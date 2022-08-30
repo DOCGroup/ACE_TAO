@@ -31,7 +31,7 @@ public:
   ~be_visitor_operation_proxy_impl_xh ();
 
   /// visit operation.
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_PROXY_IMPL_XH_H_ */

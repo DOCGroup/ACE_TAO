@@ -33,10 +33,10 @@ public:
 
   ~be_visitor_operation_svs ();
 
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_argument (be_argument *node);
+  int visit_operation (be_operation *node) override;
+  int visit_argument (be_argument *node) override;
 
-  virtual int post_process (be_decl *bd);
+  int post_process (be_decl *bd) override;
 
   void scope (be_decl *node);
 

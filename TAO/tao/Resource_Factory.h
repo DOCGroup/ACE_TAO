@@ -134,7 +134,7 @@ public:
     };
 
   TAO_Resource_Factory ();
-  virtual ~TAO_Resource_Factory ();
+  ~TAO_Resource_Factory () override;
 
   // = Resource Retrieval
 

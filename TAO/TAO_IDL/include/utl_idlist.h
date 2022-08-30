@@ -90,7 +90,7 @@ public:
               UTL_IdList *cdr);
   // Constructor(s)
 
-  virtual ~UTL_IdList () {}
+  ~UTL_IdList () override {}
   // destructor
 
   virtual void dump (ACE_OSTREAM_TYPE &o);

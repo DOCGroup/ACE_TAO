@@ -46,7 +46,7 @@ public:
   ACEXML_Parser ();
 
   /// Destructor.
-  virtual ~ACEXML_Parser ();
+  ~ACEXML_Parser () override;
 
   /**
    *  Initialize the parser state.
@@ -58,77 +58,77 @@ public:
    /**
    * Return the current content handler.
    */
-  virtual ACEXML_ContentHandler *getContentHandler () const;
+  ACEXML_ContentHandler *getContentHandler () const override;
 
   /*
    * Return the current DTD handler.
    */
-  virtual ACEXML_DTDHandler *getDTDHandler () const;
+  ACEXML_DTDHandler *getDTDHandler () const override;
 
   /*
    * Return the current entity resolver.
    */
-  virtual ACEXML_EntityResolver *getEntityResolver () const;
+  ACEXML_EntityResolver *getEntityResolver () const override;
 
   /*
    * Return the current error handler.
    */
-  virtual ACEXML_ErrorHandler *getErrorHandler () const;
+  ACEXML_ErrorHandler *getErrorHandler () const override;
 
   /**
    * Look up the value of a feature.  This method allows
    * programmers to check whether a specific feature has been
    * activated in the parser.
    */
-  virtual int getFeature (const ACEXML_Char *name);
+  int getFeature (const ACEXML_Char *name) override;
 
   /**
    * Activating or deactivating a feature.
    */
-  virtual void setFeature (const ACEXML_Char *name,
-                           int boolean_value);
+  void setFeature (const ACEXML_Char *name,
+                           int boolean_value) override;
 
   /*
    * Look up the value of a property.
    */
-  virtual void * getProperty (const ACEXML_Char *name);
+  void * getProperty (const ACEXML_Char *name) override;
 
   /*
    * Set the value of a property.
    */
-  virtual void setProperty (const ACEXML_Char *name,
-                            void *value);
+  void setProperty (const ACEXML_Char *name,
+                            void *value) override;
 
   /*
    * Parse an XML document.
    */
-  virtual void parse (ACEXML_InputSource *input);
+  void parse (ACEXML_InputSource *input) override;
 
   /*
    * Parse an XML document from a system identifier (URI).
    */
-  virtual void parse (const ACEXML_Char *systemId)
+  void parse (const ACEXML_Char *systemId) override
     ;
 
   /*
    * Allow an application to register a content event handler.
    */
-  virtual void setContentHandler (ACEXML_ContentHandler *handler);
+  void setContentHandler (ACEXML_ContentHandler *handler) override;
 
   /*
    * Allow an application to register a DTD event handler.
    */
-  virtual void setDTDHandler (ACEXML_DTDHandler *handler);
+  void setDTDHandler (ACEXML_DTDHandler *handler) override;
 
   /*
    * Allow an application to register an entity resolver.
    */
-  virtual void setEntityResolver (ACEXML_EntityResolver *resolver);
+  void setEntityResolver (ACEXML_EntityResolver *resolver) override;
 
   /*
    * Allow an application to register an error event handler.
    */
-  virtual void setErrorHandler (ACEXML_ErrorHandler *handler);
+  void setErrorHandler (ACEXML_ErrorHandler *handler) override;
 
 
 

@@ -30,11 +30,11 @@ class be_visitor_component_scope : public be_visitor_scope
 protected:
   be_visitor_component_scope (be_visitor_context *ctx);
 
-  virtual ~be_visitor_component_scope ();
+  ~be_visitor_component_scope () override;
 
 public:
-  virtual int visit_extended_port (be_extended_port *node);
-  virtual int visit_mirror_port (be_mirror_port *node);
+  int visit_extended_port (be_extended_port *node) override;
+  int visit_mirror_port (be_mirror_port *node) override;
 
   /// Automatically iterates over ancestor scopes, if any.
   int visit_component_scope (be_component *node);

@@ -31,7 +31,7 @@ class TAO_RTSchedEvent_Export TAO_EC_Gateway_Sched : public TAO_EC_Gateway_IIOP
 {
 public:
   TAO_EC_Gateway_Sched (void);
-  ~TAO_EC_Gateway_Sched (void);
+  ~TAO_EC_Gateway_Sched (void) override;
 
   /**
    * To do its job this class requires to know the local and remote

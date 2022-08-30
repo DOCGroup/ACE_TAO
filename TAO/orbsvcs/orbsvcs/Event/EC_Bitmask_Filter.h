@@ -60,26 +60,26 @@ public:
                          TAO_EC_Filter* child);
 
   /// Destructor
-  virtual ~TAO_EC_Bitmask_Filter ();
+  ~TAO_EC_Bitmask_Filter () override;
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
-  virtual ChildrenIterator begin () const;
-  virtual ChildrenIterator end () const;
-  virtual int size () const;
-  virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info);
-  virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info);
-  virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info);
-  virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info);
-  virtual void clear ();
-  virtual CORBA::ULong max_event_size () const;
-  virtual int can_match (const RtecEventComm::EventHeader& header) const;
-  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info);
+  ChildrenIterator begin () const override;
+  ChildrenIterator end () const override;
+  int size () const override;
+  int filter (const RtecEventComm::EventSet& event,
+                      TAO_EC_QOS_Info& qos_info) override;
+  int filter_nocopy (RtecEventComm::EventSet& event,
+                             TAO_EC_QOS_Info& qos_info) override;
+  void push (const RtecEventComm::EventSet& event,
+                     TAO_EC_QOS_Info& qos_info) override;
+  void push_nocopy (RtecEventComm::EventSet& event,
+                            TAO_EC_QOS_Info& qos_info) override;
+  void clear () override;
+  CORBA::ULong max_event_size () const override;
+  int can_match (const RtecEventComm::EventHeader& header) const override;
+  int add_dependencies (const RtecEventComm::EventHeader& header,
+                                const TAO_EC_QOS_Info &qos_info) override;
 
 private:
   TAO_EC_Bitmask_Filter (const TAO_EC_Bitmask_Filter&);

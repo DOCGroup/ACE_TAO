@@ -36,16 +36,16 @@ public:
                                        TAO_CEC_TypedEventChannel *typed_event_channel);
 
   /// Destructor
-  virtual ~TAO_CEC_DynamicImplementationServer (void);
+  ~TAO_CEC_DynamicImplementationServer (void) override;
 
   // = The DynamicImplementation methods.
-  virtual void invoke (CORBA::ServerRequest_ptr request);
+  void invoke (CORBA::ServerRequest_ptr request) override;
 
-  virtual CORBA::RepositoryId _primary_interface (
+  CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa);
+      PortableServer::POA_ptr poa) override;
 
-  virtual PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA (void) override;
 
   /// Handles the _is_a call
   virtual void is_a (CORBA::ServerRequest_ptr request);

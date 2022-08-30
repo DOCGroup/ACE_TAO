@@ -37,11 +37,11 @@ namespace TAO_FTRT {
     FTRT_ClientORB_Loader (void);
 
     /// Destructor.
-    virtual ~FTRT_ClientORB_Loader (void);
+    ~FTRT_ClientORB_Loader (void) override;
 
     /// Initialize the TransactionDepth loader hooks.
-    virtual int init (int argc,
-      ACE_TCHAR* []);
+    int init (int argc,
+      ACE_TCHAR* []) override;
   };
 }
 

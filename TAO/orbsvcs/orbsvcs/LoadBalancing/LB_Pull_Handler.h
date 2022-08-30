@@ -46,8 +46,8 @@ public:
   TAO_LB_Pull_Handler (void);
 
   /// Receive the timeout event.
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &current_time,
+                              const void *arg) override;
 
   /// Initialize this event handler.
   void initialize (TAO_LB_MonitorMap * monitor_map,

@@ -49,7 +49,7 @@ public:
   TAO_Naming_Context (TAO_Naming_Context_Impl *impl);
 
   /// Destructor.
-  ~TAO_Naming_Context (void);
+  ~TAO_Naming_Context (void) override;
 
   // = CosNaming::NamingContext idl interface methods.
 
@@ -62,8 +62,8 @@ public:
    * be bound using <bind_context> and <rebind_context> in order to
    * participate in name resolution later.
    */
-  virtual void bind (const CosNaming::Name &n,
-                     CORBA::Object_ptr obj);
+  void bind (const CosNaming::Name &n,
+                     CORBA::Object_ptr obj) override;
 
   /**
    * This is similar to <bind> operation above, except for when the
@@ -71,24 +71,24 @@ public:
    * context.  In that case, the existing binding is replaced with the
    * new one.
    */
-  virtual void rebind (const CosNaming::Name &n,
-                       CORBA::Object_ptr obj);
+  void rebind (const CosNaming::Name &n,
+                       CORBA::Object_ptr obj) override;
 
   /**
    * This is the version of <bind> specifically for binding naming
    * contexts, so that they will participate in name resolution when
    * compound names are passed to be resolved.
    */
-  virtual void bind_context (const CosNaming::Name &n,
-                             CosNaming::NamingContext_ptr nc);
+  void bind_context (const CosNaming::Name &n,
+                             CosNaming::NamingContext_ptr nc) override;
 
   /**
    * This is a version of <rebind> specifically for naming contexts,
    * so that they can participate in name resolution when compound
    * names are passed.
    */
-  virtual void rebind_context (const CosNaming::Name &n,
-                               CosNaming::NamingContext_ptr nc);
+  void rebind_context (const CosNaming::Name &n,
+                               CosNaming::NamingContext_ptr nc) override;
 
   /**
    * Return object reference that is bound to the name.  Compound name
@@ -97,14 +97,14 @@ public:
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
+  CORBA::Object_ptr resolve (const CosNaming::Name &n) override;
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
    * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
    */
-  virtual void unbind (const CosNaming::Name &n);
+  void unbind (const CosNaming::Name &n) override;
 
 
   /**
@@ -112,7 +112,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context ();
+  CosNaming::NamingContext_ptr new_context () override;
 
   /**
    * This operation creates a new context and binds it to the name
@@ -120,8 +120,8 @@ public:
    * implemented by the same server as the context in which it was
    * bound (the name argument excluding the last component).
    */
-  virtual CosNaming::NamingContext_ptr bind_new_context (
-      const CosNaming::Name &n);
+  CosNaming::NamingContext_ptr bind_new_context (
+      const CosNaming::Name &n) override;
 
   /**
    * Delete the naming context.  The user should take care to <unbind> any
@@ -131,7 +131,7 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (void);
+  void destroy (void) override;
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -139,9 +139,9 @@ public:
    * are returned with a BindingIterator.  In the naming context does
    * not contain any additional bindings <bi> returned as null.
    */
-  virtual void list (CORBA::ULong how_many,
+  void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out bl,
-                     CosNaming::BindingIterator_out bi);
+                     CosNaming::BindingIterator_out bi) override;
 
   /**
    * Stringify the name using '\' as the escape character. The
@@ -149,14 +149,14 @@ public:
    * is invalid i.e. if the number of characters in the name is zero,
    * an InvalidName exception is to be raised.
    */
-  virtual char * to_string (const CosNaming::Name &n);
+  char * to_string (const CosNaming::Name &n) override;
 
   /**
    * The in parameter is an stringified name. This function removes the
    * escape character '\' and destringifies the stringified name and returns
    * it.
    */
-  virtual CosNaming::Name * to_name (const char *sn);
+  CosNaming::Name * to_name (const char *sn) override;
 
   /**
    * The in parameter addr refers to the address of the naming context
@@ -164,14 +164,14 @@ public:
    * context. This function returns a fully formed URL string like
    * iiopname://1.1@myhost.555xyz.com:9999/a/b/c
    */
-  virtual char * to_url ( const char * addr,
-                          const char * sn);
+  char * to_url ( const char * addr,
+                          const char * sn) override;
 
   /**
    * Similar to <resolve> as in the CosNaming::NamingContext interface.
    * It accepts a strigified name as an argument instead of a Name.
    */
-  virtual CORBA::Object_ptr resolve_str (const char * n);
+  CORBA::Object_ptr resolve_str (const char * n) override;
 
   /**
    * Mark the implementation stale state for replicated
@@ -180,7 +180,7 @@ public:
   void stale (bool value);
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA (void) override;
 
 private:
   enum Hint

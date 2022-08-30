@@ -31,10 +31,10 @@ public:
   virtual ~be_root ();
 
   /// Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif

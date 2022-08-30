@@ -26,9 +26,9 @@ public:
   be_visitor_interface_ci (be_visitor_context *ctx);
   ~be_visitor_interface_ci ();
 
-  virtual int visit_interface (be_interface *node);
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
+  int visit_interface (be_interface *node) override;
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
 };
 
 #endif /* _BE_INTERFACE_INTERFACE_CI_H_ */

@@ -51,7 +51,7 @@ class TAO_InputCDR;
 class TAO_Export TAO_Valuetype_Adapter : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_Valuetype_Adapter ();
+  ~TAO_Valuetype_Adapter () override;
 
   virtual CORBA::Object_ptr abstractbase_to_object (
       CORBA::AbstractBase_ptr p) = 0;

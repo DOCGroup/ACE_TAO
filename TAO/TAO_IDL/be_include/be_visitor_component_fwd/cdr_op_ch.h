@@ -35,7 +35,7 @@ public:
   ~be_visitor_component_fwd_cdr_op_ch ();
 
   /// visit forward declared component.
-  virtual int visit_component_fwd (be_component_fwd *node);
+  int visit_component_fwd (be_component_fwd *node) override;
 };
 
 #endif /* _BE_VISITOR_COMPONENT_FWD_CDR_OP_CH_H_ */

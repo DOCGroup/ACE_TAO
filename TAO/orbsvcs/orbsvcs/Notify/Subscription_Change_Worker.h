@@ -35,10 +35,10 @@ public:
   TAO_Notify_Subscription_Change_Worker (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed);
 
   /// Destructor
-  virtual ~TAO_Notify_Subscription_Change_Worker ();
+  ~TAO_Notify_Subscription_Change_Worker () override;
 
   ///= TAO_ESF_Worker method
-  void work (TAO_Notify_Proxy* proxy);
+  void work (TAO_Notify_Proxy* proxy) override;
 
 protected:
   const CosNotification::EventTypeSeq & added_;

@@ -36,7 +36,7 @@ namespace TAO
 
       virtual void strategy_cleanup() = 0;
 
-      virtual ~Policy_Strategy () {};
+      ~Policy_Strategy () override {};
     };
   }
 }

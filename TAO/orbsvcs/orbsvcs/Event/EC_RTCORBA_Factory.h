@@ -41,71 +41,71 @@ public:
                           const RTCORBA::ThreadpoolLanes &lanes);
 
   /// destructor...
-  virtual ~TAO_EC_RTCORBA_Factory (void);
+  ~TAO_EC_RTCORBA_Factory (void) override;
 
   // Decorated methods...
-  virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini ();
-  virtual TAO_EC_Dispatching*
-      create_dispatching (TAO_EC_Event_Channel_Base*);
-  virtual void
-      destroy_dispatching (TAO_EC_Dispatching*) ;
-  virtual TAO_EC_Filter_Builder*
-      create_filter_builder (TAO_EC_Event_Channel_Base*)  ;
-  virtual void
-      destroy_filter_builder (TAO_EC_Filter_Builder*);
-  virtual TAO_EC_Supplier_Filter_Builder*
-      create_supplier_filter_builder (TAO_EC_Event_Channel_Base*)  ;
-  virtual void
-      destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder*);
-  virtual TAO_EC_ConsumerAdmin*
-      create_consumer_admin (TAO_EC_Event_Channel_Base*) ;
-  virtual void
-      destroy_consumer_admin (TAO_EC_ConsumerAdmin*);
-  virtual TAO_EC_SupplierAdmin*
-      create_supplier_admin (TAO_EC_Event_Channel_Base*) ;
-  virtual void
-      destroy_supplier_admin (TAO_EC_SupplierAdmin*);
-  virtual TAO_EC_ProxyPushSupplier*
-      create_proxy_push_supplier (TAO_EC_Event_Channel_Base*);
-  virtual void
-      destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier*);
-  virtual TAO_EC_ProxyPushConsumer*
-      create_proxy_push_consumer (TAO_EC_Event_Channel_Base*);
-  virtual void
-      destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*);
-  virtual TAO_EC_Timeout_Generator*
-      create_timeout_generator (TAO_EC_Event_Channel_Base*) ;
-  virtual void
-      destroy_timeout_generator (TAO_EC_Timeout_Generator*);
-  virtual TAO_EC_ObserverStrategy*
-      create_observer_strategy (TAO_EC_Event_Channel_Base*);
-  virtual void
-      destroy_observer_strategy (TAO_EC_ObserverStrategy*);
-  virtual TAO_EC_Scheduling_Strategy*
-      create_scheduling_strategy (TAO_EC_Event_Channel_Base*);
-  virtual void
-      destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy*);
-  virtual TAO_EC_ProxyPushConsumer_Collection*
-      create_proxy_push_consumer_collection (TAO_EC_Event_Channel_Base*);
-  virtual void
-      destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection*);
-  virtual TAO_EC_ProxyPushSupplier_Collection*
-      create_proxy_push_supplier_collection (TAO_EC_Event_Channel_Base*);
-  virtual void
-      destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*);
-  virtual ACE_Lock* create_consumer_lock ();
-  virtual void destroy_consumer_lock (ACE_Lock*);
-  virtual ACE_Lock* create_supplier_lock ();
-  virtual void destroy_supplier_lock (ACE_Lock*);
-  virtual TAO_EC_ConsumerControl*
-      create_consumer_control (TAO_EC_Event_Channel_Base*);
-  virtual void
-      destroy_consumer_control (TAO_EC_ConsumerControl*);
-  virtual TAO_EC_SupplierControl*
-      create_supplier_control (TAO_EC_Event_Channel_Base*);
-  virtual void
-      destroy_supplier_control (TAO_EC_SupplierControl*);
+  int init (int argc, ACE_TCHAR* argv[]) override;
+  int fini () override;
+  TAO_EC_Dispatching*
+      create_dispatching (TAO_EC_Event_Channel_Base*) override;
+  void
+      destroy_dispatching (TAO_EC_Dispatching*) override ;
+  TAO_EC_Filter_Builder*
+      create_filter_builder (TAO_EC_Event_Channel_Base*) override  ;
+  void
+      destroy_filter_builder (TAO_EC_Filter_Builder*) override;
+  TAO_EC_Supplier_Filter_Builder*
+      create_supplier_filter_builder (TAO_EC_Event_Channel_Base*) override  ;
+  void
+      destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder*) override;
+  TAO_EC_ConsumerAdmin*
+      create_consumer_admin (TAO_EC_Event_Channel_Base*) override ;
+  void
+      destroy_consumer_admin (TAO_EC_ConsumerAdmin*) override;
+  TAO_EC_SupplierAdmin*
+      create_supplier_admin (TAO_EC_Event_Channel_Base*) override ;
+  void
+      destroy_supplier_admin (TAO_EC_SupplierAdmin*) override;
+  TAO_EC_ProxyPushSupplier*
+      create_proxy_push_supplier (TAO_EC_Event_Channel_Base*) override;
+  void
+      destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier*) override;
+  TAO_EC_ProxyPushConsumer*
+      create_proxy_push_consumer (TAO_EC_Event_Channel_Base*) override;
+  void
+      destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*) override;
+  TAO_EC_Timeout_Generator*
+      create_timeout_generator (TAO_EC_Event_Channel_Base*) override ;
+  void
+      destroy_timeout_generator (TAO_EC_Timeout_Generator*) override;
+  TAO_EC_ObserverStrategy*
+      create_observer_strategy (TAO_EC_Event_Channel_Base*) override;
+  void
+      destroy_observer_strategy (TAO_EC_ObserverStrategy*) override;
+  TAO_EC_Scheduling_Strategy*
+      create_scheduling_strategy (TAO_EC_Event_Channel_Base*) override;
+  void
+      destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy*) override;
+  TAO_EC_ProxyPushConsumer_Collection*
+      create_proxy_push_consumer_collection (TAO_EC_Event_Channel_Base*) override;
+  void
+      destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection*) override;
+  TAO_EC_ProxyPushSupplier_Collection*
+      create_proxy_push_supplier_collection (TAO_EC_Event_Channel_Base*) override;
+  void
+      destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*) override;
+  ACE_Lock* create_consumer_lock () override;
+  void destroy_consumer_lock (ACE_Lock*) override;
+  ACE_Lock* create_supplier_lock () override;
+  void destroy_supplier_lock (ACE_Lock*) override;
+  TAO_EC_ConsumerControl*
+      create_consumer_control (TAO_EC_Event_Channel_Base*) override;
+  void
+      destroy_consumer_control (TAO_EC_ConsumerControl*) override;
+  TAO_EC_SupplierControl*
+      create_supplier_control (TAO_EC_Event_Channel_Base*) override;
+  void
+      destroy_supplier_control (TAO_EC_SupplierControl*) override;
 
 protected:
   /// The decorated factory

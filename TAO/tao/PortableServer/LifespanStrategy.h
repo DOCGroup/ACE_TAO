@@ -35,9 +35,9 @@ namespace TAO
     public:
       LifespanStrategy ();
 
-      virtual void strategy_init (TAO_Root_POA *poa);
+      void strategy_init (TAO_Root_POA *poa) override;
 
-      virtual void strategy_cleanup ();
+      void strategy_cleanup () override;
 
       void create (const char *name, const TAO::ObjectKey &key);
 

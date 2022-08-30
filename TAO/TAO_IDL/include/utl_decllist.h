@@ -91,7 +91,7 @@ public:
   FE_Declarator *head ();
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
 private:
   // Data

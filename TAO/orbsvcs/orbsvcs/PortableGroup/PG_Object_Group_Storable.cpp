@@ -47,24 +47,24 @@ namespace TAO
 
     ~Object_Group_File_Guard ();
 
-    virtual void set_object_last_changed (const time_t & time);
+    void set_object_last_changed (const time_t & time) override;
 
-    virtual time_t get_object_last_changed ();
+    time_t get_object_last_changed () override;
 
     /// Check if the guarded object is current with the last
     /// update which could have been performed independently of
     /// the owner of this object.
-    virtual bool object_obsolete ();
+    bool object_obsolete () override;
 
     /// Mark the object as current with respect to the
     /// file to which it was persisted.
-    virtual void mark_object_current ();
+    void mark_object_current () override;
 
-    virtual int load_from_stream ();
+    int load_from_stream () override;
 
-    virtual bool is_loaded_from_stream ();
+    bool is_loaded_from_stream () override;
 
-    virtual TAO::Storable_Base * create_stream (const char * mode);
+    TAO::Storable_Base * create_stream (const char * mode) override;
 
   private:
 

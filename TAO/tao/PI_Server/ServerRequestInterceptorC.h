@@ -198,19 +198,19 @@ namespace PortableInterceptor
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
 
-    virtual ::CORBA::Boolean _is_a (
+    ::CORBA::Boolean _is_a (
         const char *type_id
 
-      );
+      ) override;
 
-    virtual const char* _interface_repository_id () const;
-    virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    const char* _interface_repository_id () const override;
+    ::CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 
   protected:
     // Abstract or local interface only.
     ServerRequestInterceptor ();
 
-    virtual ~ServerRequestInterceptor ();
+    ~ServerRequestInterceptor () override;
 
   private:
     // Private and unimplemented for concrete interfaces.

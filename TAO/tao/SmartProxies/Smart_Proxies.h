@@ -38,7 +38,7 @@ class TAO_SmartProxies_Export TAO_Smart_Proxy_Base
 {
 public:
   /// Destructor
-  virtual ~TAO_Smart_Proxy_Base (void);
+  ~TAO_Smart_Proxy_Base (void) override;
 
 protected:
   /// Constructor.

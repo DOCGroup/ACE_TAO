@@ -29,12 +29,12 @@ public:
   void redefine (AST_Interface *from) override;
 
   // Extend lookup to the base component.
-  virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
-                                       bool full_def_only);
+  AST_Decl *look_in_inherited (UTL_ScopedName *e,
+                              bool full_def_only) override;
 
   // Extend lookup to the supported interfaces.
-  virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
-                                       bool full_def_only);
+  AST_Decl *look_in_supported (UTL_ScopedName *e,
+                              bool full_def_only) override;
 
   // Accessors.
 
@@ -45,9 +45,9 @@ public:
   long n_supports () const;
 
   // Override for component of UTL_Scope method.
-  virtual AST_Decl *special_lookup (UTL_ScopedName *e,
-                                    bool full_def_only,
-                                    AST_Decl *&final_parent_decl);
+  AST_Decl *special_lookup (UTL_ScopedName *e,
+                           bool full_def_only,
+                           AST_Decl *&final_parent_decl) override;
 
   // Cleanup function.
   void destroy () override;

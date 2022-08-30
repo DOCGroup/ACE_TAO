@@ -37,15 +37,15 @@ public:
   virtual ~TAO_Default_Server_Strategy_Factory (void);
 
   // = Service Configurator hooks.
-  virtual int init (int argc, ACE_TCHAR* argv[]);
+  int init (int argc, ACE_TCHAR* argv[]) override;
 
   // = The TAO_Server_Strategy_Factory methods, please read the
   //   documentation in "tao/Server_Strategy_Factory.h"
-  virtual int open (TAO_ORB_Core*);
-  virtual int activate_server_connections (void);
-  virtual int thread_per_connection_timeout (ACE_Time_Value &timeout);
-  virtual int server_connection_thread_flags (void);
-  virtual int server_connection_thread_count (void);
+  int open (TAO_ORB_Core*) override;
+  int activate_server_connections (void) override;
+  int thread_per_connection_timeout (ACE_Time_Value &timeout) override;
+  int server_connection_thread_flags (void) override;
+  int server_connection_thread_count (void) override;
 
   /// Parse the arguments, check the documentation in
   /// $TAO_ROOT/docs/Options.html for details

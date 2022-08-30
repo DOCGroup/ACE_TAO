@@ -50,8 +50,8 @@ namespace ACE
     {
     public:
       /// Override of ACE base class method.
-      virtual int handle_timeout (const ACE_Time_Value& interval,
-                                  const void* monitor_point);
+      int handle_timeout (const ACE_Time_Value& interval,
+                                  const void* monitor_point) override;
     };
 
     /**

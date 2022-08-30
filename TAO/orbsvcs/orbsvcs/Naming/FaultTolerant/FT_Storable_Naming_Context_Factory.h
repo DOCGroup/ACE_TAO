@@ -45,7 +45,7 @@ public:
 
   /// Destructor.  Does not deallocate the hash map: if an instance of
   /// this class goes out of scope, its hash_map remains in persistent storage.
-  virtual ~TAO_FT_Storable_Naming_Context_Factory () = default;
+  ~TAO_FT_Storable_Naming_Context_Factory () override = default;
 
   TAO_FT_Naming_Replication_Manager * replicator (void);
 
@@ -53,11 +53,11 @@ public:
   /// If an existing naming context implementation is being rebuilt,
   /// the map and counter parameters should be provided to the underlying
   /// HASH_MAP implementation
-  virtual TAO_Storable_Naming_Context* create_naming_context_impl (
+  TAO_Storable_Naming_Context* create_naming_context_impl (
     CORBA::ORB_ptr orb,
     PortableServer::POA_ptr poa,
     const char *poa_id,
-    TAO::Storable_Factory *factory);
+    TAO::Storable_Factory *factory) override;
 
   TAO_FT_Naming_Replication_Manager *replicator_;
 };

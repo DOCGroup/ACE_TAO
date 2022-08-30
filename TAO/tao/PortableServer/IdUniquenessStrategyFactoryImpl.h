@@ -32,9 +32,9 @@ namespace TAO
     {
     public:
       /// Create a new servant retention strategy
-      virtual IdUniquenessStrategy* create (::PortableServer::IdUniquenessPolicyValue value);
+      IdUniquenessStrategy* create (::PortableServer::IdUniquenessPolicyValue value) override;
 
-      virtual void destroy (IdUniquenessStrategy *strategy);
+      void destroy (IdUniquenessStrategy *strategy) override;
     };
   }
 }

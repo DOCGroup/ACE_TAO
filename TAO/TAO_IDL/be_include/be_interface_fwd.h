@@ -33,18 +33,18 @@ public:
   be_interface_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~be_interface_fwd ();
+  ~be_interface_fwd () override;
 
   /// Mutator overrides for be_type members. If we have been
   /// defined, we want the full definition to be set as well.
-  virtual void seen_in_sequence (bool val);
-  virtual void seen_in_operation (bool val);
+  void seen_in_sequence (bool val) override;
+  void seen_in_operation (bool val) override;
 
   /// Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor* visitor);
+  int accept (be_visitor* visitor) override;
 };
 
 #endif // if !defined

@@ -32,15 +32,15 @@ public:
   TAO_FTEC_ProxyPushSupplier(TAO_EC_Event_Channel_Base* event_channel,
                            int validate_connection);
     /// Activate in the POA
- virtual void activate (
-       RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy);
+ void activate (
+       RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy) override;
     // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
-  virtual void connect_push_consumer (
+  void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
-  virtual void disconnect_push_supplier (void);
-  virtual void suspend_connection (void);
-  virtual void resume_connection (void);
+                const RtecEventChannelAdmin::ConsumerQOS &qos) override;
+  void disconnect_push_supplier (void) override;
+  void suspend_connection (void) override;
+  void resume_connection (void) override;
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
 

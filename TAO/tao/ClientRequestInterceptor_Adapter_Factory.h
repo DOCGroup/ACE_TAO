@@ -40,7 +40,7 @@ class TAO_Export TAO_ClientRequestInterceptor_Adapter_Factory
   : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_ClientRequestInterceptor_Adapter_Factory ();
+  ~TAO_ClientRequestInterceptor_Adapter_Factory () override;
 
   virtual TAO::ClientRequestInterceptor_Adapter *create () = 0;
 };

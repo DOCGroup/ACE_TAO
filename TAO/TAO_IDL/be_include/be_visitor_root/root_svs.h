@@ -30,7 +30,7 @@ public:
 
   ~be_visitor_root_svs ();
 
-  virtual int visit_root (be_root *node);
+  int visit_root (be_root *node) override;
 
 private:
   /// Set the right context and make a visitor.

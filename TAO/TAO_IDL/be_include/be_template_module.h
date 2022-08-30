@@ -34,9 +34,9 @@ public:
 
   virtual ~be_template_module ();
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif /* TAO_BE_TEMPLATE_MODULE_H */

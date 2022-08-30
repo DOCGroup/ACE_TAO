@@ -41,20 +41,20 @@ class TAO_PortableServer_Export TAO_Perfect_Hash_OpTable
 public:
 
   /// Do nothing destructor.
-  virtual ~TAO_Perfect_Hash_OpTable ();
+  ~TAO_Perfect_Hash_OpTable () override;
 
   /// See the documentation in the base class for details.
-  virtual int find (const char *opname,
+  int find (const char *opname,
                     TAO_Skeleton &skelfunc,
-                    const unsigned int length = 0);
+                    const unsigned int length = 0) override;
 
-  virtual int find (const char *opname,
+  int find (const char *opname,
                     TAO_Collocated_Skeleton &skelfunc,
                     TAO::Collocation_Strategy s,
-                    const unsigned int length = 0);
+                    const unsigned int length = 0) override;
 
-  virtual int bind (const char *opname,
-                    const TAO::Operation_Skeletons skel_ptr);
+  int bind (const char *opname,
+                    const TAO::Operation_Skeletons skel_ptr) override;
 
 private:
   // = Methods that should defined by the subclasses. GPERF program

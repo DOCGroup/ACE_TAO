@@ -54,7 +54,7 @@ namespace TAO
     public:
 
       /// Virtual Destructor.
-      virtual ~TP_Custom_Request_Operation();
+      ~TP_Custom_Request_Operation() override;
 
       /// Invoked by a worker thread to perform the operation.
       void execute();

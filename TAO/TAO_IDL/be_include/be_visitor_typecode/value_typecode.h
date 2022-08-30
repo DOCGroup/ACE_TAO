@@ -39,7 +39,7 @@ namespace TAO
      *       the rest of the legacy method names and their call sites
      *       are updated accordingly.
      */
-    virtual int visit_valuetype (be_valuetype * node);
+    int visit_valuetype (be_valuetype * node) override;
 
   private:
 

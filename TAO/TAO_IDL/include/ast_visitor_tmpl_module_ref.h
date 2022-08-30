@@ -31,7 +31,7 @@ public:
 
   virtual ~ast_visitor_tmpl_module_ref ();
 
-  virtual int visit_template_module_ref (AST_Template_Module_Ref *node);
+  int visit_template_module_ref (AST_Template_Module_Ref *node) override;
 };
 
 #endif // TAO_AST_VISITOR_TMPL_MODULE_INST_H

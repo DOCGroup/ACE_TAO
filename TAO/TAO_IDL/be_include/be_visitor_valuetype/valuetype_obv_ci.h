@@ -36,10 +36,10 @@ public:
   /// destructor
   ~be_visitor_valuetype_obv_ci ();
 
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 
-  virtual int visit_field (be_field *node);
+  int visit_field (be_field *node) override;
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_OBV_CI_H_ */

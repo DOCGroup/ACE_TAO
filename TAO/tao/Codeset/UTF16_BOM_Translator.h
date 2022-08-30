@@ -41,30 +41,30 @@ public:
   TAO_UTF16_BOM_Translator (bool forceBE);
 
   /// Virtual destruction
-  virtual ~TAO_UTF16_BOM_Translator () = default;
+  ~TAO_UTF16_BOM_Translator () override = default;
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
-  virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR &,
-                                      ACE_CDR::WChar &);
-  virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR &,
-                                        ACE_CDR::WChar *&);
+  ACE_CDR::Boolean read_wchar (ACE_InputCDR &,
+                                      ACE_CDR::WChar &) override;
+  ACE_CDR::Boolean read_wstring (ACE_InputCDR &,
+                                        ACE_CDR::WChar *&) override;
 #if !defined(ACE_LACKS_STD_WSTRING)
-  virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR&,
-                                         std::wstring &);
+  ACE_CDR::Boolean read_wstring (ACE_InputCDR&,
+                                         std::wstring &) override;
 #endif
-  virtual ACE_CDR::Boolean read_wchar_array (ACE_InputCDR &,
+  ACE_CDR::Boolean read_wchar_array (ACE_InputCDR &,
                                             ACE_CDR::WChar *,
-                                            ACE_CDR::ULong);
-  virtual ACE_CDR::Boolean write_wchar (ACE_OutputCDR &,
-                                       ACE_CDR::WChar);
-  virtual ACE_CDR::Boolean write_wstring (ACE_OutputCDR &,
+                                            ACE_CDR::ULong) override;
+  ACE_CDR::Boolean write_wchar (ACE_OutputCDR &,
+                                       ACE_CDR::WChar) override;
+  ACE_CDR::Boolean write_wstring (ACE_OutputCDR &,
                                          ACE_CDR::ULong,
-                                         const ACE_CDR::WChar *);
-  virtual ACE_CDR::Boolean write_wchar_array (ACE_OutputCDR &,
+                                         const ACE_CDR::WChar *) override;
+  ACE_CDR::Boolean write_wchar_array (ACE_OutputCDR &,
                                              const ACE_CDR::WChar *,
-                                             ACE_CDR::ULong);
-  virtual ACE_CDR::ULong ncs () {return 0x00010109;}
-  virtual ACE_CDR::ULong tcs () {return 0x00010109;}
+                                             ACE_CDR::ULong) override;
+  ACE_CDR::ULong ncs () override {return 0x00010109;}
+  ACE_CDR::ULong tcs () override {return 0x00010109;}
 
 private:
   ACE_CDR::Boolean read_wchar_array_i (ACE_InputCDR &,

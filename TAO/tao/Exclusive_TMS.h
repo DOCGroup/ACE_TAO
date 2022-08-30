@@ -52,18 +52,18 @@ public:
    * for details.
    */
   //@{
-  virtual CORBA::ULong request_id (void);
+  CORBA::ULong request_id (void) override;
   virtual int bind_dispatcher (CORBA::ULong request_id,
                                ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd);
-  virtual int unbind_dispatcher (CORBA::ULong request_id);
+  int unbind_dispatcher (CORBA::ULong request_id) override;
 
-  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
-  virtual int reply_timed_out (CORBA::ULong request_id);
+  int dispatch_reply (TAO_Pluggable_Reply_Params &params) override;
+  int reply_timed_out (CORBA::ULong request_id) override;
 
-  virtual bool idle_after_send (void);
-  virtual bool idle_after_reply (void);
-  virtual void connection_closed (void);
-  virtual bool has_request (void);
+  bool idle_after_send (void) override;
+  bool idle_after_reply (void) override;
+  void connection_closed (void) override;
+  bool has_request (void) override;
   //@}
 
 protected:

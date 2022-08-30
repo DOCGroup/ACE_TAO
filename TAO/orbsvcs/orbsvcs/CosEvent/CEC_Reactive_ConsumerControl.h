@@ -57,8 +57,8 @@ public:
   TAO_CEC_ConsumerControl_Adapter (TAO_CEC_Reactive_ConsumerControl *adaptee);
 
   // = Documented in ACE_Event_Handler.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
+  int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg = 0) override;
 
 private:
   /// The adapted object
@@ -99,28 +99,28 @@ public:
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
-  virtual ~TAO_CEC_Reactive_ConsumerControl (void);
+  ~TAO_CEC_Reactive_ConsumerControl (void) override;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_CEC_ConsumerControl
-  virtual int activate (void);
-  virtual int shutdown (void);
-  virtual void consumer_not_exist (TAO_CEC_ProxyPushSupplier *proxy);
-  virtual void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy);
-  virtual void system_exception (TAO_CEC_ProxyPushSupplier *proxy,
-                                 CORBA::SystemException &);
+  int activate (void) override;
+  int shutdown (void) override;
+  void consumer_not_exist (TAO_CEC_ProxyPushSupplier *proxy) override;
+  void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy) override;
+  void system_exception (TAO_CEC_ProxyPushSupplier *proxy,
+                                 CORBA::SystemException &) override;
 
   /// Do we need to disconnect this supplier?  The parameter type for
   /// proxy is PortableServer::ServantBase* due to the fact that this
   /// method will be used for TAO_CEC_ProxyPushSupplier's and
   /// TAO_CEC_ProxyPullSupplier's.
-  virtual bool need_to_disconnect (PortableServer::ServantBase* proxy);
+  bool need_to_disconnect (PortableServer::ServantBase* proxy) override;
 
   /// Allow others to inform us when a send or receive was successful.
-  virtual void successful_transmission (PortableServer::ServantBase* proxy);
+  void successful_transmission (PortableServer::ServantBase* proxy) override;
 
 private:
   /// Check if the consumers still exists.  It is a helper method for
@@ -174,7 +174,7 @@ class TAO_CEC_Ping_Push_Consumer
 public:
   TAO_CEC_Ping_Push_Consumer (TAO_CEC_ConsumerControl *control);
 
-  virtual void work (TAO_CEC_ProxyPushSupplier *supplier);
+  void work (TAO_CEC_ProxyPushSupplier *supplier) override;
 
 private:
   TAO_CEC_ConsumerControl *control_;
@@ -188,7 +188,7 @@ class TAO_CEC_Ping_Pull_Consumer
 public:
   TAO_CEC_Ping_Pull_Consumer (TAO_CEC_ConsumerControl *control);
 
-  virtual void work (TAO_CEC_ProxyPullSupplier *supplier);
+  void work (TAO_CEC_ProxyPullSupplier *supplier) override;
 
 private:
   TAO_CEC_ConsumerControl *control_;

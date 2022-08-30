@@ -33,10 +33,10 @@ public:
   be_visitor_component_ami_rh_exh (be_visitor_context *ctx);
   ~be_visitor_component_ami_rh_exh ();
 
-  virtual int visit_uses (be_uses *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_argument (be_argument *node);
+  int visit_uses (be_uses *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_argument (be_argument *node) override;
 
 private:
   ACE_CString export_macro_;

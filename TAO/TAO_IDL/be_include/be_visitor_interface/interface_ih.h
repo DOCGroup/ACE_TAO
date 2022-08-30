@@ -32,7 +32,7 @@ public:
   ~be_visitor_interface_ih ();
 
   /// set the right context and make a visitor
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
   static int method_helper (be_interface *derived,
                             be_interface *node,

@@ -33,7 +33,7 @@ public:
   ~be_visitor_valuebox_any_op_cs ();
 
   /// visit valuebox
-  virtual int visit_valuebox (be_valuebox *node);
+  int visit_valuebox (be_valuebox *node) override;
 };
 
 #endif /* _BE_VALUEBOX_ANY_OP_CS_H_ */

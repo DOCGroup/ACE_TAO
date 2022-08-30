@@ -34,7 +34,7 @@ class TAO_Export TAO_PolicyFactory_Registry_Factory :
   public ACE_Service_Object
 {
 public:
-  virtual ~TAO_PolicyFactory_Registry_Factory ();
+  ~TAO_PolicyFactory_Registry_Factory () override;
 
   virtual TAO::PolicyFactory_Registry_Adapter* create () = 0;
 };

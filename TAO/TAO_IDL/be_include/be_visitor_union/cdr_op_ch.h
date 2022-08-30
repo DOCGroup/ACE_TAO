@@ -32,10 +32,10 @@ public:
   be_visitor_union_cdr_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union_cdr_op_ch ();
+  ~be_visitor_union_cdr_op_ch () override;
 
   /// visit union
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
 };
 

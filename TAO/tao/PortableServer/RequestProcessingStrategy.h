@@ -50,13 +50,13 @@ namespace TAO
     public:
       RequestProcessingStrategy ();
 
-      virtual void strategy_init(TAO_Root_POA *poa);
+      void strategy_init(TAO_Root_POA *poa) override;
 
       virtual void strategy_init(
         TAO_Root_POA *poa,
         ::PortableServer::ServantRetentionPolicyValue);
 
-      virtual void strategy_cleanup();
+      void strategy_cleanup() override;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 

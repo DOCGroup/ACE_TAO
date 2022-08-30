@@ -43,28 +43,28 @@ public:
   TAO_ComponentDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ComponentDef_i (void);
+  ~TAO_ComponentDef_i (void) override;
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ();
+  CORBA::DefinitionKind def_kind () override;
 
   /// Remove the repository entry.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Remove the repository entry.
-  void destroy_i ();
+  void destroy_i () override;
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe ();
+  CORBA::Contained::Description *describe () override;
 
   /// From Contained_i's pure virtual function.
-  CORBA::Contained::Description *describe_i ();
+  CORBA::Contained::Description *describe_i () override;
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type ();
+  CORBA::TypeCode_ptr type () override;
 
   /// From IDLType_i's pure virtual function.
-  CORBA::TypeCode_ptr type_i ();
+  CORBA::TypeCode_ptr type_i () override;
 
   virtual CORBA::InterfaceDefSeq *supported_interfaces ();
 

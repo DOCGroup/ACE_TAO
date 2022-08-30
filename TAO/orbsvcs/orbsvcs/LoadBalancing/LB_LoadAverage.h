@@ -67,30 +67,30 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  virtual char * name (void);
+  char * name (void) override;
 
-  virtual CosLoadBalancing::Properties * get_properties ();
+  CosLoadBalancing::Properties * get_properties () override;
 
-  virtual void push_loads (
+  void push_loads (
       const PortableGroup::Location & the_location,
-      const CosLoadBalancing::LoadList & loads);
+      const CosLoadBalancing::LoadList & loads) override;
 
-  virtual CosLoadBalancing::LoadList * get_loads (
+  CosLoadBalancing::LoadList * get_loads (
       CosLoadBalancing::LoadManager_ptr load_manager,
-      const PortableGroup::Location & the_location);
+      const PortableGroup::Location & the_location) override;
 
-  virtual CORBA::Object_ptr next_member (
+  CORBA::Object_ptr next_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager);
+      CosLoadBalancing::LoadManager_ptr load_manager) override;
 
-  virtual void analyze_loads (
+  void analyze_loads (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager);
+      CosLoadBalancing::LoadManager_ptr load_manager) override;
   //@}
 
   /// Returns the default POA for this servant.
-  virtual PortableServer::POA_ptr _default_POA (
-    );
+  PortableServer::POA_ptr _default_POA (
+    ) override;
 
   /// Initialize the LoadAverage instance with the given properties.
   void init (const PortableGroup::Properties & props);
@@ -98,7 +98,7 @@ public:
 protected:
 
   /// Destructor.
-  ~TAO_LB_LoadAverage (void);
+  ~TAO_LB_LoadAverage (void) override;
 
   /// Return the effective load.
   CORBA::Float effective_load (CORBA::Float previous_load,

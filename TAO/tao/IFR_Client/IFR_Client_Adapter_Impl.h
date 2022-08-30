@@ -39,30 +39,30 @@ class TAO_IFR_CLIENT_Export TAO_IFR_Client_Adapter_Impl
   : public TAO_IFR_Client_Adapter
 {
 public:
-  virtual ~TAO_IFR_Client_Adapter_Impl (void);
+  ~TAO_IFR_Client_Adapter_Impl (void) override;
 
-  virtual CORBA::Boolean interfacedef_cdr_insert (
+  CORBA::Boolean interfacedef_cdr_insert (
       TAO_OutputCDR &cdr,
-      CORBA::InterfaceDef_ptr object_type);
+      CORBA::InterfaceDef_ptr object_type) override;
 
-  virtual void interfacedef_any_insert (
+  void interfacedef_any_insert (
       CORBA::Any *any,
-      CORBA::InterfaceDef_ptr object_type);
+      CORBA::InterfaceDef_ptr object_type) override;
 
-  virtual void dispose (CORBA::InterfaceDef_ptr orphan);
+  void dispose (CORBA::InterfaceDef_ptr orphan) override;
 
-  virtual CORBA::InterfaceDef_ptr get_interface (
+  CORBA::InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
-      const char *repo_id);
+      const char *repo_id) override;
 
-  virtual CORBA::InterfaceDef_ptr get_interface_remote (
-      CORBA::Object_ptr target);
+  CORBA::InterfaceDef_ptr get_interface_remote (
+      CORBA::Object_ptr target) override;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  virtual void create_operation_list (
+  void create_operation_list (
       CORBA::ORB_ptr orb,
       CORBA::OperationDef_ptr,
-      CORBA::NVList_ptr&);
+      CORBA::NVList_ptr&) override;
 #endif /*TAO_HAS_MINIMUM_CORBA*/
 
   // Used to force the initialization of the ORB code.

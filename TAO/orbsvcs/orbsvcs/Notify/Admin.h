@@ -43,7 +43,7 @@ public:
   TAO_Notify_Admin ();
 
   /// Destructor
-  virtual ~TAO_Notify_Admin ();
+  ~TAO_Notify_Admin () override;
 
   /// Init
   void init (TAO_Notify::Topology_Parent * parent);
@@ -72,21 +72,21 @@ public:
   TAO_Notify_EventChannel * event_channel () const;
 
   /// Shutdown
-  virtual int shutdown (void);
+  int shutdown (void) override;
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
-    CORBA::Long id, const TAO_Notify::NVPList& attrs);
-  virtual void reconnect (void);
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
+  TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
+    CORBA::Long id, const TAO_Notify::NVPList& attrs) override;
+  void reconnect (void) override;
 
   virtual void validate ();
 
   void set_default (bool is_default);
   bool is_default () const;
-  virtual void load_attrs(const TAO_Notify::NVPList& attrs);
+  void load_attrs(const TAO_Notify::NVPList& attrs) override;
 
 protected:
-  void save_attrs (TAO_Notify::NVPList& attrs);
+  void save_attrs (TAO_Notify::NVPList& attrs) override;
   virtual const char * get_admin_type_name () const = 0;
 
   typedef TAO_Notify_Container_T<TAO_Notify_Proxy> TAO_Notify_Proxy_Container;

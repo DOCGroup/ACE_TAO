@@ -43,15 +43,15 @@ class TAO_PortableServer_Export TAO_POAManager_Factory :
 public:
   TAO_POAManager_Factory (TAO_Object_Adapter &object_adapter);
 
-  virtual ~TAO_POAManager_Factory ();
+  ~TAO_POAManager_Factory () override;
 
-  virtual ::PortableServer::POAManager_ptr create_POAManager (
+  ::PortableServer::POAManager_ptr create_POAManager (
       const char * id,
-      const ::CORBA::PolicyList & policies);
+      const ::CORBA::PolicyList & policies) override;
 
-  virtual ::PortableServer::POAManagerFactory::POAManagerSeq * list ();
+  ::PortableServer::POAManagerFactory::POAManagerSeq * list () override;
 
-  virtual ::PortableServer::POAManager_ptr find (const char * id);
+  ::PortableServer::POAManager_ptr find (const char * id) override;
 
   void remove_all_poamanagers ();
 

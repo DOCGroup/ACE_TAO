@@ -43,17 +43,17 @@ public:
    * a new RT_Info.  Here, we just return its handle, or an error value if
    * it's not present.
    */
-  virtual RtecScheduler::handle_t create (const char * entry_point);
+  RtecScheduler::handle_t create (const char * entry_point) override;
 
   /// Lookup a handle for an RT_Info, and return its handle, or an error
   /// value if it's not present.
-  virtual RtecScheduler::handle_t lookup (const char * entry_point);
+  RtecScheduler::handle_t lookup (const char * entry_point) override;
 
   /// Return a pointer to the RT_Info corresponding to the passed handle.
-  virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle);
+  RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle) override;
 
   /// Set characteristics of the RT_Info corresponding to the passed handle.
-  virtual void set (::RtecScheduler::handle_t handle,
+  void set (::RtecScheduler::handle_t handle,
                     ::RtecScheduler::Criticality_t criticality,
                     ::RtecScheduler::Time time,
                     ::RtecScheduler::Time typical_time,
@@ -62,10 +62,10 @@ public:
                     ::RtecScheduler::Importance_t importance,
                     ::RtecScheduler::Quantum_t quantum,
                     ::RtecScheduler::Threads_t threads,
-                    ::RtecScheduler::Info_Type_t info_type);
+                    ::RtecScheduler::Info_Type_t info_type) override;
 
   /// Reset characteristics of the RT_Info corresponding to the passed handle.
-  virtual void reset (RtecScheduler::handle_t handle,
+  void reset (RtecScheduler::handle_t handle,
                       RtecScheduler::Criticality_t criticality,
                       RtecScheduler::Time time,
                       RtecScheduler::Time typical_time,
@@ -74,100 +74,100 @@ public:
                       RtecScheduler::Importance_t importance,
                       RtecScheduler::Quantum_t quantum,
                       RtecScheduler::Threads_t threads,
-                      RtecScheduler::Info_Type_t info_type);
+                      RtecScheduler::Info_Type_t info_type) override;
 
   /// Set characteristics of the RT_Infos corresponding to the passed handles.
   /// Tuples are added in the case of existing and/or multiple definitions.
-  virtual void set_seq (const RtecScheduler::RT_Info_Set& infos);
+  void set_seq (const RtecScheduler::RT_Info_Set& infos) override;
 
   /// Replace characteristics of the RT_Infos corresponding to the
   /// passed handles.
-  virtual void replace_seq (const RtecScheduler::RT_Info_Set& infos);
+  void replace_seq (const RtecScheduler::RT_Info_Set& infos) override;
 
   /// Reset characteristics of the RT_Infos corresponding to the passed handles.
   /// Tuples are replaced in the case of existing and/or multiple definitions.
-  virtual void reset_seq (const RtecScheduler::RT_Info_Set& infos);
+  void reset_seq (const RtecScheduler::RT_Info_Set& infos) override;
 
   /// Returns the priority and subpriority values assigned to an RT_Info,
   /// based on its handle.
-  virtual void priority (RtecScheduler::handle_t handle,
+  void priority (RtecScheduler::handle_t handle,
                          RtecScheduler::OS_Priority& o_priority,
                          RtecScheduler::Preemption_Subpriority_t& p_subpriority,
-                         RtecScheduler::Preemption_Priority_t& p_priority);
+                         RtecScheduler::Preemption_Priority_t& p_priority) override;
 
   /// Returns the priority and subpriority values assigned to an RT_Info,
   /// based on its entry point name.
-  virtual void entry_point_priority (const char * entry_point,
+  void entry_point_priority (const char * entry_point,
                                      RtecScheduler::OS_Priority& o_priority,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
-                                     RtecScheduler::Preemption_Priority_t& p_priority);
+                                     RtecScheduler::Preemption_Priority_t& p_priority) override;
 
   /// In the config run scheduler, this method registers a dependency between
   /// two RT_Infos.  In the run time scheduler, this is a no-op.
-  virtual void add_dependency (RtecScheduler::handle_t handle,
+  void add_dependency (RtecScheduler::handle_t handle,
                                RtecScheduler::handle_t dependency,
                                CORBA::Long number_of_calls,
-                               RtecScheduler::Dependency_Type_t dependency_type);
+                               RtecScheduler::Dependency_Type_t dependency_type) override;
 
   /// In the reconfig scheduler, this method removes a dependency between
   /// two RT_Infos.  In the run time scheduler, this is a no-op.
-  virtual void remove_dependency (RtecScheduler::handle_t handle,
+  void remove_dependency (RtecScheduler::handle_t handle,
                                   RtecScheduler::handle_t dependency,
                                   CORBA::Long number_of_calls,
-                                  RtecScheduler::Dependency_Type_t dependency_type);
+                                  RtecScheduler::Dependency_Type_t dependency_type) override;
 
   /// In the reconfig scheduler, this method (re)enabes a dependency between
   /// two RT_Infos.  In the run time scheduler, this is a no-op.
-  virtual void set_dependency_enable_state (RtecScheduler::handle_t handle,
+  void set_dependency_enable_state (RtecScheduler::handle_t handle,
                                             RtecScheduler::handle_t dependency,
                                             CORBA::Long number_of_calls,
                                             RtecScheduler::Dependency_Type_t dependency_type,
-                                            RtecScheduler::Dependency_Enabled_Type_t enabled);
+                                            RtecScheduler::Dependency_Enabled_Type_t enabled) override;
 
   /// In the reconfig scheduler, enables or disables an RT_Info.
   /// In the run time scheduler, this is a no-op.
-  virtual void set_rt_info_enable_state (RtecScheduler::handle_t handle,
-                                         RtecScheduler::RT_Info_Enabled_Type_t enabled);
+  void set_rt_info_enable_state (RtecScheduler::handle_t handle,
+                                         RtecScheduler::RT_Info_Enabled_Type_t enabled) override;
 
   /// This method sets the enable state of a sequence of dependencies.
-  virtual void set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies);
+  void set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies) override;
 
   /// This method enables or disables a sequence of RT_Infos.
-  virtual void set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set);
+  void set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set) override;
 
   /**
    * In the config run scheduler, this method causes scheduling information
    * to be computed for all registered RT_Infos.  In the run time scheduler,
    * this is a no-op.
    */
-  virtual void compute_scheduling (CORBA::Long minimum_priority,
+  void compute_scheduling (CORBA::Long minimum_priority,
                                    CORBA::Long maximum_priority,
                                    RtecScheduler::RT_Info_Set_out infos,
                                    RtecScheduler::Dependency_Set_out deps,
                                    RtecScheduler::Config_Info_Set_out configs,
-                                   RtecScheduler::Scheduling_Anomaly_Set_out anomalies);
+                                   RtecScheduler::Scheduling_Anomaly_Set_out anomalies) override;
 
   /// Recomputes the scheduling priorities, etc.
-  virtual void recompute_scheduling (CORBA::Long minimum_priority,
+  void recompute_scheduling (CORBA::Long minimum_priority,
                                      CORBA::Long maximum_priority,
-                                     RtecScheduler::Scheduling_Anomaly_Set_out anomalies);
+                                     RtecScheduler::Scheduling_Anomaly_Set_out anomalies) override;
 
   /// Returns the set of rt_infos, with their assigned priorities (as
   /// of the last schedule re-computation).
-  virtual void get_rt_info_set (RtecScheduler::RT_Info_Set_out infos);
+  void get_rt_info_set (RtecScheduler::RT_Info_Set_out infos) override;
 
   /// Returns the set of rt_infos, with their assigned priorities (as
   /// of the last schedule re-computation).
-  virtual void get_dependency_set (RtecScheduler::Dependency_Set_out dependencies);
+  void get_dependency_set (RtecScheduler::Dependency_Set_out dependencies) override;
 
   /// Returns the set of config_infos, describing the appropriate
   /// number, types, and priority levels for the dispatching lanes.
-  virtual void get_config_info_set (RtecScheduler::Config_Info_Set_out configs);
+  void get_config_info_set (RtecScheduler::Config_Info_Set_out configs) override;
 
   /// Provides the thread priority and queue type for the given priority level.
-  virtual void dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
+  void dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                        RtecScheduler::OS_Priority& o_priority,
-                                       RtecScheduler::Dispatching_Type_t & d_type);
+                                       RtecScheduler::Dispatching_Type_t & d_type) override;
 
   /**
    * Returns the last priority number assigned to an operation in the
@@ -175,9 +175,9 @@ public:
    * of scheduled priorities.  All scheduled priorities range from 0
    * to the number returned, inclusive.
    */
-  virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (void);
+  RtecScheduler::Preemption_Priority_t last_scheduled_priority (void) override;
 
-  virtual void get_config_infos (RtecScheduler::Config_Info_Set_out configs);
+  void get_config_infos (RtecScheduler::Config_Info_Set_out configs) override;
 
 private:
   /// The number of elements in the config array.

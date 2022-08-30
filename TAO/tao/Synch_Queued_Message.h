@@ -64,13 +64,13 @@ public:
   /** @name Implement the Template Methods from TAO_Queued_Message
    */
   //@{
-  virtual size_t message_length () const;
-  virtual int all_data_sent () const;
-  virtual void fill_iov (int iovcnt_max, int &iovcnt, iovec iov[]) const;
-  virtual void bytes_transferred (size_t &byte_count);
-  virtual TAO_Queued_Message *clone (ACE_Allocator *alloc);
-  virtual void destroy (void);
-  virtual void copy_if_necessary (const ACE_Message_Block* chain);
+  size_t message_length () const override;
+  int all_data_sent () const override;
+  void fill_iov (int iovcnt_max, int &iovcnt, iovec iov[]) const override;
+  void bytes_transferred (size_t &byte_count) override;
+  TAO_Queued_Message *clone (ACE_Allocator *alloc) override;
+  void destroy (void) override;
+  void copy_if_necessary (const ACE_Message_Block* chain) override;
   //@}
 
 private:

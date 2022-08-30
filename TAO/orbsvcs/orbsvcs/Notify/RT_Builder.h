@@ -32,13 +32,13 @@ public:
   TAO_Notify_RT_Builder (void);
 
   /// Destructor
-  virtual ~TAO_Notify_RT_Builder ();
+  ~TAO_Notify_RT_Builder () override;
 
   /// Apply Thread Pools.
-  virtual void apply_thread_pool_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolParams& tp_params);
+  void apply_thread_pool_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolParams& tp_params) override;
 
   /// Apply Thread Pools with Lanes.
-  virtual void apply_lane_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolLanesParams& tpl_params);
+  void apply_lane_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolLanesParams& tpl_params) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

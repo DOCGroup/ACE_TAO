@@ -157,13 +157,13 @@ public:
   bool has_rw_attributes () const;
 
   /// Pass along BE-specific member values when redefining a fwd decl.
-  virtual void redefine (AST_Interface *from);
+  void redefine (AST_Interface *from) override;
 
   /// Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   /// Helper method passed to the template method that generates code for the
   /// is_a method.
@@ -222,14 +222,14 @@ public:
   int convert_parent_ops (be_visitor *visitor);
 
   /// Overridden from class be_type.
-  virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore);
+  void gen_ostream_operator (TAO_OutStream *os,
+                             bool use_underscore) override;
 
   /// Overridden from class be_type.
-  virtual void gen_member_ostream_operator (TAO_OutStream *os,
-                                            const char *instance_name,
-                                            bool use_underscore,
-                                            bool accessor = false);
+  void gen_member_ostream_operator (TAO_OutStream *os,
+                                   const char *instance_name,
+                                   bool use_underscore,
+                                   bool accessor = false) override;
 
   /// Sets the original interface from which this one was created,
   /// applies only to implied IDL.
@@ -455,9 +455,9 @@ class be_code_emitter_wrapper
 public:
   be_code_emitter_wrapper (be_interface::tao_code_emitter emitter);
 
-  virtual int emit (be_interface *derived_interface,
-                    TAO_OutStream *output_stream,
-                    be_interface *base_interface);
+  int emit (be_interface *derived_interface,
+            TAO_OutStream *output_stream,
+            be_interface *base_interface) override;
 
 private:
   be_interface::tao_code_emitter emitter_;

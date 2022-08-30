@@ -31,16 +31,16 @@ class TAO_CSD_FW_Export TAO_CSD_Default_Servant_Dispatcher
   : public virtual TAO_Default_Servant_Dispatcher
 {
 public:
-  virtual ~TAO_CSD_Default_Servant_Dispatcher (void);
+  ~TAO_CSD_Default_Servant_Dispatcher (void) override;
 
   /// Factory method for creating new CSD Root POA.
-  virtual TAO_Root_POA *create_Root_POA (const ACE_CString &name,
+  TAO_Root_POA *create_Root_POA (const ACE_CString &name,
                                          PortableServer::POAManager_ptr poa_manager,
                                          const TAO_POA_Policy_Set &policies,
                                          ACE_Lock &lock,
                                          TAO_SYNCH_MUTEX &thread_lock,
                                          TAO_ORB_Core &orb_core,
-                                         TAO_Object_Adapter *object_adapter);
+                                         TAO_Object_Adapter *object_adapter) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

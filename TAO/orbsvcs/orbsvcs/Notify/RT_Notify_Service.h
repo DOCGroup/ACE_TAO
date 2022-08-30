@@ -32,20 +32,20 @@ public:
   TAO_RT_Notify_Service (void);
 
   /// Destructor
-  ~TAO_RT_Notify_Service ();
+  ~TAO_RT_Notify_Service () override;
 
   /// Init the service.
-  virtual void init_service (CORBA::ORB_ptr orb);
+  void init_service (CORBA::ORB_ptr orb) override;
 
 protected:
   /// Init the data members
-  virtual void init_i (CORBA::ORB_ptr orb);
+  void init_i (CORBA::ORB_ptr orb) override;
 
   /// Create the Factory for RT Notify objects.
-  virtual TAO_Notify_Factory* create_factory (void);
+  TAO_Notify_Factory* create_factory (void) override;
 
   /// Creates the Builder for RT Notify objects.
-  virtual TAO_Notify_Builder* create_builder (void);
+  TAO_Notify_Builder* create_builder (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

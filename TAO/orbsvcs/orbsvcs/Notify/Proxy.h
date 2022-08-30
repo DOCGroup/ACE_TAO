@@ -46,15 +46,15 @@ public:
   TAO_Notify_Proxy (void);
 
   /// Destructor
-  virtual ~TAO_Notify_Proxy ();
+  ~TAO_Notify_Proxy () override;
 
   /// Activate
-  virtual CORBA::Object_ptr activate (PortableServer::Servant servant);
+  CORBA::Object_ptr activate (PortableServer::Servant servant) override;
 
   /// Activate with a given ID
-  virtual CORBA::Object_ptr activate (
+  CORBA::Object_ptr activate (
       PortableServer::Servant servant,
-      CORBA::Long id);
+      CORBA::Long id) override;
 
   /// Deactivate
   void deactivate (void);
@@ -92,16 +92,16 @@ public:
 
 
   /// Override, TAO_Notify_Object::qos_changed
-  virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
+  void qos_changed (const TAO_Notify_QoSProperties& qos_properties) override;
 
   // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-  virtual void save_attrs(TAO_Notify::NVPList& attrs);
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
+  void save_attrs(TAO_Notify::NVPList& attrs) override;
   virtual const char * get_proxy_type_name () const = 0;
 
-  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
-    const TAO_Notify::NVPList& attrs);
+  TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
+    const TAO_Notify::NVPList& attrs) override;
 
   virtual void validate () = 0;
 

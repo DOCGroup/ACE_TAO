@@ -57,7 +57,7 @@ public:
              TAO_LogNotification *log_notifier);
 
   /// Destructor.
-  ~TAO_Log_i ();
+  ~TAO_Log_i () override;
 
   /// Initlialize the Log.
   void init (void);
@@ -69,89 +69,89 @@ public:
    */
   //@{
   /// Return the factory of the log.
-  DsLogAdmin::LogMgr_ptr my_factory (void);
+  DsLogAdmin::LogMgr_ptr my_factory (void) override;
 
   /// Return the id of the log.
-  DsLogAdmin::LogId id (void);
+  DsLogAdmin::LogId id (void) override;
 
   /// Get the list of the QoS properties supported by the log.
   DsLogAdmin::QoSList*
-  get_log_qos (void);
+  get_log_qos (void) override;
 
   /// Set the list of the QoS properties supported by the log.
-  void set_log_qos (const DsLogAdmin::QoSList & qos);
+  void set_log_qos (const DsLogAdmin::QoSList & qos) override;
 
   /// Get the record life in seconds (0 infinite).
   CORBA::ULong
-  get_max_record_life (void);
+  get_max_record_life (void) override;
 
   /// Set the record life in seconds (0 infinite).
   void
-  set_max_record_life (CORBA::ULong life);
+  set_max_record_life (CORBA::ULong life) override;
 
   /// Get the maximum size in octets.
   CORBA::ULongLong
-  get_max_size (void);
+  get_max_size (void) override;
 
   /// Set the maximum size in octets.
   void
-  set_max_size (CORBA::ULongLong size);
+  set_max_size (CORBA::ULongLong size) override;
 
   /// Get the current size of the log in octets.
   CORBA::ULongLong
-  get_current_size (void);
+  get_current_size (void) override;
 
   /// Return the number of records in the log.
   CORBA::ULongLong
-  get_n_records (void);
+  get_n_records (void) override;
 
   /// Get the action to be taken when the log reaches its maximum size.
   DsLogAdmin::LogFullActionType
-  get_log_full_action (void);
+  get_log_full_action (void) override;
 
   /// Set the action to be taken when the log reaches its maximum size.
   void
-  set_log_full_action (DsLogAdmin::LogFullActionType action);
+  set_log_full_action (DsLogAdmin::LogFullActionType action) override;
 
   /// Get the administrative state of the log.
   DsLogAdmin::AdministrativeState
-  get_administrative_state (void);
+  get_administrative_state (void) override;
 
   /// Set the administrative state of the log.
   void
-  set_administrative_state (DsLogAdmin::AdministrativeState state);
+  set_administrative_state (DsLogAdmin::AdministrativeState state) override;
 
   /// Get the forwarding state of the log.
   /// @@ Note: is it ok to make this method virtual?
   /// @@@ Of course!  get_forwarding_state() is virtual in the base
   ///     class dictated by the IDL!  -Ossama
-  virtual DsLogAdmin::ForwardingState
-  get_forwarding_state (void);
+  DsLogAdmin::ForwardingState
+  get_forwarding_state (void) override;
 
   /// Set the forwarding state of the log.
   /// @@ Note: is it ok to make this method virtual?
   void
-    set_forwarding_state (DsLogAdmin::ForwardingState state);
+    set_forwarding_state (DsLogAdmin::ForwardingState state) override;
 
   /// Get the operational state of the log.
   DsLogAdmin::OperationalState
-  get_operational_state (void);
+  get_operational_state (void) override;
 
   /// Get the log duration
   DsLogAdmin::TimeInterval
-  get_interval (void);
+  get_interval (void) override;
 
   /// Set the log duration.
   void
-  set_interval (const DsLogAdmin::TimeInterval & interval);
+  set_interval (const DsLogAdmin::TimeInterval & interval) override;
 
   /// Get the availability status
   DsLogAdmin::AvailabilityStatus
-  get_availability_status (void);
+  get_availability_status (void) override;
 
   /// Get the capacity alarm threshold
   DsLogAdmin::CapacityAlarmThresholdList*
-    get_capacity_alarm_thresholds (void);
+    get_capacity_alarm_thresholds (void) override;
 
   /**
    * Set the capacity alarm threshold. Threshold values represent
@@ -163,75 +163,75 @@ public:
    */
   void
   set_capacity_alarm_thresholds
-  (const DsLogAdmin::CapacityAlarmThresholdList & threshs);
+  (const DsLogAdmin::CapacityAlarmThresholdList & threshs) override;
 
   /// Get the weekly scheduling parameters
   DsLogAdmin::WeekMask*
-  get_week_mask (void);
+  get_week_mask (void) override;
 
   /// Set the weekly scheduling parameters.
   void
-  set_week_mask (const DsLogAdmin::WeekMask & masks);
+  set_week_mask (const DsLogAdmin::WeekMask & masks) override;
 
   /// Returns all records in the log that match the given constraint
   /// <c>.
   DsLogAdmin::RecordList*
   query (const char * grammar,
          const char * c,
-         DsLogAdmin::Iterator_out i);
+         DsLogAdmin::Iterator_out i) override;
 
   /// Retrieve <how_many> records from time <from_time> using iterator
   /// <i>.
   DsLogAdmin::RecordList*
   retrieve (DsLogAdmin::TimeT from_time,
             CORBA::Long how_many,
-            DsLogAdmin::Iterator_out i);
+            DsLogAdmin::Iterator_out i) override;
 
   /// Returns the number of records matching constraint <c>.
   CORBA::ULong
   match (const char * grammar,
-         const char * c);
+         const char * c) override;
 
   /// Delete records matching constraint <c>.
   CORBA::ULong
   delete_records (const char * grammar,
-                  const char * c);
+                  const char * c) override;
 
   /// Delete records matching ids in <ids>
   CORBA::ULong
-  delete_records_by_id (const DsLogAdmin::RecordIdList & ids);
+  delete_records_by_id (const DsLogAdmin::RecordIdList & ids) override;
 
 
   /// Write records to the log storage.
   void
-  write_records (const DsLogAdmin::Anys & records);
+  write_records (const DsLogAdmin::Anys & records) override;
 
   /// Write a list of record ids to storage. Raises DsLogAdmin::LogFull
   /// and DsLogAdmin::LogLocked
   void
-  write_recordlist (const DsLogAdmin::RecordList & list);
+  write_recordlist (const DsLogAdmin::RecordList & list) override;
 
   /// Set single record attributes.
   void
   set_record_attribute (DsLogAdmin::RecordId id,
-                        const DsLogAdmin::NVList & attr_list);
+                        const DsLogAdmin::NVList & attr_list) override;
 
   /// Set the attributes of all records that matches the
   /// constraints with same attr_list.
   CORBA::ULong
   set_records_attribute (const char * grammar,
                          const char * c,
-                         const DsLogAdmin::NVList & attr_list);
+                         const DsLogAdmin::NVList & attr_list) override;
 
   /// Get the attributes of the record with id <id>. Raises
   /// DsLogAdmin::InvalidRecordId
   DsLogAdmin::NVList*
-  get_record_attribute (DsLogAdmin::RecordId id);
+  get_record_attribute (DsLogAdmin::RecordId id) override;
 
   /// Causes all pending events to be written to storage. Raises
   /// DsLogAdmin::UnsupportedQos
   void
-  flush (void);
+  flush (void) override;
   //@}
 
   /// Remove records that have exceeded max_record_life_.

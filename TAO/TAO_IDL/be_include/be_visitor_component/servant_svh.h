@@ -29,14 +29,14 @@ public:
 
   ~be_visitor_servant_svh () = default;
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_provides (be_provides *node);
-  virtual int visit_uses (be_uses *node);
-  virtual int visit_publishes (be_publishes *node);
-  virtual int visit_emits (be_emits *node);
-  virtual int visit_consumes (be_consumes *node);
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_provides (be_provides *node) override;
+  int visit_uses (be_uses *node) override;
+  int visit_publishes (be_publishes *node) override;
+  int visit_emits (be_emits *node) override;
+  int visit_consumes (be_consumes *node) override;
 
 private:
   /// Base class overrides and CIAO-specific code.

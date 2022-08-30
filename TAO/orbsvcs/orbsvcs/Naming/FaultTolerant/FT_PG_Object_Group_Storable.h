@@ -71,21 +71,21 @@ namespace TAO
       TAO_FT_Naming_Replication_Manager *replicator);
 
     /// Destructor
-    virtual ~FT_PG_Object_Group_Storable () = default;
+    ~FT_PG_Object_Group_Storable () override = default;
 
   public:
-    virtual void stale (bool is_stale);
-    virtual bool stale ();
+    void stale (bool is_stale) override;
+    bool stale () override;
 
   protected:
-    virtual void state_written ();
+    void state_written () override;
 
-    virtual bool is_obsolete (time_t stored_time);
+    bool is_obsolete (time_t stored_time) override;
 
     /// Provide support for modifying the object group type_id when first
     /// member is added to the group.
-    virtual PortableGroup::ObjectGroup_ptr add_member_to_iogr(
-      CORBA::Object_ptr member);
+    PortableGroup::ObjectGroup_ptr add_member_to_iogr(
+      CORBA::Object_ptr member) override;
 
   private:
     FT_PG_Object_Group_Storable () = delete;

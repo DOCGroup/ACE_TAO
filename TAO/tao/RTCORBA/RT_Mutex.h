@@ -52,10 +52,10 @@ class TAO_RTCORBA_Export TAO_RT_Mutex
 public:
 
   /// Acquire the lock.
-  virtual void lock (void);
+  void lock (void) override;
 
   /// Release the lock.
-  virtual void unlock (void);
+  void unlock (void) override;
 
   /**
    * Acquire the lock, but only wait up to @a max_wait time.  Note
@@ -63,13 +63,13 @@ public:
    * if you're interested in writing maximally portable programs avoid
    * using this operation in your program designs.
    */
-  virtual CORBA::Boolean try_lock (TimeBase::TimeT max_wait);
+  CORBA::Boolean try_lock (TimeBase::TimeT max_wait) override;
 
   /// Returns the name of the mutex.
   virtual const char *name () const;
 
   /// Destructor.
-  virtual ~TAO_RT_Mutex (void);
+  ~TAO_RT_Mutex (void) override;
 
 protected:
   /// Synchronization lock.

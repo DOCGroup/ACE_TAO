@@ -50,7 +50,7 @@ public:
   TAO_Notify_Event (void);
 
   /// Destructor
-  virtual ~TAO_Notify_Event ();
+  ~TAO_Notify_Event () override;
 
   /// Translate Any to Structured
   static void translate (const CORBA::Any& any, CosNotification::StructuredEvent& notification);
@@ -122,7 +122,7 @@ private:
   /// Return a pointer to a copy of this event on the heap
   virtual TAO_Notify_Event* copy () const = 0;
 
-  virtual void release (void);
+  void release (void) override;
 
   mutable Ptr clone_;
   bool        is_on_heap_;

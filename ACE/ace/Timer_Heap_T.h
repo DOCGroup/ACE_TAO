@@ -125,14 +125,14 @@ public:
                     TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor.
-  virtual ~ACE_Timer_Heap_T ();
+  ~ACE_Timer_Heap_T () override;
 
   /// True if heap is empty, else false.
-  virtual bool is_empty () const;
+  bool is_empty () const override;
 
   /// Returns the time of the earliest node in the Timer_Queue.
   /// Must be called on a non-empty queue.
-  virtual const ACE_Time_Value &earliest_time () const;
+  const ACE_Time_Value &earliest_time () const override;
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
@@ -141,16 +141,16 @@ public:
    * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
-  virtual int reset_interval (long timer_id,
-                              const ACE_Time_Value &interval);
+  int reset_interval (long timer_id,
+                              const ACE_Time_Value &interval) override;
 
   /**
    * Cancel all timers associated with @a type.  If @a dont_call_handle_close
    * is 0 then the <functor> will be invoked.  Returns number of timers
    * cancelled.
    */
-  virtual int cancel (const TYPE &type,
-                      int dont_call_handle_close = 1);
+  int cancel (const TYPE &type,
+                      int dont_call_handle_close = 1) override;
 
   /**
    * Cancel the single timer that matches the @a timer_id value (which
@@ -161,17 +161,17 @@ public:
    * is 0 then the <functor> will be invoked.  Returns 1 if cancellation
    * succeeded and 0 if the @a timer_id wasn't found.
    */
-  virtual int cancel (long timer_id,
+  int cancel (long timer_id,
                       const void **act = 0,
-                      int dont_call_handle_close = 1);
+                      int dont_call_handle_close = 1) override;
 
   /**
    * Destroy timer queue. Cancels all timers.
    */
-  virtual int close ();
+  int close () override;
 
   /// Returns a pointer to this ACE_Timer_Queue's iterator.
-  virtual ACE_Timer_Queue_Iterator_T<TYPE> &iter ();
+  ACE_Timer_Queue_Iterator_T<TYPE> &iter () override;
 
   /**
    * Removes the earliest node from the queue and returns it. Note that
@@ -181,13 +181,13 @@ public:
    * this function is for support of @c ACE_Timer_Queue::expire and
    * should not be used unadvisedly in other conditions.
    */
-  ACE_Timer_Node_T <TYPE> *remove_first ();
+  ACE_Timer_Node_T <TYPE> *remove_first () override;
 
   /// Dump the state of an object.
-  virtual void dump () const;
+  void dump () const override;
 
   /// Reads the earliest node from the queue and returns it.
-  virtual ACE_Timer_Node_T<TYPE> *get_first ();
+  ACE_Timer_Node_T<TYPE> *get_first () override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -210,24 +210,24 @@ protected:
    * wrong timer.  Returns -1 on failure (which is guaranteed never to
    * be a valid <timer_id>).
    */
-  virtual long schedule_i (const TYPE &type,
+  long schedule_i (const TYPE &type,
                            const void *act,
                            const ACE_Time_Value &future_time,
-                           const ACE_Time_Value &interval);
+                           const ACE_Time_Value &interval) override;
 
   /// Reschedule an "interval" ACE_Timer_Node.
-  virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
+  void reschedule (ACE_Timer_Node_T<TYPE> *) override;
 
   /// Factory method that allocates a new node (uses operator new if
   /// we're *not* preallocating, otherwise uses an internal freelist).
-  virtual ACE_Timer_Node_T<TYPE> *alloc_node ();
+  ACE_Timer_Node_T<TYPE> *alloc_node () override;
 
   /**
    * Factory method that frees a previously allocated node (uses
    * operator delete if we're *not* preallocating, otherwise uses an
    * internal freelist).
    */
-  virtual void free_node (ACE_Timer_Node_T<TYPE> *);
+  void free_node (ACE_Timer_Node_T<TYPE> *) override;
 
 private:
   /// Remove and return the @a sloth ACE_Timer_Node and restore the

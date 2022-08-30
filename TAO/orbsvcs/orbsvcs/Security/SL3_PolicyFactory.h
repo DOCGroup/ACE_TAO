@@ -58,8 +58,8 @@ namespace TAO
         //@{
 
         /// Construct a Test::Policy object as a test.
-        virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                                 const CORBA::Any & value);
+        CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
+                                                 const CORBA::Any & value) override;
 
         //@}
 

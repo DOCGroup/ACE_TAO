@@ -46,116 +46,116 @@ public:
   TAO_CEC_Default_Factory (void);
 
   /// destructor...
-  virtual ~TAO_CEC_Default_Factory (void);
+  ~TAO_CEC_Default_Factory (void) override;
 
   /// Helper function to register the default factory into the service
   /// configurator.
   static int init_svcs (void);
 
   // = The Service_Object entry points
-  virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR* argv[]) override;
+  int fini () override;
 
   // = The CEC_Factory methods
-  virtual TAO_CEC_Dispatching*
-      create_dispatching (TAO_CEC_EventChannel*);
-  virtual void
-      destroy_dispatching (TAO_CEC_Dispatching*);
-  virtual TAO_CEC_Pulling_Strategy*
-      create_pulling_strategy (TAO_CEC_EventChannel*);
-  virtual void
-      destroy_pulling_strategy (TAO_CEC_Pulling_Strategy*);
-  virtual TAO_CEC_ConsumerAdmin*
-      create_consumer_admin (TAO_CEC_EventChannel*);
-  virtual void
-      destroy_consumer_admin (TAO_CEC_ConsumerAdmin*);
-  virtual TAO_CEC_SupplierAdmin*
-      create_supplier_admin (TAO_CEC_EventChannel*);
-  virtual void
-      destroy_supplier_admin (TAO_CEC_SupplierAdmin*);
-  virtual TAO_CEC_ProxyPushSupplier*
-      create_proxy_push_supplier (TAO_CEC_EventChannel*);
-  virtual void
-      destroy_proxy_push_supplier (TAO_CEC_ProxyPushSupplier*);
-  virtual TAO_CEC_ProxyPullSupplier*
-      create_proxy_pull_supplier (TAO_CEC_EventChannel*);
-  virtual void
-      destroy_proxy_pull_supplier (TAO_CEC_ProxyPullSupplier*);
-  virtual TAO_CEC_ProxyPushConsumer*
-      create_proxy_push_consumer (TAO_CEC_EventChannel*);
-  virtual void
-      destroy_proxy_push_consumer (TAO_CEC_ProxyPushConsumer*);
-  virtual TAO_CEC_ProxyPullConsumer*
-      create_proxy_pull_consumer (TAO_CEC_EventChannel*);
-  virtual void
-      destroy_proxy_pull_consumer (TAO_CEC_ProxyPullConsumer*);
-  virtual TAO_CEC_ProxyPushConsumer_Collection*
-      create_proxy_push_consumer_collection (TAO_CEC_EventChannel*);
-  virtual void
+  TAO_CEC_Dispatching*
+      create_dispatching (TAO_CEC_EventChannel*) override;
+  void
+      destroy_dispatching (TAO_CEC_Dispatching*) override;
+  TAO_CEC_Pulling_Strategy*
+      create_pulling_strategy (TAO_CEC_EventChannel*) override;
+  void
+      destroy_pulling_strategy (TAO_CEC_Pulling_Strategy*) override;
+  TAO_CEC_ConsumerAdmin*
+      create_consumer_admin (TAO_CEC_EventChannel*) override;
+  void
+      destroy_consumer_admin (TAO_CEC_ConsumerAdmin*) override;
+  TAO_CEC_SupplierAdmin*
+      create_supplier_admin (TAO_CEC_EventChannel*) override;
+  void
+      destroy_supplier_admin (TAO_CEC_SupplierAdmin*) override;
+  TAO_CEC_ProxyPushSupplier*
+      create_proxy_push_supplier (TAO_CEC_EventChannel*) override;
+  void
+      destroy_proxy_push_supplier (TAO_CEC_ProxyPushSupplier*) override;
+  TAO_CEC_ProxyPullSupplier*
+      create_proxy_pull_supplier (TAO_CEC_EventChannel*) override;
+  void
+      destroy_proxy_pull_supplier (TAO_CEC_ProxyPullSupplier*) override;
+  TAO_CEC_ProxyPushConsumer*
+      create_proxy_push_consumer (TAO_CEC_EventChannel*) override;
+  void
+      destroy_proxy_push_consumer (TAO_CEC_ProxyPushConsumer*) override;
+  TAO_CEC_ProxyPullConsumer*
+      create_proxy_pull_consumer (TAO_CEC_EventChannel*) override;
+  void
+      destroy_proxy_pull_consumer (TAO_CEC_ProxyPullConsumer*) override;
+  TAO_CEC_ProxyPushConsumer_Collection*
+      create_proxy_push_consumer_collection (TAO_CEC_EventChannel*) override;
+  void
       destroy_proxy_push_consumer_collection (
-          TAO_CEC_ProxyPushConsumer_Collection*);
-  virtual TAO_CEC_ProxyPullConsumer_Collection*
-      create_proxy_pull_consumer_collection (TAO_CEC_EventChannel*);
-  virtual void
+          TAO_CEC_ProxyPushConsumer_Collection*) override;
+  TAO_CEC_ProxyPullConsumer_Collection*
+      create_proxy_pull_consumer_collection (TAO_CEC_EventChannel*) override;
+  void
       destroy_proxy_pull_consumer_collection (
-          TAO_CEC_ProxyPullConsumer_Collection*);
-  virtual TAO_CEC_ProxyPushSupplier_Collection*
-    create_proxy_push_supplier_collection (TAO_CEC_EventChannel*);
-  virtual void
+          TAO_CEC_ProxyPullConsumer_Collection*) override;
+  TAO_CEC_ProxyPushSupplier_Collection*
+    create_proxy_push_supplier_collection (TAO_CEC_EventChannel*) override;
+  void
       destroy_proxy_push_supplier_collection (
-          TAO_CEC_ProxyPushSupplier_Collection*);
-  virtual TAO_CEC_ProxyPullSupplier_Collection*
-    create_proxy_pull_supplier_collection (TAO_CEC_EventChannel*);
-  virtual void
+          TAO_CEC_ProxyPushSupplier_Collection*) override;
+  TAO_CEC_ProxyPullSupplier_Collection*
+    create_proxy_pull_supplier_collection (TAO_CEC_EventChannel*) override;
+  void
       destroy_proxy_pull_supplier_collection (
-          TAO_CEC_ProxyPullSupplier_Collection*);
+          TAO_CEC_ProxyPullSupplier_Collection*) override;
 
-  virtual ACE_Lock* create_consumer_lock (void);
-  virtual void destroy_consumer_lock (ACE_Lock*);
-  virtual ACE_Lock* create_supplier_lock (void);
-  virtual void destroy_supplier_lock (ACE_Lock*);
+  ACE_Lock* create_consumer_lock (void) override;
+  void destroy_consumer_lock (ACE_Lock*) override;
+  ACE_Lock* create_supplier_lock (void) override;
+  void destroy_supplier_lock (ACE_Lock*) override;
 
-  virtual TAO_CEC_ConsumerControl*
-      create_consumer_control (TAO_CEC_EventChannel*);
-  virtual void
-      destroy_consumer_control (TAO_CEC_ConsumerControl*);
-  virtual TAO_CEC_SupplierControl*
-      create_supplier_control (TAO_CEC_EventChannel*);
-  virtual void
-      destroy_supplier_control (TAO_CEC_SupplierControl*);
+  TAO_CEC_ConsumerControl*
+      create_consumer_control (TAO_CEC_EventChannel*) override;
+  void
+      destroy_consumer_control (TAO_CEC_ConsumerControl*) override;
+  TAO_CEC_SupplierControl*
+      create_supplier_control (TAO_CEC_EventChannel*) override;
+  void
+      destroy_supplier_control (TAO_CEC_SupplierControl*) override;
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual TAO_CEC_Dispatching*
-      create_dispatching (TAO_CEC_TypedEventChannel*);
-  virtual TAO_CEC_TypedConsumerAdmin*
-      create_consumer_admin (TAO_CEC_TypedEventChannel*);
-  virtual void
-      destroy_consumer_admin (TAO_CEC_TypedConsumerAdmin*);
-  virtual TAO_CEC_TypedSupplierAdmin*
-      create_supplier_admin (TAO_CEC_TypedEventChannel*);
-  virtual void
-      destroy_supplier_admin (TAO_CEC_TypedSupplierAdmin*);
-  virtual TAO_CEC_ProxyPushSupplier*
-      create_proxy_push_supplier (TAO_CEC_TypedEventChannel*);
-  virtual TAO_CEC_ProxyPushSupplier_Collection*
-      create_proxy_push_supplier_collection (TAO_CEC_TypedEventChannel*);
-  virtual TAO_CEC_TypedProxyPushConsumer*
-      create_proxy_push_consumer (TAO_CEC_TypedEventChannel*);
-  virtual void
-      destroy_proxy_push_consumer (TAO_CEC_TypedProxyPushConsumer*);
-  virtual TAO_CEC_TypedProxyPushConsumer_Collection*
-      create_proxy_push_consumer_collection (TAO_CEC_TypedEventChannel*);
-  virtual void
+  TAO_CEC_Dispatching*
+      create_dispatching (TAO_CEC_TypedEventChannel*) override;
+  TAO_CEC_TypedConsumerAdmin*
+      create_consumer_admin (TAO_CEC_TypedEventChannel*) override;
+  void
+      destroy_consumer_admin (TAO_CEC_TypedConsumerAdmin*) override;
+  TAO_CEC_TypedSupplierAdmin*
+      create_supplier_admin (TAO_CEC_TypedEventChannel*) override;
+  void
+      destroy_supplier_admin (TAO_CEC_TypedSupplierAdmin*) override;
+  TAO_CEC_ProxyPushSupplier*
+      create_proxy_push_supplier (TAO_CEC_TypedEventChannel*) override;
+  TAO_CEC_ProxyPushSupplier_Collection*
+      create_proxy_push_supplier_collection (TAO_CEC_TypedEventChannel*) override;
+  TAO_CEC_TypedProxyPushConsumer*
+      create_proxy_push_consumer (TAO_CEC_TypedEventChannel*) override;
+  void
+      destroy_proxy_push_consumer (TAO_CEC_TypedProxyPushConsumer*) override;
+  TAO_CEC_TypedProxyPushConsumer_Collection*
+      create_proxy_push_consumer_collection (TAO_CEC_TypedEventChannel*) override;
+  void
       destroy_proxy_push_consumer_collection (
-          TAO_CEC_TypedProxyPushConsumer_Collection*);
-  virtual TAO_CEC_ConsumerControl*
-      create_consumer_control (TAO_CEC_TypedEventChannel*);
-  virtual TAO_CEC_SupplierControl*
-      create_supplier_control (TAO_CEC_TypedEventChannel*);
+          TAO_CEC_TypedProxyPushConsumer_Collection*) override;
+  TAO_CEC_ConsumerControl*
+      create_consumer_control (TAO_CEC_TypedEventChannel*) override;
+  TAO_CEC_SupplierControl*
+      create_supplier_control (TAO_CEC_TypedEventChannel*) override;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-  virtual CORBA::Policy_ptr
-  create_roundtrip_timeout_policy (const ACE_Time_Value &timeout);
+  CORBA::Policy_ptr
+  create_roundtrip_timeout_policy (const ACE_Time_Value &timeout) override;
 
 private:
   /// Parse an argument to set the type of collections used.

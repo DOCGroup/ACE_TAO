@@ -64,29 +64,29 @@ public:
                     DsLogAdmin::LogId id);
 
   /// Destructor.
-  ~TAO_RTEventLog_i ();
+  ~TAO_RTEventLog_i () override;
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id);
+  DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id) override;
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
+  DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id) override;
 
   /// Destroy the log object and all contained records.
-  void destroy (void);
+  void destroy (void) override;
 
   /// Activate the RTEventLog.
   void activate (void);
 
   // = The RtecEventChannelAdmin::EventChannel interface methods.
-  RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void);
+  RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void) override;
 
-  RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void);
+  RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void) override;
 
-  virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr);
-  virtual void
-      remove_observer (RtecEventChannelAdmin::Observer_Handle);
+  RtecEventChannelAdmin::Observer_Handle
+      append_observer (RtecEventChannelAdmin::Observer_ptr) override;
+  void
+      remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
 
  private:
   /// The EventChannel used.

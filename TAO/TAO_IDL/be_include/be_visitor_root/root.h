@@ -31,7 +31,7 @@ public:
 
   /// This is the only method that differs from that of the
   /// be_visitor_module bass class.
-  virtual int visit_module (be_module *node);
+  int visit_module (be_module *node) override;
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_H_ */

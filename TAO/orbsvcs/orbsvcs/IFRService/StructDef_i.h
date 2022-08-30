@@ -44,21 +44,21 @@ public:
   TAO_StructDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_StructDef_i (void);
+  ~TAO_StructDef_i (void) override;
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ();
+  CORBA::DefinitionKind def_kind () override;
 
   /// Remove the repository entry and its contents.
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void destroy_i ();
-
-  /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type ();
+  void destroy_i () override;
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i ();
+  CORBA::TypeCode_ptr type () override;
+
+  /// From IDLType_i's pure virtual function.
+  CORBA::TypeCode_ptr type_i () override;
 
   virtual CORBA::StructMemberSeq *members ();
 

@@ -90,7 +90,7 @@ public:
   ACE_Cached_Allocator (size_t n_chunks);
 
   /// Clear things up.
-  ~ACE_Cached_Allocator ();
+  ~ACE_Cached_Allocator () override;
 
   /**
    * Get a chunk of memory from free list cache.  Note that @a nbytes is
@@ -98,7 +98,7 @@ public:
    * otherwise ignored since @c malloc() always returns a pointer to an
    * item of sizeof (T).
    */
-  void *malloc (size_t nbytes = sizeof (T));
+  void *malloc (size_t nbytes = sizeof (T)) override;
 
   /**
    * Get a chunk of memory from free list cache, giving them
@@ -106,17 +106,17 @@ public:
    * that it's less or equal to sizeof T, and is otherwise ignored since
    * calloc() always returns a pointer to an item of sizeof (T).
    */
-  virtual void *calloc (size_t nbytes,
-                        char initial_value = '\0');
+  void *calloc (size_t nbytes,
+                        char initial_value = '\0') override;
 
   /// This method is a no-op and just returns 0 since the free list
   /// only works with fixed sized entities.
-  virtual void *calloc (size_t n_elem,
+  void *calloc (size_t n_elem,
                         size_t elem_size,
-                        char initial_value = '\0');
+                        char initial_value = '\0') override;
 
   /// Return a chunk of memory back to free list cache.
-  void free (void *);
+  void free (void *) override;
 
   /// Return the number of chunks available in the cache.
   size_t pool_depth ();
@@ -157,7 +157,7 @@ public:
   ACE_Dynamic_Cached_Allocator (size_t n_chunks, size_t chunk_size);
 
   /// Clear things up.
-  ~ACE_Dynamic_Cached_Allocator ();
+  ~ACE_Dynamic_Cached_Allocator () override;
 
   /**
    * Get a chunk of memory from free list cache.  Note that @a nbytes is
@@ -165,7 +165,7 @@ public:
    * and is otherwise ignored since malloc() always returns a pointer to an
    * item of @a chunk_size size.
    */
-  void *malloc (size_t nbytes = 0);
+  void *malloc (size_t nbytes = 0) override;
 
   /**
    * Get a chunk of memory from free list cache, giving them
@@ -173,17 +173,17 @@ public:
    * that it's less or equal to @a chunk_size, and is otherwise ignored
    * since calloc() always returns a pointer to an item of @a chunk_size.
    */
-  virtual void *calloc (size_t nbytes,
-                        char initial_value = '\0');
+  void *calloc (size_t nbytes,
+                        char initial_value = '\0') override;
 
   /// This method is a no-op and just returns 0 since the free list
   /// only works with fixed sized entities.
-  virtual void *calloc (size_t n_elem,
+  void *calloc (size_t n_elem,
                         size_t elem_size,
-                        char initial_value = '\0');
+                        char initial_value = '\0') override;
 
   /// Return a chunk of memory back to free list cache.
-  void free (void *);
+  void free (void *) override;
 
   /// Return the number of chunks available in the cache.
   size_t pool_depth ();
@@ -251,27 +251,27 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Destructor.
-  virtual ~ACE_Allocator_Adapter ();
+  ~ACE_Allocator_Adapter () override;
 
   // = Memory Management
 
   /// Allocate @a nbytes, but don't give them any initial value.
-  virtual void *malloc (size_t nbytes);
+  void *malloc (size_t nbytes) override;
 
   /// Allocate @a nbytes, giving them all an @a initial_value.
-  virtual void *calloc (size_t nbytes, char initial_value = '\0');
+  void *calloc (size_t nbytes, char initial_value = '\0') override;
 
   /// Allocate @a n_elem each of size @a elem_size, giving them
   /// @a initial_value.
-  virtual void *calloc (size_t n_elem,
+  void *calloc (size_t n_elem,
                         size_t elem_size,
-                        char initial_value = '\0');
+                        char initial_value = '\0') override;
 
   /// Free @a ptr (must have been allocated by ACE_Allocator::malloc()).
-  virtual void free (void *ptr);
+  void free (void *ptr) override;
 
   /// Remove any resources associated with this memory manager.
-  virtual int remove ();
+  int remove () override;
 
   // = Map manager like functions
 
@@ -284,7 +284,7 @@ public:
    * bind a previously bound @a name and @a duplicates == 0, else
    * returns -1 if a resource failure occurs.
    */
-  virtual int bind (const char *name, void *pointer, int duplicates = 0);
+  int bind (const char *name, void *pointer, int duplicates = 0) override;
 
   /**
    * Associate @a name with @a pointer.  Does not allow duplicate
@@ -296,22 +296,22 @@ public:
    * to use @a pointer (e.g., to free it) a copy must be maintained by
    * the caller.
    */
-  virtual int trybind (const char *name, void *&pointer);
+  int trybind (const char *name, void *&pointer) override;
 
   /// Locate @a name and pass out parameter via pointer.  If found,
   /// return 0, returns -1 if @a name isn't found.
-  virtual int find (const char *name, void *&pointer);
+  int find (const char *name, void *&pointer) override;
 
   /// Returns 0 if the name is in the mapping and -1 if not.
-  virtual int find (const char *name);
+  int find (const char *name) override;
 
   /// Unbind (remove) the name from the map.  Don't return the pointer
   /// to the caller
-  virtual int unbind (const char *name);
+  int unbind (const char *name) override;
 
   /// Break any association of name.  Returns the value of pointer in
   /// case the caller needs to deallocate memory.
-  virtual int unbind (const char *name, void *&pointer);
+  int unbind (const char *name, void *&pointer) override;
 
   // = Protection and "sync" (i.e., flushing data to backing store).
 
@@ -320,22 +320,22 @@ public:
    * starting at @c this->base_addr_.  If @a len == -1 then sync the
    * whole region.
    */
-  virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
+  int sync (ssize_t len = -1, int flags = MS_SYNC) override;
 
   /// Sync @a len bytes of the memory region to the backing store
   /// starting at @c addr_.
-  virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
+  int sync (void *addr, size_t len, int flags = MS_SYNC) override;
 
   /**
    * Change the protection of the pages of the mapped region to @a prot
    * starting at @c this->base_addr_ up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */
-  virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
+  int protect (ssize_t len = -1, int prot = PROT_RDWR) override;
 
   /// Change the protection of the pages of the mapped region to @a prot
   /// starting at @a addr up to @a len bytes.
-  virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
+  int protect (void *addr, size_t len, int prot = PROT_RDWR) override;
 
   /// Returns the underlying allocator.
   ALLOCATOR &alloc ();
@@ -346,7 +346,7 @@ public:
 #endif /* ACE_HAS_MALLOC_STATS */
 
   /// Dump the state of the object.
-  virtual void dump () const;
+  void dump () const override;
 
   ACE_ALLOC_HOOK_DECLARE;
 

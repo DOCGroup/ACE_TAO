@@ -34,7 +34,7 @@ public:
   static int static_init (void);
 
   /// Initialize the Diffserv loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 };
 
 static int

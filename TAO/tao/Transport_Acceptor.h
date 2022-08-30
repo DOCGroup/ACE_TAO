@@ -173,12 +173,12 @@ public:
   {
   }
 
-  virtual int handle_accept_error ()
+  int handle_accept_error () override
   {
     return this->acceptor_->handle_accept_error (this);
   }
 
-  virtual int handle_timeout (const ACE_Time_Value&, const void*)
+  int handle_timeout (const ACE_Time_Value&, const void*) override
   {
     return this->acceptor_->handle_expiration (this);
   }

@@ -28,24 +28,24 @@ class TAO_Codeset_Export TAO_UTF16_BOM_Factory
 {
 public:
   TAO_UTF16_BOM_Factory () = default;
-  virtual ~TAO_UTF16_BOM_Factory ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  ~TAO_UTF16_BOM_Factory () override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// ncs returns the translator's native codeset ID.
-  CONV_FRAME::CodeSetId ncs () const;
+  CONV_FRAME::CodeSetId ncs () const override;
   /// tcs returns the translator's transmission codeset ID.
-  CONV_FRAME::CodeSetId tcs () const;
+  CONV_FRAME::CodeSetId tcs () const override;
 
   /// Assign the translator to the input CDR. The inherited assign_i is used
   /// to assign either a char or wchar translator, depending on the base type
   /// of NCS_TO_TCS. A null input CDR is permitted, in which case assign is a
   /// no-op.
-  virtual void assign (TAO_InputCDR *) const;
+  void assign (TAO_InputCDR *) const override;
   /// Assign the translator to the output CDR. The inherited assign_i is used
   /// to assign either a char or wchar translator, depending on the base type
   /// of NCS_TO_TCS. A null output CDR is permitted, in which case assign is a
   /// no-op.
-  virtual void assign (TAO_OutputCDR *) const;
+  void assign (TAO_OutputCDR *) const override;
 
 private:
   void create_translator () const;

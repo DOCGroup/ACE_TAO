@@ -33,11 +33,11 @@ public:
   /// destructor
   ~be_visitor_obv_module ();
 
-  virtual int visit_module (be_module *node);
+  int visit_module (be_module *node) override;
 
-  virtual int visit_valuetype (be_valuetype *node);
+  int visit_valuetype (be_valuetype *node) override;
 
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_eventtype (be_eventtype *node) override;
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_OBV_MODULE_H_ */

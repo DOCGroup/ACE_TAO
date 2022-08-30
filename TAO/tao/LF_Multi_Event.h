@@ -44,10 +44,10 @@ public:
   virtual ~TAO_LF_Multi_Event (void);
 
   /// Propagate the follower to all the events in the collection.
-  virtual int bind (TAO_LF_Follower *follower);
+  int bind (TAO_LF_Follower *follower) override;
 
   /// Unbind the follower from all the collected events.
-  virtual int unbind (TAO_LF_Follower *follower);
+  int unbind (TAO_LF_Follower *follower) override;
 
   /// Adds a handler to the collection
   void add_event (TAO_Connection_Handler *ch);
@@ -65,20 +65,20 @@ private:
 
 protected:
   /// Validate the state change
-  virtual void state_changed_i (LFS_STATE new_state);
+  void state_changed_i (LFS_STATE new_state) override;
 
   /// Check whether we have reached the final state..
-  virtual bool is_state_final () const;
+  bool is_state_final () const override;
 
   /// Return true if the condition was satisfied successfully, false if it
   /// has not - This iterates over the list of attached events and
   /// returns true if any of them return true from successful.
-  virtual bool successful_i () const;
+  bool successful_i () const override;
 
   /// Return true if an error was detected while waiting for the
   /// event - This iterates over the list of events and returns
   /// true only if all of them return true from error_detected().
-  virtual bool error_detected_i () const;
+  bool error_detected_i () const override;
 
 private:
 

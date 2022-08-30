@@ -51,7 +51,7 @@ public:
   ACE_FILE_Addr &operator= (const ACE_FILE_Addr &);
 
   /// Return a pointer to the address.
-  virtual void *get_addr () const;
+  void *get_addr () const override;
 
   /// Transform the current address into string format.
   virtual int addr_to_string (ACE_TCHAR *addr, size_t) const;

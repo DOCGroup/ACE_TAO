@@ -38,25 +38,25 @@ namespace TAO
   {
   public:
     /// Activate this adapter
-    virtual int activate (const char *server_id,
+    int activate (const char *server_id,
                           const char *orb_id,
                           PortableInterceptor::AdapterName *adapter_name,
-                          PortableServer::POA_ptr poa);
+                          PortableServer::POA_ptr poa) override;
 
     /// Accessor methods to ObjectReferenceTemplate template
-    virtual PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void);
+    PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void) override;
 
     /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
-    virtual PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory (void);
+    PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory (void) override;
 
     /// Set a different ort_factory to be used.
-    virtual int set_obj_ref_factory (
-      PortableInterceptor::ObjectReferenceFactory * current_factory);
+    int set_obj_ref_factory (
+      PortableInterceptor::ObjectReferenceFactory * current_factory) override;
 
     /**
      * @see @c TAO::ORT_Adapter for details.
      */
-    virtual void release (PortableInterceptor::ObjectReferenceTemplate * ort);
+    void release (PortableInterceptor::ObjectReferenceTemplate * ort) override;
 
     /**
      * @name Adapter methods for PortableInterceptor::ObjectReferenceTemplate
@@ -77,9 +77,9 @@ namespace TAO
      * PortableInterceptor::ObjectReferenceFactory ValueType.
      */
     //@{
-    virtual CORBA::Object_ptr make_object (
+    CORBA::Object_ptr make_object (
         const char * repository_id,
-        const PortableInterceptor::ObjectId & id);
+        const PortableInterceptor::ObjectId & id) override;
     //@}
 
   private:

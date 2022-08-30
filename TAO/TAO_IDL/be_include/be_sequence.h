@@ -70,20 +70,20 @@ public:
   virtual MANAGED_TYPE managed_type ();
 
   // Scope management functions.
-  virtual AST_Sequence *fe_add_sequence (AST_Sequence *);
+  AST_Sequence *fe_add_sequence (AST_Sequence *) override;
 
   /// Overridden method on the be_scope class.
-  virtual be_decl *decl ();
+  be_decl *decl () override;
 
   /// Overridden from class be_type.
-  virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore);
+  void gen_ostream_operator (TAO_OutStream *os,
+                            bool use_underscore) override;
 
   /// Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   /// Report the instance name for instantiation.
   const char *instance_name ();
@@ -104,7 +104,7 @@ public:
 protected:
 
   /// Computes the fully scoped typecode name.
-  virtual void compute_tc_name ();
+  void compute_tc_name () override;
 
 private:
   const char *smart_fwd_helper_name (AST_Decl *elem_scope,

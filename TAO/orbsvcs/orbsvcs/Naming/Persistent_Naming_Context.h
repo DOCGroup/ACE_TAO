@@ -51,7 +51,7 @@ public:
 
   /// Destructor.  Does not deallocate the hash map: if an instance of
   /// this class goes out of scope, its hash_map remains in persistent storage.
-  virtual ~TAO_Persistent_Bindings_Map ();
+  ~TAO_Persistent_Bindings_Map () override;
 
   /**
    * This method removes the hash map from persistent storage/frees up
@@ -70,7 +70,7 @@ public:
   size_t total_size ();
 
   /// Return the size of the underlying hash table.
-  virtual size_t current_size ();
+  size_t current_size () override;
 
   // = Name bindings manipulation methods.
 
@@ -79,10 +79,10 @@ public:
    * Return 0 on success and -1 on failure, 1 if there already is a
    * binding with @a id and @a kind.
    */
-  virtual int bind (const char *id,
+  int bind (const char *id,
                     const char *kind,
                     CORBA::Object_ptr obj,
-                    CosNaming::BindingType type);
+                    CosNaming::BindingType type) override;
 
   /**
    * Overwrite a binding containing @a id and @a kind (or create a new
@@ -90,17 +90,17 @@ public:
    * 0 or 1 on success.  Return -1 or -2 on failure. (-2 is returned
    * if the new and old bindings differ in type).
    */
-  virtual int rebind (const char *id,
+  int rebind (const char *id,
                       const char *kind,
                       CORBA::Object_ptr obj,
-                      CosNaming::BindingType type);
+                      CosNaming::BindingType type) override;
 
   /**
    * Remove a binding containing <id> and <kind> from the table.
    * Return 0 on success and -1 on failure.
    */
-  virtual int unbind (const char * id,
-                      const char * kind);
+  int unbind (const char * id,
+                      const char * kind) override;
 
   /**
    * Find the binding containing <id> and <kind> in the table, and
@@ -109,10 +109,10 @@ public:
    * reference is assigned to <obj>, so the caller is responsible for
    * its deallocation.
    */
-  virtual int find (const char * id,
+  int find (const char * id,
                     const char * kind,
                     CORBA::Object_ptr & obj,
-                    CosNaming::BindingType &type);
+                    CosNaming::BindingType &type) override;
 
 protected:
   /**
@@ -178,7 +178,7 @@ public:
                                  ACE_UINT32 *counter = 0);
 
   /// Destructor.
-  virtual ~TAO_Persistent_Naming_Context (void);
+  ~TAO_Persistent_Naming_Context (void) override;
 
   // = Utility methods.
   /**
@@ -200,7 +200,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (void);
+  CosNaming::NamingContext_ptr new_context (void) override;
 
   /**
    * Returns at most the requested number of bindings @a how_many in
@@ -208,9 +208,9 @@ public:
    * are returned with a BindingIterator.  In the naming context does
    * not contain any additional bindings @a bi returned as null.
    */
-  virtual void list (CORBA::ULong how_many,
+  void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out &bl,
-                     CosNaming::BindingIterator_out &bi);
+                     CosNaming::BindingIterator_out &bi) override;
 
 protected:
   /**

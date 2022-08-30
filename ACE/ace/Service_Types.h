@@ -107,14 +107,14 @@ public:
                            ACE_Service_Object_Exterminator gobbler = 0,
                            int stype = ACE_Service_Type::SERVICE_OBJECT);
 
-  ~ACE_Service_Object_Type ();
+  ~ACE_Service_Object_Type () override;
 
   // = Implement the hooks for <ACE_Service_Objects>.
-  virtual int suspend () const;
-  virtual int resume () const;
-  virtual int init (int argc, ACE_TCHAR *argv[]) const;
-  virtual int fini () const;
-  virtual int info (ACE_TCHAR **str, size_t len) const;
+  int suspend () const override;
+  int resume () const override;
+  int init (int argc, ACE_TCHAR *argv[]) const override;
+  int fini () const override;
+  int info (ACE_TCHAR **str, size_t len) const override;
 
 private:
   /// Holds the initialization status (result of object->init())
@@ -135,14 +135,14 @@ public:
                    u_int flags = 0,
                    int stype = ACE_Service_Type::MODULE);
 
-  ~ACE_Module_Type ();
+  ~ACE_Module_Type () override;
 
   // = Implement the hooks for <ACE_Modules>.
-  virtual int suspend () const;
-  virtual int resume () const;
-  virtual int init (int argc, ACE_TCHAR *argv[]) const;
-  virtual int fini () const;
-  virtual int info (ACE_TCHAR **str, size_t len) const;
+  int suspend () const override;
+  int resume () const override;
+  int init (int argc, ACE_TCHAR *argv[]) const override;
+  int fini () const override;
+  int info (ACE_TCHAR **str, size_t len) const override;
 
   /// Get the link pointer.
   ACE_Module_Type *link () const;
@@ -175,14 +175,14 @@ public:
                    u_int flags = 0,
                    int stype = ACE_Service_Type::STREAM);
 
-  ~ACE_Stream_Type ();
+  ~ACE_Stream_Type () override;
 
   // = Implement the hooks for <ACE_Streams>.
-  virtual int suspend () const;
-  virtual int resume () const;
-  virtual int init (int argc, ACE_TCHAR *argv[]) const;
-  virtual int fini () const;
-  virtual int info (ACE_TCHAR **str, size_t len) const;
+  int suspend () const override;
+  int resume () const override;
+  int init (int argc, ACE_TCHAR *argv[]) const override;
+  int fini () const override;
+  int info (ACE_TCHAR **str, size_t len) const override;
 
   /// Add a new  ACE_Module to the top of the ACE_Stream.
   int push (ACE_Module_Type *new_module);

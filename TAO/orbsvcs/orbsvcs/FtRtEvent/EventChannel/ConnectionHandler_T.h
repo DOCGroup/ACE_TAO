@@ -25,15 +25,15 @@ template <ACE_PEER_STREAM_1>
 class ConnectionAcceptHandler : public ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH>
 {
 public:
-  virtual int open (void *);
-  virtual void destroy (void);
-  virtual int close (u_long flags = 0);
+  int open (void *) override;
+  void destroy (void) override;
+  int close (u_long flags = 0) override;
 protected:
 
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask);
-  ~ConnectionAcceptHandler(){}
+  int handle_input (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE,
+                            ACE_Reactor_Mask) override;
+  ~ConnectionAcceptHandler() override{}
 private:
    ACE_Reactor* reactor_;
 };
@@ -51,10 +51,10 @@ public:
   ConnectionDetectHandler(TAO_FTEC_Fault_Listener* listener = 0)
     : listener_(listener){}
 
-    virtual int close (u_long flags = 0);
+    int close (u_long flags = 0) override;
 
-    virtual int handle_close (ACE_HANDLE,
-                              ACE_Reactor_Mask);
+    int handle_close (ACE_HANDLE,
+                              ACE_Reactor_Mask) override;
 private:
   TAO_FTEC_Fault_Listener* listener_;
 };

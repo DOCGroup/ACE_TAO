@@ -38,10 +38,10 @@ public:
   TAO_RT_ORB_Loader (void);
 
   /// Destructor.
-  virtual ~TAO_RT_ORB_Loader (void);
+  ~TAO_RT_ORB_Loader (void) override;
 
   /// Initialize the RT ORB loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 
 private:
   /// Set to true after init is called.

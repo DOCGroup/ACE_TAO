@@ -65,7 +65,7 @@ public:
   typedef CORBA::Object_var _stub_var_type;
 
   /// Destructor.
-  virtual ~TAO_ServantBase ();
+  ~TAO_ServantBase () override;
 
   static void _is_a_skel (TAO_ServerRequest & req,
                           TAO::Portable_Server::Servant_Upcall* servant_upcall,
@@ -107,26 +107,26 @@ public:
   virtual PortableServer::POA_ptr _default_POA ();
 
   /// Local implementation of the CORBA::Object::_is_a method.
-  virtual CORBA::Boolean _is_a (const char *logical_type_id);
+  CORBA::Boolean _is_a (const char *logical_type_id) override;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   /// Default _non_existent: always returns false.
-  virtual CORBA::Boolean _non_existent ();
+  CORBA::Boolean _non_existent () override;
 
   /// Query the Interface Repository for the interface definition.
-  virtual CORBA::InterfaceDef_ptr _get_interface ();
+  CORBA::InterfaceDef_ptr _get_interface () override;
 
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   /// Default _get_component: always returns CORBA::Object::_nil().
-  virtual CORBA::Object_ptr _get_component ();
+  CORBA::Object_ptr _get_component () override;
 #endif
 
   /// Get the repository id.
-  virtual char * _repository_id ();
+  char * _repository_id () override;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   /// This is an auxiliary method for _this() and _narrow().
-  virtual TAO_Stub *_create_stub ();
+  TAO_Stub *_create_stub () override;
 
   /**
    * Dispatches a request to the object: find the operation, cast the
@@ -135,52 +135,52 @@ public:
    * results and out parameters (if any) or the exceptions thrown into
    * @a request.
    */
-  virtual void _dispatch (
+  void _dispatch (
     TAO_ServerRequest &request,
-    TAO::Portable_Server::Servant_Upcall* servant_upcall) = 0;
+    TAO::Portable_Server::Servant_Upcall* servant_upcall) override = 0;
 
   /// Please see documentation in tao/Abstract_Servant_Base.h for
   /// details.
-  virtual int _find (const char *opname,
+  int _find (const char *opname,
                      TAO_Skeleton &skelfunc,
-                     const size_t length = 0);
+                     const size_t length = 0) override;
 
-  virtual int _find (const char *opname,
+  int _find (const char *opname,
                      TAO_Collocated_Skeleton &skelfunc,
                      TAO::Collocation_Strategy st,
-                     const size_t length = 0);
+                     const size_t length = 0) override;
 
   /// Get this interface's repository id (TAO specific).
-  virtual const char *_interface_repository_id () const = 0;
+  const char *_interface_repository_id () const override = 0;
 
   //@{
   /**
    * @name Reference Counting Operations
    */
   /// Increase reference count by one.
-  virtual void _add_ref ();
+  void _add_ref () override;
 
   /**
    * Decreases reference count by one; if the resulting reference
    * count equals zero, _remove_ref invokes delete on its this pointer
    * in order to destroy the servant.
    */
-  virtual void _remove_ref ();
+  void _remove_ref () override;
 
   /**
    * Returns the current reference count value.
    */
-  virtual CORBA::ULong _refcount_value () const;
+  CORBA::ULong _refcount_value () const override;
   //@}
 
-  virtual void _collocated_dispatch (::CORBA::Object_ptr obj,
+  void _collocated_dispatch (::CORBA::Object_ptr obj,
                                      ::CORBA::Object_out forward_obj,
                                      bool &is_forwarded,
                                      TAO::Argument ** args,
                                      int num_args,
                                      const char * op,
                                      size_t op_len,
-                                     TAO::Collocation_Strategy strategy);
+                                     TAO::Collocation_Strategy strategy) override;
 
 protected:
   /// Default constructor, only derived classes can be created.

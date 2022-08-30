@@ -32,10 +32,10 @@ public:
   be_visitor_sequence_any_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_sequence_any_op_cs ();
+  ~be_visitor_sequence_any_op_cs () override;
 
   /// visit sequence
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 };
 
 #endif /* _BE_VISITOR_SEQUENCE_ANY_OP_CS_H_ */

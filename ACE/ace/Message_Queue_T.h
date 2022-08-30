@@ -112,10 +112,10 @@ public:
   /// @sa flush().
   ///
   /// @retval The number of messages released from the queue; -1 on error.
-  virtual int close ();
+  int close () override;
 
   /// Releases all resources from the message queue and marks it deactivated.
-  virtual ~ACE_Message_Queue ();
+  ~ACE_Message_Queue () override;
 
   /**
    * Releases all resources from the message queue but does not mark it
@@ -177,8 +177,8 @@ public:
    *            - EWOULDBLOCK: the timeout elapsed
    *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
-  virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
-                                 ACE_Time_Value *timeout = 0);
+  int peek_dequeue_head (ACE_Message_Block *&first_item,
+                                 ACE_Time_Value *timeout = 0) override;
 
   /**
    * Enqueue an ACE_Message_Block into the queue in accordance with
@@ -227,8 +227,8 @@ public:
    * backwards compatibility and will go away in a subsequent release.
    * Please use enqueue_prio() instead.
    */
-  virtual int enqueue (ACE_Message_Block *new_item,
-                       ACE_Time_Value *timeout = 0);
+  int enqueue (ACE_Message_Block *new_item,
+                       ACE_Time_Value *timeout = 0) override;
 
   /**
    * Enqueue one or more ACE_Message_Block objects at the tail of the queue.
@@ -250,8 +250,8 @@ public:
    *            - EWOULDBLOCK: the timeout elapsed
    *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
-  virtual int enqueue_tail (ACE_Message_Block *new_item,
-                            ACE_Time_Value *timeout = 0);
+  int enqueue_tail (ACE_Message_Block *new_item,
+                            ACE_Time_Value *timeout = 0) override;
 
   /**
    * Enqueue one or more ACE_Message_Block objects at the head of the queue.
@@ -277,8 +277,8 @@ public:
                             ACE_Time_Value *timeout = 0);
 
   /// This method is an alias for the dequeue_head() method.
-  virtual int dequeue (ACE_Message_Block *&first_item,
-                       ACE_Time_Value *timeout = 0);
+  int dequeue (ACE_Message_Block *&first_item,
+                       ACE_Time_Value *timeout = 0) override;
 
   /**
    * Dequeue the ACE_Message_Block at the head of the queue and return
@@ -294,8 +294,8 @@ public:
    *            - EWOULDBLOCK: the timeout elapsed
    *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
-  virtual int dequeue_head (ACE_Message_Block *&first_item,
-                            ACE_Time_Value *timeout = 0);
+  int dequeue_head (ACE_Message_Block *&first_item,
+                            ACE_Time_Value *timeout = 0) override;
 
   /**
    * Dequeue the ACE_Message_Block that has the lowest priority (preserves
@@ -355,26 +355,26 @@ public:
   //@{
 
   /// True if queue is full, else false.
-  virtual bool is_full ();
+  bool is_full () override;
   /// True if queue is empty, else false.
-  virtual bool is_empty ();
+  bool is_empty () override;
 
   /**
    * Number of total bytes on the queue, i.e., sum of the message
    * block sizes.
    */
-  virtual size_t message_bytes ();
+  size_t message_bytes () override;
 
   /**
    * Number of total length on the queue, i.e., sum of the message
    * block lengths.
    */
-  virtual size_t message_length ();
+  size_t message_length () override;
 
   /**
    * Number of total messages on the queue.
    */
-  virtual size_t message_count ();
+  size_t message_count () override;
 
   // = Manual changes to these stats (used when queued message blocks
   // change size or lengths).
@@ -382,12 +382,12 @@ public:
    * New value of the number of total bytes on the queue, i.e., sum of
    * the message block sizes.
    */
-  virtual void message_bytes (size_t new_size);
+  void message_bytes (size_t new_size) override;
   /**
    * New value of the number of total length on the queue, i.e., sum
    * of the message block lengths.
    */
-  virtual void message_length (size_t new_length);
+  void message_length (size_t new_length) override;
 
   //@}
 
@@ -433,13 +433,13 @@ public:
    * ESHUTDOWN.  Returns WAS_INACTIVE if queue was inactive before the
    * call and WAS_ACTIVE if queue was active before the call.
    */
-  virtual int deactivate ();
+  int deactivate () override;
 
   /**
    * Reactivate the queue so that threads can enqueue and dequeue
    * messages again.  Returns the state of the queue before the call.
    */
-  virtual int activate ();
+  int activate () override;
 
   /**
    * Pulse the queue to wake up any waiting threads.  Changes the
@@ -448,15 +448,15 @@ public:
    *
    * @return The queue's state before this call.
    */
-  virtual int pulse ();
+  int pulse () override;
 
   /// Returns the current state of the queue, which can be one of
   /// ACTIVATED, DEACTIVATED, or PULSED.
-  virtual int state ();
+  int state () override;
 
   /// Returns true if the state of the queue is <DEACTIVATED>,
   /// but false if the queue's is <ACTIVATED> or <PULSED>.
-  virtual int deactivated ();
+  int deactivated () override;
   //@}
 
   /** @name Notification strategy methods
@@ -476,10 +476,10 @@ public:
   virtual int notify ();
 
   /// Get the notification strategy for the <Message_Queue>
-  virtual ACE_Notification_Strategy *notification_strategy ();
+  ACE_Notification_Strategy *notification_strategy () override;
 
   /// Set the notification strategy for the <Message_Queue>
-  virtual void notification_strategy (ACE_Notification_Strategy *s);
+  void notification_strategy (ACE_Notification_Strategy *s) override;
   //@}
 
   /// Returns a reference to the lock used by the ACE_Message_Queue.
@@ -494,7 +494,7 @@ public:
   void set_time_policy (TIME_POLICY const & time_policy);
 
   /// Dump the state of an object.
-  virtual void dump () const;
+  void dump () const override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -792,7 +792,7 @@ public:
                              ACE_Notification_Strategy * = 0);
 
   /// Close down the message queue and release all resources.
-  virtual ~ACE_Dynamic_Message_Queue ();
+  ~ACE_Dynamic_Message_Queue () override;
 
   /**
    * Detach all messages with status given in the passed flags from
@@ -812,11 +812,11 @@ public:
    * queue.  Returns -1 on failure, else the number of items still on
    * the queue.
    */
-  virtual int dequeue_head (ACE_Message_Block *&first_item,
-                            ACE_Time_Value *timeout = 0);
+  int dequeue_head (ACE_Message_Block *&first_item,
+                            ACE_Time_Value *timeout = 0) override;
 
   /// Dump the state of the queue.
-  virtual void dump () const;
+  void dump () const override;
 
   /**
    * Just call priority enqueue method: tail enqueue semantics for dynamic
@@ -824,8 +824,8 @@ public:
    * it was placed after the queue is refreshed prior to the next
    * enqueue or dequeue operation.
    */
-  virtual int enqueue_tail (ACE_Message_Block *new_item,
-                            ACE_Time_Value *timeout = 0);
+  int enqueue_tail (ACE_Message_Block *new_item,
+                            ACE_Time_Value *timeout = 0) override;
 
   /**
    * Just call priority enqueue method: head enqueue semantics for dynamic
@@ -833,8 +833,8 @@ public:
    * it was placed after the queue is refreshed prior to the next
    * enqueue or dequeue operation.
    */
-  virtual int enqueue_head (ACE_Message_Block *new_item,
-                            ACE_Time_Value *timeout = 0);
+  int enqueue_head (ACE_Message_Block *new_item,
+                            ACE_Time_Value *timeout = 0) override;
 
 
   /// Declare the dynamic allocation hooks.
@@ -849,7 +849,7 @@ protected:
    * Message Queue constructor to update the priorities of all
    * enqueued messages.
    */
-  virtual int enqueue_i (ACE_Message_Block *new_item);
+  int enqueue_i (ACE_Message_Block *new_item) override;
 
   /// Enqueue a message in priority order within a given priority status sublist
   virtual int sublist_enqueue_i (ACE_Message_Block *new_item,
@@ -865,7 +865,7 @@ protected:
    * or if that is empty from the beyond late portion, or if that is
    * empty just sets the passed pointer to zero and returns -1.
    */
-  virtual int dequeue_head_i (ACE_Message_Block *&first_item);
+  int dequeue_head_i (ACE_Message_Block *&first_item) override;
 
   /// Refresh the queue using the strategy
   /// specific priority status function.
@@ -910,8 +910,8 @@ private:
   // but make them private so they're not accessible outside the class
 
   /// Private method to hide public base class method: just calls base class method
-  virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
-                                 ACE_Time_Value *timeout = 0);
+  int peek_dequeue_head (ACE_Message_Block *&first_item,
+                                 ACE_Time_Value *timeout = 0) override;
 };
 
 /**

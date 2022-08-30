@@ -36,8 +36,8 @@ class TAO_Compression_Export TAO_Compression_Loader : public TAO_Object_Loader
 {
 public:
   /// Creates a Compression Manager and returns it.
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb, int argc,
-                                           ACE_TCHAR *argv []);
+  CORBA::Object_ptr create_object (CORBA::ORB_ptr orb, int argc,
+                                           ACE_TCHAR *argv []) override;
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);

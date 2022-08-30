@@ -80,7 +80,7 @@ public:
   void reconnect (void);
 
   /// Destructor (should be private but that inspires compiler wars)
-  virtual ~Routing_Slip ();
+  ~Routing_Slip () override;
 
   //////////////////
   // Action requests
@@ -111,7 +111,7 @@ public:
   void at_front_of_persist_queue ();
 
   /// \brief The persistent storage has completed the last request.
-  virtual void persist_complete ();
+  void persist_complete () override;
 
   /////////////////////////////////////////////////////
   // \brief Access the event associated with this routing slip

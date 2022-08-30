@@ -45,13 +45,13 @@ public:
   TAO_TypedefDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_TypedefDef_i (void);
+  ~TAO_TypedefDef_i (void) override;
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe ();
+  CORBA::Contained::Description *describe () override;
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i ();
+  CORBA::Contained::Description *describe_i () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

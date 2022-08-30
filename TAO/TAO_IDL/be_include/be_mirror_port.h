@@ -33,9 +33,9 @@ public:
 
   virtual ~be_mirror_port ();
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif // BE_MIRROR_PORT_H

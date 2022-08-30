@@ -195,7 +195,7 @@ public:
     UTL_ScopedName *name,
     AST_Decl *other);
 
-  ~AST_Decl ();
+  ~AST_Decl () override;
 
   // Cleanup method.
   void destroy () override;

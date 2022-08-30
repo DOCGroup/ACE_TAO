@@ -50,10 +50,10 @@ public:
   size_t byte_count () const;
 
   /// Activate this instance of the <HTTP_Handler>
-  virtual int open (void * = 0);
+  int open (void * = 0) override;
 
   /// Close down the Blob
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
 
   ~TAO_HTTP_Handler (void);
 
@@ -85,8 +85,8 @@ public:
 
 private:
   //NOTE: these functions return -1 on error
-  int send_request (void);
-  int receive_reply (void);
+  int send_request (void) override;
+  int receive_reply (void) override;
   const char *request_prefix_;
   const char *request_suffix_;
 };

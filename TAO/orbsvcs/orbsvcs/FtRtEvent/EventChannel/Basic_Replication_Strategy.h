@@ -31,19 +31,19 @@ public:
    * @param mt Specifies whether multithreaded ORB is used.
    */
   Basic_Replication_Strategy(bool mt);
-  ~Basic_Replication_Strategy();
+  ~Basic_Replication_Strategy() override;
 
-  virtual void check_validity(void);
+  void check_validity(void) override;
 
-  virtual void replicate_request(const FTRT::State& state,
+  void replicate_request(const FTRT::State& state,
     RollbackOperation rollback,
-    const FtRtecEventChannelAdmin::ObjectId& oid);
-  virtual void add_member(const FTRT::ManagerInfo & info,
-                          CORBA::ULong object_group_ref_version);
+    const FtRtecEventChannelAdmin::ObjectId& oid) override;
+  void add_member(const FTRT::ManagerInfo & info,
+                          CORBA::ULong object_group_ref_version) override;
 
-  virtual int  acquire_read (void);
-  virtual int  acquire_write (void);
-  virtual int  release (void);
+  int  acquire_read (void) override;
+  int  acquire_write (void) override;
+  int  release (void) override;
 
 private:
   FTRT::SequenceNumber sequence_num_;

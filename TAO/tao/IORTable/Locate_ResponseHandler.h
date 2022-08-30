@@ -102,7 +102,7 @@ public:
   typedef TAO_AMH_Locate_ResponseHandler_var _var_type;
 
   TAO_AMH_Locate_ResponseHandler (TAO_ServerRequest &sr);
-  ~TAO_AMH_Locate_ResponseHandler (void);
+  ~TAO_AMH_Locate_ResponseHandler (void) override;
 
   virtual void raise_excep (const CORBA::Exception &ex);
 
@@ -120,7 +120,7 @@ public:
 
 protected:
   /// Return 0.  Should never be used.
-  virtual const char *_interface_repository_id () const;
+  const char *_interface_repository_id () const override;
 
   /// Simply returns "this"
   virtual void *_downcast (const char *repository_id);

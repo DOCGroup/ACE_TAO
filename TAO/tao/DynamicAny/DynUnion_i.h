@@ -43,7 +43,7 @@ public:
   TAO_DynUnion_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynUnion_i ();
+  ~TAO_DynUnion_i () override;
 
   /// Constructor taking an Any argument.
   void init (const CORBA::Any& any);
@@ -56,35 +56,35 @@ public:
 
   // = Functions specific to DynUnion.
 
-  virtual DynamicAny::DynAny_ptr get_discriminator ();
+  DynamicAny::DynAny_ptr get_discriminator () override;
 
-  virtual void set_discriminator (DynamicAny::DynAny_ptr d);
+  void set_discriminator (DynamicAny::DynAny_ptr d) override;
 
-  virtual void set_to_default_member ();
+  void set_to_default_member () override;
 
-  virtual void set_to_no_active_member ();
+  void set_to_no_active_member () override;
 
-  virtual CORBA::Boolean has_no_active_member ();
+  CORBA::Boolean has_no_active_member () override;
 
-  virtual CORBA::TCKind discriminator_kind ();
+  CORBA::TCKind discriminator_kind () override;
 
-  virtual DynamicAny::DynAny_ptr member ();
+  DynamicAny::DynAny_ptr member () override;
 
-  virtual char * member_name ();
+  char * member_name () override;
 
-  virtual CORBA::TCKind member_kind ();
+  CORBA::TCKind member_kind () override;
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  virtual void from_any (const CORBA::Any & value);
+  void from_any (const CORBA::Any & value) override;
 
-  virtual CORBA::Any * to_any ();
+  CORBA::Any * to_any () override;
 
-  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
+  CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual DynamicAny::DynAny_ptr current_component ();
+  DynamicAny::DynAny_ptr current_component () override;
 
 private:
   /// Code common to the constructor from an Any arg and the member

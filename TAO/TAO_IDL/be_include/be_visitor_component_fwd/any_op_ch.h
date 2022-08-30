@@ -33,7 +33,7 @@ public:
   ~be_visitor_component_fwd_any_op_ch ();
 
   /// visit component_fwd
-  virtual int visit_component_fwd (be_component_fwd *node);
+  int visit_component_fwd (be_component_fwd *node) override;
 };
 
 #endif /* _BE_COMPONENT_FWD_ANY_OP_CH_H_ */

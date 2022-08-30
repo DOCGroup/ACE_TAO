@@ -37,24 +37,24 @@ public:
   be_visitor_typecode_defn (be_visitor_context *ctx);
   ~be_visitor_typecode_defn ();
 
-  virtual int visit_array (be_array *node);
-  virtual int visit_interface (be_interface *node);
-  virtual int visit_interface_fwd (be_interface_fwd *node);
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
-  virtual int visit_sequence (be_sequence *node);
-  virtual int visit_string (be_string *node);
-  virtual int visit_structure (be_structure *node);
-  virtual int visit_typedef (be_typedef *node);
-  virtual int visit_union (be_union *node);
-  virtual int visit_valuetype (be_valuetype * node);
-  virtual int visit_eventtype (be_eventtype * node);
+  int visit_array (be_array *node) override;
+  int visit_interface (be_interface *node) override;
+  int visit_interface_fwd (be_interface_fwd *node) override;
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
+  int visit_sequence (be_sequence *node) override;
+  int visit_string (be_string *node) override;
+  int visit_structure (be_structure *node) override;
+  int visit_typedef (be_typedef *node) override;
+  int visit_union (be_union *node) override;
+  int visit_valuetype (be_valuetype * node) override;
+  int visit_eventtype (be_eventtype * node) override;
 
   /// Processing for scopes.
 
   /// do any processing after every element except the last one of the scope is
   /// processed
-  virtual int post_process (be_decl *);
+  int post_process (be_decl *) override;
 
   // Data structure for handling recursive and repeated typecodes.
 

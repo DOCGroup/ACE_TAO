@@ -16,11 +16,11 @@ namespace ACE_RMCast
     Flow (Parameters const& );
 
   public:
-    virtual void
-    send (Message_ptr m);
+    void
+    send (Message_ptr m) override;
 
-    virtual void
-    recv (Message_ptr m);
+    void
+    recv (Message_ptr m) override;
 
   private:
     // Parameters const& params_;

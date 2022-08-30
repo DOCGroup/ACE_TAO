@@ -80,34 +80,34 @@ namespace TAO
 
     /// Return an ID unique to the current request.  This request ID may
     /// or may not be the same as the GIOP request ID.
-    virtual CORBA::ULong request_id ();
+    CORBA::ULong request_id () override;
 
     /// Return the operation name for the current request.
-    virtual char * operation ();
+    char * operation () override;
 
     /// Return the list of arguments passed to the current operation.
-    virtual Dynamic::ParameterList * arguments ();
+    Dynamic::ParameterList * arguments () override;
 
     /// Return the list of exceptions the current operation is capable
     /// of throwing.
-    virtual Dynamic::ExceptionList * exceptions ();
+    Dynamic::ExceptionList * exceptions () override;
 
-    virtual Dynamic::ContextList * contexts ();
+    Dynamic::ContextList * contexts () override;
 
-    virtual Dynamic::RequestContext * operation_context ();
+    Dynamic::RequestContext * operation_context () override;
 
     /// Return the result of the current request.  If there is no
     /// return value then an @c Any with @c tk_void @c TypeCode is
     /// returned.  This method is not valid for oneway operations.
-    virtual CORBA::Any * result ();
+    CORBA::Any * result () override;
 
     /// Returns @c true for a two-way operation, and @c false otherwise.
-    virtual CORBA::Boolean response_expected ();
+    CORBA::Boolean response_expected () override;
 
     /// Return the @c sync_scope policy value for the current one-way
     /// operation.  If the operation is not a one-way, a
     /// @c CORBA::BAD_INV_ORDER exception is thrown.
-    virtual ::Messaging::SyncScope sync_scope ();
+    ::Messaging::SyncScope sync_scope () override;
 
     /// Return the reply status for the current request.
     /**
@@ -115,25 +115,25 @@ namespace TAO
      * @c SYSTEM_EXCEPTION, @c USER_EXCEPTION, @c LOCATION_FORWARD,
      * @c TRANSPORT_RETRY, @c UNKNOWN..
      */
-    virtual PortableInterceptor::ReplyStatus reply_status ();
+    PortableInterceptor::ReplyStatus reply_status () override;
 
     /// If the reply status is
     /// @c PortableInterceptor::LOCATION_FORWARD return the
     /// object reference to which the request was forwarded.
-    virtual CORBA::Object_ptr forward_reference ();
+    CORBA::Object_ptr forward_reference () override;
 
     /// Retrieve data from the "request scope" @c PICurrent object.
-    virtual CORBA::Any * get_slot (PortableInterceptor::SlotId id);
+    CORBA::Any * get_slot (PortableInterceptor::SlotId id) override;
 
     /// Return the @c IOP::ServiceContext with the given
     /// @c IOP::ServiceId from the request service context list.
-    virtual IOP::ServiceContext * get_request_service_context (
-        IOP::ServiceId id);
+    IOP::ServiceContext * get_request_service_context (
+        IOP::ServiceId id) override;
 
     /// Return the @c IOP::ServiceContext with the given
     /// @c IOP::ServiceId from the reply service context list.
-    virtual IOP::ServiceContext * get_reply_service_context (
-        IOP::ServiceId id);
+    IOP::ServiceContext * get_reply_service_context (
+        IOP::ServiceId id) override;
 
     /// Return an @c Any containing the exception being sent, if any.
     /// Otherwise, throw a @c CORBA::BAD_INV_ORDER exception.
@@ -141,47 +141,47 @@ namespace TAO
      * @note There is no trivial way to extract the exception from an
      *       @c Any.
      */
-    virtual CORBA::Any * sending_exception ();
+    CORBA::Any * sending_exception () override;
 
     /// Return the @c ObjectId for the target object.
-    virtual PortableInterceptor::ObjectId * object_id ();
+    PortableInterceptor::ObjectId * object_id () override;
 
     /// Return the @c AdapterId for the POA handling the current
     /// request.
-    virtual CORBA::OctetSeq * adapter_id ();
+    CORBA::OctetSeq * adapter_id () override;
 
     /// Return the server_id of the server. The value is passed to
     /// the ORB via @c -ORBServerId parameter.
-    virtual char * server_id ();
+    char * server_id () override;
 
     /// Return the ORBId value that is passed to the @c ORB_init
     /// call.
-    virtual char * orb_id ();
+    char * orb_id () override;
 
     /// Return the name of the object adapter that services requests
     /// for the invoked object.
-    virtual PortableInterceptor::AdapterName * adapter_name ();
+    PortableInterceptor::AdapterName * adapter_name () override;
 
     /// Return the most derived interface of the target object.
-    virtual char * target_most_derived_interface ();
+    char * target_most_derived_interface () override;
 
     /// Return the policy of the given type in effect for the current
     /// request.
-    virtual CORBA::Policy_ptr get_server_policy (CORBA::PolicyType type);
+    CORBA::Policy_ptr get_server_policy (CORBA::PolicyType type) override;
 
     /// Insert data into the "request scope" @c PICurrent object.
-    virtual void set_slot (PortableInterceptor::SlotId id,
-                           const CORBA::Any & data);
+    void set_slot (PortableInterceptor::SlotId id,
+                           const CORBA::Any & data) override;
 
     /// Returns true if the target's type corresponds to the given
     /// @c RepositoryId.
-    virtual CORBA::Boolean target_is_a (const char * id);
+    CORBA::Boolean target_is_a (const char * id) override;
 
     /// Add the @c IOP::ServiceContext to the reply (outgoing)
     /// @c IOP::ServiceContextList.
-    virtual void add_reply_service_context (
+    void add_reply_service_context (
         const IOP::ServiceContext & service_context,
-        CORBA::Boolean replace);
+        CORBA::Boolean replace) override;
 
   public:
     /**

@@ -41,21 +41,21 @@ public:
   TAO_UnionDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_UnionDef_i (void);
+  ~TAO_UnionDef_i (void) override;
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ();
+  CORBA::DefinitionKind def_kind () override;
 
   /// Remove the repository entry and its contents.
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void destroy_i ();
-
-  /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type ();
+  void destroy_i () override;
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i ();
+  CORBA::TypeCode_ptr type () override;
+
+  /// From IDLType_i's pure virtual function.
+  CORBA::TypeCode_ptr type_i () override;
 
   virtual CORBA::TypeCode_ptr discriminator_type ();
 

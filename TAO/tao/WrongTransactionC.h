@@ -65,7 +65,7 @@ namespace CORBA
 
     WrongTransaction ();
     WrongTransaction (const WrongTransaction &);
-    ~WrongTransaction ();
+    ~WrongTransaction () override;
 
     WrongTransaction &operator= (const WrongTransaction &);
 
@@ -76,20 +76,20 @@ namespace CORBA
 
     static CORBA::Exception *_alloc ();
 
-    virtual CORBA::Exception *_tao_duplicate () const;
+    CORBA::Exception *_tao_duplicate () const override;
 
-    virtual void _raise () const;
+    void _raise () const override;
 
-    virtual void _tao_encode (
-        TAO_OutputCDR &) const;
+    void _tao_encode (
+        TAO_OutputCDR &) const override;
 
-    virtual void _tao_decode (
-        TAO_InputCDR &);
+    void _tao_decode (
+        TAO_InputCDR &) override;
 
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:129
 
-    virtual CORBA::TypeCode_ptr _tao_type () const;
+    CORBA::TypeCode_ptr _tao_type () const override;
   };
 
 #endif /* end #if !defined */

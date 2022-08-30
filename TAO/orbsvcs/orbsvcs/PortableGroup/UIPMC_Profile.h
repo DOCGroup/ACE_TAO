@@ -51,7 +51,7 @@ class TAO_PortableGroup_Export TAO_UIPMC_Profile : public TAO_Profile
 public:
   /// The object key delimiter that UIPMC uses or expects.
   static const char object_key_delimiter_;
-  virtual char object_key_delimiter () const;
+  char object_key_delimiter () const override;
 
   /// Return the char string prefix.
   static const char *prefix (void);
@@ -71,27 +71,27 @@ public:
                      TAO_ORB_Core *orb_core);
 
   /// Destructor is to be called only through _decr_refcnt.
-  ~TAO_UIPMC_Profile (void);
+  ~TAO_UIPMC_Profile (void) override;
 
   /// Template methods. Please see tao/Profile.h for documentation.
 
   /// N.B. We have to override the TAO_Profile default decode because
   /// in UIPMC there is no object key marshalled and we do not implement
   /// a useable decode_endpoints
-  virtual int decode (TAO_InputCDR &cdr);
-  virtual void parse_string (const char *string);
-  virtual char * to_string () const;
-  virtual int encode_endpoints (void);
+  int decode (TAO_InputCDR &cdr) override;
+  void parse_string (const char *string) override;
+  char * to_string () const override;
+  int encode_endpoints (void) override;
   virtual void encodeAddressInfo (TAO_OutputCDR &stream) const;
-  virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count () const;
-  virtual CORBA::ULong hash (CORBA::ULong max);
+  TAO_Endpoint *endpoint (void) override;
+  CORBA::ULong endpoint_count () const override;
+  CORBA::ULong hash (CORBA::ULong max) override;
   virtual IOP::TaggedProfile &create_tagged_profile (void);
   virtual void request_target_specifier (
     TAO_Target_Specification &target_spec,
     TAO_Target_Specification::TAO_Target_Address r);
-  virtual int supports_multicast () const;
-  virtual void addressing_mode (CORBA::Short addr_mode);
+  int supports_multicast () const override;
+  void addressing_mode (CORBA::Short addr_mode) override;
   static int extract_group_component (const IOP::TaggedProfile &profile,
                                       PortableGroup::TagGroupTaggedComponent &group);
 
@@ -103,11 +103,11 @@ public:
                        PortableGroup::ObjectGroupRefVersion ref_version);
 protected:
   /// Template methods, please see documentation in tao/Profile.h
-  virtual int decode_profile (TAO_InputCDR& cdr);
-  virtual int decode_endpoints (void);
-  virtual void parse_string_i (const char *);
-  virtual void create_profile_body (TAO_OutputCDR &cdr) const;
-  virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
+  int decode_profile (TAO_InputCDR& cdr) override;
+  int decode_endpoints (void) override;
+  void parse_string_i (const char *) override;
+  void create_profile_body (TAO_OutputCDR &cdr) const override;
+  CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile) override;
   virtual void update_cached_group_component (void);
 
 protected:

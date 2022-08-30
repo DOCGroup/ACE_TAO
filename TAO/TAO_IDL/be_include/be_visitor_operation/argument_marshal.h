@@ -34,10 +34,10 @@ public:
   ~be_visitor_operation_argument_marshal ();
 
   /// stuff to o/p before each element of the scope is handled
-  virtual int pre_process (be_decl *bd);
+  int pre_process (be_decl *bd) override;
 
   /// stuff to o/p after each element of the scope is handled
-  virtual int post_process (be_decl *bd);
+  int post_process (be_decl *bd) override;
 
   enum LAST_ARG_PRINTED
   {
@@ -67,10 +67,10 @@ public:
   /// constructor
   be_visitor_args_decl (be_visitor_context *ctx);
 
-  int visit_array (be_array *node);
-  int visit_typedef (be_typedef *node);
-  int visit_argument (be_argument *node);
-  int visit_operation (be_operation *node);
+  int visit_array (be_array *node) override;
+  int visit_typedef (be_typedef *node) override;
+  int visit_argument (be_argument *node) override;
+  int visit_operation (be_operation *node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_ARGUMENT_MARSHAL_H_ */

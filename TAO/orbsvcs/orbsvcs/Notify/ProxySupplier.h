@@ -42,7 +42,7 @@ public:
   TAO_Notify_ProxySupplier (void);
 
   /// Destructor
-  virtual ~TAO_Notify_ProxySupplier ();
+  ~TAO_Notify_ProxySupplier () override;
 
   /// Init
   virtual void init (TAO_Notify_ConsumerAdmin* consumer_admin);
@@ -56,17 +56,17 @@ public:
   virtual void deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request);
 
   /// Override TAO_Notify_Container_T::shutdown  method
-  virtual int shutdown (void);
+  int shutdown (void) override;
 
   /// Destroy this object.
-  virtual void destroy (void);
+  void destroy (void) override;
 
   /// Destroy this object, but also indicate if it is due to a timeout or
   /// not.
   void destroy (bool from_timeout);
 
   /// Override, TAO_Notify_Proxy::qos_changed to apply MaxEventssPerConsumer QoS.
-  virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
+  void qos_changed (const TAO_Notify_QoSProperties& qos_properties) override;
 
   /// Returns true if connected
   bool is_connected () const;
@@ -86,7 +86,7 @@ private:
   TAO_Notify_Consumer::Ptr consumer_;
 
   /// Access our Peer.
-  virtual TAO_Notify_Peer* peer (void);
+  TAO_Notify_Peer* peer (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

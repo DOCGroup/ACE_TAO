@@ -42,7 +42,7 @@ class TAO_Null_Fragmentation_Strategy
 public:
   TAO_Null_Fragmentation_Strategy (void) {}
   virtual ~TAO_Null_Fragmentation_Strategy (void);
-  virtual int fragment (TAO_OutputCDR &, ACE_CDR::ULong, ACE_CDR::ULong);
+  int fragment (TAO_OutputCDR &, ACE_CDR::ULong, ACE_CDR::ULong) override;
 
 private:
   TAO_Null_Fragmentation_Strategy (TAO_Null_Fragmentation_Strategy const &) = delete;

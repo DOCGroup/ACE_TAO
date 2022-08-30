@@ -34,7 +34,7 @@ public:
   ~be_visitor_valuebox_cdr_op_ch ();
 
   /// visit valuebox
-  virtual int visit_valuebox (be_valuebox *node);
+  int visit_valuebox (be_valuebox *node) override;
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_CDR_OP_CH_H_ */

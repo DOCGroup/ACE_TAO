@@ -135,7 +135,7 @@ public:
                             ACE_CLEANUP_FUNC func,
                             void *param = 0);
 
-  virtual ~ACE_At_Thread_Exit_Func ();
+  ~ACE_At_Thread_Exit_Func () override;
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -174,7 +174,7 @@ class ACE_Export ACE_Thread_Descriptor_Base : public ACE_OS_Thread_Descriptor
   friend class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
 public:
   ACE_Thread_Descriptor_Base ();
-  virtual ~ACE_Thread_Descriptor_Base ();
+  ~ACE_Thread_Descriptor_Base () override;
 
   // = We need the following operators to make Borland happy.
 
@@ -281,7 +281,7 @@ public:
                void *param);
 
   /// Do nothing destructor to keep some compilers happy
-  ~ACE_Thread_Descriptor ();
+  ~ACE_Thread_Descriptor () override;
 
   /**
    * Do nothing but to acquire the thread descriptor's lock and

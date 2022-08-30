@@ -48,7 +48,7 @@ class TAO_Export TAO_Singleton_Manager : public ACE_Object_Manager_Base
 {
 public:
   /// Explicitly initialize.
-  virtual int init (void);
+  int init (void) override;
 
   /**
    * Explicitly initialize the TAO_Singleton_Manager, in addition to
@@ -58,7 +58,7 @@ public:
   int init (int register_with_object_manager);
 
   /// Explicitly destroy.
-  virtual int fini ();
+  int fini () override;
 
   /**
    * Returns 1 before the TAO_Singleton_Manager has been constructed.
@@ -121,7 +121,7 @@ protected:
   /// Force allocation on the heap.
   //@{
   TAO_Singleton_Manager (void);
-  ~TAO_Singleton_Manager (void);
+  ~TAO_Singleton_Manager (void) override;
   //@}
 
 private:

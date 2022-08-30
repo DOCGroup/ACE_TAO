@@ -34,13 +34,13 @@ public:
   TAO_Notify_Method_Request_Shutdown (TAO_Notify_ThreadPool_Task* task);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Shutdown ();
+  ~TAO_Notify_Method_Request_Shutdown () override;
 
   /// Create a copy of this object.
-  TAO_Notify_Method_Request_Queueable* copy (void);
+  TAO_Notify_Method_Request_Queueable* copy (void) override;
 
   /// Execute the Request
-  virtual int execute (void);
+  int execute (void) override;
 
 private:
   // Task to shutdown

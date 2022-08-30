@@ -40,15 +40,15 @@ public:
   TAO_AbstractInterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_AbstractInterfaceDef_i (void);
+  ~TAO_AbstractInterfaceDef_i (void) override;
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (
-    );
+  CORBA::DefinitionKind def_kind (
+    ) override;
 
-  virtual CORBA::Boolean is_a (
+  CORBA::Boolean is_a (
       const char *interface_id
-    );
+    ) override;
 
   CORBA::Boolean is_a_i (
       const char *interface_id

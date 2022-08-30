@@ -740,7 +740,7 @@ public:
 
 protected:
   /// Destructor - will delete the iterators
-  virtual ~ACE_Configuration_Section_Key_Heap (void);
+  ~ACE_Configuration_Section_Key_Heap (void) override;
 
   // Not used
   ACE_Configuration_Section_Key_Heap (const ACE_Configuration_Section_Key_Heap& rhs);
@@ -770,7 +770,7 @@ public:
   ACE_Configuration_Heap ();
 
   /// Destructor
-  virtual ~ACE_Configuration_Heap ();
+  ~ACE_Configuration_Heap () override;
 
   /**
    * Opens a configuration that allocates its memory from a memory-mapped file.
@@ -805,56 +805,56 @@ public:
    */
   int open (size_t default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
 
-  virtual int open_section (const ACE_Configuration_Section_Key& base,
+  int open_section (const ACE_Configuration_Section_Key& base,
                             const ACE_TCHAR* sub_section,
-                            bool create, ACE_Configuration_Section_Key& result);
+                            bool create, ACE_Configuration_Section_Key& result) override;
 
-  virtual int remove_section (const ACE_Configuration_Section_Key& key,
+  int remove_section (const ACE_Configuration_Section_Key& key,
                               const ACE_TCHAR* sub_section,
-                              bool recursive);
+                              bool recursive) override;
 
-  virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
+  int enumerate_values (const ACE_Configuration_Section_Key& key,
                                 int index,
                                 ACE_TString& name,
-                                VALUETYPE& type);
+                                VALUETYPE& type) override;
 
-  virtual int enumerate_sections (const ACE_Configuration_Section_Key& key,
+  int enumerate_sections (const ACE_Configuration_Section_Key& key,
                                   int index,
-                                  ACE_TString& name);
+                                  ACE_TString& name) override;
 
-  virtual int set_string_value (const ACE_Configuration_Section_Key& key,
+  int set_string_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
-                                const ACE_TString& value);
+                                const ACE_TString& value) override;
 
-  virtual int set_integer_value (const ACE_Configuration_Section_Key& key,
+  int set_integer_value (const ACE_Configuration_Section_Key& key,
                                  const ACE_TCHAR* name,
-                                 u_int value);
+                                 u_int value) override;
 
-  virtual int set_binary_value (const ACE_Configuration_Section_Key& key,
+  int set_binary_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
                                 const void* data,
-                                size_t length);
+                                size_t length) override;
 
-  virtual int get_string_value (const ACE_Configuration_Section_Key& key,
+  int get_string_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
-                                ACE_TString& value);
+                                ACE_TString& value) override;
 
-  virtual int get_integer_value (const ACE_Configuration_Section_Key& key,
+  int get_integer_value (const ACE_Configuration_Section_Key& key,
                                  const ACE_TCHAR* name,
-                                 u_int& value);
+                                 u_int& value) override;
 
-  virtual int get_binary_value (const ACE_Configuration_Section_Key& key,
+  int get_binary_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
                                 void* &data,
-                                size_t &length);
+                                size_t &length) override;
 
-  virtual int find_value(const ACE_Configuration_Section_Key& key,
+  int find_value(const ACE_Configuration_Section_Key& key,
                          const ACE_TCHAR* name,
-                         VALUETYPE& type);
+                         VALUETYPE& type) override;
 
   /// Removes the the value @a name from @a key.  returns non zero on error
-  virtual int remove_value (const ACE_Configuration_Section_Key& key,
-                            const ACE_TCHAR* name);
+  int remove_value (const ACE_Configuration_Section_Key& key,
+                            const ACE_TCHAR* name) override;
 
 private:
   /// @a sub_section may not contain path separators

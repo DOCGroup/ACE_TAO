@@ -44,7 +44,7 @@ public:
   enum {persistence_code = 2};
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Lookup ();
+  ~TAO_Notify_Method_Request_Lookup () override;
 
   /// Static method used to reconstruct a Method Request Dispatch
   static TAO_Notify_Method_Request_Lookup_Queueable * unmarshal (
@@ -63,7 +63,7 @@ protected:
   int execute_i (void);
 
   ///= TAO_ESF_Worker method
-  virtual void work (TAO_Notify_ProxySupplier* proxy_supplier);
+  void work (TAO_Notify_ProxySupplier* proxy_supplier) override;
 
 protected:
 
@@ -94,10 +94,10 @@ public:
     TAO_Notify_ProxyConsumer * proxy_consumer);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Lookup_Queueable ();
+  ~TAO_Notify_Method_Request_Lookup_Queueable () override;
 
   /// Execute the Request
-  virtual int execute (void);
+  int execute (void) override;
 
 private:
   TAO_Notify_Event::Ptr event_var_;
@@ -122,13 +122,13 @@ public:
     TAO_Notify_ProxyConsumer* proxy_consumer);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Lookup_No_Copy ();
+  ~TAO_Notify_Method_Request_Lookup_No_Copy () override;
 
   /// Execute the Request
-  virtual int execute (void);
+  int execute (void) override;
 
   /// Create a copy of this object.
-  virtual TAO_Notify_Method_Request_Queueable* copy (void);
+  TAO_Notify_Method_Request_Queueable* copy (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

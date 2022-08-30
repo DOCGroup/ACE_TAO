@@ -26,7 +26,7 @@ public:
 
   ~be_visitor_component_exs ();
 
-  virtual int visit_component (be_component *node);
+  int visit_component (be_component *node) override;
 };
 
 // =============================================
@@ -41,9 +41,9 @@ class Component_Exec_Op_Attr_Generator
 public:
   Component_Exec_Op_Attr_Generator (be_visitor_scope * visitor);
 
-  virtual int emit (be_interface * derived_interface,
-                    TAO_OutStream * os,
-                    be_interface * base_interface);
+  int emit (be_interface * derived_interface,
+            TAO_OutStream * os,
+            be_interface * base_interface) override;
 
 private:
   be_visitor_scope * visitor_;

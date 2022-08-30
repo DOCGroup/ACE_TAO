@@ -51,7 +51,7 @@ namespace ACE
 
       Monitor_Base (const char* name,
                     Monitor_Control_Types::Information_Type type);
-      virtual ~Monitor_Base ();
+      ~Monitor_Base () override;
 
       /// Implemented by the most-derived class. Does the actual
       /// work of fetching the monitored value.

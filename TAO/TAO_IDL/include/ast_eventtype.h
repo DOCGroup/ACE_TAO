@@ -19,16 +19,16 @@ public:
                  bool truncatable,
                  bool custom);
 
-  virtual ~AST_EventType ();
+  ~AST_EventType () override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
   typedef AST_EventTypeFwd FWD_TYPE;

@@ -217,22 +217,22 @@ public:
                   TAO_AV_Transport *transport);
   // We should add a sfp options parameter.
 
-  virtual ~TAO_SFP_Object (void);
+  ~TAO_SFP_Object (void) override;
   // Dtor
 
-  virtual int handle_input (void) = 0;
-  virtual int send_frame (ACE_Message_Block *frame,
-                          TAO_AV_frame_info *frame_info = 0);
+  int handle_input (void) override = 0;
+  int send_frame (ACE_Message_Block *frame,
+                          TAO_AV_frame_info *frame_info = 0) override;
 
-  virtual int send_frame (const iovec *iov,
+  int send_frame (const iovec *iov,
                           int iovcnt,
-                          TAO_AV_frame_info *frame_info = 0);
+                          TAO_AV_frame_info *frame_info = 0) override;
 
-  virtual int send_frame (const char*buf,
-                          size_t len);
+  int send_frame (const char*buf,
+                          size_t len) override;
 
-  virtual int destroy (void);
-  virtual int set_policies (const TAO_AV_PolicyList &policies);
+  int destroy (void) override;
+  int set_policies (const TAO_AV_PolicyList &policies) override;
 
 protected:
   ACE_Message_Block *get_fragment (ACE_Message_Block *&frame,
@@ -256,7 +256,7 @@ public:
   TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
                            TAO_AV_Transport *transport,
                            const char *flow_options);
-  virtual int handle_input (void);
+  int handle_input (void) override;
 protected:
   CORBA::ULong credit_sequence_num_;
 };
@@ -271,7 +271,7 @@ public:
   TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
                            TAO_AV_Transport *transport,
                            ACE_CString& flow_options);
-  virtual int handle_input (void);
+  int handle_input (void) override;
 };
 
 /**
@@ -282,14 +282,14 @@ class TAO_AV_Export TAO_AV_SFP_Factory : public TAO_AV_Flow_Protocol_Factory
 {
 public:
   TAO_AV_SFP_Factory (void);
-  virtual ~TAO_AV_SFP_Factory (void);
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  ~TAO_AV_SFP_Factory (void) override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialization hook.
-  virtual int match_protocol (const char *flow_string);
-  virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
+  int match_protocol (const char *flow_string) override;
+  TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                         TAO_Base_StreamEndPoint *endpoint,
                                                         TAO_AV_Flow_Handler *handler,
-                                                        TAO_AV_Transport *transport);
+                                                        TAO_AV_Transport *transport) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

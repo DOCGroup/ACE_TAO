@@ -32,38 +32,38 @@ public:
   TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier* proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_PushConsumer ();
+  ~TAO_Notify_PushConsumer () override;
 
   /// Init
   void init (CosEventComm::PushConsumer_ptr push_consumer);
 
   /// Push @a event to this consumer.
-  virtual void push (const CORBA::Any& event);
+  void push (const CORBA::Any& event) override;
 
   /// Push @a event to this consumer.
-  virtual void push (const CosNotification::StructuredEvent& event);
+  void push (const CosNotification::StructuredEvent& event) override;
 
   /// Push a batch of events to this consumer.
-  virtual void push (const CosNotification::EventBatch& event);
+  void push (const CosNotification::EventBatch& event) override;
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior () const;
+  ACE_CString get_ior () const override;
 
   /// on reconnect we need to move events from the old consumer
   /// to the new one
-  virtual void reconnect_from_consumer (
-    TAO_Notify_Consumer* old_consumer);
+  void reconnect_from_consumer (
+    TAO_Notify_Consumer* old_consumer) override;
 
 protected:
 
-  virtual CORBA::Object_ptr get_consumer (void);
+  CORBA::Object_ptr get_consumer (void) override;
 
   /// The Consumer
   CosEventComm::PushConsumer_var push_consumer_;
 
 private:
   /// TAO_Notify_Destroy_Callback methods.
-  virtual void release (void);
+  void release (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

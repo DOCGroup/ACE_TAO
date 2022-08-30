@@ -85,7 +85,7 @@ public:
                       TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_Object_Adapter ();
+  ~TAO_Object_Adapter () override;
 
   int dispatch_servant (const TAO::ObjectKey &key,
                         TAO_ServerRequest &req,
@@ -149,19 +149,19 @@ public:
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open ();
-  virtual void close (int wait_for_completion);
-  virtual void check_close (int wait_for_completion);
-  virtual int priority () const;
-  virtual int dispatch (TAO::ObjectKey &key,
+  void open () override;
+  void close (int wait_for_completion) override;
+  void check_close (int wait_for_completion) override;
+  int priority () const override;
+  int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
-                        CORBA::Object_out forward_to);
-  virtual const char *name () const;
-  virtual CORBA::Object_ptr root ();
-  virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
-                                                      const TAO_MProfile &);
+                        CORBA::Object_out forward_to) override;
+  const char *name () const override;
+  CORBA::Object_ptr root () override;
+  CORBA::Object_ptr create_collocated_object (TAO_Stub *,
+                                                      const TAO_MProfile &) override;
 
-  virtual CORBA::Long initialize_collocated_object (TAO_Stub *);
+  CORBA::Long initialize_collocated_object (TAO_Stub *) override;
 
 protected:
 
@@ -249,17 +249,17 @@ public:
 
     Active_Hint_Strategy (CORBA::ULong map_size);
 
-    virtual ~Active_Hint_Strategy ();
+    ~Active_Hint_Strategy () override;
 
-    virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_Root_POA *&poa);
+    int find_persistent_poa (const poa_name &system_name,
+                                     TAO_Root_POA *&poa) override;
 
-    virtual int bind_persistent_poa (const poa_name &folded_name,
+    int bind_persistent_poa (const poa_name &folded_name,
                                      TAO_Root_POA *poa,
-                                     poa_name_out system_name);
+                                     poa_name_out system_name) override;
 
-    virtual int unbind_persistent_poa (const poa_name &folded_name,
-                                       const poa_name &system_name);
+    int unbind_persistent_poa (const poa_name &folded_name,
+                                       const poa_name &system_name) override;
 
   protected:
 
@@ -286,17 +286,17 @@ public:
   {
   public:
 
-    virtual ~No_Hint_Strategy ();
+    ~No_Hint_Strategy () override;
 
-    virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_Root_POA *&poa);
+    int find_persistent_poa (const poa_name &system_name,
+                                     TAO_Root_POA *&poa) override;
 
-    virtual int bind_persistent_poa (const poa_name &folded_name,
+    int bind_persistent_poa (const poa_name &folded_name,
                                      TAO_Root_POA *poa,
-                                     poa_name_out system_name);
+                                     poa_name_out system_name) override;
 
-    virtual int unbind_persistent_poa (const poa_name &folded_name,
-                                       const poa_name &system_name);
+    int unbind_persistent_poa (const poa_name &folded_name,
+                                       const poa_name &system_name) override;
 
   };
 

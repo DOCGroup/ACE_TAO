@@ -79,9 +79,9 @@ public:
                          TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
                          ACE_Time_Value const &dynamic_thread_time);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
 

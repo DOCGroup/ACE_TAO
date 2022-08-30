@@ -77,38 +77,38 @@ namespace TAO
     //@{
     /// This method implements one of the "starting" client side
     /// interception points.
-    virtual void send_request (Invocation_Base &invocation);
+    void send_request (Invocation_Base &invocation) override;
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_reply (Invocation_Base &invocation);
+    void receive_reply (Invocation_Base &invocation) override;
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_exception (Invocation_Base &invocation);
+    void receive_exception (Invocation_Base &invocation) override;
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_other (Invocation_Base &invocation);
+    void receive_other (Invocation_Base &invocation) override;
     //@}
 
     /// Register an interceptor.
-    virtual void add_interceptor (
-      PortableInterceptor::ClientRequestInterceptor_ptr interceptor);
+    void add_interceptor (
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor) override;
 
     /// Register an interceptor with policies.
-    virtual void add_interceptor (
+    void add_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies);
+      const CORBA::PolicyList& policies) override;
 
-    virtual void destroy_interceptors ();
+    void destroy_interceptors () override;
 
-    virtual PortableInterceptor::ReplyStatus pi_reply_status (
-      TAO::Invocation_Base const &invocation_base);
+    PortableInterceptor::ReplyStatus pi_reply_status (
+      TAO::Invocation_Base const &invocation_base) override;
 
-    void popTSC (TAO_ORB_Core *orb_core)
+    void popTSC (TAO_ORB_Core *orb_core) override
       {TAO_RequestInterceptor_Adapter_Impl::popTSC (orb_core);}
-    void pushTSC (TAO_ORB_Core *orb_core)
+    void pushTSC (TAO_ORB_Core *orb_core) override
       {TAO_RequestInterceptor_Adapter_Impl::pushTSC (orb_core);}
 
   protected:

@@ -43,7 +43,7 @@ namespace ACE
 
               String_StreamBufferBase (openmode mode);
               String_StreamBufferBase (string_type& string, openmode mode);
-              virtual ~String_StreamBufferBase ();
+              ~String_StreamBufferBase () override;
 
               const string_type& str () const;
 
@@ -52,16 +52,16 @@ namespace ACE
               void clear_string ();
 
             protected:
-              virtual int read_from_stream (char_type* buffer, std::streamsize length);
+              int read_from_stream (char_type* buffer, std::streamsize length) override;
 
-              virtual int write_to_stream (const char_type* buffer, std::streamsize length);
+              int write_to_stream (const char_type* buffer, std::streamsize length) override;
 
-              virtual pos_type seekoff (off_type off,
-                                        seekdir way,
-                                        openmode which);
+              pos_type seekoff (off_type off,
+                                seekdir way,
+                                openmode which) override;
 
-              virtual pos_type seekpos (pos_type pos,
-                                        openmode which);
+              pos_type seekpos (pos_type pos,
+                                openmode which) override;
 
             private:
               enum

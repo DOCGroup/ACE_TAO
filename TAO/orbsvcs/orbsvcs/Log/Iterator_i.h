@@ -48,14 +48,14 @@ public:
   TAO_Iterator_i (PortableServer::POA_ptr poa, ACE_Reactor* reactor);
 
   /// Destructor.
-  virtual ~TAO_Iterator_i (void);
+  ~TAO_Iterator_i (void) override;
 
   /// Gets a list of LogRecords.
-  virtual DsLogAdmin::RecordList* get (CORBA::ULong position,
-                                       CORBA::ULong how_many) = 0;
+  DsLogAdmin::RecordList* get (CORBA::ULong position,
+                                       CORBA::ULong how_many) override = 0;
 
   /// This destroys the iterator.
-  virtual void destroy (void);
+  void destroy (void) override;
 
 protected:
   /// POA
@@ -70,7 +70,7 @@ protected:
   /// Timer ID
   long timer_id_;
 
-  virtual int handle_timeout (const ACE_Time_Value&, const void *);
+  int handle_timeout (const ACE_Time_Value&, const void *) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

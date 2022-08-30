@@ -49,13 +49,13 @@ class TAO_Svc_Utils_Export Service_Shutdown : public ACE_Event_Handler
 public:
   Service_Shutdown (Shutdown_Functor& sf);
   Service_Shutdown (Shutdown_Functor& sf, ACE_Sig_Set& which_signals);
-  ~Service_Shutdown ();
+  ~Service_Shutdown () override;
 
   void set_signals (ACE_Sig_Set& which_signals);
 
-  virtual int handle_signal (int which_sig,
+  int handle_signal (int which_sig,
                              siginfo_t* siginfo,
-                             ucontext_t* context);
+                             ucontext_t* context) override;
 
 protected:
   Shutdown_Functor& functor_;

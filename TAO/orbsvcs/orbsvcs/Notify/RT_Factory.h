@@ -32,14 +32,14 @@ public:
   TAO_Notify_RT_Factory ();
 
   /// Destructor
-  virtual ~TAO_Notify_RT_Factory ();
+  ~TAO_Notify_RT_Factory () override;
 
   /// Instruct the compiler that we want the create
   /// methods from the base class as well
   using TAO_Notify_Default_Factory::create;
 
   /// Create StructuredProxyPushSupplier
-  virtual void create (TAO_Notify_StructuredProxyPushSupplier*& proxy);
+  void create (TAO_Notify_StructuredProxyPushSupplier*& proxy) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

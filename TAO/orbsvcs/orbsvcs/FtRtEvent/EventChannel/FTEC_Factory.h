@@ -24,21 +24,21 @@ class TAO_FTEC_Basic_Factory : public TAO_EC_Default_Factory
 public:
     /// Constructor
   TAO_FTEC_Basic_Factory (void);
-  virtual TAO_EC_ConsumerAdmin*
-      create_consumer_admin (TAO_EC_Event_Channel_Base*);
-  virtual TAO_EC_SupplierAdmin*
-      create_supplier_admin (TAO_EC_Event_Channel_Base*);
+  TAO_EC_ConsumerAdmin*
+      create_consumer_admin (TAO_EC_Event_Channel_Base*) override;
+  TAO_EC_SupplierAdmin*
+      create_supplier_admin (TAO_EC_Event_Channel_Base*) override;
 
-  virtual TAO_EC_ProxyPushSupplier*
-      create_proxy_push_supplier (TAO_EC_Event_Channel_Base*);
-  virtual void
-      destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier*);
+  TAO_EC_ProxyPushSupplier*
+      create_proxy_push_supplier (TAO_EC_Event_Channel_Base*) override;
+  void
+      destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier*) override;
 
   /// Create and destroy a ProxyPushConsumer
-  virtual TAO_EC_ProxyPushConsumer*
-      create_proxy_push_consumer (TAO_EC_Event_Channel_Base*);
-  virtual void
-      destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*);
+  TAO_EC_ProxyPushConsumer*
+      create_proxy_push_consumer (TAO_EC_Event_Channel_Base*) override;
+  void
+      destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

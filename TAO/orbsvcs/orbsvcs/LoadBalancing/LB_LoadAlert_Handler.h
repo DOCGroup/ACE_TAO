@@ -40,18 +40,18 @@ class TAO_LB_LoadAlert_Handler
   : public virtual POA_CosLoadBalancing::AMI_LoadAlertHandler
 {
 public:
-  virtual void enable_alert (void);
+  void enable_alert (void) override;
 
-  virtual void enable_alert_excep (::Messaging::ExceptionHolder *);
+  void enable_alert_excep (::Messaging::ExceptionHolder *) override;
 
-  virtual void disable_alert (void);
+  void disable_alert (void) override;
 
-  virtual void disable_alert_excep (::Messaging::ExceptionHolder *);
+  void disable_alert_excep (::Messaging::ExceptionHolder *) override;
 
 protected:
   /// Protected destructor to enforce propery memory management
   /// through reference counting.
-  ~TAO_LB_LoadAlert_Handler (void);
+  ~TAO_LB_LoadAlert_Handler (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -31,7 +31,7 @@ class TAO_Codeset_Export TAO_Codeset_Descriptor
 {
 public:
   TAO_Codeset_Descriptor ();
-  virtual ~TAO_Codeset_Descriptor ();
+  ~TAO_Codeset_Descriptor () override;
 
   struct Translator_Node
   {
@@ -41,12 +41,12 @@ public:
   };
 
   void ncs (ACE_CDR::ULong ncs);
-  void ncs (const ACE_TCHAR *name);
+  void ncs (const ACE_TCHAR *name) override;
   ACE_CDR::ULong ncs () const;
   int max_bytes () const;
   int num_translators () const;
 
-  void add_translator (const ACE_TCHAR *name);
+  void add_translator (const ACE_TCHAR *name) override;
   Translator_Node *translators (void);
 
 private:

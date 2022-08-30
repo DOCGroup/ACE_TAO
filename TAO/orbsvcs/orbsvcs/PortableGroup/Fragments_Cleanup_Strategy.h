@@ -67,7 +67,7 @@ namespace TAO_PG
     /// The constructor
     Time_Bound_Fragments_Cleanup_Strategy (int bound);
 
-    virtual void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets);
+    void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets) override;
   };
 
   /**
@@ -82,7 +82,7 @@ namespace TAO_PG
     /// The constructor
     Number_Bound_Fragments_Cleanup_Strategy (int bound);
 
-    virtual void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets);
+    void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets) override;
   };
 
   /**
@@ -97,7 +97,7 @@ namespace TAO_PG
     /// The constructor
     Memory_Bound_Fragments_Cleanup_Strategy (int bound);
 
-    virtual void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets);
+    void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets) override;
   };
 
 } // namespace TAO_PG

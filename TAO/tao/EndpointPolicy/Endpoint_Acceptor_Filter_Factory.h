@@ -37,10 +37,10 @@ class TAO_EndpointPolicy_Export TAO_Endpoint_Acceptor_Filter_Factory
   : public TAO_Acceptor_Filter_Factory
 {
 public:
-  virtual ~TAO_Endpoint_Acceptor_Filter_Factory(void);
+  ~TAO_Endpoint_Acceptor_Filter_Factory(void) override;
 
   /// Create a new TAO_Endpoint_Acceptor_Filter object.
-  TAO_Acceptor_Filter* create_object (TAO_POA_Manager& poamanager);
+  TAO_Acceptor_Filter* create_object (TAO_POA_Manager& poamanager) override;
 };
 
 

@@ -42,16 +42,16 @@ public:
   TAO_EC_Reactive_Dispatching ();
 
   // = The EC_Dispatching methods.
-  virtual void activate ();
-  virtual void shutdown ();
-  virtual void push (TAO_EC_ProxyPushSupplier *proxy,
+  void activate () override;
+  void shutdown () override;
+  void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet &event,
-                     TAO_EC_QOS_Info &qos_info);
-  virtual void push_nocopy (TAO_EC_ProxyPushSupplier *proxy,
+                     TAO_EC_QOS_Info &qos_info) override;
+  void push_nocopy (TAO_EC_ProxyPushSupplier *proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet &event,
-                            TAO_EC_QOS_Info &qos_info);
+                            TAO_EC_QOS_Info &qos_info) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

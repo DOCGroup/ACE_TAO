@@ -34,24 +34,24 @@ public:
   TAO_Notify_PushSupplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_PushSupplier ();
+  ~TAO_Notify_PushSupplier () override;
 
   /// Init
   void init (CosEventComm::PushSupplier_ptr push_supplier);
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior () const;
+  ACE_CString get_ior () const override;
 
 protected:
 
-  virtual CORBA::Object_ptr get_supplier (void);
+  CORBA::Object_ptr get_supplier (void) override;
 
   /// The Supplier
   CosEventComm::PushSupplier_var push_supplier_;
 
 private:
   /// TAO_Notify_Destroy_Callback methods
-  virtual void release (void);
+  void release (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

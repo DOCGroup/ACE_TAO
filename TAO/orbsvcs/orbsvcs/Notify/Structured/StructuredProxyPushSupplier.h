@@ -49,31 +49,31 @@ public:
   TAO_Notify_StructuredProxyPushSupplier (void);
 
   /// Destructor
-  virtual ~TAO_Notify_StructuredProxyPushSupplier ();
+  ~TAO_Notify_StructuredProxyPushSupplier () override;
 
 
-  virtual void load_attrs (const TAO_Notify::NVPList& attrs);
-  virtual void validate ();
+  void load_attrs (const TAO_Notify::NVPList& attrs) override;
+  void validate () override;
 
   /// = Servant methods
   // = interface methods
-  virtual CosNotifyChannelAdmin::ProxyType MyType (void);
+  CosNotifyChannelAdmin::ProxyType MyType (void) override;
 
-  virtual void connect_structured_push_consumer (
+  void connect_structured_push_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer
-  );
+  ) override;
 
-  virtual void disconnect_structured_push_supplier (
-  );
+  void disconnect_structured_push_supplier (
+  ) override;
 
-  virtual const char * get_proxy_type_name () const;
+  const char * get_proxy_type_name () const override;
 
   virtual void configure(TAO_Notify_ConsumerAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 private:
 
   /// Release
-  virtual void release (void);
+  void release (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

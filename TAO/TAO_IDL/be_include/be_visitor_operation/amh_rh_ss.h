@@ -27,7 +27,7 @@ class be_visitor_amh_rh_operation_ss : public be_visitor_operation
 
     ~be_visitor_amh_rh_operation_ss ();
 
-    int visit_operation (be_operation *node);
+    int visit_operation (be_operation *node) override;
 
  private:
     int marshal_params (be_operation *node);

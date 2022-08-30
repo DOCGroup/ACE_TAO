@@ -50,24 +50,24 @@ public:
   /// Returns a copy of this CompressorIdLevelListPolicy.
   virtual CompressorIdLevelListPolicy *clone () const;
 
-  virtual ::Compression::CompressorIdLevelList * compressor_ids ();
+  ::Compression::CompressorIdLevelList * compressor_ids () override;
 
-  virtual CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type (void) override;
 
-  virtual CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy (void) override;
 
-  virtual void destroy (void);
+  void destroy (void) override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope () const;
+  TAO_Policy_Scope _tao_scope () const override;
 
   /// This method writes a CDR representation of the current object.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 private:
   /// The attribute
@@ -96,24 +96,24 @@ public:
   virtual CompressionEnablingPolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
-  virtual ::CORBA::Boolean compression_enabled (void);
+  ::CORBA::Boolean compression_enabled (void) override;
 
-  virtual CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type (void) override;
 
-  virtual CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy (void) override;
 
-  virtual void destroy (void);
+  void destroy (void) override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope () const;
+  TAO_Policy_Scope _tao_scope () const override;
 
   /// This method writes a CDR representation of the current object.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 private:
 
@@ -142,15 +142,15 @@ public:
   virtual CompressionLowValuePolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
-  virtual ::CORBA::ULong low_value (void);
+  ::CORBA::ULong low_value (void) override;
 
-  virtual CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type (void) override;
 
-  virtual CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy (void) override;
 
-  virtual void destroy (void);
+  void destroy (void) override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
 private:
 
@@ -178,15 +178,15 @@ public:
   /// Returns a copy of this CompressionMinRatioPolicy.
   virtual CompressionMinRatioPolicy *clone () const;
 
-  virtual ::Compression::CompressionRatio ratio (void);
+  ::Compression::CompressionRatio ratio (void) override;
 
-  virtual CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type (void) override;
 
-  virtual CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy (void) override;
 
-  virtual void destroy (void);
+  void destroy (void) override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
 private:
 

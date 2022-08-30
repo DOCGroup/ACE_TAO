@@ -66,12 +66,12 @@ public:
       return nullptr;
     }
 
-  virtual const char* _interface_repository_id () const;
+  const char* _interface_repository_id () const override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_Priority_Mapping_Manager ();
+  ~TAO_Priority_Mapping_Manager () override;
 
 private:
   TAO_Priority_Mapping_Manager (const TAO_Priority_Mapping_Manager &);

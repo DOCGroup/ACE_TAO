@@ -49,7 +49,7 @@ public:
                                  TAO_ORB_Core* orb_core = 0);
 
   /// Makes TAO_*_Client_Connection_Handlers
-  virtual int make_svc_handler (SVC_HANDLER *&sh);
+  int make_svc_handler (SVC_HANDLER *&sh) override;
 
 
 private:
@@ -79,7 +79,7 @@ public:
 
   /// Activates the Svc_Handler, and if the right wait strategy is in
   /// use, registers the handle with the reactor.
-  int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg);
+  int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg) override;
 
 private:
   /// Pointer to the ORB Core.

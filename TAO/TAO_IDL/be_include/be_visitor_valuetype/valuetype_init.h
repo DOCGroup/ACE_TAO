@@ -34,8 +34,8 @@ public:
 
 public:
 
-  void begin_public ();
-  void begin_private ();
+  void begin_public () override;
+  void begin_private () override;
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_INIT_H_ */

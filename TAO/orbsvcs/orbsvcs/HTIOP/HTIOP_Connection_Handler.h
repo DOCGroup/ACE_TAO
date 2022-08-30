@@ -56,13 +56,13 @@ namespace TAO
       Connection_Handler (TAO_ORB_Core *orb_core);
 
       /// Destructor.
-      ~Connection_Handler (void);
+      ~Connection_Handler (void) override;
 
       /// Called by the <Strategy_Acceptor> when the handler is completely
       /// connected.  Argument is unused.
-      virtual int open (void *);
+      int open (void *) override;
 
-      virtual int open_handler (void *);
+      int open_handler (void *) override;
 
 #if 0  // for now, an active version of HTIOP is not defined, but the
        // methods are kept here as a place-holder.
@@ -88,12 +88,12 @@ namespace TAO
       //@{
       /** @name Event Handler overloads
        */
-      virtual int resume_handler (void);
-      virtual int close_connection (void);
-      virtual int handle_input (ACE_HANDLE);
-      virtual int handle_output (ACE_HANDLE);
-      virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-      virtual int close (u_long = 0);
+      int resume_handler (void) override;
+      int close_connection (void) override;
+      int handle_input (ACE_HANDLE) override;
+      int handle_output (ACE_HANDLE) override;
+      int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
+      int close (u_long = 0) override;
       //@}
 
       /// Add ourselves to Cache.
@@ -105,16 +105,16 @@ namespace TAO
       ///Set the Diff-Serv codepoint if the Policy dicates the setting of
       ///Network Priority This method is a no-op, but implemented to
       ///satisfy the base class interface.
-      int set_dscp_codepoint (CORBA::Boolean set_network_priority);
-      int set_dscp_codepoint (CORBA::Long dscp);
+      int set_dscp_codepoint (CORBA::Boolean set_network_priority) override;
+      int set_dscp_codepoint (CORBA::Long dscp) override;
 
 
       //@{
       /**
        * @name TAO_Connection Handler overloads
        */
-      virtual int release_os_resources (void);
-      virtual int handle_write_ready (const ACE_Time_Value *timeout);
+      int release_os_resources (void) override;
+      int handle_write_ready (const ACE_Time_Value *timeout) override;
       //@}
 
     private:

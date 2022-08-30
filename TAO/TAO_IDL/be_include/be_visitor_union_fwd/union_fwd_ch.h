@@ -27,7 +27,7 @@ public:
 
   ~be_visitor_union_fwd_ch ();
 
-  virtual int visit_union_fwd (be_union_fwd *node);
+  int visit_union_fwd (be_union_fwd *node) override;
 };
 
 #endif /* _BE_INTERFACE_UNION_FWD_CH_H_ */

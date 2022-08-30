@@ -30,11 +30,11 @@ public:
   virtual ~be_visitor_interface_smart_proxy_cs ();
 
   /// visit interface
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
   /// This will just call the above method - no need to create
   /// another set of visitors for this stuff.
-  virtual int visit_component (be_component *node);
+  int visit_component (be_component *node) override;
 };
 
 #endif /* _BE_INTERFACE_SMART_PROXY_CS_H_ */

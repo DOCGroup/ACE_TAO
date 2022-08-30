@@ -122,7 +122,7 @@ public:
   TAO_EC_Filter_Worker (RtecEventComm::EventSet &event,
                         const TAO_EC_QOS_Info &event_info);
 
-  virtual void work (TAO_EC_ProxyPushSupplier *supplier);
+  void work (TAO_EC_ProxyPushSupplier *supplier) override;
 
 private:
   /// The event we push on each case, use a reference to avoid copies.

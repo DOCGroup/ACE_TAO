@@ -149,9 +149,9 @@ class TAO_IDL_Downcast_Implementation_Worker
 public:
   TAO_IDL_Downcast_Implementation_Worker ();
 
-  virtual int emit (be_interface *base,
-                    TAO_OutStream *os,
-                    be_interface *derived);
+  int emit (be_interface *base,
+           TAO_OutStream *os,
+           be_interface *derived) override;
 };
 
 TAO_IDL_Downcast_Implementation_Worker::
@@ -194,9 +194,9 @@ class TAO_IDL_Copy_Ctor_Worker
 public:
   TAO_IDL_Copy_Ctor_Worker ();
 
-  virtual int emit (be_interface *base,
-                    TAO_OutStream *os,
-                    be_interface *derived);
+  int emit (be_interface *base,
+            TAO_OutStream *os,
+            be_interface *derived) override;
 };
 
 TAO_IDL_Copy_Ctor_Worker::TAO_IDL_Copy_Ctor_Worker ()

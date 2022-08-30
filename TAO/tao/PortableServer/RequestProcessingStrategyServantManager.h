@@ -35,23 +35,23 @@ namespace TAO
     public:
       RequestProcessingStrategyServantManager ();
 
-      PortableServer::Servant get_servant ();
+      PortableServer::Servant get_servant () override;
 
-      void set_servant (PortableServer::Servant servant);
+      void set_servant (PortableServer::Servant servant) override;
 
       void validate_servant_manager (
         PortableServer::ServantManager_ptr servant_manager);
 
-      virtual PortableServer::Servant system_id_to_servant (
-        const PortableServer::ObjectId &system_id);
+      PortableServer::Servant system_id_to_servant (
+        const PortableServer::ObjectId &system_id) override;
 
-      virtual PortableServer::Servant id_to_servant (
-        const PortableServer::ObjectId &id);
+      PortableServer::Servant id_to_servant (
+        const PortableServer::ObjectId &id) override;
 
-      virtual PortableServer::ObjectId *servant_to_id (
-        PortableServer::Servant servant);
+      PortableServer::ObjectId *servant_to_id (
+        PortableServer::Servant servant) override;
 
-      virtual ::PortableServer::RequestProcessingPolicyValue type() const;
+      ::PortableServer::RequestProcessingPolicyValue type() const override;
     };
   }
 }

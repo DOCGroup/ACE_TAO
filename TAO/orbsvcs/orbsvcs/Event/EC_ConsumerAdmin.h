@@ -57,14 +57,14 @@ public:
   TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// Destructor...
-  virtual ~TAO_EC_ConsumerAdmin ();
+  ~TAO_EC_ConsumerAdmin () override;
 
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
-  virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier ();
+  RtecEventChannelAdmin::ProxyPushSupplier_ptr
+      obtain_push_supplier () override;
 
   // = The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   /// Store the default POA.

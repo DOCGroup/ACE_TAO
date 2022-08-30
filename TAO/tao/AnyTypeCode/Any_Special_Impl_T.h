@@ -37,7 +37,7 @@ namespace TAO
                         CORBA::TypeCode_ptr,
                         T * const,
                         CORBA::ULong bound);
-    virtual ~Any_Special_Impl_T ();
+    ~Any_Special_Impl_T () override;
 
     static void insert (CORBA::Any &,
                         _tao_destructor destructor,
@@ -50,12 +50,12 @@ namespace TAO
                                    const T *&,
                                    CORBA::ULong bound);
 
-    virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
+    CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
-    virtual void _tao_decode (TAO_InputCDR &);
+    void _tao_decode (TAO_InputCDR &) override;
 
     virtual const void *value () const;
-    virtual void free_value ();
+    void free_value () override;
 
   private:
     T * value_;

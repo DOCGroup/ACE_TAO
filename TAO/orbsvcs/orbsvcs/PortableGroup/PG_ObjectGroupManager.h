@@ -51,7 +51,7 @@ public:
   TAO_PG_ObjectGroupManager (void);
 
   /// Destructor.
-  ~TAO_PG_ObjectGroupManager (void);
+  ~TAO_PG_ObjectGroupManager (void) override;
 
   /**
    * @name PortableGroup::ObjectGroupManager methods
@@ -62,17 +62,17 @@ public:
   //@{
 
   /// Create a member and add it to the given object group.
-  virtual PortableGroup::ObjectGroup_ptr create_member (
+  PortableGroup::ObjectGroup_ptr create_member (
       PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::Location & the_location,
       const char * type_id,
-      const PortableGroup::Criteria & the_criteria);
+      const PortableGroup::Criteria & the_criteria) override;
 
   /// Add an existing object to the ObjectGroup.
-  virtual PortableGroup::ObjectGroup_ptr add_member (
+  PortableGroup::ObjectGroup_ptr add_member (
       PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::Location & the_location,
-      CORBA::Object_ptr member);
+      CORBA::Object_ptr member) override;
 
   /**
    * Remove an object at a specific location from the given
@@ -81,39 +81,39 @@ public:
    * infrastructure (load balancer) will be deleted by the
    * infrastructure.
    */
-  virtual PortableGroup::ObjectGroup_ptr remove_member (
+  PortableGroup::ObjectGroup_ptr remove_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location);
+      const PortableGroup::Location & the_location) override;
 
   /// Return the locations of the members in the given ObjectGroup.
-  virtual PortableGroup::Locations * locations_of_members (
-      PortableGroup::ObjectGroup_ptr object_group);
+  PortableGroup::Locations * locations_of_members (
+      PortableGroup::ObjectGroup_ptr object_group) override;
 
   /// Return the locations of the members in the given ObjectGroup.
-  virtual PortableGroup::ObjectGroups * groups_at_location (
-      const PortableGroup::Location & the_location);
+  PortableGroup::ObjectGroups * groups_at_location (
+      const PortableGroup::Location & the_location) override;
 
   /// Return the ObjectGroupId for the given ObjectGroup.
   /// @note Does this method make sense for load balanced objects?
-  virtual PortableGroup::ObjectGroupId get_object_group_id (
-      PortableGroup::ObjectGroup_ptr object_group);
+  PortableGroup::ObjectGroupId get_object_group_id (
+      PortableGroup::ObjectGroup_ptr object_group) override;
 
   /// @note Does this method make sense for load balanced objects?
-  virtual PortableGroup::ObjectGroup_ptr get_object_group_ref (
-      PortableGroup::ObjectGroup_ptr object_group);
+  PortableGroup::ObjectGroup_ptr get_object_group_ref (
+      PortableGroup::ObjectGroup_ptr object_group) override;
 
   /// Return the reference corresponding to the member of a given
   /// ObjectGroup at the given location.
-  virtual CORBA::Object_ptr get_member_ref (
+  CORBA::Object_ptr get_member_ref (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & loc);
+      const PortableGroup::Location & loc) override;
   /**
    * TAO-specific extension.
    * Return the ObjectGroup reference for the given ObjectGroupId.
    */
-   virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
+   PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
         PortableGroup::ObjectGroupId group_id
-      );
+      ) override;
 
   //@}
 

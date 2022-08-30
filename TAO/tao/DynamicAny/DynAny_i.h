@@ -43,7 +43,7 @@ public:
   TAO_DynAny_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynAny_i ();
+  ~TAO_DynAny_i () override;
 
   /// Initialize using just a TypeCode
   void init (CORBA::TypeCode_ptr tc);
@@ -56,15 +56,15 @@ public:
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  virtual void from_any (const CORBA::Any & value);
+  void from_any (const CORBA::Any & value) override;
 
-  virtual CORBA::Any * to_any ();
+  CORBA::Any * to_any () override;
 
-  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
+  CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual DynamicAny::DynAny_ptr current_component ();
+  DynamicAny::DynAny_ptr current_component () override;
 
 private:
   /// Check if the typecode is acceptable.

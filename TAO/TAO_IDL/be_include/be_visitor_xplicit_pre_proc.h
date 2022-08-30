@@ -30,35 +30,35 @@ public:
 
   virtual ~be_visitor_xplicit_pre_proc ();
 
-  virtual int visit_home (be_home *node);
+  int visit_home (be_home *node) override;
 
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_argument (be_argument *node);
-  virtual int visit_factory (be_factory *node);
-  virtual int visit_finder (be_finder *node);
+  int visit_operation (be_operation *node) override;
+  int visit_argument (be_argument *node) override;
+  int visit_factory (be_factory *node) override;
+  int visit_finder (be_finder *node) override;
 
-  virtual int visit_interface (be_interface *node);
-  virtual int visit_valuebox (be_valuebox *node);
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
-  virtual int visit_structure (be_structure *node);
-  virtual int visit_structure_fwd (be_structure_fwd *node);
-  virtual int visit_exception (be_exception *node);
-  virtual int visit_enum (be_enum *node);
-  virtual int visit_field (be_field *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_union (be_union *node);
-  virtual int visit_union_fwd (be_union_fwd *node);
-  virtual int visit_union_branch (be_union_branch *node);
-  virtual int visit_union_label (be_union_label *node);
-  virtual int visit_constant (be_constant *node);
-  virtual int visit_enum_val (be_enum_val *node);
-  virtual int visit_array (be_array *node);
-  virtual int visit_sequence (be_sequence *node);
-  virtual int visit_string (be_string *node);
-  virtual int visit_typedef (be_typedef *node);
-  virtual int visit_native (be_native *node);
-  virtual int visit_predefined_type (be_predefined_type *node);
+  int visit_interface (be_interface *node) override;
+  int visit_valuebox (be_valuebox *node) override;
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
+  int visit_structure (be_structure *node) override;
+  int visit_structure_fwd (be_structure_fwd *node) override;
+  int visit_exception (be_exception *node) override;
+  int visit_enum (be_enum *node) override;
+  int visit_field (be_field *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_union (be_union *node) override;
+  int visit_union_fwd (be_union_fwd *node) override;
+  int visit_union_branch (be_union_branch *node) override;
+  int visit_union_label (be_union_label *node) override;
+  int visit_constant (be_constant *node) override;
+  int visit_enum_val (be_enum_val *node) override;
+  int visit_array (be_array *node) override;
+  int visit_sequence (be_sequence *node) override;
+  int visit_string (be_string *node) override;
+  int visit_typedef (be_typedef *node) override;
+  int visit_native (be_native *node) override;
+  int visit_predefined_type (be_predefined_type *node) override;
 
   // Member accessor
   be_interface *xplicit () const;

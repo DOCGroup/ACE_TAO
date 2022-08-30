@@ -94,20 +94,20 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::AcquisitionMethodList * supported_methods ();
+      SecurityLevel3::AcquisitionMethodList * supported_methods () override;
 
-      virtual SecurityLevel3::CredentialsAcquirer_ptr acquire_credentials (
+      SecurityLevel3::CredentialsAcquirer_ptr acquire_credentials (
           const char * acquisition_method,
-          const CORBA::Any & acquisition_arguments);
+          const CORBA::Any & acquisition_arguments) override;
 
-      virtual SecurityLevel3::OwnCredentialsList * default_creds_list ();
+      SecurityLevel3::OwnCredentialsList * default_creds_list () override;
 
-      virtual SecurityLevel3::CredentialsIdList * default_creds_ids ();
+      SecurityLevel3::CredentialsIdList * default_creds_ids () override;
 
-      virtual SecurityLevel3::OwnCredentials_ptr get_own_credentials (
-          const char * credentials_id);
+      SecurityLevel3::OwnCredentials_ptr get_own_credentials (
+          const char * credentials_id) override;
 
-      virtual void release_own_credentials (const char * credentials_id);
+      void release_own_credentials (const char * credentials_id) override;
       //@}
 
       /// Register CredentialsAcquirer factory.
@@ -131,7 +131,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~CredentialsCurator (void);
+      ~CredentialsCurator (void) override;
 
     private:
 

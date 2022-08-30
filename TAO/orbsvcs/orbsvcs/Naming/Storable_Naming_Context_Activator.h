@@ -51,24 +51,24 @@ public:
     TAO_Storable_Naming_Context_Factory *context_impl_factory,
     const ACE_TCHAR *);
 
-  virtual ~TAO_Storable_Naming_Context_Activator();
+  ~TAO_Storable_Naming_Context_Activator() override;
 
   /**
    * Create a TAO_Storable_Naming_Context and TAO_Naming_Context on
    * demand if a request to a naming context CORBA reference is made
    * and the servant implementing this reference does not yet exist.
    */
-  virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
-                                             PortableServer::POA_ptr poa);
+  PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
+                                             PortableServer::POA_ptr poa) override;
 
   /**
    * Used by the POA to delete the servant created from a call to incarnate.
    */
-  virtual void etherealize (const PortableServer::ObjectId &oid,
+  void etherealize (const PortableServer::ObjectId &oid,
                             PortableServer::POA_ptr adapter,
                             PortableServer::Servant servant,
                             CORBA::Boolean cleanup_in_progress,
-                            CORBA::Boolean remaining_activations);
+                            CORBA::Boolean remaining_activations) override;
 
 private:
   CORBA::ORB_ptr orb_;

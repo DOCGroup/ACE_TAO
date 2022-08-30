@@ -15,9 +15,9 @@ public:
          ACE_thread_t thr_id);
 
   // = The skeleton methods
-  virtual char * get_string (void);
+  char * get_string (void) override;
 
-  virtual void shutdown (void);
+  void shutdown (void) override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

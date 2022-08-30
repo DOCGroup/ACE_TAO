@@ -39,9 +39,9 @@ namespace TAO
   public:
     In_Special_Basic_Argument_T (S const &);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S const & arg () const;
 
@@ -85,10 +85,10 @@ namespace TAO
   public:
     Inout_Special_Basic_Argument_T (S & x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 
@@ -110,9 +110,9 @@ namespace TAO
   public:
     Out_Special_Basic_Argument_T (S & x);
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 
@@ -134,9 +134,9 @@ namespace TAO
   public:
     Ret_Special_Basic_Argument_T ();
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 

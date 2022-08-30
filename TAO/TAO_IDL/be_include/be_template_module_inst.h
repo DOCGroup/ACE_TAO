@@ -16,10 +16,10 @@ public:
   virtual ~be_template_module_inst ();
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif           // BE_TEMPLATE_MODULE_INST_H

@@ -26,16 +26,16 @@ class be_visitor_ami4ccm_rh_ex_idl : public be_visitor_scope
 public:
   be_visitor_ami4ccm_rh_ex_idl (be_visitor_context *ctx);
 
-  ~be_visitor_ami4ccm_rh_ex_idl ();
+  ~be_visitor_ami4ccm_rh_ex_idl () override;
 
-  virtual int visit_interface (be_interface *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_argument (be_argument *node);
-  virtual int visit_string (be_string *node);
-  virtual int visit_sequence (be_sequence *node);
+  int visit_interface (be_interface *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_argument (be_argument *node) override;
+  int visit_string (be_string *node) override;
+  int visit_sequence (be_sequence *node) override;
 
-  virtual int pre_process (be_decl *node);
+  int pre_process (be_decl *node) override;
 
 private:
   void gen_attr_rh_ops (bool is_set_op,

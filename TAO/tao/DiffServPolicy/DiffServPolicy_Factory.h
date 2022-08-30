@@ -42,9 +42,9 @@ class TAO_DiffServPolicy_Export TAO_DiffServ_PolicyFactory
 public:
 
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   const CORBA::Any &value);
+                                   const CORBA::Any &value) override;
 
-  CORBA::Policy_ptr _create_policy (CORBA::PolicyType type);
+  CORBA::Policy_ptr _create_policy (CORBA::PolicyType type) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

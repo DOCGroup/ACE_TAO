@@ -32,12 +32,12 @@ public:
   ~be_visitor_union ();
 
   /// visit union. We provide code for this method in the derived class
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
   // =visit operations on syntactically valid elements in our scope
 
   /// visit union_branch
-  virtual int visit_union_branch (be_union_branch *node);
+  int visit_union_branch (be_union_branch *node) override;
 
   enum BoolUnionBranch { BUB_NONE, BUB_UNCONDITIONAL, BUB_TRUE, BUB_FALSE };
 

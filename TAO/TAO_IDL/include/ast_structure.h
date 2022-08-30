@@ -93,7 +93,7 @@ public:
                  bool local,
                  bool abstract);
 
-  virtual ~AST_Structure ();
+  ~AST_Structure () override;
 
   // This serves for both structs and unions.
   static void fwd_redefinition_helper (AST_Structure *&i,

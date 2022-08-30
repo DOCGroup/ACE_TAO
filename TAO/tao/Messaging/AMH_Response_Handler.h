@@ -73,7 +73,7 @@ public:
    * Releases the transport and in case of an error, sends the appropriate
    * exception back to the client
    */
-  virtual ~TAO_AMH_Response_Handler ();
+  ~TAO_AMH_Response_Handler () override;
 
   /**
    * Stores necessary information from a TAO_Server_Request onto the heap
@@ -83,7 +83,7 @@ public:
 
   /// @name Mutators for refcount
   //@{
-  virtual void _remove_ref ();
+  void _remove_ref () override;
   //@}
 
 protected:

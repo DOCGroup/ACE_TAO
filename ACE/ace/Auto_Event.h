@@ -51,7 +51,7 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  virtual ~ACE_Auto_Event_T () = default;
+  ~ACE_Auto_Event_T () override = default;
 
   /// Dump the state of an object.
   void dump () const;
@@ -85,7 +85,7 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  virtual ~ACE_Auto_Event ()
+  ~ACE_Auto_Event () override
   {
   }
 };

@@ -43,10 +43,10 @@ class TAO_PI_Export TAO_RequestInterceptor_Adapter_Impl
   : public TAO::RequestInterceptor_Adapter
 {
 public:
-  ~TAO_RequestInterceptor_Adapter_Impl ();
+  ~TAO_RequestInterceptor_Adapter_Impl () override;
 
-  void popTSC (TAO_ORB_Core *orb_core);
-  void pushTSC (TAO_ORB_Core *orb_core);
+  void popTSC (TAO_ORB_Core *orb_core) override;
+  void pushTSC (TAO_ORB_Core *orb_core) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

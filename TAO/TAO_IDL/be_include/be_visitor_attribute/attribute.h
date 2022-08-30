@@ -36,7 +36,7 @@ public:
   ~be_visitor_attribute ();
 
   /// visit attribute. We provide code for this method in the derived class
-  virtual int visit_attribute (be_attribute *node);
+  int visit_attribute (be_attribute *node) override;
 
   void for_facets (bool val);
   void op_scope (be_decl *node);

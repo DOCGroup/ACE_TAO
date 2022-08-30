@@ -76,13 +76,13 @@ public:
                     PortableServer::POA_ptr poa,
                     ACE_Configuration *config);
 
-  virtual ~TAO_Repository_i (void);
+  ~TAO_Repository_i (void) override;
 
   /// Accessor for the readonly attribute.
-  virtual CORBA::DefinitionKind def_kind ();
+  CORBA::DefinitionKind def_kind () override;
 
   /// May not be called on a repository - raises BAD_INV_ORDER.
-  virtual void destroy ();
+  void destroy () override;
 
   virtual CORBA::Contained_ptr lookup_id (const char *search_id);
 

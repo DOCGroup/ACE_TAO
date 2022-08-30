@@ -79,35 +79,35 @@ public:
 
   /// Destructor. If <lock_> was not passed in by the user, it will be
   /// deleted.
-  virtual ~ACE_Reverse_Lock () = default;
+  ~ACE_Reverse_Lock () override = default;
 
   // = Lock accessors.
   /// Release the lock.
-  virtual int acquire ();
+  int acquire () override;
 
   /// Release the lock.
-  virtual int tryacquire ();
+  int tryacquire () override;
 
   /// Acquire the lock.
-  virtual int release ();
+  int release () override;
 
   /// Release the lock.
-  virtual int acquire_read ();
+  int acquire_read () override;
 
   /// Release the lock.
-  virtual int acquire_write ();
+  int acquire_write () override;
 
   /// Release the lock.
-  virtual int tryacquire_read ();
+  int tryacquire_read () override;
 
   /// Release the lock.
-  virtual int tryacquire_write ();
+  int tryacquire_write () override;
 
   /// Release the lock.
-  virtual int tryacquire_write_upgrade ();
+  int tryacquire_write_upgrade () override;
 
   /// Explicitly destroy the lock.
-  virtual int remove ();
+  int remove () override;
 
 private:
   /// The concrete locking mechanism that all the methods delegate to.

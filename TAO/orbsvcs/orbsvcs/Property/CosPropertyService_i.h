@@ -115,22 +115,22 @@ public:
   TAO_PropertySetFactory (void);
   // Constructor.
 
-  virtual ~TAO_PropertySetFactory (void);
+  ~TAO_PropertySetFactory (void) override;
   // Destructor.
 
-  virtual CosPropertyService::PropertySet_ptr
-  create_propertyset (void);
+  CosPropertyService::PropertySet_ptr
+  create_propertyset (void) override;
   // Returns a  new TAO_PropertySet object. "The property set returned
   // will *not* have any initial properties."
 
-  virtual CosPropertyService::PropertySet_ptr
+  CosPropertyService::PropertySet_ptr
   create_constrained_propertyset (const CosPropertyService::PropertyTypes &allowed_property_types,
-                                  const CosPropertyService::Properties &allowed_properties);
+                                  const CosPropertyService::Properties &allowed_properties) override;
     // Allows a client to create a new TAO_PropertySet with specific
     // constraints. "All the properties will have *fixed-normal* modes".
 
-  virtual CosPropertyService::PropertySet_ptr
-  create_initial_propertyset (const CosPropertyService::Properties &initial_properties);
+  CosPropertyService::PropertySet_ptr
+  create_initial_propertyset (const CosPropertyService::Properties &initial_properties) override;
   // Allows a client to create a new TAO_PropertySet with specific
   // initial properties."All the properties will have *fixed-normal"
   // modes".
@@ -159,21 +159,21 @@ public:
   TAO_PropertySetDefFactory(void);
   // Constructor.
 
-  virtual ~TAO_PropertySetDefFactory (void);
+  ~TAO_PropertySetDefFactory (void) override;
   // Destructor.
 
-  virtual CosPropertyService::PropertySetDef_ptr
-  create_propertysetdef (void);
+  CosPropertyService::PropertySetDef_ptr
+  create_propertysetdef (void) override;
   // Returns a new TAO_PropertySetDef object.
 
-  virtual CosPropertyService::PropertySetDef_ptr
+  CosPropertyService::PropertySetDef_ptr
   create_constrained_propertysetdef (const CosPropertyService::PropertyTypes &allowed_property_types,
-                                     const CosPropertyService::PropertyDefs &allowed_property_defs);
+                                     const CosPropertyService::PropertyDefs &allowed_property_defs) override;
   // Allows a client to create a new TAO_PropertySetDef with specific
   // constraints.
 
-  virtual CosPropertyService::PropertySetDef_ptr
-  create_initial_propertysetdef (const CosPropertyService::PropertyDefs &initial_property_defs);
+  CosPropertyService::PropertySetDef_ptr
+  create_initial_propertysetdef (const CosPropertyService::PropertyDefs &initial_property_defs) override;
   // Allows a client to create a new TAO_PropertySetDef with specific
   // initial properties.
 
@@ -211,52 +211,52 @@ public:
                    const CORBA::ULong number_of_allowed_propertydefs);
   // PropertySetDef's construction needs this.
 
-  virtual ~TAO_PropertySet (void);
+  ~TAO_PropertySet (void) override;
   // Destructor function.
 
-  virtual void define_property (const char *property_name,
-                                const CORBA::Any &property_value);
+  void define_property (const char *property_name,
+                                const CORBA::Any &property_value) override;
 
   // Store the property in the hash after checking for validity of the
   // property name, duplicate name, type code over writing etc.
 
-  virtual void define_properties (const CosPropertyService::Properties &nproperties);
+  void define_properties (const CosPropertyService::Properties &nproperties) override;
   // Define a sequence of properties at a time.
 
-  virtual CORBA::ULong get_number_of_properties (void);
+  CORBA::ULong get_number_of_properties (void) override;
   // Get the number of properties that are currently defined in the
   // PropertySet.
 
-  virtual void get_all_property_names (CORBA::ULong how_many,
+  void get_all_property_names (CORBA::ULong how_many,
                                        CosPropertyService::PropertyNames_out property_names,
-                                       CosPropertyService::PropertyNamesIterator_out rest);
+                                       CosPropertyService::PropertyNamesIterator_out rest) override;
   // Get the names of all the properties that are currently defined in
   // the property set.
 
-  virtual CORBA::Any *get_property_value (const char *property_name);
+  CORBA::Any *get_property_value (const char *property_name) override;
   // Get the value of the property, given the name.
 
-  virtual CORBA::Boolean get_properties (const CosPropertyService::PropertyNames &property_names,
-                                         CosPropertyService::Properties_out nproperties);
+  CORBA::Boolean get_properties (const CosPropertyService::PropertyNames &property_names,
+                                         CosPropertyService::Properties_out nproperties) override;
   // Get all names and their property values.
 
-  virtual void get_all_properties (CORBA::ULong how_many,
+  void get_all_properties (CORBA::ULong how_many,
                                    CosPropertyService::Properties_out nproperties,
-                                   CosPropertyService::PropertiesIterator_out rest);
+                                   CosPropertyService::PropertiesIterator_out rest) override;
   // Returns all of the property names currently defined in the
   // PropertySet. If the PropertySet contains more than how_many
   // property names, then the remaining property names are put into the PropertyNamesIterator.
 
-  virtual void delete_property (const char *property_name);
+  void delete_property (const char *property_name) override;
   // Delete a property given a name.
 
-  virtual void delete_properties (const CosPropertyService::PropertyNames &property_names);
+  void delete_properties (const CosPropertyService::PropertyNames &property_names) override;
   // Delete all the these properties from this property set.
 
-  virtual CORBA::Boolean delete_all_properties (void);
+  CORBA::Boolean delete_all_properties (void) override;
   // Delete everything from this property set.
 
-  virtual CORBA::Boolean is_property_defined (const char *property_name);
+  CORBA::Boolean is_property_defined (const char *property_name) override;
   // Tell whether this property is defined or no. Forget about the
   // value.
 
@@ -328,26 +328,26 @@ public:
   TAO_PropertySetDef (const CosPropertyService::PropertyDefs initial_property_defs);
   // This is also for the factory.
 
-  virtual ~TAO_PropertySetDef (void);
+  ~TAO_PropertySetDef (void) override;
   // Destructor.
 
-  virtual void get_allowed_property_types (CosPropertyService::PropertyTypes_out property_types);
+  void get_allowed_property_types (CosPropertyService::PropertyTypes_out property_types) override;
   // Indicates which types of properties are supported by this
   // PropertySet. If the output sequence is empty, then there is no
   // restrictions on the any TypeCode portion of the property_value
   // field of a Property in this PropertySet, unless the
   // get_allowed_properties output sequence is not empty.
 
-  virtual void get_allowed_properties (CosPropertyService::PropertyDefs_out property_defs);
+  void get_allowed_properties (CosPropertyService::PropertyDefs_out property_defs) override;
 
   // Indicates which properties are supported by this PropertySet. If
   // the output sequence is empty, then there is no restrictions on
   // the properties that can be in this PropertySet, unless the
   // get_allowed_property_types output sequence is not empty.
 
-  virtual void define_property_with_mode (const char *property_name,
+  void define_property_with_mode (const char *property_name,
                                           const CORBA::Any &property_value,
-                                          CosPropertyService::PropertyModeType property_mode);
+                                          CosPropertyService::PropertyModeType property_mode) override;
   // This operation will modify or add a property to the
   // PropertySet. If the property already exists, then the property
   // type is checked before the value is overwritten. The property
@@ -356,16 +356,16 @@ public:
   // PropertySet. If type or mode is violated, ConflictingProperty
   // exception is thrown.
 
-  virtual void define_properties_with_modes (const CosPropertyService::PropertyDefs &property_defs);
+  void define_properties_with_modes (const CosPropertyService::PropertyDefs &property_defs) override;
   // This operation will modify or add each of the properties in the
   // Properties parameter to the PropertySet.
 
-  virtual CosPropertyService::PropertyModeType get_property_mode (const char *property_name);
+  CosPropertyService::PropertyModeType get_property_mode (const char *property_name) override;
   // Get the mode of a property. Raises InvalidpropertyName,
   // PropertyNotFound exceptions.
 
-  virtual CORBA::Boolean get_property_modes (const CosPropertyService::PropertyNames &property_names,
-                                             CosPropertyService::PropertyModes_out property_modes);
+  CORBA::Boolean get_property_modes (const CosPropertyService::PropertyNames &property_names,
+                                             CosPropertyService::PropertyModes_out property_modes) override;
   // Batch operation for getting the property. Invoke
   // get_property_mode for each name.  Return value False indicates
   // that properties with *undefined* modes have failed due to
@@ -374,8 +374,8 @@ public:
   // has to check the out parameter whether it is Nil or no, before
   // doing something with it.
 
-  virtual void set_property_mode (const char *property_name,
-                                  CosPropertyService::PropertyModeType property_mode);
+  void set_property_mode (const char *property_name,
+                                  CosPropertyService::PropertyModeType property_mode) override;
   // Set the mode of a property. Watch the following. The change of
   // mode is allowed introduce more constraints, but it should not
   // relax the constraints. The following decisions have been made, in
@@ -387,7 +387,7 @@ public:
   // all illegal set_mode attempts, UnsupportedMode exception is
   // raised.
 
-  virtual void set_property_modes (const CosPropertyService::PropertyModes &property_modes);
+  void set_property_modes (const CosPropertyService::PropertyModes &property_modes) override;
   // Batch operation for setting the property. Raises
   // MultipleExceptions.
 };
@@ -411,28 +411,28 @@ public:
   TAO_PropertyNamesIterator (TAO_PropertySet &property_set);
   // Constructor.
 
-  virtual ~TAO_PropertyNamesIterator (void);
+  ~TAO_PropertyNamesIterator (void) override;
   // Destructor.
 
-  virtual void reset (void);
+  void reset (void) override;
   // The reset operation resets the position in an iterator to the
   // first property name, if one exists.
 
-  virtual CORBA::Boolean next_one (CORBA::String_out property_name);
+  CORBA::Boolean next_one (CORBA::String_out property_name) override;
   // The next_one operation returns true if an item exists at the
   // current position in the iterator with an output parameter of a
   // property name. A return of false signifies no more items in the iterator.
 
 
-  virtual CORBA::Boolean next_n (CORBA::ULong how_many,
-                                 CosPropertyService::PropertyNames_out property_names);
+  CORBA::Boolean next_n (CORBA::ULong how_many,
+                                 CosPropertyService::PropertyNames_out property_names) override;
   // The next_n operation returns true if an item exists at the
   // current position in the iterator and the how_many parameter was
   // set greater than zero. The output is a PropertyNames sequence
   // with at most the how_many number of names. A return of false
   // signifies no more items in the iterator.
 
-  virtual void destroy (void);
+  void destroy (void) override;
   // Destroys the iterator.
 private:
   typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
@@ -467,27 +467,27 @@ public:
   TAO_PropertiesIterator (TAO_PropertySet &property_set);
   // Constructor.
 
-  virtual ~TAO_PropertiesIterator (void);
+  ~TAO_PropertiesIterator (void) override;
   // Destructor.
 
-  virtual void reset (void);
+  void reset (void) override;
   // Resets the position in an iterator to the first property, if one exists.
 
-  virtual CORBA::Boolean next_one (CosPropertyService::Property_out aproperty);
+  CORBA::Boolean next_one (CosPropertyService::Property_out aproperty) override;
   // The next_one operation returns true if an item exists at the
   // current position in the iterator with an output parameter of a
   // property. A return of false signifies no more items in the
   // iterator.
 
-  virtual CORBA::Boolean next_n (CORBA::ULong how_many,
-                                 CosPropertyService::Properties_out nproperties);
+  CORBA::Boolean next_n (CORBA::ULong how_many,
+                                 CosPropertyService::Properties_out nproperties) override;
   // The next_n operation returns true if an item exists at the
   // current position in the iterator and the how_many parameter was
   // set greater than zero. The output is a properties sequence with
   // at most the how_many number of properties. A return of false
   // signifies no more items in the iterator.
 
-  virtual void destroy (void);
+  void destroy (void) override;
   // Destroys the iterator.
 
 private:

@@ -56,7 +56,7 @@ namespace TAO
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
   protected:
-    virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr);
+    Invocation_Status handle_user_exception (TAO_InputCDR &cdr) override;
 
   private:
     CORBA::ExceptionList *excp_list_;

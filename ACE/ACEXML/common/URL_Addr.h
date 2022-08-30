@@ -51,8 +51,8 @@ public:
    *  <address> it is assumed to be an ip-number or ip-address number, with
    *  the port number <ACE_DEFAULT_HTTP_PORT>.
    */
-  virtual int string_to_addr (const ACEXML_Char* address,
-                              int address_family = AF_UNSPEC);
+  int string_to_addr (const ACEXML_Char* address,
+                              int address_family = AF_UNSPEC) override;
 
   //  Function to shut up Borland C++
 #if defined (ACE_USES_WCHAR)
@@ -69,9 +69,9 @@ public:
    *  "www.cs.wustl.edu:80/~schmidt/"). Returns -1 if the <size> of the
    *  <buffer> is too small, else 0.
    */
-  virtual int addr_to_string (ACEXML_Char *s,
+  int addr_to_string (ACEXML_Char *s,
                               size_t size,
-                              int ipaddr_format = 1) const;
+                              int ipaddr_format = 1) const override;
 
   /**
    *  Transform the current ACE_INET_Addr address into string format. If
@@ -89,7 +89,7 @@ public:
   void operator= (const ACEXML_URL_Addr &addr);
 
   /// Destructor.
-  ~ACEXML_URL_Addr (void);
+  ~ACEXML_URL_Addr (void) override;
 
   /**
    *  Compare two addresses for equality.  The addresses are considered
@@ -101,7 +101,7 @@ public:
   bool operator != (const ACEXML_URL_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash () const;
+  u_long hash () const override;
 
   /// Return the path name.
   const ACEXML_Char *get_path_name () const;

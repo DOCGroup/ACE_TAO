@@ -60,19 +60,19 @@ namespace TAO
                           CORBA::Boolean = false);
 
       /// Destructor.
-      ~Completion_Handler (void);
+      ~Completion_Handler (void) override;
 
       /// Called by the <Strategy_Acceptor> when the handler is completely
       /// connected. Argument is unused.
-      virtual int open (void *);
+      int open (void *) override;
 
       //@{
       /** @name Event Handler overloads
        */
-      virtual int handle_input (ACE_HANDLE);
+      int handle_input (ACE_HANDLE) override;
 
-      virtual int resume_handler (void);
-      virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+      int resume_handler (void) override;
+      int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
       //@}
 
     private:

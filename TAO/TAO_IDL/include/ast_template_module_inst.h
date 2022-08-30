@@ -22,13 +22,13 @@ public:
   template_args () const;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 

@@ -17,12 +17,12 @@ public:
   be_visitor_amh_interface_sh (be_visitor_context *ctx);
   ~be_visitor_amh_interface_sh ();
 
-  int visit_interface (be_interface *node);
-  int visit_operation (be_operation *node);
-  int visit_attribute (be_attribute *node);
+  int visit_interface (be_interface *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
 
 protected:
-  virtual void this_method (be_interface *node);
+  void this_method (be_interface *node) override;
 
 private:
   /// Create an AMH node 'on the fly' from the

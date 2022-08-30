@@ -53,15 +53,15 @@ public:
   TAO_Continuous_Priority_Mapping (int policy = ACE_SCHED_OTHER);
 
   /// Destructor.
-  ~TAO_Continuous_Priority_Mapping (void);
+  ~TAO_Continuous_Priority_Mapping (void) override;
 
   /// Convert CORBA priority to native priority.
   CORBA::Boolean to_native (RTCORBA::Priority corba_priority,
-                            RTCORBA::NativePriority &native_priority);
+                            RTCORBA::NativePriority &native_priority) override;
 
   /// Convert native priority to CORBA priority.
   CORBA::Boolean to_CORBA (RTCORBA::NativePriority native_priority,
-                           RTCORBA::Priority &corba_priority);
+                           RTCORBA::Priority &corba_priority) override;
 
 private:
   int policy_;

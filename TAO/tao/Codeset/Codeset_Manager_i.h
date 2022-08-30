@@ -65,33 +65,33 @@ public:
   static CONV_FRAME::CodeSetId default_wchar_codeset;
 
   TAO_Codeset_Manager_i ();
-  ~TAO_Codeset_Manager_i () = default;
+  ~TAO_Codeset_Manager_i () override = default;
 
   /// Called by an object of TAO_Acceptor to set NCS and CCS values
   /// for Char/Wchar in to the Object Reference.
-  void set_codeset (TAO_Tagged_Components&) const;
+  void set_codeset (TAO_Tagged_Components&) const override;
   ///
   /// Called from an object of "TAO_GIOP_Invocation" to set TCS on the
   /// Transport
-  void set_tcs (TAO_Profile &theProfile, TAO_Transport &);
+  void set_tcs (TAO_Profile &theProfile, TAO_Transport &) override;
 
   /// Called from an Object of TAO_Messaging for every request at
   /// server side to process service context and set TCS for
   /// Char/WChar
-  void process_service_context (TAO_ServerRequest &);
+  void process_service_context (TAO_ServerRequest &) override;
 
   /// Called by a client object to generate service context
   /// at this time Transport has the TCS for Char and WChar
-  void generate_service_context (TAO_Operation_Details&, TAO_Transport & );
+  void generate_service_context (TAO_Operation_Details&, TAO_Transport & ) override;
 
   /// Called by the resource factory to signify the end of
   /// initialization.  This will traverse the list of named codeset
   /// translator factories and add any of those that have a native
   /// codeset id matching the manager's native codeset id.
-  void open(TAO_ORB_Core& core);
+  void open(TAO_ORB_Core& core) override;
 
-  virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor (void);
-  virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor (void);
+  TAO_Codeset_Descriptor_Base *char_codeset_descriptor (void) override;
+  TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor (void) override;
 
 private:
   // Compute the TCS for Char/WChar asper the CORBA Specification
@@ -118,15 +118,15 @@ private:
                 CONV_FRAME::CodeSetComponent&);
 
   // get the translator between our ncs_c and the supplied tcs_c
-  TAO_Codeset_Translator_Base * get_char_trans (CONV_FRAME::CodeSetId);
+  TAO_Codeset_Translator_Base * get_char_trans (CONV_FRAME::CodeSetId) override;
 
   // get the translator between our ncs_w and the supplied tcs_w
-  TAO_Codeset_Translator_Base * get_wchar_trans (CONV_FRAME::CodeSetId);
+  TAO_Codeset_Translator_Base * get_wchar_trans (CONV_FRAME::CodeSetId) override;
 
   TAO_Codeset_Translator_Base * get_translator_i (TAO_Codeset_Descriptor&,
                                                   CONV_FRAME::CodeSetId);
 
-  void get_ncs (CONV_FRAME::CodeSetId &ncsc, CONV_FRAME::CodeSetId& ncsw);
+  void get_ncs (CONV_FRAME::CodeSetId &ncsc, CONV_FRAME::CodeSetId& ncsw) override;
 
   // The CodeSetComponentInfo struct contains all of the information
   // regarding the code sets this application recognizes. This is

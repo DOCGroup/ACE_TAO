@@ -89,9 +89,9 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual bool tao_marshal_kind (TAO_OutputCDR & cdr) const;
-      virtual bool tao_marshal (TAO_OutputCDR & cdr,
-                                CORBA::ULong offset) const;
+      bool tao_marshal_kind (TAO_OutputCDR & cdr) const override;
+      bool tao_marshal (TAO_OutputCDR & cdr,
+                                CORBA::ULong offset) const override;
       //@}
 
     protected:
@@ -104,8 +104,8 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
-      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
+      CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
+      CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
       //@}
 
     public:

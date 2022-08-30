@@ -53,7 +53,7 @@ public:
   TAO_SHMIOP_Connector ();
 
   /// Default destructor
-  ~TAO_SHMIOP_Connector () = default;
+  ~TAO_SHMIOP_Connector () override = default;
 
   /**
    * @name The TAO_Connector Methods
@@ -61,14 +61,14 @@ public:
    * Please check the documentation in Transport_Connector.h for details.
    */
   //@{
-  int open (TAO_ORB_Core *orb_core);
-  int close (void);
+  int open (TAO_ORB_Core *orb_core) override;
+  int close (void) override;
 
-  TAO_Profile *create_profile (TAO_InputCDR& cdr);
+  TAO_Profile *create_profile (TAO_InputCDR& cdr) override;
 
-  virtual int check_prefix (const char *endpoint);
+  int check_prefix (const char *endpoint) override;
 
-  virtual char object_key_delimiter () const;
+  char object_key_delimiter () const override;
   //@}
 
 public:
@@ -94,16 +94,16 @@ protected:
    * Please check the documentation in Transport_Connector.h for details.
    */
   //@{
-  int set_validate_endpoint (TAO_Endpoint *endpoint);
+  int set_validate_endpoint (TAO_Endpoint *endpoint) override;
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                   TAO_Transport_Descriptor_Interface &desc,
-                                  ACE_Time_Value *timeout = 0);
+                                  ACE_Time_Value *timeout = 0) override;
 
-  virtual TAO_Profile *make_profile (void);
+  TAO_Profile *make_profile (void) override;
 
   /// Cancel the passed cvs handler from the connector
-  int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
+  int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;
   //@}
 
 private:

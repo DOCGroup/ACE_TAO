@@ -35,15 +35,15 @@ public:
   static PortableServer::Servant_var<TAO_ECG_Simple_Address_Server> create ();
 
   /// Destructor
-  virtual ~TAO_ECG_Simple_Address_Server ();
+  ~TAO_ECG_Simple_Address_Server () override;
 
   int init (const char *arg);
 
   // = The RtecUDPAdmin::AddrServer methods
-  virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr);
-  virtual void get_address (const RtecEventComm::EventHeader& header,
-                            RtecUDPAdmin::UDP_Address_out addr6);
+  void get_addr (const RtecEventComm::EventHeader& header,
+                         RtecUDPAdmin::UDP_Addr_out addr) override;
+  void get_address (const RtecEventComm::EventHeader& header,
+                            RtecUDPAdmin::UDP_Address_out addr6) override;
 
 protected:
 

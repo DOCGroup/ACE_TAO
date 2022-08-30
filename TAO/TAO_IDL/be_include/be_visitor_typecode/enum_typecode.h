@@ -41,7 +41,7 @@ namespace TAO
      *       the rest of the legacy method names and their call sites
      *       are updated accordingly.
      */
-    virtual int visit_enum (be_enum * node);
+    int visit_enum (be_enum * node) override;
 
   private:
 

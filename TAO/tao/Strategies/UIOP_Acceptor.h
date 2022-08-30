@@ -49,7 +49,7 @@ public:
   TAO_UIOP_Acceptor (void);
 
   /// Destructor
-  virtual ~TAO_UIOP_Acceptor (void);
+  ~TAO_UIOP_Acceptor (void) override;
 
   typedef TAO_Strategy_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_UIOP_Connection_Handler> TAO_UIOP_CREATION_STRATEGY;
@@ -62,27 +62,27 @@ public:
    * Please check the documentation in Transport_Acceptor.h for details.
    */
   //@{
-  virtual int open (TAO_ORB_Core *orb_core,
+  int open (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
                     const char *address,
-                    const char *options = 0);
-  virtual int open_default (TAO_ORB_Core *orb_core,
+                    const char *options = 0) override;
+  int open_default (TAO_ORB_Core *orb_core,
                             ACE_Reactor *reactor,
                             int version_major,
                             int version_minor,
-                            const char *options = 0);
-  virtual int close (void);
-  virtual int create_profile (const TAO::ObjectKey &object_key,
+                            const char *options = 0) override;
+  int close (void) override;
+  int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
-                              CORBA::Short priority);
+                              CORBA::Short priority) override;
 
-  virtual int is_collocated (const TAO_Endpoint* endpoint);
-  virtual CORBA::ULong endpoint_count (void);
+  int is_collocated (const TAO_Endpoint* endpoint) override;
+  CORBA::ULong endpoint_count (void) override;
 
-  virtual int object_key (IOP::TaggedProfile &profile,
-                          TAO::ObjectKey &key);
+  int object_key (IOP::TaggedProfile &profile,
+                          TAO::ObjectKey &key) override;
   //@}
 
 private:

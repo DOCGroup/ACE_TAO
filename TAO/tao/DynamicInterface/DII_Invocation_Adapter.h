@@ -90,24 +90,24 @@ namespace TAO
                             CORBA::Request *r,
                             Invocation_Mode mode = TAO_DII_INVOCATION);
 
-    virtual ~DII_Invocation_Adapter ();
+    ~DII_Invocation_Adapter () override;
 
     /// Invoke the target
-    virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
+    void invoke (const TAO::Exception_Data *ex, unsigned long ex_count) override;
 
   protected:
-    virtual Invocation_Status invoke_twoway (
+    Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time,
-        Invocation_Retry_State *retry_state = 0);
+        Invocation_Retry_State *retry_state = 0) override;
 
-    virtual Invocation_Status invoke_collocated_i (
+    Invocation_Status invoke_collocated_i (
         TAO_Stub *stub,
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
-        Collocation_Strategy strat);
+        Collocation_Strategy strat) override;
 
   private:
     CORBA::ExceptionList *exception_list_;
@@ -142,21 +142,21 @@ namespace TAO
         TAO::Invocation_Mode mode = TAO_DII_DEFERRED_INVOCATION);
 
     /// Invoke the target
-    virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
+    void invoke (const TAO::Exception_Data *ex, unsigned long ex_count) override;
 
   protected:
-    virtual Invocation_Status invoke_twoway (
+    Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time,
-        Invocation_Retry_State *retry_state = 0);
+        Invocation_Retry_State *retry_state = 0) override;
 
-    virtual Invocation_Status invoke_collocated_i (
+    Invocation_Status invoke_collocated_i (
         TAO_Stub *stub,
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
-        Collocation_Strategy strat);
+        Collocation_Strategy strat) override;
 
   private:
     CORBA::Request *request_;
@@ -189,11 +189,11 @@ namespace TAO
        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
 
   protected:
-    virtual Invocation_Status invoke_collocated_i (
+    Invocation_Status invoke_collocated_i (
         TAO_Stub *stub,
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
-        Collocation_Strategy strat);
+        Collocation_Strategy strat) override;
   };
 } // End namespace TAO
 

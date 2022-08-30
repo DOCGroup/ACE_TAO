@@ -56,7 +56,7 @@ public:
   TAO_ETCL_Literal_Constraint (const ETCL_Literal_Constraint *lit);
 
   /// Destructor.
-  virtual ~TAO_ETCL_Literal_Constraint(void);
+  ~TAO_ETCL_Literal_Constraint(void) override;
 
   /// Assignment operator.
   void operator= (const TAO_ETCL_Literal_Constraint& co);
@@ -90,8 +90,8 @@ public:
   operator- (void);
 
   /// Ensure both operands are of the same simple numeric type.
-  virtual Literal_Type
-  widest_type (const ETCL_Literal_Constraint& rhs);
+  Literal_Type
+  widest_type (const ETCL_Literal_Constraint& rhs) override;
 
   /// Determine the comparable Expression Type from the CORBA type
   static Literal_Type

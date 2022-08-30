@@ -84,27 +84,27 @@ public:
   /*
    * Destructor.
    */
-  virtual ~ACEXML_LocatorImpl ();
+  ~ACEXML_LocatorImpl () override;
 
   /*
    * Return the column number where the current document event ends.
    */
-  virtual int getColumnNumber () const;
+  int getColumnNumber () const override;
 
   /*
    * Return the line number where the current document event ends.
    */
-  virtual int getLineNumber () const;
+  int getLineNumber () const override;
 
   /*
    * Return the public identifier for the current document event.
    */
-  virtual const ACEXML_Char *getPublicId () const;
+  const ACEXML_Char *getPublicId () const override;
 
   /*
    * Return the system identifier for the current document event.
    */
-  virtual const ACEXML_Char *getSystemId () const;
+  const ACEXML_Char *getSystemId () const override;
 
   /*
    * Set the column number of this locator.

@@ -11,38 +11,38 @@ public:
   Literal_Visitor (Literal_Interpreter<T>* interp);
   virtual ~Literal_Visitor (void);
 
-  virtual int visit_constraint (TAO_Unary_Constraint*);
+  int visit_constraint (TAO_Unary_Constraint*) override;
 
-  virtual int visit_with (TAO_Unary_Constraint*) { return 1; }
-  virtual int visit_min (TAO_Unary_Constraint*) { return 1; }
-  virtual int visit_max (TAO_Unary_Constraint*) { return 1; }
-  virtual int visit_first (TAO_Noop_Constraint*) { return 1; }
-  virtual int visit_random (TAO_Noop_Constraint*) { return 1; }
+  int visit_with (TAO_Unary_Constraint*) { return 1 override; }
+  int visit_min (TAO_Unary_Constraint*) { return 1 override; }
+  int visit_max (TAO_Unary_Constraint*) { return 1 override; }
+  int visit_first (TAO_Noop_Constraint*) { return 1 override; }
+  int visit_random (TAO_Noop_Constraint*) { return 1 override; }
 
-  virtual int visit_and (TAO_Binary_Constraint*) { return 1; }
-  virtual int visit_or (TAO_Binary_Constraint*) { return 1; }
-  virtual int visit_not (TAO_Unary_Constraint*) { return 1; }
+  int visit_and (TAO_Binary_Constraint*) { return 1 override; }
+  int visit_or (TAO_Binary_Constraint*) { return 1 override; }
+  int visit_not (TAO_Unary_Constraint*) { return 1 override; }
 
-  virtual int visit_exist (TAO_Unary_Constraint*) { return 1; }
-  virtual int visit_unary_minus (TAO_Unary_Constraint*) { return 1; }
+  int visit_exist (TAO_Unary_Constraint*) { return 1 override; }
+  int visit_unary_minus (TAO_Unary_Constraint*) { return 1 override; }
 
-  virtual int visit_add (TAO_Binary_Constraint*) { return 1; }
-  virtual int visit_sub (TAO_Binary_Constraint*) { return 1; }
-  virtual int visit_mult (TAO_Binary_Constraint*) { return 1; }
-  virtual int visit_div (TAO_Binary_Constraint*) { return 1; }
+  int visit_add (TAO_Binary_Constraint*) { return 1 override; }
+  int visit_sub (TAO_Binary_Constraint*) { return 1 override; }
+  int visit_mult (TAO_Binary_Constraint*) { return 1 override; }
+  int visit_div (TAO_Binary_Constraint*) { return 1 override; }
 
-  virtual int visit_twiddle (TAO_Binary_Constraint*) { return 1; }
-  virtual int visit_in (TAO_Binary_Constraint*) { return 1; }
+  int visit_twiddle (TAO_Binary_Constraint*) { return 1 override; }
+  int visit_in (TAO_Binary_Constraint*) { return 1 override; }
 
-  virtual int visit_less_than (TAO_Binary_Constraint*) { return 1; }
-  virtual int visit_less_than_equal (TAO_Binary_Constraint*) { return 1; }
-  virtual int visit_greater_than (TAO_Binary_Constraint*) { return 1; }
-  virtual int visit_greater_than_equal (TAO_Binary_Constraint*) { return 1; }
-  virtual int visit_equal (TAO_Binary_Constraint*) { return 1; }
-  virtual int visit_not_equal (TAO_Binary_Constraint*) { return 1; }
+  int visit_less_than (TAO_Binary_Constraint*) { return 1 override; }
+  int visit_less_than_equal (TAO_Binary_Constraint*) { return 1 override; }
+  int visit_greater_than (TAO_Binary_Constraint*) { return 1 override; }
+  int visit_greater_than_equal (TAO_Binary_Constraint*) { return 1 override; }
+  int visit_equal (TAO_Binary_Constraint*) { return 1 override; }
+  int visit_not_equal (TAO_Binary_Constraint*) { return 1 override; }
 
-  virtual int visit_literal (TAO_Literal_Constraint*);
-  virtual int visit_property (TAO_Property_Constraint*) { return 1; }
+  int visit_literal (TAO_Literal_Constraint*) override;
+  int visit_property (TAO_Property_Constraint*) { return 1 override; }
 
 private:
   Literal_Interpreter<T>* interp_;

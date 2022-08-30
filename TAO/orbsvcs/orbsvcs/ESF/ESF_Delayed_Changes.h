@@ -104,11 +104,11 @@ public:
   typedef TAO_ESF_Shutdown_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE> > Shutdown_Command;
 
   // = The TAO_ESF_Proxy methods
-  virtual void for_each (TAO_ESF_Worker<PROXY> *worker);
-  virtual void connected (PROXY *proxy);
-  virtual void reconnected (PROXY *proxy);
-  virtual void disconnected (PROXY *proxy);
-  virtual void shutdown ();
+  void for_each (TAO_ESF_Worker<PROXY> *worker) override;
+  void connected (PROXY *proxy) override;
+  void reconnected (PROXY *proxy) override;
+  void disconnected (PROXY *proxy) override;
+  void shutdown () override;
 
 private:
   COLLECTION collection_;

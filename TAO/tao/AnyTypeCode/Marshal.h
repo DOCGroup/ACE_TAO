@@ -114,13 +114,13 @@ public:
   TAO_Marshal_Primitive ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
 
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest) override;
 };
 
 /**
@@ -136,13 +136,13 @@ public:
   TAO_Marshal_Any ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
 
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest) override;
 };
 
 /**
@@ -158,13 +158,13 @@ public:
   TAO_Marshal_TypeCode ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
 
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest) override;
 };
 
 /**
@@ -180,13 +180,13 @@ public:
   TAO_Marshal_Principal ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
 
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest) override;
 };
 
 /**
@@ -202,13 +202,13 @@ public:
   TAO_Marshal_ObjRef ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
 
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest) override;
 };
 
 /**
@@ -224,13 +224,13 @@ public:
   TAO_Marshal_Struct ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
 
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                              TAO_InputCDR *src,
+                              TAO_OutputCDR *dest) override;
 };
 
 /**
@@ -246,13 +246,13 @@ public:
   TAO_Marshal_Union ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
 
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest) override;
 };
 
 /**
@@ -268,13 +268,13 @@ public:
   TAO_Marshal_String ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
 
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest) override;
 };
 
 /**
@@ -290,13 +290,13 @@ public:
   TAO_Marshal_Sequence ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
 
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest) override;
 };
 
 /**
@@ -312,13 +312,13 @@ public:
   TAO_Marshal_Array ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
 
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest) override;
 };
 
 /**
@@ -334,13 +334,12 @@ public:
   TAO_Marshal_Alias ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
-
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest) override;
 };
 
 /**
@@ -356,13 +355,13 @@ public:
   TAO_Marshal_Except ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
 
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest) override;
 };
 
 /**
@@ -378,13 +377,13 @@ public:
   TAO_Marshal_WString ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
 
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest) override;
 };
 
 /**
@@ -400,13 +399,13 @@ public:
   TAO_Marshal_Value ();
 
   /// skip operation
-  virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+  TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
+                             TAO_InputCDR *context) override;
 
   /// append operation
-  virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+  TAO::traverse_status append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest) override;
 
 private:
   CORBA::Boolean nested_processing_;

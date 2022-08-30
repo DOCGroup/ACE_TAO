@@ -63,7 +63,7 @@ namespace TAO
     : public RequestInterceptor_Adapter
   {
   public:
-    virtual ~ClientRequestInterceptor_Adapter ();
+    ~ClientRequestInterceptor_Adapter () override;
 
     /**
      * @name PortableInterceptor Client Side Interception Points

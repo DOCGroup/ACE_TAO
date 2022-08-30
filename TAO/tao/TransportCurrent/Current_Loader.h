@@ -37,11 +37,11 @@ namespace TAO
     {
     public:
       /// Initializes object when dynamic linking occurs.
-      virtual int init (int argc, ACE_TCHAR *argv[]);
+      int init (int argc, ACE_TCHAR *argv[]) override;
 
     protected:
       /// Protected destructor to enforce reference counting discipline
-      virtual ~Current_Loader (void);
+      ~Current_Loader (void) override;
     };
 
   }

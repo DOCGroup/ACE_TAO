@@ -50,7 +50,7 @@ public:
                const TAO_MProfile &profiles,
                TAO_ORB_Core *orb_core);
 
-  virtual ~TAO_RT_Stub (void);
+  ~TAO_RT_Stub (void) override;
 
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -60,12 +60,12 @@ public:
    * policy type.  Returns the effective override for all other policy
    * types.
    */
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType type);
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType type) override;
 
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type) override;
 
   TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
-                                  CORBA::SetOverrideType set_add);
+                                  CORBA::SetOverrideType set_add) override;
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 

@@ -84,7 +84,7 @@ public:
                  bool local,
                  bool abstract);
 
-  virtual ~AST_Interface ();
+  ~AST_Interface () override;
 
   // This serves for interfaces, value types, components, and eventtypes.
   static void fwd_redefinition_helper (AST_Interface *&i,
@@ -112,7 +112,7 @@ public:
   // Is this interface defined? This predicate returns FALSE when an
   // interface was forward declared but not defined yet, and TRUE in
   // all other cases.
-  bool is_defined ();
+  bool is_defined () override;
 
   // Check if we have redefined any of our parents' operations or attributes,
   // and check if there is such a clash among the parents
@@ -127,8 +127,8 @@ public:
   void fwd_decl (AST_InterfaceFwd *node);
 
   // Look through inherited interfaces.
-  virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
-                                       bool full_def_only);
+  AST_Decl *look_in_inherited (UTL_ScopedName *e,
+                              bool full_def_only) override;
 
   AST_Decl *look_in_inherited_local (Identifier *e,
                                      bool full_def_only = false);
@@ -143,11 +143,11 @@ public:
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
-  virtual bool legal_for_primary_key () const;
+  bool legal_for_primary_key () const override;
 
-  virtual AST_Decl *special_lookup (UTL_ScopedName *e,
-                                    bool full_def_only,
-                                    AST_Decl *&final_parent_decl);
+  AST_Decl *special_lookup (UTL_ScopedName *e,
+                           bool full_def_only,
+                           AST_Decl *&final_parent_decl) override;
 
   /// Accessors for the members.
   AST_Interface *ami_handler () const;
@@ -156,18 +156,18 @@ public:
   void ami4ccm_uses (AST_Interface *implied);
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
   typedef AST_InterfaceFwd FWD_TYPE;
 
-  virtual bool annotatable () const;
+  bool annotatable () const override;
 
 protected:
   // Data.
@@ -218,29 +218,29 @@ protected:
 public:
   // Scope Management Protocol.
 
-  virtual AST_Constant *fe_add_constant (AST_Constant *c);
+  AST_Constant *fe_add_constant (AST_Constant *c) override;
 
-  virtual AST_Exception *fe_add_exception (AST_Exception *e);
+  AST_Exception *fe_add_exception (AST_Exception *e) override;
 
-  virtual AST_Attribute *fe_add_attribute (AST_Attribute *a);
+  AST_Attribute *fe_add_attribute (AST_Attribute *a) override;
 
-  virtual AST_Operation *fe_add_operation (AST_Operation *o);
+  AST_Operation *fe_add_operation (AST_Operation *o) override;
 
-  virtual AST_Union *fe_add_union (AST_Union *u);
+  AST_Union *fe_add_union (AST_Union *u) override;
 
-  virtual AST_Structure *fe_add_structure (AST_Structure *s);
+  AST_Structure *fe_add_structure (AST_Structure *s) override;
 
-  virtual AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u);
+  AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u) override;
 
-  virtual AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s);
+  AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s) override;
 
-  virtual AST_Enum *fe_add_enum (AST_Enum *e);
+  AST_Enum *fe_add_enum (AST_Enum *e) override;
 
-  virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
+  AST_EnumVal *fe_add_enum_val (AST_EnumVal *v) override;
 
-  virtual AST_Typedef *fe_add_typedef (AST_Typedef *t);
+  AST_Typedef *fe_add_typedef (AST_Typedef *t) override;
 
-  virtual AST_Native *fe_add_native (AST_Native *n);
+  AST_Native *fe_add_native (AST_Native *n) override;
 
 protected:
   // Lookup based on the local name, override of UTL_Scope definition.

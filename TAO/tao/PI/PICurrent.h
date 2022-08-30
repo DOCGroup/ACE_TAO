@@ -69,14 +69,14 @@ namespace TAO
     //@{
     /// Retrieve information stored in the slot table at the given
     /// SlotId.
-    virtual CORBA::Any *get_slot (PortableInterceptor::SlotId id);
+    CORBA::Any *get_slot (PortableInterceptor::SlotId id) override;
 
     /// Set information in the slot table at the given SlotId.
-    virtual void set_slot (PortableInterceptor::SlotId identifier,
-                           const CORBA::Any & data);
+    void set_slot (PortableInterceptor::SlotId identifier,
+                           const CORBA::Any & data) override;
     //@}
 
-    virtual CORBA::ORB_ptr _get_orb ();
+    CORBA::ORB_ptr _get_orb () override;
 
     /// Number of slots allocated in the slot table.
     PortableInterceptor::SlotId slot_count () const;
@@ -98,7 +98,7 @@ namespace TAO
      * counted, and should not be destroyed using delete() by anything
      * other than the reference counting mechanism.
      */
-    virtual ~PICurrent () = default;
+    ~PICurrent () override = default;
 
   private:
     PICurrent (const PICurrent &) = delete;

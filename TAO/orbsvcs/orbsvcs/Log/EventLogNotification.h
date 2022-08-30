@@ -49,10 +49,10 @@ public:
   TAO_EventLogNotification (CosEventChannelAdmin::EventChannel_ptr);
 
   /// Destructor.
-  ~TAO_EventLogNotification (void);
+  ~TAO_EventLogNotification (void) override;
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void);
+  void disconnect_push_supplier (void) override;
 
 protected:
   /// Used to connect this PushSupplier to the EventChannel
@@ -60,7 +60,7 @@ protected:
   void obtain_proxy_consumer ();
 
   /// Send the event on the event channel.
-  virtual void send_notification (const CORBA::Any& any);
+  void send_notification (const CORBA::Any& any) override;
 
 
 private:

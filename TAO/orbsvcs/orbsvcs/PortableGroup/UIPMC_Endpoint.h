@@ -50,23 +50,23 @@ public:
                       CORBA::UShort port);
 
   /// Destructor.
-  ~TAO_UIPMC_Endpoint (void);
+  ~TAO_UIPMC_Endpoint (void) override;
 
   // = Implementation of abstract TAO_Endpoint methods.  See
   // Endpoint.h for their documentation.
 
-  virtual TAO_Endpoint *next (void);
-  virtual int addr_to_string (char *buffer, size_t length);
+  TAO_Endpoint *next (void) override;
+  int addr_to_string (char *buffer, size_t length) override;
 
   /// Makes a copy of this TAO_Endpoint.
-  virtual TAO_Endpoint *duplicate (void);
+  TAO_Endpoint *duplicate (void) override;
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their port and host are the same.
-  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint) override;
 
   /// Return a hash value for this object.
-  CORBA::ULong hash (void);
+  CORBA::ULong hash (void) override;
 
   // Allocates memory and returns a copy of <this>
 

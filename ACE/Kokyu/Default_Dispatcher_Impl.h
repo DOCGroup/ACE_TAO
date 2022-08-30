@@ -40,11 +40,11 @@ namespace Kokyu
     Default_Dispatcher_Impl ();
 
   private:
-    int activate_i ();
-    int init_i (const Dispatcher_Attributes&);
+    int activate_i () override;
+    int init_i (const Dispatcher_Attributes&) override;
     int dispatch_i (const Dispatch_Command*,
-                  const QoSDescriptor&);
-    int shutdown_i ();
+                  const QoSDescriptor&) override;
+    int shutdown_i () override;
     Dispatcher_Task* find_task_with_preemption_prio (Priority_t);
 
   private:
@@ -62,7 +62,7 @@ namespace Kokyu
     Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
 
     /// Command callback
-    int execute ();
+    int execute () override;
   };
 
 } //end of namespace

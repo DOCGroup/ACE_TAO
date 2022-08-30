@@ -42,16 +42,16 @@ public:
   TAO_EC_Reactive_Timeout_Generator (ACE_Reactor *reactor = 0);
 
   /// destructor
-  virtual ~TAO_EC_Reactive_Timeout_Generator ();
+  ~TAO_EC_Reactive_Timeout_Generator () override;
 
   // = The TAO_EC_Timeout_Generator methods.
-  virtual void activate ();
-  virtual void shutdown ();
-  virtual int schedule_timer (TAO_EC_Timeout_Filter* filter,
+  void activate () override;
+  void shutdown () override;
+  int schedule_timer (TAO_EC_Timeout_Filter* filter,
                               const ACE_Time_Value& delta,
-                              const ACE_Time_Value& interval);
-  virtual int cancel_timer (const TAO_EC_QOS_Info& info,
-                            int id);
+                              const ACE_Time_Value& interval) override;
+  int cancel_timer (const TAO_EC_QOS_Info& info,
+                            int id) override;
 
 private:
   /// The reactor

@@ -32,15 +32,15 @@ public:
   TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core);
 
   /// Destructor
-  virtual ~TAO_Async_Table_Adapter (void);
+  ~TAO_Async_Table_Adapter (void) override;
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open (void);
+  void open (void) override;
 
-  virtual int dispatch (TAO::ObjectKey &key,
+  int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
-                        CORBA::Object_out foward_to);
+                        CORBA::Object_out foward_to) override;
 
 protected:
   /// Helper method to find an object bound in the table.
@@ -59,7 +59,7 @@ public:
 
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   /// details.
-  virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
+  TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -59,16 +59,16 @@ namespace TAO
        * @name CORBA::Policy Methods
        */
       //@{
-      virtual CORBA::PolicyType policy_type (void);
+      CORBA::PolicyType policy_type (void) override;
 
-      virtual CORBA::Policy_ptr copy (void);
+      CORBA::Policy_ptr copy (void) override;
 
-      virtual void destroy (void);
+      void destroy (void) override;
       //@}
 
       /// Return the Quality-of-Protection value associated with this
       /// policy.
-      virtual ::Security::QOP qop (void);
+      ::Security::QOP qop (void) override;
 
     protected:
 
@@ -77,7 +77,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechansim.
        */
-      ~QOPPolicy (void);
+      ~QOPPolicy (void) override;
 
     private:
 

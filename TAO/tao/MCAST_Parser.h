@@ -47,11 +47,11 @@ public:
 
   /// = The IOR_Parser methods, please read the documentation in
   ///   IOR_Parser.h
-  virtual bool match_prefix (const char *ior_string) const;
+  bool match_prefix (const char *ior_string) const override;
 
   /// Parse the ior-string that is passed.
-  virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb);
+  CORBA::Object_ptr parse_string (const char *ior,
+                                  CORBA::ORB_ptr orb) override;
 
 private:
 

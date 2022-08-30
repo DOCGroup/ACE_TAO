@@ -40,7 +40,7 @@ public:
                                CORBA::Boolean flag = false);
 
   /// Destructor
-  ~TAO_RT_Transport_Descriptor ();
+  ~TAO_RT_Transport_Descriptor () override;
 
   /// Insert Properties.
   void insert (TAO_RT_Transport_Descriptor_Property *descriptor_property);
@@ -49,14 +49,14 @@ public:
 
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
-  virtual TAO_Transport_Descriptor_Interface *duplicate (void);
+  TAO_Transport_Descriptor_Interface *duplicate (void) override;
 
   /// Try to determine if this object is same as the <other_prop>.
-  virtual CORBA::Boolean is_equivalent (
-      const TAO_Transport_Descriptor_Interface *other_prop);
+  CORBA::Boolean is_equivalent (
+      const TAO_Transport_Descriptor_Interface *other_prop) override;
 
   /// Generate hash value for our class
-  virtual u_long hash () const;
+  u_long hash () const override;
 
 private:
   /// Stack of properties.

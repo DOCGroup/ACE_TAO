@@ -52,7 +52,7 @@ public:
                     TAO_MProfile &mprofile,
                     TAO_Acceptor **acceptors_begin,
                     TAO_Acceptor **acceptors_end,
-                    CORBA::Short priority = TAO_INVALID_PRIORITY);
+                    CORBA::Short priority = TAO_INVALID_PRIORITY) override;
 
 private:
   // this is the list of endpoints as obtained from the policy value supplied

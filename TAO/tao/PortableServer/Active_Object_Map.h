@@ -338,40 +338,40 @@ class TAO_Unique_Id_Strategy : public TAO_Id_Uniqueness_Strategy
 public:
 
   /// Must be used with UNIQUE_ID policy.
-  virtual int
+  int
   is_servant_in_map (PortableServer::Servant servant,
-                     bool &deactivated);
+                     bool &deactivated) override;
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
   /// @a user_id is actually @c system_id.
-  virtual int
-  unbind_using_user_id (const PortableServer::ObjectId &user_id);
+  int
+  unbind_using_user_id (const PortableServer::ObjectId &user_id) override;
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
   /// @a user_id is actually @c system_id.
-  virtual int
+  int
   find_user_id_using_servant (PortableServer::Servant servant,
-                              PortableServer::ObjectId_out user_id);
+                              PortableServer::ObjectId_out user_id) override;
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
   /// <user_id> is actually @a system_id.
-  virtual int
+  int
   find_system_id_using_servant (PortableServer::Servant servant,
                                 PortableServer::ObjectId_out system_id,
-                                CORBA::Short &priority);
+                                CORBA::Short &priority) override;
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
   /// @a user_id is actually @c system_id.
-  virtual int
+  int
   bind_using_user_id (PortableServer::Servant servant,
                       const PortableServer::ObjectId &user_id,
                       CORBA::Short priority,
-                      TAO_Active_Object_Map_Entry *&entry);
+                      TAO_Active_Object_Map_Entry *&entry) override;
 
   /// Are there any remaining activations of @a servant in the active
   /// object map?  Can be used with any policy.
-  virtual CORBA::Boolean
-  remaining_activations (PortableServer::Servant servant);
+  CORBA::Boolean
+  remaining_activations (PortableServer::Servant servant) override;
 };
 
 #if !defined (CORBA_E_MICRO)
@@ -387,40 +387,40 @@ class TAO_Multiple_Id_Strategy : public TAO_Id_Uniqueness_Strategy
 public:
 
   /// Must be used with UNIQUE_ID policy.
-  virtual int
+  int
   is_servant_in_map (PortableServer::Servant servant,
-                     bool &deactivated);
+                     bool &deactivated) override;
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
   /// @a user_id is actually @c system_id.
-  virtual int
-  unbind_using_user_id (const PortableServer::ObjectId &user_id);
+  int
+  unbind_using_user_id (const PortableServer::ObjectId &user_id) override;
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
   /// @a user_id is actually @c system_id.
-  virtual int
+  int
   find_user_id_using_servant (PortableServer::Servant servant,
-                              PortableServer::ObjectId_out user_id);
+                              PortableServer::ObjectId_out user_id) override;
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
   /// <user_id> is actually @a system_id.
-  virtual int
+  int
   find_system_id_using_servant (PortableServer::Servant servant,
                                 PortableServer::ObjectId_out system_id,
-                                CORBA::Short &priority);
+                                CORBA::Short &priority) override;
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
   /// @a user_id is actually @c system_id.
-  virtual int
+  int
   bind_using_user_id (PortableServer::Servant servant,
                       const PortableServer::ObjectId &user_id,
                       CORBA::Short priority,
-                      TAO_Active_Object_Map_Entry *&entry);
+                      TAO_Active_Object_Map_Entry *&entry) override;
 
   /// Are there any remaining activations of @a servant in the active
   /// object map?  Can be used with any policy.
-  virtual CORBA::Boolean
-  remaining_activations (PortableServer::Servant servant);
+  CORBA::Boolean
+  remaining_activations (PortableServer::Servant servant) override;
 };
 #endif
 
@@ -468,12 +468,12 @@ class TAO_Transient_Strategy : public TAO_Lifespan_Strategy
 {
 public:
   /// Can be used with any policy.
-  virtual int
+  int
   find_servant_using_system_id_and_user_id (
     const PortableServer::ObjectId &system_id,
     const PortableServer::ObjectId &user_id,
     PortableServer::Servant &servant,
-    TAO_Active_Object_Map_Entry *&entry);
+    TAO_Active_Object_Map_Entry *&entry) override;
 };
 
 #if !defined (CORBA_E_MICRO)
@@ -488,12 +488,12 @@ class TAO_Persistent_Strategy : public TAO_Lifespan_Strategy
 {
 public:
   /// Can be used with any policy.
-  virtual int
+  int
   find_servant_using_system_id_and_user_id (
     const PortableServer::ObjectId &system_id,
     const PortableServer::ObjectId &user_id,
     PortableServer::Servant &servant,
-    TAO_Active_Object_Map_Entry *&entry);
+    TAO_Active_Object_Map_Entry *&entry) override;
 };
 #endif
 
@@ -539,10 +539,10 @@ class TAO_User_Id_Strategy : public TAO_Id_Assignment_Strategy
 {
 public:
   /// Must be used with SYSTEM_ID policy.
-  virtual int
+  int
   bind_using_system_id (PortableServer::Servant servant,
                         CORBA::Short priority,
-                        TAO_Active_Object_Map_Entry *&entry);
+                        TAO_Active_Object_Map_Entry *&entry) override;
 };
 #endif
 
@@ -558,10 +558,10 @@ class TAO_System_Id_With_Unique_Id_Strategy
 {
 public:
   /// Must be used with SYSTEM_ID policy.
-  virtual int
+  int
   bind_using_system_id (PortableServer::Servant servant,
                         CORBA::Short priority,
-                        TAO_Active_Object_Map_Entry *&entry);
+                        TAO_Active_Object_Map_Entry *&entry) override;
 };
 
 #if !defined (CORBA_E_MICRO)
@@ -577,10 +577,10 @@ class TAO_System_Id_With_Multiple_Id_Strategy
 {
 public:
   /// Must be used with SYSTEM_ID policy.
-  virtual int
+  int
   bind_using_system_id (PortableServer::Servant servant,
                         CORBA::Short priority,
-                        TAO_Active_Object_Map_Entry *&entry);
+                        TAO_Active_Object_Map_Entry *&entry) override;
 };
 #endif
 
@@ -639,28 +639,28 @@ public:
   TAO_Active_Hint_Strategy (CORBA::ULong map_size);
 
   /// Virtual destructor.
-  virtual ~TAO_Active_Hint_Strategy ();
+  ~TAO_Active_Hint_Strategy () override;
 
-  virtual int
+  int
   recover_key (const PortableServer::ObjectId &system_id,
-               PortableServer::ObjectId &user_id);
+               PortableServer::ObjectId &user_id) override;
 
-  virtual int
-  bind (TAO_Active_Object_Map_Entry &entry);
+  int
+  bind (TAO_Active_Object_Map_Entry &entry) override;
 
-  virtual int
-  unbind (TAO_Active_Object_Map_Entry &entry);
+  int
+  unbind (TAO_Active_Object_Map_Entry &entry) override;
 
-  virtual int
+  int
   find (const PortableServer::ObjectId &system_id,
-        TAO_Active_Object_Map_Entry *&entry);
+        TAO_Active_Object_Map_Entry *&entry) override;
 
-  virtual size_t
-  hint_size ();
+  size_t
+  hint_size () override;
 
-  virtual int
+  int
   system_id (PortableServer::ObjectId_out system_id,
-             TAO_Active_Object_Map_Entry &entry);
+             TAO_Active_Object_Map_Entry &entry) override;
 
   typedef ACE_Active_Map_Manager_Adapter<
   PortableServer::ObjectId,
@@ -681,28 +681,28 @@ class TAO_No_Hint_Strategy : public TAO_Id_Hint_Strategy
 {
 public:
   /// Virtual destructor.
-  virtual ~TAO_No_Hint_Strategy ();
+  ~TAO_No_Hint_Strategy () override;
 
-  virtual int
+  int
   recover_key (const PortableServer::ObjectId &system_id,
-               PortableServer::ObjectId &user_id);
+               PortableServer::ObjectId &user_id) override;
 
-  virtual int
-  bind (TAO_Active_Object_Map_Entry &entry);
+  int
+  bind (TAO_Active_Object_Map_Entry &entry) override;
 
-  virtual int
-  unbind (TAO_Active_Object_Map_Entry &entry);
+  int
+  unbind (TAO_Active_Object_Map_Entry &entry) override;
 
-  virtual int
+  int
   find (const PortableServer::ObjectId &system_id,
-        TAO_Active_Object_Map_Entry *&entry);
+        TAO_Active_Object_Map_Entry *&entry) override;
 
-  virtual size_t
-  hint_size ();
+  size_t
+  hint_size () override;
 
-  virtual int
+  int
   system_id (PortableServer::ObjectId_out system_id,
-             TAO_Active_Object_Map_Entry &entry);
+             TAO_Active_Object_Map_Entry &entry) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

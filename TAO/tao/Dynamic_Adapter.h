@@ -65,7 +65,7 @@ namespace CORBA
 class TAO_Export TAO_Dynamic_Adapter : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_Dynamic_Adapter ();
+  ~TAO_Dynamic_Adapter () override;
 
   // CORBA::Object::_create_request and CORBA::Object::_request.
   virtual void create_request (CORBA::Object_ptr obj,

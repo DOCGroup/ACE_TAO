@@ -32,7 +32,7 @@ class ACE_Export ACE_Asynch_Pseudo_Task : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
   ACE_Asynch_Pseudo_Task();
-  virtual ~ACE_Asynch_Pseudo_Task();
+  ~ACE_Asynch_Pseudo_Task() override;
 
   int start (void);
   int stop (void);
@@ -48,7 +48,7 @@ public:
   int suspend_io_handler (ACE_HANDLE handle);
 
 protected:
-  virtual int svc ();
+  int svc () override;
 
   /// Should be initialized before reactor_
   ACE_Select_Reactor select_reactor_;

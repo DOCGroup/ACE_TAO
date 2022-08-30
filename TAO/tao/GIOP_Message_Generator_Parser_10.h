@@ -32,54 +32,54 @@ class TAO_GIOP_Message_Generator_Parser_10:
 {
 public:
   /// Write the request header in to @a msg
-  virtual bool write_request_header (
+  bool write_request_header (
       const TAO_Operation_Details &opdetails,
       TAO_Target_Specification &spec,
-      TAO_OutputCDR &msg);
+      TAO_OutputCDR &msg) override;
 
   /// Write the LocateRequest header
-  virtual bool write_locate_request_header (
+  bool write_locate_request_header (
       CORBA::ULong request_id,
       TAO_Target_Specification &spec,
-      TAO_OutputCDR &msg);
+      TAO_OutputCDR &msg) override;
 
   /// Write the reply header in to @a output
-  virtual bool write_reply_header (
+  bool write_reply_header (
       TAO_OutputCDR &output,
-      TAO_Pluggable_Reply_Params_Base &reply);
+      TAO_Pluggable_Reply_Params_Base &reply) override;
 
   /// Writes the locate _reply message in to the @a output
-  virtual bool write_locate_reply_mesg (
+  bool write_locate_reply_mesg (
       TAO_OutputCDR &output,
       CORBA::ULong request_id,
-      TAO_GIOP_Locate_Status_Msg &status);
+      TAO_GIOP_Locate_Status_Msg &status) override;
 
-  virtual bool write_fragment_header (TAO_OutputCDR & cdr,
-                                      CORBA::ULong request_id);
+  bool write_fragment_header (TAO_OutputCDR & cdr,
+                                      CORBA::ULong request_id) override;
 
   /// Parse the Request Header from the incoming stream. This will do a
   /// version specific parsing of the incoming Request header
-  virtual int parse_request_header (TAO_ServerRequest &);
+  int parse_request_header (TAO_ServerRequest &) override;
 
   /// Parse the LocateRequest Header from the incoming stream. This will do a
   /// version specific parsing of the incoming Request header
-  virtual int parse_locate_header (
-      TAO_GIOP_Locate_Request_Header &);
+  int parse_locate_header (
+      TAO_GIOP_Locate_Request_Header &) override;
 
   /// Parse the reply message from the server
-  virtual int parse_reply (TAO_InputCDR &input,
-                           TAO_Pluggable_Reply_Params &params);
+  int parse_reply (TAO_InputCDR &input,
+                           TAO_Pluggable_Reply_Params &params) override;
 
     /// Parse the reply message from the server
-  virtual int parse_locate_reply (TAO_InputCDR &input,
-                                  TAO_Pluggable_Reply_Params &params);
+  int parse_locate_reply (TAO_InputCDR &input,
+                                  TAO_Pluggable_Reply_Params &params) override;
 
   /// Our versions
-  virtual CORBA::Octet major_version () const;
-  virtual CORBA::Octet minor_version () const;
+  CORBA::Octet major_version () const override;
+  CORBA::Octet minor_version () const override;
 
   /// The header length of a fragment
-  virtual size_t fragment_header_length () const;
+  size_t fragment_header_length () const override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

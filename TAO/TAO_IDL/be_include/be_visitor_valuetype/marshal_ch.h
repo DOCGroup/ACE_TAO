@@ -31,10 +31,10 @@ public:
   be_visitor_valuetype_marshal_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_marshal_ch ();
+  ~be_visitor_valuetype_marshal_ch () override;
 
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_MARSHAL_CH_H_ */

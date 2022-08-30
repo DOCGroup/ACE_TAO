@@ -62,7 +62,7 @@ namespace TAO
       TP_Servant_State();
 
       /// Virtual Destructor.
-      virtual ~TP_Servant_State();
+      ~TP_Servant_State() override;
 
       /// Accessor for the servant busy flag.
       bool busy_flag() const;

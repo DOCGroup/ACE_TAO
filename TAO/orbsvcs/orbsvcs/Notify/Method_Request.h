@@ -60,7 +60,7 @@ public:
   TAO_Notify_Method_Request_Queueable();
   TAO_Notify_Method_Request_Queueable(const TAO_Notify_Event * event);
 
-  virtual TAO_Notify_Method_Request_Queueable* copy (void);
+  TAO_Notify_Method_Request_Queueable* copy (void) override;
   void init (const TAO_Notify_Event * event);
 
   /// The creation time of the event to which this request corresponds.

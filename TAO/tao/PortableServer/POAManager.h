@@ -59,22 +59,22 @@ class TAO_PortableServer_Export TAO_POA_Manager :
   friend class TAO_Object_Adapter;
 
 public:
-  void activate ();
+  void activate () override;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  void hold_requests (CORBA::Boolean wait_for_completion);
+  void hold_requests (CORBA::Boolean wait_for_completion) override;
 
-  void discard_requests (CORBA::Boolean wait_for_completion);
+  void discard_requests (CORBA::Boolean wait_for_completion) override;
 
   void deactivate (CORBA::Boolean etherealize_objects,
-                   CORBA::Boolean wait_for_completion);
+                   CORBA::Boolean wait_for_completion) override;
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  PortableServer::POAManager::State get_state ();
+  PortableServer::POAManager::State get_state () override;
 
-  char *get_id ();
+  char *get_id () override;
 
   TAO_POA_Manager (TAO_Object_Adapter &object_adapter,
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -85,14 +85,14 @@ public:
                    const char * id);
 #endif
 
-  ~TAO_POA_Manager ();
+  ~TAO_POA_Manager () override;
 
   /// Check the state of this POA manager
   void check_state ();
 
   PortableServer::POAManager::State get_state_i ();
 
-  virtual CORBA::ORB_ptr _get_orb ();
+  CORBA::ORB_ptr _get_orb () override;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   CORBA::PolicyList& get_policies ();

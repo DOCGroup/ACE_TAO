@@ -38,48 +38,48 @@ class TAO_Notify_Serv_Export TAO_Notify_SequencePushConsumer
 public:
   TAO_Notify_SequencePushConsumer (TAO_Notify_ProxySupplier* proxy);
 
-  virtual ~TAO_Notify_SequencePushConsumer ();
+  ~TAO_Notify_SequencePushConsumer () override;
 
   /// Init the Consumer
   void init (CosNotifyComm::SequencePushConsumer_ptr push_consumer);
 
   /// Add request to a queue if necessary.
   /// for Sequence it's always necessary.
-  virtual bool enqueue_if_necessary(
-    TAO_Notify_Method_Request_Event * request);
+  bool enqueue_if_necessary(
+    TAO_Notify_Method_Request_Event * request) override;
 
 // FUZZ: disable check_for_ACE_Guard
-  virtual bool dispatch_from_queue (
+  bool dispatch_from_queue (
     Request_Queue & requests,
-    ACE_Guard <TAO_SYNCH_MUTEX> & ace_mon);
+    ACE_Guard <TAO_SYNCH_MUTEX> & ace_mon) override;
 // FUZZ: enable check_for_ACE_Guard
 
   /// Push @a event to this consumer.
-  virtual void push (const CORBA::Any& event);
+  void push (const CORBA::Any& event) override;
 
   /// Push event.
-  virtual void push (const CosNotification::StructuredEvent & event);
+  void push (const CosNotification::StructuredEvent & event) override;
 
   /// Push a batch of events to this consumer.
-  virtual void push (const CosNotification::EventBatch& event);
+  void push (const CosNotification::EventBatch& event) override;
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior () const;
+  ACE_CString get_ior () const override;
 
   /// on reconnect we need to move events from the old consumer
   /// to the new one
-  virtual void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer);
+  void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer) override;
 
 protected:
 
-  virtual CORBA::Object_ptr get_consumer (void);
+  CORBA::Object_ptr get_consumer (void) override;
 
   /// The Consumer
   CosNotifyComm::SequencePushConsumer_var push_consumer_;
 
 private:
   /// TAO_Notify_Destroy_Callback methods.
-  virtual void release (void);
+  void release (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

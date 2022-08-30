@@ -34,7 +34,7 @@ public:
   ~be_visitor_scope ();
 
   /// visit scope
-  int visit_scope (be_scope *node);
+  int visit_scope (be_scope *node) override;
 
   /// do any processing after every element except the last one of the scope is
   /// processed

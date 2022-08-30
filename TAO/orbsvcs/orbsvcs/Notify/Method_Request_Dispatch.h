@@ -63,7 +63,7 @@ public:
 
 public:
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch ();
+  ~TAO_Notify_Method_Request_Dispatch () override;
 
   /// Static method used to reconstruct a Method Request Dispatch
   static TAO_Notify_Method_Request_Dispatch_Queueable * unmarshal (
@@ -112,10 +112,10 @@ public:
     bool filtering);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch_Queueable ();
+  ~TAO_Notify_Method_Request_Dispatch_Queueable () override;
 
   /// Execute the Request
-  virtual int execute (void);
+  int execute (void) override;
 
 private:
   TAO_Notify_Event::Ptr event_var_;
@@ -141,13 +141,13 @@ public:
     bool filtering);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch_No_Copy ();
+  ~TAO_Notify_Method_Request_Dispatch_No_Copy () override;
 
   /// Execute the Request
-  virtual int execute (void);
+  int execute (void) override;
 
   /// Create a copy of this method request
-  virtual TAO_Notify_Method_Request_Queueable* copy (void);
+  TAO_Notify_Method_Request_Queueable* copy (void) override;
 };
 
 /*****************************************************************************/

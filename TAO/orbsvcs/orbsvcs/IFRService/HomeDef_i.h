@@ -46,27 +46,27 @@ public:
   TAO_HomeDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_HomeDef_i (void);
+  ~TAO_HomeDef_i (void) override;
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (void);
+  CORBA::DefinitionKind def_kind (void) override;
 
   /// Remove the repository entry.
-  virtual void destroy (void);
+  void destroy (void) override;
 
-  virtual void destroy_i (void);
-
-  /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe (void);
+  void destroy_i (void) override;
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i (void);
+  CORBA::Contained::Description *describe (void) override;
+
+  /// From Contained_i's pure virtual function.
+  CORBA::Contained::Description *describe_i (void) override;
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type (void);
+  CORBA::TypeCode_ptr type (void) override;
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i (void);
+  CORBA::TypeCode_ptr type_i (void) override;
 
   virtual CORBA::ComponentIR::HomeDef_ptr base_home (void);
 

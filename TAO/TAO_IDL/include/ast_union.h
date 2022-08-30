@@ -83,12 +83,12 @@ public:
              bool local,
              bool abstract);
 
-  virtual ~AST_Union ();
+  ~AST_Union () override;
 
   // This also calls the base class version.
-  virtual void redefine (AST_Structure *from);
+  void redefine (AST_Structure *from) override;
 
-  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
   // Are we or the parameter node involved in some kind of recursion?
 
   // Data Accessors.
@@ -126,10 +126,10 @@ public:
   // Return the default index used.
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &);
+  void dump (ACE_OSTREAM_TYPE &) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 
@@ -142,10 +142,10 @@ public:
   ///}
 
 protected:
-  virtual int compute_size_type ();
+  int compute_size_type () override;
   // Compute the size type if it is unknown.
 
-  virtual AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b);
+  AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b) override;
   // Moved out of private section so it can be called from subclass.
 
 private:
@@ -179,13 +179,13 @@ private:
 
   // Scope Management Protocol.
 
-  virtual AST_Union *fe_add_union (AST_Union *u);
+  AST_Union *fe_add_union (AST_Union *u) override;
 
-  virtual AST_Structure *fe_add_structure (AST_Structure *s);
+  AST_Structure *fe_add_structure (AST_Structure *s) override;
 
-  virtual AST_Enum *fe_add_enum (AST_Enum *e);
+  AST_Enum *fe_add_enum (AST_Enum *e) override;
 
-  virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
+  AST_EnumVal *fe_add_enum_val (AST_EnumVal *v) override;
 
   virtual int compute_default_value ();
   // Compute the default value (if any).

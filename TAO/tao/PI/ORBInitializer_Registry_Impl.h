@@ -53,31 +53,31 @@ namespace TAO
     /// dependent static service objects. That is just impossible
     /// without registering those static services in the same repo, the
     /// dynamic SO is registered with.
-    virtual int init (int, ACE_TCHAR *[]);
+    int init (int, ACE_TCHAR *[]) override;
 
     /// Service config fini method, release all ORBInitializers at this
     /// moment
-    virtual int fini ();
+    int fini () override;
 
     /// Register an ORBInitializer with the underlying ORBInitializer
     /// array.
-    virtual void register_orb_initializer (
-                   PortableInterceptor::ORBInitializer_ptr init);
+    void register_orb_initializer (
+                   PortableInterceptor::ORBInitializer_ptr init) override;
 
     /// Begin initialization of all registered ORBInitializers before
     /// the ORB itself is initialized.
-    virtual size_t pre_init (TAO_ORB_Core *orb_core,
+    size_t pre_init (TAO_ORB_Core *orb_core,
                              int argc,
                              char *argv[],
-                             PortableInterceptor::SlotId &slotid);
+                             PortableInterceptor::SlotId &slotid) override;
 
     /// Complete initialization of all registered ORBInitializers after
     /// the ORB has been initialized.
-    virtual void post_init (size_t pre_init_count,
+    void post_init (size_t pre_init_count,
                             TAO_ORB_Core *orb_core,
                             int argc,
                             char *argv[],
-                            PortableInterceptor::SlotId slotid);
+                            PortableInterceptor::SlotId slotid) override;
 
   private:
     // Prevent copying

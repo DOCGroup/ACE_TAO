@@ -71,14 +71,14 @@ public:
   TAO_RT_Transport_Descriptor_Private_Connection_Property (long object_id);
 
   /// Destructor
-  ~TAO_RT_Transport_Descriptor_Private_Connection_Property (void);
+  ~TAO_RT_Transport_Descriptor_Private_Connection_Property (void) override;
 
   /// Init
   void init (long object_id);
 
-  virtual TAO_RT_Transport_Descriptor_Property *duplicate (void);
+  TAO_RT_Transport_Descriptor_Property *duplicate (void) override;
 
-  virtual CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop);
+  CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop) override;
 
 private:
   /**
@@ -109,14 +109,14 @@ public:
                                                           CORBA::Short high_priority);
 
   /// Destructor
-  ~TAO_RT_Transport_Descriptor_Banded_Connection_Property (void);
+  ~TAO_RT_Transport_Descriptor_Banded_Connection_Property (void) override;
 
   /// Init
   void init (CORBA::Short low_priority, CORBA::Short high_priority);
 
-  virtual TAO_RT_Transport_Descriptor_Property *duplicate (void);
+  TAO_RT_Transport_Descriptor_Property *duplicate (void) override;
 
-  virtual CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop);
+  CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop) override;
 
 protected:
   /// The low priority of the Band.

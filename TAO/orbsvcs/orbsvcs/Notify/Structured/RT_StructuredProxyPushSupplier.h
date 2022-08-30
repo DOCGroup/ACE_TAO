@@ -32,17 +32,17 @@ public:
   TAO_Notify_RT_StructuredProxyPushSupplier (void);
 
   /// Destructor
-  ~TAO_Notify_RT_StructuredProxyPushSupplier ();
+  ~TAO_Notify_RT_StructuredProxyPushSupplier () override;
 
   /// Activate this object and obtain the Event_Forwarder interface.
-  virtual CORBA::Object_ptr activate (PortableServer::Servant servant);
+  CORBA::Object_ptr activate (PortableServer::Servant servant) override;
 
   /// Dummy method to prevent hidden TAO_Notify_Proxy::activate warning.
-  virtual CORBA::Object_ptr activate (PortableServer::Servant servant,
-                                      CORBA::Long id);
+  CORBA::Object_ptr activate (PortableServer::Servant servant,
+                                      CORBA::Long id) override;
 
   /// Dispatch Event to consumer
-  void deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request);
+  void deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request) override;
 
   /// Dispatch Event to consumer, no filtering
   virtual void push_no_filtering (const TAO_Notify_Event* event);

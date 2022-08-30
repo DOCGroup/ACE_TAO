@@ -38,10 +38,10 @@ public:
   virtual ~ifr_removing_visitor (void);
 
   /// Visit the scope.
-  virtual int visit_scope (UTL_Scope *node);
+  int visit_scope (UTL_Scope *node) override;
 
   /// Visit the root.
-  virtual int visit_root (AST_Root *node);
+  int visit_root (AST_Root *node) override;
 };
 
 #endif /* TAO_IFR_REMOVING_VISITOR_H */

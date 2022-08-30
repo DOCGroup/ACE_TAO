@@ -28,7 +28,7 @@ public:
 
   ~be_visitor_root_is ();
 
-  virtual int visit_root (be_root *node);
+  int visit_root (be_root *node) override;
 
 private:
   /// Open file and initialize stream.

@@ -12,30 +12,30 @@ public:
   AST_StructureFwd (AST_Structure *full_defn,
                     UTL_ScopedName *n);
 
-  virtual ~AST_StructureFwd ();
+  ~AST_StructureFwd () override;
 
   AST_Structure *full_definition ();
   void set_full_definition (AST_Structure *nfd);
 
-  virtual bool is_defined ();
+  bool is_defined () override;
   void set_as_defined ();
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &);
+  void dump (ACE_OSTREAM_TYPE &) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Is this decl a forward declared type (Yes)
-  virtual bool is_fwd ();
+  bool is_fwd () override;
 
   // We don't actually want the forward declaration,
   // but want to return the full definition member,
   // whether defined yet or not.
-  virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
+  AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only) override;
 
   static AST_Decl::NodeType const NT;
 

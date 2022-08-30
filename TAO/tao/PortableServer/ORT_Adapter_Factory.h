@@ -55,7 +55,7 @@ namespace TAO
      *       line option.  Apparently the compiler generated
      *       destructor is inlined.
      */
-    virtual ~ORT_Adapter_Factory ();
+    ~ORT_Adapter_Factory () override;
 
     /// Create a new adapter, in case not possible to allocate, returns 0
     virtual TAO::ORT_Adapter * create () = 0;

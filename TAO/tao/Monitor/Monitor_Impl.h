@@ -28,24 +28,24 @@ public:
   /// Constructor
   Monitor_Impl (CORBA::ORB_ptr orb);
 
-  virtual ::Monitor::NameList * get_statistic_names (const char * filter);
+  ::Monitor::NameList * get_statistic_names (const char * filter) override;
 
-  virtual ::Monitor::DataList * get_statistics (
-      const ::Monitor::NameList & names);
+  ::Monitor::DataList * get_statistics (
+      const ::Monitor::NameList & names) override;
 
-  virtual ::Monitor::DataList * get_and_clear_statistics (
-      const ::Monitor::NameList & names);
+  ::Monitor::DataList * get_and_clear_statistics (
+      const ::Monitor::NameList & names) override;
 
-  virtual ::Monitor::NameList * clear_statistics (
-    const ::Monitor::NameList & names);
+  ::Monitor::NameList * clear_statistics (
+    const ::Monitor::NameList & names) override;
 
-  virtual ::Monitor::ConstraintStructList * register_constraint (
+  ::Monitor::ConstraintStructList * register_constraint (
       const ::Monitor::NameList & names,
       const char * cs,
-      ::Monitor::Subscriber_ptr sub);
+      ::Monitor::Subscriber_ptr sub) override;
 
-  virtual void unregister_constraints (
-      const ::Monitor::ConstraintStructList & constraint);
+  void unregister_constraints (
+      const ::Monitor::ConstraintStructList & constraint) override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

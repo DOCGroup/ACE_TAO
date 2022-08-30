@@ -28,10 +28,10 @@ public:
   be_visitor_valuebox (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox ();
+  ~be_visitor_valuebox () override;
 
   /// visit attribute. We provide code for this method in the derived class
-  virtual int visit_valuebox (be_valuebox *node);
+  int visit_valuebox (be_valuebox *node) override;
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_H_ */

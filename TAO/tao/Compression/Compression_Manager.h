@@ -31,22 +31,22 @@ namespace TAO
     public virtual ::CORBA::LocalObject
   {
   public:
-    virtual ~CompressionManager ();
+    ~CompressionManager () override;
 
-    virtual void register_factory (::Compression::CompressorFactory_ptr
-                                   compressor_factory);
+    void register_factory (::Compression::CompressorFactory_ptr
+                                   compressor_factory) override;
 
-    virtual void unregister_factory (::Compression::CompressorId
-                                     compressor_id);
+    void unregister_factory (::Compression::CompressorId
+                                     compressor_id) override;
 
-    virtual ::Compression::CompressorFactory_ptr get_factory
-      (::Compression::CompressorId compressor_id);
+    ::Compression::CompressorFactory_ptr get_factory
+      (::Compression::CompressorId compressor_id) override;
 
-    virtual ::Compression::Compressor_ptr get_compressor
+    ::Compression::Compressor_ptr get_compressor
       (::Compression::CompressorId compressor_id,
-       ::Compression::CompressionLevel compression_level);
+       ::Compression::CompressionLevel compression_level) override;
 
-    virtual ::Compression::CompressorFactorySeq *get_factories (void);
+    ::Compression::CompressorFactorySeq *get_factories (void) override;
 
   private:
     TAO_SYNCH_MUTEX mutex_;

@@ -42,22 +42,22 @@ public:
   FTRT_ClientORB_Interceptor (CORBA::Long transaction_depth);
 
   /// dtor.
-  virtual ~FTRT_ClientORB_Interceptor ();
+  ~FTRT_ClientORB_Interceptor () override;
 
   /// Canonical name of the interceptor.
-  virtual char * name (void);
+  char * name (void) override;
 
-  virtual void destroy (void);
+  void destroy (void) override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 private:
   const char *myname_;
   CORBA::Long transaction_depth_;

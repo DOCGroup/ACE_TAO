@@ -34,18 +34,18 @@ public:
   ~be_visitor_valuetype_field_ci ();
 
   /// visit the field node
-  virtual int visit_field (be_field *node);
+  int visit_field (be_field *node) override;
 
   // =visit operations on all possible data types that a union_branch can be
 
   /// visit array type
-  virtual int visit_array (be_array *node);
+  int visit_array (be_array *node) override;
 
   /// visit structure type
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 
   /// visit union type
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
   /// print additional string before op (e.g. ACE_INLINE)
   void setenclosings (const char *pre);

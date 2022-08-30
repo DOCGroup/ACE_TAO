@@ -33,12 +33,12 @@ namespace ACE
     {
     public:
       Notifier (Channel *ch);
-      int handle_input(ACE_HANDLE );
-      int handle_output(ACE_HANDLE );
+      int handle_input(ACE_HANDLE ) override;
+      int handle_output(ACE_HANDLE ) override;
 
       void unregister (void);
 
-      ACE_HANDLE get_handle () const;
+      ACE_HANDLE get_handle () const override;
 
     private:
       Channel *channel_;

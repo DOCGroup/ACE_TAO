@@ -64,73 +64,73 @@ public:
 
   /// destructor, do some cleanup :TBD: last dtor should "compress"
   /// file
-  ~ACE_Remote_Name_Space (void);
+  ~ACE_Remote_Name_Space (void) override;
 
   /// Bind a new name to a naming context (Wide character strings).
-  virtual int bind (const ACE_NS_WString &name_in,
+  int bind (const ACE_NS_WString &name_in,
                     const ACE_NS_WString &value_in,
-                    const char *type_in = "");
+                    const char *type_in = "") override;
 
   /**
    * Overwrite the value or type of an existing name in a
    * ACE_Remote_Name_Space or bind a new name to the context, if it
    * didn't exist yet. (Wide character strings interface).
    */
-  virtual int rebind (const ACE_NS_WString &name_in,
+  int rebind (const ACE_NS_WString &name_in,
                       const ACE_NS_WString &value_in,
-                      const char *type_in = "");
+                      const char *type_in = "") override;
 
   /// Delete a name from a ACE_Remote_Name_Space (Wide character strings
   /// Interface).
-  virtual int unbind (const ACE_NS_WString &name_in);
+  int unbind (const ACE_NS_WString &name_in) override;
 
   /// Get value and type of a given name binding (Wide chars).  The
   /// caller is responsible for deleting both @a value_out and @a type_out!
-  virtual int resolve (const ACE_NS_WString &name_in,
+  int resolve (const ACE_NS_WString &name_in,
                        ACE_NS_WString &value_out,
-                       char *&type_out);
+                       char *&type_out) override;
 
   /// Get a set of names matching a specified pattern (wchars). Matching
   /// means the names must begin with the pattern string.
-  virtual int list_names (ACE_WSTRING_SET &set_out,
-                          const ACE_NS_WString &pattern_in);
+  int list_names (ACE_WSTRING_SET &set_out,
+                          const ACE_NS_WString &pattern_in) override;
 
   /// Get a set of values matching a specified pattern (wchars). Matching
   /// means the values must begin with the pattern string.
-  virtual int list_values (ACE_WSTRING_SET &set_out,
-                           const ACE_NS_WString &pattern_in);
+  int list_values (ACE_WSTRING_SET &set_out,
+                           const ACE_NS_WString &pattern_in) override;
 
   /// Get a set of types matching a specified pattern (wchars). Matching
   /// means the types must begin with the pattern string.
-  virtual int list_types (ACE_WSTRING_SET &set_out,
-                          const ACE_NS_WString &pattern_in);
+  int list_types (ACE_WSTRING_SET &set_out,
+                          const ACE_NS_WString &pattern_in) override;
 
   /**
    * Get a set of names matching a specified pattern (wchars). Matching
    * means the names must begin with the pattern string. Returns the
    * complete binding associated each pattern match.
    */
-  virtual int list_name_entries (ACE_BINDING_SET &set,
-                                 const ACE_NS_WString &pattern);
+  int list_name_entries (ACE_BINDING_SET &set,
+                                 const ACE_NS_WString &pattern) override;
 
   /**
    * Get a set of values matching a specified pattern (wchars). Matching
    * means the values must begin with the pattern string. Returns the
    * complete binding associated each pattern match.
    */
-  virtual int list_value_entries (ACE_BINDING_SET &set,
-                                  const ACE_NS_WString &pattern);
+  int list_value_entries (ACE_BINDING_SET &set,
+                                  const ACE_NS_WString &pattern) override;
 
   /**
    * Get a set of types matching a specified pattern (wchars). Matching
    * means the types must begin with the pattern string. Returns the
    * complete binding associated each pattern match.
    */
-  virtual int list_type_entries (ACE_BINDING_SET &set,
-                                 const ACE_NS_WString &pattern);
+  int list_type_entries (ACE_BINDING_SET &set,
+                                 const ACE_NS_WString &pattern) override;
 
   /// Dump the state of the object.
-  virtual void dump () const;
+  void dump () const override;
 
   ACE_ALLOC_HOOK_DECLARE;
 

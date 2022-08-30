@@ -38,11 +38,11 @@ namespace TAO
     {
     public:
       Current_ORBInitializer_Base (const ACE_TCHAR* id);
-      virtual ~Current_ORBInitializer_Base (void);
+      ~Current_ORBInitializer_Base (void) override;
 
-      virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr);
+      void pre_init (PortableInterceptor::ORBInitInfo_ptr) override;
 
-       virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+       void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
     protected:
         virtual TAO::Transport::Current_ptr
         make_current_instance (TAO_ORB_Core* core, size_t tss_slot_id) = 0;

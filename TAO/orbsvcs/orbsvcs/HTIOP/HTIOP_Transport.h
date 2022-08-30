@@ -65,7 +65,7 @@ namespace TAO
                  TAO_ORB_Core *orb_core);
 
       /// Default destructor.
-      ~Transport (void);
+      ~Transport (void) override;
 
     protected:
 
@@ -76,46 +76,46 @@ namespace TAO
        */
       //@{
 
-      virtual ACE_Event_Handler * event_handler_i (void);
+      ACE_Event_Handler * event_handler_i (void) override;
       virtual TAO_Connection_Handler * invalidate_event_handler_i (void);
 
-      virtual ssize_t send (iovec *iov, int iovcnt,
+      ssize_t send (iovec *iov, int iovcnt,
                             size_t &bytes_transferred,
-                            const ACE_Time_Value *timeout = 0);
+                            const ACE_Time_Value *timeout = 0) override;
 
-      virtual ssize_t recv (char *buf,
+      ssize_t recv (char *buf,
                             size_t len,
-                            const ACE_Time_Value *s = 0);
+                            const ACE_Time_Value *s = 0) override;
 
-      virtual int register_handler (void);
+      int register_handler (void) override;
 
 
     public:
       /// @@TODO: These methods IMHO should have more meaningful
       /// names. The names seem to indicate nothing.
-      virtual int send_request (TAO_Stub *stub,
+      int send_request (TAO_Stub *stub,
                                 TAO_ORB_Core *orb_core,
                                 TAO_OutputCDR &stream,
                                 TAO_Message_Semantics message_semantics,
-                                ACE_Time_Value *max_wait_time);
+                                ACE_Time_Value *max_wait_time) override;
 
-      virtual int send_message (TAO_OutputCDR &stream,
+      int send_message (TAO_OutputCDR &stream,
                                 TAO_Stub *stub = 0,
                                 TAO_ServerRequest *request = 0,
                                 TAO_Message_Semantics message_semantics =
                                   TAO_Message_Semantics (),
-                                ACE_Time_Value *max_time_wait = 0);
+                                ACE_Time_Value *max_time_wait = 0) override;
 
-      virtual int tear_listen_point_list (TAO_InputCDR &cdr);
+      int tear_listen_point_list (TAO_InputCDR &cdr) override;
 
-      virtual TAO_Connection_Handler * connection_handler_i (void);
+      TAO_Connection_Handler * connection_handler_i (void) override;
 
       //@}
 
     private:
 
       /// Set the Bidirectional context info in the service context list
-      void set_bidir_context_info (TAO_Operation_Details &opdetails);
+      void set_bidir_context_info (TAO_Operation_Details &opdetails) override;
 
       /// Add the listen points in <acceptor> to the <listen_point_list>
       /// if this connection is in the same interface as that of the

@@ -25,9 +25,9 @@ public:
 
   ~be_visitor_facet_exs ();
 
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_provides (be_provides *node);
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_provides (be_provides *node) override;
 
 private:
   be_decl *op_scope_;

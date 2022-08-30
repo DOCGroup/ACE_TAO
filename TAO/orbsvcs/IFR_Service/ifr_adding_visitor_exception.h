@@ -39,19 +39,19 @@ public:
   virtual ~ifr_adding_visitor_exception (void);
 
   /// Visit a struct.
-  virtual int visit_scope (UTL_Scope *node);
+  int visit_scope (UTL_Scope *node) override;
 
   /// Visit a struct.
-  virtual int visit_structure (AST_Structure *node);
+  int visit_structure (AST_Structure *node) override;
 
   /// Visit a struct.
-  virtual int visit_exception (AST_Exception *node);
+  int visit_exception (AST_Exception *node) override;
 
   /// Visit an enum.
-  virtual int visit_enum (AST_Enum *node);
+  int visit_enum (AST_Enum *node) override;
 
   /// Visit union.
-  virtual int visit_union (AST_Union *node);
+  int visit_union (AST_Union *node) override;
 
   /// Lets the visitor one level above acess this value.
   virtual CORBA::IDLType_ptr ir_current () const;

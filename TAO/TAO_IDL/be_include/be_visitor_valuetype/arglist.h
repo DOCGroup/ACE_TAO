@@ -36,13 +36,13 @@ public:
   bool is_amh_exception_holder (be_operation *node);
 
   /// visit the operation
-  int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 
   /// visit each argument
-  int visit_argument (be_argument *node);
+  int visit_argument (be_argument *node) override;
 
   /// set 'comma' only between arguments
-  int post_process (be_decl *bd);
+  int post_process (be_decl *bd) override;
 };
 
 #endif /* _BE_VISITOR_OBV_OPERATION_ARGLIST_H_ */

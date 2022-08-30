@@ -29,13 +29,13 @@ public:
   be_component_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~be_component_fwd ();
+  ~be_component_fwd () override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor* visitor);
+  int accept (be_visitor* visitor) override;
 };
 
 #endif // if !defined

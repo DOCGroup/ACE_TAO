@@ -20,22 +20,22 @@ class ObjectGroupManagerHandler
 {
 public:
   ObjectGroupManagerHandler(ACE_Auto_Event& evt, int num_backups);
-  virtual void start (CORBA::Boolean ami_return_val,
-                      const FTRT::Location & the_location);
+  void start (CORBA::Boolean ami_return_val,
+                      const FTRT::Location & the_location) override;
 
-  virtual void start_excep (::Messaging::ExceptionHolder * excep_holder);
+  void start_excep (::Messaging::ExceptionHolder * excep_holder) override;
 
-  virtual void create_group (void);
+  void create_group (void) override;
 
-  virtual void create_group_excep (::Messaging::ExceptionHolder * excep_holder);
+  void create_group_excep (::Messaging::ExceptionHolder * excep_holder) override;
 
-  virtual void add_member (void);
+  void add_member (void) override;
 
-  virtual void add_member_excep (::Messaging::ExceptionHolder * excep_holder);
+  void add_member_excep (::Messaging::ExceptionHolder * excep_holder) override;
 
-  virtual void set_state (void);
+  void set_state (void) override;
 
-  virtual void set_state_excep (::Messaging::ExceptionHolder * excep_holder);
+  void set_state_excep (::Messaging::ExceptionHolder * excep_holder) override;
 private:
   ACE_Auto_Event& evt_;
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> num_backups_;

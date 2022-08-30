@@ -40,7 +40,7 @@ namespace ACE
 
               virtual ~Session_T ();
 
-              virtual bool is_connected () const;
+              bool is_connected () const override;
 
               bool attach_connection (connection_type* connection);
 
@@ -48,11 +48,11 @@ namespace ACE
 
               void close_connection ();
 
-              virtual bool connect_i (const ACE_Synch_Options& sync_opt);
+              bool connect_i (const ACE_Synch_Options& sync_opt) override;
 
-              virtual void close_i ();
+              void close_i () override;
 
-              virtual std::iostream& sock_stream ();
+              std::iostream& sock_stream () override;
 
             private:
               typedef ACE::IOS::Sock_IOStreamBase<ACE_SYNCH_USE> sock_stream_type;

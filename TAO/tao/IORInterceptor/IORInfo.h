@@ -57,27 +57,27 @@ public:
 
   /// Return the policy matching the given policy type that is in
   /// effect for the object whose IOR is being created.
-  virtual CORBA::Policy_ptr get_effective_policy (CORBA::PolicyType type);
+  CORBA::Policy_ptr get_effective_policy (CORBA::PolicyType type) override;
 
   /// Add the given tagged component to all profiles.
-  virtual void add_ior_component (const IOP::TaggedComponent & component);
+  void add_ior_component (const IOP::TaggedComponent & component) override;
 
   /// Add the given tagged component to all profiles matching the given
   /// ProfileId.
-  virtual void add_ior_component_to_profile (
+  void add_ior_component_to_profile (
       const IOP::TaggedComponent & component,
-      IOP::ProfileId profile_id);
+      IOP::ProfileId profile_id) override;
 
-  virtual char * manager_id (void);
+  char * manager_id (void) override;
 
-  virtual PortableInterceptor::AdapterState state (void);
+  PortableInterceptor::AdapterState state (void) override;
 
-  virtual PortableInterceptor::ObjectReferenceTemplate *adapter_template (void);
+  PortableInterceptor::ObjectReferenceTemplate *adapter_template (void) override;
 
-  virtual PortableInterceptor::ObjectReferenceFactory *current_factory (void);
+  PortableInterceptor::ObjectReferenceFactory *current_factory (void) override;
 
-  virtual void current_factory (
-      PortableInterceptor::ObjectReferenceFactory * current_factory);
+  void current_factory (
+      PortableInterceptor::ObjectReferenceFactory * current_factory) override;
 
   //@}
 
@@ -102,7 +102,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management through
   /// the reference counting mechanism.
-  ~TAO_IORInfo (void);
+  ~TAO_IORInfo (void) override;
 
   /// Check if this IORInfo instance is valid.
   /**

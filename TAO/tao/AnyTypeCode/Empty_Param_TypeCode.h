@@ -58,10 +58,10 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual bool tao_marshal (TAO_OutputCDR & cdr,
-                                CORBA::ULong offset) const;
-      virtual void tao_duplicate ();
-      virtual void tao_release ();
+      bool tao_marshal (TAO_OutputCDR & cdr,
+                                CORBA::ULong offset) const override;
+      void tao_duplicate () override;
+      void tao_release () override;
       //@}
 
     protected:
@@ -74,9 +74,9 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
-      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
-      virtual CORBA::TypeCode_ptr get_compact_typecode_i () const;
+      CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
+      CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
+      CORBA::TypeCode_ptr get_compact_typecode_i () const override;
     };
 
   }  // End namespace TypeCode

@@ -43,19 +43,19 @@ public:
   TAO_LogMgr_i ();
 
   /// Destructor.
-  virtual ~TAO_LogMgr_i ();
+  ~TAO_LogMgr_i () override;
 
   /// Lists all log object references.
   DsLogAdmin::LogList *
-    list_logs (void);
+    list_logs (void) override;
 
   /// Lists all log ids.
   DsLogAdmin::LogIdList *
-    list_logs_by_id (void);
+    list_logs_by_id (void) override;
 
   /// Returns a reference to the log with the supplied id.
   DsLogAdmin::Log_ptr
-    find_log (DsLogAdmin::LogId id);
+    find_log (DsLogAdmin::LogId id) override;
 
   /// Returns true if log exists, otherwise false
   bool exists (DsLogAdmin::LogId id);

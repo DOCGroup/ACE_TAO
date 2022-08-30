@@ -33,10 +33,10 @@ class TAO_Export TAO_Protocol_Factory : public ACE_Service_Object
 {
 public:
   TAO_Protocol_Factory (CORBA::ULong tag);
-  virtual ~TAO_Protocol_Factory (void);
+  ~TAO_Protocol_Factory (void) override;
 
   /// Initialization hook.
-  virtual int init (int argc, ACE_TCHAR *argv[]) = 0;
+  int init (int argc, ACE_TCHAR *argv[]) override = 0;
 
   /// The protocol tag, each concrete class will have a specific tag
   /// value.

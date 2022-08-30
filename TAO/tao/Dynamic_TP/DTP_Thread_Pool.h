@@ -53,7 +53,7 @@ public:
 
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.
-  bool no_leaders_available (void);
+  bool no_leaders_available (void) override;
 
 private:
   /// Pool associated with this leader generator.
@@ -75,7 +75,7 @@ public:
   TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &pool);
 
   /// Method executed when a thread is spawned.
-  int svc (void);
+  int svc (void) override;
 
   /// Accessor to the pool to which this thread belongs to.
   TAO_DTP_Thread_Pool &pool () const;
@@ -102,7 +102,7 @@ public:
   TAO_DTP_Termination_Waiter (TAO_DTP_Thread_Pool &pool);
 
   /// Method executed when a thread is spawned.
-  int svc (void);
+  int svc (void) override;
 
 protected:
   /// Pool to which this thread belongs to.

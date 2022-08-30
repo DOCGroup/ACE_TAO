@@ -45,7 +45,7 @@ public:
 
 protected:
   ///= TAO_ESF_Worker method
-  void work (TYPE* object);
+  void work (TYPE* object) override;
 
   /// The id we're looking for.
   TAO_Notify_Object::ID id_;

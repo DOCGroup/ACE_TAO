@@ -62,7 +62,7 @@ public:
      RT_INFO_MAP & rt_info_map);
 
   /// Visit a Reconfig Scheduler Entry.  This method calls
-  virtual int visit (TAO_Reconfig_Scheduler_Entry &);
+  int visit (TAO_Reconfig_Scheduler_Entry &) override;
   // protected hook methods that can be overridden by
   // derived classes, according to the Template Method
   // design pattern.
@@ -131,27 +131,27 @@ protected:
    * Returns 0 if the actions should be applied, 1 if the entry
    * should be left alone, and -1 if an error occurred.
    */
-  virtual int precondition (TAO_Reconfig_Scheduler_Entry &rse);
+  int precondition (TAO_Reconfig_Scheduler_Entry &rse) override;
 
   /**
    * Marks entry as forward visited and sets its forward DFS start
    * time, prior to visiting any of its successors.  Returns 0 on
    * success and -1 on error.
    */
-  virtual int prefix_action (TAO_Reconfig_Scheduler_Entry &rse);
+  int prefix_action (TAO_Reconfig_Scheduler_Entry &rse) override;
 
   /// Marks whether or not successor is a thread delineator prior to
   /// visiting it.  Returns 0 on success and -1 on error.
-  virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
+  int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
-                                  const RtecScheduler::Dependency_Info &di);
+                                  const RtecScheduler::Dependency_Info &di) override;
 
   /**
    * Marks entry as forward finished and sets its forward DFS finish
    * time, after all of its successors have been visited.  Returns 0
    * on success and -1 on error.
    */
-  virtual int postfix_action (TAO_Reconfig_Scheduler_Entry &rse);
+  int postfix_action (TAO_Reconfig_Scheduler_Entry &rse) override;
 
 private:
   /// Keeps track of DFS start and finish times.
@@ -205,14 +205,14 @@ protected:
    * the actions should be applied, 1 if the entry should be left
    * alone, and -1 if an error occurred.
    */
-  virtual int precondition (TAO_Reconfig_Scheduler_Entry &rse);
+  int precondition (TAO_Reconfig_Scheduler_Entry &rse) override;
 
   /**
    * Marks reverse status as visited and sets reverse start time for
    * entry, prior to visiting any of its successors.  Returns 0 on
    * success and -1 on error.
    */
-  virtual int prefix_action (TAO_Reconfig_Scheduler_Entry &rse);
+  int prefix_action (TAO_Reconfig_Scheduler_Entry &rse) override;
 
   /**
    * Checks reverse status of each successor.  For any that have not
@@ -223,16 +223,16 @@ protected:
    * an error (finding a cycle is not considered an error, at least as
    * far as this method is concerned).
    */
-  virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
+  int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
-                                  const RtecScheduler::Dependency_Info &di);
+                                  const RtecScheduler::Dependency_Info &di) override;
 
   /**
    * Sets the entry's reverse finish time and marks it as finished in
    * the reverse DFS traversal, after visiting all of its successors.
    * Returns 0 on success and -1 on error.
    */
-  virtual int postfix_action (TAO_Reconfig_Scheduler_Entry &rse);
+  int postfix_action (TAO_Reconfig_Scheduler_Entry &rse) override;
 
 private:
   /// Keeps track of DFS start and finish times.
@@ -272,9 +272,9 @@ protected:
    * entry.  Returns 1 on success (to prevent recursion on the
    * successor), and -1 on error.
    */
-  virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
+  int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
-                                  const RtecScheduler::Dependency_Info &di);
+                                  const RtecScheduler::Dependency_Info &di) override;
 
 };
 
@@ -324,16 +324,16 @@ protected:
    * dependencies is not considered an error, at least for this
    * method).
    */
-  virtual int prefix_action (TAO_Reconfig_Scheduler_Entry &rse);
+  int prefix_action (TAO_Reconfig_Scheduler_Entry &rse) override;
 
   /**
    * Propagates effective period and execution time multiplier from
    * entry to successor prior to visiting successor.  Returns 1 on
    * success (to prevent recursion on the successor), and -1 on error.
    */
-  virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
+  int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
-                                  const RtecScheduler::Dependency_Info &di);
+                                  const RtecScheduler::Dependency_Info &di) override;
 
 private:
 
@@ -372,7 +372,7 @@ public:
    * higher priorities.  Returns -1 on error, 1 if a new priority was
    * assigned, or 0 otherwise.
    */
-    virtual int visit (TAO_Reconfig_Scheduler_Entry &);
+    int visit (TAO_Reconfig_Scheduler_Entry &) override;
 
   /**
    * Finishes tuple priority assignment by iterating over the
@@ -432,7 +432,7 @@ public:
    * the critical or non-critical utilization, depending on whether or
    * not the strategy says the operation is critical.
    */
-    virtual int visit (TAO_RT_Info_Tuple &);
+    int visit (TAO_RT_Info_Tuple &) override;
 
   /// Accessor for utilization by critical operations.
   CORBA::Double critical_utilization ();
@@ -499,9 +499,9 @@ protected:
    * entry.  Returns 1 on success (to prevent recursion on the
    * successor), and -1 on error.
    */
-  virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
+  int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
-                                  const RtecScheduler::Dependency_Info &di);
+                                  const RtecScheduler::Dependency_Info &di) override;
 
 };
 

@@ -31,10 +31,10 @@ public:
   ~be_visitor_interface_tie_sh ();
 
   /// set the right context and make a visitor
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
   /// set the right context and make a visitor
-  virtual int visit_component (be_component *node);
+  int visit_component (be_component *node) override;
 
   static int method_helper (be_interface *,
                             be_interface *,

@@ -51,10 +51,10 @@ public:
   TAO_RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr);
 
   /// Destructor.
-  ~TAO_RTEventLogNotification (void);
+  ~TAO_RTEventLogNotification (void) override;
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void);
+  void disconnect_push_supplier (void) override;
 
 protected:
   // = Helper methods
@@ -64,7 +64,7 @@ protected:
   void obtainProxyConsumer (void);
 
   // Send the event on the event channel.
-  virtual void send_notification (const CORBA::Any& any);
+  void send_notification (const CORBA::Any& any) override;
 
 private:
   /// The ORB reference.

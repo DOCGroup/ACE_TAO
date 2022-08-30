@@ -48,7 +48,7 @@ public:
   TAO_NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr);
 
   /// Destructor.
-  ~TAO_NotifyLogNotification (void);
+  ~TAO_NotifyLogNotification (void) override;
 
 protected:
   // = Helper methods
@@ -61,15 +61,15 @@ protected:
   CosNotifyChannelAdmin::ProxyID proxy_consumer_id_;
 
   // = NotifySubscribe
-  virtual void subscription_change (
+  void subscription_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+        const CosNotification::EventTypeSeq & removed) override;
 
   // = StructuredPushSupplier method
-    virtual void disconnect_push_supplier (void);
+    void disconnect_push_supplier (void) override;
 
   /// Send the event on the event channel.
-  virtual void send_notification (const CORBA::Any& any);
+  void send_notification (const CORBA::Any& any) override;
 
 private:
   /// A reference to the ORB.

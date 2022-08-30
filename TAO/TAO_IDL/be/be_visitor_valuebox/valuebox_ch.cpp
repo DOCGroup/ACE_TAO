@@ -71,14 +71,14 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
       << "_downcast ( ::CORBA::ValueBase *);" << be_nl;
 
   // _copy_value method
-  *os << "::CORBA::ValueBase * _copy_value ();" << be_nl_2;
+  *os << "::CORBA::ValueBase * _copy_value () override;" << be_nl_2;
 
   // repository id methods
-  *os << "virtual const char* "
-      << "_tao_obv_repository_id () const;"
+  *os << "const char* "
+      << "_tao_obv_repository_id () const override;"
       << be_nl_2
-      << "virtual void "
-      << "_tao_obv_truncatable_repo_ids (Repository_Id_List &ids) const;"
+      << "void "
+      << "_tao_obv_truncatable_repo_ids (Repository_Id_List &ids) const override;"
       << be_nl_2
       << "static const char* "
       << "_tao_obv_static_repository_id ();" << be_nl_2;
@@ -91,7 +91,7 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
 
   if (be_global->tc_support ())
     {
-      *os << "virtual ::CORBA::TypeCode_ptr _tao_type () const;"
+      *os << "::CORBA::TypeCode_ptr _tao_type () const override;"
           << be_nl_2;
     }
 
@@ -118,12 +118,12 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   *os << "virtual ~" << node->local_name () << " ();" << be_nl;
 
   // Methods for marshalling and unmarshalling the value
-  *os << "virtual ::CORBA::Boolean "
-      << "_tao_marshal_v (TAO_OutputCDR &) const;" << be_nl;
-  *os << "virtual ::CORBA::Boolean "
-      << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
-  *os << "virtual ::CORBA::Boolean "
-      << "_tao_match_formal_type (ptrdiff_t) const;" << be_nl;
+  *os << "::CORBA::Boolean "
+      << "_tao_marshal_v (TAO_OutputCDR &) const override;" << be_nl;
+  *os << "::CORBA::Boolean "
+      << "_tao_unmarshal_v (TAO_InputCDR &) override;" << be_nl;
+  *os << "::CORBA::Boolean "
+      << "_tao_match_formal_type (ptrdiff_t) const override;" << be_nl;
 
   // Private unimplemented default assignment operator
   *os << be_uidt_nl << "private:" << be_idt_nl;

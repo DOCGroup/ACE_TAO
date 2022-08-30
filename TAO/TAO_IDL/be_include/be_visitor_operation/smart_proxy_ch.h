@@ -36,7 +36,7 @@ public:
   ~be_visitor_operation_smart_proxy_ch ();
 
   /// visit operation node.
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_SMART_PROXY_CH_H_ */

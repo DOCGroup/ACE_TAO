@@ -38,7 +38,7 @@ public:
   /// The constructor.
   XML_Loader ();
 
-  virtual ~XML_Loader ();
+  ~XML_Loader () override;
 
   /// Open a file and perform preliminary validation to determine whether
   /// the file is complete and valid.
@@ -47,20 +47,20 @@ public:
   ///////////////////////////////////
   // Override Topology_Loader methods
   // see Topology_Loader.h for documentation
-  virtual void load (Topology_Object *root);
+  void load (Topology_Object *root) override;
 
 
   /////////////////////////////////////////
   // Override ACEXML_DefaultHandler methods
 
-  virtual void startElement (const ACEXML_Char* namespaceURI,
+  void startElement (const ACEXML_Char* namespaceURI,
     const ACEXML_Char* localName,
     const ACEXML_Char* qName,
-    ACEXML_Attributes* atts);
+    ACEXML_Attributes* atts) override;
 
-  virtual void endElement (const ACEXML_Char*,
+  void endElement (const ACEXML_Char*,
     const ACEXML_Char*,
-    const ACEXML_Char* name);
+    const ACEXML_Char* name) override;
 
 private:
   /// The name of the file from which data is read.

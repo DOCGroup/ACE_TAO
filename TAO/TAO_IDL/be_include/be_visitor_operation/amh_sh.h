@@ -23,8 +23,8 @@ public:
   be_visitor_amh_operation_sh (be_visitor_context *ctx);
   ~be_visitor_amh_operation_sh ();
 
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
 
 private:
   void generate_shared_prologue (be_decl *node,

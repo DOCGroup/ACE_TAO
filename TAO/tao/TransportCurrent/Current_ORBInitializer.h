@@ -35,8 +35,8 @@ namespace TAO
       Current_ORBInitializer (const ACE_TCHAR* id);
 
     protected:
-      virtual TAO::Transport::Current_ptr
-      make_current_instance (TAO_ORB_Core* c, size_t s);
+      TAO::Transport::Current_ptr
+      make_current_instance (TAO_ORB_Core* c, size_t s) override;
     };
   }
 }

@@ -40,7 +40,7 @@ namespace ACE
               StreamBuffer (std::iostream * stream);
               virtual ~StreamBuffer ();
 
-              virtual int sync ();
+              int sync () override;
 
               std::iostream* set_stream (std::iostream * stream);
 
@@ -50,9 +50,9 @@ namespace ACE
                   BUFFER_SIZE = 4096
                 };
 
-              virtual int read_from_stream (char* buffer, std::streamsize length);
+              int read_from_stream (char* buffer, std::streamsize length) override;
 
-              virtual int write_to_stream (const char* buffer, std::streamsize length);
+              int write_to_stream (const char* buffer, std::streamsize length) override;
 
             private:
               std::iostream * stream_;

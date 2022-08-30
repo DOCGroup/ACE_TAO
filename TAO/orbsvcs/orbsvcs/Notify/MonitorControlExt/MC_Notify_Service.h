@@ -29,16 +29,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_MC_Ext_Export TAO_MC_Notify_Service: public TAO_CosNotify_Service
 {
 public:
-  virtual ~TAO_MC_Notify_Service (void);
+  ~TAO_MC_Notify_Service (void) override;
 
 protected:
-  virtual void init_i (CORBA::ORB_ptr orb);
-  virtual void init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb);
-  virtual void finalize_service (
-                 CosNotifyChannelAdmin::EventChannelFactory_ptr factory);
+  void init_i (CORBA::ORB_ptr orb) override;
+  void init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb) override;
+  void finalize_service (
+                 CosNotifyChannelAdmin::EventChannelFactory_ptr factory) override;
 
 private:
-  virtual TAO_Notify_Factory* create_factory (void);
+  TAO_Notify_Factory* create_factory (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

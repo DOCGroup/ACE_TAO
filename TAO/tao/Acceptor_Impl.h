@@ -42,7 +42,7 @@ public:
   TAO_Creation_Strategy (TAO_ORB_Core *orb_core);
 
   /// Create a SVC_HANDLER  and set the ORB_Core pointer on it.
-  int make_svc_handler (SVC_HANDLER *&sh);
+  int make_svc_handler (SVC_HANDLER *&sh) override;
 
 protected:
   /// Pointer to the ORB Core.
@@ -68,7 +68,7 @@ public:
    * TAO_Server_Strategy_Factory, it activates the Svc_Handler to run
    * in its own thread.
    */
-  int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg);
+  int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg) override;
 
 protected:
   /// Pointer to the ORB Core.
@@ -86,11 +86,11 @@ public:
   /// Initialize the <peer_acceptor_> with @a local_addr.  If the
   /// process runs out of handles, purge some "old" connections.
   int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-            bool restart = false);
+            bool restart = false) override;
 
   /// Delegates to the <accept> method of the PEER_ACCEPTOR. If the
   /// process runs out of handles, purge some "old" connections.
-  int accept_svc_handler (SVC_HANDLER *svc_handler);
+  int accept_svc_handler (SVC_HANDLER *svc_handler) override;
 
 protected:
   /// Base class.

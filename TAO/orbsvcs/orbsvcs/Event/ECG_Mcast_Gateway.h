@@ -128,8 +128,8 @@ public:
 
   /// The Service_Object entry points.
   //@{
-  virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR* argv[]) override;
+  int fini () override;
   //@}
 
   /// Helper function to register the Gateway into the service

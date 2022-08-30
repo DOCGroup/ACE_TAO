@@ -39,13 +39,13 @@ namespace TAO
      *       rest of the legacy method names and their call sites are
      *       updated accordingly.
      */
-    virtual int visit_interface (be_interface * node);
+    int visit_interface (be_interface * node) override;
 
     /// Visit a native.
     /**
      * @see visit_interface
      */
-    virtual int visit_native (be_native * node);
+    int visit_native (be_native * node) override;
 
   private:
     /// Generate TypeCode instance.

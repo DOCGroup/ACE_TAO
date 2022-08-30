@@ -76,9 +76,9 @@ public:
   TAO_Noop_Constraint (TAO_Expression_Type type)
     : type_ (type) {}
 
-  virtual int accept (TAO_Constraint_Visitor* visitor);
+  int accept (TAO_Constraint_Visitor* visitor) override;
 
-  virtual TAO_Expression_Type expr_type () const
+  TAO_Expression_Type expr_type () const override
     { return this->type_; }
 
 private:
@@ -98,11 +98,11 @@ public:
                          TAO_Constraint* left,
                          TAO_Constraint* right);
 
-  virtual int accept (TAO_Constraint_Visitor* visitor);
+  int accept (TAO_Constraint_Visitor* visitor) override;
 
-  virtual ~TAO_Binary_Constraint ();
+  ~TAO_Binary_Constraint () override;
 
-  virtual TAO_Expression_Type expr_type () const
+  TAO_Expression_Type expr_type () const override
     { return this->op_; }
 
   /// Return the left operand of the binary expression
@@ -154,11 +154,11 @@ public:
   TAO_Unary_Constraint (TAO_Expression_Type op_type,
                         TAO_Constraint* operand);
 
-  virtual ~TAO_Unary_Constraint (void);
+  ~TAO_Unary_Constraint (void) override;
 
-  virtual int accept (TAO_Constraint_Visitor* visitor);
+  int accept (TAO_Constraint_Visitor* visitor) override;
 
-  virtual TAO_Expression_Type expr_type () const
+  TAO_Expression_Type expr_type () const override
     { return this->op_; }
 
   TAO_Constraint* operand (void);
@@ -185,11 +185,11 @@ class TAO_Trading_Serv_Export TAO_Property_Constraint : public TAO_Constraint
 public:
   TAO_Property_Constraint (const char* name);
 
-  virtual ~TAO_Property_Constraint (void);
+  ~TAO_Property_Constraint (void) override;
 
-  virtual int accept (TAO_Constraint_Visitor* visitor);
+  int accept (TAO_Constraint_Visitor* visitor) override;
 
-  virtual TAO_Expression_Type expr_type () const;
+  TAO_Expression_Type expr_type () const override;
 
   /// Returns the name of the property.
   const char* name () const;
@@ -226,12 +226,12 @@ public:
   TAO_Literal_Constraint (const TAO_Literal_Constraint& lit);
 
   /// Destructor.
-  ~TAO_Literal_Constraint(void);
+  ~TAO_Literal_Constraint(void) override;
 
   /// Visitor accept methods.
-  virtual int accept (TAO_Constraint_Visitor* visitor);
+  int accept (TAO_Constraint_Visitor* visitor) override;
 
-  virtual TAO_Expression_Type expr_type () const
+  TAO_Expression_Type expr_type () const override
     { return type_; }
 
   /// Assignment operator.

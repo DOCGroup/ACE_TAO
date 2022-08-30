@@ -66,7 +66,7 @@ namespace TAO
     : public RequestInterceptor_Adapter
   {
   public:
-    virtual ~ServerRequestInterceptor_Adapter ();
+    ~ServerRequestInterceptor_Adapter () override;
 
     /**
      * @name PortableInterceptor Server Side Interception Points

@@ -72,10 +72,10 @@ public:
   ETCL_Literal_Constraint (const ETCL_Literal_Constraint& lit);
 
   /// Destructor.
-  virtual ~ETCL_Literal_Constraint();
+  ~ETCL_Literal_Constraint() override;
 
   /// Visitor accept method.
-  virtual int accept (ETCL_Constraint_Visitor* visitor);
+  int accept (ETCL_Constraint_Visitor* visitor) override;
 
   Literal_Type expr_type () const;
 
@@ -177,7 +177,7 @@ public:
   ETCL_Union_Value (int sign,
                     ETCL_Constraint *integer);
   explicit ETCL_Union_Value (ETCL_Constraint *string = 0);
-  virtual ~ETCL_Union_Value ();
+  ~ETCL_Union_Value () override;
 
   int sign () const;
   ETCL_Literal_Constraint *integer () const;
@@ -196,7 +196,7 @@ class ACE_ETCL_Export ETCL_Union_Pos : public ETCL_Constraint
 public:
   ETCL_Union_Pos (ETCL_Constraint *union_value = 0,
                   ETCL_Constraint *component = 0);
-  virtual ~ETCL_Union_Pos ();
+  ~ETCL_Union_Pos () override;
 
   ETCL_Union_Value *union_value () const;
   ETCL_Constraint *component () const;
@@ -213,7 +213,7 @@ class ACE_ETCL_Export ETCL_Component_Pos : public ETCL_Constraint
 public:
   ETCL_Component_Pos (ETCL_Constraint *integer = 0,
                       ETCL_Constraint *component = 0);
-  virtual ~ETCL_Component_Pos ();
+  ~ETCL_Component_Pos () override;
 
   ETCL_Literal_Constraint *integer () const;
   ETCL_Constraint *component () const;
@@ -230,7 +230,7 @@ class ACE_ETCL_Export ETCL_Component_Assoc : public ETCL_Constraint
 public:
   ETCL_Component_Assoc (ETCL_Constraint *identifier = 0,
                         ETCL_Constraint *component = 0);
-  virtual ~ETCL_Component_Assoc ();
+  ~ETCL_Component_Assoc () override;
 
   ETCL_Identifier *identifier () const;
   ETCL_Constraint *component () const;
@@ -247,7 +247,7 @@ class ACE_ETCL_Export ETCL_Component_Array : public ETCL_Constraint
 public:
   ETCL_Component_Array (ETCL_Constraint *integer = 0,
                         ETCL_Constraint *component = 0);
-  virtual ~ETCL_Component_Array ();
+  ~ETCL_Component_Array () override;
 
   ETCL_Literal_Constraint *integer () const;
   ETCL_Constraint *component () const;
@@ -279,7 +279,7 @@ class ACE_ETCL_Export ETCL_Component : public ETCL_Constraint
 public:
   ETCL_Component (ETCL_Constraint *identifier = 0,
                   ETCL_Constraint *component = 0);
-  virtual ~ETCL_Component ();
+  ~ETCL_Component () override;
 
   ETCL_Identifier *identifier () const;
   ETCL_Constraint *component () const;
@@ -295,7 +295,7 @@ class ACE_ETCL_Export ETCL_Dot : public ETCL_Constraint
 {
 public:
   explicit ETCL_Dot (ETCL_Constraint *component = 0);
-  virtual ~ETCL_Dot ();
+  ~ETCL_Dot () override;
 
   ETCL_Constraint *component () const;
 
@@ -309,7 +309,7 @@ class ACE_ETCL_Export ETCL_Eval : public ETCL_Constraint
 {
 public:
   explicit ETCL_Eval (ETCL_Constraint *component = 0);
-  virtual ~ETCL_Eval ();
+  ~ETCL_Eval () override;
 
   ETCL_Constraint *component () const;
 
@@ -323,7 +323,7 @@ class ACE_ETCL_Export ETCL_Default : public ETCL_Constraint
 {
 public:
   explicit ETCL_Default (ETCL_Constraint *component = 0);
-  virtual ~ETCL_Default ();
+  ~ETCL_Default () override;
 
   ETCL_Constraint *component () const;
 
@@ -337,7 +337,7 @@ class ACE_ETCL_Export ETCL_Exist : public ETCL_Constraint
 {
 public:
   explicit ETCL_Exist (ETCL_Constraint *component = 0);
-  virtual ~ETCL_Exist ();
+  ~ETCL_Exist () override;
 
   ETCL_Constraint *component () const;
 
@@ -352,7 +352,7 @@ class ACE_ETCL_Export ETCL_Unary_Expr : public ETCL_Constraint
 public:
   ETCL_Unary_Expr (int type,
                    ETCL_Constraint *subexpr);
-  virtual ~ETCL_Unary_Expr ();
+  ~ETCL_Unary_Expr () override;
 
   int type () const;
   ETCL_Constraint *subexpr () const;
@@ -370,7 +370,7 @@ public:
   ETCL_Binary_Expr (int type,
                     ETCL_Constraint *lhs,
                     ETCL_Constraint *rhs);
-  virtual ~ETCL_Binary_Expr ();
+  ~ETCL_Binary_Expr () override;
 
   int type () const;
   ETCL_Constraint *rhs () const;
@@ -390,7 +390,7 @@ public:
   ETCL_Preference () = default;
   ETCL_Preference (int type,
                    ETCL_Constraint *subexpr = 0);
-  virtual ~ETCL_Preference ();
+  ~ETCL_Preference () override;
 
   int type () const;
   ETCL_Constraint *subexpr () const;

@@ -44,12 +44,12 @@ public:
   TAO_Contained_i (TAO_Repository_i *repo);
 
   /// Destructor.
-  virtual ~TAO_Contained_i (void);
+  ~TAO_Contained_i (void) override;
 
   /// Remove the repository entry.
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void destroy_i ();
+  void destroy_i () override;
 
   virtual char *id ();
 

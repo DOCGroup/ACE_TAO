@@ -50,8 +50,8 @@ public:
   TAO_EC_ConsumerControl_Adapter (TAO_EC_Reactive_ConsumerControl *adaptee);
 
   // = Documented in ACE_Event_Handler.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
+  int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg = 0) override;
 
 private:
   /// The adapted object
@@ -77,18 +77,18 @@ public:
                                    CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_EC_Reactive_ConsumerControl ();
+  ~TAO_EC_Reactive_ConsumerControl () override;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_EC_ConsumerControl
-  virtual int activate ();
-  virtual int shutdown ();
-  virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy);
-  virtual void system_exception (TAO_EC_ProxyPushSupplier *proxy,
-                                 CORBA::SystemException &);
+  int activate () override;
+  int shutdown () override;
+  void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy) override;
+  void system_exception (TAO_EC_ProxyPushSupplier *proxy,
+                                 CORBA::SystemException &) override;
 
 private:
   /// Check if the consumers still exists.  It is a helper method for
@@ -133,7 +133,7 @@ class TAO_EC_Ping_Consumer : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 public:
   TAO_EC_Ping_Consumer (TAO_EC_ConsumerControl *control);
 
-  virtual void work (TAO_EC_ProxyPushSupplier *supplier);
+  void work (TAO_EC_ProxyPushSupplier *supplier) override;
 
 private:
   TAO_EC_ConsumerControl *control_;

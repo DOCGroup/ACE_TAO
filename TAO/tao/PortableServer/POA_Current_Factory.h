@@ -30,9 +30,9 @@ class TAO_PortableServer_Export TAO_POA_Current_Factory
 public:
 
   /// Creates a PICurrent and returns it.
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+  CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           ACE_TCHAR *argv []);
+                                           ACE_TCHAR *argv []) override;
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_POA_Current_Factory)

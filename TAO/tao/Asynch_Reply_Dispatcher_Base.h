@@ -74,7 +74,7 @@ public:
 
 protected:
   /// Destructor.
-  virtual ~TAO_Asynch_Reply_Dispatcher_Base ();
+  ~TAO_Asynch_Reply_Dispatcher_Base () override;
 
 private:
   void operator= (const TAO_Asynch_Reply_Dispatcher_Base &);

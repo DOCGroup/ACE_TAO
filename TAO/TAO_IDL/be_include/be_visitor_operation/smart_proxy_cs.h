@@ -33,7 +33,7 @@ public:
   ~be_visitor_operation_smart_proxy_cs ();
 
   /// visit operation.
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 
   /// A helper method to generate operation invocation code.
   virtual int gen_invoke (be_visitor_context &ctx, be_operation *node);

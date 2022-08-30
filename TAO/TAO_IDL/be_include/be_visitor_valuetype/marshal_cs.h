@@ -33,10 +33,10 @@ public:
   be_visitor_valuetype_marshal_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_marshal_cs ();
+  ~be_visitor_valuetype_marshal_cs () override;
 
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 
   void class_name (be_valuetype *node, TAO_OutStream *os);
   int gen_fields (be_valuetype *node, be_visitor_context &ctx);

@@ -38,7 +38,7 @@ namespace TAO
     Any_Array_Impl_T (_tao_destructor destructor,
                       CORBA::TypeCode_ptr,
                       T_slice * const);
-    virtual ~Any_Array_Impl_T (void);
+    ~Any_Array_Impl_T (void) override;
 
     static void insert (CORBA::Any &,
                         _tao_destructor destructor,
@@ -49,12 +49,12 @@ namespace TAO
                                    CORBA::TypeCode_ptr,
                                    T_slice *&);
 
-    virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
+    CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
-    virtual void _tao_decode (TAO_InputCDR &);
+    void _tao_decode (TAO_InputCDR &) override;
 
     virtual const void *value () const;
-    virtual void free_value ();
+    void free_value () override;
 
   private:
     T_slice * value_;

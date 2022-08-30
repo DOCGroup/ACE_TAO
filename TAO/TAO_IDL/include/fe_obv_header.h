@@ -27,7 +27,7 @@ public:
   AST_Type *supports_concrete () const;
   bool truncatable () const;
 
-  virtual void destroy ();
+  void destroy () override;
   // Destroy anything allocated for this class.
 
 protected:

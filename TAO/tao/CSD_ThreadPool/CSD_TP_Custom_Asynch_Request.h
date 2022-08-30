@@ -50,14 +50,14 @@ namespace TAO
                                TP_Servant_State*            servant_state);
 
       /// Virtual Destructor.
-      virtual ~TP_Custom_Asynch_Request();
+      ~TP_Custom_Asynch_Request() override;
 
     protected:
       /// Dispatch the request to the servant.
-      virtual void dispatch_i();
+      void dispatch_i() override;
 
       /// Cancel the request.
-      virtual void cancel_i();
+      void cancel_i() override;
     };
 
   }

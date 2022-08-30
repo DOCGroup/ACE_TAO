@@ -29,7 +29,7 @@ public:
   be_visitor_component_ami_rh_ex_base (be_visitor_context *ctx);
   ~be_visitor_component_ami_rh_ex_base ();
 
-  virtual int post_process (be_decl *node);
+  int post_process (be_decl *node) override;
 
 protected:
   void init ();
@@ -57,9 +57,9 @@ public:
   Exec_ReplyHandler_Op_Attr_Generator (
     be_visitor_scope * visitor);
 
-  virtual int emit (be_interface * derived_interface,
-                    TAO_OutStream * os,
-                    be_interface * base_interface);
+  int emit (be_interface * derived_interface,
+            TAO_OutStream * os,
+            be_interface * base_interface) override;
 
 private:
   be_visitor_scope * visitor_;

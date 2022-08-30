@@ -54,11 +54,11 @@ public:
   /// Return the reply CDR.
   TAO_InputCDR &reply_cdr (void);
 
-  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
+  int dispatch_reply (TAO_Pluggable_Reply_Params &params) override;
 
-  virtual void connection_closed (void);
+  void connection_closed (void) override;
 
-  virtual void reply_timed_out (void);
+  void reply_timed_out (void) override;
 
 protected:
   /// The service context list

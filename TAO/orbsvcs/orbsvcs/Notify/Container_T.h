@@ -64,7 +64,7 @@ private:
   class Destroyer: public TAO_ESF_Worker<TYPE>
   {
     /// Call destroy on the object
-    virtual void work (TYPE* type);
+    void work (TYPE* type) override;
   };
 };
 

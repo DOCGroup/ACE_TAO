@@ -38,9 +38,9 @@ namespace ACE
               virtual ~FixedLengthStreamPolicyBase ();
 
             protected:
-              virtual int read_from_stream (char_type* buffer, std::streamsize length);
+              int read_from_stream (char_type* buffer, std::streamsize length) override;
 
-              virtual int write_to_stream (const char_type* buffer, std::streamsize length);
+              int write_to_stream (const char_type* buffer, std::streamsize length) override;
 
             private:
               std::streamsize length_;
@@ -68,9 +68,9 @@ namespace ACE
               virtual ~ChunkedTransferStreamPolicyBase ();
 
             protected:
-              virtual int read_from_stream (char_type* buffer, std::streamsize length);
+              int read_from_stream (char_type* buffer, std::streamsize length) override;
 
-              virtual int write_to_stream (const char_type* buffer, std::streamsize length);
+              int write_to_stream (const char_type* buffer, std::streamsize length) override;
 
               int getc ();
 

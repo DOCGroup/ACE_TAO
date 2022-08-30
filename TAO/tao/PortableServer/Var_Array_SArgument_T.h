@@ -37,9 +37,9 @@ namespace TAO
 
     In_Var_Array_SArgument_T ();
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_forany::_slice_type const * arg () const;
 
@@ -60,10 +60,10 @@ namespace TAO
   public:
     Inout_Var_Array_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_forany::_slice_type * arg ();
 
@@ -85,9 +85,9 @@ namespace TAO
   public:
     Out_Var_Array_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_forany::_slice_type *& arg ();
 
@@ -109,9 +109,9 @@ namespace TAO
   public:
     Ret_Var_Array_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_forany::_slice_type *& arg ();
 

@@ -40,19 +40,19 @@ public:
                               RTCORBA::Current_ptr current);
 
   /// Destructor
-  ~TAO_EC_RTCORBA_Dispatching (void);
+  ~TAO_EC_RTCORBA_Dispatching (void) override;
 
   // = The EC_Dispatching methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
-  virtual void push (TAO_EC_ProxyPushSupplier* proxy,
+  void activate (void) override;
+  void shutdown (void) override;
+  void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info);
-  virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
+                     TAO_EC_QOS_Info& qos_info) override;
+  void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info);
+                            TAO_EC_QOS_Info& qos_info) override;
 
 private:
   /// The thread pools...

@@ -30,15 +30,15 @@ class be_visitor_union_any_op_cs : public be_visitor_union
 public:
   be_visitor_union_any_op_cs (be_visitor_context *ctx);
 
-  ~be_visitor_union_any_op_cs ();
+  ~be_visitor_union_any_op_cs () override;
 
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
-  virtual int visit_union_branch (be_union_branch *node);
+  int visit_union_branch (be_union_branch *node) override;
 
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 };
 
 #endif /* _BE_VISITOR_UNION_ANY_OP_CS_H_ */

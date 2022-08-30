@@ -31,16 +31,16 @@ public:
   be_visitor_union_discriminant_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union_discriminant_ci ();
+  ~be_visitor_union_discriminant_ci () override;
 
   /// visit an enum
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 
   /// visit a predefined type
-  virtual int visit_predefined_type (be_predefined_type *node);
+  int visit_predefined_type (be_predefined_type *node) override;
 
   /// visit a typedef node
-  virtual int visit_typedef (be_typedef *node);
+  int visit_typedef (be_typedef *node) override;
 };
 
 #endif /* _BE_VISITOR_UNION_DISCRIMINANT_CI_H_ */

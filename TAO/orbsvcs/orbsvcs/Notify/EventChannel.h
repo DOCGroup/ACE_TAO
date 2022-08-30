@@ -57,7 +57,7 @@ public:
   TAO_Notify_EventChannel (void);
 
   /// Destructor
-  virtual ~TAO_Notify_EventChannel ();
+  ~TAO_Notify_EventChannel () override;
 
   /// Init
   void init (TAO_Notify_EventChannelFactory* ecf
@@ -74,19 +74,19 @@ public:
   void remove (TAO_Notify_SupplierAdmin* supplier_admin);
 
   /// ServantBase refcount methods.
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  void _add_ref (void) override;
+  void _remove_ref (void) override;
 
   // TAO_Notify::Topology_Parent
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
+  TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
                                                    CORBA::Long id,
-                                                   const TAO_Notify::NVPList& attrs);
-  virtual void reconnect (void);
+                                                   const TAO_Notify::NVPList& attrs) override;
+  void reconnect (void) override;
   virtual void validate ();
 
-  virtual TAO_Notify_Object::ID get_id () const {return id();}
+  TAO_Notify_Object::ID get_id () const override {return id();}
 
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
@@ -97,19 +97,19 @@ public:
                               bool experienced_timeout);
 
   /// Shutdown
-  virtual int shutdown (void);
-  virtual void load_attrs(const TAO_Notify::NVPList& attrs);
+  int shutdown (void) override;
+  void load_attrs(const TAO_Notify::NVPList& attrs) override;
 
   /// TAO_Notify_Container_T requires a destroy method
-  virtual void destroy (void);
+  void destroy (void) override;
 
   /// This is public to allow TAO_MonitorConsumerAdmin access.
-  virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr
-    get_consumeradmin (CosNotifyChannelAdmin::AdminID id);
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr
+    get_consumeradmin (CosNotifyChannelAdmin::AdminID id) override;
 
   /// This is public to allow TAO_MonitorSupplierAdmin access.
-  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
-    get_supplieradmin (CosNotifyChannelAdmin::AdminID id);
+  CosNotifyChannelAdmin::SupplierAdmin_ptr
+    get_supplieradmin (CosNotifyChannelAdmin::AdminID id) override;
 
   TAO_Notify_FilterFactory* default_filter_factory_servant () const;
 
@@ -117,7 +117,7 @@ private:
   typedef TAO_Notify_Container_T <TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Container;
   typedef TAO_Notify_Container_T <TAO_Notify_SupplierAdmin> TAO_Notify_SupplierAdmin_Container;
 
-  virtual void save_attrs(TAO_Notify::NVPList& attrs);
+  void save_attrs(TAO_Notify::NVPList& attrs) override;
 
   /// = Data Members
   /// The parent object.
@@ -134,38 +134,38 @@ private:
 protected:
   /// =CosNotifyChannelAdmin::EventChannel methods
 
-  virtual ::CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory ();
+  ::CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory () override;
 
-  virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin (void);
+  ::CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin (void) override;
 
-  virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr default_supplier_admin (void);
+  ::CosNotifyChannelAdmin::SupplierAdmin_ptr default_supplier_admin (void) override;
 
-  virtual ::CosNotifyFilter::FilterFactory_ptr default_filter_factory (void);
+  ::CosNotifyFilter::FilterFactory_ptr default_filter_factory (void) override;
 
-  virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-                                                                        CosNotifyChannelAdmin::AdminID_out id);
+  ::CosNotifyChannelAdmin::ConsumerAdmin_ptr new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
+                                                                        CosNotifyChannelAdmin::AdminID_out id) override;
 
-  virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-                                                                        CosNotifyChannelAdmin::AdminID_out id);
+  ::CosNotifyChannelAdmin::SupplierAdmin_ptr new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
+                                                                        CosNotifyChannelAdmin::AdminID_out id) override;
 
-  virtual ::CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins (void);
+  ::CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins (void) override;
 
-  virtual ::CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins (void);
+  ::CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins (void) override;
 
-  virtual ::CosNotification::QoSProperties * get_qos (void);
+  ::CosNotification::QoSProperties * get_qos (void) override;
 
-  virtual void set_qos (const CosNotification::QoSProperties & qos);
+  void set_qos (const CosNotification::QoSProperties & qos) override;
 
-  virtual void validate_qos (const CosNotification::QoSProperties & required_qos,
-                             CosNotification::NamedPropertyRangeSeq_out available_qos);
+  void validate_qos (const CosNotification::QoSProperties & required_qos,
+                             CosNotification::NamedPropertyRangeSeq_out available_qos) override;
 
-  virtual ::CosNotification::AdminProperties * get_admin (void);
+  ::CosNotification::AdminProperties * get_admin (void) override;
 
-  virtual void set_admin (const CosNotification::AdminProperties & admin);
+  void set_admin (const CosNotification::AdminProperties & admin) override;
 
-  virtual ::CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void);
+  ::CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void) override;
 
-  virtual ::CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void);
+  ::CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void) override;
 
 private:
   TAO_Notify_ConsumerAdmin_Container& ca_container();
@@ -181,7 +181,7 @@ private:
   CosNotifyFilter::FilterFactory_var default_filter_factory_;
   TAO_Notify_FilterFactory * default_filter_factory_servant_;
 
-  virtual void release (void);
+  void release (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -83,13 +83,13 @@ public:
                    ACE_Reactor *reactor = ACE_Reactor::instance ());
 
   /// Destructor.
-  virtual ~ACE_Svc_Handler ();
+  ~ACE_Svc_Handler () override;
 
   /// Activate the client handler.  This is typically called by the
   /// ACE_Acceptor or ACE_Connector, which passes "this" in as the
   /// parameter to open.  If this method returns -1 the Svc_Handler's
   /// close() method is automatically called.
-  virtual int open (void *acceptor_or_connector = 0);
+  int open (void *acceptor_or_connector = 0) override;
 
   /**
    * Object termination hook -- application-specific cleanup code goes
@@ -100,7 +100,7 @@ public:
    * ACE_Task::close() for further details. The default action of this
    * function is to call handle_close() with the default arguments.
    */
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
 
   /**
    * Call this method if you want to recycling the @c Svc_Handler
@@ -128,15 +128,15 @@ public:
   // = Dynamic linking hooks.
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int fini ();
+  int fini () override;
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
+  int info (ACE_TCHAR **info_string, size_t length) const override;
 
   // = Demultiplexing hooks.
 
@@ -146,19 +146,19 @@ public:
    * and to <destroy> this object (to avoid memory leaks)!  If you
    * don't want this behavior make sure you override this method...
    */
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Default behavior when timeouts occur is to close down the
   /// <Svc_Handler> by calling <handle_close>.
-  virtual int handle_timeout (const ACE_Time_Value &time,
-                              const void *);
+  int handle_timeout (const ACE_Time_Value &time,
+                              const void *) override;
 
   /// Get the underlying handle associated with the <peer_>.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /// Set the underlying handle associated with the <peer_>.
-  virtual void set_handle (ACE_HANDLE);
+  void set_handle (ACE_HANDLE) override;
 
   /// Returns the underlying PEER_STREAM.  Used by
   /// <ACE_Acceptor::accept> and <ACE_Connector::connect> factories.

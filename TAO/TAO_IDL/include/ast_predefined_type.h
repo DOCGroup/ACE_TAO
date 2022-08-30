@@ -101,19 +101,19 @@ public:
   AST_PredefinedType (PredefinedType t,
                       UTL_ScopedName *n);
 
-  virtual ~AST_PredefinedType ();
+  ~AST_PredefinedType () override;
 
   // Data Accessors.
   PredefinedType pt ();
 
   // AST Dumping
-  virtual void dump (ACE_OSTREAM_TYPE &o) override;
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
   int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 

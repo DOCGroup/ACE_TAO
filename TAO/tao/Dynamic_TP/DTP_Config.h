@@ -59,9 +59,9 @@ class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry : public ACE_Service_Object
 {
 public:
   TAO_DTP_Config_Registry (void);
-  virtual ~TAO_DTP_Config_Registry (void);
+  ~TAO_DTP_Config_Registry (void) override;
 
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 
   /// initializes the supplied set value with the configuration associated with the name, or returns false.
   bool find (const ACE_CString& name, TAO_DTP_Definition &entry);
@@ -81,7 +81,7 @@ public:
   TAO_DTP_Config (void);
 
   /// Destructor.
-  virtual ~TAO_DTP_Config (void);
+  ~TAO_DTP_Config (void) override;
 
   /// Read a definition parameter set from the supplied args.
   /// There must be a -TPName argument, which, if replicated will cause the set to be ignored, unless -TPOverwrite is also set
@@ -92,7 +92,7 @@ public:
   /// default stack size = 0, system defined default used.
   /// queue depth is in number of messages, default is infinite
   /// Init can be called multiple times,
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 
 private:
   int parse_long (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, long &value);

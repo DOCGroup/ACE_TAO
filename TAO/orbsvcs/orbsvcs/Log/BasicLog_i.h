@@ -59,13 +59,13 @@ public:
                   DsLogAdmin::LogId id);
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id);
+  DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id) override;
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
+  DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id) override;
 
   /// Destroy the log object and all contained records.
-  void destroy (void);
+  void destroy (void) override;
 
 protected:
 
@@ -74,7 +74,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~TAO_BasicLog_i (void);
+  ~TAO_BasicLog_i (void) override;
 
 private:
 

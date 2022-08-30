@@ -65,7 +65,7 @@ public:
      *       line option.  Apparently the compiler generated
      *       destructor is inlined.
      */
-  virtual ~TAO_IFR_Client_Adapter ();
+  ~TAO_IFR_Client_Adapter () override;
 
   virtual CORBA::Boolean interfacedef_cdr_insert (
       TAO_OutputCDR &cdr,

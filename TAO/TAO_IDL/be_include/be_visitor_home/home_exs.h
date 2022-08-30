@@ -29,10 +29,10 @@ public:
 
   ~be_visitor_home_exs ();
 
-  virtual int visit_home (be_home *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_factory (be_factory *node);
+  int visit_home (be_home *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_factory (be_factory *node) override;
 
 private:
   int gen_exec_class ();
@@ -57,9 +57,9 @@ class Home_Exec_Op_Attr_Generator
 public:
   Home_Exec_Op_Attr_Generator (be_visitor_scope * visitor);
 
-  virtual int emit (be_interface * derived_interface,
-                    TAO_OutStream * os,
-                    be_interface * base_interface);
+  int emit (be_interface * derived_interface,
+            TAO_OutStream * os,
+            be_interface * base_interface) override;
 
 private:
   be_visitor_scope * visitor_;

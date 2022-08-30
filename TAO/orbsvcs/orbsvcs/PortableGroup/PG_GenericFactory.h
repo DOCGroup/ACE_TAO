@@ -55,7 +55,7 @@ public:
                          TAO_PG_PropertyManager & property_manager);
 
   /// Destructor.
-  ~TAO_PG_GenericFactory (void);
+  ~TAO_PG_GenericFactory (void) override;
 
   /**
    * @name TAO_LoadBalancer::GenericFactory methods
@@ -68,11 +68,11 @@ public:
    * FactoryCreationId parameter may be passed to the delete_object()
    * method to delete the object.
    */
-  virtual CORBA::Object_ptr create_object (
+  CORBA::Object_ptr create_object (
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out
-        factory_creation_id);
+        factory_creation_id) override;
 
   /**
    * Delete the object corresponding to the provided
@@ -80,9 +80,9 @@ public:
    * then all members within the ObjectGroup will be deleted.
    * Afterward, the ObjectGroup itself will be deleted.
    */
-  virtual void delete_object (
+  void delete_object (
       const PortableGroup::GenericFactory::FactoryCreationId &
-        factory_creation_id);
+        factory_creation_id) override;
 
   //@}
 

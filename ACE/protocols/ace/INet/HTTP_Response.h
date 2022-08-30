@@ -67,12 +67,12 @@ namespace ACE
               void get_cookies(ACE_Array<ACE_CString> & cookies) const;
 
               /// Writes the HTTP response to the given stream
-              virtual void write(std::ostream& str) const;
+              void write(std::ostream& str) const override;
 
               /// Reads the HTTP response from the
               /// given stream.
               /// 100 Continue responses are ignored.
-              virtual bool read(std::istream& str);
+              bool read(std::istream& str) override;
 
               static const ACE_CString COOKIE;
 

@@ -42,7 +42,7 @@ class TAO_IFRService_Export TAO_ComponentContainer_i
 public:
   TAO_ComponentContainer_i (TAO_Repository_i *repo);
 
-  virtual ~TAO_ComponentContainer_i (void);
+  ~TAO_ComponentContainer_i (void) override;
 
   virtual CORBA::ComponentIR::ComponentDef_ptr create_component (
       const char *id,

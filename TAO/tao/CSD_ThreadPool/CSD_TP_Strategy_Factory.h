@@ -46,9 +46,9 @@ namespace TAO
         TP_Strategy_Factory();
 
         /// Virtual Destructor.
-        virtual ~TP_Strategy_Factory();
+        ~TP_Strategy_Factory() override;
 
-        int init (int argc, ACE_TCHAR* argv[]);
+        int init (int argc, ACE_TCHAR* argv[]) override;
     };
   }
 }

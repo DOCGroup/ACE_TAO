@@ -43,7 +43,7 @@ class TAO_Codeset_Manager;
 class TAO_Export TAO_Codeset_Manager_Factory_Base : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_Codeset_Manager_Factory_Base () = default;
+  ~TAO_Codeset_Manager_Factory_Base () override = default;
 
   /// Create makes a new instance of the codeset manager for every
   /// call. This allows multiple ORBs to have their own (or none).

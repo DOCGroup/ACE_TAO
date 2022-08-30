@@ -57,27 +57,27 @@ public:
   TAO_PolicyFactory_Registry ();
 
   /// Destructor.  Releases duplicated PolicyFactory references.
-  ~TAO_PolicyFactory_Registry ();
+  ~TAO_PolicyFactory_Registry () override;
 
   /// Register a PolicyFactory with the underlying PolicyFactory
   /// sequence.  This method should only be called during ORB
   /// initialization.
   void register_policy_factory (
     CORBA::PolicyType type,
-    PortableInterceptor::PolicyFactory_ptr policy_factory);
+    PortableInterceptor::PolicyFactory_ptr policy_factory) override;
 
   /// Construct a policy of the given type with the information
   /// contained in the CORBA::Any @a value.
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   const CORBA::Any &value);
+                                   const CORBA::Any &value) override;
 
   /// Create an empty policy, usually to be filled in later by
   /// demarshaling.
-  CORBA::Policy_ptr _create_policy (CORBA::PolicyType type);
+  CORBA::Policy_ptr _create_policy (CORBA::PolicyType type) override;
 
   /// Check if a @c PolicyFactory corresponding to the given type,
   /// exists.
-  bool factory_exists (CORBA::PolicyType & type) const;
+  bool factory_exists (CORBA::PolicyType & type) const override;
 
 private:
   /// The table that maps policy type to policy factory.

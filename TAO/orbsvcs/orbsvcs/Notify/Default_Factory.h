@@ -31,63 +31,63 @@ public:
   TAO_Notify_Default_Factory (void);
 
   /// Destructor
-  virtual ~TAO_Notify_Default_Factory ();
+  ~TAO_Notify_Default_Factory () override;
 
   /// Create ProxySupplier Collection
-  virtual void create (TAO_Notify_ProxySupplier_Collection*& collection);
+  void create (TAO_Notify_ProxySupplier_Collection*& collection) override;
 
   /// Create ProxyConsumer Collection
-  virtual void create (TAO_Notify_ProxyConsumer_Collection*& collection);
+  void create (TAO_Notify_ProxyConsumer_Collection*& collection) override;
 
   /// Create EventChannel Collection
-  virtual void create (TAO_Notify_EventChannel_Collection*& collection);
+  void create (TAO_Notify_EventChannel_Collection*& collection) override;
 
   /// Create ConsumerAdmin Collection
-  virtual void create (TAO_Notify_ConsumerAdmin_Collection*& collection);
+  void create (TAO_Notify_ConsumerAdmin_Collection*& collection) override;
 
   /// Create SupplierAdmin Collection
-  virtual void create (TAO_Notify_SupplierAdmin_Collection*& collection);
+  void create (TAO_Notify_SupplierAdmin_Collection*& collection) override;
 
   /// Create Proxy Collection
-  virtual void create (TAO_Notify_Proxy_Collection*& collection);
+  void create (TAO_Notify_Proxy_Collection*& collection) override;
 
   /// Create EventChannelDefault_Factory
-  virtual void create (TAO_Notify_EventChannelFactory*& channel_factory,
-                       const char* factory_name);
+  void create (TAO_Notify_EventChannelFactory*& channel_factory,
+                       const char* factory_name) override;
 
   /// Create EventChannel
-  virtual void create (TAO_Notify_EventChannel*& channel,
-                       const char* ec_name);
+  void create (TAO_Notify_EventChannel*& channel,
+                       const char* ec_name) override;
 
   /// Create SupplierAdmin
-  virtual void create (TAO_Notify_SupplierAdmin*& admin);
+  void create (TAO_Notify_SupplierAdmin*& admin) override;
 
   /// Create ConsumerAdmin
-  virtual void create (TAO_Notify_ConsumerAdmin*& admin);
+  void create (TAO_Notify_ConsumerAdmin*& admin) override;
 
   /// Create ProxyPushConsumer
-  virtual void create (TAO_Notify_ProxyPushConsumer*& proxy);
+  void create (TAO_Notify_ProxyPushConsumer*& proxy) override;
 
   /// Create ProxyPushSupplier
-  virtual void create (TAO_Notify_ProxyPushSupplier*& proxy);
+  void create (TAO_Notify_ProxyPushSupplier*& proxy) override;
 
   /// Create CosEC_ProxyPushConsumer
-  virtual void create (TAO_Notify_CosEC_ProxyPushConsumer*& proxy);
+  void create (TAO_Notify_CosEC_ProxyPushConsumer*& proxy) override;
 
   /// Create CosEC_ProxyPushSupplier
-  virtual void create (TAO_Notify_CosEC_ProxyPushSupplier*& proxy);
+  void create (TAO_Notify_CosEC_ProxyPushSupplier*& proxy) override;
 
   /// Create StructuredProxyPushConsumer
-  virtual void create (TAO_Notify_StructuredProxyPushConsumer*& proxy);
+  void create (TAO_Notify_StructuredProxyPushConsumer*& proxy) override;
 
   /// Create StructuredProxyPushSupplier
-  virtual void create (TAO_Notify_StructuredProxyPushSupplier*& proxy);
+  void create (TAO_Notify_StructuredProxyPushSupplier*& proxy) override;
 
   /// Create SequenceProxyPushConsumer
-  virtual void create (TAO_Notify_SequenceProxyPushConsumer*& proxy);
+  void create (TAO_Notify_SequenceProxyPushConsumer*& proxy) override;
 
   /// Create SequenceProxyPushSupplier
-  virtual void create (TAO_Notify_SequenceProxyPushSupplier*& proxy);
+  void create (TAO_Notify_SequenceProxyPushSupplier*& proxy) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

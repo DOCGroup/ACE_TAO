@@ -39,31 +39,31 @@ class TAO_Valuetype_Export TAO_Valuetype_Adapter_Impl
   : public TAO_Valuetype_Adapter
 {
 public:
-  virtual ~TAO_Valuetype_Adapter_Impl () = default;
+  ~TAO_Valuetype_Adapter_Impl () override = default;
 
-  virtual CORBA::Object_ptr abstractbase_to_object (
-      CORBA::AbstractBase_ptr);
+  CORBA::Object_ptr abstractbase_to_object (
+      CORBA::AbstractBase_ptr) override;
 
-  virtual CORBA::Boolean stream_to_value (TAO_InputCDR &, CORBA::ValueBase *&);
+  CORBA::Boolean stream_to_value (TAO_InputCDR &, CORBA::ValueBase *&) override;
 
-  virtual CORBA::Boolean stream_to_abstract_base (
+  CORBA::Boolean stream_to_abstract_base (
       TAO_InputCDR &,
-      CORBA::AbstractBase_ptr &);
+      CORBA::AbstractBase_ptr &) override;
 
-  virtual CORBA::Long type_info_single () const;
+  CORBA::Long type_info_single () const override;
 
-  virtual CORBA::Boolean is_type_info_implied (CORBA::Long) const;
-  virtual CORBA::Boolean is_type_info_single (CORBA::Long) const;
-  virtual CORBA::Boolean is_type_info_list (CORBA::Long) const;
-  virtual CORBA::Boolean is_value_chunked (CORBA::Long) const;
+  CORBA::Boolean is_type_info_implied (CORBA::Long) const override;
+  CORBA::Boolean is_type_info_single (CORBA::Long) const override;
+  CORBA::Boolean is_type_info_list (CORBA::Long) const override;
+  CORBA::Boolean is_value_chunked (CORBA::Long) const override;
 
-  virtual int vf_map_rebind (const char *, CORBA::ValueFactory &);
+  int vf_map_rebind (const char *, CORBA::ValueFactory &) override;
 
-  virtual int vf_map_unbind (const char *);
+  int vf_map_unbind (const char *) override;
 
-  virtual CORBA::ValueFactory vf_map_find (const char *);
+  CORBA::ValueFactory vf_map_find (const char *) override;
 
-  virtual CORBA::TypeCode_ptr derived_type (CORBA::ValueBase *);
+  CORBA::TypeCode_ptr derived_type (CORBA::ValueBase *) override;
 
 private:
   TAO_ValueFactory_Map map_;

@@ -42,7 +42,7 @@ namespace TAO_Notify
     /// \return a pointer to a Topology_Loader which must be deleted
     /// by the caller.
     virtual Topology_Loader* create_loader () = 0;
-    virtual ~Topology_Factory ();
+    ~Topology_Factory () override;
   };
 }
 

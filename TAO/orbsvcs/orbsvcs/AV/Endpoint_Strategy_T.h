@@ -32,7 +32,7 @@ protected:
   TAO_AV_Endpoint_Reactive_Strategy ();
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Reactive_Strategy ();
+  ~TAO_AV_Endpoint_Reactive_Strategy () override;
 
   /// creates and activates the streamendpoint, vdev, and mediacontrol
   virtual int activate (void);

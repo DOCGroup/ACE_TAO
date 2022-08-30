@@ -390,7 +390,7 @@ public:
     ADMIN = 0x010
   };
 
-  virtual ~TAO_Trader_Base ();
+  ~TAO_Trader_Base () override;
 
   // = Accessors for objects that manage trader's configuration.
 

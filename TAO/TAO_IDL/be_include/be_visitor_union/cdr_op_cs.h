@@ -32,13 +32,13 @@ public:
   be_visitor_union_cdr_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union_cdr_op_cs ();
+  ~be_visitor_union_cdr_op_cs () override;
 
   /// visit union
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
-  virtual int pre_process (be_decl *);
-  virtual int post_process (be_decl *);
+  int pre_process (be_decl *) override;
+  int post_process (be_decl *) override;
 
 private:
   BoolUnionBranch latest_branch_;

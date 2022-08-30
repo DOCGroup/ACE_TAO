@@ -34,7 +34,7 @@ public:
   TAO_POA_Default_Policy_Validator (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_POA_Default_Policy_Validator () = default;
+  ~TAO_POA_Default_Policy_Validator () override = default;
 
 protected:
   /**
@@ -42,10 +42,10 @@ protected:
    * are consistent and legal.  Throw an appropriate exception
    * if that is not the case.
    */
-  void validate_impl (TAO_Policy_Set &policies);
+  void validate_impl (TAO_Policy_Set &policies) override;
 
   /// Add/merge policies.
-  void merge_policies_impl (TAO_Policy_Set &policies);
+  void merge_policies_impl (TAO_Policy_Set &policies) override;
 
   /**
    * Return whether the specified policy type is legal for the
@@ -53,7 +53,7 @@ protected:
    * potentially specify policies that are unknown to an
    * validate () routine, and these need to be caught.
    */
-  virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type);
+  CORBA::Boolean legal_policy_impl (CORBA::PolicyType type) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

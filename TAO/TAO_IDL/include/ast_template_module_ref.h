@@ -21,13 +21,13 @@ public:
   UTL_StrList *param_refs () const;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // If IDL module has been created in a scope corresponding
   // to this node. That's the one we want to match, NOT this
@@ -35,7 +35,7 @@ public:
   // after this node, so we'll match what we're looking for on
   // the next iteration of the search. So for this immediate
   // adjustment we return no match.
-  virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
+  AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only) override;
 
   /// Accessors for the member.
   bool processed () const;

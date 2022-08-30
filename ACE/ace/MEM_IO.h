@@ -34,7 +34,7 @@ class ACE_Export ACE_Reactive_MEM_IO : public ACE_MEM_SAP
 public:
   ACE_Reactive_MEM_IO (void);
 
-  virtual ~ACE_Reactive_MEM_IO (void);
+  ~ACE_Reactive_MEM_IO (void) override;
 
   /**
    * Initialize the MEM_SAP object.
@@ -42,26 +42,26 @@ public:
    * @a options is used to pass in the Malloc_Options to initialize
    * underlying ACE_MMAP.
    */
-  virtual int init (ACE_HANDLE handle,
+  int init (ACE_HANDLE handle,
                     const ACE_TCHAR *name,
-                    MALLOC_OPTIONS *options);
+                    MALLOC_OPTIONS *options) override;
 
   /**
    * Fetch location of next available data into <recv_buffer_>.
    * As this operation read the address of the data off the socket
    * using ACE::recv, @a timeout only applies to ACE::recv.
    */
-  virtual ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
+  ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
                             int flags,
-                            const ACE_Time_Value *timeout);
+                            const ACE_Time_Value *timeout) override;
 
   /**
    * Wait to to @a timeout amount of time to send @a buf.  If <send>
    * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
-  virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
+  ssize_t send_buf (ACE_MEM_SAP_Node *buf,
                             int flags,
-                            const ACE_Time_Value *timeout);
+                            const ACE_Time_Value *timeout) override;
 
   /**
    * Convert the buffer offset @a off to absolute address to @a buf.

@@ -70,13 +70,13 @@ public:
   TAO_Trader (Trader_Components components = LOOKUP);
 
   /// Destructor.
-  virtual ~TAO_Trader (void);
+  ~TAO_Trader (void) override;
 
   /// Accessor for the structure with all the service offers.
   Offer_Database& offer_database (void);
 
   /// Returns the trader
-  ACE_Lock &lock (void);
+  ACE_Lock &lock (void) override;
 
 protected:
   typedef TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> TRADER_SELF;
@@ -109,23 +109,23 @@ public:
   // = CosTrading::TraderComponents methods.
   /// Returns an object reference to the Lookup interface of the trader.
   /// Returns nil if the trader does not support Lookup interface.
-  virtual CosTrading::Lookup_ptr lookup_if (void);
+  CosTrading::Lookup_ptr lookup_if (void) override;
 
   /// Returns object reference for the Register interface of the trader.
   /// Returns nil if the trader does not support Register interface.
-  virtual CosTrading::Register_ptr register_if (void);
+  CosTrading::Register_ptr register_if (void) override;
 
   /// Returns object reference for the Link interface of the trader.
   /// Returns nil if the trader does not support Link interface.
-  virtual CosTrading::Link_ptr link_if (void);
+  CosTrading::Link_ptr link_if (void) override;
 
   /// Returns object reference to the Proxy interface of the trader.
   /// Returns nil if the trader does not support Proxy interface.
-  virtual CosTrading::Proxy_ptr proxy_if (void);
+  CosTrading::Proxy_ptr proxy_if (void) override;
 
   /// Returns object reference for the Admin interface of the trader.
   /// Returns nil if the trader does not support Admin interface.
-  virtual CosTrading::Admin_ptr admin_if (void);
+  CosTrading::Admin_ptr admin_if (void) override;
 
 private:
   const TAO_Trading_Components_i& comps_;
@@ -139,13 +139,13 @@ public:
 
   // = CosTrading::SupportAttributes methods.
 
-  virtual CORBA::Boolean supports_modifiable_properties (void);
+  CORBA::Boolean supports_modifiable_properties (void) override;
 
-  virtual CORBA::Boolean supports_dynamic_properties (void);
+  CORBA::Boolean supports_dynamic_properties (void) override;
 
-  virtual CORBA::Boolean supports_proxy_offers (void);
+  CORBA::Boolean supports_proxy_offers (void) override;
 
-  virtual CosTrading::TypeRepository_ptr type_repos (void);
+  CosTrading::TypeRepository_ptr type_repos (void) override;
 
 private:
   const TAO_Support_Attributes_i& attrs_;
@@ -159,37 +159,37 @@ public:
 
   // = CosTrading::ImportAttributes methods.
 
-  virtual CORBA::ULong def_search_card (void);
+  CORBA::ULong def_search_card (void) override;
 
-  virtual CORBA::ULong max_search_card (void);
+  CORBA::ULong max_search_card (void) override;
 
   // Search cardinality determines the maximum number of offers searched
   // before not considering other offers.
 
-  virtual CORBA::ULong def_match_card (void);
+  CORBA::ULong def_match_card (void) override;
 
-  virtual CORBA::ULong max_match_card (void);
+  CORBA::ULong max_match_card (void) override;
 
   // Match cardinality determines the maximum number of offers
   // matched to the constraints before not considering other offers..
 
-  virtual CORBA::ULong def_return_card (void);
+  CORBA::ULong def_return_card (void) override;
 
-  virtual CORBA::ULong max_return_card (void);
+  CORBA::ULong max_return_card (void) override;
 
   // Return cardinality determines the maximum number of offers marked
   // to return before not considering other offers.
 
 
-  virtual CORBA::ULong max_list (void);
+  CORBA::ULong max_list (void) override;
 
-  virtual CORBA::ULong def_hop_count (void);
+  CORBA::ULong def_hop_count (void) override;
 
-  virtual CORBA::ULong max_hop_count (void);
+  CORBA::ULong max_hop_count (void) override;
 
-  virtual CosTrading::FollowOption def_follow_policy (void);
+  CosTrading::FollowOption def_follow_policy (void) override;
 
-  virtual CosTrading::FollowOption max_follow_policy (void);
+  CosTrading::FollowOption max_follow_policy (void) override;
 
 private:
   const TAO_Import_Attributes_i& attrs_;
@@ -202,7 +202,7 @@ public:
   TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs);
 
   // = CosTrading::LinkAttributes methods
-  virtual CosTrading::FollowOption max_link_follow_policy (void);
+  CosTrading::FollowOption max_link_follow_policy (void) override;
 
 private:
   const TAO_Link_Attributes_i& attrs_;

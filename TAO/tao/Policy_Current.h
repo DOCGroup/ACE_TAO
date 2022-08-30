@@ -47,12 +47,12 @@ public:
 
   // = The CORBA::PolicyManager operations
 
-  virtual CORBA::PolicyList * get_policy_overrides (
-        const CORBA::PolicyTypeSeq & ts);
+  CORBA::PolicyList * get_policy_overrides (
+    const CORBA::PolicyTypeSeq & ts) override;
 
-  virtual void set_policy_overrides (
-        const CORBA::PolicyList & policies,
-        CORBA::SetOverrideType set_add);
+  void set_policy_overrides (
+    const CORBA::PolicyList & policies,
+    CORBA::SetOverrideType set_add) override;
 
   // = Set and get the implementation.
   TAO_Policy_Current_Impl &implementation () const;

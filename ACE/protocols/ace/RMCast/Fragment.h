@@ -16,8 +16,8 @@ namespace ACE_RMCast
     Fragment (Parameters const& params);
 
   public:
-    virtual void
-    send (Message_ptr m);
+    void
+    send (Message_ptr m) override;
 
     Parameters const& params_;
 

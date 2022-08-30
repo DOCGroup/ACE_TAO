@@ -59,21 +59,21 @@ namespace ACE
 
               u_short uses_active_port () const;
 
-              virtual Request& request ();
+              Request& request () override;
 
-              virtual const Request& request () const;
+              const Request& request () const override;
 
-              virtual Response& response ();
+              Response& response () override;
 
-              virtual const Response& response () const;
+              const Response& response () const override;
 
               std::ostream& request_stream ();
 
-              virtual std::istream& response_stream ();
+              std::istream& response_stream () override;
 
-              virtual bool is_response_ok () const;
+              bool is_response_ok () const override;
 
-              virtual std::istream& handle_open_request (const ACE::INet::URL_Base& url);
+              std::istream& handle_open_request (const ACE::INet::URL_Base& url) override;
 
               virtual std::istream& handle_get_request (const URL& url, bool binary=true);
 /*
@@ -91,7 +91,7 @@ namespace ACE
               typedef Session_T<ACE_SYNCH>::connection_type connection_type;
               typedef ACE::IOS::Sock_IOStreamBase<ACE_SYNCH> stream_type;
 
-              virtual void on_eof ();
+              void on_eof () override;
 
               class Authentication
                 : public ACE::INet::AuthenticationBase
@@ -103,17 +103,17 @@ namespace ACE
 
                     virtual ~Authentication ();
 
-                    virtual const ACE_CString& scheme () const;
+                    const ACE_CString& scheme () const override;
 
-                    virtual const ACE_CString& realm () const;
+                    const ACE_CString& realm () const override;
 
-                    virtual const ACE_CString& user () const;
+                    const ACE_CString& user () const override;
 
-                    virtual void user (const ACE_CString& usr);
+                    void user (const ACE_CString& usr) override;
 
-                    virtual const ACE_CString& password () const;
+                    const ACE_CString& password () const override;
 
-                    virtual void password (const ACE_CString& pw);
+                    void password (const ACE_CString& pw) override;
 
                   private:
                     const ACE_CString& realm_;
@@ -144,8 +144,8 @@ namespace ACE
                     SessionFactory ();
                     virtual ~SessionFactory ();
 
-                    virtual ACE::INet::ConnectionHolder* create_connection (
-                        const ACE::INet::ConnectionKey& key) const;
+                    ACE::INet::ConnectionHolder* create_connection (
+                      const ACE::INet::ConnectionKey& key) const override;
                 };
 
               SessionHolder& session ();

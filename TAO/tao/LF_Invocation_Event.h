@@ -58,19 +58,19 @@ protected:
    * LFS_CONNECTION_CLOSED - The connection was closed when the state
    *                         was active.
    */
-  virtual void state_changed_i (LFS_STATE new_state);
+  void state_changed_i (LFS_STATE new_state) override;
 
   /// Return true if the condition was satisfied successfully, false if it
   /// has not
-  virtual bool successful_i () const;
+  bool successful_i () const override;
 
   /// Return true if an error was detected while waiting for the
   /// event
-  virtual bool error_detected_i () const;
+  bool error_detected_i () const override;
 
 private:
   /// Check whether we have reached the final state..
-  bool is_state_final () const;
+  bool is_state_final () const override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -57,7 +57,7 @@ public:
   TAO_EventLogFactory_i (void);
 
   /// Destructor.
-  ~TAO_EventLogFactory_i ();
+  ~TAO_EventLogFactory_i () override;
 
   /// Initialise the EventChannel and obtain a
   /// pointer to it.
@@ -73,25 +73,25 @@ public:
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
-        DsLogAdmin::LogId_out id);
+        DsLogAdmin::LogId_out id) override;
 
   /// Same as create (), but allows clients to specify the id.
   DsEventLogAdmin::EventLog_ptr create_with_id (
         DsLogAdmin::LogId id,
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
-        const DsLogAdmin::CapacityAlarmThresholdList & thresholds);
+        const DsLogAdmin::CapacityAlarmThresholdList & thresholds) override;
 
   // = Implementation of the CosEventChannelAdmin::ConsumerAdmin methods.
-  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (void);
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (void) override;
 
-  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void);
+  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void) override;
 
 protected:
-  virtual CORBA::RepositoryId create_repositoryid ();
+  CORBA::RepositoryId create_repositoryid () override;
 
-  virtual PortableServer::ServantBase*
-    create_log_servant (DsLogAdmin::LogId id);
+  PortableServer::ServantBase*
+    create_log_servant (DsLogAdmin::LogId id) override;
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;

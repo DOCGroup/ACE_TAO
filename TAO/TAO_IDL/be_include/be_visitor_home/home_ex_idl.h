@@ -29,17 +29,17 @@ public:
 
   ~be_visitor_home_ex_idl ();
 
-  virtual int visit_home (be_home *node);
+  int visit_home (be_home *node) override;
 
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_argument (be_argument *node);
-  virtual int visit_factory (be_factory *node);
+  int visit_attribute (be_attribute *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_argument (be_argument *node) override;
+  int visit_factory (be_factory *node) override;
 
   /// To regenerate the name of an anonymous type.
   /// Anonymous arrays are not allowed.
-  virtual int visit_sequence (be_sequence *node);
-  virtual int visit_string (be_string *node);
+  int visit_sequence (be_sequence *node) override;
+  int visit_string (be_string *node) override;
 
 private:
   void gen_implicit ();

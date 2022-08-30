@@ -62,9 +62,9 @@ namespace ACE
               /// Destructor
               virtual ~BasicBidirStreamBuffer ();
 
-              virtual int_type overflow (int_type c);
-              virtual int_type underflow ();
-              virtual int sync ();
+              int_type overflow (int_type c) override;
+              int_type underflow () override;
+              int sync () override;
 
               const STREAM_HANDLER& stream () const;
 

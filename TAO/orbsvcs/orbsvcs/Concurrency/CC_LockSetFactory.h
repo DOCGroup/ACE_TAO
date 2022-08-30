@@ -40,12 +40,12 @@ public:
   CC_LockSetFactory (void);
 
   /// Destructor.
-  ~CC_LockSetFactory (void);
+  ~CC_LockSetFactory (void) override;
 
-  virtual CosConcurrencyControl::LockSet_ptr create ();
+  CosConcurrencyControl::LockSet_ptr create () override;
 
-  virtual CosConcurrencyControl::LockSet_ptr create_related (
-      CosConcurrencyControl::LockSet_ptr which);
+  CosConcurrencyControl::LockSet_ptr create_related (
+      CosConcurrencyControl::LockSet_ptr which) override;
 
 private:
   /// Lock to serialize the access to the factory.

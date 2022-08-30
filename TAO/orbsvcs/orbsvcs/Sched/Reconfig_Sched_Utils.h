@@ -83,7 +83,7 @@ struct TAO_RTSched_Export TAO_RT_Info_Tuple
   // Constructor from an RT_Info.
   // (also serves as a copy constructor).
 
-  virtual ~TAO_RT_Info_Tuple ();
+  ~TAO_RT_Info_Tuple () override;
   // Destructor.
 
   void operator = (const RtecScheduler::RT_Info &);
@@ -427,11 +427,11 @@ public:
   TAO_RSE_Reset_Visitor ();
 
   /// Destructor.
-  virtual ~TAO_RSE_Reset_Visitor () {}
+  ~TAO_RSE_Reset_Visitor () override {}
 
   /// Resets the fields in the entry to pre-DFS traversal states.
   /// Returns 0 on success and -1 on error.
-  virtual int visit (TAO_Reconfig_Scheduler_Entry &rse);
+  int visit (TAO_Reconfig_Scheduler_Entry &rse) override;
 };
 
 /**

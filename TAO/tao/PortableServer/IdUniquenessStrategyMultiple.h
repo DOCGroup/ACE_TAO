@@ -31,17 +31,17 @@ namespace TAO
       : public IdUniquenessStrategy
     {
     public:
-      virtual void strategy_init (TAO_Root_POA *poa);
+      void strategy_init (TAO_Root_POA *poa) override;
 
-      virtual void strategy_cleanup ();
+      void strategy_cleanup () override;
 
-      virtual bool is_servant_activation_allowed (
+      bool is_servant_activation_allowed (
         PortableServer::Servant servant,
-        bool &w);
+        bool &w) override;
 
-      virtual bool allow_multiple_activations () const;
+      bool allow_multiple_activations () const override;
 
-      virtual ::PortableServer::IdUniquenessPolicyValue type() const;
+      ::PortableServer::IdUniquenessPolicyValue type() const override;
     };
 
   }

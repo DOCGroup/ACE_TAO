@@ -53,7 +53,7 @@ namespace TAO_Notify
     Reconnection_Registry (Topology_Parent & parent);
 
     /// Destructor
-    virtual ~Reconnection_Registry ();
+    ~Reconnection_Registry () override;
 
     //////////////////////////
     // During normal operation
@@ -69,19 +69,19 @@ namespace TAO_Notify
 
     //////////////////////
     // During topology save
-    virtual void save_persistent (Topology_Saver& saver);
+    void save_persistent (Topology_Saver& saver) override;
 
     ///////////////////////////////////////
     // During reload of persistent topology
 
-    virtual Topology_Object* load_child (const ACE_CString & type,
+    Topology_Object* load_child (const ACE_CString & type,
       CORBA::Long id,
-      const NVPList& attrs);
+      const NVPList& attrs) override;
 
     void send_reconnect (CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory);
 
   private:
-    void release (void);
+    void release (void) override;
 
     Reconnection_Registry_Type reconnection_registry_;
     ::NotifyExt::ReconnectionRegistry::ReconnectionID highest_id_;

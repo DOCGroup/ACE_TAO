@@ -31,19 +31,19 @@ namespace TAO
 
     ~PG_Group_List_Store_File_Guard () noexcept(false);
 
-    virtual void set_object_last_changed (const time_t & time);
+    void set_object_last_changed (const time_t & time) override;
 
-    virtual time_t get_object_last_changed ();
+    time_t get_object_last_changed () override;
 
-    virtual bool object_obsolete ();
+    bool object_obsolete () override;
 
-    virtual void mark_object_current ();
+    void mark_object_current () override;
 
-    virtual int load_from_stream ();
+    int load_from_stream () override;
 
-    virtual bool is_loaded_from_stream ();
+    bool is_loaded_from_stream () override;
 
-    virtual TAO::Storable_Base * create_stream (const char * mode);
+    TAO::Storable_Base * create_stream (const char * mode) override;
 
 private:
     PG_Group_List_Store & list_store_;

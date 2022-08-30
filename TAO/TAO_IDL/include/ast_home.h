@@ -19,20 +19,20 @@ public:
             AST_Interface **supports_flat,
             long n_supports_flat);
 
-  virtual ~AST_Home ();
+  ~AST_Home () override;
 
   // Extend lookup to the base home.
-  virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
-                                       bool full_def_only);
+  AST_Decl *look_in_inherited (UTL_ScopedName *e,
+                                       bool full_def_only) override;
 
   // Extend lookup to the supported interfaces.
-  virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
-                                       bool full_def_only);
+  AST_Decl *look_in_supported (UTL_ScopedName *e,
+                                       bool full_def_only) override;
 
   // Overridden for homes from the UTL_Scope method.
-  virtual AST_Decl *special_lookup (UTL_ScopedName *,
+  AST_Decl *special_lookup (UTL_ScopedName *,
                                     bool full_def_only,
-                                    AST_Decl *&final_parent_decl);
+                                    AST_Decl *&final_parent_decl) override;
 
   // Accessors.
 
@@ -49,13 +49,13 @@ public:
   void transfer_scope_elements (AST_Interface *dst);
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 
@@ -65,8 +65,8 @@ private:
   friend int tao_yyparse ();
   friend class ast_visitor_tmpl_module_inst;
 
-  virtual AST_Factory *fe_add_factory (AST_Factory *f);
-  virtual AST_Finder *fe_add_finder (AST_Finder *f);
+  AST_Factory *fe_add_factory (AST_Factory *f) override;
+  AST_Finder *fe_add_finder (AST_Finder *f) override;
 
 private:
   AST_Home *pd_base_home;

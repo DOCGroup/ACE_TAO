@@ -43,20 +43,20 @@ namespace TAO
 
     Unknown_IDL_Type (CORBA::TypeCode_ptr);
 
-    virtual ~Unknown_IDL_Type ();
+    ~Unknown_IDL_Type () override;
 
-    virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
+    CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
     virtual const void *value () const;
-    virtual void free_value ();
+    void free_value () override;
 
     virtual TAO_InputCDR &_tao_get_cdr ();
-    virtual int _tao_byte_order () const;
+    int _tao_byte_order () const override;
 
-    virtual void _tao_decode (TAO_InputCDR &);
+    void _tao_decode (TAO_InputCDR &) override;
 
-    virtual CORBA::Boolean to_object (CORBA::Object_ptr &) const;
-    virtual CORBA::Boolean to_value (CORBA::ValueBase *&) const;
-    virtual CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const;
+    CORBA::Boolean to_object (CORBA::Object_ptr &) const override;
+    CORBA::Boolean to_value (CORBA::ValueBase *&) const override;
+    CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const override;
 
   private:
     // We make the lock global, so that it won't be deleted when shared.

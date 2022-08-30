@@ -34,14 +34,14 @@ public:
   /// destructor
   ~be_visitor_valuetype_ch ();
 
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_field (be_field *node);
+  int visit_operation (be_operation *node) override;
+  int visit_field (be_field *node) override;
 
-  void begin_public ();
-  void begin_private ();
+  void begin_public () override;
+  void begin_private () override;
 
   /// Helper method passed to the template method to generate code for
   /// the operations of the parents of supported interfaces.

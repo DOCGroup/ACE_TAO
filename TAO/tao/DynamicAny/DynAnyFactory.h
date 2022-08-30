@@ -42,20 +42,20 @@ public:
   TAO_DynAnyFactory ();
 
   // = The DynamicAnyFactory methods.
-  virtual DynamicAny::DynAny_ptr create_dyn_any (const CORBA::Any & value);
+  DynamicAny::DynAny_ptr create_dyn_any (const CORBA::Any & value) override;
 
-  virtual DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
-      CORBA::TypeCode_ptr type);
+  DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
+      CORBA::TypeCode_ptr type) override;
 
-  virtual DynamicAny::DynAny_ptr create_dyn_any_without_truncation (
-      const CORBA::Any & value);
+  DynamicAny::DynAny_ptr create_dyn_any_without_truncation (
+      const CORBA::Any & value) override;
 
-  virtual DynamicAny::DynAnySeq * create_multiple_dyn_anys (
+  DynamicAny::DynAnySeq * create_multiple_dyn_anys (
       const DynamicAny::AnySeq & values,
-      ::CORBA::Boolean allow_truncate);
+      ::CORBA::Boolean allow_truncate) override;
 
-  virtual DynamicAny::AnySeq * create_multiple_anys (
-      const DynamicAny::DynAnySeq & values);
+  DynamicAny::AnySeq * create_multiple_anys (
+      const DynamicAny::DynAnySeq & values) override;
 
   /// TAO-specific methods.
 

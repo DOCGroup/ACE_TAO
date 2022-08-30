@@ -53,7 +53,7 @@ namespace TAO
       TP_Dispatchable_Visitor();
 
       /// Virtual Destructor.
-      virtual ~TP_Dispatchable_Visitor();
+      ~TP_Dispatchable_Visitor() override;
 
       /// Reset this visitor object in order to re-use it for another
       /// visitation of the request queue.  This sets the visitor's "result"
@@ -64,7 +64,7 @@ namespace TAO
       /// visitation.  Sets the remove_flag to true if the request should
       /// be removed from the queue as a result of the visit.  Leaves the
       /// remove_flag alone otherwise.
-      virtual bool visit_request(TP_Request* request, bool& remove_flag);
+      bool visit_request(TP_Request* request, bool& remove_flag) override;
 
       /// This returns a "copy" of the located request, or 0 if no request
       /// was located.

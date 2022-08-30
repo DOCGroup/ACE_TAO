@@ -31,7 +31,7 @@ public:
 
   ~be_visitor_connector_dds_exs ();
 
-  virtual int visit_connector (be_connector *node);
+  int visit_connector (be_connector *node) override;
 };
 
 #endif /* _BE_CONNECTOR_CONNECTOR_DDS_EXS_H_ */

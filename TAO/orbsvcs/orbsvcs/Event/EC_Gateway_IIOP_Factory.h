@@ -41,12 +41,12 @@ class TAO_RTEvent_Serv_Export TAO_EC_Gateway_IIOP_Factory
 {
 public:
   TAO_EC_Gateway_IIOP_Factory ();
-  virtual ~TAO_EC_Gateway_IIOP_Factory ();
+  ~TAO_EC_Gateway_IIOP_Factory () override;
 
   /// The Service_Object entry points.
   //@{
-  virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR* argv[]) override;
+  int fini () override;
   //@}
 
   /// Helper function to register the Gateway into the service

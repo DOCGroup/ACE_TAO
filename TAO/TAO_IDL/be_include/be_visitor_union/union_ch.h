@@ -32,7 +32,7 @@ public:
   ~be_visitor_union_ch ();
 
   /// visit union. We provide code for this method in the derived class
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
 };
 

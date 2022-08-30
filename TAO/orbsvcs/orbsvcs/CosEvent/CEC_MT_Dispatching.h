@@ -46,17 +46,17 @@ public:
                          int force_activate);
 
   // = The EC_Dispatching methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
-  virtual void push (TAO_CEC_ProxyPushSupplier* proxy,
-                     const CORBA::Any & event);
-  virtual void push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
-                            CORBA::Any& event);
+  void activate (void) override;
+  void shutdown (void) override;
+  void push (TAO_CEC_ProxyPushSupplier* proxy,
+                     const CORBA::Any & event) override;
+  void push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
+                            CORBA::Any& event) override;
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
-                       const TAO_CEC_TypedEvent & typed_event);
-  virtual void invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
-                              TAO_CEC_TypedEvent & typed_event);
+  void invoke (TAO_CEC_ProxyPushSupplier *proxy,
+                       const TAO_CEC_TypedEvent & typed_event) override;
+  void invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
+                              TAO_CEC_TypedEvent & typed_event) override;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 private:

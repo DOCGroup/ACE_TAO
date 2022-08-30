@@ -47,23 +47,23 @@ public:
   be_visitor_interface (be_visitor_context *ctx);
   ~be_visitor_interface ();
 
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
   /// An override of the base class method so we can generate code for
   /// any abstract parents the interface may have.
-  virtual int visit_scope (be_scope *node);
+  int visit_scope (be_scope *node) override;
 
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_constant (be_constant *node);
-  virtual int visit_native (be_native *node);
-  virtual int visit_enum (be_enum *node);
-  virtual int visit_exception (be_exception *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_structure (be_structure *node);
-  virtual int visit_structure_fwd (be_structure_fwd *node);
-  virtual int visit_union (be_union *node);
-  virtual int visit_union_fwd (be_union_fwd *node);
-  virtual int visit_typedef (be_typedef *node);
+  int visit_attribute (be_attribute *node) override;
+  int visit_constant (be_constant *node) override;
+  int visit_native (be_native *node) override;
+  int visit_enum (be_enum *node) override;
+  int visit_exception (be_exception *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_structure (be_structure *node) override;
+  int visit_structure_fwd (be_structure_fwd *node) override;
+  int visit_union (be_union *node) override;
+  int visit_union_fwd (be_union_fwd *node) override;
+  int visit_typedef (be_typedef *node) override;
 
  protected:
     int is_amh_rh_node (be_interface *node);

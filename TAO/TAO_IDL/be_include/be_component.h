@@ -40,13 +40,13 @@ public:
   be_component *base_component () const;
 
   /// Catch BE-specific members before delegating to the base class.
-  virtual void redefine (AST_Interface *from);
+  void redefine (AST_Interface *from) override;
 
   /// Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Need for public access to fe_add_structure and fe_add_typedef,
   // used to add implied IDL nodes created for 'uses multiple' declarations.
@@ -66,13 +66,13 @@ public:
   void scan (UTL_Scope *s);
 
   /// Generate the "public virtual" entries in the stub header.
-  virtual void gen_stub_inheritance (TAO_OutStream *os);
+  void gen_stub_inheritance (TAO_OutStream *os) override;
 
   /// Generate the "public virtual" entries in the skel header.
-  virtual void gen_skel_inheritance (TAO_OutStream *os);
+  void gen_skel_inheritance (TAO_OutStream *os) override;
 
   /// Generate the string compares for ancestors in _is_a().
-  virtual int gen_is_a_ancestors (TAO_OutStream *os);
+  int gen_is_a_ancestors (TAO_OutStream *os) override;
 
 private:
   /// Specialized version for mirror ports.

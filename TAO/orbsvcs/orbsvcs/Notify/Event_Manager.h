@@ -58,9 +58,9 @@ public:
   TAO_Notify_Event_Manager (void);
 
   /// Destructor
-  virtual ~TAO_Notify_Event_Manager ();
+  ~TAO_Notify_Event_Manager () override;
 
-  void release();
+  void release() override;
 
   /// Init
   void init (void);

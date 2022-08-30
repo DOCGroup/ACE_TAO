@@ -154,10 +154,10 @@ private:
   {
   public:
     Routing_Slip_Header();
-    virtual size_t extract_header(Persistent_Storage_Block& psb,
-      size_t offset = 0);
-    virtual size_t put_header(Persistent_Storage_Block& psb,
-      size_t offset = 0);
+    size_t extract_header(Persistent_Storage_Block& psb,
+      size_t offset = 0) override;
+    size_t put_header(Persistent_Storage_Block& psb,
+      size_t offset = 0) override;
 
   public:
     /// The next event in the system

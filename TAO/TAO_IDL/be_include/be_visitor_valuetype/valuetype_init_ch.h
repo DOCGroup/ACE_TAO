@@ -33,11 +33,11 @@ public:
   /// destructor
   ~be_visitor_valuetype_init_ch ();
 
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 
   /// visit a factory
-  virtual int visit_factory (be_factory *node);
+  int visit_factory (be_factory *node) override;
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_INIT_CH_H_ */

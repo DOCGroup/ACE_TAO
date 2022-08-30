@@ -39,7 +39,7 @@ public:
   TAO_DynValue_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynValue_i ();
+  ~TAO_DynValue_i () override;
 
   /// Initialize using an Any.
   void init (const CORBA::Any& any);
@@ -54,36 +54,36 @@ public:
   static TAO_DynValue_i *_narrow (CORBA::Object_ptr obj);
 
   // = Functions specific to DynValue.
-  virtual DynamicAny::FieldName current_member_name ();
+  DynamicAny::FieldName current_member_name () override;
 
-  virtual CORBA::TCKind current_member_kind ();
+  CORBA::TCKind current_member_kind () override;
 
-  virtual DynamicAny::NameValuePairSeq * get_members ();
+  DynamicAny::NameValuePairSeq * get_members () override;
 
-  virtual void set_members (const DynamicAny::NameValuePairSeq & value);
+  void set_members (const DynamicAny::NameValuePairSeq & value) override;
 
-  virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any ();
+  DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any () override;
 
-  virtual void set_members_as_dyn_any (
-      const DynamicAny::NameDynAnyPairSeq & value);
+  void set_members_as_dyn_any (
+      const DynamicAny::NameDynAnyPairSeq & value) override;
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
-  virtual void from_any (const CORBA::Any & value);
+  void from_any (const CORBA::Any & value) override;
 
-  virtual CORBA::Any * to_any ();
+  CORBA::Any * to_any () override;
 
-  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
+  CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual DynamicAny::DynAny_ptr current_component ();
+  DynamicAny::DynAny_ptr current_component () override;
 
-  virtual void insert_val (CORBA::ValueBase * value);
+  void insert_val (CORBA::ValueBase * value) override;
 
-  virtual CORBA::ValueBase * get_val ();
+  CORBA::ValueBase * get_val () override;
 
   // = DynValueCommon needed to be provided here
-  virtual void set_to_value ();
+  void set_to_value () override;
 
 private:
   /// List of base types.
@@ -119,7 +119,7 @@ private:
     CORBA::ULong index);
 
   /// Check if the typecode is acceptable.
-  void check_typecode (CORBA::TypeCode_ptr tc);
+  void check_typecode (CORBA::TypeCode_ptr tc) override;
 
   /// Common code from the init() functions, initializes the
   /// private bits from the given TypeCode

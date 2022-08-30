@@ -23,7 +23,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_TPC_Dispatching_Task : public TAO_EC_Dispat
 public:
   /// Constructor
   TAO_EC_TPC_Dispatching_Task (ACE_Thread_Manager* thr_mgr, TAO_EC_Queue_Full_Service_Object* so);
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

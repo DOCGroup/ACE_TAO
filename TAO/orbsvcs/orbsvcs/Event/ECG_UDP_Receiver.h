@@ -113,7 +113,7 @@ public:
   /// TAO_ECG_UDP_Receiver objects are heap-allocated.)
   static PortableServer::Servant_var<TAO_ECG_UDP_Receiver> create (CORBA::Boolean perform_crc = 0);
 
-  ~TAO_ECG_UDP_Receiver ();
+  ~TAO_ECG_UDP_Receiver () override;
 
   /**
    * @param lcl_ec Event Channel to which we will act as a supplier of events.
@@ -164,17 +164,17 @@ public:
   /// Call the RtecUDPAdmin::AddrServer::get_addr.  Throws exception
   /// if nil Address Server was specified in init ().
   void get_addr (const RtecEventComm::EventHeader& header,
-                 RtecUDPAdmin::UDP_Addr_out addr);
+                 RtecUDPAdmin::UDP_Addr_out addr) override;
 
   /// Call the RtecUDPAdmin::AddrServer::get_address.  Throws exception
   /// if nil Address Server was specified in init ().
   void get_address (const RtecEventComm::EventHeader& header,
-                    RtecUDPAdmin::UDP_Address_out addr);
+                    RtecUDPAdmin::UDP_Address_out addr) override;
 
   /// The PushSupplier idl method.
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
   /// TAO_ECG_Dgram_Handler method.
   /**
@@ -183,7 +183,7 @@ public:
    * Data is read from the socket, and, if complete message is
    * received, the event is pushed to the local Event Channel.
    */
-  virtual int handle_input (ACE_SOCK_Dgram& dgram);
+  int handle_input (ACE_SOCK_Dgram& dgram) override;
 
 protected:
 

@@ -40,8 +40,8 @@ class TAO_FT_ClientPolicyFactory
 {
 public:
 
-  virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any &value);
+  CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
+                                           const CORBA::Any &value) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -28,10 +28,10 @@ public:
   be_module (UTL_ScopedName *n, AST_Module *previous = 0);
 
   /// Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif

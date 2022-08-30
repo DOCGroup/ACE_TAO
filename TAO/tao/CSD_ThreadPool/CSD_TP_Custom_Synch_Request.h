@@ -50,7 +50,7 @@ namespace TAO
                               TP_Servant_State*            servant_state);
 
       /// Virtual Destructor.
-      virtual ~TP_Custom_Synch_Request();
+      ~TP_Custom_Synch_Request() override;
 
       /// Wait until the request has been executed (and completes), or
       /// until it has been cancelled.  Returns true if the request has
@@ -60,10 +60,10 @@ namespace TAO
 
     protected:
       /// Dispatch the request to the servant.
-      virtual void dispatch_i();
+      void dispatch_i() override;
 
       /// Cancel the request.
-      virtual void cancel_i();
+      void cancel_i() override;
 
     private:
       /// Helper used to block and unblock the thread that invokes our

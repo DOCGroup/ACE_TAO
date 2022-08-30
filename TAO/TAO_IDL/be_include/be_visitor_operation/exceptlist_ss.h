@@ -39,7 +39,7 @@ public:
   ~be_visitor_operation_exceptlist_ss ();
 
   /// visit the operation
-  int visit_operation (be_operation * node);
+  int visit_operation (be_operation * node) override;
 
 };
 

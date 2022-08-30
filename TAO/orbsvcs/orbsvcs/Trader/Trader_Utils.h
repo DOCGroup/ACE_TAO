@@ -178,14 +178,14 @@ class TAO_Trading_Serv_Export TAO_Dynamic_Property
 {
 public:
   TAO_Dynamic_Property (void) {}
-  virtual ~TAO_Dynamic_Property (void);
+  ~TAO_Dynamic_Property (void) override;
 
   void destroy (void);
 
   /// Dynamic property evaluation call-back method.
-  virtual CORBA::Any* evalDP(const char* name,
+  CORBA::Any* evalDP(const char* name,
                              CORBA::TypeCode_ptr returned_type,
-                             const CORBA::Any& extra_info) = 0;
+                             const CORBA::Any& extra_info) override = 0;
 
   /// Method to construct a dynamic property structure suitable for
   /// exporting in a CosTrading::PropertyStruct to the Trading Service.

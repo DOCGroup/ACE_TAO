@@ -27,10 +27,10 @@ public:
                 UTL_ScopedName *n );
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 };
 
 #endif /* TAO_BE_VALUEBOX_H */

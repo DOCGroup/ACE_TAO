@@ -43,10 +43,10 @@ public:
   TAO_Notify_Method_Request_Updates (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Updates ();
+  ~TAO_Notify_Method_Request_Updates () override;
 
   /// Execute the Request
-  virtual int execute (void);
+  int execute (void) override;
 };
 
 /*****************************************************************************/
@@ -71,13 +71,13 @@ public:
   TAO_Notify_Method_Request_Updates_No_Copy (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Updates_No_Copy ();
+  ~TAO_Notify_Method_Request_Updates_No_Copy () override;
 
   /// Create a copy of this object.
-  virtual TAO_Notify_Method_Request_Queueable* copy (void);
+  TAO_Notify_Method_Request_Queueable* copy (void) override;
 
   /// Execute the Request
-  virtual int execute (void);
+  int execute (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

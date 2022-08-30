@@ -226,7 +226,7 @@ public:
    * Any notifications that remain queued on this reactor instance are
    * lost.
    */
-  virtual ~ACE_Reactor ();
+  ~ACE_Reactor () override;
 
   /**
    * Initialize the ACE_Reactor to manage @a max_number_of_handles.
@@ -565,11 +565,11 @@ public:
    *                      cancel or reschedule this timer.
    * @retval              -1 on failure, with errno set.
    */
-  virtual long schedule_timer (ACE_Event_Handler *event_handler,
+  long schedule_timer (ACE_Event_Handler *event_handler,
                                const void *arg,
                                const ACE_Time_Value &delay,
                                const ACE_Time_Value &interval =
-                                ACE_Time_Value::zero);
+                                ACE_Time_Value::zero) override;
 
   template<class Rep1, class Period1, class Rep2 = int, class Period2 = std::ratio<1>>
   long schedule_timer (ACE_Event_Handler *event_handler,
@@ -594,8 +594,8 @@ public:
    *
    * This change will not take effect until the next timeout.
    */
-  virtual int reset_timer_interval (long timer_id,
-                                    const ACE_Time_Value &interval);
+  int reset_timer_interval (long timer_id,
+                                    const ACE_Time_Value &interval) override;
 
   template<class Rep, class Period>
   int reset_timer_interval (long timer_id,
@@ -619,9 +619,9 @@ public:
    * will be called with ACE_Event_Handler::TIMER_MASK.
    * ACE_Event_Handler::remove_reference() will also be called.
    */
-  virtual int cancel_timer (long timer_id,
+  int cancel_timer (long timer_id,
                             const void **arg = 0,
-                            int dont_call_handle_close = 1);
+                            int dont_call_handle_close = 1) override;
 
   /**
    * Cancel all timers associated with event handler.
@@ -640,8 +640,8 @@ public:
    *
    * Returns number of handlers cancelled.
    */
-  virtual int cancel_timer (ACE_Event_Handler *event_handler,
-                            int dont_call_handle_close = 1);
+  int cancel_timer (ACE_Event_Handler *event_handler,
+                            int dont_call_handle_close = 1) override;
 
   // = High-level Event_Handler scheduling operations
 

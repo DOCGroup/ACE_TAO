@@ -86,10 +86,10 @@ public:
     TAO_Notify::Delivery_Request_Ptr & request);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Event_Queueable ();
+  ~TAO_Notify_Method_Request_Event_Queueable () override;
 
   /// satisfy the pure virtual method.  Should never be called.
-  virtual int execute (void);
+  int execute (void) override;
 private:
   TAO_Notify_Event::Ptr event_var_;
 };

@@ -62,13 +62,13 @@ public:
    * Please check the IORTable.pidl file for details.
    */
   //@{
-  virtual void bind (const char * object_key, const char * IOR);
+  void bind (const char * object_key, const char * IOR) override;
 
-  virtual void rebind (const char * object_key, const char * IOR);
+  void rebind (const char * object_key, const char * IOR) override;
 
-  virtual void unbind (const char * object_key);
+  void unbind (const char * object_key) override;
 
-  virtual void set_locator (IORTable::Locator_ptr the_locator);
+  void set_locator (IORTable::Locator_ptr the_locator) override;
   //@}
 
 protected:

@@ -36,13 +36,13 @@ public:
 
   virtual ~be_visitor_template_export ();
 
-  virtual int visit_root (be_root *node);
+  int visit_root (be_root *node) override;
 
-  virtual int visit_module (be_module *node);
+  int visit_module (be_module *node) override;
 
-  virtual int visit_typedef (be_typedef *node);
+  int visit_typedef (be_typedef *node) override;
 
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 };
 
 

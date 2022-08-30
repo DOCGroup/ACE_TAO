@@ -104,7 +104,7 @@ namespace TAO
         size_t nargs,
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions) override;
 
     /// This method an "intermediate" server side interception point.
     void receive_request (
@@ -113,7 +113,7 @@ namespace TAO
         size_t nargs,
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions) override;
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -123,7 +123,7 @@ namespace TAO
         size_t nargs,
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions) override;
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -133,7 +133,7 @@ namespace TAO
         size_t nargs,
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions) override;
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -143,30 +143,30 @@ namespace TAO
         size_t nargs,
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions) override;
     //@}
 
     /// Register an interceptor.
-    virtual void add_interceptor (
-      PortableInterceptor::ServerRequestInterceptor_ptr interceptor);
+    void add_interceptor (
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor) override;
 
-    virtual void add_interceptor (
+    void add_interceptor (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies);
+      const CORBA::PolicyList& policies) override;
 
-    virtual void destroy_interceptors ();
+    void destroy_interceptors () override;
 
-    virtual TAO::PICurrent_Impl *allocate_pi_current ();
+    TAO::PICurrent_Impl *allocate_pi_current () override;
 
-    virtual void deallocate_pi_current (TAO::PICurrent_Impl *picurrent);
+    void deallocate_pi_current (TAO::PICurrent_Impl *picurrent) override;
 
-    virtual void execute_command (
+    void execute_command (
         TAO_ServerRequest &server_request,
-        TAO::Upcall_Command &command);
+        TAO::Upcall_Command &command) override;
 
-    void popTSC (TAO_ORB_Core *orb_core)
+    void popTSC (TAO_ORB_Core *orb_core) override
       {TAO_RequestInterceptor_Adapter_Impl::popTSC (orb_core);}
-    void pushTSC (TAO_ORB_Core *orb_core)
+    void pushTSC (TAO_ORB_Core *orb_core) override
       {TAO_RequestInterceptor_Adapter_Impl::pushTSC (orb_core);}
 
   private:

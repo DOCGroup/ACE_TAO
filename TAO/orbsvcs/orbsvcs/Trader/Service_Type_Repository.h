@@ -38,10 +38,10 @@ public:
    */
   TAO_Service_Type_Repository (ACE_Lock *lock = 0);
 
-  ~TAO_Service_Type_Repository (void);
+  ~TAO_Service_Type_Repository (void) override;
 
-  virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber
-    incarnation (void);
+  CosTradingRepos::ServiceTypeRepository::IncarnationNumber
+    incarnation (void) override;
 
   /**
    * BEGIN SPEC
@@ -52,11 +52,11 @@ public:
    * for this service type, and the service type names of the
    * immediate super-types to this service type.
    */
-  virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber
+  CosTradingRepos::ServiceTypeRepository::IncarnationNumber
   add_type (const char *name,
             const char *if_name,
             const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
-            const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);
+            const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types) override;
 
   // If the type creation is successful, an incarnation number is
   // returned as the value of the operation. Incarnation numbers are
@@ -103,10 +103,10 @@ public:
    * "name" has a service type which has been derived from it, then
    * the HasSubTypes exception is raised.  END SPEC
    */
-  virtual void remove_type (const char  *name);
+  void remove_type (const char  *name) override;
 
-  virtual CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq *
-  list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes &which_types);
+  CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq *
+  list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes &which_types) override;
 
   // BEGIN SPEC
   // The list_types operation permits a client to obtain the names of
@@ -128,8 +128,8 @@ public:
    * CosTrading::UnknownServiceType exception is raised.
    * END SPEC
    */
-  virtual CosTradingRepos::ServiceTypeRepository::TypeStruct *
-  describe_type (const char *name);
+  CosTradingRepos::ServiceTypeRepository::TypeStruct *
+  describe_type (const char *name) override;
 
   /**
    * BEGIN SPEC
@@ -144,8 +144,8 @@ public:
    * the CosTrading::UnknownServiceType exception is raised.
    * END SPEC
    */
-  virtual CosTradingRepos::ServiceTypeRepository::TypeStruct *
-  fully_describe_type (const char *name);
+  CosTradingRepos::ServiceTypeRepository::TypeStruct *
+  fully_describe_type (const char *name) override;
 
   /**
    * BEGIN SPEC
@@ -161,7 +161,7 @@ public:
    * exception is raised.
    * END SPEC
    */
-  virtual void mask_type (const char *name);
+  void mask_type (const char *name) override;
 
   /**
    * BEGIN SPEC
@@ -175,7 +175,7 @@ public:
    * exception is raised.
    * END SPEC
    */
-  virtual void unmask_type (const char  *name);
+  void unmask_type (const char  *name) override;
 
 private:
 

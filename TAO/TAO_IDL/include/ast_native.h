@@ -14,16 +14,16 @@ class TAO_IDL_FE_Export AST_Native : public virtual AST_Exception
 public:
   AST_Native (UTL_ScopedName *n);
 
-  virtual ~AST_Native ();
+  ~AST_Native () override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 };

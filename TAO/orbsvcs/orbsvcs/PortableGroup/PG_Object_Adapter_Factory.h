@@ -32,7 +32,7 @@ public:
   TAO_PG_Object_Adapter_Factory (void);
 
   /// Create adapter.
-  virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
+  TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

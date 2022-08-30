@@ -85,75 +85,75 @@ public:
 ANYTYPECODE__EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Char const * mychar);
+  void insert_into_any (CORBA::Any * any, CORBA::Char const * mychar) override;
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::WChar const * mywchar);
+  void insert_into_any (CORBA::Any * any, CORBA::WChar const * mywchar) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const std::string & value);
+  void insert_into_any (CORBA::Any * any, const std::string & value) override;
 
 #if !defined(ACE_LACKS_STD_WSTRING)
-  virtual void insert_into_any (CORBA::Any * any, const std::wstring & value);
+  void insert_into_any (CORBA::Any * any, const std::wstring & value) override;
 #endif /* ACE_LACKS_STD_WSTRING */
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Long value);
+  void insert_into_any (CORBA::Any * any, CORBA::Long value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Short value);
+  void insert_into_any (CORBA::Any * any, CORBA::Short value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::UShort value);
+  void insert_into_any (CORBA::Any * any, CORBA::UShort value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Float value);
+  void insert_into_any (CORBA::Any * any, CORBA::Float value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Double value);
+  void insert_into_any (CORBA::Any * any, CORBA::Double value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::LongLong value);
+  void insert_into_any (CORBA::Any * any, CORBA::LongLong value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::ULongLong value);
+  void insert_into_any (CORBA::Any * any, CORBA::ULongLong value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::LongDouble value);
+  void insert_into_any (CORBA::Any * any, CORBA::LongDouble value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr policy);
+  void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr policy) override;
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr * policy);
+  void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr * policy) override;
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::ULong value);
+  void insert_into_any (CORBA::Any * any, CORBA::ULong value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wchar value);
+  void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wchar value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_char value);
+  void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_char value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_octet value);
+  void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_octet value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value);
+  void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::BooleanSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::BooleanSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::OctetSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::OctetSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::CharSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::CharSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::WCharSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::WCharSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::ShortSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::ShortSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::UShortSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::UShortSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::LongSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::ULongSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::ULongSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongLongSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::LongLongSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::ULongLongSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::ULongLongSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::FloatSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::FloatSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::DoubleSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::DoubleSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongDoubleSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::LongDoubleSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::StringSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::StringSeq & value) override;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::WStringSeq & value);
+  void insert_into_any (CORBA::Any * any, const CORBA::WStringSeq & value) override;
 };
 
 

@@ -52,12 +52,12 @@ public:
       return nullptr;
     }
 
-  virtual const char* _interface_repository_id () const;
+  const char* _interface_repository_id () const override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_RTScheduler_Manager () = default;
+  ~TAO_RTScheduler_Manager () override = default;
 
 private:
   TAO_RTScheduler_Manager (const TAO_RTScheduler_Manager &) = delete;

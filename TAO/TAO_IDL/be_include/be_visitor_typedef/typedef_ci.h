@@ -33,22 +33,22 @@ public:
   ~be_visitor_typedef_ci ();
 
   /// visit typedef. We provide code for this method in the derived class
-  virtual int visit_typedef (be_typedef *node);
+  int visit_typedef (be_typedef *node) override;
 
   // =visit methods on all elements syntactically valid as types that can be
   // typedefed.
 
   /// visit a array
-  virtual int visit_array (be_array *node);
+  int visit_array (be_array *node) override;
 
   /// visit a sequence
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 
   /// visit a structure
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 
   /// visit a union
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 };
 
 #endif /* _BE_VISITOR_TYPEDEF_TYPEDEF_CI_H_*/

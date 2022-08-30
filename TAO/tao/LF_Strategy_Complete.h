@@ -34,12 +34,12 @@ public:
    *
    * Please check the documentation in TAO_LF_Strategy
    */
-  virtual ~TAO_LF_Strategy_Complete (void);
+  ~TAO_LF_Strategy_Complete (void) override;
 
-  virtual void set_upcall_thread (TAO_Leader_Follower &);
-  virtual int set_event_loop_thread (ACE_Time_Value *max_wait_time,
-                                     TAO_Leader_Follower &);
-  virtual void reset_event_loop_thread (int call_reset, TAO_Leader_Follower &);
+  void set_upcall_thread (TAO_Leader_Follower &) override;
+  int set_event_loop_thread (ACE_Time_Value *max_wait_time,
+                                     TAO_Leader_Follower &) override;
+  void reset_event_loop_thread (int call_reset, TAO_Leader_Follower &) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

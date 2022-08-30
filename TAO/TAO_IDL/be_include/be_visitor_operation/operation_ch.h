@@ -34,7 +34,7 @@ public:
   ~be_visitor_operation_ch ();
 
   /// visit operation.
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_CH_H_ */

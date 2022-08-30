@@ -27,8 +27,8 @@ public:
 
   ~be_visitor_component_svh ();
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
 
 private:
   void gen_entrypoint (be_component *node);

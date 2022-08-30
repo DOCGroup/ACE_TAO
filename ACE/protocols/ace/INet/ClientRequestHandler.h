@@ -80,16 +80,16 @@ namespace ACE
                                        u_short port);
                     virtual ~INetConnectionKey ();
 
-                    virtual u_long hash () const;
+                    u_long hash () const override;
 
-                    virtual ConnectionKey* duplicate () const;
+                    ConnectionKey* duplicate () const override;
 
                     const ACE_CString& host () const;
 
                     u_short port () const;
 
                   protected:
-                    virtual bool equal (const ConnectionKey& key) const;
+                    bool equal (const ConnectionKey& key) const override;
 
                   private:
                     ACE_CString host_;

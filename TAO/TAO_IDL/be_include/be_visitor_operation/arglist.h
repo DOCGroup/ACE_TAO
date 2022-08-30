@@ -32,12 +32,12 @@ public:
 
   ~be_visitor_operation_arglist ();
 
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_factory (be_factory *node);
-  virtual int visit_argument (be_argument *node);
+  int visit_operation (be_operation *node) override;
+  int visit_factory (be_factory *node) override;
+  int visit_argument (be_argument *node) override;
 
   /// Stuff to output after each element of the scope is handled.
-  virtual int post_process (be_decl *);
+  int post_process (be_decl *) override;
 
   /// Set the member.
   void unused (bool val);

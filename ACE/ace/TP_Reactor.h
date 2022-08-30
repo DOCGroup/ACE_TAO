@@ -211,15 +211,15 @@ public:
    * @a max_wait_time elapsed without dispatching any handlers, or -1
    * if an error occurs (check @c errno for more information).
    */
-  virtual int handle_events (ACE_Time_Value *max_wait_time = 0);
+  int handle_events (ACE_Time_Value *max_wait_time = 0) override;
 
-  virtual int handle_events (ACE_Time_Value &max_wait_time);
+  int handle_events (ACE_Time_Value &max_wait_time) override;
 
   /// Does the reactor allow the application to resume the handle on
   /// its own ie. can it pass on the control of handle resumption to
   /// the application.  The TP reactor has can allow applications to
   /// resume handles.  So return a positive value.
-  virtual int resumable_handler (void);
+  int resumable_handler (void) override;
 
   /// Called from handle events
   static void no_op_sleep_hook (void *);
@@ -227,10 +227,10 @@ public:
   /// The ACE_TP_Reactor implementation does not have a single owner thread.
   /// Attempts to set the owner explicitly are ignored. The reported owner
   /// thread is the current Leader in the pattern.
-  virtual int owner (ACE_thread_t n_id, ACE_thread_t *o_id = 0);
+  int owner (ACE_thread_t n_id, ACE_thread_t *o_id = 0) override;
 
   /// Return the thread ID of the current Leader.
-  virtual int owner (ACE_thread_t *t_id);
+  int owner (ACE_thread_t *t_id) override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -239,8 +239,8 @@ protected:
   // = Internal methods that do the actual work.
 
   /// Template method from the base class.
-  virtual void clear_dispatch_mask (ACE_HANDLE handle,
-                                    ACE_Reactor_Mask mask);
+  void clear_dispatch_mask (ACE_HANDLE handle,
+                                    ACE_Reactor_Mask mask) override;
 
   /// Dispatch just 1 signal, timer, notification handlers
   int dispatch_i (ACE_Time_Value *max_wait_time,
@@ -276,11 +276,11 @@ protected:
                             ACE_TP_Token_Guard &g);
 
   /// This method shouldn't get called.
-  virtual void notify_handle (ACE_HANDLE handle,
+  void notify_handle (ACE_HANDLE handle,
                               ACE_Reactor_Mask mask,
                               ACE_Handle_Set &,
                               ACE_Event_Handler *eh,
-                              ACE_EH_PTMF callback);
+                              ACE_EH_PTMF callback) override;
 private:
 
   /// Get the handle of the notify pipe from the ready set if there is

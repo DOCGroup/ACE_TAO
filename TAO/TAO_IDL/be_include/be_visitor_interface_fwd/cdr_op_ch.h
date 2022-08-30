@@ -35,7 +35,7 @@ public:
   ~be_visitor_interface_fwd_cdr_op_ch ();
 
   /// visit forward declared interface
-  virtual int visit_interface_fwd (be_interface_fwd *node);
+  int visit_interface_fwd (be_interface_fwd *node) override;
 };
 
 #endif /* _BE_VISITOR_INTERFACE_FWD_CDR_OP_CH_H_ */

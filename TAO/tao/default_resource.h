@@ -121,14 +121,14 @@ public:
   TAO_Default_Resource_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Default_Resource_Factory ();
+  ~TAO_Default_Resource_Factory () override;
 
   /**
    * @name Service Configurator Hooks
    */
   //@{
   /// Dynamic linking hook
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Parse svc.conf arguments
   int parse_args (int argc, ACE_TCHAR* argv[]);
@@ -140,7 +140,7 @@ public:
   //@{
 
   int get_parser_names (char **&names,
-                        int &number_of_names);
+                        int &number_of_names) override;
   enum
   {
     TAO_ALLOCATOR_THREAD_LOCK
@@ -150,41 +150,41 @@ public:
   int cdr_allocator_source (void);
 
   // = Resource Retrieval
-  virtual int use_locked_data_blocks () const;
-  virtual ACE_Reactor *get_reactor ();
-  virtual void reclaim_reactor (ACE_Reactor *);
-  virtual TAO_Acceptor_Registry  *get_acceptor_registry ();
-  virtual TAO_Connector_Registry *get_connector_registry ();
-  virtual void use_local_memory_pool (bool);
-  virtual ACE_Allocator* input_cdr_dblock_allocator ();
-  virtual ACE_Allocator* input_cdr_buffer_allocator ();
-  virtual ACE_Allocator* input_cdr_msgblock_allocator ();
-  virtual int input_cdr_allocator_type_locked ();
-  virtual ACE_Allocator* output_cdr_dblock_allocator ();
-  virtual ACE_Allocator* output_cdr_buffer_allocator ();
-  virtual ACE_Allocator* output_cdr_msgblock_allocator ();
-  virtual ACE_Allocator* amh_response_handler_allocator ();
-  virtual ACE_Allocator* ami_response_handler_allocator ();
-  virtual TAO_ProtocolFactorySet *get_protocol_factories ();
+  int use_locked_data_blocks () const override;
+  ACE_Reactor *get_reactor () override;
+  void reclaim_reactor (ACE_Reactor *) override;
+  TAO_Acceptor_Registry  *get_acceptor_registry () override;
+  TAO_Connector_Registry *get_connector_registry () override;
+  void use_local_memory_pool (bool) override;
+  ACE_Allocator* input_cdr_dblock_allocator () override;
+  ACE_Allocator* input_cdr_buffer_allocator () override;
+  ACE_Allocator* input_cdr_msgblock_allocator () override;
+  int input_cdr_allocator_type_locked () override;
+  ACE_Allocator* output_cdr_dblock_allocator () override;
+  ACE_Allocator* output_cdr_buffer_allocator () override;
+  ACE_Allocator* output_cdr_msgblock_allocator () override;
+  ACE_Allocator* amh_response_handler_allocator () override;
+  ACE_Allocator* ami_response_handler_allocator () override;
+  TAO_ProtocolFactorySet *get_protocol_factories () override;
 
-  virtual int init_protocol_factories ();
+  int init_protocol_factories () override;
 
-  virtual TAO_Codeset_Manager * codeset_manager ();
+  TAO_Codeset_Manager * codeset_manager () override;
 
-  virtual int cache_maximum () const;
-  virtual int purge_percentage () const;
-  virtual int max_muxed_connections () const;
-  virtual ACE_Lock *create_cached_connection_lock ();
-  virtual int locked_transport_cache ();
-  virtual TAO_Flushing_Strategy *create_flushing_strategy ();
-  virtual TAO_Connection_Purging_Strategy *create_purging_strategy ();
-  TAO_Resource_Factory::Resource_Usage resource_usage_strategy () const;
-  virtual TAO_LF_Strategy *create_lf_strategy ();
-  virtual TAO_GIOP_Fragmentation_Strategy*
+  int cache_maximum () const override;
+  int purge_percentage () const override;
+  int max_muxed_connections () const override;
+  ACE_Lock *create_cached_connection_lock () override;
+  int locked_transport_cache () override;
+  TAO_Flushing_Strategy *create_flushing_strategy () override;
+  TAO_Connection_Purging_Strategy *create_purging_strategy () override;
+  TAO_Resource_Factory::Resource_Usage resource_usage_strategy () const override;
+  TAO_LF_Strategy *create_lf_strategy () override;
+  TAO_GIOP_Fragmentation_Strategy*
     create_fragmentation_strategy (TAO_Transport * transport,
-                                   CORBA::ULong max_message_size) const;
-  virtual void disable_factory ();
-  virtual bool drop_replies_during_shutdown () const;
+                                   CORBA::ULong max_message_size) const override;
+  void disable_factory () override;
+  bool drop_replies_during_shutdown () const override;
  //@}
 
 protected:
@@ -256,7 +256,7 @@ protected:
    */
   bool dynamically_allocated_reactor_;
 
-  virtual int load_default_protocols (void);
+  int load_default_protocols (void) override;
 
   /// This flag is used to determine whether options have been
   /// processed via the init() function.  It is necessary to

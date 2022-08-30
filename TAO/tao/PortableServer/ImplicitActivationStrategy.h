@@ -28,9 +28,9 @@ namespace TAO
       : public Policy_Strategy
     {
     public:
-      virtual void strategy_init(TAO_Root_POA *poa);
+      void strategy_init(TAO_Root_POA *poa) override;
 
-      virtual void strategy_cleanup();
+      void strategy_cleanup() override;
 
       virtual bool allow_implicit_activation () const = 0;
     };

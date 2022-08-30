@@ -121,19 +121,19 @@ class ACE_Export ACE_Adaptive_Lock : public ACE_Lock
 public:
   /// You must also override the destructor function to match with how
   /// you construct the underneath @c lock_.
-  virtual ~ACE_Adaptive_Lock () = default;
+  ~ACE_Adaptive_Lock () override = default;
 
   // = Lock/unlock operations.
 
-  virtual int remove () override;
-  virtual int acquire () override;
-  virtual int tryacquire () override;
-  virtual int release () override;
-  virtual int acquire_read () override;
-  virtual int acquire_write () override;
-  virtual int tryacquire_read () override;
-  virtual int tryacquire_write () override;
-  virtual int tryacquire_write_upgrade () override;
+  int remove () override;
+  int acquire () override;
+  int tryacquire () override;
+  int release () override;
+  int acquire_read () override;
+  int acquire_write () override;
+  int tryacquire_read () override;
+  int tryacquire_write () override;
+  int tryacquire_write_upgrade () override;
   void dump () const;
 
 protected:

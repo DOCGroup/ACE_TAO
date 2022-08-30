@@ -62,7 +62,7 @@ public:
   TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
   /// Destructor...
-  virtual ~TAO_EC_ProxyPushSupplier ();
+  ~TAO_EC_ProxyPushSupplier () override;
 
   /// Activate in the POA
   virtual void activate (
@@ -128,19 +128,19 @@ public:
   CORBA::ULong _decr_refcnt ();
 
   // = The TAO_EC_Filter methods, only push() is implemented...
-  virtual int filter (const RtecEventComm::EventSet &event,
-                      TAO_EC_QOS_Info& qos_info);
-  virtual int filter_nocopy (RtecEventComm::EventSet &event,
-                             TAO_EC_QOS_Info &qos_info);
-  virtual void push (const RtecEventComm::EventSet &event,
-                     TAO_EC_QOS_Info& qos_info);
-  virtual void push_nocopy (RtecEventComm::EventSet &event,
-                            TAO_EC_QOS_Info &qos_info);
-  virtual void clear ();
-  virtual CORBA::ULong max_event_size () const;
-  virtual int can_match (const RtecEventComm::EventHeader &header) const;
-  virtual int add_dependencies (const RtecEventComm::EventHeader &header,
-                                const TAO_EC_QOS_Info &qos_info);
+  int filter (const RtecEventComm::EventSet &event,
+                      TAO_EC_QOS_Info& qos_info) override;
+  int filter_nocopy (RtecEventComm::EventSet &event,
+                             TAO_EC_QOS_Info &qos_info) override;
+  void push (const RtecEventComm::EventSet &event,
+                     TAO_EC_QOS_Info& qos_info) override;
+  void push_nocopy (RtecEventComm::EventSet &event,
+                            TAO_EC_QOS_Info &qos_info) override;
+  void clear () override;
+  CORBA::ULong max_event_size () const override;
+  int can_match (const RtecEventComm::EventHeader &header) const override;
+  int add_dependencies (const RtecEventComm::EventHeader &header,
+                                const TAO_EC_QOS_Info &qos_info) override;
 
 protected:
   /// Set the consumer, used by some implementations to change the

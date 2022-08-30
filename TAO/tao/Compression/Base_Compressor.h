@@ -37,21 +37,21 @@ namespace TAO
     BaseCompressor (::Compression::CompressorFactory_ptr compressor_factory,
                     ::Compression::CompressionLevel compression_level);
 
-    virtual void compress (const ::Compression::Buffer &source,
-                           ::Compression::Buffer &target) = 0;
+    void compress (const ::Compression::Buffer &source,
+                           ::Compression::Buffer &target) override = 0;
 
-    virtual void decompress (const ::Compression::Buffer &source,
-                             ::Compression::Buffer &target) = 0;
+    void decompress (const ::Compression::Buffer &source,
+                             ::Compression::Buffer &target) override = 0;
 
-    virtual ::Compression::CompressorFactory_ptr compressor_factory (void);
+    ::Compression::CompressorFactory_ptr compressor_factory (void) override;
 
-    virtual ::Compression::CompressionLevel compression_level (void);
+    ::Compression::CompressionLevel compression_level (void) override;
 
-    virtual ::CORBA::ULongLong compressed_bytes (void);
+    ::CORBA::ULongLong compressed_bytes (void) override;
 
-    virtual ::CORBA::ULongLong uncompressed_bytes (void);
+    ::CORBA::ULongLong uncompressed_bytes (void) override;
 
-    virtual ::Compression::CompressionRatio compression_ratio (void);
+    ::Compression::CompressionRatio compression_ratio (void) override;
 
   protected:
     void update_stats (::CORBA::ULongLong uncompressed_bytes,

@@ -39,30 +39,30 @@ public:
   TAO_Time_Service_Server (void);
 
   /// Destructor.
-  ~TAO_Time_Service_Server (void);
+  ~TAO_Time_Service_Server (void) override;
 
   /// This operation returns the current system time and an estimate of
   /// inaccuracy in a UTO.
-  virtual CosTime::UTO_ptr universal_time (void);
+  CosTime::UTO_ptr universal_time (void) override;
 
   /**
    * This operation returns the current time in a UTO only if the time
    * can be guaranteed to have been obtained securely. Currently this operation
    * is not implemented and throws a CORBA::NO_IMPLEMENT exception, if called.
    */
-  virtual CosTime::UTO_ptr secure_universal_time (void);
+  CosTime::UTO_ptr secure_universal_time (void) override;
 
   /// This creates a new UTO based on the given parameters.
-  virtual CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,
+  CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,
                                                TimeBase::InaccuracyT inaccuracy,
-                                               TimeBase::TdfT tdf);
+                                               TimeBase::TdfT tdf) override;
 
   /// This creates a new UTO given a time in the UtcT form.
-  virtual CosTime::UTO_ptr uto_from_utc (const TimeBase::UtcT &utc);
+  CosTime::UTO_ptr uto_from_utc (const TimeBase::UtcT &utc) override;
 
   /// This creates a new TIO with the given parameters.
-  virtual CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
-                                         TimeBase::TimeT upper);
+  CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
+                                         TimeBase::TimeT upper) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

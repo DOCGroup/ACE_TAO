@@ -57,11 +57,11 @@ public:
                              TAO_ORB_Core *orb_core);
 
   /// Default destructor.
-  ~TAO_UIPMC_Mcast_Transport (void);
+  ~TAO_UIPMC_Mcast_Transport (void) override;
 
   /// Look for the documentation in Transport.h.
-  virtual int handle_input (TAO_Resume_Handle &rh,
-                            ACE_Time_Value *max_wait_time = 0);
+  int handle_input (TAO_Resume_Handle &rh,
+                            ACE_Time_Value *max_wait_time = 0) override;
 
 protected:
   /** @name Overridden Template Methods
@@ -69,39 +69,39 @@ protected:
    * These are implementations of template methods declared by TAO_Transport.
    */
   //@{
-  virtual ACE_Event_Handler *event_handler_i (void);
-  virtual TAO_Connection_Handler *connection_handler_i (void);
+  ACE_Event_Handler *event_handler_i (void) override;
+  TAO_Connection_Handler *connection_handler_i (void) override;
 
   /// Write the complete Message_Block chain to the connection.
   /// Shouldn't ever be called on the server side.
-  virtual ssize_t send (iovec *,
+  ssize_t send (iovec *,
                         int,
                         size_t &,
-                        ACE_Time_Value const *);
+                        ACE_Time_Value const *) override;
 
   /// Shouldn't ever be called. We use recv_all() with different semantics.
-  virtual ssize_t recv (char *,
+  ssize_t recv (char *,
                         size_t,
-                        ACE_Time_Value const *);
+                        ACE_Time_Value const *) override;
 
-  virtual int register_handler (void);
+  int register_handler (void) override;
 
 public:
   /// @@TODO: These methods IMHO should have more meaningful
   /// names. The names seem to indicate nothing.
   /// Shouldn't ever be called on the server side.
-  virtual int send_request (TAO_Stub *,
+  int send_request (TAO_Stub *,
                             TAO_ORB_Core *,
                             TAO_OutputCDR &,
                             TAO_Message_Semantics,
-                            ACE_Time_Value *);
+                            ACE_Time_Value *) override;
 
   /// Shouldn't ever be called on the server side.
-  virtual int send_message (TAO_OutputCDR &,
+  int send_message (TAO_OutputCDR &,
                             TAO_Stub * = 0,
                             TAO_ServerRequest * = 0,
                             TAO_Message_Semantics = TAO_Message_Semantics (),
-                            ACE_Time_Value * = 0);
+                            ACE_Time_Value * = 0) override;
   //@}
 
 private:

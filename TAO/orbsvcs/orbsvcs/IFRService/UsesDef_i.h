@@ -43,16 +43,16 @@ public:
     TAO_UsesDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_UsesDef_i (void);
+  ~TAO_UsesDef_i (void) override;
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ();
+  CORBA::DefinitionKind def_kind () override;
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe ();
+  CORBA::Contained::Description *describe () override;
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i ();
+  CORBA::Contained::Description *describe_i () override;
 
   virtual CORBA::InterfaceDef_ptr interface_type ();
 

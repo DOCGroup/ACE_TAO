@@ -45,7 +45,7 @@ public:
   TAO_MonitorEventChannel (const char* name);
 
   /// Remove the statistics for this event channel.
-  ~TAO_MonitorEventChannel (void);
+  ~TAO_MonitorEventChannel (void) override;
 
   /// Return the name of this event channel.
   const ACE_CString& name () const;
@@ -66,9 +66,9 @@ public:
                            const ACE_CString& name);
 
   /// Remove the supplier/consumer proxy id/name mapping.
-  virtual void cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
+  void cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
                               bool is_supplier,
-                              bool experienced_timeout);
+                              bool experienced_timeout) override;
 
   /// Remove the consumer admin id/name mapping.
   virtual void remove_consumeradmin (CosNotifyChannelAdmin::AdminID id);
@@ -81,25 +81,25 @@ public:
   /// do nothing.
   void add_stats (const char* name = 0);
 
-  virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr
     new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-                       CosNotifyChannelAdmin::AdminID_out id);
+                       CosNotifyChannelAdmin::AdminID_out id) override;
 
-  virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr
     named_new_for_consumers (
                        CosNotifyChannelAdmin::InterFilterGroupOperator op,
                        CosNotifyChannelAdmin::AdminID_out id,
-                       const char* name);
+                       const char* name) override;
 
-  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
+  CosNotifyChannelAdmin::SupplierAdmin_ptr
     new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-                       CosNotifyChannelAdmin::AdminID_out id);
+                       CosNotifyChannelAdmin::AdminID_out id) override;
 
-  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
+  CosNotifyChannelAdmin::SupplierAdmin_ptr
     named_new_for_suppliers (
                        CosNotifyChannelAdmin::InterFilterGroupOperator op,
                        CosNotifyChannelAdmin::AdminID_out id,
-                       const char* name);
+                       const char* name) override;
 
 private:
   size_t get_consumers (Monitor_Control_Types::NameList* names);

@@ -44,9 +44,9 @@ class TAO_DTP_ORBInitializer
 public:
   TAO_DTP_ORBInitializer (void);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
   /// Register Dynamic_TP policy factories.

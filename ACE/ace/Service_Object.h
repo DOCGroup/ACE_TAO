@@ -48,7 +48,7 @@ public:
   ACE_Service_Object (ACE_Reactor * = 0);
 
   /// Destructor.
-  virtual ~ACE_Service_Object ();
+  ~ACE_Service_Object () override;
 
   /// Temporarily disable a service without removing it completely.
   virtual int suspend ();

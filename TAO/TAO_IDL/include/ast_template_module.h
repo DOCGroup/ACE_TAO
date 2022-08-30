@@ -26,18 +26,17 @@ public:
   bool match_param_refs (UTL_StrList *refs, UTL_Scope *decl_scope);
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Scope Management Protocol
-  virtual
   AST_Template_Module_Ref *fe_add_template_module_ref (
-    AST_Template_Module_Ref *m);
+    AST_Template_Module_Ref *m) override;
 
   static AST_Decl::NodeType const NT;
 

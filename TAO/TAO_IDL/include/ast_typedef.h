@@ -80,7 +80,7 @@ public:
                bool local,
                bool abstract);
 
-  virtual ~AST_Typedef ();
+  ~AST_Typedef () override;
 
   AST_Type *primitive_base_type () const;
   // Return the most primitive base type by traversing the chain of typedefed
@@ -89,12 +89,12 @@ public:
   // Data Accessors.
   AST_Type *base_type () const;
 
-  virtual bool legal_for_primary_key () const;
+  bool legal_for_primary_key () const override;
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
 
-  virtual bool is_local ();
+  bool is_local () override;
   // Override the base class method.
 
   bool owns_base_type () const;
@@ -102,25 +102,25 @@ public:
   // Sometimes this has to be accessed or managed from outside.
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 
-  virtual bool dump_annotations_inline () const { return true; }
+  bool dump_annotations_inline () const override { return true; }
 
   /**
    * Recursively acquired annotations from typedefs.
    */
-  virtual AST_Annotation_Appls &annotations ();
+  AST_Annotation_Appls &annotations () override;
 
 protected:
-  virtual int compute_size_type ();
+  int compute_size_type () override;
   // Compute the size type if it is unknown.
 
   /**

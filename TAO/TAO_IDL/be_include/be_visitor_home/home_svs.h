@@ -28,12 +28,12 @@ public:
 
   ~be_visitor_home_svs ();
 
-  virtual int visit_home (be_home *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_argument (be_argument *node);
-  virtual int visit_factory (be_factory *node);
-  virtual int visit_finder (be_finder *node);
+  int visit_home (be_home *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_argument (be_argument *node) override;
+  int visit_factory (be_factory *node) override;
+  int visit_finder (be_finder *node) override;
 
 private:
   int gen_servant_class ();
@@ -56,9 +56,9 @@ class Home_Op_Attr_Generator
 public:
   Home_Op_Attr_Generator (be_visitor_scope * visitor);
 
-  virtual int emit (be_interface * derived_interface,
-                    TAO_OutStream * os,
-                    be_interface * base_interface);
+  int emit (be_interface * derived_interface,
+            TAO_OutStream * os,
+            be_interface * base_interface) override;
 
 private:
   be_visitor_scope * visitor_;
@@ -71,8 +71,8 @@ public:
 
   ~be_visitor_home_attr_set ();
 
-  virtual int visit_home (be_home *node);
-  virtual int visit_attribute (be_attribute *node);
+  int visit_home (be_home *node) override;
+  int visit_attribute (be_attribute *node) override;
 };
 
 #endif /* _BE_HOME_HOME_SVS_H_ */

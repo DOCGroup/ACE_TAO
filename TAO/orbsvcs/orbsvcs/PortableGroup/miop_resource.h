@@ -53,14 +53,14 @@ public:
   TAO_MIOP_Resource_Factory (void);
 
   /// Destructor.
-  virtual ~TAO_MIOP_Resource_Factory (void);
+  ~TAO_MIOP_Resource_Factory (void) override;
 
   /**
    * @name Service Configurator Hooks
    */
   //@{
   /// Dynamic linking hook
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
   //@}
 
   /**

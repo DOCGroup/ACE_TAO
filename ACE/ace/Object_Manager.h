@@ -417,7 +417,7 @@ public:
   /// be constructed/destructed in <main> with
   /// ACE_HAS_NONSTATIC_OBJECT_MANAGER.
   ACE_Object_Manager ();
-  ~ACE_Object_Manager ();
+  ~ACE_Object_Manager () override;
 
 private:
   /// Singleton pointer.

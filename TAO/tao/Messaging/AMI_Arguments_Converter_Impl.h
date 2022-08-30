@@ -39,22 +39,22 @@ class TAO_Messaging_Export TAO_AMI_Arguments_Converter_Impl
   : public TAO::Collocated_Arguments_Converter
 {
 public:
-  virtual void convert_request (TAO_ServerRequest & server_request,
+  void convert_request (TAO_ServerRequest & server_request,
                                 TAO::Argument * const args[],
-                                size_t nargs);
+                                size_t nargs) override;
 
-  virtual void dsi_convert_request (TAO_ServerRequest & server_request,
-                                    TAO_OutputCDR & output);
+  void dsi_convert_request (TAO_ServerRequest & server_request,
+                                    TAO_OutputCDR & output) override;
 
-  virtual void convert_reply (TAO_ServerRequest & server_request,
+  void convert_reply (TAO_ServerRequest & server_request,
                               TAO::Argument * const args[],
-                              size_t nargs);
+                              size_t nargs) override;
 
-  virtual void dsi_convert_reply (TAO_ServerRequest & server_request,
-                                  TAO_InputCDR & input);
+  void dsi_convert_reply (TAO_ServerRequest & server_request,
+                                  TAO_InputCDR & input) override;
 
-  virtual void handle_corba_exception (TAO_ServerRequest & server_request,
-                                       CORBA::Exception *exception);
+  void handle_corba_exception (TAO_ServerRequest & server_request,
+                                       CORBA::Exception *exception) override;
 
   // Used to force the initialization of the ORB code.
   static int Initializer ();

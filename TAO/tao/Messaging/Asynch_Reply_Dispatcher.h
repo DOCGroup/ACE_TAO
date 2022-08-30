@@ -39,21 +39,21 @@ public:
       ACE_Allocator *allocator);
 
   /// Destructor.
-  virtual ~TAO_Asynch_Reply_Dispatcher () = default;
+  ~TAO_Asynch_Reply_Dispatcher () override = default;
 
   /// @name The Reply Dispatcher methods
   //@{
-  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
+  int dispatch_reply (TAO_Pluggable_Reply_Params &params) override;
 
-  virtual void connection_closed ();
+  void connection_closed () override;
   //@}
 
   /// Inform that the reply timed out
-  virtual void reply_timed_out ();
+  void reply_timed_out () override;
 
   /// Install the timeout handler
   long schedule_timer (CORBA::ULong request_id,
-                       const ACE_Time_Value &max_wait_time);
+                       const ACE_Time_Value &max_wait_time) override;
 
 private:
   /// Stub for the call back method in the Reply Handler.

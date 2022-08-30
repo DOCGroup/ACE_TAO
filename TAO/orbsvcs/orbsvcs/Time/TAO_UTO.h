@@ -46,32 +46,32 @@ public:
            TimeBase::TdfT tdf);
 
   /// Destructor.
-  ~TAO_UTO (void);
+  ~TAO_UTO (void) override;
 
   /// For the readonly attribute <time>.
-  virtual TimeBase::TimeT time ();
+  TimeBase::TimeT time () override;
 
   /// For the readonly attribute <inaccuracy>.
-  virtual TimeBase::InaccuracyT  inaccuracy (void);
+  TimeBase::InaccuracyT  inaccuracy (void) override;
 
   /// For the readonly attribute <tdf>, which is the "time displacement
   /// factor".
-  virtual TimeBase::TdfT tdf (void);
+  TimeBase::TdfT tdf (void) override;
 
   /// For the readonly attribute <utc_time>.
-  virtual TimeBase::UtcT utc_time (void);
+  TimeBase::UtcT utc_time (void) override;
 
   /**
    * Absolute time = Relative time + Base time.
    * ?? Find out more about the Base Time, UTC and
    *    Distributed Time Sync. Algos. [3
    */
-  CosTime::UTO_ptr absolute_time (void);
+  CosTime::UTO_ptr absolute_time (void) override;
 
   /// Compares the time contained in the object with the time in the
   /// supplied uto according to the supplied comparison type.
   CosTime::TimeComparison compare_time (CosTime::ComparisonType comparison_type,
-                                        CosTime::UTO_ptr uto);
+                                        CosTime::UTO_ptr uto) override;
 
   /**
    * Returns a TIO representing the time interval between the time in
@@ -80,11 +80,11 @@ public:
    * two UTOs. Inaccuracies are ignored.  Note the result of this
    * operation is meaningless if the base times of UTOs are different.
    */
-  CosTime::TIO_ptr time_to_interval (CosTime::UTO_ptr);
+  CosTime::TIO_ptr time_to_interval (CosTime::UTO_ptr) override;
 
   /// Returns a TIO object representing the error interval around the
   /// time value in the UTO.
-  CosTime::TIO_ptr interval (void);
+  CosTime::TIO_ptr interval (void) override;
 
 private:
   /**

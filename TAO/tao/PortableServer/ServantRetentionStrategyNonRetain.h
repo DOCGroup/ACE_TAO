@@ -35,91 +35,91 @@ namespace TAO
     public:
       ServantRetentionStrategyNonRetain ();
 
-      virtual void strategy_init (TAO_Root_POA *poa);
+      void strategy_init (TAO_Root_POA *poa) override;
 
-      virtual void strategy_cleanup();
+      void strategy_cleanup() override;
 
-      CORBA::ULong waiting_servant_deactivation () const;
+      CORBA::ULong waiting_servant_deactivation () const override;
 
-      virtual
+      
       PortableServer::ObjectId *
       activate_object (PortableServer::Servant servant,
                        CORBA::Short priority,
-                       bool &wait_occurred_restart_call);
+                       bool &wait_occurred_restart_call) override;
 
-      virtual
+      
       void
       activate_object_with_id (const PortableServer::ObjectId &id,
                                PortableServer::Servant servant,
                                CORBA::Short priority,
-                               bool &wait_occurred_restart_call);
+                               bool &wait_occurred_restart_call) override;
 
-      virtual void deactivate_object (const PortableServer::ObjectId &id);
+      void deactivate_object (const PortableServer::ObjectId &id) override;
 
-      virtual PortableServer::Servant find_servant (
-        const PortableServer::ObjectId &system_id);
+      PortableServer::Servant find_servant (
+        const PortableServer::ObjectId &system_id) override;
 
-      virtual int is_servant_in_map (PortableServer::Servant servant,
-                                     bool &wait_occurred_restart_call);
+      int is_servant_in_map (PortableServer::Servant servant,
+                                     bool &wait_occurred_restart_call) override;
 
-      virtual PortableServer::ObjectId *system_id_to_object_id (
-        const PortableServer::ObjectId &system_id);
+      PortableServer::ObjectId *system_id_to_object_id (
+        const PortableServer::ObjectId &system_id) override;
 
-      virtual
+      
       PortableServer::Servant
-      user_id_to_servant (const PortableServer::ObjectId &id);
+      user_id_to_servant (const PortableServer::ObjectId &id) override;
 
       CORBA::Object_ptr
       id_to_reference (const PortableServer::ObjectId &id,
-                       bool indirect);
+                       bool indirect) override;
 
-      virtual TAO_SERVANT_LOCATION servant_present (
+      TAO_SERVANT_LOCATION servant_present (
         const PortableServer::ObjectId &system_id,
-        PortableServer::Servant &servant);
+        PortableServer::Servant &servant) override;
 
-      virtual PortableServer::Servant find_servant (
+      PortableServer::Servant find_servant (
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
-        TAO::Portable_Server::POA_Current_Impl &poa_current_impl);
+        TAO::Portable_Server::POA_Current_Impl &poa_current_impl) override;
 
-      virtual int find_servant_priority (
+      int find_servant_priority (
         const PortableServer::ObjectId &system_id,
-        CORBA::Short &priority);
+        CORBA::Short &priority) override;
 
-      virtual void deactivate_all_objects ();
+      void deactivate_all_objects () override;
 
-      virtual PortableServer::ObjectId *servant_to_user_id (
-        PortableServer::Servant servant);
+      PortableServer::ObjectId *servant_to_user_id (
+        PortableServer::Servant servant) override;
 
-      virtual CORBA::Object_ptr servant_to_reference (
-        PortableServer::Servant servant);
+      CORBA::Object_ptr servant_to_reference (
+        PortableServer::Servant servant) override;
 
-      virtual CORBA::Object_ptr create_reference (
+      CORBA::Object_ptr create_reference (
         const char *intf,
-        CORBA::Short priority);
+        CORBA::Short priority) override;
 
 #if !defined (CORBA_E_MICRO)
-      virtual CORBA::Object_ptr create_reference_with_id (
+      CORBA::Object_ptr create_reference_with_id (
         const PortableServer::ObjectId &oid,
         const char *intf,
-        CORBA::Short priority);
+        CORBA::Short priority) override;
 #endif
 
-      virtual int rebind_using_user_id_and_system_id (
+      int rebind_using_user_id_and_system_id (
         PortableServer::Servant servant,
         const PortableServer::ObjectId &user_id,
         const PortableServer::ObjectId &system_id,
-        TAO::Portable_Server::Servant_Upcall &servant_upcall);
+        TAO::Portable_Server::Servant_Upcall &servant_upcall) override;
 
-      virtual CORBA::Boolean servant_has_remaining_activations (
-        PortableServer::Servant servant);
+      CORBA::Boolean servant_has_remaining_activations (
+        PortableServer::Servant servant) override;
 
-      virtual int unbind_using_user_id (
-        const PortableServer::ObjectId &user_id);
+      int unbind_using_user_id (
+        const PortableServer::ObjectId &user_id) override;
 
-        virtual ::PortableServer::ServantRetentionPolicyValue type() const;
+        ::PortableServer::ServantRetentionPolicyValue type() const override;
 
-        virtual TAO_Active_Object_Map * get_active_object_map() const;
+        TAO_Active_Object_Map * get_active_object_map() const override;
 
     protected:
       TAO_Root_POA *poa_;

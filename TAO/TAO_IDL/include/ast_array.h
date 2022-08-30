@@ -85,7 +85,7 @@ public:
              bool local,
              bool abstract);
 
-  virtual ~AST_Array ();
+  ~AST_Array () override;
 
   // Data Accessors.
 
@@ -101,16 +101,16 @@ public:
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
-  virtual bool legal_for_primary_key () const;
+  bool legal_for_primary_key () const override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 
@@ -123,7 +123,7 @@ public:
   ///}
 
 protected:
-  virtual int compute_size_type ();
+  int compute_size_type () override;
   // Compute the size type if it is unknown.
 
 private:

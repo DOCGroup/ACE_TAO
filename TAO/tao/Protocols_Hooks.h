@@ -109,7 +109,7 @@ class TAO_Export TAO_Protocols_Hooks : public ACE_Service_Object
 {
 public:
   /// Destructor
-  virtual ~TAO_Protocols_Hooks ();
+  ~TAO_Protocols_Hooks () override;
 
   /// Initialize the protocols hooks instance.
   virtual void init_hooks (TAO_ORB_Core *orb_core) = 0;

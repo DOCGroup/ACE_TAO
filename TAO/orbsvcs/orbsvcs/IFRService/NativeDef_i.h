@@ -39,16 +39,16 @@ public:
   TAO_NativeDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_NativeDef_i (void);
+  ~TAO_NativeDef_i (void) override;
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ();
+  CORBA::DefinitionKind def_kind () override;
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type ();
+  CORBA::TypeCode_ptr type () override;
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i ();
+  CORBA::TypeCode_ptr type_i () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

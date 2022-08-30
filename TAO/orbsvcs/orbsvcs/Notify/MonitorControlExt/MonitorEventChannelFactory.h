@@ -32,25 +32,25 @@ public:
   TAO_MonitorEventChannelFactory (const char* name);
 
   /// Remove the factory name from the factory names statistic
-  ~TAO_MonitorEventChannelFactory (void);
+  ~TAO_MonitorEventChannelFactory (void) override;
 
   /// Create a named event channel and associate various statistic
   /// objects with it in the statistic registry
-  virtual CosNotifyChannelAdmin::EventChannel_ptr
+  CosNotifyChannelAdmin::EventChannel_ptr
     create_named_channel(const CosNotification::QoSProperties& initial_qos,
                          const CosNotification::AdminProperties& initial_admin,
                          CosNotifyChannelAdmin::ChannelID_out id,
-                         const char* name);
+                         const char* name) override;
 
   /// Create an event channel and use the id as the name.
-  virtual CosNotifyChannelAdmin::EventChannel_ptr
+  CosNotifyChannelAdmin::EventChannel_ptr
     create_channel(const CosNotification::QoSProperties& initial_qos,
                    const CosNotification::AdminProperties& initial_admin,
-                   CosNotifyChannelAdmin::ChannelID_out id);
+                   CosNotifyChannelAdmin::ChannelID_out id) override;
 
   /// Hook into the remove() call from the base class and remove it from
   /// our map before passing control back to the base.
-  virtual void remove (TAO_Notify_EventChannel* channel);
+  void remove (TAO_Notify_EventChannel* channel) override;
 
   // This is public to allow the Unbinder class access
   // for SunCC 5.5 and above

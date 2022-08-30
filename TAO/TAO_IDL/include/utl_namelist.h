@@ -89,7 +89,7 @@ public:
   void truncatable (bool val);
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
 private:
   // List item.

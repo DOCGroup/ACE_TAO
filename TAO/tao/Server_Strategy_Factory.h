@@ -88,7 +88,7 @@ public:
   TAO_Server_Strategy_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Server_Strategy_Factory();
+  ~TAO_Server_Strategy_Factory() override;
 
   /**
    * Call <open> on various strategies.  This is not performed in

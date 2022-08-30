@@ -36,20 +36,20 @@ class be_visitor_ccm_pre_proc : public be_visitor_component_scope
 public:
   be_visitor_ccm_pre_proc (be_visitor_context *ctx);
 
-  virtual ~be_visitor_ccm_pre_proc ();
+  ~be_visitor_ccm_pre_proc () override;
 
-  virtual int visit_root (be_root *node);
-  virtual int visit_module (be_module *node);
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
-  virtual int visit_provides (be_provides *node);
-  virtual int visit_uses (be_uses *node);
-  virtual int visit_publishes (be_publishes *node);
-  virtual int visit_emits (be_emits *node);
-  virtual int visit_consumes (be_consumes *node);
-  virtual int visit_home (be_home *node);
-  virtual int visit_eventtype (be_eventtype *node);
-  virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
+  int visit_root (be_root *node) override;
+  int visit_module (be_module *node) override;
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
+  int visit_provides (be_provides *node) override;
+  int visit_uses (be_uses *node) override;
+  int visit_publishes (be_publishes *node) override;
+  int visit_emits (be_emits *node) override;
+  int visit_consumes (be_consumes *node) override;
+  int visit_home (be_home *node) override;
+  int visit_eventtype (be_eventtype *node) override;
+  int visit_eventtype_fwd (be_eventtype_fwd *node) override;
 
 protected:
   // Utility methods to handle the corresponding IDL declarations.

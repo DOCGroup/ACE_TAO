@@ -44,9 +44,9 @@ public:
   TAO_ExtAbstractInterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ExtAbstractInterfaceDef_i (void);
+  ~TAO_ExtAbstractInterfaceDef_i (void) override;
 
-  virtual void destroy (void);
+  void destroy (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

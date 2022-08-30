@@ -55,7 +55,7 @@ public:
   TAO_RTEventLogFactory_i (void);
 
   /// Destructor.
-  ~TAO_RTEventLogFactory_i ();
+  ~TAO_RTEventLogFactory_i () override;
 
   /// Initialise the EventChannel and obtain a
   /// pointer to it.
@@ -73,7 +73,7 @@ public:
         CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         DsLogAdmin::LogId_out id
-      );
+      ) override;
 
   /// Same as create (), but allows clients to specify the id.
   RTEventLogAdmin::EventLog_ptr create_with_id (
@@ -81,18 +81,18 @@ public:
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds
-      );
+      ) override;
 
    // = Implementation of the RtecEventChannelAdmin::ConsumerAdmin methods.
   RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-      );
+      ) override;
 
 protected:
-  virtual CORBA::RepositoryId
-    create_repositoryid ();
+  CORBA::RepositoryId
+    create_repositoryid () override;
 
-  virtual PortableServer::ServantBase*
-    create_log_servant (DsLogAdmin::LogId id);
+  PortableServer::ServantBase*
+    create_log_servant (DsLogAdmin::LogId id) override;
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;

@@ -39,10 +39,10 @@ namespace TAO
      *       rest of the legacy method names and their call sites are
      *       updated accordingly.
      */
-    virtual int visit_typedef (be_typedef * node);
+    int visit_typedef (be_typedef * node) override;
 
     /// Visit a valuebox.
-    virtual int visit_valuebox (be_valuebox * node);
+    int visit_valuebox (be_valuebox * node) override;
 
   private:
     int common (be_type * node,

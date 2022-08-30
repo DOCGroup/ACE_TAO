@@ -50,7 +50,7 @@ class TAO_PortableServer_Export TAO_Acceptor_Filter_Factory
   : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_Acceptor_Filter_Factory();
+  ~TAO_Acceptor_Filter_Factory() override;
 
   virtual TAO_Acceptor_Filter* create_object (TAO_POA_Manager& poamanager);
 

@@ -97,7 +97,7 @@ namespace TAO
   class TAO_Export InArgument : public Argument
   {
   public:
-    virtual CORBA::ParameterMode mode () const;
+    CORBA::ParameterMode mode () const override;
   };
 #else
   typedef Argument InArgument;
@@ -107,7 +107,7 @@ namespace TAO
   class TAO_Export InoutArgument : public Argument
   {
   public:
-    virtual CORBA::ParameterMode mode () const;
+    CORBA::ParameterMode mode () const override;
   };
 #else
   typedef Argument InoutArgument;
@@ -117,7 +117,7 @@ namespace TAO
   class TAO_Export OutArgument : public Argument
   {
   public:
-    virtual CORBA::ParameterMode mode () const;
+    CORBA::ParameterMode mode () const override;
   };
 #else
   typedef Argument OutArgument;
@@ -127,7 +127,7 @@ namespace TAO
   class TAO_Export RetArgument : public Argument
   {
   public:
-    virtual CORBA::ParameterMode mode () const;
+    CORBA::ParameterMode mode () const override;
   };
 #else
   typedef Argument RetArgument;
@@ -136,7 +136,7 @@ namespace TAO
   class TAO_Export Void_Return_Argument : public RetArgument
   {
   public:
-    virtual Argument* clone ();
+    Argument* clone () override;
   };
 }
 

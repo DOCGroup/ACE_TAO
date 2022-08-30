@@ -46,22 +46,22 @@ public:
   TAO_ModuleDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ModuleDef_i (void);
+  ~TAO_ModuleDef_i (void) override;
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ();
+  CORBA::DefinitionKind def_kind () override;
 
   /// Remove the repository entry.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Remove the repository entry.
-  virtual void destroy_i ();
+  void destroy_i () override;
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe ();
+  CORBA::Contained::Description *describe () override;
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i ();
+  CORBA::Contained::Description *describe_i () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

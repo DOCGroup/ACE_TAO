@@ -36,11 +36,11 @@ public:
                                      ACE_Reactor_Mask mask);
 
   /// Default destructor.
-  virtual ~ACE_Reactor_Notification_Strategy (void);
+  ~ACE_Reactor_Notification_Strategy (void) override;
 
-  virtual int notify (void);
+  int notify (void) override;
 
-  virtual int notify (ACE_Event_Handler *eh, ACE_Reactor_Mask mask);
+  int notify (ACE_Event_Handler *eh, ACE_Reactor_Mask mask) override;
 
   /// Get the reactor
   ACE_Reactor *reactor (void);

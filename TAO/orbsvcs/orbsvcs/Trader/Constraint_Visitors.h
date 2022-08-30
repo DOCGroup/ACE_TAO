@@ -117,7 +117,7 @@ public:
   TAO_Constraint_Validator ();
 
   /// Destructor.
-  virtual ~TAO_Constraint_Validator ();
+  ~TAO_Constraint_Validator () override;
 
   /**
    * Validate returns 1 if the expression tree whose root is <root>
@@ -128,52 +128,52 @@ public:
 
   // = Visitor Methods
 
-  virtual int visit_constraint (TAO_Unary_Constraint* constraint);
+  int visit_constraint (TAO_Unary_Constraint* constraint) override;
 
-  virtual int visit_with (TAO_Unary_Constraint* unary_with);
-  virtual int visit_min (TAO_Unary_Constraint* unary_min);
-  virtual int visit_max (TAO_Unary_Constraint* unary_max);
-  virtual int visit_first (TAO_Noop_Constraint* noop_first);
-  virtual int visit_random (TAO_Noop_Constraint* noop_random);
+  int visit_with (TAO_Unary_Constraint* unary_with) override;
+  int visit_min (TAO_Unary_Constraint* unary_min) override;
+  int visit_max (TAO_Unary_Constraint* unary_max) override;
+  int visit_first (TAO_Noop_Constraint* noop_first) override;
+  int visit_random (TAO_Noop_Constraint* noop_random) override;
 
   /// The two operands must return a boolean value.
-  virtual int visit_and (TAO_Binary_Constraint* boolean_and);
-  virtual int visit_or (TAO_Binary_Constraint* boolean_or);
+  int visit_and (TAO_Binary_Constraint* boolean_and) override;
+  int visit_or (TAO_Binary_Constraint* boolean_or) override;
 
   /// The operand must return a boolean value.
-  virtual int visit_not (TAO_Unary_Constraint* unary_not);
+  int visit_not (TAO_Unary_Constraint* unary_not) override;
 
   /// The operand must return a valid  (i.e., present in the service
   /// type description) property name.
-  virtual int visit_exist (TAO_Unary_Constraint* unary_exist);
+  int visit_exist (TAO_Unary_Constraint* unary_exist) override;
 
   /// The operand must return a number to be negated.
-  virtual int visit_unary_minus (TAO_Unary_Constraint* unary_minus);
+  int visit_unary_minus (TAO_Unary_Constraint* unary_minus) override;
 
   /// Both operands must return numeric results.
-  virtual int visit_add (TAO_Binary_Constraint* boolean_add);
-  virtual int visit_sub (TAO_Binary_Constraint* boolean_sub);
-  virtual int visit_mult (TAO_Binary_Constraint* boolean_mult);
-  virtual int visit_div (TAO_Binary_Constraint* boolean_div);
+  int visit_add (TAO_Binary_Constraint* boolean_add) override;
+  int visit_sub (TAO_Binary_Constraint* boolean_sub) override;
+  int visit_mult (TAO_Binary_Constraint* boolean_mult) override;
+  int visit_div (TAO_Binary_Constraint* boolean_div) override;
 
   /// Both operands must return strings.
-  virtual int visit_twiddle (TAO_Binary_Constraint* binary_twiddle);
+  int visit_twiddle (TAO_Binary_Constraint* binary_twiddle) override;
 
   /// The right operand must be a sequence of the same simple type as
   /// the left operand.
-  virtual int visit_in (TAO_Binary_Constraint* binary_in);
+  int visit_in (TAO_Binary_Constraint* binary_in) override;
 
   /// The left and right operands must both be of the same simple type.
-  virtual int visit_less_than (TAO_Binary_Constraint* boolean_lt);
-  virtual int visit_less_than_equal (TAO_Binary_Constraint* boolean_lte);
-  virtual int visit_greater_than (TAO_Binary_Constraint* boolean_gt);
-  virtual int visit_greater_than_equal (TAO_Binary_Constraint* boolean_gte);
-  virtual int visit_equal (TAO_Binary_Constraint* boolean_eq);
-  virtual int visit_not_equal (TAO_Binary_Constraint* boolean_neq);
+  int visit_less_than (TAO_Binary_Constraint* boolean_lt) override;
+  int visit_less_than_equal (TAO_Binary_Constraint* boolean_lte) override;
+  int visit_greater_than (TAO_Binary_Constraint* boolean_gt) override;
+  int visit_greater_than_equal (TAO_Binary_Constraint* boolean_gte) override;
+  int visit_equal (TAO_Binary_Constraint* boolean_eq) override;
+  int visit_not_equal (TAO_Binary_Constraint* boolean_neq) override;
 
   /// The property must be defined in the service type description.
-  virtual int visit_literal (TAO_Literal_Constraint* literal);
-  virtual int visit_property (TAO_Property_Constraint* literal);
+  int visit_literal (TAO_Literal_Constraint* literal) override;
+  int visit_property (TAO_Property_Constraint* literal) override;
 
 protected:
   /// A map gleaned from the ServiceTypeStruct, which correlates
@@ -239,70 +239,70 @@ public:
 
   // = Visitor Methods
 
-  virtual int visit_constraint (TAO_Unary_Constraint* constraint);
+  int visit_constraint (TAO_Unary_Constraint* constraint) override;
 
-  virtual int visit_with (TAO_Unary_Constraint* unary_with);
-  virtual int visit_min (TAO_Unary_Constraint* unary_min);
-  virtual int visit_max (TAO_Unary_Constraint* unary_max);
-  virtual int visit_first (TAO_Noop_Constraint* noop_first);
-  virtual int visit_random (TAO_Noop_Constraint* noop_random);
+  int visit_with (TAO_Unary_Constraint* unary_with) override;
+  int visit_min (TAO_Unary_Constraint* unary_min) override;
+  int visit_max (TAO_Unary_Constraint* unary_max) override;
+  int visit_first (TAO_Noop_Constraint* noop_first) override;
+  int visit_random (TAO_Noop_Constraint* noop_random) override;
 
   /**
    * Takes the logical and of the results of both operands. Note that
    * in the case where the left operand returns zero, the result is
    * immediately known.
    */
-  virtual int visit_and (TAO_Binary_Constraint* boolean_and);
+  int visit_and (TAO_Binary_Constraint* boolean_and) override;
 
   /**
    * Takes the logical or of the results of both operands. Note that
    * in the case where the left operand returns one, the result is
    * immediately known.
    */
-  virtual int visit_or (TAO_Binary_Constraint* boolean_or);
+  int visit_or (TAO_Binary_Constraint* boolean_or) override;
 
   /// Logically negates the value of the operand.
-  virtual int visit_not (TAO_Unary_Constraint* unary_not);
+  int visit_not (TAO_Unary_Constraint* unary_not) override;
 
   /// The property exists if its name is bound to a value in the
   /// <props_> map.
-  virtual int visit_exist (TAO_Unary_Constraint* unary_exist);
+  int visit_exist (TAO_Unary_Constraint* unary_exist) override;
 
   /// Mathematically negates the return value the operand.
-  virtual int visit_unary_minus (TAO_Unary_Constraint* unary_minus);
+  int visit_unary_minus (TAO_Unary_Constraint* unary_minus) override;
 
   /// Add the results of evaluating the left and right operands.
-  virtual int visit_add (TAO_Binary_Constraint* boolean_add);
+  int visit_add (TAO_Binary_Constraint* boolean_add) override;
 
   /// Subtract the results of evaluating the left and right operands.
-  virtual int visit_sub (TAO_Binary_Constraint* boolean_sub);
+  int visit_sub (TAO_Binary_Constraint* boolean_sub) override;
 
   /// Multiply the results of evaluating the left and right operands.
-  virtual int visit_mult (TAO_Binary_Constraint* boolean_mult);
+  int visit_mult (TAO_Binary_Constraint* boolean_mult) override;
 
   /// Divide the results of evaluating the left and right operands.
-  virtual int visit_div (TAO_Binary_Constraint* boolean_div);
+  int visit_div (TAO_Binary_Constraint* boolean_div) override;
 
   /// Determines if the right operand is a substring of the left.
-  virtual int visit_twiddle (TAO_Binary_Constraint* binary_twiddle);
+  int visit_twiddle (TAO_Binary_Constraint* binary_twiddle) override;
 
   /// Determines if the sequence represented by the right operand
   /// contains the left operand.
-  virtual int visit_in (TAO_Binary_Constraint* binary_in);
+  int visit_in (TAO_Binary_Constraint* binary_in) override;
 
   // = Compare the results of evaluating left and right operands.
-  virtual int visit_less_than (TAO_Binary_Constraint* boolean_lt);
-  virtual int visit_less_than_equal (TAO_Binary_Constraint* boolean_lte);
-  virtual int visit_greater_than (TAO_Binary_Constraint* boolean_gt);
-  virtual int visit_greater_than_equal (TAO_Binary_Constraint* boolean_gte);
-  virtual int visit_equal (TAO_Binary_Constraint* boolean_eq);
-  virtual int visit_not_equal (TAO_Binary_Constraint* boolean_neq);
+  int visit_less_than (TAO_Binary_Constraint* boolean_lt) override;
+  int visit_less_than_equal (TAO_Binary_Constraint* boolean_lte) override;
+  int visit_greater_than (TAO_Binary_Constraint* boolean_gt) override;
+  int visit_greater_than_equal (TAO_Binary_Constraint* boolean_gte) override;
+  int visit_equal (TAO_Binary_Constraint* boolean_eq) override;
+  int visit_not_equal (TAO_Binary_Constraint* boolean_neq) override;
 
   /// Copy the value of the literal into the result container.
-  virtual int visit_literal (TAO_Literal_Constraint* literal);
+  int visit_literal (TAO_Literal_Constraint* literal) override;
 
   /// Copy the value of the property into the result container.
-  virtual int visit_property (TAO_Property_Constraint* literal);
+  int visit_property (TAO_Property_Constraint* literal) override;
 
 private:
   class TAO_Trading_Serv_Export Operand_Queue :

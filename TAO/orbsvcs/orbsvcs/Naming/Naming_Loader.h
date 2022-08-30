@@ -36,21 +36,21 @@ public:
   TAO_Naming_Loader (TAO_Naming_Server *server = 0);
 
   /// Destructor
-  ~TAO_Naming_Loader ();
+  ~TAO_Naming_Loader () override;
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Called by the Service Configurator framework to remove the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int fini ();
+  int fini () override;
 
   /// This function call initializes the Naming Service given a reference to the
   /// ORB and the command line parameters.
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+  CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           ACE_TCHAR *argv[]);
+                                           ACE_TCHAR *argv[]) override;
 
 protected:
   /// TODO: Need to set up service configurator to initialize the naming server

@@ -67,19 +67,19 @@ public:
   virtual TAO_ConnectionTimeoutPolicy *clone () const;
 
   // = The TAO::ConnectionTinoutPolicy methods
-  virtual TimeBase::TimeT relative_expiry ();
+  TimeBase::TimeT relative_expiry () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value);
 
   /// Return the cached policy type for this policy.
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
 private:
   /// The attribute

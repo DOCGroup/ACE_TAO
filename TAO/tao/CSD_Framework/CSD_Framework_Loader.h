@@ -41,13 +41,13 @@ class TAO_CSD_FW_Export TAO_CSD_Framework_Loader : public ACE_Service_Object
   TAO_CSD_Framework_Loader (void);
 
   /// Destructor.
-  virtual ~TAO_CSD_Framework_Loader (void);
+  ~TAO_CSD_Framework_Loader (void) override;
 
   /// Used to force the initialization of the ORB code.
   static int static_init (void);
 
   /// Initialize the PI_Server loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 
 private:
   /// Set to true after init is called.

@@ -147,7 +147,7 @@ public:
    */
   ACEXML_AttributesImpl (int size = ACEXML_AttributesImpl_Default_Size);
   ACEXML_AttributesImpl (const ACEXML_AttributesImpl &attrs);
-  virtual ~ACEXML_AttributesImpl (void);
+  ~ACEXML_AttributesImpl (void) override;
 
   /**
    * Add a new attribute using the argument(s) supplied.
@@ -178,75 +178,75 @@ public:
    * Look up the index of an attribute by XML 1.0 qualified name.
    * Return -1 if we fail to find a match.
    */
-  virtual int getIndex (const ACEXML_Char *qName);
+  int getIndex (const ACEXML_Char *qName) override;
 
   /**
    * Look up the index of an attribute by Namespace name.
    * Return -1 if we fail to find a match.
    */
-  virtual int getIndex (const ACEXML_Char *uri,
-                        const ACEXML_Char *localPart);
+  int getIndex (const ACEXML_Char *uri,
+                        const ACEXML_Char *localPart) override;
 
   /**
    * Return the number of attributes in the list.
    */
-  virtual size_t getLength (void);
+  size_t getLength (void) override;
 
   /**
    * Look up an attribute's local name by index.
    * Return 0 if index is out of range.
    */
-  virtual const ACEXML_Char *getLocalName (size_t index);
+  const ACEXML_Char *getLocalName (size_t index) override;
 
   /**
    * Look up an attribute's XML 1.0 qualified name by index.
    * Return 0 if index is out of range.
    */
-  virtual const ACEXML_Char *getQName (size_t index);
+  const ACEXML_Char *getQName (size_t index) override;
 
   /**
    * Look up an attribute's type by index.
    * Return 0 if index is out of range.
    */
-  virtual const ACEXML_Char *getType (size_t index);
+  const ACEXML_Char *getType (size_t index) override;
 
   /**
    * Look up an attribute's type by XML 1.0 qualified name.
    * Return 0 if we fail to find a match.
    */
-  virtual const ACEXML_Char *getType (const ACEXML_Char *qName);
+  const ACEXML_Char *getType (const ACEXML_Char *qName) override;
 
   /**
    * Look up an attribute's type by Namespace name.
    * Return 0 if we fail to find a match.
    */
-  virtual const ACEXML_Char *getType (const ACEXML_Char *uri,
-                                      const ACEXML_Char *localPart);
+  const ACEXML_Char *getType (const ACEXML_Char *uri,
+                                      const ACEXML_Char *localPart) override;
 
   /**
    * Look up an attribute's Namespace URI by index.
    * Return 0 if index is out of range.
    */
-  virtual const ACEXML_Char *getURI (size_t index);
+  const ACEXML_Char *getURI (size_t index) override;
 
   /**
    * Look up an attribute's value by index.
    * Return 0 if index is out of range.
    */
-  virtual const ACEXML_Char *getValue (size_t index);
+  const ACEXML_Char *getValue (size_t index) override;
 
   /**
    * Look up an attribute's value by XML 1.0 qualified name.
    * Return 0 if we fail to find a match.
    */
-  virtual const ACEXML_Char *getValue (const ACEXML_Char *qName);
+  const ACEXML_Char *getValue (const ACEXML_Char *qName) override;
 
   /**
    * Look up an attribute's value by Namespace name.
    * Return 0 if we fail to find a match.
    */
-  virtual const ACEXML_Char *getValue (const ACEXML_Char *uri,
-                                       const ACEXML_Char *localPart);
+  const ACEXML_Char *getValue (const ACEXML_Char *uri,
+                                       const ACEXML_Char *localPart) override;
 
   /**
    * Set an attribute at index.  Return -1 if index is out of

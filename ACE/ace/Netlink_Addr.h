@@ -46,7 +46,7 @@ public:
   ACE_Netlink_Addr (const sockaddr_nl *, int len);
 
   /// Dtor
-  ~ACE_Netlink_Addr () = default;
+  ~ACE_Netlink_Addr () override = default;
 
   /**
    * @param naddr sets the nl_ member @see nl_
@@ -71,7 +71,7 @@ public:
   /**
    * @return addr pointer @see nl_
    */
-  virtual void *get_addr () const;
+  void *get_addr () const override;
   /**
    * @return nl_ member  @see nl_  size
    */
@@ -79,7 +79,7 @@ public:
   /**
    * Set a pointer to the address
    */
-  virtual void set_addr (const void *, int len= sizeof(sockaddr_nl) );
+  void set_addr (const void *, int len= sizeof(sockaddr_nl) ) override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

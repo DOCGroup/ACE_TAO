@@ -49,28 +49,28 @@ public:
   TAO_UTF8_Latin1_Translator () = default;
 
   /// Virtual destruction
-  virtual ~TAO_UTF8_Latin1_Translator () = default;
+  ~TAO_UTF8_Latin1_Translator () override = default;
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
-  virtual ACE_CDR::Boolean read_char (ACE_InputCDR &,
-                                      ACE_CDR::Char &);
-  virtual ACE_CDR::Boolean read_string (ACE_InputCDR &,
-                                        ACE_CDR::Char *&);
-  virtual ACE_CDR::Boolean read_string (ACE_InputCDR &,
-                                        std::string &);
-  virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR &,
+  ACE_CDR::Boolean read_char (ACE_InputCDR &,
+                                      ACE_CDR::Char &) override;
+  ACE_CDR::Boolean read_string (ACE_InputCDR &,
+                                        ACE_CDR::Char *&) override;
+  ACE_CDR::Boolean read_string (ACE_InputCDR &,
+                                        std::string &) override;
+  ACE_CDR::Boolean read_char_array (ACE_InputCDR &,
                                             ACE_CDR::Char *,
-                                            ACE_CDR::ULong);
-  virtual ACE_CDR::Boolean write_char (ACE_OutputCDR &,
-                                       ACE_CDR::Char);
-  virtual ACE_CDR::Boolean write_string (ACE_OutputCDR &,
+                                            ACE_CDR::ULong) override;
+  ACE_CDR::Boolean write_char (ACE_OutputCDR &,
+                                       ACE_CDR::Char) override;
+  ACE_CDR::Boolean write_string (ACE_OutputCDR &,
                                          ACE_CDR::ULong,
-                                         const ACE_CDR::Char *);
-  virtual ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
+                                         const ACE_CDR::Char *) override;
+  ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
                                              const ACE_CDR::Char *,
-                                             ACE_CDR::ULong);
-  virtual ACE_CDR::ULong ncs () {return 0x00010001U;}
-  virtual ACE_CDR::ULong tcs () {return 0x05010001U;}
+                                             ACE_CDR::ULong) override;
+  ACE_CDR::ULong ncs () override {return 0x00010001U;}
+  ACE_CDR::ULong tcs () override {return 0x05010001U;}
 
 private:
   ACE_CDR::ULong read_char_i (ACE_InputCDR &, ACE_CDR::Char &);

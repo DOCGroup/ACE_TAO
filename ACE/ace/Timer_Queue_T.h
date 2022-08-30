@@ -46,7 +46,7 @@ public:
   explicit ACE_Timer_Queue_Upcall_Base(FUNCTOR * upcall_functor = nullptr);
 
   /// Destructor
-  virtual ~ACE_Timer_Queue_Upcall_Base ();
+  ~ACE_Timer_Queue_Upcall_Base () override;
 
   /// Accessor to the upcall functor
   FUNCTOR & upcall_functor ();
@@ -88,25 +88,25 @@ public:
 
   /// Destructor - make virtual for proper destruction of inherited
   /// classes.
-  virtual ~ACE_Timer_Queue_T ();
+  ~ACE_Timer_Queue_T () override;
 
   /**
    * Implement ACE_Abstract_Timer_Queue<TYPE>::schedule () with the right
    * locking strategy.
    */
-  virtual long schedule (const TYPE &type,
+  long schedule (const TYPE &type,
                          const void *act,
                          const ACE_Time_Value &future_time,
-                         const ACE_Time_Value &interval = ACE_Time_Value::zero);
+                         const ACE_Time_Value &interval = ACE_Time_Value::zero) override;
 
   //@{
   /**
    * Implement ACE_Abstract_Timer_Queue<TYPE>::expire () with the right
    * locking strategy.
    */
-  virtual int expire (const ACE_Time_Value &current_time);
-  virtual int expire ();
-  virtual int expire_single(ACE_Command_Base & pre_dispatch_command);
+  int expire (const ACE_Time_Value &current_time) override;
+  int expire () override;
+  int expire_single(ACE_Command_Base & pre_dispatch_command) override;
   //@}
 
   /**
@@ -121,7 +121,7 @@ public:
   /**
    * Implement the gettimeofday() virtual function
    */
-  virtual ACE_Time_Value gettimeofday ();
+  ACE_Time_Value gettimeofday () override;
   //@}
 
   /**
@@ -132,7 +132,7 @@ public:
    *             is ACE_FPointer_Time_Policy. Other standard ACE time
    *             policies will ignore this.
    */
-  virtual void gettimeofday (ACE_Time_Value (*gettimeofday)());
+  void gettimeofday (ACE_Time_Value (*gettimeofday)()) override;
 
   /// Implement an inlined, non-abstract version of gettimeofday(),
   /// through this  member function the internals of the class can
@@ -150,10 +150,10 @@ public:
   /**
    * Implement calculate_timeout() using the right locking policy
    */
-  virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max);
-  virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max,
-                                             ACE_Time_Value *the_timeout);
-  virtual ACE_Time_Value current_time();
+  ACE_Time_Value *calculate_timeout (ACE_Time_Value *max) override;
+  ACE_Time_Value *calculate_timeout (ACE_Time_Value *max,
+                                             ACE_Time_Value *the_timeout) override;
+  ACE_Time_Value current_time() override;
   //@}
 
   /// Set the timer skew for the Timer_Queue.
@@ -166,7 +166,7 @@ public:
   ACE_LOCK &mutex ();
 
   /// Dump the state of a object.
-  virtual void dump () const;
+  void dump () const override;
 
   /// Method used to return a timer node to the queue's ownership
   /// after it is returned by a method like <remove_first>.

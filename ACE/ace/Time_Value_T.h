@@ -68,7 +68,7 @@ public:
   {}
 
   /// Destructor
-  virtual ~ACE_Time_Value_T () {}
+  ~ACE_Time_Value_T () override {}
 
   /// Add @a tv to this.
   ACE_Time_Value_T<TIME_POLICY> &operator += (const ACE_Time_Value &tv);
@@ -131,7 +131,7 @@ public:
   /**
    * @return  Time value representing current time of day according to time policy.
    */
-  virtual ACE_Time_Value now () const;
+  ACE_Time_Value now () const override;
 
   /// Converts absolute time value to time value relative to current time of day.
   /**
@@ -144,7 +144,7 @@ public:
    *          Note that the returned time value has no notion of the time policy
    *          on which it is based anymore.
    */
-  virtual ACE_Time_Value to_relative_time () const;
+  ACE_Time_Value to_relative_time () const override;
 
   /// Converts relative time value to absolute time value based on current time of day.
   /**
@@ -157,7 +157,7 @@ public:
    *          Note that the returned time value has no notion of the time policy
    *          on which it is based anymore.
    */
-  virtual ACE_Time_Value to_absolute_time () const;
+  ACE_Time_Value to_absolute_time () const override;
 
   /// Duplicates this time value (incl. time policy).
   /**
@@ -166,7 +166,7 @@ public:
    * @note    The caller is responsible for freeing the copy when it's not needed
    *          anymore.
    */
-  virtual ACE_Time_Value * duplicate () const;
+  ACE_Time_Value * duplicate () const override;
 
 private:
   TIME_POLICY time_policy_;

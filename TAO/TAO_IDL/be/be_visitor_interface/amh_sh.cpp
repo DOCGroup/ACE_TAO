@@ -114,20 +114,20 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << "& rhs);" << be_nl
       << "virtual ~" << class_name.c_str () << " () = default;\n\n"
       << be_nl
-      << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;
+      << "::CORBA::Boolean _is_a (const char* logical_type_id) override;" << be_nl_2;
 
   // Add the dispatch method.
-  *os << "virtual void _dispatch (" << be_idt << be_idt_nl
+  *os << "void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
-      << "TAO::Portable_Server::Servant_Upcall *_servant_upcall);" << be_uidt
+      << "TAO::Portable_Server::Servant_Upcall *_servant_upcall) override;" << be_uidt
       << be_uidt_nl << be_nl;
 
   this->this_method (node);
 
   // The _interface_repository_id method.
   *os << be_nl
-      << "virtual const char* _interface_repository_id "
-      << "() const;";
+      << "const char* _interface_repository_id "
+      << "() const override;";
 
   if (this->visit_scope (node) ==  -1)
     {

@@ -122,54 +122,54 @@ public:
 
   /// Destructor, do some cleanup :TBD: last dtor should "compress"
   /// file
-  ~ACE_Local_Name_Space (void);
+  ~ACE_Local_Name_Space (void) override;
 
   /// Bind a new name to a naming context (Wide character strings).
-  virtual int bind (const ACE_NS_WString &name,
+  int bind (const ACE_NS_WString &name,
                     const ACE_NS_WString &value,
-                    const char *type = "");
+                    const char *type = "") override;
 
   /**
    * Overwrite the value or type of an existing name in a
    * ACE_Local_Name_Space or bind a new name to the context, if it
    * didn't exist yet. (Wide character strings interface).
    */
-  virtual int rebind (const ACE_NS_WString &name,
+  int rebind (const ACE_NS_WString &name,
                       const ACE_NS_WString &value,
-                      const char *type = "");
+                      const char *type = "") override;
 
   /// Delete a name from a ACE_Local_Name_Space (Wide character strings
   /// Interface).
-  virtual int unbind (const ACE_NS_WString &name);
+  int unbind (const ACE_NS_WString &name) override;
   virtual int unbind_i (const ACE_NS_WString &name);
 
   /// Get value and type of a given name binding (Wide chars).  The
   /// caller is responsible for deleting @a type!
-  virtual int resolve (const ACE_NS_WString &name,
+  int resolve (const ACE_NS_WString &name,
                        ACE_NS_WString &value,
-                       char *&type);
+                       char *&type) override;
   virtual int resolve_i (const ACE_NS_WString &name,
                          ACE_NS_WString &value,
                          char *&type);
 
   /// Get a set of names matching a specified pattern (wchars). Matching
   /// means the names must begin with the pattern string.
-  virtual int list_names (ACE_WSTRING_SET &set,
-                          const ACE_NS_WString &pattern);
+  int list_names (ACE_WSTRING_SET &set,
+                          const ACE_NS_WString &pattern) override;
   virtual int list_names_i (ACE_WSTRING_SET &set,
                           const ACE_NS_WString &pattern);
 
   /// Get a set of values matching a specified pattern (wchars). Matching
   /// means the values must begin with the pattern string.
-  virtual int list_values (ACE_WSTRING_SET &set,
-                           const ACE_NS_WString &pattern);
+  int list_values (ACE_WSTRING_SET &set,
+                           const ACE_NS_WString &pattern) override;
   virtual int list_values_i (ACE_WSTRING_SET &set,
                              const ACE_NS_WString &pattern);
 
   /// Get a set of types matching a specified pattern (wchars). Matching
   /// means the types must begin with the pattern string.
-  virtual int list_types (ACE_WSTRING_SET &set,
-                          const ACE_NS_WString &pattern);
+  int list_types (ACE_WSTRING_SET &set,
+                          const ACE_NS_WString &pattern) override;
   virtual int list_types_i (ACE_WSTRING_SET &set,
                             const ACE_NS_WString &pattern);
 
@@ -178,8 +178,8 @@ public:
    * means the names must begin with the pattern string. Returns the
    * complete binding associated each pattern match.
    */
-  virtual int list_name_entries (ACE_BINDING_SET &set,
-                                 const ACE_NS_WString &pattern);
+  int list_name_entries (ACE_BINDING_SET &set,
+                                 const ACE_NS_WString &pattern) override;
   virtual int list_name_entries_i (ACE_BINDING_SET &set,
                                    const ACE_NS_WString &pattern);
 
@@ -188,8 +188,8 @@ public:
    * means the values must begin with the pattern string. Returns the
    * complete binding associated each pattern match.
    */
-  virtual int list_value_entries (ACE_BINDING_SET &set,
-                                  const ACE_NS_WString &pattern);
+  int list_value_entries (ACE_BINDING_SET &set,
+                                  const ACE_NS_WString &pattern) override;
   virtual int list_value_entries_i (ACE_BINDING_SET &set,
                                     const ACE_NS_WString &pattern);
 
@@ -198,13 +198,13 @@ public:
    * means the types must begin with the pattern string. Returns the
    * complete binding associated each pattern match.
    */
-  virtual int list_type_entries (ACE_BINDING_SET &set,
-                                 const ACE_NS_WString &pattern);
+  int list_type_entries (ACE_BINDING_SET &set,
+                                 const ACE_NS_WString &pattern) override;
   virtual int list_type_entries_i (ACE_BINDING_SET &set,
                                    const ACE_NS_WString &pattern);
 
   /// Dump the state of the object
-  virtual void dump () const;
+  void dump () const override;
   virtual void dump_i () const;
 
   // = I just know this is going to cause problems on some platform...

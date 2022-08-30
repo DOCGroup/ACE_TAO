@@ -58,16 +58,16 @@ public:
                          PortableServer::POA_ptr poa);
 
   /// Destructor.
-  ~TAO_Bindings_Iterator (void);
+  ~TAO_Bindings_Iterator (void) override;
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA (void) override;
 
   // = Idl methods.
 
   /// This operation passes back the next unseen binding.  True is
   /// returned if a binding is passed back, and false is returned otherwise.
-  CORBA::Boolean next_one (CosNaming::Binding_out b);
+  CORBA::Boolean next_one (CosNaming::Binding_out b) override;
 
   /**
    * This operation passes back at most <how_many> unseen bindings.
@@ -75,10 +75,10 @@ public:
    * returned if no bindings were passed back.
    */
   CORBA::Boolean next_n (CORBA::ULong how_many,
-                         CosNaming::BindingList_out bl);
+                         CosNaming::BindingList_out bl) override;
 
   /// This operation destroys the iterator.
-  void destroy (void);
+  void destroy (void) override;
 
   // = Helper method.
 

@@ -56,24 +56,24 @@ public:
             int flags = 0);
 
   /// Close down the shared memory segment.
-  virtual int close (void);
+  int close (void) override;
 
   /// Remove the underlying shared memory segment.
-  virtual int remove (void);
+  int remove (void) override;
 
   // = Allocation and deallocation methods.
   /// Create a new chuck of memory containing @a size bytes.
-  virtual void *malloc (size_t = 0);
+  void *malloc (size_t = 0) override;
 
   /// Free a chuck of memory allocated by <ACE_Shared_Memory_SV::malloc>.
-  virtual int free (void *p);
+  int free (void *p) override;
 
   /// Return the size of the shared memory segment.
-  virtual size_t get_segment_size () const;
+  size_t get_segment_size () const override;
 
   /// Return the ID of the shared memory segment (i.e., a System V
   /// shared memory internal id).
-  virtual ACE_HANDLE get_id () const;
+  ACE_HANDLE get_id () const override;
 
   /// Dump the state of an object.
   void dump () const;

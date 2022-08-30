@@ -22,10 +22,10 @@ public:
   be_eventtype *emits_type () const;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 };
 
 #endif // BE_EMITS_H

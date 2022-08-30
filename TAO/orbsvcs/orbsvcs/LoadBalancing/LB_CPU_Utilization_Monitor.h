@@ -58,7 +58,7 @@ public:
   /**
    * The returned "Location" is a sequence of length 1.
    */
-  virtual CosLoadBalancing::Location * the_location ();
+  CosLoadBalancing::Location * the_location () override;
 
   /// Return the average CPU load at the location which this
   /// LoadMonitor resides.
@@ -67,7 +67,7 @@ public:
    *         equal to CosLoadBalancing::LoadAverage, and the average CPU
    *         load.
    */
-  virtual CosLoadBalancing::LoadList * loads ();
+  CosLoadBalancing::LoadList * loads () override;
 
   //@}
 
@@ -78,7 +78,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~TAO_LB_CPU_Utilization_Monitor (void);
+  ~TAO_LB_CPU_Utilization_Monitor (void) override;
 
 private:
 

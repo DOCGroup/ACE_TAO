@@ -53,7 +53,7 @@ public:
   TAO_BasicLogFactory_i ();
 
   /// Destructor.
-  ~TAO_BasicLogFactory_i ();
+  ~TAO_BasicLogFactory_i () override;
 
   /// Activate this servant with the ORB and POA passed in.
   DsLogAdmin::BasicLogFactory_ptr
@@ -65,19 +65,19 @@ public:
   DsLogAdmin::BasicLog_ptr
     create (DsLogAdmin::LogFullActionType full_action,
             CORBA::ULongLong max_size,
-            DsLogAdmin::LogId_out id);
+            DsLogAdmin::LogId_out id) override;
 
   /// Same as create (), but allows clients to specify the id.
   DsLogAdmin::BasicLog_ptr
     create_with_id (DsLogAdmin::LogId id,
                     DsLogAdmin::LogFullActionType full_action,
-                    CORBA::ULongLong max_size);
+                    CORBA::ULongLong max_size) override;
 
 protected:
-  virtual CORBA::RepositoryId create_repositoryid ();
+  CORBA::RepositoryId create_repositoryid () override;
 
-  virtual PortableServer::ServantBase*
-    create_log_servant (DsLogAdmin::LogId id);
+  PortableServer::ServantBase*
+    create_log_servant (DsLogAdmin::LogId id) override;
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var        log_mgr_;

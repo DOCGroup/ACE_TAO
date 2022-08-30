@@ -38,10 +38,10 @@ public:
   TAO_NULL_Connection_Purging_Strategy (int cache_maximum);
 
   /// Does nothing.
-  virtual void update_item (TAO_Transport& transport);
+  void update_item (TAO_Transport& transport) override;
 
   /// Returns -1 to signify no maximum
-  virtual int cache_maximum () const;
+  int cache_maximum () const override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -66,17 +66,17 @@ public:
             TAO_Service_ID service_id);
 
   /// Destructor.
-  virtual ~TAO_IOR_Multicast (void);
+  ~TAO_IOR_Multicast (void) override;
 
   /// Callback when input is received on the handle.
-  virtual int handle_input (ACE_HANDLE n);
+  int handle_input (ACE_HANDLE n) override;
 
   /// Callback when a timeout has occurred.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg) override;
 
   /// Returns the internal handle used to receive multicast.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
 private:
   /// Factor common functionality from the two init functions.

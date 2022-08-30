@@ -37,39 +37,39 @@ public:
   void init (CosNotifyComm::StructuredPushConsumer_ptr push_consumer);
 
   /// Destructor
-  virtual ~TAO_Notify_StructuredPushConsumer ();
+  ~TAO_Notify_StructuredPushConsumer () override;
 
   /// Push <event> to this consumer.
 //  virtual void push_i (const TAO_Notify_Event* event);
 
   /// Push <event> to this consumer.
-  virtual void push (const CORBA::Any& event);
+  void push (const CORBA::Any& event) override;
 
   /// Push <event> to this consumer.
-  virtual void push (const CosNotification::StructuredEvent& event);
+  void push (const CosNotification::StructuredEvent& event) override;
 
   /// Push a batch of events to this consumer.
-  virtual void push (const CosNotification::EventBatch& event);
+  void push (const CosNotification::EventBatch& event) override;
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior () const;
+  ACE_CString get_ior () const override;
 
   /// on reconnect we need to move events from the old consumer
   /// to the new one
-  virtual void reconnect_from_consumer (
-    TAO_Notify_Consumer* old_consumer);
+  void reconnect_from_consumer (
+    TAO_Notify_Consumer* old_consumer) override;
 
 
 protected:
 
-  virtual CORBA::Object_ptr get_consumer (void);
+  CORBA::Object_ptr get_consumer (void) override;
 
   /// The Consumer
   CosNotifyComm::StructuredPushConsumer_var push_consumer_;
 
 private:
   /// Release
-  virtual void release (void);
+  void release (void) override;
 
   /// Connection valid flag
   int connection_valid;

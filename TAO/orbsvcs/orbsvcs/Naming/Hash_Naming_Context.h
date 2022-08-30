@@ -122,7 +122,7 @@ public:
   void interface (TAO_Naming_Context *i);
 
   /// Destructor.
-  virtual ~TAO_Hash_Naming_Context (void);
+  ~TAO_Hash_Naming_Context (void) override;
 
   // = Accessors.
 
@@ -148,8 +148,8 @@ public:
    * be bound using <bind_context> and <rebind_context> in order to
    * participate in name resolution later.
    */
-  virtual void bind (const CosNaming::Name &n,
-                     CORBA::Object_ptr obj);
+  void bind (const CosNaming::Name &n,
+                     CORBA::Object_ptr obj) override;
 
   /**
    * This is similar to bind() operation above, except for when the
@@ -157,24 +157,24 @@ public:
    * context.  In that case, the existing binding is replaced with the
    * new one.
    */
-  virtual void rebind (const CosNaming::Name &n,
-                       CORBA::Object_ptr obj);
+  void rebind (const CosNaming::Name &n,
+                       CORBA::Object_ptr obj) override;
 
   /**
    * This is the version of <bind> specifically for binding naming
    * contexts, so that they will participate in name resolution when
    * compound names are passed to be resolved.
    */
-  virtual void bind_context (const CosNaming::Name &n,
-                             CosNaming::NamingContext_ptr nc);
+  void bind_context (const CosNaming::Name &n,
+                             CosNaming::NamingContext_ptr nc) override;
 
   /**
    * This is a version of <rebind> specifically for naming contexts,
    * so that they can participate in name resolution when compound
    * names are passed.
    */
-   virtual void rebind_context (const CosNaming::Name &n,
-                               CosNaming::NamingContext_ptr nc);
+   void rebind_context (const CosNaming::Name &n,
+                               CosNaming::NamingContext_ptr nc) override;
 
   /**
    * Return object reference that is bound to the name.  Compound name
@@ -183,14 +183,14 @@ public:
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
+  CORBA::Object_ptr resolve (const CosNaming::Name &n) override;
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
    * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
    */
-  virtual void unbind (const CosNaming::Name &n);
+  void unbind (const CosNaming::Name &n) override;
 
   /**
    * This operation creates a new context and binds it to the name
@@ -198,7 +198,7 @@ public:
    * implemented by the same server as the context in which it was
    * bound (the name argument excluding the last component).
    */
-  virtual CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n);
+  CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n) override;
 
   /**
    * Delete the naming context.  The user should take care to <unbind> any
@@ -208,10 +208,10 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (void);
+  void destroy (void) override;
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA (void) override;
 
   TAO_SYNCH_RW_MUTEX &lock (void);
 

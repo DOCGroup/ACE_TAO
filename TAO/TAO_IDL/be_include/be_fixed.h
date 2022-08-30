@@ -14,9 +14,9 @@ public:
             AST_Expression *digits,
             AST_Expression *scale);
 
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
-  virtual void destroy ();
+  void destroy () override;
 };
 
 #endif

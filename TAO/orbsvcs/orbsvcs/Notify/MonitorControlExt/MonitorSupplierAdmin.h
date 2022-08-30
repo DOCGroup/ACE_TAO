@@ -26,22 +26,22 @@ public:
   TAO_MonitorSupplierAdmin (void);
 
   /// Remove the statistics for this event channel
-  ~TAO_MonitorSupplierAdmin (void);
+  ~TAO_MonitorSupplierAdmin (void) override;
 
   /// Register our statistic and control objects
   void register_stats_controls (TAO_MonitorEventChannel* mec,
                                 const ACE_CString& name);
 
-  virtual CosNotifyChannelAdmin::ProxyConsumer_ptr
+  CosNotifyChannelAdmin::ProxyConsumer_ptr
     obtain_named_notification_push_consumer (
         CosNotifyChannelAdmin::ClientType ctype,
         CosNotifyChannelAdmin::ProxyID_out proxy_id,
-        const char * name);
+        const char * name) override;
 
-  virtual CosNotifyChannelAdmin::ProxyConsumer_ptr
+  CosNotifyChannelAdmin::ProxyConsumer_ptr
     obtain_notification_push_consumer (
         CosNotifyChannelAdmin::ClientType ctype,
-        CosNotifyChannelAdmin::ProxyID_out proxy_id);
+        CosNotifyChannelAdmin::ProxyID_out proxy_id) override;
 
 private:
   ACE_CString control_name_;

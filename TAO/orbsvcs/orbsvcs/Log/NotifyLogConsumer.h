@@ -62,18 +62,18 @@ public:
 
 protected:
   /// Destructor.
-  virtual ~TAO_Notify_LogConsumer (void);
+  ~TAO_Notify_LogConsumer (void) override;
 
   // = NotifyPublish method
-  virtual void offer_change (
+  void offer_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-    );
+    ) override;
 
   // = PushSupplier methods
-  virtual void push (const CORBA::Any & event);
+  void push (const CORBA::Any & event) override;
 
-  virtual void disconnect_push_consumer (void);
+  void disconnect_push_consumer (void) override;
 
   /// ProxyPushSupplier used to connect to NotifyLog.
   CosNotifyChannelAdmin::ProxyPushSupplier_var proxy_supplier_;

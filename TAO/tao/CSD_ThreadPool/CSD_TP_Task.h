@@ -80,24 +80,24 @@ namespace TAO
       TP_Task();
 
       /// Virtual Destructor.
-      virtual ~TP_Task();
+      ~TP_Task() override;
 
       /// Put a request object on to the request queue.
       /// Returns true if successful, false otherwise (it has been "rejected").
       bool add_request(TP_Request* request);
 
       /// Activate the worker threads
-      virtual int open(void* args = 0);
+      int open(void* args = 0) override;
 
       /// The "mainline" executed by each worker thread.
-      virtual int svc();
+      int svc() override;
 
       /// Multi-purpose: argument value is used to differentiate purpose.
       ///
       /// 0) Invoked by each worker thread after its invocation of the
       ///    svc() method has completed (ie, returned).
       /// 1) Invoked by the strategy object to shutdown all worker threads.
-      virtual int close(u_long flag = 0);
+      int close(u_long flag = 0) override;
 
       /// Cancel all requests that are targeted for the provided servant.
       void cancel_servant (PortableServer::Servant servant);

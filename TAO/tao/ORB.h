@@ -169,20 +169,20 @@ namespace CORBA
     public:
       InvalidName ();
       InvalidName (const InvalidName &);
-      ~InvalidName ();
+      ~InvalidName () override;
 
       InvalidName &operator= (const InvalidName &);
 
       static InvalidName *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc ();
 
-      virtual CORBA::Exception *_tao_duplicate () const;
+      CORBA::Exception *_tao_duplicate () const override;
 
-      virtual void _raise () const;
+      void _raise () const override;
 
-      virtual void _tao_encode (TAO_OutputCDR &) const;
+      void _tao_encode (TAO_OutputCDR &) const override;
 
-      virtual void _tao_decode (TAO_InputCDR &);
+      void _tao_decode (TAO_InputCDR &) override;
     };
 
     typedef char *ObjectId;

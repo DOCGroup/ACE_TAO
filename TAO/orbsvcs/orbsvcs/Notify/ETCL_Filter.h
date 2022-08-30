@@ -39,24 +39,24 @@ public:
   friend class TAO_Notify_ETCL_Filter;
 
   TAO_Notify_Constraint_Expr (void);
-  virtual ~TAO_Notify_Constraint_Expr ();
+  ~TAO_Notify_Constraint_Expr () override;
 
   void save_persistent (
-    TAO_Notify::Topology_Saver& saver);
+    TAO_Notify::Topology_Saver& saver) override;
 
 
   void load_attrs(
-    const TAO_Notify::NVPList& attrs);
+    const TAO_Notify::NVPList& attrs) override;
 
   TAO_Notify::Topology_Object* load_child (
     const ACE_CString &type,
     CORBA::Long id,
-    const TAO_Notify::NVPList& attrs);
+    const TAO_Notify::NVPList& attrs) override;
 
 
 private:
   /// Release this object.
-  virtual void release (void);
+  void release (void) override;
 
   // = DESCRIPTION
   //   Structure for associating ConstraintInfo with an interpreter.
@@ -84,45 +84,45 @@ public:
                           const TAO_Notify_Object::ID& id);
 
   /// Destructor
-  virtual ~TAO_Notify_ETCL_Filter (void);
+  ~TAO_Notify_ETCL_Filter (void) override;
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-  void load_attrs(const TAO_Notify::NVPList& attrs);
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
+  void load_attrs(const TAO_Notify::NVPList& attrs) override;
   TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
-    CORBA::Long id, const TAO_Notify::NVPList& attrs);
+    CORBA::Long id, const TAO_Notify::NVPList& attrs) override;
 
 protected:
-  virtual char * constraint_grammar (void);
+  char * constraint_grammar (void) override;
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list) override;
 
-  virtual void modify_constraints (const CosNotifyFilter::ConstraintIDSeq & del_list,
-                                   const CosNotifyFilter::ConstraintInfoSeq & modify_list);
+  void modify_constraints (const CosNotifyFilter::ConstraintIDSeq & del_list,
+                                   const CosNotifyFilter::ConstraintInfoSeq & modify_list) override;
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list);
+  CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list) override;
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints (void);
+  CosNotifyFilter::ConstraintInfoSeq * get_all_constraints (void) override;
 
-  virtual void remove_all_constraints (void);
+  void remove_all_constraints (void) override;
 
-  virtual void destroy (void);
+  void destroy (void) override;
 
-  virtual CORBA::Boolean match (const CORBA::Any & filterable_data);
+  CORBA::Boolean match (const CORBA::Any & filterable_data) override;
 
-  virtual CORBA::Boolean match_structured (const CosNotification::StructuredEvent & filterable_data);
+  CORBA::Boolean match_structured (const CosNotification::StructuredEvent & filterable_data) override;
 
-  virtual CORBA::Boolean match_typed (const CosNotification::PropertySeq & filterable_data);
+  CORBA::Boolean match_typed (const CosNotification::PropertySeq & filterable_data) override;
 
-  virtual CosNotifyFilter::CallbackID attach_callback (CosNotifyComm::NotifySubscribe_ptr callback);
+  CosNotifyFilter::CallbackID attach_callback (CosNotifyComm::NotifySubscribe_ptr callback) override;
 
-  virtual void detach_callback (CosNotifyFilter::CallbackID callback);
+  void detach_callback (CosNotifyFilter::CallbackID callback) override;
 
-  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (void);
+  CosNotifyFilter::CallbackIDSeq * get_callbacks (void) override;
 
 private:
 
   /// Release this object.
-  virtual void release (void);
+  void release (void) override;
 
   void add_constraints_i (const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq);
   void add_constraint_i (const CosNotifyFilter::ConstraintInfo& constraint,

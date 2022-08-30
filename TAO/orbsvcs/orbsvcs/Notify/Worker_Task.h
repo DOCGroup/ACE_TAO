@@ -59,7 +59,7 @@ public:
 
 protected:
   /// Destructor
-  virtual ~TAO_Notify_Worker_Task ();
+  ~TAO_Notify_Worker_Task () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

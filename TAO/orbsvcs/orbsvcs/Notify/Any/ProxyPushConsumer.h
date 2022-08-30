@@ -42,29 +42,29 @@ public:
   TAO_Notify_ProxyPushConsumer (void);
 
   /// Destructor
-  virtual ~TAO_Notify_ProxyPushConsumer ();
+  ~TAO_Notify_ProxyPushConsumer () override;
 
-  virtual const char * get_proxy_type_name () const;
+  const char * get_proxy_type_name () const override;
 
-  virtual void load_attrs (const TAO_Notify::NVPList& attrs);
-  virtual void validate ();
+  void load_attrs (const TAO_Notify::NVPList& attrs) override;
+  void validate () override;
 
   virtual void configure(TAO_Notify_SupplierAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods
 
-  virtual CosNotifyChannelAdmin::ProxyType MyType (void);
+  CosNotifyChannelAdmin::ProxyType MyType (void) override;
 
-  virtual void push (const CORBA::Any & data);
+  void push (const CORBA::Any & data) override;
 
-  virtual void connect_any_push_supplier (CosEventComm::PushSupplier_ptr push_supplier);
+  void connect_any_push_supplier (CosEventComm::PushSupplier_ptr push_supplier) override;
 
-  virtual void disconnect_push_consumer (void);
+  void disconnect_push_consumer (void) override;
 
 private:
   /// Release
-  virtual void release (void);
+  void release (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

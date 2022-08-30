@@ -36,7 +36,7 @@ public:
   ~be_visitor_operation_exceptlist_cs ();
 
   /// visit the operation
-  int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_EXCEPTIONLIST_CS_H_ */

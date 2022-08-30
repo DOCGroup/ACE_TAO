@@ -46,10 +46,10 @@ public:
                         ACE_Timer_Queue * = 0);
 
   /// Close down the select_reactor and release all of its resources.
-  virtual ~ACE_Priority_Reactor (void);
+  ~ACE_Priority_Reactor (void) override;
 
   /// Dump the state of an object.
-  void dump () const;
+  void dump () const override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -59,12 +59,12 @@ protected:
 
   /// We simply override this function to implement the priority
   /// dispatching.
-  virtual int dispatch_io_set (int number_of_active_handles,
+  int dispatch_io_set (int number_of_active_handles,
                                int &number_dispatched,
                                int mask,
                                ACE_Handle_Set &dispatch_mask,
                                ACE_Handle_Set &ready_mask,
-                               ACE_EH_PTMF callback);
+                               ACE_EH_PTMF callback) override;
 
 private:
   /// A small helper to initialize the bucket.

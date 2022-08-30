@@ -27,7 +27,7 @@ public:
 
   ~be_visitor_structure_fwd_ch ();
 
-  virtual int visit_structure_fwd (be_structure_fwd *node);
+  int visit_structure_fwd (be_structure_fwd *node) override;
 };
 
 #endif /* _BE_INTERFACE_STRUCTURE_FWD_CH_H_ */

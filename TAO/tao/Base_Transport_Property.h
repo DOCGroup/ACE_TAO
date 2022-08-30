@@ -44,21 +44,21 @@ public:
                                CORBA::Boolean flag = false);
 
   /// Destructor
-  virtual ~TAO_Base_Transport_Property (void);
+  ~TAO_Base_Transport_Property (void) override;
 
   /// The copy constructor.
   TAO_Base_Transport_Property (const TAO_Base_Transport_Property &rhs);
 
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
-  virtual  TAO_Transport_Descriptor_Interface *duplicate (void);
+   TAO_Transport_Descriptor_Interface *duplicate (void) override;
 
   /// Try to determine if this object is same as the @a other_prop.
-  virtual CORBA::Boolean is_equivalent (
-      const TAO_Transport_Descriptor_Interface *other_prop);
+  CORBA::Boolean is_equivalent (
+      const TAO_Transport_Descriptor_Interface *other_prop) override;
 
   /// Generate hash value for our class
-  virtual u_long hash () const;
+  u_long hash () const override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

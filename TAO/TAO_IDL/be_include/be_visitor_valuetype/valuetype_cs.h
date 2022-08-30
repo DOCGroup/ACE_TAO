@@ -26,13 +26,13 @@ class be_visitor_valuetype_cs : public be_visitor_valuetype
 public:
   be_visitor_valuetype_cs (be_visitor_context *ctx);
 
-  ~be_visitor_valuetype_cs ();
+  ~be_visitor_valuetype_cs () override;
 
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 
   /// Called only by AMH exceptions.
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 
 private:
   /// Recursive to generate for inherited members.

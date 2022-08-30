@@ -42,14 +42,14 @@ public:
   TAO_EC_Kokyu_Scheduling (RtecScheduler::Scheduler_ptr scheduler);
 
   /// Destructor
-  virtual ~TAO_EC_Kokyu_Scheduling (void);
+  ~TAO_EC_Kokyu_Scheduling (void) override;
 
-  virtual void add_proxy_supplier_dependencies (
+  void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
-      TAO_EC_ProxyPushConsumer *consumer);
-  virtual void schedule_event (const RtecEventComm::EventSet &event,
+      TAO_EC_ProxyPushConsumer *consumer) override;
+  void schedule_event (const RtecEventComm::EventSet &event,
                                TAO_EC_ProxyPushConsumer *consumer,
-                               TAO_EC_Supplier_Filter *filter);
+                               TAO_EC_Supplier_Filter *filter) override;
 
 private:
   TAO_EC_Kokyu_Scheduling (const TAO_EC_Kokyu_Scheduling&);

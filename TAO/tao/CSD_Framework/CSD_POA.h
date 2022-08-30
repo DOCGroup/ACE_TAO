@@ -47,25 +47,25 @@ public:
                TAO_Object_Adapter *object_adapter);
 
   /// Destructor
-  virtual ~TAO_CSD_POA (void);
+  ~TAO_CSD_POA (void) override;
 
   /// Pass the Strategy object reference to the CSD poa.
-  virtual
-  void set_csd_strategy (::CSD_Framework::Strategy_ptr s);
+  
+  void set_csd_strategy (::CSD_Framework::Strategy_ptr s) override;
 
   /// Hook - The POA has been (or is being) activated.
-  virtual void poa_activated_hook ();
+  void poa_activated_hook () override;
 
   /// Hook - The POA has been deactivated.
-  virtual void poa_deactivated_hook ();
+  void poa_deactivated_hook () override;
 
   /// Hook - A servant has been activated.
-  virtual void servant_activated_hook (PortableServer::Servant servant,
-                              const PortableServer::ObjectId& oid);
+  void servant_activated_hook (PortableServer::Servant servant,
+                              const PortableServer::ObjectId& oid) override;
 
   /// Hook - A servant has been deactivated.
-  virtual void servant_deactivated_hook (PortableServer::Servant servant,
-                                const PortableServer::ObjectId& oid);
+  void servant_deactivated_hook (PortableServer::Servant servant,
+                                const PortableServer::ObjectId& oid) override;
 
   /// Method for creating new CSD POA.
   TAO_Root_POA * new_POA (const String &name,
@@ -75,7 +75,7 @@ public:
                           ACE_Lock &lock,
                           TAO_SYNCH_MUTEX &thread_lock,
                           TAO_ORB_Core &orb_core,
-                          TAO_Object_Adapter *object_adapter);
+                          TAO_Object_Adapter *object_adapter) override;
 
   /// Servant Dispatching Strategy proxy accessor.
   TAO::CSD::Strategy_Proxy&

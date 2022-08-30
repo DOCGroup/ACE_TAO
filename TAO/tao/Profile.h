@@ -416,30 +416,30 @@ public:
                        TAO_ORB_Core *orb_core);
 
   // = The TAO_Profile methods look above
-  virtual void parse_string (const char *string);
-  virtual char object_key_delimiter () const;
-  virtual char* to_string () const;
-  virtual int decode (TAO_InputCDR& cdr);
-  virtual int encode (TAO_OutputCDR &stream) const;
-  virtual int encode_endpoints ();
+  void parse_string (const char *string) override;
+  char object_key_delimiter () const override;
+  char* to_string () const override;
+  int decode (TAO_InputCDR& cdr) override;
+  int encode (TAO_OutputCDR &stream) const override;
+  int encode_endpoints () override;
 
   virtual TAO::ObjectKey *_key () const;
-  virtual TAO_Endpoint *endpoint ();
-  virtual CORBA::ULong endpoint_count () const;
-  virtual CORBA::ULong hash (CORBA::ULong max);
+  TAO_Endpoint *endpoint () override;
+  CORBA::ULong endpoint_count () const override;
+  CORBA::ULong hash (CORBA::ULong max) override;
 
-  virtual int decode_profile (TAO_InputCDR &cdr);
-  virtual int decode_endpoints ();
+  int decode_profile (TAO_InputCDR &cdr) override;
+  int decode_endpoints () override;
 
 protected:
-  virtual CORBA::Boolean do_is_equivalent (const TAO_Profile* other_profile);
-  virtual TAO_Service_Callbacks::Profile_Equivalence is_equivalent_hook (
-                                           const TAO_Profile* other_profile);
+  CORBA::Boolean do_is_equivalent (const TAO_Profile* other_profile) override;
+  TAO_Service_Callbacks::Profile_Equivalence is_equivalent_hook (
+                                           const TAO_Profile* other_profile) override;
 
 private:
-  virtual void create_profile_body (TAO_OutputCDR &encap) const;
+  void create_profile_body (TAO_OutputCDR &encap) const override;
 
-  virtual void parse_string_i (const char *string);
+  void parse_string_i (const char *string) override;
 private:
   TAO_opaque body_;
 };

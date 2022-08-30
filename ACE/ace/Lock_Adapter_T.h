@@ -48,49 +48,49 @@ public:
 
   /// Destructor. If @c lock_ was not passed in by the user, it will be
   /// deleted.
-  virtual ~ACE_Lock_Adapter ();
+  ~ACE_Lock_Adapter () override;
 
   // = Lock accessors.
   /// Block the thread until the lock is acquired.
-  virtual int acquire ();
+  int acquire () override;
 
   /// Conditionally acquire the lock (i.e., won't block).
-  virtual int tryacquire ();
+  int tryacquire () override;
 
   /// Release the lock.
-  virtual int release ();
+  int release () override;
 
   /**
    * Block until the thread acquires a read lock.  If the locking
    * mechanism doesn't support read locks then this just calls
    * acquire().
    */
-  virtual int acquire_read ();
+  int acquire_read () override;
 
   /**
    * Block until the thread acquires a write lock.  If the locking
    * mechanism doesn't support read locks then this just calls
    * acquire().
    */
-  virtual int acquire_write ();
+  int acquire_write () override;
 
   /// Conditionally acquire a read lock.  If the locking mechanism
   /// doesn't support read locks then this just calls acquire().
-  virtual int tryacquire_read ();
+  int tryacquire_read () override;
 
   /// Conditionally acquire a write lock.  If the locking mechanism
   /// doesn't support read locks then this just calls acquire().
-  virtual int tryacquire_write ();
+  int tryacquire_write () override;
 
   /**
    * Conditionally try to upgrade a lock held for read to a write lock.
    * If the locking mechanism doesn't support read locks then this just
    * calls acquire(). Returns 0 on success, -1 on failure.
    */
-  virtual int tryacquire_write_upgrade ();
+  int tryacquire_write_upgrade () override;
 
   /// Explicitly destroy the lock.
-  virtual int remove ();
+  int remove () override;
 
 private:
   /// The concrete locking mechanism that all the methods delegate to.

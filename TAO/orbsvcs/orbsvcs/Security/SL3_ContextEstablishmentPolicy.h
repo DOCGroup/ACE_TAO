@@ -63,23 +63,23 @@ namespace TAO
        * SecurityLevel3::ContextEstablishmentPolicy interface.
        */
       //@{
-      virtual SecurityLevel3::CredsDirective creds_directive ();
+      SecurityLevel3::CredsDirective creds_directive () override;
 
-      virtual SecurityLevel3::OwnCredentialsList * creds_list ();
+      SecurityLevel3::OwnCredentialsList * creds_list () override;
 
-      virtual SecurityLevel3::FeatureDirective use_client_auth ();
+      SecurityLevel3::FeatureDirective use_client_auth () override;
 
-      virtual SecurityLevel3::FeatureDirective use_target_auth ();
+      SecurityLevel3::FeatureDirective use_target_auth () override;
 
-      virtual SecurityLevel3::FeatureDirective use_confidentiality ();
+      SecurityLevel3::FeatureDirective use_confidentiality () override;
 
-      virtual SecurityLevel3::FeatureDirective use_integrity ();
+      SecurityLevel3::FeatureDirective use_integrity () override;
 
-      virtual CORBA::PolicyType policy_type (void);
+      CORBA::PolicyType policy_type (void) override;
 
-      virtual CORBA::Policy_ptr copy (void);
+      CORBA::Policy_ptr copy (void) override;
 
-      virtual void destroy (void);
+      void destroy (void) override;
       //@}
 
     protected:
@@ -89,7 +89,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ContextEstablishmentPolicy (void);
+      ~ContextEstablishmentPolicy (void) override;
 
     private:
 

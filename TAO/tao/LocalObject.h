@@ -46,7 +46,7 @@ namespace CORBA
   public:
 
     /// Destructor
-    virtual ~LocalObject ();
+    ~LocalObject () override;
 
     /// Increment the ref count
     static LocalObject_ptr _duplicate (LocalObject_ptr obj);
@@ -66,36 +66,36 @@ namespace CORBA
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
     /// Always returns false.
-    virtual CORBA::Boolean _non_existent ();
+    CORBA::Boolean _non_existent () override;
 
     /// Get the repository id.
-    virtual char * _repository_id ();
+    char * _repository_id () override;
 
 #if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
     /// Gets info about object from the Interface Repository.
-    virtual CORBA::InterfaceDef_ptr _get_interface ();
+    CORBA::InterfaceDef_ptr _get_interface () override;
 
     /// Throws NO_IMPLEMENT.
-    virtual CORBA::Object_ptr _get_component ();
+    CORBA::Object_ptr _get_component () override;
 
-    virtual void _create_request (CORBA::Context_ptr ctx,
+    void _create_request (CORBA::Context_ptr ctx,
                                   const char * operation,
                                   CORBA::NVList_ptr arg_list,
                                   CORBA::NamedValue_ptr result,
                                   CORBA::Request_ptr & request,
-                                  CORBA::Flags req_flags);
+                                  CORBA::Flags req_flags) override;
 
-    virtual void _create_request (CORBA::Context_ptr ctx,
+    void _create_request (CORBA::Context_ptr ctx,
                                   const char * operation,
                                   CORBA::NVList_ptr arg_list,
                                   CORBA::NamedValue_ptr result,
                                   CORBA::ExceptionList_ptr exclist,
                                   CORBA::ContextList_ptr ctxtlist,
                                   CORBA::Request_ptr & request,
-                                  CORBA::Flags req_flags);
+                                  CORBA::Flags req_flags) override;
 
     /// Throws NO_IMPLEMENT.
-    virtual CORBA::Request_ptr _request (const char * operation);
+    CORBA::Request_ptr _request (const char * operation) override;
 
 #endif
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -128,7 +128,7 @@ namespace CORBA
      * address of the object.  On non-32 bit platforms, the hash may
      * be non-unique.
      */
-    virtual CORBA::ULong _hash (CORBA::ULong maximum);
+    CORBA::ULong _hash (CORBA::ULong maximum) override;
 
     /**
      * Try to determine if this object is the same as @c other_obj.
@@ -137,14 +137,14 @@ namespace CORBA
      * different ORB protocols are in use) there is no default
      * implementation.
      */
-    virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj);
+    CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj) override;
 
-    virtual CORBA::ORB_ptr _get_orb ();
+    CORBA::ORB_ptr _get_orb () override;
 
     // = TAO extensions
 
     /// Throws CORBA::NO_IMPLEMENT.
-    virtual TAO::ObjectKey * _key ();
+    TAO::ObjectKey * _key () override;
 
     /// Useful for template programming.
     typedef LocalObject_ptr _ptr_type;

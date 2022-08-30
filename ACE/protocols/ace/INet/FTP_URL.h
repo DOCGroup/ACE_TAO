@@ -41,11 +41,11 @@ namespace ACE
 
               URL& operator =(const URL& url);
 
-              virtual const ACE_CString& get_scheme () const;
+              const ACE_CString& get_scheme () const override;
 
-              virtual ACE_CString to_string () const;
+              ACE_CString to_string () const override;
 
-              virtual u_short default_port () const;
+              u_short default_port () const override;
 
               static const char* PROTOCOL;
 
@@ -57,7 +57,7 @@ namespace ACE
               };
 
             protected:
-              virtual ACE::INet::ClientRequestHandler* create_default_request_handler () const;
+              ACE::INet::ClientRequestHandler* create_default_request_handler () const override;
 
             private:
               class Factory
@@ -66,8 +66,8 @@ namespace ACE
                   public:
                     Factory ();
                     virtual ~Factory ();
-                    virtual const ACE_CString& protocol ();
-                    virtual ACE::INet::URL_Base* create_from_string (const ACE_CString& url_string);
+                    const ACE_CString& protocol () override;
+                    ACE::INet::URL_Base* create_from_string (const ACE_CString& url_string) override;
                 };
 
               typedef ACE_Singleton<Factory,

@@ -27,8 +27,8 @@ public:
 
   ~be_visitor_component_svth ();
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
 
 private:
   TAO_OutStream &os_;

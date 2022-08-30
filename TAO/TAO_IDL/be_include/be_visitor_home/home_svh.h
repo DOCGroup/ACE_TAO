@@ -28,11 +28,11 @@ public:
 
   ~be_visitor_home_svh ();
 
-  virtual int visit_home (be_home *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_factory (be_factory *node);
-  virtual int visit_finder (be_finder *node);
+  int visit_home (be_home *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_factory (be_factory *node) override;
+  int visit_finder (be_finder *node) override;
 
 private:
   int gen_servant_class ();

@@ -41,14 +41,14 @@ public:
   TAO_AV_Default_Resource_Factory ();
 
   /// Destructor.
-  virtual ~TAO_AV_Default_Resource_Factory ();
+  ~TAO_AV_Default_Resource_Factory () override;
 
   /**
    * @name Service Configurator Hooks
    */
   //@{
   /// Dynamic linking hook
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

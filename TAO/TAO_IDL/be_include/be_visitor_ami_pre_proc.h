@@ -41,17 +41,17 @@ private:
 public:
   be_visitor_ami_pre_proc (be_visitor_context *ctx);
 
-  virtual ~be_visitor_ami_pre_proc ();
+  ~be_visitor_ami_pre_proc () override;
 
-  virtual int visit_root (be_root *node);
+  int visit_root (be_root *node) override;
 
-  virtual int visit_module (be_module *node);
+  int visit_module (be_module *node) override;
 
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 
-  virtual int visit_attribute (be_attribute *node);
+  int visit_attribute (be_attribute *node) override;
 
 private:
   /// create the reply handler interface
@@ -74,7 +74,7 @@ private:
                                       be_interface *reply_handler);
 
   /// specialized visit_scope
-  int visit_scope (be_scope *node);
+  int visit_scope (be_scope *node) override;
 
   /// concatenate the prefix, middle_name and suffix
   /// and store the result in desination.

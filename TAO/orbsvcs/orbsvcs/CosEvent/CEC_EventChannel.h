@@ -126,7 +126,7 @@ public:
                         int own_factory = 0);
 
   /// destructor
-  virtual ~TAO_CEC_EventChannel (void);
+  ~TAO_CEC_EventChannel (void) override;
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
@@ -227,16 +227,16 @@ public:
   // = The CosEventChannelAdmin::EventChannel methods...
   /// The default implementation is:
   ///    this->consumer_admin ()->_this (env);
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (void);
+  CosEventChannelAdmin::ConsumerAdmin_ptr
+      for_consumers (void) override;
 
   /// The default implementation is:
   ///    this->supplier_admin ()->_this (env);
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (void);
+  CosEventChannelAdmin::SupplierAdmin_ptr
+      for_suppliers (void) override;
 
   /// Commit suicide.
-  virtual void destroy (void);
+  void destroy (void) override;
 
   ServantRetryMap& get_servant_retry_map (void);
 

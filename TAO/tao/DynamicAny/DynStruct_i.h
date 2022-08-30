@@ -44,7 +44,7 @@ public:
   TAO_DynStruct_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynStruct_i ();
+  ~TAO_DynStruct_i () override;
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
@@ -57,30 +57,30 @@ public:
 
   // = Functions specific to DynStruct.
 
-  virtual DynamicAny::FieldName current_member_name ();
+  DynamicAny::FieldName current_member_name () override;
 
-  virtual CORBA::TCKind current_member_kind ();
+  CORBA::TCKind current_member_kind () override;
 
-  virtual DynamicAny::NameValuePairSeq *get_members ();
+  DynamicAny::NameValuePairSeq *get_members () override;
 
-  virtual void set_members (const DynamicAny::NameValuePairSeq& value);
+  void set_members (const DynamicAny::NameValuePairSeq& value) override;
 
-  virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any ();
+  DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any () override;
 
-  virtual void set_members_as_dyn_any (
-      const DynamicAny::NameDynAnyPairSeq & value);
+  void set_members_as_dyn_any (
+      const DynamicAny::NameDynAnyPairSeq & value) override;
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  virtual void from_any (const CORBA::Any & value);
+  void from_any (const CORBA::Any & value) override;
 
-  virtual CORBA::Any * to_any ();
+  CORBA::Any * to_any () override;
 
-  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
+  CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual DynamicAny::DynAny_ptr current_component ();
+  DynamicAny::DynAny_ptr current_component () override;
 
 private:
   /// Check if the typecode is acceptable.

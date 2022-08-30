@@ -27,7 +27,7 @@ class TAO_ESF_Shutdown_Proxy : public TAO_ESF_Worker<PROXY>
 public:
   TAO_ESF_Shutdown_Proxy ();
 
-  void work (PROXY *proxy);
+  void work (PROXY *proxy) override;
 };
 
 // ****************************************************************

@@ -132,7 +132,7 @@ public:
   TAO_Storable_Bindings_Map (size_t hash_table_size, CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_Storable_Bindings_Map (void);
+  ~TAO_Storable_Bindings_Map (void) override;
 
   // = Accessors.
 
@@ -144,7 +144,7 @@ public:
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.
-  virtual size_t current_size (void);
+  size_t current_size (void) override;
 
   // = Name bindings manipulation methods.
 
@@ -153,10 +153,10 @@ public:
    * Return 0 on success and -1 on failure, 1 if there already is a
    * binding with <id> and <kind>.
    */
-  virtual int bind (const char *id,
+  int bind (const char *id,
                     const char *kind,
                     CORBA::Object_ptr obj,
-                    CosNaming::BindingType type);
+                    CosNaming::BindingType type) override;
 
   /**
    * Overwrite a binding containing <id> and <kind> (or create a new
@@ -164,16 +164,16 @@ public:
    * 0 or 1 on success.  Return -1 or -2 on failure. (-2 is returned
    * if the new and old bindings differ in type).
    */
-  virtual int rebind (const char *id,
+  int rebind (const char *id,
                       const char *kind,
                       CORBA::Object_ptr obj,
-                      CosNaming::BindingType type);
+                      CosNaming::BindingType type) override;
 
   /**
    * Remove a binding containing <id> and <kind> from the table.
    * Return 0 on success and -1 on failure.
    */
-  virtual int unbind (const char * id, const char * kind);
+  int unbind (const char * id, const char * kind) override;
 
   /**
    * Find the binding containing <id> and <kind> in the table, and
@@ -182,10 +182,10 @@ public:
    * reference is assigned to <obj>, so the caller is responsible for
    * its deallocation.
    */
-  virtual int find (const char * id,
+  int find (const char * id,
                     const char * kind,
                     CORBA::Object_ptr & obj,
-                    CosNaming::BindingType &type);
+                    CosNaming::BindingType &type) override;
 
 private:
 
@@ -231,7 +231,7 @@ public:
                                size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
 
   /// Destructor.
-  virtual ~TAO_Storable_Naming_Context (void);
+  ~TAO_Storable_Naming_Context (void) override;
 
   // = Utility methods.
   /**
@@ -267,7 +267,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (void);
+  CosNaming::NamingContext_ptr new_context (void) override;
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -275,13 +275,13 @@ public:
    * are returned with a BindingIterator.  In the naming context does
    * not contain any additional bindings <bi> returned as null.
    */
-  virtual void list (CORBA::ULong how_many,
+  void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out &bl,
-                     CosNaming::BindingIterator_out &bi);
+                     CosNaming::BindingIterator_out &bi) override;
 
 
-  virtual void rebind (const CosNaming::Name& n,
-                       CORBA::Object_ptr obj);
+  void rebind (const CosNaming::Name& n,
+                       CORBA::Object_ptr obj) override;
 
   /**
    * Create a binding for name <n> and object <obj> in the naming
@@ -292,8 +292,8 @@ public:
    * be bound using <bind_context> and <rebind_context> in order to
    * participate in name resolution later.
    */
-  virtual void bind (const CosNaming::Name &n,
-                     CORBA::Object_ptr obj);
+  void bind (const CosNaming::Name &n,
+                     CORBA::Object_ptr obj) override;
 
 
   /**
@@ -301,16 +301,16 @@ public:
    * contexts, so that they will participate in name resolution when
    * compound names are passed to be resolved.
    */
-  virtual void bind_context (const CosNaming::Name &n,
-                             CosNaming::NamingContext_ptr nc);
+  void bind_context (const CosNaming::Name &n,
+                             CosNaming::NamingContext_ptr nc) override;
 
   /**
    * This is a version of <rebind> specifically for naming contexts,
    * so that they can participate in name resolution when compound
    * names are passed.
    */
-   virtual void rebind_context (const CosNaming::Name &n,
-                                CosNaming::NamingContext_ptr nc);
+   void rebind_context (const CosNaming::Name &n,
+                                CosNaming::NamingContext_ptr nc) override;
 
   /**
    * Return object reference that is bound to the name.  Compound name
@@ -319,14 +319,14 @@ public:
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
+  CORBA::Object_ptr resolve (const CosNaming::Name &n) override;
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
    * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
    */
-  virtual void unbind (const CosNaming::Name &n);
+  void unbind (const CosNaming::Name &n) override;
 
   /**
    * This operation creates a new context and binds it to the name
@@ -334,8 +334,8 @@ public:
    * implemented by the same server as the context in which it was
    * bound (the name argument excluding the last component).
    */
-  virtual CosNaming::NamingContext_ptr bind_new_context (
-                                const CosNaming::Name &n);
+  CosNaming::NamingContext_ptr bind_new_context (
+                                const CosNaming::Name &n) override;
 
   /**
    * Delete the naming context.  The user should take care to <unbind> any
@@ -345,7 +345,7 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (void);
+  void destroy (void) override;
 
 protected:
 
@@ -439,31 +439,31 @@ public:
                             Method_Type method_type,
                             bool loadnow = true);
 
-  ~File_Open_Lock_and_Check ();
+  ~File_Open_Lock_and_Check () override;
 
 protected:
 
   /// Check if the guarded object is current with the last
   /// update which could have been performed independently of
   /// the owner of this object.
-  virtual bool object_obsolete (void);
+  bool object_obsolete (void) override;
 
   /// Mark the object as current with respect to the
   /// file to which it was persisted.
-  virtual void mark_object_current (void);
+  void mark_object_current (void) override;
 
   /// Mark the time at which the object was modified and
-  virtual void set_object_last_changed (const time_t & time);
+  void set_object_last_changed (const time_t & time) override;
 
   /// Get the time which the object was last written to the
   /// file.
-  virtual time_t get_object_last_changed ();
+  time_t get_object_last_changed () override;
 
-  virtual int load_from_stream ();
+  int load_from_stream () override;
 
-  virtual bool is_loaded_from_stream ();
+  bool is_loaded_from_stream () override;
 
-  virtual TAO::Storable_Base * create_stream (const char * mode);
+  TAO::Storable_Base * create_stream (const char * mode) override;
 
 private:
   /// Default constructor

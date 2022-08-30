@@ -21,18 +21,18 @@ namespace ACE_RMCast
 
     Link (Address const& addr, Parameters const& params);
 
-    virtual void
-    in_start (In_Element* in);
+    void
+    in_start (In_Element* in) override;
 
-    virtual void
-    out_start (Out_Element* out);
+    void
+    out_start (Out_Element* out) override;
 
-    virtual void
-    in_stop ();
+    void
+    in_stop () override;
 
   public:
-    virtual void
-    send (Message_ptr m);
+    void
+    send (Message_ptr m) override;
 
   private:
     virtual void
@@ -46,8 +46,8 @@ namespace ACE_RMCast
     recv_thunk (void* obj);
 
   private:
-    virtual void
-    recv (Message_ptr);
+    void
+    recv (Message_ptr) override;
 
   private:
     Parameters const& params_;

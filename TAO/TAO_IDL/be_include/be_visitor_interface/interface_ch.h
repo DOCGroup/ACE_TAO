@@ -29,11 +29,11 @@ public:
   be_visitor_interface_ch (be_visitor_context *ctx);
   ~be_visitor_interface_ch ();
 
-  virtual int visit_interface (be_interface *node);
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
-  virtual int visit_extended_port (be_extended_port *node);
-  virtual int visit_mirror_port (be_mirror_port *node);
+  int visit_interface (be_interface *node) override;
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
+  int visit_extended_port (be_extended_port *node) override;
+  int visit_mirror_port (be_mirror_port *node) override;
 
   /// Helper to generate the declarations for the operations
   /// of any abstract parents we may have.

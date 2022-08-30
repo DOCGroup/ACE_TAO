@@ -41,17 +41,17 @@ namespace ACE
 
               URL& operator =(const URL& url);
 
-              virtual const ACE_CString& get_scheme () const;
+              const ACE_CString& get_scheme () const override;
 
-              virtual const ACE_CString& get_query () const;
+              const ACE_CString& get_query () const override;
 
-              virtual const ACE_CString& get_fragment () const;
+              const ACE_CString& get_fragment () const override;
 
               virtual ACE_CString get_request_uri () const;
 
-              virtual void set_query (const ACE_CString& query);
+              void set_query (const ACE_CString& query) override;
 
-              virtual void set_fragment (const ACE_CString& fargment);
+              void set_fragment (const ACE_CString& fargment) override;
 
               void set_proxy (const ACE_CString& proxy_host, u_short proxy_port = HTTP_PROXY_PORT);
 
@@ -61,9 +61,9 @@ namespace ACE
 
               bool has_proxy () const;
 
-              virtual ACE_CString to_string () const;
+              ACE_CString to_string () const override;
 
-              virtual u_short default_port () const;
+              u_short default_port () const override;
 
               static const char* PROTOCOL;
 
@@ -78,7 +78,7 @@ namespace ACE
             protected:
               URL (u_short port);
 
-              virtual ACE::INet::ClientRequestHandler* create_default_request_handler () const;
+              ACE::INet::ClientRequestHandler* create_default_request_handler () const override;
 
             private:
               ACE_CString query_;
@@ -93,8 +93,8 @@ namespace ACE
                   public:
                     Factory ();
                     virtual ~Factory ();
-                    virtual const ACE_CString& protocol ();
-                    virtual ACE::INet::URL_Base* create_from_string (const ACE_CString& url_string);
+                    const ACE_CString& protocol () override;
+                    ACE::INet::URL_Base* create_from_string (const ACE_CString& url_string) override;
                 };
 
               typedef ACE_Singleton<Factory,

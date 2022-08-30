@@ -36,15 +36,15 @@ public:
   TAO_Trading_Loader ();
 
   /// Destructor
-  ~TAO_Trading_Loader () = default;
+  ~TAO_Trading_Loader () override = default;
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Called by the Service Configurator framework to remove the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int fini ();
+  int fini () override;
 
   /// Run the Trading Service
   int run ();
@@ -53,7 +53,7 @@ public:
   /// ORB and the command line parameters.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc,
-                                   ACE_TCHAR *argv[]);
+                                   ACE_TCHAR *argv[]) override;
 
 protected:
   /// Enable the Trading Service to answer multicast requests for its

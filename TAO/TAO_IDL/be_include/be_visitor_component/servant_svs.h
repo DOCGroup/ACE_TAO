@@ -26,15 +26,15 @@ public:
 
   ~be_visitor_servant_svs () = default;
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_provides (be_provides *node);
-  virtual int visit_uses (be_uses *node);
-  virtual int visit_publishes (be_publishes *node);
-  virtual int visit_emits (be_emits *node);
-  virtual int visit_consumes (be_consumes *node);
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_provides (be_provides *node) override;
+  int visit_uses (be_uses *node) override;
+  int visit_publishes (be_publishes *node) override;
+  int visit_emits (be_emits *node) override;
+  int visit_consumes (be_consumes *node) override;
 
 private:
   void gen_provides_top ();
@@ -61,9 +61,9 @@ public:
 
   ~be_visitor_obv_factory_reg ();
 
-  virtual int visit_publishes (be_publishes *node);
-  virtual int visit_emits (be_emits *node);
-  virtual int visit_consumes (be_consumes *node);
+  int visit_publishes (be_publishes *node) override;
+  int visit_emits (be_emits *node) override;
+  int visit_consumes (be_consumes *node) override;
 
 private:
   void gen_obv_factory_registration (AST_Type *t);
@@ -78,7 +78,7 @@ public:
 
   ~be_visitor_attr_set ();
 
-  virtual int visit_attribute (be_attribute *node);
+  int visit_attribute (be_attribute *node) override;
 
   // This override includes the supported
   // interfaces, so we can generate code to initialize attribute
@@ -96,7 +96,7 @@ public:
 
   ~be_visitor_facet_executor_block ();
 
-  virtual int visit_provides (be_provides *node);
+  int visit_provides (be_provides *node) override;
 };
 
 // ======================================================
@@ -109,7 +109,7 @@ public:
 
   ~be_visitor_connect_block ();
 
-  virtual int visit_uses (be_uses *node);
+  int visit_uses (be_uses *node) override;
 };
 
 // ======================================================
@@ -122,7 +122,7 @@ public:
 
   ~be_visitor_disconnect_block ();
 
-  virtual int visit_uses (be_uses *node);
+  int visit_uses (be_uses *node) override;
 };
 
 // ======================================================
@@ -136,7 +136,7 @@ public:
 
   ~be_visitor_receptacle_desc ();
 
-  virtual int visit_uses (be_uses *node);
+  int visit_uses (be_uses *node) override;
 
 private:
   ACE_CDR::ULong slot_;
@@ -153,7 +153,7 @@ public:
 
   ~be_visitor_subscribe_block ();
 
-  virtual int visit_publishes (be_publishes *node);
+  int visit_publishes (be_publishes *node) override;
 };
 
 // ======================================================
@@ -166,7 +166,7 @@ public:
 
   ~be_visitor_unsubscribe_block ();
 
-  virtual int visit_publishes (be_publishes *node);
+  int visit_publishes (be_publishes *node) override;
 };
 
 // ======================================================
@@ -179,7 +179,7 @@ public:
 
   ~be_visitor_event_source_desc ();
 
-  virtual int visit_publishes (be_publishes *node);
+  int visit_publishes (be_publishes *node) override;
 
 private:
   ACE_CDR::ULong slot_;
@@ -195,7 +195,7 @@ public:
 
   ~be_visitor_connect_consumer_block ();
 
-  virtual int visit_emits (be_emits *node);
+  int visit_emits (be_emits *node) override;
 };
 
 // ======================================================
@@ -208,7 +208,7 @@ public:
 
   ~be_visitor_disconnect_consumer_block ();
 
-  virtual int visit_emits (be_emits *node);
+  int visit_emits (be_emits *node) override;
 };
 
 // ======================================================
@@ -221,7 +221,7 @@ public:
 
   ~be_visitor_emitter_desc ();
 
-  virtual int visit_emits (be_emits *node);
+  int visit_emits (be_emits *node) override;
 
 private:
   ACE_CDR::ULong slot_;
@@ -237,9 +237,9 @@ public:
 
   ~be_visitor_populate_port_tables ();
 
-  virtual int visit_provides (be_provides *node);
+  int visit_provides (be_provides *node) override;
 
-  virtual int visit_consumes (be_consumes *node);
+  int visit_consumes (be_consumes *node) override;
 };
 
 // ======================================================
@@ -252,9 +252,9 @@ class Component_Op_Attr_Generator
 public:
   Component_Op_Attr_Generator (be_visitor_scope * visitor);
 
-  virtual int emit (be_interface * derived_interface,
-                    TAO_OutStream * os,
-                    be_interface * base_interface);
+  int emit (be_interface * derived_interface,
+            TAO_OutStream * os,
+            be_interface * base_interface) override;
 
 private:
   be_visitor_scope * visitor_;

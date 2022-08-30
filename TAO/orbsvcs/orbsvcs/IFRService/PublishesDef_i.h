@@ -40,10 +40,10 @@ public:
     TAO_PublishesDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_PublishesDef_i (void);
+  ~TAO_PublishesDef_i (void) override;
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ();
+  CORBA::DefinitionKind def_kind () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

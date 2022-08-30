@@ -31,7 +31,7 @@ public:
 
   // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   // details.
-  virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
+  TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_Object_Adapter_Factory)

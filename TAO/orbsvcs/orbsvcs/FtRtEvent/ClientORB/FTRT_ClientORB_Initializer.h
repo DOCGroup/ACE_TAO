@@ -40,9 +40,9 @@ public:
   /// Priority mapping types
   FTRT_ClientORB_Initializer (int transaction_depth);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 private:
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor_;
 };

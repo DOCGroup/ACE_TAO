@@ -26,7 +26,7 @@ public:
 
   ~be_visitor_component_exh ();
 
-  virtual int visit_component (be_component *node);
+  int visit_component (be_component *node) override;
 };
 
 #endif /* _BE_COMPONENT_COMPONENT_EXH_H_ */

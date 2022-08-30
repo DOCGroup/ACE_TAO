@@ -70,7 +70,7 @@ public:
 
 protected:
   /// Ensure that this object must be allocated on the heap.
-  ~ACE_Thread_Adapter ();
+  ~ACE_Thread_Adapter () override;
 
 private:
   /// Called by invoke, mainly here to separate the SEH stuff because

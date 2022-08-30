@@ -30,7 +30,7 @@ public:
 
   ~be_visitor_interface_ex_idl ();
 
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 };
 
 #endif /* _BE_INTERFACE_INTERFACE_EX_IDL_H_ */

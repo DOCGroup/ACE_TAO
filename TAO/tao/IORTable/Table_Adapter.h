@@ -37,24 +37,24 @@ public:
   TAO_Table_Adapter (TAO_ORB_Core &orb_core);
 
   /// Destructor
-  virtual ~TAO_Table_Adapter (void);
+  ~TAO_Table_Adapter (void) override;
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open (void);
-  virtual void close (int wait_for_completion);
-  virtual void check_close (int wait_for_completion);
-  virtual int priority () const;
-  virtual int dispatch (TAO::ObjectKey &key,
+  void open (void) override;
+  void close (int wait_for_completion) override;
+  void check_close (int wait_for_completion) override;
+  int priority () const override;
+  int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
-                        CORBA::Object_out foward_to);
+                        CORBA::Object_out foward_to) override;
 
-  virtual const char *name () const;
-  virtual CORBA::Object_ptr root (void);
-  virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
-                                                      const TAO_MProfile &);
+  const char *name () const override;
+  CORBA::Object_ptr root (void) override;
+  CORBA::Object_ptr create_collocated_object (TAO_Stub *,
+                                                      const TAO_MProfile &) override;
 
-  virtual CORBA::Long initialize_collocated_object (TAO_Stub *stub);
+  CORBA::Long initialize_collocated_object (TAO_Stub *stub) override;
 
 protected:
   static ACE_Lock * create_lock (TAO_SYNCH_MUTEX &l);
@@ -84,7 +84,7 @@ public:
 
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   /// details.
-  virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
+  TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

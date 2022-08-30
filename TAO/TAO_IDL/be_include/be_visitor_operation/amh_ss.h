@@ -24,8 +24,8 @@ public:
 
   ~be_visitor_amh_operation_ss ();
 
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
 
 protected:
   int generate_shared_prologue (be_decl *node,

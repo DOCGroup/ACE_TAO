@@ -30,13 +30,13 @@ public:
 
   ~be_visitor_root_sth ();
 
-  virtual int visit_root (be_root *node);
+  int visit_root (be_root *node) override;
 
-  virtual int visit_module (be_module *node);
+  int visit_module (be_module *node) override;
 
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
-  virtual int visit_component (be_component *node);
+  int visit_component (be_component *node) override;
 
 private:
   /// Open file and initialize stream.

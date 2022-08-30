@@ -30,45 +30,45 @@ public:
   ~be_visitor_array ();
 
   /// visit the array node
-  virtual int visit_array (be_array *);
+  int visit_array (be_array *) override;
 
   // = Visitor methods on array types
 
   /// visit an enum
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 
   /// visit an interface
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
   /// visit an interface forward node
-  virtual int visit_interface_fwd (be_interface_fwd *node);
+  int visit_interface_fwd (be_interface_fwd *node) override;
 
   /// visit a valuebox
-  virtual int visit_valuebox (be_valuebox *node);
+  int visit_valuebox (be_valuebox *node) override;
 
   /// visit a valuetype
-  virtual int visit_valuetype (be_valuetype *node);
+  int visit_valuetype (be_valuetype *node) override;
 
   /// visit a valuetype forward node
-  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
+  int visit_valuetype_fwd (be_valuetype_fwd *node) override;
 
   /// visit a predefined type node
-  virtual int visit_predefined_type (be_predefined_type *node);
+  int visit_predefined_type (be_predefined_type *node) override;
 
   /// visit sequence
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 
   /// visit string
-  virtual int visit_string (be_string *node);
+  int visit_string (be_string *node) override;
 
   /// visit structure
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 
   /// visit typedef
-  virtual int visit_typedef (be_typedef *node);
+  int visit_typedef (be_typedef *node) override;
 
   /// visit union
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
 protected:
   /// helper that does the common job

@@ -26,9 +26,9 @@ public:
   be_visitor_executor_exs_attr_init (be_visitor_context *ctx);
   ~be_visitor_executor_exs_attr_init ();
 
-  virtual int visit_attribute (be_attribute *node);
+  int visit_attribute (be_attribute *node) override;
 
-  virtual int pre_process (be_decl *);
+  int pre_process (be_decl *) override;
 
   bool attr_generated () const;
 

@@ -60,13 +60,13 @@ public:
   virtual TAO_FT_Request_Duration_Policy *clone () const;
 
   // = The FT::RequestDurationPolicy methods
-  virtual TimeBase::TimeT request_duration_policy_value (void);
+  TimeBase::TimeT request_duration_policy_value (void) override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value);
@@ -107,13 +107,13 @@ public:
   virtual TAO_FT_Heart_Beat_Policy *clone () const;
 
   // = The FT::HeartBeatPolicy methods
-  virtual FT::HeartbeatPolicyValue heartbeat_policy_value (void);
+  FT::HeartbeatPolicyValue heartbeat_policy_value (void) override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value,

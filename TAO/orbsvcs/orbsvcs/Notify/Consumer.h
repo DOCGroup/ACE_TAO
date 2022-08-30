@@ -59,7 +59,7 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
   TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_Consumer ();
+  ~TAO_Notify_Consumer () override;
 
   /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
   CORBA::ULong _incr_refcnt (void);
@@ -69,7 +69,7 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
   TAO_Notify_ProxySupplier* proxy_supplier (void);
 
   /// Access Base Proxy.
-  virtual TAO_Notify_Proxy* proxy (void);
+  TAO_Notify_Proxy* proxy (void) override;
 
   /// Dispatch Event to consumer
   void deliver (TAO_Notify_Method_Request_Event * request);
@@ -99,14 +99,14 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
   void resume (void);
 
   /// Shutdown the consumer
-  virtual void shutdown (void);
+  void shutdown (void) override;
 
   /// On reconnect we need to move events from the old consumer
   /// to the new one
   virtual void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer) = 0;
 
   /// Override, Peer::qos_changed
-  virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
+  void qos_changed (const TAO_Notify_QoSProperties& qos_properties) override;
 
   /// Take the pending queue from the rhs, cancel it's timer and
   /// schedule our timer.  The caller should have locked the proxy lock
@@ -157,15 +157,15 @@ protected:
     TAO_Notify_Method_Request_Event * request);
 
   // Dispatch updates
-  virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
-                                   const CosNotification::EventTypeSeq& removed);
+  void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
+                                   const CosNotification::EventTypeSeq& removed) override;
 
   /// Get the shared Proxy Lock
   TAO_SYNCH_MUTEX* proxy_lock (void);
 
 protected:
-  virtual int handle_timeout (const ACE_Time_Value& current_time,
-                              const void* act = 0);
+  int handle_timeout (const ACE_Time_Value& current_time,
+                              const void* act = 0) override;
 
 
   /// Schedule timer

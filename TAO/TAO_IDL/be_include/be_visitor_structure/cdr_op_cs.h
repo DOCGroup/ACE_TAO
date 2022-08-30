@@ -32,13 +32,13 @@ public:
   be_visitor_structure_cdr_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_structure_cdr_op_cs ();
+  ~be_visitor_structure_cdr_op_cs () override;
 
   /// visit structure
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 
   /// any post processing that needs to be done after a scope element is handled
-  virtual int post_process (be_decl *);
+  int post_process (be_decl *) override;
 };
 
 #endif /* _BE_VISITOR_STRUCTURE_CDR_OP_CS_H_ */

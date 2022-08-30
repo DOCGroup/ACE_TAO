@@ -136,7 +136,7 @@ public:
                              int own_factory = 0);
 
   /// Destructor
-  virtual ~TAO_CEC_TypedEventChannel (void);
+  ~TAO_CEC_TypedEventChannel (void) override;
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
@@ -244,13 +244,13 @@ public:
                             CORBA::NVList_out new_list);
 
   // = The CosTypedEventChannelAdmin::TypedEventChannel methods...
-  virtual ::CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr
-    for_consumers (void);
+  ::CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr
+    for_consumers (void) override;
 
-  virtual ::CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
-    for_suppliers (void);
+  ::CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
+    for_suppliers (void) override;
 
-  virtual void destroy (void);
+  void destroy (void) override;
 
   ServantRetryMap& get_servant_retry_map (void);
 

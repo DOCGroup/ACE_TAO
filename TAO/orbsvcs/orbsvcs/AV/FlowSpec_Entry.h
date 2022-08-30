@@ -285,15 +285,15 @@ public:
                               const char *flow_protocol,
                               const char *address);
 
-  virtual ~TAO_Forward_FlowSpec_Entry (void);
+  ~TAO_Forward_FlowSpec_Entry (void) override;
 
   /// converts the entry to a string.
-  virtual const char *entry_to_string (void);
+  const char *entry_to_string (void) override;
 
-  virtual Role role (void);
+  Role role (void) override;
 
   /// construct the entry from a string specified by the flowSpec grammar.
-  virtual int parse (const char* flowSpec_entry);
+  int parse (const char* flowSpec_entry) override;
 };
 
 /**
@@ -329,15 +329,15 @@ public:
                               const char *flow_protocol,
                               const char *address);
 
-  virtual ~TAO_Reverse_FlowSpec_Entry (void);
+  ~TAO_Reverse_FlowSpec_Entry (void) override;
 
   /// converts the entry to a string.
-  virtual const char *entry_to_string (void);
+  const char *entry_to_string (void) override;
 
-  virtual Role role (void);
+  Role role (void) override;
 
   /// construct the entry from a string specified by the flowSpec grammar.
-  virtual int parse (const char* flowSpec_entry);
+  int parse (const char* flowSpec_entry) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

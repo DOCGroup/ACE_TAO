@@ -31,11 +31,11 @@ namespace TAO
       : public RequestProcessingStrategyFactory
     {
     public:
-      virtual RequestProcessingStrategy* create (
+      RequestProcessingStrategy* create (
         ::PortableServer::RequestProcessingPolicyValue value,
-        ::PortableServer::ServantRetentionPolicyValue srvalue);
+        ::PortableServer::ServantRetentionPolicyValue srvalue) override;
 
-      virtual void destroy (RequestProcessingStrategy *strategy);
+      void destroy (RequestProcessingStrategy *strategy) override;
     };
   }
 }

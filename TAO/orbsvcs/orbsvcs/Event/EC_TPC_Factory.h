@@ -33,24 +33,24 @@ public:
   TAO_EC_TPC_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_TPC_Factory ();
+  ~TAO_EC_TPC_Factory () override;
 
   /// Helper function to register the default factory into the service
   /// configurator.
   static int init_svcs ();
 
   // = The Service_Object entry points
-  virtual int init (int argc, ACE_TCHAR* argv[]);
+  int init (int argc, ACE_TCHAR* argv[]) override;
 
   // = The EC_Factory methods
-  virtual TAO_EC_Dispatching*
-      create_dispatching (TAO_EC_Event_Channel_Base*);
+  TAO_EC_Dispatching*
+      create_dispatching (TAO_EC_Event_Channel_Base*) override;
 
-  virtual TAO_EC_ProxyPushSupplier*
-      create_proxy_push_supplier (TAO_EC_Event_Channel_Base*);
+  TAO_EC_ProxyPushSupplier*
+      create_proxy_push_supplier (TAO_EC_Event_Channel_Base*) override;
 
-  virtual TAO_EC_ProxyPushConsumer*
-      create_proxy_push_consumer (TAO_EC_Event_Channel_Base*);
+  TAO_EC_ProxyPushConsumer*
+      create_proxy_push_consumer (TAO_EC_Event_Channel_Base*) override;
 };
 
 extern unsigned long TAO_EC_TPC_debug_level;

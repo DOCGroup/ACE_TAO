@@ -84,16 +84,16 @@ public:
   UTL_StrList (UTL_String *s,
                UTL_StrList *cdr);
 
-  virtual ~UTL_StrList ();
+  ~UTL_StrList () override;
 
   // AST Dumping
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Copy a list of strings
-  virtual UTL_List *copy ();
+  UTL_List *copy () override;
 
   // Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // Get list element
   UTL_String *head ();

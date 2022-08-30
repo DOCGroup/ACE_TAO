@@ -59,9 +59,9 @@ class TAO_Lookup :
 public:
   TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  ~TAO_Lookup ();
+  ~TAO_Lookup () override;
 
-  virtual void
+  void
     query (const char *type,
            const char *constr,
            const char *pref,
@@ -70,7 +70,7 @@ public:
            CORBA::ULong how_many,
            CosTrading::OfferSeq_out offers,
            CosTrading::OfferIterator_out offer_itr,
-           CosTrading::PolicyNameSeq_out limits_applied);
+           CosTrading::PolicyNameSeq_out limits_applied) override;
 
   // BEGIN SPEC
   // The query operation is the means by which an object can obtain
@@ -267,11 +267,11 @@ class TAO_Register :
 public:
   TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  virtual ~TAO_Register (void);
+  ~TAO_Register (void) override;
 
-  virtual CosTrading::OfferId _cxx_export (CORBA::Object_ptr reference,
+  CosTrading::OfferId _cxx_export (CORBA::Object_ptr reference,
                                            const char *type,
-                                           const CosTrading::PropertySeq& properties);
+                                           const CosTrading::PropertySeq& properties) override;
 
   // BEGIN SPEC
   // The export operation is the means by which a service is
@@ -327,7 +327,7 @@ public:
   // parameter, the DuplicatePropertyName exception is raised.
   // END SPEC
 
-  virtual void withdraw (const char *id);
+  void withdraw (const char *id) override;
 
   // BEGIN SPEC
   // The withdraw operation removes the service offer from the trader
@@ -342,8 +342,8 @@ public:
   // ProxyOfferId exception is raised.
   // END SPEC
 
-  virtual CosTrading::Register::OfferInfo*
-    describe (const char * id);
+  CosTrading::Register::OfferInfo*
+    describe (const char * id) override;
 
   // BEGIN SPEC
   // The describe operation returns the information about an offered
@@ -359,9 +359,9 @@ public:
   // ordinary offer, then a ProxyOfferId exception is raised.
   // END SPEC
 
-  virtual void modify (const char * id,
+  void modify (const char * id,
                        const CosTrading::PropertyNameSeq& del_list,
-                       const CosTrading::PropertySeq& modify_list);
+                       const CosTrading::PropertySeq& modify_list) override;
 
   // BEGIN SPEC
   // The modify operation is used to change the description of a
@@ -416,8 +416,8 @@ public:
   // supports_modifiable_properties attribute yields FALSE.
   // END SPEC
 
-  virtual void withdraw_using_constraint (const char *type,
-                                          const char *constr);
+  void withdraw_using_constraint (const char *type,
+                                          const char *constr) override;
 
   // BEGIN SPEC
   // The withdraw_using_constraint operation withdraws a set of offers
@@ -442,8 +442,8 @@ public:
   // service type, then a NoMatchingOffers exception is raised.
   // END SPEC
 
-  virtual CosTrading::Register_ptr
-    resolve (const CosTrading::TraderName &name);
+  CosTrading::Register_ptr
+    resolve (const CosTrading::TraderName &name) override;
 
   // BEGIN SPEC
   // This operation is used to resolve a context relative name for
@@ -512,62 +512,62 @@ public:
 
   TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  ~TAO_Admin (void);
+  ~TAO_Admin (void) override;
 
   // = Importing Parameters (used by the Lookup Interface)
 
   /// Search card is the cardinality of the offers searched for
   /// constraint compliance.
-  virtual CORBA::ULong set_def_search_card (CORBA::ULong value);
-  virtual CORBA::ULong set_max_search_card (CORBA::ULong value);
+  CORBA::ULong set_def_search_card (CORBA::ULong value) override;
+  CORBA::ULong set_max_search_card (CORBA::ULong value) override;
 
 
   /// Match card is the cardinality of offers found compliant with the
   /// constraints.
-  virtual CORBA::ULong set_def_match_card (CORBA::ULong value);
-  virtual CORBA::ULong set_max_match_card (CORBA::ULong value);
+  CORBA::ULong set_def_match_card (CORBA::ULong value) override;
+  CORBA::ULong set_max_match_card (CORBA::ULong value) override;
 
   /// Return card is the cardinality of the offers returned from
   /// Lookup.
-  virtual CORBA::ULong set_def_return_card (CORBA::ULong value);
-  virtual CORBA::ULong set_max_return_card (CORBA::ULong value);
+  CORBA::ULong set_def_return_card (CORBA::ULong value) override;
+  CORBA::ULong set_max_return_card (CORBA::ULong value) override;
 
   /// Types of offers available for consideration. Ween out those
   /// offers with modifiable properties
-  virtual CORBA::ULong set_max_list (CORBA::ULong value);
-  virtual CORBA::Boolean
-    set_supports_modifiable_properties (CORBA::Boolean value);
-  virtual CORBA::Boolean
-    set_supports_dynamic_properties (CORBA::Boolean value);
-  virtual CORBA::Boolean
-    set_supports_proxy_offers (CORBA::Boolean value);
+  CORBA::ULong set_max_list (CORBA::ULong value) override;
+  CORBA::Boolean
+    set_supports_modifiable_properties (CORBA::Boolean value) override;
+  CORBA::Boolean
+    set_supports_dynamic_properties (CORBA::Boolean value) override;
+  CORBA::Boolean
+    set_supports_proxy_offers (CORBA::Boolean value) override;
 
   // = Link Interface parameters
 
-  virtual CORBA::ULong set_def_hop_count (CORBA::ULong value);
-  virtual CORBA::ULong set_max_hop_count (CORBA::ULong value);
+  CORBA::ULong set_def_hop_count (CORBA::ULong value) override;
+  CORBA::ULong set_max_hop_count (CORBA::ULong value) override;
 
-  virtual CosTrading::FollowOption
-    set_def_follow_policy (CosTrading::FollowOption policy);
-  virtual CosTrading::FollowOption
-    set_max_follow_policy (CosTrading::FollowOption policy);
-  virtual CosTrading::FollowOption
-    set_max_link_follow_policy (CosTrading::FollowOption policy);
+  CosTrading::FollowOption
+    set_def_follow_policy (CosTrading::FollowOption policy) override;
+  CosTrading::FollowOption
+    set_max_follow_policy (CosTrading::FollowOption policy) override;
+  CosTrading::FollowOption
+    set_max_link_follow_policy (CosTrading::FollowOption policy) override;
 
   // = Set Type Repository
 
-  virtual CosTrading::TypeRepository_ptr
-    set_type_repos (CosTrading::TypeRepository_ptr repository);
+  CosTrading::TypeRepository_ptr
+    set_type_repos (CosTrading::TypeRepository_ptr repository) override;
 
-  virtual CosTrading::Admin::OctetSeq*
-    request_id_stem (void);
+  CosTrading::Admin::OctetSeq*
+    request_id_stem (void) override;
 
-  virtual CosTrading::Admin::OctetSeq*
-    set_request_id_stem (const CosTrading::Admin::OctetSeq& stem);
+  CosTrading::Admin::OctetSeq*
+    set_request_id_stem (const CosTrading::Admin::OctetSeq& stem) override;
 
-  virtual void list_offers (CORBA::ULong how_many,
+  void list_offers (CORBA::ULong how_many,
                             CosTrading::OfferIdSeq_out ids,
-                            CosTrading::OfferIdIterator_out id_itr);
+                            CosTrading::OfferIdIterator_out id_itr) override;
 
 
   // BEGIN SPEC
@@ -588,9 +588,9 @@ public:
   // the "id_itr" is nil.
   // END SPEC
 
-  virtual void list_proxies (CORBA::ULong,
+  void list_proxies (CORBA::ULong,
                              CosTrading::OfferIdSeq_out,
-                             CosTrading::OfferIdIterator_out);
+                             CosTrading::OfferIdIterator_out) override;
 
 private:
   void operator= (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
@@ -621,7 +621,7 @@ public:
 
   TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  ~TAO_Link (void);
+  ~TAO_Link (void) override;
 
   /**
    * BEGIN SPEC
@@ -629,10 +629,10 @@ public:
    * service of another trader in the performance of its own trading
    * service operations.
    */
-  virtual void add_link (const char *name,
+  void add_link (const char *name,
                          CosTrading::Lookup_ptr target,
                          CosTrading::FollowOption def_pass_on_follow_rule,
-                         CosTrading::FollowOption limiting_follow_rule);
+                         CosTrading::FollowOption limiting_follow_rule) override;
 
   // The "name" parameter is used in subsequent link management
   // operations to identify the intended link. If the parameter is not
@@ -670,7 +670,7 @@ public:
   // creation of the link.
   // END SPEC
 
-  virtual void remove_link (const char *name);
+  void remove_link (const char *name) override;
 
   // BEGIN SPEC
   // The remove_link operation removes all knowledge of the target
@@ -683,7 +683,7 @@ public:
   // not in the trader.
   // END SPEC
 
-  virtual CosTrading::Link::LinkInfo* describe_link (const char *name);
+  CosTrading::Link::LinkInfo* describe_link (const char *name) override;
 
   // BEGIN SPEC
   // The describe_link operation returns information on a link held in
@@ -708,7 +708,7 @@ public:
   // state.
   // END SPEC
 
-  virtual CosTrading::LinkNameSeq* list_links (void);
+  CosTrading::LinkNameSeq* list_links (void) override;
 
   // BEGIN SPEC
   // The list_links operation returns a list of the names of all
@@ -717,9 +717,9 @@ public:
   // describe_link or remove_link.
   // END SPEC
 
-  virtual void modify_link (const char *name,
+  void modify_link (const char *name,
                             CosTrading::FollowOption def_pass_on_follow_rule,
-                            CosTrading::FollowOption limiting_follow_rule);
+                            CosTrading::FollowOption limiting_follow_rule) override;
 
   // BEGIN SPEC
   // The modify_link operation is used to change the existing link
@@ -776,20 +776,20 @@ class TAO_Proxy :
 public:
   TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  ~TAO_Proxy (void);
+  ~TAO_Proxy (void) override;
 
-  virtual CosTrading::OfferId
+  CosTrading::OfferId
     export_proxy (CosTrading::Lookup_ptr,
                   const char *,
                   const CosTrading::PropertySeq &,
                   CORBA::Boolean if_match_all,
                   const char *,
-                  const CosTrading::PolicySeq &);
+                  const CosTrading::PolicySeq &) override;
 
-  virtual void withdraw_proxy (const char *);
+  void withdraw_proxy (const char *) override;
 
-  virtual CosTrading::Proxy::ProxyInfo *
-  describe_proxy (const char *);
+  CosTrading::Proxy::ProxyInfo *
+  describe_proxy (const char *) override;
 
    // = CosTrading::TraderComponents methods.
 

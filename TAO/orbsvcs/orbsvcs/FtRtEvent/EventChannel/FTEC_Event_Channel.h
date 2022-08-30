@@ -31,7 +31,7 @@ public:
   TAO_FTEC_Event_Channel(CORBA::ORB_var orb,
                          PortableServer::POA_var poa);
 
-  ~TAO_FTEC_Event_Channel();
+  ~TAO_FTEC_Event_Channel() override;
 
   enum MEMBERSHIP {
     UNSPECIFIED,
@@ -61,74 +61,74 @@ public:
 
   /// RtecEventChannelAdmin::EventChannel Interface
 
-  virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers (void);
+  RtecEventChannelAdmin::ConsumerAdmin_ptr
+    for_consumers (void) override;
 
-  virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers (void);
+  RtecEventChannelAdmin::SupplierAdmin_ptr
+    for_suppliers (void) override;
 
-  virtual void destroy (void);
+  void destroy (void) override;
 
-  virtual RtecEventChannelAdmin::Observer_Handle
-    append_observer (RtecEventChannelAdmin::Observer_ptr observer);
+  RtecEventChannelAdmin::Observer_Handle
+    append_observer (RtecEventChannelAdmin::Observer_ptr observer) override;
 
-  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle);
+  void remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
 
   /// EventChannelFacade Interface, used by FTEC gateway
 
-  virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_consumer (
+  ::FtRtecEventChannelAdmin::ObjectId * connect_push_consumer (
     RtecEventComm::PushConsumer_ptr push_consumer,
-    const RtecEventChannelAdmin::ConsumerQOS & qos);
+    const RtecEventChannelAdmin::ConsumerQOS & qos) override;
 
-  virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_supplier (
+  ::FtRtecEventChannelAdmin::ObjectId * connect_push_supplier (
       RtecEventComm::PushSupplier_ptr push_supplier,
-      const RtecEventChannelAdmin::SupplierQOS & qos);
+      const RtecEventChannelAdmin::SupplierQOS & qos) override;
 
-  virtual void disconnect_push_supplier (
-      const FtRtecEventChannelAdmin::ObjectId & oid);
+  void disconnect_push_supplier (
+      const FtRtecEventChannelAdmin::ObjectId & oid) override;
 
-  virtual void disconnect_push_consumer (
-      const FtRtecEventChannelAdmin::ObjectId & oid);
+  void disconnect_push_consumer (
+      const FtRtecEventChannelAdmin::ObjectId & oid) override;
 
-  virtual void suspend_push_supplier (
-      const FtRtecEventChannelAdmin::ObjectId & oid);
+  void suspend_push_supplier (
+      const FtRtecEventChannelAdmin::ObjectId & oid) override;
 
-  virtual void resume_push_supplier (
-      const FtRtecEventChannelAdmin::ObjectId & oid);
+  void resume_push_supplier (
+      const FtRtecEventChannelAdmin::ObjectId & oid) override;
 
-  virtual void push (
+  void push (
       const FtRtecEventChannelAdmin::ObjectId & oid,
-      const RtecEventComm::EventSet & data);
+      const RtecEventComm::EventSet & data) override;
 
   /// FTRT::GroupManager Interfaces
   /// These are used for inter-replica communications
 
-  void set_state (const FTRT::State & s);
+  void set_state (const FTRT::State & s) override;
 
-  virtual void set_update (const FTRT::State & s);
+  void set_update (const FTRT::State & s) override;
 
-  virtual void oneway_set_update (const FTRT::State & s);
+  void oneway_set_update (const FTRT::State & s) override;
 
 
-  virtual CORBA::Boolean start (
+  CORBA::Boolean start (
         FTRT::FaultListener_ptr listener,
-        FTRT::Location_out cur);
+        FTRT::Location_out cur) override;
 
-  virtual void create_group (
+  void create_group (
       const FTRT::ManagerInfoList & info_list,
-      CORBA::ULong object_group_ref_version);
+      CORBA::ULong object_group_ref_version) override;
 
-  virtual void join_group (const FTRT::ManagerInfo & info);
+  void join_group (const FTRT::ManagerInfo & info) override;
 
-  virtual void add_member (
+  void add_member (
       const FTRT::ManagerInfo & info,
-      CORBA::ULong object_group_ref_version);
+      CORBA::ULong object_group_ref_version) override;
 
-  virtual void remove_member (
+  void remove_member (
       const FTRT::Location & crashed_location,
-      CORBA::ULong object_group_ref_version);
+      CORBA::ULong object_group_ref_version) override;
 
-  virtual void replica_crashed (const FTRT::Location & location);
+  void replica_crashed (const FTRT::Location & location) override;
 
 private:
   CORBA::ORB_var orb_;

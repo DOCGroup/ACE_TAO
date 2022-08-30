@@ -31,31 +31,31 @@ class TAO_RTSched_Export Scheduler_Generic : public ACE_Scheduler
 {
 public:
   Scheduler_Generic ();
-  virtual ~Scheduler_Generic ();
+  ~Scheduler_Generic () override;
 
   // = Initialize the scheduler.
-  virtual void init (const int minimum_priority,
+  void init (const int minimum_priority,
                      const int maximum_priority,
                      const char *runtime_filename = 0,
                      const char *rt_info_filename = 0,
-                     const char *timeline_filename = 0);
+                     const char *timeline_filename = 0) override;
 
   // = Registers a task.
-  virtual status_t register_task (RT_Info *[],
+  status_t register_task (RT_Info *[],
                                   const u_int number_of_modes,
-                                  handle_t &handle);
+                                  handle_t &handle) override;
 
   /// Obtains an RT_Info based on its "handle".
-  virtual status_t lookup_rt_info (handle_t handle,
-                                   RT_Info* &rtinfo);
+  status_t lookup_rt_info (handle_t handle,
+                                   RT_Info* &rtinfo) override;
 
   /// Obtains a Config_Info based on its priority.
-  virtual status_t lookup_config_info (Preemption_Priority priority,
-                                       Config_Info* &config_info);
+  status_t lookup_config_info (Preemption_Priority priority,
+                                       Config_Info* &config_info) override;
 
   // = Computes the schedule.
-  virtual status_t
-    schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set);
+  status_t
+    schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set) override;
 
   // = Access a thread priority.
   /**
@@ -64,11 +64,11 @@ public:
    * as the relative ordering (due to dependencies) within the priority.
    * Returns 0 on success, or 1 if an invalid mode or handle are supplied.
    */
-  virtual int priority (const handle_t handle,
+  int priority (const handle_t handle,
                         OS_Thread_Priority &priority,
                         Sub_Priority &subpriority,
                         Preemption_Priority &preemption_prio,
-                        const mode_t = CURRENT_MODE) const;
+                        const mode_t = CURRENT_MODE) const override;
 
 private:
   /// The number of task handles dispensed so far.

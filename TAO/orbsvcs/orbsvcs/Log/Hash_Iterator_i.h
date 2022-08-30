@@ -52,11 +52,11 @@ public:
                        CORBA::ULong max_rec_list_len);
 
   /// Destructor.
-  virtual ~TAO_Hash_Iterator_i (void);
+  ~TAO_Hash_Iterator_i (void) override;
 
   /// Gets a list of LogRecords.
-  virtual DsLogAdmin::RecordList* get (CORBA::ULong position,
-                                       CORBA::ULong how_many);
+  DsLogAdmin::RecordList* get (CORBA::ULong position,
+                                       CORBA::ULong how_many) override;
 
 private:
   /// Pointer to record store

@@ -132,15 +132,15 @@ public:
   ACE_Select_Reactor_Notify (void);
 
   /// Destructor.
-  virtual ~ACE_Select_Reactor_Notify (void);
+  ~ACE_Select_Reactor_Notify (void) override;
 
   /// Initialize.
-  virtual int open (ACE_Reactor_Impl *,
+  int open (ACE_Reactor_Impl *,
                     ACE_Timer_Queue * = 0,
-                    int disable_notify_pipe = ACE_DISABLE_NOTIFY_PIPE_DEFAULT);
+                    int disable_notify_pipe = ACE_DISABLE_NOTIFY_PIPE_DEFAULT) override;
 
   /// Destroy.
-  virtual int close (void);
+  int close (void) override;
 
   /**
    * Called by a thread when it wants to unblock the
@@ -153,23 +153,23 @@ public:
    * the caller will block until action is possible, else will wait
    * until the relative time specified in @c *timeout elapses).
    */
-  virtual int notify (ACE_Event_Handler * = 0,
+  int notify (ACE_Event_Handler * = 0,
                       ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
-                      ACE_Time_Value * timeout = 0);
+                      ACE_Time_Value * timeout = 0) override;
 
   /// Handles pending threads (if any) that are waiting to unblock the
   /// ACE_Select_Reactor.
-  virtual int dispatch_notifications (int &number_of_active_handles,
-                                      ACE_Handle_Set &rd_mask);
+  int dispatch_notifications (int &number_of_active_handles,
+                                      ACE_Handle_Set &rd_mask) override;
 
   /// Returns the ACE_HANDLE of the notify pipe on which the reactor
   /// is listening for notifications so that other threads can unblock
   /// the Select_Reactor
-  virtual ACE_HANDLE notify_handle (void);
+  ACE_HANDLE notify_handle (void) override;
 
   /// Handle one of the notify call on the @c handle. This could be
   /// because of a thread trying to unblock the Reactor_Impl
-  virtual int dispatch_notify (ACE_Notification_Buffer &buffer);
+  int dispatch_notify (ACE_Notification_Buffer &buffer) override;
 
   /// Read one of the notify call on the @a handle into the
   /// @a buffer. This could be because of a thread trying to unblock
@@ -179,15 +179,15 @@ public:
   /// -1: nothing read, fatal, unrecoverable error
   ///  0: nothing read at all
   ///  1: complete buffer read
-  virtual int read_notify_pipe (ACE_HANDLE handle,
-                                ACE_Notification_Buffer &buffer);
+  int read_notify_pipe (ACE_HANDLE handle,
+                                ACE_Notification_Buffer &buffer) override;
 
   /// Verify whether the buffer has dispatchable info or not.
-  virtual int is_dispatchable (ACE_Notification_Buffer &buffer);
+  int is_dispatchable (ACE_Notification_Buffer &buffer) override;
 
   /// Called back by the ACE_Select_Reactor when a thread wants to
   /// unblock us.
-  virtual int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
   /**
    * Set the maximum number of times that the
@@ -199,7 +199,7 @@ public:
    * (and thus prevent starvation) at the expense of slightly higher
    * dispatching overhead.
    */
-  virtual void max_notify_iterations (int);
+  void max_notify_iterations (int) override;
 
   /**
    * Get the maximum number of times that the
@@ -207,7 +207,7 @@ public:
    * dispatch the ACE_Event_Handlers that are passed in via the
    * notify pipe before breaking out of its recv loop.
    */
-  virtual int max_notify_iterations (void);
+  int max_notify_iterations (void) override;
 
   /**
    * Purge any notifications pending in this reactor for the specified
@@ -216,12 +216,12 @@ public:
    * the reactor itself). Returns the number of notifications purged.
    * Returns -1 on error.
    */
-  virtual int purge_pending_notifications (
+  int purge_pending_notifications (
       ACE_Event_Handler *sh,
-      ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+      ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Dump the state of an object.
-  virtual void dump () const;
+  void dump () const override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -470,14 +470,14 @@ public:
    * ACE_Event_Handler object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler * = 0,
-                                           ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int purge_pending_notifications (ACE_Event_Handler * = 0,
+                                           ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Does the reactor allow the application to resume the handle on
   /// its own ie. can it pass on the control of handle resumption to
   /// the application.  The select reactor has no handlers that can be
   /// resumed by the  application. So return 0;
-  virtual int resumable_handler (void);
+  int resumable_handler (void) override;
 
 protected:
   /// Allow manipulation of the <wait_set_> mask and <ready_set_> mask.

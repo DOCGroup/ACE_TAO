@@ -76,7 +76,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   static std::atomic<long> guid_counter;
 
   TAO_RTScheduler_Current () = default;
-  virtual ~TAO_RTScheduler_Current ();
+  ~TAO_RTScheduler_Current () override;
 
   void init (TAO_ORB_Core* orb);
 
@@ -293,7 +293,7 @@ public:
           CORBA::Policy_ptr sched_param,
           CORBA::Policy_ptr implicit_sched_param);
 
-  virtual ~DTTask ();
+  ~DTTask () override;
 
   int activate_task (RTCORBA::Priority base_priority,
                      CORBA::ULong stack_size);

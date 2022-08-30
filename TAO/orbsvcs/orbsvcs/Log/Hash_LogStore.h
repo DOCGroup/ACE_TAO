@@ -44,40 +44,40 @@ public:
   TAO_Hash_LogStore (TAO_LogMgr_i* mgr);
 
   /// Destructor.
-  virtual ~TAO_Hash_LogStore ();
+  ~TAO_Hash_LogStore () override;
 
 
   /// Lists all logs created by the log factory.
-  virtual DsLogAdmin::LogList *
-    list_logs (void);
+  DsLogAdmin::LogList *
+    list_logs (void) override;
 
   /// Lists all log ids.
-  virtual DsLogAdmin::LogIdList *
-    list_logs_by_id (void);
+  DsLogAdmin::LogIdList *
+    list_logs_by_id (void) override;
 
   /// Returns a reference to the log with the supplied id.
-  virtual DsLogAdmin::Log_ptr
-    find_log (DsLogAdmin::LogId id);
+  DsLogAdmin::Log_ptr
+    find_log (DsLogAdmin::LogId id) override;
 
   /// Returns true if log exists, otherwise false
-  virtual bool exists (DsLogAdmin::LogId id);
+  bool exists (DsLogAdmin::LogId id) override;
 
   /// Remove the given entry from the hash table.
-  virtual int remove (DsLogAdmin::LogId id);
+  int remove (DsLogAdmin::LogId id) override;
 
   /// @brief Create log
-  virtual void
+  void
     create (DsLogAdmin::LogFullActionType full_action,
             CORBA::ULongLong max_size,
             const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
-            DsLogAdmin::LogId_out id_out);
+            DsLogAdmin::LogId_out id_out) override;
 
   /// @brief Create log
-  virtual void
+  void
     create_with_id (DsLogAdmin::LogId id,
                     DsLogAdmin::LogFullActionType full_action,
                     CORBA::ULongLong max_size,
-                    const DsLogAdmin::CapacityAlarmThresholdList* thresholds);
+                    const DsLogAdmin::CapacityAlarmThresholdList* thresholds) override;
 
   /// @brief Get log record store
   ///
@@ -85,8 +85,8 @@ public:
   ///
   /// @param id log id
   ///
-  virtual TAO_LogRecordStore*
-    get_log_record_store (DsLogAdmin::LogId id);
+  TAO_LogRecordStore*
+    get_log_record_store (DsLogAdmin::LogId id) override;
 
 private:
   ACE_SYNCH_RW_MUTEX  lock_;

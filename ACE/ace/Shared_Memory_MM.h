@@ -76,24 +76,24 @@ public:
   const ACE_TCHAR *filename () const;
 
   /// Close down the shared memory segment.
-  virtual int close (void);
+  int close (void) override;
 
   /// Remove the shared memory segment and the underlying file.
-  virtual int remove (void);
+  int remove (void) override;
 
   // = Allocation and deallocation methods.
   /// Create a new chuck of memory containing @a size bytes.
-  virtual void *malloc (size_t size = 0);
+  void *malloc (size_t size = 0) override;
 
   /// Free a chuck of memory allocated by
   /// <ACE_Shared_Memory_MM::malloc>.
-  virtual int free (void *p);
+  int free (void *p) override;
 
   /// Return the size of the shared memory segment.
-  virtual size_t get_segment_size () const;
+  size_t get_segment_size () const override;
 
   /// Return the ID of the shared memory segment (i.e., an ACE_HANDLE).
-  virtual ACE_HANDLE get_id () const;
+  ACE_HANDLE get_id () const override;
 
   /// Dump the state of an object.
   void dump () const;

@@ -39,21 +39,21 @@ public:
   TAO_SHMIOP_Protocol_Factory (void);
 
   /// Destructor.
-  virtual ~TAO_SHMIOP_Protocol_Factory (void);
+  ~TAO_SHMIOP_Protocol_Factory (void) override;
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
-  virtual int init (int argc, ACE_TCHAR* argv[]);
+  int init (int argc, ACE_TCHAR* argv[]) override;
 
   /// Verify prefix is a match
-  virtual int match_prefix (const ACE_CString &prefix);
+  int match_prefix (const ACE_CString &prefix) override;
 
   /// Returns the prefix used by the protocol.
-  virtual const char *prefix () const;
+  const char *prefix () const override;
 
   /// Return the character used to mark where an endpoint ends and
   /// where its options begin.
-  virtual char options_delimiter () const;
+  char options_delimiter () const override;
 
   /**
    * @name Protocol factory methods
@@ -61,9 +61,9 @@ public:
    * Check Protocol_Factory.h for a description of these methods.
    */
   //@{
-  virtual TAO_Acceptor  *make_acceptor (void);
-  virtual TAO_Connector *make_connector  (void);
-  virtual int requires_explicit_endpoint () const;
+  TAO_Acceptor  *make_acceptor (void) override;
+  TAO_Connector *make_connector  (void) override;
+  int requires_explicit_endpoint () const override;
   //@}
 
   /// Set mmap file prefix

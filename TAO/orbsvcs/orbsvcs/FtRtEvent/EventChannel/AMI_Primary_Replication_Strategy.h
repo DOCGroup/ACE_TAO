@@ -36,19 +36,19 @@ public:
    * @param mt Specifies whether multithreaded ORB is used.
    */
   AMI_Primary_Replication_Strategy(bool mt);
-  virtual ~AMI_Primary_Replication_Strategy();
-  virtual void replicate_request(const FTRT::State& state,
+  ~AMI_Primary_Replication_Strategy() override;
+  void replicate_request(const FTRT::State& state,
                                    RollbackOperation rollback,
-                                   const FtRtecEventChannelAdmin::ObjectId& oid);
-  virtual void add_member(const FTRT::ManagerInfo & info,
-                          CORBA::ULong object_group_ref_version);
-  virtual int  acquire_read (void);
-  virtual int  acquire_write (void);
-  virtual int  release (void);
+                                   const FtRtecEventChannelAdmin::ObjectId& oid) override;
+  void add_member(const FTRT::ManagerInfo & info,
+                          CORBA::ULong object_group_ref_version) override;
+  int  acquire_read (void) override;
+  int  acquire_write (void) override;
+  int  release (void) override;
   PortableServer::POA_ptr poa() { return poa_.in(); }
   CORBA::ORB_ptr orb() { return orb_.in();}
 private:
-  virtual int svc ();
+  int svc () override;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var poa_;

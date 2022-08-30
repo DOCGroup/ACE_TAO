@@ -42,7 +42,7 @@ class TAO_Asynch_Timeout_Handler
 public:
   TAO_Asynch_Timeout_Handler (ACE_Reactor *reactor);
 
-  ~TAO_Asynch_Timeout_Handler () = default;
+  ~TAO_Asynch_Timeout_Handler () override = default;
 
   /// Schedule a timer
   long schedule_timer (TAO_Transport_Mux_Strategy *tms,
@@ -50,8 +50,8 @@ public:
                        const ACE_Time_Value &max_wait_time);
 
   /// Invoked by the reactor on timeout
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act);
+  int handle_timeout (const ACE_Time_Value &current_time,
+                              const void *act) override;
 
   /// Cancel this timer, remove it from the reactor
   virtual void cancel ();

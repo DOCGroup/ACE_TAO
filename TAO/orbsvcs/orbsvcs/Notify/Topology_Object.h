@@ -111,7 +111,7 @@ namespace TAO_Notify
     Topology_Object ();
 
     /// The destructor.
-    virtual ~Topology_Object ();
+    ~Topology_Object () override;
 
     /// Init this object with data from <rhs>.
     virtual void initialize (Topology_Parent* topology_parent);

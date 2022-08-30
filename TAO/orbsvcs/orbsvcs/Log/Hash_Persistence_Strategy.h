@@ -39,11 +39,11 @@ public:
   TAO_Hash_Persistence_Strategy ();
 
   /// Destructor.
-  virtual ~TAO_Hash_Persistence_Strategy ();
+  ~TAO_Hash_Persistence_Strategy () override;
 
   /// @brief Log Store Factory
-  virtual TAO_LogStore*
-    create_log_store (TAO_LogMgr_i* mgr);
+  TAO_LogStore*
+    create_log_store (TAO_LogMgr_i* mgr) override;
 
 private:
 };

@@ -24,7 +24,7 @@ public:
 
   ~be_visitor_facet_exh ();
 
-  virtual int visit_provides (be_provides *node);
+  int visit_provides (be_provides *node) override;
 
   static int method_helper (be_interface *derived,
                             be_interface *node,

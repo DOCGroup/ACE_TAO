@@ -37,19 +37,19 @@ public:
   TAO_Notify_Reactive_Task (void);
 
   /// Destructor
-  virtual ~TAO_Notify_Reactive_Task (void);
+  ~TAO_Notify_Reactive_Task (void) override;
 
   /// Init the reactive task.
   void init (void);
 
   /// Shutdown task
-  virtual void shutdown (void);
+  void shutdown (void) override;
 
   /// Exec the request.
-  virtual void execute (TAO_Notify_Method_Request& method_request);
+  void execute (TAO_Notify_Method_Request& method_request) override;
 
   /// The object used by clients to register timers. This method returns a Reactor based Timer.
-  virtual TAO_Notify_Timer* timer (void);
+  TAO_Notify_Timer* timer (void) override;
 
   /// Returns NULL.
   virtual TAO_Notify_Buffering_Strategy* buffering_strategy (void);
@@ -59,7 +59,7 @@ private:
   TAO_Notify_Timer_Reactor::Ptr timer_;
 
   /// Release
-  virtual void release (void);
+  void release (void) override;
 };
 
 

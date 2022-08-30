@@ -39,7 +39,7 @@ class TAO_Export TAO_Valuetype_Adapter_Factory
   : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_Valuetype_Adapter_Factory ();
+  ~TAO_Valuetype_Adapter_Factory () override;
 
   virtual TAO_Valuetype_Adapter * create () = 0;
 };

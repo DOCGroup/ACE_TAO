@@ -34,7 +34,7 @@ public:
   ~be_visitor_structure_cdr_op_ch () = default;
 
   /// visit structure
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 };
 
 #endif /* _BE_VISITOR_STRUCTURE_CDR_OP_CH_H_ */

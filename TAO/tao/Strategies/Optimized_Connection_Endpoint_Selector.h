@@ -50,15 +50,15 @@ public:
   TAO_Optimized_Connection_Endpoint_Selector (const ACE_Time_Value& tv);
 
   /// Destructor.
-  virtual ~TAO_Optimized_Connection_Endpoint_Selector (void);
+  ~TAO_Optimized_Connection_Endpoint_Selector (void) override;
 
   static void hook (TAO_ORB_Core *,
                     TAO_Stub *,
                     bool &has_timeout,
                     ACE_Time_Value &tv);
 
-  virtual void select_endpoint (TAO::Profile_Transport_Resolver *,
-                                ACE_Time_Value *max_wait_time);
+  void select_endpoint (TAO::Profile_Transport_Resolver *,
+                                ACE_Time_Value *max_wait_time) override;
 private:
 
   int check_profile (TAO_Profile *,

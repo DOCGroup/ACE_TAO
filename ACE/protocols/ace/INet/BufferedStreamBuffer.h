@@ -59,9 +59,9 @@ namespace ACE
 
               virtual ~BasicBufferedStreamBuffer ();
 
-              virtual int_type overflow (int_type c);
-              virtual int_type underflow ();
-              virtual int sync ();
+              int_type overflow (int_type c) override;
+              int_type underflow () override;
+              int sync () override;
 
               void set_interceptor (interceptor_type& interceptor);
 

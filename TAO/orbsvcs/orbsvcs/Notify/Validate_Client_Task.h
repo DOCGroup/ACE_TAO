@@ -53,9 +53,9 @@ public:
                                      TAO_Notify_EventChannelFactory *ecf);
 
   /// destructor...
-  virtual ~TAO_Notify_validate_client_Task (void);
+  ~TAO_Notify_validate_client_Task (void) override;
 
-  virtual int svc ();
+  int svc () override;
 
   void shutdown (void);
 

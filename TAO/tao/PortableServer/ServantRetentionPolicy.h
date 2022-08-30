@@ -43,19 +43,19 @@ namespace TAO
     public:
       ServantRetentionPolicy (::PortableServer::ServantRetentionPolicyValue value);
 
-      CORBA::Policy_ptr copy ();
+      CORBA::Policy_ptr copy () override;
 
-      void destroy ();
+      void destroy () override;
 
-      ::PortableServer::ServantRetentionPolicyValue value ();
+      ::PortableServer::ServantRetentionPolicyValue value () override;
 
-      CORBA::PolicyType policy_type ();
+      CORBA::PolicyType policy_type () override;
 
       /// Return the cached policy type for this policy.
-      TAO_Cached_Policy_Type _tao_cached_type () const;
+      TAO_Cached_Policy_Type _tao_cached_type () const override;
 
       /// Returns the scope at which this policy can be applied. See orbconf.h.
-      TAO_Policy_Scope _tao_scope () const;
+      TAO_Policy_Scope _tao_scope () const override;
 
     private:
       ::PortableServer::ServantRetentionPolicyValue value_;

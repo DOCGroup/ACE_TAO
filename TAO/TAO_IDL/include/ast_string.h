@@ -81,20 +81,20 @@ public:
               AST_Expression *max_size,
               long wide = 1);
 
-  virtual ~AST_String ();
+  ~AST_String () override;
 
   // Data Accessors.
   AST_Expression *max_size ();
   long width ();
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 

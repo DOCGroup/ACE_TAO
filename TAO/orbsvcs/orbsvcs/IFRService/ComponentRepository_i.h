@@ -60,19 +60,19 @@ public:
                              ACE_Configuration *config);
 
   /// Destructor.
-  virtual ~TAO_ComponentRepository_i (void);
+  ~TAO_ComponentRepository_i (void) override;
 
   /// We create a default servant servant for each IR Object
   /// type and its corresponding POA.
-  virtual int create_servants_and_poas (void);
+  int create_servants_and_poas (void) override;
 
   /// Return one of our servants for internal use.
-  virtual TAO_IDLType_i *select_idltype (CORBA::DefinitionKind def_kind) const;
-  virtual TAO_Container_i *select_container (CORBA::DefinitionKind def_kind) const;
-  virtual TAO_Contained_i *select_contained (CORBA::DefinitionKind def_kind) const;
+  TAO_IDLType_i *select_idltype (CORBA::DefinitionKind def_kind) const override;
+  TAO_Container_i *select_container (CORBA::DefinitionKind def_kind) const override;
+  TAO_Contained_i *select_contained (CORBA::DefinitionKind def_kind) const override;
 
   /// Select the right POA for object creation.
-  virtual PortableServer::POA_ptr select_poa (CORBA::DefinitionKind def_kind) const;
+  PortableServer::POA_ptr select_poa (CORBA::DefinitionKind def_kind) const override;
 
 protected:
 

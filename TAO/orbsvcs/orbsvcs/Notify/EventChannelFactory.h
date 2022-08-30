@@ -61,11 +61,11 @@ public:
   void init (PortableServer::POA_ptr poa);
 
   /// Destructor
-  virtual ~TAO_Notify_EventChannelFactory ();
+  ~TAO_Notify_EventChannelFactory () override;
 
   /// = ServantBase  Methods
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  void _add_ref (void) override;
+  void _remove_ref (void) override;
 
   /// Remove @a channel from the <ec_container_>
   virtual void remove (TAO_Notify_EventChannel* channel);
@@ -93,15 +93,15 @@ public:
 
   //-- Topology_Parent
 
-  virtual bool is_persistent () const;
+  bool is_persistent () const override;
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-  virtual bool change_to_parent (void);
-  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
+  bool change_to_parent (void) override;
+  TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
                                                    CORBA::Long id,
-                                                   const TAO_Notify::NVPList& attrs);
+                                                   const TAO_Notify::NVPList& attrs) override;
   CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self (void);
-  virtual void reconnect (void);
+  void reconnect (void) override;
   virtual void validate ();
 
   /// at shutdown time, this causes the validator thread to exit.
@@ -112,43 +112,43 @@ public:
 
   void load_event_persistence (void);
 
-  virtual void save_topology (void);
+  void save_topology (void) override;
 
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_Object * follow_id_path (TAO_Notify::IdVec & id_path, size_t position);
-  virtual TAO_Notify_Object::ID get_id () const;
+  TAO_Notify_Object::ID get_id () const override;
 
 private:
 
   /// = Data Members
 
   /// = NotifyExt methods
-  virtual void destroy (void);
+  void destroy (void) override;
 
   /// shutdown
-  virtual int shutdown (void);
+  int shutdown (void) override;
 
-  virtual
+  
   NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
-      NotifyExt::ReconnectionCallback_ptr reconnection);
+      NotifyExt::ReconnectionCallback_ptr reconnection) override;
 
-  virtual void unregister_callback (
-      NotifyExt::ReconnectionRegistry::ReconnectionID id);
+  void unregister_callback (
+      NotifyExt::ReconnectionRegistry::ReconnectionID id) override;
 
-  virtual CORBA::Boolean is_alive (void);
+  CORBA::Boolean is_alive (void) override;
 
 protected:
   /// = CosNotifyChannelAdmin Methods
-  virtual ::CosNotifyChannelAdmin::EventChannel_ptr create_channel (
+  ::CosNotifyChannelAdmin::EventChannel_ptr create_channel (
       const CosNotification::QoSProperties & initial_qos,
       const CosNotification::AdminProperties & initial_admin,
-      CosNotifyChannelAdmin::ChannelID_out id);
+      CosNotifyChannelAdmin::ChannelID_out id) override;
 
-  virtual ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (void);
+  ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (void) override;
 
-  virtual ::CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
-      CosNotifyChannelAdmin::ChannelID id);
+  ::CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
+      CosNotifyChannelAdmin::ChannelID id) override;
 
 private:
   typedef TAO_Notify_Container_T<TAO_Notify_EventChannel> TAO_Notify_EventChannel_Container;
@@ -171,7 +171,7 @@ private:
   Routing_Slip_Set routing_slip_restart_set_;
 
   /// Release this object.
-  virtual void release (void);
+  void release (void) override;
 
   ACE_Auto_Ptr <TAO_Notify_validate_client_Task> validate_client_task_;
 

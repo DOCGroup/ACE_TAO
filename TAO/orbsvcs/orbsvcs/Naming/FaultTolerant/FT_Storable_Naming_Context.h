@@ -48,13 +48,13 @@ public:
                                   TAO::Storable_Factory *factory);
 
   /// Destructor.
-  virtual ~TAO_FT_Storable_Naming_Context () = default;
+  ~TAO_FT_Storable_Naming_Context () override = default;
 
   /**
    * Override the resolve operation to support load balancing using
    * the object group manager and associated strategy.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
+  CORBA::Object_ptr resolve (const CosNaming::Name &n) override;
 
   // Set the Naming Manager as a static so that it is available for all
   // naming context implementations.
@@ -78,22 +78,22 @@ public:
   /**
    * Mark the implementation as stale for replicated persistence support.
    */
-  virtual void stale (bool is_stale);
+  void stale (bool is_stale) override;
 
-  virtual bool stale (void);
+  bool stale (void) override;
 
   /**
    * An internal utility used to signal that this context was updated.
    * Check the last_changed_ attribute for the time of the write.
    */
-  void context_written (void);
+  void context_written (void) override;
 
   /**
    * An internal callback invoked by the File_Open_Lock_and_Check
    * object to determine if this context is obsolete with respect to the
    * file object .
    */
-  virtual bool is_obsolete (time_t stored_time);
+  bool is_obsolete (time_t stored_time) override;
 
 protected:
 

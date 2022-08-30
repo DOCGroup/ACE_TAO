@@ -62,10 +62,10 @@ public:
   int set (const sockaddr_un *, int len);
 
   /// Return a pointer to the underlying network address.
-  virtual void *get_addr () const;
+  void *get_addr () const override;
 
   /// Set a pointer to the underlying network address.
-  virtual void set_addr (const void *addr, int len);
+  void set_addr (const void *addr, int len) override;
 
   /// Transform the current address into string format.
   virtual int addr_to_string (ACE_TCHAR addr[], size_t) const;
@@ -91,7 +91,7 @@ public:
   const char *get_path_name () const;
 
   /// Computes and returns hash value.
-  virtual u_long hash () const;
+  u_long hash () const override;
 
   /// Dump the state of an object.
   void dump () const;

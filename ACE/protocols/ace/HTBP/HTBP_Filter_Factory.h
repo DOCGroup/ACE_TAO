@@ -47,7 +47,7 @@ namespace ACE
       ~Filter_Factory ();
 
       /// Initialization hook.
-      virtual int init (int argc, ACE_TCHAR *argv[]);
+      int init (int argc, ACE_TCHAR *argv[]) override;
 
       //
       static Filter *get_filter (int inside);

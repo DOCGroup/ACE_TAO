@@ -36,10 +36,10 @@ class TAO_ZIOP_PolicyFactory
   , public ::CORBA::LocalObject
 {
 public:
-  virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any & value);
+  CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
+                                           const CORBA::Any & value) override;
 
-  virtual CORBA::Policy_ptr _create_policy (CORBA::PolicyType type);
+  CORBA::Policy_ptr _create_policy (CORBA::PolicyType type) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

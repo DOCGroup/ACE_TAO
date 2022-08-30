@@ -46,9 +46,9 @@ public:
   TAO_ExtLocalInterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ExtLocalInterfaceDef_i (void);
+  ~TAO_ExtLocalInterfaceDef_i (void) override;
 
-  virtual void destroy ();
+  void destroy () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

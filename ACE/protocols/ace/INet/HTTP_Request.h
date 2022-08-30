@@ -94,11 +94,11 @@ namespace ACE
               void set_credentials(const ACE_CString& scheme, const ACE_CString& auth_info);
 
               /// Writes the HTTP request to the given stream
-              void write(std::ostream& str) const;
+              void write(std::ostream& str) const override;
 
               /// Reads the HTTP request from the
               /// given stream.
-              bool read(std::istream& str);
+              bool read(std::istream& str) override;
 
               static const ACE_CString HTTP_GET;
               static const ACE_CString HTTP_HEAD;

@@ -61,7 +61,7 @@ namespace TAO
                             TP_Servant_State*               servant_state);
 
       /// Virtual Destructor.
-      virtual ~TP_Collocated_Synch_With_Server_Request();
+      ~TP_Collocated_Synch_With_Server_Request() override;
 
       /// Wait until the request has been dispatched (but not completed), or
       /// until it has been cancelled.  Note that this will wait until just
@@ -76,13 +76,13 @@ namespace TAO
       /// Prepare this TP_Collocated_Synch_With_Server_Request object to be
       /// placed into the request queue.  This will cause the underlying
       /// TAO_ServerRequest object to be cloned.
-      virtual void prepare_for_queue_i();
+      void prepare_for_queue_i() override;
 
       /// Dispatch the request to the servant.
-      virtual void dispatch_i();
+      void dispatch_i() override;
 
       /// Cancel the request.
-      virtual void cancel_i();
+      void cancel_i() override;
 
     private:
       /// Helper used to block and unblock the thread that invokes our

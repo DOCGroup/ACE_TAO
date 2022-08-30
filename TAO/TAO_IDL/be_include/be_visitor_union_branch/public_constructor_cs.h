@@ -27,16 +27,16 @@ public:
   be_visitor_union_branch_public_constructor_cs (be_visitor_context *ctx);
   ~be_visitor_union_branch_public_constructor_cs ();
 
-  virtual int visit_union_branch (be_union_branch *node);
+  int visit_union_branch (be_union_branch *node) override;
 
-  virtual int visit_array (be_array *node);
-  virtual int visit_predefined_type (be_predefined_type *node);
-  virtual int visit_sequence (be_sequence *node);
-  virtual int visit_structure (be_structure *node);
-  virtual int visit_structure_fwd (be_structure_fwd *node);
-  virtual int visit_typedef (be_typedef *node);
-  virtual int visit_union (be_union *node);
-  virtual int visit_union_fwd (be_union_fwd *node);
+  int visit_array (be_array *node) override;
+  int visit_predefined_type (be_predefined_type *node) override;
+  int visit_sequence (be_sequence *node) override;
+  int visit_structure (be_structure *node) override;
+  int visit_structure_fwd (be_structure_fwd *node) override;
+  int visit_typedef (be_typedef *node) override;
+  int visit_union (be_union *node) override;
+  int visit_union_fwd (be_union_fwd *node) override;
 };
 
 #endif /* _BE_VISITOR_UNION_BRANCH_PUBLIC_CONSTRUCTOR_CS_H_ */

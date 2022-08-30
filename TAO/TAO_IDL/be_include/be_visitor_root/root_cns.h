@@ -30,7 +30,7 @@ public:
 
   ~be_visitor_root_cns ();
 
-  virtual int visit_root (be_root *node);
+  int visit_root (be_root *node) override;
 
   /// Open file and initialize stream.
   int init ();

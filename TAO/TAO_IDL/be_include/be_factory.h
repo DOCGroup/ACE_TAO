@@ -30,16 +30,16 @@ class be_factory : public virtual AST_Factory,
 public:
   be_factory (UTL_ScopedName *n);
 
-  ~be_factory ();
+  ~be_factory () override;
 
   /// Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Add an argument to the scope.
-  virtual AST_Argument *be_add_argument (AST_Argument *arg);
+  AST_Argument *be_add_argument (AST_Argument *arg) override;
 };
 
 #endif // BE_FACTORY_H

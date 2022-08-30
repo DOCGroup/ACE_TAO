@@ -29,7 +29,7 @@ public:
 
   ~be_visitor_facet_svth ();
 
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 };
 
 #endif /* _BE_COMPONENT_FACET_SVH_H_ */

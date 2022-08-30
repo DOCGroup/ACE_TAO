@@ -27,20 +27,20 @@ namespace ACE_RMCast
     Acknowledge (Parameters const& params);
 
     virtual void
-    in_start (In_Element* in);
+    in_start (In_Element* in) override;
 
     virtual void
-    out_start (Out_Element* out);
+    out_start (Out_Element* out) override;
 
     virtual void
-    out_stop ();
+    out_stop () override;
 
   public:
     virtual void
-    recv (Message_ptr m);
+    recv (Message_ptr m) override;
 
     virtual void
-    send (Message_ptr m);
+    send (Message_ptr m) override;
 
   // Sun C++ 5.4 can't handle private here.
   //

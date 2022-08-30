@@ -94,18 +94,18 @@ public:
 
   /// destructor, do some cleanup :TBD: last dtor should "compress"
   /// file
-  ~ACE_Naming_Context (void);
+  ~ACE_Naming_Context (void) override;
 
   // = Dynamic initialization hooks.
   /// Initialize name options and naming context when dynamically
   /// linked.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Close down the test when dynamically unlinked.
-  virtual int fini ();
+  int fini () override;
 
   /// Returns information about this context.
-  virtual int info (ACE_TCHAR **strp, size_t length) const;
+  int info (ACE_TCHAR **strp, size_t length) const override;
 
   /// Returns the ACE_Name_Options associated with the Naming_Context
   ACE_Name_Options *name_options (void);

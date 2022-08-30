@@ -62,28 +62,28 @@ public:
       PortableServer::POA_ptr poa) = 0;
 
   /// Local implementation of the CORBA::Object::_is_a method.
-  virtual CORBA::Boolean _is_a (const char *logical_type_id);
+  CORBA::Boolean _is_a (const char *logical_type_id) override;
 
   /// Returns a CORBA::Object_ptr for the target object.
   CORBA::Object_ptr _this (void);
 
   /// Query the Interface Repository for the interface definition.
-  virtual CORBA::InterfaceDef_ptr _get_interface (void);
+  CORBA::InterfaceDef_ptr _get_interface (void) override;
 
 protected:
   /// Return 0.  Should never be used.
-  virtual const char *_interface_repository_id () const;
+  const char *_interface_repository_id () const override;
 
   /// Simply returns "this"
   virtual void *_downcast (const char *repository_id);
 
   /// This is an auxiliary method for _this() and _narrow().
-  virtual TAO_Stub *_create_stub (void);
+  TAO_Stub *_create_stub (void) override;
 
   /// Turns around and calls invoke.
-  virtual void _dispatch (
+  void _dispatch (
     TAO_ServerRequest &request,
-    TAO::Portable_Server::Servant_Upcall *context);
+    TAO::Portable_Server::Servant_Upcall *context) override;
 
 private:
   /// Encapsulates code common to _is_a(), _get_interface() and _create_stub().

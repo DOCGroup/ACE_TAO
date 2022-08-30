@@ -35,16 +35,16 @@ public:
   TAO_DS_Network_Priority_Protocols_Hooks (void);
 
   /// Destructor
-  virtual ~TAO_DS_Network_Priority_Protocols_Hooks (void);
+  ~TAO_DS_Network_Priority_Protocols_Hooks (void) override;
 
   /// Initialize the network priority protocols hooks instance.
-  void init_hooks (TAO_ORB_Core *orb_core);
+  void init_hooks (TAO_ORB_Core *orb_core) override;
 
   /// This function is used by the client side ORB to figure out
   /// the DiffServ codepoint that needs to be added to the request
   /// to be sent to the server.
   ///
-  CORBA::Long get_dscp_codepoint (TAO_Stub *stub, CORBA::Object *object);
+  CORBA::Long get_dscp_codepoint (TAO_Stub *stub, CORBA::Object *object) override;
 
   /// This function is used by the server side to figure out the
   /// DiffServ codepoint that is attached and sent as part of the
@@ -54,7 +54,7 @@ public:
   /// want the server to use in the reply, as a service context
   /// entry in the request.
   ///
-  CORBA::Long get_dscp_codepoint (TAO_Service_Context &sc);
+  CORBA::Long get_dscp_codepoint (TAO_Service_Context &sc) override;
 
 protected:
   TAO_ORB_Core *orb_core_;

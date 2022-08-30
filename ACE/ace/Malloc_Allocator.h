@@ -53,27 +53,27 @@ class ACE_Export ACE_New_Allocator : public ACE_Allocator
 {
 public:
   /// These methods are defined.
-  virtual void *malloc (size_t nbytes);
-  virtual void *calloc (size_t nbytes, char initial_value = '\0');
-  virtual void *calloc (size_t n_elem, size_t elem_size, char initial_value = '\0');
-  virtual void free (void *ptr);
+  void *malloc (size_t nbytes) override;
+  void *calloc (size_t nbytes, char initial_value = '\0') override;
+  void *calloc (size_t n_elem, size_t elem_size, char initial_value = '\0') override;
+  void free (void *ptr) override;
 
   /// These methods are no-ops.
-  virtual int remove ();
-  virtual int bind (const char *name, void *pointer, int duplicates = 0);
-  virtual int trybind (const char *name, void *&pointer);
-  virtual int find (const char *name, void *&pointer);
-  virtual int find (const char *name);
-  virtual int unbind (const char *name);
-  virtual int unbind (const char *name, void *&pointer);
-  virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
-  virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
-  virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
-  virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
+  int remove () override;
+  int bind (const char *name, void *pointer, int duplicates = 0) override;
+  int trybind (const char *name, void *&pointer) override;
+  int find (const char *name, void *&pointer) override;
+  int find (const char *name) override;
+  int unbind (const char *name) override;
+  int unbind (const char *name, void *&pointer) override;
+  int sync (ssize_t len = -1, int flags = MS_SYNC) override;
+  int sync (void *addr, size_t len, int flags = MS_SYNC) override;
+  int protect (ssize_t len = -1, int prot = PROT_RDWR) override;
+  int protect (void *addr, size_t len, int prot = PROT_RDWR) override;
 #if defined (ACE_HAS_MALLOC_STATS)
   virtual void print_stats () const;
 #endif /* ACE_HAS_MALLOC_STATS */
-  virtual void dump () const;
+  void dump () const override;
 
 private:
   // DO NOT ADD ANY STATE (DATA MEMBERS) TO THIS CLASS!!!!  See the
@@ -99,25 +99,25 @@ class ACE_Export ACE_Static_Allocator_Base : public ACE_Allocator
 {
 public:
   ACE_Static_Allocator_Base (char *buffer, size_t size);
-  virtual void *malloc (size_t nbytes);
-  virtual void *calloc (size_t nbytes, char initial_value = '\0');
-  virtual void *calloc (size_t n_elem, size_t elem_size, char initial_value = '\0');
-  virtual void free (void *ptr);
-  virtual int remove ();
-  virtual int bind (const char *name, void *pointer, int duplicates = 0);
-  virtual int trybind (const char *name, void *&pointer);
-  virtual int find (const char *name, void *&pointer);
-  virtual int find (const char *name);
-  virtual int unbind (const char *name);
-  virtual int unbind (const char *name, void *&pointer);
-  virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
-  virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
-  virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
-  virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
+  void *malloc (size_t nbytes) override;
+  void *calloc (size_t nbytes, char initial_value = '\0') override;
+  void *calloc (size_t n_elem, size_t elem_size, char initial_value = '\0') override;
+  void free (void *ptr) override;
+  int remove () override;
+  int bind (const char *name, void *pointer, int duplicates = 0) override;
+  int trybind (const char *name, void *&pointer) override;
+  int find (const char *name, void *&pointer) override;
+  int find (const char *name) override;
+  int unbind (const char *name) override;
+  int unbind (const char *name, void *&pointer) override;
+  int sync (ssize_t len = -1, int flags = MS_SYNC) override;
+  int sync (void *addr, size_t len, int flags = MS_SYNC) override;
+  int protect (ssize_t len = -1, int prot = PROT_RDWR) override;
+  int protect (void *addr, size_t len, int prot = PROT_RDWR) override;
 #if defined (ACE_HAS_MALLOC_STATS)
   virtual void print_stats () const;
 #endif /* ACE_HAS_MALLOC_STATS */
-  virtual void dump () const;
+  void dump () const override;
 
 protected:
   /// Don't allow direct instantiations of this class.

@@ -55,36 +55,36 @@ namespace TAO
     public:
       /*! Constructor */
       AccessDecision (void);
-      ~AccessDecision (void);
+      ~AccessDecision (void) override;
 
-      virtual ::CORBA::Boolean access_allowed (
+      ::CORBA::Boolean access_allowed (
         const ::SecurityLevel2::CredentialsList & cred_list,
         ::CORBA::Object_ptr target,
         const char * operation_name,
-        const char * target_interface_name);
+        const char * target_interface_name) override;
 
-      virtual ::CORBA::Boolean access_allowed_ex (
+      ::CORBA::Boolean access_allowed_ex (
           const char * orb_id,
           const ::CORBA::OctetSeq & adapter_id,
           const ::CORBA::OctetSeq & object_id,
           const ::SecurityLevel2::CredentialsList & cred_list,
           const char * operation_name,
-          ::CORBA::Boolean collocated_invocation);
+          ::CORBA::Boolean collocated_invocation) override;
 
-      virtual ::CORBA::Boolean default_decision (void);
-      virtual void default_decision (::CORBA::Boolean d);
+      ::CORBA::Boolean default_decision (void) override;
+      void default_decision (::CORBA::Boolean d) override;
 
-      virtual ::CORBA::Boolean default_collocated_decision (void);
-      virtual void default_collocated_decision (::CORBA::Boolean d);
+      ::CORBA::Boolean default_collocated_decision (void) override;
+      void default_collocated_decision (::CORBA::Boolean d) override;
 
-      virtual void add_object (const char * orbid,
+      void add_object (const char * orbid,
                                const ::CORBA::OctetSeq & adapter_id,
                                const ::CORBA::OctetSeq & object_id,
-                               ::CORBA::Boolean allow_insecure_access);
+                               ::CORBA::Boolean allow_insecure_access) override;
 
-      virtual void remove_object (const char * orbid,
+      void remove_object (const char * orbid,
                                   const ::CORBA::OctetSeq & adapter_id,
-                                  const ::CORBA::OctetSeq & object_id);
+                                  const ::CORBA::OctetSeq & object_id) override;
 
     private:
       /*!
@@ -188,15 +188,15 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual ::Security::MechandOptionsList* supported_mechanisms ();
-      virtual SecurityLevel2::CredentialsList* own_credentials ();
-      virtual SecurityLevel2::RequiredRights_ptr required_rights_object ();
-      virtual SecurityLevel2::PrincipalAuthenticator_ptr principal_authenticator ();
-      virtual SecurityLevel2::AccessDecision_ptr access_decision ();
-      virtual SecurityLevel2::AuditDecision_ptr audit_decision ();
-      virtual SecurityLevel2::TargetCredentials_ptr get_target_credentials (CORBA::Object_ptr o);
-      virtual void remove_own_credentials (SecurityLevel2::Credentials_ptr creds);
-      virtual CORBA::Policy_ptr get_security_policy (CORBA::PolicyType policy_type);
+      ::Security::MechandOptionsList* supported_mechanisms () override;
+      SecurityLevel2::CredentialsList* own_credentials () override;
+      SecurityLevel2::RequiredRights_ptr required_rights_object () override;
+      SecurityLevel2::PrincipalAuthenticator_ptr principal_authenticator () override;
+      SecurityLevel2::AccessDecision_ptr access_decision () override;
+      SecurityLevel2::AuditDecision_ptr audit_decision () override;
+      SecurityLevel2::TargetCredentials_ptr get_target_credentials (CORBA::Object_ptr o) override;
+      void remove_own_credentials (SecurityLevel2::Credentials_ptr creds) override;
+      CORBA::Policy_ptr get_security_policy (CORBA::PolicyType policy_type) override;
       //@}
 
     protected:
@@ -206,7 +206,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      virtual ~SecurityManager (void);
+      ~SecurityManager (void) override;
 
     private:
 

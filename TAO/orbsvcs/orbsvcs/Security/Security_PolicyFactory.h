@@ -50,8 +50,8 @@ namespace TAO
     {
     public:
 
-      virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                               const CORBA::Any & value);
+      CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
+                                               const CORBA::Any & value) override;
     };
 
   } // End Security namespace

@@ -40,40 +40,40 @@ class TAO_DynamicInterface_Export TAO_Dynamic_Adapter_Impl
 {
 public:
   TAO_Dynamic_Adapter_Impl ();
-  virtual ~TAO_Dynamic_Adapter_Impl ();
+  ~TAO_Dynamic_Adapter_Impl () override;
 
   // CORBA::Object::_create_request and CORBA::Object::_request.
 
-  virtual void create_request (CORBA::Object_ptr obj,
+  void create_request (CORBA::Object_ptr obj,
                                CORBA::ORB_ptr orb,
                                const char *operation,
                                CORBA::NVList_ptr arg_list,
                                CORBA::NamedValue_ptr result,
                                CORBA::ExceptionList_ptr exceptions,
                                CORBA::Request_ptr &request,
-                               CORBA::Flags req_flags);
+                               CORBA::Flags req_flags) override;
 
-  virtual CORBA::Request_ptr request (CORBA::Object_ptr obj,
+  CORBA::Request_ptr request (CORBA::Object_ptr obj,
                                       CORBA::ORB_ptr orb,
-                                      const char *op);
+                                      const char *op) override;
 
   // CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
 
-  virtual CORBA::Boolean context_is_nil (CORBA::Context_ptr ctx);
+  CORBA::Boolean context_is_nil (CORBA::Context_ptr ctx) override;
 
-  virtual CORBA::Boolean request_is_nil (CORBA::Request_ptr req);
+  CORBA::Boolean request_is_nil (CORBA::Request_ptr req) override;
 
-  virtual CORBA::Boolean server_request_is_nil (CORBA::ServerRequest_ptr req);
+  CORBA::Boolean server_request_is_nil (CORBA::ServerRequest_ptr req) override;
 
-  virtual void context_release (CORBA::Context_ptr ctx);
+  void context_release (CORBA::Context_ptr ctx) override;
 
-  virtual void request_release (CORBA::Request_ptr req);
+  void request_release (CORBA::Request_ptr req) override;
 
-  virtual void server_request_release (CORBA::ServerRequest_ptr req);
+  void server_request_release (CORBA::ServerRequest_ptr req) override;
 
   // CORBA::ORB::create_exception_list.
 
-  virtual void create_exception_list (CORBA::ExceptionList_ptr &list);
+  void create_exception_list (CORBA::ExceptionList_ptr &list) override;
 
   // Used to force the initialization of the ORB code.
   static int Initializer (void);

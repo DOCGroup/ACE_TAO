@@ -52,12 +52,12 @@ public:
   TAO_LF_CH_Event (void);
 
   /// Destructor
-  virtual ~TAO_LF_CH_Event (void);
+  ~TAO_LF_CH_Event (void) override;
 
   //@{
 protected:
   /// Check whether we have reached the final state..
-  virtual bool is_state_final () const;
+  bool is_state_final () const override;
 
   //@}
 private:
@@ -96,21 +96,21 @@ private:
    * Timeouts can occur while waiting for connections.
    *
    */
-  virtual void state_changed_i (LFS_STATE new_state);
+  void state_changed_i (LFS_STATE new_state) override;
 
   /// Return true if the condition was satisfied successfully, false if it
   /// has not
-  virtual bool successful_i () const;
+  bool successful_i () const override;
 
   /// Return true if an error was detected while waiting for the
   /// event
-  virtual bool error_detected_i () const;
+  bool error_detected_i () const override;
 
   /// Set the state irrespective of anything.
-  virtual void set_state (LFS_STATE new_state);
+  void set_state (LFS_STATE new_state) override;
 
-  virtual int bind (TAO_LF_Follower *follower);
-  virtual int unbind (TAO_LF_Follower *follower);
+  int bind (TAO_LF_Follower *follower) override;
+  int unbind (TAO_LF_Follower *follower) override;
 
 private:
   /// The previous state that the LF_CH_Event was in

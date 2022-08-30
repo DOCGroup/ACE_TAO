@@ -26,8 +26,8 @@ public:
 
   ~be_visitor_executor_private_exh ();
 
-  virtual int visit_provides (be_provides *node);
-  virtual int visit_attribute (be_attribute *node);
+  int visit_provides (be_provides *node) override;
+  int visit_attribute (be_attribute *node) override;
   virtual void set_flags (bool do_provides, bool do_attribute);
 private:
   bool do_provides_;

@@ -44,28 +44,28 @@ public:
   TAO_Notify_ConsumerAdmin (void);
 
   /// Destructor
-  virtual ~TAO_Notify_ConsumerAdmin ();
+  ~TAO_Notify_ConsumerAdmin () override;
 
   /// Init
   void init (TAO_Notify_EventChannel *ec);
 
   /// ServantBase refcount methods.
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  void _add_ref (void) override;
+  void _remove_ref (void) override;
 
-  virtual const char * get_admin_type_name () const;
+  const char * get_admin_type_name () const override;
 
-  virtual TAO_Notify::Topology_Object* load_child (
+  TAO_Notify::Topology_Object* load_child (
     const ACE_CString &type,
     CORBA::Long id,
-    const TAO_Notify::NVPList& attrs);
+    const TAO_Notify::NVPList& attrs) override;
 
   TAO_Notify_ProxySupplier * find_proxy_supplier (
       TAO_Notify::IdVec & id_path,
       size_t position);
 
   /// TAO_Notify_Container_T requires a destroy method
-  virtual void destroy (void);
+  void destroy (void) override;
 
 protected:
   TAO_Notify::Topology_Object *load_proxy (
@@ -74,68 +74,68 @@ protected:
     const TAO_Notify::NVPList& attrs);
 
   /// = NotifyExt::ConsumerAdmin methods
-  virtual CosNotifyChannelAdmin::ProxySupplier_ptr
+  CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_push_supplier_with_qos (CosNotifyChannelAdmin::ClientType ctype,
                                               CosNotifyChannelAdmin::ProxyID_out proxy_id,
-                                              const CosNotification::QoSProperties & initial_qos);
+                                              const CosNotification::QoSProperties & initial_qos) override;
 
   /// = CosNotifyChannelAdmin::ConsumerAdmin methods
-  virtual CosNotifyChannelAdmin::AdminID MyID (void);
+  CosNotifyChannelAdmin::AdminID MyID (void) override;
 
-  virtual ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel (void);
+  ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel (void) override;
 
-  virtual ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (void);
+  ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (void) override;
 
-  virtual ::CosNotifyFilter::MappingFilter_ptr priority_filter (void);
+  ::CosNotifyFilter::MappingFilter_ptr priority_filter (void) override;
 
-  virtual void priority_filter (CosNotifyFilter::MappingFilter_ptr priority_filter);
+  void priority_filter (CosNotifyFilter::MappingFilter_ptr priority_filter) override;
 
-  virtual ::CosNotifyFilter::MappingFilter_ptr lifetime_filter (void);
+  ::CosNotifyFilter::MappingFilter_ptr lifetime_filter (void) override;
 
-  virtual void lifetime_filter (CosNotifyFilter::MappingFilter_ptr lifetime_filter);
+  void lifetime_filter (CosNotifyFilter::MappingFilter_ptr lifetime_filter) override;
 
-  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * pull_suppliers (void);
+  ::CosNotifyChannelAdmin::ProxyIDSeq * pull_suppliers (void) override;
 
-  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * push_suppliers (void);
+  ::CosNotifyChannelAdmin::ProxyIDSeq * push_suppliers (void) override;
 
-  virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (CosNotifyChannelAdmin::ProxyID proxy_id);
+  ::CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (CosNotifyChannelAdmin::ProxyID proxy_id) override;
 
-  virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr
+  ::CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_pull_supplier (CosNotifyChannelAdmin::ClientType ctype,
-                                     CosNotifyChannelAdmin::ProxyID_out proxy_id);
+                                     CosNotifyChannelAdmin::ProxyID_out proxy_id) override;
 
-  virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr
+  ::CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_push_supplier (CosNotifyChannelAdmin::ClientType ctype,
-                                     CosNotifyChannelAdmin::ProxyID_out proxy_id);
+                                     CosNotifyChannelAdmin::ProxyID_out proxy_id) override;
 
-  virtual ::CosNotification::QoSProperties * get_qos (void);
+  ::CosNotification::QoSProperties * get_qos (void) override;
 
-  virtual void set_qos (const CosNotification::QoSProperties & qos);
+  void set_qos (const CosNotification::QoSProperties & qos) override;
 
-  virtual void validate_qos (const CosNotification::QoSProperties & required_qos,
-                             CosNotification::NamedPropertyRangeSeq_out available_qos);
+  void validate_qos (const CosNotification::QoSProperties & required_qos,
+                             CosNotification::NamedPropertyRangeSeq_out available_qos) override;
 
-  virtual void subscription_change (const CosNotification::EventTypeSeq & added,
-                                    const CosNotification::EventTypeSeq & removed);
+  void subscription_change (const CosNotification::EventTypeSeq & added,
+                                    const CosNotification::EventTypeSeq & removed) override;
 
-  virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter);
+  CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter) override;
 
-  virtual void remove_filter (CosNotifyFilter::FilterID filter);
+  void remove_filter (CosNotifyFilter::FilterID filter) override;
 
-  virtual ::CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter);
+  ::CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter) override;
 
-  virtual ::CosNotifyFilter::FilterIDSeq * get_all_filters (void);
+  ::CosNotifyFilter::FilterIDSeq * get_all_filters (void) override;
 
-  virtual void remove_all_filters (void);
+  void remove_all_filters (void) override;
 
-  virtual ::CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (void);
+  ::CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (void) override;
 
-  virtual ::CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void);
+  ::CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void) override;
 
 private:
 
   /// Release this object.
-  virtual void release (void);
+  void release (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

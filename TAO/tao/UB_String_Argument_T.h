@@ -38,9 +38,9 @@ namespace TAO
   public:
     In_UB_String_Argument_T (const typename S_var::s_traits::char_type * x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     const typename S_var::s_traits::char_type * arg () const;
 
@@ -82,10 +82,10 @@ namespace TAO
   public:
     Inout_UB_String_Argument_T (typename S_var::s_traits::char_type *& x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_var::s_traits::char_type *& arg ();
 
@@ -106,9 +106,9 @@ namespace TAO
   public:
     Out_UB_String_Argument_T (typename S_var::s_traits::string_out & x);
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_var::s_traits::char_type *& arg ();
 
@@ -129,9 +129,9 @@ namespace TAO
   public:
     Ret_UB_String_Argument_T ();
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_var::s_traits::char_type *& arg ();
     typename S_var::s_traits::char_type * excp ();

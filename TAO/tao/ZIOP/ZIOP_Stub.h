@@ -50,16 +50,16 @@ public:
                  const TAO_MProfile &profiles,
                  TAO_ORB_Core *orb_core);
 
-  virtual ~TAO_ZIOP_Stub (void);
+  ~TAO_ZIOP_Stub (void) override;
 
   /**
    * Returns the effective policy if @a type is a known client-exposed
    * policy type.  Returns the effective override for all other policy
    * types.
    */
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType type);
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType type) override;
 
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type) override;
 
 private:
 

@@ -44,23 +44,23 @@ public:
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
-  virtual int init (int argc, ACE_TCHAR* argv[]);
+  int init (int argc, ACE_TCHAR* argv[]) override;
 
   /// Parse svc.conf arguments
   int parse_args (int argc, ACE_TCHAR* argv[]);
 
   // = Check Client_Strategy_Factory.h for the documentation of the
   //   following methods.
-  virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
-  virtual ACE_Lock *create_transport_mux_strategy_lock (void);
-  virtual int reply_dispatcher_table_size () const;
-  virtual int allow_callback (void);
-  virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
-  virtual TAO_Connect_Strategy *create_connect_strategy (TAO_ORB_Core *);
-  virtual bool use_cleanup_options () const;
-  virtual Connect_Strategy connect_strategy () const;
-  virtual const TAO::Invocation_Retry_Params &invocation_retry_params () const;
-  virtual Messaging::SyncScope sync_scope () const;
+  TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport) override;
+  ACE_Lock *create_transport_mux_strategy_lock (void) override;
+  int reply_dispatcher_table_size () const override;
+  int allow_callback (void) override;
+  TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport) override;
+  TAO_Connect_Strategy *create_connect_strategy (TAO_ORB_Core *) override;
+  bool use_cleanup_options () const override;
+  Connect_Strategy connect_strategy () const override;
+  const TAO::Invocation_Retry_Params &invocation_retry_params () const override;
+  Messaging::SyncScope sync_scope () const override;
 
 protected:
   void report_option_value_error (const ACE_TCHAR* option_name,

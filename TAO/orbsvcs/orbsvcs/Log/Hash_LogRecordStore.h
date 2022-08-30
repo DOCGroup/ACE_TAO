@@ -68,156 +68,156 @@ public:
                            const DsLogAdmin::CapacityAlarmThresholdList* thresholds);
 
   /// Destructor.
-  virtual ~TAO_Hash_LogRecordStore (void);
+  ~TAO_Hash_LogRecordStore (void) override;
 
   /// Initialization.
-  virtual int open (void);
+  int open (void) override;
 
   /// Close the record store.
-  virtual int close (void);
+  int close (void) override;
 
 
   // = Log Parameters
 
   /// Gets the administrative state of the log
-  virtual DsLogAdmin::AdministrativeState
-    get_administrative_state () const;
+  DsLogAdmin::AdministrativeState
+    get_administrative_state () const override;
 
   /// Sets the administrative state of the log
-  virtual void
-    set_administrative_state (DsLogAdmin::AdministrativeState);
+  void
+    set_administrative_state (DsLogAdmin::AdministrativeState) override;
 
   /// Get the capacity alarm thresholds
-  virtual DsLogAdmin::CapacityAlarmThresholdList*
-    get_capacity_alarm_thresholds () const;
+  DsLogAdmin::CapacityAlarmThresholdList*
+    get_capacity_alarm_thresholds () const override;
 
   /// Set the capacity alarm thresholds
-  virtual void
-    set_capacity_alarm_thresholds (const DsLogAdmin::CapacityAlarmThresholdList& thresholds);
+  void
+    set_capacity_alarm_thresholds (const DsLogAdmin::CapacityAlarmThresholdList& thresholds) override;
 
   /// Gets the forwarding state
-  virtual DsLogAdmin::ForwardingState
-    get_forwarding_state () const;
+  DsLogAdmin::ForwardingState
+    get_forwarding_state () const override;
 
   /// Sets the forwarding state
-  virtual void
-    set_forwarding_state (DsLogAdmin::ForwardingState state);
+  void
+    set_forwarding_state (DsLogAdmin::ForwardingState state) override;
 
   /// Get the log duration
-  virtual DsLogAdmin::TimeInterval get_interval () const;
+  DsLogAdmin::TimeInterval get_interval () const override;
 
   /// Set the log duration.
-  virtual void
-    set_interval (const DsLogAdmin::TimeInterval & interval);
+  void
+    set_interval (const DsLogAdmin::TimeInterval & interval) override;
 
   /// Gets the log full action
-  virtual DsLogAdmin::LogFullActionType get_log_full_action () const;
+  DsLogAdmin::LogFullActionType get_log_full_action () const override;
 
   /// Sets the log full action
-  virtual void set_log_full_action(DsLogAdmin::LogFullActionType action);
+  void set_log_full_action(DsLogAdmin::LogFullActionType action) override;
 
   /// Get the list of the QoS properties supported by the log.
-  virtual DsLogAdmin::QoSList* get_log_qos () const;
+  DsLogAdmin::QoSList* get_log_qos () const override;
 
   /// Set the list of the QoS properties supported by the log.
-  virtual void set_log_qos (const DsLogAdmin::QoSList& qos);
+  void set_log_qos (const DsLogAdmin::QoSList& qos) override;
 
   /// Gets the max record life
-  virtual CORBA::ULong get_max_record_life () const;
+  CORBA::ULong get_max_record_life () const override;
 
   /// Sets the max record life
-  virtual void set_max_record_life (CORBA::ULong life);
+  void set_max_record_life (CORBA::ULong life) override;
 
   /// Get the current set value of the max size of the log data.
-  virtual CORBA::ULongLong get_max_size () const;
+  CORBA::ULongLong get_max_size () const override;
 
   /// Set the max size of log data. size == 0, => infinite.
-  virtual void set_max_size (CORBA::ULongLong size);
+  void set_max_size (CORBA::ULongLong size) override;
 
   /// Get the weekly scheduling parameters
-  virtual DsLogAdmin::WeekMask* get_week_mask (void);
+  DsLogAdmin::WeekMask* get_week_mask (void) override;
 
   /// Set the weekly scheduling parameters.
-  virtual void set_week_mask (const DsLogAdmin::WeekMask & masks);
+  void set_week_mask (const DsLogAdmin::WeekMask & masks) override;
 
   // = LogRecordStore status methods
 
   /// Gets the current size of the log data.
-  virtual CORBA::ULongLong get_current_size (void);
+  CORBA::ULongLong get_current_size (void) override;
 
   /// Get the number of records in the log right now.
-  virtual CORBA::ULongLong get_n_records (void);
+  CORBA::ULongLong get_n_records (void) override;
 
 
   // = LogRecordStore gauge
 
   /// Gets the current value of the "gauge" that measures the total
   /// size of the records written to the log.
-  virtual CORBA::ULongLong get_gauge(void);
+  CORBA::ULongLong get_gauge(void) override;
 
   /// Resets the "gauge" to 0
-  virtual void reset_gauge(void);
+  void reset_gauge(void) override;
 
   // = Record logging, retrieval, update and removal methods.
 
   /// Insert rec into storage. Returns 0 on success -1 on failure and 1
   /// if the log is full.
-  virtual int log (const DsLogAdmin::LogRecord &rec);
+  int log (const DsLogAdmin::LogRecord &rec) override;
 
   /// Deletes "old" records from the store.
-  virtual int purge_old_records (void);
+  int purge_old_records (void) override;
 
   /// Set single record attributes.
-  virtual void
+  void
     set_record_attribute (DsLogAdmin::RecordId id,
-                          const DsLogAdmin::NVList & attr_list);
+                          const DsLogAdmin::NVList & attr_list) override;
 
   /// Set the attributes of all records that matches the
   /// constraints with same attr_list.
-  virtual CORBA::ULong
+  CORBA::ULong
     set_records_attribute (const char * grammar,
                            const char * c,
-                           const DsLogAdmin::NVList & attr_list);
+                           const DsLogAdmin::NVList & attr_list) override;
 
   /// Get the attributes of the record with id <id>. Raises
   /// DsLogAdmin::InvalidRecordId
-  virtual DsLogAdmin::NVList*
-    get_record_attribute (DsLogAdmin::RecordId id);
+  DsLogAdmin::NVList*
+    get_record_attribute (DsLogAdmin::RecordId id) override;
 
   /// Ensure changes have been flushed to persistent media
   /// Returns 0 on success, -1 on failure.
-  virtual int flush (void);
+  int flush (void) override;
 
   /// Returns all records in the log that match the given constraint
   /// <c>.
-  virtual DsLogAdmin::RecordList*
+  DsLogAdmin::RecordList*
     query (const char * grammar,
            const char * c,
-           DsLogAdmin::Iterator_out i);
+           DsLogAdmin::Iterator_out i) override;
 
   /// Retrieve <how_many> records from time <from_time> using iterator
   /// <i>.
-  virtual DsLogAdmin::RecordList*
+  DsLogAdmin::RecordList*
     retrieve (DsLogAdmin::TimeT from_time,
               CORBA::Long how_many,
-              DsLogAdmin::Iterator_out i);
+              DsLogAdmin::Iterator_out i) override;
 
   /// Returns the number of records matching constraint <c>.
-  virtual CORBA::ULong match (const char * grammar, const char * c);
+  CORBA::ULong match (const char * grammar, const char * c) override;
 
   /// Delete records matching constraint <c>.
-  virtual CORBA::ULong
+  CORBA::ULong
     delete_records (const char * grammar,
-                    const char * c);
+                    const char * c) override;
 
   /// Delete records matching ids in <ids>
-  virtual CORBA::ULong
-    delete_records_by_id (const DsLogAdmin::RecordIdList & ids);
+  CORBA::ULong
+    delete_records_by_id (const DsLogAdmin::RecordIdList & ids) override;
 
-  virtual CORBA::ULong remove_old_records (void);
+  CORBA::ULong remove_old_records (void) override;
 
   /// Read-Write Lock
-  virtual ACE_SYNCH_RW_MUTEX& lock();
+  ACE_SYNCH_RW_MUTEX& lock() override;
 
 /* protected: */
   /// Defines types to represent the container that maps RecordIds to

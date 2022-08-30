@@ -44,23 +44,23 @@ public:
     TAO_EventDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_EventDef_i (void);
+  ~TAO_EventDef_i (void) override;
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ();
+  CORBA::DefinitionKind def_kind () override;
 
   /// Remove the repository entry.
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void destroy_i ();
-
-  /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe ();
+  void destroy_i () override;
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i ();
+  CORBA::Contained::Description *describe () override;
 
-  virtual CORBA::Boolean is_a (const char *event_id);
+  /// From Contained_i's pure virtual function.
+  CORBA::Contained::Description *describe_i () override;
+
+  CORBA::Boolean is_a (const char *event_id) override;
 
   CORBA::Boolean is_a_i (const char *event_id);
 };

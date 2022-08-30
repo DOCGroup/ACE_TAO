@@ -58,17 +58,17 @@ public:
          create (int is_source_mapping = 1);
 
   /// Destructor
-  virtual ~TAO_ECG_Complex_Address_Server ();
+  ~TAO_ECG_Complex_Address_Server () override;
 
   /// Initializes the mapping from the @a arg string.  See class notes
   /// for the expected format.
   int init (const char *arg);
 
   // = The RtecUDPAdmin::AddrServer methods
-  virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr);
-  virtual void get_address (const RtecEventComm::EventHeader& header,
-                            RtecUDPAdmin::UDP_Address_out addr6);
+  void get_addr (const RtecEventComm::EventHeader& header,
+                         RtecUDPAdmin::UDP_Addr_out addr) override;
+  void get_address (const RtecEventComm::EventHeader& header,
+                            RtecUDPAdmin::UDP_Address_out addr6) override;
 
   /// Prints out complete content of the address server. Useful for
   /// debugging.

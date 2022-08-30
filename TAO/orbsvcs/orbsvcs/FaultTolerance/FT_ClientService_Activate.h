@@ -45,14 +45,14 @@ public:
   TAO_FT_ClientService_Activate (void);
 
   /// The destructor
-  virtual ~TAO_FT_ClientService_Activate (void);
+  ~TAO_FT_ClientService_Activate (void) override;
 
   /**
    * Create and activate the service callbacks into the orb.
    * This method cannot throw any exception, but it can return a nil
    * object to indicate an error condition.
    */
-  virtual TAO_Service_Callbacks *activate_services (TAO_ORB_Core *orb);
+  TAO_Service_Callbacks *activate_services (TAO_ORB_Core *orb) override;
 
   /// Used to force the initialization.
   static int Initializer (void);

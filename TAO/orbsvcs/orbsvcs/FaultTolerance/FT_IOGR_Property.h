@@ -60,27 +60,27 @@ public:
   TAO_FT_IOGR_Property (void);
 
   /// Destructor
-  ~TAO_FT_IOGR_Property (void);
+  ~TAO_FT_IOGR_Property (void) override;
 
   /// Set the property for the IOGR
-  virtual CORBA::Boolean set_property (
-      CORBA::Object_ptr &ior);
+  CORBA::Boolean set_property (
+      CORBA::Object_ptr &ior) override;
 
   /// Set <ior1> as  primary which is a part of <ior2>
-  virtual CORBA::Boolean set_primary (
+  CORBA::Boolean set_primary (
       CORBA::Object_ptr &ior1,
-      CORBA::Object_ptr ior2);
+      CORBA::Object_ptr ior2) override;
 
   /// Get the primary member from the IOGR <ior>
-  virtual CORBA::Object_ptr get_primary (
-      CORBA::Object_ptr ior);
+  CORBA::Object_ptr get_primary (
+      CORBA::Object_ptr ior) override;
 
   /// Is there a primary available for <ior>
-  virtual CORBA::Boolean is_primary_set (
-      CORBA::Object_ptr ior);
+  CORBA::Boolean is_primary_set (
+      CORBA::Object_ptr ior) override;
 
-  virtual CORBA::Boolean remove_primary_tag (
-      CORBA::Object_ptr &iogr);
+  CORBA::Boolean remove_primary_tag (
+      CORBA::Object_ptr &iogr) override;
 
   /// Reset the underlying tagged components held by the class
   CORBA::Boolean reset_tagged_components (

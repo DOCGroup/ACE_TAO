@@ -45,12 +45,12 @@ public:
                                const TAO_Property_Filter& pfilter);
 
   /// Destructor.
-  virtual ~TAO_Register_Offer_Iterator (void);
+  ~TAO_Register_Offer_Iterator (void) override;
 
   /// Deposit at maximum n offers into the return sequence and return 1,
   /// or return 0 if the iterator is done and no offers are returned.
-  virtual CORBA::Boolean next_n (CORBA::ULong n,
-                                 CosTrading::OfferSeq_out offers);
+  CORBA::Boolean next_n (CORBA::ULong n,
+                                 CosTrading::OfferSeq_out offers) override;
 
   /**
    * Throws CosTrading::UnknownMaxLeft since with the presence of
@@ -58,11 +58,11 @@ public:
    * the trader will have all the offers it has now when the time
    * to return them comes.
    */
-  virtual CORBA::ULong max_left (void);
+  CORBA::ULong max_left (void) override;
 
   /// Add an offer the iterator should iterate over.
   void add_offer (CosTrading::OfferId id,
-                  const CosTrading::Offer *);
+                  const CosTrading::Offer *) override;
 
 private:
 

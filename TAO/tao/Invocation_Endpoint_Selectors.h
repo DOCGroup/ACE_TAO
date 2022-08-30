@@ -88,10 +88,10 @@ class TAO_Export TAO_Default_Endpoint_Selector
 public:
 
   /// Destructor.
-  virtual ~TAO_Default_Endpoint_Selector (void);
+  ~TAO_Default_Endpoint_Selector (void) override;
 
-  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
-                                ACE_Time_Value *val);
+  void select_endpoint (TAO::Profile_Transport_Resolver *r,
+                                ACE_Time_Value *val) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

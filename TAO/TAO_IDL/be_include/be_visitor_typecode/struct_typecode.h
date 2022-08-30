@@ -39,7 +39,7 @@ namespace TAO
      *       the rest of the legacy method names and their call sites
      *       are updated accordingly.
      */
-    virtual int visit_structure (be_structure * node);
+    int visit_structure (be_structure * node) override;
 
     /// Visit an exception.
     /**
@@ -49,7 +49,7 @@ namespace TAO
      *       the rest of the legacy method names and their call sites
      *       are updated accordingly.
      */
-    virtual int visit_exception (be_exception * node);
+    int visit_exception (be_exception * node) override;
 
   private:
 

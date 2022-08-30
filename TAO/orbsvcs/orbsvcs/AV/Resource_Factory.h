@@ -41,7 +41,7 @@ public:
    */
   //@{
   /// Dynamic linking hook
-  virtual int init (int argc, ACE_TCHAR *argv[]) = 0;
+  int init (int argc, ACE_TCHAR *argv[]) override = 0;
 
 };
 

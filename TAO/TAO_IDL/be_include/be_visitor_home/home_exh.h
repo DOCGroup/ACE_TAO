@@ -29,10 +29,10 @@ public:
 
   ~be_visitor_home_exh ();
 
-  virtual int visit_home (be_home *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_factory (be_factory *node);
+  int visit_home (be_home *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_factory (be_factory *node) override;
 
   /// Helper method passed to traverse_inheritance_graph(),
   /// collects supported operations and attributes.

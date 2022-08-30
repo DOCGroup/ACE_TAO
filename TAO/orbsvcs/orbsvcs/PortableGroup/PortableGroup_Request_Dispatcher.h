@@ -40,14 +40,14 @@ class TAO_PortableGroup_Export PortableGroup_Request_Dispatcher
 public:
 
   /// Destructor.
-  virtual ~PortableGroup_Request_Dispatcher (void);
+  ~PortableGroup_Request_Dispatcher (void) override;
 
   /**
    * Dispatch a request.
    */
-  virtual void dispatch (TAO_ORB_Core *orb_core,
+  void dispatch (TAO_ORB_Core *orb_core,
                          TAO_ServerRequest &request,
-                         CORBA::Object_out forward_to);
+                         CORBA::Object_out forward_to) override;
 
 private:
 

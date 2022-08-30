@@ -36,13 +36,13 @@ public:
   TAO_Notify_Supplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_Supplier ();
+  ~TAO_Notify_Supplier () override;
 
   /// Access Specific Proxy.
   TAO_Notify_ProxyConsumer* proxy_consumer (void);
 
   /// Access Base Proxy.
-  virtual TAO_Notify_Proxy* proxy (void);
+  TAO_Notify_Proxy* proxy (void) override;
 
   virtual CORBA::Object_ptr get_supplier (void) = 0;
 
@@ -51,8 +51,8 @@ public:
 protected:
 
   /// Dispatch updates implementation.
-  virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
-                                   const CosNotification::EventTypeSeq& removed);
+  void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
+                                   const CosNotification::EventTypeSeq& removed) override;
 
   /// The proxy that we associate with.
   TAO_Notify_ProxyConsumer* proxy_;

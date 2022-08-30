@@ -36,12 +36,12 @@ class FT_Update_Replicant_i : public virtual POA_FT_Naming::UpdatePushNotifier
 public:
   FT_Update_Replicant_i (TAO_FT_Naming_Replication_Manager &owner);
 
-  virtual void register_peer (::FT_Naming::UpdatePushNotifier_ptr peer,
+  void register_peer (::FT_Naming::UpdatePushNotifier_ptr peer,
                               const ::FT_Naming::ReplicaInfo & info,
-                              CORBA::ULongLong seq_num);
+                              CORBA::ULongLong seq_num) override;
 
-  virtual void notify_update (CORBA::ULongLong seq_num,
-                              FT_Naming::UpdateInfoSeq& info);
+  void notify_update (CORBA::ULongLong seq_num,
+                              FT_Naming::UpdateInfoSeq& info) override;
 
 private:
   TAO_FT_Naming_Replication_Manager &owner_;
@@ -70,10 +70,10 @@ public:
 
   TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Server &owner);
 
-  virtual ~TAO_FT_Naming_Replication_Manager(void);
+  ~TAO_FT_Naming_Replication_Manager(void) override;
 
-  virtual int svc ();
-  virtual int handle_exception (ACE_HANDLE );
+  int svc () override;
+  int handle_exception (ACE_HANDLE ) override;
 
   void stop (void);
   void send_context_update (const ACE_CString &ctx,

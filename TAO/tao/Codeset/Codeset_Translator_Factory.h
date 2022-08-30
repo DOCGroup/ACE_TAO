@@ -55,8 +55,8 @@ class TAO_Codeset_Export TAO_Codeset_Translator_Factory :
 {
 public:
   TAO_Codeset_Translator_Factory () = default;
-  virtual ~TAO_Codeset_Translator_Factory () = default;
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  ~TAO_Codeset_Translator_Factory () override = default;
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
 protected:
   /// Assign the translator to the supplied input CDR. The template instance

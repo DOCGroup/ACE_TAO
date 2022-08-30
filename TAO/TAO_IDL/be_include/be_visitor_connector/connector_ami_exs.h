@@ -34,7 +34,7 @@ public:
 
   ~be_visitor_connector_ami_exs ();
 
-  virtual int visit_connector (be_connector *node);
+  int visit_connector (be_connector *node) override;
 
 private:
   void gen_entrypoint ();

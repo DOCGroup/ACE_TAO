@@ -412,7 +412,7 @@ public:
   TAO_InputCDR& operator= (const TAO_InputCDR&) = default;
 
   /// Destructor
-  virtual ~TAO_InputCDR ();
+  ~TAO_InputCDR () override;
 
   // = TAO specific methods.
 

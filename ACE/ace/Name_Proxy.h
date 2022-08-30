@@ -67,10 +67,10 @@ public:
   int recv_reply (ACE_Name_Request &reply);
 
   /// Obtain underlying handle.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /// Close down the connection to the server.
-  virtual ~ACE_Name_Proxy ();
+  ~ACE_Name_Proxy () override;
 
   /// Dump the state of the object;
   void dump () const;

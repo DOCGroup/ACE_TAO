@@ -42,10 +42,10 @@ class TAO_LoadBalancing_Export TAO_LB_Component
 public:
 
   /// Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini ();
+  int fini () override;
 
 protected:
 

@@ -68,7 +68,7 @@ public:
                     CORBA::ULong buf_sz = 0);
 
   /// Destructor.
-  virtual ~TAO_ECG_Mcast_EH ();
+  ~TAO_ECG_Mcast_EH () override;
 
   /**
    * Register for changes in the EC subscription list.
@@ -89,12 +89,12 @@ public:
    * multicast groups, close the sockets and deregister from the
    * reactor.
    */
-  virtual int shutdown ();
+  int shutdown () override;
   //@}
 
   /// Reactor callback.  Notify receiver_ that a dgram corresponding
   /// to \a fd is ready for reading.
-  virtual int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
 
 private:
 
@@ -119,10 +119,10 @@ private:
 
     /// Event Channel Observer methods
     //@{
-    virtual void update_consumer (
-        const RtecEventChannelAdmin::ConsumerQOS& sub);
-    virtual void update_supplier (
-        const RtecEventChannelAdmin::SupplierQOS& pub);
+    void update_consumer (
+        const RtecEventChannelAdmin::ConsumerQOS& sub) override;
+    void update_supplier (
+        const RtecEventChannelAdmin::SupplierQOS& pub) override;
 
   private:
     /// Handler we notify of subscriptions changes.

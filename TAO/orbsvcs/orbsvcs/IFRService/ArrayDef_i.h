@@ -41,19 +41,19 @@ public:
   TAO_ArrayDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ArrayDef_i (void);
+  ~TAO_ArrayDef_i (void) override;
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ();
+  CORBA::DefinitionKind def_kind () override;
 
   /// Remove the repository entry.
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void destroy_i ();
+  void destroy_i () override;
 
-  virtual CORBA::TypeCode_ptr type ();
+  CORBA::TypeCode_ptr type () override;
 
-  virtual CORBA::TypeCode_ptr type_i ();
+  CORBA::TypeCode_ptr type_i () override;
 
   virtual CORBA::ULong length ();
 

@@ -41,9 +41,9 @@ public:
   TAO_CSD_Strategy_Repository();
 
   /// Virtual Destructor.
-  virtual ~TAO_CSD_Strategy_Repository();
+  ~TAO_CSD_Strategy_Repository() override;
 
-  int init (int argc, ACE_TCHAR ** argv);
+  int init (int argc, ACE_TCHAR ** argv) override;
 
   /// Factory method used to create a CSD_Strategy object.
   CSD_Framework::Strategy_ptr find (const ACE_CString& poa_name);

@@ -33,43 +33,43 @@ public:
   ~be_visitor_typedef_ch ();
 
   /// visit typedef. We provide code for this method in the derived class
-  virtual int visit_typedef (be_typedef *node);
+  int visit_typedef (be_typedef *node) override;
 
   // =visit methods on all elements syntactically valid as types that can be
   // typedefed.
 
   /// visit a array
-  virtual int visit_array (be_array *node);
+  int visit_array (be_array *node) override;
 
   /// visit an enum
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 
   /// visit an interface;
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
   /// visit an interface;
-  virtual int visit_interface_fwd (be_interface_fwd *node);
+  int visit_interface_fwd (be_interface_fwd *node) override;
 
   /// visit predefined type node
-  virtual int visit_predefined_type (be_predefined_type *node);
+  int visit_predefined_type (be_predefined_type *node) override;
 
   /// visit a typedef
-  virtual int visit_string (be_string *node);
+  int visit_string (be_string *node) override;
 
   /// visit a sequence
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 
   /// visit a structure
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 
   /// visit a union
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
   /// visit a valuebox
-  virtual int visit_valuebox (be_valuebox *node);
+  int visit_valuebox (be_valuebox *node) override;
 
   /// visit a valuetype
-  virtual int visit_valuetype (be_valuetype *node);
+  int visit_valuetype (be_valuetype *node) override;
 };
 
 #endif /* _BE_VISITOR_TYPEDEF_TYPEDEF_CH_H_ */

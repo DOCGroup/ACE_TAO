@@ -323,9 +323,9 @@ namespace CORBA
     : public virtual ValueBase
   {
   public:
-    virtual void _add_ref ();
-    virtual void _remove_ref ();
-    virtual CORBA::ULong _refcount_value ();
+    void _add_ref () override;
+    void _remove_ref () override;
+    CORBA::ULong _refcount_value () override;
 
     /// The _tao variants are inline for fast access from T_var
     /// (if valuetype T is compiled with optimization for that.) %! (todo)
@@ -336,7 +336,7 @@ namespace CORBA
   protected:
     DefaultValueRefCountBase ();
     DefaultValueRefCountBase (const DefaultValueRefCountBase&);
-    virtual ~DefaultValueRefCountBase ();
+    ~DefaultValueRefCountBase () override;
 
   private:
     void operator= (const DefaultValueRefCountBase &);

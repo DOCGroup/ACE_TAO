@@ -31,14 +31,14 @@ public:
 
   TAO_FTEC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
-  virtual void activate (
-     RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy);
+  void activate (
+     RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy) override;
 
     // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
-  virtual void connect_push_supplier (
+  void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
-                const RtecEventChannelAdmin::SupplierQOS& qos);
-  virtual void disconnect_push_consumer (void);
+                const RtecEventChannelAdmin::SupplierQOS& qos) override;
+  void disconnect_push_consumer (void) override;
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
   void get_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat& state);

@@ -50,7 +50,7 @@ public:
                       const char *listener_interfaces);
 
   /// Destructor.
-  ~TAO_UIPMC_Acceptor (void);
+  ~TAO_UIPMC_Acceptor (void) override;
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
@@ -63,26 +63,26 @@ public:
    * The TAO_Acceptor methods, check the documentation in
    * Pluggable.h for details.
    */
-  virtual int open (TAO_ORB_Core *orb_core,
+  int open (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
                     const char *address,
-                    const char *options = 0);
-  virtual int open_default (TAO_ORB_Core *orb_core,
+                    const char *options = 0) override;
+  int open_default (TAO_ORB_Core *orb_core,
                             ACE_Reactor *reactor,
                             int version_major,
                             int version_minor,
-                            const char *options = 0);
-  virtual int close (void);
-  virtual int create_profile (const TAO::ObjectKey &object_key,
+                            const char *options = 0) override;
+  int close (void) override;
+  int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
-                              CORBA::Short priority);
-  virtual int is_collocated (const TAO_Endpoint *endpoint);
-  virtual CORBA::ULong endpoint_count (void);
+                              CORBA::Short priority) override;
+  int is_collocated (const TAO_Endpoint *endpoint) override;
+  CORBA::ULong endpoint_count (void) override;
 
-  virtual int object_key (IOP::TaggedProfile &profile,
-                          TAO::ObjectKey &key);
+  int object_key (IOP::TaggedProfile &profile,
+                          TAO::ObjectKey &key) override;
 
   /**
    * Set the host name for the given addr.

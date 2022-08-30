@@ -30,10 +30,10 @@ public:
   TAO_PI_Server_Loader ();
 
   /// Destructor.
-  virtual ~TAO_PI_Server_Loader ();
+  ~TAO_PI_Server_Loader () override;
 
   /// Initialize the PI_Server loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 
 private:
   /// Set to true after init is called.

@@ -43,7 +43,7 @@ namespace ACE
               StreamBuffer (std::iostream& stream, policy_type* policy = 0);
               virtual ~StreamBuffer ();
 
-              virtual int sync ();
+              int sync () override;
 
             protected:
               friend class StreamPolicyBase<StreamBuffer>;
@@ -53,9 +53,9 @@ namespace ACE
                   BUFFER_SIZE = 4096
                 };
 
-              virtual int read_from_stream (char* buffer, std::streamsize length);
+              int read_from_stream (char* buffer, std::streamsize length) override;
 
-              virtual int write_to_stream (const char* buffer, std::streamsize length);
+              int write_to_stream (const char* buffer, std::streamsize length) override;
 
               virtual int read_from_stream_i (char* buffer, std::streamsize length);
 

@@ -29,11 +29,11 @@ public:
 
   ~be_visitor_context_svts ();
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
-  virtual int visit_uses (be_uses *node);
-  virtual int visit_publishes (be_publishes *node);
-  virtual int visit_emits (be_emits *node);
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
+  int visit_uses (be_uses *node) override;
+  int visit_publishes (be_publishes *node) override;
+  int visit_emits (be_emits *node) override;
 
 private:
   void gen_uses_simplex (AST_Type *obj,

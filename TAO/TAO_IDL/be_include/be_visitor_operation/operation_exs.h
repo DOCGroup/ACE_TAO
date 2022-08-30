@@ -32,7 +32,7 @@ public:
 
   ~be_visitor_operation_exs ();
 
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 
   void scope (be_decl *node);
   void class_extension (const char *extension);

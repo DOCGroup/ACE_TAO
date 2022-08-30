@@ -45,28 +45,28 @@ public:
   TAO_Notify_SupplierAdmin (void);
 
   /// Destructor
-  virtual ~TAO_Notify_SupplierAdmin ();
+  ~TAO_Notify_SupplierAdmin () override;
 
   /// Init
   void init (TAO_Notify_EventChannel *ec);
 
   /// ServantBase refcount methods.
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  void _add_ref (void) override;
+  void _remove_ref (void) override;
 
-  virtual const char * get_admin_type_name () const;
+  const char * get_admin_type_name () const override;
 
-  virtual TAO_Notify::Topology_Object* load_child (
+  TAO_Notify::Topology_Object* load_child (
     const ACE_CString &type,
     CORBA::Long id,
-    const TAO_Notify::NVPList& attrs);
+    const TAO_Notify::NVPList& attrs) override;
 
   TAO_Notify_ProxyConsumer * find_proxy_consumer (
       TAO_Notify::IdVec & id_path,
       size_t position);
 
   /// TAO_Notify_Container_T requires a destroy method
-  virtual void destroy (void);
+  void destroy (void) override;
 
 protected:
 
@@ -80,62 +80,62 @@ protected:
   obtain_notification_push_consumer_with_qos (
       CosNotifyChannelAdmin::ClientType ctype,
       CosNotifyChannelAdmin::ProxyID_out proxy_id,
-      const CosNotification::QoSProperties & initial_qos);
+      const CosNotification::QoSProperties & initial_qos) override;
 
   /// = CosNotifyChannelAdmin::SupplierAdmin methods
-  virtual CosNotifyChannelAdmin::AdminID MyID (void);
+  CosNotifyChannelAdmin::AdminID MyID (void) override;
 
-  virtual ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel (void);
+  ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel (void) override;
 
-  virtual ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (void);
+  ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (void) override;
 
-  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * pull_consumers (void);
+  ::CosNotifyChannelAdmin::ProxyIDSeq * pull_consumers (void) override;
 
-  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * push_consumers (void);
+  ::CosNotifyChannelAdmin::ProxyIDSeq * push_consumers (void) override;
 
-  virtual ::CosNotifyChannelAdmin::ProxyConsumer_ptr get_proxy_consumer (
-      CosNotifyChannelAdmin::ProxyID proxy_id);
+  ::CosNotifyChannelAdmin::ProxyConsumer_ptr get_proxy_consumer (
+      CosNotifyChannelAdmin::ProxyID proxy_id) override;
 
-  virtual ::CosNotifyChannelAdmin::ProxyConsumer_ptr
+  ::CosNotifyChannelAdmin::ProxyConsumer_ptr
   obtain_notification_pull_consumer (
       CosNotifyChannelAdmin::ClientType ctype,
-      CosNotifyChannelAdmin::ProxyID_out proxy_id);
+      CosNotifyChannelAdmin::ProxyID_out proxy_id) override;
 
-  virtual ::CosNotifyChannelAdmin::ProxyConsumer_ptr
+  ::CosNotifyChannelAdmin::ProxyConsumer_ptr
   obtain_notification_push_consumer (
       CosNotifyChannelAdmin::ClientType ctype,
-      CosNotifyChannelAdmin::ProxyID_out proxy_id);
+      CosNotifyChannelAdmin::ProxyID_out proxy_id) override;
 
-  virtual ::CosNotification::QoSProperties* get_qos (void);
+  ::CosNotification::QoSProperties* get_qos (void) override;
 
-  virtual void set_qos (const CosNotification::QoSProperties& qos);
+  void set_qos (const CosNotification::QoSProperties& qos) override;
 
-  virtual void validate_qos (
+  void validate_qos (
       const CosNotification::QoSProperties & required_qos,
-      CosNotification::NamedPropertyRangeSeq_out available_qos);
+      CosNotification::NamedPropertyRangeSeq_out available_qos) override;
 
-  virtual void offer_change (const CosNotification::EventTypeSeq & added,
-                             const CosNotification::EventTypeSeq & removed);
+  void offer_change (const CosNotification::EventTypeSeq & added,
+                             const CosNotification::EventTypeSeq & removed) override;
 
-  virtual CosNotifyFilter::FilterID add_filter (
-      CosNotifyFilter::Filter_ptr new_filter);
+  CosNotifyFilter::FilterID add_filter (
+      CosNotifyFilter::Filter_ptr new_filter) override;
 
-  virtual void remove_filter (CosNotifyFilter::FilterID filter);
+  void remove_filter (CosNotifyFilter::FilterID filter) override;
 
-  virtual ::CosNotifyFilter::Filter_ptr get_filter (
-      CosNotifyFilter::FilterID filter);
+  ::CosNotifyFilter::Filter_ptr get_filter (
+      CosNotifyFilter::FilterID filter) override;
 
-  virtual ::CosNotifyFilter::FilterIDSeq * get_all_filters (void);
+  ::CosNotifyFilter::FilterIDSeq * get_all_filters (void) override;
 
-  virtual void remove_all_filters (void);
+  void remove_all_filters (void) override;
 
-  virtual ::CosEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer ();
+  ::CosEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer () override;
 
-  virtual ::CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer ();
+  ::CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer () override;
 
 private:
   /// Release
-  virtual void release (void);
+  void release (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

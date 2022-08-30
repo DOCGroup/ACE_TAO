@@ -34,16 +34,16 @@ public:
   ~be_visitor_valuetype_cdr_op_ci (void);
 
   /// visit valuetype
-  virtual int visit_valuetype (be_valuetype *node);
+  int visit_valuetype (be_valuetype *node) override;
 
   /// visit field
-  virtual int visit_field (be_field *node);
+  int visit_field (be_field *node) override;
 
   /// visit array
-  virtual int visit_array (be_array *node);
+  int visit_array (be_array *node) override;
 
   /// visit sequence
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_CDR_OP_CI_H_ */

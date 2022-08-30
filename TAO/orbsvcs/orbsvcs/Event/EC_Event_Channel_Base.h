@@ -110,7 +110,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Event_Channel_Base
 {
 public:
   /// destructor
-  virtual ~TAO_EC_Event_Channel_Base ();
+  ~TAO_EC_Event_Channel_Base () override;
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
@@ -216,21 +216,21 @@ public:
   // = The RtecEventChannelAdmin::EventChannel methods...
   /// The default implementation is:
   ///    this->consumer_admin ()->_this ();
-  virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers ();
+  RtecEventChannelAdmin::ConsumerAdmin_ptr
+      for_consumers () override;
 
   /// The default implementation is:
   ///    this->supplier_admin ()->_this ();
-  virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers ();
+  RtecEventChannelAdmin::SupplierAdmin_ptr
+      for_suppliers () override;
 
   /// Commit suicide.
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr);
-  virtual void
-      remove_observer (RtecEventChannelAdmin::Observer_Handle);
+  RtecEventChannelAdmin::Observer_Handle
+      append_observer (RtecEventChannelAdmin::Observer_ptr) override;
+  void
+      remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
 
   /// Return 1 if the event channel is already destroyed.
   int destroyed ();

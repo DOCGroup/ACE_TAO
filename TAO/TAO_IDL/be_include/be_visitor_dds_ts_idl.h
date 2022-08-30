@@ -31,13 +31,13 @@ public:
 
   ~be_visitor_dds_ts_idl ();
 
-  virtual int visit_root (be_root *node);
-  virtual int visit_module (be_module *node);
+  int visit_root (be_root *node) override;
+  int visit_module (be_module *node) override;
 
   /// The only types recognized so far as DDS datatypes.
-  virtual int visit_structure (be_structure *node);
-  virtual int visit_union (be_union *node);
-  virtual int visit_valuetype (be_valuetype *node);
+  int visit_structure (be_structure *node) override;
+  int visit_union (be_union *node) override;
+  int visit_valuetype (be_valuetype *node) override;
 
 /// Common code for processing all datatypes.
 private:

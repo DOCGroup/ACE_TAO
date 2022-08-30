@@ -35,7 +35,7 @@ public:
   ~be_visitor_sequence_cdr_op_ch ();
 
   /// visit sequence
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 };
 
 #endif /* _BE_VISITOR_SEQUENCE_CDR_OP_CH_H_ */

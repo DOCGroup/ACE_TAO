@@ -53,7 +53,7 @@ namespace TAO
     /**
     * Destructor.
     */
-    virtual ~FT_FaultConsumer ();
+    ~FT_FaultConsumer () override;
 
     /**
     * Connect to the FT::FaultNotifier.
@@ -101,14 +101,14 @@ namespace TAO
 
     ////////////////
     // CORBA methods
-    virtual void push_structured_event (
-      const CosNotification::StructuredEvent &notification);
+    void push_structured_event (
+      const CosNotification::StructuredEvent &notification) override;
 
-   virtual void offer_change (
+   void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+        const CosNotification::EventTypeSeq & removed) override;
 
-   virtual void disconnect_structured_push_consumer ();
+   void disconnect_structured_push_consumer () override;
 
     //@}
 

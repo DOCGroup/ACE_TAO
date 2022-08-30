@@ -92,7 +92,7 @@ namespace TAO
      * Destructor.
      * Actual cleanup happens in the fini function.
      */
-    virtual ~FT_ReplicationManager ();
+    ~FT_ReplicationManager () override;
 
   public:
 
@@ -153,18 +153,18 @@ namespace TAO
     //@{
 
     /// Registers the Fault Notifier with the Replication Manager.
-    virtual void register_fault_notifier (
-        FT::FaultNotifier_ptr fault_notifier);
+    void register_fault_notifier (
+        FT::FaultNotifier_ptr fault_notifier) override;
 
     /// Returns the reference of the Fault Notifier.
-    virtual FT::FaultNotifier_ptr get_fault_notifier ();
+    FT::FaultNotifier_ptr get_fault_notifier () override;
 
     /// TAO-specific find factory registry
-    virtual ::PortableGroup::FactoryRegistry_ptr get_factory_registry (
-        const PortableGroup::Criteria & selection_criteria);
+    ::PortableGroup::FactoryRegistry_ptr get_factory_registry (
+        const PortableGroup::Criteria & selection_criteria) override;
 
     /// TAO-specific shutdown operation.
-    virtual void shutdown ();
+    void shutdown () override;
 
     //@}
 
@@ -176,36 +176,36 @@ namespace TAO
     //@{
 
     /// Set the default properties to be used by all object groups.
-    virtual void set_default_properties (
-        const PortableGroup::Properties & props);
+    void set_default_properties (
+        const PortableGroup::Properties & props) override;
 
     /// Get the default properties used by all object groups.
-    virtual PortableGroup::Properties * get_default_properties ();
+    PortableGroup::Properties * get_default_properties () override;
 
     /// Remove default properties.
-    virtual void remove_default_properties (
-        const PortableGroup::Properties & props);
+    void remove_default_properties (
+        const PortableGroup::Properties & props) override;
 
     /**
      * Set properties associated with a given Replica type.  These
      * properties override the default properties on a name-by-name basis.
      */
-    virtual void set_type_properties (
+    void set_type_properties (
         const char * type_id,
-        const PortableGroup::Properties & overrides);
+        const PortableGroup::Properties & overrides) override;
 
     /**
      * Return the properties associated with a given Replica type.  These
      * properties include the type-specific properties in use, in
      * addition to the default properties that were not overridden.
      */
-    virtual PortableGroup::Properties * get_type_properties (
-        const char * type_id);
+    PortableGroup::Properties * get_type_properties (
+        const char * type_id) override;
 
     /// Remove the given properties associated with the Replica type ID.
-    virtual void remove_type_properties (
+    void remove_type_properties (
         const char * type_id,
-        const PortableGroup::Properties & props);
+        const PortableGroup::Properties & props) override;
 
     /**
      * Dynamically set the properties associated with a given object
@@ -213,9 +213,9 @@ namespace TAO
      * These properties override the type-specific and default
      * properties.
      */
-    virtual void set_properties_dynamically (
+    void set_properties_dynamically (
         PortableGroup::ObjectGroup_ptr object_group,
-        const PortableGroup::Properties & overrides);
+        const PortableGroup::Properties & overrides) override;
 
     /**
      * Return the properties currently in use by the given object
@@ -224,8 +224,8 @@ namespace TAO
      * were used when the Replica was created, and default properties
      * that weren't overridden.
      */
-    virtual PortableGroup::Properties * get_properties (
-        PortableGroup::ObjectGroup_ptr object_group);
+    PortableGroup::Properties * get_properties (
+        PortableGroup::ObjectGroup_ptr object_group) override;
 
     //@}
 
@@ -238,17 +238,17 @@ namespace TAO
     //@{
 
     /// Create a member in an object group.
-    virtual PortableGroup::ObjectGroup_ptr create_member (
+    PortableGroup::ObjectGroup_ptr create_member (
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Location & the_location,
         const char * type_id,
-        const PortableGroup::Criteria & the_criteria);
+        const PortableGroup::Criteria & the_criteria) override;
 
     /// Add an existing object to the ObjectGroup.
-    virtual PortableGroup::ObjectGroup_ptr add_member (
+    PortableGroup::ObjectGroup_ptr add_member (
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Location & the_location,
-        CORBA::Object_ptr member);
+        CORBA::Object_ptr member) override;
 
     /**
      * Remove the member at a specific location from an
@@ -261,50 +261,50 @@ namespace TAO
      * parameter will be checked and new members will be created
      * as necessary (if possible.)
      */
-    virtual PortableGroup::ObjectGroup_ptr remove_member (
+    PortableGroup::ObjectGroup_ptr remove_member (
         PortableGroup::ObjectGroup_ptr object_group,
-        const PortableGroup::Location & the_location);
+        const PortableGroup::Location & the_location) override;
 
     /// Return the locations of the members in the given ObjectGroup.
-    virtual PortableGroup::Locations * locations_of_members (
-        PortableGroup::ObjectGroup_ptr object_group);
+    PortableGroup::Locations * locations_of_members (
+        PortableGroup::ObjectGroup_ptr object_group) override;
 
     /// Return the locations of the members in the given ObjectGroup.
-    virtual PortableGroup::ObjectGroups * groups_at_location (
-        const PortableGroup::Location & the_location);
+    PortableGroup::ObjectGroups * groups_at_location (
+        const PortableGroup::Location & the_location) override;
 
     /// Return the ObjectGroupId for the given ObjectGroup.
-    virtual PortableGroup::ObjectGroupId get_object_group_id (
-        PortableGroup::ObjectGroup_ptr object_group);
+    PortableGroup::ObjectGroupId get_object_group_id (
+        PortableGroup::ObjectGroup_ptr object_group) override;
 
     /**
      * Return an update the IOGR for an object group.  If no changes have
      * been made in the group the return value will be the same as the object_group
      * parameter.
      */
-    virtual PortableGroup::ObjectGroup_ptr get_object_group_ref (
-        PortableGroup::ObjectGroup_ptr object_group);
+    PortableGroup::ObjectGroup_ptr get_object_group_ref (
+        PortableGroup::ObjectGroup_ptr object_group) override;
 
     /**
      * TAO-specific extension.
      * Return the ObjectGroup reference for the given ObjectGroupId.
      */
-     virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
-          PortableGroup::ObjectGroupId group_id);
+     PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
+          PortableGroup::ObjectGroupId group_id) override;
 
     /**
      * Return the reference corresponding to the Replica of a given
      * ObjectGroup at the given location.
      */
-    virtual CORBA::Object_ptr get_member_ref (
+    CORBA::Object_ptr get_member_ref (
         PortableGroup::ObjectGroup_ptr object_group,
-        const PortableGroup::Location & loc);
+        const PortableGroup::Location & loc) override;
 
     /// Sets the primary member of a group.
-    virtual PortableGroup::ObjectGroup_ptr set_primary_member (
+    PortableGroup::ObjectGroup_ptr set_primary_member (
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Location & the_location
-      );
+      ) override;
 
     //@}
 
@@ -325,11 +325,11 @@ namespace TAO
      * property will be honored by creating new members and adding them to
      * the group.
      */
-    virtual CORBA::Object_ptr create_object (
+    CORBA::Object_ptr create_object (
         const char * type_id,
         const PortableGroup::Criteria & the_criteria,
         PortableGroup::GenericFactory::FactoryCreationId_out
-          factory_creation_id);
+          factory_creation_id) override;
 
     /**
      * Delete the object group corresponding to the provided
@@ -337,9 +337,9 @@ namespace TAO
      * all members will be deleted.  For application-controlled membership
      * the application is responsible for deleting group members.
      */
-    virtual void delete_object (
+    void delete_object (
         const PortableGroup::GenericFactory::FactoryCreationId &
-          factory_creation_id);
+          factory_creation_id) override;
 
     //@}
 

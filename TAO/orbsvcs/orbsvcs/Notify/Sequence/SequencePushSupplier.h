@@ -34,20 +34,20 @@ public:
   TAO_Notify_SequencePushSupplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_SequencePushSupplier ();
+  ~TAO_Notify_SequencePushSupplier () override;
 
   /// Init
   void init (CosNotifyComm::SequencePushSupplier_ptr push_supplier);
 
   /// TAO_Notify_Destroy_Callback methods
-  virtual void release (void);
+  void release (void) override;
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior () const;
+  ACE_CString get_ior () const override;
 
 protected:
 
-  virtual CORBA::Object_ptr get_supplier (void);
+  CORBA::Object_ptr get_supplier (void) override;
 
  /// The Supplier
   CosNotifyComm::SequencePushSupplier_var push_supplier_;

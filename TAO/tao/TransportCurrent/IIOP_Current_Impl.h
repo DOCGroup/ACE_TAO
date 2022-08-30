@@ -50,17 +50,17 @@ namespace TAO
       IIOP_Current_Impl (TAO_ORB_Core* core, size_t tss_slot_id);
 
       //@{
-      virtual ::CORBA::Long id ();
+      ::CORBA::Long id () override;
 
-      virtual ::SSLIOP::Current_ptr ssliop_current ();
+      ::SSLIOP::Current_ptr ssliop_current () override;
 
-      virtual ::CORBA::Long remote_port ();
+      ::CORBA::Long remote_port () override;
 
-      virtual char* remote_host ();
+      char* remote_host () override;
 
-      virtual ::CORBA::Long local_port ();
+      ::CORBA::Long local_port () override;
 
-      virtual char* local_host ();
+      char* local_host () override;
       //@}
 
     protected:
@@ -70,7 +70,7 @@ namespace TAO
         * counted, and should not be destroyed using delete() by anything
         * other than the reference counting mechanism.
         */
-      virtual ~IIOP_Current_Impl ();
+      ~IIOP_Current_Impl () override;
 
     private:
       /// Returns the IIOP connection handler associated with the

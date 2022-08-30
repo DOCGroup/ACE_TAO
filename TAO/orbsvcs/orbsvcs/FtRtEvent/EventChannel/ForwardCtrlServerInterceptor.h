@@ -24,22 +24,22 @@ class ForwardCtrlServerInterceptor
 {
 public:
   ForwardCtrlServerInterceptor();
-  ~ForwardCtrlServerInterceptor();
+  ~ForwardCtrlServerInterceptor() override;
 
-  virtual char * name (void);
+  char * name (void) override;
 
-  virtual void destroy (void);
+  void destroy (void) override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr);
+  void receive_request_service_contexts (
+        PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

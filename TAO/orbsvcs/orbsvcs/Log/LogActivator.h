@@ -43,16 +43,16 @@ public:
 
   /// @brief Destructor
   ///
-  virtual ~TAO_LogActivator();
+  ~TAO_LogActivator() override;
 
-  virtual PortableServer::Servant incarnate (const PortableServer::ObjectId& oid,
-                                             PortableServer::POA_ptr poa);
+  PortableServer::Servant incarnate (const PortableServer::ObjectId& oid,
+                                             PortableServer::POA_ptr poa) override;
 
-  virtual void etherealize (const PortableServer::ObjectId& oid,
+  void etherealize (const PortableServer::ObjectId& oid,
                             PortableServer::POA_ptr poa,
                             PortableServer::Servant servant,
                             CORBA::Boolean cleanup_in_progress,
-                            CORBA::Boolean remaining_activations);
+                            CORBA::Boolean remaining_activations) override;
 
 private:
   TAO_LogMgr_i& logmgr_i_;

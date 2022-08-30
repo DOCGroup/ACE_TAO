@@ -30,9 +30,9 @@ public:
   be_visitor_exception_cdr_op_cs (be_visitor_context *ctx);
   ~be_visitor_exception_cdr_op_cs ();
 
-  virtual int visit_exception (be_exception *node);
+  int visit_exception (be_exception *node) override;
 
-  virtual int post_process (be_decl *);
+  int post_process (be_decl *) override;
 };
 
 #endif /* _BE_VISITOR_EXCEPTION_CDR_OP_CS_H_ */

@@ -54,7 +54,7 @@ public:
                              const ACE_Time_Value &timeout);
 
   /// destructor...
-  virtual ~TAO_CEC_ProxyPushConsumer (void);
+  ~TAO_CEC_ProxyPushConsumer (void) override;
 
   /// Activate in the POA
   virtual void activate (
@@ -85,15 +85,15 @@ public:
   CORBA::ULong _decr_refcnt (void);
 
   // = The CosEventChannelAdmin::ProxyPushConsumer methods...
-  virtual void connect_push_supplier (
-                CosEventComm::PushSupplier_ptr push_supplier);
-  virtual void push (const CORBA::Any& event);
-  virtual void disconnect_push_consumer (void);
+  void connect_push_supplier (
+                CosEventComm::PushSupplier_ptr push_supplier) override;
+  void push (const CORBA::Any& event) override;
+  void disconnect_push_consumer (void) override;
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (void);
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  PortableServer::POA_ptr _default_POA (void) override;
+  void _add_ref (void) override;
+  void _remove_ref (void) override;
 
 protected:
   /// Set the supplier, used by some implementations to change the

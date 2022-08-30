@@ -29,13 +29,13 @@ public:
   be_eventtype_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~be_eventtype_fwd ();
+  ~be_eventtype_fwd () override;
 
   // Visiting.
-  virtual int accept (be_visitor* visitor);
+  int accept (be_visitor* visitor) override;
 
   // Cleanup
-  virtual void destroy ();
+  void destroy () override;
 };
 
 #endif // if !defined

@@ -44,8 +44,8 @@ public:
   TAO_ECG_Reconnect_ConsumerEC_Control_Adapter (TAO_ECG_Reconnect_ConsumerEC_Control *adaptee);
 
   // = Documented in ACE_Event_Handler.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
+  int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg = 0) override;
 
 private:
   /// The adapted object
@@ -77,18 +77,18 @@ public:
                                         CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_ECG_Reconnect_ConsumerEC_Control ();
+  ~TAO_ECG_Reconnect_ConsumerEC_Control () override;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_EC_ConsumerControl
-  virtual int activate ();
-  virtual int shutdown ();
-  virtual void event_channel_not_exist (TAO_EC_Gateway_IIOP *gateway);
-  virtual void system_exception (TAO_EC_Gateway_IIOP *gateway,
-                                 CORBA::SystemException &);
+  int activate () override;
+  int shutdown () override;
+  void event_channel_not_exist (TAO_EC_Gateway_IIOP *gateway) override;
+  void system_exception (TAO_EC_Gateway_IIOP *gateway,
+                                 CORBA::SystemException &) override;
 
 private:
   /// Check if the consumers still exists.  It is a helper method for

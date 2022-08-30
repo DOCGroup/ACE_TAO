@@ -110,7 +110,7 @@ public:
   /// TAO_ECG_UDP_Sender objects are heap-allocated.)
   static PortableServer::Servant_var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = 0);
 
-  ~TAO_ECG_UDP_Sender ();
+  ~TAO_ECG_UDP_Sender () override;
 
   /**
    * @param lcl_ec Event Channel to which we will act as a consumer of events.
@@ -170,8 +170,8 @@ public:
   //@{
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_consumer ();
-  virtual void push (const RtecEventComm::EventSet &events);
+  void disconnect_push_consumer () override;
+  void push (const RtecEventComm::EventSet &events) override;
   //@}
 
 protected:

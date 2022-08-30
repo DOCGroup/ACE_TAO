@@ -67,7 +67,7 @@ public:
   TAO_DTP_Task();
 
   /// Virtual Destructor.
-  virtual ~TAO_DTP_Task();
+  ~TAO_DTP_Task() override;
 
   struct Open_Args {
     TAO_DTP_Definition task_thread_config;
@@ -79,12 +79,12 @@ public:
   bool add_request(TAO::CSD::TP_Request* request);
 
   /// Activate the worker threads
-  virtual int open(void* args = 0);
+  int open(void* args = 0) override;
 
   /// The "mainline" executed by each worker thread.
-  virtual int svc();
+  int svc() override;
 
-  virtual int close (u_long flag = 0);
+  int close (u_long flag = 0) override;
 
   /// Set the thread and queue config.
 

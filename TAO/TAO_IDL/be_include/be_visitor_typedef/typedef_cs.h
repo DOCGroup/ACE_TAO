@@ -33,10 +33,10 @@ public:
   ~be_visitor_typedef_cs ();
 
   /// visit typedef. We provide code for this method in the derived class
-  virtual int visit_typedef (be_typedef *node);
+  int visit_typedef (be_typedef *node) override;
 
   /// visit a sequence
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 };
 
 #endif /* _BE_VISITOR_TYPEDEF_TYPEDEF_CS_H_*/

@@ -104,7 +104,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
   //           connection, not once per invocation.  This should
   //           improve performance.
   //
-  // Check if the user overrode the default establishment of trust
+  // Check if the user override the default establishment of trust
   // policy for the current object.
   CORBA::Policy_var policy =
     resolver->stub ()->get_policy (::Security::SecEstablishTrustPolicy);
@@ -147,7 +147,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
       throw CORBA::INV_POLICY ();
     }
 
-  // Check if the user overrode the default Quality-of-Protection for
+  // Check if the user override the default Quality-of-Protection for
   // the current object.
   policy = resolver->stub ()->get_policy (::Security::SecQOPPolicy);
 
@@ -779,7 +779,7 @@ TAO::SSLIOP::OwnCredentials *
 TAO::SSLIOP::Connector::retrieve_credentials (TAO_Stub *stub,
                                               SSL *ssl)
 {
-  // Check if the user overrode the default invocation credentials.
+  // Check if the user override the default invocation credentials.
   CORBA::Policy_var policy =
     stub->get_policy (::SecurityLevel3::ContextEstablishmentPolicyType);
 

@@ -46,13 +46,13 @@ public:
                                     ACE_UINT32 *counter = 0);
 
   /// Destructor.
-  virtual ~TAO_FT_Persistent_Naming_Context () = default;
+  ~TAO_FT_Persistent_Naming_Context () override = default;
 
   /**
    * Override the resolve operation to support load balancing using
    * the object group manager and associated strategy.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
+  CORBA::Object_ptr resolve (const CosNaming::Name &n) override;
 
   static void set_naming_manager_impl (TAO_FT_Naming_Manager *mgr_impl);
 

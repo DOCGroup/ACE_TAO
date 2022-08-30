@@ -14,7 +14,7 @@ class TAO_RTScheduler_Export TAO_DistributableThread:
 {
 public:
   TAO_DistributableThread () = default;
-  ~TAO_DistributableThread () = default;
+  ~TAO_DistributableThread () override = default;
 
   void cancel () override;
 

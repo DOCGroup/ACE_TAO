@@ -50,12 +50,12 @@ public:
   TAO_IRObject_i (TAO_Repository_i *repo);
 
   /// Destructor.
-  virtual ~TAO_IRObject_i (void);
+  ~TAO_IRObject_i (void) override;
 
-  virtual CORBA::DefinitionKind def_kind ();
+  CORBA::DefinitionKind def_kind () override;
 
   /// Pure virtual.
-  virtual void destroy () = 0;
+  void destroy () override = 0;
 
   /// Pure virtual - the unlocked version called by the destroy() wrapper.
   virtual void destroy_i () = 0;

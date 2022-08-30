@@ -18,8 +18,8 @@ namespace ACE_RMCast
     Reassemble (Parameters const& );
 
   public:
-    virtual void
-    recv (Message_ptr m);
+    void
+    recv (Message_ptr m) override;
 
   private:
    // Parameters const& params_;

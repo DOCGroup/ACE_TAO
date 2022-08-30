@@ -33,10 +33,10 @@ public:
 
   // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   // details.
-  virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
+  TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
 
-  virtual int init (int argc,
-                    ACE_TCHAR* argv[]);
+  int init (int argc,
+                    ACE_TCHAR* argv[]) override;
 };
 
 

@@ -61,7 +61,7 @@ public:
 
   /// Initialize the Naming Service and Object Group Manager with the command line
   /// arguments and the ORB. Overrridden from TAO_Naming_Server
-  virtual int init_with_orb (int , ACE_TCHAR * [], CORBA::ORB_ptr orb);
+  int init_with_orb (int , ACE_TCHAR * [], CORBA::ORB_ptr orb) override;
 
   /**
    * Accessors and mutators for object references.
@@ -93,18 +93,18 @@ public:
 
   /// Overridden parse operation. Only allows options supported by the FT_Naming_Server
   /// and adds options for the object group manager
-  virtual int parse_args (int argc,
-                          ACE_TCHAR *argv[]);
+  int parse_args (int argc,
+                          ACE_TCHAR *argv[]) override;
 
   /// Factory method to create a naming context factory for use with
   /// the -u and -r options.
-  virtual TAO_Storable_Naming_Context_Factory *
-    storable_naming_context_factory (size_t context_size);
+  TAO_Storable_Naming_Context_Factory *
+    storable_naming_context_factory (size_t context_size) override;
 
   /// Factory method to create a naming context factory for use with
   /// the -f option.
-  virtual TAO_Persistent_Naming_Context_Factory *
-    persistent_naming_context_factory (void);
+  TAO_Persistent_Naming_Context_Factory *
+    persistent_naming_context_factory (void) override;
 
   /// Returns the IOR of the replication manager.
   char* replicator_ior ();
@@ -127,10 +127,10 @@ public:
   /// Destroy the child POAs created in @c init_with_orb,
   /// @c init_naming_manager_with_orb, and
   /// @c init_replication_manager_with_orb
-  virtual int fini ();
+  int fini () override;
 
   /// Destructor.
-  virtual ~TAO_FT_Naming_Server ();
+  ~TAO_FT_Naming_Server () override;
 
   void update_info (FT_Naming::UpdateInfoSeq &infos);
   void update_iors (const FT_Naming::ReplicaInfo & iors);

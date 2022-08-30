@@ -62,34 +62,34 @@ public:
   //@{
 
   /// Set the default properties to be used by all object groups.
-  virtual void set_default_properties (
-      const PortableGroup::Properties & props);
+  void set_default_properties (
+      const PortableGroup::Properties & props) override;
 
   /// Get the default properties used by all object groups.
-  virtual PortableGroup::Properties * get_default_properties ();
+  PortableGroup::Properties * get_default_properties () override;
 
   /// Remove default properties.
-  virtual void remove_default_properties (
-      const PortableGroup::Properties & props);
+  void remove_default_properties (
+      const PortableGroup::Properties & props) override;
 
   /// Set properties associated with a given Member type.  These
   /// properties override the default properties.
-  virtual void set_type_properties (
+  void set_type_properties (
       const char * type_id,
-      const PortableGroup::Properties & overrides);
+      const PortableGroup::Properties & overrides) override;
 
   /**
    * Return the properties associated with a give Replica type.  These
    * properties include the type-specific properties in use, in
    * addition to the default properties that were not overridden.
    */
-  virtual PortableGroup::Properties * get_type_properties (
-      const char * type_id);
+  PortableGroup::Properties * get_type_properties (
+      const char * type_id) override;
 
   /// Remove the given properties associated with the Replica type ID.
-  virtual void remove_type_properties (
+  void remove_type_properties (
       const char * type_id,
-      const PortableGroup::Properties & props);
+      const PortableGroup::Properties & props) override;
 
   /**
    * Dynamically set the properties associated with a given object
@@ -97,9 +97,9 @@ public:
    * These properties override the type-specific and default
    * properties.
    */
-  virtual void set_properties_dynamically (
+  void set_properties_dynamically (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Properties & overrides);
+      const PortableGroup::Properties & overrides) override;
 
   /**
    * Return the properties currently in use by the given object
@@ -108,8 +108,8 @@ public:
    * were used when the replica was created, and default properties
    * that weren't overridden.
    */
-  virtual PortableGroup::Properties * get_properties (
-      PortableGroup::ObjectGroup_ptr object_group);
+  PortableGroup::Properties * get_properties (
+      PortableGroup::ObjectGroup_ptr object_group) override;
 
   //@}
 

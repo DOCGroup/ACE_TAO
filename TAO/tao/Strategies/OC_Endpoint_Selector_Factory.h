@@ -53,13 +53,13 @@ public:
   TAO_OC_Endpoint_Selector_Factory () = default;
 
   /// Destructor.
-  virtual ~TAO_OC_Endpoint_Selector_Factory (void);
+  ~TAO_OC_Endpoint_Selector_Factory (void) override;
 
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
-  virtual TAO_Invocation_Endpoint_Selector *get_selector (void);
+  TAO_Invocation_Endpoint_Selector *get_selector (void) override;
 
 protected:
   /// The possible endpoint selector strategies that can be

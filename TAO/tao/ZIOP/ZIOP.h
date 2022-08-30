@@ -44,18 +44,18 @@ public:
   TAO_ZIOP_Loader (void);
 
   /// Destructor
-  virtual ~TAO_ZIOP_Loader (void);
+  ~TAO_ZIOP_Loader (void) override;
 
-  virtual bool decompress (ACE_Data_Block **db, TAO_Queued_Data &qd, TAO_ORB_Core &orb_core);
+  bool decompress (ACE_Data_Block **db, TAO_Queued_Data &qd, TAO_ORB_Core &orb_core) override;
 
   // Compress the @a stream. Starting point of the compression is rd_ptr()
-  virtual bool marshal_data (TAO_OutputCDR &cdr, TAO_Stub &stub);
-  virtual bool marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_ServerRequest *request);
+  bool marshal_data (TAO_OutputCDR &cdr, TAO_Stub &stub) override;
+  bool marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_ServerRequest *request) override;
 
   /// Initialize the BiDIR loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 
-  virtual void load_policy_validators (TAO_Policy_Validator &validator);
+  void load_policy_validators (TAO_Policy_Validator &validator) override;
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);

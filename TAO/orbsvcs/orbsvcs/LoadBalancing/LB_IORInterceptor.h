@@ -68,25 +68,25 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name (void);
+  char * name (void) override;
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy (void);
+  void destroy (void) override;
 
   /// Add the tagged components to the IOR.
-  virtual void establish_components (
-      PortableInterceptor::IORInfo_ptr info);
+  void establish_components (
+      PortableInterceptor::IORInfo_ptr info) override;
 
-  virtual void components_established (
-      PortableInterceptor::IORInfo_ptr info);
+  void components_established (
+      PortableInterceptor::IORInfo_ptr info) override;
 
-  virtual void adapter_manager_state_changed (
+  void adapter_manager_state_changed (
       const char * id,
-      PortableInterceptor::AdapterState state);
+      PortableInterceptor::AdapterState state) override;
 
-  virtual void adapter_state_changed (
+  void adapter_state_changed (
       const PortableInterceptor::ObjectReferenceTemplateSeq & templates,
-      PortableInterceptor::AdapterState state);
+      PortableInterceptor::AdapterState state) override;
 
   //@}
 

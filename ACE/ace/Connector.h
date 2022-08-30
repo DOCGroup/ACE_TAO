@@ -64,7 +64,7 @@ public:
                                    long timer_id);
 
   /// Destructor.
-  ~ACE_NonBlocking_Connect_Handler ();
+  ~ACE_NonBlocking_Connect_Handler () override;
 
   /// Close up and return underlying SVC_HANDLER through @c sh.
   /**
@@ -96,24 +96,24 @@ public:
   void timer_id (long timer_id);
 
   /// Called by ACE_Reactor when asynchronous connections fail.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   /// Called by ACE_Dev_Poll_Reactor when asynchronous connections fail.
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 
   /// Called by ACE_Reactor when asynchronous connections succeed.
-  virtual int handle_output (ACE_HANDLE);
+  int handle_output (ACE_HANDLE) override;
 
   /// Called by ACE_Reactor when asynchronous connections suceeds (on
   /// some platforms only).
-  virtual int handle_exception (ACE_HANDLE fd);
+  int handle_exception (ACE_HANDLE fd) override;
 
   /// This method is called if a connection times out before
   /// completing.
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
+  int handle_timeout (const ACE_Time_Value &tv, const void *arg) override;
 
   /// Should Reactor resume us if we have been suspended before the upcall?
-  virtual int resume_handler ();
+  int resume_handler () override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -191,7 +191,7 @@ public:
                     int flags = 0);
 
   /// Shutdown a connector and release resources.
-  virtual ~ACE_Connector ();
+  ~ACE_Connector () override;
 
   // = Connection establishment methods.
 
@@ -266,14 +266,14 @@ public:
   virtual PEER_CONNECTOR &connector () const;
 
   /// Initialize Svc_Handler.
-  virtual void initialize_svc_handler (ACE_HANDLE handle,
-                                       SVC_HANDLER *svc_handler);
+  void initialize_svc_handler (ACE_HANDLE handle,
+                                       SVC_HANDLER *svc_handler) override;
 
   /// Set Reactor.
-  virtual void reactor (ACE_Reactor *reactor);
+  void reactor (ACE_Reactor *reactor) override;
 
   /// Get Reactor.
-  virtual ACE_Reactor *reactor () const;
+  ACE_Reactor *reactor () const override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -348,27 +348,27 @@ protected:
 
   /// Return the handle set representing the non-blocking connects in
   /// progress.
-  ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles (void);
+  ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles (void) override;
 
   // = Dynamic linking hooks.
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Calls handle_close() to shutdown the Connector gracefully.
-  virtual int fini ();
+  int fini () override;
 
   /// Default version returns address info in @a buf.
-  virtual int info (ACE_TCHAR **strp, size_t length) const;
+  int info (ACE_TCHAR **strp, size_t length) const override;
 
   // = Service management hooks.
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int suspend ();
+  int suspend () override;
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int resume ();
+  int resume () override;
 
 private:
   /// This is the peer connector factory.
@@ -447,8 +447,8 @@ public:
    * non-blocking I/O on the SVC_HANDLER when it is opened.
    * Default strategies would be created and used.
    */
-  virtual int open (ACE_Reactor *r,
-                    int flags);
+  int open (ACE_Reactor *r,
+                    int flags) override;
 
   /**
    * Initialize a connector.  @a flags indicates how SVC_HANDLER's
@@ -463,10 +463,10 @@ public:
                     int flags = 0);
 
   /// Shutdown a connector and release resources.
-  virtual ~ACE_Strategy_Connector (void);
+  ~ACE_Strategy_Connector (void) override;
 
   /// Close down the Connector
-  virtual int close (void);
+  int close (void) override;
 
   // = Strategies accessors
   virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy () const;
@@ -492,20 +492,20 @@ protected:
    * dynamically linking the handler, etc.).  Returns -1 if failure,
    * else 0.
    */
-  virtual int make_svc_handler (SVC_HANDLER *&sh);
+  int make_svc_handler (SVC_HANDLER *&sh) override;
 
   /**
    * Bridge method for connecting the new connection into the
    * SVC_HANDLER.  The default behavior delegates to the
    * <PEER_CONNECTOR::connect> in the <Connect_Strategy>.
    */
-  virtual int connect_svc_handler (SVC_HANDLER *&sh,
+  int connect_svc_handler (SVC_HANDLER *&sh,
                                    const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
                                    ACE_Time_Value *timeout,
                                    const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
                                    int reuse_addr,
                                    int flags,
-                                   int perms);
+                                   int perms) override;
 
   /**
    * Bridge method for connecting the new connection into the
@@ -517,14 +517,14 @@ protected:
    * the internal locks in the Connect_Strategy, while saving a TSS
    * copy in @a sh_copy, usually located in the stack.
    */
-  virtual int connect_svc_handler (SVC_HANDLER *&sh,
+  int connect_svc_handler (SVC_HANDLER *&sh,
                                    SVC_HANDLER *&sh_copy,
                                    const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
                                    ACE_Time_Value *timeout,
                                    const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
                                    int reuse_addr,
                                    int flags,
-                                   int perms);
+                                   int perms) override;
 
   /**
    * Bridge method for activating a SVC_HANDLER with the appropriate
@@ -536,7 +536,7 @@ protected:
    * SVC_HANDLER as an "active object" via multi-threading or
    * multi-processing).
    */
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
+  int activate_svc_handler (SVC_HANDLER *svc_handler) override;
 
   // = Strategy objects.
 

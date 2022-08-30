@@ -39,7 +39,7 @@ public:
   TAO_DynValueBox_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynValueBox_i ();
+  ~TAO_DynValueBox_i () override;
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
@@ -51,31 +51,31 @@ public:
   static TAO_DynValueBox_i *_narrow (CORBA::Object_ptr obj);
 
   // = Functions specific to DynValueBox.
-  virtual CORBA::Any * get_boxed_value ();
+  CORBA::Any * get_boxed_value () override;
 
-  virtual void set_boxed_value (const CORBA::Any & boxed);
+  void set_boxed_value (const CORBA::Any & boxed) override;
 
-  virtual DynamicAny::DynAny_ptr get_boxed_value_as_dyn_any ();
+  DynamicAny::DynAny_ptr get_boxed_value_as_dyn_any () override;
 
-  virtual void set_boxed_value_as_dyn_any (DynamicAny::DynAny_ptr boxed);
+  void set_boxed_value_as_dyn_any (DynamicAny::DynAny_ptr boxed) override;
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
-  virtual void from_any (const CORBA::Any & value);
+  void from_any (const CORBA::Any & value) override;
 
-  virtual CORBA::Any * to_any ();
+  CORBA::Any * to_any () override;
 
-  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
+  CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual DynamicAny::DynAny_ptr current_component ();
+  DynamicAny::DynAny_ptr current_component () override;
 
   // = DynValueCommon needed to be provided here
-  virtual void set_to_value ();
+  void set_to_value () override;
 
 private:
   /// Check if the typecode is acceptable.
-  void check_typecode (CORBA::TypeCode_ptr tc);
+  void check_typecode (CORBA::TypeCode_ptr tc) override;
 
   /// Code common to the constructor from an Any arg and the member
   /// function from_any().

@@ -40,11 +40,11 @@ public:
   TAO_Advanced_Resource_Factory (void);
 
   /// Destructor.
-  virtual ~TAO_Advanced_Resource_Factory (void);
+  ~TAO_Advanced_Resource_Factory (void) override;
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
-  virtual int init (int argc, ACE_TCHAR* argv[]);
+  int init (int argc, ACE_TCHAR* argv[]) override;
 
   /// Type of lock used for the allocators
   enum Allocator_Lock_Type
@@ -84,23 +84,23 @@ public:
    * @name Resource Retrieval
    */
   //@{
-  virtual int init_protocol_factories (void);
-  virtual ACE_Allocator* input_cdr_dblock_allocator (void);
-  virtual ACE_Allocator* input_cdr_buffer_allocator (void);
-  virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
-  virtual ACE_Allocator* amh_response_handler_allocator (void);
-  virtual ACE_Allocator* ami_response_handler_allocator (void);
-  virtual int input_cdr_allocator_type_locked (void);
-  virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
+  int init_protocol_factories (void) override;
+  ACE_Allocator* input_cdr_dblock_allocator (void) override;
+  ACE_Allocator* input_cdr_buffer_allocator (void) override;
+  ACE_Allocator* input_cdr_msgblock_allocator (void) override;
+  ACE_Allocator* amh_response_handler_allocator (void) override;
+  ACE_Allocator* ami_response_handler_allocator (void) override;
+  int input_cdr_allocator_type_locked (void) override;
+  TAO_ProtocolFactorySet *get_protocol_factories (void) override;
   //@}
 
-  virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
-  virtual TAO_LF_Strategy *create_lf_strategy (void);
+  TAO_Connection_Purging_Strategy *create_purging_strategy (void) override;
+  TAO_LF_Strategy *create_lf_strategy (void) override;
 
 protected:
 
   /// Obtain the reactor implementation
-  virtual ACE_Reactor_Impl *allocate_reactor_impl () const;
+  ACE_Reactor_Impl *allocate_reactor_impl () const override;
 
   void report_option_value_error (const ACE_TCHAR* option_name,
                                   const ACE_TCHAR* option_value);
@@ -126,7 +126,7 @@ protected:
   /// Type of lock used by AMI response handler allocator.
   Allocator_Lock_Type ami_response_handler_allocator_lock_type_;
 
-  virtual int load_default_protocols (void);
+  int load_default_protocols (void) override;
 
 };
 

@@ -29,14 +29,14 @@ namespace FTRTEC
   {
   public:
     Identification_Service();
-    ~Identification_Service();
+    ~Identification_Service() override;
 
     /**
     * This function returns 0 when init is not called yet.
     */
     static Identification_Service* instance();
 
-    int init(int argc, ACE_TCHAR* argv[]);
+    int init(int argc, ACE_TCHAR* argv[]) override;
 
     const FtRtecEventComm::ObjectId& object_id() const;
     const CosNaming::Name& name() const;

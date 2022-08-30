@@ -55,20 +55,20 @@ public:
 
   /// Encode the given data, including the TypeCode, into an octet
   /// sequence.
-  virtual CORBA::OctetSeq * encode (const CORBA::Any & data);
+  CORBA::OctetSeq * encode (const CORBA::Any & data) override;
 
   /// Extract the TypeCode and the value from the octet sequence and
   /// place them into an Any.
-  virtual CORBA::Any * decode (const CORBA::OctetSeq & data);
+  CORBA::Any * decode (const CORBA::OctetSeq & data) override;
 
   /// Encode the given data, excluding the TypeCode, into an octet
   /// sequence.
-  virtual CORBA::OctetSeq * encode_value (const CORBA::Any & data);
+  CORBA::OctetSeq * encode_value (const CORBA::Any & data) override;
 
   /// Extract the value from the octet sequence, based on the given
   /// TypeCode,  and place it into an Any.
-  virtual CORBA::Any * decode_value (const CORBA::OctetSeq & data,
-                                     CORBA::TypeCode_ptr tc);
+  CORBA::Any * decode_value (const CORBA::OctetSeq & data,
+                                     CORBA::TypeCode_ptr tc) override;
 
 protected:
   /// Destructor.
@@ -76,7 +76,7 @@ protected:
    * Only allow this class to be instantiated on the heap since it is
    * reference counted.
    */
-  virtual ~TAO_CDR_Encaps_Codec (void);
+  ~TAO_CDR_Encaps_Codec (void) override;
 
   /// Verify that it is possible to encode the given data using this
   /// Codec.

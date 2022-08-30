@@ -30,7 +30,7 @@ public:
 
   ~be_visitor_root_any_op ();
 
-  virtual int visit_root (be_root *node);
+  int visit_root (be_root *node) override;
 };
 
 #endif /* _BE_VISITOR_ROOT_ANY_OP_H_ */

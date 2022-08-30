@@ -74,10 +74,10 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual bool tao_marshal (TAO_OutputCDR & cdr,
-                                CORBA::ULong offset) const;
-      virtual void tao_duplicate ();
-      virtual void tao_release ();
+      bool tao_marshal (TAO_OutputCDR & cdr,
+                                CORBA::ULong offset) const override;
+      void tao_duplicate () override;
+      void tao_release () override;
       //@}
 
       /// Accessor for concrete_base_
@@ -96,17 +96,17 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
-      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
-      virtual CORBA::TypeCode_ptr get_compact_typecode_i () const;
-      virtual char const * id_i () const;
-      virtual char const * name_i () const;
-      virtual CORBA::ULong member_count_i () const;
-      virtual char const * member_name_i (CORBA::ULong index) const;
-      virtual CORBA::TypeCode_ptr member_type_i (CORBA::ULong index) const;
-      virtual CORBA::Visibility member_visibility_i (CORBA::ULong index) const;
-      virtual CORBA::ValueModifier type_modifier_i () const;
-      virtual CORBA::TypeCode_ptr concrete_base_type_i () const;
+      CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
+      CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
+      CORBA::TypeCode_ptr get_compact_typecode_i () const override;
+      char const * id_i () const override;
+      char const * name_i () const override;
+      CORBA::ULong member_count_i () const override;
+      char const * member_name_i (CORBA::ULong index) const override;
+      CORBA::TypeCode_ptr member_type_i (CORBA::ULong index) const override;
+      CORBA::Visibility member_visibility_i (CORBA::ULong index) const override;
+      CORBA::ValueModifier type_modifier_i () const override;
+      CORBA::TypeCode_ptr concrete_base_type_i () const override;
       //@}
 
     protected:

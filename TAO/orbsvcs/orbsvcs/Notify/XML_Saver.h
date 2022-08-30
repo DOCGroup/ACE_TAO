@@ -35,7 +35,7 @@ public:
   /// Initialization is deferred to "open()"
   XML_Saver (bool timestamp = true);
 
-  virtual ~XML_Saver ();
+  ~XML_Saver () override;
 
   /// Open the output file.
   /// \param file_name the fully qualified file name
@@ -45,15 +45,15 @@ public:
   //////////////////////////////////
   // Override Topology_Saver methods
   // see Topology_Saver.h for doc
-  virtual bool begin_object (CORBA::Long id,
+  bool begin_object (CORBA::Long id,
     const ACE_CString& type,
     const NVPList& attrs,
-    bool changed);
+    bool changed) override;
 
-  virtual void end_object (CORBA::Long id,
-    const ACE_CString& type);
+  void end_object (CORBA::Long id,
+    const ACE_CString& type) override;
 
-  virtual void close (void);
+  void close (void) override;
 
 private:
   void backup_file_name (ACE_TCHAR * file_path, size_t nfile);

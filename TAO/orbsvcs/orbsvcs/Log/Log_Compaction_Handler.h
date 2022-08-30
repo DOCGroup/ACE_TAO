@@ -41,7 +41,7 @@ public:
                               const ACE_Time_Value& interval);
 
   /// Destructor.
-  ~TAO_Log_Compaction_Handler ();
+  ~TAO_Log_Compaction_Handler () override;
 
   /// Schedule Timer.
   void schedule ();
@@ -49,7 +49,7 @@ public:
   /// Cancel Timer.
   void cancel ();
 
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
+  int handle_timeout (const ACE_Time_Value &tv, const void *arg) override;
 
 private:
   long                          timer_id_;

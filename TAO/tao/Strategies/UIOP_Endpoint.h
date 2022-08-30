@@ -48,7 +48,7 @@ public:
                      CORBA::Short priority = TAO_INVALID_PRIORITY);
 
   /// Destructor.
-  ~TAO_UIOP_Endpoint () = default;
+  ~TAO_UIOP_Endpoint () override = default;
 
   /**
    * @name TAO_Endpoint Methods
@@ -56,16 +56,16 @@ public:
    * Please check the documentation in Endpoint.h for details.
    */
   //@{
-  virtual TAO_Endpoint *next (void);
-  virtual int addr_to_string (char *buffer, size_t length);
-  virtual TAO_Endpoint *duplicate (void);
+  TAO_Endpoint *next (void) override;
+  int addr_to_string (char *buffer, size_t length) override;
+  TAO_Endpoint *duplicate (void) override;
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their rendezvous points are the same.
-  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint) override;
 
   /// Return a hash value for this object.
-  virtual CORBA::ULong hash (void);
+  CORBA::ULong hash (void) override;
   //@}
 
   // = UIOP_Endpoint-specific methods.

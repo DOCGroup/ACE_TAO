@@ -82,7 +82,7 @@ public:
   ACE_Module ();
 
   /// Shutdown the Module.
-  virtual ~ACE_Module ();
+  ~ACE_Module () override;
 
   /// Create an initialized module with @a module_name as its identity
   /// and @a reader and @a writer as its tasks.

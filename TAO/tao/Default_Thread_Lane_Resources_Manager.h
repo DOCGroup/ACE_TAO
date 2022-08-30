@@ -43,26 +43,26 @@ public:
   ~TAO_Default_Thread_Lane_Resources_Manager (void);
 
   /// Finalize resources.
-  void finalize (void);
+  void finalize (void) override;
 
   /// Open default resources.
-  int open_default_resources (void);
+  int open_default_resources (void) override;
 
   /// Shutdown reactor.
-  void shutdown_reactor (void);
+  void shutdown_reactor (void) override;
 
   /// Cleanup transports.
-  virtual void close_all_transports (void);
+  void close_all_transports (void) override;
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
+  int is_collocated (const TAO_MProfile &mprofile) override;
 
   /// @name Accessors
   // @{
 
-  TAO_Thread_Lane_Resources &lane_resources (void);
+  TAO_Thread_Lane_Resources &lane_resources (void) override;
 
-  TAO_Thread_Lane_Resources &default_lane_resources (void);
+  TAO_Thread_Lane_Resources &default_lane_resources (void) override;
 
   // @}
 
@@ -90,10 +90,10 @@ class TAO_Export TAO_Default_Thread_Lane_Resources_Manager_Factory
 public:
 
   /// Destructor.
-  virtual ~TAO_Default_Thread_Lane_Resources_Manager_Factory (void);
+  ~TAO_Default_Thread_Lane_Resources_Manager_Factory (void)  override;
 
   /// Factory method.
-  TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (TAO_ORB_Core &core);
+  TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (TAO_ORB_Core &core) override;
 
 };
 

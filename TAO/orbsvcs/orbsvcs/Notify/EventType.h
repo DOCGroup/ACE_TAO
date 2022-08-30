@@ -40,7 +40,7 @@ public:
   // Constructor
 
   /// Destructor
-  virtual ~TAO_Notify_EventType ();
+  ~TAO_Notify_EventType () override;
 
   /// hash value
   u_long hash () const;
@@ -74,7 +74,7 @@ public:
 
   // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
 
 protected:
 

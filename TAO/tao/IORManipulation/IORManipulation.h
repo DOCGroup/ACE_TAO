@@ -41,44 +41,44 @@ public:
   /// Constructor
   TAO_IOR_Manipulation_impl (void);
 
-  virtual CORBA::Object_ptr merge_iors (
-    const TAO_IOP::TAO_IOR_Manipulation::IORList & iors);
+  CORBA::Object_ptr merge_iors (
+    const TAO_IOP::TAO_IOR_Manipulation::IORList & iors) override;
 
-  virtual CORBA::Object_ptr add_profiles (
-      CORBA::Object_ptr ior1, CORBA::Object_ptr ior2);
+  CORBA::Object_ptr add_profiles (
+      CORBA::Object_ptr ior1, CORBA::Object_ptr ior2) override;
 
-  virtual CORBA::Object_ptr remove_profiles (
-    CORBA::Object_ptr group, CORBA::Object_ptr ior2);
+  CORBA::Object_ptr remove_profiles (
+    CORBA::Object_ptr group, CORBA::Object_ptr ior2) override;
 
-  virtual CORBA::Boolean set_property (
-      TAO_IOP::TAO_IOR_Property_ptr prop, CORBA::Object_ptr group);
+  CORBA::Boolean set_property (
+      TAO_IOP::TAO_IOR_Property_ptr prop, CORBA::Object_ptr group) override;
 
   // @@ note awkward argument order
-  virtual CORBA::Boolean set_primary (
+  CORBA::Boolean set_primary (
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr new_primary,
-      CORBA::Object_ptr group);
+      CORBA::Object_ptr group) override;
 
-  virtual CORBA::Object_ptr get_primary (
-      TAO_IOP::TAO_IOR_Property_ptr prop, CORBA::Object_ptr group);
+  CORBA::Object_ptr get_primary (
+      TAO_IOP::TAO_IOR_Property_ptr prop, CORBA::Object_ptr group) override;
 
-  virtual CORBA::Boolean is_primary_set (
+  CORBA::Boolean is_primary_set (
       TAO_IOP::TAO_IOR_Property_ptr prop,
-      CORBA::Object_ptr group);
+      CORBA::Object_ptr group) override;
 
-   virtual CORBA::Boolean remove_primary_tag (
+   CORBA::Boolean remove_primary_tag (
        TAO_IOP::TAO_IOR_Property_ptr prop,
-       CORBA::Object_ptr iogr);
+       CORBA::Object_ptr iogr) override;
 
-  virtual CORBA::ULong is_in_ior (
+  CORBA::ULong is_in_ior (
     CORBA::Object_ptr ior1,
-    CORBA::Object_ptr ior2);
+    CORBA::Object_ptr ior2) override;
 
-  virtual CORBA::ULong get_profile_count (CORBA::Object_ptr group);
+  CORBA::ULong get_profile_count (CORBA::Object_ptr group) override;
 
 protected:
   /// Destructor
-  ~TAO_IOR_Manipulation_impl (void);
+  ~TAO_IOR_Manipulation_impl (void) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

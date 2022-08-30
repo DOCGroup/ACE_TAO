@@ -39,7 +39,7 @@ class TAO_PortableServer_Export TAO_Network_Priority_Hook
   : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_Network_Priority_Hook();
+  ~TAO_Network_Priority_Hook() override;
 
   virtual void update_network_priority (TAO_Root_POA& poa,
                                         TAO_POA_Policy_Set& poa_policy_set);

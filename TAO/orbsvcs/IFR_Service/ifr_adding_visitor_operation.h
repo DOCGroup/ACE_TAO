@@ -38,10 +38,10 @@ public:
   virtual ~ifr_adding_visitor_operation (void);
 
   /// Visit an operation.
-  virtual int visit_operation (AST_Operation *node);
+  int visit_operation (AST_Operation *node) override;
 
   /// Visit argument.
-  virtual int visit_argument (AST_Argument *node);
+  int visit_argument (AST_Argument *node) override;
 
 private:
   /// Holder for the operation parameter info passed to the

@@ -31,11 +31,11 @@ public:
   be_visitor_union_discriminant_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union_discriminant_cs ();
+  ~be_visitor_union_discriminant_cs () override;
 
   /// visit an enum. Required to generate the typecode for an enum definition
   /// appearing side the union
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 
 };
 

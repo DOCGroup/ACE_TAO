@@ -61,40 +61,40 @@ public:
   /// Returns a copy of <this>.
   TAO_Server_Network_Priority_Policy *clone () const;
 
-  TAO::DiffservCodepoint request_diffserv_codepoint (void);
+  TAO::DiffservCodepoint request_diffserv_codepoint (void) override;
 
-  void request_diffserv_codepoint (TAO::DiffservCodepoint req_dscp);
+  void request_diffserv_codepoint (TAO::DiffservCodepoint req_dscp) override;
 
-  TAO::DiffservCodepoint reply_diffserv_codepoint (void);
+  TAO::DiffservCodepoint reply_diffserv_codepoint (void) override;
 
-  void reply_diffserv_codepoint (TAO::DiffservCodepoint reply_dscp);
+  void reply_diffserv_codepoint (TAO::DiffservCodepoint reply_dscp) override;
 
-  TAO::NetworkPriorityModel network_priority_model (void);
+  TAO::NetworkPriorityModel network_priority_model (void) override;
 
-  void network_priority_model (TAO::NetworkPriorityModel npm);
+  void network_priority_model (TAO::NetworkPriorityModel npm) override;
 
   static CORBA::Policy_ptr create (const CORBA::Any &val);
 
-  CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type (void) override;
 
-  CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy (void) override;
 
-  void destroy (void);
+  void destroy (void) override;
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope () const;
+  TAO_Policy_Scope _tao_scope () const override;
 
   /// This method writes a CDR representation of the object state.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
-  virtual ~TAO_Server_Network_Priority_Policy (void);
+  ~TAO_Server_Network_Priority_Policy (void) override;
 
 private:
   /// The attributes

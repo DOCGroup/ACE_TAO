@@ -34,7 +34,7 @@ public:
   TAO_RTScheduler_Loader ();
 
   /// Destructor.
-  virtual ~TAO_RTScheduler_Loader ();
+  ~TAO_RTScheduler_Loader () override;
 
   /// Initialize the RTScheduler loader hooks.
   int init (int argc, ACE_TCHAR* []) override;

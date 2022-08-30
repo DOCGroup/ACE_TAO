@@ -43,7 +43,7 @@ public:
   TAO_FT_ServerService_Activate (void);
 
   /// The destructor
-  virtual ~TAO_FT_ServerService_Activate (void);
+  ~TAO_FT_ServerService_Activate (void) override;
 
   /// Used to force the initialization.
   static int Initializer (void);

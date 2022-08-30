@@ -69,7 +69,7 @@ public:
            const QoSDescriptor& qos_info);
 
   /// Process the events in the queue.
-  int svc ();
+  int svc () override;
 
   const ConfigInfo& get_curr_config_info() const;
   Priority_t preemption_priority() const;

@@ -32,7 +32,7 @@ public:
   be_visitor_valuetype (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype ();
+  ~be_visitor_valuetype () override;
 
 public:
   /// visit the scope of the valuetype node
@@ -45,34 +45,34 @@ public:
  // =visit methods on all elements syntactically valid in a Valuetype scope
 
   /// visit attribute
-  virtual int visit_attribute (be_attribute *node);
+  int visit_attribute (be_attribute *node) override;
 
   /// visit a constant
-  virtual int visit_constant (be_constant *node);
+  int visit_constant (be_constant *node) override;
 
   /// visit an enum
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 
   /// visit exception (not used)
-  virtual int visit_exception (be_exception *node);
+  int visit_exception (be_exception *node) override;
 
   /// visit a structure
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 
   /// visit a forward declared structure
-  virtual int visit_structure_fwd (be_structure_fwd *node);
+  int visit_structure_fwd (be_structure_fwd *node) override;
 
   /// visit a union
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
   /// visit a forward declared union
-  virtual int visit_union_fwd (be_union_fwd *node);
+  int visit_union_fwd (be_union_fwd *node) override;
 
   /// visit the typedef node
-  virtual int visit_typedef (be_typedef *node);
+  int visit_typedef (be_typedef *node) override;
 
   /// visit a field
-  virtual int visit_field (be_field *node);
+  int visit_field (be_field *node) override;
 
   // =helper methods for generation of fields
 

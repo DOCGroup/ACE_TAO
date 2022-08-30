@@ -61,37 +61,37 @@ public:
 
 
   /// Destructor.
-  ~TAO_UIPMC_Connection_Handler (void);
+  ~TAO_UIPMC_Connection_Handler (void) override;
 
   //@{
   /** @name Connection Handler overloads
    */
-  virtual int open_handler (void *v);
+  int open_handler (void *v) override;
   //@}
 
   /// Close called by the Acceptor or Connector when connection
   /// establishment fails.
-  int close (u_long = 0);
+  int close (u_long = 0) override;
 
   //@{
   /** @name Event Handler overloads
    */
-  virtual int resume_handler (void);
-  virtual int close_connection (void);
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_output (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act = 0);
-  virtual int open (void *);
+  int resume_handler (void) override;
+  int close_connection (void) override;
+  int handle_input (ACE_HANDLE) override;
+  int handle_output (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
+  int handle_timeout (const ACE_Time_Value &current_time,
+                              const void *act = 0) override;
+  int open (void *) override;
   //@}
 
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
 
   /// Set Diff-Serv codepoint on outgoing packets.
-  int set_dscp_codepoint (CORBA::Boolean set_network_priority);
-  int set_dscp_codepoint (CORBA::Long dscp_codepoint);
+  int set_dscp_codepoint (CORBA::Boolean set_network_priority) override;
+  int set_dscp_codepoint (CORBA::Long dscp_codepoint) override;
 
   // UIPMC Additions - Begin
   const ACE_INET_Addr &addr () const;
@@ -121,8 +121,8 @@ protected:
   /**
    * @name TAO_Connection Handler overloads
    */
-  virtual int release_os_resources (void);
-  virtual int handle_write_ready (const ACE_Time_Value *timeout);
+  int release_os_resources (void) override;
+  int handle_write_ready (const ACE_Time_Value *timeout) override;
   //@}
 
   // helper function used by the set_dscp_codepoint () methods to

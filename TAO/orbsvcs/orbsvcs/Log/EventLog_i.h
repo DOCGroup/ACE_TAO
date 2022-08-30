@@ -66,14 +66,14 @@ public:
                   DsLogAdmin::LogId id);
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id);
+  DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id) override;
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
+  DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id) override;
 
   /// Destroy the log object and all contained records.
   void
-  destroy (void);
+  destroy (void) override;
 
   /// Activate the EventLog.
   void
@@ -81,10 +81,10 @@ public:
 
   // = The CosEventChannelAdmin::EventChannel interface methods.
   CosEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers (void);
+  for_consumers (void) override;
 
   CosEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers (void);
+  for_suppliers (void) override;
 
 protected:
 
@@ -93,7 +93,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~TAO_EventLog_i ();
+  ~TAO_EventLog_i () override;
 
 private:
 
