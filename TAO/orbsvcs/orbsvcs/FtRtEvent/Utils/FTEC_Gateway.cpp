@@ -264,7 +264,6 @@ FTEC_Gateway_ConsumerAdmin::~FTEC_Gateway_ConsumerAdmin()
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
 FTEC_Gateway_ConsumerAdmin::obtain_push_supplier ()
 {
-
   FtRtecEventComm::ObjectId** remote_proxy_oid_ptr;
   ACE_NEW_THROW_EX(remote_proxy_oid_ptr, FtRtecEventComm::ObjectId*, CORBA::NO_MEMORY());
 
@@ -341,7 +340,6 @@ void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
   RtecEventComm::PushConsumer_ptr push_consumer,
   const RtecEventChannelAdmin::ConsumerQOS &qos)
 {
-
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
 
   *oid_ptr = impl_->ftec->connect_push_consumer(push_consumer, qos);
