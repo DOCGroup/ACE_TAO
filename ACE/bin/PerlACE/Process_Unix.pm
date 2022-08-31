@@ -874,7 +874,11 @@ sub check_return_value ($)
 {
     my $self = shift;
     my $rc = shift;
-    my $opts = shift // {};
+    my $opts = shift;
+
+    if (! defined $opts) {
+        $opts = {};
+    }
 
     # NSK OSS has a 32-bit waitpid() status
     my $is_NSK = ($^O eq "nonstop_kernel");
