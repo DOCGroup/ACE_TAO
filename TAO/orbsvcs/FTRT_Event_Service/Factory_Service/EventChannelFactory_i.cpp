@@ -100,10 +100,16 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   }
   str = ACE_TEXT_CHAR_TO_TCHAR(process_str);
 
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  const ACE_TCHAR *fmt_s = ACE_TEXT ("%ls");
+#else
+  const ACE_TCHAR *fmt_s = ACE_TEXT ("%s");
+#endif
+
   const int ENV_BUF_LEN = 512;
   ACE_TCHAR buf[ENV_BUF_LEN];
   server_addr.addr_to_string(buf,ENV_BUF_LEN,0);
-  options.setenv(ACE_TEXT("EventChannelFactoryAddr"), ACE_TEXT("%s"), buf);
+  options.setenv(ACE_TEXT("EventChannelFactoryAddr"), fmt_s, buf);
 
   // extract the object ID from the criteria
   for (CORBA::ULong i = 0; i < the_criteria.length(); ++i)
@@ -114,7 +120,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
       const char* id_str = name[0].id.in();
       the_criteria[i].val >>= val;
       if (id_str[0] != '-') // environment variable
-        options.setenv(ACE_TEXT_CHAR_TO_TCHAR(id_str), ACE_TEXT("%s"), val);
+        options.setenv(ACE_TEXT_CHAR_TO_TCHAR(id_str), fmt_s, val);
       else {// command line option
         ACE_OS::sprintf(buf, ACE_TEXT(" %s %s"), id_str, val);
         str += buf;
@@ -124,7 +130,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
 
   ORBSVCS_DEBUG((LM_DEBUG, "Command Line : %s\n", str.c_str()));
 
-  options.command_line(ACE_TEXT("%s"), str.c_str());
+  options.command_line(fmt_s, str.c_str());
 
   // Try to create a new process running date.
   ACE_Process new_process;
