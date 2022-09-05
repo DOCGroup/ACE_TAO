@@ -37,10 +37,12 @@
 #endif
 #if __cplusplus >= 201103L
 # define ACE_HAS_CPP11
-# if !defined (ACE_FALLTHROUGH) && (__GNUC__ >= 7)
-#  define ACE_FALLTHROUGH [[gnu::fallthrough]]
-# else
-#  define ACE_FALLTHROUGH
+# if !defined (ACE_FALLTHROUGH)
+#  if __GNUC__ >= 7
+#   define ACE_FALLTHROUGH [[gnu::fallthrough]]
+#  else
+#   define ACE_FALLTHROUGH
+# endif
 # endif
 #endif
 
