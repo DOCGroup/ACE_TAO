@@ -37,8 +37,6 @@
 #   define ACE_NEEDS_DEV_IO_CONVERSION
 # elif (__SUNPRO_CC >= 0x420)
 # if (__SUNPRO_CC >= 0x500)
-    // string.h and memory.h conflict for memchr definitions
-#   define ACE_LACKS_MEMORY_H
     // If -compat=4 is turned on, the old 4.2 settings for iostreams are used,
     // but the newer, explicit instantiation is used (above)
 #   if (__SUNPRO_CC_COMPAT >= 5)

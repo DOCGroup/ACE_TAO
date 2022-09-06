@@ -27,7 +27,7 @@ ACE_ATM_Acceptor::ACE_ATM_Acceptor (const ACE_Addr &remote_sap,
 
 ACE_INLINE
 int
-ACE_ATM_Acceptor::close (void)
+ACE_ATM_Acceptor::close ()
 {
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2) || defined (ACE_HAS_LINUX_ATM)
   return (acceptor_.close());

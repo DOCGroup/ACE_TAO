@@ -76,8 +76,6 @@
 
 #define ACE_NEEDS_SCHED_H
 
-#define ACE_LACKS_MALLOC_H
-
 #define ACE_HAS_ALT_CUSERID
 
 // Platform supports POSIX timers via struct timespec.

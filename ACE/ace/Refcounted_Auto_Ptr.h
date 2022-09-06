@@ -45,7 +45,7 @@ template <class X, class ACE_LOCK>
 class ACE_Refcounted_Auto_Ptr
 {
   /// Used to define a proper boolean conversion for "if (sp) ..."
-  static void unspecified_bool(ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>***){};
+  static void unspecified_bool(ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>***){}
   typedef void (*unspecified_bool_type)(ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>***);
 
 public:

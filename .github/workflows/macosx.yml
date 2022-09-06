@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-10.15, macos-11.0]
+        os: [macos-11, macos-12]
         include:
           - platform_file: include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU
     runs-on: ${{ matrix.os }}

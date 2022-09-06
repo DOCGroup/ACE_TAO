@@ -29,15 +29,15 @@ public:
   My_Test_Object (CORBA::Short id = 0);
 
   /// Destructor.
-  ~My_Test_Object (void);
+  ~My_Test_Object () = default;
 
   // = Interface implementation accessor methods.
 
   /// Sets id.
-  void id (CORBA::Short id);
+  void id (CORBA::Short id) override;
 
   /// Gets id.
-  CORBA::Short id (void);
+  CORBA::Short id () override;
 
 private:
   short id_;
@@ -48,12 +48,8 @@ My_Test_Object::My_Test_Object (CORBA::Short id)
 {
 }
 
-My_Test_Object::~My_Test_Object (void)
-{
-}
-
 CORBA::Short
-My_Test_Object::id (void)
+My_Test_Object::id ()
 {
   return id_;
 }
@@ -65,8 +61,7 @@ My_Test_Object::id (CORBA::Short id)
 }
 
 // Constructor.
-
-CosNaming_Client::CosNaming_Client (void)
+CosNaming_Client::CosNaming_Client ()
   : argc_ (0),
     argv_ (0),
     test_ (0)
@@ -74,7 +69,6 @@ CosNaming_Client::CosNaming_Client (void)
 }
 
 // Parses the command line arguments and returns an error status.
-
 int
 CosNaming_Client::parse_args (void)
 {
@@ -289,11 +283,6 @@ MT_Test::svc (void)
     {
       ex._tao_print_exception (
         "Unexpected exception in MT test bind");
-      // This debug statement works around a IRIX/MIPSPro 7.3 bug (it
-      // fails with optimize=1 debug=0; but works with any other
-      // settings for those flags).
-      ACE_DEBUG ((LM_DEBUG, "MT_Test(%t) - bind[3] %d\n",
-                  test_name_.length ()));
       return -1;
     }
 

@@ -79,7 +79,7 @@ public:
 
   /// Destructor. If <lock_> was not passed in by the user, it will be
   /// deleted.
-  virtual ~ACE_Reverse_Lock ();
+  virtual ~ACE_Reverse_Lock () = default;
 
   // = Lock accessors.
   /// Release the lock.

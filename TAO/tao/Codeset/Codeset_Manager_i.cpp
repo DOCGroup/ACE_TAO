@@ -67,7 +67,6 @@ TAO_Codeset_Manager_i::TAO_Codeset_Manager_i ()
 
   wchar_descriptor_.ncs(TAO_Codeset_Manager_i::default_wchar_codeset);
   wchar_descriptor_.add_translator (ACE_TEXT ("UTF16_BOM_Factory"));
-
 }
 
 TAO_Codeset_Descriptor_Base *
@@ -190,8 +189,7 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
         TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("TAO (%P|%t) - ")
                     ACE_TEXT("Codeset_Manager_i::process_service_context, ")
-                    ACE_TEXT("no codeset context in request, using defaults\n")
-                    ));
+                    ACE_TEXT("no codeset context in request, using defaults\n")));
       tcs_c = TAO_Codeset_Manager_i::default_char_codeset;
       tcs_w = TAO_Codeset_Manager_i::default_wchar_codeset;
     }

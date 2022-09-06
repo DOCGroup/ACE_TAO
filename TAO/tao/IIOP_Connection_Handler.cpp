@@ -543,7 +543,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
                       listen_point.host.in ()));
         }
 
-      // Construct an  IIOP_Endpoint object using the host as provided
+      // Construct an IIOP_Endpoint object using the host as provided
       // in the listen point list.  We must use host in that form because
       // that's also how the ORB on the other side will advertise the host
       // in an IOR.

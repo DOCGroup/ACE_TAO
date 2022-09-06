@@ -1,5 +1,4 @@
 // Defines the Internet domain address family address format.
-
 #include "ace/INET_Addr.h"
 
 #if !defined (__ACE_INLINE__)
@@ -139,7 +138,6 @@ ACE_INET_Addr::is_ip_equal (const ACE_INET_Addr &sap) const
 #endif /* ACE_HAS_IPV6 */
   return this->get_ip_address () == sap.get_ip_address();
 }
-
 
 u_long
 ACE_INET_Addr::hash () const
@@ -454,8 +452,7 @@ ACE_INET_Addr::set (u_short port_number,
   return 0;
 }
 
-// Helper function to get a port number from a port name.
-
+/// Helper function to get a port number from a port name.
 static int get_port_number_from_name (const char port_name[],
                                       const char protocol[])
 {

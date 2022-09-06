@@ -48,7 +48,7 @@ class ACE_Intrusive_Auto_Ptr
 {
 protected:
   /// Used to define a proper boolean conversion for "if (sp) ..."
-  static void unspecified_bool(ACE_Intrusive_Auto_Ptr<X>***){};
+  static void unspecified_bool(ACE_Intrusive_Auto_Ptr<X>***){}
   typedef void (*unspecified_bool_type)(ACE_Intrusive_Auto_Ptr<X>***);
 
 public:

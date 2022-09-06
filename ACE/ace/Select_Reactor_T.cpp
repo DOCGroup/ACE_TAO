@@ -420,6 +420,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
     {
       ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("ACE_Select_Reactor_T::open, ")
                   ACE_TEXT ("notification pipe open failed")));
       result = -1;
     }

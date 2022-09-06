@@ -100,7 +100,6 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
     }
   else
     {
-
       if (ACE_OS::strncmp (addr,
                            ACE_TEXT ("localhost"),
                            ACE_OS::strlen ("localhost")) == 0)

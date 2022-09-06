@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SHARED_MALLOC_MM_H
 #define ACE_SHARED_MALLOC_MM_H
 #include /**/ "ace/pre.h"
@@ -36,7 +35,7 @@ class ACE_Export ACE_Shared_Memory_MM : public ACE_Shared_Memory
 {
 public:
   /// Default constructor.
-  ACE_Shared_Memory_MM (void);
+  ACE_Shared_Memory_MM ();
 
   /// Constructor.
   ACE_Shared_Memory_MM (ACE_HANDLE handle,

@@ -13,7 +13,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Connector)
 
-ACE_ATM_Connector::ACE_ATM_Connector (void)
+ACE_ATM_Connector::ACE_ATM_Connector ()
 {
   ACE_TRACE ("ACE_ATM_Connector::ACE_ATM_Connector");
 }
@@ -21,7 +21,6 @@ ACE_ATM_Connector::ACE_ATM_Connector (void)
 // Actively connect and produce a new ACE_ATM_Stream if things go well...
 // Connect the <new_stream> to the <remote_sap>, waiting up to
 // <timeout> amount of time if necessary.
-
 int
 ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
                             const ACE_ATM_Addr &remote_sap,

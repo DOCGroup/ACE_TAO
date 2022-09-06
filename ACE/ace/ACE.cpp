@@ -48,9 +48,8 @@ namespace ACE
 
   // Are we debugging ACE?
   // Keeps track of whether we're in some global debug mode.
-  char debug_;
+  bool debug_ = false;
 }
-
 
 int
 ACE::out_of_handles (int error)
@@ -167,7 +166,7 @@ ACE::debug ()
   //FUZZ: disable check_for_ace_log_categories
   static const char *debug = ACE_OS::getenv ("ACE_DEBUG");
   //FUZZ: enable check_for_ace_log_categories
-  return (ACE::debug_ != 0) ? ACE::debug_ : (debug != 0 ? (*debug != '0') : false);
+  return (ACE::debug_) ? ACE::debug_ : (debug != 0 ? (*debug != '0') : false);
 }
 
 void
@@ -2922,7 +2921,6 @@ ACE::gcd (u_long x, u_long y)
   return x;
 }
 
-
 /// Calculates the minimum enclosing frame size for the given values.
 u_long
 ACE::minimum_frame_size (u_long period1, u_long period2)
@@ -2965,7 +2963,6 @@ ACE::minimum_frame_size (u_long period1, u_long period2)
       return (period1 * period2) / greatest_common_divisor;
     }
 }
-
 
 u_long
 ACE::is_prime (const u_long n,

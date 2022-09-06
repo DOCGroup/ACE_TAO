@@ -780,7 +780,7 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
   ssize_t result;
 
 # if defined (ACE_HAS_CHARPTR_SOCKOPT)
-  ACE_OSCALL (::read (handle, static_cast <char *> (buf), len), ssize_t, -result);
+  ACE_OSCALL (::read (handle, static_cast <char *> (buf), len), ssize_t, result);
 # else
   ACE_OSCALL (::read (handle, buf, len), ssize_t, result);
 # endif /* ACE_HAS_CHARPTR_SOCKOPT */
