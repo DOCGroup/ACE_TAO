@@ -53,8 +53,10 @@ namespace ACE_OS
         return -1;
 #endif // _FILE_OFFSET_BITS == 64
       }
-    else
-      stp->st_size = fdata.nFileSizeLow;
+    else 
+      {
+        stp->st_size = fdata.nFileSizeLow;
+      }
     stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
     stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
     stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
