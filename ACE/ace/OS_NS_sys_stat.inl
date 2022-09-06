@@ -53,7 +53,7 @@ namespace ACE_OS
         return -1;
 #endif // _FILE_OFFSET_BITS == 64
       }
-    else 
+    else
       {
         stp->st_size = fdata.nFileSizeLow;
       }
