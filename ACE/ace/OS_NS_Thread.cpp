@@ -5141,8 +5141,7 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, size_t stacksz, ...)
   if (ret == ACE_VX_TASK_ID_ERROR)
     return 255;
 
-  while( ret > reinterpret_cast <ACE_VX_TASK_ID> (0) &&
-         ::taskIdVerify (ret) != ERROR )
+  while( ::taskIdVerify (ret) != ERROR )
     ::taskDelay (3 * ::sysClkRateGet ());
 
   // ::taskSpawn () returns TASK_ID_ERROR on failure: return _vx_call_rc instead if
