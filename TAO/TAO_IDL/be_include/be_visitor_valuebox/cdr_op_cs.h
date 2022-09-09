@@ -35,7 +35,6 @@ public:
 
   /// visit valuebox
   int visit_valuebox (be_valuebox *node) override;
-
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_CDR_OP_CS_H_ */

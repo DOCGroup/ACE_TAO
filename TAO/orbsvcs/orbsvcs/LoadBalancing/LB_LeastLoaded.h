@@ -189,7 +189,6 @@ private:
   CORBA::Float per_balance_load_;
 
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -239,7 +239,6 @@ public:
     unsigned char ebit;
     ACE_UINT16 blkno;
   };
-
 };
 
 /**

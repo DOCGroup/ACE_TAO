@@ -840,7 +840,6 @@ private:
   /// If set, the parser should include namespace declarations in the list
   /// of attributes of an element.
   int namespace_prefixes_;
-
 };
 
 #if defined (__ACEXML_INLINE__)

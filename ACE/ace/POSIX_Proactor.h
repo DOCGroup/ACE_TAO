@@ -309,7 +309,6 @@ protected:
 private:
   /// Task to process pseudo-asynchronous accept/connect
   ACE_Asynch_Pseudo_Task  pseudo_task_;
-
 };
 
 // Forward declarations.

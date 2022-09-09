@@ -92,7 +92,6 @@ private:
 
   /// Access our Peer.
   TAO_Notify_Peer* peer (void) override;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

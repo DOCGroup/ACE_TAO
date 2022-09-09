@@ -147,7 +147,6 @@ private:
   //@}
 
   CosLoadBalancing::LoadList current_loads_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

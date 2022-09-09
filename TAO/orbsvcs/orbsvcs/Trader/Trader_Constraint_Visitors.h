@@ -37,7 +37,6 @@ class TAO_Trading_Serv_Export TAO_Trader_Constraint_Validator
 
   /// Desctructor.
   ~TAO_Trader_Constraint_Validator () override;
-
 };
 
 class TAO_Trading_Serv_Export TAO_Trader_Constraint_Evaluator : public TAO_Constraint_Evaluator

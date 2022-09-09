@@ -151,7 +151,6 @@ private:
   /// Lock that is used to guard internal structures.
   TAO_SYNCH_RECURSIVE_MUTEX *internal_lock_;
 #endif /* ACE_MT_SAFE */
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

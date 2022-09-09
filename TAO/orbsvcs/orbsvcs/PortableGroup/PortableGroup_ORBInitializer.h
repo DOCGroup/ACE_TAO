@@ -41,7 +41,6 @@ public:
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

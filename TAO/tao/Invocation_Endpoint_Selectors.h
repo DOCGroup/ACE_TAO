@@ -64,7 +64,6 @@ public:
   /// Select the endpoint and set @a r's @c profile_
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
                                 ACE_Time_Value *val) = 0;
-
 };
 
 // ****************************************************************

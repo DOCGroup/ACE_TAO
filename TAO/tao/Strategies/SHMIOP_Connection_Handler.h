@@ -92,7 +92,6 @@ protected:
   int release_os_resources (void) override;
   int handle_write_ready (const ACE_Time_Value *timeout) override;
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

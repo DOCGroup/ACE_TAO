@@ -58,7 +58,6 @@ private:
   // Disallowing copying/assignment.
   TAO_IFR_Service_Loader (const TAO_IFR_Service_Loader &);
   TAO_IFR_Service_Loader & operator= (const TAO_IFR_Service_Loader &);
-
 };
 
 

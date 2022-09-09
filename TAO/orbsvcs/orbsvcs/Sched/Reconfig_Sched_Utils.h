@@ -405,7 +405,6 @@ public:
 
   /// Visit a Reconfig Scheduler Entry.
   virtual int visit (TAO_Reconfig_Scheduler_Entry &) = 0;
-
 };
 
 

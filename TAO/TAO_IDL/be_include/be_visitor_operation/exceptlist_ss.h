@@ -39,7 +39,6 @@ public:
 
   /// visit the operation
   int visit_operation (be_operation * node) override;
-
 };
 
 #endif /* _BE_VISITOR_OPERATION_EXCEPTIONLIST_SS_H_ */

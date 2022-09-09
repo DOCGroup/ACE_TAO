@@ -42,7 +42,6 @@ public:
   ~TAO_Codeset_Manager_Factory () override;
   TAO_Codeset_Manager *create(void) override;
   bool is_default() const override;
-
 };
 
 

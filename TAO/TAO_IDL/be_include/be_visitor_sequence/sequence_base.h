@@ -59,7 +59,6 @@ public:
 protected:
   /// helper that does the common job
   int visit_node (be_type *);
-
 };
 
 /**

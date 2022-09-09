@@ -126,7 +126,6 @@ protected:
   Allocator_Lock_Type ami_response_handler_allocator_lock_type_;
 
   int load_default_protocols (void) override;
-
 };
 
 static TAO_Resource_Factory_Changer TAO_changer;

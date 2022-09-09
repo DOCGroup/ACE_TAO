@@ -60,7 +60,6 @@ public:
 
    /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
   bool can_process_upcalls () const override;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

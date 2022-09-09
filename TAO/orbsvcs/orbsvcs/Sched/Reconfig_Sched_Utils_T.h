@@ -101,7 +101,6 @@ protected:
 
   /// Map of handles into RT_Infos.
   RT_INFO_MAP & rt_info_map_;
-
 };
 
 
@@ -154,7 +153,6 @@ protected:
 private:
   /// Keeps track of DFS start and finish times.
   int DFS_time_;
-
 };
 
 
@@ -270,7 +268,6 @@ protected:
   int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
                                   const RtecScheduler::Dependency_Info &di) override;
-
 };
 
 
@@ -489,7 +486,6 @@ protected:
   int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
                                   const RtecScheduler::Dependency_Info &di) override;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

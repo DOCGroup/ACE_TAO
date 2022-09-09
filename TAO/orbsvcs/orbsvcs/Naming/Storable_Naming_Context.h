@@ -107,7 +107,6 @@ public:
 
   const char * id (void);
   const char * kind (void);
-
 };
 
 
@@ -465,7 +464,6 @@ private:
   File_Open_Lock_and_Check(void);
 
   TAO_Storable_Naming_Context * context_;
-
 }; // end of embedded class File_Open_Lock_and_Check
 
   friend class File_Open_Lock_and_Check;

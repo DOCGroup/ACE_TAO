@@ -60,7 +60,6 @@ public:
 
 protected:
   ~AV_Null_MediaCtrl (void) override;
-
 };
 
 /**
@@ -593,7 +592,6 @@ public:
 
   /// Destructor
   ~TAO_StreamEndPoint_A (void) override;
-
 };
 
 // For backward compatibility.

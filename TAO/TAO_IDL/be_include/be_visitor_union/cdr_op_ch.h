@@ -36,7 +36,6 @@ public:
 
   /// visit union
   int visit_union (be_union *node) override;
-
 };
 
 #endif /* _BE_VISITOR_UNION_CDR_OP_CH_H_ */

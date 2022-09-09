@@ -1276,7 +1276,6 @@ protected:
 
   /// I/O handle used for reading.
   ACE_HANDLE handle_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

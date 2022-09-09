@@ -84,7 +84,6 @@ public:
   void receive_other (
       PortableInterceptor::ClientRequestInfo_ptr ri) override;
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -392,7 +392,6 @@ public:
   /// uses the appropriate form of equals comparison.
   int operator () (TAO_DynSequence_i& dyn_any,
                    CORBA::ULong element) const;
-
 };
 
 template<>

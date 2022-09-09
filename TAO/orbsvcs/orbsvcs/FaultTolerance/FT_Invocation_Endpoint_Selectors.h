@@ -77,8 +77,6 @@ protected:
   /// Helper method that checks whether the profile is a primary or
   /// not.
   bool check_profile_for_primary (TAO_Profile *);
-
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

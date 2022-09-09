@@ -306,7 +306,6 @@ private:
 
   /// Return the number of entries in the CORBA::PrimitiveKind enum.
   u_int num_pkinds () const;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

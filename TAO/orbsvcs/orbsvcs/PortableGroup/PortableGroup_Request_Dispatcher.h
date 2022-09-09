@@ -54,7 +54,6 @@ private:
 
   /// Registry for all of the group (multicast) acceptors.
   TAO_PortableGroup_Acceptor_Registry acceptor_registry_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

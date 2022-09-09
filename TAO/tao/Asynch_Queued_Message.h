@@ -120,7 +120,6 @@ private:
 
   // Expiration time
   ACE_Time_Value abs_timeout_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

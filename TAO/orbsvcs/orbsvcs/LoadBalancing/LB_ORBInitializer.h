@@ -88,7 +88,6 @@ private:
    * used out of convencience.
    */
   TAO_LB_LoadAlert load_alert_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

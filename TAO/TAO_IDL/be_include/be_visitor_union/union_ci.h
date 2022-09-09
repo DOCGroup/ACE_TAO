@@ -33,7 +33,6 @@ public:
 
   /// visit union. We provide code for this method in the derived class
   int visit_union (be_union *node) override;
-
 };
 
 #endif /* _BE_VISITOR_UNION_UNION_CI_H_ */

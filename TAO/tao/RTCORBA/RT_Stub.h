@@ -120,7 +120,6 @@ private:
   // = Disallow copying and assignment.
   TAO_RT_Stub (const TAO_RT_Stub &);
   TAO_RT_Stub &operator = (const TAO_RT_Stub &);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

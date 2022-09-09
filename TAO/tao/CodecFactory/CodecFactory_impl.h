@@ -70,7 +70,6 @@ private:
    * which they are associated.
    */
   TAO_ORB_Core * const orb_core_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

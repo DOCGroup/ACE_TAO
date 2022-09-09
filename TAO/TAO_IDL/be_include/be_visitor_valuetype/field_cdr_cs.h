@@ -89,7 +89,6 @@ public:
 
 private:
   int valuetype_common (be_type *);
-
 };
 
 /**

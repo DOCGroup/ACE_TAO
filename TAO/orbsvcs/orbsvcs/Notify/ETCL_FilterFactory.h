@@ -105,7 +105,6 @@ protected:
 
   FILTERMAP filters_;
   TAO_SYNCH_MUTEX mtx_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -28,7 +28,6 @@ class be_visitor_amh_rh_operation_sh : public be_visitor_operation
     ~be_visitor_amh_rh_operation_sh ();
 
     int visit_operation (be_operation *node) override;
-
 };
 
 #endif /* AMH_RH_OPERATION_SH_H */

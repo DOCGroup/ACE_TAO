@@ -60,7 +60,6 @@ public:
 
 protected:
   static TAO_FT_Naming_Manager *naming_manager_impl_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

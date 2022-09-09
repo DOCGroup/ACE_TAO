@@ -212,7 +212,6 @@ protected:
 private:
   // @@ Frank: From DIOP_Acceptor.h
   TAO_DIOP_Connection_Handler *connection_handler_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

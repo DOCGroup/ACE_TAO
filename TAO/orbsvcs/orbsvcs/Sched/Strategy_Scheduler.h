@@ -315,7 +315,6 @@ private:
 
     /// = Instance of the strategy.
   static ACE_RMS_Scheduler_Strategy *instance_;
-
 };
 
 
@@ -379,7 +378,6 @@ private:
 
     /// = Instance of the strategy
   static ACE_MLF_Scheduler_Strategy *instance_;
-
 };
 
 

@@ -49,7 +49,6 @@ public:
 
 private:
   int emit_common (be_type *node);
-
 };
 
 #endif /* _BE_VISITOR_EXCEPTION_CTOR_H_ */

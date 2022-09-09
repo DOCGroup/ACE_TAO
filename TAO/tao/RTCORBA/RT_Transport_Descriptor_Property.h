@@ -87,7 +87,6 @@ private:
    * @c object_id_ is the @c TAO_Stub* of the object.
    */
   long object_id_;
-
 };
 
 /*****************************************************************************/

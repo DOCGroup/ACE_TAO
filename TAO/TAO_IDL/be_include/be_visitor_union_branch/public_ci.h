@@ -49,7 +49,6 @@ public:
 
 private:
   int emit_valuetype_common  (be_type *node);
-
 };
 
 #endif /* _BE_VISITOR_UNION_BRANCI_PUBLIC_CI_H_ */
