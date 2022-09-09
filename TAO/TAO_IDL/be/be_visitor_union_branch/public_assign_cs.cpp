@@ -542,7 +542,7 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
           // We are generating the copy constructor.
           *os << "ACE_NEW (" << be_idt << be_idt_nl
               << "this->u_." << ub->local_name () << "_," << be_nl
-              << "OBJECT_FIELD ( ::CORBA::Object"
+              << "OBJECT_FIELD (::CORBA::Object"
               << "::_duplicate (u.u_." << ub->local_name ()
               << "_->in ()))" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl;
@@ -552,7 +552,7 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
           // We are generating the assignment operator.
           *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
               << "this->u_." << ub->local_name () << "_," << be_nl
-              << "OBJECT_FIELD ( ::CORBA::Object"
+              << "OBJECT_FIELD (::CORBA::Object"
               << "::_duplicate (u.u_." << ub->local_name ()
               << "_->in ()))," << be_nl
               << "*this" << be_uidt_nl

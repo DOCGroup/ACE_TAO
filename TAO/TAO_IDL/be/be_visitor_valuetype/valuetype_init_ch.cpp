@@ -84,7 +84,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   // Generate _downcast method.
   os << be_nl_2
      << "static " << node->local_name () << "_init* "
-     << "_downcast ( ::CORBA::ValueFactoryBase *);";
+     << "_downcast (::CORBA::ValueFactoryBase *);";
 
   if (factory_style == be_valuetype::FS_CONCRETE_FACTORY)
     {

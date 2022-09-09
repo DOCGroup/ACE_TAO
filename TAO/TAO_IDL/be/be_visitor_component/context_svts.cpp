@@ -160,7 +160,7 @@ be_visitor_context_svts::visit_publishes (be_publishes *node)
       << port_name << " (" << be_idt_nl
       << "::" << fname << "Consumer_ptr c)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "if ( ::CORBA::is_nil (c))" << be_idt_nl
+      << "if (::CORBA::is_nil (c))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
@@ -284,7 +284,7 @@ be_visitor_context_svts::visit_emits (be_emits *node)
       << " (" << be_idt_nl
       << "::" << fname << "Consumer_ptr c)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "if ( ::CORBA::is_nil (c))" << be_idt_nl
+      << "if (::CORBA::is_nil (c))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
@@ -307,7 +307,7 @@ be_visitor_context_svts::visit_emits (be_emits *node)
       << "{" << be_idt_nl
       << "::" << fname << "Consumer_var ciao_emits_" << port_name << " =" << be_idt_nl
       << "this->ciao_emits_" << port_name << "_consumer_._retn ();" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (ciao_emits_"
+      << "if (::CORBA::is_nil (ciao_emits_"
       << port_name << ".in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::NoConnection ();" << be_uidt_nl
@@ -343,7 +343,7 @@ be_visitor_context_svts::gen_uses_simplex (AST_Type *obj,
       << port_name << " (" << be_idt_nl
       << "::" << fname << "_ptr c)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "if ( ::CORBA::is_nil (c))" << be_idt_nl
+      << "if (::CORBA::is_nil (c))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
@@ -365,7 +365,7 @@ be_visitor_context_svts::gen_uses_simplex (AST_Type *obj,
       << "{" << be_idt_nl
       << "::" << fname << "_var ciao_uses_" << port_name << " =" << be_idt_nl
       << "this->ciao_uses_" << port_name << "_._retn ();" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (ciao_uses_"
+      << "if (::CORBA::is_nil (ciao_uses_"
       << port_name << ".in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::NoConnection ();" << be_uidt_nl
@@ -434,7 +434,7 @@ be_visitor_context_svts::gen_uses_multiplex (
       << port_name << " (" << be_idt_nl
       << "::" << fname << "_ptr c)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "if ( ::CORBA::is_nil (c))" << be_idt_nl
+      << "if (::CORBA::is_nil (c))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
