@@ -49,7 +49,6 @@ namespace TAO
   class FT_ReplicationManagerFaultAnalyzer
     : public ::TAO::FT_DefaultFaultAnalyzer
   {
-
   public:
     /**
     * Constructor.
@@ -64,7 +63,6 @@ namespace TAO
     virtual ~FT_ReplicationManagerFaultAnalyzer ();
 
   public:
-
     /**
     * Validate event type to make sure it is one we can handle.
     * @param event The structured fault event, as from the Fault Notifier.
@@ -98,7 +96,6 @@ namespace TAO
     /////////////////////////
     // Implementation methods
   protected:
-
     /// Helper functions for fault analysis.
 
     // Extract the type id from a CORBA any.

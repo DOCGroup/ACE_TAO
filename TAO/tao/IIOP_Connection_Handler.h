@@ -56,9 +56,7 @@ namespace IIOP
 class TAO_Export TAO_IIOP_Connection_Handler : public TAO_IIOP_SVC_HANDLER,
                                                public TAO_Connection_Handler
 {
-
 public:
-
 #ifdef TAO_LOG_CH_REF_COUNTS
   Reference_Count add_reference (void);
   Reference_Count remove_reference (void);
@@ -113,7 +111,6 @@ public:
   void abort (void);
 
 protected:
-
   //@{
   /**
    * @name TAO_Connection Handler overloads

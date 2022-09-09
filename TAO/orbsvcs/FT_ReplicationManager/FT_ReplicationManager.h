@@ -77,7 +77,6 @@ namespace TAO
   class FT_ReplicationManager
     : public virtual POA_FT::ReplicationManager
   {
-
     //////////////////////
     // non-CORBA interface
 
@@ -95,7 +94,6 @@ namespace TAO
     virtual ~FT_ReplicationManager ();
 
   public:
-
     /**
      * Parse command line arguments.
      * @param argc traditional C argc
@@ -363,7 +361,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /// The orb
     CORBA::ORB_var orb_;
 
