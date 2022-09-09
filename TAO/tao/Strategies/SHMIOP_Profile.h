@@ -87,7 +87,6 @@ public:
   void add_endpoint (TAO_SHMIOP_Endpoint *endp);
 
 protected:
-
   /// Template methods. Please see tao/Profile.h for documentation.
   int decode_profile (TAO_InputCDR& cdr) override;
   void parse_string_i (const char *string) override;
@@ -96,7 +95,6 @@ protected:
   CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile) override;
 
 private:
-
   /**
    * Head of this profile's list of endpoints.  This endpoint is not
    * dynamically allocated because a profile always contains at least

@@ -325,7 +325,6 @@ protected:
   CORBA::ULong hash_service_i (CORBA::ULong m);
 
 private:
-
   /// This object keeps ownership of this object
   TAO_MProfile *forward_to_i ();
 

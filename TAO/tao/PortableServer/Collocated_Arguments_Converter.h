@@ -40,7 +40,6 @@ class TAO_PortableServer_Export Collocated_Arguments_Converter :
   public ACE_Service_Object
 {
 public:
-
   ~Collocated_Arguments_Converter () override;
 
   virtual void convert_request (TAO_ServerRequest & server_request,

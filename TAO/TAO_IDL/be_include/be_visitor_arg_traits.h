@@ -53,7 +53,6 @@ public:
   int visit_valuebox (be_valuebox *node) override;
 
 private:
-
   bool generated (be_decl *node) const;
   void generated (be_decl *node,
                   bool val);

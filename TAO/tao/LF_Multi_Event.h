@@ -81,7 +81,6 @@ protected:
   bool error_detected_i () const override;
 
 private:
-
   struct Event_Node {
     TAO_Connection_Handler * ptr_;
     Event_Node *next_;

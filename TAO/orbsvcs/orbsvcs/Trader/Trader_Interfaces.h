@@ -509,7 +509,6 @@ class TAO_Admin :
   public TAO_Link_Attributes <POA_CosTrading::Admin>
 {
 public:
-
   TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Admin (void) override;
@@ -618,7 +617,6 @@ class TAO_Link :
   public TAO_Link_Attributes <POA_CosTrading::Link>
 {
 public:
-
   TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Link (void) override;

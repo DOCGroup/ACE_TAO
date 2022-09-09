@@ -96,11 +96,9 @@ public:
   bool is_obsolete (time_t stored_time) override;
 
 protected:
-
   static TAO_FT_Naming_Manager *naming_manager_;
   bool stale_;
   TAO_FT_Naming_Replication_Manager *replicator_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

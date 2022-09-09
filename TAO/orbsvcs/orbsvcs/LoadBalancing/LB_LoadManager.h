@@ -42,7 +42,6 @@ class TAO_LoadBalancing_Export TAO_LB_LoadManager
     public ACE_Task_Base
 {
 public:
-
   /// Constructor.
   TAO_LB_LoadManager (int ping_timeout,
                       int ping_interval);
@@ -263,7 +262,6 @@ public:
   CORBA::Object_ptr next_member (const PortableServer::ObjectId & oid);
 
 public:
-
   /// Initialize the load balancer.  This will cause a child POA to be
   /// created with the appropriate policies to support ServantLocators
   /// (i.e. for the MemberLocator).
@@ -272,7 +270,6 @@ public:
                    PortableServer::POA_ptr root_poa);
 
 protected:
-
   /// Destructor.
   /**
    * Destructor is protected to enforce correct memory management
@@ -281,7 +278,6 @@ protected:
   ~TAO_LB_LoadManager (void) override;
 
 private:
-
   /// Extract the value of the InitialNumberReplicas property from
   /// the_criteria.
   int get_initial_number_replicas (
@@ -315,7 +311,6 @@ private:
     const CosLoadBalancing::StrategyInfo * info);
 
 private:
-
   CORBA::ORB_var orb_;
 
   /// Reactor used when pulling loads from registered load monitors.

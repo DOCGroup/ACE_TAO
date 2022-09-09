@@ -1058,7 +1058,6 @@ public:
     friend class ACE_WIN32_Asynch_Connect_Result;
 
   public:
-
     /// I/O handle for the  connection.
     ACE_HANDLE connect_handle () const;
 

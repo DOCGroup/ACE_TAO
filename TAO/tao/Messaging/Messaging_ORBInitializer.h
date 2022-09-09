@@ -38,7 +38,6 @@ class TAO_Messaging_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name PortableInterceptor::ORBInitializer Methods
    *
@@ -54,7 +53,6 @@ public:
   //@}
 
 private:
-
   /// Register Messaging policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 

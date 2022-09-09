@@ -38,7 +38,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Simple_Mcast_EH
   , public TAO_ECG_Handler_Shutdown
 {
 public:
-
   /// Initialization and termination methods.
   //@{
   /// Constructor.
@@ -70,7 +69,6 @@ public:
   int handle_input (ACE_HANDLE fd) override;
 
 private:
-
   // Socket on which we listen for messages.
   ACE_SOCK_Dgram_Mcast dgram_;
 

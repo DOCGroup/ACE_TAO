@@ -61,7 +61,6 @@ public:
 
 
 protected:
-
   CORBA::Object_ptr get_consumer (void) override;
 
   /// The Consumer

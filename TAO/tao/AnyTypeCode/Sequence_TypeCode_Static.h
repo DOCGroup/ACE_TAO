@@ -48,7 +48,6 @@ namespace TAO
       , private TAO::Null_RefCount_Policy
     {
     public:
-
       /// Constructor.
       Sequence (CORBA::TCKind kind,
                 CORBA::TypeCode_ptr const * content_type,

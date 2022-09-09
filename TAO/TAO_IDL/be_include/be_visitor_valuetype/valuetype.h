@@ -25,9 +25,7 @@
  */
 class be_visitor_valuetype : public be_visitor_scope
 {
-
 public:
-
   /// constructor
   be_visitor_valuetype (be_visitor_context *ctx);
 

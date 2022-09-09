@@ -37,7 +37,6 @@ class TAO_RTEvent_Serv_Export TAO_EC_Default_ProxyPushConsumer :
   public TAO_EC_ProxyPushConsumer
 {
 public:
-
   /// Constructor...
   TAO_EC_Default_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
@@ -60,7 +59,6 @@ public:
   void _remove_ref () override;
 
 private:
-
   PortableServer::ObjectId
          object_id () override;
 };

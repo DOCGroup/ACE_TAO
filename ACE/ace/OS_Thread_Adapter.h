@@ -60,7 +60,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Ensure that this object is allocated on the heap.
   ~ACE_OS_Thread_Adapter (void) override;
 };

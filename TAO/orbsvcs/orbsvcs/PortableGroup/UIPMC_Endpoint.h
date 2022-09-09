@@ -105,7 +105,6 @@ public:
   const char *preferred_if () const;
 
 private:
-
   /// Helper methods for getting and setting the IP address.  @@ Vadym - deprecate these.
   ACE_UINT32 uint_ip_addr () const;
   void uint_ip_addr (ACE_UINT32 ip_addr);

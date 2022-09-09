@@ -80,7 +80,6 @@ namespace CORBA
   class TAO_Export SystemException : public Exception
   {
   public:
-
     /// Copy constructor.
     /**
      * @note This constructor should be protected, but VC7.1 at
@@ -140,7 +139,6 @@ namespace CORBA
     CORBA::Exception *_tao_duplicate () const override;
 
   protected:
-
     /// Default constructor.
     SystemException ();
 

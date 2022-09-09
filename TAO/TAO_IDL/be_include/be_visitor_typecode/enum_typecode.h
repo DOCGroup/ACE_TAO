@@ -29,7 +29,6 @@ namespace TAO
     : public be_visitor_typecode_defn
   {
   public:
-
     /// Constructor.
     be_visitor_enum_typecode (be_visitor_context * ctx);
 
@@ -44,10 +43,8 @@ namespace TAO
     int visit_enum (be_enum * node) override;
 
   private:
-
     /// Generate structure field related TypeCode code.
     int visit_members (be_enum * node);
-
   };
 
 }

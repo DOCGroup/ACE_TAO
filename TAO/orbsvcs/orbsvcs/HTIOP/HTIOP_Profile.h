@@ -112,7 +112,6 @@ namespace TAO
       CORBA::ULong hash (CORBA::ULong max) override;
 
     protected:
-
       /// Template methods. Please see Profile.h for the documentation.
       int decode_profile (TAO_InputCDR &cdr) override;
       int decode_endpoints (void) override;
@@ -121,7 +120,6 @@ namespace TAO
       CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile) override;
 
     protected:
-
       /**
        * Head of this profile's list of endpoints.  This endpoint is not
        * dynamically allocated because a profile always contains at least

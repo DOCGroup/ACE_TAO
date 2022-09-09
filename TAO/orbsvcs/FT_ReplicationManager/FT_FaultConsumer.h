@@ -90,7 +90,6 @@ namespace TAO
     size_t notifications () const;
 
   public:
-
     /**
     * @name POA_CosNotifyComm::StructuredPushConsumer Methods
     *
@@ -123,7 +122,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /// The POA with which we are activated.
     PortableServer::POA_var poa_;
 

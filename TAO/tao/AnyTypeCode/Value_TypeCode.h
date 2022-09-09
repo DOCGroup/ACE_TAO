@@ -52,7 +52,6 @@ namespace TAO
         private RefCountPolicy
     {
     public:
-
       /// Constructor.
       Value (CORBA::TCKind kind,
              char const * id,

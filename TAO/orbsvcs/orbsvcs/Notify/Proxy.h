@@ -106,7 +106,6 @@ public:
   virtual void validate () = 0;
 
 protected:
-
   /// Filter Administration
   TAO_Notify_FilterAdmin filter_admin_;
 

@@ -173,7 +173,6 @@ public:
   // @}
 
 private:
-
   int create_threads_i (size_t count);
 
   TAO_DTP_Thread_Pool_Manager &manager_;
@@ -215,7 +214,6 @@ private:
 class TAO_Dynamic_TP_Export TAO_DTP_Thread_Pool_Manager
 {
 public:
-
   /// Constructor.
   TAO_DTP_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
 

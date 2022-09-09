@@ -82,7 +82,6 @@ public:
 
 
 protected:
-
   CosNotifyFilter::Filter_ptr
     create_filter (const char *constraint_grammar,
                    const TAO_Notify_Object::ID& id,

@@ -226,7 +226,6 @@ private:
                                                   const char *sn);
 
 protected:
-
   /// A concrete implementor of the NamingContext functions.
   TAO_Naming_Context_Impl *impl_;
 };
@@ -242,9 +241,7 @@ protected:
  */
 class TAO_Naming_Serv_Export TAO_Naming_Context_Impl
 {
-
 public:
-
   /// Destructor.
   virtual ~TAO_Naming_Context_Impl (void);
 

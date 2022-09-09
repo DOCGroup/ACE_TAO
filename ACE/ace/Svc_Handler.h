@@ -212,7 +212,6 @@ public:
   void dump () const;
 
 public:
-
   // = The following methods are not suppose to be public.
 
   // Because friendship is *not* inherited in C++, these methods have

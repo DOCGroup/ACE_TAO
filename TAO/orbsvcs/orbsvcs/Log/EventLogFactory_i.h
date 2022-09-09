@@ -50,7 +50,6 @@ class TAO_EventLog_Serv_Export TAO_EventLogFactory_i :
 
 {
 public:
-
   //= Initialization and termination code.
 
   /// Constructor.

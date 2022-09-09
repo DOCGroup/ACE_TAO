@@ -31,7 +31,6 @@ class TAO_RTPortableServer_Export TAO_RT_Object_Adapter_Factory
   : public TAO_Adapter_Factory
 {
 public:
-
   /// Create adapter.
   TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
 };

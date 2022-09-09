@@ -193,7 +193,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /**
    * Schedule a timer that may optionally auto-reset.
    * Schedule @a type that will expire at @a future_time,

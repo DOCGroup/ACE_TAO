@@ -75,7 +75,6 @@ public:
   void destroy (void) override;
 
 private:
-
   virtual void remove (void);
 
   ACE_CString stat_name_;

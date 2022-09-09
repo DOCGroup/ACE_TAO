@@ -73,7 +73,6 @@ public:
     const TAO_Notify::NVPList& attrs) override;
 
 private:
-
   void release (void) override;
 };
 

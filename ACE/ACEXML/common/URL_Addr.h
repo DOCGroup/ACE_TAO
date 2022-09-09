@@ -110,7 +110,6 @@ public:
   int destroy (void);
 
 private:
-
   /// Calculate the maximum length of the address string
   size_t calculate_length (int ipaddr_format) const;
 

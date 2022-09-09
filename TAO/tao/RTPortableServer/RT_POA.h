@@ -48,7 +48,6 @@ class TAO_RTPortableServer_Export TAO_RT_POA
   , public virtual TAO_Regular_POA
 {
 public:
-
   // RTCORBA specific methods
   CORBA::Object_ptr create_reference_with_priority (const char * intf,
                                                     RTCORBA::Priority priority) override;
@@ -189,7 +188,6 @@ public:
   void *thread_pool () const override;
 
 protected:
-
   /// Template method for creating new POA's of this type.
   TAO_Root_POA *new_POA (const String &name,
                                  PortableServer::POAManager_ptr poa_manager,

@@ -35,7 +35,6 @@ class TAO_Export TAO_Default_Thread_Lane_Resources_Manager
   : public TAO_Thread_Lane_Resources_Manager
 {
 public:
-
   /// Constructor.
   TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
@@ -88,13 +87,11 @@ class TAO_Export TAO_Default_Thread_Lane_Resources_Manager_Factory
   : public TAO_Thread_Lane_Resources_Manager_Factory
 {
 public:
-
   /// Destructor.
   ~TAO_Default_Thread_Lane_Resources_Manager_Factory (void)  override;
 
   /// Factory method.
   TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (TAO_ORB_Core &core) override;
-
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Thread_Lane_Resources_Manager_Factory)

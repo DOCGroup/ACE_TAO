@@ -29,7 +29,6 @@ public:
   void destroy (void) override;
   int close (u_long flags = 0) override;
 protected:
-
   int handle_input (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE,
                             ACE_Reactor_Mask) override;

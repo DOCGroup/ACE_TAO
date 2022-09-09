@@ -186,7 +186,6 @@ protected:
   /// Validate the connection to consumer on connect
   int consumer_validate_connection_;
 private:
-
   /// Template method hooks.
   virtual void refcount_zero_hook ();
   virtual void pre_dispatch_hook (RtecEventComm::EventSet&);

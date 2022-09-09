@@ -45,7 +45,6 @@ namespace TAO
 class TAO_ZIOP_Export TAO_ZIOP_Stub : public TAO_Stub
 {
 public:
-
   TAO_ZIOP_Stub (const char *repository_id,
                  const TAO_MProfile &profiles,
                  TAO_ORB_Core *orb_core);
@@ -62,7 +61,6 @@ public:
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type) override;
 
 private:
-
   /// Helper method used to parse the policies.
   void parse_policies (void);
 

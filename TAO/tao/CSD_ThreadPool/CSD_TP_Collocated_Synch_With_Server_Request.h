@@ -50,7 +50,6 @@ namespace TAO
                                                   : public TP_Corba_Request
     {
     public:
-
       /// Constructor.
       TP_Collocated_Synch_With_Server_Request
                            (TAO_ServerRequest&              server_request,

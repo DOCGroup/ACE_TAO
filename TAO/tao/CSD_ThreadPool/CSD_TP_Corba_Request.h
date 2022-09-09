@@ -47,7 +47,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Corba_Request : public TP_Request
     {
     public:
-
       /// Virtual Destructor.
       ~TP_Corba_Request() override;
 

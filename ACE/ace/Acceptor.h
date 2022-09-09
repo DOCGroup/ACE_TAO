@@ -406,7 +406,6 @@ public:
   int resume () override;
 
 protected:
-
   /// Calls {handle_close} when dynamically unlinked.
   int fini () override;
 

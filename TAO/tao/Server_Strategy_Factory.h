@@ -45,7 +45,6 @@ enum TAO_Demux_Strategy
 class TAO_Export TAO_Server_Strategy_Factory : public ACE_Service_Object
 {
 public:
-
   struct Active_Object_Map_Creation_Parameters
   {
     /// Constructor.

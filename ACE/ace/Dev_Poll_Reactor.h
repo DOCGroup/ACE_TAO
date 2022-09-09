@@ -167,7 +167,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /**
    * Keep a back pointer to the ACE_Dev_Poll_Reactor.  If this value
    * if NULL then the ACE_Dev_Poll_Reactor has been initialized with
@@ -913,7 +912,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   class Token_Guard;
 
   /// Non-locking version of wait_pending().
@@ -1090,7 +1088,6 @@ protected:
   bool restart_;
 
 protected:
-
   /**
    * @class Token_Guard
    *

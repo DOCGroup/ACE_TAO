@@ -55,7 +55,6 @@ namespace CORBA
   class TAO_AnyTypeCode_Export TypeCode
   {
   public:
-
     /**
      * @class Bounds
      *
@@ -68,7 +67,6 @@ namespace CORBA
     class TAO_AnyTypeCode_Export Bounds : public UserException
     {
     public:
-
       /// Constructor.
       Bounds ();
 
@@ -95,7 +93,6 @@ namespace CORBA
     class TAO_AnyTypeCode_Export BadKind : public CORBA::UserException
     {
     public:
-
       BadKind ();
 
       static BadKind * _downcast (CORBA::Exception * ex);

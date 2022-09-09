@@ -31,7 +31,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Container_T
 {
   typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;
  public:
-
   /// Constructor
   TAO_Notify_Container_T (void);
 

@@ -120,7 +120,6 @@ public:
   TAO_Notify_Object::ID get_id () const override;
 
 private:
-
   /// = Data Members
 
   /// = NotifyExt methods

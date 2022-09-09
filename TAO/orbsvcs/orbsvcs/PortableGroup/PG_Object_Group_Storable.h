@@ -46,11 +46,9 @@ namespace TAO
   class TAO_PortableGroup_Export PG_Object_Group_Storable
     : public PG_Object_Group
   {
-
     /////////////////////
     // Construct/Destruct
   public:
-
     /**
      * This constructor is suitable for creating an object group from
      * scratch.
@@ -82,9 +80,7 @@ namespace TAO
 
     /////////////////
     // public methods
-
   public:
-
     /**
      * Indicate that this object group is to be permanently
      * destroyed. During destruction the persistent store
@@ -139,7 +135,6 @@ namespace TAO
     PortableGroup::ObjectGroupId  get_object_group_id () const override;
 
   private:
-
     /////////////////////////
     // Forbidden methods
     PG_Object_Group_Storable ();
@@ -160,7 +155,6 @@ namespace TAO
     time_t last_changed_;
 
   protected:
-
     bool loaded_from_stream_;
 
     bool destroyed_;

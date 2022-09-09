@@ -42,7 +42,6 @@ class TAO_Reconfig_Scheduler :
   //
 {
 public:
-
   /// Type of map used for O(1) lookup of RT_Infos by their handles.
   typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
                                   TAO_RT_Info_Ex *,
@@ -308,7 +307,6 @@ public:
   void critical_utilization_threshold (const CORBA::Double &);
 
 protected:
-
   // @@ TO DO: use a memento to save and restore scheduler state without
   //           breaking encapsulation, particularly of these flags.
 

@@ -89,7 +89,6 @@ public:
   static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_PriorityModelPolicy (void) override;
@@ -100,7 +99,6 @@ protected:
   TAO_PriorityModelPolicy (void);
 
 private:
-
   /// Attributes.
   RTCORBA::PriorityModel priority_model_;
   RTCORBA::Priority server_priority_;
@@ -145,13 +143,11 @@ public:
   static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_ThreadpoolPolicy (void) override;
 
 private:
-
   /// Attribute.
   RTCORBA::ThreadpoolId id_;
 };
@@ -195,11 +191,9 @@ public:
   static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_PrivateConnectionPolicy (void) override;
-
 };
 
 //*************************************************************************
@@ -258,7 +252,6 @@ public:
   static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_PriorityBandedConnectionPolicy (void) override;
@@ -269,7 +262,6 @@ protected:
   TAO_PriorityBandedConnectionPolicy (void);
 
 private:
-
   /// Attribute.
   RTCORBA::PriorityBands priority_bands_;
 };
@@ -321,13 +313,11 @@ public:
   static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_ServerProtocolPolicy (void) override;
 
 private:
-
   /// Attribute.
   RTCORBA::ProtocolList protocols_;
 };
@@ -387,7 +377,6 @@ public:
   static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_ClientProtocolPolicy (void) override;
@@ -398,7 +387,6 @@ protected:
   TAO_ClientProtocolPolicy (void);
 
 private:
-
   /// Attribute.
   RTCORBA::ProtocolList protocols_;
 };
@@ -456,7 +444,6 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_TCP_Protocol_Properties (void) override;
@@ -487,7 +474,6 @@ class TAO_RTCORBA_Export TAO_UnixDomain_Protocol_Properties
     public ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
   TAO_UnixDomain_Protocol_Properties (CORBA::Long send_buffer_size,
                                       CORBA::Long recv_buffer_size);
@@ -520,13 +506,11 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_UnixDomain_Protocol_Properties (void) override;
 
 private:
-
   // = Attributes.
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
@@ -612,13 +596,11 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_SharedMemory_Protocol_Properties (void) override;
 
 private:
-
   // = Attributes.
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
@@ -668,7 +650,6 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_UserDatagram_Protocol_Properties (void) override;
@@ -734,7 +715,6 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_StreamControl_Protocol_Properties (void) override;
@@ -757,13 +737,11 @@ class TAO_RTCORBA_Export TAO_GIOP_Protocol_Properties
     public ::CORBA::LocalObject
 {
 public:
-
   // = CDR encoding methods
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_GIOP_Protocol_Properties () override;
@@ -777,7 +755,6 @@ protected:
 class TAO_RTCORBA_Export TAO_Protocol_Properties_Factory
 {
 public:
-
   /**
    * Creates the proper transport ProtocolProperties subclass that matches
    * the IOP::ProfileId.
@@ -799,7 +776,6 @@ public:
   static RTCORBA::ProtocolProperties *create_orb_protocol_property (IOP::ProfileId id);
 
 private:
-
   TAO_Protocol_Properties_Factory (void);
 };
 

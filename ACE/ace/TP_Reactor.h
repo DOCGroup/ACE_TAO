@@ -87,7 +87,6 @@ private:
 class ACE_TP_Token_Guard
 {
 public:
-
   /// Constructor that will grab the token for us
   ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token);
 
@@ -122,7 +121,6 @@ private:
   ACE_TP_Token_Guard &operator= (ACE_TP_Token_Guard &&) = delete;
 
 private:
-
   /// The Select Reactor token.
   ACE_Select_Reactor_Token &token_;
 
@@ -172,7 +170,6 @@ private:
 class ACE_Export ACE_TP_Reactor : public ACE_Select_Reactor
 {
 public:
-
   /// Initialize ACE_TP_Reactor with the default size.
   ACE_TP_Reactor (ACE_Sig_Handler * = 0,
                   ACE_Timer_Queue * = 0,
@@ -282,7 +279,6 @@ protected:
                               ACE_Event_Handler *eh,
                               ACE_EH_PTMF callback) override;
 private:
-
   /// Get the handle of the notify pipe from the ready set if there is
   /// an event in the notify pipe.
   ACE_HANDLE get_notify_handle (void);

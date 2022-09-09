@@ -43,9 +43,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_UIOP_Connection_Handler : public TAO_UIOP_SVC_HANDLER,
                                                           public TAO_Connection_Handler
 {
-
 public:
-
   TAO_UIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor.
@@ -82,7 +80,6 @@ public:
   int add_transport_to_cache (void);
 
 protected:
-
   //@{
   /**
    * @name TAO_Connection Handler overloads

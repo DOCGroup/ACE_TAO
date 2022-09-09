@@ -34,7 +34,6 @@ namespace TAO
   class In_Var_Array_SArgument_T : public InArgument
   {
   public:
-
     In_Var_Array_SArgument_T ();
 
     CORBA::Boolean demarshal (TAO_InputCDR &) override;

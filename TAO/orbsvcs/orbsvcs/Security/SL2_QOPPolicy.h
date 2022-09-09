@@ -51,7 +51,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       QOPPolicy (::Security::QOP qop);
 
@@ -71,7 +70,6 @@ namespace TAO
       ::Security::QOP qop (void) override;
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
@@ -80,11 +78,9 @@ namespace TAO
       ~QOPPolicy (void) override;
 
     private:
-
       /// Quality of protection which can be specified for an object
       /// reference and used to protect messages.
       ::Security::QOP const qop_;
-
     };
 
   } // End Security namespace

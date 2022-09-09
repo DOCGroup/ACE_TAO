@@ -38,7 +38,6 @@ class TAO_PortableServer_Export TAO_Binary_Search_OpTable
   : public TAO_Operation_Table
 {
 public:
-
   /// Do nothing destructor.
   ~TAO_Binary_Search_OpTable () override;
 

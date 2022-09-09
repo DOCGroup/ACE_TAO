@@ -142,7 +142,6 @@ namespace TAO
   // CORBA interface(s)
 
   public:
-
     /**
     * @name POA_FT::ReplicationManager Methods
     *

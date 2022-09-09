@@ -750,7 +750,6 @@ namespace ACE_RMCast
   class NAK : public Profile
   {
   public:
-
     static u16 const id;
 
     typedef ACE_Vector<u64, ACE_VECTOR_DEFAULT_SIZE> SerialNumbers;

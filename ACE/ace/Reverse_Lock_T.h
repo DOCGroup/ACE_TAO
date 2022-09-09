@@ -68,7 +68,6 @@ template <class ACE_LOCKING_MECHANISM>
 class ACE_Reverse_Lock : public ACE_Lock
 {
 public:
-
   typedef ACE_LOCKING_MECHANISM ACE_LOCK;
 
   // = Initialization/Finalization methods.

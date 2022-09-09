@@ -52,7 +52,6 @@ namespace TAO
                       : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
-
       /// Virtual Destructor.
       ~TP_Custom_Request_Operation() override;
 

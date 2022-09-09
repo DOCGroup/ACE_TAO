@@ -98,7 +98,6 @@ public:
   TAO_LF_Strategy *create_lf_strategy (void) override;
 
 protected:
-
   /// Obtain the reactor implementation
   ACE_Reactor_Impl *allocate_reactor_impl () const override;
 

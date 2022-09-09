@@ -40,7 +40,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Trading_Serv_Export TAO_Property_Evaluator
 {
 public:
-
   TAO_Property_Evaluator(const CosTrading::PropertySeq& properties,
                          CORBA::Boolean supports_dp = 1);
 
@@ -121,7 +120,6 @@ private:
 class TAO_Trading_Serv_Export TAO_Property_Evaluator_By_Name : public TAO_Property_Evaluator
 {
 public:
-
   TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties
  ,
                                   CORBA::Boolean supports_dp = 1);
@@ -158,7 +156,6 @@ public:
   const CosTrading::Property* get_property (const char* property_name);
 
 private:
-
   TAO_Property_Evaluator_By_Name (const TAO_Property_Evaluator_By_Name&);
   TAO_Property_Evaluator_By_Name& operator= (const TAO_Property_Evaluator_By_Name&);
 
@@ -428,7 +425,6 @@ public:
                               const CosTrading::Link::LinkInfo& link_info) const;
 
 private:
-
   /// Reconclile a ULong property with its default.
   CORBA::ULong ulong_prop (POLICY_TYPE pol) const;
 

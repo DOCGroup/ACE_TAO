@@ -38,7 +38,6 @@ class TAO_PortableGroup_Export PortableGroup_Request_Dispatcher
   friend class TAO_GOA;
 
 public:
-
   /// Destructor.
   ~PortableGroup_Request_Dispatcher (void) override;
 
@@ -50,7 +49,6 @@ public:
                          CORBA::Object_out forward_to) override;
 
 private:
-
   /// Hash map containing the GroupId->ObjectKey mappings.
   TAO_Portable_Group_Map group_map_;
 

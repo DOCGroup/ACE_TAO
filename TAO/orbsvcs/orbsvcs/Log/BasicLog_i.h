@@ -50,7 +50,6 @@ class TAO_Log_Serv_Export TAO_BasicLog_i :
   public POA_DsLogAdmin::BasicLog
 {
 public:
-
   /// Constructor.
   TAO_BasicLog_i (CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr poa,
@@ -68,7 +67,6 @@ public:
   void destroy (void) override;
 
 protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce proper memory management through
@@ -77,7 +75,6 @@ protected:
   ~TAO_BasicLog_i (void) override;
 
 private:
-
   /// POA.
   PortableServer::POA_var poa_;
 };

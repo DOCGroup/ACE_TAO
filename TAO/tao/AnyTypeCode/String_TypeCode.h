@@ -44,7 +44,6 @@ namespace TAO
         private RefCountPolicy
     {
     public:
-
       /// Constructor.
       String (CORBA::TCKind kind, CORBA::ULong length);
 

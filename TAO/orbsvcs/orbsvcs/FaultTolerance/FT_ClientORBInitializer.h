@@ -36,13 +36,11 @@ class TAO_FT_ClientORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
-
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
-
   /// Register FTCORBA policy factories.
   void register_policy_factories (
          PortableInterceptor::ORBInitInfo_ptr info);

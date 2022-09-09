@@ -50,7 +50,6 @@ typedef ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>
 class TAO_Strategies_Export TAO_SHMIOP_Transport : public TAO_Transport
 {
 public:
-
   /// Constructor.
   TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handler,
                         TAO_ORB_Core *orb_core);

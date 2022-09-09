@@ -100,7 +100,6 @@ public:
                     CosNaming::BindingType &type) override;
 
 private:
-
   /// Helper: factors common code from <bind> and <rebind>.
   int shared_bind (const char *id,
                    const char *kind,
@@ -172,7 +171,6 @@ public:
                      CosNaming::BindingIterator_out &bi) override;
 
 protected:
-
   /// Counter used for generation of POA ids for children Naming
   /// Contexts.
   ACE_UINT32 counter_;

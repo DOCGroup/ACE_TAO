@@ -138,7 +138,6 @@ protected:
                                CORBA::Float & value);
 
 private:
-
   /// This servant's default POA.
   PortableServer::POA_var poa_;
 

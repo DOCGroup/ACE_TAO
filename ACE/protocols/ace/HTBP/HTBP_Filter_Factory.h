@@ -40,7 +40,6 @@ namespace ACE
     class HTBP_Export Filter_Factory : public ACE_Service_Object
     {
     public:
-
       /// Constructor
       Filter_Factory ();
 

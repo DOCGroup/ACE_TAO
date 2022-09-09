@@ -85,7 +85,6 @@ public:
   int add_transport_to_cache (void);
 
 protected:
-
   //@{
   /**
    * @name TAO_Connection Handler overloads

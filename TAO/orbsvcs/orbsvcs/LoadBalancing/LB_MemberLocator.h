@@ -41,7 +41,6 @@ class TAO_LB_MemberLocator
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
   TAO_LB_MemberLocator (TAO_LB_LoadManager * load_balancer);
 
@@ -72,10 +71,8 @@ public:
   //@}
 
 private:
-
   /// The load balancer/manager implementation.
   TAO_LB_LoadManager * load_manager_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

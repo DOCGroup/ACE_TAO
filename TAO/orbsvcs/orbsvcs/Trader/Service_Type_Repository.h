@@ -178,7 +178,6 @@ public:
   void unmask_type (const char  *name) override;
 
 private:
-
   /**
    * @class Type_Info
    *

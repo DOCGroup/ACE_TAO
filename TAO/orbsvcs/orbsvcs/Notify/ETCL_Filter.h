@@ -35,7 +35,6 @@ class TAO_Notify_ETCL_Filter;
 class TAO_Notify_Constraint_Expr : public TAO_Notify::Topology_Object
 {
 public:
-
   friend class TAO_Notify_ETCL_Filter;
 
   TAO_Notify_Constraint_Expr (void);
@@ -120,7 +119,6 @@ protected:
   CosNotifyFilter::CallbackIDSeq * get_callbacks (void) override;
 
 private:
-
   /// Release this object.
   void release (void) override;
 

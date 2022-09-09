@@ -58,7 +58,6 @@ namespace CORBA
 class TAO_Export TAO_Invocation_Endpoint_Selector
 {
 public:
-
   /// Destructor.
   virtual ~TAO_Invocation_Endpoint_Selector (void);
 
@@ -86,7 +85,6 @@ class TAO_Export TAO_Default_Endpoint_Selector
   : public TAO_Invocation_Endpoint_Selector
 {
 public:
-
   /// Destructor.
   ~TAO_Default_Endpoint_Selector (void) override;
 

@@ -125,7 +125,6 @@ namespace TAO
         SecurityLevel3::OwnCredentials_ptr credentials);
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
@@ -134,7 +133,6 @@ namespace TAO
       ~CredentialsCurator (void) override;
 
     private:
-
       /// Lock used to synchronize access to underlying tables.
       TAO_SYNCH_MUTEX lock_;
 

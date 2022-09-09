@@ -79,7 +79,6 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class TAO_Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
-
   /// Constructor.
   TAO_Accept_Strategy (TAO_ORB_Core *orb_core);
 

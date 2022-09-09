@@ -45,7 +45,6 @@ class TAO_FT_Request_Duration_Policy
     public ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_FT_Request_Duration_Policy (const TimeBase::TimeT& relative_expiry);
 
@@ -90,7 +89,6 @@ class TAO_FT_Heart_Beat_Policy
     public ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_FT_Heart_Beat_Policy (const CORBA::Boolean boolean,
                             const TimeBase::TimeT &interval,
@@ -120,7 +118,6 @@ public:
                        const TimeBase::TimeT &timebase);
 
 private:
-
   // The attributes
   /// <heartbeat_> indicates whether heartbeating is enabled or not.
   CORBA::Boolean heartbeat_;

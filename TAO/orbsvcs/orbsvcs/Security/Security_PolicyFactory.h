@@ -49,7 +49,6 @@ namespace TAO
         public ::CORBA::LocalObject
     {
     public:
-
       CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                                const CORBA::Any & value) override;
     };

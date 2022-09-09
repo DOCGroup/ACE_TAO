@@ -58,7 +58,6 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-
       /// Constructor.
       Value (CORBA::TCKind kind,
              char const * id,

@@ -159,7 +159,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /**
      * A human-readable string to distinguish this from other Notifiers.
      */

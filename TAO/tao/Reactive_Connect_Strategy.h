@@ -50,7 +50,6 @@ public:
 
 protected:
   int wait_i (TAO_LF_Event *ch, TAO_Transport *, ACE_Time_Value *val) override;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

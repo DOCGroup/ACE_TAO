@@ -55,7 +55,6 @@ public:
     TAO_Notify_Consumer* old_consumer) override;
 
 protected:
-
   CORBA::Object_ptr get_consumer (void) override;
 
   /// The Consumer

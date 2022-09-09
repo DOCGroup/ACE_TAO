@@ -46,7 +46,6 @@ public:
   ACE_CString get_ior () const override;
 
 protected:
-
   CORBA::Object_ptr get_supplier (void) override;
 
  /// The Supplier

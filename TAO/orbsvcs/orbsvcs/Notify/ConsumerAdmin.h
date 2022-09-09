@@ -133,7 +133,6 @@ protected:
   ::CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void) override;
 
 private:
-
   /// Release this object.
   void release (void) override;
 };

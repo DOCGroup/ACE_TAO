@@ -47,7 +47,6 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-
       /// Constructor.
       String (CORBA::TCKind kind, CORBA::ULong length);
 

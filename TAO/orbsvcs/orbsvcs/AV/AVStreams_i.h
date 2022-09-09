@@ -59,7 +59,6 @@ public:
   AV_Null_MediaCtrl (void);
 
 protected:
-
   ~AV_Null_MediaCtrl (void) override;
 
 };
@@ -117,7 +116,6 @@ public:
                                     CORBA::Object_ptr flow_connection) override;
 
 protected:
-
   /// Destructor.
   ~TAO_Basic_StreamCtrl (void) override;
 
@@ -194,7 +192,6 @@ class TAO_AV_Export TAO_StreamCtrl
 {
 
 public:
-
   /// Default Constructor
   TAO_StreamCtrl (void);
 
@@ -257,7 +254,6 @@ public:
                                      const AVStreams::flowSpec &the_spec) override;
 
 protected:
-
   struct MMDevice_Map_Entry
   {
     AVStreams::StreamEndPoint_var sep_;
@@ -282,7 +278,6 @@ class TAO_AV_Export TAO_MCastConfigIf
     public virtual TAO_PropertySet
 {
 public:
-
   enum Peer_Interface {VDEV = 0, FLOWENDPOINT=1};
   struct Peer_Info
   {
@@ -431,7 +426,6 @@ public:
   int is_protocol_object_set (void);
 
 protected:
-
   TAO_AV_QoS qos_;
   Flow_Handler_Map flow_handler_map_;
   Flow_Handler_Map control_flow_handler_map_;
@@ -697,9 +691,7 @@ class TAO_AV_Export TAO_MMDevice
   :public virtual POA_AVStreams::MMDevice,
    public virtual TAO_PropertySet
 {
-
 public:
-
   /// Constructor
   enum MMDevice_Type {MMDEVICE_A = 0,MMDEVICE_B = 1};
   TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy_);
@@ -762,7 +754,6 @@ protected:
   char* add_fdev_i (AVStreams::FDev_ptr fdev);
 
 protected:
-
   TAO_AV_Endpoint_Strategy *endpoint_strategy_;
 
   /// Count of the number of flows in this MMDevice , used to
@@ -880,9 +871,7 @@ class TAO_AV_Export TAO_FlowEndPoint :
   public virtual POA_AVStreams::FlowEndPoint,
   public virtual TAO_Base_StreamEndPoint
 {
-
 public:
-
   ///default constructor.
   TAO_FlowEndPoint (void);
 

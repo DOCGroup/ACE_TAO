@@ -49,7 +49,6 @@ public:
   bool is_alive (bool allow_nil_supplier);
 
 protected:
-
   /// Dispatch updates implementation.
   void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
                                    const CosNotification::EventTypeSeq& removed) override;

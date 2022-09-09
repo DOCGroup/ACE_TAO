@@ -33,7 +33,6 @@ class TAO_FT_Heart_Beat_Enabled_Policy
   , public ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_FT_Heart_Beat_Enabled_Policy (const CORBA::Boolean boolean);
 
@@ -59,7 +58,6 @@ public:
   void destroy () override;
 
 private:
-
   /// indicates whether heartbeating is enabled or not.
   CORBA::Boolean heartbeat_enabled_value_;
 };

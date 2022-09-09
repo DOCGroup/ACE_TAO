@@ -86,12 +86,10 @@ public:
   static TimeBase::TimeT now (void);
 
 private:
-
   /// Check whether the right flags are available so that we can issue a
   /// restart.
   CORBA::Boolean restart_policy_check (IOP::ServiceContextList &service_list,
                                        const TAO_Profile *profile);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

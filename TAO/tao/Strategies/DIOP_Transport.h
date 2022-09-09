@@ -100,7 +100,6 @@ public:
                             ACE_Time_Value *max_time_wait = 0) override;
 
 private:
-
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
   TAO_DIOP_Connection_Handler *connection_handler_;

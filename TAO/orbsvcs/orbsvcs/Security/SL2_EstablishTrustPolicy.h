@@ -54,7 +54,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       EstablishTrustPolicy (const ::Security::EstablishTrust &trust);
 
@@ -74,7 +73,6 @@ namespace TAO
       ::Security::EstablishTrust trust (void) override;
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
@@ -83,11 +81,9 @@ namespace TAO
       ~EstablishTrustPolicy (void) override;
 
     private:
-
       /// Quality of protection which can be specified for an object
       /// reference and used to protect messages.
       ::Security::EstablishTrust const trust_;
-
     };
 
   } // End Security namespace

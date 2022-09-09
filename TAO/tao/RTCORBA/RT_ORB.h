@@ -64,7 +64,6 @@ public:
   RTCORBA::Mutex_ptr open_named_mutex (const char * name);
 
 private:
-
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
   /// Hash map for named RT Mutexes
   ACE_Hash_Map_Manager_Ex<
@@ -92,7 +91,6 @@ class TAO_RTCORBA_Export TAO_RT_ORB
     public ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_RT_ORB (TAO_ORB_Core *orb_core,
               TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
@@ -251,13 +249,11 @@ public:
   static int modify_thread_scheduling_policy (CORBA::ORB_ptr orb);
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_RT_ORB (void) override;
 
 protected:
-
   /// Reference to our creating ORB Core.
   TAO_ORB_Core * const orb_core_;
 

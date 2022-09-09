@@ -40,7 +40,6 @@ class TAO_Dynamic_TP_Export TAO_DTP_Thread_Lane_Resources_Manager :
   public TAO_Thread_Lane_Resources_Manager
 {
 public:
-
   /// Constructor.
   TAO_DTP_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
@@ -98,11 +97,9 @@ class TAO_Dynamic_TP_Export TAO_DTP_Thread_Lane_Resources_Manager_Factory
   : public TAO_Thread_Lane_Resources_Manager_Factory
 {
 public:
-
   /// Factory method.
   TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (
     TAO_ORB_Core &core) override;
-
 };
 
 

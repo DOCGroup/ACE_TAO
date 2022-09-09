@@ -44,7 +44,6 @@ namespace CORBA
   class TAO_Export LocalObject : public virtual CORBA::Object
   {
   public:
-
     /// Destructor
     ~LocalObject () override;
 

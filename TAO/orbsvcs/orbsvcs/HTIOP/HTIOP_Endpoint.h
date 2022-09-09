@@ -45,7 +45,6 @@ namespace TAO
     class HTIOP_Export Endpoint : public TAO_Endpoint
     {
     public:
-
       friend class Profile;
       friend class TAO_SSLIOP_Profile;
 
@@ -121,7 +120,6 @@ namespace TAO
       // Access to our <hint_>.
 
     private:
-
       /// Helper method for setting INET_Addr.
       int set (const ACE::HTBP::Addr &addr,
                int use_dotted_decimal_addresses);

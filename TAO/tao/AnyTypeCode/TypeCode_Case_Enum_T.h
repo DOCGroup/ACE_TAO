@@ -47,7 +47,6 @@ namespace TAO
     class Case_Enum_T : public Case<StringType, TypeCodeType>
     {
     public:
-
       /// Constructor.
       Case_Enum_T (CORBA::TypeCode_ptr discriminator_tc,
                    CORBA::ULong member_label,

@@ -55,7 +55,6 @@ class TAO_LB_ClientRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name Methods Required by the Client Request Interceptor
    * Interface

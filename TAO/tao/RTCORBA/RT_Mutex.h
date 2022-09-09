@@ -50,7 +50,6 @@ class TAO_RTCORBA_Export TAO_RT_Mutex
     public ::CORBA::LocalObject
 {
 public:
-
   /// Acquire the lock.
   void lock (void) override;
 
@@ -92,7 +91,6 @@ public:
   virtual const char *name () const;
 
 protected:
-
   /// My name.
   ACE_CString name_;
 };

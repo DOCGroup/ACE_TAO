@@ -45,7 +45,6 @@ class TAO_Endpoint;
 class TAO_Strategies_Export TAO_UIOP_Connector : public TAO_Connector
 {
 public:
-
   /**
    * Constructor.
    * @@ Do we want to pass in the tag here or should it be statically
@@ -78,7 +77,6 @@ public:
   //@}
 
 public:
-
   typedef TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
           TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY;
 
@@ -94,7 +92,6 @@ public:
           TAO_UIOP_BASE_CONNECTOR;
 
 protected:
-
   /**
    * @name More TAO_Connector methods
    *
@@ -112,12 +109,10 @@ protected:
   //@}
 
 private:
-
   /// Return the remote endpoint, a helper function
   TAO_UIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
 private:
-
   /// Our connect strategy
   TAO_UIOP_CONNECT_STRATEGY connect_strategy_;
 

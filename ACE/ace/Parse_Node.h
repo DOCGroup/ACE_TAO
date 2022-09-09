@@ -409,7 +409,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Return mangled function name that takes into account ACE
   /// versioned namespace.
   /**
@@ -430,7 +429,6 @@ private:
   ACE_TCHAR * make_func_name (ACE_TCHAR const * func_name);
 
 private:
-
   /// Name of the function that we're parsing.
   const ACE_TCHAR *function_name_;
 
@@ -495,7 +493,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /**
    * Not implemented to enforce no copying
    */

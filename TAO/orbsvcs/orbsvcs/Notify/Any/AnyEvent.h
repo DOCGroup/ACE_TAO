@@ -77,7 +77,6 @@ protected:
   TAO_Notify_Event * copy () const override;
 
 protected:
-
   // This must be a pointer rather than a reference, because the derived
   // class needs to redirect it to a new copy
   const CORBA::Any* event_;

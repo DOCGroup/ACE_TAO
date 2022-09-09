@@ -30,7 +30,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IFRService_Export TAO_IFR_Service_Loader : public TAO_Object_Loader
 {
 public:
-
   // Constructor
   TAO_IFR_Service_Loader (void);
 
@@ -51,13 +50,11 @@ public:
                                            int argc,
                                            ACE_TCHAR *argv[]) override;
 
-
 protected:
   TAO_IFR_Server ifr_server_;
   // Instance of the TAO_IFR_Server
 
 private:
-
   // Disallowing copying/assignment.
   TAO_IFR_Service_Loader (const TAO_IFR_Service_Loader &);
   TAO_IFR_Service_Loader & operator= (const TAO_IFR_Service_Loader &);

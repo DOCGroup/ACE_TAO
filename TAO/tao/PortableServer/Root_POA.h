@@ -467,7 +467,6 @@ public:
                                  const PortableServer::ObjectId& oid);
 
 protected:
-
 #if (TAO_HAS_MINIMUM_POA == 0)
   int enter ();
 
@@ -637,7 +636,6 @@ public:
   invoke_key_to_object_helper_i (const char * repository_id,
                                  const PortableServer::ObjectId & id);
 protected:
-
   /// Get the ORT adapter, in case there is no adapter yet, this method will
   /// try to create one and hold the POA lock
   TAO::ORT_Adapter *ORT_adapter ();
@@ -795,7 +793,6 @@ public:
 class TAO_PortableServer_Export TAO_POA_Static_Resources
 {
 public:
-
   /// Return the singleton instance.
   static TAO_POA_Static_Resources* instance ();
 
@@ -803,7 +800,6 @@ public:
   static void fini () ACE_GCC_DESTRUCTOR_ATTRIBUTE;
 
 public:
-
   /**
    * Name of the factory object used to adapt function calls on the
    * PortableInterceptor interfaces ORT. The default value is

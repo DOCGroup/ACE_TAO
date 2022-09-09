@@ -33,7 +33,6 @@ namespace TAO
   class TAO_Export Storable_FlatFileStream : public Storable_Base
   {
   public:
-
     Storable_FlatFileStream(const ACE_CString & file, const char * mode,
                             bool use_backup = Storable_Base::use_backup_default,
                             bool retry_on_ebadf = Storable_Base::retry_on_ebadf_default);

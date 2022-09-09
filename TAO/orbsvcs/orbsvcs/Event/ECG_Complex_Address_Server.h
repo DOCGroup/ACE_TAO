@@ -46,7 +46,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Complex_Address_Server :
   public virtual POA_RtecUDPAdmin::AddrServer
 {
 public:
-
   /// Create a new TAO_ECG_Complex_Address_Server object.
   /*
    * (Constructor access is restricted to insure that all
@@ -75,7 +74,6 @@ public:
   void dump_content ();
 
 protected:
-
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_Complex_Address_Server objects using the static create()
   /// method.
@@ -84,7 +82,6 @@ protected:
   TAO_ECG_Complex_Address_Server (int is_source_mapping = 1);
 
 private:
-
   /// Helper.  Given key and mcast address in string form, add them to
   /// the mapping.
   int add_entry (const char * key, const char * mcast_addr);

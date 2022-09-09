@@ -51,7 +51,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       ObjectCredentialsPolicy (
         const SecurityLevel3::OwnCredentialsList & creds);
@@ -73,7 +72,6 @@ namespace TAO
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
@@ -82,10 +80,8 @@ namespace TAO
       ~ObjectCredentialsPolicy (void) override;
 
     private:
-
       /// List of POA-specific OwnCredentials.
       SecurityLevel3::OwnCredentialsList creds_list_;
-
     };
 
   } // End SL3 namespace

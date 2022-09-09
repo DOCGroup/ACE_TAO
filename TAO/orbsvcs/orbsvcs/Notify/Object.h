@@ -173,12 +173,10 @@ private:
   void destroy_poa (void);
 
 protected:
-
   /// The mutex to serialize access to state variables.
   TAO_SYNCH_MUTEX lock_;
 
 private:
-
   /// The POA in which the object is activated.
   TAO_Notify_POA_Helper* poa_;
 
