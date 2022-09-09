@@ -33,7 +33,6 @@ class ORT_test_IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   ORT_test_IORInterceptor (void);
 
   /**
@@ -68,7 +67,6 @@ public:
   //@}
 
 private:
-
   CORBA::Long establish_count_;
 
   CORBA::Long components_establish_count_;

@@ -12,7 +12,6 @@
 class JAWS_Timer_EH : public ACE_Event_Handler
 {
 public:
-
   JAWS_Timer_EH ( JAWS_Event_Completer *completer
                 , void *act = 0
                 , int interval = 0
@@ -31,7 +30,6 @@ public:
   // Called directly when timer is canceled.
 
 private:
-
   JAWS_Event_Completer *completer_;
   void *act_;
   const int interval_;

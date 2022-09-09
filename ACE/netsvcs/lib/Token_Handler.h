@@ -114,7 +114,6 @@ protected:
   ACE_Token_Proxy *get_proxy (void);
 
 private:
-
   /// Switches on the type of token_request_ and creates a new
   /// Token_Proxy.
   virtual ACE_Token_Proxy *create_proxy (void);

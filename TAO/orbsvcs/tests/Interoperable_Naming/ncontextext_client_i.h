@@ -40,7 +40,6 @@ class NContextExt_Client_i
   int init (int argc, ACE_TCHAR *argv[]);
 
  private:
-
   /// Parses the arguments passed on the command line.
   int parse_args (void);
 

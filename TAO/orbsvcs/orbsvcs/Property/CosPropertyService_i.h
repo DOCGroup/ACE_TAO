@@ -64,7 +64,6 @@ public:
   // The function that computes a hash value.
 
 // private:
-
   CosPropertyService::PropertyName_var pname_;
   // Storage pointer.
 };
@@ -89,7 +88,6 @@ public:
   // Destructor.
 
 //private:
-
   CORBA::Any pvalue_;
   // property value.
 

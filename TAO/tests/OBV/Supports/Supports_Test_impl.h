@@ -13,7 +13,6 @@ class node_impl :
 {
 
 public:
-
   node_impl (void);
 
   node_impl (const char * name);
@@ -31,7 +30,6 @@ class node_init_impl : public Supports_Test::Node_init
 {
 
  public:
-
   virtual Supports_Test::Node * create (void);
 
   virtual CORBA::ValueBase * create_for_unmarshal (void);
@@ -45,7 +43,6 @@ class vt_graph_impl :
 {
 
  public:
-
   vt_graph_impl (void);
 
   vt_graph_impl (int num_nodes);
@@ -62,7 +59,6 @@ class vt_graph_init_impl :
 {
 
  public:
-
   virtual Supports_Test::vt_graph * create (void);
 
   virtual CORBA::ValueBase * create_for_unmarshal (void);
@@ -73,7 +69,6 @@ class test_impl :
 {
 
  public:
-
   test_impl (CORBA::ORB_ptr orb);
 
   virtual ~test_impl (void);
@@ -95,7 +90,6 @@ class test_impl :
   virtual void finish (void);
 
  private:
-
   CORBA::ORB_var orb_;
 };
 

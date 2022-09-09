@@ -336,7 +336,6 @@ index_operator_test ()
 class RefCounted
 {
 public:
-
   RefCounted ()
     : refcount_ (0)
   {
@@ -382,7 +381,6 @@ public:
   }
 
 private:
-
   unsigned int * refcount_;
 };
 

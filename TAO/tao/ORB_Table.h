@@ -61,7 +61,6 @@ namespace TAO
   class TAO_Export ORB_Table
   {
   public:
-
     /// Constructor
     /**
      * @note See the note in the class description for an explanation
@@ -119,7 +118,6 @@ namespace TAO
     TAO_SYNCH_MUTEX & lock ();
 
   private:
-
     // Prevent copying
     ORB_Table (const ORB_Table &);
     void operator= (const ORB_Table &);
@@ -129,7 +127,6 @@ namespace TAO
     ::TAO_ORB_Core * find_i (char const * orb_id);
 
   private:
-
     /// Lock used to synchronize access to the internal state.
     ::TAO_SYNCH_MUTEX lock_;
 
@@ -156,7 +153,6 @@ namespace TAO
   class ORB_Core_Ref_Counter
   {
   public:
-
     /// Constructor.
     ORB_Core_Ref_Counter ();
 

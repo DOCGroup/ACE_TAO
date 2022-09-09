@@ -98,7 +98,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SOCK_Dgram_Mcast : public ACE_SOCK_Dgram
 {
 public:
-
   /**
    * @brief Option parameters.
    *

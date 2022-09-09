@@ -33,7 +33,6 @@ namespace Test
     , public virtual ::CORBA::LocalObject
   {
   public:
-
     /// Constructor.
     IIOP_Server_Request_Interceptor (const char* orbid, TEST test);
 
@@ -69,7 +68,6 @@ namespace Test
     //@}
 
   protected:
-
     /// process incomming requests context
     void inbound_process_context
     (PortableInterceptor::ServerRequestInfo_ptr ri);
@@ -87,7 +85,6 @@ namespace Test
     TAO::Transport::IIOP::Current_ptr resolve_iiop_transport_current (const char* orbid);
 
   private:
-
     /// transport ID dtata structure
     typedef struct EP {
       CORBA::UShort port_;
@@ -116,7 +113,6 @@ namespace Test
     } EndPoint;
 
   private:
-
     /// IIOPTraits test status
     bool iiop_test_successful_;
 

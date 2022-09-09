@@ -29,7 +29,6 @@ private:
 class JAWS_Strdup_String
 {
 public:
-
   JAWS_Strdup_String (void);
   JAWS_Strdup_String (const char *s);
   JAWS_Strdup_String (const JAWS_Strdup_String &s);
@@ -40,7 +39,6 @@ public:
   void operator = (const JAWS_Strdup_String &s);
 
 private:
-
   int *c_;
   char *s_;
 };

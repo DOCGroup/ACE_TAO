@@ -476,7 +476,6 @@ protected:
 class  ASNMP_Export NetbiosAddress : public Address
 {
 public:
-
    /// default constructor with string arg
    NetbiosAddress( const char *inaddr = "");
 

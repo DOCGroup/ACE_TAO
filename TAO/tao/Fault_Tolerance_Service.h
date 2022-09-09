@@ -57,7 +57,6 @@ private:
   TAO_Fault_Tolerance_Service (const TAO_Fault_Tolerance_Service &);
 
 private:
-
   /// hook to callback on to the service
   TAO_Service_Callbacks *ft_service_callback_ {};
 };

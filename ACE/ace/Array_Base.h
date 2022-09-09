@@ -159,7 +159,6 @@ public:
   void swap (ACE_Array_Base<T> & array);
 
 protected:
-
   /// Returns 1 if @a slot is within range, i.e., 0 >= @a slot <
   /// @c cur_size_, else returns 0.
   bool in_range (size_type slot) const;

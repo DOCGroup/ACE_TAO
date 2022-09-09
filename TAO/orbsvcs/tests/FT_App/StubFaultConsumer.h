@@ -72,7 +72,6 @@ public:
   size_t notifications() const;
 
 public:
-
     ////////////////
     // CORBA methods
     virtual void push_structured_event(
@@ -95,7 +94,6 @@ private:
   /////////////////////////
   // Implementation methods
 private:
-
   ///////////////
   // Data Members
 private:

@@ -76,7 +76,6 @@ class TestSupplier
   CORBA::ORB_ptr orb_;
 
 public:
-
   TestSupplier(int evts, CosNotifyChannelAdmin::EventChannelFactory_ptr ecf,
                CORBA::ORB_ptr orb,
                PortableServer::POA_ptr poa)

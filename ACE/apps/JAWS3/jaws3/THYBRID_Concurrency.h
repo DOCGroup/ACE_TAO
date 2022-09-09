@@ -9,7 +9,6 @@
 class JAWS_Export JAWS_THYBRID_Concurrency : public JAWS_Concurrency_Impl
 {
 public:
-
   JAWS_THYBRID_Concurrency (void);
 
   int putq (JAWS_Protocol_Handler *ph);
@@ -23,7 +22,6 @@ public:
   }
 
 private:
-
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> getting_;
   int min_number_of_threads_;
   int max_number_of_threads_;

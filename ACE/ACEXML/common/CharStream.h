@@ -29,7 +29,6 @@
 class ACEXML_Export ACEXML_CharStream
 {
 public:
-
   /**
    * Virtual destructor, must have.
    */

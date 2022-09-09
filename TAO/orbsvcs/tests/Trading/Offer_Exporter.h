@@ -21,7 +21,6 @@
 class TAO_TTest_Export TAO_Offer_Exporter
 {
 public:
-
   TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
                       CORBA::Boolean verbose);
 
@@ -47,7 +46,6 @@ public:
   // Withdraw a number of offers based on a constraint string.
 
 private:
-
   CosTrading::OfferIdSeq* grab_offerids (void);
 
   void create_offers (void);

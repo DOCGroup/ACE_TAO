@@ -49,7 +49,6 @@ private:
   ////////////////
   // Data members
  private:
-
   CORBA::ORB_var orb_;
 
   int argc_;

@@ -20,7 +20,6 @@
 class TAO_TTest_Export TAO_Service_Type_Exporter
 {
 public:
-
   TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
                              CORBA::Boolean verbose);
 
@@ -50,7 +49,6 @@ public:
   // inherits from.
 
 private:
-
   void create_types (void);
   // Generate the service type description structures.
 

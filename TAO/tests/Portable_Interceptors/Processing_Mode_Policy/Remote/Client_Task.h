@@ -15,7 +15,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-
   /// Constructor
   Client_Task (const ACE_TCHAR *input,
                CORBA::ORB_ptr corb,

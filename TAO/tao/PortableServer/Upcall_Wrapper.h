@@ -55,7 +55,6 @@ namespace TAO
   class TAO_PortableServer_Export Upcall_Wrapper
   {
   public:
-
     /**
      * @note The TAO::Argument corresponding to the return value is
      *       always the first element in the array, regardless of

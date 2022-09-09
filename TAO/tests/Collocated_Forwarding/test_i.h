@@ -14,7 +14,6 @@
 class test_i : public virtual POA_Collocated_ForwardRequestTest::test
 {
 public:
-
   /// Constructor.
   test_i (CORBA::Short id,
           bool direct,
@@ -28,7 +27,6 @@ public:
   virtual CORBA::Short collocated_call (void);
 
 private:
-
   /// Id of this instance.
   CORBA::Short id_;
 

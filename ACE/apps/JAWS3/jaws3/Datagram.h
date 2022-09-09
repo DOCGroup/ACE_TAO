@@ -13,7 +13,6 @@
 class JAWS_Export JAWS_Datagram_Impl
 {
 public:
-
   virtual ~JAWS_Datagram_Impl (void) {}
 
   virtual void accept ( const ACE_Addr &local_sap
@@ -78,7 +77,6 @@ public:
 class JAWS_Export JAWS_Datagram
 {
 public:
-
   JAWS_Datagram (JAWS_Datagram_Impl *impl = 0);
 
   static JAWS_Datagram * instance (void)
@@ -128,7 +126,6 @@ public:
                );
 
 private:
-
   JAWS_Datagram_Impl *impl_;
 };
 

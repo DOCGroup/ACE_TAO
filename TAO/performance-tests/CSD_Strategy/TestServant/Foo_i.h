@@ -9,7 +9,6 @@
 class CSD_PT_TestServant_Export Foo_i : public virtual POA_Foo
 {
   public:
-
     Foo_i();
     virtual ~Foo_i();
 
@@ -30,7 +29,6 @@ class CSD_PT_TestServant_Export Foo_i : public virtual POA_Foo
 
 
   private:
-
     unsigned op_count_[5];
 };
 

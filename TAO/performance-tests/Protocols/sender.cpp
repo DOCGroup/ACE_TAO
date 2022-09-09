@@ -190,7 +190,6 @@ public:
   void setup (void);
 
 private:
-
   ACE_hrtime_t deadline_for_current_call (CORBA::ULong i);
   void missed_start_deadline (CORBA::ULong invocation);
   void missed_end_deadline (CORBA::ULong invocation);

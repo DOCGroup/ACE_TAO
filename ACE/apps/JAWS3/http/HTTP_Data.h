@@ -11,7 +11,6 @@ class JAWS_HTTP_Service_Handler;
 class JAWS_HTTP_Data
 {
 public:
-
   JAWS_HTTP_Data (JAWS_HTTP_Service_Handler *sh);
 
   ACE_SOCK_Stream & peer (void);
@@ -19,7 +18,6 @@ public:
   ACE_FILE_IO & file_io (void);
 
 private:
-
   JAWS_HTTP_Service_Handler *sh_;
   ACE_Message_Block mb_;
   ACE_FILE_IO file_io_;

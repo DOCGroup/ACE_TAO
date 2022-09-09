@@ -37,7 +37,6 @@ public:
   PortableServer::POA_ptr _default_POA (void);
 
 private:
-
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
 };
@@ -288,7 +287,6 @@ rt_poa (CORBA::ORB_ptr orb,
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 

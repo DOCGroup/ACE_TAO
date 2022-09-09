@@ -8,7 +8,6 @@ class EC_Consumer:
   public POA_RtecEventComm::PushConsumer
 {
 public:
-
   /// Constructor.
   EC_Consumer (CORBA::ORB_var orb,
                RtecEventChannelAdmin::EventChannel_var ec);
@@ -23,7 +22,6 @@ public:
   virtual void disconnect_push_consumer (void);
 
 private:
-
   /// Helper - destroys EC, shutdowns the ORB and prints number of
   /// events received.
   void disconnect (void);

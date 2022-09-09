@@ -79,7 +79,6 @@ handle_signal (int )
 class ReactorTask : public ACE_Task_Base
 {
 public:
-
   ~ReactorTask () override
   {
     EE_DEBUG ("ReactorTask", "~ReactorTask", this);

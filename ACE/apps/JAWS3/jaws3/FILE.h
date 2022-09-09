@@ -13,7 +13,6 @@ class JAWS_Export JAWS_FILE : public ACE_FILE_IO
 // Like ACE_FILE_IO, but support for ACE_Mem_Map;
 {
 public:
-
   JAWS_FILE (void);
 
   ~JAWS_FILE (void);
@@ -36,7 +35,6 @@ public:
   void can_map (int);
 
 private:
-
   ACE_SYNCH_MUTEX lock_;
   ACE_Mem_Map *map_;
 

@@ -30,7 +30,6 @@
 class URL_Visitor_Factory
 {
 public:
-
   /// Destructor.
   virtual ~URL_Visitor_Factory (void);
 

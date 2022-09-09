@@ -198,7 +198,6 @@ struct Netlink_Request
 class Secondary_Ipaddr_Handler : public ACE_Event_Handler
 {
 public:
-
   // Default constructor
   Secondary_Ipaddr_Handler ();
 
@@ -260,7 +259,6 @@ public:
   int get_state () const { return this->state_;}
 
 protected:
-
   //FUZZ: disable check_for_lack_ACE_OS
   // De-registers the handler from the reactor,
   // other cleanup jobs
@@ -270,7 +268,6 @@ protected:
   ACE_SOCK_Netlink& socket ();
 
 private:
-
   // Schedule two sec timer.
   int schedule_one_sec_timer ();
 

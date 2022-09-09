@@ -61,7 +61,6 @@ public:
   ACE_QOS_SESSION_SET qos_session_set (void);
 
 private:
-
   /// Set of QoS sessions that this socket has joined.
   ACE_QOS_SESSION_SET qos_session_set_;
 };

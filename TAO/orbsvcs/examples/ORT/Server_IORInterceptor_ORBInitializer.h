@@ -20,7 +20,6 @@ class Server_IORInterceptor_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
  public:
-
   //@{
   /// The pre-initialization hook.
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);

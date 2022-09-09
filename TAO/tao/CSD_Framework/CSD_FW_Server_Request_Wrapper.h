@@ -58,7 +58,6 @@ namespace TAO
     class TAO_CSD_FW_Export FW_Server_Request_Wrapper
     {
     public:
-
       /// Constructor.
       FW_Server_Request_Wrapper(TAO_ServerRequest& server_request);
 

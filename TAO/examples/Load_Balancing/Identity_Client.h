@@ -40,7 +40,6 @@
 class Identity_Client
 {
 public:
-
   /// Default constructor.
   Identity_Client (void);
 

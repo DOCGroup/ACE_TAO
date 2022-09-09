@@ -84,7 +84,6 @@ protected:
 class JAWS_IO_Handler
 {
 public:
-
   /// Destructor.
   virtual ~JAWS_IO_Handler (void);
 

@@ -38,7 +38,6 @@ class MT_Server
 {
 
 public:
-
   /// Default constructor
   MT_Server ();
 

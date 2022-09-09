@@ -64,7 +64,6 @@ enum Test_Type {BEST, WORST, RANDOM};
 class ArgStruct
 {
 public:
-
   /// message queue to test
   ACE_Message_Queue<ACE_SYNCH> *queue_;
 

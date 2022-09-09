@@ -138,7 +138,6 @@ disable_signal (int sigmin, int sigmax)
 class Pipe
 {
 public:
-
   Pipe ();
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -226,7 +225,6 @@ static Event_Loop_Thread *global_event_loop_thread_variable = 0;
 class Sender : public ACE_Event_Handler
 {
 public:
-
   Sender (ACE_HANDLE handle,
           Connection_Cache &connection_cache);
 
@@ -248,7 +246,6 @@ public:
 class Connection_Cache
 {
 public:
-
   Connection_Cache ();
 
   ~Connection_Cache ();
@@ -360,7 +357,6 @@ Sender::send_message ()
 class Event_Loop_Thread : public ACE_Task_Base
 {
 public:
-
   Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
                      ACE_Reactor &reactor);
 
@@ -372,7 +368,6 @@ public:
 class Receiver : public ACE_Task_Base
 {
 public:
-
   Receiver (ACE_Thread_Manager &thread_manager,
             ACE_HANDLE handle,
             int nested_upcalls);
@@ -538,7 +533,6 @@ Receiver::close (u_long)
 class Connector
 {
 public:
-
   Connector (ACE_Thread_Manager &thread_manager,
              ACE_Reactor &reactor,
              int nested_upcalls);
@@ -756,7 +750,6 @@ Connection_Cache::~Connection_Cache ()
 class Invocation_Thread : public ACE_Task_Base
 {
 public:
-
   Invocation_Thread (ACE_Thread_Manager &thread_manager,
                      ACE_Reactor &reactor,
                      Connection_Cache &connection_cache,
@@ -965,7 +958,6 @@ Invocation_Thread::svc ()
 class Close_Socket_Thread : public ACE_Task_Base
 {
 public:
-
   Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
                        ACE_Reactor &reactor,
                        ACE_Auto_Event &new_connection_event,
@@ -1099,7 +1091,6 @@ Event_Loop_Thread::svc ()
 class Purger_Thread : public ACE_Task_Base
 {
 public:
-
   Purger_Thread (ACE_Thread_Manager &thread_manager,
                  ACE_Reactor &reactor,
                  Connection_Cache &connection_cache);

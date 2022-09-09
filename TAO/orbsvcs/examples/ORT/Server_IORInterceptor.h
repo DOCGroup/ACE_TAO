@@ -22,7 +22,6 @@ class Server_IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   Server_IORInterceptor (Gateway::Object_Factory_ptr gateway_object_factory);
 
   /**
@@ -57,11 +56,9 @@ public:
   //@}
 
 protected:
-
   ~Server_IORInterceptor (void);
 
 private:
-
   Gateway::Object_Factory_ptr gateway_object_factory_;
 };
 

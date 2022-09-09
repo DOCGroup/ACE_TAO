@@ -48,7 +48,6 @@
 class ACEXML_Export ACEXML_DTDHandler
 {
 public:
-
   virtual ~ACEXML_DTDHandler ();
 
   /**

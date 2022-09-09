@@ -11,7 +11,6 @@ class HelloWorld
   : public virtual POA_Test::HelloWorld
 {
 public:
-
   HelloWorld (void);
   /// Constructor
 

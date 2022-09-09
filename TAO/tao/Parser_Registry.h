@@ -60,13 +60,11 @@ public:
   Parser_Iterator end () const;
 
 private:
-
   // The parser registry should not be copied.
   TAO_Parser_Registry (const TAO_Parser_Registry&);
   void operator= (const TAO_Parser_Registry&);
 
 private:
-
   /// List of parsers
   TAO_IOR_Parser **parsers_;
 

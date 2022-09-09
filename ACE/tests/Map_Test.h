@@ -38,7 +38,6 @@ typedef ACE_Array<char> KEY;
 class Key_Generator
 {
 public:
-
   Key_Generator (void)
     : counter_ (0)
     {
@@ -90,7 +89,6 @@ public:
 class Key_Adapter
 {
 public:
-
   int encode (const KEY &original_key,
               const ACE_Active_Map_Manager_Key &active_key,
               KEY &modified_key)

@@ -31,7 +31,6 @@ namespace ACE
     class HTBP_Export Environment
     {
     public:
-
       /// Constructor
       Environment (ACE_Configuration *config = 0,
                    int using_registry = 0,

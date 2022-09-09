@@ -26,7 +26,6 @@ public:
   virtual CORBA::Long doit (void);
 
 protected:
-
   CORBA::Long value_;
 };
 
@@ -44,7 +43,6 @@ public:
   virtual PortableServer::POA_ptr _default_POA (void);
 
 protected:
-
   CORBA::Long value_;
 
   /// Default poa associated with this servant
@@ -54,7 +52,6 @@ protected:
 class Outer_i
 {
 public:
-
   class B_i : public POA_Outer::B
   {
   public:
@@ -69,7 +66,6 @@ public:
     virtual PortableServer::POA_ptr _default_POA (void);
 
   protected:
-
     CORBA::Long value_;
 
     /// Default poa associated with this servant
@@ -79,7 +75,6 @@ public:
   class Inner_i
   {
   public:
-
     class C_i : public POA_Outer::Inner::C
     {
     public:
@@ -94,7 +89,6 @@ public:
       virtual PortableServer::POA_ptr _default_POA (void);
 
     protected:
-
       CORBA::Long value_;
 
       /// Default poa associated with this servant

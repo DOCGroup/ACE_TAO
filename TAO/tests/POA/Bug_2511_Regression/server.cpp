@@ -22,7 +22,6 @@ class test_i :
   public virtual POA_test
 {
 public:
-
   test_i (PortableServer::POA_ptr poa);
 
   void normal (void);
@@ -61,7 +60,6 @@ class Servant_Locator :
   public PortableServer::ServantLocator
 {
 public:
-
   Servant_Locator (PortableServer::POA_ptr poa);
 
   ::PortableServer::Servant preinvoke (const PortableServer::ObjectId &,

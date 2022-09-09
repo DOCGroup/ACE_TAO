@@ -43,7 +43,6 @@ class ACE_QoS_Export ACE_QoS_Session
 {
 
 public:
-
   enum RSVP_Event_Type
   {
     RSVP_PATH_EVENT,
@@ -148,7 +147,6 @@ public:
   virtual int version (void) = 0;
 
 protected:
-
   /// Source port if this is a Sender session. Used for rapi_sender ().
   u_short source_port_;
 

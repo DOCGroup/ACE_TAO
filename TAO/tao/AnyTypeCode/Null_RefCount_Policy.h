@@ -64,7 +64,6 @@ namespace TAO
   class TAO_AnyTypeCode_Export Null_RefCount_Policy
   {
   public:
-
     /// No-op reference increment.
     void add_ref ()  { }
 

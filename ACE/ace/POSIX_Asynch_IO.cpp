@@ -1741,7 +1741,6 @@ public:
   int transmit ();
 
 protected:
-
   /// The asynch result pointer made from the initial transmit file
   /// request.
   ACE_POSIX_Asynch_Transmit_File_Result *result_;

@@ -74,7 +74,6 @@ public:
   T * ptr () const;
 
 private:
-
   // Prevent widening assignment.
   TAO_Value_Var_T (const TAO_Base_var &);
   void operator= (const TAO_Base_var &);

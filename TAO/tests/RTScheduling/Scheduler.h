@@ -9,7 +9,6 @@ public RTScheduling::Scheduler,
   public ::CORBA::LocalObject
 {
  public:
-
   TAO_Scheduler (CORBA::ORB_ptr orb);
 
   ~TAO_Scheduler (void);

@@ -16,7 +16,6 @@ class HTTP_Sink_Svc_Handler
   : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void *)
   {
@@ -69,7 +68,6 @@ class HTTP_Make_Request_Event_Handler
   : public ACE_Event_Handler
 {
 public:
-
   HTTP_Make_Request_Event_Handler (const ACE_Time_Value &request_rate,
                                    int number_of_requests = -1,
                                    const char *website = 0)
@@ -120,7 +118,6 @@ public:
   }
 
 private:
-
   int number_of_requests_;
   int number_of_outstanding_requests_;
 

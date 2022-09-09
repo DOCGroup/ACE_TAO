@@ -133,11 +133,9 @@ public:
   static const int &NUM_HEADER_STRINGS;
 
 protected:
-
   const HTTP_Hdr_Node &hcode (int type) const;
 
 protected:
-
   HTTP_Header_Nodes *header_nodes_;
 };
 

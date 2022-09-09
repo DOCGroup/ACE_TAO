@@ -30,7 +30,6 @@ public:
   ~TSS_Obj (void);
 
 private:
-
  static ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> count_;
 };
 

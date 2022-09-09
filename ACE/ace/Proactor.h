@@ -561,7 +561,6 @@ public:
                          int signal_number = ACE_SIGRTMIN);
 
 protected:
-
   /**
    * Post <how_many> completions to the completion port so that all
    * threads can wake up. This is used in conjunction with the

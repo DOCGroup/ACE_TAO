@@ -43,7 +43,6 @@ class Dispatch_Proxy_Iterator;
 class TAO_RTSched_Export Dispatch_Entry_Link
 {
 public:
-
   typedef RtecScheduler::handle_t handle_t;
   typedef RtecScheduler::Dependency_Info Dependency_Info;
   typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
@@ -71,7 +70,6 @@ public:
   Dispatch_Entry &dispatch_entry () const;
 
 private:
-
     /// Dispatch entry to which the smart pointer refers.
   Dispatch_Entry &dispatch_entry_;
 };
@@ -88,7 +86,6 @@ private:
 class TAO_RTSched_Export Task_Entry
 {
 public:
-
   typedef RtecScheduler::handle_t handle_t;
   typedef RtecScheduler::Dependency_Info Dependency_Info;
   typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
@@ -188,7 +185,6 @@ public:
   u_long effective_execution_time () const;
 
 private:
-
   // Prohibits calls of the given type: currently used to enforce
   // the notion that two-way calls to disjunctive or conjunctive
   // RT_Infos do not have any defined meaning, and thus should be
@@ -287,7 +283,6 @@ private:
 class TAO_RTSched_Export Task_Entry_Link
 {
 public:
-
   typedef RtecScheduler::handle_t handle_t;
   typedef RtecScheduler::Dependency_Info Dependency_Info;
   typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
@@ -318,7 +313,6 @@ public:
   Task_Entry &called () const;
 
 private:
-
   // the number of calls of the operation
   CORBA::Long number_of_calls_;
 
@@ -343,7 +337,6 @@ private:
 class TAO_RTSched_Export Dispatch_Entry
 {
 public:
-
   typedef RtecScheduler::handle_t handle_t;
   typedef RtecScheduler::Dependency_Info Dependency_Info;
   typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
@@ -456,7 +449,6 @@ private:
 class TAO_RTSched_Export Dispatch_Proxy_Iterator
 {
 public:
-
   typedef RtecScheduler::handle_t handle_t;
   typedef RtecScheduler::Dependency_Info Dependency_Info;
   typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
@@ -528,7 +520,6 @@ public:
 
 
 private:
-
     /// the number of calls corresponding to each actual dispatch
   u_long number_of_calls_;
 
@@ -553,7 +544,6 @@ private:
 class TAO_RTSched_Export TimeLine_Entry
 {
 public:
-
   typedef RtecScheduler::handle_t handle_t;
   typedef RtecScheduler::Dependency_Info Dependency_Info;
   typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
@@ -592,7 +582,6 @@ public:
   bool operator < (const TimeLine_Entry&) const;
 
 private:
-
   // the dispatch entry to which the time slice corresponds
   Dispatch_Entry &dispatch_entry_;
 
@@ -610,7 +599,6 @@ private:
 class TAO_RTSched_Export TimeLine_Entry_Link
 {
 public:
-
   typedef RtecScheduler::handle_t handle_t;
   typedef RtecScheduler::Dependency_Info Dependency_Info;
   typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
@@ -632,7 +620,6 @@ public:
   bool operator < (const TimeLine_Entry_Link&) const;
 
 private:
-
   /// the underlying entry
   TimeLine_Entry &entry_;
 };

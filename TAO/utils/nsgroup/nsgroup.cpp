@@ -67,7 +67,6 @@ show_help(int argc, ACE_TCHAR *argv[])
 class  NSGROUP
 {
 public:
-
   enum NSGROUP_COMMAND {
     NSGROUP_NONE,
     NSGROUP_HELP,
@@ -102,12 +101,10 @@ public:
   const ACE_TCHAR * namepath_arg() const { return namepath_arg_; }
 
 private:
-
   /// parse command line arguments
   NSGROUP_COMMAND parse_command_line (void);
 
 private:
-
   NS_group_svc svc_;
 
   int argc_;

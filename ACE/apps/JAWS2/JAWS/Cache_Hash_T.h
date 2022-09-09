@@ -12,7 +12,6 @@ template <class EXT_ID, class HASH_FUNC, class EQ_FUNC>
 class JAWS_Cache_Hash
 {
 public:
-
   typedef JAWS_Hash_Bucket_Manager<EXT_ID, JAWS_Cache_Object *, EQ_FUNC>
           CACHE_BUCKET_MANAGER;
 
@@ -36,13 +35,11 @@ public:
   size_t size () const;
 
 protected:
-
   virtual unsigned long hash (const EXT_ID &ext_id) const;
   bool isprime (size_t number) const;
   int new_cachebucket (size_t idx);
 
 private:
-
   ACE_Allocator *allocator_;
   size_t size_;
 

@@ -1147,7 +1147,6 @@ class ACE_Export ACE_WIN32_Asynch_Connect_Result : public virtual ACE_Asynch_Con
   friend class ACE_WIN32_Proactor;
 
 public:
-
   /// I/O handle for the  connection.
   ACE_HANDLE connect_handle () const;
 
@@ -1227,7 +1226,6 @@ class ACE_Export ACE_WIN32_Asynch_Connect :
   public ACE_Event_Handler
 {
 public:
-
   /// Constructor.
   ACE_WIN32_Asynch_Connect (ACE_WIN32_Proactor * win32_proactor);
 

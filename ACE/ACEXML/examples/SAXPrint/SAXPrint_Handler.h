@@ -149,7 +149,6 @@ public:
   void print_indent ();
 
 private:
-
   size_t indent_;
   ACEXML_Char* fileName_;
   ACEXML_Locator* locator_;

@@ -226,7 +226,6 @@ public:
   };
 
 protected:
-
   virtual void send_message (JAWS_IO_Handler *ioh,
                              const char *buffer,
                              unsigned int length,

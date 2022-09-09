@@ -43,7 +43,6 @@ public:
   int calculate_avg_latency (void);
 
 private:
-
   /// parse command line arguments (if any)
   int parse_args (void);
 

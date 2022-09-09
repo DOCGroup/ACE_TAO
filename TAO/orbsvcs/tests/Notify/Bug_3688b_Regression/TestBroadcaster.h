@@ -31,7 +31,6 @@ class bug3688_Export TestBroadcaster
 
   // protected types and methods
   protected:
-
   // private methods and instance variables
   private:
     CosNotifyChannelAdmin::SequenceProxyPushConsumer_var mv_sequenceProxyPushConsumer;

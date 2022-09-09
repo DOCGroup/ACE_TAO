@@ -73,7 +73,6 @@ namespace
     }
 
   private:
-
     // The array.
     T * const array_;
 

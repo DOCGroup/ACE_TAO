@@ -112,7 +112,6 @@ protected:
 class Different_Handler : public ACE_Event_Handler
 {
 public:
-
   Different_Handler (ACE_Pipe &pipe)
     : pipe_ (pipe)
   {

@@ -16,7 +16,6 @@
 class Options_Manager
 {
 public:
-
   Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * const opts_set);
 
   // constant string size

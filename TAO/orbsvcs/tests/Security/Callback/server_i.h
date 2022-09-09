@@ -24,7 +24,6 @@ class server_i
   : public virtual POA_server
 {
 public:
-
   server_i (CORBA::ORB_ptr orb);
   virtual ~server_i (void);
 
@@ -35,7 +34,6 @@ public:
   virtual void shutdown (void);
 
 private:
-
   CORBA::ORB_var orb_;
 
   client_var client_;

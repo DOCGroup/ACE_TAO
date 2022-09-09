@@ -35,7 +35,6 @@ class Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   Server_ORBInitializer (void);
 

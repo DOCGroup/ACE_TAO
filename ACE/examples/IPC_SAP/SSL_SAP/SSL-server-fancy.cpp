@@ -73,7 +73,6 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
 protected:
-
   Handler (ACE_SSL_SOCK_Stream *ssl_stream);
   // Constructor.
 
@@ -111,12 +110,10 @@ class Twoway_Handler : public Handler
   // = TITLE
   //   Performs the twoway protocol.
 public:
-
   Twoway_Handler (ACE_SSL_SOCK_Stream *ssl_stream);
   // Constructor.
 
 private:
-
   virtual int run (void);
   // Template Method hook called by <svc>.
 };

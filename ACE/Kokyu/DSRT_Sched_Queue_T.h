@@ -68,7 +68,6 @@ namespace Kokyu
     DSRT_Scheduler_Traits::QoSDescriptor_t DSRT_QoSDescriptor_t;
 
   public:
-
     /**
      * Given a guid, find an item in the priority queue.
      *
@@ -130,7 +129,6 @@ namespace Kokyu
     void dump();
 
   private:
-
     /**
      * @class Guid_Hash
      *

@@ -262,7 +262,6 @@ protected:
 class Output_Device_Wrapper_Base
 {
 public:
-
   virtual ~Output_Device_Wrapper_Base (void);
 
   /// Writes contents of the passed message block out to the underlying

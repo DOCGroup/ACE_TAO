@@ -47,7 +47,6 @@ namespace TAO
   class IIOP_SSL_Connection_Handler : public TAO_IIOP_Connection_Handler
   {
   public:
-
     /// Constructor.
     IIOP_SSL_Connection_Handler (ACE_Thread_Manager* t = 0);
     IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core);
@@ -78,7 +77,6 @@ namespace TAO
   class Null_SSL_State_Guard
   {
   public:
-
     /// Constructor that sets up the null TSS SSL state.
     Null_SSL_State_Guard (TAO::SSLIOP::Current_ptr current,
                           int &result);
@@ -87,7 +85,6 @@ namespace TAO
     ~Null_SSL_State_Guard (void);
 
   private:
-
     /// The SSLIOP::Current implementation that was previously
     /// associated with the current thread and invocation.
     /**

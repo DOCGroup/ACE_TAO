@@ -80,7 +80,6 @@ static sig_atomic_t error = 0;
 class MCT_Config
 {
 public:
-
   enum
     {
       PRODUCER = 1,

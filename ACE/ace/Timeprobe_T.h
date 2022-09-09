@@ -59,7 +59,6 @@ template <class ACE_LOCK, class ALLOCATOR>
 class ACE_Timeprobe_Ex
 {
 public:
-
   /// Self
   typedef ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>
           SELF;
@@ -134,7 +133,6 @@ public:
   u_long current_size (void);
 
 protected:
-
   /// Obtain an allocator pointer.  If there is no allocator stored in
   /// the instance, the singleton allocator in the current process is used.
   ALLOCATOR * allocator (void);

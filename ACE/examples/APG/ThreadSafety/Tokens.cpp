@@ -11,7 +11,6 @@ class Device;
 class HA_Device_Repository
 {
 public:
-
   enum { N_DEVICES = 100 };
 
   HA_Device_Repository ()

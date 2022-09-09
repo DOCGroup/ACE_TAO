@@ -6,7 +6,6 @@
 class Manager
 {
   public:
-
   Manager (void);
 
   // Ctor

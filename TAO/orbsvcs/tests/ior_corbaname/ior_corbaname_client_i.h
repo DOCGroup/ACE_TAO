@@ -39,7 +39,6 @@ class IOR_corbaname_Client_i
   int init (int argc, ACE_TCHAR **argv);
 
  private:
-
   /// # of arguments on the command line.
   int argc_;
 

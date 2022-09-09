@@ -19,7 +19,6 @@
 class Foo_i : public virtual POA_Foo::Bar
 {
 public:
-
   /// Constructor.
   Foo_i (CORBA::ORB_ptr,
          SecurityLevel3::SecurityCurrent_ptr current);
@@ -30,7 +29,6 @@ public:
   virtual void shutdown (void);
 
 private:
-
   /// Reference to the ORB.
   CORBA::ORB_var orb_;
 

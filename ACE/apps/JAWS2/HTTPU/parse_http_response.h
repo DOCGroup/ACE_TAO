@@ -31,7 +31,6 @@ public:
   // 0 -> ok
 
 private:
-
   int code_;
   char *code_str_;
   int major_version_;

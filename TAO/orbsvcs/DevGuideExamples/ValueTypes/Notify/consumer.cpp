@@ -59,7 +59,6 @@ class TestConsumer : public POA_CosEventComm::PushConsumer
   PortableServer::POA_ptr poa_;
   CORBA::ORB_ptr orb_;
 public:
-
   TestConsumer(int evts,
                CosNotifyChannelAdmin::EventChannelFactory_ptr ecf,
                PortableServer::POA_ptr poa,

@@ -42,7 +42,6 @@ public:
   // The skeleton methods.
 
 private:
-
   // = Data Members
   CORBA::ORB_var orb_;
   // The ORB that we use.

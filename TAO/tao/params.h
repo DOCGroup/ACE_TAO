@@ -51,7 +51,6 @@ typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
 class TAO_Export TAO_ORB_Parameters
 {
 public:
-
   typedef ACE_Array_Map<ACE_CString, ACE_CString> endpoints_map_type;
 
   /// Constructor.

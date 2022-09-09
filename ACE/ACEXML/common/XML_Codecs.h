@@ -35,7 +35,6 @@
 class ACEXML_Export ACEXML_Base64 : public ACE_Base64
 {
 public:
-
   //@{
 
   /**

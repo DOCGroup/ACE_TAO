@@ -9,7 +9,6 @@
 class TeraSS_State_ERROR : public JAWS_Protocol_State
 {
 public:
-
   int service (JAWS_Event_Completer *, void *data);
 
   JAWS_Protocol_State * transition ( const JAWS_Event_Result &result

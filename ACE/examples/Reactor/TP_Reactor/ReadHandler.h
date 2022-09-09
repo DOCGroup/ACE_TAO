@@ -19,7 +19,6 @@
 class ReadHandler : public ACE_Event_Handler {
 
     private:
-
         /**
          * The stream socket used for data exchange.
          */
@@ -47,7 +46,6 @@ class ReadHandler : public ACE_Event_Handler {
         int mInvocationCounter;
 
     public:
-
         /**
          * Initialization.
          */

@@ -40,7 +40,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 struct TAO_PG_ObjectGroup_Map_Entry
 {
 public:
-
   /// The RepositoryId corresponding to all Members in the
   /// ObjectGroup.
   CORBA::String_var type_id;

@@ -72,7 +72,6 @@ public:
   virtual int svc ();
 
 private:
-
   /// The orb
   CORBA::ORB_var orb_;
 };
@@ -98,7 +97,6 @@ private:
   // Validate the connection
 
 private:
-
   /// The server.
   Simple_Server_var server_;
 

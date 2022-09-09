@@ -30,7 +30,6 @@
 class LB_server
 {
 public:
-
   /// Constructor
   LB_server (int argc, ACE_TCHAR **argv);
 
@@ -50,12 +49,10 @@ public:
   CORBA::ORB_ptr orb (void);
 
 private:
-
   int write_ior_to_file (const char *);
   int parse_args (int, ACE_TCHAR **);
 
 private:
-
   /// Load Manager
   CosLoadBalancing::LoadManager_var lm_;
 

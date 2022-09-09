@@ -23,7 +23,6 @@ public:
   int svc (void);
 
 private:
-
   /// Reference to the test interface
   Test::Big_Reply_var reply_gen_;
 

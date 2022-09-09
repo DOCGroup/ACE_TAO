@@ -33,7 +33,6 @@ typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX> JAWS_IO_SOCK_Acceptor;
 class JAWS_Export JAWS_IO_Acceptor
 {
 public:
-
   JAWS_IO_Acceptor (void);
   virtual ~JAWS_IO_Acceptor (void);
 
@@ -67,7 +66,6 @@ public:
 class JAWS_Export JAWS_IO_Synch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
-
   virtual int open (const ACE_INET_Addr &local_sap, int backlog = 20);
   // Initiate a passive mode socket.
 
@@ -95,7 +93,6 @@ private:
 class JAWS_Export JAWS_IO_Asynch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
-
   JAWS_IO_Asynch_Acceptor (void);
   virtual ~JAWS_IO_Asynch_Acceptor (void);
 
@@ -114,7 +111,6 @@ public:
   virtual void close (void);
 
 private:
-
   virtual int accept (ACE_SOCK_Stream &new_stream,
                       ACE_Addr *remote_addr = 0,
                       ACE_Time_Value *timeout = 0,

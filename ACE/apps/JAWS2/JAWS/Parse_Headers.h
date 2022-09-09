@@ -88,7 +88,6 @@ private:
 class JAWS_Export JAWS_Parse_Headers
 {
 public:
-
   int parse_headers (JAWS_Header_Info *info, ACE_Message_Block &mb);
   // Return 0 means need more data, and call it again.
   // Return 1 means all done or error.

@@ -57,7 +57,6 @@ public:
   const char* proxy_name (void);
 
 protected:
-
   /// svc method.
   void handle_svc (void);
 

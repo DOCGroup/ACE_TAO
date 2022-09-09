@@ -143,7 +143,6 @@ namespace Kokyu
     virtual ~DSRT_Dispatcher_Impl ();
 
   private:
-
     //following an idiom to avoid public virtual functions.
     //instead make them private and use the template method
     //pattern - "Virtually Yours" article in CUJ Experts Forum

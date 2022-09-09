@@ -17,7 +17,6 @@
 class JAWS_strings
 {
 public:
-
   ~JAWS_strings (void)
   {
     void *p;
@@ -50,7 +49,6 @@ public:
   }
 
 private:
-
   ACE_Unbounded_Queue<void *> queue_;
 };
 
@@ -61,7 +59,6 @@ private:
 class JAWS_Config_File_Impl
 {
 public:
-
   JAWS_Config_File_Impl (const ACE_TCHAR *config_file);
   ~JAWS_Config_File_Impl (void);
   int find (const ACE_TCHAR *key, const ACE_TCHAR *&value);
@@ -73,7 +70,6 @@ public:
   enum { JAWS_CONFIG_FILE_SYMBOL_TABLE_SIZE = 211 };
 
 private:
-
   ACE_FILE_Addr faddr_;
   JAWS_strings *strings_;
   JAWS_Symbol_Table *symbols_;

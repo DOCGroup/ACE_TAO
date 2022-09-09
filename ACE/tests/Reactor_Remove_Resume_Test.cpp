@@ -29,13 +29,11 @@ int overall_result = 0;
 class Bogus_Handler : public ACE_Event_Handler
 {
 public:
-
   Bogus_Handler (ACE_Reactor * reactor,
                  ACE_HANDLE read_handle,
                  bool & okay_to_close);
 
 protected:
-
   ~Bogus_Handler () override;
 
   ACE_HANDLE get_handle () const override;
@@ -45,7 +43,6 @@ protected:
   int resume_handler () override;
 
 private:
-
   ACE_HANDLE const read_handle_;
 
   // If the reactor closes the event handler before it gets the okay,
@@ -112,7 +109,6 @@ Bogus_Handler::resume_handler ()
 class Bad_Handler : public ACE_Event_Handler
 {
 public:
-
   Bad_Handler (ACE_Reactor * reactor,
                ACE_HANDLE read_handle,
                bool & okay_to_close,
@@ -121,11 +117,9 @@ public:
   ACE_HANDLE write_handle () const;
 
 protected:
-
   ~Bad_Handler () override;
 
 private:
-
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE handle) override;
   int handle_close (ACE_HANDLE handle,
@@ -134,7 +128,6 @@ private:
   int handle_input_result () const;
 
 private:
-
   ACE_HANDLE const read_handle_;
 
   bool handle_close_called_;

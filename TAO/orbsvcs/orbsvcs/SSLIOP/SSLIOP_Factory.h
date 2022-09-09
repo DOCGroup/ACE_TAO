@@ -53,7 +53,6 @@ namespace TAO
       : public TAO_Protocol_Factory
     {
     public:
-
       /// Constructor.
       Protocol_Factory (void);
 
@@ -80,7 +79,6 @@ namespace TAO
       virtual int requires_explicit_endpoint () const;
 
     private:
-
       /// Parse an X509 file path, which is expected to looks like:
       ///   <X509Path> ::= <Prefix> ':' <Path>
       ///   <Prefix>   ::= 'PEM' | 'ASN1'

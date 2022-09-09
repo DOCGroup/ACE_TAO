@@ -41,7 +41,6 @@ class Iterator_Handler
   friend class Iterator_Handler_Friend;
 
 public:
-
   /// Constructor that creates a content iterator corresponding to the
   /// name of the file being retrieved from the web server.
   Iterator_Handler (void);
@@ -89,7 +88,6 @@ private:
   int spawn_viewer (void);
 
 private:
-
   /// The Addr corresponding to the retrieved file.
   ACE_FILE_Addr file_;
 

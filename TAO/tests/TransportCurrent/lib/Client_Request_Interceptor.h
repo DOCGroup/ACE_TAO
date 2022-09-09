@@ -52,7 +52,6 @@ namespace Test
       public virtual ::CORBA::LocalObject
   {
  public:
-
     /// Constructor.
     Client_Request_Interceptor (const char *orb_id,
                                 TEST test);

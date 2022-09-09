@@ -66,7 +66,6 @@ public:
   /////////////////
   // Implementation
 private:
-
   ////////////////////
   // Forbidden methods
 private:
@@ -78,7 +77,6 @@ private:
   /////////////////////////
   // Implementation methods
 private:
-
   ///////////////
   // Data Members
 private:

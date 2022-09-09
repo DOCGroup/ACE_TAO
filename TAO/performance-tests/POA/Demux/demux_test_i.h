@@ -8,7 +8,6 @@
 class Demux_Test_i : public POA_Demux_Test
 {
 public:
-
   Demux_Test_i (void);
   //ctor.
 

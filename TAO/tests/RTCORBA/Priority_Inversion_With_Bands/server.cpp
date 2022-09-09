@@ -151,7 +151,6 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 

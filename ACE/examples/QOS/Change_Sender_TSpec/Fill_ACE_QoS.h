@@ -58,7 +58,6 @@ public:
   FLOW_SPEC_HASH_MAP& map (void);
 
 private:
-
   // The Service Provider is currently set to NULL for all ACE_QoS.
   static const iovec iov_;
 

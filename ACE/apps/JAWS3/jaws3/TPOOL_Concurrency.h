@@ -7,7 +7,6 @@
 class JAWS_Export JAWS_TPOOL_Concurrency : public JAWS_Concurrency_Impl
 {
 public:
-
   JAWS_TPOOL_Concurrency (void);
 
   int putq (JAWS_Protocol_Handler *ph);
@@ -20,7 +19,6 @@ public:
   }
 
 private:
-
   int number_of_threads_;
   int shutdown_task_;
   int error_;

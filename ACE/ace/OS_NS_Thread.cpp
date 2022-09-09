@@ -604,7 +604,6 @@ public:
   ACE_TSS_Cleanup * operator ->();
 
 private:
-
   ACE_TSS_Cleanup * operator *();
 
 private:

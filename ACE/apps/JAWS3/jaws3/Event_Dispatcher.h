@@ -41,7 +41,6 @@ class JAWS_Event_Dispatcher;
 class JAWS_Export JAWS_Event_Dispatcher
 {
 public:
-
   static void end_event_loop (void);
   static void run_event_loop (void);
 };

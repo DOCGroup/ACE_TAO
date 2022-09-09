@@ -59,7 +59,6 @@ public:
   int clear_cache (CONTAINER &container, double purge_percent);
 
 protected:
-
   /// Find the entry with minimum caching attributes.
   void minimum (CONTAINER &container,
                 KEY *&key_to_remove,
@@ -110,7 +109,6 @@ public:
                    double purge_percent);
 
 protected:
-
   /// Find the entry with minimum caching attributes.
   void minimum (CONTAINER &container,
                 KEY *&key_to_remove,
@@ -161,7 +159,6 @@ public:
                    double purge_percent);
 
 protected:
-
   /// Find the entry with minimum caching attributes.
   void minimum (CONTAINER &container,
                 KEY *&key_to_remove,
@@ -218,7 +215,6 @@ public:
                    double purge_percent);
 
 protected:
-
   /**
    * Find the entry with minimum caching attributes.  This is handler
    * specific since this utility is to be used very specifically for
@@ -272,7 +268,6 @@ public:
                    double purge_percent);
 
 protected:
-
   /**
    * Find the entry with minimum caching attributes.  This is handler
    * specific since this utility is to be used very specifically for

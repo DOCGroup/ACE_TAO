@@ -245,7 +245,6 @@ public:
   virtual int execute (TAO_Naming_Client &root_context);
 
 private:
-
   /// A pointer to our ORB (needed for object/string conversion).
   CORBA::ORB_var orb_;
 
@@ -281,7 +280,6 @@ public:
   virtual int execute (TAO_Naming_Client &root_context);
 
 private:
-
   /// A pointer to our ORB (used for string/object conversion).
   CORBA::ORB_var orb_;
 
@@ -313,7 +311,6 @@ public:
   virtual int execute (TAO_Naming_Client &root_context);
 
 private:
-
   /// A pointer to our ORB (used for string/object conversion).
   CORBA::ORB_var orb_;
 };

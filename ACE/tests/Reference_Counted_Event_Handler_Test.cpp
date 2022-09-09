@@ -764,7 +764,6 @@ simple (ACE_Reactor_Impl *impl)
 class Closed_In_Upcall_Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Closed_In_Upcall_Event_Handler (int &events);
 
   ~Closed_In_Upcall_Event_Handler () override;

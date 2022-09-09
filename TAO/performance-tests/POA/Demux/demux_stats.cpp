@@ -16,7 +16,6 @@ class Demux_Stats
 {
 
 public:
-
   /// Calculates the average latency and Standard deviation.
   /// Expects the input data in my_results.dat.
   int

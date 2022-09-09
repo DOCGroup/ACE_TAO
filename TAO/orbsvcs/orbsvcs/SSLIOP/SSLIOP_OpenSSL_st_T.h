@@ -69,7 +69,6 @@ namespace TAO
     class OpenSSL_st_var
     {
     public:
-
       /**
        * @name Constructors
        *
@@ -109,7 +108,6 @@ namespace TAO
       T*  ptr () const;
 
     private:
-
       /// The OpenSSL structure whose reference count is managed.
       T * st_;
 

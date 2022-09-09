@@ -12,7 +12,6 @@ class JAWS_Event_Result;
 class JAWS_Export JAWS_Event_Result
 {
 public:
-
   enum JE_STATUS
   { JE_IDLE
   , JE_OK
@@ -87,7 +86,6 @@ public:
   void * data () const { return this->data_; }
 
 private:
-
   size_t bytes_;
 
   JE_STATUS status_;

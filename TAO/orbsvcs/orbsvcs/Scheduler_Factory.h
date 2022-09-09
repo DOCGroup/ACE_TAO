@@ -244,7 +244,6 @@ public:
   static void rt_info_enable_state_default(RtecScheduler::RT_Info_Enabled_Type_t rt_info_enable_state_default);
 
 protected:
-
   /**
    * By default this factory assumes we are runnning a config
    * run. Calling this method disables that.  Since the methods

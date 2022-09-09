@@ -28,7 +28,6 @@ int register_smart_proxy = 1;
 class Marker
 {
  public:
-
   void accumulate_into (ACE_Throughput_Stats &throughput) const
     {
       // Accumulate the throughput statistics into <throughput>

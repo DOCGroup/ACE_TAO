@@ -22,7 +22,6 @@ public:
   PortableServer::POA_ptr _default_POA (void);
 
 private:
-
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
 };

@@ -43,7 +43,6 @@ class TAO_Notify_Serv_Export Bit_Vector
     BPW_LOG_2 = 5
   };
 public:
-
   /// The constructor.
   Bit_Vector();
   /// The destructor.

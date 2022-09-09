@@ -35,7 +35,6 @@ namespace TAO
   class FT_Property_Validator : public TAO_PG_Default_Property_Validator
   {
   public:
-
     /// Constructor.
     FT_Property_Validator (void);
 
@@ -55,7 +54,6 @@ namespace TAO
     void validate_criteria (const PortableGroup::Properties & criteria);
 
   private:
-
     /**
     * @name Pre-initialize property Names.
     *

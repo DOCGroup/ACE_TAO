@@ -5,7 +5,6 @@
 class URL {
 
 public:
-
   URL(char *buffer);
 
   char *get_protocol();

@@ -89,7 +89,6 @@ public:
   void right (ACE_RB_Tree_Node<EXT_ID, INT_ID> * r);
 
 private:
-
   /// The key.
   EXT_ID k_;
 
@@ -563,7 +562,6 @@ protected:
   int lessthan (const EXT_ID &k1, const EXT_ID &k2);
 
 private:
-
   // = Private members.
 
   /// Synchronization variable for the MT_SAFE ACE_RB_Tree.
@@ -589,7 +587,6 @@ class ACE_RB_Tree_Iterator_Base
 {
 
 public:
-
   /// Copy constructor.
   ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
 

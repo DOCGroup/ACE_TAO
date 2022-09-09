@@ -49,7 +49,6 @@ public:
   void dump_stats (ACE_TCHAR* msg, int dump_samples);
 
 protected:
-
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification);
 

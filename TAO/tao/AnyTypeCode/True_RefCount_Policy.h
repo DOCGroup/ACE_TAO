@@ -69,7 +69,6 @@ namespace TAO
   class TAO_AnyTypeCode_Export True_RefCount_Policy
   {
   public:
-
     /// Increase the reference count on this object.
     void add_ref ();
 

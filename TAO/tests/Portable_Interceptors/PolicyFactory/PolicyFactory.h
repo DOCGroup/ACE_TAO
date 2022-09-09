@@ -40,7 +40,6 @@ class PolicyFactory
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name Methods Required by the PolicyFactory Interface
    *

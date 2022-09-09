@@ -22,7 +22,6 @@ class JAWS_Cache_List
 // trying to simplify all the heap operations to be O(1).
 {
 public:
-
   typedef JAWS_Cache_Manager<EXT_ID, FACT, H_FN, E_FN> Cache_Manager;
   typedef JAWS_Cache_List_Item<EXT_ID, FACT, H_FN, E_FN> Cache_List_Item;
 
@@ -55,7 +54,6 @@ public:
   // treat item as a Cache_List_Item, and alter its heap position
 
 protected:
-
   void insert_i (Cache_List_Item *item);
   // insert item into heap.
 
@@ -66,7 +64,6 @@ protected:
   // remove the element residing at the top of heap, but do not delete it.
 
 private:
-
   ACE_Allocator *allocator_;
 
   size_t maxsize_;
@@ -86,14 +83,12 @@ class JAWS_Cache_List_Item
   friend class JAWS_Cache_List<EXT_ID, FACT, H_FN, E_FN>;
 
 public:
-
   typedef JAWS_Cache_List<EXT_ID, FACT, H_FN, E_FN> Cache_List;
 
   JAWS_Cache_List_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
   unsigned int priority (void);
 
 private:
-
   EXT_ID ext_id_;
   JAWS_Cache_Object *int_id_;
 

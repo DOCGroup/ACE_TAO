@@ -65,7 +65,6 @@ public:
   };
 
 private:
-
   CORBA::ORB_var orb_;
   ConsoleMonitor * monitor_;
 };

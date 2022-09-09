@@ -26,7 +26,6 @@ class JAWS_HTTP_Service_Handler
 //     there is less programming effort.
 {
 public:
-
   JAWS_HTTP_Service_Handler (void);
 
   int open (void *);
@@ -34,7 +33,6 @@ public:
   int close (unsigned long);
 
 private:
-
   JAWS_HTTP_Data data_;
 };
 
@@ -51,7 +49,6 @@ class ACE_Svc_Export JAWS_HTTP_Acceptor
 //     is created.
 {
 public:
-
   int init (int argc, ACE_TCHAR *argv[]);
 };
 

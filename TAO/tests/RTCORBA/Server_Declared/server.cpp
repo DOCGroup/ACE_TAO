@@ -192,7 +192,6 @@ create_object (RTPortableServer::POA_ptr poa,
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 

@@ -27,7 +27,6 @@
 class TAO_TTest_Export TAO_Offer_Importer
 {
 public:
-
   TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
                       CORBA::Boolean verbose = 1);
 
@@ -39,7 +38,6 @@ public:
   // bootstrapped-to trader.
 
 private:
-
   void perform_queries_with_policies (const TAO_Policy_Creator& policy_manager);
   // Perform a query on the bootstrapped-to trader given the policies
   // pass in <policy_manager>.

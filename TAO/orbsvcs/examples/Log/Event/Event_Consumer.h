@@ -45,7 +45,6 @@ public:
   // The skeleton methods.
 
 private:
-
   // = Data Members
   CORBA::ULong event_count_;
   // Keep track of the number of events received.

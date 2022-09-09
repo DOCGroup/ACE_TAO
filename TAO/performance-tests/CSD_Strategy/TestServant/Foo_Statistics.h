@@ -7,7 +7,6 @@
 class CSD_PT_TestServant_Export Foo_Statistics
 {
   public:
-
     Foo_Statistics();
     virtual ~Foo_Statistics();
 
@@ -22,7 +21,6 @@ class CSD_PT_TestServant_Export Foo_Statistics
 
 
   private:
-
     unsigned num_clients_;
     unsigned num_loops_;
     unsigned expected_[5];

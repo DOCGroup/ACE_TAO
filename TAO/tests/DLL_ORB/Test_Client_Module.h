@@ -36,7 +36,6 @@
 class Test_Client_Module_Export Test_Client_Module : public ACE_Task_Base
 {
 public:
-
   /// Initializes object when dynamic linking occurs.
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
@@ -47,7 +46,6 @@ public:
   virtual int svc ();
 
 private:
-
   /// Reference to the ORB.
   CORBA::ORB_var orb_;
 

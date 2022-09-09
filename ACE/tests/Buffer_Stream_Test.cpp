@@ -80,7 +80,6 @@ public:
   /// Receive message from Supplier and print to stdout.
   int svc () override;
 private:
-
   /// Amount of time to wait for a timeout.
   ACE_Time_Value timeout_;
 };

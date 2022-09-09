@@ -19,7 +19,6 @@ public:
   virtual void shutdown (void);
 
 private:
-
   /// Use an ORB reference to shutdown the application.
   CORBA::ORB_var orb_;
 };

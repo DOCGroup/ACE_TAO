@@ -44,7 +44,6 @@ class FOO_IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
   FOO_IORInterceptor (IOP::Codec_ptr codec);
 
@@ -80,7 +79,6 @@ public:
   //@}
 
 private:
-
   /// The CDR encapsulation coder/decoder used to encapsulate data
   /// into a CDR encapsulation.
   IOP::Codec_var codec_;

@@ -36,7 +36,6 @@ class TAO_NS_Persistence_Global;
 class TAO_Storable_Naming_Context_ReaderWriter
 {
 public:
-
   TAO_Storable_Naming_Context_ReaderWriter (TAO::Storable_Base & stream);
 
   int read (TAO_Storable_Naming_Context & context);
@@ -47,7 +46,6 @@ public:
   void read_global (TAO_NS_Persistence_Global & global);
 
 private:
-
   void write_header (const TAO_NS_Persistence_Header & header);
   void read_header (TAO_NS_Persistence_Header & header);
 

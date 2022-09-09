@@ -68,7 +68,6 @@ private:
 class Worker : public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
-
   // Thread fuction.
   int svc (void)
     {

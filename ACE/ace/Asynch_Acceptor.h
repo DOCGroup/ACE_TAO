@@ -210,7 +210,6 @@ public:
   virtual void bytes_to_read (size_t new_value);
 
 protected:
-
   /// This is called when an outstanding accept completes.
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
 

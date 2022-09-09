@@ -184,7 +184,6 @@ MyTask::svc (void)
 class Receiver : public ACE_Service_Handler
 {
 public:
-
   Receiver (void);
   ~Receiver (void);
 
@@ -443,7 +442,6 @@ protected:
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
 
 private:
-
   int initiate_read_stream (void);
   int initiate_write_stream (void);
 

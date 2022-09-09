@@ -48,7 +48,6 @@ class ServerRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   ServerRequestInterceptor (const char * orb_id,
                             PortableServer::Current_ptr poa_current);
@@ -84,7 +83,6 @@ public:
   //@}
 
 private:
-
   /// The ORBid of the ORB with which this interceptor is registered.
   CORBA::String_var orb_id_;
 

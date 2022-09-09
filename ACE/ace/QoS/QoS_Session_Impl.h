@@ -158,7 +158,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_QoS_Export ACE_GQoS_Session : public ACE_QoS_Session
 {
 public:
-
   /// Default destructor.
   ~ACE_GQoS_Session (void);
 

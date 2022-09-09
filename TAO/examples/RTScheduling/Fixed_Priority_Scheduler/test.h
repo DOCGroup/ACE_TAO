@@ -15,7 +15,6 @@ class Task_Stats;
 class DT_Test :public ACE_Task <ACE_SYNCH>
 {
  public:
-
   DT_Test (void);
 
   void check_supported_priorities (void);

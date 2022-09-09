@@ -70,7 +70,6 @@ public:
   void done ();
 
 private:
-
   // The ORB reference
   CORBA::ORB_var orb_;
   // The exceptions caught.

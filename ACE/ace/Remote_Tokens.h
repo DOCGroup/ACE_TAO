@@ -140,7 +140,6 @@ public:
   void dump () const;
 
 protected:
-
   /// If shadows report deadlock, go remote anyway
   int ignore_shadow_deadlock_;
 

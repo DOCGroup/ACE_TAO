@@ -23,7 +23,6 @@ class TAO249_ServerRequest_Interceptor2
   public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO249_ServerRequest_Interceptor2 (void);
 
@@ -71,7 +70,6 @@ protected:
   TimeBase::TimeT get_now (void);
 
 private:
-
   CORBA::ORB_var orb_;
 
   CORBA::Boolean expired_;

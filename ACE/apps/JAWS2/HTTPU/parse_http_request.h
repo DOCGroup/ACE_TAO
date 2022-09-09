@@ -35,7 +35,6 @@ public:
   void dump (void);
 
 private:
-
   HTTP_Hdr_Node *method_;
   int major_version_;
   int minor_version_;

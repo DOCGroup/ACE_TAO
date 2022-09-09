@@ -54,7 +54,6 @@ public:
   typedef ACE_CString TID;
 
 private:
-
   /// Display options.
   void display_menu (void);
 

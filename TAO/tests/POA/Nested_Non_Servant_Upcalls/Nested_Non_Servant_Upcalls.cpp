@@ -20,7 +20,6 @@ class test_i :
   public virtual POA_test
 {
 public:
-
   test_i (PortableServer::POA_ptr poa);
 
   ~test_i (void);
@@ -53,7 +52,6 @@ test_i::method (void)
 class Object_Activator : public ACE_Task_Base
 {
 public:
-
   Object_Activator (ACE_Thread_Manager &thread_manager,
                     PortableServer::POA_ptr poa);
 
@@ -105,7 +103,6 @@ class Servant_Activator :
   public PortableServer::ServantActivator
 {
 public:
-
   Servant_Activator (PortableServer::POA_ptr poa);
 
   PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,

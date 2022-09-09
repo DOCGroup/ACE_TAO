@@ -46,7 +46,6 @@ namespace TAO
     virtual ~FT_FaultAnalyzer ();
 
   public:
-
     /**
     * Validate event type to make sure it is one we can handle.
     * @param event The structured fault event, as from the Fault Notifier.
@@ -74,7 +73,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
   };
 
 } // namespace TAO

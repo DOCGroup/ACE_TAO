@@ -37,7 +37,6 @@
 class  Bug1495_i : public virtual POA_Bug1495_Regression::Bug1495
 {
 public:
-
   Bug1495_i (CORBA::ORB_ptr orb);
 
   //Destructor
@@ -47,7 +46,6 @@ public:
 
   virtual void shutdown (void);
 private:
-
   CORBA::ORB_var orb_;
 };
 

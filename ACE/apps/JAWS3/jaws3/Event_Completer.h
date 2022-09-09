@@ -12,7 +12,6 @@ class JAWS_Export JAWS_Event_Completer
 //     Event completion callback class.
 {
 public:
-
   virtual ~JAWS_Event_Completer (void);
 
   virtual void accept_complete (const JAWS_Event_Result &r, void *act = 0);

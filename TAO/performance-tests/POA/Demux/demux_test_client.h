@@ -23,7 +23,6 @@
 class Demux_Test_Client
 {
 public:
-
   // Request invocation strategies
   enum INVOKE_STRATEGY
   {
@@ -53,7 +52,6 @@ public:
   int run (void);
 
 private:
-
   /// parse command line arguments
   int parse_args (void);
 

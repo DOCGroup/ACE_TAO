@@ -69,7 +69,6 @@ public :
   int destroy_session (ACE_QoS_Session *qos_session);
 
 private:
-
   /// Used by the create_session () to add new sessions to the
   /// set of sessions created by this factory.
   int add_session (ACE_QoS_Session *qos_session);

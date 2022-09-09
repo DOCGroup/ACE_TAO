@@ -8,7 +8,6 @@
 class CSD_TP_Foo_A_Export Foo_A_Statistics
 {
   public:
-
     Foo_A_Statistics(unsigned num_clients);
 
     virtual ~Foo_A_Statistics();
@@ -21,7 +20,6 @@ class CSD_TP_Foo_A_Export Foo_A_Statistics
 
 
   private:
-
     unsigned num_clients_;
 
     unsigned expected_[5];

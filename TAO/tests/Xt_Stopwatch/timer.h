@@ -20,7 +20,6 @@
 class Timer_imp
 {
  public:
-
   /// Constructor
   Timer_imp (XtAppContext &,
              CORBA::Long,
@@ -39,7 +38,6 @@ class Timer_imp
   CORBA::Float  elapsed_time (void);
 
  private:
-
   /// Static member function used for TimeOut callback.
   static void tick_callback (XtPointer,
                              XtIntervalId *);

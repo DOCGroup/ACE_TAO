@@ -14,7 +14,6 @@ class Simple
   : public virtual POA_Test::Simple
 {
 public:
-
   Simple (int server_id);
   /// Constructor
 
@@ -26,7 +25,6 @@ public:
   virtual void exit (void);
 
 private:
-
   int server_id_;
 };
 

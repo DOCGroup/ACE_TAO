@@ -32,7 +32,6 @@ namespace TAO
   struct TAO_ReplicationManagerLib_Export FT_FaultEventDescriptor
   {
   public:
-
     /// Default constructor.
     FT_FaultEventDescriptor ();
 

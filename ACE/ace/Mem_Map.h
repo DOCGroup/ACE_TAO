@@ -183,7 +183,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// This method does the dirty work of actually calling ::mmap to map
   /// the file into memory.
   int map_it (ACE_HANDLE handle,

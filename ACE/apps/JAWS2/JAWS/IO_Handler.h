@@ -291,7 +291,6 @@ public:
   virtual void release (void);
 
 protected:
-
   JAWS_Asynch_Handler *handler_;
   ACE_SYNCH_RW_MUTEX count_;
 };

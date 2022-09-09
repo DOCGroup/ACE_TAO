@@ -62,7 +62,6 @@ namespace TAO
       ACE_SYNCH_NULL_MUTEX> ValueMapIterator;
 
   public:
-
     /**
      * constructor: empty set with no defaults.
      */
@@ -155,7 +154,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /**
      * Protect internal state.
      */

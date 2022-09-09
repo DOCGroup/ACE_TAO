@@ -32,7 +32,6 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterFactory
   : public ACE_Service_Object, public TAO_Notify::Topology_Object
 {
 public:
-
   /// Factory method to create a FilterFactory reference
   /// The Factory is activated in the default POA. The filters created are activated in the <filter_poa>.
   virtual CosNotifyFilter::FilterFactory_ptr create (

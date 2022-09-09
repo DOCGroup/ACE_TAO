@@ -283,7 +283,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   // = The following methods do the actual work.
 
   // These methods assume that the locks are held by the private

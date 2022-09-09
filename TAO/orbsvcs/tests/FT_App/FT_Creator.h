@@ -64,7 +64,6 @@ namespace FTAPP
     ////////////////
     // Data members
    private:
-
     TAO::Object_Group_Creator creator_;
     CORBA::ORB_var orb_;
     const ACE_TCHAR * registry_ior_;

@@ -31,7 +31,6 @@
 class Server_Worker : public ACE_Task_Base
 {
 public:
-
   /// Constructor
   Server_Worker (CORBA::ORB_ptr orb);
 

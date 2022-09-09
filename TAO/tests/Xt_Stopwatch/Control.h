@@ -39,7 +39,6 @@ class Control
   Widget& stopwidget (void);
 
  private:
-
   /// A frame widget...
   Widget frame_;
 

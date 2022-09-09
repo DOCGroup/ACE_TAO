@@ -18,7 +18,6 @@
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-
   Receiver_Callback (void);
   /// Constructor.
 

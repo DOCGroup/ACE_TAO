@@ -33,7 +33,6 @@ class Basic;
 class LB_server
 {
 public:
-
   /// Constructor
   LB_server (int argc, ACE_TCHAR **argv);
 
@@ -62,11 +61,9 @@ public:
   CosLoadBalancing::LoadManager_ptr load_manager (void);
 
 private:
-
     int parse_args (int, ACE_TCHAR **);
 
 private:
-
   /// Load Manager
   CosLoadBalancing::LoadManager_var lm_;
 

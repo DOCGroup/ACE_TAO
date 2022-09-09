@@ -45,7 +45,6 @@ namespace TAO
     virtual ACE_Reactor_Impl *reactor_impl (void);
 
   private:
-
     /// Reactor created by this factory.
     ACE_XtReactor *reactor_impl_;
 

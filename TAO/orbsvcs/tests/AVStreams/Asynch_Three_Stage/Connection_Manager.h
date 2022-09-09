@@ -36,7 +36,6 @@ class Endpoint_Addresses
 class Connection_Manager
 {
 public:
-
   /// Constructor
   Connection_Manager (void);
 

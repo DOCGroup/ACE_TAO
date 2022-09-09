@@ -22,7 +22,6 @@ public:
   PortableServer::POA_ptr _default_POA (void);
 
 private:
-
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
 };
@@ -138,7 +137,6 @@ write_iors_to_file (CORBA::Object_ptr object,
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 

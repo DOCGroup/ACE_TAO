@@ -35,7 +35,6 @@ class TAO_PortableGroup_Export TAO_PG_Location_Hash
 {
 
 public:
-
   /// Creates a hash based on all of elements of the given Location
   CORBA::ULong operator() (const PortableGroup::Location &) const;
 };

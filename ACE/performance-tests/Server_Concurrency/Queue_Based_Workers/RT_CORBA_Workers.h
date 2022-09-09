@@ -63,7 +63,6 @@ public:
   int  end_synchronization (void);
 
 private:
-
   /// The mutex that is used for synchronisation.
   ACE_SYNCH_MUTEX mutex_;
 
@@ -91,7 +90,6 @@ public:
   int svc (void);
 
 private:
-
   /// Our referance to Synchronisers
   Synchronisers &synch_;
 };
@@ -118,7 +116,6 @@ public:
   virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
 
 private:
-
   /// Our referance to Synchronisers
   Synchronisers &synch_;
 };
@@ -145,7 +142,6 @@ public:
   /// Processed messages
   int processed (void);
 private:
-
   /// Our referance to Synchronisers
   Synchronisers &synch_;
 

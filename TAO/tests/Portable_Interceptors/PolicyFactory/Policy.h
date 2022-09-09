@@ -29,7 +29,6 @@ class Policy
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   Policy (CORBA::ULong val);
 
@@ -43,7 +42,6 @@ public:
   virtual void destroy (void);
 
 protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce proper memory management through
@@ -52,7 +50,6 @@ protected:
   ~Policy (void);
 
 private:
-
   /// Pseudo-reference to the ORB.
   const CORBA::ULong value_;
 };

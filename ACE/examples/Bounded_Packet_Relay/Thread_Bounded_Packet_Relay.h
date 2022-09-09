@@ -65,7 +65,6 @@ class Thread_Bounded_Packet_Relay_Driver;
 class Text_Input_Device_Wrapper : public Input_Device_Wrapper_Base
 {
 public:
-
   // = Enumerated logging level flags
   enum Logging_Flags {NO_LOGGING = 0,
                       LOG_MSGS_CREATED = 1};
@@ -119,7 +118,6 @@ private:
 class Text_Output_Device_Wrapper : public Output_Device_Wrapper_Base
 {
 public:
-
   // = Enumerated logging level flags
   enum Logging_Flags {NO_LOGGING = 0,
                       LOG_MSGS_RCVD = 2,
@@ -141,7 +139,6 @@ public:
   virtual int modify_device_settings (void *logging);
 
 private:
-
   /// This value holds the logging level.
   int logging_;
 
@@ -161,7 +158,6 @@ private:
 class User_Input_Task : public ACE_Task_Base
 {
 public:
-
   // = Trait for command accessible entry points.
 
   typedef int (User_Input_Task::*ACTION) (void *);
@@ -239,7 +235,6 @@ private:
 class BPR_Handler_Base : public ACE_Event_Handler
 {
 public:
-
   // = Trait for command accessible entry points.
 
   typedef int (BPR_Handler_Base::*ACTION) (void *);
@@ -284,7 +279,6 @@ class Send_Handler;
 class Send_Handler : public BPR_Handler_Base
 {
 public:
-
   // = Trait for command accessible entry points.
 
   typedef int (Send_Handler::*ACTION) (void *);
@@ -312,7 +306,6 @@ public:
   virtual int reregister (void *timeout);
 
 private:
-
   /// Count of the number of messages to send from the
   /// relay object to the output device object.
   u_long send_count_;

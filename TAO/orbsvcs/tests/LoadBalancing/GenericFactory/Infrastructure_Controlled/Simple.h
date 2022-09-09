@@ -13,7 +13,6 @@ class Simple
   : public virtual POA_Test::Simple
 {
 public:
-
   Simple (void);
   /// Constructor
 

@@ -52,7 +52,6 @@ public:
   CORBA::Boolean alerted () const;
 
 // protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via

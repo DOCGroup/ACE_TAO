@@ -234,7 +234,6 @@ protected:
   virtual void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result);
 
 private:
-
   /// Network I/O handle
   ACE_SOCK_Dgram sock_dgram_;
 

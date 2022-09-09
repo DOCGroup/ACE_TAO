@@ -66,7 +66,6 @@ public:
   // Receive message from producer and print to stdout.
 
 private:
-
   ACE_Time_Value timeout_;
 };
 

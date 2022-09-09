@@ -15,7 +15,6 @@ class Factory
   : public virtual POA_PortableGroup::GenericFactory
 {
 public:
-
   /// Constructor
   Factory (void);
   /// creates a Test::Simple servant reference.

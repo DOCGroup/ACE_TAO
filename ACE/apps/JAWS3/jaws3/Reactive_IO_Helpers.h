@@ -22,7 +22,6 @@ class JAWS_IO_Reactive_Handler : public ACE_Event_Handler
   friend class JAWS_IO_Reactive_Transmit;
 
 public:
-
   virtual void open (void);
 
   int handle_timeout (const ACE_Time_Value &, const void *);
@@ -36,11 +35,9 @@ public:
   void set_handle (ACE_HANDLE handle) { this->handle_ = handle; }
 
 protected:
-
   virtual void close (int result);
 
 private:
-
   JAWS_IO_Reactive_Handler ( ACE_HANDLE handle
                            , JAWS_Event_Completer *completer
                            , const ACE_Time_Value &tv
@@ -70,7 +67,6 @@ public: // needed for destructor due to "aCC: HP ANSI C++ B3910B A.03.39" compil
   }
 
 private:
-
   JAWS_Event_Result io_result_;
 
   size_t bytes_;
@@ -92,7 +88,6 @@ class JAWS_IO_Reactive_Send : public JAWS_IO_Reactive_Handler
   friend class JAWS_Reactive_IO;
 
 public:
-
   int handle_output (ACE_HANDLE handle);
 
   static JAWS_IO_Reactive_Send * make ( ACE_HANDLE handle
@@ -127,7 +122,6 @@ public:
   }
 
 private:
-
   JAWS_IO_Reactive_Send ( ACE_HANDLE handle
                         , ACE_Message_Block *mb
                         , JAWS_Event_Completer *completer
@@ -141,7 +135,6 @@ private:
   }
 
 private:
-
   ACE_Message_Block *mb_;
 };
 
@@ -152,7 +145,6 @@ class JAWS_IO_Reactive_Recv : public JAWS_IO_Reactive_Handler
   friend class JAWS_Reactive_IO;
 
 public:
-
   int handle_input (ACE_HANDLE handle);
 
   static JAWS_IO_Reactive_Recv * make ( ACE_HANDLE handle
@@ -187,7 +179,6 @@ public:
   }
 
 private:
-
   JAWS_IO_Reactive_Recv ( ACE_HANDLE handle
                         , ACE_Message_Block *mb
                         , JAWS_Event_Completer *completer
@@ -201,7 +192,6 @@ private:
   }
 
 private:
-
   ACE_Message_Block *mb_;
 };
 
@@ -212,7 +202,6 @@ class JAWS_IO_Reactive_Transmit : public JAWS_IO_Reactive_Handler
   friend class JAWS_Reactive_IO;
 
 public:
-
   int handle_timeout (const ACE_Time_Value &, const void *);
 
   int handle_output (ACE_HANDLE handle);
@@ -259,7 +248,6 @@ public:
   }
 
 protected:
-
   void close (int result);
 
   int handle_output_header (ACE_HANDLE handle);
@@ -271,7 +259,6 @@ protected:
   int handle_output_mb (ACE_HANDLE handle, ACE_Message_Block *&mb);
 
 private:
-
   JAWS_IO_Reactive_Transmit ( ACE_HANDLE handle
                             , ACE_HANDLE source
                             , JAWS_Event_Completer *completer
@@ -291,7 +278,6 @@ private:
   }
 
 private:
-
   ACE_HANDLE source_;
   ACE_Message_Block source_mb_;
   ACE_Message_Block *source_buf_;

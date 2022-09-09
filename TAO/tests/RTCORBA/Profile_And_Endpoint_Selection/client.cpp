@@ -93,7 +93,6 @@ class Client
 {
 
 public:
-
   Client (test_ptr test,
           CORBA::ORB_ptr orb,
           RTCORBA::Current_ptr current,
@@ -114,7 +113,6 @@ public:
 
 
 private:
-
   test_var test_;
   CORBA::ORB_var orb_;
   RTCORBA::Current_var current_;
@@ -366,7 +364,6 @@ Client::reset_policies (void)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 

@@ -18,7 +18,6 @@ class JAWS_Export JAWS_Timer_Impl
 //     RHS of the Bridge pattern.
 {
 public:
-
   virtual ~JAWS_Timer_Impl (void) {}
 
   virtual void schedule_timer ( long *timer_id
@@ -53,7 +52,6 @@ class JAWS_Export JAWS_Timer
 //     Bridge pattern.
 {
 public:
-
   JAWS_Timer (JAWS_Timer_Impl *impl = 0);
 
   static JAWS_Timer * instance (void)
@@ -82,7 +80,6 @@ public:
   void cancel_timer (long timer_id);
 
 private:
-
   JAWS_Timer_Impl *impl_;
 };
 

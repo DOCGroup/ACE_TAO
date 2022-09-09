@@ -103,7 +103,6 @@ static char complete_message[] =
 class LogLocker
 {
 public:
-
   LogLocker () { ACE_LOG_MSG->acquire (); }
   virtual ~LogLocker () { ACE_LOG_MSG->release (); }
 };

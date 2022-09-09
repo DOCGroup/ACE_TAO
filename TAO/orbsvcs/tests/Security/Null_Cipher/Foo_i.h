@@ -18,14 +18,12 @@
 class Foo_i : public virtual POA_Foo
 {
 public:
-
   /// Constructor.
   Foo_i (CORBA::ORB_ptr);
 
   virtual void shutdown (void);
 
 private:
-
   /// Reference to the ORB.
   CORBA::ORB_var orb_;
 };

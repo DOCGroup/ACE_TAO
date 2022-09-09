@@ -50,7 +50,6 @@ public:
   void run_test (void);
 
 private:
-
   /// Tests stable and deprecated insertion interfaces.
   void test_tree_insertion (void);
 

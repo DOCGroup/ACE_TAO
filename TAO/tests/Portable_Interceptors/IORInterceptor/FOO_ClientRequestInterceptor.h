@@ -44,7 +44,6 @@ class FOO_ClientRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
   FOO_ClientRequestInterceptor (IOP::Codec_ptr codec);
 
@@ -79,7 +78,6 @@ public:
   //@}
 
 private:
-
   /// The CDR encapsulation coder/decoder used to retrieve data
   /// from the CDR encapsulation in the tagged component.
   IOP::Codec_var codec_;

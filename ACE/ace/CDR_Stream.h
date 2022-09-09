@@ -1090,7 +1090,6 @@ public:
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 protected:
-
   /// The start of the chain of message blocks, even though in the
   /// current version the chain always has length 1.
   ACE_Message_Block start_;

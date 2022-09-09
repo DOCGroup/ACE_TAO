@@ -25,7 +25,6 @@ public:
   int svc (void);
 
 private:
-
   /// Simple pings to prune up the connections
   void validate_connections (void);
 

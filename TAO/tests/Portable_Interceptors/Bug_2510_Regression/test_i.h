@@ -23,14 +23,12 @@ class Visual_i : public POA_Test_Interceptors::Visual
 {
 
 public:
-
   Visual_i (CORBA::ORB_ptr orb);
 
   void normal (CORBA::Long arg);
   void shutdown (void);
 
 private:
-
   /// The ORB pseudo-reference (for shutdown).
   CORBA::ORB_var orb_;
 };

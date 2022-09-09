@@ -21,7 +21,6 @@ class JAWS_Concurrency_Bridge
 //
 {
 public:
-
   JAWS_Concurrency_Bridge (CONCURRENCY_IMPL *impl = 0);
 
   int putq (JAWS_Protocol_Handler *ph);
@@ -30,7 +29,6 @@ public:
   void shutdown (void);
 
 protected:
-
   CONCURRENCY_IMPL *impl_;
 };
 

@@ -41,7 +41,6 @@ class FOO_IORInterceptor_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name Methods Required by the ORBInitializer Interface
    *

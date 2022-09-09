@@ -13,11 +13,9 @@ class JAWS_Export JAWS_Protocol_State
   friend class JAWS_Protocol_Handler;
 
 public:
-
   virtual ~JAWS_Protocol_State (void);
 
 protected:
-
   virtual int service (JAWS_Event_Completer *, void *data) = 0;
 
   virtual JAWS_Protocol_State * transition ( const JAWS_Event_Result &
@@ -37,7 +35,6 @@ class JAWS_Export JAWS_Protocol_Handler
   friend class JAWS_THYBRID_Concurrency;
 
 public:
-
   JAWS_Protocol_Handler (JAWS_Protocol_State *state = 0, void *data = 0);
 
   virtual int service (void);
@@ -48,12 +45,10 @@ public:
   }
 
 protected:
-
   virtual ~JAWS_Protocol_Handler (void);
   // Try to guarantee this class will be created dynamically.
 
 protected:
-
   void event_complete (const JAWS_Event_Result &result, void *act);
   // The event completion routine that triggers the transition
   // to the next Protocol State.
@@ -64,7 +59,6 @@ protected:
   }
 
 private:
-
   JAWS_Protocol_State *state_;
 
   void *data_;

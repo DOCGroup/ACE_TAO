@@ -65,7 +65,6 @@ public:
             Web_Server::Iterator_Factory_ptr factory);
 
 private:
-
   /// Destructor  (private to ensure that Iterator_Handler is allocated
   /// on the heap).
   ~Push_Iterator_Handler (void);

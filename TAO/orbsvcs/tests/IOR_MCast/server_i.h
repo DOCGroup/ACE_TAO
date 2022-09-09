@@ -21,7 +21,6 @@ public:
   // Initialize the server multicast.
 
 private:
-
   /// Sets the IOR_Multicast class to listen for multicast requests
   // for this server.
   int enable_multicast (const char *ior);
@@ -30,7 +29,6 @@ private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
-
   int argc_;
   // # of arguments on the command line.
 
