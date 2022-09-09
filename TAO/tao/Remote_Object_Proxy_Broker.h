@@ -48,11 +48,11 @@ namespace TAO
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-  CORBA::Boolean _non_existent (CORBA::Object_ptr target) override;
+  virtual CORBA::Boolean _non_existent (CORBA::Object_ptr target);
 
-  CORBA::InterfaceDef * _get_interface (CORBA::Object_ptr target) override;
+  virtual CORBA::InterfaceDef * _get_interface (CORBA::Object_ptr target);
 
-  CORBA::Object_ptr _get_component (CORBA::Object_ptr target) override;
+  virtual CORBA::Object_ptr _get_component (CORBA::Object_ptr target);
 
   char * _repository_id (CORBA::Object_ptr target) override;
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
