@@ -51,12 +51,10 @@ namespace TAO
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-      
       TAO_SERVANT_LOCATION
       locate_servant (const PortableServer::ObjectId &system_id,
                       PortableServer::Servant &servant) override;
 
-      
       PortableServer::Servant
       locate_servant (const char *operation,
                       const PortableServer::ObjectId &system_id,

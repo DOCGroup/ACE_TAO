@@ -50,7 +50,6 @@ public:
   ~TAO_CSD_POA (void) override;
 
   /// Pass the Strategy object reference to the CSD poa.
-  
   void set_csd_strategy (::CSD_Framework::Strategy_ptr s) override;
 
   /// Hook - The POA has been (or is being) activated.

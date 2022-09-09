@@ -40,13 +40,11 @@ namespace TAO
       void strategy_cleanup() override;
 
       CORBA::ULong waiting_servant_deactivation () const override;
-
       
       PortableServer::ObjectId *
       activate_object (PortableServer::Servant servant,
                        CORBA::Short priority,
                        bool &wait_occurred_restart_call) override;
-
       
       void
       activate_object_with_id (const PortableServer::ObjectId &id,
@@ -64,7 +62,6 @@ namespace TAO
 
       PortableServer::ObjectId *system_id_to_object_id (
         const PortableServer::ObjectId &system_id) override;
-
       
       PortableServer::Servant
       user_id_to_servant (const PortableServer::ObjectId &id) override;

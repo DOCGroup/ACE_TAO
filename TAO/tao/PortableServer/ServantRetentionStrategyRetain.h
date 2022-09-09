@@ -42,13 +42,11 @@ namespace TAO
 
       int is_servant_in_map (PortableServer::Servant servant,
                                      bool &wait_occurred_restart_call) override;
-
       
       PortableServer::ObjectId *
       activate_object (PortableServer::Servant servant,
                        CORBA::Short priority,
                        bool &wait_occurred_restart_call) override;
-
       
       void
       activate_object_with_id (const PortableServer::ObjectId &id,
@@ -63,14 +61,12 @@ namespace TAO
 
       PortableServer::ObjectId * system_id_to_object_id (
         const PortableServer::ObjectId &system_id) override;
-
       
       PortableServer::Servant
       user_id_to_servant (const PortableServer::ObjectId &id) override;
 
       CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &id,
                                          bool indirect) override;
-
       
       TAO_SERVANT_LOCATION
       servant_present (const PortableServer::ObjectId &system_id,
@@ -89,17 +85,14 @@ namespace TAO
 
       PortableServer::ObjectId *servant_to_user_id (
         PortableServer::Servant servant) override;
-
       
       CORBA::Object_ptr servant_to_reference (PortableServer::Servant servant) override;
-
       
       CORBA::Object_ptr create_reference (
         const char *intf,
         CORBA::Short priority) override;
 
-#if !defined (CORBA_E_MICRO)
-      
+#if !defined (CORBA_E_MICRO)      
       CORBA::Object_ptr create_reference_with_id (
         const PortableServer::ObjectId &oid,
         const char *intf,
@@ -121,7 +114,6 @@ namespace TAO
       PortableServer::ObjectId *servant_to_system_id_i (
           PortableServer::Servant p_servant,
           CORBA::Short &priority);
-
       
       int rebind_using_user_id_and_system_id (
         PortableServer::Servant servant,
@@ -129,7 +121,6 @@ namespace TAO
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall) override;
 
-      
       CORBA::Boolean servant_has_remaining_activations (
         PortableServer::Servant servant) override;
 

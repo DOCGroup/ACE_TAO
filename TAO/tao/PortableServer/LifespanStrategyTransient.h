@@ -45,7 +45,6 @@ namespace TAO
 
       void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at) override;
 
-      
       bool validate (CORBA::Boolean is_persistent,
                      const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const override;
 

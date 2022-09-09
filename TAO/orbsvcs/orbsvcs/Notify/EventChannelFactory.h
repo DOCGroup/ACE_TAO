@@ -127,7 +127,6 @@ private:
 
   /// shutdown
   int shutdown (void) override;
-
   
   NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
       NotifyExt::ReconnectionCallback_ptr reconnection) override;
