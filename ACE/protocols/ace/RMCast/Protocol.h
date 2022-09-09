@@ -423,7 +423,7 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
+    void
     serialize_body (ostream& os) const override
     {
       u32 addr (address_.get_ip_address ());
@@ -433,7 +433,7 @@ namespace ACE_RMCast
       os << port;
     }
 
-    virtual void
+    void
     serialize_body (sstream& ss) const override
     {
       u32 addr (0);
@@ -487,7 +487,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
+    Profile_ptr
     clone_ () override
     {
       Profile_ptr p (new To (*this));
@@ -508,7 +508,7 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
+    void
     serialize_body (ostream& os) const override
     {
       u32 addr (address_.get_ip_address ());
@@ -518,7 +518,7 @@ namespace ACE_RMCast
       os << port;
     }
 
-    virtual void
+    void
     serialize_body (sstream& ss) const override
     {
       u32 addr (0);
@@ -589,7 +589,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
+    Profile_ptr
     clone_ () override
     {
       Profile_ptr p (new Data (*this));
@@ -648,13 +648,13 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
+    void
     serialize_body (ostream& os) const override
     {
       os.write_char_array (buf_, size_);
     }
 
-    virtual void
+    void
     serialize_body (sstream& ss) const override
     {
       ss.write_char_array (buf_, size_);
@@ -700,7 +700,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
+    Profile_ptr
     clone_ () override
     {
       Profile_ptr p (new SN (*this));
@@ -721,13 +721,13 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
+    void
     serialize_body (ostream& os) const override
     {
       os << n_;
     }
 
-    virtual void
+    void
     serialize_body (sstream& ss) const override
     {
       ss << n_;
@@ -804,7 +804,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
+    Profile_ptr
     clone_ () override
     {
       Profile_ptr p (new NAK (*this));
@@ -889,7 +889,7 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
+    void
     serialize_body (ostream& os) const override
     {
       NAK& this_ = const_cast<NAK&> (*this); // Don't put in ROM.
@@ -910,7 +910,7 @@ namespace ACE_RMCast
       }
     }
 
-    virtual void
+    void
     serialize_body (sstream& ss) const override
     {
       NAK& this_ = const_cast<NAK&> (*this); // Don't put in ROM.
@@ -1205,7 +1205,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
+    Profile_ptr
     clone_ () override
     {
       Profile_ptr p (new Part (*this));
@@ -1240,7 +1240,7 @@ namespace ACE_RMCast
     }
 
   public:
-    virtual void
+    void
     serialize_body (ostream& os) const override
     {
       os << num_;
@@ -1248,7 +1248,7 @@ namespace ACE_RMCast
       os << total_size_;
     }
 
-    virtual void
+    void
     serialize_body (sstream& ss) const override
     {
       ss << num_;
