@@ -127,6 +127,8 @@ private:
 
   /// shutdown
   virtual int shutdown (void);
+  
+  virtual
   NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
       NotifyExt::ReconnectionCallback_ptr reconnection);
 

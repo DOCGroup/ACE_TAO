@@ -55,6 +55,8 @@ namespace TAO
       TAO_SERVANT_LOCATION
       locate_servant (const PortableServer::ObjectId &system_id,
                       PortableServer::Servant &servant);
+      
+      virtual
       PortableServer::Servant
       locate_servant (const char *operation,
                       const PortableServer::ObjectId &system_id,
