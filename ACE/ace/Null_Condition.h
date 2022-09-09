@@ -64,7 +64,7 @@ public:
 
   /// Returns 0.
   int broadcast () {return 0;}
-  ACE_Null_Mutex &mutex () {return this->mutex_;};
+  ACE_Null_Mutex &mutex () {return this->mutex_;}
 
   /// Dump the state of an object.
   void dump () const {}
