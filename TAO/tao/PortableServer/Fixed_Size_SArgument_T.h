@@ -38,7 +38,6 @@ namespace TAO
   class In_Fixed_Size_SArgument_T : public InArgument
   {
   public:
-
     /**
      * @name @c TAO::Argument Method Overrides
      *
@@ -59,7 +58,6 @@ namespace TAO
     S const & arg () const;
 
   private:
-
     /// Reference to the "IN" argument.
     S x_;
 
@@ -77,7 +75,6 @@ namespace TAO
   class Inout_Fixed_Size_SArgument_T : public InoutArgument
   {
   public:
-
     /// Constructor.
     Inout_Fixed_Size_SArgument_T ();
 
@@ -100,7 +97,6 @@ namespace TAO
     S & arg ();
 
   private:
-
     S x_;
   };
 
@@ -116,7 +112,6 @@ namespace TAO
   class Out_Fixed_Size_SArgument_T : public OutArgument
   {
   public:
-
     /// Constructor.
     Out_Fixed_Size_SArgument_T ();
 
@@ -138,7 +133,6 @@ namespace TAO
     S & arg ();
 
   private:
-
     S x_;
 
   };
@@ -155,7 +149,6 @@ namespace TAO
   class Ret_Fixed_Size_SArgument_T : public RetArgument
   {
   public:
-
     /// Constructor.
     Ret_Fixed_Size_SArgument_T ();
 
@@ -177,7 +170,6 @@ namespace TAO
     S & arg ();
 
   private:
-
     S x_;
 
   };

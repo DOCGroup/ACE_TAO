@@ -84,7 +84,6 @@ public:
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
-
   /// Register RTCORBA policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 

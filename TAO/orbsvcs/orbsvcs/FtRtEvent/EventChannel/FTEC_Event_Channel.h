@@ -26,8 +26,6 @@ class TAO_FTRTEC_Export TAO_FTEC_Event_Channel
   : public POA_FtRtecEventChannelAdmin::EventChannel
 {
 public:
-
-
   TAO_FTEC_Event_Channel(CORBA::ORB_var orb,
                          PortableServer::POA_var poa);
 

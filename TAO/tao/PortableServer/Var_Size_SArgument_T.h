@@ -33,7 +33,6 @@ namespace TAO
   class In_Var_Size_SArgument_T : public InArgument
   {
   public:
-
     CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
     void interceptor_value (CORBA::Any *any) const override;

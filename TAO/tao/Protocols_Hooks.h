@@ -39,7 +39,6 @@ class TAO_Stub;
 class TAO_Export TAO_IIOP_Protocol_Properties
 {
 public:
-
   TAO_IIOP_Protocol_Properties ();
 
   CORBA::Long send_buffer_size_;
@@ -54,7 +53,6 @@ public:
 class TAO_Export TAO_UIOP_Protocol_Properties
 {
 public:
-
   TAO_UIOP_Protocol_Properties ();
 
   CORBA::Long send_buffer_size_;
@@ -64,7 +62,6 @@ public:
 class TAO_Export TAO_SHMIOP_Protocol_Properties
 {
 public:
-
   TAO_SHMIOP_Protocol_Properties ();
 
   CORBA::Long send_buffer_size_;
@@ -80,7 +77,6 @@ public:
 class TAO_Export TAO_DIOP_Protocol_Properties
 {
 public:
-
   TAO_DIOP_Protocol_Properties ();
 
   CORBA::Long send_buffer_size_;
@@ -93,7 +89,6 @@ public:
 class TAO_Export TAO_SCIOP_Protocol_Properties
 {
 public:
-
   TAO_SCIOP_Protocol_Properties ();
 
   CORBA::Long send_buffer_size_;

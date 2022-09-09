@@ -100,7 +100,6 @@ private:
 
   /// Implement the pull side of this class
   TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullSupplier,CosEventChannelAdmin::ProxyPullSupplier> pull_admin_;
-
 };
 
 // ****************************************************************

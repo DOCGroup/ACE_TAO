@@ -50,7 +50,6 @@ namespace TAO
       : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
-
       /// Virtual Destructor.
       ~TP_Request() override;
 
@@ -116,7 +115,6 @@ namespace TAO
       /// Reference to the servant "state" object (contains the busy flag).
       TP_Servant_State::HandleType servant_state_;
     };
-
   }
 }
 

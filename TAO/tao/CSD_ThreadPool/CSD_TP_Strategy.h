@@ -56,7 +56,6 @@ namespace TAO
       : public Strategy_Base
     {
     public:
-
       /// Constructor.
       TP_Strategy(Thread_Counter  num_threads = 1,
                   bool     serialize_servants = true);

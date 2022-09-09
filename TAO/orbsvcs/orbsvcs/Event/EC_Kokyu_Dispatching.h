@@ -101,7 +101,6 @@ public:
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
   ~TAO_EC_Kokyu_Shutdown_Command (void) override;
-
 };
 
 // ****************************************************************

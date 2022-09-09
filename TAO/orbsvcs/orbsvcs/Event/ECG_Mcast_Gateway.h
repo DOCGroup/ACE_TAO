@@ -125,7 +125,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Mcast_Gateway
   : public ACE_Service_Object
 {
 public:
-
   /// The Service_Object entry points.
   //@{
   int init (int argc, ACE_TCHAR* argv[]) override;
@@ -219,7 +218,6 @@ public:
             RtecEventChannelAdmin::EventChannel_ptr ec);
 
 private:
-
   /// Helpers.
   //@{
   /// Check that arguments to run() are not nil.

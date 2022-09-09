@@ -233,7 +233,6 @@ protected:
   /// proxy push consumer, if 0, we only use one proxy push consumer (the
   /// default) for all source ids.
   int use_consumer_proxy_map_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
