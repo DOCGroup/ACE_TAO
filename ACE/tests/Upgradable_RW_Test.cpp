@@ -19,7 +19,6 @@
 #include "ace/Atomic_Op.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // Default number of iterations.

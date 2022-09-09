@@ -190,7 +190,6 @@ struct Netlink_Request
 };
 
 
-
 /**
  * The handler first is trying to delete an ip-address, further
  * to add the ip and, if successful to cleanup the address.

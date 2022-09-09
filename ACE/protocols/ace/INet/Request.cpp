@@ -1,7 +1,6 @@
 #include "ace/INet/Request.h"
 
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE

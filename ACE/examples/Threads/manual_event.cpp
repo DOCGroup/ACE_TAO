@@ -18,7 +18,6 @@
 #include "ace/Atomic_Op.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 static ACE_Atomic_Op <ACE_Thread_Mutex, int> amount_of_work = 0;
 

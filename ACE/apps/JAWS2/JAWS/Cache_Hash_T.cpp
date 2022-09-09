@@ -94,7 +94,6 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::~JAWS_Cache_Hash (void)
 
 
 
-
               this->hashtable_[i] = 0;
             }
         }
@@ -228,7 +227,6 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::size () const
 {
   return this->size_;
 }
-
 
 
 

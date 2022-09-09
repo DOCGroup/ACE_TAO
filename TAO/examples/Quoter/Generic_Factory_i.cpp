@@ -36,7 +36,6 @@ Quoter_Generic_Factory_i::supports (const CosLifeCycle::Key &)
 }
 
 
-
 CosNaming::NamingContext_ptr
 Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_key)
 {
@@ -76,7 +75,6 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
     }
   return quoterNamingContext_var._retn ();
 }
-
 
 
 CORBA::Object_ptr

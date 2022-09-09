@@ -85,7 +85,6 @@ Worker::svc (void)
 }
 
 
-
 /// Main driver
 
 int

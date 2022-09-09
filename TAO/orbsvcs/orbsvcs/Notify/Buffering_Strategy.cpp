@@ -361,5 +361,4 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable* met
 }
 
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

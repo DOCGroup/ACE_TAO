@@ -14,7 +14,6 @@
 #include "tao/debug.h"
 
 
-
   Client::Client (void)
 {
 }

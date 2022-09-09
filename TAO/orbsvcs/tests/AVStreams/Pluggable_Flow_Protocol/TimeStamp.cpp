@@ -237,5 +237,3 @@ ACE_STATIC_SVC_DEFINE (TimeStamp_Protocol_Factory,
 
 
 
-
-

@@ -12,7 +12,6 @@
 
 
 
-
 #include    <string>
 #include    <map>
 #include    <algorithm>
@@ -380,9 +379,6 @@ ICP_Persist::
 
 // Instantiate a single global instance of the class.
 static ICP_Persist mydb("/tmp/CCS_DB");
-
-
-
 
 
 

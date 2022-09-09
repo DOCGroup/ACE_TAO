@@ -41,7 +41,6 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
         CORBA::ORB_init (argc, argv);
 
 
-
       CORBA::Object_var naming_obj =
       this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
 

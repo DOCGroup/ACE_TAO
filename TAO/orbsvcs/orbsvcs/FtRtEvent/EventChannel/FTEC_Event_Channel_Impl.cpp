@@ -221,7 +221,6 @@ TAO_FTEC_Event_Channel_Impl::activate_object (
 }
 
 
-
 // = The RtecEventChannelAdmin::EventChannel methods...
 /// The default implementation is:
 ///    this->consumer_admin ()->_this ();

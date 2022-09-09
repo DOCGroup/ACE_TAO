@@ -24,7 +24,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 static int debug = 0;
 static const char *one_second_timeout = "one second timeout";
 static const char *two_second_timeout = "two second timeout";

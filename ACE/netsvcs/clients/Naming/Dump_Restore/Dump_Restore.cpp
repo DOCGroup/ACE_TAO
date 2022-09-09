@@ -12,7 +12,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
   : infile_ (0)
 {

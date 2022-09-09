@@ -19,7 +19,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // This test exercises the setting and cancelling of timers from a

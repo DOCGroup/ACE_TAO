@@ -472,7 +472,6 @@ BasicLog_Test::test_retrieval (CORBA::ULong /* numberOfRecordsToWrite */)
 }
 
 
-
 int
 BasicLog_Test::test_query(CORBA::ULong numberOfRecordsToWrite)
 {

@@ -45,7 +45,6 @@ char *URL::get_filename(void) {
 
 
 
-
 void cleanup(void) {
   ACE_OS::unlink(TEMPORARY_FILE_NAME);
   ACE_OS::unlink(INCOMING_FILE_NAME);

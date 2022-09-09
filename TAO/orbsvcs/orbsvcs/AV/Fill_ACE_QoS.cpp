@@ -3,7 +3,6 @@
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const iovec Fill_ACE_QoS::iov_ = {0,0};

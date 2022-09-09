@@ -287,7 +287,6 @@ int FT_ReplicaFactory_i::idle (int & result)
 }
 
 
-
 int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
 {
   int result = 0;

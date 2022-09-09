@@ -229,7 +229,6 @@ Object_Group_Factory_i::make_group (int random,
     }
 
 
-
   // As we are sure that it is not in the list go ahead and insert it
   if (random)
     ACE_NEW_THROW_EX (group_servant,
@@ -285,7 +284,6 @@ Object_Group_Factory_i::make_group (int random,
     }
 
 
-
   // Update the value of flags_
   this->update_flags (random);
 
@@ -308,7 +306,6 @@ Object_Group_Factory_i::make_group (int random,
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::resolve (const char * id)
 {
-
 
 
 #if defined (DOORS_MEASURE_STATS)
@@ -387,7 +384,6 @@ Object_Group_Factory_i::resolve (const char * id)
 
   Load_Balancer::Object_Group_ptr
     object_group = Load_Balancer::Object_Group::_narrow (objref.in ());
-
 
 
 #if defined (DOORS_MEASURE_STATS)
@@ -754,7 +750,6 @@ Object_Group_i::unbind (const char * id)
 
       this->member_id_list_ = reinterpret_cast <LIST *> (tmp_id_list);
     }
-
 
 
   Object_Group_i::ITERATOR iter (*(this->member_id_list_));

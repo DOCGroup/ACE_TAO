@@ -101,7 +101,6 @@ Sender::init (int argc, ACE_TCHAR *argv[])
     return result;
 
 
-
   // Parse the command line arguments
   result =
     this->parse_args (argc, argv);

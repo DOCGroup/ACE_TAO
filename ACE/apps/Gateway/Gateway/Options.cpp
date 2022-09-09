@@ -9,7 +9,6 @@
 #include "ace/os_include/os_fcntl.h"
 
 
-
 // Static initialization.
 Options *Options::instance_ = 0;
 

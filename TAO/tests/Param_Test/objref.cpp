@@ -259,7 +259,6 @@ Test_ObjRef::print_values (void)
     }
 
 
-
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*"
               "in = %C, "

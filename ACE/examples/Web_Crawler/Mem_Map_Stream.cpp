@@ -5,7 +5,6 @@
 #include "Mem_Map_Stream.h"
 
 
-
 ACE_SOCK_Stream &
 Mem_Map_Stream::stream (void)
 {

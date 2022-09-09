@@ -90,7 +90,6 @@ Catior_i::decode (const ACE_CString& aString, ACE_CString& output)
 }
 
 
-
 CORBA::Boolean
 Catior_i::catiiop (char* string)
 {

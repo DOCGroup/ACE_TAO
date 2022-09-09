@@ -131,7 +131,6 @@ public:
   virtual void setErrorHandler (ACEXML_ErrorHandler *handler);
 
 
-
 protected:
   /**
    * Parse XML Prolog.

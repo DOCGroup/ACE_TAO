@@ -146,7 +146,6 @@ void FT_TestReplica_i::suicide(const char * note)
 // class FT_TestReplica_i public, non-CORBA interface
 
 
-
 //static
 const char * FT_TestReplica_i::repository_id()
 {
@@ -244,7 +243,6 @@ int FT_TestReplica_i::fini (void)
 {
   return 0;
 }
-
 
 
 /////////////////////////////////////////////////////

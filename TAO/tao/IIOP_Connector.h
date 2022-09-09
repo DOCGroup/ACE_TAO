@@ -131,7 +131,6 @@ private:
                                       ACE_Time_Value *timeout = 0);
 
 
-
   /// Return the remote endpoint, a helper function
   TAO_IIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 

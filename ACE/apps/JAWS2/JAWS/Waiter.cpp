@@ -4,7 +4,6 @@
 #include "JAWS/IO_Handler.h"
 
 
-
 JAWS_Waiter::JAWS_Waiter (void)
   : iter_ (*this)
 {

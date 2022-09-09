@@ -303,7 +303,6 @@ DOVE_Supplier::use_prev_connection ()
 }
 
 
-
 // -------------------- Internal Demo Supplier -----------------------------
 
 DOVE_Supplier::Internal_DOVE_Supplier::Internal_DOVE_Supplier (DOVE_Supplier *impl_ptr)
@@ -398,7 +397,6 @@ DOVE_Supplier::connect_Supplier ()
            this->current_connection_params_->pod_rt_info_.quantum,
            this->current_connection_params_->pod_rt_info_.threads,
            static_cast<RtecScheduler::Info_Type_t> (this->current_connection_params_->pod_rt_info_.info_type));
-
 
 
     // Set the publications to report them to the event channel.

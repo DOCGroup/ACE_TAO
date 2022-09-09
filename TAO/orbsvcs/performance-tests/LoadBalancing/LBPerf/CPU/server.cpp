@@ -236,7 +236,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
 
-
   try
     {
       ORBInitializer *initializer = 0;

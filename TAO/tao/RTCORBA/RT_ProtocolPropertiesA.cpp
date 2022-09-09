@@ -34,7 +34,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/objref_typecode.cpp:76
 
@@ -50,7 +49,6 @@ namespace RTCORBA
   ::CORBA::TypeCode_ptr const _tc_ProtocolProperties =
     &_tao_tc_RTCORBA_ProtocolProperties;
 }
-
 
 
 // TAO_IDL - Generated from

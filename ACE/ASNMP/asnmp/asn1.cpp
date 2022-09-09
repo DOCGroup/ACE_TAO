@@ -1084,7 +1084,6 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
       break;
 
 
-
     case sNMP_SYNTAX_TIMETICKS:
     case sNMP_SYNTAX_CNTR32:
     case sNMP_SYNTAX_GAUGE32:
@@ -1519,7 +1518,6 @@ cmu_snmp::parse_var_op( u_char *data, oid *var_name,
   *listlength -= (int)(data - var_op_start);
   return data;
 }
-
 
 
 // build a pdu from a data and length

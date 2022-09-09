@@ -67,7 +67,6 @@ private:
 #endif // if defined RUN_DEBUG
 
 
-
 static void
 handle_signal (int )
 {

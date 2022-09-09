@@ -4,7 +4,6 @@
 #include "tao/AnyTypeCode/Any.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 void do_nothing (void)

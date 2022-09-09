@@ -84,7 +84,6 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
     }
 
 
-
   if (ACE_OS::strncmp (buf, "quit", 4) == 0)
     // Tell the main event loop to shutdown.
     this->notifier_->shutdown ();

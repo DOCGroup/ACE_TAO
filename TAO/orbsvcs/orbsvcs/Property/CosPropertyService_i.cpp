@@ -15,7 +15,6 @@
 #include "ace/OS_NS_string.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // = Methods to deal with ACE_Hash_Map_Manager.

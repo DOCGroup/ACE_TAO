@@ -18,7 +18,6 @@
 #include "ace/Truncate.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;

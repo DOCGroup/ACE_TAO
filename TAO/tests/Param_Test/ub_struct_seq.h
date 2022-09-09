@@ -79,7 +79,6 @@ private:
 };
 
 
-
 class Test_Unbounded_Struct_Sequence
 {
 public:

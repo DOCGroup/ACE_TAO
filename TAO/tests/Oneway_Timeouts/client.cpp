@@ -301,7 +301,6 @@ namespace
   }
 
 
-
 void reset_buffering (ORB_ptr orb)
 {
   Object_var obj = orb->resolve_initial_references ("PolicyCurrent");

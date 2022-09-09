@@ -93,7 +93,6 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
 
 
-
       // create a log..
 
       ACE_DEBUG ((LM_DEBUG,

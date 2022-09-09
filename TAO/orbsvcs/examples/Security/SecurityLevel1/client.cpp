@@ -1,7 +1,6 @@
 #include "SLevel1_TestC.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int

@@ -709,7 +709,6 @@ typedef enum yysymbol_kind_t yysymbol_kind_t;
 
 
 
-
 #ifdef short
 # undef short
 #endif
@@ -2446,7 +2445,6 @@ int yydebug;
 
 
 
-
 /*-----------------------------------------------.
 | Release the memory associated to this symbol.  |
 `-----------------------------------------------*/
@@ -2473,7 +2471,6 @@ int yychar;
 YYSTYPE yylval;
 /* Number of syntax errors so far.  */
 int yynerrs;
-
 
 
 
@@ -2512,7 +2509,6 @@ yyparse (void)
   /* The variables used to return semantic value and location from the
      action routines.  */
   YYSTYPE yyval;
-
 
 
 #define YYPOPSTACK(N)   (yyvsp -= (N), yyssp -= (N))

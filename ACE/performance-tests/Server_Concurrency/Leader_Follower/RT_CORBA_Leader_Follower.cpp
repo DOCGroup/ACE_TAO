@@ -1,7 +1,6 @@
 #include "RT_CORBA_Leader_Follower.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // We need the following only if we have threads enabled..
@@ -35,7 +34,6 @@ static DEBUGGING_RANGE debug = DEBUG_NONE;
 
 // Timer for the test
 ACE_High_Res_Timer test_timer;
-
 
 
 

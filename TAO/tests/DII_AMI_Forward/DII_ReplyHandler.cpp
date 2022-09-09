@@ -119,5 +119,4 @@ DII_ReplyHandler::handle_location_forward (TAO_InputCDR &incoming,
   req->sendc(this);
 
 
-
 }

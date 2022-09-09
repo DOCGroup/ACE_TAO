@@ -16,7 +16,6 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
 
-
 int
 test_with_bidir_poa (int argc,
                      ACE_TCHAR **argv,

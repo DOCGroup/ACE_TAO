@@ -293,7 +293,6 @@ int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroup_ptr object_
 }
 
 
-
 PortableGroup::ObjectGroups *
 TAO::PG_Group_Factory::groups_at_location (
     const PortableGroup::Location & the_location)

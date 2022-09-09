@@ -51,7 +51,6 @@ typedef ACE_Hash_Map_Entry <ACE_CString,TAO_AV_Flow_Handler*> Flow_Handler_Map_E
 typedef ACE_Hash_Map_Iterator <ACE_CString,TAO_AV_Flow_Handler*,ACE_Null_Mutex>  Flow_Handler_Map_Iterator;
 
 
-
 class TAO_AV_Export AV_Null_MediaCtrl
   : public virtual POA_Null_MediaCtrl
 {
@@ -1053,7 +1052,6 @@ public:
                                 CORBA::Boolean_out is_met,
                                 const char * address,
                                 const char * use_flow_protocol);
-
 
 
   /// sets the public key  to be used for encryption of the data.

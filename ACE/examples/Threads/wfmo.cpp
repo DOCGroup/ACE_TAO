@@ -11,7 +11,6 @@
 #include "ace/OS_main.h"
 
 
-
 #if defined (ACE_WIN32)
 
 // Number of threads.

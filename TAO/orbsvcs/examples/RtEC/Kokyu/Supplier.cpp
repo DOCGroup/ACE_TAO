@@ -4,7 +4,6 @@
 #include "orbsvcs/RtecEventCommC.h"
 
 
-
 Supplier::Supplier (RtecEventComm::EventSourceID id,
                     const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy)
 :id_ (id),

@@ -226,7 +226,6 @@ protected:
 };
 
 
-
 /**
  * @class TAO_IMR_Op_List
  *

@@ -1,7 +1,6 @@
 #include "RT_POA_Command.h"
 
 
-
 #include "tao/debug.h"
 #include "../lib/LookupManager.h"
 #include "../lib/Name.h"

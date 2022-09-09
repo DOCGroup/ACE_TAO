@@ -52,7 +52,6 @@
 #endif /* VXWORKS */
 
 
-
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
 enum Test_Type {BEST, WORST, RANDOM};
 

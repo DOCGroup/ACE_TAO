@@ -340,7 +340,6 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   DSUI_EVENT_LOG (EDF_SCHED_FAM, ENTER_SERVER_SCHED_TIME, 0, 0, 0);
 
 
-
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):entered EDF_Scheduler::receive_request\n"));
 #endif

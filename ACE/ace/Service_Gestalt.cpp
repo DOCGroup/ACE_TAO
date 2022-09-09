@@ -123,7 +123,6 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard ()
 }
 
 
-
 // ----------------------------------------
 
 ACE_Service_Gestalt::Processed_Static_Svc::
@@ -294,7 +293,6 @@ ACE_Service_Gestalt::load_static_svcs ()
 } /* load_static_svcs () */
 
 
-
 /// Find a static service descriptor by name
 int
 ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
@@ -339,7 +337,6 @@ ACE_Service_Gestalt::find_processed_static_svc (const ACE_TCHAR* name)
     }
   return 0;
 }
-
 
 
 /// @brief Captures a list of the direcives processed (explicitely) for this
@@ -1247,7 +1244,6 @@ ACE_Service_Gestalt::parse_args_i (int argc,
 
   return 0;
 } /* parse_args_i () */
-
 
 
 // Process service configuration directives from the files queued for

@@ -39,7 +39,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
 
@@ -61,14 +60,12 @@ namespace RTCORBA
 // be\be_visitor_interface/any_op_ch.cpp:54
 
 
-
 namespace CORBA {
 TAO_RTCORBA_Export void operator<<= (::CORBA::Any &, RTCORBA::ProtocolProperties_ptr); // copying
 TAO_RTCORBA_Export void operator<<= (::CORBA::Any &, RTCORBA::ProtocolProperties_ptr *); // non-copying
 TAO_RTCORBA_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, RTCORBA::ProtocolProperties_ptr &);
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 
 #include /**/ "ace/post.h"

@@ -129,7 +129,6 @@ void FTAPP::FT_Creator::usage(FILE* out)const
 }
 
 
-
 int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb)
 {
   int result = 0;

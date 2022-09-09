@@ -84,7 +84,6 @@ public:
           Protocol_Objects;
 
 
-
   // Map of streamctrl.
   typedef ACE_Hash_Map_Manager<ACE_CString,
                                AVStreams::StreamCtrl_var,

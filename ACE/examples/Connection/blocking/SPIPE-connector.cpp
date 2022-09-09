@@ -11,7 +11,6 @@
 #include "SPIPE-connector.h"
 
 
-
 Peer_Handler::Peer_Handler (int iterations)
   : iterations_ (iterations)
 {

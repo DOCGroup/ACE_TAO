@@ -7,7 +7,6 @@
 #include "tao/AnyTypeCode/Any.h"
 
 
-
 static const char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
 static const char NAMING_SERVICE_NAME[] = "NameService";
 

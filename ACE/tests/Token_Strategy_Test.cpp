@@ -24,7 +24,6 @@
 #include "ace/Barrier.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 class Token_Strategy_Test : public ACE_Task<ACE_MT_SYNCH>

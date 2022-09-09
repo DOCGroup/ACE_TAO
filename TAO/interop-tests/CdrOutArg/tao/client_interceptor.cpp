@@ -65,7 +65,6 @@ Echo_Client_Request_Interceptor::send_request (
 #endif /*if 0*/
 
 
-
   // Populate target member of the ClientRequestInfo.
 
   // Make the context to send the context to the target

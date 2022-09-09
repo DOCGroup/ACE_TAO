@@ -33,7 +33,6 @@ CachedRequestTable::update(const ACE_CString& client_id,
 }
 
 
-
 CORBA::Any
 CachedRequestTable::get_result(const ACE_CString& client_id)
 {

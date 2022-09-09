@@ -320,5 +320,4 @@ TAO_Notify_ETCL_FilterFactory::find_filter_id (CosNotifyFilter::Filter_ptr filte
 }
 
 
-
 ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_Notify_ETCL_FilterFactory)

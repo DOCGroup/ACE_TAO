@@ -23,7 +23,6 @@
 #include "ace/OS_NS_time.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";

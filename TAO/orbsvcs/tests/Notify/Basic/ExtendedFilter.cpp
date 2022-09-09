@@ -5,7 +5,6 @@
 #include "orbsvcs/CosNotifyFilterExtC.h"
 
 
-
 ExtendedFilter::ExtendedFilter (void)
   : event_count_ (5)
 {

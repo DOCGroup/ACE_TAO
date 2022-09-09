@@ -23,7 +23,6 @@
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
 
-
 typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
 
 /**

@@ -364,7 +364,6 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
       }
 
 
-
             if (last_completion > (*sched_data)->completion_time)
               last_completion = 0;
 

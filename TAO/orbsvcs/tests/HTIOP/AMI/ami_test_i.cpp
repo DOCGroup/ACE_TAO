@@ -15,7 +15,6 @@
 #include "tao/debug.h"
 
 
-
 AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
      number_ ((CORBA::Long) 931232),
@@ -45,7 +44,6 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
 
   return 931234;
 }
-
 
 
 void

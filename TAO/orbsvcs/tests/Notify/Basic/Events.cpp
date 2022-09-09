@@ -4,7 +4,6 @@
 #include "Events.h"
 
 
-
 /***************************************************************************/
 
 Event_StructuredPushConsumer::Event_StructuredPushConsumer (Events *test_client)

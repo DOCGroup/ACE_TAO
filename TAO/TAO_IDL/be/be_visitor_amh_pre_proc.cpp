@@ -738,7 +738,6 @@ be_visitor_amh_pre_proc::generate_name (ACE_CString &destination,
 }
 
 
-
 be_operation *
 be_visitor_amh_pre_proc::generate_get_operation (be_attribute *node)
 {

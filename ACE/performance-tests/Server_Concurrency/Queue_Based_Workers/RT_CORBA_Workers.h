@@ -151,7 +151,6 @@ private:
 
 
 
-
 #endif /*ACE_HAS_THREADS*/
 
 #include /**/ "ace/post.h"

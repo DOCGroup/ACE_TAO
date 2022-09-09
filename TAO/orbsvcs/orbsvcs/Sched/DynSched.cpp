@@ -19,7 +19,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////
@@ -308,7 +307,6 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
   // = registers a task.
 
 
-
 ACE_DynScheduler::status_t
 ACE_DynScheduler::get_rt_info (Object_Name name,
                                RT_Info* &rtinfo)
@@ -354,7 +352,6 @@ ACE_DynScheduler::get_rt_info (Object_Name name,
         }
     }
 }
-
 
 
 
@@ -1286,7 +1283,6 @@ ACE_DynScheduler::calculate_utilization_params ()
 }
 
 
-
 void
 ACE_DynScheduler::update_priority_level_params ()
 {
@@ -1914,7 +1910,6 @@ ACE_DynScheduler::create_timeline ()
   return status;
 }
   // Create a timeline.
-
 
 
 ACE_DynScheduler::status_t

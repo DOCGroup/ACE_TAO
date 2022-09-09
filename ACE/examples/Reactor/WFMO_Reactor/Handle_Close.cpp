@@ -21,7 +21,6 @@
 #include "ace/OS_main.h"
 
 
-
 // Use the WFMO_Reactor
 static int opt_wfmo_reactor = 0;
 

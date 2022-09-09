@@ -2613,7 +2613,6 @@ ACEXML_Parser::getFeature (const ACEXML_Char *name)
 }
 
 
-
 void
 ACEXML_Parser::setFeature (const ACEXML_Char *name, int boolean_value)
 {

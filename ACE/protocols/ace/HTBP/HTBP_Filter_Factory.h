@@ -60,6 +60,5 @@ ACE_STATIC_SVC_DECLARE_EXPORT (HTBP, ACE_HTBP_Filter_Factory)
 ACE_FACTORY_DECLARE (HTBP, ACE_HTBP_Filter_Factory)
 
 
-
 #include /**/ "ace/post.h"
 #endif /* ACE_HTBP_FILTER_FACTORY */

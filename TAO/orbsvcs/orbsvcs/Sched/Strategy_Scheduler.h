@@ -75,7 +75,6 @@ private:
 };
 
 
-
 ////////////////////////////////////////
 // Factory for strategized schedulers //
 ////////////////////////////////////////
@@ -181,7 +180,6 @@ protected:
     /// = The minimum critical priority number for the strategy.
   ACE_DynScheduler::Preemption_Priority minimum_critical_priority_;
 };
-
 
 
 /**
@@ -316,7 +314,6 @@ private:
     /// = Instance of the strategy.
   static ACE_RMS_Scheduler_Strategy *instance_;
 };
-
 
 
 /**

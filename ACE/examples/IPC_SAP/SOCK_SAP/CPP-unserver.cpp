@@ -8,7 +8,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 // Are we running verbosely?

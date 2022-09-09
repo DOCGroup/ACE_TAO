@@ -107,7 +107,6 @@ TAO_DTP_POA_Strategy::poa_activated_event_i (TAO_ORB_Core& orb_core)
         }
 
 
-
     }
   return (this->dtp_task_.open () == 0);
 

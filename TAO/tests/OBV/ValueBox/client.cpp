@@ -612,7 +612,6 @@ int test_boxed_sequence (void)
 }
 
 
-
 int test_boxed_sequence_invocations (Test * test_object)
 {
   int fail = 0;
@@ -800,7 +799,6 @@ int test_boxed_struct (void)
 
   return fail;
 }
-
 
 
 int test_boxed_struct_invocations (Test * test_object)
@@ -1024,7 +1022,6 @@ int test_boxed_array()
 
   return fail;
 }
-
 
 
 int test_boxed_array_invocations (Test * test_object)
@@ -1270,7 +1267,6 @@ int test_boxed_union()
 
   return fail;
 }
-
 
 
 

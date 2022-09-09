@@ -453,7 +453,6 @@ ACE_Service_Config::current (ACE_Service_Gestalt* newcurrent)
 }
 
 
-
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
 ACE_Service_Type *
 ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,

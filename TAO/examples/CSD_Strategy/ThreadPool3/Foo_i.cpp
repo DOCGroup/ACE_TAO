@@ -34,7 +34,6 @@ Foo_i::op3(void)
 }
 
 
-
 void
 Foo_i::op4(CORBA::Long value)
 {

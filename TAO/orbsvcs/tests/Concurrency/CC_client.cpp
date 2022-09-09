@@ -24,7 +24,6 @@
 #include "ace/OS_NS_fcntl.h"
 
 
-
 // Constructor.
 CC_Client::CC_Client (void)
   : naming_service_ (0),

@@ -41,7 +41,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 static int iterations = 10;
 
 static const size_t worker_threads = 2;

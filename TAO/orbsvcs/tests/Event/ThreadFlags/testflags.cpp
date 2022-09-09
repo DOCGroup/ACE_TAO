@@ -8,7 +8,6 @@
 #include "ace/OS_NS_strings.h"
 
 
-
 /*
   Here are the scenarios we need to test:
 

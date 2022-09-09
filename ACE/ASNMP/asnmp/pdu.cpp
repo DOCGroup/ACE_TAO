@@ -408,7 +408,6 @@ int Pdu::trim(const int p)
 }
 
 
-
 // delete a Vb anywhere within the Pdu
 int Pdu::delete_vb( const int p)
 {

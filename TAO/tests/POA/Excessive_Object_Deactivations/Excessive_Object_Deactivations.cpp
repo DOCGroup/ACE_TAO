@@ -94,7 +94,6 @@ test_object_deactivation (PortableServer::POA_ptr poa,
   ACE_ASSERT (expected_exception_raised);
 
 
-
   poa->activate_object_with_id (id,
                                 &servant);
 

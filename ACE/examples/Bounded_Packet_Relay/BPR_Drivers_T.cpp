@@ -21,7 +21,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 // Constructor.
 
 template <class TQ>

@@ -27,7 +27,6 @@ Object_A_i::~Object_A_i (void)
 }
 
 
-
 void
 Object_A_i::foo (Initiator_ptr theInitiator_ptr)
 {

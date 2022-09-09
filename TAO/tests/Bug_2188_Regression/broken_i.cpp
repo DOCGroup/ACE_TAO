@@ -28,7 +28,6 @@
 #include "broken_i.h"
 
 
-
 ServerAdmin_i::ServerAdmin_i (ArrayTest_ptr target)
   :target_ (ArrayTest::_duplicate(target))
 {

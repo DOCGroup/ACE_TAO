@@ -31,7 +31,6 @@
 #include "ace/OS_main.h"
 
 
-
 class Network_Handler : public ACE_Event_Handler
 {
 public:

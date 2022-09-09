@@ -18,7 +18,6 @@
 #include "ami_testS.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;

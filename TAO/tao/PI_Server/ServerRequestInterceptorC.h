@@ -137,7 +137,6 @@ namespace PortableInterceptor
     }
 
 
-
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 

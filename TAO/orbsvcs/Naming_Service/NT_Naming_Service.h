@@ -90,7 +90,6 @@ private:
 };
 
 
-
 typedef ACE_Singleton<TAO_NT_Naming_Service, TAO_NT_Naming_Service::MUTEX> SERVICE;
 
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */

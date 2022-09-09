@@ -908,7 +908,6 @@ TAO_Naming_Server::bundle_at(size_t ndx) const
   }
 
 
-
 int
 TAO_Naming_Server::write(size_t ndx) const
 {

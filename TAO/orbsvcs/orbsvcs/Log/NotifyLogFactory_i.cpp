@@ -256,7 +256,6 @@ TAO_NotifyLogFactory_i::obtain_push_supplier (
 }
 
 
-
 CosEventChannelAdmin::ProxyPullSupplier_ptr
 TAO_NotifyLogFactory_i::obtain_pull_supplier (
       )

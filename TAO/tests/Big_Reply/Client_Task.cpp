@@ -2,7 +2,6 @@
 #include "Client_Task.h"
 
 
-
 Client_Task::Client_Task (Test::Big_Reply_ptr reply_gen,
                           int event_count,
                           ACE_Thread_Manager *thr_mgr)

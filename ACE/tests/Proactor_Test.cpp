@@ -108,7 +108,6 @@ public:
 };
 
 
-
 // Function to remove signals from the signal mask.
 static int
 disable_signal (int sigmin, int sigmax)

@@ -519,7 +519,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
 
-
   // Activate the input and output threads
   result = input_task.activate (flags,
                                 1,
@@ -530,7 +529,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     return result;
 
 
-
   // Activate the workers.
   result = output_task.activate (flags,
                                  1,
@@ -539,7 +537,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (result != 0)
     return result;
-
 
 
   // Wait for all threads to terminate.

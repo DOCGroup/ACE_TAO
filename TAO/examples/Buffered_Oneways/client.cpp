@@ -18,7 +18,6 @@
 #include "ace/Read_Buffer.h"
 
 
-
 // Name of file contains ior.
 static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
 

@@ -6,7 +6,6 @@
 #include "Server_Task.h"
 
 
-
 Server_Task::Server_Task(Test::Echo_ptr echo)
   : echo_(Test::Echo::_duplicate(echo))
 {

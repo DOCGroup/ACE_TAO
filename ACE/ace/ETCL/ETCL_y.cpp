@@ -86,7 +86,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #endif
 
 
-
 #define  YYFINAL    114
 #define  YYFLAG   -32768
 #define  YYNTBASE 46

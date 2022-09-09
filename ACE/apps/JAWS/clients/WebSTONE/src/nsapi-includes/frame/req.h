@@ -30,7 +30,6 @@
 #include <sys/stat.h>
 
 
-
 /* ------------------------------ Constants ------------------------------- */
 
 
@@ -53,7 +52,6 @@
 #define REQ_NOACTION -2
 /* Tear down the session and exit */
 #define REQ_EXIT -3
-
 
 
 /* ------------------------------ Structures ------------------------------ */

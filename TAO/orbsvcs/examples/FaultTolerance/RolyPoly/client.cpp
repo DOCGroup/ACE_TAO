@@ -127,7 +127,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         object = iorm->merge_iors (iors);
 
 
-
         FT::TagFTGroupTaggedComponent ft_tag_component;
 
         // Property values

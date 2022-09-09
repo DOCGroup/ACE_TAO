@@ -21,7 +21,6 @@
 #include "ami_testS.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int shutdown_flag = 0;

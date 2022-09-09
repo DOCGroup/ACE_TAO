@@ -4,7 +4,6 @@
 #include "Simple.h"
 
 
-
 //***************************************************************************
 
 Event_AnyPushConsumer::Event_AnyPushConsumer (Simple_Test *test_client)

@@ -10,7 +10,6 @@
 #include "ace/OS_NS_stdio.h"
 
 
-
 // The file to save the persistent state to.
 const ACE_TCHAR NESTEA_DATA_FILENAME[] = ACE_TEXT("nestea.dat");
 

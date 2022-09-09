@@ -2,7 +2,6 @@
 #include "ace/Malloc_T.h"
 
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 using QUEUE_ITERATOR = ACE_Unbounded_Queue_Iterator<ACE_Event_Tuple>;

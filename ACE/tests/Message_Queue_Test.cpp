@@ -38,7 +38,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 const ACE_TCHAR usage[] = ACE_TEXT ("usage: Message_Queue_Test <number of messages>\n");
 
 using QUEUE = ACE_Message_Queue<ACE_NULL_SYNCH>;
@@ -957,7 +956,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT ("test failed")));
   delete timer;
   timer = 0;
-
 
 
   ACE_END_TEST;

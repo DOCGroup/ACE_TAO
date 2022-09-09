@@ -836,7 +836,6 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                           the_flows);
 
 
-
           }
           // This is the light profile, call connect()
           else  if (!CORBA::is_nil (this->vdev_a_.in ()) && !CORBA::is_nil (this->vdev_b_.in ()))

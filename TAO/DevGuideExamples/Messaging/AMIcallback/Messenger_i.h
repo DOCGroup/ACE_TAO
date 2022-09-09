@@ -45,5 +45,4 @@ private:
 };
 
 
-
 #endif /* MESSENGER_IMPL_H_  */

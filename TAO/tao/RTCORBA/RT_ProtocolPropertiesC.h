@@ -177,7 +177,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
 
-
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1209
 

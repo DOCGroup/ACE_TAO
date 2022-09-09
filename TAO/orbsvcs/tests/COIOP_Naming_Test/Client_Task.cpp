@@ -4,7 +4,6 @@
 #include "TestC.h"
 
 
-
 Client_Task::Client_Task (CosNaming::NamingContext_ptr root_context,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr,

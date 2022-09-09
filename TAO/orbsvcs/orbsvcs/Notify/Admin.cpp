@@ -223,5 +223,4 @@ TAO_Notify_Admin::validate ()
 }
 
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

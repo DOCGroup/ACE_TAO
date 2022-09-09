@@ -19,7 +19,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
 /**

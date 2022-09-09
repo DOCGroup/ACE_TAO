@@ -11,7 +11,6 @@
 #include "Log_Wrapper.h"
 
 
-
 // Multi-cast address.
 static const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
 

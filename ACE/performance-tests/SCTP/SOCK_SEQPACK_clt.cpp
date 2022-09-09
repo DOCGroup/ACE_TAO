@@ -289,7 +289,6 @@ ACE_SCTP::HIST runTest(ACE_SOCK_SEQPACK_Association & stream)
     msgLen *= 2;
 
 
-
   // send a header to the server that contains test parameters
   if (sendHeader(stream) < 0)
     ACE_ERROR_RETURN((LM_ERROR,

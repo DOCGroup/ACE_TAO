@@ -2,7 +2,6 @@
 #include "ace/Log_Msg.h"
 
 
-
 void test_http_addr (void);
 void test_ftp_addr (void);
 void test_mailto_addr (void);

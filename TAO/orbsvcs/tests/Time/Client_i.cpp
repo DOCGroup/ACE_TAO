@@ -10,7 +10,6 @@
 #include "ace/os_include/os_netdb.h"
 
 
-
 // Constructor.
 
 Client_i::Client_i (void)

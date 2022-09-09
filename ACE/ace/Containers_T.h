@@ -330,7 +330,6 @@ private:
 };
 
 
-
 /**
  * @class ACE_Unbounded_Stack
  *

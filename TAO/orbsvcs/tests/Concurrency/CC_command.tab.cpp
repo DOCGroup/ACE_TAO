@@ -54,7 +54,6 @@ typedef union {
 #endif
 
 
-
 #define ACE_CC_YYFINAL    66
 #define ACE_CC_YYFLAG   -32768
 #define ACE_CC_YYNTBASE 24
@@ -411,7 +410,6 @@ __ace_cc_yy_memcpy (char *to, char *from, unsigned int count)
 
 #endif
 #endif
-
 
 
 /* The user can define ACE_CC_YYPARSE_PARAM as the name of an argument to be passed

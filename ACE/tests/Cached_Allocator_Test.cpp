@@ -16,7 +16,6 @@
 #include "ace/High_Res_Timer.h"
 
 
-
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 

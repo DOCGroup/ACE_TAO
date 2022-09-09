@@ -1714,7 +1714,6 @@ int IpxSockAddress::parse_address( const char *inaddr)
 }
 
 
-
 //-------------[ set the socket number ]----------------------------------
 void IpxSockAddress::set_socket( const unsigned short s)
 {
@@ -1837,7 +1836,6 @@ MacAddress& MacAddress::operator=( const MacAddress &macaddress)
   format_output();
   return *this;
 }
-
 
 
 //-----[ MAC Address general = operator ]---------------------------------

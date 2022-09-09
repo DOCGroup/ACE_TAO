@@ -4,7 +4,6 @@
 #include "MultiTypes.h"
 
 
-
 //*****************************************************************************************************
 
 MultiTypes_PushConsumer::MultiTypes_PushConsumer (MultiTypes* client)

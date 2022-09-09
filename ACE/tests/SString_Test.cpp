@@ -18,7 +18,6 @@
 #include "ace/SString.h"
 
 
-
 static int testConcatenation() {
 #ifdef ACE_HAS_WCHAR
   ACE_WString s1;

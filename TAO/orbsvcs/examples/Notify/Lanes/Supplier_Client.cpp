@@ -10,7 +10,6 @@
 #include "ace/OS_NS_errno.h"
 
 
-
 TAO_Notify_Lanes_Supplier_Client::TAO_Notify_Lanes_Supplier_Client (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
     ,supplier_ (0)

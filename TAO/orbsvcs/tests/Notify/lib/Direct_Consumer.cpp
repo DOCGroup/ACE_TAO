@@ -1,7 +1,6 @@
 #include "Direct_Consumer.h"
 
 
-
 #include "LookupManager.h"
 
 TAO_Notify_Tests_Direct_Consumer::TAO_Notify_Tests_Direct_Consumer (void)

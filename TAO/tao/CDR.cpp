@@ -245,7 +245,6 @@ TAO_OutputCDR::fragment_stream (ACE_CDR::ULong pending_alignment,
 }
 
 
-
 int
 TAO_OutputCDR::offset (char* pos)
 {

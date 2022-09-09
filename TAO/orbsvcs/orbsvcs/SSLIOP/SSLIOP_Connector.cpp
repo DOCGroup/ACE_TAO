@@ -257,7 +257,6 @@ TAO::SSLIOP::Connector::make_secure_profile ()
 }
 
 
-
 TAO_Profile *
 TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
 {

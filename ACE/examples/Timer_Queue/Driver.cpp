@@ -21,7 +21,6 @@
 #include "Driver.h"
 
 
-
 // constructor
 
 template <class RECEIVER, class ACTION>

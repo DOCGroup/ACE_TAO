@@ -2,7 +2,6 @@
 #include "ace/OS_NS_string.h"
 
 
-
 #include "Name.h"
 
 TAO_Notify_Tests_LookupManager::TAO_Notify_Tests_LookupManager (void)

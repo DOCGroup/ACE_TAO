@@ -16,7 +16,6 @@ get_event_channel(CORBA::ORB_ptr orb)
   CosNotification::AdminProperties init_admin(0);
 
 
-
   std::cout << "Get CosNotifyChannelAdmin::EventChannelFactory"  << std::endl;
   std::cout << "IorEventChannelFactory=" << ior << std::endl;
   CORBA::Object_var obj = orb->string_to_object(ior);

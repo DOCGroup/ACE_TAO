@@ -7,7 +7,6 @@
 #include "ace/OS_NS_strings.h"
 
 
-
 static const char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
 static const char NAMING_SERVICE_NAME[] = "NameService";
 
@@ -166,7 +165,6 @@ ReconnectionCallback_i::init (
   this->callback_id_ = registry->register_callback (callback.in ());
   this->id_is_valid_ = true;
 }
-
 
 
 /////////////////

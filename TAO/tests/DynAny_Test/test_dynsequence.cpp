@@ -230,7 +230,6 @@ Test_DynSequence::run_test (void)
       }
 
 
-
       if (this->error_count_ == 0)
         {
           ACE_DEBUG ((LM_DEBUG,

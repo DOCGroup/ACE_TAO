@@ -1,7 +1,6 @@
 #include "Handle_L_FIFO.h"
 
 
-
 #if defined (SunOS4)
 extern "C"
 {

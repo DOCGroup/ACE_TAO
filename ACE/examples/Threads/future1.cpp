@@ -24,7 +24,6 @@
 #include "ace/Atomic_Op.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> ATOMIC_INT;

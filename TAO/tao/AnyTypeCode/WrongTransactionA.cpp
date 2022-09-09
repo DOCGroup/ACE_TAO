@@ -56,7 +56,6 @@ namespace CORBA
 }
 
 
-
 // TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 

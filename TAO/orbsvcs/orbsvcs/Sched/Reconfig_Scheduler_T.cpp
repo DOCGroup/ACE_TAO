@@ -626,7 +626,6 @@ reset (RtecScheduler::handle_t handle,
 }
 
 
-
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -2207,7 +2206,6 @@ dfs_traverse_i (void)
         }
     }
 }
-
 
 
 // Sorts an array of RT_info handles in topological order, then

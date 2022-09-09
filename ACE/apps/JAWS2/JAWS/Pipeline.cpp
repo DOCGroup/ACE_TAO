@@ -1,7 +1,6 @@
 #include "JAWS/Pipeline.h"
 
 
-
 JAWS_Pipeline::JAWS_Pipeline (void)
 {
 }

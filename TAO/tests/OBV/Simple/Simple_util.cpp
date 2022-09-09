@@ -231,7 +231,6 @@ Client<InterfaceObj, Var>::init (const char *name,
   this->argv_ = argv;
 
 
-
   try
     {
       // Retrieve the ORB.

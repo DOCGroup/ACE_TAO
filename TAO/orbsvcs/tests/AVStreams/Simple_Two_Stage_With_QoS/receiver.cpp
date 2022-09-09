@@ -87,7 +87,6 @@ Receiver::~Receiver (void)
 }
 
 
-
 int
 Receiver::init (int,
                 ACE_TCHAR *[])

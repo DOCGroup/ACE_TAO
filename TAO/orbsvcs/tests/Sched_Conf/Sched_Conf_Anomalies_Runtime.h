@@ -20,7 +20,6 @@ ERROR: The following entry points have unresolved local dependencies:
 // both_unresolved_consumer_2
 
 
-
 static ACE_Scheduler_Factory::POD_RT_Info infos[] = {
 {"good_supplier", 1, 5000, 5000, 5000,   500000, (RtecScheduler::Criticality_t) 3, (RtecScheduler::Importance_t) 1, 0, 1,  15, 0, 0, (RtecScheduler::Info_Type_t) 0}
 ,

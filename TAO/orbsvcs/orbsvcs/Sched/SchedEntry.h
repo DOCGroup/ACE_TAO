@@ -75,7 +75,6 @@ private:
 };
 
 
-
 /**
  * @class Task_Entry
  *
@@ -538,7 +537,6 @@ private:
 
   ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> iter_;
 };
-
 
 
 class TAO_RTSched_Export TimeLine_Entry

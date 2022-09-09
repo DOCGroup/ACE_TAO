@@ -78,7 +78,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
                              KEY, HASH_FUNC, EQ_FUNC);
 
 
-
       this->hash_ = 0;
       this->hashsize_ = 0;
     }
@@ -150,7 +149,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
                              KEY, HASH_FUNC, EQ_FUNC);
 
 
-
       this->hash_ = 0;
       this->hashsize_ = 0;
 
@@ -181,7 +179,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close (void)
                              KEY, HASH_FUNC, EQ_FUNC);
 
 
-
       this->hash_ = 0;
     }
 
@@ -191,7 +188,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close (void)
       ACE_DES_FREE_TEMPLATE4(this->heap_, this->allocator_->free,
                              JAWS_Cache_List,
                              KEY, FACTORY, HASH_FUNC, EQ_FUNC);
-
 
 
       this->heap_ = 0;

@@ -18,7 +18,6 @@ sorter (const void* a, const void* b)
 }
 
 
-
 // It's reasonable to assume that there is only one event channel
 // factory and that we know its name.
 class MonitorTestInterface_i: public virtual POA_MonitorTestInterface

@@ -39,7 +39,6 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   virtual int svc ();
 
 
-
  private:
   /// = Policies
   long thr_sched_policy_;

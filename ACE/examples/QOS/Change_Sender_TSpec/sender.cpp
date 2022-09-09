@@ -9,7 +9,6 @@
 //=============================================================================
 
 
-
 #include "ace/QoS/QoS_Session.h"
 #include "ace/QoS/QoS_Session_Factory.h"
 #include "ace/QoS/QoS_Session_Impl.h"
@@ -299,8 +298,6 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                 "Specify a -m option for multicast application\n"));
   return 0;
 }
-
-
 
 
 

@@ -29,7 +29,6 @@
 #include "ace/Signal.h"
 
 
-
 #if defined (ACE_WIN32)
 static const ACE_TCHAR *executable = ACE_TEXT("MORE.COM");
 #else

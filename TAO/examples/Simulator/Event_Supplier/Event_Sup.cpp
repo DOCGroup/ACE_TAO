@@ -330,7 +330,6 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
       }
 
 
-
             if (last_completion > (*sched_data)->completion_time)
               last_completion = 0;
 
@@ -359,7 +358,6 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
                 "(%t)Error in Event_Supplier::insert_event_data.\n"));
   }
 }
-
 
 
 // Function get_options.

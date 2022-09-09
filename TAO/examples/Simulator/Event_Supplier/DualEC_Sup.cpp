@@ -431,7 +431,6 @@ DualEC_Supplier::run_weap_thread (void *arg)
 }
 
 
-
 // Create two scheduling service instances, register
 // them with the Naming Service.
 
@@ -1030,7 +1029,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_ERROR ((LM_ERROR,
                       "%s: ACE_OS::sched_params failed\n", argv[0]));
     }
-
 
 
   try

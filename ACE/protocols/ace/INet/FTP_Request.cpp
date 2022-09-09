@@ -10,7 +10,6 @@
 #include "ace/INet/String_IOStream.h"
 
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE

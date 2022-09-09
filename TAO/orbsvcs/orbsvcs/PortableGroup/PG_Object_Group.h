@@ -176,7 +176,6 @@ namespace TAO
     PortableGroup::InitialNumberMembersValue get_initial_number_members () const;
 
 
-
     /**
      * @@TODO DOC
      */

@@ -170,5 +170,4 @@ class Supplier_Main
 };
 
 
-
 #endif /* RECONNECTNG_SUPPLIER_H */

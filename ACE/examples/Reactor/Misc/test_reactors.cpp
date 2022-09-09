@@ -7,7 +7,6 @@
 #include "ace/Atomic_Op.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Recursive_Thread_Mutex.h"

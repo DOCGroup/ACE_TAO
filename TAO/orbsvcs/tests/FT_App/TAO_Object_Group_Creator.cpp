@@ -116,7 +116,6 @@ int TAO::Object_Group_Creator::unregister_role (const char * role)
 }
 
 
-
 int TAO::Object_Group_Creator::create_detector_for_replica (
   CORBA::Object_ptr replica,
   const char * role,
