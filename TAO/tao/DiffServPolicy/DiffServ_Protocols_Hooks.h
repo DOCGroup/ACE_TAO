@@ -30,7 +30,6 @@ class TAO_DiffServPolicy_Export TAO_DS_Network_Priority_Protocols_Hooks
       : public TAO_Network_Priority_Protocols_Hooks
 {
 public:
-
   /// Constructor
   TAO_DS_Network_Priority_Protocols_Hooks (void);
 

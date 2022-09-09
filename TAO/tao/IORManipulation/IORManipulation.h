@@ -37,7 +37,6 @@ class TAO_IOR_Manipulation_impl
     public ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
   TAO_IOR_Manipulation_impl (void);
 

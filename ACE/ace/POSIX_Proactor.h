@@ -385,7 +385,6 @@ public:
   virtual int cancel_aio (ACE_HANDLE h);
 
 protected:
-
   /// Special constructor for ACE_SUN_Proactor
   /// and ACE_POSIX_SIG_Proactor
   ACE_POSIX_AIOCB_Proactor (size_t nmaxop,

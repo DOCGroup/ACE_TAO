@@ -188,7 +188,6 @@ public:
                     CosNaming::BindingType &type);
 
 private:
-
   /// Helper: factors common code from <bind> and <rebind>.
   int shared_bind (const char *id,
                    const char *kind,
@@ -200,7 +199,6 @@ private:
   HASH_MAP map_;
 
   CORBA::ORB_var orb_;
-
 };
 
 /**
@@ -348,7 +346,6 @@ public:
   virtual void destroy (void);
 
 protected:
-
   /**
    * A helper function to ensure the current object was not destroyed by raising
    * an exception if it was. Uses the lock as a Reader.
@@ -433,7 +430,6 @@ class TAO_Naming_Serv_Export File_Open_Lock_and_Check :
 public TAO::Storable_File_Guard
 {
 public:
-
   /// Constructor
   File_Open_Lock_and_Check (TAO_Storable_Naming_Context * context,
                             Method_Type method_type,
@@ -442,7 +438,6 @@ public:
   ~File_Open_Lock_and_Check ();
 
 protected:
-
   /// Check if the guarded object is current with the last
   /// update which could have been performed independently of
   /// the owner of this object.

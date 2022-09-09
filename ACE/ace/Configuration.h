@@ -524,7 +524,6 @@ public:
   virtual bool operator!= (const ACE_Configuration_Win32Registry &rhs) const;
 
 protected:
-
   /// Gets the HKEY for a configuration section
   int load_key (const ACE_Configuration_Section_Key& key, HKEY& hKey);
 

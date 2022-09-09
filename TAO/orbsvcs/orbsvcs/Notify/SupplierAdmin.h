@@ -69,7 +69,6 @@ public:
   virtual void destroy (void);
 
 protected:
-
     TAO_Notify::Topology_Object *load_proxy (
     CORBA::Long id,
     CosNotifyChannelAdmin::ClientType ctype,

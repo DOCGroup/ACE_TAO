@@ -38,7 +38,6 @@ class TAO_LoadBalancing_Export TAO_LB_CPU_Utilization_Monitor
   : public virtual POA_CosLoadBalancing::LoadMonitor
 {
 public:
-
   /// Constructor
   /**
    * If no location is supplied the hostname or IP address is used by
@@ -72,7 +71,6 @@ public:
   //@}
 
 protected:
-
   /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
@@ -81,10 +79,8 @@ protected:
   ~TAO_LB_CPU_Utilization_Monitor (void);
 
 private:
-
   /// The name of the location at which this LoadMonitor resides.
   CosLoadBalancing::Location location_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

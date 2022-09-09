@@ -560,7 +560,6 @@ protected:
   virtual ACEXML_Char peek ();
 
 private:
-
   // *** Helper functions for parsing XML
 
   /**

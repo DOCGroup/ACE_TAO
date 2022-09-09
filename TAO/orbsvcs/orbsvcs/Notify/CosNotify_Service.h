@@ -68,7 +68,6 @@ protected:
   virtual void init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb);
 
 private:
-
   /// Create the Factory for Notify objects.
   virtual TAO_Notify_Factory* create_factory (void);
 

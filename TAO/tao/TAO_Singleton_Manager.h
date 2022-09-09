@@ -117,7 +117,6 @@ public:
                       const char* name);
 
 protected:
-
   /// Force allocation on the heap.
   //@{
   TAO_Singleton_Manager (void);

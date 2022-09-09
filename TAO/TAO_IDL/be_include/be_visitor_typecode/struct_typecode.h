@@ -27,7 +27,6 @@ namespace TAO
     : public be_visitor_typecode_defn
   {
   public:
-
     /// Constructor.
     be_visitor_struct_typecode (be_visitor_context * ctx);
 
@@ -52,7 +51,6 @@ namespace TAO
     virtual int visit_exception (be_exception * node);
 
   private:
-
     /// Underlying structure/exception visitor code.
     /**
      * @note Structure/exception TypeCode generation really starts in
@@ -67,7 +65,6 @@ namespace TAO
     int visit_members (AST_Structure * node);
 
   private:
-
     /// @c true if the struct is recursive.
     /**
      * @note Only applies for struct TypeCodes.  Exceptions cannot be
@@ -78,9 +75,7 @@ namespace TAO
     /// @c true if this visitor is already visiting an outer scope
     /// struct or exception
     bool is_nested_;
-
   };
-
 }
 
 #endif  /* TAO_BE_VISITOR_STRUCT_TYPECODE_H */

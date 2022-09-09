@@ -33,7 +33,6 @@ class TAO_RTSched_Export ACE_Config_Scheduler
   //   distributed with the EC.
 {
 public:
-
   ACE_Config_Scheduler (void);
   virtual ~ACE_Config_Scheduler (void);
 
@@ -161,7 +160,6 @@ public:
 
 
 private:
-
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
 
   // trait for the scheduler implementation base class

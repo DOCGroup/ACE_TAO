@@ -89,7 +89,6 @@ public:
 
 
 private:
-
 #if defined (ACE_USES_WCHAR)
   /**
    *  Read the next character from the stream taking into account the

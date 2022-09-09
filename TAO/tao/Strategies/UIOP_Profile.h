@@ -86,7 +86,6 @@ public:
   void add_endpoint (TAO_UIOP_Endpoint *endp);
 
 protected:
-
   /// Protected template methods. Please see documentation in
   /// Profile.h for details.
   virtual int decode_profile (TAO_InputCDR& cdr);

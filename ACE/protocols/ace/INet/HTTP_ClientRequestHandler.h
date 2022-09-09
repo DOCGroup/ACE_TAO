@@ -117,7 +117,6 @@ namespace ACE
               friend class ACE_Singleton<SessionFactoryRegistry, ACE_SYNCH::MUTEX>;
 
             public:
-
               void register_session_factory (const ACE_CString& scheme,
                                              SessionFactory* factory);
 

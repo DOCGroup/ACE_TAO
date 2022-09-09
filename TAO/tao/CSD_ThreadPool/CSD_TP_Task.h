@@ -75,7 +75,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Task : public ACE_Task_Base
     {
     public:
-
       /// Default Constructor.
       TP_Task();
 

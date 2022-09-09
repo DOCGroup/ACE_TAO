@@ -56,7 +56,6 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-
       /// Constructor.
       Objref (CORBA::TCKind kind,
               char const * id,

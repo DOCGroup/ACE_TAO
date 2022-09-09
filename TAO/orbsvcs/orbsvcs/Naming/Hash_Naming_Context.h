@@ -50,7 +50,6 @@ class TAO_Naming_Serv_Export TAO_Bindings_Map
 {
 
 public:
-
   /// Destructor.
   virtual ~TAO_Bindings_Map (void);
 

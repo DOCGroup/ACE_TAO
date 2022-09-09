@@ -131,7 +131,6 @@ namespace TAO
                                   char *&host);
 
     protected:
-
       /**
        * Implement the common part of the open*() methods.  This method is
        * virtual to allow a derived class implementation to be invoked
@@ -172,7 +171,6 @@ namespace TAO
 
 
     protected:
-
       /// Array of ACE::HTBP::Addr instances, each one corresponding to a
       /// given network interface.
       ACE::HTBP::Addr *addrs_;
@@ -206,7 +204,6 @@ namespace TAO
       TAO_ORB_Core *orb_core_;
 
     private:
-
       /// the concrete acceptor, as a pointer to it's base class.
       BASE_ACCEPTOR base_acceptor_;
 

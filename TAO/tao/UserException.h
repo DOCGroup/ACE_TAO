@@ -39,7 +39,6 @@ namespace CORBA
   class TAO_Export UserException : public Exception
   {
   public:
-
     /// Copy constructor.
     UserException (UserException const &rhs);
 

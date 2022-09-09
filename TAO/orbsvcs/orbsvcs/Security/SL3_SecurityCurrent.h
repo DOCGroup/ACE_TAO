@@ -56,7 +56,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       SecurityCurrent (size_t tss_slot, TAO_ORB_Core * oc);
 
@@ -81,7 +80,6 @@ namespace TAO
       size_t tss_slot () const;
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
@@ -90,7 +88,6 @@ namespace TAO
       ~SecurityCurrent (void);
 
     private:
-
       /// Set the thread-specific storage
       /// SecurityLevel3::SecurityCurrent implementation.
       /**
@@ -106,7 +103,6 @@ namespace TAO
       SecurityCurrent_Impl * implementation (void);
 
     private:
-
       /**
        * @name Retricted Copying and Assignment
        *
@@ -119,14 +115,12 @@ namespace TAO
       //@}
 
     private:
-
       /// Thread-specific storage slot assigned to this object.
       const size_t tss_slot_;
 
       /// Pointer to the ORB Core corresponding to the ORB with which
       /// this object is registered.
       TAO_ORB_Core * const orb_core_;
-
     };
 
   } // End SL3 namespace

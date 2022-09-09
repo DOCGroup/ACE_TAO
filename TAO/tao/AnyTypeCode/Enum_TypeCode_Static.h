@@ -51,7 +51,6 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-
       /// Constructor.
       Enum (char const * id,
             char const * name,

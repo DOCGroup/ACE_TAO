@@ -131,7 +131,6 @@ public:
                   const CosTrading::Offer* offer);
 
 private:
-
   TAO_Query_Only_Offer_Iterator (const TAO_Query_Only_Offer_Iterator&);
   TAO_Query_Only_Offer_Iterator& operator=(const TAO_Query_Only_Offer_Iterator&);
 
@@ -162,7 +161,6 @@ class TAO_Offer_Iterator_Collection :
 //   the trader graph is deep enough.
 {
 public:
-
   // = Constructors.
 
   TAO_Offer_Iterator_Collection (void);
@@ -183,7 +181,6 @@ public:
   void add_offer_iterator (CosTrading::OfferIterator_ptr offer_iter);
 
 private:
-
   TAO_Offer_Iterator_Collection (const TAO_Offer_Iterator_Collection&);
   TAO_Offer_Iterator_Collection& operator= (const TAO_Offer_Iterator_Collection&);
 
@@ -214,7 +211,6 @@ class TAO_Offer_Id_Iterator :
 //   END SPEC
 {
  public:
-
   /// No op constructor
   TAO_Offer_Id_Iterator(void);
 
@@ -255,7 +251,6 @@ class TAO_Offer_Id_Iterator :
   void insert_id(CosTrading::OfferId new_id);
 
  private:
-
   TAO_Offer_Id_Iterator (const TAO_Offer_Id_Iterator&);
   TAO_Offer_Id_Iterator& operator= (TAO_Offer_Id_Iterator&);
 

@@ -41,7 +41,6 @@ class TAO_FT_ClientORB_Export TAO_FT_Endpoint_Selector_Factory
   : public TAO_Endpoint_Selector_Factory
 {
 public:
-
   /// Constructor.
   TAO_FT_Endpoint_Selector_Factory (void);
 
@@ -53,7 +52,6 @@ public:
   virtual TAO_Invocation_Endpoint_Selector *get_selector ();
 
 private:
-
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
   TAO_FT_Invocation_Endpoint_Selector *ft_endpoint_selector_;

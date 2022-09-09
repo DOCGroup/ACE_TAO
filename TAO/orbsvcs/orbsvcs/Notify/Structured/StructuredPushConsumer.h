@@ -61,7 +61,6 @@ public:
 
 
 protected:
-
   virtual CORBA::Object_ptr get_consumer (void);
 
   /// The Consumer

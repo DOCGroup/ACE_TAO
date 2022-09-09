@@ -62,7 +62,6 @@ namespace CORBA
   class TAO_Export WrongTransaction : public CORBA::UserException
   {
   public:
-
     WrongTransaction ();
     WrongTransaction (const WrongTransaction &);
     ~WrongTransaction ();

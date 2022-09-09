@@ -27,7 +27,6 @@ namespace TAO
     : public be_visitor_typecode_defn
   {
   public:
-
     /// Constructor.
     be_visitor_union_typecode (be_visitor_context * ctx);
 
@@ -42,7 +41,6 @@ namespace TAO
     virtual int visit_union (be_union * node);
 
   private:
-
     /// Generate union field TypeCode declarations, if necessary.
     int gen_case_typecodes (be_union * node);
 
@@ -50,14 +48,12 @@ namespace TAO
     int visit_cases (be_union * node);
 
   private:
-
     /// @c true if the union is recursive.
     bool is_recursive_;
 
     /// @c true if this visitor is already visiting an outer scope
     /// struct or exception
     bool is_nested_;
-
   };
 
 }

@@ -107,7 +107,6 @@ public:
   CORBA::UShort port (CORBA::UShort p);
 
 private:
-
   /// Helper method for setting INET_Addr.
   int set (const ACE_INET_Addr &addr,
            int use_dotted_decimal_addresses);

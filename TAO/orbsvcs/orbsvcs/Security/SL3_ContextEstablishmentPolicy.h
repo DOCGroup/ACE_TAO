@@ -46,7 +46,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       ContextEstablishmentPolicy (
         SecurityLevel3::CredsDirective             creds_directive,
@@ -83,7 +82,6 @@ namespace TAO
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
@@ -92,7 +90,6 @@ namespace TAO
       ~ContextEstablishmentPolicy (void);
 
     private:
-
       SecurityLevel3::CredsDirective     creds_directive_;
       SecurityLevel3::OwnCredentialsList creds_list_;
       SecurityLevel3::FeatureDirective   use_client_auth_;

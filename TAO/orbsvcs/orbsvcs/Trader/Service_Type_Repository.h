@@ -178,7 +178,6 @@ public:
   virtual void unmask_type (const char  *name);
 
 private:
-
   /**
    * @class Type_Info
    *

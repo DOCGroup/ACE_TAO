@@ -39,7 +39,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup
   , public TAO_Notify_Method_Request_Event
 {
 public:
-
   /// an arbitrary code (Octet) to identify this type of request in persistent storage
   enum {persistence_code = 2};
 
@@ -66,7 +65,6 @@ protected:
   virtual void work (TAO_Notify_ProxySupplier* proxy_supplier);
 
 protected:
-
   /// The Proxy
   TAO_Notify_ProxyConsumer* proxy_consumer_;
 };

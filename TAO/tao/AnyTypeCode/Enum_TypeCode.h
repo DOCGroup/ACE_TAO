@@ -46,7 +46,6 @@ namespace TAO
         private RefCountPolicy
     {
     public:
-
       /// Constructor.
       Enum (char const * id,
             char const * name,

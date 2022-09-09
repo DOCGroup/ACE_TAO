@@ -78,7 +78,6 @@ public:
   const char *rendezvous_point () const;
 
 private:
-
   /// Cached instance of <ACE_UNIX_Addr> for use in making
   /// invocations, etc.
   ACE_UNIX_Addr object_addr_;

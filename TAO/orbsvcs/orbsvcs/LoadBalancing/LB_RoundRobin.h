@@ -40,7 +40,6 @@ class TAO_LB_RoundRobin
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-
   /// Constructor.
   TAO_LB_RoundRobin (PortableServer::POA_ptr poa);
 
@@ -76,12 +75,10 @@ public:
     );
 
 protected:
-
   /// Destructor
   ~TAO_LB_RoundRobin (void);
 
 private:
-
   /// Keep a copy of location list for verify if the list is changed
   /// in next next_member() call.
   void copy_locations (PortableGroup::Locations_var& locations);

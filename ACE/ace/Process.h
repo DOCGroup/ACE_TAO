@@ -365,7 +365,6 @@ public:
   void inherit_environment (bool nv);
 #endif /* ACE_WIN32 */
 protected:
-
 #if !defined (ACE_HAS_WINCE)
   /// Add @a assignment to environment_buf_ and adjust
   /// environment_argv_.  @a len is the strlen of @a assignment.

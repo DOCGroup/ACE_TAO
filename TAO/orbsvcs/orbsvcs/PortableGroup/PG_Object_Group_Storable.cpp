@@ -41,7 +41,6 @@ namespace TAO
   class Object_Group_File_Guard : public TAO::Storable_File_Guard
   {
   public:
-
     Object_Group_File_Guard ( TAO::PG_Object_Group_Storable & object_group,
                               Method_Type method_type);
 
@@ -67,10 +66,8 @@ namespace TAO
     virtual TAO::Storable_Base * create_stream (const char * mode);
 
   private:
-
     TAO::PG_Object_Group_Storable & object_group_;
   };
-
 }
 
 TAO::Object_Group_File_Guard::Object_Group_File_Guard (

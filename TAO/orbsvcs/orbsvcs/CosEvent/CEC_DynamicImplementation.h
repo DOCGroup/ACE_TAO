@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_CEC_DynamicImplementationServer : public TAO_DynamicImplementation
 {
 public:
-
   /// Constructor
   TAO_CEC_DynamicImplementationServer (PortableServer::POA_ptr poa,
                                        TAO_CEC_TypedProxyPushConsumer *typed_pp_consumer,

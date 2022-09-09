@@ -33,7 +33,6 @@ public:
   ~be_visitor_valuetype_init ();
 
 public:
-
   void begin_public ();
   void begin_private ();
 };

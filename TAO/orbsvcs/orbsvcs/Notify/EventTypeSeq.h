@@ -73,7 +73,6 @@ public:
     const TAO_Notify::NVPList& attrs);
 
 private:
-
   virtual void release (void);
 };
 

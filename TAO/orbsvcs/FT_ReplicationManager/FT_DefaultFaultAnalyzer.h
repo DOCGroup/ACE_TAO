@@ -51,7 +51,6 @@ namespace TAO
     virtual ~FT_DefaultFaultAnalyzer ();
 
   public:
-
     /**
     * Validate event type to make sure it is one we can handle.
     * @param event The structured fault event, as from the Fault Notifier.

@@ -45,7 +45,6 @@ class TAO_PrivateConnectionPolicy;
 class TAO_RTCORBA_Export TAO_RT_Stub : public TAO_Stub
 {
 public:
-
   TAO_RT_Stub (const char *repository_id,
                const TAO_MProfile &profiles,
                TAO_ORB_Core *orb_core);
@@ -70,7 +69,6 @@ public:
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 private:
-
   /// Helper method used to parse the policies.
   void parse_policies (void);
 

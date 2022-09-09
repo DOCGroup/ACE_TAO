@@ -177,7 +177,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       SecurityManager (/* not sure what's needed yet */);
 
@@ -200,7 +199,6 @@ namespace TAO
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
@@ -209,7 +207,6 @@ namespace TAO
       virtual ~SecurityManager (void);
 
     private:
-
       /// The ORB-specific SecurityLevel2::PrincipalAuthenticator
       /// reference.
       // Except we're not going to have one of these right now

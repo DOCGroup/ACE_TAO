@@ -41,7 +41,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Strategy_Factory : public ACE_Service_Object
     {
       public:
-
         /// Constructor.
         TP_Strategy_Factory();
 

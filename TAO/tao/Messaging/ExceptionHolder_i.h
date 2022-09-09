@@ -67,7 +67,6 @@ namespace TAO
     virtual CORBA::ValueBase* _copy_value ();
 
   protected:
-
     virtual ~ExceptionHolder ();
 
   private:

@@ -47,9 +47,7 @@ namespace TAO
     class HTIOP_Export Connection_Handler : public SVC_HANDLER,
                                             public TAO_Connection_Handler
     {
-
     public:
-
       Connection_Handler (ACE_Thread_Manager* t = 0);
 
       /// Constructor.

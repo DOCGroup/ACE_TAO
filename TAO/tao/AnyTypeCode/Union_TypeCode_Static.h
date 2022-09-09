@@ -54,7 +54,6 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-
       /// @typedef Type of individual case array element, not the
       ///          array itself.
       typedef TAO::TypeCode::Case<char const *,

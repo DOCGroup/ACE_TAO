@@ -98,7 +98,6 @@ public:
   virtual TAO_LF_Strategy *create_lf_strategy (void);
 
 protected:
-
   /// Obtain the reactor implementation
   virtual ACE_Reactor_Impl *allocate_reactor_impl () const;
 

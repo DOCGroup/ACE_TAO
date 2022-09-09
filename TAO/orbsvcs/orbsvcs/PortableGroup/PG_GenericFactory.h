@@ -49,7 +49,6 @@ class TAO_PortableGroup_Export TAO_PG_GenericFactory
   : public virtual PortableGroup::GenericFactory
 {
 public:
-
   /// Constructor.
   TAO_PG_GenericFactory (TAO_PG_ObjectGroupManager & object_group_map,
                          TAO_PG_PropertyManager & property_manager);
@@ -135,7 +134,6 @@ public:
       const CORBA::Boolean propagate_member_already_present);
 
 private:
-
   /// Populate the object group being created.  Called when the
   /// infrastructure-controlled membership style is used for the
   /// object group being created.
@@ -176,7 +174,6 @@ private:
     PortableGroup::MinimumNumberMembersValue & minimum_number_members);
 
 private:
-
   /// Reference to the POA used to create object group references.
   PortableServer::POA_var poa_;
 

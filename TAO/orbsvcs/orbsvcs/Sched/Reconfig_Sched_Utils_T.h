@@ -40,7 +40,6 @@ class TAO_RSE_Dependency_Visitor :
   //   derived classes may call to pass them in.
 {
 public:
-
   /// Type of map used for O(1) lookup of RT_Info
   /// dependency sets by caller or called handle.
   typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
@@ -119,7 +118,6 @@ class TAO_RSE_DFS_Visitor :
   //   as appropriate according to DFS state markers.
 {
 public:
-
   /// Constructor.
   TAO_RSE_DFS_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
@@ -172,7 +170,6 @@ class TAO_RSE_SCC_Visitor :
   //   flag cycles in the graph.
 {
 public:
-
   /// Constructor.
   TAO_RSE_SCC_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
@@ -259,14 +256,12 @@ class TAO_RSE_Reverse_Propagation_Visitor :
   //   and its dependants, according to its dependencies.
 {
 public:
-
   /// Constructor.
   TAO_RSE_Reverse_Propagation_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
 
 protected:
-
   /**
    * Propagates aggregate execution time from successor to calling
    * entry.  Returns 1 on success (to prevent recursion on the
@@ -292,7 +287,6 @@ class TAO_RSE_Forward_Propagation_Visitor :
   //   its dependencies, and the period and threads it specifies.
 {
 public:
-
   /// Constructor.
   TAO_RSE_Forward_Propagation_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
@@ -336,7 +330,6 @@ protected:
                                   const RtecScheduler::Dependency_Info &di);
 
 private:
-
   /// Number of nodes with unresolved local dependencies.
   int unresolved_locals_;
 
@@ -360,7 +353,6 @@ class TAO_RSE_Priority_Visitor :
   //   priority and subpriority boundaries.
 {
 public:
-
   /// Constructor.
   TAO_RSE_Priority_Visitor (RtecScheduler::handle_t handles,
                             TAO_Reconfig_Scheduler_Entry ** entry_ptr_array);
@@ -382,7 +374,6 @@ public:
   int finish ();
 
 private:
-
   /// Pointer to previous tuple in the iteration.
   TAO_Reconfig_Scheduler_Entry *previous_entry_;
 
@@ -421,7 +412,6 @@ class TAO_Tuple_Admission_Visitor :
   //   whether or not a given operation is critical.
 {
 public:
-
   /// Constructor.
   TAO_Tuple_Admission_Visitor (const CORBA::Double & critical_utilization_threshold,
                                const CORBA::Double & noncritical_utilization_threshold);
@@ -453,7 +443,6 @@ public:
   CORBA::Double total_noncritical_utilization ();
 
 private:
-
   /// Utilization by critical operations.
   CORBA::Double critical_utilization_;
 
@@ -486,14 +475,12 @@ class TAO_RSE_Criticality_Propagation_Visitor :
   //   and its dependants, according to its dependencies.
 {
 public:
-
   /// Constructor.
   TAO_RSE_Criticality_Propagation_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
 
 protected:
-
   /**
    * Propagates criticality from successor to calling
    * entry.  Returns 1 on success (to prevent recursion on the

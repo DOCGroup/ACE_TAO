@@ -841,7 +841,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /**
    * Enqueue an <ACE_Message_Block *> in accordance with its priority.
    * priority may be *dynamic* or *static* or a combination or *both*
@@ -1002,7 +1001,6 @@ template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY = ACE_System
 class ACE_Message_Queue_Ex
 {
 public:
-
   enum
   {
     /// Default priority value. This is the lowest priority.

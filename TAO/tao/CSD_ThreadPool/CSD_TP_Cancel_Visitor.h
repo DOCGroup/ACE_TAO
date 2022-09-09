@@ -47,7 +47,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Cancel_Visitor : public TP_Queue_Visitor
     {
     public:
-
       /// Default Constructor - cancel *all* requests.
       TP_Cancel_Visitor();
 
