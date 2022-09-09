@@ -293,11 +293,17 @@ $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
 	@$(MKDIR) $(@D)
 ifeq ($(vxworks_ntbuild),1)
+  ifeq ($(SOVERSION),)
+	@if not "$(ARCH_SOURCE_DIR)/$(@F)" == "$@" \
+		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@ && \
+		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@
+  else
 	@if not exist $@ $(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
 		$(RM) $@ && \
 		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@ && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@
+  endif #SOVERSION
 else #not vxworks_ntbuild
     ifeq ($(firstword $(LN_S)),cp)
       ifneq ($(SOVERSION),)

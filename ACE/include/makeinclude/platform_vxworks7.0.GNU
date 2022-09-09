@@ -76,6 +76,10 @@ endif
 VXWORKS_VERSION_FLAG ?= -DACE_VXWORKS=0x700
 CPPFLAGS += $(VXWORKS_VERSION_FLAG)
 
+ifneq ($(WIND_RELEASE_ID), )
+  CPPFLAGS += -DACE_VXWORKS_RELEASE=0x$(subst .,,$(WIND_RELEASE_ID))
+endif
+
 ifeq ($(pthread),1)
   CPPFLAGS += -DACE_HAS_PTHREADS
 endif
@@ -101,6 +105,20 @@ endif
 
 ace_vx_mk_dir = $(if $(findstring 1,$(rtp)),$(WIND_USR_MK),$(WIND_KRNL_MK))
 include $(ace_vx_mk_dir)/defs.library.mk
+
+ifneq ($(rtp),0)
+  ## If we are building rtp and using the llvm (clang) compiler, we need to
+  ## use the linker directly to create shared libraries and executables.
+  ifeq ($(TOOL),llvm)
+    LLD = $(__WRS_TOOL_PATH)/ld$(TOOLENV)
+    define LINK.cc.override
+$(LLD) $(LDFLAGS) $(LD_EMULATION) --allow-shlib-undefined -EL $(VSB_DIR)/usr/lib/common/crt0.o -o $@ $(filter %.o,$^) --start-group --as-needed $(LDLIBS) -lc -lc_internal -lllvm -lcplusplus -lllvmcplus -lnet -ldl --end-group
+    endef
+    define SOLINK.cc.override
+$(LLD) $(LDFLAGS) $(LD_EMULATION) -shared --exclude-libs libc_internal.a -u __init -u __fini -soname="$@" -o $@ $(filter %.o,$^) -lc -lc_internal -lcplusplus -lnet
+    endef
+  endif
+endif
 
 dkm_libstdcpp ?= $(if $(findstring y,$(_WRS_CONFIG_PRI_diab)),1,0)
 ifeq ($(dkm_libstdcpp),1)
