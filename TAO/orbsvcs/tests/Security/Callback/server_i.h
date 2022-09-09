@@ -39,7 +39,6 @@ private:
   CORBA::ORB_var orb_;
 
   client_var client_;
-
 };
 
 #endif  /* SERVER_I_H */

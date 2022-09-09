@@ -37,7 +37,6 @@ class AdderCallback
     }
 
     CORBA::ORB_var orb;
-
 };
 
 int

@@ -359,7 +359,6 @@ static const char *const yyrule[] = {
 "factor : TAO_MINUS TAO_NUMBER",
 "factor : TAO_STRING",
 "factor : TAO_BOOLEAN",
-
 };
 #endif
 

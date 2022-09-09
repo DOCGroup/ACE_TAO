@@ -76,7 +76,6 @@ private:
 
   Cache_List_Item *head_;
   Cache_List_Item *tail_;
-
 };
 
 

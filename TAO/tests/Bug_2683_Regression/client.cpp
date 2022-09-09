@@ -63,7 +63,6 @@ public:
   {
     stop_ = true;
   }
-
 };
 
 int port = 0;

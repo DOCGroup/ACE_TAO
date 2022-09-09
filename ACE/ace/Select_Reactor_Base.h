@@ -107,7 +107,6 @@ public:
 
   /// ACE_Event_Handler associated with the ACE_HANDLE.
   ACE_Event_Handler *event_handler_;
-
 };
 
 /**

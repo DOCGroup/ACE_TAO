@@ -31,7 +31,6 @@ public:
 private:
 
   CORBA::ORB_var orb_;
-
 };
 
 

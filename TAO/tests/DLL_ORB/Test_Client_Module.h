@@ -53,7 +53,6 @@ private:
 
   /// Reference to the test object.
   Test_var test_;
-
 };
 
 ACE_FACTORY_DECLARE (Test_Client_Module, Test_Client_Module)

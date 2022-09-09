@@ -55,7 +55,6 @@ struct ThreadFlagsTest
   How assign_;
   ExpectedValues expected_values_;
   ExpectedValues which_results_to_check_;
-
 };
 
 ThreadFlagsTest::ThreadFlagsTest (const char* sym,

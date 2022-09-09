@@ -29,7 +29,6 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-
 };
 
 Test_i::Test_i (CORBA::ORB_ptr orb)

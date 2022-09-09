@@ -123,7 +123,6 @@ public:
   /// This method is called by the IO class when the error message has
   /// been delivered to the client.
   virtual void error_message_complete (void) = 0;
-
 };
 
 /**

@@ -14,7 +14,6 @@ class JAWS_Export JAWS_Referenced_Filecache_Factory
 public:
 
   virtual void destroy (JAWS_Cache_Object *);
-
 };
 
 class JAWS_Export JAWS_Counted_Filecache_Factory
@@ -23,7 +22,6 @@ class JAWS_Export JAWS_Counted_Filecache_Factory
 public:
 
   virtual void destroy (JAWS_Cache_Object *);
-
 };
 
 typedef JAWS_Cache_Manager<JAWS_Strdup_String,
@@ -63,7 +61,6 @@ public:
 private:
 
   ACE_FILE_IO file_;
-
 };
 
 

@@ -55,7 +55,6 @@ public:
 
   /// visit a union
   virtual int visit_union (be_union *node);
-
 };
 
 #endif /* _BE_VISITOR_TYPEDEF_ANY_OP_CS_H_*/

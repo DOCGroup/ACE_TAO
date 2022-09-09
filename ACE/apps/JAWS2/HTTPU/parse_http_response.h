@@ -39,7 +39,6 @@ private:
   char *version_;
   char *response_;
   int error_;
-
 };
 
 #if defined (ACE_HAS_INLINED_OSCALLS)

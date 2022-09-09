@@ -76,6 +76,5 @@ private:
   Multiple::Bottom_var delegate_;
 
   CORBA::ORB_var orb_;
-
 };
 #endif /* TAO_MULTIPLE_IMPL_H_ */

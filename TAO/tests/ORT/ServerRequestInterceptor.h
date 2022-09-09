@@ -95,7 +95,6 @@ private:
    * a child POA, and not the RootPOA.
    */
   PortableServer::Current_var poa_current_;
-
 };
 
 

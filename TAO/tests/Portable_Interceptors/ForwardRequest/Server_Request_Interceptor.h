@@ -107,7 +107,6 @@ private:
 
   /// References to the two objects used in this test.
   CORBA::Object_ptr obj_[2];
-
 };
 
 #if defined(_MSC_VER)

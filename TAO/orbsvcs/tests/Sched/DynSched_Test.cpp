@@ -47,7 +47,6 @@ public:
                            const char *output_filename,
                            const char *heading);
   // Creates the schedule, runs timelines.
-
 };
 
 

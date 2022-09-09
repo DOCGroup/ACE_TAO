@@ -208,7 +208,6 @@ private:
 
   // implementation base class pointer
   BaseSchedImplType* impl;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

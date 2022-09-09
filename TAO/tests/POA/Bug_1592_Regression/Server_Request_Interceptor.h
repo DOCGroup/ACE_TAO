@@ -80,7 +80,6 @@ protected:
 
   /// Destructor.
   ~Server_Request_Interceptor (void);
-
 };
 
 #if defined(_MSC_VER)

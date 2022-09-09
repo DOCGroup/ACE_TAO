@@ -89,7 +89,6 @@ struct Worker : ACE_Task_Base
       }
     return 0;
   }
-
 };
 
 int

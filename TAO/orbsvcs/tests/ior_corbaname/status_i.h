@@ -9,7 +9,6 @@ public:
   corbaname_Status_i (void);
 
   CORBA::Boolean print_status (void);
-
 };
 
 #endif /* STATUS_I_H */

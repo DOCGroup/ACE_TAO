@@ -44,7 +44,6 @@ public:
 
   virtual void cancel_timer (long timer_id) = 0;
   // Cancel a timer.
-
 };
 
 
@@ -85,7 +84,6 @@ public:
 private:
 
   JAWS_Timer_Impl *impl_;
-
 };
 
 

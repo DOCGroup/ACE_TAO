@@ -243,7 +243,6 @@ public:
   ACE_HANDLE handle_;
 
   Connection_Cache &connection_cache_;
-
 };
 
 class Connection_Cache
@@ -368,7 +367,6 @@ public:
   int svc () override;
 
   ACE_Reactor &reactor_;
-
 };
 
 class Receiver : public ACE_Task_Base
@@ -398,7 +396,6 @@ public:
   int nested_upcalls_;
 
   int nested_upcalls_level_;
-
 };
 
 Receiver::Receiver (ACE_Thread_Manager &thread_manager,
@@ -557,7 +554,6 @@ public:
   ACE_Reactor &reactor_;
 
   int nested_upcalls_;
-
 };
 
 Connector::Connector (ACE_Thread_Manager &thread_manager,
@@ -786,7 +782,6 @@ public:
   int run_receiver_thread_;
 
   int nested_upcalls_;
-
 };
 
 Invocation_Thread::Invocation_Thread (ACE_Thread_Manager &thread_manager,
@@ -986,7 +981,6 @@ public:
   int make_invocations_;
 
   int run_receiver_thread_;
-
 };
 
 Close_Socket_Thread::Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
@@ -1115,7 +1109,6 @@ public:
   ACE_Reactor &reactor_;
 
   Connection_Cache &connection_cache_;
-
 };
 
 Purger_Thread::Purger_Thread (ACE_Thread_Manager &thread_manager,

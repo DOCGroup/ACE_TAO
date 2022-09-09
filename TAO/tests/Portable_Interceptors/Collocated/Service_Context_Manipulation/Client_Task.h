@@ -32,7 +32,6 @@ private:
   const ACE_TCHAR *input_;
 
   CORBA::ORB_var corb_;
-
 };
 
 #include /**/ "ace/post.h"

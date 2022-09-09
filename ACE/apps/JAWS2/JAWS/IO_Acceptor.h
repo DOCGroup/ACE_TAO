@@ -62,7 +62,6 @@ public:
   enum { ASYNC = 0, SYNCH = 1 };
   // identify if this is being used for asynchronous or synchronous
   // accept calls
-
 };
 
 class JAWS_Export JAWS_IO_Synch_Acceptor : public JAWS_IO_Acceptor

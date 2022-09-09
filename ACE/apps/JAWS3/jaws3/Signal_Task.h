@@ -24,7 +24,6 @@ public:
 private:
 
   ACE_Sig_Set sigset_;
-
 };
 
 #endif /* JAWS_SIGNAL_TASK_H */

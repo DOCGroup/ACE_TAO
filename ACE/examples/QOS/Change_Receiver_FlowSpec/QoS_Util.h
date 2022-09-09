@@ -66,7 +66,6 @@ private:
 
   // Multicast Flag.
   int multicast_flag_;
-
 };
 
 #endif /* QOS_UTIL_H */

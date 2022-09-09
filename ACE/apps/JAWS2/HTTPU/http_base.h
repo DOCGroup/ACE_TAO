@@ -70,7 +70,6 @@ protected:
   JAWS_Header_Table_Iterator iter_;
   ACE_Message_Block *mb_;
   ACE_Message_Block payload_;
-
 };
 
 

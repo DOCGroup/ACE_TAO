@@ -119,7 +119,6 @@ private:
 
   /// database of operations
   Operation_DB_Entry op_db_[TAO_DEMUX_TEST_MAX_OPS];
-
 };
 
 

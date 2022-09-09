@@ -81,7 +81,6 @@ private:
   /// Flag that dictates whether or not the destructor will perform
   /// cleanup.
   bool released_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

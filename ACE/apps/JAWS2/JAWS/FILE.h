@@ -39,7 +39,6 @@ private:
 
   ACE_SYNCH_MUTEX lock_;
   ACE_Mem_Map *map_;
-
 };
 
 #endif /* JAWS_FILE_H */

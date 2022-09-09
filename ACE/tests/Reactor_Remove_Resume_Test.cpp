@@ -51,7 +51,6 @@ private:
   // If the reactor closes the event handler before it gets the okay,
   // we will issue an error.
   bool & okay_to_close_;
-
 };
 
 Bogus_Handler::Bogus_Handler (ACE_Reactor * reactor,
@@ -146,7 +145,6 @@ private:
 
   // Are we running the event handler suspension or removal test?
   bool suspension_test_;
-
 };
 
 Bad_Handler::Bad_Handler (ACE_Reactor * reactor,

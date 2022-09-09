@@ -22,7 +22,6 @@ public:
   virtual int perform_task (void);
 
   virtual void pre_activate (void);
-
 };
 
 #endif /*FP_TASK_H*/

@@ -55,8 +55,6 @@ public:
   int run (void);
 
 private:
-
-
   /**
    * Creates the specified number of identity objects, and registers
    * each one with the provided <Object_Group>.  Identity servants are

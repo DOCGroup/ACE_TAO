@@ -36,7 +36,6 @@ public:
 private:
 
   JAWS_HTTP_Data data_;
-
 };
 
 
@@ -54,7 +53,6 @@ class ACE_Svc_Export JAWS_HTTP_Acceptor
 public:
 
   int init (int argc, ACE_TCHAR *argv[]);
-
 };
 
 ACE_SVC_FACTORY_DECLARE (JAWS_HTTP_Acceptor)

@@ -134,7 +134,6 @@ public:
          RECEIVE_OK = 18, RECEIVE_OK_A = 19,
   /// The different states of the handler
          RECEIVE_ERROR = 20, RECEIVE_ERROR_A = 21 };
-
 };
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined(ACE_HAS_AIO_CALLS)

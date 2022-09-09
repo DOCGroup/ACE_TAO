@@ -142,7 +142,6 @@ private:
    */
   TAO::FT_FaultConsumer* p_fault_consumer_;
   PortableServer::ServantBase_var consumer_servant_;
-
 };
 #include /**/ <ace/post.h>
 

@@ -51,7 +51,6 @@ public:
 
     return 0;
   }
-
 };
 
 const ACE_TCHAR *ior = ACE_TEXT("file://obj.ior");

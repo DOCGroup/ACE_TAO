@@ -145,7 +145,6 @@ private:
    * @todo Strategize the validator, or use template policies.
    */
   TAO_PG_Default_Property_Validator property_validator_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

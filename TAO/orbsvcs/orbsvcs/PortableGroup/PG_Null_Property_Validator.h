@@ -47,7 +47,6 @@ public:
    * whatsoever.
    */
   void validate_criteria (const PortableGroup::Properties & criteria);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

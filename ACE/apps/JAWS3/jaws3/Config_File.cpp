@@ -52,7 +52,6 @@ public:
 private:
 
   ACE_Unbounded_Queue<void *> queue_;
-
 };
 
 
@@ -78,7 +77,6 @@ private:
   ACE_FILE_Addr faddr_;
   JAWS_strings *strings_;
   JAWS_Symbol_Table *symbols_;
-
 };
 
 JAWS_Config_File_Impl::JAWS_Config_File_Impl (const ACE_TCHAR *config_file)

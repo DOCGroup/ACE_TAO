@@ -90,7 +90,6 @@ private:
 
   char oneway_;
   // Are we running oneway or twoway?
-
 };
 
 #endif /* ACE_SSL_CLIENT_SIMPLE_H */

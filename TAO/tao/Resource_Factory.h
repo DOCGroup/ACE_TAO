@@ -261,7 +261,6 @@ protected:
    * without calling unnecessary functions.
    */
   virtual int load_default_protocols ();
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

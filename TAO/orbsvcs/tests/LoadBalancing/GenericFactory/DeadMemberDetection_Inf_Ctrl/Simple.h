@@ -28,7 +28,6 @@ public:
 private:
 
   int server_id_;
-
 };
 
 #if defined(_MSC_VER)

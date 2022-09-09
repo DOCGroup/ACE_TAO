@@ -61,7 +61,6 @@ private:
 
   /// The servant that implements the "Test" object.
   Test_i servant_;
-
 };
 
 ACE_FACTORY_DECLARE (Test_Server_Module, Test_Server_Module)

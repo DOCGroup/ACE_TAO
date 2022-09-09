@@ -29,7 +29,6 @@ private:
   int max_number_of_threads_;
   int shutdown_task_;
   int error_;
-
 };
 
 #endif /* JAWS_THYBRID_CONCURRENCY_H */

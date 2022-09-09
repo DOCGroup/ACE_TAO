@@ -210,7 +210,6 @@ private:
   /// Lock used to synchronize access to the factory creation id
   /// index (i.e. next_fcid_).
   TAO_SYNCH_MUTEX lock_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

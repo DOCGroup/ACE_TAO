@@ -55,7 +55,6 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   RTCORBA::RTORB_var rt_orb_;
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_;
-
 };
 
 typedef ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX> DT_TEST;

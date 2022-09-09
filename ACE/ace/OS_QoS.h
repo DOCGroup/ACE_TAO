@@ -297,7 +297,6 @@ private:
   ACE_Flow_Spec *sending_flowspec_;
   ACE_Flow_Spec *receiving_flowspec_;
 #endif
-
 };
 
 /**

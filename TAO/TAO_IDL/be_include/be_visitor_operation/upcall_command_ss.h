@@ -35,7 +35,6 @@ private:
 
   /// Generate the upcall.
   int gen_upcall (be_operation * node);
-
 };
 
 #endif /* _BE_VISITOR_OPERATION_UPCALL_COMMAND_SS_H_ */

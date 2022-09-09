@@ -49,7 +49,6 @@ private:
   int frame_count_;
 
   Receiver_Stats stats_;
-
 };
 
 /**
@@ -69,7 +68,6 @@ public:
 private:
   /// Receiver application callback.
   Receiver_Callback callback_;
-
 };
 
 /**
@@ -104,6 +102,5 @@ protected:
 
   /// Receiver MMDevice.
   TAO_MMDevice *mmdevice_;
-
 
 };

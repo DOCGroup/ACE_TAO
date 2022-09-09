@@ -72,7 +72,6 @@ private:
 
   CosNotifyChannelAdmin::ProxyPushSupplier_var proxy_supplier_;
 
-
 };
 
 #endif /* NOTIFY_CONSUMER_H */

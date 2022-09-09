@@ -83,7 +83,6 @@ private:
   /// The CDR encapsulation coder/decoder used to retrieve data
   /// from the CDR encapsulation in the tagged component.
   IOP::Codec_var codec_;
-
 };
 
 #if defined(_MSC_VER)

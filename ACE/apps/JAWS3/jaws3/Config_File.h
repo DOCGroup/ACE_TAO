@@ -65,7 +65,6 @@ private:
 
   JAWS_Config_File_Impl *impl_;
   // Opaque implementation.
-
 };
 
 #endif /* JAWS_CONFIG_FILE_H */

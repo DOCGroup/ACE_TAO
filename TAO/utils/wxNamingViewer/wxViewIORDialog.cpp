@@ -113,7 +113,6 @@ namespace  // anonymous
       dialog->SetSizer( topsizer);
       topsizer->SetSizeHints( dialog);
     }
-
 };  // anonymous
 
 BEGIN_EVENT_TABLE( WxViewIORDialog, wxDialog)

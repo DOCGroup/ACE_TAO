@@ -106,9 +106,6 @@ public:
   void load_ep_addr (const char* file_name);
 
 protected:
-
-
-
   void find_receivers (void);
 
   void add_to_receivers (CosNaming::BindingList &binding_list);

@@ -96,7 +96,6 @@ private:
   int error_number_;
 
   void *data_;
-
 };
 
 #endif /* JAWS_EVENT_RESULT_H */

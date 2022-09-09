@@ -81,7 +81,6 @@ private:
       const ACE_CDR::WChar *x,
       ACE_CDR::ULong length,
       ACE_CDR::ULong transmission_length);
-
 };
 
 #include /**/ "ace/post.h"

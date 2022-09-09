@@ -34,7 +34,6 @@ public:
 private:
   PortableServer::POA_var poa_;
   // Implement a different _default_POA()
-
 };
 
 #endif /* TAO_DEMUX_TEST_I_H */

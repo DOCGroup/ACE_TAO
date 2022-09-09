@@ -58,7 +58,6 @@ public:
   /// Set the type of file content in the metadata structure.
   int content_type (const char *filename,
                     Web_Server::Metadata_Type_out metadata);
-
 };
 
 

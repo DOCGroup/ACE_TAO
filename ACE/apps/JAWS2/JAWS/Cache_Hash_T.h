@@ -48,7 +48,6 @@ private:
 
   ACE_SYNCH_MUTEX lock_;
   CACHE_BUCKET_MANAGER **hashtable_;
-
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

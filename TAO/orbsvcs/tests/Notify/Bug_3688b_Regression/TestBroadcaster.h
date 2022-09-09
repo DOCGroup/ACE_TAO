@@ -35,7 +35,6 @@ class bug3688_Export TestBroadcaster
   // private methods and instance variables
   private:
     CosNotifyChannelAdmin::SequenceProxyPushConsumer_var mv_sequenceProxyPushConsumer;
-
 }; /* end of TestBroadcaster */
 
 

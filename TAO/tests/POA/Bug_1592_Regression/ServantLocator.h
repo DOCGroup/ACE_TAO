@@ -73,7 +73,6 @@ private:
 
   /// Pointer to the test servant.
   PortableServer::ServantBase_var servant_;
-
 };
 
 #if defined(_MSC_VER)

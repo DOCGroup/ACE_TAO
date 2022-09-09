@@ -55,7 +55,6 @@ private:
 
 /// Name of the interceptor
 const char *name_;
-
 };
 #if defined(_MSC_VER)
 #pragma warning(pop)

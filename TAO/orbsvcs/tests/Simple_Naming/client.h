@@ -107,7 +107,6 @@ private:
 
   /// Holds object to be registered with the Naming Service by each thread.
   Test_Object_var test_ref_;
-
 };
 
 /**

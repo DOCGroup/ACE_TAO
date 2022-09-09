@@ -28,7 +28,6 @@ private:
 
   /// Reference to the ORB.
   CORBA::ORB_var orb_;
-
 };
 
 #endif  /* NULL_CIPHER_FOO_I_H */

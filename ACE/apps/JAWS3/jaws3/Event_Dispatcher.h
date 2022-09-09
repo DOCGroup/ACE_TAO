@@ -44,7 +44,6 @@ public:
 
   static void end_event_loop (void);
   static void run_event_loop (void);
-
 };
 
 #endif /* JAWS_EVENT_DISPATCHER_H */

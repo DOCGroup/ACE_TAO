@@ -92,7 +92,6 @@ protected:
   virtual int release_os_resources (void);
   virtual int handle_write_ready (const ACE_Time_Value *timeout);
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

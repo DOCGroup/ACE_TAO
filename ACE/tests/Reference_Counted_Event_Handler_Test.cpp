@@ -781,7 +781,6 @@ public:
   ACE_Pipe pipe_;
 
   int &events_;
-
 };
 
 Closed_In_Upcall_Event_Handler::Closed_In_Upcall_Event_Handler (int &events)

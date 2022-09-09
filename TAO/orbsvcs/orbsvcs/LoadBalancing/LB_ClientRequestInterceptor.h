@@ -84,7 +84,6 @@ public:
   virtual void receive_other (
       PortableInterceptor::ClientRequestInfo_ptr ri);
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

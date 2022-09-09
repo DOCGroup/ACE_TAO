@@ -44,7 +44,6 @@ public:
   virtual ACE_HANDLE  get_handle () const;
 
   ACE_SOCK_Stream stream_;
-
 };
 
 Network_Handler::Network_Handler (ACE_SOCK_Stream &s)

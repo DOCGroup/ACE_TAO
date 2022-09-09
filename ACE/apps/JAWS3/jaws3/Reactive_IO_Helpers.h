@@ -83,7 +83,6 @@ private:
   long timer_id_;
 
   int was_active_;
-
 };
 
 
@@ -144,7 +143,6 @@ private:
 private:
 
   ACE_Message_Block *mb_;
-
 };
 
 
@@ -205,7 +203,6 @@ private:
 private:
 
   ACE_Message_Block *mb_;
-
 };
 
 
@@ -300,7 +297,6 @@ private:
   ACE_Message_Block *source_buf_;
   ACE_Message_Block *header_;
   ACE_Message_Block *trailer_;
-
 };
 
 #endif /* JAWS_REACTIVE_IO_HELPERS_H */

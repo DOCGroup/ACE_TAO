@@ -16,7 +16,6 @@ public:
   /// Constructor
 
   virtual char * get_string (void);
-
 };
 
 #include /**/ "ace/post.h"

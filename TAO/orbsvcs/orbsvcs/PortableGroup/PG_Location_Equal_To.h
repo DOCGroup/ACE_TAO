@@ -43,7 +43,6 @@ public:
   /// the given locations.
   int operator() (const PortableGroup::Location &lhs,
                   const PortableGroup::Location &rhs) const;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

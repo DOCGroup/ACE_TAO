@@ -294,7 +294,6 @@ protected:
   /// thread safe routine to lookup name given ip address
   /// return <> 0 on error
   static int resolve_to_hostname(const in_addr& quad_addr, char *hostname);
-
 };
 
 //------------------------------------------------------------------------

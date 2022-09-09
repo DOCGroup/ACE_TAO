@@ -55,7 +55,6 @@ public:
                                            const CORBA::Any & value);
 
   //@}
-
 };
 
 #if defined(_MSC_VER)

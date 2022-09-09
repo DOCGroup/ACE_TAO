@@ -84,7 +84,6 @@ private:
   /// The CDR encapsulation coder/decoder used to encapsulate data
   /// into a CDR encapsulation.
   IOP::Codec_var codec_;
-
 };
 
 #if defined(_MSC_VER)

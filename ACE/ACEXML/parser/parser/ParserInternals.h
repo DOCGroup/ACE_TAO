@@ -91,7 +91,6 @@ public:
     IN_NOTATION,
     INVALID = -1
   };
-
 };
 
 #include /**/ "ace/post.h"

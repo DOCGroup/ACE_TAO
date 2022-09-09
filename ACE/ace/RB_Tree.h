@@ -672,7 +672,6 @@ protected:
 
   /// Pointer to the node currently under the iterator.
   ACE_RB_Tree_Node <EXT_ID, INT_ID> *node_;
-
 };
 
 /**
@@ -787,7 +786,6 @@ public:
    * node, returns 1 if not.
    */
   int is_done ();
-
 };
 
 /**

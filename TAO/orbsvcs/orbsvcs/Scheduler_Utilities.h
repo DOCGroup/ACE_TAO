@@ -54,7 +54,6 @@ public:
   /// Add a dependency of one RT_Info upon another.
   int add_dependency(RtecScheduler::handle_t dep,
                      int number_of_calls = 1);
-
 };
 
 #if defined (__ACE_INLINE__)

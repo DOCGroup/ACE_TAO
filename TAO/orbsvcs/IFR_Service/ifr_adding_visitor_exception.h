@@ -65,7 +65,6 @@ private:
   /// Holder for the member list passed to create_struct() or
   /// create_exception().
   CORBA::StructMemberSeq members_;
-
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_EXCEPTION_H */

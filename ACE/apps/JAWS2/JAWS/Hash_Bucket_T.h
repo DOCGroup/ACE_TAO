@@ -43,7 +43,6 @@ public:
 
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev_;
   // Pointer to the prev item in the bucket of overflow nodes.
-
 };
 
 
@@ -93,7 +92,6 @@ private:
 
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *head_;
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *tail_;
-
 };
 
 
@@ -193,7 +191,6 @@ protected:
 private:
 
   JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID> dlcstack_;
-
 };
 
 

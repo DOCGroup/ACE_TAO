@@ -66,7 +66,6 @@ private:
 
   /// The event handler that is decorated by this class.
   ACE_Event_Handler *event_handler_;
-
 };
 
 /**
@@ -110,7 +109,6 @@ private:
 
   /// Requests on the class are forwarded to this base class;
   ACE_QoS_Decorator_Base *decorator_base_;
-
 };
 
 /**
@@ -168,7 +166,6 @@ private:
   /// If the application wants to use an instance of Reactor other
   /// than the Singleton one.
   ACE_Reactor *reactor_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

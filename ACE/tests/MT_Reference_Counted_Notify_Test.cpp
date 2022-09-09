@@ -47,7 +47,6 @@ public:
   ACE_Event_Handler::Reference_Count add_reference () override;
 
   ACE_Event_Handler::Reference_Count remove_reference () override;
-
 };
 
 Reference_Counted_Event_Handler::Reference_Counted_Event_Handler ()

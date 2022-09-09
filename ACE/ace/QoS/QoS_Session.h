@@ -172,7 +172,6 @@ protected:
 
   RSVP_Event_Type rsvp_event_type_;
   //Has the last rsvp event that occurred
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -81,7 +81,6 @@ private:
   /// Unordered set of QoS Sessions.
   typedef ACE_Unbounded_Set <ACE_QoS_Session *> QOS_SESSION_SET;
   QOS_SESSION_SET qos_session_set_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

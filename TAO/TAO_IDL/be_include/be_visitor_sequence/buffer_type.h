@@ -58,7 +58,6 @@ public:
 protected:
   /// helper that does the common job
   int visit_node (be_type *);
-
 };
 
 #endif /* _BE_VISITOR_SEQUENCE_BUFFER_TYPE_H_ */

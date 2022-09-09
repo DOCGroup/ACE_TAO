@@ -47,7 +47,6 @@ public:
 
   /// Used to force the initialization.
   static int Initializer (void);
-
 };
 
 static int

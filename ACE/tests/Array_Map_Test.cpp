@@ -384,7 +384,6 @@ public:
 private:
 
   unsigned int * refcount_;
-
 };
 
 // --------

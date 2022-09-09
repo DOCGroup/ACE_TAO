@@ -80,7 +80,6 @@ private:
 
   CORBA::String_var first_forward_str_;
   CORBA::String_var second_forward_str_;
-
 };
 
 #if defined(_MSC_VER)

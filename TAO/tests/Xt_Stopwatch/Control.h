@@ -51,7 +51,6 @@ class Control
 
   /// Pushbutton widget that is used to stop the timer..
   Widget stopwidget_;
-
 };
 
 

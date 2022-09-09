@@ -538,7 +538,6 @@ private:
   u_long min_dispatch_id_;
 
   u_long max_dispatch_id_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

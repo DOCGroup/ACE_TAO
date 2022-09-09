@@ -106,7 +106,6 @@ private:
 
   /// This value holds a count of packets created.
   u_long packet_count_;
-
 };
 
 /**
@@ -148,7 +147,6 @@ private:
 
   /// This value holds a count of packets received.
   u_long packet_count_;
-
 };
 
 /**

@@ -43,7 +43,6 @@ private:
   char *url_;
   char *request_;
   int error_;
-
 };
 
 #if defined (ACE_HAS_INLINED_OSCALLS)

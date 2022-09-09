@@ -64,7 +64,6 @@ struct RefHelper
 
     return t_obj._retn();
   }
-
 };
 
 struct CSD_PT_TestInf_Export AppHelper

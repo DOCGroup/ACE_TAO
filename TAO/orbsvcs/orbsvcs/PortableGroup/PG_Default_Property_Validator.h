@@ -66,7 +66,6 @@ private:
   PortableGroup::Name membership_;
   PortableGroup::Name factories_;
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

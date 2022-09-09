@@ -36,7 +36,6 @@ private:
 
   /// Reference to the "SecurityCurrent" object.
   SecurityLevel3::SecurityCurrent_var current_;
-
 };
 
 #endif  /* SECURE_INVOCATION_FOO_I_H */

@@ -69,7 +69,6 @@ private:
   /// Stringified reference to the object the initial request will be
   /// forwarded to by this interceptor.
   CORBA::String_var forward_str_;
-
 };
 
 #endif  /* CLIENT_REQUEST_INTERCEPTOR_H */

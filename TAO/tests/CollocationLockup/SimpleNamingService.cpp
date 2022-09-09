@@ -74,7 +74,6 @@ public:
 private:
 
   CORBA::Object_var obj_;
-
 };
 
 int

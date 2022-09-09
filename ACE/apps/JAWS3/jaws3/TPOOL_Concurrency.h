@@ -24,7 +24,6 @@ private:
   int number_of_threads_;
   int shutdown_task_;
   int error_;
-
 };
 
 #endif /* JAWS_TPOOL_CONCURRENCY_H */

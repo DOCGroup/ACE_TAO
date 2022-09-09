@@ -37,7 +37,6 @@ public:
 private:
 
   TeraSS_Data data_;
-
 };
 
 class ACE_Svc_Export TeraSS_Acceptor
@@ -54,7 +53,6 @@ class ACE_Svc_Export TeraSS_Acceptor
 public:
 
   int init (int argc, ACE_TCHAR *argv[]);
-
 };
 
 ACE_SVC_FACTORY_DECLARE (TeraSS_Acceptor)

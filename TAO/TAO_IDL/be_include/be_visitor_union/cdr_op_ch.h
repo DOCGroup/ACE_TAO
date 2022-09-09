@@ -36,7 +36,6 @@ public:
 
   /// visit union
   virtual int visit_union (be_union *node);
-
 };
 
 #endif /* _BE_VISITOR_UNION_CDR_OP_CH_H_ */

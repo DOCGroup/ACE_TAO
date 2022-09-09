@@ -153,7 +153,6 @@ public:
 
   void disconnect_self() {
   }
-
 };
 
 int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {

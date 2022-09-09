@@ -33,7 +33,6 @@ private:
 
   /// The ORB pseudo-reference (for shutdown).
   CORBA::ORB_var orb_;
-
 };
 
 #endif /* TAO_INTERCEPTOR_TEST_I_H */

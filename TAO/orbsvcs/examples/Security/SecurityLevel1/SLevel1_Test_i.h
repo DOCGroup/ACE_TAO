@@ -26,7 +26,6 @@ class SLevel1_Server_i : public POA_SLevel1_Server
 
   static int authorized_1;
   static int authorized_2;
-
 };
 
 #endif /* TAO_SLEVEL1_TEST_I_H */

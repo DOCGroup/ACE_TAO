@@ -57,7 +57,6 @@ public:
                 , ACE_Message_Block *header = 0
                 , ACE_Message_Block *trailer = 0
                 );
-
 };
 
 #endif /* JAWS_SYNCH_IO_H */

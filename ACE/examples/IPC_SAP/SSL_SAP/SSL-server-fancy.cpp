@@ -119,7 +119,6 @@ private:
 
   virtual int run (void);
   // Template Method hook called by <svc>.
-
 };
 
 class Oneway_Handler : public Handler

@@ -35,7 +35,6 @@ public:
 private:
 
   server_var server_;
-
 };
 
 #endif  /* CLIENT_I_H */

@@ -63,7 +63,6 @@ private:
   time_t new_last_access_;
 
   void *heap_item_;
-
 };
 
 class JAWS_Referenced_Cache_Object : public JAWS_Cache_Object
@@ -85,7 +84,6 @@ private:
 
   mutable ACE_SYNCH_RW_MUTEX count_;
   mutable ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX> lock_adapter_;
-
 };
 
 class JAWS_Counted_Cache_Object : public JAWS_Cache_Object
@@ -109,7 +107,6 @@ private:
   unsigned int new_count_;
   mutable ACE_SYNCH_MUTEX lock_;
   mutable ACE_Lock_Adapter<ACE_SYNCH_MUTEX> lock_adapter_;
-
 };
 
 class JAWS_Cache_Object_Factory
@@ -127,7 +124,6 @@ public:
 protected:
 
   ACE_Allocator *allocator_;
-
 };
 
 class JAWS_Referenced_Cache_Object_Factory : public JAWS_Cache_Object_Factory
@@ -138,7 +134,6 @@ public:
 
   virtual JAWS_Cache_Object * create (const void *, size_t);
   virtual void destroy (JAWS_Cache_Object *);
-
 };
 
 class JAWS_Counted_Cache_Object_Factory : public JAWS_Cache_Object_Factory
@@ -149,7 +144,6 @@ public:
 
   virtual JAWS_Cache_Object * create (const void *, size_t);
   virtual void destroy (JAWS_Cache_Object *);
-
 };
 
 #endif /* JAWS_CACHE_OBJECT_H */

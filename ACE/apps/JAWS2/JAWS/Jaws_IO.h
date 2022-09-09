@@ -247,7 +247,6 @@ public:
   virtual void accept (JAWS_IO_Handler *ioh,
                        ACE_Message_Block *mb = 0,
                        unsigned int size = 0);
-
 };
 
 typedef ACE_Singleton<JAWS_Asynch2_IO, ACE_SYNCH_MUTEX>

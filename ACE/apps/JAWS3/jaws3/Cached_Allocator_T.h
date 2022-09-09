@@ -53,7 +53,6 @@ private:
 
   ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<T>, ACE_LOCK> free_list_;
   // Maintain a cached memory free list.
-
 };
 
 
@@ -89,7 +88,6 @@ private:
   size_t n_chunks_;
 
   ACE_TSS_TYPE (JAWS_CACHED_ALLOCATOR(T)) ts_allocator_;
-
 };
 
 

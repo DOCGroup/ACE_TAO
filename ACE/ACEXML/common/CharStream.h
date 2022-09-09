@@ -77,7 +77,6 @@ public:
    * Get the systemId for the underlying CharStream
    */
   virtual const ACEXML_Char* getSystemId () = 0;
-
 };
 
 #include /**/ "ace/post.h"

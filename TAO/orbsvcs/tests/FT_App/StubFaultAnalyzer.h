@@ -123,7 +123,6 @@ private:
 
   StubFaultConsumer faultConsumer_;
   StubBatchConsumer batchConsumer_;
-
 };
 
 #include /**/ <ace/post.h>

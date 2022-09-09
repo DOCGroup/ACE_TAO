@@ -18,7 +18,6 @@ public:
   /// Constructor
 
   virtual char * get_string (void);
-
 };
 
 #if defined(_MSC_VER)

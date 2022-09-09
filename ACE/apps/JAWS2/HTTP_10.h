@@ -35,7 +35,6 @@ public:
   virtual ~JAWS_HTTP_10_Parse_Task (void);
 
   virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
-
 };
 
 // Write the response
@@ -60,7 +59,6 @@ public:
 
   static char *HTTP_decode_string (char *path);
   // Decode '%' escape codes in a URI
-
 };
 
 #endif /* !defined (JAWS_HTTP_10_H) */

@@ -136,7 +136,6 @@ private:
   ::FT::FaultNotifier::ConsumerId consumer_id_;
 
   size_t notifications_;
-
 };
 
 #include /**/ <ace/post.h>

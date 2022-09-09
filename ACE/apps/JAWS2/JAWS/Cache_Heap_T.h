@@ -70,7 +70,6 @@ private:
   size_t size_;
 
   Cache_Heap_Item **heap_;
-
 };
 
 
@@ -91,7 +90,6 @@ private:
   JAWS_Cache_Object *int_id_;
 
   size_t heap_idx_;
-
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

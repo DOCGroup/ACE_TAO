@@ -50,7 +50,6 @@ private:
   // Address of the multicast address where to listen for requests for */
   // the server. */
 
-
 };
 
 #endif /* SERVER_I_H */

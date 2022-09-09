@@ -79,7 +79,6 @@ private:
 
   /// IORInterceptor successfully called and executed.
   bool success_;
-
 };
 
 #if defined(_MSC_VER)

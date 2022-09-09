@@ -23,7 +23,6 @@ private:
   ACE_Message_Block mb_;
   TeraSS_Service_Handler *sh_;
   ACE_FILE_IO file_io_;
-
 };
 
 #endif /* TERA_SS_DATA_H */

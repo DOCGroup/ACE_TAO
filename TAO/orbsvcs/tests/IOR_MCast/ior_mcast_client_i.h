@@ -28,7 +28,6 @@ class ior_mcast_Client_i
  private:
   // mcast_ior
   ACE_CString mcast_url_;
-
 };
 
 #endif /* IOR_MCAST_CLIENT_I_H */

@@ -28,7 +28,6 @@ private:
 
   const int niterations;
   Test::Roundtrip_var remote_ref_;
-
 };
 
 #include /**/ "ace/post.h"

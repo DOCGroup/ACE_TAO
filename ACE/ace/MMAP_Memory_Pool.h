@@ -333,7 +333,6 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

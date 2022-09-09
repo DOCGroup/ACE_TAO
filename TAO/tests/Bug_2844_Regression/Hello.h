@@ -33,7 +33,6 @@ private:
 
   /// The ORB which will be shutdown by Hello::shutdown().
   CORBA::ORB_var orb_;
-
 };
 
 #endif /* HELLO_H */

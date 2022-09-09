@@ -93,7 +93,6 @@ public:
                     const char * kind,
                     CORBA::Object_ptr & obj,
                     CosNaming::BindingType &type) = 0;
-
 };
 
 /**

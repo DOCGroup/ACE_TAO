@@ -23,7 +23,6 @@ private:
   JAWS_HTTP_Service_Handler *sh_;
   ACE_Message_Block mb_;
   ACE_FILE_IO file_io_;
-
 };
 
 #endif /* JAWS_HTTP_DATA_H */

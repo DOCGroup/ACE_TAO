@@ -38,7 +38,6 @@ private:
   CORBA::ORB_var orb_;
 
   CORBA::Long val_;
-
 };
 
 #endif /* TAO_MPROFILE_TEST_I_H */

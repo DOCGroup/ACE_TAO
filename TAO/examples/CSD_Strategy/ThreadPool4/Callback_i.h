@@ -14,7 +14,6 @@ class Callback_i : public virtual POA_Callback
 
     virtual void test_method (
     );
-
 };
 
 

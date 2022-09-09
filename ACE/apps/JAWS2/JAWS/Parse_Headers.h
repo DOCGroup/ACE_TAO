@@ -111,7 +111,6 @@ public:
   // Scans from start to end for characters that match skip set.
   // Returns pointer to first location between start and end of a
   // character that is *not* in the skip set.
-
 };
 
 typedef ACE_Singleton<JAWS_Parse_Headers, ACE_SYNCH_MUTEX>

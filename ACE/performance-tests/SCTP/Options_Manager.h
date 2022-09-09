@@ -59,7 +59,6 @@ public:
 private:
   static ACE_CDR::Boolean __initialized;
   static ACE_TCHAR __program_name[string_len];
-
 };
 
 #endif /* OPTIONS_MANAGER_H */

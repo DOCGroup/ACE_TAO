@@ -72,7 +72,6 @@ private:
   CORBA::Long establish_count_;
 
   CORBA::Long components_establish_count_;
-
 };
 
 #if defined(_MSC_VER)

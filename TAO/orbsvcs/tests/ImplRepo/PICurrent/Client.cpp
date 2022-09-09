@@ -66,7 +66,6 @@ public:
       }
     return 0;
   }
-
 };
 
 
@@ -141,7 +140,6 @@ public:
 private:
   TAO_SYNCH_MUTEX lock_;
   PortableInterceptor::Current_var pic_;
-
 };
 
 class ORB_Initializer : public virtual PortableInterceptor::ORBInitializer,

@@ -240,7 +240,6 @@ private:
 
   /// The number of allocated slots.
   PortableInterceptor::SlotId slot_count_;
-
 };
 
 // Traits specializations.

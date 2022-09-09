@@ -36,7 +36,6 @@ private:
   void *act_;
   const int interval_;
   int expired_;
-
 };
 
 #endif /* JAWS_TIMER_HELPERS_H */

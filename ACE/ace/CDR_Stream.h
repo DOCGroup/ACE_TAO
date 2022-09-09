@@ -1371,7 +1371,6 @@ protected:
   ACE_CDR::Octet minor_version (ACE_InputCDR& input);
   ACE_CDR::Octet major_version (ACE_OutputCDR& output);
   ACE_CDR::Octet minor_version (ACE_OutputCDR& output);
-
 };
 
 // @@ These operators should not be inlined since they force SString.h

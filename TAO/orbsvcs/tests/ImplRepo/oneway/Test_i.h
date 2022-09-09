@@ -26,7 +26,6 @@ public:
 
 private:
   CORBA::Short count_;
-
 };
 
 #endif /* TEST_I_H_ */

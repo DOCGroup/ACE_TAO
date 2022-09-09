@@ -21,7 +21,6 @@ public:
   {
     return ACE_Singleton<TeraSS_State_WRITE, ACE_SYNCH_MUTEX>::instance ();
   }
-
 };
 
 #endif /* TERA_SS_STATE_WRITE_H */

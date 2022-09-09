@@ -59,7 +59,6 @@ public:
     ->schedule_wakeup (handle, ACE_Event_Handler::READ_MASK);
     return 0;
   }
-
 };
 
 typedef ACE_Connector <HTTP_Sink_Svc_Handler, ACE_SOCK_CONNECTOR>
@@ -129,7 +128,6 @@ private:
   ACE_INET_Addr addr_;
 
   long timer_id_;
-
 };
 
 class Signal_Handler

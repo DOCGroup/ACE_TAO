@@ -97,7 +97,6 @@ public:
   int svc (void);
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (CORBA::ORB_ptr orb)

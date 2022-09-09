@@ -71,7 +71,6 @@ private:
 
   friend class ACE_Singleton<TAO_NT_Naming_Service, MUTEX>;
   friend class AutoFinalizer;
-
 };
 
 /**

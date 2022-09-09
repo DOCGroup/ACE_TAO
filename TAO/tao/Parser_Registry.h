@@ -72,7 +72,6 @@ private:
 
   /// Number of parsers
   size_t size_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

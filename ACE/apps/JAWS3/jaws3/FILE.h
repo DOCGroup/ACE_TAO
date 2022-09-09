@@ -41,7 +41,6 @@ private:
   ACE_Mem_Map *map_;
 
   int can_map_;
-
 };
 
 #endif /* JAWS_FILE_H */

@@ -48,7 +48,6 @@ public:
 private:
 
   ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Wheel> timer_queue_;
-
 };
 
 #endif /* JAWS_TASK_TIMER_H */

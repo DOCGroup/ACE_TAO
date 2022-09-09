@@ -32,7 +32,6 @@ public:
 private:
 
   JAWS_Config_File *cf_;
-
 };
 
 #endif /* JAWS_OPTIONS_H */

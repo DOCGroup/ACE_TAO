@@ -47,7 +47,6 @@ public:
     ACE_DEBUG ((LM_DEBUG, "exception caught on upcall req\n"));
     upcall_end = upcall_end.now ();
   }
-
 };
 
 

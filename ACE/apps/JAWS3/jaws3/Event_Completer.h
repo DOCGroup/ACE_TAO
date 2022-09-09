@@ -35,7 +35,6 @@ public:
 
   virtual void default_complete (const JAWS_Event_Result &r, void *act = 0);
   // The defaul callback entry point when an event completes.
-
 };
 
 #endif /* JAWS_EVENT_COMPLETER_H */

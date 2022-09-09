@@ -69,7 +69,6 @@ private:
 
   /// The number of requests intercepted by this interceptor.
   CORBA::ULong request_count_;
-
 };
 
 #if defined(_MSC_VER)

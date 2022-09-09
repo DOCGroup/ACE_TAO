@@ -90,7 +90,6 @@ private:
 
   int j_;
   // The next item to be pointed to by iterator.
-
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

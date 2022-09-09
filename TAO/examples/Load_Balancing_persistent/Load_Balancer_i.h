@@ -163,7 +163,6 @@ private:
   CORBA::Short *flags_;
 
   ACE_Throughput_Stats throughput_;
-
 };
 
 class Object_Group_i
@@ -289,7 +288,6 @@ public:
   /// Returns a member object from this <Object_Group> in accordance with
   /// the "random" load balancing policy.
   char * resolve (void);
-
 };
 
 /**

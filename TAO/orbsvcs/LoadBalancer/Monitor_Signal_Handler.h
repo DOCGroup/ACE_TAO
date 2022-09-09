@@ -53,7 +53,6 @@ private:
 
   /// Reference to the location the LoadMonitor resides at.
   const PortableGroup::Location & location_;
-
 };
 
 

@@ -97,7 +97,6 @@ private:
   /// Use the Transient POAs for servant activation as opposed
   /// to persistent POAs.
   int use_transient_poas_;
-
 };
 
 

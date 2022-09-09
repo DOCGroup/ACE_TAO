@@ -139,7 +139,6 @@ private:
 
   /// Set receiving  QoS for this RAPI session.
   int receiving_qos (const ACE_QoS &ace_qos);
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

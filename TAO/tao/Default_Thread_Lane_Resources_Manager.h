@@ -72,7 +72,6 @@ private:
 protected:
   /// Default lane resources.
   TAO_Thread_Lane_Resources * const lane_resources_;
-
 };
 
 /**

@@ -42,7 +42,6 @@ public:
 private:
   /// The ORB
   CORBA::ORB_var orb_;
-
 };
 
 #if defined(_MSC_VER)

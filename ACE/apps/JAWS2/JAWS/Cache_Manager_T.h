@@ -140,7 +140,6 @@ private:
   Cache_Heap *heap_;
 
   ACE_SYNCH_RW_MUTEX lock_;
-
 };
 
 

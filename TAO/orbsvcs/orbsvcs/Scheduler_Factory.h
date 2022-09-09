@@ -271,7 +271,6 @@ private:
 
   /// Default rt_info enabled state.  (Boeing Extension)
   static RtecScheduler::RT_Info_Enabled_Type_t rt_info_enable_state_default_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

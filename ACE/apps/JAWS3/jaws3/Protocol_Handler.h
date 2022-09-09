@@ -24,7 +24,6 @@ protected:
                                            , void *data
                                            , void *act
                                            ) = 0;
-
 };
 
 class JAWS_Export JAWS_Protocol_Handler
@@ -72,7 +71,6 @@ private:
 
   ACE_Data_Block db_;
   ACE_Message_Block mb_;
-
 };
 
 

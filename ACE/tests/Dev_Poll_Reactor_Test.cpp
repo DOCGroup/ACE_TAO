@@ -61,7 +61,6 @@ public:
 private:
 
   unsigned int call_count_;
-
 };
 
 
@@ -82,7 +81,6 @@ public:
 private:
 
   unsigned int call_count_;
-
 };
 
 // ----------------------------------------------------
@@ -360,7 +358,6 @@ public:
 
     return result;
   }
-
 };
 
 // ----------------------------------------------------

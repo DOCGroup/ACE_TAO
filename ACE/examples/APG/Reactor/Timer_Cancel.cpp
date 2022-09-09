@@ -19,7 +19,6 @@ public:
                 ACE_OS::ctime(&epoch)));
     return 0;
   }
-
 };
 
 #if !defined (ACE_LACKS_UNIX_SIGNALS)

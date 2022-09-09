@@ -28,7 +28,6 @@ public:
   void method (void);
 
   PortableServer::POA_var poa_;
-
 };
 
 test_i::test_i (PortableServer::POA_ptr poa)
@@ -63,7 +62,6 @@ public:
   ACE_Auto_Event object_activated_;
 
   PortableServer::POA_var poa_;
-
 };
 
 
@@ -122,7 +120,6 @@ public:
   PortableServer::POA_var poa_;
 
   PortableServer::ObjectId_var id_;
-
 };
 
 Servant_Activator::Servant_Activator (PortableServer::POA_ptr poa)

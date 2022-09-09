@@ -592,7 +592,6 @@ public:
 
   /// Destructor
   virtual ~TAO_StreamEndPoint_A (void);
-
 };
 
 // For backward compatibility.

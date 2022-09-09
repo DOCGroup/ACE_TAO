@@ -393,7 +393,6 @@ private:
  mutable ACE_SDM_LOCK subscription_list_lock_;
      // (Lock type does not need to support recursive locking.)
 #endif /* ACE_SOCK_DGRAM_MCAST_DUMPABLE */
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -90,8 +90,6 @@ namespace TAO
                 );
 
   private:
-
-
     /// Perform pre-upcall operations.
     /**
      * Perform pre-upcall operations, including operation @c IN and

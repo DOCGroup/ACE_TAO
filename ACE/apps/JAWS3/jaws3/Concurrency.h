@@ -23,7 +23,6 @@ public:
   virtual int getq (JAWS_Protocol_Handler *&ph) = 0;
 
   int svc (void);
-
 };
 
 
@@ -46,7 +45,6 @@ public:
 protected:
 
   JAWS_Concurrency_Impl *impl_;
-
 };
 
 
@@ -64,7 +62,6 @@ public:
   {
     return ACE_Singleton<JAWS_Concurrency, ACE_SYNCH_MUTEX>::instance ();
   }
-
 };
 
 

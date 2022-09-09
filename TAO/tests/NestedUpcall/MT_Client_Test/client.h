@@ -77,7 +77,6 @@ private:
 
   /// number of loops
   unsigned long iterations_;
-
 };
 
 /**

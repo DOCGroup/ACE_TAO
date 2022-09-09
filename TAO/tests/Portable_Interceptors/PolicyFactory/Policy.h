@@ -55,7 +55,6 @@ private:
 
   /// Pseudo-reference to the ORB.
   const CORBA::ULong value_;
-
 };
 
 #endif  /* POLICY_H */

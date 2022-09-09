@@ -104,7 +104,6 @@ private:
 
   /// Locations list retrieved in last next_member() call.
   ACE_Vector <PortableGroup::Location> last_locations_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

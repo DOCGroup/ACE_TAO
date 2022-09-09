@@ -68,7 +68,6 @@ public:
                         , ACE_Message_Block *header = 0
                         , ACE_Message_Block *trailer = 0
                         ) = 0;
-
 };
 
 
@@ -132,7 +131,6 @@ public:
 private:
 
   JAWS_IO_Impl *impl_;
-
 };
 
 #endif /* JAWS_IO_H */

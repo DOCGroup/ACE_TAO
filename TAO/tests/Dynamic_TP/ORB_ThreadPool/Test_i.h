@@ -21,7 +21,6 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-
 };
 
 
@@ -43,7 +42,6 @@ private:
 
   TAO_SYNCH_MUTEX lock_;
   ACE_Unbounded_Set<ACE_hthread_t> threads_;
-
 };
 
 #include /**/ "ace/post.h"

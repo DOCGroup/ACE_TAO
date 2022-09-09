@@ -72,7 +72,6 @@ public:
   // The address to new_dgram is passed back as the data member of
   // the JAWS_Event_Result that is returned to the completer.
   // Use the specified local access point.
-
 };
 
 
@@ -131,7 +130,6 @@ public:
 private:
 
   JAWS_Datagram_Impl *impl_;
-
 };
 
 #endif /* JAWS_DATAGRAM_H */

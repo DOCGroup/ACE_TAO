@@ -198,7 +198,6 @@ protected:
   TAO_FlowSpec_Entry *entry_;
   TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
   TAO_AV_Core::Flow_Component flow_component_;
-
 };
 
 /**

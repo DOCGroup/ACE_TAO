@@ -120,7 +120,6 @@ private:
   RTCORBA::Current_var current_;
   RTCORBA::RTORB_var rt_orb_;
   CORBA::PolicyManager_var policy_manager_;
-
 };
 
 class Worker_Thread : public ACE_Task_Base
@@ -374,7 +373,6 @@ public:
   int svc (void);
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,

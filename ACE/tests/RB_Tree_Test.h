@@ -101,5 +101,4 @@ private:
 
   /// Order of indices in the key and item arrays.
   int *order_index_;
-
 };

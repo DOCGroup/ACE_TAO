@@ -32,7 +32,6 @@ public:
 protected:
 
   CONCURRENCY_IMPL *impl_;
-
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

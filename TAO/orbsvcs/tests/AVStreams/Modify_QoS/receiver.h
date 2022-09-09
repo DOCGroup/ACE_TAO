@@ -41,7 +41,6 @@ private:
 
   /// Related stream control.
   AVStreams::StreamCtrl_ptr streamctrl_;
-
 };
 
 // = AVStreams calls this class during connection setup.

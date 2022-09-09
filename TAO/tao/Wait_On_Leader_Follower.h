@@ -60,7 +60,6 @@ public:
 
    /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
   virtual bool can_process_upcalls () const;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

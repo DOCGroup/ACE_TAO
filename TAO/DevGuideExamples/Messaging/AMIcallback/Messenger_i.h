@@ -42,7 +42,6 @@ private:
   // Force an exception to be thrown to test client-side
   // exception handling
   CORBA::Boolean throw_exception_;
-
 };
 
 

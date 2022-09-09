@@ -29,7 +29,6 @@ private:
 
   CORBA::ORB_var corb_;
   CORBA::Boolean except_;
-
 };
 
 #include /**/ "ace/post.h"

@@ -43,7 +43,6 @@ private:
 
   int *c_;
   char *s_;
-
 };
 
 typedef JAWS_Cache_Manager<JAWS_Strdup_String,

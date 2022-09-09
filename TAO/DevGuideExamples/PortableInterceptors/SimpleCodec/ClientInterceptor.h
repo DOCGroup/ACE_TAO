@@ -33,7 +33,6 @@ class ClientInterceptor:
  private:
   const char *myname_;
   IOP::Codec_var codec;
-
 };
 
 #endif

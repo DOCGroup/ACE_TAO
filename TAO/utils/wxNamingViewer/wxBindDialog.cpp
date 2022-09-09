@@ -62,7 +62,6 @@ void create_dialog_components(wxDialog* dialog)
   topsizer->SetSizeHints( dialog);
 }
 
-
 };  // anonymous
 
 

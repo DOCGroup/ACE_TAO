@@ -7,7 +7,6 @@ class Filter_Localhost: public TAO_IORManip_IIOP_Filter
 public:
   virtual CORBA::Boolean profile_info_matches (
                          const TAO_IORManip_IIOP_Filter::Profile_Info& pinfo);
-
 };
 
 CORBA::Boolean

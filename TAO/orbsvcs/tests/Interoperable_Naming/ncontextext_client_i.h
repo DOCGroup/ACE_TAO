@@ -71,7 +71,6 @@ class NContextExt_Client_i
 
   /// Flag to check if '-v' option is set.
   CORBA::Boolean view_;
-
 };
 
 #endif /* NCONTEXTEXT_CLIENT_I_H */

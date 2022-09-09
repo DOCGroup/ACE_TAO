@@ -135,5 +135,4 @@ protected:
 
   /// Message block into which data is read from a file and then sent.
   ACE_Message_Block mb_;
-
 };

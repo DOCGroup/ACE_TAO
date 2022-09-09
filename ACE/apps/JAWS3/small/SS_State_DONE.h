@@ -22,7 +22,6 @@ public:
   {
     return ACE_Singleton<TeraSS_State_DONE, ACE_SYNCH_MUTEX>::instance ();
   }
-
 };
 
 #endif /* TERA_SS_STATE_DONE_H */

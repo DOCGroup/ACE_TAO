@@ -25,7 +25,6 @@ public:
   void change_weight (CORBA::Long new_weight);
 
   void print (void);
-
 };
 
 class node_init_impl : public Supports_Test::Node_init
@@ -67,7 +66,6 @@ class vt_graph_init_impl :
   virtual Supports_Test::vt_graph * create (void);
 
   virtual CORBA::ValueBase * create_for_unmarshal (void);
-
 };
 
 class test_impl :
@@ -99,7 +97,6 @@ class test_impl :
  private:
 
   CORBA::ORB_var orb_;
-
 };
 
 #endif /* TAO_SUPPORTS_TEST_IMPL_H */

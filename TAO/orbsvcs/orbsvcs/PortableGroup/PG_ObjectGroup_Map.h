@@ -64,7 +64,6 @@ public:
   /// Properties used when creating this object group, in addition to
   /// those set dynamically after the creation.
   PortableGroup::Properties properties;
-
 };
 
 /// ObjectId hash map typedef.

@@ -62,7 +62,6 @@ private:
 
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_;
   // The proxy that we are connected to.
-
 };
 
 #endif /* EVENT_CONSUMER_H */

@@ -46,7 +46,6 @@ protected:
 private:
 
   JAWS_Event_Completer *completer_;
-
 };
 
 #endif /* JAWS_ASYNCH_IO_HELPERS_H */

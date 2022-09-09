@@ -63,7 +63,6 @@ protected:
 private:
 
   Gateway::Object_Factory_ptr gateway_object_factory_;
-
 };
 
 #if defined(_MSC_VER)

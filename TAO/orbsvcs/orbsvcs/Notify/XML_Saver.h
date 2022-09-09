@@ -72,7 +72,6 @@ private:
 
   /// A string consisting of spaces that is our current indentation level.
   ACE_CString indent_;
-
 };
 
 } // namespace TAO_Notify
