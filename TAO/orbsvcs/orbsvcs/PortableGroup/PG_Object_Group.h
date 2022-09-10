@@ -363,7 +363,6 @@ namespace TAO
     PortableGroup::InitialNumberMembersValue initial_number_members_;
     PortableGroup::MinimumNumberMembersValue minimum_number_members_;
     PortableGroup::FactoryInfos group_specific_factories_;
-
   };
 } // namespace TAO
 

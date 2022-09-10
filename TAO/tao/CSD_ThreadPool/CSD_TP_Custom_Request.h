@@ -58,7 +58,6 @@ namespace TAO
     private:
       TP_Custom_Request_Operation_Handle op_;
     };
-
   }
 }
 

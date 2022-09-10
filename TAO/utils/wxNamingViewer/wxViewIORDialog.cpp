@@ -169,7 +169,6 @@ WxViewIORDialog::WxViewIORDialog(
 
   if (object != CORBA::Object::_nil()) {
     WxViewIORDialog::object = CORBA::Object::_duplicate( object);
-
   }
   CORBA::String_var ior = orb->object_to_string( object);
   WxViewIORDialog::ior = ior;
@@ -186,7 +185,6 @@ void WxViewIORDialog::decodeIOR()
     typeID = "";
     TransferDataToWindow();
     return;
-
   }
 
   // Get the stub
@@ -207,10 +205,8 @@ void WxViewIORDialog::decodeIOR()
           const_cast<TAO_Profile*>(profile)->to_string();
       profiles->AppendItem( rootItem, profileString);
       delete [] profileString;
-
     } catch (const CORBA::Exception& ex) {
       wxMessageBox( ex._info().c_str(), "CORBA::Exception");
-
     }
 
   }
@@ -224,7 +220,6 @@ void WxViewIORDialog::OnApply( wxCommandEvent& event)
   try {
     object = orb->string_to_object( ior);
     decodeIOR();
-
   } catch( CORBA::Exception& ex) {
     wxMessageBox( ex._info().c_str(), "CORBA::Exception");
   }
@@ -236,7 +231,6 @@ void WxViewIORDialog::onIORText( wxCommandEvent& event)
   // Enable the Apply button if the IOR has changed
   if (event.GetString() != ior) {
     applyButton->Enable( true);
-
   }
 }
 

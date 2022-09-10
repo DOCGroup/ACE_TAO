@@ -228,7 +228,6 @@ be_visitor_facet_ami_exs::init ()
   else
     this->sync_ = false;
 
-
 }
 int
 be_visitor_facet_ami_exs::gen_reply_handler_class ()
@@ -383,7 +382,6 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
                         ACE_TEXT ("::gen_facet_executor_class - ")
                         ACE_TEXT ("traverse_inheritance_graph() on ")
                         ACE_TEXT ("interface failed\n")));
-
       }
 
   ACE_CString scope_str (scope_name, nullptr, false);

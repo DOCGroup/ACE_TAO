@@ -226,7 +226,6 @@ TAO_OutputCDR::throw_skel_exception (int error_num )
 
     default :
       throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_YES);
-
     }
 }
 
@@ -345,7 +344,6 @@ TAO_InputCDR::throw_skel_exception (int error_num )
 
     default :
       throw ::CORBA::MARSHAL();
-
     }
 }
 

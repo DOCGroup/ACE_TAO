@@ -52,7 +52,6 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
           // Unless the notification goes thru the bind operation is
           // not complete.
           bind_result = -1;
-
         }
     }
 
@@ -87,7 +86,6 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
           // Unless the notification goes thru the rebind operation is
           // not complete.
           rebind_result = -1;
-
         }
 
     }
@@ -120,7 +118,6 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
             this->map_.unbind (key);
 
           trybind_result = -1;
-
         }
       else
         {
@@ -128,7 +125,6 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
           // is overwritten with the value from the map.
           if (trybind_result == 1)
             value = cache_value.first ();
-
         }
 
     }
@@ -155,7 +151,6 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
         find_result = -1;
       else
         find_result = 0;
-
     }
 
   return find_result;
@@ -200,7 +195,6 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 
       if (result == -1)
         unbind_result = -1;
-
     }
 
   return unbind_result;

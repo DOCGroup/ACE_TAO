@@ -80,7 +80,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           // Narrow it to a Basic object
           basic =
             Test::Basic::_narrow (tmp.in ());
-
         }
         catch (const CORBA::Exception& ex)
           {
@@ -104,7 +103,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("(%P|%t) - Client request handled ")
                       ACE_TEXT ("by object at <%C>\n"),
                       the_string.in ()));
-
         }
         catch (const CORBA::Exception& ex)
           {

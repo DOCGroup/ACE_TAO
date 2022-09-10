@@ -83,7 +83,6 @@ namespace TAO
       /// List of POA-specific OwnCredentials.
       SecurityLevel3::OwnCredentialsList creds_list_;
     };
-
   } // End SL3 namespace
 
 }  // End TAO namespace

@@ -422,7 +422,6 @@ CC_Client::init (int argc, ACE_TCHAR **argv)
 
       ACE_DEBUG ((LM_DEBUG,
                   "Factory received OK\n"));
-
     }
   catch (const CORBA::Exception& ex)
     {

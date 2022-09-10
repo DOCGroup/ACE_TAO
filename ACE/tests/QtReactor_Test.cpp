@@ -611,7 +611,6 @@ int HandlersRegister::scheduleTimers (const ACE_Time_Value &p_TestTime)
                           -1);
 
       DgramHandlers_[ i ] ->expectedTriggers (DgramsToSend);
-
     }
 
   return 0;

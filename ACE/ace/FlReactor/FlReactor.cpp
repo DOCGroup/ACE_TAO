@@ -86,7 +86,6 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
                                handle_set.wr_mask_,
                                handle_set.ex_mask_,
                                &zero);
-
     } while (nfound == -1 && this->handle_error () > 0);
 
   if (nfound > 0)

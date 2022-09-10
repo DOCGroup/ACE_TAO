@@ -949,7 +949,6 @@ u_char * asn1::build_unsigned_int64( u_char *data,
     high = (high << 8)
       | ((low & mask) >> (8 * (sizeof(long) - 1)));
     low <<= 8;
-
   }
   return data;
 }
@@ -1122,7 +1121,6 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
                        sizeof( SmiCNTR64));
       }
       break;
-
     } // end switch
 
 }

@@ -68,7 +68,6 @@ Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flows
       /// Store the related streamctrl.
       connection_manager->add_streamctrl (flowname.c_str (),
                                          this);
-
     }
   return 1;
 }
@@ -262,8 +261,6 @@ Receiver::shut_down (void)
       this->connection_manager_.unbind_receiver (this->sender_name_,
                                                  this->receiver_name_,
                                                  mmdevice_obj.in ());
-
-
     }
   catch (const CORBA::Exception& ex)
     {

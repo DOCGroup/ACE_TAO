@@ -151,7 +151,6 @@ TAO_Notify_Tests_ORB_Run_Worker::svc (void)
       ACE_DEBUG ((LM_ERROR, "Running ORB, timeout in %d sec\n", this->run_period_.sec ()));
 
       this->orb_->run ();
-
     }
   catch (const CORBA::Exception&)
     {

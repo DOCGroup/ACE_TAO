@@ -168,8 +168,6 @@ Consumer_Handler::via_naming_service ()
       // the <_narrow> method.
       this->server_ =
         Notifier::_narrow (notifier_obj.in ());
-
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -319,7 +317,6 @@ Consumer_Handler::run ()
 
       // Run the ORB.
       this->orb_->run ();
-
     }
   catch (const CORBA::Exception& ex)
     {

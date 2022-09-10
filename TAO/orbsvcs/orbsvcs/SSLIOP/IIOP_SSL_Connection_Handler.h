@@ -52,7 +52,6 @@ namespace TAO
 
     /// Destructor.
     ~IIOP_SSL_Connection_Handler (void);
-
   };
 
   // ****************************************************************
@@ -98,7 +97,6 @@ namespace TAO
     /// Flag that specifies whether or not setup of the SSLIOP::Current
     /// object completed for the current thread and invocation.
     bool setup_done_;
-
   };
 } // End TAO namespace.
 

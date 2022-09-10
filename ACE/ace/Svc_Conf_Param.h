@@ -98,7 +98,6 @@ public:
 
     /// String containing directive that will be scanned and parsed.
     const ACE_TCHAR *directive;
-
   } source;
 
   /// Discriminant use to determine which union member to use.

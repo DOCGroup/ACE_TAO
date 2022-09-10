@@ -114,7 +114,6 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
 
     default:
       throw IOP::CodecFactory::UnknownEncoding ();
-
     }
 
   return codec;

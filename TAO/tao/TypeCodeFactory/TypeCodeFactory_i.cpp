@@ -52,7 +52,6 @@ namespace TCF
                                           CORBA::TypeCode_var,
                                           field_array_type>
       recursive_typecode_type;
-
   }  // End namespace Struct
 
   namespace Union

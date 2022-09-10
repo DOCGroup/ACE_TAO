@@ -1522,7 +1522,6 @@ do_persistence_objectgroup_test (
             out << num_locations << std::endl;
             out << loc[0].id.in () << std::endl;
             out << member_str.in() << std::endl;
-
           }
           catch (const PortableGroup::ObjectGroupNotFound&)
             {
@@ -1740,7 +1739,6 @@ do_equivalence_name_test (
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("INFO: ns2ref profile count: %d\n"),
                 ns2_count));
-
   }
   catch (const CORBA::Exception& ex)
   {

@@ -58,7 +58,6 @@ namespace TAO
       /// Default Constructor.
       TP_Queue_Visitor();
     };
-
   }
 }
 

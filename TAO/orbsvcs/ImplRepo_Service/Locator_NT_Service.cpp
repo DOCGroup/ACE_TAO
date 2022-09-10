@@ -85,7 +85,6 @@ Locator_NT_Service::svc (void)
           status = server.fini ();
 
           report_status (SERVICE_STOPPED);
-
         }
         if (status != -1)
             return 0;

@@ -376,7 +376,6 @@ Clerk_i::register_clerk (void)
 
       this->naming_client_->rebind (clerk_name,
                                      this->time_service_clerk_.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -438,7 +437,6 @@ Clerk_i::init (int argc,
           // first IOR.
           if (this->get_first_IOR () != 0)
             return -1;
-
         }
 
       // Create an instance of the Clerk.

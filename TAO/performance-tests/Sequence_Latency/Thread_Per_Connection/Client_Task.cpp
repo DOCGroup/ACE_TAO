@@ -91,7 +91,6 @@ Client_Task::test_octet_seq (void)
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->latency_.sample (now - start);
-
     }
 }
 
@@ -109,7 +108,6 @@ Client_Task::test_long_seq (void)
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->latency_.sample (now - start);
-
     }
 }
 
@@ -128,7 +126,6 @@ Client_Task::test_short_seq (void)
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->latency_.sample (now - start);
-
     }
 }
 
@@ -146,7 +143,6 @@ Client_Task::test_char_seq (void)
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->latency_.sample (now - start);
-
     }
 }
 
@@ -164,7 +160,6 @@ Client_Task::test_longlong_seq (void)
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->latency_.sample (now - start);
-
     }
 }
 
@@ -182,6 +177,5 @@ Client_Task::test_double_seq (void)
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->latency_.sample (now - start);
-
     }
 }

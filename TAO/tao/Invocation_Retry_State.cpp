@@ -69,7 +69,6 @@ namespace
                     command_line_params,
                     client_factory_params,
                     result);
-
   }
 }
 

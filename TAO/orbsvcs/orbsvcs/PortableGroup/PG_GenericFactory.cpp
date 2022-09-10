@@ -133,7 +133,6 @@ TAO_PG_GenericFactory::create_object (
 
           if (this->factory_map_.bind (fcid, factory_set) != 0)
             throw PortableGroup::ObjectNotCreated ();
-
         }
 
       // Allocate a new FactoryCreationId for use as an "out" parameter.

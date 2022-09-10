@@ -571,7 +571,6 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink_i (void)
             other_tail = other_tail->next ();
 
           other_tail->writer ()->next (this->linked_us_->stream_tail_->writer ());
-
         }
 
       // Make sure the other side is also aware that it's been unlinked!

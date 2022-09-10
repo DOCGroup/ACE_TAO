@@ -150,7 +150,6 @@ Thread_Pool::svc (void)
                       pload.length (10);
                       ACE_OS::memset (pload.get_buffer(), pload.length(), 0);
                       echo->echo_payload (pload);
-
                     }
                   else
 #endif /*if 0*/

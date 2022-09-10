@@ -1629,8 +1629,6 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
                                 this->opts_->ping_external (),
                                 sip->server.in(),
                                 sip->pid);
-
-
     }
   catch (const CORBA::Exception& )
     {

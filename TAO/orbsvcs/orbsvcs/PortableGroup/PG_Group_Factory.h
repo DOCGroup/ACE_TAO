@@ -222,7 +222,6 @@ namespace TAO
     // Lazily read groups from store
     bool groups_read_;
     Storable_Factory * storable_factory_;
-
   };
 } // namespace TAO
 

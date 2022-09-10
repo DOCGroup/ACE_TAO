@@ -212,7 +212,6 @@ rsvp_callback (rapi_sid_t /* sid */,
       ACELIB_DEBUG ((LM_DEBUG,
                   "Unknown RSVP Event Received\n"));
       break;
-
     }
 
   // Set the updated ACE_QoS for the RSVP callback argument(QoS session).

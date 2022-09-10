@@ -107,7 +107,6 @@ LB_server::start_orb_and_poa (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get Load Manager Reference\n"),
                           1);
-
     }
   catch (const CORBA::Exception& ex)
     {

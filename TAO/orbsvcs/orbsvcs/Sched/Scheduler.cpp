@@ -228,13 +228,11 @@ void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
       (void) ACE_OS::fprintf (file, "%s, %d\n",
                               (const char*)tmp.entry_point,
                               info.dependencies[i].number_of_calls);
-
     }
 
   (void) ACE_OS::fprintf (file, "# end dependencies\n%d\n%d\n\n",
                           info.priority,
                           info.preemption_subpriority);
-
 
 }
 

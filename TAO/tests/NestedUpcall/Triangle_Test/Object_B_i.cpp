@@ -42,7 +42,6 @@ Object_B_i::foo (Object_A_ptr theObject_A_ptr)
       ACE_Time_Value pause(0, usecs);
 
       ACE_OS::sleep(pause);
-
     }
   catch (const CORBA::Exception& ex)
     {

@@ -140,7 +140,6 @@ namespace TAO
       //@}
 
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

@@ -256,7 +256,6 @@ Sender::pace_data (void)
 
           // Reset the message block.
           this->mb_.reset ();
-
         } // end while
     }
   catch (const CORBA::Exception& ex)
@@ -305,7 +304,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            "client::init failed\n"), -1);
 
       SENDER::instance ()->pace_data ();
-
     }
   catch (const CORBA::Exception& ex)
     {

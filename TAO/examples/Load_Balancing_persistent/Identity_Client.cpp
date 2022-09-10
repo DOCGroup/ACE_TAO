@@ -155,7 +155,6 @@ Identity_Client::run (void)
       // Record statistics.
       throughput.sample (now - throughput_base,
                          now - latency_base);
-
     }
 
   ACE_OS::printf ("*=*=*=*=Aggregated result *=*=*=*=*=\n");
@@ -208,7 +207,6 @@ Identity_Client::run (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Invocation  %s\n",
                   identity.in ()));
-
     }
 
   return 0;

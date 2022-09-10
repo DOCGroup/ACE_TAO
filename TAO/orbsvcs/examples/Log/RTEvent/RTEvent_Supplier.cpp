@@ -210,8 +210,6 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
      // Destroy the POA
      poa->destroy (1, 0);
-
-
     }
   catch (const CORBA::Exception& ex)
     {

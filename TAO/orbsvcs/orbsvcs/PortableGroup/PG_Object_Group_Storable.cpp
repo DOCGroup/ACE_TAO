@@ -149,7 +149,6 @@ TAO::Object_Group_File_Guard::~Object_Group_File_Guard ()
       // Notify if persistent store was updated.
       if (object_group_.write_occurred_)
         object_group_.state_written ();
-
     }
   catch (const TAO::Storable_Exception &se)
     {

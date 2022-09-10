@@ -58,7 +58,6 @@ namespace TAO
       /// Cancel the request.
       virtual void cancel_i();
     };
-
   }
 }
 

@@ -77,7 +77,6 @@ namespace TAO
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
       virtual CORBA::TypeCode_ptr get_compact_typecode_i () const;
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

@@ -163,7 +163,6 @@ namespace TAO
       ::CORBA::Boolean access_allowed_i (OBJECT_KEY& key,
                                          const char *operation_name,
                                          CORBA::Boolean collocated = false);
-
     };
 
     /**
@@ -215,7 +214,6 @@ namespace TAO
       // AccessDecision instance
       SecurityLevel2::AccessDecision_var access_decision_;
     };
-
   } // End SL3 namespace
 }  // End TAO namespace
 

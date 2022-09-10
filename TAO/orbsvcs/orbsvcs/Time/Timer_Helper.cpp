@@ -73,7 +73,6 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
           // Set the lowest time to the smallest time seen so far.
           if (curr_server_time < lowest_time)
             lowest_time = curr_server_time;
-
         }
 
       if (TAO_debug_level > 0)

@@ -100,7 +100,6 @@ namespace ACE
               ACE_CString command_;
               ACE_CString args_;
           };
-
       }
   }
 

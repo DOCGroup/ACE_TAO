@@ -232,7 +232,6 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
                   CDR_Test<T, H>::do_test(tdelta, niter, 1,
                                           srcbuf, dstbuf,
                                           sk, dk);
-
                 }
             }
         }

@@ -38,7 +38,6 @@ Zlib_CompressorFactory::get_compressor (
             }
 
             compressor = (*it).second.in();
-
         } catch (...) {
             TAOLIB_ERROR_RETURN((LM_ERROR,
                 ACE_TEXT("(%P | %t) ERROR: ZlibCompressor - Unable to create Zlib Compressor at level [%d].\n"),

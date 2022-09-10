@@ -233,7 +233,6 @@ EC_Supplier_Task::svc (void)
               // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
 
               this->supplier_->send_event (event);
-
             }
           catch (const CORBA::SystemException& sys_ex)
             {

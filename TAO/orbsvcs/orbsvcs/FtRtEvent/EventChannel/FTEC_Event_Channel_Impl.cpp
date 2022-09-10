@@ -411,7 +411,6 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s)
     }
 
     (update_table[op->param._d()])(this, *op);
-
   }
 }
 

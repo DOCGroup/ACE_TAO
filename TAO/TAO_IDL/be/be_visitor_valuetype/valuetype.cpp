@@ -65,7 +65,6 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
                              "(%N:%l) be_visitor_scope::visit_scope - "
                              "codegen for scope failed\n"),
                             -1);
-
         }
     }
 

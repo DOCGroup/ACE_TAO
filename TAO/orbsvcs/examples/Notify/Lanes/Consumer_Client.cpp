@@ -180,7 +180,6 @@ TAO_Notify_Lanes_Consumer_Client::svc (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Supplier error "));
-
     }
 
   return 0;

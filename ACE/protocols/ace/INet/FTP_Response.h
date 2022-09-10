@@ -116,7 +116,6 @@ namespace ACE
               int status_;
               ACE_Array<ACE_CString> response_;
           };
-
       }
   }
 

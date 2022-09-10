@@ -153,7 +153,6 @@ void big_time_test (CORBA::ULong num_list_loops,
         str_len = list.strs.first_str.length();
         list.strs.first_str.length(str_len + 1);
         list.strs.first_str[str_len] = use_long_str ? long_str : short_str;
-
       } // end of str loop
     } // end of seq loop
 

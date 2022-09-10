@@ -1129,7 +1129,6 @@ TAO_Default_Resource_Factory::create_fragmentation_strategy (
           ACE_NEW_RETURN (strategy,
                           TAO_Null_Fragmentation_Strategy,
                           strategy);
-
         }
       else
         {

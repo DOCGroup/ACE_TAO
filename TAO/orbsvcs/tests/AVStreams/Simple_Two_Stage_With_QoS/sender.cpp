@@ -464,7 +464,6 @@ Sender::pace_data (void)
 
       // Shut the orb down.
       TAO_AV_CORE::instance ()->orb ()->shutdown (0);
-
     }
   catch (const CORBA::Exception& ex)
     {

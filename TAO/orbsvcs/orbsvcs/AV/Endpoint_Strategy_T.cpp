@@ -149,7 +149,6 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
 
      this->vdev_->define_property ("Related_MediaCtrl",
                                    anyval);
-
     }
   catch (const CORBA::Exception& ex)
     {

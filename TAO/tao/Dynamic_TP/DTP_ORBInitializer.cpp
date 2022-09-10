@@ -120,7 +120,6 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
       dtp_tlrm.tp_manager().create_threadpool (def);
 
       tao_info->orb_core ()->leader_follower ().set_avoid_client_leader ();
-
     }
 
 

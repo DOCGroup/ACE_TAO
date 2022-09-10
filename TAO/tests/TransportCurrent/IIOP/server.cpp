@@ -193,7 +193,6 @@ server_main (int argc,
       server->shutdown ();
 
       orb->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {

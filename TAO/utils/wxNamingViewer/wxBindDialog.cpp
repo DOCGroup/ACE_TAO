@@ -100,7 +100,6 @@ WxBindDialog::WxBindDialog(
 #endif  // defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
   if (isContext) {
     SetTitle( "Bind Context");
-
   } else {
     SetTitle( "Bind Object");
   }
@@ -145,11 +144,9 @@ bool WxBindDialog::TransferDataFromWindow()
   name[0].kind = CORBA::string_dup( kind);
   try {
     object = orb->string_to_object( ior);
-
   } catch(CORBA::Exception& ex) {
     wxMessageBox( ex._rep_id(), "Invalid IOR");
     object = CORBA::Object::_nil();
-
   }
   return true;
 }

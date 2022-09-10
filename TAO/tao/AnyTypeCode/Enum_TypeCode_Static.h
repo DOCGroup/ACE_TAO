@@ -112,9 +112,7 @@ namespace TAO
       /// Array of @c TAO::TypeCode enumerators representing
       /// enumerators in the OMG IDL defined @c enum.
       char const * const * const enumerators_;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

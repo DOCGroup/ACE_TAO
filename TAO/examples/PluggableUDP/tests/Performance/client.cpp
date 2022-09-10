@@ -133,7 +133,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // the one calling orb->shutdown () triggering the end of the ORB
       // event loop.
       delete client;
-
     }
   catch (const CORBA::Exception& ex)
     {

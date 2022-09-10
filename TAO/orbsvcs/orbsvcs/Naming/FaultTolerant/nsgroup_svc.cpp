@@ -250,7 +250,6 @@ NS_group_svc::group_bind (const ACE_TCHAR* group_name,
       CosNaming::Name_var name = this->name_service_->to_name ( str.in() );
 
       this->name_service_->rebind (name.in(), group_var.in());
-
     }
   catch (const CosNaming::NamingContextExt::InvalidName& )
     {
@@ -614,7 +613,6 @@ NS_group_svc::member_add (const ACE_TCHAR* group_name,
       group_var = this->naming_manager_->add_member (group_var.in(),
                                                      location_name,
                                                      ior_var.in());
-
     }
   catch (const PortableGroup::ObjectGroupNotFound&)
     {

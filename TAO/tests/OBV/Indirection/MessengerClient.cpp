@@ -86,7 +86,6 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
     }
 
     orb->destroy();
-
   } catch(const CORBA::Exception& e) {
     std::cerr << e << std::endl;
     return 1;

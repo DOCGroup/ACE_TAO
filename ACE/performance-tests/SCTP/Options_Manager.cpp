@@ -501,7 +501,6 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
     ACE_OS::fprintf (out, "   -h   none           help\n");
 
     ACE_OS::fprintf (out, "\n");
-
   } else if (!ACE_OS::strcmp(ACE_TEXT ("server-opts"), opts_set)){
     ACE_OS::fprintf (out, "  Flag  Args           Option-Name                 Default\n"
                           "   -n   none           test-enable-nagle           NO NAGLING\n");
@@ -525,7 +524,6 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
     ACE_OS::fprintf (out, "   -h   none           help\n");
 
     ACE_OS::fprintf (out, "\n");
-
   } else {
     ACE_OS::fprintf (out, "Invalid options set specified.\n");
   }

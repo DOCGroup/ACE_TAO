@@ -253,8 +253,6 @@ namespace ACE
               ACE_SYNCH_CONDITION condition_;
               map_type cache_map_;
           };
-
-
       }
   }
 

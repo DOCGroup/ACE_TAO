@@ -186,7 +186,6 @@ DualEC_Supplier::init ()
 
     this->naming_context_ =
       CosNaming::NamingContext::_narrow (namingObj_var.in ());
-
   }
   catch (const CORBA::Exception& ex)
   {
@@ -349,10 +348,8 @@ DualEC_Supplier::run_nav_thread (void *arg)
 
         if (nav_iter.done ())
           nav_iter.first ();
-
       }
       while (++total_sent < sup->total_messages_);
-
     }
   catch (const CORBA::Exception&)
     {
@@ -418,10 +415,8 @@ DualEC_Supplier::run_weap_thread (void *arg)
 
         if (weap_iter.done ())
           weap_iter.first ();
-
       }
       while (++total_sent < sup->total_messages_);
-
     }
   catch (const CORBA::Exception&)
     {
@@ -547,8 +542,6 @@ DualEC_Supplier::create_schedulers (void)
                  this->rt_info_dummy_lo_.quantum,
                  this->rt_info_dummy_lo_.threads,
                  static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_lo_.info_type));
-
-
         }
     }
   catch (const CORBA::Exception& ex)
@@ -600,7 +593,6 @@ DualEC_Supplier::create_event_channels (void)
 
       naming_context_->bind (this->channel_lo_name_,
                                      this->ec_lo_.in ());
-
   }
   catch (const CORBA::Exception& ex)
   {

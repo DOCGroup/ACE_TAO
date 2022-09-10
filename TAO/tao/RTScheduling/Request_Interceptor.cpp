@@ -66,7 +66,6 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
               TAOLIB_DEBUG ((LM_DEBUG,
                           "No Scheduling Segment Context\n"));
               throw ::CORBA::INTERNAL ();
-
             }
 
           // @@ Store implicit_sched_param in a var
@@ -90,7 +89,6 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
           // Install new current in the ORB.
           //current->implementation (new_current);
           tss->rtscheduler_current_impl_ = new_current;
-
         }
 
       // Scheduler populates the service context with
@@ -407,7 +405,6 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 
       // Reset the previous current pointer.
       tss->rtscheduler_previous_current_impl_ = 0;
-
     }
   else TAOLIB_DEBUG ((LM_DEBUG,
                    "Send Reply Current is 0\n"));

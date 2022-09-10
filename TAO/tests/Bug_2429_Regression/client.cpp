@@ -37,7 +37,6 @@ class Reply_Handler
       ACE_DEBUG ((LM_DEBUG,
                   "client: parentMethod reply %d @ %T\n",
                   ++parentMethod_count));
-
     }
 
    virtual void

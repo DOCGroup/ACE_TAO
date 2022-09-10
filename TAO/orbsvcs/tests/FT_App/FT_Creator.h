@@ -103,8 +103,6 @@ namespace FTAPP
      * prefix for names
      */
     ACE_CString prefix_;
-
-
   };
 } // namespace TAO
 

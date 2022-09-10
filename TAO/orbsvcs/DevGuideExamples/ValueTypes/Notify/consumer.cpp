@@ -199,7 +199,6 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
     orb->destroy();
 
     return 0;
-
   } catch(const CORBA::Exception& e) {
     std::cerr << "Consumer: main() exception: " << e << std::endl;
   } catch(const std::invalid_argument& e) {

@@ -375,7 +375,6 @@ Client::pace_data (void)
 
           // Reset the mb.
           this->mb.reset ();
-
         } // end while
 
       // Since the file is read stop the stream.
@@ -384,7 +383,6 @@ Client::pace_data (void)
 
       // Shut the orb down.
       TAO_AV_CORE::instance ()->orb ()->shutdown (0);
-
     }
   catch (const CORBA::Exception& ex)
     {

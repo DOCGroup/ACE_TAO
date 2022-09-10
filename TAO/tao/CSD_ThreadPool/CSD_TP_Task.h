@@ -148,7 +148,6 @@ namespace TAO
 
       enum { MAX_THREADPOOL_TASK_WORKER_THREADS = 50 };
     };
-
   }
 }
 

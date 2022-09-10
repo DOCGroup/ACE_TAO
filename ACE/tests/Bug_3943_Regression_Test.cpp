@@ -243,7 +243,6 @@ namespace {
     ssize_t send (char send_char, const ACE_TCHAR * const send_desc);
 
     const ACE_Time_Value DEFAULT_TIME_VALUE;
-
   };
 } // namespace ""
 
@@ -973,7 +972,6 @@ client (void *arg)
     {
       // Send the data to the server.
       svc_handler->send_data ();
-
     }
   return 0;
 }

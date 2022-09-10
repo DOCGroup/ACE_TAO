@@ -116,7 +116,6 @@ namespace ACE
 
               void set_interceptor (StreamBuffer::interceptor_type& interceptor);
           };
-
       }
   }
 

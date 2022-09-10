@@ -1077,7 +1077,6 @@ namespace ACE_RMCast
         os << sn;
         os << addr;
         os << port;
-
       }
     }
 

@@ -155,12 +155,10 @@ void WxNamingViewerFrame::onSelectNS( wxCommandEvent& WXUNUSED( event))
         server = selectNS->getServerName();
         serverText->SetValue( server);
         resolve();
-
       } catch( CORBA::Exception const & ex) {
         wxMessageBox(
             ex._info().c_str(),
             "CORBA::Exception");
-
       }
       break;
 
@@ -169,7 +167,6 @@ void WxNamingViewerFrame::onSelectNS( wxCommandEvent& WXUNUSED( event))
       setDefaultNS();
       resolve();
       break;
-
   }
 }
 

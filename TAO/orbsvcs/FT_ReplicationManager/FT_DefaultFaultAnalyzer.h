@@ -72,7 +72,6 @@ namespace TAO
     FT_DefaultFaultAnalyzer (const FT_DefaultFaultAnalyzer & rhs);
     /// Assignment operator.
     FT_DefaultFaultAnalyzer & operator = (const FT_DefaultFaultAnalyzer & rhs);
-
   };
 } // namespace TAO
 

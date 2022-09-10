@@ -118,7 +118,6 @@ namespace TAO
      * This method returns an exception when there is an error.
      */
     Invocation_Status check_reply_status (TAO_Synch_Reply_Dispatcher &rd);
-
   };
 
   /**

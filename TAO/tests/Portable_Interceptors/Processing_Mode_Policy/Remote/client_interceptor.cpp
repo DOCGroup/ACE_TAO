@@ -106,7 +106,6 @@ Echo_Client_Request_Interceptor::receive_reply (
       CORBA::ULong i = 0;  // index -- explicitly used to avoid
                            // overloaded operator ambiguity.
       paramlist[i].argument >>= param;
-
     }
   else if (ACE_OS::strcmp (op.in (), "calculate") == 0)
     {

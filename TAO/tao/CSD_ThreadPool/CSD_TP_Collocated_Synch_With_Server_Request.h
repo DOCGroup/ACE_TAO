@@ -87,7 +87,6 @@ namespace TAO
       /// wait() method.
       TP_Synch_Helper synch_helper_;
     };
-
   }
 }
 

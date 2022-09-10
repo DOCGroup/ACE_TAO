@@ -29,7 +29,6 @@ namespace ACE
               Request ();
               virtual ~Request ();
           };
-
       }
   }
 

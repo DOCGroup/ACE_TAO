@@ -928,7 +928,6 @@ int advance_addr (ACE_INET_Addr &addr)
                              ACE_TEXT ("multicast group address past %s\n"),
                              addr.get_host_addr ()),
                             -1);
-
         }
     }
 #endif /* ACE_HAS_IPV6 */

@@ -142,7 +142,6 @@ MIF_Task::perform_task (void)
               current_->update_scheduling_segment (name,
                                                    sched_param.in (),
                                                    sched_param.in ());
-
             }
 
         }

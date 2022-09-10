@@ -335,7 +335,6 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
                       ACE_TEXT ("::gen_facet_executor_class - ")
                       ACE_TEXT ("traverse_inheritance_graph() on ")
                       ACE_TEXT ("interface failed\n")));
-
        }
    }
  else

@@ -1136,7 +1136,6 @@ protected:
 
   /// I/O handle used for writing.
   ACE_HANDLE handle_;
-
   };
 
 /**

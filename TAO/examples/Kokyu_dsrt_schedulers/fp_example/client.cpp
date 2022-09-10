@@ -191,7 +191,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           current  =
             RTScheduling::Current::_narrow (object.in ());
-
         }
 
       Worker worker1 (orb.in (),

@@ -125,7 +125,6 @@ namespace TAO
                    CORBA::TypeCode_ptr const *> const * const fields_;
       //@}
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

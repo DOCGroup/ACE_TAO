@@ -115,7 +115,6 @@ IOR_corbaname_Client_i::init (int argc, ACE_TCHAR **argv)
                            "%s: Address of naming context not specified\n",
                            this->argv_[0]),
                            -1);
-
     }
   catch (const CORBA::Exception& ex)
     {

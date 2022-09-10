@@ -85,7 +85,6 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("send_n")),
                        0);
-
   } while (--numIterations);
 
   // close and destroy the stream
@@ -321,7 +320,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
     else if (result == 0){
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) select timed out\n")));
-
     }
     else { // case where a file descriptor was actually set
       if (!(temp.is_set(acceptor_socket.get_handle()))){
@@ -340,7 +338,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
         else{
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) spawning server\n")));
-
         }
         // Run the server.
         run_server (new_stream.get_handle ());

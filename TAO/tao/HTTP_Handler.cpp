@@ -133,7 +133,6 @@ TAO_HTTP_Reader::receive_reply ()
       // Determine number of data bytes read. This is equal to the
       // total bytes read minus number of header bytes.
       bytes_read = num_recvd - (buf_ptr - buf);
-
     }
   else
     {
@@ -182,7 +181,6 @@ TAO_HTTP_Reader::receive_reply ()
 
       // Increment bytes_read
       bytes_read += num_recvd;
-
     }
   else
     {

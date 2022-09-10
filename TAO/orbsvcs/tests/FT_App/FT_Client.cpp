@@ -295,7 +295,6 @@ int FTClientMain::pass (
           }
           echo = 0;
           break;
-
         }
         case '>':
         {

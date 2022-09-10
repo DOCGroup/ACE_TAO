@@ -39,7 +39,6 @@ namespace ACE
 
               virtual const Response& response () const = 0;
           };
-
       }
   }
 

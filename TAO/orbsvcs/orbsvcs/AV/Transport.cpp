@@ -292,7 +292,6 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                               this->acceptors_.insert (acceptor);
 
                               entry->protocol_object ()->control_object (entry->control_protocol_object ());
-
                              }
                            else
                              ORBSVCS_ERROR_RETURN ((LM_ERROR,

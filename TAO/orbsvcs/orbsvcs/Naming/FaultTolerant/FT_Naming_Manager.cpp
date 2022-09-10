@@ -461,7 +461,6 @@ TAO_FT_Naming_Manager::add_member (
     }
 
     result = group->reference ();
-
   }
   else
   {

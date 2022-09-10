@@ -657,7 +657,6 @@ TAO::FT_ReplicationManager::add_member (
       member);
 
     result = group->reference ();
-
   }
   else
   {

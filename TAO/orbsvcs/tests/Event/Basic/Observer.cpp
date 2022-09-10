@@ -273,7 +273,6 @@ EC_Observer::execute_test (void)
         rmt_ec->append_observer (obs.in ());
 
       this->gwys_[i].observer_handle (h);
-
     }
 
   if (this->allocate_tasks () == -1)

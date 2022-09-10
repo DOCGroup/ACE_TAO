@@ -194,7 +194,6 @@ void Receiver::open (ACE_HANDLE handle,
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "ACE_Asynch_Write_Stream::open"));
-
     }
   else if (this->rs_.open (*this, this->handle_) == -1)
     {
@@ -699,7 +698,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       // Simplify , initial read with  zero size
       Rc = acceptor.open (ACE_INET_Addr (port),0,1);
-
     }
   else
     {

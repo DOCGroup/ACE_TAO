@@ -1971,7 +1971,6 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
                                             collocated,
                                             servant),
                         CORBA::INTERNAL ());
-
     }
   else
     {

@@ -726,7 +726,6 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
       ACE_OS::snprintf (buf, bufsize,
                        "\t Priority: %d\n", server_priority);
       buffer_ += buf;
-
     } else if (policies[iter].ptype == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE) {
       indent ();
       ACE_OS::snprintf (buf, bufsize,

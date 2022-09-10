@@ -81,7 +81,6 @@ public:
           ACE_hrtime_t elapsed = ACE_OS::gethrtime () - start;
 
           this->sample_history.sample (elapsed);
-
         } catch (const CORBA::Exception&) {
         }
       }
@@ -134,7 +133,6 @@ public:
           CORBA::ULongLong dummy = 0;
           (void) this->roundtrip_->test_method (dummy,
                                                 this->workload_);
-
         } catch (const CORBA::Exception&) {
         }
       }

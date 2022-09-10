@@ -214,7 +214,6 @@ Identity_Server::create_objects (size_t number_of_objects,
 
       // Bind the servant in the random <Object_Group>.
       group->bind (member);
-
     }
 }
 

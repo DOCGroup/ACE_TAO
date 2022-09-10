@@ -93,7 +93,6 @@ TAO_DTP_POA_Strategy::poa_activated_event_i (TAO_ORB_Core& orb_core)
                           ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy - ")
                           ACE_TEXT ("warning: config not found...using ")
                           ACE_TEXT ("defaults!\n")));
-
             }
           this->set_dtp_config (config_entry);
           //this->dtp_task_.set_init_pool_threads(config_entry.init_threads_);

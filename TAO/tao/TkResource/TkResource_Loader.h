@@ -46,7 +46,6 @@ namespace TAO
     TkResource_Loader (void);
 
     virtual ~TkResource_Loader (void);
-
   };
 }
 

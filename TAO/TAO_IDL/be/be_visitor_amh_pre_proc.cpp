@@ -488,7 +488,6 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
                              ACE_TEXT ("add_normal_reply - ")
                              ACE_TEXT ("bad node in this scope\n")),
                             -1);
-
         }
 
       //be_decl *arg = dynamic_cast<be_decl*> (d);

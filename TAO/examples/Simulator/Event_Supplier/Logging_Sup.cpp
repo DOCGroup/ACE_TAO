@@ -502,7 +502,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // when done, we clean up
       delete event_Supplier_ptr;
-
     }
   catch (const CORBA::Exception& ex)
     {

@@ -252,7 +252,6 @@ URL_Validation_Visitor::URL_Validation_Visitor (void)
                 "%p %s\n"
                 "strategy connector creation failed"));
 
-
 }
 
 URL_Validation_Visitor::~URL_Validation_Visitor (void)
@@ -408,7 +407,6 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
                            "%p\n",
                            "body execute"),
                           -1);
-
     }
   return 0;
 }
@@ -488,7 +486,6 @@ URL_Download_Visitor::make_visitation_strategy_factory (URL &url)
       int retval = url.send_request ();
       if (retval != -1)
         break;
-
     }
   // @@ Here's where we could check to see if the <url> was HTTP or
   // FTP, etc.  But for now we'll just assume that everything is an

@@ -228,7 +228,6 @@ Server_i::init (int argc,
 
       // Register the server object with the Naming Service.
       this->register_server ();
-
     }
   catch (const CORBA::Exception& ex)
     {

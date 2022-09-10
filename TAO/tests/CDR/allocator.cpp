@@ -191,7 +191,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (!quiet)
             ACE_OS::printf ("AVE: %d %f\n",
                             i, average);
-
         }
     }
   catch (const CORBA::Exception& ex)

@@ -104,9 +104,7 @@ namespace TAO
        *       @c TypeCode::Alias.
        */
       TypeCodeType const content_type_;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

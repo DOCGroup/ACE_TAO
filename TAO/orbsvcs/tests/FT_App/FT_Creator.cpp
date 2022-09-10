@@ -225,7 +225,6 @@ int FTAPP::FT_Creator::run (void)
     }
 
     iogr_seq_ += 1;
-
   }
 
   typeCount = this->unregister_roles_.size();

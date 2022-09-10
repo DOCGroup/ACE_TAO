@@ -89,7 +89,6 @@ namespace TAO
         // The ORB's TSS slot id for the Transport ptr
         size_t tss_slot_id_;
       };
-
   }
 
 }

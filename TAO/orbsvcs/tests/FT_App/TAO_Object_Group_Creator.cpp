@@ -296,7 +296,6 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
 
       //@@ this is a bit of a hack
       creation_id >>= group_id;
-
     }
 
     const PortableGroup::Location * first_location = 0;

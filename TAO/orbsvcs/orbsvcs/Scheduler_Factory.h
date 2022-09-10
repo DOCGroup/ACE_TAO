@@ -82,7 +82,6 @@ public:
     RtecScheduler::Preemption_Priority_t preemption_priority;
     CORBA::Long info_type;
     RtecScheduler::RT_Info_Enabled_Type_t enabled;
-
   };
 
 

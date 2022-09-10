@@ -73,7 +73,6 @@ namespace ACE
       virtual ssize_t recv_data_trailer(Channel *);
     private:
       int make_request_header (Channel *, const char *, char *, size_t );
-
     };
   }
 }

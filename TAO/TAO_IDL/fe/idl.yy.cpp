@@ -2766,7 +2766,6 @@ static int yy_get_next_buffer (void)
 
             YY_FATAL_ERROR(
 "input buffer overflow, can't enlarge buffer because scanner uses REJECT" );
-
             }
 
         if ( num_to_read > YY_READ_BUF_SIZE )

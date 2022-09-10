@@ -80,7 +80,6 @@ TAO_AV_UDP_QoS_Session_Helper::set_qos (ACE_Flow_Spec &ace_flow_spec,
         if (TAO_debug_level > 0)
           ORBSVCS_DEBUG ((LM_DEBUG,
                       "Filled up the Receiver QoS parameters\n"));
-
     }
 
   ACE_QoS_Manager qos_manager = handler->get_socket ()->qos_manager ();
@@ -1217,7 +1216,6 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
       session_addr->set (local_addr->get_port_number (),
                          local_addr->get_host_name ());
-
     }
   else
     {
@@ -1262,7 +1260,6 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
                       -1);
 
       this->qos_session_->source_addr (src_addr);
-
     }
 
   handler->qos_session (this->qos_session_);

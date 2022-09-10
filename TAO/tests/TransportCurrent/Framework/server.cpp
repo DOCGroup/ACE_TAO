@@ -204,7 +204,6 @@ server_main (int argc,
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server (%P|%t) Invoking orb->destroy ()\n")));
 
       orb->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {

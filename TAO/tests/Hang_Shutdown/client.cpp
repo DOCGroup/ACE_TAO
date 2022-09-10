@@ -209,7 +209,6 @@ namespace Test
         ACE_Thread_Manager::instance ()->wait ();
 
         orb->destroy ();
-
       }
     catch (const CORBA::Exception& ex)
       {

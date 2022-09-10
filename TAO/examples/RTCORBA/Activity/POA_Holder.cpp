@@ -158,7 +158,6 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
       // Create a thread-pool policy.
       lanes_policy =
         rt_orb->create_threadpool_policy (threadpool_id);
-
     }
 
   if (bands_.length () != 0)

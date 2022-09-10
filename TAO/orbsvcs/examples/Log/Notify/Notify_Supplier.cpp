@@ -219,7 +219,6 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
      ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 
      this->notify_log_->destroy();
-
      }
   catch (const CORBA::Exception& ex)
     {

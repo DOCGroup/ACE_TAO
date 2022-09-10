@@ -377,7 +377,6 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
                 this->typed_event_channel_->reconnected (this);
               }
               return;
-
             }
 
           this->typed_consumer_ = apply_policy (local_typed_consumer.in () );
@@ -389,7 +388,6 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 
         // Notify the event channel...
         this->typed_event_channel_->connected (this);
-
       } /* this->is_typed_ec */
     else
       {

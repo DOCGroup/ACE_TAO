@@ -82,7 +82,6 @@ namespace TAO
       /// reference and used to protect messages.
       ::Security::QOP const qop_;
     };
-
   } // End Security namespace
 }  // End TAO namespace
 

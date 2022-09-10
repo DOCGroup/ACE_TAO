@@ -87,7 +87,6 @@ namespace ACE
       /// Store the most recent HTTP result code. Typically it will be 200,
       /// but it could be a 4xx or 5xx code if the proxy reports an error.
       int http_code_;
-
     };
   }
 }

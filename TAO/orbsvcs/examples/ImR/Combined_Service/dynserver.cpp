@@ -109,7 +109,6 @@ DynServer_Loader::init (int argc, ACE_TCHAR* argv[])
     runner_->activate();
 
     ACE_DEBUG((LM_DEBUG, "dynserver: running.\n"));
-
   } catch (Exception& e) {
     e._tao_print_exception ("DynServer::init()");
   }
@@ -132,7 +131,6 @@ DynServer_Loader::fini (void)
     ACE_DEBUG((LM_DEBUG, "dynserver: shut down successfully.\n"));
 
     return 0;
-
   } catch (Exception& e) {
     e._tao_print_exception ("DynServer::fini()");
   }

@@ -70,7 +70,6 @@ namespace ACE
       virtual ssize_t recv_data_header (Channel *);
       virtual ssize_t recv_data_trailer(Channel *);
     };
-
   }
 }
 

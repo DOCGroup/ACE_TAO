@@ -201,7 +201,6 @@ Server::shutdown ()
   catch( CORBA::Exception& ex) {
     ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %s"
                 , ex._info().c_str()));
-
   }
 
   shutdown_ = true;

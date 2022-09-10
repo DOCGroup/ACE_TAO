@@ -130,7 +130,6 @@ Client::create_widgets (/**/)
 
   this->mainwindow_.setLayout(&box_);
 
-
 }
 
 void

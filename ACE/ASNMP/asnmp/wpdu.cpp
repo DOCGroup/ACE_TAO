@@ -507,7 +507,6 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
 
     default:
        tempvb.set_null();
-
     } // end switch
 
     // append the vb to the pdu

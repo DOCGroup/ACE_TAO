@@ -352,7 +352,6 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
               scheduler = scheduler_impl->_this ();
             }
           break;
-
         }
 
       // We use this buffer to generate the names of the local

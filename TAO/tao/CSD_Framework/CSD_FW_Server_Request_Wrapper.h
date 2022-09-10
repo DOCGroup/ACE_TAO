@@ -109,7 +109,6 @@ namespace TAO
       /// Pointer to the underlying TAO_ServerRequest object.
       TAO_ServerRequest* request_;
     };
-
   }
 }
 

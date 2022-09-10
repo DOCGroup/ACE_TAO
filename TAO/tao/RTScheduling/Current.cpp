@@ -340,7 +340,6 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
       this->name_ = CORBA::string_dup (name);
       this->sched_param_ = CORBA::Policy::_duplicate (sched_param);
       this->implicit_sched_param_ = CORBA::Policy::_duplicate (implicit_sched_param);
-
     }
   else //Nested segment
     {

@@ -1798,7 +1798,6 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
                       UTL_NameList (full_name,
                                     nullptr),
                       nullptr);
-
     }
   else
     {

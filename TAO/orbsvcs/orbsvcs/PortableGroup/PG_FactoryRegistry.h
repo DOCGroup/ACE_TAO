@@ -216,7 +216,6 @@ namespace TAO
     int linger_;
 
     RegistryType registry_;
-
   };
 } // namespace TAO
 

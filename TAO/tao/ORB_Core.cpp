@@ -3511,7 +3511,6 @@ TAO_ORB_Core::add_interceptor (
       this->client_request_interceptor_adapter_->add_interceptor (
         interceptor,
         policies);
-
     }
   else
     {
@@ -3535,7 +3534,6 @@ TAO_ORB_Core::add_interceptor (
       this->server_request_interceptor_adapter_->add_interceptor (
         interceptor,
         policies);
-
     }
   else
     {

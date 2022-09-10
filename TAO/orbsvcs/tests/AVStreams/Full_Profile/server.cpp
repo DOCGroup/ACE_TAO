@@ -136,8 +136,6 @@ Server::init (int argc,
       // Register the video control object with the naming server.
       this->my_naming_client_->rebind (server_sep_b_name,
                                        sep_b_.in ());
-
-
     }
   catch (const CORBA::Exception& ex)
     {

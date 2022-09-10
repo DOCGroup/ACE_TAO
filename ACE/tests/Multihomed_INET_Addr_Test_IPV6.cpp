@@ -138,7 +138,6 @@ int run_main (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("(for primary address)\n")));
 
           status = 1;
-
       }
 
       // Check that the secondary addresses in the in_out_sockaddr

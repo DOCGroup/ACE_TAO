@@ -152,7 +152,6 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
                             TAO_TIO (uto_time,
                                      this->time ()),
                             CORBA::NO_MEMORY ());
-
         }
       else
         {
@@ -160,7 +159,6 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
                             TAO_TIO (this->time (),
                                      uto_time),
                             CORBA::NO_MEMORY ());
-
         }
     }
   catch (const CORBA::Exception& ex)

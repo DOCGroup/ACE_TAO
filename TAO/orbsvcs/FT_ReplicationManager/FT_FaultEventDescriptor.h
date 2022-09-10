@@ -64,7 +64,6 @@ namespace TAO
 
     /// The object group's factories.
     PortableGroup::FactoryInfos_var factories;
-
   };
 } // namespace TAO
 

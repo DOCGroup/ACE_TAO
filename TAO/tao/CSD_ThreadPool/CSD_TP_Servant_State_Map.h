@@ -71,7 +71,6 @@ namespace TAO
       /// The underlying map of servant state objects.
       MapType map_;
     };
-
   }
 }
 

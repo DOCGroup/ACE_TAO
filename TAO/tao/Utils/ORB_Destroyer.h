@@ -48,7 +48,6 @@ namespace TAO
       CORBA::ORB,
       ORB_Destroyer_Functor>
     ORB_Destroyer;
-
   } // namespace Utils
 } // namespace TAO
 

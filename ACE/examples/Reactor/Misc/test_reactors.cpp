@@ -151,7 +151,6 @@ worker (void *args)
         }
 
       // ACE_DEBUG ((LM_DEBUG, "(%t) done with handle_events\n"));
-
     }
 
   ACE_NOTREACHED(return 0);

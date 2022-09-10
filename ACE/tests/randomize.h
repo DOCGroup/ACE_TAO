@@ -81,7 +81,6 @@ namespace
 
     // Random number generator seed value.
     unsigned int seed_;
-
   };
 
   /**

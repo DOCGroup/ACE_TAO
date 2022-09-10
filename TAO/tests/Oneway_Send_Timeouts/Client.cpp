@@ -131,7 +131,6 @@ Client::init (int argc, ACE_TCHAR* argv[])
     policy_list[0]->destroy ();
     policy_list[1]->destroy ();
     policy_list.length(0);
-
   }
   catch( CORBA::Exception& ex) {
     ACE_ERROR ((LM_ERROR, "(%P|%t) Client::Init> Caught CORBA::Exception %s"

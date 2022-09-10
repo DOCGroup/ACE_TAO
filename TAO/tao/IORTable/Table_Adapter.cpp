@@ -117,7 +117,6 @@ TAO_Table_Adapter::create_collocated_object (TAO_Stub *stub,
                                      stub->is_collocated (),
                                      stub->collocated_servant ()),
                       CORBA::Object::_nil ());
-
     }
 
   return result;

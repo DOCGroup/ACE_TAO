@@ -204,7 +204,6 @@ DT_Creator::register_synch_obj (void)
         this->naming_->resolve (name);
 
       synch_context = CosNaming::NamingContext::_narrow (object.in ());
-
     }
 
   ACE_CString synch_name ("Synch");
@@ -323,8 +322,6 @@ DT_Creator::activate_job_list (void)
 
       this->naming_->rebind (name.in (),
                              server.in ());
-
-
     } /* while */
 
   ACE_DEBUG ((LM_DEBUG,
@@ -574,7 +571,6 @@ DT_Creator::check_ifexit (void)
         }
       ACE_DEBUG ((LM_DEBUG,
       "Log File Ready\n"));
-
     }
       }
   }

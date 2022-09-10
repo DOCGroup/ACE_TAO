@@ -199,7 +199,6 @@ ACE_OS_Object_Manager::instance ()
       // ACE_ASSERT (instance_pointer == instance_);
 
       instance_pointer->dynamically_allocated_ = true;
-
     }
 
   return instance_;

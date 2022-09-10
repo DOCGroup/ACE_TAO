@@ -512,7 +512,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
               ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect,")
                           ACE_TEXT ("wait for completion failed\n")));
-
             }
         }
     }
@@ -761,7 +760,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
             }
 
           svc_handler_auto_ptr.release ();
-
         }
       else // not making new connection
         {

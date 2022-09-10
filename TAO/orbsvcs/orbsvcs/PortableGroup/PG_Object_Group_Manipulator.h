@@ -111,7 +111,6 @@ namespace TAO
 
     /// Next ogid to be allocated.
     PortableGroup::ObjectGroupId next_ogid_;
-
   };
 } //namespace TAO
 

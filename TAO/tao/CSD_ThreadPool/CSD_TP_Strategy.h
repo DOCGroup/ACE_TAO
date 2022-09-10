@@ -180,7 +180,6 @@ namespace TAO
       /// "serialize servants" flag is set to true.
       TP_Servant_State_Map servant_state_map_;
     };
-
   }
 }
 

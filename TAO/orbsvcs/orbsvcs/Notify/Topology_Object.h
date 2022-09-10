@@ -93,7 +93,6 @@ namespace TAO_Notify
     /// call the reconnect() method on all of our children to give them
     /// the chance to do the same.
     virtual void reconnect (void);
-
   };
 
   /// \brief Base class for Persistent Topology Objects.

@@ -60,7 +60,6 @@ namespace TAO
 
       /// Timestamp
       CORBA::ULong time_stamp_[2];
-
     };
 
     /**

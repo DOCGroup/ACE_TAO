@@ -131,7 +131,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     hosts[ i ],
                     i,
                     0 );
-
     }
   } /* if num_leaves == 1 */
 

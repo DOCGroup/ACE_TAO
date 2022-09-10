@@ -98,7 +98,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
     std::cout << "Client: Ending balance: " << b/100.0 << std::endl;
 
     orb->destroy();
-
   } catch(const CORBA::Exception& e) {
     std::cerr << e << std::endl;
     return 1;

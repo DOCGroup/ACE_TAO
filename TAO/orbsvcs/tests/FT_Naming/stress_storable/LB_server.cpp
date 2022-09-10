@@ -131,7 +131,6 @@ LB_server::start_orb_and_poa (void)
                            ACE_TEXT (" (%P|%t) Unable to get Naming ")
                            ACE_TEXT ("Manager Reference\n")),
                           -1);
-
     }
   catch (const CORBA::Exception& ex)
     {

@@ -611,7 +611,6 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
       // Set our rd & wr pointers
       this->rd_ptr (start);
       this->wr_ptr (start);
-
     }
   else
     {

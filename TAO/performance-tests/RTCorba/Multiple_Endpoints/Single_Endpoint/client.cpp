@@ -217,7 +217,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       throughput.dump_results (ACE_TEXT("Aggregated"), gsf);
 
       server->shutdown ("");
-
     }
   catch (const CORBA::Exception& ex)
     {

@@ -92,7 +92,6 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
       }
 
       consumer_proxy_->connect_structured_push_supplier(supplier.in());
-
     }
   catch(const CORBA::Exception& ex) {
     std::cerr << ex << std::endl;

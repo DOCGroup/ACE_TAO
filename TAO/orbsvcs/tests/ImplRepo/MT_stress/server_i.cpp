@@ -173,7 +173,6 @@ Server_i::run (void)
       }
 
       this->orb_->run ();
-
     }
   catch (const CORBA::Exception& ex)
     {

@@ -39,7 +39,6 @@ Simple::remove_member (void)
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Removed Member at Location <%s>\n",
                       this->location_));
-
     }
   catch (const PortableGroup::ObjectNotFound& ex)
     {

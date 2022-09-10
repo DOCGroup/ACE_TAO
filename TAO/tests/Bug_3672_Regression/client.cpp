@@ -270,7 +270,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
-
     }
 
   return parameter_corruption;

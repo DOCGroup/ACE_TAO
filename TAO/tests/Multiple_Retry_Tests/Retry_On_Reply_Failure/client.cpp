@@ -201,7 +201,6 @@ Worker::svc (void)
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) unexpected result = %d\n",
                       r));
-
       }
       catch (const CORBA::OBJECT_NOT_EXIST &)
         {

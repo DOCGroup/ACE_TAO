@@ -171,7 +171,6 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: shutdown the EC\n"));
 
       ec_impl.shutdown ();
-
     }
   catch (const CORBA::SystemException& sys_ex)
     {
@@ -1011,7 +1010,6 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
   RtecEventChannelAdmin::SupplierQOS qos_copy =
     qos.get_SupplierQOS ();
   this->receiver_->connect (qos_copy);
-
 
 }
 

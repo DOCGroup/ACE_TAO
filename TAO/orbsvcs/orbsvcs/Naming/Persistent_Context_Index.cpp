@@ -221,7 +221,6 @@ TAO_Persistent_Context_Index::recreate_all ()
       // If this is the root Naming Context, take a note of it.
       if (context_impl->root ())
           this->root_context_= result._retn ();
-
     } while (index_iter->advance ());
 
   return 0;

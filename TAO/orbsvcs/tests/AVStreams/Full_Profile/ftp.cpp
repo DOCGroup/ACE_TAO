@@ -313,7 +313,6 @@ Client::run (void)
       this->orb_->run (tv);
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -353,7 +352,6 @@ ACE_TMAIN (int argc,
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
-
     }
   catch (const CORBA::Exception& ex)
 

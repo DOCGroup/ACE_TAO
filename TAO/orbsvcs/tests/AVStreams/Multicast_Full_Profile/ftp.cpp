@@ -125,7 +125,6 @@ Client::parse_args (int argc, ACE_TCHAR *argv[])
         default:
           ACE_DEBUG ((LM_DEBUG,"Unknown option\n"));
           return -1;
-
         }
     }
   return 0;

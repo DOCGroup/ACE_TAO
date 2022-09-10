@@ -79,7 +79,6 @@ namespace ACE
       /// HTID - web-obtained unique-identifier
       ACE_CString htid_;
     };
-
   }
 }
 

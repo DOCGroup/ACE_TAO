@@ -607,7 +607,6 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                             TAO_ROOT_NAMING_CONTEXT,
                                                             context_size);
           this->assign (size_t(ROOT), false, new_context.in());
-
         }
 
 #if !defined (CORBA_E_MICRO)
@@ -786,7 +785,6 @@ TAO_Naming_Server::fini ()
     {
       if (!CORBA::is_nil (this->ns_poa_.in ()))
         this->ns_poa_->destroy (1, 1);
-
     }
   catch (const CORBA::Exception&)
     {

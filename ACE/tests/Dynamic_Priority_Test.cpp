@@ -681,7 +681,6 @@ run_performance_test (u_int min_load,
 
       // Free the allocated pointer array.
       delete [] supplier_args.array_;
-
     }
 
   // Free resources and leave.

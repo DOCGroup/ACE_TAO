@@ -105,7 +105,6 @@ Alt_Mapping_Client<T>::run_sii_test (void)
                       "run_sii_test exception in iteration %d",
                       i));
           goto loop_around;
-
         }
 
       if (!this->test_object_->check_validity ())

@@ -51,7 +51,6 @@ namespace TAO
       virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                                const CORBA::Any & value);
     };
-
   } // End Security namespace
 }  // End TAO namespace
 

@@ -394,7 +394,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      * an @c ACE_HANDLE value.  This is Unix-specific.
      */
     Event_Tuple *handlers_;
-
   };
 
 public:

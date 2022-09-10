@@ -244,7 +244,6 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
     orb->destroy();
 
     return 0;
-
   } catch(CORBA::Exception& e) {
     std::cerr << "Supplier: main() exception: " << e << std::endl;
   } catch(std::invalid_argument& e) {

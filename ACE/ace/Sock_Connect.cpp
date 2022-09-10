@@ -1288,7 +1288,6 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
               ++count;
             }
           ACE_OS::freeaddrinfo (res0);
-
         }
       ACE_OS::fclose (fp);
     }

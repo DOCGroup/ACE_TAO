@@ -764,7 +764,6 @@ yyloop:
             ctry = save->ctry;
             if (save->state != yystate) YYABORT;
             yyFreeState(save);
-
         }
         else
         {

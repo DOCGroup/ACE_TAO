@@ -291,7 +291,6 @@ Object_Group_Factory_i::make_group (int random,
       // dynamically allocated  memory.
       this->mem_pool_->free ((void *) ptr);
       throw Load_Balancer::duplicate_group ();
-
     }
 
   // Return.
@@ -350,7 +349,6 @@ Object_Group_Factory_i::resolve (const char * id)
                              ACE_TEXT ("(%N|%l) The factory does not have any references ")
                              ACE_TEXT ("to the group that you have sought \n\n")),
                             0);
-
         }
     }
 
@@ -498,7 +496,6 @@ Object_Group_Factory_i::update_flags (int random)
       if (!random)
         *(this->flags_) = 3;
       break;
-
     }
 }
 
@@ -624,7 +621,6 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
             {
               ACE_ERROR ((LM_ERROR,
                           "Unable to bind\n"));
-
             }
         }
     }

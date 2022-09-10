@@ -1322,7 +1322,6 @@ static int yy_get_next_buffer ()
 
       num_to_read = YY_CURRENT_BUFFER_LVALUE->yy_buf_size -
             number_to_move - 1;
-
       }
 
     if ( num_to_read > YY_READ_BUF_SIZE )

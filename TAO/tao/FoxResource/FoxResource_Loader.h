@@ -48,7 +48,6 @@ namespace TAO
     FoxResource_Loader (FXApp *app);
 
     virtual ~FoxResource_Loader (void);
-
   };
 }
 

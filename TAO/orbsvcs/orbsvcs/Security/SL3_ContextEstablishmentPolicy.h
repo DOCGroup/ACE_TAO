@@ -96,9 +96,7 @@ namespace TAO
       SecurityLevel3::FeatureDirective   use_target_auth_;
       SecurityLevel3::FeatureDirective   use_confidentiality_;
       SecurityLevel3::FeatureDirective   use_integrity_;
-
     };
-
   } // End SL3 namespace
 
 }  // End TAO namespace

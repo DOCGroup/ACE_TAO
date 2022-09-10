@@ -86,7 +86,6 @@ Grid_Client_i::run (const char *name,
               grid->set (index_,
                          ctr,
                          (value_ + ctr));
-
             }
         }
 

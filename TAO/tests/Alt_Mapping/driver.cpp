@@ -91,7 +91,6 @@ Driver::init (int argc, ACE_TCHAR **argv)
       ACE_OS::strcpy (exception_string,"Param_Test::_narrow () failed.");
 
       this->objref_ = Alt_Mapping::_narrow (temp.in());
-
     }
   catch (const CORBA::Exception& ex)
     {

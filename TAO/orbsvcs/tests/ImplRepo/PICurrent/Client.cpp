@@ -167,7 +167,6 @@ public:
       client_interceptor = interceptor;
 
     info->add_client_request_interceptor (client_interceptor.in ());
-
   }
 };
 

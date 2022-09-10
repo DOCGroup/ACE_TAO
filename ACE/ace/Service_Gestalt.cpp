@@ -1079,7 +1079,6 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
                 ACE_OS::fclose(fp);
               else
                 add_default = false;
-
             }
         }
 

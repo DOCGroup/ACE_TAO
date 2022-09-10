@@ -739,7 +739,6 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
                       ex._tao_print_exception (
                         "producer_check: not a producer");
-
                     }
                 }
             }
@@ -834,8 +833,6 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                           this->sep_b_.in (),
                           the_qos,
                           the_flows);
-
-
           }
           // This is the light profile, call connect()
           else  if (!CORBA::is_nil (this->vdev_a_.in ()) && !CORBA::is_nil (this->vdev_b_.in ()))
@@ -1999,7 +1996,6 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec)
                 TAO_AV_CORE::instance()->remove_connector(entry->flowname());
                 TAO_AV_CORE::instance()->remove_connector(control_flowname.c_str());
                 entry->protocol_object ()->destroy ();
-
               }
           }
       }
@@ -2126,7 +2122,6 @@ TAO_StreamEndPoint::change_qos (AVStreams::streamQoS &new_qos,
             ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "Modifying QoS Failed\n"),
                               -1);
-
         }
     }
   return 0;
@@ -3775,7 +3770,6 @@ TAO_FlowConnection::add_consumer (AVStreams::FlowConsumer_ptr consumer,
           //                                          flow_producer,
           //                                          this->fp_name_.inout ()
           //);
-
         }
       if (CORBA::is_nil (this->mcastconfigif_.in ()))
         ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_FlowConnection::add_consumer: first add a producer and then a consumer\n"), 0);

@@ -52,7 +52,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
       std::cout << "Message sent successfully.\n";
       msg->print();
       std::cout << std::endl;
-
     } else {
       std::cout << "Message refused." << std::endl;
     }
@@ -62,7 +61,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
     }
 
     orb->destroy();
-
   } catch(const CORBA::Exception& e) {
     std::cerr << e << std::endl;
     return 1;

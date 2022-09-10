@@ -429,7 +429,6 @@ NSGROUP::parse_command_line (void)
                              ACE_OS::strlen (ACE_TEXT("member_remove"))) == 0 )
       {
         nsgroup_cmd_ =  NSGROUP_MEMBER_REMOVE;
-
       }
     else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("member_show"),
                                ACE_OS::strlen (ACE_TEXT("member_show"))) == 0 )

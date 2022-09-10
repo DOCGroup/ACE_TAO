@@ -283,7 +283,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("Invalid ACE_MAX_DEFAULT_PORT ")
                   ACE_TEXT ("or %d port may be busy; got to %d\n"),
                   ACE_MAX_DEFAULT_PORT, max_listened_port));
-
     }
 
 #endif // ACE_LACKS_ACCEPT

@@ -196,7 +196,6 @@ static int init_compressor(::CORBA::ORB_ptr orb)
         Compression::CompressorFactory_var compr_fact = compressor_factory;
 
         manager->register_factory (compr_fact.in ());
-
     } catch (...) {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Unable to initialise RLE compressor manager.\n")),-1);
@@ -568,7 +567,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_DEBUG((LM_INFO, ACE_TEXT("TAO::RLECompression Ratio = %f : 1\n"), tao_ratio));
 
         orb->shutdown ();
-
     } catch (const CORBA::Exception& ex) {
         ex._tao_print_exception ("RLECompressorTest: UNEXPECTED exception - ");
         return -1;

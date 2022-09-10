@@ -68,7 +68,6 @@ namespace TAO
       /// servant if only requests targeting that servant should be cancelled.
       PortableServer::ServantBase_var servant_;
     };
-
   }
 }
 

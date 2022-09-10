@@ -299,7 +299,6 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
         CORBA::String_var t(str.c_str ());
         record[0] <<= t.in ();
         basicLog_->write_records(record);
-
       }
   }
 
@@ -323,7 +322,6 @@ BasicLog_Test::test_adminState()
       this->write_records(0);
 
       ACE_ERROR_RETURN((LM_ERROR,"Setting administrative state to lock failed.  DsLogAdmin::LogLocked not thrown.\n"),-1);
-
     }
   catch (const DsLogAdmin::LogLocked&)
     {
@@ -342,7 +340,6 @@ BasicLog_Test::test_adminState()
       this->write_records(0);
       ACE_DEBUG ((LM_DEBUG,"Setting administrative state to succeeded.  DsLogAdmin::LogLocked not thrown.\n"));
       ACE_RETURN(0);
-
     }
   catch (const DsLogAdmin::LogLocked&)
     {

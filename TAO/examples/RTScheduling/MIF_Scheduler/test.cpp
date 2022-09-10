@@ -149,7 +149,6 @@ DT_Test::svc (void)
   try
     {
       dt_creator_->create_distributable_threads (current_.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {

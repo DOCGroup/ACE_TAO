@@ -991,7 +991,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         default:
           // return print_usage (argc,argv);
           break;
-
         }
     }
 

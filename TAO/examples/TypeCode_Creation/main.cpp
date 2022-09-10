@@ -93,7 +93,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ORB-created typecode not correct!\n"),
                              -1);
-
         }
     }
   catch (const CORBA::Exception& ex)

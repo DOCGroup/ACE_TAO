@@ -140,7 +140,6 @@ namespace TAO
     ///TODO: Remove this later, it is just for testing.
     // Keep track of how many notifications we have received.
     size_t notifications_;
-
   };
 } // namespace TAO
 

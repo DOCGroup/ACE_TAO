@@ -226,7 +226,6 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                                 "Unable to access RT CORBA Priority in client thread "
                                 "accessing object with CLIENT_PROPAGATED priority model.\n"));
                   throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
-
                 }
 
               // If there are no bands.

@@ -291,7 +291,6 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
       ////////////////////////////////
       // TODO make this not hardcoded
       ACE_OS::rename ("abc.xml", "loadtest.xml");
-
     } // end of pass 1
 
     if (pass2)

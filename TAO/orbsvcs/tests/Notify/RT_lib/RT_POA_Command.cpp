@@ -269,7 +269,6 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
       // Create a thread-pool policy.
       lanes_policy =
         rt_orb->create_threadpool_policy (threadpool_id);
-
     }
   else if (thread_pool_static_threads_ > 0)
     {

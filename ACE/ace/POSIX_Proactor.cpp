@@ -1216,7 +1216,6 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
                                         error_status,
                                         transfer_count))  // completed
         break;
-
     } // end for
 
   if (count == 0) // all processed , nothing found

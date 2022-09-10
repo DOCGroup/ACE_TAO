@@ -23,7 +23,6 @@ Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
                     "In the signal handler\n"));
 
       DISTRIBUTER::instance ()->done (1);
-
     }
   return 0;
 }
@@ -119,12 +118,10 @@ Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flo
 
           ///Destroy old stream with the same flowname.
           connection_manager.destroy (flowname);
-
         }
 
       /// Store the related streamctrl.
       connection_manager.add_streamctrl (flowname.c_str (), this);
-
     }
   return true;
 }
@@ -390,7 +387,6 @@ Distributer::shut_down (void)
                                                                      sender_mmdevice.in ());
 
     //  DISTRIBUTER::instance ()->connection_manager ().destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -438,14 +434,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (wp)
           {
             orb->perform_work ();
-
           }
         }
 
       DISTRIBUTER::instance ()->shut_down ();
 
 //      orb->shutdown(true);
-
     }
   catch (const CORBA::Exception& ex)
     {

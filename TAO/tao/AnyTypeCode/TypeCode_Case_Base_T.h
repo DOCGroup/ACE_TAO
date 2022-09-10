@@ -145,7 +145,6 @@ namespace TAO
     };
 
     typedef Case<CORBA::String_var, CORBA::TypeCode_var> Case_Dynamic;
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

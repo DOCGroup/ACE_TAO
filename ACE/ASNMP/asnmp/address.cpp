@@ -518,7 +518,6 @@ int IpAddress::parse_address( const char *inaddr)
 
         // save the friendly name
         ACE_OS::strcpy( iv_friendly_name_, inaddr);
-
     }    // end if lookup result
     else {
       iv_friendly_name_status_ = rc;
@@ -2356,7 +2355,6 @@ int GenAddress::parse_address( const char *addr)
           return 1;    // ok, its a mac
         }
         break;
-
     }
         // otherwise its invalid
     delete address;

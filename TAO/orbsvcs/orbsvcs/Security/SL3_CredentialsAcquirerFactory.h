@@ -49,9 +49,7 @@ namespace TAO
       virtual SecurityLevel3::CredentialsAcquirer_ptr make (
         TAO::SL3::CredentialsCurator_ptr curator,
         const CORBA::Any & acquisition_arguments) = 0;
-
     };
-
   } // End SL3 namespace
 }  // End TAO namespace
 

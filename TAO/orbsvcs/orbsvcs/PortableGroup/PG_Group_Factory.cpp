@@ -428,7 +428,6 @@ TAO::PG_Group_Factory::get_group_map ()
             }
 
           this->groups_read_ = true;
-
         }
 
     }

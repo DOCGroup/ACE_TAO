@@ -95,7 +95,6 @@ namespace ACE
 
       /// We created the config instance, so we must clean it up
       bool own_config_;
-
     };
   }
 }

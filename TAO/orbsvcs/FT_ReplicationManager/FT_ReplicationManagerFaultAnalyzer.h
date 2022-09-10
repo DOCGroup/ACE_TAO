@@ -181,7 +181,6 @@ namespace TAO
     // Data Members
   private:
     FT_ReplicationManager * replication_manager_;
-
   };
 } // namespace TAO
 

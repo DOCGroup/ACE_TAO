@@ -562,7 +562,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       events.dump_results();
 
       ACE_DEBUG ((LM_DEBUG, "ending main...\n"));
-
     }
   catch (const CORBA::Exception& se)
     {

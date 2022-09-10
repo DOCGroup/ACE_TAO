@@ -151,7 +151,6 @@ namespace Kokyu
                     const QoSDesc& qos2);
   };
 
-
 } //end of namespace
 
 #if defined (__ACE_INLINE__)

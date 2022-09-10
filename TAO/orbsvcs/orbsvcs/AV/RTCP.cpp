@@ -177,7 +177,6 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
       }
 
       first_rtcp_packet = 0;
-
     }
 
     if (more != 0)

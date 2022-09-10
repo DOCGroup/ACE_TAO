@@ -108,7 +108,6 @@ namespace Test
       {
         return !(this->operator== (ep));
       };
-
     } EndPoint;
 
   private:

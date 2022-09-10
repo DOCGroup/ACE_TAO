@@ -329,7 +329,6 @@ Sender::pace_data (void)
 
           // Reset the message block.
           this->mb_.reset ();
-
         } // end while
 
       // File reading is complete, destroy the stream.
@@ -384,7 +383,6 @@ ACE_TMAIN (int argc,
 
       // Start sending data.
       result = SENDER::instance ()->pace_data ();
-
     }
   catch (const CORBA::Exception& ex)
     {

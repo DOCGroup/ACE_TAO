@@ -659,7 +659,6 @@ ACE_QtReactor::wait_for_multiple_events (
     nfound = QtWaitForMultipleEvents (static_cast<int> (width),
                                       handle_set,
                                       max_wait_time);
-
   } while( nfound == -1 && this->handle_error () > 0 );
 
   if (nfound > 0)

@@ -29,7 +29,6 @@ namespace ACE
               Response ();
               virtual ~Response ();
           };
-
       }
   }
 

@@ -175,7 +175,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_ASSERT (test_graph->size () == 6);
           my_test->pass_obj_graph_inout (test_graph.inout ());
           ACE_ASSERT (test_graph->size () == 7);
-
         }
 
       my_test->finish ();
@@ -185,7 +184,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG, "Client (%P.%t) completed test successfully\n", id));
-
     }
   catch (const CORBA::Exception& ex)
     {

@@ -190,7 +190,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       recv_latency.dump_results (ACE_TEXT("Receive"), gsf);
 
       send_latency.dump_results (ACE_TEXT("Send"), gsf);
-
     }
   catch (const CORBA::Exception& ex)
     {

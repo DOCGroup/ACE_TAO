@@ -77,7 +77,6 @@ Checkpoint_Client_i::run (const char *name,
 
       if (checkpoint.shutdown () == 1)
         checkpoint->shutdown ();
-
     }
   catch (const CORBA::Exception& ex)
     {

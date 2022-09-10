@@ -77,7 +77,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
           // Unless the notification goes thru the bind operation is
           // not complete.
           bind_result = -1;
-
         }
 
     }
@@ -112,7 +111,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
           // Unless the notification goes thru the rebind operation is
           // not complete.
           rebind_result = -1;
-
         }
 
     }
@@ -152,12 +150,10 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
           // Unless the notification goes thru the rebind operation is
           // not complete.
           rebind_result = -1;
-
         }
       else
         {
           old_value = old_cache_value.first ();
-
         }
 
     }
@@ -198,12 +194,10 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
           // Unless the notification goes thru the rebind operation is
           // not complete.
           rebind_result = -1;
-
         }
       else
         {
           old_value = old_cache_value.first ();
-
         }
 
     }
@@ -234,7 +228,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
             this->map_.unbind (key);
 
           trybind_result = -1;
-
         }
       else
         {
@@ -242,7 +235,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
           // is overwritten with the value from the map.
           if (trybind_result == 1)
             value = cache_value.first ();
-
         }
 
     }
@@ -279,7 +271,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
             find_result = -1;
           else
             value = cache_value.first;
-
         }
 
     }
@@ -314,7 +305,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
 
           if (rebind_result == -1)
             find_result = -1;
-
         }
 
     }
@@ -339,7 +329,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
 
       if (result == -1)
         unbind_result = -1;
-
     }
 
   return unbind_result;
@@ -364,7 +353,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
         unbind_result = -1;
       else
         value = cache_value.first ();
-
     }
 
   return unbind_result;

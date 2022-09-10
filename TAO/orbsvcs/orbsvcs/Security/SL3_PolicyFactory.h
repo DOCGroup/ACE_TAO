@@ -61,7 +61,6 @@ namespace TAO
         //@}
 
       };
-
   }  // End SL3 namespace.
 }  // End TAO namespace.
 

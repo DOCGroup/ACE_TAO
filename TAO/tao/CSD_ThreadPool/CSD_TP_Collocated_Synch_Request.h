@@ -86,7 +86,6 @@ namespace TAO
       /// exception is raised from the dispatch() call on the server_request_.
       CORBA::Exception* exception_;
     };
-
   }
 }
 

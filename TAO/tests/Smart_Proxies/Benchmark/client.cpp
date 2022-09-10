@@ -45,7 +45,6 @@ class Marker
       // get the sample.
       this->throughput_.sample (throughput_diff,
                                 latency_diff);
-
     }
  private:
   /// Keep throughput statistics on a per-thread basis

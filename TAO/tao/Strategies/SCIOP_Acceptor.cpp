@@ -295,7 +295,6 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
     // Set the length of the hostname
     hostname_length = port_separator_loc - address;
-
   } else {
     // Port separator was not found.  We allow port_number to retain
     // the value of 0, which will cause the port to be chosen for us

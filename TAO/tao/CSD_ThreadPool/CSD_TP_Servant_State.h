@@ -73,7 +73,6 @@ namespace TAO
       /// The servant's current "busy" state (true == busy, false == not busy)
       bool busy_flag_;
     };
-
   }
 }
 

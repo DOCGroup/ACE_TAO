@@ -182,7 +182,6 @@ int run_main (int, ACE_TCHAR *[])
                     returned_num_secondaries,
                     num_secondaries));
         status = 1;
-
     }
 
 
@@ -260,7 +259,6 @@ int run_main (int, ACE_TCHAR *[])
                       ACE_TEXT ("(for primary address)\n")));
 
           status = 1;
-
       }
 
       // Check that the secondary addresses in the in_out_sockaddr
@@ -358,7 +356,6 @@ int run_main (int, ACE_TCHAR *[])
                     returned_num_secondaries,
                     num_secondaries));
         status = 1;
-
     }
 
 

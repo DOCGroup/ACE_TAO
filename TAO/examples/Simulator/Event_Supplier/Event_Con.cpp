@@ -331,7 +331,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       delete demo_consumer;
 
       root_poa->destroy (true, true);
-
     }
   catch (const CORBA::Exception& ex)
     {

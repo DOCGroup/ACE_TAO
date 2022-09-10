@@ -268,7 +268,6 @@ StockQuoter_i::get_stock_info (const char * stock_name)
       stock_info->last = si.last_;
 
       return stock_info._retn ();
-
     }
   catch (Stock_Database<StockDistributor_i>::Invalid_Stock &ex)
     {

@@ -467,7 +467,6 @@ TAO_LB_LoadMinimum::get_location (
 //                         ORBSVCS_DEBUG ((LM_DEBUG, "^^^^^ PREVIOUS LOCATION\n"));
 //                       else
 //                         ORBSVCS_DEBUG ((LM_DEBUG, "^^^^^ CURRENT LOCATION\n"));
-
                     }
                   else
                     {

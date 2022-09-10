@@ -129,10 +129,8 @@ WxSelectNSDialog::WxSelectNSDialog( wxWindow* parent)
       servers->Append(
           name.c_str(),
           new wxString( value.c_str()));
-
     }
     index++;
-
   }
 }
 
@@ -142,7 +140,6 @@ WxSelectNSDialog::~WxSelectNSDialog()
   int count = servers->Number();
   for (int i = 0; i < count; i++) {
     delete static_cast<wxString*>( servers->GetClientData( i));
-
   }
 }
 
@@ -160,7 +157,6 @@ void WxSelectNSDialog::onAdd( wxCommandEvent& WXUNUSED(event))
         section,
         dialog->getServerName().c_str(),
         value);
-
   }
 }
 
@@ -223,6 +219,5 @@ void WxSelectNSDialog::onRemove( wxCommandEvent& WXUNUSED(event))
 
     ACE_Configuration_Section_Key section = config->root_section();
     config->remove_value( section, name);
-
   }
 }

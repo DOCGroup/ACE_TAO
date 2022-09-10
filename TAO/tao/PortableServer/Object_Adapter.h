@@ -289,7 +289,6 @@ public:
 
     virtual int unbind_persistent_poa (const poa_name &folded_name,
                                        const poa_name &system_name);
-
   };
 
   friend class No_Hint_Strategy;

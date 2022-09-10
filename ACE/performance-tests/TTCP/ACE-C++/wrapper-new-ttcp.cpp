@@ -713,7 +713,6 @@ read_timer (char *str, int len)
     {
       perror ("Getting 'itimer' REAL failed");
       return (0.0);
-
     }
   fprintf(stdout, "End transaction time = %d sec and %d usec\n", itimedol.it_value.tv_sec, itimedol.it_value.tv_usec);
   prusage (&ru0, &ru1, &itime0.it_value, &itimedol.it_value, line);

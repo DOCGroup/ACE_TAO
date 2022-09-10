@@ -73,7 +73,6 @@ namespace Test {
                   ACE_TEXT ("push_request_info: Can't track that many requests %d\n"),
                   name.in (),
                   requestID));
-
   }
 
   void
@@ -225,7 +224,6 @@ namespace Test {
       }
 
     Server_Request_Interceptor::receive_request_service_contexts (ri);
-
   }
 
   void
@@ -234,7 +232,6 @@ namespace Test {
     try
       {
         outbound_process_context (ri);
-
       }
     catch (const CORBA::Exception&)
       {
@@ -246,7 +243,6 @@ namespace Test {
       }
 
     Server_Request_Interceptor::send_reply (ri);
-
   }
 
   void
@@ -255,8 +251,6 @@ namespace Test {
     try
       {
         outbound_process_context (ri);
-
-
       }
     catch (const CORBA::Exception&)
       {
@@ -265,7 +259,6 @@ namespace Test {
                     ACE_TEXT("%C (%P|%t) Outbound_process_context failed in  ")
                     ACE_TEXT("send_exception.\n"),
                     name.in ()));
-
       }
 
     Server_Request_Interceptor::send_exception (ri);

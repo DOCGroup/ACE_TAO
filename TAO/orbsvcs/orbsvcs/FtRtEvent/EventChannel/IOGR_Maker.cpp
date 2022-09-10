@@ -233,7 +233,6 @@ IOGR_Maker::set_tag_components(
     iorm_->set_property (&prop,
                         merged);
 
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

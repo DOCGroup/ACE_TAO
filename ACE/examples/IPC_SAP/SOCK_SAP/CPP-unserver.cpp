@@ -54,7 +54,6 @@ server (void *arg)
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("recv")));
           break;
-
         }
       else if (r_bytes == 0)
         {

@@ -595,7 +595,6 @@ void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * 
    log_tuple_subset(entry->prop_tuple_subset(), file);
    ACE_OS::fprintf(file, "\n   }\n}");
 
-
 }
 
 void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
@@ -668,8 +667,6 @@ ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** en
       TAO_Reconfig_Scheduler_Entry * entry = entry_ptr_array[index];
 
       log_scheduling_entry(entry, file);
-
-
    }
 
 

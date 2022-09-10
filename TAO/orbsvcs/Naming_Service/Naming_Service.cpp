@@ -49,7 +49,6 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
 
       if (result == -1)
         return result;
-
     }
   catch (const CORBA::Exception& ex)
     {

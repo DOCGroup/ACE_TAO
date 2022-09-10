@@ -192,7 +192,6 @@ Policy_Verifier::verify_reference (Counter_ptr object,
                        (pb[i].high !=  rt_properties->priority_bands ()[i].high)))
                     ACE_DEBUG ((LM_DEBUG,
                                 ACE_TEXT ("Mismatching Priority Band Range!\n")));
-
                 }
             }
         }
@@ -211,7 +210,6 @@ Policy_Verifier::verify_reference (Counter_ptr object,
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\nThe Client Protocol Type: %d\n"),
                         protocol_list[i].protocol_type));
-
         }
 
     }

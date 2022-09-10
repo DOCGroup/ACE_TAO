@@ -96,7 +96,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "close"));
-
     }
   /* NOTREACHED */
   return 0;

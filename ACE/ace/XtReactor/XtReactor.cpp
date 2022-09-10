@@ -67,7 +67,6 @@ ACE_XtReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
       nfound = XtWaitForMultipleEvents (width,
                                         handle_set,
                                         max_wait_time);
-
     } while (nfound == -1 && this->handle_error () > 0);
 
   if (nfound > 0)

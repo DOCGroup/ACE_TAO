@@ -1165,7 +1165,6 @@ int test_boxed_array_invocations (Test * test_object)
       p4->_remove_ref ();
       p5->_remove_ref ();
       p6->_remove_ref ();
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -1395,7 +1394,6 @@ int test_boxed_union_invocations (Test * test_object)
       p4->_remove_ref ();
       p5->_remove_ref ();
       p6->_remove_ref ();
-
     }
   catch (const CORBA::Exception& ex)
     {

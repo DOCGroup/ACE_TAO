@@ -179,7 +179,6 @@ namespace TAO
     TAO_SYNCH_MUTEX lock_;
 
     friend class Object_Group_File_Guard;
-
   };
 } // namespace TAO
 

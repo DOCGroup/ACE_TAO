@@ -1513,7 +1513,6 @@ Cubit_Client::run ()
           for (i = 0; i < this->loop_count_; ++i)
             {
               this->cube_any_struct (i);
-
             }
 
           timer.stop ();

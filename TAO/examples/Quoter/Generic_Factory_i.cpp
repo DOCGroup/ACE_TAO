@@ -134,7 +134,6 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
 
       if (this->debug_level_ > 1)
         ACE_DEBUG ((LM_DEBUG, "Generic_Factory: Return an object reference to a new object.\n"));
-
     }
   catch (const CORBA::Exception&)
     {

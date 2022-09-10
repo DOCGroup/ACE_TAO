@@ -46,7 +46,6 @@ namespace TAO
     int common (be_type * node,
                 be_type * base,
                 const char * tctype);
-
   };
 }
 

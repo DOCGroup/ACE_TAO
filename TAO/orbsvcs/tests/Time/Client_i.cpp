@@ -34,7 +34,6 @@ Client_i::test_for_secure_universal_time (void)
     {
       CosTime::UTO_var UTO_server =
            this->clerk_->secure_universal_time ();
-
     }
   catch (const CORBA::SystemException& sysex)
     {
@@ -99,7 +98,6 @@ Client_i::test_for_new_universal_time (void)
       ACE_ASSERT ((UTO_server->utc_time ()).inacchi == 0);
       ACE_ASSERT ((UTO_server->utc_time ()).inacclo == 9999);
       ACE_ASSERT ((UTO_server->utc_time ()).tdf == 99);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -137,7 +135,6 @@ Client_i::test_for_uto_from_utc (void)
       ACE_ASSERT ((UTO_server->utc_time ()).inacclo == 50);
       ACE_ASSERT ((UTO_server->utc_time ()).inacchi == 50);
       ACE_ASSERT ((UTO_server->utc_time ()).tdf == 99);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -163,7 +160,6 @@ Client_i::test_for_new_interval (void)
 
       ACE_ASSERT ((TIO_server->time_interval ()).lower_bound == 666666666);
       ACE_ASSERT ((TIO_server->time_interval ()).upper_bound == 999999999);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -383,7 +379,6 @@ Client_i::init (int argc, ACE_TCHAR **argv)
 
           if (this->obtain_initial_references () == -1)
             return -1;
-
         }
     }
   catch (const CORBA::Exception& ex)

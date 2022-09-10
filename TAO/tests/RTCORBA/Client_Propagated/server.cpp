@@ -211,7 +211,6 @@ Task::svc (void)
         ACE_DEBUG ((LM_DEBUG,
                     "Final priority of the servant thread"
                     " = its initial priority\n"));
-
     }
   catch (const CORBA::Exception& ex)
     {

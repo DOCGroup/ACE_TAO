@@ -1173,7 +1173,6 @@ run_main (int argc, ACE_TCHAR *argv[])
           if (addr.set (port, host, 1, addr.get_type ()) == -1)
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
           rc += connector.start (addr, senders);
-
         }
 
       if (rc > 0)

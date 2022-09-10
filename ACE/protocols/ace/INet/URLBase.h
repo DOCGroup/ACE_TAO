@@ -238,7 +238,6 @@ namespace ACE
 
               static authenticator_map authenticators_;
           };
-
       }
   }
 
