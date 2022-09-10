@@ -64,7 +64,6 @@ TAO_FT_IOGR_Property::set_property (
 
   // Success
   return 1;
-
 }
 
 
@@ -139,7 +138,6 @@ TAO_FT_IOGR_Property::get_primary (
   stub = safe_stub.release ();
 
   return new_obj._retn ();
-
 }
 
 

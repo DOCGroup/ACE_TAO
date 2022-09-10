@@ -53,7 +53,6 @@ namespace ACE_OS {
   int inet_pton (int family,
                  const char *strptr,
                  void *addrptr);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

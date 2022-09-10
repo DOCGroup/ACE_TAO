@@ -83,7 +83,6 @@ namespace TAO_PG
   private:
     NamedValueVec values_;
   };
-
 } //namespace TAO_PG
 
 TAO_END_VERSIONED_NAMESPACE_DECL

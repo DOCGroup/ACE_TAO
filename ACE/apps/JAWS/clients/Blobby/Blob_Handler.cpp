@@ -40,7 +40,6 @@ ACE_Blob_Handler::open (void *)
   if (this->receive_reply () != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob_Handler::open():receive_reply failed"), -1);
   return 0;
-
 }
 
 // No-op

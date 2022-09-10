@@ -131,7 +131,6 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
   ACE_DEBUG ((LM_DEBUG,
               "Servant_Locator::postinvoke for %C.%C\n",
               name.in (), op ));
-
 }
 
 int

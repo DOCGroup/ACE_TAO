@@ -43,7 +43,6 @@ TAO_HTTP_Handler::open (void *)
   if (this->receive_reply () != 0)
     TAOLIB_ERROR_RETURN ((LM_ERROR, "TAO (%P|%t) - HTTP_Handler::open, receive_reply failed\n"), -1);
   return 0;
-
 }
 
 int

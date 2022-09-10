@@ -181,7 +181,6 @@ Client::Client (void)
     protocol_ (ACE_OS::strdup ("UDP"))
 {
   endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ());
-
 }
 
 

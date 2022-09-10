@@ -677,7 +677,6 @@ ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** en
 
    ACE_OS::fclose (file);
    return 0;
-
 }
 
 void

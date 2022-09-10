@@ -232,7 +232,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind (
     {
     }
   return result;
-
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int

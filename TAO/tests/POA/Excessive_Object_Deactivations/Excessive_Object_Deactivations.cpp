@@ -139,7 +139,6 @@ test_object_deactivation (PortableServer::POA_ptr poa,
 
   // ACE_ASSERT dissappears in non-debug builds
   ACE_UNUSED_ARG (expected_exception_raised);
-
 }
 
 int

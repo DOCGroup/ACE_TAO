@@ -116,6 +116,5 @@ CORBA::Boolean Messenger_i::send_message (const char * user_name,
   consumer_proxy_->push_structured_events(events);
 
   return 1;
-
 }
 

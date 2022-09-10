@@ -466,7 +466,6 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
     }
 
   return 0;
-
 }
 
 int

@@ -688,7 +688,6 @@ ACE_AIOCB_Notify_Pipe_Manager::~ACE_AIOCB_Notify_Pipe_Manager ()
   h = this->pipe_.read_handle ();
   if ( h != ACE_INVALID_HANDLE)
      ACE_OS::closesocket (h);
-
 }
 
 
@@ -764,7 +763,6 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations)
   // start pseudo-asynchronous accept task
   // one per all future acceptors
   this->get_asynch_pseudo_task().start ();
-
 }
 
 // Special protected constructor for ACE_SUN_Proactor

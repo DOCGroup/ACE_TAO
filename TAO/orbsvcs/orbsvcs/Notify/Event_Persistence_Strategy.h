@@ -39,7 +39,6 @@ namespace TAO_Notify
     // release the current factory so a new one can be created
     virtual void reset () = 0;
   };
-
 } // namespace TAO_Notify
 
 TAO_END_VERSIONED_NAMESPACE_DECL

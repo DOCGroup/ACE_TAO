@@ -351,7 +351,6 @@ static void TestIpxAddress()
 
   const char *ptr = (const char *)xa7;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) IpxAddress:xa7-ptr(\"01234567-012345-6789AB\") [%s]\n", ptr));
-
 }
 
 /*
@@ -519,7 +518,6 @@ static void TestUdpAddress()
   ACE_ASSERT(ua1.get_port() == 333);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpAddress:ua1.set_port()(\"333\") [%s]\n",
     (const char *)ua1));
-
 }
 
 int

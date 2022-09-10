@@ -55,7 +55,6 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
   throw PortableServer::ForwardRequest (
     CORBA::Object::_duplicate (
       server.in ()));
-
 }
 
 void

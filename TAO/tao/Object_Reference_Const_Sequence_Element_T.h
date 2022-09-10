@@ -75,7 +75,6 @@ private:
   value_type const * const element_;
   CORBA::Boolean const release_;
 };
-
 } // namespace details
 } // namespace CORBA
 

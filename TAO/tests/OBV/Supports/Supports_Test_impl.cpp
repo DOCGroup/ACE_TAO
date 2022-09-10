@@ -126,7 +126,6 @@ test_impl::pass_vt_graph_out (
   ACE_ASSERT (vt_graph_param->size () == 4);
   vt_graph_param->add_node ("NEW1");
   ACE_ASSERT (vt_graph_param->size () == 5);
-
 }
 
 void
@@ -147,7 +146,6 @@ test_impl::pass_vt_graph_inout (
   ACE_ASSERT (vt_graph_param->size () == 6);
   vt_graph_param->add_node ("NEW3");
   ACE_ASSERT (vt_graph_param->size () == 7);
-
 }
 
 void

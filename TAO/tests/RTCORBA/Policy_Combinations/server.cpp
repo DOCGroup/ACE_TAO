@@ -531,7 +531,6 @@ server::test_lanes_bands_client_propagated_poa (void)
                         ::client_priority + 1,
                         &server::test_bands_client_propagated_poa,
                         "lanes_bands_client_propagated");
-
 }
 
 void

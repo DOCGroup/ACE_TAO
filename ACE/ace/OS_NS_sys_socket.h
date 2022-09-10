@@ -315,7 +315,6 @@ namespace ACE_OS
                   int type,
                   int protocol,
                   ACE_HANDLE sv[2]);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

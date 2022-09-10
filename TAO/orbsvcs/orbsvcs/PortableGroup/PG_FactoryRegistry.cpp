@@ -169,7 +169,6 @@ void TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr 
 
   // and create a ior string
   this->ior_ = this->orb_->object_to_string (this->this_obj_.in ());
-
 }
 
 int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)

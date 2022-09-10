@@ -135,7 +135,6 @@ ACE_SUN_Proactor::handle_events_i (ACE_Time_Value *delta)
   retval += this->process_result_queue ();
 
   return retval > 0 ? 1 : 0 ;
-
 }
 
 int

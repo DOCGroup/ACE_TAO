@@ -120,7 +120,6 @@ private:
   ACE_CDR::Octet delivery_type_;
   IdVec destination_id_;
 };
-
 } // namespace
 
 TAO_END_VERSIONED_NAMESPACE_DECL

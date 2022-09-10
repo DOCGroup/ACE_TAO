@@ -148,7 +148,6 @@ namespace ACE_OS {
                const struct strbuf *data,
                int band,
                int flags);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

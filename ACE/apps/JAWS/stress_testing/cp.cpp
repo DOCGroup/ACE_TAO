@@ -3,5 +3,4 @@
 Client_Parameters::Client_Parameters(int i) {
 
   id = i;
-
 }

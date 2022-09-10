@@ -67,7 +67,6 @@ Logger_Client::init (int argc, ACE_TCHAR *argv[])
     }
 
   return 0;
-
 }
 
 int

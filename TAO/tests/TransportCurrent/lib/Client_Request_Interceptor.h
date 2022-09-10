@@ -112,7 +112,6 @@ namespace Test
     /// Test function
     TEST test_;
   };
-
 } // namespace Test
 
 #endif  /* CLIENT_REQUEST_INTERCEPTOR_H */

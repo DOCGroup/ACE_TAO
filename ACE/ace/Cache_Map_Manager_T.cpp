@@ -30,7 +30,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Cache_Map_Manager::ACE_Cache_Map_Manager")));
-
 }
 
 template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES>

@@ -280,7 +280,6 @@ TAO_AV_UDP_Transport::send (const iovec *iov,
   return this->handler_->get_socket ()->send ((const iovec *) iov,
                                               iovcnt,
                                               this->peer_addr_);
-
 }
 
 ssize_t

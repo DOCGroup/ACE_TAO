@@ -29,7 +29,6 @@ LB_server::destroy (void)
       return -1;
     }
   return 1;
-
 }
 
 CORBA::ORB_ptr
@@ -135,7 +134,6 @@ LB_server::start_orb_and_poa (void)
     }
 
   return 1;
-
 }
 
 int
@@ -178,7 +176,6 @@ LB_server::create_object_group (void)
     }
 
   return 1;
-
 }
 
 int

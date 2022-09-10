@@ -138,7 +138,6 @@ NContextExt_Client_i::get_name ()
   *name_componentPtr = '\0';
 
   return name_component;
-
 }
 
 int
@@ -321,5 +320,4 @@ NContextExt_Client_i::print_values (CosNaming::Name name,
 
  ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("The URL form of the string is \n %C\n"),
              url_string.in ()));
-
 }

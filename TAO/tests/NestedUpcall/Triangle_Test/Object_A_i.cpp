@@ -48,7 +48,6 @@ void
 Object_A_i::finish (void)
 {
   this->finish_two_way_call_ = 1;
-
 }
 
 void

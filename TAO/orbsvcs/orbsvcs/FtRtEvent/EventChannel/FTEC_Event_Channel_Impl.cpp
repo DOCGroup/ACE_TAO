@@ -187,7 +187,6 @@ TAO_FTEC_Event_Channel_Impl::TAO_FTEC_Event_Channel_Impl(
     CORBA::Object::_duplicate (attributes.scheduler);
 
   this->create_strategies ();
-
 }
 
 TAO_FTEC_Event_Channel_Impl::~TAO_FTEC_Event_Channel_Impl()

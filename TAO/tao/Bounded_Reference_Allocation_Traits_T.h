@@ -63,7 +63,6 @@ struct bounded_reference_allocation_traits
     return MAX;
   }
 };
-
 } // namespace details
 } // namespace TAO
 

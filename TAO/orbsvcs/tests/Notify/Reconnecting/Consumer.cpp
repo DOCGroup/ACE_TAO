@@ -1560,7 +1560,6 @@ Consumer_Main::init_sequence_proxy_supplier (void)
   this->sequence_proxy_push_supplier_->connect_sequence_push_consumer (
     this->sequence_push_consumer_ref_.in ());
   this->sequence_push_consumer_.set_connected(true);
-
 }
 
 

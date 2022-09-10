@@ -75,7 +75,6 @@ namespace TAO
     //@}
 
   };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

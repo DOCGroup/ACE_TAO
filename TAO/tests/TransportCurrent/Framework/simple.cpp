@@ -70,7 +70,6 @@ testCurrentLoader (int, char *[])
   //  ACE_ASSERT (factory != 0);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testCurrentLoader: OK\n")));
   return 0;
-
 }
 
 

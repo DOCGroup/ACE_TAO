@@ -186,7 +186,6 @@ namespace TAO
     Invocation_Base * const invocation_;
     Invocation_Status status_;
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

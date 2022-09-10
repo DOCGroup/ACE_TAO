@@ -74,7 +74,6 @@ namespace TAO
     // Data Members
   private:
   };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

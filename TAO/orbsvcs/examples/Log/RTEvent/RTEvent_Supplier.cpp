@@ -17,7 +17,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Supplier supplier;
 
   return supplier.run (argc, argv);
-
 }
 
 // ****************************************************************

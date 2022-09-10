@@ -77,7 +77,6 @@ struct unbounded_reference_allocation_traits
     delete[] buffer;
   }
 };
-
 } // namespace details
 } // namespace TAO
 

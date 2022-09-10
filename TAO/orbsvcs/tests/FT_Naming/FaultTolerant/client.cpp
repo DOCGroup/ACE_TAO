@@ -473,7 +473,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
   return rc;
-
 }
 
 //==============================================================================
@@ -1324,7 +1323,6 @@ do_persistence_name_test (
   }
 
   return RC_SUCCESS;
-
 }
 
 

@@ -15,7 +15,6 @@ TAO_Codeset_Manager *
 TAO_Codeset_Manager_Factory_Base::create ()
 {
   return nullptr;
-
 }
 
 int

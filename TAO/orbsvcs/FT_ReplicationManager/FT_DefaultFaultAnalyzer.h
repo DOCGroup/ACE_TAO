@@ -76,7 +76,6 @@ namespace TAO
     FT_DefaultFaultAnalyzer & operator = (const FT_DefaultFaultAnalyzer & rhs);
 
   };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

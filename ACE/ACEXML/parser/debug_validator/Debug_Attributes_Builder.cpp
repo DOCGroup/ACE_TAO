@@ -42,7 +42,6 @@ ACEXML_Debug_Attribute_Builder::setAttType (const ATT_TYPE type)
       return 0;
     }
   ACEXML_THROW_RETURN (ACEXML_SAXParseException (ACE_TEXT("Attribute type redefinition in Debug Validator")), -1);
-
 }
 
 int

@@ -71,7 +71,6 @@ public:
    */
   virtual void close (void);
 };
-
 } // namespace TAO_Notify
 
 TAO_END_VERSIONED_NAMESPACE_DECL

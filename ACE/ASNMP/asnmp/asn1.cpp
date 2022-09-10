@@ -418,7 +418,6 @@ u_char * asn1::build_header( u_char *data,
   *data++ = type;
   (*datalength)--;
   return asn1::build_length(data, datalength, length);
-
 }
 
 /*
@@ -519,7 +518,6 @@ u_char *asn1::build_length( u_char *data,
   }
   *datalength -= (data - start_data);
   return data;
-
 }
 
 /*

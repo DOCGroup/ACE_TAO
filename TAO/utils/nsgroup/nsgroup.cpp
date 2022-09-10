@@ -209,7 +209,6 @@ NSGROUP::start_orb (void)
   }
 
   return RC_SUCCESS;
-
 }
 
 int

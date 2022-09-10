@@ -140,7 +140,6 @@ ACEXML_SAXPrint_Handler::startPrefixMapping (const ACEXML_Char * ,
 //               ACE_TEXT ("* Event startPrefixMapping () ***************\n")));
 //   ACE_DEBUG ((LM_DEBUG,
 //               ACE_TEXT ("Prefix = %s, URI = %s\n"), prefix, uri));
-
 }
 
 // *** Methods inherited from ACEXML_DTDHandler.

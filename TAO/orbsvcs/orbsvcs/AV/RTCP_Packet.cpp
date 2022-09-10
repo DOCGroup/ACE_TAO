@@ -66,7 +66,6 @@ RTCP_Packet::is_valid (char is_first)
     }
 
   return 1;
-
 }
 
 /*

@@ -197,7 +197,6 @@ private:
   bool thread_active_;
   ACE_SYNCH_CONDITION wake_up_thread_;
 };
-
 } /* namespace TAO_Notify */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

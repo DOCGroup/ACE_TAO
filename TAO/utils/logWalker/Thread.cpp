@@ -141,7 +141,6 @@ Thread::split_filename (char *buff, size_t len) const
   *c = '_';
   c = strchr (c, ']');
   strcpy (c, ".txt");
-
 }
 
 void

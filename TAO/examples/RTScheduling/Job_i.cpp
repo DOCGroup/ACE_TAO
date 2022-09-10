@@ -16,7 +16,6 @@ Job_i::Job_i (DT_Creator* dt_creator)
   // create the stat object.
   ACE_NEW (task_stats_, Task_Stats);
   task_stats_->init (100);
-
 }
 
 Job_i::~Job_i (void)

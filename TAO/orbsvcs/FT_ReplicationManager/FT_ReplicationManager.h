@@ -401,7 +401,6 @@ namespace TAO
     /// Quit flag.
     int quit_;
   };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

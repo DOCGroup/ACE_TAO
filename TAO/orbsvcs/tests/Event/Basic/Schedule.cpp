@@ -102,7 +102,6 @@ EC_Schedule::execute_test (void)
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG,
                 "EC_Schedule (%P|%t) schedule dumped\n"));
-
 }
 
 void

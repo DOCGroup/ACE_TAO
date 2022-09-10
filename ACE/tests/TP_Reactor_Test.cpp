@@ -692,7 +692,6 @@ Connector::on_delete_sender (Sender & sndr)
               bufs,
               bufr,
               this->sessions_));
-
 }
 
 int

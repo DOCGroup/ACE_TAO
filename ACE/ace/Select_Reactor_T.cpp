@@ -984,7 +984,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::is_suspended_i (ACE_HANDLE handl
   return this->suspend_set_.rd_mask_.is_set (handle) ||
          this->suspend_set_.wr_mask_.is_set (handle) ||
          this->suspend_set_.ex_mask_.is_set (handle);
-
 }
 
 // Must be called with locks held

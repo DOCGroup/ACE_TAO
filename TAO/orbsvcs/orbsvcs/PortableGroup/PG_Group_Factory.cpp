@@ -358,7 +358,6 @@ TAO::PG_Group_Factory::set_object_group_storable_factory (
   ACE_NEW_THROW_EX (this->list_store_,
                     TAO::PG_Group_List_Store (*this->storable_factory_),
                     CORBA::NO_MEMORY ());
-
 }
 
 TAO::PG_Group_Factory::Group_Map &

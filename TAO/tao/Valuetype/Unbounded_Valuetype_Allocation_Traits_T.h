@@ -69,7 +69,6 @@ struct unbounded_valuetype_allocation_traits
     delete[] buffer;
   }
 };
-
 } // namespace details
 } // namespace TAO
 

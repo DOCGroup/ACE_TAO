@@ -29,7 +29,6 @@ TAO_Notify_ETCL_FilterFactory::~TAO_Notify_ETCL_FilterFactory ()
   }
 
   this->filters_.unbind_all ();
-
 }
 
 CosNotifyFilter::FilterFactory_ptr

@@ -289,7 +289,6 @@ ACE_Service_Gestalt::load_static_svcs ()
         return -1;
     }
   return 0;
-
 } /* load_static_svcs () */
 
 
@@ -608,7 +607,6 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
     }
 
   return this->initialize_i (sr, parameters);
-
 }
 
 /// Dynamically link the shared object file and retrieve a pointer to
@@ -981,7 +979,6 @@ ACE_Service_Gestalt::init_svc_conf_file_queue ()
 #endif
 
   return 0;
-
 } /* init_svc_conf_file_queue () */
 
 
@@ -1168,7 +1165,6 @@ ACE_Service_Gestalt::process_commandline_directives ()
     }
 
   return result;
-
 } /* process_commandline_directives () */
 
 
@@ -1273,7 +1269,6 @@ ACE_Service_Gestalt::process_directives (bool )
     }
 
   return failed;
-
 } /* process_directives () */
 
 // Tidy up and perform last rites on a terminating ACE_Service_Gestalt.

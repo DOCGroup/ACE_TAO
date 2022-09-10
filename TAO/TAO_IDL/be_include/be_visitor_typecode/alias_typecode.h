@@ -49,7 +49,6 @@ namespace TAO
                 const char * tctype);
 
   };
-
 }
 
 #endif  /* TAO_BE_VISITOR_ALIAS_TYPECODE_H */

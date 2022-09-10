@@ -71,7 +71,6 @@ namespace CORBA
     /// Default constructor.
     UserException ();
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

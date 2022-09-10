@@ -55,7 +55,6 @@ TAO_UIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
     return this->create_shared_profile (object_key,
                                         mprofile,
                                         priority);
-
 }
 
 int

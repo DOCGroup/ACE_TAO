@@ -58,7 +58,6 @@ namespace ACE_OS {
 
   extern ACE_Export
   int uname (ACE_utsname *name);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

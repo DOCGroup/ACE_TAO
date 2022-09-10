@@ -184,7 +184,6 @@ namespace TAO
     FT_ReplicationManager * replication_manager_;
 
   };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

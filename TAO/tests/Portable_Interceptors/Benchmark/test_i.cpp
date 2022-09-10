@@ -19,7 +19,6 @@ Secure_Vault_i::authenticate (const char * user)
 {
   if (ACE_OS::strcmp (user, "root") != 0)
     throw Test_Interceptors::Invalid ();
-
 }
 
 CORBA::Long

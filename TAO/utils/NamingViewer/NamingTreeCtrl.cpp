@@ -351,7 +351,6 @@ void CNamingTreeCtrl::OnDestroy()
 
   // TODO: Add your message handler code here
   ClearChildren();
-
 }
 
 

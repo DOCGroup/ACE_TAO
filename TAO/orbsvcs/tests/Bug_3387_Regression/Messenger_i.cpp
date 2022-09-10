@@ -121,6 +121,5 @@ CORBA::Boolean Messenger_i::send_message (
   consumer_proxy_->push_structured_event(event);
 
   return 1;
-
 }
 

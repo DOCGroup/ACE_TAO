@@ -106,7 +106,6 @@ namespace FTAPP
 
 
   };
-
 } // namespace TAO
 
 #include /**/ "ace/post.h"

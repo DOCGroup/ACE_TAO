@@ -105,7 +105,6 @@ ServerRequestInterceptor::receive_request (
   ACE_DEBUG ((LM_INFO,
               "(%P|%t) Server side RSC/TSC semantics appear "
               "to be correct.\n"));
-
 }
 
 void

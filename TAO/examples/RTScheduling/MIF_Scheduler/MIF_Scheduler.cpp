@@ -371,7 +371,6 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
       free_que_.enqueue_prio (run_dt);
     }
   lock_.release ();
-
 }
 
 void

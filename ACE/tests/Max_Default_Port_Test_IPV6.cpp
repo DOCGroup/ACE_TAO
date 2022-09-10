@@ -52,7 +52,6 @@ My_Accept_Handler::open (ACE_INET_Addr &addr)
   }
 
   return 0;
-
 }
 
 ACE_HANDLE

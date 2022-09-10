@@ -220,7 +220,6 @@ Client_Task::svc (void)
     }
 
   return 0;
-
 }
 
 CORBA::ULong

@@ -121,7 +121,6 @@ Object_Group_Factory_i::unbind_round_robin (const char * id)
 
   // Bump down the flags value
   --this->flags_;
-
 }
 
 Load_Balancer::Object_Group_ptr
@@ -775,7 +774,6 @@ Object_Group_i::resolve_with_id (const char * id)
   char *retn_ptr = CORBA::string_dup (ior.in ());
 
   return retn_ptr;
-
 }
 
 Load_Balancer::Member_ID_List *

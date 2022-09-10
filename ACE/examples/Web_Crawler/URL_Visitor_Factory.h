@@ -54,7 +54,6 @@ public:
 
   /// Factory Method that makes a <FIFO_Command_Processor>.
   virtual Command_Processor *make_command_processor (void);
-
 };
 
 /**

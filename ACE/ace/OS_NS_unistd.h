@@ -354,7 +354,6 @@ namespace ACE_OS
                    const void *buf,
                    size_t len,
                    size_t *bytes_transferred = 0);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -174,7 +174,6 @@ namespace TAO
   private:
     ::TAO_ORB_Core * core_;
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

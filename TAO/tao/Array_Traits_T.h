@@ -87,7 +87,6 @@ struct array_traits
     copy_range(begin, end, dst);
   }
 };
-
 } // namespace details
 } // namespace CORBA
 

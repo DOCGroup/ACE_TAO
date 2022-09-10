@@ -76,7 +76,6 @@ HTML_Body_Iterator::next (ACE_CString &url)
         }
     }
   return 0;
-
 }
 
 HTTP_Header_Iterator::HTTP_Header_Iterator (URL &url)

@@ -169,7 +169,6 @@ namespace ACE
       return p->clone ();
     }
   };
-
 } // End namespace ACE.
 
 ACE_END_VERSIONED_NAMESPACE_DECL

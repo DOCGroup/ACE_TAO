@@ -127,7 +127,6 @@ bool operator<=( const Address &lhs,const Address &rhs)
     return true;
   else
     return false;
-
 }
 
 
@@ -1009,7 +1008,6 @@ void NetbiosAddress::InitNBAddr(const char *inaddr)
 NetbiosAddress::NetbiosAddress( const char *inaddr)
 {
   InitNBAddr(inaddr);
-
 }
 
 NetbiosAddress::NetbiosAddress( const char *inaddr,  nb_service svc)

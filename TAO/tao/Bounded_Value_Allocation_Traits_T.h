@@ -54,7 +54,6 @@ struct bounded_value_allocation_traits
   }
   /* static CORBA::ULong const MAXIMUM = MAX; */
 };
-
 } // namespace details
 } // namespace TAO
 

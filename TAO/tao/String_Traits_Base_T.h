@@ -101,7 +101,6 @@ struct string_traits_base<CORBA::WChar>
     return CORBA::wstring_alloc (len);
   }
 };
-
 } // namespace details
 } // namespace TAO
 

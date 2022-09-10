@@ -311,7 +311,6 @@ private:
   mutable CORBA::Boolean release_;
   ACE_Message_Block* mb_;
 };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

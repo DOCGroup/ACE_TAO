@@ -71,7 +71,6 @@ namespace TAO
     void remove_ref () { }
 
   };
-
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

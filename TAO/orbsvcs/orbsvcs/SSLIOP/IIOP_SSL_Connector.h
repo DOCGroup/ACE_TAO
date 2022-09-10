@@ -88,7 +88,6 @@ namespace TAO
     /// The connector initiating connection requests for IIOP_SSL.
     BASE_CONNECTOR base_connector_;
   };
-
 } // End TAO namespace.
 
 TAO_END_VERSIONED_NAMESPACE_DECL

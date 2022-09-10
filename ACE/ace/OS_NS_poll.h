@@ -45,7 +45,6 @@ namespace ACE_OS
   int poll (struct pollfd *pollfds,
             unsigned long len,
             const ACE_Time_Value &tv);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

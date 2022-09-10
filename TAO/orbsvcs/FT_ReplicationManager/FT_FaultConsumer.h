@@ -145,7 +145,6 @@ namespace TAO
     size_t notifications_;
 
   };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

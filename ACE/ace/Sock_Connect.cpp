@@ -111,7 +111,6 @@ namespace
 
   // Does this box have ipv6 turned on?
   int ace_ipv6_enabled = -1;
-
 }
 #else /* ACE_HAS_IPV6 */
 # define SIOCGIFCONF_CMD SIOCGIFCONF

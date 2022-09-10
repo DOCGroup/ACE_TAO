@@ -82,7 +82,6 @@ TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::WrongTransac
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::WrongTransaction*); // noncopying version
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::WrongTransaction *&); // deprecated
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::WrongTransaction *&);
-
 }
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955

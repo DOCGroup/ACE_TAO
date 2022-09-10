@@ -29,7 +29,6 @@ Persistent_Storage_Block::Persistent_Storage_Block(const size_t block_number,
 {
   ACE_NEW(this->data_, unsigned char[this->block_size_]);
   ACE_OS::memset(this->data_, 0, this->block_size_);
-
 }
 
 Persistent_Storage_Block::Persistent_Storage_Block(

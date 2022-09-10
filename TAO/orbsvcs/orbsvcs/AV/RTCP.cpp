@@ -436,7 +436,6 @@ TAO_AV_RTCP_Object::TAO_AV_RTCP_Object (TAO_AV_Callback *client_cb,
 {
   rtcp_cb = &this->rtcp_cb_;
   this->client_cb_ = client_cb;
-
 }
 
 TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object ()

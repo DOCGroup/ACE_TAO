@@ -96,7 +96,6 @@ retrieve_ft_request_context(
 
   if ((cdr >> ft_request_service_context) == 0)
     throw CORBA::BAD_PARAM ();
-
 }
 
 FTRT::TransactionDepth

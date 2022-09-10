@@ -69,7 +69,6 @@ private:
   size_t first_set_bit_;
   size_t first_cleared_bit_;
 };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

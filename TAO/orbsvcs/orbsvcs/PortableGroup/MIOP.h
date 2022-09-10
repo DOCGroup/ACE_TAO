@@ -34,7 +34,6 @@ namespace TAO
 
   static int
   Requires_MIOP_Initializer = MIOP_Loader::Initializer ();
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

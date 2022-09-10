@@ -145,7 +145,6 @@ Pdu& Pdu::operator+=( Vb &vb)
 
   // return self reference
   return *this;
-
 }
 
 // return fomatted version of this object
@@ -191,7 +190,6 @@ int Pdu::get_vblist( Vb* pvbs, const int pvb_count)
       pvbs[z] = *vbs_[z];
 
    return 1;
-
 }
 
 //=====================[ deposit Vbs ]===================================
@@ -275,7 +273,6 @@ int Pdu::set_vb( Vb &vb, const int index)
    validity_ = 1;
 
    return 1;
-
 }
 
 //=====================[ return number of vbs_ ]==========================

@@ -47,7 +47,6 @@ EC_Counting_Consumer::deactivate (void)
   PortableServer::ObjectId_var consumer_id =
     consumer_poa->servant_to_id (this);
   consumer_poa->deactivate_object (consumer_id.in ());
-
 }
 
 void

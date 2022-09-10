@@ -74,7 +74,6 @@ int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel)
     -1);
 
   return 0;
-
 }
 
 

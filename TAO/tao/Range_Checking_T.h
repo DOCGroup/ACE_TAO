@@ -143,7 +143,6 @@ struct range_checking
       throw CORBA::BAD_PARAM ();
   }
 };
-
 } // namespace details
 } // namespace TAO
 

@@ -40,7 +40,6 @@ namespace Test
   private:
     PortableInterceptor::ServerRequestInterceptor_var interceptor_;
   };
-
 }
 
 #include /**/ "ace/post.h"

@@ -127,7 +127,6 @@ Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flo
 
     }
   return true;
-
 }
 
 

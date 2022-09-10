@@ -101,7 +101,6 @@ namespace TAO
     /// Reference counter.
     std::atomic<uint32_t> refcount_;
   };
-
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

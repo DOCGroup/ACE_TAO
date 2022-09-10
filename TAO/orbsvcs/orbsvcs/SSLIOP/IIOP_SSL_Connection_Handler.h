@@ -101,7 +101,6 @@ namespace TAO
     bool setup_done_;
 
   };
-
 } // End TAO namespace.
 
 TAO_END_VERSIONED_NAMESPACE_DECL

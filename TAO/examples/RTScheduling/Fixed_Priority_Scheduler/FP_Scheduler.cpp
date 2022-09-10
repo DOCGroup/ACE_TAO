@@ -76,7 +76,6 @@ Fixed_Priority_Scheduler::create_segment_scheduling_parameter (RTCORBA::Priority
   segment_policy->value (segment_priority);
 
   return segment_policy;
-
 }
 
 
@@ -110,7 +109,6 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
                                       name,
                                       sched_param,
                                       implicit_sched_param);
-
 }
 
 void
@@ -152,7 +150,6 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
                   sizeof (size_t));
   request_info->add_request_service_context (*srv_con,
                                              0);
-
 }
 
 void

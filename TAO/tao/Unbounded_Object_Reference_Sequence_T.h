@@ -109,7 +109,6 @@ public:
 private:
   implementation_type impl_;
 };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -97,7 +97,6 @@ namespace TAO_PG
                                  ACE_SYNCH_NULL_MUTEX> Fragments_Map;
     Fragments_Map fragments_;
   };
-
 } // namespace TAO_PG
 
 TAO_END_VERSIONED_NAMESPACE_DECL

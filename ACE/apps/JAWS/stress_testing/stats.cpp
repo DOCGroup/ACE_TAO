@@ -70,7 +70,6 @@ void Stats::i_have_started(int id) {
 
   init_fini_[2*id].type = THREAD_START;
   init_fini_[2*id].timestamp = ACE_OS::gettimeofday();
-
 }
 
 void Stats::i_am_done(int id) {
@@ -78,7 +77,6 @@ void Stats::i_am_done(int id) {
   init_fini_[(2*id)+1].type = THREAD_END;
 
   init_fini_[(2*id)+1].timestamp = ACE_OS::gettimeofday();
-
 }
 
 

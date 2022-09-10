@@ -62,7 +62,6 @@ TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
   this->proxy_container_.reset (proxy_container);
 
   this->proxy_container().init ();
-
 }
 
 void

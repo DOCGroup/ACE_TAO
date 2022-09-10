@@ -311,7 +311,6 @@ TAO::HTIOP::Connector::cancel_svc_handler (
     return 0;
 
   return -1;
-
 }
 
 

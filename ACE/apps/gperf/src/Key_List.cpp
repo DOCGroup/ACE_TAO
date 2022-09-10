@@ -1000,7 +1000,6 @@ Key_List::output_binary_search_function (void)
   ACE_OS::fflush(stdout);
 
   return 0;
-
 }
 
 // Generates C code for the linear search algorithm that returns
@@ -1089,7 +1088,6 @@ Key_List::output_linear_search_function (void)
   ACE_OS::fflush (stdout);
 
   return 0;
-
 }
 // Generates C code for the hash function that returns the proper
 // encoding for each key word.

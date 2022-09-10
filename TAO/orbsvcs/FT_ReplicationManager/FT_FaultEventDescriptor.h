@@ -66,7 +66,6 @@ namespace TAO
     PortableGroup::FactoryInfos_var factories;
 
   };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -126,7 +126,6 @@ TAO_Notify_Tests_Application_Command::handle_shutdown (void)
   LOOKUP_MANAGER->resolve (driver);
 
   driver->shutdown ();
-
 }
 
 void

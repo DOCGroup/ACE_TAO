@@ -232,7 +232,6 @@ private:
 
   static Routing_Slip_Queue persistent_queue_;
 };
-
 } // namespace
 
 TAO_END_VERSIONED_NAMESPACE_DECL

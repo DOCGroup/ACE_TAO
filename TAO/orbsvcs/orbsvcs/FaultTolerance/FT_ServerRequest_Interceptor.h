@@ -100,7 +100,6 @@ namespace TAO
 
     CORBA::ORB_var orb_;
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

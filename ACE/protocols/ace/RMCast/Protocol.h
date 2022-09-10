@@ -1261,7 +1261,6 @@ namespace ACE_RMCast
     u32 of_;
     u64 total_size_;
   };
-
 }
 
 /*

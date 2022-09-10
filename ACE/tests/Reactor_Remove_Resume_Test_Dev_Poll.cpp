@@ -156,7 +156,6 @@ Bad_Handler::Bad_Handler (ACE_Reactor * reactor,
 {
   this->reference_counting_policy ().value (
      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
-
 }
 
 Bad_Handler::~Bad_Handler ()

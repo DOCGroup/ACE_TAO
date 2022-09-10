@@ -39,7 +39,6 @@ private:
   /// Control the freeze time based on the timeout time
   long timeout_;
 };
-
 } // namespace Bug_3647_Regression
 
 #endif // Bug_3647_Regression_Middle_hpp

@@ -89,7 +89,6 @@ namespace TAO
   public:
     virtual CORBA::ValueBase * create_for_unmarshal ();
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

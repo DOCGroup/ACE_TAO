@@ -186,7 +186,6 @@ namespace Kokyu
     ACE_hthread_t curr_scheduled_thr_handle_;
     Guid_t curr_scheduled_guid_;
   };
-
 } //end of namespace
 
 #if defined (__ACE_INLINE__)

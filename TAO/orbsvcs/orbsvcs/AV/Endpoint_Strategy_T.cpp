@@ -239,7 +239,6 @@ TAO_AV_Endpoint_Reactive_Strategy_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
   stream_endpoint = AVStreams::StreamEndPoint_A::_duplicate( this->stream_endpoint_a_.in() );
   vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
   return 0;
-
 }
 
 // Put the stream_endpoint into the POA

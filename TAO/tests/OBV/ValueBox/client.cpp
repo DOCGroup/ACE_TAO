@@ -125,7 +125,6 @@ int simple_box_test ()
     CORBA::remove_ref (p);
 
     return fail;
-
 }
 
 //

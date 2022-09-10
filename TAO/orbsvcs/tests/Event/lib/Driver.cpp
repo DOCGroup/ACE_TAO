@@ -331,7 +331,6 @@ EC_Driver::deactivate_ec (void)
 
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) EC deactivated\n"));
-
 }
 
 void

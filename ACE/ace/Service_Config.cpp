@@ -506,7 +506,6 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
       break;
     }
   return stp;
-
 }
 
 

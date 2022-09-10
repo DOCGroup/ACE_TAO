@@ -116,7 +116,6 @@ private:
   value_type * element_;
   CORBA::Boolean release_;
 };
-
 } // namespace details
 } // namespace CORBA
 

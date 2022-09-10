@@ -177,5 +177,4 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_END_TEST;
   return status;
-
 }

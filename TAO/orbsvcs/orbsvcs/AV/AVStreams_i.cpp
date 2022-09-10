@@ -2151,7 +2151,6 @@ TAO_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
     return 0;
 
   return 1;
-
 }
 
 // Sets the list of protocols this streamendpoint can understand.
@@ -2609,7 +2608,6 @@ TAO_StreamEndPoint_A::disconnect_leaf (AVStreams::StreamEndPoint_B_ptr /* the_ep
 {
 
   throw AVStreams::notSupported ();
-
 }
 
 TAO_StreamEndPoint_A::~TAO_StreamEndPoint_A ()

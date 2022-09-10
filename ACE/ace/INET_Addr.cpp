@@ -983,7 +983,6 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
   // Here with an unrecognized length.
   errno = EAFNOSUPPORT;
   return -1;
-
 }
 
 #if (defined (ACE_LINUX) || defined (ACE_WIN32)) && defined (ACE_HAS_IPV6)
@@ -1009,7 +1008,6 @@ ACE_INET_Addr::set_interface (const char *intf_name)
     }
   else
     return 0;
-
 }
 #endif /* ACE_LINUX && ACE_HAS_IPV6 */
 

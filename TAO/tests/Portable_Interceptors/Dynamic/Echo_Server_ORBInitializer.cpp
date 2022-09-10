@@ -32,7 +32,6 @@ Echo_Server_ORBInitializer::post_init (
     server_interceptor = interceptor;
 
   info->add_server_request_interceptor (server_interceptor.in ());
-
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

@@ -71,7 +71,6 @@ Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flows
 
     }
   return 1;
-
 }
 
 Receiver_Callback::Receiver_Callback (void)

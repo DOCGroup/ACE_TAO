@@ -118,7 +118,6 @@ Demux_Test_Client::init (int argc, ACE_TCHAR *argv [])
 
   // success
   return 0;
-
 }
 
 // parse command line arguments (if any).

@@ -122,7 +122,6 @@ namespace Test
     /// Endpoints hash table
     EndPoint endPoints_[1001];
   };
-
 } // namespace Test
 
 #endif  /* ISERVER_REQUEST_INTERCEPTOR_H */

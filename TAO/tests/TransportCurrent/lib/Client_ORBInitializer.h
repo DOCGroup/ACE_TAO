@@ -41,7 +41,6 @@ namespace Test
   private:
     PortableInterceptor::ClientRequestInterceptor_var interceptor_;
   };
-
 }
 
 #include /**/ "ace/post.h"

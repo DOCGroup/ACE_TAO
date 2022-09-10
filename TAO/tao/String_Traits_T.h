@@ -77,7 +77,6 @@ struct string_traits
   , public string_traits_decorator<charT,string_traits<charT,dummy> >
 {
 };
-
 } // namespace details
 } // namespace CORBA
 

@@ -96,7 +96,6 @@ HTTP_Header_Processing_Strategy::execute (void)
         }
     }
   return 0;
-
 }
 
 HTML_Body_Validation_Strategy::HTML_Body_Validation_Strategy (URL &url,
@@ -501,7 +500,6 @@ URL_Download_Visitor::make_visitation_strategy_factory (URL &url)
                   URL_Download_Visitation_Strategy_Factory (&url),
                   0);
   return vs;
-
 }
 
 int

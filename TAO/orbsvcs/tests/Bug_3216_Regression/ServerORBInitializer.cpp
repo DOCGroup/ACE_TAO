@@ -20,7 +20,6 @@ Server_ORBInitializer::post_init (
 {
   this->register_server_request_interceptors (info
                                               );
-
 }
 
 void
@@ -40,7 +39,6 @@ Server_ORBInitializer::register_server_request_interceptors (
 
   info->add_server_request_interceptor (server_interceptor.in ()
                                         );
-
 }
 
 

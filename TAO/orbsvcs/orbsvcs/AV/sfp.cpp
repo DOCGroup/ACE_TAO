@@ -649,7 +649,6 @@ TAO_SFP_Base::send_message (TAO_AV_Transport *transport,
       return -1;
     }
   return 1;
-
 }
 
 int

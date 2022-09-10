@@ -170,7 +170,6 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
     }
   // ACE_ASSERT (total_length == fragment_offset);
   // ACE_ASSERT (fragment_id == fragment_count);
-
 }
 
 

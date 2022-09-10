@@ -536,5 +536,4 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   // All tests have passed up to this point
   return 0;
-
 }

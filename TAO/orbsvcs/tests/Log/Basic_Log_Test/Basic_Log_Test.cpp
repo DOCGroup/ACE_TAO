@@ -55,7 +55,6 @@ BasicLog_Test::init (int argc, ACE_TCHAR *argv[])
     }
 
   ACE_RETURN(0);
-
 }
 
 int
@@ -249,7 +248,6 @@ int BasicLog_Test::display_records ()
                rec_list[j].id, rec_list[j].time));
 
   return 0;
-
 }
 */
 int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
@@ -711,5 +709,4 @@ BasicLog_Test::test_capacity_alarm_threshold (void)
   this->write_records (0);
 
   return 0;
-
 }

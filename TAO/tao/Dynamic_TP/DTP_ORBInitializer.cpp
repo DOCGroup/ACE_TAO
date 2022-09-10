@@ -72,7 +72,6 @@ TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
         "DTP_Thread_Lane_Resources_Manager_Factory");
   ACE_Service_Config::process_directive (
     ace_svc_desc_TAO_DTP_Thread_Lane_Resources_Manager_Factory);
-
 }
 
 void

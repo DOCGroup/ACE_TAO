@@ -131,7 +131,6 @@ vary_temp(long temp)
     if (ACE_OS::rand() % 2)
         delta = -delta;
     return temp + delta;
-
 }
 
 //----------------------------------------------------------------

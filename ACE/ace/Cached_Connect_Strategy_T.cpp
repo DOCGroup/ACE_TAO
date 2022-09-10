@@ -306,7 +306,6 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
     }
 
   return 0;
-
 }
 
 

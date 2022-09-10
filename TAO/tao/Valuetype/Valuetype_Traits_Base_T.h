@@ -46,7 +46,6 @@ struct valuetype_traits_base
     return nil();
   }
 };
-
 } // namespace details
 } // namespace TAO
 

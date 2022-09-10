@@ -229,7 +229,6 @@ DT_Creator::register_synch_obj (void)
   // Register the synch object with the Synch context.
   synch_context->rebind (name,
        synch.in ());
-
 }
 
 
@@ -395,7 +394,6 @@ DT_Creator::activate_schedule (void)
     ACE_DEBUG ((LM_DEBUG,
     "Activated schedule, task count = %d\n",
     dt_count_));
-
 }
 
 int

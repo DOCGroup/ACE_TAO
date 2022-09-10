@@ -390,7 +390,6 @@ WUCS4_UTF16::read_wchar_array_i (ACE_InputCDR & cdr,
       return 1;
     }
   return 0;
-
 }
 
 

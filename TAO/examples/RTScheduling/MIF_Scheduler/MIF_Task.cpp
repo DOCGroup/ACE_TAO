@@ -23,7 +23,6 @@ MIF_Task::MIF_Task (int importance,
   // create the stat object.
   ACE_NEW (task_stats_, Task_Stats);
   task_stats_->init (iter_);
-
 }
 
 MIF_Task::~MIF_Task (void)

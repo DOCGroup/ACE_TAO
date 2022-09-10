@@ -54,7 +54,6 @@ DOVE_Supplier::~DOVE_Supplier ()
   delete [] this->connection_params_list_;
 
   delete internal_DOVE_Supplier_ptr_;
-
 }
 
 // Initialize the ORB and the connection to the Name Service
@@ -206,7 +205,6 @@ DOVE_Supplier::connect (const char* MIB_name,
     }
 
   return 0;
-
 }
 
 
@@ -440,7 +438,6 @@ DOVE_Supplier::connect_Supplier ()
   }
 
   return 0;
-
 }
 
 

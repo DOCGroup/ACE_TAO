@@ -239,7 +239,6 @@ namespace TAO
     /// The number of elements in the @c exceptions_ array.
     CORBA::ULong const nexceptions_;
   };
-
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

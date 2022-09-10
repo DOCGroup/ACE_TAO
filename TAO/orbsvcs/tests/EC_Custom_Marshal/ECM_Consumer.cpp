@@ -380,7 +380,6 @@ Test_Consumer::connect (int event_a,
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
                                                 qos.get_ConsumerQOS ());
-
 }
 
 void

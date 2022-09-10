@@ -1856,7 +1856,6 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
                    number_of_calls,
                    dependency_type,
                    enabled);
-
 }
 
 

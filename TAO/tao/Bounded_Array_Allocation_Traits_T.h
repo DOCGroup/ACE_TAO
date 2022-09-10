@@ -48,7 +48,6 @@ struct bounded_array_allocation_traits
     delete[] buffer;
   }
 };
-
 } // namespace details
 } // namespace TAO
 

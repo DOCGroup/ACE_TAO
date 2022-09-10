@@ -101,5 +101,4 @@ protected:
 
   /// Receiver MMDevice.
   TAO_MMDevice *mmdevice_;
-
 };

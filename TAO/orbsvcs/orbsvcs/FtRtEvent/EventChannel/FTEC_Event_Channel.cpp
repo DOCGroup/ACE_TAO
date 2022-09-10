@@ -270,7 +270,6 @@ TAO_FTEC_Event_Channel::connect_push_supplier (
       )
 {
   return ec_impl_->connect_push_supplier(push_supplier, qos);
-
 }
 
 void

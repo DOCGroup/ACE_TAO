@@ -180,7 +180,6 @@ TAO_AV_UDP_QoS_Session_Helper::activate_qos_handler (ACE_QoS_Session *qos_sessio
                       -1);
 
   return 0;
-
 }
 
 TAO_AV_UDP_QoS_Flow_Handler::TAO_AV_UDP_QoS_Flow_Handler (void)
@@ -1066,7 +1065,6 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
   this->entry_->handler (flow_handler);
 
   return 0;
-
 }
 
 int

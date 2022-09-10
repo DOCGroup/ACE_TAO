@@ -91,7 +91,6 @@ find_last ()
     }
 
   return 0;
-
 }
 
 // Explain usage and exit.
