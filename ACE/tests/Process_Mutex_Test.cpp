@@ -154,8 +154,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                             ACE_TEXT ("%") ACE_TEXT_PRIs,
                             argc > 0 ? argv[0] : ACE_TEXT ("Process_Mutex_Test"), mutex_name,
                             release_mutex == 0 ? ACE_TEXT (" -d") : ACE_TEXT (""));
-#else
-      ACE_UNUSED_ARG (format);
 #endif
 
 #ifdef ACE_HAS_PROCESS_SPAWN
