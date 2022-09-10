@@ -146,15 +146,13 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_Process_Mutex mutex( mutex_name );
 #     endif
 
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-      static const ACE_TCHAR* format = ACE_TEXT ("%ls -c -n %ls%ls");
-#else
-      static const ACE_TCHAR* format = ACE_TEXT ("%s -c -n %s%s");
-#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
       ACE_Process_Options options;
 
 #ifndef ACE_LACKS_VA_FUNCTIONS
-      options.command_line (format, argc > 0 ? argv[0] : ACE_TEXT ("Process_Mutex_Test"), mutex_name,
+      options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs
+                            ACE_TEXT (" -c -n %") ACE_TEXT_PRIs
+                            ACE_TEXT ("%") ACE_TEXT_PRIs,
+                            argc > 0 ? argv[0] : ACE_TEXT ("Process_Mutex_Test"), mutex_name,
                             release_mutex == 0 ? ACE_TEXT (" -d") : ACE_TEXT (""));
 #else
       ACE_UNUSED_ARG (format);

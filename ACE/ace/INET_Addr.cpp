@@ -49,20 +49,12 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
     + 5 // ACE_OS::strlen ("65535"), Assuming the max port number.
     + 1 // sizeof (':'), addr/port sep
     + 1; // sizeof ('\0'), terminating NUL
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_TCHAR const *format = ACE_TEXT("%ls:%d");
-#else
-  ACE_TCHAR const *format = ACE_TEXT("%s:%d");
-#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
+  ACE_TCHAR const *format = ACE_TEXT("%") ACE_TEXT_PRIs ACE_TEXT(":%d");
 #if defined (ACE_HAS_IPV6)
   if (ACE_OS::strchr (hoststr, ACE_TEXT (':')) != 0)
     {
       total_len += 2; // ACE_OS::strlen ("[]") IPv6 addr frames
-#  if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-      format = ACE_TEXT("[%ls]:%d");
-#  else
-      format = ACE_TEXT("[%s]:%d");
-#  endif /* !ACE_WIN32 && ACE_USES_WCHAR */
+      format = ACE_TEXT("[%") ACE_TEXT_PRIs ACE_TEXT("]:%d");
     }
 #endif // ACE_HAS_IPV6
 
