@@ -25,7 +25,6 @@ namespace TAO
 {
   namespace Utils
   {
-
     /**
      * @struct ORB_Destroyer_Functor
      *

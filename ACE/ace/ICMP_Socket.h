@@ -43,7 +43,6 @@ public:
    * Data transfer routines.
    */
   //@{
-
   /// Send an @a n byte @a buf to the datagram socket (uses
   /// @c sendto(3) ).
   ssize_t send (void const * buf,

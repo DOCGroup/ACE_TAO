@@ -2386,7 +2386,6 @@ ACE_WIN32_Asynch_Connect::proactor () const
 ACE_HANDLE
 ACE_WIN32_Asynch_Connect::get_handle () const
 {
-
   ACE_ASSERT (0);
   return ACE_INVALID_HANDLE;
 }

@@ -12,7 +12,6 @@ Test::Timestamp
 Roundtrip::test_method (Test::Timestamp send_time,
                         Test::number  cl_number)
 {
-
   if (cl_number % 2 == 0)
   {
     for (int i = 1; i < 10000; i++)

@@ -40,7 +40,6 @@ namespace TAO
 {
   namespace SSLIOP
   {
-
     /**
      * @class Protocol_Factory
      *

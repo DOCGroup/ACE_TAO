@@ -6,7 +6,6 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // ORB initialization boiler plate...

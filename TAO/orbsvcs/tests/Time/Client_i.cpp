@@ -290,7 +290,6 @@ Client_i::~Client_i (void)
 int
 Client_i::obtain_initial_references (void)
 {
-
   try
     {
       // Initialize the naming services.

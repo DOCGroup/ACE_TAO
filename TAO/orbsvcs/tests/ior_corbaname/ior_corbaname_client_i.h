@@ -26,7 +26,6 @@
  */
 class IOR_corbaname_Client_i
 {
-
  public:
   // = Constructor and destructor.
   IOR_corbaname_Client_i (void);

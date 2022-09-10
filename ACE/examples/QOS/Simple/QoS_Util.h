@@ -23,7 +23,6 @@
  */
 class QoS_Util
 {
-
 public:
   // constructor.
   QoS_Util (int argc, ACE_TCHAR *argv[]);

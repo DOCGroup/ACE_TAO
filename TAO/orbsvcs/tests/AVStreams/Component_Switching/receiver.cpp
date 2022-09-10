@@ -145,7 +145,6 @@ Receiver::Receiver (void)
 
 Receiver::~Receiver (void)
 {
-
 }
 
 ACE_CString

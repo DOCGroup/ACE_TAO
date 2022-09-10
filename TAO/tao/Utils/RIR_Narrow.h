@@ -28,7 +28,6 @@ namespace TAO
 {
   namespace Utils
   {
-
     /**
      * @class RIR_Narrow
      *

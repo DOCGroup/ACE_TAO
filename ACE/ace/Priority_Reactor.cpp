@@ -147,7 +147,6 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
       while (!bucket_[i]->is_empty ()
              && number_dispatched < number_of_active_handles)
         {
-
           ACE_Event_Tuple et;
 
           bucket_[i]->dequeue_head (et);

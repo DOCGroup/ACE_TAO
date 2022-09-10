@@ -33,7 +33,6 @@
  */
 class Application_Simulator
 {
-
 public:
   /// Constructor, limits the amount of fragmentation and memory this
   /// class takes.

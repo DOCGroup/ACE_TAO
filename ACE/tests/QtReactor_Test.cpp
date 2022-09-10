@@ -900,7 +900,6 @@ void testQtReactor (int argc, ACE_TCHAR *argv[])
       0 <= handlersRegister.registerDgramHandlers () &&
       0 <= handlersRegister.registerTCPHandlers ())
     {
-
       app.exec (TotalTestTime);
 
       if (0  != handlersRegister.analyze ())

@@ -1408,7 +1408,6 @@ ACE_DynScheduler::relate_task_entries ()
 ACE_DynScheduler::status_t
 ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
 {
-
   // may have entered at a non-root node previously, so this does
   //  not necessarily indicate a cycle in the dependency graph
         if (entry.dfs_status () != Task_Entry::NOT_VISITED)
@@ -1823,7 +1822,6 @@ ACE_DynScheduler::create_timeline ()
     Dispatch_Entry *rescheduled_entry;
     while (reschedule_queue.is_empty () == 0)
     {
-
       if (reschedule_queue.dequeue_head (rescheduled_entry) < 0)
       {
         status = ST_BAD_INTERNAL_POINTER;
@@ -1939,7 +1937,6 @@ ACE_DynScheduler::output_dispatch_priorities (const char *filename)
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_priorities (FILE *file)
 {
-
   u_long dispatch_count = 0;
   u_long i = 0;
   for (i = 0; i < dispatch_entry_count_; ++i)

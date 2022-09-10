@@ -29,7 +29,6 @@
 
 namespace Test
 {
-
   /// A metod doing the actual testing, so we could change it for the
   /// different traits implementations
   typedef int (*TEST) (CORBA::ORB_ptr);

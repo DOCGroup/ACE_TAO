@@ -27,7 +27,6 @@ namespace ACE
   {
     namespace HTTP
       {
-
         /**
         * @class ACE_HTTP_StreamBuffer
         *

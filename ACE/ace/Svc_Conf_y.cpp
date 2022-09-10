@@ -1117,7 +1117,6 @@ ace_yydestruct (ace_yymsg, ace_yytype, ace_yyvaluep)
 
   switch (ace_yytype)
     {
-
       default:
   break;
     }

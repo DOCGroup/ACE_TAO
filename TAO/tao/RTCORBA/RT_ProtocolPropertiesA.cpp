@@ -86,7 +86,6 @@ namespace TAO
 
 
 namespace CORBA {
-
 /// Copying insertion.
 void
 operator<<= (

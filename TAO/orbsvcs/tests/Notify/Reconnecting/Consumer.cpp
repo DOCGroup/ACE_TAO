@@ -1678,7 +1678,6 @@ Consumer_Main::init_any_proxy_supplier (void)
 
 int Consumer_Main::fini (void)
 {
-
   this->reconnection_callback_.fini ();
 
   if (this->disconnect_on_exit_)

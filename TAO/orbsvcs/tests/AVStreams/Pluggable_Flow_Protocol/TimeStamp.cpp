@@ -88,7 +88,6 @@ TimeStamp_Protocol_Object::handle_input (void)
 //        }
 //      else
 //        {
-
 //      ACE_DEBUG ((LM_DEBUG,
 //                  "(%N|%l) Frame Size %d\n",
 //                  n));

@@ -6,7 +6,6 @@
 #include "IIOP_Server_Request_Interceptor.h"
 
 namespace Test {
-
   using namespace TAO;
 
   IIOP_Server_Request_Interceptor::IIOP_Server_Request_Interceptor (const char* orbid, TEST test)

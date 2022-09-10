@@ -3357,7 +3357,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     }
   else if (sched_params.scope () == ACE_SCOPE_PROCESS)
     {
-
 # if defined (ACE_HAS_PHARLAP_RT)
       ACE_NOTSUP_RETURN (-1);
 # else
@@ -3880,7 +3879,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         {
            if (ACE_ADAPT_RETVAL(::pthread_attr_setcreatesuspend_np(&attr), result) != 0)
             {
-
               ::pthread_attr_destroy (&attr);
               return -1;
             }

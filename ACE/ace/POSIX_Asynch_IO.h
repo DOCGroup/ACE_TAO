@@ -222,7 +222,6 @@ protected:
 class ACE_Export ACE_POSIX_Asynch_Read_Stream_Result : public virtual ACE_Asynch_Read_Stream_Result_Impl,
                                                        public ACE_POSIX_Asynch_Result
 {
-
   /// Factory classes will have special permissions.
   friend class ACE_POSIX_Asynch_Read_Stream;
 
@@ -444,7 +443,6 @@ protected:
 class ACE_Export ACE_POSIX_Asynch_Read_File : public virtual ACE_Asynch_Read_File_Impl,
                                               public ACE_POSIX_Asynch_Read_Stream
 {
-
 public:
   /// Constructor.
   ACE_POSIX_Asynch_Read_File (ACE_POSIX_Proactor *posix_proactor);
@@ -1211,7 +1209,6 @@ protected:
 class ACE_Export ACE_POSIX_Asynch_Read_Dgram_Result : public virtual ACE_Asynch_Read_Dgram_Result_Impl,
                                                       public virtual ACE_POSIX_Asynch_Result
 {
-
   /// Factory classes will have special permissions.
   friend class ACE_POSIX_Asynch_Read_Dgram;
 

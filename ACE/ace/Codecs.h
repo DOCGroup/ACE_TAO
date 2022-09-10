@@ -42,7 +42,6 @@ class ACE_Export ACE_Base64
 {
 public:
   //@{
-
   /**
    * Encodes a stream of bytes to Base64 data
    *

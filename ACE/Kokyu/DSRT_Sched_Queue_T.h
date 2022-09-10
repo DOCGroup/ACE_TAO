@@ -22,7 +22,6 @@
 
 namespace Kokyu
 {
-
   /**
    * @class Sched_Ready_Queue
    *

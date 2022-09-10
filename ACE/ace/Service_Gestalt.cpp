@@ -173,7 +173,6 @@ ACE_Service_Gestalt::intrusive_remove_ref (ACE_Service_Gestalt* g)
 
 ACE_Service_Gestalt::~ACE_Service_Gestalt ()
 {
-
   if (this->svc_repo_is_owned_)
     delete this->repo_;
 
@@ -348,7 +347,6 @@ void
 ACE_Service_Gestalt::add_processed_static_svc
   (const ACE_Static_Svc_Descriptor *assd)
 {
-
   /// When process_directive(Static_Svc_Descriptor&) is called, it
   /// associates a service object with the Gestalt and makes the
   /// resource (a Service Object) local to the repository. This is but

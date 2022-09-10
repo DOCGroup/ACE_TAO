@@ -37,7 +37,6 @@ namespace
 
 namespace TAO
 {
-
   class Object_Group_File_Guard : public TAO::Storable_File_Guard
   {
   public:

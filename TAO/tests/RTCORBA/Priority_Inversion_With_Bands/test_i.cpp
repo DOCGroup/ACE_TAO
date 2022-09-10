@@ -17,10 +17,8 @@ test_i::test_i (CORBA::ORB_ptr orb,
     current_iteration_ (0),
     total_iterations_ (0)
 {
-
   try
     {
-
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTCurrent");
 

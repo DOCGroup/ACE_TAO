@@ -148,7 +148,6 @@ namespace TAO
     * Methods required by the POA_FT::ReplicationManager interface.
     */
     //@{
-
     /// Registers the Fault Notifier with the Replication Manager.
     virtual void register_fault_notifier (
         FT::FaultNotifier_ptr fault_notifier);
@@ -171,7 +170,6 @@ namespace TAO
     * Methods required by the PortableGroup::PropertyManager interface.
     */
     //@{
-
     /// Set the default properties to be used by all object groups.
     virtual void set_default_properties (
         const PortableGroup::Properties & props);
@@ -233,7 +231,6 @@ namespace TAO
      * interface.
      */
     //@{
-
     /// Create a member in an object group.
     virtual PortableGroup::ObjectGroup_ptr create_member (
         PortableGroup::ObjectGroup_ptr object_group,
@@ -311,7 +308,6 @@ namespace TAO
      * Methods required by the PortableGroup::GenericFactory interface.
      */
     //@{
-
     /**
      * Create an object of the specified type that adheres to the
      * restrictions defined by the provided Criteria.  The out

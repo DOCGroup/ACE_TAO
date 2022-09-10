@@ -19,7 +19,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename traits>
 class string_sequence_element
 {
@@ -105,7 +104,6 @@ public:
   }
 
   inline string_out out () const {
-
     if (release())
       {
         traits::release(*element_);

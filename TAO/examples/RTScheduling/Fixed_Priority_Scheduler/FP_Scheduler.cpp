@@ -128,7 +128,6 @@ Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Cur
 void
 Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_info)
 {
-
   int priority;
   ACE_hthread_t current;
   ACE_Thread::self (current);

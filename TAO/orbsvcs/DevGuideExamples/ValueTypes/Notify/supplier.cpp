@@ -185,12 +185,10 @@ public:
 };
 
 int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
-
   int num_events = 0;
   int pay_size = 1;
 
   try {
-
     CORBA::ORB_var orb = CORBA::ORB_init(ac, av);
 
     if (parse_args (ac, av) != 0)

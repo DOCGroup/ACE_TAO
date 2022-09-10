@@ -27,7 +27,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Request;
 
 

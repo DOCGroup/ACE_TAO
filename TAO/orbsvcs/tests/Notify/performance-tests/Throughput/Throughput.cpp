@@ -440,7 +440,6 @@ else
 void
 Notify_Throughput::run_test (void)
 {
-
   ACE_DEBUG ((LM_DEBUG, "collocated_ec_ %d ,"
               "burst_count_ %d, "
               "burst_pause_ %d, "

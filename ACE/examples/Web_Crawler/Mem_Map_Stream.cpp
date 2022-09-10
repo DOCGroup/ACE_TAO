@@ -144,7 +144,6 @@ Mem_Map_Stream::open (STRAT_CONNECTOR *connector,
   if (connector->connect (svc_handler_,
                           addr) == -1)
     {
-
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p %s %d\n",
                          "Connect failed",

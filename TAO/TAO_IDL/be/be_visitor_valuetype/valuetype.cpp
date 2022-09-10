@@ -931,7 +931,6 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
 bool
 be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 {
-
   // Just try to find a VT with concrete factory in inheritance tree.
   if (node == nullptr)
     {

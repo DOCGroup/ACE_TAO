@@ -13,7 +13,6 @@ QoS_Signal_Handler::QoS_Signal_Handler (ACE_QoS_Session *qos_session)
 int
 QoS_Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
 {
-
   ACE_DEBUG ((LM_DEBUG,
               "QoS_Signal_Handler::handle_signal\n"));
 

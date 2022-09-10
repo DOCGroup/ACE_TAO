@@ -43,7 +43,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
@@ -124,7 +123,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       for (int i = 0; i < num_trials; i++)
         {
-
           // Create a vt_graph_impl instance and store the reference as a
           // vt_graph_var. Then register the instance with the POA to obtain an
           // object reference, stored as a graph_var. Increment the reference count

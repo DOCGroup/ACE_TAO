@@ -67,7 +67,6 @@ public:
    */
   struct POD_RT_Info
   {
-
     const char *entry_point;
     RtecScheduler::handle_t handle;
     RtecScheduler::Time worst_case_execution_time;

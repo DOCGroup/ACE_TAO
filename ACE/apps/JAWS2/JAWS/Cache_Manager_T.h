@@ -16,7 +16,6 @@ class JAWS_Cache_List;
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC>
 class JAWS_Cache_Manager
 {
-
   friend class JAWS_Cache_Hash<KEY, HASH_FUNC, EQ_FUNC>;
   friend class JAWS_Cache_Heap<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;
   friend class JAWS_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;

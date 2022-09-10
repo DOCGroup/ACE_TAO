@@ -204,7 +204,6 @@ EC_Supplier_Task::EC_Supplier_Task (EC_Supplier* supplier,
 int
 EC_Supplier_Task::svc (void)
 {
-
   // Initialize a time value to pace the test
   ACE_Time_Value tv (0, this->burst_pause_);
 

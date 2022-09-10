@@ -224,7 +224,6 @@ Server::handle_input (ACE_HANDLE /* handle */)
         {
           if (errno == EWOULDBLOCK)
             {
-
 //               ACE_HEX_DUMP ((LM_DEBUG,
 //                              buf,
 //                              80,

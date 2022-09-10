@@ -96,7 +96,6 @@ be_visitor_context_svts::visit_connector (be_connector *node)
 int
 be_visitor_context_svts::visit_uses (be_uses *node)
 {
-
   ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();

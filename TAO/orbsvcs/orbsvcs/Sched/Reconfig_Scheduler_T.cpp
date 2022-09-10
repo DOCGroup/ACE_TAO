@@ -1158,7 +1158,6 @@ recompute_scheduling (CORBA::Long /* minimum_priority */,
   // If everything is already up to date, we're done.
   if (SCHED_ALL_STABLE == stability_flags_)
     {
-
       // Must always provide a value for an out parameter
       ACE_NEW_THROW_EX (anomalies,
          RtecScheduler::Scheduling_Anomaly_Set (0),
@@ -1172,7 +1171,6 @@ recompute_scheduling (CORBA::Long /* minimum_priority */,
   if ((this->stability_flags_ & SCHED_PROPAGATION_NOT_STABLE)
       || (this->stability_flags_ & SCHED_UTILIZATION_NOT_STABLE))
     {
-
 #if defined (SCHEDULER_LOGGING)
       ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
                                                     this->rt_info_count_,

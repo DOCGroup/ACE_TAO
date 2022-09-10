@@ -20,7 +20,6 @@ namespace TAO
 {
   namespace Transport
   {
-
     // Forward decl
     class Stats;
 

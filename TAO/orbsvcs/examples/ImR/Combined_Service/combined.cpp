@@ -37,7 +37,6 @@ public:
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
-
     ACE_Service_Config config;
     config.open (argc, argv);
 

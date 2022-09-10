@@ -142,7 +142,6 @@ NSGROUP::start_orb (void)
 
   try
   {
-
 #if 0
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("start_orb::argc(%u)\n"), this->argc_));
     for( int i = 0; i < this->argc_; ++i){
@@ -159,7 +158,6 @@ NSGROUP::start_orb (void)
 
     if (RC_SUCCESS != svc_.set_orb (orb_.in ()))
     {
-
       ACE_ERROR_RETURN (( LM_ERROR,
                           ACE_TEXT (" (%P|%t) Unable to initialize the ORB.\n")),
                           RC_ERROR);
@@ -221,7 +219,6 @@ NSGROUP::run_cmd(void)
 
   switch( parse_command_line () )
   {
-
     case NSGROUP_HELP:
       return show_usage ();
     break;
@@ -383,7 +380,6 @@ NSGROUP::parse_command_line (void)
   int non_option_arg_count = 0;
   for( int i = get_opts.opt_ind (); i < this->argc_; ++i)
   {
-
     non_option_arg_count++;
 
 
@@ -490,7 +486,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-
       NSGROUP ns_group (argc, argv);
 
       if ( show_help (argc, argv) )

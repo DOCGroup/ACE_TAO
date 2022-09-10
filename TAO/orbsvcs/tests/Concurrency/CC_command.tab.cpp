@@ -737,7 +737,6 @@ ace_cc_yyreduce:
 
 
   switch (ace_cc_yyn) {
-
 case 2:
 { cmdlist->add(new CC_Sleep_Cmd(0));
          /* dummy to check exeption in the last command */

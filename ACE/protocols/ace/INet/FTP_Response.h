@@ -21,7 +21,6 @@ namespace ACE
   {
     namespace FTP
       {
-
         /**
         * @class ACE_FTP_Response
         *

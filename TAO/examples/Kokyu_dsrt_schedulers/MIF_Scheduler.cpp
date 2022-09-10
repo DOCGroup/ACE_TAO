@@ -64,7 +64,6 @@ MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb,
     ace_sched_policy_ (ace_sched_policy),
     ace_sched_scope_ (ace_sched_scope)
 {
-
   Kokyu::DSRT_ConfigInfo config;
 
   config.impl_type_ = this->disp_impl_type_;
@@ -229,7 +228,6 @@ MIF_Scheduler::end_nested_scheduling_segment (
                    const char *,
                    CORBA::Policy_ptr)
 {
-
 }
 
 

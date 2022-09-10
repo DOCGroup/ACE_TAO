@@ -26,7 +26,6 @@ namespace ACE
 {
   namespace HTBP
   {
-
     // Forward declarations.
     class Channel;
 

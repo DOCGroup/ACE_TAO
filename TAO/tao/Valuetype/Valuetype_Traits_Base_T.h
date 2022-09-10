@@ -16,7 +16,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename object_t, typename object_t_var>
 struct valuetype_traits_base
 {

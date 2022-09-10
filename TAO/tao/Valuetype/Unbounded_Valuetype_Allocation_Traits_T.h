@@ -17,7 +17,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename T, class ref_traits, bool dummy>
 struct unbounded_valuetype_allocation_traits
 {

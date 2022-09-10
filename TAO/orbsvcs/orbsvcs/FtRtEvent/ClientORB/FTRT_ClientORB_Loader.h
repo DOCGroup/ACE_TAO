@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ORB_Core;
 
 namespace TAO_FTRT {
-
   class TAO_FTRT_Export FTRT_ClientORB_Loader : public ACE_Service_Object
   {
   public:

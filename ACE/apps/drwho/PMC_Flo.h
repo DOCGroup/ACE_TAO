@@ -21,7 +21,6 @@
  */
 class PMC_Flo : public PM_Client
 {
-
 public:
   PMC_Flo (void);
   virtual void process (void);

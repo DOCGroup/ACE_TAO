@@ -17,7 +17,6 @@ TAO_EventLog_i::TAO_EventLog_i (CORBA::ORB_ptr orb,
     poa_(PortableServer::POA::_duplicate(poa)),
     log_poa_(PortableServer::POA::_duplicate(log_poa))
 {
-
   // Create an instance of the event channel.
   TAO_CEC_EventChannel_Attributes attr (this->poa_.in(),
                                         this->poa_.in());

@@ -42,13 +42,11 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 
   if (bind_result != -1)
     {
-
       int result = this->caching_strategy_.notify_bind (bind_result,
                                                         cache_value.second);
 
       if (result == -1)
         {
-
           this->map_.unbind (key);
 
           // Unless the notification goes thru the bind operation is
@@ -75,13 +73,11 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 
   if (rebind_result != -1)
     {
-
       int result = this->caching_strategy_.notify_rebind (rebind_result,
                                                           cache_value.second ());
 
       if (result == -1)
         {
-
           // Make sure the unbind operation is done only when the
           // notification fails after a bind which is denoted by
           // rebind_result = 0
@@ -118,7 +114,6 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 
       if (result == -1)
         {
-
           // If the entry has got inserted into the map, it is removed
           // due to failure.
           if (trybind_result == 0)
@@ -129,7 +124,6 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
         }
       else
         {
-
           // If an attempt is made to bind an existing entry the value
           // is overwritten with the value from the map.
           if (trybind_result == 1)
@@ -152,7 +146,6 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 
   if (find_result != -1)
     {
-
       int result = this->caching_strategy_.notify_find (find_result,
                                                         entry->int_id_.second);
 
@@ -202,7 +195,6 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 
   if (unbind_result != -1)
     {
-
       int result = this->caching_strategy_.notify_unbind (unbind_result,
                                                           entry->int_id_.second);
 

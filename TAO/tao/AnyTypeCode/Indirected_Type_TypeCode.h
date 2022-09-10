@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Indirected_Type
      *
@@ -120,7 +119,6 @@ namespace TAO
 
     private:
       //@{
-
       /// Typecode id
       CORBA::String_var id_;
 

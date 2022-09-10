@@ -835,7 +835,6 @@ yyreduce:
 
 
   switch (yyn) {
-
 case 3:
 //#line 97 "ETCL/ETCL.yy"
 { yyval.constraint = new ETCL_Preference (ETCL_MIN, yyvsp[0].constraint); ;

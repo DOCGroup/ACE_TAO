@@ -504,7 +504,6 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
       PortableGroup::FactoryInfo & info = infos[nInfo];
       if (info.the_location == location)
       {
-
         ORBSVCS_ERROR((LM_INFO,
           "%s: Unregister_factory_by_location: Removing: [%d] %s@%s\n",
           this->identity_.c_str(),

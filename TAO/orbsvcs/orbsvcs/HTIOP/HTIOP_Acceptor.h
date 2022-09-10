@@ -48,7 +48,6 @@ namespace TAO
 {
   namespace HTIOP
   {
-
     // TAO HTIOP_Acceptor concrete call definition
 
     /**

@@ -105,7 +105,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       TAO_Naming_Client name_svc;
       try {
-
         ACE_Time_Value timeout (10); // Wait up to 10 seconds for the naming service
         if (name_svc.init (orb.in (), &timeout) != 0)
           ACE_ERROR_RETURN ((LM_DEBUG,
@@ -144,7 +143,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
         try {
-
           // Each time we invoke resolve, we get a different member
           tmp =
             name_svc->resolve (name);
@@ -205,7 +203,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       hammer.wait ();
 
       try {
-
         basic->shutdown ();
 
         ACE_DEBUG ((LM_DEBUG,

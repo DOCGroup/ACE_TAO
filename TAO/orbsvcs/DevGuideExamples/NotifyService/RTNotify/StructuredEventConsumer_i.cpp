@@ -12,7 +12,6 @@ StructuredEventConsumer_i::push_structured_event(
        const CosNotification::StructuredEvent &event
       )
 {
-
   std::cout << "event received " << std::endl;
 
   const char *value;
@@ -27,7 +26,6 @@ StructuredEventConsumer_i::push_structured_event(
 void
 StructuredEventConsumer_i::disconnect_structured_push_consumer()
 {
-
    CORBA::Object_var obj = orb_->resolve_initial_references ("POACurrent");
    PortableServer::Current_var current =
                           PortableServer::Current::_narrow (obj.in());

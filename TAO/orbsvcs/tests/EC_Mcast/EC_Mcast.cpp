@@ -86,7 +86,6 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
                j < this->local_federations_[i]->supplier_types ();
                ++j)
             {
-
               ACE_DEBUG ((LM_DEBUG,
                           "    name = <%s>\n"
                           "    ipadd = <%x>\n",

@@ -280,7 +280,6 @@ Client::init (int argc,
 int
 Client::pace_data (void)
 {
-
   // Rate at which frames of data need to be sent.
   this->frame_rate_ = CLIENT::instance ()->frame_rate ();
 
@@ -303,7 +302,6 @@ Client::pace_data (void)
 
   try
     {
-
       // Continue to send data till the file is read to the end.
       while (1)
         {

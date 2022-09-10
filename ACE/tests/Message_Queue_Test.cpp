@@ -408,7 +408,6 @@ iterator_test ()
 static int
 chained_block_test ()
 {
-
   QUEUE q;
   const char * s = "123456789";      // Will be length 10 when copied to block
   const size_t slen = 10;

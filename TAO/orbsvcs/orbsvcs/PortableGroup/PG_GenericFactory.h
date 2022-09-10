@@ -60,7 +60,6 @@ public:
    * @name TAO_LoadBalancer::GenericFactory methods
    */
   //@{
-
   /**
    * Create an object of the specified type that adheres to the
    * restrictions defined by the provided Criteria.  The out

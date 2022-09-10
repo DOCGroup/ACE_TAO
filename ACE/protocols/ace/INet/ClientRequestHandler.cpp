@@ -12,7 +12,6 @@ namespace ACE
 {
   namespace INet
   {
-
     ClientRequestHandler::ClientRequestHandler () {}
 
     ClientRequestHandler::~ClientRequestHandler () {}

@@ -1,7 +1,6 @@
 #include "util.h"
 
 URL::URL(char *input_buf) {
-
   char *buffer = new char[BUFSIZ];
 
   ACE_OS::strcpy(buffer,input_buf);

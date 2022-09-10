@@ -280,7 +280,6 @@ Thread::get_summary (long &sent_reqs,
                      size_t &sent_size,
                      size_t &recv_size)
 {
-
   for (ACE_DLList_Iterator <Invocation> i(this->invocations_);
        !i.done();
        i.advance())

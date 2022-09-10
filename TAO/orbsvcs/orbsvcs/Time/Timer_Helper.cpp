@@ -18,7 +18,6 @@ Timer_Helper::Timer_Helper ()
 Timer_Helper::Timer_Helper (TAO_Time_Service_Clerk *clerk)
   : clerk_ (clerk)
 {
-
 }
 
 Timer_Helper::~Timer_Helper ()

@@ -25,7 +25,6 @@
  */
 class Signal_Handler : public ACE_Event_Handler
 {
-
 public:
   Signal_Handler (void);
 
@@ -80,7 +79,6 @@ private:
  */
 class Distributer_Sender_Callback : public TAO_AV_Callback
 {
-
 public:
   //// Called when the sender has finished reading the file and wants
   //// to close down the connection.

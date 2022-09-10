@@ -144,7 +144,6 @@ TAO_Persistent_Context_Index::init (size_t context_size)
     // CASE 1:there are no Naming Contexts registered.  We need to create
     // one.
     {
-
       this->root_context_ =
         TAO_Persistent_Naming_Context::make_new_context (poa_.in (),
                                                          TAO_ROOT_NAMING_CONTEXT,

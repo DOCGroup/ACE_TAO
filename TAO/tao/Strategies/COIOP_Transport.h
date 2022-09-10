@@ -63,7 +63,6 @@ protected:
    * These are implementations of template methods declared by TAO_Transport.
    */
   //@{
-
   virtual ACE_Event_Handler * event_handler_i (void);
   virtual TAO_Connection_Handler *connection_handler_i (void);
 

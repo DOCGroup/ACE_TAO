@@ -14,7 +14,6 @@ namespace ACE
 {
   namespace HTTP
   {
-
     StreamBuffer::StreamBuffer (std::iostream& stream, StreamBuffer::policy_type* policy)
       : ACE::IOS::BufferedStreamBuffer (BUFFER_SIZE,
                                         std::ios::in | std::ios::out),

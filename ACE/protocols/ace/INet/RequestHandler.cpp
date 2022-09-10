@@ -7,7 +7,6 @@ namespace ACE
 {
   namespace INet
   {
-
     RequestHandler::RequestHandler () {}
 
     RequestHandler::~RequestHandler () {}

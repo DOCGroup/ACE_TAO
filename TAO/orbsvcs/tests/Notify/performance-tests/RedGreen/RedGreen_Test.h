@@ -66,7 +66,6 @@ private:
  */
 class RedGreen_Test
 {
-
  public:
   // = Initialization
   RedGreen_Test (void);

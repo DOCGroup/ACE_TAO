@@ -20,7 +20,6 @@ class TAO_Notify_ProxySupplier;
 
 namespace TAO_Notify
 {
-
 // Forward declarations of TAO_Notify classes/pointers/collections declared
 // in this header
 class Delivery_Request;

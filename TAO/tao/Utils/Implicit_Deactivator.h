@@ -26,7 +26,6 @@ namespace TAO
 {
   namespace Utils
   {
-
     /**
      * @struct Implicit_Deactivation_Functor
      *

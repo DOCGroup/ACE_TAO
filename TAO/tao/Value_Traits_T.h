@@ -19,7 +19,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename T, bool dummy>
 struct value_traits
 {

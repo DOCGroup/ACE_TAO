@@ -42,7 +42,6 @@ public:
     }
     else
     {
-
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ClientTask start.\n")));
       int i = 0;
       ACE_Time_Value due = ACE_OS::gettimeofday () + ACE_Time_Value (test_duration);

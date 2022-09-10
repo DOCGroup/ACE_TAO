@@ -185,7 +185,6 @@ Consumer_Handler::via_naming_service ()
 int
 Consumer_Handler::init (int argc, ACE_TCHAR **argv)
 {
-
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -247,7 +246,6 @@ Consumer_Handler::init (int argc, ACE_TCHAR **argv)
          }
       else
         {
-
           if (this->ior_ == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: no ior specified\n",
@@ -306,7 +304,6 @@ Consumer_Handler::run ()
 
       if (this->interactive_ == 0)
         {
-
           // Register with the server.
           this->server_->register_callback (this->stock_name_.c_str (),
                                             this->threshold_value_,

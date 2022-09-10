@@ -446,7 +446,6 @@ run_test (int disable_notify_pipe,
  */
 class Purged_Notify : public ACE_Event_Handler
 {
-
   int handle_exception (ACE_HANDLE = ACE_INVALID_HANDLE) override
   {
     ACE_ERROR_RETURN ((LM_ERROR,

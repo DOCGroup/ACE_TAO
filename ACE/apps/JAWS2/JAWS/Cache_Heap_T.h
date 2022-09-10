@@ -73,7 +73,6 @@ private:
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
 class JAWS_Cache_Heap_Item
 {
-
   friend class JAWS_Cache_Heap<EXT_ID, FACT, H_FN, E_FN>;
 
 public:

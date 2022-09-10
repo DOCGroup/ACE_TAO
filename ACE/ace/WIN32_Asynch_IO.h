@@ -314,7 +314,6 @@ protected:
 class ACE_Export ACE_WIN32_Asynch_Read_Stream : public virtual ACE_Asynch_Read_Stream_Impl,
                                                 public ACE_WIN32_Asynch_Operation
 {
-
 public:
   /// Constructor.
   ACE_WIN32_Asynch_Read_Stream (ACE_WIN32_Proactor *win32_proactor);
@@ -660,7 +659,6 @@ protected:
 class ACE_Export ACE_WIN32_Asynch_Read_File : public virtual ACE_Asynch_Read_File_Impl,
                                               public ACE_WIN32_Asynch_Read_Stream
 {
-
 public:
   /// Constructor.
   ACE_WIN32_Asynch_Read_File (ACE_WIN32_Proactor *win32_proactor);

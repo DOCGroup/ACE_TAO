@@ -33,7 +33,6 @@
  */
 class Object_B_Server
 {
-
 public:
   /// Default constructor
   Object_B_Server (void);

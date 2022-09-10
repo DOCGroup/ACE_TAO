@@ -173,7 +173,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
       {
-
         // Thread Manager for managing task.
         ACE_Thread_Manager thread_manager;
 

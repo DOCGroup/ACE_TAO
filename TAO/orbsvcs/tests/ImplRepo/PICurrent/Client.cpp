@@ -101,7 +101,6 @@ public:
 
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
   {
-
     if (CORBA::is_nil (this->pic_.in()))
       {
         ACE_GUARD (TAO_SYNCH_MUTEX, g, this->lock_);

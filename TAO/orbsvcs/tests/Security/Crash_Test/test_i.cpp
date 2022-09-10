@@ -7,7 +7,6 @@
 void
 Simple_Server_i::send_line (const char *)
 {
-
   /*
   static unsigned long count = 0;
 

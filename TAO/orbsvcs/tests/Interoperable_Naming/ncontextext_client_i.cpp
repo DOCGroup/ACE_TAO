@@ -36,7 +36,6 @@ NContextExt_Client_i::~NContextExt_Client_i (void)
 int
 NContextExt_Client_i::parse_args (void)
 {
-
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dvs"));
   int c;
 
@@ -71,7 +70,6 @@ NContextExt_Client_i::parse_args (void)
 char *
 NContextExt_Client_i::get_name ()
 {
-
   // USe time (NULL) to produce the seed:
   ACE_OS::srand (static_cast<u_int> (ACE_OS::time (0)));
 
@@ -82,7 +80,6 @@ NContextExt_Client_i::get_name ()
 
   for (int i = 0; i < len; ++i)
     {
-
       int rand_value = ACE_OS::rand () % 10;
 
       switch (rand_value)
@@ -143,7 +140,6 @@ NContextExt_Client_i::get_name ()
 int
 NContextExt_Client_i::run (void)
 {
-
   try
     {
       CosNaming::Name name;
@@ -290,7 +286,6 @@ NContextExt_Client_i::print_values (CosNaming::Name name,
                                     CORBA::String_var obj_name,
                                     CORBA::String_var url_string)
 {
-
   ACE_DEBUG((LM_DEBUG, ACE_TEXT ("The first component id is %C,")
              ACE_TEXT ("The first component kind is %C,")
              ACE_TEXT ("The second component id is %C,")

@@ -19,7 +19,6 @@ namespace ACE
 {
   namespace HTBP
   {
-
     /**
      * @class Environment
      *

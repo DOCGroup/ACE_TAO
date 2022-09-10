@@ -50,7 +50,6 @@
  */
 class Mem_Map_Stream
 {
-
 public:
   typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;
 

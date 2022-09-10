@@ -54,7 +54,6 @@ public:
    * Methods exposed by the PortableInterceptor::IORInfo interface.
    */
   //@{
-
   /// Return the policy matching the given policy type that is in
   /// effect for the object whose IOR is being created.
   virtual CORBA::Policy_ptr get_effective_policy (CORBA::PolicyType type);

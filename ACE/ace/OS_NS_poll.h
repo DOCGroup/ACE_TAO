@@ -35,7 +35,6 @@ class ACE_Time_Value;
 
 namespace ACE_OS
 {
-
   ACE_NAMESPACE_INLINE_FUNCTION
   int poll (struct pollfd *pollfds,
             unsigned long len,

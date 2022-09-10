@@ -39,7 +39,6 @@ void
 Vault_Server_Request_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
@@ -73,7 +72,6 @@ void
 Vault_Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
@@ -133,7 +131,6 @@ void
 Vault_Server_Request_Context_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   IOP::ServiceId id = request_ctx_id;
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (id);
@@ -148,7 +145,6 @@ void
 Vault_Server_Request_Context_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
-
 }
 
 void
@@ -190,7 +186,6 @@ void
 Vault_Server_Request_Dynamic_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
@@ -229,7 +224,6 @@ void
 Vault_Server_Request_Dynamic_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "ready") == 0)
@@ -301,7 +295,6 @@ void
 Vault_Server_Request_NOOP_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
-
 }
 
 void

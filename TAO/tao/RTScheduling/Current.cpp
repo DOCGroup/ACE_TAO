@@ -167,7 +167,6 @@ TAO_RTScheduler_Current::id (void)
 CORBA::Policy_ptr
 TAO_RTScheduler_Current::scheduling_parameter (void)
 {
-
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
   if (impl == 0)
@@ -427,7 +426,6 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name)
 
       // A Nested segment.
     } else {
-
       // Inform scheduler of end of nested
       // scheduling segment.
       this->scheduler_->end_nested_scheduling_segment (this->guid_,
@@ -575,7 +573,6 @@ DTTask::svc ()
 {
   try
     {
-
       TAO_TSS_Resources *tss =
         TAO_TSS_Resources::instance ();
 
@@ -602,7 +599,6 @@ DTTask::svc ()
 RTScheduling::Current::IdType *
 TAO_RTScheduler_Current_i::id ()
 {
-
   RTScheduling::Current::IdType_var guid = this->guid_;
   return guid._retn ();
 }

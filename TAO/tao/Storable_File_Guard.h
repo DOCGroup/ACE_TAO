@@ -52,7 +52,6 @@ namespace TAO
     /// the persistent store.
     enum Method_Type
     {
-
       /// Construction with persistent file already existing
       CREATE_WITH_FILE,
 

@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Case
      *

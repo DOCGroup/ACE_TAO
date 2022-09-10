@@ -1005,7 +1005,6 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
       FlowEndPoint_Map_Entry *a_feps_entry, *b_feps_entry;
       try
         {
-
           for (;a_feps_iterator.next (a_feps_entry) != 0;
                a_feps_iterator.advance ())
             {
@@ -1392,7 +1391,6 @@ TAO_MCastConfigIf::set_dev_params (const char * flowName,
   Peer_Info *info;
   try
     {
-
       for (this->peer_list_iterator_.first ();
            (info = this->peer_list_iterator_.next ()) != 0;
            this->peer_list_iterator_.advance ())
@@ -1479,7 +1477,6 @@ TAO_Base_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &)
 CORBA::Boolean
 TAO_Base_StreamEndPoint::handle_postconnect (AVStreams::flowSpec &)
 {
-
   while (!this->is_protocol_object_set ())
     TAO_AV_CORE::instance ()->orb ()->perform_work ();
   return 1;
@@ -1762,7 +1759,6 @@ TAO_StreamEndPoint::stop (const AVStreams::flowSpec &flow_spec)
 
   if (flow_spec.length () > 0)
     {
-
       for (u_int i=0;i<flow_spec.length ();i++)
         {
           TAO_AV_FlowSpecSetItor end = this->forward_flow_spec_set.end ();
@@ -2535,7 +2531,6 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                 }
               else
                 {
-
                   switch (forward_entry->direction ())
                     {
                     case TAO_FlowSpec_Entry::TAO_AV_DIR_IN:
@@ -2606,7 +2601,6 @@ TAO_StreamEndPoint_A::disconnect_leaf (AVStreams::StreamEndPoint_B_ptr /* the_ep
                                        const AVStreams::flowSpec & /* theSpec */)
 
 {
-
   throw AVStreams::notSupported ();
 }
 
@@ -3300,7 +3294,6 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj)
 CORBA::Object_ptr
 TAO_MMDevice::get_fdev (const char *flow_name)
 {
-
   ACE_CString fdev_name_key (flow_name);
   AVStreams::FDev_var fdev_entry;
   if (this->fdev_map_.find (fdev_name_key, fdev_entry) == 0)
@@ -3569,7 +3562,6 @@ TAO_FlowConnection::connect (AVStreams::FlowProducer_ptr producer,
 {
   try
     {
-
       AVStreams::FlowProducer_ptr flow_producer =
         AVStreams::FlowProducer::_duplicate (producer);
       AVStreams::FlowConsumer_ptr flow_consumer =
@@ -3919,7 +3911,6 @@ TAO_FlowEndPoint::destroy ()
 AVStreams::StreamEndPoint_ptr
 TAO_FlowEndPoint::related_sep ()
 {
-
   return AVStreams::StreamEndPoint::_duplicate (this->related_sep_.in ());
 }
 

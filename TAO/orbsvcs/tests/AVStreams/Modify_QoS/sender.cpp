@@ -239,8 +239,6 @@ Sender::init (int argc,
 int
 Sender::pace_data (void)
 {
-
-
   // The time between two consecutive frames.
   inter_frame_time.set (1 / (double) this->frame_rate_);
 

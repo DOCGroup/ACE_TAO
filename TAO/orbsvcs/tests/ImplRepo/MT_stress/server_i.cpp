@@ -36,7 +36,6 @@ Server_i::Server_i (void)
 
 Server_i::~Server_i()
 {
-
   this->root_poa_->destroy(1, 1);
   this->orb_->destroy();
 }

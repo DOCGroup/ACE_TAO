@@ -221,7 +221,6 @@ AIO_Input_Handler * AIO_CLD_Acceptor::make_handler (void) {
 int AIO_CLD_Connector::validate_connection
   (const ACE_Asynch_Connect::Result& result,
    const ACE_INET_Addr &remote, const ACE_INET_Addr&) {
-
   remote_addr_ = remote;
   if (!result.success ()) {
     ACE_Time_Value delay (retry_delay_);
@@ -344,7 +343,6 @@ public:
 };
 
 int AIO_Client_Logging_Daemon::init (int, ACE_TCHAR *[]) {
-
   ACE_ERROR_RETURN
     ((LM_ERROR, ACE_TEXT ("This service requires AIO support\n")), -1);
 }

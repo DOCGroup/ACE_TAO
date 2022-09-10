@@ -39,7 +39,6 @@ FillQoSParams (ACE_QoS_Params &qos_params,
 
 TAO_AV_UDP_QoS_Session_Helper::TAO_AV_UDP_QoS_Session_Helper (void)
 {
-
 }
 
 TAO_AV_UDP_QoS_Session_Helper::~TAO_AV_UDP_QoS_Session_Helper (void)
@@ -318,7 +317,6 @@ TAO_AV_UDP_QoS_Flow_Handler::translate (ACE_Flow_Spec *ace_flow_spec,
 int
 TAO_AV_UDP_QoS_Flow_Handler::handle_qos (ACE_HANDLE /*fd*/)
 {
-
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::handle_qos\n"));
@@ -486,7 +484,6 @@ TAO_AV_UDP_QoS_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
 int
 TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
 {
-
   if (TAO_debug_level > 0)
     {
       ACE_TCHAR buf [BUFSIZ];
@@ -509,7 +506,6 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
 
   if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
     {
-
       TAO_AV_UDP_QoS_Session_Helper helper;
 
       this->qos_session_ = helper.open_qos_session (this,
@@ -919,7 +915,6 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 
   if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_CONSUMER)
     {
-
       TAO_AV_UDP_QoS_Session_Helper helper;
 
       int result = handler->get_socket ()->open (*inet_addr,
@@ -982,7 +977,6 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 
       if (qos_available == 0)
         {
-
           ACE_Flow_Spec *ace_flow_spec = 0;
           ACE_NEW_RETURN (ace_flow_spec,
                           ACE_Flow_Spec,
@@ -1001,7 +995,6 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
     }
   else
     {
-
       int result = handler->get_socket ()->open (*inet_addr,
                                                  qos_params,
                                                  AF_INET,
@@ -1283,7 +1276,6 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
                                                             qos);
   if (qos_available == 0)
     {
-
       ACE_Flow_Spec* ace_flow_spec;
       ACE_NEW_RETURN (ace_flow_spec,
                       ACE_Flow_Spec,

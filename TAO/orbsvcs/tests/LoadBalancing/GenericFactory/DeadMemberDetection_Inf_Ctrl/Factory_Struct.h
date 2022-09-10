@@ -19,7 +19,6 @@
 
 struct Factory_Node
 {
-
   /// FactoryCreationId assigned to the member.
   PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
 };

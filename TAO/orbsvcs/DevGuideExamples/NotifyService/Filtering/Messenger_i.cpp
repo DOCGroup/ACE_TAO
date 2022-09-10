@@ -112,14 +112,12 @@ CORBA::Boolean Messenger_i::send_message (
     char *& message
   )
 {
-
    std::cout << "Message from: " << user_name << std::endl;
    std::cout << "Subject:      " << subject << std::endl;
    std::cout << "Message:      " << message << std::endl;
 
    try
      {
-
        // Event Definition
        CosNotification::StructuredEvent event;
 

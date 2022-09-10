@@ -32,7 +32,6 @@ namespace CORBA
 
 namespace TAO_Notify
 {
-
 /// A forward declaration.
 class Topology_Object;
 

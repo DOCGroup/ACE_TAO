@@ -11,7 +11,6 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 : orb_ (CORBA::ORB::_duplicate (orb))
 , supplier_(new EventSequenceSupplier_i(orb))
 {
-
   CORBA::Object_var naming_obj =
     orb_->resolve_initial_references ("NameService");
 

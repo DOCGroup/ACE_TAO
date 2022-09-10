@@ -275,7 +275,6 @@ Client<InterfaceObj, Var>::init (const char *name,
 template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::obtain_initial_references (void)
 {
-
   return 0;
 }
 

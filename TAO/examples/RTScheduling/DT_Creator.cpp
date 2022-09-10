@@ -278,7 +278,6 @@ DT_Creator::activate_poa_list (void)
 void
 DT_Creator::activate_job_list (void)
 {
-
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
     "DT_Creator::activate_job_list\n"));

@@ -481,7 +481,6 @@ GIOP_Buffer::parse_header (void)
     this->oid_ = this->cdr_->rd_ptr();
     if (!this->cdr_->skip_bytes(len_ulong))
       {
-
         return false;
       }
     if (!(*this->cdr_ >> len_ulong))

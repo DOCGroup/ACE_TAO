@@ -139,7 +139,6 @@ Peer_Handler<ROUTER, KEY>::open (void *a)
 template <class ROUTER, class KEY> int
 Peer_Handler<ROUTER, KEY>::handle_input (ACE_HANDLE h)
 {
-
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) input arrived on sd %d\n"), h));
 //  ACE_Reactor::instance ()->remove_handler(h,
 //                                          ACE_Event_Handler::ALL_EVENTS_MASK

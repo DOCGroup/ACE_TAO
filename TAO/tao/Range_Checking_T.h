@@ -22,7 +22,6 @@ namespace TAO
 {
 namespace details
 {
-
 /**
  * @struct range_checking
  *

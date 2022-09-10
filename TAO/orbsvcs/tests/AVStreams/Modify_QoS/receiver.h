@@ -45,7 +45,6 @@ private:
 // = AVStreams calls this class during connection setup.
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
-
 public:
   /// Create a receiver application callback.
   int get_callback (const char *flowname,

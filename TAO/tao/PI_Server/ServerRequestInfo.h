@@ -188,7 +188,6 @@ namespace TAO
      * @name Helper methods specific to TAO.
      */
     //@{
-
     /// Extract the forward object reference from the
     /// @c PortableInterceptor::ForwardRequest exception, and set the
     /// reply status flag accordingly.

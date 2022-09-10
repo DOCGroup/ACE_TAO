@@ -76,7 +76,6 @@ public:
 
   /// @name Accessors
   //@{
-
   TAO_Acceptor_Registry &acceptor_registry ();
 
   /**

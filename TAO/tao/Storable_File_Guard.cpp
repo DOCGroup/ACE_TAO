@@ -32,7 +32,6 @@ TAO::Storable_File_Guard::
 void
 TAO::Storable_File_Guard::init_no_load(Method_Type method_type)
 {
-
   ACE_CString mode;
   this->rwflags_ = 0;
   switch (method_type)
@@ -230,7 +229,6 @@ TAO::Storable_File_Guard::load ()
       // result of 0 means OK. We should now have a good primary file.
       if (!result)
         {
-
           TAOLIB_ERROR ((LM_INFO,
                          ACE_TEXT ("TAO: (%P|%t) Attempting to restore ")
                          ACE_TEXT ("from backup\n")));

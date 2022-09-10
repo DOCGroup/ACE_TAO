@@ -126,7 +126,6 @@ DT_Test::scheduler (void)
 int
 DT_Test::activate_task (void)
 {
-
 long flags;
   flags = THR_NEW_LWP | THR_JOINABLE;
   flags |=

@@ -20,7 +20,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<class object_t, class object_t_var, class derived>
 struct object_reference_traits_decorator
 {

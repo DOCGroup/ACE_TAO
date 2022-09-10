@@ -13,7 +13,6 @@ namespace ACE
 {
   namespace HTTP
   {
-
     const ACE_CString Status::HTTP_REASON_CONTINUE                        = "Continue";
     const ACE_CString Status::HTTP_REASON_SWITCHING_PROTOCOLS             = "Switching Protocols";
     const ACE_CString Status::HTTP_REASON_OK                              = "OK";

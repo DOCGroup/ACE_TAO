@@ -22,7 +22,6 @@ test_with_bidir_poa (int argc,
                      const char *orb_name,
                      int destroy_orb)
 {
-
   try
     {
       CORBA::ORB_var orb =

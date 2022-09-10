@@ -17,7 +17,6 @@ template <class PROXY, class ACE_LOCK>
 TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::TAO_Notify_Event_Map_T (void)
   :proxy_count_ (0)
 {
-
 }
 
 template <class PROXY, class ACE_LOCK>

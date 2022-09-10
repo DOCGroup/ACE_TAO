@@ -385,7 +385,6 @@ static void TestIpxAddress()
 
 static void TestMacAddress()
 {
-
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) MacAddress: Tests\n"));
 
   MacAddress ma1;

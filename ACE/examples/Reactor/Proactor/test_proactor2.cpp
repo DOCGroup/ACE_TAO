@@ -81,7 +81,6 @@ static int initial_read_size = BUFSIZ;
 //--------------------------------------------------------------------------
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
-
 public:
   int svc (void) ;
 };
@@ -736,7 +735,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 //--------------------------------------------------------------------
 int DisableSignal ( int SigNum )
 {
-
 #ifndef ACE_WIN32
   sigset_t signal_set;
   if ( ACE_OS::sigemptyset (&signal_set) == - 1 )

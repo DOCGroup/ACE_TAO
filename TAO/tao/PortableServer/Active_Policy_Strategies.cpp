@@ -164,7 +164,6 @@ namespace TAO
     void
     Active_Policy_Strategies::cleanup (void)
     {
-
       if (this->lifespan_strategy_ != 0)
         {
           this->lifespan_strategy_factory_->destroy (lifespan_strategy_);

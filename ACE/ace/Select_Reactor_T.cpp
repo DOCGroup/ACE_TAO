@@ -1215,7 +1215,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_set
 
       if (this->state_changed_)
         {
-
           handle_iter.reset_state ();
           this->state_changed_ = false;
         }
@@ -1499,7 +1498,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
   ACE_Handle_Set_Iterator check_iter (check_set);
   while ((h = check_iter ()) != ACE_INVALID_HANDLE)
     {
-
 #if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_VXWORKS)
       // Win32 needs to do the check this way because fstat won't work on
       // a socket handle.  MVS Open Edition needs to do it this way because,

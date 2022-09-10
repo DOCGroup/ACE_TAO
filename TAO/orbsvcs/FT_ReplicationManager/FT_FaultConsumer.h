@@ -28,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   ///////////////////////
   // Forward declarations
   class FT_FaultAnalyzer;
@@ -40,7 +39,6 @@ namespace TAO
   class TAO_ReplicationManagerLib_Export FT_FaultConsumer
     : public virtual POA_CosNotifyComm::StructuredPushConsumer
   {
-
     //////////////////////
     // non-CORBA interface
 
@@ -97,7 +95,6 @@ namespace TAO
     * interface.
     */
     //@{
-
     ////////////////
     // CORBA methods
     virtual void push_structured_event (

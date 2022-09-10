@@ -50,7 +50,6 @@ class TAO_PortableGroup_Export TAO_UIPMC_Connection_Handler :
   public TAO_UIPMC_SVC_HANDLER,
   public TAO_Connection_Handler
 {
-
 public:
   TAO_UIPMC_Connection_Handler (ACE_Thread_Manager* t = 0);
 

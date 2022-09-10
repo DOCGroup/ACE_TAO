@@ -30,7 +30,6 @@ IOR_corbaname_Client_i::~IOR_corbaname_Client_i (void)
 int
 IOR_corbaname_Client_i::run (void)
 {
-
   try
     {
       CosNaming::Name name (1);

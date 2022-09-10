@@ -40,7 +40,6 @@ NS_group_svc::determine_policy_string (const ACE_TCHAR *policy,
 int
 NS_group_svc::set_orb( CORBA::ORB_ptr orb)
 {
-
   this->orb_ = CORBA::ORB::_duplicate (orb);
 
   if (CORBA::is_nil (this->orb_.in ()))
@@ -59,7 +58,6 @@ NS_group_svc::set_orb( CORBA::ORB_ptr orb)
 int
 NS_group_svc::set_naming_manager (FT_Naming::NamingManager_ptr nm)
 {
-
   this->naming_manager_ = FT_Naming::NamingManager::_duplicate (nm);
 
   if (CORBA::is_nil (this->naming_manager_.in ()))
@@ -77,7 +75,6 @@ NS_group_svc::set_naming_manager (FT_Naming::NamingManager_ptr nm)
 int
 NS_group_svc::set_name_context( CosNaming::NamingContextExt_ptr nc)
 {
-
   this->name_service_ = CosNaming::NamingContextExt::_duplicate (nc);
 
   if (CORBA::is_nil (this->name_service_.in ()))
@@ -235,7 +232,6 @@ NS_group_svc::group_bind (const ACE_TCHAR* group_name,
 
   try
     {
-
       PortableGroup::ObjectGroup_var group_var =
         this->naming_manager_->get_object_group_ref_from_name
            (ACE_TEXT_ALWAYS_CHAR(group_name));
@@ -370,7 +366,6 @@ NS_group_svc::group_unbind (const ACE_TCHAR* path)
     }
   catch (const CORBA::Exception& )
     {
-
       if (TAO_debug_level > 2)
         {
           ORBSVCS_ERROR ((LM_ERROR,
@@ -390,7 +385,6 @@ NS_group_svc::group_unbind (const ACE_TCHAR* path)
 int
 NS_group_svc::group_list ()
 {
-
   // KCS: The group list is independent of locations. I created a new operation in the
   // naming manager IDL to support requesting the group list - which is a list of names
 
@@ -435,7 +429,6 @@ NS_group_svc::display_load_policy_group(FT_Naming::LoadBalancingStrategyValue st
                           display_label));
           if ( list->length () > 0 )
             {
-
               for (unsigned int i = 0; i < list->length (); ++i)
                 {
                   CORBA::String_var s = CORBA::string_dup (list[i]);
@@ -841,7 +834,6 @@ NS_group_svc::member_show (const ACE_TCHAR* group_name,
     }
   catch (const PortableGroup::ObjectGroupNotFound&)
     {
-
       if (TAO_debug_level > 2)
         {
           ORBSVCS_ERROR ((LM_ERROR,

@@ -50,7 +50,6 @@ public:
  */
 class FTP_Client_StreamEndPoint  : public TAO_Client_StreamEndPoint
 {
-
 public:
   /// Constructor
   FTP_Client_StreamEndPoint (void);

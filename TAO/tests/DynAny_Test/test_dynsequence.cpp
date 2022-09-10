@@ -18,7 +18,6 @@
 
 namespace
 {
-
 bool
 compare_string_sequence_elements(
     CORBA::ULong i,

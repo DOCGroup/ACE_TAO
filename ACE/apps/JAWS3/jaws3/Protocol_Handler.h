@@ -9,7 +9,6 @@
 
 class JAWS_Export JAWS_Protocol_State
 {
-
   friend class JAWS_Protocol_Handler;
 
 public:
@@ -29,7 +28,6 @@ class JAWS_Export JAWS_Protocol_Handler
 // = TITLE
 //     Abstraction that interacts with concurrency dispatching.
 {
-
   friend class JAWS_TPOOL_Concurrency;
   friend class JAWS_TPR_Concurrency;
   friend class JAWS_THYBRID_Concurrency;

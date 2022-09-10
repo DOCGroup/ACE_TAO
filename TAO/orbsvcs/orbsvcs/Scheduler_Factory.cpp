@@ -521,7 +521,6 @@ int ACE_Scheduler_Factory::dump_schedule
 
 void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * entry, FILE* file)
 {
-
    if( entry == 0 )
    {
       ACE_OS::fprintf (file, "Entry is NULL");
@@ -630,7 +629,6 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
       }
       else
       {
-
       ACE_OS::fprintf (file,
          subset_tuple_format,
          (*tuple_ptr_ptr)->handle,

@@ -16,7 +16,6 @@ namespace ACE
 {
   namespace FTP
   {
-
     const ACE_CString Request::FTP_USER = "USER";
     const ACE_CString Request::FTP_PASS = "PASS";
     const ACE_CString Request::FTP_QUIT = "QUIT";

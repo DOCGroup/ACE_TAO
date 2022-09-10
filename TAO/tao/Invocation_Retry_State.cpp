@@ -31,7 +31,6 @@ namespace
                           TAO::Invocation_Retry_Params &client_factory_params,
                           TAO::Invocation_Retry_Params &result)
   {
-
   // Retry delay
   if (command_line_params.init_retry_delay_ !=
       result.init_retry_delay_)

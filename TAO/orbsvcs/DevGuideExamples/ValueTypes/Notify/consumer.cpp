@@ -155,7 +155,6 @@ public:
 };
 
 int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
-
   int num_events = 0;
 
   try {

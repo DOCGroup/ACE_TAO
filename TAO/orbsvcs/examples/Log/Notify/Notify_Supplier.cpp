@@ -28,7 +28,6 @@ Supplier::Supplier (void)
 
 Supplier::~Supplier ()
 {
-
 }
 
 int

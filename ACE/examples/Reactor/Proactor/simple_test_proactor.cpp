@@ -36,7 +36,6 @@ static ACE_TCHAR *dump_file = ACE_TEXT("simple_output");
  */
 class Simple_Tester : public ACE_Handler
 {
-
 public:
   /// Constructor.
   Simple_Tester (void);

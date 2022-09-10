@@ -19,7 +19,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DTP_ORBInitializer::TAO_DTP_ORBInitializer (/*const ACE_CString &tplist*/)
 {
-
 }
 
 void

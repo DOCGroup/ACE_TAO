@@ -26,7 +26,6 @@ TAO_PG_GenericFactory::TAO_PG_GenericFactory (
 
 TAO_PG_GenericFactory::~TAO_PG_GenericFactory ()
 {
-
   TAO_PG_Factory_Map::iterator end = this->factory_map_.end ();
   for (TAO_PG_Factory_Map::iterator i = this->factory_map_.begin ();
        i != end;

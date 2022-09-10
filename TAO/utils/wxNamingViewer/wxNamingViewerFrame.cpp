@@ -146,10 +146,8 @@ void WxNamingViewerFrame::onMenuCopy( wxCommandEvent& WXUNUSED( event))
 void WxNamingViewerFrame::onSelectNS( wxCommandEvent& WXUNUSED( event))
 {
   switch( selectNS->ShowModal()) {
-
     case wxID_OK:
       try {
-
 // TODO: need hourglass
         CORBA::Object_var object = pOrb->string_to_object(
             selectNS->getIOR().c_str());
@@ -159,7 +157,6 @@ void WxNamingViewerFrame::onSelectNS( wxCommandEvent& WXUNUSED( event))
         resolve();
 
       } catch( CORBA::Exception const & ex) {
-
         wxMessageBox(
             ex._info().c_str(),
             "CORBA::Exception");
@@ -196,7 +193,6 @@ void WxNamingViewerFrame::setDefaultNS()
 
   TAO_Naming_Client client;
   if (client.init( pOrb) == 0) {
-
     rootContext = client.get_context();
 
     // For debugging, sets up some initial contexts in the NS

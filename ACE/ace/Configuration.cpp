@@ -1158,7 +1158,6 @@ ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (const ACE_Conf
   : value_hash_map_ (rhs.value_hash_map_),
     section_hash_map_ (rhs.section_hash_map_)
 {
-
 }
 
 ACE_Configuration_Section_IntId::~ACE_Configuration_Section_IntId ()

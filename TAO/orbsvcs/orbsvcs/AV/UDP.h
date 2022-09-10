@@ -46,7 +46,6 @@ class TAO_AV_UDP_Flow_Handler;
 class TAO_AV_Export TAO_AV_UDP_Transport
   :public TAO_AV_Transport
 {
-
 public:
   TAO_AV_UDP_Transport (void);
 

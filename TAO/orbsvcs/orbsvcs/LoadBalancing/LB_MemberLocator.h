@@ -51,7 +51,6 @@ public:
    * interface.
    */
   //@{
-
   /// Clients requests are forwarded via the
   /// PortableServer::ForwardRequest exception thrown in this method.
   virtual PortableServer::Servant preinvoke (

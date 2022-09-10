@@ -1313,7 +1313,6 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
 
   length = *out_length;
   if (pdu->command != TRP_REQ_MSG) {
-
     // request id
     cp = asn1::build_int( packet,
                        &length,

@@ -65,7 +65,6 @@ Synchronisers::start_synchronization (void)
 
     if (ready_threads == number_of_threads)
       {
-
         // Reset the ready_threads so that we can wait at the end of
         // runs
         ready_threads = 0;
@@ -107,7 +106,6 @@ Synchronisers::end_synchronization (void)
 
     if (ready_threads == number_of_threads)
       {
-
         // Reset the ready_threads so that we can wait at the end of
         // runs
         ready_threads = 0;

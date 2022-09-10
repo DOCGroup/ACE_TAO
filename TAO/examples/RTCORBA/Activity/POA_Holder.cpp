@@ -109,7 +109,6 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
 void
 POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa)
 {
-
   /*
     lanes bands priomodel
 

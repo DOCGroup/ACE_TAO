@@ -7,7 +7,6 @@ namespace ACE
 {
   namespace INet
   {
-
     Response::Response () {}
 
     Response::~Response () {}

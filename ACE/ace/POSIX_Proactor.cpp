@@ -1993,7 +1993,6 @@ ACE_POSIX_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
                                        const void * /* completion_key */,
                                        u_long       /*  error */)
 {
-
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != 0)
     handler->handle_wakeup ();

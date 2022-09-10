@@ -17,7 +17,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
 template<typename object_t, typename object_t_var, CORBA::ULong MAX>
 class bounded_object_reference_sequence
 {

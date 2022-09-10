@@ -41,7 +41,6 @@ typedef int ACE_Protocol_ID;
  */
 class ACE_QoS_Export ACE_QoS_Session
 {
-
 public:
   enum RSVP_Event_Type
   {

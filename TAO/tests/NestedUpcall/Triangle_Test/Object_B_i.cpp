@@ -31,7 +31,6 @@ Object_B_i::foo (Object_A_ptr theObject_A_ptr)
 {
   try
     {
-
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) BEGIN Object_B_i::foo: Trying to call Object A\n"));
 

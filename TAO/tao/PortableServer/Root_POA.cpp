@@ -1499,7 +1499,6 @@ TAO_Root_POA::cleanup_servant (
 PortableServer::Servant
 TAO_Root_POA::id_to_servant_i (const PortableServer::ObjectId &id)
 {
-
   PortableServer::Servant servant =
     this->active_policy_strategies_.request_processing_strategy()->
       id_to_servant (id);

@@ -20,7 +20,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename char_type, class derived>
 struct string_traits_decorator
 {

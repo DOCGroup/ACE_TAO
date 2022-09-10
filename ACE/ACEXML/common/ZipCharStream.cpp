@@ -228,7 +228,6 @@ ACEXML_ZipCharStream::get_i (ACEXML_Char& ch)
 int
 ACEXML_ZipCharStream::peek_i (void)
 {
-
   // If we are reading a UTF-8 encoded file, just use the plain unget.
   if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
     return this->peekchar_i();

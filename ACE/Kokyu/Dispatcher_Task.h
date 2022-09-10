@@ -22,7 +22,6 @@
 
 namespace Kokyu
 {
-
 class Dispatch_Queue_Item : public ACE_Message_Block
 {
 public:

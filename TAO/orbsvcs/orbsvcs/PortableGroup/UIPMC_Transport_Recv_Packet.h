@@ -26,7 +26,6 @@ class TAO_UIPMC_Mcast_Transport;
 
 namespace TAO_PG
 {
-
   /**
    * @class UIPMC_Recv_Packet_Cleanup_Guard
    *

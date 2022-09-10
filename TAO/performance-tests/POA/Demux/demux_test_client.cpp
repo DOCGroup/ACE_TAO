@@ -124,7 +124,6 @@ Demux_Test_Client::init (int argc, ACE_TCHAR *argv [])
 int
 Demux_Test_Client::parse_args (void)
 {
-
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("df:m:n:o:p:i:s:"));
   int c;
 

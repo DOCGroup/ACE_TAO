@@ -1030,7 +1030,6 @@ public:
    * @name Queue-like insert and delete methods
    */
   //@{
-
   /**
    * Insert pointer for a new item at the tail of the list.
    *

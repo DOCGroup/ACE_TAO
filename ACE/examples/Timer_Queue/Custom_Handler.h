@@ -28,7 +28,6 @@
  */
 class Custom_Handler
 {
-
     public:
         Custom_Handler (const ACE_Time_Value &expiration_time);
 

@@ -187,7 +187,6 @@ void big_time_test (CORBA::ULong num_list_loops,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   if (argc > 1 && ACE_OS::strcasecmp (argv[1],ACE_TEXT("-csv")) == 0)
     use_csv = true;
 

@@ -51,7 +51,6 @@ Echo_Client_Request_Interceptor::send_request (
   isRecursive ++ ;
   if (isRecursive%2 == 1 )
   {
-
     if (isRecursive == 3) {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)Echo_Client_Request_Interceptor::send_request(%d) ")
                             ACE_TEXT ("shutdown server 1 now. \n"), isRecursive));

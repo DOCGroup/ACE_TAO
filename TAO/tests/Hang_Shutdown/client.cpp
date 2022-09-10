@@ -59,7 +59,6 @@ namespace Test
 
     virtual int svc (void)
     {
-
       try
         {
           this->h_->send_stuff ("Testing",
@@ -117,7 +116,6 @@ namespace Test
 
     virtual int svc (void)
     {
-
       try
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -169,7 +167,6 @@ namespace Test
   static int
   try_main (int argc, ACE_TCHAR *argv[])
   {
-
     try
       {
         CORBA::ORB_var orb =

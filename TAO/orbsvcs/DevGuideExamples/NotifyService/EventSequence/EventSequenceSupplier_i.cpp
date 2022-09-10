@@ -9,7 +9,6 @@ EventSequenceSupplier_i::EventSequenceSupplier_i(CORBA::ORB_ptr orb)
 void
 EventSequenceSupplier_i::disconnect_sequence_push_supplier ()
 {
-
    CORBA::Object_var obj = orb_->resolve_initial_references ("POACurrent");
    PortableServer::Current_var current =
                           PortableServer::Current::_narrow (obj.in());

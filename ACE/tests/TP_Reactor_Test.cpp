@@ -697,7 +697,6 @@ Connector::on_delete_sender (Sender & sndr)
 int
 Connector::start (const ACE_INET_Addr & addr, int num)
 {
-
   if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>::open (ACE_Reactor::instance (),
                                                       ACE_NONBLOCK) < 0)
     ACE_ERROR_RETURN

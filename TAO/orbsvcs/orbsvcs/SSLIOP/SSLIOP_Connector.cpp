@@ -518,7 +518,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
     }
   else
     {
-
       bool make_new_connection =
         (found == TAO::Transport_Cache_Manager::CACHE_FOUND_NONE) ||
         (found == TAO::Transport_Cache_Manager::CACHE_FOUND_BUSY
@@ -526,7 +525,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
       if (make_new_connection)
         {
-
           if (TAO_debug_level > 4)
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, ")

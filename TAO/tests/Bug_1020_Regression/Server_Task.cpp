@@ -14,7 +14,6 @@ Server_Task::Server_Task(Test::Echo_ptr echo)
 int
 Server_Task::svc (void)
 {
-
   Test::Payload pload(16); pload.length(16);
   int stop_loop = 0;
   for(int i = 0; i != 1000000 && !stop_loop; ++i)

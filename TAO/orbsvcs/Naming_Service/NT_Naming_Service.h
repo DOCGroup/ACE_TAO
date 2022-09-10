@@ -80,7 +80,6 @@ private:
   */
 class AutoFinalizer
 {
-
 public:
     AutoFinalizer (TAO_NT_Naming_Service &service);
     ~AutoFinalizer ();

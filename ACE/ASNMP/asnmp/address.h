@@ -101,7 +101,6 @@ class SIPAddress; // aka ipv6
  */
 class  ASNMP_Export Address: public  SnmpSyntax
 {
-
 public:
    /// allow destruction of derived classes
    virtual ~Address();

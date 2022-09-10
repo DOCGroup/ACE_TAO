@@ -91,7 +91,6 @@ parse_args (int argc, ACE_TCHAR **argv)
 
 class Client
 {
-
 public:
   Client (test_ptr test,
           CORBA::ORB_ptr orb,
@@ -473,7 +472,6 @@ Task::svc (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       CORBA::ORB_var orb =

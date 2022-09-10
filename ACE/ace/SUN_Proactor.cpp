@@ -142,7 +142,6 @@ ACE_SUN_Proactor::get_result_status (ACE_POSIX_Asynch_Result* asynch_result,
                                      int &error_status,
                                      size_t &transfer_count)
 {
-
    // Get the error status of the aio_ operation.
    error_status  = asynch_result->aio_resultp.aio_errno;
    ssize_t op_return = asynch_result->aio_resultp.aio_return;

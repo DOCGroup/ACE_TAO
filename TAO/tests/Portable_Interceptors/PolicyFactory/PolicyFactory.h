@@ -48,7 +48,6 @@ public:
    * methods required for all PolicyFactory sub-classes.
    */
   //@{
-
   /// Construct a Test::Policy object as a test.
   virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                            const CORBA::Any & value);

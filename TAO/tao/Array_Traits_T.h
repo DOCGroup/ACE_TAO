@@ -18,7 +18,6 @@ namespace TAO
 {
 namespace details
 {
-
 template <typename T_forany>
 struct array_traits
 {

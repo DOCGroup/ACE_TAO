@@ -16,7 +16,6 @@ class JAWS_Reactive_IO;
 
 class JAWS_IO_Reactive_Handler : public ACE_Event_Handler
 {
-
   friend class JAWS_IO_Reactive_Send;
   friend class JAWS_IO_Reactive_Recv;
   friend class JAWS_IO_Reactive_Transmit;
@@ -84,7 +83,6 @@ private:
 
 class JAWS_IO_Reactive_Send : public JAWS_IO_Reactive_Handler
 {
-
   friend class JAWS_Reactive_IO;
 
 public:
@@ -141,7 +139,6 @@ private:
 
 class JAWS_IO_Reactive_Recv : public JAWS_IO_Reactive_Handler
 {
-
   friend class JAWS_Reactive_IO;
 
 public:
@@ -198,7 +195,6 @@ private:
 
 class JAWS_IO_Reactive_Transmit : public JAWS_IO_Reactive_Handler
 {
-
   friend class JAWS_Reactive_IO;
 
 public:

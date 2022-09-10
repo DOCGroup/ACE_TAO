@@ -79,7 +79,6 @@ private:
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
 class JAWS_Cache_List_Item
 {
-
   friend class JAWS_Cache_List<EXT_ID, FACT, H_FN, E_FN>;
 
 public:

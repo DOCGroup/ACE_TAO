@@ -262,7 +262,6 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
     ::PortableGroup::GenericFactory::FactoryCreationId_var creation_id;
     if (this->have_replication_manager_)
     {
-
       //////////////////////////////////////////////////////
       // note infrastructure controlled because we want the
       // ReplicationManager to manage the object after it's created.

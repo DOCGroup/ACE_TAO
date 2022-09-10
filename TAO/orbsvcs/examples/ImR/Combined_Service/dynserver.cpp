@@ -67,7 +67,6 @@ int
 DynServer_Loader::init (int argc, ACE_TCHAR* argv[])
 {
   try {
-
     orb_ = ORB_init(argc, argv, "DynServer");
 
     Object_var obj = orb_->resolve_initial_references("RootPOA");
@@ -122,7 +121,6 @@ DynServer_Loader::fini (void)
 {
   ACE_ASSERT(runner_.get() != 0);
   try {
-
     ACE_DEBUG((LM_DEBUG, "dynserver: shutting down.\n"));
 
     runner_->end();

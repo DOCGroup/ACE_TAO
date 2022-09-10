@@ -32,7 +32,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Strategy;
     typedef TAO_Intrusive_Ref_Count_Handle<TP_Strategy> TP_Strategy_Handle;
 

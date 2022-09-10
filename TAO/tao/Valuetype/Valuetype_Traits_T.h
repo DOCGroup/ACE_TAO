@@ -19,7 +19,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<class object_t, class object_t_var, class derived>
 struct valuetype_traits_decorator
 {

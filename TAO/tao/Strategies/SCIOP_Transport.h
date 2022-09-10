@@ -64,7 +64,6 @@ protected:
    * details.
    */
   //@{
-
   virtual ACE_Event_Handler * event_handler_i (void);
 
   virtual ssize_t send (iovec *iov, int iovcnt,

@@ -87,7 +87,6 @@ HTTP_Header_Processing_Strategy::execute (void)
         }
       else
         {
-
           if (line.find ("text/html") != ACE_CString::npos)
             {
               ACE_CString url_content_type("text/html");
@@ -321,7 +320,6 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
   // HTTP URL.
   else
     {
-
       URL_Visitation_Strategy_Factory *vs;
       ACE_NEW_RETURN (vs,
                       URL_Validation_Visitation_Strategy_Factory (&url,

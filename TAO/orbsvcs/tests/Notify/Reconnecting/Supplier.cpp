@@ -366,7 +366,6 @@ int Supplier_Main::init (int argc, ACE_TCHAR *argv[])
     }
     case MODE_ANY:
     {
-
       init_any_proxy_consumer ();
       break;
     }

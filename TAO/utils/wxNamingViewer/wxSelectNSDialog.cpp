@@ -124,10 +124,8 @@ WxSelectNSDialog::WxSelectNSDialog( wxWindow* parent)
   ACE_TString name;
   ACE_Configuration::VALUETYPE type;
   while(config->enumerate_values( section, index, name, type) == 0) {
-
     ACE_TString value;
     if(config->get_string_value( section, name.c_str(), value) == 0) {
-
       servers->Append(
           name.c_str(),
           new wxString( value.c_str()));
@@ -143,7 +141,6 @@ WxSelectNSDialog::~WxSelectNSDialog()
 {
   int count = servers->Number();
   for (int i = 0; i < count; i++) {
-
     delete static_cast<wxString*>( servers->GetClientData( i));
 
   }
@@ -154,7 +151,6 @@ void WxSelectNSDialog::onAdd( wxCommandEvent& WXUNUSED(event))
 {
   WxAutoDialog<WxAddNameServerDlg> dialog( new WxAddNameServerDlg( this));
   if (dialog->ShowModal() == wxID_OK) {
-
     servers->Append(
         dialog->getServerName(),
         new wxString( dialog->getIor()));
@@ -205,7 +201,6 @@ void WxSelectNSDialog::onOK( wxCommandEvent& WXUNUSED(event))
 {
   int index = servers->GetSelection();
   if (index == -1) {
-
     wxMessageBox(
         "You must select a server or cancel",
         "Error",
@@ -222,7 +217,6 @@ void WxSelectNSDialog::onRemove( wxCommandEvent& WXUNUSED(event))
 {
   int index = servers->GetSelection();
   if (index != -1) {
-
     wxString name = servers->GetString( index);
     delete static_cast<wxString*>( servers->GetClientData( index));
     servers->Delete( index);

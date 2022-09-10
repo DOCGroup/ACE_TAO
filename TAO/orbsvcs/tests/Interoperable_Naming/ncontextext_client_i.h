@@ -26,7 +26,6 @@
  */
 class NContextExt_Client_i
 {
-
  public:
   // = COnstructor and destructor.
   NContextExt_Client_i (void);

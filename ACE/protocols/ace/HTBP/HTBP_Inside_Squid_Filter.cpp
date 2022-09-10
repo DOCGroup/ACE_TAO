@@ -199,7 +199,6 @@ ACE::HTBP::Inside_Squid_Filter::send_ack (ACE::HTBP::Channel *ch)
 int
 ACE::HTBP::Inside_Squid_Filter::recv_ack (ACE::HTBP::Channel *ch)
 {
-
   char *header_end = this->header_complete(ch);
   if (header_end == 0)
     {

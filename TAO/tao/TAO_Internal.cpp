@@ -572,7 +572,6 @@ namespace
                            bool skip_service_config_open,
                            bool ignore_default_svc_conf_file)
   {
-
     if (skip_service_config_open)
       {
         return 0;

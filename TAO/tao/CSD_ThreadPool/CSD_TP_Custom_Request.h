@@ -29,7 +29,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Custom_Request;
     typedef TAO_Intrusive_Ref_Count_Handle<TP_Custom_Request>
                                              TP_Custom_Request_Handle;

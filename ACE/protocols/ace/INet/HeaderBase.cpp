@@ -14,7 +14,6 @@ namespace ACE
 {
   namespace INet
   {
-
     const int         HeaderBase::UNKNOWN_CONTENT_LENGTH     = -1;
     const ACE_CString HeaderBase::UNKNOWN_CONTENT_TYPE;
     const ACE_CString HeaderBase::CONTENT_LENGTH             = "Content-Length";
@@ -61,7 +60,6 @@ namespace ACE
 
     bool HeaderBase::read(std::istream& str)
       {
-
         ACE_CString name (64, '\0');
         ACE_CString value (128, '\0');
         int ch = str.peek ();

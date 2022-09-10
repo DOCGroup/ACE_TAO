@@ -7,7 +7,6 @@ template <class KEY, class DATA> class JAWS_Assoc_Array_Iterator;
 template <class KEY, class DATA>
 class JAWS_Assoc_Array
 {
-
 friend class JAWS_Assoc_Array_Iterator<KEY, DATA>;
 
 public:

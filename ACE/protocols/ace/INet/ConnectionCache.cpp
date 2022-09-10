@@ -13,7 +13,6 @@ namespace ACE
 {
   namespace INet
   {
-
     ConnectionKey::ConnectionKey ()
       {}
 

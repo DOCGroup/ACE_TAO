@@ -127,7 +127,6 @@ Test_TypeCode::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_TypeCode::check_validity (void)
 {
-
   try
     {
       CORBA::Boolean one, two, three;

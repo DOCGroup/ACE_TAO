@@ -44,7 +44,6 @@ class TAO_Profile;
 class TAO_FT_ClientORB_Export TAO_FT_Invocation_Endpoint_Selector :
   public TAO_Default_Endpoint_Selector
 {
-
 public:
   /// Constructor.
   TAO_FT_Invocation_Endpoint_Selector (void);

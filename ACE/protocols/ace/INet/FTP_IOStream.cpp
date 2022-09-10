@@ -14,7 +14,6 @@ namespace ACE
 {
   namespace FTP
   {
-
     StreamBuffer::StreamBuffer (std::iostream * stream)
       : ACE::IOS::BufferedStreamBuffer (BUFFER_SIZE,
                                         std::ios::in | std::ios::out),

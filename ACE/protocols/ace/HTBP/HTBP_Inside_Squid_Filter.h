@@ -25,7 +25,6 @@ namespace ACE
 {
   namespace HTBP
   {
-
     /**
      * @class Inside_Squid_Filter
      *

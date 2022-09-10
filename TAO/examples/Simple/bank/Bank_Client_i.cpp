@@ -71,7 +71,6 @@ Bank_Client_i::check_accounts (void)
 void
 Bank_Client_i::test_for_same_name (void)
 {
-
   const char *name = "Name";
   CORBA::Float initial_bal = 0.00;
 

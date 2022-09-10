@@ -7,7 +7,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <ACE_PEER_STREAM_1>
 int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
 {
-
   ACE_TRACE("ConnectionAcceptHandler::open\n");
   ACE_INET_Addr addr;
 

@@ -80,7 +80,6 @@ Test_Fixed_Array::init_parameters (Param_Test_ptr /*objref*/
 int
 Test_Fixed_Array::reset_parameters (void)
 {
-
   for (CORBA::ULong i=0; i < Param_Test::DIM1; i++)
     {
       this->inout_ [i] = 0;

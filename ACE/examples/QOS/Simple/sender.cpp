@@ -49,7 +49,6 @@ FillQoSParams (ACE_QoS_Params &qos_params,
 int
 ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
-
   ACE_DEBUG ((LM_DEBUG,
               "Sender\n"));
 

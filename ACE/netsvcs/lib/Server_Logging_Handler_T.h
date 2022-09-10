@@ -162,7 +162,6 @@ private:
 template<class LOG_MESSAGE_RECEIVER>
 class ACE_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LOG_MESSAGE_RECEIVER>
 {
-
 public:
   ACE_Server_Logging_Handler (ACE_Thread_Manager * = 0);
   ACE_Server_Logging_Handler (ACE_Thread_Manager *,
@@ -192,7 +191,6 @@ typedef u_long ACE_LOGGER_COUNTER;
 template<class LOG_MESSAGE_RECEIVER>
 class ACE_Thr_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LOG_MESSAGE_RECEIVER>
 {
-
 public:
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = 0);
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *,

@@ -23,7 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   class TAO_PortableGroup_Export MIOP_Loader
   {
     public:

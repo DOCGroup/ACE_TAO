@@ -40,7 +40,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_QoS_Export ACE_QoS_Decorator_Base : public ACE_Event_Handler
 {
-
 public:
   // Initialization and termination methods.
   /// Constructor.
@@ -78,7 +77,6 @@ private:
  */
 class ACE_QoS_Export ACE_QoS_Event_Handler : public ACE_Event_Handler
 {
-
   /// Destructor.
   ~ACE_QoS_Event_Handler (void);
 
@@ -119,7 +117,6 @@ private:
  */
 class ACE_QoS_Export ACE_QoS_Decorator : public ACE_QoS_Decorator_Base
 {
-
 public:
   // Initialization and termination methods.
   /// Constructor.

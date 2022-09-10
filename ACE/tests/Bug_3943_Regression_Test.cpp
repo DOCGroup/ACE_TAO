@@ -67,7 +67,6 @@
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
 namespace {
-
   const char FINISHED_CHAR = '%';
   const char RESTART_CHAR = '&';
   const char START_CHAR = '0';

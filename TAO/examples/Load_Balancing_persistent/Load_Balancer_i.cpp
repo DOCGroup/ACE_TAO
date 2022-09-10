@@ -47,7 +47,6 @@ Object_Group_Factory_i::_default_POA (void)
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_round_robin (const char * id)
 {
-
   void *tmp_rr (0);
 
   if (this->mem_pool_->find (rr_name_bind,
@@ -305,8 +304,6 @@ Object_Group_Factory_i::make_group (int random,
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::resolve (const char * id)
 {
-
-
 #if defined (DOORS_MEASURE_STATS)
   // Time the calls
   // Record the entry  time.
@@ -558,7 +555,6 @@ Object_Group_i::Object_Group_i (const char * id,
    id_ (id),
    allocator_ (0)
 {
-
   if (!this->allocator_)
     {
       ACE_MMAP_Memory_Pool::OPTIONS options (ACE_DEFAULT_BASE_ADDR);
@@ -601,7 +597,6 @@ Object_Group_i::id (void)
 void
 Object_Group_i::bind (const Load_Balancer::Member & member)
 {
-
   if (this->members_ == 0)
     {
       ACE_CString id = this->id ();
@@ -878,7 +873,6 @@ Random_Object_Group::Random_Object_Group (const char *id,
 char *
 Random_Object_Group::resolve (void)
 {
-
   this->read_from_memory ();
 
   size_t group_size = this->members_->current_size ();
@@ -946,7 +940,6 @@ RR_Object_Group::resolve (void)
 void
 RR_Object_Group::unbind (const char *id)
 {
-
   if (this->members_ == 0)
     {
       ACE_CString id = this->id ();

@@ -14,7 +14,6 @@
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
-
   try
     {
       // First initialize the ORB, that will remove some arguments...

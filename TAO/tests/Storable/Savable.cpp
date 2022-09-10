@@ -90,7 +90,6 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
   : storable_factory_(storable_factory)
   , loaded_from_stream_ (false)
 {
-
   for (int index = 0; index < 2; ++index)
     {
       this->i_[index] = 0;

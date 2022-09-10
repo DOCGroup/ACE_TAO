@@ -18,7 +18,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename obj_ref_traits>
 class valuetype_sequence_element
 {

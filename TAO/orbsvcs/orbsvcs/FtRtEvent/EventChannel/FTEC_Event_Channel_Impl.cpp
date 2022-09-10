@@ -209,7 +209,6 @@ TAO_FTEC_Event_Channel_Impl::activate_object (
   const FtRtecEventComm::ObjectId& supplier_admin_oid,
   const FtRtecEventComm::ObjectId& consumer_admin_oid)
 {
-
   iogr_maker_.init(orb.in());
 
   TAO_EC_Event_Channel_Base::activate();

@@ -303,7 +303,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
     switch(test_type) {
-
       case TT_FAILOVER:
 
         if( RC_SUCCESS != do_failover_name_test (
@@ -342,7 +341,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       case TT_PERSISTENCE:
 
         switch(test_phase){
-
           case TT_CREATE:
             if (RC_SUCCESS != do_persistence_name_test (
                 orb.in (),
@@ -493,7 +491,6 @@ do_failover_name_test (
   int i;
 
   try {
-
     CORBA::ORB_var orb = CORBA::ORB::_duplicate(theOrb);
 
     if (CORBA::is_nil (orb.in ()))
@@ -581,7 +578,6 @@ do_failover_name_test (
 
           // Try again...
           try {
-
             CORBA::Object_var obj1_on_replica =
               root_context_1->resolve (level1);
 
@@ -1018,7 +1014,6 @@ do_failover_objectgroup_test (
   FT_Naming::NamingManager_var naming_manager_1;
 
   try {
-
     CORBA::ORB_var orb = CORBA::ORB::_duplicate(theOrb);
     if (CORBA::is_nil (orb.in ()))
     {
@@ -1123,7 +1118,6 @@ do_persistence_name_test (
   int i;
 
   try {
-
     CORBA::ORB_var orb = CORBA::ORB::_duplicate(theOrb);
 
     if (CORBA::is_nil (orb.in () ))
@@ -1280,7 +1274,6 @@ do_persistence_name_test (
       }
 
       try {
-
         // Check if the new context is available in the repository
         CORBA::Object_var obj1_on_replica =
           root_context_1->resolve (wide);
@@ -1346,7 +1339,6 @@ do_persistence_objectgroup_test (
   FT_Naming::NamingManager_var naming_manager_1;
 
   try {
-
     CORBA::ORB_var orb = CORBA::ORB::_duplicate(theOrb);
 
     if (CORBA::is_nil (orb.in ()))
@@ -1427,14 +1419,12 @@ do_persistence_objectgroup_test (
       {
         const PortableGroup::Location & loc = locations[i];
         if (loc.length() > 0) {
-
           ACE_DEBUG (( LM_DEBUG,
                        ACE_TEXT ("INFO: validating group member %C\n"),
                        loc[0].id.in()));
 
           try
           {
-
             PortableGroup::Location location_name (1);
             location_name.length (1);
             location_name[0].id = CORBA::string_dup(loc[0].id.in());
@@ -1463,7 +1453,6 @@ do_persistence_objectgroup_test (
                            the_string.in ()));
 
               if ( ACE_OS::strcmp (the_string.in (), loc[0].id.in()) != 0 ) {
-
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("ERROR: object group member at %C reports %C\n\n"),
                                    loc[0].id.in(),
@@ -1665,7 +1654,6 @@ do_equivalence_name_test (
   int i;
 
   try {
-
     CORBA::ORB_var orb = CORBA::ORB::_duplicate(theOrb);
 
     if (CORBA::is_nil (orb.in ()))
@@ -1883,7 +1871,6 @@ do_equivalence_name_test (
 
           // Try again to see if it just was a race condition
           try {
-
             CORBA::Object_var obj1_on_replica =
               root_context_2->resolve (wide);
 
@@ -2245,7 +2232,6 @@ do_equivalence_objectgroup_test (
   FT_Naming::NamingManager_var naming_manager_2;
 
   try {
-
     CORBA::ORB_var orb = CORBA::ORB::_duplicate(theOrb);
     if (CORBA::is_nil (orb.in ()))
     {

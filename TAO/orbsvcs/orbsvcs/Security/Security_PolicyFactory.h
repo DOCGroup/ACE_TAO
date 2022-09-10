@@ -36,7 +36,6 @@ namespace TAO
 {
   namespace Security
   {
-
     /**
      * @class PolicyFactory
      *

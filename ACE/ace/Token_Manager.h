@@ -43,7 +43,6 @@ class ACE_Mutex_Token;
  */
 class ACE_Export ACE_Token_Manager : public ACE_Cleanup
 {
-
   //   To add a new type of token (e.g. semaphore), do the following
   //   steps: 1. Create a new derivation of ACE_Token.  This class
   //   defines the semantics of the new Token.  2.  Create a

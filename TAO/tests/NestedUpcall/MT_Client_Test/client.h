@@ -33,7 +33,6 @@
  */
 class MT_Client
 {
-
 public:
   /// = Constructor and destructor.
   MT_Client (void);

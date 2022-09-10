@@ -27,7 +27,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Collocated_Asynch_Request;
     typedef TAO_Intrusive_Ref_Count_Handle<TP_Collocated_Asynch_Request>
                                         TP_Collocated_Asynch_Request_Handle;

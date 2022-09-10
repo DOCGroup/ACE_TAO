@@ -82,7 +82,6 @@ CORBA::Object_ptr
 TAO_FT_IOGR_Property::get_primary (
     CORBA::Object_ptr ior)
 {
-
   TAO_Profile *pfile =
     this->get_primary_profile (ior);
 
@@ -273,7 +272,6 @@ TAO_FT_IOGR_Property::encode_properties (
        i != 0;
        i = i->cont ())
     {
-
       ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
@@ -337,7 +335,6 @@ TAO_FT_IOGR_Property::get_tagged_component (
        i < mprofile.profile_count ();
        i++)
     {
-
       // Get the Tagged Components
       const TAO_Tagged_Components &pfile_tagged =
         mprofile.get_profile (i)->tagged_components ();

@@ -57,7 +57,6 @@ class TAO_Strategies_Export TAO_SCIOP_Connection_Handler
   : public TAO_SCIOP_SVC_HANDLER,
     public TAO_Connection_Handler
 {
-
 public:
   TAO_SCIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 

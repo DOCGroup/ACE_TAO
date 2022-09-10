@@ -15,7 +15,6 @@ TAO_NotifyLog_i::TAO_NotifyLog_i (CORBA::ORB_ptr orb,
     notify_factory_ (CosNotifyChannelAdmin::EventChannelFactory::_duplicate (ecf)),
     poa_ (PortableServer::POA::_duplicate (poa))
 {
-
   CosNotifyChannelAdmin::ChannelID channel_id;
 
   CosNotification::QoSProperties initial_qos;
@@ -92,7 +91,6 @@ TAO_NotifyLog_i::destroy ()
 void
 TAO_NotifyLog_i::activate ()
 {
-
   CosNotifyChannelAdmin::AdminID adminid = 0;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
     CosNotifyChannelAdmin::OR_OP;

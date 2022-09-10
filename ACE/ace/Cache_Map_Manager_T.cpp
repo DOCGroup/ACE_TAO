@@ -67,13 +67,11 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
 
   if (bind_result != -1)
     {
-
       int result = this->caching_strategy_.notify_bind (bind_result,
                                                         cache_value.second);
 
       if (result == -1)
         {
-
           this->map_.unbind (key);
 
           // Unless the notification goes thru the bind operation is
@@ -100,13 +98,11 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
 
   if (rebind_result != -1)
     {
-
       int result = this->caching_strategy_.notify_rebind (rebind_result,
                                                           cache_value.second ());
 
       if (result == -1)
         {
-
           // Make sure the unbind operation is done only when the
           // notification fails after a bind which is denoted by
           // rebind_result = 0
@@ -142,13 +138,11 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
 
   if (rebind_result != -1)
     {
-
       int result = this->caching_strategy_.notify_rebind (rebind_result,
                                                           cache_value.second ());
 
       if (result == -1)
         {
-
           // Make sure the unbind operation is done only when the
           // notification fails after a bind which is denoted by
           // rebind_result = 0
@@ -162,7 +156,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
         }
       else
         {
-
           old_value = old_cache_value.first ();
 
         }
@@ -191,13 +184,11 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
 
   if (rebind_result != -1)
     {
-
       int result = this->caching_strategy_.notify_rebind (rebind_result,
                                                           cache_value.second ());
 
       if (result == -1)
         {
-
           // Make sure the unbind operation is done only when the
           // notification fails after a bind which is denoted by
           // rebind_result = 0
@@ -211,7 +202,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
         }
       else
         {
-
           old_value = old_cache_value.first ();
 
         }
@@ -233,13 +223,11 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
 
   if (trybind_result != -1)
     {
-
       int result = this->caching_strategy_.notify_trybind (trybind_result,
                                                            cache_value.second ());
 
       if (result == -1)
         {
-
           // If the entry has got inserted into the map, it is removed
           // due to failure.
           if (trybind_result == 0)
@@ -250,7 +238,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
         }
       else
         {
-
           // If an attempt is made to bind an existing entry the value
           // is overwritten with the value from the map.
           if (trybind_result == 1)
@@ -275,7 +262,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
 
   if (find_result != -1)
     {
-
       int result = this->caching_strategy_.notify_find (find_result,
                                                         cache_value.second);
 
@@ -285,7 +271,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
         find_result = -1;
       else
         {
-
           // Since the <cache_value> has now changed after the
           // notification, we need to bind to the map again.
           int rebind_result = this->map_.rebind (key,
@@ -313,7 +298,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
 
   if (find_result != -1)
     {
-
       int result = this->caching_strategy_.notify_find (find_result,
                                                         cache_value.second);
 
@@ -323,7 +307,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
         find_result = -1;
       else
         {
-
           // Since the <cache_value> has now changed after the
           // notification, we need to bind to the map again.
           int rebind_result = this->map_.rebind (key,
@@ -351,7 +334,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
 
   if (unbind_result != -1)
     {
-
       int result = this->caching_strategy_.notify_unbind (unbind_result,
                                                           cache_value.second);
 
@@ -375,7 +357,6 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
 
   if (unbind_result != -1)
     {
-
       int result = this->caching_strategy_.notify_unbind (unbind_result,
                                                           cache_value.second ());
 

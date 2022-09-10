@@ -129,7 +129,6 @@ Pdu& Pdu::operator=( const Pdu &pdu)
 // append operator, appends a string
 Pdu& Pdu::operator+=( Vb &vb)
 {
-
   // do we have room?
   if ( vb_count_ + 1 > MAX_VBS)
     return *this;
@@ -195,7 +194,6 @@ int Pdu::get_vblist( Vb* pvbs, const int pvb_count)
 //=====================[ deposit Vbs ]===================================
 int Pdu::set_vblist( Vb* pvbs, const int pvb_count)
 {
-
    // if invalid then don't destroy
    if ((!pvbs) || ( pvb_count < 0) || ( pvb_count > MAX_VBS))
      return 0;

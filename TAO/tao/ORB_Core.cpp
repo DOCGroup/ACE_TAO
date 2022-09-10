@@ -1727,7 +1727,6 @@ TAO_ORB_Core::collocation_resolver ()
 TAO::PolicyFactory_Registry_Adapter *
 TAO_ORB_Core::policy_factory_registry_i ()
 {
-
   TAO_PolicyFactory_Registry_Factory *loader =
     ACE_Dynamic_Service<TAO_PolicyFactory_Registry_Factory>::instance
       (this->configuration (),
@@ -2991,7 +2990,6 @@ TAO_ORB_Core::input_cdr_msgblock_allocator ()
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_dblock_allocator ()
 {
-
   return this->lane_resources ().output_cdr_dblock_allocator ();
 }
 
@@ -3019,7 +3017,6 @@ TAO_ORB_Core::transport_message_buffer_allocator ()
 ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 {
-
   ACE_Allocator *dblock_allocator = nullptr;
   ACE_Allocator *buffer_allocator = nullptr;
 
@@ -3096,7 +3093,6 @@ TAO_ORB_Core::implrepo_service ()
 
   if (CORBA::is_nil (this->implrepo_service_))
     {
-
       try
         {
           CORBA::Object_var temp =

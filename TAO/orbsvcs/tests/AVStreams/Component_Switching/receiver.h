@@ -25,7 +25,6 @@
  */
 class Signal_Handler : public ACE_Event_Handler
 {
-
 public:
   Signal_Handler (void);
 

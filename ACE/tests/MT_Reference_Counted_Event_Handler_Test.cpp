@@ -1264,7 +1264,6 @@ test<REACTOR_IMPL>::test (int ignore_nested_upcalls,
           (nested_upcalls == -1 ||
            nested_upcalls == test_configs[i][4]))
         {
-
 #if 0 /* defined (ACE_LINUX) */
 
           // @@ I am not sure why but when <make_invocations> is 0 and

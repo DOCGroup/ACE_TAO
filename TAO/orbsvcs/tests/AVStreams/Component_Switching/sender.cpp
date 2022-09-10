@@ -296,7 +296,6 @@ Sender::pace_data (void)
       /// Continue to send data till the file is read to the end.
       while (1)
         {
-
           if (g_shutdown == 1)
             {
               ACE_DEBUG ((LM_DEBUG,

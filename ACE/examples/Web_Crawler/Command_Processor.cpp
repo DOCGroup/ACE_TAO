@@ -18,7 +18,6 @@ URL_Command::URL_Command (URL *url)
 int
 URL_Command::execute (void)
 {
-
   ACE_CString check_string
     (ACE_TEXT_ALWAYS_CHAR (this->url_->url_addr ().get_path_name ()));
   if (check_string.find ("news:") != ACE_CString::npos)

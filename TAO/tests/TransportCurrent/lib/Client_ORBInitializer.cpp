@@ -6,7 +6,6 @@
 
 namespace Test
 {
-
   Client_ORBInitializer::Client_ORBInitializer
     (PortableInterceptor::ClientRequestInterceptor_ptr interceptor)
       : interceptor_

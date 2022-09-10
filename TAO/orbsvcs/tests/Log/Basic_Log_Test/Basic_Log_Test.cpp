@@ -60,7 +60,6 @@ BasicLog_Test::init (int argc, ACE_TCHAR *argv[])
 int
 BasicLog_Test::init_factory (void)
 {
-
   // Assumpting INS for finding LogServie
 
   //CORBA::Object_var logging_obj = orb_->resolve_initial_references ("BasicLogFactory",
@@ -113,7 +112,6 @@ BasicLog_Test::init_factory (void)
 int
 BasicLog_Test::test_CreateLog (CORBA::ULongLong maxSize)
 {
-
   try
     {
       DsLogAdmin::LogId id;
@@ -319,7 +317,6 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
 int
 BasicLog_Test::test_adminState()
 {
-
   basicLog_->set_administrative_state(DsLogAdmin::locked);
   try
     {
@@ -358,7 +355,6 @@ BasicLog_Test::test_adminState()
 int
 BasicLog_Test::test_logSize (void)
 {
-
   try
     {
       basicLog_->set_max_size (1);
@@ -401,7 +397,6 @@ BasicLog_Test::test_logSize (void)
 int
 BasicLog_Test::test_logCompaction(CORBA::ULong lifeExpectancy)
 {
-
   CORBA::ULongLong old_n_records = basicLog_->get_n_records ();
   if (old_n_records <= 0)
     {
@@ -555,7 +550,6 @@ BasicLog_Test::destroy_log()
 int
 BasicLog_Test::test_log_destroy (void)
 {
-
   ACE_DEBUG ((LM_ERROR, "Testing destroy log\n"));
   this->basicLog_->destroy ();
 
@@ -648,7 +642,6 @@ return 0;
 int
 BasicLog_Test::test_capacity_alarm_threshold (void)
 {
-
   //basicLog_->set_log_full_action(DsLogAdmin::halt);
 
   DsLogAdmin::CapacityAlarmThresholdList list;

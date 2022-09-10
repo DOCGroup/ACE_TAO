@@ -17,7 +17,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename T, bool dummy>
 struct unbounded_array_allocation_traits
 {

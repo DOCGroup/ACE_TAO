@@ -24,7 +24,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 /**
  * \brief Save Notification Service Topology to an XML file.
  */

@@ -314,7 +314,6 @@ void
 TAO_FT_Naming_Manager::set_default_properties (
     const PortableGroup::Properties & props)
 {
-
   this->properties_support_.set_default_properties (props);
   //@@ validate properties?
 }
@@ -364,7 +363,6 @@ TAO_FT_Naming_Manager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Properties & overrides)
 {
-
   TAO::PG_Object_Group * group = 0;
   if (this->group_factory_.find_group (object_group, group))
   {
@@ -451,7 +449,6 @@ TAO_FT_Naming_Manager::add_member (
   if (this->group_factory_.find_group (object_group, group))
   {
     try {
-
       group->add_member (the_location,
                          member);
     }
@@ -567,7 +564,6 @@ PortableGroup::ObjectGroupId
 TAO_FT_Naming_Manager::get_object_group_id (
     PortableGroup::ObjectGroup_ptr object_group)
 {
-
   if (CORBA::is_nil (object_group))
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
@@ -661,7 +657,6 @@ TAO_FT_Naming_Manager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location)
 {
-
   if (CORBA::is_nil (object_group))
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
@@ -743,7 +738,6 @@ TAO_FT_Naming_Manager::delete_object (
     const PortableGroup::GenericFactory::FactoryCreationId &
       factory_creation_id)
 {
-
   PortableGroup::ObjectGroupId group_id = 0;
   if (factory_creation_id >>= group_id)
   {

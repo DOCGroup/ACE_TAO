@@ -19,7 +19,6 @@
  */
 class Visual_i : public virtual POA_Test_Interceptors::Visual
 {
-
 public:
   Visual_i (CORBA::ORB_ptr orb);
 

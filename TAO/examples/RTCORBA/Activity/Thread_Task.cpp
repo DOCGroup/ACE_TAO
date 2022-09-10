@@ -58,7 +58,6 @@ Thread_Task::svc (void)
   // if debugging, dump the priority that we're actually at.
   if (TAO_debug_level > 0)
     {
-
       // Get the priority of the current thread.
       RTCORBA::Priority prio =
         ACTIVITY::instance()->current ()->the_priority ();

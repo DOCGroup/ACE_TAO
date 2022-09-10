@@ -17,7 +17,6 @@
  * data sent in the second call.
  */
 class ReadHandler : public ACE_Event_Handler {
-
     private:
         /**
          * The stream socket used for data exchange.
@@ -65,7 +64,6 @@ class ReadHandler : public ACE_Event_Handler {
          * @name Overridden methods from the ACE_Event_Handler
          */
         // @{
-
         /**
          * Provides the handle of mStream;
          */

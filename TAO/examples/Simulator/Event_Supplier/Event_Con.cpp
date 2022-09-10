@@ -132,7 +132,6 @@ Demo_Consumer::disconnect_push_consumer (void)
 void
 Demo_Consumer::push (const RtecEventComm::EventSet &events)
 {
-
   if (events.length () == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "no events\n"));

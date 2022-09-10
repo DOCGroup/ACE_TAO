@@ -40,7 +40,6 @@ struct ArgStruct {
 // thread function that serves the client for the UnMarshalled Octet
 // test
 static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
-
   // unbundle the arguments
   ArgStruct * args = reinterpret_cast<ArgStruct *> (arg);
   ACE_SOCK_Stream * dataModeStream = args->stream;
@@ -49,7 +48,6 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
 
   // serve the client for numIterations synchronous invocations
   do {
-
     // READ A MESSAGE FROM THE CLIENT
 
     size_t bt;
@@ -221,7 +219,6 @@ static void run_server (ACE_HANDLE handle)
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR **argv){
-
   Options_Manager optsMgr(argc, argv, ACE_TEXT ("server-opts"));
 
   // show usage is requested
@@ -301,7 +298,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   handle_set.set_bit(acceptor_socket.get_handle());
 
   for (;;){
-
     ACE_Time_Value timeout(ACE_DEFAULT_TIMEOUT);
     ACE_Handle_Set temp = handle_set;
 

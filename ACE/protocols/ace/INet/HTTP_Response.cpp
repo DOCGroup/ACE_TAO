@@ -16,7 +16,6 @@ namespace ACE
 {
   namespace HTTP
   {
-
     const ACE_CString Response::COOKIE = "Set-Cookie";
 
     Response::Response()

@@ -91,7 +91,6 @@ Logging_Supplier::start_generating_events (void)
 
   do
   {
-
   // Insert the event data
     this->insert_event_data (any,
                              schedule_iter);

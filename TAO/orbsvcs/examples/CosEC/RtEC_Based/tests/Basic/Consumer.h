@@ -29,7 +29,6 @@
  */
 class Consumer : public POA_CosEventComm::PushConsumer
 {
-
 public:
   /// This method connects the consumer to the EC.
   void open (CosEventChannelAdmin::EventChannel_ptr event_channel,

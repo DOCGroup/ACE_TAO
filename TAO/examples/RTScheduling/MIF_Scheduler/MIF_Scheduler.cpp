@@ -380,7 +380,6 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
                                 CORBA::Policy_out sched_param_out,
                                 CORBA::Policy_out /*implicit_sched_param*/)
 {
-
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "MIF_Scheduler::receive_request\n"));
@@ -450,7 +449,6 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
 void
 MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
 {
-
   RTScheduling::Current::IdType_var guid = current_->id ();
 
   size_t count;

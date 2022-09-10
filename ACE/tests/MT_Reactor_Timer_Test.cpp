@@ -146,7 +146,6 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
 
 Dispatch_Count_Handler::Dispatch_Count_Handler ()
 {
-
   ACE_Reactor *r = ACE_Reactor::instance ();
 
   this->input_seen_ = this->notify_seen_ = 0;

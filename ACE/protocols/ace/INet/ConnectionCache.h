@@ -22,7 +22,6 @@ namespace ACE
   {
     namespace INet
       {
-
         /**
         * @class ACE_INet_ConnectionKey
         *

@@ -23,7 +23,6 @@ namespace TAO
 {
   namespace Utils
   {
-
     /**
      * @class PolicyList_Destroyer
      *

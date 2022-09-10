@@ -216,7 +216,6 @@ Client::init (int argc, ACE_TCHAR *argv[])
   CORBA::String_var ior;
   try
     {
-
       PortableServer::POAManager_var mgr
         = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
 

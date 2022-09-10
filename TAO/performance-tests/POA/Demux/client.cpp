@@ -14,7 +14,6 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   // Set TAO_debug_level to 0 to ensure silent running unless
   // debugging is explicitly invoked
   TAO_debug_level = 0;

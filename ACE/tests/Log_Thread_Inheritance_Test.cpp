@@ -60,7 +60,6 @@ bool test_inherited_attributes ()
 
 struct MyThread : ACE_Task_Base
 {
-
   enum { THREAD_DEFAULTS = THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED };
 
   explicit MyThread (bool openfile = false)

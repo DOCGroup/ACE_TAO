@@ -1470,7 +1470,6 @@ ip_check (int &ipvn_enabled, int pf)
 
   if (ipvn_enabled == -1)
     {
-
 #if defined (ACE_WIN32)
       static bool recursing = false;
       if (recursing) return 1;

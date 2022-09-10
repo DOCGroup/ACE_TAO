@@ -248,7 +248,6 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
         {
           while (iter->next_one (binding.out ()))
             {
-
               ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT("Getting IOR of the server: %C\n\n"),
                           binding->binding_name[0].id.in ()));
@@ -295,7 +294,6 @@ Clerk_i::create_clerk (void)
 {
   try
     {
-
       // Create a new clerk object. Pass it the timer value, the set
       // of server IORs and the no. of servers.
       ACE_NEW_RETURN (this->time_service_clerk_impl_,

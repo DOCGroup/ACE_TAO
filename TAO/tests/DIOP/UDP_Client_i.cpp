@@ -16,7 +16,6 @@ UDP_Client_i::UDP_Client_i (CORBA::ORB_ptr orb,
 , delay_ (msec)
 , iterations_ (iterations)
 {
-
 }
 
 //Destructor.

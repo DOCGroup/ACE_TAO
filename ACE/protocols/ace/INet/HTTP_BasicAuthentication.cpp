@@ -13,7 +13,6 @@ namespace ACE
 {
   namespace HTTP
   {
-
     const char* BasicAuthentication::SCHEME = "Basic";
 
     BasicAuthentication::BasicAuthentication()

@@ -29,7 +29,6 @@ namespace TAO
 
   namespace TypeCode
   {
-
 //     enum Storage { STATIC_TYPECODE, DYNAMIC_TYPECODE };
 
 //     template<Storage S> struct Traits;

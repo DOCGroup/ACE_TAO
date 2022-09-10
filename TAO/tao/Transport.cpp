@@ -2109,7 +2109,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           message_block.copy (this->partial_message_->rd_ptr (),
                               this->partial_message_->length ()) == 0)
         {
-
           recv_size -= this->partial_message_->length ();
           // reset is done later to avoid problem in case of EWOULDBLOCK
           // or EAGAIN errno

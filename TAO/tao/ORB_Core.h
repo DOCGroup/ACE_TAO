@@ -1112,7 +1112,6 @@ protected:
    * @name Service Level Hooks
    */
   //@{
-
   /// Fault Tolerant service hook.
   TAO_Fault_Tolerance_Service ft_service_;
 

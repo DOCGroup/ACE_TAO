@@ -7,7 +7,6 @@ namespace ACE
 {
   namespace INet
   {
-
     Request::Request () {}
 
     Request::~Request () {}

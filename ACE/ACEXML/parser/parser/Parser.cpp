@@ -53,7 +53,6 @@ ACEXML_Parser::ACEXML_Parser (void)
 
 ACEXML_Parser::~ACEXML_Parser (void)
 {
-
 }
 
 int

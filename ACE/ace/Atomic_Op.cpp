@@ -12,7 +12,6 @@
 #endif /* ACE_INCLUDE_ATOMIC_OP_SPARC */
 
 namespace {
-
 #if defined (_MSC_VER)
 // Disable "no return value" warning, as we will be putting
 // the return values directly into the EAX register.

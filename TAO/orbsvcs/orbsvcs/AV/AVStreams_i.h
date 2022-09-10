@@ -70,7 +70,6 @@ class TAO_AV_Export TAO_Basic_StreamCtrl
   : public virtual POA_AVStreams::Basic_StreamCtrl,
     public virtual TAO_PropertySet
 {
-
 public:
   /// Default Constructor
   TAO_Basic_StreamCtrl (void);
@@ -188,7 +187,6 @@ class TAO_AV_Export TAO_StreamCtrl
   : public virtual POA_AVStreams::StreamCtrl,
     public virtual TAO_Basic_StreamCtrl
 {
-
 public:
   /// Default Constructor
   TAO_StreamCtrl (void);
@@ -373,7 +371,6 @@ class TAO_AV_Flow_Handler;
 class TAO_AV_Export TAO_Base_StreamEndPoint
   :public virtual TAO_PropertySet
 {
-
   // @@Naga: Rename this class to TAO_Base_EndPoint since both stream and flowendpoints derive from it.
 public:
   TAO_Base_StreamEndPoint (void);
@@ -445,7 +442,6 @@ class TAO_AV_Export TAO_StreamEndPoint
   : public virtual POA_AVStreams::StreamEndPoint,
     public virtual TAO_Base_StreamEndPoint
 {
-
 public:
   /// Constructor
   TAO_StreamEndPoint (void);
@@ -571,7 +567,6 @@ class TAO_AV_Export TAO_StreamEndPoint_A :
   public virtual POA_AVStreams::StreamEndPoint_A,
   public virtual TAO_StreamEndPoint
 {
-
 public:
   /// Constructor
   TAO_StreamEndPoint_A (void);
@@ -628,7 +623,6 @@ class TAO_AV_Export TAO_VDev
   :public virtual TAO_PropertySet,
    public virtual POA_AVStreams::VDev
 {
-
 public:
   /// Default Constructor
   TAO_VDev (void);
@@ -786,7 +780,6 @@ class TAO_AV_Export TAO_FlowConnection
  : public virtual POA_AVStreams::FlowConnection,
    public virtual TAO_PropertySet
 {
-
 public:
   /// default constructor.
   TAO_FlowConnection (void);

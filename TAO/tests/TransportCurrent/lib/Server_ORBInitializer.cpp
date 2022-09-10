@@ -6,7 +6,6 @@
 
 namespace Test
 {
-
   Server_ORBInitializer::Server_ORBInitializer
     (PortableInterceptor::ServerRequestInterceptor_ptr interceptor)
       : interceptor_

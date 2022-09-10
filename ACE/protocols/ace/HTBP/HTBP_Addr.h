@@ -28,7 +28,6 @@ namespace ACE
 {
   namespace HTBP
   {
-
     /**
      * @class Addr
      *

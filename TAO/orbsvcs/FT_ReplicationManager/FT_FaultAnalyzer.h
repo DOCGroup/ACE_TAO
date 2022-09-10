@@ -33,7 +33,6 @@ namespace TAO
   */
   class TAO_ReplicationManagerLib_Export FT_FaultAnalyzer
   {
-
   public:
     /**
     * Default constructor.

@@ -17,7 +17,6 @@
 
 namespace TAO
 {
-
   /**
    * @class be_visitor_enum_typecode
    *

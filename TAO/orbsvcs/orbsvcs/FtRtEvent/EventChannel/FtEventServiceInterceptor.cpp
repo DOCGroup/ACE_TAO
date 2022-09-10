@@ -225,7 +225,6 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
     Request_Context_Repository().set_ft_request_service_context(ri, service_context);
 
     try{
-
       FTRT::TransactionDepth transaction_depth =
         get_transaction_depth_context(ri);
 

@@ -12,7 +12,6 @@ public:
   Element_Counter (void)
     : count_ (0)
   {
-
   }
 
   void operator () (typename T::value_type & item)

@@ -55,7 +55,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-
   extern ACE_Export
   int uname (ACE_utsname *name);
 } /* namespace ACE_OS */

@@ -73,7 +73,6 @@ namespace TAO
        * details.
        */
       //@{
-
       virtual ACE_Event_Handler * event_handler_i (void);
       virtual TAO_Connection_Handler * invalidate_event_handler_i (void);
 

@@ -27,7 +27,6 @@
 
 namespace Test
 {
-
   class IIOP_Server_Request_Interceptor
     : public virtual Test::Server_Request_Interceptor
     , public virtual ::CORBA::LocalObject

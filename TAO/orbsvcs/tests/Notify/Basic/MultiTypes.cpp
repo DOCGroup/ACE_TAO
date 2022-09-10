@@ -62,7 +62,6 @@ MultiTypes::MultiTypes (void)
    seq_event_count_ (0),
    disconnect_on_last_event_ (0)
 {
-
 }
 
 MultiTypes::~MultiTypes ()

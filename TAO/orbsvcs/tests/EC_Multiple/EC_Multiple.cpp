@@ -904,7 +904,6 @@ void
 Test_ECG::shutdown_supplier (void* /* supplier_cookie */,
                              RtecEventComm::PushConsumer_ptr consumer)
 {
-
   this->running_suppliers_--;
   if (this->running_suppliers_ != 0)
     return;

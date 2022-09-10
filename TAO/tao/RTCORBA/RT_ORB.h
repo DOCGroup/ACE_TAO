@@ -46,7 +46,6 @@ class TAO_Thread_Pool_Manager;
  */
 class TAO_RTCORBA_Export TAO_Named_RT_Mutex_Manager
 {
-
 public:
   /// Constructor.
   TAO_Named_RT_Mutex_Manager (void);

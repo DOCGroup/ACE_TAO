@@ -50,7 +50,6 @@ get_event_channel(CORBA::ORB_ptr orb)
 
   if( channelIdSeq->length() == 0 )
   {
-
     try
     {
       ec = factory->create_channel( init_qos, init_admin, id);

@@ -428,7 +428,6 @@ ACE_Service_Config::current ()
 {
   void* temp = ACE_Service_Config::singleton()->threadkey_.get ();
   if (temp == 0) {
-
     // The most likely reason is that the current thread was spawned
     // by some native primitive, like pthreads or Windows API - not
     // from ACE. This is perfectly legal for callers who are not, or

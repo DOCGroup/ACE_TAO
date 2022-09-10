@@ -40,7 +40,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_QoS_Export ACE_QoS_Manager
 {
-
 public:
   /// Default constructor.
   ACE_QoS_Manager (void);

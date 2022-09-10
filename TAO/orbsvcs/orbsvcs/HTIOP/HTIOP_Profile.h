@@ -35,7 +35,6 @@ namespace TAO
 {
   namespace HTIOP
   {
-
     // TAO HTIOP_Profile concrete Profile definitions
     /**
      * @class HTIOP_Profile

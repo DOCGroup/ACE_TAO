@@ -135,7 +135,6 @@ be_visitor_valuetype_init_ch::visit_eventtype (be_eventtype *node)
 int
 be_visitor_valuetype_init_ch::visit_factory (be_factory *node)
 {
-
   TAO_OutStream& os = *(this->ctx_->stream ());
 
   be_valuetype *vt =

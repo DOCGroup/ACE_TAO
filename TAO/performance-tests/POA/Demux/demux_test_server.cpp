@@ -84,7 +84,6 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
   // grab the POA Manager
   try
     {
-
       this->poa_mgr_ =
         this->root_poa_->the_POAManager ();
     }
@@ -326,7 +325,6 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
 int
 Demux_Test_Server::parse_args (void)
 {
-
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("df:o:p:ut"));
   int c;
 

@@ -306,7 +306,6 @@ public:
 
   /// @name Accessors
   // @{
-
   TAO_Thread_Pool_Manager &manager () const;
   CORBA::ULong id () const;
 
@@ -406,7 +405,6 @@ public:
 private:
   /// @name Helpers
   // @{
-
   RTCORBA::ThreadpoolId
   create_threadpool_i (CORBA::ULong stacksize,
                        CORBA::ULong static_threads,

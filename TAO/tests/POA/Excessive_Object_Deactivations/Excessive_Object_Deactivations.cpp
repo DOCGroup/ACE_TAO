@@ -144,7 +144,6 @@ test_object_deactivation (PortableServer::POA_ptr poa,
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB first.

@@ -171,7 +171,6 @@ test_i::start_test (CORBA::Long session_id,
   // for a few times before giving up.
   for (int j = 0;;)
     {
-
     test_protocol_setup:
 
       try
@@ -209,7 +208,6 @@ test_i::start_test (CORBA::Long session_id,
   // for a few times before giving up.
   for (int k = 0;;)
     {
-
     base_protocol_setup:
 
       try

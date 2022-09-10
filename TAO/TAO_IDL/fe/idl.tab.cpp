@@ -10119,7 +10119,6 @@ yyreduce:
   case 566: /* formal_parameter: formal_parameter_type IDENTIFIER  */
 #line 6685 "fe/idl.ypp"
         {
-
           ACE_NEW_RETURN ((yyval.pival),
                           FE_Utils::T_Param_Info,
                           1);

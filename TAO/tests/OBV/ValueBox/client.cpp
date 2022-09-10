@@ -272,7 +272,6 @@ int test_basic_invocations (Test * test_object)
 
     try
       {
-
         //============================================================
         // Test method invocation with boxed value
         //============================================================
@@ -464,7 +463,6 @@ int test_boxed_string_invocations (Test * test_object)
 
     try
       {
-
         //============================================================
         // Test method invocation with boxed value
         //============================================================
@@ -620,7 +618,6 @@ int test_boxed_sequence_invocations (Test * test_object)
 
   try
     {
-
       //============================================================
       // Test method invocation with boxed value
       //============================================================
@@ -806,7 +803,6 @@ int test_boxed_struct_invocations (Test * test_object)
 
   try
     {
-
       //============================================================
       // Fixed struct
       // Test method invocation with boxed value

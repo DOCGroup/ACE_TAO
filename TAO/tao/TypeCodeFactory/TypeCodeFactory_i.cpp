@@ -567,7 +567,6 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
   if (is_recursive)
     {
-
       recursive_typecode_type * const rtc =
         dynamic_cast<recursive_typecode_type *> (recursive_tc.in ());
 

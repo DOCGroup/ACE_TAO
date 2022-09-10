@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
 {
-
   /**
    * @class Fragments_Cleanup_Strategy
    *

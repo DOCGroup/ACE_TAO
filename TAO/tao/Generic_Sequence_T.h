@@ -65,7 +65,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename T,
          class ALLOCATION_TRAITS,
          class ELEMENT_TRAITS>

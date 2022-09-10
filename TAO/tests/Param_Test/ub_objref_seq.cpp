@@ -148,7 +148,6 @@ Test_ObjRef_Sequence::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_ObjRef_Sequence::check_validity (void)
 {
-
   try
     {
       this->compare (this->in_,

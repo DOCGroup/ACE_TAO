@@ -56,7 +56,6 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 int
 Task::svc (void)
 {
-
   int result = 0;
   try
     {

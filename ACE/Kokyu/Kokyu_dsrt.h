@@ -16,7 +16,6 @@
 
 namespace Kokyu
 {
-
   template <class DSRT_Scheduler_Traits> class DSRT_Dispatcher_Impl;
 
   /**

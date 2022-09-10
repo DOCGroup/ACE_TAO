@@ -37,7 +37,6 @@ const char *const Key_List::default_return_type = "char *";
 
 namespace
 {
-
 char *
 dup_string (const char *const str)
 {
@@ -486,7 +485,6 @@ Key_List::reorder (void)
 
           for (; run_ptr; run_ptr = trail_ptr->next)
             {
-
               if (already_determined (run_ptr))
                 {
                   trail_ptr->next = run_ptr->next;
@@ -687,7 +685,6 @@ Key_List::output_switch (int use_keyword_table)
               // list by increasing hash values.
               if (temp->next && temp->hash_value == temp->next->hash_value)
                 {
-
                   for ( ; temp->next && temp->hash_value == temp->next->hash_value;
                         temp = temp->next)
                     {
@@ -792,7 +789,6 @@ Key_List::output_keylength_table (void)
 
       for (temp = head; temp; temp = temp->next, slot++)
         {
-
           if (slot < temp->hash_value)
             for ( ; slot < temp->hash_value; slot++)
               ACE_OS::printf ("%3d,%s", 0, ++column % (max_column - 1) ? "" : "\n    ");
@@ -1247,7 +1243,6 @@ Key_List::output_hash_function (void)
 
               do
                 {
-
                   while (--count > key_pos)
                     ACE_OS::printf ("      case %d:\n", count);
 
@@ -1812,7 +1807,6 @@ Key_List::sort (void)
 void
 Key_List::string_sort (void)
 {
-
   // Flatten the equivalence class list to a linear list.
 
   List_Node *ptr;

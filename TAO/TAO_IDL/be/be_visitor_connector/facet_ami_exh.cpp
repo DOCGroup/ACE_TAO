@@ -79,7 +79,6 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
 int
 be_visitor_facet_ami_exh::visit_attribute (be_attribute *node)
 {
-
   be_operation get_op (node->field_type (),
                        AST_Operation::OP_noflags,
                        node->name (),

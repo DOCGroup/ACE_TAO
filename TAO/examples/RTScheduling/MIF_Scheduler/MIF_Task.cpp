@@ -48,7 +48,6 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
        long flags,
        ACE_Time_Value* base_time)
 {
-
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
     "MIF_Task::activate %d\n",
@@ -84,7 +83,6 @@ MIF_Task::perform_task (void)
 {
   try
     {
-
       ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,
                        ACE_TEXT("MIF_Task::perform_task ")
@@ -135,7 +133,6 @@ MIF_Task::perform_task (void)
 
               while (count_down_time > ACE_Time_Value::zero)
                 {
-
                   ACE::is_prime (prime_number,
                                  2,
                                  prime_number / 2);

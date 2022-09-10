@@ -19,7 +19,6 @@ namespace ACE
 {
   namespace FTP
   {
-
     ClientRequestHandler::SessionHolder::SessionHolder ()
       : session_ ()
       {

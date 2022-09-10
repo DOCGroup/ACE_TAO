@@ -54,7 +54,6 @@ static ACE_Atomic_Op <ACE_SYNCH_MUTEX, size_t> Completions_To_Go;
  */
 class My_Result : public RESULT_CLASS
 {
-
 public:
   My_Result (ACE_Handler &handler,
              const void *act,
@@ -117,7 +116,6 @@ private:
  */
 class My_Handler : public  ACE_Handler
 {
-
 public:
   /// Constructor.
   My_Handler (void) {}

@@ -586,7 +586,6 @@ Handler_Factory::handle_events (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   ACE_SSL_Context *context = ACE_SSL_Context::instance ();
 
   context->certificate ("./dummy.pem", SSL_FILETYPE_PEM);

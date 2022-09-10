@@ -464,7 +464,6 @@ Worker::setup (void)
   // for a few times before giving up.
   for (int j = 0;;)
     {
-
     test_protocol_setup:
 
       try
@@ -502,7 +501,6 @@ Worker::setup (void)
   // for a few times before giving up.
   for (int k = 0;;)
     {
-
     base_protocol_setup:
 
       try

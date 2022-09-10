@@ -28,7 +28,6 @@
  */
 class Timeout_Handler : public ACE_Handler, public ACE_Event_Handler
 {
-
 public:
   Timeout_Handler (void)
     {

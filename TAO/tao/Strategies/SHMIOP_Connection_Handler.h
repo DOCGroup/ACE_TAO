@@ -43,7 +43,6 @@ class TAO_Strategies_Export TAO_SHMIOP_Connection_Handler :
   public TAO_SHMIOP_SVC_HANDLER,
   public TAO_Connection_Handler
 {
-
 public:
   /// Constructor.
   TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager* t = 0);

@@ -303,7 +303,6 @@ Ping_Send_Callback::get_timeout (ACE_Time_Value *&tv,
 int
 Ping_Send_Callback::handle_timeout (void *)
 {
-
   this->count_++;
 
   ACE_DEBUG ((LM_DEBUG, "Ping timeout frame %d\n", this->count_));

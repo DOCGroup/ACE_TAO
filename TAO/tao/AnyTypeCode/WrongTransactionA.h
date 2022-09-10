@@ -53,7 +53,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
 
@@ -77,7 +76,6 @@ namespace TAO
 
 namespace CORBA
 {
-
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::WrongTransaction &); // copying version
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::WrongTransaction*); // noncopying version
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::WrongTransaction *&); // deprecated

@@ -59,7 +59,6 @@ public:
    * interface.
    */
   //@{
-
   /// Create a member and add it to the given object group.
   virtual PortableGroup::ObjectGroup_ptr create_member (
       PortableGroup::ObjectGroup_ptr object_group,

@@ -43,7 +43,6 @@ My_Accept_Handler::~My_Accept_Handler ()
 int
 My_Accept_Handler::open (ACE_INET_Addr &addr)
 {
-
   if (this->peer_acceptor_.open (addr, 1) == -1)
   {
      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -63,7 +62,6 @@ My_Accept_Handler::get_handle () const
 int
 My_Accept_Handler::handle_input (ACE_HANDLE)
 {
-
   if (this->peer_acceptor_.accept(this->stream_, 0) == -1) {
     ACE_ERROR((LM_ERROR, ACE_TEXT ("%p\n"),
                ACE_TEXT ("peer_acceptor.accept")));

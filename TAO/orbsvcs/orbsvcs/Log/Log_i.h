@@ -46,7 +46,6 @@ class TAO_LogMgr_i;
  */
 class TAO_Log_Serv_Export TAO_Log_i : public virtual POA_DsLogAdmin::Log
 {
-
 public:
   /// Constructor.
   TAO_Log_i (CORBA::ORB_ptr orb,

@@ -160,7 +160,6 @@ public:
 
   /// @name Accessors
   // @{
-
   bool use_timeouts () const;
   const ACE_Time_Value& dynamic_thread_time () const;
 
@@ -241,7 +240,6 @@ public:
 private:
   /// @name Helpers
   // @{
-
   CORBA::ULong
   create_threadpool_i (TAO_DTP_Definition &def);
 

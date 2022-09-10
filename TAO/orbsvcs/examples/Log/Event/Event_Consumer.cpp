@@ -90,7 +90,6 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 void
 Consumer::push (const CORBA::Any &)
 {
-
   this->event_count_ ++;
 
       ACE_DEBUG ((LM_DEBUG,

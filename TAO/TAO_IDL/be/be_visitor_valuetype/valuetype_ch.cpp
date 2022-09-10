@@ -498,7 +498,6 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
                                             be_interface *base,
                                             TAO_OutStream *os)
 {
-
   AST_Decl *d = nullptr;
   be_visitor_context ctx;
   ctx.stream (os);

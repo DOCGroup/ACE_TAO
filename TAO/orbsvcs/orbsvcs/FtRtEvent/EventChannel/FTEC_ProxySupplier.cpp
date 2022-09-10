@@ -26,7 +26,6 @@ void
 TAO_FTEC_ProxyPushSupplier::activate (
        RtecEventChannelAdmin::ProxyPushSupplier_ptr &result)
 {
-
   result =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil();
   try{

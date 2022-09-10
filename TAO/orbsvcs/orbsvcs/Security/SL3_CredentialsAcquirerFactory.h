@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace SL3
   {
-
     /**
      * @class CredentialsAcquirerFactory
      *

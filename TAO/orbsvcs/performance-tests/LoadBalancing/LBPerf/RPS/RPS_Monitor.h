@@ -41,7 +41,6 @@ public:
    * Methods required by the CosLoadBalancing::LoadMonitor interface.
    */
   //@{
-
   /// Return the location at which the LoadMonitor resides.
   /**
    * The returned "Location" is a sequence of length 1.

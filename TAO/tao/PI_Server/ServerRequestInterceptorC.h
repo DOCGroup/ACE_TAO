@@ -56,7 +56,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
-
   // TAO_IDL - Generated from
   // be\be_interface.cpp:646
 
@@ -231,7 +230,6 @@ namespace PortableInterceptor
 // Traits specializations.
 namespace TAO
 {
-
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__TRAITS_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__TRAITS_
 

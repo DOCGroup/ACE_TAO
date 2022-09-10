@@ -53,7 +53,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace RTCORBA
 {
-
   // TAO_IDL - Generated from
   // be\be_interface.cpp:638
 
@@ -148,7 +147,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Traits specializations.
 namespace TAO
 {
-
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES__TRAITS_)
 #define _RTCORBA_PROTOCOLPROPERTIES__TRAITS_
 

@@ -11,7 +11,6 @@ class node_impl :
   public virtual OBV_Supports_Test::Node,
   public virtual CORBA::DefaultValueRefCountBase
 {
-
 public:
   node_impl (void);
 
@@ -28,7 +27,6 @@ public:
 
 class node_init_impl : public Supports_Test::Node_init
 {
-
  public:
   virtual Supports_Test::Node * create (void);
 
@@ -41,7 +39,6 @@ class vt_graph_impl :
   public virtual POA_Supports_Test::vt_graph,
   public virtual CORBA::DefaultValueRefCountBase
 {
-
  public:
   vt_graph_impl (void);
 
@@ -57,7 +54,6 @@ class vt_graph_impl :
 class vt_graph_init_impl :
   public Supports_Test::vt_graph_init
 {
-
  public:
   virtual Supports_Test::vt_graph * create (void);
 
@@ -67,7 +63,6 @@ class vt_graph_init_impl :
 class test_impl :
   public virtual POA_Supports_Test::test
 {
-
  public:
   test_impl (CORBA::ORB_ptr orb);
 

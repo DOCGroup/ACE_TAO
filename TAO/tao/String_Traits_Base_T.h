@@ -27,7 +27,6 @@ class String_out;
 
 namespace details
 {
-
 template<typename charT>
 struct string_traits_base
 {

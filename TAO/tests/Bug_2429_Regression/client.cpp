@@ -99,7 +99,6 @@ client_parse_args(int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   CORBA::ORB_var orb;
 
   try

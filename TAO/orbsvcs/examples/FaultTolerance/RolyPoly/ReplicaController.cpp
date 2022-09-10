@@ -492,7 +492,6 @@ void
 ReplicaController::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
-
 }
 
 void

@@ -48,7 +48,6 @@ TAO_DTP_POA_Strategy::CustomRequestOutcome
 TAO_DTP_POA_Strategy::custom_asynch_request (
   TAO::CSD::TP_Custom_Request_Operation* op)
 {
-
   TAO::CSD::TP_Servant_State::HandleType servant_state =
     this->get_servant_state (op->servant ());
 
@@ -66,7 +65,6 @@ TAO_DTP_POA_Strategy::custom_asynch_request (
 bool
 TAO_DTP_POA_Strategy::poa_activated_event_i (TAO_ORB_Core& orb_core)
 {
-
   this->dtp_task_.thr_mgr (orb_core.thr_mgr ());
 
   // Activates the worker threads, and waits until all have been started.
@@ -179,8 +177,6 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
                               const char*                     operation,
                               PortableServer::Servant         servant)
 {
-
-
   TAO::CSD::TP_Servant_State::HandleType servant_state =
                         this->get_servant_state (servant);
 
@@ -216,7 +212,6 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
     }
   else if (is_synchronous)
     {
-
       TAO::CSD::TP_Collocated_Synch_Request *req_ptr;
       ACE_NEW_RETURN (req_ptr,
                       TAO::CSD::TP_Collocated_Synch_Request (

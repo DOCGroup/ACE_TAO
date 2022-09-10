@@ -30,7 +30,6 @@
  */
 class Naming_Test
 {
-
 public:
   /// Execute the test code.  <root_context> is the context to assume
   /// as the root for all tests operations.

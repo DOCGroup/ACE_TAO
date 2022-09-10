@@ -38,7 +38,6 @@ PushSupplier_impl::~PushSupplier_impl()
 
 int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel)
 {
-
   ACE_DEBUG((LM_DEBUG, "for_suppliers\n"));
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     channel->for_suppliers();
@@ -80,7 +79,6 @@ int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel)
 void  PushSupplier_impl::disconnect_push_supplier (
       )
 {
-
   reactor_task_.reactor_->end_reactor_event_loop();
 
   PortableServer::Current_var current =

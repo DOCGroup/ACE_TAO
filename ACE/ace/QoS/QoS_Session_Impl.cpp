@@ -305,7 +305,6 @@ ACE_RAPI_Session::qos (ACE_SOCK * /* socket */,
                        ACE_QoS_Manager * /* qos_manager */,
                        const ACE_QoS &ace_qos)
 {
-
   // If sender : call sending_qos ()
   // If receiver : call receiving_qos ()
   // If both : call sending_qos () and receiving_qos ()
@@ -425,7 +424,6 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
 int
 ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
 {
-
   ACE_Flow_Spec *receiving_flowspec = ace_qos.receiving_flowspec ();
   if (receiving_flowspec == 0)
     {
@@ -659,7 +657,6 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
                        ACE_QoS_Manager *qos_manager,
                        const ACE_QoS &ace_qos)
 {
-
   // Confirm if the current session is one of the QoS sessions
   // subscribed to by the given socket.
 

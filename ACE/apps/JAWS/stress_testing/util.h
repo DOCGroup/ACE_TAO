@@ -3,7 +3,6 @@
 #ifndef _D_URL
 #define _D_URL
 class URL {
-
 public:
   URL(char *buffer);
 

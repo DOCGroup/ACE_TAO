@@ -21,7 +21,6 @@
  */
 class PMC_All : public PM_Client
 {
-
 protected:
   virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record);
   virtual int encode (char *packet, int &total_bytes);

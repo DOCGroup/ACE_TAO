@@ -24,7 +24,6 @@
 
 namespace Test
 {
-
   class Current_Test_Export Server_ORBInitializer :
     public virtual PortableInterceptor::ORBInitializer,
     public virtual ::CORBA::LocalObject

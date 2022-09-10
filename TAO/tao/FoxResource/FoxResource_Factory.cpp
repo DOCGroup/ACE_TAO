@@ -6,7 +6,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   FoxResource_Factory::FoxResource_Factory (FXApp *app)
     : reactor_impl_ (0)
     , fxapp_ (app)

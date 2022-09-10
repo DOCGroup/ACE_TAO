@@ -43,7 +43,6 @@
  */
 class ACE_Svc_Export ACE_Token_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
-
 public:
   /// Default constructor.
   ACE_Token_Handler (ACE_Thread_Manager * = 0);
@@ -154,7 +153,6 @@ private:
  */
 class ACE_TS_Mutex : public ACE_Local_Mutex
 {
-
 public:
   /// Creation.
   ACE_TS_Mutex (const ACE_TCHAR *name,

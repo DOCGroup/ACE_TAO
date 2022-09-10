@@ -17,7 +17,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename traits>
 class string_const_sequence_element
 {

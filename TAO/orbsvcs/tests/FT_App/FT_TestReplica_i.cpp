@@ -149,7 +149,6 @@ void FT_TestReplica_i::suicide(const char * note)
 //static
 const char * FT_TestReplica_i::repository_id()
 {
-
   const char * id =
     FT_TEST::_tc_TestReplica->id();
 

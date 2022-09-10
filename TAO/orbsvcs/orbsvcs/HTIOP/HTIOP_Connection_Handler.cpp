@@ -94,7 +94,6 @@ TAO::HTIOP::Connection_Handler::open (void*)
   if (local_addr.is_ip_equal (remote_addr)
       && local_addr.get_port_number () == remote_addr.get_port_number ())
     {
-
       if (TAO_debug_level > 0)
         {
           ACE_TCHAR remote_as_string[MAXHOSTNAMELEN + 16];

@@ -173,7 +173,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close (void)
 
   if (this->hash_)
     {
-
       ACE_DES_FREE_TEMPLATE3(this->hash_, this->allocator_->free,
                              JAWS_Cache_Hash,
                              KEY, HASH_FUNC, EQ_FUNC);
@@ -184,7 +183,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close (void)
 
   if (this->heap_)
     {
-
       ACE_DES_FREE_TEMPLATE4(this->heap_, this->allocator_->free,
                              JAWS_Cache_List,
                              KEY, FACTORY, HASH_FUNC, EQ_FUNC);

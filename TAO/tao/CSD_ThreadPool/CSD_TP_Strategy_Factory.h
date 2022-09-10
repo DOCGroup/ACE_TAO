@@ -29,7 +29,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     /**
      * @class TP_Strategy_Factory
      *

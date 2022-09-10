@@ -396,7 +396,6 @@ ACE_QtReactor::create_notifiers_for_handle (ACE_HANDLE handle)
     if ((this->exception_notifier_.find (handle,
              qsock_notifier) == -1))
     {
-
         ACE_NEW (qsock_notifier,
             QSocketNotifier (ACE_QT_HANDLE_TYPE(handle), QSocketNotifier::Exception, this));
 

@@ -81,7 +81,6 @@ public:
 class ACE_QoS;
 
 namespace ACE_OS {
-
   ACE_NAMESPACE_INLINE_FUNCTION
   int getmsg (ACE_HANDLE handle,
               struct strbuf *ctl,

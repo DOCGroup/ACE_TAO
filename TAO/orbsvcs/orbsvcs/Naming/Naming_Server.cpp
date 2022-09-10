@@ -572,7 +572,6 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         // Initialize Persistent Naming Service.
         //
         {
-
           // Create Naming Context Implementation Factory to be used for the creation of
           // naming contexts by the TAO_Persistent_Context_Index
           TAO_Persistent_Naming_Context_Factory *naming_context_factory =

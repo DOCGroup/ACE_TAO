@@ -7,7 +7,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
 Zlib_CompressorFactory::Zlib_CompressorFactory (void) :
   ::TAO::CompressorFactory (::Compression::COMPRESSORID_ZLIB)
 {

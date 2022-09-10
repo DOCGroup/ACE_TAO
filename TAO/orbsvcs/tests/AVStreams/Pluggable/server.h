@@ -26,7 +26,6 @@
  */
 class FTP_Server_Callback : public TAO_AV_Callback
 {
-
 public:
   // Method that is called when there is data to be received from the ftp client.
   int receive_frame (ACE_Message_Block *frame,

@@ -110,7 +110,6 @@ namespace TAO
        *       increase cache hits by improving spatial locality.
        */
       //@{
-
       /// Base attributes containing repository ID and name of
       /// structure type.
       Base_Attributes<StringType> base_attributes_;

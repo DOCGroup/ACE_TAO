@@ -5,7 +5,6 @@
 
 namespace Bug_3647_Regression
 {
-
 /**
  * @class Middle
  *

@@ -123,7 +123,6 @@ void
 Policy_Verifier::verify_reference (Counter_ptr object,
                                    RT_Properties *rt_properties)
 {
-
   try
     {
       CORBA::Policy_var policy_var =
@@ -162,7 +161,6 @@ Policy_Verifier::verify_reference (Counter_ptr object,
       if (Policy_Verifier::check_reference (policy_var.in (),
                                           "Unable to get Priority Banded Policy\n"))
         {
-
           RTCORBA::PriorityBandedConnectionPolicy_var priority_banded_policy =
             RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy_var.in ());
 
@@ -170,7 +168,6 @@ Policy_Verifier::verify_reference (Counter_ptr object,
           if (Policy_Verifier::check_reference (priority_banded_policy.in (),
                                               "Unable to get Priority Banded Policy\n"))
             {
-
               // Here we have a priority banded connection policy.
 
               RTCORBA::PriorityBands_var pb =

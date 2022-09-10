@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 /// \brief Simple bit vector.
 ///
 /// Written to support block allocation from persistent storage.
