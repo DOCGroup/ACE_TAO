@@ -360,7 +360,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs
                             ACE_TEXT ("%") ACE_TEXT_PRIs
-                            ACE_TEXT ("%") ACE_TEXT_PRIs
+                            ACE_TEXT ("%") ACE_TEXT_PRIs,
                             EXE_LOCATION,
                             argc > 0 ? argv[0] : ACE_TEXT ("Malloc_Test"),
                             ACE_TEXT (" run_as_test"));
