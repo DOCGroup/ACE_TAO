@@ -38,7 +38,6 @@ class Receiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
 {
   friend class Acceptor;
 public:
-
   Receiver (Acceptor * acceptor=0, size_t index=MAX_RECEIVERS+1);
 
   ~Receiver (void);
@@ -94,7 +93,6 @@ public:
   virtual int make_svc_handler (Receiver * & sh);
 
 private:
-
   ACE_Recursive_Thread_Mutex mutex_;
   size_t sessions_;
   Receiver *list_receivers_[MAX_RECEIVERS];
@@ -178,7 +176,6 @@ public:
   virtual int make_svc_handler (Sender * & sh);
 
 private:
-
   ACE_Recursive_Thread_Mutex mutex_;
   size_t  sessions_;
   Sender * list_senders_ [MAX_SENDERS];

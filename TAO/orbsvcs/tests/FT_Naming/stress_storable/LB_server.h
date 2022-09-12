@@ -35,7 +35,6 @@ class Basic;
 class LB_server
 {
 public:
-
   /// Constructor
   LB_server (int argc, ACE_TCHAR **argv);
 
@@ -67,11 +66,9 @@ public:
   FT_Naming::NamingManager_ptr naming_manager (void);
 
 private:
-
     int parse_args (int, ACE_TCHAR **);
 
 private:
-
   /// Load Manager
   FT_Naming::NamingManager_var naming_manager_;
 

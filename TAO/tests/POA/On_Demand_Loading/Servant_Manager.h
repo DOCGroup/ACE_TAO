@@ -108,6 +108,5 @@ public:
    * using the unique ObjectId as key.
    */
   SERVANT_MAP servant_map_;
-
 };
 #endif /* SERVANT_MANAGER_H */

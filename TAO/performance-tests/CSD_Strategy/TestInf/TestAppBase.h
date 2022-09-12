@@ -10,7 +10,6 @@
 class CSD_PT_TestInf_Export TestAppBase
 {
   public:
-
     virtual ~TestAppBase();
 
     // Returns 0 for success, and -1 for failure.
@@ -20,7 +19,6 @@ class CSD_PT_TestInf_Export TestAppBase
 
 
   protected:
-
     TestAppBase(const char* name);
 
     // Returns -1 for failure, 0 for success
@@ -28,7 +26,6 @@ class CSD_PT_TestInf_Export TestAppBase
 
 
   private:
-
     ACE_CString name_;
 };
 

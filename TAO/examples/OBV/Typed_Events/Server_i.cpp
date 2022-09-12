@@ -9,7 +9,6 @@ Criterion_List_var criterions;
 // Arriving events are tested against the list members.
 
 
-
 // Set the ORB pointer, register OBV factories and init the
 // lists declared above.
 
@@ -118,7 +117,6 @@ Checkpoint_i::put_event (Event *event)
     {
       alarms->store_event (event);
     }
-
 
 
   // If we want to return the event (e.g. return type is Event *)

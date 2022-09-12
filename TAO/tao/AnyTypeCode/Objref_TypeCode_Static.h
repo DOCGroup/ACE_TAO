@@ -56,7 +56,6 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-
       /// Constructor.
       Objref (CORBA::TCKind kind,
               char const * id,
@@ -97,9 +96,7 @@ namespace TAO
     protected:
       /// Base attributes (@c id and @c name).
       Base_Attributes<char const *> attributes_;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

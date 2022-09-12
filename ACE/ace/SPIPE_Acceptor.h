@@ -155,7 +155,6 @@ private:
   ACE_HANDLE       pipe_handle_;
   int              already_connected_;
 #endif /* ACE_HAS_WIN32_NAMED_PIPES */
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -4,7 +4,6 @@
 #include "Supplier_T.h"
 
 
-
 template <class Supplier_Traits>
 TAO_Notify_Tests_Supplier_T<Supplier_Traits>::TAO_Notify_Tests_Supplier_T (void)
 {

@@ -20,7 +20,6 @@ public:
 
   virtual int handle_put (TYPE *data, ACE_Time_Value *tv) = 0;
   // Callback hook for specialized data processing
-
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

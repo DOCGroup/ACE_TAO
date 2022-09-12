@@ -12,7 +12,6 @@
 #include "ace/OS_NS_errno.h"
 
 
-
 int iterations = 1000;
 int do_dump_history = 0;
 const ACE_TCHAR *ec_ior = ACE_TEXT("file://ec.ior");

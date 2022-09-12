@@ -55,7 +55,6 @@ namespace TAO
 class TAO_Export TAO_Connector
 {
 public:
-
   /// Default constructor.
   TAO_Connector (CORBA::ULong tag);
 

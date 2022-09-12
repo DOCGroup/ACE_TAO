@@ -5,7 +5,6 @@
 #include "ace/OS_NS_string.h"
 
 
-
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {

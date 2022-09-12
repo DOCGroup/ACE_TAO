@@ -3,7 +3,6 @@
 #include "Event_Analyzer.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 int

@@ -6,7 +6,6 @@
 #include "Options.h"
 
 
-
 // Handle outgoing messages in a separate thread.
 
 int

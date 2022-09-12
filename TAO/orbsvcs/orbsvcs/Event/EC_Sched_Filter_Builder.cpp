@@ -14,7 +14,6 @@
 
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Sched_Filter_Builder::~TAO_EC_Sched_Filter_Builder ()

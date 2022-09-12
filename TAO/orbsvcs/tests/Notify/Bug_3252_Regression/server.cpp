@@ -136,7 +136,6 @@ int loadOrb(ACE_Service_Config & service_config)
 }
 
 
-
 int
 ACE_TMAIN(int, ACE_TCHAR **argv)
 {

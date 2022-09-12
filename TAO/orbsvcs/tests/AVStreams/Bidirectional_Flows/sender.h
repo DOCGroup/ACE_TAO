@@ -27,7 +27,6 @@
 class Sender_Callback : public TAO_AV_Callback
 {
 public:
-
   /// Constructor.
   Sender_Callback (void);
 

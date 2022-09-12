@@ -11,7 +11,6 @@
 //#define DEBUG_MEMORY_USE
 #if defined(_MSC_VER) && defined (_DEBUG) && defined (DEBUG_MEMORY_USE)
 namespace CRT{
-
 /// \brief dump heap allocation stats
 ///
 /// This works only on microsoft/windows compilers

@@ -21,7 +21,6 @@
 class Counter_Servant : public POA_Counter
 {
 public:
-
   // = Ctor-Dtor Declaration
 
   Counter_Servant (Policy_Tester *policy_tester);

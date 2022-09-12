@@ -24,7 +24,6 @@
  */
 class Quoter_Generic_Factory_i : public POA_Stock::Quoter_Generic_Factory
 {
-
 public:
   Quoter_Generic_Factory_i (int debug_level = 1);
   ~Quoter_Generic_Factory_i (void);

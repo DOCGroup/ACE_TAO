@@ -65,7 +65,6 @@ namespace TAO
     CORBA::PolicyList *get_inconsistent_policies (void);
 
   private:
-
     bool get_timeout (ACE_Time_Value &val);
 
     /// Helper method that takes care of setting the profiles within

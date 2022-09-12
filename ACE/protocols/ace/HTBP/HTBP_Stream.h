@@ -278,7 +278,6 @@ namespace ACE
       /// associated with. On the inside, sessions are created by the Connector,
       /// which then create streams on demand.
       Session *session_;
-
     };
   }
 }

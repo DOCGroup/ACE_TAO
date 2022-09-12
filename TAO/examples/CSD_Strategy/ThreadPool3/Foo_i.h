@@ -7,7 +7,6 @@
 class Foo_i : public virtual POA_Foo
 {
   public:
-
     Foo_i(unsigned num_clients);
     virtual ~Foo_i();
 
@@ -24,7 +23,6 @@ class Foo_i : public virtual POA_Foo
     virtual void done(void);
 
   private:
-
     CORBA::Long value_;
     unsigned num_clients_;
 };

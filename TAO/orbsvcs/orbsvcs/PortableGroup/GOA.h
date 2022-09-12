@@ -167,7 +167,6 @@ public:
     static int Initializer (void);
 
 protected:
-
   /// Template method for creating new POA's of this type.
   virtual TAO_Root_POA *new_POA (const String &name,
                                  PortableServer::POAManager_ptr poa_manager,

@@ -44,7 +44,6 @@ namespace TAO
     class TAO_Security_Export Current_Impl
     {
     public:
-
       /// Destructor.
       virtual ~Current_Impl (void);
 
@@ -76,9 +75,7 @@ namespace TAO
 
       /// Return the unique tag that identifies the concrete subclass.
       virtual CORBA::ULong tag () const = 0;
-
     };
-
   }  // End Security namespace.
 }  // End TAO namespace.
 

@@ -33,9 +33,7 @@
  */
 class Initiator_Server
 {
-
 public:
-
   /// Default constructor
   Initiator_Server (void);
 

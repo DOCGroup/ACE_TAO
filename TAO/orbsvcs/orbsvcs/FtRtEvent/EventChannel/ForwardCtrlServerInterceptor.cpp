@@ -122,7 +122,6 @@ FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_c
 }
 
 
-
 void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   IOP::ServiceContext_var service_context;

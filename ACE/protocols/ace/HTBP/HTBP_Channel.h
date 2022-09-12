@@ -232,7 +232,6 @@ namespace ACE
       int consume_error (void);
 
     private:
-
       /// The filter_ is a pluggable component used to manage the
       /// wrapping of data in a way suitable for the proxy to
       /// manage. The actual filter instance is owned by the

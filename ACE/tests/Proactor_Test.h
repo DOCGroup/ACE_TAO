@@ -83,7 +83,6 @@ private:
 class Client : public ACE_Service_Handler
 {
 public:
-
   /// This is called after the new connection has been established.
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);

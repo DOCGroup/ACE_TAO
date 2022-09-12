@@ -81,7 +81,6 @@ private:
 
   /// The connector endpoint to initiate the client connection
   ACE_Connector<ACE_Blob_Handler, ACE_SOCK_CONNECTOR> connector_;
-
 };
 
 #endif /* ACE_BLOB_H */

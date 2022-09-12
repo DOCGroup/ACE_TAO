@@ -226,7 +226,6 @@ private:
 class URL_Visitor
 {
 public:
-
   virtual ~URL_Visitor (void);
 
   /// Visit an <HTTP_URL>.

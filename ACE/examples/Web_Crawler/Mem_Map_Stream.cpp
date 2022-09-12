@@ -5,7 +5,6 @@
 #include "Mem_Map_Stream.h"
 
 
-
 ACE_SOCK_Stream &
 Mem_Map_Stream::stream (void)
 {
@@ -145,7 +144,6 @@ Mem_Map_Stream::open (STRAT_CONNECTOR *connector,
   if (connector->connect (svc_handler_,
                           addr) == -1)
     {
-
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p %s %d\n",
                          "Connect failed",

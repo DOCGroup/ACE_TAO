@@ -276,7 +276,6 @@ protected:
   virtual void free_node (ACE_Timer_Node_T<TYPE> *);
 
 private:
-
   /**
    * Schedule @a type that will expire at @a future_time,
    * which is specified in absolute time.  If it expires then @a act is

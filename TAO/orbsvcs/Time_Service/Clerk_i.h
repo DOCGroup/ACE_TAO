@@ -30,7 +30,6 @@
 class Clerk_i
 {
 public:
-
   enum {
     // Pre-allocate slots for this many servers. The capacity grows on
     // demand.
@@ -58,7 +57,6 @@ private:
   void insert_server (CosTime::TimeService_ptr server);
 
 private:
-
   /// Read the server IORs from a file instead of using a naming
   /// service.
   int read_ior (const ACE_TCHAR* filename);

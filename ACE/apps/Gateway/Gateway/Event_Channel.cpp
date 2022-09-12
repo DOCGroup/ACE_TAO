@@ -158,7 +158,6 @@ Event_Channel::subscription_event (ACE_Message_Block *data)
                 "(%t) consumers_[%d] = %d\n",
                 i,
                 subscription->consumers_[i]));
-
 }
 
 void

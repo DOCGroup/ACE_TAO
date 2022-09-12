@@ -231,7 +231,6 @@ Client<InterfaceObj, Var>::init (const char *name,
   this->argv_ = argv;
 
 
-
   try
     {
       // Retrieve the ORB.
@@ -260,8 +259,6 @@ Client<InterfaceObj, Var>::init (const char *name,
         ACE_ERROR_RETURN ((LM_ERROR,
                            "no ior or naming options  specified\n"),
                           -1);
-
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -277,7 +274,6 @@ Client<InterfaceObj, Var>::init (const char *name,
 template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::obtain_initial_references (void)
 {
-
   return 0;
 }
 

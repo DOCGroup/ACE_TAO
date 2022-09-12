@@ -94,7 +94,6 @@ test_object_deactivation (PortableServer::POA_ptr poa,
   ACE_ASSERT (expected_exception_raised);
 
 
-
   poa->activate_object_with_id (id,
                                 &servant);
 
@@ -140,13 +139,11 @@ test_object_deactivation (PortableServer::POA_ptr poa,
 
   // ACE_ASSERT dissappears in non-debug builds
   ACE_UNUSED_ARG (expected_exception_raised);
-
 }
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB first.

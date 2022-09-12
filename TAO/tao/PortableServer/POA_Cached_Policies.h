@@ -40,7 +40,6 @@ namespace TAO
     class TAO_PortableServer_Export Cached_Policies
     {
     public:
-
       enum PriorityModel
       {
         CLIENT_PROPAGATED,
@@ -113,7 +112,6 @@ namespace TAO
       //@}
 
     protected:
-
       /// Helper method to update a particular policy.
       void update_policy (const CORBA::Policy_ptr policy);
 

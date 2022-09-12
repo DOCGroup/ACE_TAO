@@ -26,7 +26,6 @@ ACE_Blob::open (const ACE_TCHAR *filename, const ACE_TCHAR *hostname , u_short p
 int
 ACE_Blob::read (ACE_Message_Block *mb, size_t length, size_t offset)
 {
-
   // Create a Blob Reader
   ACE_Blob_Reader blob_reader (mb, length, offset, filename_);
   ACE_Blob_Handler *brp = &blob_reader;
@@ -36,7 +35,6 @@ ACE_Blob::read (ACE_Message_Block *mb, size_t length, size_t offset)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob::read():Connector error"), -1);
 
   return blob_reader.byte_count ();
-
 }
 
 // write to connection length bytes from offset, into Message block
@@ -44,7 +42,6 @@ ACE_Blob::read (ACE_Message_Block *mb, size_t length, size_t offset)
 int
 ACE_Blob::write (ACE_Message_Block *mb, size_t length, size_t offset)
 {
-
   // Create a Blob Writer
   ACE_Blob_Writer blob_writer (mb, length, offset, filename_);
   ACE_Blob_Handler *bwp = &blob_writer;
@@ -61,13 +58,11 @@ ACE_Blob::write (ACE_Message_Block *mb, size_t length, size_t offset)
 int
 ACE_Blob::close (void)
 {
-
   if (filename_)
     {
       ACE_OS::free ((void *) filename_);
       filename_ = 0;
     }
   return 0;
-
 }
 

@@ -11,7 +11,6 @@
 //=============================================================================
 
 
-
 #ifndef TAO_AV_FTP_H
 #define TAO_AV_FTP_H
 
@@ -51,7 +50,6 @@ public:
  */
 class FTP_Client_StreamEndPoint  : public TAO_Client_StreamEndPoint
 {
-
 public:
   /// Constructor
   FTP_Client_StreamEndPoint (void);
@@ -163,7 +161,6 @@ private:
 
   /// Protocol object corresponding to the transport protocol selected.
   TAO_AV_Protocol_Object* protocol_object_;
-
 };
 
 typedef ACE_Unmanaged_Singleton<Client,ACE_Null_Mutex> CLIENT;

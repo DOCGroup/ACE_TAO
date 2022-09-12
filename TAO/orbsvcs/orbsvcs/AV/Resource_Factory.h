@@ -35,14 +35,12 @@ class TAO_AV_Export TAO_AV_Resource_Factory
 : public ACE_Service_Object
 {
 public:
-
   /**
    * @name Service Configurator Hooks
    */
   //@{
   /// Dynamic linking hook
   virtual int init (int argc, ACE_TCHAR *argv[]) = 0;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

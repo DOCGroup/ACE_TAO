@@ -28,7 +28,6 @@
 #include "broken_i.h"
 
 
-
 ServerAdmin_i::ServerAdmin_i (ArrayTest_ptr target)
   :target_ (ArrayTest::_duplicate(target))
 {
@@ -143,7 +142,6 @@ ArrayTest_i::~ArrayTest_i (void)
   // Add your implementation here
   ::CharArray_copy(p3,p2);
   return CharArray_dup(p1);
-
 }
 
 ::OctetArray_slice * ArrayTest_i::octetArrayOp (

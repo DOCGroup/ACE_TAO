@@ -210,7 +210,6 @@ void set::usage()
 
 int set::run()
 {
-
    //----------[ create a ASNMP session ]-----------------------------------
    if ( snmp_.valid() != SNMP_CLASS_SUCCESS) {
       cout << "\nASNMP:ERROR:Create session failed: "<<

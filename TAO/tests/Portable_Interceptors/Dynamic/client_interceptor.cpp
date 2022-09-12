@@ -135,7 +135,6 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
         {
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) All parameters not available\n"));
-
         }
 
       CORBA::ULong first = 0, second = 1; // If you dont understand

@@ -4,7 +4,6 @@
 
 extern "C"
 {
-
 ACE_Proper_Export_Flag int capi_init(void)
 {
   int ret = ACE::init();

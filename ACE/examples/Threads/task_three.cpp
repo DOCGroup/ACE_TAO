@@ -22,7 +22,6 @@
 #include "ace/Signal.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 static ACE_OSTREAM_TYPE *out_stream = 0;

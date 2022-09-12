@@ -167,7 +167,6 @@ TAO_AV_UDP_MCast_Transport::send (const char *buf,
 //   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"to %s\n",addr));
 
   return this->handler_->get_mcast_socket ()->send (buf, len);
-
 }
 
 ssize_t
@@ -178,7 +177,6 @@ TAO_AV_UDP_MCast_Transport::send (const iovec *iov,
   return this->handler_->get_mcast_socket ()->send (iov,
                                                     iovcnt,
                                                     0);
-
 }
 
 int

@@ -39,7 +39,6 @@ static const int RECURSION_INDENT = 3;
 static int entrycount = 0;
 
 extern "C" {
-
 static int
 selector (const ACE_DIRENT *d)
 {

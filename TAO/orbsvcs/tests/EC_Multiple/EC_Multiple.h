@@ -96,7 +96,6 @@ private:
 
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC (as a supplier) using this proxy.
-
 };
 
 class Test_Consumer : public POA_RtecEventComm::PushConsumer

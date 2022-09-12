@@ -139,7 +139,6 @@ private:
 
   /// Set receiving  QoS for this RAPI session.
   int receiving_qos (const ACE_QoS &ace_qos);
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -159,7 +158,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_QoS_Export ACE_GQoS_Session : public ACE_QoS_Session
 {
 public:
-
   /// Default destructor.
   ~ACE_GQoS_Session (void);
 

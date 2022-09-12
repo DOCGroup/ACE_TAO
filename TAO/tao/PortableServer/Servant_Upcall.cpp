@@ -352,7 +352,6 @@ namespace TAO
                   this->poa_->cleanup_servant (
                     this->active_object_map_entry_->servant_,
                     this->active_object_map_entry_->user_id_);
-
                 }
               catch (...)
                 {

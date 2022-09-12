@@ -27,7 +27,6 @@ class TeraSS_Service_Handler
 //     there is less programming effort.
 {
 public:
-
   TeraSS_Service_Handler (void);
 
   int open (void *);
@@ -35,9 +34,7 @@ public:
   int close (unsigned long);
 
 private:
-
   TeraSS_Data data_;
-
 };
 
 class ACE_Svc_Export TeraSS_Acceptor
@@ -52,9 +49,7 @@ class ACE_Svc_Export TeraSS_Acceptor
 //     is created.
 {
 public:
-
   int init (int argc, ACE_TCHAR *argv[]);
-
 };
 
 ACE_SVC_FACTORY_DECLARE (TeraSS_Acceptor)

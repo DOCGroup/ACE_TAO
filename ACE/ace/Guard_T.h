@@ -110,7 +110,6 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-
   /// Helper, meant for subclass only.
   ACE_Guard (ACE_LOCK *lock): lock_ (lock), owner_ (0) {}
 

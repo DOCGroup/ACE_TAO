@@ -381,7 +381,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (be_global->tc_support ())
     {
-
       be_visitor_context ctx = *this->ctx_;
       TAO::be_visitor_objref_typecode tc_visitor (&ctx);
 

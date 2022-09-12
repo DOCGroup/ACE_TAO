@@ -17,7 +17,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
 template<class T, class Tag=int>
 class unbounded_value_sequence
 {
@@ -91,7 +90,6 @@ public:
 private:
   implementation_type impl_;
 };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

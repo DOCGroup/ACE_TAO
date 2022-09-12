@@ -74,7 +74,6 @@ inline void ace_rewinddir_helper (ACE_DIR *dir)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-
   ACE_NAMESPACE_INLINE_FUNCTION
   void closedir (ACE_DIR *);
 

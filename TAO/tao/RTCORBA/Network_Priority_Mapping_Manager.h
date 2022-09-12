@@ -45,7 +45,6 @@ namespace RTCORBA
 class TAO_RTCORBA_Export TAO_Network_Priority_Mapping_Manager :
   public virtual ::CORBA::LocalObject
 {
-
 public:
   /// Constructor.
   TAO_Network_Priority_Mapping_Manager (RTCORBA::NetworkPriorityMapping * mapping);
@@ -74,18 +73,15 @@ public:
   virtual const char* _interface_repository_id () const;
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   ~TAO_Network_Priority_Mapping_Manager (void);
 
 private:
-
   TAO_Network_Priority_Mapping_Manager (const TAO_Network_Priority_Mapping_Manager &);
   void operator= (const TAO_Network_Priority_Mapping_Manager &);
 
 private:
-
   TAO_Network_Priority_Mapping *mapping_;
 };
 

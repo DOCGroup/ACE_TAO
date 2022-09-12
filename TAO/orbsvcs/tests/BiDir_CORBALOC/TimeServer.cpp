@@ -19,7 +19,6 @@ public:
 
 TimeModule::TimeOfDay Time_impl::get_gmt (void)
 {
-
   time_t time_now   = ACE_OS::time(0);
   struct tm *time_p = ACE_OS::gmtime(&time_now);
 
@@ -41,7 +40,6 @@ Time_impl::Shutdown (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize orb

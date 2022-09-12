@@ -8,7 +8,6 @@ class ACE_Svc_Export Smart_Test_Factory
 
 {
 public:
-
   Smart_Test_Factory (void);
 
   // This method will create the smart_proxy.

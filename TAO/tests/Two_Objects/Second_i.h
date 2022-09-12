@@ -13,7 +13,6 @@ class Second_i
   : public virtual POA_Two_Objects_Test::Second
 {
 public:
-
   Second_i ( CORBA::ORB_ptr orb,
              CORBA::ULong len, ACE_Auto_Event &two_way_done);
 

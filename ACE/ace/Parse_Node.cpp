@@ -510,7 +510,6 @@ ACE_Location_Node::open_dll (int & yyerrno)
     }
 
   return 0;
-
 }
 
 void

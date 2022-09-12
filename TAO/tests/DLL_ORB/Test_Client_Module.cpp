@@ -179,7 +179,6 @@ Test_Client_Module::svc (void)
       // is used, i.e. one isn't explicitly loaded prior to initializing
       // the ORB.
       (void) this->test_.out ();
-
     }
   catch (const CORBA::Exception& ex)
     {

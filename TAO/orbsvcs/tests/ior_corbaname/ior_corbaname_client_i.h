@@ -26,7 +26,6 @@
  */
 class IOR_corbaname_Client_i
 {
-
  public:
   // = Constructor and destructor.
   IOR_corbaname_Client_i (void);
@@ -39,7 +38,6 @@ class IOR_corbaname_Client_i
   int init (int argc, ACE_TCHAR **argv);
 
  private:
-
   /// # of arguments on the command line.
   int argc_;
 

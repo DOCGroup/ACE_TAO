@@ -4,7 +4,6 @@
 #include "Consumer_T.h"
 
 
-
 template <class Consumer_Traits>
 TAO_Notify_Tests_Consumer_T<Consumer_Traits>::TAO_Notify_Tests_Consumer_T (void)
 {

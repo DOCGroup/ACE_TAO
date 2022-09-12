@@ -36,7 +36,6 @@ class Endpoint_Addresses
 class Connection_Manager
 {
 public:
-
   /// Constructor
   Connection_Manager (void);
 
@@ -85,7 +84,6 @@ public:
           Protocol_Objects;
 
 
-
   // Map of streamctrl.
   typedef ACE_Hash_Map_Manager<ACE_CString,
                                AVStreams::StreamCtrl_var,
@@ -106,9 +104,6 @@ public:
   void load_ep_addr (const char* file_name);
 
 protected:
-
-
-
   void find_receivers (void);
 
   void add_to_receivers (CosNaming::BindingList &binding_list);

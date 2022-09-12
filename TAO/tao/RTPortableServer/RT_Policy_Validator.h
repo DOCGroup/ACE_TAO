@@ -55,7 +55,6 @@ public:
                                                TAO_Policy_Set &policies);
 
 protected:
-
   /**
    * Validate that the policies in the specified set
    * are consistent and legal.  Throw an appropriate exception

@@ -85,7 +85,6 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
   while ((c = get_opts ()) != -1)
     switch (c)
   {
-
     case 'o':
       ior_output_file = get_opts.optarg;
       break;

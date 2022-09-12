@@ -10,7 +10,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 void
 Callback_i::shutdown (void)
 {

@@ -86,7 +86,6 @@ IdAssignment::init (int argc,
       ACE_ERROR ((LM_ERROR,
                   " (%P|%t) Unable to resolve naming service !\n"));
       return;
-
     }
   CosNaming::NamingContext_var rootNC =
     CosNaming::NamingContext::_narrow (rootObj.in ());
@@ -108,7 +107,6 @@ IdAssignment::init (int argc,
     CosNotifyChannelAdmin::EventChannelFactory::_narrow (
         obj.in()
       );
-
 }
 
 CosNotifyChannelAdmin::ChannelID

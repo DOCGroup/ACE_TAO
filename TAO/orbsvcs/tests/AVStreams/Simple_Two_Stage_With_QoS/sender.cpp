@@ -342,8 +342,6 @@ Sender::init (int argc,
 int
 Sender::pace_data (void)
 {
-
-
   // The time between two consecutive frames.
   inter_frame_time.set (1.0 / this->frame_rate_);
 
@@ -466,7 +464,6 @@ Sender::pace_data (void)
 
       // Shut the orb down.
       TAO_AV_CORE::instance ()->orb ()->shutdown (0);
-
     }
   catch (const CORBA::Exception& ex)
     {

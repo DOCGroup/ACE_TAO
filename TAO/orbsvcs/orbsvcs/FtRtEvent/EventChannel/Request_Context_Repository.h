@@ -45,7 +45,6 @@ namespace PortableInterceptor
 class Request_Context_Repository
 {
 public:
-
   void init(CORBA::ORB_ptr orb);
 
   /**

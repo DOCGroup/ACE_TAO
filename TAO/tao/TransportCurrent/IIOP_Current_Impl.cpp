@@ -16,8 +16,6 @@ namespace TAO
 {
   namespace Transport
   {
-
-
     /// Obtains the IIOP_Connection_Handler associated with the
     /// Transport. Will throw NoContext if the (selected) transport
     /// () == 0, or if transport->connection_handler () == 0. Will

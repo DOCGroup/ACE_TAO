@@ -44,7 +44,6 @@ class TAO_DiffServPolicy_Export TAO_Server_Network_Priority_Policy
     public ::CORBA::LocalObject
 {
 public:
-
   /// default constructor.
   TAO_Server_Network_Priority_Policy (void);
 

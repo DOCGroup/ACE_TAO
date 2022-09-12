@@ -75,7 +75,6 @@ ACE_NT_Service::open (void *args)
     }
 
   return svc_return;
-
 }
 
 int
@@ -234,7 +233,6 @@ ACE_NT_Service::insert (DWORD start_type,
   this->svc_sc_handle_ = sh;
 
   return 0;
-
 }
 
 int
@@ -302,7 +300,6 @@ ACE_NT_Service::startup (void)
   // Zero is a valid return value for QueryServiceConfig, so if
   // QueryServiceConfig fails, return the DWORD equivalent of -1.
   return MAXDWORD;
-
 }
 
 void

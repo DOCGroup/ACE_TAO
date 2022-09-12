@@ -20,7 +20,6 @@ Server_Task::svc (void)
 {
  try
    {
-
       CORBA::Object_var poa_object =
         sorb_->resolve_initial_references ("RootPOA");
 

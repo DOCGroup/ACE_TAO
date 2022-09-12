@@ -40,7 +40,6 @@ public:
                 CORBA::Short &corba_priority);
 
 protected:
-
   /// The Priority Mapping helper.
   RTCORBA::PriorityMapping *priority_mapping_;
 };

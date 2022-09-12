@@ -94,7 +94,6 @@ private:
  */
 class ACE_TS_Server_Acceptor : public ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
 {
-
 public:
   /// Dynamic linking hook.
   virtual int init (int argc, ACE_TCHAR *argv[]);

@@ -97,7 +97,6 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
 
   // mktime is a Standard C function.
   {
-
 #if !defined (ACE_HAS_REENTRANT_LIBC)
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, HTTP_Helper::mutex_, -1));
 #endif /* NOT ACE_HAS_REENTRANT_LIBC */

@@ -57,7 +57,6 @@ public:
   void recycle_state (ACE_Recyclable_State new_state);
 
 protected:
-
   /// Constructor.
   ACE_Recyclable (ACE_Recyclable_State initial_state);
 

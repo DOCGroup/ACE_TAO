@@ -33,7 +33,6 @@ EDF_Scheduler::EDF_Scheduler (CORBA::ORB_ptr orb,
     ace_sched_policy_ (ace_sched_policy),
     ace_sched_scope_ (ace_sched_scope)
 {
-
   Kokyu::DSRT_ConfigInfo config;
 
   config.impl_type_ = this->disp_impl_type_;
@@ -198,7 +197,6 @@ void
 EDF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid,
                                        const char *)
 {
-
   int int_guid;
   ACE_OS::memcpy (&int_guid,
                   guid.get_buffer (),
@@ -332,13 +330,11 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                                 CORBA::Policy_out sched_param_out,
                                 CORBA::Policy_out /*implicit_sched_param_out*/)
 {
-
   Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
   RTScheduling::Current::IdType guid;
   int int_guid;
 
   DSUI_EVENT_LOG (EDF_SCHED_FAM, ENTER_SERVER_SCHED_TIME, 0, 0, 0);
-
 
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -665,7 +661,6 @@ EDF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
 void
 EDF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   DSUI_EVENT_LOG (EDF_SCHED_FAM, RECEIVE_OTHER, 0, 0, 0);
 
 //Otherwise Segmentation fault when oneway call happens.

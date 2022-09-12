@@ -49,7 +49,6 @@ RT_Properties::read_from (const ACE_TCHAR *file_name)
           ACE_UNUSED_ARG (n_matched);
 
           rt_properties->priority_bands_.length (int_field);
-
         }
       else if (ACE_OS::strcmp (string_field, "Priority_Range") == 0)
         {

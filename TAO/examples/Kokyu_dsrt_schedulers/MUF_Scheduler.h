@@ -78,7 +78,6 @@ public MUF_Scheduling::Scheduler,
 public ::CORBA::LocalObject
 {
  public:
-
   MUF_Scheduler (CORBA::ORB_ptr orb,
                  Kokyu::DSRT_Dispatcher_Impl_t,
                  int ace_sched_policy,

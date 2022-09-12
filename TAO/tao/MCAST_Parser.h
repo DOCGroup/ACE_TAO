@@ -54,7 +54,6 @@ public:
                                           CORBA::ORB_ptr orb);
 
 private:
-
   CORBA::Object_ptr multicast_to_service (const char *service_name,
                                           unsigned short port,
                                           const char *mcast_address,
@@ -77,7 +76,6 @@ private:
   void assign_to_variables (char const * mcast_name_ptr);
 
 private:
-
   CORBA::String_var mcast_address_;
 
   /// Default multicast port (currently Name Service mcast port).
@@ -91,7 +89,6 @@ private:
 
   /// Multicast service name
   CORBA::String_var service_name_;
-
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_MCAST_Parser)

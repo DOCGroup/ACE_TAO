@@ -3359,7 +3359,6 @@ ACE::strnew (const wchar_t *s)
 // helper functions for ACE::wild_match()
 namespace
 {
-
   inline bool equal_char (char a, char b, bool case_sensitive)
   {
     if (case_sensitive)

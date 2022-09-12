@@ -288,7 +288,6 @@ private:
     Update_Handler (Shared_Backing_Store *owner) : owner_ (owner) {}
     int handle_exception (ACE_HANDLE);
   } update_handler_;
-
 };
 
 #endif /* SHARED_BACKING_STORE_H */

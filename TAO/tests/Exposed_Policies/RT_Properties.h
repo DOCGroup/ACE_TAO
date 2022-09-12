@@ -35,7 +35,6 @@ public:
   const ACE_TCHAR* ior_source (void);
 
 private:
-
   RTCORBA::Priority priority_;
   RTCORBA::PriorityBands priority_bands_;
   ACE_TString ior_source_;

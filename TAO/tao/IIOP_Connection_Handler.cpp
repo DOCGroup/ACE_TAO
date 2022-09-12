@@ -34,7 +34,6 @@ TAO_IIOP_Connection_Handler::add_reference (void)
                   rc));
     }
   return rc;
-
 }
 
 ACE_Event_Handler::Reference_Count

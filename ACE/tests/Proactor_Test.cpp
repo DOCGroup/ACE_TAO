@@ -103,11 +103,9 @@ static char complete_message[] =
 class LogLocker
 {
 public:
-
   LogLocker () { ACE_LOG_MSG->acquire (); }
   virtual ~LogLocker () { ACE_LOG_MSG->release (); }
 };
-
 
 
 // Function to remove signals from the signal mask.
@@ -190,7 +188,6 @@ private:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Thread_Semaphore sem_;
   ACE_Proactor * proactor_;
-
 };
 
 int

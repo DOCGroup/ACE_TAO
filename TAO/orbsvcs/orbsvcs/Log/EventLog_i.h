@@ -87,7 +87,6 @@ public:
   for_suppliers (void);
 
 protected:
-
   /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
@@ -96,7 +95,6 @@ protected:
   ~TAO_EventLog_i ();
 
 private:
-
   /// The Event Channel that the log uses.
   TAO_CEC_EventChannel *event_channel_;
 

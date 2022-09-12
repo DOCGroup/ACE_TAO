@@ -116,7 +116,6 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
 private:
-
   /// The attribute
   ::CORBA::Boolean value_;
 };
@@ -131,7 +130,6 @@ class CompressionLowValuePolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   CompressionLowValuePolicy (const ::CORBA::ULong val);
 
@@ -153,7 +151,6 @@ public:
   virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
 private:
-
   /// The attribute
   ::CORBA::ULong value_;
 };
@@ -168,7 +165,6 @@ class CompressionMinRatioPolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   CompressionMinRatioPolicy (const ::Compression::CompressionRatio val);
 
@@ -189,7 +185,6 @@ public:
   virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
 private:
-
   /// The attribute
   ::Compression::CompressionRatio value_;
 };

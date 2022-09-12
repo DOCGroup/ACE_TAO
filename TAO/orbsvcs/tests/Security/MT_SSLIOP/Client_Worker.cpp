@@ -36,7 +36,6 @@ Client_Worker::validate_connection (void)
 int
 Client_Worker::svc (void)
 {
-
   try
     {
       // Validate connections befire doing any actual work..

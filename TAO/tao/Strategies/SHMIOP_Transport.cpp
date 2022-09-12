@@ -263,7 +263,6 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 }
 
 
-
 int
 TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,
                                     TAO_ORB_Core *orb_core,

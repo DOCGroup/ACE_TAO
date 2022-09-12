@@ -7,7 +7,6 @@
 #include "tao/AnyTypeCode/Any.h"
 
 
-
 static const char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
 static const char NAMING_SERVICE_NAME[] = "NameService";
 
@@ -1561,7 +1560,6 @@ Consumer_Main::init_sequence_proxy_supplier (void)
   this->sequence_proxy_push_supplier_->connect_sequence_push_consumer (
     this->sequence_push_consumer_ref_.in ());
   this->sequence_push_consumer_.set_connected(true);
-
 }
 
 
@@ -1680,7 +1678,6 @@ Consumer_Main::init_any_proxy_supplier (void)
 
 int Consumer_Main::fini (void)
 {
-
   this->reconnection_callback_.fini ();
 
   if (this->disconnect_on_exit_)

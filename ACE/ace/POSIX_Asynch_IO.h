@@ -222,7 +222,6 @@ protected:
 class ACE_Export ACE_POSIX_Asynch_Read_Stream_Result : public virtual ACE_Asynch_Read_Stream_Result_Impl,
                                                        public ACE_POSIX_Asynch_Result
 {
-
   /// Factory classes will have special permissions.
   friend class ACE_POSIX_Asynch_Read_Stream;
 
@@ -401,8 +400,6 @@ class ACE_Export ACE_POSIX_Asynch_Read_File_Result : public virtual ACE_Asynch_R
   /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
 
-public:
-
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_File factory.
@@ -446,7 +443,6 @@ protected:
 class ACE_Export ACE_POSIX_Asynch_Read_File : public virtual ACE_Asynch_Read_File_Impl,
                                               public ACE_POSIX_Asynch_Read_Stream
 {
-
 public:
   /// Constructor.
   ACE_POSIX_Asynch_Read_File (ACE_POSIX_Proactor *posix_proactor);
@@ -658,7 +654,6 @@ class ACE_Export ACE_POSIX_Asynch_Accept :
   public ACE_Event_Handler
 {
 public:
-
   /// Constructor.
   ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_proactor);
 
@@ -764,7 +759,6 @@ class ACE_Export ACE_POSIX_Asynch_Connect_Result : public virtual ACE_Asynch_Con
   friend class ACE_POSIX_Proactor;
 
 public:
-
   /// I/O handle for the  connection.
   ACE_HANDLE connect_handle () const;
 
@@ -802,7 +796,6 @@ class ACE_Export ACE_POSIX_Asynch_Connect :
   public ACE_Event_Handler
 {
 public:
-
   /// Constructor.
   ACE_POSIX_Asynch_Connect (ACE_POSIX_Proactor * posix_proactor);
 
@@ -1143,7 +1136,6 @@ protected:
 
   /// I/O handle used for writing.
   ACE_HANDLE handle_;
-
   };
 
 /**
@@ -1216,7 +1208,6 @@ protected:
 class ACE_Export ACE_POSIX_Asynch_Read_Dgram_Result : public virtual ACE_Asynch_Read_Dgram_Result_Impl,
                                                       public virtual ACE_POSIX_Asynch_Result
 {
-
   /// Factory classes will have special permissions.
   friend class ACE_POSIX_Asynch_Read_Dgram;
 
@@ -1281,7 +1272,6 @@ protected:
 
   /// I/O handle used for reading.
   ACE_HANDLE handle_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

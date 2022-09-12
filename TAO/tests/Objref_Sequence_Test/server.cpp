@@ -73,7 +73,6 @@ ServerServant::CreateExtra (CORBA::ULong len,
 }
 
 
-
 void
 ServerServant::DeleteExtra (const ServerSequence &seq)
 {

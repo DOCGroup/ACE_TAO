@@ -75,7 +75,6 @@ spawn_child (const ACE_TCHAR *argv0,
              int sleep_time,
              int my_process_id)
 {
-
 #if defined (ACE_HAS_WINCE)
 const ACE_TCHAR *cmdline_format = ACE_TEXT("%s %d");
 #elif defined (ACE_WIN32)

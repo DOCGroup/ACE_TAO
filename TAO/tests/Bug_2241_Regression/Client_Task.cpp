@@ -57,5 +57,4 @@ Client_Task::svc (void)
       ACE_ERROR ((LM_ERROR, "(ERROR: Client_Task::svc Expected exception not received\n"));
     }
   return 0;
-
 }

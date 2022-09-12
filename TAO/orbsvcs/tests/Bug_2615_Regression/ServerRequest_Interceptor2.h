@@ -22,7 +22,6 @@ class ServerRequest_Interceptor2
   public virtual ::CORBA::LocalObject
 {
 public:
-
 /// Constructor.
 ServerRequest_Interceptor2 (void);
 
@@ -62,7 +61,6 @@ virtual void send_other (
 static CORBA::Boolean has_ft_request_sc_;
 
 private:
-
 CORBA::ORB_var orb_;
 };
 

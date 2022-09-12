@@ -65,7 +65,6 @@ public FP_Scheduling::FP_Scheduler,
 public ::CORBA::LocalObject
 {
  public:
-
   Fixed_Priority_Scheduler (CORBA::ORB_ptr orb,
                  Kokyu::DSRT_Dispatcher_Impl_t,
                  int ace_sched_policy,

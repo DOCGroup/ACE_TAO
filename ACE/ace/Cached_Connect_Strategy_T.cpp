@@ -164,7 +164,6 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
     if (state_result == 1)
     {
-
       if (sh->close () == -1)
         return -1;
 
@@ -306,7 +305,6 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
     }
 
   return 0;
-
 }
 
 
@@ -588,7 +586,6 @@ ACE_Bounded_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_S
  std::pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
  int &found)
 {
-
   REFCOUNTED_HASH_RECYCLABLE_ADDRESS search_addr (remote_addr);
 
   // Try to find the address in the cache.  Only if we don't find it

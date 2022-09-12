@@ -201,7 +201,6 @@ public:
   void destroy (void);
 
 protected:
-
   /// Typedefs for ease of use.
   typedef ACE_DLList<ACE_CString> LIST;
   typedef ACE_DLList_Iterator<ACE_CString> ITERATOR;
@@ -273,7 +272,6 @@ public:
 class RR_Object_Group: public Object_Group_i
 {
 public:
-
   /// Constructor.
   RR_Object_Group (const char *id,
                    Object_Group_Factory_i *my_factory);
@@ -301,7 +299,6 @@ public:
   void destroy (void);
 
 private:
-
   /// Index into the Object_Group_i::member_id_list_: keeps track of
   /// the member_id to return on the next invocation of <resolve>.
   size_t next_;

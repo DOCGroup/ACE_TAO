@@ -9,7 +9,6 @@
 #include "Options.h"
 
 
-
 /* static */
 Options *Options::instance_ = 0;
 

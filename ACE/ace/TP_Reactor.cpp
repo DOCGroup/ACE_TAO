@@ -366,7 +366,6 @@ int
 ACE_TP_Reactor::handle_socket_events (int &event_count,
                                       ACE_TP_Token_Guard &guard)
 {
-
   // We got the lock, lets handle some I/O events.
   ACE_EH_Dispatch_Info dispatch_info;
 

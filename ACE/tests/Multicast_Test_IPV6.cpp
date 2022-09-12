@@ -86,7 +86,6 @@ static sig_atomic_t error = 0;
 class MCT_Config
 {
 public:
-
   enum
     {
       PRODUCER = 1,
@@ -755,7 +754,6 @@ MCT_Task::svc ()
 
 int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
 {
-
   // Send each message twice, once to the right port, and once to the "wrong"
   // port.  This helps generate noise and lets us see if port filtering is
   // working properly.
@@ -930,7 +928,6 @@ int advance_addr (ACE_INET_Addr &addr)
                              ACE_TEXT ("multicast group address past %s\n"),
                              addr.get_host_addr ()),
                             -1);
-
         }
     }
 #endif /* ACE_HAS_IPV6 */

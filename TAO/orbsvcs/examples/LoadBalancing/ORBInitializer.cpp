@@ -22,7 +22,6 @@ void
 ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   ACE_NEW_THROW_EX (this->interceptor_,
                     ServerRequestInterceptor,
                     CORBA::NO_MEMORY (

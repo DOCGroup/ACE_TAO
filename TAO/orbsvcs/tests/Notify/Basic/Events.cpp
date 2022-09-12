@@ -4,7 +4,6 @@
 #include "Events.h"
 
 
-
 /***************************************************************************/
 
 Event_StructuredPushConsumer::Event_StructuredPushConsumer (Events *test_client)
@@ -131,7 +130,6 @@ Events::parse_args (int argc,
         {
           this->use_default_admin_ = 1;
           arg_shifter.consume_arg ();
-
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-events"))))
         {

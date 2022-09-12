@@ -14,7 +14,6 @@ class Task_Stats;
 class DT_Test //:public ACE_Task <ACE_SYNCH>
 {
  public:
-
   DT_Test (void);
 
   int init (int argc, ACE_TCHAR *argv []);

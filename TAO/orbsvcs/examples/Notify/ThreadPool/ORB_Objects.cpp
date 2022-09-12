@@ -1,7 +1,6 @@
 #include "ORB_Objects.h"
 
 
-
 TAO_Notify_ORB_Objects::TAO_Notify_ORB_Objects (void)
 {
 }

@@ -53,7 +53,6 @@ public:
     virtual void destroy (void);
 
   private:
-
     /// Extracts the ACE_HANDLE from the objectID
     ACE_HANDLE fd (void);
 

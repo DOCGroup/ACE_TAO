@@ -19,7 +19,6 @@
 class Stopwatch_display
 {
 public:
-
   /// Stopwatch_display constructor
   Stopwatch_display (Widget &parent);
 

@@ -18,7 +18,6 @@
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-
   Receiver_Callback (void);
   /// Constructor.
 
@@ -41,13 +40,11 @@ private:
 
   /// Related stream control.
   AVStreams::StreamCtrl_ptr streamctrl_;
-
 };
 
 // = AVStreams calls this class during connection setup.
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
-
 public:
   /// Create a receiver application callback.
   int get_callback (const char *flowname,

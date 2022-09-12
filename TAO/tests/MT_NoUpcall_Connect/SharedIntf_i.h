@@ -10,7 +10,6 @@
 class  Test_Idl_SharedIntf_i : public virtual POA_Test_Idl::SharedIntf
 {
 public:
-
   Test_Idl_SharedIntf_i (CORBA::ORB_ptr orb);
   virtual ~Test_Idl_SharedIntf_i (void);
   void set_upper (const char * ior);

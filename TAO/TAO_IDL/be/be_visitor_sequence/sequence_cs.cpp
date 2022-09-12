@@ -205,7 +205,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
       *os << be_nl_2
           << "void" << be_nl
-          << node->name () << "::length ( ::CORBA::ULong length)"
+          << node->name () << "::length (::CORBA::ULong length)"
           << be_nl
           << "{" << be_idt_nl
           << "this->resize (length);" << be_uidt_nl

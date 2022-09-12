@@ -129,7 +129,6 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                                                      this->stream_,
                                                      svc_dll,
                                                      this->stream_info_.active ());
-
         }
       else
         {
@@ -308,7 +307,6 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("initializer")) == 0)
     {
       this->get_initializer_attrs (alist);
-
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("static")) == 0)
     {

@@ -20,7 +20,6 @@
 #include "Reactor_Timer_Queue_Test.h"
 
 
-
 void
 Reactor_Timer_Handler::set_timer_id (long tid)
 {

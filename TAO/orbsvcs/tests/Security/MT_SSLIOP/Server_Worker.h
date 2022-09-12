@@ -31,7 +31,6 @@
 class Server_Worker : public ACE_Task_Base
 {
 public:
-
   /// Constructor
   Server_Worker (CORBA::ORB_ptr orb);
 
@@ -42,7 +41,6 @@ public:
 private:
   /// The ORB
   CORBA::ORB_var orb_;
-
 };
 
 #if defined(_MSC_VER)

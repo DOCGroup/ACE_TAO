@@ -22,7 +22,6 @@ class TAO249_ServerRequest_Interceptor
   public virtual ::CORBA::LocalObject
 {
 public:
-
 /// Constructor.
 TAO249_ServerRequest_Interceptor (void);
 
@@ -59,7 +58,6 @@ virtual void send_other (
     PortableInterceptor::ServerRequestInfo_ptr ri);
 //@}
 private:
-
 CORBA::ORB_var orb_;
 
 CORBA:: Long client_id_;

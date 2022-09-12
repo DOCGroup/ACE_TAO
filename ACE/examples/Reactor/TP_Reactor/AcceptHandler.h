@@ -15,9 +15,7 @@
  * This accept handler is based on the provided solution from the ACE course.
  */
 class AcceptHandler : public ACE_Event_Handler {
-
     private:
-
         /**
          * The reactor to which the accept handler belongs.
          */
@@ -29,7 +27,6 @@ class AcceptHandler : public ACE_Event_Handler {
         ACE_SOCK_Acceptor mAcceptor;
 
     public:
-
         /**
          * @param reactor The reactor which will use this accept handler.
          */
@@ -51,7 +48,6 @@ class AcceptHandler : public ACE_Event_Handler {
          * @name Overridden methods from the ACE_Event_Handler
          */
         // @{
-
         /**
          * Provides the handle of mAcceptor.
          */

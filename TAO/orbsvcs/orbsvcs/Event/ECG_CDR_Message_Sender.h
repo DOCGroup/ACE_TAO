@@ -73,7 +73,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_ECG_CDR_Message_Sender
 {
 public:
-
   enum {
     ECG_HEADER_SIZE = 32,
     ECG_MIN_MTU = 32 + 8,

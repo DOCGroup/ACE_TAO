@@ -6,7 +6,6 @@
 #include "Options.h"
 
 
-
 Consumer_Router::Consumer_Router (Peer_Router_Context *prc)
   : Peer_Router (prc)
 {

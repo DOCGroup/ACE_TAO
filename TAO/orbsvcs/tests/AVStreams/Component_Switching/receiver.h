@@ -25,14 +25,11 @@
  */
 class Signal_Handler : public ACE_Event_Handler
 {
-
 public:
-
   Signal_Handler (void);
 
   /// Override this method to implement graceful shutdown.
   int handle_signal(int signum, siginfo_t*,ucontext_t*);
-
 };
 
 /**
@@ -45,7 +42,6 @@ public:
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-
   //// Constructor.
   Receiver_Callback (void);
 

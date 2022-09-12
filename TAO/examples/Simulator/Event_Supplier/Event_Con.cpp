@@ -132,7 +132,6 @@ Demo_Consumer::disconnect_push_consumer (void)
 void
 Demo_Consumer::push (const RtecEventComm::EventSet &events)
 {
-
   if (events.length () == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "no events\n"));
@@ -332,7 +331,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       delete demo_consumer;
 
       root_poa->destroy (true, true);
-
     }
   catch (const CORBA::Exception& ex)
     {

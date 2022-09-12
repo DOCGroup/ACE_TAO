@@ -1,9 +1,6 @@
-// Shared_Memory_Pool.cpp
 #include "ace/Shared_Memory_Pool.h"
 #include "ace/OS_NS_sys_shm.h"
 #include "ace/Log_Category.h"
-
-
 
 #if !defined (ACE_LACKS_SYSV_SHMEM)
 
@@ -53,11 +50,11 @@ ACE_Shared_Memory_Pool::in_use (ACE_OFF_T &offset,
     {
       if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
         ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::in_use, %p\n"),
                            ACE_TEXT ("shmctl")),
                           -1);
       offset += buf.shm_segsz;
-      // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) segment size = %d, offset = %d\n"), buf.shm_segsz, offset));
+      // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::in_use, segment size = %d, offset = %d\n"), buf.shm_segsz, offset));
     }
   return 0;
 #endif
@@ -85,7 +82,7 @@ ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
     {
       if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
         ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::find_seg, %p\n"),
                            ACE_TEXT ("shmctl")),
                           -1);
       offset += buf.shm_segsz;
@@ -99,7 +96,7 @@ ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
           offset -= buf.shm_segsz;
           return 0;
         }
-      // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) segment size = %d, offset = %d\n"), buf.shm_segsz, offset));
+      // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::find_seg, segment size = %d, offset = %d\n"), buf.shm_segsz, offset));
     }
 
   return 0;
@@ -120,19 +117,19 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 
   if (counter == this->max_segments_)
     ACELIB_ERROR_RETURN ((LM_ERROR,
-                      "exceeded max number of segments = %d, base = %u, offset = %u\n",
+                      "ACE_Shared_Memory_Pool::commit_backing_store_name, exceeded max number of segments = %d, base = %u, offset = %u\n",
                        counter,
                        this->base_addr_,
                        static_cast<unsigned int>(offset)),
                       -1);
   else
     {
-      int shmid = ACE_OS::shmget (st[counter].key_,
-                                  rounded_bytes,
-                                  this->file_perms_ | IPC_CREAT | IPC_EXCL);
+      int const shmid = ACE_OS::shmget (st[counter].key_,
+                                        rounded_bytes,
+                                        this->file_perms_ | IPC_CREAT | IPC_EXCL);
       if (shmid == -1)
         ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::commit_backing_store_name, %p\n"),
                            ACE_TEXT ("shmget")),
                           -1);
       st[counter].shmid_ = shmid;
@@ -145,7 +142,7 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 
       if (shmem != address)
         ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("(%P|%t) %p, shmem = %u, address = %u\n"),
+                           ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::commit_backing_store_name, %p, shmem = %u, address = %u\n"),
                            ACE_TEXT("shmat"),
                            shmem,
                            address),
@@ -167,16 +164,15 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
   if (siginfo == 0)
     return -1;
 
-  ACE_OFF_T offset;
-
   // Make sure that the pointer causing the problem is within the
   // range of the backing store.
-  // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
+  // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::handle_signal, si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
+  ACE_OFF_T offset;
   size_t counter = 0;
   if (this->in_use (offset, counter) == -1)
     {
       ACELIB_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::handle_signal, %p\n"),
                   ACE_TEXT ("in_use")));
     }
   else if (!(siginfo->si_code == SEGV_MAPERR
@@ -184,8 +180,10 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
         && siginfo->si_addr >= ((char *) this->base_addr_)))
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,
-                          "(%P|%t) address %u out of range\n",
-                          siginfo->si_addr),
+                          "(%P|%t) ACE_Shared_Memory_Pool::handle_signal, address %u out of range, base = %u, offset = %u\n",
+                          siginfo->si_addr,
+                          this->base_addr_,
+                          static_cast<unsigned int>(offset)),
                         -1);
     }
 
@@ -193,11 +191,10 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
   // proper range.  Therefore there is a segment out there that the
   // pointer wants to point into.  Find the segment that someone else
   // has used and attach to it (flabar@vais.net)
-
   counter = 0; // ret value to get shmid from the st table.
   if (this->find_seg (siginfo->si_addr, offset, counter) == -1)
       ACELIB_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::handle_signal, %p\n"),
                          ACE_TEXT ("in_use")),
                         -1);
 
@@ -208,7 +205,7 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
 
   if (shmem != address)
       ACELIB_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT("(%P|%t) %p, shmem = %u, address = %u\n"),
+                         ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::handle_signal, %p, shmem = %u, address = %u\n"),
                          ACE_TEXT("shmat"),
                          shmem,
                          address),
@@ -251,7 +248,6 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (
     {
       // Convert the string into a number that is used as the segment
       // key.
-
       int segment_key = 0;
 #if !defined (ACE_LACKS_SSCANF)
       int result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (backing_store_name),
@@ -279,16 +275,11 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (
 
   if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
     ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool, %p\n"),
                 ACE_TEXT ("ACE_Sig_Handler::register_handler")));
 }
 
-ACE_Shared_Memory_Pool::~ACE_Shared_Memory_Pool ()
-{
-}
-
-// Ask system for more shared memory.
-
+/// Ask system for more shared memory.
 void *
 ACE_Shared_Memory_Pool::acquire (size_t nbytes,
                                  size_t &rounded_bytes)
@@ -297,19 +288,18 @@ ACE_Shared_Memory_Pool::acquire (size_t nbytes,
 
   rounded_bytes = this->round_up (nbytes);
 
-  // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) acquiring more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
+  // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::acquire, acquiring more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
 
   ACE_OFF_T offset;
 
   if (this->commit_backing_store_name (rounded_bytes, offset) == -1)
     return 0;
 
-  // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
+  // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::acquire, acquired more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
   return ((char *) this->base_addr_) + offset;
 }
 
-// Ask system for initial chunk of shared memory.
-
+/// Ask system for initial chunk of shared memory.
 void *
 ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
                                       size_t &rounded_bytes,
@@ -332,7 +322,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
     {
       if (errno != EEXIST)
         ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::init_acquire, %p\n"),
                            ACE_TEXT ("shmget")),
                           0);
       first_time = 0;
@@ -341,7 +331,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 
       if (shmid == -1)
         ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::init_acquire, %p\n"),
                            ACE_TEXT ("shmget")),
                           0);
 
@@ -353,7 +343,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
                        0);
       if (this->base_addr_ == reinterpret_cast<void *> (-1))
         ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("(%P|%t) %p, base_addr = %u\n"),
+                           ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::init_acquire, %p, base_addr = %u\n"),
                            ACE_TEXT("shmat"),
                            this->base_addr_),
                           0);
@@ -370,7 +360,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
                        0);
       if (this->base_addr_ == reinterpret_cast<char *> (-1))
         ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("(%P|%t) %p, base_addr = %u\n"),
+                           ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::init_acquire, %p, base_addr = %u\n"),
                            ACE_TEXT("shmat"),
                            this->base_addr_), 0);
 
@@ -395,8 +385,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
   return (void *) (((char *) this->base_addr_) + shm_table_offset);
 }
 
-// Instruct the memory pool to release all of its resources.
-
+/// Instruct the memory pool to release all of its resources.
 int
 ACE_Shared_Memory_Pool::release (int)
 {
@@ -449,9 +438,8 @@ ACE_Shared_Memory_Pool::base_addr () const
   return this->base_addr_;
 }
 
-// Implement the algorithm for rounding up the request to an
-// appropriate chunksize.
-
+/// Implement the algorithm for rounding up the request to an
+/// appropriate chunksize.
 size_t
 ACE_Shared_Memory_Pool::round_up (size_t nbytes)
 {

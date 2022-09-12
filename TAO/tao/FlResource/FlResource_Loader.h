@@ -25,7 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class FlResource_Loader
    *
@@ -42,7 +41,6 @@ namespace TAO
    */
   class TAO_FlResource_Export FlResource_Loader
   {
-
   public:
     FlResource_Loader (void);
 

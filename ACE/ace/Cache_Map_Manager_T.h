@@ -218,7 +218,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// The underlying map which needs to be cached.
   CMAP_TYPE map_;
 

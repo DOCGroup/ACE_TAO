@@ -39,7 +39,6 @@ class TAO_ServerRequest;
 class TAO_ZIOP_Export TAO_ZIOP_Loader : public TAO_ZIOP_Adapter
 {
 public:
-
   /// Constructor
   TAO_ZIOP_Loader (void);
 
@@ -64,7 +63,6 @@ public:
   static const char * ziop_compressorid_name (::Compression::CompressorId st);
 
 private:
-
   /// Set to true after init is called.
   bool initialized_;
 

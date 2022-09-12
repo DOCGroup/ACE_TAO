@@ -77,7 +77,6 @@ public:
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
 
 protected:
-
   friend class TAO_Notify_Constraint_Interpreter;
 
   /// Init this object.

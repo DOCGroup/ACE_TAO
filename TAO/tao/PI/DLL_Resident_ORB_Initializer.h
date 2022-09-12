@@ -34,7 +34,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
-
   /**
    * @class DLL_Resident_ORB_Initializer
    *
@@ -73,7 +72,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* PI_DLL_RESIDENT_ORB_INITIALIZER_H */
-
 
 
 

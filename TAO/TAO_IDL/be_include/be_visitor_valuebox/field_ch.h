@@ -90,7 +90,6 @@ private:
                         const char *const_prefix,
                         const char *type_suffix,
                         const char *const_method);
-
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_FIELD_CH_H_ */

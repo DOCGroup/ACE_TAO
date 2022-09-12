@@ -53,7 +53,6 @@ public:
   virtual int visit_valuebox (be_valuebox *node);
 
 private:
-
   bool generated (be_decl *node) const;
   void generated (be_decl *node,
                   bool val);

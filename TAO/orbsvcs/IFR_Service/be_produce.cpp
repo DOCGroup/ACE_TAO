@@ -200,7 +200,6 @@ BE_produce (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("BE_produce"));
-
     }
 
   // Clean up.

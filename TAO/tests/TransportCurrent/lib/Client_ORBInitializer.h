@@ -25,7 +25,6 @@
 
 namespace Test
 {
-
   class Current_Test_Export Client_ORBInitializer :
     public virtual PortableInterceptor::ORBInitializer,
     public virtual ::CORBA::LocalObject
@@ -41,12 +40,10 @@ namespace Test
   private:
     PortableInterceptor::ClientRequestInterceptor_var interceptor_;
   };
-
 }
 
 #include /**/ "ace/post.h"
 
 #endif  /* CLIENT_ORBINITIALIZER_T_H */
-
 
 

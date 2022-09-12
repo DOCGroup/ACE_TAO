@@ -48,9 +48,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_Naming_Serv_Export TAO_Bindings_Map
 {
-
 public:
-
   /// Destructor.
   virtual ~TAO_Bindings_Map (void);
 
@@ -94,7 +92,6 @@ public:
                     const char * kind,
                     CORBA::Object_ptr & obj,
                     CosNaming::BindingType &type) = 0;
-
 };
 
 /**

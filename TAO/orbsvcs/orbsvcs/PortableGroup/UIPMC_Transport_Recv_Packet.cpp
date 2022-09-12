@@ -8,7 +8,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
 {
-
   UIPMC_Recv_Packet_Cleanup_Guard::UIPMC_Recv_Packet_Cleanup_Guard (
     TAO_UIPMC_Mcast_Transport *transport
   )

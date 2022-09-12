@@ -583,7 +583,6 @@ Connection_Manager::destroy (const ACE_CString &flowname)
   this->receivers_.unbind (flowname);
 
   this->streamctrls_.unbind (flowname );
-
 }
 
 Connection_Manager::Receivers &

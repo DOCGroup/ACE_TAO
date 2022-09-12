@@ -43,7 +43,6 @@ private:
                                    const char *msg);
 
 private:
-
   int is_initialized_;
 
   RTCORBA::RTORB_var rt_orb_;

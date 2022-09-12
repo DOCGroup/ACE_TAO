@@ -92,7 +92,6 @@ private:
   ACEXML_Char *end_;
   ACEXML_Char* encoding_;
   ACEXML_Char* name_;
-
 };
 
 #include /**/ "ace/post.h"

@@ -133,7 +133,6 @@ protected:
   virtual ::CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void);
 
 private:
-
   /// Release this object.
   virtual void release (void);
 };

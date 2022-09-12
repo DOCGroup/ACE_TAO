@@ -96,7 +96,6 @@ namespace ACE
                     u_short port_;
                 };
           };
-
       }
   }
 

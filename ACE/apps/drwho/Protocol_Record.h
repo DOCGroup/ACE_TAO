@@ -21,7 +21,6 @@
  */
 class Protocol_Record
 {
-
 public:
   Protocol_Record (void);
   Protocol_Record (int use_dummy);

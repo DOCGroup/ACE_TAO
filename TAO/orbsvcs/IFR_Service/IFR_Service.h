@@ -28,7 +28,6 @@
 class IFR_Service
 {
 public:
-
   /// Default constructor.
   IFR_Service (void);
 

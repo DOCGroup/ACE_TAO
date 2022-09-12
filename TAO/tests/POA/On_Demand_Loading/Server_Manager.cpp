@@ -126,7 +126,6 @@ Server_i::init (int argc, ACE_TCHAR **argv)
 
       // Get the POAManager of RootPOA
       poa_manager_ = root_poa_->the_POAManager ();
-
     }
   catch (const CORBA::Exception& ex)
     {

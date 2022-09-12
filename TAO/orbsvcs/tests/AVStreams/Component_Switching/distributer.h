@@ -25,14 +25,11 @@
  */
 class Signal_Handler : public ACE_Event_Handler
 {
-
 public:
-
   Signal_Handler (void);
 
   /// Override this method to implement graceful shutdown.
   int handle_signal(int signum, siginfo_t*,ucontext_t*);
-
 };
 
 
@@ -46,7 +43,6 @@ public:
 class Distributer_Receiver_Callback : public TAO_AV_Callback
 {
 public:
-
   //// Constructor.
   Distributer_Receiver_Callback (void);
 
@@ -83,9 +79,7 @@ private:
  */
 class Distributer_Sender_Callback : public TAO_AV_Callback
 {
-
 public:
-
   //// Called when the sender has finished reading the file and wants
   //// to close down the connection.
   int handle_destroy (void);
@@ -95,9 +89,7 @@ public:
   void flowname (const ACE_CString &flowname);
 
 private:
-
   ACE_CString flowname_;
-
 };
 
 /**

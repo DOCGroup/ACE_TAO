@@ -69,10 +69,8 @@ public:
   virtual int requires_explicit_endpoint () const = 0;
 
 private:
-
   /// IOP protocol tag.
   CORBA::ULong const tag_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

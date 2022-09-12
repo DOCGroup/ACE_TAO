@@ -198,7 +198,6 @@ Client::svc (void)
 
       for (int c = 0; c < 10; ++c)
         server_->shutdown ();
-
     }
   catch (const CORBA::Exception& ex)
     {

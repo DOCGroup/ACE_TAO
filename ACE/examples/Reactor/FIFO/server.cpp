@@ -7,7 +7,6 @@
 #include "ace/OS_NS_stropts.h"
 
 
-
 class FIFO_Recv_Handler : public ACE_Event_Handler
 {
 public:

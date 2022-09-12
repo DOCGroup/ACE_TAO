@@ -356,4 +356,3 @@ CORBA::ULong Hello::error_count () const
 }
 
 
-

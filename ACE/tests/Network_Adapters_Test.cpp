@@ -615,7 +615,6 @@ Stop_Handler::handle_input (ACE_HANDLE handle)
           // protect from deleted pointer
           try
             {
-
               this->reactor ()->cancel_timer (this->handlers_to_stop_[i]);
               this->reactor ()->remove_handler
                 (this->handlers_to_stop_[i],
@@ -992,7 +991,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         default:
           // return print_usage (argc,argv);
           break;
-
         }
     }
 

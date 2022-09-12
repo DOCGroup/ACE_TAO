@@ -158,7 +158,6 @@ public:
         try{
           CORBA::ULongLong dummy = 0;
           (void) session->sample (dummy);
-
         } catch (const CORBA::Exception&) {
         }
       }

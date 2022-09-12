@@ -19,7 +19,6 @@
 #include "ace/OS_main.h"
 
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
@@ -37,7 +36,6 @@ static ACE_TCHAR *dump_file = ACE_TEXT("simple_output");
  */
 class Simple_Tester : public ACE_Handler
 {
-
 public:
   /// Constructor.
   Simple_Tester (void);

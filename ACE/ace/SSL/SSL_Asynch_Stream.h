@@ -144,7 +144,6 @@ class ACE_SSL_Export ACE_SSL_Asynch_Stream
     public ACE_Handler
 {
 public:
-
   // Use a class/struct to work around scoping
   // problems for extern "C" free functions with some compilers.  For
   // example, some can't handle

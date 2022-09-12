@@ -352,7 +352,6 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
               scheduler = scheduler_impl->_this ();
             }
           break;
-
         }
 
       // We use this buffer to generate the names of the local
@@ -904,7 +903,6 @@ void
 Test_ECG::shutdown_supplier (void* /* supplier_cookie */,
                              RtecEventComm::PushConsumer_ptr consumer)
 {
-
   this->running_suppliers_--;
   if (this->running_suppliers_ != 0)
     return;

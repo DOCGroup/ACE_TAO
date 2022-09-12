@@ -91,7 +91,6 @@ Logging_Supplier::start_generating_events (void)
 
   do
   {
-
   // Insert the event data
     this->insert_event_data (any,
                              schedule_iter);
@@ -364,7 +363,6 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
       }
 
 
-
             if (last_completion > (*sched_data)->completion_time)
               last_completion = 0;
 
@@ -504,7 +502,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // when done, we clean up
       delete event_Supplier_ptr;
-
     }
   catch (const CORBA::Exception& ex)
     {

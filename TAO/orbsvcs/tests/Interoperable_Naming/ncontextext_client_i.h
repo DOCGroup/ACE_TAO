@@ -13,7 +13,6 @@
 //=============================================================================
 
 
-
 #if !defined (NCONTEXTEXT_CLIENT_I_H)
 #define NCONTEXTEXT_CLIENT_I_H
 
@@ -27,7 +26,6 @@
  */
 class NContextExt_Client_i
 {
-
  public:
   // = COnstructor and destructor.
   NContextExt_Client_i (void);
@@ -40,7 +38,6 @@ class NContextExt_Client_i
   int init (int argc, ACE_TCHAR *argv[]);
 
  private:
-
   /// Parses the arguments passed on the command line.
   int parse_args (void);
 
@@ -71,7 +68,6 @@ class NContextExt_Client_i
 
   /// Flag to check if '-v' option is set.
   CORBA::Boolean view_;
-
 };
 
 #endif /* NCONTEXTEXT_CLIENT_I_H */

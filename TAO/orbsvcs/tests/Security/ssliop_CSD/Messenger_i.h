@@ -24,7 +24,6 @@ virtual CORBA::Boolean send_message (
     const char * subject,
     char *& message
     );
-
 };
 
 

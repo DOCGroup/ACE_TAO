@@ -11,9 +11,7 @@ class node_impl :
   public virtual OBV_Supports_Test::Node,
   public virtual CORBA::DefaultValueRefCountBase
 {
-
 public:
-
   node_impl (void);
 
   node_impl (const char * name);
@@ -25,14 +23,11 @@ public:
   void change_weight (CORBA::Long new_weight);
 
   void print (void);
-
 };
 
 class node_init_impl : public Supports_Test::Node_init
 {
-
  public:
-
   virtual Supports_Test::Node * create (void);
 
   virtual CORBA::ValueBase * create_for_unmarshal (void);
@@ -44,9 +39,7 @@ class vt_graph_impl :
   public virtual POA_Supports_Test::vt_graph,
   public virtual CORBA::DefaultValueRefCountBase
 {
-
  public:
-
   vt_graph_impl (void);
 
   vt_graph_impl (int num_nodes);
@@ -61,21 +54,16 @@ class vt_graph_impl :
 class vt_graph_init_impl :
   public Supports_Test::vt_graph_init
 {
-
  public:
-
   virtual Supports_Test::vt_graph * create (void);
 
   virtual CORBA::ValueBase * create_for_unmarshal (void);
-
 };
 
 class test_impl :
   public virtual POA_Supports_Test::test
 {
-
  public:
-
   test_impl (CORBA::ORB_ptr orb);
 
   virtual ~test_impl (void);
@@ -97,9 +85,7 @@ class test_impl :
   virtual void finish (void);
 
  private:
-
   CORBA::ORB_var orb_;
-
 };
 
 #endif /* TAO_SUPPORTS_TEST_IMPL_H */

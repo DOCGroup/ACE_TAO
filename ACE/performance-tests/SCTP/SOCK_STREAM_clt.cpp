@@ -43,7 +43,6 @@ ACE_High_Res_Timer::global_scale_factor_type const microsec_clock_scale_factor =
 ACE_SCTP::HIST runTest(ACE_SOCK_Stream &);
 
 int ACE_TMAIN (int argc, ACE_TCHAR **argv){
-
   // Initialize the options manager
   Options_Manager optsMgr(argc, argv, ACE_TEXT ("client-opts"));
 
@@ -110,7 +109,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
   // create a histogram to store test results
   ACE_SCTP::HIST createHistogram(ACE_CDR::ULong messageSize){
-
   // The histogram created below lives beyond the scope of this
   // function. So the memory allocated here cannot be cleaned up when
   // this function goes out of scope. Unfortunately the histogram
@@ -135,7 +133,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
 // send the test header (only contains number of iterations)
 int sendHeader(ACE_SOCK_Stream & stream) {
-
   // create an ACE CDR output stream and place the header information
   // into it
   ACE_OutputCDR hdrCDR;
@@ -155,7 +152,6 @@ int sendHeader(ACE_SOCK_Stream & stream) {
 // conduct the UnMarshalled Octet performance test using separate
 // send_n calls with Nagle's algorithm disabled
 ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_Stream & stream){
-
   ACE_CDR::ULong const testIterations = Options_Manager::test_iterations;
 
   size_t bt;
@@ -191,7 +187,6 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
 
   // prime the client and server before starting the test
   for(cnt=0;cnt<primerIterations;++cnt){
-
     // send message size
     // TODO : The message length should be CDR encoded
     ACE_CDR::ULong msgLenExpressed = ACE_HTONL(msgLen);
@@ -229,7 +224,6 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
   iovec iov[2];
   // PERFORMANCE TEST LOOP
   for (cnt = 0; cnt < testIterations; ++cnt){
-
     // get the start time
     startTime = ACE_OS::gethrtime();
     if (!startTime)
@@ -294,7 +288,6 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
 // function.
 ACE_SCTP::HIST runTest(ACE_SOCK_Stream & stream)
 {
-
   size_t msgLen = 1;
   for (int i=1; i <= Options_Manager::payload_size_power_of_2; i++)
     msgLen *= 2;

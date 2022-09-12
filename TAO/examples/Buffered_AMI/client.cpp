@@ -229,7 +229,6 @@ setup_buffering_constraints (CORBA::ORB_ptr orb)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB.

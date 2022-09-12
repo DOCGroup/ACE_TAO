@@ -62,7 +62,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Dynamic_TP_Export TAO_DTP_Task : public ACE_Task_Base
 {
 public:
-
   /// Default Constructor.
   TAO_DTP_Task();
 

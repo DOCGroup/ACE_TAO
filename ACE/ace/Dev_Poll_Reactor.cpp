@@ -1115,7 +1115,6 @@ ACE_Dev_Poll_Reactor::dispatch_notification_handlers (
 int
 ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
 {
-
   // Dispatch a ready event.
 
   // Define bits to check for while dispatching.
@@ -2336,7 +2335,6 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
   // cleared, we can un-control the fd now.
   if (!info->suspended || (info->controlled && new_mask == 0))
     {
-
       short const events = this->reactor_mask_to_poll_event (new_mask);
 
 #if defined (sun)

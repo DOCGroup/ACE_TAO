@@ -450,7 +450,6 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_and_return_index (const EXT_ID
 template <class EXT_ID, class INT_ID, class ACE_LOCK> void
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_slot (ACE_UINT32 slot)
 {
-
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
   //

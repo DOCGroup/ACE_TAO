@@ -167,7 +167,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /**
    * Keep a back pointer to the ACE_Dev_Poll_Reactor.  If this value
    * if NULL then the ACE_Dev_Poll_Reactor has been initialized with
@@ -252,7 +251,6 @@ typedef ACE_Reactor_Token_T<ACE_DEV_POLL_TOKEN> ACE_Dev_Poll_Reactor_Token;
 
 class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
 {
-
   /**
    * @struct Event_Tuple
    *
@@ -332,7 +330,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      * Methods used to search and modify the handler repository.
      */
     //@{
-
     /// Return a pointer to the Event_Tuple associated with @a handle.
     /// If there is none associated, returns 0 and sets errno.
     Event_Tuple *find (ACE_HANDLE handle);
@@ -360,7 +357,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      * underlying handler array.
      */
     //@{
-
     // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
     // within the range of legal handles (i.e., greater than or equal to
     // zero and less than @c max_size_).
@@ -398,7 +394,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      * an @c ACE_HANDLE value.  This is Unix-specific.
      */
     Event_Tuple *handlers_;
-
   };
 
 public:
@@ -865,7 +860,6 @@ public:
    * manipulated with these methods.
    */
   //@{
-
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
   /// event_handler and mask.
   /**
@@ -892,7 +886,6 @@ public:
    * These methods are unimplemented.
    */
   //@{
-
   /// GET/SET/ADD/CLR the ready "bit" bound with the event_handler
   /// and mask.
   virtual int ready_ops (ACE_Event_Handler *event_handler,
@@ -913,7 +906,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   class Token_Guard;
 
   /// Non-locking version of wait_pending().
@@ -1090,7 +1082,6 @@ protected:
   bool restart_;
 
 protected:
-
   /**
    * @class Token_Guard
    *

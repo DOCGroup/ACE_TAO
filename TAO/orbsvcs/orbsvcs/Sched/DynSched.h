@@ -41,7 +41,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTSched_Export ACE_DynScheduler
 {
 public:
-
   //////////////////////////////
   // public type declarations //
   //////////////////////////////
@@ -105,7 +104,6 @@ public:
     , UNABLE_TO_OPEN_SCHEDULE_FILE
     , UNABLE_TO_WRITE_SCHEDULE_FILE
   };
-
 
 
   /////////////////////////////
@@ -264,7 +262,6 @@ public:
                                       Dispatching_Type & d_type);
 
 protected:
-
   ////////////////////////////////
   // protected member functions //
   ////////////////////////////////
@@ -380,7 +377,6 @@ protected:
   ACE_Ordered_MultiSet <TimeLine_Entry_Link> *timeline_;
 
 private:
-
   ///////////////////////////////
   // private type declarations //
   ///////////////////////////////
@@ -538,7 +534,6 @@ private:
   u_long min_dispatch_id_;
 
   u_long max_dispatch_id_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

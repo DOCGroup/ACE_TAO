@@ -65,7 +65,6 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
                              "(%N:%l) be_visitor_scope::visit_scope - "
                              "codegen for scope failed\n"),
                             -1);
-
         }
     }
 
@@ -931,7 +930,6 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
 bool
 be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 {
-
   // Just try to find a VT with concrete factory in inheritance tree.
   if (node == nullptr)
     {

@@ -63,7 +63,6 @@ Echo_Server_Request_Interceptor::receive_request (
       ACE_DEBUG ((LM_DEBUG,
                   "The arg is %d\n",
                   param));
-
      }
 
   CORBA::String_var tmdi =

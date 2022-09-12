@@ -359,7 +359,6 @@ CORBA::Any::operator<<= (CORBA::Any::from_wstring ws)
 
 namespace CORBA
 {
-
 void
 operator<<= (CORBA::Any &any, CORBA::Short s)
 {

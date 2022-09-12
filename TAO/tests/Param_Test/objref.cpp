@@ -149,7 +149,6 @@ Test_ObjRef::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_ObjRef::run_sii_test\n");
-
     }
   return -1;
 }
@@ -257,7 +256,6 @@ Test_ObjRef::print_values (void)
       ex._tao_print_exception ("Retrieving Description");
       return;
     }
-
 
 
   ACE_DEBUG ((LM_DEBUG,

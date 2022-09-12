@@ -48,7 +48,6 @@ public:
   const ACE_CString& get_name (void);
 
 protected:
-
   /// My name.
   ACE_CString name_;
 

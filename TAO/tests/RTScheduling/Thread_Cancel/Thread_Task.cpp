@@ -100,13 +100,10 @@ Thread_Task::svc (void)
       //  End - Nested Scheduling Segment
 
 
-
       this->current_->end_scheduling_segment (name);
       //  End - Nested Scheduling Segment
 
       this->current_->end_scheduling_segment (name);
-
-
     }
   catch (const CORBA::THREAD_CANCELLED& )
     {

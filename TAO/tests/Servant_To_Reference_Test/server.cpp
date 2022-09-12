@@ -31,7 +31,6 @@ private:
 int
 MT_Task::svc (void)
 {
-
   try
     {
       for (CORBA::Long i = 0;

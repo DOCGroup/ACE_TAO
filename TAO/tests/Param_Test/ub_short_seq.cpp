@@ -111,7 +111,6 @@ Test_Short_Sequence::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Short_Sequence::run_sii_test\n");
-
     }
   return -1;
 }

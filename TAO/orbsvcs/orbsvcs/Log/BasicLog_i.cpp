@@ -34,7 +34,6 @@ TAO_BasicLog_i::copy (DsLogAdmin::LogId &id)
   this->copy_attributes (log.in ());
 
   return log._retn ();
-
 }
 
 DsLogAdmin::Log_ptr
@@ -50,7 +49,6 @@ TAO_BasicLog_i::copy_with_id (DsLogAdmin::LogId id)
   this->copy_attributes (log.in ());
 
   return log._retn ();
-
 }
 
 void

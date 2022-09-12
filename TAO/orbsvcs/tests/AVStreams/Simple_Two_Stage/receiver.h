@@ -28,7 +28,6 @@
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-
   /// Constructor.
   Receiver_Callback (void);
 
@@ -49,7 +48,6 @@ private:
   int frame_count_;
 
   Receiver_Stats stats_;
-
 };
 
 /**
@@ -69,7 +67,6 @@ public:
 private:
   /// Receiver application callback.
   Receiver_Callback callback_;
-
 };
 
 /**
@@ -104,6 +101,4 @@ protected:
 
   /// Receiver MMDevice.
   TAO_MMDevice *mmdevice_;
-
-
 };

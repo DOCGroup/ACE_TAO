@@ -621,7 +621,6 @@ TAO_AV_SCTP_SEQ_Factory::make_connector (void)
 int
 TAO_AV_SCTP_SEQ_Factory::init (int, ACE_TCHAR *[])
 {
-
   return 0;
 }
 
@@ -727,7 +726,6 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
   int dscp_flag=0;
   for(i=0; i < qos.QoSParams.length(); i++)
     {
-
       if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
         {
           qos.QoSParams[i].property_value >>= dscp;

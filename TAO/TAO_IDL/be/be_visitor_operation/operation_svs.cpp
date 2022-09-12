@@ -118,7 +118,7 @@ be_visitor_operation_svs::gen_op_body (be_operation *node)
     }
 
   os_ << be_nl_2
-      << "if ( ::CORBA::is_nil (executor.in ()))"
+      << "if (::CORBA::is_nil (executor.in ()))"
       << be_idt_nl
       << "{"<< be_idt_nl
       << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl

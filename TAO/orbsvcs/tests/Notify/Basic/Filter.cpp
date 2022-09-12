@@ -4,7 +4,6 @@
 #include "Filter.h"
 
 
-
 Filter::Filter (void)
   : event_count_ (5)
 {

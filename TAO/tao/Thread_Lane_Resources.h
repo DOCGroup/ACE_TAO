@@ -76,7 +76,6 @@ public:
 
   /// @name Accessors
   //@{
-
   TAO_Acceptor_Registry &acceptor_registry ();
 
   /**
@@ -147,7 +146,6 @@ public:
   //@}
 
 private:
-
   /// Checks if the acceptor registry has been created.
   int has_acceptor_registry_been_created () const;
 

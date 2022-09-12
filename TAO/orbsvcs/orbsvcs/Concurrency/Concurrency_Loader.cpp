@@ -15,7 +15,6 @@
 #include "ace/Dynamic_Service.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Concurrency_Loader::TAO_Concurrency_Loader ()

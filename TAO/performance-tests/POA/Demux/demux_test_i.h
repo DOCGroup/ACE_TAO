@@ -8,7 +8,6 @@
 class Demux_Test_i : public POA_Demux_Test
 {
 public:
-
   Demux_Test_i (void);
   //ctor.
 
@@ -34,7 +33,6 @@ public:
 private:
   PortableServer::POA_var poa_;
   // Implement a different _default_POA()
-
 };
 
 #endif /* TAO_DEMUX_TEST_I_H */

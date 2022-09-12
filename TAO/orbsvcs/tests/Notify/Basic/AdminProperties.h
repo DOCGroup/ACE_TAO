@@ -47,7 +47,6 @@ protected:
  */
 class AdminProperties_Task : public ACE_Task_Base
 {
-
 public:
   /// Constructor.
   AdminProperties_Task (void);
@@ -83,7 +82,6 @@ private:
  */
 class AdminProperties : public Notify_Test_Client
 {
-
   friend class AdminProperties_StructuredPushConsumer;
   friend class AdminProperties_Task;
 

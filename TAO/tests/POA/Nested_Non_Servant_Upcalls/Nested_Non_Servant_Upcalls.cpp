@@ -20,7 +20,6 @@ class test_i :
   public virtual POA_test
 {
 public:
-
   test_i (PortableServer::POA_ptr poa);
 
   ~test_i (void);
@@ -28,7 +27,6 @@ public:
   void method (void);
 
   PortableServer::POA_var poa_;
-
 };
 
 test_i::test_i (PortableServer::POA_ptr poa)
@@ -54,7 +52,6 @@ test_i::method (void)
 class Object_Activator : public ACE_Task_Base
 {
 public:
-
   Object_Activator (ACE_Thread_Manager &thread_manager,
                     PortableServer::POA_ptr poa);
 
@@ -63,7 +60,6 @@ public:
   ACE_Auto_Event object_activated_;
 
   PortableServer::POA_var poa_;
-
 };
 
 
@@ -107,7 +103,6 @@ class Servant_Activator :
   public PortableServer::ServantActivator
 {
 public:
-
   Servant_Activator (PortableServer::POA_ptr poa);
 
   PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
@@ -122,7 +117,6 @@ public:
   PortableServer::POA_var poa_;
 
   PortableServer::ObjectId_var id_;
-
 };
 
 Servant_Activator::Servant_Activator (PortableServer::POA_ptr poa)

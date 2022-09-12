@@ -15,7 +15,6 @@
 #include "JAWS/Pipeline_Tasks.h"
 
 
-
 JAWS_Server::JAWS_Server (void)
   : port_ (5432),
     concurrency_ (0),

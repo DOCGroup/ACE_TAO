@@ -56,7 +56,6 @@ namespace CORBA
 }
 
 
-
 // TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
@@ -89,7 +88,6 @@ namespace TAO
 
 namespace CORBA
 {
-
 // Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,

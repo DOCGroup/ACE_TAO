@@ -14,7 +14,6 @@
 #include "tao/debug.h"
 
 
-
   Client::Client (void)
 {
 }
@@ -651,7 +650,6 @@ Client::test_get_property_value (void)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       Client client;

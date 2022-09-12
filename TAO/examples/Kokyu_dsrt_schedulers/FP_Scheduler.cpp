@@ -64,7 +64,6 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (
     ace_sched_policy_ (ace_sched_policy),
     ace_sched_scope_ (ace_sched_scope)
 {
-
   Kokyu::DSRT_ConfigInfo config;
 
   config.impl_type_ = this->disp_impl_type_;
@@ -233,7 +232,6 @@ Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Cur
                                                          const char *,
                                                          CORBA::Policy_ptr)
 {
-
 }
 
 

@@ -131,7 +131,6 @@ public:
   virtual void setErrorHandler (ACEXML_ErrorHandler *handler);
 
 
-
 protected:
   /**
    * Parse XML Prolog.
@@ -560,7 +559,6 @@ protected:
   virtual ACEXML_Char peek ();
 
 private:
-
   // *** Helper functions for parsing XML
 
   /**
@@ -841,7 +839,6 @@ private:
   /// If set, the parser should include namespace declarations in the list
   /// of attributes of an element.
   int namespace_prefixes_;
-
 };
 
 #if defined (__ACEXML_INLINE__)

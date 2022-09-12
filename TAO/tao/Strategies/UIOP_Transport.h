@@ -48,7 +48,6 @@ typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
 class TAO_Strategies_Export TAO_UIOP_Transport : public TAO_Transport
 {
 public:
-
   /// Constructor.
   TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
                       TAO_ORB_Core *orb_core);
@@ -62,7 +61,6 @@ protected:
    * These are implementations of template methods declared by TAO_Transport.
    */
   //@{
-
   virtual ACE_Event_Handler * event_handler_i (void);
   virtual TAO_Connection_Handler *connection_handler_i (void);
 
@@ -93,7 +91,6 @@ public:
   //@}
 
 private:
-
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
   TAO_UIOP_Connection_Handler *connection_handler_;

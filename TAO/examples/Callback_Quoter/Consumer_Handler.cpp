@@ -168,8 +168,6 @@ Consumer_Handler::via_naming_service ()
       // the <_narrow> method.
       this->server_ =
         Notifier::_narrow (notifier_obj.in ());
-
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -185,7 +183,6 @@ Consumer_Handler::via_naming_service ()
 int
 Consumer_Handler::init (int argc, ACE_TCHAR **argv)
 {
-
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -247,7 +244,6 @@ Consumer_Handler::init (int argc, ACE_TCHAR **argv)
          }
       else
         {
-
           if (this->ior_ == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: no ior specified\n",
@@ -306,7 +302,6 @@ Consumer_Handler::run ()
 
       if (this->interactive_ == 0)
         {
-
           // Register with the server.
           this->server_->register_callback (this->stock_name_.c_str (),
                                             this->threshold_value_,
@@ -322,7 +317,6 @@ Consumer_Handler::run ()
 
       // Run the ORB.
       this->orb_->run ();
-
     }
   catch (const CORBA::Exception& ex)
     {

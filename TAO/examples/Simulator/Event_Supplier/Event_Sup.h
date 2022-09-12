@@ -42,7 +42,6 @@ struct Schedule_Viewer_Data
 class Event_Supplier
 {
 public:
-
   Event_Supplier (int argc, ACE_TCHAR** argv);
 
   ~Event_Supplier (void);

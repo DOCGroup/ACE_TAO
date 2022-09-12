@@ -159,7 +159,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /**
      * A human-readable string to distinguish this from other Notifiers.
      */
@@ -217,7 +216,6 @@ namespace TAO
     int linger_;
 
     RegistryType registry_;
-
   };
 } // namespace TAO
 

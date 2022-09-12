@@ -42,7 +42,6 @@ class TAO_Export TAO_Synch_Reply_Dispatcher
   : public TAO_Reply_Dispatcher
   , public TAO_LF_Invocation_Event
 {
-
 public:
   /// Constructor.
   TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core,

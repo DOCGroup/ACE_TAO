@@ -70,12 +70,10 @@ class HTTPU_Export HTTP_SCode : public HTTP_SCode_Base
   friend class ACE_Singleton<HTTP_SCode, ACE_SYNCH_MUTEX>;
 
 protected:
-
   HTTP_SCode (void);
   ~HTTP_SCode (void);
 
 public:
-
   const char * operator[] (int) const;
   // Return the reason string corresponding to a status code number.
 

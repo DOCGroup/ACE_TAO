@@ -39,7 +39,6 @@ void
 Echo_Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
@@ -63,7 +62,6 @@ Echo_Client_Request_Interceptor::send_request (
               operation.in (),
               ior.in ()));
 #endif /*if 0*/
-
 
 
   // Populate target member of the ClientRequestInfo.

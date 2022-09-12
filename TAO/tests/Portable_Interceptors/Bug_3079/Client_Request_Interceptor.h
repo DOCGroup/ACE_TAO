@@ -27,7 +27,6 @@ class Client_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   Client_Request_Interceptor (const char *orb_id,
                               const char *first_forward_str,
@@ -64,7 +63,6 @@ public:
   //@}
 
 private:
-
   ///The ID of the ORB this interceptor is registered with.
   CORBA::String_var orb_id_;
 
@@ -80,7 +78,6 @@ private:
 
   CORBA::String_var first_forward_str_;
   CORBA::String_var second_forward_str_;
-
 };
 
 #if defined(_MSC_VER)

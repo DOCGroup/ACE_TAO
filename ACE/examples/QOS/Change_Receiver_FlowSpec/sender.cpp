@@ -9,7 +9,6 @@
 //=============================================================================
 
 
-
 #include "ace/QoS/QoS_Session.h"
 #include "ace/QoS/QoS_Session_Factory.h"
 #include "ace/QoS/QoS_Session_Impl.h"
@@ -50,7 +49,6 @@ FillQoSParams (ACE_QoS_Params &qos_params,
 int
 ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
-
   ACE_DEBUG ((LM_DEBUG,
               "Sender\n"));
 
@@ -287,7 +285,6 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
 
 
-
       // Start the event loop.
       ACE_DEBUG ((LM_DEBUG,
                   "Running the Event Loop ...\n"));
@@ -302,8 +299,6 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                 "Specify a -m option for multicast application\n"));
   return 0;
 }
-
-
 
 
 

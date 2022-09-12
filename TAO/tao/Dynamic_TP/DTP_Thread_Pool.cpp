@@ -63,7 +63,6 @@ TAO_DTP_Thread_Pool_Threads::TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &p
 int
 TAO_DTP_Thread_Pool_Threads::svc (void)
 {
-
   if (TAO_debug_level > 7)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
@@ -496,7 +495,6 @@ TAO_DTP_Thread_Pool_Manager::destroy_threadpool (CORBA::ULong threadpool)
 
   // Delete the thread pool.
   delete tao_thread_pool;
-
 }
 
 CORBA::ULong

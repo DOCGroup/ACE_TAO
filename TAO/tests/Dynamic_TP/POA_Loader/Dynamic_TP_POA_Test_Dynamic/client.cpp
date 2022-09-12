@@ -77,7 +77,6 @@ public:
   int exs_;
 
 private:
-
   ACE_Mutex lock_;
   Test::Hello_var target_;
 };

@@ -111,7 +111,6 @@ namespace
 
   // Does this box have ipv6 turned on?
   int ace_ipv6_enabled = -1;
-
 }
 #else /* ACE_HAS_IPV6 */
 # define SIOCGIFCONF_CMD SIOCGIFCONF
@@ -1289,7 +1288,6 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
               ++count;
             }
           ACE_OS::freeaddrinfo (res0);
-
         }
       ACE_OS::fclose (fp);
     }
@@ -1471,7 +1469,6 @@ ip_check (int &ipvn_enabled, int pf)
 
   if (ipvn_enabled == -1)
     {
-
 #if defined (ACE_WIN32)
       static bool recursing = false;
       if (recursing) return 1;

@@ -33,7 +33,6 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   Server_Request_Interceptor (void);
 
@@ -74,7 +73,6 @@ public:
   //@}
 
 private:
-
   /// References to the two objects used in this test.
   CORBA::String_var iorstr_;
     int request_forwarded_;

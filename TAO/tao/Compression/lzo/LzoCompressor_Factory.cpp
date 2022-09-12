@@ -6,7 +6,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
 Lzo_CompressorFactory::Lzo_CompressorFactory (void) :
   ::TAO::CompressorFactory (::Compression::COMPRESSORID_LZO),
   compressor_ (::Compression::Compressor::_nil ())

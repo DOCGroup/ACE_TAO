@@ -29,7 +29,6 @@
 class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Element_Tree_Node
 {
 public:
-
   /// Default constructor.
   ACEXML_Element_Tree_Node ();
 

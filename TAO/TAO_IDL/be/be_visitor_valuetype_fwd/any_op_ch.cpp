@@ -56,10 +56,10 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
   *os << be_global->anyops_versioning_begin () << be_nl;
 
   *os << macro << " void"
-      << " operator<<= ( ::CORBA::Any &, " << node->name ()
+      << " operator<<= (::CORBA::Any &, " << node->name ()
       << " *); // copying" << be_nl;
   *os << macro << " void"
-      << " operator<<= ( ::CORBA::Any &, " << node->name ()
+      << " operator<<= (::CORBA::Any &, " << node->name ()
       << " **); // non-copying" << be_nl;
   *os << macro << " ::CORBA::Boolean"
       << " operator>>= (const ::CORBA::Any &, "

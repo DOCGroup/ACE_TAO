@@ -124,7 +124,6 @@ Quoter_Client::run (void)
 
       if (this->debug_level_ >= 1)
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Copied object: ACE Hardware = %i\n", q));
-
     }
   catch (const CORBA::Exception& ex)
     {

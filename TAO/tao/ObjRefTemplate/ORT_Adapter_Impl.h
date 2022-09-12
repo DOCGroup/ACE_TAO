@@ -83,7 +83,6 @@ namespace TAO
     //@}
 
   private:
-
     /// The ORT Template, this is the factory and its identity.
     PortableInterceptor::ObjectReferenceTemplate_var ort_template_;
 

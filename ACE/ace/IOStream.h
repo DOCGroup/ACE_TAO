@@ -128,7 +128,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Streambuf : public streambuf
 {
 public:
-
   /**
    * If the default allocation strategy were used the common buffer
    * would be deleted when the object destructs.  Since we are

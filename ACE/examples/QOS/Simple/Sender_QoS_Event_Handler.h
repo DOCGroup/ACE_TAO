@@ -43,7 +43,6 @@ public:
   virtual int handle_qos (ACE_HANDLE fd);
 
 private:
-
   ACE_SOCK_Dgram_Mcast_QoS dgram_mcast_qos_;
   ACE_QoS_Session *qos_session_;
 };

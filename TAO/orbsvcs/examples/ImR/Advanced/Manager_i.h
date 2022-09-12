@@ -23,7 +23,6 @@ public:
   virtual CORBA::Long endRetry ();
 
 private:
-
   long server_instance_;
   long retry_count_;
   long retry_attempt_;

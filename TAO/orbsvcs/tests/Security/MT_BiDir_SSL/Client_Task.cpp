@@ -23,7 +23,6 @@ Client_Task::svc (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("(%P|%t) Client_Task::svc exception!!!\n");
-
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));

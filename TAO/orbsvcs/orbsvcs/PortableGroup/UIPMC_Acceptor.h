@@ -104,7 +104,6 @@ public:
                               char *&host);
 
 protected:
-
   /**
    * Implement the common part of the open*() methods.  This method is
    * virtual to allow a derived class implementation to be invoked

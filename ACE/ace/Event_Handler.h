@@ -229,7 +229,6 @@ public:
   class ACE_Export Policy
   {
   public:
-
     /// Virtual destructor.
     virtual ~Policy ();
   };

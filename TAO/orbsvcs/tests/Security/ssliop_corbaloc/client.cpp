@@ -368,7 +368,6 @@ MT_Test::execute (TAO_Naming_Client &root_context)
 
       name_service_ior_ =
         orb_->object_to_string (context.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {

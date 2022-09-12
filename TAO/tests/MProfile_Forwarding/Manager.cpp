@@ -50,7 +50,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   Manager manager;
 
   try
@@ -145,7 +144,6 @@ Manager::init (int argc, ACE_TCHAR *argv[])
 int
 Manager::activate_servant (void)
 {
-
   ACE_NEW_THROW_EX (this->servant_locator_,
                     Servant_Locator (this->orb_.in ()),
                     CORBA::NO_MEMORY ());

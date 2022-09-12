@@ -46,7 +46,6 @@ class TAO_AV_UDP_Flow_Handler;
 class TAO_AV_Export TAO_AV_UDP_Transport
   :public TAO_AV_Transport
 {
-
 public:
   TAO_AV_UDP_Transport (void);
 
@@ -198,7 +197,6 @@ protected:
   TAO_FlowSpec_Entry *entry_;
   TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
   TAO_AV_Core::Flow_Component flow_component_;
-
 };
 
 /**

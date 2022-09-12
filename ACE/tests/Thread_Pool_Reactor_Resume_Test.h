@@ -31,7 +31,6 @@
 class Request_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
 {
 public:
-
   /// The default constructor makes sure the right reactor is used.
   Request_Handler (ACE_Thread_Manager *tm = 0);
 

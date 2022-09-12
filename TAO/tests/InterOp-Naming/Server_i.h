@@ -38,7 +38,6 @@ public:
   int run (void);
 
 protected:
-
   /// Servant class
   INS_i servant_;
 

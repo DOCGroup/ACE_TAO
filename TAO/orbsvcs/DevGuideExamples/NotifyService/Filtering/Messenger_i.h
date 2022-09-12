@@ -26,7 +26,6 @@ public:
 private:
    CORBA::ORB_var orb_;
    CosNotifyChannelAdmin::StructuredProxyPushConsumer_var consumer_proxy_;
-
 };
 
 #endif /* MESSENGERI_H_  */

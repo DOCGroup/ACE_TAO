@@ -41,7 +41,6 @@ public:
   /// svc thread entry point
   int svc () override;
 private:
-
 };
 
 int Consumer::open (void*)

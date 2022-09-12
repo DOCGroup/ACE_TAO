@@ -20,7 +20,6 @@ class Control;
 class Client
 {
 public:
-
   /// ctor
   Client (CORBA::ORB_ptr orb);
 
@@ -44,7 +43,6 @@ public:
 
   void parse_args (int argc, ACE_TCHAR *argv[]);
 private:
-
   /// The ORB
   CORBA::ORB_var orb_;
 

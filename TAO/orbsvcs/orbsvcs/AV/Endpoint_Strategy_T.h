@@ -227,7 +227,6 @@ protected:
   CORBA::ORB_ptr orb_;
 
   PortableServer::POA_ptr poa_;
-
 };
 
 // ----------------------------------------------------------------------

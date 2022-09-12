@@ -366,7 +366,6 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
     }
 
   return 0;
-
 }
 
 

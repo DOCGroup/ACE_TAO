@@ -13,7 +13,6 @@ class DT_Creator;
 class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
-
   Thread_Task (void);
 
   virtual int activate_task (RTScheduling::Current_ptr current,

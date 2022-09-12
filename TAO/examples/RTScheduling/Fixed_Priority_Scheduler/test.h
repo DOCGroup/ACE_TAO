@@ -15,7 +15,6 @@ class Task_Stats;
 class DT_Test :public ACE_Task <ACE_SYNCH>
 {
  public:
-
   DT_Test (void);
 
   void check_supported_priorities (void);
@@ -40,7 +39,6 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   virtual int svc ();
 
 
-
  private:
   /// = Policies
   long thr_sched_policy_;
@@ -55,7 +53,6 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   RTCORBA::RTORB_var rt_orb_;
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_;
-
 };
 
 typedef ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX> DT_TEST;

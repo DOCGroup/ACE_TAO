@@ -10,7 +10,6 @@ TAO_NotifyLogNotification::TAO_NotifyLogNotification (
   : TAO_LogNotification (),
     event_channel_ (CosNotifyChannelAdmin::EventChannel::_duplicate (ec))
 {
-
   CosNotifyComm::PushSupplier_var objref =
     this->_this ();
   ACE_ASSERT (!CORBA::is_nil (objref.in ()));

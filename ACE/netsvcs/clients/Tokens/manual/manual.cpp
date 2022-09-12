@@ -23,7 +23,6 @@
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
 
-
 typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
 
 /**
@@ -54,7 +53,6 @@ public:
   typedef ACE_CString TID;
 
 private:
-
   /// Display options.
   void display_menu (void);
 

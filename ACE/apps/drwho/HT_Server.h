@@ -21,7 +21,6 @@
  */
 class HT_Server : public Hash_Table
 {
-
 public:
   virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN);

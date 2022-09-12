@@ -96,7 +96,6 @@ public:
   virtual const ACEXML_Char* getSystemId (void);
 
 protected:
-
   /** Read the next character as a normal character. Return -1 if EOF is
    *  reached, else return 0.
    */
@@ -109,7 +108,6 @@ protected:
   virtual int peekchar_i (ACE_OFF_T offset = 0);
 
 private:
-
 #if defined (ACE_USES_WCHAR)
   /**
    *  Read the next character from the stream taking into account the

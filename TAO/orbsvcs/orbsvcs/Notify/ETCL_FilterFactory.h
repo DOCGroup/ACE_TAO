@@ -82,7 +82,6 @@ public:
 
 
 protected:
-
   CosNotifyFilter::Filter_ptr
     create_filter (const char *constraint_grammar,
                    const TAO_Notify_Object::ID& id,
@@ -106,7 +105,6 @@ protected:
 
   FILTERMAP filters_;
   TAO_SYNCH_MUTEX mtx_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

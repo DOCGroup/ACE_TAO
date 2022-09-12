@@ -33,7 +33,6 @@ test_i::destroy_poa (void)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB first.

@@ -25,7 +25,6 @@ TAO_DTP_Thread_Lane_Resources_Manager::TAO_DTP_Thread_Lane_Resources_Manager
   // Create the thread-pool manager.
   ACE_NEW (this->tp_manager_,
            TAO_DTP_Thread_Pool_Manager (orb_core));
-
 }
 
 TAO_DTP_Thread_Lane_Resources_Manager::~TAO_DTP_Thread_Lane_Resources_Manager (void)

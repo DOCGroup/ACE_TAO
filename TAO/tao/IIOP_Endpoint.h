@@ -183,7 +183,6 @@ private:
   TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &);
 
 private:
-
   /// String representing the host name.
   CORBA::String_var host_;
 

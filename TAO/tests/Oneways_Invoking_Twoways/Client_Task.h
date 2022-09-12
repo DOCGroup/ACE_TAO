@@ -25,7 +25,6 @@ public:
   int svc (void);
 
 private:
-
   /// Reference to the test interface
   Test::Sender_var sender_;
 

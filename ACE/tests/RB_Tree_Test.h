@@ -23,7 +23,6 @@
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree_Test
 {
-
   //   To run the test class on a particular type instantiation of the
   //   RB_Tree, simply instantiate the test class template with the
   //   same type parameters, and invoke the run_test method.
@@ -50,7 +49,6 @@ public:
   void run_test (void);
 
 private:
-
   /// Tests stable and deprecated insertion interfaces.
   void test_tree_insertion (void);
 
@@ -101,5 +99,4 @@ private:
 
   /// Order of indices in the key and item arrays.
   int *order_index_;
-
 };

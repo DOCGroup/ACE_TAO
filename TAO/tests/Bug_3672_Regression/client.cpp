@@ -122,7 +122,6 @@ public:
 
    void foo_excep (::Messaging::ExceptionHolder * excep_holder)
     {
-
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"));
       try
@@ -271,7 +270,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
-
     }
 
   return parameter_corruption;

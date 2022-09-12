@@ -15,7 +15,6 @@ GroupInfoPublisherBase::GroupInfoPublisherBase()
 }
 
 
-
 void
 GroupInfoPublisherBase::subscribe(TAO_FTEC_Become_Primary_Listener* listener)
 {
@@ -46,13 +45,11 @@ GroupInfoPublisherBase::successor() const
 }
 
 
-
 const GroupInfoPublisherBase::BackupList&
 GroupInfoPublisherBase::backups() const
 {
   return info_->backups;
 }
-
 
 
 GroupInfoPublisherBase::Info*

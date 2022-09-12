@@ -65,7 +65,6 @@ public:
                   const CosTrading::Offer *);
 
 private:
-
   /// A reference to the trader is needed for access to the map of offers.
   TAO_Offer_Database<MAP_LOCK_TYPE> &db_;
 

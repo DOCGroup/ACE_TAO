@@ -86,7 +86,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #endif
 
 
-
 #define  YYFINAL    114
 #define  YYFLAG   -32768
 #define  YYNTBASE 46
@@ -836,7 +835,6 @@ yyreduce:
 
 
   switch (yyn) {
-
 case 3:
 //#line 97 "ETCL/ETCL.yy"
 { yyval.constraint = new ETCL_Preference (ETCL_MIN, yyvsp[0].constraint); ;

@@ -31,8 +31,6 @@ ACEXML_SAXPrint_Handler::characters (const ACEXML_Char *cdata,
 void
 ACEXML_SAXPrint_Handler::endDocument (void)
 {
-
-
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }
 
@@ -41,8 +39,6 @@ ACEXML_SAXPrint_Handler::endElement (const ACEXML_Char *,
                                      const ACEXML_Char *,
                                      const ACEXML_Char *qName)
 {
-
-
   this->dec_indent ();
   this->print_indent ();
   ACE_DEBUG ((LM_DEBUG,
@@ -74,8 +70,6 @@ void
 ACEXML_SAXPrint_Handler::processingInstruction (const ACEXML_Char *target,
                                                 const ACEXML_Char *data)
 {
-
-
   this->print_indent ();
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("<?%s %s>\n"),
@@ -85,7 +79,6 @@ ACEXML_SAXPrint_Handler::processingInstruction (const ACEXML_Char *target,
 void
 ACEXML_SAXPrint_Handler::setDocumentLocator (ACEXML_Locator * locator)
 {
-
   this->locator_ = locator;
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("* Event setDocumentLocator () ***************\n")));
 }
@@ -93,8 +86,6 @@ ACEXML_SAXPrint_Handler::setDocumentLocator (ACEXML_Locator * locator)
 void
 ACEXML_SAXPrint_Handler::skippedEntity (const ACEXML_Char *name)
 {
-
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event skippedEntity (%s) ***************\n"),
               name));
@@ -103,8 +94,6 @@ ACEXML_SAXPrint_Handler::skippedEntity (const ACEXML_Char *name)
 void
 ACEXML_SAXPrint_Handler::startDocument (void)
 {
-
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event startDocument () ***************\n")));
 }
@@ -115,8 +104,6 @@ ACEXML_SAXPrint_Handler::startElement (const ACEXML_Char *,
                                        const ACEXML_Char *qName,
                                        ACEXML_Attributes *alist)
 {
-
-
   this->print_indent ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<%s"),
@@ -140,7 +127,6 @@ ACEXML_SAXPrint_Handler::startPrefixMapping (const ACEXML_Char * ,
 //               ACE_TEXT ("* Event startPrefixMapping () ***************\n")));
 //   ACE_DEBUG ((LM_DEBUG,
 //               ACE_TEXT ("Prefix = %s, URI = %s\n"), prefix, uri));
-
 }
 
 // *** Methods inherited from ACEXML_DTDHandler.

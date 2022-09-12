@@ -50,7 +50,6 @@ namespace TAO
     , public virtual ::CORBA::LocalObject
   {
   public:
-
     /// Constructor.
     FT_ServerRequest_Interceptor (void);
 
@@ -87,14 +86,12 @@ namespace TAO
         PortableInterceptor::ServerRequestInfo_ptr ri);
     //@}
   private:
-
     void check_iogr_version (const IOP::ServiceContext &svc);
 
     void update_iogr (
         PortableInterceptor::ServerRequestInfo_ptr ri);
 
   private:
-
     CORBA::ULong object_group_ref_version_;
 
     CORBA::Boolean is_primary_;
@@ -103,7 +100,6 @@ namespace TAO
 
     CORBA::ORB_var orb_;
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

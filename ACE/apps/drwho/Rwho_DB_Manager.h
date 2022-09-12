@@ -30,7 +30,6 @@
  */
 class RWho_DB_Manager
 {
-
 public:
   RWho_DB_Manager (void);
   ~RWho_DB_Manager (void);

@@ -54,7 +54,6 @@ namespace
 
 struct Worker : ACE_Task_Base
 {
-
   Worker (Simple_Server_ptr srv)
     : srv_(Simple_Server::_duplicate(srv))
   {
@@ -89,7 +88,6 @@ struct Worker : ACE_Task_Base
       }
     return 0;
   }
-
 };
 
 int

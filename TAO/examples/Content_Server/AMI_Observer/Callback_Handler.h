@@ -96,7 +96,6 @@ private:
   void deactivate (void);
 
 private:
-
   /// The Addr corresponding to the retrieved file.
   ACE_FILE_Addr file_;
 

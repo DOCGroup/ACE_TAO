@@ -52,8 +52,6 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
            *os << "/// Setter for " << node->local_name() << " attribute" << be_nl
                << "/// @param[in] " << node->local_name() << " - New value for "
                << node->local_name() << " attribute" << be_nl;
-
-
         }
       else
         {

@@ -340,7 +340,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_cond_t
 {
 public:
-
   /// Returns the number of waiters.
   long waiters () const;
 
@@ -417,7 +416,6 @@ struct ACE_Export ACE_rwlock_t
 {
 public:
 //protected:
-
   /// Serialize access to internal state.
   ACE_mutex_t lock_;
 
@@ -937,7 +935,6 @@ public:
   bool operator!= (const ACE_TSS_Ref &) const;
 
 // private:
-
   /// ID of thread using a specific key.
   ACE_thread_t tid_;
 };

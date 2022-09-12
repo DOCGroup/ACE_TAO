@@ -8,7 +8,6 @@ namespace TAO
 {
   namespace Transport
   {
-
     Current_ORBInitializer_Base::Current_ORBInitializer_Base(const ACE_TCHAR* id)
       : id_ (id)
     {

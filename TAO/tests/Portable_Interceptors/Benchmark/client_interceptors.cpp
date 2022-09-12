@@ -39,7 +39,6 @@ void
 Vault_Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
@@ -79,7 +78,6 @@ void
 Vault_Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
@@ -102,7 +100,6 @@ void
 Vault_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::Any_var any = ri->received_exception ();
 
   CORBA::TypeCode_var tc = any->type ();
@@ -153,7 +150,6 @@ void
 Vault_Client_Request_Context_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   // MAke the context to send the context to the target
   IOP::ServiceContext sc;
   sc.context_id = request_ctx_id;
@@ -184,14 +180,12 @@ void
 Vault_Client_Request_Context_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr)
 {
-
 }
 
 void
 Vault_Client_Request_Context_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::Any_var any = ri->received_exception ();
 
   CORBA::TypeCode_var tc = any->type ();
@@ -242,7 +236,6 @@ void
 Vault_Client_Request_Dynamic_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
  if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
@@ -274,7 +267,6 @@ void
 Vault_Client_Request_Dynamic_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "ready") == 0)
@@ -307,7 +299,6 @@ void
 Vault_Client_Request_Dynamic_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::Any_var any = ri->received_exception ();
 
   CORBA::TypeCode_var tc = any->type ();
@@ -358,7 +349,6 @@ void
 Vault_Client_Request_NOOP_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr)
 {
-
 }
 
 void
@@ -372,14 +362,12 @@ void
 Vault_Client_Request_NOOP_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr)
 {
-
 }
 
 void
 Vault_Client_Request_NOOP_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::Any_var any = ri->received_exception ();
 
   CORBA::TypeCode_var tc = any->type ();

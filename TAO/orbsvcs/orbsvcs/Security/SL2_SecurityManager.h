@@ -163,7 +163,6 @@ namespace TAO
       ::CORBA::Boolean access_allowed_i (OBJECT_KEY& key,
                                          const char *operation_name,
                                          CORBA::Boolean collocated = false);
-
     };
 
     /**
@@ -177,7 +176,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       SecurityManager (/* not sure what's needed yet */);
 
@@ -200,7 +198,6 @@ namespace TAO
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
@@ -209,7 +206,6 @@ namespace TAO
       virtual ~SecurityManager (void);
 
     private:
-
       /// The ORB-specific SecurityLevel2::PrincipalAuthenticator
       /// reference.
       // Except we're not going to have one of these right now
@@ -218,7 +214,6 @@ namespace TAO
       // AccessDecision instance
       SecurityLevel2::AccessDecision_var access_decision_;
     };
-
   } // End SL3 namespace
 }  // End TAO namespace
 

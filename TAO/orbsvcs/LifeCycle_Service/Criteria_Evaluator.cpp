@@ -14,7 +14,6 @@
 #include "ace/OS_NS_string.h"
 
 
-
 Criteria_Evaluator::Criteria_Evaluator (const CosLifeCycle::Criteria &criteria)
 : criteria_ (criteria)
 {

@@ -20,7 +20,6 @@
  */
 class Secure_Vault_i : public POA_Test_Interceptors::Secure_Vault
 {
-
 public:
   /// ctor
   Secure_Vault_i (CORBA::ORB_ptr orb);

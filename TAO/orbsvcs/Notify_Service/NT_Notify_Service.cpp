@@ -149,7 +149,6 @@ TAO_NT_Notify_Service::arg_manip (char *args, DWORD arglen, bool query)
     }
 
   RegCloseKey (hkey);
-
 }
 
 int

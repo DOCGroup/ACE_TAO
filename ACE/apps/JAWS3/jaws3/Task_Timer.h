@@ -14,7 +14,6 @@ class JAWS_Task_Timer;
 class JAWS_Export JAWS_Task_Timer : public JAWS_Timer_Impl
 {
 public:
-
   JAWS_Task_Timer (void);
 
   static JAWS_Timer_Impl * instance (void)
@@ -46,9 +45,7 @@ public:
   // is being used as the timer helper).
 
 private:
-
   ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Wheel> timer_queue_;
-
 };
 
 #endif /* JAWS_TASK_TIMER_H */

@@ -44,7 +44,6 @@ private:
 
   /// The reply message
   Test::Octet_Seq_var reply_message_;
-
 };
 
 #include /**/ "ace/post.h"

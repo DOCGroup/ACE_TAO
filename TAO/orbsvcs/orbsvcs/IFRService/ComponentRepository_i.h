@@ -75,7 +75,6 @@ public:
   virtual PortableServer::POA_ptr select_poa (CORBA::DefinitionKind def_kind) const;
 
 protected:
-
 #ifdef CONCRETE_IR_OBJECT_TYPES
 #undef CONCRETE_IR_OBJECT_TYPES
 #endif

@@ -15,7 +15,6 @@ typedef ACE_Task<ACE_SYNCH> JAWS_CONCURRENCY_TASK;
 class JAWS_Export JAWS_Concurrency_Impl : public JAWS_CONCURRENCY_TASK
 {
 public:
-
   virtual ~JAWS_Concurrency_Impl (void) {};
 
   virtual int putq (JAWS_Protocol_Handler *ph) = 0;
@@ -23,7 +22,6 @@ public:
   virtual int getq (JAWS_Protocol_Handler *&ph) = 0;
 
   int svc (void);
-
 };
 
 
@@ -35,7 +33,6 @@ template<>
 class JAWS_Export JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 {
 public:
-
   JAWS_Concurrency_Bridge (JAWS_Concurrency_Impl *impl = 0);
 
   int putq (JAWS_Protocol_Handler *ph);
@@ -44,9 +41,7 @@ public:
   void shutdown (void);
 
 protected:
-
   JAWS_Concurrency_Impl *impl_;
-
 };
 
 
@@ -59,12 +54,10 @@ class JAWS_Export JAWS_Concurrency
   : public JAWS_Concurrency_Bridge<JAWS_CONCURRENCY_CONCRETE_IMPL>
 {
 public:
-
   static JAWS_Concurrency * instance (void)
   {
     return ACE_Singleton<JAWS_Concurrency, ACE_SYNCH_MUTEX>::instance ();
   }
-
 };
 
 

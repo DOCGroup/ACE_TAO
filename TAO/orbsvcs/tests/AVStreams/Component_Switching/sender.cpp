@@ -31,7 +31,6 @@ Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
                     "In the signal handler\n"));
 
       g_shutdown = 1;
-
     }
   return 0;
 }
@@ -157,7 +156,6 @@ Sender::shut_down (void)
 
       SENDER::instance ()->connection_manager ().unbind_sender (this->sender_name_,
                                                                 mmdevice.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -296,7 +294,6 @@ Sender::pace_data (void)
       /// Continue to send data till the file is read to the end.
       while (1)
         {
-
           if (g_shutdown == 1)
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -327,7 +324,6 @@ Sender::pace_data (void)
               this->shut_down ();
 
               break;
-
             }
 
           this->mb_.wr_ptr (n);
@@ -366,7 +362,6 @@ Sender::pace_data (void)
                   /// Run the orb for the wait time so the sender can
                   /// continue other orb requests.
                   TAO_AV_CORE::instance ()->orb ()->run (wait_time);
-
                 }
             }
 
@@ -397,7 +392,6 @@ Sender::pace_data (void)
 
           /// Reset the message block.
           this->mb_.reset ();
-
         } /// end while
 
     }

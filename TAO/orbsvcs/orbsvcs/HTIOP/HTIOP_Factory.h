@@ -38,7 +38,6 @@ namespace TAO
 {
   namespace HTIOP
   {
-
     class HTIOP_Export Protocol_Factory : public TAO_Protocol_Factory
     {
     public:

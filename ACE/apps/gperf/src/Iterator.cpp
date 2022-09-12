@@ -75,7 +75,6 @@ Iterator::operator() (void)
 
             if (*str == '-')
               {
-
                 for (size = 1, upper_bound = 0;
                      ACE_OS::ace_isdigit (*++str);
                      upper_bound = upper_bound * 10 + *str - '0')

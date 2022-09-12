@@ -1,7 +1,6 @@
 #include "RT_CORBA_Leader_Follower.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // We need the following only if we have threads enabled..
@@ -38,7 +37,6 @@ ACE_High_Res_Timer test_timer;
 
 
 
-
 /*******************************************************************/
 // Constructor for Synchronisers
 Synchronisers::Synchronisers (void)
@@ -67,7 +65,6 @@ Synchronisers::start_synchronization (void)
 
     if (ready_threads == number_of_threads)
       {
-
         // Reset the ready_threads so that we can wait at the end of
         // runs
         ready_threads = 0;
@@ -109,7 +106,6 @@ Synchronisers::end_synchronization (void)
 
     if (ready_threads == number_of_threads)
       {
-
         // Reset the ready_threads so that we can wait at the end of
         // runs
         ready_threads = 0;

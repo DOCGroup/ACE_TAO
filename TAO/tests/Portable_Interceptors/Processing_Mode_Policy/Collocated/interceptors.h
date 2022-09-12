@@ -23,7 +23,6 @@ class Echo_Client_Request_Interceptor
 {
   // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
-
   Echo_Client_Request_Interceptor (void);
   // ctor.
   virtual ~Echo_Client_Request_Interceptor ();

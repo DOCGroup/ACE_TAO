@@ -480,7 +480,6 @@ JAWS_Asynch_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
     }
   else
     this->handler ()->accept_error ();
-
 }
 
 void

@@ -10,7 +10,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-
 // Default Constructor
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>

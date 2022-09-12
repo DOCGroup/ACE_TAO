@@ -11,7 +11,6 @@ class TeraSS_Service_Handler;
 class TeraSS_Data
 {
 public:
-
   TeraSS_Data (TeraSS_Service_Handler *sh);
 
   ACE_SOCK_Stream & peer (void);
@@ -19,11 +18,9 @@ public:
   ACE_FILE_IO & file_io (void);
 
 private:
-
   ACE_Message_Block mb_;
   TeraSS_Service_Handler *sh_;
   ACE_FILE_IO file_io_;
-
 };
 
 #endif /* TERA_SS_DATA_H */

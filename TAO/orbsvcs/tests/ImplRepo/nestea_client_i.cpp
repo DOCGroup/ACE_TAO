@@ -5,7 +5,6 @@
 #include "ace/ACE.h"
 
 
-
 // Constructor.
 Nestea_Client_i::Nestea_Client_i (void)
   : argc_ (0)

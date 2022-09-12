@@ -11,7 +11,6 @@
 #include "ace/OS_NS_stdlib.h"
 
 
-
 Log_Wrapper::Log_Wrapper (void)
 {
   sequence_number_ = 0;

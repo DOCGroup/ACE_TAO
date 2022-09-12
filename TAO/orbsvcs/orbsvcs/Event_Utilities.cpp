@@ -215,7 +215,6 @@ void ACE_SupplierQOS_Factory::debug (const RtecEventChannelAdmin::SupplierQOS& q
                   buf, qos.publications[i].dependency_info.number_of_calls));
         }
   ORBSVCS_DEBUG ((LM_DEBUG, "}\n"));
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

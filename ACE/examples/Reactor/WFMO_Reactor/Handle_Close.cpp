@@ -21,7 +21,6 @@
 #include "ace/OS_main.h"
 
 
-
 // Use the WFMO_Reactor
 static int opt_wfmo_reactor = 0;
 
@@ -112,7 +111,6 @@ protected:
 class Different_Handler : public ACE_Event_Handler
 {
 public:
-
   Different_Handler (ACE_Pipe &pipe)
     : pipe_ (pipe)
   {

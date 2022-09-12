@@ -42,7 +42,6 @@ typedef TAO_Priority_Mapping_Manager *TAO_Priority_Mapping_Manager_ptr;
 class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager :
   public virtual ::CORBA::LocalObject
 {
-
 public:
   /// Constructor.
   TAO_Priority_Mapping_Manager (RTCORBA::PriorityMapping * mapping);

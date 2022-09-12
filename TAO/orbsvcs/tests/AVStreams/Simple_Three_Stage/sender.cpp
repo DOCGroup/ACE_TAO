@@ -280,7 +280,6 @@ Sender::pace_data (void)
 
           // Reset the message block.
           this->mb_.reset ();
-
         } // end while
 
       // If a stream was setup, destroy it.

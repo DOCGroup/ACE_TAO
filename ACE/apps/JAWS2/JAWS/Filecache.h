@@ -12,18 +12,14 @@ class JAWS_Export JAWS_Referenced_Filecache_Factory
   : public JAWS_Referenced_Cache_Object_Factory
 {
 public:
-
   virtual void destroy (JAWS_Cache_Object *);
-
 };
 
 class JAWS_Export JAWS_Counted_Filecache_Factory
   : public JAWS_Counted_Cache_Object_Factory
 {
 public:
-
   virtual void destroy (JAWS_Cache_Object *);
-
 };
 
 typedef JAWS_Cache_Manager<JAWS_Strdup_String,
@@ -47,7 +43,6 @@ typedef JAWS_Cache_Proxy<const char *,
 class JAWS_Export JAWS_Cached_FILE : private JAWS_Filecache_Proxy
 {
 public:
-
   JAWS_Cached_FILE (const char *const &filename,
                     JAWS_Filecache_Proxy::Cache_Manager *cm = 0);
   JAWS_Cached_FILE (const char *const &filename,
@@ -61,9 +56,7 @@ public:
   ACE_Mem_Map * mmap (void);
 
 private:
-
   ACE_FILE_IO file_;
-
 };
 
 

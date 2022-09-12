@@ -18,7 +18,6 @@ ACEXML_StrCharStream::~ACEXML_StrCharStream (void)
 int
 ACEXML_StrCharStream::open (const ACEXML_Char *str, const ACEXML_Char* name)
 {
-
   if (str != 0 && name != 0)
     {
       delete [] this->start_;

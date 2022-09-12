@@ -46,7 +46,6 @@ namespace TAO
     : public ACE_Service_Object
   {
   public:
-
     /// Destructor.
     /**
      * @note Even though this class only defines an interface, a

@@ -40,7 +40,6 @@ class TAO_RTCORBA_Export TAO_RT_Thread_Lane_Resources_Manager :
   public TAO_Thread_Lane_Resources_Manager
 {
 public:
-
   /// Constructor.
   TAO_RT_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
@@ -65,7 +64,6 @@ public:
 
   /// @name Accessors
   // @{
-
   TAO_Thread_Lane_Resources &lane_resources (void);
 
   TAO_Thread_Lane_Resources &default_lane_resources (void);
@@ -79,7 +77,6 @@ private:
   TAO_RT_Thread_Lane_Resources_Manager (const TAO_RT_Thread_Lane_Resources_Manager &);
 
 protected:
-
   /// Default lane resources.
   TAO_Thread_Lane_Resources *default_lane_resources_;
 
@@ -99,12 +96,9 @@ class TAO_RTCORBA_Export TAO_RT_Thread_Lane_Resources_Manager_Factory
   : public TAO_Thread_Lane_Resources_Manager_Factory
 {
 public:
-
   /// Factory method.
   TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (TAO_ORB_Core &core);
-
 };
-
 
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Thread_Lane_Resources_Manager_Factory)

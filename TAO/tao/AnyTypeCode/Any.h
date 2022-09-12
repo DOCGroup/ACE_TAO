@@ -282,7 +282,6 @@ operator<< (std::ostream &, const CORBA::Any &);
 
 namespace CORBA
 {
-
 /// Typesafe insertion.
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Short);
@@ -356,7 +355,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-
 /// Copying versions of insertion operators for basic types
 /// must also be defined for CORBA::Any_var.
 

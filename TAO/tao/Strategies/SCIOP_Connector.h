@@ -64,7 +64,6 @@ public:
   virtual char object_key_delimiter () const;
 
 public:
-
   typedef TAO_Connect_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>
           TAO_SCIOP_CONNECT_CONCURRENCY_STRATEGY;
 
@@ -80,7 +79,6 @@ public:
           TAO_SCIOP_BASE_CONNECTOR;
 
 protected:
-
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
   int set_validate_endpoint (TAO_Endpoint *ep);
@@ -97,7 +95,6 @@ protected:
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
 private:
-
   /// Return the remote endpoint, a helper function
   TAO_SCIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
@@ -108,7 +105,6 @@ private:
                                     TAO_SCIOP_Endpoint *sciop_endpoint);
 
 private:
-
   /// Our connect strategy
   TAO_SCIOP_CONNECT_STRATEGY connect_strategy_;
 

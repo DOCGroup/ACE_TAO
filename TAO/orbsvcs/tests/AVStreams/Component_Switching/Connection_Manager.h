@@ -32,7 +32,6 @@
 class Connection_Manager
 {
 public:
-
   /// Constructor
   Connection_Manager (void);
 
@@ -98,7 +97,6 @@ public:
   StreamCtrls &streamctrls (void);
 
 protected:
-
   void find_receivers (void);
 
   void add_to_receivers (CosNaming::BindingList &binding_list);

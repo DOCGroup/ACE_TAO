@@ -91,7 +91,6 @@ namespace TAO
       /// @}
 
     protected:
-
       // = The TAO_Connector methods, please check the documentation on
       // Transport_Connector.h
       int set_validate_endpoint (TAO_Endpoint *ep);
@@ -111,7 +110,6 @@ namespace TAO
       virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
     private:
-
       /// Return the remote endpoint, a helper function
       Endpoint *remote_endpoint (TAO_Endpoint *ep);
 

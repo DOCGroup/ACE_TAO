@@ -19,7 +19,6 @@ class JAWS_Options;
 class JAWS_Export JAWS_Options
 {
 public:
-
   JAWS_Options (void);
 
   const char *getenv (const char *key);
@@ -30,9 +29,7 @@ public:
   }
 
 private:
-
   JAWS_Config_File *cf_;
-
 };
 
 #endif /* JAWS_OPTIONS_H */

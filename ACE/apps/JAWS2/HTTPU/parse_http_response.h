@@ -31,7 +31,6 @@ public:
   // 0 -> ok
 
 private:
-
   int code_;
   char *code_str_;
   int major_version_;
@@ -39,7 +38,6 @@ private:
   char *version_;
   char *response_;
   int error_;
-
 };
 
 #if defined (ACE_HAS_INLINED_OSCALLS)

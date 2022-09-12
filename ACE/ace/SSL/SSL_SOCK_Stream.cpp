@@ -257,7 +257,6 @@ ACE_SSL_SOCK_Stream::send (size_t n, ...) const
           // buffer in the varargs occurred.
           if (result < data_len)
             break;
-
         }
     }
 

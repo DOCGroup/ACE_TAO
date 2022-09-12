@@ -54,7 +54,6 @@ public:
   virtual ~TAO_Naming_Service (void);
 
 protected:
-
   /// Parse the command line arguments to find
   /// the timeout period.
   int parse_args (int &argc, ACE_TCHAR* argv[]);

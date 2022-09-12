@@ -861,7 +861,6 @@ string_strsncpy_test ()
                         9) == 0);
     // size should be 9 (+ '\0' char)
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(ACE_OS::strlen(strsncpy2) == 9);
-
   }
 
 #if defined (ACE_HAS_WCHAR)

@@ -43,7 +43,6 @@ public:
 
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev_;
   // Pointer to the prev item in the bucket of overflow nodes.
-
 };
 
 
@@ -60,7 +59,6 @@ class JAWS_Hash_Bucket_DLCStack
   friend class JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>;
 
 public:
-
   JAWS_Hash_Bucket_DLCStack (ACE_Allocator *alloc = 0);
   ~JAWS_Hash_Bucket_DLCStack (void);
 
@@ -90,10 +88,8 @@ public:
   ACE_Allocator *allocator_;
 
 private:
-
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *head_;
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *tail_;
-
 };
 
 
@@ -101,7 +97,6 @@ template <class EXT_ID, class INT_ID>
 class JAWS_Hash_Bucket_DLCStack_Iterator
 {
 public:
-
   JAWS_Hash_Bucket_DLCStack_Iterator (const JAWS_HASH_BUCKET_DLCSTACK &dlcstack);
 
   int first (void);
@@ -185,15 +180,12 @@ public:
   // if unbind succeeds, -1 otherwise.
 
 protected:
-
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *find_i (const EXT_ID &ext_id) const;
   // Returns the item associated with ext_id if found in list.
   // Returns NULL if not found.
 
 private:
-
   JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID> dlcstack_;
-
 };
 
 

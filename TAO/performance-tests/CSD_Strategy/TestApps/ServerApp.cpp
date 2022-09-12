@@ -386,7 +386,6 @@ ServerApp::create_poa(CORBA::ORB_ptr orb,
 bool
 ServerApp::check_results()
 {
-
   this->stats_.init(this->num_remote_clients_ +
                     this->num_collocated_clients_,
                     this->num_loops_);

@@ -42,7 +42,6 @@ namespace TAO
 class TAO_Export TAO_Tagged_Profile
 {
 public:
-
   /// Declare FW_Server_Request_Wrapper a friend
   /// This friendship makes the FW_Server_Request_Wrapper be able to
   /// clone the TAO_Tagged_Profile data member in TAO_ServerRequest.

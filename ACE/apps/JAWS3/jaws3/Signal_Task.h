@@ -11,7 +11,6 @@
 class JAWS_Export JAWS_Signal_Task
 {
 public:
-
   JAWS_Signal_Task (void);
 
   static JAWS_Signal_Task * instance (void)
@@ -22,9 +21,7 @@ public:
   ACE_Sig_Set & sigset (void) { return this->sigset_; }
 
 private:
-
   ACE_Sig_Set sigset_;
-
 };
 
 #endif /* JAWS_SIGNAL_TASK_H */

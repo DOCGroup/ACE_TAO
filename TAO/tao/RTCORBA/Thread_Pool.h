@@ -45,7 +45,6 @@ class TAO_RTCORBA_Export TAO_RT_New_Leader_Generator
   : public TAO_New_Leader_Generator
 {
 public:
-
   /// Constructor.
   TAO_RT_New_Leader_Generator (TAO_Thread_Lane &lane);
 
@@ -54,7 +53,6 @@ public:
   bool no_leaders_available (void);
 
 private:
-
   /// Lane associated with this leader generator.
   TAO_Thread_Lane &lane_;
 };
@@ -70,7 +68,6 @@ private:
 class TAO_Thread_Pool_Threads : public ACE_Task_Base
 {
 public:
-
   /// Constructor.
   TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane);
 
@@ -192,7 +189,6 @@ public:
   // @}
 
 private:
-
   /// Validate lane's priority and map it to a native value.
   void validate_and_map_priority (void);
 
@@ -256,7 +252,6 @@ class TAO_Thread_Pool_Manager;
 class TAO_RTCORBA_Export TAO_Thread_Pool
 {
 public:
-
   /// Constructor (for pools without lanes).
   TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                    CORBA::ULong id,
@@ -311,7 +306,6 @@ public:
 
   /// @name Accessors
   // @{
-
   TAO_Thread_Pool_Manager &manager () const;
   CORBA::ULong id () const;
 
@@ -326,7 +320,6 @@ public:
   // @}
 
 private:
-
   TAO_Thread_Pool_Manager &manager_;
   CORBA::ULong id_;
 
@@ -355,7 +348,6 @@ class TAO_ORB_Core;
 class TAO_RTCORBA_Export TAO_Thread_Pool_Manager
 {
 public:
-
   /// Constructor.
   TAO_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
 
@@ -411,10 +403,8 @@ public:
   // @}
 
 private:
-
   /// @name Helpers
   // @{
-
   RTCORBA::ThreadpoolId
   create_threadpool_i (CORBA::ULong stacksize,
                        CORBA::ULong static_threads,
@@ -441,7 +431,6 @@ private:
   // @}
 
 private:
-
   TAO_ORB_Core &orb_core_;
 
   THREAD_POOLS thread_pools_;

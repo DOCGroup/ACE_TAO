@@ -19,7 +19,6 @@
 // #include "HTTP_Helpers.h"
 
 
-
 JAWS_IO::JAWS_IO (void)
   : handle_ (ACE_INVALID_HANDLE),
     handler_ (0),

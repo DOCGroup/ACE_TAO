@@ -56,7 +56,6 @@ public:
   virtual void run_event_loop ();
 
 public:
-
 protected:
   CORBA::ORB_ptr orb_;
   PortableServer::POA_var root_poa_;

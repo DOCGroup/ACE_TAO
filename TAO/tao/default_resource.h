@@ -138,7 +138,6 @@ public:
    * @name Member Accessors
    */
   //@{
-
   int get_parser_names (char **&names,
                         int &number_of_names);
   enum

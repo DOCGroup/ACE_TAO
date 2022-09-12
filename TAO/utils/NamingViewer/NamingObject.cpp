@@ -21,7 +21,6 @@ CNamingObject::CNamingObject(CosNaming::Name &Name,
     m_Object (CORBA::Object::_duplicate (pObject)),
     m_Context (Context)
 {
-
 }
 
 CNamingObject::~CNamingObject (void)

@@ -9,7 +9,6 @@
 class CSD_TP_Foo_C_Export Foo_C_i : public virtual POA_Foo_C
 {
   public:
-
     Foo_C_i();
     virtual ~Foo_C_i();
 
@@ -37,7 +36,6 @@ class CSD_TP_Foo_C_Export Foo_C_i : public virtual POA_Foo_C
 
 
   private:
-
     LongVector in_values_ [10];
     unsigned count_[10];
 };

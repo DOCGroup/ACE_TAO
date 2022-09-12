@@ -149,7 +149,6 @@ namespace TAO
 
     CORBA::PolicyList *steal_inconsistent_policies ();
   private:
-
     /// Helper method to access get the connection timeout from the
     /// ORB.
     bool get_connection_timeout (ACE_Time_Value &max_wait_time);

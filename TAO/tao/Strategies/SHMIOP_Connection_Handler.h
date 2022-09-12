@@ -43,7 +43,6 @@ class TAO_Strategies_Export TAO_SHMIOP_Connection_Handler :
   public TAO_SHMIOP_SVC_HANDLER,
   public TAO_Connection_Handler
 {
-
 public:
   /// Constructor.
   TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
@@ -85,7 +84,6 @@ public:
   int add_transport_to_cache (void);
 
 protected:
-
   //@{
   /**
    * @name TAO_Connection Handler overloads
@@ -93,7 +91,6 @@ protected:
   virtual int release_os_resources (void);
   virtual int handle_write_ready (const ACE_Time_Value *timeout);
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -10,7 +10,6 @@ static int authorize_2 = 1;
 CORBA::Boolean
 SLevel1_Server_i::authorize_level1 (void)
 {
-
   /// Get a reference to the SecurityCurrent object.
   CORBA::Object_var obj =
     orb->resolve_initial_references ("SecurityCurrent");

@@ -56,7 +56,6 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                                  TAO_AV_Core* av_core,
                                  TAO_AV_FlowSpecSet &flow_spec_set)
 {
-
   TAO_AV_FlowSpecSetItor last_flowspec =  flow_spec_set.end ();
 
   for (TAO_AV_FlowSpecSetItor flow_spec = flow_spec_set.begin ();
@@ -293,7 +292,6 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                               this->acceptors_.insert (acceptor);
 
                               entry->protocol_object ()->control_object (entry->control_protocol_object ());
-
                              }
                            else
                              ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -386,7 +384,6 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
 
   if (control_flow_factory_name != 0)
     {
-
       TAO_AV_Flow_Protocol_Factory *control_flow_factory =
         av_core->get_flow_protocol_factory (control_flow_factory_name);
 

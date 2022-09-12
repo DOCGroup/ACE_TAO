@@ -28,7 +28,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Request;
     class TP_Queue_Visitor;
 

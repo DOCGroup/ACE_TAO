@@ -367,7 +367,6 @@ Client::get_high_priority_jitter (void)
 
       if (stats.sample (ACE_round (*latency)) == -1)
         ACE_DEBUG ((LM_DEBUG, "Error: stats.sample returned -1\n"));
-
     }
 
   // Return the square root of the sum of the differences computed

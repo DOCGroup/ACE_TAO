@@ -10,7 +10,6 @@ class CSD_TP_Foo_B_Export Callback_i
                               : public virtual POA_Callback
 {
   public:
-
     Callback_i();
 
     virtual ~Callback_i();
@@ -21,7 +20,6 @@ class CSD_TP_Foo_B_Export Callback_i
 
 
   private:
-
      unsigned num_callbacks_;
 };
 

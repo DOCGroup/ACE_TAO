@@ -88,7 +88,6 @@ TimeStamp_Protocol_Object::handle_input (void)
 //        }
 //      else
 //        {
-
 //      ACE_DEBUG ((LM_DEBUG,
 //                  "(%N|%l) Frame Size %d\n",
 //                  n));
@@ -232,8 +231,6 @@ ACE_STATIC_SVC_DEFINE (TimeStamp_Protocol_Factory,
                        ACE_Service_Type::DELETE_THIS |
                        ACE_Service_Type::DELETE_OBJ,
                        0)
-
-
 
 
 

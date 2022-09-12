@@ -38,7 +38,6 @@ class Content_Iterator_i :
 
   friend class Iterator_Factory_i;
 public:
-
   /// Constructor
   Content_Iterator_i (const char *filename, CORBA::ULongLong file_size);
 
@@ -54,12 +53,10 @@ public:
   virtual void destroy (void);
 
 private:
-
   /// Initialize the Content_Iterator.
   int init (void);
 
 private:
-
   /// The Addr representing the requested file.
   ACE_FILE_Addr file_;
 

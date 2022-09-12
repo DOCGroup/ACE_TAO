@@ -35,7 +35,6 @@ public:
   void dump (void);
 
 protected:
-
   virtual void parse_line (void);
   virtual int espouse_line (void);
   virtual void set_status (int);

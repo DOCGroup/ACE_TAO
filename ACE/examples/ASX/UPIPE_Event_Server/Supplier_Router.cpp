@@ -5,7 +5,6 @@
 #include "Supplier_Router.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 typedef Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY> SUPPLIER_FACTORY;

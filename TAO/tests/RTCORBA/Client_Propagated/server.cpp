@@ -102,14 +102,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
   int svc (void);
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -213,7 +211,6 @@ Task::svc (void)
         ACE_DEBUG ((LM_DEBUG,
                     "Final priority of the servant thread"
                     " = its initial priority\n"));
-
     }
   catch (const CORBA::Exception& ex)
     {

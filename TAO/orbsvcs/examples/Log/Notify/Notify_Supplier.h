@@ -44,7 +44,6 @@ public:
   // Run the test
 
 private:
-
   // = Data Members
   CORBA::ORB_var orb_;
   // The ORB that we use.

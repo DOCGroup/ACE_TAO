@@ -13,12 +13,10 @@ class Simple
   : public virtual POA_Test::Simple
 {
 public:
-
   Simple (void);
   /// Constructor
 
   virtual char * get_string (void);
-
 };
 
 #if defined(_MSC_VER)

@@ -114,7 +114,6 @@ HostProcess::find_thread_for_handle (long h)
 PeerProcess *
 HostProcess::find_peer (const ACE_CString &addr)
 {
-
   PeerProcess *pp = 0;
   Endpoint ep (addr.c_str());
   (void)this->by_addr_.find(ep,pp);

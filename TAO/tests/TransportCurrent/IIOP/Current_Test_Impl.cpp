@@ -58,7 +58,6 @@ Current_Test_Impl::test_transport_current (void)
 }
 
 
-
 void
 Current_Test_Impl::invoked_by_client (void)
 {

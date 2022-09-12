@@ -24,13 +24,11 @@
 #include "ace/Barrier.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 class Token_Strategy_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-
   Token_Strategy_Test (ACE_Token::QUEUEING_STRATEGY strategy = ACE_Token::FIFO,
                        int threads = 5, int invocations = 10);
   ~Token_Strategy_Test () override;

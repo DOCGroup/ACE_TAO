@@ -25,7 +25,6 @@ TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
 
 
   return this->common (node, base, "tk_alias");
-
 }
 
 

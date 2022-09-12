@@ -291,12 +291,10 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
       ////////////////////////////////
       // TODO make this not hardcoded
       ACE_OS::rename ("abc.xml", "loadtest.xml");
-
     } // end of pass 1
 
     if (pass2)
     {
-
       // Create a new ecf, which should load itself from loadtest.xml
       CosNotifyChannelAdmin::EventChannelFactory_var
         cosecf = TAO_Notify_EventChannelFactory_i::create(persistentPOA.in ());

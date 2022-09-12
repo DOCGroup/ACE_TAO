@@ -210,7 +210,6 @@ public:
   virtual void bytes_to_read (size_t new_value);
 
 protected:
-
   /// This is called when an outstanding accept completes.
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
 
@@ -234,6 +233,10 @@ protected:
    */
   virtual HANDLER *make_handler (void);
 
+  /// Address family used to open this object. Obtained from @a address passed
+  /// to @c open().
+  int addr_family_;
+
 private:
   /// Handle used to listen for new connections.
   ACE_HANDLE listen_handle_;
@@ -253,10 +256,6 @@ private:
 
   /// Bytes to be read with the <accept> call.
   size_t bytes_to_read_;
-
-  /// Address family used to open this object. Obtained from @a address passed
-  /// to @c open().
-  int addr_family_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

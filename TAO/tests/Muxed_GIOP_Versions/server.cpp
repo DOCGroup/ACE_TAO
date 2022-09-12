@@ -72,7 +72,6 @@ public:
   virtual int svc ();
 
 private:
-
   /// The orb
   CORBA::ORB_var orb_;
 };
@@ -98,7 +97,6 @@ private:
   // Validate the connection
 
 private:
-
   /// The server.
   Simple_Server_var server_;
 
@@ -280,7 +278,6 @@ SelfClient::svc (void)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   "(%P|%t)  Not found it\n"));
-
                     }
                   else
                     {
@@ -297,7 +294,6 @@ SelfClient::svc (void)
 
           // Just make a call
           this->server_->test_method (i);
-
         }
     }
   catch (const CORBA::Exception& ex)

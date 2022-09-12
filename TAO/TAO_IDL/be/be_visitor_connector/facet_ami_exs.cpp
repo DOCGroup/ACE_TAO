@@ -41,7 +41,6 @@ be_visitor_facet_ami_exs::visit_component (be_component *node)
 int
 be_visitor_facet_ami_exs::visit_provides (be_provides *node)
 {
-
   this->iface_ =
     dynamic_cast<be_interface*> (node->provides_type ());
 
@@ -70,7 +69,6 @@ be_visitor_facet_ami_exs::visit_provides (be_provides *node)
 int
 be_visitor_facet_ami_exs::visit_attribute (be_attribute *node)
 {
-
   be_operation get_op (node->field_type (),
                          AST_Operation::OP_noflags,
                          node->name (),
@@ -230,7 +228,6 @@ be_visitor_facet_ami_exs::init ()
   else
     this->sync_ = false;
 
-
 }
 int
 be_visitor_facet_ami_exs::gen_reply_handler_class ()
@@ -327,7 +324,6 @@ be_visitor_facet_ami_exs::gen_reply_handler_class ()
 int
 be_visitor_facet_ami_exs::gen_facet_executor_class ()
 {
-
   this->for_reply_handler_ = false;
 
   const char *suffix = "_exec_i";
@@ -386,7 +382,6 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
                         ACE_TEXT ("::gen_facet_executor_class - ")
                         ACE_TEXT ("traverse_inheritance_graph() on ")
                         ACE_TEXT ("interface failed\n")));
-
       }
 
   ACE_CString scope_str (scope_name, nullptr, false);
@@ -407,7 +402,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
       << ScopeAsDecl (this->node_->defined_in ())->full_name ()
       << "::CCM_" << this->node_->local_name ()
       << "_Context::_narrow (ctx);" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (this->context_.in ()))"
+      << "if (::CORBA::is_nil (this->context_.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
@@ -451,7 +446,6 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
 int
 be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
 {
-
   os_ << be_nl_2
       << "void" << be_nl
       << this->iface_->local_name () << "_reply_handler::"
@@ -537,7 +531,6 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
 int
 be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 {
-
   // do not handle not sendc operations.
   if (ACE_OS::strstr (node->local_name()->get_string (), "sendc_")== nullptr)
      return 0;
@@ -647,7 +640,6 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 int
 be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
 {
-
    if (node->is_sendc_ami())
      return 0;
 

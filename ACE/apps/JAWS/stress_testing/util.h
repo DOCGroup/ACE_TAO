@@ -3,9 +3,7 @@
 #ifndef _D_URL
 #define _D_URL
 class URL {
-
 public:
-
   URL(char *buffer);
 
   char *get_protocol();
@@ -26,7 +24,6 @@ int copier(connection in);
 #define INCOMING_FILE_NAME "/tmp/sumedh.web.inc"
 #define TEMPORARY_FILE_NAME "/tmp/sumedh.web.tmp"
 #endif
-
 
 
 

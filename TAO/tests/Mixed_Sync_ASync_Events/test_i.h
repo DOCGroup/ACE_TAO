@@ -117,6 +117,5 @@ private:
 };
 
 
-
 #endif /* TAO_MSAE_TEST_I_H */
 

@@ -112,7 +112,6 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
 void
 Content_Iterator_i::destroy (void)
 {
-
   (void) this->file_io_.close ();
 
   // Get the POA used when activating the Content_Iterator object.

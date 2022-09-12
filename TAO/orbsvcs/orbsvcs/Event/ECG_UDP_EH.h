@@ -43,7 +43,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_EH :
 , public TAO_ECG_Handler_Shutdown
 {
 public:
-
   /// Initialization and termination methods.
   //@{
   /// Constructor.
@@ -81,7 +80,6 @@ public:
   ACE_SOCK_Dgram &dgram ();
 
 private:
-
   /// The datagram used to receive the data.
   ACE_SOCK_Dgram dgram_;
 

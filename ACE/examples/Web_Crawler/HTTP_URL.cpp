@@ -6,7 +6,6 @@
 #include "HTTP_URL.h"
 
 
-
 const ACE_URL_Addr &
 HTTP_URL::url_addr () const
 {

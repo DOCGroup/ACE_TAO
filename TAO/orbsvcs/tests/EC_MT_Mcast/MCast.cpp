@@ -26,7 +26,6 @@ static const int data_items = 60000;
 void *
 run_orb_within_thread (void *)
 {
-
   while (! terminate_threads)
     {
       try

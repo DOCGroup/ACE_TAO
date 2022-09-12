@@ -25,7 +25,6 @@
 #include "ace/OS_NS_time.h"
 
 
-
 static int concurrent_threads = 1;
 static int number_of_handles = static_cast<int> (ACE_Reactor::instance ()->size ());
 static int number_of_handles_to_signal = 1;

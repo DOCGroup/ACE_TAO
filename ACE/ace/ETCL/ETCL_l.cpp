@@ -1514,7 +1514,6 @@ YY_BUFFER_STATE b;
   }
 
 
-
 #ifdef YY_USE_PROTOS
 void yy_init_buffer( YY_BUFFER_STATE b, FILE *file )
 #else
@@ -1735,7 +1734,6 @@ char msg[];
   (void) ACE_OS::fprintf( stderr, "%s\n", msg );
   ACE_OS::exit( YY_EXIT_FAILURE );
   }
-
 
 
 /* Redefine yyless() so it works in section 3 code. */

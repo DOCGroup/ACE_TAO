@@ -103,10 +103,8 @@ Worker::svc (void)
 {
   try
     {
-
       for (int i = 0; i < this->niterations_; ++i)
         {
-
   // Minimum CORBA does not define Object::_request, so we're just
   // skipping the DII part in those cases.
 #if (!defined(TAO_HAS_MINIMUM_CORBA) || (TAO_HAS_MINIMUM_CORBA == 0))
@@ -249,7 +247,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       else
         {
-
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client (%P|%t) Invoking server->self_test()\n")));
 
           // Self-test the server side

@@ -308,7 +308,6 @@ protected:
 
   /// The event channel object reference
   RtecEventChannelAdmin::EventChannel_var event_channel_;
-
 };
 
 #if defined (__ACE_INLINE__)

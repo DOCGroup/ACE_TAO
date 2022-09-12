@@ -49,7 +49,6 @@ private:
   ////////////////
   // Data members
  private:
-
   CORBA::ORB_var orb_;
 
   int argc_;
@@ -296,7 +295,6 @@ int FTClientMain::pass (
           }
           echo = 0;
           break;
-
         }
         case '>':
         {

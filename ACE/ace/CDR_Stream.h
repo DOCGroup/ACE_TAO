@@ -1090,7 +1090,6 @@ public:
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 protected:
-
   /// The start of the chain of message blocks, even though in the
   /// current version the chain always has length 1.
   ACE_Message_Block start_;
@@ -1371,7 +1370,6 @@ protected:
   ACE_CDR::Octet minor_version (ACE_InputCDR& input);
   ACE_CDR::Octet major_version (ACE_OutputCDR& output);
   ACE_CDR::Octet minor_version (ACE_OutputCDR& output);
-
 };
 
 // @@ These operators should not be inlined since they force SString.h

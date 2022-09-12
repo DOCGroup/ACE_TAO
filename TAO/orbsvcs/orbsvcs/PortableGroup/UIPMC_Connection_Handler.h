@@ -50,9 +50,7 @@ class TAO_PortableGroup_Export TAO_UIPMC_Connection_Handler :
   public TAO_UIPMC_SVC_HANDLER,
   public TAO_Connection_Handler
 {
-
 public:
-
   TAO_UIPMC_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor. arg parameter is used by the Acceptor to pass the
@@ -106,7 +104,6 @@ public:
   // UIPMC Additions - End
 
 protected:
-
   // UIPMC Additions - Begin
 
   // This is always the remote address
@@ -130,7 +127,6 @@ protected:
   int set_tos (int tos);
 
 private:
-
   /// Stores the type of service value.
   int dscp_codepoint_;
 

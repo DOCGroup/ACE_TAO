@@ -87,7 +87,6 @@ public:
   void add_endpoint (TAO_DIOP_Endpoint *endp);
 
 protected:
-
   /// Template methods. Please see tao/Profile.h for documentation.
   virtual int decode_profile (TAO_InputCDR& cdr);
   virtual void parse_string_i (const char *string);
@@ -96,7 +95,6 @@ protected:
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
 
 protected:
-
   /**
    * Head of this profile's list of endpoints.  This endpoint is not
    * dynamically allocated because a profile always contains at least

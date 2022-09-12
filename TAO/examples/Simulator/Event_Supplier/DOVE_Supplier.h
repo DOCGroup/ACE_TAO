@@ -30,7 +30,6 @@
 class DOVE_Supplier
 {
 public:
-
   /// Constructor.
   DOVE_Supplier ();
 
@@ -62,7 +61,6 @@ public:
   void use_prev_connection ();
 
 private:
-
   // The following Supplier is needed because DOVE_Supplier has not
   // inherited from PushSupplier.
 
@@ -71,20 +69,17 @@ private:
     friend class DOVE_Supplier;
 
   public:
-
     virtual void disconnect_push_supplier (void)
     {
     }
 
   private:
-
     Internal_DOVE_Supplier (DOVE_Supplier* impl_ptr);
 
     DOVE_Supplier* impl_ptr_;
   };
 
 private:
-
   struct Connection_Params
   {
     const char * es_name_;

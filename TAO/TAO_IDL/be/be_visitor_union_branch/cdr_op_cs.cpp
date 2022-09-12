@@ -510,7 +510,6 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
               << "_tao_union." << f->local_name () << " (_tao_union_tmp.in ());";
-
         }
       else if (pt == AST_PredefinedType::PT_pseudo)
         {
@@ -519,7 +518,6 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
               << "_tao_union." << f->local_name () << " (_tao_union_tmp.in ());";
-
         }
       else if (pt == AST_PredefinedType::PT_value)
         {
@@ -528,7 +526,6 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
               << "_tao_union." << f->local_name () << " (_tao_union_tmp);";
-
         }
       else if (pt == AST_PredefinedType::PT_char)
         {

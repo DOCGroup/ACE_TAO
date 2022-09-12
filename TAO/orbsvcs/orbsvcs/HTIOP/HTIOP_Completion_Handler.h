@@ -34,7 +34,6 @@ namespace TAO
 {
   namespace HTIOP
   {
-
     /**
      * @class Completion_Handler
      *
@@ -52,7 +51,6 @@ namespace TAO
 
     class HTIOP_Export Completion_Handler : public COMPLETION_BASE
     {
-
     public:
       Completion_Handler (ACE_Thread_Manager* t = 0);
       /// Constructor.

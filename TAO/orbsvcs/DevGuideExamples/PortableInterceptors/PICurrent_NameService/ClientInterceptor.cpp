@@ -84,7 +84,6 @@ ClientInterceptor::send_request (
   // reset recursion test
   flag <<= 0;
   pic->set_slot(slot,flag);
-
 }
 
 void

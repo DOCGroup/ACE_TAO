@@ -66,7 +66,6 @@ RTCP_Packet::is_valid (char is_first)
     }
 
   return 1;
-
 }
 
 /*
@@ -143,7 +142,6 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
       index++;
       ACE_OS::memcpy(this->reason_, &buffer[index], this->reason_length_);
       index+=this->reason_length_;
-
     }
   else
     this->reason_length_ = 0;

@@ -112,7 +112,6 @@ public:
                               char *&host);
 
 protected:
-
   /**
    * Helper method
    * Clear out 'addr' & 'specified_hostname' and initialize them based
@@ -173,7 +172,6 @@ protected:
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
 protected:
-
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
   ACE_INET_Addr *addrs_;
@@ -214,7 +212,6 @@ protected:
 private:
   // @@ Frank: From DIOP_Acceptor.h
   TAO_DIOP_Connection_Handler *connection_handler_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

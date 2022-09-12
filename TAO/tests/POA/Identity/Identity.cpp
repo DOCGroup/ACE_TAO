@@ -18,7 +18,6 @@
 class test_i : public POA_test
 {
 public:
-
   test_i (PortableServer::POA_ptr poa)
     : poa_ (PortableServer::POA::_duplicate (poa))
     {
@@ -30,7 +29,6 @@ public:
     }
 
 protected:
-
   PortableServer::POA_var poa_;
 };
 
@@ -483,7 +481,6 @@ test_poas (CORBA::ORB_ptr orb,
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);

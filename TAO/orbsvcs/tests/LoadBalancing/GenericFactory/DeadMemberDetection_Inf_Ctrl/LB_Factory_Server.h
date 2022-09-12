@@ -28,7 +28,6 @@
 class LB_Factory_Server
 {
 public:
-
   /// Constructor
   LB_Factory_Server (int argc, ACE_TCHAR ** argv);
 
@@ -47,14 +46,12 @@ public:
   CORBA::ORB_ptr orb (void);
 
 private:
-
   /// Create the Object Group using the Load Manager Reference.
   int create_object_group (const char *loc_1, const char *loc_2, const char *loc_3);
 
   int write_ior_to_file (const char * ior, const char * ior_file);
 
 private:
-
   /// Load Manager
   CosLoadBalancing::LoadManager_var lm_;
 

@@ -44,7 +44,6 @@ LB_Factory_Server::run (void)
       return -1;
     }
   return 1;
-
 }
 
 
@@ -66,7 +65,6 @@ LB_Factory_Server::destroy (void)
       return -1;
     }
   return 1;
-
 }
 
 int
@@ -195,6 +193,5 @@ LB_Factory_Server::init (void)
     }
 
   return 1;
-
 }
 
