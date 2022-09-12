@@ -8,7 +8,6 @@
 ACEXML_Entity_Manager::ACEXML_Entity_Manager (void)
   : entities_ (0)
 {
-
 }
 
 ACEXML_Entity_Manager::~ACEXML_Entity_Manager (void)

@@ -31,7 +31,6 @@ HTML_Body_Iterator::next (ACE_CString &url)
        buf != 0;
        buf = this->url_.stream ().recv (len))
     {
-
       buffer.set (buf, BUFSIZ, 1);
 
       href_index = ACE_Utils::truncate_cast<int> (buffer.find ("HREF"));
@@ -76,7 +75,6 @@ HTML_Body_Iterator::next (ACE_CString &url)
         }
     }
   return 0;
-
 }
 
 HTTP_Header_Iterator::HTTP_Header_Iterator (URL &url)

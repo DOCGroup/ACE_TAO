@@ -101,9 +101,6 @@ Identity_Server::init (int argc,
 int
 Identity_Server::register_groups (void)
 {
-
-
-
   // Contact the <Object_Group_Factory> to create 2
   // <Object_Group>s, one random and one rr.
   CORBA::ORB_var orb = orb_manager_.orb ();
@@ -217,7 +214,6 @@ Identity_Server::create_objects (size_t number_of_objects,
 
       // Bind the servant in the random <Object_Group>.
       group->bind (member);
-
     }
 }
 

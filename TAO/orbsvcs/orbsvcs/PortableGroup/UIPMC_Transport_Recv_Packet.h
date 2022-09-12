@@ -26,7 +26,6 @@ class TAO_UIPMC_Mcast_Transport;
 
 namespace TAO_PG
 {
-
   /**
    * @class UIPMC_Recv_Packet_Cleanup_Guard
    *
@@ -97,7 +96,6 @@ namespace TAO_PG
                                  ACE_SYNCH_NULL_MUTEX> Fragments_Map;
     Fragments_Map fragments_;
   };
-
 } // namespace TAO_PG
 
 TAO_END_VERSIONED_NAMESPACE_DECL

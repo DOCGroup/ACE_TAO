@@ -33,7 +33,6 @@ namespace TAO
 {
   namespace SL3
     {
-
       /**
        * @class olicyFactory
        *
@@ -55,7 +54,6 @@ namespace TAO
          * sub-classes.
          */
         //@{
-
         /// Construct a Test::Policy object as a test.
         CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                                  const CORBA::Any & value) override;
@@ -63,7 +61,6 @@ namespace TAO
         //@}
 
       };
-
   }  // End SL3 namespace.
 }  // End TAO namespace.
 

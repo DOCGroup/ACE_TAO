@@ -27,7 +27,6 @@ namespace ACE
   {
     namespace HTTP
       {
-
         /**
         * @class ACE_HTTP_StreamBuffer
         *
@@ -117,7 +116,6 @@ namespace ACE
 
               void set_interceptor (StreamBuffer::interceptor_type& interceptor);
           };
-
       }
   }
 

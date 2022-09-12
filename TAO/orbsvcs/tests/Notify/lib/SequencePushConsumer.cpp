@@ -5,7 +5,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 TAO_Notify_Tests_SequencePushConsumer_Traits::TAO_Notify_Tests_SequencePushConsumer_Traits (void)
   :type_ (CosNotifyChannelAdmin::SEQUENCE_EVENT)
 {

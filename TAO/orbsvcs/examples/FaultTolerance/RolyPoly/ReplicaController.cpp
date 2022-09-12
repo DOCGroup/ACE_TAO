@@ -63,7 +63,6 @@ associate_state (CORBA::ORB_ptr orb, CORBA::Any const& state)
 
 
     pic->set_slot (state_slot_id (), state);
-
   }
   catch (const CORBA::Exception& ex)
   {
@@ -492,7 +491,6 @@ void
 ReplicaController::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
-
 }
 
 void

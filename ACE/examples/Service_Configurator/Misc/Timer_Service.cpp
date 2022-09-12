@@ -3,7 +3,6 @@
 #include "ace/Log_Msg.h"
 
 
-
 Timer_Service_1::Timer_Service_1 (void)
 {
   ACE_OS::strcpy (this->name_,

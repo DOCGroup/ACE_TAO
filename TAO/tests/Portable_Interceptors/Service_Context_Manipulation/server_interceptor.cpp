@@ -32,7 +32,6 @@ void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -137,7 +136,6 @@ void
 Echo_Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var operation = ri->operation ();
 
 #if 0

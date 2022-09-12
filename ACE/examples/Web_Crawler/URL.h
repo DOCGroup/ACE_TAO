@@ -66,7 +66,6 @@ public:
   virtual void content_type (const ACE_CString &);
 
 
-
 private:
   /// Reply status of the URL.
   URL_Status reply_status_;

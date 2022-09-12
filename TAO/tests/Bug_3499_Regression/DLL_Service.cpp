@@ -2,12 +2,10 @@
 
 ACE_DLL_Service::ACE_DLL_Service (void)
 {
-
 }
 
 ACE_DLL_Service::~ACE_DLL_Service (void)
 {
-
 }
 
 int ACE_DLL_Service::init (int, ACE_TCHAR *[])

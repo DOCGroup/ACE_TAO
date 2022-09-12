@@ -25,14 +25,11 @@
  */
 class Signal_Handler : public ACE_Event_Handler
 {
-
 public:
-
   Signal_Handler (void);
 
   /// Override this method to implement graceful shutdown.
   int handle_signal(int signum, siginfo_t*,ucontext_t*);
-
 };
 
 
@@ -46,9 +43,7 @@ public:
  */
 class Sender_Callback : public TAO_AV_Callback
 {
-
 public:
-
   /**
    * Called when the sender has finished reading the file and wants
    * to close down the connection. Also called when the distributer

@@ -45,7 +45,6 @@ namespace CORBA
 class TAO_PortableGroup_Export TAO_PortableGroup_Acceptor_Registry
 {
 public:
-
   /**
    * @struct Entry
    *
@@ -79,7 +78,6 @@ public:
   typedef ACE_Unbounded_Queue_Iterator<Entry> Acceptor_Registry_Iterator;
 
 protected:
-
   /// Helper function to open a group acceptor.
   void open_i (const TAO_Profile* profile,
                TAO_ORB_Core &orb_core,
@@ -90,7 +88,6 @@ protected:
             Entry *&entry);
 
 private:
-
   // The acceptor registry should not be copied.
   TAO_PortableGroup_Acceptor_Registry (
     const TAO_PortableGroup_Acceptor_Registry&);

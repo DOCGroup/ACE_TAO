@@ -151,7 +151,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           CORBA::Policy_ptr policy = policies[i];
           policy->destroy ();
-
         }
 
 

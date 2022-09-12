@@ -226,7 +226,6 @@ postfix_action (TAO_Reconfig_Scheduler_Entry & /* rse */)
 }
 
 
-
 /////////////////////////
 // TAO_RSE_DFS_Visitor //
 /////////////////////////

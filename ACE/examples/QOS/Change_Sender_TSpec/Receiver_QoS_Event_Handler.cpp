@@ -130,9 +130,7 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
 
 
 return 0;
-
 }
-
 
 
 

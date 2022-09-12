@@ -21,7 +21,6 @@
  */
 class PMC_Ruser : public PM_Client
 {
-
 public:
   PMC_Ruser (void);
   virtual void process (void);

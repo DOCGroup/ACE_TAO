@@ -14,7 +14,6 @@ class Object_Factory_i
   : public virtual POA_Two_Objects_Test::Object_Factory
 {
 public:
-
   Object_Factory_i (CORBA::ORB_ptr orb,
                     CORBA::ULong len);
 

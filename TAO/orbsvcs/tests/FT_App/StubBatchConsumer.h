@@ -68,7 +68,6 @@ public:
 
 
 public:
-
     ////////////////
     // CORBA methods
 
@@ -93,7 +92,6 @@ private:
   /////////////////////////
   // Implementation methods
 private:
-
   ///////////////
   // Data Members
 private:

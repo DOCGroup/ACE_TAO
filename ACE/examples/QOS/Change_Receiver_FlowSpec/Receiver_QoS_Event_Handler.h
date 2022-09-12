@@ -50,4 +50,3 @@ private:
 #endif  /* RECEIVER_QOS_EVENT_HANDLER_H */
 
 
-

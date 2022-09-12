@@ -736,7 +736,6 @@ Log::parse_connection_handler_ctor_i (void)
   // char *c = ACE_OS::strchr (this->info_, '[') + 1;
   // size_t handle = ACE_OS::strtol (c, 0, 10);
   // ACE_DEBUG ((LM_DEBUG,"%d: constructed new handler for %d\n", offset_, handle));
-
 }
 
 void

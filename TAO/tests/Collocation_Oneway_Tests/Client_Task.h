@@ -14,7 +14,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-
 enum ClientSyncModeEnum {
    MODE_NONE,
    MODE_TRANSPORT,

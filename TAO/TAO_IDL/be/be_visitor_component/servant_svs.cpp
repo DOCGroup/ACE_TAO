@@ -119,7 +119,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
           << be_uidt_nl
           << "{" << be_idt_nl;
 
-      os_ << "for ( ::CORBA::ULong i = 0; i < descr.length (); ++i)"
+      os_ << "for (::CORBA::ULong i = 0; i < descr.length (); ++i)"
           << be_idt_nl
           << "{" << be_idt_nl
           << "const char * descr_name = descr[i]->name ();"
@@ -674,7 +674,7 @@ be_visitor_servant_svs::gen_provides_top ()
       << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
       << "::_duplicate (this->executor_.in ());" << be_uidt << be_nl_2;
 
-  os_ << "if ( ::CORBA::is_nil (executor.in ()))"
+  os_ << "if (::CORBA::is_nil (executor.in ()))"
       << be_idt_nl
       << "{"<< be_idt_nl
       << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl

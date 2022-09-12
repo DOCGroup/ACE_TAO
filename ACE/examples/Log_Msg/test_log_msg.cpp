@@ -21,7 +21,6 @@
 #include "ace/OS_NS_stdlib.h"
 
 
-
 static void
 cleanup (void)
 {

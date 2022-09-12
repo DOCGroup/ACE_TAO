@@ -179,7 +179,6 @@ Client_Task::svc (void)
     }
 
   return result;
-
 }
 
 int

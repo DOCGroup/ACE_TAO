@@ -17,7 +17,6 @@
 #include "ace/Active_Map_Manager.h"
 
 
-
 // Simple map manager.
 using LAZY_MAP = ACE_Map_Manager<int, int, ACE_Null_Mutex>;
 

@@ -65,7 +65,6 @@ public:
 
   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
     {
-
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"
                   "Testing proper exception handling ...\n"));

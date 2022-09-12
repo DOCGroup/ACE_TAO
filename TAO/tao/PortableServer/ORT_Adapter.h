@@ -93,7 +93,6 @@ namespace TAO
 
  typedef
   ACE_Array_Base<PortableInterceptor::ObjectReferenceTemplate*> ORT_Array;
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -134,7 +134,6 @@ namespace IORTable
 {
   // satisfy the native type requirement for the asnyc locate interface
   typedef const TAO_AMH_Locate_ResponseHandler_var &Locate_ResponseHandler;
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

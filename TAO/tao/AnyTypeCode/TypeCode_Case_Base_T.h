@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Case
      *
@@ -146,7 +145,6 @@ namespace TAO
     };
 
     typedef Case<CORBA::String_var, CORBA::TypeCode_var> Case_Dynamic;
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 
@@ -169,7 +167,6 @@ namespace ACE
       return p->clone ();
     }
   };
-
 } // End namespace ACE.
 
 ACE_END_VERSIONED_NAMESPACE_DECL

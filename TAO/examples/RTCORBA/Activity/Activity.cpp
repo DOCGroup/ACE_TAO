@@ -174,7 +174,6 @@ Activity::activate_job_list (void)
                   job_name.c_str ()));
 
       active_job_count_++;
-
     } /* while */
 }
 

@@ -15,7 +15,6 @@ class AST_Component;
 class FE_ComponentHeader : public FE_InterfaceHeader
 {
 public:
-
   FE_ComponentHeader (UTL_ScopedName *n,
                       UTL_ScopedName *base_component,
                       UTL_NameList *supports,

@@ -195,7 +195,6 @@ template <class T> class ACE_Cleanup_Adapter;
  */
 class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
 {
-
 public:
   ACE_ALLOC_HOOK_DECLARE;
 

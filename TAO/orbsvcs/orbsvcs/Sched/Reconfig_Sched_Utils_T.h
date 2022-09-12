@@ -104,7 +104,6 @@ protected:
 };
 
 
-
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_RSE_DFS_Visitor :
   public TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>

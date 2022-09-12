@@ -30,7 +30,6 @@ Server_Task::svc (void)
   this->event_.wait ();
 
 
-
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Start doing some work....\n"));
 
 

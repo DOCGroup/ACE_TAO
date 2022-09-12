@@ -76,7 +76,6 @@ public:
 
   /// The command line arguments.
   ACE_TCHAR **argv_;
-
 };
 
 

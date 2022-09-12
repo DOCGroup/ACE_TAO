@@ -21,7 +21,6 @@
  */
 class be_visitor_interface_smart_proxy_cs : public be_visitor_interface
 {
-
 public:
   /// constructor
   be_visitor_interface_smart_proxy_cs (be_visitor_context *ctx);

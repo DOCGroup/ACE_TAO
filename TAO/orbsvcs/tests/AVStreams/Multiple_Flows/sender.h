@@ -117,5 +117,4 @@ private:
 
   /// Protocol object corresponding to the transport protocol selected.
   ProtocolObject_Set protocol_object_;
-
 };

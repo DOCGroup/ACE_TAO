@@ -36,7 +36,6 @@ protected:
 
 
 
-
 //class NodeImpl : public virtual POA_demo::value::idl::Node
 //class NodeFactory
 //  : public virtual CORBA::ValueFactoryBase

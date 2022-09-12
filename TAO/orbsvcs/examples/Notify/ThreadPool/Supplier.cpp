@@ -1,7 +1,6 @@
 #include "Supplier.h"
 
 
-
 #include "tao/ORB_Core.h"
 
 TAO_Notify_ThreadPool_Supplier::TAO_Notify_ThreadPool_Supplier  (TAO_Notify_ORB_Objects& orb_objects)

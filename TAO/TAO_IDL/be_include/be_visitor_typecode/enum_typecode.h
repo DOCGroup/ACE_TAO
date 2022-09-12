@@ -17,7 +17,6 @@
 
 namespace TAO
 {
-
   /**
    * @class be_visitor_enum_typecode
    *
@@ -46,7 +45,6 @@ namespace TAO
     /// Generate structure field related TypeCode code.
     int visit_members (be_enum * node);
   };
-
 }
 
 #endif  /* TAO_BE_VISITOR_ENUM_TYPECODE_H */

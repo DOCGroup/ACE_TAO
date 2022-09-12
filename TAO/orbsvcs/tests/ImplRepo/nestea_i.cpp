@@ -10,7 +10,6 @@
 const size_t MAX_UINT32_STR_LEN = 11;  // Largest UINT32 is 8589934591 + NUL is 11 characters
 
 
-
 Nestea_i::Nestea_i (CORBA::ORB_ptr orb, const ACE_TCHAR *filename)
 : cans_ (0)
 {

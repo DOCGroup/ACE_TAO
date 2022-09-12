@@ -233,7 +233,6 @@ namespace ACE
               Response response_;
               SessionHolder* session_;
           };
-
       }
   }
 

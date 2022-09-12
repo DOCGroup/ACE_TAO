@@ -36,7 +36,6 @@ class TAO_Notify_Method_Request_Queueable;
 
 namespace TAO_Notify
 {
-
 class Routing_Slip_Persistence_Manager;
 
 // Forward declarations of TAO_Notify classes/pointers/collections
@@ -232,7 +231,6 @@ private:
 
   static Routing_Slip_Queue persistent_queue_;
 };
-
 } // namespace
 
 TAO_END_VERSIONED_NAMESPACE_DECL

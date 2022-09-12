@@ -19,7 +19,6 @@ namespace ACE
 {
   namespace HTBP
   {
-
     /**
      * @class Environment
      *
@@ -31,7 +30,6 @@ namespace ACE
     class HTBP_Export Environment
     {
     public:
-
       /// Constructor
       Environment (ACE_Configuration *config = 0,
                    int using_registry = 0,
@@ -97,7 +95,6 @@ namespace ACE
 
       /// We created the config instance, so we must clean it up
       bool own_config_;
-
     };
   }
 }

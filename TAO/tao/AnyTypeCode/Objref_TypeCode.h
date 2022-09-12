@@ -93,7 +93,6 @@ namespace TAO
       /// Base attributes (@c id and @c name).
       Base_Attributes<StringType> attributes_;
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

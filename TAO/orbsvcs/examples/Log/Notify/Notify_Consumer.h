@@ -71,8 +71,6 @@ private:
   DsNotifyLogAdmin::NotifyLogFactory_var notify_log_factory_;
 
   CosNotifyChannelAdmin::ProxyPushSupplier_var proxy_supplier_;
-
-
 };
 
 #endif /* NOTIFY_CONSUMER_H */

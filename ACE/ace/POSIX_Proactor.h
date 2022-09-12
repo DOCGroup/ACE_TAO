@@ -323,7 +323,6 @@ class ACE_AIOCB_Notify_Pipe_Manager;
  */
 class ACE_Export ACE_POSIX_AIOCB_Proactor : public ACE_POSIX_Proactor
 {
-
   /// Handler needs to call application specific code.
   friend class ACE_AIOCB_Notify_Pipe_Manager;
 
@@ -503,7 +502,6 @@ protected:
  */
 class ACE_Export ACE_POSIX_SIG_Proactor : public ACE_POSIX_AIOCB_Proactor
 {
-
   /**
    * This class does the registering of Asynch Operations with the
    * Proactor which is necessary in the SIG strategy, because we need

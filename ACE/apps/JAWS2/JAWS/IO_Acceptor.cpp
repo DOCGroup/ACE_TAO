@@ -4,7 +4,6 @@
 #include "ace/OS_NS_sys_socket.h"
 
 
-
 JAWS_IO_Acceptor::JAWS_IO_Acceptor (void)
 {
 }
@@ -91,7 +90,6 @@ JAWS_IO_Synch_Acceptor::get_handle (void)
 {
   return this->acceptor_.get_handle ();
 }
-
 
 
 JAWS_IO_Asynch_Acceptor::JAWS_IO_Asynch_Acceptor (void)

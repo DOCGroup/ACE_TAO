@@ -16,7 +16,6 @@
 #include "ace/High_Res_Timer.h"
 
 
-
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 
@@ -76,7 +75,6 @@ using STATIC_ALLOCATOR = ACE_Cached_Allocator<MEMBLOCK, ACE_MT_SYNCH::NULL_MUTEX
 static int
 stdspeed_test (ACE_UINT32 loops)
 {
-
   double tt    = 0.0,
     ut    = 0.0,
     utus  = 0.0,

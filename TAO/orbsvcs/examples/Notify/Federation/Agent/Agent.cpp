@@ -190,7 +190,6 @@ private:
 
   ProxyID supplier_id_;
   StructuredProxyPushSupplier_var supplier_;
-
 };
 
 int

@@ -105,7 +105,6 @@ Load_Balancing_Service::init (int argc,
 }
 
 
-
 int
 Load_Balancing_Service::run (void)
 {

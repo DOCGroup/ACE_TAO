@@ -78,7 +78,6 @@ void CSelectNSDialog::OnAdd()
   ACE_TCHAR* pIOR = new ACE_TCHAR[Value.length() + 1];
   ACE_OS::strcpy(pIOR, Value.c_str());
   m_Servers.SetItemData(pos, (DWORD)pIOR);
-
 }
 
 void CSelectNSDialog::OnRemove()

@@ -55,7 +55,6 @@ TAO_Endpoint_Acceptor_Filter_Factory::~TAO_Endpoint_Acceptor_Filter_Factory(void
 }
 
 
-
 ACE_FACTORY_DEFINE (TAO_EndpointPolicy, TAO_Endpoint_Acceptor_Filter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Endpoint_Acceptor_Filter_Factory,
                        ACE_TEXT ("TAO_Acceptor_Filter_Factory"),

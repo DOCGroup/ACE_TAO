@@ -732,7 +732,6 @@ int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
 
   // loop through and build up a string
   for (index=0; index < srcOid->len; index++) {
-
     // convert data element to a string
     if (ACE_OS::sprintf( szNumber,"%lu", srcOid->ptr[index]) == -1)
       return -1;

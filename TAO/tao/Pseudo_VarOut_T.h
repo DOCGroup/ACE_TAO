@@ -80,7 +80,6 @@ public:
   // TAO extension.
   _retn_type    ptr () const;
 private:
-
   // Unimplemented - prevents widening assignment.
   TAO_Pseudo_Var_T (const TAO_Base_var &);
   void operator= (const TAO_Base_var &);

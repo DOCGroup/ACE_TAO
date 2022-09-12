@@ -31,7 +31,6 @@ class Filter_StructuredPushSupplier;
  */
 class FilterClient
 {
-
  public:
   /// Constructor
   FilterClient (void);

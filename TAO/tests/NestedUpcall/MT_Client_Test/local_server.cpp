@@ -75,7 +75,6 @@ MT_Server::read_ior (ACE_TCHAR *filename)
 }
 
 
-
 int
 MT_Server::parse_args (void)
 {

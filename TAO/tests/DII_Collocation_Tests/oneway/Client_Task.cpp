@@ -203,8 +203,6 @@ Client_Task::svc (void)
       req = obj->_request ("shutdown");
 
       req->send_oneway ();
-
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -220,7 +218,6 @@ Client_Task::svc (void)
     }
 
   return 0;
-
 }
 
 CORBA::ULong

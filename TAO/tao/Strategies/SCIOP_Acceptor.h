@@ -161,7 +161,6 @@ protected:
                              CORBA::Short priority);
 
 protected:
-
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
   ACE_INET_Addr *addrs_;

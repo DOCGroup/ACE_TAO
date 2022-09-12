@@ -33,7 +33,6 @@ namespace TAO
 {
   namespace HTIOP
   {
-
     /**
      * @class HTIOP_Connection_Handler
      *

@@ -382,7 +382,6 @@ Sender::pace_data (void)
 
           // Reset the message block.
           this->mb_.reset ();
-
         } // end while
 
          // File reading is complete, destroy the stream.

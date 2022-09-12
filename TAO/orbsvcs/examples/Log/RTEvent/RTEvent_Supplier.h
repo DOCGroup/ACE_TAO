@@ -43,7 +43,6 @@ public:
   // The skeleton methods.
 
 private:
-
   // = Data Members
   CosNaming::NamingContext_var naming_context_;
   // Handle to the name service.

@@ -430,7 +430,6 @@ public:
 private:
   /// The name to look up in the naming service.
   char *name_;
-
 };
 
 /**

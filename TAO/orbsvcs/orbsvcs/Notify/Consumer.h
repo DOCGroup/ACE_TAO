@@ -40,7 +40,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Consumer
   : public TAO_Notify_Peer
   , public ACE_Event_Handler    // to support timer
 {
-
 public:
   /// Status returned from dispatch attempts
   enum DispatchStatus {

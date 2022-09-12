@@ -106,7 +106,6 @@ TAO::TypeCode::Objref<StringType,
     {
       return adapter->create_local_interface_tc (this->attributes_.id (),
                                                  ""  /* empty name */);
-
     }
   else if (this->kind_ == CORBA::tk_native)
     {

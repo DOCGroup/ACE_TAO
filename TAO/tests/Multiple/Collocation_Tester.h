@@ -27,7 +27,6 @@ struct Quote
 class Collocation_Tester
 {
 public:
-
   // -- Constructor/Destructors --
   Collocation_Tester (CORBA::Object_ptr object);
 
@@ -39,7 +38,6 @@ public:
 
 
 private:
-
   // -- Helper Methods --
 
   /// Tests the method accessible thru the

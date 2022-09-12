@@ -39,7 +39,6 @@ class TAO_Service_Callbacks;
  */
 class TAO_FT_ClientORB_Export TAO_FT_ClientService_Activate : public TAO_Services_Activate
 {
-
 public:
   /// Constructor
   TAO_FT_ClientService_Activate (void);

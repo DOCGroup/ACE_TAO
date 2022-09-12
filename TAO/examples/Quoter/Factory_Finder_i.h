@@ -23,7 +23,6 @@
  */
 class Quoter_Factory_Finder_i : public POA_Stock::Quoter_Factory_Finder
 {
-
 public:
   Quoter_Factory_Finder_i (int debug_level = 1);
   ~Quoter_Factory_Finder_i (void);

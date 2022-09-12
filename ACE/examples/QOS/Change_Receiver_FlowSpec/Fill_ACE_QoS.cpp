@@ -2,7 +2,6 @@
 #include "Fill_ACE_QoS.h"
 
 
-
 const iovec Fill_ACE_QoS::iov_ = {0,0};
 
 Fill_ACE_QoS::Fill_ACE_QoS (void)

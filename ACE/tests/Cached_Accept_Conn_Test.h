@@ -28,7 +28,6 @@
 class Client_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-
   Client_Svc_Handler (ACE_Thread_Manager *t = 0);
   int open (void *v = 0);
   int close (u_long flags = 0);
@@ -37,7 +36,6 @@ public:
 class Server_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-
   Server_Svc_Handler (ACE_Thread_Manager *t = 0);
   int open (void *v = 0);
 };
@@ -101,7 +99,6 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
-
   /// Constructor.
   Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy);
 
@@ -122,7 +119,6 @@ public:
   int accept_svc_handler (SVC_HANDLER *svc_handler);
 
 protected:
-
   typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY_BASE;
 
   /// Handler for removing cached connections.

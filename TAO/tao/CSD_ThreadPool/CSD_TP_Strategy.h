@@ -32,7 +32,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Strategy;
     typedef TAO_Intrusive_Ref_Count_Handle<TP_Strategy> TP_Strategy_Handle;
 
@@ -181,7 +180,6 @@ namespace TAO
       /// "serialize servants" flag is set to true.
       TP_Servant_State_Map servant_state_map_;
     };
-
   }
 }
 

@@ -18,7 +18,6 @@
 
 namespace
 {
-
 bool
 compare_string_sequence_elements(
     CORBA::ULong i,
@@ -228,7 +227,6 @@ Test_DynSequence::run_test (void)
               this->error_count_++;
           }
       }
-
 
 
       if (this->error_count_ == 0)

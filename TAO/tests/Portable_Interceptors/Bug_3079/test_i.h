@@ -15,7 +15,6 @@
 class test_i : public virtual POA_RedirectionTest::test
 {
 public:
-
   /// Constructor.
   test_i (CORBA::Short num,
           CORBA::ORB_ptr orb);
@@ -30,13 +29,11 @@ public:
   virtual void shutdown (void);
 
 private:
-
   /// The number assigned to this object.
   CORBA::Short number_;
 
   /// Pseudo-reference to the ORB.
   CORBA::ORB_var orb_;
-
 };
 
 #endif  /* TEST_I_H */

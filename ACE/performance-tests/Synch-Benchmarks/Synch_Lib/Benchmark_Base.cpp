@@ -53,7 +53,6 @@ Benchmark_Method_Base::exec (ACE_Service_Repository_Iterator *sri)
 
       if (this->valid_test_object (bp))
         {
-
           ACE_DEBUG ((LM_DEBUG, "\nstarting up %s\n", sr->name ()));
 
           int notused = this->pre_run_test (bp) == 0 && this->run_test () == 0 &&

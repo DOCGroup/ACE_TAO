@@ -121,7 +121,6 @@ Server_i::init (int argc, ACE_TCHAR **argv)
 
       // Get the POAManager of RootPOA
       poa_manager_ = root_poa_->the_POAManager ();
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -209,7 +208,6 @@ Server_i::create_poa (const char *name,
 int
 Server_i::create_activator (PortableServer::POA_var first_poa)
 {
-
   try
     {
       // An Servant Activator object is created which will activate
@@ -257,7 +255,6 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
 int
 Server_i::create_locator (PortableServer::POA_var second_poa)
 {
-
   try
     {
       // An Servant Locator object is created which will activate
@@ -307,7 +304,6 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
 int
 Server_i::run (void)
 {
-
   try
     {
       // Invoke object_to_string on the references created in firstPOA

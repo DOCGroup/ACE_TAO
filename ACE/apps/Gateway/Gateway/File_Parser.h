@@ -47,7 +47,6 @@ template <class ENTRY>
 class File_Parser
 {
 public:
-
   /// Destructor.
   virtual ~File_Parser (void);
 

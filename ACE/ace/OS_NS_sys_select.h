@@ -56,7 +56,6 @@ namespace ACE_OS
               fd_set *wfds,
               fd_set *efds,
               const ACE_Time_Value &tv);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

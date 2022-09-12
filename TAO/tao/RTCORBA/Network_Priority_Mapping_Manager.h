@@ -45,7 +45,6 @@ namespace RTCORBA
 class TAO_RTCORBA_Export TAO_Network_Priority_Mapping_Manager :
   public virtual ::CORBA::LocalObject
 {
-
 public:
   /// Constructor.
   TAO_Network_Priority_Mapping_Manager (RTCORBA::NetworkPriorityMapping * mapping);

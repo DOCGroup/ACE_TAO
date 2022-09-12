@@ -7,7 +7,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 void
 Receiver_Stats::accumulate (const Receiver_Stats &rhs)
 {

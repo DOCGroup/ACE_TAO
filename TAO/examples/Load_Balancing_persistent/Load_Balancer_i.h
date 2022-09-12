@@ -109,7 +109,6 @@ public:
   Load_Balancer::Group_List * random_groups (void);
 
 private:
-
   /// Our ORB
   CORBA::ORB_var orb_;
 
@@ -163,7 +162,6 @@ private:
   CORBA::Short *flags_;
 
   ACE_Throughput_Stats throughput_;
-
 };
 
 class Object_Group_i
@@ -240,7 +238,6 @@ public:
   void destroy (void);
 
 protected:
-
   /// This will replenish all the pointers that could have been lost
   /// because of failure
   void read_from_memory (void);
@@ -289,7 +286,6 @@ public:
   /// Returns a member object from this <Object_Group> in accordance with
   /// the "random" load balancing policy.
   char * resolve (void);
-
 };
 
 /**
@@ -301,7 +297,6 @@ public:
 class RR_Object_Group: public Object_Group_i
 {
 public:
-
   /// Constructor.
   RR_Object_Group (const char *id,
                    PortableServer::POA_ptr poa);
@@ -318,7 +313,6 @@ public:
   char * resolve (void);
 
 private:
-
   /// Index into the Object_Group_i::member_id_list_: keeps track of
   /// the member_id to return on the next invocation of <resolve>.
   size_t next_;

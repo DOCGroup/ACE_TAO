@@ -23,7 +23,6 @@
 class test_i : public virtual POA_TestModule::test
 {
 public:
-
   /// Constructor.
   test_i (void);
 

@@ -277,7 +277,6 @@ namespace TAO
                                         resolver,
                                         max_wait_time,
                                         retry_state);
-
           }
       }
     return TAO_INVOKE_FAILURE;

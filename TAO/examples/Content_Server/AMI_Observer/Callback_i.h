@@ -63,7 +63,6 @@ public:
   void metadata (const Web_Server::Metadata_Type &metadata);
 
 private:
-
   /// Destructor must be private to ensure that this object is
   /// allocated on the heap.
   ~Callback_i (void);
@@ -83,12 +82,10 @@ private:
   int spawn_viewer (void);
 
 private:
-
   /// Deactivate this Callback servant.
   void deactivate (void);
 
 private:
-
   /// The Addr corresponding to the retrieved file.
   ACE_FILE_Addr file_;
 

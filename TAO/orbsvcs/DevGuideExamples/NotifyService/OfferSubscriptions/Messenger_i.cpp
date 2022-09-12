@@ -115,7 +115,6 @@ CORBA::Boolean Messenger_i::send_message (
     const char * subject,
     char *& message)
 {
-
   std::cout << "Message from: " << user_name << std::endl;
   std::cout << "Subject:      " << subject << std::endl;
   std::cout << "Message:      " << message << std::endl;

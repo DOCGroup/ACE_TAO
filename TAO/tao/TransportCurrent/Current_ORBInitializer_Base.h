@@ -51,7 +51,6 @@ namespace TAO
       Current_ORBInitializer_Base (const Current_ORBInitializer_Base &) = delete;
       Current_ORBInitializer_Base &operator = (const Current_ORBInitializer_Base &) = delete;
     };
-
   } /* namespace Transport */
 
 } /* namespace TAO */

@@ -35,7 +35,6 @@ LB_server::run (void)
       return -1;
     }
   return 1;
-
 }
 
 
@@ -57,7 +56,6 @@ LB_server::destroy (void)
       return -1;
     }
   return 1;
-
 }
 
 int
@@ -137,7 +135,6 @@ LB_server::start_orb_and_poa (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get Load Manager Reference\n"),
                           1);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -146,7 +143,6 @@ LB_server::start_orb_and_poa (void)
     }
 
   return 1;
-
 }
 
 int
@@ -232,7 +228,6 @@ LB_server::create_object_group (const char *loc_1, const char *loc_2)
         this->orb_->object_to_string (this->object_group_.in ());
 
       this->write_ior_to_file (ior.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -242,5 +237,4 @@ LB_server::create_object_group (const char *loc_1, const char *loc_2)
     }
 
   return 1;
-
 }

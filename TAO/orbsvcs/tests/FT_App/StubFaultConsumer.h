@@ -72,7 +72,6 @@ public:
   size_t notifications() const;
 
 public:
-
     ////////////////
     // CORBA methods
     virtual void push_structured_event(
@@ -95,7 +94,6 @@ private:
   /////////////////////////
   // Implementation methods
 private:
-
   ///////////////
   // Data Members
 private:
@@ -136,7 +134,6 @@ private:
   ::FT::FaultNotifier::ConsumerId consumer_id_;
 
   size_t notifications_;
-
 };
 
 #include /**/ <ace/post.h>

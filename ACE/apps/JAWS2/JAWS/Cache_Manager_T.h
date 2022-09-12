@@ -16,13 +16,11 @@ class JAWS_Cache_List;
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC>
 class JAWS_Cache_Manager
 {
-
   friend class JAWS_Cache_Hash<KEY, HASH_FUNC, EQ_FUNC>;
   friend class JAWS_Cache_Heap<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;
   friend class JAWS_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;
 
 public:
-
   typedef ACE_Singleton<FACTORY, ACE_SYNCH_MUTEX> Object_Factory;
   typedef JAWS_Cache_Hash<KEY, HASH_FUNC, EQ_FUNC> Cache_Hash;
   typedef JAWS_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC> Cache_Heap;
@@ -102,7 +100,6 @@ public:
   // Removes lowest priority object from cache.
 
 protected:
-
   int GET_i (const KEY &key, JAWS_Cache_Object *&object);
   // Retrieve the object associated with key from cache.  Return 0 on
   // success, -1 on failure.
@@ -122,7 +119,6 @@ protected:
   // Decrement reference count on cached object, perhaps delete.
 
 private:
-
   ACE_Allocator *allocator_;
   JAWS_Cache_Object_Factory *factory_;
 
@@ -140,7 +136,6 @@ private:
   Cache_Heap *heap_;
 
   ACE_SYNCH_RW_MUTEX lock_;
-
 };
 
 

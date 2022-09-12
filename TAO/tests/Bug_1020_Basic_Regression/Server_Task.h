@@ -17,7 +17,6 @@
 class Server_Task : public ACE_Task_Base
 {
 public:
-
   /// Constructor
   Server_Task (Test::Echo_ptr echo,
                size_t sz);

@@ -48,7 +48,6 @@ public EDF_Scheduling::SchedulingParameterPolicy,
        public ::CORBA::LocalObject
 {
  public:
-
     EDF_Scheduling::SchedulingParameter value (void);
 
     void value (const EDF_Scheduling::SchedulingParameter & value);
@@ -62,7 +61,6 @@ public EDF_Scheduling::Scheduler,
 public ::CORBA::LocalObject
 {
  public:
-
   EDF_Scheduler (CORBA::ORB_ptr orb,
                  Kokyu::DSRT_Dispatcher_Impl_t,
                  int ace_sched_policy,

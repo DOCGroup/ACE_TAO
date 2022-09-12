@@ -181,7 +181,6 @@ TAO_NT_Naming_Service::arg_manip (char *args, DWORD arglen, bool query)
     }
 
   RegCloseKey (hkey);
-
 }
 
 int

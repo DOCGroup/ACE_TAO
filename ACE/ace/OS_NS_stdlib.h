@@ -91,7 +91,6 @@ inline int ace_rand_r_helper (unsigned *seed)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-
   /** @name Non-standard functions
    *
    *  These functions aren't in the standard.

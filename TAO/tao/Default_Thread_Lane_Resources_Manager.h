@@ -58,7 +58,6 @@ public:
 
   /// @name Accessors
   // @{
-
   TAO_Thread_Lane_Resources &lane_resources (void) override;
 
   TAO_Thread_Lane_Resources &default_lane_resources (void) override;

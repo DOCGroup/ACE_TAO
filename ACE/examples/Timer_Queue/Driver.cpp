@@ -21,7 +21,6 @@
 #include "Driver.h"
 
 
-
 // constructor
 
 template <class RECEIVER, class ACTION>
@@ -133,7 +132,6 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *buf)
 
         if (cancel_cmd_->execute ((void *) &id) == -1)
           ACE_DEBUG ((LM_DEBUG, "Timer #%d is not valid\n", id));
-
       }
       break;
       /* NOTREACHED */

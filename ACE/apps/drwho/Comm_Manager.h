@@ -18,7 +18,6 @@
 class Comm_Manager
 {
 public:
-
   virtual ~Comm_Manager (void);
 
   // = TITLE

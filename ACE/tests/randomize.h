@@ -73,7 +73,6 @@ namespace
     }
 
   private:
-
     // The array.
     T * const array_;
 
@@ -82,7 +81,6 @@ namespace
 
     // Random number generator seed value.
     unsigned int seed_;
-
   };
 
   /**

@@ -124,7 +124,6 @@ public:
   int does_echo_test_successful (void);
 
 private:
-
   /// Wrapper for sending/receiving ICMPs.
   ACE_Ping_Socket ping_socket_;
 
@@ -197,7 +196,6 @@ public:
   virtual int unregister_handler (ACE_Event_Handler * handler);
 
 private:
-
   enum
     {
       HANDLERS_TO_STOP_TABLE_SIZE = 10

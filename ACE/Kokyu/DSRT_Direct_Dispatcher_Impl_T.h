@@ -70,7 +70,6 @@ namespace Kokyu
   private:
     int svc (void);
   };
-
 }
 
 #if !defined (__ACE_INLINE__)

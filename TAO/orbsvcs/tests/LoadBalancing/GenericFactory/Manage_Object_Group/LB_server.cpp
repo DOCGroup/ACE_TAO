@@ -31,7 +31,6 @@ LB_server::destroy (void)
       return -1;
     }
   return 1;
-
 }
 
 CORBA::ORB_ptr
@@ -91,7 +90,6 @@ LB_server::start_orb_and_poa (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get Load Manager Reference\n"),
                           1);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -100,7 +98,6 @@ LB_server::start_orb_and_poa (void)
     }
 
   return 1;
-
 }
 
 int
@@ -129,7 +126,6 @@ LB_server::create_basic_object_group (void)
 
       CORBA::String_var ior =
         this->orb_->object_to_string (this->basic_object_group_.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -139,7 +135,6 @@ LB_server::create_basic_object_group (void)
     }
 
   return 1;
-
 }
 
 int
@@ -168,7 +163,6 @@ LB_server::create_simple_object_group (void)
 
       CORBA::String_var ior =
         this->orb_->object_to_string (this->simple_object_group_.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -178,7 +172,6 @@ LB_server::create_simple_object_group (void)
     }
 
   return 1;
-
 }
 
 int

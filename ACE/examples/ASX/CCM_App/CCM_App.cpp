@@ -6,7 +6,6 @@
 #include "ace/svc_export.h"
 
 
-
 typedef ACE_Task<ACE_SYNCH> MT_Task;
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_SYNCH> MT_Module;

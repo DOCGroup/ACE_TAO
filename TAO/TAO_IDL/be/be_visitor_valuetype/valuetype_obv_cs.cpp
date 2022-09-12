@@ -117,8 +117,8 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           *os << be_uidt_nl;
         }
       *os << ")," << be_nl
-          << "::CORBA::NO_MEMORY ()" << be_uidt_nl
-          << ");" << be_nl
+          << "::CORBA::NO_MEMORY ());" << be_uidt
+          << be_nl
           << "return ret_val;" << be_uidt_nl
           << "}";
     }

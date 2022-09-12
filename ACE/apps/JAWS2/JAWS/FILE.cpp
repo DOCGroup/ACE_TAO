@@ -60,7 +60,6 @@ JAWS_FILE::mem_map (int length,
     }
 
   return this->map_;
-
 }
 
 

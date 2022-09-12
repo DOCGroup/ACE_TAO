@@ -89,7 +89,6 @@ Driver::init (int argc, ACE_TCHAR *argv[])
                           "(%N:%l) driver.cpp - "
                           "parse_args failed\n"),
                           -1);
-
     }
   catch (const CORBA::Exception& ex)
     {

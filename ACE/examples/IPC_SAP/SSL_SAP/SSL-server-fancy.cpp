@@ -73,7 +73,6 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
 protected:
-
   Handler (ACE_SSL_SOCK_Stream *ssl_stream);
   // Constructor.
 
@@ -111,15 +110,12 @@ class Twoway_Handler : public Handler
   // = TITLE
   //   Performs the twoway protocol.
 public:
-
   Twoway_Handler (ACE_SSL_SOCK_Stream *ssl_stream);
   // Constructor.
 
 private:
-
   virtual int run (void);
   // Template Method hook called by <svc>.
-
 };
 
 class Oneway_Handler : public Handler
@@ -590,7 +586,6 @@ Handler_Factory::handle_events (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   ACE_SSL_Context *context = ACE_SSL_Context::instance ();
 
   context->certificate ("./dummy.pem", SSL_FILETYPE_PEM);

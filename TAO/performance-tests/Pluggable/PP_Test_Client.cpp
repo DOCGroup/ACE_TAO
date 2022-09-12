@@ -166,7 +166,6 @@ PP_Test_Client::parse_args (void)
 void
 PP_Test_Client::send_oneway (void)
 {
-
   try
     {
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_ONEWAY_START);
@@ -186,7 +185,6 @@ PP_Test_Client::send_oneway (void)
 void
 PP_Test_Client::send_void (void)
 {
-
   try
     {
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_VOID_START);
@@ -250,7 +248,6 @@ PP_Test_Client::run ()
 int
 PP_Test_Client::shutdown_server (int do_shutdown)
 {
-
   try
     {
       if (do_shutdown)
@@ -277,7 +274,6 @@ PP_Test_Client::shutdown_server (int do_shutdown)
 int
 PP_Test_Client::run_oneway (void)
 {
-
   try
     {
       CORBA::ULong i;
@@ -316,7 +312,6 @@ PP_Test_Client::run_oneway (void)
 int
 PP_Test_Client::run_void (void)
 {
-
   try
     {
       CORBA::ULong i;

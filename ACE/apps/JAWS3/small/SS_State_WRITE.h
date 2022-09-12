@@ -9,7 +9,6 @@
 class TeraSS_State_WRITE : public JAWS_Protocol_State
 {
 public:
-
   int service (JAWS_Event_Completer *, void *data);
 
   JAWS_Protocol_State * transition ( const JAWS_Event_Result &result
@@ -21,7 +20,6 @@ public:
   {
     return ACE_Singleton<TeraSS_State_WRITE, ACE_SYNCH_MUTEX>::instance ();
   }
-
 };
 
 #endif /* TERA_SS_STATE_WRITE_H */

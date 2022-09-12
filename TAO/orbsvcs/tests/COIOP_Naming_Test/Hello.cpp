@@ -4,7 +4,6 @@
 #include "tao/Strategies/advanced_resource.h"
 
 
-
   Hello::Hello (CORBA::ORB_ptr orb,
               ACE_thread_t thrid)
   : orb_ (CORBA::ORB::_duplicate (orb))

@@ -30,7 +30,6 @@ AST_ValueBox::boxed_type () const
 void
 AST_ValueBox::dump (ACE_OSTREAM_TYPE &o)
 {
-
   this->dump_i (o, "valuetype ");
 
   this->local_name ()->dump (o);

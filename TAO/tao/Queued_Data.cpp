@@ -86,7 +86,6 @@ TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
                                message_buffer_alloc->malloc (sizeof (TAO_Queued_Data))),
                              TAO_Queued_Data (message_buffer_alloc),
                              nullptr);
-
     }
   else
     {

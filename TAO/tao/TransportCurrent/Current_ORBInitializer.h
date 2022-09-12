@@ -26,7 +26,6 @@ namespace TAO
 {
   namespace Transport
   {
-
     template <typename Impl>
     class Current_ORBInitializer
       : public Current_ORBInitializer_Base

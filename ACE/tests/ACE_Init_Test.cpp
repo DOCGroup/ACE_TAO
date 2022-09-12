@@ -122,7 +122,6 @@ wait_and_kill_dialog (void *pBox)
   ACE_OS::sleep(2);
   pDialog->EndModalLoop (IDOK);
   return 0;
-
 }
 
 #endif /* ACE_HAS_MFC */

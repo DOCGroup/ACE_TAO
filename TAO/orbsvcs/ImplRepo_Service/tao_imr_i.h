@@ -30,7 +30,6 @@ class TAO_IMR_Op;
 class TAO_IMR_i
 {
 public:
-
   // = Constructor and destructor.
   TAO_IMR_i (void);
   ~TAO_IMR_i (void);
@@ -227,7 +226,6 @@ protected:
 };
 
 
-
 /**
  * @class TAO_IMR_Op_List
  *
@@ -345,7 +343,6 @@ public:
   virtual int run (void);
 
 protected:
-
   /// Enables pre-registration checks
   bool is_add_;
 

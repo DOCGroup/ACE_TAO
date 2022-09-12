@@ -118,7 +118,6 @@ void
 test_impl::pass_vt_graph_out (
     Supports_Test::vt_graph_out vt_graph_param)
 {
-
   vt_graph_impl * the_vt_graph = 0;
   ACE_NEW (the_vt_graph, vt_graph_impl (4));
   vt_graph_param = the_vt_graph;
@@ -126,14 +125,12 @@ test_impl::pass_vt_graph_out (
   ACE_ASSERT (vt_graph_param->size () == 4);
   vt_graph_param->add_node ("NEW1");
   ACE_ASSERT (vt_graph_param->size () == 5);
-
 }
 
 void
 test_impl::pass_obj_graph_inout (
     Supports_Test::graph * &graph_param)
 {
-
   ACE_ASSERT (graph_param->size () == 6);
   graph_param->add_node ("NEW3");
   ACE_ASSERT (graph_param->size () == 7);
@@ -143,11 +140,9 @@ void
 test_impl::pass_vt_graph_inout (
     Supports_Test::vt_graph * &vt_graph_param)
 {
-
   ACE_ASSERT (vt_graph_param->size () == 6);
   vt_graph_param->add_node ("NEW3");
   ACE_ASSERT (vt_graph_param->size () == 7);
-
 }
 
 void

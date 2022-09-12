@@ -408,7 +408,6 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                       ACE_TEXT ("TAO (%P|%t) - The default ")
                       ACE_TEXT ("ORB must have completed the global ")
                       ACE_TEXT ("initialization...\n")));
-
       }
     else
       {
@@ -572,7 +571,6 @@ namespace
                            bool skip_service_config_open,
                            bool ignore_default_svc_conf_file)
   {
-
     if (skip_service_config_open)
       {
         return 0;

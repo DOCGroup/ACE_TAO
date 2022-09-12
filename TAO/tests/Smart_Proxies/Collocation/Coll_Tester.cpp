@@ -67,7 +67,6 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
 
   return 0;
 
-
 }
 
 int

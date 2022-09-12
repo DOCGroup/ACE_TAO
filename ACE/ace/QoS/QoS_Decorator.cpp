@@ -110,7 +110,6 @@ ACE_QoS_Decorator::init (void)
                                            ACE_Event_Handler::READ_MASK);
 #endif
   return 0;
-
 }
 
 // Constructor.

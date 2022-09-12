@@ -178,7 +178,6 @@ private:
 
   /// Address at the end of the file mapping.
   char *end_of_mapping_plus1_;
-
 };
 
 

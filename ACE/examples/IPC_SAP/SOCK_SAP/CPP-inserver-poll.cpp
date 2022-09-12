@@ -12,7 +12,6 @@
 #include "ace/OS_NS_stdio.h"
 
 
-
 #if defined (ACE_HAS_POLL)
 
 // Should we be verbose?

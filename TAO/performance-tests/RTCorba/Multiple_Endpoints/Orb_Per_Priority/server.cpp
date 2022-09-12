@@ -253,7 +253,6 @@ Server::svc (void)
       poa_manager->activate ();
 
       orb->run ();
-
     }
   catch (const CORBA::Exception& ex)
     {

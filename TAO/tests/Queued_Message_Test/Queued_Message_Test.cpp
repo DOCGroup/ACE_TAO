@@ -83,7 +83,6 @@ static void del_message (TAO_Queued_Message *&head,
 int
 ACE_TMAIN(int, ACE_TCHAR *[])
 {
-
   // Initialize a random seed to get better coverage.
   // @@ The random seed and default values should be configurable
   // using command line options.

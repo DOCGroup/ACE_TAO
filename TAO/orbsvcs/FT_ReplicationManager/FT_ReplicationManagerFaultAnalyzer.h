@@ -34,7 +34,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   ///////////////////////
   // Forward declarations
   class FT_ReplicationManager;
@@ -182,9 +181,7 @@ namespace TAO
     // Data Members
   private:
     FT_ReplicationManager * replication_manager_;
-
   };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

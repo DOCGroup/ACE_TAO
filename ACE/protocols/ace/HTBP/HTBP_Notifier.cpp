@@ -69,7 +69,6 @@ int
 ACE::HTBP::Notifier::handle_output (ACE_HANDLE )
 {
   return -1;
-
 }
 
 void

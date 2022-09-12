@@ -8,7 +8,6 @@ class test_i :
   public POA_test
 {
 public:
-
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
@@ -91,13 +90,11 @@ test_i::_default_POA (void)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (CORBA::ORB_ptr orb);
 
   int svc (void);
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (CORBA::ORB_ptr orb)

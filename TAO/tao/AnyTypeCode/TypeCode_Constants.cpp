@@ -101,7 +101,6 @@ namespace CORBA
   TypeCode_ptr const _tc_Object     = &TAO::TypeCode::tc_Object;
   TypeCode_ptr const _tc_Component  = &TAO::TypeCode::tc_Component;
   TypeCode_ptr const _tc_Home       = &TAO::TypeCode::tc_Home;
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

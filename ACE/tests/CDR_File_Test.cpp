@@ -33,7 +33,6 @@
  */
 class CDR_Test
 {
-
   /// Output the state of a <CDR_Test> object to the <ostream>.
   friend ostream& operator << (ostream &os, const CDR_Test &t);
 

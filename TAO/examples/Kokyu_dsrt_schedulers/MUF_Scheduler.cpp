@@ -64,7 +64,6 @@ MUF_Scheduler::MUF_Scheduler (CORBA::ORB_ptr orb,
     ace_sched_policy_ (ace_sched_policy),
     ace_sched_scope_ (ace_sched_scope)
 {
-
   Kokyu::DSRT_ConfigInfo config;
 
   config.impl_type_ = this->disp_impl_type_;
@@ -439,7 +438,6 @@ MUF_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
 void
 MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
 
   CORBA::String_var operation = ri->operation ();

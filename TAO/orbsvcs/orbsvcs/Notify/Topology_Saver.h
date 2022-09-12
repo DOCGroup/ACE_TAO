@@ -34,7 +34,6 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export Topology_Saver
   {
   public:
-
     /// The destructor.
     virtual ~Topology_Saver ();
 

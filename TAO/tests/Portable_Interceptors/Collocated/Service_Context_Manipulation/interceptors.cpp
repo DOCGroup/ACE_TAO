@@ -40,7 +40,6 @@ void
 Echo_Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
@@ -101,7 +100,6 @@ void
 Echo_Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
@@ -324,7 +322,6 @@ void
 Echo_Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -370,7 +367,6 @@ void
 Echo_Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,

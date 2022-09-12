@@ -81,7 +81,6 @@ namespace TAO
     protected:
       TAO_Root_POA *poa_;
     };
-
   } /* namespace Portable_Server */
 } /* namespace TAO */
 

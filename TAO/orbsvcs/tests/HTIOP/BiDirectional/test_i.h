@@ -36,7 +36,6 @@ public:
 private:
   /// The orb
   CORBA::ORB_var orb_;
-
 };
 
 /**

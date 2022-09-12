@@ -44,7 +44,6 @@ namespace TAO
     class TAO_CSD_FW_Export Strategy_Proxy
     {
     public:
-
       /// Default Constructor.
       Strategy_Proxy();
 

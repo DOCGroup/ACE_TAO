@@ -23,7 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class FoxResource_Factory
    *

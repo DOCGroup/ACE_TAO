@@ -39,7 +39,6 @@ class Heartbeat_Application :
   public TAO_EC_Deactivated_Object
 {
 public:
-
   /// Constructor.
   Heartbeat_Application (void);
 
@@ -78,7 +77,6 @@ public:
   //@}
 
 private:
-
   /**
    * @class Timeout_Handler
    *

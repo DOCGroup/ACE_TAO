@@ -3,7 +3,6 @@
 #include "ace/Service_Types.h"
 
 
-
 int
 Test_Task::open (void *)
 {

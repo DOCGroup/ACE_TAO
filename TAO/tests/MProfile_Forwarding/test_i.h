@@ -37,7 +37,6 @@ public:
 
  private:
   CORBA::ORB_var orb_;
-
 };
 
 #if defined(__ACE_INLINE__)

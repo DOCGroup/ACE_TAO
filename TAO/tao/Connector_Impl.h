@@ -58,7 +58,6 @@ private:
 };
 
 
-
 /**
  * @class TAO_Connect_Concurrency_Strategy
  *

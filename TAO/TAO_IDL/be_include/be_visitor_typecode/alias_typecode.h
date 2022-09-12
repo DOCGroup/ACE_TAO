@@ -15,7 +15,6 @@
 
 namespace TAO
 {
-
   /**
    * @class be_visitor_alias_typecode
    *
@@ -47,9 +46,7 @@ namespace TAO
     int common (be_type * node,
                 be_type * base,
                 const char * tctype);
-
   };
-
 }
 
 #endif  /* TAO_BE_VISITOR_ALIAS_TYPECODE_H */

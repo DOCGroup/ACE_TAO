@@ -43,7 +43,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 
-
 void
 run_test (Test_Interceptors::Secure_Vault_ptr server)
 {
@@ -136,7 +135,6 @@ run_test (Test_Interceptors::Secure_Vault_ptr server)
 
       if (TAO_debug_level > 0 && i % 100 == 0)
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
-
     }
 
   marker.dump_stats (ACE_TEXT ("update records  method  "), gsf, 3);

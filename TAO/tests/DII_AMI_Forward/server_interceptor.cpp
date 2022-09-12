@@ -103,7 +103,6 @@ void
 ForwardTest_Request_Interceptor::send_other (
              PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   // This will throw an exception if a location forward has not
   // occurred.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.

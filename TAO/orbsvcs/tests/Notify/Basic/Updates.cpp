@@ -4,7 +4,6 @@
 #include "Updates.h"
 
 
-
 Updates_StructuredPushConsumer::Updates_StructuredPushConsumer (Updates *test_client)
   : test_client_ (test_client)
 {

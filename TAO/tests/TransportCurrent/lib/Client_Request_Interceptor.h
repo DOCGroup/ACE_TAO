@@ -29,7 +29,6 @@
 
 namespace Test
 {
-
   /// A metod doing the actual testing, so we could change it for the
   /// different traits implementations
   typedef int (*TEST) (CORBA::ORB_ptr);
@@ -52,7 +51,6 @@ namespace Test
       public virtual ::CORBA::LocalObject
   {
  public:
-
     /// Constructor.
     Client_Request_Interceptor (const char *orb_id,
                                 TEST test);
@@ -113,7 +111,6 @@ namespace Test
     /// Test function
     TEST test_;
   };
-
 } // namespace Test
 
 #endif  /* CLIENT_REQUEST_INTERCEPTOR_H */

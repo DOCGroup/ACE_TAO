@@ -29,7 +29,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Collocated_Synch_Request;
     typedef TAO_Intrusive_Ref_Count_Handle<TP_Collocated_Synch_Request>
                                           TP_Collocated_Synch_Request_Handle;
@@ -87,7 +86,6 @@ namespace TAO
       /// exception is raised from the dispatch() call on the server_request_.
       CORBA::Exception* exception_;
     };
-
   }
 }
 

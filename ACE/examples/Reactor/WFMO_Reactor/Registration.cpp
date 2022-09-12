@@ -35,7 +35,6 @@
 #include "ace/Log_Msg.h"
 
 
-
 // Globals for this test
 int stop_test = 0;
 ACE_Reactor reactor;

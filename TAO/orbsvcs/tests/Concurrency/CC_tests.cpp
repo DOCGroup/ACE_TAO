@@ -209,7 +209,6 @@ Test_Use_Already_Created_LockSet::run (int /* times_to_run */)
         CosConcurrencyControl::LockSet::_narrow (ccls_obj.in ());
 
       ccls->lock (CosConcurrencyControl::read);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -312,7 +311,6 @@ Test_Release_Not_Held_Lock::run (int /* times_to_run */)
       ACE_DEBUG ((LM_DEBUG,
                   "attemptet to release %s lock\n",
                   get_lock_mode_name (mode_)));
-
     }
   catch (const CosConcurrencyControl::LockNotHeld& userex)
     {

@@ -54,7 +54,6 @@ namespace ACE
           };
 
         typedef StreamInterceptorBase<char> StreamInterceptor;
-
       }
   }
 

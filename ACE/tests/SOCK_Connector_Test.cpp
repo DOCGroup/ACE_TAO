@@ -72,7 +72,6 @@ find_another_host (ACE_TCHAR other_host[])
 
   if (cached_other_host[0] == '\0')
     {
-
       ACE_OS::strcpy (other_host,
                       ACE_DEFAULT_SERVER_HOST); // If all else fails
 
@@ -314,6 +313,5 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return status;
 }
-
 
 

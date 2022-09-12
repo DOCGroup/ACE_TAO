@@ -244,7 +244,6 @@ int CC_UnLock_Cmd::execute(void)
       CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_);
 
       ccls->unlock (mode_);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -347,7 +346,6 @@ int CC_ChangeMode_Cmd::execute(void)
       CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_);
 
       ccls->change_mode (held_mode_, new_mode_);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -540,7 +538,6 @@ CC_Lookup_Cmd::execute(void)
             CosConcurrencyControl::LockSet::_narrow (ccls_obj.in ());
 
           cc_lockset_ = ccls;
-
         }
       catch (const CORBA::Exception& ex)
         {

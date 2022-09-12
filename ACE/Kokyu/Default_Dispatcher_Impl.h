@@ -64,7 +64,6 @@ namespace Kokyu
     /// Command callback
     int execute () override;
   };
-
 } //end of namespace
 
 #if defined (__ACE_INLINE__)

@@ -71,7 +71,6 @@ public:
   void invocation_priority (RTCORBA::Priority);
 
 private:
-
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
   Tests &tests_;
@@ -750,14 +749,12 @@ Server::shutdown (void)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
   int svc (void);
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,

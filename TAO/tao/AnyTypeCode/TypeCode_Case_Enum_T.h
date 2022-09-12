@@ -84,7 +84,6 @@ namespace TAO
       /// IDL @c union discriminator typecode.
       CORBA::TypeCode_var discriminator_tc_;
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

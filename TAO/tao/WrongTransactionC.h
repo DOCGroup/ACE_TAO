@@ -52,7 +52,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-
   // TAO_IDL - Generated from
   // be\be_visitor_exception/exception_ch.cpp:53
 

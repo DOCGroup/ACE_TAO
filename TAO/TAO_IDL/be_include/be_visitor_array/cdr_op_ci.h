@@ -24,7 +24,6 @@
  */
 class be_visitor_array_cdr_op_ci : public be_visitor_decl
 {
-
 public:
   /// constructor
   be_visitor_array_cdr_op_ci (be_visitor_context *ctx);

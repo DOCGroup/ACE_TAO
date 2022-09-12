@@ -47,7 +47,6 @@ typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
 int
 Options::init (void)
 {
-
   ACE_DEBUG((LM_DEBUG,"Options::init, len = %d\n",this->message_len_));
 
   // Check for default case.

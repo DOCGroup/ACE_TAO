@@ -9,7 +9,6 @@
 #define QUERY_LANG "TCL"
 
 
-
 TLS_Client::TLS_Client (void)
 {
   // No-Op.

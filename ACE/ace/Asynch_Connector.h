@@ -122,7 +122,6 @@ public:
   virtual void validate_new_connection (bool new_value);
 
 protected:
-
   /// This is called when an outstanding accept completes.
   virtual void handle_connect (const ACE_Asynch_Connect::Result &result);
 

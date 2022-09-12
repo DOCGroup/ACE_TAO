@@ -68,7 +68,6 @@ public:
   //@}
 
 protected:
-
   /**
    * @name More TAO_Connector Methods
    *
@@ -88,7 +87,6 @@ protected:
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
 private:
-
   /// Return the remote endpoint, a helper function
   TAO_COIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 };

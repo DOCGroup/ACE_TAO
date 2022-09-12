@@ -96,9 +96,7 @@ namespace TAO
     protected:
       /// Base attributes (@c id and @c name).
       Base_Attributes<char const *> attributes_;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

@@ -68,7 +68,6 @@ JAWS_Reactive_IO::recv ( ACE_HANDLE handle
                        , void *act
                        )
 {
-
   JAWS_IO_Reactive_Recv *rr;
   rr = JAWS_IO_Reactive_Recv::make (handle, mb, completer, tv, act);
 

@@ -309,8 +309,6 @@ Client<ServerInterface>::init (const char *,
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("no ior or naming options  specified\n")),
                           -1);
-
-
     }
   catch (const CORBA::Exception& ex)
     {

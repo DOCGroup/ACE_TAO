@@ -95,7 +95,6 @@
 template<ACE_SYNCH_DECL>
 class Static_Log_Message_Receiver
 {
-
 public:
   /// Prints the log_record to stderr using record.print (hostname, 0, stderr).
   /// Serializes the output by using a ACE_SYNCH_MUTEX.

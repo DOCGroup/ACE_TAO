@@ -27,7 +27,6 @@
 class Distributer_Receiver_Callback : public TAO_AV_Callback
 {
 public:
-
   /// Constructor.
   Distributer_Receiver_Callback (void);
 

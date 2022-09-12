@@ -24,8 +24,6 @@ class BasicLog_Test
    //  This class exercises various methods of the DsLogAdmin::BasicLog
    //  interface.
  public:
-
-
   enum
   { MAX_LOG_SIZE = 8192 };
 
@@ -150,7 +148,6 @@ private:
 
   static const char* naming_service_name_;
   // strings for log factory and naming service
-
 };
 
 #endif  /* TAO_BASIC_LOG_TEST_H */

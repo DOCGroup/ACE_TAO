@@ -15,7 +15,6 @@
 #include "BPR_Drivers.h"
 
 
-
 // Constructor.
 
 Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr)
@@ -485,7 +484,6 @@ Bounded_Packet_Relay::queue_lwm (ACE_UINT32 lwm)
 {
   queue_lwm_ = lwm;
 }
-
 
 
 // Returns string corresponding to current status.

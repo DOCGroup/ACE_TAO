@@ -62,7 +62,6 @@ public:
   ~TAO_IFR_Server (void);
 
 protected:
-
   /// Two persistent POAs, one using a servant locator.
   int create_poa (void);
 

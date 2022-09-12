@@ -605,7 +605,6 @@ operator== (const TAO_Literal_Constraint& left,
 }
 
 
-
 bool
 operator< (const TAO_Literal_Constraint& left,
            const TAO_Literal_Constraint& right)

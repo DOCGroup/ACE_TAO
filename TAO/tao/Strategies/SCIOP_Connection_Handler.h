@@ -57,9 +57,7 @@ class TAO_Strategies_Export TAO_SCIOP_Connection_Handler
   : public TAO_SCIOP_SVC_HANDLER,
     public TAO_Connection_Handler
 {
-
 public:
-
   TAO_SCIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor.
@@ -106,7 +104,6 @@ public:
   int set_dscp_codepoint (CORBA::Long dscp);
 
 protected:
-
   /// Helper method needed by the set_dscp_codepoint () methods
   int set_tos (int tos);
 
@@ -120,7 +117,6 @@ protected:
   //@}
 
 private:
-
   /// Stores the type of service value.
   int dscp_codepoint_;
 };

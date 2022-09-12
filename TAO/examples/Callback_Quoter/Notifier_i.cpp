@@ -188,7 +188,6 @@ Notifier_i::shutdown ()
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
-
 }
 
 bool

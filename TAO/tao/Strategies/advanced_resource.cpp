@@ -43,7 +43,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 {
-
   TAO_ORB_Core::set_resource_factory ("Advanced_Resource_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factory);
 
@@ -134,7 +133,6 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
                              ACE_TEXT("TAO_Advanced_Resource_Factory::init - ")
                              ACE_TEXT("-ORBReactorRegistry no longer supported\n")),
                             -1);
-
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBReactorLock"))))
@@ -377,7 +375,6 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
 #endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */
 
       return 0;
-
     }
 
   for (; factory != end; factory++)
@@ -404,7 +401,6 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
     }
  return 0;
 }
-
 
 
 TAO_ProtocolFactorySet *

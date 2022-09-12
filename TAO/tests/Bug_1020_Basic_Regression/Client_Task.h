@@ -21,7 +21,6 @@ public:
   int svc (void);
 
 private:
-
   CORBA::ORB_var orb_;
 };
 

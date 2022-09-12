@@ -66,7 +66,6 @@ Receiver_Callback::flowname (const char* flow_name)
                 "%C File Opened Successfully\n",
                 this->flowname_.c_str ()));
 
-
 }
 
 int

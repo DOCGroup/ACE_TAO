@@ -30,7 +30,6 @@
 class URL_Visitor_Factory
 {
 public:
-
   /// Destructor.
   virtual ~URL_Visitor_Factory (void);
 
@@ -55,8 +54,6 @@ public:
 
   /// Factory Method that makes a <FIFO_Command_Processor>.
   virtual Command_Processor *make_command_processor (void);
-
-
 };
 
 /**

@@ -11,7 +11,6 @@ Second_i::Second_i (CORBA::ORB_ptr orb,
     length_(len),
     two_way_done_(two_way_done)
 {
-
 }
 
 Two_Objects_Test::Octet_Seq *

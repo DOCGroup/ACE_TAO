@@ -274,7 +274,6 @@ Manager::shut_down (void)
 
       delete req;
       delete worker;
-
     }
   while (iter.advance ());
 

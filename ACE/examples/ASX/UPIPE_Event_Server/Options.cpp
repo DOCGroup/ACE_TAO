@@ -9,7 +9,6 @@
 #include "Options.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 Options::Options (void)

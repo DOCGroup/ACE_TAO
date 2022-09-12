@@ -115,7 +115,6 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout)
 {
-
   /**
    * \par
    * Connector is used only in the processes inside the firewall
@@ -311,7 +310,6 @@ TAO::HTIOP::Connector::cancel_svc_handler (
     return 0;
 
   return -1;
-
 }
 
 

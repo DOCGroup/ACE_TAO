@@ -42,7 +42,6 @@ public:
   // The skeleton methods.
 
 private:
-
   // = Data Members
   CORBA::ORB_var orb_;
   // The ORB that we use.
@@ -55,7 +54,6 @@ private:
 
   CosEventChannelAdmin::ProxyPushConsumer_var consumer_;
   // The proxy that we are connected to.
-
 };
 
 #endif /* EVENT_SUPPLIER_H */

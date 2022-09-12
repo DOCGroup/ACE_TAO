@@ -33,7 +33,6 @@
  */
 class Application_Simulator
 {
-
 public:
   /// Constructor, limits the amount of fragmentation and memory this
   /// class takes.
@@ -192,7 +191,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (!quiet)
             ACE_OS::printf ("AVE: %d %f\n",
                             i, average);
-
         }
     }
   catch (const CORBA::Exception& ex)

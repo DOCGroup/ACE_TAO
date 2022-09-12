@@ -1,7 +1,6 @@
 #include "Application_Command.h"
 
 
-
 #include "tao/PortableServer/PortableServer.h"
 #include "LookupManager.h"
 #include "Name.h"
@@ -127,7 +126,6 @@ TAO_Notify_Tests_Application_Command::handle_shutdown (void)
   LOOKUP_MANAGER->resolve (driver);
 
   driver->shutdown ();
-
 }
 
 void

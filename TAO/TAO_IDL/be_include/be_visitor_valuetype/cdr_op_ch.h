@@ -25,7 +25,6 @@
  */
 class be_visitor_valuetype_cdr_op_ch : public be_visitor_valuetype
 {
-
 public:
   /// constructor
   be_visitor_valuetype_cdr_op_ch (be_visitor_context *ctx);

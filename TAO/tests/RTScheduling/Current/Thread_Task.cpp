@@ -10,7 +10,6 @@ Thread_Task::Thread_Task (CORBA::ORB_ptr orb)
 int
 Thread_Task::activate_task (int thr_count)
 {
-
   try
     {
       ACE_NEW_RETURN (shutdown_lock_,

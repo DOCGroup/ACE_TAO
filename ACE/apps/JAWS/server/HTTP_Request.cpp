@@ -50,7 +50,6 @@ HTTP_Request::HTTP_Request (void)
     header_strings_ (HTTP_Request::static_header_strings_),
     method_strings_ (HTTP_Request::static_method_strings_)
 {
-
   for (size_t i = 0;
        i < HTTP_Request::NUM_HEADER_STRINGS;
        i++)

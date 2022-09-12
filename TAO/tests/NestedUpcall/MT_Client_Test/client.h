@@ -33,7 +33,6 @@
  */
 class MT_Client
 {
-
 public:
   /// = Constructor and destructor.
   MT_Client (void);
@@ -77,7 +76,6 @@ private:
 
   /// number of loops
   unsigned long iterations_;
-
 };
 
 /**

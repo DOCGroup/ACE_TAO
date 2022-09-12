@@ -15,7 +15,6 @@ void
 Reply_Handler::next_prime_excep (
     ::Messaging::ExceptionHolder *ex)
 {
-
   try
     {
       ex->raise_exception ();

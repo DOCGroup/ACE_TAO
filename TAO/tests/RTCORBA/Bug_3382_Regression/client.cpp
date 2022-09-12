@@ -38,7 +38,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
@@ -57,7 +56,6 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 int
 Task::svc (void)
 {
-
   int result = 0;
   try
     {

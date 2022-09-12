@@ -90,7 +90,6 @@ public:
 
     return proxy;
   }
-
 };
 
 // define the ProxyConsumer Builders.

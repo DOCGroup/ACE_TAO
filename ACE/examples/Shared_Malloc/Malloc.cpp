@@ -15,7 +15,6 @@
 #include "ace/Malloc_T.h"
 
 
-
 // Strategic typedefs for memory allocation.
 
 typedef ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX> L_ALLOCATOR;

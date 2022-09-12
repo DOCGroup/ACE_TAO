@@ -89,7 +89,6 @@ namespace TAO
   public:
     CORBA::ValueBase * create_for_unmarshal () override;
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

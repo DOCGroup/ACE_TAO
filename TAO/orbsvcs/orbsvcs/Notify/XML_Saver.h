@@ -24,7 +24,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 /**
  * \brief Save Notification Service Topology to an XML file.
  */
@@ -73,7 +72,6 @@ private:
   /// A string consisting of spaces that is our current indentation level.
   ACE_CString indent_;
 };
-
 } // namespace TAO_Notify
 
 TAO_END_VERSIONED_NAMESPACE_DECL

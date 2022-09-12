@@ -15,7 +15,6 @@
 #include "ace/OS_NS_string.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // = Methods to deal with ACE_Hash_Map_Manager.
@@ -491,7 +490,6 @@ TAO_PropertySet::define_property (const char *property_name,
 CORBA::Boolean
 TAO_PropertySet::is_type_allowed (CORBA::TypeCode_ptr type)
 {
-
   // If the sequence is empty, no constraints.
   if (this->allowed_property_types_.length () == 0)
     return 1;

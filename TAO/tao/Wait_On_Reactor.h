@@ -28,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_Wait_On_Reactor : public TAO_Wait_Strategy
 {
-
 public:
   /// Constructor.
   explicit TAO_Wait_On_Reactor (TAO_Transport *transport);

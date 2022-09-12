@@ -270,7 +270,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
       // Typedefed array.
       *os << storage_class.c_str() << node->nested_type_name (scope, "_slice")
           << " *" << be_nl;
-      *os << node->nested_type_name (scope, "_alloc") << " (void);"
+      *os << node->nested_type_name (scope, "_alloc") << " ();"
           << be_nl_2;
       *os << storage_class.c_str() << "void" << be_nl
           << node->nested_type_name (scope, "_free")

@@ -68,7 +68,6 @@ typedef unsigned short                  ushort;
 #define MAXPATHLEN                      512
 
 
-
 #else /* not WIN32 */
 #define NETREAD(sock, buf, len)         read(sock, buf, len)
 #define NETWRITE(sock, buf, len)        write(sock, buf, len)

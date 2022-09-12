@@ -157,7 +157,6 @@ private:
    * Cached LeastLoaded load balancing strategy property values.
    */
   //@{
-
   /// The critical load threshold.
   /**
    * Load rebalancing/shedding will occur if loads at a given location

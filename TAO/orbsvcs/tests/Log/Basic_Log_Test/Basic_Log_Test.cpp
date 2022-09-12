@@ -55,13 +55,11 @@ BasicLog_Test::init (int argc, ACE_TCHAR *argv[])
     }
 
   ACE_RETURN(0);
-
 }
 
 int
 BasicLog_Test::init_factory (void)
 {
-
   // Assumpting INS for finding LogServie
 
   //CORBA::Object_var logging_obj = orb_->resolve_initial_references ("BasicLogFactory",
@@ -114,7 +112,6 @@ BasicLog_Test::init_factory (void)
 int
 BasicLog_Test::test_CreateLog (CORBA::ULongLong maxSize)
 {
-
   try
     {
       DsLogAdmin::LogId id;
@@ -249,7 +246,6 @@ int BasicLog_Test::display_records ()
                rec_list[j].id, rec_list[j].time));
 
   return 0;
-
 }
 */
 int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
@@ -303,7 +299,6 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
         CORBA::String_var t(str.c_str ());
         record[0] <<= t.in ();
         basicLog_->write_records(record);
-
       }
   }
 
@@ -321,14 +316,12 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
 int
 BasicLog_Test::test_adminState()
 {
-
   basicLog_->set_administrative_state(DsLogAdmin::locked);
   try
     {
       this->write_records(0);
 
       ACE_ERROR_RETURN((LM_ERROR,"Setting administrative state to lock failed.  DsLogAdmin::LogLocked not thrown.\n"),-1);
-
     }
   catch (const DsLogAdmin::LogLocked&)
     {
@@ -347,7 +340,6 @@ BasicLog_Test::test_adminState()
       this->write_records(0);
       ACE_DEBUG ((LM_DEBUG,"Setting administrative state to succeeded.  DsLogAdmin::LogLocked not thrown.\n"));
       ACE_RETURN(0);
-
     }
   catch (const DsLogAdmin::LogLocked&)
     {
@@ -360,7 +352,6 @@ BasicLog_Test::test_adminState()
 int
 BasicLog_Test::test_logSize (void)
 {
-
   try
     {
       basicLog_->set_max_size (1);
@@ -403,7 +394,6 @@ BasicLog_Test::test_logSize (void)
 int
 BasicLog_Test::test_logCompaction(CORBA::ULong lifeExpectancy)
 {
-
   CORBA::ULongLong old_n_records = basicLog_->get_n_records ();
   if (old_n_records <= 0)
     {
@@ -470,7 +460,6 @@ BasicLog_Test::test_retrieval (CORBA::ULong /* numberOfRecordsToWrite */)
 
   return rc;
 }
-
 
 
 int
@@ -558,7 +547,6 @@ BasicLog_Test::destroy_log()
 int
 BasicLog_Test::test_log_destroy (void)
 {
-
   ACE_DEBUG ((LM_ERROR, "Testing destroy log\n"));
   this->basicLog_->destroy ();
 
@@ -651,7 +639,6 @@ return 0;
 int
 BasicLog_Test::test_capacity_alarm_threshold (void)
 {
-
   //basicLog_->set_log_full_action(DsLogAdmin::halt);
 
   DsLogAdmin::CapacityAlarmThresholdList list;
@@ -712,5 +699,4 @@ BasicLog_Test::test_capacity_alarm_threshold (void)
   this->write_records (0);
 
   return 0;
-
 }

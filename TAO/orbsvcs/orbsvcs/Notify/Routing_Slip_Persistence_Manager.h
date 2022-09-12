@@ -255,7 +255,6 @@ private:
   ACE_Message_Block * event_mb_;
   ACE_Message_Block * routing_slip_mb_;
 };
-
 } /* namespace TAO_Notify */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

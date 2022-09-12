@@ -37,9 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_Log_Serv_Export TAO_LogNotification
 {
-
 public:
-
   /// Constructor.
   TAO_LogNotification (void);
 

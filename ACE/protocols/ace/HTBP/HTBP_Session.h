@@ -37,7 +37,6 @@ namespace ACE
 {
   namespace HTBP
   {
-
     class Session_Id_t
     {
     public:

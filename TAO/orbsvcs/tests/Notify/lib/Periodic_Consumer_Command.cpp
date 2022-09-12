@@ -83,7 +83,6 @@ TAO_Notify_Tests_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
          }
 
          consumer->init_state (arg_shifter);
-
         } /* -Create */
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Subscription")) == 0) // -Subscription admin_name +added_type1 +-added_type2 ... -added_type3 -added_type4..
         {

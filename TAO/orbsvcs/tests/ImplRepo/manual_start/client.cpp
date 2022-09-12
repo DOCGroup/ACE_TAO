@@ -70,7 +70,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   }
 
   try {
-
     if (parse_args (argc, argv) != 0)
       return 1;
 

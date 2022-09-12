@@ -2,7 +2,6 @@
 #include "URL_Status.h"
 
 
-
 URL_Status::URL_Status (STATUS_CODE code)
   : status_ (code)
 {

@@ -81,7 +81,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   // The _downcast method.
   *os << be_nl_2
       << node->name () << " *" << be_nl
-      << node->name () << "::_downcast ( ::CORBA::ValueBase *v)" << be_nl
+      << node->name () << "::_downcast (::CORBA::ValueBase *v)" << be_nl
       << "{" << be_idt_nl
       << "return dynamic_cast< ::" << node->name () << " * > (v);"
       << be_uidt_nl << "}" << be_nl_2;
@@ -238,7 +238,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "::CORBA::Boolean is_null_object = false;" << be_nl
       << "::CORBA::Boolean is_indirected = false;" << be_nl
       << "TAO_InputCDR indrected_strm ((size_t) 0);" << be_nl
-      << "if ( ::CORBA::ValueBase::_tao_validate_box_type (" << be_idt
+      << "if (::CORBA::ValueBase::_tao_validate_box_type (" << be_idt
       << be_idt << be_idt_nl
       << "strm, indrected_strm," << be_nl
       << node->local_name () << "::_tao_obv_static_repository_id (),"
@@ -480,7 +480,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
     {
       // Public constructor with one argument of type ULong
       *os << vb_node->name () << "::" << vb_node->local_name ()
-          << " ( ::CORBA::ULong max)" << be_nl
+          << " (::CORBA::ULong max)" << be_nl
           << "{" << be_idt_nl
           << node->full_name () << "* p;" << be_nl
           << "ACE_NEW (" << be_idt_nl
@@ -543,7 +543,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
     }
 
   *os << " &" << be_nl
-      << vb_node->name () << "::operator[] ( ::CORBA::ULong index)"
+      << vb_node->name () << "::operator[] (::CORBA::ULong index)"
       << be_nl
       << "{" << be_idt_nl
       << "return (";
@@ -574,7 +574,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
 
   *os << " &" << be_nl;
   *os << vb_node->name ()
-      << "::operator[] ( ::CORBA::ULong index) const" << be_nl
+      << "::operator[] (::CORBA::ULong index) const" << be_nl
       << "{" << be_idt_nl;
 
   switch (bt->node_type())

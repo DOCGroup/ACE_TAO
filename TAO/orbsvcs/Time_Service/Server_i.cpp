@@ -76,7 +76,6 @@ Server_i::create_server (void)
 {
   try
     {
-
       // Create a new server object.
       ACE_NEW_RETURN (this->time_service_server_impl_,
                       TAO_Time_Service_Server,
@@ -229,7 +228,6 @@ Server_i::init (int argc,
 
       // Register the server object with the Naming Service.
       this->register_server ();
-
     }
   catch (const CORBA::Exception& ex)
     {

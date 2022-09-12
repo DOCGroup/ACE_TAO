@@ -88,7 +88,6 @@ namespace TAO
       /// reference.
       SecurityLevel3::CredentialsCurator_var credentials_curator_;
     };
-
   } // End SL3 namespace
 }  // End TAO namespace
 

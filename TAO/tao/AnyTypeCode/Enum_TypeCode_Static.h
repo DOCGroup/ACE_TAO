@@ -102,7 +102,6 @@ namespace TAO
        *       increase cache hits by improving spatial locality.
        */
       //@{
-
       /// Base attributes containing repository ID and name of
       /// structure type.
       Base_Attributes<char const *> base_attributes_;
@@ -113,9 +112,7 @@ namespace TAO
       /// Array of @c TAO::TypeCode enumerators representing
       /// enumerators in the OMG IDL defined @c enum.
       char const * const * const enumerators_;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

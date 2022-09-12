@@ -93,7 +93,6 @@ namespace TAO_Notify
     /// call the reconnect() method on all of our children to give them
     /// the chance to do the same.
     virtual void reconnect (void);
-
   };
 
   /// \brief Base class for Persistent Topology Objects.
@@ -200,7 +199,6 @@ namespace TAO_Notify
     /// \return false if save will never happen
     bool child_change (void);
   };
-
 } // namespace TAO_Notify
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -42,7 +42,6 @@ TAO_Requires_DiffServPolicy_Initializer =
   TAO_DiffServPolicy_Initializer::static_init ();
 
 
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_DiffServPolicy, TAO_DiffServPolicy_Initializer)
 ACE_FACTORY_DECLARE (TAO_DiffServPolicy, TAO_DiffServPolicy_Initializer)
 TAO_END_VERSIONED_NAMESPACE_DECL

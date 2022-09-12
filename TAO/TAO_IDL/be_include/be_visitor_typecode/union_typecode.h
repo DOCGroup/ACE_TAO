@@ -15,7 +15,6 @@
 
 namespace TAO
 {
-
   /**
    * @class be_visitor_union_typecode
    *
@@ -55,7 +54,6 @@ namespace TAO
     /// struct or exception
     bool is_nested_;
   };
-
 }
 
 #endif  /* TAO_BE_VISITOR_UNION_TYPECODE_H */

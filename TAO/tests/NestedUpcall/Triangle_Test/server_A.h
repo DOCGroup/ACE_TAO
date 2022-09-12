@@ -33,9 +33,7 @@
  */
 class Object_A_Server
 {
-
 public:
-
   /// Default constructor
   Object_A_Server (void);
 

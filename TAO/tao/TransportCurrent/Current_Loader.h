@@ -43,7 +43,6 @@ namespace TAO
       /// Protected destructor to enforce reference counting discipline
       ~Current_Loader (void) override;
     };
-
   }
 }
 

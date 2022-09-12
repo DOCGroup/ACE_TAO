@@ -2,7 +2,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 CEC_Counting_Supplier::CEC_Counting_Supplier (void)
   :  event_count (0),
      disconnect_count (0)

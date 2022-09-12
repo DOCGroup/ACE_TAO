@@ -28,7 +28,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class String
      *

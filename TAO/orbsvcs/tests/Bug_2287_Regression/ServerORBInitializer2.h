@@ -25,7 +25,6 @@ class Server_ORBInitializer2 :
   public virtual ::CORBA::LocalObject
 {
 public:
-
   Server_ORBInitializer2 (void);
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
@@ -35,7 +34,6 @@ public:
   void set_server_iogr (CORBA::Object_ptr obj);
 
 private:
-
   /// Register the necessary interceptors.
   void register_server_request_interceptors (PortableInterceptor::ORBInitInfo_ptr info);
 

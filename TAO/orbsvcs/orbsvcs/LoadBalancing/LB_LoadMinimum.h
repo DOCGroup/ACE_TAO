@@ -158,7 +158,6 @@ private:
    * Cached LoadMinimum load balancing strategy property values.
    */
   //@{
-
   ///
   CORBA::Float tolerance_;
 

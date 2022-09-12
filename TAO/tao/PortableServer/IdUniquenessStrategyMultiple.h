@@ -43,7 +43,6 @@ namespace TAO
 
       ::PortableServer::IdUniquenessPolicyValue type() const override;
     };
-
   }
 }
 

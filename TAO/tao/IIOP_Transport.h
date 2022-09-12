@@ -68,7 +68,6 @@ protected:
    * details.
    */
   //@{
-
   ACE_Event_Handler * event_handler_i (void) override;
 
   ssize_t send (iovec *iov, int iovcnt,

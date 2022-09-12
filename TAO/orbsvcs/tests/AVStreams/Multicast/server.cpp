@@ -66,7 +66,6 @@ Server::init (int argc,
 {
   try
     {
-
       PortableServer::POAManager_var mgr
         = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
 
@@ -121,7 +120,6 @@ Server::run (void)
   CORBA::ORB_ptr orb = TAO_AV_CORE::instance ()->orb();
   try
     {
-
       while( !done )
       {
         CORBA::Boolean wp = orb->work_pending ();

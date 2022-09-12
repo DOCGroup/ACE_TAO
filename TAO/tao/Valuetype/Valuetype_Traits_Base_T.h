@@ -16,7 +16,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename object_t, typename object_t_var>
 struct valuetype_traits_base
 {
@@ -46,7 +45,6 @@ struct valuetype_traits_base
     return nil();
   }
 };
-
 } // namespace details
 } // namespace TAO
 

@@ -59,7 +59,6 @@ char *
 PM_Server::handle_protocol_entries (char *buf_ptr,
                                     Drwho_Node *np)
 {
-
   for (; np != 0; np = np->next_)
     {
       ACE_OS::sprintf (buf_ptr,

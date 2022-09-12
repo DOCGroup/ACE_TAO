@@ -154,7 +154,6 @@ Server_Request_Interceptor::send_exception (
                   this->request_count_ - 2));
 
       throw PortableInterceptor::ForwardRequest (this->obj_[0]);
-
     }
 
 }

@@ -22,7 +22,6 @@
 
 namespace Kokyu
 {
-
 class Dispatch_Queue_Item : public ACE_Message_Block
 {
 public:
@@ -92,7 +91,6 @@ private:
   ACE_Deadline_Message_Strategy deadline_msg_strategy_;
   ACE_Laxity_Message_Strategy laxity_msg_strategy_;
 };
-
 } //end of namespace
 
 #if defined (__ACE_INLINE__)

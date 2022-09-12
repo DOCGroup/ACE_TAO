@@ -42,7 +42,6 @@ public:
                        const char *log_message);
 
 private:
-
   /// Called by process_request when the request is a normal request.
   void normal_response (void);
 
@@ -50,7 +49,6 @@ private:
   void cgi_response (void);
 
 private:
-
   /// static version of process_request, just in case.
   static void process_request (HTTP_Response &response);
 

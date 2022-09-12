@@ -48,7 +48,6 @@ class Builder : public ACE_Service_Object
   int job_list (JOB_LIST &job_list);
 
  protected:
-
   /// Number of POA's declared
   int poa_count_;
 

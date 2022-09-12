@@ -118,7 +118,6 @@ DatabaseImpl::Agent::Agent (CORBA::ORB_ptr orb,
     common_servant_ (orb,
                      poa)
 {
-
   this->poa_->set_servant (&this->common_servant_);
 }
 

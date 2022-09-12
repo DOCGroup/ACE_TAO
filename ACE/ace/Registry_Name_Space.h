@@ -123,7 +123,6 @@ public:
   void dump () const;
 
 private:
-
   /// current context
   ACE_Registry::Naming_Context context_;
 };

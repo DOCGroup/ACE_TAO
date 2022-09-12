@@ -300,7 +300,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::calculate_spoke
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> long
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::generate_timer_id (u_int spoke)
 {
-
   int cnt_bits = sizeof (long) * 8 - this->spoke_bits_;
   long max_cnt = ((long)1 << cnt_bits) - 1;
   if (spoke == this->spoke_count_)

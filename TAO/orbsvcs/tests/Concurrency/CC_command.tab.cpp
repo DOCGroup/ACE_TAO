@@ -54,7 +54,6 @@ typedef union {
 #endif
 
 
-
 #define ACE_CC_YYFINAL    66
 #define ACE_CC_YYFLAG   -32768
 #define ACE_CC_YYNTBASE 24
@@ -413,7 +412,6 @@ __ace_cc_yy_memcpy (char *to, char *from, unsigned int count)
 #endif
 
 
-
 /* The user can define ACE_CC_YYPARSE_PARAM as the name of an argument to be passed
    into ace_cc_yyparse.  The argument should have type void *.
    It should actually point to an object.
@@ -739,7 +737,6 @@ ace_cc_yyreduce:
 
 
   switch (ace_cc_yyn) {
-
 case 2:
 { cmdlist->add(new CC_Sleep_Cmd(0));
          /* dummy to check exeption in the last command */

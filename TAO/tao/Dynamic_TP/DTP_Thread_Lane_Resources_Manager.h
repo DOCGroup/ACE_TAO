@@ -64,7 +64,6 @@ public:
 
   /// @name Accessors
   // @{
-
   TAO_Thread_Lane_Resources &lane_resources (void) override;
 
   TAO_Thread_Lane_Resources &default_lane_resources (void) override;
@@ -101,7 +100,6 @@ public:
   TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (
     TAO_ORB_Core &core) override;
 };
-
 
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP,

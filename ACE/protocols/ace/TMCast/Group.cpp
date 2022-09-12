@@ -181,7 +181,6 @@ namespace ACE_TMCast
                 }
                 else if ((data = dynamic_cast<LinkData*> (m.get ())))
                 {
-
                   // INSYNC, TL, CT
 
                   // Filter out loopback.

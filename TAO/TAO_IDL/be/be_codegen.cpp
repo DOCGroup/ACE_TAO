@@ -2338,7 +2338,6 @@ TAO_CodeGen::gen_stub_hdr_includes ()
                                this->client_header_);
 
 
-
   if (idl_global->abstract_iface_seen_ || idl_global->abstractbase_seen_)
     {
       // Include the AbstractBase file from the Valuetype library.

@@ -68,7 +68,6 @@ public:
   static TAO_ValueFactory_Map * instance (void);
 
 private:
-
   /// The hash table data structure.
   typedef ACE_Hash_Map_Manager_Ex<const char *,
                                   CORBA::ValueFactory,

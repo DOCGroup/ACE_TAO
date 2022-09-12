@@ -5,7 +5,6 @@
 FP_DT_Creator::FP_DT_Creator (void)
 {
   DT_TEST::instance ()->dt_creator (this);
-
 }
 
 Thread_Task*

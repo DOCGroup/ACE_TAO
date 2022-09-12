@@ -9,7 +9,6 @@
 
 namespace Kokyu
 {
-
 /*
 //@@VS: This is somehow not being recognized by MSVC, which results
 //in a link error. For now, the definition has been moved to the .h

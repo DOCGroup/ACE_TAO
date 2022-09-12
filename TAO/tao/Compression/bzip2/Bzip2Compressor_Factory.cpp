@@ -5,7 +5,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
 Bzip2_CompressorFactory::Bzip2_CompressorFactory (void) :
   ::TAO::CompressorFactory (::Compression::COMPRESSORID_BZIP2),
   compressor_ (::Compression::Compressor::_nil ())

@@ -30,7 +30,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
   * Default fault analyzer.
   *
@@ -38,7 +37,6 @@ namespace TAO
   class TAO_ReplicationManagerLib_Export FT_DefaultFaultAnalyzer
     : public ::TAO::FT_FaultAnalyzer
   {
-
   public:
     /**
     * Default constructor.
@@ -74,9 +72,7 @@ namespace TAO
     FT_DefaultFaultAnalyzer (const FT_DefaultFaultAnalyzer & rhs);
     /// Assignment operator.
     FT_DefaultFaultAnalyzer & operator = (const FT_DefaultFaultAnalyzer & rhs);
-
   };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

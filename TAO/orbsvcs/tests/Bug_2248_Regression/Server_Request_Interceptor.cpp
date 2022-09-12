@@ -38,7 +38,6 @@ Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr //
     )
 {
-
 }
 
 void

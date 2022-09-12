@@ -29,7 +29,6 @@
  */
 class Quoter_Generic_Factory_Server
 {
-
 public:
   /// Default constructor
   Quoter_Generic_Factory_Server (void);

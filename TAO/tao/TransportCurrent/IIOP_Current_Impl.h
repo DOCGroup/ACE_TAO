@@ -31,7 +31,6 @@ namespace TAO
 {
   namespace Transport
   {
-
     /**
      * @class IIOP_Current_Impl
      *

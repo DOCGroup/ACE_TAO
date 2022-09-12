@@ -296,7 +296,6 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
                                  ACE_TEXT ("create_response_handler_operation - ")
                                  ACE_TEXT ("bad node in this scope\n")),
                                 -1);
-
             }
 
           AST_Argument *original_arg =

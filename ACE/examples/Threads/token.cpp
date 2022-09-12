@@ -6,7 +6,6 @@
 #include "ace/OS_NS_time.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 class My_Task : public ACE_Task<ACE_MT_SYNCH>

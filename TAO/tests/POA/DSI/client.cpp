@@ -95,7 +95,6 @@ read_IOR_from_file (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   char str [255];
   // Initialize the ORB
   try

@@ -48,7 +48,6 @@ namespace Stock
     /// Register mapping.
     static void register_mapping (CORBA::ORB_ptr orb);
   };
-
 }
 
 #endif  // !defined STOCK_PRIORITYMAPPING_

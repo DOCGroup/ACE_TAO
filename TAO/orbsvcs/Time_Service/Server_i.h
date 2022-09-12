@@ -57,7 +57,6 @@ public:
                   ACE_TCHAR* argv[]);
 
 private:
-
   /// My orb.
   CORBA::ORB_var orb_;
 

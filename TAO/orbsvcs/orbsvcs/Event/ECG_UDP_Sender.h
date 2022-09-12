@@ -102,7 +102,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Sender :
 public:
   /// Initialization and termination methods.
   //@{
-
   /// Create a new TAO_ECG_UDP_Sender object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_UDP_Sender objects are heap-allocated.)

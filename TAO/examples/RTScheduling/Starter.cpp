@@ -126,7 +126,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Starter starter (orb.in ());
 
       starter.init ();
-
     }
   catch (const CORBA::Exception& ex)
     {

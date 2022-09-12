@@ -23,7 +23,6 @@
 #include "ace/SString.h"
 
 
-
 class Test_SIGINT_Handler : public ACE_Event_Handler
 {
 public:

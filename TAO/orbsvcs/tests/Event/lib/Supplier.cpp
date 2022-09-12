@@ -204,7 +204,6 @@ EC_Supplier_Task::EC_Supplier_Task (EC_Supplier* supplier,
 int
 EC_Supplier_Task::svc (void)
 {
-
   // Initialize a time value to pace the test
   ACE_Time_Value tv (0, this->burst_pause_);
 
@@ -234,7 +233,6 @@ EC_Supplier_Task::svc (void)
               // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
 
               this->supplier_->send_event (event);
-
             }
           catch (const CORBA::SystemException& sys_ex)
             {

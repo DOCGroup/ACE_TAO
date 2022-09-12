@@ -100,7 +100,6 @@ Driver::init (int argc, ACE_TCHAR **argv)
       ACE_OS::strcpy (exception_string,"Param_Test::_narrow () failed.");
 
       this->objref_ = Param_Test::_narrow (temp.in());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -616,7 +615,6 @@ Driver::run (void)
 
       this->objref_ = Param_Test::_nil ();
       this->orb_->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {

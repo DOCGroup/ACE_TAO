@@ -36,7 +36,6 @@
 #include "ace/os_include/os_netdb.h"
 
 
-
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 // This test doesn't work well using fork() on MacOS X.  So we

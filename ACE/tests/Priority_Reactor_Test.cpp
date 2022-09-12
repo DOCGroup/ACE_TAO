@@ -32,7 +32,6 @@
 #include <utility>
 
 
-
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 // The number of children to run, it can be changed using the -c

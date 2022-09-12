@@ -36,7 +36,6 @@ namespace TAO
 
       void destroy (IdUniquenessStrategy *strategy) override;
     };
-
   }
 }
 

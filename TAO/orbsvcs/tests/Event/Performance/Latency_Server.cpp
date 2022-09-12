@@ -11,7 +11,6 @@
 #include "ace/OS_NS_errno.h"
 
 
-
 const ACE_TCHAR *ior_file_name = ACE_TEXT("ec.ior");
 
 /// Parse the arguments.

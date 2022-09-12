@@ -50,7 +50,6 @@
  */
 class Mem_Map_Stream
 {
-
 public:
   typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;
 
@@ -193,7 +192,6 @@ private:
 
   /// Address at the end of the file mapping.
   char *end_of_mapping_plus1_;
-
 };
 
 #include /**/ "ace/post.h"

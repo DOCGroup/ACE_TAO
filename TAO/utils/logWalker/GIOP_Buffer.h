@@ -31,7 +31,6 @@ class Thread;
 class GIOP_Buffer
 {
 public:
-
   static const char *size_leadin;
   static size_t leadin_len;
   static const size_t giop_header_len;

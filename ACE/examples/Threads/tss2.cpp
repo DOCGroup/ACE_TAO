@@ -20,7 +20,6 @@
 #include "TSS_Task.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 const int MAX_TASKS = 4;

@@ -15,7 +15,6 @@ StructuredEventSupplier_i::disconnect_structured_push_supplier ()
    PortableServer::POA_var poa = current->get_POA ();
    PortableServer::ObjectId_var objectId = current->get_object_id ();
    poa->deactivate_object (objectId.in());
-
 }
 
 void

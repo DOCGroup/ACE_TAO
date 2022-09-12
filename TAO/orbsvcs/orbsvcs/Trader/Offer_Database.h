@@ -50,7 +50,6 @@ class TAO_Offer_Database
 {
   friend class TAO_Service_Offer_Iterator<LOCK_TYPE>;
 public:
-
   // Traits
   typedef TAO_Service_Offer_Iterator<LOCK_TYPE> offer_iterator;
 

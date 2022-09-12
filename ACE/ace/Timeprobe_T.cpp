@@ -33,7 +33,6 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (u_long size)
                         this->max_size_);
   //FUZZ: enable check_for_lack_ACE_OS
   this->timeprobes_ = temp;
-
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
@@ -56,7 +55,6 @@ ACE_Timeprobe_Ex (ALLOCATOR *allocator,
                         this->max_size_);
   //FUZZ: enable check_for_lack_ACE_OS
   this->timeprobes_ = temp;
-
 }
 
 template <class ACE_LOCK, class ALLOCATOR>

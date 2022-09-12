@@ -70,7 +70,6 @@ namespace ACE
       ssize_t recv_data_header (Channel *) override;
       ssize_t recv_data_trailer(Channel *) override;
     };
-
   }
 }
 

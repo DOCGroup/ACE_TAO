@@ -23,7 +23,6 @@ namespace TAO
 {
   namespace Utils
   {
-
     /**
      * @class PolicyList_Destroyer
      *
@@ -37,7 +36,6 @@ namespace TAO
       PolicyList_Destroyer(CORBA::ULong length_hint);
       ~PolicyList_Destroyer() throw () override;
     };
-
   } // namespace Utils
 } // namespace TAO
 

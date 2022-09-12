@@ -7,7 +7,6 @@
 #include "Peer_Router.h"
 
 
-
 // Send the <ACE_Message_Block> to all the peers.  Note that in a
 // "real" application this logic would most likely be more selective,
 // i.e., it would actually do "routing" based on addressing

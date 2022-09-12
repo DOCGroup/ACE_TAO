@@ -54,7 +54,6 @@ public:
    * Methods required by the CosLoadBalancing::LoadManager interface.
    */
   //@{
-
   /// For the PUSH load monitoring style.
   void push_loads (const PortableGroup::Location & the_location,
                            const CosLoadBalancing::LoadList & loads) override;
@@ -107,7 +106,6 @@ public:
    * Methods required by the PortableGroup::PropertyManager interface.
    */
   //@{
-
   /// Set the default properties to be used by all object groups.
   void set_default_properties (
       const PortableGroup::Properties & props) override;
@@ -167,7 +165,6 @@ public:
    * interface.
    */
   //@{
-
   /// Create a member using the load balancer ObjectGroupManager, and
   /// add the created object to the ObjectGroup.
   PortableGroup::ObjectGroup_ptr create_member (
@@ -227,7 +224,6 @@ public:
    * Methods required by the PortableGroup::GenericFactory interface.
    */
   //@{
-
   /**
    * Create an object of the specified type that adheres to the
    * restrictions defined by the provided Criteria.  The out

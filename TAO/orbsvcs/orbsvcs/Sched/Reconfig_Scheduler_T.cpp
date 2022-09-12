@@ -626,7 +626,6 @@ reset (RtecScheduler::handle_t handle,
 }
 
 
-
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -1159,7 +1158,6 @@ recompute_scheduling (CORBA::Long /* minimum_priority */,
   // If everything is already up to date, we're done.
   if (SCHED_ALL_STABLE == stability_flags_)
     {
-
       // Must always provide a value for an out parameter
       ACE_NEW_THROW_EX (anomalies,
          RtecScheduler::Scheduling_Anomaly_Set (0),
@@ -1173,7 +1171,6 @@ recompute_scheduling (CORBA::Long /* minimum_priority */,
   if ((this->stability_flags_ & SCHED_PROPAGATION_NOT_STABLE)
       || (this->stability_flags_ & SCHED_UTILIZATION_NOT_STABLE))
     {
-
 #if defined (SCHEDULER_LOGGING)
       ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
                                                     this->rt_info_count_,
@@ -1857,7 +1854,6 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
                    number_of_calls,
                    dependency_type,
                    enabled);
-
 }
 
 
@@ -2207,7 +2203,6 @@ dfs_traverse_i (void)
         }
     }
 }
-
 
 
 // Sorts an array of RT_info handles in topological order, then

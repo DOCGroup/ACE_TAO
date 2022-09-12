@@ -15,7 +15,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-
   /// Constructor
   Client_Task (Test::Roundtrip_ptr reference,
                int iterations,
@@ -25,10 +24,8 @@ public:
   int svc (void);
 
 private:
-
   const int niterations;
   Test::Roundtrip_var remote_ref_;
-
 };
 
 #include /**/ "ace/post.h"

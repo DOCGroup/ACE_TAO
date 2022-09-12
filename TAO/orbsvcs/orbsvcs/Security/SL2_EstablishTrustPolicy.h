@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace Security
   {
-
     /**
      * @class EstablishTrustPolicy
      *
@@ -85,7 +84,6 @@ namespace TAO
       /// reference and used to protect messages.
       ::Security::EstablishTrust const trust_;
     };
-
   } // End Security namespace
 }  // End TAO namespace
 

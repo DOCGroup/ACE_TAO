@@ -122,7 +122,6 @@ namespace TAO
       /// this object is registered.
       TAO_ORB_Core * const orb_core_;
     };
-
   } // End SL3 namespace
 }  // End TAO namespace
 

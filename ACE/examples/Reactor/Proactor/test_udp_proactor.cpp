@@ -23,7 +23,6 @@
 #include "ace/Log_Msg.h"
 
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on asynch I/O-capable platforms.
 
@@ -234,7 +233,6 @@ protected:
   virtual void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result);
 
 private:
-
   /// Network I/O handle
   ACE_SOCK_Dgram sock_dgram_;
 

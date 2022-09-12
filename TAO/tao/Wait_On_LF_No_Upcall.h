@@ -55,7 +55,6 @@ namespace TAO
 
     /*! @copydoc TAO_Wait_Strategy::defer_upcall() */
     int defer_upcall (ACE_Event_Handler*) override;
-
   };
 }
 

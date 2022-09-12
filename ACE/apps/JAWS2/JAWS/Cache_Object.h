@@ -46,14 +46,12 @@ public:
   virtual ACE_Lock & lock (void) = 0;
 
 protected:
-
   virtual unsigned int count_i () const = 0;
   virtual int acquire_i (void) = 0;
   virtual int release_i (void) = 0;
   virtual unsigned int priority_i () const = 0;
 
 private:
-
   void *internal_;
   const void *data_;
   size_t size_;
@@ -63,7 +61,6 @@ private:
   time_t new_last_access_;
 
   void *heap_item_;
-
 };
 
 class JAWS_Referenced_Cache_Object : public JAWS_Cache_Object
@@ -75,17 +72,14 @@ public:
   virtual ACE_Lock & lock (void);
 
 protected:
-
   virtual unsigned int count_i () const;
   virtual int acquire_i (void);
   virtual int release_i (void);
   virtual unsigned int priority_i () const;
 
 private:
-
   mutable ACE_SYNCH_RW_MUTEX count_;
   mutable ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX> lock_adapter_;
-
 };
 
 class JAWS_Counted_Cache_Object : public JAWS_Cache_Object
@@ -97,25 +91,21 @@ public:
   virtual ACE_Lock & lock (void);
 
 protected:
-
   virtual unsigned int count_i () const;
   virtual int acquire_i (void);
   virtual int release_i (void);
   virtual unsigned int priority_i () const;
 
 private:
-
   unsigned int count_;
   unsigned int new_count_;
   mutable ACE_SYNCH_MUTEX lock_;
   mutable ACE_Lock_Adapter<ACE_SYNCH_MUTEX> lock_adapter_;
-
 };
 
 class JAWS_Cache_Object_Factory
 {
 public:
-
   JAWS_Cache_Object_Factory (ACE_Allocator *alloc = 0);
   virtual ~JAWS_Cache_Object_Factory (void);
 
@@ -125,9 +115,7 @@ public:
   virtual void destroy (JAWS_Cache_Object *) = 0;
 
 protected:
-
   ACE_Allocator *allocator_;
-
 };
 
 class JAWS_Referenced_Cache_Object_Factory : public JAWS_Cache_Object_Factory
@@ -138,7 +126,6 @@ public:
 
   virtual JAWS_Cache_Object * create (const void *, size_t);
   virtual void destroy (JAWS_Cache_Object *);
-
 };
 
 class JAWS_Counted_Cache_Object_Factory : public JAWS_Cache_Object_Factory
@@ -149,7 +136,6 @@ public:
 
   virtual JAWS_Cache_Object * create (const void *, size_t);
   virtual void destroy (JAWS_Cache_Object *);
-
 };
 
 #endif /* JAWS_CACHE_OBJECT_H */

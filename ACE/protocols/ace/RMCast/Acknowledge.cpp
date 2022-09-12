@@ -116,7 +116,6 @@ namespace ACE_RMCast
             Message_ptr m (new Message);
             m->add (nrtm);
             msgs.push_back (m);
-
           }
         }
       }

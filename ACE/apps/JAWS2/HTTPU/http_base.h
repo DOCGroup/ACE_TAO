@@ -15,7 +15,6 @@
 class HTTPU_Export HTTP_Base : public HTTP_SCode_Base
 {
 public:
-
   HTTP_Base (void);
   virtual ~HTTP_Base (void);
 
@@ -40,7 +39,6 @@ public:
   void dump (void);
 
 protected:
-
   virtual void parse_line (void) = 0;
   // Hook into the receive function to do specialized parsing of initial line.
   // Sets the status_ variable.
@@ -61,7 +59,6 @@ protected:
   // Return 1 if line successfully parsed.
 
 protected:
-
   int status_;
   char *line_;
   int deliver_state_;
@@ -70,7 +67,6 @@ protected:
   JAWS_Header_Table_Iterator iter_;
   ACE_Message_Block *mb_;
   ACE_Message_Block payload_;
-
 };
 
 

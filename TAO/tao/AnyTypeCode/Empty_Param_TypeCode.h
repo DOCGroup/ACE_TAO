@@ -27,7 +27,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Empty_Param
      *
@@ -78,7 +77,6 @@ namespace TAO
       CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::TypeCode_ptr get_compact_typecode_i () const override;
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

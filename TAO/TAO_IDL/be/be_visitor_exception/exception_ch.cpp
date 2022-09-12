@@ -72,9 +72,9 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
     }
 
   *os << "static " << node->local_name ()
-      << " *_downcast ( ::CORBA::Exception *);" << be_nl
+      << " *_downcast (::CORBA::Exception *);" << be_nl
       << "static const " << node->local_name ()
-      << " *_downcast ( ::CORBA::Exception const *);" << be_nl_2;
+      << " *_downcast (::CORBA::Exception const *);" << be_nl_2;
 
   *os << "static ::CORBA::Exception *_alloc ();" << be_nl_2;
 

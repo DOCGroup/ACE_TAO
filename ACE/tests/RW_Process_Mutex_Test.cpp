@@ -22,7 +22,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 // The parent process is number -1. Writer is 0; Readers are 1-3.
 static int child_nr = -1;
 static u_short reporting_port = 0;

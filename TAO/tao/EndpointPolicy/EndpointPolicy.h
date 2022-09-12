@@ -40,7 +40,6 @@ static int
 TAO_Requires_EndpointPolicy_Initializer = TAO_EndpointPolicy_Initializer::static_init ();
 
 
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_EndpointPolicy, TAO_EndpointPolicy_Initializer)
 ACE_FACTORY_DECLARE (TAO_EndpointPolicy, TAO_EndpointPolicy_Initializer)
 

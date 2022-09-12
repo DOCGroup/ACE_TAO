@@ -13,7 +13,6 @@ Inner_callback_i::Inner_callback_i (PortableServer::POA_ptr p,
 Inner_callback_i::~Inner_callback_i (void)
 {
   std::cout << "Inner_callback_i destroying" << std::endl;
-
 }
 
 void

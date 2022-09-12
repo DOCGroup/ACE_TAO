@@ -125,7 +125,6 @@ ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
         ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream %p\n"),
         ACE_TEXT ("- cannot allocate new SSL structure")
      ));
-
 }
 
 ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream (void)

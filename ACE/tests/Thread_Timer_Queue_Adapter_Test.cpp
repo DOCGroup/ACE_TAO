@@ -22,7 +22,6 @@
 class ICustomEventHandler
 {
     public:
-
         /// Default constructor.
         ///
         /// @return
@@ -51,7 +50,6 @@ class ICustomEventHandler
 class CCustomEventHandlerUpcall
 {
     public:
-
         using TTimerQueue = ACE_Timer_Queue_T<ICustomEventHandler *, CCustomEventHandlerUpcall, ACE_Null_Mutex>;
 
         /// Default constructor
@@ -115,7 +113,6 @@ class CCustomEventHandlerUpcall
 class CTestEventHandler : public ICustomEventHandler
 {
     public:
-
         /// Default constructor.
         ///
         /// @return
@@ -154,7 +151,6 @@ class CTestEventHandler : public ICustomEventHandler
         }
 
     private:
-
         long* m_p_iCallCount;
         ACE_Thread_Mutex m_Mutex;
 };

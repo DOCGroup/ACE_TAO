@@ -44,5 +44,4 @@ PeerObject::dump_detail (ostream &strm)
         << s << " invocation"
         << (s > 1 ? "s" : "")
         << endl;
-
 }

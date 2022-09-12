@@ -16,7 +16,6 @@ class test_i :
   public POA_test
 {
 public:
-
   test_i (CORBA::ORB_ptr orb);
 
   void normal_method (void);
@@ -104,7 +103,6 @@ class test_factory_i :
   public POA_test_factory
 {
 public:
-
   test_factory_i (CORBA::ORB_ptr orb);
 
   test_ptr create_test (void);

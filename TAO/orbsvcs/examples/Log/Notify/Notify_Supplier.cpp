@@ -28,7 +28,6 @@ Supplier::Supplier (void)
 
 Supplier::~Supplier ()
 {
-
 }
 
 int
@@ -39,7 +38,6 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       // ORB initialization boiler plate...
       this->orb_ =
         CORBA::ORB_init (argc, argv);
-
 
 
       CORBA::Object_var naming_obj =
@@ -221,7 +219,6 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
      ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 
      this->notify_log_->destroy();
-
      }
   catch (const CORBA::Exception& ex)
     {

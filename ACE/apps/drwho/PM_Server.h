@@ -21,7 +21,6 @@
  */
 class PM_Server : public Protocol_Manager
 {
-
 public:
   PM_Server (void);
   virtual ~PM_Server (void);

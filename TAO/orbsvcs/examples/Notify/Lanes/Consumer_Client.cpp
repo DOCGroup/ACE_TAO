@@ -9,7 +9,6 @@
 #include "ace/OS_NS_errno.h"
 
 
-
 TAO_Notify_Lanes_Consumer_Client::TAO_Notify_Lanes_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
   , lane_priority_ (0)
@@ -181,7 +180,6 @@ TAO_Notify_Lanes_Consumer_Client::svc (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Supplier error "));
-
     }
 
   return 0;

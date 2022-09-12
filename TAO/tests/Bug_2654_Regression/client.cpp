@@ -95,7 +95,6 @@ Worker::svc()
           ACE_Time_Value udelay(0,400);
           struct timespec ts = udelay;
           ACE_OS::nanosleep (&ts);
-
         }
       catch (const CORBA::Exception &ex)
         {
@@ -280,7 +279,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
 
       init_callback(worker);
-
     }
   catch (const CORBA::Exception &ex)
     {

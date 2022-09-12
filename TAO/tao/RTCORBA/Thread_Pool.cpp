@@ -819,7 +819,6 @@ TAO_Thread_Pool_Manager::destroy_threadpool (RTCORBA::ThreadpoolId threadpool)
 
   // Delete the thread pool.
   delete tao_thread_pool;
-
 }
 
 RTCORBA::ThreadpoolId

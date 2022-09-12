@@ -596,7 +596,6 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "Peer Address %s\n",
                   buf));
-
     }
 
   if (tokenizer [TAO_AV_FLOW_PROTOCOL] != 0)
@@ -736,7 +735,6 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
             //inet_addr->get_host_name (address, BUFSIZ);
 
             //cstring += ACE_OS::itoa (address, BUFSIZ, inet_addr->get_port_number ());
-
           }
           break;
         default:
@@ -982,7 +980,6 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string ()
       char port_str[10];
       ACE_OS::sprintf(port_str, "%u", control_port);
       address_str += port_str;
-
     }
 
   this->entry_ = this->flowname_;

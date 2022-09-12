@@ -50,7 +50,6 @@ struct Schedule_Viewer_Data
 class DualEC_Supplier
 {
 public:
-
   DualEC_Supplier (int argc, ACE_TCHAR** argv);
 
   ~DualEC_Supplier (void);
@@ -72,7 +71,6 @@ public:
 
 
 private:
-
 /**
  * @class Terminator
  *

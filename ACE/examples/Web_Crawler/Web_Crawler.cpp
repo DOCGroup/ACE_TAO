@@ -3,7 +3,6 @@
 #include "Web_Crawler.h"
 
 
-
 Web_Crawler::~Web_Crawler (void)
 {
   delete this->url_visitor_factory_;

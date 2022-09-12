@@ -20,7 +20,6 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-
   /// Constructor
   Hello (CORBA::ORB_ptr orb);
 
@@ -30,10 +29,8 @@ public:
   virtual void shutdown (void);
 
 private:
-
   /// The ORB which will be shutdown by Hello::shutdown().
   CORBA::ORB_var orb_;
-
 };
 
 #endif /* HELLO_H */

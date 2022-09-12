@@ -23,7 +23,6 @@
  */
 class be_visitor_root : public be_visitor_module
 {
-
 public:
   be_visitor_root (be_visitor_context *ctx);
 

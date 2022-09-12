@@ -52,7 +52,6 @@ public:
                                ts.whatEver._tao_get_typecode()->id(),
                                ts.whatEver._tao_get_typecode()->name(),
                                ts.whatEver._tao_get_typecode()->kind()));
-
       }
     else
       {

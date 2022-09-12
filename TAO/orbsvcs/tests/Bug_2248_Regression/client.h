@@ -12,7 +12,6 @@
 class Manager
 {
 public:
-
   Manager (void);
   // Ctor
 
@@ -34,7 +33,6 @@ public:
   CORBA::ORB_ptr orb (void);
 
 private:
-
   /// Write the merged IOGRs to a file
   int write_to_file (CORBA::Object_ptr ior, const ACE_TCHAR* ior_output_file);
 

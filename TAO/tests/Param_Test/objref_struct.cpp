@@ -94,7 +94,6 @@ Test_Objref_Struct::init_parameters (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Objref_Struct::init_parameters\n");
-
     }
   return -1;
 }
@@ -132,7 +131,6 @@ Test_Objref_Struct::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Objref_Struct::run_sii_test\n");
-
     }
   return -1;
 }
@@ -176,7 +174,6 @@ Test_Objref_Struct::check_validity (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Objref_Struct::check_validity\n");
-
     }
   return 0;
 }

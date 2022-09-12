@@ -318,7 +318,6 @@ public:
    * lock atomically over a number of calls to ACE_Log_Msg.
    */
   //@{
-
   /// Acquire the internal lock.
   int acquire ();
 

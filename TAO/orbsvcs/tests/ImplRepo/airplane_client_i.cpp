@@ -5,7 +5,6 @@
 #include "ace/ACE.h"
 
 
-
 // Constructor.
 Airplane_Client_i::Airplane_Client_i (void)
   : argc_ (0),

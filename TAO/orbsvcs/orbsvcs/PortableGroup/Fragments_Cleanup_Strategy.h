@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
 {
-
   /**
    * @class Fragments_Cleanup_Strategy
    *
@@ -99,7 +98,6 @@ namespace TAO_PG
 
     void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets) override;
   };
-
 } // namespace TAO_PG
 
 TAO_END_VERSIONED_NAMESPACE_DECL

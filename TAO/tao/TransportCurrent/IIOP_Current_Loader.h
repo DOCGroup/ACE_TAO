@@ -25,7 +25,6 @@ namespace TAO
 {
   namespace Transport
   {
-
     namespace IIOP
     {
       class TAO_Transport_Current_Export Current_Loader

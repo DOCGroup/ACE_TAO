@@ -30,7 +30,6 @@
  */
 class Consumer : public POA_CosEventComm::PushConsumer, public Multiple
 {
-
 public:
   // = Initializatiopn and termination methods.
   /// Constructor.

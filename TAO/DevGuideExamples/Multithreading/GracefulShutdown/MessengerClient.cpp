@@ -28,7 +28,6 @@ int parse_args (int argc, ACE_TCHAR* argv[])
                            "-x - call shutdown on server\n",
                            argv[0]),
                            -1);
-
     }
   }
   return 0;

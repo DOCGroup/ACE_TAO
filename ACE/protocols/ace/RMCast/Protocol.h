@@ -1077,7 +1077,6 @@ namespace ACE_RMCast
         os << sn;
         os << addr;
         os << port;
-
       }
     }
 
@@ -1261,7 +1260,6 @@ namespace ACE_RMCast
     u32 of_;
     u64 total_size_;
   };
-
 }
 
 /*

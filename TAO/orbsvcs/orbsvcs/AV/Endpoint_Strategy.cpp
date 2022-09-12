@@ -259,7 +259,6 @@ TAO_AV_Endpoint_Process_Strategy_A::create_A (AVStreams::StreamEndPoint_A_ptr &s
   stream_endpoint = AVStreams::StreamEndPoint_A::_duplicate( this->stream_endpoint_a_.in() );
   vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
   return 0;
-
 }
 
 // Gets the stream endpoint object reference from the naming service

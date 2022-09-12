@@ -84,7 +84,6 @@ protected:
 class JAWS_IO_Handler
 {
 public:
-
   /// Destructor.
   virtual ~JAWS_IO_Handler (void);
 
@@ -123,7 +122,6 @@ public:
   /// This method is called by the IO class when the error message has
   /// been delivered to the client.
   virtual void error_message_complete (void) = 0;
-
 };
 
 /**

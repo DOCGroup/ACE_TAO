@@ -23,9 +23,7 @@
  */
 class QoS_Util
 {
-
 public:
-
   // constructor.
   QoS_Util (int argc, ACE_TCHAR *argv[]);
 
@@ -47,7 +45,6 @@ public:
   int multicast_flag () const;
 
 private:
-
   // Command line arguments.
   int argc_;
   ACE_TCHAR **argv_;
@@ -66,7 +63,6 @@ private:
 
   // Multicast Flag.
   int multicast_flag_;
-
 };
 
 #endif /* QOS_UTIL_H */

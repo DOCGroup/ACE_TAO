@@ -32,7 +32,6 @@ Test_Thread_Action::Test_Thread_Action (void)
 void
 Test_Thread_Action::_cxx_do (CORBA::VoidData data)
 {
-
   Data* tmp = (Data*) data;
   ACE_DEBUG ((LM_DEBUG,
               "Test_Thread_Action::do %C\n",

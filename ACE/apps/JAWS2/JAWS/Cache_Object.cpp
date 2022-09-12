@@ -146,7 +146,6 @@ JAWS_Referenced_Cache_Object::priority_i () const
 }
 
 
-
 JAWS_Counted_Cache_Object::
 JAWS_Counted_Cache_Object (const void *data, size_t size)
   : JAWS_Cache_Object (data, size),

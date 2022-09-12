@@ -55,5 +55,4 @@ Client_Task::svc (void)
     }
 
   return status;
-
 }

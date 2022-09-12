@@ -469,7 +469,6 @@ protected:
 
   /// Number of records to be deleted
   size_t handles_to_be_deleted_;
-
 };
 
 /**
