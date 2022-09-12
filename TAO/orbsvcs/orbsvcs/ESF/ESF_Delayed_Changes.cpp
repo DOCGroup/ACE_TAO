@@ -55,7 +55,6 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
   for (ITERATOR i = this->collection_.begin (); i != end; ++i)
     {
       worker->work (*i);
-
   }
 }
 

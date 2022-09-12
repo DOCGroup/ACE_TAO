@@ -37,7 +37,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Policy_Set
 {
 public:
-
   /** Creates a TAO_Policy_Set that has a given scope. The
    * scope is used to determinate whether or not a given policy can
    * be set for the given Policy Manager Implementation.

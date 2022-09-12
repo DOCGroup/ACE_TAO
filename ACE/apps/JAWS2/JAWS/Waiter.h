@@ -39,7 +39,6 @@ public:
 
 private:
   JAWS_Waiter_Base_Iterator iter_;
-
 };
 
 typedef ACE_Singleton<JAWS_Waiter, ACE_SYNCH_MUTEX> JAWS_Waiter_Singleton;

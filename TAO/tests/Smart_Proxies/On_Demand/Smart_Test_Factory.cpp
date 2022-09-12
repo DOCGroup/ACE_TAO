@@ -17,7 +17,6 @@ Smart_Test_Factory::create_proxy (Test_ptr proxy)
      ACE_NEW_RETURN (proxy, Smart_Test_Proxy (proxy), 0);
 
    return proxy;
-
  }
 
 // The following Factory is used by the <ACE_Service_Config> to

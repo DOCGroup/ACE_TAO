@@ -91,9 +91,7 @@ parse_args (int argc, ACE_TCHAR **argv)
 
 class Client
 {
-
 public:
-
   Client (test_ptr test,
           CORBA::ORB_ptr orb,
           RTCORBA::Current_ptr current,
@@ -114,13 +112,11 @@ public:
 
 
 private:
-
   test_var test_;
   CORBA::ORB_var orb_;
   RTCORBA::Current_var current_;
   RTCORBA::RTORB_var rt_orb_;
   CORBA::PolicyManager_var policy_manager_;
-
 };
 
 class Worker_Thread : public ACE_Task_Base
@@ -367,14 +363,12 @@ Client::reset_policies (void)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
   int svc (void);
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -478,7 +472,6 @@ Task::svc (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       CORBA::ORB_var orb =

@@ -136,7 +136,6 @@ void ValueListCtrl::OnModify(wxCommandEvent& event)
 
         Value = Dlg.GetUINTValue();
         m_pConfig->set_integer_value(m_Key, Name, Value);
-
       }
       break;
     case ACE_Configuration::BINARY:

@@ -27,7 +27,6 @@ Object_A_i::~Object_A_i (void)
 }
 
 
-
 void
 Object_A_i::foo (Initiator_ptr theInitiator_ptr)
 {
@@ -49,7 +48,6 @@ void
 Object_A_i::finish (void)
 {
   this->finish_two_way_call_ = 1;
-
 }
 
 void

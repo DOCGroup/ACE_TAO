@@ -204,7 +204,6 @@ DT_Creator::register_synch_obj (void)
         this->naming_->resolve (name);
 
       synch_context = CosNaming::NamingContext::_narrow (object.in ());
-
     }
 
   ACE_CString synch_name ("Synch");
@@ -229,7 +228,6 @@ DT_Creator::register_synch_obj (void)
   // Register the synch object with the Synch context.
   synch_context->rebind (name,
        synch.in ());
-
 }
 
 
@@ -279,7 +277,6 @@ DT_Creator::activate_poa_list (void)
 void
 DT_Creator::activate_job_list (void)
 {
-
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
     "DT_Creator::activate_job_list\n"));
@@ -325,8 +322,6 @@ DT_Creator::activate_job_list (void)
 
       this->naming_->rebind (name.in (),
                              server.in ());
-
-
     } /* while */
 
   ACE_DEBUG ((LM_DEBUG,
@@ -395,7 +390,6 @@ DT_Creator::activate_schedule (void)
     ACE_DEBUG ((LM_DEBUG,
     "Activated schedule, task count = %d\n",
     dt_count_));
-
 }
 
 int
@@ -577,7 +571,6 @@ DT_Creator::check_ifexit (void)
         }
       ACE_DEBUG ((LM_DEBUG,
       "Log File Ready\n"));
-
     }
       }
   }

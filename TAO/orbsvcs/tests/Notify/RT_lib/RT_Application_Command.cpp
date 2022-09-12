@@ -1,7 +1,6 @@
 #include "RT_Application_Command.h"
 
 
-
 #include "../lib/LookupManager.h"
 #include "RT_Priority_Mapping.h"
 

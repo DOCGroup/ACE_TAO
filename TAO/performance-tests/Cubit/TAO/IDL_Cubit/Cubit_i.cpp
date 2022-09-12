@@ -241,7 +241,6 @@ Cubit_i::cube_union (const Cubit::oneof &values)
       temp.cm ().o  = values.cm ().o * values.cm ().o * values.cm ().o;
       temp.cm ().s  = values.cm ().s * values.cm ().s * values.cm ().s;
       temp.cm ().l  = values.cm ().l * values.cm ().l * values.cm ().l;
-
     }
   return temp;
 }

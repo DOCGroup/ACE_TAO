@@ -67,7 +67,6 @@ public:
    */
   struct POD_RT_Info
   {
-
     const char *entry_point;
     RtecScheduler::handle_t handle;
     RtecScheduler::Time worst_case_execution_time;
@@ -83,7 +82,6 @@ public:
     RtecScheduler::Preemption_Priority_t preemption_priority;
     CORBA::Long info_type;
     RtecScheduler::RT_Info_Enabled_Type_t enabled;
-
   };
 
 
@@ -244,7 +242,6 @@ public:
   static void rt_info_enable_state_default(RtecScheduler::RT_Info_Enabled_Type_t rt_info_enable_state_default);
 
 protected:
-
   /**
    * By default this factory assumes we are runnning a config
    * run. Calling this method disables that.  Since the methods
@@ -271,7 +268,6 @@ private:
 
   /// Default rt_info enabled state.  (Boeing Extension)
   static RtecScheduler::RT_Info_Enabled_Type_t rt_info_enable_state_default_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

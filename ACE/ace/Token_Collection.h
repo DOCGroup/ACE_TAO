@@ -193,7 +193,6 @@ public:
   virtual const ACE_TCHAR *name () const;
 
 protected:
-
   typedef ACE_Token_Name TOKEN_NAME;
 
   /// COLLECTION maintains a mapping from token names to ACE_Tokens*

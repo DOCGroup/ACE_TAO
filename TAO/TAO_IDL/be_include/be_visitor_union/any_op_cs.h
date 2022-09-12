@@ -26,7 +26,6 @@
  */
 class be_visitor_union_any_op_cs : public be_visitor_union
 {
-
 public:
   be_visitor_union_any_op_cs (be_visitor_context *ctx);
 

@@ -101,7 +101,6 @@ struct ReplyHeader_1_0 { // Renamed from ReplyHeader
  */
 
 
-
 //static const size_t target_offset_12 = GIOP_Buffer::giop_header_len + 12;
 
 // 12 = req_id + flags + RESVD + addr disp.
@@ -482,7 +481,6 @@ GIOP_Buffer::parse_header (void)
     this->oid_ = this->cdr_->rd_ptr();
     if (!this->cdr_->skip_bytes(len_ulong))
       {
-
         return false;
       }
     if (!(*this->cdr_ >> len_ulong))

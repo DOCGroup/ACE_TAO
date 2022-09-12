@@ -239,7 +239,6 @@ public:
     unsigned char ebit;
     ACE_UINT16 blkno;
   };
-
 };
 
 /**
@@ -389,7 +388,6 @@ protected:
 
   int connection_gone_;
 };
-
 
 
 /**

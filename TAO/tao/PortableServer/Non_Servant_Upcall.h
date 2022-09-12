@@ -48,7 +48,6 @@ namespace TAO
     class TAO_PortableServer_Export Non_Servant_Upcall
     {
     public:
-
       /// Constructor.
       Non_Servant_Upcall (::TAO_Root_POA &poa);
 
@@ -58,7 +57,6 @@ namespace TAO
       ::TAO_Root_POA &poa () const;
 
     protected:
-
       TAO_Object_Adapter &object_adapter_;
       TAO_Root_POA &poa_;
       Non_Servant_Upcall *previous_;

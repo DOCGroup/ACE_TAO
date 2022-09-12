@@ -12,7 +12,6 @@ class Foo_i;
 class FooServantList
 {
   public:
-
     FooServantList(const ACE_TCHAR* prefix,
                    unsigned num_servants,
                    unsigned num_clients,

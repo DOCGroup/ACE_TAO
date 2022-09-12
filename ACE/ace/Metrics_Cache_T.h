@@ -45,7 +45,6 @@ class ACE_Metrics_Timeprobe :
   public ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>
   {
 public:
-
   typedef ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>
           ACE_METRICS_TIMEPROBE_TYPE;
 
@@ -94,7 +93,6 @@ public:
   void flush_ACE_Metrics_Timeprobe ();
 
 protected:
-
   /// Identifier for the timeprobe.
   u_int id_;
 
@@ -102,7 +100,6 @@ protected:
   char* name_;
 
 private:
-
   // Declare but do not define.
   ACE_Metrics_Timeprobe (const ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR> &);
   void operator =(const ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR> &);
@@ -120,7 +117,6 @@ template <class ACE_LOCK, class ALLOCATOR>
 class ACE_Metrics_Cache
 {
 public:
-
   typedef ACE_Metrics_Cache <ACE_LOCK, ALLOCATOR> ACE_METRICS_CACHE_TYPE;
 
   /// Default constructor.
@@ -165,7 +161,6 @@ public:
   int metrics_enabled() const;
 
 protected:
-
   /// Obtain an allocator pointer correctly thunked for the current
   /// address space.  If there is no allocator stored in the instance,
   /// the singleton allocator in the current process is used.

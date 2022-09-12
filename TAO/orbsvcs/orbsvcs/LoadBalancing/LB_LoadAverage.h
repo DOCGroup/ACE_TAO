@@ -57,7 +57,6 @@ class TAO_LB_LoadAverage
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-
   /// Constructor.
   TAO_LB_LoadAverage (PortableServer::POA_ptr poa);
 
@@ -96,7 +95,6 @@ public:
   void init (const PortableGroup::Properties & props);
 
 protected:
-
   /// Destructor.
   ~TAO_LB_LoadAverage (void);
 
@@ -117,7 +115,6 @@ protected:
                                CORBA::Float & value);
 
 private:
-
   /// This servant's default POA.
   PortableServer::POA_var poa_;
 
@@ -137,7 +134,6 @@ private:
    * Cached LoadAverage load balancing strategy property values.
    */
   //@{
-
   ///
   CORBA::Float tolerance_;
 
@@ -150,7 +146,6 @@ private:
   //@}
 
   CosLoadBalancing::LoadList current_loads_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

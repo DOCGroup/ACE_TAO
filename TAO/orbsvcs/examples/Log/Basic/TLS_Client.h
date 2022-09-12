@@ -53,6 +53,5 @@ class TLS_Client
   // The basic log factory from the Log Service.
 
 
-
 };
 #endif /* TLS_CLIENT_H */

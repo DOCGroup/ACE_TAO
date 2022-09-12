@@ -23,7 +23,6 @@ namespace XML
   XStr::XStr (XMLCh *wstr)
     : _wstr(wstr)
   {
-
   }
 
   XStr::XStr (const XMLCh* wstr)

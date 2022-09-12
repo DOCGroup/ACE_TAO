@@ -304,7 +304,6 @@ static const YYINT yyctable[] = {                        -1,
 #define YYTRANSLATE(a) ((a) > YYMAXTOKEN ? YYUNDFTOKEN : (a))
 #if YYDEBUG
 static const char *const yyname[] = {
-
 "$end",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -359,7 +358,6 @@ static const char *const yyrule[] = {
 "factor : TAO_MINUS TAO_NUMBER",
 "factor : TAO_STRING",
 "factor : TAO_BOOLEAN",
-
 };
 #endif
 
@@ -766,11 +764,9 @@ yyloop:
             ctry = save->ctry;
             if (save->state != yystate) YYABORT;
             yyFreeState(save);
-
         }
         else
         {
-
             /* Unresolved conflict - start/continue trial parse */
             YYParseState *save;
 #if YYDEBUG

@@ -20,7 +20,6 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-
 };
 
 #include /**/ "ace/post.h"

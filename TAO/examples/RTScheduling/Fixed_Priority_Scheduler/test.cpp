@@ -214,7 +214,6 @@ DT_Test::scheduler (void)
 int
 DT_Test::activate_task (void)
 {
-
   ACE_DEBUG ((LM_DEBUG,
               "Test Activate Task\n"));
 

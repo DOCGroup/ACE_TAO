@@ -135,7 +135,6 @@ Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
 }
 
 
-
 int
 Load_Balancing_Service::run (void)
 {

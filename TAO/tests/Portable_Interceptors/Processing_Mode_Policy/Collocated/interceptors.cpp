@@ -81,7 +81,6 @@ void
 Echo_Client_Request_Interceptor::receive_other (
   PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   // Do not count the _is_a calls
@@ -99,7 +98,6 @@ void
 Echo_Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   // Do not count the _is_a calls
@@ -122,7 +120,6 @@ Echo_Client_Request_Interceptor::receive_reply (
       CORBA::ULong i = 0;  // index -- explicitly used to avoid
                            // overloaded operator ambiguity.
       paramlist[i].argument >>= param;
-
     }
   else if (ACE_OS::strcmp (op.in (), "calculate") == 0)
     {
@@ -151,7 +148,6 @@ void
 Echo_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   // Do not count the _is_a calls
@@ -203,7 +199,6 @@ void
 Echo_Server_Request_Interceptor::receive_request (
   PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   // Do not count the _is_a calls
@@ -232,7 +227,6 @@ Echo_Server_Request_Interceptor::receive_request (
       ACE_DEBUG ((LM_DEBUG,
                   "The arg is %d\n",
                   param));
-
      }
 
   CORBA::String_var tmdi =
@@ -247,7 +241,6 @@ void
 Echo_Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   // Do not count the _is_a calls
@@ -301,7 +294,6 @@ void
 Echo_Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   // Do not count the _is_a calls

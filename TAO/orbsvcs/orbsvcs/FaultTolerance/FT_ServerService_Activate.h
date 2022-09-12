@@ -37,7 +37,6 @@ class TAO_Service_Callbacks;
 class TAO_FT_ServerORB_Export TAO_FT_ServerService_Activate
 : public ACE_Service_Object
 {
-
 public:
   /// Constructor
   TAO_FT_ServerService_Activate (void);
@@ -47,7 +46,6 @@ public:
 
   /// Used to force the initialization.
   static int Initializer (void);
-
 };
 
 static int

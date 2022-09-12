@@ -30,7 +30,6 @@ public:
     virtual void  disconnect_push_supplier (
       );
 private:
-
   class ReactorTask : public ACE_Task_Base
   {
   public:

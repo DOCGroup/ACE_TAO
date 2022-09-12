@@ -46,13 +46,11 @@ class TAO_Acceptor;
 class TAO_Strategies_Export TAO_SCIOP_Transport : public TAO_Transport
 {
 public:
-
   /// Constructor.
   TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
                        TAO_ORB_Core *orb_core);
 
 protected:
-
   /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
@@ -66,7 +64,6 @@ protected:
    * details.
    */
   //@{
-
   virtual ACE_Event_Handler * event_handler_i (void);
 
   virtual ssize_t send (iovec *iov, int iovcnt,
@@ -103,7 +100,6 @@ public:
   //@}
 
 private:
-
   /// Set the Bidirectional context info in the service context list
   void set_bidir_context_info (TAO_Operation_Details &opdetails);
 
@@ -113,7 +109,6 @@ private:
   int get_listen_point (IIOP::ListenPointList &listen_point_list,
                         TAO_Acceptor *acceptor);
 private:
-
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
   TAO_SCIOP_Connection_Handler *connection_handler_;

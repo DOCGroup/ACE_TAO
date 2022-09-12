@@ -15,7 +15,6 @@ FTP_Client_Callback::handle_end_stream (void)
 FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (void)
   : callback_ (0)
 {
-
 }
 
 void
@@ -182,7 +181,6 @@ Client::Client (void)
 int
 Client::bind_to_server (const char *name)
 {
-
   try
     {
       // Initialize the naming services
@@ -212,7 +210,6 @@ Client::bind_to_server (const char *name)
 int
 Client::init (int argc, ACE_TCHAR *argv[])
 {
-
   PortableServer::POAManager_var mgr
     = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
 

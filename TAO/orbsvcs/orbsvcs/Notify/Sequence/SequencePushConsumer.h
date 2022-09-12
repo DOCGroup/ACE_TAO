@@ -71,7 +71,6 @@ public:
   virtual void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer);
 
 protected:
-
   virtual CORBA::Object_ptr get_consumer (void);
 
   /// The Consumer

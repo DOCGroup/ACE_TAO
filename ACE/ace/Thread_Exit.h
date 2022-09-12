@@ -101,7 +101,6 @@ public:
 private:
   /// Holds the underlying instance.
   ACE_Thread_Exit *instance_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

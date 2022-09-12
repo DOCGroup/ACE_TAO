@@ -85,7 +85,6 @@ public:
   void set_tracker (Tracker* tracker);
 
 private:
-
   /// Apply the Order Policy and queue. return -1 on error.
   int queue (TAO_Notify_Method_Request_Queueable* method_request);
 

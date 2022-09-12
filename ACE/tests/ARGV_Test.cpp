@@ -20,7 +20,6 @@
 #include "test_config.h"
 
 
-
 static void
 consume_arg (int argc, ACE_TCHAR *argv[])
 {

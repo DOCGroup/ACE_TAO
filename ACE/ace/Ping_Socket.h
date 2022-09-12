@@ -76,7 +76,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 public:
-
   enum
     {
       PING_BUFFER_SIZE = (1024 * 2)

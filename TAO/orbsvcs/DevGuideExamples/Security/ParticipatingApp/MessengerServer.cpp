@@ -37,7 +37,6 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
-
     CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
 
     if (parse_args (argc, argv) != 0)
@@ -84,7 +83,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     std::cout << "Messenger Server is shut down!"
          << std::endl;
     std::cout << std::endl;
-
   }
   catch(const CORBA::Exception& ex) {
     ex._tao_print_exception("Server Error: main block");

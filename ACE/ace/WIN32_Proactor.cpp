@@ -21,7 +21,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_WIN32_Wakeup_Completion : public ACE_WIN32_Asynch_Result
 {
-
 public:
   /// Constructor.
   ACE_WIN32_Wakeup_Completion (ACE_Handler::Proxy_Ptr &handler_proxy,

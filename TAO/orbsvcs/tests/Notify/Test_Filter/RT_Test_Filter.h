@@ -66,7 +66,6 @@ protected:
   virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (void);
 
 protected:
-
   /// Lock to serialize access to data members.
   TAO_SYNCH_MUTEX lock_;
 

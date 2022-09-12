@@ -135,7 +135,6 @@ ACE_SUN_Proactor::handle_events_i (ACE_Time_Value *delta)
   retval += this->process_result_queue ();
 
   return retval > 0 ? 1 : 0 ;
-
 }
 
 int
@@ -143,7 +142,6 @@ ACE_SUN_Proactor::get_result_status (ACE_POSIX_Asynch_Result* asynch_result,
                                      int &error_status,
                                      size_t &transfer_count)
 {
-
    // Get the error status of the aio_ operation.
    error_status  = asynch_result->aio_resultp.aio_errno;
    ssize_t op_return = asynch_result->aio_resultp.aio_return;

@@ -214,7 +214,6 @@ private:
 
   /// Underlying NT IoCompletionPort.
   ACE_HANDLE completion_port_;
-
 };
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 

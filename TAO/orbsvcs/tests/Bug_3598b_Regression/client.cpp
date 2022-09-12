@@ -6,7 +6,6 @@
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
 int

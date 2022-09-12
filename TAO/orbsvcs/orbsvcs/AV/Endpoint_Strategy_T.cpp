@@ -84,7 +84,6 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 char *
 TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_with_poa (PortableServer::Servant servant)
 {
-
   PortableServer::ObjectId_var id =
     this->poa_->activate_object (servant);
 
@@ -150,7 +149,6 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
 
      this->vdev_->define_property ("Related_MediaCtrl",
                                    anyval);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -239,7 +237,6 @@ TAO_AV_Endpoint_Reactive_Strategy_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
   stream_endpoint = AVStreams::StreamEndPoint_A::_duplicate( this->stream_endpoint_a_.in() );
   vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
   return 0;
-
 }
 
 // Put the stream_endpoint into the POA
@@ -249,7 +246,6 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 {
   try
     {
-
       // Use the bridge method
       if (this->make_stream_endpoint (this->stream_endpoint_a_servant_) == -1)
         return -1;
@@ -397,7 +393,6 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 char *
 TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_with_poa (PortableServer::Servant servant)
 {
-
   PortableServer::ObjectId_var id =
     this->poa_->activate_object (servant);
 

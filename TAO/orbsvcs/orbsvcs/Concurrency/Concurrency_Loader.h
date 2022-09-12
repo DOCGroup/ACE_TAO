@@ -30,7 +30,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Concurrency_Serv_Export TAO_Concurrency_Loader : public TAO_Object_Loader
 {
 public:
-
   /// Constructor
   TAO_Concurrency_Loader (void);
 

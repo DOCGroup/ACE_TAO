@@ -29,7 +29,6 @@
  */
 class Life_Cycle_Service_Server
 {
-
 public:
   /// Default constructor
   Life_Cycle_Service_Server (void);

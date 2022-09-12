@@ -49,7 +49,6 @@ namespace TAO
   class TAO_Export Argument
   {
   public:
-
     /// Destructor.
     virtual ~Argument ();
 
@@ -90,7 +89,6 @@ namespace TAO
     //@}
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-
   };
 
 #if TAO_HAS_INTERCEPTORS == 1

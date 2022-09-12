@@ -128,5 +128,4 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
               ace_get_qos.sending_flowspec ()->minimum_policed_size ()));
 
   return 0;
-
 }

@@ -38,7 +38,6 @@ private:
   CORBA::ORB_var orb_;
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_;
   int event_limit_;
-
 };
 
 

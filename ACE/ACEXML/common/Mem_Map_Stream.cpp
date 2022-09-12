@@ -154,7 +154,6 @@ ACEXML_Mem_Map_Stream::open (Connector *connector,
   if (connector->connect (svc_handler_,
                           addr) == -1)
     {
-
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p %s %d\n",
                          "Connect failed",

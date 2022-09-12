@@ -82,7 +82,6 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
 
   // If it reaches here then it should be nill
   return true;
-
 }
 
 TAO_Service_Callbacks::Profile_Equivalence

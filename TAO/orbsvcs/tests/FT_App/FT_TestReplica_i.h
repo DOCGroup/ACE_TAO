@@ -197,7 +197,6 @@ private:
    */
 
   const ACE_TCHAR* name_persistent_storage;
-
 };
 
 #include /**/ "ace/post.h"

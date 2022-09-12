@@ -34,7 +34,6 @@ class Thread_Task : public Periodic_Task
   virtual int activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping);
 
  protected:
-
   /// task svc
   virtual int svc ();
 };

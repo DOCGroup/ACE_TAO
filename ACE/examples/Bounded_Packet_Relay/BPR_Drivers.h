@@ -154,7 +154,6 @@ private:
 
   /// Ending time of the most recent transmission.
   ACE_Time_Value transmission_end_;
-
 };
 
 /**
@@ -245,7 +244,6 @@ protected:
   /// Currently remaining count of messages to send before stopping
   /// (-1 indicates the device should not stop).
   long current_count_;
-
 };
 
 /**
@@ -264,7 +262,6 @@ protected:
 class Output_Device_Wrapper_Base
 {
 public:
-
   virtual ~Output_Device_Wrapper_Base (void);
 
   /// Writes contents of the passed message block out to the underlying

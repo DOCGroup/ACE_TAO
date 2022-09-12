@@ -1484,7 +1484,6 @@ ACE_WFMO_Reactor::mask_ops_i (ACE_HANDLE io_handle,
 }
 
 
-
 int
 ACE_WFMO_Reactor_Handler_Repository::modify_network_events_i (ACE_HANDLE io_handle,
                                                               ACE_Reactor_Mask new_masks,

@@ -699,7 +699,6 @@ ACE_Asynch_Accept::Result::implementation () const
 }
 
 
-
 // *********************************************************************
 
 ACE_Asynch_Connect::ACE_Asynch_Connect ()

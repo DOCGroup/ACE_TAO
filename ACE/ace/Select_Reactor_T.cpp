@@ -984,7 +984,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::is_suspended_i (ACE_HANDLE handl
   return this->suspend_set_.rd_mask_.is_set (handle) ||
          this->suspend_set_.wr_mask_.is_set (handle) ||
          this->suspend_set_.ex_mask_.is_set (handle);
-
 }
 
 // Must be called with locks held
@@ -1216,7 +1215,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_set
 
       if (this->state_changed_)
         {
-
           handle_iter.reset_state ();
           this->state_changed_ = false;
         }
@@ -1500,7 +1498,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
   ACE_Handle_Set_Iterator check_iter (check_set);
   while ((h = check_iter ()) != ACE_INVALID_HANDLE)
     {
-
 #if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_VXWORKS)
       // Win32 needs to do the check this way because fstat won't work on
       // a socket handle.  MVS Open Edition needs to do it this way because,

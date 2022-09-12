@@ -309,7 +309,6 @@ protected:
 private:
   /// Task to process pseudo-asynchronous accept/connect
   ACE_Asynch_Pseudo_Task  pseudo_task_;
-
 };
 
 // Forward declarations.
@@ -324,7 +323,6 @@ class ACE_AIOCB_Notify_Pipe_Manager;
  */
 class ACE_Export ACE_POSIX_AIOCB_Proactor : public ACE_POSIX_Proactor
 {
-
   /// Handler needs to call application specific code.
   friend class ACE_AIOCB_Notify_Pipe_Manager;
 
@@ -385,7 +383,6 @@ public:
   virtual int cancel_aio (ACE_HANDLE h);
 
 protected:
-
   /// Special constructor for ACE_SUN_Proactor
   /// and ACE_POSIX_SIG_Proactor
   ACE_POSIX_AIOCB_Proactor (size_t nmaxop,
@@ -505,7 +502,6 @@ protected:
  */
 class ACE_Export ACE_POSIX_SIG_Proactor : public ACE_POSIX_AIOCB_Proactor
 {
-
   /**
    * This class does the registering of Asynch Operations with the
    * Proactor which is necessary in the SIG strategy, because we need

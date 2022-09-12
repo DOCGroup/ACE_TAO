@@ -274,7 +274,6 @@ TAO_Storable_Naming_Context_ReaderWriter::read_global (TAO_NS_Persistence_Global
     }
 
   global.counter(counter);
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

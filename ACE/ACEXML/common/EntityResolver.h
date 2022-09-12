@@ -41,7 +41,6 @@
 class ACEXML_Export ACEXML_EntityResolver
 {
 public:
-
   virtual ~ACEXML_EntityResolver ();
 
   /**

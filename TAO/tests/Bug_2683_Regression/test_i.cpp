@@ -9,7 +9,6 @@ test_i::test_i (ORB_Killer *k)
 void
 test_i::ping (void)
 {
-
 }
 
 void

@@ -2,7 +2,6 @@
 #include "ace/Log_Msg.h"
 
 
-
 void test_http_addr (void);
 void test_ftp_addr (void);
 void test_mailto_addr (void);
@@ -119,7 +118,6 @@ void test_ftp_addr (void)
                       "FTP[%d]\n"
                       "    \"%s\" ERROR\n",
                       i, addresses[i]));
-
         }
     }
 }
@@ -160,7 +158,6 @@ void test_mailto_addr (void)
                       "Mailto[%d]\n"
                       "    \"%s\" ERROR\n",
                       i, addresses[i]));
-
         }
     }
 }
@@ -205,7 +202,6 @@ void test_url_addr (void)
                       "URL[%d]\n"
                       "    \"%s\" ERROR\n",
                       i, addresses[i]));
-
         }
     }
 }

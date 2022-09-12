@@ -62,7 +62,6 @@ namespace XML
     /// Release the held string and free its memory.
     void reset (void);
   private:
-
     XMLCh* _wstr; // Internal representation
   };
 

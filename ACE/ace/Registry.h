@@ -42,7 +42,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Registry
 {
 public:
-
   /// International string
   struct ACE_Export Name_Component
   {
@@ -438,7 +437,6 @@ public:
     Naming_Context &naming_context (void);
 
   private:
-
     /// Set naming_context that the iterator is iterating over
     void naming_context (Naming_Context& naming_context);
 

@@ -75,7 +75,6 @@ private:
 
   /// The connector endpoint to initiate the client connection
   ACE_Connector<TAO_HTTP_Handler, ACE_SOCK_CONNECTOR> connector_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

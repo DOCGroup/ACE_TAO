@@ -28,7 +28,6 @@
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-
   /// Constructor.
   Receiver_Callback (void);
 
@@ -55,7 +54,6 @@ private:
 
   /// File handle of the file into which received data is written.
   FILE *output_file_;
-
 };
 
 /**
@@ -133,5 +131,4 @@ protected:
 
   /// Message block into which data is read from a file and then sent.
   ACE_Message_Block mb_;
-
 };

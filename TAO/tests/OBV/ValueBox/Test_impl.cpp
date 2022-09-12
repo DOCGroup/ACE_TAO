@@ -326,7 +326,6 @@ Test_impl::array_op4 (const ::StringArray p1,
     }
 
   p3 = sa;
-
 }
 
 

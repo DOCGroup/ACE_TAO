@@ -16,7 +16,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 // Default is to have a 2 second timeout.
 static int timeout = 2;
 

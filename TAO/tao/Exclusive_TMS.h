@@ -37,7 +37,6 @@ class TAO_Reply_Dispatcher;
  */
 class TAO_Export TAO_Exclusive_TMS : public TAO_Transport_Mux_Strategy
 {
-
 public:
   /// Constructor.
   TAO_Exclusive_TMS (TAO_Transport *transport);

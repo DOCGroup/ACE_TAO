@@ -87,7 +87,6 @@ ClientInterceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
   x = false;
   flag <<= CORBA::Any::from_boolean(x);
   pic->set_slot(slot,flag);
-
 }
 
 void

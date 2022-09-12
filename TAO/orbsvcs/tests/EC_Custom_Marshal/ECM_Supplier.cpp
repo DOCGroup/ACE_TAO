@@ -15,7 +15,6 @@
 #include "ace/OS_NS_errno.h"
 
 
-
 ECMS_Driver::ECMS_Driver (void)
   : n_suppliers_ (1),
     event_count_ (100),

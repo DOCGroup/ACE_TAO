@@ -126,7 +126,6 @@ private:
 class ACE_Export ACE_Token_Invariant_Manager : public ACE_Cleanup
 {
 public:
-
   /// Singleton access point.
   static ACE_Token_Invariant_Manager *instance (void);
 

@@ -916,7 +916,6 @@ class Sender : public ACE_Service_Handler
 {
   friend class Connector;
 public:
-
   Sender  (Connector *connector = 0, int index = -1);
 
   virtual ~Sender (void);

@@ -173,7 +173,6 @@ typedef ACE_Singleton<Globals,ACE_Null_Mutex> GLOBALS;
  */
 class MT_Priority
 {
-
 public:
   /// constructor.
   MT_Priority (void);

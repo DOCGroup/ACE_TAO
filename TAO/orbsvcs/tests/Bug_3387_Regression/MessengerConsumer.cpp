@@ -98,7 +98,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
 
-
       CosNotification::EventTypeSeq added (1);
       CosNotification::EventTypeSeq removed (1);
       added.length (1);
@@ -111,7 +110,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       removed[0].type_name = CORBA::string_dup ("*");
 
       supplier_proxy->subscription_change(added, removed);
-
 
 
 

@@ -33,7 +33,6 @@ namespace TAO
 {
   namespace SL3
     {
-
       /**
        * @class olicyFactory
        *
@@ -46,7 +45,6 @@ namespace TAO
           public virtual ::CORBA::LocalObject
       {
       public:
-
         /**
          * @name Methods Required by the PolicyFactory Interface
          *
@@ -56,7 +54,6 @@ namespace TAO
          * sub-classes.
          */
         //@{
-
         /// Construct a Test::Policy object as a test.
         virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                                  const CORBA::Any & value);
@@ -64,7 +61,6 @@ namespace TAO
         //@}
 
       };
-
   }  // End SL3 namespace.
 }  // End TAO namespace.
 

@@ -63,7 +63,6 @@ Ping_Death_Request_Interceptor::receive_request_service_contexts (
   throw ::CORBA::TRANSIENT
     ( CORBA::SystemException::_tao_minor_code (TAO_POA_HOLDING, 1),
       CORBA::COMPLETED_NO);
-
 }
 
 void

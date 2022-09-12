@@ -60,7 +60,6 @@ Sender::shutdown (void)
 
       // Shut the orb down.
   TAO_AV_CORE::instance ()->orb ()->shutdown (0);
-
 }
 
 int
@@ -335,7 +334,6 @@ Sender::pace_data (void)
 
           // Reset the message block.
           this->mb_.reset ();
-
         } // end while
 
       ACE_OS::sleep (1);

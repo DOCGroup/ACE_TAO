@@ -60,7 +60,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-
       if (supplier.init (argc, argv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                           "%p\n",

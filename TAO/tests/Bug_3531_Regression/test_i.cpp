@@ -35,7 +35,6 @@ Simple_Server_i::test_method (Simple_Server_ptr objref)
                       "which will sleep for 3 seconds\n"));
           CORBA::String_var str = objref->test_method (_this());
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) Received \"%C\"\n", str.in ()));
-
         }
       catch (...)
         {

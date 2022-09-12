@@ -40,7 +40,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_QoS_Export ACE_QoS_Manager
 {
-
 public:
   /// Default constructor.
   ACE_QoS_Manager (void);
@@ -61,7 +60,6 @@ public:
   ACE_QOS_SESSION_SET qos_session_set (void);
 
 private:
-
   /// Set of QoS sessions that this socket has joined.
   ACE_QOS_SESSION_SET qos_session_set_;
 };

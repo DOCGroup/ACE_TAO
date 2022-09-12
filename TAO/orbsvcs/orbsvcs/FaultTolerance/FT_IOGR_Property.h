@@ -53,7 +53,6 @@ class TAO_FT_ORB_Utils_Export TAO_FT_IOGR_Property
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Our Constructor
   TAO_FT_IOGR_Property (FT::TagFTGroupTaggedComponent &ft_group);
 
@@ -92,7 +91,6 @@ public:
       FT::TagFTGroupTaggedComponent &ft_group) const;
 
 private:
-
   /// An helper function that gets the primary profile from the <ior>
   TAO_Profile *get_primary_profile (CORBA::Object_ptr ior);
 

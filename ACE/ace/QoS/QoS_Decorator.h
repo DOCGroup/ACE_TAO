@@ -40,9 +40,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_QoS_Export ACE_QoS_Decorator_Base : public ACE_Event_Handler
 {
-
 public:
-
   // Initialization and termination methods.
   /// Constructor.
   ACE_QoS_Decorator_Base (void);
@@ -63,10 +61,8 @@ public:
   virtual int handle_qos (ACE_HANDLE fd);
 
 private:
-
   /// The event handler that is decorated by this class.
   ACE_Event_Handler *event_handler_;
-
 };
 
 /**
@@ -81,7 +77,6 @@ private:
  */
 class ACE_QoS_Export ACE_QoS_Event_Handler : public ACE_Event_Handler
 {
-
   /// Destructor.
   ~ACE_QoS_Event_Handler (void);
 
@@ -97,7 +92,6 @@ class ACE_QoS_Export ACE_QoS_Event_Handler : public ACE_Event_Handler
   friend class ACE_QoS_Decorator;
 
 private:
-
   /// Constructor is private because only ACE_QoS_Decorator should
   /// create this object.
   ACE_QoS_Event_Handler (void);
@@ -110,7 +104,6 @@ private:
 
   /// Requests on the class are forwarded to this base class;
   ACE_QoS_Decorator_Base *decorator_base_;
-
 };
 
 /**
@@ -124,9 +117,7 @@ private:
  */
 class ACE_QoS_Export ACE_QoS_Decorator : public ACE_QoS_Decorator_Base
 {
-
 public:
-
   // Initialization and termination methods.
   /// Constructor.
   ACE_QoS_Decorator (void);
@@ -153,7 +144,6 @@ public:
   int init (void);
 
 private:
-
   /// Requests on the class are forwarded to this base class;
   ACE_QoS_Decorator_Base *decorator_base_;
 
@@ -168,7 +158,6 @@ private:
   /// If the application wants to use an instance of Reactor other
   /// than the Singleton one.
   ACE_Reactor *reactor_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

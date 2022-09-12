@@ -26,7 +26,6 @@
 #include "ace/Tokenizer_T.h"
 
 
-
 #if defined (ACE_WIN32)
 #define EXEC_NAME ACE_TEXT ("MORE.COM")
 const ACE_TCHAR *DATE_PATH = ACE_TEXT ("date.exe");

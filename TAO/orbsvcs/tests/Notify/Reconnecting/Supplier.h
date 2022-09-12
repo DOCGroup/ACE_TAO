@@ -124,7 +124,6 @@ class Supplier_Main
   ////////////////
   // Data members
  private:
-
   // set by command line parameters
   bool verbose_;             // -v make a glorious noise
   enum Mode_T {
@@ -169,7 +168,6 @@ class Supplier_Main
 
   bool reconnecting_;
 };
-
 
 
 #endif /* RECONNECTNG_SUPPLIER_H */

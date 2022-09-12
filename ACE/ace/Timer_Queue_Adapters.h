@@ -201,7 +201,6 @@ public:
 # endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
 
 private:
-
 # if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
   /// Dispatches all command objects enqueued in the most
   /// recent event handler context.

@@ -113,7 +113,6 @@ private:
 
   static Options *instance_;
   // Static Singleton.
-
 };
 
 #include "Options.inl"

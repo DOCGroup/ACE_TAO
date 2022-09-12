@@ -16,7 +16,6 @@
 #include "ace/Log_Msg.h"
 
 
-
 /**
  * @class Event_Handler
  *

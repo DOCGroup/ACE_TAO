@@ -37,7 +37,6 @@ class TAO_RTSched_Export ACE_Strategy_Scheduler : public ACE_DynScheduler
 {
 // public interface
 public:
-
     /// = Constructor.
   ACE_Strategy_Scheduler (ACE_Scheduler_Strategy &strategy);
 
@@ -60,7 +59,6 @@ public:
   virtual Preemption_Priority minimum_critical_priority ();
 
 private:
-
     /// = Schedules a dispatch entry into the timeline being created.
   virtual status_t schedule_timeline_entry (Dispatch_Entry &dispatch_entry,
                                             ACE_Unbounded_Queue <Dispatch_Entry *>
@@ -75,7 +73,6 @@ private:
   ACE_Strategy_Scheduler (const ACE_Strategy_Scheduler &);
   ACE_Strategy_Scheduler &operator= (const ACE_Strategy_Scheduler &);
 };
-
 
 
 ////////////////////////////////////////
@@ -94,7 +91,6 @@ template <class STRATEGY>
 class ACE_Strategy_Scheduler_Factory
 {
 public:
-
     /// = Constructs and returns a scheduler strategized with
     ///   an instance of the the parameterized strategy type.
         static ACE_Strategy_Scheduler * create (RtecScheduler::Preemption_Priority_t minimum_critical_priority);
@@ -117,7 +113,6 @@ public:
 class TAO_RTSched_Export ACE_Scheduler_Strategy
 {
 public:
-
   /// = Constructor.
   ACE_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
@@ -168,7 +163,6 @@ public:
     dispatch_type (const Dispatch_Entry &entry) = 0;
 
 protected:
-
     /**
      * = Compares two dispatch entries using the specific priority, dynamic
      *   subpriority, and static subpriority method definitions provided by
@@ -188,7 +182,6 @@ protected:
 };
 
 
-
 /**
  * @class ACE_MUF_Scheduler_Strategy
  *
@@ -200,7 +193,6 @@ protected:
 class TAO_RTSched_Export ACE_MUF_Scheduler_Strategy : public ACE_Scheduler_Strategy
 {
 public:
-
     /// = Constructor.
   ACE_MUF_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
@@ -231,7 +223,6 @@ public:
     dispatch_type (const Dispatch_Entry &entry);
 
 protected:
-
     /**
      * = Returns a dynamic subpriority value at the current time for
      *   the given timeline entry: if the operation has
@@ -252,7 +243,6 @@ protected:
     const Dispatch_Entry &second_entry);
 
 private:
-
     // = Comparison function to pass to qsort: calls instance ()->sort_comp ().
 #if defined (ACE_HAS_WINCE)
   static int _cdecl sort_function (void *arg1, void *arg2);
@@ -276,7 +266,6 @@ private:
 class TAO_RTSched_Export ACE_RMS_Scheduler_Strategy : public ACE_Scheduler_Strategy
 {
 public:
-
     /// = Constructor.
   ACE_RMS_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
@@ -307,7 +296,6 @@ public:
     dispatch_type (const Dispatch_Entry &entry);
 
 protected:
-
     /// = Just returns 0: all operations have
     ///   the same dynamic subpriority value.
     virtual long dynamic_subpriority (Dispatch_Entry &entry,
@@ -320,15 +308,12 @@ protected:
      const Dispatch_Entry &second_entry);
 
 private:
-
     /// = Comparison function to pass to qsort: calls instance ()->sort_comp ().
   static int sort_function (void *arg1, void *arg2);
 
     /// = Instance of the strategy.
   static ACE_RMS_Scheduler_Strategy *instance_;
-
 };
-
 
 
 /**
@@ -342,7 +327,6 @@ private:
 class TAO_RTSched_Export ACE_MLF_Scheduler_Strategy : public ACE_Scheduler_Strategy
 {
 public:
-
     /// = Constructor.
   ACE_MLF_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
@@ -366,7 +350,6 @@ public:
     dispatch_type (const Dispatch_Entry &entry);
 
 protected:
-
     /**
      * = Returns a dynamic subpriority value at the current time for
      *   the given timeline entry: if the operation has
@@ -387,13 +370,11 @@ protected:
      const Dispatch_Entry &second_entry);
 
 private:
-
     /// = Comparison function to pass to qsort: calls instance ()->sort_comp ().
   static int sort_function (void *arg1, void *arg2);
 
     /// = Instance of the strategy
   static ACE_MLF_Scheduler_Strategy *instance_;
-
 };
 
 
@@ -408,7 +389,6 @@ private:
 class TAO_RTSched_Export ACE_EDF_Scheduler_Strategy : public ACE_Scheduler_Strategy
 {
 public:
-
     /// = Default constructor.
   ACE_EDF_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
@@ -433,7 +413,6 @@ public:
     dispatch_type (const Dispatch_Entry &entry);
 
 protected:
-
     /**
      * = Returns a dynamic subpriority value at the current time for the
      *   given timeline entry: if the operation has non-negative
@@ -455,13 +434,11 @@ protected:
      const Dispatch_Entry &second_entry);
 
 private:
-
     /// = Comparison function to pass to qsort: calls instance ()->sort_comp ().
   static int sort_function (void *arg1, void *arg2);
 
     /// = Instance of the strategy.
   static ACE_EDF_Scheduler_Strategy *instance_;
-
 };
 
 
@@ -476,7 +453,6 @@ private:
 class TAO_RTSched_Export ACE_Criticality_Scheduler_Strategy : public ACE_Scheduler_Strategy
 {
 public:
-
     /// = Constructor.
   ACE_Criticality_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
@@ -507,7 +483,6 @@ public:
     dispatch_type (const Dispatch_Entry &entry);
 
 protected:
-
     /// = Just returns 0: all operations have
     ///   the same dynamic subpriority value.
     virtual long dynamic_subpriority (Dispatch_Entry &entry,
@@ -520,13 +495,11 @@ protected:
      const Dispatch_Entry &second_entry);
 
 private:
-
     /// = Comparison function to pass to qsort: calls instance ()->sort_comp ().
   static int sort_function (void *arg1, void *arg2);
 
     /// = Instance of the strategy.
   static ACE_Criticality_Scheduler_Strategy *instance_;
-
 };
 
 

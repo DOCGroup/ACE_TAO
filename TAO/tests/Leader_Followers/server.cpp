@@ -50,7 +50,6 @@ public:
 
   int svc (void)
     {
-
       try
         {
           this->orb_->run ();

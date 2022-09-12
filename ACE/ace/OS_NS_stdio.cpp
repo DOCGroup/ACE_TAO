@@ -51,7 +51,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-
 void
 ace_flock_t::dump () const
 {

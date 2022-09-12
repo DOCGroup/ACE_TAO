@@ -24,7 +24,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 static int debug = 0;
 static const char *one_second_timeout = "one second timeout";
 static const char *two_second_timeout = "two second timeout";
@@ -45,7 +44,6 @@ namespace
 class Reference_Counted_Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Reference_Counted_Event_Handler (int expected_number_of_handle_close_calls);
 
   ~Reference_Counted_Event_Handler () override;
@@ -349,7 +347,6 @@ upcall_test<TIMER_QUEUE>::upcall_test (const char *timer_queue_type)
 class Simple_Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Simple_Event_Handler ();
 
   ~Simple_Event_Handler () override;

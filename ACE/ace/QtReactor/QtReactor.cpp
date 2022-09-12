@@ -396,7 +396,6 @@ ACE_QtReactor::create_notifiers_for_handle (ACE_HANDLE handle)
     if ((this->exception_notifier_.find (handle,
              qsock_notifier) == -1))
     {
-
         ACE_NEW (qsock_notifier,
             QSocketNotifier (ACE_QT_HANDLE_TYPE(handle), QSocketNotifier::Exception, this));
 
@@ -660,7 +659,6 @@ ACE_QtReactor::wait_for_multiple_events (
     nfound = QtWaitForMultipleEvents (static_cast<int> (width),
                                       handle_set,
                                       max_wait_time);
-
   } while( nfound == -1 && this->handle_error () > 0 );
 
   if (nfound > 0)

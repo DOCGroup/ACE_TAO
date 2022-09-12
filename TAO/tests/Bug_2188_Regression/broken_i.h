@@ -44,7 +44,6 @@ public:
   void shutdown (void);
 private:
   ArrayTest_var target_;
-
 };
 
 class  ArrayTest_i : public virtual POA_ArrayTest

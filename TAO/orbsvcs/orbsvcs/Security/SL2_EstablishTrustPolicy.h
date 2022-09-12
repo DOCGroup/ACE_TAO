@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace Security
   {
-
     /**
      * @class EstablishTrustPolicy
      *
@@ -54,7 +53,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       EstablishTrustPolicy (const ::Security::EstablishTrust &trust);
 
@@ -74,7 +72,6 @@ namespace TAO
       virtual ::Security::EstablishTrust trust (void);
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
@@ -83,13 +80,10 @@ namespace TAO
       ~EstablishTrustPolicy (void);
 
     private:
-
       /// Quality of protection which can be specified for an object
       /// reference and used to protect messages.
       ::Security::EstablishTrust const trust_;
-
     };
-
   } // End Security namespace
 }  // End TAO namespace
 

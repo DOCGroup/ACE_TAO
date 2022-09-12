@@ -33,7 +33,6 @@
 #include "ace/Task.h"
 
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.
@@ -184,7 +183,6 @@ MyTask::svc (void)
 class Receiver : public ACE_Service_Handler
 {
 public:
-
   Receiver (void);
   ~Receiver (void);
 
@@ -443,7 +441,6 @@ protected:
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
 
 private:
-
   int initiate_read_stream (void);
   int initiate_write_stream (void);
 

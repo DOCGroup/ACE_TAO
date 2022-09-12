@@ -196,7 +196,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           current  =
             RTScheduling::Current::_narrow (object.in ());
-
         }
 
       TimeBase::TimeT deadline;

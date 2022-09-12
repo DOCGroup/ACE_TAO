@@ -46,7 +46,6 @@ struct mif_scheduler_traits
 class MyTask : public ACE_Task_Base
 {
 public:
-
   MyTask (ACE_Barrier& bar,
           Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* dispatcher,
           mif_scheduler_traits::QoSDescriptor_t& qos,

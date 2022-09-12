@@ -9,7 +9,6 @@
 #include "ace/Default_Constants.h"
 
 
-
 /* BSD socket server. */
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])

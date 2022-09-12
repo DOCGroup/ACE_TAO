@@ -28,7 +28,6 @@
  */
 class IOR_corbaloc_Client_i
 {
-
  public:
   // = Constructor and destructor.
   IOR_corbaloc_Client_i (void);

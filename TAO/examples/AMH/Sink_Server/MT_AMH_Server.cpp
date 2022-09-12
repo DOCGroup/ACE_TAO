@@ -34,7 +34,6 @@ MT_AMH_Server::usage (const char *message)
 int
 MT_AMH_Server::parse_args (void)
 {
-
   // Let the base server parse it's argumrents first
   if (Base_Server::parse_args () != 1)
     {

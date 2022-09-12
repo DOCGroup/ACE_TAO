@@ -43,7 +43,6 @@ class IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
   IORInterceptor (void);
 
@@ -67,7 +66,6 @@ public:
   //@}
 
 protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce proper memory management through
@@ -76,10 +74,8 @@ protected:
   ~IORInterceptor (void);
 
 private:
-
   /// IORInterceptor successfully called and executed.
   bool success_;
-
 };
 
 #if defined(_MSC_VER)

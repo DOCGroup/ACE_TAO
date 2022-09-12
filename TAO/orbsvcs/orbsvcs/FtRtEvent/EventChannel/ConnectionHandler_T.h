@@ -29,7 +29,6 @@ public:
   virtual void destroy (void);
   virtual int close (u_long flags = 0);
 protected:
-
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE,
                             ACE_Reactor_Mask);

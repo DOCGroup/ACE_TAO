@@ -6,7 +6,6 @@
 
 namespace Test
 {
-
   Server_Request_Interceptor::Server_Request_Interceptor (const char* orbid, TEST test)
     : request_count_ (0)
     , orb_id_ (::CORBA::string_dup (orbid))

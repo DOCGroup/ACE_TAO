@@ -45,7 +45,6 @@ private:
 class Pong_Send_Callback : public TAO_AV_Callback
 {
 public:
-
   /// Ad-hoc method to send a response outside the context of a
   /// handle_timeout.
   int send_response (ACE_hrtime_t stamp);

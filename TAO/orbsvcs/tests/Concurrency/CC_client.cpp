@@ -24,7 +24,6 @@
 #include "ace/OS_NS_fcntl.h"
 
 
-
 // Constructor.
 CC_Client::CC_Client (void)
   : naming_service_ (0),
@@ -423,7 +422,6 @@ CC_Client::init (int argc, ACE_TCHAR **argv)
 
       ACE_DEBUG ((LM_DEBUG,
                   "Factory received OK\n"));
-
     }
   catch (const CORBA::Exception& ex)
     {

@@ -27,7 +27,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Recursive_Type
      *
@@ -161,7 +160,6 @@ namespace TAO
       /// Track whether data has been initialized.
       bool data_initialized_;
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

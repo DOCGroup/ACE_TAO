@@ -44,7 +44,6 @@ class TAO_ORB_Core;
  */
 class TAO_Export TAO_Resume_Handle
 {
-
 public:
   /// Constructor.
   TAO_Resume_Handle (TAO_ORB_Core *orb_core = 0,
@@ -75,7 +74,6 @@ public:
   void handle_input_return_value_hook (int& return_value);
 
 private:
-
   /// Our ORB Core.
   TAO_ORB_Core *orb_core_;
 

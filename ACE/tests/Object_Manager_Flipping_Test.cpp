@@ -105,5 +105,4 @@ int run_main (int, ACE_TCHAR *[])
   }
 
   return errors == 0 ? 0 : 1;
-
 }

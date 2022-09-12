@@ -39,7 +39,6 @@ private:
   JAWS_Concurrency_Base *concurrency_;
   int waiting_;
   ACE_SYNCH_MUTEX lock_;
-
 };
 
 #endif /* JAWS_REAPER_H */

@@ -138,7 +138,6 @@ protected:
                                CORBA::Float & value);
 
 private:
-
   /// This servant's default POA.
   PortableServer::POA_var poa_;
 
@@ -158,7 +157,6 @@ private:
    * Cached LeastLoaded load balancing strategy property values.
    */
   //@{
-
   /// The critical load threshold.
   /**
    * Load rebalancing/shedding will occur if loads at a given location
@@ -190,7 +188,6 @@ private:
   CORBA::Float per_balance_load_;
 
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

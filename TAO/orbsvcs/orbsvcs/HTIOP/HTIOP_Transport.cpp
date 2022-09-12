@@ -76,7 +76,6 @@ TAO::HTIOP::Transport::recv (char *buf,
       TAO_debug_level > 4 &&
       errno != ETIME)
     {
-
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::recv_i, ")
                   ACE_TEXT ("read failure - %m"),
@@ -304,7 +303,6 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
 
   if (local_addr.get_port_number() != 0)
     {
-
       // Note: Looks like there is no point in sending the list of
       // endpoints on interfaces on which this connection has not
       // been established. If this is wrong, please correct me.

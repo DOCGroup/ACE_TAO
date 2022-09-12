@@ -13,7 +13,6 @@ class  Test_i : public virtual POA_Test
 {
 public:
   virtual CORBA::Long server_pid (void);
-
 };
 
 #endif /* TEST_I_H_ */

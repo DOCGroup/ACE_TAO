@@ -42,7 +42,6 @@ public:
   bool process_file (const ACE_TCHAR *filename, const char *alias = "");
 
 protected:
-
   virtual void parse_line (void);
 
   void get_preamble (void);

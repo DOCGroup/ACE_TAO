@@ -314,7 +314,6 @@ protected:
 class ACE_Export ACE_WIN32_Asynch_Read_Stream : public virtual ACE_Asynch_Read_Stream_Impl,
                                                 public ACE_WIN32_Asynch_Operation
 {
-
 public:
   /// Constructor.
   ACE_WIN32_Asynch_Read_Stream (ACE_WIN32_Proactor *win32_proactor);
@@ -660,7 +659,6 @@ protected:
 class ACE_Export ACE_WIN32_Asynch_Read_File : public virtual ACE_Asynch_Read_File_Impl,
                                               public ACE_WIN32_Asynch_Read_Stream
 {
-
 public:
   /// Constructor.
   ACE_WIN32_Asynch_Read_File (ACE_WIN32_Proactor *win32_proactor);
@@ -1147,7 +1145,6 @@ class ACE_Export ACE_WIN32_Asynch_Connect_Result : public virtual ACE_Asynch_Con
   friend class ACE_WIN32_Proactor;
 
 public:
-
   /// I/O handle for the  connection.
   ACE_HANDLE connect_handle () const;
 
@@ -1227,7 +1224,6 @@ class ACE_Export ACE_WIN32_Asynch_Connect :
   public ACE_Event_Handler
 {
 public:
-
   /// Constructor.
   ACE_WIN32_Asynch_Connect (ACE_WIN32_Proactor * win32_proactor);
 

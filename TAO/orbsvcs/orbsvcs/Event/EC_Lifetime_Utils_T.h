@@ -82,7 +82,6 @@ public:
   void execute ();
 
 private:
-
   T target_;
 };
 

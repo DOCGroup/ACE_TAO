@@ -15,7 +15,6 @@ namespace ACE
 {
   namespace INet
   {
-
     SSL_Proxy_Connector::SSL_Proxy_Connector () {}
 
     SSL_Proxy_Connector::~SSL_Proxy_Connector () {}

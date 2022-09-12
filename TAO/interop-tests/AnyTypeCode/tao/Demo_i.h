@@ -47,7 +47,6 @@ public:
   virtual char * do_value (const ::CORBA::Any & a);
 
   virtual void shutdown (void);
-
 };
 
 

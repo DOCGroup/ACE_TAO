@@ -48,7 +48,6 @@ namespace TAO_Notify
       ACE_SYNCH_NULL_MUTEX> Reconnection_Registry_Type;
 
   public:
-
     /// Constructor
     Reconnection_Registry (Topology_Parent & parent);
 

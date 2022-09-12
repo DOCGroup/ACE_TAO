@@ -84,8 +84,6 @@ private:
 
 private:
   CONV_FRAME::CodeSetId tcs_;
-
-
 };
 
 #include /**/ "ace/post.h"

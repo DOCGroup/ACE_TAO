@@ -31,7 +31,6 @@
 #if defined (ACE_HAS_THREADS)
 
 namespace {
-
   const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
   // Number of connections to run

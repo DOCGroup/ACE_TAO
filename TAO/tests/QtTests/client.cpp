@@ -8,7 +8,6 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   ACE_Argv_Type_Converter ct (argc, argv);
   QApplication app (argc,  ct.get_ASCII_argv ());
   TAO::QtResource_Loader qt_resources (&app);
@@ -130,7 +129,6 @@ Client::create_widgets (/**/)
                     SLOT (remote_call (int)));
 
   this->mainwindow_.setLayout(&box_);
-
 
 }
 

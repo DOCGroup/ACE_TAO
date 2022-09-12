@@ -192,7 +192,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /**
      * Protect internal state.
      * Mutex should be locked by corba methods, or by

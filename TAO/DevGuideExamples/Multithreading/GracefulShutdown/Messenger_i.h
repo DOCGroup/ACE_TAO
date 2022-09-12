@@ -36,7 +36,6 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-
 };
 
 #endif /* MESSENGER_I_H_  */

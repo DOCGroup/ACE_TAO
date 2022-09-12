@@ -36,7 +36,6 @@ public:
   // Initiate (or reinitiate) a connection on the Connection_Handler.
   int initiate_connection (Connection_Handler *,
                            ACE_Synch_Options & = ACE_Synch_Options::synch);
-
 };
 
 #endif /* _IO_HANDLER_CONNECTOR */

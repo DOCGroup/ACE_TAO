@@ -58,14 +58,12 @@ namespace CORBA
 class TAO_Export TAO_Invocation_Endpoint_Selector
 {
 public:
-
   /// Destructor.
   virtual ~TAO_Invocation_Endpoint_Selector (void);
 
   /// Select the endpoint and set @a r's @c profile_
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
                                 ACE_Time_Value *val) = 0;
-
 };
 
 // ****************************************************************
@@ -86,7 +84,6 @@ class TAO_Export TAO_Default_Endpoint_Selector
   : public TAO_Invocation_Endpoint_Selector
 {
 public:
-
   /// Destructor.
   virtual ~TAO_Default_Endpoint_Selector (void);
 

@@ -7,7 +7,6 @@
 #include "ace/Reactor.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Reactive_ConsumerEC_Control::
@@ -175,7 +174,6 @@ TAO_ECG_Reactive_ConsumerEC_Control::event_channel_not_exist (
       gateway->cleanup_consumer_ec ();
 
       gateway->cleanup_consumer_proxies ();
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -195,7 +193,6 @@ TAO_ECG_Reactive_ConsumerEC_Control::system_exception (
       gateway->cleanup_consumer_ec ();
 
       gateway->cleanup_consumer_proxies ();
-
     }
   catch (const CORBA::Exception&)
     {

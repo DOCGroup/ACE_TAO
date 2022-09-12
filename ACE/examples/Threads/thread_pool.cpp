@@ -17,7 +17,6 @@
 #include "ace/Service_Config.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // Default number of iterations to run the test.

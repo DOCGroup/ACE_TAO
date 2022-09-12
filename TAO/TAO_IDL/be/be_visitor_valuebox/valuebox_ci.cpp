@@ -558,7 +558,6 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 }
 
 
-
 int
 be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
                                               const char * type_suffix,
@@ -621,7 +620,6 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
           << "{" << be_idt_nl
           << "return this->_pd_value;" << be_uidt_nl
           << "}" << be_nl_2;
-
     }
 
   return 0;

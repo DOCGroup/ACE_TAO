@@ -8,7 +8,6 @@ Client_Task::Client_Task (CORBA::ORB_ptr orb)
 int
 Client_Task::svc (void)
 {
-
   try
     {
       this->orb_->run ();

@@ -98,7 +98,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SOCK_Dgram_Mcast : public ACE_SOCK_Dgram
 {
 public:
-
   /**
    * @brief Option parameters.
    *
@@ -393,7 +392,6 @@ private:
  mutable ACE_SDM_LOCK subscription_list_lock_;
      // (Lock type does not need to support recursive locking.)
 #endif /* ACE_SOCK_DGRAM_MCAST_DUMPABLE */
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

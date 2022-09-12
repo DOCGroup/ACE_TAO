@@ -329,7 +329,6 @@ protected:
   {
     return 0;
   }
-
 };
 
 class Shutdown: public Command
@@ -342,7 +341,6 @@ public:
     worker->shutdown (true);
     return 0;
   }
-
 };
 
 class TSS_Assert: public Command

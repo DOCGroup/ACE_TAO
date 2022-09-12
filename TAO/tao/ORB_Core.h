@@ -162,7 +162,6 @@ class TAO_Export TAO_ORB_Core
                                          ACE_TCHAR *argv[],
                                          const char *);
 public:
-
   /// Constructor.
   TAO_ORB_Core (const char* id, ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> g);
 
@@ -911,7 +910,6 @@ public:
 #endif
 
 protected:
-
   /// Destructor is protected since the ORB Core is a reference
   /// counted object.
   ~TAO_ORB_Core ();
@@ -993,7 +991,6 @@ protected:
                                    const TAO_MProfile& mprofile);
 
 private:
-
   /// The ORB Core should not be copied.
   //@{
   TAO_ORB_Core(const TAO_ORB_Core&);
@@ -1014,7 +1011,6 @@ private:
   bool use_local_memory_pool_;
 
 protected:
-
   /// Synchronize internal state...
   TAO_SYNCH_MUTEX lock_;
 
@@ -1116,7 +1112,6 @@ protected:
    * @name Service Level Hooks
    */
   //@{
-
   /// Fault Tolerant service hook.
   TAO_Fault_Tolerance_Service ft_service_;
 
@@ -1296,7 +1291,6 @@ protected:
 class TAO_Export TAO_ORB_Core_Static_Resources : public ACE_Service_Object
 {
 public:
-
   /// Return the context-specific singleton instance.
   static TAO_ORB_Core_Static_Resources* instance ();
 
@@ -1366,14 +1360,12 @@ public:
   TAO_ORB_Core::Timeout_Hook alt_connection_timeout_hook_;
 
 //private:
-
   /// Constructor.
   TAO_ORB_Core_Static_Resources ();
   TAO_ORB_Core_Static_Resources& operator=
       (const TAO_ORB_Core_Static_Resources&);
 
 private:
-
   /// Mostly unused variable whose sole purpose is to enforce
   /// the instantiation of a TAO_ORB_Core_Static_Resources instance
   /// at initialization time.

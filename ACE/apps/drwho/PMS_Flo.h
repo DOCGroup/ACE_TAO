@@ -21,7 +21,6 @@
  */
 class PMS_Flo : public PM_Server
 {
-
 public:
   PMS_Flo (void);
 

@@ -20,7 +20,6 @@ class Identity_i :
   // = TITLE
   //    This class implements Identity.idl interface.
 public:
-
   /// Constructor - initializes the name of this object.
   Identity_i (const char *name);
 
@@ -31,7 +30,6 @@ public:
   virtual void get_name (CORBA::String_out name);
 
 private:
-
   /// Stores the name of this object.
   CORBA::String_var name_;
 };

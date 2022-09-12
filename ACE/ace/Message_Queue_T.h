@@ -353,7 +353,6 @@ public:
   /** @name Queue statistics methods
    */
   //@{
-
   /// True if queue is full, else false.
   virtual bool is_full ();
   /// True if queue is empty, else false.
@@ -395,7 +394,6 @@ public:
   /** @name Water mark (flow control) methods
    */
   //@{
-
   /**
    * Get high watermark.
    */
@@ -424,7 +422,6 @@ public:
    * enqueueing and dequeueing operations.
    */
   //@{
-
   /**
    * Deactivate the queue and wakeup all threads waiting on the queue
    * so they can continue.  No messages are removed from the queue,
@@ -462,7 +459,6 @@ public:
   /** @name Notification strategy methods
    */
   //@{
-
   /**
    * This hook is automatically invoked by <enqueue_head>,
    * <enqueue_tail>, and <enqueue_prio> when a new item is inserted
@@ -841,7 +837,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /**
    * Enqueue an <ACE_Message_Block *> in accordance with its priority.
    * priority may be *dynamic* or *static* or a combination or *both*
@@ -1002,7 +997,6 @@ template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY = ACE_System
 class ACE_Message_Queue_Ex
 {
 public:
-
   enum
   {
     /// Default priority value. This is the lowest priority.
@@ -1254,7 +1248,6 @@ public:
   /** @name Queue statistics methods
    */
   //@{
-
   /// True if queue is full, else false.
   virtual bool is_full ();
 
@@ -1294,7 +1287,6 @@ public:
   /** @name Water mark (flow control) methods
    */
   //@{
-
   /**
    * Get high watermark.
    */
@@ -1323,7 +1315,6 @@ public:
    * enqueueing and dequeueing operations.
    */
   //@{
-
   /**
    * Deactivate the queue and wakeup all threads waiting on the queue
    * so they can continue.  No messages are removed from the queue,
@@ -1361,7 +1352,6 @@ public:
   /** @name Notification strategy methods
    */
   //@{
-
   /**
    * This hook is automatically invoked by <enqueue_head>,
    * <enqueue_tail>, and <enqueue_prio> when a new item is inserted

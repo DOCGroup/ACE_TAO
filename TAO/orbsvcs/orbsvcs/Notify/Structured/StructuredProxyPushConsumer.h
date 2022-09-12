@@ -51,7 +51,6 @@ public:
   virtual void configure(TAO_Notify_SupplierAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 protected:
-
   // = interface methods
   virtual CosNotifyChannelAdmin::ProxyType MyType (void);
 
@@ -70,7 +69,6 @@ protected:
 
 
 private:
-
   /// Release
   virtual void release (void);
 };

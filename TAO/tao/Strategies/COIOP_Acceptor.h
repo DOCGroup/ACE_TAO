@@ -79,7 +79,6 @@ public:
   //@}
 
 protected:
-
   /// Parse protocol specific options.
   virtual int parse_options (const char *options);
 
@@ -95,7 +94,6 @@ protected:
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
 protected:
-
   /**
    * Cache the information about the endpoints serviced by this
    * acceptor.

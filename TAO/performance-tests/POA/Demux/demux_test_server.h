@@ -43,7 +43,6 @@ public:
   int calculate_avg_latency (void);
 
 private:
-
   /// parse command line arguments (if any)
   int parse_args (void);
 
@@ -97,7 +96,6 @@ private:
   /// Use the Transient POAs for servant activation as opposed
   /// to persistent POAs.
   int use_transient_poas_;
-
 };
 
 

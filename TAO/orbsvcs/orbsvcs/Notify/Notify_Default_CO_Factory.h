@@ -35,7 +35,6 @@ public:
   /// Helper function to register the default factory into the service
   /// configurator.
   static int init_svc (void);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

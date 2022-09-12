@@ -35,7 +35,6 @@ namespace TAO
 {
   namespace HTIOP
   {
-
     // TAO HTIOP_Profile concrete Profile definitions
     /**
      * @class HTIOP_Profile
@@ -112,7 +111,6 @@ namespace TAO
       virtual CORBA::ULong hash (CORBA::ULong max);
 
     protected:
-
       /// Template methods. Please see Profile.h for the documentation.
       virtual int decode_profile (TAO_InputCDR &cdr);
       virtual int decode_endpoints (void);
@@ -121,7 +119,6 @@ namespace TAO
       virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
 
     protected:
-
       /**
        * Head of this profile's list of endpoints.  This endpoint is not
        * dynamically allocated because a profile always contains at least

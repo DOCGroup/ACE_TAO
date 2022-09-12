@@ -100,7 +100,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     do_drwho (smr_server);
   else
     {
-
       for (;;)
         do_drwho (smr_server);
 

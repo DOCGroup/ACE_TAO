@@ -229,7 +229,6 @@ DRV_parse_args (long ac, char **av)
                         ));
                       idl_global->parse_args_exit (1);
                       return;
-
                     }
                 }
               else

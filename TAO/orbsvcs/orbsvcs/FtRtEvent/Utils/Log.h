@@ -18,7 +18,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC {
-
   /**
    * A utility class for logging messages.
    */

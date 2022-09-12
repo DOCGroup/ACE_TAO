@@ -79,7 +79,6 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
                                             key_to_remove,
                                             value_to_remove) == -1)
         return -1;
-
     }
 
   return 0;

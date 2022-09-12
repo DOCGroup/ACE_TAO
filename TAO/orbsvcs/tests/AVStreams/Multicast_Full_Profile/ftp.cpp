@@ -125,7 +125,6 @@ Client::parse_args (int argc, ACE_TCHAR *argv[])
         default:
           ACE_DEBUG ((LM_DEBUG,"Unknown option\n"));
           return -1;
-
         }
     }
   return 0;
@@ -181,7 +180,6 @@ Client::Client (void)
     protocol_ (ACE_OS::strdup ("UDP"))
 {
   endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ());
-
 }
 
 

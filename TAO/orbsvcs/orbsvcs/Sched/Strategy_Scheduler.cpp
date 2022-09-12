@@ -578,7 +578,6 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
 }
 
 
-
 ////////////////////////////////////////////////////////////////////
 // class template ACE_Strategy_Scheduler_Factory member functions //
 ////////////////////////////////////////////////////////////////////
@@ -598,7 +597,6 @@ ACE_Strategy_Scheduler_Factory<STRATEGY>::create (RtecScheduler::Preemption_Prio
 
   return the_scheduler;
 }
-
 
 
 /////////////////////////////////////////////////////////////////
@@ -695,7 +693,6 @@ ACE_Scheduler_Strategy::minimum_critical_priority ()
 {
   return 0;
 }
-
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -857,7 +854,6 @@ ACE_MUF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 
 
 
-
 /////////////////////////////////////////////////////////////////////////
 // class ACE_RMS_Scheduler_Strategy static data member initializations //
 /////////////////////////////////////////////////////////////////////////
@@ -987,7 +983,6 @@ ACE_RMS_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 {
   return RtecScheduler::STATIC_DISPATCHING;
 }
-
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -1121,7 +1116,6 @@ ACE_MLF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 {
   return RtecScheduler::LAXITY_DISPATCHING;
 }
-
 
 
 /////////////////////////////////////////////////////////////////////////

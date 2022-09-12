@@ -63,7 +63,6 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core)
       TAO_OBJID_RTCURRENT);
 
   this->current_ = RTCORBA::Current::_narrow (object.in ());
-
 }
 
 RTCORBA::ProtocolProperties_ptr

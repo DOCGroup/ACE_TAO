@@ -98,7 +98,6 @@ public:
   virtual TAO_LF_Strategy *create_lf_strategy (void);
 
 protected:
-
   /// Obtain the reactor implementation
   virtual ACE_Reactor_Impl *allocate_reactor_impl () const;
 
@@ -127,7 +126,6 @@ protected:
   Allocator_Lock_Type ami_response_handler_allocator_lock_type_;
 
   virtual int load_default_protocols (void);
-
 };
 
 static TAO_Resource_Factory_Changer TAO_changer;

@@ -216,7 +216,6 @@ Client::init (int argc, ACE_TCHAR *argv[])
   CORBA::String_var ior;
   try
     {
-
       PortableServer::POAManager_var mgr
         = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
 
@@ -314,7 +313,6 @@ Client::run (void)
       this->orb_->run (tv);
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -354,7 +352,6 @@ ACE_TMAIN (int argc,
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
-
     }
   catch (const CORBA::Exception& ex)
 

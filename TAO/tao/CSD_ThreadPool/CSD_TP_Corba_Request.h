@@ -31,7 +31,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Corba_Request;
     typedef TAO_Intrusive_Ref_Count_Handle<TP_Corba_Request>
                                              TP_Corba_Request_Handle;
@@ -47,7 +46,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Corba_Request : public TP_Request
     {
     public:
-
       /// Virtual Destructor.
       virtual ~TP_Corba_Request();
 

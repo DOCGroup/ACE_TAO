@@ -34,7 +34,6 @@ public:
       PortableServer::POA_ptr poa);
 
  private:
-
   CORBA::ORB_ptr orb_;
 
   PortableServer::Current_ptr poa_current_;

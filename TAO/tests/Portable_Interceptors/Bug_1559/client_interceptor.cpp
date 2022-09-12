@@ -169,7 +169,6 @@ void
 Echo_Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
@@ -278,7 +277,6 @@ void
 Echo_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;

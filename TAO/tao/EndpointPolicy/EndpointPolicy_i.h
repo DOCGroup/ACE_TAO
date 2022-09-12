@@ -74,7 +74,6 @@ private:
 };
 
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)

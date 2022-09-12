@@ -79,5 +79,4 @@ Client_Task::svc (void)
     }
   corb_->destroy ();
   return status;
-
 }

@@ -35,7 +35,6 @@ virtual CORBA::Boolean send_message (
 virtual char * get_time (
 
   );
-
 };
 
 #endif /* MESSENGERI_H_  */

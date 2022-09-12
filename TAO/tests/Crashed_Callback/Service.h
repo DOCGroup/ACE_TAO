@@ -40,7 +40,6 @@ private:
 private:
   /// Count the number of tests executed
   int test_count_;
-
 };
 
 #include /**/ "ace/post.h"

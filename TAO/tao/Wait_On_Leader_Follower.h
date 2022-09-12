@@ -37,7 +37,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_Wait_On_Leader_Follower : public TAO_Wait_Strategy
 {
-
 public:
   /// Constructor.
   TAO_Wait_On_Leader_Follower (TAO_Transport *transport);
@@ -60,7 +59,6 @@ public:
 
    /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
   virtual bool can_process_upcalls () const;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

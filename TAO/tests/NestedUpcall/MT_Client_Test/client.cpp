@@ -182,7 +182,6 @@ int
 MT_Client::init (int argc, ACE_TCHAR **argv,
                  int client_number)
 {
-
   // Make a copy of argv since ORB_init will change it.
   this->argc_ = argc;
   this->argv_ = new ACE_TCHAR *[argc];

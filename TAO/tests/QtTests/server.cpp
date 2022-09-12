@@ -131,7 +131,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // We choose to run the main Qt event loop..
       app.exec ();
-
     }
   catch (const CORBA::Exception& ex)
     {

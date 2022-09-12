@@ -18,7 +18,6 @@
 #include "ace/Service_Config.h"
 
 
-
 int
 run_main (int, ACE_TCHAR *argv[])
 {

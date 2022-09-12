@@ -120,7 +120,6 @@ public:
   virtual TAO_Notify_Object::ID get_id () const;
 
 private:
-
   /// = Data Members
 
   /// = NotifyExt methods

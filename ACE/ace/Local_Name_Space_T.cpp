@@ -139,7 +139,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
   const char *type,
   int rebind)
 {
-
   ACE_TRACE ("ACE_Local_Name_Space::shared_bind_i");
   const size_t name_len = (name.length () + 1) * sizeof (ACE_WCHAR_T);
   const size_t value_len = (value.length () + 1) * sizeof (ACE_WCHAR_T);
@@ -232,7 +231,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind (
     {
     }
   return result;
-
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int

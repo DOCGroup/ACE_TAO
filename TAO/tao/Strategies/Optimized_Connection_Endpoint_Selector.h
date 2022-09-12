@@ -60,7 +60,6 @@ public:
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *,
                                 ACE_Time_Value *max_wait_time);
 private:
-
   int check_profile (TAO_Profile *,
                      TAO::Profile_Transport_Resolver *);
 

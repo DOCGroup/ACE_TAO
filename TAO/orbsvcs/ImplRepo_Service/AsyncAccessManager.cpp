@@ -386,7 +386,6 @@ AsyncAccessManager::status_name (ImplementationRepository::AAM_Status s)
       return "UPDATE_FAILED";
     case ImplementationRepository::AAM_ACTIVE_TERMINATE:
       return "ACTIVE_TERMINATE";
-
     }
   return "<undefined status>";
 }

@@ -84,7 +84,6 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
   // grab the POA Manager
   try
     {
-
       this->poa_mgr_ =
         this->root_poa_->the_POAManager ();
     }
@@ -285,7 +284,6 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
 
 
                   ACE_OS::fprintf (this->ior_fp_, "%s\n", ior.in ());
-
                 }
               catch (const CORBA::Exception& ex)
                 {
@@ -298,7 +296,6 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
         } // j loop
 
       prev_poa = this->child_poa_[i].in ();
-
     } // i loop
 
   ACE_OS::fclose (this->ior_fp_);
@@ -310,7 +307,6 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
   try
     {
       this->poa_mgr_->activate ();
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -320,14 +316,12 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
 
   // success
   return 0;
-
 }
 
 // parse command line arguments (if any).
 int
 Demux_Test_Server::parse_args (void)
 {
-
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("df:o:p:ut"));
   int c;
 

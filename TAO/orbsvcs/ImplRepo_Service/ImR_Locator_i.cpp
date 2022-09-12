@@ -29,7 +29,6 @@ static const ACE_Time_Value DEFAULT_SHUTDOWN_TIMEOUT (0, 5000 * 1000);
 
 static PortableServer::POA_ptr
 createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name) {
-
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
@@ -1630,8 +1629,6 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
                                 this->opts_->ping_external (),
                                 sip->server.in(),
                                 sip->pid);
-
-
     }
   catch (const CORBA::Exception& )
     {

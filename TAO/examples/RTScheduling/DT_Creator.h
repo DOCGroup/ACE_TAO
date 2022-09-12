@@ -82,8 +82,6 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
   int activate_root_poa (void);
 
  protected:
-
-
   DT_LIST dt_list_;
   POA_LIST poa_list_;
   JOB_LIST job_list_;

@@ -107,7 +107,6 @@ public:
    * Methods required by the PortableGroup::PropertyManager interface.
    */
   //@{
-
   /// Set the default properties to be used by all object groups.
   virtual void set_default_properties (
       const PortableGroup::Properties & props);
@@ -167,7 +166,6 @@ public:
    * interface.
    */
   //@{
-
   /// Create a member using the load balancer ObjectGroupManager, and
   /// add the created object to the ObjectGroup.
   virtual PortableGroup::ObjectGroup_ptr create_member (
@@ -230,7 +228,6 @@ public:
    * Methods required by the PortableGroup::GenericFactory interface.
    */
   //@{
-
   /**
    * Create an object of the specified type that adheres to the
    * restrictions defined by the provided Criteria.  The out
@@ -321,7 +318,6 @@ private:
    * and Random are supported.
    */
   //@{
-
   /// The "RoundRobin" load balancing strategy.
   TAO_FT_Round_Robin round_robin_;
   /// The "Random" load balancing strategy.

@@ -45,7 +45,6 @@ class TAO_PrivateConnectionPolicy;
 class TAO_RTCORBA_Export TAO_RT_Stub : public TAO_Stub
 {
 public:
-
   TAO_RT_Stub (const char *repository_id,
                const TAO_MProfile &profiles,
                TAO_ORB_Core *orb_core);
@@ -70,7 +69,6 @@ public:
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 private:
-
   /// Helper method used to parse the policies.
   void parse_policies (void);
 
@@ -122,7 +120,6 @@ private:
   // = Disallow copying and assignment.
   TAO_RT_Stub (const TAO_RT_Stub &);
   TAO_RT_Stub &operator = (const TAO_RT_Stub &);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

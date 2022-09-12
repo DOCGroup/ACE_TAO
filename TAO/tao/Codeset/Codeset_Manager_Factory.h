@@ -42,7 +42,6 @@ public:
   virtual ~TAO_Codeset_Manager_Factory ();
   virtual TAO_Codeset_Manager *create(void);
   virtual bool is_default() const;
-
 };
 
 

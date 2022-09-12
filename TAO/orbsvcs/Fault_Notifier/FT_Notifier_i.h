@@ -226,7 +226,6 @@ namespace TAO
      * boolean: set true when CORBA is done with this object.
      */
     int gone_;
-
   };
 } // namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL

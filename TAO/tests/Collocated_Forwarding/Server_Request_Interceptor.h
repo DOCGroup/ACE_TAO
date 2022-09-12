@@ -26,7 +26,6 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   Server_Request_Interceptor (CORBA::ULong request_pass_count);
 
@@ -64,7 +63,6 @@ public:
   //@}
 
 private:
-
   /// How much requests to pass thru before forwarding.
   CORBA::ULong request_pass_count_;
 

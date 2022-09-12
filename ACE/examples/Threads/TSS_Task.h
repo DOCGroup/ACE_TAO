@@ -22,7 +22,6 @@
 class Test_Task
 {
 public:
-
   Test_Task (void);
   ~Test_Task (void);
 

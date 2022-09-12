@@ -208,7 +208,6 @@ typedef struct page_list {
 }page_list_t;
 
 
-
 /* shared variables */
 extern THREAD FILE *debugfile;
 extern int debug;

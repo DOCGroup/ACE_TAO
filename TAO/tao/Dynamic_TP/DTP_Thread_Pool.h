@@ -160,7 +160,6 @@ public:
 
   /// @name Accessors
   // @{
-
   bool use_timeouts () const;
   const ACE_Time_Value& dynamic_thread_time () const;
 
@@ -173,7 +172,6 @@ public:
   // @}
 
 private:
-
   int create_threads_i (size_t count);
 
   TAO_DTP_Thread_Pool_Manager &manager_;
@@ -215,7 +213,6 @@ private:
 class TAO_Dynamic_TP_Export TAO_DTP_Thread_Pool_Manager
 {
 public:
-
   /// Constructor.
   TAO_DTP_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
 
@@ -243,7 +240,6 @@ public:
 private:
   /// @name Helpers
   // @{
-
   CORBA::ULong
   create_threadpool_i (TAO_DTP_Definition &def);
 

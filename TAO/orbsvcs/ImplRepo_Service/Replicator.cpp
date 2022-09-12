@@ -325,7 +325,6 @@ Replicator::send_entity (ImplementationRepository::UpdateInfo &info)
 int
 Replicator::send_registration (char *&imr_ior)
 {
-
   if (this->debug_ > 1)
     {
       ORBSVCS_DEBUG((LM_INFO,

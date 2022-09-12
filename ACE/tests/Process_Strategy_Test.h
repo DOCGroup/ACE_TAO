@@ -72,7 +72,6 @@ protected:
 class Process_Strategy : public ACE_Process_Strategy<Counting_Service>
 {
 public:
-
   // Constructor
   Process_Strategy (size_t n_processes = 1,
                     ACE_Event_Handler *acceptor = 0,

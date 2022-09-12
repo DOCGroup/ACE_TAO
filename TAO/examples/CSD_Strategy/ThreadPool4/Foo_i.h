@@ -12,7 +12,6 @@ class FooServantList;
 class Foo_i : public virtual POA_Foo
 {
   public:
-
     Foo_i(const char* servant_name);
     virtual ~Foo_i();
 
@@ -82,7 +81,6 @@ class Foo_i : public virtual POA_Foo
 
 
   private:
-
     CORBA::Long value_;
 
     unsigned count_op1_;

@@ -55,7 +55,6 @@ class FilterClient
   void done (void);
 
  protected:
-
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
 

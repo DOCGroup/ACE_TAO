@@ -7,7 +7,6 @@ template <class KEY, class DATA> class JAWS_Assoc_Array_Iterator;
 template <class KEY, class DATA>
 class JAWS_Assoc_Array
 {
-
 friend class JAWS_Assoc_Array_Iterator<KEY, DATA>;
 
 public:
@@ -44,7 +43,6 @@ public:
   // Destroys all keys and associated data.
 
 protected:
-
   int find_i (const KEY &k);
   // If k points to an associated data item, then this function
   // returns the index into the arrays that hold it.  Otherwise, it
@@ -61,7 +59,6 @@ template <class KEY, class DATA>
 class JAWS_Assoc_Array_Iterator
 {
 public:
-
   JAWS_Assoc_Array_Iterator (const JAWS_Assoc_Array<KEY, DATA> &aa);
   ~JAWS_Assoc_Array_Iterator (void);
 
@@ -75,14 +72,12 @@ public:
   int is_done (void);
 
 private:
-
   // declare private and do not define: explicitly
   // prevent assignment and copy construction of iterators
   JAWS_Assoc_Array_Iterator (const JAWS_Assoc_Array_Iterator<KEY, DATA> &);
   void operator= (const JAWS_Assoc_Array_Iterator<KEY, DATA> &);
 
 private:
-
   const JAWS_Assoc_Array<KEY, DATA> &aa_;
 
   int i_;
@@ -90,7 +85,6 @@ private:
 
   int j_;
   // The next item to be pointed to by iterator.
-
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

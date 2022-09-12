@@ -31,7 +31,6 @@ ACE_QoS_Session_Factory::~ACE_QoS_Session_Factory (void)
 ACE_QoS_Session *
 ACE_QoS_Session_Factory::create_session (ACE_QoS_Session_Type qos_session_type)
 {
-
   ACE_QoS_Session * qos_session = 0;
 
 #if defined (ACE_HAS_RAPI)
@@ -61,7 +60,6 @@ ACE_QoS_Session_Factory::create_session (ACE_QoS_Session_Type qos_session_type)
 int
 ACE_QoS_Session_Factory::destroy_session (ACE_QoS_Session *qos_session)
 {
-
   if ((qos_session != 0) && (this->remove_session (qos_session) == -1))
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error in destroying session\n")),

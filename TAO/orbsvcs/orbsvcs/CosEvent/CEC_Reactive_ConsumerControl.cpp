@@ -161,7 +161,6 @@ void
 TAO_CEC_Reactive_ConsumerControl::successful_transmission (
                                     PortableServer::ServantBase* proxy)
 {
-
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   if (this->typed_event_channel_)
     {

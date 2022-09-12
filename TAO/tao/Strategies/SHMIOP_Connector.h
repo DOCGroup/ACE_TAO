@@ -72,7 +72,6 @@ public:
   //@}
 
 public:
-
   typedef TAO_Connect_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>
           TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY;
 
@@ -107,12 +106,10 @@ protected:
   //@}
 
 private:
-
   /// Return the remote endpoint, a helper function
   TAO_SHMIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
 private:
-
   /// Local address.
   ACE_MEM_Addr address_;
 

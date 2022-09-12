@@ -54,7 +54,6 @@ private:
   /// Pre-allocate the message block to send...
   ACE_Message_Block frame_;
   int count_;
-
 };
 
 class Ping_Send : public TAO_FlowProducer

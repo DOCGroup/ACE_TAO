@@ -35,7 +35,6 @@ class be_decl;
 class TAO_IDL_BE_Export TAO_CodeGen
 {
 public:
-
   // Define all the code generation states.
   // The first letter C/S of the suffix stands for client/server-side
   // The second letter H/I/S stands for header/inline/impl file.

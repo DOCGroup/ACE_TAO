@@ -17,7 +17,6 @@
 #include "orbsvcs/Property/CosPropertyService_i.h"
 
 
-
 class TAO_PropertySet_Tester
 {
   // = TITLE

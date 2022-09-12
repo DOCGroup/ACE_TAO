@@ -45,7 +45,6 @@ public:
   // The skeleton methods.
 
 private:
-
   // = Data Members
   CORBA::ULong event_count_;
   // Keep track of the number of events received.
@@ -62,7 +61,6 @@ private:
 
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_;
   // The proxy that we are connected to.
-
 };
 
 #endif /* EVENT_CONSUMER_H */

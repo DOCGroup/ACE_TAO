@@ -7,7 +7,6 @@
 #include "ace/Atomic_Op.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Recursive_Thread_Mutex.h"
@@ -152,7 +151,6 @@ worker (void *args)
         }
 
       // ACE_DEBUG ((LM_DEBUG, "(%t) done with handle_events\n"));
-
     }
 
   ACE_NOTREACHED(return 0);

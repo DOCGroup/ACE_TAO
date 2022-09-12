@@ -69,7 +69,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "drv_private_ifr.h"
 
 
-
 // Storage for file names
 
 #if !defined (NFILES)

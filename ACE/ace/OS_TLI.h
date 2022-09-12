@@ -243,7 +243,6 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_unbind (ACE_HANDLE fildes);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

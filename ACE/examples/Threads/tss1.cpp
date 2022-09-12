@@ -20,7 +20,6 @@
 #include "ace/Task.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "thread_specific.h"

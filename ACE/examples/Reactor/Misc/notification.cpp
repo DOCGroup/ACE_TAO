@@ -7,7 +7,6 @@
 #include "ace/Truncate.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 #define MAX_ITERATIONS 10000
 

@@ -22,7 +22,6 @@ class Client : public QObject
 {
   Q_OBJECT
 public:
-
   /// ctor
   Client (CORBA::ORB_ptr orb,
           QApplication &app);
@@ -47,7 +46,6 @@ public:
    void shutdown_call (void);
 
 private:
-
   /// A push button
   QPushButton *push_button_;
 

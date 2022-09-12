@@ -72,7 +72,6 @@ ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (
 
       if (container.unbind (*key) == -1)
         return -1;
-
     }
 
   return 0;

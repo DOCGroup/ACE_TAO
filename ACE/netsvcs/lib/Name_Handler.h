@@ -105,7 +105,6 @@ protected:
   ~ACE_Name_Handler (void);
 
 private:
-
   /// Table of pointers to member functions
   OPERATION op_table_[ACE_Name_Request::MAX_ENUM];
 

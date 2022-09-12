@@ -23,7 +23,6 @@
 class Demux_Test_Client
 {
 public:
-
   // Request invocation strategies
   enum INVOKE_STRATEGY
   {
@@ -53,7 +52,6 @@ public:
   int run (void);
 
 private:
-
   /// parse command line arguments
   int parse_args (void);
 
@@ -119,7 +117,6 @@ private:
 
   /// database of operations
   Operation_DB_Entry op_db_[TAO_DEMUX_TEST_MAX_OPS];
-
 };
 
 

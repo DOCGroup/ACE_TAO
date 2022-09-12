@@ -91,7 +91,6 @@ catch (const CORBA::Exception& ex)
   }
 
 
-
 }
 
 void

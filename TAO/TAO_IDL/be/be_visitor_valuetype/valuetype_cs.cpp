@@ -170,7 +170,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   // Nothing to marshal if abstract valuetype.
   if (!node->is_abstract () && !is_an_amh_exception_holder)
     {
-
       this->marshal_unmarshal_v (node);
 
       *os << "::CORBA::Boolean" << be_nl
@@ -181,7 +180,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "return formal_type_id == reinterpret_cast<ptrdiff_t> ("
           << node->name() << "::_downcast);" << be_uidt_nl
           << "}" << be_nl_2;
-
     }
   else if (is_an_amh_exception_holder)
     {

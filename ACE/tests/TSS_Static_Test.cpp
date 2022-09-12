@@ -20,7 +20,6 @@
 #include "ace/Thread.h"
 
 
-
 #if defined (ACE_HAS_TSS_EMULATION)
 
 class Some_Object

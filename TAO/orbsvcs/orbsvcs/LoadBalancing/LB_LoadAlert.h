@@ -37,7 +37,6 @@ public:
    * Methods required by the CosLoadBalancing::LoadAlert interface.
    */
   //@{
-
   /// Forward requests back to the load manager via the object group
   /// reference.
   virtual void enable_alert (void);
@@ -52,7 +51,6 @@ public:
   CORBA::Boolean alerted () const;
 
 // protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via

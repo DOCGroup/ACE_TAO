@@ -40,7 +40,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Consumer
   : public TAO_Notify_Peer
   , public ACE_Event_Handler    // to support timer
 {
-
 public:
   /// Status returned from dispatch attempts
   enum DispatchStatus {
@@ -52,7 +51,6 @@ public:
   };
 
 public:
-
 typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
 
   /// Constructor
@@ -123,7 +121,6 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
   size_t pending_count (void);
 
 protected:
-
   /// This method is called by the is_alive() method.  It should provide
   /// the connected consumer or nil if there is none.
   virtual CORBA::Object_ptr get_consumer (void) = 0;

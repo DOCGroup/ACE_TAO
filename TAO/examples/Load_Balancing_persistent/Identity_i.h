@@ -20,7 +20,6 @@ class Identity_i :
   // = TITLE
   //    This class implements Identity.idl interface.
 public:
-
   /// Constructor - initializes the name of this object.
   Identity_i (const char *name,
               PortableServer::POA_ptr poa);
@@ -36,7 +35,6 @@ public:
   PortableServer::POA_ptr _default_POA (void);
 
 private:
-
   /// Stores the name of this object.
   CORBA::String_var name_;
 

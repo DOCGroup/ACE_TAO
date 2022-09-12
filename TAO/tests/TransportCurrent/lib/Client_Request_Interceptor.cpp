@@ -7,7 +7,6 @@
 
 namespace Test
 {
-
   Client_Request_Interceptor::Client_Request_Interceptor (const char *orb_id,
                                                           TEST test)
     : orb_id_ (CORBA::string_dup (orb_id))

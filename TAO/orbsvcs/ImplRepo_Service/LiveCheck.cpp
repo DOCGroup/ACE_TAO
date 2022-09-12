@@ -245,7 +245,6 @@ LiveEntry::update_listeners (void)
        !i.done();
        i.advance ())
     {
-
       if ((*i)->status_changed (this->liveliness_))
         {
           remove.insert (*i);

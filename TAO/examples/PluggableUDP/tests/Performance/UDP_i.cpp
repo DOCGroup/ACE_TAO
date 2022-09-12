@@ -1,7 +1,6 @@
 #include "UDP_i.h"
 
 
-
 // Constructor
 UDP_i::UDP_i (void)
   : messages_count_ (0)

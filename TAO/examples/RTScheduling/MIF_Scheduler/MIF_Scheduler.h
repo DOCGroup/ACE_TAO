@@ -54,7 +54,6 @@ public MIF_Scheduling::MIF_Scheduler,
 public ::CORBA::LocalObject
 {
  public:
-
   MIF_Scheduler (CORBA::ORB_ptr orb);
 
   ~MIF_Scheduler (void);

@@ -25,9 +25,7 @@ ACE_RLECompressor::compress(const void *in_ptr,
     bool       run_code     = false;
 
     if (in_p && out_p && in_len) {
-
         while (in_len-- > 0) {
-
             ACE_Byte cur_byte = *in_p++;
 
             switch (out_index ? run_count : 128U) {  // BootStrap to 128
@@ -46,7 +44,6 @@ ACE_RLECompressor::compress(const void *in_ptr,
 
                 // Fix problem where input exhaused but maybe compressing
                 if (in_len ? cur_byte == *in_p : run_code) {
-
                     if (run_code) {             // In Compression?
                         out_p[out_base] = ACE_Byte(run_count++ | 0x80);
                         continue;               // Stay in Compression
@@ -99,7 +96,6 @@ ACE_RLECompressor::decompress(const void *in_ptr,
     ACE_Byte *out_p         = static_cast<ACE_Byte *>(out_ptr);
 
     if (in_p && out_p) while(in_len-- > 0) {
-
         ACE_Byte    cur_byte    = *in_p++;
         ACE_UINT32  cpy_len     = ACE_UINT32((cur_byte & ACE_CHAR_MAX) + 1);
 

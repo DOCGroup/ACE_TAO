@@ -21,7 +21,6 @@
  */
 class PMS_Usr : public PM_Server
 {
-
 public:
   PMS_Usr (void);
 

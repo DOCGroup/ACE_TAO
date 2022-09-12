@@ -26,7 +26,6 @@
  */
 class Server_i
 {
-
 public:
   /// Constructor.
   Server_i (void);

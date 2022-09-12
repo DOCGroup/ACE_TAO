@@ -44,7 +44,6 @@ public:
   static const char* name (void);
 
 protected:
-
   /// = Data Members
 #ifdef HPUX_11
    // Remove clash with /usr/include/machine/cpu.h and /usr/include/pa/cpu.h

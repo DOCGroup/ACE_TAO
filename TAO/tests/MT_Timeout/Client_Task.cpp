@@ -42,7 +42,6 @@ Client_Task::too_big_difference_calls () const
 int
 Client_Task::svc (void)
 {
-
   int successful_calls = 0;
   int timed_out_calls = 0;
 

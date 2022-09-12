@@ -14,7 +14,6 @@
 #include "CPP-inserver-fancy.h"
 
 
-
 // Forward declaration.
 class Handler;
 

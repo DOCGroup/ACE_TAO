@@ -1,7 +1,6 @@
 #include "RT_Test_FilterFactory.h"
 
 
-
 #include "RT_Test_Filter.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_string.h"

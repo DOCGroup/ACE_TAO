@@ -137,7 +137,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       server->shutdown ();
 
       root_poa->destroy (true, true);
-
     }
   catch (const CORBA::Exception& ex)
     {

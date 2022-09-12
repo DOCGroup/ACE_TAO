@@ -199,7 +199,6 @@ public:
   ///}
 
 protected:
-
   /**
    * Dynamic size (length) of the vector.
    */

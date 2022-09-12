@@ -7,7 +7,6 @@
 #include "tao/Environment.h"
 
 
-
 ORB_Task::ORB_Task(CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))
 {

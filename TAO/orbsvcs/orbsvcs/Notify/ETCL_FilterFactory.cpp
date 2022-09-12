@@ -29,7 +29,6 @@ TAO_Notify_ETCL_FilterFactory::~TAO_Notify_ETCL_FilterFactory ()
   }
 
   this->filters_.unbind_all ();
-
 }
 
 CosNotifyFilter::FilterFactory_ptr
@@ -318,7 +317,6 @@ TAO_Notify_ETCL_FilterFactory::find_filter_id (CosNotifyFilter::Filter_ptr filte
   throw CORBA::INTERNAL ();
   return 0;
 }
-
 
 
 ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_Notify_ETCL_FilterFactory)

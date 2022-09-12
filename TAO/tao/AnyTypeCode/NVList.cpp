@@ -145,7 +145,6 @@ CORBA::NVList::add_value (const char *name,
 CORBA::NamedValue_ptr
 CORBA::NVList::add_item_consume (char *name, CORBA::Flags flags)
 {
-
   // call the helper to allocate a NamedValue element
   CORBA::NamedValue_ptr nv = this->add_element (flags);
 

@@ -90,7 +90,6 @@ void test_octet_seq (Test::Roundtrip_ptr roundtrip,
                                                ACE_OS::gethrtime ());
            if (orb->work_pending ())
                   orb->perform_work ();
-
          }
 
   ACE_Time_Value tv (0, 2000);
@@ -136,7 +135,6 @@ void test_char_seq  (Test::Roundtrip_ptr roundtrip,
                                                ACE_OS::gethrtime ());
            if (orb->work_pending ())
                   orb->perform_work ();
-
          }
 
   ACE_Time_Value tv (0, 2000);
@@ -182,7 +180,6 @@ void test_long_seq  (Test::Roundtrip_ptr roundtrip,
                                               ACE_OS::gethrtime ());
            if (orb->work_pending ())
                   orb->perform_work ();
-
          }
 
   ACE_Time_Value tv (0, 2000);
@@ -228,7 +225,6 @@ void test_short_seq (Test::Roundtrip_ptr roundtrip,
                                                ACE_OS::gethrtime ());
            if (orb->work_pending ())
                   orb->perform_work ();
-
          }
 
   ACE_Time_Value tv (0, 2000);
@@ -274,7 +270,6 @@ void test_double_seq (Test::Roundtrip_ptr roundtrip,
                                                 ACE_OS::gethrtime ());
            if (orb->work_pending ())
                   orb->perform_work ();
-
          }
 
   ACE_Time_Value tv (0, 2000);
@@ -320,7 +315,6 @@ void test_longlong_seq (Test::Roundtrip_ptr roundtrip,
                                                   ACE_OS::gethrtime ());
            if (orb->work_pending ())
                   orb->perform_work ();
-
          }
 
   ACE_Time_Value tv (0, 2000);

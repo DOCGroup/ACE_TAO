@@ -32,7 +32,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-
   // non=standard..
   //@{ @name A set of wrappers for regular expressions.
   ACE_NAMESPACE_INLINE_FUNCTION

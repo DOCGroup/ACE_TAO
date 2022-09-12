@@ -21,7 +21,6 @@ class test_i :
   public virtual POA_test
 {
 public:
-
   test_i (PortableServer::POA_ptr poa);
 
   void method (void);
@@ -42,7 +41,6 @@ test_i::method (void)
 class Task : public ACE_Task_Base
 {
 public:
-
   void object (test_ptr test);
 
   int svc (void);
@@ -76,7 +74,6 @@ class Servant_Locator :
   public PortableServer::ServantLocator
 {
 public:
-
   Servant_Locator (PortableServer::POA_ptr poa);
 
   ::PortableServer::Servant preinvoke (const PortableServer::ObjectId &,

@@ -12,7 +12,6 @@
 class IO_Test
 {
 public:
-
   // Initialize the test name
   IO_Test (const char *name,
            ACE_Profile_Timer &tm);

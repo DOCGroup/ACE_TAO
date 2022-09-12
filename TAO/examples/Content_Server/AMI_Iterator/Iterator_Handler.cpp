@@ -49,7 +49,6 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
 
       this->contents_->sendc_next_chunk (this->ami_handler_.in (),
                                          this->offset_);
-
     }
   else
     {

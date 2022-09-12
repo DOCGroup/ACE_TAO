@@ -9,7 +9,6 @@ Options *Options::instance_ = 0;
 Options *
 Options::instance (void)
 {
-
   if (Options::instance_ == 0)
     Options::instance_ = new Options;
 

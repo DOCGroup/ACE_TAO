@@ -78,7 +78,6 @@ class Service_Config_ORB_DLL_Export Service_Config_ORB_DLL
   : public ACE_Task_Base
 {
 public:
-
   /// Constructor.
   Service_Config_ORB_DLL (void);
   ~Service_Config_ORB_DLL (void);

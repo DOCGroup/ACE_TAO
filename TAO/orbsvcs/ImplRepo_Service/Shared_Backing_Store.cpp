@@ -895,7 +895,6 @@ Shared_Backing_Store::locator_service_ior (const char* peer_ior) const
   char* const combined_ior =
     this->orb_->object_to_string(locator_service.in ());
   return combined_ior;
-
 }
 
 void

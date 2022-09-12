@@ -34,7 +34,6 @@
  */
 class ACE_Time_Info
 {
-
 public:
   time_t delta_time_;
 

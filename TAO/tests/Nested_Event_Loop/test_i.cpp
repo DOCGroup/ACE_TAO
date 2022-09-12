@@ -140,7 +140,6 @@ void
 client_i::oneway_no_op (const act &act_for_iterations,
                         const act &act_for_flag)
 {
-
   try
     {
       this->remote_partner_->no_op (self_.in (),

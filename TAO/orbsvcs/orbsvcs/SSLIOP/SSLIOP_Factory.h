@@ -40,7 +40,6 @@ namespace TAO
 {
   namespace SSLIOP
   {
-
     /**
      * @class Protocol_Factory
      *
@@ -53,7 +52,6 @@ namespace TAO
       : public TAO_Protocol_Factory
     {
     public:
-
       /// Constructor.
       Protocol_Factory (void);
 
@@ -80,7 +78,6 @@ namespace TAO
       virtual int requires_explicit_endpoint () const;
 
     private:
-
       /// Parse an X509 file path, which is expected to looks like:
       ///   <X509Path> ::= <Prefix> ':' <Path>
       ///   <Prefix>   ::= 'PEM' | 'ASN1'
@@ -118,7 +115,6 @@ namespace TAO
       ACE_Time_Value timeout_;
 
       bool check_host_;
-
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.

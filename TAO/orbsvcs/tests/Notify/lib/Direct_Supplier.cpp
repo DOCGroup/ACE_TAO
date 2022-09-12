@@ -5,7 +5,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 #include "LookupManager.h"
 
 TAO_Notify_Tests_Direct_Supplier::TAO_Notify_Tests_Direct_Supplier (ACE_CString& target)

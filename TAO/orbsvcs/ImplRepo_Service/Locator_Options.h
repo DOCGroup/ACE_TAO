@@ -34,7 +34,6 @@ class LiveCheck;
 class Locator_Export Options
 {
 public:
-
   enum SERVICE_COMMAND {
     SC_NONE,
     SC_INSTALL,

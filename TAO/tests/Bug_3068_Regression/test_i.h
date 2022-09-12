@@ -58,7 +58,6 @@ public:
 private:
   /// The orb
   CORBA::ORB_var orb_;
-
 };
 
 /**
@@ -71,7 +70,6 @@ private:
  */
 class Simple_Server_i : public POA_Simple_Server
 {
-
 public:
   /// ctor
   Simple_Server_i (CORBA::ORB_ptr orb, int no_iterations);

@@ -57,7 +57,6 @@ namespace
 class SimpleNamingService_i : public virtual POA_SimpleNamingService
 {
 public:
-
   //FUZZ: disable check_for_lack_ACE_OS
   virtual void bind (CORBA::Object_ptr obj)
   {
@@ -72,9 +71,7 @@ public:
   }
 
 private:
-
   CORBA::Object_var obj_;
-
 };
 
 int

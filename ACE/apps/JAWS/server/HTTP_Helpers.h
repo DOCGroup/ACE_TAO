@@ -26,7 +26,6 @@
 class HTTP_Helper
 {
 public:
-
   // Convert and HTTP-date into a time_t
   static time_t HTTP_mktime (const char *httpdate);
 
@@ -45,7 +44,6 @@ public:
   static char *HTTP_encode_base64 (char *data);
 
 private:
-
   static int fixyear (int year);
 
 private:

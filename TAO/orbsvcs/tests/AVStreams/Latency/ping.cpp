@@ -172,7 +172,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "done %d\n", gsf));
 
       recv_latency.dump_results (ACE_TEXT("Receive"), gsf);
-
     }
   catch (const CORBA::Exception& ex)
     {

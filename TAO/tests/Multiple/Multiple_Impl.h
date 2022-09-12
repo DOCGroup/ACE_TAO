@@ -25,7 +25,6 @@
  */
 class Bottom_Impl : public virtual POA_Multiple::Bottom
 {
-
 public:
   // Ctor-Dtor
   Bottom_Impl (CORBA::ORB_ptr orb);
@@ -57,9 +56,7 @@ private:
  */
 class Delegated_Bottom_Impl : public virtual POA_Multiple::Bottom
 {
-
 public:
-
   // Ctor-Dtor
   Delegated_Bottom_Impl (Multiple::Bottom_ptr delegate, CORBA::ORB_ptr orb);
   virtual ~Delegated_Bottom_Impl (void);
@@ -76,6 +73,5 @@ private:
   Multiple::Bottom_var delegate_;
 
   CORBA::ORB_var orb_;
-
 };
 #endif /* TAO_MULTIPLE_IMPL_H_ */

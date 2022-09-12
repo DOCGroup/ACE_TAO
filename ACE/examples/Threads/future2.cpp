@@ -47,7 +47,6 @@ class Scheduler : public ACE_Task_Base
   friend class Method_Request_name;
   friend class Method_Request_end;
 public:
-
   Scheduler (const char *, Scheduler * = 0);
   virtual ~Scheduler (void);
 

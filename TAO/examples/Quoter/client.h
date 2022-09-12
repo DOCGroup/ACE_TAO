@@ -109,7 +109,6 @@ private:
   Quoter_Client quoter_client;
   int argc_;
   ACE_TCHAR **argv_;
-
 };
 
 #endif /* QUOTER_CLIENT_H */

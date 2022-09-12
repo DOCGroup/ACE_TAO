@@ -125,7 +125,6 @@ void CNamingTreeCtrl::ClearChildren(HTREEITEM hItem)
     HTREEITEM hItem = GetRootItem();
     if(hItem)
     {
-
       //CORBA::Object_var Object = (CORBA::Object_ptr)GetItemData(hItem);
       ClearChildren(hItem);
       delete GetTreeObject(hItem);
@@ -351,7 +350,6 @@ void CNamingTreeCtrl::OnDestroy()
 
   // TODO: Add your message handler code here
   ClearChildren();
-
 }
 
 

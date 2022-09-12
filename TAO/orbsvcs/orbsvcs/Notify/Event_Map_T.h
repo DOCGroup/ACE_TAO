@@ -32,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class PROXY, class ACE_LOCK>
 class TAO_Notify_Event_Map_T
 {
-
 public:
   typedef  TAO_Notify_Event_Map_Entry_T<PROXY> ENTRY;
 

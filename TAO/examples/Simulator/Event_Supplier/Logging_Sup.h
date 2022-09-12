@@ -43,7 +43,6 @@ struct Schedule_Viewer_Data
 class Logging_Supplier
 {
 public:
-
   Logging_Supplier (int argc, ACE_TCHAR** argv);
 
   ~Logging_Supplier (void);

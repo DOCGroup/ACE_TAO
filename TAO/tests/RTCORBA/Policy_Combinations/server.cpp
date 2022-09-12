@@ -25,7 +25,6 @@ public:
   PortableServer::POA_ptr _default_POA (void);
 
 private:
-
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
   CORBA::Short server_priority_;
@@ -236,7 +235,6 @@ public:
   void test_lanes_bands_server_declared_poa (void);
 
 private:
-
   CORBA::ORB_var orb_;
   RTCORBA::RTORB_var rt_orb_;
   PortableServer::POA_var root_poa_;
@@ -533,7 +531,6 @@ server::test_lanes_bands_client_propagated_poa (void)
                         ::client_priority + 1,
                         &server::test_bands_client_propagated_poa,
                         "lanes_bands_client_propagated");
-
 }
 
 void
@@ -647,14 +644,12 @@ server::test_lanes_bands_server_declared_poa (void)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
   int svc (void);
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,

@@ -66,7 +66,6 @@ private:
 #if defined ACE_HAS_THREADS
   ACE_Thread_Mutex  lock_;
 #endif /* ACE_HAS_THREADS */
-
 };
 
 /**
@@ -104,7 +103,6 @@ private:
   int input_seen_;
   int notify_seen_;
   size_t timers_fired_;
-
 };
 
 #endif /* ACE_TESTS_MT_REACTOR_TIMER_TEST_H */

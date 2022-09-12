@@ -34,7 +34,6 @@ public:
 private:
   /// ORB pointer.
   CORBA::ORB_var orb_;
-
 };
 
 #endif /* INS_I_H */

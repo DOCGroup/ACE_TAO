@@ -35,7 +35,6 @@
 #include "ace/OS_main.h"
 
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
@@ -82,9 +81,7 @@ static int initial_read_size = BUFSIZ;
 //--------------------------------------------------------------------------
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
-
 public:
-
   int svc (void) ;
 };
 
@@ -108,7 +105,6 @@ int MyTask::svc ()
 class Receiver : public ACE_Service_Handler
 {
 public:
-
   Receiver (void);
   ~Receiver (void);
 
@@ -198,7 +194,6 @@ void Receiver::open (ACE_HANDLE handle,
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "ACE_Asynch_Write_Stream::open"));
-
     }
   else if (this->rs_.open (*this, this->handle_) == -1)
     {
@@ -387,7 +382,6 @@ virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
 &result);
 
 private:
-
 int initiate_read_stream (void);
 int initiate_write_stream (void);
 
@@ -704,7 +698,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       // Simplify , initial read with  zero size
       Rc = acceptor.open (ACE_INET_Addr (port),0,1);
-
     }
   else
     {
@@ -740,7 +733,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 //--------------------------------------------------------------------
 int DisableSignal ( int SigNum )
 {
-
 #ifndef ACE_WIN32
   sigset_t signal_set;
   if ( ACE_OS::sigemptyset (&signal_set) == - 1 )

@@ -18,7 +18,6 @@ void
 Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   CORBA::String_var orb_id =
     info->orb_id ();
 

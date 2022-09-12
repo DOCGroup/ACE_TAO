@@ -41,7 +41,6 @@
 class Quoter_Server
 {
 public:
-
   /// Default constructor
   Quoter_Server (void);
 

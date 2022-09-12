@@ -92,7 +92,6 @@ private:
 
   /// Access our Peer.
   virtual TAO_Notify_Peer* peer (void);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

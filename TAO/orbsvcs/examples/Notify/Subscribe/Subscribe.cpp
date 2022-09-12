@@ -329,7 +329,6 @@ Subscribe_StructuredPushConsumer::push_structured_event
 
   if (++g_result_count == EVENT_COUNT)
     subscribe_->done ();
-
 }
 
 void

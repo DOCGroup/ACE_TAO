@@ -69,7 +69,6 @@ namespace TAO
   class TAO_AnyTypeCode_Export True_RefCount_Policy
   {
   public:
-
     /// Increase the reference count on this object.
     void add_ref ();
 
@@ -102,7 +101,6 @@ namespace TAO
     /// Reference counter.
     std::atomic<uint32_t> refcount_;
   };
-
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

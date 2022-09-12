@@ -17,7 +17,6 @@ Client_Task::svc (void)
 {
   try
     {
-
       CORBA::Object_var object =
         corb_->string_to_object (input_);
 
@@ -43,7 +42,6 @@ Client_Task::svc (void)
     }
 
   return 0;
-
 }
 
 

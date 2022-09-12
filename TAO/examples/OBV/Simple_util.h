@@ -147,7 +147,6 @@ protected:
 
   /// Flag for shutting down the server
   int shutdown_;
-
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

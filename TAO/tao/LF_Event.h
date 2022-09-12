@@ -47,7 +47,6 @@ class TAO_Leader_Follower;
 class TAO_Export TAO_LF_Event
 {
 public:
-
   friend class TAO_Leader_Follower;
 
   /// Constructor
@@ -139,7 +138,6 @@ protected:
   virtual bool is_state_final () const = 0;
 
 private:
-
   /// Set the state irrespective of anything.
   virtual void set_state (LFS_STATE new_state);
 

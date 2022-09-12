@@ -55,7 +55,6 @@ public:
   bool should_retry ();
 
 protected:
-
   /// The Event
   const TAO_Notify_Event * event_;
 

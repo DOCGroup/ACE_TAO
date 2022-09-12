@@ -28,7 +28,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     /**
      * @class TP_Synch_Helper
      *

@@ -5,7 +5,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 void
 Simple_Server_i::send_line (const char *line)
 {

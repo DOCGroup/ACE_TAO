@@ -50,7 +50,6 @@ public:
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
   );
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

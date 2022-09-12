@@ -87,7 +87,6 @@ virtual void shutdown (void);
 private:
   CORBA::ORB_var orb_;
   wchar_reference ref_;
-
 };
 
 

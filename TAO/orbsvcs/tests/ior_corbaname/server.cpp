@@ -49,7 +49,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Destroy the POA, waiting until the destruction terminates
       poa->destroy (true, true);
       orb->destroy ();
-
     }
   catch (const CORBA::SystemException& ex)
     {

@@ -421,7 +421,6 @@ TAO_SCIOP_Connection_Handler::set_tos (int tos)
       // On successful setting of TOS field.
       if (result == 0)
         this->dscp_codepoint_ = tos;
-
     }
 
   return 0;

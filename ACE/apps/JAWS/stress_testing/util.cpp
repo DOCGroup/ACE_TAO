@@ -1,7 +1,6 @@
 #include "util.h"
 
 URL::URL(char *input_buf) {
-
   char *buffer = new char[BUFSIZ];
 
   ACE_OS::strcpy(buffer,input_buf);
@@ -41,7 +40,6 @@ char *URL::get_hostname(void) {
 char *URL::get_filename(void) {
   return filename_;
 }
-
 
 
 

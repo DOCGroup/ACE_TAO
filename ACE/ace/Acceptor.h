@@ -406,7 +406,6 @@ public:
   virtual int resume ();
 
 protected:
-
   /// Calls {handle_close} when dynamically unlinked.
   virtual int fini ();
 

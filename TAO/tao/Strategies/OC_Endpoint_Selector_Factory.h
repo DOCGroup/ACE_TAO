@@ -72,7 +72,6 @@ protected:
 
 
 
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Strategies, TAO_OC_Endpoint_Selector_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_OC_Endpoint_Selector_Factory)
 

@@ -16,7 +16,6 @@
 #include "ace/Init_ACE.h"
 
 
-
 static u_int *ip;
 
 extern "C"

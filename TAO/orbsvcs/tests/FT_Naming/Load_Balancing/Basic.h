@@ -31,7 +31,6 @@ public:
   virtual void remove_member (void);
 
 private:
-
   const char* object_group_name_;
 
   /// Use an ORB reference to convert strings to objects and shutdown

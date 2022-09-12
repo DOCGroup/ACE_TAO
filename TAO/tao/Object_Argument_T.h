@@ -136,7 +136,6 @@ namespace TAO
   class Ret_Object_Argument_T : public RetArgument
   {
   public:
-
     Ret_Object_Argument_T ();
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);

@@ -39,7 +39,6 @@ class Control
   Widget& stopwidget (void);
 
  private:
-
   /// A frame widget...
   Widget frame_;
 
@@ -51,7 +50,6 @@ class Control
 
   /// Pushbutton widget that is used to stop the timer..
   Widget stopwidget_;
-
 };
 
 

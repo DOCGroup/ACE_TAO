@@ -139,7 +139,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 typedef ACE_Task<ACE_MT_SYNCH> MT_TASK;
 
 /**

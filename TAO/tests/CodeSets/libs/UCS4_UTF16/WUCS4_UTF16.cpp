@@ -215,12 +215,10 @@ size_t count_potential_surrogates (
 
 WUCS4_UTF16::WUCS4_UTF16 (void)
 {
-
 }
 
 WUCS4_UTF16::~WUCS4_UTF16 (void)
 {
-
 }
 
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h
@@ -390,7 +388,6 @@ WUCS4_UTF16::read_wchar_array_i (ACE_InputCDR & cdr,
       return 1;
     }
   return 0;
-
 }
 
 

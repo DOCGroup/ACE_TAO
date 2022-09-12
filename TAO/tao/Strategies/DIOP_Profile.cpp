@@ -438,7 +438,6 @@ TAO_DIOP_Profile::to_string () const
               digits [this->version_.minor],
               endp->host (),
               endp->port ());
-
   }
   ACE_OS::sprintf (buf + ACE_OS::strlen (buf),
                    "%c%s",

@@ -44,7 +44,6 @@ JAWS_Signal_Task_function (void *)
 #endif // !defined (ACE_WIN32)
         default:
           break;
-
         }
 
     }

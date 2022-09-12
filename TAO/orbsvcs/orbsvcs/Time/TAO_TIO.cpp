@@ -109,7 +109,6 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
         }
       else if (up2 < lb1)
         {
-
           ACE_NEW_RETURN (tio,
                           TAO_TIO (0, 0),
                           CosTime::OTNoOverlap);

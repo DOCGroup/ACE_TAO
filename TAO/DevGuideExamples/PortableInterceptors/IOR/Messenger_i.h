@@ -19,7 +19,6 @@ class  Messenger_i : public virtual POA_Messenger
 
 
   virtual void send_message (const CORBA::OctetSeq & user_name);
-
 };
 
 

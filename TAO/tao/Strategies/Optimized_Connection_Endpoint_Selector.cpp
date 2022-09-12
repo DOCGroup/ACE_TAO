@@ -125,7 +125,6 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
     }
 
 
-
   // at this point, we do not have an existing transport, so we must
   // reset the profile list and try establishing connections via the
   // connector(s).

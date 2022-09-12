@@ -49,7 +49,6 @@ MIF_DT_Creator::yield (time_t suspend_time,
       ACE_Time_Value now (ACE_OS::gettimeofday ());
       while (((now - *base_time_) < sus_time_value) || (suspend_time == 1))
         {
-
           ACE_OS::sleep (1);
           CORBA::Policy_var sched_param;
           sched_param = this->sched_param (100);

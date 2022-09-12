@@ -75,7 +75,6 @@ public:
   virtual void destroy (void);
 
 private:
-
   virtual void remove (void);
 
   ACE_CString stat_name_;

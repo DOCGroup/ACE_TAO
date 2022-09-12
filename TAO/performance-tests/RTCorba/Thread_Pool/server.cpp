@@ -186,14 +186,12 @@ write_ior_to_file (const ACE_TCHAR *ior_file,
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
   int svc (void);
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,

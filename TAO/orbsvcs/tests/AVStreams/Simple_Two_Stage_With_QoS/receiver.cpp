@@ -71,7 +71,6 @@ Receiver_Callback::handle_destroy (void)
     {
       ex._tao_print_exception ("Receiver_Callback::handle_destroy Failed\n");
       return -1;
-
     }
 
   return 0;
@@ -85,7 +84,6 @@ Receiver::Receiver (void)
 Receiver::~Receiver (void)
 {
 }
-
 
 
 int

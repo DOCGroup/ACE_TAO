@@ -22,7 +22,6 @@ typedef ACE_Command_Callback<BPR_Handler_Base, BPR_Handler_Base::ACTION> HANDLER
 typedef ACE_Command_Callback<Send_Handler, Send_Handler::ACTION> SEND_HANDLER_CMD;
 
 
-
 // Constructor.
 
 Text_Input_Device_Wrapper::Text_Input_Device_Wrapper (ACE_Thread_Manager *input_task_mgr,
@@ -69,7 +68,6 @@ Text_Input_Device_Wrapper::modify_device_settings (void *logging)
 ACE_Message_Block *
 Text_Input_Device_Wrapper::create_input_message (void)
 {
-
   // Construct a new message block to send.
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,

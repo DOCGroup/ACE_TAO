@@ -53,7 +53,6 @@ public:
   int  end_synchronization (void);
 
 private:
-
   /// The mutex and condition variable that is used for
   /// synchronisation.
   ACE_SYNCH_MUTEX mutex_;
@@ -79,7 +78,6 @@ private:
 class Leader_Follower_Task : public ACE_Task_Base
 {
 public:
-
   /// Ctor with a mutex and a condition variable
   Leader_Follower_Task (Synchronisers &synch);
 

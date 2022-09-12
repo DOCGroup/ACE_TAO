@@ -592,7 +592,6 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
   this->persistent_update (base, true);
 
   return 0;
-
 }
 
 // -------------------------------------------------------------------------------------

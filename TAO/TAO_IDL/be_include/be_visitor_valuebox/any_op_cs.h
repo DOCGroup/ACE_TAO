@@ -24,7 +24,6 @@
  */
 class be_visitor_valuebox_any_op_cs : public be_visitor_valuebox
 {
-
 public:
   /// constructor
   be_visitor_valuebox_any_op_cs (be_visitor_context *ctx);

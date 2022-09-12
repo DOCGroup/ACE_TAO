@@ -81,7 +81,6 @@ protected:
   virtual bool error_detected_i () const;
 
 private:
-
   struct Event_Node {
     TAO_Connection_Handler * ptr_;
     Event_Node *next_;

@@ -7,7 +7,6 @@
 class Foo_i
 {
   public:
-
     Foo_i(unsigned num_clients);
     virtual ~Foo_i();
 
@@ -25,7 +24,6 @@ class Foo_i
 
 
   private:
-
     CORBA::Long value_;
     unsigned num_clients_;
 

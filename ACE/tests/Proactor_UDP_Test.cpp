@@ -100,7 +100,6 @@ static char close_ack_msg[] = "CLOSE-ACK";
 class LogLocker
 {
 public:
-
   LogLocker () { ACE_LOG_MSG->acquire (); }
   virtual ~LogLocker () { ACE_LOG_MSG->release (); }
 };
@@ -184,7 +183,6 @@ private:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Thread_Semaphore sem_;
   ACE_Proactor * proactor_;
-
 };
 
 int

@@ -50,7 +50,6 @@ Client_Task::validate_connections (void)
       try
         {
           this->sender_->ping ();
-
         }
       catch (const CORBA::Exception&){}
     }

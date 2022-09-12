@@ -33,9 +33,7 @@
  */
 class MT_Object_Server
 {
-
 public:
-
   /// Default constructor
   MT_Object_Server (void);
 

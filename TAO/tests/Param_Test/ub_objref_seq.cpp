@@ -110,7 +110,6 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_ObjRef_Sequence::init_parameters\n");
-
     }
   return -1;
 }
@@ -140,7 +139,6 @@ Test_ObjRef_Sequence::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_ObjRef_Sequence::run_sii_test\n");
-
     }
   return -1;
 }
@@ -148,7 +146,6 @@ Test_ObjRef_Sequence::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_ObjRef_Sequence::check_validity (void)
 {
-
   try
     {
       this->compare (this->in_,
@@ -165,7 +162,6 @@ Test_ObjRef_Sequence::check_validity (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_ObjRef_Sequence::check_validity");
-
     }
   return 0;
 }
@@ -247,7 +243,6 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_ObjRef_Sequence::compare");
-
     }
   return 0;
 }

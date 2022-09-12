@@ -103,7 +103,6 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
     }
 
     consumer_proxy_->connect_structured_push_supplier(supplier.in());
-
   }
   catch(const CORBA::Exception& ex) {
     std::cerr << ex << std::endl;
@@ -127,7 +126,6 @@ CORBA::Boolean Messenger_i::send_message (const char * user_name,
 
   try
   {
-
     // Event Definition
     CosNotification::StructuredEvent event;
 

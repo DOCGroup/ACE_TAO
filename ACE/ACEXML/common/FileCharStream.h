@@ -95,7 +95,6 @@ public:
   virtual const ACEXML_Char* getSystemId ();
 
 private:
-
   /** Read the next character as a normal character. Return -1 if EOF is
    *  reached, else return 0.
    */

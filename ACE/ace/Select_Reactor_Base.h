@@ -107,7 +107,6 @@ public:
 
   /// ACE_Event_Handler associated with the ACE_HANDLE.
   ACE_Event_Handler *event_handler_;
-
 };
 
 /**
@@ -409,7 +408,6 @@ private:
 class ACE_Export ACE_Select_Reactor_Handler_Repository_Iterator
 {
 public:
-
   typedef
     ACE_Select_Reactor_Handler_Repository::map_type::const_iterator const_base_iterator;
 

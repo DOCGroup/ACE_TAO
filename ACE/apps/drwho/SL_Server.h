@@ -21,7 +21,6 @@
  */
 class SL_Server : public Single_Lookup
 {
-
 public:
   SL_Server (const char *packet);
   virtual Protocol_Record *insert (const char *key_name,

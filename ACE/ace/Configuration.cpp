@@ -336,7 +336,6 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                 }// end else if values match.
 
               ++valueIndex;
-
             }// end value while loop
 
           // look in the rhs for values not in this
@@ -361,7 +360,6 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
         }// end else if sections match.
 
       ++sectionIndex;
-
     }// end section while loop
 
   // Finally, make sure that there are no sections in rhs that do not
@@ -1158,7 +1156,6 @@ ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (const ACE_Conf
   : value_hash_map_ (rhs.value_hash_map_),
     section_hash_map_ (rhs.section_hash_map_)
 {
-
 }
 
 ACE_Configuration_Section_IntId::~ACE_Configuration_Section_IntId ()

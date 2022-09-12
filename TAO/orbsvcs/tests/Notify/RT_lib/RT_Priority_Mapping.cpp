@@ -1,7 +1,6 @@
 #include "RT_Priority_Mapping.h"
 
 
-
 #include "../lib/LookupManager.h"
 
 TAO_Notify_Tests_RT_Priority_Mapping::~TAO_Notify_Tests_RT_Priority_Mapping (void)

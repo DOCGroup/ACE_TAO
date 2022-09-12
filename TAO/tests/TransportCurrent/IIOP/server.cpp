@@ -85,7 +85,6 @@ Worker::svc (void)
 }
 
 
-
 /// Main driver
 
 int
@@ -93,7 +92,6 @@ server_main (int argc,
              ACE_TCHAR *argv[],
              Test::Server_Request_Interceptor *cri)
 {
-
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
   try
@@ -195,7 +193,6 @@ server_main (int argc,
       server->shutdown ();
 
       orb->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {

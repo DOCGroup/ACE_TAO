@@ -21,7 +21,6 @@
 #include "ace/Task.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 #include "ace/Lock_Adapter_T.h"
 #include "ace/OS_NS_stdio.h"

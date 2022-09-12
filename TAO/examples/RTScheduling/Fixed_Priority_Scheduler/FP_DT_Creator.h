@@ -24,7 +24,6 @@ public:
 
   virtual void wait (void);
   virtual int total_load (void);
-
 };
 
 

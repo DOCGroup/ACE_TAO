@@ -91,7 +91,6 @@ myallocator (const void *base_addr = 0)
 
   if (static_allocator.get () == 0)
     {
-
 #if defined (ACE_HAS_WINCE) || defined (ACE_OPENVMS)
       // WinCE cannot do fixed base, ever.
       ACE_UNUSED_ARG (base_addr);

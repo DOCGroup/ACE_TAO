@@ -69,7 +69,6 @@ public:
                 RTCORBA::Priority &corba_priority);
 
 private:
-
   /// The base settings
   int base_native_priority_;
   int base_corba_priority_;

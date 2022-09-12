@@ -14,7 +14,6 @@
 #include "Options.h"
 
 
-
 static int
 gen_size (void)
 {

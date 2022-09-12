@@ -59,7 +59,6 @@ namespace TAO
     class HTIOP_Export Transport : public TAO_Transport
     {
     public:
-
       /// Constructor.
       Transport (Connection_Handler *handler,
                  TAO_ORB_Core *orb_core);
@@ -68,14 +67,12 @@ namespace TAO
       ~Transport (void);
 
     protected:
-
       /** @name Overridden Template Methods
        *
        * Please check the documentation in "tao/Transport.h" for more
        * details.
        */
       //@{
-
       virtual ACE_Event_Handler * event_handler_i (void);
       virtual TAO_Connection_Handler * invalidate_event_handler_i (void);
 
@@ -113,7 +110,6 @@ namespace TAO
       //@}
 
     private:
-
       /// Set the Bidirectional context info in the service context list
       void set_bidir_context_info (TAO_Operation_Details &opdetails);
 

@@ -280,7 +280,6 @@ Client::init (int argc,
 int
 Client::pace_data (void)
 {
-
   // Rate at which frames of data need to be sent.
   this->frame_rate_ = CLIENT::instance ()->frame_rate ();
 
@@ -303,7 +302,6 @@ Client::pace_data (void)
 
   try
     {
-
       // Continue to send data till the file is read to the end.
       while (1)
         {
@@ -377,7 +375,6 @@ Client::pace_data (void)
 
           // Reset the mb.
           this->mb.reset ();
-
         } // end while
 
       // Since the file is read stop the stream.
@@ -386,7 +383,6 @@ Client::pace_data (void)
 
       // Shut the orb down.
       TAO_AV_CORE::instance ()->orb ()->shutdown (0);
-
     }
   catch (const CORBA::Exception& ex)
     {
