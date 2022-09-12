@@ -24,12 +24,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)
-  : listen_handle_ (ACE_INVALID_HANDLE),
+  : addr_family_ (0),
+    listen_handle_ (ACE_INVALID_HANDLE),
     pass_addresses_ (false),
     validate_new_connection_ (false),
     reissue_accept_ (1),
-    bytes_to_read_ (0),
-    addr_family_ (0)
+    bytes_to_read_ (0)
 {
 }
 
