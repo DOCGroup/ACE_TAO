@@ -98,7 +98,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "/// do we own it" << be_nl
       << "::CORBA::Boolean _is_owner ();" << be_nl
       << "/// set the ownership" << be_nl_2
-      << "void _is_owner ( ::CORBA::Boolean b);" << be_nl
+      << "void _is_owner (::CORBA::Boolean b);" << be_nl
       << "// overridden ServantBase operations" << be_nl
       << "PortableServer::POA_ptr _default_POA ();";
 

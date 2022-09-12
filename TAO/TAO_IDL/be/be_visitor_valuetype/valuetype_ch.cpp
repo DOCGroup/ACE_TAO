@@ -172,7 +172,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     {
       // Generate the constructor and destructor and _copy_value.
       *os << be_nl_2
-          << node->local_name () << " ( ::CORBA::Exception *ex)" << be_idt_nl
+          << node->local_name () << " (::CORBA::Exception *ex)" << be_idt_nl
           << ": exception (ex)" << be_uidt_nl
           << "{}" << be_nl_2
           << "virtual ~" << node->local_name () << " ();" << be_nl
@@ -181,7 +181,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   *os << be_nl_2
       << "static " << node->local_name () << "* "
-      << "_downcast ( ::CORBA::ValueBase *v);" << be_nl
+      << "_downcast (::CORBA::ValueBase *v);" << be_nl
       << be_nl
       << "/// TAO extensions or internals" << be_nl
       << "static ::CORBA::Boolean _tao_unmarshal (" << be_idt << be_idt_nl

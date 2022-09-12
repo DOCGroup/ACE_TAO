@@ -130,14 +130,14 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
 
   // Overloaded subscript operators
   *os << "ACE_INLINE const " << node->full_name () << "_slice &" << be_nl
-      << vb_node->name () << "::operator[] ( ::CORBA::ULong index) const"
+      << vb_node->name () << "::operator[] (::CORBA::ULong index) const"
       << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value[index];" << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "ACE_INLINE "<< node->full_name () << "_slice &" << be_nl
-      << vb_node->name () << "::operator[] ( ::CORBA::ULong index)" << be_nl
+      << vb_node->name () << "::operator[] (::CORBA::ULong index)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value[index];" << be_uidt_nl
       << "}" << be_nl_2;
@@ -239,7 +239,7 @@ be_visitor_valuebox_ci::visit_sequence (be_sequence *node)
 
   // Generate length() setter
   *os << "ACE_INLINE void" << be_nl
-      << vb_node->name () << "::length ( ::CORBA::ULong length)" << be_nl
+      << vb_node->name () << "::length (::CORBA::ULong length)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value->length (length);" << be_uidt_nl
       << "}" << be_nl_2;
@@ -371,13 +371,13 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 
   // Overloaded subscript operators
   *os << "ACE_INLINE " << char_type << " &" << be_nl
-      << vb_node->name () << "::operator[] ( ::CORBA::ULong slot)" << be_nl
+      << vb_node->name () << "::operator[] (::CORBA::ULong slot)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value[slot];" << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << char_type << be_nl
-      << vb_node->name () << "::operator[] ( ::CORBA::ULong slot) const" << be_nl
+      << vb_node->name () << "::operator[] (::CORBA::ULong slot) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value[slot];" << be_uidt_nl
       << "}" << be_nl_2;

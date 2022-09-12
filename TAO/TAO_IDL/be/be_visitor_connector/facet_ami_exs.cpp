@@ -407,7 +407,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
       << ScopeAsDecl (this->node_->defined_in ())->full_name ()
       << "::CCM_" << this->node_->local_name ()
       << "_Context::_narrow (ctx);" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (this->context_.in ()))"
+      << "if (::CORBA::is_nil (this->context_.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::INTERNAL ();" << be_uidt_nl

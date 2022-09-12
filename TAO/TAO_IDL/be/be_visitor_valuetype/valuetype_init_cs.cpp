@@ -84,7 +84,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
   // The _downcast method.
   *os << be_nl_2
       << node->name () << "_init *" << be_nl << node->name ()
-      << "_init::_downcast ( ::CORBA::ValueFactoryBase *v)" << be_nl
+      << "_init::_downcast (::CORBA::ValueFactoryBase *v)" << be_nl
       << "{" << be_idt_nl
       << "return dynamic_cast< ::" << node->name ()
       << "_init * > (v);" << be_uidt_nl
@@ -111,8 +111,8 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
           << "ACE_NEW_THROW_EX (" << be_idt << be_idt_nl
           << "ret_val," << be_nl
           << "OBV_" << node->full_name () << "," << be_nl
-          << "::CORBA::NO_MEMORY ()" << be_uidt_nl
-          << ");" << be_uidt_nl
+          << "::CORBA::NO_MEMORY ());" << be_uidt
+          << be_uidt_nl
           << "return ret_val;"
           << be_uidt_nl << "}";
 
