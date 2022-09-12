@@ -77,8 +77,8 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   *os << "const char* "
       << "_tao_obv_repository_id () const override;"
       << be_nl_2
-      << "void "
-      << "_tao_obv_truncatable_repo_ids (Repository_Id_List &ids) const override;"
+      << "virtual void "
+      << "_tao_obv_truncatable_repo_ids (Repository_Id_List &ids) const;"
       << be_nl_2
       << "static const char* "
       << "_tao_obv_static_repository_id ();" << be_nl_2;

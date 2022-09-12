@@ -52,8 +52,8 @@ public:
    */
   //@{
   CORBA::ULong request_id (void) override;
-  virtual int bind_dispatcher (CORBA::ULong request_id,
-                               ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd);
+  int bind_dispatcher (CORBA::ULong request_id,
+                       ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd) override;
   int unbind_dispatcher (CORBA::ULong request_id) override;
 
   int dispatch_reply (TAO_Pluggable_Reply_Params &params) override;

@@ -126,8 +126,8 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
 
   // The _interface_repository_id method.
   *os << be_nl
-      << "const char* _interface_repository_id "
-      << "() const override;";
+      << "virtual const char* _interface_repository_id "
+      << "() const;";
 
   if (this->visit_scope (node) ==  -1)
     {

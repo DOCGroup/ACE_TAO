@@ -12,7 +12,7 @@ class Naming_Svc_Shutdown : public Shutdown_Functor
 public:
   Naming_Svc_Shutdown (TAO_FT_Naming_Service& ns);
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 private:
   TAO_FT_Naming_Service& ns_;
 };
