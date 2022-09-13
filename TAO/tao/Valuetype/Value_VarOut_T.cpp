@@ -32,7 +32,7 @@ TAO_Value_Var_T<T>::TAO_Value_Var_T (const TAO_Value_Var_T<T> & p)
 }
 
 template <typename T>
-TAO_Value_Var_T<T>::~TAO_Value_Var_T (void)
+TAO_Value_Var_T<T>::~TAO_Value_Var_T ()
 {
   TAO::Value_Traits<T>::remove_ref (this->ptr_);
 }

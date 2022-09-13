@@ -119,7 +119,7 @@ Common_Task::close (u_long exit_status)
 // know when to exit.
 
 int
-Producer::svc (void)
+Producer::svc ()
 {
   // Keep reading stdin, until we reach EOF.
 
@@ -180,7 +180,7 @@ Consumer::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 // reading and exit.
 
 int
-Consumer::svc (void)
+Consumer::svc ()
 {
   int result = 0;
 

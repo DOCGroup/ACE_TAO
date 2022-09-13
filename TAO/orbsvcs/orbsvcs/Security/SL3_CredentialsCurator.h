@@ -81,10 +81,10 @@ namespace TAO
       typedef Credentials_Table::iterator Credentials_Iterator;
 
       /// Constructor
-      CredentialsCurator (void);
+      CredentialsCurator ();
 
       static CredentialsCurator_ptr _duplicate (CredentialsCurator_ptr obj);
-      static CredentialsCurator_ptr _nil (void);
+      static CredentialsCurator_ptr _nil ();
       static CredentialsCurator_ptr _narrow (CORBA::Object_ptr obj);
 
       /**
@@ -130,7 +130,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~CredentialsCurator (void);
+      ~CredentialsCurator ();
 
     private:
       /// Lock used to synchronize access to underlying tables.

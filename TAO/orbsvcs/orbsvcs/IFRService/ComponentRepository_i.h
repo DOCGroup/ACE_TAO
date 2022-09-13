@@ -60,11 +60,11 @@ public:
                              ACE_Configuration *config);
 
   /// Destructor.
-  virtual ~TAO_ComponentRepository_i (void);
+  virtual ~TAO_ComponentRepository_i ();
 
   /// We create a default servant servant for each IR Object
   /// type and its corresponding POA.
-  virtual int create_servants_and_poas (void);
+  virtual int create_servants_and_poas ();
 
   /// Return one of our servants for internal use.
   virtual TAO_IDLType_i *select_idltype (CORBA::DefinitionKind def_kind) const;

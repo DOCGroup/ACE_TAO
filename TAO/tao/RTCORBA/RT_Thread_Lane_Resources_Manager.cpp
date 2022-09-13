@@ -26,7 +26,7 @@ TAO_RT_Thread_Lane_Resources_Manager::TAO_RT_Thread_Lane_Resources_Manager (TAO_
            TAO_Thread_Pool_Manager (orb_core));
 }
 
-TAO_RT_Thread_Lane_Resources_Manager::~TAO_RT_Thread_Lane_Resources_Manager (void)
+TAO_RT_Thread_Lane_Resources_Manager::~TAO_RT_Thread_Lane_Resources_Manager ()
 {
   // Delete the default resources.
   delete this->default_lane_resources_;
@@ -36,7 +36,7 @@ TAO_RT_Thread_Lane_Resources_Manager::~TAO_RT_Thread_Lane_Resources_Manager (voi
 }
 
 int
-TAO_RT_Thread_Lane_Resources_Manager::open_default_resources (void)
+TAO_RT_Thread_Lane_Resources_Manager::open_default_resources ()
 {
   TAO_ORB_Parameters *params =
     this->orb_core_->orb_params ();
@@ -55,7 +55,7 @@ TAO_RT_Thread_Lane_Resources_Manager::open_default_resources (void)
 }
 
 void
-TAO_RT_Thread_Lane_Resources_Manager::finalize (void)
+TAO_RT_Thread_Lane_Resources_Manager::finalize ()
 {
   // Finalize resources managed by the thread-pool manager.
   this->tp_manager_->finalize ();
@@ -65,7 +65,7 @@ TAO_RT_Thread_Lane_Resources_Manager::finalize (void)
 }
 
 void
-TAO_RT_Thread_Lane_Resources_Manager::shutdown_reactor (void)
+TAO_RT_Thread_Lane_Resources_Manager::shutdown_reactor ()
 {
   // Shutdown default reactors.
   this->default_lane_resources_->shutdown_reactor ();
@@ -75,7 +75,7 @@ TAO_RT_Thread_Lane_Resources_Manager::shutdown_reactor (void)
 }
 
 void
-TAO_RT_Thread_Lane_Resources_Manager::close_all_transports (void)
+TAO_RT_Thread_Lane_Resources_Manager::close_all_transports ()
 {
   // Shutdown default reactors.
   this->default_lane_resources_->close_all_transports ();
@@ -94,7 +94,7 @@ TAO_RT_Thread_Lane_Resources_Manager::is_collocated (const TAO_MProfile &mprofil
 }
 
 TAO_Thread_Lane_Resources &
-TAO_RT_Thread_Lane_Resources_Manager::lane_resources (void)
+TAO_RT_Thread_Lane_Resources_Manager::lane_resources ()
 {
   // Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources &tss =
@@ -113,13 +113,13 @@ TAO_RT_Thread_Lane_Resources_Manager::lane_resources (void)
 }
 
 TAO_Thread_Lane_Resources &
-TAO_RT_Thread_Lane_Resources_Manager::default_lane_resources (void)
+TAO_RT_Thread_Lane_Resources_Manager::default_lane_resources ()
 {
   return *this->default_lane_resources_;
 }
 
 TAO_Thread_Pool_Manager &
-TAO_RT_Thread_Lane_Resources_Manager::tp_manager (void)
+TAO_RT_Thread_Lane_Resources_Manager::tp_manager ()
 {
   return *this->tp_manager_;
 }

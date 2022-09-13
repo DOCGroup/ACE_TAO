@@ -118,7 +118,7 @@ TAO_AV_Callback::get_policies ()
 }
 
 // TAO_AV_Transport*
-// TAO_AV_Callback::transport (void)
+// TAO_AV_Callback::transport ()
 // {
 //   return this->transport_;
 // }

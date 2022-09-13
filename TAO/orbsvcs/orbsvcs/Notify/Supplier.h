@@ -39,10 +39,10 @@ public:
   virtual ~TAO_Notify_Supplier ();
 
   /// Access Specific Proxy.
-  TAO_Notify_ProxyConsumer* proxy_consumer (void);
+  TAO_Notify_ProxyConsumer* proxy_consumer ();
 
   /// Access Base Proxy.
-  virtual TAO_Notify_Proxy* proxy (void);
+  virtual TAO_Notify_Proxy* proxy ();
 
   virtual CORBA::Object_ptr get_supplier (void) = 0;
 

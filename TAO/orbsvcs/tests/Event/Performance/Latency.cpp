@@ -280,7 +280,7 @@ EC_Latency_Consumer::EC_Latency_Consumer (ACE_Sample_History *history,
 }
 
 int
-EC_Latency_Consumer::done (void)
+EC_Latency_Consumer::done ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_, -1);
   return this->remaining_messages_ <= 0;
@@ -306,18 +306,18 @@ EC_Latency_Consumer::push (const RtecEventComm::EventSet& events)
 }
 
 void
-EC_Latency_Consumer::disconnect_push_consumer (void)
+EC_Latency_Consumer::disconnect_push_consumer ()
 {
 }
 
 // ****************************************************************
 
-EC_Latency_Supplier::EC_Latency_Supplier (void)
+EC_Latency_Supplier::EC_Latency_Supplier ()
 {
 }
 
 void
-EC_Latency_Supplier::disconnect_push_supplier (void)
+EC_Latency_Supplier::disconnect_push_supplier ()
 {
 }
 
@@ -331,14 +331,14 @@ Task::Task (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
 }
 
 int
-Task::done (void)
+Task::done ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 1);
   return this->remaining_messages_ == 0;
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   try
     {

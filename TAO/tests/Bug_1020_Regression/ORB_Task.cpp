@@ -13,7 +13,7 @@ ORB_Task::ORB_Task(CORBA::ORB_ptr orb)
 }
 
 int
-ORB_Task::svc (void)
+ORB_Task::svc ()
 {
   try
     {

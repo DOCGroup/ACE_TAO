@@ -68,7 +68,7 @@ namespace TAO
       //@{
       virtual SecurityLevel3::ClientCredentials_ptr client_credentials ();
 
-      virtual CORBA::Boolean request_is_local (void);
+      virtual CORBA::Boolean request_is_local ();
       //@}
 
       /// Return the TSS slot ID assigned to the "SecurityCurrent"
@@ -85,7 +85,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~SecurityCurrent (void);
+      ~SecurityCurrent ();
 
     private:
       /// Set the thread-specific storage
@@ -100,7 +100,7 @@ namespace TAO
        * There is no function that places the implementation pointer
        * in TSS.  The underlying security mechanism does that.
        */
-      SecurityCurrent_Impl * implementation (void);
+      SecurityCurrent_Impl * implementation ();
 
     private:
       /**

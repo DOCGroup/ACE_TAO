@@ -130,7 +130,7 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
 
 
 void
-FooServantList::client_done(void)
+FooServantList::client_done()
 {
   unsigned num_left;
 
@@ -158,7 +158,7 @@ FooServantList::collocated_client () const
 
 
 void
-FooServantList::deactivate_servant (void)
+FooServantList::deactivate_servant ()
 {
   for (unsigned i = 0; i < this->num_servants_; i++)
     {

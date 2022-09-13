@@ -22,14 +22,14 @@ class Receiver_QoS_Event_Handler : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Receiver_QoS_Event_Handler (void);
+  Receiver_QoS_Event_Handler ();
 
   /// Constructor.
   Receiver_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos,
                               ACE_QoS_Session *qos_session);
 
   /// Destructor.
-  ~Receiver_QoS_Event_Handler (void);
+  ~Receiver_QoS_Event_Handler ();
 
   /// Override this to return the handle of the Dgram_Mcast
   /// that we are using.

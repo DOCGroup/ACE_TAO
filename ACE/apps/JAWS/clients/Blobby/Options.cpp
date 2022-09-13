@@ -7,7 +7,7 @@
 Options *Options::instance_ = 0;
 
 Options *
-Options::instance (void)
+Options::instance ()
 {
   if (Options::instance_ == 0)
     Options::instance_ = new Options;
@@ -64,7 +64,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
 }
 
-Options::Options (void)
+Options::Options ()
   : hostname_ (0),
     port_ (ACE_DEFAULT_HTTP_SERVER_PORT),
     filename_ (0),

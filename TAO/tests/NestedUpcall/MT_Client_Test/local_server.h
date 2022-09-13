@@ -41,7 +41,7 @@ public:
   MT_Server ();
 
   /// Destructor
-  ~MT_Server (void);
+  ~MT_Server ();
 
   /// Initialize the MT_Server state - parsing arguments and ...
   int init (int argc,
@@ -49,17 +49,17 @@ public:
             TAO_ORB_Manager* orb_manager_ptr);
 
   /// Run the orb
-  int run (void);
+  int run ();
 
   /// Just run it briefly
-  int run_ORB_briefly (void);
+  int run_ORB_briefly ();
 
 private:
   /// reading the IOR of mt object in
   int read_ior (ACE_TCHAR *filename);
 
   /// Parses the commandline arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// Key of the object
   char *object_key_;

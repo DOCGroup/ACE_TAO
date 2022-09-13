@@ -17,7 +17,7 @@ Receiver_StreamEndPoint::get_callback (const char *,
   return 0;
 }
 
-Receiver_Callback::Receiver_Callback (void)
+Receiver_Callback::Receiver_Callback ()
   : frame_count_ (1)
 {
 }
@@ -56,7 +56,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-Receiver_Callback::handle_destroy (void)
+Receiver_Callback::handle_destroy ()
 {
   // Called when the distributer requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
@@ -75,12 +75,12 @@ Receiver_Callback::handle_destroy (void)
   return 0;
 }
 
-Receiver::Receiver (void)
+Receiver::Receiver ()
   : mmdevice_ (0)
 {
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
 }
 

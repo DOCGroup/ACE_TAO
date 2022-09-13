@@ -6,7 +6,7 @@
 #include "ace/Log_Msg.h"
 
 
-TAO_Notify_Tests_Command::TAO_Notify_Tests_Command (void)
+TAO_Notify_Tests_Command::TAO_Notify_Tests_Command ()
   :next_ (0), command_ (INVALID)
 {
 }
@@ -28,7 +28,7 @@ TAO_Notify_Tests_Command::next (TAO_Notify_Tests_Command* command)
 }
 
 void
-TAO_Notify_Tests_Command::execute (void)
+TAO_Notify_Tests_Command::execute ()
 {
   if (this->command_ == INVALID)
     {

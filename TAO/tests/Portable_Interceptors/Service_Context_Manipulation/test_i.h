@@ -25,13 +25,13 @@ public:
 
   void normal (CORBA::Long arg);
 
-  void nothing (void);
+  void nothing ();
 
-  void user (void);
+  void user ();
 
-  void system (void);
+  void system ();
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB pseudo-reference (for shutdown).

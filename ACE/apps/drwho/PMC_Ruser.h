@@ -22,8 +22,8 @@
 class PMC_Ruser : public PM_Client
 {
 public:
-  PMC_Ruser (void);
-  virtual void process (void);
+  PMC_Ruser ();
+  virtual void process ();
 
 protected:
   char *handle_protocol_entries (const char *cp,

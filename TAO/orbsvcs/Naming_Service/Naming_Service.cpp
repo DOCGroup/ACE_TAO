@@ -8,7 +8,7 @@
 #include "ace/Task.h"
 
 // Default Constructor.
-TAO_Naming_Service::TAO_Naming_Service (void)
+TAO_Naming_Service::TAO_Naming_Service ()
   : time_ (0),
     num_threads_ (1)
 {
@@ -122,7 +122,7 @@ public:
       time_(t)
   {}
 
-  int svc (void)
+  int svc ()
   {
   if (!CORBA::is_nil (orb_.in ()))
     {
@@ -146,7 +146,7 @@ private:
 };
 
 int
-TAO_Naming_Service::run (void)
+TAO_Naming_Service::run ()
 {
   ORB_Runner runner (this->orb_.in(), time_);
   if (this->num_threads_ == 1)
@@ -168,7 +168,7 @@ TAO_Naming_Service::run (void)
 }
 
 void
-TAO_Naming_Service::shutdown (void)
+TAO_Naming_Service::shutdown ()
 {
   if (!CORBA::is_nil (orb_.in ()))
     {
@@ -177,7 +177,7 @@ TAO_Naming_Service::shutdown (void)
 }
 
 int
-TAO_Naming_Service::fini (void)
+TAO_Naming_Service::fini ()
 {
   this->my_naming_server_.fini();
 
@@ -198,6 +198,6 @@ TAO_Naming_Service::fini (void)
 }
 
 // Destructor.
-TAO_Naming_Service::~TAO_Naming_Service (void)
+TAO_Naming_Service::~TAO_Naming_Service ()
 {
 }

@@ -18,7 +18,7 @@ public:
   /// Calculates the average latency and Standard deviation.
   /// Expects the input data in my_results.dat.
   int
-  calculate_avg_latency (void);
+  calculate_avg_latency ();
 
   /// parses args.
   int

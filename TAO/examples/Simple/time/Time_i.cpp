@@ -2,12 +2,12 @@
 #include "ace/OS_NS_time.h"
 
 // Constructor
-Time_i::Time_i (void)
+Time_i::Time_i ()
 {
 }
 
 // Destructor
-Time_i::~Time_i (void)
+Time_i::~Time_i ()
 {
 }
 
@@ -20,14 +20,14 @@ Time_i::orb (CORBA::ORB_ptr o)
 
 // Return the current date/time on the server.
 CORBA::Long
-Time_i::current_time (void)
+Time_i::current_time ()
 {
   return CORBA::Long (ACE_OS::time (0));
 }
 
 // Shutdown.
 void
-Time_i::shutdown (void)
+Time_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Time_i is shutting down\n")));

@@ -31,10 +31,10 @@ class TAO_Concurrency_Serv_Export TAO_Concurrency_Loader : public TAO_Object_Loa
 {
 public:
   /// Constructor
-  TAO_Concurrency_Loader (void);
+  TAO_Concurrency_Loader ();
 
   /// Destructor
-  ~TAO_Concurrency_Loader (void);
+  ~TAO_Concurrency_Loader ();
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>

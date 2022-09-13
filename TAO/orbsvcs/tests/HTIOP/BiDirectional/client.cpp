@@ -6,7 +6,7 @@
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
-void do_nothing (void)
+void do_nothing ()
 {
 }
 

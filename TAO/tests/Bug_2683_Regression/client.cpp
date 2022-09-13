@@ -20,7 +20,7 @@ public:
   {
   }
 
-  int svc (void)
+  int svc ()
   {
     bool keep_going = true;
     while (keep_going && !this->stop_)

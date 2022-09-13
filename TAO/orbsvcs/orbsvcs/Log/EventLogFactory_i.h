@@ -53,7 +53,7 @@ public:
   //= Initialization and termination code.
 
   /// Constructor.
-  TAO_EventLogFactory_i (void);
+  TAO_EventLogFactory_i ();
 
   /// Destructor.
   ~TAO_EventLogFactory_i ();
@@ -82,9 +82,9 @@ public:
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds);
 
   // = Implementation of the CosEventChannelAdmin::ConsumerAdmin methods.
-  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (void);
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier ();
 
-  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void);
+  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier ();
 
 protected:
   virtual CORBA::RepositoryId create_repositoryid ();

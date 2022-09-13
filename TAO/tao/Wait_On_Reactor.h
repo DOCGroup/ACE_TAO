@@ -33,14 +33,14 @@ public:
   explicit TAO_Wait_On_Reactor (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Wait_On_Reactor (void);
+  virtual ~TAO_Wait_On_Reactor ();
 
   /*! @copydoc TAO_Wait_Strategy::wait() */
   virtual int wait (ACE_Time_Value *max_wait_time,
                     TAO_Synch_Reply_Dispatcher &rd);
 
   /*! @copydoc TAO_Wait_Strategy::register_handler() */
-  virtual int register_handler (void);
+  virtual int register_handler ();
 
   /*! @copydoc TAO_Wait_Strategy::non_blocking() */
   virtual bool non_blocking () const;

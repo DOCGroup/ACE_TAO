@@ -25,7 +25,7 @@ Coffee_i::Coffee_i (const char *name)
 
 // Destructor
 
-Coffee_i::~Coffee_i (void)
+Coffee_i::~Coffee_i ()
 {
 }
 
@@ -60,7 +60,7 @@ Param_Test_i::Param_Test_i (const char *coffee_name,
 
 // Destructor
 
-Param_Test_i::~Param_Test_i (void)
+Param_Test_i::~Param_Test_i ()
 {
 }
 
@@ -627,7 +627,7 @@ Param_Test_i::test_objref_struct (const Param_Test::Objref_Struct &s1,
 
 // make a Coffee object
 Coffee_ptr
-Param_Test_i::make_coffee (void)
+Param_Test_i::make_coffee ()
 {
   return this->obj_._this ();
 }
@@ -973,13 +973,13 @@ Param_Test_i::test_multdim_array (const Param_Test::Multdim_Array a1,
 }
 
 void
-Param_Test_i::shutdown (void)
+Param_Test_i::shutdown ()
 {
   this->orb_->shutdown ();
 }
 
 void
-Param_Test_i::throw_badboy (void)
+Param_Test_i::throw_badboy ()
 {
   throw Param_Test::BadBoy ();
 }

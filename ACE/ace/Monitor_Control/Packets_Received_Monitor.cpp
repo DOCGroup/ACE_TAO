@@ -30,7 +30,7 @@ namespace ACE
     {}
 
     void
-    Packets_Received_Monitor::update (void)
+    Packets_Received_Monitor::update ()
     {
       this->update_i ();
 
@@ -39,13 +39,13 @@ namespace ACE
     }
 
     const char*
-    Packets_Received_Monitor::default_name (void)
+    Packets_Received_Monitor::default_name ()
     {
       return Packets_Received_Monitor::default_name_;
     }
 
     void
-    Packets_Received_Monitor::clear_i (void)
+    Packets_Received_Monitor::clear_i ()
     {
       this->clear_impl ();
       this->Monitor_Base::clear_i ();

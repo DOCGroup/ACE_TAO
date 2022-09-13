@@ -38,10 +38,10 @@ class ServerAdmin_i : public virtual POA_ServerAdmin
 {
 public:
   ServerAdmin_i (ArrayTest_ptr target);
-  virtual ~ServerAdmin_i (void);
-  ArrayTest_ptr target(void);
+  virtual ~ServerAdmin_i ();
+  ArrayTest_ptr target();
 
-  void shutdown (void);
+  void shutdown ();
 private:
   ArrayTest_var target_;
 };
@@ -67,10 +67,10 @@ private:
   CORBA::Char char_;
 public:
   //Constructor
-  ArrayTest_i (void);
+  ArrayTest_i ();
 
   //Destructor
-  virtual ~ArrayTest_i (void);
+  virtual ~ArrayTest_i ();
 
   virtual
   ::LongArray_slice * longArrayOp (

@@ -154,7 +154,7 @@ TAO_RTScheduler_Current::spawn (RTScheduling::ThreadAction_ptr start,
 }
 
 RTScheduling::Current::IdType *
-TAO_RTScheduler_Current::id (void)
+TAO_RTScheduler_Current::id ()
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -165,7 +165,7 @@ TAO_RTScheduler_Current::id (void)
 }
 
 CORBA::Policy_ptr
-TAO_RTScheduler_Current::scheduling_parameter (void)
+TAO_RTScheduler_Current::scheduling_parameter ()
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -176,7 +176,7 @@ TAO_RTScheduler_Current::scheduling_parameter (void)
 }
 
 CORBA::Policy_ptr
-TAO_RTScheduler_Current::implicit_scheduling_parameter (void)
+TAO_RTScheduler_Current::implicit_scheduling_parameter ()
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -187,7 +187,7 @@ TAO_RTScheduler_Current::implicit_scheduling_parameter (void)
 }
 
 RTScheduling::Current::NameList *
-TAO_RTScheduler_Current::current_scheduling_segment_names (void)
+TAO_RTScheduler_Current::current_scheduling_segment_names ()
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -198,7 +198,7 @@ TAO_RTScheduler_Current::current_scheduling_segment_names (void)
 }
 
 RTCORBA::Priority
-TAO_RTScheduler_Current::the_priority (void)
+TAO_RTScheduler_Current::the_priority ()
 {
   return this->rt_current_->the_priority ();
 }
@@ -223,7 +223,7 @@ TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i* new_current)
 }
 
 TAO_RTScheduler_Current_i*
-TAO_RTScheduler_Current::implementation (void)
+TAO_RTScheduler_Current::implementation ()
 {
   TAO_TSS_Resources *tss =
     TAO_TSS_Resources::instance ();
@@ -616,7 +616,7 @@ TAO_RTScheduler_Current_i::implicit_scheduling_parameter ()
 }
 
 RTScheduling::Current::NameList *
-TAO_RTScheduler_Current_i::current_scheduling_segment_names (void)
+TAO_RTScheduler_Current_i::current_scheduling_segment_names ()
 {
   RTScheduling::Current::NameList* name_list;
   ACE_NEW_RETURN (name_list,

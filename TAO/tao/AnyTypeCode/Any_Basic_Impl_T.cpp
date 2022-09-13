@@ -27,7 +27,7 @@ TAO::Any_Basic_Impl_T<T>::Any_Basic_Impl_T (CORBA::TypeCode_ptr tc,
 }
 
 template<typename T>
-TAO::Any_Basic_Impl_T<T>::~Any_Basic_Impl_T (void)
+TAO::Any_Basic_Impl_T<T>::~Any_Basic_Impl_T ()
 {
 }
 

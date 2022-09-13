@@ -281,7 +281,7 @@ public:
   void set_global_strategy (const ACE_TCHAR *strat_name);
 
   /// Destructor.
-  ~TAO_FT_Naming_Manager (void);
+  ~TAO_FT_Naming_Manager ();
 
 private:
   /// A utility to ensure we can access the latest object reference for

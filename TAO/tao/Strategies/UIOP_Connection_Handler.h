@@ -50,7 +50,7 @@ public:
   TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor.
-  ~TAO_UIOP_Connection_Handler (void);
+  ~TAO_UIOP_Connection_Handler ();
 
   //@{
   /**
@@ -67,8 +67,8 @@ public:
   /** @name Event Handler overloads
    */
   virtual int open (void *);
-  virtual int resume_handler (void);
-  virtual int close_connection (void);
+  virtual int resume_handler ();
+  virtual int close_connection ();
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
@@ -77,14 +77,14 @@ public:
   //@}
 
   /// Add ourselves to Cache.
-  int add_transport_to_cache (void);
+  int add_transport_to_cache ();
 
 protected:
   //@{
   /**
    * @name TAO_Connection Handler overloads
    */
-  virtual int release_os_resources (void);
+  virtual int release_os_resources ();
   virtual int handle_write_ready (const ACE_Time_Value *timeout);
   //@}
 };

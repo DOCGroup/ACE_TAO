@@ -48,7 +48,7 @@ public:
     {
     }
 
-  int svc (void)
+  int svc ()
     {
       try
         {

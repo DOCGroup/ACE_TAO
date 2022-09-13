@@ -160,13 +160,13 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC>
-JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::~JAWS_Cache_Manager (void)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::~JAWS_Cache_Manager ()
 {
   this->close ();
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close (void)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close ()
 {
   while (this->waterlevel_ > 0)
     this->FLUSH_i ();
@@ -296,7 +296,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::FLUSH_i (void)
+::FLUSH_i ()
 {
   KEY temp_key;
   JAWS_Cache_Object *temp_object;
@@ -469,7 +469,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::FLUSH (void)
+::FLUSH ()
 {
   ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, g, this->lock_, -1);
 
@@ -507,7 +507,7 @@ JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER>
-JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::~JAWS_Cache_Proxy (void)
+JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::~JAWS_Cache_Proxy ()
 {
   DATA *data = this->data ();
   this->manager_->DROP (this->object_);

@@ -24,7 +24,7 @@ test_i::forward (CORBA::Object_ptr to,
 }
 
 CORBA::Short
-test_i::collocated_call (void)
+test_i::collocated_call ()
 {
   this->request_count_++;
 

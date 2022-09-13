@@ -16,7 +16,7 @@ LiveListener::LiveListener (const char *server)
 {
 }
 
-LiveListener::~LiveListener (void)
+LiveListener::~LiveListener ()
 {
 }
 
@@ -27,7 +27,7 @@ LiveListener::server () const
 }
 
 LiveListener *
-LiveListener::_add_ref (void)
+LiveListener::_add_ref ()
 {
   int const refcount = ++this->refcount_;
   if (ImR_Locator_i::debug () > 5)
@@ -40,7 +40,7 @@ LiveListener::_add_ref (void)
 }
 
 void
-LiveListener::_remove_ref (void)
+LiveListener::_remove_ref ()
 {
   int const count = --this->refcount_;
   if (ImR_Locator_i::debug () > 5)
@@ -102,7 +102,7 @@ LiveEntry::reping_available () const
 }
 
 int
-LiveEntry::next_reping (void)
+LiveEntry::next_reping ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, -1);
   return this->reping_available() ? LiveEntry::reping_msec_[this->repings_++] : -1;
@@ -146,7 +146,7 @@ LiveEntry::LiveEntry (LiveCheck *owner,
     }
 }
 
-LiveEntry::~LiveEntry (void)
+LiveEntry::~LiveEntry ()
 {
   if (this->callback_.in () != 0)
     {
@@ -159,7 +159,7 @@ LiveEntry::~LiveEntry (void)
 }
 
 void
-LiveEntry::release_callback (void)
+LiveEntry::release_callback ()
 {
   this->callback_ = 0;
 }
@@ -195,7 +195,7 @@ LiveEntry::remove_listener (LiveListener *ll)
 }
 
 void
-LiveEntry::reset_status (void)
+LiveEntry::reset_status ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   if ( this->liveliness_ == LS_ALIVE ||
@@ -238,7 +238,7 @@ LiveEntry::status () const
 }
 
 void
-LiveEntry::update_listeners (void)
+LiveEntry::update_listeners ()
 {
   Listen_Set remove;
   for (Listen_Set::ITERATOR i(this->listeners_);
@@ -494,12 +494,12 @@ PingReceiver::PingReceiver (LiveEntry *entry, PortableServer::POA_ptr poa)
 {
 }
 
-PingReceiver::~PingReceiver (void)
+PingReceiver::~PingReceiver ()
 {
 }
 
 void
-PingReceiver::cancel (void)
+PingReceiver::cancel ()
 {
   if (ImR_Locator_i::debug () > 4)
     {
@@ -531,7 +531,7 @@ PingReceiver::cancel (void)
 }
 
 void
-PingReceiver::ping (void)
+PingReceiver::ping ()
 {
   if (this->entry_ != 0)
     {
@@ -632,7 +632,7 @@ LC_TimeoutGuard::LC_TimeoutGuard (LiveCheck *owner, LC_token_type token)
   owner_->enter_handle_timeout ();
 }
 
-LC_TimeoutGuard::~LC_TimeoutGuard (void)
+LC_TimeoutGuard::~LC_TimeoutGuard ()
 {
   owner_->exit_handle_timeout ();
 
@@ -702,7 +702,7 @@ LiveCheck::LiveCheck ()
 {
 }
 
-LiveCheck::~LiveCheck (void)
+LiveCheck::~LiveCheck ()
 {
   for (LiveEntryMap::iterator em (this->entry_map_); !em.done(); em++)
     {
@@ -719,19 +719,19 @@ LiveCheck::~LiveCheck (void)
 }
 
 void
-LiveCheck::enter_handle_timeout (void)
+LiveCheck::enter_handle_timeout ()
 {
   ++this->handle_timeout_busy_;
 }
 
 void
-LiveCheck::exit_handle_timeout (void)
+LiveCheck::exit_handle_timeout ()
 {
   --this->handle_timeout_busy_;
 }
 
 bool
-LiveCheck::in_handle_timeout (void)
+LiveCheck::in_handle_timeout ()
 {
   return this->handle_timeout_busy_ != 0;
 }
@@ -749,7 +749,7 @@ LiveCheck::init (CORBA::ORB_ptr orb,
 }
 
 void
-LiveCheck::shutdown (void)
+LiveCheck::shutdown ()
 {
   this->running_ = false;
   this->reactor()->cancel_timer (this);
@@ -968,7 +968,7 @@ LiveCheck::remove_server (const char *server, int pid)
 }
 
 void
-LiveCheck::remove_deferred_servers (void)
+LiveCheck::remove_deferred_servers ()
 {
   if (!this->removed_entries_.is_empty ())
     {

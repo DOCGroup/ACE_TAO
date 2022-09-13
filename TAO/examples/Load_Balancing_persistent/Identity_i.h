@@ -25,14 +25,14 @@ public:
               PortableServer::POA_ptr poa);
 
   /// Destructor.
-  ~Identity_i (void);
+  ~Identity_i ();
 
   /// Returns the name of this object.
   virtual void get_name (CORBA::String_out name);
 
   /// Method for the POA that will return the persistent POA_ptr stored
   /// in here..
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
   /// Stores the name of this object.

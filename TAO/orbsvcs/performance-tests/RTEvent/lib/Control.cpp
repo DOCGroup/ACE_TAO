@@ -32,7 +32,7 @@ Control::Control (size_t peers_expected,
 {
 }
 
-Control::~Control (void)
+Control::~Control ()
 {
   delete[] this->peers_;
 }
@@ -149,7 +149,7 @@ Control::join (Federated_Test::Peer_ptr peer)
 }
 
 PortableServer::POA_ptr
-Control::_default_POA (void)
+Control::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

@@ -13,7 +13,7 @@ namespace TAO
   }
 
   ACE_Reactor_Impl *
-  XtResource_Factory::reactor_impl (void)
+  XtResource_Factory::reactor_impl ()
   {
     // synchronized by external locks
     if (!this->context_)

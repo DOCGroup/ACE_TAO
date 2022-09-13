@@ -20,9 +20,9 @@ public:
 
   // = The skeleton methods
 
-  virtual Test::Simple_ptr create_simple_object (void);
+  virtual Test::Simple_ptr create_simple_object ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Keep a reference to the ORB

@@ -57,10 +57,10 @@ public:
   };
 
   /// Ctor
-  Synchronisers (void);
+  Synchronisers ();
 
-  int  start_synchronization (void);
-  int  end_synchronization (void);
+  int  start_synchronization ();
+  int  end_synchronization ();
 
 private:
   /// The mutex that is used for synchronisation.
@@ -87,7 +87,7 @@ public:
               Synchronisers &synch);
 
   /// The thread runs inside this method..
-  int svc (void);
+  int svc ();
 
 private:
   /// Our referance to Synchronisers
@@ -110,7 +110,7 @@ public:
               Synchronisers &synch);
 
   /// The thread runs inside this method..
-  int svc (void);
+  int svc ();
 
   /// Need to overload this method to do anything useful..
   virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
@@ -137,10 +137,10 @@ public:
                Synchronisers &synch);
 
   /// Methods in which the threads run on
-  int svc (void);
+  int svc ();
 
   /// Processed messages
-  int processed (void);
+  int processed ();
 private:
   /// Our referance to Synchronisers
   Synchronisers &synch_;

@@ -63,7 +63,7 @@ namespace TAO
                  TAO_ORB_Core *orb_core);
 
       /// Default destructor.
-      ~Transport (void);
+      ~Transport ();
 
       /// Overload of the handle_input () in the TAO_Transport
       /// class. This is required to set up the state guard. The
@@ -79,8 +79,8 @@ namespace TAO
        * TAO_Transport.
        */
       //@{
-      virtual ACE_Event_Handler * event_handler_i (void);
-      virtual TAO_Connection_Handler *connection_handler_i (void);
+      virtual ACE_Event_Handler * event_handler_i ();
+      virtual TAO_Connection_Handler *connection_handler_i ();
 
       /// Write the complete Message_Block chain to the connection.
       virtual ssize_t send (iovec *iov, int iovcnt,

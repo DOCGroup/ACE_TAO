@@ -25,19 +25,19 @@ MIF_Task::MIF_Task (int importance,
   task_stats_->init (iter_);
 }
 
-MIF_Task::~MIF_Task (void)
+MIF_Task::~MIF_Task ()
 {
   delete task_stats_;
 }
 
 void
-MIF_Task::pre_activate (void)
+MIF_Task::pre_activate ()
 {
   DT_TEST::instance ()->scheduler ()->incr_thr_count ();
 }
 
 void
-MIF_Task::post_activate (void)
+MIF_Task::post_activate ()
 {
   DT_TEST::instance ()->scheduler ()->wait ();
 }
@@ -79,7 +79,7 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
 }
 
 int
-MIF_Task::perform_task (void)
+MIF_Task::perform_task ()
 {
   try
     {

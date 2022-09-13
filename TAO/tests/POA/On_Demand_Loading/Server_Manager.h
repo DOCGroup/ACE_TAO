@@ -30,10 +30,10 @@ class Server_i
 {
 public:
   /// Initialisation.
-  Server_i (void);
+  Server_i ();
 
   /// Destruction.
-  ~Server_i (void);
+  ~Server_i ();
 
   /// Initialisation of the ORB and poa.
   int init (int argc, ACE_TCHAR **argv);
@@ -55,7 +55,7 @@ public:
   int create_locator (PortableServer::POA_var second_poa);
 
   /// The server is executed.
-  int run (void);
+  int run ();
 
 private:
   /// Parses the input arguments.

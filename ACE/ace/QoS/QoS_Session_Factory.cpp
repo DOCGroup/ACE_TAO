@@ -17,12 +17,12 @@ const enum ACE_QoS_Session_Factory::ACE_QoS_Session_Type
 #  error "QoS type not supported.  Cannot build."
 #endif /* ACE_HAS_RAPI */
 
-ACE_QoS_Session_Factory::ACE_QoS_Session_Factory (void)
+ACE_QoS_Session_Factory::ACE_QoS_Session_Factory ()
 {
   ACE_TRACE ("ACE_QoS_Session_Factory::ACE_QoS_Session_Factory");
 }
 
-ACE_QoS_Session_Factory::~ACE_QoS_Session_Factory (void)
+ACE_QoS_Session_Factory::~ACE_QoS_Session_Factory ()
 {
   ACE_TRACE ("ACE_QoS_Session_Factory::~ACE_QoS_Session_Factory");
 }

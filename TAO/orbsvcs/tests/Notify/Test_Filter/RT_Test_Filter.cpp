@@ -5,7 +5,7 @@
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/PortableServer/Root_POA.h"
 
-TAO_Notify_Tests_RT_Test_Filter::TAO_Notify_Tests_RT_Test_Filter (void)
+TAO_Notify_Tests_RT_Test_Filter::TAO_Notify_Tests_RT_Test_Filter ()
   : expected_pool_id_ (0)
     , expected_lane_id_ (0)
 {
@@ -16,7 +16,7 @@ TAO_Notify_Tests_RT_Test_Filter::~TAO_Notify_Tests_RT_Test_Filter ()
 }
 
 char*
-TAO_Notify_Tests_RT_Test_Filter::constraint_grammar (void)
+TAO_Notify_Tests_RT_Test_Filter::constraint_grammar ()
 {
   return CORBA::string_dup ("ETCL");
 }
@@ -82,18 +82,18 @@ TAO_Notify_Tests_RT_Test_Filter::get_constraints (const CosNotifyFilter::Constra
 }
 
 CosNotifyFilter::ConstraintInfoSeq *
-TAO_Notify_Tests_RT_Test_Filter::get_all_constraints (void)
+TAO_Notify_Tests_RT_Test_Filter::get_all_constraints ()
 {
   return 0;
 }
 
 void
-TAO_Notify_Tests_RT_Test_Filter::remove_all_constraints (void)
+TAO_Notify_Tests_RT_Test_Filter::remove_all_constraints ()
 {
 }
 
 void
-TAO_Notify_Tests_RT_Test_Filter::destroy (void)
+TAO_Notify_Tests_RT_Test_Filter::destroy ()
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -229,7 +229,7 @@ TAO_Notify_Tests_RT_Test_Filter::detach_callback (
 }
 
 CosNotifyFilter::CallbackIDSeq *
-TAO_Notify_Tests_RT_Test_Filter::get_callbacks (void)
+TAO_Notify_Tests_RT_Test_Filter::get_callbacks ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }

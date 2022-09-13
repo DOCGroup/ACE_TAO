@@ -3,7 +3,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
-Smart_Diamond_Top_Factory::Smart_Diamond_Top_Factory (void)
+Smart_Diamond_Top_Factory::Smart_Diamond_Top_Factory ()
 {
   ACE_DEBUG ((LM_DEBUG, "Smart_Diamond_Top_Factory\n"));
 }

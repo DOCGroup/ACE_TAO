@@ -17,7 +17,7 @@
 //               Test_Bounded_String
 // ************************************************************************
 
-Test_Bounded_String::Test_Bounded_String (void)
+Test_Bounded_String::Test_Bounded_String ()
   : opname_ (CORBA::string_dup ("test_bounded_string")),
     in_ (0),
     inout_ (0),
@@ -26,7 +26,7 @@ Test_Bounded_String::Test_Bounded_String (void)
 {
 }
 
-Test_Bounded_String::~Test_Bounded_String (void)
+Test_Bounded_String::~Test_Bounded_String ()
 {
   CORBA::string_free (this->opname_);
   CORBA::string_free (this->in_);
@@ -96,7 +96,7 @@ Test_Bounded_String::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Bounded_String::reset_parameters (void)
+Test_Bounded_String::reset_parameters ()
 {
   // release any previously occupied values
   CORBA::string_free (this->inout_);
@@ -131,7 +131,7 @@ Test_Bounded_String::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Bounded_String::check_validity (void)
+Test_Bounded_String::check_validity ()
 {
   CORBA::ULong len = ACE_OS::strlen (this->in_);
 
@@ -154,7 +154,7 @@ Test_Bounded_String::check_validity (CORBA::Request_ptr)
 }
 
 void
-Test_Bounded_String::print_values (void)
+Test_Bounded_String::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"

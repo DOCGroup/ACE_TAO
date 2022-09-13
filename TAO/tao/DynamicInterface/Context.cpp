@@ -83,7 +83,7 @@ CORBA::ContextList::ContextList (CORBA::ULong len, char* *ctx_list)
     }
 }
 
-CORBA::ContextList::~ContextList (void)
+CORBA::ContextList::~ContextList ()
 {
   for (CORBA::ULong i = 0; i < this->count (); ++i)
     {

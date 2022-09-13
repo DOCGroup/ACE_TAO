@@ -95,7 +95,7 @@ public:
                               const char* preference);
 
   /// Destructor
-  ~TAO_Preference_Interpreter(void);
+  ~TAO_Preference_Interpreter();
 
   void order_offer (CosTrading::Offer* offer,
                     CosTrading::OfferId offer_id = 0);
@@ -114,7 +114,7 @@ public:
   int remove_offer (CosTrading::Offer*& offer);
 
   /// Return the number of offers remaining in the ordering.
-  size_t num_offers (void);
+  size_t num_offers ();
 
   struct Preference_Info
   {

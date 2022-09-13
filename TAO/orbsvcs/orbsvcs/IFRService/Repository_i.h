@@ -76,7 +76,7 @@ public:
                     PortableServer::POA_ptr poa,
                     ACE_Configuration *config);
 
-  virtual ~TAO_Repository_i (void);
+  virtual ~TAO_Repository_i ();
 
   /// Accessor for the readonly attribute.
   virtual CORBA::DefinitionKind def_kind ();
@@ -134,10 +134,10 @@ public:
 
   /// We create a default servant servant for each IR Object
   /// type and its corresponding POA.
-  virtual int create_servants_and_poas (void);
+  virtual int create_servants_and_poas ();
 
   /// Create the top-level ACE_Configuration sections.
-  int create_sections (void);
+  int create_sections ();
 
   /// Return one of our servants for internal use.
   virtual TAO_IDLType_i *select_idltype (
@@ -200,7 +200,7 @@ public:
    * destroy() method of the last thing to be destroyed
    * by the test code.
    */
-  void shutdown (void);
+  void shutdown ();
 
 protected:
   /// Reference to our ORB.

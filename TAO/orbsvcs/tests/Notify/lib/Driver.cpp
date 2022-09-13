@@ -72,7 +72,7 @@ TAO_Notify_Tests_Worker::command_builder (TAO_Notify_Tests_Command_Builder* cmd_
 }
 
 int
-TAO_Notify_Tests_Worker::svc (void)
+TAO_Notify_Tests_Worker::svc ()
 {
 #if 0
   ACE_hthread_t current;
@@ -107,7 +107,7 @@ TAO_Notify_Tests_Worker::svc (void)
 
 /*****************************************************************/
 
-TAO_Notify_Tests_ORB_Run_Worker::TAO_Notify_Tests_ORB_Run_Worker (void)
+TAO_Notify_Tests_ORB_Run_Worker::TAO_Notify_Tests_ORB_Run_Worker ()
 {
 }
 
@@ -124,7 +124,7 @@ TAO_Notify_Tests_ORB_Run_Worker::run_period (ACE_Time_Value run_period)
 }
 
 int
-TAO_Notify_Tests_ORB_Run_Worker::svc (void)
+TAO_Notify_Tests_ORB_Run_Worker::svc ()
 {
 #if 0
   // ACE_Thread::getprio() fails on systems that do not support thread
@@ -160,7 +160,7 @@ TAO_Notify_Tests_ORB_Run_Worker::svc (void)
 
 /*****************************************************************/
 
-TAO_Notify_Tests_Driver::TAO_Notify_Tests_Driver (void)
+TAO_Notify_Tests_Driver::TAO_Notify_Tests_Driver ()
   :cmd_builder_ (0), activation_manager_ (0), run_period_ (0,0), skip_priority_levels_check_ (0)
 {
   this->activation_manager_ = new TAO_Notify_Tests_Activation_Manager ();
@@ -260,7 +260,7 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[])
 }
 
 void
-TAO_Notify_Tests_Driver::run (void)
+TAO_Notify_Tests_Driver::run ()
 {
   // Task activation flags.
   long flags =
@@ -308,7 +308,7 @@ TAO_Notify_Tests_Driver::run (void)
 }
 
 void
-TAO_Notify_Tests_Driver::shutdown (void)
+TAO_Notify_Tests_Driver::shutdown ()
 {
   this->orb_->shutdown ();
 }

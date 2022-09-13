@@ -23,10 +23,10 @@ public:
   Stopwatch_display (Widget &parent);
 
   /// Destructor
-  virtual ~Stopwatch_display (void);
+  virtual ~Stopwatch_display ();
 
   /// Manage the widget
-  virtual void manage (void);
+  virtual void manage ();
 
   /// Change the displayed time
   void set_time (CORBA::Float value);

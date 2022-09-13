@@ -42,7 +42,7 @@ class ObjectReferenceFactory
   ObjectReferenceFactory (
     PortableInterceptor::ObjectReferenceFactory * old_orf);
 
-  virtual ::CORBA::ValueBase *_copy_value (void);
+  virtual ::CORBA::ValueBase *_copy_value ();
 
   /**
    * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -62,7 +62,7 @@ protected:
    * Protected destructor to enforce proper memory management via
    * reference counting.
    */
-  ~ObjectReferenceFactory (void);
+  ~ObjectReferenceFactory ();
 
 private:
   /// The old ObjectReferenceFactory used to create object references.

@@ -49,7 +49,7 @@ class ACE_Export ACE_SOCK_SEQPACK_Connector
 {
 public:
   /// Default constructor.
-  ACE_SOCK_SEQPACK_Connector (void);
+  ACE_SOCK_SEQPACK_Connector ();
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_SOCK_SEQPACK_Association
@@ -251,7 +251,7 @@ public:
                int protocol = 132);
 
   /// Default dtor.
-  ~ACE_SOCK_SEQPACK_Connector (void);
+  ~ACE_SOCK_SEQPACK_Connector ();
 
   // = Completion routine.
   /**

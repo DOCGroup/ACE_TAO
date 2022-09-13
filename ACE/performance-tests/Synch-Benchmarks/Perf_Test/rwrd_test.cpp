@@ -17,7 +17,7 @@ private:
 ACE_RW_Mutex RWRD_Test::rw_lock;
 
 int
-RWRD_Test::svc (void)
+RWRD_Test::svc ()
 {
   int ni = this->thr_id ();
   synch_count = 2;

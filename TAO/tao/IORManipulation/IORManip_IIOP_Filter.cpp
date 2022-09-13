@@ -10,12 +10,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IORManip_IIOP_Filter::TAO_IORManip_IIOP_Filter (void)
+TAO_IORManip_IIOP_Filter::TAO_IORManip_IIOP_Filter ()
 {
 }
 
 
-TAO_IORManip_IIOP_Filter::~TAO_IORManip_IIOP_Filter (void)
+TAO_IORManip_IIOP_Filter::~TAO_IORManip_IIOP_Filter ()
 {
 }
 

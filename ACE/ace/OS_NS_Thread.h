@@ -926,7 +926,7 @@ public:
   ACE_TSS_Ref (ACE_thread_t id);
 
   /// Default constructor
-  ACE_TSS_Ref (void);
+  ACE_TSS_Ref ();
 
   /// Check for equality.
   bool operator== (const ACE_TSS_Ref &) const;
@@ -957,7 +957,7 @@ public:
                 Destructor dest = 0);
 
   /// Default constructor
-  ACE_TSS_Info (void);
+  ACE_TSS_Info ();
 
   /// Returns 1 if the key is in use, 0 if not.
   int key_in_use () const { return thread_count_ != -1; }
@@ -973,7 +973,7 @@ public:
   bool operator!= (const ACE_TSS_Info &) const;
 
   /// Dump the state.
-  void dump (void);
+  void dump ();
 
 private:
   /// Key to the thread-specific storage item.
@@ -1006,7 +1006,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Default constructor, to initialize all bits to zero (unused).
-  ACE_TSS_Keys (void);
+  ACE_TSS_Keys ();
 
   /// Mark the specified key as being in use, if it was not already so marked.
   /// Returns 1 if the had already been marked, 0 if not.

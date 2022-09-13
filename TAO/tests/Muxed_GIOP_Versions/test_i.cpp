@@ -18,7 +18,7 @@ Simple_Server_i::test_method (CORBA::Long x)
 }
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
   // We dont shutdown the ORB. We allow the server to go away as it
   // wants.

@@ -17,8 +17,8 @@
 class JAWS_Export JAWS_Header_Info
 {
 public:
-  JAWS_Header_Info (void);
-  ~JAWS_Header_Info (void);
+  JAWS_Header_Info ();
+  ~JAWS_Header_Info ();
 
   int end_of_line () const;
   void end_of_line (int flag);
@@ -30,19 +30,19 @@ public:
 
   const JAWS_Header_Data * last_header_data () const;
 
-  char *header_buf (void);
+  char *header_buf ();
 
   void append_last_header_value (char c);
-  int append_last_header_value (void);
+  int append_last_header_value ();
   void append_last_header_value (const char *begin, const char *end);
-  void reduce_last_header_value (void);
+  void reduce_last_header_value ();
 
   void create_next_header_value (char *ht);
   // This will insert last_header_data into the table if it is not
   // null.  Then, it will create a new header_data node and populate
   // it.  If ht is null, last_header_data is not inserted.
 
-  void finish_last_header_value (void);
+  void finish_last_header_value ();
   // This will insert last_header_data into the table if it is not
   // null.
 
@@ -52,7 +52,7 @@ public:
   int status () const;
   void status (int s);
 
-  JAWS_Headers *table (void);
+  JAWS_Headers *table ();
 
   enum STATUS_CODE
   {
@@ -70,7 +70,7 @@ public:
   // In Apache, they assume that each header line should not exceed
   // 8K.  Who am I to disagree?
 
-  void dump (void);
+  void dump ();
 
 private:
   int end_of_headers_;

@@ -1,7 +1,7 @@
 #include "Policy_Verifier.h"
 #include "ace/OS_NS_string.h"
 
-Policy_Verifier::Policy_Verifier (void)
+Policy_Verifier::Policy_Verifier ()
   : rt_object_properties_ (0)
   , rt_poa_properties_ (0)
   , priority_bands_ (0)
@@ -12,7 +12,7 @@ Policy_Verifier::Policy_Verifier (void)
                   ACE_TEXT("file://overridden.ior"));
 }
 
-Policy_Verifier::~Policy_Verifier (void)
+Policy_Verifier::~Policy_Verifier ()
 {
   delete rt_object_properties_;
   delete rt_poa_properties_;

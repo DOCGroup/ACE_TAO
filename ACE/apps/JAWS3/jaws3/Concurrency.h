@@ -21,7 +21,7 @@ public:
 
   virtual int getq (JAWS_Protocol_Handler *&ph) = 0;
 
-  int svc (void);
+  int svc ();
 };
 
 
@@ -38,7 +38,7 @@ public:
   int putq (JAWS_Protocol_Handler *ph);
   int getq (JAWS_Protocol_Handler *&ph);
 
-  void shutdown (void);
+  void shutdown ();
 
 protected:
   JAWS_Concurrency_Impl *impl_;
@@ -54,7 +54,7 @@ class JAWS_Export JAWS_Concurrency
   : public JAWS_Concurrency_Bridge<JAWS_CONCURRENCY_CONCRETE_IMPL>
 {
 public:
-  static JAWS_Concurrency * instance (void)
+  static JAWS_Concurrency * instance ()
   {
     return ACE_Singleton<JAWS_Concurrency, ACE_SYNCH_MUTEX>::instance ();
   }

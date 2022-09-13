@@ -112,7 +112,7 @@ private:
    *  encoding of the file. Subsequent call to get() returns this
    *  character.
    */
-  int peek_i (void);
+  int peek_i ();
 
 #endif /* ACE_USES_WCHAR */
 

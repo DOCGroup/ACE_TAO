@@ -6,7 +6,7 @@
 #include "Name.h"
 
 
-TAO_Notify_Tests_Command_Builder::TAO_Notify_Tests_Command_Builder (void)
+TAO_Notify_Tests_Command_Builder::TAO_Notify_Tests_Command_Builder ()
   : start_command_ (0),
     last_command_ (0)
 {
@@ -57,7 +57,7 @@ TAO_Notify_Tests_Command_Builder::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-TAO_Notify_Tests_Command_Builder::fini (void)
+TAO_Notify_Tests_Command_Builder::fini ()
 {
         return 0;
 }
@@ -72,7 +72,7 @@ TAO_Notify_Tests_Command_Builder::_register (ACE_CString command_factory_name, T
 }
 
 void
-TAO_Notify_Tests_Command_Builder::execute (void)
+TAO_Notify_Tests_Command_Builder::execute ()
 {
   if (this->start_command_)
     this->start_command_->execute ();

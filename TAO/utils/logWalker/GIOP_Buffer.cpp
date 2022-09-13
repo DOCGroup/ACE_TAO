@@ -105,7 +105,7 @@ struct ReplyHeader_1_0 { // Renamed from ReplyHeader
 
 // 12 = req_id + flags + RESVD + addr disp.
 
-GIOP_Buffer::GIOP_Buffer(void)
+GIOP_Buffer::GIOP_Buffer()
   : cdr_ (0),
     preamble_(),
     log_offset_(0),
@@ -186,7 +186,7 @@ GIOP_Buffer::owner (Invocation *owner)
 }
 
 Invocation *
-GIOP_Buffer::owner (void)
+GIOP_Buffer::owner ()
 {
   return this->owner_;
 }
@@ -214,7 +214,7 @@ GIOP_Buffer::init_buf (const char *text, size_t offset)
   this->wr_pos_ = this->octets_;
 }
 
-GIOP_Buffer::~GIOP_Buffer(void)
+GIOP_Buffer::~GIOP_Buffer()
 {
   delete [] this->octets_;
 }
@@ -310,7 +310,7 @@ GIOP_Buffer::num_contexts () const
 }
 
 bool
-GIOP_Buffer::is_oneway (void)
+GIOP_Buffer::is_oneway ()
 {
   if (this->octets_ == 0)
     {
@@ -330,7 +330,7 @@ GIOP_Buffer::log_posn () const
 }
 
 Thread *
-GIOP_Buffer::thread (void)
+GIOP_Buffer::thread ()
 {
   return this->thr_;
 }
@@ -360,7 +360,7 @@ GIOP_Buffer::expected_size () const
 }
 
 size_t
-GIOP_Buffer::msg_size (void)
+GIOP_Buffer::msg_size ()
 {
   if (this->cur_size() < 12)
     return 0;
@@ -376,7 +376,7 @@ GIOP_Buffer::expected_req_id () const
 }
 
 size_t
-GIOP_Buffer::actual_req_id (void)
+GIOP_Buffer::actual_req_id ()
 {
   if (this->octets_ == 0)
     return 0;
@@ -394,7 +394,7 @@ GIOP_Buffer::cur_size () const
 }
 
 bool
-GIOP_Buffer::parse_svc_contexts (void)
+GIOP_Buffer::parse_svc_contexts ()
 {
   ACE_CDR::ULong temp;
   ACE_CDR::ULong num_svc_cont;
@@ -421,7 +421,7 @@ GIOP_Buffer::parse_svc_contexts (void)
 }
 
 bool
-GIOP_Buffer::parse_header (void)
+GIOP_Buffer::parse_header ()
 {
   if (this->octets_ == 0 || this->cur_size() < 12)
     {
@@ -532,7 +532,7 @@ GIOP_Buffer::target_oid (size_t &len)
 }
 
 const char *
-GIOP_Buffer::operation (void)
+GIOP_Buffer::operation ()
 {
   if (octets_ == 0)
     return 0;
@@ -544,7 +544,7 @@ GIOP_Buffer::operation (void)
 }
 
 ACE_InputCDR &
-GIOP_Buffer::payload (void)
+GIOP_Buffer::payload ()
 {
   if (octets_ != 0 && !this->header_parsed_)
     this->header_parsed_ = this->parse_header();
@@ -558,7 +558,7 @@ GIOP_Buffer::has_octets () const
 }
 
 bool
-GIOP_Buffer::validate (void)
+GIOP_Buffer::validate ()
 {
   return
     this->expected_req_id_ == this->actual_req_id() &&
@@ -583,7 +583,7 @@ GIOP_Buffer::matches (GIOP_Buffer *other) const
 }
 
 void
-GIOP_Buffer::reset (void)
+GIOP_Buffer::reset ()
 {
   this->octets_ = 0;
   this->wr_pos_ = 0;

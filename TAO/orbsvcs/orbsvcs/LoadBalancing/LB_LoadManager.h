@@ -271,7 +271,7 @@ protected:
    * Destructor is protected to enforce correct memory management
    * through reference counting.
    */
-  ~TAO_LB_LoadManager (void);
+  ~TAO_LB_LoadManager ();
 
 private:
   /// Extract the value of the InitialNumberReplicas property from

@@ -53,7 +53,7 @@ public:
   void mapping (RTCORBA::NetworkPriorityMapping * mapping);
 
   ///
-  RTCORBA::NetworkPriorityMapping *mapping (void);
+  RTCORBA::NetworkPriorityMapping *mapping ();
 
 public:
   typedef TAO_Network_Priority_Mapping_Manager_ptr _ptr_type;
@@ -75,7 +75,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_Network_Priority_Mapping_Manager (void);
+  ~TAO_Network_Priority_Mapping_Manager ();
 
 private:
   TAO_Network_Priority_Mapping_Manager (const TAO_Network_Priority_Mapping_Manager &);
@@ -102,16 +102,16 @@ public:
   operator const TAO_Network_Priority_Mapping_Manager_ptr &() const;
   operator TAO_Network_Priority_Mapping_Manager_ptr &();
   TAO_Network_Priority_Mapping_Manager_ptr in () const;
-  TAO_Network_Priority_Mapping_Manager_ptr &inout (void);
-  TAO_Network_Priority_Mapping_Manager_ptr &out (void);
-  TAO_Network_Priority_Mapping_Manager_ptr _retn (void);
+  TAO_Network_Priority_Mapping_Manager_ptr &inout ();
+  TAO_Network_Priority_Mapping_Manager_ptr &out ();
+  TAO_Network_Priority_Mapping_Manager_ptr _retn ();
   TAO_Network_Priority_Mapping_Manager_ptr ptr () const;
 
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
   static TAO_Network_Priority_Mapping_Manager_ptr duplicate (TAO_Network_Priority_Mapping_Manager_ptr);
   static void release (TAO_Network_Priority_Mapping_Manager_ptr);
-  static TAO_Network_Priority_Mapping_Manager_ptr nil (void);
+  static TAO_Network_Priority_Mapping_Manager_ptr nil ();
   static TAO_Network_Priority_Mapping_Manager_ptr narrow (CORBA::Object * );
   static CORBA::Object * upcast (void *);
 
@@ -131,8 +131,8 @@ public:
   TAO_Network_Priority_Mapping_Manager_out &operator= (const TAO_Network_Priority_Mapping_Manager_var &);
   TAO_Network_Priority_Mapping_Manager_out &operator= (TAO_Network_Priority_Mapping_Manager_ptr);
   operator TAO_Network_Priority_Mapping_Manager_ptr &();
-  TAO_Network_Priority_Mapping_Manager_ptr &ptr (void);
-  TAO_Network_Priority_Mapping_Manager_ptr operator-> (void);
+  TAO_Network_Priority_Mapping_Manager_ptr &ptr ();
+  TAO_Network_Priority_Mapping_Manager_ptr operator-> ();
 
 private:
   TAO_Network_Priority_Mapping_Manager_ptr &ptr_;

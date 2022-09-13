@@ -35,7 +35,7 @@ class FTP_Client_Callback : public TAO_AV_Callback
 {
 public:
   ///Constructor
-  FTP_Client_Callback (void);
+  FTP_Client_Callback ();
 };
 
 
@@ -52,7 +52,7 @@ class FTP_Client_StreamEndPoint  : public TAO_Client_StreamEndPoint
 {
 public:
   /// Constructor
-  FTP_Client_StreamEndPoint (void);
+  FTP_Client_StreamEndPoint ();
 
   /// Create the application client callback and return its handle to the
   /// AVStreams for further application callbacks
@@ -83,7 +83,7 @@ class Client
 {
 public:
   /// Constructor
-  Client (void);
+  Client ();
 
   /// Method to initialize the various data components.
   int init (int argc,
@@ -93,26 +93,26 @@ public:
   void set_protocol_object (TAO_AV_Protocol_Object *protocol_object);
 
   /// Method to pace and send data from a file.
-  int pace_data (void);
+  int pace_data ();
 
   /// File handle from which data is read to be sent.
-  FILE *file (void);
+  FILE *file ();
 
   /// The stream control interface that manages the stream set up
-  TAO_StreamCtrl* streamctrl (void);
+  TAO_StreamCtrl* streamctrl ();
 
   /// name of the flow set up.
-  char *flowname (void);
+  char *flowname ();
 
   /// The requested frame rate for sending each frame of data read from the file.
-  int frame_rate (void);
+  int frame_rate ();
 
 private:
   /// Method to parse the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Method that binds the ftp client to the server
-  int bind_to_server (void);
+  int bind_to_server ();
 
   /// The reacfive strategy of the client.
   ENDPOINT_STRATEGY endpoint_strategy_;

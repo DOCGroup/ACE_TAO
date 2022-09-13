@@ -7,7 +7,7 @@ const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 static int done = 0;
 
 void
-throw_exception (void)
+throw_exception ()
 {
   throw 1;
 }
@@ -18,14 +18,14 @@ class test_i :
 public:
   test_i (CORBA::ORB_ptr orb);
 
-  void normal_method (void);
+  void normal_method ();
 
-  void unknown_exception_in_method (void);
+  void unknown_exception_in_method ();
 
-  void unknown_exception_during_deactivation (void);
+  void unknown_exception_during_deactivation ();
 
-  void _add_ref (void);
-  void _remove_ref (void);
+  void _add_ref ();
+  void _remove_ref ();
 
   CORBA::ORB_var orb_;
 
@@ -39,14 +39,14 @@ test_i::test_i (CORBA::ORB_ptr orb)
 }
 
 void
-test_i::normal_method (void)
+test_i::normal_method ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::normal_method() called\n"));
 }
 
 void
-test_i::unknown_exception_in_method (void)
+test_i::unknown_exception_in_method ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::unknown_exception_in_method() called\n"));
@@ -58,7 +58,7 @@ test_i::unknown_exception_in_method (void)
 }
 
 void
-test_i::unknown_exception_during_deactivation (void)
+test_i::unknown_exception_during_deactivation ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::unknown_exception_during_deactivation() called\n"));
@@ -73,7 +73,7 @@ test_i::unknown_exception_during_deactivation (void)
 }
 
 void
-test_i::_add_ref (void)
+test_i::_add_ref ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::_add_ref() called; current refcount = %d\n",
@@ -81,7 +81,7 @@ test_i::_add_ref (void)
 }
 
 void
-test_i::_remove_ref (void)
+test_i::_remove_ref ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::_remove_ref() called; current refcount = %d\n",
@@ -105,9 +105,9 @@ class test_factory_i :
 public:
   test_factory_i (CORBA::ORB_ptr orb);
 
-  test_ptr create_test (void);
+  test_ptr create_test ();
 
-  void shutdown (void);
+  void shutdown ();
 
   CORBA::ORB_var orb_;
 };
@@ -119,7 +119,7 @@ test_factory_i::test_factory_i (CORBA::ORB_ptr orb)
 }
 
 test_ptr
-test_factory_i::create_test (void)
+test_factory_i::create_test ()
 {
   test_i *servant =
     new test_i (this->orb_.in ());
@@ -145,7 +145,7 @@ test_factory_i::create_test (void)
 }
 
 void
-test_factory_i::shutdown (void)
+test_factory_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "factory_i::shutdown() called\n"));

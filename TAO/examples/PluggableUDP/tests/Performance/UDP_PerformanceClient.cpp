@@ -20,7 +20,7 @@ UDP_PerformanceClient::UDP_PerformanceClient (CORBA::ORB_ptr orb,
 }
 
 //Destructor.
-UDP_PerformanceClient::~UDP_PerformanceClient (void)
+UDP_PerformanceClient::~UDP_PerformanceClient ()
 {
   //no-op
 }

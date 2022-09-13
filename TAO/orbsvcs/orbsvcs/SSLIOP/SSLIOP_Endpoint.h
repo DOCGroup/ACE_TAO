@@ -58,7 +58,7 @@ namespace TAO
                 TAO_IIOP_Endpoint *iiop_endp);
 
       /// Destructor.
-      virtual ~TAO_SSLIOP_Endpoint (void);
+      virtual ~TAO_SSLIOP_Endpoint ();
 
       /// Need to have an assignment operator since the SSLIOP_Profile class
       /// may have to reorder its list of endpoints based on filtering by

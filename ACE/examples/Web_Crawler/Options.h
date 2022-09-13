@@ -76,7 +76,7 @@ public:
   void visitor (URL_Visitor *);
 
   // Get the handle_limit.
-  int handle_limit (void);
+  int handle_limit ();
 private:
   /// Are we recursving.
   int recurse_;

@@ -25,7 +25,7 @@
 # include <sys/lwp.h> /* for _lwp_self */
 #endif /* sun */
 
-Test_ECG::Test_ECG (void)
+Test_ECG::Test_ECG ()
   : lcl_name_ ("Test_ECG"),
     rmt_name_ (""),
     scheduling_type_ (Test_ECG::ss_runtime),
@@ -598,7 +598,7 @@ Test_ECG::get_ec (CosNaming::NamingContext_ptr naming_context,
 }
 
 void
-Test_ECG::disconnect_suppliers (void)
+Test_ECG::disconnect_suppliers ()
 {
   for (int i = 0; i < this->hp_suppliers_ + this->lp_suppliers_; ++i)
     {
@@ -655,7 +655,7 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
 }
 
 void
-Test_ECG::disconnect_consumers (void)
+Test_ECG::disconnect_consumers ()
 {
   for (int i = 0; i < this->hp_consumers_ + this->lp_consumers_; ++i)
     {
@@ -892,7 +892,7 @@ Test_ECG::push_consumer (void *consumer_cookie,
 }
 
 void
-Test_ECG::wait_until_ready (void)
+Test_ECG::wait_until_ready ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ready_mon, this->ready_mtx_);
   while (!this->ready_)
@@ -945,7 +945,7 @@ Test_ECG::shutdown_consumer (int id)
 }
 
 int
-Test_ECG::shutdown (void)
+Test_ECG::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "Shutting down the multiple EC test\n"));
 
@@ -959,7 +959,7 @@ Test_ECG::shutdown (void)
 }
 
 void
-Test_ECG::dump_results (void)
+Test_ECG::dump_results ()
 {
   const int bufsize = 512;
   ACE_TCHAR buf[bufsize];
@@ -1259,7 +1259,7 @@ Test_Supplier::open (const char* name,
 }
 
 void
-Test_Supplier::close (void)
+Test_Supplier::close ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -1387,7 +1387,7 @@ Test_Supplier::push (const RtecEventComm::EventSet& events)
 }
 
 void
-Test_Supplier::disconnect_push_supplier (void)
+Test_Supplier::disconnect_push_supplier ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
@@ -1396,7 +1396,7 @@ Test_Supplier::disconnect_push_supplier (void)
 }
 
 void
-Test_Supplier::disconnect_push_consumer (void)
+Test_Supplier::disconnect_push_consumer ()
 {
 }
 
@@ -1458,7 +1458,7 @@ Test_Consumer::open (const char* name,
 }
 
 void
-Test_Consumer::close (void)
+Test_Consumer::close ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
@@ -1476,7 +1476,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events)
 }
 
 void
-Test_Consumer::disconnect_push_consumer (void)
+Test_Consumer::disconnect_push_consumer ()
 {
 }
 

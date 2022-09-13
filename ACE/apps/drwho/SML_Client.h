@@ -18,10 +18,10 @@
 class SML_Client : public SM_Client
 {
 public:
-  SML_Client (void);
-  virtual ~SML_Client (void);
+  SML_Client ();
+  virtual ~SML_Client ();
   virtual int receive (int timeout = 0);
-  virtual int send (void);
+  virtual int send ();
 
 private:
   SML_Server sml_server;

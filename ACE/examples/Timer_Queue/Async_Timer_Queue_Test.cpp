@@ -43,7 +43,7 @@ Async_Timer_Queue *Async_Timer_Queue::instance_ = 0;
 
 // Implement the Singleton logic.
 Async_Timer_Queue *
-Async_Timer_Queue::instance (void)
+Async_Timer_Queue::instance ()
 {
   if (Async_Timer_Queue::instance_ == 0)
     {
@@ -69,7 +69,7 @@ Async_Timer_Queue::Async_Timer_Queue (ACE_Sig_Set *ss) :
 // Dump the contents of the queue when we receive ^C.
 
 void
-Async_Timer_Queue::dump (void)
+Async_Timer_Queue::dump ()
 {
   ACE_DEBUG ((LM_DEBUG, "begin dumping timer queue\n"));
 
@@ -196,7 +196,7 @@ signal_handler (int signum)
 // However, SIGQUIT is never blocked...
 
 static void
-register_signal_handlers (void)
+register_signal_handlers ()
 {
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   // Register SIGQUIT (never blocked).
@@ -219,14 +219,14 @@ register_signal_handlers (void)
 
 // constructor
 
-Async_Timer_Queue_Test_Driver::Async_Timer_Queue_Test_Driver (void)
+Async_Timer_Queue_Test_Driver::Async_Timer_Queue_Test_Driver ()
 {
 }
 
 // displays the menu of options.
 
 int
-Async_Timer_Queue_Test_Driver::display_menu (void)
+Async_Timer_Queue_Test_Driver::display_menu ()
 {
   // The menu of options provided to the user.
   static char menu[] =
@@ -243,7 +243,7 @@ Async_Timer_Queue_Test_Driver::display_menu (void)
 // Initializes the test driver.
 
 int
-Async_Timer_Queue_Test_Driver::init (void)
+Async_Timer_Queue_Test_Driver::init ()
 {
   typedef Command<Async_Timer_Queue, Async_Timer_Queue::ACTION> CMD;
 

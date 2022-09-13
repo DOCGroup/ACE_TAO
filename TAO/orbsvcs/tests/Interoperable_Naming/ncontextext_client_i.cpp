@@ -22,11 +22,11 @@
 #include "ace/streams.h"
 
 // Constructor
-NContextExt_Client_i::NContextExt_Client_i (void)
+NContextExt_Client_i::NContextExt_Client_i ()
 {
 }
 
-NContextExt_Client_i::~NContextExt_Client_i (void)
+NContextExt_Client_i::~NContextExt_Client_i ()
 {
 }
 
@@ -34,7 +34,7 @@ NContextExt_Client_i::~NContextExt_Client_i (void)
 // Parses the command line arguments and returns an
 // error status
 int
-NContextExt_Client_i::parse_args (void)
+NContextExt_Client_i::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dvs"));
   int c;
@@ -138,7 +138,7 @@ NContextExt_Client_i::get_name ()
 }
 
 int
-NContextExt_Client_i::run (void)
+NContextExt_Client_i::run ()
 {
   try
     {

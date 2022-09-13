@@ -25,19 +25,19 @@ class Policy_Tester
 {
 public:
   // Ctor/Dtor.
-  Policy_Tester (void);
-  ~Policy_Tester (void);
+  Policy_Tester ();
+  ~Policy_Tester ();
 
   /// Runs the test.
-  void run (void);
+  void run ();
 
   int init (int argc,
             ACE_TCHAR *argv[]);
 
-  void shutdown (void);
+  void shutdown ();
 private:
   // Helper method used internally.
-  int create_objects (void);
+  int create_objects ();
 
   CORBA::Boolean check_reference (CORBA::Object_ptr object,
                                    const char *msg);

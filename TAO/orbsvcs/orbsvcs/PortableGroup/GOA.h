@@ -100,25 +100,25 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  char * the_name (void);
+  char * the_name ();
 
-  PortableServer::POA_ptr the_parent (void);
+  PortableServer::POA_ptr the_parent ();
 
-  PortableServer::POAList *the_children (void);
+  PortableServer::POAList *the_children ();
 
-  PortableServer::POAManager_ptr the_POAManager (void);
+  PortableServer::POAManager_ptr the_POAManager ();
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  PortableServer::AdapterActivator_ptr the_activator (void);
+  PortableServer::AdapterActivator_ptr the_activator ();
 
   void the_activator (PortableServer::AdapterActivator_ptr adapter_activator);
 
-  PortableServer::ServantManager_ptr get_servant_manager (void);
+  PortableServer::ServantManager_ptr get_servant_manager ();
 
   void set_servant_manager (PortableServer::ServantManager_ptr imgr);
 
-  PortableServer::Servant get_servant (void);
+  PortableServer::Servant get_servant ();
 
   void set_servant (PortableServer::Servant servant);
 
@@ -148,7 +148,7 @@ public:
 
   CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid);
 
-  CORBA::OctetSeq *id (void);
+  CORBA::OctetSeq *id ();
 
   // End standard POA interface methods.
 
@@ -161,10 +161,10 @@ public:
            TAO_ORB_Core &orb_core,
            TAO_Object_Adapter *object_adapter);
 
-  virtual ~TAO_GOA (void);
+  virtual ~TAO_GOA ();
 
     // Used to force the initialization of the code.
-    static int Initializer (void);
+    static int Initializer ();
 
 protected:
   /// Template method for creating new POA's of this type.

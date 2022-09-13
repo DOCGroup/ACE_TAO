@@ -64,7 +64,7 @@ parse_args (int argc, ACE_TCHAR **argv)
 }
 
 int
-read_IOR_from_file (void)
+read_IOR_from_file ()
 {
   // Open the file for reading.
   ACE_HANDLE f_handle =

@@ -68,7 +68,7 @@ namespace TAO
       /// just *after* the request is dispatched by a worker thread.
       /// Returns true if the request has been dispatched, and returns
       /// false if the request has been cancelled.
-      bool wait(void);
+      bool wait();
 
     protected:
       /// Prepare this TP_Collocated_Synch_With_Server_Request object to be

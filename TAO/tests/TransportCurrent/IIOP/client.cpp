@@ -99,7 +99,7 @@ Worker::Worker (Test::Transport::CurrentTest_ptr server,
 /// interceptor
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {

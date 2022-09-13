@@ -13,7 +13,7 @@ ACEXML_SAXPrint_Handler::ACEXML_SAXPrint_Handler (const ACEXML_Char* filename)
 {
 }
 
-ACEXML_SAXPrint_Handler::~ACEXML_SAXPrint_Handler (void)
+ACEXML_SAXPrint_Handler::~ACEXML_SAXPrint_Handler ()
 {
   delete [] this->fileName_;
 }
@@ -29,7 +29,7 @@ ACEXML_SAXPrint_Handler::characters (const ACEXML_Char *cdata,
 }
 
 void
-ACEXML_SAXPrint_Handler::endDocument (void)
+ACEXML_SAXPrint_Handler::endDocument ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }
@@ -92,7 +92,7 @@ ACEXML_SAXPrint_Handler::skippedEntity (const ACEXML_Char *name)
 }
 
 void
-ACEXML_SAXPrint_Handler::startDocument (void)
+ACEXML_SAXPrint_Handler::startDocument ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event startDocument () ***************\n")));
@@ -194,7 +194,7 @@ ACEXML_SAXPrint_Handler::warning (ACEXML_SAXParseException & ex)
 }
 
 void
-ACEXML_SAXPrint_Handler::print_indent (void)
+ACEXML_SAXPrint_Handler::print_indent ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   for (size_t i = 0; i < this->indent_; ++i)

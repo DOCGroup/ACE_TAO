@@ -47,10 +47,10 @@ public:
   friend class Leader_Follower_Task;
 
   /// Ctor
-  Synchronisers (void);
+  Synchronisers ();
 
-  int  start_synchronization (void);
-  int  end_synchronization (void);
+  int  start_synchronization ();
+  int  end_synchronization ();
 
 private:
   /// The mutex and condition variable that is used for
@@ -82,10 +82,10 @@ public:
   Leader_Follower_Task (Synchronisers &synch);
 
   /// Messages consumed
-  int processed (void);
+  int processed ();
 
   /// Method that is run by a daemon thread
-  int svc (void);
+  int svc ();
 
 private:
   /// Number of messages processed by this thread

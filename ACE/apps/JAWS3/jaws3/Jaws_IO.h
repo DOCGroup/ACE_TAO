@@ -75,9 +75,9 @@ class JAWS_Export JAWS_IO
 public:
   JAWS_IO (JAWS_IO_Impl *impl = 0);
 
-  ~JAWS_IO (void);
+  ~JAWS_IO ();
 
-  static JAWS_IO * instance (void)
+  static JAWS_IO * instance ()
   {
     return ACE_Singleton<JAWS_IO, ACE_SYNCH_MUTEX>::instance ();
   }

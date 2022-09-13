@@ -5,12 +5,12 @@
 #include "orbsvcs/CosNotifyFilterExtC.h"
 
 
-ExtendedFilter::ExtendedFilter (void)
+ExtendedFilter::ExtendedFilter ()
   : event_count_ (5)
 {
 }
 
-ExtendedFilter::~ExtendedFilter (void)
+ExtendedFilter::~ExtendedFilter ()
 {
 }
 
@@ -45,7 +45,7 @@ ExtendedFilter::init (int argc, ACE_TCHAR* argv [])
 }
 
 void
-ExtendedFilter::run_test (void)
+ExtendedFilter::run_test ()
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, " Obtaining FilterAdmin interface from ConsumerAdmin\n"));
@@ -216,7 +216,7 @@ ExtendedFilter::print_filters (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 
 
 void
-ExtendedFilter::create_EC (void)
+ExtendedFilter::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id, id2;
 

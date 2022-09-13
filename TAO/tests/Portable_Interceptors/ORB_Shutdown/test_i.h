@@ -30,13 +30,13 @@ public:
   test_i (CORBA::ORB_ptr orb);
 
   /// Destructor.
-  ~test_i (void);
+  ~test_i ();
 
   /// Say hello.
-  virtual void hello (void);
+  virtual void hello ();
 
   /// Shutdown the ORB.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Pseudo-reference to the ORB.

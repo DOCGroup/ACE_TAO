@@ -27,15 +27,15 @@ public:
          int server_id);
 
   /// Default _non_existent: always returns false.
-  virtual CORBA::Boolean _non_existent (void);
+  virtual CORBA::Boolean _non_existent ();
 
-  virtual char * get_string (void);
+  virtual char * get_string ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
-  virtual void remove_member (void);
+  virtual void remove_member ();
 
-  virtual void exit (void);
+  virtual void exit ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

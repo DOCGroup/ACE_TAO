@@ -55,7 +55,7 @@ class Write_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
 public:
   virtual int open (void *);
-  virtual int send_data (void);
+  virtual int send_data ();
 };
 
 #endif /* ACE_TESTS_REACTOR_PERFORMANCE_TEST_H */

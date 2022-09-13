@@ -8,8 +8,8 @@
 class JAWS_HTTP_10_Request : public HTTP_Request, public HTTP_HCodes
 {
 public:
-  JAWS_HTTP_10_Request (void);
-  ~JAWS_HTTP_10_Request (void);
+  JAWS_HTTP_10_Request ();
+  ~JAWS_HTTP_10_Request ();
 
   int type () const;
   const char * method () const;

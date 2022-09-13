@@ -43,7 +43,7 @@ Iterator::Iterator (char *s,
 /// Provide an Iterator, returning the ``next'' value from the list of
 /// valid values given in the constructor.
 int
-Iterator::operator() (void)
+Iterator::operator() ()
 {
   // Variables to record the Iterator's status when handling ranges,
   // e.g., 3-12.

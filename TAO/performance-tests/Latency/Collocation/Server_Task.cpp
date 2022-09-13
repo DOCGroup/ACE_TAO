@@ -18,7 +18,7 @@ Server_Task::get_reference ()
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
  try
    {

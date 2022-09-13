@@ -50,7 +50,7 @@ class TAO_Naming_Serv_Export TAO_Bindings_Map
 {
 public:
   /// Destructor.
-  virtual ~TAO_Bindings_Map (void);
+  virtual ~TAO_Bindings_Map ();
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.
@@ -119,20 +119,20 @@ public:
   void interface (TAO_Naming_Context *i);
 
   /// Destructor.
-  virtual ~TAO_Hash_Naming_Context (void);
+  virtual ~TAO_Hash_Naming_Context ();
 
   // = Accessors.
 
   /// Get the pointer to our interface.
-  TAO_Naming_Context *interface (void);
+  TAO_Naming_Context *interface ();
 
   /// Returns true if this Naming Context is a root Naming Context for
   /// the server, and false otherwise.
-  int root (void);
+  int root ();
 
   /// Returns true if this context had <destroy> operation invoked on
   /// it, and false otherwise.
-  int destroyed (void);
+  int destroyed ();
 
   // = CosNaming::NamingContext idl interface methods.
 
@@ -205,12 +205,12 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
-  TAO_SYNCH_RW_MUTEX &lock (void);
+  TAO_SYNCH_RW_MUTEX &lock ();
 
 protected:
   // = Helper method used by other methods.

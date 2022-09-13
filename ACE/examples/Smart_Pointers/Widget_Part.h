@@ -19,7 +19,7 @@ class Widget_Part
 {
 public:
   /// Destructor.
-  virtual ~Widget_Part (void);
+  virtual ~Widget_Part ();
 
   /// Ask the part to print information about itself.
   virtual void print_info (void) = 0;

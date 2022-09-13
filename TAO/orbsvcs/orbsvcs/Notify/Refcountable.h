@@ -61,7 +61,7 @@ public:
   typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_Refcountable> Ptr;
 
   /// Constructor
-  TAO_Notify_Refcountable (void);
+  TAO_Notify_Refcountable ();
 
   /// Destructor
   /// public for stack allocated instances
@@ -69,8 +69,8 @@ public:
 
   /// This method signatures deliberately match the RefCounting methods required for ESF Proxy
   /// Public for bridge implementations and various guard classes
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
 #if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
   static void diagnostic_dump( const char* title = 0 );

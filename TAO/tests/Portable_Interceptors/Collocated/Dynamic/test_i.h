@@ -30,11 +30,11 @@ public:
                          CORBA::Long one,
                          CORBA::Long two);
 
-  void user (void);
+  void user ();
 
-  void system (void);
+  void system ();
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB pointer (for shutdown.)

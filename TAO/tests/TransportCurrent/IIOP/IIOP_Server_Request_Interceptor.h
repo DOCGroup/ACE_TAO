@@ -51,7 +51,7 @@ namespace Test
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name (void);
+    virtual char * name ();
 
     /// incomming interception point
     virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr);

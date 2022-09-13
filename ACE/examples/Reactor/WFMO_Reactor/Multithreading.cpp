@@ -33,7 +33,7 @@ static int iterations = 10;
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "usage: \n\t"
@@ -84,7 +84,7 @@ public:
                 size_t concurrent_threads);
 
   /// Destructor.
-  ~Task_Handler (void);
+  ~Task_Handler ();
 
   /// Called when object is removed from the ACE_Reactor
   virtual int handle_close (ACE_HANDLE handle,
@@ -98,7 +98,7 @@ public:
                               const void *arg = 0);
 
   /// Task event loop.
-  int svc (void);
+  int svc ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Signal an event.
@@ -111,7 +111,7 @@ private:
 
 // All threads do reactor->handle_events ()
 int
-Task_Handler::svc (void)
+Task_Handler::svc ()
 {
   // Try to become the owner
   ACE_Reactor::instance ()->owner (ACE_Thread::self ());
@@ -139,7 +139,7 @@ Task_Handler::Task_Handler (size_t number_of_handles,
                 "activate"));
 }
 
-Task_Handler::~Task_Handler (void)
+Task_Handler::~Task_Handler ()
 {
   this->reactor (0);
   delete [] this->events_;

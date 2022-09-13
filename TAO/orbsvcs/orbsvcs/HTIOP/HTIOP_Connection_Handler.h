@@ -53,7 +53,7 @@ namespace TAO
       Connection_Handler (TAO_ORB_Core *orb_core);
 
       /// Destructor.
-      ~Connection_Handler (void);
+      ~Connection_Handler ();
 
       /// Called by the <Strategy_Acceptor> when the handler is completely
       /// connected.  Argument is unused.
@@ -85,8 +85,8 @@ namespace TAO
       //@{
       /** @name Event Handler overloads
        */
-      virtual int resume_handler (void);
-      virtual int close_connection (void);
+      virtual int resume_handler ();
+      virtual int close_connection ();
       virtual int handle_input (ACE_HANDLE);
       virtual int handle_output (ACE_HANDLE);
       virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
@@ -94,7 +94,7 @@ namespace TAO
       //@}
 
       /// Add ourselves to Cache.
-      int add_transport_to_cache (void);
+      int add_transport_to_cache ();
 
       /// Process the <listen_list>
       int process_listen_point_list (::HTIOP::ListenPointList &listen_list);
@@ -110,7 +110,7 @@ namespace TAO
       /**
        * @name TAO_Connection Handler overloads
        */
-      virtual int release_os_resources (void);
+      virtual int release_os_resources ();
       virtual int handle_write_ready (const ACE_Time_Value *timeout);
       //@}
 

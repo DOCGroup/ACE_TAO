@@ -43,7 +43,7 @@ class RTCP_Packet
 {
 public:
   /// Constructor for outgoing RTCP packets.
-  RTCP_Packet(void);
+  RTCP_Packet();
 
   /// Constructor for incoming RTCP packets.
   RTCP_Packet(char *buffer);
@@ -95,10 +95,10 @@ public:
                    int *len);
 
   /// Destructor.
-  virtual ~RTCP_BYE_Packet (void);
+  virtual ~RTCP_BYE_Packet ();
 
   /// Returns the size of the packet in bytes.
-  unsigned int packet_size (void);
+  unsigned int packet_size ();
 
   /// Returns a pointer to a local list of synchronization source ids that are
   /// leaving the session.
@@ -106,10 +106,10 @@ public:
                   unsigned char &length);
 
   /// Returns the reason for leaving the session.
-  const char *reason (void);
+  const char *reason ();
 
   /// Prints the contents of the packet.
-  void dump (void);
+  void dump ();
 
 private:
   /// Used to create the byte representation of the RTCP packet.
@@ -180,20 +180,20 @@ public:
   RTCP_RR_Packet (ACE_UINT32 ssrc, RR_Block *blocks);
 
   /// Destructor.
-  virtual ~RTCP_RR_Packet (void);
+  virtual ~RTCP_RR_Packet ();
 
   /// Returns the size of the packet in bytes.
-  unsigned int packet_size(void);
+  unsigned int packet_size();
 
   /// Returns the synchronization source id of the source sending this packet.
   ACE_INT32 ssrc (void) { return this->ssrc_; }
 
   /// Prints the contents of the packet.
-  void dump (void);
+  void dump ();
 
 private:
   /// Used to create the byte representation of the RTCP packet.
-  void build_packet(void);
+  void build_packet();
 
   /// The synchronization source id of the sender of this report.
   ACE_UINT32 ssrc_;
@@ -278,10 +278,10 @@ public:
   RTCP_SDES_Packet(char* buffer, int *len);
 
   /// Constructor for outgoing SDES packets.
-  RTCP_SDES_Packet(void);
+  RTCP_SDES_Packet();
 
   /// Destructor.
-  virtual ~RTCP_SDES_Packet(void);
+  virtual ~RTCP_SDES_Packet();
 
   /// This will add a standard item of type and length for the ssrc specified.
   /// When the first item for a ssrc is added, a chunk is created.  Subsequent
@@ -303,10 +303,10 @@ public:
                      const char *data);
 
   /// Returns the size of the packet in bytes.
-  unsigned int packet_size(void);
+  unsigned int packet_size();
 
   /// Prints the contents of the packet.
-  void dump (void);
+  void dump ();
 
   /// This returns the synchronization source id for this packet.  This assumes
   /// that this source is only receiving messages from end systems (i.e. only
@@ -315,7 +315,7 @@ public:
 
 private:
   /// Used to create the byte representation of the RTCP packet.
-  void build_packet(void);
+  void build_packet();
 
   /// Add a chunk to the packet.
   void add_chunk(ACE_UINT32 ssrc);
@@ -354,10 +354,10 @@ public:
                  RR_Block *rrBlocks);
 
   /// Destructor
-  virtual ~RTCP_SR_Packet(void);
+  virtual ~RTCP_SR_Packet();
 
   /// Returns the size of the packet in bytes.
-  unsigned int packet_size(void);
+  unsigned int packet_size();
 
   /// Returns the synchronization source id for the sender of this packet.
   ACE_UINT32 ssrc (void) { return this->ssrc_; }
@@ -369,11 +369,11 @@ public:
   ACE_UINT32 ntp_ts_lsw (void) { return this->ntp_ts_lsw_; }
 
   /// Prints the contents of the packet.
-  void dump (void);
+  void dump ();
 
 private:
   /// Used to create the byte representation of the RTCP packet.
-  void build_packet(void);
+  void build_packet();
 
   /// The synchronization source id of the sender generating this report.
   ACE_UINT32 ssrc_;

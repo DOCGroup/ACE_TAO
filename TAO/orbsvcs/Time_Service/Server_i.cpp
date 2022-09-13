@@ -9,13 +9,13 @@
 #include "ace/os_include/os_netdb.h"
 
 // Constructor.
-Server_i::Server_i (void)
+Server_i::Server_i ()
   : ior_output_file_ (0)
 {
 }
 
 // Destructor.
-Server_i::~Server_i (void)
+Server_i::~Server_i ()
 {
 }
 
@@ -72,7 +72,7 @@ Server_i::init_naming_service ()
 // Print the IOR of the registered server on the console and in a file.
 
 int
-Server_i::create_server (void)
+Server_i::create_server ()
 {
   try
     {
@@ -133,7 +133,7 @@ Server_i::create_server (void)
 // 'Server:<hostname>'.
 
 int
-Server_i::register_server (void)
+Server_i::register_server ()
 {
   try
     {
@@ -242,7 +242,7 @@ Server_i::init (int argc,
 // Run the event loop for ORB.
 
 int
-Server_i::run (void)
+Server_i::run ()
 {
   int retval = this->orb_manager_.run ();
 

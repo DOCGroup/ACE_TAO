@@ -11,12 +11,12 @@
 const char* BasicLog_Test::basic_log_factory_name_= "BasicLogFactory";
 const char* BasicLog_Test::naming_service_name_ = "NameService";
 
-BasicLog_Test::BasicLog_Test(void)
+BasicLog_Test::BasicLog_Test()
   : argc_ (0), argv_(0), logServiceIor_ (0)
 {
 }
 
-BasicLog_Test::~BasicLog_Test (void)
+BasicLog_Test::~BasicLog_Test ()
 {
   this->destroy_log ();
 }
@@ -58,7 +58,7 @@ BasicLog_Test::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-BasicLog_Test::init_factory (void)
+BasicLog_Test::init_factory ()
 {
   // Assumpting INS for finding LogServie
 
@@ -350,7 +350,7 @@ BasicLog_Test::test_adminState()
 
 
 int
-BasicLog_Test::test_logSize (void)
+BasicLog_Test::test_logSize ()
 {
   try
     {
@@ -499,7 +499,7 @@ BasicLog_Test::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-BasicLog_Test::resolve_naming_service (void)
+BasicLog_Test::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references (naming_service_name_);
@@ -513,7 +513,7 @@ BasicLog_Test::resolve_naming_service (void)
 }
 
 void
-BasicLog_Test::resolve_basic_factory (void)
+BasicLog_Test::resolve_basic_factory ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -545,7 +545,7 @@ BasicLog_Test::destroy_log()
 }
 
 int
-BasicLog_Test::test_log_destroy (void)
+BasicLog_Test::test_log_destroy ()
 {
   ACE_DEBUG ((LM_ERROR, "Testing destroy log\n"));
   this->basicLog_->destroy ();
@@ -576,7 +576,7 @@ BasicLog_Test::test_log_destroy (void)
 }
 
 int
-BasicLog_Test::test_week_mask (void)
+BasicLog_Test::test_week_mask ()
 {
   DsLogAdmin::WeekMask masks;
   masks.length (1);
@@ -637,7 +637,7 @@ return 0;
 }
 
 int
-BasicLog_Test::test_capacity_alarm_threshold (void)
+BasicLog_Test::test_capacity_alarm_threshold ()
 {
   //basicLog_->set_log_full_action(DsLogAdmin::halt);
 

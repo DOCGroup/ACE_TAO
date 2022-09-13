@@ -22,7 +22,7 @@ public:
       ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
   }
 
-  void activate (void)
+  void activate ()
   {
     ACE_Time_Value tv (150, 0);
     this->reactor()->schedule_timer (this, 0, tv, tv);

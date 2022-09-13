@@ -18,17 +18,17 @@
 #include "ace/SString.h"
 
 // Constructor
-IOR_corbaname_Client_i::IOR_corbaname_Client_i (void)
+IOR_corbaname_Client_i::IOR_corbaname_Client_i ()
 {
 }
 
 // Destructor
-IOR_corbaname_Client_i::~IOR_corbaname_Client_i (void)
+IOR_corbaname_Client_i::~IOR_corbaname_Client_i ()
 {
 }
 
 int
-IOR_corbaname_Client_i::run (void)
+IOR_corbaname_Client_i::run ()
 {
   try
     {

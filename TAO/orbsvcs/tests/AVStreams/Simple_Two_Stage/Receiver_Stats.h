@@ -33,7 +33,7 @@ public:
    * The number of samples is pre-allocated, and cannot changes once
    * the class is initialized.
    */
-  Receiver_Stats (void);
+  Receiver_Stats ();
 
   /// The number of samples received so far
   ACE_UINT32 samples_count () const;

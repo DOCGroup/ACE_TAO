@@ -9,18 +9,18 @@ PeerObject::PeerObject (long id, const char *name, PeerProcess *)
 {
 }
 
-PeerObject::~PeerObject (void)
+PeerObject::~PeerObject ()
 {
 }
 
 ACE_CString &
-PeerObject::name (void)
+PeerObject::name ()
 {
   return this->name_;
 }
 
 long
-PeerObject::ident (void)
+PeerObject::ident ()
 {
   return this->ident_;
 }
@@ -31,7 +31,7 @@ PeerObject::add_invocation (Invocation *inv)
   this->invocations_.enqueue_tail (inv);
 }
 size_t
-PeerObject::num_invocations (void)
+PeerObject::num_invocations ()
 {
   return this->invocations_.size();
 }

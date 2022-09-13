@@ -19,7 +19,7 @@ const CORBA::ULong MAX_ARRAYSEQ_LEN = 1;
 //               Test_Bounded_Array_Sequence
 // ************************************************************************
 
-Test_Bounded_Array_Sequence::Test_Bounded_Array_Sequence (void)
+Test_Bounded_Array_Sequence::Test_Bounded_Array_Sequence ()
   : opname_ (CORBA::string_dup ("test_bounded_array_sequence")),
     inout_ (new Param_Test::Bounded_ArraySeq),
     out_ (new Param_Test::Bounded_ArraySeq),
@@ -27,7 +27,7 @@ Test_Bounded_Array_Sequence::Test_Bounded_Array_Sequence (void)
 {
 }
 
-Test_Bounded_Array_Sequence::~Test_Bounded_Array_Sequence (void)
+Test_Bounded_Array_Sequence::~Test_Bounded_Array_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -102,7 +102,7 @@ Test_Bounded_Array_Sequence::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Bounded_Array_Sequence::reset_parameters (void)
+Test_Bounded_Array_Sequence::reset_parameters ()
 {
   // Delete the previous ones.
   this->inout_ = new Param_Test::Bounded_ArraySeq;
@@ -133,7 +133,7 @@ Test_Bounded_Array_Sequence::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Bounded_Array_Sequence::check_validity (void)
+Test_Bounded_Array_Sequence::check_validity ()
 {
   if (this->compare (this->in_, this->inout_.in ()) &&
       this->compare (this->in_, this->out_.in ()) &&
@@ -150,7 +150,7 @@ Test_Bounded_Array_Sequence::check_validity (CORBA::Request_ptr)
 }
 
 void
-Test_Bounded_Array_Sequence::print_values (void)
+Test_Bounded_Array_Sequence::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"

@@ -808,7 +808,7 @@ static int input ( void );
 
 extern int yylex ();
 
-#define YY_DECL int yylex (void)
+#define YY_DECL int yylex ()
 #endif /* !YY_DECL */
 
 
@@ -1477,9 +1477,9 @@ static int yy_get_next_buffer ()
 
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
-    static int yyinput (void)
+    static int yyinput ()
 #else
-    static int input  (void)
+    static int input  ()
 #endif
 
 {
@@ -2288,7 +2288,7 @@ trader_strtoll(const char* s, unsigned int base)
 }
 
 int
-yywrap (void)
+yywrap ()
 {
   return 1;
 }

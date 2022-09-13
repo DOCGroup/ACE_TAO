@@ -5,7 +5,7 @@
  */
 #include "Echo_Handler.h"
 
-Echo_Handler::Echo_Handler(void)
+Echo_Handler::Echo_Handler()
   : replies_ (0)
 {
 }
@@ -22,7 +22,7 @@ Echo_Handler::echo_operation_excep (::Messaging::ExceptionHolder *)
 }
 
 void
-Echo_Handler::shutdown (void)
+Echo_Handler::shutdown ()
 {
 }
 

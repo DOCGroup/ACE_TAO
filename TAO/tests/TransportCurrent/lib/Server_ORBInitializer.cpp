@@ -14,7 +14,7 @@ namespace Test
     /* no-op */
   }
 
-  Server_ORBInitializer::~Server_ORBInitializer (void)
+  Server_ORBInitializer::~Server_ORBInitializer ()
   {
     /* no-op */
   }

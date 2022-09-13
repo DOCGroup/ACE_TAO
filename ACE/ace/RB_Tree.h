@@ -742,7 +742,7 @@ public:
    * be declared and defined in both the derived forward and
    * reverse iterator classes rather than in the base iterator
    * class because of a method signature resolution problem
-   * caused by the existence of the deprecated next (void)
+   * caused by the existence of the deprecated next ()
    * method in the derived forward iterator class.  When that
    * deprecated method is removed, this method should be removed
    * from the derived classes and placed in the base class.
@@ -857,7 +857,7 @@ public:
    * be declared and defined in both the derived forward and
    * reverse iterator classes rather than in the base iterator
    * class because of a method signature resolution problem
-   * caused by the existence of the deprecated next (void)
+   * caused by the existence of the deprecated next ()
    * method in the derived forward iterator class.  When that
    * deprecated method is removed, this method should be removed
    * from the derived classes and placed in the base class.

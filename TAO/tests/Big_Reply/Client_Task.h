@@ -20,11 +20,11 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   /// Validate the connection
-  void validate_connection (void);
+  void validate_connection ();
 
 private:
   /// Reference to the test interface

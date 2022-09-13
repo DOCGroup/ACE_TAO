@@ -52,7 +52,7 @@ Hello::get_string (::Test::ThreadId caller_threadid)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
   // Give the client thread time to return from the collocated
   // call to this method before shutting down the ORB.  We sleep

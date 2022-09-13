@@ -39,12 +39,12 @@ public:
   {
   }
 
-  void go (void)
+  void go ()
   {
     started_ = true;
   }
 
-  void done (void)
+  void done ()
   {
     started_ = false;
   }
@@ -169,7 +169,7 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 }
 
 static void
-disconnect_suppliers (void)
+disconnect_suppliers ()
 {
   for (unsigned int i = 0; i < supplier_count; ++i)
   {

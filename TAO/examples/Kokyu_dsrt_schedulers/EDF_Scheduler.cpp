@@ -13,7 +13,7 @@
 using namespace std;
 
 EDF_Scheduling::SchedulingParameter
-EDF_Sched_Param_Policy::value (void)
+EDF_Sched_Param_Policy::value ()
 {
   return this->value_;
 }
@@ -73,12 +73,12 @@ EDF_Scheduler::EDF_Scheduler (CORBA::ORB_ptr orb,
   codec_ = codec_factory->create_codec (encoding);
 }
 
-EDF_Scheduler::~EDF_Scheduler (void)
+EDF_Scheduler::~EDF_Scheduler ()
 {
 }
 
 void
-EDF_Scheduler::shutdown (void)
+EDF_Scheduler::shutdown ()
 {
   kokyu_dispatcher_->shutdown ();
   DSUI_EVENT_LOG (EDF_SCHED_FAM, DISPATCHER_SHUTDOWN, 0, 0, 0);
@@ -675,7 +675,7 @@ EDF_Scheduler::cancel (const RTScheduling::Current::IdType &)
 }
 
 CORBA::PolicyList*
-EDF_Scheduler::scheduling_policies (void)
+EDF_Scheduler::scheduling_policies ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -687,13 +687,13 @@ EDF_Scheduler::scheduling_policies (const CORBA::PolicyList &)
 }
 
 CORBA::PolicyList*
-EDF_Scheduler::poa_policies (void)
+EDF_Scheduler::poa_policies ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 char *
-EDF_Scheduler::scheduling_discipline_name (void)
+EDF_Scheduler::scheduling_discipline_name ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }

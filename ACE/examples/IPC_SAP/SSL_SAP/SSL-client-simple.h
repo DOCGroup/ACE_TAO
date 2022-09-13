@@ -13,10 +13,10 @@ class Options
   //   Define the options for this test.
 {
 public:
-  Options (void);
+  Options ();
   // Constructor.
 
-  ~Options (void);
+  ~Options ();
   // Destructor.
 
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -44,11 +44,11 @@ public:
   const void *message_buf () const;
   // Returns a pointer to the message.
 
-  void run (void);
+  void run ();
   // Run the test
 
 private:
-  int init (void);
+  int init ();
   // Initialize the message we're sending to the user and set up the
   // barrier.
 
@@ -57,10 +57,10 @@ private:
   // Performs the shared behavior of the oneway and twoway client
   // tests.
 
-  void twoway_client_test (void);
+  void twoway_client_test ();
   // Performs the twoway test.
 
-  void oneway_client_test (void);
+  void oneway_client_test ();
   // Performs the oneway test.
 
   const ACE_TCHAR *host_;

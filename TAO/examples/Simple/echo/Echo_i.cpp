@@ -66,7 +66,7 @@ Echo_i::echo_string (const char *mesg)
 // Shutdown the server application.
 
 void
-Echo_i::shutdown (void)
+Echo_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nThe echo server is shutting down\n")));

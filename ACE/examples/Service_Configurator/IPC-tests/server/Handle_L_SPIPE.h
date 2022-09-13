@@ -21,7 +21,7 @@
 class ACE_Svc_Export Handle_L_SPIPE : public ACE_Service_Object, public ACE_SPIPE_Acceptor
 {
 public:
-  Handle_L_SPIPE (void);
+  Handle_L_SPIPE ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **, size_t) const;
   virtual int fini ();

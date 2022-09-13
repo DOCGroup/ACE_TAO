@@ -44,7 +44,7 @@ class TAO_Event_Serv_Export TAO_CEC_Dispatching
 {
 public:
   /// destructor...
-  virtual ~TAO_CEC_Dispatching (void);
+  virtual ~TAO_CEC_Dispatching ();
 
   /// Initialize all the data structures, activate any internal threads,
   /// etc.
@@ -85,11 +85,11 @@ class TAO_Event_Serv_Export TAO_CEC_Reactive_Dispatching : public TAO_CEC_Dispat
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
-  TAO_CEC_Reactive_Dispatching (void);
+  TAO_CEC_Reactive_Dispatching ();
 
   // = The CEC_Dispatching methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
+  virtual void activate ();
+  virtual void shutdown ();
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
                      const CORBA::Any &event);
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier *proxy,

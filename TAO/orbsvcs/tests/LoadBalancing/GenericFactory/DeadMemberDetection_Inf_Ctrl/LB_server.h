@@ -32,18 +32,18 @@ public:
   LB_server (int argc, ACE_TCHAR ** argv);
 
   /// destroys LoadManager, ORB and POA.
-  int destroy (void);
+  int destroy ();
 
   int parse_args (int& argc, ACE_TCHAR **& argv);
 
   /// start the ORB.
-  int init (void);
+  int init ();
 
   /// Run the ORB.
-  int run (void);
+  int run ();
 
   /// for servants to register to the initialised ORB.
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
 private:
   /// Create the Object Group using the Load Manager Reference.

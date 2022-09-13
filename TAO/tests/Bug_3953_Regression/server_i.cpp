@@ -48,7 +48,7 @@ server_i::ping (CORBA::UShort time_to_live)
 }
 
 void
-server_i::shutdown (void)
+server_i::shutdown ()
 {
   this->orb_->shutdown (false);
 }

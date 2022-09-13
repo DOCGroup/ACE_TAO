@@ -51,7 +51,7 @@ TAO::In_Object_Argument_Cloner_T<S_ptr>::release (S_ptr objref)
 
 template<typename S_ptr,
          template <typename> class Insert_Policy>
-TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::~In_Object_Clonable_Argument_T (void)
+TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::~In_Object_Clonable_Argument_T ()
 {
   if (this->is_clone_)
     {
@@ -62,7 +62,7 @@ TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::~In_Object_Clonable_Arg
 template<typename S_ptr,
          template <typename> class Insert_Policy>
 TAO::Argument*
-TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::clone (void)
+TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::clone ()
 {
   In_Object_Argument_Cloner_T<S_ptr>::duplicate (this->x_);
 

@@ -76,7 +76,7 @@ public:
 
   void set_rspm (Routing_Slip_Persistence_Manager * rspm);
 
-  void reconnect (void);
+  void reconnect ();
 
   /// Destructor (should be private but that inspires compiler wars)
   virtual ~Routing_Slip ();

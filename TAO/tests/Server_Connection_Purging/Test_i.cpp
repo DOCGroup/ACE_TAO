@@ -12,7 +12,7 @@ test_i::send_stuff (const char* string)
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) About to invoke shudown...\n"));

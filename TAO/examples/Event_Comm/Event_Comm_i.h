@@ -33,7 +33,7 @@ class ShutdownCallback
 {
 public:
   /// Destructor.
-  virtual ~ShutdownCallback (void);
+  virtual ~ShutdownCallback ();
 
   /// This method is to be called to shutdown the application.
   virtual void close (void) = 0;
@@ -48,10 +48,10 @@ class Consumer_i : public POA_Event_Comm::Consumer
 {
 public:
   /// Constructor.
-  Consumer_i (void);
+  Consumer_i ();
 
   /// Destructor.
-  ~Consumer_i (void);
+  ~Consumer_i ();
 
   /// set the ACE_Reactor to use when quitting.
   void set_reactor (ACE_Reactor *reactor);

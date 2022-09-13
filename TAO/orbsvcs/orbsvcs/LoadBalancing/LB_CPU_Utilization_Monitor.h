@@ -75,7 +75,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~TAO_LB_CPU_Utilization_Monitor (void);
+  ~TAO_LB_CPU_Utilization_Monitor ();
 
 private:
   /// The name of the location at which this LoadMonitor resides.

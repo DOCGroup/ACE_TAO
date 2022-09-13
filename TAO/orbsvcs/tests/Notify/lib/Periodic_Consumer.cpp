@@ -13,7 +13,7 @@
 
 int WARMUP_COUNT = 10;
 
-TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer (void)
+TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer ()
   : count_ (-2)
   , warmup_countdown_ (WARMUP_COUNT)
   , max_count_ (-1)

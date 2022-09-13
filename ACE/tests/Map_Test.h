@@ -38,7 +38,7 @@ typedef ACE_Array<char> KEY;
 class Key_Generator
 {
 public:
-  Key_Generator (void)
+  Key_Generator ()
     : counter_ (0)
     {
     }

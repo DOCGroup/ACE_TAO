@@ -70,7 +70,7 @@ public:
     {}
   // Constructor.
 
-  virtual ~My_Result (void)
+  virtual ~My_Result ()
     {}
   // Destructor.
 
@@ -151,7 +151,7 @@ public:
       return 0;
     }
 
-  int svc (void)
+  int svc ()
     {
       // Handle events for 13 seconds.
       ACE_Time_Value run_time (13);

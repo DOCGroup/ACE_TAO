@@ -39,7 +39,7 @@ class TAO_Event_Serv_Export TAO_CEC_Pulling_Strategy
 {
 public:
   /// destructor...
-  virtual ~TAO_CEC_Pulling_Strategy (void);
+  virtual ~TAO_CEC_Pulling_Strategy ();
 
   /// Initialize all the data structures, activate any internal threads,
   /// etc.

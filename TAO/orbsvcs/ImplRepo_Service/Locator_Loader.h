@@ -28,7 +28,7 @@ public:
                                            ACE_TCHAR *argv[]);
 
  // Unlike other service objects, we have our own orb.
- int run(void);
+ int run();
 
 private:
   ImR_Locator_i service_;

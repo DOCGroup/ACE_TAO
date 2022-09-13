@@ -73,29 +73,29 @@ public:
 
   /// Destroy the log object and all contained records.
   void
-  destroy (void);
+  destroy ();
 
   /// Activate the NotifyLog.
   void
-  activate (void);
+  activate ();
 
   // = Methods from CosNotifyChannelAdmin::EventChannel.
   CosNotifyFilter::Filter_ptr
-  get_filter (void);
+  get_filter ();
 
   void set_filter (CosNotifyFilter::Filter_ptr filter);
 
   CosNotifyChannelAdmin::EventChannelFactory_ptr
-  MyFactory (void);
+  MyFactory ();
 
   CosNotifyChannelAdmin::ConsumerAdmin_ptr
-  default_consumer_admin (void);
+  default_consumer_admin ();
 
   CosNotifyChannelAdmin::SupplierAdmin_ptr
-  default_supplier_admin (void);
+  default_supplier_admin ();
 
   CosNotifyFilter::FilterFactory_ptr
-  default_filter_factory (void);
+  default_filter_factory ();
 
   CosNotifyChannelAdmin::ConsumerAdmin_ptr
   new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
@@ -112,18 +112,18 @@ public:
   get_supplieradmin (CosNotifyChannelAdmin::AdminID id);
 
   CosNotifyChannelAdmin::AdminIDSeq*
-  get_all_consumeradmins (void);
+  get_all_consumeradmins ();
 
   CosNotifyChannelAdmin::AdminIDSeq*
-  get_all_supplieradmins (void);
+  get_all_supplieradmins ();
 
   CosNotification::AdminProperties*
-  get_admin (void);
+  get_admin ();
 
   void set_admin (const CosNotification::AdminProperties& admin);
 
   CosNotification::QoSProperties*
-  get_qos (void);
+  get_qos ();
 
   void set_qos (const CosNotification::QoSProperties&);
 
@@ -132,10 +132,10 @@ public:
 
   // = Methods from DsEventLogAdmin::EventLog.
   CosEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers (void);
+  for_consumers ();
 
   CosEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers (void);
+  for_suppliers ();
 
 private:
   /// The PushConsumer that consumes the events and stores them

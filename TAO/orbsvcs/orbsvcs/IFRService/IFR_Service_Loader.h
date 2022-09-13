@@ -31,10 +31,10 @@ class TAO_IFRService_Export TAO_IFR_Service_Loader : public TAO_Object_Loader
 {
 public:
   // Constructor
-  TAO_IFR_Service_Loader (void);
+  TAO_IFR_Service_Loader ();
 
   // Destructor
-  ~TAO_IFR_Service_Loader (void);
+  ~TAO_IFR_Service_Loader ();
 
   // Called by the Service Configurator framework to initialize the
   // Event Service. Defined in <ace/Service_Config.h>

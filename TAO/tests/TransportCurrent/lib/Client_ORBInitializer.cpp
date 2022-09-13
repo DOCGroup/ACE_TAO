@@ -14,7 +14,7 @@ namespace Test
     /* no-op */
   }
 
-  Client_ORBInitializer::~Client_ORBInitializer (void)
+  Client_ORBInitializer::~Client_ORBInitializer ()
   {
     /* no-op */
   }

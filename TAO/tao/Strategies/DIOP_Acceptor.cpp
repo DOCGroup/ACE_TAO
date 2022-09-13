@@ -22,7 +22,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (void)
+TAO_DIOP_Acceptor::TAO_DIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_DIOP_PROFILE),
     addrs_ (0),
     port_span_ (1),
@@ -39,7 +39,7 @@ TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (void)
 {
 }
 
-TAO_DIOP_Acceptor::~TAO_DIOP_Acceptor (void)
+TAO_DIOP_Acceptor::~TAO_DIOP_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -231,7 +231,7 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO_DIOP_Acceptor::close (void)
+TAO_DIOP_Acceptor::close ()
 {
   return 0;
 }
@@ -925,7 +925,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
 }
 
 CORBA::ULong
-TAO_DIOP_Acceptor::endpoint_count (void)
+TAO_DIOP_Acceptor::endpoint_count ()
 {
   return this->endpoint_count_;
 }

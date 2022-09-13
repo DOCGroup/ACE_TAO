@@ -105,7 +105,7 @@ CE_ARGV::CE_ARGV(wchar_t* cmdLine)
 }
 
 
-CE_ARGV::~CE_ARGV(void)
+CE_ARGV::~CE_ARGV()
 {
     for (int i = 0; i < ce_argc_; ++i) {
         delete [] ce_argv_[i];

@@ -35,7 +35,7 @@
 
 ACE_Test_Output *ACE_Test_Output::instance_ = 0;
 
-ACE_Test_Output::ACE_Test_Output (void)
+ACE_Test_Output::ACE_Test_Output ()
   : output_file_ (0)
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -43,7 +43,7 @@ ACE_Test_Output::ACE_Test_Output (void)
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 }
 
-ACE_Test_Output::~ACE_Test_Output (void)
+ACE_Test_Output::~ACE_Test_Output ()
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   ACE_LOG_MSG->msg_ostream (&cerr);
@@ -58,7 +58,7 @@ ACE_Test_Output::~ACE_Test_Output (void)
 }
 
 OFSTREAM *
-ACE_Test_Output::output_file (void)
+ACE_Test_Output::output_file ()
 {
   return this->output_file_;
 }
@@ -154,7 +154,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 }
 
 void
-ACE_Test_Output::close (void)
+ACE_Test_Output::close ()
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   this->output_file_->flush ();
@@ -186,19 +186,19 @@ ACE_Test_Output::instance ()
 }
 
 const ACE_TCHAR *
-ACE_Test_Output::dll_name (void)
+ACE_Test_Output::dll_name ()
 {
   return ACE_TEXT ("Test_Output");
 }
 
 const ACE_TCHAR *
-ACE_Test_Output::name (void)
+ACE_Test_Output::name ()
 {
   return ACE_TEXT ("ACE_Test_Output");
 }
 
 void
-ACE_Test_Output::close_singleton (void)
+ACE_Test_Output::close_singleton ()
 {
   delete ACE_Test_Output::instance_;
   ACE_Test_Output::instance_ = 0;

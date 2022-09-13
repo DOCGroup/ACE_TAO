@@ -51,7 +51,7 @@ Pipe_Thr_Test::init (int, ACE_TCHAR **)
 }
 
 int
-Pipe_Thr_Test::svc (void)
+Pipe_Thr_Test::svc ()
 {
   ssize_t length = performance_test_options.msg_size ();
   ACE_HANDLE handle = this->pipe_handles[1];

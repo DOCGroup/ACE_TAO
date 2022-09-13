@@ -40,11 +40,11 @@ public:
   Bug1495_i (CORBA::ORB_ptr orb);
 
   //Destructor
-  virtual ~Bug1495_i (void);
+  virtual ~Bug1495_i ();
 
   virtual void get_thread_id (Bug1495_Regression::ThreadId_out thread_id);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 private:
   CORBA::ORB_var orb_;
 };

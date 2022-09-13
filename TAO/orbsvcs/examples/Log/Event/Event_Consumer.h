@@ -31,7 +31,7 @@ class Consumer : public POA_CosEventComm::PushConsumer
   //   This class is a consumer of log generated events.
   //
 public:
-  Consumer (void);
+  Consumer ();
   // Constructor
 
   int run (int argc, ACE_TCHAR* argv[]);
@@ -41,7 +41,7 @@ public:
 
   virtual void push (const CORBA::Any &event);
 
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
   // The skeleton methods.
 
 private:

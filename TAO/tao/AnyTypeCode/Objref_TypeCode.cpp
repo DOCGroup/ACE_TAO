@@ -39,14 +39,14 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_marshal (
 
 template <typename StringType, class RefCountPolicy>
 void
-TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_duplicate (void)
+TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_duplicate ()
 {
   this->RefCountPolicy::add_ref ();
 }
 
 template <typename StringType, class RefCountPolicy>
 void
-TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_release (void)
+TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_release ()
 {
   this->RefCountPolicy::remove_ref ();
 }

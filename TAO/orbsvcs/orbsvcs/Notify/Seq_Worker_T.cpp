@@ -10,7 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
-TAO_Notify_Seq_Worker_T<T>::TAO_Notify_Seq_Worker_T (void)
+TAO_Notify_Seq_Worker_T<T>::TAO_Notify_Seq_Worker_T ()
 {
 }
 

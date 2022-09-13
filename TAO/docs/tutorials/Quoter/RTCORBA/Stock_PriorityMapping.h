@@ -30,10 +30,10 @@ namespace Stock
   {
   public:
     /// Default constructor.
-    Priority_Mapping (void);
+    Priority_Mapping ();
 
     /// Default destructor.
-    virtual ~Priority_Mapping (void);
+    virtual ~Priority_Mapping ();
 
     /// Stock priorities.
     enum Priority

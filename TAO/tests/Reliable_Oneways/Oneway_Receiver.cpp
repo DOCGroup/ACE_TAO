@@ -7,13 +7,13 @@ Oneway_Receiver::Oneway_Receiver (CORBA::ORB_ptr orb)
 }
 
 void
-Oneway_Receiver::raise_no_permission (void)
+Oneway_Receiver::raise_no_permission ()
 {
   throw CORBA::NO_PERMISSION ();
 }
 
 void
-Oneway_Receiver::destroy (void)
+Oneway_Receiver::destroy ()
 {
   PortableServer::POA_var poa = this->_default_POA ();
 
@@ -24,7 +24,7 @@ Oneway_Receiver::destroy (void)
 }
 
 Test::Shutdown_Helper_ptr
-Oneway_Receiver::get_shutdown_helper (void)
+Oneway_Receiver::get_shutdown_helper ()
 {
   Shutdown_Helper *shutdown_helper;
   ACE_NEW_THROW_EX (shutdown_helper,

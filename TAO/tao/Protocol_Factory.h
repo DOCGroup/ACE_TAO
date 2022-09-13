@@ -33,7 +33,7 @@ class TAO_Export TAO_Protocol_Factory : public ACE_Service_Object
 {
 public:
   TAO_Protocol_Factory (CORBA::ULong tag);
-  virtual ~TAO_Protocol_Factory (void);
+  virtual ~TAO_Protocol_Factory ();
 
   /// Initialization hook.
   virtual int init (int argc, ACE_TCHAR *argv[]) = 0;

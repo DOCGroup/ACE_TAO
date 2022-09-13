@@ -64,7 +64,7 @@ namespace TAO
                  TAO_ORB_Core *orb_core);
 
       /// Default destructor.
-      ~Transport (void);
+      ~Transport ();
 
     protected:
       /** @name Overridden Template Methods
@@ -73,8 +73,8 @@ namespace TAO
        * details.
        */
       //@{
-      virtual ACE_Event_Handler * event_handler_i (void);
-      virtual TAO_Connection_Handler * invalidate_event_handler_i (void);
+      virtual ACE_Event_Handler * event_handler_i ();
+      virtual TAO_Connection_Handler * invalidate_event_handler_i ();
 
       virtual ssize_t send (iovec *iov, int iovcnt,
                             size_t &bytes_transferred,
@@ -84,7 +84,7 @@ namespace TAO
                             size_t len,
                             const ACE_Time_Value *s = 0);
 
-      virtual int register_handler (void);
+      virtual int register_handler ();
 
 
     public:
@@ -105,7 +105,7 @@ namespace TAO
 
       virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
-      virtual TAO_Connection_Handler * connection_handler_i (void);
+      virtual TAO_Connection_Handler * connection_handler_i ();
 
       //@}
 

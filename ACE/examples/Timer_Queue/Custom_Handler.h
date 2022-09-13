@@ -31,7 +31,7 @@ class Custom_Handler
     public:
         Custom_Handler (const ACE_Time_Value &expiration_time);
 
-        virtual ~Custom_Handler (void);
+        virtual ~Custom_Handler ();
 
         // Set the custom handler's id
         void set_id (int id);

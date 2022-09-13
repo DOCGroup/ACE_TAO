@@ -105,7 +105,7 @@ public:
         }
     };
 
-  void set_yadda (void)
+  void set_yadda ()
     {
       ACE_ERROR ((LM_ERROR,
                   "Error: Callback method <set_yadda> called:\n"));

@@ -9,13 +9,13 @@
 class JAWS_Export JAWS_TPR_Concurrency : public JAWS_Concurrency_Impl
 {
 public:
-  JAWS_TPR_Concurrency (void);
+  JAWS_TPR_Concurrency ();
 
   int putq (JAWS_Protocol_Handler *ph);
 
   int getq (JAWS_Protocol_Handler *&ph);
 
-  static JAWS_TPR_Concurrency * instance (void)
+  static JAWS_TPR_Concurrency * instance ()
   {
     return ACE_Singleton<JAWS_TPR_Concurrency, ACE_SYNCH_MUTEX>::instance ();
   }

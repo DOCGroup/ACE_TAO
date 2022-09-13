@@ -19,7 +19,7 @@ ClientInterceptor (Messenger_var theMessenger,
   this->slot = theSlot;
 }
 
-ClientInterceptor::~ClientInterceptor (void)
+ClientInterceptor::~ClientInterceptor ()
 {
 }
 

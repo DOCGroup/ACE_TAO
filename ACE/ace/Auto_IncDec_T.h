@@ -42,7 +42,7 @@ public:
   ACE_Auto_IncDec (ACE_SAFELY_INCREMENTABLE_DECREMENTABLE &counter);
 
   /// Implicitly decrement the counter.
-  ~ACE_Auto_IncDec (void);
+  ~ACE_Auto_IncDec ();
 
   /// Dump the state of an object.
   void dump () const;

@@ -465,7 +465,7 @@ namespace
 
 
 char*
-ReplicaController::name (void)
+ReplicaController::name ()
 {
   return CORBA::string_dup ("ReplicaController");
 }
@@ -483,7 +483,7 @@ ReplicaController::send_other (
 }
 
 void
-ReplicaController::destroy (void)
+ReplicaController::destroy ()
 {
 }
 

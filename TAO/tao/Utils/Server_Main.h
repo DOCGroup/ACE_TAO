@@ -35,7 +35,7 @@
  *      int parse_args (int argc, ACE_TCHAR * argv[]);
  *      int init (CORBA::ORB_ptr orb );
  *      int idle(int &result);
- *      int fini (void);
+ *      int fini ();
  *      const char * identity () const;
  *
  *      parse_args, self_register, self_unregister return 0 if ok, nonzero for error.

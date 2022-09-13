@@ -79,7 +79,7 @@ ACE_UTF16_Encoding_Converter::ACE_UTF16_Encoding_Converter (bool swap)
 {
 }
 
-ACE_UTF16_Encoding_Converter::~ACE_UTF16_Encoding_Converter (void)
+ACE_UTF16_Encoding_Converter::~ACE_UTF16_Encoding_Converter ()
 {
 }
 
@@ -323,37 +323,37 @@ ACE_UTF16_Encoding_Converter::encoded (const ACE_Byte* source,
 }
 
 ACE_UINT32
-ACE_UTF16_Encoding_Converter::get_UNI_SUR_HIGH_START (void)
+ACE_UTF16_Encoding_Converter::get_UNI_SUR_HIGH_START ()
 {
   return UNI_SUR_HIGH_START;
 }
 
 ACE_UINT32
-ACE_UTF16_Encoding_Converter::get_UNI_SUR_LOW_END (void)
+ACE_UTF16_Encoding_Converter::get_UNI_SUR_LOW_END ()
 {
   return UNI_SUR_LOW_END;
 }
 
 ACE_UINT32
-ACE_UTF16_Encoding_Converter::get_UNI_REPLACEMENT_CHAR (void)
+ACE_UTF16_Encoding_Converter::get_UNI_REPLACEMENT_CHAR ()
 {
   return UNI_REPLACEMENT_CHAR;
 }
 
 const ACE_Byte*
-ACE_UTF16_Encoding_Converter::get_first_byte_mark (void)
+ACE_UTF16_Encoding_Converter::get_first_byte_mark ()
 {
   return firstByteMark;
 }
 
 const ACE_Byte*
-ACE_UTF16_Encoding_Converter::get_trailing_bytes_for_utf8 (void)
+ACE_UTF16_Encoding_Converter::get_trailing_bytes_for_utf8 ()
 {
   return trailingBytesForUTF8;
 }
 
 const ACE_UINT32*
-ACE_UTF16_Encoding_Converter::get_offsets_from_utf8 (void)
+ACE_UTF16_Encoding_Converter::get_offsets_from_utf8 ()
 {
   return offsetsFromUTF8;
 }

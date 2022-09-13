@@ -11,11 +11,11 @@
 class ACE_Svc_Export Performance_Test : public Benchmark_Method_Base
 {
 public:
-  Performance_Test (void);
+  Performance_Test ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int pre_run_test (Benchmark_Base *bp);
-  virtual int run_test (void);
-  virtual int post_run_test (void);
+  virtual int run_test ();
+  virtual int post_run_test ();
   virtual int valid_test_object (Benchmark_Base *);
 private:
   int n_lwps_;

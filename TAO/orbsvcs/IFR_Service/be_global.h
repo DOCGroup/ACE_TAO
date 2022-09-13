@@ -38,10 +38,10 @@ public:
   //    Storage of global data specific to the compiler back end
   //
   /// Constructor.
-  BE_GlobalData (void);
+  BE_GlobalData ();
 
   /// Destructor.
-  virtual ~BE_GlobalData (void);
+  virtual ~BE_GlobalData ();
 
   // Data accessors.
 
@@ -54,10 +54,10 @@ public:
   CORBA::Repository_ptr repository () const;
   void repository (CORBA::Repository_ptr repo);
 
-  ACE_Unbounded_Stack<CORBA::Container_ptr> &ifr_scopes (void);
+  ACE_Unbounded_Stack<CORBA::Container_ptr> &ifr_scopes ();
 
   /// Cleanup function.
-  void destroy (void);
+  void destroy ();
 
   const char *filename () const;
   void filename (char *fname);
@@ -76,7 +76,7 @@ public:
 
   /// Command line passed to ACE_Process::spawn. Different
   /// implementations in IDL and IFR backends.
-  ACE_CString spawn_options (void);
+  ACE_CString spawn_options ();
 
   /// Parse an argument that might affect the backend.
   void parse_args (long &i, char **av);

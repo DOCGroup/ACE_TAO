@@ -14,7 +14,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Codeset_Manager_Factory::~TAO_Codeset_Manager_Factory (void)
+TAO_Codeset_Manager_Factory::~TAO_Codeset_Manager_Factory ()
 {
 }
 
@@ -26,7 +26,7 @@ TAO_Codeset_Manager_Factory::is_default () const
 
 
 TAO_Codeset_Manager *
-TAO_Codeset_Manager_Factory::create (void)
+TAO_Codeset_Manager_Factory::create ()
 {
   TAO_Codeset_Manager_i *csm = 0;
   ACE_NEW_RETURN (csm, TAO_Codeset_Manager_i, 0);

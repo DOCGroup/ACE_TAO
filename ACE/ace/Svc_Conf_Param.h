@@ -85,7 +85,7 @@ public:
     source.directive = directive;
   }
 
-  ~ACE_Svc_Conf_Param (void)
+  ~ACE_Svc_Conf_Param ()
   {
     ace_yy_delete_buffer (this->buffer);
   }

@@ -61,7 +61,7 @@ init_i (const DSRT_ConfigInfo&)
 }
 
 template <class DSRT_Scheduler_Traits> int
-DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
+DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc ()
 {
   ACE_hthread_t scheduler_thr_handle;
   ACE_Thread::self (scheduler_thr_handle);

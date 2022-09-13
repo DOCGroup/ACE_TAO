@@ -43,28 +43,28 @@ public:
                     int order_index []);
 
   /// Destructor.
-  ~ACE_RB_Tree_Test (void);
+  ~ACE_RB_Tree_Test ();
 
   /// Run the individual interface and iteration tests in order.
-  void run_test (void);
+  void run_test ();
 
 private:
   /// Tests stable and deprecated insertion interfaces.
-  void test_tree_insertion (void);
+  void test_tree_insertion ();
 
   /// Tests forward and reverse iteration after insertion in both
   /// trees.
-  void test_post_insertion_iteration (void);
+  void test_post_insertion_iteration ();
 
   ///Tests forward and reverse partial iteration
-  void test_partial_iteration(void);
+  void test_partial_iteration();
 
   /// Tests stable and deprecated deletion interfaces.
-  void test_tree_deletion (void);
+  void test_tree_deletion ();
 
   /// Tests forward and reverse iteration after deletions in both
   /// trees.
-  void test_post_deletion_iteration (void);
+  void test_post_deletion_iteration ();
 
   /// Tree for testing stable interface.
   TREE stable_tree_;

@@ -30,10 +30,10 @@ public:
   TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
                       CORBA::Boolean verbose = 1);
 
-  void perform_queries (void);
+  void perform_queries ();
   // Barrage the bootstrapped-to trader with queries.
 
-  void perform_directed_queries (void);
+  void perform_directed_queries ();
   // Direct a query to a trader two graph edges distant from the
   // bootstrapped-to trader.
 

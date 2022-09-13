@@ -30,7 +30,7 @@ namespace ACE
     }
 
     void
-    Num_Threads_Monitor::update (void)
+    Num_Threads_Monitor::update ()
     {
 #if defined (ACE_HAS_WIN32_PDH)
       this->update_i ();
@@ -75,13 +75,13 @@ namespace ACE
     }
 
     const char*
-    Num_Threads_Monitor::default_name (void)
+    Num_Threads_Monitor::default_name ()
     {
       return Num_Threads_Monitor::default_name_;
     }
 
     void
-    Num_Threads_Monitor::clear_i (void)
+    Num_Threads_Monitor::clear_i ()
     {
 #if defined (ACE_HAS_WIN32_PDH)
       this->clear_impl ();

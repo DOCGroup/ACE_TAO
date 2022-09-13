@@ -10,7 +10,7 @@ class ClientInterceptor
   public virtual ::CORBA::LocalObject
 {
  public:
-  ClientInterceptor (void);
+  ClientInterceptor ();
 
   virtual ~ClientInterceptor ();
 
