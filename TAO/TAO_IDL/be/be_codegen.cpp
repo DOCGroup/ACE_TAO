@@ -145,6 +145,7 @@ TAO_CodeGen::start_client_header (const char *fname)
       return -1;
     }
 
+  gen_generated_from_comment (this->client_header_);
   TAO_INSERT_COMMENT (this->client_header_);
 
   // Generate the #ident string, if any.
@@ -369,6 +370,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
       return -1;
     }
 
+  gen_generated_from_comment (this->client_stubs_);
   TAO_INSERT_COMMENT (this->client_stubs_);
 
   this->gen_stub_src_includes ();
@@ -451,6 +453,7 @@ TAO_CodeGen::start_server_header (const char *fname)
       return -1;
     }
 
+  gen_generated_from_comment (this->server_header_);
   TAO_INSERT_COMMENT (this->server_header_);
 
   // Generate the ident string, if any.
@@ -577,6 +580,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
       return -1;
     }
 
+  gen_generated_from_comment (this->server_template_header_);
   TAO_INSERT_COMMENT (this->server_template_header_);
 
   // Generate the ident string, if any.
@@ -628,6 +632,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
       return -1;
     }
 
+  gen_generated_from_comment (this->server_skeletons_);
   TAO_INSERT_COMMENT (this->server_skeletons_);
 
   // Generate the ident string, if any.
@@ -688,6 +693,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       return -1;
     }
 
+  gen_generated_from_comment (this->server_template_skeletons_);
   TAO_INSERT_COMMENT (this->server_template_skeletons_);
 
   // Generate the ident string, if any.
@@ -764,6 +770,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
       return 0;
     }
 
+  gen_generated_from_comment (this->anyop_header_);
   TAO_INSERT_COMMENT (this->anyop_header_);
 
   // Generate the #ident string, if any.
@@ -996,6 +1003,7 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
 
   TAO_OutStream &os = *this->ciao_svnt_header_;
 
+  gen_generated_from_comment (&os);
   TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
@@ -1096,6 +1104,7 @@ TAO_CodeGen::start_ciao_svnt_source (const char *fname)
 
   TAO_OutStream &os = *this->ciao_svnt_source_;
 
+  gen_generated_from_comment (&os);
   TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
@@ -1136,6 +1145,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
 
   TAO_OutStream &os = *this->ciao_svnt_template_header_;
 
+  gen_generated_from_comment (&os);
   TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
@@ -1215,6 +1225,7 @@ TAO_CodeGen::start_ciao_svnt_template_source (const char *fname)
 
   TAO_OutStream &os = *this->ciao_svnt_template_source_;
 
+  gen_generated_from_comment (&os);
   TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
@@ -1419,6 +1430,7 @@ TAO_CodeGen::start_ciao_conn_header (const char *fname)
 
   TAO_OutStream &os = *this->ciao_conn_header_;
 
+  gen_generated_from_comment (&os);
   TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
@@ -1488,6 +1500,7 @@ TAO_CodeGen::start_ciao_conn_source (const char *fname)
 
   TAO_OutStream &os = *this->ciao_conn_source_;
 
+  gen_generated_from_comment (&os);
   TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
@@ -1564,6 +1577,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
       return -1;
     }
 
+  gen_generated_from_comment (this->implementation_header_);
   TAO_INSERT_COMMENT (this->implementation_header_);
 
   // Generate the ident string, if any.
@@ -1618,6 +1632,7 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
       return -1;
     }
 
+  gen_generated_from_comment (this->implementation_skeleton_);
   TAO_INSERT_COMMENT (this->implementation_skeleton_);
 
   // Generate the ident string, if any.
@@ -3829,4 +3844,10 @@ TAO_CodeGen::destroy ()
   delete this->ciao_ami_conn_idl_;
   delete this->gperf_input_stream_;
   delete [] this->gperf_input_filename_;
+}
+
+void
+TAO_CodeGen::gen_generated_from_comment (TAO_OutStream *stream)
+{
+  *stream << "// Generated from: " << idl_global->filename ()->get_string () << "\n";
 }
