@@ -78,11 +78,11 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << node->full_name () << " *_tao_copy =" << be_idt_nl
       << "_tao_elem ?" << be_idt_nl
       << node->full_name () << "::_downcast (_tao_elem->_copy_value ())" << be_nl
-      << ": 0;" << be_uidt << be_uidt_nl
-      << "_tao_any <<= &_tao_copy;" << be_uidt_nl
+      << ": nullptr;" << be_uidt << be_uidt_nl
+      << "_tao_any <<= std::addressof(_tao_copy);" << be_uidt_nl
       << "#else" << be_idt_nl
       << "::CORBA::add_ref (_tao_elem);" << be_nl
-      << "_tao_any <<= &_tao_elem;" << be_uidt_nl
+      << "_tao_any <<= std::addressof(_tao_elem);" << be_uidt_nl
       << "#endif" << be_uidt_nl
       << "}" << be_nl_2;
 
@@ -105,8 +105,8 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
   *os << "::CORBA::Boolean" << be_nl
       << "operator>>= (" << be_idt << be_idt_nl
       << "const ::CORBA::Any &_tao_any," << be_nl
-      << node->full_name () << " *&_tao_elem" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << node->full_name () << " *&_tao_elem)" << be_uidt_nl
+      << be_uidt_nl
       << "{" << be_idt_nl
       << "return" << be_idt_nl
       << "TAO::Any_Impl_T<" << node->name () << ">::extract ("
@@ -114,8 +114,8 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "_tao_any," << be_nl
       << node->name () << "::_tao_any_destructor," << be_nl
       << node->tc_name () << "," << be_nl
-      << "_tao_elem" << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt_nl
+      << "_tao_elem);" << be_uidt
+      << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << be_global->anyops_versioning_end () << be_nl;
