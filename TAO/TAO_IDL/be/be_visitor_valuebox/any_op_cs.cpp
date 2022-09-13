@@ -98,7 +98,7 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
   *os << "::CORBA::Boolean" << be_nl
       << "operator>>= (" << be_idt << be_idt_nl
       << "const ::CORBA::Any &_tao_any," << be_nl
-      << node->full_name () << " *&_tao_elem)" << be_uidt_nl
+      << node->full_name () << " *&_tao_elem)" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl
       << "return" << be_idt_nl
