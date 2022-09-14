@@ -16,11 +16,11 @@
 class test_i : public POA_test
 {
 public:
-  void destroy_poa (void);
+  void destroy_poa ();
 };
 
 void
-test_i::destroy_poa (void)
+test_i::destroy_poa ()
 {
   PortableServer::POA_var poa = this->_default_POA ();
 

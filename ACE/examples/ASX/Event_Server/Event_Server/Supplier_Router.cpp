@@ -9,7 +9,7 @@
 // Handle outgoing messages in a separate thread.
 
 int
-Supplier_Router::svc (void)
+Supplier_Router::svc ()
 {
   assert (this->is_writer ());
 

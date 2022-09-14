@@ -17,7 +17,7 @@ public:
   // = The skeleton methods
   virtual void delay (CORBA::Short sec);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;
@@ -34,7 +34,7 @@ public:
   // = The skeleton methods
   virtual void call_delay (CORBA::Short sec);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

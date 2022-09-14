@@ -23,10 +23,10 @@ class ServerRequest_Interceptor2
 {
 public:
 /// Constructor.
-ServerRequest_Interceptor2 (void);
+ServerRequest_Interceptor2 ();
 
 /// Destructor.
-~ServerRequest_Interceptor2 (void);
+~ServerRequest_Interceptor2 ();
 
 /**
  * @name Methods Required by the Server Request Interceptor
@@ -38,9 +38,9 @@ ServerRequest_Interceptor2 (void);
  */
 //@{
 /// Return the name of this ServerRequestinterceptor.
-virtual char * name (void);
+virtual char * name ();
 
-virtual void destroy (void);
+virtual void destroy ();
 
 virtual void receive_request_service_contexts (
   PortableInterceptor::ServerRequestInfo_ptr ri);

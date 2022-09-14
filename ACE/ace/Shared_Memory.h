@@ -37,7 +37,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Shared_Memory
 {
 public:
-  virtual ~ACE_Shared_Memory (void);
+  virtual ~ACE_Shared_Memory ();
 
   // = Note that all the following methods are pure virtual.
   virtual int close (void) = 0;

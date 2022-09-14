@@ -43,9 +43,9 @@ public:
                           CORBA::ULong object_group_ref_version);
   virtual Replication_Strategy* make_primary_strategy();
 
-  virtual int  acquire_read (void);
-  virtual int  acquire_write (void);
-  virtual int  release (void);
+  virtual int  acquire_read ();
+  virtual int  acquire_write ();
+  virtual int  release ();
 private:
   bool mt_;
 };

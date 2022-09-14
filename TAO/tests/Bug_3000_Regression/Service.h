@@ -16,7 +16,7 @@ public:
   // = The skeleton methods
   virtual void run_test (Test::Callback_ptr callback);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to shutdown the application.

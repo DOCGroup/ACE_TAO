@@ -52,7 +52,7 @@ public:
   virtual void end_object (CORBA::Long id,
     const ACE_CString& type);
 
-  virtual void close (void);
+  virtual void close ();
 
 private:
   void backup_file_name (ACE_TCHAR * file_path, size_t nfile);

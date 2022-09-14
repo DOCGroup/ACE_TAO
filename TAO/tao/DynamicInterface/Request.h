@@ -73,13 +73,13 @@ namespace CORBA
     const CORBA::Char *operation () const;
 
     /// Return the arguments for the request.
-    CORBA::NVList_ptr arguments (void);
+    CORBA::NVList_ptr arguments ();
 
     /// Return the result for the request.
-    CORBA::NamedValue_ptr result (void);
+    CORBA::NamedValue_ptr result ();
 
     /// Return the exceptions resulting from this request.
-    CORBA::ExceptionList_ptr exceptions (void);
+    CORBA::ExceptionList_ptr exceptions ();
 
     /// Accessor for the Context member.
     CORBA::Context_ptr ctx () const;
@@ -89,7 +89,7 @@ namespace CORBA
 
     /// Return a list of the request's result's contexts.  Since TAO
     /// does not implement Contexts, this will always be 0.
-    CORBA::ContextList_ptr contexts (void);
+    CORBA::ContextList_ptr contexts ();
 
     /**
      * @name Argument manipulation helper functions.
@@ -143,7 +143,7 @@ namespace CORBA
     //@{
     void send_deferred ();
     void get_response ();
-    CORBA::Boolean poll_response (void);
+    CORBA::Boolean poll_response ();
     //@}
 
     /// Callback method for deferred synchronous requests.
@@ -182,11 +182,11 @@ namespace CORBA
     void raw_user_exception (TAO_InputCDR &cdr);
 
     /// Accessor for the input stream containing the exception.
-    ACE_CString &raw_user_exception (void);
+    ACE_CString &raw_user_exception ();
 
     /// Proprietary method to check whether a response has been
     /// received.
-    CORBA::Boolean response_received (void);
+    CORBA::Boolean response_received ();
 
     // Useful for template programming.
     typedef CORBA::Request_ptr _ptr_type;
@@ -210,7 +210,7 @@ namespace CORBA
              CORBA::ORB_ptr orb,
              const CORBA::Char *op);
 
-    ~Request (void);
+    ~Request ();
 
   private:
     /// Target object.

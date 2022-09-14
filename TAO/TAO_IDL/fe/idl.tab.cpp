@@ -146,8 +146,8 @@
 #include <fe_utils.h>
 
 void tao_yyerror (const char *);
-int tao_yylex (void);
-extern "C" int tao_yywrap (void);
+int tao_yylex ();
+extern "C" int tao_yywrap ();
 
 extern char tao_yytext[];
 extern int tao_yyleng;
@@ -2479,7 +2479,7 @@ int yynerrs;
 `----------*/
 
 int
-yyparse (void)
+yyparse ()
 {
     yy_state_fast_t yystate = 0;
     /* Number of tokens to shift before error messages enabled.  */
@@ -10901,7 +10901,7 @@ yyreturn:
  * ???
  */
 int
-tao_yywrap (void)
+tao_yywrap ()
 {
   return 1;
 }

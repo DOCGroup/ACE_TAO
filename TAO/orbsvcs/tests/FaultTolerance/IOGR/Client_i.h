@@ -28,7 +28,7 @@ public:
   Client_i (CORBA::ORB_ptr orb);
 
   /// Initialize the ORB etc.
-  void init (void);
+  void init ();
 
 private:
   CORBA::ORB_var orb_;

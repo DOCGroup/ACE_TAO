@@ -12,7 +12,7 @@ class JAWS_Export JAWS_Protocol_State
   friend class JAWS_Protocol_Handler;
 
 public:
-  virtual ~JAWS_Protocol_State (void);
+  virtual ~JAWS_Protocol_State ();
 
 protected:
   virtual int service (JAWS_Event_Completer *, void *data) = 0;
@@ -35,15 +35,15 @@ class JAWS_Export JAWS_Protocol_Handler
 public:
   JAWS_Protocol_Handler (JAWS_Protocol_State *state = 0, void *data = 0);
 
-  virtual int service (void);
+  virtual int service ();
 
-  virtual void dismiss (void)
+  virtual void dismiss ()
   {
     delete this;
   }
 
 protected:
-  virtual ~JAWS_Protocol_Handler (void);
+  virtual ~JAWS_Protocol_Handler ();
   // Try to guarantee this class will be created dynamically.
 
 protected:

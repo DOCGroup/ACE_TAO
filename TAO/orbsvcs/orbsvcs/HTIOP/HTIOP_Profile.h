@@ -53,7 +53,7 @@ namespace TAO
       virtual char object_key_delimiter () const;
 
       /// Return the char string prefix.
-      static const char *prefix (void);
+      static const char *prefix ();
 
       /// Profile constructor, same as above except the object_key has
       /// already been marshaled.
@@ -76,7 +76,7 @@ namespace TAO
       Profile (TAO_ORB_Core *orb_core);
 
       /// Destructor is to be called only through <_decr_refcnt>.
-      ~Profile (void);
+      ~Profile ();
 
       /**
        * Return a string representation for this profile.
@@ -92,10 +92,10 @@ namespace TAO
        * encapsulation of a sequence of structs, each representing a
        * single endpoint.  Data format is specified in iiop_endpoins.pidl.
        */
-      virtual int encode_endpoints (void);
+      virtual int encode_endpoints ();
 
       /// Return pointer to the head of this profile's endpoints list.
-      virtual TAO_Endpoint *endpoint (void);
+      virtual TAO_Endpoint *endpoint ();
 
       /// Return how many endpoints this profile contains.
       virtual CORBA::ULong endpoint_count () const;
@@ -113,7 +113,7 @@ namespace TAO
     protected:
       /// Template methods. Please see Profile.h for the documentation.
       virtual int decode_profile (TAO_InputCDR &cdr);
-      virtual int decode_endpoints (void);
+      virtual int decode_endpoints ();
       virtual void parse_string_i (const char *string);
       virtual void create_profile_body (TAO_OutputCDR &cdr) const;
       virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);

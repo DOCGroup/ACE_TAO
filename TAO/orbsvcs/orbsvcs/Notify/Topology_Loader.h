@@ -68,7 +68,7 @@ public:
    * vary based on the type of loader, so we can't include it in the
    * interface.
    */
-  virtual void close (void);
+  virtual void close ();
 };
 } // namespace TAO_Notify
 

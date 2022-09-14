@@ -19,7 +19,7 @@ Foo_B_i::~Foo_B_i()
 
 
 void
-Foo_B_i::op1(void)
+Foo_B_i::op1()
 {
   this->op_count_[0] ++;
 }
@@ -51,7 +51,7 @@ Foo_B_i::op4(CORBA::Long value)
 
 
 void
-Foo_B_i::op5(void)
+Foo_B_i::op5()
 {
   this->op_count_[4] ++;
   throw FooException();
@@ -245,7 +245,7 @@ Foo_B_i::test_objref_arg(Callback_ptr cb)
 
 
 void
-Foo_B_i::done(void)
+Foo_B_i::done()
 {
   TheAppShutdown->client_done();
 }

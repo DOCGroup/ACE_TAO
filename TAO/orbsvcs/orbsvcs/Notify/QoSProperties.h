@@ -33,10 +33,10 @@ class TAO_Notify_Serv_Export TAO_Notify_QoSProperties : public TAO_Notify_Proper
 {
 public:
   /// Constructor
-  TAO_Notify_QoSProperties (void);
+  TAO_Notify_QoSProperties ();
 
   /// Destructor
-  virtual ~TAO_Notify_QoSProperties (void);
+  virtual ~TAO_Notify_QoSProperties ();
 
   /// Return 0 on success, 1 if unsupported properties were detected and -1 on error.
   int init (const CosNotification::PropertySeq& prop_seq, CosNotification::PropertyErrorSeq& err_seq);
@@ -67,17 +67,17 @@ public:
   const TAO_Notify_Property_Time& blocking_policy() const;
 
   // The non-const accessors are used during topology load
-  TAO_Notify_Property_Short& event_reliability (void);
-  TAO_Notify_Property_Short& connection_reliability (void);
-  TAO_Notify_Property_Short& priority (void);
-  TAO_Notify_Property_Time& timeout (void);
-  TAO_Notify_Property_Boolean& stop_time_supported (void);
-  TAO_Notify_Property_Long& maximum_batch_size (void);
-  TAO_Notify_Property_Time& pacing_interval (void);
-  TAO_Notify_Property_Long& max_events_per_consumer (void);
-  TAO_Notify_Property_Short& discard_policy(void);
-  TAO_Notify_Property_Short& order_policy(void);
-  TAO_Notify_Property_Time& blocking_policy(void);
+  TAO_Notify_Property_Short& event_reliability ();
+  TAO_Notify_Property_Short& connection_reliability ();
+  TAO_Notify_Property_Short& priority ();
+  TAO_Notify_Property_Time& timeout ();
+  TAO_Notify_Property_Boolean& stop_time_supported ();
+  TAO_Notify_Property_Long& maximum_batch_size ();
+  TAO_Notify_Property_Time& pacing_interval ();
+  TAO_Notify_Property_Long& max_events_per_consumer ();
+  TAO_Notify_Property_Short& discard_policy();
+  TAO_Notify_Property_Short& order_policy();
+  TAO_Notify_Property_Time& blocking_policy();
 
 protected:
   /// Return 1 if <value> is unsupported.

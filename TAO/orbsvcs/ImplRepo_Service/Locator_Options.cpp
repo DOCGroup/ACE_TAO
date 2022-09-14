@@ -359,7 +359,7 @@ Options::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Options::init_from_registry (void)
+Options::init_from_registry ()
 {
   this->load_registry_options ();
   return 0;

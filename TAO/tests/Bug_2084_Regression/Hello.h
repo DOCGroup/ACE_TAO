@@ -20,7 +20,7 @@ public:
   // = The skeleton methods
   virtual char * get_string ( ::Test::ThreadId caller_threadid);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

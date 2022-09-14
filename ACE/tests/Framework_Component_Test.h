@@ -20,11 +20,11 @@
 class Simple_Service
 {
 public:
-  Simple_Service (void)
+  Simple_Service ()
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Service::Simple_Service\n")));
     }
-  virtual ~Simple_Service (void)
+  virtual ~Simple_Service ()
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Service::~Simple_Service\n")));
     }

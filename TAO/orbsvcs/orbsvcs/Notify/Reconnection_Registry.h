@@ -64,7 +64,7 @@ namespace TAO_Notify
     ///
     void unregister_callback (::NotifyExt::ReconnectionRegistry::ReconnectionID id);
 
-    CORBA::Boolean is_alive (void);
+    CORBA::Boolean is_alive ();
 
     //////////////////////
     // During topology save
@@ -80,7 +80,7 @@ namespace TAO_Notify
     void send_reconnect (CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory);
 
   private:
-    void release (void);
+    void release ();
 
     Reconnection_Registry_Type reconnection_registry_;
     ::NotifyExt::ReconnectionRegistry::ReconnectionID highest_id_;

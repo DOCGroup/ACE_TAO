@@ -30,7 +30,7 @@ class Supplier : public POA_CosEventComm::PushSupplier
   //   This class is a supplier of events.
   //
 public:
-  Supplier (void);
+  Supplier ();
   // Constructor
 
   int run (int argc, ACE_TCHAR* argv[]);
@@ -38,7 +38,7 @@ public:
 
   // = The CosEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
   // The skeleton methods.
 
 private:

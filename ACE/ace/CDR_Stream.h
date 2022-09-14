@@ -536,7 +536,7 @@ public:
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   /// Register and unregister our buffer size monitor.
   void register_monitor (const char* id);
-  void unregister_monitor (void);
+  void unregister_monitor ();
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 private:
@@ -1086,7 +1086,7 @@ public:
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   /// Register and unregister our buffer size monitor.
   void register_monitor (const char* id);
-  void unregister_monitor (void);
+  void unregister_monitor ();
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 protected:

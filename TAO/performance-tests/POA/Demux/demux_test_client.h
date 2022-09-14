@@ -40,38 +40,38 @@ public:
   };
 
   /// CTOR
-  Demux_Test_Client (void);
+  Demux_Test_Client ();
 
   /// DTOR
-  ~Demux_Test_Client (void);
+  ~Demux_Test_Client ();
 
   /// initialize the client test bed
   int init (int argc, ACE_TCHAR *argv []);
 
   /// run the tests
-  int run (void);
+  int run ();
 
 private:
   /// parse command line arguments
-  int parse_args (void);
+  int parse_args ();
 
   /// initialize the operation database
-  int init_operation_db (void);
+  int init_operation_db ();
 
   /// run linear strategy
-  int run_linear_test (void);
+  int run_linear_test ();
 
   /// run random strategy
-  int run_random_test (void);
+  int run_random_test ();
 
   /// run best strategy (w.r.t to linear)
-  int run_best_test (void);
+  int run_best_test ();
 
   /// run worst strategy (w.r.t to linear)
-  int run_worst_test (void);
+  int run_worst_test ();
 
   /// print results
-  int print_results (void);
+  int print_results ();
 
   /// number of command line arguments
   int argc_;

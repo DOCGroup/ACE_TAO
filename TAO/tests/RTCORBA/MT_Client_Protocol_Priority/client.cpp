@@ -146,7 +146,7 @@ public:
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
 };
@@ -159,7 +159,7 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   try
     {
@@ -354,7 +354,7 @@ Worker_Thread::Worker_Thread (CORBA::ORB_ptr orb,
 }
 
 int
-Worker_Thread::svc (void)
+Worker_Thread::svc ()
 {
   try
     {

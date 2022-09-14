@@ -106,7 +106,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
   s_proxy_consumer_->offer_change(added, removed);
 }
 
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 

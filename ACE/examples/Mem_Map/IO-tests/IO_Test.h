@@ -17,10 +17,10 @@ public:
            ACE_Profile_Timer &tm);
 
   // Destructor.
-  virtual ~IO_Test (void);
+  virtual ~IO_Test ();
 
   // Return the name of the test
-  const char *name (void);
+  const char *name ();
 
   // Execute the IO test (note this is a pure virtual function...)
   virtual int run_test (int iterations,

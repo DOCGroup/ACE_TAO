@@ -58,16 +58,16 @@ namespace TAO
        * @name CORBA::Policy Methods
        */
       //@{
-      virtual CORBA::PolicyType policy_type (void);
+      virtual CORBA::PolicyType policy_type ();
 
-      virtual CORBA::Policy_ptr copy (void);
+      virtual CORBA::Policy_ptr copy ();
 
-      virtual void destroy (void);
+      virtual void destroy ();
       //@}
 
       /// Return the Quality-of-Protection value associated with this
       /// policy.
-      virtual ::Security::QOP qop (void);
+      virtual ::Security::QOP qop ();
 
     protected:
       /// Destructor
@@ -75,7 +75,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechansim.
        */
-      ~QOPPolicy (void);
+      ~QOPPolicy ();
 
     private:
       /// Quality of protection which can be specified for an object

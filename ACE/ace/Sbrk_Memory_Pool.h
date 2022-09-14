@@ -54,7 +54,7 @@ public:
   ACE_Sbrk_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                         const OPTIONS *options = 0);
 
-  virtual ~ACE_Sbrk_Memory_Pool (void);
+  virtual ~ACE_Sbrk_Memory_Pool ();
 
   // = Implementor operations.
   /// Ask system for initial chunk of local memory.

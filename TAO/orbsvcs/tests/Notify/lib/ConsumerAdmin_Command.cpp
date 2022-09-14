@@ -5,7 +5,7 @@
 #include "Name.h"
 #include "Options_Parser.h"
 
-TAO_Notify_Tests_ConsumerAdmin_Command::TAO_Notify_Tests_ConsumerAdmin_Command (void)
+TAO_Notify_Tests_ConsumerAdmin_Command::TAO_Notify_Tests_ConsumerAdmin_Command ()
   :ifgop_ (CosNotifyChannelAdmin::OR_OP), id_ (0)
 {
 }
@@ -15,19 +15,19 @@ TAO_Notify_Tests_ConsumerAdmin_Command::~TAO_Notify_Tests_ConsumerAdmin_Command 
 }
 
 const char*
-TAO_Notify_Tests_ConsumerAdmin_Command::get_name (void)
+TAO_Notify_Tests_ConsumerAdmin_Command::get_name ()
 {
   return TAO_Notify_Tests_ConsumerAdmin_Command::name ();
 }
 
 const char*
-TAO_Notify_Tests_ConsumerAdmin_Command::name (void)
+TAO_Notify_Tests_ConsumerAdmin_Command::name ()
 {
   return TAO_Notify_Tests_Name::consumer_admin_command;
 }
 
 void
-TAO_Notify_Tests_ConsumerAdmin_Command::handle_create (void)
+TAO_Notify_Tests_ConsumerAdmin_Command::handle_create ()
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
@@ -43,7 +43,7 @@ TAO_Notify_Tests_ConsumerAdmin_Command::handle_create (void)
 
 
 void
-TAO_Notify_Tests_ConsumerAdmin_Command::handle_subscriptions (void)
+TAO_Notify_Tests_ConsumerAdmin_Command::handle_subscriptions ()
 {
   CosNotifyChannelAdmin::ConsumerAdmin_var admin;
 
@@ -69,7 +69,7 @@ TAO_Notify_Tests_ConsumerAdmin_Command::handle_subscriptions (void)
 }
 
 void
-TAO_Notify_Tests_ConsumerAdmin_Command::handle_set_qos (void)
+TAO_Notify_Tests_ConsumerAdmin_Command::handle_set_qos ()
 {
   CosNotifyChannelAdmin::ConsumerAdmin_var admin;
 
@@ -79,7 +79,7 @@ TAO_Notify_Tests_ConsumerAdmin_Command::handle_set_qos (void)
 }
 
 void
-TAO_Notify_Tests_ConsumerAdmin_Command::handle_status (void)
+TAO_Notify_Tests_ConsumerAdmin_Command::handle_status ()
 {
   //@@ TODO:
 }
@@ -144,7 +144,7 @@ TAO_Notify_Tests_ConsumerAdmin_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_ConsumerAdmin_Command::execute_i (void)
+TAO_Notify_Tests_ConsumerAdmin_Command::execute_i ()
 {
   if (this->command_ == CREATE)
     {

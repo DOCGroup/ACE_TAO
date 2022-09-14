@@ -30,7 +30,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::Any_Array_Impl_T (
 }
 
 template<typename T_slice, typename T_forany>
-TAO::Any_Array_Impl_T<T_slice, T_forany>::~Any_Array_Impl_T (void)
+TAO::Any_Array_Impl_T<T_slice, T_forany>::~Any_Array_Impl_T ()
 {
 }
 

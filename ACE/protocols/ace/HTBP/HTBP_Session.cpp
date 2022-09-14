@@ -56,7 +56,7 @@ ACE::HTBP::Session::find_session (const ACE::HTBP::Session_Id_t &sid, ACE::HTBP:
 }
 
 //----------------------------------------------------------------------------
-ACE::HTBP::Session::Session (void)
+ACE::HTBP::Session::Session ()
   : proxy_addr_ (0),
     destroy_proxy_addr_ (0),
     inbound_ (0),
@@ -133,7 +133,7 @@ ACE::HTBP::Session::operator= (const ACE::HTBP::Session &)
   return *this;
 }
 
-ACE::HTBP::Session::~Session (void)
+ACE::HTBP::Session::~Session ()
 {
   if (destroy_proxy_addr_)
     delete proxy_addr_;
@@ -143,7 +143,7 @@ ACE::HTBP::Session::~Session (void)
 }
 
 int
-ACE::HTBP::Session::close (void)
+ACE::HTBP::Session::close ()
 {
   if (this->inbound_)
     this->inbound_->close();
@@ -198,7 +198,7 @@ ACE::HTBP::Session::reconnect_i (ACE::HTBP::Channel *s) const
 }
 
 ACE_Event_Handler *
-ACE::HTBP::Session::handler (void)
+ACE::HTBP::Session::handler ()
 {
   return this->handler_;
 }
@@ -238,7 +238,7 @@ ACE::HTBP::Session::enqueue (ACE_Message_Block *msg)
 }
 
 int
-ACE::HTBP::Session::flush_outbound_queue (void)
+ACE::HTBP::Session::flush_outbound_queue ()
 {
   int result = 0;
   if (this->outbound_queue_.message_count() > 0)

@@ -13,7 +13,7 @@ namespace TAO
   }
 
   ACE_Reactor_Impl *
-  FoxResource_Factory::reactor_impl (void)
+  FoxResource_Factory::reactor_impl ()
   {
     if (this->fxapp_ == 0)
       return 0;

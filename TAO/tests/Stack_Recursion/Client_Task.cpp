@@ -13,7 +13,7 @@ Client_Task::Client_Task (Test::Sender_ptr sender,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
@@ -43,7 +43,7 @@ Client_Task::svc (void)
 
 
 void
-Client_Task::validate_connections (void)
+Client_Task::validate_connections ()
 {
   for (int i = 0 ; i != 100; i++)
     {

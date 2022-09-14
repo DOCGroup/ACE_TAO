@@ -22,7 +22,7 @@ namespace TAO
     /// throw NoContext, if no transport has been selected yet.
 
     TAO_IIOP_Connection_Handler*
-    IIOP_Current_Impl::handler (void)
+    IIOP_Current_Impl::handler ()
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       const TAO_Transport* t = this->transport ();
@@ -57,12 +57,12 @@ namespace TAO
 
     /// Dtor
 
-    IIOP_Current_Impl::~IIOP_Current_Impl (void)
+    IIOP_Current_Impl::~IIOP_Current_Impl ()
     {
     }
 
     CORBA::Long
-    IIOP_Current_Impl::id (void)
+    IIOP_Current_Impl::id ()
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       // Need to use cast to pacify windows compilers complaining
@@ -74,14 +74,14 @@ namespace TAO
     }
 
     ::SSLIOP::Current_ptr
-    IIOP_Current_Impl::ssliop_current (void)
+    IIOP_Current_Impl::ssliop_current ()
     {
         throw ::CORBA::NO_IMPLEMENT ();
     }
 
 
     CORBA::Long
-    IIOP_Current_Impl::remote_port (void)
+    IIOP_Current_Impl::remote_port ()
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_IIOP_Connection_Handler *iiopch =
@@ -97,7 +97,7 @@ namespace TAO
     }
 
     char*
-    IIOP_Current_Impl::remote_host (void)
+    IIOP_Current_Impl::remote_host ()
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_IIOP_Connection_Handler *iiopch =
@@ -113,7 +113,7 @@ namespace TAO
     }
 
     CORBA::Long
-    IIOP_Current_Impl::local_port (void)
+    IIOP_Current_Impl::local_port ()
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_IIOP_Connection_Handler *iiopch =
@@ -129,7 +129,7 @@ namespace TAO
     }
 
     char*
-    IIOP_Current_Impl::local_host (void)
+    IIOP_Current_Impl::local_host ()
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_IIOP_Connection_Handler *iiopch =

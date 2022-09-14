@@ -37,7 +37,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 {
 public:
   /// Destructor.
-  virtual ~TAO_LogRecordStore (void);
+  virtual ~TAO_LogRecordStore ();
 
   /// Initialization.
   virtual int open (void) = 0;
@@ -214,7 +214,7 @@ public:
 
 protected:
   /// Constructor.
-  TAO_LogRecordStore (void);
+  TAO_LogRecordStore ();
 
 
 private:

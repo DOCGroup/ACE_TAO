@@ -13,7 +13,7 @@ public:
 };
 
 int
-Memory_Test::svc (void)
+Memory_Test::svc ()
 {
   int ni = this->thr_id ();
   size_t length = performance_test_options.msg_size ();

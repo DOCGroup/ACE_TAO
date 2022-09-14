@@ -54,8 +54,8 @@ namespace TAO
     {
     public:
       /*! Constructor */
-      AccessDecision (void);
-      ~AccessDecision (void);
+      AccessDecision ();
+      ~AccessDecision ();
 
       virtual ::CORBA::Boolean access_allowed (
         const ::SecurityLevel2::CredentialsList & cred_list,
@@ -71,10 +71,10 @@ namespace TAO
           const char * operation_name,
           ::CORBA::Boolean collocated_invocation);
 
-      virtual ::CORBA::Boolean default_decision (void);
+      virtual ::CORBA::Boolean default_decision ();
       virtual void default_decision (::CORBA::Boolean d);
 
-      virtual ::CORBA::Boolean default_collocated_decision (void);
+      virtual ::CORBA::Boolean default_collocated_decision ();
       virtual void default_collocated_decision (::CORBA::Boolean d);
 
       virtual void add_object (const char * orbid,
@@ -203,7 +203,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      virtual ~SecurityManager (void);
+      virtual ~SecurityManager ();
 
     private:
       /// The ORB-specific SecurityLevel2::PrincipalAuthenticator

@@ -96,13 +96,13 @@ public:
     ACE_OPCODE_WRITE = 2
   };
 
-  virtual Proactor_Type  get_impl_type (void);
+  virtual Proactor_Type  get_impl_type ();
 
   /// Virtual destructor.
-  virtual ~ACE_POSIX_Proactor (void);
+  virtual ~ACE_POSIX_Proactor ();
 
   /// Close down the Proactor.
-  virtual int close (void);
+  virtual int close ();
 
   /**
    * Dispatch a single set of events.  If @a wait_time elapses before
@@ -142,7 +142,7 @@ public:
                                const void *completion_key);
 
   /// @@ This is a no-op on POSIX platforms. Returns 0.
-  int wake_up_dispatch_threads (void);
+  int wake_up_dispatch_threads ();
 
   /// @@ This is a no-op on POSIX platforms. Returns 0.
   int close_dispatch_threads (int wait);
@@ -157,7 +157,7 @@ public:
   // Methods used to create Asynch IO factory and result objects. We
   // create the right objects here in these methods.
 
-  virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
+  virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream ();
   virtual ACE_Asynch_Read_Stream_Result_Impl *
     create_asynch_read_stream_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
@@ -168,7 +168,7 @@ public:
                                       int priority = 0,
                                       int signal_number = ACE_SIGRTMIN);
 
-  virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void);
+  virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream ();
   virtual ACE_Asynch_Write_Stream_Result_Impl *
     create_asynch_write_stream_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                        ACE_HANDLE handle,
@@ -179,7 +179,7 @@ public:
                                        int priority = 0,
                                        int signal_number = ACE_SIGRTMIN);
 
-  virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file (void);
+  virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file ();
   virtual ACE_Asynch_Read_File_Result_Impl *
     create_asynch_read_file_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                     ACE_HANDLE handle,
@@ -192,7 +192,7 @@ public:
                                     int priority = 0,
                                     int signal_number = ACE_SIGRTMIN);
 
-  virtual ACE_Asynch_Write_File_Impl *create_asynch_write_file (void);
+  virtual ACE_Asynch_Write_File_Impl *create_asynch_write_file ();
   virtual ACE_Asynch_Write_File_Result_Impl *
     create_asynch_write_file_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
@@ -205,7 +205,7 @@ public:
                                      int priority = 0,
                                      int signal_number = ACE_SIGRTMIN);
 
-  virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram (void);
+  virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram ();
   virtual ACE_Asynch_Read_Dgram_Result_Impl *
     create_asynch_read_dgram_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
@@ -218,7 +218,7 @@ public:
                                      int priority = 0,
                                      int signal_number = ACE_SIGRTMIN);
 
-  virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram (void);
+  virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram ();
   virtual ACE_Asynch_Write_Dgram_Result_Impl *
     create_asynch_write_dgram_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
@@ -230,7 +230,7 @@ public:
                                       int priority = 0,
                                       int signal_number = ACE_SIGRTMIN);
 
-  virtual ACE_Asynch_Accept_Impl *create_asynch_accept (void);
+  virtual ACE_Asynch_Accept_Impl *create_asynch_accept ();
   virtual ACE_Asynch_Accept_Result_Impl *
     create_asynch_accept_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                  ACE_HANDLE listen_handle,
@@ -242,7 +242,7 @@ public:
                                  int priority = 0,
                                  int signal_number = ACE_SIGRTMIN);
 
-  virtual ACE_Asynch_Connect_Impl *create_asynch_connect (void);
+  virtual ACE_Asynch_Connect_Impl *create_asynch_connect ();
   virtual ACE_Asynch_Connect_Result_Impl *
     create_asynch_connect_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE connect_handle,
@@ -251,7 +251,7 @@ public:
                                   int priority = 0,
                                   int signal_number = ACE_SIGRTMIN);
 
-  virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
+  virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file ();
   virtual ACE_Asynch_Transmit_File_Result_Impl *
     create_asynch_transmit_file_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                         ACE_HANDLE socket,
@@ -279,7 +279,7 @@ public:
 
 protected:
   /// Constructor.
-  ACE_POSIX_Proactor (void);
+  ACE_POSIX_Proactor ();
 
   /**
    * Protect against structured exceptions caused by user code when
@@ -338,13 +338,13 @@ public:
   /// which can be started at the same time
   ACE_POSIX_AIOCB_Proactor (size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
-  virtual Proactor_Type  get_impl_type (void);
+  virtual Proactor_Type  get_impl_type ();
 
   /// Destructor.
-  virtual ~ACE_POSIX_AIOCB_Proactor (void);
+  virtual ~ACE_POSIX_AIOCB_Proactor ();
 
   /// Close down the Proactor.
-  virtual int close (void);
+  virtual int close ();
 
   /**
    * Dispatch a single set of events.  If @a wait_time elapses before
@@ -361,7 +361,7 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events (void);
+  virtual int handle_events ();
 
   /// Post a result to the completion port of the Proactor.
   virtual int post_completion (ACE_POSIX_Asynch_Result *result);
@@ -395,16 +395,16 @@ protected:
                                  size_t &transfer_count);
 
   /// Create aiocb list
-  int create_result_aiocb_list (void);
+  int create_result_aiocb_list ();
 
   /// Call this method from derived class when virtual table is
   /// built.
-  int delete_result_aiocb_list (void);
+  int delete_result_aiocb_list ();
 
   /// Call these methods from derived class when virtual table is
   /// built.
-  void create_notify_manager (void);
-  void delete_notify_manager (void);
+  void create_notify_manager ();
+  void delete_notify_manager ();
 
   /// Define the maximum number of asynchronous I/O requests
   /// for the current OS
@@ -421,7 +421,7 @@ protected:
   int handle_events_i (u_long milli_seconds);
 
   /// Start deferred AIO if necessary
-  int start_deferred_aio (void);
+  int start_deferred_aio ();
 
   /// Cancel running or deferred AIO
   virtual int cancel_aiocb (ACE_POSIX_Asynch_Result * result);
@@ -446,13 +446,13 @@ protected:
   int  putq_result (ACE_POSIX_Asynch_Result *result);
 
   /// Get "post_completed" result from the internal queue
-  ACE_POSIX_Asynch_Result * getq_result (void);
+  ACE_POSIX_Asynch_Result * getq_result ();
 
   /// Clear the internal results queue
-  int clear_result_queue (void);
+  int clear_result_queue ();
 
   /// Process the internal results queue
-  int process_result_queue (void);
+  int process_result_queue ();
 
 
   /// This class takes care of doing <accept> when we use
@@ -517,7 +517,7 @@ public:
    */
   ACE_POSIX_SIG_Proactor (size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
-  virtual Proactor_Type get_impl_type (void);
+  virtual Proactor_Type get_impl_type ();
 
   /**
    * This constructor should be used to tell the Proactor to mask and
@@ -529,7 +529,7 @@ public:
                           size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
   /// Destructor.
-  virtual ~ACE_POSIX_SIG_Proactor (void);
+  virtual ~ACE_POSIX_SIG_Proactor ();
 
   /**
    * Dispatch a single set of events.  If @a wait_time elapses before
@@ -546,7 +546,7 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events (void);
+  virtual int handle_events ();
 
   /// Post a result to the completion port of the Proactor.
   /// now it is implemented in base ACE_POSIX_AIOCB_Proactor class

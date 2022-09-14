@@ -48,16 +48,16 @@ public:
                               IOP::ServiceContextList &sc);
 
   /// Destructor.
-  virtual ~TAO_Synch_Reply_Dispatcher (void);
+  virtual ~TAO_Synch_Reply_Dispatcher ();
 
   /// Return the reply CDR.
-  TAO_InputCDR &reply_cdr (void);
+  TAO_InputCDR &reply_cdr ();
 
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
-  virtual void connection_closed (void);
+  virtual void connection_closed ();
 
-  virtual void reply_timed_out (void);
+  virtual void reply_timed_out ();
 
 protected:
   /// The service context list

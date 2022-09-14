@@ -37,11 +37,11 @@ FillQoSParams (ACE_QoS_Params &qos_params,
   return 0;
 }
 
-TAO_AV_UDP_QoS_Session_Helper::TAO_AV_UDP_QoS_Session_Helper (void)
+TAO_AV_UDP_QoS_Session_Helper::TAO_AV_UDP_QoS_Session_Helper ()
 {
 }
 
-TAO_AV_UDP_QoS_Session_Helper::~TAO_AV_UDP_QoS_Session_Helper (void)
+TAO_AV_UDP_QoS_Session_Helper::~TAO_AV_UDP_QoS_Session_Helper ()
 {
 }
 
@@ -180,19 +180,19 @@ TAO_AV_UDP_QoS_Session_Helper::activate_qos_handler (ACE_QoS_Session *qos_sessio
   return 0;
 }
 
-TAO_AV_UDP_QoS_Flow_Handler::TAO_AV_UDP_QoS_Flow_Handler (void)
+TAO_AV_UDP_QoS_Flow_Handler::TAO_AV_UDP_QoS_Flow_Handler ()
 {
   ACE_NEW (this->transport_,
            TAO_AV_UDP_QoS_Transport (this));
 }
 
-TAO_AV_UDP_QoS_Flow_Handler::~TAO_AV_UDP_QoS_Flow_Handler (void)
+TAO_AV_UDP_QoS_Flow_Handler::~TAO_AV_UDP_QoS_Flow_Handler ()
 {
   delete this->transport_;
 }
 
 TAO_AV_Transport *
-TAO_AV_UDP_QoS_Flow_Handler::transport (void)
+TAO_AV_UDP_QoS_Flow_Handler::transport ()
 {
   return this->transport_;
 }
@@ -551,7 +551,7 @@ TAO_AV_UDP_QoS_Flow_Handler::get_handle () const
 // TAO_AV_UDP_Transport
 //------------------------------------------------------------
 
-TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport (void)
+TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport ()
   :handler_ (0)
 {
 }
@@ -562,7 +562,7 @@ TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport (TAO_AV_UDP_QoS_Flow_Handler 
 {
 }
 
-TAO_AV_UDP_QoS_Transport::~TAO_AV_UDP_QoS_Transport (void)
+TAO_AV_UDP_QoS_Transport::~TAO_AV_UDP_QoS_Transport ()
 {
 }
 
@@ -580,19 +580,19 @@ TAO_AV_UDP_QoS_Transport::open (ACE_Addr * /*address*/)
 }
 
 int
-TAO_AV_UDP_QoS_Transport::close (void)
+TAO_AV_UDP_QoS_Transport::close ()
 {
   return 0;
 }
 
 int
-TAO_AV_UDP_QoS_Transport::mtu (void)
+TAO_AV_UDP_QoS_Transport::mtu ()
 {
   return ACE_MAX_DGRAM_SIZE;
 }
 
 ACE_Addr*
-TAO_AV_UDP_QoS_Transport::get_peer_addr (void)
+TAO_AV_UDP_QoS_Transport::get_peer_addr ()
 {
   return &this->peer_addr_;
 }
@@ -772,11 +772,11 @@ TAO_AV_UDP_QoS_Transport::recv (iovec *iov,
 // TAO_AV_UDP_Acceptor
 //------------------------------------------------------------
 
-TAO_AV_UDP_QoS_Acceptor::TAO_AV_UDP_QoS_Acceptor (void)
+TAO_AV_UDP_QoS_Acceptor::TAO_AV_UDP_QoS_Acceptor ()
 {
 }
 
-TAO_AV_UDP_QoS_Acceptor::~TAO_AV_UDP_QoS_Acceptor (void)
+TAO_AV_UDP_QoS_Acceptor::~TAO_AV_UDP_QoS_Acceptor ()
 {
 }
 
@@ -1060,7 +1060,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 }
 
 int
-TAO_AV_UDP_QoS_Acceptor::close (void)
+TAO_AV_UDP_QoS_Acceptor::close ()
 {
   return 0;
 }
@@ -1068,11 +1068,11 @@ TAO_AV_UDP_QoS_Acceptor::close (void)
 //------------------------------------------------------------
 // TAO_AV_UDP_Connector
 //------------------------------------------------------------
-TAO_AV_UDP_QoS_Connector::TAO_AV_UDP_QoS_Connector (void)
+TAO_AV_UDP_QoS_Connector::TAO_AV_UDP_QoS_Connector ()
 {
 }
 
-TAO_AV_UDP_QoS_Connector::~TAO_AV_UDP_QoS_Connector (void)
+TAO_AV_UDP_QoS_Connector::~TAO_AV_UDP_QoS_Connector ()
 {
 }
 
@@ -1369,7 +1369,7 @@ TAO_AV_UDP_QoS_Connector::activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *han
 }
 
 int
-TAO_AV_UDP_QoS_Connector::close (void)
+TAO_AV_UDP_QoS_Connector::close ()
 {
   return 0;
 }
@@ -1378,14 +1378,14 @@ TAO_AV_UDP_QoS_Connector::close (void)
 // TAO_AV_UDP_Protocol_Factory
 //------------------------------------------------------------
 
-TAO_AV_UDP_QoS_Factory::TAO_AV_UDP_QoS_Factory (void)
+TAO_AV_UDP_QoS_Factory::TAO_AV_UDP_QoS_Factory ()
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_UDP_QoS_Factory::TAO_AV_UDP_QoS_Factory\n"));
 }
 
-TAO_AV_UDP_QoS_Factory::~TAO_AV_UDP_QoS_Factory (void)
+TAO_AV_UDP_QoS_Factory::~TAO_AV_UDP_QoS_Factory ()
 {
 }
 
@@ -1402,7 +1402,7 @@ TAO_AV_UDP_QoS_Factory::match_protocol (const char *protocol_string)
 }
 
 TAO_AV_Acceptor*
-TAO_AV_UDP_QoS_Factory::make_acceptor (void)
+TAO_AV_UDP_QoS_Factory::make_acceptor ()
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -1416,7 +1416,7 @@ TAO_AV_UDP_QoS_Factory::make_acceptor (void)
 }
 
 TAO_AV_Connector*
-TAO_AV_UDP_QoS_Factory::make_connector (void)
+TAO_AV_UDP_QoS_Factory::make_connector ()
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -1440,14 +1440,14 @@ TAO_AV_UDP_QoS_Factory::init (int /* argc */,
 //------------------------------------------------------------
 // TAO_AV_UDP_Flow_Factory
 //------------------------------------------------------------
-TAO_AV_UDP_QoS_Flow_Factory::TAO_AV_UDP_QoS_Flow_Factory (void)
+TAO_AV_UDP_QoS_Flow_Factory::TAO_AV_UDP_QoS_Flow_Factory ()
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_UDP_QoS_Flow_Factory::TAO_AV_UDP_QoS_Flow_Factory\n"));
 }
 
-TAO_AV_UDP_QoS_Flow_Factory::~TAO_AV_UDP_QoS_Flow_Factory (void)
+TAO_AV_UDP_QoS_Flow_Factory::~TAO_AV_UDP_QoS_Flow_Factory ()
 {
 }
 

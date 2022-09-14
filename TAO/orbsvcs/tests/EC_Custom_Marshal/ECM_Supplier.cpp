@@ -15,7 +15,7 @@
 #include "ace/OS_NS_errno.h"
 
 
-ECMS_Driver::ECMS_Driver (void)
+ECMS_Driver::ECMS_Driver ()
   : n_suppliers_ (1),
     event_count_ (100),
     event_period_ (100),
@@ -286,7 +286,7 @@ ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel)
 }
 
 void
-ECMS_Driver::activate_suppliers (void)
+ECMS_Driver::activate_suppliers ()
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -295,7 +295,7 @@ ECMS_Driver::activate_suppliers (void)
 }
 
 void
-ECMS_Driver::disconnect_suppliers (void)
+ECMS_Driver::disconnect_suppliers ()
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -435,7 +435,7 @@ Test_Supplier::connect (const char* name,
 }
 
 void
-Test_Supplier::disconnect (void)
+Test_Supplier::disconnect ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -470,7 +470,7 @@ Test_Supplier::svc ()
 }
 
 void
-Test_Supplier::disconnect_push_supplier (void)
+Test_Supplier::disconnect_push_supplier ()
 {
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
@@ -482,7 +482,7 @@ int Test_Supplier::supplier_id () const
 }
 
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
-Test_Supplier::consumer_proxy (void)
+Test_Supplier::consumer_proxy ()
 {
   return this->consumer_proxy_.in ();
 }

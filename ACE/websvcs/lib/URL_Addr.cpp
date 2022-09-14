@@ -51,7 +51,7 @@ static size_t gopher_size = sizeof(gopher)/sizeof(gopher[0]) - 1;
 #  define ACE_PRINTF_S ACE_TEXT ("%ls")
 #endif
 
-ACE_URL_Addr::ACE_URL_Addr (void)
+ACE_URL_Addr::ACE_URL_Addr ()
   : url_ (0)
 {
 }
@@ -157,7 +157,7 @@ ACE_URL_Addr::known_scheme (const ACE_TCHAR *url)
 
 // ****************************************************************
 
-ACE_URL_Addr_Visitor::~ACE_URL_Addr_Visitor (void)
+ACE_URL_Addr_Visitor::~ACE_URL_Addr_Visitor ()
 {
 }
 
@@ -187,7 +187,7 @@ ACE_URL_Addr_Visitor::visit (ACE_Mailto_Addr*)
 
 // ****************************************************************
 
-ACE_HTTP_Addr::ACE_HTTP_Addr (void)
+ACE_HTTP_Addr::ACE_HTTP_Addr ()
   :  hostname_ (0),
      port_number_ (0),
      path_ (0),
@@ -217,7 +217,7 @@ ACE_HTTP_Addr::ACE_HTTP_Addr (const ACE_HTTP_Addr &addr)
   this->set (addr);
 }
 
-ACE_HTTP_Addr::~ACE_HTTP_Addr (void)
+ACE_HTTP_Addr::~ACE_HTTP_Addr ()
 {
   this->clear ();
   this->hostname_ = 0;
@@ -278,7 +278,7 @@ ACE_HTTP_Addr::set (const ACE_HTTP_Addr &addr)
 }
 
 void
-ACE_HTTP_Addr::clear (void)
+ACE_HTTP_Addr::clear ()
 {
   if (this->hostname_ != 0)
     ACE_OS::free (this->hostname_);
@@ -565,7 +565,7 @@ ACE_HTTP_Addr::accept (ACE_URL_Addr_Visitor *visitor)
 
 // ****************************************************************
 
-ACE_FTP_Addr::ACE_FTP_Addr (void)
+ACE_FTP_Addr::ACE_FTP_Addr ()
   :  user_ (0),
      password_ (0),
      hostname_ (0),
@@ -595,7 +595,7 @@ ACE_FTP_Addr::ACE_FTP_Addr (const ACE_FTP_Addr& addr)
   this->set (addr);
 }
 
-ACE_FTP_Addr::~ACE_FTP_Addr (void)
+ACE_FTP_Addr::~ACE_FTP_Addr ()
 {
   this->clear ();
 }
@@ -652,7 +652,7 @@ ACE_FTP_Addr::set (const ACE_FTP_Addr& addr)
 }
 
 void
-ACE_FTP_Addr::clear (void)
+ACE_FTP_Addr::clear ()
 {
   if (this->hostname_ != 0)
     ACE_OS::free (this->hostname_);
@@ -805,7 +805,7 @@ ACE_FTP_Addr::accept (ACE_URL_Addr_Visitor* visitor)
 
 // ****************************************************************
 
-ACE_Mailto_Addr::ACE_Mailto_Addr (void)
+ACE_Mailto_Addr::ACE_Mailto_Addr ()
   :  user_ (0),
      hostname_ (0),
      headers_ (0)
@@ -831,7 +831,7 @@ ACE_Mailto_Addr::ACE_Mailto_Addr (const ACE_Mailto_Addr &addr)
   this->set (addr);
 }
 
-ACE_Mailto_Addr::~ACE_Mailto_Addr (void)
+ACE_Mailto_Addr::~ACE_Mailto_Addr ()
 {
   this->clear ();
 }
@@ -877,7 +877,7 @@ ACE_Mailto_Addr::set (const ACE_Mailto_Addr &addr)
 }
 
 void
-ACE_Mailto_Addr::clear (void)
+ACE_Mailto_Addr::clear ()
 {
   if (this->user_ != 0)
     ACE_OS::free (this->user_);

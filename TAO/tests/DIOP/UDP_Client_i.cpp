@@ -19,13 +19,13 @@ UDP_Client_i::UDP_Client_i (CORBA::ORB_ptr orb,
 }
 
 //Destructor.
-UDP_Client_i::~UDP_Client_i (void)
+UDP_Client_i::~UDP_Client_i ()
 {
   //no-op
 }
 
 int
-UDP_Client_i::svc (void)
+UDP_Client_i::svc ()
 {
   ACE_CString client_name ("UDP");
 

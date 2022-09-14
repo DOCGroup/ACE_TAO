@@ -26,7 +26,7 @@ public:
 
   virtual ~Foo_B_SimpleClientEngine();
 
-  virtual bool execute(void);
+  virtual bool execute();
 
   static void expected_results(Foo_B_Statistics& stats);
   static unsigned expected_callbacks ();

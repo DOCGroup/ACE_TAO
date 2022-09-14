@@ -30,7 +30,7 @@ public:
   static time_t HTTP_mktime (const char *httpdate);
 
   // Create today's date
-  static const char *HTTP_date (void);
+  static const char *HTTP_date ();
   static const char *HTTP_date (char *s);
 
   // Month conversions (ascii <--> numeric)
@@ -68,7 +68,7 @@ class HTTP_Status_Code
 {
 public:
   /// Singleton access point.
-  static const char **instance (void);
+  static const char **instance ();
 
   enum STATUS_CODE
   {

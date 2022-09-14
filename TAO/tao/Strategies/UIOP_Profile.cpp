@@ -64,7 +64,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO_UIOP_Profile::~TAO_UIOP_Profile (void)
+TAO_UIOP_Profile::~TAO_UIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -272,7 +272,7 @@ TAO_UIOP_Profile::to_string () const
 }
 
 const char *
-TAO_UIOP_Profile::prefix (void)
+TAO_UIOP_Profile::prefix ()
 {
   return ::prefix_;
 }
@@ -340,7 +340,7 @@ TAO_UIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 }
 
 int
-TAO_UIOP_Profile::encode_endpoints (void)
+TAO_UIOP_Profile::encode_endpoints ()
 {
   // Create a data structure and fill it with endpoint info for wire
   // transfer.
@@ -374,7 +374,7 @@ TAO_UIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_UIOP_Profile::decode_endpoints (void)
+TAO_UIOP_Profile::decode_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;

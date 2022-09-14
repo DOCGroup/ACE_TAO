@@ -105,7 +105,7 @@ public:
   int post_completion (ACE_Proactor_Impl *proactor);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Result (void);
+  virtual ~ACE_WIN32_Asynch_Result ();
 
   /// Simulate error value to use in the post_completion()
   void set_error (u_long errcode);
@@ -167,7 +167,7 @@ public:
    * the calling thread.  The function does not cancel asynchronous
    * operations issued by other threads.
    */
-  int cancel (void);
+  int cancel ();
 
   // = Access methods.
 
@@ -179,7 +179,7 @@ protected:
   ACE_WIN32_Asynch_Operation (ACE_WIN32_Proactor *win32_proactor);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Operation (void);
+  virtual ~ACE_WIN32_Asynch_Operation ();
 
   /// Win32 Proactor.
   ACE_WIN32_Proactor *win32_proactor_;
@@ -284,7 +284,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Read_Stream_Result (void);
+  virtual ~ACE_WIN32_Asynch_Read_Stream_Result ();
 
   /// Bytes requested when the asynchronous read was initiated.
   size_t bytes_to_read_;
@@ -337,7 +337,7 @@ public:
              int signal_number = 0);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Read_Stream (void);
+  virtual ~ACE_WIN32_Asynch_Read_Stream ();
 
   // Methods belong to ACE_WIN32_Asynch_Operation base class. These
   // methods are defined here to avoid VC++ warnings. They route the
@@ -359,7 +359,7 @@ public:
    * the calling thread.  The function does not cancel asynchronous
    * operations issued by other threads.
    */
-  int cancel (void);
+  int cancel ();
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
@@ -460,7 +460,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Write_Stream_Result (void);
+  virtual ~ACE_WIN32_Asynch_Write_Stream_Result ();
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
@@ -514,7 +514,7 @@ public:
               int signal_number = 0);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Write_Stream (void);
+  virtual ~ACE_WIN32_Asynch_Write_Stream ();
 
   // = Methods belonging to <ACE_WIN32_Asynch_Operation> base class.
 
@@ -537,7 +537,7 @@ public:
    * the calling thread.  The function does not cancel asynchronous
    * operations issued by other threads.
    */
-  int cancel (void);
+  int cancel ();
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
@@ -638,7 +638,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Read_File_Result (void);
+  virtual ~ACE_WIN32_Asynch_Read_File_Result ();
 };
 
 /**
@@ -693,7 +693,7 @@ public:
 
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Read_File (void);
+  virtual ~ACE_WIN32_Asynch_Read_File ();
 
   // = Methods belong to ACE_WIN32_Asynch_Operation base class. These
   //   methods are defined here to avoid VC++ warnings. They route the
@@ -715,7 +715,7 @@ public:
    * the calling thread.  The function does not cancel asynchronous
    * operations issued by other threads.
    */
-  int cancel (void);
+  int cancel ();
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
@@ -848,7 +848,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Write_File_Result (void);
+  virtual ~ACE_WIN32_Asynch_Write_File_Result ();
 };
 
 /**
@@ -899,7 +899,7 @@ public:
               int signal_number = 0);
 
   /// Destrcutor.
-  virtual ~ACE_WIN32_Asynch_Write_File (void);
+  virtual ~ACE_WIN32_Asynch_Write_File ();
 
   // = Methods belong to ACE_WIN32_Asynch_Operation base class. These
   //   methods are defined here to avoid VC++ warnings. They route the
@@ -921,7 +921,7 @@ public:
    * the calling thread.  The function does not cancel asynchronous
    * operations issued by other threads.
    */
-  int cancel (void);
+  int cancel ();
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
@@ -1043,7 +1043,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Accept_Result (void);
+  virtual ~ACE_WIN32_Asynch_Accept_Result ();
 
   /// Bytes requested when the asynchronous read was initiated.
   size_t bytes_to_read_;
@@ -1097,7 +1097,7 @@ public:
               int addr_family = AF_INET);
 
   /// Destructor.
-  ~ACE_WIN32_Asynch_Accept (void);
+  ~ACE_WIN32_Asynch_Accept ();
 
   // Methods belong to ACE_WIN32_Asynch_Operation base class. These
   // methods are defined here to avoid VC++ warnings. They route the
@@ -1119,7 +1119,7 @@ public:
    * the calling thread.  The function does not cancel asynchronous
    * operations issued by other threads.
    */
-  int cancel (void);
+  int cancel ();
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
@@ -1206,7 +1206,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Connect_Result (void);
+  virtual ~ACE_WIN32_Asynch_Connect_Result ();
 
   /// Set the I/O handle for the new connection.
   void  connect_handle (ACE_HANDLE handle);
@@ -1228,7 +1228,7 @@ public:
   ACE_WIN32_Asynch_Connect (ACE_WIN32_Proactor * win32_proactor);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Connect (void);
+  virtual ~ACE_WIN32_Asynch_Connect ();
 
  /**
    * This open belongs to ACE_WIN32_Asynch_Operation. We forward
@@ -1261,13 +1261,13 @@ public:
    *  Cancel all pending pseudo-asynchronus requests
    *  Behavior as usual AIO request
    */
-  int cancel (void);
+  int cancel ();
 
   /**
    *  Close performs cancellation of all pending requests
    *  and close the connect handle
    */
-  int close (void);
+  int close ();
 
   /// Virtual from ACE_Event_Handler
   ACE_HANDLE get_handle () const;
@@ -1435,7 +1435,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Transmit_File_Result (void);
+  virtual ~ACE_WIN32_Asynch_Transmit_File_Result ();
 
   /// Network I/O handle.
   ACE_HANDLE socket_;
@@ -1507,7 +1507,7 @@ public:
                      int signal_number = 0);
 
   /// Destructor.
-  ~ACE_WIN32_Asynch_Transmit_File (void);
+  ~ACE_WIN32_Asynch_Transmit_File ();
 
   // Methods belong to ACE_WIN32_Asynch_Operation base class. These
   // methods are defined here to avoid VC++ warnings. They route the
@@ -1529,7 +1529,7 @@ public:
    * the calling thread.  The function does not cancel asynchronous
    * operations issued by other threads.
    */
-  int cancel (void);
+  int cancel ();
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
@@ -1631,7 +1631,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Read_Dgram_Result (void);
+  virtual ~ACE_WIN32_Asynch_Read_Dgram_Result ();
 
   /// Bytes requested when the asynchronous read was initiated.
   size_t bytes_to_read_;
@@ -1671,7 +1671,7 @@ public:
   ACE_WIN32_Asynch_Read_Dgram (ACE_WIN32_Proactor *win32_proactor);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Read_Dgram (void);
+  virtual ~ACE_WIN32_Asynch_Read_Dgram ();
 
    /** This starts off an asynchronous read.  Upto
    * <message_block->total_size()> will be read and stored in the
@@ -1718,14 +1718,14 @@ public:
    * the calling thread.  The function does not cancel asynchronous
    * operations issued by other threads.
    */
-  int cancel (void);
+  int cancel ();
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
 
 protected:
   /// Do-nothing constructor.
-  ACE_WIN32_Asynch_Read_Dgram (void);
+  ACE_WIN32_Asynch_Read_Dgram ();
 };
 
 /**
@@ -1818,7 +1818,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Write_Dgram_Result (void);
+  virtual ~ACE_WIN32_Asynch_Write_Dgram_Result ();
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
@@ -1854,7 +1854,7 @@ public:
   ACE_WIN32_Asynch_Write_Dgram (ACE_WIN32_Proactor *win32_proactor);
 
   /// Destructor.
-  virtual ~ACE_WIN32_Asynch_Write_Dgram (void);
+  virtual ~ACE_WIN32_Asynch_Write_Dgram ();
 
   /** This starts off an asynchronous send.  Upto
    * <message_block->total_length()> will be sent.  @a message_block's
@@ -1902,14 +1902,14 @@ public:
    * the calling thread.  The function does not cancel asynchronous
    * operations issued by other threads.
    */
-  int cancel (void);
+  int cancel ();
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
 
 protected:
   /// Do-nothing constructor.
-  ACE_WIN32_Asynch_Write_Dgram (void);
+  ACE_WIN32_Asynch_Write_Dgram ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

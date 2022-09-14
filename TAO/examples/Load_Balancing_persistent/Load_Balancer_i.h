@@ -53,12 +53,12 @@ public:
                           PortableServer::POA_ptr poa);
 
   /// Destructor.
-  ~Object_Group_Factory_i (void);
+  ~Object_Group_Factory_i ();
 
 
   /// Method for the POA that will return the persistent POA_ptr stored
   /// in here..
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
   // = Load_Balancer::Object_Group_Factory idl methods.
 
@@ -98,7 +98,7 @@ public:
    * a sequence of <Group_ID>s of all existing round robin
    * <Object_Group>s created by this factory.
    */
-  Load_Balancer::Group_List * round_robin_groups (void);
+  Load_Balancer::Group_List * round_robin_groups ();
 
   /**
    * Lists all the random <Object_Group>s which were created
@@ -106,7 +106,7 @@ public:
    * a sequence of <Group_ID>s of all existing random
    * <Object_Group>s created by this factory.
    */
-  Load_Balancer::Group_List * random_groups (void);
+  Load_Balancer::Group_List * random_groups ();
 
 private:
   /// Our ORB
@@ -138,7 +138,7 @@ private:
 
   /// This rolls back the status of the objects in the POA if the
   /// service had failed..
-  void update_objects (void);
+  void update_objects ();
 
   /// Map containing all random <Object_Group>s created by this factory.
   HASH_MAP *random_groups_;
@@ -185,16 +185,16 @@ public:
                   PortableServer::POA_ptr poa);
 
   /// Destructor.
-  ~Object_Group_i (void);
+  ~Object_Group_i ();
 
   // Persistent POA
   // Method for the POA
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
   // = Load_Balancer::Object_Group idl methods.
 
   /// Get group's id.
-  char * id (void);
+  char * id ();
 
   /**
    * Adds a new <member> to the <Object_Group>.  Note that each
@@ -227,7 +227,7 @@ public:
   char * resolve_with_id (const char * id);
 
   /// Return a sequence of <Member_ID>s of all of its members.
-  Load_Balancer::Member_ID_List * members (void);
+  Load_Balancer::Member_ID_List * members ();
 
   /**
    * Cleanup the resources associated with this <Object_Group>.
@@ -235,12 +235,12 @@ public:
    * <id> should become available.  <Object_Group_Factory>
    * should no longer list this <Object_Group>.
    */
-  void destroy (void);
+  void destroy ();
 
 protected:
   /// This will replenish all the pointers that could have been lost
   /// because of failure
-  void read_from_memory (void);
+  void read_from_memory ();
 
   /// Our POA
   PortableServer::POA_var poa_;
@@ -285,7 +285,7 @@ public:
 
   /// Returns a member object from this <Object_Group> in accordance with
   /// the "random" load balancing policy.
-  char * resolve (void);
+  char * resolve ();
 };
 
 /**
@@ -310,7 +310,7 @@ public:
 
   /// Returns a member object from this <Object_Group> in accordance with
   /// the "round robin" load balancing policy.
-  char * resolve (void);
+  char * resolve ();
 
 private:
   /// Index into the Object_Group_i::member_id_list_: keeps track of

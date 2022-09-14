@@ -101,7 +101,7 @@ typedef int                             SOCKET;
 
 #ifdef WIN32
 int     getopt(int argc, char ** argv, char *opts);
-int     getpid(void);
+int     getpid();
 int     gettimeofday(struct timeval *curTimeP);
 int     random_number(int max);
 SOCKET  rexec(const char **hostname, NETPORT port, char *username, char *password,

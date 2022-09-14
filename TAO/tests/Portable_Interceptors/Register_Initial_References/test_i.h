@@ -24,10 +24,10 @@ class test_i : public virtual POA_TestModule::test
 {
 public:
   /// Constructor.
-  test_i (void);
+  test_i ();
 
   /// Destructor.
-  ~test_i (void);
+  ~test_i ();
 
 private:
 };

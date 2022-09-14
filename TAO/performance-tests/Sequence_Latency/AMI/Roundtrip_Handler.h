@@ -47,7 +47,7 @@ public:
 
   // = Other methods
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
   virtual void shutdown_excep (::Messaging::ExceptionHolder *holder);
 
 private:

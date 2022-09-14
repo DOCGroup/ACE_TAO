@@ -3,7 +3,7 @@
 
 #include "LookupManager.h"
 
-TAO_Notify_Tests_Direct_Consumer::TAO_Notify_Tests_Direct_Consumer (void)
+TAO_Notify_Tests_Direct_Consumer::TAO_Notify_Tests_Direct_Consumer ()
 {
 }
 
@@ -12,7 +12,7 @@ TAO_Notify_Tests_Direct_Consumer::~TAO_Notify_Tests_Direct_Consumer ()
 }
 
 void
-TAO_Notify_Tests_Direct_Consumer::connect (void)
+TAO_Notify_Tests_Direct_Consumer::connect ()
 {
   // Get the POA
   PortableServer::POA_var poa;

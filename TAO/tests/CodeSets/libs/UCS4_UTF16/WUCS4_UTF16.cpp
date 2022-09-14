@@ -213,11 +213,11 @@ size_t count_potential_surrogates (
 /////////////////////////////
 // WUCS4_UTF16 implementation
 
-WUCS4_UTF16::WUCS4_UTF16 (void)
+WUCS4_UTF16::WUCS4_UTF16 ()
 {
 }
 
-WUCS4_UTF16::~WUCS4_UTF16 (void)
+WUCS4_UTF16::~WUCS4_UTF16 ()
 {
 }
 

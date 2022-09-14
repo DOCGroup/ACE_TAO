@@ -73,7 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
 
 void
-DRV_init (void)
+DRV_init ()
 {
   // Initialize FE global data object.
   ACE_NEW (idl_global,

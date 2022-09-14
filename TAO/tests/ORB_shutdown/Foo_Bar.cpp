@@ -5,7 +5,7 @@ Foo_Bar::Foo_Bar (CORBA::ORB_ptr orb)
 {
 }
 
-Foo_Bar::~Foo_Bar (void)
+Foo_Bar::~Foo_Bar ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Shutting down the ORB again\n"));

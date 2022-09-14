@@ -17,7 +17,7 @@
 //               Test_Objref_Struct
 // ************************************************************************
 
-Test_Objref_Struct::Test_Objref_Struct (void)
+Test_Objref_Struct::Test_Objref_Struct ()
   : opname_ (CORBA::string_dup ("test_objref_struct")),
     inout_ (new Param_Test::Objref_Struct),
     out_ (new Param_Test::Objref_Struct),
@@ -25,7 +25,7 @@ Test_Objref_Struct::Test_Objref_Struct (void)
 {
 }
 
-Test_Objref_Struct::~Test_Objref_Struct (void)
+Test_Objref_Struct::~Test_Objref_Struct ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -99,7 +99,7 @@ Test_Objref_Struct::init_parameters (Param_Test_ptr objref)
 }
 
 int
-Test_Objref_Struct::reset_parameters (void)
+Test_Objref_Struct::reset_parameters ()
 {
   this->inout_ = new Param_Test::Objref_Struct; // delete the previous ones
   this->out_ = new Param_Test::Objref_Struct;
@@ -136,7 +136,7 @@ Test_Objref_Struct::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Objref_Struct::check_validity (void)
+Test_Objref_Struct::check_validity ()
 {
   if (this->in_.x != this->inout_->x
       || this->in_.x != this->out_->x
@@ -185,7 +185,7 @@ Test_Objref_Struct::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Objref_Struct::print_values (void)
+Test_Objref_Struct::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n*=*=*=*=*=*=*=*=*=*=\n"

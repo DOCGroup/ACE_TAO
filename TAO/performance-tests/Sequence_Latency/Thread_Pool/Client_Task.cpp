@@ -13,7 +13,7 @@ Client_Task::Client_Task (const ACE_TCHAR *data_type,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {
@@ -62,7 +62,7 @@ Client_Task::accumulate_and_dump (
 }
 
 void
-Client_Task::validate_connection (void)
+Client_Task::validate_connection ()
 {
   CORBA::ULongLong dummy = 0;
   Test::octet_load oc;
@@ -78,7 +78,7 @@ Client_Task::validate_connection (void)
 }
 
 void
-Client_Task::test_octet_seq (void)
+Client_Task::test_octet_seq ()
 {
   Test::octet_load ol (this->size_);
   ol.length (this->size_);
@@ -95,7 +95,7 @@ Client_Task::test_octet_seq (void)
 }
 
 void
-Client_Task::test_long_seq (void)
+Client_Task::test_long_seq ()
 {
   Test::long_load ll (this->size_);
   ll.length (this->size_);
@@ -113,7 +113,7 @@ Client_Task::test_long_seq (void)
 
 
 void
-Client_Task::test_short_seq (void)
+Client_Task::test_short_seq ()
 {
   Test::short_load sl (this->size_);
   sl.length (this->size_);
@@ -130,7 +130,7 @@ Client_Task::test_short_seq (void)
 }
 
 void
-Client_Task::test_char_seq (void)
+Client_Task::test_char_seq ()
 {
   Test::char_load cl (this->size_);
   cl.length (this->size_);
@@ -147,7 +147,7 @@ Client_Task::test_char_seq (void)
 }
 
 void
-Client_Task::test_longlong_seq (void)
+Client_Task::test_longlong_seq ()
 {
   Test::longlong_load ll (this->size_);
   ll.length (this->size_);
@@ -164,7 +164,7 @@ Client_Task::test_longlong_seq (void)
 }
 
 void
-Client_Task::test_double_seq (void)
+Client_Task::test_double_seq ()
 {
   Test::double_load dl (this->size_);
   dl.length (this->size_);

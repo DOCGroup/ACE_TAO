@@ -27,7 +27,7 @@
 class RTSCHEDTESTLIB_Export Base_Time
 {
  public:
-  Base_Time (void);
+  Base_Time ();
   ACE_hrtime_t base_time_;
 };
 
@@ -42,10 +42,10 @@ class RTSCHEDTESTLIB_Export Task_Stats
 {
  public:
   /// Constructor
-  Task_Stats (void);
+  Task_Stats ();
 
   /// Destructor
-  ~Task_Stats (void);
+  ~Task_Stats ();
 
   /// Init
   int init (size_t max_samples);

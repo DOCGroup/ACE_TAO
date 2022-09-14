@@ -104,7 +104,7 @@ class Globals
 {
 public:
   /// default constructor.
-  Globals (void);
+  Globals ();
 
   /// parse the arguments.
   int parse_args (int argc, ACE_TCHAR **argv);
@@ -115,7 +115,7 @@ public:
    * for other failure.  As a side effect, sets thr_create_flags
    * appropriately.
    */
-  static int sched_fifo_init (void);
+  static int sched_fifo_init ();
 
   /// Thread creation flags.  Must call sched_fifo_init () before
   /// accessing.
@@ -175,13 +175,13 @@ class MT_Priority
 {
 public:
   /// constructor.
-  MT_Priority (void);
+  MT_Priority ();
 
   /// Destructor.
-  virtual ~MT_Priority (void);
+  virtual ~MT_Priority ();
 
   /// Sets the priority of the high priority thread.
-  virtual ACE_Sched_Priority get_high_priority (void);
+  virtual ACE_Sched_Priority get_high_priority ();
 
   /// Sets the priority to be used for the low priority thread.
   virtual ACE_Sched_Priority get_low_priority
@@ -190,10 +190,10 @@ public:
      u_int use_multiple_priority);
 
   /// Accessor for num_priorities_.
-  u_int number_of_priorities (void);
+  u_int number_of_priorities ();
 
   /// Accessor for grain_.
-  u_int grain (void);
+  u_int grain ();
 
 protected:
   /// Number of priorities used.

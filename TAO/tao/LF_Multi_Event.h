@@ -38,10 +38,10 @@ class TAO_Export TAO_LF_Multi_Event: public TAO_LF_Event
 {
 public:
   /// Constructor
-  TAO_LF_Multi_Event (void);
+  TAO_LF_Multi_Event ();
 
   /// Destructor
-  virtual ~TAO_LF_Multi_Event (void);
+  virtual ~TAO_LF_Multi_Event ();
 
   /// Propagate the follower to all the events in the collection.
   virtual int bind (TAO_LF_Follower *follower);
@@ -54,10 +54,10 @@ public:
 
   /// Returns the connection handler that caused the successful status
   /// to be returned.
-  TAO_Connection_Handler *winner(void);
+  TAO_Connection_Handler *winner();
 
   /// Returns the transport associated with the first entry in the collection.
-  TAO_Transport *base_transport(void);
+  TAO_Transport *base_transport();
 
 private:
   void operator= (const TAO_LF_Multi_Event &);

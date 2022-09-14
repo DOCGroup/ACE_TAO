@@ -68,7 +68,7 @@ public:
   CORBA::Boolean is_valid () const;
 
   /// Invalidate this property's value.
-  void invalidate (void);
+  void invalidate ();
 
 protected:
   /// The Property name.

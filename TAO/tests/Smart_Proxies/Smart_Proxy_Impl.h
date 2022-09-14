@@ -4,7 +4,7 @@
 class Smart_Test_Factory : public virtual TAO_Test_Default_Proxy_Factory
 {
 public:
-  Smart_Test_Factory (void);
+  Smart_Test_Factory ();
 
   virtual Test_ptr create_proxy (Test_ptr proxy);
   // This method will create the smart_proxy.
@@ -23,7 +23,7 @@ public:
   virtual CORBA::Short method (CORBA::Short boo);
   // "Smartify" the method call!
 
-  static const ACE_CString& fake_ior (void);
+  static const ACE_CString& fake_ior ();
 
   // Don't need to add any extra functionality into <shutdown>, hence
   // we don't define it.

@@ -17,9 +17,9 @@ public:
              CORBA::ULong len, ACE_Auto_Event &two_way_done);
 
   Two_Objects_Test::Octet_Seq *
-    twoway_method (void);
+    twoway_method ();
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

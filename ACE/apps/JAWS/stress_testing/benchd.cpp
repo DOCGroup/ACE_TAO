@@ -35,7 +35,7 @@ public:
                  const char *ip_addr,
                  const char *interface_,
                  ACE_Reactor &reactor);
-  ~Handle_Events (void);
+  ~Handle_Events ();
 
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
@@ -101,7 +101,7 @@ Handle_Events::handle_close (ACE_HANDLE h, ACE_Reactor_Mask)
   return 0;
 }
 
-Handle_Events::~Handle_Events (void)
+Handle_Events::~Handle_Events ()
 {
   // ACE_OS::exit on error (bogus)...
 

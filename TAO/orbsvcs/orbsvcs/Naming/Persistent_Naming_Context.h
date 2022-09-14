@@ -178,7 +178,7 @@ public:
                                  ACE_UINT32 *counter = 0);
 
   /// Destructor.
-  virtual ~TAO_Persistent_Naming_Context (void);
+  virtual ~TAO_Persistent_Naming_Context ();
 
   // = Utility methods.
   /**
@@ -200,7 +200,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (void);
+  virtual CosNaming::NamingContext_ptr new_context ();
 
   /**
    * Returns at most the requested number of bindings @a how_many in

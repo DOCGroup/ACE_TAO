@@ -33,7 +33,7 @@ class ACE_Export ACE_TLI_Connector
 {
 public:
   /// Default constructor.
-  ACE_TLI_Connector (void);
+  ACE_TLI_Connector ();
 
   /**
    * Actively connect and produce a <new_stream> if things go well.

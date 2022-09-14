@@ -16,7 +16,7 @@ TAO_Compression_Loader::create_object (CORBA::ORB_ptr, int, ACE_TCHAR *[])
 
 
 int
-TAO_Compression_Loader::Initializer (void)
+TAO_Compression_Loader::Initializer ()
 {
   return ACE_Service_Config::process_directive (
     ace_svc_desc_TAO_Compression_Loader);

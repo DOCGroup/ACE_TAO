@@ -23,7 +23,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class HANDLER>
-ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)
+ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor ()
   : addr_family_ (0),
     listen_handle_ (ACE_INVALID_HANDLE),
     pass_addresses_ (false),
@@ -351,7 +351,7 @@ ACE_Asynch_Acceptor<HANDLER>::validate_connection
 }
 
 template <class HANDLER> int
-ACE_Asynch_Acceptor<HANDLER>::cancel (void)
+ACE_Asynch_Acceptor<HANDLER>::cancel ()
 {
   ACE_TRACE ("ACE_Asynch_Acceptor<>::cancel");
 
@@ -430,13 +430,13 @@ ACE_Asynch_Acceptor<HANDLER>::handle (ACE_HANDLE h)
 }
 
 template <class HANDLER> ACE_Asynch_Accept &
-ACE_Asynch_Acceptor<HANDLER>::asynch_accept (void)
+ACE_Asynch_Acceptor<HANDLER>::asynch_accept ()
 {
   return this->asynch_accept_;
 }
 
 template <class HANDLER> HANDLER *
-ACE_Asynch_Acceptor<HANDLER>::make_handler (void)
+ACE_Asynch_Acceptor<HANDLER>::make_handler ()
 {
   // Default behavior
   HANDLER *handler = 0;
@@ -495,7 +495,7 @@ ACE_Asynch_Acceptor<HANDLER>::bytes_to_read (size_t new_value)
 }
 
 template <class HANDLER> int
-ACE_Asynch_Acceptor<HANDLER>::should_reissue_accept (void)
+ACE_Asynch_Acceptor<HANDLER>::should_reissue_accept ()
 {
   return this->reissue_accept_;
 }

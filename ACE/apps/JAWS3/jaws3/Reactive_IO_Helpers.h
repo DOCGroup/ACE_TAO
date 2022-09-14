@@ -21,7 +21,7 @@ class JAWS_IO_Reactive_Handler : public ACE_Event_Handler
   friend class JAWS_IO_Reactive_Transmit;
 
 public:
-  virtual void open (void);
+  virtual void open ();
 
   int handle_timeout (const ACE_Time_Value &, const void *);
 
@@ -59,7 +59,7 @@ private:
 
 public: // needed for destructor due to "aCC: HP ANSI C++ B3910B A.03.39" compiler bug
 
-  ~JAWS_IO_Reactive_Handler (void)
+  ~JAWS_IO_Reactive_Handler ()
   {
     if (this->timer_id_ != -1)
       ACE_Reactor::instance ()->cancel_timer (this->timer_id_);

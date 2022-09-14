@@ -13,7 +13,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class Concrete>
-ACE_Dumpable_Adapter<Concrete>::~ACE_Dumpable_Adapter (void)
+ACE_Dumpable_Adapter<Concrete>::~ACE_Dumpable_Adapter ()
 {
   ACE_TRACE ("ACE_Dumpable_Adapter<Concrete>::~ACE_Dumpable_Adapter");
 }

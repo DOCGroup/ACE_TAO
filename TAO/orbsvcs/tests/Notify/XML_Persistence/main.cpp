@@ -22,7 +22,7 @@
 class TestSupplier
 : public POA_CosNotifyComm::StructuredPushSupplier
 {
-  virtual void disconnect_structured_push_supplier(void)
+  virtual void disconnect_structured_push_supplier()
   {
   }
 
@@ -35,7 +35,7 @@ class TestSupplier
 class TestConsumer
 : public POA_CosNotifyComm::StructuredPushConsumer
 {
-  virtual void disconnect_structured_push_consumer(void)
+  virtual void disconnect_structured_push_consumer()
   {
   }
 

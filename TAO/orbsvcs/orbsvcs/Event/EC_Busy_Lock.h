@@ -35,14 +35,14 @@ public:
   // = The ACE_Lock methods, please check $ACE_ROOT/ace/Synch.h for
   // details.
 
-  int remove (void);
-  int acquire (void);
-  int tryacquire (void);
-  int release (void);
-  int acquire_read (void);
-  int acquire_write (void);
-  int tryacquire_read (void);
-  int tryacquire_write (void);
+  int remove ();
+  int acquire ();
+  int tryacquire ();
+  int release ();
+  int acquire_read ();
+  int acquire_write ();
+  int tryacquire_read ();
+  int tryacquire_write ();
 
 private:
   Adaptee* adaptee_;

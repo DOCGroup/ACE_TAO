@@ -36,7 +36,7 @@ class ACE_Export ACE_MEM_Connector : public ACE_SOCK_Connector
 {
 public:
   /// Default constructor.
-  ACE_MEM_Connector (void);
+  ACE_MEM_Connector ();
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_MEM_Stream

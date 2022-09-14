@@ -38,7 +38,7 @@ public:
 private:
   void brain_dump (const char * context);
   void stat_dump (const char * statName);
-  void consumer_stats_check (void);
+  void consumer_stats_check ();
 private:
   ACE_CString base_;
   CosNotification::NotificationServiceMonitorControl_var nsm_;

@@ -178,7 +178,7 @@ void err (char *s);
 void mes (char *s);
 void pattern (register char *cp, register int cnt);
 char *outfmt (double b);
-void prep_timer (void);
+void prep_timer ();
 double read_timer (char *str, int len);
 static void prusage (register struct rusage *r0, struct rusage *r1, struct timeval *e, struct timeval *b, char *outp);
 static void tvadd (struct timeval *tsum, struct timeval *t0, struct timeval *t1);

@@ -38,7 +38,7 @@ ACE_Message_Queue_NT::open (DWORD max_threads)
 }
 
 int
-ACE_Message_Queue_NT::close (void)
+ACE_Message_Queue_NT::close ()
 {
   ACE_TRACE ("ACE_Message_Queue_NT::close");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
@@ -46,7 +46,7 @@ ACE_Message_Queue_NT::close (void)
   return (::CloseHandle (this->completion_port_) ? 0 : -1 );
 }
 
-ACE_Message_Queue_NT::~ACE_Message_Queue_NT (void)
+ACE_Message_Queue_NT::~ACE_Message_Queue_NT ()
 {
   ACE_TRACE ("ACE_Message_Queue_NT::~ACE_Message_Queue_NT");
   this->close ();
@@ -131,7 +131,7 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
 }
 
 int
-ACE_Message_Queue_NT::deactivate (void)
+ACE_Message_Queue_NT::deactivate ()
 {
   ACE_TRACE ("ACE_Message_Queue_NT::deactivate");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
@@ -155,7 +155,7 @@ ACE_Message_Queue_NT::deactivate (void)
 }
 
 int
-ACE_Message_Queue_NT::activate (void)
+ACE_Message_Queue_NT::activate ()
 {
   ACE_TRACE ("ACE_Message_Queue_NT::activate");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
@@ -165,7 +165,7 @@ ACE_Message_Queue_NT::activate (void)
 }
 
 int
-ACE_Message_Queue_NT::pulse (void)
+ACE_Message_Queue_NT::pulse ()
 {
   ACE_TRACE ("ACE_Message_Queue_NT::pulse");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);

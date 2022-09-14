@@ -311,7 +311,7 @@ child ()
 // run time check and run the NT4-or-better code unless we're on
 // CE or something other than NT4 (Pharlap reports itself as NT 3.51).
 static void
-get_base_addrs (void)
+get_base_addrs ()
 {
 #   if defined(__clang__)
 #     pragma clang diagnostic push

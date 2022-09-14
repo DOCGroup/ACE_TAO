@@ -40,10 +40,10 @@ class ACE_QoS_Export ACE_QoS_Session_Factory
 {
 public :
   /// Default constructor.
-  ACE_QoS_Session_Factory (void);
+  ACE_QoS_Session_Factory ();
 
   /// Default destructor.
-  ~ACE_QoS_Session_Factory (void);
+  ~ACE_QoS_Session_Factory ();
 
   /// Types of sessions for this factory to manage.
   enum ACE_QoS_Session_Type

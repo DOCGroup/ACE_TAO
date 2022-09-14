@@ -117,9 +117,9 @@ namespace RTCORBA
 
   protected:
     // Abstract or local interface only.
-    ProtocolProperties (void);
+    ProtocolProperties ();
 
-    virtual ~ProtocolProperties (void);
+    virtual ~ProtocolProperties ();
 
   private:
     // Private and unimplemented for concrete interfaces.
@@ -159,7 +159,7 @@ namespace TAO
     static void release (
         ::RTCORBA::ProtocolProperties_ptr
       );
-    static ::RTCORBA::ProtocolProperties_ptr nil (void);
+    static ::RTCORBA::ProtocolProperties_ptr nil ();
     static ::CORBA::Boolean marshal (
         const ::RTCORBA::ProtocolProperties_ptr p,
         TAO_OutputCDR & cdr

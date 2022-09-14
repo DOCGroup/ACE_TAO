@@ -15,7 +15,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 
-Identity_Client::Identity_Client (void)
+Identity_Client::Identity_Client ()
   : group_factory_ior_ (0),
     number_of_invocations_ (5),
     use_random_ (0),
@@ -92,7 +92,7 @@ Identity_Client::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-Identity_Client::run (void)
+Identity_Client::run ()
 {
   // Contact the <Object_Group_Factory> to obtain an <Object_Group>.
   CORBA::ORB_var orb = orb_manager_.orb ();
@@ -212,7 +212,7 @@ Identity_Client::run (void)
   return 0;
 }
 
-Identity_Client::~Identity_Client (void)
+Identity_Client::~Identity_Client ()
 {
 }
 

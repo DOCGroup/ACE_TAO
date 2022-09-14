@@ -45,7 +45,7 @@ public:
   /// Run by a daemon thread to handle deferred processing.
   virtual int svc ();
 
-  virtual ~Test_Server_Module (void);
+  virtual ~Test_Server_Module ();
 
 private:
   /// Reference to the ORB.

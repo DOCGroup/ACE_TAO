@@ -183,7 +183,7 @@ public:
                        ACE_Synch_Options &options =
                        ACE_Synch_Options::defaults);
 
-  ~ACE_Token_Collection (void);
+  ~ACE_Token_Collection ();
 
   /// Dump the state of the class.
   void dump () const;

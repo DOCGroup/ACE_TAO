@@ -100,29 +100,29 @@ enum
 class Options : private ACE_Copy_Disabled
 {
 public:
-  Options (void);
-  ~Options (void);
+  Options ();
+  ~Options ();
   int operator[] (Option_Type option);
   int parse_args (int argc, ACE_TCHAR *argv[]);
   void operator= (enum Option_Type);
   bool operator!= (enum Option_Type);
-  static void print_options (void);
+  static void print_options ();
   static void asso_max (int r);
-  static int asso_max (void);
-  static void reset (void);
-  static int get (void);
-  static int iterations (void);
-  static u_int max_keysig_size (void);
+  static int asso_max ();
+  static void reset ();
+  static int get ();
+  static int iterations ();
+  static u_int max_keysig_size ();
   static void keysig_size (u_int);
-  static int jump (void);
-  static int initial_value (void);
-  static int total_switches (void);
-  static const char *function_name (void);
-  static const char *fill_default (void);
-  static const char *key_name (void);
-  static const char *class_name (void);
-  static const char *hash_name (void);
-  static const char *delimiter (void);
+  static int jump ();
+  static int initial_value ();
+  static int total_switches ();
+  static const char *function_name ();
+  static const char *fill_default ();
+  static const char *key_name ();
+  static const char *class_name ();
+  static const char *hash_name ();
+  static const char *delimiter ();
 
 private:
   /// Holds the user-specified Options.
@@ -180,7 +180,7 @@ private:
   static int key_sort (char *base, int len);
 
   /// Prints proper program usage.
-  static void usage (void);
+  static void usage ();
 };
 
 /// Global option coordinator for the entire program.

@@ -81,7 +81,7 @@ TAO::FT_ReplicationManager::FT_ReplicationManager ()
   // init must be called before using this object.
 }
 
-TAO::FT_ReplicationManager::~FT_ReplicationManager (void)
+TAO::FT_ReplicationManager::~FT_ReplicationManager ()
 {
   // cleanup happens in fini
 }
@@ -324,7 +324,7 @@ int TAO::FT_ReplicationManager::idle (int & result)
 
 
 //public
-int TAO::FT_ReplicationManager::fini (void)
+int TAO::FT_ReplicationManager::fini ()
 {
   int result = 0;
 

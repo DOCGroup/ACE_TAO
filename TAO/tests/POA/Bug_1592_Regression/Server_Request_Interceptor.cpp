@@ -5,22 +5,22 @@ CORBA::Boolean receive_request_called = 0;
 CORBA::Boolean ending_interception_point_called = 0;
 
 
-Server_Request_Interceptor::Server_Request_Interceptor (void)
+Server_Request_Interceptor::Server_Request_Interceptor ()
 {
 }
 
-Server_Request_Interceptor::~Server_Request_Interceptor (void)
+Server_Request_Interceptor::~Server_Request_Interceptor ()
 {
 }
 
 char *
-Server_Request_Interceptor::name (void)
+Server_Request_Interceptor::name ()
 {
   return CORBA::string_dup ("");  // Anonymous
 }
 
 void
-Server_Request_Interceptor::destroy (void)
+Server_Request_Interceptor::destroy ()
 {
 }
 

@@ -23,7 +23,7 @@ public:
     {
     }
 
-  PortableServer::POA_ptr _default_POA (void)
+  PortableServer::POA_ptr _default_POA ()
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }

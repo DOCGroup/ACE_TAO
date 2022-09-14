@@ -2,7 +2,7 @@
 #include "test.h"
 #include "MIF_Task.h"
 
-MIF_DT_Creator::MIF_DT_Creator (void)
+MIF_DT_Creator::MIF_DT_Creator ()
 {
   DT_TEST::instance ()->dt_creator (this);
 }
@@ -68,13 +68,13 @@ MIF_DT_Creator::yield (time_t suspend_time,
 }
 
 int
-MIF_DT_Creator::total_load (void)
+MIF_DT_Creator::total_load ()
 {
   return 1000;
 }
 
 void
-MIF_DT_Creator::wait (void)
+MIF_DT_Creator::wait ()
 {
   while (active_dt_count_ > 0 || active_job_count_ > 0)
     {

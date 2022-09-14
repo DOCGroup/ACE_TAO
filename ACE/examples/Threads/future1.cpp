@@ -53,7 +53,7 @@ class Scheduler : public ACE_Task_Base
   friend class Method_RequestWork;
 public:
   Scheduler (const char *, Scheduler * = 0);
-  virtual ~Scheduler (void);
+  virtual ~Scheduler ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
@@ -63,11 +63,11 @@ public:
   virtual int svc ();
 
   ACE_Future<u_long> work (u_long param, int count = 1);
-  ACE_Future<const char*> name (void);
-  void end (void);
+  ACE_Future<const char*> name ();
+  void end ();
 
   u_long work_i (u_long, int);
-  const char *name_i (void);
+  const char *name_i ();
 
 private:
   char *name_;
@@ -84,8 +84,8 @@ class Method_Request_work : public ACE_Method_Request
 {
 public:
   Method_Request_work (Scheduler *, u_long, int, ACE_Future<u_long> &);
-  virtual ~Method_Request_work (void);
-  virtual int call (void);
+  virtual ~Method_Request_work ();
+  virtual int call ();
 
 private:
   Scheduler *scheduler_;
@@ -107,14 +107,14 @@ Method_Request_work::Method_Request_work (Scheduler* new_Scheduler,
               "(%t) Method_Request_work created\n"));
 }
 
-Method_Request_work::~Method_Request_work (void)
+Method_Request_work::~Method_Request_work ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Method_Request_work will be deleted.\n"));
 }
 
 
 int
-Method_Request_work::call (void)
+Method_Request_work::call ()
 {
   return this->future_result_.set (this->scheduler_->work_i (this->param_, this->count_));
 }
@@ -128,8 +128,8 @@ class Method_Request_name : public ACE_Method_Request
 {
 public:
   Method_Request_name (Scheduler *, ACE_Future<const char*> &);
-  virtual ~Method_Request_name (void);
-  virtual int call (void);
+  virtual ~Method_Request_name ();
+  virtual int call ();
 
 private:
   Scheduler *scheduler_;
@@ -145,14 +145,14 @@ Method_Request_name::Method_Request_name (Scheduler *new_scheduler,
               "(%t) Method_Request_name created\n"));
 }
 
-Method_Request_name::~Method_Request_name (void)
+Method_Request_name::~Method_Request_name ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Method_Request_name will be deleted.\n"));
 }
 
 int
-Method_Request_name::call (void)
+Method_Request_name::call ()
 {
   return future_result_.set (scheduler_->name_i ());
 }
@@ -185,7 +185,7 @@ Scheduler::Scheduler (const char *newname,
 }
 
 // Destructor
-Scheduler::~Scheduler (void)
+Scheduler::~Scheduler ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s will be destroyed\n", this->name_));
   delete [] this->name_;
@@ -211,7 +211,7 @@ Scheduler::close (u_long)
 
 // service..
 int
-Scheduler::svc (void)
+Scheduler::svc ()
 {
   for (;;)
     {
@@ -231,7 +231,7 @@ Scheduler::svc (void)
 }
 
 void
-Scheduler::end (void)
+Scheduler::end ()
 {
   this->activation_queue_.enqueue (new Method_Request_end (this));
 }
@@ -248,7 +248,7 @@ Scheduler::work_i (u_long param,
 }
 
 const char *
-Scheduler::name_i (void)
+Scheduler::name_i ()
 {
   char *the_name;
 
@@ -259,7 +259,7 @@ Scheduler::name_i (void)
 }
 
 ACE_Future<const char *>
-Scheduler::name (void)
+Scheduler::name ()
 {
   if (this->scheduler_)
     // Delegate to the Scheduler.

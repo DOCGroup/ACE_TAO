@@ -35,7 +35,7 @@ class AIO_CLD_Acceptor
 public:
   //FUZZ: disable check_for_lack_ACE_OS
   // Cancel accept and close all clients.
-  void close (void);
+  void close ();
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Remove handler from client set.
@@ -44,7 +44,7 @@ public:
 
 protected:
   // Service handler factory method.
-  virtual AIO_Input_Handler *make_handler (void);
+  virtual AIO_Input_Handler *make_handler ();
 
   // Set of all connected clients
   ACE_Unbounded_Set<AIO_Input_Handler *> clients_;

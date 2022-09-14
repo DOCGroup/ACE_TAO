@@ -11,7 +11,7 @@
 #include "ace/os_include/os_netdb.h"
 
 // Constructor.
-Clerk_i::Clerk_i (void)
+Clerk_i::Clerk_i ()
   : ior_output_file_ (0),
     timer_value_ (3),
     timer_value_usecs_ (0),
@@ -21,7 +21,7 @@ Clerk_i::Clerk_i (void)
 }
 
 // Destructor.
-Clerk_i::~Clerk_i (void)
+Clerk_i::~Clerk_i ()
 {
 }
 
@@ -161,7 +161,7 @@ Clerk_i::parse_args (int argc,
 // The iterator returned from this is used to get the next n IORs.
 
 int
-Clerk_i::get_first_IOR (void)
+Clerk_i::get_first_IOR ()
 {
   try
     {
@@ -290,7 +290,7 @@ Clerk_i::init_naming_service ()
 // Create an instance of the clerk with appropriate parameters.
 
 int
-Clerk_i::create_clerk (void)
+Clerk_i::create_clerk ()
 {
   try
     {
@@ -340,7 +340,7 @@ Clerk_i::create_clerk (void)
 // Clerk:<hostname>.
 
 int
-Clerk_i::register_clerk (void)
+Clerk_i::register_clerk ()
 {
   try
     {
@@ -465,7 +465,7 @@ Clerk_i::init (int argc,
 }
 
 int
-Clerk_i::run (void)
+Clerk_i::run ()
 {
   try
     {

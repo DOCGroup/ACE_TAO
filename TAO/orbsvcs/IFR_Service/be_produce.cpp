@@ -77,14 +77,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Clean up before exit, whether successful or not.
 TAO_IFR_BE_Export void
-BE_cleanup (void)
+BE_cleanup ()
 {
   idl_global->destroy ();
 }
 
 // Abort this run of the BE.
 TAO_IFR_BE_Export void
-BE_abort (void)
+BE_abort ()
 {
   ORBSVCS_ERROR ((LM_ERROR,
               ACE_TEXT ("Fatal Error - Aborting\n")));
@@ -94,7 +94,7 @@ BE_abort (void)
 }
 
 int
-BE_ifr_repo_init (void)
+BE_ifr_repo_init ()
 {
   try
   {
@@ -138,7 +138,7 @@ BE_ifr_repo_init (void)
 
 // Do the work of this BE. This is the starting point for code generation.
 TAO_IFR_BE_Export void
-BE_produce (void)
+BE_produce ()
 {
   try
     {

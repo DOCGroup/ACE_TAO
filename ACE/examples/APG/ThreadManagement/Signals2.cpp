@@ -24,7 +24,7 @@ public:
     return 0;
   }
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Starting thread\n")));
 
@@ -56,7 +56,7 @@ SignalableTask::process_message (ACE_Message_Block *)
 }
 
 void
-SignalableTask::handle_alert (void)
+SignalableTask::handle_alert ()
 {
   return;
 }

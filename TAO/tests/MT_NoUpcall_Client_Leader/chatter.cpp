@@ -12,19 +12,19 @@ Chatter::Chatter (CORBA::ORB_ptr orb, const ACE_TCHAR *ior, ACE_Condition<ACE_Mu
 }
 
 long
-Chatter::nreplies (void)
+Chatter::nreplies ()
 {
   return this->nreplies_;
 }
 
 long
-Chatter::nrequests (void)
+Chatter::nrequests ()
 {
   return this->nrequests_;
 }
 
 int
-Chatter::svc (void)
+Chatter::svc ()
 {
   long nrq = -1;
   try

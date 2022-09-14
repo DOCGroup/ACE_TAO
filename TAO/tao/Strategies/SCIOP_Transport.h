@@ -56,7 +56,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
    */
-  virtual ~TAO_SCIOP_Transport (void);
+  virtual ~TAO_SCIOP_Transport ();
 
   /** @name Overridden Template Methods
    *
@@ -64,7 +64,7 @@ protected:
    * details.
    */
   //@{
-  virtual ACE_Event_Handler * event_handler_i (void);
+  virtual ACE_Event_Handler * event_handler_i ();
 
   virtual ssize_t send (iovec *iov, int iovcnt,
                         size_t &bytes_transferred,
@@ -95,7 +95,7 @@ public:
 
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
-  virtual TAO_Connection_Handler * connection_handler_i (void);
+  virtual TAO_Connection_Handler * connection_handler_i ();
 
   //@}
 

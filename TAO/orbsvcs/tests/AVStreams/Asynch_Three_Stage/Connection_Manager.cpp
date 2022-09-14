@@ -1,10 +1,10 @@
 #include "Connection_Manager.h"
 
-Connection_Manager::Connection_Manager (void)
+Connection_Manager::Connection_Manager ()
 {
 }
 
-Connection_Manager::~Connection_Manager (void)
+Connection_Manager::~Connection_Manager ()
 {
 }
 
@@ -214,7 +214,7 @@ Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
 }
 
 void
-Connection_Manager::find_receivers (void)
+Connection_Manager::find_receivers ()
 {
   CosNaming::BindingIterator_var iterator;
   CosNaming::BindingList_var binding_list;
@@ -464,7 +464,7 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
 }
 
 void
-Connection_Manager::connect_to_sender (void)
+Connection_Manager::connect_to_sender ()
 {
   if (CORBA::is_nil (this->sender_.in ()))
     return;
@@ -586,19 +586,19 @@ Connection_Manager::destroy (const ACE_CString &flowname)
 }
 
 Connection_Manager::Receivers &
-Connection_Manager::receivers (void)
+Connection_Manager::receivers ()
 {
   return this->receivers_;
 }
 
 Connection_Manager::Protocol_Objects &
-Connection_Manager::protocol_objects (void)
+Connection_Manager::protocol_objects ()
 {
   return this->protocol_objects_;
 }
 
 Connection_Manager::StreamCtrls &
-Connection_Manager::streamctrls (void)
+Connection_Manager::streamctrls ()
 {
   return this->streamctrls_;
 }

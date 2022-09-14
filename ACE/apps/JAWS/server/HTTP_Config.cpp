@@ -8,7 +8,7 @@
 HTTP_Config_Info *HTTP_Config::instance_ = 0;
 
 HTTP_Config_Info *
-HTTP_Config::instance (void)
+HTTP_Config::instance ()
 {
   if (HTTP_Config::instance_ == 0)
     {
@@ -24,7 +24,7 @@ HTTP_Config::instance (void)
   return HTTP_Config::instance_;
 }
 
-HTTP_Config_Info::HTTP_Config_Info (void)
+HTTP_Config_Info::HTTP_Config_Info ()
   : document_root_ (0),
     cgi_path_ (0),
     user_dir_ (0),
@@ -33,7 +33,7 @@ HTTP_Config_Info::HTTP_Config_Info (void)
 {
 }
 
-HTTP_Config_Info::~HTTP_Config_Info (void)
+HTTP_Config_Info::~HTTP_Config_Info ()
 {
 }
 

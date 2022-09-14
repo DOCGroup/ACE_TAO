@@ -15,22 +15,22 @@ class Task_Stats;
 class DT_Test :public ACE_Task <ACE_SYNCH>
 {
  public:
-  DT_Test (void);
+  DT_Test ();
 
-  void check_supported_priorities (void);
+  void check_supported_priorities ();
 
   int init (int argc, ACE_TCHAR *argv []);
 
   void run (int argc, ACE_TCHAR *argv []);
 
   void dt_creator (FP_DT_Creator* dt_creator);
-  FP_DT_Creator* dt_creator (void);
+  FP_DT_Creator* dt_creator ();
 
-  Fixed_Priority_Scheduler* scheduler (void);
+  Fixed_Priority_Scheduler* scheduler ();
 
-  int activate_task (void);
+  int activate_task ();
 
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
   ACE_hrtime_t base_t;
 

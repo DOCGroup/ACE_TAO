@@ -37,7 +37,7 @@ ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
     }
 }
 
-ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream (void)
+ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream");
 

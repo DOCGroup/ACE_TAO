@@ -229,7 +229,7 @@ extern void rqstat_times(rqst_stats_t *rs, rqst_timer_t *rt);
 void errexit(const char *, ...);
 extern int returnerr(const char *, ...);
 extern int d_printf(const char *, ...);
-extern char *neterrstr(void);
+extern char *neterrstr();
 
 /* routines in get.c */
 

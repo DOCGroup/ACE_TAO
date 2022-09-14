@@ -31,7 +31,7 @@ public:
   FT_ProxyAdmin(EC_PROXY_ADMIN* admin,
               PortableServer::POA_var poa);
 
-  ProxyInterface_ptr obtain_proxy (void);
+  ProxyInterface_ptr obtain_proxy ();
 
   /// this is used for updating the state
   void obtain_proxy (const FtRtecEventChannelAdmin::Operation& op);

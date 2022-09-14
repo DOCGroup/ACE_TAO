@@ -19,7 +19,7 @@ public:
      CORBA::ULong group_version);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   CORBA::ORB_var corb_;

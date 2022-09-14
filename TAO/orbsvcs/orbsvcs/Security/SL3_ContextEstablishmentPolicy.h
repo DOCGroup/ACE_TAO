@@ -74,11 +74,11 @@ namespace TAO
 
       virtual SecurityLevel3::FeatureDirective use_integrity ();
 
-      virtual CORBA::PolicyType policy_type (void);
+      virtual CORBA::PolicyType policy_type ();
 
-      virtual CORBA::Policy_ptr copy (void);
+      virtual CORBA::Policy_ptr copy ();
 
-      virtual void destroy (void);
+      virtual void destroy ();
       //@}
 
     protected:
@@ -87,7 +87,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ContextEstablishmentPolicy (void);
+      ~ContextEstablishmentPolicy ();
 
     private:
       SecurityLevel3::CredsDirective     creds_directive_;

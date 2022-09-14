@@ -27,7 +27,7 @@ ACE_TLI::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_TLI::ACE_TLI (void)
+ACE_TLI::ACE_TLI ()
 {
   ACE_TRACE ("ACE_TLI::ACE_TLI");
 #if defined (ACE_HAS_SVR4_TLI)
@@ -62,7 +62,7 @@ ACE_TLI::open (const char device[], int oflag, struct t_info *info)
   return this->get_handle ();
 }
 
-ACE_TLI::~ACE_TLI (void)
+ACE_TLI::~ACE_TLI ()
 {
   ACE_TRACE ("ACE_TLI::~ACE_TLI");
 #if defined (ACE_HAS_SVR4_TLI)
@@ -101,7 +101,7 @@ ACE_TLI::get_local_addr (ACE_Addr &sa) const
 }
 
 int
-ACE_TLI::close (void)
+ACE_TLI::close ()
 {
   ACE_TRACE ("ACE_TLI::close");
   int result = 0; // Geisler: result must be int

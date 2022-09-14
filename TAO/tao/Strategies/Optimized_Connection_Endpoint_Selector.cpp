@@ -36,7 +36,7 @@ TAO_Optimized_Connection_Endpoint_Selector (const ACE_Time_Value &tv)
 }
 
 TAO_Optimized_Connection_Endpoint_Selector::
-~TAO_Optimized_Connection_Endpoint_Selector (void)
+~TAO_Optimized_Connection_Endpoint_Selector ()
 {
 }
 

@@ -41,7 +41,7 @@ static ACE_TCHAR *fname = 0;   // File you want to view.
 static int use_named_pipe = 0; // Do we want to use named pipe?
 
 static void
-usage (void)
+usage ()
 {
   ACE_ERROR ((LM_ERROR, "Usage: imore [-n|-u] <filename>\n"
               "\t-n Use named pipe.\n"

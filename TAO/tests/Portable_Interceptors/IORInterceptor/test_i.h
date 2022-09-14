@@ -31,7 +31,7 @@ public:
   test_i (CORBA::ORB_ptr orb);
 
   /// Shutdown the ORB.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Pseudo-reference to the ORB.

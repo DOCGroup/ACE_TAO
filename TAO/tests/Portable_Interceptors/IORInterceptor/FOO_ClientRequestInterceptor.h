@@ -57,9 +57,9 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestInterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void send_request (
       PortableInterceptor::ClientRequestInfo_ptr ri);

@@ -13,7 +13,7 @@ Echo_Client_i::Echo_Client_i (void) : payload_length_ (0)
 }
 
 //Destructor.
-Echo_Client_i::~Echo_Client_i (void)
+Echo_Client_i::~Echo_Client_i ()
 {
   //no-op
 }

@@ -11,7 +11,7 @@
 }
 
 char *
-Hello::get_string (void)
+Hello::get_string ()
 {
   ACE_ERROR ((LM_DEBUG,
               "(%P|%t) ERROR: Upcall in process ..\n"));
@@ -19,7 +19,7 @@ Hello::get_string (void)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
   // Give the client thread time to return from the collocated
   // call to this method before shutting down the ORB.  We sleep

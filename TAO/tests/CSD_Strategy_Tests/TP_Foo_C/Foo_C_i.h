@@ -12,7 +12,7 @@ class CSD_TP_Foo_C_Export Foo_C_i : public virtual POA_Foo_C
     Foo_C_i();
     virtual ~Foo_C_i();
 
-    virtual void op1(void);
+    virtual void op1();
 
     virtual void op2(CORBA::Long value);
 
@@ -20,15 +20,15 @@ class CSD_TP_Foo_C_Export Foo_C_i : public virtual POA_Foo_C
 
     virtual void op4(CORBA::Long value);
 
-    virtual void op5(void);
+    virtual void op5();
 
-    virtual void done(void);
+    virtual void done();
 
-    void cust_op1(void);
+    void cust_op1();
     void cust_op2(long value);
     long cust_op3(long value);
     void cust_op4(long value);
-    void cust_op5(void);
+    void cust_op5();
 
     void gather_stats(Foo_C_Statistics& stats);
 

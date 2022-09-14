@@ -171,7 +171,7 @@ int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb)
   return result;
 }
 
-int FTAPP::FT_Creator::run (void)
+int FTAPP::FT_Creator::run ()
 {
   int result = 0;
   size_t typeCount = this->create_roles_.size();

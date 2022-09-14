@@ -87,7 +87,7 @@ Test_i::report (
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
   if (this->mode_ == A::RM_SLAVE && !CORBA::is_nil (this->opponent_.in ()))
   {

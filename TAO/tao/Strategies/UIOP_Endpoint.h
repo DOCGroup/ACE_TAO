@@ -41,7 +41,7 @@ public:
   friend class TAO_UIOP_Profile;
 
   /// Default constructor.
-  TAO_UIOP_Endpoint (void);
+  TAO_UIOP_Endpoint ();
 
   /// Constructor.
   TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr,
@@ -56,16 +56,16 @@ public:
    * Please check the documentation in Endpoint.h for details.
    */
   //@{
-  virtual TAO_Endpoint *next (void);
+  virtual TAO_Endpoint *next ();
   virtual int addr_to_string (char *buffer, size_t length);
-  virtual TAO_Endpoint *duplicate (void);
+  virtual TAO_Endpoint *duplicate ();
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their rendezvous points are the same.
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
   /// Return a hash value for this object.
-  virtual CORBA::ULong hash (void);
+  virtual CORBA::ULong hash ();
   //@}
 
   // = UIOP_Endpoint-specific methods.

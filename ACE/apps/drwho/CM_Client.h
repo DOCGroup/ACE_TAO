@@ -28,16 +28,16 @@ class CM_Client : public Comm_Manager
 {
 public:
   /// Constructor.
-  CM_Client (void);
+  CM_Client ();
 
   /// Destructor.
-  virtual ~CM_Client (void);
+  virtual ~CM_Client ();
 
   virtual int mux (char *packet, int &packet_length)   = 0;
   virtual int demux (char *packet, int &packet_length) = 0;
   virtual int open (short port_number);
   virtual int receive (int timeout = 0);
-  virtual int send (void);
+  virtual int send ();
 
 private:
   fd_set read_fd_;

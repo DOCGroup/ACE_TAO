@@ -42,7 +42,7 @@ public:
   virtual char *echo_string (const char *mesg);
 
   /// Shutdown the server.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);

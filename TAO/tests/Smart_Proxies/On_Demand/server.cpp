@@ -25,7 +25,7 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  void shutdown  (void);
+  void shutdown  ();
 
 private:
   CORBA::ORB_var orb_;
@@ -48,7 +48,7 @@ Test_i :: method (CORBA::Short boo)
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
   this->orb_->shutdown ();
 }

@@ -19,7 +19,7 @@ TAO_LB_Signal_Handler::TAO_LB_Signal_Handler (CORBA::ORB_ptr orb,
 }
 
 int
-TAO_LB_Signal_Handler::svc (void)
+TAO_LB_Signal_Handler::svc ()
 {
   // This method is only invoked when performing synchronous signal
   // handling.

@@ -26,7 +26,7 @@ class ACE_Service_Gestalt_Test : public ACE_Service_Gestalt
     {
     };
 
-  ~ACE_Service_Gestalt_Test (void)
+  ~ACE_Service_Gestalt_Test ()
     {
       if (this->teardown_)
         {

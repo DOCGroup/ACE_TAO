@@ -104,7 +104,7 @@ namespace TAO
      * return all groups in the factory
      */
     PortableGroup::ObjectGroups *
-    all_groups (void);
+    all_groups ();
 
 
     /**

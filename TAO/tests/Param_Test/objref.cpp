@@ -17,12 +17,12 @@
 //               Test_ObjRef
 // ************************************************************************
 
-Test_ObjRef::Test_ObjRef (void)
+Test_ObjRef::Test_ObjRef ()
   : opname_ (CORBA::string_dup ("test_objref"))
 {
 }
 
-Test_ObjRef::~Test_ObjRef (void)
+Test_ObjRef::~Test_ObjRef ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -106,7 +106,7 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref)
 }
 
 int
-Test_ObjRef::reset_parameters (void)
+Test_ObjRef::reset_parameters ()
 {
   // Environemnt variable
   Coffee::Desc desc;
@@ -154,7 +154,7 @@ Test_ObjRef::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_ObjRef::check_validity (void)
+Test_ObjRef::check_validity ()
 {
   // Environemnt variable
 
@@ -209,7 +209,7 @@ Test_ObjRef::check_validity (CORBA::Request_ptr)
 }
 
 void
-Test_ObjRef::print_values (void)
+Test_ObjRef::print_values ()
 {
   // Env. variable
 

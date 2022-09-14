@@ -54,14 +54,14 @@ public:
                              const ACE_Time_Value &timeout);
 
   /// destructor...
-  virtual ~TAO_CEC_ProxyPushConsumer (void);
+  virtual ~TAO_CEC_ProxyPushConsumer ();
 
   /// Activate in the POA
   virtual void activate (
       CosEventChannelAdmin::ProxyPushConsumer_ptr &activated_proxy);
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate ();
 
   /// Return false if no supplier is connected...
   CORBA::Boolean is_connected () const;
@@ -78,22 +78,22 @@ public:
   CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected);
 
   /// The event channel is shutting down
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   // = The CosEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
                 CosEventComm::PushSupplier_ptr push_supplier);
   virtual void push (const CORBA::Any& event);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (void);
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  virtual PortableServer::POA_ptr _default_POA ();
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
 protected:
   /// Set the supplier, used by some implementations to change the
@@ -108,7 +108,7 @@ protected:
   CORBA::Boolean is_connected_i () const;
 
   /// Release the supplier
-  void cleanup_i (void);
+  void cleanup_i ();
 
   /// Assigns the parameter to both supplier_ and nopolicy_supplier_, and
   /// applies policies (when appropriate) to supplier_.
@@ -164,7 +164,7 @@ public:
                                    TAO_CEC_ProxyPushConsumer *proxy);
 
   /// Destructor
-  ~TAO_CEC_ProxyPushConsumer_Guard (void);
+  ~TAO_CEC_ProxyPushConsumer_Guard ();
 
   /// Returns true if the reference count successfully acquired
   bool locked () const;

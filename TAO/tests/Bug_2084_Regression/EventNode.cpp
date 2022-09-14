@@ -52,7 +52,7 @@ void EventNode::registerHello ( ::Test::Hello_ptr h )
 }
 
 void
-EventNode::shutdown (void)
+EventNode::shutdown ()
 {
   this->orb_->shutdown (false);
 }

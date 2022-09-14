@@ -20,7 +20,7 @@ class Client : public ACE_Task_Base
   //   Use the ACE_Task_Base class to run the client threads.
   //
 public:
-  Client (void);
+  Client ();
   // ctor
 
   void set (Test_ptr server,
@@ -230,7 +230,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Client::Client (void)
+Client::Client ()
 {
 }
 
@@ -251,7 +251,7 @@ Client::set (Test_ptr server,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   ACE_hthread_t current;
   ACE_Thread::self (current);

@@ -15,9 +15,9 @@ public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
-  virtual Test::HelloWorld_ptr get_helloworld (void);
+  virtual Test::HelloWorld_ptr get_helloworld ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   PortableServer::POA_var poa_;

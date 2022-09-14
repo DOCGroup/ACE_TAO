@@ -25,7 +25,7 @@
 #endif /* __ACE_INLINE__ */
 
 
-EC_Driver::EC_Driver (void)
+EC_Driver::EC_Driver ()
   :  n_consumers_ (1),
      consumers_ (0),
      n_suppliers_ (1),
@@ -51,7 +51,7 @@ EC_Driver::EC_Driver (void)
   TAO_EC_Default_Factory::init_svcs ();
 }
 
-EC_Driver::~EC_Driver (void)
+EC_Driver::~EC_Driver ()
 {
 }
 
@@ -123,7 +123,7 @@ EC_Driver::run_init (int &argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_Driver::run_cleanup (void)
+EC_Driver::run_cleanup ()
 {
   this->disconnect_clients ();
 
@@ -214,7 +214,7 @@ EC_Driver::print_args () const
 }
 
 int
-EC_Driver::move_to_rt_class (void)
+EC_Driver::move_to_rt_class ()
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -248,7 +248,7 @@ EC_Driver::move_to_rt_class (void)
 }
 
 void
-EC_Driver::initialize_ec_impl (void)
+EC_Driver::initialize_ec_impl ()
 {
 #if !defined(EC_DISABLE_REMOTE_EC)
   if (this->use_remote_ec_ == 1)
@@ -263,7 +263,7 @@ EC_Driver::initialize_ec_impl (void)
 
 #if !defined(EC_DISABLE_REMOTE_EC)
 void
-EC_Driver::obtain_remote_ec (void)
+EC_Driver::obtain_remote_ec ()
 {
   CosNaming::NamingContext_var naming_context =
     this->get_naming_context ();
@@ -280,7 +280,7 @@ EC_Driver::obtain_remote_ec (void)
 }
 
 CosNaming::NamingContext_ptr
-EC_Driver::get_naming_context (void)
+EC_Driver::get_naming_context ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService");
@@ -295,7 +295,7 @@ EC_Driver::get_naming_context (void)
 #endif
 
 void
-EC_Driver::initialize_new_ec (void)
+EC_Driver::initialize_new_ec ()
 {
   TAO_EC_Event_Channel_Attributes attr (this->root_poa_.in (),
                                         this->root_poa_.in ());
@@ -313,7 +313,7 @@ EC_Driver::initialize_new_ec (void)
 }
 
 void
-EC_Driver::deactivate_ec (void)
+EC_Driver::deactivate_ec ()
 {
 #if !defined(EC_DISABLE_REMOTE_EC)
   if (this->use_remote_ec_ == 1)
@@ -334,13 +334,13 @@ EC_Driver::deactivate_ec (void)
 }
 
 void
-EC_Driver::destroy_ec (void)
+EC_Driver::destroy_ec ()
 {
   this->event_channel_->destroy ();
 }
 
 int
-EC_Driver::allocate_consumers (void)
+EC_Driver::allocate_consumers ()
 {
   ACE_NEW_RETURN (this->consumers_,
                   EC_Consumer*[this->n_consumers_],
@@ -352,7 +352,7 @@ EC_Driver::allocate_consumers (void)
 }
 
 int
-EC_Driver::allocate_suppliers (void)
+EC_Driver::allocate_suppliers ()
 {
   ACE_NEW_RETURN (this->suppliers_,
                   EC_Supplier*[this->n_suppliers_],
@@ -378,7 +378,7 @@ EC_Driver::allocate_supplier (int i)
 }
 
 void
-EC_Driver::connect_clients (void)
+EC_Driver::connect_clients ()
 {
   this->connect_consumers ();
 
@@ -386,7 +386,7 @@ EC_Driver::connect_clients (void)
 }
 
 void
-EC_Driver::disconnect_clients (void)
+EC_Driver::disconnect_clients ()
 {
   this->disconnect_suppliers ();
 
@@ -394,7 +394,7 @@ EC_Driver::disconnect_clients (void)
 }
 
 void
-EC_Driver::shutdown_clients (void)
+EC_Driver::shutdown_clients ()
 {
   this->shutdown_suppliers ();
 
@@ -402,7 +402,7 @@ EC_Driver::shutdown_clients (void)
 }
 
 void
-EC_Driver::connect_consumers (void)
+EC_Driver::connect_consumers ()
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     this->event_channel_->for_consumers ();
@@ -454,7 +454,7 @@ EC_Driver::build_consumer_qos (
 }
 
 void
-EC_Driver::connect_suppliers (void)
+EC_Driver::connect_suppliers ()
 {
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     this->event_channel_->for_suppliers ();
@@ -508,7 +508,7 @@ EC_Driver::build_supplier_qos (
 }
 
 void
-EC_Driver::execute_test (void)
+EC_Driver::execute_test ()
 {
   if (this->allocate_tasks () == -1)
     return;
@@ -529,7 +529,7 @@ EC_Driver::execute_test (void)
 }
 
 int
-EC_Driver::allocate_tasks (void)
+EC_Driver::allocate_tasks ()
 {
   if (this->tasks_ != 0)
     return 0;
@@ -559,7 +559,7 @@ EC_Driver::allocate_task (int i)
 }
 
 void
-EC_Driver::activate_tasks (void)
+EC_Driver::activate_tasks ()
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -585,7 +585,7 @@ EC_Driver::activate_tasks (void)
 }
 
 void
-EC_Driver::disconnect_suppliers (void)
+EC_Driver::disconnect_suppliers ()
 {
   if (this->suppliers_ == 0)
     return;
@@ -598,7 +598,7 @@ EC_Driver::disconnect_suppliers (void)
 }
 
 void
-EC_Driver::disconnect_consumers (void)
+EC_Driver::disconnect_consumers ()
 {
   if (this->consumers_ == 0)
     return;
@@ -611,7 +611,7 @@ EC_Driver::disconnect_consumers (void)
 }
 
 void
-EC_Driver::shutdown_suppliers (void)
+EC_Driver::shutdown_suppliers ()
 {
   if (this->suppliers_ == 0)
     return;
@@ -624,7 +624,7 @@ EC_Driver::shutdown_suppliers (void)
 }
 
 void
-EC_Driver::shutdown_consumers (void)
+EC_Driver::shutdown_consumers ()
 {
   if (this->consumers_ == 0)
     return;
@@ -637,7 +637,7 @@ EC_Driver::shutdown_consumers (void)
 }
 
 void
-EC_Driver::dump_results (void)
+EC_Driver::dump_results ()
 {
   ACE_Throughput_Stats throughput;
   ACE_High_Res_Timer::global_scale_factor_type gsf =
@@ -845,7 +845,7 @@ EC_Driver::parse_args (int &argc, ACE_TCHAR *argv [])
 }
 
 void
-EC_Driver::print_usage (void)
+EC_Driver::print_usage ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "EC_Driver Usage:\n"
@@ -878,7 +878,7 @@ EC_Driver::modify_attributes (TAO_EC_Event_Channel_Attributes& attr)
 }
 
 void
-EC_Driver::cleanup_tasks (void)
+EC_Driver::cleanup_tasks ()
 {
   if (this->tasks_ != 0)
     {
@@ -893,7 +893,7 @@ EC_Driver::cleanup_tasks (void)
 }
 
 void
-EC_Driver::cleanup_suppliers (void)
+EC_Driver::cleanup_suppliers ()
 {
   if (this->suppliers_ != 0)
     {
@@ -908,7 +908,7 @@ EC_Driver::cleanup_suppliers (void)
 }
 
 void
-EC_Driver::cleanup_consumers (void)
+EC_Driver::cleanup_consumers ()
 {
   if (this->consumers_ != 0)
     {
@@ -923,7 +923,7 @@ EC_Driver::cleanup_consumers (void)
 }
 
 void
-EC_Driver::cleanup_ec (void)
+EC_Driver::cleanup_ec ()
 {
   delete this->ec_impl_;
 #if !defined(EC_DISABLE_OLD_EC)

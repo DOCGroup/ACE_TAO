@@ -40,7 +40,7 @@ createPOAs (ACE_CString &base)
 }
 
 void
-activatePOAs(void)
+activatePOAs()
 {
   PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
   mgr->activate ();

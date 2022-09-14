@@ -417,7 +417,7 @@ ACE_Section_Key_Win32::ACE_Section_Key_Win32 (HKEY hKey)
 {
 }
 
-ACE_Section_Key_Win32::~ACE_Section_Key_Win32 (void)
+ACE_Section_Key_Win32::~ACE_Section_Key_Win32 ()
 {
   ::RegCloseKey (hKey_);
 }
@@ -449,7 +449,7 @@ ACE_Configuration_Win32Registry::ACE_Configuration_Win32Registry (HKEY hKey, u_l
 }
 
 
-ACE_Configuration_Win32Registry::~ACE_Configuration_Win32Registry (void)
+ACE_Configuration_Win32Registry::~ACE_Configuration_Win32Registry ()
 {
 }
 

@@ -44,10 +44,10 @@ public:
   UpdateableServerInfo(UpdateableServerInfo& other );
 
   /// Destructor (updates repo if needed)
-  ~UpdateableServerInfo(void);
+  ~UpdateableServerInfo();
 
   /// Explicitly update repo if needed
-  void update_repo(void);
+  void update_repo();
 
   /// Update remote access state
   void notify_remote_access (ImplementationRepository::AAM_Status state);

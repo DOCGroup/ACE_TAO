@@ -21,7 +21,7 @@ public:
 
   // Errno::flags_ is a static variable, so we've got to protect it
   // with a mutex since it isn't kept in thread-specific storage.
-  int flags (void)
+  int flags ()
   {
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Errno::lock_, -1);
 

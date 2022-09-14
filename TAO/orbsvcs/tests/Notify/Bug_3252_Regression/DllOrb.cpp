@@ -85,7 +85,7 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
 
 
 int
-DllOrb::fini (void)
+DllOrb::fini ()
 {
   try
   {
@@ -127,7 +127,7 @@ DllOrb::fini (void)
   return 0;
 }
 
-int DllOrb::svc (void)
+int DllOrb::svc ()
 {
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("svc mp_barrier->wait() ...\n")));
   ma_barrier_->wait();

@@ -20,7 +20,7 @@ public:
   }
   virtual ~test_i (void) {
   }
-  virtual CORBA::Long get (void)
+  virtual CORBA::Long get ()
   {
     ACE_DEBUG((LM_DEBUG, "dynserver: get() %d\n", ++n_));
     return n_;

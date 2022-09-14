@@ -13,7 +13,7 @@ TAO_Continuous_Priority_Mapping::TAO_Continuous_Priority_Mapping (int policy)
 {
 }
 
-TAO_Continuous_Priority_Mapping::~TAO_Continuous_Priority_Mapping (void)
+TAO_Continuous_Priority_Mapping::~TAO_Continuous_Priority_Mapping ()
 {
 }
 

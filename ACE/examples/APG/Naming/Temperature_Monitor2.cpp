@@ -81,7 +81,7 @@ void Temperature_Monitor2::reset_device (Name_Binding_Ptr &resetCount)
   this->naming_context_.rebind ("resetCount", number_of_resets);
 }
 
-void Temperature_Monitor2::record_failure (void)
+void Temperature_Monitor2::record_failure ()
 {
   Name_Binding_Ptr lastFailure (this->naming_context_.fetch ("lastFailure"));
   Name_Binding_Ptr lastReset (this->naming_context_.fetch ("lastReset"));
@@ -117,7 +117,7 @@ void Temperature_Monitor2::record_failure (void)
   this->naming_context_.rebind ("lastFailure", lastFailureTime);
 }
 
-void Temperature_Monitor2::monitor (void)
+void Temperature_Monitor2::monitor ()
 {
   this->thermometer_ = new Thermometer (this->opt_.thermometer_address ());
 

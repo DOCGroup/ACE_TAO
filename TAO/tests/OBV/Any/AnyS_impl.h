@@ -30,9 +30,9 @@ public:
   virtual CORBA::Any * get_something (
       CORBA::Boolean need_vb);
 
-  virtual OBV_AnyTest::VB * get_vb (void);
+  virtual OBV_AnyTest::VB * get_vb ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// The ORB

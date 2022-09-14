@@ -157,7 +157,7 @@ public:
    * from main, after resolve_initial_references.
    */
   static int server (RtecScheduler::Scheduler_ptr);
-  static RtecScheduler::Scheduler_ptr server (void);
+  static RtecScheduler::Scheduler_ptr server ();
 
   /**
    * This helper function will dump the schedule returned by a
@@ -200,7 +200,7 @@ public:
    * the factory is uninitialized, or in a config or runtime mode of
    * operation.
    */
-  static Factory_Status status (void);
+  static Factory_Status status ();
 
   // = Access the (OS independent) preemption priority of the calling thread.
   /// Returns (u_int) -1 if the preemption priority hadn't been set.
@@ -250,7 +250,7 @@ protected:
    * code emitted for the run-time scheduler, automagically disabling
    * the config_run() when that code is linked in.
    */
-  static int no_config_run (void);
+  static int no_config_run ();
 
 private:
   static RtecScheduler::Scheduler_ptr server_;

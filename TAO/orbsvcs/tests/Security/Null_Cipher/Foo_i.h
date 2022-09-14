@@ -21,7 +21,7 @@ public:
   /// Constructor.
   Foo_i (CORBA::ORB_ptr);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Reference to the ORB.

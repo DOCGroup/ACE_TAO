@@ -29,7 +29,7 @@ ServantActivator::etherealize (const PortableServer::ObjectId &,
 }
 
 void
-ServantActivator::forward_requests (void)
+ServantActivator::forward_requests ()
 {
   if (CORBA::is_nil (this->forward_to_.in ()))
     throw test::Cannot_Forward ();

@@ -24,7 +24,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Servant_Dispatcher::~TAO_RT_Servant_Dispatcher (void)
+TAO_RT_Servant_Dispatcher::~TAO_RT_Servant_Dispatcher ()
 {
 }
 

@@ -30,7 +30,7 @@ class TAO_RT_NOTIFY_TEST_Export TAO_Notify_Tests_RT_POA_Command : public TAO_Not
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_RT_POA_Command (void);
+  TAO_Notify_Tests_RT_POA_Command ();
 
   /// Destructor
   ~TAO_Notify_Tests_RT_POA_Command ();
@@ -40,11 +40,11 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
   /// Execute the command.
-  virtual void execute_i (void);
+  virtual void execute_i ();
 
   /// Get the command name.
-  virtual const char* get_name (void);
-  static const char* name (void);
+  virtual const char* get_name ();
+  static const char* name ();
 
 protected:
   /// Create the POA with the params parsed.

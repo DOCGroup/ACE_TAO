@@ -7,7 +7,7 @@
 // This is the interface program that accesses the remote object
 
 // Constructor.
-Grid_Client_i::Grid_Client_i (void)
+Grid_Client_i::Grid_Client_i ()
   : height_ (0),
     width_ (0),
     setx_ (0),
@@ -19,7 +19,7 @@ Grid_Client_i::Grid_Client_i (void)
 }
 
 //Destructor.
-Grid_Client_i::~Grid_Client_i (void)
+Grid_Client_i::~Grid_Client_i ()
 {
   //no-op
 }

@@ -26,15 +26,15 @@ public:
 
   /// Checks made after parsing args.
   static TAO_IFR_BE_Export void
-  arg_post_proc (void);
+  arg_post_proc ();
 
   /// Display usage of BE-specific options.
   static TAO_IFR_BE_Export void
-  usage (void);
+  usage ();
 
   /// Create an AST node generator.
   static TAO_IFR_BE_Export AST_Generator *
-  generator_init (void);
+  generator_init ();
 };
 
 #endif // if !defined

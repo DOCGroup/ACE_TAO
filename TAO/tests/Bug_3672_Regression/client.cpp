@@ -96,7 +96,7 @@ private:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler (void)
+  Handler ()
   {
   };
 
@@ -134,7 +134,7 @@ public:
         }
     };
 
-  ~Handler (void)
+  ~Handler ()
   {
   };
 };
@@ -293,7 +293,7 @@ Client::Client (A::AMI_Test_ptr server,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

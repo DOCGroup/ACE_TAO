@@ -42,7 +42,7 @@ public:
   static void set_countdown (int nchildren);
 
   /// Get the number of children we are still waiting for.
-  static int get_countdown (void);
+  static int get_countdown ();
 
   /// The Svc_Handler callbacks.
   virtual int open (void *);

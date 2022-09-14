@@ -34,7 +34,7 @@ class Consumer
   //   This class is a consumer of log generated events.
   //
 public:
-  Consumer (void);
+  Consumer ();
   // Constructor
 
   int run (int argc, ACE_TCHAR* argv[]);

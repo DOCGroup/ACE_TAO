@@ -14,9 +14,9 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual Test::ObjectSeq* get_objects (void);
+  virtual Test::ObjectSeq* get_objects ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

@@ -13,7 +13,7 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
 
   int activate_task (int thr_count);
 
-  ~Thread_Task (void);
+  ~Thread_Task ();
 
  protected:
   /// task svc

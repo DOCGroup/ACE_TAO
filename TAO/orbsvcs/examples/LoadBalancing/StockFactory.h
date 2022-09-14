@@ -13,7 +13,7 @@ public:
 
   Test::Stock_ptr get_stock (const char *symbol);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

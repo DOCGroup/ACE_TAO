@@ -19,7 +19,7 @@ public:
   // = The skeleton methods
   virtual char * get_string (const char * mystring);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

@@ -13,7 +13,7 @@ namespace Test
   {
   }
 
-  Server_Request_Interceptor::~Server_Request_Interceptor (void)
+  Server_Request_Interceptor::~Server_Request_Interceptor ()
   {
   }
 
@@ -57,20 +57,20 @@ namespace Test
 
   /// queries the status of the test
   bool
-  Server_Request_Interceptor::self_test (void)
+  Server_Request_Interceptor::self_test ()
   {
     return true;
   }
 
 
   char *
-  Server_Request_Interceptor::name (void)
+  Server_Request_Interceptor::name ()
   {
     return CORBA::string_dup ("SRI   ");
   }
 
   void
-  Server_Request_Interceptor::destroy (void)
+  Server_Request_Interceptor::destroy ()
   {
   }
 

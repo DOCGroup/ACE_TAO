@@ -44,7 +44,7 @@ namespace FTAPP
 
     ////////////
     // execution
-    int run (void);
+    int run ();
 
     ////////////
     // shut down

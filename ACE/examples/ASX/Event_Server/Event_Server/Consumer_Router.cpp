@@ -58,7 +58,7 @@ Consumer_Router::close (u_long)
 // Handle incoming messages in a separate thread.
 
 int
-Consumer_Router::svc (void)
+Consumer_Router::svc ()
 {
   assert (this->is_writer ());
 

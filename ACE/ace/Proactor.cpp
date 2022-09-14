@@ -1135,12 +1135,12 @@ ACE_Proactor::instance (ACE_Proactor *)
 }
 
 void
-ACE_Proactor::close_singleton (void)
+ACE_Proactor::close_singleton ()
 {
 }
 
 int
-ACE_Proactor::run_event_loop (void)
+ACE_Proactor::run_event_loop ()
 {
   // not implemented
   return -1;
@@ -1154,14 +1154,14 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &)
 }
 
 int
-ACE_Proactor::end_event_loop (void)
+ACE_Proactor::end_event_loop ()
 {
   // not implemented
   return -1;
 }
 
 sig_atomic_t
-ACE_Proactor::event_loop_done (void)
+ACE_Proactor::event_loop_done ()
 {
   return sig_atomic_t (1);
 }

@@ -19,9 +19,9 @@ public:
           Fl_Window* parent);
   // ctor
 
-  ~Client (void);
+  ~Client ();
 
-  void show (void);
+  void show ();
   // Call show on all the window objects
 
   void parse_args (int argc, ACE_TCHAR *argv[]);
@@ -31,8 +31,8 @@ private:
   static void y_cb (Fl_Widget *widget, void* cookie);
   // The callbacks
 
-  void x_changed (void);
-  void y_changed (void);
+  void x_changed ();
+  void y_changed ();
   // The methods for the callbacks
 
 private:
@@ -99,14 +99,14 @@ Client::Client (CORBA::ORB_ptr orb,
   this->y_roller_->step (1);
 }
 
-Client::~Client (void)
+Client::~Client ()
 {
   delete x_roller_;
   delete y_roller_;
 }
 
 void
-Client::show (void)
+Client::show ()
 {
   this->x_roller_->show ();
   this->y_roller_->show ();
@@ -127,7 +127,7 @@ Client::y_cb (Fl_Widget*, void* cookie)
 }
 
 void
-Client::x_changed (void)
+Client::x_changed ()
 {
   try
     {
@@ -141,7 +141,7 @@ Client::x_changed (void)
 }
 
 void
-Client::y_changed (void)
+Client::y_changed ()
 {
   try
     {

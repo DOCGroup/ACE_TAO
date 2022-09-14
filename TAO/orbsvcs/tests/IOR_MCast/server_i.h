@@ -14,8 +14,8 @@ class Server_i
 
 public:
   // = Constructor and destructor.
-  Server_i (void);
-  ~Server_i (void);
+  Server_i ();
+  ~Server_i ();
 
   int init (int &argc, ACE_TCHAR **argv);
   // Initialize the server multicast.

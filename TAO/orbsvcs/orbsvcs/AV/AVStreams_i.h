@@ -55,10 +55,10 @@ class TAO_AV_Export AV_Null_MediaCtrl
   : public virtual POA_Null_MediaCtrl
 {
 public:
-  AV_Null_MediaCtrl (void);
+  AV_Null_MediaCtrl ();
 
 protected:
-  virtual ~AV_Null_MediaCtrl (void);
+  virtual ~AV_Null_MediaCtrl ();
 };
 
 /**
@@ -72,7 +72,7 @@ class TAO_AV_Export TAO_Basic_StreamCtrl
 {
 public:
   /// Default Constructor
-  TAO_Basic_StreamCtrl (void);
+  TAO_Basic_StreamCtrl ();
 
   /// Stop the transfer of data of the stream
   /// Empty the_spec means apply operation to all flows
@@ -114,7 +114,7 @@ public:
 
 protected:
   /// Destructor.
-  virtual ~TAO_Basic_StreamCtrl (void);
+  virtual ~TAO_Basic_StreamCtrl ();
 
 
   /// The Virtual Devices for this stream
@@ -151,7 +151,7 @@ class TAO_AV_Export MMDevice_Map_Hash_Key
 {
 public:
   /// default constructor.
-  MMDevice_Map_Hash_Key (void);
+  MMDevice_Map_Hash_Key ();
 
   /// constructor.
   MMDevice_Map_Hash_Key (AVStreams::MMDevice_ptr mmdevice);
@@ -160,7 +160,7 @@ public:
   MMDevice_Map_Hash_Key (const MMDevice_Map_Hash_Key&);
 
   /// destructor.
-  ~MMDevice_Map_Hash_Key (void);
+  ~MMDevice_Map_Hash_Key ();
 
   /// operator== needed by  ACE_Hash_Map_Manager.
   bool operator == (const MMDevice_Map_Hash_Key &hash_key) const;
@@ -189,10 +189,10 @@ class TAO_AV_Export TAO_StreamCtrl
 {
 public:
   /// Default Constructor
-  TAO_StreamCtrl (void);
+  TAO_StreamCtrl ();
 
   /// virtual destructor.
-  virtual ~TAO_StreamCtrl (void);
+  virtual ~TAO_StreamCtrl ();
 
   /// Stop the transfer of data of the stream
   /// Empty the_spec means apply operation to all flows
@@ -239,7 +239,7 @@ public:
                              const AVStreams::flowSpec &the_spec);
 
   /// unbind the stream. Same effect as Basic_StreamCtrl::destroy ()
-  virtual void unbind (void);
+  virtual void unbind ();
 
   virtual AVStreams::VDev_ptr get_related_vdev (AVStreams::MMDevice_ptr adev,
                                                 AVStreams::StreamEndPoint_out sep);
@@ -285,10 +285,10 @@ public:
   };
 
   /// Default constructor.
-  TAO_MCastConfigIf (void);
+  TAO_MCastConfigIf ();
 
   /// Dtor
-  ~TAO_MCastConfigIf (void);
+  ~TAO_MCastConfigIf ();
 
   virtual CORBA::Boolean set_peer (CORBA::Object_ptr peer,
                                    AVStreams::streamQoS & the_qos,
@@ -327,7 +327,7 @@ class TAO_AV_Export TAO_AV_QoS
 {
 public:
   /// constructor.
-  TAO_AV_QoS (void);
+  TAO_AV_QoS ();
 
   /// constructor taking a stream qos parameter.
   TAO_AV_QoS (AVStreams::streamQoS &stream_qos);
@@ -373,14 +373,14 @@ class TAO_AV_Export TAO_Base_StreamEndPoint
 {
   // @@Naga: Rename this class to TAO_Base_EndPoint since both stream and flowendpoints derive from it.
 public:
-  TAO_Base_StreamEndPoint (void);
-  virtual ~TAO_Base_StreamEndPoint (void);
+  TAO_Base_StreamEndPoint ();
+  virtual ~TAO_Base_StreamEndPoint ();
 
   /// called when streamendpoint is instantiated
-  virtual int handle_open (void);
+  virtual int handle_open ();
 
   /// called when streamendpoint is being destructed
-  virtual int handle_close (void);
+  virtual int handle_close ();
 
   /// Application needs to define this
   virtual int handle_stop (const AVStreams::flowSpec &the_spec);
@@ -415,10 +415,10 @@ public:
   virtual void set_control_flow_handler (const char *flowname,
                                          TAO_AV_Flow_Handler *handler);
 
-  TAO_AV_QoS &qos (void);
+  TAO_AV_QoS &qos ();
 
-  void protocol_object_set (void);
-  int is_protocol_object_set (void);
+  void protocol_object_set ();
+  int is_protocol_object_set ();
 
 protected:
   TAO_AV_QoS qos_;
@@ -444,7 +444,7 @@ class TAO_AV_Export TAO_StreamEndPoint
 {
 public:
   /// Constructor
-  TAO_StreamEndPoint (void);
+  TAO_StreamEndPoint ();
 
    /// Stop the stream. Empty the_spec means, for all the flows
   virtual void stop (const AVStreams::flowSpec &the_spec);
@@ -505,7 +505,7 @@ public:
   virtual void set_source_id (CORBA::Long source_id);
 
   /// Destructor
-  virtual ~TAO_StreamEndPoint (void);
+  virtual ~TAO_StreamEndPoint ();
 
   CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
                                AVStreams::flowSpec &the_spec);
@@ -569,7 +569,7 @@ class TAO_AV_Export TAO_StreamEndPoint_A :
 {
 public:
   /// Constructor
-  TAO_StreamEndPoint_A (void);
+  TAO_StreamEndPoint_A ();
 
   /// Used for ATM-style multicast
   virtual CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
@@ -585,7 +585,7 @@ public:
                                 const AVStreams::flowSpec &theSpec);
 
   /// Destructor
-  virtual ~TAO_StreamEndPoint_A (void);
+  virtual ~TAO_StreamEndPoint_A ();
 };
 
 // For backward compatibility.
@@ -604,14 +604,14 @@ class TAO_AV_Export TAO_StreamEndPoint_B :
   //     The "B" side of a streamendpoint
 public:
   /// Constructor
-  TAO_StreamEndPoint_B (void);
+  TAO_StreamEndPoint_B ();
 
   /// Used for internet-style multicast
   virtual CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
                                        AVStreams::flowSpec &the_spec);
 
   /// Destructor
-  virtual ~TAO_StreamEndPoint_B (void);
+  virtual ~TAO_StreamEndPoint_B ();
 };
 
 /**
@@ -625,7 +625,7 @@ class TAO_AV_Export TAO_VDev
 {
 public:
   /// Default Constructor
-  TAO_VDev (void);
+  TAO_VDev ();
 
   /// Called to tell the vdev who the streamctrl, peer vdev is
   virtual CORBA::Boolean set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
@@ -657,7 +657,7 @@ public:
 protected:
   /// Destructor for a servant should be protected or private.
   /// Use _remove_ref() to delete this servant.
-  virtual ~TAO_VDev (void);
+  virtual ~TAO_VDev ();
 
   /// hook called after set_peer is done to set the media ctrl of the peer vdev.
   virtual CORBA::Boolean set_media_ctrl (CORBA::Object_ptr media_ctrl);
@@ -738,7 +738,7 @@ public:
   virtual void remove_fdev (const char *flow_name);
 
   /// Destructor
-  virtual ~TAO_MMDevice (void);
+  virtual ~TAO_MMDevice ();
 
 protected:
   /// Helper method to implement add_fdev()
@@ -782,16 +782,16 @@ class TAO_AV_Export TAO_FlowConnection
 {
 public:
   /// default constructor.
-  TAO_FlowConnection (void);
+  TAO_FlowConnection ();
 
   /// stop this flow.
-  virtual void stop (void);
+  virtual void stop ();
 
   /// start this flow.
-  virtual void start (void);
+  virtual void start ();
 
   /// destroy this flow.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// modify the QoS for this flow.
   virtual CORBA::Boolean modify_QoS (AVStreams::QoS & new_qos);
@@ -815,7 +815,7 @@ public:
                                   AVStreams::QoS & the_qos);
 
   /// disconnect this flow connection.
-  virtual CORBA::Boolean disconnect (void);
+  virtual CORBA::Boolean disconnect ();
 
   /// adds the producer to this flow connection.
   virtual CORBA::Boolean add_producer (AVStreams::FlowProducer_ptr flow_producer,
@@ -863,7 +863,7 @@ class TAO_AV_Export TAO_FlowEndPoint :
 {
 public:
   ///default constructor.
-  TAO_FlowEndPoint (void);
+  TAO_FlowEndPoint ();
 
   TAO_FlowEndPoint (const char *flowname,
                     AVStreams::protocolSpec &protocols,
@@ -882,24 +882,24 @@ public:
                                    TAO_AV_Protocol_Object *object);
 
   /// lock the flow endpoint for a particular flow.
-  virtual CORBA::Boolean lock (void);
+  virtual CORBA::Boolean lock ();
 
   /// unlock the flow endpoint for subsequent use.
-  virtual void unlock (void);
+  virtual void unlock ();
 
 
   /// destroy this flow.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// get method for the related streamendpoint under which this
   /// flowendpoint is.
-  virtual AVStreams::StreamEndPoint_ptr related_sep(void);
+  virtual AVStreams::StreamEndPoint_ptr related_sep();
 
   /// set method for the related streamendpoint under which this
   /// flowendpoint is.
   virtual void related_sep (AVStreams::StreamEndPoint_ptr related_sep);
 
-  virtual AVStreams::FlowConnection_ptr related_flow_connection(void);
+  virtual AVStreams::FlowConnection_ptr related_flow_connection();
 
   // accessor for the related flow connection attribute.
 
@@ -907,7 +907,7 @@ public:
   virtual void related_flow_connection (AVStreams::FlowConnection_ptr related_flow_connection);
 
   /// returns the other flowendpoint to which this is connected.
-  virtual AVStreams::FlowEndPoint_ptr get_connected_fep (void);
+  virtual AVStreams::FlowEndPoint_ptr get_connected_fep ();
 
   //// use the specified flow protocol.
   virtual CORBA::Boolean use_flow_protocol (const char * fp_name,
@@ -1010,7 +1010,7 @@ class TAO_AV_Export TAO_FlowProducer:
 {
 public:
   /// default constructor
-  TAO_FlowProducer (void);
+  TAO_FlowProducer ();
 
   TAO_FlowProducer (const char *flowname,
                     AVStreams::protocolSpec protocols,
@@ -1026,10 +1026,10 @@ public:
   virtual char * get_rev_channel (const char * pcol_name);
 
   /// stop this flow, to be overridden by the application.
-  virtual void stop (void);
+  virtual void stop ();
 
   /// start this flow, to be overridden by the application.
-  virtual void start (void);
+  virtual void start ();
 
   virtual char * go_to_listen (AVStreams::QoS & the_qos,
                                CORBA::Boolean is_mcast,

@@ -54,7 +54,7 @@ ACE_hrtime_t total_ltime;
 ACE_hrtime_t ltime;
 
 static void
-usage (void)
+usage ()
 {
   ACE_ERROR ((LM_ERROR,
               "%s\n"
@@ -86,7 +86,7 @@ public:
   Client (const ACE_INET_Addr &addr,
           const ACE_INET_Addr &remote_addr);
 
-  virtual ~Client (void);
+  virtual ~Client ();
 
   // = Override <ACE_Event_Handler> methods.
   virtual ACE_HANDLE get_handle () const;
@@ -103,11 +103,11 @@ public:
   int get_response (char *buf, size_t len);
 
   /// Send messages to server and record statistics.
-  int run (void);
+  int run ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Send shutdown message to server.
-  int shutdown (void);
+  int shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -136,7 +136,7 @@ Client::Client (const ACE_INET_Addr &addr,
     }
 }
 
-Client::~Client (void)
+Client::~Client ()
 {
 }
 
@@ -190,7 +190,7 @@ Client::get_response (char *buf, size_t len)
 }
 
 int
-Client::run (void)
+Client::run ()
 {
   int ndist = 0;
   int i;
@@ -447,7 +447,7 @@ Client::run (void)
 }
 
 int
-Client::shutdown (void)
+Client::shutdown ()
 {
   const char buf = 'S';
   const int n = endpoint_.send (&buf, 1u, remote_addr_);
@@ -469,7 +469,7 @@ class Server : public ACE_Event_Handler
 public:
   Server (const ACE_INET_Addr &addr);
 
-  virtual ~Server (void);
+  virtual ~Server ();
 
   // = Override <ACE_Event_Handler> methods.
   virtual ACE_HANDLE get_handle () const;
@@ -499,7 +499,7 @@ Server::Server (const ACE_INET_Addr &addr)
     }
 }
 
-Server::~Server (void)
+Server::~Server ()
 {
 }
 

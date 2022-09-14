@@ -1053,7 +1053,7 @@ ACE_OutputCDR::register_monitor (const char *id)
 }
 
 void
-ACE_OutputCDR::unregister_monitor (void)
+ACE_OutputCDR::unregister_monitor ()
 {
   this->monitor_->remove_from_registry ();
 }
@@ -2337,7 +2337,7 @@ ACE_InputCDR::register_monitor (const char *id)
 }
 
 void
-ACE_InputCDR::unregister_monitor (void)
+ACE_InputCDR::unregister_monitor ()
 {
   this->monitor_->remove_from_registry ();
 }

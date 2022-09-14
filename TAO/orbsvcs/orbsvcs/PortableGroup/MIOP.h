@@ -28,7 +28,7 @@ namespace TAO
     public:
     /// Used to force the insertion of UIPMC_Factory in the service
     /// configurator.
-    static int Initializer (void);
+    static int Initializer ();
   };
 
   static int

@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Monitor_Init::TAO_Monitor_Init (void)
+TAO_Monitor_Init::TAO_Monitor_Init ()
 {
 }
 
@@ -52,7 +52,7 @@ TAO_Monitor_Init::create_object (CORBA::ORB_ptr orb,
 // This one is used during static initialization while the other is used
 // when Monitor is a shared library.
 int
-TAO_Monitor_Init::Initializer (void)
+TAO_Monitor_Init::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_Monitor_Init);
 }

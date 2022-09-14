@@ -39,7 +39,7 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void shutdown (void)
+  virtual void shutdown ()
   {
     orb_->shutdown ();
   }

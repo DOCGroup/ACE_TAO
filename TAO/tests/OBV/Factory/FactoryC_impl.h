@@ -47,7 +47,7 @@ public:
       );
 
 public:
-  virtual CORBA::ValueBase * create_for_unmarshal (void);
+  virtual CORBA::ValueBase * create_for_unmarshal ();
 };
 
 #endif /* TAO_FACTORY_FACTORY_C_IMPL_H */

@@ -85,7 +85,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
 }
 
 void
-TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
+TAO_DII_Deferred_Reply_Dispatcher::connection_closed ()
 {
   try
     {
@@ -133,7 +133,7 @@ TAO_DII_Asynch_Reply_Dispatcher::TAO_DII_Asynch_Reply_Dispatcher (
 {
 }
 
-TAO_DII_Asynch_Reply_Dispatcher::~TAO_DII_Asynch_Reply_Dispatcher (void)
+TAO_DII_Asynch_Reply_Dispatcher::~TAO_DII_Asynch_Reply_Dispatcher ()
 {
   // this was handed to us by the caller.
   CORBA::release(callback_);
@@ -194,7 +194,7 @@ TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
 }
 
 void
-TAO_DII_Asynch_Reply_Dispatcher::connection_closed (void)
+TAO_DII_Asynch_Reply_Dispatcher::connection_closed ()
 {
   try
     {

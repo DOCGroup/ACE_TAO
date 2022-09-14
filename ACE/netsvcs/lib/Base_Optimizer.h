@@ -27,7 +27,7 @@ template<class Base, class Member>
 class Base_Optimizer : public Base
 {
 public:
-  Base_Optimizer (void);
+  Base_Optimizer ();
   Base_Optimizer (const Base &base);
   Base_Optimizer (const Base &base,
                   const Member &member);

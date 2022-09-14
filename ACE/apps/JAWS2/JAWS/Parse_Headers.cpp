@@ -254,7 +254,7 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
 }
 
 
-JAWS_Header_Info::JAWS_Header_Info (void)
+JAWS_Header_Info::JAWS_Header_Info ()
   : end_of_headers_ (0),
     end_of_line_ (1),
     last_header_data_ (0),
@@ -263,7 +263,7 @@ JAWS_Header_Info::JAWS_Header_Info (void)
 {
 }
 
-JAWS_Header_Info::~JAWS_Header_Info (void)
+JAWS_Header_Info::~JAWS_Header_Info ()
 {
   JAWS_Header_Table_Iterator iter (this->table_);
   JAWS_Header_Data *data_ptr;
@@ -277,7 +277,7 @@ JAWS_Header_Info::~JAWS_Header_Info (void)
 }
 
 void
-JAWS_Header_Info::dump (void)
+JAWS_Header_Info::dump ()
 {
   JAWS_Header_Table_Iterator iter (this->table_);
 
@@ -297,7 +297,7 @@ JAWS_Header_Info::dump (void)
 }
 
 JAWS_Headers *
-JAWS_Header_Info::table (void)
+JAWS_Header_Info::table ()
 {
   return &(this->table_);
 }
@@ -321,7 +321,7 @@ JAWS_Header_Info::append_last_header_value (char c)
 }
 
 int
-JAWS_Header_Info::append_last_header_value (void)
+JAWS_Header_Info::append_last_header_value ()
 {
   if (this->last_header_data_ == 0 || this->last_header_length_ == 0)
     return -1;
@@ -349,7 +349,7 @@ JAWS_Header_Info::append_last_header_value (const char *begin, const char *end)
 }
 
 void
-JAWS_Header_Info::reduce_last_header_value (void)
+JAWS_Header_Info::reduce_last_header_value ()
 {
   if (this->last_header_data_ == 0) return;
 
@@ -394,7 +394,7 @@ JAWS_Header_Info::create_next_header_value (char *ht)
 }
 
 void
-JAWS_Header_Info::finish_last_header_value (void)
+JAWS_Header_Info::finish_last_header_value ()
 {
   if (this->last_header_data_ != 0)
     {
@@ -412,7 +412,7 @@ JAWS_Header_Info::finish_last_header_value (void)
 }
 
 char *
-JAWS_Header_Info::header_buf (void)
+JAWS_Header_Info::header_buf ()
 {
   return this->header_buf_;
 }

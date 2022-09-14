@@ -30,7 +30,7 @@ namespace TAO
       public ::TAO::CompressorFactory
     {
       public:
-        Lzo_CompressorFactory (void);
+        Lzo_CompressorFactory ();
 
         virtual ::Compression::Compressor_ptr get_compressor (
             ::Compression::CompressionLevel compression_level);

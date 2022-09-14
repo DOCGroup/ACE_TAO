@@ -32,7 +32,7 @@
 #include "ace/OS_NS_stdio.h"
 
 void ace_cc_yyerror (const char* s);
-int ace_cc_yylex(void);
+int ace_cc_yylex();
 
 extern int line_no;
 extern char line_buf[500];
@@ -436,7 +436,7 @@ __ace_cc_yy_memcpy (char *to, char *from, unsigned int count)
 #ifdef ACE_CC_YYPARSE_PARAM
 int ace_cc_yyparse (void *);
 #else
-int ace_cc_yyparse (void);
+int ace_cc_yyparse ();
 #endif
 #endif
 

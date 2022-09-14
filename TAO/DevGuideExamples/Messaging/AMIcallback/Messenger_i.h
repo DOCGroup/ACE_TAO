@@ -25,7 +25,7 @@ public:
                CORBA::Boolean throw_exception = 0);
 
   //Destructor
-  virtual ~Messenger_i (void);
+  virtual ~Messenger_i ();
 
 virtual CORBA::Boolean send_message (
     const char * user_name,

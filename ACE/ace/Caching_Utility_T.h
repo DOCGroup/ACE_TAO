@@ -50,7 +50,7 @@ public:
                             bool delete_cleanup_strategy = false);
 
   /// Destructor.
-  ~ACE_Pair_Caching_Utility (void);
+  ~ACE_Pair_Caching_Utility ();
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do the
@@ -98,7 +98,7 @@ public:
                                           bool delete_cleanup_strategy = false);
 
   /// Destructor.
-  ~ACE_Recyclable_Handler_Caching_Utility (void);
+  ~ACE_Recyclable_Handler_Caching_Utility ();
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
@@ -148,7 +148,7 @@ public:
                                                      bool delete_cleanup_strategy = false);
 
   /// Destructor.
-  ~ACE_Refcounted_Recyclable_Handler_Caching_Utility (void);
+  ~ACE_Refcounted_Recyclable_Handler_Caching_Utility ();
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
@@ -204,7 +204,7 @@ public:
                                bool delete_cleanup_strategy = false);
 
   /// Destructor.
-  ~ACE_Handler_Caching_Utility (void);
+  ~ACE_Handler_Caching_Utility ();
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
@@ -257,7 +257,7 @@ public:
                             bool delete_cleanup_strategy = false);
 
   /// Destructor.
-  ~ACE_Null_Caching_Utility (void);
+  ~ACE_Null_Caching_Utility ();
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
