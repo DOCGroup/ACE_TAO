@@ -214,8 +214,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "return proxy;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
           << "// Verify that an <proxy_factory_> is available else make one." << be_nl
-          << "if ("
-          <<"this->proxy_factory_ == 0)" << be_idt_nl
+          << "if (!this->proxy_factory_)" << be_idt_nl
           << "ACE_NEW_RETURN ("
           << "this->proxy_factory_," << be_idt << be_idt_nl
           << "TAO_" << node->flat_name ()
