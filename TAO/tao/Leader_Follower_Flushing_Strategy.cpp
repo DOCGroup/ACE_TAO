@@ -48,7 +48,7 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (
           // transport we're coping with here and this thread will block.
           // Instead we do run for a small amount of time and then recheck
           // the queue.
-          if (max_wait_time == 0)
+          if (max_wait_time == nullptr)
             {
               ACE_Errno_Guard eguard (errno);
 
@@ -61,7 +61,7 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (
               orb_core->orb ()->perform_work (max_wait_time);
             }
 
-          if (max_wait_time != 0) {
+          if (max_wait_time != nullptr) {
             if (*max_wait_time <= ACE_Time_Value::zero) {
               errno = ETIME;
               return -1;

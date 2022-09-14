@@ -13,14 +13,12 @@
 #include "ace/SOCK_Acceptor.h"
 
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace FTP
   {
-
     ClientRequestHandler::SessionHolder::SessionHolder ()
       : session_ ()
       {

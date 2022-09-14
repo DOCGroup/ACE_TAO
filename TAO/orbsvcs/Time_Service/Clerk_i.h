@@ -30,7 +30,6 @@
 class Clerk_i
 {
 public:
-
   enum {
     // Pre-allocate slots for this many servers. The capacity grows on
     // demand.
@@ -38,10 +37,10 @@ public:
   };
 
   /// Constructor.
-  Clerk_i (void);
+  Clerk_i ();
 
   /// Destructor.
-  ~Clerk_i (void);
+  ~Clerk_i ();
 
   /// Set of available Time servers.
   typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
@@ -51,14 +50,13 @@ public:
             ACE_TCHAR *argv[]);
 
   /// Run the orb.
-  int run (void);
+  int run ();
 
 private:
   /// Insert a server in the internal data structure (servers_).
   void insert_server (CosTime::TimeService_ptr server);
 
 private:
-
   /// Read the server IORs from a file instead of using a naming
   /// service.
   int read_ior (const ACE_TCHAR* filename);
@@ -78,18 +76,18 @@ private:
   int init_naming_service ();
 
   /// Create an instance of the clerk to use.
-  int create_clerk (void);
+  int create_clerk ();
 
   /// Bind the clerk in the appropriate context in the Naming Service.
-  int register_clerk (void);
+  int register_clerk ();
 
   /// Initialise the Interface Repository and register the clerk
   /// implementation with it.
-  int init_IR (void);
+  int init_IR ();
 
   /// Get the reference to the server naming context and the first
   /// server IOR.
-  int get_first_IOR (void);
+  int get_first_IOR ();
 
   /// Iterate over the given server context to get the rest of the
   /// server IORs.

@@ -20,7 +20,6 @@
 #include "ace/OS_main.h"
 
 
-
 /**
  * @class Timeout_Handler
  *
@@ -29,7 +28,7 @@
 class Timeout_Handler : public ACE_Event_Handler
 {
 public:
-  Timeout_Handler (void)
+  Timeout_Handler ()
     : count_ (0) {}
 
     /// Print out when timeouts occur.

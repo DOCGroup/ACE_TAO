@@ -75,14 +75,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     // Accept requests
     orb->run();
     orb->destroy();
-
   }
   catch(const CORBA::Exception& ex) {
     std::cerr << ex << std::endl;
     return 1;
   }
   return 0;
-
 }
 
 

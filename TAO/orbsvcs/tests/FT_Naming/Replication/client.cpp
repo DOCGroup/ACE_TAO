@@ -27,7 +27,7 @@ public:
   My_Test_Object (CORBA::Short id = 0);
   // Constructor.
 
-  ~My_Test_Object (void);
+  ~My_Test_Object ();
   // Destructor.
 
   // = Interface implementation accessor methods.
@@ -35,7 +35,7 @@ public:
   void id (CORBA::Short id);
   // Sets id.
 
-  CORBA::Short id (void);
+  CORBA::Short id ();
   // Gets id.
 
 private:
@@ -47,12 +47,12 @@ My_Test_Object::My_Test_Object (CORBA::Short id)
 {
 }
 
-My_Test_Object::~My_Test_Object (void)
+My_Test_Object::~My_Test_Object ()
 {
 }
 
 CORBA::Short
-My_Test_Object::id (void)
+My_Test_Object::id ()
 {
   return id_;
 }
@@ -177,7 +177,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                ns2ref),
                               -1);
     root_context_2 = CosNaming::NamingContext::_narrow (ns2obj.in ());
-
   }
   catch (const CORBA::Exception& ex)
   {
@@ -665,8 +664,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Unbound %i objects in %.2f secs\n"),
                 test_runs, secs));
-
-
   }
   catch (const CORBA::Exception& ex)
   {
@@ -676,5 +673,4 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
   return 0;
-
 }

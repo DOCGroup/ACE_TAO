@@ -28,18 +28,14 @@ TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
 {
 }
 
-TAO_DIOP_Transport::~TAO_DIOP_Transport (void)
-{
-}
-
 ACE_Event_Handler *
-TAO_DIOP_Transport::event_handler_i (void)
+TAO_DIOP_Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO_DIOP_Transport::connection_handler_i (void)
+TAO_DIOP_Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }
@@ -203,7 +199,7 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
 
 int
-TAO_DIOP_Transport::register_handler (void)
+TAO_DIOP_Transport::register_handler ()
 {
   // @@ Michael:
   //

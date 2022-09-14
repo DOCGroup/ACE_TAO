@@ -2,14 +2,14 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_sema_t &
-ACE_Semaphore::lock (void) const
+ACE_Semaphore::lock () const
 {
 // ACE_TRACE ("ACE_Semaphore::lock");
   return this->semaphore_;
 }
 
 ACE_INLINE int
-ACE_Semaphore::remove (void)
+ACE_Semaphore::remove ()
 {
 // ACE_TRACE ("ACE_Semaphore::remove");
   int result = 0;
@@ -22,7 +22,7 @@ ACE_Semaphore::remove (void)
 }
 
 ACE_INLINE int
-ACE_Semaphore::acquire (void)
+ACE_Semaphore::acquire ()
 {
 // ACE_TRACE ("ACE_Semaphore::acquire");
   return ACE_OS::sema_wait (&this->semaphore_);
@@ -43,14 +43,14 @@ ACE_Semaphore::acquire (ACE_Time_Value *tv)
 }
 
 ACE_INLINE int
-ACE_Semaphore::tryacquire (void)
+ACE_Semaphore::tryacquire ()
 {
 // ACE_TRACE ("ACE_Semaphore::tryacquire");
   return ACE_OS::sema_trywait (&this->semaphore_);
 }
 
 ACE_INLINE int
-ACE_Semaphore::release (void)
+ACE_Semaphore::release ()
 {
 // ACE_TRACE ("ACE_Semaphore::release");
   return ACE_OS::sema_post (&this->semaphore_);
@@ -68,7 +68,7 @@ ACE_Semaphore::release (unsigned int release_count)
 // other synchronization APIs.
 
 ACE_INLINE int
-ACE_Semaphore::acquire_read (void)
+ACE_Semaphore::acquire_read ()
 {
   return this->acquire ();
 }
@@ -78,7 +78,7 @@ ACE_Semaphore::acquire_read (void)
 // other synchronization APIs.
 
 ACE_INLINE int
-ACE_Semaphore::acquire_write (void)
+ACE_Semaphore::acquire_write ()
 {
   return this->acquire ();
 }
@@ -88,7 +88,7 @@ ACE_Semaphore::acquire_write (void)
 // interface consistent with the other synchronization APIs.
 
 ACE_INLINE int
-ACE_Semaphore::tryacquire_read (void)
+ACE_Semaphore::tryacquire_read ()
 {
   return this->tryacquire ();
 }
@@ -98,7 +98,7 @@ ACE_Semaphore::tryacquire_read (void)
 // interface consistent with the other synchronization APIs.
 
 ACE_INLINE int
-ACE_Semaphore::tryacquire_write (void)
+ACE_Semaphore::tryacquire_write ()
 {
   return this->tryacquire ();
 }
@@ -108,7 +108,7 @@ ACE_Semaphore::tryacquire_write (void)
 // already acquired the semaphore using one of the above calls, and
 // returns 0 (success) always.
 ACE_INLINE int
-ACE_Semaphore::tryacquire_write_upgrade (void)
+ACE_Semaphore::tryacquire_write_upgrade ()
 {
   return 0;
 }

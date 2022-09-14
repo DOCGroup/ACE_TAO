@@ -45,7 +45,6 @@ namespace PortableInterceptor
 class Request_Context_Repository
 {
 public:
-
   void init(CORBA::ORB_ptr orb);
 
   /**
@@ -57,14 +56,14 @@ public:
 
   void generate_object_id(FtRtecEventChannelAdmin::ObjectId& object_id);
   void set_object_id(const FtRtecEventChannelAdmin::ObjectId& object_id);
-  FtRtecEventChannelAdmin::ObjectId_var get_object_id(void);
+  FtRtecEventChannelAdmin::ObjectId_var get_object_id();
   FtRtecEventChannelAdmin::ObjectId_var
     get_object_id(PortableInterceptor::ServerRequestInfo_ptr ri);
 
   void set_cached_result(PortableInterceptor::ServerRequestInfo_ptr ri,
                          const CORBA::Any& result);
 
-  CORBA::Any_ptr get_cached_result(void);
+  CORBA::Any_ptr get_cached_result();
   bool is_executed_request();
 
   void set_sequence_number(PortableInterceptor::ServerRequestInfo_ptr ri,
@@ -73,7 +72,7 @@ public:
   void set_sequence_number(FTRT::SequenceNumber);
   FTRT::SequenceNumber get_sequence_number(PortableInterceptor::ClientRequestInfo_ptr ri);
 
-  FTRT::SequenceNumber get_sequence_number(void);
+  FTRT::SequenceNumber get_sequence_number();
 
   void set_ft_request_service_context(
     PortableInterceptor::ServerRequestInfo_ptr ri,

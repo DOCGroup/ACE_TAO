@@ -27,9 +27,8 @@
 class Sender_Callback : public TAO_AV_Callback
 {
 public:
-
   /// Constructor.
-  Sender_Callback (void);
+  Sender_Callback ();
 
   // Method that is called when there is data to be received from a
   // sender.
@@ -39,7 +38,7 @@ public:
 
   // Called when the sender is done sending data and wants to close
   // down the connection.
-  //  int handle_destroy (void);
+  //  int handle_destroy ();
 
 private:
   /// Keeping a count of the incoming frames.
@@ -87,28 +86,28 @@ class Sender
 {
 public:
   /// Constructor
-  Sender (void);
+  Sender ();
 
   /// Method to initialize the various data components.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   /// Method to pace and send data from a file.
-  int pace_data (void);
+  int pace_data ();
 
   /// Set the protocol object corresponding to the transport protocol chosen.
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
 
-  int eof (void);
+  int eof ();
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// Method to parse the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Method that binds the sender to the receiver.
-  int bind_to_receiver (void);
+  int bind_to_receiver ();
 
   /// The endpoint strategy used by the sender.
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;

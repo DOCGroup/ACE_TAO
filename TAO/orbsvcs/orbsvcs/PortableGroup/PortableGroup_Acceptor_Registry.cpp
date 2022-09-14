@@ -12,11 +12,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PortableGroup_Acceptor_Registry::TAO_PortableGroup_Acceptor_Registry (void)
+TAO_PortableGroup_Acceptor_Registry::TAO_PortableGroup_Acceptor_Registry ()
 {
 }
 
-TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry (void)
+TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry ()
 {
   // Free the memory for the endpoints.
   Entry *entry;

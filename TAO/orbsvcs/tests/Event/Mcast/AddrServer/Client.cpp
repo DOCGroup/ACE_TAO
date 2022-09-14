@@ -4,7 +4,6 @@
 #include "ace/OS_NS_strings.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://as.ior");
 
 int

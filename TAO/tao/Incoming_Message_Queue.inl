@@ -11,7 +11,7 @@ TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_Incoming_Message_Queue::queue_length (void) const
+TAO_Incoming_Message_Queue::queue_length () const
 {
   return this->size_;
 }

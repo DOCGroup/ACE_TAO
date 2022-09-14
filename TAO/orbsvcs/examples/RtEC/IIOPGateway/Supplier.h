@@ -26,7 +26,7 @@ class Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
   /// Constructor
-  Supplier (void);
+  Supplier ();
 
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
@@ -34,7 +34,7 @@ public:
   // = The RtecEventComm::PushSupplier methods
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);

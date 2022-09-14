@@ -12,7 +12,7 @@
 #include "server.h"
 #include "tao/ORB_Core.h"
 
-Quoter_Server::Quoter_Server (void)
+Quoter_Server::Quoter_Server ()
   : num_of_objs_ (1),
     quoter_Factory_i_ptr_ (0),
     debug_level_ (1)
@@ -20,7 +20,7 @@ Quoter_Server::Quoter_Server (void)
 }
 
 int
-Quoter_Server::parse_args (void)
+Quoter_Server::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("d:n:"));
   int c;
@@ -141,7 +141,7 @@ Quoter_Server::init (int argc,
 // and Quoter_factory object.
 
 int
-Quoter_Server::init_naming_service (void)
+Quoter_Server::init_naming_service ()
 {
   const char *exception_message = "Null Message";
   try
@@ -192,7 +192,7 @@ Quoter_Server::init_naming_service (void)
 }
 
 int
-Quoter_Server::run (void)
+Quoter_Server::run ()
 {
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -203,7 +203,7 @@ Quoter_Server::run (void)
   return 0;
 }
 
-Quoter_Server::~Quoter_Server (void)
+Quoter_Server::~Quoter_Server ()
 {
   try
     {

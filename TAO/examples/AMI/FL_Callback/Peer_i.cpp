@@ -24,22 +24,22 @@ Peer_Handler_i::request_excep (
 }
 
 void
-Peer_Handler_i::start (void)
+Peer_Handler_i::start ()
 {
 }
 
 void
-Peer_Handler_i::shutdown (void)
+Peer_Handler_i::shutdown ()
 
 {
 }
 
-Peer_i::Peer_i (void)
+Peer_i::Peer_i ()
   :  reply_handler_ (this)
 {
 }
 
-Peer_i::~Peer_i (void)
+Peer_i::~Peer_i ()
 {
 }
 
@@ -91,9 +91,9 @@ Peer_i::start (const PeerSet &the_peers,
 }
 
 void
-Peer_i::shutdown (void)
+Peer_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 // ****************************************************************
@@ -112,7 +112,7 @@ Peer_Task::Peer_Task (const PeerSet& the_peers,
 }
 
 int
-Peer_Task::svc (void)
+Peer_Task::svc ()
 {
   for (int i = 0; i != this->iterations_; ++i)
     {

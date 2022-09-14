@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LF_Event_Binder::~TAO_LF_Event_Binder (void)
+TAO_LF_Event_Binder::~TAO_LF_Event_Binder ()
 {
   this->event_->unbind (follower_);
 }

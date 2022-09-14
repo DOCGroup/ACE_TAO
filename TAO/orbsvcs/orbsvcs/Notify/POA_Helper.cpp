@@ -13,16 +13,16 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_POA_Helper::TAO_Notify_POA_Helper (void)
+TAO_Notify_POA_Helper::TAO_Notify_POA_Helper ()
 {
 }
 
-TAO_Notify_POA_Helper::~TAO_Notify_POA_Helper (void)
+TAO_Notify_POA_Helper::~TAO_Notify_POA_Helper ()
 {
 }
 
 ACE_CString
-TAO_Notify_POA_Helper::get_unique_id (void)
+TAO_Notify_POA_Helper::get_unique_id ()
 {
   /// Factory for generating unique ids for the POAs.
   static TAO_Notify_ID_Factory poa_id_factory;
@@ -234,7 +234,7 @@ TAO_Notify_POA_Helper::servant_to_reference (
 
 
 void
-TAO_Notify_POA_Helper::destroy (void)
+TAO_Notify_POA_Helper::destroy ()
 {
   poa_->destroy (true, false);
  // The <wait_for_completion> flag = 0

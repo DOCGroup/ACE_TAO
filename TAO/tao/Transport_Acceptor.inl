@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::ULong
-TAO_Acceptor::tag (void) const
+TAO_Acceptor::tag () const
 {
   return this->tag_;
 }

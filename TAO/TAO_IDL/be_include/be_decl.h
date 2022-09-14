@@ -34,7 +34,7 @@ public:
   be_decl (AST_Decl::NodeType type,
            UTL_ScopedName *n);
 
-  ~be_decl (void);
+  ~be_decl ();
 
   // Methods used by the interface type strategy.
   /// Both the arguments should be non-null!!!. Applies prefix and
@@ -52,63 +52,63 @@ public:
   // End of Methods use by the interface type strategy.
 
   /// Return the scope created by this node (if one exists).
-  virtual be_scope *scope (void);
+  virtual be_scope *scope ();
 
   // Visiting
   virtual int accept (be_visitor *visitor);
 
   /// Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Temporarily set this node's is_local_ flag.
   void set_local (bool val);
 
   // Boolean methods to test if code was already generated.
-  bool cli_hdr_gen (void);
-  bool cli_stub_gen (void);
-  bool cli_inline_gen (void);
-  bool srv_hdr_gen (void);
-  bool impl_hdr_gen (void);
-  bool srv_skel_gen (void);
-  bool impl_skel_gen (void);
-  bool srv_inline_gen (void);
-  bool tie_skel_gen (void);
-  bool cli_hdr_any_op_gen (void);
-  bool cli_stub_any_op_gen (void);
-  bool cli_hdr_cdr_op_gen (void);
-  bool cli_stub_cdr_op_gen (void);
-  bool cli_inline_cdr_op_gen (void);
-  bool cli_inline_cdr_decl_gen (void);
-  bool cli_traits_gen (void);
-  bool cli_arg_traits_gen (void);
-  bool srv_arg_traits_gen (void);
-  bool srv_sarg_traits_gen (void);
-  bool cli_pragma_inst_gen (void);
-  bool cli_inarg_tmpl_class_gen (void);
-  bool cli_inarg_pragma_inst_gen (void);
-  bool cli_inoutarg_tmpl_class_gen (void);
-  bool cli_inoutarg_pragma_inst_gen (void);
-  bool cli_outarg_tmpl_class_gen (void);
-  bool cli_outarg_pragma_inst_gen (void);
-  bool cli_retarg_tmpl_class_gen (void);
-  bool cli_retarg_pragma_inst_gen (void);
-  bool srv_tmpl_class_gen (void);
-  bool srv_pragma_inst_gen (void);
-  bool srv_inarg_tmpl_class_gen (void);
-  bool srv_inarg_pragma_inst_gen (void);
-  bool srv_inoutarg_tmpl_class_gen (void);
-  bool srv_inoutarg_pragma_inst_gen (void);
-  bool srv_outarg_tmpl_class_gen (void);
-  bool srv_outarg_pragma_inst_gen (void);
-  bool srv_retarg_tmpl_class_gen (void);
-  bool srv_retarg_pragma_inst_gen (void);
-  bool ccm_pre_proc_gen (void);
-  bool ex_idl_facet_gen (void);
-  bool svnt_hdr_facet_gen (void);
-  bool svnt_src_facet_gen (void);
-  bool exec_hdr_facet_gen (void);
-  bool exec_src_facet_gen (void);
-  bool ami4ccm_ex_idl_gen (void);
+  bool cli_hdr_gen ();
+  bool cli_stub_gen ();
+  bool cli_inline_gen ();
+  bool srv_hdr_gen ();
+  bool impl_hdr_gen ();
+  bool srv_skel_gen ();
+  bool impl_skel_gen ();
+  bool srv_inline_gen ();
+  bool tie_skel_gen ();
+  bool cli_hdr_any_op_gen ();
+  bool cli_stub_any_op_gen ();
+  bool cli_hdr_cdr_op_gen ();
+  bool cli_stub_cdr_op_gen ();
+  bool cli_inline_cdr_op_gen ();
+  bool cli_inline_cdr_decl_gen ();
+  bool cli_traits_gen ();
+  bool cli_arg_traits_gen ();
+  bool srv_arg_traits_gen ();
+  bool srv_sarg_traits_gen ();
+  bool cli_pragma_inst_gen ();
+  bool cli_inarg_tmpl_class_gen ();
+  bool cli_inarg_pragma_inst_gen ();
+  bool cli_inoutarg_tmpl_class_gen ();
+  bool cli_inoutarg_pragma_inst_gen ();
+  bool cli_outarg_tmpl_class_gen ();
+  bool cli_outarg_pragma_inst_gen ();
+  bool cli_retarg_tmpl_class_gen ();
+  bool cli_retarg_pragma_inst_gen ();
+  bool srv_tmpl_class_gen ();
+  bool srv_pragma_inst_gen ();
+  bool srv_inarg_tmpl_class_gen ();
+  bool srv_inarg_pragma_inst_gen ();
+  bool srv_inoutarg_tmpl_class_gen ();
+  bool srv_inoutarg_pragma_inst_gen ();
+  bool srv_outarg_tmpl_class_gen ();
+  bool srv_outarg_pragma_inst_gen ();
+  bool srv_retarg_tmpl_class_gen ();
+  bool srv_retarg_pragma_inst_gen ();
+  bool ccm_pre_proc_gen ();
+  bool ex_idl_facet_gen ();
+  bool svnt_hdr_facet_gen ();
+  bool svnt_src_facet_gen ();
+  bool exec_hdr_facet_gen ();
+  bool exec_src_facet_gen ();
+  bool ami4ccm_ex_idl_gen ();
 
   // Set the flag indicating that code generation is done.
   void cli_hdr_gen (bool);
@@ -156,10 +156,6 @@ public:
   void exec_hdr_facet_gen (bool);
   void exec_src_facet_gen (bool);
   void ami4ccm_ex_idl_gen (bool);
-
-  // Narrowing
-
-  DEF_NARROW_FROM_DECL (be_decl);
 
 private:
   // Variables that indicate if the code generation for that node is already

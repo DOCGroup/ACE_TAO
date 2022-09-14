@@ -78,9 +78,7 @@ namespace TAO
 
       /// The @c CORBA::TypeCode of the field.
       TypeCodeType type;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

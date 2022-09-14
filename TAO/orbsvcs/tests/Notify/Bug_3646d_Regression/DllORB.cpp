@@ -139,7 +139,7 @@ DllORB::fini ()
       // attempt to protect against sporadic BAD_INV_ORDER exceptions
       ACE_OS::sleep (ACE_Time_Value (0, 500));
 
-      mv_orb_->shutdown (1);
+      mv_orb_->shutdown (true);
     }
   catch (...)
     {

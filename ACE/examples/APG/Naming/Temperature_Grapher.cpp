@@ -6,7 +6,7 @@
 #include "Temperature_Grapher.h"
 
 // Listing 1 code/ch21
-void Temperature_Grapher::monitor (void)
+void Temperature_Grapher::monitor ()
 {
   for (;;)
     {
@@ -17,7 +17,7 @@ void Temperature_Grapher::monitor (void)
 // Listing 1
 
 // Listing 2 code/ch21
-void Temperature_Grapher::update_graph (void)
+void Temperature_Grapher::update_graph ()
 {
   Name_Binding_Ptr lastUpdate
     (this->naming_context_.fetch ("lastUpdate"));

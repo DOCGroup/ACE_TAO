@@ -14,7 +14,7 @@ void
 Callback_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void
@@ -100,7 +100,7 @@ Caller::svc ()
   try
     {
       ACE_OS::sleep (1);
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
   catch (const CORBA::Exception &ex)
     {
@@ -112,5 +112,5 @@ Caller::svc ()
 void
 Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -28,13 +28,13 @@ class be_visitor_root_cs : public be_visitor_root
 public:
   be_visitor_root_cs (be_visitor_context *ctx);
 
-  ~be_visitor_root_cs (void);
+  ~be_visitor_root_cs ();
 
   virtual int visit_root (be_root *node);
 
 private:
   /// Open file and initialize stream.
-  int init (void);
+  int init ();
 
   /// Encapsulating various bits of code generation peculiar
   /// to the client source file, done either before or after

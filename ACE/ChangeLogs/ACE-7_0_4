@@ -1,0 +1,977 @@
+commit 389be0caccf266048af1ad6fb63cc942410b7a4e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 28 12:02:32 2021 +0200
+
+    ACE_Hash_Map_Entry needs a destructor
+    
+        * ACE/ace/Hash_Map_Manager_T.cpp:
+        * ACE/ace/Hash_Map_Manager_T.h:
+
+commit 033bb575e13f5514fb49b8d38ce709b4140e3f99
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 28 11:25:16 2021 +0200
+
+    Use default
+    
+        * ACE/ace/Hash_Cache_Map_Manager_T.cpp:
+        * ACE/ace/Hash_Cache_Map_Manager_T.h:
+        * ACE/ace/Hash_Map_Manager_T.cpp:
+        * ACE/ace/Hash_Map_Manager_T.h:
+        * ACE/ace/Hash_Multi_Map_Manager_T.cpp:
+        * ACE/ace/Hash_Multi_Map_Manager_T.h:
+
+commit a883ebb22c241ee580d7ef84f367bfe5e3a68c9d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 28 11:22:30 2021 +0200
+
+    Default/uniform init
+    
+        * ACE/ace/Framework_Component.h:
+        * ACE/ace/Free_List.cpp:
+        * ACE/ace/Free_List.h:
+        * ACE/ace/Functor.cpp:
+        * ACE/ace/Functor.h:
+        * ACE/ace/Functor_T.cpp:
+        * ACE/ace/Functor_T.h:
+        * ACE/ace/Functor_T.inl:
+
+commit da89a0cbd85364e47d1387a5be0cbb59624ec74d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 28 11:06:02 2021 +0200
+
+    Use default/uniform initialization
+    
+        * ACE/ace/Map_Manager.h:
+        * ACE/ace/Map_Manager.inl:
+        * ACE/ace/Map_T.cpp:
+        * ACE/ace/Map_T.h:
+        * ACE/ace/Map_T.inl:
+        * ACE/ace/Monitor_Control_Types.cpp:
+        * ACE/ace/Monitor_Control_Types.h:
+        * ACE/ace/Monitor_Point_Registry.cpp:
+        * ACE/ace/Monitor_Point_Registry.h:
+        * ACE/ace/Node.cpp:
+
+commit 3e4ebe5de44b75f77ffff3929546d0e9aba94941
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 28 10:39:39 2021 +0200
+
+    Use default/delete
+    
+        * ACE/ace/Hashable.inl:
+          Deleted.
+    
+        * ACE/ace/Configuration.cpp:
+        * ACE/ace/Configuration.h:
+        * ACE/ace/Connection_Recycling_Strategy.cpp:
+        * ACE/ace/Connection_Recycling_Strategy.h:
+        * ACE/ace/Hashable.cpp:
+        * ACE/ace/Hashable.h:
+        * ACE/ace/Lock.cpp:
+        * ACE/ace/Lock.h:
+        * ACE/ace/Notification_Strategy.cpp:
+        * ACE/ace/Notification_Strategy.h:
+        * ACE/ace/Refcountable_T.cpp:
+        * ACE/ace/Refcountable_T.h:
+        * ACE/ace/Registry_Name_Space.cpp:
+        * ACE/ace/Registry_Name_Space.h:
+        * ACE/ace/Remote_Tokens.h:
+        * ACE/ace/Token_Request_Reply.cpp:
+        * ACE/ace/Token_Request_Reply.h:
+        * ACE/ace/UUID.h:
+        * ACE/ace/UUID.inl:
+
+commit b5c94111662dfcc8dab19dc1c84e716e9cfc7f26
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 28 10:14:24 2021 +0200
+
+    Make use of delete
+    
+        * ACE/ace/Manual_Event.inl:
+          Deleted.
+    
+        * ACE/ace/Event.cpp:
+        * ACE/ace/Event.h:
+        * ACE/ace/Event_Handler.cpp:
+        * ACE/ace/Event_Handler.h:
+        * ACE/ace/Manual_Event.cpp:
+        * ACE/ace/Manual_Event.h:
+        * ACE/ace/Method_Request.cpp:
+        * ACE/ace/Method_Request.h:
+        * ACE/ace/Name_Request_Reply.cpp:
+        * ACE/ace/Naming_Context.h:
+
+commit 6a127777136e5210a5b2ddc9ac7fc3f74d47d6ce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 28 09:54:19 2021 +0200
+
+    Removed comment
+    
+        * ACE/ace/Node.h:
+
+commit 4ceea8a4636a2b171c890abf651f743e70b414e7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 28 09:53:49 2021 +0200
+
+    Use delete/default
+    
+        * ACE/ace/Node.cpp:
+        * ACE/ace/Node.h:
+
+commit d017dac249b849bc0fda979684166b2ca61b5578
+Merge: a59431844a4 53f510db8ce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 27 08:17:08 2021 +0200
+
+    Merge pull request #1687 from jwillemsen/jwi-autoptr5
+    
+    Use std::unique_ptr and default
+
+commit 53f510db8ce145bffcc165ed38d0bfd29ebf016c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 26 20:49:54 2021 +0200
+
+    Update WFMO_Reactor.cpp
+
+commit 6cd803939a08d36b328ac6283ffb5751c58eb5bd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 26 19:32:45 2021 +0200
+
+    Use default
+    
+        * ACE/protocols/ace/HTBP/HTBP_Addr.cpp:
+        * ACE/protocols/ace/HTBP/HTBP_Addr.h:
+        * ACE/protocols/ace/HTBP/HTBP_Filter.cpp:
+        * ACE/protocols/ace/HTBP/HTBP_Filter.h:
+
+commit 3934b107edbad1f5332fc70c5153009a50f43f17
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 26 19:31:42 2021 +0200
+
+    Use std::unique_ptr
+    
+        * ACE/protocols/ace/HTBP/HTBP_ID_Requestor.cpp:
+        * ACE/protocols/ace/HTBP/HTBP_Inside_Squid_Filter.cpp:
+
+commit fc303f4408a093ea939c5583a5f5f1a7292f5704
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 26 19:29:18 2021 +0200
+
+    Use std::unique_ptr instead of ACE_Auto_Basic_Array_Ptr
+    
+        * ACE/ace/Configuration.cpp:
+        * ACE/ace/Local_Memory_Pool.cpp:
+        * ACE/ace/Local_Name_Space_T.cpp:
+        * ACE/ace/Log_Record.cpp:
+        * ACE/ace/OS_NS_unistd.cpp:
+        * ACE/ace/Parse_Node.cpp:
+        * ACE/ace/Process.cpp:
+        * ACE/ace/Remote_Name_Space.cpp:
+        * ACE/ace/XML_Utils/XML_Helper.tpp:
+        * TAO/tao/Storable_FlatFileStream.cpp:
+        * TAO/tao/Strategies/DIOP_Acceptor.cpp:
+
+commit ab1d28b5dd3665cd21c9cef12e055df2fe8918ec
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 26 19:17:50 2021 +0200
+
+    Add missing include
+    
+        * ACE/ace/Parse_Node.cpp:
+
+commit ad7a6707a41f88f8fdf043cfc44f8674698880f0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 26 19:10:02 2021 +0200
+
+    Use std::unique_ptr and default
+    
+        * ACE/ace/INET_Addr.cpp:
+        * ACE/ace/Parse_Node.h:
+        * ACE/ace/Service_Gestalt.cpp:
+        * ACE/ace/TLI.cpp:
+        * ACE/ace/Thread_Manager.cpp:
+        * ACE/ace/UUID.cpp:
+        * ACE/ace/UUID.h:
+        * ACE/ace/WFMO_Reactor.cpp:
+        * ACE/tests/CDR_File_Test.cpp:
+        * TAO/orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * TAO/orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+        * TAO/orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
+        * TAO/orbsvcs/examples/CosEC/Factory/FactoryDriver.cpp:
+        * TAO/orbsvcs/examples/CosEC/Factory/FactoryDriver.h:
+        * TAO/orbsvcs/examples/CosEC/Factory/README:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/ConsumerAdmin_i.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/ConsumerAdmin_i.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/EventChannel_i.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/EventChannel_i.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushConsumer_i.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushSupplier_i.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushSupplier_i.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/SupplierAdmin_i.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/SupplierAdmin_i.h:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Control.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.h:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplier_i.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplier_i.h:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/README:
+        * TAO/orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_1385_Regression/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_2415_Regression/Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_2561_Regression/Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Discarding/Sequence_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Discarding/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Ordering/Sequence_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Ordering/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Persistent_POA/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.cpp:
+        * TAO/tao/IORManipulation/IORManipulation.cpp:
+        * TAO/tao/Leader_Follower.cpp:
+        * TAO/tao/Load_Protocol_Factory_T.h:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * TAO/tao/default_resource.cpp:
+        * TAO/tests/Oneway_Send_Timeouts/Server.cpp:
+        * TAO/tests/Storable/Savable.cpp:
+
+commit a59431844a4b19bec5cbdd0d292378b35fd98358
+Merge: 701d5ca07e1 f77bcabd4c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Sep 25 10:26:30 2021 +0200
+
+    Merge pull request #1669 from jwillemsen/jwi-xmlcleanup2
+    
+    Removed XML_Typedefs, declares a hidden global static, anyone using X…
+
+commit c9e357117805957910e7bfb9bcd533a3f962f7b8
+Merge: ebf00c730e8 b54bbdb8179
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 17 08:57:33 2021 +0200
+
+    Merge pull request #1674 from jwillemsen/jwi-strsncpy
+    
+    Use strsncpy as that will return a zero terminated string, fixes gcc …
+
+commit 46fcff0baa52dfbaaf51cb0d9a7f29e088a5572c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 17 08:56:12 2021 +0200
+
+    Update NEWS
+
+commit 5c5cd42762380e82a4bb62bb0aec85dcfaadf8fc
+Merge: a954f862cd0 7ea6b67d928
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 14 21:12:41 2021 +0200
+
+    Merge pull request #1678 from jwillemsen/jwi-ssl2
+    
+    ACE SSL minor changes
+
+commit 6b0bb4c4ec55c1d8bb809f3bcb074bdffd20bf03
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 14 18:08:19 2021 +0200
+
+    Const changes
+    
+        * ACE/ace/SSL/SSL_Context.cpp:
+
+commit b02dec6e4d8ca18e0b07c18725686c852b06d74d
+Merge: c089a1b6f9a dcb38958166
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 9 20:59:08 2021 +0200
+
+    Merge pull request #1677 from jwillemsen/jwi-news6
+    
+    Update NEWS
+
+commit dcb3895816654e99058671429385afafbefa1c69
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 9 19:26:40 2021 +0200
+
+    Updated news
+    
+        * ACE/NEWS:
+
+commit 450630997ccc0bb1b1e48c36e4fde0628493e914
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 9 14:18:56 2021 +0200
+
+    Layout changes
+    
+        * ACE/examples/Threads/process_mutex.cpp:
+        * ACE/tests/Signal_Test.cpp:
+
+commit 8b7df97c14b6e32104bdeb79a6a531b6fa0569a1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 9 14:18:41 2021 +0200
+
+    Updated Embarcadero news item
+    
+        * ACE/NEWS:
+
+commit b54bbdb8179ddfa5e66d1430c81998bffdc5ef95
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 9 13:22:59 2021 +0200
+
+    Use strsncpy as that will return a zero terminated strict, fixes gcc warnings
+    :
+        * ACE/ace/OS_NS_string.cpp:
+        * ACE/ace/SOCK_Dgram.cpp:
+
+commit c089a1b6f9a83da58b287a91e8a724ac154f0da2
+Merge: 208cb68d61d 74f88d5bec3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 7 08:01:19 2021 +0200
+
+    Merge pull request #1673 from jwillemsen/jwi-deletefilelogging
+    
+    Simplified DeleteFile for cross platform testing
+
+commit 208cb68d61dc00c639bf499e1728ed5b11e03162
+Merge: b914de7fd2d d01b67f0e52
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Sep 6 11:24:35 2021 -0500
+
+    Merge pull request #1671 from simpsont-oci/ace7_atomic_op_gcc_tsan_fixes_and_updated_atomics
+    
+    Update ACE_Atomic_Op_GCC to use newer __atomic operations
+
+commit b914de7fd2de874c4390d72df797073f4dd9b580
+Merge: 84d30caebdc 1bfbc674980
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Sep 6 11:24:18 2021 -0500
+
+    Merge pull request #1668 from mitza-oci/no-conv-lib
+    
+    Removed conv_lib.mpb
+
+commit 74f88d5bec32a96be6a8755d575615521e197286
+Merge: d3aab461b86 84d30caebdc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 6 17:39:35 2021 +0200
+
+    Fixed merge
+
+commit d3aab461b86772e58f11898c3e2818b50e995e37
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 6 17:37:07 2021 +0200
+
+    Silence logging
+    
+        * ACE/bin/PerlACE/TestTarget.pm:
+
+commit 3d338376f99860fd099a74a88c84d1ff85f8940d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 6 17:26:46 2021 +0200
+
+    Fixed error
+    
+        * ACE/bin/PerlACE/TestTarget.pm:
+
+commit 27b0f270771da42ee7b1732bb89d58e1944120b1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 6 15:32:00 2021 +0200
+
+    Cleanup logging
+    
+        * ACE/bin/PerlACE/TestTarget.pm:
+
+commit 8df142c58505ebd09f93a919bdc52f63a6e24b16
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 6 15:04:36 2021 +0200
+
+    Correct error
+    
+        * ACE/bin/PerlACE/TestTarget.pm:
+
+commit ccb7df9e19ee78a2b4dca6bc71ea3a365bebcba3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 6 14:59:19 2021 +0200
+
+    Make DeleteFile more consistent witl WaitForFileTimed
+        * ACE/bin/PerlACE/TestTarget.pm:
+
+commit 84d30caebdc4e0da71f9720c4692e6742e99688d
+Merge: 46e3fbbce15 0bf7e2a3366
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 6 13:40:46 2021 +0200
+
+    Merge pull request #1672 from jwillemsen/jwi-removenotusedvariable
+    
+    Removed not used variable in DeleteFile
+
+commit e80bdf823e52e42db4f9f219f4868d7e2761c96f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 6 12:25:45 2021 +0200
+
+    Log DeleteFile operation
+    
+        * ACE/bin/PerlACE/TestTarget.pm:
+
+commit 0bf7e2a33660d1d58b4d17d2547bd4f051c3a4ce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 6 12:24:42 2021 +0200
+
+    Removed not used variable in DeleteFile
+    
+        * ACE/bin/PerlACE/TestTarget.pm:
+
+commit 46e3fbbce15bf2856e932274a662318eb5553302
+Merge: e7bf76df360 dc7c7bed2a5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 6 09:21:26 2021 +0200
+
+    Merge pull request #1654 from esohns/master
+    
+    some small changes
+
+commit d01b67f0e52a34269857eb3c574ff589cbe194bb
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Sun Sep 5 15:33:31 2021 -0500
+
+    Update ACE_Atomic_Op_GCC to use newer __atomic operations
+
+commit dc7c7bed2a548ed8e12986f1a7ad24dbbb20baee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Sep 4 09:50:54 2021 +0200
+
+    Add changes
+    
+        * ACE/NEWS:
+
+commit 9d38996bbcb9d4f5c376e0a330f8e72fbad53875
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Sep 4 09:29:31 2021 +0200
+
+    Removed redundant static
+    
+        * ACE/tests/Basic_Types_Test.cpp:
+
+commit 4a95ea8e89f07d1c4dd92161471c04e89d430cce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Sep 4 09:25:07 2021 +0200
+
+    Use C++11 initialization for send_net_if_ member
+    
+        * ACE/ace/SOCK_Dgram_Mcast.cpp:
+        * ACE/ace/SOCK_Dgram_Mcast.h:
+
+commit d5cd9e453ea4dcb1edc23cd44441c0d7d6138175
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Fri Sep 3 20:02:35 2021 +0200
+
+    fixed compilation issue (ubuntu)
+
+commit 41ed6db137eef43ad432dd3bb8fb74af4a796647
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Fri Sep 3 19:53:26 2021 +0200
+
+    removed trailing whitespace
+
+commit 117856ae1875d2bcc75d2ea2ce4e1badc158bc11
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Fri Sep 3 19:47:31 2021 +0200
+
+    incorporated review comments
+
+commit f77bcabd4c6dd4decccec38b330d76c92049e295
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 1 09:17:43 2021 +0200
+
+    Removed XML_Typedefs, declares a hidden global static, anyone using XML_Utils could create a XML_Helper as member or declare its own static. Some further C++11 cleanup
+    
+        * ACE/ace/XML_Utils/XML_Typedefs.cpp:
+        * ACE/ace/XML_Utils/XML_Typedefs.h:
+          Deleted.
+    
+        * ACE/ace/XML_Utils/XML.mpc:
+        * ACE/ace/XML_Utils/XMLSchema/Traversal.hpp:
+        * ACE/ace/XML_Utils/XMLSchema/TypeInfo.tpp:
+        * ACE/ace/XML_Utils/XMLSchema/Types.hpp:
+        * ACE/ace/XML_Utils/XMLSchema/Writer.hpp:
+        * ACE/ace/XML_Utils/XMLSchema/id_map.hpp:
+
+commit 1bfbc674980869ef05c6fed94c01f291ff5fd7d4
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Aug 31 21:01:43 2021 -0500
+
+    Removed conv_lib.mpb
+    
+    Replaced uses of it with install_lib
+
+commit e7bf76df360f7f9e9c9d254b9180e3bfca666e45
+Merge: 13370c164a3 9f459a8db27
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 31 18:53:00 2021 +0200
+
+    Merge pull request #1667 from jwillemsen/jwi-acexml
+    
+    ACEXML cleanup
+
+commit 9f459a8db274b0460933b4c6d96b048f3a6f3e50
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 31 16:05:14 2021 +0200
+
+    Make sure impl_ is always initialized to nullptr and use nullptr in some more places
+    
+        * ACE/ace/XML_Utils/XML_Helper.h:
+        * ACE/ace/XML_Utils/XML_Helper.tpp:
+
+commit e46a0add7c9185d85f8ac82621809b5530cd5658
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 31 15:08:38 2021 +0200
+
+    Removed commented out code, use uniform unit
+    
+        * ACE/ace/XML_Utils/XML_Helper.h:
+        * ACE/ace/XML_Utils/XML_Helper.tpp:
+
+commit d46f2792b077bfd416bd0ec22d75a39c6aba7201
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 31 14:31:31 2021 +0200
+
+    Make use of default, layout changes, cleanup
+    
+        * ACE/ace/XML_Utils/XSCRT/Elements.hpp:
+        * ACE/ace/XML_Utils/XSCRT/ExtendedTypeInfo.hpp:
+        * ACE/ace/XML_Utils/XSCRT/ExtendedTypeInfo.ipp:
+        * ACE/ace/XML_Utils/XSCRT/Traversal.hpp:
+        * ACE/ace/XML_Utils/XSCRT/Traversal.tpp:
+        * ACE/ace/XML_Utils/XSCRT/XMLSchema.hpp:
+
+commit 50073ab694cb6beaba2396f00d7ccca8a812befa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 31 14:24:28 2021 +0200
+
+    Mark destructor as override
+    
+        * ACE/ace/XML_Utils/XML_Error_Handler.h:
+
+commit f1f97eb359b0e75fc2fa3c825ab9f3762abdf690
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 31 13:57:36 2021 +0200
+
+    Cleanup using, layout changes, make error member protected
+    
+        * ACE/ace/XML_Utils/XML_Error_Handler.cpp:
+        * ACE/ace/XML_Utils/XML_Error_Handler.h:
+        * ACE/ace/XML_Utils/XML_Helper.tpp:
+
+commit 88ccb57a7f94abfc228ce90d9b6a414b9696ff13
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 31 13:07:11 2021 +0200
+
+    Layout changes, removed redundant void, no need to check a pointer for non null before calling delete on it
+    
+        * ACE/ace/DLL_Manager.h:
+        * ACE/ace/SV_Shared_Memory.cpp:
+        * ACE/ace/XML_Utils/XML_Error_Handler.h:
+        * ACE/ace/XML_Utils/XML_Helper.tpp:
+        * ACE/ace/XML_Utils/XML_Schema_Resolver.h:
+
+commit 7d8d836f2e864c07cb1088083219770c6b8cc515
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Sat Aug 28 20:23:23 2021 +0200
+
+    hopefully fixed CRLF issues
+
+commit ad6a2f25d66b04898410d125fee3f9b2d70a4e76
+Merge: 6b97b3645c2 8c8f9f494ee
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Sat Aug 28 20:14:37 2021 +0200
+
+    Merge branch 'master' of https://github.com/esohns/ACE_TAO
+
+commit 6b97b3645c2bd9d569e1785303243e15f64f9dfe
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Sat Aug 28 20:14:08 2021 +0200
+
+    incorporated review comments
+
+commit aa5239614bb958573dc96402f371701fa2401b34
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Sat Aug 28 20:12:42 2021 +0200
+
+    Revert "make some 'private' members 'protected' to support sub-classing"
+    
+    This reverts commit f2f00f8252f3d434697986185a1d806b7270191f.
+
+commit 8c8f9f494ee5ed7838bf0b9904c55925cb7f761d
+Merge: 2f9886504dd 13370c164a3
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Sat Aug 28 19:46:15 2021 +0200
+
+    Merge branch 'DOCGroup:master' into master
+
+commit 1f2388d86d9424d496078ce1b8d93e0e26d159f0
+Merge: 0c684359137 784726fd21b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 26 08:56:01 2021 -0500
+
+    Merge pull request #1659 from mitza-oci/sock-dgram-warning-7
+    
+    Fixed warning in ACE_SOCK_Dgram::make_multicast_ifaddr
+
+commit 8a06519b861bf014582d33f0e282cebfafff302a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 23 14:06:51 2021 +0200
+
+    Add missing include
+    
+        * ACE/tests/Compiler_Features_40_Test.cpp:
+
+commit d50e46200d578cae0e9ade85b9c44685ab3266ae
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 23 11:06:09 2021 +0200
+
+    Also let the test fail when this pointer is not correct
+    
+        * ACE/tests/Compiler_Features_40_Test.cpp:
+
+commit 529cb9411f2f9175643b40e2c7a704cf937a35de
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 23 10:27:55 2021 +0200
+
+    Cleanup test
+    
+        * ACE/tests/Compiler_Features_40_Test.cpp:
+
+commit 06e67dd18288ffec72c89225dfaa545d862eb37a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 23 10:17:13 2021 +0200
+
+    Starter compiler exception test
+
+commit 784726fd21b6193ef8d445939b92b644e57aa136
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 20 15:58:40 2021 -0500
+
+    Fixed warning in ACE_SOCK_Dgram::make_multicast_ifaddr
+    
+    (cherry picked from commit a5725b647c7e90ede55db1e8c2aea3c890ac4798)
+
+commit b98eee89193b7aa20f939e021f7ad2f9b5d0fc9a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 18 08:47:46 2021 +0200
+
+    Update NEWS
+
+commit a2f3af2458141a30373b040ad6707855768859c3
+Merge: 10efc1f8bc2 b4020834a32
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 18 08:18:32 2021 +0200
+
+    Merge pull request #1656 from jwillemsen/jwi-minor
+    
+    Minor cleanup
+
+commit b4020834a321b081e93f61b60a59a925918de228
+Merge: c471d880c21 6193f95eed3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 17 14:04:59 2021 +0200
+
+    Merge branch 'master' into jwi-minor
+
+commit 2f9886504dde18e2aec8d9af2558467db22518fa
+Merge: f2f00f8252f 6193f95eed3
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Tue Aug 17 11:06:49 2021 +0200
+
+    Merge branch 'DOCGroup:master' into master
+
+commit ca407b92f6f037d5097f33ddd6cdc774669cf6c7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 16 18:48:17 2021 +0200
+
+    Removed a lot of warning disabling
+    
+        * ACE/ace/pre.h:
+
+commit ff36cc735a8fc98d840982116021da48c4cb2568
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 16 16:59:42 2021 +0200
+
+    Cleanup old Embarcadero compiler checks
+    
+        * ACE/ace/Compression/rle/RLECompressor.cpp:
+        * ACE/ace/post.h:
+        * ACE/ace/pre.h:
+        * TAO/orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * TAO/orbsvcs/orbsvcs/Notify/RT_Factory.h:
+        * TAO/orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * TAO/tests/Bug_3574_Regression/test.cpp:
+
+commit f2f00f8252f3d434697986185a1d806b7270191f
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Mon Aug 16 16:46:00 2021 +0200
+
+    make some 'private' members 'protected' to support sub-classing
+
+commit 7b64a87668d886cb908a471c53afefdba0d13d87
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Mon Aug 16 16:44:10 2021 +0200
+
+    added a byte-swapping macro for 64 bit types
+
+commit 0749c4217babf7eba360565697f565b0e10ba9c1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 16 09:15:03 2021 +0200
+
+    Layout changes, use default and override
+    
+        * ACE/ace/Compression/Compressor.cpp:
+        * ACE/ace/Compression/Compressor.h:
+        * ACE/ace/Compression/Compressor.inl:
+        * ACE/ace/Compression/rle/RLECompressor.cpp:
+        * ACE/ace/Compression/rle/RLECompressor.h:
+
+commit 020498b18098352558e63acf55e91b08a1462abf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 16 08:28:09 2021 +0200
+
+    Updated Embarcadero version checks
+
+commit 5b2a781f2fbb8c81d6ab2c68de39d712ebab76c2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 6 09:52:57 2021 +0200
+
+    Don't check for ACE_LACKS_STRTOD, not set by any config file
+    
+        * ACE/ace/OS_NS_stdlib.h:
+        * ACE/ace/OS_NS_stdlib.inl:
+        * ACE/ace/config-win32-borland.h:
+
+commit 8620fc2daa77c1b2addf7f4d6c285181231f10f2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:34:44 2021 +0200
+
+    Removed empty extern C block
+    
+        * ACE/ace/os_include/os_aio.h:
+
+commit 10494fadbde3ac52d3f3d38ffba93bbc0bf88ee1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:32:23 2021 +0200
+
+    Removed check for ACE_LACKS_WORDEXP_H, not set in any config file
+    
+        * ACE/ace/os_include/os_wordexp.h:
+
+commit 26c336cd9fc5d5e1546b631e35cf36a70e09369f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:31:40 2021 +0200
+
+    Indent change
+    
+        * ACE/ace/os_include/os_typeinfo.h:
+
+commit a2a35dac5cb719ec44670bb99aa4f43397761f87
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:31:04 2021 +0200
+
+    Removed check for ACE_LACKS_TIME_H, not set in any config file
+    
+        * ACE/ace/os_include/os_time.h:
+
+commit b6c34ffbabeb08f1277673cb0999d4d205f2dfc2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:30:31 2021 +0200
+
+    Removed empty extern C block
+    
+        * ACE/ace/os_include/os_strings.h:
+
+commit 1475baeb7744b5a21af8b449894464cc1242ceed
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:29:57 2021 +0200
+
+    Removed check for ACE_LACKS_STDARG_H, not set in any config file
+    
+        * ACE/ace/os_include/os_stdarg.h:
+
+commit e753ae7dddbd01809fd3c6652a422cda6525d88d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:29:25 2021 +0200
+
+    Removed check for ACE_LACKS_STDBOOL_H, not set in any config file
+    
+        * ACE/ace/os_include/os_stdbool.h:
+
+commit 2d5df2ff7e8012581017626ee8aa2c7586d8a3ea
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:28:47 2021 +0200
+
+    Removed check for ACE_LACKS_WCHAR_T, not set in any config file
+    
+        * ACE/ace/os_include/os_stddef.h:
+
+commit 639f1a501b1fc949ccf0c3631b378ef4f5b1f4a9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:28:03 2021 +0200
+
+    Removed check for ACE_LACKS_SIZE_T, not set in any config file
+    
+        * ACE/ace/os_include/os_stddef.h:
+
+commit 3f878f6afbb89a052d232818e6e13c9ffd9d9897
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:27:25 2021 +0200
+
+    Removed check for ACE_LACKS_PTRDIFF_T, not set in any config file
+    
+        * ACE/ace/os_include/os_stddef.h:
+
+commit cdeb89b03905ca6047461f2be33c2a6f3d893a0a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:26:38 2021 +0200
+
+    Removed check for ACE_LACKS_STDDEF_H, not set in any config file
+    
+        * ACE/ace/os_include/os_stddef.h:
+
+commit a21dc16fd620e6bf631e2393db402692ba270381
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:25:40 2021 +0200
+
+    Removed check for ACE_LACKS_FLOAT_H, not set in any config file
+    
+        * ACE/ace/os_include/os_float.h:
+
+commit c8c8981a55761ccb1b63835b83233e007c2bdedc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:24:38 2021 +0200
+
+    Removed check for ACE_LACKS_STRING_H, not set in any config file
+    
+        * ACE/ace/os_include/os_string.h:
+
+commit 3ba2cee7ad05f99edfd1abd6894b99ed613dd5d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:23:47 2021 +0200
+
+    Removed check for ACE_LACKS_ULIMIT_H, not set in any config file
+    
+        * ACE/ace/os_include/os_ulimit.h:
+
+commit 23503a25fe500f9d0d54a5474f566b6f597bcb91
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:22:57 2021 +0200
+
+    Removed check for ACE_LACKS_STDLIB_H, not set anymore
+    
+        * ACE/ace/os_include/os_stdlib.h:
+
+commit d2bc02b5bc71978fc171041d7a2d846b78637ce4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:22:19 2021 +0200
+
+    Removed check for ACE_LACKS_UTIME_H, not set by any config file anymore
+    
+        * ACE/ace/os_include/os_utime.h:
+
+commit e41cfa87c167c64e26a90c7079bc47e8362e4d8b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 5 13:21:00 2021 +0200
+
+    Removed ACE_HAS_UTIME because it is not used and fixed some broken links
+    
+        * ACE/ace/config-aix-5.x.h:
+        * ACE/docs/Download.html:
+        * TAO/tao/Transport.h:
+        * TAO/tao/Transport_Selection_Guard.h:
+
+commit 75a5133c32604b605b013910b38cea0bb5f42930
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 4 09:28:08 2021 +0200
+
+    Corrected links
+    
+        * ACE/docs/Download.html:
+
+commit a79c07f1ebc800f8ef643a7d69c29e987420fd4e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 4 09:27:08 2021 +0200
+
+    Make ACE 7.0.3 and TAO 3.0.3 available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit 9b88ad992949b800f9125517ce8b86be63ff5c92
+Merge: 4c9b829566a f2ba2c2be16
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 4 09:04:04 2021 +0200
+
+    Merge branch 'master' into jwi-newrelease
+
+commit f2ba2c2be166876c9159dde3b895507ec18f9f59
+Merge: a2a24234026 e3d60ee085a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 4 09:03:54 2021 +0200
+
+    Merge remote-tracking branch 'upstream/master' into master
+
+commit 4c9b829566aa5186e1030d1e4dda0fc82335db4f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 4 09:02:47 2021 +0200
+
+    Fixed error in this script
+    
+        * ACE/bin/generate_doxygen.pl:
+
+commit a2a2423402622ee14ba02e43e9f1a9e2b2bb61a8
+Merge: 8648fa5307b 9c1556c22e0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 4 08:31:15 2021 +0200
+
+    Merge remote-tracking branch 'upstream/master' into master
+
+commit 8648fa5307b1487bbb9a420cb5b8c94b4370ef50
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 3 20:03:08 2021 +0200
+
+    Doxygen changes, use nullptr instead of a c-style cast of 0
+    
+        * ACE/ace/Handle_Set.cpp:
+        * ACE/ace/Handle_Set.inl:
+
+commit b7f80f89e301504e312831849a88e4101369c898
+Merge: e79149bc51a 908c1a40dda
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Sat Jul 31 20:46:27 2021 +0200
+
+    minor changes
+
+commit e79149bc51a9348936dcbdb545b3bfb172a761fc
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Sat Jul 31 20:42:37 2021 +0200
+
+    minor changes
+
+commit c471d880c21a01d0b4f49b9f1067fd1c1e9dacba
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 22 14:37:25 2021 +0200
+
+    Minor cleanup
+    
+        * ACE/ace/Future_Set.h:
+        * ACE/ace/Service_Gestalt.h:

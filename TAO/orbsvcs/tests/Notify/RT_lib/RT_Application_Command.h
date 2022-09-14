@@ -26,12 +26,12 @@ class TAO_RT_NOTIFY_TEST_Export TAO_Notify_Tests_RT_Application_Command : public
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_RT_Application_Command (void);
+  TAO_Notify_Tests_RT_Application_Command ();
 
   /// Destructor
   ~TAO_Notify_Tests_RT_Application_Command ();
 
-  virtual void handle_init (void);
+  virtual void handle_init ();
 };
 
 #include /**/ "ace/post.h"

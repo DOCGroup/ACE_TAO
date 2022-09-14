@@ -24,12 +24,12 @@ Handler::open (void *)
   return 0;
 }
 
-Handler::Handler (void)
+Handler::Handler ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P) starting handler %x\n", this));
 }
 
-Handler::~Handler (void)
+Handler::~Handler ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P) shutting down handler %x\n", this));
   ACE_Reactor::end_event_loop ();
@@ -45,7 +45,6 @@ Handler::handle_input (ACE_HANDLE)
   if (this->peer ().eof ())
     ACE_ERROR_RETURN ((LM_ERROR, "(%P) connection closed\n"), -1);
 
-#if defined (ACE_HAS_STRING_CLASS)
   ACE_IOStream_String s;
 
   if (!(this->peer () >> i >> f >> s))
@@ -56,17 +55,6 @@ Handler::handle_input (ACE_HANDLE)
 
   if (!(this->peer () << "Received: " << i << " " << f << " " << s << endl))
     ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "error sending data"), -1);
-
-#else
-  if (!(this->peer () >> i >> f))
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "error getting data"), -1);
-
-  cerr << "(" << ACE_OS::getpid () << ") Client sent:\n\t";
-  cerr << "(" << i << ") (" << f << ")" << endl;
-
-  if (!(this->peer () << i << " " << f << endl))
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "error sending data"), -1);
-#endif /* ACE_HAS_STRING_CLASS */
 
   // In order to flush the output to the peer, we have to use the sync
   // () function.  Some iostreams implementations let us use a 'flush'

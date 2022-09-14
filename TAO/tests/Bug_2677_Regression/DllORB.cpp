@@ -4,14 +4,14 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
 
-DllORB::DllORB (void)
+DllORB::DllORB ()
  : failPrePostInit_ (3),
    mv_orb_ (),
    mv_rootPOA_ ()
 {
 }
 
-DllORB::~DllORB (void)
+DllORB::~DllORB ()
 {
 }
 
@@ -103,7 +103,7 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
 
 
 int
-DllORB::fini (void)
+DllORB::fini ()
 {
   try
     {
@@ -112,7 +112,7 @@ DllORB::fini (void)
       // attempt to protect against sporadic BAD_INV_ORDER exceptions
       ACE_OS::sleep (ACE_Time_Value (0, 500));
 
-      mv_orb_->shutdown (1);
+      mv_orb_->shutdown (true);
     }
   catch (...)
     {

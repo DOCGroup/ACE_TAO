@@ -13,12 +13,12 @@ public:
    Test_i (CORBA::ORB_ptr orb);
 
    /// Destructor
-   ~Test_i (void);
+   ~Test_i ();
 
    /// Try and create a persistant POA
-   int try_and_create_POA (void);
+   int try_and_create_POA ();
 
-   void shutdown (void);
+   void shutdown ();
 
 protected:
    CORBA::ORB_var orb_;

@@ -54,7 +54,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       ACE_Argv_Type_Converter main_args_s (argc, argv);

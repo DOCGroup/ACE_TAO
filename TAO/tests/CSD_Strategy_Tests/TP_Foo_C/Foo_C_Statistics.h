@@ -8,7 +8,6 @@
 class CSD_TP_Foo_C_Export Foo_C_Statistics
 {
   public:
-
     Foo_C_Statistics(unsigned num_remote_clients,
                      unsigned num_collocated_clients);
 
@@ -22,7 +21,6 @@ class CSD_TP_Foo_C_Export Foo_C_Statistics
 
 
   private:
-
     unsigned num_remote_clients_;
     unsigned num_collocated_clients_;
     unsigned expected_[10];

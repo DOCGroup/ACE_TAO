@@ -84,10 +84,10 @@ public:
                 UTL_ExprList *cdr);
 
   // Get list item.
-  AST_Expression *head (void);
+  AST_Expression *head ();
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
 private:
   // Data.
@@ -101,7 +101,7 @@ public:
   UTL_ExprlistActiveIterator (UTL_ExprList *s);
 
   // Get current item.
-  AST_Expression *item (void);
+  AST_Expression *item ();
 };
 
 #endif           // _UTL_EXPRLIST_UTL_EXPRLIST_HH

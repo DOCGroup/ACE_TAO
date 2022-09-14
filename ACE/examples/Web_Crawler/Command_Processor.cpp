@@ -6,8 +6,7 @@
 #include "URL_Visitor.h"
 
 
-
-Command::~Command (void)
+Command::~Command ()
 {
 }
 
@@ -17,9 +16,8 @@ URL_Command::URL_Command (URL *url)
 }
 
 int
-URL_Command::execute (void)
+URL_Command::execute ()
 {
-
   ACE_CString check_string
     (ACE_TEXT_ALWAYS_CHAR (this->url_->url_addr ().get_path_name ()));
   if (check_string.find ("news:") != ACE_CString::npos)
@@ -56,28 +54,28 @@ URL_Command::execute (void)
 }
 
 int
-URL_Command::destroy (void)
+URL_Command::destroy ()
 {
   delete this;
   return 0;
 }
-Command_Processor::Command_Processor (void)
+Command_Processor::Command_Processor ()
 {
 }
 
-Command_Processor::~Command_Processor (void)
+Command_Processor::~Command_Processor ()
 {
 }
 
 int
-Command_Processor::destroy (void)
+Command_Processor::destroy ()
 {
   delete this;
   return 0;
 }
 
 int
-Command_Processor::execute (void)
+Command_Processor::execute ()
 {
   Command *command;
   while (this->url_queue_.is_empty () != 1)

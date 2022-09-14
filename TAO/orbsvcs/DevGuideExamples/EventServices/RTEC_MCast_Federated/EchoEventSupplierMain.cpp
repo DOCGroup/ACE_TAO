@@ -19,7 +19,7 @@
 
 #include "tao/ORB_Core.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include <iostream>
 #include <fstream>
 
@@ -180,22 +180,20 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     receiver->connect (pub);
 
     // Create the appropriate event handler and register it with the reactor
-    auto_ptr<ACE_Event_Handler> eh;
+    std::unique_ptr<ACE_Event_Handler> eh;
     if (mcast) {
-      auto_ptr<TAO_ECG_Mcast_EH> mcast_eh(new TAO_ECG_Mcast_EH (receiver.in()));
+      std::unique_ptr<TAO_ECG_Mcast_EH> mcast_eh(new TAO_ECG_Mcast_EH (receiver.in()));
       mcast_eh->reactor (orb->orb_core ()->reactor ());
       mcast_eh->open (ec.in());
-      ACE_auto_ptr_reset(eh,mcast_eh.release());
-      //eh.reset(mcast_eh.release());
+      eh.reset(mcast_eh.release());
     } else {
-      auto_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
+      std::unique_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
       udp_eh->reactor (orb->orb_core ()->reactor ());
       ACE_INET_Addr local_addr (listenport);
       if (udp_eh->open (local_addr) == -1) {
         std::cerr << "Cannot open EH" << std::endl;
       }
-      ACE_auto_ptr_reset(eh,udp_eh.release());
-      //eh.reset(udp_eh.release());
+      eh.reset(udp_eh.release());
     }
 
     // Create an event (just a string in this case).

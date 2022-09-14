@@ -12,9 +12,9 @@
 
 #include "ast_visitor_context.h"
 
-ast_visitor_context::ast_visitor_context (void)
-  : template_params_ (0),
-    template_args_ (0)
+ast_visitor_context::ast_visitor_context ()
+  : template_params_ (nullptr),
+    template_args_ (nullptr)
 {
 }
 
@@ -24,12 +24,12 @@ ast_visitor_context::ast_visitor_context (const ast_visitor_context &ctx)
 {
 }
 
-ast_visitor_context::~ast_visitor_context (void)
+ast_visitor_context::~ast_visitor_context ()
 {
 }
 
 FE_Utils::T_PARAMLIST_INFO *
-ast_visitor_context::template_params (void) const
+ast_visitor_context::template_params () const
 {
   return this->template_params_;
 }
@@ -41,7 +41,7 @@ ast_visitor_context::template_params (FE_Utils::T_PARAMLIST_INFO *params)
 }
 
 FE_Utils::T_ARGLIST const *
-ast_visitor_context::template_args (void) const
+ast_visitor_context::template_args () const
 {
   return this->template_args_;
 }

@@ -11,14 +11,14 @@ TAO_TIO::TAO_TIO (TimeBase::TimeT lower,
 }
 
 // Destructor.
-TAO_TIO::~TAO_TIO (void)
+TAO_TIO::~TAO_TIO ()
 {
 }
 
 // This is the get method for the attribute time interval.
 
 TimeBase::IntervalT
-TAO_TIO::time_interval (void)
+TAO_TIO::time_interval ()
 {
   return attr_time_interval;
 }
@@ -109,7 +109,6 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
         }
       else if (up2 < lb1)
         {
-
           ACE_NEW_RETURN (tio,
                           TAO_TIO (0, 0),
                           CosTime::OTNoOverlap);
@@ -234,7 +233,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 }
 
 CosTime::UTO_ptr
-TAO_TIO::time (void)
+TAO_TIO::time ()
 {
   TAO_UTO *uto = 0;
 

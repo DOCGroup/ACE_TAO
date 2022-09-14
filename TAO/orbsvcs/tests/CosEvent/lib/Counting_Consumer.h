@@ -36,7 +36,7 @@ public:
 
   /// Simple connect/disconnect methods..
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
-  void disconnect (void);
+  void disconnect ();
 
   /// Print out an error message if the event count is too far from the
   /// expected count.
@@ -46,7 +46,7 @@ public:
 
   /// The skeleton methods.
   virtual void push (const CORBA::Any& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count;
@@ -79,18 +79,18 @@ public:
 
   /// Simple connect/disconnect methods..
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
-  void disconnect (void);
+  void disconnect ();
 
   /// Print out an error message if the event count is too far from the
   /// expected count.
   void dump_results (int expected_count, int tolerance);
 
-  CORBA::Any *pull (void);
+  CORBA::Any *pull ();
   CORBA::Any *try_pull (CORBA::Boolean_out has_event);
 
   // = The CosEventComm::PullConsumer methods
   /// The skeleton methods.
-  virtual void disconnect_pull_consumer (void);
+  virtual void disconnect_pull_consumer ();
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count;
@@ -116,13 +116,13 @@ public:
                               int milliseconds = 0);
 
   // = Check the ACE_Task_Base documentation.
-  int svc (void);
+  int svc ();
 
-  void stop (void);
-  CORBA::ULong pull_count (void);
+  void stop ();
+  CORBA::ULong pull_count ();
 
   /// Run a single iteration of the test
-  void run (void);
+  void run ();
 
 private:
   /// The consumer we are turning into an active object

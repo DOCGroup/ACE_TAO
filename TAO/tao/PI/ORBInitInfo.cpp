@@ -16,7 +16,7 @@
 #include "tao/PI/ORBInitInfo.inl"
 #endif /* defined INLINE */
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -35,7 +35,7 @@ TAO::Objref_Traits<TAO_ORBInitInfo>::release (TAO_ORBInitInfo_ptr p)
 }
 
 TAO_ORBInitInfo_ptr
-TAO::Objref_Traits<TAO_ORBInitInfo>::nil (void)
+TAO::Objref_Traits<TAO_ORBInitInfo>::nil ()
 {
   return TAO_ORBInitInfo::_nil ();
 }
@@ -61,12 +61,12 @@ TAO_ORBInitInfo::TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
 {
 }
 
-TAO_ORBInitInfo::~TAO_ORBInitInfo (void)
+TAO_ORBInitInfo::~TAO_ORBInitInfo ()
 {
 }
 
 CORBA::StringSeq *
-TAO_ORBInitInfo::arguments (void)
+TAO_ORBInitInfo::arguments ()
 {
   this->check_validity ();
 
@@ -94,7 +94,7 @@ TAO_ORBInitInfo::arguments (void)
 }
 
 char *
-TAO_ORBInitInfo::orb_id (void)
+TAO_ORBInitInfo::orb_id ()
 {
   this->check_validity ();
 
@@ -104,7 +104,7 @@ TAO_ORBInitInfo::orb_id (void)
 }
 
 IOP::CodecFactory_ptr
-TAO_ORBInitInfo::codec_factory (void)
+TAO_ORBInitInfo::codec_factory ()
 {
   if (CORBA::is_nil (this->codec_factory_.in ()))
     {
@@ -142,7 +142,7 @@ TAO_ORBInitInfo::register_initial_reference (
 {
   this->check_validity ();
 
-  if (id == 0 || ACE_OS::strlen (id) == 0)
+  if (id == 0 || std::strlen (id) == 0)
     throw PortableInterceptor::ORBInitInfo::InvalidName ();
 
   if (CORBA::is_nil (obj))
@@ -159,7 +159,7 @@ TAO_ORBInitInfo::resolve_initial_references (const char * id)
 {
   this->check_validity ();
 
-  if (id == 0 || ACE_OS::strlen (id) == 0)
+  if (id == 0 || std::strlen (id) == 0)
     throw PortableInterceptor::ORBInitInfo::InvalidName ();
 
   // The ORB is practically fully initialized by the time this point
@@ -258,8 +258,7 @@ TAO_ORBInitInfo::add_server_request_interceptor_with_policy (
 void
 TAO_ORBInitInfo::add_ior_interceptor_with_policy (
     PortableInterceptor::IORInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies
-    )
+    const CORBA::PolicyList& policies)
 {
   this->check_validity ();
 
@@ -277,7 +276,7 @@ TAO_ORBInitInfo::add_ior_interceptor_with_policy (
 }
 
 PortableInterceptor::SlotId
-TAO_ORBInitInfo::allocate_slot_id (void)
+TAO_ORBInitInfo::allocate_slot_id ()
 {
   this->check_validity ();
 
@@ -297,8 +296,7 @@ TAO_ORBInitInfo::allocate_slot_id (void)
 void
 TAO_ORBInitInfo::register_policy_factory (
     CORBA::PolicyType type,
-    PortableInterceptor::PolicyFactory_ptr policy_factory
-    )
+    PortableInterceptor::PolicyFactory_ptr policy_factory)
 {
   this->check_validity ();
 
@@ -333,7 +331,7 @@ TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup)
 }
 
 void
-TAO_ORBInitInfo::check_validity (void)
+TAO_ORBInitInfo::check_validity ()
 {
   if (this->orb_core_ == 0)
     {
@@ -348,7 +346,7 @@ TAO_ORBInitInfo::check_validity (void)
 }
 
 CORBA::ORB_ptr
-TAO_ORBInitInfo::_get_orb (void)
+TAO_ORBInitInfo::_get_orb ()
 {
   this->check_validity ();
 
@@ -379,7 +377,7 @@ TAO_ORBInitInfo::_duplicate (TAO_ORBInitInfo_ptr obj)
   return obj;
 }
 
-const char* TAO_ORBInitInfo::_interface_repository_id (void) const
+const char* TAO_ORBInitInfo::_interface_repository_id () const
 {
   return "IDL:TAO_ORBInitInfo:1.0";
 }

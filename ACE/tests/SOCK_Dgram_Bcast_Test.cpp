@@ -197,7 +197,7 @@ int run_auto_test (const ACE_TCHAR *prog_name)
   return (receiver_exit_code);
 }
 
-void print_usage (void)
+void print_usage ()
 {
   ACE_OS::printf("Usage:SOCK_Dgram_Bast_Test [-p port] [-n dgrams_no] [-t timeout_ms] [-s] [-r]\n"
                  "\tp broadcast port [14521]\n"

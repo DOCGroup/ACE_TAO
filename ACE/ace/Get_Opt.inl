@@ -8,31 +8,31 @@ ACE_Get_Opt::ACE_Get_Opt_Long_Option::operator < (const ACE_Get_Opt_Long_Option 
 }
 
 ACE_INLINE int
-ACE_Get_Opt::argc (void) const
+ACE_Get_Opt::argc () const
 {
   return this->argc_;
 }
 
 ACE_INLINE ACE_TCHAR **
-ACE_Get_Opt::argv (void) const
+ACE_Get_Opt::argv () const
 {
   return this->argv_;
 }
 
 ACE_INLINE ACE_TCHAR*
-ACE_Get_Opt::opt_arg (void) const
+ACE_Get_Opt::opt_arg () const
 {
   return this->optarg;
 }
 
 ACE_INLINE int
-ACE_Get_Opt::opt_opt (void)
+ACE_Get_Opt::opt_opt ()
 {
   return this->optopt_;
 }
 
 ACE_INLINE int &
-ACE_Get_Opt::opt_ind (void)
+ACE_Get_Opt::opt_ind ()
 {
   return this->optind;
 }

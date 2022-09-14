@@ -28,7 +28,7 @@ typedef ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex> Server_Info_Ptr;
 */
 struct Server_Info
 {
-  Server_Info (void);
+  Server_Info ();
   Server_Info (const Server_Info & other);
 
   Server_Info (const ACE_CString& fqname,
@@ -49,21 +49,21 @@ struct Server_Info
 
   Server_Info & operator= (const Server_Info& other);
 
-  void clear (void);
+  void clear ();
 
   /// Convert to the corba type
   void setImRInfo (ImplementationRepository::ServerInformation* info) const;
-  ImplementationRepository::ServerInformation* createImRServerInfo(void) const;
+  ImplementationRepository::ServerInformation* createImRServerInfo() const;
 
-  void reset_runtime (void);
+  void reset_runtime ();
 
   bool is_server (const char *name) const;
   bool has_peer (const char *name) const;
   bool is_mode (ImplementationRepository::ActivationMode m) const;
-  ImplementationRepository::ActivationMode mode (void) const;
+  ImplementationRepository::ActivationMode mode () const;
 
-  bool is_running (void) const;
-  bool start_allowed (void);
+  bool is_running () const;
+  bool start_allowed ();
   void started (bool success);
 
   // transform the supplied limit to always be at least 1
@@ -74,10 +74,10 @@ struct Server_Info
                     const char *sior,
                     ImplementationRepository::ServerObject_ptr svrobj);
 
-  Server_Info *active_info (void);
-  const Server_Info *active_info (void) const;
+  Server_Info *active_info ();
+  const Server_Info *active_info () const;
 
-  const char * ping_id (void) const;
+  const char * ping_id () const;
 
   static bool parse_id (const char * id,
                         ACE_CString& server_id,

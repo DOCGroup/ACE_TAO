@@ -14,12 +14,12 @@
 be_visitor_home_ex_idl::be_visitor_home_ex_idl (
     be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (0),
+    node_ (nullptr),
     os_ (*ctx->stream ())
 {
 }
 
-be_visitor_home_ex_idl::~be_visitor_home_ex_idl (void)
+be_visitor_home_ex_idl::~be_visitor_home_ex_idl ()
 {
 }
 
@@ -62,7 +62,7 @@ be_visitor_home_ex_idl::visit_attribute (be_attribute *node)
    os_ << be_nl
        << (rd_only ? "readonly " : "") << "attribute ";
 
-   be_type *ft = be_type::narrow_from_decl (node->field_type ());
+   be_type *ft = dynamic_cast<be_type*> (node->field_type ());
 
    os_ << IdentifierHelper::type_name (ft, this);
    os_ << " "
@@ -89,7 +89,7 @@ be_visitor_home_ex_idl::visit_operation (be_operation *node)
       os_ << "oneway ";
     }
 
-  be_type *rt = be_type::narrow_from_decl (node->return_type ());
+  be_type *rt = dynamic_cast<be_type*> (node->return_type ());
 
   os_ << IdentifierHelper::type_name (rt, this);
 
@@ -136,7 +136,7 @@ be_visitor_home_ex_idl::visit_argument (be_argument *node)
         return -1;
     }
 
-  be_type *ft = be_type::narrow_from_decl (node->field_type ());
+  be_type *ft = dynamic_cast<be_type*> (node->field_type ());
 
   os_ << IdentifierHelper::type_name (ft, this)
       << " "
@@ -178,7 +178,7 @@ be_visitor_home_ex_idl::visit_sequence (be_sequence *node)
   // Keep output statements separate because of side effects.
   os_ << "sequence<";
 
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   os_ << IdentifierHelper::type_name (bt, this);
 
@@ -210,7 +210,7 @@ be_visitor_home_ex_idl::visit_string (be_string *node)
 }
 
 void
-be_visitor_home_ex_idl::gen_implicit (void)
+be_visitor_home_ex_idl::gen_implicit ()
 {
   os_ << be_nl
       << "local interface CCM_"
@@ -218,13 +218,13 @@ be_visitor_home_ex_idl::gen_implicit (void)
       << "Implicit" << be_nl
       << "{" << be_idt_nl
       << "::Components::EnterpriseComponent create ()" << be_idt_nl
-      << "raises ( ::Components::CCMException);"
+      << "raises (::Components::CCMException);"
       << be_uidt << be_uidt_nl
       << "};";
 }
 
 void
-be_visitor_home_ex_idl::gen_explicit (void)
+be_visitor_home_ex_idl::gen_explicit ()
 {
   os_ << be_nl_2
       << "local interface CCM_"
@@ -234,7 +234,7 @@ be_visitor_home_ex_idl::gen_explicit (void)
 
   AST_Home *base = node_->base_home ();
 
-  if (base == 0)
+  if (base == nullptr)
     {
       os_ << "::Components::HomeExecutorBase";
 
@@ -270,7 +270,7 @@ be_visitor_home_ex_idl::gen_explicit (void)
 }
 
 void
-be_visitor_home_ex_idl::gen_derived (void)
+be_visitor_home_ex_idl::gen_derived ()
 {
   ACE_CString lname_str =
     IdentifierHelper::try_escape (node_->original_local_name ());
@@ -285,7 +285,7 @@ be_visitor_home_ex_idl::gen_derived (void)
 }
 
 void
-be_visitor_home_ex_idl::gen_supported (void)
+be_visitor_home_ex_idl::gen_supported ()
 {
   os_ << be_idt;
 
@@ -309,7 +309,7 @@ be_visitor_home_ex_idl::gen_exception_list (
 {
   ACE_CDR::Long cutoff = (init_op ? 1 : 0);
 
-  if (exceptions != 0 && exceptions->length () > cutoff)
+  if (exceptions != nullptr && exceptions->length () > cutoff)
     {
       os_ << be_idt_nl
           << prefix << "raises ( ";
@@ -351,7 +351,7 @@ be_visitor_home_ex_idl::gen_exception_list (
 }
 
 void
-be_visitor_home_ex_idl::gen_home_executor (void)
+be_visitor_home_ex_idl::gen_home_executor ()
 {
   AST_Component *comp = node_->managed_component ();
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
@@ -377,7 +377,7 @@ be_visitor_home_ex_idl::gen_home_executor (void)
 }
 
 void
-be_visitor_home_ex_idl::restore_scope (void)
+be_visitor_home_ex_idl::restore_scope ()
 {
   for (UTL_ScopeActiveIterator iter (node_, UTL_Scope::IK_decls);
        ! iter.is_done ();
@@ -389,7 +389,7 @@ be_visitor_home_ex_idl::restore_scope (void)
 
       UTL_ScopedName *nconc_name =
         new UTL_ScopedName (d->local_name ()->copy (),
-                            0);
+                            nullptr);
 
       UTL_ScopedName *new_name =
         dynamic_cast<UTL_ScopedName *> (node_->name ()->copy ());

@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key (void)
+ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key ()
 {
   // If you change ~0, please change ACE_Map_Manager::free_list_id()
   // accordingly.
@@ -21,13 +21,13 @@ ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key (ACE_UINT32 slot_index,
 }
 
 ACE_INLINE ACE_UINT32
-ACE_Active_Map_Manager_Key::slot_index (void) const
+ACE_Active_Map_Manager_Key::slot_index () const
 {
   return this->key_data_.slot_index_;
 }
 
 ACE_INLINE ACE_UINT32
-ACE_Active_Map_Manager_Key::slot_generation (void) const
+ACE_Active_Map_Manager_Key::slot_generation () const
 {
   return this->key_data_.slot_generation_;
 }
@@ -59,14 +59,14 @@ ACE_Active_Map_Manager_Key::slot_generation (ACE_UINT32 g)
 }
 
 ACE_INLINE void
-ACE_Active_Map_Manager_Key::increment_slot_generation_count (void)
+ACE_Active_Map_Manager_Key::increment_slot_generation_count ()
 {
   ++this->key_data_.slot_generation_;
 }
 
 /* static */
 ACE_INLINE size_t
-ACE_Active_Map_Manager_Key::size (void)
+ACE_Active_Map_Manager_Key::size ()
 {
   return sizeof (ACE_UINT32) + sizeof (ACE_UINT32);
 }

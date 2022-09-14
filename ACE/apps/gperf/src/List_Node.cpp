@@ -121,7 +121,7 @@ List_Node::List_Node (char *k, int len)
   sort (keysig, ACE_Utils::truncate_cast<int> (ptr - keysig));
 }
 
-List_Node::~List_Node (void)
+List_Node::~List_Node ()
 {
   delete [] this->key;
   delete [] this->keysig;

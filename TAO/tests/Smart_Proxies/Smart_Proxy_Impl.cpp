@@ -2,7 +2,7 @@
 
 ACE_CString Smart_Test_Proxy::fake_ior_ ("This_is_my_fake_ior");
 
-Smart_Test_Factory::Smart_Test_Factory (void)
+Smart_Test_Factory::Smart_Test_Factory ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Smart_Test_Factory\n"));
@@ -18,7 +18,6 @@ Smart_Test_Factory::create_proxy (Test_ptr proxy)
        ACE_NEW_RETURN (proxy, Smart_Test_Proxy (proxy), 0);
 
    return proxy;
-
  }
 
 Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)
@@ -27,7 +26,7 @@ Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)
 }
 
 bool
-Smart_Test_Proxy::can_convert_to_ior (void) const
+Smart_Test_Proxy::can_convert_to_ior () const
 {
   // Even though a smart proxy is local, this one can be stringified
   return true;
@@ -63,7 +62,7 @@ Smart_Test_Proxy::method (CORBA::Short boo)
 }
 
 const ACE_CString&
-Smart_Test_Proxy::fake_ior (void)
+Smart_Test_Proxy::fake_ior ()
 {
   return fake_ior_;
 }

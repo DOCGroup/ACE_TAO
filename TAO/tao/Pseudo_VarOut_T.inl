@@ -56,7 +56,7 @@ TAO_Pseudo_Var_T<T>::operator typename T::_ptr_type & ()
 template <typename T>
 ACE_INLINE
 typename T::_ptr_type
-TAO_Pseudo_Var_T<T>::operator-> (void) const
+TAO_Pseudo_Var_T<T>::operator-> () const
 {
   return this->ptr_;
 }
@@ -64,7 +64,7 @@ TAO_Pseudo_Var_T<T>::operator-> (void) const
 template <typename T>
 ACE_INLINE
 typename T::_ptr_type
-TAO_Pseudo_Var_T<T>::in (void) const
+TAO_Pseudo_Var_T<T>::in () const
 {
   return this->ptr_;
 }
@@ -100,7 +100,7 @@ TAO_Pseudo_Var_T<T>::_retn (void)
 template <typename T>
 ACE_INLINE
 typename T::_ptr_type
-TAO_Pseudo_Var_T<T>::ptr (void) const
+TAO_Pseudo_Var_T<T>::ptr () const
 {
   return this->ptr_;
 }

@@ -49,23 +49,23 @@ class Map_Example
 {
 public:
   // Illustrate the ACE_Map_Manager<>.
-  int run (void);
+  int run ();
 
 private:
   // Iterate in the forward direction.
-  void iterate_forward (void);
+  void iterate_forward ();
 
   // Iterate in the other direction.
-  void iterate_reverse (void);
+  void iterate_reverse ();
 
   // Remove all elements from the map.
-  void remove_all (void);
+  void remove_all ();
 
 private:
   ACE_Map_Manager<KeyType,DataElement,ACE_Null_Mutex> map_;
 };
 
-int Map_Example::run (void)
+int Map_Example::run ()
 {
   ACE_TRACE ("Map_Example::run");
 
@@ -102,7 +102,7 @@ int Map_Example::run (void)
   return 0;
 }
 
-void Map_Example::iterate_forward (void)
+void Map_Example::iterate_forward ()
 {
   ACE_TRACE ("Map_Example::iterate_forward");
 
@@ -117,7 +117,7 @@ void Map_Example::iterate_forward (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }
 
-void Map_Example::iterate_reverse (void)
+void Map_Example::iterate_reverse ()
 {
   ACE_TRACE ("Map_Example::iterate_reverse");
 
@@ -132,7 +132,7 @@ void Map_Example::iterate_reverse (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }
 
-void Map_Example::remove_all (void)
+void Map_Example::remove_all ()
 {
   ACE_TRACE ("Map_Example::remove_all");
 

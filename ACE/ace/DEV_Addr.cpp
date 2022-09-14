@@ -27,7 +27,7 @@ ACE_DEV_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 // Return a pointer to the address.
 
 void *
-ACE_DEV_Addr::get_addr (void) const
+ACE_DEV_Addr::get_addr () const
 {
   ACE_TRACE ("ACE_DEV_Addr::get_addr");
 
@@ -35,7 +35,7 @@ ACE_DEV_Addr::get_addr (void) const
 }
 
 void
-ACE_DEV_Addr::dump (void) const
+ACE_DEV_Addr::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_DEV_Addr::dump");
@@ -48,7 +48,7 @@ ACE_DEV_Addr::dump (void) const
 
 // Do nothing constructor.
 
-ACE_DEV_Addr::ACE_DEV_Addr (void)
+ACE_DEV_Addr::ACE_DEV_Addr ()
   : ACE_Addr (AF_DEV, sizeof this->devname_)
 {
   ACE_TRACE ("ACE_DEV_Addr::ACE_DEV_Addr");

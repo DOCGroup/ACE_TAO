@@ -45,7 +45,6 @@ protected:
 
 public:
   virtual int run (int argc, char *argv[]);
-
 };
 
 #endif /* _PROCESS_PER_CONNECTION_LOGGING_SERVER_H */

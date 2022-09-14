@@ -1,12 +1,12 @@
 #include "Callback.h"
 
-Callback::Callback (void)
+Callback::Callback ()
   : received_callback_ (false)
 {
 }
 
 void
-Callback::test_oneway (void)
+Callback::test_oneway ()
 {
   received_callback_ = true;
 
@@ -15,7 +15,7 @@ Callback::test_oneway (void)
 }
 
 bool
-Callback::received_callback (void)
+Callback::received_callback ()
 {
   return received_callback_;
 }

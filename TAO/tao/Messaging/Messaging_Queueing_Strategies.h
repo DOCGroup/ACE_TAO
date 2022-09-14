@@ -45,16 +45,16 @@ namespace TAO
   class Eager_Transport_Queueing_Strategy : public Transport_Queueing_Strategy
   {
   public:
-    virtual bool must_queue (bool queue_empty) const;
+    bool must_queue (bool queue_empty) const override;
 
-    virtual bool buffering_constraints_reached (
+    bool buffering_constraints_reached (
       TAO_Stub *stub,
       size_t msg_count,
       size_t total_bytes,
       bool &must_flush,
       const ACE_Time_Value &current_deadline,
       bool &set_timer,
-      ACE_Time_Value &new_deadline) const;
+      ACE_Time_Value &new_deadline) const override;
 
   private:
     /// Check if the buffering constraint includes any timeouts and
@@ -88,7 +88,7 @@ namespace TAO
     : public Eager_Transport_Queueing_Strategy
   {
   public:
-    virtual bool must_queue (bool queue_empty) const;
+    bool must_queue (bool queue_empty) const override;
   };
 
   #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

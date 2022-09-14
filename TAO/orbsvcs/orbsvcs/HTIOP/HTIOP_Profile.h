@@ -35,7 +35,6 @@ namespace TAO
 {
   namespace HTIOP
   {
-
     // TAO HTIOP_Profile concrete Profile definitions
     /**
      * @class HTIOP_Profile
@@ -51,10 +50,10 @@ namespace TAO
     public:
       /// The object key delimiter that HTIOP uses or expects.
       static const char object_key_delimiter_;
-      virtual char object_key_delimiter (void) const;
+      virtual char object_key_delimiter () const;
 
       /// Return the char string prefix.
-      static const char *prefix (void);
+      static const char *prefix ();
 
       /// Profile constructor, same as above except the object_key has
       /// already been marshaled.
@@ -77,7 +76,7 @@ namespace TAO
       Profile (TAO_ORB_Core *orb_core);
 
       /// Destructor is to be called only through <_decr_refcnt>.
-      ~Profile (void);
+      ~Profile ();
 
       /**
        * Return a string representation for this profile.
@@ -85,7 +84,7 @@ namespace TAO
        * This is used to create url-style reference.  Only one
        * endpoint is included into the string.
        */
-      virtual char * to_string (void) const;
+      virtual char * to_string () const;
 
       /**
        * Endpoints are transmitted using TAO-proprietory tagged component.
@@ -93,13 +92,13 @@ namespace TAO
        * encapsulation of a sequence of structs, each representing a
        * single endpoint.  Data format is specified in iiop_endpoins.pidl.
        */
-      virtual int encode_endpoints (void);
+      virtual int encode_endpoints ();
 
       /// Return pointer to the head of this profile's endpoints list.
-      virtual TAO_Endpoint *endpoint (void);
+      virtual TAO_Endpoint *endpoint ();
 
       /// Return how many endpoints this profile contains.
-      virtual CORBA::ULong endpoint_count (void) const;
+      virtual CORBA::ULong endpoint_count () const;
 
       /**
        * Add <endp> to this profile's list of endpoints (it is inserted
@@ -112,16 +111,14 @@ namespace TAO
       virtual CORBA::ULong hash (CORBA::ULong max);
 
     protected:
-
       /// Template methods. Please see Profile.h for the documentation.
       virtual int decode_profile (TAO_InputCDR &cdr);
-      virtual int decode_endpoints (void);
+      virtual int decode_endpoints ();
       virtual void parse_string_i (const char *string);
       virtual void create_profile_body (TAO_OutputCDR &cdr) const;
       virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
 
     protected:
-
       /**
        * Head of this profile's list of endpoints.  This endpoint is not
        * dynamically allocated because a profile always contains at least

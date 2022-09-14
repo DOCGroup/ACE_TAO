@@ -38,7 +38,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Seq_Worker_T
 
 public:
   /// Constructor
-  TAO_Notify_Seq_Worker_T (void);
+  TAO_Notify_Seq_Worker_T ();
 
   /// Create a SEQ
   SEQ* create (CONTAINER& container);

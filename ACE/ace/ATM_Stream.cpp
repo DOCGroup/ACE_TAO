@@ -13,7 +13,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE (ACE_ATM_Stream)
 
 char*
-ACE_ATM_Stream::get_peer_name (void) const
+ACE_ATM_Stream::get_peer_name () const
 {
   ACE_TRACE ("ACE_ATM_Stream::get_peer_name");
 #if defined (ACE_HAS_FORE_ATM_XTI)
@@ -127,7 +127,7 @@ ACE_ATM_Stream::get_peer_name (void) const
 }
 
 ACE_HANDLE
-ACE_ATM_Stream::get_handle (void) const
+ACE_ATM_Stream::get_handle () const
 {
   ACE_TRACE ("ACE_ATM_Stream::get_handle");
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2) || defined (ACE_HAS_LINUX_ATM)

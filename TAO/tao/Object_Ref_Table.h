@@ -49,7 +49,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Object_Ref_Table
 {
 public:
-
   typedef ACE_Array_Map<CORBA::String_var,
                         CORBA::Object_var,
                         TAO::String_Var_Equal_To> Table;
@@ -57,7 +56,7 @@ public:
   typedef Table::iterator iterator;
 
   /// Constructor
-  TAO_Object_Ref_Table (void);
+  TAO_Object_Ref_Table ();
 
   /**
    * Register an object reference with the table, and map the given
@@ -79,21 +78,20 @@ public:
   CORBA::Object_ptr resolve_initial_reference (const char * id);
 
   /// Explicitly destroy the contents of the object reference table.
-  void destroy (void);
+  void destroy ();
 
   /**
    * @name Forward Iterators
    */
   //@{
-  iterator begin (void);
-  iterator end (void);
+  iterator begin ();
+  iterator end ();
   //@}
 
   /// Return the current size of the underlying table.
-  size_t current_size (void) const;
+  size_t current_size () const;
 
 private:
-
   /**
    * @name The canonical ACE_Map methods
    */
@@ -104,19 +102,17 @@ private:
   //@}
 
 private:
-
-  // Disallow copying and assignment.
-  TAO_Object_Ref_Table (const TAO_Object_Ref_Table &);
-  void operator= (const TAO_Object_Ref_Table &);
+  TAO_Object_Ref_Table (const TAO_Object_Ref_Table &) = delete;
+  void operator= (const TAO_Object_Ref_Table &) = delete;
+  TAO_Object_Ref_Table (TAO_Object_Ref_Table &&) = delete;
+  void operator= (TAO_Object_Ref_Table &&) = delete;
 
 private:
-
   /// The implementation.
   Table table_;
 
   /// Table synchronization lock.
   TAO_SYNCH_MUTEX lock_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -90,7 +90,6 @@ public:
 
     return proxy;
   }
-
 };
 
 // define the ProxyConsumer Builders.
@@ -151,7 +150,7 @@ typedef TAO_Notify_Proxy_Builder_T<TAO_Notify_CosEC_ProxyPushSupplier
                              , TAO_Notify_ConsumerAdmin>
 TAO_Notify_CosEC_ProxyPushSupplier_Builder;
 
-TAO_Notify_Builder::TAO_Notify_Builder (void)
+TAO_Notify_Builder::TAO_Notify_Builder ()
 {
   // Init the static members.
   TAO_Notify_AnyEvent::event_type_ = TAO_Notify_EventType::special ();

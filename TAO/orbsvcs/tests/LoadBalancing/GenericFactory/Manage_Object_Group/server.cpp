@@ -113,7 +113,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (lb_server.destroy () == -1)
         return 1;
-
     }
   catch (const CORBA::Exception& ex)
     {

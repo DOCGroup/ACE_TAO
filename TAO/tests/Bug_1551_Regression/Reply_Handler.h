@@ -14,12 +14,12 @@ public:
       Test::Hello_ptr hello,
       CORBA::ORB_ptr orb);
 
-  void short_sleep (void);
+  void short_sleep ();
 
   void short_sleep_excep (::Messaging::ExceptionHolder * excep_holder);
 
 private:
-  void check_counter(void);
+  void check_counter();
 
 private:
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> counter_;

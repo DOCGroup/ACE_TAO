@@ -14,7 +14,7 @@ namespace TAO
     }
 
     void
-    ImplicitActivationStrategy::strategy_cleanup (void)
+    ImplicitActivationStrategy::strategy_cleanup ()
     {
     }
   }

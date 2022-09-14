@@ -17,10 +17,6 @@ be_visitor_servant_svh::be_visitor_servant_svh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_servant_svh::~be_visitor_servant_svh (void)
-{
-}
-
 int
 be_visitor_servant_svh::visit_component (be_component *node)
 {
@@ -75,7 +71,7 @@ be_visitor_servant_svh::visit_component (be_component *node)
 
   os_ << be_nl
       << "virtual ~" << lname << "_Servant"
-      << " (void);" << be_nl;
+      << " ();" << be_nl;
 
   if (this->node_->has_rw_attributes ())
     {
@@ -166,13 +162,13 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
       os_ << be_uidt_nl << be_nl
           << "public:" << be_idt_nl
           << "virtual ::" << obj_name << "_ptr" << be_nl
-          << "provide_" << port_name << " (void);";
+          << "provide_" << port_name << " ();";
     }
 
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
       << "void" << be_nl
-      << "setup_" << port_name << "_i (void);";
+      << "setup_" << port_name << "_i ();";
 
   if (!be_global->gen_lwccm ())
      {
@@ -207,12 +203,12 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
     {
       os_ << "::" << node_->full_name () << "::"
           << port_name << "Connections *" << be_nl
-          << "get_connections_" << port_name << " (void);";
+          << "get_connections_" << port_name << " ();";
     }
   else
     {
       os_ << "::" << obj_name << "_ptr" << be_nl
-          << "get_connection_" << port_name << " (void);";
+          << "get_connection_" << port_name << " ();";
     }
 
   os_ << be_nl_2
@@ -232,7 +228,7 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
     }
   else
     {
-      os_ << "void);";
+      os_ << ");";
     }
 
   return 0;
@@ -276,7 +272,7 @@ be_visitor_servant_svh::visit_emits (be_emits *node)
 
       os_ << be_nl_2
           << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
-          << "disconnect_" << port_name << " (void);";
+          << "disconnect_" << port_name << " ();";
     }
   return 0;
 }
@@ -291,7 +287,7 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
 
       ACE_CString holder (obj_name);
       ACE_CString::size_type pos = holder.rfind (':');
-      const char *ev_lname = 0;
+      const char *ev_lname = nullptr;
 
       if (pos == ACE_CString::npos)
         {
@@ -329,7 +325,7 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
           << "_Context_ptr c);" << be_uidt_nl << be_nl;
 
       os_ << "virtual ~" << ev_lname << "Consumer_" << port_name
-          << "_Servant (void);";
+          << "_Servant ();";
 
       os_ << be_nl_2
           << "virtual void" << be_nl
@@ -339,12 +335,12 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
       os_ << be_nl_2
           << "/// Inherited from ::Components::EventConsumerBase." << be_nl
           << "virtual void" << be_nl
-          << "push_event ( ::Components::EventBase * ev);";
+          << "push_event (::Components::EventBase * ev);";
 
       os_ << be_nl_2
           << "/// Get component implementation." << be_nl
           << "virtual ::CORBA::Object_ptr" << be_nl
-          << "_get_component (void);";
+          << "_get_component ();";
 
       os_ << be_uidt_nl << be_nl
           << "protected:" << be_idt_nl;
@@ -364,14 +360,14 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
         {
           os_ << be_nl_2
               << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
-              << "get_consumer_" << port_name << " (void);";
+              << "get_consumer_" << port_name << " ();";
         }
 
       os_ << be_uidt_nl << be_nl
           << "private:" << be_idt_nl;
 
       os_ << "void" << be_nl
-          << "setup_consumer_" << port_name << "_i (void);";
+          << "setup_consumer_" << port_name << "_i ();";
 
       os_ << be_uidt_nl << be_nl
           << "private:" << be_idt_nl;
@@ -383,7 +379,7 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
 }
 
 void
-be_visitor_servant_svh::gen_non_type_specific (void)
+be_visitor_servant_svh::gen_non_type_specific ()
 {
   os_ << be_nl_2
       << "// Base class overrides."
@@ -406,7 +402,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
       os_ << be_nl_2
           << "virtual ::Components::ReceptacleDescriptions *"
           << be_nl
-          << "get_all_receptacles (void);";
+          << "get_all_receptacles ();";
     }
 
   AST_Decl::NodeType nt = this->node_->node_type ();
@@ -420,7 +416,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           os_ << be_nl_2
               << "virtual ::Components::PublisherDescriptions *"
               << be_nl
-              << "get_all_publishers (void);";
+              << "get_all_publishers ();";
         }
 
       if (this->node_->n_emits () != 0UL)
@@ -428,7 +424,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           os_ << be_nl_2
               << "virtual ::Components::EmitterDescriptions *"
               << be_nl
-              << "get_all_emitters (void);";
+              << "get_all_emitters ();";
         }
     }
 

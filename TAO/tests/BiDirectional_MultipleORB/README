@@ -1,4 +1,4 @@
-This is a test that creates a birectional GIOP policy for a POA and then
+This is a test that creates a bidirectional GIOP policy for a POA and then
 attempts to repeat this, after destructing and re-creating the ORB. This used to
 fail by breaking an assertion, because the second ORB was trying to register a policy
 validator object instance, which lingered since the time the first ORB was created.

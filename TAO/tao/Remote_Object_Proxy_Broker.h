@@ -62,7 +62,7 @@ namespace TAO
 
 // -----------------------------------------------------
 
-TAO::Remote_Object_Proxy_Broker *the_tao_remote_object_proxy_broker (void);
+TAO::Remote_Object_Proxy_Broker *the_tao_remote_object_proxy_broker ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

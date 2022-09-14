@@ -24,7 +24,7 @@ int StubBatchConsumer::parse_args (int argc, ACE_TCHAR * argv[])
 }
 
 
-::PortableServer::POA_ptr StubBatchConsumer::_default_POA (void)
+::PortableServer::POA_ptr StubBatchConsumer::_default_POA ()
 {
   return ::PortableServer::POA::_duplicate(this->poa_.in ());
 }
@@ -100,7 +100,7 @@ const char * StubBatchConsumer::identity () const
 /**
  * Clean house for process shut down.
  */
-void StubBatchConsumer::fini (void)
+void StubBatchConsumer::fini ()
 {
   this->notifier_->disconnect_consumer(this->consumer_id_);
 }

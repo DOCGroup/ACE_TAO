@@ -7,7 +7,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Smart_Proxy_Base::~TAO_Smart_Proxy_Base (void)
+TAO_Smart_Proxy_Base::~TAO_Smart_Proxy_Base ()
 {
 }
 

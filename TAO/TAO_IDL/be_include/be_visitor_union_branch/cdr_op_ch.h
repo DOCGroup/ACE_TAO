@@ -28,7 +28,7 @@ public:
   be_visitor_union_branch_cdr_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union_branch_cdr_op_ch (void);
+  ~be_visitor_union_branch_cdr_op_ch ();
 
   /// visit the union_branch node
   virtual int visit_union_branch (be_union_branch *node);
@@ -52,7 +52,6 @@ public:
 
   /// visit union type
   virtual int visit_union (be_union *node);
-
 };
 
 #endif /*  _BE_VISITOR_UNION_BRANCH_CDR_OP_CH_H_ */

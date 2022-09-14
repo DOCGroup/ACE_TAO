@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Valuetype_Adapter_Factory::~TAO_Valuetype_Adapter_Factory (void)
+TAO_Valuetype_Adapter_Factory::~TAO_Valuetype_Adapter_Factory ()
 {
 }
 

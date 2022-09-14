@@ -175,7 +175,7 @@ public:
    * of scheduled priorities.  All scheduled priorities range from 0
    * to the number returned, inclusive.
    */
-  virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (void);
+  virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority ();
 
   virtual void get_config_infos (RtecScheduler::Config_Info_Set_out configs);
 

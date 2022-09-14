@@ -3,7 +3,6 @@
 
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_MT_Dispatching::TAO_EC_MT_Dispatching (int nthreads,
@@ -15,14 +14,14 @@ TAO_EC_MT_Dispatching::TAO_EC_MT_Dispatching (int nthreads,
      thread_creation_flags_ (thread_creation_flags),
      thread_priority_ (thread_priority),
      force_activate_ (force_activate),
-     task_(0, service_object),
+     task_(nullptr, service_object),
      active_ (0)
 {
   this->task_.open (&this->thread_manager_);
 }
 
 void
-TAO_EC_MT_Dispatching::activate (void)
+TAO_EC_MT_Dispatching::activate ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -49,7 +48,7 @@ TAO_EC_MT_Dispatching::activate (void)
 }
 
 void
-TAO_EC_MT_Dispatching::shutdown (void)
+TAO_EC_MT_Dispatching::shutdown ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 

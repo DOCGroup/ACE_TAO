@@ -7,17 +7,17 @@ class SetExample
 {
 public:
   // Illustrate all ACE set types.
-  int run (void);
+  int run ();
 
 private:
   // Illustrate the ACE Bounded Sets.
-  int runBoundedSet (void);
+  int runBoundedSet ();
 
   // Illustrate the ACE Unbounded sets.
-  int runUnboundedSet (void);
+  int runUnboundedSet ();
 };
 
-int SetExample::run (void)
+int SetExample::run ()
 {
   ACE_TRACE ("SetExample::run");
 

@@ -5,18 +5,6 @@
 
 // This is the interface program that accesses the remote object
 
-// Constructor.
-Echo_Client_i::Echo_Client_i (void)
-{
-  //no-op
-}
-
-//Destructor.
-Echo_Client_i::~Echo_Client_i (void)
-{
-  //no-op
-}
-
 int
 Echo_Client_i::run (const char *name,
                     int argc,

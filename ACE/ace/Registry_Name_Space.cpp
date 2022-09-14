@@ -1,26 +1,15 @@
 #include "ace/Registry_Name_Space.h"
 
-
-
 #if (defined (ACE_WIN32) && defined (ACE_USES_WCHAR))
 // This only works on Win32 platforms when ACE_USES_WCHAR is turned on
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-ACE_Registry_Name_Space::ACE_Registry_Name_Space (void)
-{
-}
 
 ACE_Registry_Name_Space::ACE_Registry_Name_Space (ACE_Name_Options *name_options)
 {
   if (this->open (name_options) != 0)
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Registry_Name_Space::open")));
-}
-
-
-ACE_Registry_Name_Space::~ACE_Registry_Name_Space (void)
-{
 }
 
 
@@ -283,7 +272,7 @@ ACE_Registry_Name_Space::list_type_entries (ACE_BINDING_SET &set,
 
 
 void
-ACE_Registry_Name_Space::dump (void) const
+ACE_Registry_Name_Space::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 #endif /* ACE_HAS_DUMP */

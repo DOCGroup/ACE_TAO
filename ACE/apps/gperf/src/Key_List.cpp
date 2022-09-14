@@ -37,7 +37,6 @@ const char *const Key_List::default_return_type = "char *";
 
 namespace
 {
-
 char *
 dup_string (const char *const str)
 {
@@ -58,7 +57,7 @@ int Key_List::field_width = 0;
 int Key_List::determined_[ACE_STANDARD_CHARACTER_SET_SIZE];
 
 /// Destructor dumps diagnostics during debugging.
-Key_List::~Key_List (void)
+Key_List::~Key_List ()
 {
   if (option[DEBUGGING])
     this->dump ();
@@ -162,7 +161,7 @@ Key_List::special_input (char delimiter)
 /// Stores any C/C++ source code that must be included verbatim into
 /// the generated code output.
 char *
-Key_List::save_include_src (void)
+Key_List::save_include_src ()
 {
   int c = getchar ();
 
@@ -182,7 +181,7 @@ Key_List::save_include_src (void)
 /// table from a user-defined struct, or whether the user is content to
 /// simply use the default array of keys.
 char *
-Key_List::array_type (void)
+Key_List::array_type ()
 {
   return special_input ('%');
 }
@@ -190,7 +189,7 @@ Key_List::array_type (void)
 /// Sets up the Return_Type, the Struct_Tag type and the Array_Type
 /// based upon various user Options.
 int
-Key_List::output_types (void)
+Key_List::output_types ()
 {
   if (option[TYPE])
     {
@@ -245,7 +244,7 @@ Key_List::output_types (void)
 /// ``links,'' i.e., unhashable elements possessing identical key sets
 /// and lengths.
 int
-Key_List::read_keys (void)
+Key_List::read_keys ()
 {
   this->include_src = this->save_include_src ();
   if (this->include_src == 0)
@@ -462,7 +461,7 @@ Key_List::already_determined (List_Node *ptr)
 // paper from Jan 1980 JACM for details....
 
 void
-Key_List::reorder (void)
+Key_List::reorder ()
 {
   List_Node *ptr = 0;
 
@@ -486,7 +485,6 @@ Key_List::reorder (void)
 
           for (; run_ptr; run_ptr = trail_ptr->next)
             {
-
               if (already_determined (run_ptr))
                 {
                   trail_ptr->next = run_ptr->next;
@@ -505,7 +503,7 @@ Key_List::reorder (void)
 // item!
 
 void
-Key_List::output_min_max (void)
+Key_List::output_min_max ()
 {
   List_Node *temp = 0;
   for (temp = head; temp->next; temp = temp->next)
@@ -601,7 +599,7 @@ Key_List::output_switch (int use_keyword_table)
     }
   if (!option[OPTIMIZE])
     ACE_OS::printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
-  ACE_OS::printf ("      unsigned int key = %s (str, len);\n\n", option.hash_name ());
+  ACE_OS::printf ("      unsigned int const key = %s (str, len);\n\n", option.hash_name ());
   if (!option[OPTIMIZE])
     ACE_OS::printf ("      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)\n");
 
@@ -664,7 +662,7 @@ Key_List::output_switch (int use_keyword_table)
                 }
               else
                 {
-                  List_Node *links;
+                  List_Node *links = 0;
 
                   for (links = temp; links; links = links->link)
                     {
@@ -687,7 +685,6 @@ Key_List::output_switch (int use_keyword_table)
               // list by increasing hash values.
               if (temp->next && temp->hash_value == temp->next->hash_value)
                 {
-
                   for ( ; temp->next && temp->hash_value == temp->next->hash_value;
                         temp = temp->next)
                     {
@@ -773,7 +770,7 @@ Key_List::output_switch (int use_keyword_table)
 // code in generated function ``in_word_set.''
 
 void
-Key_List::output_keylength_table (void)
+Key_List::output_keylength_table ()
 {
   const int max_column = 15;
   int slot = 0;
@@ -792,7 +789,6 @@ Key_List::output_keylength_table (void)
 
       for (temp = head; temp; temp = temp->next, slot++)
         {
-
           if (slot < temp->hash_value)
             for ( ; slot < temp->hash_value; slot++)
               ACE_OS::printf ("%3d,%s", 0, ++column % (max_column - 1) ? "" : "\n    ");
@@ -810,7 +806,7 @@ Key_List::output_keylength_table (void)
 // function.
 
 void
-Key_List::output_keyword_table (void)
+Key_List::output_keyword_table ()
 {
   const char *l_brace = *head->rest ? "{" : "";
   const char *r_brace = *head->rest ? "}," : "";
@@ -908,7 +904,7 @@ Key_List::output_keyword_table (void)
 // the proper encoding for each key word
 
 int
-Key_List::output_binary_search_function (void)
+Key_List::output_binary_search_function ()
 {
   ACE_OS::printf ("%s\n", include_src);
 
@@ -1000,14 +996,13 @@ Key_List::output_binary_search_function (void)
   ACE_OS::fflush(stdout);
 
   return 0;
-
 }
 
 // Generates C code for the linear search algorithm that returns
 // the proper encoding for each key word
 
 int
-Key_List::output_linear_search_function (void)
+Key_List::output_linear_search_function ()
 {
   ACE_OS::printf ("%s\n", include_src);
 
@@ -1089,13 +1084,12 @@ Key_List::output_linear_search_function (void)
   ACE_OS::fflush (stdout);
 
   return 0;
-
 }
 // Generates C code for the hash function that returns the proper
 // encoding for each key word.
 
 void
-Key_List::output_hash_function (void)
+Key_List::output_hash_function ()
 {
   const int max_column = 10;
   int count = max_hash_value;
@@ -1249,13 +1243,12 @@ Key_List::output_hash_function (void)
 
               do
                 {
-
                   while (--count > key_pos)
                     ACE_OS::printf ("      case %d:\n", count);
 
                   ACE_OS::printf (option[STRCASECMP]
-                          ? "      case %d:\n        hval += asso_values[static_cast<int>(charmap[static_cast<int>(str[%d])])];\n"
-                          : "      case %d:\n        hval += asso_values[static_cast<int>(str[%d])];\n",
+                          ? "      case %d:\n        hval += asso_values[static_cast<int>(charmap[static_cast<int>(str[%d])])];\n        // Fallthrough\n"
+                          : "      case %d:\n        hval += asso_values[static_cast<int>(str[%d])];\n        // Fallthrough \n",
                           key_pos, key_pos - 1);
                 }
               while ((key_pos = option.get ()) != EOS && key_pos != WORD_END);
@@ -1310,7 +1303,7 @@ Key_List::update_lookup_array (int lookup_array[],
 // smaller, contiguous range of the keyword table.
 
 int
-Key_List::output_lookup_array (void)
+Key_List::output_lookup_array ()
 {
   if (total_duplicates > 0)
     {
@@ -1490,11 +1483,11 @@ Key_List::output_lookup_array (void)
 // Generates C code to perform the keyword lookup.
 
 void
-Key_List::output_lookup_function (void)
+Key_List::output_lookup_function ()
 {
   if (!option[OPTIMIZE])
     ACE_OS::printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
-  ACE_OS::printf ("      unsigned int key = %s (str, len);\n\n", option.hash_name ());
+  ACE_OS::printf ("      unsigned int const key = %s (str, len);\n\n", option.hash_name ());
   if (!option[OPTIMIZE])
     ACE_OS::printf ("      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)\n");
   ACE_OS::printf ("        {\n");
@@ -1578,7 +1571,7 @@ Key_List::output_lookup_function (void)
 // Output the table and the functions that map upper case into lower case!
 
 void
-Key_List::output_strcasecmp (void)
+Key_List::output_strcasecmp ()
 {
   ACE_OS::printf ("%s",
           "/* This array is designed for mapping upper and lower case letter\n"
@@ -1641,7 +1634,7 @@ Key_List::output_strcasecmp (void)
 // based upon the user's Options.
 
 int
-Key_List::output (void)
+Key_List::output ()
 {
   if (option[BINARYSEARCH])
     // Generate code binary search.
@@ -1801,7 +1794,7 @@ Key_List::output (void)
 // Sorts the keys by hash value.
 
 void
-Key_List::sort (void)
+Key_List::sort ()
 {
   // By default, we sort via hashing.
   hash_sort = 1;
@@ -1812,9 +1805,8 @@ Key_List::sort (void)
 
 // Sorts the keys by normal strcmp.
 void
-Key_List::string_sort (void)
+Key_List::string_sort ()
 {
-
   // Flatten the equivalence class list to a linear list.
 
   List_Node *ptr;
@@ -1865,7 +1857,7 @@ Key_List::string_sort (void)
 // Dumps the key list to stderr stream.
 
 void
-Key_List::dump (void)
+Key_List::dump ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nDumping key list information:\ntotal non-static linked keywords = %d"
@@ -1922,7 +1914,7 @@ Key_List::dump (void)
 
 // Simple-minded constructor action here...
 
-Key_List::Key_List (void)
+Key_List::Key_List ()
   : head (0),
     total_duplicates (0),
     array_type_ (dup_string (Key_List::default_array_type)),
@@ -1939,7 +1931,7 @@ Key_List::Key_List (void)
 // Returns the length of entire key list.
 
 int
-Key_List::keyword_list_length (void)
+Key_List::keyword_list_length ()
 {
   return list_len;
 }
@@ -1947,7 +1939,7 @@ Key_List::keyword_list_length (void)
 // Returns length of longest key read.
 
 int
-Key_List::max_key_length (void)
+Key_List::max_key_length ()
 {
   return max_key_len;
 }

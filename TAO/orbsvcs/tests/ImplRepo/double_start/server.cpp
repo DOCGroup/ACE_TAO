@@ -171,7 +171,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb->destroy();
 
     //    ACE_OS::unlink (pid_file.c_str ());
-
   }
   catch(const CORBA::Exception& ex) {
     ex._tao_print_exception (ACE_TEXT ("Server main()"));

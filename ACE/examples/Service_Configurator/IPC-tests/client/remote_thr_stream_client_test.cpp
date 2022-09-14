@@ -23,7 +23,7 @@ static const ACE_TCHAR *host_name = ACE_DEFAULT_SERVER_HOST;
 // Name of file to send.
 static const ACE_TCHAR *file_name = ACE_TEXT ("./remote_data");
 
-static void print_usage_and_die (void)
+static void print_usage_and_die ()
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("usage: %s [-p portnum] [-h host_name] [-f file]\n"),

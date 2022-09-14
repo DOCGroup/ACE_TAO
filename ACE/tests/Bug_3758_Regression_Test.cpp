@@ -23,7 +23,7 @@
 
 // Test ACE_OS::fileno()
 int
-fileno_test (void)
+fileno_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing fileno method\n")));

@@ -177,7 +177,6 @@ HCURSOR CLog_Msg_MFCDlg::OnQueryDragIcon()
 void CLog_Msg_MFCDlg::OnDebugButtonClicked()
 {
     ACE_DEBUG(( LM_DEBUG, "Debug message sent!\n" ));
-
 }
 
 #endif /* ACE_WIN32 */

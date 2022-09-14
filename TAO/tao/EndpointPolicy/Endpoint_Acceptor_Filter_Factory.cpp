@@ -8,7 +8,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-TAO_Endpoint_Acceptor_Filter_Factory::~TAO_Endpoint_Acceptor_Filter_Factory(void)
+TAO_Endpoint_Acceptor_Filter_Factory::~TAO_Endpoint_Acceptor_Filter_Factory()
 {
 }
 
@@ -53,7 +53,6 @@ TAO_Endpoint_Acceptor_Filter_Factory::~TAO_Endpoint_Acceptor_Filter_Factory(void
 
   return filter;
 }
-
 
 
 ACE_FACTORY_DEFINE (TAO_EndpointPolicy, TAO_Endpoint_Acceptor_Filter_Factory)

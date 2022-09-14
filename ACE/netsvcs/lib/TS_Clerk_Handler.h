@@ -34,7 +34,6 @@
  */
 class ACE_Time_Info
 {
-
 public:
   time_t delta_time_;
 
@@ -81,15 +80,15 @@ public:
   };
 
   // = Set/get the current state.
-  State state (void);
+  State state ();
   void state (State);
 
   // = Set/get the current retry timeout delay.
-  long timeout (void);
+  long timeout ();
   void timeout (long);
 
   // = Set/get the maximum retry timeout delay.
-  long max_timeout (void);
+  long max_timeout ();
   void max_timeout (long);
 
   /// Activate this instance of the <ACE_TS_Clerk_Handler>
@@ -97,7 +96,7 @@ public:
   virtual int open (void * = 0);
 
   /// Return the handle of the message_fifo_;
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Called when object is removed from the ACE_Reactor
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
@@ -112,7 +111,7 @@ public:
 
   /// Get/Set remote addr
   void remote_addr (ACE_INET_Addr &addr);
-  ACE_INET_Addr &remote_addr (void);
+  ACE_INET_Addr &remote_addr ();
 
   /// Send request for time update to the server as well as return the
   /// current time info by reference.
@@ -121,9 +120,7 @@ public:
 
 protected:
   /// Handle SIGPIPE.
-  virtual int handle_signal (int signum,
-                             siginfo_t *,
-                             ucontext_t *);
+  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
 
   static void stderr_output (int = 0);
 
@@ -138,7 +135,7 @@ private:
   int recv_reply (ACE_Time_Request &reply);
 
   /// Reinitiate connection with the server
-  int reinitiate_connection (void);
+  int reinitiate_connection ();
 
   /// The current state of the connection
   State state_;
@@ -182,7 +179,7 @@ class ACE_TS_Clerk_Processor : public ACE_Connector <ACE_TS_Clerk_Handler, ACE_S
 {
 public:
   /// Default constructor
-  ACE_TS_Clerk_Processor (void);
+  ACE_TS_Clerk_Processor ();
 
   /// Query servers for time periodically (timeout value)
   virtual int handle_timeout (const ACE_Time_Value &tv,
@@ -198,21 +195,21 @@ protected:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Called when service is unlinked.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Called to determine info about the service.
   virtual int info (ACE_TCHAR **strp, size_t length) const;
 
   // = Scheduling hooks.
-  virtual int suspend (void);
-  virtual int resume (void);
+  virtual int suspend ();
+  virtual int resume ();
 
 private:
   /// Parse svc.conf arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Allocate entry in shared memory for system time
-  void alloc (void);
+  void alloc ();
 
   /// Update delta_time using times obtained from all servers
   int update_time ();

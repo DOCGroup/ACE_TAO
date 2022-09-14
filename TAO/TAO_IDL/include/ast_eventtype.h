@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef _AST_VALUETYPE_AST_EVENTTYPE_HH
 #define _AST_VALUETYPE_AST_EVENTTYPE_HH
 
@@ -20,15 +19,10 @@ public:
                  bool truncatable,
                  bool custom);
 
-  virtual ~AST_EventType (void);
+  virtual ~AST_EventType ();
 
   // Cleanup function.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_EventType);
-  DEF_NARROW_FROM_SCOPE(AST_EventType);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);

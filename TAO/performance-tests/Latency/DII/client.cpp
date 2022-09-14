@@ -158,7 +158,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             object->_request ("shutdown");
 
           request->invoke ();
-
         }
     }
   catch (const CORBA::Exception& ex)

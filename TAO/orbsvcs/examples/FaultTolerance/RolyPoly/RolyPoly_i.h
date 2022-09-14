@@ -12,24 +12,17 @@ class RolyPoly_i : public virtual POA_RolyPoly,
 public:
   RolyPoly_i (CORBA::ORB_ptr orb);
 
-  ~RolyPoly_i (void);
+  ~RolyPoly_i () = default;
 
   // Checkpointable
-  //
-  virtual CORBA::Any*
-  get_state ();
+  virtual CORBA::Any* get_state ();
 
-  virtual void
-  set_state (CORBA::Any const& state);
-
+  virtual void set_state (CORBA::Any const& state);
 
   // RolyPoly
-  //
-  virtual CORBA::Short
-  number (char *&s);
+  virtual CORBA::Short number (char *&s);
 
-  virtual void
-  shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::Short number_;

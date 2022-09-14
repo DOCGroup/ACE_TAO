@@ -43,7 +43,7 @@ protected:
 class ST_AMH_Server
 {
 public:
-  ST_AMH_Server (void);
+  ST_AMH_Server ();
   virtual ~ST_AMH_Server ();
 
   /// ORB inititalisation stuff
@@ -56,7 +56,6 @@ public:
   virtual void run_event_loop ();
 
 public:
-
 protected:
   CORBA::ORB_ptr orb_;
   PortableServer::POA_var root_poa_;
@@ -124,7 +123,7 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr,
 
 // ------------------------------------------------------------------------
 //
-ST_AMH_Server::ST_AMH_Server (void)
+ST_AMH_Server::ST_AMH_Server ()
 {
 }
 

@@ -58,10 +58,10 @@ class ACE_Export ACE_Command_Base
 {
 public:
   /// Default constructor.
-  ACE_Command_Base (void);
+  ACE_Command_Base ();
 
   /// Virtual destructor.
-  virtual ~ACE_Command_Base (void);
+  virtual ~ACE_Command_Base () = default;
 
   /**
    * Invokes the method encapsulated by the command, passing along the
@@ -84,7 +84,7 @@ class ACE_Export ACE_Noop_Command
 {
 public:
   /// Constructor
-  ACE_Noop_Command();
+  ACE_Noop_Command() = default;
 
   /// Implement the empty execute() member function
   virtual int execute(void*);

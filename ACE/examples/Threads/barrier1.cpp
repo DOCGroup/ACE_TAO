@@ -7,7 +7,6 @@
 #include "ace/Service_Config.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 struct Tester_Args

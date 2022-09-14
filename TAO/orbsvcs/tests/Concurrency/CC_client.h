@@ -28,7 +28,7 @@
 #define _CC_CLIENT_H_
 
 // Stuff to be used by the command file parser
-int ace_cc_yyparse(void);
+int ace_cc_yyparse();
 int line_no = 1;
 char line_buf[500];
 CC_CommandList *cmdlist;
@@ -49,30 +49,30 @@ class CC_Client
 {
 public:
   /// Default constructor.
-  CC_Client (void);
+  CC_Client ();
 
   /// Destructor.
-  ~CC_Client (void);
+  ~CC_Client ();
 
   /// Run the test.
-  int run (void);
+  int run ();
 
   /// Initialize the test with the parameters from the command line.
   int init (int argc, ACE_TCHAR **argv);
 
 private:
   /// Function to initialize the naming service.
-  int init_naming_service (void);
+  int init_naming_service ();
 
   /// Function to parse the command line arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// Function to read the ior from the given file.
   int read_ior (ACE_TCHAR *filename);
 
   /// Runs the basic tests (on a single lock set). Returns CC_SUCCESS
   /// upon success CC_FAIL otherwise.
-  int run_basic_tests (void);
+  int run_basic_tests ();
 
   /// Runs the extended tests (on more lock sets). Returns CC_SUCCESS
   /// upon success CC_FAIL otherwise.
@@ -131,6 +131,6 @@ private:
   ACE_TCHAR *script_file_;
 
   /// Prints out the options to the program.
-  void print_usage (void);
+  void print_usage ();
 };
 #endif /* !defined (_CC_CLIENT_H_) */

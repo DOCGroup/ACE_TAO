@@ -29,7 +29,7 @@ class be_visitor_dds_ts_idl : public be_visitor_scope
 public:
   be_visitor_dds_ts_idl (be_visitor_context *ctx);
 
-  ~be_visitor_dds_ts_idl (void);
+  ~be_visitor_dds_ts_idl ();
 
   virtual int visit_root (be_root *node);
   virtual int visit_module (be_module *node);
@@ -46,8 +46,8 @@ private:
   void gen_datareader (be_type *node);
 
   /// Manage streams and files.
-  int init_file (void);
-  void fini_file (void);
+  int init_file ();
+  void fini_file ();
 
 private:
   TAO_OutStream *os_ptr_;

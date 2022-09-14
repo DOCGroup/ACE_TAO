@@ -14,12 +14,11 @@ class Gateway_ObjRef_Factory
     public virtual OBV_ORT::ObjectReferenceFactory
 {
 public:
-
   Gateway_ObjRef_Factory (
     Gateway::Object_Factory_ptr gateway_object_factory,
     PortableInterceptor::ObjectReferenceFactory *old_factory);
 
-  virtual ::CORBA::ValueBase *_copy_value (void);
+  virtual ::CORBA::ValueBase *_copy_value ();
 
   virtual CORBA::Object_ptr make_object (
       const char *repository_id,

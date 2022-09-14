@@ -28,7 +28,7 @@ class be_visitor_interface_svts : public be_visitor_interface
 public:
   be_visitor_interface_svts (be_visitor_context *ctx);
 
-  ~be_visitor_interface_svts (void);
+  ~be_visitor_interface_svts ();
 
   virtual int visit_interface (be_interface *node);
   virtual int visit_operation (be_operation *node);

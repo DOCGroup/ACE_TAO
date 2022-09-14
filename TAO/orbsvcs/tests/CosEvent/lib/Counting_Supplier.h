@@ -32,19 +32,19 @@ class CEC_Test_Export CEC_Counting_Supplier : public POA_CosEventComm::PushSuppl
 {
 public:
   /// Constructor
-  CEC_Counting_Supplier (void);
+  CEC_Counting_Supplier ();
 
   // = The CosEventComm::PushSupplier methods
 
   /// Simple connect/disconnect methods..
   void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
-  void disconnect (void);
+  void disconnect ();
 
   /// Push an event.
   void push (const CORBA::Any& events);
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
   /// Count the number of events sent
   CORBA::ULong event_count;
@@ -65,13 +65,13 @@ public:
                               int milliseconds = 0);
 
   // = Check the ACE_Task_Base documentation.
-  int svc (void);
+  int svc ();
 
-  void stop (void);
-  CORBA::ULong push_count (void);
+  void stop ();
+  CORBA::ULong push_count ();
 
   /// Run a single iteration of the test
-  void run (void);
+  void run ();
 
 private:
   /// The supplier we are turning into an active object
@@ -103,18 +103,18 @@ class CEC_Test_Export CEC_Pull_Counting_Supplier : public POA_CosEventComm::Pull
 {
 public:
   /// Constructor
-  CEC_Pull_Counting_Supplier (void);
+  CEC_Pull_Counting_Supplier ();
 
   // = The CosEventComm::PullSupplier methods
 
   /// Simple connect/disconnect methods..
   void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
-  void disconnect (void);
+  void disconnect ();
 
   // The PullSupplier methods.
-  CORBA::Any* pull (void);
+  CORBA::Any* pull ();
   CORBA::Any* try_pull (CORBA::Boolean_out has_event);
-  virtual void disconnect_pull_supplier (void);
+  virtual void disconnect_pull_supplier ();
 
   /// Count the number of events sent
   CORBA::ULong event_count;

@@ -36,12 +36,12 @@ be_component_fwd::be_component_fwd (AST_Interface *dummy,
   this->size_type (AST_Type::VARIABLE);
 }
 
-be_component_fwd::~be_component_fwd (void)
+be_component_fwd::~be_component_fwd ()
 {
 }
 
 void
-be_component_fwd::destroy (void)
+be_component_fwd::destroy ()
 {
   this->AST_ComponentFwd::destroy ();
 }
@@ -53,7 +53,3 @@ be_component_fwd::accept (be_visitor *visitor)
             ? 0
             : visitor->visit_component_fwd (this));
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_component_fwd)

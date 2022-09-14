@@ -8,12 +8,12 @@ test_i::test_i (CORBA::Short num,
 {
 }
 
-test_i::~test_i (void)
+test_i::~test_i ()
 {
 }
 
 CORBA::Short
-test_i::number (void)
+test_i::number ()
 {
   ++this->number_;
   if (this->number_ == 3)
@@ -35,10 +35,10 @@ test_i::number (void)
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "SERVER: Server is shutting down at %d.\n",
               this->number_));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

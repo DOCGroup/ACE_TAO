@@ -24,7 +24,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor from typecode
-TAO_DynAnyFactory::TAO_DynAnyFactory (void)
+TAO_DynAnyFactory::TAO_DynAnyFactory ()
 {
 }
 

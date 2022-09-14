@@ -11,7 +11,7 @@ Foo_i::Foo_i (CORBA::ORB_ptr orb,
 }
 
 void
-Foo_i::baz (void)
+Foo_i::baz ()
 {
   // Make sure that logging will occur.
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
@@ -30,7 +30,7 @@ Foo_i::baz (void)
 }
 
 void
-Foo_i::shutdown (void)
+Foo_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

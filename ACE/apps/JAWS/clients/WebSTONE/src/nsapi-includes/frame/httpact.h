@@ -84,7 +84,6 @@ int servact_handle_processed(Session *sn, Request *rq);
 char *servact_translate_uri(char *uri, Session *sn);
 
 
-
 #ifdef MCC_PROXY
 
 /* ----------------------- proxy specific prototypes ---------------------- */

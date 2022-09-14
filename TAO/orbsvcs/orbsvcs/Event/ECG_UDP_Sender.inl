@@ -24,7 +24,7 @@ TAO_ECG_UDP_Sender::TAO_ECG_UDP_Sender (CORBA::Boolean crc)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_ECG_UDP_Sender::mtu (void) const
+TAO_ECG_UDP_Sender::mtu () const
 {
   return this->cdr_sender_.mtu ();
 }

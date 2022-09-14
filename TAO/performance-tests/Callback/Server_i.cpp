@@ -21,7 +21,7 @@ Server_i::request (Test::TimeStamp time_stamp,
 }
 
 void
-Server_i::shutdown (void)
+Server_i::shutdown ()
 {
   this->done_ = 1;
 }

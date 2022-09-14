@@ -6,7 +6,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-Basic_Logging_Service::Basic_Logging_Service (void)
+Basic_Logging_Service::Basic_Logging_Service ()
   : service_name_ ("BasicLogFactory"),
     ior_file_name_ (0),
     pid_file_name_ (0),
@@ -16,7 +16,7 @@ Basic_Logging_Service::Basic_Logging_Service (void)
   // No-Op.
 }
 
-Basic_Logging_Service::~Basic_Logging_Service (void)
+Basic_Logging_Service::~Basic_Logging_Service ()
 {
   // No-Op.
 }
@@ -159,7 +159,7 @@ Basic_Logging_Service::init (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Basic_Logging_Service::resolve_naming_service (void)
+Basic_Logging_Service::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService");
@@ -173,7 +173,7 @@ Basic_Logging_Service::resolve_naming_service (void)
 }
 
 int
-Basic_Logging_Service::run (void)
+Basic_Logging_Service::run ()
 {
   if (this->nthreads_ > 0)
     {
@@ -190,7 +190,7 @@ Basic_Logging_Service::run (void)
 }
 
 int
-Basic_Logging_Service::svc (void)
+Basic_Logging_Service::svc ()
 {
   try
     {
@@ -205,7 +205,7 @@ Basic_Logging_Service::svc (void)
 }
 
 void
-Basic_Logging_Service::shutdown (void)
+Basic_Logging_Service::shutdown ()
 {
   if (this->bind_to_naming_service_)
     {

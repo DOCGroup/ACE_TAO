@@ -57,7 +57,7 @@ public:
 
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   Simple_Server_var server_;
@@ -129,7 +129,7 @@ Client::Client (Simple_Server_ptr server,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

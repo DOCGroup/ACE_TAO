@@ -28,13 +28,13 @@ class Client_i
 {
 public:
   /// Constructor.
-  Client_i (void);
+  Client_i ();
 
   /// Destructor.
-  ~Client_i (void);
+  ~Client_i ();
 
   /// Execute client example code.
-  int run (void);
+  int run ();
 
   /// Initialize the client communication endpoint with server.
   int init (int argc, ACE_TCHAR *argv[]);
@@ -44,29 +44,29 @@ public:
    * <secure_universal_time> has not been currently implemented in the
    * given server.
    */
-  void test_for_secure_universal_time (void);
+  void test_for_secure_universal_time ();
 
   /// Tests if the server returns a valid time.
-  void test_for_universal_time (void);
+  void test_for_universal_time ();
 
   /// Tests if the server returns a new UTO filled with the given time.
-  void test_for_new_universal_time (void);
+  void test_for_new_universal_time ();
 
   /// Tests if the returned UTO has the same value as the given UTC.
-  void test_for_uto_from_utc (void);
+  void test_for_uto_from_utc ();
 
   /// Tests if a new TIO is created according to the given bounds.
-  void test_for_new_interval (void);
+  void test_for_new_interval ();
 
 private:
   /// Function to read the server IOR from a file.
   int read_ior (ACE_TCHAR *filename);
 
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// To initialize the naming service and get a clerk IOR.
-   int obtain_initial_references (void);
+   int obtain_initial_references ();
 
   /// # of arguments on the command line.
   int argc_;
@@ -92,5 +92,4 @@ private:
 
   /// Remember our orb.
   CORBA::ORB_var orb_;
-
 };

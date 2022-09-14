@@ -1,5 +1,3 @@
-
-
 This directory houses a collection of tests which exercise TAO support
 for features defined in the RT-CORBA specification. Tests which exercise
 TAO-specific RT features can be found in $TAO_ROOT/performance-tests/RTCorba.

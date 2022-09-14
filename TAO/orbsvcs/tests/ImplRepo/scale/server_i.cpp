@@ -21,7 +21,7 @@ public:
   }
   virtual ~test_i () {
   }
-  virtual CORBA::Long get (void)
+  virtual CORBA::Long get ()
   {
     ++n_;
     CORBA::Object_var obj = orb_->resolve_initial_references("POACurrent");
@@ -38,7 +38,7 @@ public:
 // The server name of the Aiprlane Server
 static const char DEFAULT_SERVER_NAME[] = "TestObject";
 
-Server_i::Server_i (void)
+Server_i::Server_i ()
 : server_name_(DEFAULT_SERVER_NAME)
 , count_(1)
 {
@@ -163,7 +163,7 @@ Server_i::init (int argc, ACE_TCHAR** argv)
 }
 
 int
-Server_i::run (void)
+Server_i::run ()
 {
   try
   {

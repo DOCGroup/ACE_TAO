@@ -12,12 +12,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 extern unsigned long TAO_EC_TPC_debug_level;
 
-TAO_EC_TPC_ProxyPushSupplier::~TAO_EC_TPC_ProxyPushSupplier (void)
+TAO_EC_TPC_ProxyPushSupplier::~TAO_EC_TPC_ProxyPushSupplier ()
 {
 }
 
 void
-TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (void)
+TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier ()
 {
   if (TAO_EC_TPC_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t): enter EC_TPC_ProxySupplier::disconnect_push_supplier (%@): consumer=%@\n",

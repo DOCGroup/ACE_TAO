@@ -28,16 +28,15 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
-  void method (void);
+  void method ();
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void);
+  void shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
-
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
 };
@@ -50,7 +49,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 void
-test_i::method (void)
+test_i::method ()
 {
   // Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources *tss =
@@ -74,17 +73,17 @@ test_i::method (void)
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 "test_i::shutdown\n"));
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (void)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -288,14 +287,12 @@ rt_poa (CORBA::ORB_ptr orb,
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -306,7 +303,7 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   try
     {

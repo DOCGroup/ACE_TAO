@@ -47,7 +47,7 @@ struct tdesc {
   bool ipv6_test;
 };
 
-typedef struct tdesc tdesc_t;
+using tdesc_t = struct tdesc;
 
 #ifdef ACE_WIN64
 // This arg is ignored on Windows and causes pointer truncation
@@ -328,7 +328,7 @@ spawn_test(bool ipv6_test)
 }
 
 int
-do_test(void)
+do_test()
 {
   spawn_test(false);
 

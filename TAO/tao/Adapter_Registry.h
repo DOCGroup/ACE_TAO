@@ -51,7 +51,7 @@ public:
   explicit TAO_Adapter_Registry (TAO_ORB_Core *);
 
   /// Close the
-  ~TAO_Adapter_Registry (void);
+  ~TAO_Adapter_Registry ();
 
   /**
    * Close each of of the Adapters and then cleanup the Registry.
@@ -91,8 +91,8 @@ public:
   TAO_Adapter *find_adapter (const char *name) const;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Adapter_Registry (const TAO_Adapter_Registry &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Adapter_Registry &operator= (const TAO_Adapter_Registry &))
+  TAO_Adapter_Registry (const TAO_Adapter_Registry &) = delete;
+  TAO_Adapter_Registry &operator= (const TAO_Adapter_Registry &) = delete;
 
   /**
    * @name A simple array of adapters.

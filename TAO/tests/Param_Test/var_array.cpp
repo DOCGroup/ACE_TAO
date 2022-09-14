@@ -17,21 +17,21 @@
 //               Test_Var_Array
 // ************************************************************************
 
-Test_Var_Array::Test_Var_Array (void)
+Test_Var_Array::Test_Var_Array ()
   : opname_ (CORBA::string_dup ("test_var_array")),
     out_ (new Param_Test::Var_Array),
     ret_ (new Param_Test::Var_Array)
 {
 }
 
-Test_Var_Array::~Test_Var_Array (void)
+Test_Var_Array::~Test_Var_Array ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Var_Array::opname (void) const
+Test_Var_Array::opname () const
 {
   return this->opname_;
 }
@@ -79,7 +79,7 @@ Test_Var_Array::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Var_Array::reset_parameters (void)
+Test_Var_Array::reset_parameters ()
 {
   // free the out, and return value arrays
   Param_Test::Var_Array_free (this->out_._retn ());
@@ -104,13 +104,12 @@ Test_Var_Array::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Var_Array::run_sii_test\n");
-
     }
   return -1;
 }
 
 CORBA::Boolean
-Test_Var_Array::check_validity (void)
+Test_Var_Array::check_validity ()
 {
   if (this->compare (this->in_, this->inout_) &&
       this->compare (this->in_, this->out_.in ()) &&
@@ -139,7 +138,7 @@ Test_Var_Array::compare (const Param_Test::Var_Array_slice *a1,
 }
 
 void
-Test_Var_Array::print_values (void)
+Test_Var_Array::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG, "IN array\n"));
   this->print (this->in_);
@@ -156,6 +155,6 @@ Test_Var_Array::print (const Param_Test::Var_Array_slice *a)
 {
   for (CORBA::ULong i = 0; i < Param_Test::DIM2; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d = %s\n",i, a[i].in ()));
+      ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d = %C\n",i, a[i].in ()));
     }
 }

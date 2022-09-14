@@ -46,7 +46,7 @@ public:
   virtual void convert (CosNotification::StructuredEvent& notification) const;
 
   /// Get the event type.
-  virtual const TAO_Notify_EventType& type (void) const;
+  virtual const TAO_Notify_EventType& type () const;
 
   /// Push event to consumer
   virtual void push (TAO_Notify_Consumer* consumer) const;
@@ -69,7 +69,7 @@ public:
 
 protected:
   /// returns a copy of this event allocated on the heap
-  virtual TAO_Notify_Event * copy (void) const;
+  virtual TAO_Notify_Event * copy () const;
 
   /// Structured Event
   const CosNotification::StructuredEvent* notification_;

@@ -17,14 +17,14 @@ be_visitor_interface_smart_proxy_ch::be_visitor_interface_smart_proxy_ch (
 {
 }
 
-be_visitor_interface_smart_proxy_ch::~be_visitor_interface_smart_proxy_ch (void)
+be_visitor_interface_smart_proxy_ch::~be_visitor_interface_smart_proxy_ch ()
 {
 }
 
 int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -35,8 +35,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       bt = node;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "class " << be_global->stub_export_macro ()<< " "
       << "TAO_" << node->flat_name ()
@@ -54,7 +53,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "// flexibility of having a different smart proxy per object "<<be_nl
       <<"// instead of per interface."<<be_nl<< be_nl
       << "virtual ~TAO_" << node->flat_name ()
-      << "_Default_Proxy_Factory (void);" << be_nl_2
+      << "_Default_Proxy_Factory ();" << be_nl_2
       << "virtual "<< node->local_name ()
       << "_ptr create_proxy (" << be_idt << be_idt_nl
       << node->local_name ()
@@ -73,16 +72,16 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "TAO_" << node->flat_name () << "_Default_Proxy_Factory *df,"<< be_nl
       << "bool one_shot_factory = true" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl
-      << "void unregister_proxy_factory (void);" << be_nl_2
+      << "void unregister_proxy_factory ();" << be_nl_2
       << node->local_name ()
       << "_ptr create_proxy (" << be_idt << be_idt_nl
       << node->local_name () << "_ptr proxy" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl << be_nl
       << "protected:" << be_idt_nl
       << "TAO_" << node->flat_name ()
-      << "_Proxy_Factory_Adapter (void);" << be_nl
+      << "_Proxy_Factory_Adapter ();" << be_nl
       << "~TAO_" << node->flat_name ()
-      << "_Proxy_Factory_Adapter (void);" << be_nl
+      << "_Proxy_Factory_Adapter ();" << be_nl
       << "TAO_" << node->flat_name ()
       << "_Proxy_Factory_Adapter &operator= (" << be_idt << be_idt_nl
       << "const TAO_" << node->flat_name ()
@@ -114,14 +113,14 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       for (i = 0; i < node->n_inherits (); i++)
         {
           be_interface *inherited =
-            be_interface::narrow_from_decl (node->inherits ()[i]);
-          be_decl *scope = 0;
+            dynamic_cast<be_interface*> (node->inherits ()[i]);
+          be_decl *scope = nullptr;
 
           if (inherited->is_nested ())
             {
               // Inherited node is used in the scope of "node" node.
               scope =
-                be_scope::narrow_from_scope (node->defined_in ())->decl ();
+                dynamic_cast<be_scope*> (node->defined_in ())->decl ();
             }
 
           *os << "," << be_nl << "  public virtual ";
@@ -138,19 +137,19 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 
   *os << "{" << be_nl
       << "public:" << be_idt_nl
-      << "TAO_"<< node->flat_name () << "_Smart_Proxy_Base (void);"
+      << "TAO_"<< node->flat_name () << "_Smart_Proxy_Base ();"
       << be_nl
       // Just to keep Old g++ complier (version: 2.7.2.3) happy it's
       // necesssary to declare and define the destructor explicitly.
-      << "~TAO_"<< node->flat_name () << "_Smart_Proxy_Base (void);"
+      << "~TAO_"<< node->flat_name () << "_Smart_Proxy_Base ();"
       << be_nl
       // This method will delegate this method to the <base_proxy_>
       // member of the smart proxy and so the smart proxy's (nil)
       // stubobj will not be returned.
-      << "virtual TAO_Stub *_stubobj (void) const;"
+      << "virtual TAO_Stub *_stubobj () const;"
 << be_nl
 // Another version of the above method..
-<< "virtual TAO_Stub *_stubobj (void);"
+<< "virtual TAO_Stub *_stubobj ();"
       << be_uidt_nl;
 
   // Generate code for the interface definition by traversing thru the
@@ -169,7 +168,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 
   *os << "protected:" << be_idt_nl
       << "::" << node->full_name ()
-      << "_ptr get_proxy (void);" << be_nl
+      << "_ptr get_proxy ();" << be_nl
       << "::" << node->full_name () << "_var proxy_;"
       << be_uidt_nl
       << "};\n\n";

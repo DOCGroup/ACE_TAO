@@ -39,7 +39,7 @@ class TAO_Contained_i;
 class TAO_IFRService_Export TAO_IFR_Server
 {
 public:
-  TAO_IFR_Server (void);
+  TAO_IFR_Server ();
 
   /// Initialize the IFR Service with the command line arguments and
   /// the ORB.
@@ -56,25 +56,24 @@ public:
                      int use_multicast_server = 0);
 
   /// Destroy the child POA created in init_with_poa().
-  int fini (void);
+  int fini ();
 
   /// Destructor.
-  ~TAO_IFR_Server (void);
+  ~TAO_IFR_Server ();
 
 protected:
-
   /// Two persistent POAs, one using a servant locator.
-  int create_poa (void);
+  int create_poa ();
 
   /// Open an ACE_Configuration of the appropriate type.
-  int open_config (void);
+  int open_config ();
 
   /// Create and initialize the repository.
-  int create_repository (void);
+  int create_repository ();
 
   /// Enable the Interface Repository to answer multicast requests
   /// for its IOR.
-  int init_multicast_server (void);
+  int init_multicast_server ();
 
   /// Reference to our ORB.
   CORBA::ORB_var orb_;
@@ -98,9 +97,9 @@ protected:
 class TAO_IFR_Service_Utils
 {
 public:
-  TAO_IFR_Service_Utils (void);
+  TAO_IFR_Service_Utils ();
 
-  ~TAO_IFR_Service_Utils (void);
+  ~TAO_IFR_Service_Utils ();
 
   typedef int (*name_clash_checker)(const char *);
 

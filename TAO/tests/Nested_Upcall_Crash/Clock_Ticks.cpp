@@ -6,7 +6,7 @@
 #include "Clock_Ticks.h"
 
 long
-Clock_Ticks::get_hz (void)
+Clock_Ticks::get_hz ()
 {
 #if defined(_SC_CLK_TCK)
   long r = ACE_OS::sysconf(_SC_CLK_TCK);
@@ -24,7 +24,7 @@ Clock_Ticks::get_hz (void)
 }
 
 int
-Clock_Ticks::get_usecs_per_tick (void)
+Clock_Ticks::get_usecs_per_tick ()
 {
   return 1000000 / get_hz ();
 }

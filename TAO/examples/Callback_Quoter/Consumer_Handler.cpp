@@ -23,7 +23,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/OS_NS_fcntl.h"
 
-Consumer_Handler::Consumer_Handler (void)
+Consumer_Handler::Consumer_Handler ()
   : stock_name_ ("Unknown"),
     threshold_value_ (0),
     server_ (),
@@ -34,13 +34,11 @@ Consumer_Handler::Consumer_Handler (void)
     use_naming_service_ (1),
     interactive_ (1)
 {
-
 }
 
-Consumer_Handler::~Consumer_Handler (void)
+Consumer_Handler::~Consumer_Handler ()
 {
   // Make sure to cleanup the STDIN handler.
-
   if (this->interactive_ == 1)
     {
       if (ACE_Event_Handler::remove_stdin_handler
@@ -53,7 +51,6 @@ Consumer_Handler::~Consumer_Handler (void)
 }
 
 // Reads the Server factory IOR from a file.
-
 int
 Consumer_Handler::read_ior (ACE_TCHAR *filename)
 {
@@ -83,9 +80,8 @@ Consumer_Handler::read_ior (ACE_TCHAR *filename)
 }
 
 // Parses the command line arguments and returns an error status.
-
 int
-Consumer_Handler::parse_args (void)
+Consumer_Handler::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("a:t:d:f:xk:xs"));
   int c;
@@ -124,7 +120,6 @@ Consumer_Handler::parse_args (void)
         this->threshold_value_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
-
       case 'x':
         this->shutdown_ = 1;
         break;
@@ -149,10 +144,9 @@ Consumer_Handler::parse_args (void)
   return 0;
 }
 
-// this method uses the naming service to obtain the server object refernce.
-
+// This method uses the naming service to obtain the server object reference.
 int
-Consumer_Handler::via_naming_service (void)
+Consumer_Handler::via_naming_service ()
 {
   try
     {
@@ -174,8 +168,6 @@ Consumer_Handler::via_naming_service (void)
       // the <_narrow> method.
       this->server_ =
         Notifier::_narrow (notifier_obj.in ());
-
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -191,7 +183,6 @@ Consumer_Handler::via_naming_service (void)
 int
 Consumer_Handler::init (int argc, ACE_TCHAR **argv)
 {
-
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -253,7 +244,6 @@ Consumer_Handler::init (int argc, ACE_TCHAR **argv)
          }
       else
         {
-
           if (this->ior_ == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: no ior specified\n",
@@ -284,9 +274,8 @@ Consumer_Handler::init (int argc, ACE_TCHAR **argv)
 }
 
 int
-Consumer_Handler::run (void)
+Consumer_Handler::run ()
 {
-
   try
     {
       // Obtain and activate the RootPOA.
@@ -313,7 +302,6 @@ Consumer_Handler::run (void)
 
       if (this->interactive_ == 0)
         {
-
           // Register with the server.
           this->server_->register_callback (this->stock_name_.c_str (),
                                             this->threshold_value_,
@@ -329,7 +317,6 @@ Consumer_Handler::run (void)
 
       // Run the ORB.
       this->orb_->run ();
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -341,7 +328,7 @@ Consumer_Handler::run (void)
 }
 
 ACE_Reactor *
-Consumer_Handler::reactor_used (void) const
+Consumer_Handler::reactor_used () const
 {
   return this->orb_->orb_core ()->reactor ();
 }

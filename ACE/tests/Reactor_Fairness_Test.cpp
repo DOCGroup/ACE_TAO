@@ -31,7 +31,6 @@
 #if defined (ACE_HAS_THREADS)
 
 namespace {
-
   const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
   // Number of connections to run
@@ -51,7 +50,7 @@ namespace {
   // Class to collect and report on data handling for each test pass.
   struct Result_Set {
     int nr_conns;
-    typedef ACE_Array_Map<ACE_HANDLE, unsigned int> report_map;
+    using report_map = ACE_Array_Map<ACE_HANDLE, unsigned int>;
     report_map reports;
 
     void reset (int n_connections)   // Reset for next run
@@ -67,7 +66,7 @@ namespace {
     }
 
     // Return 1 if this looks like a failure wrt fairness.
-    int analyze_reports (void)
+    int analyze_reports ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Results (%d entries):\n"),

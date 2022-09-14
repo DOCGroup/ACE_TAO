@@ -33,7 +33,7 @@ class TAO_Naming_Service
 {
 public:
   /// Default Constructor.
-  TAO_Naming_Service (void);
+  TAO_Naming_Service ();
 
   /// Constructor taking the command-line arguments.
   TAO_Naming_Service (int argc, ACE_TCHAR* argv[]);
@@ -42,19 +42,18 @@ public:
   virtual int init (int argc, ACE_TCHAR* argv[]);
 
   /// The opposite of init().
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Run the TAO_Naming_Service.
-  virtual int run (void);
+  virtual int run ();
 
   /// Shut down the TAO_Naming_Service; you must still call fini().
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Destructor.
-  virtual ~TAO_Naming_Service (void);
+  virtual ~TAO_Naming_Service ();
 
 protected:
-
   /// Parse the command line arguments to find
   /// the timeout period.
   int parse_args (int &argc, ACE_TCHAR* argv[]);

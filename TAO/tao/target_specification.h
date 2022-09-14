@@ -54,9 +54,8 @@ namespace TAO
 class TAO_Export TAO_Target_Specification
 {
 public:
-
   /// Ctor
-  TAO_Target_Specification (void);
+  TAO_Target_Specification ();
   enum TAO_Target_Address
   {
     // Note that this could be extended for other protocols
@@ -86,14 +85,14 @@ public:
    * the stored specifier is not of the right type then this would
    * return a NULL
    */
-  const TAO::ObjectKey* object_key (void);
+  const TAO::ObjectKey* object_key ();
 
   /**
    * Returns the IOP::TaggedProfile after a check of the stored specifier. If
    * the stored specifier is not of the right type then this would
    * return a NULL
    */
-  const IOP::TaggedProfile *profile (void);
+  const IOP::TaggedProfile *profile ();
 
   /**
    * Returns a  pointer to IOP::IOR through the parameters and the
@@ -104,7 +103,7 @@ public:
   CORBA::ULong iop_ior (IOP::IOR *&ior);
 
   /// Access the TArget_Address specifier
-  TAO_Target_Address specifier (void);
+  TAO_Target_Address specifier ();
 
 private:
   /// The union of all the possibilities

@@ -3,7 +3,6 @@
 // ******************************************************************
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 
 #include "tao/ORB_Core.h"
 
@@ -16,6 +15,7 @@
 #include "Notify_Test_Client.h"
 
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 
 // ******************************************************************
 // Data Section
@@ -39,12 +39,12 @@ public:
   {
   }
 
-  void go (void)
+  void go ()
   {
     started_ = true;
   }
 
-  void done (void)
+  void done ()
   {
     started_ = false;
   }
@@ -169,7 +169,7 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 }
 
 static void
-disconnect_suppliers (void)
+disconnect_suppliers ()
 {
   for (unsigned int i = 0; i < supplier_count; ++i)
   {
@@ -183,7 +183,7 @@ disconnect_suppliers (void)
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Auto_Ptr< sig_i > sig_impl;
+  std::unique_ptr<sig_i> sig_impl;
   try
   {
     Consumer_Client client;

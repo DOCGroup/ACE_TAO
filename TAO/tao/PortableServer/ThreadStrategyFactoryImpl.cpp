@@ -52,8 +52,7 @@ namespace TAO
 
     void
     ThreadStrategyFactoryImpl::destroy (
-      ThreadStrategy *strategy
-      )
+      ThreadStrategy *strategy)
     {
       switch (strategy->type ())
       {

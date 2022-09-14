@@ -36,7 +36,6 @@ namespace TAO
 
       virtual void destroy (IdUniquenessStrategy *strategy);
     };
-
   }
 }
 

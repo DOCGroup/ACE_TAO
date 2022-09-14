@@ -1,5 +1,3 @@
-
-
 Before compiling the example in The Borland C++ Builder IDE
 you must generate the client and server stubs using build_idl.bat.
 Please update the location of the tao_idl dependent on your build

@@ -1,7 +1,7 @@
 #include "Account_i.h"
 
 // Constructor
-Account_i::Account_i (void)
+Account_i::Account_i ()
 {
 }
 
@@ -13,7 +13,7 @@ Account_i::Account_i (const char *name,
 }
 
 // Destructor
-Account_i::~Account_i (void)
+Account_i::~Account_i ()
 {
 }
 
@@ -26,7 +26,7 @@ Account_i::orb (CORBA::ORB_ptr o)
 
 // Return the current balance on the server.
 CORBA::Float
-Account_i::balance (void)
+Account_i::balance ()
 {
   return balance_;
 }
@@ -47,7 +47,7 @@ Account_i::withdraw (CORBA::Float withdrawl)
 }
 
 char *
-Account_i::name (void)
+Account_i::name ()
 {
   return CORBA::string_dup (this->name_.in ());
 }

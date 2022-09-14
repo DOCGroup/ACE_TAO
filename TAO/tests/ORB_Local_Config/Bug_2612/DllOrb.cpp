@@ -119,7 +119,7 @@ int DllOrb::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-int DllOrb::fini (void)
+int DllOrb::fini ()
 {
   int result;
 
@@ -133,7 +133,7 @@ int DllOrb::fini (void)
       // attempt to protect against sporadic BAD_INV_ORDER exceptions
       ACE_OS::sleep(ACE_Time_Value(0, 500));
 
-      mv_orb->shutdown(1);
+      mv_orb->shutdown(true);
     }
   catch(CORBA::Exception& ex)
   {
@@ -190,7 +190,7 @@ int DllOrb::fini (void)
   return 0;
 }
 
-int DllOrb::svc (void)
+int DllOrb::svc ()
 {
 #if defined (ACE_HAS_THREADS)
   mp_barrier->wait();

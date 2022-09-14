@@ -25,7 +25,7 @@ ACE_Sample_History::ACE_Sample_History (size_t max_samples)
 #endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
-ACE_Sample_History::~ACE_Sample_History (void)
+ACE_Sample_History::~ACE_Sample_History ()
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(this->samples_);

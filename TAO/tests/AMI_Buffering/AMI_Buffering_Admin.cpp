@@ -8,13 +8,13 @@ AMI_Buffering_Admin::AMI_Buffering_Admin (CORBA::ORB_ptr orb)
 }
 
 CORBA::ULong
-AMI_Buffering_Admin::request_count (void)
+AMI_Buffering_Admin::request_count ()
 {
   return this->request_count_;
 }
 
 CORBA::ULong
-AMI_Buffering_Admin::bytes_received_count (void)
+AMI_Buffering_Admin::bytes_received_count ()
 {
   return this->bytes_received_count_;
 }
@@ -27,12 +27,12 @@ AMI_Buffering_Admin::request_received (CORBA::ULong payload_length)
 }
 
 void
-AMI_Buffering_Admin::flush (void)
+AMI_Buffering_Admin::flush ()
 {
 }
 
 void
-AMI_Buffering_Admin::shutdown (void)
+AMI_Buffering_Admin::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

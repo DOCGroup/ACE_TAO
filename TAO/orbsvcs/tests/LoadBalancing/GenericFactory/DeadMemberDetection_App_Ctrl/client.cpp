@@ -48,7 +48,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 
-
 int dead_member_rr_test (CORBA::ORB_ptr orb,
                          const ACE_TCHAR *group_ior,
                          Test::Basic_ptr direct_basic)

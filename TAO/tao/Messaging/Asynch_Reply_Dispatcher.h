@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Asynch_Reply_Dispatcher.h
@@ -8,7 +6,6 @@
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_ASYNCH_REPLY_DISPATCHER_H
 #define TAO_ASYNCH_REPLY_DISPATCHER_H
@@ -42,17 +39,17 @@ public:
       ACE_Allocator *allocator);
 
   /// Destructor.
-  virtual ~TAO_Asynch_Reply_Dispatcher (void);
+  virtual ~TAO_Asynch_Reply_Dispatcher () = default;
 
   /// @name The Reply Dispatcher methods
   //@{
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
-  virtual void connection_closed (void);
+  virtual void connection_closed ();
   //@}
 
   /// Inform that the reply timed out
-  virtual void reply_timed_out (void);
+  virtual void reply_timed_out ();
 
   /// Install the timeout handler
   long schedule_timer (CORBA::ULong request_id,

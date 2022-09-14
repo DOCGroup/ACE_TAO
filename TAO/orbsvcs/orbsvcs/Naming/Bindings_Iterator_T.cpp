@@ -23,7 +23,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (
 }
 
 template <class ITERATOR, class TABLE_ENTRY>
-TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::~TAO_Bindings_Iterator (void)
+TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::~TAO_Bindings_Iterator ()
 {
   delete hash_iter_;
 
@@ -157,7 +157,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
 }
 
 template <class ITERATOR, class TABLE_ENTRY> void
-TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::destroy (void)
+TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::destroy ()
 {
   // Check to make sure this object is still valid.
   if (this->destroyed_)

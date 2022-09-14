@@ -15,9 +15,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_MProfile::~TAO_MProfile (void)
+TAO_MProfile::~TAO_MProfile ()
 {
-  if (this->policy_list_ != 0)
+  if (this->policy_list_ != nullptr)
     {
       CORBA::ULong const len = this->policy_list_->length ();
       for (CORBA::ULong i = 0; i < len; ++i)
@@ -41,15 +41,15 @@ TAO_MProfile::~TAO_MProfile (void)
 }
 
 void
-TAO_MProfile::cleanup (void)
+TAO_MProfile::cleanup ()
 {
-  if (this->pfiles_ != 0)
+  if (this->pfiles_ != nullptr)
     {
       for (TAO_PHandle i = 0; i < this->last_; ++i)
         if (this->pfiles_[i])
           this->pfiles_[i]->_decr_refcnt ();
       delete [] this->pfiles_;
-      this->pfiles_ = 0;
+      this->pfiles_ = nullptr;
     }
 
   this->current_ = 0;
@@ -78,7 +78,7 @@ TAO_MProfile::set (CORBA::ULong sz)
         if (this->pfiles_[h])
           {
             this->pfiles_[h]->_decr_refcnt ();
-            this->pfiles_[h] = 0;
+            this->pfiles_[h] = nullptr;
           }
 
       // Next see if we can reuse our profile list memory
@@ -107,7 +107,7 @@ TAO_MProfile::set (CORBA::ULong sz)
   this->current_ = 0;
 
   for (TAO_PHandle i = 0; i != this->size_; ++i)
-    this->pfiles_[i] = 0;
+    this->pfiles_[i] = nullptr;
 
   return this->size_;
 }
@@ -132,7 +132,7 @@ TAO_MProfile::set (const TAO_MProfile &mprofile)
   for (TAO_PHandle h = 0; h < this->last_; ++h)
     {
       this->pfiles_[h] = mprofile.pfiles_[h];
-      if (this->pfiles_[h] != 0)
+      if (this->pfiles_[h] != nullptr)
         this->pfiles_[h]->_incr_refcnt ();
     }
 
@@ -147,8 +147,8 @@ TAO_MProfile::grow (CORBA::ULong sz)
     return 0;
 
   // get the additional space
-  TAO_Profile **new_pfiles = 0;
-  TAO_Profile **old_pfiles = 0;
+  TAO_Profile **new_pfiles = nullptr;
+  TAO_Profile **old_pfiles = nullptr;
   ACE_NEW_RETURN (new_pfiles,
                   TAO_Profile *[sz],
                   -1);
@@ -159,7 +159,7 @@ TAO_MProfile::grow (CORBA::ULong sz)
   for (TAO_PHandle h = 0; h < this->size_; ++h)
     {
       new_pfiles[h] = old_pfiles[h];
-      old_pfiles[h] = 0;
+      old_pfiles[h] = nullptr;
     }
 
   this->pfiles_ = new_pfiles;
@@ -235,7 +235,7 @@ TAO_MProfile::remove_profile (const TAO_Profile *pfile)
       if (this->pfiles_[h]->is_equivalent (pfile))
         { // remove it!
           TAO_Profile *old = this->pfiles_[h];
-          this->pfiles_[h] = 0;
+          this->pfiles_[h] = nullptr;
           old->_decr_refcnt ();
           // shift other profiles up one
           // note, if h == last_ - 1 then do nothing.
@@ -300,17 +300,16 @@ TAO_MProfile::hash (CORBA::ULong max)
 }
 
 void
-TAO_MProfile::create_policy_list (void)
+TAO_MProfile::create_policy_list ()
 {
   ACE_NEW_THROW_EX (this->policy_list_,
                     CORBA::PolicyList,
                     CORBA::NO_MEMORY (0,
-                                      CORBA::COMPLETED_NO)
-                    );
+                                      CORBA::COMPLETED_NO));
 }
 
 void
-TAO_MProfile::init_policy_list (void)
+TAO_MProfile::init_policy_list ()
 {
   // The first time this method is called
   // it causes the initialization of the policies
@@ -322,23 +321,23 @@ TAO_MProfile::init_policy_list (void)
 }
 
 CORBA::PolicyList *
-TAO_MProfile::policy_list (void)
+TAO_MProfile::policy_list ()
 {
   if (!this->is_policy_list_initialized_)
     {
       ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                         guard,
                         this->mutex_,
-                        0);
+                        nullptr);
 
-      if (this->policy_list_ == 0)
+      if (this->policy_list_ == nullptr)
         {
           this->create_policy_list ();
 
           this->init_policy_list ();
         }
     }
-  CORBA::PolicyList *ret_val = 0;
+  CORBA::PolicyList *ret_val = nullptr;
   ACE_NEW_THROW_EX (ret_val,
                     CORBA::PolicyList (*this->policy_list_),
                     CORBA::NO_MEMORY (0,

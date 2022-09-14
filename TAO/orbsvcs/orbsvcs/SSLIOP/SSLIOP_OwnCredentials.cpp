@@ -7,7 +7,7 @@ TAO::SSLIOP::OwnCredentials::OwnCredentials (X509 *cert, EVP_PKEY *evp)
 {
 }
 
-TAO::SSLIOP::OwnCredentials::~OwnCredentials (void)
+TAO::SSLIOP::OwnCredentials::~OwnCredentials ()
 {
 }
 
@@ -28,26 +28,25 @@ TAO::SSLIOP::OwnCredentials::_narrow (CORBA::Object_ptr obj)
 }
 
 TAO::SSLIOP::OwnCredentials_ptr
-TAO::SSLIOP::OwnCredentials::_nil (void)
+TAO::SSLIOP::OwnCredentials::_nil ()
 {
   return (OwnCredentials *) 0;
-
 }
 
 SecurityLevel3::CredentialsType
-TAO::SSLIOP::OwnCredentials::creds_type (void)
+TAO::SSLIOP::OwnCredentials::creds_type ()
 {
   return SecurityLevel3::CT_OwnCredentials;
 }
 
 SecurityLevel3::CredsInitiator_ptr
-TAO::SSLIOP::OwnCredentials::creds_initiator (void)
+TAO::SSLIOP::OwnCredentials::creds_initiator ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel3::CredsAcceptor_ptr
-TAO::SSLIOP::OwnCredentials::creds_acceptor (void)
+TAO::SSLIOP::OwnCredentials::creds_acceptor ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }

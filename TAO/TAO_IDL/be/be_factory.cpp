@@ -23,8 +23,8 @@
 #include "global_extern.h"
 
 be_factory::be_factory (UTL_ScopedName *n)
-  : COMMON_Base (1,
-                 0), //@@ Always local, never abstract
+  : COMMON_Base (true,
+                 false), //@@ Always local, never abstract
     AST_Decl (AST_Decl::NT_factory,
               n),
     UTL_Scope (AST_Decl::NT_factory),
@@ -35,12 +35,12 @@ be_factory::be_factory (UTL_ScopedName *n)
 {
 }
 
-be_factory::~be_factory (void)
+be_factory::~be_factory ()
 {
 }
 
 void
-be_factory::destroy (void)
+be_factory::destroy ()
 {
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();
@@ -60,10 +60,7 @@ be_factory::be_add_argument (AST_Argument *arg)
 {
   this->add_to_scope (arg);
   this->add_to_referenced (arg,
-                           0,
-                           0);
+                           false,
+                           nullptr);
   return arg;
 }
-
-IMPL_NARROW_FROM_DECL (be_factory)
-IMPL_NARROW_FROM_SCOPE (be_factory)

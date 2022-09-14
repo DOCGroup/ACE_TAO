@@ -25,7 +25,7 @@ Echo_Caller::start_task(Test::Echo_ptr client)
 }
 
 void
-Echo_Caller::shutdown(void)
+Echo_Caller::shutdown()
 {
   ACE_DEBUG ((LM_DEBUG, "Server received shutdown message\n"));
   orb_->shutdown(0);

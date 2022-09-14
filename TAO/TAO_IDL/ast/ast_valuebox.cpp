@@ -17,12 +17,12 @@ AST_ValueBox::AST_ValueBox (UTL_ScopedName *n,
 {
 }
 
-AST_ValueBox::~AST_ValueBox (void)
+AST_ValueBox::~AST_ValueBox ()
 {
 }
 
 AST_Type *
-AST_ValueBox::boxed_type (void) const
+AST_ValueBox::boxed_type () const
 {
   return this->pd_boxed_type;
 }
@@ -30,7 +30,6 @@ AST_ValueBox::boxed_type (void) const
 void
 AST_ValueBox::dump (ACE_OSTREAM_TYPE &o)
 {
-
   this->dump_i (o, "valuetype ");
 
   this->local_name ()->dump (o);
@@ -45,11 +44,7 @@ AST_ValueBox::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_ValueBox::destroy (void)
+AST_ValueBox::destroy ()
 {
   this->AST_ConcreteType::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_ValueBox)
-
-

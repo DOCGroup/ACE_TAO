@@ -19,16 +19,16 @@ be_visitor_valuetype_init::be_visitor_valuetype_init (
 {
 }
 
-be_visitor_valuetype_init::~be_visitor_valuetype_init (void)
+be_visitor_valuetype_init::~be_visitor_valuetype_init ()
 {
 }
 
 void
-be_visitor_valuetype_init::begin_public (void)
+be_visitor_valuetype_init::begin_public ()
 {
 }
 
 void
-be_visitor_valuetype_init::begin_private (void)
+be_visitor_valuetype_init::begin_private ()
 {
 }

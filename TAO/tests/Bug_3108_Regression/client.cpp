@@ -48,7 +48,7 @@ public:
   // ctor
   Client (test_ptr server);
 
-  virtual int svc (void);
+  virtual int svc ();
 
   // The server.
   test_var server_;
@@ -60,7 +60,7 @@ Client::Client (test_ptr server)
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

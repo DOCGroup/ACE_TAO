@@ -14,7 +14,7 @@ Replication_Strategy::~Replication_Strategy()
 
 
 void
-Replication_Strategy::check_validity(void)
+Replication_Strategy::check_validity()
 {
 }
 

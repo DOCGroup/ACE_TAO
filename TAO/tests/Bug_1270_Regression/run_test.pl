@@ -108,27 +108,27 @@ while($elapsed < $max_running_time) {
         exit 1;
     }
 
-    $client_status = $CL1->WaitKill ($client1->ProcessStopWaitInterval() + 45);
+    $client_status = $CL1->WaitKill ($client1->ProcessStopWaitInterval() + 45, {self_crash => 1});
     if ($client_status != 0) {
-        print STDERR "ERROR: client returned $client_status\n";
+        print STDERR "ERROR: client 1 returned $client_status\n";
         $SV->Kill (); $SV->TimedWait (1);
-        $CL1->Kill (); $CL1->TimedWait (1);
         $CL2->Kill (); $CL2->TimedWait (1);
+        $CL3->Kill (); $CL3->TimedWait (1);
         exit 1;
     }
 
-    $client_status = $CL2->WaitKill ($client2->ProcessStopWaitInterval() + 45);
+    $client_status = $CL2->WaitKill ($client2->ProcessStopWaitInterval() + 45, {self_crash => 1});
     if ($client_status != 0) {
-        print STDERR "ERROR: client returned $client_status\n";
+        print STDERR "ERROR: client 2 returned $client_status\n";
         $SV->Kill (); $SV->TimedWait (1);
         $CL1->Kill (); $CL1->TimedWait (1);
-        $CL2->Kill (); $CL2->TimedWait (1);
+        $CL3->Kill (); $CL3->TimedWait (1);
         exit 1;
     }
 
-    $client_status = $CL3->WaitKill ($client3->ProcessStopWaitInterval() + 45);
+    $client_status = $CL3->WaitKill ($client3->ProcessStopWaitInterval() + 45, {self_crash => 1});
     if ($client_status != 0) {
-        print STDERR "ERROR: client returned $client_status\n";
+        print STDERR "ERROR: client 3 returned $client_status\n";
         $SV->Kill (); $SV->TimedWait (1);
         $CL1->Kill (); $CL1->TimedWait (1);
         $CL2->Kill (); $CL2->TimedWait (1);

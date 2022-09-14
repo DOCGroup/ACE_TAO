@@ -4,7 +4,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::Invocation_Retry_Params::Invocation_Retry_Params (void)
+TAO::Invocation_Retry_Params::Invocation_Retry_Params ()
   : forward_on_reply_closed_limit_ (0)
   , init_retry_delay_ (0, 100000) // Set default to 0.1 seconds
 {

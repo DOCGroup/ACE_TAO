@@ -30,12 +30,11 @@ class TAO_DiffServPolicy_Export TAO_DS_Network_Priority_Protocols_Hooks
       : public TAO_Network_Priority_Protocols_Hooks
 {
 public:
-
   /// Constructor
-  TAO_DS_Network_Priority_Protocols_Hooks (void);
+  TAO_DS_Network_Priority_Protocols_Hooks ();
 
   /// Destructor
-  virtual ~TAO_DS_Network_Priority_Protocols_Hooks (void);
+  virtual ~TAO_DS_Network_Priority_Protocols_Hooks ();
 
   /// Initialize the network priority protocols hooks instance.
   void init_hooks (TAO_ORB_Core *orb_core);

@@ -30,7 +30,7 @@ TAO_RT_Transport_Descriptor::~TAO_RT_Transport_Descriptor ()
 }
 
 TAO_Transport_Descriptor_Interface *
-TAO_RT_Transport_Descriptor::duplicate (void)
+TAO_RT_Transport_Descriptor::duplicate ()
 {
   // Get a copy of the underlying endpoint
   TAO_Endpoint *endpoint =
@@ -105,7 +105,7 @@ TAO_RT_Transport_Descriptor::is_equivalent (const TAO_Transport_Descriptor_Inter
 }
 
 u_long
-TAO_RT_Transport_Descriptor::hash (void) const
+TAO_RT_Transport_Descriptor::hash () const
 {
   return this->endpoint_->hash ();
 }

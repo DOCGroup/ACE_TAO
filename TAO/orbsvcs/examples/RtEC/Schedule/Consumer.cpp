@@ -1,6 +1,6 @@
 #include "Consumer.h"
 
-Consumer::Consumer (void)
+Consumer::Consumer ()
 {
 }
 
@@ -19,7 +19,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
 }
 
 void
-Consumer::disconnect_push_consumer (void)
+Consumer::disconnect_push_consumer ()
 {
 }
 

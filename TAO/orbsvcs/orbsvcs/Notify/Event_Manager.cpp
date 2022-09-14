@@ -55,7 +55,7 @@ protected:
 
 /********************************************************************************/
 
-TAO_Notify_Event_Manager::TAO_Notify_Event_Manager (void)
+TAO_Notify_Event_Manager::TAO_Notify_Event_Manager ()
 {
 }
 
@@ -74,7 +74,7 @@ void TAO_Notify_Event_Manager::release()
 }
 
 void
-TAO_Notify_Event_Manager::init (void)
+TAO_Notify_Event_Manager::init ()
 {
   ACE_ASSERT (this->consumer_map_.get() == 0);
 
@@ -96,7 +96,7 @@ TAO_Notify_Event_Manager::init (void)
 }
 
 void
-TAO_Notify_Event_Manager::shutdown (void)
+TAO_Notify_Event_Manager::shutdown ()
 {
 }
 
@@ -231,27 +231,27 @@ TAO_Notify_Event_Manager::un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, 
 }
 
 TAO_Notify_Consumer_Map&
-TAO_Notify_Event_Manager::consumer_map (void)
+TAO_Notify_Event_Manager::consumer_map ()
 {
   ACE_ASSERT( this->consumer_map_.get() != 0 );
   return *this->consumer_map_;
 }
 
 TAO_Notify_Supplier_Map&
-TAO_Notify_Event_Manager::supplier_map (void)
+TAO_Notify_Event_Manager::supplier_map ()
 {
   ACE_ASSERT( this->supplier_map_.get() != 0 );
   return *this->supplier_map_;
 }
 
 const TAO_Notify_EventTypeSeq&
-TAO_Notify_Event_Manager::offered_types (void) const
+TAO_Notify_Event_Manager::offered_types () const
 {
   return this->supplier_map_->event_types ();
 }
 
 const TAO_Notify_EventTypeSeq&
-TAO_Notify_Event_Manager::subscription_types (void) const
+TAO_Notify_Event_Manager::subscription_types () const
 {
   return this->consumer_map_->event_types ();
 }

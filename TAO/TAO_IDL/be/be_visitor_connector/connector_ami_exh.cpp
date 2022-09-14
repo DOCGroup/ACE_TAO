@@ -22,7 +22,7 @@ be_visitor_connector_ami_exh::be_visitor_connector_ami_exh (
   this->export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_connector_ami_exh::~be_visitor_connector_ami_exh (void)
+be_visitor_connector_ami_exh::~be_visitor_connector_ami_exh ()
 {
 }
 
@@ -36,8 +36,7 @@ be_visitor_connector_ami_exh::visit_connector (be_connector *node)
 
   this->node_ = node;
 
-  /// CIDL-generated namespace used 'CIDL_' + composition name.
-  /// Now we use 'CIAO_' + component's flat name.
+  /// Use 'CIAO_' + component's flat name.
   os_ << be_nl_2
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl
@@ -77,13 +76,13 @@ be_visitor_connector_ami_exh::visit_connector (be_connector *node)
 }
 
 void
-be_visitor_connector_ami_exh::gen_entrypoint (void)
+be_visitor_connector_ami_exh::gen_entrypoint ()
 {
   os_ << be_nl_2
       << "extern \"C\" " << this->export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_"
       << ScopeAsDecl (this->node_->defined_in ())->flat_name ()
-      << "_Impl (void);";
+      << "_Impl ();";
 }
 

@@ -11,19 +11,19 @@ Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong server_id
 }
 
 char *
-Hello::get_string (void)
+Hello::get_string ()
 {
   return CORBA::string_dup ("Hello there!");
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void
-Hello::throw_exception (void)
+Hello::throw_exception ()
 {
   throw Test::MyException ();
 }
@@ -38,7 +38,7 @@ Hello::call_me_back (Test::Hello_ptr me)
 
 // Nested sequence step 2 - This op called by the server on the client
 CORBA::Boolean
-Hello::call_back (void)
+Hello::call_back ()
 {
   CORBA::Boolean result = server_->check_request_id ();
   return result;
@@ -46,7 +46,7 @@ Hello::call_back (void)
 
 // Nested sequence step 3 - This op called by the client on the server
 CORBA::Boolean
-Hello::check_request_id (void)
+Hello::check_request_id ()
 {
   // The server request interceptor will have set this public static member
   // false if the same retention id has been used twice
@@ -54,7 +54,7 @@ Hello::check_request_id (void)
 }
 
 CORBA::ULong
-Hello::drop_down_dead (void)
+Hello::drop_down_dead ()
 {
   return server_id_;
 }

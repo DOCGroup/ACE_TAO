@@ -6,13 +6,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Send an n byte message to the connected socket.
 
 ACE_INLINE
-ACE_SOCK_IO::ACE_SOCK_IO (void)
+ACE_SOCK_IO::ACE_SOCK_IO ()
 {
   // ACE_TRACE ("ACE_SOCK_IO::ACE_SOCK_IO");
 }
 
 ACE_INLINE
-ACE_SOCK_IO::~ACE_SOCK_IO (void)
+ACE_SOCK_IO::~ACE_SOCK_IO ()
 {
   // ACE_TRACE ("ACE_SOCK_IO::~ACE_SOCK_IO");
 }

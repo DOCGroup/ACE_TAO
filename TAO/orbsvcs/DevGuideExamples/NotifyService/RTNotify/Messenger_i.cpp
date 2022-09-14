@@ -105,7 +105,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 }
 
 
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 

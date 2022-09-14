@@ -4,7 +4,6 @@
 #include "Updates.h"
 
 
-
 Updates_StructuredPushConsumer::Updates_StructuredPushConsumer (Updates *test_client)
   : test_client_ (test_client)
 {
@@ -45,7 +44,7 @@ Updates_StructuredPushSupplier::subscription_change (
 
 /***************************************************************************/
 
-Updates::Updates (void)
+Updates::Updates ()
   : added_count_ (0), removed_count_ (0)
 {
 }
@@ -97,7 +96,7 @@ Updates::init (int argc,
 }
 
 void
-Updates::create_EC (void)
+Updates::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -162,7 +161,7 @@ Updates::wait_for_updates (int expected_added, int expected_removed)
 }
 
 void
-Updates::reset_counts (void)
+Updates::reset_counts ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   this->added_count_ = 0;
@@ -170,7 +169,7 @@ Updates::reset_counts (void)
 }
 
 void
-Updates::run_test (void)
+Updates::run_test ()
 {
   this->test_subscription_change ();
 
@@ -183,7 +182,7 @@ Updates::run_test (void)
 }
 
 void
-Updates::test_subscription_change (void)
+Updates::test_subscription_change ()
 {
   {
     // reset counts.
@@ -301,7 +300,7 @@ Updates::test_subscription_change (void)
 }
 
 void
-Updates::test_offer_change (void)
+Updates::test_offer_change ()
 {
   {
     // reset counts.

@@ -12,7 +12,6 @@
 #include /**/ "orbsvcs/Event/event_serv_export.h"
 #include "orbsvcs/RtecUDPAdminS.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils.h"
-#include "ace/Auto_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -29,7 +28,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Address_Server_Base
   : public virtual POA_RtecUDPAdmin::AddrServer
 {
 public:
-
   virtual int init (const char *arg) = 0;
 };
 

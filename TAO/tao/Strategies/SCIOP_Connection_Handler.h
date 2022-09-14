@@ -57,16 +57,14 @@ class TAO_Strategies_Export TAO_SCIOP_Connection_Handler
   : public TAO_SCIOP_SVC_HANDLER,
     public TAO_Connection_Handler
 {
-
 public:
-
   TAO_SCIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor.
   TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor.
-  ~TAO_SCIOP_Connection_Handler (void);
+  ~TAO_SCIOP_Connection_Handler ();
 
   //@{
   /**
@@ -86,8 +84,8 @@ public:
   //@{
   /** @name Event Handler overloads
    */
-  virtual int resume_handler (void);
-  virtual int close_connection (void);
+  virtual int resume_handler ();
+  virtual int close_connection ();
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
@@ -96,7 +94,7 @@ public:
   //@}
 
   /// Add ourselves to Cache.
-  int add_transport_to_cache (void);
+  int add_transport_to_cache ();
 
   /// Process the <listen_list>
   int process_listen_point_list (IIOP::ListenPointList &listen_list);
@@ -106,7 +104,6 @@ public:
   int set_dscp_codepoint (CORBA::Long dscp);
 
 protected:
-
   /// Helper method needed by the set_dscp_codepoint () methods
   int set_tos (int tos);
 
@@ -114,13 +111,12 @@ protected:
   /**
    * @name TAO_Connection Handler overloads
    */
-  //  void handle_close_i (void);
-  virtual int release_os_resources (void);
+  //  void handle_close_i ();
+  virtual int release_os_resources ();
   virtual int handle_write_ready (const ACE_Time_Value *timeout);
   //@}
 
 private:
-
   /// Stores the type of service value.
   int dscp_codepoint_;
 };

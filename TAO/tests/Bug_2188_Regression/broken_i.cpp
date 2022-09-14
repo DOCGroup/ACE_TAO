@@ -28,24 +28,23 @@
 #include "broken_i.h"
 
 
-
 ServerAdmin_i::ServerAdmin_i (ArrayTest_ptr target)
   :target_ (ArrayTest::_duplicate(target))
 {
 }
 
-ServerAdmin_i::~ServerAdmin_i (void)
+ServerAdmin_i::~ServerAdmin_i ()
 {
 }
 
 ArrayTest_ptr
-ServerAdmin_i::target(void)
+ServerAdmin_i::target()
 {
   return ArrayTest::_duplicate(target_.in());
 }
 
 void
-ServerAdmin_i::shutdown (void)
+ServerAdmin_i::shutdown ()
 {
   int argc = 0;
   char ** argv = 0;
@@ -54,7 +53,7 @@ ServerAdmin_i::shutdown (void)
 }
 
 // Implementation skeleton constructor
-ArrayTest_i::ArrayTest_i (void)
+ArrayTest_i::ArrayTest_i ()
   :longArray_ (LongArray_alloc()),
    ulongArray_ (ULongArray_alloc()),
    stringArray_ (StringArray_alloc()),
@@ -73,7 +72,7 @@ ArrayTest_i::ArrayTest_i (void)
 }
 
 // Implementation skeleton destructor
-ArrayTest_i::~ArrayTest_i (void)
+ArrayTest_i::~ArrayTest_i ()
 {
   LongArray_free (longArray_);
   ULongArray_free (ulongArray_);
@@ -143,7 +142,6 @@ ArrayTest_i::~ArrayTest_i (void)
   // Add your implementation here
   ::CharArray_copy(p3,p2);
   return CharArray_dup(p1);
-
 }
 
 ::OctetArray_slice * ArrayTest_i::octetArrayOp (

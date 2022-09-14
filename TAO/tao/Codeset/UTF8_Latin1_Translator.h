@@ -46,10 +46,10 @@ class TAO_Codeset_Export TAO_UTF8_Latin1_Translator
 {
 public:
   /// constructor
-  TAO_UTF8_Latin1_Translator ();
+  TAO_UTF8_Latin1_Translator () = default;
 
   /// Virtual destruction
-  virtual ~TAO_UTF8_Latin1_Translator (void);
+  virtual ~TAO_UTF8_Latin1_Translator () = default;
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
   virtual ACE_CDR::Boolean read_char (ACE_InputCDR &,
@@ -73,12 +73,9 @@ public:
   virtual ACE_CDR::ULong tcs () {return 0x05010001U;}
 
 private:
-  ACE_CDR::ULong read_char_i (ACE_InputCDR &,
-                                ACE_CDR::Char &);
+  ACE_CDR::ULong read_char_i (ACE_InputCDR &, ACE_CDR::Char &);
 
-  ACE_CDR::Boolean write_char_i (ACE_OutputCDR &,
-                                 ACE_CDR::Char);
-
+  ACE_CDR::Boolean write_char_i (ACE_OutputCDR &, ACE_CDR::Char);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

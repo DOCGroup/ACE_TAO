@@ -18,7 +18,7 @@ class Data
 {
 public:
   Data (CORBA::ORB_var orb);
-  ~Data (void);
+  ~Data ();
 
   CORBA::Boolean        m_bool1,      m_bool2;
   CORBA::Octet          m_octet1,     m_octet2;

@@ -43,7 +43,6 @@
  */
 class ACE_Svc_Export ACE_Token_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
-
 public:
   /// Default constructor.
   ACE_Token_Handler (ACE_Thread_Manager * = 0);
@@ -78,7 +77,7 @@ public:
 
   /// Called by TS_[Mutex,RLock,WLock] when we hold the mutex and
   /// someone wants it.
-  void sleep_hook (void);
+  void sleep_hook ();
 
   /// Called by TS_[Mutex,RLock,WLock] when we are waiting and acquire
   /// the mutex.
@@ -92,11 +91,11 @@ protected:
   virtual int abandon (int send_error);
 
   /// Receive, frame, and decode the client's request.
-  virtual int recv_request (void);
+  virtual int recv_request ();
 
   /// Dispatch the appropriate operation to handle the client's
   /// request.
-  virtual int dispatch (void);
+  virtual int dispatch ();
 
   /// Create and send a reply to the client.
   virtual int send_reply (ACE_UINT32 errnum);
@@ -111,13 +110,12 @@ protected:
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
 
   /// return a proxy for the calling client_id and token name.
-  ACE_Token_Proxy *get_proxy (void);
+  ACE_Token_Proxy *get_proxy ();
 
 private:
-
   /// Switches on the type of token_request_ and creates a new
   /// Token_Proxy.
-  virtual ACE_Token_Proxy *create_proxy (void);
+  virtual ACE_Token_Proxy *create_proxy ();
 
   /// Keeps track of the synchronization options (i.e., the timeout
   /// interval).
@@ -155,7 +153,6 @@ private:
  */
 class ACE_TS_Mutex : public ACE_Local_Mutex
 {
-
 public:
   /// Creation.
   ACE_TS_Mutex (const ACE_TCHAR *name,
@@ -163,7 +160,7 @@ public:
 
 protected:
   /// Somebody wants our token!
-  virtual void sleep_hook (void);
+  virtual void sleep_hook ();
 
   /**
    * We've been taken off the waiters list and given the token!  Call
@@ -176,7 +173,7 @@ protected:
   ACE_TS_Mutex (const ACE_TS_Mutex &);
 
   /// Return a deep copy.
-  virtual ACE_Token_Proxy *clone (void) const;
+  virtual ACE_Token_Proxy *clone () const;
 
 private:
   /// The Token Handler associated with this proxy.  Set at
@@ -198,7 +195,7 @@ public:
 
 protected:
   /// Somebody wants our token!
-  virtual void sleep_hook (void);
+  virtual void sleep_hook ();
 
   /**
    * We've been taken off the waiters list and given the token!  Call
@@ -211,7 +208,7 @@ protected:
   ACE_TS_RLock (const ACE_TS_RLock&);
 
   /// Return a deep copy.
-  virtual ACE_Token_Proxy *clone (void) const;
+  virtual ACE_Token_Proxy *clone () const;
 
 private:
   /// the Token Handler associated with this proxy.  Set at
@@ -233,7 +230,7 @@ public:
 
 protected:
   /// Somebody wants our token!
-  virtual void sleep_hook (void);
+  virtual void sleep_hook ();
 
   /**
    * We've been taken off the waiters list and given the token!  Call
@@ -246,7 +243,7 @@ protected:
   ACE_TS_WLock (const ACE_TS_WLock&);
 
   /// Return a deep copy.
-  virtual ACE_Token_Proxy *clone (void) const;
+  virtual ACE_Token_Proxy *clone () const;
 
 private:
   /// the Token Handler associated with this proxy.  Set at

@@ -35,18 +35,18 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (
   this->uuid_hash_ = uuid.to_string ()->hash ();
 }
 
-TAO_UIPMC_Transport::~TAO_UIPMC_Transport (void)
+TAO_UIPMC_Transport::~TAO_UIPMC_Transport ()
 {
 }
 
 ACE_Event_Handler *
-TAO_UIPMC_Transport::event_handler_i (void)
+TAO_UIPMC_Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO_UIPMC_Transport::connection_handler_i (void)
+TAO_UIPMC_Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }
@@ -421,7 +421,7 @@ TAO_UIPMC_Transport::recv (
 }
 
 int
-TAO_UIPMC_Transport::register_handler (void)
+TAO_UIPMC_Transport::register_handler ()
 {
   // We never register the handler with the reactor
   // as we never need to be informed about any incoming data,

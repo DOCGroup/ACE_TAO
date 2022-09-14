@@ -83,7 +83,7 @@ Replicator::~Replicator()
 }
 
 void
-Replicator::init_orb (void)
+Replicator::init_orb ()
 {
   int argc = 6;
   ACE_TCHAR *argv[8];
@@ -119,19 +119,19 @@ Replicator::init_orb (void)
 }
 
 char *
-Replicator::ior (void)
+Replicator::ior ()
 {
   return this->orb_->object_to_string (this->me_.in ());
 }
 
 bool
-Replicator::peer_available (void)
+Replicator::peer_available ()
 {
   return !CORBA::is_nil (this->peer_.in ());
 }
 
 void
-Replicator::stop (void)
+Replicator::stop ()
 {
   if (this->reactor_ == 0)
     {
@@ -141,7 +141,7 @@ Replicator::stop (void)
 }
 
 int
-Replicator::svc (void)
+Replicator::svc ()
 {
   if (this->reactor_ == 0)
     {
@@ -325,7 +325,6 @@ Replicator::send_entity (ImplementationRepository::UpdateInfo &info)
 int
 Replicator::send_registration (char *&imr_ior)
 {
-
   if (this->debug_ > 1)
     {
       ORBSVCS_DEBUG((LM_INFO,

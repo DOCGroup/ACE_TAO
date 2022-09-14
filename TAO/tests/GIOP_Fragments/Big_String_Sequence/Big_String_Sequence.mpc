@@ -1,0 +1,31 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Echo.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver {
+  exename = server
+  after += *idl
+  Source_Files {
+    Echo_i.cpp
+    server.cpp
+    EchoS.cpp
+    EchoC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient {
+  exename = client
+  after += *idl
+  Source_Files {
+    client.cpp
+    EchoC.cpp
+  }
+  IDL_Files {
+  }
+}

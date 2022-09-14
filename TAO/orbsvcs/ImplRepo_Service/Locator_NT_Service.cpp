@@ -57,7 +57,7 @@ Locator_NT_Service::handle_exception (ACE_HANDLE)
  * We do almost the same thing as we do in run_standalone ()
  */
 int
-Locator_NT_Service::svc (void)
+Locator_NT_Service::svc ()
 {
   ImR_Locator_i server;
   Options opts;
@@ -85,7 +85,6 @@ Locator_NT_Service::svc (void)
           status = server.fini ();
 
           report_status (SERVICE_STOPPED);
-
         }
         if (status != -1)
             return 0;

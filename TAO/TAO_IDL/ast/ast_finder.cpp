@@ -16,12 +16,12 @@ AST_Finder::AST_Finder (UTL_ScopedName *n)
 {
 }
 
-AST_Finder::~AST_Finder (void)
+AST_Finder::~AST_Finder ()
 {
 }
 
 void
-AST_Finder::destroy (void)
+AST_Finder::destroy ()
 {
   this->AST_Factory::destroy ();
 }
@@ -30,7 +30,7 @@ AST_Finder::destroy (void)
 void
 AST_Finder::dump (ACE_OSTREAM_TYPE &o)
 {
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
 
   this->dump_i (o, "finder ");
   this->local_name ()->dump (o);
@@ -58,7 +58,3 @@ AST_Finder::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_finder (this);
 }
-
-IMPL_NARROW_FROM_DECL(AST_Finder)
-IMPL_NARROW_FROM_SCOPE(AST_Finder)
-

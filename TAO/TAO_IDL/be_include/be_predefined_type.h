@@ -37,14 +37,11 @@ public:
   virtual int accept (be_visitor* visitor);
 
   // Cleanup.
-  virtual void destroy (void);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (be_predefined_type);
+  virtual void destroy ();
 
 protected:
   /// Overridden method.
-  virtual void compute_tc_name (void);
+  virtual void compute_tc_name ();
 
   // Compute and return the value.
 
@@ -53,7 +50,7 @@ protected:
    * prefix, but the default compute_repoID() uses the #pragma's to
    * obtain prefixes.
    */
-  virtual void compute_repoID (void);
+  virtual void compute_repoID ();
 };
 
 #endif

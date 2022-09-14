@@ -18,14 +18,13 @@
 #include "tao/ORB_Core.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Null_Factory::TAO_EC_Null_Factory (void)
+TAO_EC_Null_Factory::TAO_EC_Null_Factory ()
 {
 }
 
-TAO_EC_Null_Factory::~TAO_EC_Null_Factory (void)
+TAO_EC_Null_Factory::~TAO_EC_Null_Factory ()
 {
 }
 
@@ -117,7 +116,7 @@ TAO_EC_Timeout_Generator*
 TAO_EC_Null_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
 {
   int argc = 0;
-  ACE_TCHAR **argv = 0;
+  ACE_TCHAR **argv = nullptr;
   CORBA::ORB_var orb =
     CORBA::ORB_init (argc, argv);
   ACE_Reactor *reactor = orb->orb_core ()->reactor ();
@@ -189,7 +188,7 @@ TAO_EC_Null_Factory::destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSup
 }
 
 ACE_Lock*
-TAO_EC_Null_Factory::create_consumer_lock (void)
+TAO_EC_Null_Factory::create_consumer_lock ()
 {
   return new ACE_Lock_Adapter<ACE_Null_Mutex> ();
 }
@@ -201,7 +200,7 @@ TAO_EC_Null_Factory::destroy_consumer_lock (ACE_Lock* x)
 }
 
 ACE_Lock*
-TAO_EC_Null_Factory::create_supplier_lock (void)
+TAO_EC_Null_Factory::create_supplier_lock ()
 {
   return new ACE_Lock_Adapter<ACE_Null_Mutex> ();
 }

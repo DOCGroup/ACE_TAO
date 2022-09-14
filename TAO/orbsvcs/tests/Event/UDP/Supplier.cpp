@@ -30,7 +30,7 @@ Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
 }
 
 void
-Supplier::disconnect (void)
+Supplier::disconnect ()
 {
   // Disconnect from the EC
   try
@@ -55,7 +55,7 @@ Supplier::insert_into_any (CORBA::Any& any, Components::EventBase* vb)
 }
 
 void
-Supplier::perform_push (void)
+Supplier::perform_push ()
 {
   try
     {
@@ -89,7 +89,7 @@ Supplier::perform_push (void)
 }
 
 void
-Supplier::disconnect_push_supplier (void)
+Supplier::disconnect_push_supplier ()
 {
 }
 

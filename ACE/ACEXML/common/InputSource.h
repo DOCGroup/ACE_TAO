@@ -55,7 +55,7 @@ public:
   /**
    * Default constructor.
    */
-  ACEXML_InputSource (void);
+  ACEXML_InputSource ();
 
 
   /**
@@ -73,27 +73,27 @@ public:
   /**
    * Default destructor.
    */
-  virtual ~ACEXML_InputSource (void);
+  virtual ~ACEXML_InputSource ();
 
   /**
    * Get the ACEXML_Char stream for this input source.
    */
-  virtual ACEXML_CharStream *getCharStream (void) const;
+  virtual ACEXML_CharStream *getCharStream () const;
 
   /**
    * Get the character encoding for a byte stream or URI.
    */
-  virtual const ACEXML_Char *getEncoding (void) const;
+  virtual const ACEXML_Char *getEncoding () const;
 
   /**
    * Get the public identifier for this input source.
    */
-  virtual const ACEXML_Char *getPublicId (void) const;
+  virtual const ACEXML_Char *getPublicId () const;
 
   /**
    * Get the system identifier for this input source.
    */
-  virtual const ACEXML_Char *getSystemId (void) const;
+  virtual const ACEXML_Char *getSystemId () const;
 
   /**
    * Set the ACEXML_Char stream for this input source.

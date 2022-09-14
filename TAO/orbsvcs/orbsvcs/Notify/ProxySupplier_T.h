@@ -31,7 +31,7 @@ class TAO_Notify_ProxySupplier_T : public virtual TAO_Notify_Proxy_T <SERVANT_TY
 {
 public:
   /// Constructor
-  TAO_Notify_ProxySupplier_T (void);
+  TAO_Notify_ProxySupplier_T ();
 
   /// Destructor
   ~TAO_Notify_ProxySupplier_T ();

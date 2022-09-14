@@ -18,7 +18,7 @@ AST_ComponentFwd::AST_ComponentFwd (AST_Interface *dummy,
 {
 }
 
-AST_ComponentFwd::~AST_ComponentFwd (void)
+AST_ComponentFwd::~AST_ComponentFwd ()
 {
 }
 
@@ -40,15 +40,13 @@ AST_ComponentFwd::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_ComponentFwd::destroy (void)
+AST_ComponentFwd::destroy ()
 {
   this->AST_InterfaceFwd::destroy ();
 }
 
 bool
-AST_ComponentFwd::is_fwd (void)
+AST_ComponentFwd::is_fwd ()
 {
   return true; // This is a fwd declared type
 }
-
-IMPL_NARROW_FROM_DECL (AST_ComponentFwd)

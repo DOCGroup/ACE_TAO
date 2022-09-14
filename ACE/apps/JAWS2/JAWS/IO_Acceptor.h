@@ -33,9 +33,8 @@ typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX> JAWS_IO_SOCK_Acceptor;
 class JAWS_Export JAWS_IO_Acceptor
 {
 public:
-
-  JAWS_IO_Acceptor (void);
-  virtual ~JAWS_IO_Acceptor (void);
+  JAWS_IO_Acceptor ();
+  virtual ~JAWS_IO_Acceptor ();
 
   virtual int open (const ACE_INET_Addr &address, int backlog = 20);
   // Initiate a passive mode socket.
@@ -53,22 +52,20 @@ public:
   virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
   // This initiates a new asynchronous accept through the AcceptEx call.
 
-  virtual ACE_HANDLE get_handle (void);
+  virtual ACE_HANDLE get_handle ();
   // Get the listener's handle
 
-  virtual void close (void);
+  virtual void close ();
   // Close the acceptor.
 
   enum { ASYNC = 0, SYNCH = 1 };
   // identify if this is being used for asynchronous or synchronous
   // accept calls
-
 };
 
 class JAWS_Export JAWS_IO_Synch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
-
   virtual int open (const ACE_INET_Addr &local_sap, int backlog = 20);
   // Initiate a passive mode socket.
 
@@ -82,7 +79,7 @@ public:
                       int reset_new_handle = 0) const;
   // Accept the connection
 
-  virtual ACE_HANDLE get_handle (void);
+  virtual ACE_HANDLE get_handle ();
   // Get the listener's handle
 
 private:
@@ -96,9 +93,8 @@ private:
 class JAWS_Export JAWS_IO_Asynch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
-
-  JAWS_IO_Asynch_Acceptor (void);
-  virtual ~JAWS_IO_Asynch_Acceptor (void);
+  JAWS_IO_Asynch_Acceptor ();
+  virtual ~JAWS_IO_Asynch_Acceptor ();
 
   virtual int open (const ACE_INET_Addr &address, int backlog = 20);
   // Initiate an asynchronous passive connection
@@ -109,13 +105,12 @@ public:
   virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
   // This initiates a new asynchronous accept through the AcceptEx call.
 
-  virtual ACE_HANDLE get_handle (void);
+  virtual ACE_HANDLE get_handle ();
   // Get the listener's handle
 
-  virtual void close (void);
+  virtual void close ();
 
 private:
-
   virtual int accept (ACE_SOCK_Stream &new_stream,
                       ACE_Addr *remote_addr = 0,
                       ACE_Time_Value *timeout = 0,

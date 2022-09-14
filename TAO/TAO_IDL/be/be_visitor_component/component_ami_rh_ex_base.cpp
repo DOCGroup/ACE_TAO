@@ -15,13 +15,13 @@
 be_visitor_component_ami_rh_ex_base::be_visitor_component_ami_rh_ex_base (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    iface_ (0),
-    port_ (0)
+    iface_ (nullptr),
+    port_ (nullptr)
 {
 }
 
 be_visitor_component_ami_rh_ex_base::~be_visitor_component_ami_rh_ex_base (
-  void)
+  )
 {
 }
 
@@ -33,7 +33,7 @@ be_visitor_component_ami_rh_ex_base::post_process (be_decl *bd)
   if (bd->node_type () == AST_Decl::NT_argument)
     {
       AST_Argument *arg =
-        AST_Argument::narrow_from_decl (bd);
+        dynamic_cast<AST_Argument*> (bd);
 
       if (arg->direction () != AST_Argument::dir_IN
           && ! this->last_inout_or_out_node (bd))
@@ -46,7 +46,7 @@ be_visitor_component_ami_rh_ex_base::post_process (be_decl *bd)
 }
 
 void
-be_visitor_component_ami_rh_ex_base::init (void)
+be_visitor_component_ami_rh_ex_base::init ()
 {
   UTL_Scope *s = this->iface_->defined_in ();
   AST_Decl *scope = ScopeAsDecl (s);
@@ -94,7 +94,7 @@ be_visitor_component_ami_rh_ex_base::gen_excep_op (
 }
 
 void
-be_visitor_component_ami_rh_ex_base::gen_op_body (void)
+be_visitor_component_ami_rh_ex_base::gen_op_body ()
 {
 }
 
@@ -153,7 +153,7 @@ be_visitor_component_ami_rh_ex_base::gen_attr_op (
         }
 
       os_ << "set_" << node->local_name ()->get_string ()
-          << " (void)" << (for_defn ? "" : ";");
+          << " ()" << (for_defn ? "" : ";");
 
       this->gen_op_body ();
 

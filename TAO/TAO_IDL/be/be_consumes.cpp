@@ -20,15 +20,15 @@ be_consumes::be_consumes (UTL_ScopedName *n,
 {
 }
 
-be_consumes::~be_consumes (void)
+be_consumes::~be_consumes ()
 {
 }
 
 be_eventtype *
-be_consumes::consumes_type (void) const
+be_consumes::consumes_type () const
 {
   return
-    be_eventtype::narrow_from_decl (
+    dynamic_cast<be_eventtype*> (
       this->AST_Consumes::consumes_type ());
 }
 
@@ -39,10 +39,8 @@ be_consumes::accept (be_visitor *visitor)
 }
 
 void
-be_consumes::destroy (void)
+be_consumes::destroy ()
 {
   this->AST_Consumes::destroy ();
   this->be_field::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL (be_consumes)

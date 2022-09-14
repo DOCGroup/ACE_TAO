@@ -7,12 +7,12 @@ TAO_Offer_Iterator::TAO_Offer_Iterator (const TAO_Property_Filter& pfilter)
 {
 }
 
-TAO_Offer_Iterator::~TAO_Offer_Iterator (void)
+TAO_Offer_Iterator::~TAO_Offer_Iterator ()
 {
 }
 
 void
-TAO_Offer_Iterator::destroy (void)
+TAO_Offer_Iterator::destroy ()
 {
   // Remove self from POA
 
@@ -31,7 +31,7 @@ TAO_Query_Only_Offer_Iterator(const TAO_Property_Filter& pfilter)
 {
 }
 
-TAO_Query_Only_Offer_Iterator::~TAO_Query_Only_Offer_Iterator(void)
+TAO_Query_Only_Offer_Iterator::~TAO_Query_Only_Offer_Iterator()
 {
 }
 
@@ -44,7 +44,7 @@ TAO_Query_Only_Offer_Iterator::add_offer (CosTrading::OfferId offer_id,
 }
 
 CORBA::ULong
-TAO_Query_Only_Offer_Iterator::max_left (void)
+TAO_Query_Only_Offer_Iterator::max_left ()
 {
   return static_cast<CORBA::ULong> (this->offers_.size ());
 }
@@ -62,7 +62,6 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
   // populate the sequence.
   for (CORBA::ULong i = 0; i < offers_in_sequence; i++)
     {
-
       CosTrading::Offer *source = 0;
       this->offers_.dequeue_head (source);
       this->pfilter_.filter_offer (source, offers[i]);
@@ -71,11 +70,11 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
   return offers_in_sequence != 0;
 }
 
-TAO_Offer_Iterator_Collection::TAO_Offer_Iterator_Collection (void)
+TAO_Offer_Iterator_Collection::TAO_Offer_Iterator_Collection ()
 {
 }
 
-TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection (void)
+TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection ()
 {
   while (! this->iters_.is_empty ())
     {
@@ -157,7 +156,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
 }
 
 void
-TAO_Offer_Iterator_Collection::destroy (void)
+TAO_Offer_Iterator_Collection::destroy ()
 {
   // Destroy all iterators in the collection.
   for (Offer_Iters::ITERATOR iters_iter (this->iters_);
@@ -182,16 +181,16 @@ TAO_Offer_Iterator_Collection::destroy (void)
 }
 
 CORBA::ULong
-TAO_Offer_Iterator_Collection::max_left (void)
+TAO_Offer_Iterator_Collection::max_left ()
 {
   throw CosTrading::UnknownMaxLeft();
 }
 
-TAO_Offer_Id_Iterator::TAO_Offer_Id_Iterator (void)
+TAO_Offer_Id_Iterator::TAO_Offer_Id_Iterator ()
 {
 }
 
-TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator (void)
+TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator ()
 {
   int return_value = 0;
 
@@ -207,13 +206,13 @@ TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator (void)
 }
 
 CORBA::ULong
-TAO_Offer_Id_Iterator::max_left (void)
+TAO_Offer_Id_Iterator::max_left ()
 {
   return static_cast<CORBA::ULong> (this->ids_.size ());
 }
 
 void
-TAO_Offer_Id_Iterator::destroy (void)
+TAO_Offer_Id_Iterator::destroy ()
 {
   // Remove self from POA
 

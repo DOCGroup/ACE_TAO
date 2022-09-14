@@ -4,7 +4,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::IIOP_SSL_Acceptor::IIOP_SSL_Acceptor (void)
+TAO::IIOP_SSL_Acceptor::IIOP_SSL_Acceptor ()
   : TAO_IIOP_Acceptor (),
     base_acceptor_ (),
     creation_strategy_ (0),
@@ -13,7 +13,7 @@ TAO::IIOP_SSL_Acceptor::IIOP_SSL_Acceptor (void)
 {
 }
 
-TAO::IIOP_SSL_Acceptor::~IIOP_SSL_Acceptor (void)
+TAO::IIOP_SSL_Acceptor::~IIOP_SSL_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -25,7 +25,7 @@ TAO::IIOP_SSL_Acceptor::~IIOP_SSL_Acceptor (void)
 }
 
 int
-TAO::IIOP_SSL_Acceptor::close (void)
+TAO::IIOP_SSL_Acceptor::close ()
 {
   return this->base_acceptor_.close ();
 }

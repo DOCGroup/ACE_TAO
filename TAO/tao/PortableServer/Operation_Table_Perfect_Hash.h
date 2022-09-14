@@ -39,9 +39,8 @@ class TAO_PortableServer_Export TAO_Perfect_Hash_OpTable
   : public TAO_Operation_Table
 {
 public:
-
   /// Do nothing destructor.
-  virtual ~TAO_Perfect_Hash_OpTable (void);
+  virtual ~TAO_Perfect_Hash_OpTable ();
 
   /// See the documentation in the base class for details.
   virtual int find (const char *opname,
@@ -59,7 +58,6 @@ public:
 private:
   // = Methods that should defined by the subclasses. GPERF program
   //   will generate these routines.
-
   virtual unsigned int hash (const char *str, unsigned int len) = 0;
 
   virtual const TAO_operation_db_entry* lookup (const char *str,

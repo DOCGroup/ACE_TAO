@@ -16,13 +16,13 @@
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
-Service::Service (void)
+Service::Service ()
 {
   // Remember the Reactor instance.
   reactor (ACE_Reactor::instance ());
 }
 
-Service::~Service (void)
+Service::~Service ()
 {
   if (ACE_Reactor::instance ()->cancel_timer(this) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -78,7 +78,7 @@ Service::handle_timeout (const ACE_Time_Value &tv,
 // request is received.
 
 int
-Service::svc (void)
+Service::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Service::svc\n")));

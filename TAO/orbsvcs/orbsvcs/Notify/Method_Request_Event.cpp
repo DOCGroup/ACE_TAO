@@ -83,7 +83,7 @@ TAO_Notify_Method_Request_Event_Queueable::~TAO_Notify_Method_Request_Event_Queu
 }
 
 int
-TAO_Notify_Method_Request_Event_Queueable::execute (void)
+TAO_Notify_Method_Request_Event_Queueable::execute ()
 {
   ACE_ASSERT (false);
   return -1;

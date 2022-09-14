@@ -16,22 +16,18 @@
 // ******************************************************
 
 be_visitor_operation_smart_proxy_ch::be_visitor_operation_smart_proxy_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_operation_smart_proxy_ch::~be_visitor_operation_smart_proxy_ch (
-    void
-  )
+be_visitor_operation_smart_proxy_ch::~be_visitor_operation_smart_proxy_ch ()
 {
 }
 
 int
 be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
 {
-
   if (be_global->gen_smart_proxies ())
     {
       TAO_OutStream *os = this->ctx_->stream ();
@@ -41,7 +37,7 @@ be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
       *os << "virtual ";
 
       // STEP I: generate the return type.
-      be_type *bt = be_type::narrow_from_decl (node->return_type ());
+      be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
       if (!bt)
         {

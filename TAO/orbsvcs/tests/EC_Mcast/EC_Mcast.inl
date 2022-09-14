@@ -7,19 +7,19 @@ ECM_Federation::sender_local_addr (ACE_INET_Addr& addr)
 
 
 ACE_INLINE const char*
-ECM_Federation::name (void) const
+ECM_Federation::name () const
 {
   return this->name_;
 }
 
 ACE_INLINE CORBA::UShort
-ECM_Federation::mcast_port (void) const
+ECM_Federation::mcast_port () const
 {
   return this->mcast_port_;
 }
 
 ACE_INLINE int
-ECM_Federation::supplier_types (void) const
+ECM_Federation::supplier_types () const
 {
   return this->supplier_types_;
 }
@@ -41,7 +41,7 @@ ECM_Federation::supplier_ipaddr (CORBA::ULong i) const
 }
 
 ACE_INLINE int
-ECM_Federation::consumer_types (void) const
+ECM_Federation::consumer_types () const
 {
   return this->consumer_types_;
 }
@@ -63,25 +63,25 @@ ECM_Federation::consumer_ipaddr (CORBA::ULong i) const
 }
 
 ACE_INLINE const ECM_Federation*
-ECM_Local_Federation::federation (void) const
+ECM_Local_Federation::federation () const
 {
   return this->federation_;
 }
 
 ACE_INLINE const char*
-ECM_Local_Federation::name (void) const
+ECM_Local_Federation::name () const
 {
   return this->federation_->name ();
 }
 
 ACE_INLINE CORBA::UShort
-ECM_Local_Federation::mcast_port (void) const
+ECM_Local_Federation::mcast_port () const
 {
   return this->federation_->mcast_port ();
 }
 
 ACE_INLINE int
-ECM_Local_Federation::supplier_types (void) const
+ECM_Local_Federation::supplier_types () const
 {
   return this->federation_->supplier_types ();
 }
@@ -99,7 +99,7 @@ ECM_Local_Federation::supplier_ipaddr (CORBA::ULong i) const
 }
 
 ACE_INLINE int
-ECM_Local_Federation::consumer_types (void) const
+ECM_Local_Federation::consumer_types () const
 {
   return this->federation_->consumer_types ();
 }

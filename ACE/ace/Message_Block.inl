@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Data_Block *
-ACE_Message_Block::data_block (void) const
+ACE_Message_Block::data_block () const
 {
   ACE_TRACE ("ACE_Message_Block::data_block");
   return this->data_block_;
@@ -27,40 +27,40 @@ ACE_Message_Block::clr_self_flags (ACE_Message_Block::Message_Flags less_flags)
 }
 
 ACE_INLINE ACE_Message_Block::Message_Flags
-ACE_Message_Block::self_flags (void) const
+ACE_Message_Block::self_flags () const
 {
   ACE_TRACE ("ACE_Message_Block::self_flags");
   return this->flags_;
 }
 
 ACE_INLINE int
-ACE_Data_Block::reference_count_i (void) const
+ACE_Data_Block::reference_count_i () const
 {
   return reference_count_;
 }
 
 ACE_INLINE int
-ACE_Message_Block::reference_count (void) const
+ACE_Message_Block::reference_count () const
 {
   return data_block () ? data_block ()->reference_count () : 0;
 }
 
 ACE_INLINE char *
-ACE_Data_Block::base (void) const
+ACE_Data_Block::base () const
 {
   ACE_TRACE ("ACE_Data_Block::base");
   return this->base_;
 }
 
 ACE_INLINE size_t
-ACE_Data_Block::size (void) const
+ACE_Data_Block::size () const
 {
   ACE_TRACE ("ACE_Data_Block::size");
   return this->cur_size_;
 }
 
 ACE_INLINE size_t
-ACE_Data_Block::capacity (void) const
+ACE_Data_Block::capacity () const
 {
   ACE_TRACE ("ACE_Data_Block::capacity");
   return this->max_size_;
@@ -85,14 +85,14 @@ ACE_Data_Block::clr_flags (ACE_Message_Block::Message_Flags less_flags)
 }
 
 ACE_INLINE ACE_Message_Block::Message_Flags
-ACE_Data_Block::flags (void) const
+ACE_Data_Block::flags () const
 {
   ACE_TRACE ("ACE_Data_Block::flags");
    return this->flags_;
 }
 
 ACE_INLINE ACE_Allocator*
-ACE_Data_Block::data_block_allocator (void) const
+ACE_Data_Block::data_block_allocator () const
 {
   ACE_TRACE ("ACE_Data_Block::data_block_allocator");
   return this->data_block_allocator_;
@@ -113,7 +113,7 @@ ACE_Message_Block::clr_flags (ACE_Message_Block::Message_Flags less_flags)
 }
 
 ACE_INLINE ACE_Message_Block::Message_Flags
-ACE_Message_Block::flags (void) const
+ACE_Message_Block::flags () const
 {
   ACE_TRACE ("ACE_Message_Block::flags");
    return this->data_block ()->flags ();
@@ -122,7 +122,7 @@ ACE_Message_Block::flags (void) const
 // Return the length of the "active" portion of the message.
 
 ACE_INLINE size_t
-ACE_Message_Block::length (void) const
+ACE_Message_Block::length () const
 {
   ACE_TRACE ("ACE_Message_Block::length");
   return this->wr_ptr_ - this->rd_ptr_;
@@ -141,21 +141,21 @@ ACE_Message_Block::length (size_t len)
 // Return the length of the potential size of the message.
 
 ACE_INLINE size_t
-ACE_Message_Block::size (void) const
+ACE_Message_Block::size () const
 {
   ACE_TRACE ("ACE_Message_Block::size");
   return this->data_block ()->size ();
 }
 
 ACE_INLINE size_t
-ACE_Message_Block::capacity (void) const
+ACE_Message_Block::capacity () const
 {
   ACE_TRACE ("ACE_Message_Block::capacity");
   return this->data_block ()->capacity ();
 }
 
 ACE_INLINE ACE_Message_Block::ACE_Message_Type
-ACE_Data_Block::msg_type (void) const
+ACE_Data_Block::msg_type () const
 {
   ACE_TRACE ("ACE_Data_Block::msg_type");
   return this->type_;
@@ -169,7 +169,7 @@ ACE_Data_Block::msg_type (ACE_Message_Block::ACE_Message_Type t)
 }
 
 ACE_INLINE ACE_Message_Block::ACE_Message_Type
-ACE_Message_Block::msg_type (void) const
+ACE_Message_Block::msg_type () const
 {
   ACE_TRACE ("ACE_Message_Block::msg_type");
   return this->data_block ()->msg_type ();
@@ -183,7 +183,7 @@ ACE_Message_Block::msg_type (ACE_Message_Block::ACE_Message_Type t)
 }
 
 ACE_INLINE ACE_Message_Block::ACE_Message_Type
-ACE_Message_Block::msg_class (void) const
+ACE_Message_Block::msg_class () const
 {
   ACE_TRACE ("ACE_Message_Block::msg_class");
 
@@ -196,7 +196,7 @@ ACE_Message_Block::msg_class (void) const
 }
 
 ACE_INLINE int
-ACE_Message_Block::is_data_msg (void) const
+ACE_Message_Block::is_data_msg () const
 {
   ACE_TRACE ("ACE_Message_Block::is_data_msg");
   ACE_Message_Type mt = this->msg_type ();
@@ -207,7 +207,7 @@ ACE_Message_Block::is_data_msg (void) const
 }
 
 ACE_INLINE unsigned long
-ACE_Message_Block::msg_priority (void) const
+ACE_Message_Block::msg_priority () const
 {
   ACE_TRACE ("ACE_Message_Block::msg_priority");
   return this->priority_;
@@ -221,7 +221,7 @@ ACE_Message_Block::msg_priority (unsigned long pri)
 }
 
 ACE_INLINE const ACE_Time_Value &
-ACE_Message_Block::msg_execution_time (void) const
+ACE_Message_Block::msg_execution_time () const
 {
   ACE_TRACE ("ACE_Message_Block::msg_execution_time (void)");
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
@@ -243,7 +243,7 @@ ACE_Message_Block::msg_execution_time (const ACE_Time_Value &et)
 }
 
 ACE_INLINE const ACE_Time_Value &
-ACE_Message_Block::msg_deadline_time (void) const
+ACE_Message_Block::msg_deadline_time () const
 {
   ACE_TRACE ("ACE_Message_Block::msg_deadline_time (void)");
 
@@ -279,7 +279,7 @@ ACE_Message_Block::access_allocators (ACE_Allocator *& allocator_strategy,
 }
 
 ACE_INLINE char *
-ACE_Message_Block::base (void) const
+ACE_Message_Block::base () const
 {
   ACE_TRACE ("ACE_Message_Block::base");
   return this->data_block ()->base ();
@@ -297,7 +297,7 @@ ACE_Message_Block::base (char *msg_data,
 }
 
 ACE_INLINE char *
-ACE_Message_Block::rd_ptr (void) const
+ACE_Message_Block::rd_ptr () const
 {
   ACE_TRACE ("ACE_Message_Block::rd_ptr");
   return this->base () + this->rd_ptr_;
@@ -313,28 +313,28 @@ ACE_Message_Block::wr_ptr (char *new_ptr)
 // Return a pointer to 1 past the end of the data buffer.
 
 ACE_INLINE char *
-ACE_Data_Block::mark (void) const
+ACE_Data_Block::mark () const
 {
   ACE_TRACE ("ACE_Data_Block::mark");
   return this->base_ + this->cur_size_;
 }
 
 ACE_INLINE char *
-ACE_Message_Block::mark (void) const
+ACE_Message_Block::mark () const
 {
   ACE_TRACE ("ACE_Message_Block::mark");
   return this->data_block ()->mark ();
 }
 
 ACE_INLINE char *
-ACE_Data_Block::end (void) const
+ACE_Data_Block::end () const
 {
   ACE_TRACE ("ACE_Data_Block::end");
   return this->base_ + this->max_size_;
 }
 
 ACE_INLINE char *
-ACE_Message_Block::end (void) const
+ACE_Message_Block::end () const
 {
   ACE_TRACE ("ACE_Message_Block::end");
   return this->data_block ()->end ();
@@ -356,7 +356,7 @@ ACE_Message_Block::rd_ptr (size_t n)
 }
 
 ACE_INLINE char *
-ACE_Message_Block::wr_ptr (void) const
+ACE_Message_Block::wr_ptr () const
 {
   ACE_TRACE ("ACE_Message_Block::wr_ptr");
   return this->base () + this->wr_ptr_;
@@ -370,7 +370,7 @@ ACE_Message_Block::wr_ptr (size_t n)
 }
 
 ACE_INLINE void
-ACE_Message_Block::reset (void)
+ACE_Message_Block::reset ()
 {
   ACE_TRACE ("ACE_Message_Block::reset");
   this->rd_ptr_ = 0;
@@ -378,7 +378,7 @@ ACE_Message_Block::reset (void)
 }
 
 ACE_INLINE size_t
-ACE_Message_Block::space (void) const
+ACE_Message_Block::space () const
 {
   ACE_TRACE ("ACE_Message_Block::space");
   return this->mark () - this->wr_ptr ();
@@ -410,7 +410,7 @@ ACE_Message_Block::cont (ACE_Message_Block *cont_msg)
 }
 
 ACE_INLINE ACE_Message_Block *
-ACE_Message_Block::cont (void) const
+ACE_Message_Block::cont () const
 {
   ACE_TRACE ("ACE_Message_Block::cont");
   return this->cont_;
@@ -442,7 +442,7 @@ ACE_Message_Block::next (ACE_Message_Block *next_msg)
 }
 
 ACE_INLINE ACE_Message_Block *
-ACE_Message_Block::next (void) const
+ACE_Message_Block::next () const
 {
   ACE_TRACE ("ACE_Message_Block::next");
   return this->next_;
@@ -456,21 +456,21 @@ ACE_Message_Block::prev (ACE_Message_Block *next_msg)
 }
 
 ACE_INLINE ACE_Message_Block *
-ACE_Message_Block::prev (void) const
+ACE_Message_Block::prev () const
 {
   ACE_TRACE ("ACE_Message_Block::prev");
   return this->prev_;
 }
 
 ACE_INLINE ACE_Allocator *
-ACE_Data_Block::allocator_strategy (void) const
+ACE_Data_Block::allocator_strategy () const
 {
   ACE_TRACE ("ACE_Data_Block::allocator_strategy");
   return this->allocator_strategy_;
 }
 
 ACE_INLINE ACE_Lock *
-ACE_Data_Block::locking_strategy (void)
+ACE_Data_Block::locking_strategy ()
 {
   ACE_TRACE ("ACE_Data_Block::locking_strategy");
   return this->locking_strategy_;
@@ -487,7 +487,7 @@ ACE_Data_Block::locking_strategy (ACE_Lock *nls)
 }
 
 ACE_INLINE ACE_Lock *
-ACE_Message_Block::locking_strategy (void)
+ACE_Message_Block::locking_strategy ()
 {
   ACE_TRACE ("ACE_Message_Block::locking_strategy");
   return this->data_block ()->locking_strategy ();

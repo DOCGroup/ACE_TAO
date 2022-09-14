@@ -18,7 +18,6 @@ TAO_Connect_Creation_Strategy<SVC_HANDLER>::
     : ACE_Creation_Strategy <SVC_HANDLER> (t, orb_core->reactor ()),
       orb_core_ (orb_core)
 {
-
 }
 
 template <class SVC_HANDLER> int

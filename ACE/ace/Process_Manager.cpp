@@ -60,14 +60,14 @@ ACE_Process_Manager *ACE_Process_Manager::instance_ = 0;
 // (we can only delete it safely if we created it!)
 bool ACE_Process_Manager::delete_instance_ = false;
 
-ACE_Process_Manager::Process_Descriptor::~Process_Descriptor (void)
+ACE_Process_Manager::Process_Descriptor::~Process_Descriptor ()
 {
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager::Process_Descriptor)
 
 void
-ACE_Process_Manager::Process_Descriptor::dump (void) const
+ACE_Process_Manager::Process_Descriptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Process_Manager::Process_Descriptor::dump");
@@ -82,7 +82,7 @@ ACE_Process_Manager::Process_Descriptor::dump (void) const
 }
 
 void
-ACE_Process_Manager::dump (void) const
+ACE_Process_Manager::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Process_Manager::dump");
@@ -99,7 +99,7 @@ ACE_Process_Manager::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Process_Manager::Process_Descriptor::Process_Descriptor (void)
+ACE_Process_Manager::Process_Descriptor::Process_Descriptor ()
   : process_ (0),
     exit_notify_ (0)
 {
@@ -107,7 +107,7 @@ ACE_Process_Manager::Process_Descriptor::Process_Descriptor (void)
 }
 
 ACE_Process_Manager *
-ACE_Process_Manager::instance (void)
+ACE_Process_Manager::instance ()
 {
   ACE_TRACE ("ACE_Process_Manager::instance");
 
@@ -161,7 +161,7 @@ ACE_Process_Manager::instance (ACE_Process_Manager *tm)
 }
 
 void
-ACE_Process_Manager::close_singleton( void )
+ACE_Process_Manager::close_singleton( )
 {
   ACE_TRACE ("ACE_Process_Manager::close_singleton");
 
@@ -251,7 +251,7 @@ ACE_Process_Manager::ACE_Process_Manager (size_t size,
 
 // Close up and release all resources.
 int
-ACE_Process_Manager::close (void)
+ACE_Process_Manager::close ()
 {
   ACE_TRACE ("ACE_Process_Manager::close");
 
@@ -283,7 +283,7 @@ ACE_Process_Manager::close (void)
   return 0;
 }
 
-ACE_Process_Manager::~ACE_Process_Manager (void)
+ACE_Process_Manager::~ACE_Process_Manager ()
 {
   ACE_TRACE ("ACE_Process_Manager::~ACE_Process_Manager");
   this->close ();
@@ -333,9 +333,7 @@ ACE_Process_Manager::handle_close (ACE_HANDLE /* handle */,
 // On Win32, this routine is called synchronously, and is passed the
 // HANDLE of the Process that exited, so we can do all our work here.
 int
-ACE_Process_Manager::handle_signal (int,
-                                    siginfo_t *si,
-                                    ucontext_t *)
+ACE_Process_Manager::handle_signal (int, siginfo_t *si, ucontext_t *)
 {
 #if defined (ACE_WIN32)
   ACE_HANDLE proc = si->si_handle_;
@@ -888,7 +886,8 @@ ACE_Process_Manager::wait (pid_t pid,
           ACE_Sig_Action old_action;
           if (this->reactor () == 0)
             {
-              ACE_Sig_Action do_sigchld ((ACE_SignalHandler)sigchld_nop);
+              ACE_Sig_Handler_Ex sigchld_nop_ptr = sigchld_nop;
+              ACE_Sig_Action do_sigchld (reinterpret_cast<ACE_SignalHandler> (reinterpret_cast<void*> (sigchld_nop_ptr)));
               do_sigchld.register_action (SIGCHLD, &old_action);
             }
 

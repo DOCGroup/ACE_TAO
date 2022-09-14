@@ -52,7 +52,6 @@ namespace TAO
          i != 0;
          i = i->cont ())
       {
-
         ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
         buf += i->length ();
       }

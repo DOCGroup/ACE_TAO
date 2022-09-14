@@ -64,7 +64,7 @@ namespace TAO
     , public TAO_RequestInterceptor_Adapter_Impl
   {
   public:
-    ClientRequestInterceptor_Adapter_Impl (void);
+    ClientRequestInterceptor_Adapter_Impl ();
 
     /**
      * @name PortableInterceptor Client Side Interception Points
@@ -101,7 +101,7 @@ namespace TAO
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies);
 
-    virtual void destroy_interceptors (void);
+    virtual void destroy_interceptors ();
 
     virtual PortableInterceptor::ReplyStatus pi_reply_status (
       TAO::Invocation_Base const &invocation_base);

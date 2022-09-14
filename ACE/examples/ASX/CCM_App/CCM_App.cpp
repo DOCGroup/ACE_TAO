@@ -6,7 +6,6 @@
 #include "ace/svc_export.h"
 
 
-
 typedef ACE_Task<ACE_SYNCH> MT_Task;
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_SYNCH> MT_Module;
@@ -20,9 +19,9 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   virtual int init (int, ACE_TCHAR *[]);
-  virtual int fini (void);
-  virtual int suspend (void);
-  virtual int resume (void);
+  virtual int fini ();
+  virtual int suspend ();
+  virtual int resume ();
 };
 
 int
@@ -44,7 +43,7 @@ Test_Task::close (u_long)
 }
 
 int
-Test_Task::suspend (void)
+Test_Task::suspend ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("suspending in %s\n"),
@@ -53,7 +52,7 @@ Test_Task::suspend (void)
 }
 
 int
-Test_Task::resume (void)
+Test_Task::resume ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("resuming in %s\n"),
@@ -72,7 +71,7 @@ Test_Task::init (int, ACE_TCHAR *[])
 }
 
 int
-Test_Task::fini (void)
+Test_Task::fini ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("finalizing %s (%@)\n"),
@@ -88,33 +87,33 @@ ACE_SVC_FACTORY_DEFINE (Test_Task)
 
 // Dynamically linked functions used to control configuration.
 
-extern "C" ACE_Svc_Export MT_Stream *make_stream (void);
-extern "C" ACE_Svc_Export MT_Module *make_da (void);
-extern "C" ACE_Svc_Export MT_Module *make_ea (void);
-extern "C" ACE_Svc_Export MT_Module *make_mr (void);
+extern "C" ACE_Svc_Export MT_Stream *make_stream ();
+extern "C" ACE_Svc_Export MT_Module *make_da ();
+extern "C" ACE_Svc_Export MT_Module *make_ea ();
+extern "C" ACE_Svc_Export MT_Module *make_mr ();
 
 MT_Stream *
-make_stream (void)
+make_stream ()
 {
   return new MT_Stream;
 }
 
 MT_Module *
-make_da (void)
+make_da ()
 {
   return new MT_Module (ACE_TEXT ("Device_Adapter"),
                         new Test_Task, new Test_Task);
 }
 
 MT_Module *
-make_ea (void)
+make_ea ()
 {
   return new MT_Module (ACE_TEXT ("Event_Analyzer"),
                         new Test_Task, new Test_Task);
 }
 
 MT_Module *
-make_mr (void)
+make_mr ()
 {
   return new MT_Module (ACE_TEXT ("Multicast_Router"),
                         new Test_Task, new Test_Task);

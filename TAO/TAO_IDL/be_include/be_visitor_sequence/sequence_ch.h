@@ -31,7 +31,7 @@ public:
   be_visitor_sequence_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_sequence_ch (void);
+  ~be_visitor_sequence_ch ();
 
   /// visit sequence node.
   virtual int visit_sequence (be_sequence *node);

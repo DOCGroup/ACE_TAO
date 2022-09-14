@@ -44,6 +44,6 @@ SyncScope_Setup::init (CORBA::ORB_ptr orb,
   policy_list[0]->destroy ();
 }
 
-SyncScope_Setup::~SyncScope_Setup (void)
+SyncScope_Setup::~SyncScope_Setup ()
 {
 }

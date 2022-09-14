@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Encodable::~TAO_Encodable (void)
+TAO_Encodable::~TAO_Encodable ()
 {
 }
 

@@ -47,13 +47,12 @@ public:
   friend class Leader_Follower_Task;
 
   /// Ctor
-  Synchronisers (void);
+  Synchronisers ();
 
-  int  start_synchronization (void);
-  int  end_synchronization (void);
+  int  start_synchronization ();
+  int  end_synchronization ();
 
 private:
-
   /// The mutex and condition variable that is used for
   /// synchronisation.
   ACE_SYNCH_MUTEX mutex_;
@@ -79,15 +78,14 @@ private:
 class Leader_Follower_Task : public ACE_Task_Base
 {
 public:
-
   /// Ctor with a mutex and a condition variable
   Leader_Follower_Task (Synchronisers &synch);
 
   /// Messages consumed
-  int processed (void);
+  int processed ();
 
   /// Method that is run by a daemon thread
-  int svc (void);
+  int svc ();
 
 private:
   /// Number of messages processed by this thread

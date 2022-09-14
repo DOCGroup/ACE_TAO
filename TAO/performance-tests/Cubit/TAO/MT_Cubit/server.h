@@ -43,7 +43,7 @@
 
 #if defined (VME_DRIVER)
 #include <hostLib.h>
-extern "C" STATUS vmeDrv (void);
+extern "C" STATUS vmeDrv ();
 extern "C" STATUS vmeDevCreate (char *);
 #endif /* VME_DRIVER */
 
@@ -60,32 +60,32 @@ class Server
 {
 public:
   /// Default constructor.
-  Server (void);
+  Server ();
 
   /// Initialize the server state.
   int init (int argc, ACE_TCHAR **argv);
 
   /// Run method.
-  int run (void);
+  int run ();
 
 private:
   /// Start the high and low priority servants.
-  int start_servants (void);
+  int start_servants ();
 
   /// Preliminary argument processing code.
-  void prelim_args_process (void);
+  void prelim_args_process ();
 
   /// sets the priority to be used for the low priority servants.
-  void init_low_priority (void);
+  void init_low_priority ();
 
   /// Writes the iors of the servants to a file
-  int write_iors (void);
+  int write_iors ();
 
   /// Activates the high priority servant.
-  int activate_high_servant (void);
+  int activate_high_servant ();
 
   /// Activates the low priority servants.
-  int activate_low_servants (void);
+  int activate_low_servants ();
 
   /// Number of arguments for the servant.
   int argc_;

@@ -1,5 +1,3 @@
-
-
 ====================================================================
 ASNMP = ACE+SNMP++ Version 2.1
 By Michael R. MacFaden mrm@acm.org, mrm@yagosys.com
@@ -57,10 +55,11 @@ How to build this library
   create libasnmp.a, libasnmp.so and then run the tests
 
 Any Support for ASNMP?
-   As time permits from the mailing list.
+   As time permits through github.
 
 Where to ask questions?
-  Please use ace-users@cs.wustl.edu mailing list or mrm@acm.org
+  Please use github issues or discussions at https://github.com/DOCGroup/ACE_TAO
+  or mrm@acm.org
 
 NOTE: Please do not bother Eric Mellquist unless you are using
    the original HP version of this library.

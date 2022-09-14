@@ -27,14 +27,14 @@ class Driver
 {
 public:
   // = Constructor and destructor.
-  Driver (void);
-  ~Driver (void);
+  Driver ();
+  ~Driver ();
 
   /// Initialize the driver object
   int init (int argc, ACE_TCHAR **argv);
 
   /// Execute client example code.
-  int run (void);
+  int run ();
 
 private:
   /// underlying ORB (we do not own it)

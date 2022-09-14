@@ -21,24 +21,23 @@ CNamingObject::CNamingObject(CosNaming::Name &Name,
     m_Object (CORBA::Object::_duplicate (pObject)),
     m_Context (Context)
 {
-
 }
 
-CNamingObject::~CNamingObject (void)
+CNamingObject::~CNamingObject ()
 {
 }
 
-CosNaming::NamingContext_ptr CNamingObject::NamingContext (void)
+CosNaming::NamingContext_ptr CNamingObject::NamingContext ()
 {
   return CosNaming::NamingContext::_narrow (m_Object);
 }
 
-CORBA::Object_ptr CNamingObject::Object (void)
+CORBA::Object_ptr CNamingObject::Object ()
 {
   return m_Object;
 }
 
-CosNaming::Name& CNamingObject::Name (void)
+CosNaming::Name& CNamingObject::Name ()
 {
   return m_Name;
 }

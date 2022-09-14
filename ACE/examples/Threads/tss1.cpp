@@ -20,7 +20,6 @@
 #include "ace/Task.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "thread_specific.h"
@@ -47,7 +46,7 @@ public:
   Tester (void) {}
   ~Tester (void) {}
 
-  virtual int svc (void);
+  virtual int svc ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Activate the thread.
@@ -58,7 +57,7 @@ public:
 };
 
 template <ACE_SYNCH_DECL> int
-Tester<ACE_SYNCH_USE>::svc (void)
+Tester<ACE_SYNCH_USE>::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) svc: setting error code to 1\n"));

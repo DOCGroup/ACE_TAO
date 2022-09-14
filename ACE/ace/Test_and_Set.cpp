@@ -18,7 +18,7 @@ ACE_Test_and_Set<ACE_LOCK, TYPE>::ACE_Test_and_Set (TYPE initial_value)
 
 // Returns true if we are done, else false.
 template <class ACE_LOCK, class TYPE> TYPE
-ACE_Test_and_Set<ACE_LOCK, TYPE>::is_set (void) const
+ACE_Test_and_Set<ACE_LOCK, TYPE>::is_set () const
 {
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->lock_, this->is_set_);
   return this->is_set_;

@@ -5,8 +5,6 @@
 
 #include "test_config.h"
 
-#if defined (ACE_HAS_CPP11)
-
 #include <string>
 #include <iostream>
 #include <cstdint>
@@ -18,7 +16,7 @@ namespace IDL
            typename _Alloc = std::allocator<_CharT> >
     class bounded_basic_string : public std::basic_string<_CharT, _Traits, _Alloc>
     {
-      typedef std::basic_string<_CharT, _Traits, _Alloc>  _String;
+      using _String = std::basic_string<_CharT, _Traits, _Alloc>;
 
     public:
       static const uint32_t                               bound_ = _Bound;
@@ -48,7 +46,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT("Compiler_Features_19_Test"));
 
-  typedef IDL::bounded_string<100> string100;
+  using string100 = IDL::bounded_string<100>;
   string100 s100("world");
 
   ACE_DEBUG ((LM_DEBUG,
@@ -61,18 +59,3 @@ run_main (int, ACE_TCHAR *[])
 
   return 0;
 }
-
-#else
-int
-run_main (int, ACE_TCHAR *[])
-{
-  ACE_START_TEST (ACE_TEXT("Compiler_Features_19_Test"));
-
-  ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("No C++11 support enabled\n")));
-
-  ACE_END_TEST;
-  return 0;
-}
-
-#endif

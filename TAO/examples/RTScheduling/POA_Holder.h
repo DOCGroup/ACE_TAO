@@ -28,7 +28,7 @@ class RTSCHEDTESTLIB_Export POA_Holder
 {
 public:
   /// Constructor
-  POA_Holder (void);
+  POA_Holder ();
 
   /// The arg_shifter options are read in the following manner:
   ///-POA <name> -PriorityModel <CLIENT|SERVER> <priority> -Lanes <count> (-Lane <priority> ,<static_threads> <dynamic_threads>)* -Bands <count> (-Band <low> <high>)*

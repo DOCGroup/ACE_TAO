@@ -42,32 +42,32 @@ public:
     TAO_ConstantDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ConstantDef_i (void);
+  virtual ~TAO_ConstantDef_i ();
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (void);
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe (void);
+  virtual CORBA::Contained::Description *describe ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i (void);
+  virtual CORBA::Contained::Description *describe_i ();
 
-  virtual CORBA::TypeCode_ptr type (void);
+  virtual CORBA::TypeCode_ptr type ();
 
-  CORBA::TypeCode_ptr type_i (void);
+  CORBA::TypeCode_ptr type_i ();
 
-  virtual CORBA::IDLType_ptr type_def (void);
+  virtual CORBA::IDLType_ptr type_def ();
 
-  CORBA::IDLType_ptr type_def_i (void);
+  CORBA::IDLType_ptr type_def_i ();
 
   virtual void type_def (CORBA::IDLType_ptr type_def);
 
   void type_def_i (CORBA::IDLType_ptr type_def);
 
-  virtual CORBA::Any *value (void);
+  virtual CORBA::Any *value ();
 
-  CORBA::Any *value_i (void);
+  CORBA::Any *value_i ();
 
   virtual void value (const CORBA::Any &value);
 

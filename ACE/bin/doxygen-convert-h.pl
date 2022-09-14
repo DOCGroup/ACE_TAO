@@ -41,16 +41,14 @@ sub recursive_find {
 
   if (opendir($fh, $file)) {
     foreach my $f (grep(!/^\.\.?$/, readdir($fh))) {
-      if ($f ne '.svn') {
-        my($full) = "$file/$f";
-        if (-d $full) {
-          push(@rfiles, recursive_find($full));
-        }
-        else {
-          push(@rfiles, $full)
-          if ($f =~ /\.(h|hxx|hpp|hh|inl|idl|cpp|cxx|cc|c|C)$/)
-          ;
-        }
+      my($full) = "$file/$f";
+      if (-d $full) {
+        push(@rfiles, recursive_find($full));
+      }
+      else {
+        push(@rfiles, $full)
+        if ($f =~ /\.(h|hxx|hpp|hh|inl|idl|cpp|cxx|cc|c|C)$/)
+        ;
       }
     }
     closedir($fh);

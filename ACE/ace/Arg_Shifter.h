@@ -85,10 +85,10 @@ public:
                      CHAR_TYPE **temp = 0);
 
   /// Destructor.
-  ~ACE_Arg_Shifter_T (void);
+  ~ACE_Arg_Shifter_T ();
 
   /// Get the current head of the vector.
-  const CHAR_TYPE *get_current (void) const;
+  const CHAR_TYPE *get_current () const;
 
   /**
    * If the @a flag matches the current_arg of arg shifter
@@ -172,28 +172,28 @@ public:
   int ignore_arg (int number = 1);
 
   /// Returns the number of args left to see in the vector.
-  int is_anything_left (void) const;
+  int is_anything_left () const;
 
   /// Returns 1 if there's a next item in the vector and it begins with
   /// '-'.
-  int is_option_next (void) const;
+  int is_option_next () const;
 
   /// Returns 1 if there's a next item in the vector and it doesn't
   /// begin with '-'.
-  int is_parameter_next (void) const;
+  int is_parameter_next () const;
 
   /// Returns the number of irrelevant args seen.
-  int num_ignored_args (void) const;
+  int num_ignored_args () const;
 
 private:
   /// Copy Constructor should not be used.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Arg_Shifter_T (const ACE_Arg_Shifter_T<CHAR_TYPE> &))
+  ACE_Arg_Shifter_T (const ACE_Arg_Shifter_T<CHAR_TYPE> &) = delete;
 
   /// Assignment '=' operator should not be used.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Arg_Shifter_T operator= (const ACE_Arg_Shifter_T<CHAR_TYPE> &))
+  ACE_Arg_Shifter_T operator= (const ACE_Arg_Shifter_T<CHAR_TYPE> &) = delete;
 
   /// Refactor the constructor logic.
-  void init (void);
+  void init ();
 
   /// The size of the argument vector.
   int &argc_;

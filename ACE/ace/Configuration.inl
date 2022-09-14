@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_TCHAR*
-ACE_Configuration_ExtId::name (void)
+ACE_Configuration_ExtId::name ()
 {
   return name_;
 }

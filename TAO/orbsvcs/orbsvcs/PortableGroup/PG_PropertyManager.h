@@ -49,7 +49,6 @@ class TAO_PortableGroup_Export TAO_PG_PropertyManager
   : public virtual POA_PortableGroup::PropertyManager
 {
 public:
-
   /// Constructor.
   TAO_PG_PropertyManager (TAO_PG_ObjectGroupManager & object_group_manager);
 
@@ -60,7 +59,6 @@ public:
    * interface.
    */
   //@{
-
   /// Set the default properties to be used by all object groups.
   virtual void set_default_properties (
       const PortableGroup::Properties & props);
@@ -122,14 +120,12 @@ public:
     ACE_Null_Mutex> Type_Prop_Table;
 
 private:
-
   /// Remove properties "to_be_removed" from the given list of
   /// properties.
   void remove_properties (const PortableGroup::Properties & to_be_removed,
                           PortableGroup::Properties &properties);
 
 private:
-
   /// Table that maps ObjectId to Object Group related information.
   TAO_PG_ObjectGroupManager & object_group_manager_;
 
@@ -148,7 +144,6 @@ private:
    * @todo Strategize the validator, or use template policies.
    */
   TAO_PG_Default_Property_Validator property_validator_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -48,15 +48,15 @@ public:
 
   /// Checks made after parsing args.
   static TAO_IDL_BE_Export void
-  arg_post_proc (void);
+  arg_post_proc ();
 
   /// Display usage of BE-specific options.
   static TAO_IDL_BE_Export void
-  usage (void);
+  usage ();
 
   /// Create an AST node generator.
   static TAO_IDL_BE_Export AST_Generator *
-  generator_init (void);
+  generator_init ();
 
   /// Called from various places.
   static const char *
@@ -67,7 +67,7 @@ public:
 
   /// Called from various places.
   static bool
-  overwrite_ciao_exec_files (void);
+  overwrite_ciao_exec_files ();
 
   // Called by each node upon construction.
   static void set_arg_seen_bit (be_type *);

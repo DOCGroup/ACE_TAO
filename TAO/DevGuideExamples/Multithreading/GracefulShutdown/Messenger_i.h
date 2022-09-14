@@ -24,7 +24,7 @@ public:
   Messenger_i (CORBA::ORB_ptr orb);
 
   //Destructor
-  virtual ~Messenger_i (void);
+  virtual ~Messenger_i ();
 
   virtual CORBA::Boolean send_message (
     const char * user_name,
@@ -36,7 +36,6 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-
 };
 
 #endif /* MESSENGER_I_H_  */

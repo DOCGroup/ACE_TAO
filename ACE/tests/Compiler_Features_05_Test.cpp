@@ -25,7 +25,7 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
 
   // Create a simple queue ...
-  typedef std::queue<int> collection;
+  using collection = std::queue<int>;
   // ... if the previous line compiles, the default template
   // parameters work.  The declaration of queue<> is something like:
   //   template<typename T, typename Sequence = deque<T> >

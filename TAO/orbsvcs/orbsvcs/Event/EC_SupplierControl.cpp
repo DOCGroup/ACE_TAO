@@ -1,25 +1,24 @@
 #include "orbsvcs/Event/EC_SupplierControl.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_SupplierControl::TAO_EC_SupplierControl (void)
+TAO_EC_SupplierControl::TAO_EC_SupplierControl ()
 {
 }
 
-TAO_EC_SupplierControl::~TAO_EC_SupplierControl (void)
+TAO_EC_SupplierControl::~TAO_EC_SupplierControl ()
 {
 }
 
 int
-TAO_EC_SupplierControl::activate (void)
+TAO_EC_SupplierControl::activate ()
 {
   return 0;
 }
 
 int
-TAO_EC_SupplierControl::shutdown (void)
+TAO_EC_SupplierControl::shutdown ()
 {
   return 0;
 }

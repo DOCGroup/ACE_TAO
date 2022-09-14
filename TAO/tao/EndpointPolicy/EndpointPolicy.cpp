@@ -11,7 +11,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_EndpointPolicy_Initializer::static_init (void)
+TAO_EndpointPolicy_Initializer::static_init ()
 {
   ACE_Service_Config::process_directive  (ace_svc_desc_TAO_EndpointPolicy_Initializer);
   return 0;

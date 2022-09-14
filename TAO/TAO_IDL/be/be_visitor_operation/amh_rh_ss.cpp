@@ -16,7 +16,7 @@ be_visitor_amh_rh_operation_ss::be_visitor_amh_rh_operation_ss (
 {
 }
 
-be_visitor_amh_rh_operation_ss::~be_visitor_amh_rh_operation_ss (void)
+be_visitor_amh_rh_operation_ss::~be_visitor_amh_rh_operation_ss ()
 {
 }
 
@@ -43,13 +43,13 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
       ? this->ctx_->attribute ()->defined_in ()
       : node->defined_in ();
 
-  be_interface *intf = be_interface::narrow_from_scope (s);
+  be_interface *intf = dynamic_cast<be_interface*> (s);
 
-  if (intf == 0)
+  if (intf == nullptr)
     {
-      be_porttype *pt = be_porttype::narrow_from_scope (s);
+      be_porttype *pt = dynamic_cast<be_porttype*> (s);
 
-      if (pt == 0)
+      if (pt == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_amh_rh_operation_sh::")
@@ -63,18 +63,17 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
         }
     }
 
-  char *buf = 0;
+  char *buf = nullptr;
   intf->compute_full_name ("TAO_", "", buf);
   ACE_CString response_handler_implementation_name ("POA_");
   response_handler_implementation_name += buf;
   // buf was allocated by ACE_OS::strdup, so we need to use free instead
   // of delete.
   ACE_OS::free (buf);
-  buf = 0;
+  buf = nullptr;
 
   // Step 1 : Generate return type: always void
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "void" << be_nl
       << response_handler_implementation_name.c_str () << "::";
@@ -125,7 +124,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   // 4) The implied valuetype ends in ExceptionHolder
   const char *last_underbar = ACE_OS::strrchr (node->full_name (), '_');
 
-  if (last_underbar != 0
+  if (last_underbar != nullptr
       && ACE_OS::strcmp (last_underbar, "_excep") == 0)
     {
       if (node->nmembers () == 1)
@@ -136,17 +135,17 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
           if (!i.is_done ())
             {
               be_argument *argument =
-                be_argument::narrow_from_decl (i.item ());
+                dynamic_cast<be_argument*> (i.item ());
               be_valuetype *vt =
-                be_valuetype::narrow_from_decl (argument->field_type ());
+                dynamic_cast<be_valuetype*> (argument->field_type ());
 
-              if (vt != 0
+              if (vt != nullptr
                   && vt->original_interface () == intf->original_interface ())
                 {
                   const char *last_E =
                     ACE_OS::strrchr (vt->full_name (), 'E');
 
-                  if (last_E != 0
+                  if (last_E != nullptr
                       && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
                     {
                       is_an_exception_reply = 1;
@@ -171,7 +170,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
           << "holder->raise_" << operation_name.c_str ()
           << " ();" << be_uidt_nl
           << "}" << be_nl
-          << "catch ( ::CORBA::Exception& ex)"
+          << "catch (const ::CORBA::Exception& ex)"
           << be_nl
           << "{" << be_idt_nl
           << "this->_tao_rh_send_exception (ex);" << be_uidt_nl

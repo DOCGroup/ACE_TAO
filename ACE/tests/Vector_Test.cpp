@@ -15,9 +15,9 @@
 
 #include "ace/Vector_T.h"
 
-typedef size_t DATA;
-typedef ACE_Vector<DATA> VECTOR;
-typedef ACE_Vector<DATA>::Iterator ITERATOR;
+using DATA = size_t;
+using VECTOR = ACE_Vector<DATA>;
+using ITERATOR = ACE_Vector<DATA>::Iterator;
 
 const size_t TOP = 100;
 const size_t LEFT = 10;

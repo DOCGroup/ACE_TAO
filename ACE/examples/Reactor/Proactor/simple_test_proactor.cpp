@@ -19,7 +19,6 @@
 #include "ace/OS_main.h"
 
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
@@ -37,17 +36,16 @@ static ACE_TCHAR *dump_file = ACE_TEXT("simple_output");
  */
 class Simple_Tester : public ACE_Handler
 {
-
 public:
   /// Constructor.
-  Simple_Tester (void);
+  Simple_Tester ();
 
-  ~Simple_Tester (void);
+  ~Simple_Tester ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Open the operations and initiate read from the file.
   ///FUZZ: enble check_for_lack_ACE_OS
-  int open (void);
+  int open ();
 
 protected:
   // = These methods are called by the freamwork.
@@ -59,7 +57,7 @@ protected:
   virtual void handle_write_file (const ACE_Asynch_Write_File::Result &result);
 
 private:
-  int initiate_read_file (void);
+  int initiate_read_file ();
 
   /// rf (read file): for writing from the file.
   ACE_Asynch_Read_File rf_;
@@ -81,13 +79,13 @@ private:
 };
 
 
-Simple_Tester::Simple_Tester (void)
+Simple_Tester::Simple_Tester ()
   : input_file_ (ACE_INVALID_HANDLE),
     dump_file_ (ACE_INVALID_HANDLE)
 {
 }
 
-Simple_Tester::~Simple_Tester (void)
+Simple_Tester::~Simple_Tester ()
 {
   ACE_OS::close (this->input_file_);
   ACE_OS::close (this->dump_file_);
@@ -95,7 +93,7 @@ Simple_Tester::~Simple_Tester (void)
 
 
 int
-Simple_Tester::open (void)
+Simple_Tester::open ()
 {
   // Initialize stuff
 
@@ -133,7 +131,7 @@ Simple_Tester::open (void)
 
 
 int
-Simple_Tester::initiate_read_file (void)
+Simple_Tester::initiate_read_file ()
 {
   // Create Message_Block
   ACE_Message_Block *mb = 0;

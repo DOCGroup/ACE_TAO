@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE unsigned long
-ACE_Dynamic_Message_Strategy::static_bit_field_mask (void) const
+ACE_Dynamic_Message_Strategy::static_bit_field_mask () const
 {
   return static_bit_field_mask_;
 }
@@ -16,7 +16,7 @@ ACE_Dynamic_Message_Strategy::static_bit_field_mask (unsigned long ul)
   // set static bit field mask
 
 ACE_INLINE unsigned long
-ACE_Dynamic_Message_Strategy::static_bit_field_shift (void) const
+ACE_Dynamic_Message_Strategy::static_bit_field_shift () const
 {
   return static_bit_field_shift_;
 }
@@ -30,7 +30,7 @@ ACE_Dynamic_Message_Strategy::static_bit_field_shift (unsigned long ul)
   // set left shift value to make room for static bit field
 
 ACE_INLINE unsigned long
-ACE_Dynamic_Message_Strategy::dynamic_priority_max (void) const
+ACE_Dynamic_Message_Strategy::dynamic_priority_max () const
 {
   return dynamic_priority_max_;
 }
@@ -49,7 +49,7 @@ ACE_Dynamic_Message_Strategy::dynamic_priority_max (unsigned long ul)
   // set maximum supported priority value
 
 ACE_INLINE unsigned long
-ACE_Dynamic_Message_Strategy::dynamic_priority_offset (void) const
+ACE_Dynamic_Message_Strategy::dynamic_priority_offset () const
 {
   return dynamic_priority_offset_;
 }

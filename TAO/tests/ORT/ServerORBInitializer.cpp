@@ -15,7 +15,6 @@ void
 ServerORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   CORBA::Object_var obj =
     info->resolve_initial_references ("POACurrent");
 

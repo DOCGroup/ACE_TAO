@@ -9,7 +9,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Time_Value
-ACE_OS::gettimeofday (void)
+ACE_OS::gettimeofday ()
 {
   // ACE_OS_TRACE ("ACE_OS::gettimeofday");
 
@@ -47,16 +47,16 @@ ACE_OS::gettimeofday (void)
   tv.tv_usec = tb.tb_low / 1000L;
 #else
 # if defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) || \
-  defined(ACE_HAS_VOIDPTR_GETTIMEOFDAY) || \
-  (defined (ACE_HAS_SVR4_GETTIMEOFDAY) && !defined (SCO))
-  ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
+     defined (ACE_HAS_VOIDPTR_GETTIMEOFDAY) || \
+     defined (ACE_HAS_SVR4_GETTIMEOFDAY)
+  ACE_OSCALL (::gettimeofday (&tv, 0), int, result);
 # elif defined (ACE_VXWORKS)
   // Assumes that struct timespec is same size as struct timeval,
   // which assumes that time_t is a long: it currently (VxWorks
   // 5.2/5.3) is.
   struct timespec ts;
 
-  ACE_OSCALL (ACE_OS::clock_gettime (CLOCK_REALTIME, &ts), int, -1, result);
+  ACE_OSCALL (ACE_OS::clock_gettime (CLOCK_REALTIME, &ts), int, result);
   tv.tv_sec = ts.tv_sec;
   tv.tv_usec = ts.tv_nsec / 1000L;  // timespec has nsec, but timeval has usec
 # elif defined (ACE_MQX)
@@ -68,7 +68,7 @@ ACE_OS::gettimeofday (void)
 #  if defined (ACE_LACKS_GETTIMEOFDAY)
   ACE_NOTSUP_RETURN (ACE_Time_Value ((time_t)-1));
 #  else
-  ACE_OSCALL (::gettimeofday (&tv), int, -1, result);
+  ACE_OSCALL (::gettimeofday (&tv), int, result);
 #  endif /* ACE_LACKS_GETTIMEOFDAY */
 # endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
 #endif /* 0 */
@@ -81,7 +81,7 @@ ACE_OS::gettimeofday (void)
 }
 
 ACE_INLINE ACE_Time_Value
-ACE_OS::gettimeofday_ (void)
+ACE_OS::gettimeofday_ ()
 {
   return ACE_OS::gettimeofday ();
 }

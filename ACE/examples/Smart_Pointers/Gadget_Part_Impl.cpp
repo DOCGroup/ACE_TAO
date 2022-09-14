@@ -22,19 +22,19 @@ Gadget_Part_Impl::Gadget_Part_Impl (Gadget_ptr owner,
   ACE_DEBUG ((LM_DEBUG, "Gadget_Part_Impl constructor\n"));
 }
 
-Gadget_Part_Impl::~Gadget_Part_Impl (void)
+Gadget_Part_Impl::~Gadget_Part_Impl ()
 {
   ACE_DEBUG ((LM_DEBUG, "Gadget_Part_Impl destructor\n"));
 
   delete [] name_;
 }
 
-void Gadget_Part_Impl::print_info (void)
+void Gadget_Part_Impl::print_info ()
 {
   ACE_DEBUG ((LM_INFO, "Gadget part: name=%s size=%d\n", name_, size_));
 }
 
-void Gadget_Part_Impl::remove_from_owner (void)
+void Gadget_Part_Impl::remove_from_owner ()
 {
   // Need to guarantee the existence of the owner for the duration of this call.
   Gadget_var owner = owner_;

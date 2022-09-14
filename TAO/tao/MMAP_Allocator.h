@@ -44,26 +44,24 @@ class TAO_MMAP_Allocator
   : public TAO_MMAP_Allocator_Base
 {
 public:
-
   /// Constructor
-  TAO_MMAP_Allocator (void);
+  TAO_MMAP_Allocator ();
 
   /// Destructor.
-  virtual ~TAO_MMAP_Allocator (void);
+  virtual ~TAO_MMAP_Allocator ();
 
   /// Return backing store handle.
-  ACE_HANDLE handle (void);
+  ACE_HANDLE handle ();
 
   /// Return offset in backing store file for memory address @a p. If @a p
   /// is not coming from this allocator -1 is returned.
   off_t offset (void * p);
 
 private:
-
-  // Disallow copying.
-  TAO_MMAP_Allocator (TAO_MMAP_Allocator const &);
-  void operator= (TAO_MMAP_Allocator const &);
-
+  TAO_MMAP_Allocator (TAO_MMAP_Allocator const &) = delete;
+  void operator= (TAO_MMAP_Allocator const &) = delete;
+  TAO_MMAP_Allocator (TAO_MMAP_Allocator &&) = delete;
+  void operator= (TAO_MMAP_Allocator &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

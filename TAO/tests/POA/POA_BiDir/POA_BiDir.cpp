@@ -63,7 +63,6 @@ print_poa (PortableServer::POA_ptr poa)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // The first step Initialize the ORB

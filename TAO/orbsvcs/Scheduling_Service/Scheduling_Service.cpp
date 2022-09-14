@@ -9,7 +9,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_unistd.h"
 
-TAO_Scheduling_Service::TAO_Scheduling_Service (void)
+TAO_Scheduling_Service::TAO_Scheduling_Service ()
   : scheduler_impl_ (0),
     service_name_ ("ScheduleService"),
     scheduler_type_ (CONFIG)
@@ -25,7 +25,7 @@ TAO_Scheduling_Service::TAO_Scheduling_Service (int argc, ACE_TCHAR* argv[])
   this->init (argc, argv);
 }
 
-TAO_Scheduling_Service::~TAO_Scheduling_Service (void)
+TAO_Scheduling_Service::~TAO_Scheduling_Service ()
 {
 }
 
@@ -143,7 +143,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
 // Runs the TAO_Scheduling_Service.
 
 int
-TAO_Scheduling_Service::run (void)
+TAO_Scheduling_Service::run ()
 {
   // Run the ORB manager.
   return this->orb_manager_.run ();

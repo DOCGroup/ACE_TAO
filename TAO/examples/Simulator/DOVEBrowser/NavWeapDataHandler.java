@@ -318,7 +318,7 @@ public class NavWeapDataHandler implements DataHandler {
             weapons_.deadline_time += event.header.creation_time;
           }
 
-	WeaponsObservable wobs = (WeaponsObservable)ObservablesTable.get ("Weapons");;
+	WeaponsObservable wobs = (WeaponsObservable)ObservablesTable.get ("Weapons");
 	wobs.updateWeapons (weapons_);
 	Cpu_UsageObservable cobs = (Cpu_UsageObservable)ObservablesTable.get ("CPU Usage");
 	cobs.updateCpu_Usage (weapons_.utilization);

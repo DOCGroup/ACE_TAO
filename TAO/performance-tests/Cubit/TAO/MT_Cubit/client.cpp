@@ -62,7 +62,7 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
 
 // Constructor.
 
-Client_i::Client_i (void)
+Client_i::Client_i ()
   : high_priority_client_ (0),
     low_priority_client_ (0),
     util_thread_ (0),
@@ -80,7 +80,7 @@ Client_i::Client_i (void)
 
 // Destructor.
 
-Client_i::~Client_i (void)
+Client_i::~Client_i ()
 {
   delete this->high_priority_client_;
   if (this->low_priority_client_ != 0)
@@ -130,7 +130,7 @@ Client_i::init (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Client_i::run (void)
+Client_i::run ()
 {
   if (this->ts_->thread_per_rate_ == 0)
     {
@@ -148,7 +148,7 @@ Client_i::run (void)
 
 #if defined (ACE_HAS_VXTHREADS)
 void
-Client_i::output_taskinfo (void)
+Client_i::output_taskinfo ()
 {
   FILE *file_handle = ACE_OS::fopen ("taskinfo.txt", "w");
 
@@ -175,7 +175,7 @@ Client_i::output_taskinfo (void)
 #endif /* ACE_HAS_VXTHREADS */
 
 void
-Client_i::get_context_switches (void)
+Client_i::get_context_switches ()
 {
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
 
@@ -202,7 +202,7 @@ Client_i::get_context_switches (void)
 }
 
 void
-Client_i::output_latency (void)
+Client_i::output_latency ()
 {
   FILE *latency_file_handle = 0;
   char latency_file[BUFSIZ];
@@ -260,7 +260,7 @@ Client_i::output_latency (void)
 // when there are not enough different priorities for all threads.
 
 void
-Client_i::init_low_priority (void)
+Client_i::init_low_priority ()
 {
   ACE_Sched_Priority prev_priority = this->high_priority_;
   if (this->ts_->use_multiple_priority_ == 1)
@@ -280,7 +280,7 @@ Client_i::init_low_priority (void)
 }
 
 void
-Client_i::calc_util_time (void)
+Client_i::calc_util_time ()
 {
   MT_Cubit_Timer timer (ACE_ONE_SECOND_IN_MSECS);
   // Time the utilization thread' "computation" to get % IdleCPU at the
@@ -298,7 +298,7 @@ Client_i::calc_util_time (void)
 }
 
 int
-Client_i::activate_high_client (void)
+Client_i::activate_high_client ()
 {
   ACE_NEW_RETURN (this->high_priority_client_,
                   Client (&this->client_thread_manager_,
@@ -345,7 +345,7 @@ Client_i::activate_high_client (void)
 }
 
 int
-Client_i::activate_low_client (void)
+Client_i::activate_low_client ()
 {
   ACE_NEW_RETURN (this->low_priority_client_,
                   Client *[this->ts_->thread_count_],
@@ -431,7 +431,7 @@ Client_i::activate_low_client (void)
 }
 
 int
-Client_i::activate_util_thread (void)
+Client_i::activate_util_thread ()
 {
   ACE_NEW_RETURN (this->util_thread_,
                   Util_Thread (this->ts_,
@@ -467,7 +467,7 @@ Client_i::activate_util_thread (void)
 }
 
 void
-Client_i:: print_context_stats (void)
+Client_i:: print_context_stats ()
 {
   if (this->ts_->context_switch_test_ == 1)
     {
@@ -503,7 +503,7 @@ Client_i:: print_context_stats (void)
 }
 
 void
-Client_i::print_latency_stats (void)
+Client_i::print_latency_stats ()
 {
   // If running the utilization test, don't report latency nor jitter.
   if (this->ts_->use_utilization_test_ == 0)
@@ -535,7 +535,7 @@ Client_i::print_latency_stats (void)
 }
 
 void
-Client_i::print_util_stats (void)
+Client_i::print_util_stats ()
 {
  if (this->ts_->use_utilization_test_ == 1)
     {
@@ -555,7 +555,7 @@ Client_i::print_util_stats (void)
 }
 
 void
-Client_i::print_priority_inversion_stats (void)
+Client_i::print_priority_inversion_stats ()
 {
   this->print_context_stats ();
   this->print_latency_stats ();
@@ -563,7 +563,7 @@ Client_i::print_priority_inversion_stats (void)
 }
 
 int
-Client_i::start_servant (void)
+Client_i::start_servant ()
 {
   ACE_TCHAR high_thread_args[BUFSIZ];
 
@@ -614,7 +614,7 @@ Client_i::start_servant (void)
 }
 
 int
-Client_i::do_priority_inversion_test (void)
+Client_i::do_priority_inversion_test ()
 {
   this->timer_.start ();
 #if defined (ACE_HAS_VXTHREADS)
@@ -695,7 +695,7 @@ Client_i::do_priority_inversion_test (void)
 }
 
 int
-Client_i::do_thread_per_rate_test (void)
+Client_i::do_thread_per_rate_test ()
 {
   Client CB_20Hz_client (&this->client_thread_manager_,
                          this->ts_,

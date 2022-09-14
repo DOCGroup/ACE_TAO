@@ -196,7 +196,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t|%T) Server %d ending serving of %C\n"),
                 server_num, poa_name.c_str ()));
-
   }
   catch(const CORBA::Exception& ex) {
     ex._tao_print_exception (ACE_TEXT ("Server main()"));

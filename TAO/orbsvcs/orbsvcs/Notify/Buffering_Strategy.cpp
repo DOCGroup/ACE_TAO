@@ -50,7 +50,7 @@ TAO_Notify_Buffering_Strategy::update_qos_properties
 }
 
 void
-TAO_Notify_Buffering_Strategy::shutdown (void)
+TAO_Notify_Buffering_Strategy::shutdown ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_);
 
@@ -67,7 +67,7 @@ TAO_Notify_Buffering_Strategy::shutdown (void)
 }
 
 ACE_Time_Value
-TAO_Notify_Buffering_Strategy::oldest_event (void)
+TAO_Notify_Buffering_Strategy::oldest_event ()
 {
   ACE_Time_Value tv (ACE_Time_Value::max_time);
   ACE_Message_Block* mb = 0;
@@ -91,13 +91,13 @@ TAO_Notify_Buffering_Strategy::oldest_event (void)
 }
 
 
-TAO_Notify_Buffering_Strategy::Tracker::Tracker (void)
+TAO_Notify_Buffering_Strategy::Tracker::Tracker ()
   : child_ (0)
 {
 }
 
 
-TAO_Notify_Buffering_Strategy::Tracker::~Tracker (void)
+TAO_Notify_Buffering_Strategy::Tracker::~Tracker ()
 {
 }
 
@@ -359,7 +359,6 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable* met
 
   return false;
 }
-
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

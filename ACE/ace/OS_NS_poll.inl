@@ -12,7 +12,7 @@ ACE_OS::poll (struct pollfd *pollfds,
   ACE_OS_TRACE ("ACE_OS::poll");
 #if defined (ACE_HAS_POLL)
   int to = timeout == 0 ? -1 : int (timeout->msec ());
-  ACE_OSCALL_RETURN (::poll (pollfds, len, to), int, -1);
+  return ::poll (pollfds, len, to);
 #else
   ACE_UNUSED_ARG (timeout);
   ACE_UNUSED_ARG (len);
@@ -29,7 +29,7 @@ ACE_OS::poll (struct pollfd *pollfds,
 {
   ACE_OS_TRACE ("ACE_OS::poll");
 #if defined (ACE_HAS_POLL)
-  ACE_OSCALL_RETURN (::poll (pollfds, len, int (timeout.msec ())), int, -1);
+  return ::poll (pollfds, len, int (timeout.msec ()));
 #else
   ACE_UNUSED_ARG (timeout);
   ACE_UNUSED_ARG (len);

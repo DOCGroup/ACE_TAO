@@ -11,7 +11,7 @@ TAO_Notify::Topology_Loader::~Topology_Loader ()
 }
 
 void
-TAO_Notify::Topology_Loader::close (void)
+TAO_Notify::Topology_Loader::close ()
 {
 }
 

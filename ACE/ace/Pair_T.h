@@ -41,10 +41,10 @@ public:
   ACE_Reference_Pair (T1 &t1, T2 &t2);
 
   /// Access first.
-  T1 &first (void) const;
+  T1 &first () const;
 
   /// Access second.
-  T2 &second (void) const;
+  T2 &second () const;
 
   // Compare pairs.
   bool operator== (const ACE_Reference_Pair<T1, T2> &rhs) const;

@@ -39,7 +39,6 @@ static ACE_Scheduler_Factory::POD_RT_Info infos[] = {
  {"high_01_C" , 15, 0, 0, 0,        0,  static_cast<RtecScheduler::Criticality_t> (3),  static_cast<RtecScheduler::Importance_t> (1),  0, 0,  15, 0, 0, static_cast<RtecScheduler::Info_Type_t> (0)}
 ,
  {"low_01_C"  , 16, 0, 0, 0,        0,  static_cast<RtecScheduler::Criticality_t> (1),  static_cast<RtecScheduler::Importance_t> (3),  0, 0,   2, 0, 1, static_cast<RtecScheduler::Info_Type_t> (0)}
-
 };
 
 static int infos_size = sizeof(infos)/sizeof(infos[0]);

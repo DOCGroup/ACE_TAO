@@ -73,7 +73,6 @@ class TAO_PortableServer_Export TAO_Object_Adapter
   : public TAO_Adapter
 {
 public:
-
   friend class TAO_Root_POA;
 
   typedef PortableServer::ObjectId poa_name;
@@ -85,7 +84,7 @@ public:
                       TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_Object_Adapter (void);
+  ~TAO_Object_Adapter ();
 
   int dispatch_servant (const TAO::ObjectKey &key,
                         TAO_ServerRequest &req,
@@ -113,31 +112,31 @@ public:
   int activate_poa (const poa_name &folded_name,
                     TAO_Root_POA *&poa);
 
-  ACE_Lock &lock (void);
+  ACE_Lock &lock ();
 
-  TAO_SYNCH_MUTEX &thread_lock (void);
+  TAO_SYNCH_MUTEX &thread_lock ();
 
-  ACE_Reverse_Lock<ACE_Lock> &reverse_lock (void);
+  ACE_Reverse_Lock<ACE_Lock> &reverse_lock ();
 
   /// Access the root poa.
-  TAO_Root_POA *root_poa (void) const;
+  TAO_Root_POA *root_poa () const;
 
   /// Access to ORB Core.
-  TAO_ORB_Core &orb_core (void) const;
+  TAO_ORB_Core &orb_core () const;
 
   /// Wait for non-servant upcalls to complete.
-  void wait_for_non_servant_upcalls_to_complete (void);
+  void wait_for_non_servant_upcalls_to_complete ();
 
   /// Non-exception throwing version.
-  void wait_for_non_servant_upcalls_to_complete_no_throw (void);
+  void wait_for_non_servant_upcalls_to_complete_no_throw ();
 
-  static CORBA::ULong transient_poa_name_size (void);
+  static CORBA::ULong transient_poa_name_size ();
 
   /// Return the validator.
-  TAO_Policy_Validator &validator (void);
+  TAO_Policy_Validator &validator ();
 
   /// Return the set of default policies.
-  TAO_POA_Policy_Set &default_poa_policies (void);
+  TAO_POA_Policy_Set &default_poa_policies ();
 
   /// Set the servant dispatcher method.  Ownership is transferred to
   /// this Object Adapter.  Note: This should only be called
@@ -149,22 +148,21 @@ public:
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open (void);
+  virtual void open ();
   virtual void close (int wait_for_completion);
   virtual void check_close (int wait_for_completion);
-  virtual int priority (void) const;
+  virtual int priority () const;
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
                         CORBA::Object_out forward_to);
-  virtual const char *name (void) const;
-  virtual CORBA::Object_ptr root (void);
+  virtual const char *name () const;
+  virtual CORBA::Object_ptr root ();
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &);
 
   virtual CORBA::Long initialize_collocated_object (TAO_Stub *);
 
 protected:
-
   int locate_servant_i (const TAO::ObjectKey &key);
 
   TAO_SERVANT_LOCATION find_servant_i (const TAO::ObjectKey &key,
@@ -176,7 +174,7 @@ protected:
 
   void locate_poa (const TAO::ObjectKey &key,
                    PortableServer::ObjectId &id,
-                   TAO_Root_POA *&poa                  );
+                   TAO_Root_POA *&poa);
 
   int find_transient_poa (const poa_name &system_name,
                           CORBA::Boolean root,
@@ -202,7 +200,6 @@ protected:
                             TAO::Portable_Server::Servant_Upcall& upcall);
 
 public:
-
   /**
    * @class Hint_Strategy
    *
@@ -214,8 +211,7 @@ public:
   class TAO_PortableServer_Export Hint_Strategy
   {
   public:
-
-    virtual ~Hint_Strategy (void);
+    virtual ~Hint_Strategy ();
 
     virtual int find_persistent_poa (const poa_name &system_name,
                                      TAO_Root_POA *&poa) = 0;
@@ -230,7 +226,6 @@ public:
     void object_adapter (TAO_Object_Adapter *oa);
 
   protected:
-
     TAO_Object_Adapter *object_adapter_;
   };
 
@@ -246,10 +241,9 @@ public:
   class TAO_PortableServer_Export Active_Hint_Strategy : public Hint_Strategy
   {
   public:
-
     Active_Hint_Strategy (CORBA::ULong map_size);
 
-    virtual ~Active_Hint_Strategy (void);
+    virtual ~Active_Hint_Strategy ();
 
     virtual int find_persistent_poa (const poa_name &system_name,
                                      TAO_Root_POA *&poa);
@@ -262,7 +256,6 @@ public:
                                        const poa_name &system_name);
 
   protected:
-
     typedef ACE_Active_Map_Manager_Adapter<
     poa_name,
       TAO_Root_POA *,
@@ -285,8 +278,7 @@ public:
   class TAO_PortableServer_Export No_Hint_Strategy : public Hint_Strategy
   {
   public:
-
-    virtual ~No_Hint_Strategy (void);
+    virtual ~No_Hint_Strategy ();
 
     virtual int find_persistent_poa (const poa_name &system_name,
                                      TAO_Root_POA *&poa);
@@ -297,13 +289,11 @@ public:
 
     virtual int unbind_persistent_poa (const poa_name &folded_name,
                                        const poa_name &system_name);
-
   };
 
   friend class No_Hint_Strategy;
 
 protected:
-
   Hint_Strategy *hint_strategy_;
 
   /// Base class of the id map.
@@ -366,7 +356,6 @@ protected:
   transient_poa_map *transient_poa_map_;
 
 protected:
-
   static CORBA::ULong transient_poa_name_size_;
 
   static void set_transient_poa_name_size (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
@@ -380,7 +369,6 @@ protected:
   ACE_Reverse_Lock<ACE_Lock> reverse_lock_;
 
 public:
-
   /**
    * @class poa_name_iterator
    *
@@ -389,7 +377,6 @@ public:
   class poa_name_iterator
   {
   public:
-
     /// Constructor.
     poa_name_iterator (int begin,
                        CORBA::ULong size,
@@ -403,10 +390,9 @@ public:
     ACE_CString operator* () const;
 
     /// Prefix advance.
-    poa_name_iterator &operator++ (void);
+    poa_name_iterator &operator++ ();
 
   protected:
-
     CORBA::ULong size_;
     CORBA::ULong position_;
     const CORBA::Octet *folded_buffer_;
@@ -421,16 +407,14 @@ public:
   class iteratable_poa_name
   {
   public:
-
     typedef poa_name_iterator iterator;
 
     iteratable_poa_name (const poa_name &folded_name);
 
-    iterator begin (void) const;
-    iterator end (void) const;
+    iterator begin () const;
+    iterator end () const;
 
   protected:
-
     const poa_name &folded_name_;
   };
 
@@ -439,13 +423,11 @@ public:
   friend class TAO::Portable_Server::Servant_Upcall;
 
 public:
-
   /// Pointer to the non-servant upcall in progress.  If no non-servant
   /// upcall is in progress, this pointer is zero.
-  TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress (void) const;
+  TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress () const;
 
 private:
-
   /// Helper method to get collocated servant
   TAO_ServantBase *get_collocated_servant (const TAO_MProfile &mp);
 
@@ -453,7 +435,6 @@ private:
   static void release_poa_manager_factory (TAO_POAManager_Factory *factory);
 #endif
 private:
-
   /// Condition variable for waiting on non-servant upcalls to end.
   TAO_SYNCH_CONDITION non_servant_upcall_condition_;
 

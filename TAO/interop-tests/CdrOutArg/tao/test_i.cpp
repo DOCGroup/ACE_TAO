@@ -12,7 +12,7 @@ CDR_Out_Arg_i::get_out (CORBA::Long_out arg)
 }
 
 void
-CDR_Out_Arg_i::shutdown (void)
+CDR_Out_Arg_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

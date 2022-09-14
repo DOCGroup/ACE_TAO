@@ -18,12 +18,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Acceptor)
 
-ACE_ATM_Acceptor::ACE_ATM_Acceptor (void)
+ACE_ATM_Acceptor::ACE_ATM_Acceptor ()
 {
   ACE_TRACE ("ACE_ATM_Acceptor::ACE_ATM_Acceptor");
 }
 
-ACE_ATM_Acceptor::~ACE_ATM_Acceptor (void)
+ACE_ATM_Acceptor::~ACE_ATM_Acceptor ()
 {
   ACE_TRACE ("ACE_ATM_Acceptor::~ACE_ATM_Acceptor");
 }

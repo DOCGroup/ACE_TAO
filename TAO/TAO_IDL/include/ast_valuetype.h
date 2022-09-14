@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef _AST_INTERFACE_AST_VALUETYPE_HH
 #define _AST_INTERFACE_AST_VALUETYPE_HH
 
@@ -21,7 +20,7 @@ public:
                  bool truncatable,
                  bool custom);
 
-  virtual ~AST_ValueType (void);
+  virtual ~AST_ValueType ();
 
   virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Are we or the node represented by node involved in recursion.
@@ -29,18 +28,18 @@ public:
   // This also calls the base class version.
   virtual void redefine (AST_Interface *from);
 
-  AST_Type **supports (void) const;
+  AST_Type **supports () const;
 
-  long n_supports (void) const;
+  long n_supports () const;
 
-  AST_Type *inherits_concrete (void) const;
+  AST_Type *inherits_concrete () const;
 
-  AST_Type *supports_concrete (void) const;
+  AST_Type *supports_concrete () const;
 
-  bool truncatable (void) const;
-  bool custom (void) const;
+  bool truncatable () const;
+  bool custom () const;
 
-  virtual bool will_have_factory (void);
+  virtual bool will_have_factory ();
   // Called from y.tab.cpp to set the factory decl seen bit.
 
   // Look up a scoped name in the supported interface list.
@@ -55,15 +54,10 @@ public:
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
-  virtual bool legal_for_primary_key (void) const;
+  virtual bool legal_for_primary_key () const;
 
   // Cleanup function.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_ValueType);
-  DEF_NARROW_FROM_SCOPE(AST_ValueType);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -89,7 +83,7 @@ protected:
 
   bool derived_from_primary_key_base (const AST_ValueType *node,
                                       const AST_ValueType *pk_base) const;
-  AST_ValueType *lookup_primary_key_base (void) const;
+  AST_ValueType *lookup_primary_key_base () const;
 };
 
 #endif           // _AST_INTERFACE_AST_VALUETYPE_HH

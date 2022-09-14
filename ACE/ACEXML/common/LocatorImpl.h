@@ -65,7 +65,7 @@ public:
   /*
    * Default constructor.
    */
-  ACEXML_LocatorImpl (void);
+  ACEXML_LocatorImpl ();
 
   /**
    * Construct a locator with systemId and publicId
@@ -84,27 +84,27 @@ public:
   /*
    * Destructor.
    */
-  virtual ~ACEXML_LocatorImpl (void);
+  virtual ~ACEXML_LocatorImpl ();
 
   /*
    * Return the column number where the current document event ends.
    */
-  virtual int getColumnNumber (void) const;
+  virtual int getColumnNumber () const;
 
   /*
    * Return the line number where the current document event ends.
    */
-  virtual int getLineNumber (void) const;
+  virtual int getLineNumber () const;
 
   /*
    * Return the public identifier for the current document event.
    */
-  virtual const ACEXML_Char *getPublicId (void) const;
+  virtual const ACEXML_Char *getPublicId () const;
 
   /*
    * Return the system identifier for the current document event.
    */
-  virtual const ACEXML_Char *getSystemId (void) const;
+  virtual const ACEXML_Char *getSystemId () const;
 
   /*
    * Set the column number of this locator.
@@ -142,7 +142,7 @@ public:
    * tying the life of the Locator with the parser is not appropriate. The
    * parser calls this method as soon as issuing an endDocument() call.
    */
-  void reset (void);
+  void reset ();
 
 private:
   ACEXML_Char *publicId_;

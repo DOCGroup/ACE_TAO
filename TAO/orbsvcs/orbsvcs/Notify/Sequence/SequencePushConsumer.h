@@ -64,22 +64,21 @@ public:
   virtual void push (const CosNotification::EventBatch& event);
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior (void) const;
+  virtual ACE_CString get_ior () const;
 
   /// on reconnect we need to move events from the old consumer
   /// to the new one
   virtual void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer);
 
 protected:
-
-  virtual CORBA::Object_ptr get_consumer (void);
+  virtual CORBA::Object_ptr get_consumer ();
 
   /// The Consumer
   CosNotifyComm::SequencePushConsumer_var push_consumer_;
 
 private:
   /// TAO_Notify_Destroy_Callback methods.
-  virtual void release (void);
+  virtual void release ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

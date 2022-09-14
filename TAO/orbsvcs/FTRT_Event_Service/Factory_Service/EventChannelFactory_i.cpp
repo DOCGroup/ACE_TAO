@@ -21,13 +21,11 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
   PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
   )
 {
-
   ORBSVCS_DEBUG((LM_DEBUG,"EventChannelFactory_i::create_object\n"));
   FILE* file = 0;
   char *id_str=0, *prog=0;
 
   try{
-
     file = ACE_OS::fopen(conf_file, "r");
     if (file == 0)
       throw PortableGroup::NoFactory();

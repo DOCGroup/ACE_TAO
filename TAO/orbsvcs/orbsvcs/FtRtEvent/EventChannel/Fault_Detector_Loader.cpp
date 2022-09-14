@@ -18,17 +18,16 @@ namespace FTRTEC {
     ACE_SOCK_Connector, ConnectionDetectHandler<ACE_SOCK_STREAM> >
     TCP_Fault_Detector;
 
-  Fault_Detector_Loader::Fault_Detector_Loader (void)
+  Fault_Detector_Loader::Fault_Detector_Loader ()
   {
   }
 
-  Fault_Detector_Loader::~Fault_Detector_Loader (void)
+  Fault_Detector_Loader::~Fault_Detector_Loader ()
   {
   }
 
   int
-  Fault_Detector_Loader::init (int argc,
-    ACE_TCHAR* argv[])
+  Fault_Detector_Loader::init (int argc, ACE_TCHAR* argv[])
   {
     static int initialized = 0;
 
@@ -44,7 +43,7 @@ namespace FTRTEC {
     if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_TEXT("sctp")) == 0)
     {
 #if (TAO_HAS_SCIOP == 1)
-      ACE_auto_ptr_reset(detector_, detector);
+      detector_.reset (detector);
 #else
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "(%P|%t) SCTP not enabled. ",
@@ -54,7 +53,7 @@ namespace FTRTEC {
     }
     else {
       ACE_NEW_RETURN(detector, TCP_Fault_Detector, -1);
-      ACE_auto_ptr_reset(detector_, detector);
+      detector_.reset (detector);
     }
     return detector_->init(argc, argv);
   }

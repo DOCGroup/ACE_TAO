@@ -31,7 +31,6 @@
 #include "hist.h"
 namespace ACE_SCTP
 {
-
 hist_t *head_hist, *tail_hist;
 
 hist_t *histogram(char *name, unsigned int num_bins, double first,
@@ -299,7 +298,6 @@ void add_histogram(HIST dest, HIST source) {
 }
 
 double histfloor (double x) {
-
 #ifdef WIN32
   return ACE_OS::floor(x);
 #else

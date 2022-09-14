@@ -25,7 +25,7 @@ class be_visitor_field_cs : public be_visitor_decl
 {
 public:
   be_visitor_field_cs (be_visitor_context *ctx);
-  ~be_visitor_field_cs (void);
+  ~be_visitor_field_cs ();
 
   virtual int visit_field (be_field *node);
 

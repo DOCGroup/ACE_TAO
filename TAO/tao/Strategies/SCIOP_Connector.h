@@ -48,23 +48,22 @@ class TAO_Strategies_Export TAO_SCIOP_Connector : public TAO_Connector
 {
 public:
   /// Constructor.
-  TAO_SCIOP_Connector (void);
+  TAO_SCIOP_Connector ();
 
   /// Destructor.
-  ~TAO_SCIOP_Connector (void);
+  ~TAO_SCIOP_Connector ();
 
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
   int open (TAO_ORB_Core *orb_core);
-  int close (void);
+  int close ();
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
   virtual int check_prefix (const char *endpoint);
 
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
 
 public:
-
   typedef TAO_Connect_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>
           TAO_SCIOP_CONNECT_CONCURRENCY_STRATEGY;
 
@@ -80,7 +79,6 @@ public:
           TAO_SCIOP_BASE_CONNECTOR;
 
 protected:
-
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
   int set_validate_endpoint (TAO_Endpoint *ep);
@@ -91,13 +89,12 @@ protected:
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h
-  virtual TAO_Profile *make_profile (void);
+  virtual TAO_Profile *make_profile ();
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
 private:
-
   /// Return the remote endpoint, a helper function
   TAO_SCIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
@@ -108,7 +105,6 @@ private:
                                     TAO_SCIOP_Endpoint *sciop_endpoint);
 
 private:
-
   /// Our connect strategy
   TAO_SCIOP_CONNECT_STRATEGY connect_strategy_;
 

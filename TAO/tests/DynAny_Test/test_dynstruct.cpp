@@ -24,20 +24,20 @@ Test_DynStruct::Test_DynStruct (CORBA::ORB_var orb, int debug)
 {
 }
 
-Test_DynStruct::~Test_DynStruct (void)
+Test_DynStruct::~Test_DynStruct ()
 {
   CORBA::string_free (this->test_name_);
   this->test_name_ = 0;
 }
 
 const char*
-Test_DynStruct::test_name (void) const
+Test_DynStruct::test_name () const
 {
   return this->test_name_;
 }
 
 int
-Test_DynStruct::run_test (void)
+Test_DynStruct::run_test ()
 {
   Data data (this->orb_);
 

@@ -16,7 +16,7 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
 const typename S_var::s_traits::char_type *
-TAO::In_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::arg (void) const
+TAO::In_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::arg () const
 {
   return this->x_;
 }

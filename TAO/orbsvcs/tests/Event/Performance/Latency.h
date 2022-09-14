@@ -33,10 +33,10 @@ public:
                        int message_count);
 
   /// Return 1 when all the messages have been received
-  int done (void);
+  int done ();
 
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
 private:
   /// Roundtrip delays are recorded here
@@ -55,9 +55,9 @@ class EC_Latency_Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
   /// Constructor
-  EC_Latency_Supplier (void);
+  EC_Latency_Supplier ();
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 };
 
 // ****************************************************************
@@ -71,10 +71,10 @@ public:
         int iterations);
 
   /// Return 1 when all the messages have been sent
-  int done (void);
+  int done ();
 
   /// Run the experiment
-  int svc (void);
+  int svc ();
 
 private:
   /// The consumer

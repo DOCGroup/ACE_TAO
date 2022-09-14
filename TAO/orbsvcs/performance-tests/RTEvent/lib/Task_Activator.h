@@ -63,10 +63,10 @@ public:
    * cooperative termination protocol in the destructor of the derived
    * class.
    */
-  ~Task_Activator (void);
+  ~Task_Activator ();
 
   /// Release the task, do not terminate it
-  void release (void);
+  void release ();
 
 protected:
   Task *task_;

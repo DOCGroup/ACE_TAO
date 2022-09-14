@@ -55,7 +55,7 @@ public:
 
   void shutdown_now (CORBA::Boolean is_clean);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB
@@ -83,7 +83,7 @@ public:
 
   void shutdown_now (CORBA::Boolean is_clean);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB

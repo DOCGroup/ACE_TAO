@@ -35,7 +35,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Find_Worker_T : public TAO_ESF_Worker<TY
 
 public:
   /// Constructor
-  TAO_Notify_Find_Worker_T (void);
+  TAO_Notify_Find_Worker_T ();
 
   /// Find the Type.
   TYPE* find (const TAO_Notify_Object::ID id, CONTAINER& container);

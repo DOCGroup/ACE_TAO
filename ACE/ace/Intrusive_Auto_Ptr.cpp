@@ -12,7 +12,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Intrusive_Auto_Ptr)
 
 template <class X>
-ACE_Intrusive_Auto_Ptr<X>::~ACE_Intrusive_Auto_Ptr (void)
+ACE_Intrusive_Auto_Ptr<X>::~ACE_Intrusive_Auto_Ptr ()
 {
   reset (0);
 }

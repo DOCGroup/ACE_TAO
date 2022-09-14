@@ -60,182 +60,27 @@ typedef void * ACE_MALLOC_T;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-// ============================================================================
+// For backwards compatibility, we except all compilers to support these
+#include /**/ <new>
+#define ACE_bad_alloc std::bad_alloc
+#define ACE_nothrow   std::nothrow
+#define ACE_nothrow_t std::nothrow_t
+#define ACE_del_bad_alloc
+#define ACE_throw_bad_alloc throw std::bad_alloc ()
+
 // ACE_NEW macros
-//
-// A useful abstraction for expressions involving operator new since
-// we can change memory allocation error handling policies (e.g.,
-// depending on whether ANSI/ISO exception handling semantics are
-// being used).
-// ============================================================================
-
-// If new(std::nothrow) is defined then, by definition, new throws exceptions.
-#if defined (ACE_HAS_NEW_NOTHROW)
-#  if !defined (ACE_NEW_THROWS_EXCEPTIONS)
-#    define ACE_NEW_THROWS_EXCEPTIONS
-#  endif
-#endif
-
-// The Windows MFC exception mechanism requires that a caught CException
-// (including the CMemoryException in use here) be freed using its Delete()
-// method. Thus, when MFC is in use and we're catching exceptions as a result
-// of new(), the exception's Delete() method has to be called. No other
-// platform imposes this sort of restriction/requirement. The Windows
-// config stuff (at least for MSVC/MFC) defines a ACE_del_bad_alloc macro
-// that works with its ACE_bad_alloc macro to implement this cleanup
-// requirement. Since no other platform requires this, define it as
-// empty here.
-#if !defined (ACE_del_bad_alloc)
-#  define ACE_del_bad_alloc
-#endif
-
-#if defined (ACE_NEW_THROWS_EXCEPTIONS)
-
-// Since new() throws exceptions, we need a way to avoid passing
-// exceptions past the call to new because ACE counts on having a 0
-// return value for a failed allocation. Some compilers offer the
-// new (nothrow) version, which does exactly what we want. Others
-// do not. For those that do not, this sets up what exception is thrown,
-// and then below we'll do a try/catch around the new to catch it and
-// return a 0 pointer instead.
-
-#  if defined (__HP_aCC)
-      // I know this works for HP aC++... if <stdexcept> is used, it
-      // introduces other stuff that breaks things, like <memory>, which
-      // screws up auto_ptr.
-#    include /**/ <new>
-    // _HP_aCC was first defined at aC++ 03.13 on HP-UX 11. Prior to that
-    // (03.10 and before) a failed new threw bad_alloc. After that (03.13
-    // and above) the exception thrown is dependent on the below settings.
-#    if (HPUX_VERS >= 1100)
-#      if ((__HP_aCC < 32500 && !defined (RWSTD_NO_NAMESPACE)) || \
-           defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB))
-#        define ACE_bad_alloc ::std::bad_alloc
-#        define ACE_nothrow   ::std::nothrow
-#        define ACE_nothrow_t ::std::nothrow_t
-#      else
-#        define ACE_bad_alloc bad_alloc
-#        define ACE_nothrow   nothrow
-#        define ACE_nothrow_t nothrow_t
-#      endif /* __HP_aCC */
-#    elif ((__HP_aCC <  12500 && !defined (RWSTD_NO_NAMESPACE)) || \
-           defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB))
-#      define ACE_bad_alloc ::std::bad_alloc
-#      define ACE_nothrow   ::std::nothrow
-#      define ACE_nothrow_t ::std::nothrow_t
-#    else
-#      define ACE_bad_alloc bad_alloc
-#      define ACE_nothrow   nothrow
-#      define ACE_nothrow_t nothrow_t
-#    endif /* HPUX_VERS < 1100 */
-#    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
-#  elif defined (__SUNPRO_CC)
-#      if (__SUNPRO_CC < 0x500) || (__SUNPRO_CC_COMPAT == 4)
-#        include /**/ <exception.h>
-         // Note: we catch ::xalloc rather than just xalloc because of
-         // a name clash with unsafe_ios::xalloc()
-#        define ACE_bad_alloc ::xalloc
-#        define ACE_throw_bad_alloc throw ACE_bad_alloc ("no more memory")
-#      else
-#        include /**/ <new>
-#        define ACE_bad_alloc ::std::bad_alloc
-#        if defined (ACE_HAS_NEW_NOTHROW)
-#          if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#            define ACE_nothrow   ::std::nothrow
-#            define ACE_nothrow_t ::std::nothrow_t
-#          else
-#            define ACE_nothrow   nothrow
-#            define ACE_nothrow_t nothrow_t
-#          endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-#        endif /* ACE_HAS_NEW_NOTHROW */
-#        define ACE_throw_bad_alloc throw ACE_bad_alloc ()
-#      endif /* __SUNPRO_CC < 0x500 */
-#  elif defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#    include /**/ <new>
-#    if !defined (ACE_bad_alloc)
-#      define ACE_bad_alloc ::std::bad_alloc
-#    endif
-#    define ACE_nothrow   ::std::nothrow
-#    define ACE_nothrow_t ::std::nothrow_t
-     // MFC changes the behavior of operator new at all MSVC versions from 6 up.
-#    if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
-#      define ACE_throw_bad_alloc AfxThrowMemoryException ()
-#    else
-#      define ACE_throw_bad_alloc throw ACE_bad_alloc ()
-#    endif
-#  else
-#    include /**/ <new>
-#    if !defined (ACE_bad_alloc)
-#      define ACE_bad_alloc bad_alloc
-#    endif
-#    define ACE_nothrow   nothrow
-#    define ACE_nothrow_t nothrow_t
-     // MFC changes the behavior of operator new at all MSVC versions from 6 up.
-#    if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
-#      define ACE_throw_bad_alloc AfxThrowMemoryException ()
-#    else
-#      define ACE_throw_bad_alloc throw ACE_bad_alloc ()
-#    endif
-#  endif /* __HP_aCC */
-
-#  if defined (ACE_HAS_NEW_NOTHROW)
-#    define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = new (ACE_nothrow) CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+#define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
+   do { POINTER = new (std::nothrow) CONSTRUCTOR; \
+     if (POINTER == nullptr) { errno = ENOMEM; return RET_VAL; } \
    } while (0)
-#    define ACE_NEW(POINTER,CONSTRUCTOR) \
-   do { POINTER = new(ACE_nothrow) CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return; } \
+#define ACE_NEW(POINTER,CONSTRUCTOR) \
+   do { POINTER = new(std::nothrow) CONSTRUCTOR; \
+     if (POINTER == nullptr) { errno = ENOMEM; return; } \
    } while (0)
-#    define ACE_NEW_NORETURN(POINTER,CONSTRUCTOR) \
-   do { POINTER = new(ACE_nothrow) CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; } \
+#define ACE_NEW_NORETURN(POINTER,CONSTRUCTOR) \
+   do { POINTER = new(std::nothrow) CONSTRUCTOR; \
+     if (POINTER == nullptr) { errno = ENOMEM; } \
    } while (0)
-
-#  else
-
-#    define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
-   do { try { POINTER = new CONSTRUCTOR; } \
-     catch (ACE_bad_alloc) { ACE_del_bad_alloc errno = ENOMEM; POINTER = 0; return RET_VAL; } \
-   } while (0)
-
-#    define ACE_NEW(POINTER,CONSTRUCTOR) \
-   do { try { POINTER = new CONSTRUCTOR; } \
-     catch (ACE_bad_alloc) { ACE_del_bad_alloc errno = ENOMEM; POINTER = 0; return; } \
-   } while (0)
-
-#    define ACE_NEW_NORETURN(POINTER,CONSTRUCTOR) \
-   do { try { POINTER = new CONSTRUCTOR; } \
-     catch (ACE_bad_alloc) { ACE_del_bad_alloc errno = ENOMEM; POINTER = 0; } \
-   } while (0)
-#  endif /* ACE_HAS_NEW_NOTHROW */
-
-#else /* ACE_NEW_THROWS_EXCEPTIONS */
-
-# define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
-   } while (0)
-# define ACE_NEW(POINTER,CONSTRUCTOR) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return; } \
-   } while (0)
-# define ACE_NEW_NORETURN(POINTER,CONSTRUCTOR) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; } \
-   } while (0)
-
-# if !defined (ACE_bad_alloc)
-    class ACE_bad_alloc_class {};
-#   define ACE_bad_alloc  ACE_bad_alloc_class
-# endif
-# if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
-#   define ACE_throw_bad_alloc  AfxThrowMemoryException ()
-# else
-#   define ACE_throw_bad_alloc  return 0
-# endif
-
-#endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 //@{

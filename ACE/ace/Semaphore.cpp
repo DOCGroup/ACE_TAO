@@ -15,7 +15,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Semaphore)
 
 void
-ACE_Semaphore::dump (void) const
+ACE_Semaphore::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Semaphore::dump");
@@ -51,7 +51,7 @@ ACE_Semaphore::ACE_Semaphore (unsigned int count,
                 ACE_TEXT ("ACE_Semaphore::ACE_Semaphore")));
 }
 
-ACE_Semaphore::~ACE_Semaphore (void)
+ACE_Semaphore::~ACE_Semaphore ()
 {
 // ACE_TRACE ("ACE_Semaphore::~ACE_Semaphore");
 

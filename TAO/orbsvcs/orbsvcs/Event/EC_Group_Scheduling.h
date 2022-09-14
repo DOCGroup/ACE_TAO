@@ -29,7 +29,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Group_Scheduling : public TAO_EC_Scheduling
 {
 public:
   /// Constructor.
-  TAO_EC_Group_Scheduling (void);
+  TAO_EC_Group_Scheduling ();
 
   // Read EC_Scheduling_Strategy.h for more details
   virtual void add_proxy_supplier_dependencies (

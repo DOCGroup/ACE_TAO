@@ -15,7 +15,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor (void)
+TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_SHMEM_PROFILE),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
@@ -28,7 +28,7 @@ TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor (void)
 {
 }
 
-TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor (void)
+TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -160,7 +160,7 @@ TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO_SHMIOP_Acceptor::close (void)
+TAO_SHMIOP_Acceptor::close ()
 {
   return this->base_acceptor_.close ();
 }
@@ -389,7 +389,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
 
 CORBA::ULong
-TAO_SHMIOP_Acceptor::endpoint_count (void)
+TAO_SHMIOP_Acceptor::endpoint_count ()
 {
   // @@ for now just assume one!
   // we should take a look at the local address, if it is zero then

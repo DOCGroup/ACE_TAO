@@ -19,15 +19,14 @@
 class Deadlock : public ACE_Task_Base
 {
 public:
-
-  int svc (void);
+  int svc () override;
 
   int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act);
+                      const void *act) override;
 };
 
 int
-Deadlock::svc (void)
+Deadlock::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Deadlock starts accessing Reactor and Timer Queue....\n")));
@@ -55,14 +54,13 @@ Deadlock::handle_timeout (const ACE_Time_Value &,
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Event_Handler (Deadlock &deadlock);
 
   int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act);
+                      const void *act) override;
 
   int handle_close (ACE_HANDLE handle,
-                    ACE_Reactor_Mask close_mask);
+                    ACE_Reactor_Mask close_mask) override;
 
   Deadlock &deadlock_;
 };

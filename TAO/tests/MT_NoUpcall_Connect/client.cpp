@@ -17,7 +17,7 @@ ACE_Time_Value ping_end (0,0);
 class SharedIntfCB : public POA_Test_Idl::AMI_SharedIntfHandler
 {
 public:
-  void ping (void)
+  void ping ()
   {
     ACE_DEBUG ((LM_DEBUG, "ping returned\n"));
     ping_end = ping_end.now ();
@@ -29,7 +29,7 @@ public:
     ping_end = ping_end.now ();
   }
 
-  void do_upcall (void)
+  void do_upcall ()
   {
     ACE_DEBUG ((LM_DEBUG, "upcall returned\n"));
     upcall_end = upcall_end.now ();
@@ -47,7 +47,6 @@ public:
     ACE_DEBUG ((LM_DEBUG, "exception caught on upcall req\n"));
     upcall_end = upcall_end.now ();
   }
-
 };
 
 

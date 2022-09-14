@@ -6,7 +6,6 @@
 class Marker
 {
  public:
-
   void accumulate_into (ACE_Throughput_Stats &throughput,
                         int which_method) const;
   // Accumulate the throughput statistics into <throughput>

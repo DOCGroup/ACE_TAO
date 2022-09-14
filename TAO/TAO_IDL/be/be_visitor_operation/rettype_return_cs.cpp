@@ -24,7 +24,7 @@ be_visitor_operation_rettype_return_cs (be_visitor_context *ctx)
 }
 
 be_visitor_operation_rettype_return_cs::
-~be_visitor_operation_rettype_return_cs (void)
+~be_visitor_operation_rettype_return_cs ()
 {
 }
 
@@ -189,7 +189,7 @@ be_visitor_operation_rettype_return_cs::visit_typedef (
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 

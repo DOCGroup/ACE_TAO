@@ -39,7 +39,7 @@ public:
   TAO_Reactive_Connect_Strategy (TAO_ORB_Core *orb);
 
   /// Destructor
-  ~TAO_Reactive_Connect_Strategy (void);
+  ~TAO_Reactive_Connect_Strategy ();
 
   /*
    * Concrete implementation for this class. Please see
@@ -50,7 +50,6 @@ public:
 
 protected:
   virtual int wait_i (TAO_LF_Event *ch, TAO_Transport *, ACE_Time_Value *val);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

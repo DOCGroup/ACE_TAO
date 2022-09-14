@@ -50,7 +50,7 @@ class Ping_Pong : public ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
 {
 public:
   Ping_Pong (char b[], ACE_HANDLE f);
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_timeout (const ACE_Time_Value &,
@@ -86,7 +86,7 @@ Ping_Pong::Ping_Pong (char b[], ACE_HANDLE f)
 }
 
 ACE_HANDLE
-Ping_Pong::get_handle (void) const
+Ping_Pong::get_handle () const
 {
   return this->handle_;
 }

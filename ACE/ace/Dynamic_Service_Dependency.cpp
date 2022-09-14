@@ -18,7 +18,7 @@ ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (const ACE_Servic
 }
 
 
-ACE_Dynamic_Service_Dependency::~ACE_Dynamic_Service_Dependency (void)
+ACE_Dynamic_Service_Dependency::~ACE_Dynamic_Service_Dependency ()
 {
   if (ACE::debug ())
     ACELIB_DEBUG ((LM_DEBUG,

@@ -16,7 +16,7 @@ TAO_Priority_Mapping_Manager_var::TAO_Priority_Mapping_Manager_var (TAO_Priority
 {}
 
 ACE_INLINE ::TAO_Priority_Mapping_Manager_ptr
-TAO_Priority_Mapping_Manager_var::ptr (void) const
+TAO_Priority_Mapping_Manager_var::ptr () const
 {
   return this->ptr_;
 }
@@ -65,13 +65,13 @@ TAO_Priority_Mapping_Manager_var::operator ::TAO_Priority_Mapping_Manager_ptr &(
 }
 
 ACE_INLINE ::TAO_Priority_Mapping_Manager_ptr
-TAO_Priority_Mapping_Manager_var::operator-> (void) const
+TAO_Priority_Mapping_Manager_var::operator-> () const
 {
   return this->ptr_;
 }
 
 ACE_INLINE ::TAO_Priority_Mapping_Manager_ptr
-TAO_Priority_Mapping_Manager_var::in (void) const
+TAO_Priority_Mapping_Manager_var::in () const
 {
   return this->ptr_;
 }

@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -81,29 +80,26 @@ public:
                bool local,
                bool abstract);
 
-  virtual ~AST_Typedef (void);
+  virtual ~AST_Typedef ();
 
-  AST_Type *primitive_base_type (void) const;
+  AST_Type *primitive_base_type () const;
   // Return the most primitive base type by traversing the chain of typedefed
   // base types.
 
   // Data Accessors.
-  AST_Type *base_type (void) const;
+  AST_Type *base_type () const;
 
-  virtual bool legal_for_primary_key (void) const;
+  virtual bool legal_for_primary_key () const;
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
 
-  virtual bool is_local (void);
+  virtual bool is_local ();
   // Override the base class method.
 
-  bool owns_base_type (void) const;
+  bool owns_base_type () const;
   void owns_base_type (bool val);
   // Sometimes this has to be accessed or managed from outside.
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (AST_Typedef);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -112,7 +108,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   static AST_Decl::NodeType const NT;
 
@@ -124,7 +120,7 @@ public:
   virtual AST_Annotation_Appls &annotations ();
 
 protected:
-  virtual int compute_size_type (void);
+  virtual int compute_size_type ();
   // Compute the size type if it is unknown.
 
   /**

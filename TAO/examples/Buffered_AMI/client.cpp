@@ -69,7 +69,7 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void)
+  void shutdown ()
   {
   }
   //FUZZ: enable check_for_lack_ACE_OS
@@ -229,7 +229,6 @@ setup_buffering_constraints (CORBA::ORB_ptr orb)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB.
@@ -310,8 +309,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           test_object->shutdown ();
         }
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (true, true);
 
       // Destroy the ORB.  On some platforms, e.g., Win32, the socket
       // library is closed at the end of main().  This means that any
@@ -326,7 +324,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-
 
   return 0;
 }

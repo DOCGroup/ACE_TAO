@@ -1,4 +1,3 @@
-
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
@@ -80,7 +79,7 @@ public:
   virtual ~ST_AMH_Server ();
 
   /// ORB initialization stuff
-  int start_orb_and_poa (void);
+  int start_orb_and_poa ();
 
   /// register the servant with the poa
   virtual void register_servant (ST_AMH_Servant *servant);
@@ -113,8 +112,6 @@ private:
   int write_ior_to_file (CORBA::String_var ior);
 };
 
-
-
 /*** Server Declaration ***/
 
 ST_AMH_Server::ST_AMH_Server (int* argc, ACE_TCHAR **argv)
@@ -145,7 +142,7 @@ ST_AMH_Server::cleanup ()
 }
 
 int
-ST_AMH_Server::start_orb_and_poa (void)
+ST_AMH_Server::start_orb_and_poa ()
 {
   try
     {

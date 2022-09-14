@@ -68,14 +68,14 @@ namespace ACE
       Packets_Sent_Monitor (const char* name);
 
       /// Implementation of the pure virtual method.
-      virtual void update (void);
+      virtual void update ();
 
       /// Stores the default name, used if none is supplied by the user.
-      static const char* default_name (void);
+      static const char* default_name ();
 
     private:
       /// Overridden reset, calls platform-specific reset.
-      virtual void clear_i (void);
+      virtual void clear_i ();
 
     private:
       static const char* default_name_;

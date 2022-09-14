@@ -14,6 +14,7 @@
 // The first part of the test is to compile this line.  If the program
 // does not compile the platform is just too broken.
 #include <memory>
+#include <utility>
 
 // For extra challenge, we use the anonymous namespace
 namespace
@@ -64,8 +65,8 @@ run_main (int, ACE_TCHAR *[])
 
   // ... this works with the ACE version of auto_ptr (well, the
   // namespace is broken, but you get the idea) ...
-  std::auto_ptr<Base> x(new Base);
-  std::auto_ptr<Derived> y(new Derived);
+  std::unique_ptr<Base> x(new Base);
+  std::unique_ptr<Derived> y(new Derived);
 
   // ... with a compliant implementation of std::auto_ptr<> you should be
   // able to write:
@@ -85,8 +86,8 @@ run_main (int, ACE_TCHAR *[])
                  Base::destructors));
     }
 
-  std::auto_ptr<Base> z;
-  z = x;
+  std::unique_ptr<Base> z;
+  z = std::move(x);
   if (Base::destructors != 1)
     {
       status = 1;

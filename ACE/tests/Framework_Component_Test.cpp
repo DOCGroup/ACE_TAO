@@ -21,8 +21,6 @@
 #include "ace/ARGV.h"
 #include "ace/DLL_Manager.h"
 
-
-
 // Define a few macros--because they're so much fun, and keep the
 // code below a little cleaner...
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)

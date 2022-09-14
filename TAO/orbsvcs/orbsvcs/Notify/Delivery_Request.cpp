@@ -21,7 +21,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 ///////////////////
 // Delivery_Request
 Delivery_Request::Delivery_Request (const Routing_Slip_Ptr & routing_slip, size_t request_id)

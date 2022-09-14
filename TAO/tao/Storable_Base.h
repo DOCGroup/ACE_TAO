@@ -79,15 +79,15 @@ namespace TAO
 
     void setstate (Storable_State state);
 
-    Storable_State rdstate (void) const;
+    Storable_State rdstate () const;
 
-    bool good (void) const;
+    bool good () const;
 
-    bool bad (void) const;
+    bool bad () const;
 
-    bool eof (void) const;
+    bool eof () const;
 
-    bool fail (void) const;
+    bool fail () const;
 
     static ACE_CString state_as_string (Storable_State state);
 

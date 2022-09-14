@@ -28,7 +28,7 @@ class be_visitor_member_type_decl : public be_visitor_decl
 {
 public:
   be_visitor_member_type_decl (be_visitor_context *ctx);
-  virtual ~be_visitor_member_type_decl (void);
+  virtual ~be_visitor_member_type_decl ();
 
   virtual int visit_array (be_array *);
   virtual int visit_component (be_component *);

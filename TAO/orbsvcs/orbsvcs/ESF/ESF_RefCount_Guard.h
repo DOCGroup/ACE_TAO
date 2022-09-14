@@ -41,7 +41,7 @@ public:
   TAO_ESF_RefCount_Guard (T &refcount);
 
   /// Destructor
-  ~TAO_ESF_RefCount_Guard (void);
+  ~TAO_ESF_RefCount_Guard ();
 
 protected:
   /// The reference count

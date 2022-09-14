@@ -93,10 +93,9 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
   constraint_list.length(1);
 
   constraint_list[0].event_types.length (0);
-  constraint_list[0].constraint_expr = CORBA::string_dup (
-   "$.enum < 0");
+  constraint_list[0].constraint_expr = CORBA::string_dup ("$.enum < 0");
 
-  filter->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
   // apply filter
   admin->add_filter (filter.in ());

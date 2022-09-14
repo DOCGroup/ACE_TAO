@@ -48,12 +48,11 @@ class TAO_PortableGroup_Export TAO_MIOP_Resource_Factory
   : public ACE_Service_Object
 {
 public:
-
   /// Constructor.
-  TAO_MIOP_Resource_Factory (void);
+  TAO_MIOP_Resource_Factory ();
 
   /// Destructor.
-  virtual ~TAO_MIOP_Resource_Factory (void);
+  virtual ~TAO_MIOP_Resource_Factory ();
 
   /**
    * @name Service Configurator Hooks
@@ -67,32 +66,32 @@ public:
    * @name Member Accessors
    */
   //@{
-  TAO_PG::Fragments_Cleanup_Strategy *fragments_cleanup_strategy (void) const;
+  TAO_PG::Fragments_Cleanup_Strategy *fragments_cleanup_strategy () const;
 
   /// Get Maximum number of fragments allowed.
-  u_long max_fragments (void) const;
+  u_long max_fragments () const;
 
   /// Get MTU value (roughly).
-  u_long max_fragment_size (void) const;
+  u_long max_fragment_size () const;
 
   /// Get time required for transfering one maximum sized fragment.
-  u_long max_fragment_rate (void) const;
+  u_long max_fragment_rate () const;
 
   /// Get number of bytes that can be sent without delay.
-  u_long send_hi_water_mark (void) const;
+  u_long send_hi_water_mark () const;
 
   /// Get the desired socket transmit buffer's size in bytes (Zero is unspecified).
-  u_long send_buffer_size (void) const;
+  u_long send_buffer_size () const;
 
   /// Get the desired socket receive buffer's size in bytes (Zero is unspecified).
-  u_long receive_buffer_size (void) const;
+  u_long receive_buffer_size () const;
   //@}
 
   /// Get the client-side transmission rate throttling enable flag.
-  bool enable_throttling (void) const;
+  bool enable_throttling () const;
 
   /// Get the server-side eager complete message dequeuing enable flag.
-  bool enable_eager_dequeue (void) const;
+  bool enable_eager_dequeue () const;
 
 private:
   enum Fragments_Cleanup_Strategy_Type

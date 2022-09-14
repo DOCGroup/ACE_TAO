@@ -54,13 +54,12 @@ class TAO_Pluggable_Reply_Params;
  */
 class TAO_Export TAO_Reply_Dispatcher
 {
-
 public:
   /// Constructor.
   TAO_Reply_Dispatcher (ACE_Allocator *allocator = 0);
 
   /// Destructor.
-  virtual ~TAO_Reply_Dispatcher (void);
+  virtual ~TAO_Reply_Dispatcher ();
 
   /**
    * Dispatch the reply. Return 1 on sucess, -1 on error.
@@ -74,7 +73,7 @@ public:
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params) = 0;
 
   /// Inform that the reply timed out
-  virtual void reply_timed_out (void) = 0;
+  virtual void reply_timed_out () = 0;
 
   /**
    * The used for the pending reply has been closed.
@@ -84,12 +83,12 @@ public:
    *    the exception, it would a matter of simply adding a boolean
    *    argument to this function.
    */
-  virtual void connection_closed (void) = 0;
+  virtual void connection_closed () = 0;
 
   /// Get the locate reply status.
-  GIOP::LocateStatusType locate_reply_status (void) const;
+  GIOP::LocateStatusType locate_reply_status () const;
 
-  GIOP::ReplyStatusType reply_status (void) const;
+  GIOP::ReplyStatusType reply_status () const;
 
   static void intrusive_add_ref (TAO_Reply_Dispatcher*);
   static void intrusive_remove_ref (TAO_Reply_Dispatcher*);
@@ -103,7 +102,7 @@ protected:
 
 private:
   /// Support for intrusive reference counting
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> refcount_;
+  std::atomic<uint32_t> refcount_;
 
   /// Allocator that was used to allocate this reply dispatcher. In case of
   /// zero we come from the heap.

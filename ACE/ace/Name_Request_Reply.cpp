@@ -10,14 +10,12 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default "do nothing" constructor.
-
-ACE_Name_Request::ACE_Name_Request (void)
+ACE_Name_Request::ACE_Name_Request ()
 {
   ACE_TRACE ("ACE_Name_Request::ACE_Name_Request");
 }
 
 // Create a ACE_Name_Request message.
-
 ACE_Name_Request::ACE_Name_Request (
   ACE_INT32 t, // Type of request.
   const ACE_WCHAR_T name[], // Name
@@ -77,7 +75,7 @@ ACE_Name_Request::ACE_Name_Request (
 // Initialize length_ in order to avoid problems with byte-ordering.
 
 void
-ACE_Name_Request::init (void)
+ACE_Name_Request::init ()
 {
   ACE_TRACE ("ACE_Name_Request::init");
   this->length (sizeof this->transfer_);
@@ -86,7 +84,7 @@ ACE_Name_Request::init (void)
 // = Set/get the length of the encoded/decoded message.
 
 ACE_UINT32
-ACE_Name_Request::length (void) const
+ACE_Name_Request::length () const
 {
   ACE_TRACE ("ACE_Name_Request::length");
   return this->transfer_.length_;
@@ -102,7 +100,7 @@ ACE_Name_Request::length (ACE_UINT32 l)
 // = Set/get the type of the message.
 
 ACE_INT32
-ACE_Name_Request::msg_type (void) const
+ACE_Name_Request::msg_type () const
 {
   ACE_TRACE ("ACE_Name_Request::msg_type");
   return this->transfer_.msg_type_;
@@ -118,7 +116,7 @@ ACE_Name_Request::msg_type (ACE_INT32 t)
 // = Set/get the len of the name
 
 ACE_UINT32
-ACE_Name_Request::name_len (void) const
+ACE_Name_Request::name_len () const
 {
   ACE_TRACE ("ACE_Name_Request::name_len");
   return this->transfer_.name_len_;
@@ -134,7 +132,7 @@ ACE_Name_Request::name_len (ACE_UINT32 t)
 // = Set/get the len of the value
 
 ACE_UINT32
-ACE_Name_Request::value_len (void) const
+ACE_Name_Request::value_len () const
 {
   ACE_TRACE ("ACE_Name_Request::value_len");
   return this->transfer_.value_len_;
@@ -150,7 +148,7 @@ ACE_Name_Request::value_len (ACE_UINT32 t)
 // = Set/get the len of the type
 
 ACE_UINT32
-ACE_Name_Request::type_len (void) const
+ACE_Name_Request::type_len () const
 {
   ACE_TRACE ("ACE_Name_Request::type_len");
   return this->transfer_.type_len_;
@@ -166,7 +164,7 @@ ACE_Name_Request::type_len (ACE_UINT32 t)
 // = Set/get the blocking semantics.
 
 ACE_UINT32
-ACE_Name_Request::block_forever (void) const
+ACE_Name_Request::block_forever () const
 {
   ACE_TRACE ("ACE_Name_Request::block_forever");
   return this->transfer_.block_forever_;
@@ -182,7 +180,7 @@ ACE_Name_Request::block_forever (ACE_UINT32 bs)
 // = Set/get the timeout.
 
 ACE_Time_Value
-ACE_Name_Request::timeout (void) const
+ACE_Name_Request::timeout () const
 {
   ACE_TRACE ("ACE_Name_Request::timeout");
   time_t sec = ACE_Utils::truncate_cast<time_t> (this->transfer_.sec_timeout_);
@@ -200,7 +198,7 @@ ACE_Name_Request::timeout (const ACE_Time_Value timeout)
 // = Set/get the name
 
 const ACE_WCHAR_T *
-ACE_Name_Request::name (void) const
+ACE_Name_Request::name () const
 {
   ACE_TRACE ("ACE_Name_Request::name");
   return this->name_;
@@ -218,7 +216,7 @@ ACE_Name_Request::name (const ACE_WCHAR_T *t)
 // = Set/get the value
 
 const ACE_WCHAR_T *
-ACE_Name_Request::value (void) const
+ACE_Name_Request::value () const
 {
   ACE_TRACE ("ACE_Name_Request::value");
   return this->value_;
@@ -237,7 +235,7 @@ ACE_Name_Request::value (const ACE_WCHAR_T *c)
 // = Set/get the type
 
 const char *
-ACE_Name_Request::type (void) const
+ACE_Name_Request::type () const
 {
   ACE_TRACE ("ACE_Name_Request::type");
   return this->type_;
@@ -291,7 +289,7 @@ ACE_Name_Request::encode (void *&buf)
 // be used by the server.
 
 int
-ACE_Name_Request::decode (void)
+ACE_Name_Request::decode ()
 {
   ACE_TRACE ("ACE_Name_Request::decode");
   // Decode the fixed-sized portion first.
@@ -327,7 +325,7 @@ ACE_Name_Request::decode (void)
 // Print out the current values of the ACE_Name_Request.
 
 void
-ACE_Name_Request::dump (void) const
+ACE_Name_Request::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Request::dump");
@@ -413,7 +411,7 @@ ACE_Name_Request::dump (void) const
 
 // Default constructor.
 
-ACE_Name_Reply::ACE_Name_Reply (void)
+ACE_Name_Reply::ACE_Name_Reply ()
 {
   ACE_TRACE ("ACE_Name_Reply::ACE_Name_Reply");
 
@@ -436,7 +434,7 @@ ACE_Name_Reply::ACE_Name_Reply (ACE_UINT32 t, ACE_UINT32 err) // Type of reply.
 // Initialize length_ to avoid problems with byte-ordering.
 
 void
-ACE_Name_Reply::init (void)
+ACE_Name_Reply::init ()
 {
   ACE_TRACE ("ACE_Name_Reply::init");
   this->length (sizeof this->transfer_);
@@ -445,7 +443,7 @@ ACE_Name_Reply::init (void)
 // = Set/get the length of the encoded/decoded message.
 
 ACE_UINT32
-ACE_Name_Reply::length (void) const
+ACE_Name_Reply::length () const
 {
   ACE_TRACE ("ACE_Name_Reply::length");
   return this->transfer_.length_;
@@ -461,7 +459,7 @@ ACE_Name_Reply::length (ACE_UINT32 l)
 // = Set/get the type of the message.
 
 ACE_INT32
-ACE_Name_Reply::msg_type (void) const
+ACE_Name_Reply::msg_type () const
 {
   ACE_TRACE ("ACE_Name_Reply::msg_type");
   return this->transfer_.type_;
@@ -477,7 +475,7 @@ ACE_Name_Reply::msg_type (ACE_INT32 t)
 // Get the status of the reply (0 == success, -1 == failure).
 
 ACE_INT32
-ACE_Name_Reply::status (void) const
+ACE_Name_Reply::status () const
 {
   ACE_TRACE ("ACE_Name_Reply::status");
   return this->transfer_.type_;
@@ -497,7 +495,7 @@ ACE_Name_Reply::status (ACE_INT32 s)
 
 // = Set/get the errno of a failed reply.
 ACE_UINT32
-ACE_Name_Reply::errnum (void) const
+ACE_Name_Reply::errnum () const
 {
   ACE_TRACE ("ACE_Name_Reply::errnum");
   return this->transfer_.errno_;
@@ -530,7 +528,7 @@ ACE_Name_Reply::encode (void *&buf)
 // used by the client.
 
 int
-ACE_Name_Reply::decode (void)
+ACE_Name_Reply::decode ()
 {
   ACE_TRACE ("ACE_Name_Reply::decode");
   this->transfer_.length_ = ACE_NTOHL (this->transfer_.length_);
@@ -542,7 +540,7 @@ ACE_Name_Reply::decode (void)
 // Print out current values of the ACE_Name_Reply object.
 
 void
-ACE_Name_Reply::dump (void) const
+ACE_Name_Reply::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Reply::dump");

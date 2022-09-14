@@ -11,16 +11,16 @@
 #include "JAWS/Waiter.h"
 #include "JAWS/Filecache.h"
 
-JAWS_Abstract_IO_Handler::~JAWS_Abstract_IO_Handler (void)
+JAWS_Abstract_IO_Handler::~JAWS_Abstract_IO_Handler ()
 {
 }
 
-JAWS_IO_Handler_Factory::~JAWS_IO_Handler_Factory (void)
+JAWS_IO_Handler_Factory::~JAWS_IO_Handler_Factory ()
 {
 }
 
 JAWS_IO_Handler *
-JAWS_IO_Handler_Factory::create_io_handler (void)
+JAWS_IO_Handler_Factory::create_io_handler ()
 {
   JAWS_TRACE ("JAWS_IO_Handler_Factory::create");
 
@@ -50,7 +50,7 @@ JAWS_IO_Handler::JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory)
 {
 }
 
-JAWS_IO_Handler::~JAWS_IO_Handler (void)
+JAWS_IO_Handler::~JAWS_IO_Handler ()
 {
   this->mb_ = 0;
   this->status_ = 0;
@@ -76,7 +76,7 @@ JAWS_IO_Handler::accept_complete (ACE_HANDLE handle)
 }
 
 void
-JAWS_IO_Handler::accept_error (void)
+JAWS_IO_Handler::accept_error ()
 {
   // callback into pipeline task, notify that the accept has failed
   this->status_ |= ACCEPT_ERROR;
@@ -94,7 +94,7 @@ JAWS_IO_Handler::read_complete (ACE_Message_Block *data)
 }
 
 void
-JAWS_IO_Handler::read_error (void)
+JAWS_IO_Handler::read_error ()
 {
   // this->pipeline_->read_error ();
   this->status_ |= READ_ERROR;
@@ -102,7 +102,7 @@ JAWS_IO_Handler::read_error (void)
 }
 
 void
-JAWS_IO_Handler::transmit_file_complete (void)
+JAWS_IO_Handler::transmit_file_complete ()
 {
   JAWS_TRACE ("JAWS_IO_Handler::transmit_file_complete");
   // this->pipeline_->transmit_file_complete ();
@@ -121,7 +121,7 @@ JAWS_IO_Handler::transmit_file_error (int result)
 }
 
 void
-JAWS_IO_Handler::receive_file_complete (void)
+JAWS_IO_Handler::receive_file_complete ()
 {
   this->status_ |= RECEIVE_OK;
   this->status_ &= (RECEIVE_OK+1);
@@ -136,7 +136,7 @@ JAWS_IO_Handler::receive_file_error (int result)
 }
 
 void
-JAWS_IO_Handler::write_error (void)
+JAWS_IO_Handler::write_error ()
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) error in writing response\n"));
 
@@ -146,27 +146,27 @@ JAWS_IO_Handler::write_error (void)
 }
 
 void
-JAWS_IO_Handler::confirmation_message_complete (void)
+JAWS_IO_Handler::confirmation_message_complete ()
 {
   this->status_ |= WRITE_OK;
   this->status_ &= (WRITE_OK+1);
 }
 
 void
-JAWS_IO_Handler::error_message_complete (void)
+JAWS_IO_Handler::error_message_complete ()
 {
   this->status_ |= WRITE_OK;
   this->status_ &= (WRITE_OK+1);
 }
 
 JAWS_IO_Handler_Factory *
-JAWS_IO_Handler::factory (void)
+JAWS_IO_Handler::factory ()
 {
   return this->factory_;
 }
 
 ACE_HANDLE
-JAWS_IO_Handler::handle (void) const
+JAWS_IO_Handler::handle () const
 {
   return this->handle_;
 }
@@ -178,7 +178,7 @@ JAWS_IO_Handler::task (JAWS_Pipeline_Handler *ph)
 }
 
 JAWS_Pipeline_Handler *
-JAWS_IO_Handler::task (void)
+JAWS_IO_Handler::task ()
 {
   return this->task_;
 }
@@ -190,52 +190,52 @@ JAWS_IO_Handler::message_block (JAWS_Data_Block *mb)
 }
 
 JAWS_Data_Block *
-JAWS_IO_Handler::message_block (void)
+JAWS_IO_Handler::message_block ()
 {
   return this->mb_;
 }
 
 void
-JAWS_IO_Handler::done (void)
+JAWS_IO_Handler::done ()
 {
   this->factory ()->destroy_io_handler (this);
 }
 
 int
-JAWS_IO_Handler::status (void)
+JAWS_IO_Handler::status ()
 {
   return this->status_;
 }
 
 void
-JAWS_IO_Handler::idle (void)
+JAWS_IO_Handler::idle ()
 {
   this->status_ &= (IDLE+1);
 }
 
 void
-JAWS_IO_Handler::acquire (void)
+JAWS_IO_Handler::acquire ()
 {
 }
 
 void
-JAWS_IO_Handler::lock (void)
+JAWS_IO_Handler::lock ()
 {
 }
 
 void
-JAWS_IO_Handler::release (void)
+JAWS_IO_Handler::release ()
 {
 }
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
-JAWS_Asynch_IO_Handler_Factory::~JAWS_Asynch_IO_Handler_Factory (void)
+JAWS_Asynch_IO_Handler_Factory::~JAWS_Asynch_IO_Handler_Factory ()
 {
 }
 
 JAWS_IO_Handler *
-JAWS_Asynch_IO_Handler_Factory::create_io_handler (void)
+JAWS_Asynch_IO_Handler_Factory::create_io_handler ()
 {
   JAWS_TRACE ("JAWS_Asynch_IO_Handler_Factory::create");
 
@@ -268,46 +268,46 @@ JAWS_Asynch_IO_Handler::JAWS_Asynch_IO_Handler (JAWS_Asynch_IO_Handler_Factory *
   this->status_ = 1;
 }
 
-JAWS_Asynch_IO_Handler::~JAWS_Asynch_IO_Handler (void)
+JAWS_Asynch_IO_Handler::~JAWS_Asynch_IO_Handler ()
 {
   delete this->handler_;
   this->handler_ = 0;
 }
 
 ACE_Handler *
-JAWS_Asynch_IO_Handler::handler (void)
+JAWS_Asynch_IO_Handler::handler ()
 {
   return this->handler_;
 }
 
 void
-JAWS_Asynch_IO_Handler::acquire (void)
+JAWS_Asynch_IO_Handler::acquire ()
 {
   //cerr << "(" << thr_self () << ") acquire handler: " << this << endl;
   this->count_.acquire_read ();
 }
 
 void
-JAWS_Asynch_IO_Handler::lock (void)
+JAWS_Asynch_IO_Handler::lock ()
 {
   //cerr << "(" << thr_self () << ") locking handler: " << this << endl;
   this->count_.acquire_write ();
 }
 
 void
-JAWS_Asynch_IO_Handler::release (void)
+JAWS_Asynch_IO_Handler::release ()
 {
   //cerr << "(" << thr_self () << ") release handler: " << this << endl;
   this->count_.release ();
 }
 
-JAWS_Asynch_Handler::JAWS_Asynch_Handler (void)
+JAWS_Asynch_Handler::JAWS_Asynch_Handler ()
   : ioh_ (0)
 {
   this->proactor (ACE_Proactor::instance ());
 }
 
-JAWS_Asynch_Handler::~JAWS_Asynch_Handler (void)
+JAWS_Asynch_Handler::~JAWS_Asynch_Handler ()
 {
 }
 
@@ -354,14 +354,14 @@ JAWS_Asynch_Handler::act (const void *act_ref)
 
 #if 0
 ACE_HANDLE
-JAWS_Asynch_Handler::handle (void) const
+JAWS_Asynch_Handler::handle () const
 {
   return this->ioh_->handle ();
 }
 #endif
 
 void
-JAWS_Asynch_Handler::dispatch_handler (void)
+JAWS_Asynch_Handler::dispatch_handler ()
 {
 #if 0
   // A future version of ACE will support this.
@@ -480,7 +480,6 @@ JAWS_Asynch_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
     }
   else
     this->handler ()->accept_error ();
-
 }
 
 void
@@ -490,7 +489,7 @@ JAWS_Asynch_Handler::handler (JAWS_Asynch_IO_Handler *ioh)
 }
 
 JAWS_Asynch_IO_Handler *
-JAWS_Asynch_Handler::handler (void)
+JAWS_Asynch_Handler::handler ()
 {
   return this->ioh_;
 }

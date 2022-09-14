@@ -7,22 +7,20 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    IdUniquenessStrategyUnique::IdUniquenessStrategyUnique (void) :
+    IdUniquenessStrategyUnique::IdUniquenessStrategyUnique () :
       poa_ (0)
     {
     }
 
     void
     IdUniquenessStrategyUnique::strategy_init (
-      TAO_Root_POA *poa
-      )
+      TAO_Root_POA *poa)
     {
       poa_ = poa;
     }
 
     void
-    IdUniquenessStrategyUnique::strategy_cleanup (
-      void)
+    IdUniquenessStrategyUnique::strategy_cleanup ()
     {
       poa_ = 0;
     }
@@ -42,7 +40,7 @@ namespace TAO
     }
 
     bool
-    IdUniquenessStrategyUnique::allow_multiple_activations (void) const
+    IdUniquenessStrategyUnique::allow_multiple_activations () const
     {
       return false;
     }

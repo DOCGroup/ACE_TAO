@@ -3,7 +3,7 @@
 #include "MessengerC.h"
 #include <iostream>
 
-ClientInitializer::ClientInitializer (void)
+ClientInitializer::ClientInitializer ()
  : slot_ (0),
    current_ (PortableInterceptor::Current::_nil())
 {
@@ -41,7 +41,7 @@ ClientInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 }
 
 void
-ClientInitializer::set_slot_data (void)
+ClientInitializer::set_slot_data ()
 {
   // Set the recursion flag
   CORBA::Any flag;

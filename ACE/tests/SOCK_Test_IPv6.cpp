@@ -208,7 +208,7 @@ server (void *arg)
 }
 
 static void
-spawn (void)
+spawn ()
 {
   // Acceptor
   ACE_SOCK_Acceptor peer_acceptor;

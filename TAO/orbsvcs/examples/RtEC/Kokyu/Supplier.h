@@ -41,9 +41,9 @@ public:
   // = The RtecEventComm::PushSupplier methods
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
-  void timeout_occurred (void);
+  void timeout_occurred ();
 
 private:
   RtecEventComm::EventSourceID id_;
@@ -69,7 +69,7 @@ public:
 
   /// The skeleton methods.
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
 private:
   Supplier *supplier_impl_;

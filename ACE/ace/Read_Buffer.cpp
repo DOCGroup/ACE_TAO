@@ -14,7 +14,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-ACE_Read_Buffer::dump (void) const
+ACE_Read_Buffer::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Read_Buffer::dump");
@@ -58,7 +58,7 @@ ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
 }
 #endif  // ACE_HAS_WINCE
 
-ACE_Read_Buffer::~ACE_Read_Buffer (void)
+ACE_Read_Buffer::~ACE_Read_Buffer ()
 {
   ACE_TRACE ("ACE_Read_Buffer::~ACE_Read_Buffer");
 

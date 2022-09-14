@@ -38,7 +38,7 @@ class ACE_Export ACE_FIFO_Send_Msg : public ACE_FIFO_Send
 {
 public:
   /// Default constructor.
-  ACE_FIFO_Send_Msg (void);
+  ACE_FIFO_Send_Msg ();
 
   /// Open up a record-oriented named pipe for writing.
   ACE_FIFO_Send_Msg (const ACE_TCHAR *rendezvous,
@@ -72,7 +72,7 @@ public:
 #endif /* ACE_HAS_STREAM_PIPES */
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

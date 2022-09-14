@@ -29,20 +29,19 @@
  */
 class Life_Cycle_Service_Server
 {
-
 public:
   /// Default constructor
-  Life_Cycle_Service_Server (void);
+  Life_Cycle_Service_Server ();
 
   /// Destructor
-  ~Life_Cycle_Service_Server (void);
+  ~Life_Cycle_Service_Server ();
 
   /// Initialize the Server state - parsing arguments and ...
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   /// Run the orb.
-  int run (void);
+  int run ();
 
   /// Parse the passed parameters.
   u_int parse_args (int argc,

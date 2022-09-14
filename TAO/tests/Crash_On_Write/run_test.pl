@@ -63,7 +63,7 @@ if ($client_status != 0) {
 
 # The server crashes, therefore it normally exists with status != 0,
 # but a status of -1 would be a serious error.
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 50);
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 50, {self_crash => 1});
 
 if ($server_status == -1) {
     print STDERR "ERROR: server returned $server_status\n";

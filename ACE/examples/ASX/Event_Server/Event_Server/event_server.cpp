@@ -34,10 +34,10 @@ class Event_Server : public ACE_Sig_Adapter
   //     shutdown the <ACE_Reactor> cleanly when a SIGINT is
   //     generated.
 public:
-  Event_Server (void);
+  Event_Server ();
   // Constructor.
 
-  int svc (void);
+  int svc ();
   // Run the event-loop for the event server.
 
 private:
@@ -45,13 +45,13 @@ private:
   // Hook method called back when a user types something into the
   // STDIN in order to shut down the program.
 
-  int configure_stream (void);
+  int configure_stream ();
   // Setup the plumbing in the stream.
 
-  int set_watermarks (void);
+  int set_watermarks ();
   // Set the high and low queue watermarks.
 
-  int run_event_loop (void);
+  int run_event_loop ();
   // Run the event-loop for the <Event_Server>.
 
   MT_Stream event_server_;
@@ -59,7 +59,7 @@ private:
   // <Modules>.
 };
 
-Event_Server::Event_Server (void)
+Event_Server::Event_Server ()
   : ACE_Sig_Adapter (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
   // Shutdown the <ACE_Reactor>'s event loop when a SIGINT is
   // received.
@@ -106,7 +106,7 @@ Event_Server::handle_input (ACE_HANDLE)
 }
 
 int
-Event_Server::configure_stream (void)
+Event_Server::configure_stream ()
 {
   Peer_Router_Context *src;
   // Create the <Supplier_Router>'s routing context.  This contains a
@@ -172,7 +172,7 @@ Event_Server::configure_stream (void)
 }
 
 int
-Event_Server::set_watermarks (void)
+Event_Server::set_watermarks ()
 {
   // Set the high and low water marks appropriately.  The water marks
   // control how much data can be buffered before the queues are
@@ -195,7 +195,7 @@ Event_Server::set_watermarks (void)
 }
 
 int
-Event_Server::run_event_loop (void)
+Event_Server::run_event_loop ()
 {
   // Begin the timer.
   Options::instance ()->start_timer ();
@@ -215,7 +215,7 @@ Event_Server::run_event_loop (void)
 }
 
 int
-Event_Server::svc (void)
+Event_Server::svc ()
 {
   if (this->configure_stream () == -1)
     return -1;

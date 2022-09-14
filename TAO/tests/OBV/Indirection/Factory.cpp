@@ -9,7 +9,7 @@ NodeFactory::register_new_factory (CORBA::ORB& orb) {
 }
 
 CORBA::ValueBase*
-NodeFactory::create_for_unmarshal (void)
+NodeFactory::create_for_unmarshal ()
 {
   ::CORBA::ValueBase *ret_val = 0;
   ACE_NEW_THROW_EX (
@@ -24,12 +24,12 @@ void
 BoxedValueFactory::register_new_factory (CORBA::ORB& orb) {
   CORBA::ValueFactoryBase_var mf = new BoxedValueFactory;
   demo::value::idl::boxedValue_var bv (new OBV_demo::value::idl::boxedValue);
-  CORBA::String_var id = bv->_tao_type ()->id ();;
+  CORBA::String_var id = bv->_tao_type ()->id ();
   orb.register_value_factory (id.in (), mf.in ());
 }
 
 CORBA::ValueBase*
-BoxedValueFactory::create_for_unmarshal (void)
+BoxedValueFactory::create_for_unmarshal ()
 {
   ::CORBA::ValueBase *ret_val = 0;
   ACE_NEW_THROW_EX (
@@ -49,7 +49,7 @@ BaseValueFactory::register_new_factory (CORBA::ORB& orb) {
 }
 
 CORBA::ValueBase*
-BaseValueFactory::create_for_unmarshal (void)
+BaseValueFactory::create_for_unmarshal ()
 {
   ::CORBA::ValueBase *ret_val = 0;
   ACE_NEW_THROW_EX (
@@ -69,7 +69,7 @@ TValueFactory::register_new_factory (CORBA::ORB& orb) {
 }
 
 CORBA::ValueBase*
-TValueFactory::create_for_unmarshal (void)
+TValueFactory::create_for_unmarshal ()
 {
   ::CORBA::ValueBase *ret_val = 0;
   ACE_NEW_THROW_EX (
@@ -89,7 +89,7 @@ ConfigValueFactory::register_new_factory (CORBA::ORB& orb) {
 }
 
 CORBA::ValueBase*
-ConfigValueFactory::create_for_unmarshal (void)
+ConfigValueFactory::create_for_unmarshal ()
 {
   ::CORBA::ValueBase *ret_val = 0;
   ACE_NEW_THROW_EX (

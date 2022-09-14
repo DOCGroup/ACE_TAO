@@ -33,12 +33,11 @@ class TAO_ORB_Core;
 class TAO_Dynamic_TP_Export TAO_DTP_ORB_Loader : public ACE_Service_Object
 {
 public:
-
   /// Constructor.
-  TAO_DTP_ORB_Loader (void);
+  TAO_DTP_ORB_Loader ();
 
   /// Destructor.
-  virtual ~TAO_DTP_ORB_Loader (void);
+  virtual ~TAO_DTP_ORB_Loader ();
 
   /// Initialize the DynamicTP loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);

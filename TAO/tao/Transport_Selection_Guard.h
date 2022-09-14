@@ -50,7 +50,7 @@ namespace TAO
    *
    * <B>See Also:</B>
    *
-   * http://htmlpreview.github.com/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/transport_current/index.html
+   * https://htmlpreview.github.io/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/transport_current/index.html
    *
    */
   class TAO_Export Transport_Selection_Guard
@@ -64,32 +64,32 @@ namespace TAO
     Transport_Selection_Guard (TAO_Transport* t);
 
     /// Dtor
-    ~Transport_Selection_Guard (void);
+    ~Transport_Selection_Guard ();
 
     /// getter
-    TAO_Transport* operator-> (void) const
+    TAO_Transport* operator-> () const
     {
       return this->get ();
-    };
+    }
 
     /// getter
-    TAO_Transport& operator* (void) const
+    TAO_Transport& operator* () const
     {
       return *this->get ();
-    };
+    }
 
     /// Getter
-    TAO_Transport* get (void) const
+    TAO_Transport* get () const
     {
       return this->curr_;
-    };
+    }
 
     /// Setter
     Transport_Selection_Guard& set (TAO_Transport* t)
     {
       this->curr_ = t;
       return *this;
-    };
+    }
 
   Transport_Selection_Guard& operator=(const Transport_Selection_Guard& rhs) {
     if (this != &rhs)
@@ -103,7 +103,7 @@ namespace TAO
   }
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (Transport_Selection_Guard (const Transport_Selection_Guard&))
+    Transport_Selection_Guard (const Transport_Selection_Guard&) = delete;
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
     /// This is pointing to the guard that was active prior to

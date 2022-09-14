@@ -49,7 +49,7 @@ public:
   Event_StructuredPushSupplier (Events * test_client);
 
   /// Destructor.
-  virtual ~Event_StructuredPushSupplier (void);
+  virtual ~Event_StructuredPushSupplier ();
 
 protected:
   Events* test_client_;
@@ -61,8 +61,8 @@ class Events : public Notify_Test_Client
 {
 public:
   // Initialization and termination code.
-  Events (void);
-  virtual ~Events (void);
+  Events ();
+  virtual ~Events ();
 
   int parse_args (int argc,
                   ACE_TCHAR *argv[]) ;
@@ -72,20 +72,20 @@ public:
             ACE_TCHAR *argv []);
 
   /// Called when an event is received.
-  void on_event_received (void);
+  void on_event_received ();
 
   /// Run the test.
-  void run_test (void);
+  void run_test ();
 
   /// End the test.
-  void end_test (void);
+  void end_test ();
 
   /// check if we got the expected results.
-  int check_results (void);
+  int check_results ();
 
 protected:
   /// Create EC
-  void create_EC (void);
+  void create_EC ();
 
   /// Number of events received so far.
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;

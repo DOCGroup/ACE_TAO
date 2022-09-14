@@ -15,18 +15,18 @@ Echo_Client_Request_Interceptor (const char *id)
 {
 }
 
-Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor (void)
+Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor ()
 {
 }
 
 char *
-Echo_Client_Request_Interceptor::name (void)
+Echo_Client_Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Client_Request_Interceptor::destroy (void)
+Echo_Client_Request_Interceptor::destroy ()
 {
 }
 
@@ -41,7 +41,6 @@ void
 Echo_Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
@@ -65,7 +64,6 @@ Echo_Client_Request_Interceptor::send_request (
               operation.in (),
               ior.in ()));
 #endif /*if 0*/
-
 
 
   // Populate target member of the ClientRequestInfo.
@@ -105,7 +103,6 @@ void
 Echo_Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
@@ -180,7 +177,6 @@ void
 Echo_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;

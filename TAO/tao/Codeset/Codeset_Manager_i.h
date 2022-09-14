@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //======================================================================
 /*
  *  @file Codeset_Manager_i.h
@@ -58,7 +56,6 @@ class TAO_Codeset_Descriptor;
 class TAO_Codeset_Export TAO_Codeset_Manager_i :
   public TAO_Codeset_Manager
 {
-
 public:
   /// NCS for char is defaulted to ISO 8859-1:1987; Latin Alphabet
   /// No. 1
@@ -67,12 +64,12 @@ public:
   /// to provide a non-compliant default wchar codeset may do so.
   static CONV_FRAME::CodeSetId default_wchar_codeset;
 
-  TAO_Codeset_Manager_i (void);
-  ~TAO_Codeset_Manager_i (void);
+  TAO_Codeset_Manager_i ();
+  ~TAO_Codeset_Manager_i () = default;
 
   /// Called by an object of TAO_Acceptor to set NCS and CCS values
   /// for Char/Wchar in to the Object Reference.
-  void set_codeset (TAO_Tagged_Components& ) const;
+  void set_codeset (TAO_Tagged_Components&) const;
   ///
   /// Called from an object of "TAO_GIOP_Invocation" to set TCS on the
   /// Transport
@@ -93,8 +90,8 @@ public:
   /// codeset id matching the manager's native codeset id.
   void open(TAO_ORB_Core& core);
 
-  virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor (void);
-  virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor (void);
+  virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor ();
+  virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor ();
 
 private:
   // Compute the TCS for Char/WChar asper the CORBA Specification

@@ -33,7 +33,7 @@ class TAO_Messaging_Export TAO_Messaging_Initializer
 {
 public:
   /// Used to force the initialisation of the ORB code.
-  static int init (void);
+  static int init ();
 };
 
 static const int TAO_Requires_Messaging_Initializer = TAO_Messaging_Initializer::init ();

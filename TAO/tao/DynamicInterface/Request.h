@@ -40,11 +40,7 @@
 #endif /* TAO_HAS_AMI */
 
 #include "ace/SString.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -71,29 +67,29 @@ namespace CORBA
   {
   public:
     /// Return the target of this request.
-    CORBA::Object_ptr target (void) const;
+    CORBA::Object_ptr target () const;
 
     /// Return the operation name for the request.
-    const CORBA::Char *operation (void) const;
+    const CORBA::Char *operation () const;
 
     /// Return the arguments for the request.
-    CORBA::NVList_ptr arguments (void);
+    CORBA::NVList_ptr arguments ();
 
     /// Return the result for the request.
-    CORBA::NamedValue_ptr result (void);
+    CORBA::NamedValue_ptr result ();
 
     /// Return the exceptions resulting from this request.
-    CORBA::ExceptionList_ptr exceptions (void);
+    CORBA::ExceptionList_ptr exceptions ();
 
     /// Accessor for the Context member.
-    CORBA::Context_ptr ctx (void) const;
+    CORBA::Context_ptr ctx () const;
 
     /// Mutator for the Context member.
     void ctx (CORBA::Context_ptr);
 
     /// Return a list of the request's result's contexts.  Since TAO
     /// does not implement Contexts, this will always be 0.
-    CORBA::ContextList_ptr contexts (void);
+    CORBA::ContextList_ptr contexts ();
 
     /**
      * @name Argument manipulation helper functions.
@@ -103,11 +99,11 @@ namespace CORBA
      * <<=.
      */
     //@{
-    CORBA::Any &add_in_arg (void);
+    CORBA::Any &add_in_arg ();
     CORBA::Any &add_in_arg (const char* name);
-    CORBA::Any &add_inout_arg (void);
+    CORBA::Any &add_inout_arg ();
     CORBA::Any &add_inout_arg (const char* name);
-    CORBA::Any &add_out_arg (void);
+    CORBA::Any &add_out_arg ();
     CORBA::Any &add_out_arg (const char* name);
     //@}
 
@@ -115,7 +111,7 @@ namespace CORBA
     void set_return_type (CORBA::TypeCode_ptr tc);
 
     /// Returns reference to Any for extraction using >>=.
-    CORBA::Any &return_value (void);
+    CORBA::Any &return_value ();
 
     /// Perform method resolution and invoke an appropriate method.
     /**
@@ -129,7 +125,7 @@ namespace CORBA
      *       recommended as the user may not be able to propagate the
      *       exceptions.
      */
-    void invoke (void);
+    void invoke ();
 
     /// Send a oneway request.
     /**
@@ -137,7 +133,7 @@ namespace CORBA
      *       recommended as the user may not be able to propagate the
      *       exceptions.
      */
-    void send_oneway (void);
+    void send_oneway ();
 
     /**
      * @name The 'deferred synchronous' methods.
@@ -145,9 +141,9 @@ namespace CORBA
      * The 'deferred synchronous' methods.
      */
     //@{
-    void send_deferred (void);
-    void get_response (void);
-    CORBA::Boolean poll_response (void);
+    void send_deferred ();
+    void get_response ();
+    CORBA::Boolean poll_response ();
     //@}
 
     /// Callback method for deferred synchronous requests.
@@ -166,17 +162,17 @@ namespace CORBA
 
     /// Pseudo object methods.
     static CORBA::Request* _duplicate (CORBA::Request*);
-    static CORBA::Request* _nil (void);
+    static CORBA::Request* _nil ();
 
     // = Reference counting.
-    CORBA::ULong _incr_refcount (void);
-    CORBA::ULong _decr_refcount (void);
+    CORBA::ULong _incr_refcount ();
+    CORBA::ULong _decr_refcount ();
 
     /// Set the lazy evaluation flag.
     void _tao_lazy_evaluation (bool lazy_evaluation);
 
     /// Get the byte order member.
-    int _tao_byte_order (void) const;
+    int _tao_byte_order () const;
 
     /// Set the byte order member.
     void _tao_byte_order (int byte_order);
@@ -186,11 +182,11 @@ namespace CORBA
     void raw_user_exception (TAO_InputCDR &cdr);
 
     /// Accessor for the input stream containing the exception.
-    ACE_CString &raw_user_exception (void);
+    ACE_CString &raw_user_exception ();
 
     /// Proprietary method to check whether a response has been
     /// received.
-    CORBA::Boolean response_received (void);
+    CORBA::Boolean response_received ();
 
     // Useful for template programming.
     typedef CORBA::Request_ptr _ptr_type;
@@ -214,7 +210,7 @@ namespace CORBA
              CORBA::ORB_ptr orb,
              const CORBA::Char *op);
 
-    ~Request (void);
+    ~Request ();
 
   private:
     /// Target object.
@@ -248,11 +244,7 @@ namespace CORBA
     CORBA::Context_ptr ctx_;
 
     /// Reference counting.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
     /// Protect the response_received_.
     TAO_SYNCH_MUTEX lock_;

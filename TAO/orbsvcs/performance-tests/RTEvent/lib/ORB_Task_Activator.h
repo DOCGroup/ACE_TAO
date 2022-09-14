@@ -29,7 +29,7 @@ public:
                       ORB_Task *task);
 
   /// Destructor, stop the task and wait for it
-  ~ORB_Task_Activator (void);
+  ~ORB_Task_Activator ();
 };
 
 #if defined(__ACE_INLINE__)

@@ -45,7 +45,6 @@ ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:t:"));
 class PeriodicTask : public ACE_Event_Handler
 {
 public:
-
   explicit PeriodicTask(CORBA::ORB_var orbIn)
       : ACE_Event_Handler(),
       orb(orbIn),
@@ -106,9 +105,7 @@ public:
   }
 
 protected:
-
 private:
-
   PeriodicTask(const PeriodicTask &);
   PeriodicTask & operator=(const PeriodicTask &);
   CORBA::ORB_var orb;

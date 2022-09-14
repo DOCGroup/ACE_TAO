@@ -34,7 +34,7 @@ ACE_UTF32_Encoding_Converter::ACE_UTF32_Encoding_Converter (bool swap)
 {
 }
 
-ACE_UTF32_Encoding_Converter::~ACE_UTF32_Encoding_Converter (void)
+ACE_UTF32_Encoding_Converter::~ACE_UTF32_Encoding_Converter ()
 {
 }
 

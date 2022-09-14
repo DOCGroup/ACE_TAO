@@ -9,7 +9,6 @@
 #include "Options.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // Define some short-hand macros to deal with long templates
@@ -51,7 +50,7 @@ Acceptor_Factory<PH, PK>::Acceptor_Factory (Peer_Router<PH, PK> *pr)
 }
 
 template <class PH, class PK> Peer_Router<PH, PK> *
-Acceptor_Factory<PH, PK>::router (void)
+Acceptor_Factory<PH, PK>::router ()
 {
   return this->pr_;
 }
@@ -63,7 +62,7 @@ Peer_Handler<ROUTER, KEY>::Peer_Handler (ACE_Thread_Manager *tm)
 }
 
 template <class ROUTER, class KEY> int
-Peer_Handler<ROUTER, KEY>::svc (void)
+Peer_Handler<ROUTER, KEY>::svc ()
 {
   // Just a try !!  we're just reading from our ACE_Message_Queue.
   ACE_Message_Block *db, *hb;
@@ -140,7 +139,6 @@ Peer_Handler<ROUTER, KEY>::open (void *a)
 template <class ROUTER, class KEY> int
 Peer_Handler<ROUTER, KEY>::handle_input (ACE_HANDLE h)
 {
-
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) input arrived on sd %d\n"), h));
 //  ACE_Reactor::instance ()->remove_handler(h,
 //                                          ACE_Event_Handler::ALL_EVENTS_MASK
@@ -205,12 +203,12 @@ Peer_Router<PH, PK>::send_peers (ACE_Message_Block *mb)
 }
 
 template <class PH, class PK>
-Peer_Router<PH, PK>::~Peer_Router (void)
+Peer_Router<PH, PK>::~Peer_Router ()
 {
 }
 
 template <class PH, class PK> int
-Peer_Router<PH, PK>::fini (void)
+Peer_Router<PH, PK>::fini ()
 {
   delete this->acceptor_;
   return 0;

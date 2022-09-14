@@ -11,7 +11,7 @@ TAO_LRU_Connection_Purging_Strategy::TAO_LRU_Connection_Purging_Strategy (
 }
 
 
-TAO_LRU_Connection_Purging_Strategy::~TAO_LRU_Connection_Purging_Strategy (void)
+TAO_LRU_Connection_Purging_Strategy::~TAO_LRU_Connection_Purging_Strategy ()
 {
 }
 

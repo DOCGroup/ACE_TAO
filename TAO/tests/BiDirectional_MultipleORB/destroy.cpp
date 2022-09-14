@@ -16,14 +16,12 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
 
-
 int
 test_with_bidir_poa (int argc,
                      ACE_TCHAR **argv,
                      const char *orb_name,
                      int destroy_orb)
 {
-
   try
     {
       CORBA::ORB_var orb =
@@ -67,7 +65,7 @@ test_with_bidir_poa (int argc,
       poa_manager->activate ();
 
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       if (destroy_orb)
         {

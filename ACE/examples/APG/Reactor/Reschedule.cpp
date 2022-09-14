@@ -19,7 +19,6 @@ public:
                 ACE_OS::ctime(&epoch)));
     return 0;
   }
-
 };
 
 // Listing 1 code/ch07
@@ -33,9 +32,7 @@ public:
   {
   }
 
-  int handle_signal (int,
-                     siginfo_t * = 0,
-                     ucontext_t * = 0)
+  int handle_signal (int, siginfo_t * = 0, ucontext_t * = 0)
   {
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("Resetting interval of timer ")

@@ -63,7 +63,7 @@ namespace TAO
        */
       //@{
       virtual int open (TAO_ORB_Core *orb_core);
-      virtual int close (void);
+      virtual int close ();
       virtual TAO_Transport *connect (TAO::Profile_Transport_Resolver *r,
                                       TAO_Transport_Descriptor_Interface *desc,
                                       ACE_Time_Value *timeout);
@@ -82,12 +82,12 @@ namespace TAO
        * @see @c TAO_Connector
        */
       //@{
-      virtual TAO_Profile * make_profile (void);
+      virtual TAO_Profile * make_profile ();
       virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
       //@}
 
       /// SSL-specific profile
-      TAO_Profile * make_secure_profile (void);
+      TAO_Profile * make_secure_profile ();
 
       /// IIOP-specific connection establishment.
       /**

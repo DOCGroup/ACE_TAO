@@ -51,7 +51,6 @@ class TAO_LB_IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_LB_IORInterceptor (const CORBA::StringSeq & object_groups,
                          const CORBA::StringSeq & repository_ids,
@@ -69,10 +68,10 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Add the tagged components to the IOR.
   virtual void establish_components (
@@ -92,12 +91,10 @@ public:
   //@}
 
 private:
-
   /// Create and register the LoadAlert object with the LoadManager.
-  void register_load_alert (void);
+  void register_load_alert ();
 
 private:
-
   /// List of stringified object group references.
   const CORBA::StringSeq object_groups_;
 
@@ -122,7 +119,6 @@ private:
 
   /// Synchronize access to the class state.
   TAO_SYNCH_MUTEX lock_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

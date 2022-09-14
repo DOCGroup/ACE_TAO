@@ -14,7 +14,7 @@ public:
   // Constructor
 
   // = The skeleton methods
-  virtual void start_workers (void);
+  virtual void start_workers ();
   virtual void start_workers_excep (::Messaging::ExceptionHolder *holder);
 
 private:

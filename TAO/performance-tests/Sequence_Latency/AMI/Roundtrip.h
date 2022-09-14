@@ -15,7 +15,6 @@ class Roundtrip
   : public virtual POA_Test::Roundtrip
 {
 public:
-
   /// Constructor
   Roundtrip (CORBA::ORB_ptr orb);
 
@@ -38,7 +37,7 @@ public:
   Test::Timestamp test_double_method (const Test::double_load& ol,
                                       Test::Timestamp send_time);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

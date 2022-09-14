@@ -153,9 +153,9 @@ int processWin32Record (ALLOCATOR *shmem_allocator)
   {
     return processRecord (shmem_allocator);
   }
-
   ACE_SEH_EXCEPT (handle_remap (GetExceptionInformation ()))
-  { }
+  {
+  }
 
   return 0;
 }
@@ -223,7 +223,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
 // Listing 2
 
 // Listing 3 code/ch17
-int handle_child (void)
+int handle_child ()
 {
   ALLOCATOR *shmem_allocator = 0;
   ACE_MMAP_Memory_Pool_Options options

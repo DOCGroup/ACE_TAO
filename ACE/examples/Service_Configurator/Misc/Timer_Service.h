@@ -16,7 +16,7 @@ class ACE_Svc_Export Timer_Service_1 : public ACE_Service_Object
   //   Demonstrates a simple timer service that can be configured
   //   statically.
 public:
-  Timer_Service_1 (void);
+  Timer_Service_1 ();
   // Default constructor.
 
   virtual int init (int argc, ACE_TCHAR *argv[]);
@@ -50,14 +50,14 @@ private:
 class ACE_Svc_Export Timer_Service_2 : public Timer_Service_1
 {
 public:
-  Timer_Service_2 (void);
+  Timer_Service_2 ();
   // Default constructor.
 };
 
 class ACE_Svc_Export Timer_Service_3 : public Timer_Service_1
 {
 public:
-  Timer_Service_3 (void);
+  Timer_Service_3 ();
   // Default constructor.
 };
 

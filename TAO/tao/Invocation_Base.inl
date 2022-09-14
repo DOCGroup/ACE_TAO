@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   ACE_INLINE TAO_Stub *
-  Invocation_Base::stub (void) const
+  Invocation_Base::stub () const
   {
     return this->stub_;
   }
@@ -30,13 +30,13 @@ namespace TAO
   }
 
   ACE_INLINE CORBA::Boolean
-  Invocation_Base::response_expected (void) const
+  Invocation_Base::response_expected () const
   {
     return this->response_expected_;
   }
 
   ACE_INLINE GIOP::ReplyStatusType
-  Invocation_Base::reply_status (void) const
+  Invocation_Base::reply_status () const
   {
     return this->reply_status_;
   }
@@ -48,13 +48,13 @@ namespace TAO
   }
 
   ACE_INLINE CORBA::Object_ptr
-  Invocation_Base::target (void) const
+  Invocation_Base::target () const
   {
     return this->otarget_;
   }
 
   ACE_INLINE CORBA::Object_ptr
-  Invocation_Base::effective_target (void) const
+  Invocation_Base::effective_target () const
   {
     return this->target_;
   }
@@ -79,7 +79,7 @@ namespace TAO
   }
 
   ACE_INLINE TAO::Invocation_Status
-  Invocation_Base::invoke_status (void) const
+  Invocation_Base::invoke_status () const
   {
     return this->invoke_status_;
   }
@@ -91,7 +91,7 @@ namespace TAO
   }
 
   ACE_INLINE bool
-  Invocation_Base::is_remote_request (void) const
+  Invocation_Base::is_remote_request () const
   {
     return this->is_remote_request_;
   }

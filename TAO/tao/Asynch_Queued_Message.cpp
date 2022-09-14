@@ -24,7 +24,7 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   , offset_ (0)
   , abs_timeout_ (ACE_Time_Value::zero)
 {
-  if (timeout != 0)// && *timeout != ACE_Time_Value::zero)
+  if (timeout != nullptr)// && *timeout != ACE_Time_Value::zero)
     {
       this->abs_timeout_ = ACE_High_Res_Timer::gettimeofday_hr () + *timeout;
     }
@@ -33,7 +33,7 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
 
   size_t copy_offset = 0;
   for (const ACE_Message_Block *i = contents;
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     {
       ACE_OS::memcpy (this->buffer_ + copy_offset,
@@ -57,20 +57,20 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (char *buf,
 {
 }
 
-TAO_Asynch_Queued_Message::~TAO_Asynch_Queued_Message (void)
+TAO_Asynch_Queued_Message::~TAO_Asynch_Queued_Message ()
 {
   // @@ Use a pool for these guys!
   delete [] this->buffer_;
 }
 
 size_t
-TAO_Asynch_Queued_Message::message_length (void) const
+TAO_Asynch_Queued_Message::message_length () const
 {
   return this->size_ - this->offset_;
 }
 
 int
-TAO_Asynch_Queued_Message::all_data_sent (void) const
+TAO_Asynch_Queued_Message::all_data_sent () const
 {
   return this->size_ == this->offset_;
 }
@@ -112,7 +112,7 @@ TAO_Asynch_Queued_Message::bytes_transferred (size_t &byte_count)
 TAO_Queued_Message *
 TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
 {
-  char *buf = 0;
+  char *buf = nullptr;
 
   // @todo: Need to use a memory pool. But certain things need to
   // change a bit in this class for that. Till then.
@@ -123,13 +123,13 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
 
   ACE_NEW_RETURN (buf,
                   char[sz],
-                  0);
+                  nullptr);
 
   ACE_OS::memcpy (buf,
                   this->buffer_ + this->offset_,
                   sz);
 
-  TAO_Asynch_Queued_Message *qm = 0;
+  TAO_Asynch_Queued_Message *qm = nullptr;
 
   if (alloc)
     {
@@ -142,7 +142,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
                                                         this->abs_timeout_,
                                                         alloc,
                                                         true),
-                             0);
+                             nullptr);
     }
   else
     {
@@ -160,16 +160,16 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
                                                  this->orb_core_,
                                                  sz,
                                                  this->abs_timeout_,
-                                                 0,
+                                                 nullptr,
                                                  true),
-                      0);
+                      nullptr);
     }
 
   return qm;
 }
 
 void
-TAO_Asynch_Queued_Message::destroy (void)
+TAO_Asynch_Queued_Message::destroy ()
 {
   if (this->is_heap_created_)
     {
@@ -179,7 +179,6 @@ TAO_Asynch_Queued_Message::destroy (void)
         {
           ACE_DES_FREE_THIS (this->allocator_->free,
                              TAO_Asynch_Queued_Message);
-
         }
       else // global release..
         {

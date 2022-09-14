@@ -44,7 +44,6 @@ class Server_Request_Interceptor
     public virtual Request_Interceptor
 {
 public:
-
   /// Constructor.  Accepts the name of the interceptor.
   Server_Request_Interceptor (const char *name);
 
@@ -74,14 +73,12 @@ public:
   //@}
 
 private:
-
   /// Returns 1 if the server-side test is currently being run, and 0
   /// otherwise.
   CORBA::Boolean server_side_test (
     PortableInterceptor::ServerRequestInfo_ptr info);
 
 private:
-
   /// Variable used to keep track of the scenario count.  Used to get
   /// around the inability to call RequestInfo::arguments() in the
   /// receive_service_contexts() interception point.

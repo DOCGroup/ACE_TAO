@@ -34,7 +34,7 @@ public:
   NotificationServiceMonitor_i (CORBA::ORB_ptr orb = 0);
 
   /// Get a list of statistic names
-  virtual Monitor::NameList* get_statistic_names (void);
+  virtual Monitor::NameList* get_statistic_names ();
 
   /// Get the data from a single statistic
   virtual Monitor::Data*
@@ -68,7 +68,7 @@ public:
   virtual void remove_supplieradmin (const char* name);
 
   /// Call shutdown() on the ORB if one was provided during construction
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   void send_control_command (const char* name, const char* cmd);

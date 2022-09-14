@@ -53,7 +53,6 @@ struct TAO_PG_MemberInfo
    * given location, this equality operator will return true.
    */
   bool operator== (const TAO_PG_MemberInfo & rhs) const;
-
 };
 
 typedef ACE_Unbounded_Set<TAO_PG_MemberInfo> TAO_PG_MemberInfo_Set;

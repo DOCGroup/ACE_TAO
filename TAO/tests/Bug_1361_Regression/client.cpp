@@ -22,7 +22,7 @@ public:
       ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
   }
 
-  void activate (void)
+  void activate ()
   {
     ACE_Time_Value tv (150, 0);
     this->reactor()->schedule_timer (this, 0, tv, tv);
@@ -127,7 +127,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "(%P|%t) client - event loop finished\n"));
 
       // Actually the code here should never be reached.
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

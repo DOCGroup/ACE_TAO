@@ -13,7 +13,6 @@
 #include "ace/SString.inl"
 #endif /* __ACE_INLINE__ */
 
-
 // ************************************************************
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -53,7 +52,7 @@ operator<< (ACE_OSTREAM_TYPE &os, const ACE_SString &ss)
 // *****************************************************************
 
 char *
-ACE_NS_WString::char_rep (void) const
+ACE_NS_WString::char_rep () const
 {
   ACE_TRACE ("ACE_NS_WString::char_rep");
   if (this->len_ == 0)
@@ -83,7 +82,7 @@ ACE_NS_WString::char_rep (void) const
 }
 
 ACE_UINT16 *
-ACE_NS_WString::ushort_rep (void) const
+ACE_NS_WString::ushort_rep () const
 {
   ACE_TRACE ("ACE_NS_WString::ushort_rep");
   if (this->len_ <= 0)
@@ -165,7 +164,7 @@ ACE_SString::size_type const ACE_SString::npos =
 ACE_ALLOC_HOOK_DEFINE(ACE_SString)
 
 void
-ACE_SString::dump (void) const
+ACE_SString::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SString::dump");

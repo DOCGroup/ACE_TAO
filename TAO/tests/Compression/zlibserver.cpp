@@ -11,12 +11,10 @@ test_invalid_compression_factory (Compression::CompressionManager_ptr cm)
   try
     {
       // Get an invalid compression factory
-      Compression::CompressorFactory_var factory =
-        cm->get_factory (100);
+      Compression::CompressorFactory_var factory = cm->get_factory (100);
     }
-  catch (const Compression::UnknownCompressorId& ex)
+  catch (const Compression::UnknownCompressorId&)
     {
-      ACE_UNUSED_ARG (ex);
       succeed = true;
     }
   catch (const CORBA::Exception&)
@@ -119,7 +117,6 @@ test_compression (CORBA::ULong nelements,
   if (decompress != mytest)
     {
       ACE_ERROR ((LM_ERROR, "Error, decompress not working\n"));
-
     }
   else
     {

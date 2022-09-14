@@ -8,24 +8,24 @@ Policy::Policy (CORBA::ULong val)
 {
 }
 
-Policy::~Policy (void)
+Policy::~Policy ()
 {
 }
 
 CORBA::ULong
-Policy::value (void)
+Policy::value ()
 {
   return this->value_;
 }
 
 CORBA::PolicyType
-Policy::policy_type (void)
+Policy::policy_type ()
 {
   return Test::POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
-Policy::copy (void)
+Policy::copy ()
 {
   CORBA::Policy_ptr p;
   ACE_NEW_THROW_EX (p,
@@ -36,6 +36,6 @@ Policy::copy (void)
 }
 
 void
-Policy::destroy (void)
+Policy::destroy ()
 {
 }

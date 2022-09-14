@@ -29,7 +29,7 @@ class TAO_RT_Notify_Export TAO_RT_Notify_Service : public TAO_CosNotify_Service
 {
 public:
   /// Constructor
-  TAO_RT_Notify_Service (void);
+  TAO_RT_Notify_Service ();
 
   /// Destructor
   ~TAO_RT_Notify_Service ();
@@ -42,10 +42,10 @@ protected:
   virtual void init_i (CORBA::ORB_ptr orb);
 
   /// Create the Factory for RT Notify objects.
-  virtual TAO_Notify_Factory* create_factory (void);
+  virtual TAO_Notify_Factory* create_factory ();
 
   /// Creates the Builder for RT Notify objects.
-  virtual TAO_Notify_Builder* create_builder (void);
+  virtual TAO_Notify_Builder* create_builder ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

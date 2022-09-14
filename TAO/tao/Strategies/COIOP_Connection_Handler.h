@@ -44,16 +44,14 @@ class TAO_Strategies_Export TAO_COIOP_Connection_Handler
   : public TAO_COIOP_SVC_HANDLER,
     public TAO_Connection_Handler
 {
-
 public:
-
   TAO_COIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor.
   TAO_COIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor.
-  ~TAO_COIOP_Connection_Handler (void);
+  ~TAO_COIOP_Connection_Handler ();
 
   /// Called by the <Strategy_Acceptor> when the handler is completely
   /// connected.  Argument is unused.
@@ -73,8 +71,8 @@ public:
   //@{
   /** @name Event Handler overloads
    */
-  virtual int resume_handler (void);
-  virtual int close_connection (void);
+  virtual int resume_handler ();
+  virtual int close_connection ();
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
@@ -83,8 +81,7 @@ public:
   //@}
 
   /// Add ourselves to Cache.
-  int add_transport_to_cache (void);
-
+  int add_transport_to_cache ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

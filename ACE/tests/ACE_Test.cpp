@@ -18,7 +18,7 @@
 #include "ace/OS_NS_stdlib.h"
 
 int
-log2_test (void)
+log2_test ()
 {
   u_long values[] = {1, 2, 4, 8, 1048576};
   u_long results[] = {0, 1, 2, 3, 20};
@@ -39,7 +39,7 @@ log2_test (void)
 }
 
 int
-ace_debug_test (void)
+ace_debug_test ()
 {
   int test_status = 0;
 
@@ -62,7 +62,7 @@ ace_debug_test (void)
 
 // Test ACE::execname to be sure it finds .exe without regard to case.
 int
-execname_test (void)
+execname_test ()
 {
   int error_count = 0;
 

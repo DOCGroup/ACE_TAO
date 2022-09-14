@@ -19,7 +19,7 @@ public:
   Test_i (Terminator &terminator);
 
   //Destructor
-  virtual ~Test_i (void);
+  virtual ~Test_i ();
 
   virtual CORBA::Boolean send_message (
     const char * user_name,

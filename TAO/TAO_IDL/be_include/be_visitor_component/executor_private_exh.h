@@ -24,7 +24,7 @@ class be_visitor_executor_private_exh
 public:
   be_visitor_executor_private_exh (be_visitor_context *ctx);
 
-  ~be_visitor_executor_private_exh (void);
+  ~be_visitor_executor_private_exh ();
 
   virtual int visit_provides (be_provides *node);
   virtual int visit_attribute (be_attribute *node);

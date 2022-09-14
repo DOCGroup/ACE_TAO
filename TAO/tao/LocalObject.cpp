@@ -13,7 +13,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::LocalObject::~LocalObject (void)
+CORBA::LocalObject::~LocalObject ()
 {
 }
 
@@ -50,7 +50,7 @@ CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj)
 
 
 TAO::ObjectKey *
-CORBA::LocalObject::_key (void)
+CORBA::LocalObject::_key ()
 {
   if (TAO_debug_level > 0)
     TAOLIB_ERROR ((LM_ERROR,
@@ -66,14 +66,14 @@ CORBA::LocalObject::_key (void)
 // the latter case, return FALSE.
 
 CORBA::Boolean
-CORBA::LocalObject::_non_existent (void)
+CORBA::LocalObject::_non_existent ()
 {
   // Always return false.
   return false;
 }
 
 char *
-CORBA::LocalObject::_repository_id (void)
+CORBA::LocalObject::_repository_id ()
 {
   if (TAO_debug_level > 0)
     TAOLIB_ERROR ((LM_ERROR,
@@ -126,7 +126,7 @@ CORBA::LocalObject::_request (const char *)
 }
 
 CORBA::Object_ptr
-CORBA::LocalObject::_get_component (void)
+CORBA::LocalObject::_get_component ()
 {
   if (TAO_debug_level > 0)
     TAOLIB_ERROR ((LM_ERROR,
@@ -136,7 +136,7 @@ CORBA::LocalObject::_get_component (void)
 }
 
 CORBA::InterfaceDef_ptr
-CORBA::LocalObject::_get_interface (void)
+CORBA::LocalObject::_get_interface ()
 {
   if (TAO_debug_level > 0)
     TAOLIB_ERROR ((LM_ERROR,
@@ -204,7 +204,7 @@ CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 CORBA::ORB_ptr
-CORBA::LocalObject::_get_orb (void)
+CORBA::LocalObject::_get_orb ()
 {
   if (TAO_debug_level > 0)
     TAOLIB_ERROR ((LM_ERROR,

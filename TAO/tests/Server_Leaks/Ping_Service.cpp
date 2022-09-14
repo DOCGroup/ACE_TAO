@@ -6,12 +6,12 @@ Ping_Service::Ping_Service (CORBA::ORB_ptr orb)
 }
 
 void
-Ping_Service::ping (void)
+Ping_Service::ping ()
 {
 }
 
 void
-Ping_Service::shutdown (void)
+Ping_Service::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

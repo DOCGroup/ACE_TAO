@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IOR_Parser::~TAO_IOR_Parser (void)
+TAO_IOR_Parser::~TAO_IOR_Parser ()
 {
 }
 

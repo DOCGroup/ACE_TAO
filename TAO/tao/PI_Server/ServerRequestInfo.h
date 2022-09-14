@@ -70,7 +70,6 @@ namespace TAO
     , public virtual ::CORBA::LocalObject
   {
   public:
-
     /// Constructor.
     ServerRequestInfo (TAO_ServerRequest & server_request,
                        TAO::Argument * const * args,
@@ -81,34 +80,34 @@ namespace TAO
 
     /// Return an ID unique to the current request.  This request ID may
     /// or may not be the same as the GIOP request ID.
-    virtual CORBA::ULong request_id (void);
+    virtual CORBA::ULong request_id ();
 
     /// Return the operation name for the current request.
-    virtual char * operation (void);
+    virtual char * operation ();
 
     /// Return the list of arguments passed to the current operation.
-    virtual Dynamic::ParameterList * arguments (void);
+    virtual Dynamic::ParameterList * arguments ();
 
     /// Return the list of exceptions the current operation is capable
     /// of throwing.
-    virtual Dynamic::ExceptionList * exceptions (void);
+    virtual Dynamic::ExceptionList * exceptions ();
 
-    virtual Dynamic::ContextList * contexts (void);
+    virtual Dynamic::ContextList * contexts ();
 
-    virtual Dynamic::RequestContext * operation_context (void);
+    virtual Dynamic::RequestContext * operation_context ();
 
     /// Return the result of the current request.  If there is no
     /// return value then an @c Any with @c tk_void @c TypeCode is
     /// returned.  This method is not valid for oneway operations.
-    virtual CORBA::Any * result (void);
+    virtual CORBA::Any * result ();
 
     /// Returns @c true for a two-way operation, and @c false otherwise.
-    virtual CORBA::Boolean response_expected (void);
+    virtual CORBA::Boolean response_expected ();
 
     /// Return the @c sync_scope policy value for the current one-way
     /// operation.  If the operation is not a one-way, a
     /// @c CORBA::BAD_INV_ORDER exception is thrown.
-    virtual Messaging::SyncScope sync_scope (void);
+    virtual ::Messaging::SyncScope sync_scope ();
 
     /// Return the reply status for the current request.
     /**
@@ -116,12 +115,12 @@ namespace TAO
      * @c SYSTEM_EXCEPTION, @c USER_EXCEPTION, @c LOCATION_FORWARD,
      * @c TRANSPORT_RETRY, @c UNKNOWN..
      */
-    virtual PortableInterceptor::ReplyStatus reply_status (void);
+    virtual PortableInterceptor::ReplyStatus reply_status ();
 
     /// If the reply status is
     /// @c PortableInterceptor::LOCATION_FORWARD return the
     /// object reference to which the request was forwarded.
-    virtual CORBA::Object_ptr forward_reference (void);
+    virtual CORBA::Object_ptr forward_reference ();
 
     /// Retrieve data from the "request scope" @c PICurrent object.
     virtual CORBA::Any * get_slot (PortableInterceptor::SlotId id);
@@ -142,29 +141,29 @@ namespace TAO
      * @note There is no trivial way to extract the exception from an
      *       @c Any.
      */
-    virtual CORBA::Any * sending_exception (void);
+    virtual CORBA::Any * sending_exception ();
 
     /// Return the @c ObjectId for the target object.
-    virtual PortableInterceptor::ObjectId * object_id (void);
+    virtual PortableInterceptor::ObjectId * object_id ();
 
     /// Return the @c AdapterId for the POA handling the current
     /// request.
-    virtual CORBA::OctetSeq * adapter_id (void);
+    virtual CORBA::OctetSeq * adapter_id ();
 
     /// Return the server_id of the server. The value is passed to
     /// the ORB via @c -ORBServerId parameter.
-    virtual char * server_id (void);
+    virtual char * server_id ();
 
     /// Return the ORBId value that is passed to the @c ORB_init
     /// call.
-    virtual char * orb_id (void);
+    virtual char * orb_id ();
 
     /// Return the name of the object adapter that services requests
     /// for the invoked object.
-    virtual PortableInterceptor::AdapterName * adapter_name (void);
+    virtual PortableInterceptor::AdapterName * adapter_name ();
 
     /// Return the most derived interface of the target object.
-    virtual char * target_most_derived_interface (void);
+    virtual char * target_most_derived_interface ();
 
     /// Return the policy of the given type in effect for the current
     /// request.
@@ -185,12 +184,10 @@ namespace TAO
         CORBA::Boolean replace);
 
   public:
-
     /**
      * @name Helper methods specific to TAO.
      */
     //@{
-
     /// Extract the forward object reference from the
     /// @c PortableInterceptor::ForwardRequest exception, and set the
     /// reply status flag accordingly.
@@ -209,10 +206,9 @@ namespace TAO
 
     /// Return a reference to the underlying @c TAO_ServerRequest
     /// object.
-    TAO_ServerRequest &server_request (void);
+    TAO_ServerRequest &server_request ();
 
   protected:
-
     /// Helper method to get the request and response service
     /// contexts.
     IOP::ServiceContext * get_service_context_i (
@@ -220,7 +216,6 @@ namespace TAO
         IOP::ServiceId id);
 
   protected:
-
     /// Underlying request object that contains much of the
     /// information encapsulated by this @c ServerRequestInfo
     /// implementation.
@@ -243,7 +238,6 @@ namespace TAO
     /// The number of elements in the @c exceptions_ array.
     CORBA::ULong const nexceptions_;
   };
-
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

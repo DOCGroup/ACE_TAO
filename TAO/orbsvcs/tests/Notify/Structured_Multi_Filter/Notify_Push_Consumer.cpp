@@ -102,7 +102,7 @@ Notify_Push_Consumer::_connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consume
     constraint_list[0].event_types.length (0);
     constraint_list[0].constraint_expr = CORBA::string_dup ("$group != 1");
 
-    filter->add_constraints (constraint_list);
+    CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
     proxysupplier->add_filter (filter.in ());
   }

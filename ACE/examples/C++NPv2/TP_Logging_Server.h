@@ -26,7 +26,7 @@ public:
                    ACE_Time_Value *timeout = 0)
   { return putq (mblk, timeout); }
 
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 typedef ACE_Unmanaged_Singleton<TP_Logging_Task, ACE_Null_Mutex>

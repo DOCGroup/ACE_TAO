@@ -9,18 +9,17 @@ public RTScheduling::Scheduler,
   public ::CORBA::LocalObject
 {
  public:
-
   TAO_Scheduler (CORBA::ORB_ptr orb);
 
-  ~TAO_Scheduler (void);
+  ~TAO_Scheduler ();
 
-  virtual CORBA::PolicyList * scheduling_policies (void);
+  virtual CORBA::PolicyList * scheduling_policies ();
 
   virtual void scheduling_policies (const CORBA::PolicyList & scheduling_policies);
 
-  virtual CORBA::PolicyList * poa_policies (void);
+  virtual CORBA::PolicyList * poa_policies ();
 
-  virtual char * scheduling_discipline_name (void);
+  virtual char * scheduling_discipline_name ();
 
   virtual RTScheduling::ResourceManager_ptr create_resource_manager (const char * name,
                                                                      CORBA::Policy_ptr scheduling_parameter);

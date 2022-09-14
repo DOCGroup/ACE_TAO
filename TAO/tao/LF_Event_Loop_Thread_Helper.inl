@@ -22,7 +22,7 @@ TAO_LF_Event_Loop_Thread_Helper::~TAO_LF_Event_Loop_Thread_Helper (void)
 }
 
 ACE_INLINE int
-TAO_LF_Event_Loop_Thread_Helper::event_loop_return (void) const
+TAO_LF_Event_Loop_Thread_Helper::event_loop_return () const
 {
   return this->event_loop_return_;
 }

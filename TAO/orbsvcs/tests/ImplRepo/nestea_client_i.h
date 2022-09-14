@@ -29,8 +29,8 @@ class Nestea_Client_i
 {
 public:
   // = Constructor and destructor.
-  Nestea_Client_i (void);
-  ~Nestea_Client_i (void);
+  Nestea_Client_i ();
+  ~Nestea_Client_i ();
 
   /// Execute client example code.
   int run ();
@@ -40,7 +40,7 @@ public:
 
 private:
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// # of arguments on the command line.
   int argc_;

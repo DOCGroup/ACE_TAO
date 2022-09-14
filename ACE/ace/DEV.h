@@ -33,10 +33,10 @@ class ACE_Export ACE_DEV : public ACE_IO_SAP
 {
 public:
   /// Close down the DEVICE
-  int close (void);
+  int close ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -50,7 +50,7 @@ public:
 
 protected:
   /// Ensure that this class is an abstract base class
-  ACE_DEV (void);
+  ACE_DEV ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

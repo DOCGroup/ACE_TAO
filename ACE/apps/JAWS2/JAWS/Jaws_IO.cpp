@@ -19,8 +19,7 @@
 // #include "HTTP_Helpers.h"
 
 
-
-JAWS_IO::JAWS_IO (void)
+JAWS_IO::JAWS_IO ()
   : handle_ (ACE_INVALID_HANDLE),
     handler_ (0),
     inet_addr_ (0),
@@ -28,13 +27,13 @@ JAWS_IO::JAWS_IO (void)
 {
 }
 
-JAWS_IO::~JAWS_IO (void)
+JAWS_IO::~JAWS_IO ()
 {
 }
 
 #if 0
 ACE_HANDLE
-JAWS_IO::handle (void)
+JAWS_IO::handle ()
 {
   return this->handle_;
 }
@@ -58,12 +57,12 @@ JAWS_IO::acceptor (JAWS_IO_Acceptor *acceptor)
 }
 #endif /* 0 */
 
-JAWS_Synch_IO::JAWS_Synch_IO (void)
+JAWS_Synch_IO::JAWS_Synch_IO ()
 {
   this->acceptor_ = JAWS_IO_Synch_Acceptor_Singleton::instance ();
 }
 
-JAWS_Synch_IO::~JAWS_Synch_IO (void)
+JAWS_Synch_IO::~JAWS_Synch_IO ()
 {
   if (this->handle_ != ACE_INVALID_HANDLE)
     ACE_OS::closesocket (this->handle_);
@@ -325,11 +324,11 @@ JAWS_Synch_IO::send_message (JAWS_IO_Handler *ioh,
 // This only works on asynch I/O-capable systems.
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
-JAWS_Asynch_IO::JAWS_Asynch_IO (void)
+JAWS_Asynch_IO::JAWS_Asynch_IO ()
 {
 }
 
-JAWS_Asynch_IO::~JAWS_Asynch_IO (void)
+JAWS_Asynch_IO::~JAWS_Asynch_IO ()
 {
   if (this->handle_ != ACE_INVALID_HANDLE)
     ACE_OS::closesocket (this->handle_);

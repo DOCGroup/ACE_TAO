@@ -11,7 +11,7 @@ Client_Worker::Client_Worker (Simple_Server_ptr server,
 }
 
 void
-Client_Worker::validate_connection (void)
+Client_Worker::validate_connection ()
 {
   // Ping the object 100 times, ignoring all exceptions.
   // It would be better to use validate_connection() but the test must
@@ -34,9 +34,8 @@ Client_Worker::validate_connection (void)
 }
 
 int
-Client_Worker::svc (void)
+Client_Worker::svc ()
 {
-
   try
     {
       // Validate connections befire doing any actual work..

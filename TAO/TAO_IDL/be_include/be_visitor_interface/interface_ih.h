@@ -29,7 +29,7 @@ public:
   be_visitor_interface_ih (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_interface_ih (void);
+  ~be_visitor_interface_ih ();
 
   /// set the right context and make a visitor
   virtual int visit_interface (be_interface *node);

@@ -21,7 +21,7 @@ using namespace ACE_Utils;
 // ----------------------------------------------------
 
 bool
-sizeof_from_lt_sizeof_to (void)
+sizeof_from_lt_sizeof_to ()
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Running sizeof(FROM) < sizeof(TO) test\n")));
@@ -30,8 +30,8 @@ sizeof_from_lt_sizeof_to (void)
 
   // signed from_type, unsigned to_type
   {
-    typedef signed char from_type;
-    typedef unsigned int to_type;
+    using from_type = signed char;
+    using to_type = unsigned int;
 
     ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
@@ -50,8 +50,8 @@ sizeof_from_lt_sizeof_to (void)
 
   // unsigned from_type, signed to_type
   {
-    typedef unsigned char from_type;
-    typedef signed int to_type;
+    using from_type = unsigned char;
+    using to_type = int;
 
     ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
@@ -70,8 +70,8 @@ sizeof_from_lt_sizeof_to (void)
 
   // signed from_type, signed to_type
   {
-    typedef signed char from_type;
-    typedef signed int to_type;
+    using from_type = signed char;
+    using to_type = int;
 
     ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
@@ -92,8 +92,8 @@ sizeof_from_lt_sizeof_to (void)
 
   // unsigned from_type, unsigned to_type
   {
-    typedef unsigned char from_type;
-    typedef unsigned int to_type;
+    using from_type = unsigned char;
+    using to_type = unsigned int;
 
     ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
@@ -120,7 +120,7 @@ sizeof_from_lt_sizeof_to (void)
 }
 
 bool
-sizeof_from_eq_sizeof_to (void)
+sizeof_from_eq_sizeof_to ()
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Running sizeof(FROM) == sizeof(TO) test\n")));
@@ -129,8 +129,8 @@ sizeof_from_eq_sizeof_to (void)
 
   // signed from_type, unsigned to_type
   {
-    typedef signed int from_type;
-    typedef unsigned int to_type;
+    using from_type = int;
+    using to_type = unsigned int;
 
     ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
@@ -151,8 +151,8 @@ sizeof_from_eq_sizeof_to (void)
 
   // unsigned from_type, signed to_type
   {
-    typedef unsigned int from_type;
-    typedef signed int to_type;
+    using from_type = unsigned int;
+    using to_type = int;
 
     ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
@@ -171,8 +171,8 @@ sizeof_from_eq_sizeof_to (void)
 
   // signed from_type, signed to_type
   {
-    typedef signed int from_type;
-    typedef signed int to_type;
+    using from_type = int;
+    using to_type = int;
 
     ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
@@ -193,8 +193,8 @@ sizeof_from_eq_sizeof_to (void)
 
   // unsigned from_type, unsigned to_type
   {
-    typedef unsigned int from_type;
-    typedef unsigned int to_type;
+    using from_type = unsigned int;
+    using to_type = unsigned int;
 
     ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
@@ -221,7 +221,7 @@ sizeof_from_eq_sizeof_to (void)
 }
 
 bool
-sizeof_from_gt_sizeof_to (void)
+sizeof_from_gt_sizeof_to ()
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Running sizeof(FROM) > sizeof(TO) test\n")));
@@ -230,8 +230,8 @@ sizeof_from_gt_sizeof_to (void)
 
   // signed from_type, unsigned to_type
   {
-    typedef signed int from_type;
-    typedef unsigned char to_type;
+    using from_type = int;
+    using to_type = unsigned char;
 
     ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
@@ -250,8 +250,8 @@ sizeof_from_gt_sizeof_to (void)
 
   // unsigned from_type, signed to_type
   {
-    typedef unsigned int from_type;
-    typedef signed char to_type;
+    using from_type = unsigned int;
+    using to_type = signed char;
 
     ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
@@ -270,8 +270,8 @@ sizeof_from_gt_sizeof_to (void)
 
   // signed from_type, signed to_type
   {
-    typedef signed int from_type;
-    typedef signed char to_type;
+    using from_type = int;
+    using to_type = signed char;
 
     ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
@@ -292,8 +292,8 @@ sizeof_from_gt_sizeof_to (void)
 
   // unsigned from_type, unsigned to_type
   {
-    typedef unsigned int from_type;
-    typedef unsigned char to_type;
+    using from_type = unsigned int;
+    using to_type = unsigned char;
 
     ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
@@ -329,10 +329,13 @@ sizeof_from_gt_sizeof_to (void)
  * Test method invocation functor.
  */
 template <typename T>
-struct Caller : public std::unary_function<T, void>
+struct Caller
 {
+  typedef T argument_type;
+  typedef void result_type;
+
   /// Constructor
-  Caller (void) : success (true) {}
+  Caller () : success (true) {}
 
   /// Function call operator overload.
   void operator() (T f)
@@ -352,7 +355,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Integer_Truncate_Test"));
 
-  typedef bool (*test_func) ();
+  using test_func = bool (*)();
 
   static test_func const tests[] =
     {

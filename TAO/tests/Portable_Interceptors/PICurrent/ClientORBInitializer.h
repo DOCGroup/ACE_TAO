@@ -25,7 +25,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
 // Test's SlotId made global for ease of implementation.
 // It is initialized to a large number to make it obvious when the
 // SlotId is invalid.
@@ -33,7 +32,6 @@
 // Don't do this if you have more than one ORB in your application or
 // if thread-safety is an issue!!!
 extern PortableInterceptor::SlotId slot_id;
-
 
 /**
  * @class ClientORBInitializer
@@ -48,7 +46,6 @@ class ClientORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name Methods Required by the ORBInitializer Interface
    *
@@ -65,7 +62,6 @@ public:
   virtual void post_init (
       PortableInterceptor::ORBInitInfo_ptr info);
   //@}
-
 };
 
 #if defined(_MSC_VER)

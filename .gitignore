@@ -16,11 +16,14 @@
 *S_T.h
 *S_T.inl
 *.bmak
+*.recipe
 
 .depend.*
 GNUmakefile*
 *.ior
 .obj/
+*.iobj
+*.ipdb
 .shobj/
 lib*.a
 lib*.so*

@@ -32,7 +32,7 @@ public:
   virtual void str_date (CORBA::String_out time_date);
 
   /// Shutdown the server.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// ORB pointer.
   void orb (CORBA::ORB_ptr orb_ptr);

@@ -20,7 +20,6 @@ namespace ACE
 {
   namespace HTTP
   {
-
     SessionBase::SessionBase (u_short port, bool keep_alive)
       : port_ (port),
         reactive_ (false),

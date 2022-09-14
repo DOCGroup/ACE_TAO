@@ -67,7 +67,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
@@ -141,7 +140,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);
-
         }
 
       ACE_hrtime_t test_end = ACE_OS::gethrtime ();

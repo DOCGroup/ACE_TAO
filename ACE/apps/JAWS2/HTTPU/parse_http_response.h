@@ -13,25 +13,24 @@ class HTTPU_Export Parse_HTTP_Response
 {
 public:
   Parse_HTTP_Response (const char *response = 0);
-  ~Parse_HTTP_Response (void);
+  ~Parse_HTTP_Response ();
 
   void init (const char *response);
 
-  int code (void) const;
-  const char *code_str (void) const;
+  int code () const;
+  const char *code_str () const;
 
-  int major_version (void) const;
-  int minor_version (void) const;
+  int major_version () const;
+  int minor_version () const;
 
-  const char *version (void) const;
+  const char *version () const;
 
   enum { HTTPU_OK, NO_MEMORY, BAD_RESPONSE };
 
-  int error (void) const;
+  int error () const;
   // 0 -> ok
 
 private:
-
   int code_;
   char *code_str_;
   int major_version_;
@@ -39,7 +38,6 @@ private:
   char *version_;
   char *response_;
   int error_;
-
 };
 
 #if defined (ACE_HAS_INLINED_OSCALLS)

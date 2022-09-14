@@ -17,7 +17,7 @@ server_i::start (client_ptr c,
 }
 
 bool
-server_i::exception (void) const
+server_i::exception () const
 {
   return this->exception_;
 }
@@ -48,7 +48,7 @@ server_i::ping (CORBA::UShort time_to_live)
 }
 
 void
-server_i::shutdown (void)
+server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

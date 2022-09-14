@@ -87,7 +87,7 @@ void
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::tao_duplicate (void)
+                      RefCountPolicy>::tao_duplicate ()
 {
   this->RefCountPolicy::add_ref ();
 }
@@ -100,7 +100,7 @@ void
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::tao_release (void)
+                      RefCountPolicy>::tao_release ()
 {
   this->RefCountPolicy::remove_ref ();
 }
@@ -113,7 +113,7 @@ const FieldArrayType&
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::fields (void) const
+                      RefCountPolicy>::fields () const
 {
   return fields_;
 }
@@ -147,7 +147,7 @@ TAO::TypeCode::Struct<StringType,
         Traits<StringType>::get_string (lhs_field.name);
       char const * const rhs_name = tc->member_name (i);
 
-      if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
+      if (std::strcmp (lhs_name, rhs_name) != 0)
         return false;
 
       CORBA::TypeCode_ptr const lhs_tc =
@@ -210,7 +210,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::get_compact_typecode_i (void) const
+                      RefCountPolicy>::get_compact_typecode_i () const
 {
   ACE_Array_Base<Struct_Field<CORBA::String_var,
                               CORBA::TypeCode_var> >
@@ -260,7 +260,7 @@ char const *
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::id_i (void) const
+                      RefCountPolicy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -275,7 +275,7 @@ char const *
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::name_i (void) const
+                      RefCountPolicy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -290,7 +290,7 @@ CORBA::ULong
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::member_count_i (void) const
+                      RefCountPolicy>::member_count_i () const
 {
   return this->nfields_;
 }

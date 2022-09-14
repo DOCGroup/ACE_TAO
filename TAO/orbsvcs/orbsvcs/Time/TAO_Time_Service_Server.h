@@ -36,21 +36,21 @@ class TAO_Time_Serv_Export TAO_Time_Service_Server : public POA_CosTime::TimeSer
 {
 public:
   /// Constructor.
-  TAO_Time_Service_Server (void);
+  TAO_Time_Service_Server ();
 
   /// Destructor.
-  ~TAO_Time_Service_Server (void);
+  ~TAO_Time_Service_Server ();
 
   /// This operation returns the current system time and an estimate of
   /// inaccuracy in a UTO.
-  virtual CosTime::UTO_ptr universal_time (void);
+  virtual CosTime::UTO_ptr universal_time ();
 
   /**
    * This operation returns the current time in a UTO only if the time
    * can be guaranteed to have been obtained securely. Currently this operation
    * is not implemented and throws a CORBA::NO_IMPLEMENT exception, if called.
    */
-  virtual CosTime::UTO_ptr secure_universal_time (void);
+  virtual CosTime::UTO_ptr secure_universal_time ();
 
   /// This creates a new UTO based on the given parameters.
   virtual CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,

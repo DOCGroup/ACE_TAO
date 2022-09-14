@@ -29,7 +29,7 @@ class ast_visitor_tmpl_module_ref
 public:
   ast_visitor_tmpl_module_ref (ast_visitor_context *ctx);
 
-  virtual ~ast_visitor_tmpl_module_ref (void);
+  virtual ~ast_visitor_tmpl_module_ref ();
 
   virtual int visit_template_module_ref (AST_Template_Module_Ref *node);
 };

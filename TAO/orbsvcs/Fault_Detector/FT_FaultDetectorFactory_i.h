@@ -120,7 +120,7 @@ namespace TAO
      * Prepare to exit.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (void);
+    int fini ();
 
     /**
      * Idle-time activity.
@@ -154,7 +154,7 @@ namespace TAO
     virtual void change_properties (
         const PortableGroup::Properties & property_set);
 
-    virtual void shutdown (void);
+    virtual void shutdown ();
 
     /////////////////////////////////////////
     // CORBA interface GenericFactory methods
@@ -169,7 +169,7 @@ namespace TAO
     //////////////////////////////////////////
     // CORBA interface PullMonitorable methods
 
-    virtual CORBA::Boolean is_alive (void);
+    virtual CORBA::Boolean is_alive ();
 
     /////////////////////////
     // Implementation methods
@@ -192,7 +192,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /**
      * Protect internal state.
      * Mutex should be locked by corba methods, or by

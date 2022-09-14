@@ -76,7 +76,6 @@ class TestSupplier
   CORBA::ORB_ptr orb_;
 
 public:
-
   TestSupplier(int evts, CosNotifyChannelAdmin::EventChannelFactory_ptr ecf,
                CORBA::ORB_ptr orb,
                PortableServer::POA_ptr poa)
@@ -186,12 +185,10 @@ public:
 };
 
 int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
-
   int num_events = 0;
   int pay_size = 1;
 
   try {
-
     CORBA::ORB_var orb = CORBA::ORB_init(ac, av);
 
     if (parse_args (ac, av) != 0)
@@ -247,7 +244,6 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
     orb->destroy();
 
     return 0;
-
   } catch(CORBA::Exception& e) {
     std::cerr << "Supplier: main() exception: " << e << std::endl;
   } catch(std::invalid_argument& e) {

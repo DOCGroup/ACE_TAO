@@ -16,7 +16,7 @@ be_visitor_union::be_visitor_union (be_visitor_context *ctx)
 {
 }
 
-be_visitor_union::~be_visitor_union (void)
+be_visitor_union::~be_visitor_union ()
 {
 }
 
@@ -110,7 +110,7 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
 be_visitor_union::BoolUnionBranch
 be_visitor_union::boolean_branch (be_union_branch *b)
 {
-  be_union *u = be_union::narrow_from_scope (b->defined_in ());
+  be_union *u = dynamic_cast<be_union*> (b->defined_in ());
   if (!u || u->udisc_type () != AST_Expression::EV_bool)
     return BUB_NONE;
 
@@ -131,7 +131,7 @@ be_visitor_union::boolean_branch (be_union_branch *b)
       u->field (f, i);
       if (*f != b)
         {
-          AST_UnionBranch *other = AST_UnionBranch::narrow_from_decl (*f);
+          AST_UnionBranch *other = dynamic_cast<AST_UnionBranch*> (*f);
           for (unsigned long j = 0; j < other->label_list_length (); ++j)
             {
               has_other = true;
@@ -162,10 +162,10 @@ be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
   TAO_OutStream *os = this->ctx_->stream ();
 
   be_union_branch* b =
-    be_union_branch::narrow_from_decl (bd);
+    dynamic_cast<be_union_branch*> (bd);
 
   // Could be a type decl.
-  if (b == 0)
+  if (b == nullptr)
     {
       return 0;
     }

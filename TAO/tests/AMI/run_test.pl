@@ -63,7 +63,7 @@ if ($client->PutFile ($iorbase) == -1) {
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
-# copy the configruation file.
+# copy the configuration file.
 if ($client->PutFile ($conf_file) == -1) {
     print STDERR "ERROR: cannot set file <$client_conf>\n";
     $SV->Kill (); $SV->TimedWait (1);

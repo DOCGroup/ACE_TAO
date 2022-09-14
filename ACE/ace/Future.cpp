@@ -20,7 +20,7 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Future_Rep)
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Future)
 
 template <class T>
-ACE_Future_Holder<T>::ACE_Future_Holder (void)
+ACE_Future_Holder<T>::ACE_Future_Holder ()
 {
 }
 
@@ -31,24 +31,24 @@ ACE_Future_Holder<T>::ACE_Future_Holder (const ACE_Future<T> &item)
 }
 
 template <class T>
-ACE_Future_Holder<T>::~ACE_Future_Holder (void)
+ACE_Future_Holder<T>::~ACE_Future_Holder ()
 {
 }
 
 template <class T>
-ACE_Future_Observer<T>::ACE_Future_Observer (void)
+ACE_Future_Observer<T>::ACE_Future_Observer ()
 {
 }
 
 template <class T>
-ACE_Future_Observer<T>::~ACE_Future_Observer (void)
+ACE_Future_Observer<T>::~ACE_Future_Observer ()
 {
 }
 
 // Dump the state of an object.
 
 template <class T> void
-ACE_Future_Rep<T>::dump (void) const
+ACE_Future_Rep<T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -72,7 +72,7 @@ ACE_Future_Rep<T>::dump (void) const
 }
 
 template <class T> ACE_Future_Rep<T> *
-ACE_Future_Rep<T>::internal_create (void)
+ACE_Future_Rep<T>::internal_create ()
 {
   ACE_Future_Rep<T> *temp = 0;
   ACE_NEW_RETURN (temp,
@@ -82,16 +82,12 @@ ACE_Future_Rep<T>::internal_create (void)
 }
 
 template <class T> ACE_Future_Rep<T> *
-ACE_Future_Rep<T>::create (void)
+ACE_Future_Rep<T>::create ()
 {
   // Yes set ref count to zero.
   ACE_Future_Rep<T> *temp = internal_create ();
-#if defined (ACE_NEW_THROWS_EXCEPTIONS)
-  if (temp == 0)
-    ACE_throw_bad_alloc;
-#else
-  ACE_ASSERT (temp != 0);
-#endif /* ACE_NEW_THROWS_EXCEPTIONS */
+  if (!temp)
+    throw std::bad_alloc ();
    return temp;
  }
 
@@ -146,7 +142,7 @@ ACE_Future_Rep<T>::assign (ACE_Future_Rep<T>*& rep, ACE_Future_Rep<T>* new_rep)
 }
 
 template <class T>
-ACE_Future_Rep<T>::ACE_Future_Rep (void)
+ACE_Future_Rep<T>::ACE_Future_Rep ()
   : value_ (0),
     ref_count_ (0),
     value_ready_ (value_ready_mutex_)
@@ -154,13 +150,13 @@ ACE_Future_Rep<T>::ACE_Future_Rep (void)
 }
 
 template <class T>
-ACE_Future_Rep<T>::~ACE_Future_Rep (void)
+ACE_Future_Rep<T>::~ACE_Future_Rep ()
 {
   delete this->value_;
 }
 
 template <class T> int
-ACE_Future_Rep<T>::ready (void) const
+ACE_Future_Rep<T>::ready () const
 {
   return this->value_ != 0;
 }
@@ -292,7 +288,7 @@ ACE_Future_Rep<T>::operator T ()
 }
 
 template <class T>
-ACE_Future<T>::ACE_Future (void)
+ACE_Future<T>::ACE_Future ()
   : future_rep_ (FUTURE_REP::create ())
 {
 }
@@ -311,7 +307,7 @@ ACE_Future<T>::ACE_Future (const T &r)
 }
 
 template <class T>
-ACE_Future<T>::~ACE_Future (void)
+ACE_Future<T>::~ACE_Future ()
 {
   FUTURE_REP::detach (future_rep_);
 }
@@ -336,7 +332,7 @@ ACE_Future<T>::cancel (const T &r)
 }
 
 template <class T> int
-ACE_Future<T>::cancel (void)
+ACE_Future<T>::cancel ()
 {
   // If this ACE_Future is already attached to a ACE_Future_Rep,
   // detach it (maybe delete the ACE_Future_Rep).
@@ -353,7 +349,7 @@ ACE_Future<T>::set (const T &r)
 }
 
 template <class T> int
-ACE_Future<T>::ready (void) const
+ACE_Future<T>::ready () const
 {
   // We're ready if the ACE_Future_rep is ready...
   return this->future_rep_->ready ();
@@ -411,7 +407,7 @@ ACE_Future<T>::operator = (const ACE_Future<T> &rhs)
 }
 
 template <class T> void
-ACE_Future<T>::dump (void) const
+ACE_Future<T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG,

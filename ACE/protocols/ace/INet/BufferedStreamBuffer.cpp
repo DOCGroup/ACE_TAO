@@ -11,7 +11,6 @@ namespace ACE
 {
   namespace IOS
   {
-
     template <class ACE_CHAR_T, class TR>
     BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::BasicBufferedStreamBuffer (
         std::streamsize bufsz,

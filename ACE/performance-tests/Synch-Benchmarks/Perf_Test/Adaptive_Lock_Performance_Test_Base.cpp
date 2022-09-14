@@ -7,7 +7,7 @@
 ACE_Lock *Adaptive_Lock_Performance_Test_Base::lock_ = 0;
 
 int
-Adaptive_Lock_Performance_Test_Base::fini (void)
+Adaptive_Lock_Performance_Test_Base::fini ()
 {
   delete Adaptive_Lock_Performance_Test_Base::lock_;
   Adaptive_Lock_Performance_Test_Base::lock_ = 0;
@@ -15,7 +15,7 @@ Adaptive_Lock_Performance_Test_Base::fini (void)
 }
 
 int
-Adaptive_Lock_Performance_Test_Base::svc (void)
+Adaptive_Lock_Performance_Test_Base::svc ()
 {
   // Extract out the unique thread-specific value to be used as an
   // index...

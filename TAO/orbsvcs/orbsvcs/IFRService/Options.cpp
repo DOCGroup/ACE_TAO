@@ -90,37 +90,37 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 const char *
-Options::ior_output_file (void) const
+Options::ior_output_file () const
 {
   return this->ior_output_file_;
 }
 
 int
-Options::persistent (void) const
+Options::persistent () const
 {
   return this->persistent_;
 }
 
 const char *
-Options::persistent_file (void) const
+Options::persistent_file () const
 {
   return this->persistent_file_;
 }
 
 int
-Options::using_registry (void) const
+Options::using_registry () const
 {
   return this->using_registry_;
 }
 
 int
-Options::enable_locking (void) const
+Options::enable_locking () const
 {
   return this->enable_locking_;
 }
 
 int
-Options::support_multicast_discovery (void) const
+Options::support_multicast_discovery () const
 {
   return this->support_multicast_;
 }

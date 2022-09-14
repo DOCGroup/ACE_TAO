@@ -41,7 +41,7 @@ TAO::PG_Object_Group::MemberInfo::MemberInfo (
 {
 }
 
-TAO::PG_Object_Group::MemberInfo::~MemberInfo (void)
+TAO::PG_Object_Group::MemberInfo::~MemberInfo ()
 {
   if( ! CORBA::is_nil (this->factory_.in()))
     {
@@ -103,7 +103,7 @@ TAO::PG_Object_Group::PG_Object_Group (
 {
 }
 
-TAO::PG_Object_Group::~PG_Object_Group (void)
+TAO::PG_Object_Group::~PG_Object_Group ()
 {
   if (TAO_debug_level > 3)
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -134,7 +134,7 @@ dump_ior (const char * base,
 #endif  // may want this again someday
 
 PortableGroup::ObjectGroup_ptr
-TAO::PG_Object_Group::reference (void) const
+TAO::PG_Object_Group::reference () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -155,7 +155,7 @@ TAO::PG_Object_Group::get_group_specific_factories (
 }
 
 const PortableGroup::Location &
-TAO::PG_Object_Group::get_primary_location (void)
+TAO::PG_Object_Group::get_primary_location ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -450,7 +450,7 @@ TAO::PG_Object_Group::remove_member (
 
 
 PortableGroup::ObjectGroupId
-TAO::PG_Object_Group::get_object_group_id (void) const
+TAO::PG_Object_Group::get_object_group_id () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -480,7 +480,7 @@ TAO::PG_Object_Group::get_properties (
 
 
 PortableGroup::TypeId
-TAO::PG_Object_Group::get_type_id (void) const
+TAO::PG_Object_Group::get_type_id () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -494,7 +494,7 @@ TAO::PG_Object_Group::get_type_id (void) const
 // Internal method
 
 int
-TAO::PG_Object_Group::increment_version (void)
+TAO::PG_Object_Group::increment_version ()
 {
   // assume internals is locked
   int result = 0;
@@ -520,7 +520,7 @@ TAO::PG_Object_Group::increment_version (void)
 //////////////////
 // Internal method
 void
-TAO::PG_Object_Group::distribute_iogr (void)
+TAO::PG_Object_Group::distribute_iogr ()
 {
   // Check if the object group is configured to distribute
   if (!this->distribute_)
@@ -584,7 +584,7 @@ TAO::PG_Object_Group::distribute_iogr (void)
 }
 
 PortableGroup::Locations *
-TAO::PG_Object_Group::locations_of_members (void)
+TAO::PG_Object_Group::locations_of_members ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -640,7 +640,7 @@ TAO::PG_Object_Group::get_member_reference (
 
 
 PortableGroup::MembershipStyleValue
-TAO::PG_Object_Group::get_membership_style (void) const
+TAO::PG_Object_Group::get_membership_style () const
 {
   PortableGroup::MembershipStyleValue membership_style = 0;
   if (!TAO::find (properties_,
@@ -654,7 +654,7 @@ TAO::PG_Object_Group::get_membership_style (void) const
 
 
 PortableGroup::MinimumNumberMembersValue
-TAO::PG_Object_Group::get_minimum_number_members (void) const
+TAO::PG_Object_Group::get_minimum_number_members () const
 {
   PortableGroup::MinimumNumberMembersValue minimum_number_members = 0;
   if (!TAO::find (properties_,
@@ -667,7 +667,7 @@ TAO::PG_Object_Group::get_minimum_number_members (void) const
 }
 
 PortableGroup::InitialNumberMembersValue
-TAO::PG_Object_Group::get_initial_number_members (void) const
+TAO::PG_Object_Group::get_initial_number_members () const
 {
   PortableGroup::InitialNumberMembersValue initial_number_members = 0;
   if (!TAO::find (properties_,
@@ -859,7 +859,7 @@ TAO::PG_Object_Group::create_members (size_t count)
 }
 
 void
-TAO::PG_Object_Group::initial_populate (void)
+TAO::PG_Object_Group::initial_populate ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
@@ -876,7 +876,7 @@ TAO::PG_Object_Group::initial_populate (void)
 }
 
 void
-TAO::PG_Object_Group::minimum_populate (void)
+TAO::PG_Object_Group::minimum_populate ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
@@ -913,13 +913,13 @@ TAO::PG_Object_Group::set_name (const char* group_name)
 }
 
 const char*
-TAO::PG_Object_Group::get_name (void)
+TAO::PG_Object_Group::get_name ()
 {
   return group_name_;
 }
 
 void
-TAO::PG_Object_Group::clear_members_map (void)
+TAO::PG_Object_Group::clear_members_map ()
 {
   for (MemberMap_Iterator it = this->members_.begin();
       it != this->members_.end();

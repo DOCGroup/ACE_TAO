@@ -37,7 +37,7 @@ public:
   }
 };
 
-TAO_Notify_Default_Factory::TAO_Notify_Default_Factory (void)
+TAO_Notify_Default_Factory::TAO_Notify_Default_Factory ()
 {
 }
 

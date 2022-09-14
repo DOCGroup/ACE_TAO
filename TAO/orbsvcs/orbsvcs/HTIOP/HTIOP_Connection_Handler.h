@@ -33,7 +33,6 @@ namespace TAO
 {
   namespace HTIOP
   {
-
     /**
      * @class HTIOP_Connection_Handler
      *
@@ -47,16 +46,14 @@ namespace TAO
     class HTIOP_Export Connection_Handler : public SVC_HANDLER,
                                             public TAO_Connection_Handler
     {
-
     public:
-
       Connection_Handler (ACE_Thread_Manager* t = 0);
 
       /// Constructor.
       Connection_Handler (TAO_ORB_Core *orb_core);
 
       /// Destructor.
-      ~Connection_Handler (void);
+      ~Connection_Handler ();
 
       /// Called by the <Strategy_Acceptor> when the handler is completely
       /// connected.  Argument is unused.
@@ -82,14 +79,14 @@ namespace TAO
 
       /// Only used when the handler is turned into an active object by
       /// calling <activate>.  This serves as the event loop in such cases.
-      virtual int svc (void);
+      virtual int svc ();
 #endif /* 0 */
 
       //@{
       /** @name Event Handler overloads
        */
-      virtual int resume_handler (void);
-      virtual int close_connection (void);
+      virtual int resume_handler ();
+      virtual int close_connection ();
       virtual int handle_input (ACE_HANDLE);
       virtual int handle_output (ACE_HANDLE);
       virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
@@ -97,7 +94,7 @@ namespace TAO
       //@}
 
       /// Add ourselves to Cache.
-      int add_transport_to_cache (void);
+      int add_transport_to_cache ();
 
       /// Process the <listen_list>
       int process_listen_point_list (::HTIOP::ListenPointList &listen_list);
@@ -113,7 +110,7 @@ namespace TAO
       /**
        * @name TAO_Connection Handler overloads
        */
-      virtual int release_os_resources (void);
+      virtual int release_os_resources ();
       virtual int handle_write_ready (const ACE_Time_Value *timeout);
       //@}
 

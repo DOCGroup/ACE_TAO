@@ -23,7 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class FoxResource_Factory
    *
@@ -42,7 +41,7 @@ namespace TAO
 
   protected:
     /// Create or obtain current reactor implementation
-    virtual ACE_Reactor_Impl *reactor_impl (void);
+    virtual ACE_Reactor_Impl *reactor_impl ();
 
   private:
     /// Reactor created by this factory.

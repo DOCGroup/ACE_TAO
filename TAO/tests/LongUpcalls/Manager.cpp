@@ -43,9 +43,9 @@ Manager::start_workers (CORBA::Short worker_count,
 }
 
 void
-Manager::shutdown (void)
+Manager::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 
@@ -61,7 +61,7 @@ Worker::Worker (ACE_Thread_Manager *thr_mgr,
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   // ACE_DEBUG ((LM_DEBUG, "Worker starts\n"));
   try

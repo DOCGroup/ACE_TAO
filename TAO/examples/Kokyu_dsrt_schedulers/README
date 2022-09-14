@@ -1,5 +1,3 @@
-
-
 Design approaches for the Kokyu based DSRT scheduler/dispatcher
 --------------------------------------------------------
 
@@ -92,7 +90,7 @@ To aid (1), we have created a Svc_Ctxt_DSRT_QoS idl
 interface (see ./Kokyu_qos.pidl). This interface
 currently has the necessary things to be propagated
 for FP, MIF and MUF schedulers. This can be altered
-if necessary to accomodate new sched params. The
+if necessary to accommodate new sched params. The
 idea here is to let the IDL compiler generate the
 marshalling code (including Any operators) so that
 these parameters can be shipped across in the

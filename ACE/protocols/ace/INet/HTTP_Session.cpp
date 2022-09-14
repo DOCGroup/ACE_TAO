@@ -18,7 +18,6 @@ namespace ACE
 {
   namespace HTTP
   {
-
     template <ACE_SYNCH_DECL>
     Session_T<ACE_SYNCH_USE>::Session_T (bool keep_alive)
       : SessionBase (URL::HTTP_PORT, keep_alive),

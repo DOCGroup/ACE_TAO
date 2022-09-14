@@ -33,7 +33,7 @@ namespace TAO
                                     bool response_expected,
                                     bool TAO_INTERCEPTOR (request_is_remote))
     : details_ (details)
-    , forwarded_to_ (0)
+    , forwarded_to_ (nullptr)
     , response_expected_ (response_expected)
     , reply_status_ (GIOP::NO_EXCEPTION)
     , otarget_ (ot)
@@ -44,33 +44,33 @@ namespace TAO
     , sri_adapter_ (stub_->orb_core ()->serverrequestinterceptor_adapter ())
     , stack_size_ (0)
     , invoke_status_ (TAO_INVOKE_START)
-    , caught_exception_ (0)
+    , caught_exception_ (nullptr)
     , is_remote_request_ (request_is_remote)
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
   {
   }
 
-  Invocation_Base::~Invocation_Base (void)
+  Invocation_Base::~Invocation_Base ()
   {
-    TAO_INTERCEPTOR (cri_adapter_= 0);
-    TAO_INTERCEPTOR (sri_adapter_= 0);
+    TAO_INTERCEPTOR (cri_adapter_= nullptr);
+    TAO_INTERCEPTOR (sri_adapter_= nullptr);
   }
 
   TAO_Service_Context &
-  Invocation_Base::request_service_context (void)
+  Invocation_Base::request_service_context ()
   {
     return this->details_.request_service_context ();
   }
 
   TAO_Service_Context &
-  Invocation_Base::reply_service_context (void)
+  Invocation_Base::reply_service_context ()
   {
     return this->details_.reply_service_context ();
   }
 
 #if TAO_HAS_INTERCEPTORS == 1
   Invocation_Status
-  Invocation_Base::send_request_interception (void)
+  Invocation_Base::send_request_interception ()
   {
     if (cri_adapter_)
       {
@@ -105,7 +105,7 @@ namespace TAO
   }
 
   Invocation_Status
-  Invocation_Base::receive_reply_interception (void)
+  Invocation_Base::receive_reply_interception ()
   {
     if (cri_adapter_)
       {
@@ -137,7 +137,7 @@ namespace TAO
   }
 
   Invocation_Status
-  Invocation_Base::receive_other_interception (void)
+  Invocation_Base::receive_other_interception ()
   {
     if (cri_adapter_)
       {
@@ -199,7 +199,7 @@ namespace TAO
   }
 
   PortableInterceptor::ReplyStatus
-  Invocation_Base::handle_all_exception (void)
+  Invocation_Base::handle_all_exception ()
   {
     this->exception (&unknown_exception);
 
@@ -224,9 +224,9 @@ namespace TAO
   void
   Invocation_Base::exception (CORBA::Exception *exception)
   {
-    if (CORBA::SystemException::_downcast (exception) != 0)
+    if (CORBA::SystemException::_downcast (exception) != nullptr)
       this->invoke_status_ = TAO::TAO_INVOKE_SYSTEM_EXCEPTION;
-    else if (CORBA::UserException::_downcast (exception) != 0)
+    else if (CORBA::UserException::_downcast (exception) != nullptr)
       this->invoke_status_ = TAO::TAO_INVOKE_USER_EXCEPTION;
 
     this->forwarded_to_ = CORBA::Object::_nil ();
@@ -235,7 +235,7 @@ namespace TAO
   }
 
   PortableInterceptor::ReplyStatus
-  Invocation_Base::pi_reply_status (void) const
+  Invocation_Base::pi_reply_status () const
   {
     if (cri_adapter_)
       {

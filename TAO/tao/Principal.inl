@@ -3,9 +3,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 unsigned long
-CORBA::Principal::_decr_refcount (void)
+CORBA::Principal::_decr_refcount ()
 {
-  unsigned long new_count = --this->refcount_;
+  unsigned long const new_count = --this->refcount_;
 
   if (new_count == 0)
     delete this;
@@ -15,7 +15,7 @@ CORBA::Principal::_decr_refcount (void)
 
 ACE_INLINE
 unsigned long
-CORBA::Principal::_incr_refcount (void)
+CORBA::Principal::_incr_refcount ()
 {
   return ++this->refcount_;
 }
@@ -25,7 +25,7 @@ ACE_INLINE
 CORBA::Principal *
 CORBA::Principal::_duplicate (CORBA::Principal * x)
 {
-  if (x != 0)
+  if (x)
     {
       x->_incr_refcount ();
     }
@@ -36,9 +36,9 @@ CORBA::Principal::_duplicate (CORBA::Principal * x)
 
 ACE_INLINE
 CORBA::Principal *
-CORBA::Principal::_nil (void)
+CORBA::Principal::_nil ()
 {
-  return 0;
+  return nullptr;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

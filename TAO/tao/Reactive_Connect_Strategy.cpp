@@ -16,7 +16,7 @@ TAO_Reactive_Connect_Strategy::TAO_Reactive_Connect_Strategy (
 {
 }
 
-TAO_Reactive_Connect_Strategy::~TAO_Reactive_Connect_Strategy (void)
+TAO_Reactive_Connect_Strategy::~TAO_Reactive_Connect_Strategy ()
 {
 }
 
@@ -24,7 +24,7 @@ void
 TAO_Reactive_Connect_Strategy::synch_options (ACE_Time_Value *timeout,
                                              ACE_Synch_Options &options)
 {
-  if (timeout != 0)
+  if (timeout != nullptr)
     {
       options.set (ACE_Synch_Options::USE_REACTOR,
                    *timeout);
@@ -43,7 +43,7 @@ TAO_Reactive_Connect_Strategy::wait_i (TAO_LF_Event *ev,
                                        ACE_Time_Value * max_wait_time)
 {
   int result = 0;
-  if (ev == 0)
+  if (ev == nullptr)
     return -1;
 
   if (TAO_debug_level > 2)
@@ -66,7 +66,7 @@ TAO_Reactive_Connect_Strategy::wait_i (TAO_LF_Event *ev,
 
           // Did we timeout? If so, stop running the loop.
           if (result == 0 &&
-              max_wait_time != 0 &&
+              max_wait_time != nullptr &&
               *max_wait_time == ACE_Time_Value::zero)
             {
               errno = ETIME;

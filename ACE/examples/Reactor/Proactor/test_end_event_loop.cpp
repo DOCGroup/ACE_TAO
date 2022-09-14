@@ -37,7 +37,7 @@ class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
   // Constructor.
-  My_Task (void)
+  My_Task ()
     : time_flag_ (0)
     {}
 
@@ -68,7 +68,7 @@ public:
     }
 
   // Thread function.
-  int svc (void)
+  int svc ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t):Starting svc routine\n"));

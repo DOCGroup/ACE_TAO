@@ -29,16 +29,16 @@ public:
   PP_Test_i (CORBA::ORB_ptr orb);
 
   /// Destructor
-  ~PP_Test_i (void);
+  ~PP_Test_i ();
 
   /// Test a oneway call.
-  virtual void send_oneway (void);
+  virtual void send_oneway ();
 
   /// Test a twoway call.
-  virtual void send_void (void);
+  virtual void send_void ();
 
   /// Shutdown routine.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 protected:
   /// Keep a pointer to the ORB so we can shut it down.
@@ -59,10 +59,10 @@ public:
   Pluggable_Test_Factory_i (CORBA::ORB_ptr orb);
 
   /// Destructor.
-  ~Pluggable_Test_Factory_i (void);
+  ~Pluggable_Test_Factory_i ();
 
   /// Make a Pluggable Test object.
-  virtual Pluggable_Test_ptr make_pluggable_test (void);
+  virtual Pluggable_Test_ptr make_pluggable_test ();
 
 private:
   PP_Test_i my_pluggable_test_;

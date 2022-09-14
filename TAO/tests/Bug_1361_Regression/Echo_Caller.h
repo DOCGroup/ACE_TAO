@@ -17,7 +17,7 @@ public:
 
   virtual void start_task(Test::Echo_ptr client);
 
-  virtual void shutdown(void);
+  virtual void shutdown();
 
 private:
   Thread_Pool *pool_;

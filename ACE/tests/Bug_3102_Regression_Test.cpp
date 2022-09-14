@@ -15,7 +15,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-void mutexTest(void)
+void mutexTest()
 {
   ACE_MT(ACE_Thread_Mutex *lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object

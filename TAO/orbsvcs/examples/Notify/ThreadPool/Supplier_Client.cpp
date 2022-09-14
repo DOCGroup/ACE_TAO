@@ -76,7 +76,7 @@ TAO_Notify_ThreadPool_Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-TAO_Notify_ThreadPool_Supplier_Client::_init (void)
+TAO_Notify_ThreadPool_Supplier_Client::_init ()
 {
   PortableServer::POAManager_var poa_manager =
     this->orb_objects_.root_poa_->the_POAManager ();
@@ -101,7 +101,7 @@ TAO_Notify_ThreadPool_Supplier_Client::_init (void)
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
-TAO_Notify_ThreadPool_Supplier_Client::create_ec (void)
+TAO_Notify_ThreadPool_Supplier_Client::create_ec ()
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
@@ -141,7 +141,7 @@ TAO_Notify_ThreadPool_Supplier_Client::create_ec (void)
 }
 
 void
-TAO_Notify_ThreadPool_Supplier_Client::run (void)
+TAO_Notify_ThreadPool_Supplier_Client::run ()
 {
   /// First, signal that the supplier is ready.
   this->write_ior ();
@@ -150,7 +150,7 @@ TAO_Notify_ThreadPool_Supplier_Client::run (void)
 }
 
 void
-TAO_Notify_ThreadPool_Supplier_Client::write_ior (void)
+TAO_Notify_ThreadPool_Supplier_Client::write_ior ()
 {
   CosNotifyComm::StructuredPushSupplier_var objref = this->supplier_->_this ();
 
@@ -170,7 +170,7 @@ TAO_Notify_ThreadPool_Supplier_Client::write_ior (void)
 }
 
 int
-TAO_Notify_ThreadPool_Supplier_Client::svc (void)
+TAO_Notify_ThreadPool_Supplier_Client::svc ()
 {
   try
     {
@@ -183,7 +183,6 @@ TAO_Notify_ThreadPool_Supplier_Client::svc (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Supplier error "));
-
     }
 
   return 0;

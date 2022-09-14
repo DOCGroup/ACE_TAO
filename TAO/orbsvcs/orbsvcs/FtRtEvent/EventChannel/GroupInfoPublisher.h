@@ -16,7 +16,7 @@
 #include "ace/Vector_T.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +38,7 @@ public:
     BackupList backups;
   };
 
-  typedef auto_ptr<Info> Info_ptr;
+  typedef std::unique_ptr<Info> Info_ptr;
   friend class ACE_Singleton<GroupInfoPublisherBase, TAO_SYNCH_MUTEX>;
 
   void subscribe(TAO_FTEC_Become_Primary_Listener* listener);

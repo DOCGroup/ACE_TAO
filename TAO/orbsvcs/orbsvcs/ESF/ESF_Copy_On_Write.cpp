@@ -11,14 +11,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class COLLECTION, class ITERATOR> CORBA::ULong
-TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::_incr_refcnt (void)
+TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::_incr_refcnt ()
 {
   // LOCKING: no locking is required, the caller grabs the mutex.
   return this->refcount_++;
 }
 
 template<class COLLECTION, class ITERATOR> CORBA::ULong
-TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::_decr_refcnt (void)
+TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::_decr_refcnt ()
 {
   // LOCKING: no locking is required, the caller grabs the mutex.
   {
@@ -41,7 +41,7 @@ TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::_decr_refcnt (void)
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    TAO_ESF_Copy_On_Write (void)
+    TAO_ESF_Copy_On_Write ()
       :  pending_writes_ (0),
          writing_ (0),
          cond_ (mutex_)
@@ -51,7 +51,7 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    ~TAO_ESF_Copy_On_Write (void)
+    ~TAO_ESF_Copy_On_Write ()
 {
   ACE_GUARD (ACE_SYNCH_MUTEX_T, ace_mon, this->mutex_);
 
@@ -119,7 +119,7 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
-TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::shutdown (void)
+TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::shutdown ()
 {
   // We need to perform a copy to follow the protocol.
   Write_Guard ace_mon (this->mutex_,
@@ -175,7 +175,7 @@ TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 
 template<class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    ~TAO_ESF_Copy_On_Write_Write_Guard (void)
+    ~TAO_ESF_Copy_On_Write_Write_Guard ()
 {
   Collection *tmp = 0;
   {

@@ -43,7 +43,7 @@ TestListener::TestListener(
   constraintSeq[0].event_types[0].type_name = "Data";
   constraintSeq[0].constraint_expr = rc_filterExpression.c_str();
 
-  v_filter->add_constraints (constraintSeq);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info = v_filter->add_constraints (constraintSeq);
 
   mv_consumerAdmin->add_filter(v_filter.in());
 

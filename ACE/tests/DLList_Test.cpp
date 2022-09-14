@@ -15,10 +15,10 @@
 #include "ace/SString.h"
 #include "ace/Malloc_T.h"
 
-typedef ACE_TCHAR *ACE_STRING;
-typedef ACE_DLList<ACE_STRING> STRLIST;
-typedef ACE_DLList_Iterator<ACE_STRING> STRLIST_ITERATOR;
-typedef ACE_DLList_Reverse_Iterator<ACE_STRING> STRLIST_REVERSE_ITERATOR;
+using ACE_STRING = ACE_TCHAR *;
+using STRLIST = ACE_DLList<ACE_STRING>;
+using STRLIST_ITERATOR = ACE_DLList_Iterator<ACE_STRING>;
+using STRLIST_REVERSE_ITERATOR = ACE_DLList_Reverse_Iterator<ACE_STRING>;
 
 static ACE_STRING string_table[] =
 {
@@ -67,7 +67,7 @@ run_reverse_iterate (STRLIST &list)
 }
 
 static int
-run_test (void)
+run_test ()
 {
   STRLIST list;
 

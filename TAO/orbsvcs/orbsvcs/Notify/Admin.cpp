@@ -62,7 +62,6 @@ TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
   this->proxy_container_.reset (proxy_container);
 
   this->proxy_container().init ();
-
 }
 
 void
@@ -99,7 +98,7 @@ TAO_Notify_Admin::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types)
 }
 
 int
-TAO_Notify_Admin::shutdown (void)
+TAO_Notify_Admin::shutdown ()
 {
   if (TAO_Notify_Object::shutdown () == 1)
     return 1;
@@ -209,7 +208,7 @@ TAO_Notify_Admin::load_child (const ACE_CString &type,
 }
 
 void
-TAO_Notify_Admin::reconnect (void)
+TAO_Notify_Admin::reconnect ()
 {
   TAO_Notify::Reconnect_Worker<TAO_Notify_Proxy> wrk;
   this->proxy_container().collection()->for_each(&wrk);
@@ -221,7 +220,6 @@ TAO_Notify_Admin::validate ()
   TAO_Notify::Validate_Worker<TAO_Notify_Proxy> wrk;
   this->proxy_container().collection()->for_each(&wrk);
 }
-
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

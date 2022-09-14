@@ -6,7 +6,6 @@
 #include "IIOP_Server_Request_Interceptor.h"
 
 namespace Test {
-
   using namespace TAO;
 
   IIOP_Server_Request_Interceptor::IIOP_Server_Request_Interceptor (const char* orbid, TEST test)
@@ -16,12 +15,12 @@ namespace Test {
   {
   }
 
-  IIOP_Server_Request_Interceptor::~IIOP_Server_Request_Interceptor (void)
+  IIOP_Server_Request_Interceptor::~IIOP_Server_Request_Interceptor ()
   {
   }
 
   char *
-  IIOP_Server_Request_Interceptor::name (void)
+  IIOP_Server_Request_Interceptor::name ()
   {
     return CORBA::string_dup ("II SRI");
   }
@@ -74,7 +73,6 @@ namespace Test {
                   ACE_TEXT ("push_request_info: Can't track that many requests %d\n"),
                   name.in (),
                   requestID));
-
   }
 
   void
@@ -133,7 +131,7 @@ namespace Test {
   /// Checks if all the endpoints, encountered on the way in have been
   /// cleaned on the way out of the interception point
   bool
-  IIOP_Server_Request_Interceptor::self_test (void)
+  IIOP_Server_Request_Interceptor::self_test ()
   {
     CORBA::String_var name (this->name ());
     bool has_remaining_endpoints = false;
@@ -226,7 +224,6 @@ namespace Test {
       }
 
     Server_Request_Interceptor::receive_request_service_contexts (ri);
-
   }
 
   void
@@ -235,7 +232,6 @@ namespace Test {
     try
       {
         outbound_process_context (ri);
-
       }
     catch (const CORBA::Exception&)
       {
@@ -247,7 +243,6 @@ namespace Test {
       }
 
     Server_Request_Interceptor::send_reply (ri);
-
   }
 
   void
@@ -256,8 +251,6 @@ namespace Test {
     try
       {
         outbound_process_context (ri);
-
-
       }
     catch (const CORBA::Exception&)
       {
@@ -266,7 +259,6 @@ namespace Test {
                     ACE_TEXT("%C (%P|%t) Outbound_process_context failed in  ")
                     ACE_TEXT("send_exception.\n"),
                     name.in ()));
-
       }
 
     Server_Request_Interceptor::send_exception (ri);

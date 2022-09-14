@@ -5,12 +5,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SYNCH_MUTEX TAO_Interpreter::parserMutex__;
 
-TAO_Interpreter::TAO_Interpreter (void)
+TAO_Interpreter::TAO_Interpreter ()
   : root_ (0)
 {
 }
 
-TAO_Interpreter::~TAO_Interpreter (void)
+TAO_Interpreter::~TAO_Interpreter ()
 {
   delete root_;
 }

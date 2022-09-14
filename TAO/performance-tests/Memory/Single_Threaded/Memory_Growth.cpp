@@ -6,13 +6,13 @@ Memory_Growth::Memory_Growth (CORBA::ORB_ptr orb)
 }
 
 void
-Memory_Growth::ping (void)
+Memory_Growth::ping ()
 {
   return;
 }
 
 void
-Memory_Growth::shutdown (void)
+Memory_Growth::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -72,8 +72,7 @@ namespace TAO
       TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T")
                   ACE_TEXT ("::mark_connected, %s Transport[%d]\n"),
                   (state ? ACE_TEXT("true") : ACE_TEXT("false")),
-                  entry->item ().transport ()->id ()
-                  ));
+                  entry->item ().transport ()->id ()));
     entry->item().is_connected (state);
   }
 
@@ -137,21 +136,21 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   ACE_INLINE size_t
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::current_size (void) const
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::current_size () const
   {
     return this->cache_map_.current_size ();
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
   ACE_INLINE size_t
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::total_size (void) const
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::total_size () const
   {
     return this->cache_map_.total_size ();
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
   ACE_INLINE typename Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::HASH_MAP &
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::map (void)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::map ()
   {
     return this->cache_map_;
   }

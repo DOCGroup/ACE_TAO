@@ -18,7 +18,7 @@ ACE_Dev_Poll_Reactor::Event_Tuple::Event_Tuple (ACE_Event_Handler *eh,
 // ---------------------------------------------------------------------
 
 ACE_INLINE size_t
-ACE_Dev_Poll_Reactor::Handler_Repository::size (void) const
+ACE_Dev_Poll_Reactor::Handler_Repository::size () const
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::size");
 
@@ -26,7 +26,7 @@ ACE_Dev_Poll_Reactor::Handler_Repository::size (void) const
 }
 
 ACE_INLINE size_t
-ACE_Dev_Poll_Reactor::Handler_Repository::max_size (void) const
+ACE_Dev_Poll_Reactor::Handler_Repository::max_size () const
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::max_size");
 

@@ -10,10 +10,10 @@ class  Test_Simple_Test_i
 {
 public:
   //Constructor
-  Test_Simple_Test_i (void);
+  Test_Simple_Test_i ();
 
   //Destructor
-  virtual ~Test_Simple_Test_i (void);
+  virtual ~Test_Simple_Test_i ();
 
   virtual
   void test_method (
@@ -108,7 +108,7 @@ public:
       const ::Test::Var_Array arg4
     );
 
-  virtual char * get_string (void);
+  virtual char * get_string ();
 
   virtual
   char * test_unbounded_string (
@@ -117,7 +117,7 @@ public:
       CORBA::String_out s3
     );
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   CORBA::ULong error_count () const;
 

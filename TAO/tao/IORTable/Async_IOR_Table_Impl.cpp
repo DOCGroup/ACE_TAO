@@ -11,11 +11,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Async_IOR_Table_Impl::TAO_Async_IOR_Table_Impl (void)
+TAO_Async_IOR_Table_Impl::TAO_Async_IOR_Table_Impl ()
 {
 }
 
-TAO_Async_IOR_Table_Impl::~TAO_Async_IOR_Table_Impl (void)
+TAO_Async_IOR_Table_Impl::~TAO_Async_IOR_Table_Impl ()
 {
 }
 

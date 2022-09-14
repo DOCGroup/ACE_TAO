@@ -5,7 +5,7 @@
 #include "tao/Exception.h"
 
 
-Server_ORBInitializer2::Server_ORBInitializer2 (void)
+Server_ORBInitializer2::Server_ORBInitializer2 ()
   : sri_ (0)
 {
 }

@@ -36,12 +36,12 @@ public:
   TAO_LF_Follower_Auto_Ptr (TAO_Leader_Follower &);
 
   /// Destructor
-  ~TAO_LF_Follower_Auto_Ptr (void);
+  ~TAO_LF_Follower_Auto_Ptr ();
 
   /// Implement the smart pointer methods
-  TAO_LF_Follower *get (void);
-  TAO_LF_Follower *operator->(void);
-  operator TAO_LF_Follower *(void);
+  TAO_LF_Follower *get ();
+  TAO_LF_Follower *operator->();
+  operator TAO_LF_Follower *();
 
 private:
   /// Keep a reference to the leader follower

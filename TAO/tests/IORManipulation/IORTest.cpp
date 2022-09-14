@@ -201,7 +201,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Finally generate an exception and quit.
       // This will generate a NotFound exception.
       in_count = iorm->is_in_ior (just2.in (), name1.in ());
-
     }
   catch (const TAO_IOP::EmptyProfileList& userex)
     {

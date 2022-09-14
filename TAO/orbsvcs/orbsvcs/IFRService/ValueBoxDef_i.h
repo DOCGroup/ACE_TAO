@@ -40,7 +40,7 @@ public:
   TAO_ValueBoxDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ValueBoxDef_i (void);
+  virtual ~TAO_ValueBoxDef_i ();
 
   /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();

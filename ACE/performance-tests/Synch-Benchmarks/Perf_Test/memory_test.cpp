@@ -9,11 +9,11 @@
 class ACE_Svc_Export Memory_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 int
-Memory_Test::svc (void)
+Memory_Test::svc ()
 {
   int ni = this->thr_id ();
   size_t length = performance_test_options.msg_size ();

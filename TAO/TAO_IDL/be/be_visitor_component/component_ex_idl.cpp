@@ -18,7 +18,7 @@ be_visitor_component_ex_idl::be_visitor_component_ex_idl (
 {
 }
 
-be_visitor_component_ex_idl::~be_visitor_component_ex_idl (void)
+be_visitor_component_ex_idl::~be_visitor_component_ex_idl ()
 {
 }
 

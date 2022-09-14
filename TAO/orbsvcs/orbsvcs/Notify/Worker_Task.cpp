@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Worker_Task::TAO_Notify_Worker_Task (void)
+TAO_Notify_Worker_Task::TAO_Notify_Worker_Task ()
 {
 }
 

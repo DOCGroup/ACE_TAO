@@ -61,7 +61,6 @@ TestTask::parse_args (int argc, ACE_TCHAR **argv)
 
 int TestTask::svc()
 {
-
   try {
     // Start the Naming Service tasks
     namingServiceA_.activate();

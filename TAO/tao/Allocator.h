@@ -34,8 +34,7 @@ namespace TAO
   class TAO_Allocator
   {
   public:
-
-    virtual ~TAO_Allocator (void) {}
+    virtual ~TAO_Allocator () {}
 
     virtual handler_type *allocate () = 0;
     virtual void release (handler_type *ptr) = 0;

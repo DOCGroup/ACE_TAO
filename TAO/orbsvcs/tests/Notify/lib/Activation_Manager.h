@@ -44,13 +44,13 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Activation_Manager : public TAO_No
 
 public:
   /// Constructor
-  TAO_Notify_Tests_Activation_Manager (void);
+  TAO_Notify_Tests_Activation_Manager ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_Activation_Manager ();
 
   /// Interface impl.
-  virtual void start (void);
+  virtual void start ();
 
   /// Register Supplier
   void _register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name);
@@ -64,16 +64,16 @@ public:
   void resolve (TAO_Notify_Tests_Periodic_Consumer*& consumer, const char* obj_name);
 
   // Activate the tasks for each supplier.
-  int activate_suppliers (void);
+  int activate_suppliers ();
 
   // Supplier Count
-  int supplier_count (void);
+  int supplier_count ();
 
   // Consumer Count
-  int consumer_count (void);
+  int consumer_count ();
 
   /// Wait till active suppliers and consumers are done.
-  void wait_for_completion (void);
+  void wait_for_completion ();
 
   /// TAO_Notify_Tests_Task_Callback methods
   virtual void done (TAO_Notify_Tests_Periodic_Supplier* supplier);
@@ -88,9 +88,9 @@ public:
   // Returns 1 if the file could be opened for read.
   int ior_input_file (const ACE_TCHAR *file_name);
 
-  void write_ior (void);
-  void wait_for_start_signal (void);
-  void signal_peer (void);
+  void write_ior ();
+  void wait_for_start_signal ();
+  void signal_peer ();
 
 protected:
   /// Lock to serialize internal state.

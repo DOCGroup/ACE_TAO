@@ -79,35 +79,35 @@ class UTL_ScopeStackActiveIterator;
 class TAO_IDL_FE_Export UTL_ScopeStack
 {
 public:
-  UTL_ScopeStack (void);
-  ~UTL_ScopeStack (void);
+  UTL_ScopeStack ();
+  ~UTL_ScopeStack ();
 
   /// The initial capacity and how much to increment the capacity when needed.
   static const size_t increments;
 
   // Return top element.
-  UTL_Scope *top (void);
+  UTL_Scope *top ();
 
   // Pop top element.
-  void pop (void);
+  void pop ();
 
   // Clear entire stack.
-  void clear (void);
+  void clear ();
 
   // Push an element on the stack and return stack.
   UTL_ScopeStack *push (UTL_Scope *el);
 
   // How deep is the stack now?
-  unsigned long depth (void);
+  unsigned long depth ();
 
   // Return bottom element.
-  UTL_Scope *bottom (void);
+  UTL_Scope *bottom ();
 
   // Return (top - 1) element.
-  UTL_Scope *next_to_top (void);
+  UTL_Scope *next_to_top ();
 
   // return topmost non-NULL element.
-  UTL_Scope *top_non_null (void);
+  UTL_Scope *top_non_null ();
 
   /**
    * Call lookup_by_name on all the scopes from the top down.
@@ -136,13 +136,13 @@ public:
   UTL_ScopeStackActiveIterator (UTL_ScopeStack &s);
 
   // Advance to next element.
-  void next (void);
+  void next ();
 
   // Get current item.
-  UTL_Scope* item (void);
+  UTL_Scope* item ();
 
   // Is the iteration finished?
-  bool is_done (void) const;
+  bool is_done () const;
 
 private:
   // On what to iterate?

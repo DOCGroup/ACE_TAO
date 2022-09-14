@@ -23,31 +23,28 @@
  */
 class QoS_Util
 {
-
 public:
-
   // constructor.
   QoS_Util (int argc, ACE_TCHAR *argv[]);
 
   // destructor.
-  ~QoS_Util (void);
+  ~QoS_Util ();
 
   // Parse command-line arguments.
-  int parse_args (void);
+  int parse_args ();
 
   // GET methods.
-  ACE_INET_Addr *mult_session_addr (void) const;
+  ACE_INET_Addr *mult_session_addr () const;
 
-  ACE_INET_Addr *dest_addr (void) const;
+  ACE_INET_Addr *dest_addr () const;
 
-  u_short source_port (void) const;
+  u_short source_port () const;
 
-  ACE_Protocol_ID protocol (void) const;
+  ACE_Protocol_ID protocol () const;
 
-  int multicast_flag (void) const;
+  int multicast_flag () const;
 
 private:
-
   // Command line arguments.
   int argc_;
   ACE_TCHAR **argv_;
@@ -66,7 +63,6 @@ private:
 
   // Multicast Flag.
   int multicast_flag_;
-
 };
 
 #endif /* QOS_UTIL_H */

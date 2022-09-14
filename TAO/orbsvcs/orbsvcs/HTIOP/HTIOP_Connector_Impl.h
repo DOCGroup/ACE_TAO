@@ -33,7 +33,6 @@ namespace TAO
 {
   namespace HTIOP
   {
-
     /**
      * @class HTIOP_Connect_Creation_Strategy
      *

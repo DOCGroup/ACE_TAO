@@ -16,7 +16,7 @@ Server_Task::Server_Task (CosNaming::NamingContext_ptr root_context,
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
  try
    {

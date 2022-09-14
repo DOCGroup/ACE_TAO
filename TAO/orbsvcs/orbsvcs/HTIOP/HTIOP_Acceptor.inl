@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE::HTBP::Addr&
-TAO::HTIOP::Acceptor::address (void) const
+TAO::HTIOP::Acceptor::address () const
 {
   ACE_ASSERT (this->addrs_ != 0);
 

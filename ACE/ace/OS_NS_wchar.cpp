@@ -107,7 +107,6 @@ ACE_OS::wcscspn_emulation (const wchar_t *s, const wchar_t *reject)
 
   for (scan = s; *scan; scan++)
     {
-
       for (rej_scan = reject; *rej_scan; rej_scan++)
         if (*scan == *rej_scan)
           return count;

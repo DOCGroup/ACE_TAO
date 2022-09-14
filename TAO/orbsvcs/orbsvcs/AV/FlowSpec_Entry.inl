@@ -46,14 +46,14 @@ TAO_FlowSpec_Entry::direction (void)
 
 ACE_INLINE
 const char *
-TAO_FlowSpec_Entry::direction_str (void) const
+TAO_FlowSpec_Entry::direction_str () const
 {
   return this->direction_str_.c_str();
 }
 
 ACE_INLINE
 const char *
-TAO_FlowSpec_Entry::flow_protocol_str (void) const
+TAO_FlowSpec_Entry::flow_protocol_str () const
 {
   return this->flow_protocol_.c_str();
 }
@@ -74,7 +74,7 @@ TAO_FlowSpec_Entry::carrier_protocol (void)
 
 ACE_INLINE
 const char *
-TAO_FlowSpec_Entry::carrier_protocol_str (void) const
+TAO_FlowSpec_Entry::carrier_protocol_str () const
 {
   return this->carrier_protocol_.c_str();
 }
@@ -113,21 +113,21 @@ TAO_FlowSpec_Entry::control_address (ACE_Addr *addr)
 
 ACE_INLINE
 const char *
-TAO_FlowSpec_Entry::address_str (void) const
+TAO_FlowSpec_Entry::address_str () const
 {
   return this->address_str_.c_str();
 }
 
 ACE_INLINE
 const char*
-TAO_FlowSpec_Entry::format (void) const
+TAO_FlowSpec_Entry::format () const
 {
   return this->format_.c_str();
 }
 
 ACE_INLINE
 const char *
-TAO_FlowSpec_Entry::flowname (void) const
+TAO_FlowSpec_Entry::flowname () const
 {
   return this->flowname_.c_str();
 }

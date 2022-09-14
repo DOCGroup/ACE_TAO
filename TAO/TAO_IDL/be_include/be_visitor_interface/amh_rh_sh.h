@@ -15,11 +15,11 @@
 class be_visitor_amh_rh_interface_sh : public be_visitor_interface_sh
 {
 public:
-  be_visitor_amh_rh_interface_sh (void);
+  be_visitor_amh_rh_interface_sh ();
 
   be_visitor_amh_rh_interface_sh (be_visitor_context *ctx);
 
-  ~be_visitor_amh_rh_interface_sh (void);
+  ~be_visitor_amh_rh_interface_sh ();
 
   virtual int visit_interface (be_interface *node);
 

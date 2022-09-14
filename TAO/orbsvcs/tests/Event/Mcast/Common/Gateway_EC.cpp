@@ -6,7 +6,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_stdio.h"
 
-Gateway_EC::Gateway_EC (void)
+Gateway_EC::Gateway_EC ()
   : ec_ior_file_ (ACE_TEXT("gateway-ec.ior"))
 {
 }

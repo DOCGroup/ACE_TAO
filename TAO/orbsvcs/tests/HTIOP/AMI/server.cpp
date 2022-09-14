@@ -18,7 +18,6 @@
 #include "ace/OS_NS_sys_socket.h"
 
 
-
 const ACE_TCHAR *ior_output_file = 0;
 
 int
@@ -103,9 +102,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->run ();
 
-      root_poa->destroy (1,  // ethernalize objects
-                         0  // wait for completion
-                         );
+      root_poa->destroy (true,  // ethernalize objects
+                         false);  // wait for completion
 
       orb->destroy ();
 

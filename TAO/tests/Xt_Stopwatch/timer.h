@@ -20,7 +20,6 @@
 class Timer_imp
 {
  public:
-
   /// Constructor
   Timer_imp (XtAppContext &,
              CORBA::Long,
@@ -30,22 +29,21 @@ class Timer_imp
   virtual ~Timer_imp ();
 
   /// Resets, and starts the clock ticking
-  void start (void);
+  void start ();
 
   /// Stops the clock
-  void stop (void);
+  void stop ();
 
   /// Returns time since timer started
-  CORBA::Float  elapsed_time (void);
+  CORBA::Float  elapsed_time ();
 
  private:
-
   /// Static member function used for TimeOut callback.
   static void tick_callback (XtPointer,
                              XtIntervalId *);
 
   /// Called every interval_ milliseconds
-  void tick (void);
+  void tick ();
 
   /// Called at each clock tick...
   virtual void report_time (CORBA::Float);

@@ -29,7 +29,7 @@ public:
   be_visitor_structure_ch (be_visitor_context *ctx);
 
   /// destructureor
-  ~be_visitor_structure_ch (void);
+  ~be_visitor_structure_ch ();
 
   /// visit structure. We provide code for this method in the derived class
   virtual int visit_structure (be_structure *node);

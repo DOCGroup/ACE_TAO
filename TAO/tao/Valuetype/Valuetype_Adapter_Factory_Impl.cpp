@@ -7,12 +7,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Valuetype_Adapter_Factory_Impl::~TAO_Valuetype_Adapter_Factory_Impl (void)
-{
-}
-
 TAO_Valuetype_Adapter *
-TAO_Valuetype_Adapter_Factory_Impl::create (void)
+TAO_Valuetype_Adapter_Factory_Impl::create ()
 {
   TAO_Valuetype_Adapter_Impl *nva = 0;
   ACE_NEW_THROW_EX (nva,
@@ -22,23 +18,17 @@ TAO_Valuetype_Adapter_Factory_Impl::create (void)
   return nva;
 }
 
-// *********************************************************************
-
 // Initialization and registration of dynamic service object.
-
 int
-TAO_Valuetype_Adapter_Factory_Impl::Initializer (void)
+TAO_Valuetype_Adapter_Factory_Impl::Initializer ()
 {
   TAO_ORB_Core::valuetype_adapter_factory_name (
-      "Concrete_Valuetype_Adapter_Factory"
-    );
+      "Concrete_Valuetype_Adapter_Factory");
 
   return
     ACE_Service_Config::process_directive (
-        ace_svc_desc_TAO_Valuetype_Adapter_Factory_Impl
-      );
+        ace_svc_desc_TAO_Valuetype_Adapter_Factory_Impl);
 }
-
 
 ACE_STATIC_SVC_DEFINE (
     TAO_Valuetype_Adapter_Factory_Impl,

@@ -10,7 +10,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb, long instance)
 {
 }
 
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 

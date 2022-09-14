@@ -27,13 +27,13 @@ public:
   /// ctor
   Test_impl (CORBA::ORB_ptr orb);
 
-  virtual OBV_FactoryTest::BaseValue * get_base_value (void);
+  virtual OBV_FactoryTest::BaseValue * get_base_value ();
 
-  virtual OBV_FactoryTest::Value1 * get_value1 (void);
+  virtual OBV_FactoryTest::Value1 * get_value1 ();
 
-  virtual OBV_FactoryTest::Value2 * get_value2 (void);
+  virtual OBV_FactoryTest::Value2 * get_value2 ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// The ORB

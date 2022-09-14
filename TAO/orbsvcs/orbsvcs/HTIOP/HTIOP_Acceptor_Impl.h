@@ -102,7 +102,6 @@ namespace TAO
       /// Pointer to the ORB Core.
       TAO_ORB_Core *orb_core_;
     };
-
   }
 }
 

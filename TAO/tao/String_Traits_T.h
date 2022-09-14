@@ -20,7 +20,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename char_type, class derived>
 struct string_traits_decorator
 {
@@ -77,7 +76,6 @@ struct string_traits
   , public string_traits_decorator<charT,string_traits<charT,dummy> >
 {
 };
-
 } // namespace details
 } // namespace CORBA
 

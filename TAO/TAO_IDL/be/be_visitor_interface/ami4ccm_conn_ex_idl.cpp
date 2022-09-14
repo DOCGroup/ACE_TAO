@@ -18,7 +18,7 @@ be_visitor_ami4ccm_conn_ex_idl::be_visitor_ami4ccm_conn_ex_idl (
 {
 }
 
-be_visitor_ami4ccm_conn_ex_idl::~be_visitor_ami4ccm_conn_ex_idl (void)
+be_visitor_ami4ccm_conn_ex_idl::~be_visitor_ami4ccm_conn_ex_idl ()
 {
 }
 
@@ -27,9 +27,7 @@ be_visitor_ami4ccm_conn_ex_idl::visit_interface (be_interface *node)
 {
   Identifier *oln = node->original_local_name ();
 
-  os_ << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (&os_);
 
   os_ << be_nl_2
       << "module CCM_AMI::Connector_T<" << oln << ", AMI4CCM_"

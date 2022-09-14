@@ -16,7 +16,7 @@ be_visitor_union_ci::be_visitor_union_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_union_ci::~be_visitor_union_ci (void)
+be_visitor_union_ci::~be_visitor_union_ci ()
 {
 }
 
@@ -32,8 +32,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "// *************************************************************"
       << be_nl;
@@ -43,7 +42,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
   // the discriminant type may have to be defined here if it was an enum
   // declaration inside of the union statement.
 
-  be_type *bt = be_type::narrow_from_decl (node->disc_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->disc_type ());
 
   if (!bt)
     {

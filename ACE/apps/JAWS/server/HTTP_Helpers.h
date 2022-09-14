@@ -26,12 +26,11 @@
 class HTTP_Helper
 {
 public:
-
   // Convert and HTTP-date into a time_t
   static time_t HTTP_mktime (const char *httpdate);
 
   // Create today's date
-  static const char *HTTP_date (void);
+  static const char *HTTP_date ();
   static const char *HTTP_date (char *s);
 
   // Month conversions (ascii <--> numeric)
@@ -45,7 +44,6 @@ public:
   static char *HTTP_encode_base64 (char *data);
 
 private:
-
   static int fixyear (int year);
 
 private:
@@ -70,7 +68,7 @@ class HTTP_Status_Code
 {
 public:
   /// Singleton access point.
-  static const char **instance (void);
+  static const char **instance ();
 
   enum STATUS_CODE
   {

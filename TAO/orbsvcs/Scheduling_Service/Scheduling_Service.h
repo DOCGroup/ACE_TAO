@@ -37,7 +37,7 @@ class TAO_Scheduling_Service
 {
 public:
   /// Default Constructor.
-  TAO_Scheduling_Service (void);
+  TAO_Scheduling_Service ();
 
   /// Constructor taking the command-line arguments.
   TAO_Scheduling_Service (int argc, ACE_TCHAR* argv[]);
@@ -46,10 +46,10 @@ public:
   int init (int argc, ACE_TCHAR* argv[]);
 
   /// Run the TAO_Scheduling_Service.
-  int run (void);
+  int run ();
 
   /// Destructor.
-  ~TAO_Scheduling_Service (void);
+  ~TAO_Scheduling_Service ();
 
 private:
   typedef ACE_Config_Scheduler CONFIG_SCHED_TYPE;

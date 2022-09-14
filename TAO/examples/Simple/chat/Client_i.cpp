@@ -118,7 +118,7 @@ Client_i::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Client_i::run (void)
+Client_i::run ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n============= Simple Chat =================\n")

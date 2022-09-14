@@ -47,7 +47,7 @@ public:
 
   // Errno::flags_ is a static variable, so we've got to protect it
   // with a mutex since it isn't kept in thread-specific storage.
-  int flags (void)
+  int flags ()
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_Mon, *Errno::lock_, -1));
 
@@ -61,12 +61,12 @@ public:
     return 0;
   }
 
-  static int created (void)
+  static int created ()
   {
     return created_;
   }
 
-  static int deleted (void)
+  static int deleted ()
   {
     return deleted_;
   }
@@ -74,7 +74,7 @@ public:
 #if defined (ACE_HAS_THREADS)
   static
   ACE_Thread_Mutex *
-  allocate_lock (void)
+  allocate_lock ()
   {
     ACE_NEW_RETURN (Errno::lock_, ACE_Thread_Mutex, 0);
     return Errno::lock_;

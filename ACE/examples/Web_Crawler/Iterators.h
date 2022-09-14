@@ -32,7 +32,7 @@ class URL_Iterator
 {
 public:
   /// "virtual" destructor.
-  virtual int destroy (void);
+  virtual int destroy ();
 
   // = Iterator methods.
   /// Pass back the next <string> that hasn't been seen yet.  Returns 0
@@ -41,7 +41,7 @@ public:
 
 protected:
   /// C++ destructor.
-  virtual ~URL_Iterator (void);
+  virtual ~URL_Iterator ();
 };
 
 /**

@@ -18,7 +18,7 @@ TAO::IIOP_SSL_Transport::IIOP_SSL_Transport (
     TAO::SSLIOP::Util::current (orb_core);
 }
 
-TAO::IIOP_SSL_Transport::~IIOP_SSL_Transport (void)
+TAO::IIOP_SSL_Transport::~IIOP_SSL_Transport ()
 {
 }
 

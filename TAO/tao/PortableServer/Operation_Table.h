@@ -79,7 +79,7 @@ namespace TAO
    */
   struct TAO_PortableServer_Export Operation_Skeletons
   {
-    Operation_Skeletons (void);
+    Operation_Skeletons ();
 
     /// Remote skeleton pointer
     TAO_Skeleton skel_ptr;
@@ -123,7 +123,7 @@ public:
   virtual int bind (const char *opname,
                     const TAO::Operation_Skeletons skel_ptr) = 0;
 
-  virtual ~TAO_Operation_Table (void);
+  virtual ~TAO_Operation_Table ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

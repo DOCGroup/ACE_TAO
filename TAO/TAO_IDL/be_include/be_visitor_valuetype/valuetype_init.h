@@ -24,18 +24,16 @@
  */
 class be_visitor_valuetype_init : public be_visitor_valuetype
 {
-
 public:
   /// constructor
   be_visitor_valuetype_init (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_init (void);
+  ~be_visitor_valuetype_init ();
 
 public:
-
-  void begin_public (void);
-  void begin_private (void);
+  void begin_public ();
+  void begin_private ();
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_INIT_H_ */

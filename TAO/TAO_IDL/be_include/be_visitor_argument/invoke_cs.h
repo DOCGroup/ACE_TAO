@@ -14,10 +14,6 @@
 #ifndef _BE_VISITOR_ARGUMENT_INVOKE_CS_H_
 #define _BE_VISITOR_ARGUMENT_INVOKE_CS_H_
 
-// ************************************************************
-// class be_visitor_args_invoke_cs
-// ************************************************************
-
 /**
  * @class be_visitor_args_invoke_cs
  *
@@ -32,7 +28,7 @@ public:
   be_visitor_args_invoke_cs (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_args_invoke_cs (void);
+  virtual ~be_visitor_args_invoke_cs ();
 
   /// visit the argument node
   virtual int visit_argument (be_argument *node);
@@ -93,9 +89,8 @@ public:
   virtual int visit_home (be_home *node);
 
  private:
-  int emit_common (void);
+  int emit_common ();
   int emit_common2 (be_type *node);
-
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_INVOKE_CS_H_ */

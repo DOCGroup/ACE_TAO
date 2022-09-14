@@ -51,11 +51,11 @@ namespace ACE
 
       Monitor_Base (const char* name,
                     Monitor_Control_Types::Information_Type type);
-      virtual ~Monitor_Base (void);
+      virtual ~Monitor_Base ();
 
       /// Implemented by the most-derived class. Does the actual
       /// work of fetching the monitored value.
-      virtual void update (void);
+      virtual void update ();
 
       /// Updates the monitor's data if it is a numeric floating point.
       virtual void receive (double data);
@@ -75,10 +75,10 @@ namespace ACE
       Control_Action* remove_constraint (const long constraint_id);
 
       /// Get all constraints
-      CONSTRAINTS& constraints (void);
+      CONSTRAINTS& constraints ();
 
       /// Reset function.
-      virtual void clear (void);
+      virtual void clear ();
 
       /// Data accessors.
       void retrieve (Monitor_Control_Types::Data& data) const;
@@ -88,42 +88,42 @@ namespace ACE
 
       void add_to_registry (
         const ACE_Time_Value& time = ACE_Time_Value::zero);
-      void remove_from_registry (void);
+      void remove_from_registry ();
 
-      const char* name (void) const;
+      const char* name () const;
       void name (const char* new_name);
 
-      void add_ref (void);
-      void remove_ref (void);
+      void add_ref ();
+      void remove_ref ();
 
       /// Calculate the average of the accumulated samples.
-      double average (void) const;
+      double average () const;
 
       /// Calculate the sum of the squares of the samples.
-      double sum_of_squares (void) const;
+      double sum_of_squares () const;
 
       /// Returns the number of samples
-      size_t count (void) const;
+      size_t count () const;
 
       /// Returns the minimum sample value
-      double minimum_sample (void) const;
+      double minimum_sample () const;
 
       /// Returns the maximum sample value
-      double maximum_sample (void) const;
+      double maximum_sample () const;
 
       /// Returns the most recent sample value
-      double last_sample (void) const;
+      double last_sample () const;
 
       /// Return the type of this statistic
-      Monitor_Control_Types::Information_Type type (void) const;
+      Monitor_Control_Types::Information_Type type () const;
 
       /// Return the list or error msg if wrong type.
-      Monitor_Control_Types::NameList get_list (void) const;
+      Monitor_Control_Types::NameList get_list () const;
 
     protected:
       /// Overridden in some monitors (for example the OS monitors) where
       /// clearing requires monitor-specific actions.
-      virtual void clear_i (void);
+      virtual void clear_i ();
 
     protected:
       Monitor_Control_Types::Data data_;

@@ -39,61 +39,39 @@
 #endif /* _MSC_VER */
 
 
+using ATTRIBUTES = size_t;
+using CACHED_HANDLER = std::pair<Svc_Handler *, ATTRIBUTES>;
+using ACE_ADDR = ARHR<ACE_INET_Addr>;
+using H_KEY = ACE_Hash<ACE_ADDR>;
+using C_KEYS = ACE_Equal_To<ACE_ADDR>;
 
-typedef size_t ATTRIBUTES;
-typedef std::pair<Svc_Handler *, ATTRIBUTES>
-        CACHED_HANDLER;
-typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
-        ACE_ADDR;
-typedef ACE_Hash<ACE_ADDR> H_KEY;
-typedef ACE_Equal_To<ACE_ADDR> C_KEYS;
+using HASH_MAP = ACE_Hash_Map_Manager_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+using HASH_MAP_ITERATOR = ACE_Hash_Map_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+using HASH_MAP_REVERSE_ITERATOR = ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Manager_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
-        HASH_MAP;
-typedef ACE_Hash_Map_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
-        HASH_MAP_ITERATOR;
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
-        HASH_MAP_REVERSE_ITERATOR;
+using CLEANUP_STRATEGY = ARHCLE<ACE_ADDR, CACHED_HANDLER, HASH_MAP>;
+using CACHING_UTILITY = ACE_Recyclable_Handler_Caching_Utility<ACE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>;
 
-typedef ACE_Recyclable_Handler_Cleanup_Strategy<ACE_ADDR, CACHED_HANDLER, HASH_MAP>
-        CLEANUP_STRATEGY;
-typedef ACE_Recyclable_Handler_Caching_Utility<ACE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>
-        CACHING_UTILITY;
+using LRU_CACHING_STRATEGY = ALRU<ATTRIBUTES, CACHING_UTILITY>;
 
-typedef ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-        LRU_CACHING_STRATEGY;
+using LFU_CACHING_STRATEGY = ALFU<ATTRIBUTES, CACHING_UTILITY>;
+using FIFO_CACHING_STRATEGY = AFIFO<ATTRIBUTES, CACHING_UTILITY>;
+using NULL_CACHING_STRATEGY = ANULL<ATTRIBUTES, CACHING_UTILITY>;
+using LRU_CACHING_STRATEGY_ADAPTER = ACSA<ATTRIBUTES, CACHING_UTILITY, LRU_CACHING_STRATEGY>;
+using LFU_CACHING_STRATEGY_ADAPTER = ACSA<ATTRIBUTES, CACHING_UTILITY, LFU_CACHING_STRATEGY>;
+using FIFO_CACHING_STRATEGY_ADAPTER = ACSA<ATTRIBUTES, CACHING_UTILITY, FIFO_CACHING_STRATEGY>;
+using NULL_CACHING_STRATEGY_ADAPTER = ACSA<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_STRATEGY>;
+using CACHING_STRATEGY = ACS<ATTRIBUTES, CACHING_UTILITY>;
 
-typedef ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-        LFU_CACHING_STRATEGY;
-typedef ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-        FIFO_CACHING_STRATEGY;
-typedef ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-        NULL_CACHING_STRATEGY;
-typedef ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LRU_CACHING_STRATEGY>
-        LRU_CACHING_STRATEGY_ADAPTER;
-typedef ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LFU_CACHING_STRATEGY>
-        LFU_CACHING_STRATEGY_ADAPTER;
-typedef ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, FIFO_CACHING_STRATEGY>
-        FIFO_CACHING_STRATEGY_ADAPTER;
-typedef ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_STRATEGY>
-        NULL_CACHING_STRATEGY_ADAPTER;
-typedef ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-        CACHING_STRATEGY;
+using ACCEPTOR = ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_Acceptor>;
 
-typedef ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>
-        ACCEPTOR;
+using STRATEGY_CONNECTOR = ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_Connector>;
 
-typedef ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
-        STRATEGY_CONNECTOR;
+using NULL_CREATION_STRATEGY = ACE_NOOP_Creation_Strategy<Svc_Handler>;
 
-typedef ACE_NOOP_Creation_Strategy<Svc_Handler>
-        NULL_CREATION_STRATEGY;
+using NULL_ACTIVATION_STRATEGY = ACE_NOOP_Concurrency_Strategy<Svc_Handler>;
 
-typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler>
-        NULL_ACTIVATION_STRATEGY;
-
-typedef ACE_Cached_Connect_Strategy_Ex<Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
-        CACHED_CONNECT_STRATEGY;
+using CACHED_CONNECT_STRATEGY = ACCSE<Svc_Handler, ACE_SOCK_Connector, CACHING_STRATEGY, ATTRIBUTES, ACE_MT_SYNCH::NULL_MUTEX>;
 
 #endif /* CACHED_CONNECT_TEST */
 
@@ -154,7 +132,7 @@ static int iterations = 200;
 //====================================================================
 
 static void
-out_of_sockets_handler (void)
+out_of_sockets_handler ()
 {
   if (ACE::out_of_handles (errno))
     {
@@ -311,7 +289,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
 }
 
 void
-test_caching_strategy_type (void)
+test_caching_strategy_type ()
 {
   CACHING_STRATEGY *caching_strategy = 0;
 

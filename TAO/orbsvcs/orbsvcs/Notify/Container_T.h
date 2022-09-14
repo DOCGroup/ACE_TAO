@@ -31,15 +31,14 @@ class TAO_Notify_Serv_Export TAO_Notify_Container_T
 {
   typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;
  public:
-
   /// Constructor
-  TAO_Notify_Container_T (void);
+  TAO_Notify_Container_T ();
 
   /// Destructor
   virtual ~TAO_Notify_Container_T ();
 
   /// Init this object.
-  void init (void);
+  void init ();
 
   /// Insert object to this container.
   virtual void insert (TYPE* type);
@@ -48,13 +47,13 @@ class TAO_Notify_Serv_Export TAO_Notify_Container_T
   virtual void remove (TYPE* type);
 
   /// Shutdown
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Call destroy on each contained object
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Collection
-  COLLECTION* collection (void);
+  COLLECTION* collection ();
 
 protected:
   /// The collection data structure that we add objects to.

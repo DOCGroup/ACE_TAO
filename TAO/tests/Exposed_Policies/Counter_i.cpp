@@ -9,7 +9,7 @@ Counter_Servant::Counter_Servant (Policy_Tester *policy_tester)
   // No-Op.
 }
 
-Counter_Servant::~Counter_Servant (void)
+Counter_Servant::~Counter_Servant ()
 {
   // No-Op.
 }
@@ -35,7 +35,7 @@ Counter_Servant::reset (/**/)
 }
 
 void
-Counter_Servant::shutdown (void)
+Counter_Servant::shutdown ()
 {
   this->policy_tester_->shutdown ();
 }

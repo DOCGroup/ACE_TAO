@@ -32,15 +32,13 @@ public:
     UTL_ScopedName *n,
     AST_PortType *porttype_ref);
 
-  virtual ~be_extended_port (void);
+  virtual ~be_extended_port ();
 
-  be_porttype *port_type (void) const;
+  be_porttype *port_type () const;
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual int accept (be_visitor *visitor);
-
-  DEF_NARROW_FROM_DECL (be_extended_port);
 };
 
 #endif // BE_EXTENDED_PORT_H

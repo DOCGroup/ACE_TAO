@@ -1,5 +1,5 @@
 #include "DTDHandler.h"
 
-ACEXML_DTDHandler::~ACEXML_DTDHandler (void)
+ACEXML_DTDHandler::~ACEXML_DTDHandler ()
 {
 }

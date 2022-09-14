@@ -26,10 +26,9 @@ class ConnectionAcceptHandler : public ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_N
 {
 public:
   virtual int open (void *);
-  virtual void destroy (void);
+  virtual void destroy ();
   virtual int close (u_long flags = 0);
 protected:
-
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE,
                             ACE_Reactor_Mask);

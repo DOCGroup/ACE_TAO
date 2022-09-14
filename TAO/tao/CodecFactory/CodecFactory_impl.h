@@ -55,10 +55,8 @@ public:
   virtual IOP::Codec_ptr create_codec_with_codesets (const IOP::Encoding_1_2 & enc);
 
 private:
-  /// Prevent copying through the copy constructor and the assignment
-  /// operator.
-  TAO_CodecFactory (const TAO_CodecFactory &);
-  void operator= (const TAO_CodecFactory &);
+  TAO_CodecFactory (const TAO_CodecFactory &) = delete;
+  void operator= (const TAO_CodecFactory &) = delete;
 
   IOP::Codec_ptr create_codec_i (CORBA::Octet major,
                                  CORBA::Octet minor,
@@ -72,7 +70,6 @@ private:
    * which they are associated.
    */
   TAO_ORB_Core * const orb_core_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

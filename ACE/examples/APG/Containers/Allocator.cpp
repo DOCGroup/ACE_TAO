@@ -8,7 +8,7 @@ class StackExample
 public:
   // Illustrate all the differnet
   // types of stacks provided by ACE.
-  int run (void);
+  int run ();
 
 private:
   // Illustrate the use of an unbounded stack.
@@ -16,7 +16,7 @@ private:
 };
 
 // Listing 1 code/ch05
-int StackExample::run (void)
+int StackExample::run ()
 {
   ACE_TRACE ("StackExample::run");
 

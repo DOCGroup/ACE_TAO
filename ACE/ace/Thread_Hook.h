@@ -33,10 +33,10 @@ class ACE_Export ACE_Thread_Hook
 {
 public:
   /// Default constructor
-  ACE_Thread_Hook (void);
+  ACE_Thread_Hook ();
 
   /// Destructor.
-  virtual ~ACE_Thread_Hook (void);
+  virtual ~ACE_Thread_Hook ();
 
   /**
    * This method can be overridden in a subclass to customize this
@@ -54,7 +54,7 @@ public:
   static ACE_Thread_Hook *thread_hook (ACE_Thread_Hook *hook);
 
   /// Returns the current system thread hook.
-  static ACE_Thread_Hook *thread_hook (void);
+  static ACE_Thread_Hook *thread_hook ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

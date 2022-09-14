@@ -26,13 +26,12 @@
  */
 class be_visitor_structure_cdr_op_cs : public be_visitor_structure
 {
-
 public:
   /// constructor
   be_visitor_structure_cdr_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_structure_cdr_op_cs (void);
+  ~be_visitor_structure_cdr_op_cs ();
 
   /// visit structure
   virtual int visit_structure (be_structure *node);

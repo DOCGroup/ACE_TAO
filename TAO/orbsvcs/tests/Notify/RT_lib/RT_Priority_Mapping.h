@@ -27,7 +27,7 @@ class TAO_RT_NOTIFY_TEST_Export TAO_Notify_Tests_RT_Priority_Mapping : public TA
 {
 public:
   /// The destructor
-  virtual ~TAO_Notify_Tests_RT_Priority_Mapping (void);
+  virtual ~TAO_Notify_Tests_RT_Priority_Mapping ();
 
   /// Init the Mapping manager.
   void init (CORBA::ORB_ptr orb);
@@ -40,7 +40,6 @@ public:
                 CORBA::Short &corba_priority);
 
 protected:
-
   /// The Priority Mapping helper.
   RTCORBA::PriorityMapping *priority_mapping_;
 };

@@ -7,13 +7,12 @@ test_i::test_i (ORB_Killer *k)
 }
 
 void
-test_i::ping (void)
+test_i::ping ()
 {
-
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) requesting shutdown\n"));
   this->killer_->activate ();

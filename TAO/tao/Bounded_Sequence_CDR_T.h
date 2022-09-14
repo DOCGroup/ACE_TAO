@@ -1,5 +1,5 @@
-#ifndef guard_bounded_sequence_cdr
-#define guard_bounded_sequence_cdr
+#ifndef TAO_BOUNDED_SEQUENCE_CDR_T_H
+#define TAO_BOUNDED_SEQUENCE_CDR_T_H
 /**
  * @file
  *
@@ -11,6 +11,7 @@
 
 #include "tao/orbconf.h"
 #include "tao/SystemException.h"
+#include "tao/Basic_Types_IDLv4.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -277,6 +278,48 @@ namespace TAO {
     return true;
   }
 
+  template <typename stream, CORBA::ULong MAX>
+  bool demarshal_sequence(stream & strm,
+      TAO::bounded_value_sequence <CORBA::IDLv4::UInt8, MAX, CORBA::IDLv4::UInt8_tag> & target) {
+    typedef TAO::bounded_value_sequence <CORBA::IDLv4::UInt8, MAX, CORBA::IDLv4::UInt8_tag> sequence;
+    ::CORBA::ULong new_length = 0;
+    if (!(strm >> new_length)) {
+      return false;
+    }
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
+      return false;
+    }
+    sequence tmp;
+    tmp.length(new_length);
+    typename sequence::value_type * buffer = tmp.get_buffer();
+    if (!strm.read_uint8_array (buffer, new_length)) {
+      return false;
+    }
+    tmp.swap(target);
+    return true;
+  }
+
+  template <typename stream, CORBA::ULong MAX>
+  bool demarshal_sequence(stream & strm,
+      TAO::bounded_value_sequence <CORBA::IDLv4::Int8, MAX, CORBA::IDLv4::Int8_tag> & target) {
+    typedef TAO::bounded_value_sequence <CORBA::IDLv4::Int8, MAX, CORBA::IDLv4::Int8_tag> sequence;
+    ::CORBA::ULong new_length = 0;
+    if (!(strm >> new_length)) {
+      return false;
+    }
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
+      return false;
+    }
+    sequence tmp;
+    tmp.length(new_length);
+    typename sequence::value_type * buffer = tmp.get_buffer();
+    if (!strm.read_int8_array (buffer, new_length)) {
+      return false;
+    }
+    tmp.swap(target);
+    return true;
+  }
+
   template <typename stream, typename value_t, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <value_t, MAX> & target) {
     typedef TAO::bounded_value_sequence <value_t, MAX> sequence;
@@ -382,9 +425,7 @@ namespace TAO {
     tmp.swap(target);
     return true;
   }
-}
 
-namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::Short, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
@@ -504,6 +545,26 @@ namespace TAO {
     return strm.write_boolean_array (source.get_buffer (), length);
   }
 
+  template <typename stream, CORBA::ULong MAX>
+  bool marshal_sequence(stream & strm,
+      const TAO::bounded_value_sequence <CORBA::IDLv4::UInt8, MAX, CORBA::IDLv4::UInt8_tag> & source) {
+    ::CORBA::ULong const length = source.length ();
+    if (length > source.maximum () || !(strm << length)) {
+      return false;
+    }
+    return strm.write_uint8_array (source.get_buffer (), length);
+  }
+
+  template <typename stream, CORBA::ULong MAX>
+  bool marshal_sequence(stream & strm,
+      const TAO::bounded_value_sequence <CORBA::IDLv4::Int8, MAX, CORBA::IDLv4::Int8_tag> & source) {
+    ::CORBA::ULong const length = source.length ();
+    if (length > source.maximum () || !(strm << length)) {
+      return false;
+    }
+    return strm.write_int8_array (source.get_buffer (), length);
+  }
+
   template <typename stream, typename value_t, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <value_t, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
@@ -568,4 +629,4 @@ namespace TAO {
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* guard_bounded_sequence_cdr */
+#endif /* TAO_BOUNDED_SEQUENCE_CDR_T_H */

@@ -43,7 +43,7 @@ TAO_EC_Object_Deactivator::~TAO_EC_Object_Deactivator (void)
 }
 
 ACE_INLINE PortableServer::POA_var
-TAO_EC_Object_Deactivator::poa (void) const
+TAO_EC_Object_Deactivator::poa () const
 {
   return this->poa_;
 }

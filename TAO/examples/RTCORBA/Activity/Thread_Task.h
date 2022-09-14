@@ -28,15 +28,14 @@ class Thread_Task : public Periodic_Task
 {
  public:
   /// Constructor
-  Thread_Task (void);
+  Thread_Task ();
 
   /// Activate thread(s).
   virtual int activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping);
 
  protected:
-
   /// task svc
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 #endif /* THREAD_TASK_H */

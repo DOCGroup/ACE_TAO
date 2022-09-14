@@ -225,7 +225,6 @@ namespace TAO
                                 CORBA::TypeCode_ptr & tc,
                                 TC_Info_List & indirect_infos,
                                 TC_Info_List & direct_infos);
-
   }  // End namespace TypeCodeFactory
 }  // End namespace TAO
 

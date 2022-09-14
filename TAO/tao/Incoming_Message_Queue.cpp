@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
+TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue ()
 {
   CORBA::ULong const sz = this->size_;
 
@@ -27,10 +27,10 @@ TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
 
 
 TAO_Queued_Data *
-TAO_Incoming_Message_Queue::dequeue_head (void)
+TAO_Incoming_Message_Queue::dequeue_head ()
 {
   if (this->size_ == 0)
-    return 0;
+    return nullptr;
 
   // Get the node on the head of the queue...
   TAO_Queued_Data * const head = this->last_added_->next ();
@@ -40,17 +40,17 @@ TAO_Incoming_Message_Queue::dequeue_head (void)
 
   // Decrease the size and reset last_added_ if empty
   if (--this->size_ == 0)
-    this->last_added_ = 0;
+    this->last_added_ = nullptr;
 
   return head;
 }
 
 TAO_Queued_Data *
-TAO_Incoming_Message_Queue::dequeue_tail (void)
+TAO_Incoming_Message_Queue::dequeue_tail ()
 {
   // This is a bit painful stuff...
   if (this->size_ == 0)
-    return 0;
+    return nullptr;
 
   // Get the node on the head of the queue...
   TAO_Queued_Data *head = this->last_added_->next ();
@@ -69,7 +69,7 @@ TAO_Incoming_Message_Queue::dequeue_tail (void)
 
   // Decrease the size
   if (--this->size_ == 0)
-    this->last_added_ = 0;
+    this->last_added_ = nullptr;
 
  return ret_qd;
 }

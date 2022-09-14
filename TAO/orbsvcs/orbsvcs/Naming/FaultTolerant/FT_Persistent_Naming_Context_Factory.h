@@ -30,19 +30,19 @@ class TAO_FtNaming_Export TAO_FT_Persistent_Naming_Context_Factory
 {
 public:
   /// Constructor.
-  TAO_FT_Persistent_Naming_Context_Factory (void);
+  TAO_FT_Persistent_Naming_Context_Factory () = default;
 
   /// Destructor.  Does not deallocate the hash map: if an instance of
   /// this class goes out of scope, its hash_map remains in persistent storage.
-  virtual ~TAO_FT_Persistent_Naming_Context_Factory (void);
+  ~TAO_FT_Persistent_Naming_Context_Factory () override = default;
 
   /// Factory method for creating an implementation object for naming contexts
-  virtual TAO_Persistent_Naming_Context* create_naming_context_impl (
+  TAO_Persistent_Naming_Context* create_naming_context_impl (
     PortableServer::POA_ptr poa,
     const char *poa_id,
     TAO_Persistent_Context_Index *context_index,
     HASH_MAP * map = 0,
-    ACE_UINT32 *counter = 0);
+    ACE_UINT32 *counter = 0) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

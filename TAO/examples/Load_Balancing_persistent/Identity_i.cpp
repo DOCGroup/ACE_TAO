@@ -18,7 +18,7 @@ Identity_i::Identity_i (const char *name,
 {
 }
 
-Identity_i::~Identity_i (void)
+Identity_i::~Identity_i ()
 {
 }
 
@@ -29,7 +29,7 @@ Identity_i::get_name (CORBA::String_out name)
 }
 
 PortableServer::POA_ptr
-Identity_i::_default_POA (void)
+Identity_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

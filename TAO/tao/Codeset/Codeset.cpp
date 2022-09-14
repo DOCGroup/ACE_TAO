@@ -18,15 +18,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Codeset_Initializer::init (void)
+TAO_Codeset_Initializer::init ()
 {
   int result = 0;
 
-  result += ACE_Service_Config::process_directive
-    (ace_svc_desc_TAO_UTF8_Latin1_Factory);
+  result += ACE_Service_Config::process_directive (ace_svc_desc_TAO_UTF8_Latin1_Factory);
 
-  result += ACE_Service_Config::process_directive
-    (ace_svc_desc_TAO_UTF16_BOM_Factory);
+  result += ACE_Service_Config::process_directive (ace_svc_desc_TAO_UTF16_BOM_Factory);
 
   TAO_Codeset_Manager_Factory *cmf = ACE_Dynamic_Service<TAO_Codeset_Manager_Factory>::instance("TAO_Codeset");
 
@@ -35,8 +33,7 @@ TAO_Codeset_Initializer::init (void)
       return result;
     }
 
-  result += ACE_Service_Config::process_directive
-    (ace_svc_desc_TAO_Codeset_Manager_Factory,1); // force replacement
+  result += ACE_Service_Config::process_directive (ace_svc_desc_TAO_Codeset_Manager_Factory,1); // force replacement
 
   return result;
 }

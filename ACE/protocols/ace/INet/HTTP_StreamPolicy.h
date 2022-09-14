@@ -80,7 +80,6 @@ namespace ACE
           };
 
         typedef ChunkedTransferStreamPolicyBase<StreamBuffer> ChunkedTransferStreamPolicy;
-
       }
   }
 

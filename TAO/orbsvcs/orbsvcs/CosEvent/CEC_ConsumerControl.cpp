@@ -2,22 +2,22 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CEC_ConsumerControl::TAO_CEC_ConsumerControl (void)
+TAO_CEC_ConsumerControl::TAO_CEC_ConsumerControl ()
 {
 }
 
-TAO_CEC_ConsumerControl::~TAO_CEC_ConsumerControl (void)
+TAO_CEC_ConsumerControl::~TAO_CEC_ConsumerControl ()
 {
 }
 
 int
-TAO_CEC_ConsumerControl::activate (void)
+TAO_CEC_ConsumerControl::activate ()
 {
   return 0;
 }
 
 int
-TAO_CEC_ConsumerControl::shutdown (void)
+TAO_CEC_ConsumerControl::shutdown ()
 {
   return 0;
 }

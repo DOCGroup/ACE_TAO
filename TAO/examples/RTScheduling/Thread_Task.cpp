@@ -7,7 +7,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Atomic_Op.h"
 
-Thread_Task::Thread_Task (void)
+Thread_Task::Thread_Task ()
  : start_time_ (0),
    load_ (0),
    iter_ (0),
@@ -22,7 +22,7 @@ Thread_Task::Thread_Task (void)
 }
 
 int
-Thread_Task::svc (void)
+Thread_Task::svc ()
 {
   try
     {
@@ -34,7 +34,7 @@ Thread_Task::svc (void)
         }
 
       const char * name = 0;
-      CORBA::Policy_var implicit_sched_param = CORBA::Policy::_duplicate (sched_param_.in ());;
+      CORBA::Policy_var implicit_sched_param = CORBA::Policy::_duplicate (sched_param_.in ());
       this->current_->begin_scheduling_segment (name,
                                                 sched_param_.in (),
                                                 implicit_sched_param.in ());
@@ -72,26 +72,26 @@ Thread_Task::svc (void)
 }
 
 int
-Thread_Task::importance (void)
+Thread_Task::importance ()
 {
   return this->importance_;
 }
 
 time_t
-Thread_Task::start_time (void)
+Thread_Task::start_time ()
 {
   return this->start_time_;
 }
 
 int
-Thread_Task::perform_task (void)
+Thread_Task::perform_task ()
 {
   return 0;
 }
 
 
 const char*
-Thread_Task::job (void)
+Thread_Task::job ()
 {
   return job_name_.in ();
 }
@@ -103,13 +103,13 @@ Thread_Task::job (Job_ptr job)
 }
 
 int
-Thread_Task::dist (void)
+Thread_Task::dist ()
 {
   return this->dist_;
 }
 
 void
-Thread_Task::dump_stats (void)
+Thread_Task::dump_stats ()
 {
   ACE_TCHAR fname [BUFSIZ];
   ACE_OS::sprintf (fname,

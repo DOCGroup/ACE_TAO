@@ -50,7 +50,6 @@
  */
 class Mem_Map_Stream
 {
-
 public:
   typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;
 
@@ -58,18 +57,18 @@ public:
                                ACE_SOCK_CONNECTOR>
         STRAT_CONNECTOR;
 
-  // Mem_Map_Stream (void);
+  // Mem_Map_Stream ();
   // constructor added:KIRTHIKA
   /// Initialize this object.
   virtual int open (STRAT_CONNECTOR *connector,
                     const ACE_INET_Addr &);
 
   /// Destructor.
-  virtual ~Mem_Map_Stream (void);
+  virtual ~Mem_Map_Stream ();
 
   // = Accessor.
   /// Returns the underlying <ACE_SOCK_Stream>.
-  ACE_SOCK_Stream &stream (void);
+  ACE_SOCK_Stream &stream ();
 
   // = I/O methods.
 
@@ -84,7 +83,7 @@ public:
    * position.  Returns EOF when the <get> position reaches the end of
    * the HTTP stream.
    */
-  virtual int get_char (void);
+  virtual int get_char ();
 
   /**
    * Returns a pointer to array of at most <len> characters starting
@@ -98,18 +97,18 @@ public:
 
   /// Returns a pointer to array of characters starting at the <recv>
   /// position.
-  virtual const char *recv (void) const;
+  virtual const char *recv () const;
 
   /// Returns the length in bytes between the <get> position and the
   /// <recv> position.
-  virtual size_t recv_len (void) const;
+  virtual size_t recv_len () const;
 
   /**
    * Resets the <get> and <recv> positions to the beginning of the
    * stream.  This works since all the data has been cached in the
    * memory-mapped backing store.
    */
-  virtual int rewind (void);
+  virtual int rewind ();
 
   /**
    * Returns the nth character <offset> from the <get> position in the
@@ -142,7 +141,7 @@ public:
   virtual ACE_OFF_T seek (ACE_OFF_T offset, int whence = SEEK_CUR);
 
   /// Returns 1 if we're at the end of the HTTP stream, else 0.
-  virtual int eof (void) const;
+  virtual int eof () const;
 
 
   /*
@@ -155,7 +154,7 @@ public:
                                     ACE_SYNCH_NULL_MUTEX>
                                     CACHED_CONNECT_STRATEGY;*/
 
-  Svc_Handler *svc_handler (void);
+  Svc_Handler *svc_handler ();
 
 private:
   /**
@@ -163,7 +162,7 @@ private:
    * extend the mapping to cover this chunk.  Returns -1 on failure or
    * EOF, else 0.
    */
-  int grow_file_and_remap (void);
+  int grow_file_and_remap ();
 
   //ACE_SOCK_Stream stream_;
 
@@ -193,7 +192,6 @@ private:
 
   /// Address at the end of the file mapping.
   char *end_of_mapping_plus1_;
-
 };
 
 #include /**/ "ace/post.h"

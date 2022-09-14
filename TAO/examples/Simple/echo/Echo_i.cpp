@@ -1,19 +1,6 @@
 #include "Echo_i.h"
 
-// Constructor.
-
-Echo_i::Echo_i (void)
-{
-}
-
-// Destructor.
-
-Echo_i::~Echo_i (void)
-{
-}
-
 // Set the ORB pointer.
-
 void
 Echo_i::orb (CORBA::ORB_ptr o)
 {
@@ -21,7 +8,6 @@ Echo_i::orb (CORBA::ORB_ptr o)
 }
 
 // Return a list of object references.
-
 Echo::List *
 Echo_i::echo_list (const char *)
 {
@@ -44,7 +30,7 @@ Echo_i::echo_list (const char *)
     orb_->resolve_initial_references ("NameService");
 
   list[CORBA::ULong(1)] =
-    orb_->resolve_initial_references ("NameService");;
+    orb_->resolve_initial_references ("NameService");
 
   list[CORBA::ULong(2)] =
     orb_->resolve_initial_references ("NameService");
@@ -80,7 +66,7 @@ Echo_i::echo_string (const char *mesg)
 // Shutdown the server application.
 
 void
-Echo_i::shutdown (void)
+Echo_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nThe echo server is shutting down\n")));

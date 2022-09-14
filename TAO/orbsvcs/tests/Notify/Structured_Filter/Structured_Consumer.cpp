@@ -111,7 +111,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            "exist $.filterable_data(type) and "
                            "$type != 1 and group != 0");
 
-      filter->add_constraints (constraint_list);
+      CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
       consumer_admin->add_filter (filter.in ());
     }

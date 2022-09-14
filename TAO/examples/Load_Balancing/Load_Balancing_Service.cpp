@@ -13,7 +13,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-Load_Balancing_Service::Load_Balancing_Service (void)
+Load_Balancing_Service::Load_Balancing_Service ()
   : ior_output_file_ (0)
 {
 }
@@ -105,9 +105,8 @@ Load_Balancing_Service::init (int argc,
 }
 
 
-
 int
-Load_Balancing_Service::run (void)
+Load_Balancing_Service::run ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Load_Balancer: Initialized\n"));
@@ -119,7 +118,7 @@ Load_Balancing_Service::run (void)
   return result;
 }
 
-Load_Balancing_Service::~Load_Balancing_Service (void)
+Load_Balancing_Service::~Load_Balancing_Service ()
 {
 }
 

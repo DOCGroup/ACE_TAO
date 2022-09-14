@@ -6,10 +6,9 @@
 
 class corbaname_Status_i : public POA_corbaname::Status {
 public:
-  corbaname_Status_i (void);
+  corbaname_Status_i ();
 
-  CORBA::Boolean print_status (void);
-
+  CORBA::Boolean print_status ();
 };
 
 #endif /* STATUS_I_H */

@@ -28,7 +28,7 @@ class Consumer : public POA_CosEventComm::PushConsumer
 {
 public:
   /// Constructor
-  Consumer (void);
+  Consumer ();
 
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
@@ -37,7 +37,7 @@ public:
 
   /// The skeleton methods.
   virtual void push (const CORBA::Any &event);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
 private:
   /// Keep track of the number of events received.

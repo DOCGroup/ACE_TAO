@@ -33,30 +33,29 @@ class Simple;
 class LB_server
 {
 public:
-
   /// Constructor
   LB_server (int argc, ACE_TCHAR **argv);
 
   /// destroys LoadManager, ORB and POA.
-  int destroy (void);
+  int destroy ();
 
   /// start the ORB.
-  int start_orb_and_poa (void);
+  int start_orb_and_poa ();
 
   /// Get the LoadManager Interface.
   int init (int argc, ACE_TCHAR **argv);
 
   /// Create the basic Object Group using the Load Manager Reference.
-  int create_basic_object_group (void);
+  int create_basic_object_group ();
 
   /// Create the simple Object Group using the Load Manager Reference.
-  int create_simple_object_group (void);
+  int create_simple_object_group ();
 
   /// remove the basic member from the object group
-  int remove_basic_member (void);
+  int remove_basic_member ();
 
   /// remove the simple member from the object group
-  int remove_simple_member (void);
+  int remove_simple_member ();
 
   /// register the basic servants with the object group.
   int register_basic_servant (Basic *servant, const char *loc);
@@ -65,19 +64,18 @@ public:
   int register_simple_servant (Simple *servant, const char *loc);
 
   /// for servants to register to the initialised ORB.
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
   /// for servants to get the reference for object_group.
-  CORBA::Object_ptr get_basic_object_group (void);
+  CORBA::Object_ptr get_basic_object_group ();
 
   /// for servants to get the reference for object_group.
-  CORBA::Object_ptr get_simple_object_group (void);
+  CORBA::Object_ptr get_simple_object_group ();
 
   /// for servants to get the reference for object_group.
-  CosLoadBalancing::LoadManager_ptr load_manager (void);
+  CosLoadBalancing::LoadManager_ptr load_manager ();
 
 private:
-
   /// Load Manager
   CosLoadBalancing::LoadManager_var lm_;
 

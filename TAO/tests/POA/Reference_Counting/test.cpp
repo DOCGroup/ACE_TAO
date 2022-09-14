@@ -76,7 +76,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           PortableServer::ServantBase_var srv = poa->id_to_servant (oid.in());
 
           CORBA::ULong refCountAfterIdToServant =
-            srv->_refcount_value ();;
+            srv->_refcount_value ();
 
           ACE_DEBUG ((LM_DEBUG, "After id_to_servant:  %d\n", refCountAfterIdToServant));
 
@@ -111,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       h->_remove_ref ();
 
-      orb->shutdown (1);
+      orb->shutdown (true);
 
       orb->destroy ();
     }

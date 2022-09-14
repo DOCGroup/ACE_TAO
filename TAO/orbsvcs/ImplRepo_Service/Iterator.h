@@ -22,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-
 class ImR_AsyncIterator
   : public POA_ImplementationRepository::AMH_ServerInformationIterator
 {

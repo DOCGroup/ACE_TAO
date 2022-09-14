@@ -6,7 +6,7 @@ server_i::server_i (CORBA::ORB_ptr orb)
 {
 }
 
-server_i::~server_i (void)
+server_i::~server_i ()
 {
 }
 
@@ -23,7 +23,7 @@ server_i::test_request (const char *msg)
 }
 
 void
-server_i::shutdown (void)
+server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

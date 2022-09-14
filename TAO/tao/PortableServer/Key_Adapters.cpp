@@ -7,7 +7,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Incremental_Key_Generator::TAO_Incremental_Key_Generator (void)
+TAO_Incremental_Key_Generator::TAO_Incremental_Key_Generator ()
   : counter_ (0)
 {
 }

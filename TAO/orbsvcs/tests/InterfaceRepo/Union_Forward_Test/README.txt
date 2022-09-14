@@ -1,5 +1,3 @@
-
-
 This test illustrates a problem with the IFR service in that it cannot
 properly handle forward declared unions.
 
@@ -37,4 +35,3 @@ Here is a stack trace relative to the IFR service in TAO 1.6.6:
 #10 0x00007f68cc47dc25 in POA_CORBA::AttributeDef::_get_type_skel (
     server_request=@0x7fffd4cdda90, servant_upcall=0x7fffd4cdd3d0,
     servant=0x672150) at IFRService/IFR_BasicS.cpp:14111
-

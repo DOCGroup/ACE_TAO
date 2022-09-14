@@ -26,11 +26,10 @@
 class TSS_Obj
 {
 public:
-  TSS_Obj (void);
-  ~TSS_Obj (void);
+  TSS_Obj ();
+  ~TSS_Obj ();
 
 private:
-
  static ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> count_;
 };
 

@@ -23,7 +23,7 @@ public:
   int visit_operation (be_operation *node);
   int visit_attribute (be_attribute *node);
 
-  ~be_visitor_amh_interface_ss (void);
+  ~be_visitor_amh_interface_ss ();
 
 protected:
   virtual void this_method (be_interface *node);

@@ -25,14 +25,11 @@
  */
 class Signal_Handler : public ACE_Event_Handler
 {
-
 public:
-
-  Signal_Handler (void);
+  Signal_Handler ();
 
   /// Override this method to implement graceful shutdown.
   int handle_signal(int signum, siginfo_t*,ucontext_t*);
-
 };
 
 
@@ -46,9 +43,8 @@ public:
 class Distributer_Receiver_Callback : public TAO_AV_Callback
 {
 public:
-
   //// Constructor.
-  Distributer_Receiver_Callback (void);
+  Distributer_Receiver_Callback ();
 
   /// Method that is called when there is data to be received from a
   /// sender.
@@ -58,10 +54,10 @@ public:
 
   /// Called when the sender is done sending data and wants to close
   /// down the connection.
-  int handle_destroy (void);
+  int handle_destroy ();
 
   /// Accessor methods for the flowname of the callback.
-  ACE_CString &flowname (void);
+  ACE_CString &flowname ();
   void flowname (const ACE_CString &flowname);
 
 private:
@@ -83,21 +79,17 @@ private:
  */
 class Distributer_Sender_Callback : public TAO_AV_Callback
 {
-
 public:
-
   //// Called when the sender has finished reading the file and wants
   //// to close down the connection.
-  int handle_destroy (void);
+  int handle_destroy ();
 
   /// Accessor methods for the flowname of the callback.
-  ACE_CString &flowname (void);
+  ACE_CString &flowname ();
   void flowname (const ACE_CString &flowname);
 
 private:
-
   ACE_CString flowname_;
-
 };
 
 /**
@@ -174,10 +166,10 @@ class Distributer
 {
 public:
   //// Constructor
-  Distributer (void);
+  Distributer ();
 
   //// Destructor.
-  ~Distributer (void);
+  ~Distributer ();
 
   //// Initialize data components.
   int init (int argc,
@@ -188,20 +180,20 @@ public:
                   ACE_TCHAR **argv);
 
   /// Flag to know when we are done.
-  bool done (void) const;
+  bool done () const;
   void done (bool);
 
   //// Accessor to connection manager.
-  Connection_Manager &connection_manager (void);
+  Connection_Manager &connection_manager ();
 
   //// Called when stream created
-  void stream_created (void);
+  void stream_created ();
 
   //// Called when stream destroyed
-  void stream_destroyed (void);
+  void stream_destroyed ();
 
   ////Unbind the sender and receiver from the Naming Service
-  void shut_down (void);
+  void shut_down ();
 
 protected:
   //// Connection manager.

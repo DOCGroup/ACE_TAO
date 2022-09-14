@@ -8,7 +8,7 @@ namespace TAO
   namespace Portable_Server
   {
     bool
-    ImplicitActivationStrategyExplicit::allow_implicit_activation (void) const
+    ImplicitActivationStrategyExplicit::allow_implicit_activation () const
     {
       return false;
     }

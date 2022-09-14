@@ -12,10 +12,6 @@ TAO_POA_Default_Policy_Validator::TAO_POA_Default_Policy_Validator (
 {
 }
 
-TAO_POA_Default_Policy_Validator::~TAO_POA_Default_Policy_Validator (void)
-{
-}
-
 void
 TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies)
 {

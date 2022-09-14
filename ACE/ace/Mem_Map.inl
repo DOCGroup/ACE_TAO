@@ -6,7 +6,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_HANDLE
-ACE_Mem_Map::handle (void) const
+ACE_Mem_Map::handle () const
 {
   ACE_TRACE ("ACE_Mem_Map::handle");
   return this->handle_;
@@ -15,7 +15,7 @@ ACE_Mem_Map::handle (void) const
 // Return the name of file that is mapped (if any).
 
 ACE_INLINE const ACE_TCHAR *
-ACE_Mem_Map::filename (void) const
+ACE_Mem_Map::filename () const
 {
   return this->filename_;
 }
@@ -75,7 +75,7 @@ ACE_Mem_Map::operator () (void *&addr)
 // Return the base address.
 
 ACE_INLINE void *
-ACE_Mem_Map::addr (void) const
+ACE_Mem_Map::addr () const
 {
   ACE_TRACE ("ACE_Mem_Map::addr");
 
@@ -86,7 +86,7 @@ ACE_Mem_Map::addr (void) const
 // file.
 
 ACE_INLINE size_t
-ACE_Mem_Map::size (void) const
+ACE_Mem_Map::size () const
 {
   ACE_TRACE ("ACE_Mem_Map::size");
   return this->length_;

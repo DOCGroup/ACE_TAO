@@ -139,13 +139,13 @@ public:
     PortableServer::POA_ptr poa,
     CosNotifyChannelAdmin::EventChannelFactory_ptr ecf_);
 
-  void fini (void);
+  void fini ();
 
   size_t reconnect_count () const;
 
   virtual void reconnect (CORBA::Object_ptr reconnection);
 
-  virtual CORBA::Boolean is_alive (void);
+  virtual CORBA::Boolean is_alive ();
 
 private:
   Consumer_Main & consumer_main_;
@@ -165,8 +165,8 @@ class Consumer_Main
   int parse_single_arg (int argc, ACE_TCHAR *argv[]);
 
   int init (int argc, ACE_TCHAR *argv[]);
-  int run (void);
-  int fini (void);
+  int run ();
+  int fini ();
   void usage (FILE * log) const;
 
   void reconnect (
@@ -174,19 +174,19 @@ class Consumer_Main
 
  private:
   /// Find naming service.
-  int resolve_naming_service (void);
+  int resolve_naming_service ();
 
   /// Resolve the Notify factory from the Naming service.
-  int find_notify_factory (void);
+  int find_notify_factory ();
 
   /// Resolve the Notify factory using resolve_initial_reference ("NotifyEventChannelFactory")
-  int resolve_notify_factory (void);
+  int resolve_notify_factory ();
 
-  void init_event_channel (void);
-  void init_consumer_admin (void);
-  void init_structured_proxy_supplier (void);
-  void init_sequence_proxy_supplier (void);
-  void init_any_proxy_supplier (void);
+  void init_event_channel ();
+  void init_consumer_admin ();
+  void init_structured_proxy_supplier ();
+  void init_sequence_proxy_supplier ();
+  void init_any_proxy_supplier ();
 
   void set_proxy_qos (CosNotifyChannelAdmin::ProxySupplier_ptr proxy);
 
@@ -202,7 +202,6 @@ class Consumer_Main
   ////////////////
   // Data members
  private:
-
   // set by command line parameters
   bool verbose_;            // -v make a glorious noise
   enum Mode_T{

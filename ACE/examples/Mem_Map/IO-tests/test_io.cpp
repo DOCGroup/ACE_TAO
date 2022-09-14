@@ -32,7 +32,7 @@ static ACE_Profile_Timer profile_timer;
 // Explain usage and exit.
 
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_OS::fprintf (stderr, "usage: %s"
                    " [-i input_file] [-o output_file] [-n iteration_count] [-r]\n",

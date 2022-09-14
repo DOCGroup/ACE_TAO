@@ -19,5 +19,5 @@ Simple_Server_i::test_method (const char *x)
 void
 Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

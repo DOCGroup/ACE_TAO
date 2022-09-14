@@ -25,7 +25,7 @@ namespace TAO
   }
 
   template <typename TRANSPORT_TYPE>
-  Cache_IntId_T<TRANSPORT_TYPE>::~Cache_IntId_T (void)
+  Cache_IntId_T<TRANSPORT_TYPE>::~Cache_IntId_T ()
   {
     if (this->transport_)
       this->transport_->remove_reference ();

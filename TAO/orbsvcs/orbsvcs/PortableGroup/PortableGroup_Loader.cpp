@@ -8,7 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PortableGroup_Loader::TAO_PortableGroup_Loader (void)
+TAO_PortableGroup_Loader::TAO_PortableGroup_Loader ()
 {
 }
 
@@ -47,7 +47,7 @@ TAO_PortableGroup_Loader::init (int /*argc*/,
 }
 
 int
-TAO_PortableGroup_Loader::Initializer (void)
+TAO_PortableGroup_Loader::Initializer ()
 {
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_PortableGroup_Loader);
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_MIOP_Resource_Factory);

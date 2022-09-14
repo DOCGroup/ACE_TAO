@@ -23,7 +23,7 @@ be_visitor_null_return_value::be_visitor_null_return_value (
 {
 }
 
-be_visitor_null_return_value::~be_visitor_null_return_value (void)
+be_visitor_null_return_value::~be_visitor_null_return_value ()
 {
 }
 
@@ -122,7 +122,7 @@ be_visitor_null_return_value::visit_sequence (be_sequence *node)
   const char *fname = node->full_name ();
   be_typedef *td = this->ctx_->tdef ();
 
-  if (td != 0)
+  if (td != nullptr)
     {
       fname = td->full_name ();
     }

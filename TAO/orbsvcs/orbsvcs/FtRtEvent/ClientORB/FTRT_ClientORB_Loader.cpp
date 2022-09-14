@@ -10,11 +10,11 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRT {
-  FTRT_ClientORB_Loader::FTRT_ClientORB_Loader (void)
+  FTRT_ClientORB_Loader::FTRT_ClientORB_Loader ()
   {
   }
 
-  FTRT_ClientORB_Loader::~FTRT_ClientORB_Loader (void)
+  FTRT_ClientORB_Loader::~FTRT_ClientORB_Loader ()
   {
   }
 

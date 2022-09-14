@@ -261,7 +261,6 @@ int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
   smival->syntax = tempvb.get_syntax();
 
   switch ( smival->syntax ) {
-
   case sNMP_SYNTAX_NULL:
     break;
 
@@ -411,7 +410,6 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
    struct variable_list *vp;
 
    for(vp = raw_pdu->variables; vp; vp = vp->next_variable) {
-
     // extract the oid portion
     tempoid.set_data( (unsigned long *)vp->name,
                        ( unsigned int) vp->name_length);
@@ -419,7 +417,6 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
 
     // extract the value portion
     switch(vp->type) {
-
     // octet string
     case sNMP_SYNTAX_OCTETS:
      case sNMP_SYNTAX_OPAQUE:
@@ -510,7 +507,6 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
 
     default:
        tempvb.set_null();
-
     } // end switch
 
     // append the vb to the pdu

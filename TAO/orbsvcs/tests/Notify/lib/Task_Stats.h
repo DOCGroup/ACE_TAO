@@ -26,7 +26,7 @@
 class TAO_NOTIFY_TEST_Export Base_Time
 {
  public:
-  Base_Time (void);
+  Base_Time ();
   ACE_hrtime_t base_time_;
 };
 
@@ -41,10 +41,10 @@ class TAO_NOTIFY_TEST_Export Task_Stats
 {
  public:
   /// Constructor
-  Task_Stats (void);
+  Task_Stats ();
 
   /// Destructor
-  ~Task_Stats (void);
+  ~Task_Stats ();
 
   /// Useful Global Scale Factor
   static ACE_High_Res_Timer::global_scale_factor_type gsf_;

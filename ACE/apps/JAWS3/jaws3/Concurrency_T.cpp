@@ -34,7 +34,7 @@ JAWS_Concurrency_Bridge<CONCURRENCY_IMPL>::getq (JAWS_Protocol_Handler *&ph)
 
 
 template <class CONCURRENCY_IMPL> void
-JAWS_Concurrency_Bridge<CONCURRENCY_IMPL>::shutdown (void)
+JAWS_Concurrency_Bridge<CONCURRENCY_IMPL>::shutdown ()
 {
   ACE_Message_Block *empty_mb = JAWS_Empty_Message_Block::instance ();
   JAWS_CONCURRENCY_TASK *task;

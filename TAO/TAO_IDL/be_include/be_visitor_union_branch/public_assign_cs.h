@@ -28,7 +28,7 @@ class be_visitor_union_branch_public_assign_cs
 {
 public:
   be_visitor_union_branch_public_assign_cs (be_visitor_context *ctx);
-  ~be_visitor_union_branch_public_assign_cs (void);
+  ~be_visitor_union_branch_public_assign_cs ();
 
   virtual int visit_union_branch (be_union_branch *node);
 
@@ -50,7 +50,6 @@ public:
 
 private:
   int emit_valuetype_common (be_type *node);
-
 };
 
 #endif /* _BE_VISITOR_UNION_BRANCH_PUBLIC_ASSIGN_CS_H_ */

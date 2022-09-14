@@ -24,7 +24,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
 
 template<class PROXY, class C, class I,ACE_SYNCH_DECL> void
 TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
-    shutdown_i (void)
+    shutdown_i ()
 {
   this->collection_.shutdown ();
 }

@@ -90,7 +90,7 @@ namespace ACE
       Stream (Session *s = 0);
 
       /// Destructor.
-      ~Stream (void);
+      ~Stream ();
 
       // = I/O functions.
 
@@ -211,23 +211,23 @@ namespace ACE
                        size_t *bytes_transferred = 0) const;
 
       // = Selectively close endpoints.  / Close down the reader.
-      int close_reader (void);
+      int close_reader ();
 
       /// Close down the writer.
-      int close_writer (void);
+      int close_writer ();
 
       /**
        * Close down the socket (we need this to make things work correctly
        * on Win32, which requires use to do a <close_writer> before doing
        * the close to avoid losing data).
        */
-      int close (void);
+      int close ();
 
       // = Meta-type info
       typedef Addr PEER_ADDR;
 
       /// Dump the state of an object.
-      void dump (void) const;
+      void dump () const;
 
       /// Declare the dynamic allocation hooks.
       ACE_ALLOC_HOOK_DECLARE;
@@ -238,9 +238,9 @@ namespace ACE
       /// future. - Priyanka
       /// {@
       void set_handle (ACE_HANDLE h);
-      ACE_HANDLE get_handle (void) const;
+      ACE_HANDLE get_handle () const;
 
-      Session *session (void) const;
+      Session *session () const;
       void session (Session *s);
 
       /**
@@ -278,7 +278,6 @@ namespace ACE
       /// associated with. On the inside, sessions are created by the Connector,
       /// which then create streams on demand.
       Session *session_;
-
     };
   }
 }

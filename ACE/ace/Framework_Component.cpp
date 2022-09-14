@@ -12,7 +12,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Framework_Component::~ACE_Framework_Component (void)
+ACE_Framework_Component::~ACE_Framework_Component ()
 {
   ACE_TRACE ("ACE_Framework_Component::~ACE_Framework_Component");
 
@@ -29,7 +29,7 @@ sig_atomic_t ACE_Framework_Repository::shutting_down_ = 0;
 // Pointer to the Singleton instance.
 ACE_Framework_Repository *ACE_Framework_Repository::repository_ = 0;
 
-ACE_Framework_Repository::~ACE_Framework_Repository (void)
+ACE_Framework_Repository::~ACE_Framework_Repository ()
 {
   ACE_TRACE ("ACE_Framework_Repository::~ACE_Framework_Repository");
   this->close ();
@@ -58,7 +58,7 @@ ACE_Framework_Repository::open (int size)
 }
 
 int
-ACE_Framework_Repository::close (void)
+ACE_Framework_Repository::close ()
 {
   ACE_TRACE ("ACE_Framework_Repository::close");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
@@ -118,7 +118,7 @@ ACE_Framework_Repository::instance (int size)
 }
 
 void
-ACE_Framework_Repository::close_singleton (void)
+ACE_Framework_Repository::close_singleton ()
 {
   ACE_TRACE ("ACE_Framework_Repository::close_singleton");
 
@@ -216,7 +216,7 @@ ACE_Framework_Repository::remove_dll_components_i (const ACE_TCHAR *dll_name)
 }
 
 void
-ACE_Framework_Repository::compact (void)
+ACE_Framework_Repository::compact ()
 {
   ACE_TRACE ("ACE_Framework_Repository::compact");
 
@@ -263,7 +263,7 @@ ACE_Framework_Repository::compact (void)
 }
 
 void
-ACE_Framework_Repository::dump (void) const
+ACE_Framework_Repository::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Framework_Repository::dump");

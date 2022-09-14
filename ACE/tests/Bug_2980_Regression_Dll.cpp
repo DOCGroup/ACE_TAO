@@ -4,8 +4,7 @@
 
 extern "C"
 {
-
-ACE_Proper_Export_Flag int capi_init(void)
+ACE_Proper_Export_Flag int capi_init()
 {
   int ret = ACE::init();
   ACE_START_TEST (ACE_TEXT ("Bug_2980_Regression_Test"));
@@ -16,7 +15,7 @@ ACE_Proper_Export_Flag int capi_init(void)
 }
 
 
-ACE_Proper_Export_Flag int capi_fini(void)
+ACE_Proper_Export_Flag int capi_fini()
 {
   ACE_START_TEST (ACE_TEXT ("Bug_2980_Regression_Test"));
   ACE_DEBUG ((LM_INFO,
@@ -27,7 +26,7 @@ ACE_Proper_Export_Flag int capi_fini(void)
 }
 
 
-ACE_Proper_Export_Flag int capi_dosomething(void)
+ACE_Proper_Export_Flag int capi_dosomething()
 {
   ACE_START_TEST (ACE_TEXT ("Bug_2980_Regression_Test"));
 

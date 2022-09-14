@@ -35,13 +35,13 @@
 // SNMPv1 Set Application
 //
 class set {
-  public:
+public:
   set(int argc, char **argv); // process command line args
   int valid() const;             // verify transaction can proceed
   int run();                     //  issue transaction
   static void usage();           // operator help message
 
-  private:
+private:
   set(const set&);
 
   UdpAddress address_;
@@ -210,7 +210,6 @@ void set::usage()
 
 int set::run()
 {
-
    //----------[ create a ASNMP session ]-----------------------------------
    if ( snmp_.valid() != SNMP_CLASS_SUCCESS) {
       cout << "\nASNMP:ERROR:Create session failed: "<<

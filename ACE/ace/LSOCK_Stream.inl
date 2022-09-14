@@ -13,7 +13,7 @@ ACE_LSOCK_Stream::set_handle (ACE_HANDLE fd)
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_LSOCK_Stream::get_handle (void) const
+ACE_LSOCK_Stream::get_handle () const
 {
   ACE_TRACE ("ACE_LSOCK_Stream::get_handle");
   return this->ACE_SOCK_Stream::get_handle ();

@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef _AST_COMPONENT_FWD_AST_COMPONENT_FWD_HH
 #define _AST_COMPONENT_FWD_AST_COMPONENT_FWD_HH
 
@@ -12,14 +11,10 @@ public:
   AST_ComponentFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~AST_ComponentFwd (void);
+  virtual ~AST_ComponentFwd ();
 
   // Cleanup function.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_ComponentFwd);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);
@@ -28,7 +23,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Is this decl a forward declared type (Yes)
-  virtual bool is_fwd (void);
+  virtual bool is_fwd ();
 
   static AST_Decl::NodeType const NT;
 };

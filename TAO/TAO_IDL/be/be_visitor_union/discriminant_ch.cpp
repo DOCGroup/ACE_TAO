@@ -17,7 +17,7 @@ be_visitor_union_discriminant_ch::be_visitor_union_discriminant_ch (
 {
 }
 
-be_visitor_union_discriminant_ch::~be_visitor_union_discriminant_ch (void)
+be_visitor_union_discriminant_ch::~be_visitor_union_discriminant_ch ()
 {
 }
 
@@ -26,8 +26,8 @@ be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
 {
   // Get the enclosing union backend.
   be_union *bu =
-    be_union::narrow_from_decl (this->ctx_->node ());
-  be_type *bt = 0;
+    dynamic_cast<be_union*> (this->ctx_->node ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -63,14 +63,13 @@ be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // The set method.
   *os << be_nl_2
       << "void _d (" << bt->nested_type_name (bu) << ");" << be_nl;
   // The get method.
-  *os << bt->nested_type_name (bu) << " _d (void) const;";
+  *os << bt->nested_type_name (bu) << " _d () const;";
 
   return 0;
 }
@@ -81,8 +80,8 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
 {
   // get the enclosing union backend.
   be_union *bu =
-    be_union::narrow_from_decl (this->ctx_->node ());
-  be_type *bt = 0;
+    dynamic_cast<be_union*> (this->ctx_->node ());
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -96,14 +95,13 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // The set method.
   *os << be_nl_2
       << "void _d ( " << bt->nested_type_name (bu) << ");" << be_nl;
   // The get method.
-  *os << bt->nested_type_name (bu) << " _d (void) const;";
+  *os << bt->nested_type_name (bu) << " _d () const;";
 
   return 0;
 }
@@ -125,6 +123,6 @@ be_visitor_union_discriminant_ch::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }

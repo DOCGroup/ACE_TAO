@@ -61,7 +61,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   the_string.in ()));
 
       orb->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {

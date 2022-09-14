@@ -17,7 +17,7 @@ be_visitor_root::be_visitor_root (be_visitor_context *ctx)
 {
 }
 
-be_visitor_root::~be_visitor_root (void)
+be_visitor_root::~be_visitor_root ()
 {
 }
 

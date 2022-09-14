@@ -52,25 +52,25 @@ public:
                              const ACE_Time_Value &timeout);
 
   /// destructor...
-  virtual ~TAO_CEC_ProxyPullConsumer (void);
+  virtual ~TAO_CEC_ProxyPullConsumer ();
 
   /// Activate in the POA
   virtual void  activate (
       CosEventChannelAdmin::ProxyPullConsumer_ptr &activated_proxy);
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate ();
 
   /// Return 0 if no supplier is connected...
-  CORBA::Boolean is_connected (void) const;
+  CORBA::Boolean is_connected () const;
 
   /// Return the consumer object reference. It returns nil() if it has
   /// not connected yet.
-  CosEventComm::PullSupplier_ptr supplier (void) const;
+  CosEventComm::PullSupplier_ptr supplier () const;
 
   /// Pulls from the supplier, verifies that it is connected.
   CORBA::Any* try_pull_from_supplier (CORBA::Boolean_out has_event);
-  CORBA::Any* pull_from_supplier (void);
+  CORBA::Any* pull_from_supplier ();
 
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
@@ -80,21 +80,21 @@ public:
   CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected);
 
   /// The event channel is shutting down
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   // = The CosEventChannelAdmin::ProxyPullConsumer methods...
   virtual void connect_pull_supplier (
                 CosEventComm::PullSupplier_ptr pull_supplier);
-  virtual void disconnect_pull_consumer (void);
+  virtual void disconnect_pull_consumer ();
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (void);
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  virtual PortableServer::POA_ptr _default_POA ();
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
 protected:
   /// Set the supplier, used by some implementations to change the
@@ -103,10 +103,10 @@ protected:
   void supplier_i (CosEventComm::PullSupplier_ptr supplier);
 
   /// The private version (without locking) of is_connected().
-  CORBA::Boolean is_connected_i (void) const;
+  CORBA::Boolean is_connected_i () const;
 
   /// Release the supplier
-  void cleanup_i (void);
+  void cleanup_i ();
 
   /// Assigns the parameter to both supplier_ and nopolicy_supplier_, and
   /// applies policies (when appropriate) to supplier_.

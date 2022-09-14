@@ -44,7 +44,7 @@ be_visitor_traits::be_visitor_traits (be_visitor_context *ctx)
 {
 }
 
-be_visitor_traits::~be_visitor_traits (void)
+be_visitor_traits::~be_visitor_traits ()
 {
 }
 
@@ -55,9 +55,7 @@ be_visitor_traits::visit_root (be_root *node)
     {
       TAO_OutStream *os = this->ctx_->stream ();
 
-      *os << be_nl_2
-          << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      TAO_INSERT_COMMENT (os);
 
       *os << be_nl
           << be_global->core_versioning_begin ();
@@ -128,14 +126,13 @@ be_visitor_traits::visit_interface (be_interface *node)
           << " ::" << fname << ">" << be_nl
           << "{" << be_idt_nl
           << "static ::" << fname << "_ptr duplicate ("
-          << be_idt << be_idt_nl
-          << "::" << fname << "_ptr p);" << be_uidt << be_uidt_nl
-          << "static void release (" << be_idt << be_idt_nl
-          << "::" << fname << "_ptr p);" << be_uidt << be_uidt_nl
-          << "static ::" << fname << "_ptr nil (void);" << be_nl
-          << "static ::CORBA::Boolean marshal (" << be_idt << be_idt_nl
-          << "const ::" << fname << "_ptr p," << be_nl
-          << "TAO_OutputCDR & cdr);" << be_uidt  << be_uidt << be_uidt_nl
+          << "::" << fname << "_ptr p);" << be_nl
+          << "static void release ("
+          << "::" << fname << "_ptr p);" << be_nl
+          << "static ::" << fname << "_ptr nil ();" << be_nl
+          << "static ::CORBA::Boolean marshal ("
+          << "const ::" << fname << "_ptr p,"
+          << "TAO_OutputCDR & cdr);" << be_uidt_nl
           << "};";
 
       os->gen_endif ();
@@ -161,7 +158,7 @@ be_visitor_traits::visit_interface_fwd (be_interface_fwd *node)
     }
 
   be_interface *fd =
-    be_interface::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_interface*> (node->full_definition ());
 
   // We want to generate just the declaration of the Arg_Traits<>
   // specialization if the interface is forward declared but not defined.
@@ -234,7 +231,7 @@ be_visitor_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
     }
 
   be_valuetype *fd =
-    be_valuetype::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_valuetype*> (node->full_definition ());
 
   // The logic in visit_valuetype() should handle what gets generated
   // and what doesn't.
@@ -320,7 +317,7 @@ be_visitor_traits::visit_eventtype_fwd (be_eventtype_fwd *node)
 int
 be_visitor_traits::visit_field (be_field *node)
 {
-  be_type *ft = be_type::narrow_from_decl (node->field_type ());
+  be_type *ft = dynamic_cast<be_type*> (node->field_type ());
 
   if (ft->accept (this) == -1)
     {
@@ -336,7 +333,7 @@ be_visitor_traits::visit_field (be_field *node)
 int
 be_visitor_traits::visit_union_branch (be_union_branch *node)
 {
-  be_type *ft = be_type::narrow_from_decl (node->field_type ());
+  be_type *ft = dynamic_cast<be_type*> (node->field_type ());
   AST_Decl::NodeType nt = ft->node_type ();
 
   // All we are trying to catch in here are anonymous array members.
@@ -411,7 +408,7 @@ be_visitor_traits::visit_array (be_array *node)
   if (node->is_nested ())
     {
       be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
+        dynamic_cast<be_scope*> (node->defined_in ())->decl ();
       name_holder = parent->full_name ();
 
       name_holder += "::";
@@ -454,7 +451,7 @@ be_visitor_traits::visit_array (be_array *node)
       << "const " << name << "_slice * _tao_from);"
       << be_uidt
       << be_uidt_nl
-      << "static " << name << "_slice * alloc (void);"
+      << "static " << name << "_slice * alloc ();"
       << be_nl
       << "static void zero (" << be_idt << be_idt_nl
       << name << "_slice * _tao_slice);"
@@ -485,7 +482,7 @@ be_visitor_traits::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   node->cli_traits_gen (true);
   return 0;
 }

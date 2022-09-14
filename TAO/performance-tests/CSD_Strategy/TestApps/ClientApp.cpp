@@ -51,7 +51,7 @@ ClientApp::init(int argc, ACE_TCHAR* argv[])
 
 
 void
-ClientApp::client_setup(void)
+ClientApp::client_setup()
 {
   // Turn the ior_ into a Foo obj ref.
   Foo_var foo = RefHelper<Foo>::string_to_ref(this->orb_.in(),
@@ -63,7 +63,7 @@ ClientApp::client_setup(void)
 
 
 int
-ClientApp::run_engine(void)
+ClientApp::run_engine()
 {
   bool result = this->engine_->execute(this->num_loops_);
   return result ? 0 : -1;

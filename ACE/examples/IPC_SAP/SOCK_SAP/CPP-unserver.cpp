@@ -8,7 +8,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 // Are we running verbosely?
@@ -55,7 +54,6 @@ server (void *arg)
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("recv")));
           break;
-
         }
       else if (r_bytes == 0)
         {

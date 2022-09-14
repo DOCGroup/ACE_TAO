@@ -19,7 +19,6 @@
 #include "Timer_Service.h"
 
 
-
 // Create an object that will insert the <Timer_Service> into the list
 // of statically linked services that the <ACE_Service_Config> will
 // process at run-time.

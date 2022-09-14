@@ -38,11 +38,11 @@ class TAO_BIDIRGIOP_Export TAO_BiDirPolicy_Validator : public TAO_Policy_Validat
 public:
   TAO_BiDirPolicy_Validator (TAO_ORB_Core &orb_core);
 
-  virtual void validate_impl (TAO_Policy_Set &policies);
+  void validate_impl (TAO_Policy_Set &policies) override;
 
-  virtual void merge_policies_impl (TAO_Policy_Set &policies);
+  void merge_policies_impl (TAO_Policy_Set &policies) override;
 
-  virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type);
+  CORBA::Boolean legal_policy_impl (CORBA::PolicyType type) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

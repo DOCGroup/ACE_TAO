@@ -14,10 +14,6 @@
 #ifndef _BE_VISITOR_SEQUENCE_CDR_OP_CS_H_
 #define _BE_VISITOR_SEQUENCE_CDR_OP_CS_H_
 
-// ************************************************************
-// class be_visitor_sequence_cs
-// ************************************************************
-
 /**
  * @class be_visitor_sequence_cdr_op_cs
  *
@@ -28,13 +24,12 @@
  */
 class be_visitor_sequence_cdr_op_cs : public be_visitor_decl
 {
-
 public:
   /// constructor
   be_visitor_sequence_cdr_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_sequence_cdr_op_cs (void);
+  ~be_visitor_sequence_cdr_op_cs ();
 
   /// visit sequence
   virtual int visit_sequence (be_sequence *node);
@@ -93,10 +88,8 @@ public:
   virtual int visit_union (be_union *node);
 
 protected:
-
   /// helper that does the common job
   int visit_node (be_type *);
-
 };
 
 #endif /* _BE_VISITOR_SEQUENCE_CDR_OP_CS_H_ */

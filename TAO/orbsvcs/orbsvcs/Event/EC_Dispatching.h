@@ -45,18 +45,18 @@ class TAO_RTEvent_Serv_Export TAO_EC_Dispatching
 {
 public:
   /// Destructor...
-  virtual ~TAO_EC_Dispatching (void);
+  virtual ~TAO_EC_Dispatching ();
 
   /// Initialize all the data structures, activate any internal threads,
   /// etc.
-  virtual void activate (void) = 0;
+  virtual void activate () = 0;
 
   /**
    * Deactivate any internal threads and cleanup internal data
    * structures, it should only return once the threads have finished
    * their jobs.
    */
-  virtual void shutdown (void) = 0;
+  virtual void shutdown () = 0;
 
   /**
    * The consumer represented by @a proxy should receive @a event.

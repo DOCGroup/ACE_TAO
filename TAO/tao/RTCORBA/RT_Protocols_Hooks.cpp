@@ -26,14 +26,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Protocols_Hooks::TAO_RT_Protocols_Hooks (void)
+TAO_RT_Protocols_Hooks::TAO_RT_Protocols_Hooks ()
   : orb_core_ (0)
   , current_ ()
 {
 }
 
 
-TAO_RT_Protocols_Hooks::~TAO_RT_Protocols_Hooks (void)
+TAO_RT_Protocols_Hooks::~TAO_RT_Protocols_Hooks ()
 {
 }
 
@@ -63,7 +63,6 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core)
       TAO_OBJID_RTCURRENT);
 
   this->current_ = RTCORBA::Current::_narrow (object.in ());
-
 }
 
 RTCORBA::ProtocolProperties_ptr
@@ -410,7 +409,7 @@ TAO_RT_Protocols_Hooks::set_server_network_priority (IOP::ProfileId protocol_tag
 }
 
 CORBA::Long
-TAO_RT_Protocols_Hooks::get_dscp_codepoint (void)
+TAO_RT_Protocols_Hooks::get_dscp_codepoint ()
 {
   if (TAO_debug_level)
     TAOLIB_DEBUG ((LM_DEBUG,

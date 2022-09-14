@@ -19,7 +19,7 @@ public:
   }
 };
 
-ImR_Activator_Loader::ImR_Activator_Loader (void)
+ImR_Activator_Loader::ImR_Activator_Loader ()
 {
 }
 
@@ -56,7 +56,7 @@ ImR_Activator_Loader::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ImR_Activator_Loader::fini (void)
+ImR_Activator_Loader::fini ()
 {
   ACE_ASSERT (this->runner_.get() != 0);
   try
@@ -82,7 +82,7 @@ ImR_Activator_Loader::create_object (CORBA::ORB_ptr,
 }
 
 int
-ImR_Activator_Loader::run (void)
+ImR_Activator_Loader::run ()
 {
   try
     {

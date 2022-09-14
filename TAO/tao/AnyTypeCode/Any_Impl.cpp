@@ -22,7 +22,7 @@ TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
 {
 }
 
-TAO::Any_Impl::~Any_Impl (void)
+TAO::Any_Impl::~Any_Impl ()
 {
 }
 
@@ -56,20 +56,20 @@ TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
 }
 
 void
-TAO::Any_Impl::free_value (void)
+TAO::Any_Impl::free_value ()
 {
   // We always have to do this.
   ::CORBA::release (this->type_);
 }
 
 CORBA::TypeCode_ptr
-TAO::Any_Impl::type (void) const
+TAO::Any_Impl::type () const
 {
   return CORBA::TypeCode::_duplicate (this->type_);
 }
 
 CORBA::TypeCode_ptr
-TAO::Any_Impl::_tao_get_typecode (void) const
+TAO::Any_Impl::_tao_get_typecode () const
 {
   return this->type_;
 }
@@ -82,7 +82,7 @@ TAO::Any_Impl::type (CORBA::TypeCode_ptr tc)
 }
 
 int
-TAO::Any_Impl::_tao_byte_order (void) const
+TAO::Any_Impl::_tao_byte_order () const
 {
   return TAO_ENCAP_BYTE_ORDER;
 }
@@ -102,13 +102,13 @@ TAO::Any_Impl::_tao_any_wstring_destructor (void *x)
 }
 
 void
-TAO::Any_Impl::_add_ref (void)
+TAO::Any_Impl::_add_ref ()
 {
   ++this->refcount_;
 }
 
 void
-TAO::Any_Impl::_remove_ref (void)
+TAO::Any_Impl::_remove_ref ()
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -145,7 +145,7 @@ TAO::Any_Impl::to_abstract_base (CORBA::AbstractBase_ptr &) const
 }
 
 bool
-TAO::Any_Impl::encoded (void) const
+TAO::Any_Impl::encoded () const
 {
   return this->encoded_;
 }

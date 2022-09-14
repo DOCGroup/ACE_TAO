@@ -141,7 +141,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);
-
         }
 
       ACE_hrtime_t test_end = ACE_OS::gethrtime ();

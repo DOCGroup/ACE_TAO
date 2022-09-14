@@ -40,7 +40,7 @@ public:
   TAO_EC_Simple_AddrServer (CORBA::UShort port);
 
   /// Destructor
-  virtual ~TAO_EC_Simple_AddrServer (void);
+  virtual ~TAO_EC_Simple_AddrServer ();
 
   // = The RtecUDPAdmin::AddrServer methods
   virtual void get_addr (const RtecEventComm::EventHeader& header,

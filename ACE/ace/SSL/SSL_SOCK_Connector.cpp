@@ -18,7 +18,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Connector)
 
-ACE_SSL_SOCK_Connector::~ACE_SSL_SOCK_Connector (void)
+ACE_SSL_SOCK_Connector::~ACE_SSL_SOCK_Connector ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::~ACE_SSL_SOCK_Connector");
 }
@@ -28,6 +28,8 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
                                      const ACE_Time_Value *timeout)
 {
   SSL *ssl = new_stream.ssl ();
+  if (ssl == 0)
+    return -1;
 
   if (SSL_is_init_finished (ssl))
     return 0;
@@ -364,7 +366,6 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
     }
 
   return 0;
-
 }
 
 

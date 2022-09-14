@@ -42,13 +42,12 @@
 class TAO_LB_Signal_Handler : public ACE_Task_Base
 {
 public:
-
   /// Constructor.
   TAO_LB_Signal_Handler (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa);
 
   /// Run by a daemon thread to handle signals synchronously.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Active object activation method.
   /**
@@ -72,12 +71,10 @@ public:
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
 protected:
-
   /// Template method that initiates the cleanup process.
   virtual int perform_cleanup (int signum);
 
 private:
-
 #ifdef ACE_HAS_THREADS
   /// Block all signals before spawning the threads.  Then, unblock
   /// these signals when this handler is destroyed.
@@ -93,7 +90,6 @@ private:
   /// Reference to the POA within which the LoadManager servant is
   /// registered.
   PortableServer::POA_var poa_;
-
 };
 
 #endif  /* TAO_LB_SIGNAL_HANDLER_H */

@@ -20,7 +20,7 @@ public:
 
   virtual void mod_stringList (::Test::StringList & iosl);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

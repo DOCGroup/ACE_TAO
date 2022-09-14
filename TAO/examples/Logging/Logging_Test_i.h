@@ -41,20 +41,20 @@ class Logger_Client
 {
 public:
   /// Constructor.
-  Logger_Client (void);
+  Logger_Client ();
 
   /// Destructor.
-  ~Logger_Client (void);
+  ~Logger_Client ();
 
   /// Initialize the client communication endpoint with server.
   int init (int argc, ACE_TCHAR **argv);
 
   /// Execute client example code.
-  int run (void);
+  int run ();
 
 private:
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// Prepares the <Log_Record> for logging.
   void init_record (Logger::Log_Record &newrec,
@@ -62,10 +62,10 @@ private:
                     const char *msg);
 
   /// Initialises the name server and resolves the logger_factory
-  int init_naming_service (void);
+  int init_naming_service ();
 
   /// Instantiates the 2 logger member variables
-  int init_loggers (void);
+  int init_loggers ();
 
   /// Shows contents of the record (for debugging purposes).
   void show_record (Logger::Log_Record &newrec);

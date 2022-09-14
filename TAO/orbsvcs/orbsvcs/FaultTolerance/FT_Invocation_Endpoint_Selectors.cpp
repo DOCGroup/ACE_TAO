@@ -12,12 +12,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_Invocation_Endpoint_Selector::TAO_FT_Invocation_Endpoint_Selector (void)
+TAO_FT_Invocation_Endpoint_Selector::TAO_FT_Invocation_Endpoint_Selector ()
   : TAO_Default_Endpoint_Selector ()
 {
 }
 
-TAO_FT_Invocation_Endpoint_Selector::~TAO_FT_Invocation_Endpoint_Selector (void)
+TAO_FT_Invocation_Endpoint_Selector::~TAO_FT_Invocation_Endpoint_Selector ()
 {
 }
 

@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/HTIOP/HTIOP_Profile.h"
@@ -19,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 const char TAO::HTIOP::Profile::object_key_delimiter_ = '/';
 
 char
-TAO::HTIOP::Profile::object_key_delimiter (void) const
+TAO::HTIOP::Profile::object_key_delimiter () const
 {
   return TAO::HTIOP::Profile::object_key_delimiter_;
 }
@@ -63,7 +62,7 @@ TAO::HTIOP::Profile::Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO::HTIOP::Profile::~Profile (void)
+TAO::HTIOP::Profile::~Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -86,7 +85,6 @@ TAO::HTIOP::Profile::~Profile (void)
 int
 TAO::HTIOP::Profile::decode_profile (TAO_InputCDR& cdr)
 {
-
   // Decode host and port into the <endpoint_>.
   if (cdr.read_string (this->endpoint_.host_.out ()) == 0
       || cdr.read_ushort (this->endpoint_.port_) == 0
@@ -258,13 +256,13 @@ TAO::HTIOP::Profile::hash (CORBA::ULong max)
 }
 
 TAO_Endpoint*
-TAO::HTIOP::Profile::endpoint (void)
+TAO::HTIOP::Profile::endpoint ()
 {
   return &this->endpoint_;
 }
 
 CORBA::ULong
-TAO::HTIOP::Profile::endpoint_count (void) const
+TAO::HTIOP::Profile::endpoint_count () const
 {
   return this->count_;
 }
@@ -279,7 +277,7 @@ TAO::HTIOP::Profile::add_endpoint (TAO::HTIOP::Endpoint *endp)
 }
 
 char *
-TAO::HTIOP::Profile::to_string (void) const
+TAO::HTIOP::Profile::to_string () const
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
@@ -317,9 +315,8 @@ TAO::HTIOP::Profile::to_string (void) const
 }
 
 
-
 const char *
-TAO::HTIOP::Profile::prefix (void)
+TAO::HTIOP::Profile::prefix ()
 {
   return ::the_prefix;
 }
@@ -413,7 +410,7 @@ TAO::HTIOP::Profile::encode_endpoints ()
 }
 
 int
-TAO::HTIOP::Profile::decode_endpoints (void)
+TAO::HTIOP::Profile::decode_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;

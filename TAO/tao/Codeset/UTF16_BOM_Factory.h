@@ -27,7 +27,7 @@ class TAO_Codeset_Export TAO_UTF16_BOM_Factory
   : public  TAO_Codeset_Translator_Factory
 {
 public:
-  TAO_UTF16_BOM_Factory ();
+  TAO_UTF16_BOM_Factory () = default;
   virtual ~TAO_UTF16_BOM_Factory ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
@@ -52,9 +52,9 @@ private:
   int parse_one_arg (int argc, ACE_TCHAR *argv[]);
 
 private:
-  TAO_UTF16_BOM_Translator *translator_;
+  TAO_UTF16_BOM_Translator *translator_ {};
   /// Force big endian wchar, warray, & wstring
-  bool forceBE_;
+  bool forceBE_ {false};
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Codeset, TAO_UTF16_BOM_Factory)

@@ -90,25 +90,25 @@ public:
               UTL_IdList *cdr);
   // Constructor(s)
 
-  virtual ~UTL_IdList (void) {}
+  virtual ~UTL_IdList () {}
   // destructor
 
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to ostream.
 
-  virtual void destroy (void);
+  virtual void destroy ();
   // Cleanup function.
 
-  virtual UTL_IdList *copy (void);
+  virtual UTL_IdList *copy ();
   // Copy the list.
 
-  Identifier *head (void);
+  Identifier *head ();
   // Get element.
 
-  Identifier *last_component (void);
+  Identifier *last_component ();
   // Get last element in this list.
 
-  Identifier *first_component (void);
+  Identifier *first_component ();
   // Get first element in this list holding a non-empty string.
 
   int compare (UTL_IdList *other);
@@ -141,7 +141,7 @@ public:
   UTL_IdListActiveIterator (UTL_IdList *s);
 
   /// Retrieves the next item.
-  Identifier *item (void);
+  Identifier *item ();
 };
 
 #endif          // _UTL_IDLIST_UTL_IDLIST_HH

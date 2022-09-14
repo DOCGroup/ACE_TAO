@@ -54,13 +54,12 @@ DOVE_Supplier::~DOVE_Supplier ()
   delete [] this->connection_params_list_;
 
   delete internal_DOVE_Supplier_ptr_;
-
 }
 
 // Initialize the ORB and the connection to the Name Service
 
 int
-DOVE_Supplier::init (void)
+DOVE_Supplier::init ()
 {
   try
   {
@@ -206,7 +205,6 @@ DOVE_Supplier::connect (const char* MIB_name,
     }
 
   return 0;
-
 }
 
 
@@ -301,7 +299,6 @@ DOVE_Supplier::use_prev_connection ()
         connection_params_list_ [current_connection_index_];
     }
 }
-
 
 
 // -------------------- Internal Demo Supplier -----------------------------
@@ -400,7 +397,6 @@ DOVE_Supplier::connect_Supplier ()
            static_cast<RtecScheduler::Info_Type_t> (this->current_connection_params_->pod_rt_info_.info_type));
 
 
-
     // Set the publications to report them to the event channel.
 
     CORBA::Short x = 0;
@@ -442,7 +438,6 @@ DOVE_Supplier::connect_Supplier ()
   }
 
   return 0;
-
 }
 
 

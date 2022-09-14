@@ -2,13 +2,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const char *
-TAO_SCIOP_Endpoint::host (void) const
+TAO_SCIOP_Endpoint::host () const
 {
   return this->host_.in ();
 }
 
 ACE_INLINE CORBA::UShort
-TAO_SCIOP_Endpoint::port (void) const
+TAO_SCIOP_Endpoint::port () const
 {
   return this->port_;
 }

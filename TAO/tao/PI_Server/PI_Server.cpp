@@ -6,7 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_PI_Server_Init::Initializer (void)
+TAO_PI_Server_Init::Initializer ()
 {
 #if TAO_HAS_INTERCEPTORS == 1
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_ServerRequestInterceptor_Adapter_Factory_Impl);

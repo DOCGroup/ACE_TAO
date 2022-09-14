@@ -23,18 +23,18 @@
 class TAO_IDL_FE_Export ast_visitor_context
 {
 public:
-  ast_visitor_context (void);
+  ast_visitor_context ();
 
   ast_visitor_context (const ast_visitor_context &ctx);
 
-  ~ast_visitor_context (void);
+  ~ast_visitor_context ();
 
   // Accessors/mutators for template-related storage.
 
-  FE_Utils::T_PARAMLIST_INFO *template_params (void) const;
+  FE_Utils::T_PARAMLIST_INFO *template_params () const;
   void template_params (FE_Utils::T_PARAMLIST_INFO *args);
 
-  FE_Utils::T_ARGLIST const *template_args (void) const;
+  FE_Utils::T_ARGLIST const *template_args () const;
   void template_args (FE_Utils::T_ARGLIST const *args);
 
 protected:

@@ -4,20 +4,20 @@
 #include "ace/OS_NS_stdio.h"
 
 // Constructor.
-Server_i::Server_i (void)
+Server_i::Server_i ()
   : ior_output_file_ (0),
     ins_ (0)
 {
 }
 
 // Destructor.
-Server_i::~Server_i (void)
+Server_i::~Server_i ()
 {
 }
 
 // Parse the command-line arguments and set options.
 int
-Server_i::parse_args (void)
+Server_i::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:ni:"));
   int c = 0;
@@ -153,7 +153,7 @@ Server_i::init (int argc,
 }
 
 int
-Server_i::run (void)
+Server_i::run ()
 {
   // Run the main event loop for the ORB.
   int result = this->orb_manager_.run ();

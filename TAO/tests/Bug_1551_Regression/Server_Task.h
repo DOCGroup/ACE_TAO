@@ -12,7 +12,7 @@ public:
   Server_Task (CORBA::ORB_ptr orb,
                ACE_Thread_Manager *thr_mgr);
 
-  int svc (void);
+  int svc ();
 
 private:
   CORBA::ORB_var orb_;

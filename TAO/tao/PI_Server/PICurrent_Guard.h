@@ -48,7 +48,6 @@ namespace TAO
   class PICurrent_Guard
   {
   public:
-
     /// Constructor
     /**
      * This constructor sets up this guard to copy the data held in a
@@ -72,10 +71,9 @@ namespace TAO
      * points are invoked, and after the starting and intermediate (if
      * any) interception points are invoked.
      */
-    ~PICurrent_Guard (void);
+    ~PICurrent_Guard ();
 
   private:
-
     /// The PICurrent implementation whose slot table will be copied.
     PICurrent_Impl *src_;
 

@@ -35,7 +35,7 @@ namespace TAO
   // Function pointer returning a pointer to CORBA::Exception. This is used to
   // describe the allocator for user-defined exceptions that are used internally
   // by the interpreter.
-  typedef CORBA::Exception* (*TAO_Exception_Alloc) (void);
+  typedef CORBA::Exception* (*TAO_Exception_Alloc) ();
 
   /**
    * @struct Exception_Data

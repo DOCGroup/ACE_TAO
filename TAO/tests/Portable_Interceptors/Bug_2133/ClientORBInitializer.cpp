@@ -21,5 +21,4 @@ ClientORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
     client_interceptor = cri;
 
   info->add_client_request_interceptor (client_interceptor.in ());
-
 }

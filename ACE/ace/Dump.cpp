@@ -12,7 +12,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Implementations (very simple for now...)
 
-ACE_Dumpable::~ACE_Dumpable (void)
+ACE_Dumpable::~ACE_Dumpable ()
 {
   ACE_TRACE ("ACE_Dumpable::~ACE_Dumpable");
 }
@@ -47,7 +47,7 @@ ACE_Dumpable_Ptr::operator= (const ACE_Dumpable *dumper) const
     }
 }
 
-ACE_ODB::ACE_ODB (void)
+ACE_ODB::ACE_ODB ()
   // Let the Tuple default constructor initialize object_table_
   : current_size_ (0)
 {
@@ -57,7 +57,7 @@ ACE_ODB::ACE_ODB (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_ODB)
 
 ACE_ODB *
-ACE_ODB::instance (void)
+ACE_ODB::instance ()
 {
   ACE_TRACE ("ACE_ODB::instance");
 
@@ -78,7 +78,7 @@ ACE_ODB::instance (void)
 }
 
 void
-ACE_ODB::dump_objects (void)
+ACE_ODB::dump_objects ()
 {
   ACE_TRACE ("ACE_ODB::dump_objects");
   for (int i = 0; i < this->current_size_; i++)

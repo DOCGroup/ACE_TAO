@@ -34,17 +34,17 @@ class TAO_Notify_Proxy_T : public SERVANT_TYPE, public virtual TAO_Notify_Proxy
 {
 public:
   /// Constructor
-  TAO_Notify_Proxy_T (void);
+  TAO_Notify_Proxy_T ();
 
   /// Destructor
   ~TAO_Notify_Proxy_T ();
 
   /// Implements TAO_Notify_Object::servant method.
-  virtual PortableServer::Servant servant (void);
+  virtual PortableServer::Servant servant ();
 
   /// ServantBase refcount methods.
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
   virtual void validate_event_qos (
     const CosNotification::QoSProperties & required_qos,

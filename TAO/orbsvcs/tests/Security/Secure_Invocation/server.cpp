@@ -125,7 +125,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "\n"
                   "Event loop finished.\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

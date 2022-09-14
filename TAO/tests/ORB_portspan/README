@@ -1,0 +1,19 @@
+portspan Test
+-------------
+
+The portspan test verifies that the portspan option to the ORB_init() call
+behaves correctly. This option allows you to restrict the port that a
+server-side ORB will use to listen for requests, from a given range of port
+numbers, starting at a given initial port.
+
+The test works by starting a simple ORB on an endpoint with a portspan of 2.
+server -ORBEndpoint iiop://:5555/portspan=2. The test script does this
+three times and reports an error if the first two don't succeed or if the
+third call doesn't fail.
+
+The test accepts the following mutually-exclusive protocol arguments to
+determine which protocol gets tested for portspan support. You must supply
+exactly one of these arguments:
+
+• -iiop
+• -diop

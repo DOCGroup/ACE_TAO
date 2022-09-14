@@ -11,7 +11,7 @@ Consumer::Consumer (bool valuetype)
 }
 
 CORBA::ULong
-Consumer::event_count (void) const
+Consumer::event_count () const
 {
   return this->event_count_;
 }
@@ -45,7 +45,7 @@ Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 }
 
 void
-Consumer::disconnect (void)
+Consumer::disconnect ()
 {
   try
     {
@@ -124,7 +124,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
 }
 
 void
-Consumer::disconnect_push_consumer (void)
+Consumer::disconnect_push_consumer ()
 {
 }
 

@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Default_Acceptor_Filter::TAO_Default_Acceptor_Filter (void)
+TAO_Default_Acceptor_Filter::TAO_Default_Acceptor_Filter ()
 {
 }
 

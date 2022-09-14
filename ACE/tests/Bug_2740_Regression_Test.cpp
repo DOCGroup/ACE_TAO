@@ -41,13 +41,13 @@ public:
   // Each client will send/recv 'echo_cnt' times, close/reopen the socket,
   // then echo, etc. for ACE_MAX_ITERATIONS times.
   ClientSvcHandler (const ACE_INET_Addr &addr, int echo_cnt);
-  ~ClientSvcHandler ();
+  ~ClientSvcHandler () override;
 
-  int open (void* factory);
-  int handle_input (ACE_HANDLE handle = ACE_INVALID_HANDLE);
-  int handle_timeout (const ACE_Time_Value &now, const void *act = 0);
+  int open (void* factory) override;
+  int handle_input (ACE_HANDLE handle = ACE_INVALID_HANDLE) override;
+  int handle_timeout (const ACE_Time_Value &now, const void *act = 0) override;
   int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
-                    ACE_Reactor_Mask mask = 0);
+                    ACE_Reactor_Mask mask = 0) override;
 
 protected:
   static const char *send_str;
@@ -68,10 +68,10 @@ const char *ClientSvcHandler::send_str =
 class ServerSvcHandler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  int open (void* factory);
-  int handle_input (ACE_HANDLE handle = ACE_INVALID_HANDLE);
+  int open (void* factory) override;
+  int handle_input (ACE_HANDLE handle = ACE_INVALID_HANDLE) override;
   int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
-                    ACE_Reactor_Mask mask = 0);
+                    ACE_Reactor_Mask mask = 0) override;
 };
 
 

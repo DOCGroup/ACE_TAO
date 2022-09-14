@@ -26,7 +26,6 @@ namespace TAO
 {
   namespace Utils
   {
-
     /**
      * @struct Implicit_Deactivation_Functor
      *
@@ -50,7 +49,6 @@ namespace TAO
       PortableServer::ServantBase,
       Implicit_Deactivation_Functor>
     Implicit_Deactivator;
-
   } // namespace Utils
 } // namespace TAO
 

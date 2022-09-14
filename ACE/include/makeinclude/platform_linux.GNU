@@ -43,20 +43,6 @@ ifeq ($(buildbits),64)
   LDFLAGS    += -m64
 endif
 
-# DT_RUNPATH is preferred over DT_RPATH, but the linker will only use it when
-# this extra flag option (enable-new-dtags) is present
-LD_RPATH_FLAGS += -Wl,--enable-new-dtags
-
-# Rely on _GNU_SOURCE to set these defaults defined in /usr/include/features.h
-# instead of setting them directly here (older versions of gcc don't set it
-# for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, ...
-CPPFLAGS += -D_GNU_SOURCE
-
-DCFLAGS  += -ggdb
-DCCFLAGS += -ggdb
-DLD      = $(CXX)
-LD       = $(CXX)
-
 ifeq ($(dynamic_loader),0)
   CPPFLAGS += -DACE_HAS_DYNAMIC_LINKING=0
 else
@@ -69,18 +55,9 @@ ifeq ($(threads),1)
   LIBS += -lrt
 endif
 
-ifeq ($(optimize),1)
-  SOFLAGS += -Wl,-O3
-endif
-
 ifeq ($(static_stdlibs),1)
   LDFLAGS += -static-libgcc -static-libstdc++
 endif
-
-SOFLAGS += -shared
-SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
-          $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
-PRELIB  = @true
 
 # Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld

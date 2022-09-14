@@ -39,7 +39,7 @@ class TAO_RTCORBA_Export TAO_Network_Priority_Mapping
 {
 public:
   /// The destructor
-  virtual ~TAO_Network_Priority_Mapping (void);
+  virtual ~TAO_Network_Priority_Mapping ();
 
   virtual CORBA::Boolean
     to_network (RTCORBA::Priority corba_priority,
@@ -55,7 +55,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NETWORK_PRIORITY_MAPPING_H */
-
 
 
 

@@ -63,7 +63,6 @@ namespace TAO
         return CORBA::Any::to_char (v);
       }
     };
-
   } // End TypeCode namespace
 }  // End TAO namespace
 
@@ -76,7 +75,7 @@ template <typename DiscriminatorType,
 TAO::TypeCode::Case<StringType, TypeCodeType> *
 TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
-                      TypeCodeType>::clone (void) const
+                      TypeCodeType>::clone () const
 {
   Case<StringType, TypeCodeType> * p = 0;
 
@@ -112,8 +111,7 @@ bool
 TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
                       TypeCodeType>::equal_label (CORBA::ULong index,
-                                                  CORBA::TypeCode_ptr tc
-                                                  ) const
+                                                  CORBA::TypeCode_ptr tc) const
 {
   CORBA::Any_var const any = tc->member_label (index);
 
@@ -139,7 +137,7 @@ template <typename DiscriminatorType,
 CORBA::Any *
 TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
-                      TypeCodeType>::label (void) const
+                      TypeCodeType>::label () const
 {
   CORBA::Any * value = 0;
 

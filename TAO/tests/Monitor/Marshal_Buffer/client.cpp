@@ -29,7 +29,7 @@ public:
     : orb_ (orb)
   {}
 
-  int svc (void)
+  int svc ()
   {
     this->orb_->run ();
     return 0;

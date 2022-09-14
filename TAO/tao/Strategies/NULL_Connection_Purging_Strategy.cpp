@@ -15,7 +15,7 @@ TAO_NULL_Connection_Purging_Strategy::update_item (TAO_Transport&)
 }
 
 int
-TAO_NULL_Connection_Purging_Strategy::cache_maximum (void) const
+TAO_NULL_Connection_Purging_Strategy::cache_maximum () const
 {
   return -1;
 }

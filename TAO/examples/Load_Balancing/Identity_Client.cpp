@@ -16,7 +16,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 
-Identity_Client::Identity_Client (void)
+Identity_Client::Identity_Client ()
   : group_factory_ior_ (0),
     number_of_invocations_ (5),
     use_random_ (0)
@@ -90,7 +90,7 @@ Identity_Client::init (int argc,
 }
 
 int
-Identity_Client::run (void)
+Identity_Client::run ()
 {
   ACE_DEBUG ((LM_DEBUG, "Identity_Client: Initialized\n"));
 
@@ -176,7 +176,7 @@ Identity_Client::run (void)
   return 0;
 }
 
-Identity_Client::~Identity_Client (void)
+Identity_Client::~Identity_Client ()
 {
 }
 

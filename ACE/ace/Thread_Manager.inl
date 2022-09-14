@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_At_Thread_Exit::ACE_At_Thread_Exit (void)
+ACE_At_Thread_Exit::ACE_At_Thread_Exit ()
   : next_ (0),
     td_ (0),
     was_applied_ (false),
@@ -39,7 +39,7 @@ ACE_At_Thread_Exit::is_owner (bool owner)
 }
 
 ACE_INLINE void
-ACE_At_Thread_Exit::do_apply (void)
+ACE_At_Thread_Exit::do_apply ()
 {
   if (!this->was_applied_ && this->is_owner_)
     td_->at_pop();
@@ -56,7 +56,7 @@ ACE_At_Thread_Exit_Func::ACE_At_Thread_Exit_Func (void *object,
 }
 
 ACE_INLINE
-ACE_Thread_Descriptor_Base::ACE_Thread_Descriptor_Base (void)
+ACE_Thread_Descriptor_Base::ACE_Thread_Descriptor_Base ()
   : ACE_OS_Thread_Descriptor (),
     thr_id_ (ACE_OS::NULL_thread),
     thr_handle_ (ACE_OS::NULL_hthread),
@@ -69,7 +69,7 @@ ACE_Thread_Descriptor_Base::ACE_Thread_Descriptor_Base (void)
 }
 
 ACE_INLINE
-ACE_Thread_Descriptor_Base::~ACE_Thread_Descriptor_Base (void)
+ACE_Thread_Descriptor_Base::~ACE_Thread_Descriptor_Base ()
 {
 }
 
@@ -89,7 +89,7 @@ ACE_Thread_Descriptor_Base::operator!=(const ACE_Thread_Descriptor_Base &rhs) co
 }
 
 ACE_INLINE ACE_Task_Base *
-ACE_Thread_Descriptor_Base::task (void) const
+ACE_Thread_Descriptor_Base::task () const
 {
   ACE_TRACE ("ACE_Thread_Descriptor_Base::task");
   return this->task_;
@@ -98,7 +98,7 @@ ACE_Thread_Descriptor_Base::task (void) const
 // Group ID.
 
 ACE_INLINE int
-ACE_Thread_Descriptor_Base::grp_id (void) const
+ACE_Thread_Descriptor_Base::grp_id () const
 {
   ACE_TRACE ("ACE_Thread_Descriptor_Base::grp_id");
   return grp_id_;
@@ -106,7 +106,7 @@ ACE_Thread_Descriptor_Base::grp_id (void) const
 
 // Current state of the thread.
 ACE_INLINE ACE_UINT32
-ACE_Thread_Descriptor_Base::state (void) const
+ACE_Thread_Descriptor_Base::state () const
 {
   ACE_TRACE ("ACE_Thread_Descriptor_Base::state");
   return thr_state_;
@@ -114,7 +114,7 @@ ACE_Thread_Descriptor_Base::state (void) const
 
 // Reset this base descriptor.
 ACE_INLINE void
-ACE_Thread_Descriptor_Base::reset (void)
+ACE_Thread_Descriptor_Base::reset ()
 {
   ACE_TRACE ("ACE_Thread_Descriptor_Base::reset");
   this->thr_id_ = ACE_OS::NULL_thread;
@@ -127,7 +127,7 @@ ACE_Thread_Descriptor_Base::reset (void)
 
 // Unique thread id.
 ACE_INLINE ACE_thread_t
-ACE_Thread_Descriptor::self (void) const
+ACE_Thread_Descriptor::self () const
 {
   ACE_TRACE ("ACE_Thread_Descriptor::self");
   return this->thr_id_;
@@ -159,7 +159,7 @@ ACE_Thread_Descriptor::set_next (ACE_Thread_Descriptor *td)
 
 // Get the <next_> pointer
 ACE_INLINE ACE_Thread_Descriptor *
-ACE_Thread_Descriptor::get_next (void) const
+ACE_Thread_Descriptor::get_next () const
 {
   ACE_TRACE ("ACE_Thread_Descriptor::get_next");
   return static_cast<ACE_Thread_Descriptor * ACE_CAST_CONST> (this->next_);
@@ -180,7 +180,7 @@ ACE_Thread_Descriptor::reset (ACE_Thread_Manager *tm)
 }
 
 ACE_INLINE ACE_Thread_Descriptor *
-ACE_Thread_Manager::thread_desc_self (void)
+ACE_Thread_Manager::thread_desc_self ()
 {
   // This method must be called with lock held.
 
@@ -210,14 +210,14 @@ ACE_Thread_Manager::thread_desc_self (void)
 // Return the unique ID of the thread.
 
 ACE_INLINE ACE_thread_t
-ACE_Thread_Manager::thr_self (void)
+ACE_Thread_Manager::thr_self ()
 {
   ACE_TRACE ("ACE_Thread_Manager::thr_self");
   return ACE_Thread::self ();
 }
 
 ACE_INLINE ACE_Task_Base *
-ACE_Thread_Manager::task (void)
+ACE_Thread_Manager::task ()
 {
   ACE_TRACE ("ACE_Thread_Manager::task");
 
@@ -275,7 +275,7 @@ ACE_Thread_Manager::wait_on_exit (int do_wait)
 }
 
 ACE_INLINE int
-ACE_Thread_Manager::wait_on_exit (void)
+ACE_Thread_Manager::wait_on_exit ()
 {
   return this->automatic_wait_;
 }
@@ -294,7 +294,7 @@ ACE_Thread_Manager::register_as_terminated (ACE_Thread_Descriptor *td)
 }
 
 ACE_INLINE size_t
-ACE_Thread_Manager::count_threads (void) const
+ACE_Thread_Manager::count_threads () const
 {
   return this->thr_list_.size ();
 }

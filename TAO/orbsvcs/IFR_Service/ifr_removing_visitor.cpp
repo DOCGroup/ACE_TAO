@@ -4,11 +4,11 @@
 #include "utl_scope.h"
 #include "ast_root.h"
 
-ifr_removing_visitor::ifr_removing_visitor (void)
+ifr_removing_visitor::ifr_removing_visitor ()
 {
 }
 
-ifr_removing_visitor::~ifr_removing_visitor (void)
+ifr_removing_visitor::~ifr_removing_visitor ()
 {
 }
 

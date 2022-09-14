@@ -29,7 +29,7 @@ public:
   be_visitor_valuebox_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_ch (void);
+  ~be_visitor_valuebox_ch ();
 
   /// visit valuebox.
   virtual int visit_valuebox (be_valuebox *node);
@@ -66,14 +66,14 @@ private:
                            const char * type_suffix,
                            bool is_any);
 
-  void emit_default_constructor (void);
+  void emit_default_constructor ();
 
   void emit_constructor_one_arg (be_decl *node,
                                  const char * type_suffix,
                                  const char * const_prefix,
                                  const char * ref_modifier);
 
-  void emit_copy_constructor (void);
+  void emit_copy_constructor ();
 
   void emit_assignment (be_decl *node,
                         const char * type_suffix,
@@ -90,7 +90,6 @@ private:
 
   void emit_boxed_member_var (be_decl *node,
                               const char * type_suffix);
-
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_CH_H_ */

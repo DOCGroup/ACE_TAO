@@ -17,7 +17,7 @@
 //               Test_Var_Struct
 // ************************************************************************
 
-Test_Var_Struct::Test_Var_Struct (void)
+Test_Var_Struct::Test_Var_Struct ()
   : opname_ (CORBA::string_dup ("test_var_struct")),
     inout_ (new Param_Test::Var_Struct),
     out_ (new Param_Test::Var_Struct),
@@ -25,7 +25,7 @@ Test_Var_Struct::Test_Var_Struct (void)
 {
 }
 
-Test_Var_Struct::~Test_Var_Struct (void)
+Test_Var_Struct::~Test_Var_Struct ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -34,7 +34,7 @@ Test_Var_Struct::~Test_Var_Struct (void)
 }
 
 const char *
-Test_Var_Struct::opname (void) const
+Test_Var_Struct::opname () const
 {
   return this->opname_;
 }
@@ -102,7 +102,7 @@ Test_Var_Struct::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Var_Struct::reset_parameters (void)
+Test_Var_Struct::reset_parameters ()
 {
   this->inout_ = new Param_Test::Var_Struct; // delete the previous ones
   this->out_ = new Param_Test::Var_Struct;
@@ -134,13 +134,12 @@ Test_Var_Struct::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Var_Struct::run_sii_test\n");
-
     }
   return -1;
 }
 
 CORBA::Boolean
-Test_Var_Struct::check_validity (void)
+Test_Var_Struct::check_validity ()
 {
   CORBA::Boolean flag = 0;
   if (ACE::is_equal (this->in_.dbl, this->inout_->dbl) &&
@@ -183,14 +182,14 @@ Test_Var_Struct::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Var_Struct::print_values (void)
+Test_Var_Struct::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n*=*=*=*=*=*=*=*=*=*=\n"
-              "in_.dummy1 = %s\n"
-              "inout_.dummy1 = %s\n"
-              "out_.dummy1 = %s\n"
-              "ret_.dummy1 = %s\n",
+              "in_.dummy1 = %C\n"
+              "inout_.dummy1 = %C\n"
+              "out_.dummy1 = %C\n"
+              "ret_.dummy1 = %C\n",
               this->in_.dummy1.in (),
               this->inout_->dummy1.in (),
               this->out_->dummy1.in (),
@@ -198,10 +197,10 @@ Test_Var_Struct::print_values (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "\n*=*=*=*=*=*=*=*=*=*=\n"
-              "in_.dummy2 = %s\n"
-              "inout_.dummy2 = %s\n"
-              "out_.dummy2 = %s\n"
-              "ret_.dummy2 = %s\n",
+              "in_.dummy2 = %C\n"
+              "inout_.dummy2 = %C\n"
+              "out_.dummy2 = %C\n"
+              "ret_.dummy2 = %C\n",
               this->in_.dummy2.in (),
               this->inout_->dummy2.in (),
               this->out_->dummy2.in (),
@@ -213,7 +212,7 @@ Test_Var_Struct::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in.seq : %s\n",
+                  "in.seq : %C\n",
                   i,
                   (this->in_.seq[i]? (const char *)this->in_.seq[i]:"<nul>")));
     }
@@ -222,7 +221,7 @@ Test_Var_Struct::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "inout : %s\n",
+                  "inout : %C\n",
                   i,
                   (this->inout_->seq[i]? (const char *)this->inout_->seq[i]:"<nul>")));
     }
@@ -233,7 +232,7 @@ Test_Var_Struct::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->out_->seq[i]? (const char *)this->out_->seq[i]:"<nul>")));
     }
@@ -244,7 +243,7 @@ Test_Var_Struct::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->ret_->seq[i]? (const char *)this->ret_->seq[i]:"<nul>")));
     }

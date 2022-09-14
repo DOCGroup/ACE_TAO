@@ -8,7 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_GIOP_Message_Generator_Parser::~TAO_GIOP_Message_Generator_Parser (void)
+TAO_GIOP_Message_Generator_Parser::~TAO_GIOP_Message_Generator_Parser ()
 {
 }
 
@@ -86,11 +86,10 @@ TAO_GIOP_Message_Generator_Parser::parse_locate_reply (
   params.locate_reply_status (static_cast <GIOP::LocateStatusType> (locate_reply_status));
 
   return 0;
-
 }
 
 bool
-TAO_GIOP_Message_Generator_Parser::is_ready_for_bidirectional (void) const
+TAO_GIOP_Message_Generator_Parser::is_ready_for_bidirectional () const
 {
   return false;
 }

@@ -146,7 +146,7 @@ ACE_TS_Server_Handler::send_request (ACE_Time_Request &request)
 // unexpectedly).
 
 /* VIRTUAL */ int
-ACE_TS_Server_Handler::abandon (void)
+ACE_TS_Server_Handler::abandon ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::abandon");
 
@@ -167,7 +167,7 @@ ACE_TS_Server_Handler::handle_timeout (const ACE_Time_Value &, const void *)
 // Return the underlying ACE_HANDLE.
 
 /* VIRTUAL */ ACE_HANDLE
-ACE_TS_Server_Handler::get_handle (void) const
+ACE_TS_Server_Handler::get_handle () const
 {
   ACE_TRACE ("ACE_TS_Server_Handler::get_handle");
   return this->peer ().get_handle ();
@@ -176,7 +176,7 @@ ACE_TS_Server_Handler::get_handle (void) const
 // Dispatch the appropriate operation to handle the client request.
 
 /* VIRTUAL */ int
-ACE_TS_Server_Handler::dispatch (void)
+ACE_TS_Server_Handler::dispatch ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::dispatch");
   // Get the system time and then create an ACE_Time_Request
@@ -189,7 +189,7 @@ ACE_TS_Server_Handler::dispatch (void)
 // should use non-blocking I/O.
 
 /* VIRTUAL */ int
-ACE_TS_Server_Handler::recv_request (void)
+ACE_TS_Server_Handler::recv_request ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::recv_request");
   ssize_t const bytes_expected = this->time_request_.size ();
@@ -204,14 +204,14 @@ ACE_TS_Server_Handler::recv_request (void)
         case -1:
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("****************** recv_request returned -1\n")));
-          /* FALLTHROUGH */
+          ACE_FALLTHROUGH;
         default:
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
                       ACE_TEXT ("recv failed"),
                       n,
                       bytes_expected));
-          /* FALLTHROUGH */
+          ACE_FALLTHROUGH;
         case 0:
           // We've shutdown unexpectedly, let's abandon the
           // connection.
@@ -248,7 +248,7 @@ ACE_TS_Server_Handler::handle_input (ACE_HANDLE)
     return this->dispatch ();
 }
 
-ACE_TS_Server_Handler::~ACE_TS_Server_Handler (void)
+ACE_TS_Server_Handler::~ACE_TS_Server_Handler ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::~ACE_TS_Server_Handler");
   ACE_DEBUG ((LM_DEBUG,

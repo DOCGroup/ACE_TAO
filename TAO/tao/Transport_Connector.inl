@@ -14,7 +14,7 @@ TAO_Connector::orb_core (TAO_ORB_Core *orb_core)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_Connector::tag (void) const
+TAO_Connector::tag () const
 {
   return this->tag_;
 }

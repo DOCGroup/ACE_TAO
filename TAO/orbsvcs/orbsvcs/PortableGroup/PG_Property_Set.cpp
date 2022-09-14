@@ -164,7 +164,6 @@ void TAO::PG_Property_Set::set_property (
 }
 
 
-
 void TAO::PG_Property_Set::export_properties(PortableGroup::Properties & property_set) const
 {
   ValueMap merged_values;
@@ -209,7 +208,6 @@ void TAO::PG_Property_Set::merge_properties (ValueMap & merged_values) const
     merged_values.rebind ( (*it).ext_id_, (*it).int_id_);
   }
 }
-
 
 
 int TAO::PG_Property_Set::find (

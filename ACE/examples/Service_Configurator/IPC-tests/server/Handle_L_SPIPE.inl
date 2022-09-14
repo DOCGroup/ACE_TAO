@@ -82,7 +82,7 @@ Handle_L_SPIPE::fini (void)
 }
 
 ACE_INLINE int
-Handle_L_SPIPE::get_handle (void) const
+Handle_L_SPIPE::get_handle () const
 {
   return ACE_SPIPE::get_handle();
 }

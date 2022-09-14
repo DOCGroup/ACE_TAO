@@ -33,25 +33,25 @@ Simple_Server_i::test_method (CORBA::Long x,
 }
 
 void
-Simple_Server_i::raise_user_exception (void)
+Simple_Server_i::raise_user_exception ()
 {
   throw test_exception (33, "reactor meltdown", "kaput");
 }
 
 void
-Simple_Server_i::raise_system_exception (void)
+Simple_Server_i::raise_system_exception ()
 {
   throw CORBA::NO_PERMISSION ();
 }
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 CORBA::Long
-Simple_Server_i::test_val (void)
+Simple_Server_i::test_val ()
 {
   return vlong_;
 }

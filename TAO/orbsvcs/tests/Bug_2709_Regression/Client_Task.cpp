@@ -84,7 +84,7 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
 }
 
 /// Thread entry point
-int Client_Task::svc (void)
+int Client_Task::svc ()
 {
   try
     {

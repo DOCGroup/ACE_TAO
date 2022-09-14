@@ -31,16 +31,16 @@ public:
   /// Overrides for be_type members. If we have been
   /// defined, we want the underlying type to be set as well.
   virtual void seen_in_sequence (bool val);
-  virtual bool seen_in_operation (void) const;
+  virtual bool seen_in_operation () const;
   virtual void seen_in_operation (bool val);
 
   /// Return the most primitive base type by traversing the chain of typedefed
   /// base types.
-  be_type *primitive_base_type (void);
+  be_type *primitive_base_type ();
 
   /// Return the most "unaliased" type node for the base type (see
   /// be_type.h).
-  virtual AST_Decl::NodeType base_node_type (void) const;
+  virtual AST_Decl::NodeType base_node_type () const;
 
   /// Overridden from class be_type.
   virtual void gen_member_ostream_operator (TAO_OutStream *os,
@@ -49,14 +49,10 @@ public:
                                             bool accessor = false);
 
   /// Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_typedef);
 };
 
 #endif

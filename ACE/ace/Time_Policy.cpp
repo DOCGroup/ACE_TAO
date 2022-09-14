@@ -14,7 +14,7 @@ ACE_Dynamic_Time_Policy_Base::~ACE_Dynamic_Time_Policy_Base ()
 class NULL_Time_Policy : public ACE_Dynamic_Time_Policy_Base
 {
 protected:
-  virtual ACE_Time_Value_T<ACE_Delegating_Time_Policy> gettimeofday () const;
+  ACE_Time_Value_T<ACE_Delegating_Time_Policy> gettimeofday () const override;
 };
 
 ACE_Time_Value_T<ACE_Delegating_Time_Policy> NULL_Time_Policy::gettimeofday () const

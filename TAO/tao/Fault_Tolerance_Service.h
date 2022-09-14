@@ -38,28 +38,26 @@ class TAO_ORB_Core;
  */
 class TAO_Export TAO_Fault_Tolerance_Service
 {
-
 public:
   /// Ctor
-  TAO_Fault_Tolerance_Service (void);
+  TAO_Fault_Tolerance_Service () = default;
 
   /// Dtor
-  ~TAO_Fault_Tolerance_Service (void);
+  ~TAO_Fault_Tolerance_Service ();
 
   /// Initialize the internal data structures
   void init (TAO_ORB_Core *orb_core);
 
   /// Return the underlying callback object
-  TAO_Service_Callbacks *service_callback (void);
+  TAO_Service_Callbacks *service_callback ();
 
 private:
   void operator= (const TAO_Fault_Tolerance_Service &);
   TAO_Fault_Tolerance_Service (const TAO_Fault_Tolerance_Service &);
 
 private:
-
   /// hook to callback on to the service
-  TAO_Service_Callbacks *ft_service_callback_;
+  TAO_Service_Callbacks *ft_service_callback_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

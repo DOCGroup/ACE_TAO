@@ -213,14 +213,12 @@ size_t count_potential_surrogates (
 /////////////////////////////
 // WUCS4_UTF16 implementation
 
-WUCS4_UTF16::WUCS4_UTF16 (void)
+WUCS4_UTF16::WUCS4_UTF16 ()
 {
-
 }
 
-WUCS4_UTF16::~WUCS4_UTF16 (void)
+WUCS4_UTF16::~WUCS4_UTF16 ()
 {
-
 }
 
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h
@@ -270,7 +268,7 @@ WUCS4_UTF16::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
             if (! this->read_2 (cdr, &low))
               {
                 cdr.reset_byte_order (old_bo);
-                return 0;;
+                return 0;
               }
             if (low < ACE_UTF16_SURROGATE_LOW_BEGIN
               || low >= ACE_UTF16_SURROGATE_LOW_END)
@@ -390,7 +388,6 @@ WUCS4_UTF16::read_wchar_array_i (ACE_InputCDR & cdr,
       return 1;
     }
   return 0;
-
 }
 
 

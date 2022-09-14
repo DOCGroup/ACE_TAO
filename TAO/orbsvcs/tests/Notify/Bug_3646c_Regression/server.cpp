@@ -98,7 +98,6 @@ return 0;
 }
 
 
-
 void loadunloadcycle()
 {
   ACE_DEBUG ((LM_DEBUG,

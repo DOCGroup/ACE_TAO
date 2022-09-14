@@ -44,7 +44,7 @@ namespace FTAPP
 
     ////////////
     // execution
-    int run (void);
+    int run ();
 
     ////////////
     // shut down
@@ -64,7 +64,6 @@ namespace FTAPP
     ////////////////
     // Data members
    private:
-
     TAO::Object_Group_Creator creator_;
     CORBA::ORB_var orb_;
     const ACE_TCHAR * registry_ior_;
@@ -104,10 +103,7 @@ namespace FTAPP
      * prefix for names
      */
     ACE_CString prefix_;
-
-
   };
-
 } // namespace TAO
 
 #include /**/ "ace/post.h"

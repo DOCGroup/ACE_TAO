@@ -57,7 +57,7 @@ TAO_Codeset_Manager_i::default_char_codeset = TAO_DEFAULT_CHAR_CODESET_ID;
 CONV_FRAME::CodeSetId
 TAO_Codeset_Manager_i::default_wchar_codeset = TAO_DEFAULT_WCHAR_CODESET_ID;
 
-TAO_Codeset_Manager_i::TAO_Codeset_Manager_i (void)
+TAO_Codeset_Manager_i::TAO_Codeset_Manager_i ()
   : codeset_info_ (),
     char_descriptor_ (),
     wchar_descriptor_ ()
@@ -67,21 +67,16 @@ TAO_Codeset_Manager_i::TAO_Codeset_Manager_i (void)
 
   wchar_descriptor_.ncs(TAO_Codeset_Manager_i::default_wchar_codeset);
   wchar_descriptor_.add_translator (ACE_TEXT ("UTF16_BOM_Factory"));
-
-}
-
-TAO_Codeset_Manager_i::~TAO_Codeset_Manager_i (void)
-{
 }
 
 TAO_Codeset_Descriptor_Base *
-TAO_Codeset_Manager_i::char_codeset_descriptor (void)
+TAO_Codeset_Manager_i::char_codeset_descriptor ()
 {
   return &this->char_descriptor_;
 }
 
 TAO_Codeset_Descriptor_Base *
-TAO_Codeset_Manager_i::wchar_codeset_descriptor (void)
+TAO_Codeset_Manager_i::wchar_codeset_descriptor ()
 {
   return &this->wchar_descriptor_;
 }
@@ -194,8 +189,7 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
         TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("TAO (%P|%t) - ")
                     ACE_TEXT("Codeset_Manager_i::process_service_context, ")
-                    ACE_TEXT("no codeset context in request, using defaults\n")
-                    ));
+                    ACE_TEXT("no codeset context in request, using defaults\n")));
       tcs_c = TAO_Codeset_Manager_i::default_char_codeset;
       tcs_w = TAO_Codeset_Manager_i::default_wchar_codeset;
     }

@@ -9,6 +9,8 @@
 
 #include "orbsvcs/Notify/PropertySeq.h"
 
+#include "orbsvcs/NotifyExtC.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /*****************************************************************************/
@@ -32,7 +34,6 @@ TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (
     value_ (rhs.value_),
     valid_ (rhs.valid_)
 {
-
 }
 
 template <class TYPE>

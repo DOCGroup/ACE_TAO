@@ -19,7 +19,7 @@
 static const ACE_TCHAR config[] = ACE_TEXT ("Capabilities_Test.cfg");
 
 static int
-load_config (void)
+load_config ()
 {
   ACE_Capabilities caps;
   if (caps.getent (config, ACE_TEXT ("Config")) == -1)

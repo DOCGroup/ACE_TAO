@@ -6,17 +6,13 @@
  *
  * Main header file for the ACE_INIT_TEST application.
  *
- *  @author Steve Huston <shuston@cs.wustl.edu>
+ *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================
 
 
 #ifndef AFX_ACE_INIT_TEST_H__64FDC9FE_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_
 #define AFX_ACE_INIT_TEST_H__64FDC9FE_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_
-
-#if _MSC_VER >= 1000
-#pragma once
-#endif // _MSC_VER >= 1000
 
 #ifndef __AFXWIN_H__
   #error include 'stdafx.h' before including this file for PCH
@@ -32,7 +28,7 @@
 class CACE_Init_TestApp : public CWinApp
 {
 public:
-  CACE_Init_TestApp (void);
+  CACE_Init_TestApp ();
 
   // Overrides
   // ClassWizard generated virtual function overrides

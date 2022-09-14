@@ -2,14 +2,14 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE int
-ACE_Bounded_Stack<T>::is_empty (void) const
+ACE_Bounded_Stack<T>::is_empty () const
 {
   ACE_TRACE ("ACE_Bounded_Stack<T>::is_empty");
   return this->top_ == 0;
 }
 
 template <class T> ACE_INLINE int
-ACE_Bounded_Stack<T>::is_full (void) const
+ACE_Bounded_Stack<T>::is_full () const
 {
   ACE_TRACE ("ACE_Bounded_Stack<T>::is_full");
   return this->top_ >= this->size_;
@@ -55,7 +55,7 @@ ACE_Bounded_Stack<T>::top (T &item) const
 }
 
 template <class T> ACE_INLINE size_t
-ACE_Bounded_Stack<T>::size (void) const
+ACE_Bounded_Stack<T>::size () const
 {
   return this->size_;
 }
@@ -63,14 +63,14 @@ ACE_Bounded_Stack<T>::size (void) const
 //----------------------------------------
 
 template <class T, size_t ACE_SIZE> ACE_INLINE int
-ACE_Fixed_Stack<T, ACE_SIZE>::is_empty (void) const
+ACE_Fixed_Stack<T, ACE_SIZE>::is_empty () const
 {
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::is_empty");
   return this->top_ == 0;
 }
 
 template <class T, size_t ACE_SIZE> ACE_INLINE int
-ACE_Fixed_Stack<T, ACE_SIZE>::is_full (void) const
+ACE_Fixed_Stack<T, ACE_SIZE>::is_full () const
 {
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::is_full");
   return this->top_ >= this->size_;
@@ -116,13 +116,13 @@ ACE_Fixed_Stack<T, ACE_SIZE>::top (T &item) const
 }
 
 template <class T, size_t ACE_SIZE> ACE_INLINE size_t
-ACE_Fixed_Stack<T, ACE_SIZE>::size (void) const
+ACE_Fixed_Stack<T, ACE_SIZE>::size () const
 {
   return this->size_;
 }
 
 template <class T> ACE_INLINE int
-ACE_Unbounded_Stack<T>::is_empty (void) const
+ACE_Unbounded_Stack<T>::is_empty () const
 {
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::is_empty");
   return this->head_ == this->head_->next_;
@@ -142,14 +142,14 @@ ACE_Unbounded_Stack<T>::top (T &item) const
 }
 
 template <class T> ACE_INLINE int
-ACE_Unbounded_Stack<T>::is_full (void) const
+ACE_Unbounded_Stack<T>::is_full () const
 {
   ACE_TRACE ("ACE_Unbounded_Stack<T>::is_full");
   return 0; // ???
 }
 
 template <class T> ACE_INLINE size_t
-ACE_Unbounded_Stack<T>::size (void) const
+ACE_Unbounded_Stack<T>::size () const
 {
   return this->cur_size_;
 }
@@ -160,14 +160,14 @@ ACE_Unbounded_Stack<T>::size (void) const
 // ---
 
 template <class T, size_t ACE_SIZE> ACE_INLINE int
-ACE_Fixed_Set<T, ACE_SIZE>::is_empty (void) const
+ACE_Fixed_Set<T, ACE_SIZE>::is_empty () const
 {
   ACE_TRACE ("ACE_Fixed_Set<T>::is_empty");
   return this->cur_size_ == 0;
 }
 
 template <class T, size_t ACE_SIZE> ACE_INLINE int
-ACE_Fixed_Set<T, ACE_SIZE>::is_full (void) const
+ACE_Fixed_Set<T, ACE_SIZE>::is_full () const
 {
   ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::is_full");
   return this->cur_size_ == this->max_size_;
@@ -176,14 +176,14 @@ ACE_Fixed_Set<T, ACE_SIZE>::is_full (void) const
 // ---
 
 template <class T> ACE_INLINE int
-ACE_Bounded_Set<T>::is_empty (void) const
+ACE_Bounded_Set<T>::is_empty () const
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::is_empty");
   return this->cur_size_ == 0;
 }
 
 template <class T> ACE_INLINE int
-ACE_Bounded_Set<T>::is_full (void) const
+ACE_Bounded_Set<T>::is_full () const
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::is_full");
   return this->cur_size_ == this->max_size_;
@@ -192,7 +192,7 @@ ACE_Bounded_Set<T>::is_full (void) const
 // --
 
 template <class T> ACE_INLINE int
-ACE_Ordered_MultiSet_Iterator<T>::first (void)
+ACE_Ordered_MultiSet_Iterator<T>::first ()
 {
   ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::first");
   current_ = set_.head_;
@@ -201,7 +201,7 @@ ACE_Ordered_MultiSet_Iterator<T>::first (void)
 }
 
 template <class T> ACE_INLINE int
-ACE_Ordered_MultiSet_Iterator<T>::last (void)
+ACE_Ordered_MultiSet_Iterator<T>::last ()
 {
   ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::last");
   current_ = set_.tail_;
@@ -210,7 +210,7 @@ ACE_Ordered_MultiSet_Iterator<T>::last (void)
 }
 
 template <class T> ACE_INLINE int
-ACE_Ordered_MultiSet_Iterator<T>::advance (void)
+ACE_Ordered_MultiSet_Iterator<T>::advance ()
 {
   ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::advance");
 
@@ -220,7 +220,7 @@ ACE_Ordered_MultiSet_Iterator<T>::advance (void)
 }
 
 template <class T> ACE_INLINE int
-ACE_Ordered_MultiSet_Iterator<T>::retreat (void)
+ACE_Ordered_MultiSet_Iterator<T>::retreat ()
 {
   ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::retreat");
 
@@ -230,7 +230,7 @@ ACE_Ordered_MultiSet_Iterator<T>::retreat (void)
 }
 
 template <class T> ACE_INLINE int
-ACE_Ordered_MultiSet_Iterator<T>::done (void) const
+ACE_Ordered_MultiSet_Iterator<T>::done () const
 {
   ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::done");
 
@@ -238,7 +238,7 @@ ACE_Ordered_MultiSet_Iterator<T>::done (void) const
 }
 
 template <class T> ACE_INLINE void
-ACE_Ordered_MultiSet_Iterator<T>::dump (void) const
+ACE_Ordered_MultiSet_Iterator<T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::dump");
@@ -250,14 +250,14 @@ ACE_Ordered_MultiSet_Iterator<T>::dump (void) const
 // --
 
 template <class T> ACE_INLINE int
-ACE_Ordered_MultiSet<T>::is_empty (void) const
+ACE_Ordered_MultiSet<T>::is_empty () const
 {
   ACE_TRACE ("ACE_Ordered_MultiSet<T>::is_empty");
   return this->cur_size_ > 0 ? 0 : 1;
 }
 
 template <class T> ACE_INLINE size_t
-ACE_Ordered_MultiSet<T>::size (void) const
+ACE_Ordered_MultiSet<T>::size () const
 {
 // ACE_TRACE ("ACE_Ordered_MultiSet<T>::size");
   return this->cur_size_;
@@ -329,7 +329,7 @@ ACE_DLList<T>::get (T *&item, size_t index)
 }
 
 template <class T> ACE_INLINE void
-ACE_DLList<T>::dump (void) const
+ACE_DLList<T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_DLList_Base::dump ();
@@ -359,13 +359,13 @@ ACE_DLList<T>::ACE_DLList (const ACE_DLList<T> &l)
 }
 
 template <class T> ACE_INLINE
-ACE_DLList<T>::~ACE_DLList (void)
+ACE_DLList<T>::~ACE_DLList ()
 {
   while (this->delete_head ()) ;
 }
 
 template <class T> ACE_INLINE int
-ACE_DLList_Iterator<T>::remove (void)
+ACE_DLList_Iterator<T>::remove ()
 {
   ACE_DLList_Node *temp = this->ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::next ();
   this->ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::advance ();
@@ -397,20 +397,20 @@ ACE_DLList_Iterator<T>::next (T *&ptr)
 }
 
 template <class T> ACE_INLINE T *
-ACE_DLList_Iterator<T>::next (void) const
+ACE_DLList_Iterator<T>::next () const
 {
   ACE_DLList_Node *temp = ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::next ();
   return (T *) (temp ? temp->item_ : 0);
 }
 
 template <class T> ACE_INLINE int
-ACE_DLList_Iterator<T>::advance (void)
+ACE_DLList_Iterator<T>::advance ()
 {
   return this->ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::advance ();
 }
 
 template <class T> ACE_INLINE void
-ACE_DLList_Iterator<T>::dump (void) const
+ACE_DLList_Iterator<T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::dump ();
@@ -419,7 +419,7 @@ ACE_DLList_Iterator<T>::dump (void) const
 
 
 template <class T> ACE_INLINE int
-ACE_DLList_Reverse_Iterator<T>::remove (void)
+ACE_DLList_Reverse_Iterator<T>::remove ()
 {
   ACE_DLList_Node *temp = ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::next ();
   this->ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::advance ();
@@ -441,7 +441,7 @@ ACE_DLList_Reverse_Iterator<T>::reset (ACE_DLList<T> &l)
 }
 
 template <class T> ACE_INLINE int
-ACE_DLList_Reverse_Iterator<T>::advance (void)
+ACE_DLList_Reverse_Iterator<T>::advance ()
 {
   return ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::advance ();
 }
@@ -458,7 +458,7 @@ ACE_DLList_Reverse_Iterator<T>::next (T *&ptr)
 }
 
 template <class T> ACE_INLINE T *
-ACE_DLList_Reverse_Iterator<T>::next (void) const
+ACE_DLList_Reverse_Iterator<T>::next () const
 {
   ACE_DLList_Node *temp = ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::next ();
   return (T *) (temp ? temp->item_ : 0);
@@ -466,7 +466,7 @@ ACE_DLList_Reverse_Iterator<T>::next (void) const
 
 
 template <class T> ACE_INLINE void
-ACE_DLList_Reverse_Iterator<T>::dump (void) const
+ACE_DLList_Reverse_Iterator<T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::dump ();

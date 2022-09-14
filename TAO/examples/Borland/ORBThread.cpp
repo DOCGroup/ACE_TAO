@@ -28,7 +28,7 @@ __fastcall TORBThread::~TORBThread ()
 {
   try
     {
-      orb_->shutdown (0);
+      orb_->shutdown (false);
     }
   catch (const CORBA::Exception&)
     {

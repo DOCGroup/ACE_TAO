@@ -87,15 +87,15 @@ public:
                                    CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_EC_Reactive_SupplierControl (void);
+  virtual ~TAO_EC_Reactive_SupplierControl ();
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_EC_SupplierControl
-  virtual int activate (void);
-  virtual int shutdown (void);
+  virtual int activate ();
+  virtual int shutdown ();
   virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy);
   virtual void system_exception (TAO_EC_ProxyPushConsumer *proxy,
                                  CORBA::SystemException &);
@@ -103,7 +103,7 @@ public:
 private:
   /// Check if the suppliers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_suppliers (void);
+  void query_suppliers ();
 
 private:
   /// The polling rate

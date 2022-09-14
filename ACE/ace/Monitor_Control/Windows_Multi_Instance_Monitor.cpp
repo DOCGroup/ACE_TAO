@@ -60,7 +60,7 @@ namespace ACE
       GlobalFree (paths);
     }
 
-    Windows_Multi_Instance_Monitor::~Windows_Multi_Instance_Monitor (void)
+    Windows_Multi_Instance_Monitor::~Windows_Multi_Instance_Monitor ()
     {
       Windows_Monitor *instance = 0;
 
@@ -72,7 +72,7 @@ namespace ACE
     }
 
     void
-    Windows_Multi_Instance_Monitor::update_i (void)
+    Windows_Multi_Instance_Monitor::update_i ()
     {
       Windows_Monitor **current_instance = 0;
 
@@ -88,7 +88,7 @@ namespace ACE
     }
 
     void
-    Windows_Multi_Instance_Monitor::clear_impl (void)
+    Windows_Multi_Instance_Monitor::clear_impl ()
     {
       Windows_Monitor **current_instance = 0;
 

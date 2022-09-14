@@ -15,7 +15,6 @@
 
 
 
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -141,7 +140,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           ACE_ASSERT (priority == configs [j].thread_priority);
           ACE_ASSERT (dispatching_type == configs [j].dispatching_type);
-
         }
     }
   catch (const CORBA::Exception& ex)

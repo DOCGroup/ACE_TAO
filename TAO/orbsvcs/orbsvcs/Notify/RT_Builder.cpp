@@ -10,7 +10,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_RT_Builder::TAO_Notify_RT_Builder (void)
+TAO_Notify_RT_Builder::TAO_Notify_RT_Builder ()
 {
 }
 

@@ -44,13 +44,13 @@ namespace TAO
   }
 
   /// Dtor
-  Transport_Selection_Guard::~Transport_Selection_Guard (void)
+  Transport_Selection_Guard::~Transport_Selection_Guard ()
   {
 #if TAO_HAS_TRANSPORT_CURRENT == 1
     TAO_TSS_Resources::instance ()->tsg_ = prev_;
-    this->prev_ = 0;
+    this->prev_ = nullptr;
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
-    this->curr_ = 0;
+    this->curr_ = nullptr;
   }
 
   bool

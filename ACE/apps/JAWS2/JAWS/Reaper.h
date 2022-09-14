@@ -30,16 +30,15 @@ class JAWS_Export JAWS_Reaper : public ACE_Task<ACE_SYNCH>
 {
 public:
   JAWS_Reaper (JAWS_Concurrency_Base *concurrency);
-  virtual ~JAWS_Reaper (void);
+  virtual ~JAWS_Reaper ();
 
   virtual int open (void * = 0);
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   JAWS_Concurrency_Base *concurrency_;
   int waiting_;
   ACE_SYNCH_MUTEX lock_;
-
 };
 
 #endif /* JAWS_REAPER_H */

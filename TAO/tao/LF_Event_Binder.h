@@ -36,7 +36,7 @@ public:
   TAO_LF_Event_Binder (TAO_LF_Event *event, TAO_LF_Follower *folloer);
 
   /// Destructor
-  ~TAO_LF_Event_Binder (void);
+  ~TAO_LF_Event_Binder ();
 
 private:
   void operator= (const TAO_LF_Event_Binder &);

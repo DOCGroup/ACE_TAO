@@ -12,7 +12,6 @@ class JAWS_Event_Result;
 class JAWS_Export JAWS_Event_Result
 {
 public:
-
   enum JE_STATUS
   { JE_IDLE
   , JE_OK
@@ -77,17 +76,16 @@ public:
       this->error_number_ = errno;
   }
 
-  size_t bytes (void) const { return this->bytes_; }
+  size_t bytes () const { return this->bytes_; }
 
-  int status (void) const { return this->status_; }
-  int reason (void) const { return this->reason_; }
+  int status () const { return this->status_; }
+  int reason () const { return this->reason_; }
 
-  int error_number (void) const { return (errno = this->error_number_); }
+  int error_number () const { return (errno = this->error_number_); }
 
-  void * data (void) const { return this->data_; }
+  void * data () const { return this->data_; }
 
 private:
-
   size_t bytes_;
 
   JE_STATUS status_;
@@ -96,7 +94,6 @@ private:
   int error_number_;
 
   void *data_;
-
 };
 
 #endif /* JAWS_EVENT_RESULT_H */

@@ -20,7 +20,6 @@
 class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-
   Svc_Handler (ACE_Thread_Manager *t = 0);
   int open (void *v = 0);
   int close (u_long flags = 0);

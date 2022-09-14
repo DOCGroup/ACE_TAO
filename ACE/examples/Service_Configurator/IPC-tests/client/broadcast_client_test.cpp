@@ -17,7 +17,7 @@ static ACE_TCHAR *program_name;
 static unsigned short broadcast_port_number = ACE_DEFAULT_BROADCAST_PORT;
 
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_OS::fprintf (stderr, "usage: %s [-p broadcast portnum]\n",
                    ACE_TEXT_ALWAYS_CHAR (program_name));

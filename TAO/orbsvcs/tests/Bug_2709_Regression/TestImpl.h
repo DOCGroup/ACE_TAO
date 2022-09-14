@@ -8,9 +8,9 @@ public:
   TestImpl (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void myMethod (void);
+  virtual void myMethod ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

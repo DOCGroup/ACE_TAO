@@ -7,7 +7,7 @@
 #include "RecordingDevice_Text.h"
 #include "Util.h"
 
-TextListenerAcceptor::TextListenerAcceptor (void)
+TextListenerAcceptor::TextListenerAcceptor ()
   : ACE_Event_Handler(), RecordingDevice()
 { }
 
@@ -23,7 +23,7 @@ int TextListenerAcceptor::open (ACE_INET_Addr &addr)
   return 0;
 }
 
-ACE_HANDLE TextListenerAcceptor::get_handle (void) const
+ACE_HANDLE TextListenerAcceptor::get_handle () const
 {
   return this->acceptor_.get_handle ();
 }
@@ -57,23 +57,23 @@ int TextListenerAcceptor::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-ACE_Event_Handler *TextListenerAcceptor::get_handler (void) const
+ACE_Event_Handler *TextListenerAcceptor::get_handler () const
 {
   return (ACE_Event_Handler *)this;
 }
 
-RecordingDevice *TextListenerAcceptor::wait_for_activity (void)
+RecordingDevice *TextListenerAcceptor::wait_for_activity ()
 {
   this->RecordingDevice::wait_for_activity ();
   return new TextListener (this);
 }
 
-int TextListenerAcceptor::answer_call (void)
+int TextListenerAcceptor::answer_call ()
 {
   return -1;
 }
 
-CallerId *TextListenerAcceptor::retrieve_callerId (void)
+CallerId *TextListenerAcceptor::retrieve_callerId ()
 {
   return 0;
 }
@@ -102,13 +102,13 @@ TextListener::TextListener (TextListenerAcceptor *acceptor)
 }
 // Listing 01
 
-const ACE_TCHAR *TextListener::get_name (void) const
+const ACE_TCHAR *TextListener::get_name () const
 {
   return ACE_TEXT ("TextListener");
 }
 
 // Listing 02 code/ch18
-int TextListener::answer_call (void)
+int TextListener::answer_call ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TextListener::answer_call()\n")));
@@ -129,7 +129,7 @@ int TextListener::answer_call (void)
 // Listing 02
 
 // Listing 03 code/ch18
-CallerId *TextListener::retrieve_callerId (void)
+CallerId *TextListener::retrieve_callerId ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TextListener::retrieve_callerId()\n")));
@@ -188,7 +188,7 @@ MessageType *TextListener::record_message (ACE_FILE_Addr &addr)
 // Listing 05
 
 // Listing 06 code/ch18
-void TextListener::release (void)
+void TextListener::release ()
 {
   delete this;
 }

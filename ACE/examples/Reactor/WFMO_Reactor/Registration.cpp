@@ -35,7 +35,6 @@
 #include "ace/Log_Msg.h"
 
 
-
 // Globals for this test
 int stop_test = 0;
 ACE_Reactor reactor;
@@ -45,7 +44,7 @@ class Simple_Handler : public ACE_Event_Handler
 {
 public:
   /// Default constructor
-  Simple_Handler (void);
+  Simple_Handler ();
 
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   virtual int handle_close (ACE_HANDLE handle,
@@ -57,7 +56,7 @@ public:
   int handle_close_count_;
 };
 
-Simple_Handler::Simple_Handler (void)
+Simple_Handler::Simple_Handler ()
   : handle_signal_count_ (0),
     handle_close_count_ (0)
 {
@@ -107,7 +106,7 @@ Simple_Handler::handle_close (ACE_HANDLE handle,
 Simple_Handler simple_handler;
 
 void
-worker (void)
+worker ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread creation\n"));
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread sleeping\n"));

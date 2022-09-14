@@ -14,7 +14,7 @@ public:
   // = The skeleton methods
   virtual void send_stuff (const char* string);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

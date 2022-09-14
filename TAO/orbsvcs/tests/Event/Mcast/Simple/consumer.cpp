@@ -8,7 +8,6 @@ class EC_Consumer:
   public POA_RtecEventComm::PushConsumer
 {
 public:
-
   /// Constructor.
   EC_Consumer (CORBA::ORB_var orb,
                RtecEventChannelAdmin::EventChannel_var ec);
@@ -18,14 +17,13 @@ public:
   /// Logs each event.  Initiates shutdown after receiving 100 events.
   virtual void push (const RtecEventComm::EventSet &events);
   /// No-op.
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
   //@}
 
 private:
-
   /// Helper - destroys EC, shutdowns the ORB and prints number of
   /// events received.
-  void disconnect (void);
+  void disconnect ();
 
   /// Number of events pushed to us by EC.
   size_t n_events_;
@@ -57,12 +55,12 @@ EC_Consumer::push (const RtecEventComm::EventSet &events)
 }
 
 void
-EC_Consumer::disconnect_push_consumer (void)
+EC_Consumer::disconnect_push_consumer ()
 {
 }
 
 void
-EC_Consumer::disconnect (void)
+EC_Consumer::disconnect ()
 {
   if (this->n_events_ == 100)
     {
@@ -72,7 +70,7 @@ EC_Consumer::disconnect (void)
 
   this->ec_->destroy ();
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 ////////////////////////////////////////////////////////////

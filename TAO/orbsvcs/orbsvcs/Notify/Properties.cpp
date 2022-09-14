@@ -9,7 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Properties::TAO_Notify_Properties (void)
+TAO_Notify_Properties::TAO_Notify_Properties ()
   : factory_ (0)
   , builder_ (0)
   , orb_(0)
@@ -39,14 +39,14 @@ TAO_Notify_Properties::~TAO_Notify_Properties ()
 }
 
 TAO_Notify_Properties *
-TAO_Notify_Properties::instance (void)
+TAO_Notify_Properties::instance ()
 {
   return ACE_Unmanaged_Singleton<TAO_Notify_Properties,
                                  TAO_SYNCH_MUTEX>::instance ();
 }
 
 void
-TAO_Notify_Properties::close (void)
+TAO_Notify_Properties::close ()
 {
   ACE_Unmanaged_Singleton<TAO_Notify_Properties,
                           TAO_SYNCH_MUTEX>::close ();

@@ -56,7 +56,7 @@ Loopback_Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 }
 
 void
-Loopback_Consumer::disconnect (void)
+Loopback_Consumer::disconnect ()
 {
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy;
   {
@@ -83,7 +83,7 @@ Loopback_Consumer::push (const RtecEventComm::EventSet &events)
 }
 
 void
-Loopback_Consumer::disconnect_push_consumer (void)
+Loopback_Consumer::disconnect_push_consumer ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->proxy_supplier_ =
@@ -91,7 +91,7 @@ Loopback_Consumer::disconnect_push_consumer (void)
 }
 
 PortableServer::POA_ptr
-Loopback_Consumer::_default_POA (void)
+Loopback_Consumer::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }

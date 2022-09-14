@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::Object_Proxy_Broker::~Object_Proxy_Broker (void)
+TAO::Object_Proxy_Broker::~Object_Proxy_Broker ()
 {
 }
 

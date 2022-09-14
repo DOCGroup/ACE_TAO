@@ -10,7 +10,7 @@ namespace ACE
   {
     unsigned int INet_Log::debug_level_ = INet_Log::Initializer ();
 
-    unsigned int INet_Log::Initializer(void)
+    unsigned int INet_Log::Initializer()
       {
         unsigned int debug_level = 0;
         bool trace = false;

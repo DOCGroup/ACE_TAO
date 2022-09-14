@@ -36,15 +36,15 @@ public:
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
   /// Disconnect from the event channel
-  void disconnect (void);
+  void disconnect ();
 
   // = The RtecEventComm::PushConsumer methods
 
   /// The skeleton methods.
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
-  CORBA::ULong event_count (void) const;
+  CORBA::ULong event_count () const;
 private:
   /// Keep track of the number of events received.
   CORBA::ULong event_count_;

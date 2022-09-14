@@ -30,7 +30,7 @@ public:
   be_visitor_obv_operation_arglist (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_obv_operation_arglist (void);
+  ~be_visitor_obv_operation_arglist ();
 
   /// special arglist generation for amh_exceptionholders
   bool is_amh_exception_holder (be_operation *node);

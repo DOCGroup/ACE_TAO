@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef _AST_HOME_AST_HOME_HH
 #define _AST_HOME_AST_HOME_HH
 
@@ -20,7 +19,7 @@ public:
             AST_Interface **supports_flat,
             long n_supports_flat);
 
-  virtual ~AST_Home (void);
+  virtual ~AST_Home ();
 
   // Extend lookup to the base home.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
@@ -37,25 +36,20 @@ public:
 
   // Accessors.
 
-  AST_Home *base_home (void) const;
+  AST_Home *base_home () const;
 
-  AST_Type **supports (void) const;
+  AST_Type **supports () const;
 
-  long n_supports (void) const;
+  long n_supports () const;
 
-  AST_Component *managed_component (void) const;
+  AST_Component *managed_component () const;
 
-  AST_Type *primary_key (void) const;
+  AST_Type *primary_key () const;
 
   void transfer_scope_elements (AST_Interface *dst);
 
   // Cleanup function.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Home);
-  DEF_NARROW_FROM_SCOPE(AST_Home);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -68,7 +62,7 @@ public:
 private:
   // Scope Management Protocol.
 
-  friend int tao_yyparse (void);
+  friend int tao_yyparse ();
   friend class ast_visitor_tmpl_module_inst;
 
   virtual AST_Factory *fe_add_factory (AST_Factory *f);

@@ -22,9 +22,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Semaphore.h"
 #include "ace/Null_Semaphore.h"
-
 #include "ace/POSIX_Proactor.h"
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -32,16 +30,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_POSIX_CB_Proactor
  *
  * @brief Implementation of Callback-based Proactor
- * };
  */
 class ACE_Export ACE_POSIX_CB_Proactor : public ACE_POSIX_AIOCB_Proactor
 {
-
 public:
-  virtual Proactor_Type get_impl_type (void);
+  virtual Proactor_Type get_impl_type ();
 
   /// Destructor.
-  virtual ~ACE_POSIX_CB_Proactor (void);
+  virtual ~ACE_POSIX_CB_Proactor ();
 
   /// Constructor defines max number asynchronous operations that can
   /// be started at the same time.
@@ -52,7 +48,6 @@ public:
   static void aio_completion_func (sigval cb_data);
 
 protected:
-
   /**
    * Dispatch a single set of events.  If @a wait_time elapses before
    * any events occur, return 0.  Return 1 on success i.e., when a
@@ -68,7 +63,7 @@ protected:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events (void);
+  virtual int handle_events ();
 
   /// Find free slot to store result and aiocb pointer
   virtual ssize_t allocate_aio_slot (ACE_POSIX_Asynch_Result *result);

@@ -135,7 +135,6 @@ public:
 
     return shared;
   };
-
 };
 
 ShmemMan* ShmemMan::c_instance = 0;

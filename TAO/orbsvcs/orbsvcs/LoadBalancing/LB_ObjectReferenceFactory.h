@@ -58,7 +58,7 @@ class TAO_LB_ObjectReferenceFactory
     CORBA::ORB_ptr orb,
     CosLoadBalancing::LoadManager_ptr lm);
 
-  virtual ::CORBA::ValueBase *_copy_value (void);
+  virtual ::CORBA::ValueBase *_copy_value ();
 
   /**
    * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -88,7 +88,7 @@ protected:
    * Protected destructor to enforce proper memory management via
    * reference counting.
    */
-  ~TAO_LB_ObjectReferenceFactory (void);
+  ~TAO_LB_ObjectReferenceFactory ();
 
   /// Retrieve the object group reference for objects with the given
   /// RepositoryId.

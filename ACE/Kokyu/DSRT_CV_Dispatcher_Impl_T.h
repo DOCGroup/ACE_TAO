@@ -64,7 +64,6 @@ namespace Kokyu
     cond_lock_t run_cond_lock_;
     cond_t run_cond_;
   };
-
 }
 
 #if !defined (__ACE_INLINE__)

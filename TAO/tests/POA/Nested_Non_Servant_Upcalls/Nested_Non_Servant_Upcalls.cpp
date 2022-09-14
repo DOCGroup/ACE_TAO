@@ -20,15 +20,13 @@ class test_i :
   public virtual POA_test
 {
 public:
-
   test_i (PortableServer::POA_ptr poa);
 
-  ~test_i (void);
+  ~test_i ();
 
-  void method (void);
+  void method ();
 
   PortableServer::POA_var poa_;
-
 };
 
 test_i::test_i (PortableServer::POA_ptr poa)
@@ -39,7 +37,7 @@ test_i::test_i (PortableServer::POA_ptr poa)
               this));
 }
 
-test_i::~test_i (void)
+test_i::~test_i ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i destroyed: instance %x\n",
@@ -47,23 +45,21 @@ test_i::~test_i (void)
 }
 
 void
-test_i::method (void)
+test_i::method ()
 {
 }
 
 class Object_Activator : public ACE_Task_Base
 {
 public:
-
   Object_Activator (ACE_Thread_Manager &thread_manager,
                     PortableServer::POA_ptr poa);
 
-  int svc (void);
+  int svc ();
 
   ACE_Auto_Event object_activated_;
 
   PortableServer::POA_var poa_;
-
 };
 
 
@@ -75,7 +71,7 @@ Object_Activator::Object_Activator (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Object_Activator::svc (void)
+Object_Activator::svc ()
 {
   try
     {
@@ -107,7 +103,6 @@ class Servant_Activator :
   public PortableServer::ServantActivator
 {
 public:
-
   Servant_Activator (PortableServer::POA_ptr poa);
 
   PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
@@ -122,7 +117,6 @@ public:
   PortableServer::POA_var poa_;
 
   PortableServer::ObjectId_var id_;
-
 };
 
 Servant_Activator::Servant_Activator (PortableServer::POA_ptr poa)
@@ -247,8 +241,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Wait for the Object_Activator thread to exit.
       thread_manager.wait ();
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

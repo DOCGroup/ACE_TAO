@@ -10,7 +10,6 @@
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
-
   CORBA::Object_var naming_obj =
     orb_->resolve_initial_references ("NameService");
 
@@ -75,7 +74,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
     connect_structured_push_supplier (supplier.in());
 }
 
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 

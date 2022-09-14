@@ -21,12 +21,12 @@ TAO_Container_i::TAO_Container_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_Container_i::~TAO_Container_i (void)
+TAO_Container_i::~TAO_Container_i ()
 {
 }
 
 void
-TAO_Container_i::destroy (void)
+TAO_Container_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -36,14 +36,14 @@ TAO_Container_i::destroy (void)
 }
 
 void
-TAO_Container_i::destroy_i (void)
+TAO_Container_i::destroy_i ()
 {
   this->destroy_references_i();
   this->destroy_definitions_i();
 }
 
 void
-TAO_Container_i::destroy_references_i (void)
+TAO_Container_i::destroy_references_i ()
 {
   int index = 0;
   int status;
@@ -119,7 +119,7 @@ TAO_Container_i::destroy_references_i (void)
 }
 
 void
-TAO_Container_i::destroy_definitions_i (void)
+TAO_Container_i::destroy_definitions_i ()
 {
   int index = 0;
   int status;

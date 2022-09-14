@@ -26,7 +26,7 @@ namespace TAO
   namespace Transport
   {
     /// Destructor
-    Current_Loader::~Current_Loader (void)
+    Current_Loader::~Current_Loader ()
     {
     }
 
@@ -67,7 +67,7 @@ namespace TAO
 {
   namespace Transport
   {
-    int current_static_initializer (void)
+    int current_static_initializer ()
     {
       ACE_STATIC_SVC_REGISTER (TAO_Transport_Current_Loader);
       return 0;

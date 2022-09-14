@@ -29,7 +29,7 @@ namespace TAO
     PG_Group_List_Store_File_Guard (PG_Group_List_Store & list_store,
                                     Method_Type method_type);
 
-    ~PG_Group_List_Store_File_Guard () ACE_NOEXCEPT_FALSE;
+    ~PG_Group_List_Store_File_Guard () noexcept(false);
 
     virtual void set_object_last_changed (const time_t & time);
 
@@ -69,7 +69,7 @@ TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (
     }
 }
 
-TAO::PG_Group_List_Store_File_Guard::~PG_Group_List_Store_File_Guard () ACE_NOEXCEPT_FALSE
+TAO::PG_Group_List_Store_File_Guard::~PG_Group_List_Store_File_Guard () noexcept(false)
 {
   this->release ();
   if (list_store_.lock_.release() == -1)

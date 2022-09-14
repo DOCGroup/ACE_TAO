@@ -45,10 +45,10 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Out_Endpoint
 {
 public:
   /// Constructor
-  TAO_ECG_UDP_Out_Endpoint (void);
+  TAO_ECG_UDP_Out_Endpoint ();
 
   /// Constructor
-  ~TAO_ECG_UDP_Out_Endpoint (void);
+  ~TAO_ECG_UDP_Out_Endpoint ();
 
   /// Copy Constructor
   TAO_ECG_UDP_Out_Endpoint (const TAO_ECG_UDP_Out_Endpoint& rhs);
@@ -58,10 +58,10 @@ public:
 
   /// Obtain the datagram associated with this endpoint. Clients of
   /// this class must open, and register (if necessary) this datagram.
-  ACE_SOCK_Dgram& dgram (void);
+  ACE_SOCK_Dgram& dgram ();
 
   /// Obtain the next request id.
-  CORBA::ULong next_request_id (void);
+  CORBA::ULong next_request_id ();
 
   /// The endpoint can detect if a data-gram was sent by itself, this
   /// is useful to ignore or remove messages sent by the same process.

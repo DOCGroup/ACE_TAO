@@ -39,20 +39,20 @@ TAO_LB_LoadAverage::TAO_LB_LoadAverage (PortableServer::POA_ptr poa)
   TAO_LB_Random::init ();
 }
 
-TAO_LB_LoadAverage::~TAO_LB_LoadAverage (void)
+TAO_LB_LoadAverage::~TAO_LB_LoadAverage ()
 {
   delete this->load_map_;
   delete this->lock_;
 }
 
 char *
-TAO_LB_LoadAverage::name (void)
+TAO_LB_LoadAverage::name ()
 {
   return CORBA::string_dup ("LoadAverage");
 }
 
 CosLoadBalancing::Properties *
-TAO_LB_LoadAverage::get_properties (void)
+TAO_LB_LoadAverage::get_properties ()
 {
   CosLoadBalancing::Properties * props = 0;
   ACE_NEW_THROW_EX (props,
@@ -305,7 +305,6 @@ TAO_LB_LoadAverage::analyze_loads (
 */
 
                 load_manager->enable_alert (loc);
-
               }
 
             }
@@ -320,7 +319,7 @@ TAO_LB_LoadAverage::analyze_loads (
 }
 
 PortableServer::POA_ptr
-TAO_LB_LoadAverage::_default_POA (void)
+TAO_LB_LoadAverage::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

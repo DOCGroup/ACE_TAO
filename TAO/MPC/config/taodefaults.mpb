@@ -1,5 +1,5 @@
 // -*- MPC -*-
-project : tao_vc8warnings {
+project : tao_rules, tao_vc8warnings {
   staticflags += TAO_AS_STATIC_LIBS
   includes    += $(TAO_ROOT)
   libpaths    += $(ACE_ROOT)/lib

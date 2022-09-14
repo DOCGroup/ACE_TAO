@@ -6,6 +6,10 @@
 #define ACE_CONFIG_VXWORKS_H
 #include /**/ "ace/pre.h"
 
+#if !defined(ACE_VXWORKS_RELEASE)
+# define ACE_VXWORKS_RELEASE ACE_VXWORKS
+#endif
+
 // If ACE_VXWORKS is not defined try to figure out the VxWorks version
 #if !defined (ACE_VXWORKS)
 # include "vxWorks.h"
@@ -53,7 +57,13 @@
 #elif (ACE_VXWORKS == 0x690)
 # include "ace/config-vxworks6.9.h"
 #elif (ACE_VXWORKS == 0x700)
-# include "ace/config-vxworks7.0.h"
+# if (ACE_VXWORKS_RELEASE == 0x2103)
+#   include "ace/config-vxworks21.03.h"
+# elif (ACE_VXWORKS_RELEASE >= 0x2203)
+#   include "ace/config-vxworks22.03.h"
+# else
+#   include "ace/config-vxworks7.0.h"
+# endif
 #else
 # error Unknown or unsupported VxWorks version
 #endif

@@ -17,8 +17,6 @@ public:
   virtual int accept (be_visitor *visitor);
 
   virtual void destroy ();
-
-  DEF_NARROW_FROM_DECL (be_fixed);
 };
 
 #endif

@@ -15,7 +15,7 @@ TAO_BasicLog_i::TAO_BasicLog_i (CORBA::ORB_ptr orb,
   // No-Op.
 }
 
-TAO_BasicLog_i::~TAO_BasicLog_i (void)
+TAO_BasicLog_i::~TAO_BasicLog_i ()
 {
   // No-Op.
 }
@@ -34,7 +34,6 @@ TAO_BasicLog_i::copy (DsLogAdmin::LogId &id)
   this->copy_attributes (log.in ());
 
   return log._retn ();
-
 }
 
 DsLogAdmin::Log_ptr
@@ -50,11 +49,10 @@ TAO_BasicLog_i::copy_with_id (DsLogAdmin::LogId id)
   this->copy_attributes (log.in ());
 
   return log._retn ();
-
 }
 
 void
-TAO_BasicLog_i::destroy (void)
+TAO_BasicLog_i::destroy ()
 {
   // Remove ourselves from the list of logs.
   this->logmgr_i_.remove (this->logid_);

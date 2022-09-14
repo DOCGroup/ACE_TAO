@@ -65,7 +65,7 @@ public:
   Message_Receiver (HA_CommandHandler *ch) : handler_(ch)
   { }
 
-  ACE_Message_Block *shut_down_message (void);
+  ACE_Message_Block *shut_down_message ();
 
   virtual int handle_input (ACE_HANDLE fd);
 

@@ -9,14 +9,13 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_STORABLE_NAMING_CONTEXT_H
 #define TAO_FT_STORABLE_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/PortableGroupC.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
 #include "orbsvcs/FT_NamingReplicationC.h"
 
@@ -49,7 +48,7 @@ public:
                                   TAO::Storable_Factory *factory);
 
   /// Destructor.
-  virtual ~TAO_FT_Storable_Naming_Context (void);
+  virtual ~TAO_FT_Storable_Naming_Context () = default;
 
   /**
    * Override the resolve operation to support load balancing using
@@ -81,13 +80,13 @@ public:
    */
   virtual void stale (bool is_stale);
 
-  virtual bool stale (void);
+  virtual bool stale ();
 
   /**
    * An internal utility used to signal that this context was updated.
    * Check the last_changed_ attribute for the time of the write.
    */
-  void context_written (void);
+  void context_written ();
 
   /**
    * An internal callback invoked by the File_Open_Lock_and_Check
@@ -97,11 +96,9 @@ public:
   virtual bool is_obsolete (time_t stored_time);
 
 protected:
-
   static TAO_FT_Naming_Manager *naming_manager_;
   bool stale_;
   TAO_FT_Naming_Replication_Manager *replicator_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

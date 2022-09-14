@@ -16,13 +16,13 @@ Benchmark_Base::Benchmark_Base (int type)
 }
 
 int
-Benchmark_Base::benchmark_type (void)
+Benchmark_Base::benchmark_type ()
 {
   return this->benchmark_type_;
 }
 
 int
-Benchmark_Base::thr_id (void)
+Benchmark_Base::thr_id ()
 {
 #if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
   // This invokes the thread-specific storage smart pointer.
@@ -32,7 +32,7 @@ Benchmark_Base::thr_id (void)
 #endif /* ACE_HAS_PTHREADS || VXWORKS */
 }
 
-Benchmark_Method_Base::Benchmark_Method_Base (void)
+Benchmark_Method_Base::Benchmark_Method_Base ()
   : Benchmark_Base (Benchmark_Base::METHOD)
 {
 }
@@ -53,7 +53,6 @@ Benchmark_Method_Base::exec (ACE_Service_Repository_Iterator *sri)
 
       if (this->valid_test_object (bp))
         {
-
           ACE_DEBUG ((LM_DEBUG, "\nstarting up %s\n", sr->name ()));
 
           int notused = this->pre_run_test (bp) == 0 && this->run_test () == 0 &&
@@ -70,13 +69,13 @@ Benchmark_Method_Base::exec (ACE_Service_Repository_Iterator *sri)
 /* static */
 MT_INT Thr_ID::thread_id_ (0);
 
-Thr_ID::Thr_ID (void)
+Thr_ID::Thr_ID ()
   : thr_id_ (++Thr_ID::thread_id_)
 {
 }
 
 int
-Thr_ID::thr_id (void)
+Thr_ID::thr_id ()
 {
   return this->thr_id_;
 }

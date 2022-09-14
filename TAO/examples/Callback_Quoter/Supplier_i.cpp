@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "Supplier_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
@@ -20,8 +19,7 @@
 #include "ace/OS_NS_fcntl.h"
 
 // Constructor.
-
-Supplier::Supplier (void)
+Supplier::Supplier ()
   : ior_ (0),
     use_naming_service_ (1),
     notifier_ (),
@@ -29,10 +27,9 @@ Supplier::Supplier (void)
     loop_count_ (10),
     period_value_ (1)
 {
-  // No-op.
 }
 
-Supplier::~Supplier (void)
+Supplier::~Supplier ()
 {
   // Release the memory allocated for ior_.
   ACE_OS::free (this->ior_);
@@ -45,7 +42,6 @@ Supplier::~Supplier (void)
 }
 
 // Reads the Server factory IOR from a file.
-
 int
 Supplier::read_ior (ACE_TCHAR *filename)
 {
@@ -75,9 +71,8 @@ Supplier::read_ior (ACE_TCHAR *filename)
 }
 
 // Parses the command line arguments and returns an error status.
-
 int
-Supplier::parse_args (void)
+Supplier::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dn:f:i:xk:xs"));
 
@@ -142,15 +137,11 @@ Supplier::parse_args (void)
 }
 
 // Give the stock status information to the Notifier.
-
 int
-Supplier::send_market_status (const char *stock_name,
-                              long value)
+Supplier::send_market_status (const char *stock_name, long value)
 {
-
   try
     {
-
       // Make the RMI.
       this->notifier_->market_status (stock_name,
                                       value);
@@ -171,11 +162,9 @@ Supplier::send_market_status (const char *stock_name,
 }
 
 // Execute client example code.
-
 int
-Supplier::run (void)
+Supplier::run ()
 {
-
   long timer_id = 0;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -199,11 +188,9 @@ Supplier::run (void)
   return this->reactor_used ()->run_reactor_event_loop ();
 }
 
-
 int
-Supplier::via_naming_service (void)
+Supplier::via_naming_service ()
 {
-
   try
     {
       // Initialization of the naming service.
@@ -241,7 +228,6 @@ Supplier::via_naming_service (void)
 }
 
 // Init function.
-
 int
 Supplier::init (int argc, ACE_TCHAR **argv)
 {
@@ -299,13 +285,12 @@ Supplier::init (int argc, ACE_TCHAR **argv)
 }
 
 ACE_Reactor*
-Supplier::reactor_used (void) const
+Supplier::reactor_used () const
 {
   return ACE_Reactor::instance ();
 }
 
 // The stock market information is read from a file.
-
 int
 Supplier::read_file (ACE_TCHAR *filename)
 {

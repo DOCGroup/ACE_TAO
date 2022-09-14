@@ -23,10 +23,9 @@
  */
 class be_visitor_typecode_decl : public be_visitor_decl
 {
-
 public:
   be_visitor_typecode_decl (be_visitor_context *ctx);
-  ~be_visitor_typecode_decl (void);
+  ~be_visitor_typecode_decl ();
 
   /// visit a generic be_type node.
   virtual int visit_type (be_type *node);

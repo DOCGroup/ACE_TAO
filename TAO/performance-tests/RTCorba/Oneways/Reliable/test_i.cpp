@@ -37,5 +37,5 @@ Test_i::twoway_work_test (CORBA::ULong work)
 void
 Test_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

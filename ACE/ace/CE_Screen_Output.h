@@ -48,7 +48,7 @@ class ACE_Export ACE_CE_Screen_Output : public ACE_Log_Msg_Callback
 public:
   ACE_CE_Screen_Output (HWND hEdit);
 
-  ACE_CE_Screen_Output (void);
+  ACE_CE_Screen_Output ();
 
   virtual ~ACE_CE_Screen_Output();
 
@@ -58,7 +58,7 @@ public:
   /// Interface to specify active window handle.
   void SetOutputWindow (HWND hWnd);
 
-  void clear (void);
+  void clear ();
 
   /// Stream insertion operator that performs actual print out.
   /**

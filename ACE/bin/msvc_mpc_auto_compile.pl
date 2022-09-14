@@ -14,8 +14,6 @@ if (!$ENV{ACE_ROOT}) {
 else {
     $ACE_ROOT = $ENV{ACE_ROOT};
     $TAO_ROOT = $ENV{TAO_ROOT};
-    $CIAO_ROOT = $ENV{CIAO_ROOT};
-    $DANCE_ROOT = $ENV{DANCE_ROOT};
 }
 
 @directories = ();
@@ -33,10 +31,6 @@ else {
                   "$TAO_ROOT\\tests");
 
 @orbsvcs_core_dirs = ("$TAO_ROOT\\orbsvcs\\orbsvcs");
-
-@dance_core_dirs = ("$DANCE_ROOT");
-
-@ciao_core_dirs = ("$CIAO_ROOT");
 
 $debug = 0;
 $verbose = 0;
@@ -164,8 +158,6 @@ sub Build_All ()
     push @directories, @ace_core_dirs;
     push @directories, @tao_core_dirs;
     push @directories, @orbsvcs_core_dirs;
-    push @directories, @dance_core_dirs;
-    push @directories, @ciao_core_dirs;
 
     print STDERR "First pass (libraries)\n" if ($print_status == 1);
     print "\nmsvc_mpc_auto_compile: First Pass CORE (libraries)\n";
@@ -226,8 +218,6 @@ sub Build_All_VC7 ()
     push @directories, @ace_core_dirs;
     push @directories, @tao_core_dirs;
     push @directories, @orbsvcs_core_dirs;
-    push @directories, @dance_core_dirs;
-    push @directories, @ciao_core_dirs;
 
     print STDERR "First pass (libraries)\n" if ($print_status == 1);
     print "\nmsvc_mpc_auto_compile: First Pass CORE (libraries)\n";
@@ -304,18 +294,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         push @directories, @tao_core_dirs;
         push @directories, @orbsvcs_core_dirs;
     }
-    elsif ($ARGV[0] =~ '-CIAO') {# Build the CIAO and related
-                                 # libraries
-        print "Building only CIAO\n" if ( $verbose );
-        $use_custom_dir = 1;
-        push @directories, @ace_core_dirs;
-        push @directories, @tao_core_dirs;
-        push @directories, @orbsvcs_core_dirs;
-        push @directories, @dance_core_dirs;
-        push @directories, @ciao_core_dirs;
-    }
-    elsif ($ARGV[0] =~ '-ALL') {# Build the CIAO and related
-                                 # libraries
+    elsif ($ARGV[0] =~ '-ALL') {# Build all
         print "Building ALL \n" if ( $verbose );
         $build_all = 1;
     }
@@ -360,7 +339,6 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "-ACE       = Build ACE and its tests\n";
         print "-TAO       = Build ACE+TAO and its tests\n";
         print "-ORBSVCS   = Build ACE+TAO+ORBSVCS and its tests\n";
-        print "-CIAO      = Build ACE+TAO+ORBSVCS+CIAO and its tests\n";
         print "-dir <dir> = Compile custom directories\n";
         print "-project_root <dir> = Use different root directory than ACE_ROOT\n";
         print "\n";

@@ -37,7 +37,7 @@ public:
                        const char *stock_name);
 
   /// Destructor
-  virtual ~Stock_StockBroker_i (void);
+  virtual ~Stock_StockBroker_i ();
 
   /**
    * Return the StockNameConsumer object created by the Constructor.
@@ -108,7 +108,7 @@ public:
   Stock_StockBrokerHome_i (CORBA::ORB_ptr orb);
 
   /// Destructor
-  virtual ~Stock_StockBrokerHome_i (void);
+  virtual ~Stock_StockBrokerHome_i ();
 
   /**
    * Return the StockBroker object created by the Constructor.

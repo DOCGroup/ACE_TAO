@@ -76,7 +76,7 @@ ACE_File_Lock::remove (bool unlink_file)
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_File_Lock::get_handle (void) const
+ACE_File_Lock::get_handle () const
 {
 // ACE_TRACE ("ACE_File_Lock::get_handle");
   return this->lock_.handle_;

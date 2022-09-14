@@ -22,9 +22,9 @@
 class Collocation_Test
 {
 public:
-  Collocation_Test (void);
+  Collocation_Test ();
 
-  void shutdown (void);
+  void shutdown ();
 
   /// Initializing the Collocation_Test object.
   int init (int argc, ACE_TCHAR *argv[]);
@@ -34,10 +34,10 @@ public:
 
   /// This test narrow an object reference to its base class and see
   /// if it works correctly.
-  int test_narrow (void);
+  int test_narrow ();
 
   /// Run the test.
-  int run (void);
+  int run ();
 
 private:
   CORBA::ORB_var orb_;

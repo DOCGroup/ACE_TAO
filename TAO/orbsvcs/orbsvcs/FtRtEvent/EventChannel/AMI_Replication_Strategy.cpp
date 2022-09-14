@@ -38,23 +38,23 @@ AMI_Replication_Strategy::make_primary_strategy()
 {
   AMI_Primary_Replication_Strategy* result;
   ACE_NEW_RETURN(result, AMI_Primary_Replication_Strategy(mt_), 0);
-  auto_ptr<AMI_Primary_Replication_Strategy> holder(result);
+  std::unique_ptr<AMI_Primary_Replication_Strategy> holder(result);
   if (result->activate() == 0)
     return holder.release();
   return 0;
 }
 
-int  AMI_Replication_Strategy::acquire_read (void)
+int  AMI_Replication_Strategy::acquire_read ()
 {
   return 0;
 }
 
-int  AMI_Replication_Strategy::acquire_write (void)
+int  AMI_Replication_Strategy::acquire_write ()
 {
   return 0;
 }
 
-int  AMI_Replication_Strategy::release (void)
+int  AMI_Replication_Strategy::release ()
 {
   return 0;
 }

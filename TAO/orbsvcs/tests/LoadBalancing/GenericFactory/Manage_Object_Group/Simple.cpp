@@ -15,19 +15,19 @@ Simple::Simple (CORBA::Object_ptr object_group,
 }
 
 CORBA::Short
-Simple::number (void)
+Simple::number ()
 {
   return this->number_;
 }
 
 char *
-Simple::get_string (void)
+Simple::get_string ()
 {
   return CORBA::string_dup (this->location_);
 }
 
 void
-Simple::remove_member (void)
+Simple::remove_member ()
 {
   try
     {
@@ -39,7 +39,6 @@ Simple::remove_member (void)
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Removed Member at Location <%s>\n",
                       this->location_));
-
     }
   catch (const PortableGroup::ObjectNotFound& ex)
     {
@@ -59,7 +58,7 @@ Simple::remove_member (void)
 }
 
 void
-Simple::shutdown (void)
+Simple::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

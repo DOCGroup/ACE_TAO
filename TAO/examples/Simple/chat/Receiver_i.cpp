@@ -12,12 +12,12 @@
 
 #include "Receiver_i.h"
 
-Receiver_i::Receiver_i (void)
+Receiver_i::Receiver_i ()
   : orb_ (0)
 {
 }
 
-Receiver_i::~Receiver_i (void)
+Receiver_i::~Receiver_i ()
 {
 }
 
@@ -30,7 +30,7 @@ Receiver_i::message (const char *msg)
 }
 
 void
-Receiver_i::shutdown (void)
+Receiver_i::shutdown ()
 {
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();

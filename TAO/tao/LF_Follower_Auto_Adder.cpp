@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LF_Follower_Auto_Adder::~TAO_LF_Follower_Auto_Adder (void)
+TAO_LF_Follower_Auto_Adder::~TAO_LF_Follower_Auto_Adder ()
 {
   this->leader_follower_.remove_follower (this->follower_);
 }

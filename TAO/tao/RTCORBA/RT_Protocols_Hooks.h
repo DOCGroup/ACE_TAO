@@ -34,12 +34,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBA_Export TAO_RT_Protocols_Hooks : public TAO_Protocols_Hooks
 {
 public:
-
   /// Constructor
-  TAO_RT_Protocols_Hooks (void);
+  TAO_RT_Protocols_Hooks ();
 
   /// Destructor
-  virtual ~TAO_RT_Protocols_Hooks (void);
+  virtual ~TAO_RT_Protocols_Hooks ();
 
   /// Initialize the protocols hooks instance.
   void init_hooks (TAO_ORB_Core *orb_core);
@@ -70,7 +69,7 @@ public:
 
   void client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties);
 
-  CORBA::Long get_dscp_codepoint (void);
+  CORBA::Long get_dscp_codepoint ();
 
   void get_selector_hook (CORBA::Policy *model_policy,
                           CORBA::Boolean
@@ -137,7 +136,6 @@ protected:
                                        RTCORBA::ProtocolProperties_ptr protocol_properties);
 
 protected:
-
   TAO_ORB_Core *orb_core_;
 
   // Save a reference to the priority mapping manager.

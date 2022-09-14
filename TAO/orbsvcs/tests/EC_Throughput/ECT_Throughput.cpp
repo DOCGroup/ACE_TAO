@@ -13,12 +13,12 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -31,7 +31,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-ECT_Throughput::ECT_Throughput (void)
+ECT_Throughput::ECT_Throughput ()
   : n_consumers_ (1),
     n_suppliers_ (1),
     burst_count_ (10),
@@ -51,7 +51,7 @@ ECT_Throughput::ECT_Throughput (void)
 {
 }
 
-ECT_Throughput::~ECT_Throughput (void)
+ECT_Throughput::~ECT_Throughput ()
 {
 }
 
@@ -205,8 +205,6 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
       ACE_Scheduler_Factory::use_config (naming_context.in ());
 #endif /* 0 */
 
-      auto_ptr<POA_RtecEventChannelAdmin::EventChannel> ec_impl;
-
       TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
                                             root_poa.in ());
 
@@ -215,8 +213,7 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
 
       ec->activate ();
 
-      auto_ptr<POA_RtecEventChannelAdmin::EventChannel> auto_ec_impl (ec);
-      ec_impl = auto_ec_impl;
+      std::unique_ptr<POA_RtecEventChannelAdmin::EventChannel> ec_impl (ec);
 
       RtecEventChannelAdmin::EventChannel_var channel =
         ec_impl->_this ();
@@ -307,7 +304,7 @@ ECT_Throughput::shutdown_consumer (void*)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) shutting down the ORB\n"));
-      // Not needed: this->orb_->shutdown (0);
+      // Not needed: this->orb_->shutdown (false);
     }
 }
 
@@ -367,7 +364,7 @@ ECT_Throughput::connect_suppliers
 }
 
 void
-ECT_Throughput::activate_suppliers (void)
+ECT_Throughput::activate_suppliers ()
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -386,7 +383,7 @@ ECT_Throughput::activate_suppliers (void)
 }
 
 void
-ECT_Throughput::disconnect_suppliers (void)
+ECT_Throughput::disconnect_suppliers ()
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -395,7 +392,7 @@ ECT_Throughput::disconnect_suppliers (void)
 }
 
 void
-ECT_Throughput::disconnect_consumers (void)
+ECT_Throughput::disconnect_consumers ()
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
@@ -404,7 +401,7 @@ ECT_Throughput::disconnect_consumers (void)
 }
 
 void
-ECT_Throughput::dump_results (void)
+ECT_Throughput::dump_results ()
 {
   ACE_High_Res_Timer::global_scale_factor_type gsf =
     ACE_High_Res_Timer::global_scale_factor ();

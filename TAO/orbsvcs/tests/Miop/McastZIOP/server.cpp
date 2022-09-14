@@ -141,7 +141,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Shutdown the orb
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
       orb->destroy ();
 
       // Validate that our servants got the right requests.

@@ -13,13 +13,13 @@ public:
 
   virtual int open (const ACE_TCHAR *logger_key);
 
-  virtual int reset (void);
+  virtual int reset ();
 
-  virtual int close (void);
+  virtual int close ();
 
   virtual ssize_t log (ACE_Log_Record &log_record);
 
-  bool ok (void) const;
+  bool ok () const;
 
 private:
   bool ok_;
@@ -34,13 +34,13 @@ Backend::open (const ACE_TCHAR *key)
 }
 
 int
-Backend::reset (void)
+Backend::reset ()
 {
   return 0;
 }
 
 int
-Backend::close (void)
+Backend::close ()
 {
   return 0;
 }
@@ -52,7 +52,7 @@ Backend::log (ACE_Log_Record &)
 }
 
 bool
-Backend::ok (void) const
+Backend::ok () const
 {
   return this->ok_;
 }

@@ -122,7 +122,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "done sleeping\n"));
 
-      _orb->shutdown(1);
+      _orb->shutdown(true);
     }
   catch (const ::CORBA::Exception &ex)
     {

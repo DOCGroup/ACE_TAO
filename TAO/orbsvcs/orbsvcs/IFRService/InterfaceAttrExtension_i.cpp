@@ -18,7 +18,7 @@ TAO_InterfaceAttrExtension_i::TAO_InterfaceAttrExtension_i (
 {
 }
 
-TAO_InterfaceAttrExtension_i::~TAO_InterfaceAttrExtension_i (void)
+TAO_InterfaceAttrExtension_i::~TAO_InterfaceAttrExtension_i ()
 {
 }
 

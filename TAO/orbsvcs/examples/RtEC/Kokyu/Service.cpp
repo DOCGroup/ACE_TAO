@@ -20,7 +20,6 @@
 #include "ace/Thread.h"
 
 
-
 namespace
 {
   int config_run = 0;

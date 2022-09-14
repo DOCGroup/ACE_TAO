@@ -38,14 +38,14 @@ class ACE_Abstract_Timer_Queue
 {
 public:
   /// Destructor
-  virtual ~ACE_Abstract_Timer_Queue (void) = 0;
+  virtual ~ACE_Abstract_Timer_Queue () = 0;
 
   /// True if queue is empty, else false.
-  virtual bool is_empty (void) const = 0;
+  virtual bool is_empty () const = 0;
 
   /// Returns the time of the earlier node in the Timer_Queue.  Must
   /// be called on a non-empty queue.
-  virtual const ACE_Time_Value &earliest_time (void) const = 0;
+  virtual const ACE_Time_Value &earliest_time () const = 0;
 
   /**
    * Schedule @a type that will expire at @a future_time, which is
@@ -110,7 +110,7 @@ public:
    *
    *  Returns the number of timers canceled.
    */
-  virtual int expire (void) = 0;
+  virtual int expire () = 0;
 
   /**
    * A couple of classes using Timer_Queues need to dispatch a single
@@ -160,21 +160,21 @@ public:
   /**
    * Close timer queue. Cancels all timers.
    */
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /**
    * Returns the current time of day.  This method allows different
    * implementations of the timer queue to use special high resolution
    * timers.
    */
-  virtual ACE_Time_Value gettimeofday (void) = 0;
+  virtual ACE_Time_Value gettimeofday () = 0;
 
   /**
    * Allows applications to control how the timer queue gets the time
    * of day.
    * @deprecated Use TIME_POLICY support instead. See Timer_Queue_T.h
    */
-  virtual void gettimeofday (ACE_Time_Value (*gettimeofday)(void)) = 0;
+  virtual void gettimeofday (ACE_Time_Value (*gettimeofday)()) = 0;
 
   /// Determine the next event to timeout.  Returns @a max if there are
   /// no pending timers or if all pending timers are longer than max.
@@ -204,16 +204,16 @@ public:
   typedef ACE_Timer_Queue_Iterator_T<TYPE> ITERATOR;
 
   /// Returns a pointer to this ACE_Timer_Queue's iterator.
-  virtual ITERATOR & iter (void) = 0;
+  virtual ITERATOR & iter () = 0;
 
   /// Removes the earliest node from the queue and returns it
-  virtual ACE_Timer_Node_T<TYPE> *remove_first (void) = 0;
+  virtual ACE_Timer_Node_T<TYPE> *remove_first () = 0;
 
   /// Reads the earliest node from the queue and returns it.
-  virtual ACE_Timer_Node_T<TYPE> *get_first (void) = 0;
+  virtual ACE_Timer_Node_T<TYPE> *get_first () = 0;
 
   /// Dump the state of a object.
-  virtual void dump (void) const = 0;
+  virtual void dump () const = 0;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

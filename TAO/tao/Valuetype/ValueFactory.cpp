@@ -26,23 +26,23 @@ CORBA::remove_ref (CORBA::ValueFactoryBase *val)
 
 // ===========================================================
 
-CORBA::ValueFactoryBase::ValueFactoryBase (void)
+CORBA::ValueFactoryBase::ValueFactoryBase ()
   : refcount_ (1)
 {
 }
 
-CORBA::ValueFactoryBase::~ValueFactoryBase (void)
+CORBA::ValueFactoryBase::~ValueFactoryBase ()
 {
 }
 
 void
-CORBA::ValueFactoryBase::_add_ref (void)
+CORBA::ValueFactoryBase::_add_ref ()
 {
   ++this->refcount_;
 }
 
 void
-CORBA::ValueFactoryBase::_remove_ref (void)
+CORBA::ValueFactoryBase::_remove_ref ()
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -52,7 +52,7 @@ CORBA::ValueFactoryBase::_remove_ref (void)
 
 // No-op. This should never be called, but it can't be pure virtual.
 CORBA::AbstractBase *
-CORBA::ValueFactoryBase::create_for_unmarshal_abstract (void)
+CORBA::ValueFactoryBase::create_for_unmarshal_abstract ()
 {
   return 0;
 }

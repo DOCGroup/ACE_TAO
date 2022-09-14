@@ -82,14 +82,14 @@ public:
                 UTL_NameList *cdr);
 
   // Get list item.
-  UTL_ScopedName *head (void);
+  UTL_ScopedName *head ();
 
   // Accessors.
-  bool truncatable (void) const;
+  bool truncatable () const;
   void truncatable (bool val);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
 private:
   // List item.
@@ -106,7 +106,7 @@ public:
   UTL_NamelistActiveIterator (UTL_NameList *source);
 
   // Get current item.
-  UTL_ScopedName *item (void);
+  UTL_ScopedName *item ();
 };
 
 #endif           // _UTL_NAMELIST_UTL_NAMELIST_HH

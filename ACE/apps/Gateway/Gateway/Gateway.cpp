@@ -10,53 +10,49 @@
 #include "Event_Channel.h"
 #include "Gateway.h"
 
+// Integrates the whole Gateway application.
+//
+// This implementation uses the <Event_Channel> as the basis
+// for the <Gateway> routing.
 class ACE_Svc_Export Gateway : public ACE_Service_Object
 {
-  // = TITLE
-  //     Integrates the whole Gateway application.
-  //
-  // = DESCRIPTION
-  //     This implementation uses the <Event_Channel> as the basis
-  //     for the <Gateway> routing.
 protected:
   // = Service configurator hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Perform initialization.
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 
-  virtual int fini (void);
   // Perform termination when unlinked dynamically.
+  virtual int fini ();
 
-  virtual int info (ACE_TCHAR **, size_t) const;
   // Return info about this service.
+  virtual int info (ACE_TCHAR **, size_t) const;
 
   // = Configuration methods.
-  int parse_connection_config_file (void);
   // Parse the proxy configuration file.
+  int parse_connection_config_file ();
 
-  int parse_consumer_config_file (void);
   // Parse the consumer configuration file.
+  int parse_consumer_config_file ();
 
   // = Lifecycle management methods.
-  int handle_input (ACE_HANDLE);
   // Shut down the Gateway when input comes in from the controlling
   // console.
+  int handle_input (ACE_HANDLE);
 
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Shut down the Gateway when a signal arrives.
+  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
-  Event_Channel event_channel_;
   // The Event Channel routes events from Supplier(s) to Consumer(s)
   // using <Supplier_Handler> and <Consumer_Handler> objects.
+  Event_Channel event_channel_;
 
-  Connection_Handler_Factory connection_handler_factory_;
   // Creates the appropriate type of <Connection_Handlers>.
+  Connection_Handler_Factory connection_handler_factory_;
 };
 
 int
-Gateway::handle_signal (int signum, siginfo_t *, ucontext_t *)
+Gateway::handle_signal (int, siginfo_t *, ucontext_t *)
 {
-  ACE_UNUSED_ARG (signum);
-
   // Shut down the main event loop.
   ACE_Reactor::end_event_loop ();
   return 0;
@@ -139,7 +135,7 @@ Gateway::init (int argc, ACE_TCHAR *argv[])
 // This method is automatically called when the Gateway is shutdown.
 
 int
-Gateway::fini (void)
+Gateway::fini ()
 {
   // Remove the handler that receive events on stdin.  Otherwise, we
   // will crash on shutdown.
@@ -174,7 +170,7 @@ Gateway::info (ACE_TCHAR **strp, size_t length) const
 // Parse and build the proxy table.
 
 int
-Gateway::parse_connection_config_file (void)
+Gateway::parse_connection_config_file ()
 {
   // File that contains the proxy configuration information.
   Connection_Config_File_Parser connection_file;
@@ -260,7 +256,7 @@ Gateway::parse_connection_config_file (void)
 }
 
 int
-Gateway::parse_consumer_config_file (void)
+Gateway::parse_consumer_config_file ()
 {
   // File that contains the consumer event forwarding information.
   Consumer_Config_File_Parser consumer_file;

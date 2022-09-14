@@ -11,7 +11,7 @@ Receiver_Stats::Receiver_Stats (void)
 }
 
 ACE_INLINE ACE_UINT32
-Receiver_Stats::samples_count (void) const
+Receiver_Stats::samples_count () const
 {
   return this->samples_count_;
 }

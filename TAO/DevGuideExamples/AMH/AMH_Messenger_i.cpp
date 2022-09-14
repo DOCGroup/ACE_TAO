@@ -11,12 +11,12 @@
 #include "AMH_Messenger_i.h"
 #include <iostream>
 // Implementation skeleton constructor
-AMH_Messenger_i::AMH_Messenger_i (void)
+AMH_Messenger_i::AMH_Messenger_i ()
 {
 }
 
 // Implementation skeleton destructor
-AMH_Messenger_i::~AMH_Messenger_i (void)
+AMH_Messenger_i::~AMH_Messenger_i ()
 {
 }
 

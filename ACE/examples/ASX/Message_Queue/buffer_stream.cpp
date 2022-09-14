@@ -18,7 +18,6 @@
 #include "ace/Truncate.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
@@ -47,7 +46,7 @@ public:
   Producer (void) {}
 
   // Read data from stdin and pass to consumer.
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 class Consumer : public Common_Task
@@ -62,11 +61,10 @@ public:
   // Enqueue the message on the ACE_Message_Queue for subsequent
   // handling in the svc() method.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Receive message from producer and print to stdout.
 
 private:
-
   ACE_Time_Value timeout_;
 };
 
@@ -121,7 +119,7 @@ Common_Task::close (u_long exit_status)
 // know when to exit.
 
 int
-Producer::svc (void)
+Producer::svc ()
 {
   // Keep reading stdin, until we reach EOF.
 
@@ -182,7 +180,7 @@ Consumer::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 // reading and exit.
 
 int
-Consumer::svc (void)
+Consumer::svc ()
 {
   int result = 0;
 

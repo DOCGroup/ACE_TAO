@@ -563,7 +563,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-ACE_OS::netdb_acquire (void)
+ACE_OS::netdb_acquire ()
 {
   return ACE_OS::thread_mutex_lock ((ACE_thread_mutex_t *)
     ACE_OS_Object_Manager::preallocated_object[
@@ -571,7 +571,7 @@ ACE_OS::netdb_acquire (void)
 }
 
 int
-ACE_OS::netdb_release (void)
+ACE_OS::netdb_release ()
 {
   return ACE_OS::thread_mutex_unlock ((ACE_thread_mutex_t *)
     ACE_OS_Object_Manager::preallocated_object[

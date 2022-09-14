@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //-----------------------------------------------------------
 
 ACE_INLINE ACE_SOCK_Dgram_Mcast *
-TAO_AV_UDP_MCast_Flow_Handler::get_mcast_socket (void) const
+TAO_AV_UDP_MCast_Flow_Handler::get_mcast_socket () const
 {
   return this->dgram_mcast_;
 }

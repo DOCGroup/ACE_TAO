@@ -10,7 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   /*static*/ int
-  MIOP_Loader::Initializer (void)
+  MIOP_Loader::Initializer ()
   {
     ACE_Service_Config::process_directive (
       ace_svc_desc_TAO_PortableGroup_Loader);

@@ -161,13 +161,13 @@ HTTP_Base::receive_payload (ACE_Message_Block &mb, long length)
 }
 
 const char *
-HTTP_Base::payload (void)
+HTTP_Base::payload ()
 {
   return this->payload_.rd_ptr ();
 }
 
 unsigned long
-HTTP_Base::payload_size (void)
+HTTP_Base::payload_size ()
 {
   return this->payload_.length ();
 }
@@ -307,7 +307,7 @@ HTTP_Base::extract_line (ACE_Message_Block &mb)
 }
 
 void
-HTTP_Base::dump (void)
+HTTP_Base::dump ()
 {
   ACE_DEBUG ((LM_DEBUG, "%s\n", this->line ()));
   this->info_.dump ();

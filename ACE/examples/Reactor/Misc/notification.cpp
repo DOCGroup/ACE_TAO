@@ -7,7 +7,6 @@
 #include "ace/Truncate.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 #define MAX_ITERATIONS 10000
 
@@ -32,12 +31,10 @@ public:
   Thread_Handler (size_t id,
                   size_t max_iterations);
 
-  ~Thread_Handler (void);
+  ~Thread_Handler ();
   // Destructor.
 
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Handle signals.
 
   virtual int handle_exception (ACE_HANDLE);
@@ -56,7 +53,7 @@ public:
   virtual int notify (ACE_Time_Value *tv = 0);
   // Perform notifications.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Handle I/O events in a separate threads.
 
 private:
@@ -95,7 +92,7 @@ Thread_Handler::Thread_Handler (size_t id,
 {
 }
 
-Thread_Handler::~Thread_Handler (void)
+Thread_Handler::~Thread_Handler ()
 {
   // Cleanup resources so that we don't crash and burn when shutdown.
   ACE_Event_Handler::remove_stdin_handler (ACE_Reactor::instance (),
@@ -228,7 +225,7 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
 // capabilities in separate threads.
 
 int
-Thread_Handler::svc (void)
+Thread_Handler::svc ()
 {
   ACE_Time_Value sleep_timeout (Thread_Handler::interval_.sec () / 2);
 

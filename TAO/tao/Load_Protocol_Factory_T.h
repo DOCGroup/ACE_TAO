@@ -33,11 +33,7 @@ namespace TAO
                            const char *name)
     {
       TAO_Protocol_Factory *protocol_factory = 0;
-#if defined (ACE_HAS_CPP11)
       std::unique_ptr<TAO_Protocol_Factory> safe_protocol_factory;
-#else
-      auto_ptr<TAO_Protocol_Factory> safe_protocol_factory;
-#endif /* ACE_HAS_CPP11 */
 
       TAO_Protocol_Item *item = 0;
 
@@ -62,8 +58,7 @@ namespace TAO
                           T,
                           -1);
 
-          ACE_auto_ptr_reset (safe_protocol_factory,
-                              protocol_factory);
+          safe_protocol_factory.reset (protocol_factory);
 
           transfer_ownership = true;
         }

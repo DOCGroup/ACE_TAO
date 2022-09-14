@@ -6,18 +6,18 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LB_LoadAlert::TAO_LB_LoadAlert (void)
+TAO_LB_LoadAlert::TAO_LB_LoadAlert ()
   : alerted_ (0),
     lock_ ()
 {
 }
 
-TAO_LB_LoadAlert::~TAO_LB_LoadAlert (void)
+TAO_LB_LoadAlert::~TAO_LB_LoadAlert ()
 {
 }
 
 void
-TAO_LB_LoadAlert::enable_alert (void)
+TAO_LB_LoadAlert::enable_alert ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
@@ -25,7 +25,7 @@ TAO_LB_LoadAlert::enable_alert (void)
 }
 
 void
-TAO_LB_LoadAlert::disable_alert (void)
+TAO_LB_LoadAlert::disable_alert ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 

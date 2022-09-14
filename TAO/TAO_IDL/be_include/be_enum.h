@@ -35,14 +35,10 @@ public:
                                      bool use_underscore);
 
   /// Cleanup method.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (be_enum);
-  DEF_NARROW_FROM_SCOPE (be_enum);
 };
 
 #endif

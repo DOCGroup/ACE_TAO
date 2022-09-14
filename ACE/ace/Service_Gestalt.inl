@@ -67,7 +67,7 @@ ACE_Service_Gestalt::find (const ACE_TCHAR name[],
 }
 
 ACE_INLINE ACE_Service_Repository*
-ACE_Service_Gestalt::current_service_repository (void)
+ACE_Service_Gestalt::current_service_repository ()
 {
   return this->repo_;
 }

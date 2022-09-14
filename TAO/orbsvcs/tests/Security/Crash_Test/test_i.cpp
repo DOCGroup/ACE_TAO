@@ -7,7 +7,6 @@
 void
 Simple_Server_i::send_line (const char *)
 {
-
   /*
   static unsigned long count = 0;
 
@@ -25,7 +24,7 @@ Simple_Server_i::send_line (const char *)
 }
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

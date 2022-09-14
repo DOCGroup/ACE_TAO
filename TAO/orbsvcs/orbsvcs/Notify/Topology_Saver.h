@@ -34,7 +34,6 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export Topology_Saver
   {
   public:
-
     /// The destructor.
     virtual ~Topology_Saver ();
 
@@ -95,7 +94,7 @@ namespace TAO_Notify
      * vary based on the type of saver, so we can't include it in the
      * interface.
      */
-    virtual void close (void);
+    virtual void close ();
   };
 } // namespace TAO_Notify
 

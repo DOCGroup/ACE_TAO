@@ -91,7 +91,7 @@ ServerInterceptor::receive_request (
     std::cout << "Permission Granted " << std::endl;
   }
   else {
-    std::cout << "Permission Denied " << std::endl;;
+    std::cout << "Permission Denied " << std::endl;
   }
 }
 

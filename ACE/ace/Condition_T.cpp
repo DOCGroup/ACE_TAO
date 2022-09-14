@@ -25,7 +25,7 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Condition)
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Thread_Condition)
 
 template <class MUTEX> void
-ACE_Condition<MUTEX>::dump (void) const
+ACE_Condition<MUTEX>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Condition<MUTEX>::dump");
@@ -46,7 +46,7 @@ ACE_Thread_Condition<MUTEX>::ACE_Thread_Condition (MUTEX &m,
 }
 
 template <class MUTEX> void
-ACE_Thread_Condition<MUTEX>::dump (void) const
+ACE_Thread_Condition<MUTEX>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Thread_Condition<MUTEX>::dump");
@@ -91,7 +91,7 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
 }
 
 template <class MUTEX>
-ACE_Condition<MUTEX>::~ACE_Condition (void)
+ACE_Condition<MUTEX>::~ACE_Condition ()
 {
   // ACE_TRACE ("ACE_Condition<MUTEX>::~ACE_Condition");
 
@@ -102,7 +102,7 @@ ACE_Condition<MUTEX>::~ACE_Condition (void)
 }
 
 template <class MUTEX> int
-ACE_Condition<MUTEX>::wait (void)
+ACE_Condition<MUTEX>::wait ()
 {
   // ACE_TRACE ("ACE_Condition<MUTEX>::wait");
   return ACE_OS::cond_wait (&this->cond_,

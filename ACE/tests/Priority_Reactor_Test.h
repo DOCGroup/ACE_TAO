@@ -42,7 +42,7 @@ public:
   static void set_countdown (int nchildren);
 
   /// Get the number of children we are still waiting for.
-  static int get_countdown (void);
+  static int get_countdown ();
 
   /// The Svc_Handler callbacks.
   virtual int open (void *);
@@ -68,7 +68,7 @@ class Write_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
 public:
   virtual int open (void *);
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 #endif /* ACE_TESTS_PRIORITY_REACTOR_TEST_H */

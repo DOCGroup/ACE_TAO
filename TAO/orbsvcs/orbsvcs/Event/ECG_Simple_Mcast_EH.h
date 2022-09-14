@@ -38,7 +38,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Simple_Mcast_EH
   , public TAO_ECG_Handler_Shutdown
 {
 public:
-
   /// Initialization and termination methods.
   //@{
   /// Constructor.
@@ -50,7 +49,7 @@ public:
   TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv);
 
   /// Destructor.
-  virtual ~TAO_ECG_Simple_Mcast_EH (void);
+  virtual ~TAO_ECG_Simple_Mcast_EH ();
 
   /// Join the specified multicast group and register itself with the
   /// reactor.
@@ -62,7 +61,7 @@ public:
 
   /// TAO_ECG_Handler_Shutdown method.
   /// Unsubscribe from the reactor and close the datagram.
-  virtual int shutdown (void);
+  virtual int shutdown ();
   //@}
 
   /// Main method - reactor callback.  Notify <receiver_> that
@@ -70,7 +69,6 @@ public:
   virtual int handle_input (ACE_HANDLE fd);
 
 private:
-
   // Socket on which we listen for messages.
   ACE_SOCK_Dgram_Mcast dgram_;
 

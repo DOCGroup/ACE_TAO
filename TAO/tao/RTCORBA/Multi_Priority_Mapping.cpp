@@ -62,7 +62,7 @@ TAO_Multi_Priority_Mapping::TAO_Multi_Priority_Mapping (
     }
 }
 
-TAO_Multi_Priority_Mapping::~TAO_Multi_Priority_Mapping (void)
+TAO_Multi_Priority_Mapping::~TAO_Multi_Priority_Mapping ()
 {
 }
 

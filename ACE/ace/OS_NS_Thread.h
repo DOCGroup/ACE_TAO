@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -342,9 +340,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_cond_t
 {
 public:
-
   /// Returns the number of waiters.
-  long waiters (void) const;
+  long waiters () const;
 
 //protected:
   /// Number of waiting threads.
@@ -419,7 +416,6 @@ struct ACE_Export ACE_rwlock_t
 {
 public:
 //protected:
-
   /// Serialize access to internal state.
   ACE_mutex_t lock_;
 
@@ -701,7 +697,7 @@ public:
                  ACE_hthread_t thr_handle);
 
   /// Initialize the object using calls to ACE_OS::thr_self().
-  ACE_Thread_ID (void);
+  ACE_Thread_ID ();
 
   /// Copy constructor.
   ACE_Thread_ID (const ACE_Thread_ID &id);
@@ -710,13 +706,13 @@ public:
   ACE_Thread_ID& operator= (const ACE_Thread_ID &id);
 
   /// Get the thread id.
-  ACE_thread_t id (void) const;
+  ACE_thread_t id () const;
 
   /// Set the thread id.
   void id (ACE_thread_t);
 
   /// Get the thread handle.
-  ACE_hthread_t handle (void) const;
+  ACE_hthread_t handle () const;
 
   /// Set the thread handle.
   void handle (ACE_hthread_t);
@@ -930,7 +926,7 @@ public:
   ACE_TSS_Ref (ACE_thread_t id);
 
   /// Default constructor
-  ACE_TSS_Ref (void);
+  ACE_TSS_Ref ();
 
   /// Check for equality.
   bool operator== (const ACE_TSS_Ref &) const;
@@ -939,7 +935,6 @@ public:
   bool operator!= (const ACE_TSS_Ref &) const;
 
 // private:
-
   /// ID of thread using a specific key.
   ACE_thread_t tid_;
 };
@@ -962,10 +957,10 @@ public:
                 Destructor dest = 0);
 
   /// Default constructor
-  ACE_TSS_Info (void);
+  ACE_TSS_Info ();
 
   /// Returns 1 if the key is in use, 0 if not.
-  int key_in_use (void) const { return thread_count_ != -1; }
+  int key_in_use () const { return thread_count_ != -1; }
 
   /// Mark the key as being in use if the flag is non-zero, or
   /// not in use if the flag is 0.
@@ -978,7 +973,7 @@ public:
   bool operator!= (const ACE_TSS_Info &) const;
 
   /// Dump the state.
-  void dump (void);
+  void dump ();
 
 private:
   /// Key to the thread-specific storage item.
@@ -1011,7 +1006,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Default constructor, to initialize all bits to zero (unused).
-  ACE_TSS_Keys (void);
+  ACE_TSS_Keys ();
 
   /// Mark the specified key as being in use, if it was not already so marked.
   /// Returns 1 if the had already been marked, 0 if not.
@@ -1629,7 +1624,7 @@ namespace ACE_OS {
   void thr_exit (ACE_THR_FUNC_RETURN status = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_getconcurrency (void);
+  int thr_getconcurrency ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_getprio (ACE_hthread_t id,
@@ -1740,16 +1735,16 @@ namespace ACE_OS {
   int thr_kill (ACE_thread_t thr_id, int signum);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  size_t thr_min_stack (void);
+  size_t thr_min_stack ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_thread_t thr_self (void);
+  ACE_thread_t thr_self ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void thr_self (ACE_hthread_t &);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  const char* thr_name (void);
+  const char* thr_name ();
 
   /// Stores a string version of the current thread id into buffer and
   /// returns the size of this thread id in bytes.
@@ -1767,6 +1762,7 @@ namespace ACE_OS {
    * For older Linux (pre 2.4.11) and other systems that don't have gettid(),
    * this uses ACE_NOTSUP_RETURN (-1).
    */
+  ACE_NAMESPACE_INLINE_FUNCTION
   pid_t thr_gettid ();
 
   /**
@@ -1809,10 +1805,10 @@ namespace ACE_OS {
   int thr_suspend (ACE_hthread_t target_thread);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void thr_testcancel (void);
+  void thr_testcancel ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void thr_yield (void);
+  void thr_yield ();
 
   //@{ @name A set of wrappers for mutex locks that only work within a single process.
 
@@ -1952,17 +1948,17 @@ class ACE_Export ACE_event_t
 
 public:
   /// Constructor initializing all pointer fields to null
-  ACE_event_t (void);
+  ACE_event_t ();
 
 private:
   /// Lock the internal mutex/semaphore
-  int lock (void);
+  int lock ();
 
   /// Unlock the internal mutex/semaphore
-  int unlock (void);
+  int unlock ();
 
   /// Use the internal semaphore or condition variable to unblock one thread
-  int wake_one (void);
+  int wake_one ();
 
   /// Event name if process shared.
   char *name_;
@@ -2014,13 +2010,13 @@ public:
   ACE_OS_Thread_Mutex_Guard (ACE_thread_mutex_t &m);
 
   /// Implicitly release the lock.
-  ~ACE_OS_Thread_Mutex_Guard (void);
+  ~ACE_OS_Thread_Mutex_Guard ();
 
   /// Explicitly acquire the lock.
-  int acquire (void);
+  int acquire ();
 
   /// Explicitly release the lock.
-  int release (void);
+  int release ();
 
 protected:
   /// Reference to the mutex.
@@ -2029,9 +2025,8 @@ protected:
   /// Keeps track of whether we acquired the lock or failed.
   int owner_;
 
-  // = Prevent assignment and initialization.
-  ACE_OS_Thread_Mutex_Guard &operator= (const ACE_OS_Thread_Mutex_Guard &);
-  ACE_OS_Thread_Mutex_Guard (const ACE_OS_Thread_Mutex_Guard &);
+  ACE_OS_Thread_Mutex_Guard &operator= (const ACE_OS_Thread_Mutex_Guard &) = delete;
+  ACE_OS_Thread_Mutex_Guard (const ACE_OS_Thread_Mutex_Guard &) = delete;
 };
 
 /**
@@ -2059,13 +2054,13 @@ public:
   ACE_OS_Recursive_Thread_Mutex_Guard (ACE_recursive_thread_mutex_t &m);
 
   /// Implicitly release the lock.
-  ~ACE_OS_Recursive_Thread_Mutex_Guard (void);
+  ~ACE_OS_Recursive_Thread_Mutex_Guard ();
 
   /// Explicitly acquire the lock.
-  int acquire (void);
+  int acquire ();
 
   /// Explicitly release the lock.
-  int release (void);
+  int release ();
 
 protected:
   /// Reference to the mutex.
@@ -2074,11 +2069,8 @@ protected:
   /// Keeps track of whether we acquired the lock or failed.
   int owner_;
 
-  // = Prevent assignment and initialization.
-  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (
-    const ACE_OS_Recursive_Thread_Mutex_Guard &);
-  ACE_OS_Recursive_Thread_Mutex_Guard (
-    const ACE_OS_Recursive_Thread_Mutex_Guard &);
+  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (const ACE_OS_Recursive_Thread_Mutex_Guard &) = delete;
+  ACE_OS_Recursive_Thread_Mutex_Guard (const ACE_OS_Recursive_Thread_Mutex_Guard &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

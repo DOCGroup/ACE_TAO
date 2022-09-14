@@ -54,42 +54,42 @@ class Locator_Export AsyncAccessManager
   AsyncAccessManager (UpdateableServerInfo &info,
                       ImR_Locator_i &locator);
 
-  ~AsyncAccessManager (void);
+  ~AsyncAccessManager ();
 
-  void started_running (void);
+  void started_running ();
 
-  bool is_terminating (void) const;
-  bool is_running (void) const;
+  bool is_terminating () const;
+  bool is_running () const;
   bool has_server (const char *name) const;
   void remote_state (ImplementationRepository::AAM_Status s);
 
   void add_interest (ImR_ResponseHandler *rh, bool manual);
-  ImplementationRepository::AAM_Status status (void) const;
+  ImplementationRepository::AAM_Status status () const;
   bool force_remove_rh (ImR_ResponseHandler *rh);
 
   void activator_replied_start_running (bool success, int pid);
   void server_is_running (const char *partial_ior,
                           ImplementationRepository::ServerObject_ptr ref);
-  void server_is_shutting_down (void);
-  void shutdown_initiated (void);
+  void server_is_shutting_down ();
+  void shutdown_initiated ();
   bool notify_child_death (int pid);
   void ping_replied (LiveStatus server);
-  void listener_disconnected (void);
+  void listener_disconnected ();
 
-  AsyncAccessManager *_add_ref (void);
-  void _remove_ref (void);
+  AsyncAccessManager *_add_ref ();
+  void _remove_ref ();
   static const char *status_name (ImplementationRepository::AAM_Status s);
   static bool is_final (ImplementationRepository::AAM_Status s);
-  void update_prev_pid (void);
+  void update_prev_pid ();
 
  private:
   void report (const char* operation) const;
   void final_state (bool active = true);
   void notify_waiter (ImR_ResponseHandler *rh);
-  void notify_waiters (void);
+  void notify_waiters ();
   void status (ImplementationRepository::AAM_Status s);
   void update_status (ImplementationRepository::AAM_Status s);
-  bool send_start_request (void);
+  bool send_start_request ();
 
   UpdateableServerInfo info_;
   bool manual_start_;
@@ -125,12 +125,12 @@ class ActivatorReceiver :
 public:
   ActivatorReceiver (AsyncAccessManager *aam,
                      PortableServer::POA_ptr poa);
-  virtual ~ActivatorReceiver (void);
+  virtual ~ActivatorReceiver ();
 
-  void start_server (void);
+  void start_server ();
   void start_server_excep (Messaging::ExceptionHolder * excep_holder);
 
-  void shutdown (void);
+  void shutdown ();
   void shutdown_excep (Messaging::ExceptionHolder * excep_holder);
 
   void kill_server (CORBA::Boolean);
@@ -155,8 +155,8 @@ class AccessLiveListener : public LiveListener
                       AsyncAccessManager *aam,
                       LiveCheck &pinger);
 
-  virtual ~AccessLiveListener (void);
-  bool start (void);
+  virtual ~AccessLiveListener ();
+  bool start ();
 
   bool status_changed (LiveStatus status);
 

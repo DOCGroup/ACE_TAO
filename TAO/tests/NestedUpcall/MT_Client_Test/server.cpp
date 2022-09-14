@@ -32,7 +32,7 @@ public:
 #endif
   }
 
-  ~TestShutdown (void)
+  ~TestShutdown ()
   {
 #if !defined(ACE_LACKS_UNIX_SIGNALS)
     this->shutdown_.remove_handler (SIGTERM);
@@ -54,13 +54,13 @@ private:
   ACE_Sig_Handler shutdown_;
 };
 
-MT_Object_Server::MT_Object_Server (void)
+MT_Object_Server::MT_Object_Server ()
   : ior_output_file_ (0)
 {
 }
 
 int
-MT_Object_Server::parse_args (void)
+MT_Object_Server::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("do:m"));
   int c;
@@ -132,7 +132,7 @@ MT_Object_Server::init (int argc, ACE_TCHAR** argv)
 
 
 int
-MT_Object_Server::run (void)
+MT_Object_Server::run ()
 {
   CORBA::ORB_var orb = this->orb_manager_.orb ();
   TestShutdown killer (orb.in ());
@@ -146,7 +146,7 @@ MT_Object_Server::run (void)
   return 0;
 }
 
-MT_Object_Server::~MT_Object_Server (void)
+MT_Object_Server::~MT_Object_Server ()
 {
 }
 

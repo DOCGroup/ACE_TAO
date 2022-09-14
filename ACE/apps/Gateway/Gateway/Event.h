@@ -132,7 +132,7 @@ public:
   {
   }
 
-  void decode (void)
+  void decode ()
   {
     this->len_ = ntohl (this->len_);
     this->connection_id_ = ntohl (this->connection_id_);
@@ -141,7 +141,7 @@ public:
   }
   // Decode from network byte order to host byte order.
 
-  void encode (void)
+  void encode ()
   {
     this->len_ = htonl (this->len_);
     this->connection_id_ = htonl (this->connection_id_);
@@ -194,7 +194,7 @@ public:
 class Subscription
 {
 public:
-  void decode (void)
+  void decode ()
     {
       this->connection_id_ = ntohl (this->connection_id_);
 
@@ -205,7 +205,7 @@ public:
     }
   // Decode from network byte order to host byte order.
 
-  void encode (void)
+  void encode ()
     {
       this->connection_id_ = htonl (this->connection_id_);
 

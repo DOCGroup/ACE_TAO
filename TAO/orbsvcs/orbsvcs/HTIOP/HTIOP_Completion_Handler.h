@@ -34,7 +34,6 @@ namespace TAO
 {
   namespace HTIOP
   {
-
     /**
      * @class Completion_Handler
      *
@@ -52,7 +51,6 @@ namespace TAO
 
     class HTIOP_Export Completion_Handler : public COMPLETION_BASE
     {
-
     public:
       Completion_Handler (ACE_Thread_Manager* t = 0);
       /// Constructor.
@@ -60,7 +58,7 @@ namespace TAO
                           CORBA::Boolean = false);
 
       /// Destructor.
-      ~Completion_Handler (void);
+      ~Completion_Handler ();
 
       /// Called by the <Strategy_Acceptor> when the handler is completely
       /// connected. Argument is unused.
@@ -71,7 +69,7 @@ namespace TAO
        */
       virtual int handle_input (ACE_HANDLE);
 
-      virtual int resume_handler (void);
+      virtual int resume_handler ();
       virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
       //@}
 

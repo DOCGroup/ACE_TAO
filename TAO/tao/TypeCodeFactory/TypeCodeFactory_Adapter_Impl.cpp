@@ -5,7 +5,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_TypeCodeFactory_Adapter_Impl::~TAO_TypeCodeFactory_Adapter_Impl (void)
+TAO_TypeCodeFactory_Adapter_Impl::~TAO_TypeCodeFactory_Adapter_Impl ()
 {
 }
 
@@ -280,7 +280,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_value_event_tc (
 // Initialization and registration of dynamic service object.
 
 int
-TAO_TypeCodeFactory_Adapter_Impl::Initializer (void)
+TAO_TypeCodeFactory_Adapter_Impl::Initializer ()
 {
   TAO_ORB_Core::typecodefactory_adapter_name ("Concrete_TypeCodeFactory_Adapter");
 

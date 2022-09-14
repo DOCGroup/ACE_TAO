@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec, int sched_policy, int sched_scope)
   :allocator_ (0),
-   dispatcher_ (0),
+   dispatcher_ (nullptr),
    lanes_setup_ (0),
    disp_sched_policy_ (sched_policy),
    disp_sched_scope_ (sched_scope)
@@ -36,7 +36,7 @@ TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *e
 }
 
 void
-TAO_EC_Kokyu_Dispatching::activate (void)
+TAO_EC_Kokyu_Dispatching::activate ()
 {
   if (!lanes_setup_)
     setup_lanes ();
@@ -47,7 +47,7 @@ TAO_EC_Kokyu_Dispatching::activate (void)
 }
 
 void
-TAO_EC_Kokyu_Dispatching::setup_lanes (void)
+TAO_EC_Kokyu_Dispatching::setup_lanes ()
 {
   // Query the scheduler togetConfig_Infos
   RtecScheduler::Config_Info_Set_var configs;
@@ -89,14 +89,14 @@ TAO_EC_Kokyu_Dispatching::setup_lanes (void)
   // Create Kokyu::Dispatcher using factory
   Kokyu::Dispatcher_Auto_Ptr
     tmp(Kokyu::Dispatcher_Factory::create_dispatcher(attrs));
-  this->dispatcher_ = tmp;
+  this->dispatcher_ = std::move(tmp);
   this->lanes_setup_ = 1;
 
   //ORBSVCS_DEBUG ((LM_DEBUG, "Kokyu dispatcher setup\n"));
 }
 
 void
-TAO_EC_Kokyu_Dispatching::shutdown (void)
+TAO_EC_Kokyu_Dispatching::shutdown ()
 {
   this->dispatcher_->shutdown();
 }
@@ -154,19 +154,19 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
 
 // ****************************************************************
 
-TAO_EC_Kokyu_Shutdown_Command::~TAO_EC_Kokyu_Shutdown_Command(void)
+TAO_EC_Kokyu_Shutdown_Command::~TAO_EC_Kokyu_Shutdown_Command()
 {
 }
 
 int
-TAO_EC_Kokyu_Shutdown_Command::execute(void)
+TAO_EC_Kokyu_Shutdown_Command::execute()
 {
   return -1;
 }
 
 // ****************************************************************
 
-TAO_EC_Kokyu_Push_Command::~TAO_EC_Kokyu_Push_Command(void)
+TAO_EC_Kokyu_Push_Command::~TAO_EC_Kokyu_Push_Command()
 {
   this->proxy_->_decr_refcnt ();
 }
@@ -174,7 +174,6 @@ TAO_EC_Kokyu_Push_Command::~TAO_EC_Kokyu_Push_Command(void)
 int
 TAO_EC_Kokyu_Push_Command::execute ()
 {
-
   try
     {
       //ORBSVCS_DEBUG ((LM_DEBUG,

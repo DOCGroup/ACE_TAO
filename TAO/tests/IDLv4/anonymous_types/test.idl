@@ -3,6 +3,15 @@
  * there is already a test file at tests/IDL_Test/anonymous.idl.
  */
 
+#include __TAO_IDL_FEATURES
+#ifdef TAO_IDL_HAS_ANONYMOUS_TYPES
+#  if !TAO_IDL_HAS_ANONYMOUS_TYPES
+#    error "Expecting macro to be true"
+#  endif
+#else
+#  error "Expecting macro to be defined"
+#endif
+
 struct TestStruct {
   short short_array[10];
   short another_short_array[10];

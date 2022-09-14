@@ -23,10 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/sys/os_types.h"
-
-#if !defined (ACE_LACKS_UTIME_H)
-#  include /**/ <utime.h>
-#endif /* !ACE_LACKS_UTIME_H */
+#include /**/ <utime.h>
 
 #include /**/ "ace/post.h"
 #endif /* ACE_OS_INCLUDE_OS_UTIME_H */

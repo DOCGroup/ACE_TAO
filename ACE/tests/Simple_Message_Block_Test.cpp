@@ -21,7 +21,6 @@
 #include "ace/Thread_Mutex.h"
 
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {

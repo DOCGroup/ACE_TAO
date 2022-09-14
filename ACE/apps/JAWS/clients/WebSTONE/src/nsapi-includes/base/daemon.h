@@ -100,7 +100,7 @@ void daemon_run(int det, void (*child_callback)(Session *), daemon_s *d);
  * the calling thread and not all of them.
  */
 
-pid_t child_fork(void);
+pid_t child_fork();
 
 
 /*

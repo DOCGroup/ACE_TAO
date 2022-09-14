@@ -29,7 +29,7 @@ TAO_UIPMC_Mcast_Transport::TAO_UIPMC_Mcast_Transport (
            TAO_UIPMC_Wait_Never (this));
 }
 
-TAO_UIPMC_Mcast_Transport::~TAO_UIPMC_Mcast_Transport (void)
+TAO_UIPMC_Mcast_Transport::~TAO_UIPMC_Mcast_Transport ()
 {
   // Cleanup all packets.
   this->cleanup_packets (false);
@@ -88,13 +88,13 @@ TAO_UIPMC_Mcast_Transport::cleanup_packets (bool expired_only)
 }
 
 ACE_Event_Handler *
-TAO_UIPMC_Mcast_Transport::event_handler_i (void)
+TAO_UIPMC_Mcast_Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO_UIPMC_Mcast_Transport::connection_handler_i (void)
+TAO_UIPMC_Mcast_Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }
@@ -605,7 +605,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
 }
 
 int
-TAO_UIPMC_Mcast_Transport::register_handler (void)
+TAO_UIPMC_Mcast_Transport::register_handler ()
 {
   // We never register the handler with the reactor
   // as we never need to be informed about any incoming data,

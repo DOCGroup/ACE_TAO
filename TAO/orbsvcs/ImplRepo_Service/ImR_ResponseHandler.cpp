@@ -12,7 +12,7 @@ ImR_ResponseHandler::ImR_ResponseHandler ()
 {
 }
 
-ImR_ResponseHandler::~ImR_ResponseHandler (void)
+ImR_ResponseHandler::~ImR_ResponseHandler ()
 {
 }
 

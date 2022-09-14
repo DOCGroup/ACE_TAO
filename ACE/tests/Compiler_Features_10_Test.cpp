@@ -125,7 +125,6 @@ namespace
 }
 
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -184,7 +183,7 @@ run_main (int, ACE_TCHAR *[])
     {
       // ... start the test fresh ...
       reset_counts();
-      std::auto_ptr<Aggregate> b(new Aggregate);
+      std::unique_ptr<Aggregate> b(new Aggregate);
       never_reached(__FILE__, __LINE__);
     }
   catch(...)
@@ -201,7 +200,6 @@ run_main (int, ACE_TCHAR *[])
 
 namespace
 {
-
 void
 check_constructor_count(int expected,
                         char const * filename,

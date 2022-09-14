@@ -20,7 +20,7 @@ FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy (
 }
 
 FP_Scheduling::SegmentSchedulingParameter
-FP_Segment_Sched_Param_Policy::value (void)
+FP_Segment_Sched_Param_Policy::value ()
 {
   return value_;
 }
@@ -33,7 +33,7 @@ FP_Segment_Sched_Param_Policy::value (
 }
 
 CORBA::Policy_ptr
-FP_Segment_Sched_Param_Policy::copy (void)
+FP_Segment_Sched_Param_Policy::copy ()
 {
   FP_Segment_Sched_Param_Policy* tmp = 0;
   ACE_NEW_THROW_EX (tmp, FP_Segment_Sched_Param_Policy (*this),
@@ -44,13 +44,13 @@ FP_Segment_Sched_Param_Policy::copy (void)
 }
 
 CORBA::PolicyType
-FP_Segment_Sched_Param_Policy::policy_type (void)
+FP_Segment_Sched_Param_Policy::policy_type ()
 {
   return 0;
 }
 
 void
-FP_Segment_Sched_Param_Policy::destroy (void)
+FP_Segment_Sched_Param_Policy::destroy ()
 {
 }
 
@@ -64,7 +64,6 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (
     ace_sched_policy_ (ace_sched_policy),
     ace_sched_scope_ (ace_sched_scope)
 {
-
   Kokyu::DSRT_ConfigInfo config;
 
   config.impl_type_ = this->disp_impl_type_;
@@ -74,7 +73,7 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (
   Kokyu::DSRT_Dispatcher_Factory<FP_Scheduler_Traits>::DSRT_Dispatcher_Auto_Ptr
     tmp( Kokyu::DSRT_Dispatcher_Factory<FP_Scheduler_Traits>::
          create_DSRT_dispatcher (config) );
-  kokyu_dispatcher_ = tmp;
+  kokyu_dispatcher_ = std::move(tmp);
 
   CORBA::Object_var object =
     orb->resolve_initial_references ("RTScheduler_Current");
@@ -103,13 +102,13 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (
   codec_ = codec_factory->create_codec (encoding);
 }
 
-Fixed_Priority_Scheduler::~Fixed_Priority_Scheduler (void)
+Fixed_Priority_Scheduler::~Fixed_Priority_Scheduler ()
 {
   //  delete kokyu_dispatcher_;
 }
 
 void
-Fixed_Priority_Scheduler::shutdown (void)
+Fixed_Priority_Scheduler::shutdown ()
 {
   kokyu_dispatcher_->shutdown ();
   ACE_DEBUG ((LM_DEBUG, "kokyu DSRT dispatcher shutdown\n"));
@@ -233,7 +232,6 @@ Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Cur
                                                          const char *,
                                                          CORBA::Policy_ptr)
 {
-
 }
 
 
@@ -571,7 +569,7 @@ Fixed_Priority_Scheduler::cancel (const RTScheduling::Current::IdType &)
 }
 
 CORBA::PolicyList*
-Fixed_Priority_Scheduler::scheduling_policies (void)
+Fixed_Priority_Scheduler::scheduling_policies ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -583,13 +581,13 @@ Fixed_Priority_Scheduler::scheduling_policies (const CORBA::PolicyList &)
 }
 
 CORBA::PolicyList*
-Fixed_Priority_Scheduler::poa_policies (void)
+Fixed_Priority_Scheduler::poa_policies ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 char *
-Fixed_Priority_Scheduler::scheduling_discipline_name (void)
+Fixed_Priority_Scheduler::scheduling_discipline_name ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }

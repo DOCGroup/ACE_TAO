@@ -56,18 +56,17 @@ namespace Messaging
 class TAO_Export TAO_Client_Strategy_Factory : public ACE_Service_Object
 {
 public:
-
   /// Destructor
-  virtual ~TAO_Client_Strategy_Factory (void);
+  virtual ~TAO_Client_Strategy_Factory ();
 
   /// Create the correct client request muxing strategy.
   virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport) = 0;
 
   /// Create the correct lock for request muxing strategy.
-  virtual ACE_Lock *create_transport_mux_strategy_lock (void) = 0;
+  virtual ACE_Lock *create_transport_mux_strategy_lock () = 0;
 
   /// Return the size of the reply dispatcher table
-  virtual int reply_dispatcher_table_size (void) const = 0;
+  virtual int reply_dispatcher_table_size () const = 0;
 
   /// Create the correct client wait_for_reply strategy.
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport) = 0;
@@ -83,20 +82,20 @@ public:
   };
 
   /// Return the selected connection strategy option.
-  virtual Connect_Strategy connect_strategy (void) const = 0;
+  virtual Connect_Strategy connect_strategy () const = 0;
 
   /// Does the client allow any form of callback?
-  virtual int allow_callback (void) = 0;
+  virtual int allow_callback () = 0;
 
   /// Cleanup options for wait strategy.
   /**
     * Only applicable to RW wait strategy
   */
-  virtual bool use_cleanup_options (void) const = 0;
+  virtual bool use_cleanup_options () const = 0;
 
   /// Return the parameters used to optionally retry invocation
   /// after an exception occurs.
-  virtual const TAO::Invocation_Retry_Params &invocation_retry_params (void) const = 0;
+  virtual const TAO::Invocation_Retry_Params &invocation_retry_params () const = 0;
 
   /// Return the value to be used as the default sync scope for the ORB
   virtual Messaging::SyncScope sync_scope () const = 0;

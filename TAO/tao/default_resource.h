@@ -55,11 +55,11 @@ class TAO_RSF_Timer_Queue_Ptr;
 class TAO_Export TAO_Codeset_Parameters
 {
 public:
-  TAO_Codeset_Parameters (void);
-  ~TAO_Codeset_Parameters (void);
+  TAO_Codeset_Parameters ();
+  ~TAO_Codeset_Parameters ();
 
   /// The native codeset (getter)
-  const ACE_TCHAR* native (void);
+  const ACE_TCHAR* native ();
 
   /// The native codeset (setter)
   void native (const ACE_TCHAR* n);
@@ -70,14 +70,14 @@ public:
   typedef ACE_Unbounded_Queue_Iterator<ACE_TCHAR*> iterator;
 
   /// Iterate through the registered translators
-  iterator translators (void);
+  iterator translators ();
 
   /// Apply the parameters to the said descriptor
   void apply_to (TAO_Codeset_Descriptor_Base *csd);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Codeset_Parameters (const TAO_Codeset_Parameters &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Codeset_Parameters &operator= (const TAO_Codeset_Parameters &))
+  TAO_Codeset_Parameters (const TAO_Codeset_Parameters &) = delete;
+  TAO_Codeset_Parameters &operator= (const TAO_Codeset_Parameters &) = delete;
 
   ACE_Unbounded_Queue<ACE_TCHAR*> translators_;
   ACE_TCHAR* native_;
@@ -117,12 +117,11 @@ class TAO_Export TAO_Default_Resource_Factory
   : public TAO_Resource_Factory
 {
 public:
-
   /// Constructor.
-  TAO_Default_Resource_Factory (void);
+  TAO_Default_Resource_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Default_Resource_Factory (void);
+  virtual ~TAO_Default_Resource_Factory ();
 
   /**
    * @name Service Configurator Hooks
@@ -139,7 +138,6 @@ public:
    * @name Member Accessors
    */
   //@{
-
   int get_parser_names (char **&names,
                         int &number_of_names);
   enum
@@ -148,60 +146,59 @@ public:
   };
 
   /// Modify and get the source for the CDR allocators
-  int cdr_allocator_source (void);
+  int cdr_allocator_source ();
 
   // = Resource Retrieval
-  virtual int use_locked_data_blocks (void) const;
-  virtual ACE_Reactor *get_reactor (void);
+  virtual int use_locked_data_blocks () const;
+  virtual ACE_Reactor *get_reactor ();
   virtual void reclaim_reactor (ACE_Reactor *);
-  virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
-  virtual TAO_Connector_Registry *get_connector_registry (void);
+  virtual TAO_Acceptor_Registry  *get_acceptor_registry ();
+  virtual TAO_Connector_Registry *get_connector_registry ();
   virtual void use_local_memory_pool (bool);
-  virtual ACE_Allocator* input_cdr_dblock_allocator (void);
-  virtual ACE_Allocator* input_cdr_buffer_allocator (void);
-  virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
-  virtual int input_cdr_allocator_type_locked (void);
-  virtual ACE_Allocator* output_cdr_dblock_allocator (void);
-  virtual ACE_Allocator* output_cdr_buffer_allocator (void);
-  virtual ACE_Allocator* output_cdr_msgblock_allocator (void);
-  virtual ACE_Allocator* amh_response_handler_allocator (void);
-  virtual ACE_Allocator* ami_response_handler_allocator (void);
-  virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
+  virtual ACE_Allocator* input_cdr_dblock_allocator ();
+  virtual ACE_Allocator* input_cdr_buffer_allocator ();
+  virtual ACE_Allocator* input_cdr_msgblock_allocator ();
+  virtual int input_cdr_allocator_type_locked ();
+  virtual ACE_Allocator* output_cdr_dblock_allocator ();
+  virtual ACE_Allocator* output_cdr_buffer_allocator ();
+  virtual ACE_Allocator* output_cdr_msgblock_allocator ();
+  virtual ACE_Allocator* amh_response_handler_allocator ();
+  virtual ACE_Allocator* ami_response_handler_allocator ();
+  virtual TAO_ProtocolFactorySet *get_protocol_factories ();
 
-  virtual int init_protocol_factories (void);
+  virtual int init_protocol_factories ();
 
-  virtual TAO_Codeset_Manager * codeset_manager (void);
+  virtual TAO_Codeset_Manager * codeset_manager ();
 
-  virtual int cache_maximum (void) const;
-  virtual int purge_percentage (void) const;
-  virtual int max_muxed_connections (void) const;
-  virtual ACE_Lock *create_cached_connection_lock (void);
-  virtual int locked_transport_cache (void);
-  virtual TAO_Flushing_Strategy *create_flushing_strategy (void);
-  virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
-  TAO_Resource_Factory::Resource_Usage resource_usage_strategy (void) const;
-  virtual TAO_LF_Strategy *create_lf_strategy (void);
+  virtual int cache_maximum () const;
+  virtual int purge_percentage () const;
+  virtual int max_muxed_connections () const;
+  virtual ACE_Lock *create_cached_connection_lock ();
+  virtual int locked_transport_cache ();
+  virtual TAO_Flushing_Strategy *create_flushing_strategy ();
+  virtual TAO_Connection_Purging_Strategy *create_purging_strategy ();
+  TAO_Resource_Factory::Resource_Usage resource_usage_strategy () const;
+  virtual TAO_LF_Strategy *create_lf_strategy ();
   virtual TAO_GIOP_Fragmentation_Strategy*
     create_fragmentation_strategy (TAO_Transport * transport,
                                    CORBA::ULong max_message_size) const;
-  virtual void disable_factory (void);
-  virtual bool drop_replies_during_shutdown (void) const;
+  virtual void disable_factory ();
+  virtual bool drop_replies_during_shutdown () const;
  //@}
 
 protected:
-
   friend class TAO_RSF_Timer_Queue_Ptr;
 
 #if (TAO_HAS_TIME_POLICY == 1)
-  TAO_Time_Policy_Manager* time_policy_manager (void) const;
+  TAO_Time_Policy_Manager* time_policy_manager () const;
 #endif
 
-  ACE_Timer_Queue * create_timer_queue (void) const;
+  ACE_Timer_Queue * create_timer_queue () const;
 
   void destroy_timer_queue (ACE_Timer_Queue *tmq) const;
 
   /// Obtain the reactor implementation
-  virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
+  virtual ACE_Reactor_Impl *allocate_reactor_impl () const;
 
   /// Add a Parser name to the list of Parser names.
   int add_to_ior_parser_names (const char *);
@@ -210,7 +207,6 @@ protected:
                                   const ACE_TCHAR* option_value);
 
 protected:
-
   /// The type of data blocks that the ORB should use
   int use_locked_data_blocks_;
 
@@ -259,7 +255,7 @@ protected:
    */
   bool dynamically_allocated_reactor_;
 
-  virtual int load_default_protocols (void);
+  virtual int load_default_protocols ();
 
   /// This flag is used to determine whether options have been
   /// processed via the init() function.  It is necessary to

@@ -37,17 +37,13 @@ public:
                 bool truncatable,
                 bool custom);
 
-  ~be_eventtype (void);
+  ~be_eventtype ();
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (be_eventtype);
-  DEF_NARROW_FROM_SCOPE (be_eventtype);
+  virtual void destroy ();
 };
 
 #endif  // if !defined

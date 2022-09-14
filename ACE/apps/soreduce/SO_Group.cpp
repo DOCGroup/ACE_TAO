@@ -20,7 +20,7 @@ SO_Group::SO_Group ()
   libs_ = new Library*[max_libs_];
 }
 
-SO_Group::~SO_Group (void)
+SO_Group::~SO_Group ()
 {
   for (int i = 0; i < num_libs_; delete libs_[i++])
     {
@@ -165,7 +165,7 @@ SO_Group::add_executable (const char * path)
 }
 
 void
-SO_Group::analize (void)
+SO_Group::analize ()
 {
   for (int passcount = 0; undefs_.modified (); ++passcount)
     {
@@ -182,7 +182,7 @@ SO_Group::analize (void)
 }
 
 void
-SO_Group::write_results (void)
+SO_Group::write_results ()
 {
   for (int i = 0; i < num_libs_; libs_[i++]->write_export_list (1))
     {
@@ -191,7 +191,7 @@ SO_Group::write_results (void)
 }
 
 void
-SO_Group::load_modules (void)
+SO_Group::load_modules ()
 {
   for (int i = 0; i < num_libs_; libs_[i++]->load_modules ())
     {
@@ -200,7 +200,7 @@ SO_Group::load_modules (void)
 }
 
 void
-SO_Group::list_libs (void)
+SO_Group::list_libs ()
 {
   ACE_DEBUG ((LM_DEBUG, "Libs subject to analysis:\n"));
 
@@ -212,8 +212,6 @@ SO_Group::list_libs (void)
       }
   }
 }
-
-
 
 
 

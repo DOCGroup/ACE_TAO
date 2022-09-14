@@ -24,17 +24,17 @@ AMI_Primary_Replication_Strategy::~AMI_Primary_Replication_Strategy()
     this->wait();
 }
 
-int  AMI_Primary_Replication_Strategy::acquire_read (void)
+int  AMI_Primary_Replication_Strategy::acquire_read ()
 {
   return mutex_ ? mutex_->acquire_read() : 0;
 }
 
-int  AMI_Primary_Replication_Strategy::acquire_write (void)
+int  AMI_Primary_Replication_Strategy::acquire_write ()
 {
   return mutex_ ? mutex_->acquire_write() : 0;
 }
 
-int  AMI_Primary_Replication_Strategy::release (void)
+int  AMI_Primary_Replication_Strategy::release ()
 {
   return  mutex_ ? mutex_->release() : 0;
 }

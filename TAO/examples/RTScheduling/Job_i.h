@@ -31,14 +31,14 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
   /// Constructor
   Job_i (DT_Creator* dt_creator);
 
-  ~Job_i (void);
+  ~Job_i ();
 
   /// Init the state of this object.
   int init (ACE_Arg_Shifter& arg_shifter);
 
   /// = Accessors
-  const ACE_CString& name (void);
-  const ACE_CString& poa (void);
+  const ACE_CString& name ();
+  const ACE_CString& poa ();
 
   /// = inteface Job method implementation.
   virtual void work (CORBA::ULong work,
@@ -47,11 +47,11 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
   virtual void post_work (int guid,
         int importance);
 
-  void dump_stats (void);
+  void dump_stats ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
-  int guid (void);
+  int guid ();
 
  protected:
   /// The name of this Job

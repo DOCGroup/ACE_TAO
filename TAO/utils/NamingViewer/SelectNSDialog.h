@@ -34,7 +34,6 @@ public:
 
 // Implementation
 protected:
-
   // Generated message map functions
   //{{AFX_MSG(CSelectNSDialog)
   virtual void OnOK();

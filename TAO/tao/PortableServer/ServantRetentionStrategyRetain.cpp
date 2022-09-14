@@ -26,7 +26,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ServantRetentionStrategyRetain::ServantRetentionStrategyRetain (void) :
+    ServantRetentionStrategyRetain::ServantRetentionStrategyRetain () :
       ServantRetentionStrategyNonRetain (),
       active_object_map_ (),
       waiting_servant_deactivation_ (0)
@@ -47,7 +47,7 @@ namespace TAO
                                                poa->orb_core().server_factory ()->active_object_map_creation_parameters ()
                                               ), CORBA::NO_MEMORY ());
 
-      ACE_auto_ptr_reset (this->active_object_map_, active_object_map);
+      this->active_object_map_.reset (active_object_map);
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
       ACE_CString name_str ("Active_Object_Map_");
@@ -61,7 +61,7 @@ namespace TAO
     }
 
     void
-    ServantRetentionStrategyRetain::strategy_cleanup (void)
+    ServantRetentionStrategyRetain::strategy_cleanup ()
     {
     }
 
@@ -433,13 +433,13 @@ namespace TAO
     }
 
     CORBA::ULong
-    ServantRetentionStrategyRetain::waiting_servant_deactivation (void) const
+    ServantRetentionStrategyRetain::waiting_servant_deactivation () const
     {
       return waiting_servant_deactivation_;
     }
 
     void
-    ServantRetentionStrategyRetain::deactivate_all_objects (void)
+    ServantRetentionStrategyRetain::deactivate_all_objects ()
     {
       // If the etherealize_objects parameter is TRUE, the POA has the
       // RETAIN policy, and a servant manager is registered with the POA,
@@ -963,7 +963,7 @@ namespace TAO
 
 
     ::PortableServer::ServantRetentionPolicyValue
-    ServantRetentionStrategyRetain::type(void) const
+    ServantRetentionStrategyRetain::type() const
     {
       return ::PortableServer::RETAIN;
     }

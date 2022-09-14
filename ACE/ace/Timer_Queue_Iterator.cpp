@@ -19,7 +19,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Timer_Node_T)
 
 template <class TYPE> void
-ACE_Timer_Node_T<TYPE>::dump (void) const
+ACE_Timer_Node_T<TYPE>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Timer_Node_T::dump");
@@ -35,7 +35,7 @@ ACE_Timer_Node_T<TYPE>::dump (void) const
 }
 
 template <class TYPE>
-ACE_Timer_Node_T<TYPE>::ACE_Timer_Node_T (void)
+ACE_Timer_Node_T<TYPE>::ACE_Timer_Node_T ()
   : act_ (0),
     prev_ (0),
     next_ (0),
@@ -45,18 +45,13 @@ ACE_Timer_Node_T<TYPE>::ACE_Timer_Node_T (void)
 }
 
 template <class TYPE>
-ACE_Timer_Node_T<TYPE>::~ACE_Timer_Node_T (void)
+ACE_Timer_Node_T<TYPE>::~ACE_Timer_Node_T ()
 {
   ACE_TRACE ("ACE_Timer_Node_T::~ACE_Timer_Node_T");
 }
 
 template <class TYPE>
-ACE_Timer_Queue_Iterator_T<TYPE>::ACE_Timer_Queue_Iterator_T (void)
-{
-}
-
-template <class TYPE>
-ACE_Timer_Queue_Iterator_T<TYPE>::~ACE_Timer_Queue_Iterator_T (void)
+ACE_Timer_Queue_Iterator_T<TYPE>::~ACE_Timer_Queue_Iterator_T ()
 {
 }
 

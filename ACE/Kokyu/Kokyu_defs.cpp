@@ -6,7 +6,7 @@
 
 namespace Kokyu
 {
-   Dispatch_Command::~Dispatch_Command (void)
+   Dispatch_Command::~Dispatch_Command ()
    {
    }
 

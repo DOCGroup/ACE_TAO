@@ -18,13 +18,8 @@ public:
   CORBA::Double price ();
 
 private:
-#if defined (HPUX) && (ACE_HAS_STANDARD_CPP_LIBRARY == 0)
-  string symbol_;
-  string full_name_;
-#else
   std::string symbol_;
   std::string full_name_;
-#endif /* HPUX */
   CORBA::Double price_;
 };
 

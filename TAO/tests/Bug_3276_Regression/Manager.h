@@ -6,24 +6,24 @@
 class Manager
 {
 public:
-  Manager (void);
+  Manager ();
   // Ctor
 
-  ~Manager (void);
+  ~Manager ();
 
   int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the ORB, POA etc.
 
-  int activate_servant (void);
+  int activate_servant ();
   // Activate the servant etc.
 
-  int run (void);
+  int run ();
   // Run the ORB's event loop.
 
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
   // ORB's accessor.
 
-  CORBA::Object_ptr server (void);
+  CORBA::Object_ptr server ();
   // Server's accessor.
 
 private:

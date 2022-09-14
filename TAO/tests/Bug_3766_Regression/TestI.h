@@ -44,7 +44,7 @@ public:
   Test_i (CORBA::ORB_ptr o);
 
   // Destructor
-  virtual ~Test_i (void);
+  virtual ~Test_i ();
 
   virtual
   void do_something_FixedLength (
@@ -54,7 +54,7 @@ public:
   void do_something_VariableLength (
     ::VariableLengthInfo_out my_info);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

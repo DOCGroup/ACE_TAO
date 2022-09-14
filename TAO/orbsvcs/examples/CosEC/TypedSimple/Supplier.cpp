@@ -3,11 +3,9 @@
 #include "CountryC.h"
 
 
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // ORB initialization boiler plate...
@@ -67,6 +65,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   return 0;
 }
-
 
 

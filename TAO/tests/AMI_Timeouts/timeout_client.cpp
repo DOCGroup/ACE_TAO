@@ -60,7 +60,7 @@ TimeoutClient::svc ()
       ACE_OS::sleep (tv);
 
       // shut down local ORB
-      orb_->shutdown (0);
+      orb_->shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -161,7 +161,6 @@ TimeoutClient::send (CORBA::Boolean async,
       // Trap this exception and continue...
       ACE_DEBUG ((LM_DEBUG,
                   " timeout "));
-
     }
 
   // get rid of the policy, you created before.

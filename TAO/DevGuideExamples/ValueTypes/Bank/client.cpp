@@ -70,9 +70,7 @@ private:
 };
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
-
   try {
-
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     if (parse_args (argc, argv) != 0)
@@ -100,7 +98,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
     std::cout << "Client: Ending balance: " << b/100.0 << std::endl;
 
     orb->destroy();
-
   } catch(const CORBA::Exception& e) {
     std::cerr << e << std::endl;
     return 1;

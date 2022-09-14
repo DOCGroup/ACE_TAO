@@ -92,7 +92,7 @@ Handle_L_Stream::fini (void)
 }
 
 ACE_INLINE ACE_HANDLE
-Handle_L_Stream::get_handle (void) const
+Handle_L_Stream::get_handle () const
 {
   return ACE_LSOCK_Acceptor::get_handle ();
 }

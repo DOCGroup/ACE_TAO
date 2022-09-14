@@ -36,12 +36,12 @@ TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
     &rt_thread_lane_resources_manager->tp_manager ();
 }
 
-TAO_RT_ORB::~TAO_RT_ORB (void)
+TAO_RT_ORB::~TAO_RT_ORB ()
 {
 }
 
 RTCORBA::Mutex_ptr
-TAO_RT_ORB::create_mutex (void)
+TAO_RT_ORB::create_mutex ()
 {
   return this->mutex_mgr_.create_mutex ();
 }
@@ -68,16 +68,16 @@ TAO_RT_ORB::open_named_mutex (const char *name)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_Named_RT_Mutex_Manager::TAO_Named_RT_Mutex_Manager (void)
+TAO_Named_RT_Mutex_Manager::TAO_Named_RT_Mutex_Manager ()
 {
 }
 
-TAO_Named_RT_Mutex_Manager::~TAO_Named_RT_Mutex_Manager (void)
+TAO_Named_RT_Mutex_Manager::~TAO_Named_RT_Mutex_Manager ()
 {
 }
 
 RTCORBA::Mutex_ptr
-TAO_Named_RT_Mutex_Manager::create_mutex (void)
+TAO_Named_RT_Mutex_Manager::create_mutex ()
 {
   TAO_RT_Mutex *mutex = 0;
   ACE_NEW_THROW_EX (mutex,
@@ -390,7 +390,7 @@ TAO_RT_ORB::create_priority_banded_connection_policy (const
 }
 
 RTCORBA::PrivateConnectionPolicy_ptr
-TAO_RT_ORB::create_private_connection_policy (void)
+TAO_RT_ORB::create_private_connection_policy ()
 {
   TAO_PrivateConnectionPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -426,13 +426,13 @@ TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protoco
 }
 
 TAO_Thread_Pool_Manager &
-TAO_RT_ORB::tp_manager (void) const
+TAO_RT_ORB::tp_manager () const
 {
   return *this->tp_manager_;
 }
 
 TAO_ORB_Core *
-TAO_RT_ORB::orb_core (void) const
+TAO_RT_ORB::orb_core () const
 {
   return this->orb_core_;
 }

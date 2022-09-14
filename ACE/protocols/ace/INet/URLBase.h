@@ -26,7 +26,6 @@ namespace ACE
   {
     namespace INet
       {
-
         /**
         * @class ACE_INet_URLStream
         *
@@ -239,7 +238,6 @@ namespace ACE
 
               static authenticator_map authenticators_;
           };
-
       }
   }
 

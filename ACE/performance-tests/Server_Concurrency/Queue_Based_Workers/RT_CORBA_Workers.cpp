@@ -35,7 +35,7 @@ ACE_Data_Block *data_block = 0;
 
 /*******************************************************************/
 // Constructor for Synchronisers
-Synchronisers::Synchronisers (void)
+Synchronisers::Synchronisers ()
   : mutex_ (),
     event_ ()
 {
@@ -43,7 +43,7 @@ Synchronisers::Synchronisers (void)
 
 
 int
-Synchronisers::start_synchronization (void)
+Synchronisers::start_synchronization ()
 {
   // Hold the lock and increment the global variable to indicate
   // number of ready threads
@@ -91,7 +91,7 @@ Synchronisers::start_synchronization (void)
 }
 
 int
-Synchronisers::end_synchronization (void)
+Synchronisers::end_synchronization ()
 {
   // Hold the lock and increment the global variable to indicate
   // number of ready threads
@@ -149,7 +149,7 @@ Worker_Task::Worker_Task (Message_Queue *mq,
 }
 
 int
-Worker_Task::svc (void)
+Worker_Task::svc ()
 {
   // Start synchronization
   (void) this->synch_.start_synchronization ();
@@ -246,7 +246,7 @@ Worker_Task::svc (void)
 }
 
 int
-Worker_Task::processed (void)
+Worker_Task::processed ()
 {
   return this->messages_processed_;
 }
@@ -261,7 +261,7 @@ Input_Task::Input_Task (Message_Queue *mq,
 }
 
 int
-Input_Task::svc (void)
+Input_Task::svc ()
 {
   // Synchronise threads
   (void) this->synch_.start_synchronization ();
@@ -343,7 +343,7 @@ Output_Task::Output_Task (Message_Queue *mq,
 }
 
 int
-Output_Task::svc (void)
+Output_Task::svc ()
 {
   // Synchronise threads
   (void) this->synch_.start_synchronization ();
@@ -519,7 +519,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
 
-
   // Activate the input and output threads
   result = input_task.activate (flags,
                                 1,
@@ -530,7 +529,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     return result;
 
 
-
   // Activate the workers.
   result = output_task.activate (flags,
                                  1,
@@ -539,7 +537,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (result != 0)
     return result;
-
 
 
   // Wait for all threads to terminate.

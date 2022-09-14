@@ -12,7 +12,7 @@ template<typename S_ptr,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S_ptr
-TAO::In_Object_Argument_T<S_ptr,Insert_Policy>::arg (void) const
+TAO::In_Object_Argument_T<S_ptr,Insert_Policy>::arg () const
 {
   return this->x_;
 }

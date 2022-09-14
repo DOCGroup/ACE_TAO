@@ -36,7 +36,7 @@ public:
 
   virtual CORBA::Any *get_value (CORBA::Long offset);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_ptr orb_;

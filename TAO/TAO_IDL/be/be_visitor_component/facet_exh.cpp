@@ -24,7 +24,7 @@ be_visitor_facet_exh::be_visitor_facet_exh (
   export_macro_ = be_global->exec_export_macro ();
 }
 
-be_visitor_facet_exh::~be_visitor_facet_exh (void)
+be_visitor_facet_exh::~be_visitor_facet_exh ()
 {
 }
 
@@ -69,12 +69,12 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << this->node_->local_name ()
       << "_Context_ptr ctx);" << be_uidt_nl
       << "/// Destructor" << be_nl
-      << "virtual ~" << lname << "_exec_i (void);";
+      << "virtual ~" << lname << "_exec_i ();";
 
   if (impl->node_type () == AST_Decl::NT_interface)
     {
       be_interface *intf =
-        be_interface::narrow_from_decl (impl);
+        dynamic_cast<be_interface*> (impl);
 
       os_ << be_nl_2
           << "/** @name Operations and attributes from "

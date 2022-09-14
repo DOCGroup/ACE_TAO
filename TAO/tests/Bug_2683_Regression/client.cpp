@@ -20,7 +20,7 @@ public:
   {
   }
 
-  int svc (void)
+  int svc ()
   {
     bool keep_going = true;
     while (keep_going && !this->stop_)
@@ -63,7 +63,6 @@ public:
   {
     stop_ = true;
   }
-
 };
 
 int port = 0;
@@ -132,7 +131,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       pinger.wait();
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) client done\n"));
-
     }
   catch (const CORBA::Exception &ex)
     {

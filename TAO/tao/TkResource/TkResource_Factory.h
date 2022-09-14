@@ -23,7 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class TkResource_Factory
    *
@@ -38,13 +37,11 @@ namespace TAO
   class TAO_TkResource_Export TkResource_Factory : public GUIResource_Factory
   {
   public:
-
     TkResource_Factory ();
 
   protected:
-
     /// Create or obtain current reactor implementation
-    virtual ACE_Reactor_Impl *reactor_impl (void);
+    virtual ACE_Reactor_Impl *reactor_impl ();
 
   private:
     /// Reactor created by this factory.

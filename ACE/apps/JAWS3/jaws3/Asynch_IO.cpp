@@ -118,7 +118,6 @@ JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
 }
 
 
-
 JAWS_EC_AH_Adapter *
 JAWS_EC_AH_Adapter::make (JAWS_Event_Completer *completer)
 {

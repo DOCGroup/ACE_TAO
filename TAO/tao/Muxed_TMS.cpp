@@ -9,7 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport)
-    , lock_ (0)
+    , lock_ (nullptr)
     , request_id_generator_ (0)
     , orb_core_ (transport->orb_core ())
     , dispatcher_table_ (this->orb_core_->client_factory ()->reply_dispatcher_table_size ())
@@ -18,7 +18,7 @@ TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
     this->orb_core_->client_factory ()->create_transport_mux_strategy_lock ();
 }
 
-TAO_Muxed_TMS::~TAO_Muxed_TMS (void)
+TAO_Muxed_TMS::~TAO_Muxed_TMS ()
 {
   delete this->lock_;
 }
@@ -26,7 +26,7 @@ TAO_Muxed_TMS::~TAO_Muxed_TMS (void)
 // Generate and return an unique request id for the current
 // invocation.
 CORBA::ULong
-TAO_Muxed_TMS::request_id (void)
+TAO_Muxed_TMS::request_id ()
 {
   // @@ What is a good error return value?
   ACE_GUARD_RETURN (ACE_Lock,
@@ -67,7 +67,7 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
                     *this->lock_,
                     -1);
 
-  if (rd == 0)
+  if (rd == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -106,7 +106,7 @@ TAO_Muxed_TMS::unbind_dispatcher (CORBA::ULong request_id)
 }
 
 bool
-TAO_Muxed_TMS::has_request (void)
+TAO_Muxed_TMS::has_request ()
 {
   ACE_GUARD_RETURN (ACE_Lock,
                     ace_mon,
@@ -120,7 +120,7 @@ int
 TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {
   int result = 0;
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(0);
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(nullptr);
 
   // Grab the reply dispatcher for this id.
   {
@@ -167,7 +167,7 @@ int
 TAO_Muxed_TMS::reply_timed_out (CORBA::ULong request_id)
 {
   int result = 0;
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(0);
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(nullptr);
 
   // Grab the reply dispatcher for this id.
   {
@@ -218,25 +218,25 @@ TAO_Muxed_TMS::reply_timed_out (CORBA::ULong request_id)
 
 
 bool
-TAO_Muxed_TMS::idle_after_send (void)
+TAO_Muxed_TMS::idle_after_send ()
 {
   // Irrespective of whether we are successful or not we need to
   // return true. If *this* class is not successful in idling the
   // transport no one can.
-  if (this->transport_ != 0)
+  if (this->transport_ != nullptr)
     (void) this->transport_->make_idle ();
 
   return true;
 }
 
 bool
-TAO_Muxed_TMS::idle_after_reply (void)
+TAO_Muxed_TMS::idle_after_reply ()
 {
   return false;
 }
 
 void
-TAO_Muxed_TMS::connection_closed (void)
+TAO_Muxed_TMS::connection_closed ()
 {
   ACE_GUARD (ACE_Lock,
              ace_mon,
@@ -251,7 +251,7 @@ TAO_Muxed_TMS::connection_closed (void)
 }
 
 int
-TAO_Muxed_TMS::clear_cache_i (void)
+TAO_Muxed_TMS::clear_cache_i ()
 {
   if (this->dispatcher_table_.current_size () == 0)
     return -1;
@@ -274,7 +274,7 @@ TAO_Muxed_TMS::clear_cache_i (void)
 
   for (size_t k = 0 ; k != sz ; ++k)
     {
-      ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(0);
+      ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(nullptr);
 
       if (ubs.pop (rd) == 0)
         {

@@ -12,7 +12,6 @@
 
 
 
-
 #ifndef server_HH_
 #define server_HH_
 
@@ -138,8 +137,7 @@ private:
             const char *                        str
         ) : m_sc(sc), m_str(str) {}
         bool operator()(
-            pair<const CCS::AssetType, Thermometer_impl *> & p
-        ) const
+            pair<const CCS::AssetType, Thermometer_impl *> & p) const
         {
             char buf[32];
             switch (m_sc) {

@@ -38,7 +38,7 @@ public:
   ast_visitor_tmpl_module_inst (ast_visitor_context *ctx,
                                 bool ref_only = false);
 
-  virtual ~ast_visitor_tmpl_module_inst (void);
+  virtual ~ast_visitor_tmpl_module_inst ();
 
   virtual int visit_decl (AST_Decl *d);
   virtual int visit_scope (UTL_Scope *node);

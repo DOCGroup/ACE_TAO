@@ -1,6 +1,6 @@
 # -*- Makefile -*-
 #----------------------------------------------------------------------------
-#       
+#
 #
 #       Build libraries (i.e., contain no binary executables)
 #       GNU version
@@ -22,12 +22,12 @@ ifneq ($(versioned_so),0)
   ifeq ($(SOVERSION),)
     ifeq ($(versioned_so),1)
       SOVERSION = .$(GNUACE_PROJECT_VERSION)
+    else ifeq ($(versioned_so),2)
+      SOVERSION = -$(GNUACE_PROJECT_VERSION)
+    else ifeq ($(versioned_so),3)
+      # Nothing
     else
-      ifeq ($(versioned_so),2)
-        SOVERSION = -$(GNUACE_PROJECT_VERSION)
-      else
-        $(error unknown value for versioned_so: $(versioned_so))
-      endif
+      $(error unknown value for versioned_so: $(versioned_so))
     endif
   endif # SOVERSION
 
@@ -36,10 +36,10 @@ ifneq ($(versioned_so),0)
   ifeq ($(SONAME),)
     ifeq ($(versioned_so),1)
       SONAME = $(SHLIB)$(SOVERSION)
-    else
-      ifeq ($(versioned_so),2)
-        SONAME = $(patsubst %.$(SOEXT),%,$(SHLIB))$(SOVERSION).$(SOEXT)
-      endif
+    else ifeq ($(versioned_so),2)
+      SONAME = $(patsubst %.$(SOEXT),%,$(SHLIB))$(SOVERSION).$(SOEXT)
+    else ifeq ($(versioned_so),3)
+      SONAME = $(SHLIB)
     endif
   endif # SONAME
 endif # versioned_so

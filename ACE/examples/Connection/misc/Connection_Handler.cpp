@@ -45,7 +45,7 @@ Connection_Handler::close (u_long)
 }
 
 int
-Connection_Handler::svc (void)
+Connection_Handler::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) in svc()\n")));
 
@@ -146,13 +146,10 @@ Connection_Handler::handle_input (ACE_HANDLE)
 }
 
 int
-Connection_Handler::handle_signal (int signum,
-                                   siginfo_t *,
-                                   ucontext_t *)
+Connection_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   // @@ Note that this code is not portable to all OS platforms since
   // it uses print statements within signal handler context.
-
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("received signal %S\n"), signum));
 
   this->finished_ = 1;

@@ -36,7 +36,7 @@ namespace ACE
 
               const ACE_SSL_Context& context () const;
 
-              SSL_X509Cert& certificate (void);
+              SSL_X509Cert& certificate ();
 
               int error_depth () const;
 

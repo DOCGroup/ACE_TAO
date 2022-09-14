@@ -52,12 +52,12 @@ class TAO_RTCORBA_Export RT_Endpoint_Selector_Factory
 {
 public:
   /// Constructor.
-  RT_Endpoint_Selector_Factory (void);
+  RT_Endpoint_Selector_Factory ();
 
   /// Destructor.
-  virtual ~RT_Endpoint_Selector_Factory (void);
+  virtual ~RT_Endpoint_Selector_Factory ();
 
-  virtual TAO_Invocation_Endpoint_Selector *get_selector (void);
+  virtual TAO_Invocation_Endpoint_Selector *get_selector ();
 
 private:
   void operator= (const RT_Endpoint_Selector_Factory &);

@@ -59,7 +59,6 @@ namespace TAO
   CORBA::Boolean
   NVList_Argument::demarshal (TAO_InputCDR &cdr)
   {
-
     try
       {
         // Now, get all the "return", "out", and "inout" parameters

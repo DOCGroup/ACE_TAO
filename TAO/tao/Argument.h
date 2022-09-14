@@ -49,9 +49,8 @@ namespace TAO
   class TAO_Export Argument
   {
   public:
-
     /// Destructor.
-    virtual ~Argument (void);
+    virtual ~Argument ();
 
     /// Marshal the argument into the given CDR output stream.
     /**
@@ -66,7 +65,7 @@ namespace TAO
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 
     /// Template method to clone a TAO Argument
-    virtual Argument* clone (void);
+    virtual Argument* clone ();
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -86,18 +85,17 @@ namespace TAO
     virtual void interceptor_value (CORBA::Any *) const;
 
     /// Get the parameter mode of this argument
-    virtual CORBA::ParameterMode mode (void) const = 0;
+    virtual CORBA::ParameterMode mode () const = 0;
     //@}
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-
   };
 
 #if TAO_HAS_INTERCEPTORS == 1
   class TAO_Export InArgument : public Argument
   {
   public:
-    virtual CORBA::ParameterMode mode (void) const;
+    virtual CORBA::ParameterMode mode () const;
   };
 #else
   typedef Argument InArgument;
@@ -107,7 +105,7 @@ namespace TAO
   class TAO_Export InoutArgument : public Argument
   {
   public:
-    virtual CORBA::ParameterMode mode (void) const;
+    virtual CORBA::ParameterMode mode () const;
   };
 #else
   typedef Argument InoutArgument;
@@ -117,7 +115,7 @@ namespace TAO
   class TAO_Export OutArgument : public Argument
   {
   public:
-    virtual CORBA::ParameterMode mode (void) const;
+    virtual CORBA::ParameterMode mode () const;
   };
 #else
   typedef Argument OutArgument;
@@ -127,7 +125,7 @@ namespace TAO
   class TAO_Export RetArgument : public Argument
   {
   public:
-    virtual CORBA::ParameterMode mode (void) const;
+    virtual CORBA::ParameterMode mode () const;
   };
 #else
   typedef Argument RetArgument;
@@ -136,7 +134,7 @@ namespace TAO
   class TAO_Export Void_Return_Argument : public RetArgument
   {
   public:
-    virtual Argument* clone (void);
+    virtual Argument* clone ();
   };
 }
 

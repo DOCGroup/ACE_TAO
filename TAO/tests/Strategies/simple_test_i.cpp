@@ -6,7 +6,7 @@
 #endif /* __ACE_INLINE__ */
 
 CORBA::Boolean
-Simple_Server_i::print_status (void)
+Simple_Server_i::print_status ()
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -15,7 +15,7 @@ Simple_Server_i::print_status (void)
 }
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

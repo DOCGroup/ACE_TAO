@@ -41,7 +41,7 @@ public:
   TAO_ExceptionDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ExceptionDef_i (void);
+  virtual ~TAO_ExceptionDef_i ();
 
   /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();

@@ -43,7 +43,7 @@ class TAO_PI_Export TAO_RequestInterceptor_Adapter_Impl
   : public TAO::RequestInterceptor_Adapter
 {
 public:
-  ~TAO_RequestInterceptor_Adapter_Impl (void);
+  ~TAO_RequestInterceptor_Adapter_Impl ();
 
   void popTSC (TAO_ORB_Core *orb_core);
   void pushTSC (TAO_ORB_Core *orb_core);

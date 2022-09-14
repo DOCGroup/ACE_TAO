@@ -43,7 +43,7 @@ namespace TAO
       this->object_adapter_.lock ().release ();
     }
 
-    Non_Servant_Upcall::~Non_Servant_Upcall (void)
+    Non_Servant_Upcall::~Non_Servant_Upcall ()
     {
       // Reacquire the Object Adapter lock.
       this->object_adapter_.lock ().acquire ();

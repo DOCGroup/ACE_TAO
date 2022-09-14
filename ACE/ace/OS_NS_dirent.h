@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -76,7 +74,6 @@ inline void ace_rewinddir_helper (ACE_DIR *dir)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-
   ACE_NAMESPACE_INLINE_FUNCTION
   void closedir (ACE_DIR *);
 
@@ -85,11 +82,6 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   struct ACE_DIRENT *readdir (ACE_DIR *);
-
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int readdir_r (ACE_DIR *dirp,
-                 struct ACE_DIRENT *entry,
-                 struct ACE_DIRENT **result);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void rewinddir (ACE_DIR *);

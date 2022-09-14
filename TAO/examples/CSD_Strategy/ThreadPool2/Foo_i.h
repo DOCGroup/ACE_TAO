@@ -11,25 +11,23 @@ class FooServantList;
 class Foo_i : public virtual POA_Foo
 {
   public:
-
     Foo_i(const ACE_TCHAR* servant_name, FooServantList* mgr);
     virtual ~Foo_i();
 
-    virtual void op1(void);
+    virtual void op1();
 
     virtual void op2(CORBA::Long value);
 
-    virtual CORBA::Long op3(void);
+    virtual CORBA::Long op3();
 
     virtual void op4(CORBA::Long value);
 
-    virtual void op5(void);
+    virtual void op5();
 
-    virtual void done(void);
+    virtual void done();
 
 
   private:
-
     CORBA::Long value_;
 
     unsigned count_op1_;

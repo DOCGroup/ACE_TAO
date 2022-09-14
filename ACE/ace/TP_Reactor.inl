@@ -41,7 +41,7 @@ ACE_EH_Dispatch_Info::set (ACE_HANDLE handle,
 }
 
 ACE_INLINE bool
-ACE_EH_Dispatch_Info::dispatch (void) const
+ACE_EH_Dispatch_Info::dispatch () const
 {
   return this->dispatch_;
 }
@@ -52,7 +52,6 @@ ACE_EH_Dispatch_Info::dispatch (void) const
 
 ACE_INLINE
 ACE_TP_Token_Guard::ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token)
-
   : token_ (token),
     owner_ (false)
 {

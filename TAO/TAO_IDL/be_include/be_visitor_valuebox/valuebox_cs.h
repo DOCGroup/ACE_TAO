@@ -29,7 +29,7 @@ public:
   be_visitor_valuebox_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_cs (void);
+  ~be_visitor_valuebox_cs ();
 
   /// visit valuebox.
   virtual int visit_valuebox (be_valuebox *node);
@@ -62,12 +62,10 @@ public:
   virtual int visit_union (be_union *node);
 
 private:
-
   /// Generate virtual destructor.
-  void emit_destructor (void);
+  void emit_destructor ();
 
   int emit_for_predef_enum (char const * marshal_arg);
-
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_CS_H_ */

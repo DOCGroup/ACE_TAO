@@ -11,19 +11,19 @@ TestServer::pass_callback (Test::TestCallback_ptr test)
 }
 
 bool
-TestServer::got_callback (void)
+TestServer::got_callback ()
 {
   return (callback_.in() != 0);
 }
 
 void
-TestServer::make_callback (void)
+TestServer::make_callback ()
 {
   callback_->test_call();
 }
 
 void
-TestServer::shutdown_client (void)
+TestServer::shutdown_client ()
 {
   callback_->shutdown();
 }

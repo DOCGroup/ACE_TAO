@@ -1,0 +1,608 @@
+commit 411b34270df0c46b051fa1da75da6116c291e856
+Merge: 61ebc40ae0d fd6a45e7696
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 15 16:19:14 2021 +0100
+
+    Merge pull request #1733 from jwillemsen/jwi-newsupdates
+    
+    List changes for 7.0.5
+
+commit fd6a45e7696f5d77e0545a4dd39dbc8805c9c0df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 15 10:38:39 2021 +0100
+
+    List changes for 7.0.5
+    
+        * ACE/NEWS:
+
+commit 69133618a86b6305310b1d2c55dce3fa2e6fa525
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 12 09:28:53 2021 +0100
+
+    Add config file for Visual Studio 2022 and add github CI action
+    
+        * ACE/ace/config-win32-msvc-143.h:
+          Added.
+    
+        * .github/workflows/windows.yml:
+        * ACE/ace/config-win32-msvc.h:
+
+commit 069d2366ec47e59371fa92d70f5e74dcb003971f
+Merge: ac7821e5587 310acc88afe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 10 13:24:37 2021 +0100
+
+    Merge pull request #1721 from jwillemsen/jwi-constchanges
+    
+    Const/layout changes
+
+commit 62a69382078670aaf06d0a284e16e06092aa3bc1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 10 13:23:59 2021 +0100
+
+    Fixed argument unused warnings
+    
+        * ACE/ace/MEM_Addr.h:
+        * ACE/ace/SPIPE_Addr.h:
+        * ACE/ace/UNIX_Addr.h:
+
+commit 310acc88afeaf696a27c7393540a24e6489ca061
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 10 10:51:37 2021 +0100
+
+    Const/layout changes
+    
+        * ACE/ace/OS_NS_stdlib.cpp:
+
+commit 330bee4fc0833c16295dd615a044735173b36687
+Merge: f89faa003e8 43002d55052
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 10 10:17:20 2021 +0100
+
+    Merge pull request #1719 from jwillemsen/jwi-memaddrwarning
+    
+    Add default assignment operators to fix gcc warnings
+
+commit 43002d5505231e9e13870d6bec044166dd86480e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 10 08:30:10 2021 +0100
+
+    Add default assignment operator to fix gcc warnings
+    
+        * ACE/ace/MEM_Addr.cpp:
+        * ACE/ace/MEM_Addr.h:
+        * ACE/ace/SPIPE_Addr.h:
+        * ACE/ace/UNIX_Addr.h:
+
+commit 3681a73b62e4642ce8269babb1bd9eb75ac09604
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 9 16:53:00 2021 +0100
+
+    Layout changes, use delete, removed redundant void
+    
+        * ACE/ace/Asynch_IO.h:
+        * ACE/ace/Dev_Poll_Reactor.h:
+        * ACE/ace/Event_Handler_Handle_Timeout_Upcall.h:
+        * ACE/ace/Future.h:
+        * ACE/ace/Get_Opt.h:
+        * ACE/ace/Hash_Map_Manager_T.h:
+        * ACE/ace/Local_Tokens.cpp:
+        * ACE/ace/Local_Tokens.h:
+        * ACE/ace/SOCK_Dgram_Mcast.h:
+        * ACE/ace/Select_Reactor_Base.h:
+
+commit a6797833fd068f5bbf9e2a0126fcddec29a9deaa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 9 16:47:11 2021 +0100
+
+    Layout/doxygen changes
+    
+        * ACE/ace/MEM_Addr.cpp:
+        * ACE/ace/UNIX_Addr.inl:
+
+commit 362919a40c8652e5465a2240d7524d1cc1aac9ac
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Tue Nov 9 16:12:24 2021 +0100
+
+    Fix signal handler warnings.
+
+commit a54dcc98cde480c8cc9fc1cfcda08f68e2ab4157
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 9 16:12:16 2021 +0100
+
+    Removed empty line
+    
+        * ACE/ace/Process.cpp:
+
+commit f4f210cf797d6d2dd4d42b480e646276f339f536
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 9 16:12:02 2021 +0100
+
+    Add assignment operator to resolve gcc warning
+    
+        * ACE/ace/MEM_Addr.cpp:
+        * ACE/ace/MEM_Addr.h:
+
+commit 16330a8f2ece9ed2a36fe5af9c7d69efb195d44c
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Nov 5 10:57:31 2021 -0500
+
+    updated ACE_TRACE logging
+
+commit 2bc264c4ebe25a8aebb0d33a19b308132864fb58
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Nov 5 10:44:46 2021 -0500
+
+    ACE_Based_Pointer is not copyable/moveable
+    
+    - use =delete instead of asserting
+    - also clean up comments and style
+
+commit fd83ab71c26234f56b7e8bfb3794c7058b923dcc
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Nov 5 08:44:08 2021 -0500
+
+    Resolve "ambiguous call to overloaded operator" with /std:c++20
+
+commit 0e2c9d980d009ace54e08a2da3ab2d57d48b5596
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Nov 5 08:25:44 2021 -0500
+
+    Reverted b01722554a69d1850c026d529e5b0a5e023961cd
+
+commit e891d97240963103798e3e78876447b171835e7e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Nov 3 13:22:47 2021 -0500
+
+    Use a using in place of a typedef
+    
+    Co-authored-by: Johnny Willemsen <jwillemsen@remedy.nl>
+
+commit b01722554a69d1850c026d529e5b0a5e023961cd
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sun Oct 31 21:07:11 2021 -0500
+
+    getting libACE to compile with /std:c++20
+    
+    avoid ambiguous calls to overloaded operators
+
+commit 9baea8b9ba5c34b5bf96f56c4852bb9824e85a3e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sun Oct 31 12:56:00 2021 -0500
+
+    ACE tests: fixed compatibility with MSVC /std:c++17
+
+commit 38932737b23d0e25dfed197b0e48137e7eea1a21
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sat Oct 30 17:22:45 2021 -0500
+
+    Add versioned namespace macros
+
+commit ee68b18b68d55a6ad9daa1e67a6ebb681ce7a7c5
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sat Oct 30 14:34:42 2021 -0500
+
+    Fix compile errors on MSVC /std:c++17
+
+commit 15ea30ccfd13c9fc1ab5ad6a833b2b82df767796
+Merge: 0c2228f586a 4f43ab1824a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 27 16:37:58 2021 +0200
+
+    Merge branch 'master' into jwi-gccwarning
+
+commit 4f43ab1824a8d6abe0a90129fb549b0c131e190c
+Merge: 80d17ac691b 0defd826ba1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 27 16:37:22 2021 +0200
+
+    Merge pull request #1707 from jwillemsen/jwi-nullptr2
+    
+    use nullptr, layout changes, const changes
+
+commit 0c2228f586a6c8fda87b707fcdaf2e861e118eff
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 27 13:38:09 2021 +0200
+
+    Make use of ACE_TString to get the subsection string to resolve gcc warning on memcpy
+    
+        * ACE/ace/Configuration.cpp:
+
+commit 0defd826ba10123edca8ade53bc34e1472b14e0b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 27 13:26:06 2021 +0200
+
+    nullptr/constexpre changes
+    
+        * ACE/ace/Configuration.cpp:
+        * ACE/tests/Config_Test.cpp:
+
+commit 9b18e1b7460c6f10feb441ae7c8e681b615b8460
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 27 10:54:30 2021 +0200
+
+    use nullptr, layout changes, const changes
+    
+        * ACE/ace/Configuration.cpp:
+        * ACE/ace/OS_NS_string.h:
+        * ACE/ace/OS_NS_string.inl:
+        * ACE/ace/String_Base.cpp:
+        * ACE/ace/String_Base.h:
+        * ACE/ace/String_Base.inl:
+
+commit bc69025e935e4d038bbc814c30eb8c1c47013e8b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 25 16:47:06 2021 +0200
+
+    Doxygen/nullptr changes
+    
+        * ACE/ace/Sig_Handler.h:
+
+commit 473aa5260db397f26786bd2fe5eab8a6f61bbb01
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 25 16:19:38 2021 +0200
+
+    Doxygen changes
+    
+        * ACE/ace/Sig_Adapter.h:
+
+commit de9c207618a405eaee7b0294d39b29b4bfd9a295
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 25 16:15:30 2021 +0200
+
+    Use override instead of virtual
+    
+        * ACE/ace/Sig_Handler.h:
+
+commit 11800a21404e49e45a85f3bd29eb8e954fbfa31d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 25 16:06:42 2021 +0200
+
+    Use nullptr instead of 0
+    
+        * ACE/ace/Signal.h:
+        * ACE/ace/Signal.inl:
+
+commit b823d4738c4d72853db6ac4382a3afd8a54eb0c1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 25 14:35:12 2021 +0200
+
+    Make use of using instead of typedef, doxygen changes, use bool instead of int
+    
+        * ACE/ace/Signal.cpp:
+        * ACE/ace/Signal.h:
+        * ACE/ace/Signal.inl:
+        * ACE/ace/os_include/os_signal.h:
+
+commit 36a9f816d472c0ba515a6a9ed3f78225994c122c
+Merge: e5b34643f7f 3b9024dd162
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 18:58:07 2021 +0200
+
+    Merge pull request #1701 from jwillemsen/jwi-signalcleanup
+    
+    Minor cleanup
+
+commit 3b9024dd16208f7f37ef545b31d6a7107bda1110
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 16:30:46 2021 +0200
+
+    Fixed errors
+    
+        * ACE/ace/SPIPE_Addr.cpp:
+        * ACE/ace/SPIPE_Addr.inl:
+        * ACE/ace/WFMO_Reactor.cpp:
+
+commit 0ab6b912c087235e5358982f4ab62dec94bf10d9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 15:43:21 2021 +0200
+
+    Corrected worker signature to resolve gcc warnings
+    
+        * ACE/tests/Reactor_Exceptions_Test.cpp:
+
+commit d183bccfeafcb9aec60bdbdd1e656011d63631c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 15:03:35 2021 +0200
+
+    Removed commented out tracing from header
+    
+        * ACE/ace/Sig_Adapter.cpp:
+
+commit bf23a25dc75514afd7d8cc66384c941cb1e63e84
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 15:01:14 2021 +0200
+
+    Initialize eh_ in the header
+    
+        * ACE/ace/Sig_Adapter.cpp:
+        * ACE/ace/Sig_Adapter.h:
+
+commit db8f5f7a497c1a6b698cba66726de20387989930
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 14:59:39 2021 +0200
+
+    Make sig_key method const
+    
+        * ACE/ace/Sig_Adapter.cpp:
+        * ACE/ace/Sig_Adapter.h:
+
+commit c53cccafe9907d2d110ae2c2055d903316b17b02
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 14:56:46 2021 +0200
+
+    Layout change
+    
+        * ACE/ace/TP_Reactor.inl:
+        * ACE/ace/WFMO_Reactor.cpp:
+
+commit 09d2c2817ef061a651026aebafa1357136b7b239
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 14:53:42 2021 +0200
+
+    Add misisng include
+    
+        * ACE/ace/SPIPE_Addr.cpp:
+
+commit 279753acc2f06be7c5cea2f7b69441d9efc0a52d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 14:43:10 2021 +0200
+
+    Fixed comments
+    
+        * ACE/ace/Sig_Handler.cpp:
+
+commit 8d65848aff96639f4149b18213511776f084f4af
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 14:31:23 2021 +0200
+
+    Use nullptr
+    
+        * ACE/ace/Signal.cpp:
+
+commit 1c0cf15330111d1ce3dc7807ff66d108487f9b78
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 14:24:49 2021 +0200
+
+    Use default
+    
+        * ACE/ace/Sig_Adapter.cpp:
+        * ACE/ace/Sig_Adapter.h:
+
+commit 574d630763362f20d6890401293ad13b6c948847
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 14:21:33 2021 +0200
+
+    Minor cleanup
+    
+        * ACE/ace/SPIPE_Addr.cpp:
+        * ACE/ace/SPIPE_Addr.inl:
+        * ACE/ace/Sig_Adapter.cpp:
+        * ACE/ace/Sig_Adapter.h:
+        * ACE/ace/WFMO_Reactor.cpp:
+        * ACE/ace/WFMO_Reactor.inl:
+
+commit fbfe8923ae50012d510b2c936e4ea8482ed252f2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 14:07:56 2021 +0200
+
+    Minor layout changes
+    
+        * ACE/apps/JAWS3/bench/rqfiles.cpp:
+        * ACE/examples/ASX/Event_Server/Transceiver/transceiver.h:
+        * ACE/examples/QOS/Change_Sender_TSpec/QoS_Signal_Handler.h:
+        * ACE/examples/Reactor/WFMO_Reactor/Console_Input.cpp:
+        * ACE/netsvcs/lib/TS_Clerk_Handler.cpp:
+
+commit f330084b3ff87d778f5c2d9cb2bb86b1bebdb7fc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 14:05:52 2021 +0200
+
+    Minor layout changes
+    
+        * ACE/ace/Process_Manager.cpp:
+        * ACE/ace/Process_Manager.h:
+        * ACE/ace/Service_Config.cpp:
+        * ACE/ace/Sig_Adapter.cpp:
+        * ACE/ace/Sig_Handler.cpp:
+        * ACE/ace/Test_and_Set.h:
+        * ACE/ace/Timer_Queue_Adapters.cpp:
+        * ACE/ace/WFMO_Reactor.cpp:
+        * ACE/ace/WFMO_Reactor.inl:
+        * ACE/apps/Gateway/Gateway/Gateway.cpp:
+        * ACE/examples/APG/Reactor/HAStatus.cpp:
+        * ACE/examples/APG/Reactor/Reschedule.cpp:
+        * ACE/examples/APG/Reactor/Schedule_Timers.cpp:
+        * ACE/examples/APG/Reactor/Timer_Cancel.cpp:
+        * ACE/examples/APG/Reactor/Timer_State_Data.cpp:
+        * ACE/examples/APG/Signals/SigGuard.cpp:
+        * ACE/examples/APG/Signals/SigHandler.cpp:
+        * ACE/examples/APG/Signals/SigInfo.cpp:
+        * ACE/examples/APG/ThreadManagement/Signals.cpp:
+        * ACE/examples/APG/ThreadManagement/Signals2.cpp:
+        * ACE/examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+        * ACE/examples/Connection/blocking/SPIPE-acceptor.cpp:
+        * ACE/examples/Connection/misc/Connection_Handler.cpp:
+        * ACE/examples/Connection/misc/Connection_Handler.h:
+        * ACE/examples/Connection/non_blocking/CPP-connector.cpp:
+        * ACE/examples/QOS/Change_Receiver_FlowSpec/QoS_Signal_Handler.h:
+        * ACE/examples/QOS/Change_Sender_TSpec/QoS_Signal_Handler.cpp:
+        * ACE/examples/QOS/Change_Sender_TSpec/QoS_Signal_Handler.h:
+        * ACE/examples/QOS/Simple/QoS_Signal_Handler.h:
+        * ACE/examples/Reactor/Misc/notification.cpp:
+        * ACE/examples/Reactor/Misc/test_demuxing.cpp:
+        * ACE/examples/Reactor/Misc/test_event_handler_t.cpp:
+        * ACE/examples/Reactor/Misc/test_signals_1.cpp:
+        * ACE/examples/Reactor/Misc/test_signals_2.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/APC.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/Abandoned.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/Directory_Changes.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/Registry_Changes.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/Talker.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+        * ACE/netsvcs/lib/TS_Clerk_Handler.h:
+        * ACE/tests/Bug_2368_Regression_Test.cpp:
+        * ACE/tests/Network_Adapters_Test.cpp:
+        * ACE/tests/Network_Adapters_Test.h:
+        * ACE/tests/Reference_Counted_Event_Handler_Test.cpp:
+
+commit c9c176cf7f50117e144581839da7c91b556586e1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 13:55:17 2021 +0200
+
+    Minor cleanup
+    
+        * ACE/ace/Sig_Handler.cpp:
+        * ACE/ace/Signal.h:
+
+commit aa58d652d4a4bb66cb15c6688c11cc4fc33fd743
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 13:49:13 2021 +0200
+
+    Minor cleanup
+    
+        * ACE/ace/Configuration.cpp:
+        * ACE/ace/Configuration.h:
+        * ACE/ace/POSIX_CB_Proactor.cpp:
+        * ACE/ace/POSIX_CB_Proactor.h:
+        * ACE/ace/Process.cpp:
+        * ACE/ace/Sig_Adapter.cpp:
+        * ACE/ace/Sig_Adapter.h:
+        * ACE/ace/Sig_Handler.h:
+        * ACE/ace/Signal.h:
+
+commit f63fd23cdbaafd7a8c17095198193421476ee9f2
+Merge: 713b686b403 affc714b380
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 23 09:58:09 2021 +0200
+
+    Merge pull request #1700 from jwillemsen/jwi-taoidl2
+    
+    Don't use strncpy in native_ch.cpp to fix compiler warning
+
+commit affc714b3808507eb0c5f451292c8fd56da032f9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 22 16:55:21 2021 +0200
+
+    Don't use strncpy in native_ch.cpp to fix compiler warning
+    Use override/default
+    
+        * ACE/ace/Event_Handler.h:
+        * TAO/TAO_IDL/be/be_array.cpp:
+        * TAO/TAO_IDL/be/be_visitor_array/any_op_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO/TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO/TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_enum/cdr_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_native/native_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_structure/structure.cpp:
+        * TAO/TAO_IDL/be_include/be_array.h:
+        * TAO/TAO_IDL/be_include/be_visitor_argument/invoke_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_argument/marshal_ss.h:
+        * TAO/TAO_IDL/be_include/be_visitor_argument/upcall_ss.h:
+        * TAO/TAO_IDL/be_include/be_visitor_argument/vardecl_ss.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/any_op_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/any_op_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/array.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/array_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/array_ci.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/array_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/cdr_op_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/cdr_op_ci.h:
+        * TAO/TAO_IDL/be_include/be_visitor_array/cdr_op_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_component/executor_exs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_component/servant_svh.h:
+        * TAO/TAO_IDL/be_include/be_visitor_component/servant_svs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_enum/any_op_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_enum/cdr_op_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_enum/enum_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_enum/enum_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_native/native_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_sequence/cdr_op_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_structure/any_op_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_structure/any_op_cs.h:
+        * TAO/TAO_IDL/be_include/be_visitor_structure/cdr_op_ch.h:
+        * TAO/TAO_IDL/be_include/be_visitor_structure/structure.h:
+        * TAO/TAO_IDL/include/ast_concrete_type.h:
+        * TAO/TAO_IDL/include/ast_type.h:
+        * TAO/TAO_IDL/util/utl_exceptlist.cpp:
+
+commit 713b686b4039ad41033296c6b23a7ad1a62c69b8
+Merge: 8a289d150ee a1665e92f0b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 13 08:55:24 2021 +0200
+
+    Merge pull request #1699 from jwillemsen/jwi-defaultdestructor
+    
+    Make use of default destructor
+
+commit a1665e92f0b6ac02552b0f3d5e6474260d0f2608
+Merge: 59faca13303 cc290bf7f20
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 12 16:01:59 2021 +0200
+
+    Merge branch 'master' into jwi-defaultdestructor
+
+commit cc290bf7f2023fe5ceb8834d5eac300e9cfb8522
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 12 16:01:41 2021 +0200
+
+    Make use of default destructor
+    
+        * ACE/ace/Local_Tokens.cpp:
+        * ACE/ace/Local_Tokens.h:
+
+commit 59faca133037343c33432677bd5cd5eec72aa522
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 12 15:59:10 2021 +0200
+
+    Make use of default destructor
+    
+        * ACE/ace/Barrier.inl:
+          Deleted.
+    
+        * ACE/ace/Barrier.cpp:
+        * ACE/ace/Barrier.h:
+        * ACE/ace/Base_Thread_Adapter.cpp:
+        * ACE/ace/Base_Thread_Adapter.h:
+        * ACE/ace/Compression/Compressor.cpp:
+        * ACE/ace/Compression/Compressor.h:
+
+commit 9084da95c561f11fc84e449e4e19324eecddda1e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 12 15:56:08 2021 +0200
+
+    Use default destructor
+    
+        * ACE/ASNMP/asnmp/oid.cpp:
+        * ACE/ace/ATM_Addr.cpp:
+        * ACE/ace/ATM_Addr.h:
+        * ACE/ace/Asynch_IO.cpp:
+        * ACE/ace/Asynch_IO.h:
+        * ACE/ace/MEM_Addr.cpp:
+        * ACE/ace/MEM_Addr.h:
+        * TAO/tests/OctetSeq/README:
+
+commit dbd98a476910b9c1a6745db560f57b02525dddeb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 1 09:38:36 2021 +0200
+
+    Make x.0.4 public available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

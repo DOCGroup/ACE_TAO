@@ -15,13 +15,13 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 
-Object_A_Server::Object_A_Server (void)
+Object_A_Server::Object_A_Server ()
   : ior_output_file_ (0)
 {
 }
 
 int
-Object_A_Server::parse_args (void)
+Object_A_Server::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("do:"));
   int c;
@@ -88,7 +88,7 @@ Object_A_Server::init (int argc,
 
 
 int
-Object_A_Server::run (void)
+Object_A_Server::run ()
 {
   int r = this->orb_manager_.run ();
 
@@ -99,7 +99,7 @@ Object_A_Server::run (void)
   return 0;}
 
 
-Object_A_Server::~Object_A_Server (void)
+Object_A_Server::~Object_A_Server ()
 {
 }
 

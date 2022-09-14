@@ -15,18 +15,18 @@ TAO_EC_ConsumerAdmin::TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel_Base *ec)
     this->event_channel_->consumer_poa ();
 }
 
-TAO_EC_ConsumerAdmin::~TAO_EC_ConsumerAdmin (void)
+TAO_EC_ConsumerAdmin::~TAO_EC_ConsumerAdmin ()
 {
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_EC_ConsumerAdmin::obtain_push_supplier (void)
+TAO_EC_ConsumerAdmin::obtain_push_supplier ()
 {
   return this->obtain ();
 }
 
 PortableServer::POA_ptr
-TAO_EC_ConsumerAdmin::_default_POA (void)
+TAO_EC_ConsumerAdmin::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }

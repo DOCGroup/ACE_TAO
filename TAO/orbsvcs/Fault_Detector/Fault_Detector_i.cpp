@@ -165,7 +165,6 @@ void TAO::Fault_Detector_i::notify()
       this->notifier_->push_structured_fault(vEvent.in());
       if (TAO_debug_level > 5)
       {
-
         ORBSVCS_ERROR ((LM_ERROR,
         "return from Fault Detector push Structured Event.\n"
         ));

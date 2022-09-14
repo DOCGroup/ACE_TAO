@@ -113,7 +113,7 @@ ACE_Tokenizer_T<ACE_CHAR_T>::is_preserve_designator (ACE_CHAR_T start,
 
 template <class ACE_CHAR_T>
 ACE_CHAR_T *
-ACE_Tokenizer_T<ACE_CHAR_T>::next (void)
+ACE_Tokenizer_T<ACE_CHAR_T>::next ()
 {
   // Check if the previous pass was the last one in the buffer.
   if (index_ == -1)

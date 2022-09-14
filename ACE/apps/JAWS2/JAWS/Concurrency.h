@@ -29,11 +29,11 @@ class JAWS_Export JAWS_Concurrency_Base : public ACE_Task<ACE_SYNCH>
 
 {
 public:
-  JAWS_Concurrency_Base (void);
-  ~JAWS_Concurrency_Base (void);
+  JAWS_Concurrency_Base ();
+  ~JAWS_Concurrency_Base ();
 
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual int svc_loop (JAWS_Data_Block *db);
   // in thread pool, this is an infinite loop
@@ -42,10 +42,10 @@ public:
   virtual int svc_hook (JAWS_Data_Block *db);
   // does the work of following the pipeline tasks
 
-  virtual int activate_hook (void);
+  virtual int activate_hook ();
   // callback for IO_Handler when accept completes
 
-  virtual ACE_Message_Block *singleton_mb (void);
+  virtual ACE_Message_Block *singleton_mb ();
 
 protected:
   int mb_acquired_;
@@ -64,10 +64,10 @@ class JAWS_Export JAWS_Dispatcher
   //     IO can find a thread to take care of it.
 {
 public:
-  JAWS_Dispatcher (void);
+  JAWS_Dispatcher ();
 
   int dispatch (ACE_Message_Block *mb);
-  JAWS_Dispatch_Policy *policy (void);
+  JAWS_Dispatch_Policy *policy ();
   JAWS_Dispatch_Policy *policy (JAWS_Dispatch_Policy *p);
 
 private:
@@ -110,7 +110,7 @@ public:
   virtual int svc_loop (JAWS_Data_Block *db);
   // a single iteration
 
-  virtual int activate_hook (void);
+  virtual int activate_hook ();
   // callback for IO_Handler when accept completes
 
 private:

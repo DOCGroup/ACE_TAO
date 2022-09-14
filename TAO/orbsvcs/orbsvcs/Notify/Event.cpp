@@ -14,7 +14,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Event::TAO_Notify_Event (void)
+TAO_Notify_Event::TAO_Notify_Event ()
 : priority_ (CosNotification::Priority, CosNotification::DefaultPriority)
 , timeout_ (CosNotification::Timeout)
 , reliable_ (CosNotification::EventReliability, true)
@@ -32,7 +32,7 @@ TAO_Notify_Event::~TAO_Notify_Event ()
   //  ORBSVCS_DEBUG ((LM_DEBUG,"event:%x  destroyed\n", this ));
 }
 void
-TAO_Notify_Event::release (void)
+TAO_Notify_Event::release ()
 {
   delete this;
 }

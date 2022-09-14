@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_stat.h"
@@ -25,8 +24,6 @@
 #include "ace/Lib_Find.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
-
-
 
 #if !defined (ACE_LACKS_MKFIFO)
 
@@ -182,7 +179,7 @@ server (void *arg)
 }
 
 static int
-test_fifo_msg (void)
+test_fifo_msg ()
 {
   // Reader side opens first - it may fail if fifo not supported on this
   // platform.

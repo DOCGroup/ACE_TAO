@@ -1441,7 +1441,7 @@ Wed Nov 27 22:38:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
         * ace/Connector.h:
         * ace/Connector.cpp: Fix for BUG 1361. Please see
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1361 for
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1361 for
           more details on the problem.
 
           The fix is based on the assumption that ACE_Connector need not
@@ -1942,7 +1942,7 @@ Wed Nov 13 16:52:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 Tue Nov 12 14:12:59 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
         This is a hackish fix for BUG 1361. Please see
-        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1361
+        http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1361
         for details of this problem
 
         * ace/TP_Reactor.cpp (handle_socket_events): A hack to prevent
@@ -4493,7 +4493,7 @@ Wed Sep 11 13:03:48 2002  Carlos O'Ryan  <coryan@atdesk.com>
           Check the suspend mask before completely forgetting about a
           handle, otherwise things do not work correctly with TP_Reactors
           and multiply-registered handlers.  This fixes:
-            http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1306
+            http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1306
 
 Tue Sep 10 17:46:51 2002  Steve Huston  <shuston@riverace.com>
 
@@ -4531,14 +4531,14 @@ Tue Sep 10 12:32:33 2002  Carlos O'Ryan  <coryan@atdesk.com>
         * ace/Connector.cpp:
           Be more informative in error messages, at least report in what
           library, class and function was the error detected.  This fixes:
-            http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1304
+            http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1304
 
 Tue Sep 10 12:28:41 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
         * ace/Connector.cpp:
           Be more paranoid about using AST's returned from cleanup_AST()
           and always check the return value of that function.  This fixes:
-            http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1303
+            http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1303
 
 Mon Sep  9 16:44:00 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
@@ -7061,7 +7061,7 @@ Sat Jul 06 19:32:40 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
           created problems in builds where inlining was diabled. Please
           see
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1240 for
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1240 for
           more details. Thanks to Marina Spivak <marina@atdesk.com> for
           reporting this.
 

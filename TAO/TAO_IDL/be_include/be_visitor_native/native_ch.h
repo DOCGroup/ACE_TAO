@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_NATIVE_NATIVE_CH_H_
 #define _BE_VISITOR_NATIVE_NATIVE_CH_H_
 
@@ -19,19 +18,19 @@
  *
  * @brief be_visitor_native_ch
  *
- * This is the base visitor for enum for the header file
+ * This is the base visitor for native for the header file
  */
 class be_visitor_native_ch : public be_visitor_scope
 {
 public:
-  /// conenumor
+  /// constructor
   be_visitor_native_ch (be_visitor_context *ctx);
 
-  /// deenumor
-  ~be_visitor_native_ch (void);
+  /// destructor
+  ~be_visitor_native_ch () override = default;
 
   /// visit native.
-  virtual int visit_native (be_native *node);
+  int visit_native (be_native *node) override;
 };
 
 #endif /* _BE_VISITOR_NATIVE_NATIVE_CH_H_ */

@@ -11,7 +11,7 @@
 #include "jaws3/Options.h"
 
 
-JAWS_THYBRID_Concurrency::JAWS_THYBRID_Concurrency (void)
+JAWS_THYBRID_Concurrency::JAWS_THYBRID_Concurrency ()
   : getting_ (0)
   , min_number_of_threads_ (1)
   , max_number_of_threads_ (-1)

@@ -8,7 +8,7 @@ Session_Task::Session_Task (Session *session)
 }
 
 int
-Session_Task::svc (void)
+Session_Task::svc ()
 {
   return this->session_->svc ();
 }

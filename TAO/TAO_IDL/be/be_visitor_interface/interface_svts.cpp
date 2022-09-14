@@ -18,7 +18,7 @@ be_visitor_interface_svts::be_visitor_interface_svts (
 {
 }
 
-be_visitor_interface_svts::~be_visitor_interface_svts (void)
+be_visitor_interface_svts::~be_visitor_interface_svts ()
 {
 }
 
@@ -42,7 +42,7 @@ int
 be_visitor_interface_svts::visit_operation (be_operation *node)
 {
   be_visitor_operation_svs v (this->ctx_);
-  v.scope (be_interface::narrow_from_decl (
+  v.scope (dynamic_cast<be_interface*> (
              this->ctx_->scope ()->decl ()));
 
   return v.visit_operation (node);
@@ -54,7 +54,7 @@ be_visitor_interface_svts::visit_attribute (be_attribute *node)
   be_visitor_attribute v (this->ctx_);
 
   v.for_facets (true);
-  v.op_scope (be_interface::narrow_from_decl (
+  v.op_scope (dynamic_cast<be_interface*> (
                 this->ctx_->scope ()->decl ()));
 
   return v.visit_attribute (node);

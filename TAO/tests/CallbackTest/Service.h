@@ -17,7 +17,7 @@ public:
   /**
    * In case of failure this exposes any incomplete runs.
    */
-  void dump_results (void);
+  void dump_results ();
 
   // = The skeleton methods
   virtual void run_test (Test::Callback_ptr callback);

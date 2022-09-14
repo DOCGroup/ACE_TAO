@@ -27,7 +27,7 @@ be_eventtype::be_eventtype (UTL_ScopedName *n,
                             bool abstract,
                             bool truncatable,
                             bool custom)
-  : COMMON_Base (0,
+  : COMMON_Base (false,
                  abstract),
     AST_Decl (AST_Decl::NT_eventtype,
               n),
@@ -39,7 +39,7 @@ be_eventtype::be_eventtype (UTL_ScopedName *n,
                    n_inherits,
                    inherits_flat,
                    n_inherits_flat,
-                   0,
+                   false,
                    abstract),
     be_scope (AST_Decl::NT_eventtype),
     be_decl (AST_Decl::NT_eventtype,
@@ -51,7 +51,7 @@ be_eventtype::be_eventtype (UTL_ScopedName *n,
                   n_inherits,
                   inherits_flat,
                   n_inherits_flat,
-                  0,
+                  false,
                   abstract),
     AST_ValueType (n,
                    inherits,
@@ -92,7 +92,7 @@ be_eventtype::be_eventtype (UTL_ScopedName *n,
 {
 }
 
-be_eventtype::~be_eventtype (void)
+be_eventtype::~be_eventtype ()
 {
 }
 
@@ -107,12 +107,7 @@ be_eventtype::accept (be_visitor *visitor)
 }
 
 void
-be_eventtype::destroy (void)
+be_eventtype::destroy ()
 {
   this->be_valuetype::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_eventtype)
-IMPL_NARROW_FROM_SCOPE (be_eventtype)

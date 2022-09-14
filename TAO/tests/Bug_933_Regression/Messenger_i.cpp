@@ -6,7 +6,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 {
 }
 
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 
@@ -52,7 +52,7 @@ Messenger_i::send_message (const CORBA::OctetSeq & user_name)
 }
 
 void
-Messenger_i::shutdown (void)
+Messenger_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -37,7 +37,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 PortableServer::POA_ptr
 createPersistentPOA(PortableServer::POA_ptr root_poa,
                     const char* poa_name) {
-
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
 

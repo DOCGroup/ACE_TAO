@@ -96,7 +96,6 @@ namespace TAO
      */
     int have_replication_manager_;
   };
-
 } // namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 

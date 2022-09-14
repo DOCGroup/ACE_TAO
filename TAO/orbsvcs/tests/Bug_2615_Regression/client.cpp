@@ -6,7 +6,6 @@
 #include "Hello.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://ior.ior");
 const ACE_TCHAR *iogr = ACE_TEXT("file://iogr.ior");
 

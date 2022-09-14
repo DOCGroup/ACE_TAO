@@ -3,7 +3,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_INET_Addr&
-TAO_UIPMC_Acceptor::address (void) const
+TAO_UIPMC_Acceptor::address () const
 {
   ACE_ASSERT (this->addrs_ != 0);
 

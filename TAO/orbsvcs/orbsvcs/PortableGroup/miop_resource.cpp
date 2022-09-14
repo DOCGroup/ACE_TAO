@@ -9,7 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_MIOP_Resource_Factory::TAO_MIOP_Resource_Factory (void)
+TAO_MIOP_Resource_Factory::TAO_MIOP_Resource_Factory ()
   : fragments_cleanup_strategy_type_ (TAO_MIOP_CLEANUP_TIME_BOUND)
   , fragments_cleanup_bound_   (-1)
   , fragments_cleanup_strategy_ (0)
@@ -24,7 +24,7 @@ TAO_MIOP_Resource_Factory::TAO_MIOP_Resource_Factory (void)
 {
 }
 
-TAO_MIOP_Resource_Factory::~TAO_MIOP_Resource_Factory (void)
+TAO_MIOP_Resource_Factory::~TAO_MIOP_Resource_Factory ()
 {
   delete this->fragments_cleanup_strategy_;
 }
@@ -284,7 +284,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 }
 
 TAO_PG::Fragments_Cleanup_Strategy *
-TAO_MIOP_Resource_Factory::fragments_cleanup_strategy (void) const
+TAO_MIOP_Resource_Factory::fragments_cleanup_strategy () const
 {
   if (this->fragments_cleanup_strategy_ == 0)
     {
@@ -330,19 +330,19 @@ TAO_MIOP_Resource_Factory::fragments_cleanup_strategy (void) const
 }
 
 u_long
-TAO_MIOP_Resource_Factory::max_fragment_size (void) const
+TAO_MIOP_Resource_Factory::max_fragment_size () const
 {
   return this->max_fragment_size_;
 }
 
 u_long
-TAO_MIOP_Resource_Factory::max_fragments (void) const
+TAO_MIOP_Resource_Factory::max_fragments () const
 {
   return this->max_fragments_;
 }
 
 u_long
-TAO_MIOP_Resource_Factory::max_fragment_rate (void) const
+TAO_MIOP_Resource_Factory::max_fragment_rate () const
 {
   // If "max_fragment_rate_" is not specified (i.e. zero)
   // use the same value as "max_fragment_size_".
@@ -352,31 +352,31 @@ TAO_MIOP_Resource_Factory::max_fragment_rate (void) const
 }
 
 u_long
-TAO_MIOP_Resource_Factory::send_hi_water_mark (void) const
+TAO_MIOP_Resource_Factory::send_hi_water_mark () const
 {
   return this->send_hi_water_mark_;
 }
 
 u_long
-TAO_MIOP_Resource_Factory::send_buffer_size (void) const
+TAO_MIOP_Resource_Factory::send_buffer_size () const
 {
   return send_buffer_size_;
 }
 
 u_long
-TAO_MIOP_Resource_Factory::receive_buffer_size (void) const
+TAO_MIOP_Resource_Factory::receive_buffer_size () const
 {
   return receive_buffer_size_;
 }
 
 bool
-TAO_MIOP_Resource_Factory::enable_throttling (void) const
+TAO_MIOP_Resource_Factory::enable_throttling () const
 {
   return enable_throttling_;
 }
 
 bool
-TAO_MIOP_Resource_Factory::enable_eager_dequeue (void) const
+TAO_MIOP_Resource_Factory::enable_eager_dequeue () const
 {
   return enable_eager_dequeue_;
 }

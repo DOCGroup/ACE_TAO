@@ -184,10 +184,10 @@ UTL_String::get_canonical_rep (ACE_CString &cstr)
 
 //////////////////////////////////////////////////////////////////////
 
-UTL_String::UTL_String (void)
+UTL_String::UTL_String ()
   : copy_taken (false),
-    p_str      (0),
-    c_str      (0)
+    p_str      (nullptr),
+    c_str      (nullptr)
 {
 }
 
@@ -195,7 +195,7 @@ UTL_String::UTL_String (const char *str, bool take_copy)
   : copy_taken (str ? take_copy : false),
     p_str      (this->copy_taken ? ACE::strnew (str)
                                  : const_cast<char *>(str)),
-    c_str      (0)
+    c_str      (nullptr)
 {
 }
 
@@ -203,11 +203,11 @@ UTL_String::UTL_String (UTL_String *s, bool force_copy)
   : copy_taken (force_copy ? true : s->copy_taken),
     p_str      (this->copy_taken ? ACE::strnew (s->p_str)
                                  : const_cast<char *> (s->p_str)),
-    c_str      (0)
+    c_str      (nullptr)
 {
 }
 
-UTL_String::~UTL_String (void)
+UTL_String::~UTL_String ()
 {
   delete [] this->c_str;
   if (copy_taken)
@@ -217,16 +217,16 @@ UTL_String::~UTL_String (void)
 }
 
 void
-UTL_String::destroy (void)
+UTL_String::destroy ()
 {
   delete [] this->c_str;
-  this->c_str = 0;
+  this->c_str = nullptr;
   if (this->copy_taken)
     {
        ACE::strdelete (this->p_str);
-       this->copy_taken = 0;
+       this->copy_taken = false;
     }
-  this->p_str = 0;
+  this->p_str = nullptr;
 }
 
 // Compare two UTL_String *.
@@ -246,7 +246,7 @@ UTL_String::compare_quiet (UTL_String *s)
 
 // Get the canonical representation from a String.
 char *
-UTL_String::get_canonical_rep (void)
+UTL_String::get_canonical_rep ()
 {
   if (!this->c_str && this->p_str)
     {

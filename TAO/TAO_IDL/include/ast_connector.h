@@ -9,22 +9,17 @@ class TAO_IDL_FE_Export AST_Connector
   : public virtual AST_Component
 {
 public:
-  AST_Connector (void);
+  AST_Connector ();
 
   AST_Connector (UTL_ScopedName *n,
                  AST_Connector *base_connector);
 
-  virtual ~AST_Connector (void);
+  virtual ~AST_Connector ();
 
-  AST_Connector *base_connector (void) const;
+  AST_Connector *base_connector () const;
 
   // Cleanup function.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (AST_Connector);
-  DEF_NARROW_FROM_SCOPE (AST_Connector);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);

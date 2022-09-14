@@ -16,7 +16,7 @@ Identity_i::Identity_i (const char *name)
 {
 }
 
-Identity_i::~Identity_i (void)
+Identity_i::~Identity_i ()
 {
 }
 

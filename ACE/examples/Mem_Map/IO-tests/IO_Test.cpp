@@ -14,12 +14,12 @@ IO_Test::IO_Test (const char *name,
 {
 }
 
-IO_Test::~IO_Test (void)
+IO_Test::~IO_Test ()
 {
 }
 
 const char *
-IO_Test::name (void)
+IO_Test::name ()
 {
   return this->name_;
 }

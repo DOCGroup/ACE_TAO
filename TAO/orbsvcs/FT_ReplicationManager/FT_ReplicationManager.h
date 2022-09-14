@@ -77,7 +77,6 @@ namespace TAO
   class FT_ReplicationManager
     : public virtual POA_FT::ReplicationManager
   {
-
     //////////////////////
     // non-CORBA interface
 
@@ -95,7 +94,6 @@ namespace TAO
     virtual ~FT_ReplicationManager ();
 
   public:
-
     /**
      * Parse command line arguments.
      * @param argc traditional C argc
@@ -115,7 +113,7 @@ namespace TAO
      * Prepare to exit.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (void);
+    int fini ();
 
     /**
      * Idle-time activity.
@@ -144,14 +142,12 @@ namespace TAO
   // CORBA interface(s)
 
   public:
-
     /**
     * @name POA_FT::ReplicationManager Methods
     *
     * Methods required by the POA_FT::ReplicationManager interface.
     */
     //@{
-
     /// Registers the Fault Notifier with the Replication Manager.
     virtual void register_fault_notifier (
         FT::FaultNotifier_ptr fault_notifier);
@@ -174,7 +170,6 @@ namespace TAO
     * Methods required by the PortableGroup::PropertyManager interface.
     */
     //@{
-
     /// Set the default properties to be used by all object groups.
     virtual void set_default_properties (
         const PortableGroup::Properties & props);
@@ -236,7 +231,6 @@ namespace TAO
      * interface.
      */
     //@{
-
     /// Create a member in an object group.
     virtual PortableGroup::ObjectGroup_ptr create_member (
         PortableGroup::ObjectGroup_ptr object_group,
@@ -314,7 +308,6 @@ namespace TAO
      * Methods required by the PortableGroup::GenericFactory interface.
      */
     //@{
-
     /**
      * Create an object of the specified type that adheres to the
      * restrictions defined by the provided Criteria.  The out
@@ -349,7 +342,7 @@ namespace TAO
     /**
      * Write this factory's IOR to a file
      */
-    int write_ior (void);
+    int write_ior ();
 
     /// Registers the Fault Notifier with the Replication Manager.
     void register_fault_notifier_i (
@@ -364,7 +357,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /// The orb
     CORBA::ORB_var orb_;
 
@@ -405,7 +397,6 @@ namespace TAO
     /// Quit flag.
     int quit_;
   };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

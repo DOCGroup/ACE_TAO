@@ -14,11 +14,11 @@ static const ACEXML_Char ACEXML_TABOO_NS_PREFIX[] = ACE_TEXT ("xml");
 static const ACEXML_Char ACEXML_XMLNS_URI_name[] = ACE_TEXT ("http://www.w3.org/XML/1998/namespace");
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS = ACEXML_XMLNS_URI_name;
 
-ACEXML_Namespace_Context_Stack::ACEXML_Namespace_Context_Stack (void)
+ACEXML_Namespace_Context_Stack::ACEXML_Namespace_Context_Stack ()
 {
 }
 
-ACEXML_Namespace_Context_Stack::~ACEXML_Namespace_Context_Stack (void)
+ACEXML_Namespace_Context_Stack::~ACEXML_Namespace_Context_Stack ()
 {
   // Clean up stuff.
 }
@@ -30,7 +30,7 @@ ACEXML_Namespace_Context_Stack::push (ACEXML_NS_CONTEXT *nsc)
 }
 
 ACEXML_NS_CONTEXT *
-ACEXML_Namespace_Context_Stack::pop (void)
+ACEXML_Namespace_Context_Stack::pop ()
 {
   if (this->stack_.size() <= 0)
     return 0;
@@ -46,7 +46,7 @@ ACEXML_Namespace_Context_Stack::pop (void)
 }
 
 int
-ACEXML_NamespaceSupport::popContext (void)
+ACEXML_NamespaceSupport::popContext ()
 {
   delete this->effective_context_;
 
@@ -56,7 +56,7 @@ ACEXML_NamespaceSupport::popContext (void)
 }
 
 int
-ACEXML_NamespaceSupport::pushContext (void)
+ACEXML_NamespaceSupport::pushContext ()
 {
   ACEXML_NS_CONTEXT *temp = this->effective_context_;
   ACE_NEW_RETURN (this->effective_context_,
@@ -75,13 +75,13 @@ ACEXML_NamespaceSupport::pushContext (void)
   return 0;
 }
 
-ACEXML_NamespaceSupport::ACEXML_NamespaceSupport (void)
+ACEXML_NamespaceSupport::ACEXML_NamespaceSupport ()
   : ns_stack_ (),
     effective_context_ (0)
 {}
 
 int
-ACEXML_NamespaceSupport::init (void)
+ACEXML_NamespaceSupport::init ()
 {
   // @@ No way to tell if the new fails.
   ACE_NEW_RETURN (effective_context_, ACEXML_NS_CONTEXT(), -1);
@@ -91,7 +91,7 @@ ACEXML_NamespaceSupport::init (void)
   return this->effective_context_->bind (prefix, uri);
 }
 
-ACEXML_NamespaceSupport::~ACEXML_NamespaceSupport (void)
+ACEXML_NamespaceSupport::~ACEXML_NamespaceSupport ()
 {
   while (this->popContext () == 0)
     ;
@@ -238,7 +238,7 @@ ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
 }
 
 int
-ACEXML_NamespaceSupport::reset (void)
+ACEXML_NamespaceSupport::reset ()
 {
   while (this->popContext() != -1)
     ;

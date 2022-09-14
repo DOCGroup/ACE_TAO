@@ -12,8 +12,8 @@
 
 #if defined (TAO_HAS_NOTIFICATION_MONITOR_CONTROL) && defined (TAO_AS_STATIC_LIBS)
 // for static builds, be sure the library is included
-#include "orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.h"
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h"
+#include "orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.h"
+#include "orbsvcs/Notify/MonitorControl/MonitorManager.h"
 #endif
 
 #if defined (TAO_EXPLICIT_NEGOTIATE_CODESETS)
@@ -31,7 +31,7 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Logging_Strategy.h"
 
-TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
+TAO_Notify_Service_Driver::TAO_Notify_Service_Driver ()
 : notify_service_ (0)
 , bootstrap_ (false)
 , use_name_svc_ (true)
@@ -47,7 +47,7 @@ TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
 {
 }
 
-TAO_Notify_Service_Driver::~TAO_Notify_Service_Driver (void)
+TAO_Notify_Service_Driver::~TAO_Notify_Service_Driver ()
 {
 }
 
@@ -335,7 +335,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-TAO_Notify_Service_Driver::resolve_naming_service (void)
+TAO_Notify_Service_Driver::resolve_naming_service ()
 {
   try
     {
@@ -366,7 +366,7 @@ TAO_Notify_Service_Driver::resolve_naming_service (void)
 }
 
 int
-TAO_Notify_Service_Driver::run (void)
+TAO_Notify_Service_Driver::run ()
 {
   if (TAO_debug_level > 0 )
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -388,7 +388,7 @@ TAO_Notify_Service_Driver::run (void)
 }
 
 int
-TAO_Notify_Service_Driver::fini (void)
+TAO_Notify_Service_Driver::fini ()
 {
   /// Release all the _vars as the ORB about to go away.
   CosNotifyChannelAdmin::EventChannelFactory_var factory =
@@ -689,7 +689,7 @@ LoggingWorker::start ()
 }
 
 int
-LoggingWorker::svc (void)
+LoggingWorker::svc ()
 {
   if (TAO_debug_level > 0)
     {
@@ -719,7 +719,7 @@ LoggingWorker::end ()
     }
 }
 
-Worker::Worker (void)
+Worker::Worker ()
 {
 }
 
@@ -730,7 +730,7 @@ Worker::orb (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
 #if 0
   // ACE_Thread::getprio() fails on systems that do not support thread

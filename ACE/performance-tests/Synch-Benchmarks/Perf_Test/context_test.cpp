@@ -7,11 +7,11 @@
 class ACE_Svc_Export Context_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 int
-Context_Test::svc (void)
+Context_Test::svc ()
 {
   int ni = this->thr_id ();
 

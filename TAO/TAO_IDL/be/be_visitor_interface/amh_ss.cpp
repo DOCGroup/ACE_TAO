@@ -16,7 +16,7 @@ be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (
 {
 }
 
-be_visitor_amh_interface_ss::~be_visitor_amh_interface_ss (void)
+be_visitor_amh_interface_ss::~be_visitor_amh_interface_ss ()
 {
 }
 
@@ -38,7 +38,7 @@ int
 be_visitor_amh_interface_ss::visit_interface (be_interface *node)
 {
   // Do not generate AMH classes for any sort of implied IDL.
-  if (node->original_interface () != 0)
+  if (node->original_interface () != nullptr)
     {
       return 0;
     }
@@ -61,17 +61,16 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << non_amh_name.c_str () << "*" << be_nl
       << full_skel_name
-      << "::_this (void)" << be_nl
+      << "::_this ()" << be_nl
       << "{" << be_idt_nl
       << "TAO_Stub *stub = this->_create_stub ();" << be_nl_2;
 
   *os << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl
-      << "::CORBA::Object_ptr tmp = CORBA::Object_ptr ();" << be_nl
+      << "::CORBA::Object_ptr tmp {};" << be_nl
       << be_nl
       << "::CORBA::Boolean _tao_opt_colloc =" << be_idt_nl
       << "stub->servant_orb_var ()->orb_core ()->"
@@ -79,7 +78,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
       << "tmp," << be_nl
       << "::CORBA::Object (stub, _tao_opt_colloc, this)," << be_nl
-      << "0" << be_uidt_nl
+      << "nullptr" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   *os << "::CORBA::Object_var obj = tmp;" << be_nl
@@ -100,7 +99,6 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
 
   *os << be_uidt << be_uidt_nl
       << "}";
-
 }
 
 void
@@ -112,8 +110,7 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "void" << be_nl
       << full_skel_name << "::_dispatch (" << be_idt << be_idt_nl
@@ -157,7 +154,7 @@ public:
 };
 
 TAO_IDL_Downcast_Implementation_Worker::
-TAO_IDL_Downcast_Implementation_Worker (void)
+TAO_IDL_Downcast_Implementation_Worker ()
 {
 }
 
@@ -173,7 +170,7 @@ emit (be_interface * /* derived */,
   ACE_CString amh_name ("POA_");
 
   // @@ The following code is *NOT* exception-safe.
-  char *buf = 0;
+  char *buf = nullptr;
   base->compute_full_name ("AMH_", "", buf);
   amh_name += buf;
   // buf was allocated using ACE_OS::strdup, so we must use free instead
@@ -194,14 +191,14 @@ class TAO_IDL_Copy_Ctor_Worker
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  TAO_IDL_Copy_Ctor_Worker (void);
+  TAO_IDL_Copy_Ctor_Worker ();
 
   virtual int emit (be_interface *base,
                     TAO_OutStream *os,
                     be_interface *derived);
 };
 
-TAO_IDL_Copy_Ctor_Worker::TAO_IDL_Copy_Ctor_Worker (void)
+TAO_IDL_Copy_Ctor_Worker::TAO_IDL_Copy_Ctor_Worker ()
 {
 }
 
@@ -219,8 +216,8 @@ TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,
 
   if (base->is_nested ())
     {
-      be_decl *scope = 0;
-      scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
+      be_decl *scope = nullptr;
+      scope = dynamic_cast<be_scope*> (base->defined_in ())->decl ();
 
       *os << "POA_" << scope->name () << "::AMH_"
           << base->local_name () << " (rhs)";
@@ -233,7 +230,7 @@ TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,
       ACE_CString amh_name ("POA_");
 
       // @@ The following code is *NOT* exception-safe.
-      char *buf = 0;
+      char *buf = nullptr;
       base->compute_full_name ("AMH_", "", buf);
       amh_name += buf;
       // buf was allocated by ACE_OS::strdup, so we need to use free
@@ -275,7 +272,7 @@ ACE_CString
 be_visitor_amh_interface_ss::generate_flat_name (be_interface *node)
 {
   // @@ The following code is *NOT* exception-safe.
-  char *buf = 0;
+  char *buf = nullptr;
   node->compute_flat_name ("AMH_", "", buf);
 
   // @@ This whole thing would be more efficient if we could pass the
@@ -306,7 +303,7 @@ be_visitor_amh_interface_ss::generate_full_skel_name (be_interface *node)
   ACE_CString result ("POA_");
 
   // @@ The following code is *NOT* exception-safe.
-  char *buf = 0;
+  char *buf = nullptr;
   node->compute_full_name ("AMH_", "", buf);
   result += buf;
   // buf was allocated using ACE_OS::strdup, so we must use free instead

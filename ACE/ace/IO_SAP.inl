@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_IO_SAP::~ACE_IO_SAP (void)
+ACE_IO_SAP::~ACE_IO_SAP ()
 {
   ACE_TRACE ("ACE_IO_SAP::~ACE_IO_SAP");
 }
@@ -12,7 +12,7 @@ ACE_IO_SAP::~ACE_IO_SAP (void)
 // Used to return the underlying handle_.
 
 ACE_INLINE ACE_HANDLE
-ACE_IO_SAP::get_handle (void) const
+ACE_IO_SAP::get_handle () const
 {
   ACE_TRACE ("ACE_IO_SAP::get_handle");
   return this->handle_;

@@ -12,7 +12,7 @@ MessageImpl::MessageImpl (const char *user, const char *subject, const char *tex
 }
 
 ::CORBA::ValueBase *
-MessageImpl::_copy_value (void)
+MessageImpl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
   ACE_NEW_THROW_EX (

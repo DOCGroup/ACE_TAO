@@ -679,7 +679,7 @@ components. <P>
 
   <li><p>If you don't want the application users to worry about
       setting up or knowing about <code>svc.conf</code> files, you can
-      call <code>TAO_Internal::default_svc_conf_entries()</code>
+      call <code>TAO::ORB::default_svc_conf_entries()</code>
       before calling the first <code>ORB_init()</code> in your program
       to set up the default svc.conf entries.  In this case, if a TAO
       application cannot find a svc.conf file, it will configure TAO's
@@ -696,7 +696,7 @@ components. <P>
             <code>svc.conf</code> in the start-up directory will be
             evaluated, if one exist.
         <li>Default entries set by
-            <code>TAO_Internal::default_svc_conf_entries()</code>, if
+            <code>TAO::ORB::default_svc_conf_entries()</code>, if
             ones exist.
         <li>Default configuration as specified in <a
             href="Options.html">this document</a>.
@@ -706,7 +706,7 @@ components. <P>
       always the ones take effect.  For example, if you set the entries
       for <code>Resource_Factory</code> and
       <code>Server_Strategy_Factory</code> using
-      <code>TAO_Internal::default_svc_conf_entries()</code> in a
+      <code>TAO::ORB::default_svc_conf_entries()</code> in a
       program and you also have a file called <code>svc.conf</code>
       which has an entry for <code>Resource_Factory</code>.  This
       program will use the entry for <code>Resource_Factory</code> in

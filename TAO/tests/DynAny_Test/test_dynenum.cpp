@@ -24,20 +24,20 @@ Test_DynEnum::Test_DynEnum (CORBA::ORB_var orb, int debug)
 {
 }
 
-Test_DynEnum::~Test_DynEnum (void)
+Test_DynEnum::~Test_DynEnum ()
 {
   CORBA::string_free (this->test_name_);
   this->test_name_ = 0;
 }
 
 const char*
-Test_DynEnum::test_name (void) const
+Test_DynEnum::test_name () const
 {
   return this->test_name_;
 }
 
 int
-Test_DynEnum::run_test (void)
+Test_DynEnum::run_test ()
 {
   Data data (this->orb_);
 

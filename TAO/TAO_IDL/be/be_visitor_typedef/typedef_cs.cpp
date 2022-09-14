@@ -20,7 +20,7 @@ be_visitor_typedef_cs::be_visitor_typedef_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_typedef_cs::~be_visitor_typedef_cs (void)
+be_visitor_typedef_cs::~be_visitor_typedef_cs ()
 {
 }
 
@@ -48,7 +48,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt = 0; // base type
+  be_type *bt = nullptr; // base type
 
   if (this->ctx_->tdef ())
     {
@@ -81,7 +81,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
                             -1);
         }
 
-      this->ctx_->alias (0);
+      this->ctx_->alias (nullptr);
     }
   else
     {
@@ -90,7 +90,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
       this->ctx_->tdef (node);
 
       // Grab the immediate base type node.
-      bt = be_type::narrow_from_decl (node->base_type ());
+      bt = dynamic_cast<be_type*> (node->base_type ());
 
       if (!bt)
         {
@@ -128,7 +128,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
 
         }
 
-      this->ctx_->tdef (0);
+      this->ctx_->tdef (nullptr);
     }
 
   return 0;
@@ -137,7 +137,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
 int
 be_visitor_typedef_cs::visit_sequence (be_sequence *node)
 {
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())

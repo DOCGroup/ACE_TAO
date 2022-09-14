@@ -48,12 +48,12 @@ namespace TAO
     typedef TAO_Accept_Strategy<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_SSL_ACCEPT_STRATEGY;
 
     /// Constructor.
-    IIOP_SSL_Acceptor (void);
+    IIOP_SSL_Acceptor ();
 
     /// Destructor.
-    ~IIOP_SSL_Acceptor (void);
+    ~IIOP_SSL_Acceptor ();
 
-    virtual int close (void);
+    virtual int close ();
 
   private:
     /// The concrete acceptor, as a pointer to it's base class.

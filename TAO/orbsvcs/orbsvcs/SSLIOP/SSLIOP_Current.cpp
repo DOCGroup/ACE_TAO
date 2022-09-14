@@ -13,7 +13,7 @@ TAO::SSLIOP::Current::Current (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO::SSLIOP::Current::~Current (void)
+TAO::SSLIOP::Current::~Current ()
 {
 }
 
@@ -78,7 +78,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
 }
 
 CORBA::Boolean
-TAO::SSLIOP::Current::no_context (void)
+TAO::SSLIOP::Current::no_context ()
 {
   return (this->implementation () == 0 ? true : false);
 }
@@ -127,7 +127,7 @@ TAO::SSLIOP::Current::_duplicate (TAO::SSLIOP::Current_ptr obj)
 }
 
 const char *
-TAO::SSLIOP::Current::_interface_repository_id (void) const
+TAO::SSLIOP::Current::_interface_repository_id () const
 {
   return "IDL:TAO/SSLIOP/Current:1.0";
 }
@@ -147,7 +147,7 @@ tao_TAO_SSLIOP_Current_release (TAO::SSLIOP::Current_ptr p)
 }
 
 TAO::SSLIOP::Current_ptr
-tao_TAO_SSLIOP_Current_nil (void)
+tao_TAO_SSLIOP_Current_nil ()
 {
   return TAO::SSLIOP::Current::_nil ();
 }

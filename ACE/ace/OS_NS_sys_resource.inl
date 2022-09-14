@@ -16,9 +16,9 @@ ACE_OS::getrlimit (int resource, struct rlimit *rl)
   ACE_NOTSUP_RETURN (-1);
 #else
 # if defined (ACE_HAS_RLIMIT_RESOURCE_ENUM)
-  ACE_OSCALL_RETURN (::getrlimit ((ACE_HAS_RLIMIT_RESOURCE_ENUM) resource, rl), int, -1);
+  return ::getrlimit ((ACE_HAS_RLIMIT_RESOURCE_ENUM) resource, rl);
 # else
-  ACE_OSCALL_RETURN (::getrlimit (resource, rl), int, -1);
+  return ::getrlimit (resource, rl);
 # endif /* ACE_HAS_RLIMIT_RESOURCE_ENUM */
 #endif /* ACE_LACKS_RLIMIT */
 }
@@ -48,9 +48,9 @@ ACE_OS::getrusage (int who, struct rusage *ru)
 #  endif /* ACE_LACKS_WIN32_GETPROCESSTIMES */
 # else
 #   if defined (ACE_HAS_RUSAGE_WHO_ENUM)
-  ACE_OSCALL_RETURN (::getrusage ((ACE_HAS_RUSAGE_WHO_ENUM) who, ru), int, -1);
+  return ::getrusage ((ACE_HAS_RUSAGE_WHO_ENUM) who, ru);
 #   else
-  ACE_OSCALL_RETURN (::getrusage (who, ru), int, -1);
+  return ::getrusage (who, ru);
 #   endif /* ACE_HAS_RUSAGE_WHO_ENUM */
 # endif /* ACE_WIN32 */
 #else
@@ -73,20 +73,15 @@ ACE_OS::setrlimit (int resource, const struct rlimit *rl)
 #else
 # if defined (ACE_HAS_RLIMIT_RESOURCE_ENUM)
 #  if defined (ACE_HAS_NONCONST_SETRLIMIT)
-  ACE_OSCALL_RETURN (::setrlimit ((ACE_HAS_RLIMIT_RESOURCE_ENUM) resource,
-                                  const_cast<struct rlimit *>(rl)
-                                  ), int, -1);
+  return ::setrlimit ((ACE_HAS_RLIMIT_RESOURCE_ENUM) resource, const_cast<struct rlimit *>(rl));
 # else
-  ACE_OSCALL_RETURN (::setrlimit ((ACE_HAS_RLIMIT_RESOURCE_ENUM) resource,
-                                  rl
-                                  ), int, -1);
+  return ::setrlimit ((ACE_HAS_RLIMIT_RESOURCE_ENUM) resource, rl);
 #  endif /* ACE_HAS_NONCONST_SETRLIMIT */
 # else /* ACE_HAS_RLIMIT_RESOURCE_ENUM */
 #  if defined (ACE_HAS_NONCONST_SETRLIMIT)
-  ACE_OSCALL_RETURN (::setrlimit (resource, const_cast<struct rlimit *>(rl)
-                                  ), int, -1);
+  return ::setrlimit (resource, const_cast<struct rlimit *>(rl));
 #  else
-  ACE_OSCALL_RETURN (::setrlimit (resource, rl), int, -1);
+  return ::setrlimit (resource, rl);
 #  endif /* ACE_HAS_NONCONST_SETRLIMIT */
 # endif /* ACE_HAS_RLIMIT_RESOURCE_ENUM */
 #endif /* ACE_LACKS_RLIMIT */

@@ -20,13 +20,12 @@ class SLevel1_Server_i : public POA_SLevel1_Server
   SLevel1_Server_i ();
 
   ///
-  CORBA::Boolean authorize_level1 (void);
+  CORBA::Boolean authorize_level1 ();
 
-  CORBA::Boolean authorize_level2 (void);
+  CORBA::Boolean authorize_level2 ();
 
   static int authorized_1;
   static int authorized_2;
-
 };
 
 #endif /* TAO_SLEVEL1_TEST_I_H */

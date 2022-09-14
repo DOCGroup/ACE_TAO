@@ -55,9 +55,6 @@
 
 #define ACE_NEEDS_SCHED_H
 
-// Use of <malloc.h> is deprecated.
-#define ACE_LACKS_MALLOC_H
-
 #define ACE_HAS_ALT_CUSERID
 
 // Platform supports POSIX timers via struct timespec.
@@ -153,7 +150,6 @@
 #define ACE_LACKS_SIGINFO_H
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_GETIFADDRS
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_UNNAMED_SEMAPHORE
 
 // dlcompat package (not part of base Darwin) is needed for dlopen().

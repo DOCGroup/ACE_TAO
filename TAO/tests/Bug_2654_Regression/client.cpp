@@ -23,7 +23,7 @@ const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 class Callback_i : public POA_Test::CallBack
 {
 public:
-  void method2(void)
+  void method2()
   {
     ACE_DEBUG ((LM_DEBUG,"(%t) Callback_i::method2 called\n"));
   }
@@ -43,12 +43,12 @@ private:
   int busy_threads_;
   CORBA::Short message_counter_;
 
-  int run_test (void);
+  int run_test ();
 public:
   Worker( int ot);
   ~Worker();
 
-  int svc (void);
+  int svc ();
 };
 
 Worker::Worker(int ot)
@@ -95,7 +95,6 @@ Worker::svc()
           ACE_Time_Value udelay(0,400);
           struct timespec ts = udelay;
           ACE_OS::nanosleep (&ts);
-
         }
       catch (const CORBA::Exception &ex)
         {
@@ -280,7 +279,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
 
       init_callback(worker);
-
     }
   catch (const CORBA::Exception &ex)
     {

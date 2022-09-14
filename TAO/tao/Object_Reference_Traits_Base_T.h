@@ -16,7 +16,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename object_t, typename object_t_var>
 struct object_reference_traits_base
 {
@@ -45,7 +44,6 @@ struct object_reference_traits_base
     return nil();
   }
 };
-
 } // namespace details
 } // namespace TAO
 

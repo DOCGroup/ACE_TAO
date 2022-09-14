@@ -44,8 +44,7 @@ namespace TAO
 
     void
     ImplicitActivationStrategyFactoryImpl::destroy (
-      ImplicitActivationStrategy * /*strategy*/
-      )
+      ImplicitActivationStrategy * /*strategy*/)
     {
       // Noop because both types are singletons
     }

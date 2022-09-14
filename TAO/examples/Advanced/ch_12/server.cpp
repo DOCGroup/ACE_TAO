@@ -470,7 +470,6 @@ find (CCS::Controller::SearchSeq & slist)
   CORBA::ULong listlen = slist.length ();
   for  (CORBA::ULong i = 0; i < listlen; i++)
     {
-
       AssetMap::iterator where;   // Iterator for asset set
       int num_found = 0;          // Num matched per iteration
 

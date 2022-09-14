@@ -9,7 +9,6 @@
 #include "ace/os_include/os_netdb.h"
 
 int Logging_Event_Handler::open () {
-
   static const char LOGFILE_SUFFIX[] = ".log";
   char filename[MAXHOSTNAMELEN + sizeof (LOGFILE_SUFFIX)];
   ACE_INET_Addr logging_peer_addr;

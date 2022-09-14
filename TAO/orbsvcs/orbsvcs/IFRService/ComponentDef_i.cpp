@@ -69,18 +69,18 @@ TAO_ComponentDef_i::TAO_ComponentDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ComponentDef_i::~TAO_ComponentDef_i (void)
+TAO_ComponentDef_i::~TAO_ComponentDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_ComponentDef_i::def_kind (void)
+TAO_ComponentDef_i::def_kind ()
 {
   return CORBA::dk_Component;
 }
 
 void
-TAO_ComponentDef_i::destroy (void)
+TAO_ComponentDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -90,7 +90,7 @@ TAO_ComponentDef_i::destroy (void)
 }
 
 void
-TAO_ComponentDef_i::destroy_i (void)
+TAO_ComponentDef_i::destroy_i ()
 {
   // Destroy our special subsections first, then call destroy_i
   // on our base class.
@@ -129,7 +129,7 @@ TAO_ComponentDef_i::destroy_i (void)
 }
 
 CORBA::Contained::Description *
-TAO_ComponentDef_i::describe (void)
+TAO_ComponentDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -139,7 +139,7 @@ TAO_ComponentDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_ComponentDef_i::describe_i (void)
+TAO_ComponentDef_i::describe_i ()
 {
   CORBA::ComponentIR::ComponentDescription cd;
   TAO_IFR_Desc_Utils<CORBA::ComponentIR::ComponentDescription,
@@ -278,7 +278,7 @@ TAO_ComponentDef_i::describe_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ComponentDef_i::type (void)
+TAO_ComponentDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -288,7 +288,7 @@ TAO_ComponentDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ComponentDef_i::type_i (void)
+TAO_ComponentDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -307,7 +307,7 @@ TAO_ComponentDef_i::type_i (void)
 }
 
 CORBA::InterfaceDefSeq *
-TAO_ComponentDef_i::supported_interfaces (void)
+TAO_ComponentDef_i::supported_interfaces ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -317,7 +317,7 @@ TAO_ComponentDef_i::supported_interfaces (void)
 }
 
 CORBA::InterfaceDefSeq *
-TAO_ComponentDef_i::supported_interfaces_i (void)
+TAO_ComponentDef_i::supported_interfaces_i ()
 {
   CORBA::InterfaceDefSeq *seq = 0;
   ACE_NEW_RETURN (seq,
@@ -421,7 +421,7 @@ TAO_ComponentDef_i::supported_interfaces_i (
 }
 
 CORBA::ComponentIR::ComponentDef_ptr
-TAO_ComponentDef_i::base_component (void)
+TAO_ComponentDef_i::base_component ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
@@ -431,7 +431,7 @@ TAO_ComponentDef_i::base_component (void)
 }
 
 CORBA::ComponentIR::ComponentDef_ptr
-TAO_ComponentDef_i::base_component_i (void)
+TAO_ComponentDef_i::base_component_i ()
 {
   ACE_TString base_path;
   int status =

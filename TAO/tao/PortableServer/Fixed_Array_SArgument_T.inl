@@ -14,7 +14,7 @@ template<typename S_forany,
 ACE_INLINE
 typename S_forany::_slice_type const *
 TAO::In_Fixed_Array_SArgument_T<S_forany,
-                                Insert_Policy>::arg (void) const
+                                Insert_Policy>::arg () const
 {
   S_forany tmp (this->x_);
   return tmp.in ();

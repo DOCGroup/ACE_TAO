@@ -79,7 +79,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
 
       orb->destroy ();
     }

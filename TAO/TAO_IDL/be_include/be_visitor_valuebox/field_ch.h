@@ -36,7 +36,7 @@ public:
   be_visitor_valuebox_field_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_field_ch (void);
+  ~be_visitor_valuebox_field_ch ();
 
   /// visit the union_branch node
   virtual int visit_field (be_field *node);
@@ -90,7 +90,6 @@ private:
                         const char *const_prefix,
                         const char *type_suffix,
                         const char *const_method);
-
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_FIELD_CH_H_ */

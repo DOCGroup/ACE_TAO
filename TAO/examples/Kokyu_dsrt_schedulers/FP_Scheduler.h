@@ -52,7 +52,7 @@ public FP_Scheduling::SegmentSchedulingParameterPolicy,
 
      virtual CORBA::Policy_ptr copy ();
 
-     virtual CORBA::PolicyType policy_type (void);
+     virtual CORBA::PolicyType policy_type ();
 
      virtual void destroy ();
 
@@ -65,15 +65,14 @@ public FP_Scheduling::FP_Scheduler,
 public ::CORBA::LocalObject
 {
  public:
-
   Fixed_Priority_Scheduler (CORBA::ORB_ptr orb,
                  Kokyu::DSRT_Dispatcher_Impl_t,
                  int ace_sched_policy,
                  int ace_sched_scope);
 
-  ~Fixed_Priority_Scheduler (void);
+  ~Fixed_Priority_Scheduler ();
 
-  void shutdown (void);
+  void shutdown ();
 
   virtual FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
     create_segment_scheduling_parameter (
@@ -126,13 +125,13 @@ public ::CORBA::LocalObject
 
   virtual void cancel (const RTScheduling::Current::IdType & guid);
 
-  virtual CORBA::PolicyList * scheduling_policies (void);
+  virtual CORBA::PolicyList * scheduling_policies ();
 
   virtual void scheduling_policies (const CORBA::PolicyList & scheduling_policies);
 
-  virtual CORBA::PolicyList * poa_policies (void);
+  virtual CORBA::PolicyList * poa_policies ();
 
-  virtual char * scheduling_discipline_name (void);
+  virtual char * scheduling_discipline_name ();
 
   virtual RTScheduling::ResourceManager_ptr create_resource_manager (const char * name,
                                                                      CORBA::Policy_ptr scheduling_parameter);

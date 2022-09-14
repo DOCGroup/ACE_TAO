@@ -7,19 +7,19 @@ class QueueExample
 {
 public:
   // Illustrate the various ACE Queues.
-  int run (void);
+  int run ();
 
 private:
   // Illustrate the ACE unbounded queue
   // that has copies of the data elements.
-  int runStackUnboundedQueue (void);
+  int runStackUnboundedQueue ();
 
   // Illustrate the ACE unbounded queue
   // with pointers to elements on the heap.
-  int runHeapUnboundedQueue (void);
+  int runHeapUnboundedQueue ();
 };
 
-int QueueExample::run (void)
+int QueueExample::run ()
 {
   ACE_TRACE ("QueueExample::run");
 
@@ -45,7 +45,7 @@ int QueueExample::run (void)
 }
 
 // Listing 1 code/ch05
-int QueueExample::runStackUnboundedQueue (void)
+int QueueExample::runStackUnboundedQueue ()
 {
   ACE_TRACE ("QueueExample::runStackUnboundedQueue");
 
@@ -78,7 +78,7 @@ int QueueExample::runStackUnboundedQueue (void)
 }
 // Listing 1
 // Listing 2 code/ch05
-int QueueExample::runHeapUnboundedQueue (void)
+int QueueExample::runHeapUnboundedQueue ()
 {
   ACE_TRACE ("QueueExample::runHeapUnboundedQueue");
 

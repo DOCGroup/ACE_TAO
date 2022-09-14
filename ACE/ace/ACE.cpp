@@ -48,9 +48,8 @@ namespace ACE
 
   // Are we debugging ACE?
   // Keeps track of whether we're in some global debug mode.
-  char debug_;
+  bool debug_ = false;
 }
-
 
 int
 ACE::out_of_handles (int error)
@@ -91,31 +90,31 @@ ACE::out_of_handles (int error)
 }
 
 u_int
-ACE::major_version (void)
+ACE::major_version ()
 {
   return ACE_MAJOR_VERSION;
 }
 
 u_int
-ACE::minor_version (void)
+ACE::minor_version ()
 {
   return ACE_MINOR_VERSION;
 }
 
 u_int
-ACE::beta_version (void)
+ACE::beta_version ()
 {
-  return ACE_BETA_VERSION;
+  return ACE_MICRO_VERSION;
 }
 
 u_int
-ACE::micro_version (void)
+ACE::micro_version ()
 {
   return ACE_MICRO_VERSION;
 }
 
 const ACE_TCHAR *
-ACE::compiler_name (void)
+ACE::compiler_name ()
 {
 #ifdef ACE_CC_NAME
   return ACE_CC_NAME;
@@ -125,7 +124,7 @@ ACE::compiler_name (void)
 }
 
 u_int
-ACE::compiler_major_version (void)
+ACE::compiler_major_version ()
 {
 #ifdef ACE_CC_MAJOR_VERSION
   return ACE_CC_MAJOR_VERSION;
@@ -135,7 +134,7 @@ ACE::compiler_major_version (void)
 }
 
 u_int
-ACE::compiler_minor_version (void)
+ACE::compiler_minor_version ()
 {
 #ifdef ACE_CC_MINOR_VERSION
   return ACE_CC_MINOR_VERSION;
@@ -145,7 +144,7 @@ ACE::compiler_minor_version (void)
 }
 
 u_int
-ACE::compiler_beta_version (void)
+ACE::compiler_beta_version ()
 {
 #ifdef ACE_CC_BETA_VERSION
   return ACE_CC_BETA_VERSION;
@@ -162,12 +161,12 @@ ACE::nibble2hex (u_int n)
 }
 
 bool
-ACE::debug (void)
+ACE::debug ()
 {
   //FUZZ: disable check_for_ace_log_categories
   static const char *debug = ACE_OS::getenv ("ACE_DEBUG");
   //FUZZ: enable check_for_ace_log_categories
-  return (ACE::debug_ != 0) ? ACE::debug_ : (debug != 0 ? (*debug != '0') : false);
+  return (ACE::debug_) ? ACE::debug_ : (debug != 0 ? (*debug != '0') : false);
 }
 
 void
@@ -625,7 +624,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -665,7 +664,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -743,7 +742,7 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -783,7 +782,7 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -859,7 +858,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -898,7 +897,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -1051,7 +1050,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   bytes_transferred = 0;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -1083,7 +1082,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -1404,7 +1403,7 @@ ACE::send_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -1443,7 +1442,7 @@ ACE::send_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -1525,7 +1524,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -1565,7 +1564,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -1642,7 +1641,7 @@ ACE::send_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -1681,7 +1680,7 @@ ACE::send_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -1841,7 +1840,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   bytes_transferred = 0;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -1879,7 +1878,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -2231,11 +2230,11 @@ ACE::handle_ready (ACE_HANDLE handle,
     {
     case 0:  // Timer expired.
       errno = ETIME;
-      /* FALLTHRU */
+      ACE_FALLTHROUGH;
     case -1: // we got here directly - select() returned -1.
       return -1;
     case 1: // Handle has data.
-      /* FALLTHRU */
+      ACE_FALLTHROUGH;
     default: // default is case result > 0; return a
       // ACE_ASSERT (result == 1);
       return result;
@@ -2791,6 +2790,7 @@ ACE::fork (const ACE_TCHAR *program_name,
               return 0;
             case static_cast<pid_t>(-1): // assumes all errnos are < 256
               ACE_OS::_exit (errno);
+              ACE_FALLTHROUGH;    // gcc sees this as a fallthrough
             default:  // child terminates, orphaning grandchild
               ACE_OS::_exit (0);
             }
@@ -2819,7 +2819,7 @@ ACE::fork (const ACE_TCHAR *program_name,
 }
 
 int
-ACE::max_handles (void)
+ACE::max_handles ()
 {
   ACE_TRACE ("ACE::max_handles");
 #if defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT)
@@ -2921,7 +2921,6 @@ ACE::gcd (u_long x, u_long y)
   return x;
 }
 
-
 /// Calculates the minimum enclosing frame size for the given values.
 u_long
 ACE::minimum_frame_size (u_long period1, u_long period2)
@@ -2964,7 +2963,6 @@ ACE::minimum_frame_size (u_long period1, u_long period2)
       return (period1 * period2) / greatest_common_divisor;
     }
 }
-
 
 u_long
 ACE::is_prime (const u_long n,
@@ -3369,7 +3367,6 @@ ACE::strnew (const wchar_t *s)
 // helper functions for ACE::wild_match()
 namespace
 {
-
   inline bool equal_char (char a, char b, bool case_sensitive)
   {
     if (case_sensitive)

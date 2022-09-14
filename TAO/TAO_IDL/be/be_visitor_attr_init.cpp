@@ -22,7 +22,7 @@ be_visitor_attr_init::be_visitor_attr_init (
 {
 }
 
-be_visitor_attr_init::~be_visitor_attr_init (void)
+be_visitor_attr_init::~be_visitor_attr_init ()
 {
 }
 

@@ -87,12 +87,12 @@ ACE_Time_Value const ACE_Ping_Socket::time_default_ (0, 500000);
 
 
 void
-ACE_Ping_Socket::dump (void) const
+ACE_Ping_Socket::dump () const
 {
   ACE_TRACE ("ACE_Ping_Socket::dump");
 }
 
-ACE_Ping_Socket::ACE_Ping_Socket (void)
+ACE_Ping_Socket::ACE_Ping_Socket ()
 {
   ACE_TRACE ("ACE_Ping_Socket::ACE_Ping_Socket");
 }
@@ -126,7 +126,7 @@ ACE_Ping_Socket::ACE_Ping_Socket (ACE_Addr const & local,
                         sizeof (size));
 }
 
-ACE_Ping_Socket::~ACE_Ping_Socket (void)
+ACE_Ping_Socket::~ACE_Ping_Socket ()
 {
   ACE_TRACE ("ACE_Ping_Socket::~ACE_Ping_Socket");
 }

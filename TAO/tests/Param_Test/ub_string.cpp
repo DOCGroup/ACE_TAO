@@ -17,7 +17,7 @@
 //               Test_Unbounded_String
 // ************************************************************************
 
-Test_Unbounded_String::Test_Unbounded_String (void)
+Test_Unbounded_String::Test_Unbounded_String ()
   : opname_ (CORBA::string_dup ("test_unbounded_string")),
     in_ (0),
     inout_ (0),
@@ -26,7 +26,7 @@ Test_Unbounded_String::Test_Unbounded_String (void)
 {
 }
 
-Test_Unbounded_String::~Test_Unbounded_String (void)
+Test_Unbounded_String::~Test_Unbounded_String ()
 {
   CORBA::string_free (this->opname_);
   CORBA::string_free (this->in_);
@@ -41,7 +41,7 @@ Test_Unbounded_String::~Test_Unbounded_String (void)
 }
 
 const char *
-Test_Unbounded_String::opname (void) const
+Test_Unbounded_String::opname () const
 {
   return this->opname_;
 }
@@ -97,7 +97,7 @@ Test_Unbounded_String::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Unbounded_String::reset_parameters (void)
+Test_Unbounded_String::reset_parameters ()
 {
   // release any previously occupied values
   CORBA::string_free (this->inout_);
@@ -127,13 +127,12 @@ Test_Unbounded_String::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Unbounded_String::run_sii_test\n");
-
     }
   return -1;
 }
 
 CORBA::Boolean
-Test_Unbounded_String::check_validity (void)
+Test_Unbounded_String::check_validity ()
 {
   CORBA::ULong len = ACE_OS::strlen (this->in_);
 
@@ -156,14 +155,14 @@ Test_Unbounded_String::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Unbounded_String::print_values (void)
+Test_Unbounded_String::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"
-              "in with len (%d) = %s\n"
-              "inout with len (%d) = %s\n"
-              "out with len (%d) = %s\n"
-              "ret with len (%d) = %s\n"
+              "in with len (%d) = %C\n"
+              "inout with len (%d) = %C\n"
+              "out with len (%d) = %C\n"
+              "ret with len (%d) = %C\n"
               "\n=*=*=*=*=*=*\n",
               (this->in_ ? ACE_OS::strlen (this->in_):0),
               (this->in_ ? this->in_:"<nul string>"),

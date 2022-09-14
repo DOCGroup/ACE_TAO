@@ -30,33 +30,40 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
 
-TAO_IDL_BE_Export BE_GlobalData *be_global = 0;
+TAO_IDL_BE_Export BE_GlobalData *be_global = nullptr;
 
-BE_GlobalData::BE_GlobalData (void)
+const char *const BE_GlobalData::core_versioned_ns_begin =
+  "\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n";
+const char *const BE_GlobalData::core_versioned_ns_end =
+  "\nTAO_END_VERSIONED_NAMESPACE_DECL\n";
+
+BE_GlobalData::BE_GlobalData ()
   : changing_standard_include_files_ (1),
-    skel_export_macro_ (0),
-    skel_export_include_ (0),
-    skel_export_file_ (0),
-    stub_export_macro_ (0),
-    stub_export_include_ (0),
-    stub_export_file_ (0),
-    anyop_export_macro_ (0),
-    anyop_export_include_ (0),
-    exec_export_macro_ (0),
-    exec_export_include_ (0),
-    svnt_export_macro_ (0),
-    svnt_export_include_ (0),
-    conn_export_macro_ (0),
-    conn_export_include_ (0),
-    pch_include_ (0),
-    pre_include_ (0),
-    post_include_ (0),
-    include_guard_ (0),
-    safe_include_ (0),
-    unique_include_ (0),
-    stripped_filename_ (0),
-    core_versioning_begin_ ("\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n"),
-    core_versioning_end_   ("\nTAO_END_VERSIONED_NAMESPACE_DECL\n"),
+    skel_export_macro_ (nullptr),
+    skel_export_include_ (nullptr),
+    skel_export_file_ (nullptr),
+    stub_export_macro_ (nullptr),
+    stub_export_include_ (nullptr),
+    stub_export_file_ (nullptr),
+    anyop_export_macro_ (nullptr),
+    anyop_export_include_ (nullptr),
+    exec_export_macro_ (nullptr),
+    exec_export_include_ (nullptr),
+    svnt_export_macro_ (nullptr),
+    svnt_export_include_ (nullptr),
+    conn_export_macro_ (nullptr),
+    conn_export_include_ (nullptr),
+    pch_include_ (nullptr),
+    pre_include_ (nullptr),
+    post_include_ (nullptr),
+    include_guard_ (nullptr),
+    safe_include_ (nullptr),
+    unique_include_ (nullptr),
+    stripped_filename_ (nullptr),
+    core_versioning_begin_ (core_versioned_ns_begin),
+    core_versioning_end_ (core_versioned_ns_end),
+    anyops_versioning_begin_ (core_versioning_begin_ + "namespace CORBA {\n"),
+    anyops_versioning_end_ ("\n}" + core_versioning_end_),
     versioning_begin_ (),
     versioning_end_ (),
     versioning_include_ (),
@@ -88,15 +95,15 @@ BE_GlobalData::BE_GlobalData (void)
     ciao_ami_conn_impl_hdr_ending_ (ACE::strnew ("_conn_i.h")),
     ciao_ami_conn_impl_src_ending_ (ACE::strnew ("_conn_i.cpp")),
     ciao_container_type_ (ACE::strnew ("Session")),
-    output_dir_ (0),
-    stub_include_dir_ (0),
-    skel_output_dir_ (0),
-    anyop_output_dir_ (0),
-    exec_output_dir_ (0),
+    output_dir_ (nullptr),
+    stub_include_dir_ (nullptr),
+    skel_output_dir_ (nullptr),
+    anyop_output_dir_ (nullptr),
+    exec_output_dir_ (nullptr),
     any_support_ (true),
     cdr_support_ (true),
     tc_support_ (true),
-    obv_opt_accessor_ (0),
+    obv_opt_accessor_ (false),
     gen_impl_files_ (false),
     gen_impl_debug_info_ (false),
     gen_copy_ctor_ (false),
@@ -118,11 +125,11 @@ BE_GlobalData::BE_GlobalData (void)
     gen_empty_anyop_header_ (false),
     lookup_strategy_ (TAO_PERFECT_HASH),
     dds_impl_ (DDS_NONE),
-    void_type_ (0),
-    ccmobject_ (0),
-    messaging_ (0),
-    messaging_exceptionholder_ (0),
-    messaging_replyhandler_ (0),
+    void_type_ (nullptr),
+    ccmobject_ (nullptr),
+    messaging_ (nullptr),
+    messaging_exceptionholder_ (nullptr),
+    messaging_replyhandler_ (nullptr),
     gen_anyop_files_ (false),
     gen_skel_files_ (true),
     gen_svnt_cpp_files_ (true),
@@ -161,7 +168,7 @@ BE_GlobalData::BE_GlobalData (void)
 {
 }
 
-BE_GlobalData::~BE_GlobalData (void)
+BE_GlobalData::~BE_GlobalData ()
 {
 }
 
@@ -176,7 +183,7 @@ BE_GlobalData::changing_standard_include_files (size_t changing)
 }
 
 size_t
-BE_GlobalData::changing_standard_include_files (void)
+BE_GlobalData::changing_standard_include_files ()
 {
   return this->changing_standard_include_files_;
 }
@@ -192,9 +199,9 @@ be_change_idl_file_extension (UTL_String* idl_file,
 {
   // @@ This shouldn't happen anyway; but a better error handling
   // mechanism is needed.
-  if (idl_file == 0 || new_extension == 0)
+  if (idl_file == nullptr || new_extension == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   static char fname[MAXPATHLEN];
@@ -205,7 +212,7 @@ be_change_idl_file_extension (UTL_String* idl_file,
 
   // Get the base part of the filename, we try several extensions
   // before giving up.
-  const char *base = 0;
+  const char *base = nullptr;
 
   static const char* extensions[] = {
     ".idl",
@@ -220,22 +227,22 @@ be_change_idl_file_extension (UTL_String* idl_file,
     {
       base = ACE_OS::strstr (string, extensions[k]);
 
-      if (base != 0)
+      if (base != nullptr)
         {
           break;
         }
     }
 
-  if (base == 0)
+  if (base == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   // Anyop * skel file output defaults to general output dir if not set.
   const char *output_path =
     be_util::get_output_path (for_anyop, for_skel, for_exec);
 
-  if (!base_name_only && output_path != 0)
+  if (!base_name_only && output_path != nullptr)
     {
       // Path info should also be added to fname.
 
@@ -598,7 +605,7 @@ BE_GlobalData::be_get_client_hdr_fname (
 }
 
 const char *
-BE_GlobalData::be_get_client_stub_fname (void)
+BE_GlobalData::be_get_client_stub_fname ()
 {
   return
     be_get_client_stub (idl_global->stripped_filename ());
@@ -650,14 +657,14 @@ BE_GlobalData::be_get_server_template_hdr_fname (
 }
 
 const char *
-BE_GlobalData::be_get_server_skeleton_fname (void)
+BE_GlobalData::be_get_server_skeleton_fname ()
 {
   return
     be_get_server_skeleton (idl_global->stripped_filename ());
 }
 
 const char *
-BE_GlobalData::be_get_implementation_skeleton_fname (void)
+BE_GlobalData::be_get_implementation_skeleton_fname ()
 {
   return
     be_get_implementation_skel (idl_global->stripped_filename ());
@@ -808,9 +815,9 @@ BE_GlobalData::be_get_ciao_ami_conn_impl_src_fname (
 }
 
 const char*
-BE_GlobalData::skel_export_macro (void) const
+BE_GlobalData::skel_export_macro () const
 {
-  if (this->skel_export_macro_ == 0)
+  if (this->skel_export_macro_ == nullptr)
     {
       return "";
     }
@@ -826,7 +833,7 @@ BE_GlobalData::skel_export_macro (const char *s)
 }
 
 const char*
-BE_GlobalData::skel_export_include (void) const
+BE_GlobalData::skel_export_include () const
 {
   return this->skel_export_include_;
 }
@@ -839,7 +846,7 @@ BE_GlobalData::skel_export_include (const char *s)
 }
 
 const char*
-BE_GlobalData::skel_export_file (void) const
+BE_GlobalData::skel_export_file () const
 {
   return this->skel_export_file_;
 }
@@ -852,9 +859,9 @@ BE_GlobalData::skel_export_file (const char *s)
 }
 
 const char*
-BE_GlobalData::stub_export_macro (void) const
+BE_GlobalData::stub_export_macro () const
 {
-  if (this->stub_export_macro_ == 0)
+  if (this->stub_export_macro_ == nullptr)
     {
       return "";
     }
@@ -870,7 +877,7 @@ BE_GlobalData::stub_export_macro (const char *s)
 }
 
 const char*
-BE_GlobalData::stub_export_include (void) const
+BE_GlobalData::stub_export_include () const
 {
   return this->stub_export_include_;
 }
@@ -883,7 +890,7 @@ BE_GlobalData::stub_export_include (const char *s)
 }
 
 const char*
-BE_GlobalData::stub_export_file (void) const
+BE_GlobalData::stub_export_file () const
 {
   return this->stub_export_file_;
 }
@@ -896,9 +903,9 @@ BE_GlobalData::stub_export_file (const char *s)
 }
 
 const char*
-BE_GlobalData::anyop_export_macro (void) const
+BE_GlobalData::anyop_export_macro () const
 {
-  if (this->anyop_export_macro_ == 0)
+  if (this->anyop_export_macro_ == nullptr)
     {
       return "";
     }
@@ -914,7 +921,7 @@ BE_GlobalData::anyop_export_macro (const char *s)
 }
 
 const char*
-BE_GlobalData::anyop_export_include (void) const
+BE_GlobalData::anyop_export_include () const
 {
   return this->anyop_export_include_;
 }
@@ -927,9 +934,9 @@ BE_GlobalData::anyop_export_include (const char *s)
 }
 
 const char*
-BE_GlobalData::exec_export_macro (void) const
+BE_GlobalData::exec_export_macro () const
 {
-  if (this->exec_export_macro_ == 0)
+  if (this->exec_export_macro_ == nullptr)
     {
       return "";
     }
@@ -945,7 +952,7 @@ BE_GlobalData::exec_export_macro (const char *s)
 }
 
 const char*
-BE_GlobalData::exec_export_include (void) const
+BE_GlobalData::exec_export_include () const
 {
   return this->exec_export_include_;
 }
@@ -958,9 +965,9 @@ BE_GlobalData::exec_export_include (const char *s)
 }
 
 const char*
-BE_GlobalData::svnt_export_macro (void) const
+BE_GlobalData::svnt_export_macro () const
 {
-  if (this->svnt_export_macro_ == 0)
+  if (this->svnt_export_macro_ == nullptr)
     {
       return "";
     }
@@ -976,7 +983,7 @@ BE_GlobalData::svnt_export_macro (const char *s)
 }
 
 const char*
-BE_GlobalData::svnt_export_include (void) const
+BE_GlobalData::svnt_export_include () const
 {
   return this->svnt_export_include_;
 }
@@ -989,9 +996,9 @@ BE_GlobalData::svnt_export_include (const char *s)
 }
 
 const char*
-BE_GlobalData::conn_export_macro (void) const
+BE_GlobalData::conn_export_macro () const
 {
-  if (this->conn_export_macro_ == 0)
+  if (this->conn_export_macro_ == nullptr)
     {
       return "";
     }
@@ -1007,7 +1014,7 @@ BE_GlobalData::conn_export_macro (const char *s)
 }
 
 const char*
-BE_GlobalData::conn_export_include (void) const
+BE_GlobalData::conn_export_include () const
 {
   return this->conn_export_include_;
 }
@@ -1020,7 +1027,7 @@ BE_GlobalData::conn_export_include (const char *s)
 }
 
 const char*
-BE_GlobalData::pch_include (void) const
+BE_GlobalData::pch_include () const
 {
   return this->pch_include_;
 }
@@ -1033,7 +1040,7 @@ BE_GlobalData::pch_include (const char *s)
 }
 
 const char*
-BE_GlobalData::pre_include (void) const
+BE_GlobalData::pre_include () const
 {
   return this->pre_include_;
 }
@@ -1046,7 +1053,7 @@ BE_GlobalData::pre_include (const char *s)
 }
 
 const char*
-BE_GlobalData::post_include (void) const
+BE_GlobalData::post_include () const
 {
   return this->post_include_;
 }
@@ -1059,7 +1066,7 @@ BE_GlobalData::post_include (const char *s)
 }
 
 const char*
-BE_GlobalData::include_guard (void) const
+BE_GlobalData::include_guard () const
 {
   return this->include_guard_;
 }
@@ -1072,7 +1079,7 @@ BE_GlobalData::include_guard (const char *s)
 }
 
 const char*
-BE_GlobalData::safe_include (void) const
+BE_GlobalData::safe_include () const
 {
   return this->safe_include_;
 }
@@ -1085,7 +1092,7 @@ BE_GlobalData::safe_include (const char *s)
 }
 
 const char*
-BE_GlobalData::unique_include (void) const
+BE_GlobalData::unique_include () const
 {
   return this->unique_include_;
 }
@@ -1098,7 +1105,7 @@ BE_GlobalData::unique_include (const char *s)
 }
 
 const char*
-BE_GlobalData::stripped_filename (void) const
+BE_GlobalData::stripped_filename () const
 {
   return this->stripped_filename_;
 }
@@ -1111,7 +1118,7 @@ BE_GlobalData::stripped_filename (const char *s)
 }
 
 const char *
-BE_GlobalData::versioning_begin (void) const
+BE_GlobalData::versioning_begin () const
 {
   return this->versioning_begin_.c_str ();
 }
@@ -1123,13 +1130,13 @@ BE_GlobalData::versioning_include (const char * s)
 }
 
 const char *
-BE_GlobalData::versioning_include (void) const
+BE_GlobalData::versioning_include () const
 {
   return this->versioning_include_.c_str ();
 }
 
 const char *
-BE_GlobalData::core_versioning_begin (void) const
+BE_GlobalData::core_versioning_begin () const
 {
   return this->core_versioning_begin_.c_str ();
 }
@@ -1144,7 +1151,10 @@ BE_GlobalData::versioning_end (const char * s)
 
   this->core_versioning_begin_ =
     this->versioning_end_ + // Yes, "end".
-    "\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n";
+    core_versioned_ns_begin;
+
+  this->anyops_versioning_begin_ =
+    this->core_versioning_begin_ + "namespace CORBA {\n";
 }
 
 void
@@ -1156,22 +1166,35 @@ BE_GlobalData::versioning_begin (const char * s)
     + ACE_CString ("\n\n");
 
   this->core_versioning_end_ =
-    "\nTAO_END_VERSIONED_NAMESPACE_DECL\n"
+    core_versioned_ns_end
     + this->versioning_begin_;  // Yes, "begin".
 
-  // Yes, "begin".
+  this->anyops_versioning_end_ =
+    "\n}" + this->core_versioning_end_;
 }
 
 const char *
-BE_GlobalData::versioning_end (void) const
+BE_GlobalData::versioning_end () const
 {
   return this->versioning_end_.c_str ();
 }
 
 const char *
-BE_GlobalData::core_versioning_end (void) const
+BE_GlobalData::core_versioning_end () const
 {
   return this->core_versioning_end_.c_str ();
+}
+
+const char *
+BE_GlobalData::anyops_versioning_begin () const
+{
+  return this->anyops_versioning_begin_.c_str ();
+}
+
+const char *
+BE_GlobalData::anyops_versioning_end () const
+{
+  return this->anyops_versioning_end_.c_str ();
 }
 
 // Set the client_hdr_ending.
@@ -1184,7 +1207,7 @@ BE_GlobalData::client_hdr_ending (const char* s)
 
 // Get the client_hdr_ending.
 const char*
-BE_GlobalData::client_hdr_ending (void) const
+BE_GlobalData::client_hdr_ending () const
 {
   return this->client_hdr_ending_;
 }
@@ -1197,7 +1220,7 @@ BE_GlobalData::client_inline_ending  (const char* s)
 }
 
 const char*
-BE_GlobalData::client_inline_ending (void) const
+BE_GlobalData::client_inline_ending () const
 {
   return this->client_inline_ending_;
 }
@@ -1211,7 +1234,7 @@ BE_GlobalData::client_stub_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::client_stub_ending (void) const
+BE_GlobalData::client_stub_ending () const
 {
   return this->client_stub_ending_;
 }
@@ -1224,7 +1247,7 @@ BE_GlobalData::server_hdr_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::server_hdr_ending (void) const
+BE_GlobalData::server_hdr_ending () const
 {
   return this->server_hdr_ending_;
 }
@@ -1258,25 +1281,25 @@ BE_GlobalData::impl_class_suffix (const char* s)
 }
 
 const char*
-BE_GlobalData::impl_class_prefix (void) const
+BE_GlobalData::impl_class_prefix () const
 {
   return this->impl_class_prefix_;
 }
 
 const char*
-BE_GlobalData::implementation_hdr_ending (void) const
+BE_GlobalData::implementation_hdr_ending () const
 {
   return this->implementation_hdr_ending_;
 }
 
 const char*
-BE_GlobalData::impl_class_suffix (void) const
+BE_GlobalData::impl_class_suffix () const
 {
   return this->impl_class_suffix_;
 }
 
 const char*
-BE_GlobalData::implementation_skel_ending (void) const
+BE_GlobalData::implementation_skel_ending () const
 {
   return this->implementation_skel_ending_;
 }
@@ -1289,7 +1312,7 @@ BE_GlobalData::server_template_hdr_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::server_template_hdr_ending (void) const
+BE_GlobalData::server_template_hdr_ending () const
 {
   return this->server_template_hdr_ending_;
 }
@@ -1302,7 +1325,7 @@ BE_GlobalData::server_skeleton_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::server_skeleton_ending (void) const
+BE_GlobalData::server_skeleton_ending () const
 {
   return this->server_skeleton_ending_;
 }
@@ -1315,7 +1338,7 @@ BE_GlobalData::server_template_skeleton_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::server_template_skeleton_ending (void) const
+BE_GlobalData::server_template_skeleton_ending () const
 {
   return this->server_template_skeleton_ending_;
 }
@@ -1334,13 +1357,13 @@ BE_GlobalData::use_clonable_in_args (bool clonable)
 }
 
 bool
-BE_GlobalData::use_clonable_in_args (void) const
+BE_GlobalData::use_clonable_in_args () const
 {
   return this->use_clonable_in_args_;
 }
 
 bool
-BE_GlobalData::gen_template_export (void) const
+BE_GlobalData::gen_template_export () const
 {
   return this->gen_template_export_;
 }
@@ -1352,7 +1375,7 @@ BE_GlobalData::gen_template_export (bool val)
 }
 
 bool
-BE_GlobalData::gen_ostream_operators (void) const
+BE_GlobalData::gen_ostream_operators () const
 {
   return this->gen_ostream_operators_;
 }
@@ -1365,7 +1388,7 @@ BE_GlobalData::gen_ostream_operators (bool val)
 
 
 bool
-BE_GlobalData::gen_static_desc_operations (void) const
+BE_GlobalData::gen_static_desc_operations () const
 {
   return this->gen_static_desc_operations_;
 }
@@ -1377,7 +1400,7 @@ BE_GlobalData::gen_static_desc_operations (bool val)
 }
 
 const char*
-BE_GlobalData::anyop_header_ending (void) const
+BE_GlobalData::anyop_header_ending () const
 {
   return this->anyop_hdr_ending_;
 }
@@ -1390,7 +1413,7 @@ BE_GlobalData::anyop_source_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::anyop_source_ending (void) const
+BE_GlobalData::anyop_source_ending () const
 {
   return this->anyop_src_ending_;
 }
@@ -1403,7 +1426,7 @@ BE_GlobalData::ciao_svnt_header_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::ciao_svnt_header_ending (void) const
+BE_GlobalData::ciao_svnt_header_ending () const
 {
   return this->ciao_svnt_hdr_ending_;
 }
@@ -1416,7 +1439,7 @@ BE_GlobalData::ciao_svnt_source_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::ciao_svnt_source_ending (void) const
+BE_GlobalData::ciao_svnt_source_ending () const
 {
   return this->ciao_svnt_src_ending_;
 }
@@ -1429,7 +1452,7 @@ BE_GlobalData::ciao_svnt_header_template_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::ciao_svnt_header_template_ending (void) const
+BE_GlobalData::ciao_svnt_header_template_ending () const
 {
   return this->ciao_svnt_hdr_template_ending_;
 }
@@ -1442,7 +1465,7 @@ BE_GlobalData::ciao_svnt_source_template_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::ciao_svnt_source_template_ending (void) const
+BE_GlobalData::ciao_svnt_source_template_ending () const
 {
   return this->ciao_svnt_src_template_ending_;
 }
@@ -1455,7 +1478,7 @@ BE_GlobalData::ciao_exec_header_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::ciao_exec_header_ending (void) const
+BE_GlobalData::ciao_exec_header_ending () const
 {
   return this->ciao_exec_hdr_ending_;
 }
@@ -1468,7 +1491,7 @@ BE_GlobalData::ciao_exec_source_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::ciao_exec_source_ending (void) const
+BE_GlobalData::ciao_exec_source_ending () const
 {
   return this->ciao_exec_src_ending_;
 }
@@ -1481,7 +1504,7 @@ BE_GlobalData::ciao_exec_stub_header_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::ciao_exec_stub_header_ending (void) const
+BE_GlobalData::ciao_exec_stub_header_ending () const
 {
   return this->ciao_exec_stub_hdr_ending_;
 }
@@ -1494,7 +1517,7 @@ BE_GlobalData::ciao_exec_idl_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::ciao_exec_idl_ending (void) const
+BE_GlobalData::ciao_exec_idl_ending () const
 {
   return this->ciao_exec_idl_ending_;
 }
@@ -1507,7 +1530,7 @@ BE_GlobalData::ciao_conn_header_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::ciao_conn_header_ending (void) const
+BE_GlobalData::ciao_conn_header_ending () const
 {
   return this->ciao_conn_hdr_ending_;
 }
@@ -1520,7 +1543,7 @@ BE_GlobalData::ciao_conn_source_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::ciao_conn_source_ending (void) const
+BE_GlobalData::ciao_conn_source_ending () const
 {
   return this->ciao_conn_src_ending_;
 }
@@ -1533,7 +1556,7 @@ BE_GlobalData::dds_typesupport_hdr_ending (const char* s)
 }
 
 const char*
-BE_GlobalData::dds_typesupport_hdr_ending (void) const
+BE_GlobalData::dds_typesupport_hdr_ending () const
 {
   return this->dds_typesupport_hdr_ending_;
 }
@@ -1546,7 +1569,7 @@ BE_GlobalData::ciao_ami_conn_idl_ending (const char* s)
 }
 
 const char *
-BE_GlobalData::ciao_ami_conn_idl_ending (void) const
+BE_GlobalData::ciao_ami_conn_idl_ending () const
 {
   return this->ciao_ami_conn_idl_ending_;
 }
@@ -1559,7 +1582,7 @@ BE_GlobalData::ciao_ami_conn_impl_hdr_ending (const char* s)
 }
 
 const char *
-BE_GlobalData::ciao_ami_conn_impl_hdr_ending (void) const
+BE_GlobalData::ciao_ami_conn_impl_hdr_ending () const
 {
   return this->ciao_ami_conn_impl_hdr_ending_;
 }
@@ -1572,7 +1595,7 @@ BE_GlobalData::ciao_ami_conn_impl_src_ending (const char* s)
 }
 
 const char *
-BE_GlobalData::ciao_ami_conn_impl_src_ending (void) const
+BE_GlobalData::ciao_ami_conn_impl_src_ending () const
 {
   return this->ciao_ami_conn_impl_src_ending_;
 }
@@ -1585,7 +1608,7 @@ BE_GlobalData::ciao_container_type (const char* s)
 }
 
 const char *
-BE_GlobalData::ciao_container_type (void) const
+BE_GlobalData::ciao_container_type () const
 {
   return this->ciao_container_type_;
 }
@@ -1598,12 +1621,12 @@ BE_GlobalData::output_dir (const char* s)
 }
 
 const char*
-BE_GlobalData::output_dir (void) const
+BE_GlobalData::output_dir () const
 {
   return this->output_dir_;
 }
 bool
-BE_GlobalData::overwrite_not_exec (void) const
+BE_GlobalData::overwrite_not_exec () const
 {
   return this->overwrite_not_exec_;
 }
@@ -1622,7 +1645,7 @@ BE_GlobalData::skel_output_dir (const char* s)
 }
 
 const char*
-BE_GlobalData::skel_output_dir (void) const
+BE_GlobalData::skel_output_dir () const
 {
   return this->skel_output_dir_;
 }
@@ -1635,7 +1658,7 @@ BE_GlobalData::stub_include_dir (const char* s)
 }
 
 const char*
-BE_GlobalData::stub_include_dir (void) const
+BE_GlobalData::stub_include_dir () const
 {
   return this->stub_include_dir_;
 }
@@ -1648,7 +1671,7 @@ BE_GlobalData::anyop_output_dir (const char* s)
 }
 
 const char*
-BE_GlobalData::anyop_output_dir (void) const
+BE_GlobalData::anyop_output_dir () const
 {
   return this->anyop_output_dir_;
 }
@@ -1661,7 +1684,7 @@ BE_GlobalData::exec_output_dir (const char* s)
 }
 
 const char*
-BE_GlobalData::exec_output_dir (void) const
+BE_GlobalData::exec_output_dir () const
 {
   return this->exec_output_dir_;
 }
@@ -1672,7 +1695,7 @@ BE_GlobalData::any_support (bool val)
 }
 
 bool
-BE_GlobalData::any_support (void) const
+BE_GlobalData::any_support () const
 {
   return this->any_support_;
 }
@@ -1684,7 +1707,7 @@ BE_GlobalData::cdr_support (bool val)
 }
 
 bool
-BE_GlobalData::cdr_support (void) const
+BE_GlobalData::cdr_support () const
 {
   return this->cdr_support_;
 }
@@ -1696,7 +1719,7 @@ BE_GlobalData::tc_support (bool val)
 }
 
 bool
-BE_GlobalData::tc_support (void) const
+BE_GlobalData::tc_support () const
 {
   return this->tc_support_;
 }
@@ -1708,7 +1731,7 @@ BE_GlobalData::obv_opt_accessor (bool val)
 }
 
 bool
-BE_GlobalData::obv_opt_accessor (void) const
+BE_GlobalData::obv_opt_accessor () const
 {
   return this->obv_opt_accessor_;
 }
@@ -1720,7 +1743,7 @@ BE_GlobalData::gen_impl_files (bool val)
 }
 
 bool
-BE_GlobalData::gen_impl_files (void) const
+BE_GlobalData::gen_impl_files () const
 {
   return this->gen_impl_files_;
 }
@@ -1732,7 +1755,7 @@ BE_GlobalData::gen_impl_debug_info (bool val)
 }
 
 bool
-BE_GlobalData::gen_impl_debug_info (void) const
+BE_GlobalData::gen_impl_debug_info () const
 {
   return this->gen_impl_debug_info_;
 }
@@ -1744,7 +1767,7 @@ BE_GlobalData::gen_copy_ctor (bool val)
 }
 
 bool
-BE_GlobalData::gen_copy_ctor (void) const
+BE_GlobalData::gen_copy_ctor () const
 {
   return this->gen_copy_ctor_;
 }
@@ -1756,7 +1779,7 @@ BE_GlobalData::gen_assign_op (bool val)
 }
 
 bool
-BE_GlobalData::gen_assign_op (void) const
+BE_GlobalData::gen_assign_op () const
 {
   return this->gen_assign_op_;
 }
@@ -1768,7 +1791,7 @@ BE_GlobalData::gen_thru_poa_collocation (bool val)
 }
 
 bool
-BE_GlobalData::gen_thru_poa_collocation (void) const
+BE_GlobalData::gen_thru_poa_collocation () const
 {
   return this->gen_thru_poa_collocation_;
 }
@@ -1780,7 +1803,7 @@ BE_GlobalData::gen_direct_collocation (bool val)
 }
 
 bool
-BE_GlobalData::gen_direct_collocation (void) const
+BE_GlobalData::gen_direct_collocation () const
 {
   return this->gen_direct_collocation_;
 }
@@ -1792,7 +1815,7 @@ BE_GlobalData::gen_corba_e (bool val)
 }
 
 bool
-BE_GlobalData::gen_corba_e (void) const
+BE_GlobalData::gen_corba_e () const
 {
   return this->gen_corba_e_;
 }
@@ -1804,7 +1827,7 @@ BE_GlobalData::gen_minimum_corba (bool val)
 }
 
 bool
-BE_GlobalData::gen_minimum_corba (void) const
+BE_GlobalData::gen_minimum_corba () const
 {
   return this->gen_minimum_corba_;
 }
@@ -1816,7 +1839,7 @@ BE_GlobalData::gen_noeventccm (bool val)
 }
 
 bool
-BE_GlobalData::gen_noeventccm (void) const
+BE_GlobalData::gen_noeventccm () const
 {
   return this->gen_noeventccm_;
 }
@@ -1828,7 +1851,7 @@ BE_GlobalData::gen_lwccm (bool val)
 }
 
 bool
-BE_GlobalData::gen_lwccm (void) const
+BE_GlobalData::gen_lwccm () const
 {
   return this->gen_lwccm_;
 }
@@ -1841,7 +1864,7 @@ BE_GlobalData::opt_tc (bool val)
 }
 
 bool
-BE_GlobalData::opt_tc (void) const
+BE_GlobalData::opt_tc () const
 {
   return this->opt_tc_;
 }
@@ -1853,7 +1876,7 @@ BE_GlobalData::ami4ccm_call_back (bool val)
 }
 
 bool
-BE_GlobalData::ami4ccm_call_back (void) const
+BE_GlobalData::ami4ccm_call_back () const
 {
   return this->ami4ccm_call_back_;
 }
@@ -1865,7 +1888,7 @@ BE_GlobalData::ami_call_back (bool val)
 }
 
 bool
-BE_GlobalData::ami_call_back (void) const
+BE_GlobalData::ami_call_back () const
 {
   return this->ami_call_back_;
 }
@@ -1877,7 +1900,7 @@ BE_GlobalData::gen_amh_classes (bool val)
 }
 
 bool
-BE_GlobalData::gen_amh_classes (void) const
+BE_GlobalData::gen_amh_classes () const
 {
   return this->gen_amh_classes_;
 }
@@ -1889,7 +1912,7 @@ BE_GlobalData::gen_tie_classes (bool val)
 }
 
 bool
-BE_GlobalData::gen_tie_classes (void) const
+BE_GlobalData::gen_tie_classes () const
 {
   return this->gen_tie_classes_;
 }
@@ -1901,7 +1924,7 @@ BE_GlobalData::gen_smart_proxies (bool val)
 }
 
 bool
-BE_GlobalData::gen_smart_proxies (void) const
+BE_GlobalData::gen_smart_proxies () const
 {
   return this->gen_smart_proxies_;
 }
@@ -1913,7 +1936,7 @@ BE_GlobalData::gen_inline_constants (bool val)
 }
 
 bool
-BE_GlobalData::gen_inline_constants (void) const
+BE_GlobalData::gen_inline_constants () const
 {
   return this->gen_inline_constants_;
 }
@@ -1925,7 +1948,7 @@ BE_GlobalData::gen_orb_h_include (bool val)
 }
 
 bool
-BE_GlobalData::gen_orb_h_include (void) const
+BE_GlobalData::gen_orb_h_include () const
 {
   return this->gen_orb_h_include_;
 }
@@ -1937,7 +1960,7 @@ BE_GlobalData::gen_empty_anyop_header (bool val)
 }
 
 bool
-BE_GlobalData::gen_empty_anyop_header (void) const
+BE_GlobalData::gen_empty_anyop_header () const
 {
   return this->gen_empty_anyop_header_;
 }
@@ -1949,7 +1972,7 @@ BE_GlobalData::lookup_strategy (LOOKUP_STRATEGY s)
 }
 
 BE_GlobalData::LOOKUP_STRATEGY
-BE_GlobalData::lookup_strategy (void) const
+BE_GlobalData::lookup_strategy () const
 {
   return this->lookup_strategy_;
 }
@@ -1957,7 +1980,7 @@ BE_GlobalData::lookup_strategy (void) const
 void
 BE_GlobalData::dds_impl (char const * const val)
 {
-  ACE_CString tmp (val, 0, false);
+  ACE_CString tmp (val, nullptr, false);
 
   if (tmp == "ndds")
     {
@@ -1986,236 +2009,236 @@ BE_GlobalData::dds_impl (char const * const val)
 }
 
 BE_GlobalData::DDS_IMPL
-BE_GlobalData::dds_impl (void) const
+BE_GlobalData::dds_impl () const
 {
   return this->dds_impl_;
 }
 
 void
-BE_GlobalData::destroy (void)
+BE_GlobalData::destroy ()
 {
   ACE::strdelete (this->skel_export_macro_);
-  this->skel_export_macro_ = 0;
+  this->skel_export_macro_ = nullptr;
 
   ACE::strdelete (this->skel_export_include_);
-  this->skel_export_include_ = 0;
+  this->skel_export_include_ = nullptr;
 
   ACE::strdelete (this->skel_export_file_);
-  this->skel_export_file_ = 0;
+  this->skel_export_file_ = nullptr;
 
   ACE::strdelete (this->stub_export_macro_);
-  this->stub_export_macro_ = 0;
+  this->stub_export_macro_ = nullptr;
 
   ACE::strdelete (this->stub_export_include_);
-  this->stub_export_include_ = 0;
+  this->stub_export_include_ = nullptr;
 
   ACE::strdelete (this->stub_export_file_);
-  this->stub_export_file_ = 0;
+  this->stub_export_file_ = nullptr;
 
   ACE::strdelete (this->anyop_export_macro_);
-  this->anyop_export_macro_ = 0;
+  this->anyop_export_macro_ = nullptr;
 
   ACE::strdelete (this->anyop_export_include_);
-  this->anyop_export_include_ = 0;
+  this->anyop_export_include_ = nullptr;
 
   ACE::strdelete (this->exec_export_macro_);
-  this->exec_export_macro_ = 0;
+  this->exec_export_macro_ = nullptr;
 
   ACE::strdelete (this->exec_export_include_);
-  this->exec_export_include_ = 0;
+  this->exec_export_include_ = nullptr;
 
   ACE::strdelete (this->svnt_export_macro_);
-  this->svnt_export_macro_ = 0;
+  this->svnt_export_macro_ = nullptr;
 
   ACE::strdelete (this->svnt_export_include_);
-  this->svnt_export_include_ = 0;
+  this->svnt_export_include_ = nullptr;
 
   ACE::strdelete (this->conn_export_macro_);
-  this->conn_export_macro_ = 0;
+  this->conn_export_macro_ = nullptr;
 
   ACE::strdelete (this->conn_export_include_);
-  this->conn_export_include_ = 0;
+  this->conn_export_include_ = nullptr;
 
   ACE::strdelete (this->pch_include_);
-  this->pch_include_ = 0;
+  this->pch_include_ = nullptr;
 
   ACE::strdelete (this->pre_include_);
-  this->pre_include_ = 0;
+  this->pre_include_ = nullptr;
 
   ACE::strdelete (this->post_include_);
-  this->post_include_ = 0;
+  this->post_include_ = nullptr;
 
   ACE::strdelete (this->include_guard_);
-  this->include_guard_ = 0;
+  this->include_guard_ = nullptr;
 
   ACE::strdelete (this->safe_include_);
-  this->safe_include_ = 0;
+  this->safe_include_ = nullptr;
 
   ACE::strdelete (this->unique_include_);
-  this->unique_include_ = 0;
+  this->unique_include_ = nullptr;
 
   ACE::strdelete (this->stripped_filename_);
-  this->stripped_filename_ = 0;
+  this->stripped_filename_ = nullptr;
 
   ACE::strdelete (this->client_hdr_ending_);
-  this->client_hdr_ending_ = 0;
+  this->client_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->client_stub_ending_);
-  this->client_stub_ending_ = 0;
+  this->client_stub_ending_ = nullptr;
 
   ACE::strdelete (this->client_inline_ending_);
-  this->client_inline_ending_ = 0;
+  this->client_inline_ending_ = nullptr;
 
   ACE::strdelete (this->server_hdr_ending_);
-  this->server_hdr_ending_ = 0;
+  this->server_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->implementation_hdr_ending_);
-  this->implementation_hdr_ending_ = 0;
+  this->implementation_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->implementation_skel_ending_);
-  this->implementation_skel_ending_ = 0;
+  this->implementation_skel_ending_ = nullptr;
 
   ACE::strdelete (this->impl_class_prefix_);
-  this->impl_class_prefix_ = 0;
+  this->impl_class_prefix_ = nullptr;
 
   ACE::strdelete (this->impl_class_suffix_);
-  this->impl_class_suffix_ = 0;
+  this->impl_class_suffix_ = nullptr;
 
   ACE::strdelete (this->server_template_hdr_ending_);
-  this->server_template_hdr_ending_ = 0;
+  this->server_template_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->server_skeleton_ending_);
-  this->server_skeleton_ending_ = 0;
+  this->server_skeleton_ending_ = nullptr;
 
   ACE::strdelete (this->server_template_skeleton_ending_);
-  this->server_template_skeleton_ending_ = 0;
+  this->server_template_skeleton_ending_ = nullptr;
 
   ACE::strdelete (this->anyop_hdr_ending_);
-  this->anyop_hdr_ending_ = 0;
+  this->anyop_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->anyop_src_ending_);
-  this->anyop_src_ending_ = 0;
+  this->anyop_src_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_svnt_hdr_ending_);
-  this->ciao_svnt_hdr_ending_ = 0;
+  this->ciao_svnt_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_svnt_src_ending_);
-  this->ciao_svnt_src_ending_ = 0;
+  this->ciao_svnt_src_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_svnt_hdr_template_ending_);
-  this->ciao_svnt_hdr_template_ending_ = 0;
+  this->ciao_svnt_hdr_template_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_svnt_src_template_ending_);
-  this->ciao_svnt_src_template_ending_ = 0;
+  this->ciao_svnt_src_template_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_exec_hdr_ending_);
-  this->ciao_exec_hdr_ending_ = 0;
+  this->ciao_exec_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_exec_src_ending_);
-  this->ciao_exec_src_ending_ = 0;
+  this->ciao_exec_src_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_exec_stub_hdr_ending_);
-  this->ciao_exec_stub_hdr_ending_ = 0;
+  this->ciao_exec_stub_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_exec_idl_ending_);
-  this->ciao_exec_idl_ending_ = 0;
+  this->ciao_exec_idl_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_conn_hdr_ending_);
-  this->ciao_conn_hdr_ending_ = 0;
+  this->ciao_conn_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_conn_src_ending_);
-  this->ciao_conn_src_ending_ = 0;
+  this->ciao_conn_src_ending_ = nullptr;
 
   ACE::strdelete (this->dds_typesupport_hdr_ending_);
-  this->dds_typesupport_hdr_ending_ = 0;
+  this->dds_typesupport_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_ami_conn_idl_ending_);
-  this->ciao_ami_conn_idl_ending_ = 0;
+  this->ciao_ami_conn_idl_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_ami_conn_impl_hdr_ending_);
-  this->ciao_ami_conn_impl_hdr_ending_ = 0;
+  this->ciao_ami_conn_impl_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_ami_conn_impl_src_ending_);
-  this->ciao_ami_conn_impl_src_ending_ = 0;
+  this->ciao_ami_conn_impl_src_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_container_type_);
-  this->ciao_container_type_ = 0;
+  this->ciao_container_type_ = nullptr;
 
   ACE::strdelete (this->output_dir_);
-  this->output_dir_ = 0;
+  this->output_dir_ = nullptr;
 
   ACE::strdelete (this->stub_include_dir_);
-  this->stub_include_dir_ = 0;
+  this->stub_include_dir_ = nullptr;
 
   ACE::strdelete (this->skel_output_dir_);
-  this->skel_output_dir_ = 0;
+  this->skel_output_dir_ = nullptr;
 
   ACE::strdelete (this->anyop_output_dir_);
-  this->anyop_output_dir_ = 0;
+  this->anyop_output_dir_ = nullptr;
 
   ACE::strdelete (this->exec_output_dir_);
-  this->exec_output_dir_ = 0;
+  this->exec_output_dir_ = nullptr;
 
-  if (0 != this->messaging_)
+  if (nullptr != this->messaging_)
     {
       this->messaging_->destroy ();
       delete this->messaging_;
-      this->messaging_ = 0;
+      this->messaging_ = nullptr;
     }
 
-  if (0 != this->messaging_exceptionholder_)
+  if (nullptr != this->messaging_exceptionholder_)
     {
       this->messaging_exceptionholder_->destroy ();
       delete this->messaging_exceptionholder_;
-      this->messaging_exceptionholder_ = 0;
+      this->messaging_exceptionholder_ = nullptr;
     }
 
-  if (0 != this->messaging_replyhandler_)
+  if (nullptr != this->messaging_replyhandler_)
     {
       this->messaging_replyhandler_->destroy ();
       delete this->messaging_replyhandler_;
-      this->messaging_replyhandler_ = 0;
+      this->messaging_replyhandler_ = nullptr;
     }
 
-  if (0 != tao_cg)
+  if (nullptr != tao_cg)
     {
       tao_cg->destroy ();
     }
 }
 
 AST_PredefinedType *
-BE_GlobalData:: void_type (void)
+BE_GlobalData:: void_type ()
 {
-  if (0 == this->void_type_)
+  if (nullptr == this->void_type_)
     {
       AST_Decl *d =
         idl_global->root ()->lookup_primitive_type (
           AST_Expression::EV_void);
 
-      this->void_type_ = AST_PredefinedType::narrow_from_decl (d);
+      this->void_type_ = dynamic_cast<AST_PredefinedType*> (d);
     }
 
   return this->void_type_;
 }
 
 be_interface *
-BE_GlobalData::ccmobject (void)
+BE_GlobalData::ccmobject ()
 {
-  if (0 == this->ccmobject_)
+  if (nullptr == this->ccmobject_)
     {
-      Identifier *local_id = 0;
+      Identifier *local_id = nullptr;
       ACE_NEW_RETURN (local_id,
                       Identifier ("CCMObject"),
-                      0);
-      UTL_ScopedName *local_name = 0;
+                      nullptr);
+      UTL_ScopedName *local_name = nullptr;
       ACE_NEW_RETURN (local_name,
-                      UTL_ScopedName (local_id, 0),
-                      0);
+                      UTL_ScopedName (local_id, nullptr),
+                      nullptr);
 
-      Identifier *module_id = 0;
+      Identifier *module_id = nullptr;
       ACE_NEW_RETURN (module_id,
                       Identifier ("Components"),
-                      0);
+                      nullptr);
       UTL_ScopedName sn (module_id,
                          local_name);
 
@@ -2225,7 +2248,7 @@ BE_GlobalData::ccmobject (void)
 
       sn.destroy ();
 
-      if (0 == d)
+      if (nullptr == d)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_global::ccmobject - "
@@ -2233,32 +2256,32 @@ BE_GlobalData::ccmobject (void)
                             0);
         }
 
-      this->ccmobject_ = be_interface::narrow_from_decl (d);
+      this->ccmobject_ = dynamic_cast<be_interface*> (d);
     }
 
   return this->ccmobject_;
 }
 
 be_module *
-BE_GlobalData::messaging (void)
+BE_GlobalData::messaging ()
 {
-  if (0 == this->messaging_)
+  if (nullptr == this->messaging_)
     {
-      Identifier *id = 0;
-      UTL_ScopedName *sn = 0;
+      Identifier *id = nullptr;
+      UTL_ScopedName *sn = nullptr;
 
       ACE_NEW_RETURN (id,
                       Identifier ("Messaging"),
-                      0);
+                      nullptr);
 
       ACE_NEW_RETURN (sn,
                       UTL_ScopedName (id,
-                                      0),
-                      0);
+                                      nullptr),
+                      nullptr);
 
       ACE_NEW_RETURN (this->messaging_,
                       be_module (sn),
-                      0);
+                      nullptr);
 
       this->messaging_->set_name (sn);
     }
@@ -2267,52 +2290,52 @@ BE_GlobalData::messaging (void)
 }
 
 be_valuetype *
-BE_GlobalData::messaging_exceptionholder (void)
+BE_GlobalData::messaging_exceptionholder ()
 {
-  if (0 == this->messaging_exceptionholder_)
+  if (nullptr == this->messaging_exceptionholder_)
     {
-      Identifier *id = 0;
+      Identifier *id = nullptr;
       be_module *msg = this->messaging ();
       idl_global->scopes ().push (msg);
 
       ACE_NEW_RETURN (id,
                       Identifier ("Messaging"),
-                      0);
+                      nullptr);
 
       // Create a valuetype "ExceptionHolder"
       // from which we inherit.
-      UTL_ScopedName *full_name = 0;
+      UTL_ScopedName *full_name = nullptr;
       ACE_NEW_RETURN (full_name,
                       UTL_ScopedName (id,
-                                      0),
-                      0);
+                                      nullptr),
+                      nullptr);
 
       ACE_NEW_RETURN (id,
                       Identifier ("ExceptionHolder"),
-                      0);
+                      nullptr);
 
-      UTL_ScopedName *local_name = 0;
+      UTL_ScopedName *local_name = nullptr;
       ACE_NEW_RETURN (local_name,
                       UTL_ScopedName (id,
-                                      0),
-                      0);
+                                      nullptr),
+                      nullptr);
 
       full_name->nconc (local_name);
 
       ACE_NEW_RETURN (this->messaging_exceptionholder_,
                       be_valuetype (full_name,
+                                    nullptr,
                                     0,
+                                    nullptr,
+                                    nullptr,
                                     0,
+                                    nullptr,
                                     0,
-                                    0,
-                                    0,
-                                    0,
-                                    0,
-                                    0,
+                                    nullptr,
                                     0,
                                     0,
                                     0),
-                      0);
+                      nullptr);
 
       this->messaging_exceptionholder_->set_name (full_name);
 
@@ -2332,49 +2355,49 @@ BE_GlobalData::messaging_exceptionholder (void)
 }
 
 be_interface *
-BE_GlobalData::messaging_replyhandler (void)
+BE_GlobalData::messaging_replyhandler ()
 {
-  if (0 == this->messaging_replyhandler_)
+  if (nullptr == this->messaging_replyhandler_)
     {
       be_module *msg = this->messaging ();
       idl_global->scopes ().push (msg);
 
-      Identifier *id = 0;
-      UTL_ScopedName *local_name = 0;
+      Identifier *id = nullptr;
+      UTL_ScopedName *local_name = nullptr;
 
       // Create a virtual module named "Messaging"
       // "and an interface "ReplyHandler"
       // from which we inherit.
       ACE_NEW_RETURN (id,
                       Identifier ("Messaging"),
-                      0);
+                      nullptr);
 
-      UTL_ScopedName *full_name = 0;
+      UTL_ScopedName *full_name = nullptr;
       ACE_NEW_RETURN (full_name,
                       UTL_ScopedName (id,
-                                      0),
-                      0);
+                                      nullptr),
+                      nullptr);
 
       ACE_NEW_RETURN (id,
                       Identifier ("ReplyHandler"),
-                      0);
+                      nullptr);
 
       ACE_NEW_RETURN (local_name,
                       UTL_ScopedName (id,
-                                      0),
-                      0);
+                                      nullptr),
+                      nullptr);
 
       full_name->nconc (local_name);
 
       ACE_NEW_RETURN (this->messaging_replyhandler_,
                       be_interface (full_name,
-                                    0,  // inherited interfaces
+                                    nullptr,  // inherited interfaces
                                     0,  // number of inherited interfaces
-                                    0,  // ancestors
+                                    nullptr,  // ancestors
                                     0,  // number of ancestors
                                     0,  // not local
                                     0), // not abstract
-                      0);
+                      nullptr);
 
       this->messaging_replyhandler_->set_name (full_name);
       this->messaging_replyhandler_->set_prefix_with_typeprefix ("omg.org");
@@ -2390,7 +2413,7 @@ BE_GlobalData::messaging_replyhandler (void)
 }
 
 bool
-BE_GlobalData::gen_anyop_files (void) const
+BE_GlobalData::gen_anyop_files () const
 {
   return this->gen_anyop_files_;
 }
@@ -2402,7 +2425,7 @@ BE_GlobalData::gen_anyop_files (bool val)
 }
 
 bool
-BE_GlobalData::gen_skel_files (void) const
+BE_GlobalData::gen_skel_files () const
 {
   return this->gen_skel_files_;
 }
@@ -2414,7 +2437,7 @@ BE_GlobalData::gen_skel_files (bool val)
 }
 
 bool
-BE_GlobalData::gen_svnt_cpp_files (void) const
+BE_GlobalData::gen_svnt_cpp_files () const
 {
   return this->gen_svnt_cpp_files_;
 }
@@ -2426,7 +2449,7 @@ BE_GlobalData::gen_svnt_cpp_files (bool val)
 }
 
 bool
-BE_GlobalData::gen_svnt_t_files (void) const
+BE_GlobalData::gen_svnt_t_files () const
 {
   return this->gen_svnt_t_files_;
 }
@@ -2438,7 +2461,7 @@ BE_GlobalData::gen_svnt_t_files (bool val)
 }
 
 bool
-BE_GlobalData::gen_client_inline (void) const
+BE_GlobalData::gen_client_inline () const
 {
   return this->gen_client_inline_;
 }
@@ -2450,7 +2473,7 @@ BE_GlobalData::gen_client_inline (bool val)
 }
 
 bool
-BE_GlobalData::gen_client_stub (void) const
+BE_GlobalData::gen_client_stub () const
 {
   return this->gen_client_stub_;
 }
@@ -2462,7 +2485,7 @@ BE_GlobalData::gen_client_stub (bool val)
 }
 
 bool
-BE_GlobalData::gen_client_header (void) const
+BE_GlobalData::gen_client_header () const
 {
   return this->gen_client_header_;
 }
@@ -2474,7 +2497,7 @@ BE_GlobalData::gen_client_header (bool val)
 }
 
 bool
-BE_GlobalData::gen_server_skeleton (void) const
+BE_GlobalData::gen_server_skeleton () const
 {
   return this->gen_server_skeleton_;
 }
@@ -2486,7 +2509,7 @@ BE_GlobalData::gen_server_skeleton (bool val)
 }
 
 bool
-BE_GlobalData::gen_server_header (void) const
+BE_GlobalData::gen_server_header () const
 {
   return this->gen_server_header_;
 }
@@ -2498,7 +2521,7 @@ BE_GlobalData::gen_server_header (bool val)
 }
 
 bool
-BE_GlobalData::gen_local_iface_anyops (void) const
+BE_GlobalData::gen_local_iface_anyops () const
 {
   return this->gen_local_iface_anyops_;
 }
@@ -2510,7 +2533,7 @@ BE_GlobalData::gen_local_iface_anyops (bool val)
 }
 
 bool
-BE_GlobalData::gen_custom_ending (void) const
+BE_GlobalData::gen_custom_ending () const
 {
   return this->gen_custom_ending_;
 }
@@ -2522,7 +2545,7 @@ BE_GlobalData::gen_custom_ending (bool val)
 }
 
 bool
-BE_GlobalData::gen_unique_guards (void) const
+BE_GlobalData::gen_unique_guards () const
 {
   return this->gen_unique_guards_;
 }
@@ -2534,7 +2557,7 @@ BE_GlobalData::gen_unique_guards (bool val)
 }
 
 bool
-BE_GlobalData::gen_ciao_svnt (void) const
+BE_GlobalData::gen_ciao_svnt () const
 {
   return this->gen_ciao_svnt_;
 }
@@ -2546,7 +2569,7 @@ BE_GlobalData::gen_ciao_svnt (bool val)
 }
 
 bool
-BE_GlobalData::gen_ciao_exec_idl (void) const
+BE_GlobalData::gen_ciao_exec_idl () const
 {
   return this->gen_ciao_exec_idl_;
 }
@@ -2558,7 +2581,7 @@ BE_GlobalData::gen_ciao_exec_idl (bool val)
 }
 
 bool
-BE_GlobalData::gen_ciao_exec_impl (void) const
+BE_GlobalData::gen_ciao_exec_impl () const
 {
   return this->gen_ciao_exec_impl_;
 }
@@ -2570,7 +2593,7 @@ BE_GlobalData::gen_ciao_exec_impl (bool val)
 }
 
 bool
-BE_GlobalData::gen_ciao_exec_reactor_impl (void) const
+BE_GlobalData::gen_ciao_exec_reactor_impl () const
 {
   return this->gen_ciao_exec_reactor_impl_;
 }
@@ -2582,7 +2605,7 @@ BE_GlobalData::gen_ciao_exec_reactor_impl (bool val)
 }
 
 bool
-BE_GlobalData::gen_ciao_conn_impl (void) const
+BE_GlobalData::gen_ciao_conn_impl () const
 {
   return this->gen_ciao_conn_impl_;
 }
@@ -2594,7 +2617,7 @@ BE_GlobalData::gen_ciao_conn_impl (bool val)
 }
 
 bool
-BE_GlobalData::gen_dds_typesupport_idl (void) const
+BE_GlobalData::gen_dds_typesupport_idl () const
 {
   return this->gen_dds_typesupport_idl_;
 }
@@ -2606,7 +2629,7 @@ BE_GlobalData::gen_dds_typesupport_idl (bool val)
 }
 
 bool
-BE_GlobalData::gen_ciao_valuefactory_reg (void) const
+BE_GlobalData::gen_ciao_valuefactory_reg () const
 {
   return this->gen_ciao_valuefactory_reg_;
 }
@@ -2618,7 +2641,7 @@ BE_GlobalData::gen_ciao_valuefactory_reg (bool val)
 }
 
 bool
-BE_GlobalData::gen_stub_export_hdr_file (void) const
+BE_GlobalData::gen_stub_export_hdr_file () const
 {
   return this->gen_stub_export_hdr_file_;
 }
@@ -2630,7 +2653,7 @@ BE_GlobalData::gen_stub_export_hdr_file (bool val)
 }
 
 bool
-BE_GlobalData::gen_skel_export_hdr_file (void) const
+BE_GlobalData::gen_skel_export_hdr_file () const
 {
   return this->gen_skel_export_hdr_file_;
 }
@@ -2642,7 +2665,7 @@ BE_GlobalData::gen_skel_export_hdr_file (bool val)
 }
 
 bool
-BE_GlobalData::gen_svnt_export_hdr_file (void) const
+BE_GlobalData::gen_svnt_export_hdr_file () const
 {
   return this->gen_svnt_export_hdr_file_;
 }
@@ -2654,7 +2677,7 @@ BE_GlobalData::gen_svnt_export_hdr_file (bool val)
 }
 
 bool
-BE_GlobalData::gen_exec_export_hdr_file (void) const
+BE_GlobalData::gen_exec_export_hdr_file () const
 {
   return this->gen_exec_export_hdr_file_;
 }
@@ -2666,7 +2689,7 @@ BE_GlobalData::gen_exec_export_hdr_file (bool val)
 }
 
 bool
-BE_GlobalData::gen_conn_export_hdr_file (void) const
+BE_GlobalData::gen_conn_export_hdr_file () const
 {
   return this->gen_conn_export_hdr_file_;
 }
@@ -2678,7 +2701,7 @@ BE_GlobalData::gen_conn_export_hdr_file (bool val)
 }
 
 bool
-BE_GlobalData::alt_mapping (void) const
+BE_GlobalData::alt_mapping () const
 {
   return this->alt_mapping_;
 }
@@ -2690,7 +2713,7 @@ BE_GlobalData::alt_mapping (bool val)
 }
 
 bool
-BE_GlobalData::in_facet_servant (void) const
+BE_GlobalData::in_facet_servant () const
 {
   return this->in_facet_servant_;
 }
@@ -2702,7 +2725,7 @@ BE_GlobalData::in_facet_servant (bool val)
 }
 
 bool
-BE_GlobalData::gen_arg_traits (void) const
+BE_GlobalData::gen_arg_traits () const
 {
   return this->gen_arg_traits_;
 }
@@ -2714,7 +2737,7 @@ BE_GlobalData::gen_arg_traits (bool val)
 }
 
 bool
-BE_GlobalData::gen_anytypecode_adapter (void) const
+BE_GlobalData::gen_anytypecode_adapter () const
 {
   return this->gen_anytypecode_adapter_;
 }
@@ -2738,7 +2761,7 @@ BE_GlobalData::no_fixed_err (bool val)
 }
 
 unsigned long
-BE_GlobalData::tab_size (void) const
+BE_GlobalData::tab_size () const
 {
   return this->tab_size_;
 }
@@ -2750,7 +2773,7 @@ BE_GlobalData::tab_size (unsigned long val)
 }
 
 ACE_CString
-BE_GlobalData::spawn_options (void)
+BE_GlobalData::spawn_options ()
 {
   return idl_global->idl_flags ();
 }
@@ -2902,7 +2925,7 @@ BE_GlobalData::parse_args (long &i, char **av)
       case 'H':
         idl_global->append_idl_flag (av[i + 1]);
 
-        if (av[i + 1] == 0 || av[i + 1][0] == '-')
+        if (av[i + 1] == nullptr || av[i + 1][0] == '-')
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("no selection for -H option\n")));
@@ -2981,7 +3004,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == '\0')
           {
             idl_global->append_idl_flag (av[i + 1]);
-            ACE_CString tmp (av[i + 1], 0, false);
+            ACE_CString tmp (av[i + 1], nullptr, false);
 #if defined (ACE_WIN32)
             // WIN32's CreateProcess needs the full executable name
             // when the gperf path is modified, but not for the default
@@ -3420,7 +3443,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         else if (av[i][2] == 't')
           {
             // Optimized typecode generation.
-            be_global->opt_tc (1);
+            be_global->opt_tc (true);
           }
         else if (av[i][2] == 'p')
           {
@@ -3488,7 +3511,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             size_t j;
             size_t k = i;
             // Generate implementation files.
-            be_global->gen_impl_files (1);
+            be_global->gen_impl_files (true);
 
             for (j = 0; j < options; ++j)
               {
@@ -3713,7 +3736,7 @@ BE_GlobalData::parse_args (long &i, char **av)
       case 'T':
         if (av[i][2] == 'S')
           {
-            unsigned long ul = ACE_OS::strtoul (av[i + 1], 0, 10);
+            unsigned long ul = ACE_OS::strtoul (av[i + 1], nullptr, 10);
             be_global->tab_size (ul);
             ++i;
           }
@@ -3738,4 +3761,3 @@ BE_GlobalData::parse_args (long &i, char **av)
         idl_global->parse_args_exit (1);
     }
 }
-

@@ -17,7 +17,7 @@ be_visitor_facet_svts::be_visitor_facet_svts (be_visitor_context *ctx)
 {
 }
 
-be_visitor_facet_svts::~be_visitor_facet_svts (void)
+be_visitor_facet_svts::~be_visitor_facet_svts ()
 {
 }
 
@@ -36,7 +36,7 @@ be_visitor_facet_svts::visit_interface (be_interface *node)
   const char *lname = node->local_name ();
 
   be_decl *scope =
-    be_scope::narrow_from_scope (node->defined_in ())->decl ();
+    dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
   ACE_CString sname_str (scope->full_name ());
 
@@ -66,7 +66,7 @@ be_visitor_facet_svts::visit_interface (be_interface *node)
 
   os_ << be_nl_2 << "template <typename BASE, typename EXEC, typename CONTEXT>" << be_nl
       << lname << "_Servant_T<BASE, EXEC, CONTEXT>::~"
-      << lname << "_Servant_T (void)" << be_nl
+      << lname << "_Servant_T ()" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -75,7 +75,7 @@ be_visitor_facet_svts::visit_interface (be_interface *node)
   if (is_intf)
     {
       be_interface *op_scope =
-        be_interface::narrow_from_decl (node);
+        dynamic_cast<be_interface*> (node);
 
       os_ << be_nl_2
           << "// All facet operations and attributes.";
@@ -147,7 +147,7 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
           case AST_Decl::NT_op:
             {
               be_operation *op =
-                be_operation::narrow_from_decl (d);
+                dynamic_cast<be_operation*> (d);
 
               /// If AMI implied IDL was generated for the
               /// original interface, we don't want those
@@ -174,7 +174,7 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
           case AST_Decl::NT_attr:
             {
               be_attribute *attr =
-                be_attribute::narrow_from_decl (d);
+                dynamic_cast<be_attribute*> (d);
 
               be_visitor_attribute v (&ctx);
               v.op_scope (op_scope_);

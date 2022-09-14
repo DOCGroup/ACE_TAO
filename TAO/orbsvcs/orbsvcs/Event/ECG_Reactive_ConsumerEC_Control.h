@@ -72,15 +72,15 @@ public:
                                        CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_ECG_Reactive_ConsumerEC_Control (void);
+  virtual ~TAO_ECG_Reactive_ConsumerEC_Control ();
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_EC_ConsumerControl
-  virtual int activate (void);
-  virtual int shutdown (void);
+  virtual int activate ();
+  virtual int shutdown ();
   virtual void event_channel_not_exist (TAO_EC_Gateway_IIOP *gateway);
   virtual void system_exception (TAO_EC_Gateway_IIOP *gateway,
                                  CORBA::SystemException &);
@@ -88,7 +88,7 @@ public:
 private:
   /// Check if the consumers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_eventchannel (void);
+  void query_eventchannel ();
 
 private:
   /// The polling rate

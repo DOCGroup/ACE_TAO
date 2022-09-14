@@ -30,11 +30,10 @@
  */
 class Naming_Test
 {
-
 public:
   /// Execute the test code.  <root_context> is the context to assume
   /// as the root for all tests operations.
-  virtual ~Naming_Test (void);
+  virtual ~Naming_Test ();
   virtual int execute (TAO_Naming_Client &root_context) = 0;
 
 protected:
@@ -81,7 +80,7 @@ public:
   virtual int execute (TAO_Naming_Client &root_context);
 
   /// This code is executed by each thread.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Number of threads to spawn.  By default is set to 10.
@@ -107,7 +106,6 @@ private:
 
   /// Holds object to be registered with the Naming Service by each thread.
   Test_Object_var test_ref_;
-
 };
 
 /**
@@ -240,13 +238,12 @@ public:
                          FILE * ior_output_file);
 
   /// Destructor.
-  virtual ~Persistent_Test_Begin (void);
+  virtual ~Persistent_Test_Begin ();
 
   /// Execute the persistent test (part 1) code.
   virtual int execute (TAO_Naming_Client &root_context);
 
 private:
-
   /// A pointer to our ORB (needed for object/string conversion).
   CORBA::ORB_var orb_;
 
@@ -276,13 +273,12 @@ public:
                        const ACE_TCHAR * ior);
 
   /// Destructor.
-  virtual ~Persistent_Test_End (void);
+  virtual ~Persistent_Test_End ();
 
   /// Execute the persistent test (part 2).
   virtual int execute (TAO_Naming_Client &root_context);
 
 private:
-
   /// A pointer to our ORB (used for string/object conversion).
   CORBA::ORB_var orb_;
 
@@ -308,13 +304,12 @@ public:
                         PortableServer::POA_ptr poa);
 
   /// Destructor.
-  virtual ~Persistent_List_Test (void);
+  virtual ~Persistent_List_Test ();
 
   /// Execute the persistent test (part 3).
   virtual int execute (TAO_Naming_Client &root_context);
 
 private:
-
   /// A pointer to our ORB (used for string/object conversion).
   CORBA::ORB_var orb_;
 };
@@ -335,13 +330,13 @@ class CosNaming_Client
 {
 public:
   /// Constructor.
-  CosNaming_Client (void);
+  CosNaming_Client ();
 
   /// Destructor.
-  ~CosNaming_Client (void);
+  ~CosNaming_Client ();
 
   /// Execute client example code.
-  int run (void);
+  int run ();
 
   /// Initialize the client communication endpoint with server.
   int init (int argc, ACE_TCHAR **argv);
@@ -355,7 +350,7 @@ public:
 
 private:
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// # of arguments on the command line.
   int argc_;

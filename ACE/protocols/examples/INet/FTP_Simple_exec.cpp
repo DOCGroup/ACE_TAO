@@ -13,7 +13,7 @@ ACE_CString password;
 bool do_active = false;
 
 void
-usage (void)
+usage ()
 {
   std::cout << "usage: ftp_simple_wget [options] <url>\n";
   std::cout << "Executes an FTP download request and sends the result to STDOUT or file\n";

@@ -38,9 +38,7 @@ class Content_Iterator_i;
  */
 class Iterator_Factory_i : virtual public POA_Web_Server::Iterator_Factory
 {
-
 public:
-
   /**
    * This factory method returns a <Content_Iterator> that can be used
    * to read the <contents> associated with <pathname> one ``chunk''
@@ -58,7 +56,6 @@ public:
   /// Set the type of file content in the metadata structure.
   int content_type (const char *filename,
                     Web_Server::Metadata_Type_out metadata);
-
 };
 
 

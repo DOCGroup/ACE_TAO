@@ -16,7 +16,7 @@ TAO_Linear_Priority_Mapping::TAO_Linear_Priority_Mapping (long policy)
 {
 }
 
-TAO_Linear_Priority_Mapping::~TAO_Linear_Priority_Mapping (void)
+TAO_Linear_Priority_Mapping::~TAO_Linear_Priority_Mapping ()
 {
 }
 

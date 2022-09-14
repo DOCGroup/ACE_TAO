@@ -69,34 +69,34 @@ public:
 
   /// Consolidate this fragments chained message blocks into one.
   /// @return -1 if consolidation failed, eg out or memory, otherwise 0
-  int consolidate (void);
+  int consolidate ();
 
   /// Get missing data
-  size_t missing_data (void) const;
+  size_t missing_data () const;
 
   /// Set missing data
   void missing_data (size_t data);
 
   /// Get the GIOP version
-  TAO_GIOP_Message_Version const &giop_version (void) const;
+  TAO_GIOP_Message_Version const &giop_version () const;
 
   /// Get byte_order
-  CORBA::Octet byte_order (void) const;
+  CORBA::Octet byte_order () const;
 
   /// Get more fragments
-  CORBA::Boolean more_fragments (void) const;
+  CORBA::Boolean more_fragments () const;
 
   /// Get message type
-  GIOP::MsgType msg_type (void) const;
+  GIOP::MsgType msg_type () const;
 
   /// Get next
-  TAO_Queued_Data *next (void) const;
+  TAO_Queued_Data *next () const;
 
   /// Set next
   void next (TAO_Queued_Data* qd);
 
   /// Get message block
-  ACE_Message_Block *msg_block (void) const;
+  ACE_Message_Block *msg_block () const;
 
   /// Set message block
   void msg_block (ACE_Message_Block *mb);
@@ -105,12 +105,11 @@ public:
   void state (const TAO_GIOP_Message_State& state);
 
   /// Get the state
-  const TAO_GIOP_Message_State& state (void) const;
+  const TAO_GIOP_Message_State& state () const;
 
 private:
-
   /// The message block that contains the message.
-  ACE_Message_Block *msg_block_;
+  ACE_Message_Block *msg_block_ {};
 
   /*!
     @name Missing Data details
@@ -122,21 +121,21 @@ private:
   /*! Data missing in the above message that hasn't been read or processed yet,
       the value TAO_MISSING_DATA_UNDEFINED indicates it hasn't been processed yet,
       otherwise greater or equal zero. */
-  size_t missing_data_;
+  size_t missing_data_ {};
   //@}
 
   /// State of this queued data
   TAO_GIOP_Message_State state_;
 
   /// Pounter to the next element in the queue.
-  TAO_Queued_Data *next_;
+  TAO_Queued_Data *next_ {};
 
   /// Replace the datablock with a one allocated on the heap or
   /// allocator
   static void replace_data_block (ACE_Message_Block &mb);
 
   /// The allocator used to allocate this class.
-  ACE_Allocator *allocator_;
+  ACE_Allocator *allocator_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

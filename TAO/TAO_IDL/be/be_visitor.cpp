@@ -21,11 +21,11 @@
 
 #include "ace/config-all.h"
 
-be_visitor::be_visitor (void)
+be_visitor::be_visitor ()
 {
 }
 
-be_visitor::~be_visitor (void)
+be_visitor::~be_visitor ()
 {
 }
 

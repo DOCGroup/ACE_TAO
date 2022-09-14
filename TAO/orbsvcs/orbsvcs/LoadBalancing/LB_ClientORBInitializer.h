@@ -46,7 +46,6 @@ class TAO_LB_ClientORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name PortableInterceptor::ORBInitializer Methods
    *
@@ -58,7 +57,6 @@ public:
 
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

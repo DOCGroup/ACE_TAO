@@ -32,7 +32,7 @@ TAO_AMH_Locate_ResponseHandler_var::~TAO_AMH_Locate_ResponseHandler_var (void)
 }
 
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_ptr
-TAO_AMH_Locate_ResponseHandler_var::ptr (void) const
+TAO_AMH_Locate_ResponseHandler_var::ptr () const
 {
   return this->ptr_;
 }
@@ -74,13 +74,13 @@ TAO_AMH_Locate_ResponseHandler_var::operator TAO_AMH_Locate_ResponseHandler_ptr 
 }
 
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_ptr
-TAO_AMH_Locate_ResponseHandler_var::operator-> (void) const
+TAO_AMH_Locate_ResponseHandler_var::operator-> () const
 {
   return this->ptr_;
 }
 
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_ptr
-TAO_AMH_Locate_ResponseHandler_var::in (void) const
+TAO_AMH_Locate_ResponseHandler_var::in () const
 {
   return this->ptr_;
 }

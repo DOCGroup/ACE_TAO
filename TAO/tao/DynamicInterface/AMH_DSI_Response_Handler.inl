@@ -44,7 +44,7 @@ TAO_AMH_DSI_Response_Handler_var::~TAO_AMH_DSI_Response_Handler_var (void)
 }
 
 ACE_INLINE TAO_AMH_DSI_Response_Handler_ptr
-TAO_AMH_DSI_Response_Handler_var::ptr (void) const
+TAO_AMH_DSI_Response_Handler_var::ptr () const
 {
   return this->ptr_;
 }
@@ -86,13 +86,13 @@ TAO_AMH_DSI_Response_Handler_var::operator TAO_AMH_DSI_Response_Handler_ptr &()
 }
 
 ACE_INLINE TAO_AMH_DSI_Response_Handler_ptr
-TAO_AMH_DSI_Response_Handler_var::operator-> (void) const
+TAO_AMH_DSI_Response_Handler_var::operator-> () const
 {
   return this->ptr_;
 }
 
 ACE_INLINE TAO_AMH_DSI_Response_Handler_ptr
-TAO_AMH_DSI_Response_Handler_var::in (void) const
+TAO_AMH_DSI_Response_Handler_var::in () const
 {
   return this->ptr_;
 }

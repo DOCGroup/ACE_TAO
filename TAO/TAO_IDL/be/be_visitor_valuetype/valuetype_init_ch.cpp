@@ -19,7 +19,7 @@ be_visitor_valuetype_init_ch::be_visitor_valuetype_init_ch (
 {
 }
 
-be_visitor_valuetype_init_ch::~be_visitor_valuetype_init_ch (void)
+be_visitor_valuetype_init_ch::~be_visitor_valuetype_init_ch ()
 {
 }
 
@@ -53,8 +53,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream& os = *(this->ctx_->stream ());
 
-  os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   //@@ If I'm generating concrete class I need a RefCounter.
   os << "class " << be_global->stub_export_macro ()
@@ -70,7 +69,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
     {
       // Public constructor.
       os << be_nl
-         << node->local_name () << "_init (void);";
+         << node->local_name () << "_init ();";
     }
 
   if (this->visit_valuetype_scope (node) == -1)
@@ -85,21 +84,19 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   // Generate _downcast method.
   os << be_nl_2
      << "static " << node->local_name () << "_init* "
-     << "_downcast ( ::CORBA::ValueFactoryBase *);";
+     << "_downcast (::CORBA::ValueFactoryBase *);";
 
   if (factory_style == be_valuetype::FS_CONCRETE_FACTORY)
     {
       //@@ Boris: create_for_unmarshal is still public...
       // generate create_for_unmarshal
       os << be_nl_2
-         << "virtual ::CORBA::ValueBase *" << be_nl
-         << "create_for_unmarshal (void);";
+         << "virtual ::CORBA::ValueBase *create_for_unmarshal ();";
 
       if (node->supports_abstract ())
         {
           os << be_nl_2
-             << "virtual ::CORBA::AbstractBase_ptr" << be_nl
-             << "create_for_unmarshal_abstract (void);" << be_uidt;
+             << "virtual ::CORBA::AbstractBase_ptr create_for_unmarshal_abstract ();" << be_uidt;
         }
     }
 
@@ -109,20 +106,20 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   os << "// TAO-specific extensions"
      << be_uidt_nl
      << "public:" << be_idt_nl;
-  os << "virtual const char* tao_repository_id (void);";
+  os << "virtual const char* tao_repository_id ();";
 
   if (factory_style == be_valuetype::FS_ABSTRACT_FACTORY)
     {
       // Protected constructor.
       os << be_uidt_nl << be_nl
          << "protected:" << be_idt_nl
-         << node->local_name () << "_init (void);";
+         << node->local_name () << "_init ();";
     }
 
   // Protected virtual destructor.
   os << be_uidt_nl << be_nl
      << "protected:" << be_idt_nl
-     << "virtual ~" << node->local_name () << "_init (void);"
+     << "virtual ~" << node->local_name () << "_init ();"
      << be_uidt_nl
      << "};";
 
@@ -138,11 +135,10 @@ be_visitor_valuetype_init_ch::visit_eventtype (be_eventtype *node)
 int
 be_visitor_valuetype_init_ch::visit_factory (be_factory *node)
 {
-
   TAO_OutStream& os = *(this->ctx_->stream ());
 
   be_valuetype *vt =
-    be_valuetype::narrow_from_decl (this->ctx_->scope ()->decl ());
+    dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
 
 
   // STEP I: Generate preambule.

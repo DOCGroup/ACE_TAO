@@ -37,15 +37,15 @@ public:
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
 
   /// Disconnect from the event channel
-  void disconnect (void);
+  void disconnect ();
 
   /// Push a single event
-  void perform_push (void);
+  void perform_push ();
 
   // = The RtecEventComm::PushSupplier methods
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
 private:
   void insert_into_any (CORBA::Any& any, Components::EventBase* vb);

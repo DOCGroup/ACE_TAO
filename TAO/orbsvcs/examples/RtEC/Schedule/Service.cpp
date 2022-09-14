@@ -15,7 +15,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 int config_run = 0;
 
 int parse_args (int argc, ACE_TCHAR *argv[]);

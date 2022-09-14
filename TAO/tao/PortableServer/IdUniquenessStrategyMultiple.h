@@ -33,17 +33,16 @@ namespace TAO
     public:
       virtual void strategy_init (TAO_Root_POA *poa);
 
-      virtual void strategy_cleanup (void);
+      virtual void strategy_cleanup ();
 
       virtual bool is_servant_activation_allowed (
         PortableServer::Servant servant,
         bool &w);
 
-      virtual bool allow_multiple_activations (void) const;
+      virtual bool allow_multiple_activations () const;
 
       virtual ::PortableServer::IdUniquenessPolicyValue type() const;
     };
-
   }
 }
 

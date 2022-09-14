@@ -32,7 +32,7 @@ public:
   be_visitor_valuetype_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_ch (void);
+  ~be_visitor_valuetype_ch ();
 
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_eventtype (be_eventtype *node);
@@ -40,8 +40,8 @@ public:
   virtual int visit_operation (be_operation *node);
   virtual int visit_field (be_field *node);
 
-  void begin_public (void);
-  void begin_private (void);
+  void begin_public ();
+  void begin_private ();
 
   /// Helper method passed to the template method to generate code for
   /// the operations of the parents of supported interfaces.

@@ -1,5 +1,5 @@
 #include "Attributes.h"
 
-ACEXML_Attributes::~ACEXML_Attributes (void)
+ACEXML_Attributes::~ACEXML_Attributes ()
 {
 }

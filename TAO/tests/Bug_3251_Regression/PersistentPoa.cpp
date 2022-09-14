@@ -63,7 +63,7 @@ int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
 } /* end of PersistentPoa::init ( ) */
 
 
-int PersistentPoa::fini (void)
+int PersistentPoa::fini ()
 {
   try
   {

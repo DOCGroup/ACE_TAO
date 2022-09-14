@@ -61,7 +61,7 @@ public:
                    const RtecEventComm::Event& event);
 
   /// Send a shutdown event.
-  void send_shutdown (void);
+  void send_shutdown ();
 
   /// Connect using a <supplier_admin> and publications (<qos>)
   /// computed by the user
@@ -76,10 +76,10 @@ public:
         int shutdown_event_type);
 
   /// Disconnect from the EC, also deactivates the object
-  void disconnect (void);
+  void disconnect ();
 
   /// Disconnect from the EC, also deactivates the object
-  void shutdown (void);
+  void shutdown ();
 
   /// Dump the results...
   virtual void dump_results (
@@ -94,7 +94,7 @@ public:
                    RtecEventComm::Event& event);
 
   // = The PushSupplier methods
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
 private:
   /// Class we forward to.
@@ -156,7 +156,7 @@ public:
                     ACE_Thread_Manager* thr_mgr = 0);
 
   /// The svc call
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The supplier

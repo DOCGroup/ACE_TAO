@@ -18,7 +18,7 @@ be_visitor_interface_cdr_op_ch::be_visitor_interface_cdr_op_ch (
 {
 }
 
-be_visitor_interface_cdr_op_ch::~be_visitor_interface_cdr_op_ch (void)
+be_visitor_interface_cdr_op_ch::~be_visitor_interface_cdr_op_ch ()
 {
 }
 
@@ -37,8 +37,7 @@ be_visitor_interface_cdr_op_ch::visit_interface (be_interface *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl;
 
@@ -74,7 +73,7 @@ be_visitor_interface_cdr_op_ch::visit_interface (be_interface *node)
     }
 
   this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }
 

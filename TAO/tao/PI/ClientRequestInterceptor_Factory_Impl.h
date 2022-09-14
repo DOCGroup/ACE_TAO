@@ -38,7 +38,7 @@ class TAO_PI_Export TAO_ClientRequestInterceptor_Adapter_Factory_Impl
   : public TAO_ClientRequestInterceptor_Adapter_Factory
 {
 public:
-  virtual TAO::ClientRequestInterceptor_Adapter *create (void);
+  virtual TAO::ClientRequestInterceptor_Adapter *create ();
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_ClientRequestInterceptor_Adapter_Factory_Impl)

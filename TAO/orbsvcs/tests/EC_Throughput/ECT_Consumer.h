@@ -49,7 +49,7 @@ public:
                 RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the consumer to the EC.
 
-  void disconnect (void);
+  void disconnect ();
   // Disconnect from the EC.
 
   void dump_results (const ACE_TCHAR* name,
@@ -60,7 +60,7 @@ public:
   // Add our throughput and latency statistics to <stats>
 
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
   // The skeleton methods.
 
 private:

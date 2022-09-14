@@ -39,7 +39,6 @@ private:
   FT::ReplicationManager_var replication_manager_;
   const ACE_TCHAR *rm_ior_;
   int shutdown_;
-
 };
 
 TAO_FT_ReplicationManagerController::TAO_FT_ReplicationManagerController ()

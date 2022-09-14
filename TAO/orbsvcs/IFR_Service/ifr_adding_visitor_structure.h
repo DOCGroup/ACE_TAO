@@ -33,7 +33,7 @@ class ifr_adding_visitor_structure : public ifr_adding_visitor
 public:
   ifr_adding_visitor_structure (AST_Decl *scope);
 
-  virtual ~ifr_adding_visitor_structure (void);
+  virtual ~ifr_adding_visitor_structure ();
 
   virtual int visit_scope (UTL_Scope *node);
   virtual int visit_structure (AST_Structure *node);
@@ -41,7 +41,7 @@ public:
   virtual int visit_union (AST_Union *node);
 
   /// Lets the visitor one level above acess this value.
-  virtual CORBA::IDLType_ptr ir_current (void) const;
+  virtual CORBA::IDLType_ptr ir_current () const;
 
 private:
   /// Common code called whether we are creating a new struct

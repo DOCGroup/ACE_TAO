@@ -43,7 +43,7 @@ public:
          char const *test_name);
 
   /// Run the test
-  void run (void);
+  void run ();
 
   /// One of the sub-handlers has received a notification
   void notification_received ();
@@ -63,12 +63,12 @@ private:
    * Each iteration of the test consists of sending multiple
    * notifications simultaneously.
    */
-  void send_notifications (void);
+  void send_notifications ();
 
   /**
    * @brief Return true if the test is finished.
    */
-  bool done (void) const;
+  bool done () const;
 
   /**
    * @brief Return true if there are more iterations to run.
@@ -84,7 +84,7 @@ private:
    * @brief Run one iteration of the test, each iteration doubles
    * the number of events.
    */
-  int run_one_iteration (void);
+  int run_one_iteration ();
 
   /**
    * @brief Initialize a bunch of One_Shot_Handlers
@@ -176,7 +176,7 @@ public:
 
   /// Receive the notifications, but remove itself from the reactor on
   /// on the first one.
-  virtual int handle_exception(ACE_HANDLE);
+  int handle_exception(ACE_HANDLE) override;
 
 private:
   /// The driver for this test, communicate results to it
@@ -251,7 +251,7 @@ Driver::Driver (
 }
 
 void
-Driver::run (void)
+Driver::run ()
 {
   while(more_iterations())
   {
@@ -292,7 +292,7 @@ Driver::reactor()
 }
 
 void
-Driver::send_notifications (void)
+Driver::send_notifications ()
 {
   int const nhandlers = 16;
   One_Shot_Handler * handlers[nhandlers];
@@ -305,7 +305,7 @@ Driver::send_notifications (void)
 }
 
 bool
-Driver::done (void) const
+Driver::done () const
 {
   return !more_iterations() && current_iteration_done();
 }
@@ -323,7 +323,7 @@ Driver::current_iteration_done() const
 }
 
 int
-Driver::run_one_iteration (void)
+Driver::run_one_iteration ()
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Running iteration with %d events for %C test\n"),

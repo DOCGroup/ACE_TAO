@@ -15,20 +15,7 @@
 #include "tao/debug.h"
 #include "ace/OS_Memory.h"
 
-// ****************************************************************
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-/////////////////////////////
-// UTF8_Latin1_Translator implementation
-
-TAO_UTF8_Latin1_Translator::TAO_UTF8_Latin1_Translator ()
-{
-}
-
-TAO_UTF8_Latin1_Translator::~TAO_UTF8_Latin1_Translator (void)
-{
-}
 
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h
 ACE_CDR::Boolean
@@ -121,7 +108,6 @@ ACE_CDR::Boolean
 TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
                                          std::string &x)
 {
-#if defined (ACE_HAS_CPP11)
   ACE_CDR::ULong len;
   if (!cdr.read_ulong (len))
     return false;
@@ -161,9 +147,6 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
 
   x.clear ();
   return false;
-#else
-  return this->ACE_Char_Codeset_Translator::read_string (cdr, x);
-#endif
 }
 
 ACE_CDR::Boolean

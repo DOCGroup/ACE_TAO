@@ -9,7 +9,6 @@ namespace ACE
 {
   namespace IOS
   {
-
     template <class ACE_CHAR_T, class TR>
     StreamInterceptorBase<ACE_CHAR_T, TR>::StreamInterceptorBase ()
       {

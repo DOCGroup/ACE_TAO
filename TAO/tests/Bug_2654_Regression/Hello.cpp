@@ -6,7 +6,7 @@ ACE_THR_FUNC_RETURN killer (void *arg)
   CORBA::ORB_var orb = reinterpret_cast<CORBA::ORB_ptr> (arg);
 
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) server exiting\n"));
-  orb->shutdown (1);
+  orb->shutdown (true);
 
   return 0;
 }

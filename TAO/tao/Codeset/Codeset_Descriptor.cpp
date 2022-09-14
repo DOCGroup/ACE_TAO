@@ -74,19 +74,19 @@ TAO_Codeset_Descriptor::ncs (ACE_CDR::ULong n)
 }
 
 ACE_CDR::ULong
-TAO_Codeset_Descriptor::ncs (void) const
+TAO_Codeset_Descriptor::ncs () const
 {
   return this->ncs_;
 }
 
 int
-TAO_Codeset_Descriptor::num_translators (void) const
+TAO_Codeset_Descriptor::num_translators () const
 {
   return this->num_translators_;
 }
 
 int
-TAO_Codeset_Descriptor::max_bytes (void) const
+TAO_Codeset_Descriptor::max_bytes () const
 {
   return this->max_bytes_;
 }
@@ -117,7 +117,7 @@ TAO_Codeset_Descriptor::add_translator (const ACE_TCHAR *name)
 }
 
 TAO_Codeset_Descriptor::Translator_Node *
-TAO_Codeset_Descriptor::translators (void)
+TAO_Codeset_Descriptor::translators ()
 {
   return this->trans_base_;
 }

@@ -17,7 +17,6 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "Running the IOGRManipulation Tests.\n"));
 

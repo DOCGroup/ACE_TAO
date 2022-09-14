@@ -91,7 +91,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     std::cout << "Supplier starting sending events.\n";
     while (1) {
-
       event[0].header.type++;
       if (event[0].header.type > MY_EVENT_END) {
         event[0].header.type = MY_EVENT_START;

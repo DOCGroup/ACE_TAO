@@ -39,7 +39,6 @@ ACE_TMAIN (
   int        argc,
   ACE_TCHAR *argv[])
 {
-
   CORBA::Boolean testFailed= 0;
   ACE_DEBUG( (LM_INFO, "Regression test for Bug 2234 (Interceptor arg list with var len out params)\n"));
   try

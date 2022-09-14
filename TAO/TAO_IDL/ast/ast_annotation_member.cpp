@@ -17,7 +17,7 @@ AST_Annotation_Member::AST_Annotation_Member (
   : AST_Decl (NT, name),
     AST_Field (type, name, vis_NA),
     expr_type_ (expr_type),
-    value_ (0)
+    value_ (nullptr)
 {
 }
 
@@ -27,7 +27,7 @@ AST_Annotation_Member::AST_Annotation_Member (
   : AST_Decl (nt, name),
     AST_Field (nt, type, name, vis_NA),
     expr_type_ (expr_type),
-    value_ (0)
+    value_ (nullptr)
 {
 }
 
@@ -38,7 +38,7 @@ AST_Annotation_Member::AST_Annotation_Member (
     AST_Field (name, dynamic_cast<AST_Field*>(other)),
     expr_type_ (other->expr_type ()),
     value_ (other->value () ?
-      new AST_Expression (other->value (), other->expr_type ()) : 0)
+      new AST_Expression (other->value (), other->expr_type ()) : nullptr)
 {
 }
 
@@ -56,9 +56,6 @@ AST_Annotation_Member::destroy ()
     }
   AST_Field::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL (AST_Annotation_Member);
-IMPL_NARROW_FROM_SCOPE (AST_Annotation_Member);
 
 void
 AST_Annotation_Member::dump (ACE_OSTREAM_TYPE &o)

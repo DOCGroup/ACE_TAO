@@ -40,18 +40,18 @@ class TAO_RTEvent_Serv_Export TAO_EC_Gateway_IIOP_Factory
   : public ACE_Service_Object
 {
 public:
-  TAO_EC_Gateway_IIOP_Factory (void);
-  virtual ~TAO_EC_Gateway_IIOP_Factory (void);
+  TAO_EC_Gateway_IIOP_Factory ();
+  virtual ~TAO_EC_Gateway_IIOP_Factory ();
 
   /// The Service_Object entry points.
   //@{
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini (void);
+  virtual int fini ();
   //@}
 
   /// Helper function to register the Gateway into the service
   /// configurator.
-  static int init_svcs (void);
+  static int init_svcs ();
 
   /// Create the consumer event channel control.
   TAO_ECG_ConsumerEC_Control *
@@ -61,10 +61,10 @@ public:
   void destroy_consumerec_control (TAO_ECG_ConsumerEC_Control* x);
 
   /// Accessors to use_ttl flag
-  int use_ttl (void) const;
+  int use_ttl () const;
 
   /// Accessors to use_consumer_proxy_map flag
-  int use_consumer_proxy_map (void) const;
+  int use_consumer_proxy_map () const;
 
 private:
   /// Helper for agrument parsing.  Prints out an error message about

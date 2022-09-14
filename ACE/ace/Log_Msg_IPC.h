@@ -50,13 +50,13 @@ class ACE_Export ACE_Log_Msg_IPC : public ACE_Log_Msg_Backend
 {
 public:
   /// Constructor
-  ACE_Log_Msg_IPC (void);
+  ACE_Log_Msg_IPC () = default;
 
   /// Destructor
-  virtual ~ACE_Log_Msg_IPC (void);
+  ~ACE_Log_Msg_IPC () override;
 
   /// Open a new connection
-  virtual int open (const ACE_TCHAR *logger_key);
+  int open (const ACE_TCHAR *logger_key) override;
 
   /**
    * Reset the backend.  When changing the logging destination the
@@ -64,10 +64,10 @@ public:
    * daemon and reclaim some local resources.  But we try to reduce
    * the number of local allocations/deallocations.
    */
-  virtual int reset (void);
+  int reset () override;
 
-  virtual int close (void);
-  virtual ssize_t log (ACE_Log_Record &log_record);
+  int close () override;
+  ssize_t log (ACE_Log_Record &log_record) override;
 
   ACE_ALLOC_HOOK_DECLARE;
 

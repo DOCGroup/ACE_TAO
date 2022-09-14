@@ -9,7 +9,7 @@ Secure_Vault_i::Secure_Vault_i (CORBA::ORB_ptr orb)
 // ctor
 
 CORBA::Short
-Secure_Vault_i::ready (void)
+Secure_Vault_i::ready ()
 {
   return 1;
 }
@@ -19,7 +19,6 @@ Secure_Vault_i::authenticate (const char * user)
 {
   if (ACE_OS::strcmp (user, "root") != 0)
     throw Test_Interceptors::Invalid ();
-
 }
 
 CORBA::Long
@@ -30,7 +29,7 @@ return 1;
 }
 
 void
-Secure_Vault_i::shutdown (void)
+Secure_Vault_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

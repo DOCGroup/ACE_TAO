@@ -11,7 +11,7 @@ Collocation_Tester::Collocation_Tester (CORBA::Object_ptr object)
   this->object_ = CORBA::Object::_duplicate (object);
 }
 
-Collocation_Tester::~Collocation_Tester (void)
+Collocation_Tester::~Collocation_Tester ()
 {
   // No-Op.
 }
@@ -36,7 +36,7 @@ Collocation_Tester::match_answer (const char *actual_answer,
 }
 
 int
-Collocation_Tester::test_top (void)
+Collocation_Tester::test_top ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n------------------------<TOP>-------------------------------\n")));
@@ -70,7 +70,7 @@ Collocation_Tester::test_top (void)
 }
 
 int
-Collocation_Tester::test_right (void)
+Collocation_Tester::test_right ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n------------------------<RIGHT>-------------------------------\n")));
@@ -109,7 +109,7 @@ Collocation_Tester::test_right (void)
 
 
 int
-Collocation_Tester::test_left (void)
+Collocation_Tester::test_left ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n------------------------<LEFT>-------------------------------\n")));
@@ -149,7 +149,7 @@ Collocation_Tester::test_left (void)
 
 
 int
-Collocation_Tester::test_bottom (void)
+Collocation_Tester::test_bottom ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n-----------------------<BOTTOM>-------------------------------\n")));
@@ -196,7 +196,7 @@ Collocation_Tester::test_bottom (void)
 }
 
 void
-Collocation_Tester::shutdown (void)
+Collocation_Tester::shutdown ()
 {
   Multiple::Top_var top =
     Multiple::Top::_narrow (this->object_.in ());
@@ -215,7 +215,7 @@ Collocation_Tester::shutdown (void)
 }
 
 void
-Collocation_Tester::run (void)
+Collocation_Tester::run ()
 {
   int failure_num =   this->test_top ();
 

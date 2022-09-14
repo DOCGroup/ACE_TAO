@@ -9,9 +9,7 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Thread_Manager.h"
 
-#if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
-                            (ACE_HAS_STANDARD_CPP_LIBRARY == 0) || \
-                            defined (ACE_USES_OLD_IOSTREAMS))
+#if defined (ACE_WIN32) && defined (ACE_USES_OLD_IOSTREAMS)
 #  include <stdio.h>
 #else
 #  include <string>
@@ -37,7 +35,6 @@ public:
   { delete this; return 0; }
 
 protected:
-
   // Protected destructor ensures dynamic allocation.
   virtual ~Quit_Handler () {}
 };
@@ -58,9 +55,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   Quit_Handler *quit_handler = 0;
   ACE_NEW_RETURN (quit_handler, Quit_Handler (reactor), 0);
 
-#if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
-                            (ACE_HAS_STANDARD_CPP_LIBRARY == 0) || \
-                            defined (ACE_USES_OLD_IOSTREAMS))
+#if defined (ACE_WIN32) && defined (ACE_USES_OLD_IOSTREAMS)
   for (;;) {
     char user_input[80];
     ACE_OS::fgets (user_input, sizeof (user_input), stdin);

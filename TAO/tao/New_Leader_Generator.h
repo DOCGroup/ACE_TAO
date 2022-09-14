@@ -33,9 +33,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_New_Leader_Generator
 {
 public:
-
   /// Destructor.
-  virtual ~TAO_New_Leader_Generator (void);
+  virtual ~TAO_New_Leader_Generator ();
 
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.

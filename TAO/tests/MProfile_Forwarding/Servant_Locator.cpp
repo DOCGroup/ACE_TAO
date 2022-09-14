@@ -32,7 +32,6 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
                             const char * /*operation*/,
                             PortableServer::ServantLocator::Cookie & /* cookie */)
 {
-
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -55,7 +54,6 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
   throw PortableServer::ForwardRequest (
     CORBA::Object::_duplicate (
       server.in ()));
-
 }
 
 void

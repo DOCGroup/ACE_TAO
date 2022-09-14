@@ -54,7 +54,6 @@ do_primary_test (CORBA::Object_var &server,
 {
   try
     {
-
       CORBA::Request_var req = server->_request("do_forward");
 
       if (CORBA::is_nil (server.in ()))

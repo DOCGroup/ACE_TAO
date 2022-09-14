@@ -1,7 +1,5 @@
 #include "ace/Msg_WFMO_Reactor.h"
 
-
-
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
 
 #if !defined (__ACE_INLINE__)
@@ -24,7 +22,7 @@ ACE_Msg_WFMO_Reactor::ACE_Msg_WFMO_Reactor (size_t size,
 {
 }
 
-ACE_Msg_WFMO_Reactor::~ACE_Msg_WFMO_Reactor (void)
+ACE_Msg_WFMO_Reactor::~ACE_Msg_WFMO_Reactor ()
 {
 }
 
@@ -45,7 +43,7 @@ ACE_Msg_WFMO_Reactor::wait_for_multiple_events (int timeout,
 }
 
 int
-ACE_Msg_WFMO_Reactor::dispatch_window_messages (void)
+ACE_Msg_WFMO_Reactor::dispatch_window_messages ()
 {
   int number_of_messages = 0;
   MSG msg;

@@ -28,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   ///////////////////////
   // Forward declarations
   class FT_FaultAnalyzer;
@@ -40,7 +39,6 @@ namespace TAO
   class TAO_ReplicationManagerLib_Export FT_FaultConsumer
     : public virtual POA_CosNotifyComm::StructuredPushConsumer
   {
-
     //////////////////////
     // non-CORBA interface
 
@@ -76,7 +74,7 @@ namespace TAO
     * - Disconnect from FT::FaultNotifier.
     * - Deactivate from the POA.
     */
-    int fini (void);
+    int fini ();
 
     /**
     * Accessor for a duplicate of this consumer's object reference.
@@ -90,7 +88,6 @@ namespace TAO
     size_t notifications () const;
 
   public:
-
     /**
     * @name POA_CosNotifyComm::StructuredPushConsumer Methods
     *
@@ -98,7 +95,6 @@ namespace TAO
     * interface.
     */
     //@{
-
     ////////////////
     // CORBA methods
     virtual void push_structured_event (
@@ -123,7 +119,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /// The POA with which we are activated.
     PortableServer::POA_var poa_;
 
@@ -145,9 +140,7 @@ namespace TAO
     ///TODO: Remove this later, it is just for testing.
     // Keep track of how many notifications we have received.
     size_t notifications_;
-
   };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

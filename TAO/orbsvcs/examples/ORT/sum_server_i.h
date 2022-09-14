@@ -21,14 +21,12 @@
 class sum_server_i : public virtual POA_ORT::sum_server
 {
  public:
-
   /// Constructor
   sum_server_i ();
 
   /// add variables method
   CORBA::Long add_variables (CORBA::Long a,
                              CORBA::Long b);
-
 };
 
 #endif /* SUM_SERVER_I_H */

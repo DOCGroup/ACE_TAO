@@ -64,7 +64,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
         {
-
           Client_Task client_task (receiver.in (),
 #if defined (ACE_OPENVMS)
                                   750, /* test takes much longer on OpenVMS */

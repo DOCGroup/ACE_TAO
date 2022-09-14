@@ -17,19 +17,16 @@ public:
   be_provides (UTL_ScopedName *n,
                AST_Type *provides_type);
 
-  virtual ~be_provides (void);
+  virtual ~be_provides ();
 
   // Non-virtual override of frontend method.
-  be_type *provides_type (void) const;
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(be_provides);
+  be_type *provides_type () const;
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 };
 
 #endif // BE_PROVIDES_H

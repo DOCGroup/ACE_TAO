@@ -46,7 +46,7 @@ public:
   ACE_URL_Record (ACE_URL_Offer *offer);
 
   /// dtor.
-  ~ACE_URL_Record (void);
+  ~ACE_URL_Record ();
 
   /// Two records are equal if they have the same offer id.
   bool operator== (const ACE_URL_Record &rhs) const;
@@ -58,7 +58,7 @@ public:
 private:
   /// Default ctor.  This is put here to prevent users from
   /// pushing in an invalid record.
-  ACE_URL_Record (void);
+  ACE_URL_Record ();
 
   /// Offer ID in the repository.
   ACE_WString *id_;
@@ -79,7 +79,7 @@ private:
 class ACE_Svc_Export ACE_URL_Local_Locator
 {
   /// Default destructor.
-  virtual ~ACE_URL_Local_Locator (void);
+  virtual ~ACE_URL_Local_Locator ();
 
   /**
    * Query the locator for HTTP with designate properties (none, some,

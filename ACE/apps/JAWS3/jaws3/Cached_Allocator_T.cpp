@@ -20,7 +20,7 @@ JAWS_Cached_Allocator<T, ACE_LOCK>::set_next_pool (char *pool, char *next_pool)
 }
 
 template <class T, class ACE_LOCK> void
-JAWS_Cached_Allocator<T, ACE_LOCK>::extend_pool (void)
+JAWS_Cached_Allocator<T, ACE_LOCK>::extend_pool ()
 {
   char *new_pool = 0;
   ACE_NEW (new_pool, char[this->pool_size_ + sizeof (char *)]);
@@ -51,7 +51,7 @@ JAWS_Cached_Allocator<T, ACE_LOCK>::JAWS_Cached_Allocator (size_t n_chunks)
 }
 
 template <class T, class ACE_LOCK>
-JAWS_Cached_Allocator<T, ACE_LOCK>::~JAWS_Cached_Allocator (void)
+JAWS_Cached_Allocator<T, ACE_LOCK>::~JAWS_Cached_Allocator ()
 {
   char *curr = this->pool_head_;
 
@@ -92,7 +92,7 @@ JAWS_Cached_Allocator<T, ACE_LOCK>::free (void *ptr)
 
 
 template <class T> JAWS_Cached_Allocator<T, ACE_SYNCH_NULL_MUTEX> *
-JAWS_TSS_Cached_Allocator<T>::ts_allocator (void)
+JAWS_TSS_Cached_Allocator<T>::ts_allocator ()
 {
   JAWS_Cached_Allocator<T, ACE_SYNCH_NULL_MUTEX> *ts_obj = 0;
 
@@ -118,7 +118,7 @@ JAWS_TSS_Cached_Allocator<T>::JAWS_TSS_Cached_Allocator (size_t n_chunks)
 }
 
 template <class T>
-JAWS_TSS_Cached_Allocator<T>::~JAWS_TSS_Cached_Allocator (void)
+JAWS_TSS_Cached_Allocator<T>::~JAWS_TSS_Cached_Allocator ()
 {
 }
 

@@ -5,7 +5,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LB_Pull_Handler::TAO_LB_Pull_Handler (void)
+TAO_LB_Pull_Handler::TAO_LB_Pull_Handler ()
   : monitor_map_ (0),
     load_manager_ (0)
 {

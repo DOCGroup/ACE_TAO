@@ -94,5 +94,4 @@ ServantActivator::etherealize (const PortableServer::ObjectId &oid,
     (*servant_garbage_collector_) (oid,
                                    poa,
                                    servant);
-
 }

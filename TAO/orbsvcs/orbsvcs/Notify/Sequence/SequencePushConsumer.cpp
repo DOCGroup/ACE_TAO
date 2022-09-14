@@ -86,7 +86,7 @@ TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr p
 }
 
 void
-TAO_Notify_SequencePushConsumer::release (void)
+TAO_Notify_SequencePushConsumer::release ()
 {
   delete this;
   //@@ inform factory
@@ -309,7 +309,7 @@ TAO_Notify_SequencePushConsumer::push (const CosNotification::EventBatch& event_
 }
 
 ACE_CString
-TAO_Notify_SequencePushConsumer::get_ior (void) const
+TAO_Notify_SequencePushConsumer::get_ior () const
 {
   ACE_CString result;
   CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance ()->orb ();
@@ -335,7 +335,7 @@ TAO_Notify_SequencePushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* o
 }
 
 CORBA::Object_ptr
-TAO_Notify_SequencePushConsumer::get_consumer (void)
+TAO_Notify_SequencePushConsumer::get_consumer ()
 {
   return CosNotifyComm::SequencePushConsumer::_duplicate (this->push_consumer_.in ());
 }

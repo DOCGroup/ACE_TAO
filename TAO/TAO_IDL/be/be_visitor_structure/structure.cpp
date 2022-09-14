@@ -16,10 +16,6 @@ be_visitor_structure::be_visitor_structure (be_visitor_context *ctx)
 {
 }
 
-be_visitor_structure::~be_visitor_structure (void)
-{
-}
-
 int
 be_visitor_structure::visit_structure (be_structure *)
 {

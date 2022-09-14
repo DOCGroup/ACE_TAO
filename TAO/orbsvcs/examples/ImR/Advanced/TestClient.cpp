@@ -134,7 +134,6 @@ void TestClient::run()
   this->wait();
 
   ACE_DEBUG((LM_DEBUG, "* Client ended.\n"));
-
 }
 
 // Read in the stringified object references into an array

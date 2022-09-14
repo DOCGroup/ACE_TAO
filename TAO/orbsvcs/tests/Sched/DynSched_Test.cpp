@@ -17,7 +17,6 @@ class DynSched_Test
   //    Wraps static functions for test
 {
 public:
-
   static void setup_rt_info (RtecScheduler::RT_Info &info,
                              const char *entry_point,
                              u_long period,
@@ -47,7 +46,6 @@ public:
                            const char *output_filename,
                            const char *heading);
   // Creates the schedule, runs timelines.
-
 };
 
 

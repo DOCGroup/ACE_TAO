@@ -38,7 +38,7 @@ class FilterClient
 {
  public:
   /// Constructor
-  FilterClient (void);
+  FilterClient ();
 
   /// Destructor
   ~FilterClient ();
@@ -52,10 +52,9 @@ class FilterClient
   void run_consumer ();
 
   /// Consumer calls done, We're done.
-  void done (void);
+  void done ();
 
  protected:
-
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
 
@@ -192,7 +191,7 @@ protected:
 
   // = Methods
   /// Destructor
-  virtual ~Filter_StructuredPushConsumer (void);
+  virtual ~Filter_StructuredPushConsumer ();
 
   // = NotifyPublish method
     virtual void offer_change (

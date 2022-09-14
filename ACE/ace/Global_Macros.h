@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-// Included just keep compilers that see #pragma dierctive first
+// Included just keep compilers that see #pragma directive first
 // happy.
 #include /**/ "ace/ACE_export.h"
 
@@ -57,28 +57,15 @@
 # define ACE_SET_BITS(WORD, BITS) (WORD |= (BITS))
 # define ACE_CLR_BITS(WORD, BITS) (WORD &= ~(BITS))
 
-# if !defined (ACE_ENDLESS_LOOP)
-#  define ACE_ENDLESS_LOOP
-# endif /* ! ACE_ENDLESS_LOOP */
+#if !defined (ACE_HAS_CPP11)
+# error ACE/TAO require C++11 compliance, please upgrade your compiler and/or fix the platform configuration for your environment
+#endif /* !ACE_HAS_CPP11 */
 
-# if defined (ACE_NEEDS_FUNC_DEFINITIONS) && !defined (ACE_HAS_CPP11)
-    // It just evaporated ;-)  Not pleasant.
-#   define ACE_UNIMPLEMENTED_FUNC(f)
-# else
-#   if defined (ACE_HAS_CPP11)
-#     define ACE_UNIMPLEMENTED_FUNC(f) f = delete;
-#   else
-#     define ACE_UNIMPLEMENTED_FUNC(f) f;
-#   endif
-# endif /* ACE_NEEDS_FUNC_DEFINITIONS */
+#define ACE_UNIMPLEMENTED_FUNC(f) f = delete;
 
 // noexcept(false) specification to specify that the operation can
 // throw an exception
-#if defined (ACE_HAS_CPP11)
 #define ACE_NOEXCEPT_FALSE noexcept(false)
-#else
-#define ACE_NOEXCEPT_FALSE
-#endif
 
 // ----------------------------------------------------------------
 
@@ -162,7 +149,7 @@
 
 /* Using ACE_UNEXPECTED_RETURNS is ill-advised because, in many cases,
  *   it fails to inform callers of the error condition.
- * It exists mainly to provide back-compatibility with old, dangegrous,
+ * It exists mainly to provide back-compatibility with old, dangerous,
  *   incorrect behavior.
  * Code that previously used ACE_GUARD() or ACE_GUARD_RETURN() to return
  *   upon failure to acquire a lock can now use:
@@ -244,7 +231,6 @@
       } \
    while (0)
 
-# if defined (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR)
 #   define ACE_DES_NOFREE_TEMPLATE(POINTER,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
@@ -379,95 +365,6 @@
             } \
         } \
      while (0)
-# else /* ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
-#   define ACE_DES_NOFREE_TEMPLATE(POINTER,T_CLASS,T_PARAMETER) \
-     do { \
-          if (POINTER) \
-            { \
-              (POINTER)->T_CLASS T_PARAMETER::~T_CLASS (); \
-            } \
-        } \
-     while (0)
-#   define ACE_DES_ARRAY_NOFREE_TEMPLATE(POINTER,SIZE,T_CLASS,T_PARAMETER) \
-     do { \
-          if (POINTER) \
-            { \
-              for (size_t i = 0; \
-                   i < SIZE; \
-                   ++i) \
-              { \
-                (POINTER)[i].T_CLASS T_PARAMETER::~T_CLASS (); \
-              } \
-            } \
-        } \
-     while (0)
-#     define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
-       do { \
-            if (POINTER) \
-              { \
-                POINTER->T_CLASS T_PARAMETER::~T_CLASS (); \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
-#     define ACE_DES_ARRAY_FREE_TEMPLATE(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAMETER) \
-       do { \
-            if (POINTER) \
-              { \
-                for (size_t i = 0; \
-                     i < SIZE; \
-                     ++i) \
-                { \
-                  POINTER[i].T_CLASS T_PARAMETER::~T_CLASS (); \
-                } \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
-#     define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
-       do { \
-            if (POINTER) \
-              { \
-                POINTER->T_CLASS <T_PARAM1, T_PARAM2>::~T_CLASS (); \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
-#     define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3) \
-       do { \
-            if (POINTER) \
-              { \
-                POINTER->T_CLASS <T_PARAM1, T_PARAM2, T_PARAM3>::~T_CLASS (); \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
-#     define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3,T_PARAM4) \
-       do { \
-            if (POINTER) \
-              { \
-                POINTER->T_CLASS <T_PARAM1, T_PARAM2, T_PARAM3, T_PARAM4>::~T_CLASS (); \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
-#     define ACE_DES_ARRAY_FREE_TEMPLATE2(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
-       do { \
-            if (POINTER) \
-              { \
-                for (size_t i = 0; \
-                     i < SIZE; \
-                     ++i) \
-                { \
-                  POINTER[i].T_CLASS <T_PARAM1, T_PARAM2>::~T_CLASS (); \
-                } \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
-# endif /* defined ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
-
-
 /*******************************************************************/
 
 /// Service Objects, i.e., objects dynamically loaded via the service
@@ -909,24 +806,20 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 // This is being placed here temporarily to help stabilize the builds, but will
 // be moved out along with the above macros as part of the subsetting.  dhinton
 #if !defined (ACE_LACKS_NEW_H)
-#  if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#    include /**/ <new>
-#  else
-#    include /**/ <new.h>
-#  endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+#  include /**/ <new>
 #endif /* ! ACE_LACKS_NEW_H */
 
 # define ACE_NOOP(x)
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 # define ACE_SEH_TRY __try
 # define ACE_SEH_EXCEPT(X) __except(X)
 # define ACE_SEH_FINALLY __finally
-#else /* !ACE_WIN32 */
+#else /* !ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 # define ACE_SEH_TRY if (1)
 # define ACE_SEH_EXCEPT(X) while (0)
 # define ACE_SEH_FINALLY if (1)
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 // Handle ACE_Message_Queue.
 #   define ACE_SYNCH_DECL typename _ACE_SYNCH

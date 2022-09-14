@@ -26,7 +26,7 @@ class be_visitor_component_ex_idl : public be_visitor_decl
 public:
   be_visitor_component_ex_idl (be_visitor_context *ctx);
 
-  ~be_visitor_component_ex_idl (void);
+  ~be_visitor_component_ex_idl ();
 
   virtual int visit_component (be_component *node);
   virtual int visit_connector (be_connector *node);

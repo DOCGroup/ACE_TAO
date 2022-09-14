@@ -136,7 +136,6 @@ Factory_Trader::_cxx_export (const char * name,
       register_ptr->_cxx_export (CORBA::Object::_duplicate (object_ptr),
                                  CORBA::string_dup("GenericFactory"),
                                  propertySeq);
-
     }
   catch (const CORBA::Exception& ex)
     {

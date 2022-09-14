@@ -9,7 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_CosEC_ProxyPushConsumer::TAO_Notify_CosEC_ProxyPushConsumer (void)
+TAO_Notify_CosEC_ProxyPushConsumer::TAO_Notify_CosEC_ProxyPushConsumer ()
 {
 }
 
@@ -18,7 +18,7 @@ TAO_Notify_CosEC_ProxyPushConsumer::~TAO_Notify_CosEC_ProxyPushConsumer ()
 }
 
 void
-TAO_Notify_CosEC_ProxyPushConsumer::release (void)
+TAO_Notify_CosEC_ProxyPushConsumer::release ()
 {
   delete this;
   //@@ inform factory
@@ -59,14 +59,14 @@ TAO_Notify_CosEC_ProxyPushConsumer::connect_push_supplier (CosEventComm::PushSup
 }
 
 void
-TAO_Notify_CosEC_ProxyPushConsumer::disconnect_push_consumer (void)
+TAO_Notify_CosEC_ProxyPushConsumer::disconnect_push_consumer ()
 {
   TAO_Notify_CosEC_ProxyPushConsumer::Ptr guard( this );
   this->destroy ();
 }
 
 const char *
-TAO_Notify_CosEC_ProxyPushConsumer::get_proxy_type_name (void) const
+TAO_Notify_CosEC_ProxyPushConsumer::get_proxy_type_name () const
 {
   return "ec_proxy_push_consumer";
 }

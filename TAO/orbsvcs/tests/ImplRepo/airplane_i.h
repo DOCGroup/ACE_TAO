@@ -42,10 +42,10 @@ public:
   Airplane_i ();
 
   /// Destructor
-  ~Airplane_i (void);
+  ~Airplane_i ();
 
   /// Returns a random plane.
-  virtual char *get_plane (void);
+  virtual char *get_plane ();
 };
 
 #endif /* AIRPLANE_I_H */

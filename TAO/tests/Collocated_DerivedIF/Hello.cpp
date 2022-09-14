@@ -10,7 +10,7 @@ HelloAgain::HelloAgain (CORBA::ORB_ptr orb,
 {
 }
 char *
-HelloAgain::get_string_again (void)
+HelloAgain::get_string_again ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall get_string_again in process ..\n"));
@@ -40,7 +40,7 @@ HelloAgain::get_string_again (void)
 }
 
 char *
-HelloAgain::get_string (void)
+HelloAgain::get_string ()
 {
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) HelloAgain::get_string Upcall get_string in process ..\n"));
@@ -69,12 +69,12 @@ HelloAgain::get_string (void)
     return CORBA::string_dup ("Hello there!");
 }
 void
-HelloAgain::shutdown (void)
+HelloAgain::shutdown ()
 {
   // Give the client thread time to return from the collocated
   // call to this method before shutting down the ORB.  We sleep
   // to avoid BAD_INV_ORDER exceptions on fast dual processor machines.
   ACE_OS::sleep (1);
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 

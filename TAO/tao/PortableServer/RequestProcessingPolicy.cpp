@@ -19,7 +19,7 @@ namespace TAO
     }
 
     CORBA::Policy_ptr
-    RequestProcessingPolicy::copy (void)
+    RequestProcessingPolicy::copy ()
     {
       RequestProcessingPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
@@ -30,30 +30,30 @@ namespace TAO
     }
 
     void
-    RequestProcessingPolicy::destroy (void)
+    RequestProcessingPolicy::destroy ()
     {
     }
 
     ::PortableServer::RequestProcessingPolicyValue
-    RequestProcessingPolicy::value (void)
+    RequestProcessingPolicy::value ()
     {
       return value_;
     }
 
     CORBA::PolicyType
-    RequestProcessingPolicy::policy_type (void)
+    RequestProcessingPolicy::policy_type ()
     {
       return ::PortableServer::REQUEST_PROCESSING_POLICY_ID;
     }
 
     TAO_Cached_Policy_Type
-    RequestProcessingPolicy::_tao_cached_type (void) const
+    RequestProcessingPolicy::_tao_cached_type () const
     {
       return TAO_CACHED_POLICY_REQUEST_PROCESSING;
     }
 
     TAO_Policy_Scope
-    RequestProcessingPolicy::_tao_scope (void) const
+    RequestProcessingPolicy::_tao_scope () const
     {
       return TAO_POLICY_POA_SCOPE;
     }

@@ -16,7 +16,7 @@ ACE_SSL_SOCK_Connector::reset_new_handle (ACE_HANDLE handle)
 }
 
 ACE_INLINE void
-ACE_SSL_SOCK_Connector::dump (void) const
+ACE_SSL_SOCK_Connector::dump () const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::dump");
   this->connector_.dump ();

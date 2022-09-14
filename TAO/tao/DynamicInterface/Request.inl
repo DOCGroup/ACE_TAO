@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE CORBA::Request_ptr
 CORBA::Request::_duplicate (CORBA::Request_ptr x)
 {
-  if (x != 0)
+  if (x)
     {
       x->_incr_refcount ();
     }
@@ -13,20 +13,20 @@ CORBA::Request::_duplicate (CORBA::Request_ptr x)
 }
 
 ACE_INLINE CORBA::Request_ptr
-CORBA::Request::_nil (void)
+CORBA::Request::_nil ()
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE CORBA::Object_ptr
-CORBA::Request::target (void) const
+CORBA::Request::target () const
 {
   return this->target_;
 }
 
 // Return the operation name for the request.
 ACE_INLINE const CORBA::Char *
-CORBA::Request::operation (void) const
+CORBA::Request::operation () const
 {
   return this->opname_;
 }
@@ -103,13 +103,13 @@ CORBA::Request::set_return_type (CORBA::TypeCode_ptr tc)
 }
 
 ACE_INLINE CORBA::Any &
-CORBA::Request::return_value (void )
+CORBA::Request::return_value ()
 {
   return this->result_->any_;
 }
 
 ACE_INLINE CORBA::Context_ptr
-CORBA::Request::ctx (void) const
+CORBA::Request::ctx () const
 {
   return this->ctx_;
 }
@@ -127,7 +127,7 @@ CORBA::Request::_tao_lazy_evaluation (bool lazy_evaluation)
 }
 
 ACE_INLINE int
-CORBA::Request::_tao_byte_order (void) const
+CORBA::Request::_tao_byte_order () const
 {
   return this->byte_order_;
 }

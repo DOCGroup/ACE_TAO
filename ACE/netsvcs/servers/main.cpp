@@ -11,7 +11,6 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   // Try to link in the svc.conf entries dynamically, enabling the
   // "ignore_debug_flag" as the last parameter so that we can override
   // the default ACE_Log_Priority settings in the svc.conf file.

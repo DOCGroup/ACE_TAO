@@ -24,7 +24,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
 
 void
-ACE_Service_Type::dump (void) const
+ACE_Service_Type::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Type::dump");
@@ -73,7 +73,7 @@ ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
   this->name (n);
 }
 
-ACE_Service_Type::~ACE_Service_Type (void)
+ACE_Service_Type::~ACE_Service_Type ()
 {
   ACE_TRACE ("ACE_Service_Type::~ACE_Service_Type");
   this->fini ();
@@ -86,7 +86,7 @@ ACE_Service_Type::~ACE_Service_Type (void)
 }
 
 int
-ACE_Service_Type::fini (void)
+ACE_Service_Type::fini ()
 {
   if (ACE::debug ())
     ACELIB_DEBUG ((LM_DEBUG,
@@ -110,7 +110,7 @@ ACE_Service_Type::fini (void)
       return 1; // No implementation was found.
     }
 
-  int ret = this->type_->fini ();
+  int const ret = this->type_->fini ();
 
   // Ensure type is 0 to prevent invalid access after call to fini.
   this->type_ = 0;
@@ -123,7 +123,7 @@ ACE_Service_Type::fini (void)
 }
 
 int
-ACE_Service_Type::suspend (void) const
+ACE_Service_Type::suspend () const
 {
   ACE_TRACE ("ACE_Service_Type::suspend");
   (const_cast<ACE_Service_Type *> (this))->active_ = false;
@@ -131,7 +131,7 @@ ACE_Service_Type::suspend (void) const
 }
 
 int
-ACE_Service_Type::resume (void) const
+ACE_Service_Type::resume () const
 {
   ACE_TRACE ("ACE_Service_Type::resume");
   (const_cast<ACE_Service_Type *> (this))->active_ = true;
@@ -144,20 +144,20 @@ ACE_Service_Object::ACE_Service_Object (ACE_Reactor *r)
   ACE_TRACE ("ACE_Service_Object::ACE_Service_Object");
 }
 
-ACE_Service_Object::~ACE_Service_Object (void)
+ACE_Service_Object::~ACE_Service_Object ()
 {
   ACE_TRACE ("ACE_Service_Object::~ACE_Service_Object");
 }
 
 int
-ACE_Service_Object::suspend (void)
+ACE_Service_Object::suspend ()
 {
   ACE_TRACE ("ACE_Service_Object::suspend");
   return 0;
 }
 
 int
-ACE_Service_Object::resume (void)
+ACE_Service_Object::resume ()
 {
   ACE_TRACE ("ACE_Service_Object::resume");
   return 0;

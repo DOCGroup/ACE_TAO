@@ -18,7 +18,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO)
 
 void
-ACE_FIFO::dump (void) const
+ACE_FIFO::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FIFO::dump");
@@ -55,13 +55,13 @@ ACE_FIFO::ACE_FIFO (const ACE_TCHAR *fifo_name,
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO")));
 }
 
-ACE_FIFO::ACE_FIFO (void)
+ACE_FIFO::ACE_FIFO ()
 {
 //  ACE_TRACE ("ACE_FIFO::ACE_FIFO");
 }
 
 int
-ACE_FIFO::close (void)
+ACE_FIFO::close ()
 {
   ACE_TRACE ("ACE_FIFO::close");
   int result = 0;

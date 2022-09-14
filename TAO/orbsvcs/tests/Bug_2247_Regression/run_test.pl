@@ -102,7 +102,7 @@ sub run_single {
         $status = 1;
     }
 
-    $server_status = $SV1->WaitKill ($server1->ProcessStopWaitInterval());
+    $server_status = $SV1->WaitKill ($server1->ProcessStopWaitInterval(), {self_crash => 1});
 
     if ($server1_status != 0) {
         print STDERR "ERROR: server 1 returned $server_status\n";
@@ -183,14 +183,14 @@ sub run_merged {
         $status = 1;
     }
 
-    $server_status = $SV1->WaitKill ($server1->ProcessStopWaitInterval() + 5);
+    $server_status = $SV1->WaitKill ($server1->ProcessStopWaitInterval() + 5, {self_crash => 1});
 
     if ($server1_status != 0) {
         print STDERR "ERROR: server 1 returned $server_status\n";
         $status = 1;
     }
 
-    $server_status = $SV2->WaitKill ($server2->ProcessStopWaitInterval() + 5);
+    $server_status = $SV2->WaitKill ($server2->ProcessStopWaitInterval() + 5, {self_crash => 1});
 
     if ($server_status != 0) {
         print STDERR "ERROR: server 2 returned $server_status\n";

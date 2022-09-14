@@ -9,7 +9,6 @@
 
 namespace Kokyu
 {
-
 /*
 //@@VS: This is somehow not being recognized by MSVC, which results
 //in a link error. For now, the definition has been moved to the .h
@@ -55,7 +54,6 @@ template <class DSRT_Scheduler_Traits>
 int DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 {
-
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T):schedule_i enter\n"));

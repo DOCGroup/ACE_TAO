@@ -30,7 +30,7 @@ public:
   be_visitor_typedef_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_typedef_ci (void);
+  ~be_visitor_typedef_ci ();
 
   /// visit typedef. We provide code for this method in the derived class
   virtual int visit_typedef (be_typedef *node);

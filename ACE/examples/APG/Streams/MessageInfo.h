@@ -15,7 +15,7 @@ public:
   CallerId (ACE_TString id) : id_(id)
   { }
 
-  const ACE_TCHAR * string(void)
+  const ACE_TCHAR * string()
   {
     return this->id_.c_str ();
   }
@@ -59,31 +59,31 @@ public:
     : codec_(codec), addr_(addr)
   { }
 
-  int get_codec (void)
+  int get_codec ()
   {
     return this->codec_;
   }
 
-  ACE_FILE_Addr &get_addr (void)
+  ACE_FILE_Addr &get_addr ()
   {
     return this->addr_;
   }
 
-  int is_video (void)
+  int is_video ()
   {
     return
       this->get_codec () > FIRST_VIDEO_CODEC &&
       this->get_codec () < LAST_VIDEO_CODEC;
   }
 
-  int is_audio (void)
+  int is_audio ()
   {
     return
       this->get_codec () > FIRST_AUDIO_CODEC &&
       this->get_codec () < LAST_AUDIO_CODEC ;
   }
 
-  int is_text (void)
+  int is_text ()
   {
     return
       this->get_codec () > FIRST_TEXT_CODEC &&

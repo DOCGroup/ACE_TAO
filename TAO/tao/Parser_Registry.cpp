@@ -11,13 +11,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Parser_Registry::TAO_Parser_Registry (void)
-  : parsers_ (0),
+TAO_Parser_Registry::TAO_Parser_Registry ()
+  : parsers_ (nullptr),
     size_ (0)
 {
 }
 
-TAO_Parser_Registry::~TAO_Parser_Registry (void)
+TAO_Parser_Registry::~TAO_Parser_Registry ()
 {
   delete [] this->parsers_;
 }
@@ -25,10 +25,10 @@ TAO_Parser_Registry::~TAO_Parser_Registry (void)
 int
 TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
 {
-  char **names = 0;
+  char **names = nullptr;
   int number_of_names = 0;
 
-  if (orb_core->resource_factory () == 0)
+  if (orb_core->resource_factory () == nullptr)
     {
       return -1;
     }
@@ -51,7 +51,7 @@ TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
         ACE_Dynamic_Service<TAO_IOR_Parser>::instance (orb_core->configuration (),
                                                        names [i]);
 
-      if (this->parsers_[index] == 0)
+      if (this->parsers_[index] == nullptr)
         {
           --number_of_names;
           if (TAO_debug_level >= 1)
@@ -81,7 +81,7 @@ TAO_Parser_Registry::match_parser (const char *ior_string)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

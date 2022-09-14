@@ -86,17 +86,17 @@ template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 class TAO_ESF_Delayed_Changes : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
-  TAO_ESF_Delayed_Changes (void);
+  TAO_ESF_Delayed_Changes ();
   TAO_ESF_Delayed_Changes (const COLLECTION &collection);
 
-  int busy (void);
-  int idle (void);
-  int execute_delayed_operations (void);
+  int busy ();
+  int idle ();
+  int execute_delayed_operations ();
 
   void connected_i (PROXY *proxy);
   void reconnected_i (PROXY *proxy);
   void disconnected_i (PROXY *proxy);
-  void shutdown_i (void);
+  void shutdown_i ();
 
   typedef TAO_ESF_Connected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Connected_Command;
   typedef TAO_ESF_Reconnected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Reconnected_Command;
@@ -108,7 +108,7 @@ public:
   virtual void connected (PROXY *proxy);
   virtual void reconnected (PROXY *proxy);
   virtual void disconnected (PROXY *proxy);
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   COLLECTION collection_;

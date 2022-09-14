@@ -7,20 +7,20 @@ Server_IORInterceptor (Gateway::Object_Factory_ptr factory)
 {
 }
 
-Server_IORInterceptor::~Server_IORInterceptor (void)
+Server_IORInterceptor::~Server_IORInterceptor ()
 {
   CORBA::release (this->gateway_object_factory_);
 }
 
 
 char *
-Server_IORInterceptor::name (void)
+Server_IORInterceptor::name ()
 {
   return CORBA::string_dup ("Server_IORInterceptor");
 }
 
 void
-Server_IORInterceptor::destroy (void)
+Server_IORInterceptor::destroy ()
 {
   CORBA::release (this->gateway_object_factory_);
   this->gateway_object_factory_ = Gateway::Object_Factory::_nil ();

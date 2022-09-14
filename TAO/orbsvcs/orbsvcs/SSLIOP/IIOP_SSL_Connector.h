@@ -41,18 +41,16 @@ namespace TAO
   class IIOP_SSL_Connector : public TAO_IIOP_Connector
   {
   public:
-
     /// Constructor.
-    IIOP_SSL_Connector (void);
+    IIOP_SSL_Connector ();
 
     /// Destructor.
-    ~IIOP_SSL_Connector (void);
+    ~IIOP_SSL_Connector ();
 
     int open (TAO_ORB_Core *orb_core);
-    int close (void);
+    int close ();
 
   public:
-
     typedef TAO_Connect_Concurrency_Strategy<IIOP_SSL_Connection_Handler>
             CONNECT_CONCURRENCY_STRATEGY;
 
@@ -68,7 +66,6 @@ namespace TAO
             BASE_CONNECTOR;
 
   protected:
-
     /**
      * @name The TAO_Connector Methods
      *
@@ -85,14 +82,12 @@ namespace TAO
     //@}
 
   private:
-
     /// Our connect strategy
     CONNECT_STRATEGY connect_strategy_;
 
     /// The connector initiating connection requests for IIOP_SSL.
     BASE_CONNECTOR base_connector_;
   };
-
 } // End TAO namespace.
 
 TAO_END_VERSIONED_NAMESPACE_DECL

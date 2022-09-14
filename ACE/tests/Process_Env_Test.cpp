@@ -14,8 +14,7 @@
 #include "ace/Process.h"
 #include "ace/SString.h"
 
-typedef void (*setenvfn_t) (const ACE_TCHAR *name, const ACE_TCHAR *value,
-                            void *ctx);
+using setenvfn_t = void (*)(const ACE_TCHAR *, const ACE_TCHAR *, void *);
 
 #if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
 
@@ -115,8 +114,8 @@ run_main (int, ACE_TCHAR*[])
   process2.wait (&status);
   if (status != 1)
     {
-       ACE_ERROR ((LM_ERROR,
-                  "ERROR: process2 did not inherit env var Z.\n"));
+      ACE_ERROR ((LM_ERROR,
+                 "ERROR: process2 did not inherit env var Z, wait returned %d.\n", status));
       test_status = 1;
     }
 

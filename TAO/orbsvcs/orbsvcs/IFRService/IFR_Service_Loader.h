@@ -30,12 +30,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IFRService_Export TAO_IFR_Service_Loader : public TAO_Object_Loader
 {
 public:
-
   // Constructor
-  TAO_IFR_Service_Loader (void);
+  TAO_IFR_Service_Loader ();
 
   // Destructor
-  ~TAO_IFR_Service_Loader (void);
+  ~TAO_IFR_Service_Loader ();
 
   // Called by the Service Configurator framework to initialize the
   // Event Service. Defined in <ace/Service_Config.h>
@@ -43,7 +42,7 @@ public:
 
   // Called by the Service Configurator framework to remove the
   // Event Service. Defined in <ace/Service_Config.h>
-  virtual int fini (void);
+  virtual int fini ();
 
   // This function call initializes the IFR Service given a reference to the
   // ORB and the command line parameters.
@@ -51,17 +50,14 @@ public:
                                            int argc,
                                            ACE_TCHAR *argv[]);
 
-
 protected:
   TAO_IFR_Server ifr_server_;
   // Instance of the TAO_IFR_Server
 
 private:
-
   // Disallowing copying/assignment.
   TAO_IFR_Service_Loader (const TAO_IFR_Service_Loader &);
   TAO_IFR_Service_Loader & operator= (const TAO_IFR_Service_Loader &);
-
 };
 
 

@@ -14,8 +14,7 @@ class Task_Stats;
 class DT_Test //:public ACE_Task <ACE_SYNCH>
 {
  public:
-
-  DT_Test (void);
+  DT_Test ();
 
   int init (int argc, ACE_TCHAR *argv []);
 
@@ -23,14 +22,14 @@ class DT_Test //:public ACE_Task <ACE_SYNCH>
 
   void dt_creator (MIF_DT_Creator* dt_creator);
 
-  MIF_Scheduler* scheduler (void);
+  MIF_Scheduler* scheduler ();
 
-  int activate_task (void);
+  int activate_task ();
 
 
 /*   protected: */
 /*   /// task svc */
-/*   virtual int svc (void); */
+/*   virtual int svc (); */
 
 
  private:

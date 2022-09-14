@@ -37,7 +37,7 @@ public:
   CC_naming_service (CORBA::ORB_var orb_);
 
   /// Default destructor.
-  ~CC_naming_service (void);
+  ~CC_naming_service ();
 
   /// Initialization method must be called after first call of Instance()
   /// in order to initialize the object correctly
@@ -52,14 +52,14 @@ public:
                   CORBA::Object_ptr obj);
 
   /// Gets the cc lock set factory which is common for all tests.
-  CosConcurrencyControl::LockSetFactory_var get_lock_set_factory (void);
+  CosConcurrencyControl::LockSetFactory_var get_lock_set_factory ();
 
   /// The naming service object is a singleton
-  static CC_naming_service *Instance(void);
+  static CC_naming_service *Instance();
 
 private:
   /// Function to initialize the naming service.
-  int init_naming_service (void);
+  int init_naming_service ();
 
   /// Key of factory obj ref.
   char *cc_factory_key_;

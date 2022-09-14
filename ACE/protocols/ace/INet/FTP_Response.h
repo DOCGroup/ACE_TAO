@@ -21,7 +21,6 @@ namespace ACE
   {
     namespace FTP
       {
-
         /**
         * @class ACE_FTP_Response
         *
@@ -117,7 +116,6 @@ namespace ACE
               int status_;
               ACE_Array<ACE_CString> response_;
           };
-
       }
   }
 

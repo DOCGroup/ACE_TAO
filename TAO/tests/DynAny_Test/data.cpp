@@ -89,11 +89,8 @@ Data::Data (CORBA::ORB_var orb)
       this->m_objref2 =
         root_poa->create_reference ("foo");
 
-
       // Clean up after the POA
-      root_poa->destroy (1,
-                         1);
-
+      root_poa->destroy (true, true);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -101,7 +98,7 @@ Data::Data (CORBA::ORB_var orb)
     }
 }
 
-Data::~Data (void)
+Data::~Data ()
 {
   CORBA::string_free (m_string1);
   CORBA::string_free (m_string2);

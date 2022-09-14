@@ -45,7 +45,6 @@
 #include "ace/OS_NS_sys_socket.h"
 
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
@@ -57,13 +56,13 @@ static int done = 0;
 static int read_size = 2;
 
 
-Receiver::Receiver (void)
+Receiver::Receiver ()
   : mb_ (read_size + 1),
     handle_ (ACE_INVALID_HANDLE)
 {
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Receiver: Closing down Remote connection:%d\n",

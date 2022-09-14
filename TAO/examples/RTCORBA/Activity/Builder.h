@@ -40,7 +40,7 @@ class Builder : public ACE_Service_Object
 
   /// = Service_Object virtual method overloads.
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   /// = List access
   int poa_list (POA_LIST& poa_list);
@@ -48,7 +48,6 @@ class Builder : public ACE_Service_Object
   int job_list (JOB_LIST &job_list);
 
  protected:
-
   /// Number of POA's declared
   int poa_count_;
 

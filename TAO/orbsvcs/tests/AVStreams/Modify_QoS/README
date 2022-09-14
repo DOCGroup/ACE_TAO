@@ -10,7 +10,7 @@ receiver.  The test has the following features:
 2. Shows a mechanism to pace data.
 3. Shows how we can modify the qos of a flow during run-time.
 
-To demonstrate the qos modification teh receiver calls the modify_qos
+To demonstrate the qos modification the receiver calls the modify_qos
 (in this test we are modifying the frame rate of the flow) method after
 receiving 20 frames (a number selected for no good reason!!).
 This call in turn is propagated to the sender. The sender then re-initializes

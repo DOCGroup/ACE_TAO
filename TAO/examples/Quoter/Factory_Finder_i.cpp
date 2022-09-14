@@ -26,7 +26,7 @@ Quoter_Factory_Finder_i::Quoter_Factory_Finder_i (int debug_level)
 }
 
 // Destructor.
-Quoter_Factory_Finder_i::~Quoter_Factory_Finder_i (void)
+Quoter_Factory_Finder_i::~Quoter_Factory_Finder_i ()
 {
   // Nothing
 }

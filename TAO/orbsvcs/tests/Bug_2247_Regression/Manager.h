@@ -13,8 +13,7 @@
 class Manager
 {
 public:
-
-  Manager (void);
+  Manager ();
   // Ctor
 
   void init (int argc,
@@ -22,19 +21,19 @@ public:
 
   // Initialize the ORB, POA etc.
 
-  int make_merged_iors (void);
+  int make_merged_iors ();
   // Merges the different IORS
 
-  int set_properties (void);
+  int set_properties ();
   // Sets the properties for the profiles
 
-  int run (void);
+  int run ();
   // Run the  ORB event loop..
 
-  int write_to_file (void);
+  int write_to_file ();
   // Write the merged IOR to a file
 
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
   // Return the pointer to the copy of our ORB
 private:
   CORBA::ORB_var orb_;

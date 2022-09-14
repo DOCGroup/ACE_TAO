@@ -15,6 +15,6 @@ SMR_Client::SMR_Client (short port_number)
                 1));
 }
 
-SMR_Client::~SMR_Client (void)
+SMR_Client::~SMR_Client ()
 {
 }

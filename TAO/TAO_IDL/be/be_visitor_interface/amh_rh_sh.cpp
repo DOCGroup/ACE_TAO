@@ -17,7 +17,7 @@ be_visitor_amh_rh_interface_sh::be_visitor_amh_rh_interface_sh (
 {
 }
 
-be_visitor_amh_rh_interface_sh::~be_visitor_amh_rh_interface_sh (void)
+be_visitor_amh_rh_interface_sh::~be_visitor_amh_rh_interface_sh ()
 {
 }
 
@@ -46,8 +46,7 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
       rh_skel_class_name = "POA_TAO_";
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   rh_skel_class_name += rh_base_class_name.c_str ();
 
@@ -72,8 +71,8 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
   *os << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << rh_skel_class_name.c_str () << " (void);" << be_nl
-      << "virtual ~" << rh_skel_class_name.c_str () << " (void);";
+      << rh_skel_class_name.c_str () << " () = default;" << be_nl
+      << "virtual ~" << rh_skel_class_name.c_str () << " () = default;";
 
   // Generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) ==  -1)

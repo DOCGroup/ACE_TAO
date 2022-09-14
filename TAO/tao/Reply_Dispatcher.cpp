@@ -17,7 +17,7 @@ TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (ACE_Allocator *allocator)
 }
 
 // Destructor.
-TAO_Reply_Dispatcher::~TAO_Reply_Dispatcher (void)
+TAO_Reply_Dispatcher::~TAO_Reply_Dispatcher ()
 {
 }
 
@@ -25,7 +25,7 @@ TAO_Reply_Dispatcher::~TAO_Reply_Dispatcher (void)
 void
 TAO_Reply_Dispatcher::intrusive_add_ref (TAO_Reply_Dispatcher* rd)
 {
-  if (rd != 0)
+  if (rd != nullptr)
     {
       ++rd->refcount_;
     }
@@ -34,10 +34,10 @@ TAO_Reply_Dispatcher::intrusive_add_ref (TAO_Reply_Dispatcher* rd)
 void
 TAO_Reply_Dispatcher::intrusive_remove_ref (TAO_Reply_Dispatcher* rd)
 {
-  if (rd != 0)
+  if (rd != nullptr)
     {
-      long const tmp = --rd->refcount_;
-      if (tmp <= 0)
+      uint32_t const tmp = --rd->refcount_;
+      if (tmp == 0)
         {
           if (rd->allocator_)
             {

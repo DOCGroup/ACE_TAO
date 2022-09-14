@@ -34,32 +34,30 @@ class Notifier_Input_Handler : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Notifier_Input_Handler (void);
+  Notifier_Input_Handler ();
 
   /// Destructor.
-  ~Notifier_Input_Handler (void);
+  ~Notifier_Input_Handler ();
 
   /// Initialize the Notifier who plays the role of the server here.
-  int init (int argc,
-            ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
 
   /// Run the ORB.
-  int run (void);
+  int run ();
 
   /// Handle the user input.
-   virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
 private:
-
-  /// The tao orb manager object.
+  /// The TAO orb manager object.
   TAO_ORB_Manager orb_manager_;
 
   /// Parses the command line arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// Initialises the name server and registers the Notifier object
   /// name with the name server.
-  int init_naming_service (void);
+  int init_naming_service ();
 
   /// File where the IOR of the Notifier object is stored.
   FILE *ior_output_file_;

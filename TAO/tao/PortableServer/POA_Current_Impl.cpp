@@ -15,7 +15,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    POA_Current_Impl::POA_Current_Impl (void)
+    POA_Current_Impl::POA_Current_Impl ()
       : poa_ (0),
         object_id_ (TAO_POA_OBJECT_ID_BUF_SIZE, 0, object_id_buf_),
         object_key_ (0),
@@ -46,13 +46,13 @@ namespace TAO
     }
 
     POA_Current_Impl *
-    POA_Current_Impl::previous (void) const
+    POA_Current_Impl::previous () const
     {
       return this->previous_current_impl_;
     }
 
     void
-    POA_Current_Impl::teardown (void)
+    POA_Current_Impl::teardown ()
     {
       if (this->setup_done_)
         {
@@ -62,13 +62,13 @@ namespace TAO
     }
 
     PortableServer::POA_ptr
-    POA_Current_Impl::get_POA (void)
+    POA_Current_Impl::get_POA ()
     {
       return PortableServer::POA::_duplicate (this->poa_);
     }
 
     PortableServer::ObjectId *
-    POA_Current_Impl::get_object_id (void)
+    POA_Current_Impl::get_object_id ()
     {
       PortableServer::ObjectId *objid = 0;
 
@@ -80,19 +80,19 @@ namespace TAO
     }
 
     CORBA::Object_ptr
-    POA_Current_Impl::get_reference (void)
+    POA_Current_Impl::get_reference ()
     {
       return this->poa_->id_to_reference (this->object_id_);
     }
 
     PortableServer::Servant
-    POA_Current_Impl::get_servant (void)
+    POA_Current_Impl::get_servant ()
     {
       return this->servant_;
     }
 
     TAO_ORB_Core &
-    POA_Current_Impl::orb_core (void) const
+    POA_Current_Impl::orb_core () const
 
     {
       return this->poa_->orb_core ();

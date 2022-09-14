@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     /**
      * @class TP_Servant_State_Map
      *
@@ -72,7 +71,6 @@ namespace TAO
       /// The underlying map of servant state objects.
       MapType map_;
     };
-
   }
 }
 

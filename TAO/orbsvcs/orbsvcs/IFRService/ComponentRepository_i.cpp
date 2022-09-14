@@ -27,7 +27,7 @@ TAO_ComponentRepository_i::TAO_ComponentRepository_i (
 {
 }
 
-TAO_ComponentRepository_i::~TAO_ComponentRepository_i (void)
+TAO_ComponentRepository_i::~TAO_ComponentRepository_i ()
 {
 }
 
@@ -113,8 +113,7 @@ TAO_ComponentRepository_i::create_servants_and_poas (
 
 TAO_IDLType_i *
 TAO_ComponentRepository_i::select_idltype (
-    CORBA::DefinitionKind def_kind
-  ) const
+    CORBA::DefinitionKind def_kind) const
 {
   switch (def_kind)
   {
@@ -129,8 +128,7 @@ TAO_ComponentRepository_i::select_idltype (
 
 TAO_Container_i *
 TAO_ComponentRepository_i::select_container (
-    CORBA::DefinitionKind def_kind
-  ) const
+    CORBA::DefinitionKind def_kind) const
 {
   switch (def_kind)
   {
@@ -147,8 +145,7 @@ TAO_ComponentRepository_i::select_container (
 
 TAO_Contained_i *
 TAO_ComponentRepository_i::select_contained (
-    CORBA::DefinitionKind def_kind
-  ) const
+    CORBA::DefinitionKind def_kind) const
 {
   switch (def_kind)
   {
@@ -181,8 +178,7 @@ TAO_ComponentRepository_i::select_contained (
 
 PortableServer::POA_ptr
 TAO_ComponentRepository_i::select_poa (
-    CORBA::DefinitionKind def_kind
-  ) const
+    CORBA::DefinitionKind def_kind) const
 {
   switch (def_kind)
   {

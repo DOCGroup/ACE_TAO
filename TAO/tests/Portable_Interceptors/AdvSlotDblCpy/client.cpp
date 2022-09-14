@@ -32,7 +32,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Object_var obj = orb->string_to_object (argv[1]);
       InvokeMe_var server = InvokeMe::_narrow (obj.in ());
 
-      always Shutdown( server.in () ); // When goes out of scope!
+      always Shutdown( server.in ()); // When goes out of scope!
       server->invoke_me ();
       ACE_DEBUG ((LM_DEBUG, "\n"));
       server->invoke_me ();

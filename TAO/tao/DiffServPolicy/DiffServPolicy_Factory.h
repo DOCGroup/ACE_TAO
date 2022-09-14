@@ -40,7 +40,6 @@ class TAO_DiffServPolicy_Export TAO_DiffServ_PolicyFactory
     public virtual ::CORBA::LocalObject
 {
 public:
-
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any &value);
 

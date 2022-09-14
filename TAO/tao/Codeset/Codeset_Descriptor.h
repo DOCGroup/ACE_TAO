@@ -42,12 +42,12 @@ public:
 
   void ncs (ACE_CDR::ULong ncs);
   void ncs (const ACE_TCHAR *name);
-  ACE_CDR::ULong ncs (void) const;
-  int max_bytes (void) const;
-  int num_translators (void) const;
+  ACE_CDR::ULong ncs () const;
+  int max_bytes () const;
+  int num_translators () const;
 
   void add_translator (const ACE_TCHAR *name);
-  Translator_Node *translators (void);
+  Translator_Node *translators ();
 
 private:
   ACE_CDR::ULong ncs_;

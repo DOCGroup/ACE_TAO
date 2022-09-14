@@ -9,13 +9,13 @@ FOO_IORInterceptor::FOO_IORInterceptor (IOP::Codec_ptr codec)
 }
 
 char *
-FOO_IORInterceptor::name (void)
+FOO_IORInterceptor::name ()
 {
   return CORBA::string_dup ("FOO_IORInterceptor");
 }
 
 void
-FOO_IORInterceptor::destroy (void)
+FOO_IORInterceptor::destroy ()
 {
 }
 

@@ -39,7 +39,7 @@ public:
   /// To use non-blocking behavior include ACE_NONBLOCK in @a flags.
   //@{
   /// Default constructor.
-  ACE_FIFO_Send (void);
+  ACE_FIFO_Send ();
 
   /// Open up a bytestream named pipe for writing.
   ACE_FIFO_Send (const ACE_TCHAR *rendezvous,
@@ -61,7 +61,7 @@ public:
   ssize_t send_n (const void *buf, size_t len);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

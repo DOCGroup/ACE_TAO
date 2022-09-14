@@ -57,7 +57,7 @@ static ACE_Atomic_Op<ACE_Thread_Mutex, long> current_writers;
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-r n_readers] [-w n_writers] [-n iteration_count]\n")));
@@ -157,7 +157,6 @@ reader (void *)
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) could not upgrade to write lock!\n")));
-
         }
       else // result == -1
         {

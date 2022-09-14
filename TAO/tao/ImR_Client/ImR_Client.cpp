@@ -10,6 +10,7 @@
 #include "tao/ImR_Client/ServerObject_i.h"
 #include "tao/ImR_Client/ImplRepoC.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,9 +22,8 @@ namespace
     // should be protocol neutral.
     const char corbaloc[] = "corbaloc:";
     char *pos = ACE_OS::strstr (ior, corbaloc);
-    pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
-
-    pos = ACE_OS::strchr (pos + 1, delimiter);
+    pos = std::strchr (pos + sizeof (corbaloc), ':');
+    pos = std::strchr (pos + 1, delimiter);
 
     return pos;
   }
@@ -208,7 +208,7 @@ namespace TAO
 {
   namespace ImR_Client
   {
-    ImR_Client_Adapter_Impl::ImR_Client_Adapter_Impl (void)
+    ImR_Client_Adapter_Impl::ImR_Client_Adapter_Impl ()
      : server_object_ (0)
     {
     }
@@ -451,7 +451,7 @@ namespace TAO
     // Initialization and registration of dynamic service object.
 
     int
-    ImR_Client_Adapter_Impl::Initializer (void)
+    ImR_Client_Adapter_Impl::Initializer ()
     {
       TAO_Root_POA::imr_client_adapter_name (
         "Concrete_ImR_Client_Adapter");

@@ -452,5 +452,5 @@ A_i::exc_method (::Test::string_field f)
 void
 A_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

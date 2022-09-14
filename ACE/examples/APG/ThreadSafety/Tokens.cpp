@@ -11,7 +11,6 @@ class Device;
 class HA_Device_Repository
 {
 public:
-
   enum { N_DEVICES = 100 };
 
   HA_Device_Repository ()
@@ -65,7 +64,7 @@ public:
   HA_CommandHandler (HA_Device_Repository &rep) : rep_(rep)
   { }
 
-  int svc (void)
+  int svc ()
   {
     for (int i = 0; i < HA_Device_Repository::N_DEVICES; i++)
       rep_.update_device (i, "");

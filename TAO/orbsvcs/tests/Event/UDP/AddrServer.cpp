@@ -2,7 +2,6 @@
 #include "tao/SystemException.h"
 
 
-
 AddrServer::AddrServer (const ACE_INET_Addr& addr)
 {
   this->addr_ = addr;

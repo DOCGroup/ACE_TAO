@@ -1,5 +1,5 @@
 ACE_INLINE bool
-ACE_Name_Options::use_registry (void) const
+ACE_Name_Options::use_registry () const
 {
   ACE_TRACE ("ACE_Name_Options::use_registry");
   return this->use_registry_;

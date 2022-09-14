@@ -85,7 +85,7 @@ Handle_Broadcast::fini (void)
 }
 
 ACE_INLINE ACE_HANDLE
-Handle_Broadcast::get_handle (void) const
+Handle_Broadcast::get_handle () const
 {
   return this->ACE_SOCK_Dgram::get_handle ();
 }

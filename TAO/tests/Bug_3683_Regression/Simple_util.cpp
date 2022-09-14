@@ -11,7 +11,7 @@
 
 // Constructor.
 template <class Servant>
-Server<Servant>::Server (void)
+Server<Servant>::Server ()
   : servant_ (0)
   , ior_output_file_ (0)
   , ins_ (0)
@@ -25,13 +25,13 @@ Server<Servant>::Server (void)
 
 // Destructor.
 template <class Servant>
-Server<Servant>::~Server (void)
+Server<Servant>::~Server ()
 {
 }
 
 // Parse the command-line arguments and set options.
 template <class Servant> int
-Server<Servant>::parse_args (void)
+Server<Servant>::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_,
                         ACE_TEXT ("do:i:"), 1, 0,
@@ -165,7 +165,7 @@ Server<Servant>::init (const char *servant_name,
 }
 
 template <class Servant>int
-Server<Servant>::run (void)
+Server<Servant>::run ()
 {
   // Run the main event loop for the ORB.
   if (this->orb_manager_.run () == -1)
@@ -178,7 +178,7 @@ Server<Servant>::run (void)
 
 // Constructor.
 template <class ServerInterface>
-Client<ServerInterface>::Client (void)
+Client<ServerInterface>::Client ()
   : ior_ ("")
   , do_shutdown_ (0)
 {
@@ -218,7 +218,7 @@ Client<ServerInterface>::read_ior (ACE_TCHAR *filename)
 
 // Parses the command line arguments and returns an error status.
 template <class ServerInterface> int
-Client<ServerInterface>::parse_args (void)
+Client<ServerInterface>::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_,
                         ACE_TEXT ("df:nk:x"), 1, 0,
@@ -265,7 +265,7 @@ Client<ServerInterface>::parse_args (void)
 }
 
 template <class ServerInterface>
-Client<ServerInterface>::~Client (void)
+Client<ServerInterface>::~Client ()
 {
   this->orb_->destroy ();
 }
@@ -309,8 +309,6 @@ Client<ServerInterface>::init (const char *,
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("no ior or naming options  specified\n")),
                           -1);
-
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -322,7 +320,7 @@ Client<ServerInterface>::init (const char *,
 }
 
 template <class ServerInterface> int
-Client<ServerInterface>::do_shutdown (void)
+Client<ServerInterface>::do_shutdown ()
 {
   // Returns the shutdwon flag
   return this->do_shutdown_;

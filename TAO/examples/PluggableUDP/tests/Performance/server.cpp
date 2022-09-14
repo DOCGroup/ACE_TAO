@@ -21,7 +21,6 @@
 
 
 
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 int orb_threads = 1; // Number of threads running inside the ORB.
 
@@ -162,8 +161,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));
 
-      root_poa->destroy (1,  // ethernalize objects
-                         0);  // wait for completion
+      root_poa->destroy (true,  // ethernalize objects
+                        false);  // wait for completion
 
       orb->destroy ();
 

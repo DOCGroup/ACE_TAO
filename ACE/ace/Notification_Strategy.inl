@@ -3,7 +3,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Event_Handler *
-ACE_Notification_Strategy::event_handler (void)
+ACE_Notification_Strategy::event_handler ()
 {
   return eh_;
 }
@@ -15,7 +15,7 @@ ACE_Notification_Strategy::event_handler (ACE_Event_Handler *eh)
 }
 
 ACE_INLINE ACE_Reactor_Mask
-ACE_Notification_Strategy::mask (void) const
+ACE_Notification_Strategy::mask () const
 {
   return mask_;
 }

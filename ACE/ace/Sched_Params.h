@@ -78,24 +78,24 @@ public:
                     const ACE_Time_Value &quantum = ACE_Time_Value::zero);
 
   /// Termination.
-  ~ACE_Sched_Params (void);
+  ~ACE_Sched_Params ();
 
   // = Get/Set methods:
 
   // = Get/Set policy
-  Policy policy (void) const;
+  Policy policy () const;
   void policy (const Policy);
 
   // = Get/Set priority.
-  ACE_Sched_Priority priority (void) const;
+  ACE_Sched_Priority priority () const;
   void priority (const ACE_Sched_Priority);
 
   // = Get/Set scope.
-  int scope (void) const;
+  int scope () const;
   void scope(const int);
 
   // = Get/Set quantum.
-  const ACE_Time_Value &quantum (void) const;
+  const ACE_Time_Value &quantum () const;
   void quantum (const ACE_Time_Value &);
 
   // = Accessors for OS-specific priorities.
@@ -184,23 +184,23 @@ public:
                                int scope = ACE_SCOPE_THREAD);
 
   /// Default dtor.
-  ~ACE_Sched_Priority_Iterator (void);
+  ~ACE_Sched_Priority_Iterator ();
 
   /// Check if there are more priorities.
-  int more (void) const;
+  int more () const;
 
   /// Return the current priority.
-  int priority (void) const;
+  int priority () const;
 
   /// Move to the next priority.
   /// The iteration is from lowest to highest importance.
-  void next (void);
+  void next ();
 
   /// Accessor for the scheduling policy over which we are iterating.
-  const ACE_Sched_Params::Policy &policy (void) const;
+  const ACE_Sched_Params::Policy &policy () const;
 
   /// Accessor for the scheduling
-  int scope (void) const;
+  int scope () const;
 
 private:
   /// The Scheduling policy (FIFO, RR, etc.) and scheduling scope

@@ -37,11 +37,11 @@ public:
                          ACE_UINT32 burst_messages);
 
   /// Destructor
-  virtual ~UDP_PerformanceClient (void);
+  virtual ~UDP_PerformanceClient ();
 
 private:
   // Runs in a separate thread.
-  virtual int svc (void );
+  virtual int svc ();
 
 private:
   CORBA::ORB_var orb_;

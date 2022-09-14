@@ -23,13 +23,13 @@ public:
          CORBA::Short num,
          const char *loc);
 
-  virtual char * get_string (void);
+  virtual char * get_string ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
-  virtual void remove_member (void);
+  virtual void remove_member ();
 
-  virtual CORBA::Short number (void);
+  virtual CORBA::Short number ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

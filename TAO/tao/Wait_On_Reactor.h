@@ -28,26 +28,25 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_Wait_On_Reactor : public TAO_Wait_Strategy
 {
-
 public:
   /// Constructor.
   explicit TAO_Wait_On_Reactor (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Wait_On_Reactor (void);
+  virtual ~TAO_Wait_On_Reactor ();
 
   /*! @copydoc TAO_Wait_Strategy::wait() */
   virtual int wait (ACE_Time_Value *max_wait_time,
                     TAO_Synch_Reply_Dispatcher &rd);
 
   /*! @copydoc TAO_Wait_Strategy::register_handler() */
-  virtual int register_handler (void);
+  virtual int register_handler ();
 
   /*! @copydoc TAO_Wait_Strategy::non_blocking() */
-  virtual bool non_blocking (void) const;
+  virtual bool non_blocking () const;
 
   /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
-  virtual bool can_process_upcalls (void) const;
+  virtual bool can_process_upcalls () const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

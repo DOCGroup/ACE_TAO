@@ -3,29 +3,20 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_sys_utsname.h"
 
-
-
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("ACE: %u.%u.%u\n"),
               ACE::major_version(),
               ACE::minor_version(),
-              ACE::beta_version()));
+              ACE::micro_version()));
 
   ACE_utsname uname;
   ACE_OS::uname(&uname);
-#if defined (ACE_LACKS_UTSNAME_T)
-  ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("OS: %s %s\n"),
-              uname.sysname,
-              uname.release));
-#else
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("OS: %C %C\n"),
               uname.sysname,
               uname.release));
-#endif
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Compiler: %s %u.%u\n"),
               ACE::compiler_name(),
@@ -35,4 +26,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   return 0;
 }
-

@@ -62,10 +62,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SUN_Proactor : public ACE_POSIX_AIOCB_Proactor
 {
 public:
-  virtual Proactor_Type get_impl_type (void);
+  virtual Proactor_Type get_impl_type ();
 
   /// Destructor.
-  virtual ~ACE_SUN_Proactor (void);
+  virtual ~ACE_SUN_Proactor ();
 
   /// Constructor defines max number asynchronous operations that can
   /// be started at the same time.
@@ -86,7 +86,7 @@ protected:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events (void);
+  virtual int handle_events ();
 
   /// Internal completion detection and dispatching.
   int handle_events_i (ACE_Time_Value *delta);

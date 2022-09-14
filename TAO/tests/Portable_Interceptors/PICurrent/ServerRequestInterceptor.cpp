@@ -13,13 +13,13 @@ ServerRequestInterceptor::ServerRequestInterceptor (
 }
 
 char *
-ServerRequestInterceptor::name (void)
+ServerRequestInterceptor::name ()
 {
   return CORBA::string_dup ("ServerRequestInterceptor");
 }
 
 void
-ServerRequestInterceptor::destroy (void)
+ServerRequestInterceptor::destroy ()
 {
 }
 
@@ -27,7 +27,6 @@ void
 ServerRequestInterceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "invoke_me") != 0)
@@ -105,14 +104,12 @@ ServerRequestInterceptor::receive_request (
   ACE_DEBUG ((LM_INFO,
               "(%P|%t) Server side RSC/TSC semantics appear "
               "to be correct.\n"));
-
 }
 
 void
 ServerRequestInterceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "invoke_me") != 0)

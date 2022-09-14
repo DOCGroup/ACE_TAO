@@ -32,7 +32,7 @@ TAO_CDR_Encaps_Codec::TAO_CDR_Encaps_Codec (
 {
 }
 
-TAO_CDR_Encaps_Codec::~TAO_CDR_Encaps_Codec (void)
+TAO_CDR_Encaps_Codec::~TAO_CDR_Encaps_Codec ()
 {
 }
 

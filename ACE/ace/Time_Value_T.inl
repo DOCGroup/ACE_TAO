@@ -67,7 +67,7 @@ ACE_Time_Value_T<TIME_POLICY> ACE_Time_Value_T<TIME_POLICY>::operator++ (int)
 }
 
 template <class TIME_POLICY>
-ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator++ (void)
+ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator++ ()
 {
   this->ACE_Time_Value::operator ++();
   return *this;
@@ -82,7 +82,7 @@ ACE_Time_Value_T<TIME_POLICY> ACE_Time_Value_T<TIME_POLICY>::operator-- (int)
 }
 
 template <class TIME_POLICY>
-ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator-- (void)
+ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator-- ()
 {
   this->ACE_Time_Value::operator --();
   return *this;

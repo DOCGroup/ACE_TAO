@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Custom_Request_Operation;
     typedef TAO_Intrusive_Ref_Count_Handle<TP_Custom_Request_Operation>
                                           TP_Custom_Request_Operation_Handle;
@@ -52,7 +51,6 @@ namespace TAO
                       : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
-
       /// Virtual Destructor.
       virtual ~TP_Custom_Request_Operation();
 
@@ -78,7 +76,6 @@ namespace TAO
     private:
       PortableServer::ServantBase_var servant_;
     };
-
   }
 }
 

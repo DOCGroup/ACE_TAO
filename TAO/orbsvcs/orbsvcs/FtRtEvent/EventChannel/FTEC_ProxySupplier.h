@@ -38,9 +38,9 @@ public:
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
                 const RtecEventChannelAdmin::ConsumerQOS &qos);
-  virtual void disconnect_push_supplier (void);
-  virtual void suspend_connection (void);
-  virtual void resume_connection (void);
+  virtual void disconnect_push_supplier ();
+  virtual void suspend_connection ();
+  virtual void resume_connection ();
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
 

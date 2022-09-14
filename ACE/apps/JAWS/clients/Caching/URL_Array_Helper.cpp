@@ -35,5 +35,4 @@ size_t ace_array_decode (void *buf, T &x)
 }
 
 
-
 #endif /* ACE_URL_ARRAY_HELPER_C */

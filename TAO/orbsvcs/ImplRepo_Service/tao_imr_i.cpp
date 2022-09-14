@@ -12,7 +12,7 @@
 #include "ace/os_include/os_netdb.h"
 #include "ace/OS_NS_unistd.h"
 
-TAO_IMR_i::TAO_IMR_i (void)
+TAO_IMR_i::TAO_IMR_i ()
   : argc_ (0),
     argv_ (0),
     orb_ (),
@@ -22,7 +22,7 @@ TAO_IMR_i::TAO_IMR_i (void)
   // Nothing
 }
 
-TAO_IMR_i::~TAO_IMR_i (void)
+TAO_IMR_i::~TAO_IMR_i ()
 {
 }
 
@@ -92,7 +92,7 @@ TAO_IMR_i::init (int argc, ACE_TCHAR **argv)
 // Go through and figure out which operation we should do.
 
 int
-TAO_IMR_i::parse_args (void)
+TAO_IMR_i::parse_args ()
 {
   // Make sure one command was given
   if (this->argc_ < 2)
@@ -121,7 +121,7 @@ TAO_IMR_i::parse_args (void)
 // Print out information about all operations.
 
 void
-TAO_IMR_i::print_usage (void)
+TAO_IMR_i::print_usage ()
 {
   ORBSVCS_ERROR ((LM_ERROR, "Usage: tao_imr [options] command [command-arguments]\n"
     "  where [options] are ORB options\n"
@@ -263,7 +263,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
   ORBSVCS_DEBUG ((LM_DEBUG, "\n"));
 }
 
-TAO_IMR_Op_List::TAO_IMR_Op_List (void)
+TAO_IMR_Op_List::TAO_IMR_Op_List ()
 : verbose_server_information_ (0)
 , list_only_active_servers_ (0)
 , how_many_ (0)
@@ -287,7 +287,7 @@ TAO_IMR_Op_Register::TAO_IMR_Op_Register (bool is_add)
 }
 
 void
-TAO_IMR_Op_Activate::print_usage (void)
+TAO_IMR_Op_Activate::print_usage ()
 {
   ORBSVCS_ERROR ((LM_ERROR,
                   "Starts a server using its registered Activator.\n\n"
@@ -334,7 +334,7 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
 }
 
 void
-TAO_IMR_Op_Autostart::print_usage (void)
+TAO_IMR_Op_Autostart::print_usage ()
 {
   ORBSVCS_ERROR ((LM_ERROR, "Usage: tao_imr [options] autostart\n"
     "  where [options] are ORB options\n"
@@ -366,7 +366,7 @@ TAO_IMR_Op_Autostart::parse (int argc, ACE_TCHAR **argv)
 }
 
 void
-TAO_IMR_Op_IOR::print_usage (void)
+TAO_IMR_Op_IOR::print_usage ()
 {
   ORBSVCS_ERROR ((LM_ERROR, "Creates an IOR for a server that is registered with the IMR and uses\n"
     "the InterOperable Naming Service.  Please see the documentation for\n"
@@ -423,7 +423,7 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
 }
 
 void
-TAO_IMR_Op_Kill::print_usage (void)
+TAO_IMR_Op_Kill::print_usage ()
 {
   ORBSVCS_ERROR ((LM_ERROR,
                   "Sends a signal to the designated process\n\n"
@@ -478,7 +478,7 @@ TAO_IMR_Op_Kill::parse (int argc, ACE_TCHAR **argv)
 }
 
 void
-TAO_IMR_Op_Link::print_usage (void)
+TAO_IMR_Op_Link::print_usage ()
 {
   ORBSVCS_ERROR ((LM_ERROR, "Links multiple POAs to a single executable\n"
     "\n"
@@ -548,7 +548,7 @@ TAO_IMR_Op_Link::parse (int argc, ACE_TCHAR **argv)
 }
 
 void
-TAO_IMR_Op_List::print_usage (void)
+TAO_IMR_Op_List::print_usage ()
 {
   ORBSVCS_ERROR ((LM_ERROR, "Lists all or one of the servers in the Implementation Repository\n"
     "\n"
@@ -608,7 +608,7 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
 }
 
 void
-TAO_IMR_Op_Remove::print_usage (void)
+TAO_IMR_Op_Remove::print_usage ()
 {
   ORBSVCS_ERROR ((LM_ERROR, "Removes a server entry\n"
     "\n"
@@ -662,7 +662,7 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
 }
 
 void
-TAO_IMR_Op_Shutdown::print_usage (void)
+TAO_IMR_Op_Shutdown::print_usage ()
 {
   ORBSVCS_ERROR ((LM_ERROR,
                   "Shuts down a server\n\n"
@@ -714,7 +714,7 @@ TAO_IMR_Op_ShutdownRepo::TAO_IMR_Op_ShutdownRepo()
 }
 
 void
-TAO_IMR_Op_ShutdownRepo::print_usage (void)
+TAO_IMR_Op_ShutdownRepo::print_usage ()
 {
   ORBSVCS_ERROR ((LM_ERROR, "Shuts down the ImR\n"
     "\n"
@@ -775,7 +775,7 @@ TAO_IMR_Op_Register::addenv (ACE_TCHAR *opt)
 }
 
 void
-TAO_IMR_Op_Register::print_usage (void)
+TAO_IMR_Op_Register::print_usage ()
 {
   ORBSVCS_ERROR ((LM_ERROR,
     "Adds/Updates a server entry\n\n"
@@ -876,7 +876,7 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
 
 
 int
-TAO_IMR_Op_Activate::run (void)
+TAO_IMR_Op_Activate::run ()
 {
   ACE_ASSERT(! CORBA::is_nil(imr_));
   try
@@ -927,7 +927,7 @@ TAO_IMR_Op_Activate::run (void)
 }
 
 int
-TAO_IMR_Op_Autostart::run (void)
+TAO_IMR_Op_Autostart::run ()
 {
   ACE_ASSERT(! CORBA::is_nil (imr_));
 
@@ -967,7 +967,7 @@ TAO_IMR_Op_Autostart::run (void)
 }
 
 int
-TAO_IMR_Op_IOR::run (void)
+TAO_IMR_Op_IOR::run ()
 {
   ACE_ASSERT (! CORBA::is_nil(imr_));
 
@@ -1055,7 +1055,7 @@ TAO_IMR_Op_IOR::run (void)
 }
 
 int
-TAO_IMR_Op_Kill::run (void)
+TAO_IMR_Op_Kill::run ()
 {
   ACE_ASSERT (! CORBA::is_nil(imr_));
 
@@ -1104,7 +1104,7 @@ TAO_IMR_Op_Kill::run (void)
 }
 
 int
-TAO_IMR_Op_Link::run (void)
+TAO_IMR_Op_Link::run ()
 {
   ACE_ASSERT (! CORBA::is_nil(imr_));
 
@@ -1148,7 +1148,7 @@ TAO_IMR_Op_Link::run (void)
 
 
 int
-TAO_IMR_Op_List::run (void)
+TAO_IMR_Op_List::run ()
 {
   ACE_ASSERT (! CORBA::is_nil(imr_));
 
@@ -1220,7 +1220,7 @@ TAO_IMR_Op_List::run (void)
 }
 
 int
-TAO_IMR_Op_Remove::run (void)
+TAO_IMR_Op_Remove::run ()
 {
   ACE_ASSERT (! CORBA::is_nil(imr_));
 
@@ -1274,7 +1274,7 @@ TAO_IMR_Op_Remove::run (void)
 }
 
 int
-TAO_IMR_Op_Shutdown::run (void)
+TAO_IMR_Op_Shutdown::run ()
 {
   ACE_ASSERT (! CORBA::is_nil(imr_));
 
@@ -1318,7 +1318,7 @@ TAO_IMR_Op_Shutdown::run (void)
 }
 
 int
-TAO_IMR_Op_ShutdownRepo::run (void)
+TAO_IMR_Op_ShutdownRepo::run ()
 {
   ACE_ASSERT(! CORBA::is_nil(imr_));
 
@@ -1343,7 +1343,7 @@ TAO_IMR_Op_ShutdownRepo::run (void)
 }
 
 int
-TAO_IMR_Op_Register::run (void)
+TAO_IMR_Op_Register::run ()
 {
   ACE_ASSERT (! CORBA::is_nil(imr_));
 

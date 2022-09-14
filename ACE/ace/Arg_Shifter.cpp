@@ -44,7 +44,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::ACE_Arg_Shifter_T (int& argc,
 
 template <typename CHAR_TYPE>
 void
-ACE_Arg_Shifter_T<CHAR_TYPE>::init (void)
+ACE_Arg_Shifter_T<CHAR_TYPE>::init ()
 {
   // If not provided with one, allocate a temporary array.
   if (this->temp_ == 0)
@@ -74,7 +74,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::init (void)
 }
 
 template <typename CHAR_TYPE>
-ACE_Arg_Shifter_T<CHAR_TYPE>::~ACE_Arg_Shifter_T (void)
+ACE_Arg_Shifter_T<CHAR_TYPE>::~ACE_Arg_Shifter_T ()
 {
   // Delete the temporary vector.
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -87,7 +87,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::~ACE_Arg_Shifter_T (void)
 
 template <typename CHAR_TYPE>
 const CHAR_TYPE *
-ACE_Arg_Shifter_T<CHAR_TYPE>::get_current (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::get_current () const
 {
   const CHAR_TYPE * retval = 0;
 
@@ -190,14 +190,14 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::ignore_arg (int number)
 
 template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter_T<CHAR_TYPE>::is_anything_left (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::is_anything_left () const
 {
   return this->total_size_ - this->current_index_;
 }
 
 template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter_T<CHAR_TYPE>::is_option_next (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::is_option_next () const
 {
   return this->is_anything_left () &&
     this->temp_[this->current_index_][0] == '-';
@@ -205,7 +205,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::is_option_next (void) const
 
 template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter_T<CHAR_TYPE>::is_parameter_next (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::is_parameter_next () const
 {
   return this->is_anything_left ()
     && this->temp_[this->current_index_][0] != '-';
@@ -213,7 +213,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::is_parameter_next (void) const
 
 template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter_T<CHAR_TYPE>::num_ignored_args (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::num_ignored_args () const
 {
   return this->front_;
 }

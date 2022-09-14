@@ -1,7 +1,7 @@
 // Forward declaration to make recursive construct.
 valuetype BaseNode;
 
-//@@ Dosn't work for now
+//@@ Doesn't work for now
 //typedef sequence<BaseNode> BaseNodeSeq;
 
 // Performance test: One may try to pass

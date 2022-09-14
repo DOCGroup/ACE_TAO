@@ -12,7 +12,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initializes object when dynamic linking occurs.
-
 int
 ACE_Shared_Object::init (int, ACE_TCHAR *[])
 {
@@ -21,16 +20,14 @@ ACE_Shared_Object::init (int, ACE_TCHAR *[])
 }
 
 // Terminates object when dynamic unlinking occurs.
-
 int
-ACE_Shared_Object::fini (void)
+ACE_Shared_Object::fini ()
 {
   ACE_TRACE ("ACE_Shared_Object::fini");
   return 0;
 }
 
 // Returns information on active object.
-
 int
 ACE_Shared_Object::info (ACE_TCHAR **, size_t) const
 {
@@ -39,8 +36,7 @@ ACE_Shared_Object::info (ACE_TCHAR **, size_t) const
 }
 
 // Need to give a default implementation.
-
-ACE_Shared_Object::~ACE_Shared_Object (void)
+ACE_Shared_Object::~ACE_Shared_Object ()
 {
   ACE_TRACE ("ACE_Shared_Object::~ACE_Shared_Object");
 }

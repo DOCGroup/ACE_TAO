@@ -58,10 +58,10 @@ SM_Server::mux (char *packet,
   return pm_server->encode (packet, packet_length);
 }
 
-SM_Server::SM_Server (void)
+SM_Server::SM_Server ()
 {
 }
 
-SM_Server::~SM_Server (void)
+SM_Server::~SM_Server ()
 {
 }

@@ -15,7 +15,7 @@
 
 TAO::Storable_File_Guard::
 Storable_File_Guard (bool redundant, bool use_backup)
-  : fl_(0)
+  : fl_(nullptr)
   , redundant_(redundant)
   , closed_(1)
   , rwflags_(0)
@@ -24,7 +24,7 @@ Storable_File_Guard (bool redundant, bool use_backup)
 }
 
 TAO::Storable_File_Guard::
-~Storable_File_Guard () ACE_NOEXCEPT_FALSE
+~Storable_File_Guard () noexcept(false)
 {
   delete fl_;
 }
@@ -32,7 +32,6 @@ TAO::Storable_File_Guard::
 void
 TAO::Storable_File_Guard::init_no_load(Method_Type method_type)
 {
-
   ACE_CString mode;
   this->rwflags_ = 0;
   switch (method_type)
@@ -69,7 +68,7 @@ TAO::Storable_File_Guard::init_no_load(Method_Type method_type)
 }
 
 void
-TAO::Storable_File_Guard::reload (void)
+TAO::Storable_File_Guard::reload ()
 {
   if (redundant_)
     {
@@ -145,21 +144,21 @@ TAO::Storable_File_Guard::init(Method_Type method_type)
 }
 
 bool
-TAO::Storable_File_Guard::object_obsolete (void)
+TAO::Storable_File_Guard::object_obsolete ()
 { // Default implementation uses time to determine
   // if obsolete.
   return (fl_->last_changed () > this->get_object_last_changed ());
 }
 
 void
-TAO::Storable_File_Guard::mark_object_current (void)
+TAO::Storable_File_Guard::mark_object_current ()
 { // Default implementation is to set the last changed
   // time to that of the file lock.
   this->set_object_last_changed (fl_->last_changed ());
 }
 
 void
-TAO::Storable_File_Guard::release (void)
+TAO::Storable_File_Guard::release ()
 {
   if ( ! closed_ )
     {
@@ -230,7 +229,6 @@ TAO::Storable_File_Guard::load ()
       // result of 0 means OK. We should now have a good primary file.
       if (!result)
         {
-
           TAOLIB_ERROR ((LM_INFO,
                          ACE_TEXT ("TAO: (%P|%t) Attempting to restore ")
                          ACE_TEXT ("from backup\n")));

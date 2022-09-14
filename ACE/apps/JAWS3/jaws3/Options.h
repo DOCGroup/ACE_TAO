@@ -19,20 +19,17 @@ class JAWS_Options;
 class JAWS_Export JAWS_Options
 {
 public:
-
-  JAWS_Options (void);
+  JAWS_Options ();
 
   const char *getenv (const char *key);
 
-  static JAWS_Options * instance (void)
+  static JAWS_Options * instance ()
   {
     return ACE_Singleton<JAWS_Options, ACE_SYNCH_MUTEX>::instance ();
   }
 
 private:
-
   JAWS_Config_File *cf_;
-
 };
 
 #endif /* JAWS_OPTIONS_H */

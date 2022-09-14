@@ -5,7 +5,6 @@
 #include "tao/AnyTypeCode/Any.h"
 
 
-
 const ACE_TCHAR *ior_output_file = 0;
 int no_iterations = 10;
 
@@ -141,7 +140,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
     }
   catch (const CORBA::Exception& ex)
     {

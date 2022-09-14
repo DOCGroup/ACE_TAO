@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IFR_Client_Adapter_Impl::~TAO_IFR_Client_Adapter_Impl (void)
+TAO_IFR_Client_Adapter_Impl::~TAO_IFR_Client_Adapter_Impl ()
 {
 }
 
@@ -155,7 +155,7 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
 // Initialization and registration of dynamic service object.
 
 int
-TAO_IFR_Client_Adapter_Impl::Initializer (void)
+TAO_IFR_Client_Adapter_Impl::Initializer ()
 {
   TAO_ORB_Core::ifr_client_adapter_name ("Concrete_IFR_Client_Adapter");
 

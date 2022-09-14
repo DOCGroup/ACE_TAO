@@ -50,14 +50,14 @@ public:
                       const char *listener_interfaces);
 
   /// Destructor.
-  ~TAO_UIPMC_Acceptor (void);
+  ~TAO_UIPMC_Acceptor ();
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
-  const ACE_INET_Addr& address (void) const;
+  const ACE_INET_Addr& address () const;
 
   /// Returns the array of endpoints in this acceptor
-  const ACE_INET_Addr *endpoints (void);
+  const ACE_INET_Addr *endpoints ();
 
   /**
    * The TAO_Acceptor methods, check the documentation in
@@ -74,12 +74,12 @@ public:
                             int version_major,
                             int version_minor,
                             const char *options = 0);
-  virtual int close (void);
+  virtual int close ();
   virtual int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
   virtual int is_collocated (const TAO_Endpoint *endpoint);
-  virtual CORBA::ULong endpoint_count (void);
+  virtual CORBA::ULong endpoint_count ();
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key);
@@ -104,7 +104,6 @@ public:
                               char *&host);
 
 protected:
-
   /**
    * Implement the common part of the open*() methods.  This method is
    * virtual to allow a derived class implementation to be invoked

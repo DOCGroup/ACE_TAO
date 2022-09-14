@@ -39,7 +39,7 @@ class TAO_Export TAO_IORInterceptor_Adapter_Factory
   : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_IORInterceptor_Adapter_Factory (void);
+  virtual ~TAO_IORInterceptor_Adapter_Factory ();
 
   virtual TAO_IORInterceptor_Adapter * create (void) = 0;
 };

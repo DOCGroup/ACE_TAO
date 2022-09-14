@@ -10,7 +10,6 @@
 #include "ace/OS_NS_stdio.h"
 
 
-
 // The file to save the persistent state to.
 const ACE_TCHAR NESTEA_DATA_FILENAME[] = ACE_TEXT("nestea.dat");
 
@@ -32,13 +31,13 @@ Nestea_Server_i::Nestea_Server_i (const char * /*filename*/)
   // Nothing
 }
 
-Nestea_Server_i::~Nestea_Server_i (void)
+Nestea_Server_i::~Nestea_Server_i ()
 {
   delete this->server_impl_;
 }
 
 int
-Nestea_Server_i::parse_args (void)
+Nestea_Server_i::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:"));
   int c;
@@ -193,7 +192,7 @@ Nestea_Server_i::init (int argc, ACE_TCHAR** argv)
 }
 
 int
-Nestea_Server_i::run (void)
+Nestea_Server_i::run ()
 {
   int status = 0;
 

@@ -17,10 +17,10 @@ public:
                CORBA::ORB_ptr o,
                ACE_Thread_Manager *thr_mgr);
 
-  ~Client_Task (void);
+  ~Client_Task ();
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   /// Reference to the test interface

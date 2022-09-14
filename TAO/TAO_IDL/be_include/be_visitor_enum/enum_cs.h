@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ENUM_ENUM_CS_H_
 #define _BE_VISITOR_ENUM_ENUM_CS_H_
 
@@ -24,14 +23,14 @@
 class be_visitor_enum_cs : public be_visitor_scope
 {
 public:
-  /// conenumor
+  /// constructor
   be_visitor_enum_cs (be_visitor_context *ctx);
 
-  /// deenumor
-  ~be_visitor_enum_cs (void);
+  /// destructor
+  ~be_visitor_enum_cs () override = default;
 
   /// visit enum and generate the typecode
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 };
 
 #endif /* _BE_VISITOR_ENUM_ENUM_CS_H_ */

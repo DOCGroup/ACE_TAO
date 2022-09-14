@@ -12,7 +12,7 @@
 // whether a given LOGIN_NAME is currently idle or not.
 
 int
-PM_Server::process (void)
+PM_Server::process ()
 {
   RWho_DB_Manager ru;
   Protocol_Record protocol_record (1);
@@ -59,7 +59,6 @@ char *
 PM_Server::handle_protocol_entries (char *buf_ptr,
                                     Drwho_Node *np)
 {
-
   for (; np != 0; np = np->next_)
     {
       ACE_OS::sprintf (buf_ptr,
@@ -73,10 +72,10 @@ PM_Server::handle_protocol_entries (char *buf_ptr,
   return buf_ptr;
 }
 
-PM_Server::PM_Server (void)
+PM_Server::PM_Server ()
 {
 }
 
-PM_Server::~PM_Server (void)
+PM_Server::~PM_Server ()
 {
 }

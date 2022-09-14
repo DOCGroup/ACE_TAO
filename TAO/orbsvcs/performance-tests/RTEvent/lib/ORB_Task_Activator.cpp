@@ -10,7 +10,7 @@
 #include "ORB_Task_Activator.inl"
 #endif /* __ACE_INLINE__ */
 
-ORB_Task_Activator::~ORB_Task_Activator (void)
+ORB_Task_Activator::~ORB_Task_Activator ()
 {
   if (this->task_ == 0)
     return;

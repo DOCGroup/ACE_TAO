@@ -14,7 +14,7 @@ public:
   Coordinator (CORBA::ULong peer_count);
 
   /// Check if all the peers have registered already
-  int has_all_peers (void) const;
+  int has_all_peers () const;
 
   /// Check a session on each peer
   void create_session_list (Test::Session_Control_ptr session_control,
@@ -24,14 +24,14 @@ public:
                             Test::Session_List &session_list);
 
   /// Shutdown all the peers
-  void shutdown_all_peers (void);
+  void shutdown_all_peers ();
 
   // = The skeleton methods
   virtual void add_peer (Test::Peer_ptr peer);
 
 protected:
   /// Protected destructor, call _remove_ref() to delete
-  virtual ~Coordinator (void);
+  virtual ~Coordinator ();
 
 private:
   /// Store a reference to each peer

@@ -116,7 +116,7 @@ void TAO_FTEC_Group_Manager::add_member (
   TAO_FTRTEC::Log(1, ACE_TEXT("add_member location = <%s>\n"),
     (const char*)info.the_location[0].id);
 
-  auto_ptr<TAO_FTEC_Group_Manager_Impl> new_impl(new TAO_FTEC_Group_Manager_Impl);
+  std::unique_ptr<TAO_FTEC_Group_Manager_Impl> new_impl(new TAO_FTEC_Group_Manager_Impl);
 
   new_impl->my_position = impl_->my_position;
   size_t pos = impl_->info_list.length();
@@ -155,7 +155,7 @@ void TAO_FTEC_Group_Manager::add_member (
         publisher->setup_info(new_impl->info_list,
                               new_impl->my_position,
                               object_group_ref_version));
-      ACE_auto_ptr_reset(group_info, group_info1.release());
+      group_info = std::move(group_info1);
 
       last_one = true;
     }

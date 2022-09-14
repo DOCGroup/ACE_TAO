@@ -15,7 +15,7 @@ public:
     : psema_(psema), csema_(csema), exit_condition_(0)
   { }
 
-  int svc (void)
+  int svc ()
   {
     while (!is_closed ())
       consume_item ();
@@ -47,7 +47,7 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void)
+  void shutdown ()
   {
   //FUZZ: enable check_for_lack_ACE_OS
     exit_condition_ = 1;
@@ -55,7 +55,7 @@ public:
     csema_.release (N_THREADS);
   }
 
-  int is_closed (void)
+  int is_closed ()
   {
     return exit_condition_;
   }
@@ -77,7 +77,7 @@ public:
       : psema_(psema), csema_(csema), consumer_(consumer)
   { }
 
-  int svc (void)
+  int svc ()
   {
     for (int i = 0; i <= MAX_PROD; i++)
       produce_item (i);

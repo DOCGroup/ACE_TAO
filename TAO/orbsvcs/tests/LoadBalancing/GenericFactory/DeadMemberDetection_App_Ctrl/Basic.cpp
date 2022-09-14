@@ -25,7 +25,7 @@ Basic::Basic (CORBA::Object_ptr object_group,
 
 /// Default _non_existent: always returns false.
 CORBA::Boolean
-Basic::_non_existent (void)
+Basic::_non_existent ()
 {
   if (pong_delay > 0)
     ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T Basic::_non_existent server %d sleep %d seconds ... \n",
@@ -40,13 +40,13 @@ Basic::_non_existent (void)
 }
 
 char *
-Basic::get_string (void)
+Basic::get_string ()
 {
   return CORBA::string_dup (this->location_.in ());
 }
 
 void
-Basic::remove_member (void)
+Basic::remove_member ()
 {
   try
     {
@@ -58,7 +58,6 @@ Basic::remove_member (void)
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T - Removed Member at Location <%s>\n",
                       this->location_.in ()));
-
     }
   catch (const PortableGroup::ObjectNotFound& ex)
     {
@@ -78,13 +77,13 @@ Basic::remove_member (void)
 }
 
 void
-Basic::shutdown (void)
+Basic::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void
-Basic::exit (void)
+Basic::exit ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T - Basic::exit  server %d exit \n",
                       this->server_id_));

@@ -26,10 +26,10 @@ public:
         int use_callbacks);
 
   // = Check the ACE_Task_Base documentation.
-  int svc (void);
+  int svc ();
 
   /// Run a single iteration of the test
-  void run_iteration (void);
+  void run_iteration ();
 
 private:
   /// The event channel used on the test

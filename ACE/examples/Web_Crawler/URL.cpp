@@ -1,19 +1,18 @@
 #include "URL.h"
 
 
-
 Mem_Map_Stream &
-URL::stream (void)
+URL::stream ()
 {
   return this->stream_;
 }
 
-URL::~URL (void)
+URL::~URL ()
 {
 }
 
 const URL_Status &
-URL::reply_status (void)
+URL::reply_status ()
 {
   return this->reply_status_;
 }
@@ -25,7 +24,7 @@ URL::reply_status (const URL_Status &rs)
 }
 
 const ACE_CString &
-URL::content_type (void)
+URL::content_type ()
 {
   return this->content_type_;
 }

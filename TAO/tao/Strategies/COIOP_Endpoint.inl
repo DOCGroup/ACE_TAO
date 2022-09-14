@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_Utils::UUID&
-TAO_COIOP_Endpoint::uuid (void) const
+TAO_COIOP_Endpoint::uuid () const
 {
   return this->uuid_;
 }

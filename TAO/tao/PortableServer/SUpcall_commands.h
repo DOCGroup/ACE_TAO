@@ -52,7 +52,7 @@ public:
     , args_ (args)
   {}
 
-  virtual void execute (void);
+  virtual void execute ();
 
 private:
   TAO_ServantBase * const servant_;
@@ -77,7 +77,7 @@ public:
   {
   }
 
-  virtual void execute (void);
+  virtual void execute ();
 
 private:
   TAO_ServantBase * const servant_;
@@ -105,7 +105,7 @@ public:
   {
   }
 
-  virtual void execute (void);
+  virtual void execute ();
 private:
   TAO_ServantBase * const servant_;
   TAO_Operation_Details const * const operation_details_;
@@ -129,7 +129,7 @@ public:
   {
   }
 
-  virtual void execute (void);
+  virtual void execute ();
 
 private:
   TAO_ServantBase * const servant_;
@@ -157,7 +157,7 @@ public:
   {
   }
 
-  virtual void execute (void);
+  virtual void execute ();
 
 private:
   TAO_ServantBase * const servant_;
@@ -182,7 +182,7 @@ public:
   {
   }
 
-  virtual void execute (void);
+  virtual void execute ();
 
 private:
   TAO_ServantBase * const servant_;
@@ -209,7 +209,7 @@ public:
   {
   }
 
-  virtual void execute (void);
+  virtual void execute ();
 
 private:
   TAO_ServantBase * const servant_;
@@ -234,7 +234,7 @@ public:
   {
   }
 
-  virtual void execute (void);
+  virtual void execute ();
 
 private:
   TAO_ServantBase * const servant_;

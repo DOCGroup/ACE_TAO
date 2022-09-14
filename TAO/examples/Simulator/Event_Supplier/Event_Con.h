@@ -32,7 +32,7 @@
 class Demo_Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  Demo_Consumer (void);
+  Demo_Consumer ();
 
   /**
    * Uses the name server to obtain a reference to the <supplier_name>
@@ -45,7 +45,7 @@ public:
                      const char *my_name);
 
   /// The channel is disconnecting.
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
   // = (not protected to allow short-circuiting) protected:
   /**
@@ -57,7 +57,7 @@ public:
 
 protected:
   /// Disconnect from the Event Service.
-  void shutdown (void);
+  void shutdown ();
 
   // = Event channel adminstration references.
   RtecEventChannelAdmin::EventChannel_var channel_admin_;

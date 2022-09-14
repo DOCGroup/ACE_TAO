@@ -54,7 +54,7 @@ CB::setID (long timerID)
 }
 
 long
-CB::getID (void)
+CB::getID ()
 {
   ACE_TRACE ("CB::getID");
   return timerID_;

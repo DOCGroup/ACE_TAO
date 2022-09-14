@@ -12,7 +12,7 @@ namespace TAO
     }
 
     void
-    ThreadStrategy::strategy_cleanup (void)
+    ThreadStrategy::strategy_cleanup ()
     {
     }
   }

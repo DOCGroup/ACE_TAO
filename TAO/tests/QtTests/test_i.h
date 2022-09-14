@@ -33,7 +33,7 @@ public:
 
   // ctor
 
-  void shutdown (void);
+  void shutdown ();
 
   void send_val (CORBA::Long val);
 

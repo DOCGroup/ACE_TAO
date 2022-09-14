@@ -19,7 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 const char TAO_COIOP_Profile::object_key_delimiter_ = '/';
 
 char
-TAO_COIOP_Profile::object_key_delimiter (void) const
+TAO_COIOP_Profile::object_key_delimiter () const
 {
   return TAO_COIOP_Profile::object_key_delimiter_;
 }
@@ -46,7 +46,7 @@ TAO_COIOP_Profile::TAO_COIOP_Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO_COIOP_Profile::~TAO_COIOP_Profile (void)
+TAO_COIOP_Profile::~TAO_COIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -98,7 +98,7 @@ TAO_COIOP_Profile::parse_string_i (const char *ior)
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
   const char *okd =
-    ACE_OS::strchr (ior, this->object_key_delimiter_);
+    std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == 0 || okd == ior)
     {
@@ -180,13 +180,13 @@ TAO_COIOP_Profile::hash (CORBA::ULong max)
 }
 
 TAO_Endpoint*
-TAO_COIOP_Profile::endpoint (void)
+TAO_COIOP_Profile::endpoint ()
 {
   return &this->endpoint_;
 }
 
 CORBA::ULong
-TAO_COIOP_Profile::endpoint_count (void) const
+TAO_COIOP_Profile::endpoint_count () const
 {
   return this->count_;
 }
@@ -201,7 +201,7 @@ TAO_COIOP_Profile::add_endpoint (TAO_COIOP_Endpoint *endp)
 }
 
 char *
-TAO_COIOP_Profile::to_string (void) const
+TAO_COIOP_Profile::to_string () const
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
@@ -239,7 +239,7 @@ TAO_COIOP_Profile::to_string (void) const
 }
 
 const char *
-TAO_COIOP_Profile::prefix (void)
+TAO_COIOP_Profile::prefix ()
 {
   return ::the_prefix;
 }
@@ -273,7 +273,7 @@ TAO_COIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 }
 
 int
-TAO_COIOP_Profile::encode_endpoints (void)
+TAO_COIOP_Profile::encode_endpoints ()
 {
   // Create a data structure and fill it with endpoint info for wire
   // transfer.
@@ -330,7 +330,7 @@ TAO_COIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_COIOP_Profile::decode_endpoints (void)
+TAO_COIOP_Profile::decode_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;

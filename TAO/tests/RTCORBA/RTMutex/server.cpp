@@ -76,7 +76,6 @@ test_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
       my_mutex->unlock ();
 
       rt_orb->destroy_mutex (my_mutex.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -321,7 +320,6 @@ test_mutex_threads (RTCORBA::RTORB_ptr rt_orb)
       ACE_Thread_Manager::instance ()->wait ();
 
       CORBA::release (mutex);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -443,7 +441,6 @@ test_mutex_try_lock (RTCORBA::RTORB_ptr rt_orb)
       mutex->unlock ();
 
       CORBA::release (mutex);
-
     }
   catch (const CORBA::Exception& ex)
     {

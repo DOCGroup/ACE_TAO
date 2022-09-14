@@ -2,7 +2,6 @@
 #include "HTTP_10.h"
 
 
-
 #ifdef ACE_HAS_SIG_C_FUNC
 extern "C"
 {

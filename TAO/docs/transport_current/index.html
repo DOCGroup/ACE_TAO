@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 
 <!--  -->
 
@@ -429,15 +429,15 @@ information about how a transport is used:
       Stats ();
 
       void messages_sent (size_t message_length);
-      CORBA::LongLong messages_sent (void) const;
-      CORBA::LongLong bytes_sent (void) const;
+      CORBA::LongLong messages_sent () const;
+      CORBA::LongLong bytes_sent () const;
 
       void messages_received (size_t message_length);
-      CORBA::LongLong messages_received (void) const;
-      CORBA::LongLong bytes_received (void) const;
+      CORBA::LongLong messages_received () const;
+      CORBA::LongLong bytes_received () const;
 
       void opened_since (const ACE_Time_Value& tv);
-      const ACE_Time_Value& opened_since (void) const;
+      const ACE_Time_Value& opened_since () const;
 
     private:
       CORBA::LongLong messages_rcvd_; // 32bits not enough (?)

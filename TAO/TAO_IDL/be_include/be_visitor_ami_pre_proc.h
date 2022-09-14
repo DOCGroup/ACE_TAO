@@ -41,7 +41,7 @@ private:
 public:
   be_visitor_ami_pre_proc (be_visitor_context *ctx);
 
-  virtual ~be_visitor_ami_pre_proc (void);
+  virtual ~be_visitor_ami_pre_proc ();
 
   virtual int visit_root (be_root *node);
 
@@ -94,7 +94,7 @@ private:
                                       long &n_parents);
 
   /// Generate an *A.idl file for AMI4CCM.
-  int generate_ami4ccm_idl (void);
+  int generate_ami4ccm_idl ();
 };
 
 #endif // TAO_BE_VISITOR_AMI_PRE_PROC_H

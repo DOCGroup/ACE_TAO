@@ -21,21 +21,21 @@ class Supplier : public POA_RtecEventComm::PushSupplier
   //   method is invoked it pushes the event through the event service
   //
 public:
-  Supplier (void);
+  Supplier ();
   // Constructor
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
   // Connect to the event channel
 
-  void disconnect (void);
+  void disconnect ();
   // Disconnect from the event channel
 
-  void perform_push (void);
+  void perform_push ();
   // Push a single event
 
   // = The RtecEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
   // The skeleton methods.
 
 private:

@@ -17,5 +17,5 @@ LongDoubleTest::get_long_double ()
 void
 LongDoubleTest::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

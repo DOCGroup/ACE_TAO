@@ -28,7 +28,7 @@ TAO_Notify_Supplier::~TAO_Notify_Supplier ()
 }
 
 TAO_Notify_Proxy*
-TAO_Notify_Supplier::proxy (void)
+TAO_Notify_Supplier::proxy ()
 {
   return this->proxy_consumer ();
 }

@@ -32,7 +32,7 @@
 class Timeout_Handler : public ACE_Handler
 {
 public:
-  Timeout_Handler (void)
+  Timeout_Handler ()
     : start_time_ (ACE_OS::gettimeofday ())
     {
     }
@@ -61,7 +61,7 @@ private:
 class Worker : public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
-  int svc (void)
+  int svc ()
     {
       // Handle events for 13 seconds.
       ACE_Time_Value run_time (13);

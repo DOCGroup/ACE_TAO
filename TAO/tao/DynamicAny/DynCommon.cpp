@@ -20,6 +20,7 @@
 
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -34,12 +35,12 @@ TAO_DynCommon::TAO_DynCommon (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynCommon::~TAO_DynCommon (void)
+TAO_DynCommon::~TAO_DynCommon ()
 {
 }
 
 CORBA::TypeCode_ptr
-TAO_DynCommon::type (void)
+TAO_DynCommon::type ()
 {
   if (this->destroyed_)
     {
@@ -158,7 +159,7 @@ TAO_DynCommon::insert_string (const char * value)
       CORBA::ULong const bound =
         unaliased_tc->length ();
 
-      if (bound > 0 && bound < ACE_OS::strlen (value))
+      if (bound > 0 && bound < std::strlen (value))
         {
           throw DynamicAny::DynAny::InvalidValue ();
         }
@@ -395,61 +396,61 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value)
 // ****************************************************************
 
 CORBA::Boolean
-TAO_DynCommon::get_boolean (void)
+TAO_DynCommon::get_boolean ()
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Boolean>::get_value (this);
 }
 
 CORBA::Octet
-TAO_DynCommon::get_octet (void)
+TAO_DynCommon::get_octet ()
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Octet>::get_value (this);
 }
 
 CORBA::Char
-TAO_DynCommon::get_char (void)
+TAO_DynCommon::get_char ()
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Char>::get_value (this);
 }
 
 CORBA::Short
-TAO_DynCommon::get_short (void)
+TAO_DynCommon::get_short ()
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Short>::get_value (this);
 }
 
 CORBA::UShort
-TAO_DynCommon::get_ushort (void)
+TAO_DynCommon::get_ushort ()
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::UShort>::get_value (this);
 }
 
 CORBA::Long
-TAO_DynCommon::get_long (void)
+TAO_DynCommon::get_long ()
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Long>::get_value (this);
 }
 
 CORBA::ULong
-TAO_DynCommon::get_ulong (void)
+TAO_DynCommon::get_ulong ()
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::ULong>::get_value (this);
 }
 
 CORBA::Float
-TAO_DynCommon::get_float (void)
+TAO_DynCommon::get_float ()
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Float>::get_value (this);
 }
 
 CORBA::Double
-TAO_DynCommon::get_double (void)
+TAO_DynCommon::get_double ()
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Double>::get_value (this);
 }
 
 char *
-TAO_DynCommon::get_string (void)
+TAO_DynCommon::get_string ()
 {
   if (this->destroyed_)
     {
@@ -493,7 +494,7 @@ TAO_DynCommon::get_string (void)
 }
 
 CORBA::Object_ptr
-TAO_DynCommon::get_reference (void)
+TAO_DynCommon::get_reference ()
 {
   if (this->destroyed_)
     {
@@ -521,7 +522,7 @@ TAO_DynCommon::get_reference (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_DynCommon::get_typecode (void)
+TAO_DynCommon::get_typecode ()
 {
   if (this->destroyed_)
     {
@@ -548,25 +549,25 @@ TAO_DynCommon::get_typecode (void)
 }
 
 CORBA::LongLong
-TAO_DynCommon::get_longlong (void)
+TAO_DynCommon::get_longlong ()
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::LongLong>::get_value (this);
 }
 
 CORBA::ULongLong
-TAO_DynCommon::get_ulonglong (void)
+TAO_DynCommon::get_ulonglong ()
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::ULongLong>::get_value (this);
 }
 
 CORBA::LongDouble
-TAO_DynCommon::get_longdouble (void)
+TAO_DynCommon::get_longdouble ()
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::LongDouble>::get_value (this);
 }
 
 CORBA::WChar
-TAO_DynCommon::get_wchar (void)
+TAO_DynCommon::get_wchar ()
 {
   if (this->destroyed_)
     {
@@ -593,7 +594,7 @@ TAO_DynCommon::get_wchar (void)
 }
 
 CORBA::WChar *
-TAO_DynCommon::get_wstring (void)
+TAO_DynCommon::get_wstring ()
 {
   if (this->destroyed_)
     {
@@ -627,7 +628,7 @@ TAO_DynCommon::get_wstring (void)
 }
 
 CORBA::Any_ptr
-TAO_DynCommon::get_any (void)
+TAO_DynCommon::get_any ()
 {
   if (this->destroyed_)
     {
@@ -661,7 +662,7 @@ TAO_DynCommon::get_any (void)
 // @@@ (JP) TODO - optimize - this version was intended by the OMG to
 // have fewer Any/DynAny conversions than get_any, not more.
 DynamicAny::DynAny_ptr
-TAO_DynCommon::get_dyn_any (void)
+TAO_DynCommon::get_dyn_any ()
 {
   if (this->destroyed_)
     {
@@ -678,7 +679,7 @@ TAO_DynCommon::get_dyn_any (void)
 }
 
 CORBA::ValueBase *
-TAO_DynCommon::get_val (void)
+TAO_DynCommon::get_val ()
 {
   if (this->destroyed_)
     {
@@ -733,8 +734,7 @@ TAO_DynCommon::get_val (void)
 // ****************************************************************
 
 CORBA::Boolean
-TAO_DynCommon::seek (CORBA::Long slot
-                     )
+TAO_DynCommon::seek (CORBA::Long slot)
 {
   if (this->destroyed_)
     {
@@ -760,7 +760,7 @@ TAO_DynCommon::seek (CORBA::Long slot
 }
 
 void
-TAO_DynCommon::rewind (void)
+TAO_DynCommon::rewind ()
 {
   if (this->destroyed_)
     {
@@ -771,7 +771,7 @@ TAO_DynCommon::rewind (void)
 }
 
 CORBA::Boolean
-TAO_DynCommon::next (void)
+TAO_DynCommon::next ()
 {
   if (this->destroyed_)
     {
@@ -794,7 +794,7 @@ TAO_DynCommon::next (void)
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynCommon::copy (void)
+TAO_DynCommon::copy ()
 {
   if (this->destroyed_)
     {
@@ -813,7 +813,7 @@ TAO_DynCommon::copy (void)
 }
 
 CORBA::ULong
-TAO_DynCommon::component_count (void)
+TAO_DynCommon::component_count ()
 {
   if (this->destroyed_)
     {
@@ -899,7 +899,7 @@ TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value)
 }
 
 CORBA::AbstractBase_ptr
-TAO_DynCommon::get_abstract (void)
+TAO_DynCommon::get_abstract ()
 {
   if (this->destroyed_)
     {
@@ -1032,7 +1032,7 @@ TAO_DynCommon::insert_wchar_seq (const CORBA::WCharSeq &value)
 // ****************************************************************
 
 CORBA::BooleanSeq *
-TAO_DynCommon::get_boolean_seq (void)
+TAO_DynCommon::get_boolean_seq ()
 {
   const CORBA::BooleanSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::BooleanSeq>::get_value (this);
@@ -1040,7 +1040,7 @@ TAO_DynCommon::get_boolean_seq (void)
 }
 
 CORBA::OctetSeq *
-TAO_DynCommon::get_octet_seq (void)
+TAO_DynCommon::get_octet_seq ()
 {
   const CORBA::OctetSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::OctetSeq>::get_value (this);
@@ -1048,7 +1048,7 @@ TAO_DynCommon::get_octet_seq (void)
 }
 
 CORBA::CharSeq *
-TAO_DynCommon::get_char_seq (void)
+TAO_DynCommon::get_char_seq ()
 {
   const CORBA::CharSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::CharSeq>::get_value (this);
@@ -1056,7 +1056,7 @@ TAO_DynCommon::get_char_seq (void)
 }
 
 CORBA::ShortSeq *
-TAO_DynCommon::get_short_seq (void)
+TAO_DynCommon::get_short_seq ()
 {
   const CORBA::ShortSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::ShortSeq>::get_value (this);
@@ -1064,7 +1064,7 @@ TAO_DynCommon::get_short_seq (void)
 }
 
 CORBA::UShortSeq *
-TAO_DynCommon::get_ushort_seq (void)
+TAO_DynCommon::get_ushort_seq ()
 {
   const CORBA::UShortSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::UShortSeq>::get_value (this);
@@ -1072,7 +1072,7 @@ TAO_DynCommon::get_ushort_seq (void)
 }
 
 CORBA::LongSeq *
-TAO_DynCommon::get_long_seq (void)
+TAO_DynCommon::get_long_seq ()
 {
   const CORBA::LongSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::LongSeq>::get_value (this);
@@ -1080,7 +1080,7 @@ TAO_DynCommon::get_long_seq (void)
 }
 
 CORBA::ULongSeq *
-TAO_DynCommon::get_ulong_seq (void)
+TAO_DynCommon::get_ulong_seq ()
 {
   const CORBA::ULongSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::ULongSeq>::get_value (this);
@@ -1088,7 +1088,7 @@ TAO_DynCommon::get_ulong_seq (void)
 }
 
 CORBA::FloatSeq *
-TAO_DynCommon::get_float_seq (void)
+TAO_DynCommon::get_float_seq ()
 {
   const CORBA::FloatSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::FloatSeq>::get_value (this);
@@ -1096,7 +1096,7 @@ TAO_DynCommon::get_float_seq (void)
 }
 
 CORBA::DoubleSeq *
-TAO_DynCommon::get_double_seq (void)
+TAO_DynCommon::get_double_seq ()
 {
   const CORBA::DoubleSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::DoubleSeq>::get_value (this);
@@ -1104,7 +1104,7 @@ TAO_DynCommon::get_double_seq (void)
 }
 
 CORBA::LongLongSeq *
-TAO_DynCommon::get_longlong_seq (void)
+TAO_DynCommon::get_longlong_seq ()
 {
   const CORBA::LongLongSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::LongLongSeq>::get_value (this);
@@ -1112,7 +1112,7 @@ TAO_DynCommon::get_longlong_seq (void)
 }
 
 CORBA::ULongLongSeq *
-TAO_DynCommon::get_ulonglong_seq (void)
+TAO_DynCommon::get_ulonglong_seq ()
 {
   const CORBA::ULongLongSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::ULongLongSeq>::get_value (this);
@@ -1120,7 +1120,7 @@ TAO_DynCommon::get_ulonglong_seq (void)
 }
 
 CORBA::LongDoubleSeq *
-TAO_DynCommon::get_longdouble_seq (void)
+TAO_DynCommon::get_longdouble_seq ()
 {
   const CORBA::LongDoubleSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::LongDoubleSeq>::get_value (this);
@@ -1128,7 +1128,7 @@ TAO_DynCommon::get_longdouble_seq (void)
 }
 
 CORBA::WCharSeq *
-TAO_DynCommon::get_wchar_seq (void)
+TAO_DynCommon::get_wchar_seq ()
 {
   const CORBA::WCharSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::WCharSeq>::get_value (this);
@@ -1269,19 +1269,19 @@ TAO_DynCommon::is_basic_type_seq (CORBA::TypeCode_ptr tc)
 }
 
 CORBA::Boolean
-TAO_DynCommon::has_components (void) const
+TAO_DynCommon::has_components () const
 {
   return this->has_components_;
 }
 
 CORBA::Boolean
-TAO_DynCommon::destroyed (void) const
+TAO_DynCommon::destroyed () const
 {
   return this->destroyed_;
 }
 
 CORBA::Any &
-TAO_DynCommon::the_any (void)
+TAO_DynCommon::the_any ()
 {
   return this->any_;
 }

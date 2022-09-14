@@ -31,12 +31,12 @@ class TAO_Notify_Serv_Export TAO_Notify_ID_Factory
 {
 public:
   /// Constructor
-  TAO_Notify_ID_Factory (void);
+  TAO_Notify_ID_Factory ();
 
   /// Destructor
   ~TAO_Notify_ID_Factory ();
 
-  TAO_Notify_Object::ID id (void);
+  TAO_Notify_Object::ID id ();
 
   void set_last_used (const TAO_Notify_Object::ID id);
 

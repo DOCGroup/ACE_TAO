@@ -49,7 +49,7 @@ public:
   TAO_Naming_Context (TAO_Naming_Context_Impl *impl);
 
   /// Destructor.
-  ~TAO_Naming_Context (void);
+  ~TAO_Naming_Context ();
 
   // = CosNaming::NamingContext idl interface methods.
 
@@ -131,7 +131,7 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -180,7 +180,7 @@ public:
   void stale (bool value);
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
 private:
   enum Hint
@@ -226,7 +226,6 @@ private:
                                                   const char *sn);
 
 protected:
-
   /// A concrete implementor of the NamingContext functions.
   TAO_Naming_Context_Impl *impl_;
 };
@@ -242,11 +241,9 @@ protected:
  */
 class TAO_Naming_Serv_Export TAO_Naming_Context_Impl
 {
-
 public:
-
   /// Destructor.
-  virtual ~TAO_Naming_Context_Impl (void);
+  virtual ~TAO_Naming_Context_Impl ();
 
   // = CosNaming::NamingContext idl interface methods.
 
@@ -350,7 +347,7 @@ public:
    * Query if the the implementation is stale for replicated
    * persistence support.
    */
-  virtual bool stale (void);
+  virtual bool stale ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

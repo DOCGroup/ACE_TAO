@@ -29,7 +29,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Peer
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_Peer (void);
+  TAO_Notify_Tests_Peer ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_Peer ();
@@ -45,10 +45,9 @@ public:
 
   // Accessor to set/get our name.
   void set_name (ACE_CString& name);
-  const ACE_CString& get_name (void);
+  const ACE_CString& get_name ();
 
 protected:
-
   /// My name.
   ACE_CString name_;
 

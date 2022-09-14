@@ -16,7 +16,7 @@ Sat Jul 06 19:32:40 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  created problems in builds where inlining was diabled. Please
 	  see 
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1240 for
+	  http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1240 for
 	  more details. Thanks to Marina Spivak <marina@atdesk.com> for
 	  reporting this.
 
@@ -576,12 +576,12 @@ Wed Jun 19 14:25:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* ace/TP_Reactor.cpp (handle_socket_events): Couple of small
 	  fixes. The fixes are for
 
-	  1. Bug http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1231
+	  1. Bug http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1231
 	  and it is self-explanatory
 
 	  2. The find () operation after dispatch was not holding the lock
 	  and chances of race are high. This is documented as #2 in
-  	  bug http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1233
+  	  bug http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1233
 
 	  Added some comments in the code explaining what is going
 	  on. Thanks to Carlos for identifying the problem.
@@ -7157,7 +7157,7 @@ Fri Feb 22 08:07:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Makefile.bor: Added String_Base.cpp and Atomic_op.cpp to the
           list of files that must be installed when doing a make install.
-          Thanks to Cyrille Chépélov <cyrille@softek.fr> for reporting that
+          Thanks to Cyrille Chï¿½pï¿½lov <cyrille@softek.fr> for reporting that
           these files missed.
 
 Thu Feb 21 16:33:11 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>

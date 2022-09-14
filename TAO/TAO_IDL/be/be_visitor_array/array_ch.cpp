@@ -17,10 +17,6 @@ be_visitor_array_ch::be_visitor_array_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_array_ch::~be_visitor_array_ch (void)
-{
-}
-
 int be_visitor_array_ch::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -35,7 +31,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
   this->ctx_->node (node);
 
   // Retrieve the type.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (!bt)
     {
@@ -48,8 +44,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   AST_Decl::NodeType nt = bt->node_type ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-               << "// " __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // If we contain an anonymous sequence,
   // generate code for the sequence here.
@@ -70,7 +65,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
   // If the array is an anonymous member and if its element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 // Not a typedef.
+  if (this->ctx_->alias () == nullptr // Not a typedef.
       && bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;
@@ -126,7 +121,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   be_typedef *td = this->ctx_->tdef ();
 
-  if (td == 0)
+  if (td == nullptr)
     {
       // We are dealing with an anonymous array case. Generate a typedef with
       // an _ prepended to the name.
@@ -165,7 +160,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
                   '\0',
                   2);
 
-  if (this->ctx_->tdef () != 0)
+  if (this->ctx_->tdef () != nullptr)
     {
       anon_p[0] = '\0';
     }
@@ -193,7 +188,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
       << " {};" << be_nl;
 
   // No _var or _out class for an anonymous (non-typedef'd) array.
-  if (td != 0)
+  if (td != nullptr)
     {
       // Generate _var class decl.
       // An _out decl is generated only for a variable size array.
@@ -270,12 +265,12 @@ int be_visitor_array_ch::visit_array (be_array *node)
       storage_class = storage_class + " ";
     }
 
-  if (td != 0)
+  if (td != nullptr)
     {
       // Typedefed array.
       *os << storage_class.c_str() << node->nested_type_name (scope, "_slice")
           << " *" << be_nl;
-      *os << node->nested_type_name (scope, "_alloc") << " (void);"
+      *os << node->nested_type_name (scope, "_alloc") << " ();"
           << be_nl_2;
       *os << storage_class.c_str() << "void" << be_nl
           << node->nested_type_name (scope, "_free")
@@ -306,7 +301,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
       *os << storage_class.c_str() << node->nested_type_name (scope, "_slice", "_")
           << " *" << be_nl;
       *os << node->nested_type_name (scope, "_alloc", "_")
-          << " (void);" << be_nl_2;
+          << " ();" << be_nl_2;
       *os << storage_class.c_str() << "void" << be_nl
           << node->nested_type_name (scope, "_free", "_")
           << " (" << be_idt << be_idt_nl;

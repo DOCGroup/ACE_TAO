@@ -7,16 +7,10 @@
 #include "HTBP_Filter.inl"
 #endif
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE::HTBP::Filter::Filter (void)
+ACE::HTBP::Filter::Filter ()
   :http_code_ (0)
-{
-}
-
-ACE::HTBP::Filter::~Filter (void)
 {
 }
 

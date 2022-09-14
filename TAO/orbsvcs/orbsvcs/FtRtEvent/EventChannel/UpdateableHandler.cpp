@@ -31,7 +31,6 @@ FTRT::AMI_UpdateableHandler_ptr UpdateableHandler::activate(
 }
 
 
-
 void UpdateableHandler::dispatch(UpdateableHandler::Handler handler)
 {
   PortableServer::Current_var current =

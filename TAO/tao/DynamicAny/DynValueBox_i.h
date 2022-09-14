@@ -39,7 +39,7 @@ public:
   TAO_DynValueBox_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynValueBox_i (void);
+  ~TAO_DynValueBox_i ();
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
@@ -51,27 +51,27 @@ public:
   static TAO_DynValueBox_i *_narrow (CORBA::Object_ptr obj);
 
   // = Functions specific to DynValueBox.
-  virtual CORBA::Any * get_boxed_value (void);
+  virtual CORBA::Any * get_boxed_value ();
 
   virtual void set_boxed_value (const CORBA::Any & boxed);
 
-  virtual DynamicAny::DynAny_ptr get_boxed_value_as_dyn_any (void);
+  virtual DynamicAny::DynAny_ptr get_boxed_value_as_dyn_any ();
 
   virtual void set_boxed_value_as_dyn_any (DynamicAny::DynAny_ptr boxed);
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
   virtual void from_any (const CORBA::Any & value);
 
-  virtual CORBA::Any * to_any (void);
+  virtual CORBA::Any * to_any ();
 
   virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
-  virtual DynamicAny::DynAny_ptr current_component (void);
+  virtual DynamicAny::DynAny_ptr current_component ();
 
   // = DynValueCommon needed to be provided here
-  virtual void set_to_value (void);
+  virtual void set_to_value ();
 
 private:
   /// Check if the typecode is acceptable.

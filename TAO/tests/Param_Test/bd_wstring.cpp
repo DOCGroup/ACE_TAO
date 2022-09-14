@@ -18,7 +18,7 @@
 //               Test_Bounded_WString
 // ************************************************************************
 
-Test_Bounded_WString::Test_Bounded_WString (void)
+Test_Bounded_WString::Test_Bounded_WString ()
   : opname_ (CORBA::string_dup ("test_bounded_wstring")),
     in_ (0),
     inout_ (0),
@@ -27,7 +27,7 @@ Test_Bounded_WString::Test_Bounded_WString (void)
 {
 }
 
-Test_Bounded_WString::~Test_Bounded_WString (void)
+Test_Bounded_WString::~Test_Bounded_WString ()
 {
   CORBA::string_free (this->opname_);
   CORBA::wstring_free (this->in_);
@@ -42,7 +42,7 @@ Test_Bounded_WString::~Test_Bounded_WString (void)
 }
 
 const char *
-Test_Bounded_WString::opname (void) const
+Test_Bounded_WString::opname () const
 {
   return this->opname_;
 }
@@ -97,7 +97,7 @@ Test_Bounded_WString::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Bounded_WString::reset_parameters (void)
+Test_Bounded_WString::reset_parameters ()
 {
   // release any previously occupied values
   CORBA::wstring_free (this->inout_);
@@ -127,13 +127,12 @@ Test_Bounded_WString::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Bounded_WString::run_sii_test\n");
-
     }
   return -1;
 }
 
 CORBA::Boolean
-Test_Bounded_WString::check_validity (void)
+Test_Bounded_WString::check_validity ()
 {
   CORBA::ULong len = ACE_OS::wslen (this->in_);
 
@@ -156,6 +155,6 @@ Test_Bounded_WString::check_validity (CORBA::Request_ptr)
 }
 
 void
-Test_Bounded_WString::print_values (void)
+Test_Bounded_WString::print_values ()
 {
 }

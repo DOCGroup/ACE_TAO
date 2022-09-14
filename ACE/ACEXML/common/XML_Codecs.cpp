@@ -5,8 +5,6 @@
 #include "ace/OS_NS_string.h"
 #include "ACEXML/common/XML_Codecs.h"
 
-
-
 ACEXML_Char*
 ACEXML_Base64::encode (const ACEXML_Char* input,
                        size_t* output_len)

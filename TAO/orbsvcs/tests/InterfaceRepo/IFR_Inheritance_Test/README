@@ -1,5 +1,3 @@
-
-
 This is a simple test showing that Interface inheritance
 is supported by the Interface Repository.
 
@@ -30,8 +28,6 @@ In addition, the Interface Repository requires the TAO_Svc_Utils
 library in TAO/orbsvcs/orbsvcs.
 
 To run this test, either use the Perl script run_test.pl, or
-
-
 
 (Windows)
 start the Interface Repository by typing

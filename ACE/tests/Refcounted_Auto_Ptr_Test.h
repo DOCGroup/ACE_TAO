@@ -22,7 +22,7 @@ struct Printer
   Printer (const char *message);
   ~Printer (void) ;
 
-  void print (void);
+  void print ();
 
   const char *message_;
   unsigned int which_;

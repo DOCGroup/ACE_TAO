@@ -19,7 +19,7 @@
 class Time_impl : public virtual POA_Time
 {
 public:
-  virtual TimeOfDay get_gmt (void);
+  virtual TimeOfDay get_gmt ();
 };
 
 #endif /* server_HH_ */

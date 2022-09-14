@@ -12,7 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  FT_ServerRequest_Interceptor::FT_ServerRequest_Interceptor (void)
+  FT_ServerRequest_Interceptor::FT_ServerRequest_Interceptor ()
     : object_group_ref_version_ (0)
     , is_primary_ (false)
     , iogr_ (0)
@@ -20,18 +20,18 @@ namespace TAO
   {
   }
 
-  FT_ServerRequest_Interceptor::~FT_ServerRequest_Interceptor (void)
+  FT_ServerRequest_Interceptor::~FT_ServerRequest_Interceptor ()
   {
   }
 
   char *
-  FT_ServerRequest_Interceptor::name (void)
+  FT_ServerRequest_Interceptor::name ()
   {
     return CORBA::string_dup ("TAO_FT_ServerRequest_Interceptor");
   }
 
   void
-  FT_ServerRequest_Interceptor::destroy (void)
+  FT_ServerRequest_Interceptor::destroy ()
   {
   }
 

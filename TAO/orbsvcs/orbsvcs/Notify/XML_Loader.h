@@ -71,7 +71,6 @@ private:
   /// If false, then we're just checking syntax of topology file.
   bool live_;
 };
-
 } // namespace TAO_Notify
 
 TAO_END_VERSIONED_NAMESPACE_DECL

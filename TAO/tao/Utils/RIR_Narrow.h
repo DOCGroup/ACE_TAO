@@ -28,7 +28,6 @@ namespace TAO
 {
   namespace Utils
   {
-
     /**
      * @class RIR_Narrow
      *
@@ -53,7 +52,6 @@ namespace TAO
     private:
       static _ptr_type narrow_object (CORBA::Object_ptr object);
     };
-
   } // namespace Utils
 } // namespace TAO
 

@@ -1,6 +1,6 @@
 #include "server.h"
 
-FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)
+FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint ()
   :TAO_FlowConsumer ("Data",FTP_SERVER::instance ()->protocols (),FTP_SERVER::instance ()->format ())
 {
   AVStreams::protocolSpec protocols (2);
@@ -30,7 +30,7 @@ FTP_Server_FlowEndPoint::get_callback (const char *,
 }
 
 int
-FTP_Server_Callback::handle_stop (void)
+FTP_Server_Callback::handle_stop ()
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop\n"));
   ACE_OS::fclose (FTP_SERVER::instance ()->file ());
@@ -58,7 +58,7 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-FTP_Server_Callback::handle_end_stream (void)
+FTP_Server_Callback::handle_end_stream ()
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_SFP_Callback::end_stream\n"));
   CORBA::ORB_var orb = TAO_AV_CORE::instance ()->orb ();
@@ -66,7 +66,7 @@ FTP_Server_Callback::handle_end_stream (void)
   return 0;
 }
 
-// FTP_Server_FDev::FTP_Server_FDev (void)
+// FTP_Server_FDev::FTP_Server_FDev ()
 //   :TAO_FDev ("Data")
 // {
 // }
@@ -86,14 +86,14 @@ FTP_Server_Callback::handle_end_stream (void)
 //   return endpoint->_this ();
 // }
 
-Server::Server (void)
+Server::Server ()
 {
   reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                            TAO_AV_CORE::instance ()->poa ());
 }
 
 AVStreams::protocolSpec
-Server::protocols (void)
+Server::protocols ()
 {
   AVStreams::protocolSpec protocols (2);
   protocols.length (2);
@@ -103,7 +103,7 @@ Server::protocols (void)
 }
 
 const char*
-Server::format (void)
+Server::format ()
 {
   return "UNS:ftp";
 }
@@ -168,7 +168,7 @@ Server::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Server::run (void)
+Server::run ()
 {
   try
     {
@@ -210,7 +210,7 @@ Server::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 FILE*
-Server::file (void)
+Server::file ()
 {
   return this->fp_;
 }

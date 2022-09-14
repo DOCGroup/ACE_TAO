@@ -33,19 +33,17 @@ class TAO_FT_Naming_Replication_Manager;
 
 namespace TAO
 {
-
   /**
    * class FT_PG_Group_Factory
    */
   class TAO_FtNaming_Export FT_PG_Group_Factory : public PG_Group_Factory
   {
   public:
-
     /// Constructor.
-    FT_PG_Group_Factory ();
+    FT_PG_Group_Factory () = default;
 
     /// Destructor.
-    ~FT_PG_Group_Factory ();
+    ~FT_PG_Group_Factory () override = default;
 
     /**
      * indicate the object group state is stale.
@@ -56,8 +54,7 @@ namespace TAO
     void set_replicator (TAO_FT_Naming_Replication_Manager *repl);
 
   protected:
-
-    virtual PG_Object_Group_Storable * create_persistent_group (
+    PG_Object_Group_Storable * create_persistent_group (
       CORBA::ORB_ptr orb,
       PortableGroup::FactoryRegistry_ptr factory_registry,
       TAO::PG_Object_Group_Manipulator & manipulator,
@@ -66,16 +63,16 @@ namespace TAO
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       const TAO::PG_Property_Set_var & type_properties,
-      TAO::Storable_Factory & storable_factory);
+      TAO::Storable_Factory & storable_factory) override;
 
-    virtual PG_Object_Group_Storable * restore_persistent_group (
+    PG_Object_Group_Storable * restore_persistent_group (
       PortableGroup::ObjectGroupId group_id,
       CORBA::ORB_ptr orb,
       PortableGroup::FactoryRegistry_ptr factory_registry,
       TAO::PG_Object_Group_Manipulator & manipulator,
-      TAO::Storable_Factory & storable_factory);
+      TAO::Storable_Factory & storable_factory) override;
 
-    TAO_FT_Naming_Replication_Manager *replicator_;
+    TAO_FT_Naming_Replication_Manager *replicator_ {};
   };
 } // namespace TAO
 

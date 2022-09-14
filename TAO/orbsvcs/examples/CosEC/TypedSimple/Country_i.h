@@ -16,16 +16,16 @@ public:
   Country_i (CORBA::ORB_ptr orb);
 
   //Destructor
-  virtual ~Country_i (void);
+  virtual ~Country_i ();
 
   virtual void update_population (const char * country,
                                   CORBA::Long population);
 
-  virtual CORBA::Object_ptr get_typed_consumer (void);
+  virtual CORBA::Object_ptr get_typed_consumer ();
 
   virtual void push (const CORBA::Any & data);
 
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
 private:
   /// The ORB

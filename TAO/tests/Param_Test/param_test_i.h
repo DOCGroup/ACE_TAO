@@ -22,12 +22,12 @@ public:
   Coffee_i (const char *name);
 
   /// destructor
-  ~Coffee_i (void);
+  ~Coffee_i ();
 
   // =methods for the attribute
 
   /// get attribute
-  virtual Coffee::Desc * description (void);
+  virtual Coffee::Desc * description ();
 
   /// set attribute
   virtual void description (const Coffee::Desc &description);
@@ -53,7 +53,7 @@ public:
                 CORBA::ORB_ptr orb);
 
   /// Destructor
-  ~Param_Test_i (void);
+  ~Param_Test_i ();
 
   /// test for shorts
   virtual CORBA::Short test_short (CORBA::Short s1,
@@ -183,7 +183,7 @@ public:
 
   /// make a coffee object
   virtual Coffee_ptr
-  make_coffee (void);
+  make_coffee ();
 
   /// test for object references
   virtual Coffee_ptr
@@ -245,7 +245,7 @@ public:
                       Param_Test::Multdim_Array ,
                       Param_Test::Multdim_Array_out);
 
-  void shutdown (void);
+  void shutdown ();
 
 
 private:
@@ -261,7 +261,7 @@ private:
    * not in its THROW_SPEC, but still test TAO's
    * conversion of such an exception to UNKNOWN.
    */
-  void throw_badboy (void);
+  void throw_badboy ();
 };
 
 #endif /* PARAM_TEST_I_H */

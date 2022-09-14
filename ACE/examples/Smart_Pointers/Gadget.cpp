@@ -9,6 +9,6 @@
 
 #include "Gadget.h"
 
-Gadget::~Gadget (void)
+Gadget::~Gadget ()
 {
 }

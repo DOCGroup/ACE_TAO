@@ -44,7 +44,7 @@ public:
               bool reset_new_handle = false) const;
 
   /// Return a reference to the lock.
-  ACE_LOCK &lock (void);
+  ACE_LOCK &lock ();
 
 protected:
   /// Type of locking mechanism.

@@ -7,7 +7,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <ACE_PEER_STREAM_1>
 int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
 {
-
   ACE_TRACE("ConnectionAcceptHandler::open\n");
   ACE_INET_Addr addr;
 
@@ -30,7 +29,7 @@ int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
 }
 
 template <ACE_PEER_STREAM_1>
-void ConnectionAcceptHandler<ACE_PEER_STREAM_2>::destroy (void)
+void ConnectionAcceptHandler<ACE_PEER_STREAM_2>::destroy ()
 {
   // Remove ourselves from the reactor
   reactor_->remove_handler

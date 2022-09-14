@@ -34,7 +34,7 @@ JAWS_IO::JAWS_IO (JAWS_IO_Impl *impl)
     }
 }
 
-JAWS_IO::~JAWS_IO (void)
+JAWS_IO::~JAWS_IO ()
 {
 }
 

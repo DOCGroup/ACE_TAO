@@ -44,26 +44,26 @@ public:
    * variable name or a default value.  Before being useful it must
    * open()'d.
    */
-  ACE_Env_Value (void);
+  ACE_Env_Value ();
 
   /// Constructor that calls open().
   ACE_Env_Value (const ACE_TCHAR *varname, const T &vardefault);
 
   /// Destroy the value.
-  ~ACE_Env_Value (void);
+  ~ACE_Env_Value ();
 
   /// Returns the value as type T.
-  operator T (void);
+  operator T ();
 
   /// The constructor, read @a varname from the environment, using
   /// @a defval as its value if it is not defined.
   void open (const ACE_TCHAR *varname, const T &defval);
 
   /// Returns the name of the variable being tracked.
-  const ACE_TCHAR *varname (void) const;
+  const ACE_TCHAR *varname () const;
 
 private:
-  void fetch_value (void);
+  void fetch_value ();
 
   const ACE_TCHAR *varname_;
   T value_;

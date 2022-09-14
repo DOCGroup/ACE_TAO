@@ -25,14 +25,11 @@
  */
 class Signal_Handler : public ACE_Event_Handler
 {
-
 public:
-
-  Signal_Handler (void);
+  Signal_Handler ();
 
   /// Override this method to implement graceful shutdown.
   int handle_signal(int signum, siginfo_t*,ucontext_t*);
-
 };
 
 
@@ -46,18 +43,16 @@ public:
  */
 class Sender_Callback : public TAO_AV_Callback
 {
-
 public:
-
   /**
    * Called when the sender has finished reading the file and wants
    * to close down the connection. Also called when the distributer
    * tears down the connection when it switches to a new sender.
    */
-  int handle_destroy (void);
+  int handle_destroy ();
 
   /// Accessor methods for the flowname of the callback
-  ACE_CString &flowname (void);
+  ACE_CString &flowname ();
   void flowname (const ACE_CString &flowname);
 
 private:
@@ -110,22 +105,22 @@ class Sender
 {
 public:
   //// Constructor
-  Sender (void);
+  Sender ();
 
   //// Destructor
-  ~Sender (void);
+  ~Sender ();
 
-  void shut_down (void);
+  void shut_down ();
 
   //// Method to initialize the various data components.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   //// Method to pace and send data from a file.
-  int pace_data (void);
+  int pace_data ();
 
   //// Accessor to the connection manager.
-  Connection_Manager &connection_manager (void);
+  Connection_Manager &connection_manager ();
 
 private:
   //// Method to parse the command line arguments.

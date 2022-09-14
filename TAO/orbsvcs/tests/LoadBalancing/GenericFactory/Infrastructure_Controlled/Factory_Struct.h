@@ -19,10 +19,8 @@
 
 struct Factory_Node
 {
-
   /// FactoryCreationId assigned to the member.
   PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
-
 };
 
 typedef ACE_Array_Base<Factory_Node> Factory_Struct;

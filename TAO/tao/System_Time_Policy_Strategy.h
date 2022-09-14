@@ -41,11 +41,11 @@ class TAO_Export TAO_System_Time_Policy_Strategy
 public:
   virtual ~TAO_System_Time_Policy_Strategy ();
 
-  virtual ACE_Timer_Queue * create_timer_queue (void);
+  virtual ACE_Timer_Queue * create_timer_queue ();
 
   virtual void destroy_timer_queue (ACE_Timer_Queue *tmq);
 
-  virtual ACE_Dynamic_Time_Policy_Base * get_time_policy (void);
+  virtual ACE_Dynamic_Time_Policy_Base * get_time_policy ();
 
 private:
   static ACE_Time_Policy_T<ACE_System_Time_Policy>  time_policy_;

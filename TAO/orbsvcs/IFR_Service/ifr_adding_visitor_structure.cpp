@@ -14,7 +14,7 @@ ifr_adding_visitor_structure::ifr_adding_visitor_structure (AST_Decl *scope)
 {
 }
 
-ifr_adding_visitor_structure::~ifr_adding_visitor_structure (void)
+ifr_adding_visitor_structure::~ifr_adding_visitor_structure ()
 {
 }
 
@@ -29,8 +29,8 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
       return ifr_adding_visitor::visit_scope (node);
     }
 
-  AST_Structure *s = AST_Structure::narrow_from_scope (node);
-  CORBA::ULong nfields = static_cast<CORBA::ULong> (s->nfields ());
+  AST_Structure *s = dynamic_cast<AST_Structure*> (node);
+  CORBA::ULong const nfields = static_cast<CORBA::ULong> (s->nfields ());
   this->members_.length (nfields);
   AST_Field **f = 0;
 
@@ -383,7 +383,7 @@ ifr_adding_visitor_structure::visit_union (AST_Union *node)
 }
 
 CORBA::IDLType_ptr
-ifr_adding_visitor_structure::ir_current (void) const
+ifr_adding_visitor_structure::ir_current () const
 {
   return this->ir_current_.in ();
 }

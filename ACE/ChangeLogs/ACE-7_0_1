@@ -1,0 +1,421 @@
+commit 0f58dd1951e1b03fc0b860f7586c0eb5f6a94c32
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 11 18:04:14 2021 +0100
+
+    Upgrade to doxygen 1.9.1
+
+commit df1008d5611e10fb8af7c8a49e9d4c7a8c4b7681
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 10 12:28:38 2021 +0100
+
+    Layout changes and remove redundant void
+    
+        * ACE/ace/SPIPE_Addr.inl:
+
+commit f6b7d0ccad487a44da5f517a450a8ef982c06efb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 10 12:28:21 2021 +0100
+
+    Fixed unused parameter warning
+        * ACE/ace/SString.h:
+
+commit 492dcbc1f79531956403abb2313de416d847ce1b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 9 15:40:07 2021 +0100
+
+    Revert changes for the moment
+    
+        * ACE/ace/Numeric_Limits.h:
+        * ACE/tests/New_Fail_Test.cpp:
+
+commit 8db07b95476a40304b49e4d033ccbec76501fed4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 9 15:13:47 2021 +0100
+
+    Use SIZE_MAX, numeric_limits is a constexpr which the compiler checks
+    
+        * ACE/tests/New_Fail_Test.cpp:
+
+commit cd16b241c028b0c2ecc4578aa84d31bea5128dc9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 9 14:47:44 2021 +0100
+
+    Comment upate
+    
+        * ACE/tests/New_Fail_Test.cpp:
+
+commit 14350a335485096c0678e2ca98795fe1a9a19a9f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 9 14:46:38 2021 +0100
+
+    Work on windows and linux
+
+commit 073872266ac2bc33c4f518903f5459b3f5b0e430
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 9 14:40:54 2021 +0100
+
+    Fixed maximum value
+
+commit 0f5ef8fabe73b51b0b59745b3381335996460737
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 9 13:48:29 2021 +0100
+
+    Solve compile error on windows
+    
+        * ACE/tests/New_Fail_Test.cpp:
+
+commit 317dd62b7112b590efe99283ceb4b2e5e5649884
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 9 13:31:46 2021 +0100
+
+    Documentation, layout, C++11 changes
+
+commit 60d97734bef3939bb7ed54170fbcf9a1b459b496
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 9 12:53:36 2021 +0100
+
+    Make use of constexpr instead of const
+    
+        * ACE/ace/CDR_Base.cpp:
+        * ACE/ace/Configuration.cpp:
+        * ACE/ace/ETCL/ETCL_l.cpp:
+        * ACE/ace/OS_NS_time.h:
+        * ACE/ace/OS_NS_time.inl:
+        * ACE/ace/UTF16_Encoding_Converter.cpp:
+        * ACE/ace/Vector_T.h:
+
+commit 710e551540f9d1a24c7808ae0172ddce2e39f717
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 9 12:34:32 2021 +0100
+
+    Reduce size of blocks
+    
+        * ACE/tests/New_Fail_Test.cpp:
+
+commit 3a135b20e2c3c3dd407b9b768a411645eca6a7e0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 9 11:49:28 2021 +0100
+
+    Various cleanup and use of C++11 features
+
+commit e4fb72413b5fcfe058359a6344b8fa59fe52e806
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 8 18:36:56 2021 +0100
+
+    Layout changes
+    
+        * ACE/ace/ATM_Acceptor.h:
+        * ACE/ace/ATM_Connector.cpp:
+        * ACE/ace/ATM_Connector.inl:
+
+commit 813d80ca6f4949f4c831433166c058f4c7bbb975
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 8 18:25:49 2021 +0100
+
+    Layout changes
+    
+        * ACE/ASNMP/tests/test_config.h:
+        * ACE/Kokyu/Kokyu_defs.inl:
+        * ACE/ace/ATM_Params.h:
+        * ACE/apps/JAWS2/HTTPU/http_headers.h:
+        * TAO/TAO_IDL/be/be_visitor_valuebox/valuebox_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/Refcountable.cpp:
+        * TAO/tao/Codeset/Codeset_Manager_i.h:
+        * TAO/tao/Codeset/Codeset_Translator_Factory.h:
+        * TAO/tao/Codeset_Manager.h:
+        * TAO/tests/Portable_Interceptors/AdvSlotDblCpy/client.cpp:
+        * TAO/tests/Portable_Interceptors/AdvSlotDblCpy/server.cpp:
+
+commit 3ee40a3fef0cdd8a2ce86531a2e78cb218608023
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 25 11:00:40 2021 +0100
+
+    Cleanup for vc6, use nullptr, remove redundant void, layout changes
+    
+        * ACE/bin/pippen.pl:
+        * TAO/orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * TAO/tao/AnyTypeCode/Alias_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/Any.cpp:
+        * TAO/tao/AnyTypeCode/Any.inl:
+        * TAO/tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp:
+        * TAO/tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h:
+        * TAO/tao/AnyTypeCode/Any_Array_Impl_T.cpp:
+        * TAO/tao/AnyTypeCode/Any_Array_Impl_T.h:
+        * TAO/tao/AnyTypeCode/Any_Basic_Impl_T.cpp:
+        * TAO/tao/AnyTypeCode/Any_Dual_Impl_T.cpp:
+        * TAO/tao/AnyTypeCode/Any_Impl_T.cpp:
+        * TAO/tao/AnyTypeCode/Any_Special_Impl_T.cpp:
+        * TAO/tao/AnyTypeCode/Enum_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/Fixed_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/NVList.inl:
+        * TAO/tao/AnyTypeCode/Sequence_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/Sequence_TypeCode_Static.cpp:
+        * TAO/tao/AnyTypeCode/Sequence_TypeCode_Static.h:
+        * TAO/tao/AnyTypeCode/SystemExceptionA.cpp:
+        * TAO/tao/AnyTypeCode/True_RefCount_Policy.inl:
+        * TAO/tao/AnyTypeCode/TypeCode_Base_Attributes.inl:
+        * TAO/tao/AnyTypeCode/TypeCode_Case_Base_T.inl:
+        * TAO/tao/AnyTypeCode/Union_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/Union_TypeCode_Static.cpp:
+        * TAO/tao/AnyTypeCode/Value_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/Value_TypeCode_Static.cpp:
+        * TAO/tao/AnyTypeCode/WrongTransactionA.cpp:
+        * TAO/tao/AnyTypeCode/append.cpp:
+        * TAO/tao/Array_VarOut_T.cpp:
+        * TAO/tao/Array_VarOut_T.inl:
+        * TAO/tao/BD_String_Argument_T.cpp:
+        * TAO/tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+        * TAO/tao/DynamicInterface/Unknown_User_Exception.cpp:
+        * TAO/tao/EndpointPolicy/EndpointPolicy_ORBInitializer.cpp:
+        * TAO/tao/IFR_Client/IFR_Base.pidl:
+        * TAO/tao/PI/ORBInitInfo.cpp:
+        * TAO/tao/PortableServer/Active_Object_Map.cpp:
+        * TAO/tao/PortableServer/BD_String_SArgument_T.cpp:
+        * TAO/tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+        * TAO/tao/PortableServer/IdUniquenessStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/IdUniquenessStrategyUnique.cpp:
+        * TAO/tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.cpp:
+        * TAO/tao/PortableServer/ImplicitActivationStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/POA.pidl:
+        * TAO/tao/PortableServer/POAManagerFactory.pidl:
+        * TAO/tao/PortableServer/POA_Cached_Policies.cpp:
+        * TAO/tao/PortableServer/Regular_POA.cpp:
+        * TAO/tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
+        * TAO/tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+        * TAO/tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.cpp:
+        * TAO/tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.cpp:
+        * TAO/tao/PortableServer/ThreadStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/Var_Array_SArgument_T.cpp:
+        * TAO/tao/Profile.cpp:
+        * TAO/tao/RTCORBA/Network_Priority_Mapping_Manager.cpp:
+        * TAO/tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+        * TAO/tao/RTCORBA/Thread_Pool.cpp:
+        * TAO/tao/RTPortableServer/RT_POA.h:
+        * TAO/tao/RTPortableServer/RT_Servant_Dispatcher.h:
+        * TAO/tao/RTScheduling/Current.cpp:
+        * TAO/tao/RTScheduling/Current.h:
+        * TAO/tao/RTScheduling/RTScheduler_Manager.cpp:
+        * TAO/tao/Remote_Object_Proxy_Broker.cpp:
+        * TAO/tao/Strategies/DIOP_Connection_Handler.cpp:
+        * TAO/tao/SystemException.cpp:
+        * TAO/tao/TAO_Server_Request.cpp:
+        * TAO/tao/Transport.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.inl:
+        * TAO/tao/TypeCodeFactory/TypeCodeFactory.pidl:
+        * TAO/tao/Utils/Server_Main.cpp:
+        * TAO/tao/Valuetype/ValueBase.cpp:
+        * TAO/tao/Valuetype/Valuetype_Adapter_Factory_Impl.cpp:
+        * TAO/tao/VarOut_T.cpp:
+        * TAO/tao/VarOut_T.inl:
+        * TAO/tao/Vector_Argument_T.cpp:
+        * TAO/tao/Vector_Argument_T.h:
+        * TAO/tao/Vector_Argument_T.inl:
+        * TAO/tao/ZIOP/ZIOP.cpp:
+
+commit bf7a0246bb5755b73440fac59976b2603d0e205c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 24 16:19:06 2021 +0100
+
+    Documented changes
+    
+        * ACE/NEWS:
+
+commit c4275e3632f19d3f908fbe86a5af14b49c727859
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 24 16:12:52 2021 +0100
+
+    Removed checks for ACE_TANDEM_T1248_PTHREADS, not set in any config file
+    
+        * ACE/ace/Task.cpp:
+        * ACE/ace/os_include/os_pthread.h:
+
+commit 75d423d5b4ce43a9586504b37a6af91bcb5d37ac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 24 16:09:14 2021 +0100
+
+    Removed checks for ACE_HAS_TANDEM_SIGNALS, not set in any config file
+    
+        * ACE/ace/OS_NS_signal.inl:
+        * ACE/ace/Signal.cpp:
+        * ACE/ace/Signal.inl:
+        * ACE/ace/os_include/os_signal.h:
+
+commit 1c3db3e2fa4ac9f074ffcab4f3cce413b770d16f
+Merge: 9aebe01b1af 1438c5c113e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 24 11:46:17 2021 +0100
+
+    Merge pull request #1436 from jwillemsen/jwi-ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+    
+    Remove ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES for macosx/msvc, should…
+
+commit 1438c5c113eaa68621352ea165981efd1d7fe68b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 24 10:30:18 2021 +0100
+
+    Remove ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES for macosx/msvc, should work
+    
+        * ACE/ace/config-macosx-jaguar.h:
+        * ACE/ace/config-macosx-leopard.h:
+        * ACE/ace/config-macosx-panther.h:
+        * ACE/ace/config-macosx-tiger.h:
+        * ACE/ace/config-win32-msvc-14.h:
+
+commit bc36f789c62bc53c63c1d33d6a37b22d8fe700cd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 24 10:28:58 2021 +0100
+
+    Remove macros we don't use anymore
+    
+        * ACE/ace/README:
+        * ACE/docs/ACE-guidelines.html:
+
+commit e4957c0bc1bc03961b30cbbfd72dd6205f33cc24
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 24 08:49:47 2021 +0100
+
+    Cleanup LynxOS4 support, fixes #1434
+    
+        * ACE/ace/OS_NS_pwd.inl:
+        * ACE/ace/OS_NS_signal.inl:
+        * ACE/ace/README:
+        * ACE/ace/Sig_Handler.cpp:
+        * ACE/ace/config-lynxos.h:
+        * ACE/ace/os_include/os_signal.h:
+        * ACE/ace/os_include/os_stdlib.h:
+        * ACE/ace/os_include/os_strings.h:
+        * ACE/ace/os_include/os_unistd.h:
+        * ACE/tests/Task_Ex_Test.cpp:
+
+commit 9f05fd32184d21307404ba5436bfd3bad247c5d5
+Merge: 34d2bcfc5e5 ec4c0e7af88
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 24 08:31:47 2021 +0100
+
+    Merge pull request #1433 from jwillemsen/jwi-strtoll
+    
+    Removed strtoll and strtoull prototypes, not used in any config file …
+
+commit ec4c0e7af88a55b0667a40c1fbe23721f7521473
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 23 18:25:23 2021 +0100
+
+    Removed strtoll and strtoull prototypes, not used in any config file anymore
+    
+        * ACE/ace/os_include/os_stdlib.h:
+
+commit a628ae8c121b92767573eaebd0926b5378e9da13
+Merge: 152df7f22b7 6f026e3935c
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Feb 22 08:24:21 2021 -0600
+
+    Merge pull request #1430 from DOCGroup/mitza-autoruntests
+    
+    auto_run_tests: removed DDS_ROOT - use equivalent script in OpenDDS to test it
+
+commit 152df7f22b7d8b3d748992442fb77f9f4fcb9a57
+Merge: 7a8455af325 ab276a1dd14
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 17 13:35:53 2021 +0100
+
+    Merge pull request #1431 from jwillemsen/jwi-ACE_LACKS_MSGHDR
+    
+    Add new ACE_LACKS_MSGHDR
+
+commit ab276a1dd1442d0f0d27d44eb4ccf3ad913db57b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 17 12:10:23 2021 +0100
+
+    Add new ACE_LACKS_MSGHDR define which we use for the struct msghdr
+    
+        * ACE/ace/config-win32-common.h:
+        * ACE/ace/os_include/sys/os_socket.h:
+
+commit 6f026e3935c278a3bf0b444be90c3e54c0698e5f
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Feb 15 09:02:31 2021 -0600
+
+    auto_run_tests: removed DDS_ROOT - use equivalent script in OpenDDS to test it
+
+commit bfc28a1757a6e5492f1a1ecc14b863fc306f8756
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 12 16:55:08 2021 -0600
+
+    Removed DDS_ROOT from diff-builds-and-group-fixed-tests-only.sh
+
+commit de06b15490fe52f0bd712ab5dbe2ab7879c81382
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 26 13:54:55 2021 +0100
+
+    Updated identation
+
+commit 74c1aff706b4140a106b111c9cf9e1723f92d5f0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 26 13:44:33 2021 +0100
+
+    Update ACE/ace/SSL/SSL_Context.cpp
+
+commit c8da16d9e0323a261204a438844099da5680f64d
+Author: Kamil Sokolowski <Kamil.Sokolowski@motorolasolutions.com>
+Date:   Tue Jan 26 13:39:26 2021 +0100
+
+    Added support for disabling/forcing TLSv1.3
+
+commit 680f436de36aed41f87f4179637192f3cdfb021b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 26 09:07:58 2021 +0100
+
+    Default enable c++11 for macosx
+    
+        * ACE/include/makeinclude/platform_macosx_common.GNU:
+
+commit c77bbe5516b478dda379a03b4a0f2f693e2ee3c5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 26 08:57:32 2021 +0100
+
+    Merge code for detecting whether we have c++11 support also to macosx
+    
+        * ACE/include/makeinclude/platform_macosx_common.GNU:
+
+commit b11ee739c37e7e8ed8cacb8a0aa99328242aedba
+Merge: e412671045b 3ba2a08dd4b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 25 15:47:51 2021 +0100
+
+    Merge pull request #1426 from jwillemsen/jwi-downloadmajorversioned
+    
+    Add link to OpenSuSE build services for major versioned builds
+
+commit 3ba2a08dd4be56336686f7d17662453511078995
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 25 15:47:21 2021 +0100
+
+    Add link to OpenSuSE build services for major versioned builds
+    
+        * ACE/docs/Download.html:
+
+commit 261b34bd068b413cbe015502aa32001d0234da24
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 25 13:59:12 2021 +0100
+
+    Integrate patch from conda-forge ace-feedstock, see https://github.com/conda-forge/ace-feedstock/blob/master/recipe/fix_macos_rpath.patch
+    
+        * ACE/include/makeinclude/platform_macosx_yosemite.GNU:
+
+commit dc7f187d65b4cbc34e8db61813e2c28e892a5f3b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 25 10:19:04 2021 +0100
+
+    Make ACE 7.0.0 and TAO 3.0.0 public available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

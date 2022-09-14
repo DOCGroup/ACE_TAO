@@ -7,12 +7,10 @@
 #include "ace/PI_Malloc.h"
 #include "ace/Based_Pointer_T.h"
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Process_Mutex.h"
 #include "ace/Malloc_T.h"
 #include "ace/MMAP_Memory_Pool.h"
-
-
+#include <memory>
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 typedef ACE_PI_Control_Block CONTROL_BLOCK;
@@ -152,7 +150,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                ACE_TEXT("test_lock"),
                                &options),
                   1);
-  auto_ptr <TEST_MALLOC> allocator (ptr);
+  std::unique_ptr <TEST_MALLOC> allocator (ptr);
   void *data = 0;
 
   // This is the first time in, so we allocate the memory and bind it

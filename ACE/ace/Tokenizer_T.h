@@ -140,7 +140,7 @@ public:
   int preserve_designators (ACE_CHAR_T start, ACE_CHAR_T stop, int strip=1);
 
   /// Returns the next token.
-  ACE_CHAR_T *next (void);
+  ACE_CHAR_T *next ();
 
   enum {
     MAX_DELIMITERS=16,

@@ -34,17 +34,17 @@ class TAO_Notify_Tests_Command_Factory_T : public TAO_Notify_Tests_Command_Facto
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_Command_Factory_T (void);
+  TAO_Notify_Tests_Command_Factory_T ();
 
   /// Destructor
   ~TAO_Notify_Tests_Command_Factory_T ();
 
   /// = Service_Object virtual method overloads.
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Create the <COMMAND> command.
-  TAO_Notify_Tests_Command* create (void);
+  TAO_Notify_Tests_Command* create ();
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

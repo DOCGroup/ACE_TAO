@@ -18,11 +18,6 @@ TAO_Asynch_Timeout_Handler::TAO_Asynch_Timeout_Handler (
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-TAO_Asynch_Timeout_Handler::~TAO_Asynch_Timeout_Handler ()
-{
-}
-
-
 long
 TAO_Asynch_Timeout_Handler::schedule_timer (TAO_Transport_Mux_Strategy *tms,
                                             CORBA::ULong request_id,

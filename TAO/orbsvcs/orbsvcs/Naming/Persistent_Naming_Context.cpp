@@ -70,31 +70,31 @@ TAO_Persistent_Bindings_Map::TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb)
 {
 }
 
-TAO_Persistent_Bindings_Map::~TAO_Persistent_Bindings_Map (void)
+TAO_Persistent_Bindings_Map::~TAO_Persistent_Bindings_Map ()
 {
 }
 
 void
-TAO_Persistent_Bindings_Map::destroy (void)
+TAO_Persistent_Bindings_Map::destroy ()
 {
   this->map_->ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>::~ACE_Hash_Map_With_Allocator ();
   this->allocator_->free (map_);
 }
 
 TAO_Persistent_Bindings_Map::HASH_MAP *
-TAO_Persistent_Bindings_Map::map (void)
+TAO_Persistent_Bindings_Map::map ()
 {
   return this->map_;
 }
 
 size_t
-TAO_Persistent_Bindings_Map::total_size (void)
+TAO_Persistent_Bindings_Map::total_size ()
 {
   return this->map_->total_size ();
 }
 
 size_t
-TAO_Persistent_Bindings_Map::current_size (void)
+TAO_Persistent_Bindings_Map::current_size ()
 {
   return map_->current_size ();
 }
@@ -260,7 +260,7 @@ TAO_Persistent_Naming_Context::init (size_t hash_table_size)
   return persistent_context_->open (hash_table_size, index_->allocator ());
 }
 
-TAO_Persistent_Naming_Context::~TAO_Persistent_Naming_Context (void)
+TAO_Persistent_Naming_Context::~TAO_Persistent_Naming_Context ()
 {
   // Perform appropriate cleanup based on the destruction level specified.
 
@@ -349,7 +349,7 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 }
 
 CosNaming::NamingContext_ptr
-TAO_Persistent_Naming_Context::new_context (void)
+TAO_Persistent_Naming_Context::new_context ()
 {
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.

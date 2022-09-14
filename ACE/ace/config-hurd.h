@@ -79,9 +79,6 @@
 // Then the compiler specific parts
 
 #if defined (__GNUG__)
-  // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
-  // this must appear before its #include.
-# define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
 #elif defined (__GNUC__)
 /**
@@ -118,8 +115,6 @@
 #define ACE_LACKS_ISWASCII
 
 #define ACE_HAS_3_PARAM_WCSTOK
-
-#define ACE_HAS_3_PARAM_READDIR_R
 
 #if !defined (ACE_DEFAULT_BASE_ADDR)
 #  define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
@@ -208,12 +203,12 @@
 
 #define ACE_HAS_DIRENT
 
-#define ACE_HAS_STRBUF_T
-
 #define ACE_SIZEOF_WCHAR 4
 
 #define ACE_LACKS_GETIPNODEBYADDR
 #define ACE_LACKS_GETIPNODEBYNAME
+#define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_STRRECVFD
 
 // Platform has POSIX terminal interface.
 #define ACE_HAS_TERMIOS
@@ -238,7 +233,6 @@
 
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_AUTOMATIC_INIT_FINI
-#define ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE
 #define ACE_HAS_RECURSIVE_MUTEXES
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS

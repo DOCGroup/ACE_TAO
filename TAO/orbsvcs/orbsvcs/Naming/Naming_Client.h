@@ -39,7 +39,7 @@ class TAO_Naming_Export TAO_Naming_Client
 {
 public:
   /// Default constructor.
-  TAO_Naming_Client (void);
+  TAO_Naming_Client ();
 
   /**
    * Look for a Naming Service for a period of @a timeout using
@@ -49,17 +49,17 @@ public:
   int init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout = 0);
 
   /// Destructor.
-  ~TAO_Naming_Client (void);
+  ~TAO_Naming_Client ();
 
   /// Returns a pointer to the root Naming Context.
-  CosNaming::NamingContext_ptr operator-> (void) const;
+  CosNaming::NamingContext_ptr operator-> () const;
 
   /**
    * Returns a pointer to the root Naming Context.  This ptr is
    * duplicated via <_duplicate> so that it can be stored into a
    * <*_var>.
    */
-  CosNaming::NamingContext_ptr get_context (void) const;
+  CosNaming::NamingContext_ptr get_context () const;
 
 protected:
   /// Reference to the root Naming Context.

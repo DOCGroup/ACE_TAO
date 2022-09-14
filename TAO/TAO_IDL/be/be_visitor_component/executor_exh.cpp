@@ -24,7 +24,7 @@ be_visitor_executor_exh::be_visitor_executor_exh (
   export_macro_ = be_global->exec_export_macro ();
 }
 
-be_visitor_executor_exh::~be_visitor_executor_exh (void)
+be_visitor_executor_exh::~be_visitor_executor_exh ()
 {
 }
 
@@ -81,11 +81,11 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << "public:" << be_idt_nl;
 
   os_ << "/// Constructor" << be_nl
-      << lname << "_exec_i (void);";
+      << lname << "_exec_i ();";
 
   os_ << be_nl
       << "/// Destructor" << be_nl
-      << "virtual ~" << lname << "_exec_i (void);";
+      << "virtual ~" << lname << "_exec_i ();";
 
   os_ << be_nl_2
       << "/** @name Supported operations and attributes. */" << be_nl
@@ -147,18 +147,18 @@ be_visitor_executor_exh::visit_component (be_component *node)
     {
       os_ << be_nl_2
           << "/// Component state change method to configuration_complete state" << be_nl
-          << "virtual void configuration_complete (void);";
+          << "virtual void configuration_complete ();";
 
       os_ << be_nl_2
           << "/// Component state change method to activated state" << be_nl
-          << "virtual void ccm_activate (void);" << be_nl_2
+          << "virtual void ccm_activate ();" << be_nl_2
           << "/// Component state change method to passivated state" << be_nl
-          << "virtual void ccm_passivate (void);";
+          << "virtual void ccm_passivate ();";
     }
 
   os_ << be_nl_2
       << "/// Component state change method to removed state" << be_nl
-      << "virtual void ccm_remove (void);";
+      << "virtual void ccm_remove ();";
 
   os_ << be_nl
       << "//@}";
@@ -268,7 +268,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
       os_ << be_nl_2
           << "/// Get the ACE_Reactor" << be_nl
           << "/// @return non-owning pointer to reactor" << be_nl
-          << "ACE_Reactor* reactor (void);";
+          << "ACE_Reactor* reactor ();";
     }
 
   os_ << be_uidt_nl
@@ -302,7 +302,7 @@ be_visitor_executor_exh::visit_provides (be_provides *node)
       << "/// @return existing instance of facet if one exists, else creates one" << be_nl
       << "virtual " << global << sname << "::CCM_"
       << lname << "_ptr" << be_nl
-      << "get_" << port_name << " (void);";
+      << "get_" << port_name << " ();";
 
   return 0;
 }
@@ -338,7 +338,6 @@ Exec_Attr_Decl_Generator::emit (
   TAO_OutStream *  /*os*/,
   be_interface * base_interface)
 {
-
   // Even though this call seems unaware of CCM types, the
   // visitor must inherit from be_visitor_component_scope so
   // it will pick up attributes via porttypes.

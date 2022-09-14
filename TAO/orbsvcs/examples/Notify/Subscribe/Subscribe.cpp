@@ -16,7 +16,7 @@
 
 ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0; // we wait for 4 events.
 
-Subscribe::Subscribe (void)
+Subscribe::Subscribe ()
   : done_ (0)
 {
   // No-Op.
@@ -42,7 +42,7 @@ Subscribe::init (int argc, ACE_TCHAR *argv [])
 }
 
 void
-Subscribe::run (void)
+Subscribe::run ()
 {
   this->send_events ();
 
@@ -55,7 +55,7 @@ Subscribe::run (void)
 }
 
 void
-Subscribe::done (void)
+Subscribe::done ()
 {
   this->done_ = 1;
 }
@@ -84,7 +84,7 @@ Subscribe::init_ORB (int argc, ACE_TCHAR *argv [])
 }
 
 void
-Subscribe::resolve_naming_service (void)
+Subscribe::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
@@ -98,7 +98,7 @@ Subscribe::resolve_naming_service (void)
 }
 
 void
-Subscribe::resolve_Notify_factory (void)
+Subscribe::resolve_Notify_factory ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -112,7 +112,7 @@ Subscribe::resolve_Notify_factory (void)
 }
 
 void
-Subscribe::create_EC (void)
+Subscribe::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -124,7 +124,7 @@ Subscribe::create_EC (void)
 }
 
 void
-Subscribe::create_supplieradmin (void)
+Subscribe::create_supplieradmin ()
 {
   CosNotifyChannelAdmin::AdminID adminid;
 
@@ -135,7 +135,7 @@ Subscribe::create_supplieradmin (void)
 }
 
 void
-Subscribe:: create_consumeradmin (void)
+Subscribe:: create_consumeradmin ()
 {
   CosNotifyChannelAdmin::AdminID adminid;
 
@@ -146,7 +146,7 @@ Subscribe:: create_consumeradmin (void)
 }
 
 void
-Subscribe::create_consumers (void)
+Subscribe::create_consumers ()
 {
   consumer_1_ = new Subscribe_StructuredPushConsumer (this);
   consumer_1_->connect (this->consumer_admin_.in ());
@@ -156,7 +156,7 @@ Subscribe::create_consumers (void)
 }
 
 void
-Subscribe::create_suppliers (void)
+Subscribe::create_suppliers ()
 {
   supplier_1_ = new Subscribe_StructuredPushSupplier ();
   supplier_1_->connect (this->supplier_admin_.in ());
@@ -166,7 +166,7 @@ Subscribe::create_suppliers (void)
 }
 
 void
-Subscribe::send_events (void)
+Subscribe::send_events ()
 {
   // Setup the CA to receive event_type : "domain_A", "Type_a"
   CosNotification::EventTypeSeq added(1);
@@ -288,7 +288,7 @@ Subscribe_StructuredPushConsumer::connect
 }
 
 void
-Subscribe_StructuredPushConsumer::disconnect (void)
+Subscribe_StructuredPushConsumer::disconnect ()
 {
   this->proxy_supplier_->
     disconnect_structured_push_supplier();
@@ -329,25 +329,24 @@ Subscribe_StructuredPushConsumer::push_structured_event
 
   if (++g_result_count == EVENT_COUNT)
     subscribe_->done ();
-
 }
 
 void
 Subscribe_StructuredPushConsumer::disconnect_structured_push_consumer
-   (void)
+   ()
 {
   // No-Op.
 }
 
 CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr
-Subscribe_StructuredPushConsumer::get_proxy_supplier (void)
+Subscribe_StructuredPushConsumer::get_proxy_supplier ()
 {
   return proxy_supplier_.in ();
 }
 
 /*****************************************************************/
 
-Subscribe_StructuredPushSupplier::Subscribe_StructuredPushSupplier (void)
+Subscribe_StructuredPushSupplier::Subscribe_StructuredPushSupplier ()
 {
 }
 
@@ -377,7 +376,7 @@ Subscribe_StructuredPushSupplier::connect
 }
 
 void
-Subscribe_StructuredPushSupplier::disconnect (void)
+Subscribe_StructuredPushSupplier::disconnect ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
@@ -403,7 +402,7 @@ Subscribe_StructuredPushSupplier::send_event
 
 void
 Subscribe_StructuredPushSupplier::disconnect_structured_push_supplier
-   (void)
+   ()
 {
   // No-Op.
 }

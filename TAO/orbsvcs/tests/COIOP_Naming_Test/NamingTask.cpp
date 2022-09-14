@@ -26,7 +26,7 @@ void NamingTask::end()
 }
 
 CosNaming::NamingContext_ptr
-NamingTask::root (void) const
+NamingTask::root () const
 {
   return CosNaming::NamingContext::_duplicate (root_);
 }

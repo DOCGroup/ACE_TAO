@@ -462,7 +462,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 static const char* extract_string(char*);
-//static const char * extract_string(char*);
 
 #define YY_LEX_DEBUG
 
@@ -946,6 +945,7 @@ YY_RULE_SETUP
 //#line 122 "ETCL/ETCL.ll"
 ETCL_ECHO;
   YY_BREAK
+// Fallthrough
 case YY_STATE_EOF(INITIAL):
   yyterminate();
 
@@ -1399,7 +1399,7 @@ static int input()
   }
 #endif /* YY_NO_INPUT */
 
-void yyflush_current_buffer (void)
+void yyflush_current_buffer ()
 {
   YY_FLUSH_BUFFER;
 }
@@ -1512,7 +1512,6 @@ YY_BUFFER_STATE b;
 
   yy_flex_free( (void *) b );
   }
-
 
 
 #ifdef YY_USE_PROTOS
@@ -1737,7 +1736,6 @@ char msg[];
   }
 
 
-
 /* Redefine yyless() so it works in section 3 code. */
 
 #undef yyless
@@ -1867,7 +1865,7 @@ extract_string(char* str)
 }
 
 int
-yywrap (void)
+yywrap ()
 {
   return 1;
 }

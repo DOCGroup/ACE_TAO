@@ -13,7 +13,7 @@ CORBA::ORB_var orb_;
 class Worker : public ACE_Task_Base
 {
 public:
-  int svc (void)
+  int svc ()
   {
     ACE_DEBUG((LM_INFO,"(%P|%t) Running ORB in a separate thread\n"));
     try
@@ -25,7 +25,6 @@ public:
       }
     return 0;
   }
-
 };
 
 int

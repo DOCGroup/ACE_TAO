@@ -47,7 +47,7 @@ public:
                              const char *stock_name);
 
   /// Destructor.
-  virtual ~Stock_StockNameConsumer_i (void);
+  virtual ~Stock_StockNameConsumer_i ();
 
   /**
    * Push an event to the consumer.

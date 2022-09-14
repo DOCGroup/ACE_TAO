@@ -28,8 +28,8 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
                 TAO_DEF_GIOP_MAJOR,
                 TAO_DEF_GIOP_MINOR,
                 orb_core)
-  , transport_ (0)
-  , lock_ (0)
+  , transport_ (nullptr)
+  , lock_ (nullptr)
   , is_reply_dispatched_ (false)
 {
   // @@ NOTE: Need a separate option for this..
@@ -38,10 +38,10 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
 }
 
 // Destructor.
-TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base (void)
+TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base ()
 {
   // Release the transport that we own
-  if (this->transport_ != 0)
+  if (this->transport_ != nullptr)
     this->transport_->remove_reference ();
 
   if (this->lock_)
@@ -51,7 +51,7 @@ TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base (void)
 void
 TAO_Asynch_Reply_Dispatcher_Base::transport (TAO_Transport *t)
 {
-  if (this->transport_ != 0)
+  if (this->transport_ != nullptr)
     this->transport_->remove_reference ();
 
   this->transport_ = t;
@@ -60,7 +60,7 @@ TAO_Asynch_Reply_Dispatcher_Base::transport (TAO_Transport *t)
 }
 
 bool
-TAO_Asynch_Reply_Dispatcher_Base::try_dispatch_reply (void)
+TAO_Asynch_Reply_Dispatcher_Base::try_dispatch_reply ()
 {
   if (this->is_reply_dispatched_)
     {

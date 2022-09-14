@@ -23,7 +23,6 @@ class Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
                          );
 
@@ -31,12 +30,10 @@ public:
                           );
 
 private:
-
   /// Register the necessary interceptors.
   void register_server_request_interceptors (
          PortableInterceptor::ORBInitInfo_ptr info
          );
-
 };
 
 #include /**/ "ace/post.h"

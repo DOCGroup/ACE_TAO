@@ -11,7 +11,7 @@ class Foo_T
 {
 public:
   Foo_T () : member() {};
-  typedef T& T_elem;
+  using T_elem = T &;
   T_elem operator[] (ACE_CDR::ULong) { return member; }
 private:
   T member;
@@ -21,7 +21,7 @@ struct Foo2
 {
   long i;
 };
-typedef Foo_T<Foo2> Foo2Seq;
+using Foo2Seq = Foo_T<Foo2>;
 
 int
 run_main (int, ACE_TCHAR *[])

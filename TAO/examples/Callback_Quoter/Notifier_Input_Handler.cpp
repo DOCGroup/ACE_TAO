@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Notifier_Input_Handler.cpp
@@ -9,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "Notifier_Input_Handler.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -18,8 +16,7 @@
 #include "ace/OS_NS_ctype.h"
 
 // Constructor.
-
-Notifier_Input_Handler::Notifier_Input_Handler (void)
+Notifier_Input_Handler::Notifier_Input_Handler ()
   : ior_output_file_ (0),
     argc_ (0),
     argv_ (0),
@@ -28,27 +25,22 @@ Notifier_Input_Handler::Notifier_Input_Handler (void)
 }
 
 // Destructor.
-
-Notifier_Input_Handler::~Notifier_Input_Handler (void)
+Notifier_Input_Handler::~Notifier_Input_Handler ()
 {
    // Make sure to cleanup the STDIN handler.
-
   if (ACE_Event_Handler::remove_stdin_handler
       (this->notifier_i_.orb_->orb_core ()->reactor (),
        this->notifier_i_.orb_->orb_core ()->thr_mgr ()) == -1)
      ACE_ERROR ((LM_ERROR,
                "%p\n",
                "remove_stdin_handler"));
-
 }
 
 // The naming service is initialized and the naming context as well as
 // the object name is bound to the naming server.
-
 int
-Notifier_Input_Handler::init_naming_service (void)
+Notifier_Input_Handler::init_naming_service ()
 {
-
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   if (this->naming_server_.init (orb.in ()) == -1)
@@ -68,7 +60,6 @@ Notifier_Input_Handler::init_naming_service (void)
 
       naming_server_->rebind (notifier_obj_name,
                               notifier_obj.in());
-
     }
   catch (const CosNaming::NamingContext::AlreadyBound&)
     {
@@ -83,7 +74,7 @@ Notifier_Input_Handler::init_naming_service (void)
 
 // Parse the command-line arguments and set options.
 int
-Notifier_Input_Handler::parse_args (void)
+Notifier_Input_Handler::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("df:s "));
   int c;
@@ -125,15 +116,12 @@ Notifier_Input_Handler::parse_args (void)
 }
 
 // Initialize the server.
-
 int
 Notifier_Input_Handler::init (int argc,
                               ACE_TCHAR *argv[])
 {
-
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create the child poa under the root POA.
-
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -192,21 +180,16 @@ Notifier_Input_Handler::init (int argc,
 }
 
 int
-Notifier_Input_Handler::run (void)
+Notifier_Input_Handler::run ()
 {
   // Run the main event loop for the ORB.
+  ACE_DEBUG ((LM_DEBUG, " Type \"q\" to quit \n"));
 
-
-  ACE_DEBUG ((LM_DEBUG,
-              " Type \"q\" to quit \n"));
-
-  int result = this->orb_manager_.run ();
+  int const result = this->orb_manager_.run ();
 
   if (result == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Notifier_Input_Handler::run"),
-                        -1);
+      ACE_ERROR_RETURN ((LM_ERROR, "Notifier_Input_Handler::run"), -1);
     }
 
   return 0;
@@ -215,23 +198,19 @@ Notifier_Input_Handler::run (void)
 int
 Notifier_Input_Handler::handle_input (ACE_HANDLE)
 {
-  char buf[BUFSIZ];
-
-
   try
     {
+      char buf[BUFSIZ];
+
       // The string could read contains \n\0 hence using ACE_OS::read
       // which returns the no of bytes read and hence i can manipulate
       // and remove the devil from the picture i.e '\n' ! ;)
-
-      ssize_t strlen = ACE_OS::read (ACE_STDIN,
-                                     buf,
-                                     sizeof buf);
+      ssize_t const strlen = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
       if (buf[strlen -1] == '\n')
         buf[strlen -1] = '\0';
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%s",
+                  "%C",
                   buf));
 
       if (ACE_OS::ace_tolower(buf[0]) == 'q')

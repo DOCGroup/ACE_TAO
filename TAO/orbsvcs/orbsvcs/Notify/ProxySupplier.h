@@ -39,7 +39,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxySupplier : public virtual TAO_Notif
 public:
   typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier> Ptr;
   /// Constructor
-  TAO_Notify_ProxySupplier (void);
+  TAO_Notify_ProxySupplier ();
 
   /// Destructor
   virtual ~TAO_Notify_ProxySupplier ();
@@ -50,16 +50,16 @@ public:
   /// Connect
   void connect (TAO_Notify_Consumer* consumer);
   /// Disconnect
-  void disconnect (void);
+  void disconnect ();
 
   /// Dispatch Event to consumer
   virtual void deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request);
 
   /// Override TAO_Notify_Container_T::shutdown  method
-  virtual int shutdown (void);
+  virtual int shutdown ();
 
   /// Destroy this object.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Destroy this object, but also indicate if it is due to a timeout or
   /// not.
@@ -69,13 +69,13 @@ public:
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
   /// Returns true if connected
-  bool is_connected (void) const;
+  bool is_connected () const;
 
   /// Access the Consumer
-  TAO_Notify_Consumer* consumer (void);
+  TAO_Notify_Consumer* consumer ();
 
   /// The CA parent.
-  TAO_Notify_ConsumerAdmin& consumer_admin (void);
+  TAO_Notify_ConsumerAdmin& consumer_admin ();
 
 private:
   ///= Data Members.
@@ -86,7 +86,7 @@ private:
   TAO_Notify_Consumer::Ptr consumer_;
 
   /// Access our Peer.
-  virtual TAO_Notify_Peer* peer (void);
+  virtual TAO_Notify_Peer* peer ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

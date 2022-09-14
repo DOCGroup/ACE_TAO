@@ -60,16 +60,16 @@ class ACEXML_Export ACEXML_Namespace_Context_Stack
 {
 public:
   /// Default constructor.
-  ACEXML_Namespace_Context_Stack (void);
+  ACEXML_Namespace_Context_Stack ();
 
   /// Destructor.
-  ~ACEXML_Namespace_Context_Stack (void);
+  ~ACEXML_Namespace_Context_Stack ();
 
   /// Push the old namespace before entering into a new namespace scope.
   int push (ACEXML_NS_CONTEXT * old);
 
   /// Pop the old namespace when exiting a namespace scope.
-  ACEXML_NS_CONTEXT *pop (void);
+  ACEXML_NS_CONTEXT *pop ();
 
 private:
   /// Internal stack structure to hold namespace context.
@@ -126,17 +126,17 @@ public:
   /**
    * Default constructor.
    */
-  ACEXML_NamespaceSupport (void);
+  ACEXML_NamespaceSupport ();
 
   /**
    * Default destructor.
    */
-  ~ACEXML_NamespaceSupport (void);
+  ~ACEXML_NamespaceSupport ();
 
   /**
    *  Initialize the namespace support object
    */
-  int init(void);
+  int init();
 
   /**
    * XMLNS default prefix and URI strings.
@@ -185,7 +185,7 @@ public:
   /**
    * Revert to the previous namespace context.
    */
-  int popContext (void);
+  int popContext ();
 
   /**
    * Process a raw XML 1.0 name.
@@ -205,13 +205,13 @@ public:
    * Start a new Namespace context.  Prefixes defined in previous
    * context are copied over to the new context.
    */
-  int pushContext (void);
+  int pushContext ();
 
   /**
    * Reset this Namespace support object for reuse.
    *
    */
-  int reset (void);
+  int reset ();
 
 private:
   /**

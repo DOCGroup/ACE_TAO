@@ -16,7 +16,7 @@ Client_Task::Client_Task (CORBA::ORB_ptr orb,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 

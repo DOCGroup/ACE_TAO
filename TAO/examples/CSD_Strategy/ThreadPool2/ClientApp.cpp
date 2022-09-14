@@ -86,7 +86,6 @@ ClientApp::run(int argc, ACE_TCHAR* argv[])
 }
 
 
-
 int
 ClientApp::parse_args(int argc, ACE_TCHAR* argv[])
 {

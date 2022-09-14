@@ -26,7 +26,7 @@ be_visitor_component_svh::be_visitor_component_svh (be_visitor_context *ctx)
     }
 }
 
-be_visitor_component_svh::~be_visitor_component_svh (void)
+be_visitor_component_svh::~be_visitor_component_svh ()
 {
 }
 
@@ -42,8 +42,7 @@ be_visitor_component_svh::visit_component (be_component *node)
   /// code generation.
   node->scan (node);
 
-  /// CIDL-generated namespace used 'CIDL_' + composition name.
-  /// Now we use 'CIAO_' + component's flat name.
+  /// Use 'CIAO_' + component's flat name.
   os_ << be_nl_2
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl

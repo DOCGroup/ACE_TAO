@@ -29,12 +29,12 @@
 
 
 // Implementation skeleton constructor
-Test_interfaceOne_i::Test_interfaceOne_i (void)
+Test_interfaceOne_i::Test_interfaceOne_i ()
 {
 }
 
 // Implementation skeleton destructor
-Test_interfaceOne_i::~Test_interfaceOne_i (void)
+Test_interfaceOne_i::~Test_interfaceOne_i ()
 {
 }
 

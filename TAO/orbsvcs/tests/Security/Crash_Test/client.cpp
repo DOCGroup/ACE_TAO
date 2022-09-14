@@ -44,7 +44,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       ACE_CString env ("SSL_CERT_FILE=");
@@ -117,7 +116,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (call_shutdown)
         {
-
           // Let other clients to finish their task if any
           ACE_OS::sleep (wait_time);
 

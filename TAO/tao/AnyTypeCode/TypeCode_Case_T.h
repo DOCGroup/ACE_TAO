@@ -86,7 +86,6 @@ namespace TAO
     class Case_T : public Case<StringType, TypeCodeType>
     {
     public:
-
       /// Constructor.
       Case_T (DiscriminatorType member_label,
               char const * member_name,
@@ -108,8 +107,8 @@ namespace TAO
        * @see @c TAO::TypeCode::Case
        */
       //@{
-      Case<StringType, TypeCodeType> * clone (void) const;
-      virtual CORBA::Any * label (void) const;
+      Case<StringType, TypeCodeType> * clone () const;
+      virtual CORBA::Any * label () const;
       virtual bool marshal_label (TAO_OutputCDR & cdr) const;
       virtual bool equal_label (CORBA::ULong index,
                                 CORBA::TypeCode_ptr tc) const;

@@ -21,16 +21,15 @@
 #include "ace/OS_NS_stdlib.h"
 
 
-
 static void
-cleanup (void)
+cleanup ()
 {
   ACE_DEBUG ((LM_INFO,
               "leaving (%P)!\n"));
 }
 
 static void
-cause_error (void)
+cause_error ()
 {
   errno = EWOULDBLOCK;
   ACE_ERROR ((LM_DEBUG,

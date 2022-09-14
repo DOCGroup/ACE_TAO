@@ -17,9 +17,8 @@ ACE_Shared_Memory_SV::open (key_t id,
 }
 
 // The "do-nothing" constructor.
-
 ACE_INLINE
-ACE_Shared_Memory_SV::ACE_Shared_Memory_SV (void)
+ACE_Shared_Memory_SV::ACE_Shared_Memory_SV ()
 {
   ACE_TRACE ("ACE_Shared_Memory_SV::ACE_Shared_Memory_SV");
 }

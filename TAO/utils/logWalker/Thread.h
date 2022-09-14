@@ -21,24 +21,24 @@ public:
   Thread (long tid, const char *alias, size_t offset);
   void add_time (const ACE_CString &time);
 
-  long max_depth (void) const;
-  long client_encounters (void) const;
-  long server_encounters (void) const;
-  long id (void) const;
-  const ACE_CString &alias (void) const;
+  long max_depth () const;
+  long client_encounters () const;
+  long server_encounters () const;
+  long id () const;
+  const ACE_CString &alias () const;
   void split_filename (char *buff, size_t len) const;
 
   void incoming_from (PeerProcess *);
   void add_invocation (Invocation *);
   void push_invocation (Invocation *);
-  void pop_invocation (void);
-  Invocation *current_invocation (void) const;
+  void pop_invocation ();
+  Invocation *current_invocation () const;
 
-  PeerProcess *incoming (void) const;
-  void handle_request (void);
+  PeerProcess *incoming () const;
+  void handle_request ();
   void enter_wait (PeerProcess *);
   void exit_wait (PeerProcess *, size_t linenum);
-  GIOP_Buffer *giop_target (void);
+  GIOP_Buffer *giop_target ();
   void set_giop_target (GIOP_Buffer *buffer);
   void dump_summary (ostream &strm);
   void dump_invocations (ostream &strm);
@@ -47,19 +47,19 @@ public:
   void get_summary (long &sent_reqs, long &recv_reqs, size_t &sent_size, size_t &recv_size);
 
   void push_new_connection (PeerProcess *pp);
-  PeerProcess *pop_new_connection (void);
-  PeerProcess *peek_new_connection (void) const;
+  PeerProcess *pop_new_connection ();
+  PeerProcess *peek_new_connection () const;
 
   void pending_local_addr (const ACE_CString &addr);
-  const ACE_CString& pending_local_addr (void) const;
+  const ACE_CString& pending_local_addr () const;
   void active_handle (long handle);
-  long active_handle (void) const;
+  long active_handle () const;
   void set_dup (Thread *other, bool set_other);
-  void clear_dup (void);
-  void swap_target (void);
-  bool has_dup (void);
+  void clear_dup ();
+  void swap_target ();
+  bool has_dup ();
 
-  size_t count_nesting (void);
+  size_t count_nesting ();
 
 private:
   long id_;

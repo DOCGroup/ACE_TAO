@@ -7,13 +7,13 @@ namespace TAO
   namespace Portable_Server
   {
     char
-    IdAssignmentStrategyUser::id_assignment_key_type (void) const
+    IdAssignmentStrategyUser::id_assignment_key_type () const
     {
       return 'U';
     }
 
     bool
-    IdAssignmentStrategyUser::has_system_id (void) const
+    IdAssignmentStrategyUser::has_system_id () const
     {
       return false;
     }

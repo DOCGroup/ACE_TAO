@@ -6,7 +6,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // ************************************************************
 
 ACE_INLINE int
-ACE_Token_Proxy_Queue::size (void)
+ACE_Token_Proxy_Queue::size ()
 {
   ACE_TRACE ("ACE_Token_Proxy_Queue::size");
   return this->size_;
@@ -15,7 +15,7 @@ ACE_Token_Proxy_Queue::size (void)
 // ************************************************************
 
 ACE_INLINE int
-ACE_TPQ_Entry::waiting (void) const
+ACE_TPQ_Entry::waiting () const
 {
   ACE_TRACE ("ACE_TPQ_Entry::waiting");
   return waiting_;
@@ -29,14 +29,14 @@ ACE_TPQ_Entry::waiting (int v)
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_TPQ_Entry::client_id (void) const
+ACE_TPQ_Entry::client_id () const
 {
   ACE_TRACE ("ACE_TPQ_Entry::client_id");
   return this->client_id_;
 }
 
 ACE_INLINE ACE_Token_Proxy *
-ACE_TPQ_Entry::proxy (void) const
+ACE_TPQ_Entry::proxy () const
 {
   ACE_TRACE ("ACE_TPQ_Entry::proxy");
   return this->proxy_;
@@ -47,16 +47,6 @@ ACE_TPQ_Entry::proxy (ACE_Token_Proxy *proxy)
 {
   ACE_TRACE ("ACE_TPQ_Entry::proxy");
   this->proxy_ = proxy;
-}
-
-ACE_INLINE
-ACE_TPQ_Iterator::~ACE_TPQ_Iterator (void)
-{
-}
-
-ACE_INLINE
-ACE_Token_Proxy_Queue::~ACE_Token_Proxy_Queue (void)
-{
 }
 
 ACE_INLINE void
@@ -95,8 +85,6 @@ ACE_Token_Proxy_Queue::head (void)
     return this->head_;
 }
 
-// **************************************************
-// **************************************************
 // **************************************************
 
 ACE_INLINE void
@@ -140,7 +128,7 @@ ACE_Tokens::name (void)
 // ************************************************************
 
 ACE_INLINE int
-ACE_TPQ_Entry::nesting_level (void) const
+ACE_TPQ_Entry::nesting_level () const
 {
   ACE_TRACE ("ACE_TPQ_Entry::nesting_level");
   return this->nesting_level_;
@@ -154,7 +142,7 @@ ACE_TPQ_Entry::nesting_level (int delta)
 }
 
 ACE_INLINE ACE_TPQ_Entry::PTVF
-ACE_TPQ_Entry::sleep_hook (void) const
+ACE_TPQ_Entry::sleep_hook () const
 {
   ACE_TRACE ("ACE_TPQ_Entry::sleep_hook");
   return this->sleep_hook_;
@@ -188,8 +176,6 @@ ACE_TPQ_Entry::equal_client_id (const ACE_TCHAR *id)
 }
 
 // ************************************************************
-// ************************************************************
-// ************************************************************
 
 ACE_INLINE
 ACE_Local_Mutex::ACE_Local_Mutex (const ACE_TCHAR *token_name,
@@ -217,7 +203,7 @@ ACE_Token_Name::name (const ACE_TCHAR *new_name)
 }
 
 ACE_INLINE const ACE_TCHAR*
-ACE_Token_Name::name (void) const
+ACE_Token_Name::name () const
 {
   ACE_TRACE ("ACE_Token_Name::name");
   return this->token_name_;
@@ -252,10 +238,10 @@ ACE_INLINE void
 ACE_Token_Name::operator= (const ACE_Token_Name &rhs)
 {
   ACE_TRACE ("ACE_Token_Name::operator=");
-  if (&rhs == this)
-    return;
-  else
+  if (&rhs != this)
+  {
     this->name (rhs.name ());
+  }
 }
 
 ACE_INLINE bool

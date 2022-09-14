@@ -71,13 +71,13 @@ TAO/tests/Bug_1020_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/tests/Bug_1020_Regression/run_test.pl -quick : !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 QUICK
 TAO/tests/Bug_1254_Regression/run_test.pl:
 TAO/tests/Bug_1330_Regression/run_test.pl:
-TAO/tests/Bug_1361_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !IRIX !QUICK
-TAO/tests/Bug_1361_Regression/run_test.pl -quick : !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !IRIX QUICK
+TAO/tests/Bug_1361_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !QUICK
+TAO/tests/Bug_1361_Regression/run_test.pl -quick : !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 QUICK
 TAO/tests/Bug_1476_Test/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
 TAO/tests/Bug_1482_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !QUICK !LynxOS
 TAO/tests/Bug_1482_Regression/run_test.pl -quick : !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST QUICK !LynxOS
-TAO/tests/Bug_1551_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !IRIX !OpenVMS_IA64Crash !QUICK
-TAO/tests/Bug_1551_Regression/run_test.pl -quick: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !IRIX !OpenVMS_IA64Crash QUICK
+TAO/tests/Bug_1551_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !OpenVMS_IA64Crash !QUICK
+TAO/tests/Bug_1551_Regression/run_test.pl -quick: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !OpenVMS_IA64Crash QUICK
 TAO/tests/Bug_1636_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_1639_Regression/run_test.pl: !CORBA_E_MICRO
 TAO/tests/Bug_1676_Regression/run_test.pl:
@@ -210,6 +210,7 @@ TAO/tests/Bug_4059_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/tests/Bug_4082_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_4097_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_4213_Regression/run_test.pl: !Win32
+TAO/tests/CORBA_is_nil/run_test.pl:
 TAO/tests/DIOP/run_test.pl: !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO
 TAO/tests/DIOP/run_test_ipv6.pl: IPV6 !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO
 TAO/tests/RTCORBA/Activate_Object_Multiple_ORBs/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
@@ -266,7 +267,7 @@ TAO/tests/File_IO/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/MT_Server/run_test.pl: !ST
 TAO/tests/No_Server_MT_Connect_Test/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Connect_Strategy_Test/run_test.pl:
-# DISABLED TAO/tests/Client_Leaks/run_test.pl: !VxWorks !ST !Tru64
+# DISABLED TAO/tests/Client_Leaks/run_test.pl: !VxWorks !ST
 TAO/tests/Server_Leaks/run_test.pl: !ANDROID
 TAO/tests/SHMIOP/run_test_collocated.pl: !ACE_FOR_TAO !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/SHMIOP/run_test.pl: !ACE_FOR_TAO !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
@@ -355,6 +356,8 @@ TAO/tests/Codec/run_test.pl
 TAO/tests/Bug_1693_Test/run_test.pl
 TAO/tests/IDL_Test/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO !ANDROID
 TAO/tests/ORB_init/run_test.pl:
+TAO/tests/ORB_portspan/run_test.pl -iiop:
+TAO/tests/ORB_portspan/run_test.pl -diop: !NO_DIOP
 TAO/tests/ORB_destroy/run_test.pl:
 TAO/tests/ORB_shutdown/run_test.pl:
 TAO/tests/Server_Port_Zero/run_test.pl:
@@ -431,9 +434,9 @@ TAO/tests/Transport_Cache_Manager/run_test.pl
 TAO/tests/UNKNOWN_Exception/run_test.pl:
 TAO/tests/Native_Exceptions/run_test.pl:
 TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
-TAO/tests/Sequence_Iterators/run_test.pl:
 TAO/tests/Sequence_Unit_Tests/run_test.pl:
 TAO/tests/Typedef_String_Array/run_test.pl:
+TAO/tests/GIOP_Fragments/Big_String_Sequence/run_test.pl: !FIXED_BUGS_ONLY
 TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl: !CORBA_E_MICRO
 TAO/tests/CodeSets/simple/run_test.pl: !GIOP10 !STATIC
 TAO/tests/Hang_Shutdown/run_test.pl: !ST !ACE_FOR_TAO
@@ -508,3 +511,5 @@ TAO/DevGuideExamples/ValueTypes/Bank/run_test.pl: !MINIMUM !CORBA_E_MICRO
 TAO/DevGuideExamples/AMH/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
 TAO/DevGuideExamples/AMH_AMI/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
 TAO/tests/IDLv4/annotations/run_test.pl
+TAO/tests/IDLv4/explicit_ints/run_test.pl
+TAO/tests/AST_Unit_Tests/run_test.pl

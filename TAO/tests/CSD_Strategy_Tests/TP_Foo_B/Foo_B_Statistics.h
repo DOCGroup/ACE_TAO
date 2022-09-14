@@ -8,7 +8,6 @@
 class CSD_TP_Foo_B_Export Foo_B_Statistics
 {
   public:
-
     enum In_Value_Type
     {
       FOO_B_STAT_NONE,
@@ -33,7 +32,6 @@ class CSD_TP_Foo_B_Export Foo_B_Statistics
     bool actual_vs_expected();
 
 private:
-
     unsigned num_clients_;
     unsigned num_collcated_clients_;
 

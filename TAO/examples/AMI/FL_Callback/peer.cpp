@@ -56,7 +56,7 @@ public:
   Worker (CORBA::ORB_ptr orb);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The orb
@@ -157,7 +157,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting event loop\n"));
   this->orb_->run ();

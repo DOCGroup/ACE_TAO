@@ -36,7 +36,7 @@ Callback_i::Callback_i (int *request_count)
     (*this->request_count_)++;
 }
 
-Callback_i::~Callback_i (void)
+Callback_i::~Callback_i ()
 {
   (void) this->file_io_.close ();
 }
@@ -133,7 +133,7 @@ Callback_i::metadata (const Web_Server::Metadata_Type &metadata)
 }
 
 int
-Callback_i::metadata_received (void)
+Callback_i::metadata_received ()
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
@@ -144,7 +144,7 @@ Callback_i::metadata_received (void)
 }
 
 int
-Callback_i::content_received (void)
+Callback_i::content_received ()
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
@@ -221,7 +221,7 @@ Callback_i::get_viewer (char *viewer,
 }
 
 int
-Callback_i::spawn_viewer (void)
+Callback_i::spawn_viewer ()
 {
   char viewer[BUFSIZ];
 
@@ -264,7 +264,7 @@ Callback_i::spawn_viewer (void)
 }
 
 void
-Callback_i::deactivate (void)
+Callback_i::deactivate ()
 {
   // Get the POA used when activating the Reply Handler object.
   PortableServer::POA_var poa = this->_default_POA ();

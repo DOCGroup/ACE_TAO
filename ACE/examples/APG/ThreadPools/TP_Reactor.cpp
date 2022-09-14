@@ -111,7 +111,7 @@ reactor_event_hook (ACE_Reactor *)
 class ServerTP : public ACE_Task_Base
 {
 public:
-  virtual int svc (void)
+  virtual int svc ()
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Running the event loop\n")));

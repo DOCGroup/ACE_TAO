@@ -66,7 +66,6 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
           if (i != 0)
             return -1;
-
         }
 
       result = ns.close ();

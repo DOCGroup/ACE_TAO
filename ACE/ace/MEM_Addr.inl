@@ -32,7 +32,7 @@ ACE_MEM_Addr::set (const ACE_TCHAR port_number[])
 
 /// Return the port number.
 ACE_INLINE u_short
-ACE_MEM_Addr::get_port_number (void) const
+ACE_MEM_Addr::get_port_number () const
 {
   ACE_TRACE ("ACE_MEM_Addr::get_port_number");
   return this->internal_.get_port_number ();
@@ -40,7 +40,7 @@ ACE_MEM_Addr::get_port_number (void) const
 
 /// Return the "dotted decimal" external address.
 ACE_INLINE const char *
-ACE_MEM_Addr::get_host_addr (void) const
+ACE_MEM_Addr::get_host_addr () const
 {
   ACE_TRACE ("ACE_MEM_Addr::get_host_addr");
   return this->external_.get_host_addr ();
@@ -56,20 +56,20 @@ ACE_MEM_Addr::get_host_addr (char *addr, int addr_size) const
 
 /// Return the 4-byte IP address, converting it into host byte order.
 ACE_INLINE ACE_UINT32
-ACE_MEM_Addr::get_ip_address (void) const
+ACE_MEM_Addr::get_ip_address () const
 {
   ACE_TRACE ("ACE_MEM_Addr::get_ip_address");
   return this->external_.get_ip_address ();
 }
 
 ACE_INLINE const ACE_INET_Addr &
-ACE_MEM_Addr::get_local_addr (void) const
+ACE_MEM_Addr::get_local_addr () const
 {
   return this->internal_;
 }
 
 ACE_INLINE const ACE_INET_Addr &
-ACE_MEM_Addr::get_remote_addr (void) const
+ACE_MEM_Addr::get_remote_addr () const
 {
   return this->external_;
 }

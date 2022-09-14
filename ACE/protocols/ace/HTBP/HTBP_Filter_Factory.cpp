@@ -7,7 +7,6 @@
 #include "ace/Log_Msg.h"
 
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE::HTBP::Filter_Factory::Filter_Factory ()

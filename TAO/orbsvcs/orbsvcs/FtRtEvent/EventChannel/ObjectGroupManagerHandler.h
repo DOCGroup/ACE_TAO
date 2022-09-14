@@ -25,20 +25,20 @@ public:
 
   virtual void start_excep (::Messaging::ExceptionHolder * excep_holder);
 
-  virtual void create_group (void);
+  virtual void create_group ();
 
   virtual void create_group_excep (::Messaging::ExceptionHolder * excep_holder);
 
-  virtual void add_member (void);
+  virtual void add_member ();
 
   virtual void add_member_excep (::Messaging::ExceptionHolder * excep_holder);
 
-  virtual void set_state (void);
+  virtual void set_state ();
 
   virtual void set_state_excep (::Messaging::ExceptionHolder * excep_holder);
 private:
   ACE_Auto_Event& evt_;
-  ACE_Atomic_Op< TAO_SYNCH_MUTEX, int > num_backups_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> num_backups_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

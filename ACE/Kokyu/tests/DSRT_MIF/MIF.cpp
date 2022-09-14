@@ -46,7 +46,6 @@ struct mif_scheduler_traits
 class MyTask : public ACE_Task_Base
 {
 public:
-
   MyTask (ACE_Barrier& bar,
           Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* dispatcher,
           mif_scheduler_traits::QoSDescriptor_t& qos,
@@ -58,7 +57,7 @@ public:
      exec_duration_ (exec_duration)
   {}
 
-  int svc (void);
+  int svc ();
 
  private:
   ACE_Barrier& barrier_;
@@ -68,7 +67,7 @@ public:
   int exec_duration_;
 };
 
-int MyTask::svc (void)
+int MyTask::svc ()
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);

@@ -29,7 +29,7 @@ public:
   be_visitor_module_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_module_ch (void);
+  ~be_visitor_module_ch ();
 
   /// visit module. We provide code for this method in the derived class
   virtual int visit_module (be_module *node);

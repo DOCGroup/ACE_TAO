@@ -39,12 +39,11 @@ class TAO_ServerRequest;
 class TAO_ZIOP_Export TAO_ZIOP_Loader : public TAO_ZIOP_Adapter
 {
 public:
-
   /// Constructor
-  TAO_ZIOP_Loader (void);
+  TAO_ZIOP_Loader ();
 
   /// Destructor
-  virtual ~TAO_ZIOP_Loader (void);
+  virtual ~TAO_ZIOP_Loader ();
 
   virtual bool decompress (ACE_Data_Block **db, TAO_Queued_Data &qd, TAO_ORB_Core &orb_core);
 
@@ -58,13 +57,12 @@ public:
   virtual void load_policy_validators (TAO_Policy_Validator &validator);
 
   /// Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 
   /// Converts compressor ID to a compressor name.
   static const char * ziop_compressorid_name (::Compression::CompressorId st);
 
 private:
-
   /// Set to true after init is called.
   bool initialized_;
 

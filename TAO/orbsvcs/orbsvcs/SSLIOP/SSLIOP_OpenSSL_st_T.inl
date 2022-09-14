@@ -103,7 +103,7 @@ TAO::SSLIOP::OpenSSL_st_var<T>::operator= (T const & st)
 }
 
 template <typename T> ACE_INLINE T const *
-TAO::SSLIOP::OpenSSL_st_var<T>::operator-> (void) const
+TAO::SSLIOP::OpenSSL_st_var<T>::operator-> () const
 {
   return this->st_;
 }
@@ -127,7 +127,7 @@ TAO::SSLIOP::OpenSSL_st_var<T>::operator T &()
 }
 
 template <typename T> ACE_INLINE T *
-TAO::SSLIOP::OpenSSL_st_var<T>::in (void) const
+TAO::SSLIOP::OpenSSL_st_var<T>::in () const
 {
   return this->st_;
 }
@@ -156,7 +156,7 @@ TAO::SSLIOP::OpenSSL_st_var<T>::_retn (void)
 }
 
 template <typename T> ACE_INLINE T *
-TAO::SSLIOP::OpenSSL_st_var<T>::ptr (void) const
+TAO::SSLIOP::OpenSSL_st_var<T>::ptr () const
 {
   return this->st_;
 }

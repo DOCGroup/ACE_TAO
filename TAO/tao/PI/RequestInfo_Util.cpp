@@ -13,7 +13,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Dynamic::ParameterList *
-TAO_RequestInfo_Util::make_parameter_list (void)
+TAO_RequestInfo_Util::make_parameter_list ()
 {
   Dynamic::ParameterList *parameter_list = 0;
   ACE_NEW_THROW_EX (parameter_list,
@@ -30,7 +30,7 @@ TAO_RequestInfo_Util::make_parameter_list (void)
 }
 
 Dynamic::ExceptionList *
-TAO_RequestInfo_Util::make_exception_list (void)
+TAO_RequestInfo_Util::make_exception_list ()
 {
   Dynamic::ExceptionList *exception_list = 0;
   ACE_NEW_THROW_EX (exception_list,
@@ -47,7 +47,7 @@ TAO_RequestInfo_Util::make_exception_list (void)
 }
 
 Dynamic::ContextList *
-TAO_RequestInfo_Util::make_context_list (void)
+TAO_RequestInfo_Util::make_context_list ()
 {
   Dynamic::ContextList *context_list = 0;
   ACE_NEW_THROW_EX (context_list,
@@ -64,7 +64,7 @@ TAO_RequestInfo_Util::make_context_list (void)
 }
 
 Dynamic::RequestContext *
-TAO_RequestInfo_Util::make_request_context (void)
+TAO_RequestInfo_Util::make_request_context ()
 {
   Dynamic::RequestContext *request_context = 0;
   ACE_NEW_THROW_EX (request_context,

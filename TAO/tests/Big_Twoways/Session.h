@@ -26,18 +26,18 @@ public:
            CORBA::ULong peer_count);
 
   /// Run one of the experiment threads
-  int svc (void);
+  int svc ();
 
   // = The skeleton methods
   virtual void start (const Test::Session_List &other_sessions);
 
   virtual Test::Payload* echo_payload (const Test::Payload &the_payload);
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
 protected:
   /// Protected destructor, call _remove_ref() to delete
-  virtual ~Session (void);
+  virtual ~Session ();
 
 private:
   /// Helper function used to report any problems and destroy local
@@ -45,10 +45,10 @@ private:
   void terminate (CORBA::Boolean success);
 
   /// Return 1 if all the work in this session has been completed
-  int more_work (void) const;
+  int more_work () const;
 
   /// Validate all the connections
-  void validate_connections (void);
+  void validate_connections ();
 
 private:
   /// Synchronize the internal state

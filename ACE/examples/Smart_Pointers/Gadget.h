@@ -22,7 +22,7 @@ class Gadget
 {
 public:
   /// Destructor.
-  virtual ~Gadget (void);
+  virtual ~Gadget ();
 
   /// Add a new part to the gadget. The gadget automatically takes shared
   /// responsibility for the ownership of the part object since we are passing

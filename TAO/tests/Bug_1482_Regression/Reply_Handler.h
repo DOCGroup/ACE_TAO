@@ -18,7 +18,6 @@ public:
   void next_prime_excep (::Messaging::ExceptionHolder * excep_holder);
 
 private:
-
   CORBA::ORB_var orb_;
 };
 

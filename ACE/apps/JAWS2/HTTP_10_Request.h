@@ -8,21 +8,19 @@
 class JAWS_HTTP_10_Request : public HTTP_Request, public HTTP_HCodes
 {
 public:
+  JAWS_HTTP_10_Request ();
+  ~JAWS_HTTP_10_Request ();
 
-  JAWS_HTTP_10_Request (void);
-  ~JAWS_HTTP_10_Request (void);
+  int type () const;
+  const char * method () const;
+  const char * uri () const;
+  const char * version () const;
 
-  int type (void) const;
-  const char * method (void) const;
-  const char * uri (void) const;
-  const char * version (void) const;
-
-  const char * path (void) const;
+  const char * path () const;
   void path (const char *);
   void set_status (int);
 
 private:
-
   char *path_;
 };
 

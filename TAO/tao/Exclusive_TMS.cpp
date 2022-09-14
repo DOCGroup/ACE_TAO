@@ -9,11 +9,11 @@ TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport),
     request_id_generator_ (0),
     request_id_ (0),
-    rd_ (0)
+    rd_ (nullptr)
 {
 }
 
-TAO_Exclusive_TMS::~TAO_Exclusive_TMS (void)
+TAO_Exclusive_TMS::~TAO_Exclusive_TMS ()
 {
 }
 
@@ -21,7 +21,7 @@ TAO_Exclusive_TMS::~TAO_Exclusive_TMS (void)
 // invocation. We can actually return a predecided ULong, since we
 // allow only one invocation over this connection at a time.
 CORBA::ULong
-TAO_Exclusive_TMS::request_id (void)
+TAO_Exclusive_TMS::request_id ()
 {
   ++this->request_id_generator_;
 
@@ -58,9 +58,9 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
 }
 
 bool
-TAO_Exclusive_TMS::has_request (void)
+TAO_Exclusive_TMS::has_request ()
 {
-  return this->rd_ != 0;
+  return this->rd_ != nullptr;
 }
 
 int
@@ -125,17 +125,17 @@ TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
 }
 
 bool
-TAO_Exclusive_TMS::idle_after_send (void)
+TAO_Exclusive_TMS::idle_after_send ()
 {
   // if there is no reply dispatcher (possible in case of AMI requests)
   // release the transport now
-  if (this->rd_ != 0)
+  if (this->rd_ != nullptr)
     {
       return false;
     }
   else
     {
-      if (this->transport_ != 0)
+      if (this->transport_ != nullptr)
         {
           // let WS know we're finished
           this->transport_->wait_strategy ()->finished_request ();
@@ -147,12 +147,12 @@ TAO_Exclusive_TMS::idle_after_send (void)
 }
 
 bool
-TAO_Exclusive_TMS::idle_after_reply (void)
+TAO_Exclusive_TMS::idle_after_reply ()
 {
   // Irrespective of whether we are successful or not we need to
   // return true. If *this* class is not successful in idling the
   // transport no one can.
-  if (this->transport_ != 0)
+  if (this->transport_ != nullptr)
   {
     // let WS know we're finished
     this->transport_->wait_strategy ()->finished_request ();
@@ -164,9 +164,9 @@ TAO_Exclusive_TMS::idle_after_reply (void)
 }
 
 void
-TAO_Exclusive_TMS::connection_closed (void)
+TAO_Exclusive_TMS::connection_closed ()
 {
-  if (this->rd_ != 0)
+  if (this->rd_ != nullptr)
     this->rd_->connection_closed ();
 }
 

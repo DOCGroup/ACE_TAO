@@ -31,7 +31,7 @@ public:
   be_visitor_operation_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_ch (void);
+  ~be_visitor_operation_ch ();
 
   /// visit operation.
   virtual int visit_operation (be_operation *node);

@@ -26,7 +26,7 @@ TAO_Table_Adapter::TAO_Table_Adapter (TAO_ORB_Core &orb_core)
 {
 }
 
-TAO_Table_Adapter::~TAO_Table_Adapter (void)
+TAO_Table_Adapter::~TAO_Table_Adapter ()
 {
   delete this->lock_;
 }
@@ -43,7 +43,7 @@ TAO_Table_Adapter::create_lock (TAO_SYNCH_MUTEX &thread_lock)
 }
 
 void
-TAO_Table_Adapter::open (void)
+TAO_Table_Adapter::open ()
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
   TAO_IOR_Table_Impl *impl = 0;
@@ -69,7 +69,7 @@ TAO_Table_Adapter::check_close (int)
 }
 
 int
-TAO_Table_Adapter::priority (void) const
+TAO_Table_Adapter::priority () const
 {
   return static_cast<int> (TAO_DEFAULT_ADAPTER_REGISTRY_SIZE);
 }
@@ -89,13 +89,13 @@ TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
 }
 
 const char *
-TAO_Table_Adapter::name (void) const
+TAO_Table_Adapter::name () const
 {
   return "IORTable";
 }
 
 CORBA::Object_ptr
-TAO_Table_Adapter::root (void)
+TAO_Table_Adapter::root ()
 {
   return CORBA::Object::_duplicate (this->root_.in());
 }
@@ -117,7 +117,6 @@ TAO_Table_Adapter::create_collocated_object (TAO_Stub *stub,
                                      stub->is_collocated (),
                                      stub->collocated_servant ()),
                       CORBA::Object::_nil ());
-
     }
 
   return result;
@@ -190,7 +189,7 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
 
 // ****************************************************************
 
-TAO_Table_Adapter_Factory::TAO_Table_Adapter_Factory (void)
+TAO_Table_Adapter_Factory::TAO_Table_Adapter_Factory ()
 {
 }
 

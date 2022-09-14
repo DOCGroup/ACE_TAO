@@ -79,7 +79,6 @@ interface later_user
             inout later inoutarg,
             out later outarg);
 
-
   // Not a clash with the C++ keyword because they are case sensitive,
   // but the Arg_Traits<> specialization parameter (ACE_InputCDR::to_boolean)
   // needs the unaliased type name to work.
@@ -258,5 +257,24 @@ module Rec_Arg_Traits
   interface derived : Rec_Arg_Traits::base
   {
     void remove_task (in plan_stub_type listener);
+  };
+};
+
+// Test to validate that the generated code is compilable
+// when we have an argument `call`
+module call_test
+{
+  interface iTest
+  {
+    void do_op (in string call);
+  };
+};
+
+// Test that using an attribut call is working correctly
+module call_attribute
+{
+  interface iBar
+  {
+    attribute string call;
   };
 };

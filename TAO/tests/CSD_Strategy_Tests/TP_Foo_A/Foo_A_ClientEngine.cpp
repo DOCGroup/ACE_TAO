@@ -20,7 +20,7 @@ Foo_A_ClientEngine::~Foo_A_ClientEngine()
 
 
 bool
-Foo_A_ClientEngine::execute(void)
+Foo_A_ClientEngine::execute()
 {
   // Make sure the connection is established before making
   // remote invocations.

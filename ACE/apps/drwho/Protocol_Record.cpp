@@ -6,7 +6,7 @@
 
 Drwho_Node Protocol_Record::drwho_node_;
 
-Protocol_Record::~Protocol_Record (void)
+Protocol_Record::~Protocol_Record ()
 {
   if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
@@ -21,7 +21,7 @@ Protocol_Record::~Protocol_Record (void)
     }
 }
 
-Protocol_Record::Protocol_Record (void)
+Protocol_Record::Protocol_Record ()
   : key_name1_ (0),
     key_name2_ (0),
     drwho_list_ (0),
@@ -50,7 +50,7 @@ Protocol_Record::Protocol_Record (const char *kn1,
 }
 
 const char *
-Protocol_Record::get_login (void)
+Protocol_Record::get_login ()
 {
   return this->key_name1_;
 }
@@ -63,13 +63,13 @@ Protocol_Record::set_login (const char *str)
 }
 
 const char *
-Protocol_Record::get_real (void)
+Protocol_Record::get_real ()
 {
   return this->key_name2_;
 }
 
 const char *
-Protocol_Record::get_host (void)
+Protocol_Record::get_host ()
 {
   return this->key_name1_;
 }
@@ -89,7 +89,7 @@ Protocol_Record::set_real (const char *str)
 }
 
 Drwho_Node *
-Protocol_Record::get_drwho_list (void)
+Protocol_Record::get_drwho_list ()
 {
   return this->drwho_list_;
 }

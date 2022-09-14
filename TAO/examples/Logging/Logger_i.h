@@ -31,7 +31,7 @@ public:
   Logger_i (const char* name);
 
   /// destructor
-  virtual ~Logger_i (void);
+  virtual ~Logger_i ();
 
   /// Writes the <log_rec> to the standard output.
   virtual void log (const Logger::Log_Record &log_rec);
@@ -82,10 +82,10 @@ class Logger_Factory_i : public virtual POA_Logger_Factory
 {
 public:
   /// Constructor.
-  Logger_Factory_i (void);
+  Logger_Factory_i ();
 
   /// Destructor.
-  ~Logger_Factory_i (void);
+  ~Logger_Factory_i ();
 
   /**
    * This function returns a logger with name <name>. If <name> is

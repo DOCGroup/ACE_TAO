@@ -85,7 +85,7 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
 public:
   friend class Active_Pid_Setter;
 
-  ImR_Activator_i (void);
+  ImR_Activator_i ();
 
   void start_server (const char* name,
                      const char* cmdline,
@@ -96,18 +96,18 @@ public:
 
   CORBA::Boolean still_alive (CORBA::Long pid);
 
-  void shutdown(void);
+  void shutdown();
 
   /// Initialize the Server state - parsing arguments and waiting.
   int init (Activator_Options& opts);
 
   /// Cleans up any state created by init*.
-  int fini (void);
+  int fini ();
 
   int handle_timeout (const ACE_Time_Value &, const void *tok);
 
   /// Runs the orb.
-  int run (void);
+  int run ();
 
   /// Shutdown the orb.
   void shutdown (bool signaled);
@@ -124,7 +124,7 @@ private:
 
   bool still_running_i (const char *name, pid_t& pid);
 
-  bool in_upcall (void);
+  bool in_upcall ();
 
 private:
   typedef ACE_Unbounded_Set<ACE_CString> UniqueServerList;

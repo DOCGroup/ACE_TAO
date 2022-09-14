@@ -22,7 +22,6 @@ namespace ACE
 {
   namespace HTTPS
   {
-
     template <ACE_SYNCH_DECL>
     Session_T<ACE_SYNCH_USE>::Session_T (bool keep_alive
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)

@@ -19,7 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/Servant_Location.h"
-#include "ace/Atomic_Op.h"
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,13 +33,13 @@ namespace TAO
        : public ServantRetentionStrategy
     {
     public:
-      ServantRetentionStrategyNonRetain (void);
+      ServantRetentionStrategyNonRetain ();
 
       virtual void strategy_init (TAO_Root_POA *poa);
 
-      virtual void strategy_cleanup(void);
+      virtual void strategy_cleanup();
 
-      CORBA::ULong waiting_servant_deactivation (void) const;
+      CORBA::ULong waiting_servant_deactivation () const;
 
       virtual
       PortableServer::ObjectId *
@@ -86,7 +86,7 @@ namespace TAO
         const PortableServer::ObjectId &system_id,
         CORBA::Short &priority);
 
-      virtual void deactivate_all_objects (void);
+      virtual void deactivate_all_objects ();
 
       virtual PortableServer::ObjectId *servant_to_user_id (
         PortableServer::Servant servant);
@@ -123,7 +123,7 @@ namespace TAO
 
     protected:
       TAO_Root_POA *poa_;
-      ACE_Atomic_Op<TAO_SYNCH_MUTEX,ACE_UINT32> sys_id_count_;
+      std::atomic<uint32_t> sys_id_count_;
     };
   }
 }

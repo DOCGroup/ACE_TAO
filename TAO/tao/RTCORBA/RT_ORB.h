@@ -46,15 +46,14 @@ class TAO_Thread_Pool_Manager;
  */
 class TAO_RTCORBA_Export TAO_Named_RT_Mutex_Manager
 {
-
 public:
   /// Constructor.
-  TAO_Named_RT_Mutex_Manager (void);
+  TAO_Named_RT_Mutex_Manager ();
 
   /// Destructor.
-  ~TAO_Named_RT_Mutex_Manager (void);
+  ~TAO_Named_RT_Mutex_Manager ();
 
-  RTCORBA::Mutex_ptr create_mutex (void);
+  RTCORBA::Mutex_ptr create_mutex ();
 
   void destroy_mutex (RTCORBA::Mutex_ptr the_mutex);
 
@@ -64,7 +63,6 @@ public:
   RTCORBA::Mutex_ptr open_named_mutex (const char * name);
 
 private:
-
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
   /// Hash map for named RT Mutexes
   ACE_Hash_Map_Manager_Ex<
@@ -92,7 +90,6 @@ class TAO_RTCORBA_Export TAO_RT_ORB
     public ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_RT_ORB (TAO_ORB_Core *orb_core,
               TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
@@ -104,7 +101,7 @@ public:
    * consistant priority inheritance/piority ceiling semantics
    * can be guaranteed.
    */
-  virtual RTCORBA::Mutex_ptr create_mutex (void);
+  virtual RTCORBA::Mutex_ptr create_mutex ();
 
   /**
    * Destroy a mutex.  Currently this is a no-op since RTCORBA::Mutex
@@ -211,7 +208,7 @@ public:
    * to the server.
    */
   virtual RTCORBA::PrivateConnectionPolicy_ptr
-  create_private_connection_policy (void);
+  create_private_connection_policy ();
 
   /**
    * Create a ServerProtocolPolicy instance to select and configure
@@ -228,10 +225,10 @@ public:
   create_client_protocol_policy (const RTCORBA::ProtocolList & protocols);
 
   /// Reference to our creating ORB Core.
-  TAO_ORB_Core *orb_core (void) const;
+  TAO_ORB_Core *orb_core () const;
 
   /// Get the Thread Pool Manager.
-  TAO_Thread_Pool_Manager &tp_manager (void) const;
+  TAO_Thread_Pool_Manager &tp_manager () const;
 
   /**
    * This method changes the scheduling policy of the calling thread
@@ -251,13 +248,11 @@ public:
   static int modify_thread_scheduling_policy (CORBA::ORB_ptr orb);
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_RT_ORB (void);
+  virtual ~TAO_RT_ORB ();
 
 protected:
-
   /// Reference to our creating ORB Core.
   TAO_ORB_Core * const orb_core_;
 

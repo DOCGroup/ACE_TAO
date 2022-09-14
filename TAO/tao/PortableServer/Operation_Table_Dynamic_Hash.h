@@ -49,7 +49,7 @@ public:
                             ACE_Allocator *alloc);
 
   /// Destructor
-  ~TAO_Dynamic_Hash_OpTable (void);
+  ~TAO_Dynamic_Hash_OpTable ();
 
   /// See the documentation in the base class for details.
   virtual int bind (const char *opname,

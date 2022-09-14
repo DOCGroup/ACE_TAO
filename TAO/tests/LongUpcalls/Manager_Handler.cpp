@@ -9,7 +9,7 @@ Manager_Handler::Manager_Handler (Test::Manager_ptr manager,
 }
 
 void
-Manager_Handler::start_workers (void)
+Manager_Handler::start_workers ()
 {
   try
     {

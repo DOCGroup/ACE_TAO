@@ -39,7 +39,6 @@ typedef ACE_Utils::Auto_Functor<
         TAO_EC_Supplier_Proxy_Disconnector;
 
 
-
 /**
  * @struct TAO_EC_Consumer_Proxy_Disconnect_Functor
  *

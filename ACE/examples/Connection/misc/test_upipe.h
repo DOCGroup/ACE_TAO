@@ -24,7 +24,7 @@ public:
       return 0;
     }
 
-  virtual int svc (void)
+  virtual int svc ()
     {
       ACE_TRACE ("Server_Service::svc");
 
@@ -57,7 +57,7 @@ public:
       return this->activate (THR_DETACHED | THR_NEW_LWP);
     }
 
-  virtual int svc (void)
+  virtual int svc ()
     {
       ACE_TRACE ("Client_Service::svc");
       char buf[BUFSIZ];

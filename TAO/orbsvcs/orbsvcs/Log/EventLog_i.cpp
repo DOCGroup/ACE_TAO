@@ -17,7 +17,6 @@ TAO_EventLog_i::TAO_EventLog_i (CORBA::ORB_ptr orb,
     poa_(PortableServer::POA::_duplicate(poa)),
     log_poa_(PortableServer::POA::_duplicate(log_poa))
 {
-
   // Create an instance of the event channel.
   TAO_CEC_EventChannel_Attributes attr (this->poa_.in(),
                                         this->poa_.in());
@@ -48,7 +47,6 @@ TAO_EventLog_i::copy (DsLogAdmin::LogId &id)
   this->copy_attributes (log.in ());
 
   return log._retn ();
-
 }
 
 DsLogAdmin::Log_ptr
@@ -64,12 +62,11 @@ TAO_EventLog_i::copy_with_id (DsLogAdmin::LogId id)
   this->copy_attributes (log.in ());
 
   return log._retn ();
-
 }
 
 
 void
-TAO_EventLog_i::destroy (void)
+TAO_EventLog_i::destroy ()
 {
   // Send event to indicate the log has been deleted.
   notifier_->object_deletion (logid_);
@@ -85,7 +82,7 @@ TAO_EventLog_i::destroy (void)
 }
 
 void
-TAO_EventLog_i::activate (void)
+TAO_EventLog_i::activate ()
 {
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
   this->event_channel_->for_consumers ();
@@ -97,13 +94,13 @@ TAO_EventLog_i::activate (void)
 
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-TAO_EventLog_i::for_consumers (void)
+TAO_EventLog_i::for_consumers ()
 {
   return this->event_channel_->for_consumers ();
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
-TAO_EventLog_i::for_suppliers (void)
+TAO_EventLog_i::for_suppliers ()
 {
   return this->event_channel_->for_suppliers ();
 }

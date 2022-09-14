@@ -24,12 +24,10 @@
 #include "ace/Pipe.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-ACE_Pipe::dump (void) const
+ACE_Pipe::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Pipe::dump");
@@ -93,17 +91,19 @@ ACE_Pipe::open (int buffer_size)
 # endif /* ACE_WIN32 */
 
   // Bind listener to any port and then find out what the port was.
-  if (acceptor.open (local_any) == -1
-      || acceptor.get_local_addr (my_addr) == -1)
-    result = -1;
+  if (acceptor.open (local_any) == -1 || acceptor.get_local_addr (my_addr) == -1)
+    {
+      result = -1;
+    }
   else
     {
-      ACE_INET_Addr sv_addr (my_addr.get_port_number (),
-                             ACE_LOCALHOST);
+      ACE_INET_Addr sv_addr (my_addr.get_port_number (), ACE_LOCALHOST);
 
       // Establish a connection within the same process.
       if (connector.connect (writer, sv_addr) == -1)
-        result = -1;
+        {
+          result = -1;
+        }
       else if (acceptor.accept (reader) == -1)
         {
           writer.close ();
@@ -264,7 +264,7 @@ ACE_Pipe::open (ACE_HANDLE handles[2])
 
 // Do nothing...
 
-ACE_Pipe::ACE_Pipe (void)
+ACE_Pipe::ACE_Pipe ()
 {
   ACE_TRACE ("ACE_Pipe::ACE_Pipe");
 
@@ -290,7 +290,7 @@ ACE_Pipe::ACE_Pipe (ACE_HANDLE read,
 }
 
 int
-ACE_Pipe::close (void)
+ACE_Pipe::close ()
 {
   ACE_TRACE ("ACE_Pipe::close");
 
@@ -300,12 +300,12 @@ ACE_Pipe::close (void)
 }
 
 int
-ACE_Pipe::close_read (void)
+ACE_Pipe::close_read ()
 {
   return this->close_handle (0);
 }
 
-int ACE_Pipe::close_write (void)
+int ACE_Pipe::close_write ()
 {
   return this->close_handle (1);
 }

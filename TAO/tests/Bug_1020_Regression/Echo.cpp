@@ -6,7 +6,6 @@
 #include "Echo.h"
 
 
-
 Echo::Echo(CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))
 {

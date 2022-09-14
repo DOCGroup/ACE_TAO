@@ -39,24 +39,24 @@ class TAO_BIDIRGIOP_Export TAO_BiDirGIOP_Loader : public TAO_BiDir_Adapter
 {
 public:
   /// Constructor
-  TAO_BiDirGIOP_Loader (void);
+  TAO_BiDirGIOP_Loader () = default;
 
   /// Destructor
-  virtual ~TAO_BiDirGIOP_Loader (void);
+  ~TAO_BiDirGIOP_Loader () override = default;
 
   /// Initialize the BiDIR loader hooks.
-  virtual int init (int argc,
-                    ACE_TCHAR* []);
+  int init (int argc,
+            ACE_TCHAR* []) override;
 
-  virtual void load_policy_validators (TAO_Policy_Validator &validator);
+  void load_policy_validators (TAO_Policy_Validator &validator) override;
 
   /// Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 
 private:
   /// Flag to indicate whether the BiDirGIOP library has been
   /// activated.
-  bool initialized_;
+  bool initialized_ {false};
 };
 
 static bool

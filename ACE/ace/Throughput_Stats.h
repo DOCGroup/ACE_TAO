@@ -44,7 +44,7 @@ class ACE_Export ACE_Throughput_Stats : public ACE_Basic_Stats
 {
 public:
   /// Constructor
-  ACE_Throughput_Stats (void);
+  ACE_Throughput_Stats () = default;
 
   /// Store one sample
   void sample (ACE_UINT64 throughput, ACE_UINT64 latency);
@@ -62,7 +62,7 @@ public:
                                ACE_UINT32 samples_count);
 private:
   /// The last throughput measurement.
-  ACE_UINT64 throughput_last_;
+  ACE_UINT64 throughput_last_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

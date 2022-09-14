@@ -59,7 +59,7 @@ TAO::PG_Group_Factory::PG_Group_Factory ()
 {
 }
 
-TAO::PG_Group_Factory::~PG_Group_Factory (void)
+TAO::PG_Group_Factory::~PG_Group_Factory ()
 {
   for (Group_Map_Iterator it = this->group_map_.begin ();
     it != this->group_map_.end ();
@@ -293,7 +293,6 @@ int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroup_ptr object_
 }
 
 
-
 PortableGroup::ObjectGroups *
 TAO::PG_Group_Factory::groups_at_location (
     const PortableGroup::Location & the_location)
@@ -325,7 +324,7 @@ TAO::PG_Group_Factory::groups_at_location (
 }
 
 PortableGroup::ObjectGroups *
-TAO::PG_Group_Factory::all_groups (void)
+TAO::PG_Group_Factory::all_groups ()
 {
   Group_Map & group_map = this->get_group_map ();
   CORBA::ULong const upper_limit = static_cast<CORBA::ULong> (group_map.current_size ());
@@ -359,7 +358,6 @@ TAO::PG_Group_Factory::set_object_group_storable_factory (
   ACE_NEW_THROW_EX (this->list_store_,
                     TAO::PG_Group_List_Store (*this->storable_factory_),
                     CORBA::NO_MEMORY ());
-
 }
 
 TAO::PG_Group_Factory::Group_Map &
@@ -430,7 +428,6 @@ TAO::PG_Group_Factory::get_group_map ()
             }
 
           this->groups_read_ = true;
-
         }
 
     }

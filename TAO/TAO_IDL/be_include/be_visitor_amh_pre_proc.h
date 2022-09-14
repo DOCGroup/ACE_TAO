@@ -37,7 +37,7 @@ private:
 public:
   be_visitor_amh_pre_proc (be_visitor_context *ctx);
 
-  virtual ~be_visitor_amh_pre_proc (void);
+  virtual ~be_visitor_amh_pre_proc ();
 
   virtual int visit_root (be_root *node);
 

@@ -27,14 +27,14 @@
 // Number of iterations for the performance tests.
 static int max_iterations = 30;
 
-typedef ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap> Thread_Timer_Queue;
+using Thread_Timer_Queue = ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap>;
 
 class Test_Handler;
 
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  virtual int svc (void)
+  int svc () override
   {
     while (--max_iterations > 0)
       {
@@ -72,7 +72,7 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void * = 0)
+  int open (void * = 0) override
   {
   //FUZZ: enable check_for_lack_ACE_OS
     if (ACE_Task<ACE_MT_SYNCH>::activate (THR_NEW_LWP, 1) != 0)
@@ -95,8 +95,8 @@ private:
 class Test_Handler : public ACE_Event_Handler
 {
 public:
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *arg) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Test_Handler::handle_timeout\n")));

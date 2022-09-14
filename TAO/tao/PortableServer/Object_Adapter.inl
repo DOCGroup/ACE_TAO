@@ -129,19 +129,19 @@ TAO_Object_Adapter::unbind_persistent_poa (const poa_name &folded_name,
 }
 
 ACE_INLINE TAO_Root_POA *
-TAO_Object_Adapter::root_poa (void) const
+TAO_Object_Adapter::root_poa () const
 {
   return this->root_;
 }
 
 ACE_INLINE TAO_ORB_Core &
-TAO_Object_Adapter::orb_core (void) const
+TAO_Object_Adapter::orb_core () const
 {
   return this->orb_core_;
 }
 
 ACE_INLINE TAO::Portable_Server::Non_Servant_Upcall *
-TAO_Object_Adapter::non_servant_upcall_in_progress (void) const
+TAO_Object_Adapter::non_servant_upcall_in_progress () const
 {
   return this->non_servant_upcall_in_progress_;
 }

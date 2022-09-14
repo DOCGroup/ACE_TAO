@@ -15,47 +15,47 @@ class Options
 {
 public:
   // Constructor.
-  Options (void);
+  Options ();
 
   // Destructor.
-  ~Options (void);
+  ~Options ();
 
   // Parse the command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   // Return the amount of time to sleep in order to implement the
   // proper transmission rates.
-  const ACE_Time_Value &sleep_time (void) const;
+  const ACE_Time_Value &sleep_time () const;
 
   // Port of the server.
-  u_short port (void) const;
+  u_short port () const;
 
   // Host of the server.
-  const ACE_TCHAR *host (void) const;
+  const ACE_TCHAR *host () const;
 
   // Number of threads.
-  size_t threads (void) const;
+  size_t threads () const;
 
   // String that shuts down the client/server.
-  const char *quit_string (void) const;
+  const char *quit_string () const;
 
   // Read from the appropriate location.
   ssize_t read (void *buf, size_t len, size_t &iterations);
 
   // Returns the length of the message to send.
-  size_t message_len (void) const;
+  size_t message_len () const;
 
   // Returns a pointer to the message.
-  const void *message_buf (void) const;
+  const void *message_buf () const;
 
   // Returns a pointer to the entry point into the thread that runs
   // the client test function.
-  ACE_THR_FUNC thr_func (void);
+  ACE_THR_FUNC thr_func ();
 
 private:
   // Initialize the message we're sending to the user and set up the
   // barrier.
-  int init (void);
+  int init ();
 
   // Performs the shared behavior of the oneway and twoway client
   // tests.

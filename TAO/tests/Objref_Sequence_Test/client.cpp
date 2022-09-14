@@ -33,9 +33,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
-
-
   try
     {
       CORBA::ORB_var orb  =
@@ -106,7 +103,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Calling shutdown\n"));
       server->shutdown ();
-
     }
   catch (const CORBA::Exception& ex)
     {

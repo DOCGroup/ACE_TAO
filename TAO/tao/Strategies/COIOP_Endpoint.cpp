@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #include "tao/Strategies/COIOP_Endpoint.h"
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
@@ -25,16 +24,11 @@ TAO_COIOP_Endpoint::TAO_COIOP_Endpoint (const ACE_Utils::UUID& uuid)
 {
 }
 
-TAO_COIOP_Endpoint::TAO_COIOP_Endpoint (void)
+TAO_COIOP_Endpoint::TAO_COIOP_Endpoint ()
   : TAO_Endpoint (TAO_TAG_COIOP_PROFILE),
     uuid_ (),
     next_ (0)
 {
-}
-
-TAO_COIOP_Endpoint::~TAO_COIOP_Endpoint (void)
-{
-
 }
 
 int
@@ -54,13 +48,13 @@ TAO_COIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 }
 
 TAO_Endpoint *
-TAO_COIOP_Endpoint::next (void)
+TAO_COIOP_Endpoint::next ()
 {
   return 0;
 }
 
 TAO_Endpoint *
-TAO_COIOP_Endpoint::duplicate (void)
+TAO_COIOP_Endpoint::duplicate ()
 {
   TAO_COIOP_Endpoint *endpoint = 0;
 
@@ -84,7 +78,7 @@ TAO_COIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 CORBA::ULong
-TAO_COIOP_Endpoint::hash (void)
+TAO_COIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
     return this->hash_val_;

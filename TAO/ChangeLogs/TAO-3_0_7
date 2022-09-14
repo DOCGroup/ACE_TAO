@@ -1,0 +1,391 @@
+commit 97bae51bbcde61f7d389441b3f7fac9e29534c9a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 10 11:29:38 2022 +0200
+
+    Use default
+    
+        * TAO/tao/Strategies/OC_Endpoint_Selector_Factory.cpp:
+        * TAO/tao/Strategies/OC_Endpoint_Selector_Factory.h:
+        * TAO/tao/Strategies/SCIOP_Endpoint.cpp:
+        * TAO/tao/Strategies/SCIOP_Endpoint.h:
+        * TAO/tao/Strategies/SCIOP_Factory.cpp:
+        * TAO/tao/Strategies/SCIOP_Factory.h:
+        * TAO/tao/Strategies/SHMIOP_Connector.cpp:
+        * TAO/tao/Strategies/SHMIOP_Connector.h:
+        * TAO/tao/Strategies/UIOP_Endpoint.cpp:
+        * TAO/tao/Strategies/UIOP_Endpoint.h:
+
+commit 73d0ce5aa15fcf0e27124fd4e9aa6e756e6bc9de
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 23 09:28:22 2022 +0200
+
+    Make use of ACE_FALLTHROUGH
+
+commit 17fc02df28233df6df48daa00f62a89b6629ef4b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 23 09:25:51 2022 +0200
+
+    Make use of default
+    
+        * TAO/DevGuideExamples/BiDirectionalGIOP/callback_i.cpp:
+        * TAO/DevGuideExamples/BiDirectionalGIOP/callback_i.h:
+        * TAO/DevGuideExamples/BiDirectionalGIOP/simple_i.cpp:
+        * TAO/DevGuideExamples/BiDirectionalGIOP/simple_i.h:
+
+commit 2693429c1335ccf6e1c1b39f338f67c2739a38a8
+Merge: 9a54764694a 58b937ceafa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 19 19:06:09 2022 +0200
+
+    Merge pull request #1822 from jwillemsen/jwi-readmetypos
+    
+    Fixed some typos in readmes
+
+commit 58b937ceafa3563b358599bd19519db204bece3d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 19 19:00:55 2022 +0200
+
+    Fixed some typos in readmes
+
+commit 9a54764694aaf7c0830d916e85f3de8e90a252f9
+Merge: 5f445eac3b0 b2f2da90051
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 19 17:16:46 2022 +0200
+
+    Merge pull request #1821 from jwillemsen/jwi-default
+
+commit b2f2da90051267c26b4165ace3ffb9c40acfb536
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 19 09:20:01 2022 +0200
+
+    Removed redundant void
+    
+        * TAO/tao/EndpointPolicy/IIOPEndpointValue_i.h:
+
+commit 9adf6e6eac693a65add0a9bee486c8ced1547023
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 19 09:19:50 2022 +0200
+
+    Make constructor default
+    
+        * TAO/tests/DII_Deferred_Transient/Hello.cpp:
+        * TAO/tests/DII_Deferred_Transient/Hello.h:
+
+commit e11fca73066699aa01c4f820841e4725d25d3e86
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Tue Apr 12 12:37:45 2022 -0500
+
+    More tests update
+
+commit e8a34fc500cb689215ad5500c951de06f864469b
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Fri Apr 8 12:34:55 2022 -0500
+
+    Update orbsvcs tests
+
+commit 8085c8f0443371a61fc5d30464b3a9dfb4211693
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Thu Apr 7 16:56:03 2022 -0500
+
+    More updates to TAO/tests
+
+commit 44f313a104c4a76fa6e83239ec07066df6703355
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Thu Apr 7 11:26:20 2022 -0500
+
+    Fixing tests
+
+commit 9d3af324cdb11fe2812acf55dbc1274ee0e87225
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 6 13:41:46 2022 +0200
+
+    Fixed typo
+    
+        * TAO/docs/ORBEndpoint.html:
+
+commit 0bfdaeb95608f3652cfe499e1960988c71476f30
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Mar 11 10:35:21 2022 -0600
+
+    tao_idl: avoid undefined behavior (adding to nullptr)
+
+commit f42ac731ce93d0963450f4027e5d43049665e2d1
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Tue Feb 15 10:57:43 2022 -0600
+
+    Update TAO/NEWS
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit d758d7eb994dd9bdeb2b02a1ae7746acab83ba7f
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Tue Feb 15 10:39:02 2022 -0600
+
+    Update TAO/TAO_IDL/driver/drv_preproc.cpp
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit 694663ce656d2b56729588175983d1340d807a29
+Merge: 9de890f6631 8ae8c457638
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Feb 15 10:38:04 2022 -0600
+
+    Merge remote-tracking branch 'upstream/master' into igtd/tao-idl-open
+
+commit 9de890f6631c296b98eb9cd3a3b425b11c5ddc60
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Feb 14 12:25:30 2022 -0600
+
+    Update TAO/NEWS
+
+commit ac7122d8366f187afb732482b3301a4b1d769d1e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Feb 14 12:21:49 2022 -0600
+
+    drv_preproc.cpp: Replace fstat with stat
+
+commit d1d0d3ce399e1191c5d05251127074bd60081cdc
+Author: Clayton Calabrese <calabreseclayton@gmail.com>
+Date:   Fri Feb 11 14:13:31 2022 -0600
+
+    Add news file for PRs 1772 and 1778
+
+commit f86b6106d9a4d122555a47e860b7f83284d4a31b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Feb 11 03:03:01 2022 -0600
+
+    Replace -1 with ACE_INVALID_HANDLE
+
+commit 0a279b9e711450549ac5ac11025617174329edd0
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Feb 10 21:35:19 2022 -0600
+
+    Fix tao_idl File Errors
+    
+    1. The error message for failing to open an IDL file didn't have the
+       filename in it. This was because the `ACE_ERROR` for it was using a
+       `%m` when it should have been using a `%p`.
+       It looks like https://github.com/DOCGroup/ACE_TAO/pull/1420/commits/faab6830cf4ecf67b452183dba712caae7996be4
+       went one change too far.
+    
+    2. First brought up here: https://github.com/objectcomputing/OpenDDS/issues/3308
+       Inputting a directory to tao_idl results in an empty file that causes
+       a weird error latter. Changed it to ensure the file is a regular file
+       using `fstat`.
+
+commit 0d11899fc5c8ecdd52e12ff98324f085109e329f
+Merge: ab053fad273 89a599e2c4d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 7 17:02:22 2022 +0100
+
+    Merge pull request #1781 from jwillemsen/jwi-doxygen4
+    
+    Upgrade doxygen config files to the latest version of doxygen
+
+commit 89a599e2c4d2d3fe65c1dc4078c2e3a910bff326
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 7 14:30:57 2022 +0100
+
+    Upgrade doxygen config files to the latest version of doxygen
+
+commit 68b5a13864501e5a5f18c2fc842e9623771d4cd3
+Author: Clayton Calabrese <calabreseclayton@gmail.com>
+Date:   Wed Feb 2 16:01:44 2022 -0600
+
+    Fix unused variable warning for first_quote variable
+
+commit fa5ca0765970ed21788207f1920e76c48111650a
+Merge: ff69a8d6d27 a85885d41a8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 2 20:58:59 2022 +0100
+
+    Merge pull request #1777 from jwillemsen/jwi-copydis
+    
+    Use deleted copy/assign and use nullptr
+
+commit ff69a8d6d272e741957ff60f34c4428885de33b2
+Merge: e4b72cc9a0f ae0a6df7c06
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 2 16:04:30 2022 +0100
+
+    Merge pull request #1776 from jwillemsen/jwi-examplecleanup
+    
+    Minor cleanup
+
+commit 13ba18411204bf0525f4d1badea98892e5973529
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 2 14:57:46 2022 +0100
+
+    Remove redundant whitespace
+    
+        * TAO/examples/Simple/README:
+
+commit f3858b42237e52396c002309f5a6cd5f7eb56fa4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 2 14:57:11 2022 +0100
+
+    Initialize members
+    
+        * TAO/examples/Simple/Simple_util.cpp:
+        * TAO/examples/Simple/Simple_util.h:
+
+commit ae0a6df7c06ede20e909164f97f94bfe9eeb342e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 2 12:23:09 2022 +0100
+
+    Minor cleanup
+    
+        * TAO/examples/DeveloperGuideExamples.txt:
+        * TAO/examples/Event_Comm/Consumer_Handler.cpp:
+        * TAO/examples/Event_Comm/Consumer_Handler.h:
+        * TAO/examples/Event_Comm/Consumer_Input_Handler.cpp:
+        * TAO/examples/Event_Comm/Consumer_Input_Handler.h:
+        * TAO/examples/Event_Comm/Event_Comm_i.h:
+        * TAO/examples/Event_Comm/Notifier_Handler.cpp:
+        * TAO/examples/Event_Comm/Notifier_Handler.h:
+        * TAO/examples/Event_Comm/consumer.cpp:
+        * TAO/examples/Event_Comm/supplier.cpp:
+        * TAO/examples/Event_Comm/supplier.h:
+        * TAO/examples/Simple/Simple_util.cpp:
+        * TAO/examples/Simple/Simple_util.h:
+        * TAO/examples/Simple/chat/Broadcaster_i.cpp:
+        * TAO/examples/Simple/chat/Broadcaster_i.h:
+        * TAO/examples/Simple/echo/Echo_Client_i.cpp:
+        * TAO/examples/Simple/echo/Echo_Client_i.h:
+        * TAO/examples/Simple/echo/Echo_i.cpp:
+        * TAO/examples/Simple/echo/Echo_i.h:
+
+commit e4b72cc9a0fcc5e0f4449eef2598d84df37715b2
+Merge: 219b2a2a8a3 f62e96a54a9
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Feb 1 14:57:43 2022 -0600
+
+    Merge pull request #1772 from ClaytonCalabrese/resolve_space_in_path
+    
+    TAO_IDL: Fix Space In Path Handling
+
+commit c3204073d36bb7bacf54f56f153782d1de2944d7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 1 19:26:07 2022 +0100
+
+    Remove redundant void
+    
+        * TAO/examples/Callback_Quoter/Consumer_Handler.cpp:
+
+commit b4794216ec8b22c4c3d278507dfab5448c31e44b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 1 18:58:56 2022 +0100
+
+    Fixed codacy issues
+    
+        * TAO/examples/Callback_Quoter/Consumer_Handler.h:
+        * TAO/examples/Callback_Quoter/Consumer_i.cpp:
+        * TAO/examples/Callback_Quoter/Consumer_i.h:
+        * TAO/examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+        * TAO/examples/Callback_Quoter/Notifier_Input_Handler.h:
+        * TAO/examples/Callback_Quoter/Supplier_i.h:
+
+commit cb82b05379998df92de22061ab5c49aa464107a7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 1 17:25:03 2022 +0100
+
+    Removed redundant virtual
+    
+        * TAO/examples/Callback_Quoter/Supplier_Timer_Handler.h:
+
+commit 64f5c16be32cf4a9fb14ac76d37531c53d47246b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 1 17:11:25 2022 +0100
+
+    Cleanup the callback quoter example
+    
+        * TAO/examples/Callback_Quoter/Consumer.idl:
+        * TAO/examples/Callback_Quoter/Consumer_Handler.cpp:
+        * TAO/examples/Callback_Quoter/Consumer_Handler.h:
+        * TAO/examples/Callback_Quoter/Consumer_Input_Handler.cpp:
+        * TAO/examples/Callback_Quoter/Consumer_Input_Handler.h:
+        * TAO/examples/Callback_Quoter/Consumer_Signal_Handler.cpp:
+        * TAO/examples/Callback_Quoter/Consumer_Signal_Handler.h:
+        * TAO/examples/Callback_Quoter/Consumer_i.cpp:
+        * TAO/examples/Callback_Quoter/Consumer_i.h:
+        * TAO/examples/Callback_Quoter/Notifier.idl:
+        * TAO/examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+        * TAO/examples/Callback_Quoter/Notifier_Input_Handler.h:
+        * TAO/examples/Callback_Quoter/Notifier_i.cpp:
+        * TAO/examples/Callback_Quoter/Notifier_i.h:
+        * TAO/examples/Callback_Quoter/README:
+        * TAO/examples/Callback_Quoter/Supplier_Timer_Handler.cpp:
+        * TAO/examples/Callback_Quoter/Supplier_Timer_Handler.h:
+        * TAO/examples/Callback_Quoter/Supplier_i.cpp:
+        * TAO/examples/Callback_Quoter/Supplier_i.h:
+        * TAO/examples/Callback_Quoter/consumer.cpp:
+        * TAO/examples/Callback_Quoter/notifier.cpp:
+        * TAO/examples/Callback_Quoter/supplier.cpp:
+
+commit 124cb3c16e5b3b9e766bc3d30677d5a86ae57b06
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 1 14:06:55 2022 +0100
+
+    Removed redundant newline
+    
+        * TAO/examples/Buffered_AMI/client.cpp:
+        * TAO/examples/Buffered_Oneways/client.cpp:
+
+commit f62e96a54a95d0ae48b4addbf266278be33a62d8
+Author: Clayton Calabrese <calabreseclayton@gmail.com>
+Date:   Thu Jan 27 15:40:20 2022 -0600
+
+    Change to consistently concatonate -I with the rest of the arg. Remove outdated comment.
+
+commit fa93d8146fc7823ea6960c342a7be95c0c9a97bf
+Author: Clayton Calabrese <calabreseclayton@gmail.com>
+Date:   Tue Jan 25 17:34:56 2022 -0600
+
+    remove unused variable has_space. Update if to remove first_quote.
+
+commit 98dcdf61448837f074787eaf47096f05bb2ade28
+Merge: 8d5a781cb31 44e18307771
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 25 20:29:57 2022 +0100
+
+    Merge pull request #1773 from jwillemsen/jwi-logging
+    
+    Logging changes, updated bczar instructions
+
+commit 44e1830777113a8ada369d5d39bd667c1f95ab95
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 25 18:23:45 2022 +0100
+
+    Logging changes, fixed a typo in the documentation, layout change
+    
+        * TAO/docs/Options.html:
+        * TAO/tao/IIOP_Acceptor.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/Strategies/SCIOP_Acceptor.cpp:
+
+commit 08ab454bd3ae971b575f389b64ed7ba42e5c9dda
+Author: Clayton Calabrese <calabreseclayton@gmail.com>
+Date:   Mon Jan 24 18:22:56 2022 -0600
+
+    Fix an issue where TAO_IDL would not properly handle spaces in paths
+
+commit 341eb88adc828eef2bbdc5468785224c5315d1b2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 21 13:41:15 2022 +0100
+
+    Remove duplicate semi-colon
+
+commit 45c001e0f6affa2fba6f4698e9adb60036599dc1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 20 09:52:54 2022 +0100
+
+    Make x.0.6 public
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * ACE/html/README:
+        * TAO/NEWS:

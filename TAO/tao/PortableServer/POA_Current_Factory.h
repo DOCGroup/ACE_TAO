@@ -28,7 +28,6 @@ class TAO_PortableServer_Export TAO_POA_Current_Factory
   : public TAO_Object_Loader
 {
 public:
-
   /// Creates a PICurrent and returns it.
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,

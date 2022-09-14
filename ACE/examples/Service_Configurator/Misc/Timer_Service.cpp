@@ -3,8 +3,7 @@
 #include "ace/Log_Msg.h"
 
 
-
-Timer_Service_1::Timer_Service_1 (void)
+Timer_Service_1::Timer_Service_1 ()
 {
   ACE_OS::strcpy (this->name_,
                   ACE_TEXT ("Timer_Service_1"));
@@ -105,13 +104,13 @@ Timer_Service_1::handle_close (ACE_HANDLE,
   return 0;
 }
 
-Timer_Service_2::Timer_Service_2 (void)
+Timer_Service_2::Timer_Service_2 ()
 {
   ACE_OS::strcpy (this->name_,
                   ACE_TEXT ("Timer_Service_2"));
 }
 
-Timer_Service_3::Timer_Service_3 (void)
+Timer_Service_3::Timer_Service_3 ()
 {
   ACE_OS::strcpy (this->name_,
                   ACE_TEXT ("Timer_Service_3"));

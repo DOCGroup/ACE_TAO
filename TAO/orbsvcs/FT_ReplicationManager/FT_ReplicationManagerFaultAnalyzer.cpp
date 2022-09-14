@@ -366,7 +366,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
   const PortableGroup::Location & location,
   int & object_is_primary)
 {
-
   // To determine if this was a primary that faulted:
   // Get the TagFTGroupTaggedComponent from the IOGR and search
   // for the primary, using the TAO_FT_IOGR_Property helper class.
@@ -669,7 +668,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
   if ((result == 0) &&
       (fault_event_desc.membership_style == FT::MEMB_INF_CTRL))
   {
-
     PortableGroup::ObjectGroup_var new_object_group;
     result = this->remove_failed_member (
         the_object_group.in(),

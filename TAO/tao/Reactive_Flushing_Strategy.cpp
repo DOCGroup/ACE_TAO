@@ -34,7 +34,7 @@ TAO_Reactive_Flushing_Strategy::flush_message (TAO_Transport *transport,
         {
           result = orb_core->run (max_wait_time, 1);
 
-          if (max_wait_time != 0) {
+          if (max_wait_time != nullptr) {
             if (*max_wait_time <= ACE_Time_Value::zero) {
               errno = ETIME;
               result = -1;
@@ -63,7 +63,7 @@ TAO_Reactive_Flushing_Strategy::flush_transport (TAO_Transport *transport
           if (orb_core->run (max_wait_time, 1) == -1)
             return -1;
 
-          if (max_wait_time != 0) {
+          if (max_wait_time != nullptr) {
             if (*max_wait_time <= ACE_Time_Value::zero) {
               errno = ETIME;
               return -1;

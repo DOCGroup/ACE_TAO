@@ -54,7 +54,7 @@ class Accept_Handler : public ACE_Event_Handler
 {
 public:
   Accept_Handler (ACE_SOCK_Acceptor& a);
-  virtual ~Accept_Handler (void);
+  virtual ~Accept_Handler ();
   virtual int handle_input (ACE_HANDLE );
 private:
   ACE_SOCK_Acceptor& acceptor_;

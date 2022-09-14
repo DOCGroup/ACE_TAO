@@ -30,17 +30,17 @@
 class HTTP_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  HTTP_Handler (void);
+  HTTP_Handler ();
   HTTP_Handler (const char * path);
 
   /// Open hook.
   virtual int open (void *);
 
   /// Entry points defined by the abstract Svc_Handler.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Accessor to the file being fetched.
-  const char *filename (void) const;
+  const char *filename () const;
 
 private:
   char request_[BUFSIZ];

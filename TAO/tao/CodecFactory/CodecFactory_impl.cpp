@@ -85,7 +85,6 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
 
   switch (encoding_format)
     {
-
       // @@ MSVC 6 gets confused and thinks that
       //    IOP::ENCODING_CDR_ENCAPS is not a constant, so its actual
       //    value (0) is used instead.
@@ -115,7 +114,6 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
 
     default:
       throw IOP::CodecFactory::UnknownEncoding ();
-
     }
 
   return codec;

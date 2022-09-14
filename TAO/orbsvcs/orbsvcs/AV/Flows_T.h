@@ -30,17 +30,17 @@ class TAO_FDev :
 {
 public:
   /// default constructor
-  TAO_FDev (void);
+  TAO_FDev ();
 
   /// constructor taking a flowname.
   TAO_FDev (const char *flowname);
 
   /// Destructor..
-  ~TAO_FDev (void);
+  ~TAO_FDev ();
 
   /// set/get the flowname.
   /// create a flow producer object.
-  const char *flowname (void);
+  const char *flowname ();
   void flowname (const char *flowname);
   AVStreams::FlowProducer_ptr create_producer (AVStreams::FlowConnection_ptr the_requester,
                                                        AVStreams::QoS & the_qos,

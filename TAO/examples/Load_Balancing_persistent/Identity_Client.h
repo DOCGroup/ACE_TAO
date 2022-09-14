@@ -40,18 +40,17 @@
 class Identity_Client
 {
 public:
-
   /// Default constructor.
-  Identity_Client (void);
+  Identity_Client ();
 
   /// Destructor.
-  ~Identity_Client (void);
+  ~Identity_Client ();
 
   /// Initializes <orb_manager_>, and parses commandline arguments.
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// See TITLE.
-  int run (void);
+  int run ();
 
 private:
   /// Parses the commandline arguments.

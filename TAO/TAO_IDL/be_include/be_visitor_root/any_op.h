@@ -28,7 +28,7 @@ class be_visitor_root_any_op : public be_visitor_root
 public:
   be_visitor_root_any_op (be_visitor_context *ctx);
 
-  ~be_visitor_root_any_op (void);
+  ~be_visitor_root_any_op ();
 
   virtual int visit_root (be_root *node);
 };

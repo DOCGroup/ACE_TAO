@@ -25,11 +25,11 @@ public:
   /// ctor
   Test_i (PortableServer::POA_ptr poa);
 
-  CORBA::Long instance_count (void);
+  CORBA::Long instance_count ();
 
-  void destroy (void);
+  void destroy ();
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
   /// The default POA used for this object

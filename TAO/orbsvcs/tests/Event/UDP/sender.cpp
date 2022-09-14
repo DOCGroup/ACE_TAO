@@ -226,7 +226,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Now we can destroy the POA, the flags mean that we want to
       // wait until the POA is really destroyed
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
 
       // Finally destroy the ORB
       orb->destroy ();

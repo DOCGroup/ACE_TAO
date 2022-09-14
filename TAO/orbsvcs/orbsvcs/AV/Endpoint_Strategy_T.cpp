@@ -17,14 +17,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // ----------------------------------------------------------------------
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy (void)
+TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy ()
    :  stream_endpoint_a_servant_(0), stream_endpoint_b_servant_(0), vdev_servant_(0),
       media_ctrl_servant_(0)
 {
 }
 
 template <class T_StreamEndpoint, class T_VDev, class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy (void)
+TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy ()
 {
   // Do not allow exceptions to escape from the destructor
   try
@@ -58,7 +58,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_
 // Create, activate the objects with the POA
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate (void)
+TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate ()
 {
   try
     {
@@ -84,7 +84,6 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 char *
 TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_with_poa (PortableServer::Servant servant)
 {
-
   PortableServer::ObjectId_var id =
     this->poa_->activate_object (servant);
 
@@ -101,7 +100,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
 // Activate VDev into the POA
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_vdev (void)
+TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_vdev ()
 {
   try
     {
@@ -132,7 +131,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
 // Activate the media_controller
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_mediactrl (void)
+TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_mediactrl ()
 {
   try
     {
@@ -150,7 +149,6 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
 
      this->vdev_->define_property ("Related_MediaCtrl",
                                    anyval);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -203,14 +201,14 @@ TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_m
 
 //Constructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_A (void)
+TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_A ()
 {
 }
 
 
 // Destructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_A (void)
+TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_A ()
 {
 }
 
@@ -239,17 +237,15 @@ TAO_AV_Endpoint_Reactive_Strategy_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
   stream_endpoint = AVStreams::StreamEndPoint_A::_duplicate( this->stream_endpoint_a_.in() );
   vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
   return 0;
-
 }
 
 // Put the stream_endpoint into the POA
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_stream_endpoint (void)
+TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_stream_endpoint ()
 {
   try
     {
-
       // Use the bridge method
       if (this->make_stream_endpoint (this->stream_endpoint_a_servant_) == -1)
         return -1;
@@ -273,13 +269,13 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 
 // Constructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_B (void)
+TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_B ()
 {
 }
 
 // Destructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_B (void)
+TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_B ()
 {
 }
 
@@ -296,7 +292,7 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::ini
 // Activate stream_endpoint
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_stream_endpoint (void)
+TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_stream_endpoint ()
 {
   try
     {
@@ -397,7 +393,6 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 char *
 TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_with_poa (PortableServer::Servant servant)
 {
-
   PortableServer::ObjectId_var id =
     this->poa_->activate_object (servant);
 
@@ -458,7 +453,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects 
 // Bind to the namingservice
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::bind_to_naming_service (void)
+TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::bind_to_naming_service ()
 {
   try
     {
@@ -484,7 +479,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::bind_to_naming_se
 // register the vdev with the naming service
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (void)
+TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev ()
 {
   try
     {
@@ -592,7 +587,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::release_semapho
 // register the stream_endpoint with the naming service
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_stream_endpoint (void)
+TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_stream_endpoint ()
 {
   CORBA::Object_ptr stream_endpoint_obj = CORBA::Object::_nil ();
   try
@@ -657,7 +652,7 @@ TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_mediactrl (T_M
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::unbind_names (void)
+TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::unbind_names ()
 {
   // Remove the names from the naming service
   try

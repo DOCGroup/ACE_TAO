@@ -34,7 +34,7 @@ class be_visitor_template_export : public be_visitor_scope
 public:
   be_visitor_template_export (be_visitor_context *ctx);
 
-  virtual ~be_visitor_template_export (void);
+  virtual ~be_visitor_template_export ();
 
   virtual int visit_root (be_root *node);
 

@@ -14,18 +14,18 @@ Oneway_Buffering::receive_data (const Test::Payload &the_payload)
 }
 
 void
-Oneway_Buffering::flush (void)
+Oneway_Buffering::flush ()
 {
 }
 
 void
-Oneway_Buffering::sync (void)
+Oneway_Buffering::sync ()
 {
   this->admin_->flush ();
 }
 
 void
-Oneway_Buffering::shutdown (void)
+Oneway_Buffering::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

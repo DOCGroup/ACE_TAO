@@ -41,7 +41,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ConsumerAdmin :
 public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_ConsumerAdmin > Ptr;
   /// Constructor
-  TAO_Notify_ConsumerAdmin (void);
+  TAO_Notify_ConsumerAdmin ();
 
   /// Destructor
   virtual ~TAO_Notify_ConsumerAdmin ();
@@ -50,8 +50,8 @@ public:
   void init (TAO_Notify_EventChannel *ec);
 
   /// ServantBase refcount methods.
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
   virtual const char * get_admin_type_name () const;
 
@@ -65,7 +65,7 @@ public:
       size_t position);
 
   /// TAO_Notify_Container_T requires a destroy method
-  virtual void destroy (void);
+  virtual void destroy ();
 
 protected:
   TAO_Notify::Topology_Object *load_proxy (
@@ -80,23 +80,23 @@ protected:
                                               const CosNotification::QoSProperties & initial_qos);
 
   /// = CosNotifyChannelAdmin::ConsumerAdmin methods
-  virtual CosNotifyChannelAdmin::AdminID MyID (void);
+  virtual CosNotifyChannelAdmin::AdminID MyID ();
 
-  virtual ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel (void);
+  virtual ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel ();
 
-  virtual ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (void);
+  virtual ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator ();
 
-  virtual ::CosNotifyFilter::MappingFilter_ptr priority_filter (void);
+  virtual ::CosNotifyFilter::MappingFilter_ptr priority_filter ();
 
   virtual void priority_filter (CosNotifyFilter::MappingFilter_ptr priority_filter);
 
-  virtual ::CosNotifyFilter::MappingFilter_ptr lifetime_filter (void);
+  virtual ::CosNotifyFilter::MappingFilter_ptr lifetime_filter ();
 
   virtual void lifetime_filter (CosNotifyFilter::MappingFilter_ptr lifetime_filter);
 
-  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * pull_suppliers (void);
+  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * pull_suppliers ();
 
-  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * push_suppliers (void);
+  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * push_suppliers ();
 
   virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (CosNotifyChannelAdmin::ProxyID proxy_id);
 
@@ -108,7 +108,7 @@ protected:
   obtain_notification_push_supplier (CosNotifyChannelAdmin::ClientType ctype,
                                      CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
-  virtual ::CosNotification::QoSProperties * get_qos (void);
+  virtual ::CosNotification::QoSProperties * get_qos ();
 
   virtual void set_qos (const CosNotification::QoSProperties & qos);
 
@@ -124,18 +124,17 @@ protected:
 
   virtual ::CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter);
 
-  virtual ::CosNotifyFilter::FilterIDSeq * get_all_filters (void);
+  virtual ::CosNotifyFilter::FilterIDSeq * get_all_filters ();
 
-  virtual void remove_all_filters (void);
+  virtual void remove_all_filters ();
 
-  virtual ::CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (void);
+  virtual ::CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier ();
 
-  virtual ::CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void);
+  virtual ::CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier ();
 
 private:
-
   /// Release this object.
-  virtual void release (void);
+  virtual void release ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

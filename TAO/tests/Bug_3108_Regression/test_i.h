@@ -11,7 +11,7 @@ public:
 
   /// Test method.
   CORBA::Long test_method ();
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

@@ -2,7 +2,7 @@
 
 void Server_impl::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 Server_impl::Server_impl (CORBA::ORB_ptr orb)

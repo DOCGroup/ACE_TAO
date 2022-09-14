@@ -9,7 +9,6 @@
 #include "ace/Profile_Timer.h"
 
 
-
 static int
 run_event_loop (u_short port)
 {

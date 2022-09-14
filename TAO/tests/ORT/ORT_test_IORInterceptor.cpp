@@ -3,20 +3,20 @@
 
 #include "tao/ORB_Constants.h"
 
-ORT_test_IORInterceptor::ORT_test_IORInterceptor (void)
+ORT_test_IORInterceptor::ORT_test_IORInterceptor ()
   : establish_count_ (0),
     components_establish_count_ (0)
 {
 }
 
 char *
-ORT_test_IORInterceptor::name (void)
+ORT_test_IORInterceptor::name ()
 {
   return CORBA::string_dup ("ORT_IORInterceptor");
 }
 
 void
-ORT_test_IORInterceptor::destroy (void)
+ORT_test_IORInterceptor::destroy ()
 {
   ACE_ASSERT (this->establish_count_ > 0
               && this->components_establish_count_ > 0

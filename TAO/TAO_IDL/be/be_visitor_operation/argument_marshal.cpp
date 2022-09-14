@@ -19,16 +19,13 @@
 
 be_visitor_operation_argument_marshal::be_visitor_operation_argument_marshal (
     be_visitor_context
-    *ctx
-  )
+    *ctx)
   : be_visitor_operation_argument (ctx),
     last_arg_printed_ (be_visitor_operation_argument_marshal::TAO_ARG_NONE)
 {
 }
 
-be_visitor_operation_argument_marshal::~be_visitor_operation_argument_marshal (
-    void
-  )
+be_visitor_operation_argument_marshal::~be_visitor_operation_argument_marshal ()
 {
 }
 
@@ -37,7 +34,7 @@ be_visitor_operation_argument_marshal::pre_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_argument *arg = be_argument::narrow_from_decl (bd);
+  be_argument *arg = dynamic_cast<be_argument*> (bd);
 
   if (!arg)
     {
@@ -97,7 +94,7 @@ be_visitor_operation_argument_marshal::pre_process (be_decl *bd)
 int
 be_visitor_operation_argument_marshal::post_process (be_decl *bd)
 {
-  be_argument *arg = be_argument::narrow_from_decl (bd);
+  be_argument *arg = dynamic_cast<be_argument*> (bd);
 
   if (!arg)
     {
@@ -178,7 +175,7 @@ be_visitor_args_decl::visit_argument (be_argument *node)
   this->ctx_->node (node); // save the argument node
 
   // retrieve the type of the argument
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   return bt->accept (this);
 }
@@ -191,9 +188,9 @@ be_visitor_args_decl::visit_array (be_array *node)
 
   // retrieve the field node
   be_argument *f =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_args_decl::"
@@ -221,7 +218,7 @@ be_visitor_args_decl::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
           ACE_OS::sprintf (fname,
                            "%s::_%s",
@@ -275,6 +272,6 @@ be_visitor_args_decl::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }

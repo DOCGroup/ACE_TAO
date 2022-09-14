@@ -3,16 +3,12 @@
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Obchunk.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Obchunk)
 
 void
-ACE_Obchunk::dump (void) const
+ACE_Obchunk::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Obchunk::dump");

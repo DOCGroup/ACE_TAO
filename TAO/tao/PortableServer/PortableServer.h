@@ -27,7 +27,7 @@ class TAO_PortableServer_Export TAO_POA_Initializer
 {
 public:
   /// Used to force the initialization of the ORB code.
-  static int init (void);
+  static int init ();
 };
 
 static const int TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();

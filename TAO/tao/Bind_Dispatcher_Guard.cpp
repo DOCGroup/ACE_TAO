@@ -21,7 +21,7 @@ TAO_Bind_Dispatcher_Guard::TAO_Bind_Dispatcher_Guard (CORBA::ULong request_id,
     this->status_ = TAO_Bind_Dispatcher_Guard::NO_UNBIND;
 }
 
-TAO_Bind_Dispatcher_Guard::~TAO_Bind_Dispatcher_Guard (void)
+TAO_Bind_Dispatcher_Guard::~TAO_Bind_Dispatcher_Guard ()
 {
   // We try unbinding. If it works it works, else cant do much about
   // it..

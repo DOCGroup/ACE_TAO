@@ -37,21 +37,21 @@ class Gen_Perf : private ACE_Copy_Disabled
 {
 public:
   /// Constructor.
-  Gen_Perf (void);
+  Gen_Perf ();
 
   /// Destructor
-  ~Gen_Perf (void);
+  ~Gen_Perf ();
 
   /// Attempt to generate a perfect hash function.
-  int run (void);
+  int run ();
 
 private:
-  int open (void);
+  int open ();
   int change (List_Node *prior, List_Node *curr);
   int affects_prev (char c, List_Node *curr);
-  int compute_perfect_hash (void);
-  int compute_binary_search (void);
-  int compute_linear_search (void);
+  int compute_perfect_hash ();
+  int compute_binary_search ();
+  int compute_linear_search ();
   static int hash (List_Node *key_node);
   static int compute_disjoint_union (char *s1, char *s2, char *s3);
   static void sort_set (char *union_set, int len);

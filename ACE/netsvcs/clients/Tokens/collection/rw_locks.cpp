@@ -6,7 +6,6 @@
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
 
-
 static ACE_Token_Proxy *global_rlock;
 static ACE_Token_Proxy *global_wlock;
 
@@ -106,7 +105,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
           ignore_deadlock = 1;
           break;
         case 'u':
-        // usage: fallthrough
+          // usage same as unknown.
+          ACE_FALLTHROUGH;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "%n:\n"

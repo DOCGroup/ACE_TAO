@@ -19,13 +19,13 @@ class PeerObject
 {
 public:
   PeerObject (long ident, const char *name, PeerProcess * );
-  virtual ~PeerObject (void);
+  virtual ~PeerObject ();
 
   void add_invocation (Invocation *inv);
   void dump_detail (ostream &strm);
-  size_t num_invocations (void);
-  long ident (void);
-  ACE_CString &name (void);
+  size_t num_invocations ();
+  long ident ();
+  ACE_CString &name ();
 
 private:
   long ident_;

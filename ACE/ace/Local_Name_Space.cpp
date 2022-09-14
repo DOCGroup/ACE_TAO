@@ -7,7 +7,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_NS_String::~ACE_NS_String (void)
+ACE_NS_String::~ACE_NS_String ()
 {
   if (this->delete_rep_)
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -18,7 +18,7 @@ ACE_NS_String::~ACE_NS_String (void)
 }
 
 ACE_WCHAR_T *
-ACE_NS_String::fast_rep (void) const
+ACE_NS_String::fast_rep () const
 {
   ACE_TRACE ("ACE_NS_String::fast_rep");
   return this->rep_;
@@ -32,14 +32,14 @@ ACE_NS_String::operator ACE_NS_WString () const
 }
 
 size_t
-ACE_NS_String::len (void) const
+ACE_NS_String::len () const
 {
   ACE_TRACE ("ACE_NS_String::len");
   return this->len_;
 }
 
 char *
-ACE_NS_String::char_rep (void) const
+ACE_NS_String::char_rep () const
 {
   ACE_TRACE ("ACE_NS_String::char_rep");
   ACE_NS_WString w_string (this->rep_,
@@ -47,7 +47,7 @@ ACE_NS_String::char_rep (void) const
   return w_string.char_rep ();
 }
 
-ACE_NS_String::ACE_NS_String (void)
+ACE_NS_String::ACE_NS_String ()
   : len_ (0),
     rep_ (0),
     delete_rep_ (false)
@@ -125,14 +125,14 @@ ACE_NS_String::ACE_NS_String (ACE_WCHAR_T *dst,
 }
 
 u_long
-ACE_NS_String::hash (void) const
+ACE_NS_String::hash () const
 {
   return ACE::hash_pjw
     (reinterpret_cast<char *> (const_cast<ACE_WCHAR_T *> (this->rep_)),
      this->len_);
 }
 
-ACE_NS_Internal::ACE_NS_Internal (void)
+ACE_NS_Internal::ACE_NS_Internal ()
   : value_ (),
     type_ ()
 {
@@ -153,14 +153,14 @@ ACE_NS_Internal::operator == (const ACE_NS_Internal &s) const
 }
 
 ACE_NS_String
-ACE_NS_Internal::value (void)
+ACE_NS_Internal::value ()
 {
   ACE_TRACE ("ACE_NS_Internal::value");
   return this->value_;
 }
 
 const char *
-ACE_NS_Internal::type (void)
+ACE_NS_Internal::type ()
 {
   ACE_TRACE ("ACE_NS_Internal::type");
   return this->type_;

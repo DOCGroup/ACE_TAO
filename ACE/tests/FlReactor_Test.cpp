@@ -20,7 +20,6 @@
 
 
 
-
 #include "ace/FlReactor/FlReactor.h"
 #include "ace/Event_Handler.h"
 #include "ace/Acceptor.h"
@@ -45,13 +44,13 @@ public:
   Test_Window (int x, int y, int w, int h,
                const char * l = 0);
 
-  int sides (void) const;
+  int sides () const;
   void sides (int s);
-  void incr_sides (void);
+  void incr_sides ();
 
 private:
   /// from the Fl_Gl_Window...
-  virtual void draw (void);
+  virtual void draw ();
 
   int sides_;
 };
@@ -65,7 +64,7 @@ Test_Window::Test_Window (int x, int y,
 }
 
 int
-Test_Window::sides (void) const
+Test_Window::sides () const
 {
   return this->sides_;
 }
@@ -78,7 +77,7 @@ Test_Window::sides (int s)
 }
 
 void
-Test_Window::incr_sides (void)
+Test_Window::incr_sides ()
 {
   this->sides_++;
   if (this->sides_ > 10)
@@ -87,7 +86,7 @@ Test_Window::incr_sides (void)
 }
 
 void
-Test_Window::draw (void)
+Test_Window::draw ()
 {
   // the valid() property may be used to avoid reinitializing your
   // GL transformation for each redraw:

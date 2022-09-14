@@ -28,7 +28,7 @@ ACE_Future_Set<T>::ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *new_queue)
 }
 
 template <class T>
-ACE_Future_Set<T>::~ACE_Future_Set (void)
+ACE_Future_Set<T>::~ACE_Future_Set ()
 {
   // Detach ourselves from all remaining futures, if any, in our map.
   typename FUTURE_HASH_MAP::iterator iterator =

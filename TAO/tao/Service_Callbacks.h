@@ -51,15 +51,13 @@ namespace IOP
  * @brief An Abstract Base class for the hooks in the ORB.
  *
  * This class (would) define all the hooks that may be needed by
- * the ORB to override some of its default behaviour. The methods
+ * the ORB to override some of its default behavior. The methods
  * can be potentially used to call service level specific
  * processing that may be required.
  */
 class TAO_Export TAO_Service_Callbacks
 {
-
 public:
-
   enum Profile_Equivalence
   {
     EQUIVALENT,
@@ -67,9 +65,8 @@ public:
     DONT_KNOW
   };
 
-
   /// Dtor
-  virtual ~TAO_Service_Callbacks (void);
+  virtual ~TAO_Service_Callbacks ();
 
   /// Select the profile from MProfile as the needs of the services
   /// may be. Return the profile in @a pfile
@@ -78,7 +75,6 @@ public:
 
   /// Check whether @a obj is nil or not.
   virtual CORBA::Boolean object_is_nil (CORBA::Object_ptr obj);
-
 
   /// Check for equivalency of the two profiles
   virtual Profile_Equivalence is_profile_equivalent (const TAO_Profile *,

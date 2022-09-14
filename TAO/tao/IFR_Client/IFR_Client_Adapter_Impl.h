@@ -39,7 +39,7 @@ class TAO_IFR_CLIENT_Export TAO_IFR_Client_Adapter_Impl
   : public TAO_IFR_Client_Adapter
 {
 public:
-  virtual ~TAO_IFR_Client_Adapter_Impl (void);
+  virtual ~TAO_IFR_Client_Adapter_Impl ();
 
   virtual CORBA::Boolean interfacedef_cdr_insert (
       TAO_OutputCDR &cdr,
@@ -66,7 +66,7 @@ public:
 #endif /*TAO_HAS_MINIMUM_CORBA*/
 
   // Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 static int

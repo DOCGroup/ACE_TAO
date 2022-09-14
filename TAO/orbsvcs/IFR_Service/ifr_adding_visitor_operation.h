@@ -35,7 +35,7 @@ public:
   ifr_adding_visitor_operation (AST_Decl *scope);
 
   /// Destructor.
-  virtual ~ifr_adding_visitor_operation (void);
+  virtual ~ifr_adding_visitor_operation ();
 
   /// Visit an operation.
   virtual int visit_operation (AST_Operation *node);

@@ -9,7 +9,7 @@ public:
   virtual AnySeq *RunTest(const AnySeq &params);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void shutdown (void);
+  virtual void shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 private:
   CORBA::ORB_var orb_;
@@ -20,9 +20,9 @@ Test_impl::Test_impl (CORBA::ORB_ptr orb) : orb_ (CORBA::ORB::_duplicate (orb))
 }
 
 void
-Test_impl::shutdown(void)
+Test_impl::shutdown()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 AnySeq *Test_impl::RunTest(const AnySeq &params)
@@ -111,8 +111,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   return 0;
 }
-
-
 
 
 

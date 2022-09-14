@@ -33,7 +33,7 @@ public:
   be_visitor_attribute (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_attribute (void);
+  ~be_visitor_attribute ();
 
   /// visit attribute. We provide code for this method in the derived class
   virtual int visit_attribute (be_attribute *node);

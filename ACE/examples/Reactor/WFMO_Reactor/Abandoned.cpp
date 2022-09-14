@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 
 #if defined (ACE_WIN32)
@@ -18,8 +17,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Process_Mutex.h"
 #include "ace/Auto_Event.h"
-
-
 
 class Event_Handler : public ACE_Event_Handler
 {

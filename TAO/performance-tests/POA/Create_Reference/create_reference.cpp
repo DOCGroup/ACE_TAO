@@ -46,7 +46,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-set_rt_scheduling (void)
+set_rt_scheduling ()
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -170,7 +170,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1  // POA::create_reference_with_id
                             );
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

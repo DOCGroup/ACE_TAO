@@ -165,7 +165,7 @@ ACE_Noop_Token::renew (int, ACE_Time_Value *)
 }
 
 ACE_INLINE void
-ACE_Noop_Token::dump (void) const
+ACE_Noop_Token::dump () const
 {
 }
 

@@ -16,9 +16,9 @@
            ACE_thread_t thr_id);
 
     // = The skeleton methods
-    virtual char * get_string_again (void);
-    virtual char * get_string (void);
-    virtual void shutdown (void);
+    virtual char * get_string_again ();
+    virtual char * get_string ();
+    virtual void shutdown ();
 
 
   private:

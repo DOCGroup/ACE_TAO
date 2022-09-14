@@ -18,7 +18,7 @@ be_visitor_args::be_visitor_args (be_visitor_context *ctx)
 {
 }
 
-be_visitor_args::~be_visitor_args (void)
+be_visitor_args::~be_visitor_args ()
 {
 }
 
@@ -39,7 +39,7 @@ be_visitor_args::type_name (be_type *node,
                   '\0',
                   NAMEBUFSIZE);
 
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Use the typedefed name if that is the one
   // used in the IDL defn.
@@ -67,7 +67,7 @@ be_visitor_args::type_name (be_type *node,
 
 // Helper that returns the direction type of the argument
 AST_Argument::Direction
-be_visitor_args::direction (void)
+be_visitor_args::direction ()
 {
   if (this->fixed_direction_ != -1)
     {
@@ -77,7 +77,7 @@ be_visitor_args::direction (void)
   // Grab the argument node. We know that our context has stored the right
   // argument node.
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
   return arg->direction ();
 }
@@ -146,14 +146,14 @@ be_visitor_args::gen_pd_arg (be_predefined_type *node,
   const char *to_from = to_from_str.c_str ();
 
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
   const char *lname = arg->local_name ()->get_string ();
 
   switch (pt)
   {
     case AST_PredefinedType::PT_any:
       *os << any_deref;
-      // fallthrough
+      ACE_FALLTHROUGH;
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
       *os << lname << var_call;

@@ -23,9 +23,9 @@
 class Search_Struct
 {
 public:
-  Search_Struct (void);
-  virtual ~Search_Struct (void);
-  virtual int n_elems (void);
+  Search_Struct ();
+  virtual ~Search_Struct ();
+  virtual int n_elems ();
 
   virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN) = 0;

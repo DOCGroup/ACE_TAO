@@ -67,7 +67,7 @@ public:
 
   virtual ~Shared_Backing_Store();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// indicate the persistence mode for the repository
   virtual const ACE_TCHAR* repo_mode() const;
@@ -109,7 +109,7 @@ public:
   void gen_ior (char*& ft_imr_ior);
   void updates_available (const ImplementationRepository::UpdateInfoSeq& info,
                           bool missed);
-  void process_updates (void);
+  void process_updates ();
 
 protected:
   /// perform shared backing store specific initialization
@@ -136,7 +136,7 @@ protected:
   /// this ImR Locator's IOR
   char* locator_service_ior(const char* peer_ior) const;
 
-  int connect_replicas (void);
+  int connect_replicas ();
 
 private:
   /// map management helper functions
@@ -288,7 +288,6 @@ private:
     Update_Handler (Shared_Backing_Store *owner) : owner_ (owner) {}
     int handle_exception (ACE_HANDLE);
   } update_handler_;
-
 };
 
 #endif /* SHARED_BACKING_STORE_H */

@@ -6,7 +6,6 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   Server_i server;
 
   ACE_DEBUG ((LM_DEBUG,

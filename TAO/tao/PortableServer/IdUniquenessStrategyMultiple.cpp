@@ -13,7 +13,7 @@ namespace TAO
     }
 
     void
-    IdUniquenessStrategyMultiple::strategy_cleanup (void)
+    IdUniquenessStrategyMultiple::strategy_cleanup ()
     {
     }
 
@@ -28,7 +28,7 @@ namespace TAO
     }
 
     bool
-    IdUniquenessStrategyMultiple::allow_multiple_activations (void) const
+    IdUniquenessStrategyMultiple::allow_multiple_activations () const
     {
       return true;
     }

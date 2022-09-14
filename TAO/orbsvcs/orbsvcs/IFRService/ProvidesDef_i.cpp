@@ -12,18 +12,18 @@ TAO_ProvidesDef_i::TAO_ProvidesDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ProvidesDef_i::~TAO_ProvidesDef_i (void)
+TAO_ProvidesDef_i::~TAO_ProvidesDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_ProvidesDef_i::def_kind (void)
+TAO_ProvidesDef_i::def_kind ()
 {
   return CORBA::dk_Provides;
 }
 
 CORBA::Contained::Description *
-TAO_ProvidesDef_i::describe (void)
+TAO_ProvidesDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -33,7 +33,7 @@ TAO_ProvidesDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_ProvidesDef_i::describe_i (void)
+TAO_ProvidesDef_i::describe_i ()
 {
   CORBA::ComponentIR::ProvidesDescription pd;
   TAO_IFR_Desc_Utils<CORBA::ComponentIR::ProvidesDescription,
@@ -60,7 +60,7 @@ TAO_ProvidesDef_i::describe_i (void)
 }
 
 CORBA::InterfaceDef_ptr
-TAO_ProvidesDef_i::interface_type (void)
+TAO_ProvidesDef_i::interface_type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::InterfaceDef::_nil ());
 
@@ -70,7 +70,7 @@ TAO_ProvidesDef_i::interface_type (void)
 }
 
 CORBA::InterfaceDef_ptr
-TAO_ProvidesDef_i::interface_type_i (void)
+TAO_ProvidesDef_i::interface_type_i ()
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,

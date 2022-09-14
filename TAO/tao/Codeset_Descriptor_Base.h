@@ -34,7 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Codeset_Descriptor_Base
 {
 public:
-  virtual ~TAO_Codeset_Descriptor_Base (void);
+  virtual ~TAO_Codeset_Descriptor_Base ();
 
   virtual void ncs (const ACE_TCHAR *name) = 0;
   virtual void add_translator (const ACE_TCHAR *name) = 0;

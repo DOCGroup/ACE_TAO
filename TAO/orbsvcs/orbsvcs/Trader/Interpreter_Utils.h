@@ -83,7 +83,6 @@ class TAO_Sequence_Extracter_Base
 //   Static methods used by the TAO_Sequence_Extracter class.
 {
 public:
-
   static CORBA::TCKind sequence_type (CORBA::TypeCode* code);
   // Return the sequence element type for the sequence whose typecode
   // is <code>.

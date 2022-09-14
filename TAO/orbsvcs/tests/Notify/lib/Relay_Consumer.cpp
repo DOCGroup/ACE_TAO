@@ -1,7 +1,6 @@
 #include "Relay_Consumer.h"
 
 
-
 #include "LookupManager.h"
 
 TAO_Notify_Tests_Relay_Consumer::TAO_Notify_Tests_Relay_Consumer (ACE_CString& destination)
@@ -14,7 +13,7 @@ TAO_Notify_Tests_Relay_Consumer::~TAO_Notify_Tests_Relay_Consumer ()
 }
 
 void
-TAO_Notify_Tests_Relay_Consumer::connect (void)
+TAO_Notify_Tests_Relay_Consumer::connect ()
 {
   TAO_Notify_Tests_Direct_Consumer::connect ();
 

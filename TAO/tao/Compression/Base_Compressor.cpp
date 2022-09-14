@@ -15,20 +15,20 @@ namespace TAO
   }
 
   ::Compression::CompressorFactory_ptr
-  BaseCompressor::compressor_factory (void)
+  BaseCompressor::compressor_factory ()
   {
     return ::Compression::CompressorFactory::_duplicate (
       compressor_factory_);
   }
 
   ::Compression::CompressionLevel
-  BaseCompressor::compression_level (void)
+  BaseCompressor::compression_level ()
   {
     return compression_level_;
   }
 
   ::CORBA::ULongLong
-  BaseCompressor::compressed_bytes (void)
+  BaseCompressor::compressed_bytes ()
   {
     ::CORBA::ULongLong return_value = 0;
     {
@@ -39,7 +39,7 @@ namespace TAO
   }
 
   ::CORBA::ULongLong
-  BaseCompressor::uncompressed_bytes (void)
+  BaseCompressor::uncompressed_bytes ()
   {
     ::CORBA::ULongLong return_value = 0;
     {
@@ -50,14 +50,13 @@ namespace TAO
   }
 
   ::Compression::CompressionRatio
-  BaseCompressor::compression_ratio (void)
+  BaseCompressor::compression_ratio ()
   {
     ::Compression::CompressionRatio return_value = 0;
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       if (this->uncompressed_bytes_ > 0)
         {
-
           return_value =
             static_cast< ::Compression::CompressionRatio>
               ((::Compression::CompressionRatio) this->compressed_bytes_ / this->uncompressed_bytes_);

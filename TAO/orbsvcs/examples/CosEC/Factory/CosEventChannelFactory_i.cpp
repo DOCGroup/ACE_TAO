@@ -2,21 +2,12 @@
 #include "CosEventChannelFactory_i.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
-TAO_CosEventChannelFactory_i::TAO_CosEventChannelFactory_i (void)
+TAO_CosEventChannelFactory_i::TAO_CosEventChannelFactory_i ()
   :poa_ (PortableServer::POA::_nil ()),
    naming_ (CosNaming::NamingContext::_nil ())
 {
-}
-
-TAO_CosEventChannelFactory_i::~TAO_CosEventChannelFactory_i (void)
-{
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-              "in TAO_CosEventChannelFactory_i dtor"));
-#endif
-  // No-Op.
 }
 
 int
@@ -90,7 +81,7 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
                         TAO_CEC_EventChannel (attr, 0, 0),
                         CORBA::NO_MEMORY ());
 
-      auto_ptr <TAO_CEC_EventChannel> ec (impl);
+      std::unique_ptr <TAO_CEC_EventChannel> ec (impl);
 
       impl->activate ();
 
@@ -153,10 +144,8 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
 
 void
 TAO_CosEventChannelFactory_i::destroy
-(
- const char * channel_id,
- CORBA::Boolean unbind_from_naming_service
- )
+  (const char * channel_id,
+   CORBA::Boolean unbind_from_naming_service)
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
 
@@ -204,10 +193,7 @@ TAO_CosEventChannelFactory_i::destroy
 }
 
 CosEventChannelAdmin::EventChannel_ptr
-TAO_CosEventChannelFactory_i::find
-(
- const char * channel_id
- )
+TAO_CosEventChannelFactory_i::find(const char * channel_id)
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
 
@@ -232,10 +218,7 @@ TAO_CosEventChannelFactory_i::find
 }
 
 char*
-TAO_CosEventChannelFactory_i::find_channel_id
-(
- CosEventChannelAdmin::EventChannel_ptr channel
- )
+TAO_CosEventChannelFactory_i::find_channel_id(CosEventChannelAdmin::EventChannel_ptr channel)
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
 
@@ -254,4 +237,3 @@ TAO_CosEventChannelFactory_i::find_channel_id
 
   return str_return._retn ();
 }
-

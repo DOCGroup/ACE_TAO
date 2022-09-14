@@ -41,7 +41,7 @@ ACE_SV_Message_Queue::remove (void)
 }
 
 ACE_INLINE int
-ACE_SV_Message_Queue::get_id (void) const
+ACE_SV_Message_Queue::get_id () const
 {
   ACE_TRACE ("ACE_SV_Message_Queue::get_id");
   return this->internal_id_;

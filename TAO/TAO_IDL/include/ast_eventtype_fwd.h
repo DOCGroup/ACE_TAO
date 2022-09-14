@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef _AST_VALUETYPE_FWD_AST_EVENTTYPE_FWD_HH
 #define _AST_VALUETYPE_FWD_AST_EVENTTYPE_FWD_HH
 
@@ -12,14 +11,10 @@ public:
   AST_EventTypeFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~AST_EventTypeFwd (void);
+  virtual ~AST_EventTypeFwd ();
 
   // Cleanup function.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_EventTypeFwd);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);

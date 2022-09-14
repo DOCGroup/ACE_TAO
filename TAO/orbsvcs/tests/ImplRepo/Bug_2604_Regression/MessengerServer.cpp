@@ -111,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep(1);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Messenger server shutting down.\n")));
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
       orb->destroy ();
       return 0;
     }

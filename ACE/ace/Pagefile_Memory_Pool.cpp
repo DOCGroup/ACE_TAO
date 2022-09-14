@@ -19,8 +19,6 @@
 #include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1  */
 
-
-
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 #if !defined (ACE_HAS_WINCE)
 #define ACE_MAP_FILE(_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd)\
@@ -91,10 +89,6 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_sto
       && ACE_OS::strlen (this->backing_store_name_) < sizeof this->backing_store_name_)
       ACE_OS::strcat (this->backing_store_name_,
                       ACE_TEXT ("_"));
-}
-
-ACE_Pagefile_Memory_Pool::~ACE_Pagefile_Memory_Pool (void)
-{
 }
 
 void *
@@ -189,7 +183,7 @@ ACE_Pagefile_Memory_Pool::remap (void *addr)
 }
 
 int
-ACE_Pagefile_Memory_Pool::unmap (void)
+ACE_Pagefile_Memory_Pool::unmap ()
 {
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
   ACE_BASED_POINTER_REPOSITORY::instance ()->unbind

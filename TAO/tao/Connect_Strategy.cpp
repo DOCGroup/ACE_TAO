@@ -11,16 +11,11 @@ TAO_Connect_Strategy::TAO_Connect_Strategy (TAO_ORB_Core *orb_core)
 {
 }
 
-
-TAO_Connect_Strategy::~TAO_Connect_Strategy (void)
-{
-}
-
 int
 TAO_Connect_Strategy::wait (TAO_Connection_Handler *ch,
                             ACE_Time_Value *max_wait_time)
 {
-  if (ch == 0)
+  if (ch == nullptr)
     return -1;
 
   return this->wait_i (ch, ch->transport (), max_wait_time);
@@ -32,7 +27,7 @@ TAO_Connect_Strategy::wait (TAO_Transport *t, ACE_Time_Value *max_wait_time)
   // Basically the connection was EINPROGRESS, but before we could
   // wait for it some other thread detected a failure and cleaned up
   // the connection handler.
-  if (t == 0)
+  if (t == nullptr)
     return -1;
 
   return this->wait_i (t->connection_handler (), t, max_wait_time);

@@ -5,13 +5,13 @@
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 ACE_INLINE
-HTTP_SCode_Node::operator int (void) const
+HTTP_SCode_Node::operator int () const
 {
   return this->code_;
 }
 
 ACE_INLINE
-HTTP_SCode_Node::operator const char * (void) const
+HTTP_SCode_Node::operator const char * () const
 {
   return this->code_str_;
 }

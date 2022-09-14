@@ -33,25 +33,23 @@
  */
 class Object_A_Server
 {
-
 public:
-
   /// Default constructor
-  Object_A_Server (void);
+  Object_A_Server ();
 
   /// Destructor
-  ~Object_A_Server (void);
+  ~Object_A_Server ();
 
   /// Initialize the NestedUpCalls_Server state - parsing arguments and ...
   int init (int argc,
             ACE_TCHAR **argv);
 
   /// Run the orb
-  int run (void);
+  int run ();
 
 private:
   /// Parses the commandline arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// File to output the IOR of the object A.
   FILE* ior_output_file_;

@@ -23,7 +23,6 @@
 #include "TSS_Test_Errno.h"
 
 
-
 static u_int errors = 0;
 
 #if defined (ACE_HAS_THREADS)

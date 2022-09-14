@@ -23,7 +23,7 @@ IIOPEndpointValue_i::IIOPEndpointValue_i (const char *host, CORBA::UShort port)
     this->addr_.set_type (-1);
 }
 
-IIOPEndpointValue_i::~IIOPEndpointValue_i (void)
+IIOPEndpointValue_i::~IIOPEndpointValue_i ()
 {
 }
 
@@ -88,7 +88,7 @@ IIOPEndpointValue_i::validate_acceptor(TAO_Acceptor * acceptor,
 }
 
 char *
-IIOPEndpointValue_i::host (void)
+IIOPEndpointValue_i::host ()
 {
   return CORBA::string_dup (this->host_.in());
 }
@@ -102,7 +102,7 @@ IIOPEndpointValue_i::host (const char *h)
 }
 
 CORBA::UShort
-IIOPEndpointValue_i::port (void)
+IIOPEndpointValue_i::port ()
 {
   return this->port_;
 }
@@ -116,7 +116,7 @@ IIOPEndpointValue_i::port (CORBA::UShort p )
 }
 
 CORBA::ULong
-IIOPEndpointValue_i::protocol_tag (void)
+IIOPEndpointValue_i::protocol_tag ()
 {
   return IOP::TAG_INTERNET_IOP;
 }

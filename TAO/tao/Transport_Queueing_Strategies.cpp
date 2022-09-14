@@ -10,7 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  Transport_Queueing_Strategy::~Transport_Queueing_Strategy (void)
+  Transport_Queueing_Strategy::~Transport_Queueing_Strategy ()
   {
   }
 

@@ -31,7 +31,7 @@ namespace TAO
        public ImplicitActivationStrategy
     {
     public:
-      virtual bool allow_implicit_activation (void) const;
+      virtual bool allow_implicit_activation () const;
     };
   }
 }

@@ -17,5 +17,5 @@ Simple_Server_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Servant in process id (%P) received shutdown request. Complying...\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

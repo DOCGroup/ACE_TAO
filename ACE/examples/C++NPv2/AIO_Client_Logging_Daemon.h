@@ -116,7 +116,7 @@ protected:
     (const ACE_Time_Value&, const void *);
 
   // Template method to create a new handler
-  virtual AIO_Output_Handler *make_handler (void)
+  virtual AIO_Output_Handler *make_handler ()
     { return OUTPUT_HANDLER::instance (); }
 
   // Address at which logging server listens for connections.

@@ -21,14 +21,14 @@ public:
   {
   }
 
-  virtual CORBA::Long get (void)
+  virtual CORBA::Long get ()
   {
     ++n_;
     return n_;
   }
 };
 
-Server_i::Server_i (void)
+Server_i::Server_i ()
   : server_name_()
   , second_name_()
 {
@@ -36,7 +36,6 @@ Server_i::Server_i (void)
 
 Server_i::~Server_i()
 {
-
   this->root_poa_->destroy(1, 1);
   this->orb_->destroy();
 }
@@ -158,7 +157,7 @@ Server_i::init (int argc, ACE_TCHAR** argv)
 }
 
 int
-Server_i::run (void)
+Server_i::run ()
 {
   try
     {
@@ -174,7 +173,6 @@ Server_i::run (void)
       }
 
       this->orb_->run ();
-
     }
   catch (const CORBA::Exception& ex)
     {

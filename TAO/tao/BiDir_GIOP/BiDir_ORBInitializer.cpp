@@ -31,7 +31,7 @@ TAO_BiDir_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     }
 
   // Bind the service context handler for BiDIR GIOP
-  TAO_BiDIR_Service_Context_Handler* h = 0;
+  TAO_BiDIR_Service_Context_Handler* h = nullptr;
   ACE_NEW (h,
            TAO_BiDIR_Service_Context_Handler());
   tao_info->orb_core ()->service_context_registry ().bind (IOP::BI_DIR_IIOP, h);

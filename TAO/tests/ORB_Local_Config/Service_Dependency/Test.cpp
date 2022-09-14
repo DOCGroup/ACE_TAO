@@ -99,7 +99,6 @@ testOpenDynamicServices (int , ACE_TCHAR *[])
 
 
 
-
 // @brief Try loading the ORBInitializer_Registry locally
 
 int
@@ -268,7 +267,6 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
               "(%P|%t) We're done testing.\n"));
   return 0;
 }
-
 
 
 // @brief ...

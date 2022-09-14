@@ -10,21 +10,18 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Control_Action::Control_Action (void)
+    Control_Action::Control_Action ()
       : ACE_Refcountable_T<ACE_SYNCH_MUTEX> (1)
     {}
 
-    Control_Action::~Control_Action (void)
-    {}
-
     void
-    Control_Action::add_ref (void)
+    Control_Action::add_ref ()
     {
       (void) this->increment ();
     }
 
     void
-    Control_Action::remove_ref (void)
+    Control_Action::remove_ref ()
     {
       const long new_count = this->decrement ();
 

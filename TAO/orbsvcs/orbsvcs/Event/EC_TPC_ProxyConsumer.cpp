@@ -13,7 +13,7 @@ TAO_EC_TPC_ProxyPushConsumer::TAO_EC_TPC_ProxyPushConsumer (TAO_EC_Event_Channel
 }
 
 TAO_EC_TPC_Dispatching*
-TAO_EC_TPC_ProxyPushConsumer::tpc_dispatching (void)
+TAO_EC_TPC_ProxyPushConsumer::tpc_dispatching ()
 {
   TAO_EC_Dispatching* dispatcher = this->event_channel_->dispatching ();
   TAO_EC_TPC_Dispatching* tpcdispatcher =
@@ -21,7 +21,7 @@ TAO_EC_TPC_ProxyPushConsumer::tpc_dispatching (void)
   return tpcdispatcher;
 }
 
-TAO_EC_TPC_ProxyPushConsumer::~TAO_EC_TPC_ProxyPushConsumer (void)
+TAO_EC_TPC_ProxyPushConsumer::~TAO_EC_TPC_ProxyPushConsumer ()
 {
   // @@@ Do I need to call the logic to remove the consumer from the
   // dispatch map in here?  I'm not sure...  But, if I do, then I need
@@ -32,7 +32,7 @@ TAO_EC_TPC_ProxyPushConsumer::~TAO_EC_TPC_ProxyPushConsumer (void)
 }
 
 void
-TAO_EC_TPC_ProxyPushConsumer::disconnect_push_consumer (void)
+TAO_EC_TPC_ProxyPushConsumer::disconnect_push_consumer ()
 {
   RtecEventComm::PushConsumer_var emulated_exceptions_suck = this->_this ();
 

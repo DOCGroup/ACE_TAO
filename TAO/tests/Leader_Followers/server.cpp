@@ -48,9 +48,8 @@ public:
     {
     }
 
-  int svc (void)
+  int svc ()
     {
-
       try
         {
           this->orb_->run ();
@@ -129,8 +128,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Server: Event loop finished\n"));
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (true, true);
     }
   catch (const CORBA::Exception& ex)
     {

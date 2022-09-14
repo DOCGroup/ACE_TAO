@@ -39,8 +39,8 @@ class TAO_DynamicInterface_Export TAO_Dynamic_Adapter_Impl
   : public TAO_Dynamic_Adapter
 {
 public:
-  TAO_Dynamic_Adapter_Impl (void);
-  virtual ~TAO_Dynamic_Adapter_Impl (void);
+  TAO_Dynamic_Adapter_Impl ();
+  virtual ~TAO_Dynamic_Adapter_Impl ();
 
   // CORBA::Object::_create_request and CORBA::Object::_request.
 
@@ -76,7 +76,7 @@ public:
   virtual void create_exception_list (CORBA::ExceptionList_ptr &list);
 
   // Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 static int

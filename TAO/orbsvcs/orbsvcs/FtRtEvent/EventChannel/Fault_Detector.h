@@ -42,13 +42,12 @@ private:
   virtual int parse_conf(int argc, ACE_TCHAR** argv);
 
 protected:
-
   class ReactorTask : public ACE_Task_Base
   {
   public:
     // ctor
     ReactorTask();
-    virtual int svc (void);
+    virtual int svc ();
     ACE_Reactor reactor_;
   };
 

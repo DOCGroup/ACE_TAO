@@ -6,11 +6,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Dynamic_Adapter_Impl::TAO_Dynamic_Adapter_Impl (void)
+TAO_Dynamic_Adapter_Impl::TAO_Dynamic_Adapter_Impl ()
 {
 }
 
-TAO_Dynamic_Adapter_Impl::~TAO_Dynamic_Adapter_Impl (void)
+TAO_Dynamic_Adapter_Impl::~TAO_Dynamic_Adapter_Impl ()
 {
 }
 
@@ -89,7 +89,7 @@ TAO_Dynamic_Adapter_Impl::request_is_nil (CORBA::Request_ptr req)
 void
 TAO_Dynamic_Adapter_Impl::request_release (CORBA::Request_ptr req)
 {
-  if (req != 0)
+  if (req)
     {
       req->_decr_refcount ();
     }
@@ -104,7 +104,7 @@ TAO_Dynamic_Adapter_Impl::server_request_is_nil (CORBA::ServerRequest_ptr req)
 void
 TAO_Dynamic_Adapter_Impl::server_request_release (CORBA::ServerRequest_ptr req)
 {
-  if (req != 0)
+  if (req)
     {
       req->_decr_refcount ();
     }
@@ -126,7 +126,7 @@ TAO_Dynamic_Adapter_Impl::create_exception_list (
 }
 
 int
-TAO_Dynamic_Adapter_Impl::Initializer (void)
+TAO_Dynamic_Adapter_Impl::Initializer ()
 {
   TAO_ORB_Core::dynamic_adapter_name ("Concrete_Dynamic_Adapter");
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_Dynamic_Adapter_Impl);

@@ -28,7 +28,7 @@ sub run_test
 for ($i = 0; $i <= $#ARGV; $i++) {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
         print "Run_Test Perl script for TAO DynAny Test\n\n";
-        print "run_test [-chorus <target>] [-t type]\n";
+        print "run_test [-t type]\n";
         print "\n";
         print "-t type             -- runs only one type of dynany test\n";
         exit;

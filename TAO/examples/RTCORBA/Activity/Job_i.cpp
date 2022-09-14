@@ -9,13 +9,13 @@ Job_i::Job_i ()
 }
 
 const ACE_CString&
-Job_i::name (void)
+Job_i::name ()
 {
   return job_name_;
 }
 
 const ACE_CString&
-Job_i::poa (void)
+Job_i::poa ()
 {
   return POA_name_;
 }
@@ -51,7 +51,7 @@ Job_i::work (CORBA::ULong work)
 }
 
 void
-Job_i::shutdown (void)
+Job_i::shutdown ()
 {
   ACTIVITY::instance()->job_ended (this);
 }

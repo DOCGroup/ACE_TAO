@@ -539,7 +539,7 @@ Sun Dec 28 23:24:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Please see
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1693
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1693
 
           for an outline of the problem. The problem showed up because the
           Any_Basic_Impl::extract () didn't handle alias TCKind's
@@ -1564,7 +1564,7 @@ Tue Dec 23 09:47:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Fixed incorrect dropping of _cxx_ prefix in parameter name (if
           it clashes with a C++ keyword) of AMI sendc_* operation. Thanks
-          to  Cyrille Chépélov <cyrille@softek.fr> for reporting the bug.
+          to  Cyrille Chï¿½pï¿½lov <cyrille@softek.fr> for reporting the bug.
 
 Tue Dec 23 12:53:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -2327,7 +2327,7 @@ Thu Dec 11 14:03:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           methods need a reply to be sent right away, and this is not
           handled under the hood in asynchronous_upcall_dispatch() as it
           is in synchronous_upcall_dispatch(). This fix closes
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1670. Thanks
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1670. Thanks
           to Carlos O'Ryan <coryan@atdesk.com> for pointing out the
           problem and suggesting the fix.
 
@@ -6030,7 +6030,7 @@ Sun Nov 16 16:49:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Fix for [BUG 1384]. Please see
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1384
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1384
 
           for details. The crux of the problem is whether the FTORB
           infrastructure should do a reinvocation when it receives a
@@ -6214,7 +6214,7 @@ Thu Nov 13 21:02:31 2003  Carlos O'Ryan  <coryan@atdesk.com>
         * tao/Queued_Message.cpp:
           Made the remove_from_list() operation safe if called multiple
           times.  This fixes:
-            http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1614
+            http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1614
 
 Fri Nov 14 00:26:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -9510,7 +9510,7 @@ Tue Oct 28 12:02:47 2003  Balachandran Natarajan <bala@dre.vanderbilt.edu>
         including the generated code. The design is outlined in the
         bugzilla. Please see
 
-        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1369
+        http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1369
 
         This checkin only concentrates on the stub path. During the work
         we tried addressing the following additional problems

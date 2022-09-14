@@ -44,18 +44,18 @@ class TAO_RTEvent_Serv_Export TAO_ECG_ConsumerEC_Control
 {
 public:
   /// Constructor.
-  TAO_ECG_ConsumerEC_Control (void);
+  TAO_ECG_ConsumerEC_Control ();
 
   /// Destructor.
-  virtual ~TAO_ECG_ConsumerEC_Control (void);
+  virtual ~TAO_ECG_ConsumerEC_Control ();
 
   /// Activate any internal threads or timers used to poll the state of
   /// the event channel.
-  virtual int activate (void);
+  virtual int activate ();
 
   /// Shutdown any internal threads or timers used to poll the state of
   /// the event channel.
-  virtual int shutdown (void);
+  virtual int shutdown ();
 
   /**
    * When pushing an event to the event channel a CORBA::OBJECT_NOT_EXIST

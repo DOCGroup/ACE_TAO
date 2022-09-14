@@ -17,7 +17,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename traits>
 class string_const_sequence_element
 {
@@ -51,7 +50,7 @@ public:
     return *this->element_;
   }
 
-  inline const character_type *in (void) const
+  inline const character_type *in () const
   {
     return *this->element_;
   }
@@ -70,7 +69,6 @@ private:
   const_value_type const * element_;
   CORBA::Boolean const release_;
 };
-
 } // namespace details
 } // namespace CORBA
 

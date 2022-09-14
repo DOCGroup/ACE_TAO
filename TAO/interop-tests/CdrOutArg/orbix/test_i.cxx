@@ -14,5 +14,5 @@ CDR_Out_Arg_i::get_out (CORBA::Long_out arg) IT_THROW_DECL((CORBA::SystemExcepti
 void
 CDR_Out_Arg_i::shutdown (void) IT_THROW_DECL((CORBA::SystemException))
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -40,7 +40,7 @@ class ACE_Export ACE_Log_Msg_Backend
 {
 public:
   /// No-op virtual destructor.
-  virtual ~ACE_Log_Msg_Backend (void);
+  virtual ~ACE_Log_Msg_Backend ();
 
   /**
    * Open the back end object. Perform any actions needed to prepare
@@ -64,10 +64,10 @@ public:
    * @retval Currently ignored, but to be safe, return 0 for success;
    *         -1 for failure.
    */
-  virtual int reset (void) = 0;
+  virtual int reset () = 0;
 
   /// Close the backend completely.
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /**
    * Process a log record.

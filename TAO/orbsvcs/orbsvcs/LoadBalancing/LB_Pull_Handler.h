@@ -41,9 +41,8 @@ class TAO_LB_LoadManager;
 class TAO_LB_Pull_Handler : public ACE_Event_Handler
 {
 public:
-
   /// Constructor
-  TAO_LB_Pull_Handler (void);
+  TAO_LB_Pull_Handler ();
 
   /// Receive the timeout event.
   virtual int handle_timeout (const ACE_Time_Value &current_time,
@@ -54,14 +53,12 @@ public:
                    TAO_LB_LoadManager * load_manager);
 
 private:
-
   /// The table that contains all load monitors registered with the
   /// load balancer.
   TAO_LB_MonitorMap * monitor_map_;
 
   /// Pointer to the LoadManager servant.
   TAO_LB_LoadManager * load_manager_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

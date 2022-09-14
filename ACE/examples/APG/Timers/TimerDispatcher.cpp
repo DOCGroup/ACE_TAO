@@ -1,6 +1,6 @@
 #include "TimerDispatcher.h"
 // Listing 1 code/ch20
-void Timer_Dispatcher::wait_for_event (void)
+void Timer_Dispatcher::wait_for_event ()
 {
   ACE_TRACE ("Timer_Dispatcher::wait_for_event");
 

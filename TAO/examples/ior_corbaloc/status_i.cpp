@@ -7,7 +7,7 @@ corbaloc_Status_i::corbaloc_Status_i ()
 }
 
 CORBA::Boolean
-corbaloc_Status_i::print_status (void)
+corbaloc_Status_i::print_status ()
 {
   // If the server received the request from the client, return true
   // == 0;

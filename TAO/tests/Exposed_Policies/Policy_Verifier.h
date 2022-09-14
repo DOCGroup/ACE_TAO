@@ -28,14 +28,13 @@
 class Policy_Verifier
 {
 public:
-
   // -- Ctor/Dtor --
-  Policy_Verifier (void);
-  ~Policy_Verifier (void);
+  Policy_Verifier ();
+  ~Policy_Verifier ();
 
   bool init (int argc, ACE_TCHAR *argv[]);
 
-  void run (void);
+  void run ();
 
 private:
   // -- Helper methods --
@@ -46,7 +45,6 @@ private:
                                   const char *msg);
 
 private:
-
   CORBA::ORB_var orb_;
 
   RT_Properties *rt_object_properties_;

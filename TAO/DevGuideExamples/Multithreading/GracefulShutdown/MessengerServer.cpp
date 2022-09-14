@@ -134,7 +134,6 @@ int MessengerServer::parse_args (int argc, ACE_TCHAR* argv[])
                            "-r <n> - run ORB for <n> seconds\n",
                            argv[0]),
                            -1);
-
     }
   }
   return 0;

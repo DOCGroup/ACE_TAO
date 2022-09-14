@@ -17,9 +17,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
 #include "ACEXML/common/XML_Types.h"
 #include "ACEXML/common/SAXExceptions.h"
+#include <memory>
 
 /**
  * @class ACEXML_Element_Def_Builder
@@ -33,8 +33,7 @@
 class ACEXML_Export ACEXML_Element_Def_Builder
 {
 public:
-
-  typedef auto_ptr<ACEXML_Element_Def_Builder> VAR;
+  typedef std::unique_ptr<ACEXML_Element_Def_Builder> VAR;
 
   typedef enum {
     EMPTY,
@@ -60,24 +59,21 @@ public:
    */
   virtual int setElementName (const ACEXML_Char *namespaceURI,
                               const ACEXML_Char *localName,
-                              const ACEXML_Char *qName)
-        = 0;
+                              const ACEXML_Char *qName) = 0;
 
   /**
    * Define the content type of the element.
    *
    * @retval 0 if valid, -1 otherwise.
    */
-  virtual int setContentType (CONTENT_TYPE type)
-        = 0;
+  virtual int setContentType (CONTENT_TYPE type) = 0;
 
   /**
    * Insert one more element into Mixed definition.
    */
   virtual int insertMixedElement (const ACEXML_Char *namespaceURI,
                                   const ACEXML_Char *localName,
-                                  const ACEXML_Char *qName)
-        = 0;
+                                  const ACEXML_Char *qName) = 0;
 
   /**
    * Start a new group of children.
@@ -116,13 +112,12 @@ public:
    */
   virtual int insertElement  (const ACEXML_Char *namespaceURI,
                               const ACEXML_Char *localName,
-                              const ACEXML_Char *qName)
-        = 0;
+                              const ACEXML_Char *qName) = 0;
 
   /**
    * Dump the content of the attribute definition.
    */
-  virtual void dump (void) = 0;
+  virtual void dump () = 0;
 };
 
 

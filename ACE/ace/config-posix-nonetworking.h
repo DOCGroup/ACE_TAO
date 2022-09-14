@@ -16,7 +16,6 @@
 # define ACE_LACKS_NET_IF_H
 # define ACE_LACKS_SYSLOG_H
 # define ACE_LACKS_SYS_UN_H
-# define ACE_LACKS_MEMORY_H
 # define ACE_LACKS_SYS_SYSCTL_H
 # define ACE_LACKS_NETINET_TCP_H
 

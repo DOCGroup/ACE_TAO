@@ -28,10 +28,9 @@ class ClientRequest_Interceptor
   public virtual ::CORBA::LocalObject
 {
 public:
+ClientRequest_Interceptor ();
 
-ClientRequest_Interceptor (void);
-
-~ClientRequest_Interceptor (void);
+~ClientRequest_Interceptor ();
 
 /// Canonical name of the interceptor.
 virtual char * name ();
@@ -52,10 +51,8 @@ virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
 static CORBA::Boolean success_flag_;
 
 private:
-
 /// Name of the interceptor
 const char *name_;
-
 };
 #if defined(_MSC_VER)
 #pragma warning(pop)

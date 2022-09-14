@@ -17,7 +17,6 @@ Smart_Test_Factory::create_proxy (Test_ptr proxy)
        ACE_NEW_RETURN (proxy, Smart_Test_Proxy (proxy), 0);
 
    return proxy;
-
  }
 
 Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)

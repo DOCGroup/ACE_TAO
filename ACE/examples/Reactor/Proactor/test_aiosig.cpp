@@ -36,15 +36,15 @@ aiocb aiocb1, aiocb2;
 sigset_t completion_signal;
 
 // Function prototypes.
-int setup_signal_delivery (void);
-int issue_aio_calls (void);
-int query_aio_completions (void);
-int test_aio_calls (void);
-int setup_signal_handler (void);
+int setup_signal_delivery ();
+int issue_aio_calls ();
+int query_aio_completions ();
+int test_aio_calls ();
+int setup_signal_handler ();
 int setup_signal_handler (int signal_number);
 
 int
-setup_signal_delivery (void)
+setup_signal_delivery ()
 {
   // Make the sigset_t consisting of the completion signal.
   if (sigemptyset (&completion_signal) == -1)
@@ -70,7 +70,7 @@ setup_signal_delivery (void)
 }
 
 int
-issue_aio_calls (void)
+issue_aio_calls ()
 {
   // Setup AIOCB.
   aiocb1.aio_fildes = file_handle;
@@ -111,7 +111,7 @@ issue_aio_calls (void)
 }
 
 int
-query_aio_completions (void)
+query_aio_completions ()
 {
   size_t number_of_compleions = 0;
   for (number_of_compleions = 0;
@@ -220,7 +220,7 @@ query_aio_completions (void)
 }
 
 int
-test_aio_calls (void)
+test_aio_calls ()
 {
   // Set up the input file.
   // Open file (in SEQUENTIAL_SCAN mode)

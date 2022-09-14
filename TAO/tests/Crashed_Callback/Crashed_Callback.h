@@ -11,14 +11,14 @@ class Crashed_Callback
 {
 public:
   /// Constructor
-  Crashed_Callback (void);
+  Crashed_Callback ();
 
   // = The skeleton methods
-  virtual CORBA::Boolean are_you_there (void);
+  virtual CORBA::Boolean are_you_there ();
 
-  virtual void crash_now_please (void);
+  virtual void crash_now_please ();
 
-  virtual void test_oneway (void);
+  virtual void test_oneway ();
 };
 
 #include /**/ "ace/post.h"

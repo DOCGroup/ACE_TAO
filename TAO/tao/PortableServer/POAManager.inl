@@ -67,7 +67,7 @@ TAO_POA_Manager::get_state (void)
 }
 
 ACE_INLINE char*
-TAO_POA_Manager::generate_manager_id (void) const
+TAO_POA_Manager::generate_manager_id () const
 {
   // The AdapterManagerId must be unique across all Adapter Managers
   // (e.g. POAManagers) within a given process.  To avoid locking

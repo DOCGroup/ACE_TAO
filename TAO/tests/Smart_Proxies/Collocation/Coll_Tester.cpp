@@ -14,7 +14,7 @@
 #include "Coll_Tester.h"
 #include "Smart_Proxy_Impl.h"
 
-Collocation_Test::Collocation_Test (void)
+Collocation_Test::Collocation_Test ()
 {
 }
 
@@ -67,7 +67,6 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
 
   return 0;
 
-
 }
 
 int
@@ -77,7 +76,7 @@ Collocation_Test::parse_args (int, ACE_TCHAR *[])
 }
 
 int
-Collocation_Test::test_narrow (void)
+Collocation_Test::test_narrow ()
 {
   // Ensure that the smart proxy is the one which is used by registering
   // the user-defined factory. Its necessary to create one on the heap so
@@ -115,7 +114,7 @@ Collocation_Test::test_narrow (void)
 }
 
 int
-Collocation_Test::run (void)
+Collocation_Test::run ()
 {
   this->poa_manager_->activate ();
 

@@ -47,16 +47,16 @@ public:
   TAO_LF_Follower (TAO_Leader_Follower &leader_follower);
 
   /// Destructor
-  ~TAO_LF_Follower (void);
+  ~TAO_LF_Follower ();
 
   /// Access the leader follower that owns this follower
-  TAO_Leader_Follower &leader_follower (void);
+  TAO_Leader_Follower &leader_follower ();
 
   /// Wait until on the underlying condition variable
   int wait (ACE_Time_Value *tv);
 
   /// Signal the underlying condition variable
-  int signal (void);
+  int signal ();
 
 private:
   /// The Leader/Follower set this Follower belongs to

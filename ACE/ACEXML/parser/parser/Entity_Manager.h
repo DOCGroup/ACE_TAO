@@ -61,10 +61,10 @@ class ACEXML_PARSER_Export ACEXML_Entity_Manager
 {
 public:
   /// Default constructor.
-  ACEXML_Entity_Manager (void);
+  ACEXML_Entity_Manager ();
 
   /// Destructor.
-  ~ACEXML_Entity_Manager (void);
+  ~ACEXML_Entity_Manager ();
 
   /// Add a new entity declaration.
   int add_entity (const ACEXML_Char *ref, const ACEXML_Char *value);
@@ -78,15 +78,14 @@ public:
                       ACEXML_Char*& publicId);
 
   /// Number of items in the Entity Manager
-  size_t size(void) const;
+  size_t size() const;
 
   /// Reset the state
-  int reset (void);
+  int reset ();
 
 private:
   ACEXML_ENTITIES_MANAGER* entities_;
   // bool init_;
-
 };
 
 #if defined (__ACEXML_INLINE__)

@@ -24,12 +24,12 @@ AST_Mirror_Port::AST_Mirror_Port (
 {
 }
 
-AST_Mirror_Port::~AST_Mirror_Port (void)
+AST_Mirror_Port::~AST_Mirror_Port ()
 {
 }
 
 void
-AST_Mirror_Port::destroy (void)
+AST_Mirror_Port::destroy ()
 {
   this->AST_Extended_Port::destroy ();
 }
@@ -47,6 +47,3 @@ AST_Mirror_Port::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_mirror_port (this);
 }
-
-IMPL_NARROW_FROM_DECL (AST_Mirror_Port)
-

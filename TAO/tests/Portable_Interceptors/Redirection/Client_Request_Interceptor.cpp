@@ -14,13 +14,13 @@ Client_Request_Interceptor::Client_Request_Interceptor (
 }
 
 char *
-Client_Request_Interceptor::name (void)
+Client_Request_Interceptor::name ()
 {
   return CORBA::string_dup ("Client_Request_Interceptor");
 }
 
 void
-Client_Request_Interceptor::destroy (void)
+Client_Request_Interceptor::destroy ()
 {
 }
 

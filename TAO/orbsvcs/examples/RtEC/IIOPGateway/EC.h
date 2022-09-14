@@ -25,7 +25,7 @@ class EC
 {
 public:
   /// Constructor
-  EC (void);
+  EC ();
 
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);

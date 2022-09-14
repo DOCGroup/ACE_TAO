@@ -22,10 +22,10 @@ class Server_i
 {
 public:
   /// Constructor.
-  Server_i (void);
+  Server_i ();
 
   /// Destructor.
-  ~Server_i (void);
+  ~Server_i ();
 
   /// Initialize the Server state - parsing arguments and waiting.
   int init (int argc,
@@ -35,15 +35,14 @@ public:
   int add_IOR_to_table (CORBA::String_var ior);
 
   /// Run the orb.
-  int run (void);
+  int run ();
 
 protected:
-
   /// Servant class
   INS_i servant_;
 
   /// Parses the commandline arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// The ORB manager - a helper class for accessing the POA and
   /// registering objects.

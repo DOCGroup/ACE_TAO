@@ -45,7 +45,7 @@ ACE_OS::getmsg (ACE_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::getmsg");
 #if defined (ACE_HAS_STREAM_PIPES)
-  ACE_OSCALL_RETURN (::getmsg (handle, ctl, data, flags), int, -1);
+  return ::getmsg (handle, ctl, data, flags);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (ctl);
@@ -66,7 +66,7 @@ ACE_OS::getpmsg (ACE_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::getpmsg");
 #if defined (ACE_HAS_STREAM_PIPES)
-  ACE_OSCALL_RETURN (::getpmsg (handle, ctl, data, band, flags), int, -1);
+  return ::getpmsg (handle, ctl, data, band, flags);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (ctl);
@@ -84,7 +84,7 @@ ACE_OS::fattach (int handle, const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::fattach");
 #if defined (ACE_HAS_STREAM_PIPES)
-  ACE_OSCALL_RETURN (::fattach (handle, path), int, -1);
+  return ::fattach (handle, path);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (path);
@@ -98,7 +98,7 @@ ACE_OS::fdetach (const char *file)
 {
   ACE_OS_TRACE ("ACE_OS::fdetach");
 #if defined (ACE_HAS_STREAM_PIPES)
-  ACE_OSCALL_RETURN (::fdetach (file), int, -1);
+  return ::fdetach (file);
 #else
   ACE_UNUSED_ARG (file);
 
@@ -121,13 +121,12 @@ ACE_OS::ioctl (ACE_HANDLE handle,
   ACE_SOCKET sock = (ACE_SOCKET) handle;
   ACE_SOCKCALL_RETURN (::ioctlsocket (sock, cmd, reinterpret_cast<unsigned long *> (val)), int, -1);
 #elif defined (ACE_HAS_IOCTL_INT_3_PARAM)
-  ACE_OSCALL_RETURN (::ioctl (handle, cmd, reinterpret_cast<int> (val)),
-                     int, -1);
+  return ::ioctl (handle, cmd, reinterpret_cast<int> (val));
 #elif defined (ACE_MQX)
   // TBD: See if there is a way to provide this functionality
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::ioctl (handle, cmd, val), int, -1);
+  return ::ioctl (handle, cmd, val);
 #endif /* ACE_WIN32 */
 }
 
@@ -136,7 +135,7 @@ ACE_OS::isastream (ACE_HANDLE handle)
 {
   ACE_OS_TRACE ("ACE_OS::isastream");
 #if defined (ACE_HAS_STREAM_PIPES)
-  ACE_OSCALL_RETURN (::isastream (handle), int, -1);
+  return ::isastream (handle);
 #else
   ACE_UNUSED_ARG (handle);
 
@@ -150,10 +149,7 @@ ACE_OS::putmsg (ACE_HANDLE handle, const struct strbuf *ctl,
 {
   ACE_OS_TRACE ("ACE_OS::putmsg");
 #if defined (ACE_HAS_STREAM_PIPES)
-  ACE_OSCALL_RETURN (::putmsg (handle,
-                               (ACE_STRBUF_TYPE) ctl,
-                               (ACE_STRBUF_TYPE) data,
-                               flags), int, -1);
+  return ::putmsg (handle, (ACE_STRBUF_TYPE) ctl, (ACE_STRBUF_TYPE) data, flags);
 #else
   ACE_UNUSED_ARG (flags);
   ssize_t result;
@@ -205,10 +201,7 @@ ACE_OS::putpmsg (ACE_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::putpmsg");
 #if defined (ACE_HAS_STREAM_PIPES)
-  ACE_OSCALL_RETURN (::putpmsg (handle,
-                                (ACE_STRBUF_TYPE) ctl,
-                                (ACE_STRBUF_TYPE) data,
-                                band, flags), int, -1);
+  return ::putpmsg (handle, (ACE_STRBUF_TYPE) ctl, (ACE_STRBUF_TYPE) data, band, flags);
 #else
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (band);

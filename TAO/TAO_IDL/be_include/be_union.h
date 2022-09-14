@@ -35,33 +35,28 @@ public:
   virtual void redefine (AST_Structure *from);
 
   /// Do we have at least one member with multiple case labels?
-  virtual bool has_duplicate_case_labels (void);
+  virtual bool has_duplicate_case_labels ();
 
   /// Overridden from class be_type.
   virtual void gen_ostream_operator (TAO_OutStream *os,
                                      bool use_underscore);
 
   /// Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Visiting.
   virtual int accept (be_visitor *visitor);
 
   /// Decides whether a default switch case label in the generated copy
   /// constructor, assignment operator, etc. is needed.
-  bool gen_empty_default_label (void);
+  bool gen_empty_default_label ();
 
   /// Just a way to get at fe_add_union_branch() from the backend.
   AST_UnionBranch *be_add_union_branch (AST_UnionBranch *b);
 
   /// Returns total number of labels, useful when the union has
   /// multiple case labels.
-  ACE_UINT64 nlabels (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(be_union);
-  DEF_NARROW_FROM_SCOPE(be_union);
+  ACE_UINT64 nlabels ();
 };
 
 #endif

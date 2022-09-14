@@ -40,7 +40,7 @@ public:
   CC_Test (CC_naming_service *ns);
 
   /// Destructor
-  virtual ~CC_Test (void);
+  virtual ~CC_Test ();
 
   /// Run the test times_to_run number of times. Returns CC_SUCCESS on
   /// success CC_FAIL otherwise.
@@ -48,7 +48,7 @@ public:
 
   /// Create a new lock set using the default global lock set factory
   /// from the naming service.
-  CosConcurrencyControl::LockSet_ptr create_lock_set (void);
+  CosConcurrencyControl::LockSet_ptr create_lock_set ();
 
   /// Returns a human readable string from the lock mode enum.
   char *get_lock_mode_name (CosConcurrencyControl::lock_mode mode);
@@ -79,7 +79,7 @@ public:
                               CosConcurrencyControl::lock_mode mode);
 
   /// Destructor
-  virtual ~Test_Single_Lock_With_Mode (void);
+  virtual ~Test_Single_Lock_With_Mode ();
 
   /// Runs the test the specified number of times.
   virtual int run (int times_to_run = 1);
@@ -107,7 +107,7 @@ public:
                       char *name);
 
   /// Destructor
-  virtual ~Test_Setup_LockSet (void);
+  virtual ~Test_Setup_LockSet ();
 
   /// Runs the test the specified number of times.
   virtual int run (int times_to_run = 1);
@@ -135,7 +135,7 @@ public:
                                    char *name);
 
   /// Destructor
-  virtual ~Test_Use_Already_Created_LockSet (void);
+  virtual ~Test_Use_Already_Created_LockSet ();
 
   /// Runs the test the specified number of times.
   virtual int run (int times_to_run = 1);
@@ -163,7 +163,7 @@ public:
                                        char *name);
 
   /// Destructor
-  virtual ~Test_Unlock_Already_Created_LockSet (void);
+  virtual ~Test_Unlock_Already_Created_LockSet ();
 
   /// Runs the test the specified number of times.
   virtual int run (int times_to_run = 1);
@@ -188,7 +188,7 @@ public:
                                 CosConcurrencyControl::lock_mode mode_);
 
   /// Destructor
-  virtual ~Test_Release_Not_Held_Lock (void);
+  virtual ~Test_Release_Not_Held_Lock ();
 
   /// Runs the test the specified number of times.
   virtual int run (int times_to_run = 1);

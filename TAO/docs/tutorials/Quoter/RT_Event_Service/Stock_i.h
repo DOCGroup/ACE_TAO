@@ -13,14 +13,14 @@ public:
   Quoter_Stock_i (const char *symbol,
                   const char *full_name,
                   CORBA::Double price);
-  ~Quoter_Stock_i (void);
+  ~Quoter_Stock_i ();
 
   char *symbol ();
   char *full_name ();
   CORBA::Double price ();
   void set_price (CORBA::Double new_price);
 
-  void disconnect_push_supplier (void);
+  void disconnect_push_supplier ();
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
 

@@ -35,7 +35,7 @@ class be_visitor_typecode_defn : public be_visitor_scope
 {
 public:
   be_visitor_typecode_defn (be_visitor_context *ctx);
-  ~be_visitor_typecode_defn (void);
+  ~be_visitor_typecode_defn ();
 
   virtual int visit_array (be_array *node);
   virtual int visit_interface (be_interface *node);
@@ -95,11 +95,10 @@ protected:
    * Utility methods to generate enclosing namespaces for
    * typecodes of bounded (w)strings, sequences and arrays.
    */
-  void gen_begin_NS_for_anon (void);
-  void gen_end_NS_for_anon (void);
+  void gen_begin_NS_for_anon ();
+  void gen_end_NS_for_anon ();
 
 protected:
-
   /// Queue to keep nodes
   ACE_Unbounded_Queue <QNode*> tc_queue_;
 
@@ -139,7 +138,6 @@ private:
   int pop (ACE_CDR::Long &);
 
 protected:
-
   // queue related routines
 
   const QNode *queue_insert (ACE_Unbounded_Queue <QNode*> &,
@@ -148,7 +146,6 @@ protected:
   const QNode *queue_lookup (ACE_Unbounded_Queue <QNode*> &, be_type *node);
 
   void queue_reset (ACE_Unbounded_Queue <QNode*> &);
-
 };
 
 #endif /* _BE_VISITOR_TYPECODE_TYPECODE_DEFN_H_ */

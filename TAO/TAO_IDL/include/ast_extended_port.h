@@ -13,16 +13,12 @@ public:
     UTL_ScopedName *n,
     AST_PortType *porttype_ref);
 
-  virtual ~AST_Extended_Port (void);
+  virtual ~AST_Extended_Port ();
 
-  AST_PortType *port_type (void) const;
+  AST_PortType *port_type () const;
 
   // Cleanup function.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (AST_Extended_Port);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);

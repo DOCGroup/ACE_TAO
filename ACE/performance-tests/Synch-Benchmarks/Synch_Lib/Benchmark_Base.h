@@ -33,8 +33,8 @@ class Thr_ID
   //   emulate this ourselves with this class (gag).
 {
 public:
-  Thr_ID (void);
-  int thr_id (void);
+  Thr_ID ();
+  int thr_id ();
   void thr_id (int);
 
 private:
@@ -61,10 +61,10 @@ public:
     PERFORMANCE
   };
 
-  int benchmark_type (void);
+  int benchmark_type ();
   // RTTI information of this module.
 
-  int thr_id (void);
+  int thr_id ();
   // Returns our thread id;
 
 protected:
@@ -105,7 +105,7 @@ public:
   // Check if we got a valid test to perform.
 
 protected:
-  Benchmark_Method_Base (void);
+  Benchmark_Method_Base ();
 };
 
 # endif /* ACE_HAS_THREADS */

@@ -27,9 +27,8 @@
 class Distributer_Receiver_Callback : public TAO_AV_Callback
 {
 public:
-
   /// Constructor.
-  Distributer_Receiver_Callback (void);
+  Distributer_Receiver_Callback ();
 
   // Method that is called when there is data to be received from a
   // sender.
@@ -39,7 +38,7 @@ public:
 
   // Called when the sender is done sending data and wants to close
   // down the connection.
-  int handle_destroy (void);
+  int handle_destroy ();
 
 private:
   /// Count of the frames passing through us.
@@ -112,10 +111,10 @@ class Distributer
 {
 public:
   /// Constructor
-  Distributer (void);
+  Distributer ();
 
   /// Destructor.
-  ~Distributer (void);
+  ~Distributer ();
 
   /// Initialize data components.
   int init (int argc,
@@ -126,14 +125,14 @@ public:
                          const ACE_CString &mmdevice_name);
 
   /// Get the stream control of the receiver
-  TAO_StreamCtrl *receiver_streamctrl (void);
+  TAO_StreamCtrl *receiver_streamctrl ();
 
   /// Accessor methods to set/get our sender protocol object
   int sender_protocol_object  (TAO_AV_Protocol_Object *object);
-  TAO_AV_Protocol_Object *sender_protocol_object (void);
+  TAO_AV_Protocol_Object *sender_protocol_object ();
 
   // Flag to know when we are done.
-  int done (void) const;
+  int done () const;
   void done (int);
 
 protected:

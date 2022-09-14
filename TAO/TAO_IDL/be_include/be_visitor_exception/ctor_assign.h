@@ -24,7 +24,7 @@ class be_visitor_exception_ctor_assign : public be_visitor_scope
 {
 public:
   be_visitor_exception_ctor_assign (be_visitor_context *ctx);
-  ~be_visitor_exception_ctor_assign (void);
+  ~be_visitor_exception_ctor_assign ();
 
   virtual int visit_exception (be_exception *node);
   virtual int visit_field (be_field *node);

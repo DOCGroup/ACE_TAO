@@ -9,7 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IORInterceptor_Adapter_Impl::~TAO_IORInterceptor_Adapter_Impl (void)
+TAO_IORInterceptor_Adapter_Impl::~TAO_IORInterceptor_Adapter_Impl ()
 {
 }
 
@@ -29,7 +29,7 @@ TAO_IORInterceptor_Adapter_Impl::add_interceptor (
 }
 
 void
-TAO_IORInterceptor_Adapter_Impl::destroy_interceptors (void)
+TAO_IORInterceptor_Adapter_Impl::destroy_interceptors ()
 {
   this->ior_interceptor_list_.destroy_interceptors ();
 

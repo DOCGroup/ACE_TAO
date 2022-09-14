@@ -12,10 +12,10 @@ public:
   Callback_i (int expected_samples);
 
   /// Return 1 when all the samples have been received
-  int done (void);
+  int done ();
 
   /// Get access to the history
-  ACE_Sample_History &sample_history (void);
+  ACE_Sample_History &sample_history ();
 
   /// Implement the CORBA methods
   //@{

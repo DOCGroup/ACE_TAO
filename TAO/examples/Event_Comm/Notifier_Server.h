@@ -27,27 +27,27 @@ class Notifier_Server
 {
 public:
   /// Constructor.
-  Notifier_Server (void);
+  Notifier_Server ();
 
   /// Destructor.
-  ~Notifier_Server (void);
+  ~Notifier_Server ();
 
   /// Initialize the Server state.
  int init (int argc, ACE_TCHAR *argv[]);
 
   /// Run the orb.
-  int run (void);
+  int run ();
 
   /// Close the naming service.
-  int close (void);
+  int close ();
 
   /// Reactor accessor.
-  ACE_Reactor *reactor(void);
+  ACE_Reactor *reactor();
 
 private:
   /// Initialises the name server and registers the Notifier server
   /// object name with the name server.
-  int init_naming_service (void);
+  int init_naming_service ();
 
   /// The ORB manager.
   TAO_ORB_Manager orb_manager_;

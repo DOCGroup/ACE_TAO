@@ -52,17 +52,17 @@ static long *timer_ids = 0;
 class Example_Handler : public ACE_Event_Handler
 {
 public:
-  Example_Handler (void): close_count_ (0) {}
+  Example_Handler (): close_count_ (0) {}
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask mask) override
   {
     ACE_TEST_ASSERT (mask == ACE_Event_Handler::TIMER_MASK);
     this->close_count_++;
     return 0;
   }
 
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *arg) override
   {
     int *act = (int *) arg;
     ACE_TEST_ASSERT (*act == 42 || *act == 007);
@@ -82,9 +82,9 @@ public:
 
 struct Interval_Handler : public ACE_Event_Handler
 {
-  Interval_Handler (void) : trip_count_ (0) { }
+  Interval_Handler () : trip_count_ (0) { }
 
-  virtual int handle_timeout (const ACE_Time_Value & , const void *)
+  int handle_timeout (const ACE_Time_Value & , const void *) override
   {
     ++trip_count_;
     return 0;
@@ -521,7 +521,7 @@ test_performance (ACE_Timer_Queue *tq,
 // of ACE_Timer_Heap timer IDs around the boundary of having to enlarge
 // the heap.
 static void
-test_unique_timer_heap_ids (void)
+test_unique_timer_heap_ids ()
 {
   Example_Handler eh;
   ACE_Timer_Heap timer_heap (44);
@@ -684,11 +684,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                   -1);
 
   // new (optimized) version
-  typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
-                           ACE_Event_Handler_Handle_Timeout_Upcall,
-                           ACE_SYNCH_RECURSIVE_MUTEX,
-                           ACE_HR_Time_Policy>
-          timer_heap_hr_type;
+  using timer_heap_hr_type = ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_HR_Time_Policy>;
   ACE_NEW_RETURN (tq_stack,
                   Timer_Queue_Stack (new timer_heap_hr_type,
                                      ACE_TEXT ("ACE_Timer_Heap (high-res timer)"),

@@ -8,10 +8,9 @@
 #include "tao/Thread_Lane_Resources.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
-void do_nothing (void)
+void do_nothing ()
 {
 }
 
@@ -170,7 +169,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_OS::abort ();
         }
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

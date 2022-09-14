@@ -1,0 +1,577 @@
+commit 44e5772d323a1b19bb88b992d0a633b358e991ee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 18 14:47:40 2022 +0200
+
+    Fixed typo
+    
+        * ACE/examples/QOS/Change_Receiver_FlowSpec/receiver.cpp:
+        * ACE/examples/QOS/Change_Receiver_FlowSpec/sender.cpp:
+        * ACE/examples/QOS/Change_Sender_TSpec/receiver.cpp:
+        * ACE/examples/QOS/Change_Sender_TSpec/sender.cpp:
+        * ACE/examples/QOS/Simple/receiver.cpp:
+        * ACE/examples/QOS/Simple/sender.cpp:
+
+commit a58e3e099b9cebd45f84d737f1adadf2e46b499c
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Tue May 10 11:05:27 2022 -0500
+
+    From review
+
+commit 5c90e03d58bffc9e5dd0576fb94267025e720224
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon May 9 14:21:13 2022 -0500
+
+    Return when core files are handled by a dedicated service
+
+commit 4dbf47e7ba09aad965301d232f52609dd09d3ce4
+Merge: 63e14ff77e1 acdabc7e61d
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri May 6 15:48:23 2022 -0500
+
+    Merge pull request #1826 from iguessthislldo/igtd/phony-postbuild
+    
+    gnuace: Mark `__postbuild__` Target as PHONY
+
+commit 24225a08a3556ae450c8f8cd89815c085ad8998b
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Wed May 4 16:14:30 2022 -0500
+
+    From review
+
+commit 453d79a3d34cd46867613401dced66b001a89cb1
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Tue May 3 12:05:17 2022 -0500
+
+    From review
+
+commit f2f9cae32512a17a58ab853736fcbcd60671f484
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Fri Apr 29 17:41:07 2022 -0500
+
+    Choosing debugger is configurable
+
+commit a334d5c29adbeb3997c8474284cc51b3805fedea
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Fri Apr 29 16:45:38 2022 -0500
+
+    From review
+
+commit 5c38ce72996e395e7154432193e3c01bac353b83
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Fri Apr 29 16:30:31 2022 -0500
+
+    Add support for macOS & fixed errors
+
+commit fe2ccd51aabca2023d8781bfda8ed3162a639445
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Thu Apr 28 18:22:28 2022 -0500
+
+    Update logs
+
+commit aeccee26e472d4397b3910727fc777230174a2ac
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Thu Apr 28 18:07:18 2022 -0500
+
+    Update WaitKill
+
+commit 78cb035440f146ee3772cf695d7eb3202c897b98
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Thu Apr 28 17:39:07 2022 -0500
+
+    Print out stack trace
+
+commit acdabc7e61d494db0e6b6ce85245df7bf225d7c1
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Apr 25 13:17:30 2022 -0500
+
+    gnuace: Mark __postbuild__ Target as PHONY
+    
+    To prevent it from being created as a file when `make --touch` is used.
+
+commit b1bd82f99d4f2e5aa199e78fd29e302937797e13
+Author: Steve Huston <shuston@riverace.com>
+Date:   Mon Apr 25 20:52:08 2022 +0000
+
+    Add required operator= instances to match explicit copy ctors
+
+commit 735c0f60ba0620af930429e3ea12df4e2dd5dbbd
+Author: Steve Huston <shuston@riverace.com>
+Date:   Mon Apr 25 09:55:16 2022 -0400
+
+    Restore getpid() result cast to int; resolves compile warning.
+
+commit 142ad92d0b0394f67d718748d1a7fc5bc5e0bec6
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Apr 21 17:09:45 2022 +0000
+
+    Remove tabs
+
+commit e214db007eba0a7f293e44c3ee2fbbedab38b0c4
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Apr 21 17:02:57 2022 +0000
+
+    Replace fallthrough with ACE_FALLTHROUGH
+
+commit 296d113203ffb70fb8c81c3ce244bf810c17e834
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Apr 21 14:53:42 2022 +0000
+
+    Restore pre-PR version from master; my changes did not add value
+
+commit aca25f19f8e6a38281ea2db2de4c9881b1353168
+Merge: 17b13ace970 2693429c133
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Apr 21 14:33:04 2022 +0000
+
+    Merge branch 'master' into debian11-gcc10
+
+commit 9bda3c74358d8c5f09bd4d408860484cd7f7ac29
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Wed Apr 6 13:00:30 2022 -0500
+
+    Update doc and add argument to SpawnWaitKill
+
+commit 738090b3f90575ee5801406d4357b003dd544a92
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Apr 4 17:00:53 2022 -0500
+
+    Update Kill function
+
+commit 9ebdc646d2dc45af1c73fd81e2c4dfaae5dcbf34
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Apr 4 12:31:09 2022 -0500
+
+    Indicating if a process can self crash and get signal info
+
+commit bee659a4ec8cb572f009ddd854827d5136d3a231
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Sun Apr 10 21:18:28 2022 +0200
+
+    silence warning about non-virtual dtor
+
+commit 89a831ce128745b0a7c904c3c3940f7cf2b56971
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Sun Apr 10 17:40:51 2022 +0200
+
+    support modifying the SSL connection context before ssl_connect() is called with it. Allows implementing support for e.g. TLS SNI.
+
+commit 17b13ace9707518deb2edce9b033f7f626878926
+Author: Steve Huston <shuston@riverace.com>
+Date:   Mon Apr 4 15:26:13 2022 +0000
+
+    Correction for inadvertently replaced default copy constructor with explicit one
+
+commit 39e6f9d39b63b83c01fc9ae0d016c9d1c5240094
+Author: Steve Huston <shuston@riverace.com>
+Date:   Mon Apr 4 15:00:30 2022 +0000
+
+    Un-tabify
+
+commit 497d3c7a3ab493c8598a581ce4507ca81c6b32cc
+Author: Steve Huston <shuston@riverace.com>
+Date:   Mon Apr 4 14:56:19 2022 +0000
+
+    Move methods to their old place in the file to avert spurious diff
+
+commit a846e371dfc91c6472ed400c3abbc41292a247bf
+Author: Steve Huston <shuston@riverace.com>
+Date:   Mon Apr 4 14:47:49 2022 +0000
+
+    Remove extraneous blank line
+
+commit 1ffdd13ded89a554f84a5d4d0fd42e8ec4f0d3f2
+Author: Steve Huston <shuston@riverace.com>
+Date:   Mon Apr 4 14:44:21 2022 +0000
+
+    Correct spelling error
+
+commit ab21cb036ead68d8be6ffafeb22567d42f232c38
+Author: Steve Huston <shuston@riverace.com>
+Date:   Mon Apr 4 14:43:59 2022 +0000
+
+    Fix line splitting
+
+commit e06cadc3b95a577e6a8bbc94f93dd063710c73a1
+Author: Fabrice Fontaine <fontaine.fabrice@gmail.com>
+Date:   Sun Apr 3 15:25:49 2022 +0200
+
+    ACE/ace/SSL/SSL_Asynch_BIO.cpp: fix build with libressl
+    
+    Fix the following build failure with libressl:
+    
+    /home/autobuild/autobuild/instance-10/output-1/build/ace-7.0.6/ace/SSL/SSL_Asynch_BIO.cpp:174:7: error: 'BIO_get_init' was not declared in this scope; did you mean 'BIO_set_init'?
+      174 |   if (BIO_get_init(pBIO) == 0 || p_stream == 0 || buf == 0 || len <= 0)
+          |       ^~~~~~~~~~~~
+          |       BIO_set_init
+    
+    Fixes:
+     - http://autobuild.buildroot.org/results/386afa88ac9e5e3bb65dddeabf610bb1e9bc4285
+    
+    Signed-off-by: Fabrice Fontaine <fontaine.fabrice@gmail.com>
+
+commit 47039208a82664652ca6d8738c638366bbb4e94d
+Author: Steve Huston <shuston@riverace.com>
+Date:   Fri Apr 1 18:24:14 2022 +0000
+
+    Remove duplicated copy ctor and assignment operators brought in from Riverace-6.2 branch.
+
+commit a5480283648adb3ae8214deb830df6ee26ccfa62
+Author: Steve Huston <shuston@riverace.com>
+Date:   Fri Apr 1 18:22:17 2022 +0000
+
+    Replace inadvertently removed change
+
+commit 58a1a57b1a11121f76e34bd8a443bb026a042b7c
+Author: Steve Huston <shuston@riverace.com>
+Date:   Fri Apr 1 18:20:17 2022 +0000
+
+    Remove extraneous ACE_FALLTHROUGH
+
+commit 232604ca9f6d2ab57046f53f8954d01ff19c2810
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Mar 31 22:39:42 2022 +0000
+
+    Move operator= to corret place; per Howard 3/31/2022
+
+commit 23aeab853eb30f1803d15a0ffc51c4ad2c8c278e
+Author: Steve Huston <shuston@riverace.com>
+Date:   Tue Mar 29 20:41:03 2022 +0000
+
+    Add abspath converter to rc compile to work on linked builds
+
+commit 297cb477deb10625c5f095f50f4095ac16e9461e
+Author: Steve Huston <shuston@riverace.com>
+Date:   Tue Mar 29 20:38:56 2022 +0000
+
+    Add explicit copy constructor per Howard Finer
+
+commit e04b4e5c0d713026fb58bb580dd8f66a5cd6282a
+Author: Steve Huston <shuston@riverace.com>
+Date:   Fri Oct 10 21:58:31 2014 +0000
+
+    Pick up changes from this set:
+    Commit ad906bbed19
+    ChangeLogTag:Thu Oct  9 16:21:38 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+commit 9b7b7079f31ca77db96bd1e075b52002e894453b
+Author: Steve Huston <shuston@riverace.com>
+Date:   Sat Mar 19 19:31:27 2022 +0000
+
+    Add CPP14 and 11 mechanisms to allow fallthrough
+
+commit 1d031ea873eaf15ef546c1cd08fbe5d63afe8e34
+Author: Steve Huston <shuston@riverace.com>
+Date:   Sat Mar 19 19:30:31 2022 +0000
+
+    Refactor switch to avoid fallthrough and read easier
+
+commit 039562b6305e44e5792b5aaf4808b0bca12f6443
+Author: Steve Huston <shuston@riverace.com>
+Date:   Sat Mar 19 18:01:46 2022 +0000
+
+    Refactor preproc so ACE_HAS_CPU_SET_T is obeyed
+
+commit c68ab9eeb399cc93e5663918c6b0957ad7703348
+Author: Steve Huston <shuston@riverace.com>
+Date:   Wed Mar 16 20:03:19 2022 -0400
+
+    Move ACE_Handle_Set copy ctor to inl
+
+commit de7c57dbeb079dc74ca0844972b1475b88fce52e
+Author: Steve Huston <shuston@riverace.com>
+Date:   Wed Mar 16 20:02:16 2022 -0400
+
+    Add ACE_FALLTHROUGH macro that adjusts to c++17 or earlier
+
+commit b20918731b7339c4f5d1fa4ded6325fab6cfbb90
+Author: Steve Huston <shuston@riverace.com>
+Date:   Wed Mar 16 16:47:41 2022 -0400
+
+    Apply diffs from Howard
+
+commit b9654cc5f0282de43ecd4fd15c5bcdd84705dcda
+Merge: 8dedd23775b a5ca07d8448
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 28 07:48:33 2022 +0200
+
+    Merge pull request #1806 from esohns/task_flush_virtual
+    
+    make ACE_Task::flush virtual
+
+commit 17e36960c19c402dc1ab3c3fbf68be3f5c8b62a3
+Author: Vemund Handeland <vemund.handeland@kongsbergdigital.com>
+Date:   Sun Mar 27 13:29:04 2022 +0200
+
+    Add missing memory include
+
+commit 0258f8170a6e943cf861c01e176955a0c9592544
+Merge: 0842ba4d03d 03a6cf5c202
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 16:02:42 2022 +0100
+
+    Merge pull request #1807 from jwillemsen/jwi-defaultdelete
+    
+    Make use of delete/default/nullptr
+
+commit 03a6cf5c202a1931c6a66a1e3002be0dac3a2db0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 14:06:14 2022 +0100
+
+    Make use of delete/default/nullptr
+    
+        * ACE/ace/Configuration.cpp:
+        * ACE/ace/Configuration.h:
+        * ACE/ace/Configuration.inl:
+        * ACE/ace/Configuration_Import_Export.cpp:
+        * ACE/ace/Configuration_Import_Export.h:
+        * ACE/ace/Dirent_Selector.h:
+
+commit a5ca07d8448c53a71fccb4a53403a88a59f9828c
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Fri Mar 25 12:21:13 2022 +0100
+
+    make ACE_Task::flush virtual. Note: this call should not be on a hot path.
+
+commit 1c722f323311567f1528e083b4840bb64a95d87e
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Tue Mar 22 20:10:06 2022 +0100
+
+    increase usability of ACE_Stream
+
+commit 192fa0c41a6f5d4a5c31e049d519b57d30aa1a81
+Merge: ce3b8b760b2 878be948f00
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 18 15:27:45 2022 +0100
+
+    Merge pull request #1793 from jwillemsen/jwi-doubledefinecheck
+    
+    Cleanup double check
+
+commit 878be948f00070348299fc14c3b712372c1f7d1d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 18 09:33:30 2022 +0100
+
+    Cleanup double check
+    
+        * ACE/ace/OS_NS_Thread.inl:
+
+commit aefa4830967443e6d9cfad62c6720c36d1117ca7
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Mon Feb 14 21:33:04 2022 +0000
+
+    Sync debian/* files for ACE
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 79c6e76aa604bcc83e2db1608ab1a1af1960141a
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Wed Feb 9 08:45:33 2022 +0100
+
+    support thread naming via pthread_setname_np() if available (#1763)
+    
+    * added option to use pthread_setname_np() if available
+    
+    Co-authored-by: Erik Sohns <erik.sohns@posteo.de>
+
+commit 61cf7303a4dd2d48a22134031dce467b0b5d39c6
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Wed Feb 9 08:40:56 2022 +0100
+
+    support subclassing ACE_Stream (#1780)
+    
+    * support sub-classing ACE_Stream
+    
+    Co-authored-by: Erik Sohns <erik.sohns@posteo.de>
+
+commit 0d11899fc5c8ecdd52e12ff98324f085109e329f
+Merge: ab053fad273 89a599e2c4d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 7 17:02:22 2022 +0100
+
+    Merge pull request #1781 from jwillemsen/jwi-doxygen4
+    
+    Upgrade doxygen config files to the latest version of doxygen
+
+commit 89a599e2c4d2d3fe65c1dc4078c2e3a910bff326
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 7 14:30:57 2022 +0100
+
+    Upgrade doxygen config files to the latest version of doxygen
+
+commit ab053fad2737cb08dcc1230e9314843612224e40
+Merge: a943c630241 b1f656faa86
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Feb 6 21:23:17 2022 +0100
+
+    Merge pull request #1764 from esohns/missing_ctor_initializers
+    
+    added some missing ctor initializers
+
+commit b1f656faa86512791a4fc641748a91e16a5b8d79
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Sat Feb 5 11:13:56 2022 +0100
+
+    Revert "fixed potential leak in out-of-memory situation"
+    
+    This reverts commit 3152d6827c3a93a811fe862c93bd36a329e1037a.
+
+commit 077446ec256623ebd90a12e8d0f3b4557f0d6579
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Sat Feb 5 11:07:32 2022 +0100
+
+    conform with C++11
+
+commit a85885d41a8ea2b730fd3de987ac0ee0925d5a5e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 2 15:44:54 2022 +0100
+
+    Removed redundant void
+
+commit b394f19b420212653b828ac72506727913c159fe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 2 15:41:36 2022 +0100
+
+    Removed redundant void
+    
+        * ACE/ace/Filecache.h:
+
+commit 6c5166ddd90fb7eb75320f44322162cc5ccc02b1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 2 15:40:43 2022 +0100
+
+    Use nullptr
+    
+        * ACE/ace/Timer_Queue_T.h:
+
+commit 46f2c5a82a96aa222450db61c3de04071074a18b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 2 15:40:06 2022 +0100
+
+    Use deleted copy/assignment instead of ACE_Copy_Disabled
+    
+        * ACE/ace/Event_Handler_Handle_Timeout_Upcall.cpp:
+        * ACE/ace/Event_Handler_Handle_Timeout_Upcall.h:
+
+commit 692708de6220a181c569155bac91c76e7a2f7e14
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 2 15:36:49 2022 +0100
+
+    Use nullptr
+    
+        * ACE/ace/Node.h:
+
+commit af15dd3a4ed854d8c1c7a74a5f0b004b5d768be4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 2 15:36:37 2022 +0100
+
+    Use deleted copy/assignment instead of Copy_Disabled
+    
+        * ACE/ace/Notification_Queue.cpp:
+        * ACE/ace/Notification_Queue.h:
+
+commit 98dcdf61448837f074787eaf47096f05bb2ade28
+Merge: 8d5a781cb31 44e18307771
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 25 20:29:57 2022 +0100
+
+    Merge pull request #1773 from jwillemsen/jwi-logging
+    
+    Logging changes, updated bczar instructions
+
+commit 341eb88adc828eef2bbdc5468785224c5315d1b2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 21 13:41:15 2022 +0100
+
+    Remove duplicate semi-colon
+
+commit a00e497e796b897df46baabad79139219439d162
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 20 10:18:52 2022 +0100
+
+    No need to manually create a PR for conda-forge, they have a bot doing that automatically
+    
+        * ACE/docs/bczar/bczar.html:
+
+commit 3092f6ec02e1d9e47c8eb0f08fb5f6f89ece22ae
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 20 10:18:27 2022 +0100
+
+    Remove ciao-users/ciao-announce from the default list to inform about a release
+    
+        * ACE/docs/bczar/bczar.html:
+
+commit 45c001e0f6affa2fba6f4698e9adb60036599dc1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 20 09:52:54 2022 +0100
+
+    Make x.0.6 public
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * ACE/html/README:
+        * TAO/NEWS:
+
+commit 874207d9671c61649e134ae1f5a90ba8b751686b
+Merge: 90cf05a0f0a fd284a0a226
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Sat Jan 15 18:45:33 2022 +0100
+
+    Merge branch 'master' of https://github.com/esohns/ACE_TAO into missing_ctor_initializers
+
+commit 90cf05a0f0a9cddd1a5c385c44546cb8dd2c7b81
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Sat Jan 15 18:43:23 2022 +0100
+
+    added some missing ctor initializations
+
+commit fd284a0a226f36b48284ff72c345a8a09f9767d6
+Merge: 291fa1d2c50 a8372419d0e
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Sat Jan 15 18:35:31 2022 +0100
+
+    Merge branch 'DOCGroup:master' into master
+
+commit 291fa1d2c50c97858de5596782c28bb9e88c370f
+Merge: a12b031aa92 d98b9462f07
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Sat Dec 18 22:40:56 2021 +0100
+
+    Merge branch 'DOCGroup:master' into master
+
+commit a12b031aa9247ed10816e59fcb1e7f33a947b30c
+Merge: 40700d4cc63 c012b2e2c49
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Tue Nov 30 21:18:13 2021 +0100
+
+    Merge branch 'DOCGroup:master' into master
+
+commit 40700d4cc63c82e5cc35d655ba6fabe115cc1f18
+Merge: adbd935d882 abba742d46e
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Sat Nov 13 20:51:33 2021 +0100
+
+    Merge branch 'DOCGroup:master' into master
+
+commit adbd935d882ca0921b0df38dcedff48fd466a4ab
+Merge: c50fbc25f4c 069d2366ec4
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Wed Nov 10 19:58:18 2021 +0100
+
+    Merge branch 'DOCGroup:master' into master
+
+commit c50fbc25f4ce0422a91e5f41382eca852b53e7d8
+Merge: 3152d6827c3 713b686b403
+Author: Erik Sohns <esohns@users.noreply.github.com>
+Date:   Sun Oct 17 00:43:02 2021 +0200
+
+    Merge branch 'DOCGroup:master' into master
+
+commit 3152d6827c3a93a811fe862c93bd36a329e1037a
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Mon Oct 4 23:09:52 2021 +0200
+
+    fixed potential leak in out-of-memory situation

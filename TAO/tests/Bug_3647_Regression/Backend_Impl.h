@@ -5,7 +5,6 @@
 
 namespace Bug_3647_Regression
 {
-
 /**
  * @class Backend
  *
@@ -30,7 +29,6 @@ private:
   /// Use this flag to decide if the program should produce any output.
   bool verbose_;
 };
-
 } // namespace Bug_3647_Regression
 
 #endif // Bug_3647_Regression_Backend_h

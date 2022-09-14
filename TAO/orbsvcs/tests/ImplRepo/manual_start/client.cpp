@@ -33,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-do_test (void)
+do_test ()
 {
   CORBA::Object_var obj = orb->string_to_object (ior);
   Test_var test = Test::_narrow( obj.in () );
@@ -70,7 +70,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   }
 
   try {
-
     if (parse_args (argc, argv) != 0)
       return 1;
 

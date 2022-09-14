@@ -1,7 +1,7 @@
 // ========================================================================
 //
 // = FILE
-//     Simple_Dyanmic.h
+//     Simple_Dynamic.h
 //
 // = DESCRIPTION
 //    Class that implements a really simple dynamic property.
@@ -25,7 +25,6 @@ template<class T>
 class TAO_Simple_Dynamic_Property : public TAO_Dynamic_Property
 {
 public:
-
   TAO_Simple_Dynamic_Property (const T& dp);
 
   virtual CORBA::Any* evalDP (const char* /* name */,

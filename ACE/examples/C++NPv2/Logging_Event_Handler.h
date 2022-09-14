@@ -41,7 +41,7 @@ public:
                             ACE_Reactor_Mask = 0);
 
   // Return socket handle of the contained <Logging_Handler>.
-  virtual ACE_HANDLE get_handle (void) const {
+  virtual ACE_HANDLE get_handle () const {
     // Need a non-const reference to call peer(), but that's
     // safe since we call a const method using it.
     Logging_Handler& h =

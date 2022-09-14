@@ -6,7 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class SERVANT_TYPE>
-TAO_Notify_Proxy_T<SERVANT_TYPE>::TAO_Notify_Proxy_T (void)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::TAO_Notify_Proxy_T ()
 {
   // Any object that is used by the POA gets a reference count of 1 at construction
   this->_incr_refcnt();
@@ -18,19 +18,19 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::~TAO_Notify_Proxy_T ()
 }
 
 template <class SERVANT_TYPE> PortableServer::Servant
-TAO_Notify_Proxy_T<SERVANT_TYPE>::servant (void)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::servant ()
 {
   return this;
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy_T<SERVANT_TYPE>::_add_ref (void)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::_add_ref ()
 {
   this->_incr_refcnt ();
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy_T<SERVANT_TYPE>::_remove_ref (void)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::_remove_ref ()
 {
   this->_decr_refcnt ();
 }
@@ -42,7 +42,7 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::validate_event_qos (const CosNotification::QoS
 }
 
 template <class SERVANT_TYPE> CosNotification::QoSProperties*
-TAO_Notify_Proxy_T<SERVANT_TYPE>::get_qos (void)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::get_qos ()
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -101,7 +101,7 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::get_filter (CosNotifyFilter::FilterID filter)
 }
 
 template <class SERVANT_TYPE> CosNotifyFilter::FilterIDSeq*
-TAO_Notify_Proxy_T<SERVANT_TYPE>::get_all_filters (void)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::get_all_filters ()
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -110,7 +110,7 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::get_all_filters (void)
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy_T<SERVANT_TYPE>::remove_all_filters (void)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::remove_all_filters ()
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());

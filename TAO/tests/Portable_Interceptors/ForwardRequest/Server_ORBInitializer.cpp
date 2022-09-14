@@ -7,7 +7,7 @@
 
 #include "tao/ORB_Constants.h"
 
-Server_ORBInitializer::Server_ORBInitializer (void)
+Server_ORBInitializer::Server_ORBInitializer ()
   : server_interceptor_ ()
 {
 }
@@ -38,7 +38,7 @@ Server_ORBInitializer::post_init (
 }
 
 PortableInterceptor::ServerRequestInterceptor_ptr
-Server_ORBInitializer::server_interceptor (void)
+Server_ORBInitializer::server_interceptor ()
 {
   return
     PortableInterceptor::ServerRequestInterceptor::_duplicate (

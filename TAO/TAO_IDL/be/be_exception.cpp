@@ -55,7 +55,7 @@ be_exception::be_exception (UTL_ScopedName *n,
 }
 
 void
-be_exception::destroy (void)
+be_exception::destroy ()
 {
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();
@@ -68,8 +68,3 @@ be_exception::accept (be_visitor *visitor)
 {
   return visitor->visit_exception (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_exception)
-IMPL_NARROW_FROM_SCOPE (be_exception)

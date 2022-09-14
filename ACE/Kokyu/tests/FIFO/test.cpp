@@ -1,10 +1,9 @@
-#include "ace/Auto_Ptr.h"
-
 #include "Kokyu.h"
 #include "ace/Task.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_strings.h"
+#include <memory>
 
 ACE_CString sched_policy_str = "fifo";
 
@@ -98,7 +97,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR** argv)
   attrs.config_info_set_ = config_info;
 
   ACE_DEBUG ((LM_DEBUG, "before create_dispatcher\n" ));
-  auto_ptr<Kokyu::Dispatcher>
+  std::unique_ptr<Kokyu::Dispatcher>
     disp (Kokyu::Dispatcher_Factory::create_dispatcher (attrs));
 
   ACE_ASSERT (disp.get() != 0);

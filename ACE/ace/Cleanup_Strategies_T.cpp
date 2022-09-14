@@ -12,7 +12,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER>
-ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>::~ACE_Cleanup_Strategy (void)
+ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>::~ACE_Cleanup_Strategy ()
 {
 }
 
@@ -72,7 +72,6 @@ ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (
 
       if (container.unbind (*key) == -1)
         return -1;
-
     }
 
   return 0;

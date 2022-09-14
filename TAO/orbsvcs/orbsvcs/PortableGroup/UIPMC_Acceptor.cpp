@@ -28,7 +28,7 @@ TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (
 {
 }
 
-TAO_UIPMC_Acceptor::~TAO_UIPMC_Acceptor (void)
+TAO_UIPMC_Acceptor::~TAO_UIPMC_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -70,7 +70,7 @@ TAO_UIPMC_Acceptor::is_collocated (const TAO_Endpoint *)
 }
 
 int
-TAO_UIPMC_Acceptor::close (void)
+TAO_UIPMC_Acceptor::close ()
 {
   return 0;
 }
@@ -363,7 +363,7 @@ TAO_UIPMC_Acceptor::dotted_decimal_address (
 }
 
 CORBA::ULong
-TAO_UIPMC_Acceptor::endpoint_count (void)
+TAO_UIPMC_Acceptor::endpoint_count ()
 {
   return this->endpoint_count_;
 }

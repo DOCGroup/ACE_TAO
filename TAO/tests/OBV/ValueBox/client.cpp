@@ -125,7 +125,6 @@ int simple_box_test ()
     CORBA::remove_ref (p);
 
     return fail;
-
 }
 
 //
@@ -154,7 +153,7 @@ int box_test_ref (BoxT *valuebox, UT &val1, UT &val2)
     return fail;
 }
 
-int test_basic (void)
+int test_basic ()
 {
     int fail = 0;
 
@@ -273,7 +272,6 @@ int test_basic_invocations (Test * test_object)
 
     try
       {
-
         //============================================================
         // Test method invocation with boxed value
         //============================================================
@@ -465,7 +463,6 @@ int test_boxed_string_invocations (Test * test_object)
 
     try
       {
-
         //============================================================
         // Test method invocation with boxed value
         //============================================================
@@ -522,7 +519,7 @@ int test_boxed_string_invocations (Test * test_object)
 //
 // Test boxed sequence types.
 //
-int test_boxed_sequence (void)
+int test_boxed_sequence ()
 {
   int fail = 0;
   try
@@ -612,7 +609,6 @@ int test_boxed_sequence (void)
 }
 
 
-
 int test_boxed_sequence_invocations (Test * test_object)
 {
   int fail = 0;
@@ -622,7 +618,6 @@ int test_boxed_sequence_invocations (Test * test_object)
 
   try
     {
-
       //============================================================
       // Test method invocation with boxed value
       //============================================================
@@ -703,7 +698,7 @@ int test_boxed_sequence_invocations (Test * test_object)
 // Test a boxed struct type. This is not templated since the struct
 // members are accessed by name, so this is specific to a certain IDL.
 //
-int test_boxed_struct (void)
+int test_boxed_struct ()
 {
   int fail = 0;
 
@@ -802,14 +797,12 @@ int test_boxed_struct (void)
 }
 
 
-
 int test_boxed_struct_invocations (Test * test_object)
 {
   int fail = 0;
 
   try
     {
-
       //============================================================
       // Fixed struct
       // Test method invocation with boxed value
@@ -1026,7 +1019,6 @@ int test_boxed_array()
 }
 
 
-
 int test_boxed_array_invocations (Test * test_object)
 {
   int fail = 0;
@@ -1173,7 +1165,6 @@ int test_boxed_array_invocations (Test * test_object)
       p4->_remove_ref ();
       p5->_remove_ref ();
       p6->_remove_ref ();
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -1270,7 +1261,6 @@ int test_boxed_union()
 
   return fail;
 }
-
 
 
 
@@ -1404,7 +1394,6 @@ int test_boxed_union_invocations (Test * test_object)
       p4->_remove_ref ();
       p5->_remove_ref ();
       p6->_remove_ref ();
-
     }
   catch (const CORBA::Exception& ex)
     {

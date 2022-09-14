@@ -38,7 +38,7 @@ class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_Adapter_Impl
   : public TAO_TypeCodeFactory_Adapter
 {
 public:
-  virtual ~TAO_TypeCodeFactory_Adapter_Impl (void);
+  virtual ~TAO_TypeCodeFactory_Adapter_Impl ();
 
   virtual CORBA::TypeCode_ptr create_struct_tc (
       const char *id,
@@ -181,7 +181,7 @@ public:
 
 
   /// Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 static int

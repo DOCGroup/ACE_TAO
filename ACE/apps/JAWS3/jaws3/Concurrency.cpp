@@ -20,7 +20,7 @@ typedef ACE_Singleton<ACE_Message_Block, ACE_SYNCH_NULL_MUTEX>
 
 
 int
-JAWS_Concurrency_Impl::svc (void)
+JAWS_Concurrency_Impl::svc ()
 {
   JAWS_Protocol_Handler *ph;
 
@@ -84,7 +84,7 @@ JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 
 
 void
-JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>::shutdown (void)
+JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>::shutdown ()
 {
   ACE_Message_Block *empty_mb = JAWS_Empty_Message_Block::instance ();
   JAWS_CONCURRENCY_TASK *task;

@@ -8,8 +8,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 
-
-
 // Number of times to allow signal to execute until we quit.
 static size_t signal_count = 10;
 
@@ -24,9 +22,7 @@ my_signal_function (int sig)
 class My_Handler : public ACE_Event_Handler
 {
 public:
-  virtual int handle_signal (int sig,
-                             siginfo_t *,
-                             ucontext_t *)
+  virtual int handle_signal (int sig, siginfo_t *, ucontext_t *)
   {
     // @@ Note that this code is not portable to all OS platforms
     // since it uses print statements within signal handler context.

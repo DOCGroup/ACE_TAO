@@ -8,13 +8,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Here's the simple-minded constructor.
 
 ACE_INLINE
-ACE_SOCK_Dgram::ACE_SOCK_Dgram (void)
+ACE_SOCK_Dgram::ACE_SOCK_Dgram ()
 {
   ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
 }
 
 ACE_INLINE
-ACE_SOCK_Dgram::~ACE_SOCK_Dgram (void)
+ACE_SOCK_Dgram::~ACE_SOCK_Dgram ()
 {
   ACE_TRACE ("ACE_SOCK_Dgram::~ACE_SOCK_Dgram");
 }

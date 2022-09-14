@@ -23,12 +23,11 @@ class TAO249_ServerRequest_Interceptor2
   public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
-  TAO249_ServerRequest_Interceptor2 (void);
+  TAO249_ServerRequest_Interceptor2 ();
 
   /// Destructor.
-  ~TAO249_ServerRequest_Interceptor2 (void);
+  ~TAO249_ServerRequest_Interceptor2 ();
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -68,10 +67,9 @@ public:
   CORBA::Object_var server_iogr_;
 
 protected:
-  TimeBase::TimeT get_now (void);
+  TimeBase::TimeT get_now ();
 
 private:
-
   CORBA::ORB_var orb_;
 
   CORBA::Boolean expired_;

@@ -78,7 +78,7 @@ Server::Server (int , ACE_TCHAR* argv[])
       PortableServer::POA::_narrow (obj.in ());
     PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
-    ACE_auto_ptr_reset (test_i_, new Test_i (orb_.in()));
+    test_i_.reset (new Test_i (orb_.in()));
     PortableServer::ObjectId_var oid =
       root_poa->activate_object (test_i_.get());
     obj = root_poa->id_to_reference (oid.in());
@@ -184,10 +184,10 @@ Server::shutdown ()
 
   try {
     if (!CORBA::is_nil (management_orb_.in())) {
-    management_orb_->shutdown (1);
+    management_orb_->shutdown (true);
       ACE_OS::sleep (1); // Let management thread clear out
     }
-    ACE_auto_ptr_reset (test_i_, (Test_i*)0);
+    test_i_.reset ((Test_i*)0);
 
     if (!CORBA::is_nil (orb_.in())) {
     orb_->destroy ();
@@ -201,7 +201,6 @@ Server::shutdown ()
   catch( CORBA::Exception& ex) {
     ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %s"
                 , ex._info().c_str()));
-
   }
 
   shutdown_ = true;

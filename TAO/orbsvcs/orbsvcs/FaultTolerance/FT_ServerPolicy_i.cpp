@@ -10,7 +10,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
@@ -38,14 +37,14 @@ TAO_FT_Heart_Beat_Enabled_Policy::create (const CORBA::Any& val)
 }
 
 CORBA::PolicyType
-TAO_FT_Heart_Beat_Enabled_Policy::policy_type (void)
+TAO_FT_Heart_Beat_Enabled_Policy::policy_type ()
 {
   return FT::HEARTBEAT_ENABLED_POLICY;
 }
 
 
 CORBA::Policy_ptr
-TAO_FT_Heart_Beat_Enabled_Policy::copy (void)
+TAO_FT_Heart_Beat_Enabled_Policy::copy ()
 {
   TAO_FT_Heart_Beat_Enabled_Policy * tmp = 0;
   ACE_NEW_THROW_EX (tmp, TAO_FT_Heart_Beat_Enabled_Policy (*this),
@@ -56,7 +55,7 @@ TAO_FT_Heart_Beat_Enabled_Policy::copy (void)
 }
 
 TAO_FT_Heart_Beat_Enabled_Policy *
-TAO_FT_Heart_Beat_Enabled_Policy::clone (void) const
+TAO_FT_Heart_Beat_Enabled_Policy::clone () const
 {
   TAO_FT_Heart_Beat_Enabled_Policy *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -66,7 +65,7 @@ TAO_FT_Heart_Beat_Enabled_Policy::clone (void) const
 }
 
 void
-TAO_FT_Heart_Beat_Enabled_Policy::destroy (void)
+TAO_FT_Heart_Beat_Enabled_Policy::destroy ()
 {
 }
 

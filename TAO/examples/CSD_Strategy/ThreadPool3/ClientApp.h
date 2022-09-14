@@ -9,7 +9,6 @@
 class ClientApp
 {
   public:
-
     ClientApp();
     ~ClientApp();
 
@@ -17,7 +16,6 @@ class ClientApp
 
 
   private:
-
     int parse_args(int argc, ACE_TCHAR* argv[]);
     void usage_statement();
 

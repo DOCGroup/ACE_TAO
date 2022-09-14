@@ -132,7 +132,6 @@ test_reference_to_servant_active_object(PortableServer::POA_ptr root_poa)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB.

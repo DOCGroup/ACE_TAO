@@ -37,11 +37,8 @@ ImR is Darrell Brunsch
 @<<a href="mailto:brunsch@cs.wustl.edu">brunsch@cs.wustl.edu</a>@>.
 The current version is developed by Phil Mesnier
 @<<a href="mailto:mesnier_p@ociweb.com">mesnier_p@ociweb.com</a>@>.
-You can reach us by either email (which is better), or through the
-<a href="http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html">ACE mailing list</a>
-@<<a href="mailto:ace-users@list.isis.vanderbilt.edu">ace-users@list.isis.vanderbilt.edu</a>@>.
-If you use the mailing list, it is required to join it before sending
-a question since responses are usually just replied back to the group.
+You can reach us at the ACE/TAO
+<a href="https://github.com/DOCGroup/ACE_TAO">github project</a>.
 
 The NT Service part of the ImR was developed by Jeff Parsons @<<a
 href="mailto:parsons@cs.wustl.edu">parsons@cs.wustl.edu</a>@>.  He can

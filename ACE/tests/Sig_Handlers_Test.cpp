@@ -23,7 +23,6 @@
 #include "ace/SString.h"
 
 
-
 class Test_SIGINT_Handler : public ACE_Event_Handler
 {
 public:
@@ -38,12 +37,12 @@ public:
     Test_SIGINT_Handler::registration_count_++;
   }
 
-  ~Test_SIGINT_Handler()
+  ~Test_SIGINT_Handler() override
   {
     ACE_TEST_ASSERT (Test_SIGINT_Handler::handle_signal_count_ == Test_SIGINT_Handler::registration_count_);
   }
 
-  virtual int handle_signal (int signal, siginfo_t *, ucontext_t *)
+  int handle_signal (int signal, siginfo_t *, ucontext_t *) override
   {
     ACE_TEST_ASSERT (signal == SIGINT);
     ACE_DEBUG ((LM_DEBUG,
@@ -77,7 +76,7 @@ public:
                 result));
   }
 
-  virtual int handle_signal (int signal, siginfo_t *, ucontext_t *)
+  int handle_signal (int signal, siginfo_t *, ucontext_t *) override
   {
     ACE_TEST_ASSERT (signal == SIGINT);
     ACE_DEBUG ((LM_DEBUG,

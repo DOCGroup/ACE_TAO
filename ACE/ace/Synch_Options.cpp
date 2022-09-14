@@ -12,7 +12,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE (ACE_Synch_Options)
 
 void
-ACE_Synch_Options::dump (void) const
+ACE_Synch_Options::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Synch_Options::dump");
@@ -74,7 +74,7 @@ ACE_Synch_Options::operator= (unsigned long option)
 }
 
 const ACE_Time_Value &
-ACE_Synch_Options::timeout (void) const
+ACE_Synch_Options::timeout () const
 {
   ACE_TRACE ("ACE_Synch_Options::timeout");
   return this->timeout_;
@@ -88,14 +88,14 @@ ACE_Synch_Options::timeout (const ACE_Time_Value &tv)
 }
 
 const ACE_Time_Value *
-ACE_Synch_Options::time_value (void) const
+ACE_Synch_Options::time_value () const
 {
   ACE_TRACE ("ACE_Synch_Options::time_value");
   return (*this)[USE_TIMEOUT] ? &this->timeout_ : 0;
 }
 
 const void *
-ACE_Synch_Options::arg (void) const
+ACE_Synch_Options::arg () const
 {
   ACE_TRACE ("ACE_Synch_Options::arg");
   return this->arg_;

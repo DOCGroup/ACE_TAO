@@ -63,8 +63,8 @@ class TAO_EC_Gateway_IIOP_Factory;
 class TAO_RTEvent_Serv_Export TAO_EC_Gateway_IIOP : public TAO_EC_Gateway
 {
 public:
-  TAO_EC_Gateway_IIOP (void);
-  virtual ~TAO_EC_Gateway_IIOP (void);
+  TAO_EC_Gateway_IIOP ();
+  virtual ~TAO_EC_Gateway_IIOP ();
 
   /**
    * To do its job this class requires to know the local and remote ECs it will
@@ -75,25 +75,25 @@ public:
             RtecEventChannelAdmin::EventChannel_ptr consumer_ec);
 
   /// The channel is disconnecting.
-  void disconnect_push_supplier (void);
+  void disconnect_push_supplier ();
 
   /// The channel is disconnecting.
-  void disconnect_push_consumer (void);
+  void disconnect_push_consumer ();
 
   /// This is the consumer side behavior, it pushes the events to the
   /// local event channel.
   void push (const RtecEventComm::EventSet &events);
 
   /// Disconnect and shutdown the gateway
-  int shutdown (void);
+  int shutdown ();
 
   // The following methods are documented in the base class.
-  virtual void close (void);
+  virtual void close ();
   virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub);
   virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub);
 
   // Let the gateway reconnect itself to the consumer ec given exisiting QoS
-  void reconnect_consumer_ec(void);
+  void reconnect_consumer_ec();
 
   /// Check whether the consumer event channel is non existent or not
   CORBA::Boolean consumer_ec_non_existent (CORBA::Boolean_out disconnected);
@@ -104,33 +104,33 @@ public:
    * the consumer proxy administration in case we know that the consumers
    * are all unreachable.
    */
-  void cleanup_consumer_proxies (void);
+  void cleanup_consumer_proxies ();
 
   /// Cleanup the connection to the consumer ec. Doesn't call anything on the
   /// ec again, just set the object to nil
-  int cleanup_consumer_ec (void);
+  int cleanup_consumer_ec ();
 
   /// Cleanup the connection to the supplier ec. Doesn't call anything on the
   /// ec again, just set the object to nil
-  int cleanup_supplier_ec (void);
+  int cleanup_supplier_ec ();
 
   /// Suspend the connection to the supplier ec
-  void suspend_supplier_ec (void);
+  void suspend_supplier_ec ();
 
   /// Resume the connection to the supplier ec
-  void resume_supplier_ec (void);
+  void resume_supplier_ec ();
 
 private:
-  void close_i (void);
+  void close_i ();
 
   /// Disconnect the supplier proxy
-  void disconnect_supplier_proxy_i (void);
+  void disconnect_supplier_proxy_i ();
 
   /// Disconnect all consumer proxies
-  void disconnect_consumer_proxies_i (void);
+  void disconnect_consumer_proxies_i ();
 
   /// Remove all consumer proxies without calling disconnect on them
-  void cleanup_consumer_proxies_i (void);
+  void cleanup_consumer_proxies_i ();
 
   void update_consumer_i (const RtecEventChannelAdmin::ConsumerQOS& sub);
 
@@ -138,15 +138,15 @@ private:
   void open_i (const RtecEventChannelAdmin::ConsumerQOS& sub);
 
   /// Helper method to see if consumer ec is connected
-  CORBA::Boolean is_consumer_ec_connected_i (void) const;
+  CORBA::Boolean is_consumer_ec_connected_i () const;
 
   /// Push the @a event to the @a consumer.
   void push_to_consumer (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
                          const RtecEventComm::EventSet& event);
 
-  void cleanup_consumer_ec_i (void);
+  void cleanup_consumer_ec_i ();
 
-  void cleanup_supplier_ec_i (void);
+  void cleanup_supplier_ec_i ();
 
 protected:
   /// Do the real work in init()
@@ -233,7 +233,6 @@ protected:
   /// proxy push consumer, if 0, we only use one proxy push consumer (the
   /// default) for all source ids.
   int use_consumer_proxy_map_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

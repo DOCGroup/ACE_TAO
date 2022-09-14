@@ -3,12 +3,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Control_Registry*
-TAO_Control_Registry::instance (void)
+TAO_Control_Registry::instance ()
 {
   return TAO_Singleton<TAO_Control_Registry, TAO_SYNCH_MUTEX>::instance ();
 }
 
-TAO_Control_Registry::~TAO_Control_Registry (void)
+TAO_Control_Registry::~TAO_Control_Registry ()
 {
   ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
 
@@ -67,7 +67,7 @@ TAO_Control_Registry::remove (const ACE_CString& name)
 }
 
 const TAO_Control_Registry::NameList&
-TAO_Control_Registry::names (void)
+TAO_Control_Registry::names ()
 {
   if (this->name_cache_.length () == 0)
     {

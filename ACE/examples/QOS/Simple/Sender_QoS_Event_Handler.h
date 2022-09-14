@@ -25,25 +25,24 @@ class Sender_QoS_Event_Handler : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Sender_QoS_Event_Handler (void);
+  Sender_QoS_Event_Handler ();
 
   /// Constructor.
   Sender_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos,
                             ACE_QoS_Session *qos_session);
 
   /// Destructor.
-  ~Sender_QoS_Event_Handler (void);
+  ~Sender_QoS_Event_Handler ();
 
   /// Override this to return the handle of the Dgram_Mcast
   /// that we are using.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Handles a QoS event. Right now, just
   /// prints a message.
   virtual int handle_qos (ACE_HANDLE fd);
 
 private:
-
   ACE_SOCK_Dgram_Mcast_QoS dgram_mcast_qos_;
   ACE_QoS_Session *qos_session_;
 };

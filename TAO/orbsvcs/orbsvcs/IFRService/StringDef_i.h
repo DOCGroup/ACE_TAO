@@ -44,7 +44,7 @@ public:
   TAO_StringDef_i (TAO_Repository_i *repoy);
 
   /// Destructor.
-  virtual ~TAO_StringDef_i (void);
+  virtual ~TAO_StringDef_i ();
 
   /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();

@@ -8,5 +8,4 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 #endif /* TAO_ESF_REFCOUNT_GUARD_CPP */

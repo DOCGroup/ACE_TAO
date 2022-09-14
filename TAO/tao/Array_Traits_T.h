@@ -18,7 +18,6 @@ namespace TAO
 {
 namespace details
 {
-
 template <typename T_forany>
 struct array_traits
 {
@@ -37,7 +36,7 @@ struct array_traits
     TAO::Array_Traits<forany_type>::free (value);
   }
 
-  inline static slice_type * alloc (void)
+  inline static slice_type * alloc ()
   {
     return TAO::Array_Traits<forany_type>::alloc ();
   }
@@ -87,7 +86,6 @@ struct array_traits
     copy_range(begin, end, dst);
   }
 };
-
 } // namespace details
 } // namespace CORBA
 

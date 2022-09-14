@@ -2,5 +2,4 @@
 
 ACEXML_DTD_Manager::~ACEXML_DTD_Manager ()
 {
-
 }

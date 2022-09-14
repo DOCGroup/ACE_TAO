@@ -41,7 +41,7 @@ template<class Object>
 class TAO_ESF_Worker
 {
 public:
-  virtual ~TAO_ESF_Worker (void);
+  virtual ~TAO_ESF_Worker ();
 
   /// Used by the collection to inform the worker
   /// the number of proxies in the collection.

@@ -77,14 +77,14 @@ ACE_hrtime_t starttime;
 class High_Priority_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
-  High_Priority_Task (void);
-  ~High_Priority_Task (void);
+  High_Priority_Task ();
+  ~High_Priority_Task ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void *);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int svc (void);
+  int svc ();
   int done () const { return done_; }
   void print_times () const;
 
@@ -94,7 +94,7 @@ private:
   u_long *time_;
 };
 
-High_Priority_Task::High_Priority_Task (void)
+High_Priority_Task::High_Priority_Task ()
   : ACE_Task<ACE_SYNCH> (ACE_Thread_Manager::instance ()),
     priority_ (ACE_Sched_Params::next_priority (
                  ACE_SCHED_FIFO,
@@ -106,7 +106,7 @@ High_Priority_Task::High_Priority_Task (void)
   ACE_NEW (time_, u_long[high_iterations]);
 }
 
-High_Priority_Task::~High_Priority_Task (void)
+High_Priority_Task::~High_Priority_Task ()
 {
   delete [] time_;
   time_ = 0;
@@ -141,7 +141,7 @@ High_Priority_Task::open (void *)
 }
 
 int
-High_Priority_Task::svc (void)
+High_Priority_Task::svc ()
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -199,7 +199,7 @@ public:
   int open (void *);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int svc (void);
+  int svc ();
 
 private:
   int priority_;
@@ -242,7 +242,7 @@ Low_Priority_Task::open (void *)
 }
 
 int
-Low_Priority_Task::svc (void)
+Low_Priority_Task::svc ()
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);

@@ -11,7 +11,7 @@ Ping_Death_Request_Interceptor::Ping_Death_Request_Interceptor (int *counter)
 {
 }
 
-Ping_Death_Request_Interceptor::~Ping_Death_Request_Interceptor (void)
+Ping_Death_Request_Interceptor::~Ping_Death_Request_Interceptor ()
 {
 }
 
@@ -22,13 +22,13 @@ Ping_Death_Request_Interceptor::set_poa (PortableServer::POA_ptr poa)
 }
 
 char *
-Ping_Death_Request_Interceptor::name (void)
+Ping_Death_Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Ping_Death_Request_Interceptor::destroy (void)
+Ping_Death_Request_Interceptor::destroy ()
 {
 }
 
@@ -63,7 +63,6 @@ Ping_Death_Request_Interceptor::receive_request_service_contexts (
   throw ::CORBA::TRANSIENT
     ( CORBA::SystemException::_tao_minor_code (TAO_POA_HOLDING, 1),
       CORBA::COMPLETED_NO);
-
 }
 
 void

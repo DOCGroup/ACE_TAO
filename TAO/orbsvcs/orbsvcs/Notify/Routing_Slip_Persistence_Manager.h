@@ -130,7 +130,7 @@ private:
       };
 
     Block_Header(Header_Type type);
-    virtual ~Block_Header (void);
+    virtual ~Block_Header ();
     virtual size_t extract_header(Persistent_Storage_Block& psb,
       size_t offset = 0);
     virtual size_t put_header(Persistent_Storage_Block& psb,
@@ -255,7 +255,6 @@ private:
   ACE_Message_Block * event_mb_;
   ACE_Message_Block * routing_slip_mb_;
 };
-
 } /* namespace TAO_Notify */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

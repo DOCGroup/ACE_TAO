@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE u_char
-ACE_ATM_Addr::get_selector (void) const
+ACE_ATM_Addr::get_selector () const
 {
   ACE_TRACE ("ACE_ATM_Addr::get_selector");
 #if defined (ACE_HAS_FORE_ATM_XTI)

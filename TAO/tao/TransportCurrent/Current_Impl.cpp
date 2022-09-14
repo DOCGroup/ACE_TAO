@@ -20,7 +20,6 @@ namespace TAO
 {
   namespace Transport
   {
-
     /// ctor
     Current_Impl::Current_Impl (TAO_ORB_Core* core, size_t tss_slot_id)
       : core_ (core)
@@ -29,7 +28,7 @@ namespace TAO
     }
 
     /// dtor
-    Current_Impl::~Current_Impl (void)
+    Current_Impl::~Current_Impl ()
     {
     }
 
@@ -37,7 +36,7 @@ namespace TAO
     /// if, there was no "current" transport selected on the current
     /// thread.
     const TAO_Transport*
-    Current_Impl::transport (void) const
+    Current_Impl::transport () const
     {
       Transport_Selection_Guard* topguard =
         Transport_Selection_Guard::current (this->core_, this->tss_slot_id_);
@@ -52,7 +51,7 @@ namespace TAO
 
     /// Obtains the current transport's stats
     const TAO::Transport::Stats*
-    Current_Impl::transport_stats (void) const
+    Current_Impl::transport_stats () const
     {
       static const TAO::Transport::Stats dummy;
 
@@ -61,34 +60,34 @@ namespace TAO
       return (t==0 || t->stats () == 0) ? &dummy_transport_stats : t->stats ();
     }
 
-    CORBA::Long Current_Impl::id (void)
+    CORBA::Long Current_Impl::id ()
     {
       const TAO_Transport* t = this->transport ();
 
       return (t==0) ? 0 : static_cast<CORBA::Long> (t->id ());
     }
 
-    CounterT Current_Impl::bytes_sent (void)
+    CounterT Current_Impl::bytes_sent ()
     {
       return transport_stats ()->bytes_sent ();
     }
 
-    CounterT Current_Impl::bytes_received (void)
+    CounterT Current_Impl::bytes_received ()
     {
       return transport_stats ()->bytes_received ();
     }
 
-    CounterT Current_Impl::messages_sent (void)
+    CounterT Current_Impl::messages_sent ()
     {
       return transport_stats ()->messages_sent ();
     }
 
-    CounterT Current_Impl::messages_received (void)
+    CounterT Current_Impl::messages_received ()
     {
       return transport_stats ()->messages_received ();
     }
 
-    TimeBase::TimeT Current_Impl::open_since (void)
+    TimeBase::TimeT Current_Impl::open_since ()
     {
       TimeBase::TimeT msecs = 0;
       transport_stats ()->opened_since ().msec (msecs);

@@ -26,7 +26,7 @@ be_visitor_valuetype_obv_ci::be_visitor_valuetype_obv_ci (
 {
 }
 
-be_visitor_valuetype_obv_ci::~be_visitor_valuetype_obv_ci (void)
+be_visitor_valuetype_obv_ci::~be_visitor_valuetype_obv_ci ()
 {
 }
 
@@ -77,7 +77,7 @@ be_visitor_valuetype_obv_ci::visit_field (be_field *node)
   be_visitor_context new_ctx (*this->ctx_);
   be_visitor_valuetype_field_ci visitor (&new_ctx);
 
-  visitor.in_obv_space_ = 1;
+  visitor.in_obv_space_ = true;
 
   if (visitor.visit_field (node) == -1)
     {

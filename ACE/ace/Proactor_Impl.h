@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_PROACTOR_IMPL_H
 #define ACE_PROACTOR_IMPL_H
 #include /**/ "ace/pre.h"
@@ -39,13 +38,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_Export ACE_Proactor_Impl : public ACE_Event_Handler
 {
-
 public:
   /// Virtual destruction.
-  virtual ~ACE_Proactor_Impl (void);
+  virtual ~ACE_Proactor_Impl ();
 
   /// Close the IO completion port.
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /// This method adds the @a handle to the I/O completion port. This
   /// function is a no-op function for Unix systems.
@@ -67,22 +65,22 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events (void) = 0;
+  virtual int handle_events () = 0;
 
   /// Add wakeup dispatch threads (reinit).
-  virtual int wake_up_dispatch_threads (void) = 0;
+  virtual int wake_up_dispatch_threads () = 0;
 
   /// Close all dispatch threads.
   virtual int close_dispatch_threads (int wait) = 0;
 
   /// Get number of thread used as a parameter to CreatIoCompletionPort.
-  virtual size_t number_of_threads (void) const = 0;
+  virtual size_t number_of_threads () const = 0;
 
   /// Set number of thread used as a parameter to CreatIoCompletionPort.
   virtual void number_of_threads (size_t threads) = 0;
 
   /// Get the event handle.
-  virtual ACE_HANDLE get_handle (void) const = 0;
+  virtual ACE_HANDLE get_handle () const = 0;
 
   //
   // = Factory methods for the operations
@@ -91,33 +89,33 @@ public:
   // methods.
 
   /// Create the correct implementation class for doing Asynch_Read_Stream.
-  virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void) = 0;
+  virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream () = 0;
 
   /// Create the correct implementation class for doing Asynch_Write_Stream.
-  virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void) = 0;
+  virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream () = 0;
 
   /// Create the correct implementation class for doing Asynch_Read_File.
-  virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file (void) = 0;
+  virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file () = 0;
 
     /// Create the correct implementation class for doing Asynch_Write_File.
-  virtual ACE_Asynch_Write_File_Impl *create_asynch_write_file (void) = 0;
+  virtual ACE_Asynch_Write_File_Impl *create_asynch_write_file () = 0;
 
   /// Create the correct implementation class for doing Asynch_Accept.
-  virtual ACE_Asynch_Accept_Impl *create_asynch_accept (void) = 0;
+  virtual ACE_Asynch_Accept_Impl *create_asynch_accept () = 0;
 
   /// Create the correct implementation class for doing Asynch_Connect.
-  virtual ACE_Asynch_Connect_Impl *create_asynch_connect (void) = 0;
+  virtual ACE_Asynch_Connect_Impl *create_asynch_connect () = 0;
 
   /// Create the correct implementation class for doing Asynch_Transmit_File.
-  virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void) = 0;
+  virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file () = 0;
 
   /// Create the correct implementation class for doing
   /// Asynch_Read_Dgram.
-  virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram (void) = 0;
+  virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram () = 0;
 
   /// Create the correct implementation class for doing
   /// Asynch_Write_Dgram.
-  virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram (void) = 0;
+  virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram () = 0;
 
   //
   // = Factory methods for the results

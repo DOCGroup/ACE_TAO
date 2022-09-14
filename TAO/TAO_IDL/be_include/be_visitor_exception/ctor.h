@@ -24,7 +24,7 @@ class be_visitor_exception_ctor : public be_visitor_scope
 {
 public:
   be_visitor_exception_ctor (be_visitor_context *ctx);
-  ~be_visitor_exception_ctor (void);
+  ~be_visitor_exception_ctor ();
 
   virtual int post_process (be_decl *);
 
@@ -49,7 +49,6 @@ public:
 
 private:
   int emit_common (be_type *node);
-
 };
 
 #endif /* _BE_VISITOR_EXCEPTION_CTOR_H_ */

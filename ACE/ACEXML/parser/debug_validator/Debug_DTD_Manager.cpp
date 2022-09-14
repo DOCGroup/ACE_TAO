@@ -7,12 +7,10 @@
 
 ACEXML_Debug_DTD_Manager::ACEXML_Debug_DTD_Manager ()
 {
-
 }
 
 ACEXML_Debug_DTD_Manager::~ACEXML_Debug_DTD_Manager ()
 {
-
 }
 
 ACEXML_Element_Def_Builder *

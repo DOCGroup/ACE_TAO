@@ -42,8 +42,8 @@
 class ACE_Blob
 {
 public:
-  ACE_Blob (void);
-  ~ACE_Blob (void);
+  ACE_Blob ();
+  ~ACE_Blob ();
 
   /// initializes the class with the given filename, hostname and port.
   /// it should be called with the filename, before any read/write calls
@@ -81,7 +81,6 @@ private:
 
   /// The connector endpoint to initiate the client connection
   ACE_Connector<ACE_Blob_Handler, ACE_SOCK_CONNECTOR> connector_;
-
 };
 
 #endif /* ACE_BLOB_H */

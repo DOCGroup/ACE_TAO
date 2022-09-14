@@ -16,7 +16,7 @@ public:
   Echo(CORBA::ORB_ptr orb);
 
   virtual char * echo_operation(char const * the_input);
-  virtual void shutdown(void);
+  virtual void shutdown();
 
 private:
   CORBA::ORB_var orb_;

@@ -25,7 +25,7 @@ class HTTP_Config
 {
 public:
   /// Access the Singleton.
-  static HTTP_Config_Info *instance (void);
+  static HTTP_Config_Info *instance ();
 
 private:
   /// Store the Singleton.
@@ -41,28 +41,28 @@ class HTTP_Config_Info
 {
 friend class HTTP_Config;
 public:
-  HTTP_Config_Info (void);
-  ~HTTP_Config_Info (void);
+  HTTP_Config_Info ();
+  ~HTTP_Config_Info ();
 
   // Accessors to the information
 
   /// Where the root of the document tree begins.  This prevents
   /// clients from being able to examine your entire filesystem.
-  const char *document_root (void) const;
+  const char *document_root () const;
 
   /// A search path for CGI files.
-  const char *cgi_path (void) const;
+  const char *cgi_path () const;
 
   /// The directory which is appended to a home user directory, e.g.,
   /// ".www-docs" or "public_html".
-  const char *user_dir (void) const;
+  const char *user_dir () const;
 
   /// What is the default index file for a directory, e.g.,
   /// "index.html".
-  const char *dir_index (void) const;
+  const char *dir_index () const;
 
   /// Will the server support proxy requests?
-  int proxy_flag (void) const;
+  int proxy_flag () const;
 
 private:
   // = Accesors that can set the data

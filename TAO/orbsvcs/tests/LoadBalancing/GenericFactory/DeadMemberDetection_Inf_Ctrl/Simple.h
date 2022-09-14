@@ -14,21 +14,18 @@ class Simple
   : public virtual POA_Test::Simple
 {
 public:
-
   Simple (int server_id);
   /// Constructor
 
   /// Default _non_existent: always returns false.
-  virtual CORBA::Boolean _non_existent (void);
+  virtual CORBA::Boolean _non_existent ();
 
-  virtual char * get_string (void);
+  virtual char * get_string ();
 
-  virtual void exit (void);
+  virtual void exit ();
 
 private:
-
   int server_id_;
-
 };
 
 #if defined(_MSC_VER)

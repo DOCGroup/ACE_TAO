@@ -58,7 +58,7 @@ private:
 
 
   virtual void
-  disconnect_structured_push_consumer (void);
+  disconnect_structured_push_consumer ();
 
 private:
   ACE_thread_t thread_;

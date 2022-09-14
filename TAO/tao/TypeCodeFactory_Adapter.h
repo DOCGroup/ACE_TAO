@@ -64,7 +64,7 @@ namespace TAO
 class TAO_Export TAO_TypeCodeFactory_Adapter : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_TypeCodeFactory_Adapter (void);
+  virtual ~TAO_TypeCodeFactory_Adapter ();
 
   virtual CORBA::TypeCode_ptr create_struct_tc (
       const char *id,

@@ -84,7 +84,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
 }
 
 int
-TAO_LB_Component::fini (void)
+TAO_LB_Component::fini ()
 {
   return 0;
 }

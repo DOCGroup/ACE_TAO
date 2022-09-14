@@ -7,7 +7,6 @@
 #include "ace/Truncate.h"
 
 
-
 static void
 putline (const char *s)
 {

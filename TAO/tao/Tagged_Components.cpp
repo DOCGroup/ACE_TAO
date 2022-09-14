@@ -77,7 +77,7 @@ TAO_Tagged_Components::set_component_i (IOP::ComponentId tag,
   CORBA::Octet *buf = component.component_data.get_buffer ();
 
   for (const ACE_Message_Block *i = cdr.begin ();
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     {
       ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());

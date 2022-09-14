@@ -70,7 +70,7 @@ namespace TAO
       // IOP::IOR info, the call would create the info and return the
       // index that we need.
       CORBA::ULong index = 0;
-      IOP::IOR *ior_info = 0;
+      IOP::IOR *ior_info = nullptr;
 
       if (this->resolver_.stub ()->create_ior_info (ior_info, index) == -1)
         {
@@ -94,7 +94,7 @@ namespace TAO
   void
   Remote_Invocation::write_header (TAO_OutputCDR &out_stream)
   {
-    this->resolver_.transport ()->clear_translators (0, &out_stream);
+    this->resolver_.transport ()->clear_translators (nullptr, &out_stream);
 
     TAO_Target_Specification spec;
     this->init_target_spec (spec, out_stream);
@@ -107,7 +107,7 @@ namespace TAO
         throw ::CORBA::MARSHAL ();
       }
 
-    this->resolver_.transport ()->assign_translators (0, &out_stream);
+    this->resolver_.transport ()->assign_translators (nullptr, &out_stream);
   }
 
   Invocation_Status
@@ -125,7 +125,7 @@ namespace TAO
     TAO_Connection_Handler *connection_handler =
       this->resolver_.transport ()->connection_handler ();
 
-    if (nph != 0)
+    if (nph != nullptr)
       {
         // nph = 0, means DiffServ library is not used
         // nph = 0, means DiffServ library is used, and
@@ -138,7 +138,7 @@ namespace TAO
           this->resolver_.object ());
         connection_handler->set_dscp_codepoint (dscp);
       }
-    else if (tph != 0)
+    else if (tph != nullptr)
       {
         // If we execute this code, DiffServ library is not used,
         // but RTCORBA could be used.

@@ -22,7 +22,7 @@ class be_visitor_facet_exh
 public:
   be_visitor_facet_exh (be_visitor_context *ctx);
 
-  ~be_visitor_facet_exh (void);
+  ~be_visitor_facet_exh ();
 
   virtual int visit_provides (be_provides *node);
 

@@ -55,31 +55,31 @@ namespace ACE
 {
   // = ACE version information.
   /// e.g., the "6" in ACE 6.3.4
-  extern ACE_Export u_int major_version (void);
+  extern ACE_Export u_int major_version ();
 
   /// e.g., the "3" in ACE 6.3.4
-  extern ACE_Export u_int minor_version (void);
+  extern ACE_Export u_int minor_version ();
 
   /// e.g., the "4" in ACE 6.3.4
   /// Returns 0 for "stable" (non-micro) releases.
-  extern ACE_Export u_int micro_version (void);
+  extern ACE_Export u_int micro_version ();
 
   /// e.g., the "4" in ACE 6.3.4
   /// Returns 0 for "stable" (non-micro) releases.
-  extern ACE_Export u_int beta_version (void);
+  extern ACE_Export u_int beta_version ();
 
   // = C++ compiler version information.
   /// E.g., the "SunPro C++" in SunPro C++ 4.32.0
-  extern ACE_Export const ACE_TCHAR * compiler_name (void);
+  extern ACE_Export const ACE_TCHAR * compiler_name ();
 
   /// E.g., the "4" in SunPro C++ 4.32.0
-  extern ACE_Export u_int compiler_major_version (void);
+  extern ACE_Export u_int compiler_major_version ();
 
   /// E.g., the "32" in SunPro C++ 4.32.0
-  extern ACE_Export u_int compiler_minor_version (void);
+  extern ACE_Export u_int compiler_minor_version ();
 
   /// E.g., the "0" in SunPro C++ 4.32.0
-  extern ACE_Export u_int compiler_beta_version (void);
+  extern ACE_Export u_int compiler_beta_version ();
 
   /// Check if error indicates the process being out of handles (file
   /// descriptors).
@@ -388,7 +388,7 @@ namespace ACE
    * this process.  This maximum may be extended using
    * @c ACE::set_handle_limit.
    */
-  extern ACE_Export int max_handles (void);
+  extern ACE_Export int max_handles ();
 
   // = String functions
   /**
@@ -680,7 +680,7 @@ namespace ACE
   ACE_NAMESPACE_INLINE_FUNCTION u_char hex2byte (ACE_TCHAR c);
 
   // = Set/get the debug level.
-  extern ACE_Export bool debug (void);
+  extern ACE_Export bool debug ();
   extern ACE_Export void debug (bool onoff);
 
   /// Wrapper facade for @c select that uses @c ACE_Handle_Sets.

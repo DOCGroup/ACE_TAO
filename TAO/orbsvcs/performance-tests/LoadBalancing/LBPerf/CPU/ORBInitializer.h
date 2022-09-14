@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ORB_INITIALIZER_H
 #define ORB_INITIALIZER_H
 
@@ -30,7 +29,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
 class ServerRequestInterceptor;
 
 /**
@@ -45,9 +43,8 @@ class ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
-  ORBInitializer (void);
+  ORBInitializer ();
 
   /**
    * @name PortableInterceptor::ORBInitializer Methods
@@ -62,10 +59,9 @@ public:
   //@}
 
   /// Return a reference to the LoadAlert object.
-  TAO_LB_LoadAlert & load_alert (void);
+  TAO_LB_LoadAlert & load_alert ();
 
 private:
-
   /// The CosLoadBalancing::LoadAlert servant to be used at this
   /// location.
   /**
@@ -73,7 +69,6 @@ private:
    * used out of convencience.
    */
   TAO_LB_LoadAlert load_alert_;
-
 };
 
 

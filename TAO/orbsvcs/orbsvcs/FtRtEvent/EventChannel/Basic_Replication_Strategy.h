@@ -33,7 +33,7 @@ public:
   Basic_Replication_Strategy(bool mt);
   ~Basic_Replication_Strategy();
 
-  virtual void check_validity(void);
+  virtual void check_validity();
 
   virtual void replicate_request(const FTRT::State& state,
     RollbackOperation rollback,
@@ -41,9 +41,9 @@ public:
   virtual void add_member(const FTRT::ManagerInfo & info,
                           CORBA::ULong object_group_ref_version);
 
-  virtual int  acquire_read (void);
-  virtual int  acquire_write (void);
-  virtual int  release (void);
+  virtual int  acquire_read ();
+  virtual int  acquire_write ();
+  virtual int  release ();
 
 private:
   FTRT::SequenceNumber sequence_num_;

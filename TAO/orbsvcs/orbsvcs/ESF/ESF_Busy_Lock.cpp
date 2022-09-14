@@ -10,49 +10,49 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class T>
-int TAO_ESF_Busy_Lock_Adapter<T>::remove (void)
+int TAO_ESF_Busy_Lock_Adapter<T>::remove ()
 {
   return 0;
 }
 
 template<class T>
-int TAO_ESF_Busy_Lock_Adapter<T>::acquire (void)
+int TAO_ESF_Busy_Lock_Adapter<T>::acquire ()
 {
   return this->adaptee_->busy ();
 }
 
 template<class T>
-int TAO_ESF_Busy_Lock_Adapter<T>::tryacquire (void)
+int TAO_ESF_Busy_Lock_Adapter<T>::tryacquire ()
 {
   return this->adaptee_->busy ();
 }
 
 template<class T>
-int TAO_ESF_Busy_Lock_Adapter<T>::release (void)
+int TAO_ESF_Busy_Lock_Adapter<T>::release ()
 {
   return this->adaptee_->idle ();
 }
 
 template<class T>
-int TAO_ESF_Busy_Lock_Adapter<T>::acquire_read (void)
+int TAO_ESF_Busy_Lock_Adapter<T>::acquire_read ()
 {
   return this->adaptee_->busy ();
 }
 
 template<class T>
-int TAO_ESF_Busy_Lock_Adapter<T>::acquire_write (void)
+int TAO_ESF_Busy_Lock_Adapter<T>::acquire_write ()
 {
   return this->adaptee_->busy ();
 }
 
 template<class T>
-int TAO_ESF_Busy_Lock_Adapter<T>::tryacquire_read (void)
+int TAO_ESF_Busy_Lock_Adapter<T>::tryacquire_read ()
 {
   return this->adaptee_->busy ();
 }
 
 template<class T>
-int TAO_ESF_Busy_Lock_Adapter<T>::tryacquire_write (void)
+int TAO_ESF_Busy_Lock_Adapter<T>::tryacquire_write ()
 {
   return this->adaptee_->busy ();
 }

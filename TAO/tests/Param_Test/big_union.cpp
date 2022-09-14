@@ -19,19 +19,19 @@
 
 size_t Test_Big_Union::counter = 0;
 
-Test_Big_Union::Test_Big_Union (void)
+Test_Big_Union::Test_Big_Union ()
   : opname_ (CORBA::string_dup ("test_big_union"))
 {
 }
 
-Test_Big_Union::~Test_Big_Union (void)
+Test_Big_Union::~Test_Big_Union ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Big_Union::opname (void) const
+Test_Big_Union::opname () const
 {
   return this->opname_;
 }
@@ -86,7 +86,7 @@ Test_Big_Union::init_parameters (Param_Test_ptr objref)
 }
 
 int
-Test_Big_Union::reset_parameters (void)
+Test_Big_Union::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
   CORBA::ULong index = (counter++ % Test_Big_Union::BIG_UNION_N_BRANCHES);
@@ -228,13 +228,12 @@ Test_Big_Union::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Big_Union::run_sii_test\n");
-
     }
   return -1;
 }
 
 CORBA::Boolean
-Test_Big_Union::check_validity (void)
+Test_Big_Union::check_validity ()
 {
   if (this->in_._d () != this->inout_._d ()
       || this->in_._d () != this->out_->_d ()
@@ -548,6 +547,6 @@ Test_Big_Union::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Big_Union::print_values (void)
+Test_Big_Union::print_values ()
 {
 }

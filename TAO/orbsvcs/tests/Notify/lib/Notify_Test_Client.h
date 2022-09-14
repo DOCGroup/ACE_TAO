@@ -32,7 +32,7 @@ class TAO_Notify_Tests_Peer;
 class TAO_NOTIFY_TEST_Export Notify_Test_Client
 {
 public:
-  Notify_Test_Client (void);
+  Notify_Test_Client ();
   virtual ~Notify_Test_Client ();
 
   /// starts the orb and resolves the notify factory via a naming service.
@@ -42,7 +42,7 @@ public:
   virtual int parse_args (int argc, ACE_TCHAR* argv[]);
 
   /// Call ORB::run to accept requests.
-  int ORB_run (void);
+  int ORB_run ();
   int ORB_run (ACE_Time_Value& tv);
 
   /// How many clients will call consumer_done.
@@ -52,19 +52,19 @@ public:
   void consumer_done (TAO_Notify_Tests_Peer*);
 
   /// Access the done boolean.
-  bool is_done (void) const;
+  bool is_done () const;
 
   /// Access the ORB.  This class retains ownership.
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
   /// Access the Root POA.  This class retains ownership.
-  PortableServer::POA_ptr root_poa (void);
+  PortableServer::POA_ptr root_poa ();
 
   /// Access the Naming Context.  This class retains ownership.
-  CosNaming::NamingContext_ptr naming_context (void);
+  CosNaming::NamingContext_ptr naming_context ();
 
   /// Access the Notify Factory.  This class retains ownership.
-  CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory (void);
+  CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory ();
 
   /// Create an Event Channel.  Ownership is passed to the caller.
   CosNotifyChannelAdmin::EventChannel_ptr create_event_channel (
@@ -77,10 +77,10 @@ protected:
                 ACE_TCHAR *argv []);
 
   /// Try to get hold of a running naming service.
-  void resolve_naming_service (void);
+  void resolve_naming_service ();
 
   /// Try to resolve the Notify factory from the Naming service.
-  void resolve_Notify_factory (void);
+  void resolve_Notify_factory ();
 
   // = Data Members
   /// Reference to the root poa.

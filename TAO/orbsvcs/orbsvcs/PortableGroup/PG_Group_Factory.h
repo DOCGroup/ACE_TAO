@@ -73,7 +73,6 @@ namespace TAO
        TAO_SYNCH_MUTEX> Group_Map_Iterator;
 
   public:
-
     /// Constructor.
     PG_Group_Factory ();
 
@@ -105,7 +104,7 @@ namespace TAO
      * return all groups in the factory
      */
     PortableGroup::ObjectGroups *
-    all_groups (void);
+    all_groups ();
 
 
     /**
@@ -167,7 +166,6 @@ namespace TAO
     void set_object_group_storable_factory (TAO::Storable_Factory * factory);
 
   protected:
-
     /**
      * Factory function to create a storable object object from
      * scratch.
@@ -199,7 +197,6 @@ namespace TAO
     PG_Group_List_Store * list_store_;
 
   private:
-
     CORBA::ORB_var orb_;
 
     /// Reference to the POA used to create object group references.
@@ -225,7 +222,6 @@ namespace TAO
     // Lazily read groups from store
     bool groups_read_;
     Storable_Factory * storable_factory_;
-
   };
 } // namespace TAO
 

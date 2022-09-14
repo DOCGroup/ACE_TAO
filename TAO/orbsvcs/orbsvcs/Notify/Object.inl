@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Long
-TAO_Notify_Object::id (void) const
+TAO_Notify_Object::id () const
 {
   return id_;
 }

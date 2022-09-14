@@ -8,7 +8,6 @@
 #include "ace/Auto_Ptr.h"
 
 
-
 //const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
 CORBA::ULong number_of_servers = 0;

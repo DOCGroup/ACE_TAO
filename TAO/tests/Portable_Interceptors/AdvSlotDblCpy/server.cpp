@@ -68,7 +68,7 @@ namespace
       CORBA::Any_var data;
 
       ACE_DEBUG ((LM_DEBUG, "SERVER %C -> get_slot(TSC) -> is ", location));
-      data= pi_current->get_slot( slot_id );
+      data= pi_current->get_slot(slot_id);
       CORBA::TypeCode_var
         tc= data->type();
       if (tc->kind() == CORBA::tk_null)
@@ -98,7 +98,7 @@ namespace
       }
 
       ACE_DEBUG ((LM_DEBUG, "SERVER %C -> get_slot(RSC) -> is ", location));
-      data= ri->get_slot( slot_id );
+      data= ri->get_slot(slot_id);
 
       tc= data->type();
       if (tc->kind() == CORBA::tk_null)
@@ -192,7 +192,7 @@ public:
   shutdown ()
   {
     ACE_DEBUG ((LM_DEBUG, "\nServer is shutting down.\n"));
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
   }
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -346,7 +346,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   //
   orb->run ();
 
-  root_poa->destroy (1, 1);
+  root_poa->destroy (true, true);
   orb->destroy ();
 
   ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));

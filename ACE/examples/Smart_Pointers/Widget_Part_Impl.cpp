@@ -22,19 +22,19 @@ Widget_Part_Impl::Widget_Part_Impl (Widget *owner, const char* name, int size)
   ACE_DEBUG ((LM_DEBUG, "Widget_Part_Impl constructor\n"));
 }
 
-Widget_Part_Impl::~Widget_Part_Impl (void)
+Widget_Part_Impl::~Widget_Part_Impl ()
 {
   ACE_DEBUG ((LM_DEBUG, "Widget_Part_Impl destructor\n"));
 
   delete [] name_;
 }
 
-void Widget_Part_Impl::print_info (void)
+void Widget_Part_Impl::print_info ()
 {
   ACE_DEBUG ((LM_INFO, "Widget part: name=%s size=%d\n", name_, size_));
 }
 
-void Widget_Part_Impl::remove_from_owner (void)
+void Widget_Part_Impl::remove_from_owner ()
 {
   // Since we only have a raw pointer to refer to the owner, we have no way of
   // checking whether the owner still exists, and if it does guaranteeing that

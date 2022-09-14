@@ -24,7 +24,7 @@ class Collocated_ORBInitializer :
 {
 public:
   /// Constructor
-  Collocated_ORBInitializer (void);
+  Collocated_ORBInitializer ();
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 

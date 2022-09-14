@@ -41,7 +41,7 @@ public:
   virtual void update_item (TAO_Transport& transport);
 
   /// Returns -1 to signify no maximum
-  virtual int cache_maximum (void) const;
+  virtual int cache_maximum () const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

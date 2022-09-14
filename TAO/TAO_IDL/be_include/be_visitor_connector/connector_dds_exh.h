@@ -31,7 +31,7 @@ class be_visitor_connector_dds_exh
 public:
   be_visitor_connector_dds_exh (be_visitor_context *ctx);
 
-  ~be_visitor_connector_dds_exh (void);
+  ~be_visitor_connector_dds_exh ();
 
   virtual int visit_connector (be_connector *node);
 
@@ -47,7 +47,7 @@ private:
   /// Generate application-specific instantiations of
   /// middleware templates containing traits constructs.
   void gen_dds_traits (AST_Decl *datatype);
-  void gen_connector_traits (void);
+  void gen_connector_traits ();
 
   /// Common code triggered by provides and uses ports.
   void gen_interface_connector_trait (be_interface *iface,

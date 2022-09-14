@@ -25,19 +25,19 @@ class MT_AMH_Server
 public:
   MT_AMH_Server (int &argc, ACE_TCHAR **argv);
 
-  ~MT_AMH_Server (void);
+  ~MT_AMH_Server ();
 
   // print usage text
   void usage (const char *message);
 
   // We need to parse an extra thread_count parameter for
   // multi-threraded server.
-  int parse_args (void);
+  int parse_args ();
 
-  void start_threads (void);
+  void start_threads ();
 
   // the service method
-  int svc (void);
+  int svc ();
 
 private:
   int nthreads_;

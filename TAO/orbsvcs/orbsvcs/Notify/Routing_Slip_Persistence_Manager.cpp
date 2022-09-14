@@ -8,7 +8,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 Routing_Slip_Persistence_Manager::Routing_Slip_Persistence_Manager(
   Standard_Event_Persistence_Factory* factory)
   : removed_(false)
@@ -277,7 +276,7 @@ Routing_Slip_Persistence_Manager::Block_Header::Block_Header(Header_Type type)
   , data_size(0)
 {
 }
-Routing_Slip_Persistence_Manager::Block_Header::~Block_Header (void)
+Routing_Slip_Persistence_Manager::Block_Header::~Block_Header ()
 {
 }
 

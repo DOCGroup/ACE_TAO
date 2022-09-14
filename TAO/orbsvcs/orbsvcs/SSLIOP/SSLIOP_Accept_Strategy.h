@@ -34,7 +34,6 @@ namespace TAO
 {
   namespace SSLIOP
   {
-
     /**
      * @class Accept_Strategy
      *

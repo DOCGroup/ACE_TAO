@@ -29,7 +29,7 @@ public:
   // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Long x);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB

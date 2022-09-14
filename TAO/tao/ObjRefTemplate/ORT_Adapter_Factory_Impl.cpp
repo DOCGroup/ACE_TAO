@@ -25,7 +25,7 @@ namespace TAO
   }
 
   int
-  ORT_Adapter_Factory_Impl::Initializer (void)
+  ORT_Adapter_Factory_Impl::Initializer ()
   {
     TAO_Root_POA::ort_adapter_factory_name ("Concrete_ORT_Adapter_Factory");
 

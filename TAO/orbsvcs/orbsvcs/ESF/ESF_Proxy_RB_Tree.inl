@@ -58,7 +58,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::end (void)
 }
 
 template<class PROXY> ACE_INLINE size_t
-TAO_ESF_Proxy_RB_Tree<PROXY>::size (void) const
+TAO_ESF_Proxy_RB_Tree<PROXY>::size () const
 {
   return this->impl_.current_size ();
 }

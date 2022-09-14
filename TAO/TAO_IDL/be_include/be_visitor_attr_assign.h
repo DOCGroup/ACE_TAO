@@ -28,7 +28,7 @@ class be_visitor_attr_assign : public be_visitor_decl
 {
 public:
   be_visitor_attr_assign (be_visitor_context *ctx);
-  virtual ~be_visitor_attr_assign (void);
+  virtual ~be_visitor_attr_assign ();
 
   virtual int visit_array (be_array *);
   virtual int visit_component (be_component *);

@@ -25,13 +25,13 @@ public:
   Gadget_Part_Impl (Gadget_ptr owner, const char* name, int size);
 
   /// Destructor.
-  virtual ~Gadget_Part_Impl (void);
+  virtual ~Gadget_Part_Impl ();
 
   /// Ask the part to print information about itself.
-  virtual void print_info (void);
+  virtual void print_info ();
 
   /// Ask the part to remove itself from the gadget that contains it.
-  virtual void remove_from_owner (void);
+  virtual void remove_from_owner ();
 
 private:
   /// The gadget that contains this part.

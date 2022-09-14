@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_PARSE_NODE_H
 #define ACE_PARSE_NODE_H
 
@@ -22,10 +21,10 @@
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
-#include "ace/Auto_Ptr.h"
 #include "ace/DLL.h"
 #include "ace/SString.h"
 #include "ace/Svc_Conf.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -46,21 +45,21 @@ class ACE_Service_Type;
 class ACE_Parse_Node
 {
 public:
-  ACE_Parse_Node (void);
+  ACE_Parse_Node ();
   explicit ACE_Parse_Node (const ACE_TCHAR *name);
-  virtual ~ACE_Parse_Node (void);
+  virtual ~ACE_Parse_Node ();
 
-  ACE_Parse_Node *link (void) const;
+  ACE_Parse_Node *link () const;
   void link (ACE_Parse_Node *);
 
   /// Will update the yyereno member and/or the corresponding configuration
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno) = 0;
 
-  const ACE_TCHAR *name (void) const;
-  void print (void) const;
+  const ACE_TCHAR *name () const;
+  void print () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -70,8 +69,8 @@ private:
   ACE_Parse_Node *next_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Parse_Node (const ACE_Parse_Node&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Parse_Node& operator= (const ACE_Parse_Node&))
+  ACE_Parse_Node (const ACE_Parse_Node&) = delete;
+  ACE_Parse_Node& operator= (const ACE_Parse_Node&) = delete;
 };
 
 /**
@@ -87,19 +86,19 @@ class ACE_Suspend_Node : public ACE_Parse_Node
 {
 public:
   ACE_Suspend_Node (const ACE_TCHAR *name);
-  ~ACE_Suspend_Node (void);
+  ~ACE_Suspend_Node ();
 
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Suspend_Node (const ACE_Suspend_Node&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Suspend_Node& operator= (const ACE_Suspend_Node&))
+  ACE_Suspend_Node (const ACE_Suspend_Node&) = delete;
+  ACE_Suspend_Node& operator= (const ACE_Suspend_Node&) = delete;
 };
 
 /**
@@ -115,19 +114,19 @@ class ACE_Resume_Node : public ACE_Parse_Node
 {
 public:
   ACE_Resume_Node (const ACE_TCHAR *name);
-  ~ACE_Resume_Node (void);
+  ~ACE_Resume_Node ();
 
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Resume_Node (const ACE_Resume_Node&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Resume_Node& operator= (const ACE_Resume_Node&))
+  ACE_Resume_Node (const ACE_Resume_Node&) = delete;
+  ACE_Resume_Node& operator= (const ACE_Resume_Node&) = delete;
 };
 
 /**
@@ -143,19 +142,19 @@ class ACE_Remove_Node : public ACE_Parse_Node
 {
 public:
   ACE_Remove_Node (const ACE_TCHAR *name);
-  ~ACE_Remove_Node (void);
+  ~ACE_Remove_Node ();
 
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Remove_Node (const ACE_Remove_Node&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Remove_Node& operator= (const ACE_Remove_Node&))
+  ACE_Remove_Node (const ACE_Remove_Node&) = delete;
+  ACE_Remove_Node& operator= (const ACE_Remove_Node&) = delete;
 };
 
 /**
@@ -171,15 +170,15 @@ class ACE_Static_Node : public ACE_Parse_Node
 {
 public:
   ACE_Static_Node (const ACE_TCHAR *name, ACE_TCHAR *params = 0);
-  virtual ~ACE_Static_Node (void);
+  virtual ~ACE_Static_Node ();
 
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
   virtual const ACE_Service_Type *record (const ACE_Service_Gestalt *g) const;
 
-  ACE_TCHAR *parameters (void) const;
+  ACE_TCHAR *parameters () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -189,8 +188,8 @@ private:
   ACE_TCHAR *parameters_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Static_Node (const ACE_Static_Node&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Static_Node& operator= (const ACE_Static_Node&))
+  ACE_Static_Node (const ACE_Static_Node&) = delete;
+  ACE_Static_Node& operator= (const ACE_Static_Node&) = delete;
 };
 
 
@@ -210,24 +209,24 @@ class ACE_Dynamic_Node : public ACE_Static_Node
 public:
   ACE_Dynamic_Node (ACE_Service_Type_Factory const *, ACE_TCHAR *params);
 
-  virtual ~ACE_Dynamic_Node (void);
+  virtual ~ACE_Dynamic_Node ();
 
-  //  virtual const ACE_Service_Type *record (void) const;
+  //  virtual const ACE_Service_Type *record () const;
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
   /// Pointer to a descriptor that describes this node.
-  ACE_Auto_Ptr<const ACE_Service_Type_Factory> factory_;
+  std::unique_ptr<const ACE_Service_Type_Factory> factory_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Node (const ACE_Dynamic_Node&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Node& operator= (const ACE_Dynamic_Node&))
+  ACE_Dynamic_Node (const ACE_Dynamic_Node&) = delete;
+  ACE_Dynamic_Node& operator= (const ACE_Dynamic_Node&) = delete;
 };
 
 /**
@@ -243,12 +242,12 @@ class ACE_Stream_Node : public ACE_Parse_Node
 {
 public:
   ACE_Stream_Node (const ACE_Static_Node *, const ACE_Parse_Node *);
-  virtual ~ACE_Stream_Node (void);
+  virtual ~ACE_Stream_Node ();
 
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -259,8 +258,8 @@ private:
   const ACE_Parse_Node *mods_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Stream_Node (const ACE_Stream_Node&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Stream_Node& operator= (const ACE_Stream_Node&))
+  ACE_Stream_Node (const ACE_Stream_Node&) = delete;
+  ACE_Stream_Node& operator= (const ACE_Stream_Node&) = delete;
 };
 
 /**
@@ -275,12 +274,12 @@ class ACE_Dummy_Node : public ACE_Parse_Node
 {
 public:
   ACE_Dummy_Node (const ACE_Static_Node *, const ACE_Parse_Node *);
-  ~ACE_Dummy_Node (void);
+  ~ACE_Dummy_Node ();
 
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -291,8 +290,8 @@ private:
   const ACE_Parse_Node *mods_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Dummy_Node (const ACE_Dummy_Node&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Dummy_Node& operator= (const ACE_Dummy_Node&))
+  ACE_Dummy_Node (const ACE_Dummy_Node&) = delete;
+  ACE_Dummy_Node& operator= (const ACE_Dummy_Node&) = delete;
 };
 
 /**
@@ -307,13 +306,13 @@ private:
 class ACE_Location_Node
 {
 public:
-  ACE_Location_Node (void);
-  const ACE_DLL &dll (void);
-  const ACE_TCHAR *pathname (void) const;
+  ACE_Location_Node ();
+  const ACE_DLL &dll ();
+  const ACE_TCHAR *pathname () const;
   void pathname (const ACE_TCHAR *h);
-  int dispose (void) const;
+  int dispose () const;
 
-  virtual ~ACE_Location_Node (void);
+  virtual ~ACE_Location_Node ();
   virtual void set_symbol (void *h);
 
   /// Will update the yyerrno member and/or corresponding configuration
@@ -323,7 +322,7 @@ public:
                         ACE_Service_Object_Exterminator * = 0) = 0;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -348,8 +347,8 @@ protected:
   void *symbol_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Location_Node (const ACE_Location_Node&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Location_Node& operator= (const ACE_Location_Node&))
+  ACE_Location_Node (const ACE_Location_Node&) = delete;
+  ACE_Location_Node& operator= (const ACE_Location_Node&) = delete;
 };
 
 /**
@@ -368,10 +367,10 @@ public:
   virtual void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
                         ACE_Service_Object_Exterminator * = 0);
-  virtual ~ACE_Object_Node (void);
+  virtual ~ACE_Object_Node ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -381,8 +380,8 @@ private:
   const ACE_TCHAR *object_name_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Object_Node (const ACE_Object_Node&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Object_Node& operator= (const ACE_Object_Node&))
+  ACE_Object_Node (const ACE_Object_Node&) = delete;
+  ACE_Object_Node& operator= (const ACE_Object_Node&) = delete;
 };
 
 /**
@@ -401,16 +400,15 @@ public:
   virtual void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
                         ACE_Service_Object_Exterminator *gobbler = 0);
-  virtual ~ACE_Function_Node (void);
+  virtual ~ACE_Function_Node ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Return mangled function name that takes into account ACE
   /// versioned namespace.
   /**
@@ -431,13 +429,12 @@ private:
   ACE_TCHAR * make_func_name (ACE_TCHAR const * func_name);
 
 private:
-
   /// Name of the function that we're parsing.
   const ACE_TCHAR *function_name_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Function_Node (const ACE_Function_Node&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Function_Node& operator= (const ACE_Function_Node&))
+  ACE_Function_Node (const ACE_Function_Node&) = delete;
+  ACE_Function_Node& operator= (const ACE_Function_Node&) = delete;
 };
 
 /**
@@ -458,10 +455,10 @@ public:
   virtual void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
                         ACE_Service_Object_Exterminator * = 0);
-  virtual ~ACE_Static_Function_Node (void);
+  virtual ~ACE_Static_Function_Node ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -471,46 +468,42 @@ private:
   const ACE_TCHAR *function_name_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Static_Function_Node (const ACE_Static_Function_Node&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Static_Function_Node& operator= (const ACE_Static_Function_Node&))
+  ACE_Static_Function_Node (const ACE_Static_Function_Node&) = delete;
+  ACE_Static_Function_Node& operator= (const ACE_Static_Function_Node&) = delete;
 };
 
 /// A helper class used to safely register dynamic services, which may contains
 /// subordinate static services. It is used to capture the necessary data during
-/// the parsing, but perform the actuall instantiation later.
+/// the parsing, but perform the actual instantiation later.
 class ACE_Service_Type_Factory
 {
 public:
   ACE_Service_Type_Factory (ACE_TCHAR const *name,
                             int type,
                             ACE_Location_Node *location,
-                            int active);
+                            bool active);
 
-  ~ACE_Service_Type_Factory (void);
+  ~ACE_Service_Type_Factory ();
 
   ACE_Service_Type *make_service_type (ACE_Service_Gestalt *pcfg) const;
 
-  ACE_TCHAR const* name (void) const;
+  ACE_TCHAR const* name () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /**
    * Not implemented to enforce no copying
    */
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Service_Type_Factory(const ACE_Service_Type_Factory&))
-
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Service_Type_Factory& operator=(const ACE_Service_Type_Factory&))
+  ACE_Service_Type_Factory(const ACE_Service_Type_Factory&) = delete;
+  ACE_Service_Type_Factory& operator=(const ACE_Service_Type_Factory&) = delete;
 
 private:
   ACE_TString name_;
   int type_;
-  ACE_Auto_Ptr<ACE_Location_Node> location_;
-  int is_active_;
+  std::unique_ptr<ACE_Location_Node> location_;
+  bool const is_active_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

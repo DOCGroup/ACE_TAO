@@ -78,9 +78,9 @@ namespace TAO
        * PortableInterceptor::ServerRequestInterceptor interface.
        */
       //@{
-      virtual char * name (void);
+      virtual char * name ();
 
-      virtual void destroy (void);
+      virtual void destroy ();
 
       virtual void receive_request_service_contexts (
           PortableInterceptor::ServerRequestInfo_ptr ri);
@@ -104,7 +104,7 @@ namespace TAO
        * Protected destructor to force deallocation by the reference
        * counting mechanism.
        */
-      ~Server_Invocation_Interceptor (void);
+      ~Server_Invocation_Interceptor ();
 
     private:
       /**

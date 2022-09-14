@@ -2,6 +2,6 @@
 
 #include "ACEXML/common/CharStream.h"
 
-ACEXML_CharStream::~ACEXML_CharStream (void)
+ACEXML_CharStream::~ACEXML_CharStream ()
 {
 }

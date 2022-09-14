@@ -2,7 +2,6 @@
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "PushSupplier.h"
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_stdlib.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
@@ -12,10 +11,11 @@
 
 /// include this file to statically linked with Transaction Depth
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
+#include <memory>
 
 ACE_Time_Value timer_interval(1,0);
 CORBA::ORB_var orb;
-auto_ptr<TAO_FTRTEC::FTEC_Gateway> gateway;
+std::unique_ptr<TAO_FTRTEC::FTEC_Gateway> gateway;
 
 RtecEventChannelAdmin::EventChannel_ptr
 get_event_channel(int argc, ACE_TCHAR** argv)
@@ -40,6 +40,7 @@ get_event_channel(int argc, ACE_TCHAR** argv)
         break;
       case 't':
         timer_interval.set(ACE_OS::atof(get_opt.opt_arg ()));
+        break;
       case 'h':
       case '?':
         ACE_DEBUG((LM_DEBUG,
@@ -50,10 +51,8 @@ get_event_channel(int argc, ACE_TCHAR** argv)
                    ACE_TEXT("\n"),
                       argv[0]));
         return 0;
-
       }
     }
-
 
     if (CORBA::is_nil(channel.in()))
     {
@@ -72,7 +71,7 @@ get_event_channel(int argc, ACE_TCHAR** argv)
     if (use_gateway)
     {
       // use local gateway to communicate with FTRTEC
-      ACE_auto_ptr_reset (gateway, new TAO_FTRTEC::FTEC_Gateway (orb.in (), channel.in ()));
+      gateway.reset (new TAO_FTRTEC::FTEC_Gateway (orb.in (), channel.in ()));
       return gateway->_this ();
     }
     else
@@ -107,14 +106,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     RtecEventComm::PushSupplier_var
       supplier = push_supplier._this();
 
-
     orb->run();
-
   }
   catch (const CORBA::Exception& ex){
       ex._tao_print_exception ("A CORBA Exception occurred.");
   }
-
 
   return 0;
 }

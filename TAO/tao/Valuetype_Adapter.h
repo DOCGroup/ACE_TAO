@@ -51,7 +51,7 @@ class TAO_InputCDR;
 class TAO_Export TAO_Valuetype_Adapter : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_Valuetype_Adapter (void);
+  virtual ~TAO_Valuetype_Adapter ();
 
   virtual CORBA::Object_ptr abstractbase_to_object (
       CORBA::AbstractBase_ptr p) = 0;
@@ -63,7 +63,7 @@ public:
       TAO_InputCDR &,
       CORBA::AbstractBase_ptr &) = 0;
 
-  virtual CORBA::Long type_info_single (void) const = 0;
+  virtual CORBA::Long type_info_single () const = 0;
 
   virtual CORBA::Boolean is_type_info_implied (CORBA::Long) const = 0;
   virtual CORBA::Boolean is_type_info_single (CORBA::Long) const = 0;

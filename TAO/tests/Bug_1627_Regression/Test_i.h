@@ -9,13 +9,13 @@ class Test_i: public POA_Test
 {
 public:
    /// Constructor
-   Test_i (void);
+   Test_i ();
 
    /// Destructor
-   ~Test_i (void);
+   ~Test_i ();
 
    /// A method
-   void test_method(void);
+   void test_method();
 };
 
 #endif /* ! BUG_1330_REGRESSION_TEST_I_H */

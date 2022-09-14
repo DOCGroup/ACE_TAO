@@ -7,7 +7,7 @@
 #include "ace/OS_NS_time.h"
 
 int
-Callback_i::done (void)
+Callback_i::done ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return this->remaining_samples_ == 0;

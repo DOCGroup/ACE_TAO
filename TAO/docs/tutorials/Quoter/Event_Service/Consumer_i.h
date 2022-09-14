@@ -12,7 +12,7 @@ public:
   void connect (CosEventChanneAdmin::ConsumerAdmin_ptr consumer_admin);
 
   void push (const CORBA::Any& data);
-  void disconnect_push_consumer (void);
+  void disconnect_push_consumer ();
 
 private:
 };

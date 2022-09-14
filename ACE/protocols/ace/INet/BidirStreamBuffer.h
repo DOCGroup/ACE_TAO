@@ -119,7 +119,6 @@ namespace ACE
               BidirStreamBuffer(const BidirStreamBuffer&);
               BidirStreamBuffer& operator = (const BidirStreamBuffer&);
           };
-
       }
   }
 

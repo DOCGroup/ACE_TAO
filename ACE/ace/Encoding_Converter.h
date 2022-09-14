@@ -41,7 +41,7 @@ public:
 
   /// This destructor is here (and virtual) because we have virtual
   /// functions.
-  virtual ~ACE_Encoding_Converter (void);
+  virtual ~ACE_Encoding_Converter ();
 
   /// Convert the source (which can be in any encoding) to UTF-8 and
   /// store it in the provided target buffer.

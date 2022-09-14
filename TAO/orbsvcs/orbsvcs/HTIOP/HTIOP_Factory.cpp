@@ -12,14 +12,14 @@ static const char the_prefix[] = "htiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::HTIOP::Protocol_Factory::Protocol_Factory (void)
+TAO::HTIOP::Protocol_Factory::Protocol_Factory ()
   :  TAO_Protocol_Factory (OCI_TAG_HTIOP_PROFILE),
      ht_env_ (0),
      inside_ (-1)
 {
 }
 
-TAO::HTIOP::Protocol_Factory::~Protocol_Factory (void)
+TAO::HTIOP::Protocol_Factory::~Protocol_Factory ()
 {
   delete this->ht_env_;
 }
@@ -32,13 +32,13 @@ TAO::HTIOP::Protocol_Factory::match_prefix (const ACE_CString &prefix)
 }
 
 const char *
-TAO::HTIOP::Protocol_Factory::prefix (void) const
+TAO::HTIOP::Protocol_Factory::prefix () const
 {
   return ::the_prefix;
 }
 
 char
-TAO::HTIOP::Protocol_Factory::options_delimiter (void) const
+TAO::HTIOP::Protocol_Factory::options_delimiter () const
 {
   return '/';
 }
@@ -111,7 +111,7 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
 }
 
 TAO_Acceptor *
-TAO::HTIOP::Protocol_Factory::make_acceptor (void)
+TAO::HTIOP::Protocol_Factory::make_acceptor ()
 {
   TAO_Acceptor *acceptor = 0;
 
@@ -123,7 +123,7 @@ TAO::HTIOP::Protocol_Factory::make_acceptor (void)
 }
 
 TAO_Connector *
-TAO::HTIOP::Protocol_Factory::make_connector (void)
+TAO::HTIOP::Protocol_Factory::make_connector ()
 {
   TAO_Connector *connector = 0;
   ACE_NEW_RETURN (connector,
@@ -133,7 +133,7 @@ TAO::HTIOP::Protocol_Factory::make_connector (void)
 }
 
 int
-TAO::HTIOP::Protocol_Factory::requires_explicit_endpoint (void) const
+TAO::HTIOP::Protocol_Factory::requires_explicit_endpoint () const
 {
   return 0;
 }

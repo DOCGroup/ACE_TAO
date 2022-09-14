@@ -1,6 +1,5 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Reactor.h"
-#include "ace/Auto_Ptr.h"
 
 #include "tao/Leader_Follower.h"
 #include "tao/LF_Follower_Auto_Ptr.h"
@@ -11,6 +10,8 @@
 #include "tao/GUIResource_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Time_Policy.h"
+
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Leader_Follower.inl"
@@ -30,7 +31,7 @@ ACE_Event_Handler* TAO_Leader_Follower::Deferred_Event::handler () const
   return this->eh_.handler ();
 }
 
-TAO_Leader_Follower::~TAO_Leader_Follower (void)
+TAO_Leader_Follower::~TAO_Leader_Follower ()
 {
   while (!this->deferred_event_set_.is_empty ())
     {
@@ -49,19 +50,19 @@ TAO_Leader_Follower::~TAO_Leader_Follower (void)
   else
     this->orb_core_->resource_factory ()->reclaim_reactor (this->reactor_);
 
-  this->reactor_ = 0;
+  this->reactor_ = nullptr;
 }
 
 TAO_LF_Follower *
-TAO_Leader_Follower::allocate_follower (void)
+TAO_Leader_Follower::allocate_follower ()
 {
   if (!this->follower_free_list_.is_empty ())
     return this->follower_free_list_.pop_front ();
 
-  TAO_LF_Follower* ptr = 0;
+  TAO_LF_Follower* ptr = nullptr;
   ACE_NEW_RETURN (ptr,
                   TAO_LF_Follower (*this),
-                  0);
+                  nullptr);
   return ptr;
 }
 
@@ -72,7 +73,7 @@ TAO_Leader_Follower::release_follower (TAO_LF_Follower *follower)
 }
 
 int
-TAO_Leader_Follower::elect_new_leader_i (void)
+TAO_Leader_Follower::elect_new_leader_i ()
 {
   TAO_LF_Follower* const follower = this->follower_set_.head ();
 
@@ -97,7 +98,7 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
 
   while (this->client_thread_is_leader_ && result != -1)
     {
-      if (max_wait_time == 0)
+      if (max_wait_time == nullptr)
         {
           if (this->event_loop_threads_condition_.wait () == -1)
             {
@@ -134,12 +135,12 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
 }
 
 ACE_Reactor *
-TAO_Leader_Follower::reactor (void)
+TAO_Leader_Follower::reactor ()
 {
-  if (this->reactor_ == 0)
+  if (this->reactor_ == nullptr)
     {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock (), 0);
-      if (this->reactor_ == 0)
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock (), nullptr);
+      if (this->reactor_ == nullptr)
         {
           // use GUI reactor factory if available
           if ( this->orb_core_->gui_resource_factory () )
@@ -154,7 +155,7 @@ TAO_Leader_Follower::reactor (void)
 }
 
 void
-TAO_Leader_Follower::set_client_thread (void)
+TAO_Leader_Follower::set_client_thread ()
 {
   // If we were a leader thread or an event loop thread, give up
   // leadership.
@@ -178,7 +179,7 @@ TAO_Leader_Follower::set_client_thread (void)
 }
 
 void
-TAO_Leader_Follower::reset_client_thread (void)
+TAO_Leader_Follower::reset_client_thread ()
 {
   // If we were a leader thread or an event loop thread, take back
   // leadership.
@@ -211,7 +212,7 @@ TAO_Leader_Follower::defer_event (ACE_Event_Handler* eh)
                 ACE_TEXT ("TAO (%P|%t) - TAO_Leader_Follower::defer_event, ")
                 ACE_TEXT ("deferring event handler[%d]\n"),
                 eh->get_handle ()));
-  Deferred_Event* ptr = 0;
+  Deferred_Event* ptr = nullptr;
   ACE_NEW_RETURN (ptr,
                   Deferred_Event (eh),
                   -1);
@@ -225,7 +226,7 @@ TAO_Leader_Follower::resume_events ()
   // not need to obtain the lock, only called when holding the lock
   while (!this->deferred_event_set_.is_empty ())
     {
-      ACE_Auto_Ptr<Deferred_Event> event (this->deferred_event_set_.pop_front ());
+      std::unique_ptr<Deferred_Event> event (this->deferred_event_set_.pop_front ());
       // Send a notification to the reactor to cause the awakening of a new
       // follower, if there is one already available.
       ACE_Reactor *reactor = this->orb_core_->reactor ();
@@ -265,7 +266,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   // in PathFinder
   size_t t_id = 0;
 
-  if (TAO_debug_level && transport != 0)
+  if (TAO_debug_level && transport != nullptr)
   {
     t_id = transport->id ();
   }
@@ -283,7 +284,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
     // leader loop below can end, other than the event being complete
     while (event->keep_waiting_i ()
            && !(result == 0 &&
-                max_wait_time != 0 &&
+                max_wait_time != nullptr &&
                 *max_wait_time == ACE_Time_Value::zero)
            && result != -1)
     { // Scope #2: threads here alternate between being leader/followers
@@ -296,7 +297,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
         // Grab a follower:
         TAO_LF_Follower_Auto_Ptr follower (*this);
-        if (follower.get () == 0)
+        if (follower.get () == nullptr)
           return -1;
 
         if (TAO_debug_level >= 5)
@@ -338,7 +339,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
           // lost.
           TAO_LF_Follower_Auto_Adder auto_adder (*this, follower);
 
-          if (max_wait_time == 0)
+          if (max_wait_time == nullptr)
           {
             if (follower->wait (max_wait_time) == -1)
               {
@@ -506,7 +507,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
             // Did we timeout? If so, stop running the loop.
             if (result == 0 &&
-                max_wait_time != 0 &&
+                max_wait_time != nullptr &&
                 *max_wait_time == ACE_Time_Value::zero)
               break;
 
@@ -600,7 +601,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                       -1);
 
   // Return an error if there was a problem receiving the reply...
-  if (max_wait_time != 0)
+  if (max_wait_time != nullptr)
     {
       if (!event->successful_i ()
           && *max_wait_time == ACE_Time_Value::zero)

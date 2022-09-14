@@ -17,18 +17,17 @@
 #include "ace/Read_Buffer.h"
 
 // Constructor
-IOR_corbaloc_Client_i::IOR_corbaloc_Client_i (void)
+IOR_corbaloc_Client_i::IOR_corbaloc_Client_i ()
 {
 }
 
-IOR_corbaloc_Client_i::~IOR_corbaloc_Client_i (void)
+IOR_corbaloc_Client_i::~IOR_corbaloc_Client_i ()
 {
 }
 
 int
-IOR_corbaloc_Client_i::run (void)
+IOR_corbaloc_Client_i::run ()
 {
-
   try
     {
       CosNaming::Name name (1);

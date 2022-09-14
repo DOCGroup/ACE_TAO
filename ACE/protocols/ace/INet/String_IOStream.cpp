@@ -11,7 +11,6 @@ namespace ACE
 {
   namespace IOS
   {
-
     template <class ACE_CHAR_T, class TR>
     String_StreamBufferBase<ACE_CHAR_T, TR>::String_StreamBufferBase (openmode mode)
       : BasicBufferedStreamBuffer<ACE_CHAR_T, TR> (BUFFER_SIZE, mode),
@@ -40,7 +39,6 @@ namespace ACE
         seekdir way,
         openmode which)
       {
-
         if (which != this->get_mode () || which == std::ios::out)
           return pos_type (-1);
 

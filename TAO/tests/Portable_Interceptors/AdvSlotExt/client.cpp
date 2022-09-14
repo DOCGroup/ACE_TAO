@@ -22,7 +22,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_ERROR, "Got number %d\n", n));
 
       server->shutdown ();
-
     }
   catch (const ::CORBA::Exception &ex)
     {

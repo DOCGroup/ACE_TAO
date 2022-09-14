@@ -9,7 +9,6 @@ const ACE_TCHAR *port = ACE_TEXT ("12345");
 class AdderCallback
   : public POA_AMI_test::AMI_adderHandler,
     public ACE_Task_Base {
-
   public:
     AdderCallback(CORBA::ORB_ptr orb)
       : orb(CORBA::ORB::_duplicate(orb)) {
@@ -37,7 +36,6 @@ class AdderCallback
     }
 
     CORBA::ORB_var orb;
-
 };
 
 int
@@ -71,11 +69,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
-
 ACE_TCHAR address_servant[1000];
 
   try {
-
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
@@ -120,6 +116,5 @@ ACE_TCHAR address_servant[1000];
 
   return 0;
 }
-
 
 

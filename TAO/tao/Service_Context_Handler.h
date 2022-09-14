@@ -36,7 +36,7 @@ class TAO_ServerRequest;
 class TAO_Export TAO_Service_Context_Handler
 {
   public:
-    TAO_Service_Context_Handler (void);
+    TAO_Service_Context_Handler ();
     virtual int process_service_context (
       TAO_Transport& transport,
       const IOP::ServiceContext& context,
@@ -49,7 +49,7 @@ class TAO_Export TAO_Service_Context_Handler
       TAO_Target_Specification &spec,
       TAO_OutputCDR &msg) = 0;
 
-    virtual ~TAO_Service_Context_Handler (void);
+    virtual ~TAO_Service_Context_Handler ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

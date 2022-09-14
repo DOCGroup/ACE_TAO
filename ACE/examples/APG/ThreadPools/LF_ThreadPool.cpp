@@ -19,18 +19,18 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int wait (void)
+  int wait ()
   {
     return this->cond_.wait ();
   }
 
-  int signal (void)
+  int signal ()
   {
     return this->cond_.signal ();
   }
   //FUZZ: enable check_for_lack_ACE_OS
 
-  ACE_thread_t owner (void)
+  ACE_thread_t owner ()
   {
     return this->owner_;
   }
@@ -49,21 +49,21 @@ public:
     ACE_TRACE ("LF_ThreadPool::TP");
   }
 
-  virtual int svc (void);
+  virtual int svc ();
 
-  void shut_down (void)
+  void shut_down ()
   {
     shutdown_ = 1;
   }
 
 private:
-  int become_leader (void);
+  int become_leader ();
 
-  Follower *make_follower (void);
+  Follower *make_follower ();
 
-  int elect_new_leader (void);
+  int elect_new_leader ();
 
-  int leader_active (void)
+  int leader_active ()
   {
     ACE_TRACE ("LF_ThreadPool::leader_active");
     return this->current_leader_ != 0;
@@ -77,7 +77,7 @@ private:
 
   void process_message (ACE_Message_Block *mb);
 
-  int done (void)
+  int done ()
   {
     return (shutdown_ == 1);
   }
@@ -93,7 +93,7 @@ private:
 // Listing 1
 // Listing 2 code/ch16
 int
-LF_ThreadPool::svc (void)
+LF_ThreadPool::svc ()
 {
   ACE_TRACE ("LF_ThreadPool::svc");
   while (!done ())
@@ -121,7 +121,7 @@ LF_ThreadPool::svc (void)
 // Listing 2
 // Listing 3 code/ch16
 int
-LF_ThreadPool::become_leader (void)
+LF_ThreadPool::become_leader ()
 {
   ACE_TRACE ("LF_ThreadPool::become_leader");
 
@@ -147,7 +147,7 @@ LF_ThreadPool::become_leader (void)
 }
 
 Follower*
-LF_ThreadPool::make_follower (void)
+LF_ThreadPool::make_follower ()
 {
   ACE_TRACE ("LF_ThreadPool::make_follower");
 
@@ -161,7 +161,7 @@ LF_ThreadPool::make_follower (void)
 // Listing 3
 // Listing 5 code/ch16
 int
-LF_ThreadPool::elect_new_leader (void)
+LF_ThreadPool::elect_new_leader ()
 {
   ACE_TRACE ("LF_ThreadPool::elect_new_leader");
 

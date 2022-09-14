@@ -40,13 +40,13 @@ public:
                      Param_Test_ptr objref,
                      T *);
 
-  ~Param_Test_Client (void);
+  ~Param_Test_Client ();
 
   /// run the SII test
-  int run_sii_test (void);
+  int run_sii_test ();
 
   /// run the DII test
-  int run_dii_test (void);
+  int run_dii_test ();
 
 private:
   /// underlying ORB

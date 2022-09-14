@@ -25,14 +25,11 @@
  */
 class Signal_Handler : public ACE_Event_Handler
 {
-
 public:
-
-  Signal_Handler (void);
+  Signal_Handler ();
 
   /// Override this method to implement graceful shutdown.
   int handle_signal(int signum, siginfo_t*,ucontext_t*);
-
 };
 
 /**
@@ -45,9 +42,8 @@ public:
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-
   //// Constructor.
-  Receiver_Callback (void);
+  Receiver_Callback ();
 
   /// Method that is called when there is data to be received from a
   /// sender.
@@ -55,10 +51,10 @@ public:
                      TAO_AV_frame_info *frame_info,
                      const ACE_Addr &peer_address);
 
-  int handle_destroy (void);
+  int handle_destroy ();
 
   /// Accessor methods for the flowname of the callback.
-  ACE_CString &flowname (void);
+  ACE_CString &flowname ();
   void flowname (const ACE_CString &flowname);
 
 private:
@@ -103,10 +99,10 @@ class Receiver
 {
 public:
   //// Constructor
-  Receiver (void);
+  Receiver ();
 
   //// Destructor.
-  virtual ~Receiver (void);
+  virtual ~Receiver ();
 
   //// Initialize data components.
   int init (int argc,
@@ -117,12 +113,12 @@ public:
                   ACE_TCHAR **argv);
 
   //// Name of the output file.
-  ACE_CString output_file_name (void);
+  ACE_CString output_file_name ();
 
-  ACE_CString sender_name (void);
-  ACE_CString receiver_name (void);
+  ACE_CString sender_name ();
+  ACE_CString receiver_name ();
 
-  void shut_down (void);
+  void shut_down ();
 
 protected:
   //// Connection manager.

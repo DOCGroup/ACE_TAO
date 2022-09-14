@@ -33,14 +33,14 @@
 class Time_Handler : public ACE_Task<ACE_SYNCH>
 {
 public:
-  Time_Handler (void);
+  Time_Handler ();
 
-  void setup (void);
+  void setup ();
 
-  int verify_results(void);
+  int verify_results();
 
   /// Run by a daemon thread to handle deferred processing.
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg);
@@ -66,7 +66,6 @@ private:
 #if defined ACE_HAS_THREADS
   ACE_Thread_Mutex  lock_;
 #endif /* ACE_HAS_THREADS */
-
 };
 
 /**
@@ -78,7 +77,7 @@ private:
 class Dispatch_Count_Handler : public ACE_Event_Handler
 {
 public:
-  Dispatch_Count_Handler (void);
+  Dispatch_Count_Handler ();
 
   /// Clean up resources from the Reactor.
   int handle_close (ACE_HANDLE h,
@@ -95,7 +94,7 @@ public:
   virtual int handle_exception (ACE_HANDLE);
 
   /// Verify that the expected events did happen.
-  int verify_results (void);
+  int verify_results ();
 
 private:
   /// Provide something to trigger I/O.
@@ -104,7 +103,6 @@ private:
   int input_seen_;
   int notify_seen_;
   size_t timers_fired_;
-
 };
 
 #endif /* ACE_TESTS_MT_REACTOR_TIMER_TEST_H */

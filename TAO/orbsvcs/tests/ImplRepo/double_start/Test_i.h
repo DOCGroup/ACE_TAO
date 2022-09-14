@@ -18,11 +18,11 @@ public:
   //Destructor
   virtual ~Test_i ();
 
-  virtual void arm (void);
+  virtual void arm ();
 
-  virtual void trigger (void);
+  virtual void trigger ();
 
-  int exit_code (void) const;
+  int exit_code () const;
 
 private:
   CORBA::ORB_var orb_;

@@ -61,7 +61,7 @@ Activator_NT_Service::handle_exception (ACE_HANDLE)
  * we update the report_status after init.
  */
 int
-Activator_NT_Service::svc (void)
+Activator_NT_Service::svc ()
 {
   ImR_Activator_i server;
   Activator_Options opts;
@@ -89,7 +89,6 @@ Activator_NT_Service::svc (void)
           status = server.fini ();
 
           report_status (SERVICE_STOPPED);
-
         }
         if (status != -1)
             return 0;

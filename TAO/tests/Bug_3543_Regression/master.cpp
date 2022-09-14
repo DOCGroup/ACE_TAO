@@ -74,7 +74,7 @@ public:
   }
 };
 
-void Dispatcher_shutdown(void)
+void Dispatcher_shutdown()
 {
     std::list<MasterClient::Server_var> copiedlist;
     {
@@ -179,7 +179,7 @@ void Dispatcher_run(int id)
   if (id == 0)
   {
     ACE_DEBUG ((LM_DEBUG, "Shutting down ORB\n"));
-    orb->shutdown (1);
+    orb->shutdown (true);
   }
 }
 
@@ -254,7 +254,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       servers.clear ();
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
 

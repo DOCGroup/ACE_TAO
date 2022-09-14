@@ -31,7 +31,7 @@ public:
   be_visitor_union_discriminant_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union_discriminant_ch (void);
+  ~be_visitor_union_discriminant_ch ();
 
   /// visit an enum
   virtual int visit_enum (be_enum *node);

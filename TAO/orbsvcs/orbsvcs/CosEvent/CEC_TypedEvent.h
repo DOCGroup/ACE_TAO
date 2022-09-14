@@ -41,7 +41,7 @@ class TAO_Event_Serv_Export TAO_CEC_TypedEvent
 {
 public:
   /// constructors...
-  TAO_CEC_TypedEvent (void);
+  TAO_CEC_TypedEvent ();
 
   TAO_CEC_TypedEvent (CORBA::NVList_ptr list,
                       const char * operation);

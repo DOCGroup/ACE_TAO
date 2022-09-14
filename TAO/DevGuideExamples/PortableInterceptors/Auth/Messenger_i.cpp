@@ -5,22 +5,18 @@
 // Distributed Object Computing at Washington University, St. Louis.
 //
 // Information about TAO is available at:
-//                 http://www.dre.vanderbilt.edu/~schmidt/TAO.html
+//                 https://www.dre.vanderbilt.edu/~schmidt/TAO.html
 
 #include "Messenger_i.h"
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY == 1)
 #include <iostream>
-#else
-#include <iostream.h>
-#endif
 
 // Implementation skeleton constructor
-Messenger_i::Messenger_i (void)
+Messenger_i::Messenger_i ()
 {
 }
 
 // Implementation skeleton destructor
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 

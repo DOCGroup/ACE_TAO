@@ -253,11 +253,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   FileTimeToSystemTime (&localtime, &systime);
 
   res->tm_hour = systime.wHour;
-
-  if(pTz.DaylightBias!=0)
-    res->tm_isdst = 1;
-  else
-    res->tm_isdst = 1;
+  res->tm_isdst = pTz.DaylightBias != 0;
 
    int iLeap;
    iLeap = (res->tm_year % 4 == 0 && (res->tm_year% 100 != 0 || res->tm_year % 400 == 0));
@@ -278,7 +274,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
 
   ACE_UNUSED_ARG (res);
   struct tm * res_ptr = 0;
-  ACE_OSCALL (::localtime (t), struct tm *, 0, res_ptr);
+  ACE_OSCALL (::localtime (t), struct tm *, res_ptr);
   if (res_ptr == 0)
     return 0;
   else
@@ -315,7 +311,7 @@ ACE_OS::mktime (struct tm *t)
   ACE_OS_GUARD
 #     endif /* ACE_HAS_THREADS  &&  ! ACE_HAS_MT_SAFE_MKTIME */
 
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::mktime (t), time_t, (time_t) -1);
+  return std::mktime (t);
 #   endif /* ACE_HAS_WINCE */
 }
 

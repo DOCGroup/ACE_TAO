@@ -81,7 +81,7 @@ TAO_Root_POA::persistent (void)
 }
 
 ACE_INLINE const ACE_CString &
-TAO_Root_POA::name (void) const
+TAO_Root_POA::name () const
 {
   return this->name_;
 }
@@ -93,13 +93,13 @@ TAO_Root_POA::the_name (void)
 }
 
 ACE_INLINE const TAO_Object_Adapter::poa_name &
-TAO_Root_POA::folded_name (void) const
+TAO_Root_POA::folded_name () const
 {
   return this->folded_name_;
 }
 
 ACE_INLINE const TAO_Object_Adapter::poa_name &
-TAO_Root_POA::system_name (void) const
+TAO_Root_POA::system_name () const
 {
   return this->system_name_.in ();
 }
@@ -177,7 +177,7 @@ TAO_Root_POA::root_key_type_length (void)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_Root_POA::outstanding_requests (void) const
+TAO_Root_POA::outstanding_requests () const
 {
   return this->outstanding_requests_;
 }
@@ -195,13 +195,13 @@ TAO_Root_POA::decrement_outstanding_requests (void)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Root_POA::waiting_destruction (void) const
+TAO_Root_POA::waiting_destruction () const
 {
   return this->waiting_destruction_;
 }
 
 ACE_INLINE TAO_ORB_Core &
-TAO_Root_POA::orb_core (void) const
+TAO_Root_POA::orb_core () const
 {
   return this->orb_core_;
 }
@@ -213,7 +213,7 @@ TAO_Root_POA::get_adapter_state (void)
 }
 
 ACE_INLINE void *
-TAO_Root_POA::thread_pool (void) const
+TAO_Root_POA::thread_pool () const
 {
   return 0;
 }

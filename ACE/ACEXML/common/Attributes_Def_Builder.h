@@ -19,7 +19,7 @@
 
 #include "ACEXML/common/XML_Types.h"
 #include "ACEXML/common/SAXExceptions.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 /**
  * @class ACEXML_Attribute_Def_Builder
@@ -33,8 +33,7 @@
 class ACEXML_Export ACEXML_Attribute_Def_Builder
 {
 public:
-
-  typedef auto_ptr<ACEXML_Attribute_Def_Builder> VAR;
+  typedef std::unique_ptr<ACEXML_Attribute_Def_Builder> VAR;
 
   enum ATT_TYPE {
     CDATA,
@@ -110,8 +109,7 @@ public:
 class ACEXML_Export ACEXML_Attributes_Def_Builder
 {
 public:
-
-  typedef auto_ptr<ACEXML_Attributes_Def_Builder> VAR;
+  typedef std::unique_ptr<ACEXML_Attributes_Def_Builder> VAR;
 
   virtual ~ACEXML_Attributes_Def_Builder () = 0;
 
@@ -138,7 +136,7 @@ public:
   /**
    * Dump the content of the attribute definition.
    */
-  virtual void dump (void) = 0;
+  virtual void dump () = 0;
 };
 
 #include /**/ "ace/post.h"

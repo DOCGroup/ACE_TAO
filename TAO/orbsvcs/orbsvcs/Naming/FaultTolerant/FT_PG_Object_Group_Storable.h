@@ -41,11 +41,7 @@ namespace TAO
   class TAO_FtNaming_Export FT_PG_Object_Group_Storable
     : public PG_Object_Group_Storable
   {
-
-    /////////////////////
-    // Construct/Destruct
   public:
-
     /**
      * This constructor is suitable for creating an object group from
      * scratch.
@@ -75,18 +71,13 @@ namespace TAO
       TAO_FT_Naming_Replication_Manager *replicator);
 
     /// Destructor
-    virtual ~FT_PG_Object_Group_Storable ();
-
-    /////////////////
-    // public methods
+    virtual ~FT_PG_Object_Group_Storable () = default;
 
   public:
-
     virtual void stale (bool is_stale);
     virtual bool stale ();
 
   protected:
-
     virtual void state_written ();
 
     virtual bool is_obsolete (time_t stored_time);
@@ -97,16 +88,11 @@ namespace TAO
       CORBA::Object_ptr member);
 
   private:
-
-    /////////////////////////
-    // Forbidden methods
-    FT_PG_Object_Group_Storable ();
-    FT_PG_Object_Group_Storable (const FT_PG_Object_Group_Storable & rhs);
-    FT_PG_Object_Group_Storable & operator = (
-      const FT_PG_Object_Group_Storable & rhs);
+    FT_PG_Object_Group_Storable () = delete;
+    FT_PG_Object_Group_Storable (const FT_PG_Object_Group_Storable &) = delete;
+    FT_PG_Object_Group_Storable & operator = (const FT_PG_Object_Group_Storable &) = delete;
 
     /// Replication persistence support
-
     bool stale_;
 
     /// Track if the persistent file used for storage has been created yet
@@ -124,7 +110,6 @@ namespace TAO
      * resolution.
      */
     int propagate_update_notification (FT_Naming::ChangeType change_type);
-
   };
 } // namespace TAO
 

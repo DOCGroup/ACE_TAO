@@ -103,26 +103,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-Manager::Manager (void)
+Manager::Manager ()
   : orb_ (0),
     new_poa_var_ (0)
 {
   //no-op
 }
 
-Manager::~Manager (void)
+Manager::~Manager ()
 {
   this->orb_->destroy ();
 }
 
 CORBA::ORB_ptr
-Manager::orb (void)
+Manager::orb ()
 {
   return CORBA::ORB::_duplicate (this->orb_.in ());
 }
 
 CORBA::Object_ptr
-Manager::server (void)
+Manager::server ()
 {
   return CORBA::Object::_duplicate (this->server_.in ());
 }

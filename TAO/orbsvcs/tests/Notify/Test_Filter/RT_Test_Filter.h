@@ -32,13 +32,13 @@ class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_Filter
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_RT_Test_Filter (void);
+  TAO_Notify_Tests_RT_Test_Filter ();
 
   /// Destructor
   ~TAO_Notify_Tests_RT_Test_Filter ();
 
 protected:
-  virtual char * constraint_grammar (void);
+  virtual char * constraint_grammar ();
 
   virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list);
 
@@ -47,11 +47,11 @@ protected:
 
   virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list);
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints (void);
+  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints ();
 
-  virtual void remove_all_constraints (void);
+  virtual void remove_all_constraints ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual CORBA::Boolean match (const CORBA::Any & filterable_data);
 
@@ -63,10 +63,9 @@ protected:
 
   virtual void detach_callback (CosNotifyFilter::CallbackID callback);
 
-  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (void);
+  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks ();
 
 protected:
-
   /// Lock to serialize access to data members.
   TAO_SYNCH_MUTEX lock_;
 

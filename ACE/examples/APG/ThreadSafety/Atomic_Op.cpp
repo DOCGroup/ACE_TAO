@@ -26,7 +26,7 @@ public:
     : buf_(buf), in_(in), out_(out)
   { }
 
-  int svc (void)
+  int svc ()
   {
     SafeInt itemNo = 0;
     while (1)
@@ -68,7 +68,7 @@ public:
     : buf_(buf), in_(in), out_(out)
   { }
 
-  int svc (void)
+  int svc ()
   {
     while (1)
       {

@@ -120,7 +120,7 @@ public:
         bool mask_signals = true,
         int s_queue = ACE_SELECT_TOKEN::FIFO);
 
-    virtual ~ACE_QtReactor (void);
+    virtual ~ACE_QtReactor ();
 
     void qapplication (QApplication *qapp);
 
@@ -197,9 +197,9 @@ protected:
 private:
     /// This method ensures there's an Qt timeout for the first timeout
     /// in the Reactor's Timer_Queue.
-    void reset_timeout (void);
+    void reset_timeout ();
     /// reopens notification pipe to create SocketNotifier for it
-    void reopen_notification_pipe(void);
+    void reopen_notification_pipe();
 
 #ifdef ACE_HAS_QT5
     /// Recover the socket's ACE_HANDLE based on the sender of the Qt signal.
@@ -223,7 +223,7 @@ private slots:
     void exception_event (ACE_QT_HANDLE_TYPE p_handle);
 
     /// Dispatch a timeout event
-    void timeout_event (void);
+    void timeout_event ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

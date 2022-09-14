@@ -62,17 +62,17 @@ public:
                const ACE_Time_Value *abstime);
 
   /// Shutdown
-  void shutdown (void);
+  void shutdown ();
 
   /// Provide the time value of the oldest event in the queue.
-  ACE_Time_Value oldest_event (void);
+  ACE_Time_Value oldest_event ();
 
   /// This interface allows tracking of the queue size
   class TAO_Notify_Serv_Export Tracker
   {
   public:
-    Tracker (void);
-    virtual ~Tracker (void);
+    Tracker ();
+    virtual ~Tracker ();
     virtual void update_queue_count (size_t count) = 0;
     virtual void count_queue_overflow (bool local_overflow, bool global_overflow) = 0;
     void register_child (Tracker * child);
@@ -85,7 +85,6 @@ public:
   void set_tracker (Tracker* tracker);
 
 private:
-
   /// Apply the Order Policy and queue. return -1 on error.
   int queue (TAO_Notify_Method_Request_Queueable* method_request);
 

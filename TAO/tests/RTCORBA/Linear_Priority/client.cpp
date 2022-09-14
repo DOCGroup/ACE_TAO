@@ -75,9 +75,9 @@ public:
                  RTCORBA::Current_ptr current,
                  CORBA::Short priority);
 
-  int svc (void);
+  int svc ();
 
-  void validate_connection (void);
+  void validate_connection ();
 
 private:
   test_var test_;
@@ -97,7 +97,7 @@ Worker_Thread::Worker_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 void
-Worker_Thread::validate_connection (void)
+Worker_Thread::validate_connection ()
 {
   // Try to validate the connection several times, ignoring transient
   // exceptions.  If the connection can still not be setup, return
@@ -131,7 +131,7 @@ Worker_Thread::validate_connection (void)
 }
 
 int
-Worker_Thread::svc (void)
+Worker_Thread::svc ()
 {
   try
     {
@@ -154,14 +154,12 @@ Worker_Thread::svc (void)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -172,7 +170,7 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   try
     {

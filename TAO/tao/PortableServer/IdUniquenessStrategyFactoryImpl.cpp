@@ -50,8 +50,7 @@ namespace TAO
 
     void
     IdUniquenessStrategyFactoryImpl::destroy (
-      IdUniquenessStrategy *strategy
-      )
+      IdUniquenessStrategy *strategy)
     {
       switch (strategy->type ())
       {

@@ -32,11 +32,11 @@ public:
   TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core);
 
   /// Destructor
-  virtual ~TAO_Async_Table_Adapter (void);
+  virtual ~TAO_Async_Table_Adapter ();
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open (void);
+  virtual void open ();
 
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
@@ -55,7 +55,7 @@ class TAO_Async_IORTable_Export TAO_Async_Table_Adapter_Factory :
 {
 public:
   /// Constructor
-  TAO_Async_Table_Adapter_Factory (void);
+  TAO_Async_Table_Adapter_Factory ();
 
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   /// details.

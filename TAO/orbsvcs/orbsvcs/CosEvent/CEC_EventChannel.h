@@ -126,30 +126,30 @@ public:
                         int own_factory = 0);
 
   /// destructor
-  virtual ~TAO_CEC_EventChannel (void);
+  virtual ~TAO_CEC_EventChannel ();
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
-  virtual void activate (void);
+  virtual void activate ();
 
   /// Shutdown any internal threads, cleanup all the internal
   /// structures, flush all the messages, etc.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Access the dispatching module....
-  TAO_CEC_Dispatching* dispatching (void) const;
+  TAO_CEC_Dispatching* dispatching () const;
 
   /// Access the consumer admin implementation.
-  TAO_CEC_ConsumerAdmin* consumer_admin (void) const;
+  TAO_CEC_ConsumerAdmin* consumer_admin () const;
 
   /// Access the supplier admin implementation.
-  TAO_CEC_SupplierAdmin* supplier_admin (void) const;
+  TAO_CEC_SupplierAdmin* supplier_admin () const;
 
   /// Access the consumer control strategy.
-  TAO_CEC_ConsumerControl* consumer_control (void) const;
+  TAO_CEC_ConsumerControl* consumer_control () const;
 
   /// Access the supplier control strategy.
-  TAO_CEC_SupplierControl* supplier_control (void) const;
+  TAO_CEC_SupplierControl* supplier_control () const;
 
   // = The factory methods, they delegate on the CEC_Factory.
   /// Create and destroy a ProxyPushSupplier
@@ -183,14 +183,14 @@ public:
   void destroy_proxy_collection (TAO_CEC_ProxyPullConsumer_Collection*);
 
   /// Access the supplier and consumer POAs from the factory.
-  PortableServer::POA_ptr supplier_poa (void);
-  PortableServer::POA_ptr consumer_poa (void);
+  PortableServer::POA_ptr supplier_poa ();
+  PortableServer::POA_ptr consumer_poa ();
 
   /// Locking strategies for the ProxyPushConsumer and
   /// ProxyPushSupplier objects
-  ACE_Lock* create_consumer_lock (void);
+  ACE_Lock* create_consumer_lock ();
   void destroy_consumer_lock (ACE_Lock*);
-  ACE_Lock* create_supplier_lock (void);
+  ACE_Lock* create_supplier_lock ();
   void destroy_supplier_lock (ACE_Lock*);
 
   /// Used to inform the EC that a Consumer has connected or
@@ -215,30 +215,30 @@ public:
   // at construction time.
 
   /// Can the consumers reconnect to the EC?
-  int consumer_reconnect (void) const;
+  int consumer_reconnect () const;
 
   /// Can the suppliers reconnect to the EC?
-  int supplier_reconnect (void) const;
+  int supplier_reconnect () const;
 
   /// Should we send callback disconnect messages when a proxy is
   /// disconnected by the client
-  int disconnect_callbacks (void) const;
+  int disconnect_callbacks () const;
 
   // = The CosEventChannelAdmin::EventChannel methods...
   /// The default implementation is:
   ///    this->consumer_admin ()->_this (env);
   virtual CosEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (void);
+      for_consumers ();
 
   /// The default implementation is:
   ///    this->supplier_admin ()->_this (env);
   virtual CosEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (void);
+      for_suppliers ();
 
   /// Commit suicide.
-  virtual void destroy (void);
+  virtual void destroy ();
 
-  ServantRetryMap& get_servant_retry_map (void);
+  ServantRetryMap& get_servant_retry_map ();
 
   /// Forwarded to the factory
   CORBA::Policy_ptr

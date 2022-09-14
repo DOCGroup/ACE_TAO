@@ -30,7 +30,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_AV_Core
 //------------------------------------------------------------
 
-TAO_AV_Core::TAO_AV_Core (void)
+TAO_AV_Core::TAO_AV_Core ()
   :connector_registry_ (0),
    acceptor_registry_ (0)
 {
@@ -42,7 +42,7 @@ TAO_AV_Core::TAO_AV_Core (void)
            );
 }
 
-TAO_AV_Core::~TAO_AV_Core (void)
+TAO_AV_Core::~TAO_AV_Core ()
 {
   delete this->connector_registry_;
   delete this->acceptor_registry_;
@@ -76,7 +76,7 @@ TAO_AV_Core::~TAO_AV_Core (void)
 }
 
 CORBA::ORB_ptr
-TAO_AV_Core::orb (void)
+TAO_AV_Core::orb ()
 {
   return this->orb_.in ();
 }
@@ -88,7 +88,7 @@ TAO_AV_Core::orb (CORBA::ORB_ptr orb)
 }
 
 PortableServer::POA_ptr
-TAO_AV_Core::poa (void)
+TAO_AV_Core::poa ()
 {
   return this->poa_.in ();
 }
@@ -100,38 +100,38 @@ TAO_AV_Core::poa (PortableServer::POA_ptr poa)
 }
 
 TAO_AV_Connector_Registry*
-TAO_AV_Core::connector_registry (void)
+TAO_AV_Core::connector_registry ()
 {
   return this->connector_registry_;
 }
 
 TAO_AV_Acceptor_Registry*
-TAO_AV_Core::acceptor_registry (void)
+TAO_AV_Core::acceptor_registry ()
 {
   return this->acceptor_registry_;
 }
 
 TAO_AV_TransportFactorySet *
-TAO_AV_Core::transport_factories (void)
+TAO_AV_Core::transport_factories ()
 {
   return &this->transport_factories_;
 }
 
 TAO_AV_Flow_ProtocolFactorySet*
-TAO_AV_Core::flow_protocol_factories (void)
+TAO_AV_Core::flow_protocol_factories ()
 {
   return &this->flow_protocol_factories_;
 }
 
 int
-TAO_AV_Core::stop_run (void)
+TAO_AV_Core::stop_run ()
 {
   this->stop_run_ = 1;
   return 0;
 }
 
 int
-TAO_AV_Core::run (void)
+TAO_AV_Core::run ()
 {
   this->stop_run_ = 0;
   while (!this->stop_run_ && this->orb_->work_pending ())
@@ -146,7 +146,7 @@ TAO_AV_Core::reactor (ACE_Reactor *r)
 }
 
 ACE_Reactor *
-TAO_AV_Core::reactor (void)
+TAO_AV_Core::reactor ()
 {
   return this->reactor_;
 }
@@ -530,7 +530,6 @@ TAO_AV_Core::init_reverse_flows (TAO_Base_StreamEndPoint *endpoint,
   int result = -1;
   switch (direction)
     {
-
     case TAO_AV_Core::TAO_AV_ENDPOINT_A:
       {
         result = this->connector_registry_->open (endpoint,
@@ -565,10 +564,8 @@ TAO_AV_Core::get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
 TAO_AV_Acceptor*
 TAO_AV_Core::get_acceptor (const char *flowname)
 {
-
   try
     {
-
       TAO_AV_AcceptorSetItor acceptor =  this->acceptor_registry_->begin ();
 
       TAO_AV_AcceptorSetItor end =
@@ -590,10 +587,8 @@ TAO_AV_Core::get_acceptor (const char *flowname)
 int
 TAO_AV_Core::remove_acceptor (const char *flowname)
 {
-
   try
     {
-
       TAO_AV_AcceptorSetItor acceptor =  this->acceptor_registry_->begin ();
 
       TAO_AV_AcceptorSetItor end =
@@ -694,7 +689,7 @@ TAO_AV_Core::get_transport_factory(const char *transport_protocol)
 }
 
 int
-TAO_AV_Core::load_default_transport_factories (void)
+TAO_AV_Core::load_default_transport_factories ()
 {
   const char *udp_factory_str = "UDP_Factory";
   const char *tcp_factory_str = "TCP_Factory";
@@ -813,7 +808,7 @@ TAO_AV_Core::load_default_transport_factories (void)
 }
 
 int
-TAO_AV_Core::init_transport_factories (void)
+TAO_AV_Core::init_transport_factories ()
 {
   TAO_AV_TransportFactorySetItor end = this->transport_factories_.end ();
   TAO_AV_TransportFactorySetItor factory = this->transport_factories_.begin ();
@@ -861,7 +856,7 @@ TAO_AV_Core::init_transport_factories (void)
 }
 
 int
-TAO_AV_Core::load_default_flow_protocol_factories (void)
+TAO_AV_Core::load_default_flow_protocol_factories ()
 {
   const char *udp_flow = "UDP_Flow_Factory";
   const char *tcp_flow = "TCP_Flow_Factory";
@@ -1051,7 +1046,7 @@ TAO_AV_Core::load_default_flow_protocol_factories (void)
 }
 
 int
-TAO_AV_Core::init_flow_protocol_factories (void)
+TAO_AV_Core::init_flow_protocol_factories ()
 {
   TAO_AV_Flow_ProtocolFactorySetItor end = this->flow_protocol_factories_.end ();
   TAO_AV_Flow_ProtocolFactorySetItor factory = this->flow_protocol_factories_.begin ();

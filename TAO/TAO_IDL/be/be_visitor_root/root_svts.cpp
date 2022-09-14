@@ -16,7 +16,7 @@ be_visitor_root_svts::be_visitor_root_svts (be_visitor_context *ctx)
 {
 }
 
-be_visitor_root_svts::~be_visitor_root_svts (void)
+be_visitor_root_svts::~be_visitor_root_svts ()
 {
 }
 
@@ -45,7 +45,7 @@ be_visitor_root_svts::visit_root (be_root *node)
 }
 
 int
-be_visitor_root_svts::init (void)
+be_visitor_root_svts::init ()
 {
   // First open the client-side header file for writing.
   int status =

@@ -38,8 +38,8 @@ class TAO_Async_IOR_Table_Impl : public virtual TAO_IOR_Table_Impl
 {
 public:
   /// Constructor
-  TAO_Async_IOR_Table_Impl (void);
-  virtual ~TAO_Async_IOR_Table_Impl (void);
+  TAO_Async_IOR_Table_Impl ();
+  virtual ~TAO_Async_IOR_Table_Impl ();
 
   virtual bool async_available (void) { return true; }
 

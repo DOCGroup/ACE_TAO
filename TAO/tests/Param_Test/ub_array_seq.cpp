@@ -17,7 +17,7 @@
 //               Test_Array_Sequence
 // ************************************************************************
 
-Test_Array_Sequence::Test_Array_Sequence (void)
+Test_Array_Sequence::Test_Array_Sequence ()
   : opname_ (CORBA::string_dup ("test_array_sequence")),
     inout_ (new Param_Test::ArraySeq),
     out_ (new Param_Test::ArraySeq),
@@ -25,7 +25,7 @@ Test_Array_Sequence::Test_Array_Sequence (void)
 {
 }
 
-Test_Array_Sequence::~Test_Array_Sequence (void)
+Test_Array_Sequence::~Test_Array_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -34,7 +34,7 @@ Test_Array_Sequence::~Test_Array_Sequence (void)
 }
 
 const char *
-Test_Array_Sequence::opname (void) const
+Test_Array_Sequence::opname () const
 {
   return this->opname_;
 }
@@ -104,7 +104,7 @@ Test_Array_Sequence::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Array_Sequence::reset_parameters (void)
+Test_Array_Sequence::reset_parameters ()
 {
   // Delete the previous ones.
   this->inout_ = new Param_Test::ArraySeq;
@@ -129,13 +129,12 @@ Test_Array_Sequence::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Array_Sequence::run_sii_test\n");
-
     }
   return -1;
 }
 
 CORBA::Boolean
-Test_Array_Sequence::check_validity (void)
+Test_Array_Sequence::check_validity ()
 {
   if (this->compare (this->in_, this->inout_.in ()) &&
       this->compare (this->in_, this->out_.in ()) &&
@@ -152,7 +151,7 @@ Test_Array_Sequence::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Array_Sequence::print_values (void)
+Test_Array_Sequence::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"

@@ -4,10 +4,9 @@
 #include "tao/AnyTypeCode/Any.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
-void do_nothing (void)
+void do_nothing ()
 {
 }
 
@@ -129,8 +128,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->run ();
 
-      root_poa->destroy (1, 1);
-
+      root_poa->destroy (true, true);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -139,7 +137,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   if (!CORBA::is_nil(root_poa.in()))
-    root_poa->destroy (1,1);
+    root_poa->destroy (true, true);
   delete servant;
 
   return 0;

@@ -110,15 +110,15 @@ class TAO_RTEvent_Serv_Export TAO_EC_Event_Channel_Base
 {
 public:
   /// destructor
-  virtual ~TAO_EC_Event_Channel_Base (void);
+  virtual ~TAO_EC_Event_Channel_Base ();
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
-  virtual void activate (void);
+  virtual void activate ();
 
   /// Shutdown any internal threads, cleanup all the internal
   /// structures, flush all the messages, etc.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   virtual void for_each_consumer (
                     TAO_ESF_Worker<TAO_EC_ProxyPushSupplier> *worker);
@@ -127,31 +127,31 @@ public:
                     TAO_ESF_Worker<TAO_EC_ProxyPushConsumer> *worker);
 
   /// Access the dispatching module....
-  TAO_EC_Dispatching* dispatching (void) const;
+  TAO_EC_Dispatching* dispatching () const;
 
   /// Access the filter builder....
-  TAO_EC_Filter_Builder* filter_builder (void) const;
+  TAO_EC_Filter_Builder* filter_builder () const;
 
   /// Access the filter builder....
-  TAO_EC_Supplier_Filter_Builder* supplier_filter_builder (void) const;
+  TAO_EC_Supplier_Filter_Builder* supplier_filter_builder () const;
 
   /// Access the consumer admin implementation, useful for controlling
   /// the activation...
-  TAO_EC_ConsumerAdmin* consumer_admin (void) const;
+  TAO_EC_ConsumerAdmin* consumer_admin () const;
 
   /// Access the supplier admin implementation, useful for controlling
   /// the activation...
-  TAO_EC_SupplierAdmin* supplier_admin (void) const;
+  TAO_EC_SupplierAdmin* supplier_admin () const;
 
   /// Access the timer module...
-  TAO_EC_Timeout_Generator* timeout_generator (void) const;
+  TAO_EC_Timeout_Generator* timeout_generator () const;
 
   /// Access the scheduling strategy
-  TAO_EC_Scheduling_Strategy* scheduling_strategy (void) const;
+  TAO_EC_Scheduling_Strategy* scheduling_strategy () const;
 
   /// Access the client control strategies.
-  TAO_EC_ConsumerControl *consumer_control (void) const;
-  TAO_EC_SupplierControl *supplier_control (void) const;
+  TAO_EC_ConsumerControl *consumer_control () const;
+  TAO_EC_SupplierControl *supplier_control () const;
 
   // = The factory methods, they delegate on the EC_Factory.
   /// Create and destroy a ProxyPushSupplier
@@ -175,14 +175,14 @@ public:
   void destroy_proxy_collection (TAO_EC_ProxyPushConsumer_Collection*);
 
   /// Access the supplier and consumer POAs from the factory.
-  PortableServer::POA_ptr supplier_poa (void);
-  PortableServer::POA_ptr consumer_poa (void);
+  PortableServer::POA_ptr supplier_poa ();
+  PortableServer::POA_ptr consumer_poa ();
 
   /// Locking strategies for the ProxyPushConsumer and
   /// ProxyPushSupplier objects
-  ACE_Lock* create_consumer_lock (void);
+  ACE_Lock* create_consumer_lock ();
   void destroy_consumer_lock (ACE_Lock*);
-  ACE_Lock* create_supplier_lock (void);
+  ACE_Lock* create_supplier_lock ();
   void destroy_supplier_lock (ACE_Lock*);
 
   /// Used to inform the EC that a Consumer has connected or
@@ -201,31 +201,31 @@ public:
   // at construction time.
 
   /// Can the consumers reconnect to the EC?
-  int consumer_reconnect (void) const;
+  int consumer_reconnect () const;
 
   /// Can the suppliers reconnect to the EC?
-  int supplier_reconnect (void) const;
+  int supplier_reconnect () const;
 
   /// Should we send callback disconnect messages when a proxy is
   /// disconnected by the client
-  int disconnect_callbacks (void) const;
+  int disconnect_callbacks () const;
 
   /// Obtain the scheduler, the user must release
-  CORBA::Object_ptr scheduler (void);
+  CORBA::Object_ptr scheduler ();
 
   // = The RtecEventChannelAdmin::EventChannel methods...
   /// The default implementation is:
   ///    this->consumer_admin ()->_this ();
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (void);
+      for_consumers ();
 
   /// The default implementation is:
   ///    this->supplier_admin ()->_this ();
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (void);
+      for_suppliers ();
 
   /// Commit suicide.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr);
@@ -233,7 +233,7 @@ public:
       remove_observer (RtecEventChannelAdmin::Observer_Handle);
 
   /// Return 1 if the event channel is already destroyed.
-  int destroyed (void);
+  int destroyed ();
 
 protected:
   /**
@@ -249,7 +249,7 @@ protected:
   /**
    * Get the factory.
    */
-  TAO_EC_Factory * factory (void) const;
+  TAO_EC_Factory * factory () const;
 
   /**
    * Set the factory, if @a own_factory is not 0 it assumes ownership of the
@@ -261,13 +261,13 @@ protected:
   /**
    * Create all strategies
    */
-  void create_strategies (void);
+  void create_strategies ();
 
   /// Helpers.  Deactivate admins from their POAs, ignoring any CORBA
   /// exceptions.
   //@{
-  void deactivate_supplier_admin (void);
-  void deactivate_consumer_admin (void);
+  void deactivate_supplier_admin ();
+  void deactivate_consumer_admin ();
   //@}
 
   /// The POAs used to activate "supplier-side" and "consumer-side"

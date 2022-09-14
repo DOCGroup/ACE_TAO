@@ -26,7 +26,7 @@ class be_visitor_home_svs : public be_visitor_scope
 public:
   be_visitor_home_svs (be_visitor_context *ctx);
 
-  ~be_visitor_home_svs (void);
+  ~be_visitor_home_svs ();
 
   virtual int visit_home (be_home *node);
   virtual int visit_operation (be_operation *node);
@@ -36,9 +36,9 @@ public:
   virtual int visit_finder (be_finder *node);
 
 private:
-  int gen_servant_class (void);
+  int gen_servant_class ();
 
-  void gen_entrypoint (void);
+  void gen_entrypoint ();
 
 private:
   be_home *node_;
@@ -69,7 +69,7 @@ class be_visitor_home_attr_set : public be_visitor_decl
 public:
   be_visitor_home_attr_set (be_visitor_context *ctx);
 
-  ~be_visitor_home_attr_set (void);
+  ~be_visitor_home_attr_set ();
 
   virtual int visit_home (be_home *node);
   virtual int visit_attribute (be_attribute *node);

@@ -19,7 +19,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename traits>
 class string_sequence_element
 {
@@ -96,16 +95,15 @@ public:
     return *this->element_;
   }
 
-  inline const character_type *in (void) const {
+  inline const character_type *in () const {
     return *this->element_;
   }
 
-  inline character_type *&inout (void) const {
+  inline character_type *&inout () const {
     return *this->element_;
   }
 
-  inline string_out out (void) const {
-
+  inline string_out out () const {
     if (release())
       {
         traits::release(*element_);
@@ -114,7 +112,7 @@ public:
     return *this->element_;
   }
 
-  inline character_type *_retn (void) {
+  inline character_type *_retn () {
     character_type * copy = *this->element_;
     *this->element_ = traits::default_initializer();
     return copy;
@@ -139,7 +137,6 @@ private:
   value_type * element_;
   CORBA::Boolean release_;
 };
-
 } // namespace details
 } // namespace CORBA
 

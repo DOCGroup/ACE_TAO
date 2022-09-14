@@ -13,7 +13,7 @@ Client_Task::Client_Task (
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {

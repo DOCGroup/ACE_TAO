@@ -5,7 +5,7 @@
 #include "Concrete_Connection_Handlers.h"
 
 Event_Channel *
-Connection_Handler::event_channel (void) const
+Connection_Handler::event_channel () const
 {
   return this->event_channel_;
 }
@@ -23,7 +23,7 @@ Connection_Handler::connection_id (CONNECTION_ID id)
 }
 
 CONNECTION_ID
-Connection_Handler::connection_id (void) const
+Connection_Handler::connection_id () const
 {
   return this->connection_id_;
 }
@@ -31,7 +31,7 @@ Connection_Handler::connection_id (void) const
 // The total number of bytes sent/received on this Proxy.
 
 size_t
-Connection_Handler::total_bytes (void) const
+Connection_Handler::total_bytes () const
 {
   return this->total_bytes_;
 }
@@ -42,7 +42,7 @@ Connection_Handler::total_bytes (size_t bytes)
   this->total_bytes_ += bytes;
 }
 
-Connection_Handler::Connection_Handler (void)
+Connection_Handler::Connection_Handler ()
 {
 }
 
@@ -74,7 +74,7 @@ Connection_Handler::connection_role (char d)
 // Get the connection_role.
 
 char
-Connection_Handler::connection_role (void) const
+Connection_Handler::connection_role () const
 {
   return this->connection_role_;
 }
@@ -95,7 +95,7 @@ Connection_Handler::timeout (long to)
 // re-calculation).
 
 long
-Connection_Handler::timeout (void)
+Connection_Handler::timeout ()
 {
   long old_timeout = this->timeout_;
   this->timeout_ *= 2;
@@ -117,7 +117,7 @@ Connection_Handler::max_timeout (long mto)
 // Gets the max timeout delay.
 
 long
-Connection_Handler::max_timeout (void) const
+Connection_Handler::max_timeout () const
 {
   return this->max_timeout_;
 }
@@ -165,7 +165,7 @@ Connection_Handler::state (Connection_Handler::State s)
 // Return the current state of the Proxy.
 
 Connection_Handler::State
-Connection_Handler::state (void) const
+Connection_Handler::state () const
 {
   return this->state_;
 }
@@ -197,7 +197,7 @@ Connection_Handler::open (void *)
 }
 
 const ACE_INET_Addr &
-Connection_Handler::remote_addr (void) const
+Connection_Handler::remote_addr () const
 {
   return this->remote_addr_;
 }
@@ -209,7 +209,7 @@ Connection_Handler::remote_addr (ACE_INET_Addr &ra)
 }
 
 const ACE_INET_Addr &
-Connection_Handler::local_addr (void) const
+Connection_Handler::local_addr () const
 {
   return this->local_addr_;
 }

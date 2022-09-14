@@ -19,14 +19,14 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE>
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
-    ~TAO_ESF_Proxy_Admin (void)
+    ~TAO_ESF_Proxy_Admin ()
 {
   this->event_channel_->destroy_proxy_collection (this->collection_);
 }
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE> INTERFACE*
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
-    obtain (void)
+    obtain ()
 {
   PROXY* proxy;
   this->event_channel_->create_proxy (proxy);
@@ -44,7 +44,7 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
 }
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
-TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::shutdown (void)
+TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::shutdown ()
 {
   TAO_ESF_Shutdown_Proxy<PROXY> worker;
 

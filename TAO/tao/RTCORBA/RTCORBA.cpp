@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RTCORBA_Initializer::TAO_RTCORBA_Initializer (void)
+TAO_RTCORBA_Initializer::TAO_RTCORBA_Initializer ()
 {
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_ORB_Loader);
 }

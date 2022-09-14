@@ -27,19 +27,19 @@ class ExtendedFilter : public Notify_Test_Client
 {
 public:
   // Initialization and termination code
-  ExtendedFilter (void);
-  virtual ~ExtendedFilter (void);
+  ExtendedFilter ();
+  virtual ~ExtendedFilter ();
 
   /// initialization.
   int init (int argc,
             ACE_TCHAR *argv []);
 
   /// Run the test.
-  void run_test (void);
+  void run_test ();
 
 protected:
   /// Create EC
-  void create_EC (void);
+  void create_EC ();
 
   /// Run some tests to check the filters.
   void run_filter_test (CosNotifyFilter::FilterAdmin_ptr);

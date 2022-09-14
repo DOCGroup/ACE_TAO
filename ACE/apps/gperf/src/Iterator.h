@@ -54,7 +54,7 @@ public:
             int word_end,
             int bad_val,
             int key_end);
-  int operator () (void);
+  int operator () ();
 
 private:
   /// A pointer to the string provided by the user.

@@ -1,12 +1,11 @@
 #include "RT_POA_Command.h"
 
 
-
 #include "tao/debug.h"
 #include "../lib/LookupManager.h"
 #include "../lib/Name.h"
 
-TAO_Notify_Tests_RT_POA_Command::TAO_Notify_Tests_RT_POA_Command (void)
+TAO_Notify_Tests_RT_POA_Command::TAO_Notify_Tests_RT_POA_Command ()
   :priority_model_ (RTCORBA::CLIENT_PROPAGATED)
   , server_priority_ (0)
   , thread_pool_static_threads_ (0)
@@ -19,13 +18,13 @@ TAO_Notify_Tests_RT_POA_Command::~TAO_Notify_Tests_RT_POA_Command ()
 }
 
 const char*
-TAO_Notify_Tests_RT_POA_Command::get_name (void)
+TAO_Notify_Tests_RT_POA_Command::get_name ()
 {
   return TAO_Notify_Tests_RT_POA_Command::name ();
 }
 
 const char*
-TAO_Notify_Tests_RT_POA_Command::name (void)
+TAO_Notify_Tests_RT_POA_Command::name ()
 {
   return TAO_Notify_Tests_Name::poa_command;
 }
@@ -175,7 +174,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_RT_POA_Command::execute_i (void)
+TAO_Notify_Tests_RT_POA_Command::execute_i ()
 {
   if (this->command_ == CREATE)
     {
@@ -270,7 +269,6 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
       // Create a thread-pool policy.
       lanes_policy =
         rt_orb->create_threadpool_policy (threadpool_id);
-
     }
   else if (thread_pool_static_threads_ > 0)
     {

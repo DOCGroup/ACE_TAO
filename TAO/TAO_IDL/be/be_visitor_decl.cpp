@@ -23,12 +23,12 @@ be_visitor_decl::be_visitor_decl (be_visitor_context *ctx)
 {
 }
 
-be_visitor_decl::~be_visitor_decl (void)
+be_visitor_decl::~be_visitor_decl ()
 {
 }
 
 be_visitor_context *
-be_visitor_decl::ctx (void)
+be_visitor_decl::ctx ()
 {
   return this->ctx_;
 }
@@ -37,7 +37,7 @@ int
 be_visitor_decl::gen_anonymous_base_type (be_type *bt,
                                           TAO_CodeGen::CG_STATE cg_state)
 {
-  be_typedef *tdef = be_typedef::narrow_from_decl (bt);
+  be_typedef *tdef = dynamic_cast<be_typedef*> (bt);
 
   if (!tdef)
     {
@@ -45,7 +45,7 @@ be_visitor_decl::gen_anonymous_base_type (be_type *bt,
       ctx.state (cg_state);
 
       // In case our container was typedef'd.
-      ctx.tdef (0);
+      ctx.tdef (nullptr);
 
       int status = 0;
 

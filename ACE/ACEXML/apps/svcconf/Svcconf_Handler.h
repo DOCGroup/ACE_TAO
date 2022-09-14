@@ -24,42 +24,42 @@ public:
    * Set/get name of a parsed entity.
    */
   int name (const ACEXML_Char *n);
-  const ACEXML_Char *name (void);
+  const ACEXML_Char *name ();
 
   /**
    * Set/get type of a dynamic node.
    */
   int service_type (int type);
-  int service_type (void);
+  int service_type ();
 
   /**
    * Set/Get active status.
    */
   int active (int a);
-  int active (void);
+  int active ();
 
   /**
    * Set/get initializer path.
    */
   int path (const ACEXML_Char *n);
-  const ACEXML_Char *path (void);
+  const ACEXML_Char *path ();
 
   /**
    * Set/get initializer init function.
    */
   int init_func (const ACEXML_Char *n);
-  const ACEXML_Char *init_func (void);
+  const ACEXML_Char *init_func ();
 
   /**
    * Set/get initializer init parameter.
    */
   int init_params (const ACEXML_Char *n);
-  const ACEXML_Char *init_params (void);
+  const ACEXML_Char *init_params ();
 
   /**
    * Reset Parsed_Info.
    */
-  void reset (void);
+  void reset ();
 
 protected:
   ACEXML_Char *name_;
@@ -84,12 +84,12 @@ public:
   /*
    * Default constructor.
    */
-  ACEXML_Svcconf_Handler (void);
+  ACEXML_Svcconf_Handler ();
 
   /*
    * Default destructor.
    */
-  virtual ~ACEXML_Svcconf_Handler (void);
+  virtual ~ACEXML_Svcconf_Handler ();
 
   // Methods inherit from ACEXML_ContentHandler.
 
@@ -103,7 +103,7 @@ public:
   /*
    * Receive notification of the end of a document.
    */
-  virtual void endDocument (void);
+  virtual void endDocument ();
 
   /*
    * Receive notification of the end of an element.
@@ -143,7 +143,7 @@ public:
   /*
    * Receive notification of the beginning of a document.
    */
-  virtual void startDocument (void)
+  virtual void startDocument ()
     ;
 
   /*

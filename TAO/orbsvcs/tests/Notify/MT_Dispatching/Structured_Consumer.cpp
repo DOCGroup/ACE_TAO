@@ -104,7 +104,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 }
 
 static void
-disconnect_consumers (void)
+disconnect_consumers ()
 {
   for (unsigned int i = 0; i < consumer_count; i++)
   {

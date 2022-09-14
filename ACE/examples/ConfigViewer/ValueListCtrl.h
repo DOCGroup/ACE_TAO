@@ -36,7 +36,6 @@ protected:
 
   DECLARE_EVENT_TABLE()
 private:
-
   ACE_Configuration*              m_pConfig;
   ACE_Configuration_Section_Key   m_Key;
 };

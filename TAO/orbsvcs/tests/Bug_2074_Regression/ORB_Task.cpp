@@ -8,14 +8,13 @@
 #include "orbsvcs/CosNamingC.h"
 
 
-
 ORB_Task::ORB_Task (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
 int
-ORB_Task::svc (void)
+ORB_Task::svc ()
 {
   try
   {

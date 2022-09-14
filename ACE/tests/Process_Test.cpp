@@ -25,7 +25,7 @@
 static const char *proc_self_fd = "/proc/self/fd/";
 
 int
-test_setenv (void)
+test_setenv ()
 {
   int status = 0;
   ACE_Process_Options opts;

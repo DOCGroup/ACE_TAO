@@ -45,7 +45,7 @@ TAO_COIOP_Connection_Handler::TAO_COIOP_Connection_Handler (TAO_ORB_Core *orb_co
 }
 
 
-TAO_COIOP_Connection_Handler::~TAO_COIOP_Connection_Handler (void)
+TAO_COIOP_Connection_Handler::~TAO_COIOP_Connection_Handler ()
 {
   delete this->transport ();
 
@@ -75,13 +75,13 @@ TAO_COIOP_Connection_Handler::open (void*)
 }
 
 int
-TAO_COIOP_Connection_Handler::resume_handler (void)
+TAO_COIOP_Connection_Handler::resume_handler ()
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
 int
-TAO_COIOP_Connection_Handler::close_connection (void)
+TAO_COIOP_Connection_Handler::close_connection ()
 {
   return this->close_connection_eh (this);
 }

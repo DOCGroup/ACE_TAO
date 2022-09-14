@@ -1,7 +1,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE bool
-TAO_Wait_Strategy::is_registered (void) const
+TAO_Wait_Strategy::is_registered () const
 {
   return this->is_registered_;
 }

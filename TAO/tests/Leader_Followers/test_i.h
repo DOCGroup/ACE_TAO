@@ -24,7 +24,7 @@ public:
   // = The test interface methods.
   CORBA::ULong method (CORBA::ULong work);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB.

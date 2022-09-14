@@ -51,10 +51,10 @@
 class Snmp;
 class ASNMP_Export Snmp_Result
 {
-  public:
-    Snmp_Result ();
-    virtual ~Snmp_Result();
-    virtual void result(Snmp *snmp, int result) = 0;
+public:
+  Snmp_Result ();
+  virtual ~Snmp_Result();
+  virtual void result(Snmp *snmp, int result) = 0;
 };
 
 // Snmp session class - supports Version 1 operations in blocking mode

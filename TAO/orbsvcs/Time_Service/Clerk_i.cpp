@@ -11,7 +11,7 @@
 #include "ace/os_include/os_netdb.h"
 
 // Constructor.
-Clerk_i::Clerk_i (void)
+Clerk_i::Clerk_i ()
   : ior_output_file_ (0),
     timer_value_ (3),
     timer_value_usecs_ (0),
@@ -21,7 +21,7 @@ Clerk_i::Clerk_i (void)
 }
 
 // Destructor.
-Clerk_i::~Clerk_i (void)
+Clerk_i::~Clerk_i ()
 {
 }
 
@@ -138,7 +138,7 @@ Clerk_i::parse_args (int argc,
        break;
 
       case '?':  // display help for use of the server.
-        /* FALLTHRU */
+        ACE_FALLTHROUGH;
       default:
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)")
@@ -161,7 +161,7 @@ Clerk_i::parse_args (int argc,
 // The iterator returned from this is used to get the next n IORs.
 
 int
-Clerk_i::get_first_IOR (void)
+Clerk_i::get_first_IOR ()
 {
   try
     {
@@ -221,7 +221,7 @@ Clerk_i::get_first_IOR (void)
                        server_context) != 0)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to get next N IORs ")),
-                          -1);;
+                          -1);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -248,7 +248,6 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
         {
           while (iter->next_one (binding.out ()))
             {
-
               ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT("Getting IOR of the server: %C\n\n"),
                           binding->binding_name[0].id.in ()));
@@ -291,11 +290,10 @@ Clerk_i::init_naming_service ()
 // Create an instance of the clerk with appropriate parameters.
 
 int
-Clerk_i::create_clerk (void)
+Clerk_i::create_clerk ()
 {
   try
     {
-
       // Create a new clerk object. Pass it the timer value, the set
       // of server IORs and the no. of servers.
       ACE_NEW_RETURN (this->time_service_clerk_impl_,
@@ -342,7 +340,7 @@ Clerk_i::create_clerk (void)
 // Clerk:<hostname>.
 
 int
-Clerk_i::register_clerk (void)
+Clerk_i::register_clerk ()
 {
   try
     {
@@ -378,7 +376,6 @@ Clerk_i::register_clerk (void)
 
       this->naming_client_->rebind (clerk_name,
                                      this->time_service_clerk_.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -440,7 +437,6 @@ Clerk_i::init (int argc,
           // first IOR.
           if (this->get_first_IOR () != 0)
             return -1;
-
         }
 
       // Create an instance of the Clerk.
@@ -469,7 +465,7 @@ Clerk_i::init (int argc,
 }
 
 int
-Clerk_i::run (void)
+Clerk_i::run ()
 {
   try
     {

@@ -19,7 +19,7 @@ static const ACE_TCHAR *host_name = ACE_DEFAULT_SERVER_HOST;
 static int remote_reconfigure = 0;
 
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_ERROR ((LM_ERROR,
               "usage: %n [-p portnum] [-h host_name] [-r]\n"));

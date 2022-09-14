@@ -82,7 +82,7 @@ TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
                   CSIIOP::NoProtection);
 }
 
-TAO::SSLIOP::Acceptor::~Acceptor (void)
+TAO::SSLIOP::Acceptor::~Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -351,7 +351,7 @@ TAO::SSLIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO::SSLIOP::Acceptor::close (void)
+TAO::SSLIOP::Acceptor::close ()
 {
   int r = this->ssl_acceptor_.close ();
   if (this->IIOP_SSL_Acceptor::close () != 0)
@@ -485,11 +485,8 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
       ACE_INET_Addr a(addr);
 
       int found_a_port = 0;
-      ACE_UINT32 last_port = requested_port + this->port_span_ - 1;
-      if (last_port > ACE_MAX_DEFAULT_PORT)
-        {
-          last_port = ACE_MAX_DEFAULT_PORT;
-        }
+      ACE_UINT32 const last_port = ACE_MIN (requested_port + this->port_span_ - 1,
+                                            ACE_MAX_DEFAULT_PORT);
 
       for (ACE_UINT32 p = requested_port; p <= last_port; p++)
         {
@@ -577,7 +574,7 @@ int
 TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
 {
   //first, do the base class parser, then parse the leftovers.
-  int result = this->IIOP_SSL_Acceptor::parse_options_i(argc,argv);
+  int const result = this->IIOP_SSL_Acceptor::parse_options_i(argc,argv);
   if (result == -1)
     return result;
 
@@ -629,7 +626,6 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
       for (int j = i; j <= argc-1; j++)
         argv[j] = argv[j+1];
       argv[argc] = temp;
-
     }
   return 0;
 }

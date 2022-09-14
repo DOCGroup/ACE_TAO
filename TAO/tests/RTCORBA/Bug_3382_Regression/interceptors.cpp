@@ -9,18 +9,18 @@ Client_Request_Interceptor (const char *id)
 {
 }
 
-Client_Request_Interceptor::~Client_Request_Interceptor (void)
+Client_Request_Interceptor::~Client_Request_Interceptor ()
 {
 }
 
 char *
-Client_Request_Interceptor::name (void)
+Client_Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Client_Request_Interceptor::destroy (void)
+Client_Request_Interceptor::destroy ()
 {
 }
 
@@ -42,7 +42,6 @@ void
 Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   try
     {
       // Try to get the RTCorbaPriority context.  If its not there,
@@ -71,7 +70,6 @@ void
 Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;

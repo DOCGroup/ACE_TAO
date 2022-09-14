@@ -37,11 +37,11 @@ public:
                 RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the consumer to the EC.
 
-  void disconnect (void);
+  void disconnect ();
   // Disconnect from the EC.
 
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
   // The skeleton methods.
 
 private:
@@ -64,7 +64,7 @@ class Driver
   // = DESCRIPTION
   //
 public:
-  Driver (void);
+  Driver ();
 
   enum {
     MAX_CONSUMERS = 16
@@ -85,7 +85,7 @@ private:
   // parse the command line args
 
   void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec);
-  void disconnect_consumers (void);
+  void disconnect_consumers ();
   // Connect and disconnect the consumers.
 
 private:

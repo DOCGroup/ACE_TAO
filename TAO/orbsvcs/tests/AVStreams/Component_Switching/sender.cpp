@@ -17,7 +17,7 @@ int g_shutdown = 0;
 /// Flag set when a signal is raised.
 
 // constructor.
-Signal_Handler::Signal_Handler (void)
+Signal_Handler::Signal_Handler ()
 {
 }
 
@@ -31,13 +31,12 @@ Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
                     "In the signal handler\n"));
 
       g_shutdown = 1;
-
     }
   return 0;
 }
 
 ACE_CString &
-Sender_Callback::flowname (void)
+Sender_Callback::flowname ()
 {
   return this->flowname_;
 }
@@ -50,7 +49,7 @@ Sender_Callback::flowname (const ACE_CString &flowname)
 
 
 int
-Sender_Callback::handle_destroy (void)
+Sender_Callback::handle_destroy ()
 {
   SENDER::instance ()->connection_manager ().protocol_objects ().unbind (this->flowname_.c_str ());
 
@@ -129,7 +128,7 @@ Sender_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &flowspec)
   return 1;
 }
 
-Sender::Sender (void)
+Sender::Sender ()
   : sender_mmdevice_ (0),
     frame_count_ (0),
     filename_ ("input"),
@@ -140,7 +139,7 @@ Sender::Sender (void)
 {
 }
 
-Sender::~Sender (void)
+Sender::~Sender ()
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -148,7 +147,7 @@ Sender::~Sender (void)
 }
 
 void
-Sender::shut_down (void)
+Sender::shut_down ()
 {
   try
     {
@@ -157,7 +156,6 @@ Sender::shut_down (void)
 
       SENDER::instance ()->connection_manager ().unbind_sender (this->sender_name_,
                                                                 mmdevice.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -273,7 +271,7 @@ Sender::init (int argc,
 
 /// Method to send data at the specified rate
 int
-Sender::pace_data (void)
+Sender::pace_data ()
 {
   /// The time that should lapse between two consecutive frames sent.
   ACE_Time_Value inter_frame_time;
@@ -296,7 +294,6 @@ Sender::pace_data (void)
       /// Continue to send data till the file is read to the end.
       while (1)
         {
-
           if (g_shutdown == 1)
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -327,7 +324,6 @@ Sender::pace_data (void)
               this->shut_down ();
 
               break;
-
             }
 
           this->mb_.wr_ptr (n);
@@ -366,7 +362,6 @@ Sender::pace_data (void)
                   /// Run the orb for the wait time so the sender can
                   /// continue other orb requests.
                   TAO_AV_CORE::instance ()->orb ()->run (wait_time);
-
                 }
             }
 
@@ -397,7 +392,6 @@ Sender::pace_data (void)
 
           /// Reset the message block.
           this->mb_.reset ();
-
         } /// end while
 
     }
@@ -410,25 +404,25 @@ Sender::pace_data (void)
 }
 
 Connection_Manager &
-Sender::connection_manager (void)
+Sender::connection_manager ()
 {
   return this->connection_manager_;
 }
 
 //  void
-//  Sender::add_stream (void)
+//  Sender::add_stream ()
 //  {
 //    this->stream_count_++;
 //  }
 
 //  void
-//  Sender::remove_stream (void)
+//  Sender::remove_stream ()
 //  {
 //    this->stream_count_--;
 //  }
 
 //  int
-//  Sender::stream_alive (void)
+//  Sender::stream_alive ()
 //  {
 //    return this->stream_count_;
 //  }

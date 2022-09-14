@@ -45,7 +45,7 @@ public:
   TAO_TypedefDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_TypedefDef_i (void);
+  virtual ~TAO_TypedefDef_i ();
 
   /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe ();

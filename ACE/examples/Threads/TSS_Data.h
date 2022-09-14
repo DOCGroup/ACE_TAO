@@ -35,4 +35,3 @@ private:
 typedef ACE_TSS_Singleton<TSS_Data, ACE_SYNCH_MUTEX> TSS_DATA;
 
 
-

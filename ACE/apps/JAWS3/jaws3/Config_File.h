@@ -41,7 +41,6 @@ class JAWS_Export JAWS_Config_File
 //     No <configuration-line> is to exceed 4094 characters.
 {
 public:
-
   // = Initialization
 
   JAWS_Config_File (const ACE_TCHAR *config_file,
@@ -54,18 +53,15 @@ public:
   // Find the <value> associated with <key>.
 
 public:
-
-  void reset (void);
+  void reset ();
   // Re-read the configuration file.
 
-  void dump (void);
+  void dump ();
   // Dump the values of all configuration variables.
 
 private:
-
   JAWS_Config_File_Impl *impl_;
   // Opaque implementation.
-
 };
 
 #endif /* JAWS_CONFIG_FILE_H */

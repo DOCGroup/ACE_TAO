@@ -5,13 +5,12 @@
 #include "orbsvcs/CosNotifyFilterExtC.h"
 
 
-
-ExtendedFilter::ExtendedFilter (void)
+ExtendedFilter::ExtendedFilter ()
   : event_count_ (5)
 {
 }
 
-ExtendedFilter::~ExtendedFilter (void)
+ExtendedFilter::~ExtendedFilter ()
 {
 }
 
@@ -46,7 +45,7 @@ ExtendedFilter::init (int argc, ACE_TCHAR* argv [])
 }
 
 void
-ExtendedFilter::run_test (void)
+ExtendedFilter::run_test ()
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, " Obtaining FilterAdmin interface from ConsumerAdmin\n"));
@@ -191,7 +190,7 @@ ExtendedFilter::add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin)
   constraint_list[0].event_types.length (0);
   constraint_list[0].constraint_expr = CORBA::string_dup (test_filter_string);
 
-  filter->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
   CosNotifyFilter::FilterID id = filter_admin->add_filter (filter.in ());
 
@@ -217,7 +216,7 @@ ExtendedFilter::print_filters (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 
 
 void
-ExtendedFilter::create_EC (void)
+ExtendedFilter::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id, id2;
 

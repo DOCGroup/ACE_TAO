@@ -13,7 +13,6 @@ void
 Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   // Create and register the test request interceptors.
   PortableInterceptor::ServerRequestInterceptor_ptr si =
     PortableInterceptor::ServerRequestInterceptor::_nil ();

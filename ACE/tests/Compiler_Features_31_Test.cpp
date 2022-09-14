@@ -5,8 +5,6 @@
 
 #include "test_config.h"
 
-#if defined (ACE_HAS_CPP11)
-
 namespace A
 {
   namespace C
@@ -17,7 +15,7 @@ namespace A
     template <typename T>
     struct abstractbase_traits
     {
-      typedef abstractbase_reference<T> ref_type;
+      using ref_type = abstractbase_reference<T>;
       static ref_type narrow(abstractbase_reference<C::AbstractBase>);
       static ref_type narrow2(abstractbase_reference<C::AbstractBase>);
     };
@@ -56,18 +54,3 @@ run_main (int, ACE_TCHAR *[])
 
   return 0;
 }
-
-#else
-int
-run_main (int, ACE_TCHAR *[])
-{
-  ACE_START_TEST (ACE_TEXT("Compiler_Features_31_Test"));
-
-  ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("No C++11 support enabled\n")));
-
-  ACE_END_TEST;
-  return 0;
-}
-
-#endif

@@ -8,7 +8,7 @@
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 
 int
-PushSupplier_impl::ReactorTask::svc (void)
+PushSupplier_impl::ReactorTask::svc ()
 {
   ACE_DEBUG((LM_DEBUG, "Reactor Thread started\n"));
   ACE_Reactor reactor (new ACE_Select_Reactor) ;
@@ -26,7 +26,6 @@ PushSupplier_impl::ReactorTask::svc (void)
 }
 
 
-
 PushSupplier_impl::PushSupplier_impl(CORBA::ORB_ptr orb)
 : orb_(orb), seq_no_(0), reactor_task_(this)
 {
@@ -39,7 +38,6 @@ PushSupplier_impl::~PushSupplier_impl()
 
 int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel)
 {
-
   ACE_DEBUG((LM_DEBUG, "for_suppliers\n"));
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     channel->for_suppliers();
@@ -47,7 +45,6 @@ int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel)
   ACE_DEBUG((LM_DEBUG, "obtain_push_consumer\n"));
   consumer_ =
     supplier_admin->obtain_push_consumer();
-
 
 
   ACE_DEBUG((LM_DEBUG, "got push_consumer with %d profiles\n",
@@ -76,15 +73,12 @@ int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel)
     -1);
 
   return 0;
-
 }
-
 
 
 void  PushSupplier_impl::disconnect_push_supplier (
       )
 {
-
   reactor_task_.reactor_->end_reactor_event_loop();
 
   PortableServer::Current_var current =

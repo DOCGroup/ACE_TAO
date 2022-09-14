@@ -27,7 +27,7 @@
 #include "ace/OS_NS_signal.h"
 
 /// Type of the extended signal handler.
-typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontext);
+using ACE_Sig_Handler_Ex = void (*) (int, siginfo_t *siginfo, ucontext_t *ucontext);
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -43,25 +43,25 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Sig_Set
 {
 public:
-  /// Initialize <sigset_> with @a sigset.  If @a sigset == 0 then fill
+  /// Initialize sigset_ with @a sigset.  If @a sigset == 0 then fill
   /// the set.
   ACE_Sig_Set (sigset_t *sigset);
 
-  /// Initialize <sigset_> with @a sigset.  If @a sigset == 0 then fill
+  /// Initialize sigset_ with @a sigset.  If @a sigset == 0 then fill
   /// the set.
   ACE_Sig_Set (ACE_Sig_Set *sigset);
 
-  /// If @a fill == 0 then initialize the <sigset_> to be empty, else
+  /// If @a fill == false then initialize the sigset_ to be empty, else
   /// full.
-  ACE_Sig_Set (int fill = 0);
+  ACE_Sig_Set (bool fill = false);
 
-  ~ACE_Sig_Set (void);
+  ~ACE_Sig_Set ();
 
   /// Create a set that excludes all signals defined by the system.
-  int empty_set (void);
+  int empty_set ();
 
   /// Create a set that includes all signals defined by the system.
-  int fill_set (void);
+  int fill_set ();
 
   /// Adds the individual signal specified by @a signo to the set.
   int sig_add (int signo);
@@ -76,10 +76,10 @@ public:
   operator sigset_t *();
 
   /// Returns a copy of the underlying @c sigset_t.
-  sigset_t sigset (void) const;
+  sigset_t sigset () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -98,12 +98,12 @@ class ACE_Export ACE_Sig_Action
 {
 public:
   /// Default constructor.  Initializes everything to 0.
-  ACE_Sig_Action (void);
+  ACE_Sig_Action ();
 
   /// Assigns the various fields of a @c sigaction struct but doesn't
   /// register for signal handling via the @c sigaction function.
   ACE_Sig_Action (ACE_SignalHandler handler,
-                  sigset_t *sigmask = 0,
+                  sigset_t *sigmask = nullptr,
                   int flags = 0);
 
   /// Assigns the various fields of a @c sigaction struct but doesn't
@@ -119,7 +119,7 @@ public:
    */
   ACE_Sig_Action (ACE_SignalHandler handler,
                   int signum,
-                  sigset_t *sigmask = 0,
+                  sigset_t *sigmask = nullptr,
                   int flags = 0);
 
   /**
@@ -149,24 +149,22 @@ public:
    */
   ACE_Sig_Action (const ACE_Sig_Set &signalss,
                   ACE_SignalHandler handler,
-                  sigset_t *sigmask = 0,
+                  sigset_t *sigmask = nullptr,
                   int flags = 0);
 
-#if defined (ACE_HAS_CPP11)
   ACE_Sig_Action (const ACE_Sig_Action&) = default;
   ACE_Sig_Action (ACE_Sig_Action&&) = default;
   ACE_Sig_Action& operator = (ACE_Sig_Action const &) = default;
   ACE_Sig_Action &operator = (ACE_Sig_Action&&)  = default;
-#endif /* ACE_HAS_CPP11 */
 
   /// Default dtor.
-  ~ACE_Sig_Action (void);
+  ~ACE_Sig_Action ();
 
   // = Signal action management.
   /// Register @c this as the current disposition and store old
   /// disposition into @a oaction if it is non-NULL.
   int register_action (int signum,
-                       ACE_Sig_Action *oaction = 0);
+                       ACE_Sig_Action *oaction = nullptr);
 
   /// Assign the value of @a oaction to @c this and make it become the
   /// new signal disposition.
@@ -180,30 +178,30 @@ public:
   void set (struct sigaction *);
 
   /// Get current signal action.
-  struct sigaction *get (void);
+  struct sigaction *get ();
   operator struct sigaction *();
 
   /// Set current signal flags.
   void flags (int);
 
   /// Get current signal flags.
-  int flags (void);
+  int flags ();
 
   /// Set current signal mask.
   void mask (sigset_t *);
   void mask (ACE_Sig_Set &);
 
   /// Get current signal mask.
-  sigset_t *mask (void);
+  sigset_t *mask ();
 
   /// Set current signal handler (pointer to function).
   void handler (ACE_SignalHandler);
 
   /// Get current signal handler (pointer to function).
-  ACE_SignalHandler handler (void);
+  ACE_SignalHandler handler ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -225,13 +223,13 @@ public:
   /// This is kind of conditional Guard, needed when guard should be
   /// activated only when a specific condition met. When condition ==
   /// true (default), Guard is activated
-  ACE_Sig_Guard (ACE_Sig_Set *mask = 0, bool condition = true);
+  ACE_Sig_Guard (ACE_Sig_Set *mask = nullptr, bool condition = true);
 
   /// Restore blocked signals.
-  ~ACE_Sig_Guard (void);
+  ~ACE_Sig_Guard ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -241,7 +239,7 @@ private:
   ACE_Sig_Set omask_;
 
   /// Guard Condition
-  bool condition_;
+  bool const condition_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

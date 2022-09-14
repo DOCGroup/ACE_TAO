@@ -15,7 +15,7 @@ template<typename S_var,
 ACE_INLINE
 const typename S_var::s_traits::char_type *
 TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
-arg (void) const
+arg () const
 {
   return this->x_.in ();
 }

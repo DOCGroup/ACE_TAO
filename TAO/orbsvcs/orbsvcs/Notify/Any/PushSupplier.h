@@ -40,18 +40,17 @@ public:
   void init (CosEventComm::PushSupplier_ptr push_supplier);
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior (void) const;
+  virtual ACE_CString get_ior () const;
 
 protected:
-
-  virtual CORBA::Object_ptr get_supplier (void);
+  virtual CORBA::Object_ptr get_supplier ();
 
   /// The Supplier
   CosEventComm::PushSupplier_var push_supplier_;
 
 private:
   /// TAO_Notify_Destroy_Callback methods
-  virtual void release (void);
+  virtual void release ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

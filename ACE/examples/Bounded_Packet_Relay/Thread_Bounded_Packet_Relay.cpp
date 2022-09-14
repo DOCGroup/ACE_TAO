@@ -22,7 +22,6 @@ typedef ACE_Command_Callback<BPR_Handler_Base, BPR_Handler_Base::ACTION> HANDLER
 typedef ACE_Command_Callback<Send_Handler, Send_Handler::ACTION> SEND_HANDLER_CMD;
 
 
-
 // Constructor.
 
 Text_Input_Device_Wrapper::Text_Input_Device_Wrapper (ACE_Thread_Manager *input_task_mgr,
@@ -41,7 +40,7 @@ Text_Input_Device_Wrapper::Text_Input_Device_Wrapper (ACE_Thread_Manager *input_
 
 // Destructor.
 
-Text_Input_Device_Wrapper::~Text_Input_Device_Wrapper (void)
+Text_Input_Device_Wrapper::~Text_Input_Device_Wrapper ()
 {
 }
 
@@ -67,9 +66,8 @@ Text_Input_Device_Wrapper::modify_device_settings (void *logging)
 // read from the underlying input device.
 
 ACE_Message_Block *
-Text_Input_Device_Wrapper::create_input_message (void)
+Text_Input_Device_Wrapper::create_input_message ()
 {
-
   // Construct a new message block to send.
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,
@@ -173,7 +171,7 @@ User_Input_Task::User_Input_Task (Bounded_Packet_Relay *relay,
 
 // Destructor.
 
-User_Input_Task::~User_Input_Task (void)
+User_Input_Task::~User_Input_Task ()
 {
   this->clear_all_timers ();
 }
@@ -181,7 +179,7 @@ User_Input_Task::~User_Input_Task (void)
 // Runs the main event loop.
 
 int
-User_Input_Task::svc (void)
+User_Input_Task::svc ()
 {
   for (;;)
     // Call back to the driver's implementation of how to read and
@@ -375,7 +373,7 @@ User_Input_Task::end_transmission (void *)
             ACE_DEBUG ((LM_DEBUG,
                         "\nEnd transmission: "
                         "no transmission in progress\n"));
-            /* Fall through to next case */
+            ACE_FALLTHROUGH;
           case 0:
             // Cancel any remaining timers.
             this->clear_all_timers ();
@@ -448,7 +446,7 @@ User_Input_Task::shutdown (void *)
 // Helper method: clears all timers.
 
 int
-User_Input_Task::clear_all_timers (void)
+User_Input_Task::clear_all_timers ()
 {
   // loop through the timers in the queue, cancelling each one
   for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
@@ -470,7 +468,7 @@ BPR_Handler_Base::BPR_Handler_Base (Bounded_Packet_Relay &relay,
 
 // Destructor.
 
-BPR_Handler_Base::~BPR_Handler_Base (void)
+BPR_Handler_Base::~BPR_Handler_Base ()
 {
 }
 
@@ -509,7 +507,7 @@ Send_Handler::Send_Handler (u_long send_count,
 
 // Destructor.
 
-Send_Handler::~Send_Handler (void)
+Send_Handler::~Send_Handler ()
 {
 }
 
@@ -524,7 +522,7 @@ Send_Handler::handle_timeout (const ACE_Time_Value &,
       case 0:
         // Decrement count of packets to relay.
         --send_count_;
-        /* Fall through to next case. */
+        ACE_FALLTHROUGH;
       case 1:
         if (send_count_ > 0)
           {
@@ -560,7 +558,7 @@ Send_Handler::handle_timeout (const ACE_Time_Value &,
 // Cancellation hook.
 
 int
-Send_Handler::cancelled (void)
+Send_Handler::cancelled ()
 {
   delete this;
   return 0;
@@ -596,7 +594,7 @@ Termination_Handler::Termination_Handler (Bounded_Packet_Relay &relay,
 
 // Destructor.
 
-Termination_Handler::~Termination_Handler (void)
+Termination_Handler::~Termination_Handler ()
 {
 }
 
@@ -624,7 +622,7 @@ Termination_Handler::handle_timeout (const ACE_Time_Value &,
 // Cancellation hook
 
 int
-Termination_Handler::cancelled (void)
+Termination_Handler::cancelled ()
 {
   delete this;
   return 0;
@@ -639,14 +637,14 @@ Thread_Bounded_Packet_Relay_Driver::Thread_Bounded_Packet_Relay_Driver (Bounded_
 
 // Destructor.
 
-Thread_Bounded_Packet_Relay_Driver::~Thread_Bounded_Packet_Relay_Driver (void)
+Thread_Bounded_Packet_Relay_Driver::~Thread_Bounded_Packet_Relay_Driver ()
 {
 }
 
 // Display the user menu.
 
 int
-Thread_Bounded_Packet_Relay_Driver::display_menu (void)
+Thread_Bounded_Packet_Relay_Driver::display_menu ()
 {
   static char menu[] =
     "\n\n  Options:\n"
@@ -690,7 +688,7 @@ Thread_Bounded_Packet_Relay_Driver::display_menu (void)
 // Initialize the driver.
 
 int
-Thread_Bounded_Packet_Relay_Driver::init (void)
+Thread_Bounded_Packet_Relay_Driver::init ()
 {
   // Initialize the <Command> objects with their corresponding
   // methods from <User_Input_Task>.
@@ -748,7 +746,7 @@ Thread_Bounded_Packet_Relay_Driver::init (void)
 // Run the driver
 
 int
-Thread_Bounded_Packet_Relay_Driver::run (void)
+Thread_Bounded_Packet_Relay_Driver::run ()
 {
   this->init ();
   return 0;

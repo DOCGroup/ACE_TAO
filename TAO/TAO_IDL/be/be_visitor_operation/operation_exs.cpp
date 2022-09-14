@@ -14,13 +14,13 @@
 be_visitor_operation_exs::be_visitor_operation_exs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     os_ (*ctx->stream ()),
-    scope_ (0),
+    scope_ (nullptr),
     your_code_here_ ("/* Your code here. */"),
     class_extension_ ("_exec_i")
 {
 }
 
-be_visitor_operation_exs::~be_visitor_operation_exs (void)
+be_visitor_operation_exs::~be_visitor_operation_exs ()
 {
 }
 
@@ -38,9 +38,9 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
   os_ << be_nl_2;
 
   // Retrieve the operation return type.
-  be_type *rt = be_type::narrow_from_decl (node->return_type ());
+  be_type *rt = dynamic_cast<be_type*> (node->return_type ());
 
-  if (rt == 0)
+  if (rt == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_operation_exs::")
@@ -111,7 +111,7 @@ be_visitor_operation_exs::gen_op_body (be_type *return_type)
       << your_code_here_;
 
   be_operation *op =
-    be_operation::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_operation*> (this->ctx_->node ());
 
   if (! op->void_return_type ())
     {

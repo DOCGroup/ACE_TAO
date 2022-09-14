@@ -24,24 +24,22 @@
 class be_visitor_enum_ch : public be_visitor_scope
 {
 public:
-  /// conenumor
+  /// constructor
   be_visitor_enum_ch (be_visitor_context *ctx);
 
-  /// deenumor
-  ~be_visitor_enum_ch (void);
+  /// destructor
+  ~be_visitor_enum_ch () override = default;
 
   /// visit enum.
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 
   // =visit operations on syntactically valid elements in our scope
 
   /// visit enum_val
-  virtual int visit_enum_val (be_enum_val *node);
-
-  // = helper
+  int visit_enum_val (be_enum_val *node) override;
 
   /// generate a comma after each element is processed
-  virtual int post_process (be_decl *);
+  int post_process (be_decl *) override;
 };
 
 #endif /* _BE_VISITOR_ENUM_ENUM_CH_H_ */

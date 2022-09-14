@@ -10,23 +10,23 @@ public:
 
   // Illustrate all the differnet
   // types of stacks provided by ACE.
-  int run (void);
+  int run ();
 
 private:
   // Illustrate the use of a bounded stack.
-  int runBoundedStack (void);
+  int runBoundedStack ();
 
   // Illustrate the use of an unbounded stack.
-  int runUnboundedStack (void);
+  int runUnboundedStack ();
 
   // Illustrate the use of a compile time fixed stack.
-  int runFixedStack (void);
+  int runFixedStack ();
 
 private:
   ACE_Bounded_Stack<DataElement*> privateStack_;
 };
 
-int StackExample::run (void)
+int StackExample::run ()
 {
   ACE_TRACE ("StackExample::run");
 
@@ -45,7 +45,7 @@ int StackExample::run (void)
   return 0;
 }
 // Listing 1 code/ch05
-int StackExample::runBoundedStack (void)
+int StackExample::runBoundedStack ()
 {
   ACE_TRACE ("StackExample::runBoundedStack");
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using a bounded stack\n")));
@@ -78,7 +78,7 @@ int StackExample::runBoundedStack (void)
 }
 // Listing 1
 // Listing 2 code/ch05
-int StackExample::runFixedStack (void)
+int StackExample::runFixedStack ()
 {
   ACE_TRACE ("StackExample::runFixedStack");
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using a fixed stack\n")));
@@ -102,7 +102,7 @@ int StackExample::runFixedStack (void)
   return 0;
 }
 
-int StackExample::runUnboundedStack (void)
+int StackExample::runUnboundedStack ()
 {
   ACE_TRACE ("StackExample::runUnboundedStack");
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using an unbounded stack\n")));

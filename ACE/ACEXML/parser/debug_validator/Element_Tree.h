@@ -29,7 +29,6 @@
 class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Element_Tree_Node
 {
 public:
-
   /// Default constructor.
   ACEXML_Element_Tree_Node ();
 
@@ -98,16 +97,16 @@ public:
   } LIST_TYPE;
 
   /// Default constructor.
-  ACEXML_Element_Tree_List_Node (void);
+  ACEXML_Element_Tree_List_Node ();
 
   /// Destructor.
-  virtual ~ACEXML_Element_Tree_List_Node (void);
+  virtual ~ACEXML_Element_Tree_List_Node ();
 
   /// Insert a new ACEXML_Element_Tree_Node into the list.
   int insert (ACEXML_Element_Tree_Node *node);
 
   /// Get/set the type of list.
-  LIST_TYPE get (void);
+  LIST_TYPE get ();
   int set (LIST_TYPE type);
 
   virtual void dump ();
@@ -137,11 +136,11 @@ public:
 
   void push (ACEXML_Element_Tree_List_Node *n);
 
-  ACEXML_Element_Tree_List_Node *pop (void);
+  ACEXML_Element_Tree_List_Node *pop ();
 
-  ACEXML_Element_Tree_List_Node *top (void);
+  ACEXML_Element_Tree_List_Node *top ();
 
-  int empty (void);
+  int empty ();
 
   ACE_ALLOC_HOOK_DECLARE;
 

@@ -11,19 +11,19 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::Principal::Principal (void)
+CORBA::Principal::Principal ()
   : refcount_ (1)
 {
 }
 
-CORBA::Principal::~Principal (void)
+CORBA::Principal::~Principal ()
 {
 }
 
 CORBA::Boolean
 operator<< (TAO_OutputCDR & cdr, CORBA::Principal * x)
 {
-  if (x != 0)
+  if (x != nullptr)
     {
       CORBA::ULong length  = x->id.length ();
       cdr.write_long (length);
@@ -45,7 +45,7 @@ operator>> (TAO_InputCDR & cdr, CORBA::Principal *& x)
 
   if (length == 0 || !cdr.good_bit ())
     {
-      x = 0;
+      x = nullptr;
     }
   else
     {

@@ -33,14 +33,13 @@
  */
 class MT_Client
 {
-
 public:
   /// = Constructor and destructor.
-  MT_Client (void);
-  ~MT_Client (void);
+  MT_Client ();
+  ~MT_Client ();
 
   /// Execute client example code.
-  int run (void);
+  int run ();
 
   /// Initialize the client communication endpoint with server.
   int init (int argc,
@@ -52,7 +51,7 @@ private:
   int read_ior (ACE_TCHAR *filename);
 
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// # of arguments on the command line.
   int argc_;
@@ -77,7 +76,6 @@ private:
 
   /// number of loops
   unsigned long iterations_;
-
 };
 
 /**
@@ -92,7 +90,7 @@ class MT_Client_Task : public ACE_Task<ACE_SYNCH>
 public:
   MT_Client_Task (int argc, ACE_TCHAR **argv, int client_number);
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   MT_Client mT_Client_;

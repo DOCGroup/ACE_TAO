@@ -29,22 +29,21 @@
 class ACEXML_Export ACEXML_CharStream
 {
 public:
-
   /**
    * Virtual destructor, must have.
    */
-  virtual ~ACEXML_CharStream (void) = 0;
+  virtual ~ACEXML_CharStream () = 0;
 
   /**
    * Returns the available ACEXML_Char in the buffer.  -1
    * if the object is not initialized properly.
    */
-  virtual int available (void) = 0;
+  virtual int available () = 0;
 
   /**
    * Close this stream and release all resources used by it.
    */
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /**
    * Read the next ACEXML_Char.  Return -1 if we are not able to
@@ -61,23 +60,22 @@ public:
    * Peek the next ACEXML_Char in the CharStream.  Return the
    * character if succeess, -1 if EOS is reached.
    */
-  virtual int peek (void) = 0;
+  virtual int peek () = 0;
 
   /**
    *  Resets the pointer to the beginning of the stream.
    */
-  virtual void rewind (void) = 0;
+  virtual void rewind () = 0;
 
   /*
    * Get the character encoding for a byte stream or URI.
    */
-  virtual const ACEXML_Char *getEncoding (void)  = 0;
+  virtual const ACEXML_Char *getEncoding ()  = 0;
 
   /*
    * Get the systemId for the underlying CharStream
    */
-  virtual const ACEXML_Char* getSystemId (void) = 0;
-
+  virtual const ACEXML_Char* getSystemId () = 0;
 };
 
 #include /**/ "ace/post.h"

@@ -171,7 +171,7 @@ TAO::PICurrent_Impl::~PICurrent_Impl ()
 }
 
 void
-TAO::PICurrent_Impl::push (void)
+TAO::PICurrent_Impl::push ()
 {
   if (this->orb_core_) // We have a stack to adjust
     {
@@ -197,7 +197,7 @@ TAO::PICurrent_Impl::push (void)
 }
 
 void
-TAO::PICurrent_Impl::pop (void)
+TAO::PICurrent_Impl::pop ()
 {
   if (this->orb_core_) // We have a stack to adjust
     {

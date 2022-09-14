@@ -17,7 +17,7 @@ Foo_A_i::~Foo_A_i()
 
 
 void
-Foo_A_i::op1(void)
+Foo_A_i::op1()
 {
   this->op_count_[0] ++;
 }
@@ -49,7 +49,7 @@ Foo_A_i::op4(CORBA::Long value)
 
 
 void
-Foo_A_i::op5(void)
+Foo_A_i::op5()
 {
   this->op_count_[4] ++;
   throw FooException();
@@ -57,7 +57,7 @@ Foo_A_i::op5(void)
 
 
 void
-Foo_A_i::done(void)
+Foo_A_i::done()
 {
   TheAppShutdown->client_done();
 }

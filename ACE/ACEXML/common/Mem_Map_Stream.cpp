@@ -4,7 +4,7 @@
 
 #include "ACEXML/common/Mem_Map_Stream.h"
 
-ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream (void)
+ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream ()
   : svc_handler_ (0),
     recv_pos_ (0),
     get_pos_ (0),
@@ -13,7 +13,7 @@ ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream (void)
 }
 
 ACE_SOCK_Stream &
-ACEXML_Mem_Map_Stream::stream (void)
+ACEXML_Mem_Map_Stream::stream ()
 {
   return svc_handler_->peer ();
 }
@@ -26,13 +26,13 @@ ACEXML_Mem_Map_Stream::send_n (const void *buf, size_t size,
 }
 
 int
-ACEXML_Mem_Map_Stream::eof (void) const
+ACEXML_Mem_Map_Stream::eof () const
 {
   return this->get_pos_ >= this->end_of_mapping_plus1_;
 }
 
 int
-ACEXML_Mem_Map_Stream::get_char (void)
+ACEXML_Mem_Map_Stream::get_char ()
 {
   if (this->eof () && this->grow_file_and_remap () == -1)
     return EOF;
@@ -40,7 +40,7 @@ ACEXML_Mem_Map_Stream::get_char (void)
 }
 
 void
-ACEXML_Mem_Map_Stream::rewind (void)
+ACEXML_Mem_Map_Stream::rewind ()
 {
   this->recv_pos_ = reinterpret_cast<char *> (this->mem_map_.addr ());
   this->get_pos_ = this->recv_pos_;
@@ -59,7 +59,7 @@ ACEXML_Mem_Map_Stream::peek_char (size_t offset)
 }
 
 const char *
-ACEXML_Mem_Map_Stream::recv (void) const
+ACEXML_Mem_Map_Stream::recv () const
 {
   return this->recv_pos_;
 }
@@ -79,7 +79,7 @@ ACEXML_Mem_Map_Stream::recv (size_t &len)
 }
 
 size_t
-ACEXML_Mem_Map_Stream::recv_len (void) const
+ACEXML_Mem_Map_Stream::recv_len () const
 {
   return this->get_pos_ - this->recv_pos_;
 }
@@ -131,13 +131,13 @@ ACEXML_Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
 }
 
 Svc_Handler *
-ACEXML_Mem_Map_Stream::svc_handler (void)
+ACEXML_Mem_Map_Stream::svc_handler ()
 {
   return this->svc_handler_;
 }
 
 size_t
-ACEXML_Mem_Map_Stream::available (void) const
+ACEXML_Mem_Map_Stream::available () const
 {
   return this->end_of_mapping_plus1_ - this->get_pos_;
 }
@@ -154,7 +154,6 @@ ACEXML_Mem_Map_Stream::open (Connector *connector,
   if (connector->connect (svc_handler_,
                           addr) == -1)
     {
-
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p %s %d\n",
                          "Connect failed",
@@ -188,7 +187,7 @@ ACEXML_Mem_Map_Stream::open (Connector *connector,
 }
 
 int
-ACEXML_Mem_Map_Stream::grow_file_and_remap (void)
+ACEXML_Mem_Map_Stream::grow_file_and_remap ()
 {
   char buf[8192];
 
@@ -257,7 +256,7 @@ ACEXML_Mem_Map_Stream::grow_file_and_remap (void)
   return 0;
 }
 
-ACEXML_Mem_Map_Stream::~ACEXML_Mem_Map_Stream (void)
+ACEXML_Mem_Map_Stream::~ACEXML_Mem_Map_Stream ()
 {
   // Remove the mapping and the file.
   this->mem_map_.remove ();

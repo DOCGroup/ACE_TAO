@@ -23,7 +23,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-ECT_Consumer_Driver::ECT_Consumer_Driver (void)
+ECT_Consumer_Driver::ECT_Consumer_Driver ()
   : n_consumers_ (1),
     n_suppliers_ (1),
     type_start_ (ACE_ES_EVENT_UNDEFINED),
@@ -35,7 +35,7 @@ ECT_Consumer_Driver::ECT_Consumer_Driver (void)
 {
 }
 
-ECT_Consumer_Driver::~ECT_Consumer_Driver (void)
+ECT_Consumer_Driver::~ECT_Consumer_Driver ()
 {
 }
 
@@ -177,7 +177,7 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
           channel->destroy ();
         }
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       this->orb_->destroy ();
     }
@@ -234,7 +234,7 @@ ECT_Consumer_Driver::connect_consumers
 }
 
 void
-ECT_Consumer_Driver::dump_results (void)
+ECT_Consumer_Driver::dump_results ()
 {
   ACE_High_Res_Timer::global_scale_factor_type gsf =
     ACE_High_Res_Timer::global_scale_factor ();
@@ -252,7 +252,7 @@ ECT_Consumer_Driver::dump_results (void)
 }
 
 void
-ECT_Consumer_Driver::disconnect_consumers (void)
+ECT_Consumer_Driver::disconnect_consumers ()
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {

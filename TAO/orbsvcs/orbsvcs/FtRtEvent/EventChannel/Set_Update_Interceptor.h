@@ -44,10 +44,10 @@ public:
   virtual ~TAO_Set_Update_Interceptor ();
   // dtor.
 
-  virtual char * name (void);
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
 

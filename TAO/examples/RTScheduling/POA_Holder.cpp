@@ -5,7 +5,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Log_Msg.h"
 
-POA_Holder::POA_Holder (void)
+POA_Holder::POA_Holder ()
   :priority_model_ (RTCORBA::CLIENT_PROPAGATED),
    server_priority_ (0),
    thread_pool_ (0)
@@ -90,7 +90,6 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
     arg_shifter.consume_arg ();
     ACE_DEBUG ((LM_DEBUG,
           "Thread Pool Initialized\n"));
-
   }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Bands"))))
         {
@@ -127,7 +126,6 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
             } /* while -- Band values */
     ACE_DEBUG ((LM_DEBUG,
           "Bands Initialized\n"));
-
         } /* if -Bands */
       else // something else is showing up ...
         {
@@ -179,7 +177,6 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
 
       ACE_DEBUG ((LM_DEBUG,
       "Activated Lanes\n"));
-
     }
 
   if (thread_pool_)
@@ -203,8 +200,6 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
 
       ACE_DEBUG ((LM_DEBUG,
       "Activated thread pool\n"));
-
-
     }
 
   if (bands_.length () != 0)
@@ -214,7 +209,6 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
         rt_orb->create_priority_banded_connection_policy (this->bands_);
       ACE_DEBUG ((LM_DEBUG,
       "Activated Bands\n"));
-
     }
 
   CORBA::PolicyList poa_policy_list;

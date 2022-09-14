@@ -50,11 +50,10 @@ namespace ACE
               virtual void before_read (std::streamsize length_to_read);
               virtual void after_read (const char_type* buffer,
                                        int length_read);
-              virtual void on_eof (void);
+              virtual void on_eof ();
           };
 
         typedef StreamInterceptorBase<char> StreamInterceptor;
-
       }
   }
 

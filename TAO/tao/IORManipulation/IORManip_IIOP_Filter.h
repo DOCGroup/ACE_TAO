@@ -42,10 +42,10 @@ public:
   };
 
   /// Constructor.
-  TAO_IORManip_IIOP_Filter (void);
+  TAO_IORManip_IIOP_Filter ();
 
   /// Destructor.
-  virtual ~TAO_IORManip_IIOP_Filter (void);
+  virtual ~TAO_IORManip_IIOP_Filter ();
 
   /// Compares the profile to the profile info.
   virtual CORBA::Boolean compare_profile_info (

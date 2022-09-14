@@ -15,7 +15,7 @@ ACE_IntCapEntry::ACE_IntCapEntry (int val)
 }
 
 ACE_INLINE int
-ACE_IntCapEntry::getval (void) const
+ACE_IntCapEntry::getval () const
 {
   return val_;
 }
@@ -28,7 +28,7 @@ ACE_StringCapEntry::ACE_StringCapEntry (const ACE_TString &val)
 }
 
 ACE_INLINE ACE_TString
-ACE_StringCapEntry::getval (void) const
+ACE_StringCapEntry::getval () const
 {
   return val_;
 }
@@ -41,7 +41,7 @@ ACE_BoolCapEntry::ACE_BoolCapEntry (int val)
 }
 
 ACE_INLINE int
-ACE_BoolCapEntry::getval (void) const
+ACE_BoolCapEntry::getval () const
 {
   return val_;
 }

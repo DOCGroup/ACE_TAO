@@ -20,7 +20,7 @@ public:
   Worker(Publisher_impl * _owner);
   ~Worker();
   void addSubscriber(Subscriber_ptr subscriber);
-  virtual int svc (void);
+  virtual int svc ();
   void terminate();
 private:
   bool terminated;
@@ -50,7 +50,7 @@ void Publisher_impl::Worker::addSubscriber(Subscriber_ptr subscriber)
   s.count = 0;
 }
 
-int Publisher_impl::Worker::svc (void)
+int Publisher_impl::Worker::svc ()
 {
   double data = 0.0;
   bool doShutdown = false;
@@ -145,6 +145,6 @@ void
 Publisher_impl::shutdown (
                           )
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
   worker->terminate();
 }

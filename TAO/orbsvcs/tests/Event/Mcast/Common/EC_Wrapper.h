@@ -26,14 +26,13 @@ class ECMcastTests_Export EC_Wrapper:
   public TAO_EC_Deactivated_Object
 {
 public:
-
   /// Create a new EC_Wrapper object.
   /// (Constructor access is restricted to insure that all
   /// EC_Wrapper objects are heap-allocated.)
-  static PortableServer::Servant_var<EC_Wrapper> create (void);
+  static PortableServer::Servant_var<EC_Wrapper> create ();
 
   /// Destructor.  Destroys the Event Channel implementation.
-  virtual ~EC_Wrapper (void);
+  virtual ~EC_Wrapper ();
 
   /// Create and initialize underlying EC servant.
   int init (CORBA::ORB_ptr orb,
@@ -42,13 +41,13 @@ public:
   /// RtecEventChannelAdmin::Event_Channel methods.
   //@{
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers (void);
+    for_consumers ();
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers (void);
+    for_suppliers ();
 
   /// Destroy the Event Channel, deactivate from POA, and shut down
   /// the ORB.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual RtecEventChannelAdmin::Observer_Handle
     append_observer (RtecEventChannelAdmin::Observer_ptr observer);
@@ -56,16 +55,14 @@ public:
   //@}
 
 protected:
-
   /// Constructor (protected).  Clients can create new
   /// EC_Wrapper objects using the static create() method.
-  EC_Wrapper (void);
+  EC_Wrapper ();
 
 private:
-
   /// Helper - destroys Event Channel and deactivate from POA, if
   /// necessary.
-  void destroy_ec (void);
+  void destroy_ec ();
 
   /// Event Channel implementation.
   /*

@@ -32,7 +32,7 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
 
 // Destructor.
 
-TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk (void)
+TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk ()
 {
 }
 
@@ -40,7 +40,7 @@ TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk (void)
 // in a UTO.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Clerk::universal_time (void)
+TAO_Time_Service_Clerk::universal_time ()
 {
   TAO_UTO *uto = 0;
 
@@ -59,7 +59,7 @@ TAO_Time_Service_Clerk::universal_time (void)
 // implemented currently.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Clerk::secure_universal_time (void)
+TAO_Time_Service_Clerk::secure_universal_time ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -120,7 +120,7 @@ TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
 }
 
 CORBA::ULongLong
-TAO_Time_Service_Clerk::get_time (void)
+TAO_Time_Service_Clerk::get_time ()
 {
   // Globally sync. time is the latest global time plus the time
   // elapsed since last updation was done.
@@ -137,7 +137,7 @@ TAO_Time_Service_Clerk::get_time (void)
 // Returns the time displacement factor in minutes.
 // This is displacement from the GMT.
 CORBA::Short
-TAO_Time_Service_Clerk::time_displacement_factor (void)
+TAO_Time_Service_Clerk::time_displacement_factor ()
 {
   return time_displacement_factor_;
 }
@@ -151,7 +151,7 @@ TAO_Time_Service_Clerk::time_displacement_factor (CORBA::Short tdf)
 
 // GET method for inaccuracy.
 TimeBase::InaccuracyT
-TAO_Time_Service_Clerk::inaccuracy (void)
+TAO_Time_Service_Clerk::inaccuracy ()
 {
   return this->inaccuracy_;
 }

@@ -28,7 +28,7 @@ class be_visitor_root_cdr_op : public be_visitor_root
 public:
   be_visitor_root_cdr_op (be_visitor_context *ctx);
 
-  ~be_visitor_root_cdr_op (void);
+  ~be_visitor_root_cdr_op ();
 
   virtual int visit_root (be_root *node);
 };

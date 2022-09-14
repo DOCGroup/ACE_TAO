@@ -18,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  FT_ClientRequest_Interceptor::FT_ClientRequest_Interceptor (void)
+  FT_ClientRequest_Interceptor::FT_ClientRequest_Interceptor ()
     : name_ ("TAO_FT_ClientRequest_Interceptor")
       , uuid_ (0)
       , lock_ (0)
@@ -33,23 +33,22 @@ namespace TAO
     // Would be nice to have runtime option.
     ACE_NEW (this->lock_,
              ACE_Lock_Adapter<TAO_SYNCH_MUTEX>);
-
   }
 
-  FT_ClientRequest_Interceptor::~FT_ClientRequest_Interceptor (void)
+  FT_ClientRequest_Interceptor::~FT_ClientRequest_Interceptor ()
   {
     delete this->uuid_;
     delete this->lock_;
   }
 
   char *
-  FT_ClientRequest_Interceptor::name (void)
+  FT_ClientRequest_Interceptor::name ()
   {
     return CORBA::string_dup (this->name_);
   }
 
   void
-  FT_ClientRequest_Interceptor::destroy (void)
+  FT_ClientRequest_Interceptor::destroy ()
   {
   }
 
@@ -269,7 +268,6 @@ namespace TAO
         }
       // Add this context to the service context list.
       ri->add_request_service_context (sc, 0);
-
     }
     catch (const CORBA::Exception&)
     {

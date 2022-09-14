@@ -2,13 +2,13 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_recursive_thread_mutex_t &
-ACE_Recursive_Thread_Mutex::lock (void)
+ACE_Recursive_Thread_Mutex::lock ()
 {
   return lock_;
 }
 
 ACE_INLINE ACE_thread_mutex_t &
-ACE_Recursive_Thread_Mutex::get_nesting_mutex (void)
+ACE_Recursive_Thread_Mutex::get_nesting_mutex ()
 {
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
   return static_cast<ACE_thread_mutex_t &> (lock_);
@@ -29,19 +29,19 @@ ACE_Recursive_Thread_Mutex::set_thread_id (ACE_thread_t t)
 }
 
 ACE_INLINE int
-ACE_Recursive_Thread_Mutex::acquire (void)
+ACE_Recursive_Thread_Mutex::acquire ()
 {
   return ACE_OS::recursive_mutex_lock (&this->lock_);
 }
 
 ACE_INLINE int
-ACE_Recursive_Thread_Mutex::release (void)
+ACE_Recursive_Thread_Mutex::release ()
 {
   return ACE_OS::recursive_mutex_unlock (&this->lock_);
 }
 
 ACE_INLINE int
-ACE_Recursive_Thread_Mutex::tryacquire (void)
+ACE_Recursive_Thread_Mutex::tryacquire ()
 {
   return ACE_OS::recursive_mutex_trylock (&this->lock_);
 }
@@ -59,31 +59,31 @@ ACE_Recursive_Thread_Mutex::acquire (ACE_Time_Value *tv)
 }
 
 ACE_INLINE int
-ACE_Recursive_Thread_Mutex::acquire_read (void)
+ACE_Recursive_Thread_Mutex::acquire_read ()
 {
   return this->acquire ();
 }
 
 ACE_INLINE int
-ACE_Recursive_Thread_Mutex::acquire_write (void)
+ACE_Recursive_Thread_Mutex::acquire_write ()
 {
   return this->acquire ();
 }
 
 ACE_INLINE int
-ACE_Recursive_Thread_Mutex::tryacquire_read (void)
+ACE_Recursive_Thread_Mutex::tryacquire_read ()
 {
   return this->tryacquire ();
 }
 
 ACE_INLINE int
-ACE_Recursive_Thread_Mutex::tryacquire_write (void)
+ACE_Recursive_Thread_Mutex::tryacquire_write ()
 {
   return this->tryacquire ();
 }
 
 ACE_INLINE int
-ACE_Recursive_Thread_Mutex::tryacquire_write_upgrade (void)
+ACE_Recursive_Thread_Mutex::tryacquire_write_upgrade ()
 {
   return 0;
 }

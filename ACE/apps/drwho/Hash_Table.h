@@ -22,12 +22,12 @@
 class Hash_Table : public Search_Struct
 {
 public:
-  Hash_Table (void);
-  virtual ~Hash_Table (void);
+  Hash_Table ();
+  virtual ~Hash_Table ();
   virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN) = 0;
-  virtual Protocol_Record *get_next_entry (void);
-  virtual Protocol_Record *get_each_entry (void);
+  virtual Protocol_Record *get_next_entry ();
+  virtual Protocol_Record *get_each_entry ();
 
 protected:
   enum

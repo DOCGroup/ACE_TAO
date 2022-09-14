@@ -39,11 +39,11 @@ class TAO_RTEvent_Serv_Export TAO_EC_Reactive_Dispatching : public TAO_EC_Dispat
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
-  TAO_EC_Reactive_Dispatching (void);
+  TAO_EC_Reactive_Dispatching ();
 
   // = The EC_Dispatching methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
+  virtual void activate ();
+  virtual void shutdown ();
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet &event,

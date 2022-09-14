@@ -29,7 +29,7 @@ public:
             Visibility vis = vis_NA);
 
   // Non-virtual override of frontend method.
-  be_type *field_type (void) const;
+  be_type *field_type () const;
 
   // Generate debugging ostream operator for members.
   void gen_member_ostream_operator (TAO_OutStream *os,
@@ -38,18 +38,14 @@ public:
                                     bool accessor = false);
 
   // Accessors for the member.
-  bool port_name_prefixed (void) const;
+  bool port_name_prefixed () const;
   void port_name_prefixed (bool val);
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_field);
+  virtual void destroy ();
 
 private:
   // If the name of a provides or uses node has already been

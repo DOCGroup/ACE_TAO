@@ -21,22 +21,22 @@ public:
   }
 
   // illustrate the hash map
-  int run (void);
+  int run ();
 
   // use the forward iterate
-  void iterate_forward (void);
+  void iterate_forward ();
 
   // use the reverse iterator
-  void iterate_reverse (void);
+  void iterate_reverse ();
 
   // remove all the elements from the map
-  void remove_all (void);
+  void remove_all ();
 
 private:
   Hash_Map<KeyType, DataElement> map_;
 };
 
-int Hash_Map_Example::run (void)
+int Hash_Map_Example::run ()
 {
   ACE_TRACE ("Hash_Map_Example::run");
 
@@ -69,7 +69,7 @@ int Hash_Map_Example::run (void)
   return 0;
 }
 
-void Hash_Map_Example::iterate_forward (void)
+void Hash_Map_Example::iterate_forward ()
 {
   ACE_TRACE ("Hash_Map_Example::iterate_forward");
 
@@ -82,7 +82,7 @@ void Hash_Map_Example::iterate_forward (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }
 
-void Hash_Map_Example::iterate_reverse (void)
+void Hash_Map_Example::iterate_reverse ()
 {
   ACE_TRACE ("Hash_Map_Example::iterate_reverse");
 
@@ -95,7 +95,7 @@ void Hash_Map_Example::iterate_reverse (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }
 
-void Hash_Map_Example::remove_all (void)
+void Hash_Map_Example::remove_all ()
 {
   ACE_TRACE ("Hash_Map_Example::remove_all");
   map_.unbind_all ();

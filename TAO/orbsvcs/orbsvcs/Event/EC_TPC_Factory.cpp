@@ -12,22 +12,21 @@
 #include "ace/OS_NS_strings.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 unsigned long TAO_EC_TPC_debug_level;
 
-TAO_EC_TPC_Factory::TAO_EC_TPC_Factory (void)
+TAO_EC_TPC_Factory::TAO_EC_TPC_Factory ()
 {
   TAO_EC_TPC_debug_level = 0;
 }
 
-TAO_EC_TPC_Factory::~TAO_EC_TPC_Factory (void)
+TAO_EC_TPC_Factory::~TAO_EC_TPC_Factory ()
 {
 }
 
 int
-TAO_EC_TPC_Factory::init_svcs (void)
+TAO_EC_TPC_Factory::init_svcs ()
 {
   TAO_EC_Simple_Queue_Full_Action::init_svcs();
   return ACE_Service_Config::static_svcs ()->

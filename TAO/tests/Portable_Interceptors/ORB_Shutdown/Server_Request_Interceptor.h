@@ -44,7 +44,6 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   Server_Request_Interceptor (bool & destroy_called);
 
@@ -58,9 +57,9 @@ public:
    */
   //@{
   /// Return the name of this ServerRequestinterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void receive_request_service_contexts (
       PortableInterceptor::ServerRequestInfo_ptr ri);
@@ -79,16 +78,13 @@ public:
   //@}
 
 protected:
-
   /// Destructor.
-  ~Server_Request_Interceptor (void);
+  ~Server_Request_Interceptor ();
 
 private:
-
   /// Flag that states whether this interceptor's @c destroy() method
   /// was called.
   bool & destroy_called_;
-
 };
 
 #if defined(_MSC_VER)

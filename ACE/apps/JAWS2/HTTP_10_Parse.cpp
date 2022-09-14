@@ -8,14 +8,13 @@
 #include "HTTP_10_Request.h"
 
 
-
 // --------------- PARSE TASK ----------------------
 
-JAWS_HTTP_10_Parse_Task::JAWS_HTTP_10_Parse_Task (void)
+JAWS_HTTP_10_Parse_Task::JAWS_HTTP_10_Parse_Task ()
 {
 }
 
-JAWS_HTTP_10_Parse_Task::~JAWS_HTTP_10_Parse_Task (void)
+JAWS_HTTP_10_Parse_Task::~JAWS_HTTP_10_Parse_Task ()
 {
 }
 

@@ -46,10 +46,10 @@ namespace TAO
     {
     public:
       /// Constructor.
-      ImR_Client_Adapter_Impl (void);
+      ImR_Client_Adapter_Impl ();
 
       /// Used to force the initialization of the PortableServer code.
-      static int Initializer (void);
+      static int Initializer ();
 
       /// ImplRepo helper method, notify the ImplRepo on startup
       virtual void imr_notify_startup (TAO_Root_POA* poa);

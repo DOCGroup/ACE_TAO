@@ -20,7 +20,6 @@ class TAO_Notify_ProxySupplier;
 
 namespace TAO_Notify
 {
-
 // Forward declarations of TAO_Notify classes/pointers/collections declared
 // in this header
 class Delivery_Request;
@@ -120,7 +119,6 @@ private:
   ACE_CDR::Octet delivery_type_;
   IdVec destination_id_;
 };
-
 } // namespace
 
 TAO_END_VERSIONED_NAMESPACE_DECL

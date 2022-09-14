@@ -175,78 +175,78 @@ RTP_Packet::RTP_Packet(unsigned char padding,
       }
 }
 
-RTP_Packet::~RTP_Packet(void)
+RTP_Packet::~RTP_Packet()
 {
 }
 
 ACE_UINT16
-RTP_Packet::packet_size(void)
+RTP_Packet::packet_size()
 {
     return this->packet_size_;
 }
 
 ACE_UINT16
-RTP_Packet::payload_size(void)
+RTP_Packet::payload_size()
 {
     return this->payload_size_;
 }
 
 unsigned int
-RTP_Packet::ver (void)
+RTP_Packet::ver ()
 {
   return ( this->packet_[0] & 0xC0 ) >> 6;
 }
 
 unsigned int
-RTP_Packet::pad (void)
+RTP_Packet::pad ()
 {
   return ( this->packet_[0] & 0x20 ) >> 5;
 }
 
 unsigned int
-RTP_Packet::ext (void)
+RTP_Packet::ext ()
 {
   return ( this->packet_[0] & 0x10 ) >> 4;
 }
 
 unsigned int
-RTP_Packet::cc  (void)
+RTP_Packet::cc  ()
 {
   return ( this->packet_[0] & 0x0F ) ;
 }
 
 unsigned int
-RTP_Packet::mrk (void)
+RTP_Packet::mrk ()
 {
   return ( this->packet_[1] & 0x80 ) >> 7;
 }
 
 unsigned int
-RTP_Packet::pt  (void)
+RTP_Packet::pt  ()
 {
   return ( this->packet_[1] & 0x7F ) ;
 }
 
 ACE_UINT16
-RTP_Packet::sn  (void)
+RTP_Packet::sn  ()
 {
   return ntohs(*(ACE_UINT16*)(&this->packet_[2])) ;
 }
 
 ACE_UINT32
-RTP_Packet::ts  (void)
+RTP_Packet::ts  ()
 {
   return ntohl(*(ACE_UINT32*)(&this->packet_[4])) ;
 }
 
 ACE_UINT32
-RTP_Packet::ssrc (void)
+RTP_Packet::ssrc ()
 {
   return ntohl(*(ACE_UINT32*)(&this->packet_[8])) ;
 }
 
 unsigned int
-RTP_Packet::ext_bytes (void)
+RTP_Packet::ext_bytes ()
 {
   return this->extension_bytes_;
 }
@@ -262,7 +262,7 @@ RTP_Packet::get_frame_info (TAO_AV_frame_info *frame_info)
 }
 
 int
-RTP_Packet::is_valid (void)
+RTP_Packet::is_valid ()
 {
   // taken from RFC 1889 - Appendix A.1
 
@@ -315,7 +315,7 @@ RTP_Packet::get_packet_data (char **packet, ACE_UINT16 &length)
 // TAO_AV_RTP_Object
 
 int
-TAO_AV_RTP_Object::handle_input (void)
+TAO_AV_RTP_Object::handle_input ()
 {
   TAO_AV_frame_info frame_info;
 
@@ -638,12 +638,12 @@ TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
   this->frame_.size (2 * this->transport_->mtu ());
 }
 
-TAO_AV_RTP_Object::~TAO_AV_RTP_Object (void)
+TAO_AV_RTP_Object::~TAO_AV_RTP_Object ()
 {
 }
 
 int
-TAO_AV_RTP_Object::destroy (void)
+TAO_AV_RTP_Object::destroy ()
 {
   if(this->control_object_)
      this->control_object_->destroy ();
@@ -681,7 +681,7 @@ TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
               static_cast<TAO_AV_SSRC_Policy *> (policy);
             if (ssrc_policy == 0)
               ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:SSRC policy not defined\n"),-1);
-            this->ssrc_ = ssrc_policy->value ();;
+            this->ssrc_ = ssrc_policy->value ();
           }
           break;
         default:
@@ -702,25 +702,25 @@ TAO_AV_RTP_Object::control_object (TAO_AV_Protocol_Object *object)
 }
 
 int
-TAO_AV_RTP_Object::start (void)
+TAO_AV_RTP_Object::start ()
 {
   this->control_object_->start ();
   return this->callback_->handle_start ();
 }
 
 int
-TAO_AV_RTP_Object::stop (void)
+TAO_AV_RTP_Object::stop ()
 {
   this->control_object_->stop ();
   return this->callback_->handle_stop ();
 }
 
 // TAO_AV_RTP_Flow_Factory
-TAO_AV_RTP_Flow_Factory::TAO_AV_RTP_Flow_Factory (void)
+TAO_AV_RTP_Flow_Factory::TAO_AV_RTP_Flow_Factory ()
 {
 }
 
-TAO_AV_RTP_Flow_Factory::~TAO_AV_RTP_Flow_Factory (void)
+TAO_AV_RTP_Flow_Factory::~TAO_AV_RTP_Flow_Factory ()
 {
 }
 
@@ -768,7 +768,7 @@ TAO_AV_RTP_Flow_Factory::match_protocol (const char *flow_string)
 }
 
 const char *
-TAO_AV_RTP_Flow_Factory::control_flow_factory (void)
+TAO_AV_RTP_Flow_Factory::control_flow_factory ()
 {
   return "RTCP";
 }

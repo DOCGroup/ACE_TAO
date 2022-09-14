@@ -56,7 +56,7 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::msg_queue (ACE_Message_Queue<ACE_SYNCH_USE
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::msg_queue (void)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::msg_queue ()
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::msg_queue");
   return this->msg_queue_;
@@ -64,7 +64,7 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::msg_queue (void)
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Time_Value_T<TIME_POLICY>
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::gettimeofday (void) const
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::gettimeofday () const
 {
   if (this->msg_queue_ != 0)
     return this->msg_queue_->gettimeofday ();
@@ -88,7 +88,7 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::reply (ACE_Message_Block *mb, ACE_Time_Val
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::next (void)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::next ()
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::next");
   return this->next_;

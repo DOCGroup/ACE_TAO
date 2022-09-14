@@ -45,7 +45,6 @@ class TAO_RTCORBA_Export TAO_RT_Invocation_Endpoint_Selector
   : public TAO_Invocation_Endpoint_Selector
 {
 public:
-
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
                                 ACE_Time_Value *val);
 

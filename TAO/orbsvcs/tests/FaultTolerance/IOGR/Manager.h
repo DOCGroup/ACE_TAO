@@ -30,19 +30,19 @@ public:
   // Initialize the ORB, POA etc.
 
   /// Merges the different IORS
-  int make_merged_iors (void);
+  int make_merged_iors ();
 
   /// Sets the properties for the profiles
-  int set_properties (void);
+  int set_properties ();
 
   /// Run the  ORB event loop..
-  int run (void);
+  int run ();
 
   /// Write the merged IOR to a file
-  int write_to_file (void);
+  int write_to_file ();
 
   /// Return the pointer to the copy of our ORB
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 private:
   CORBA::Object_var object_primary_;
   CORBA::Object_var object_secondary_;

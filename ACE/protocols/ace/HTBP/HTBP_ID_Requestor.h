@@ -51,7 +51,6 @@ namespace ACE
       static ACE_TString htid_;
       static ACE_SYNCH_MUTEX htid_lock_;
     };
-
   }
 }
 

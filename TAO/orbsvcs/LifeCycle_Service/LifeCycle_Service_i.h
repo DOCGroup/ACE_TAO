@@ -24,10 +24,9 @@
  */
 class Life_Cycle_Service_i : public POA_LifeCycleService::Life_Cycle_Service
 {
-
 public:
   Life_Cycle_Service_i (int debug_level = 1);
-  ~Life_Cycle_Service_i (void);
+  ~Life_Cycle_Service_i ();
 
   /// Returns true if the Generic Factory is able to forward a request
   /// for creating an object described by the <factory_key>.
@@ -56,8 +55,6 @@ private:
 };
 
 #endif /* LIFECYCLE_SERVICE_IMPL_H */
-
-
 
 
 

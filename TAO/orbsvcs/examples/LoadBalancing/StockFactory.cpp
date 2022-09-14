@@ -23,7 +23,7 @@ StockFactory::get_stock (const char *symbol)
 }
 
 void
-StockFactory::shutdown (void)
+StockFactory::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -13,7 +13,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::SSLIOP::Current_Impl::~Current_Impl (void)
+TAO::SSLIOP::Current_Impl::~Current_Impl ()
 {
 }
 
@@ -43,7 +43,7 @@ TAO::SSLIOP::Current_Impl::client_credentials ()
 }
 
 CORBA::Boolean
-TAO::SSLIOP::Current_Impl::request_is_local (void)
+TAO::SSLIOP::Current_Impl::request_is_local ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -115,7 +115,7 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate_chain (
 }
 
 CORBA::ULong
-TAO::SSLIOP::Current_Impl::tag (void) const
+TAO::SSLIOP::Current_Impl::tag () const
 {
   return ::SSLIOP::TAG_SSL_SEC_TRANS;
 }

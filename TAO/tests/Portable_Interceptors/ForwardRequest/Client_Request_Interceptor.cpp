@@ -21,7 +21,7 @@ Client_Request_Interceptor::name ()
 }
 
 void
-Client_Request_Interceptor::destroy (void)
+Client_Request_Interceptor::destroy ()
 {
 }
 
@@ -90,7 +90,6 @@ void
 Client_Request_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::Boolean response_expected =
     ri->response_expected ();
 

@@ -12,12 +12,12 @@ namespace TAO
     }
 
     void
-    IdAssignmentStrategy::strategy_cleanup(void)
+    IdAssignmentStrategy::strategy_cleanup()
     {
     }
 
     char
-    IdAssignmentStrategy::key_type_length (void) const
+    IdAssignmentStrategy::key_type_length () const
     {
       return sizeof (char);
     }

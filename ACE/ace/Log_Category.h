@@ -242,14 +242,14 @@ private:
  * and then use @c per_thr_obj() for logging. For example,
  *
  * \code{.cpp}
- *  ACE_Log_Category test_catogory("Test");
- *  test_cateogry.per_thr_obj()->log(LM_DEBUG, "Log into the Test category.");
+ *  ACE_Log_Category test_category("Test");
+ *  test_category.per_thr_obj()->log(LM_DEBUG, "Log into the Test category.");
  *
  *  // set the process wide priority mask
- *  test_catogory.priority_mask(LM_DEBUG|LM_ERROR);
+ *  test_category.priority_mask(LM_DEBUG|LM_ERROR);
  *
  *  // set the thread specific priority mask
- *  test_cateogry.per_thr_obj()->priority_mask(LM_DEBUG);
+ *  test_category.per_thr_obj()->priority_mask(LM_DEBUG);
  * \endcode
  */
 class ACE_Export ACE_Log_Category

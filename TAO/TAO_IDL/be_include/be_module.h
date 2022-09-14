@@ -28,14 +28,10 @@ public:
   be_module (UTL_ScopedName *n, AST_Module *previous = 0);
 
   /// Cleanup method.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting
   virtual int accept (be_visitor *visitor);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (be_module);
-  DEF_NARROW_FROM_SCOPE (be_module);
 };
 
 #endif

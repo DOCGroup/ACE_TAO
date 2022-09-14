@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 /// \brief Simple bit vector.
 ///
 /// Written to support block allocation from persistent storage.
@@ -43,7 +42,6 @@ class TAO_Notify_Serv_Export Bit_Vector
     BPW_LOG_2 = 5
   };
 public:
-
   /// The constructor.
   Bit_Vector();
   /// The destructor.
@@ -70,7 +68,6 @@ private:
   size_t first_set_bit_;
   size_t first_cleared_bit_;
 };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

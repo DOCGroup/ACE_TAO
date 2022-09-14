@@ -39,7 +39,7 @@ public:
   TAO_AliasDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_AliasDef_i (void);
+  virtual ~TAO_AliasDef_i ();
 
   /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();

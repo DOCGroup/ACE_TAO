@@ -103,7 +103,6 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB

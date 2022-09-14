@@ -25,12 +25,12 @@ Control::Control (Widget &parent)
                                           0);
 }
 
-Control::~Control (void)
+Control::~Control ()
 {
 }
 
 void
-Control::manage (void)
+Control::manage ()
 {
   XtManageChild (frame_);
   XtManageChild (rowcolumn_);
@@ -39,13 +39,13 @@ Control::manage (void)
 }
 
 Widget &
-Control::startwidget (void)
+Control::startwidget ()
 {
   return this->startwidget_;
 }
 
 Widget &
-Control::stopwidget (void)
+Control::stopwidget ()
 {
   return this->stopwidget_;
 }

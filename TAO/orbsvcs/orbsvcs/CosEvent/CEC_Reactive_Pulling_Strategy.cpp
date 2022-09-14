@@ -83,7 +83,7 @@ TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
 }
 
 void
-TAO_CEC_Reactive_Pulling_Strategy::activate (void)
+TAO_CEC_Reactive_Pulling_Strategy::activate ()
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
@@ -124,7 +124,7 @@ TAO_CEC_Reactive_Pulling_Strategy::activate (void)
 }
 
 void
-TAO_CEC_Reactive_Pulling_Strategy::shutdown (void)
+TAO_CEC_Reactive_Pulling_Strategy::shutdown ()
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   this->reactor_->cancel_timer (timer_id_);

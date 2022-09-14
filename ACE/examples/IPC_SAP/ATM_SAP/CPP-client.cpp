@@ -5,7 +5,6 @@
 #include "ace/Log_Msg.h"
 
 
-
 #if defined (ACE_HAS_ATM)
 
 #define MAX_LEAVES  32
@@ -132,7 +131,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     hosts[ i ],
                     i,
                     0 );
-
     }
   } /* if num_leaves == 1 */
 

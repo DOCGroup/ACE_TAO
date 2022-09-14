@@ -39,10 +39,10 @@ public:
                      Alt_Mapping_ptr objref,
                      T *);
 
-  ~Alt_Mapping_Client (void);
+  ~Alt_Mapping_Client ();
 
   /// run the SII test
-  int run_sii_test (void);
+  int run_sii_test ();
 
 private:
   /// underlying ORB

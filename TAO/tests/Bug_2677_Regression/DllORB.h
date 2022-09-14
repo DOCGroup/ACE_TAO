@@ -9,14 +9,14 @@
 class bug_2677_regression_Export DllORB: public ACE_Service_Object
 {
 public:
-  DllORB (void);
-  virtual ~DllORB (void);
+  DllORB ();
+  virtual ~DllORB ();
 
-  CORBA::ORB_ptr orb (void) const;
+  CORBA::ORB_ptr orb () const;
 
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
-  virtual int fini (void);
+  virtual int fini ();
 
 private:
   unsigned int                   failPrePostInit_;

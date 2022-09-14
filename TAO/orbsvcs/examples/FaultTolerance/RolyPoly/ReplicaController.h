@@ -11,10 +11,9 @@
 #include "tao/PortableServer/PortableServer.h"
 
 #include "Log.h"
+#include <memory>
 
 // State management
-//
-
 PortableInterceptor::SlotId
 state_slot_id ();
 
@@ -22,8 +21,6 @@ void
 state_slot_id (PortableInterceptor::SlotId slot_id);
 
 // ReplicaController
-//
-
 class ReplicaController
   : public virtual PortableInterceptor::ServerRequestInterceptor,
     public virtual ::CORBA::LocalObject
@@ -35,11 +32,9 @@ public:
   ReplicaController (CORBA::ORB_ptr orb);
 
 public:
-  virtual char *
-  name (void);
+  virtual char * name ();
 
-  virtual void
-  destroy (void);
+  virtual void destroy ();
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
   virtual void
@@ -79,7 +74,6 @@ private:
   resolve_poa (PortableInterceptor::AdapterName const& name);
 
 private:
-
   class RecordId
   {
   public:
@@ -109,7 +103,7 @@ private:
   Log_ log_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
-  auto_ptr<ACE_TMCast::Group> group_;
+  std::unique_ptr<ACE_TMCast::Group> group_;
 };
 
 #endif  /* REPLICA_CONTROLLER_H */

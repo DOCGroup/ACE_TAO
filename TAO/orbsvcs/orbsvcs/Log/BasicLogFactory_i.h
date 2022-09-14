@@ -46,7 +46,6 @@ class TAO_Log_Serv_Export TAO_BasicLogFactory_i :
   public TAO_LogMgr_i
 {
 public:
-
   //= Initialization and termination code.
 
   /// Constructor.

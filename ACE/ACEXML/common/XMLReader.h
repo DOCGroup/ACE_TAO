@@ -40,28 +40,27 @@
 class ACEXML_Export ACEXML_XMLReader
 {
 public:
-
-  virtual ~ACEXML_XMLReader (void);
+  virtual ~ACEXML_XMLReader ();
 
   /**
    * Return the current content handler.
    */
-  virtual ACEXML_ContentHandler *getContentHandler (void) const = 0;
+  virtual ACEXML_ContentHandler *getContentHandler () const = 0;
 
   /**
    * Return the current DTD handler.
    */
-  virtual ACEXML_DTDHandler *getDTDHandler (void) const = 0;
+  virtual ACEXML_DTDHandler *getDTDHandler () const = 0;
 
   /**
    * Return the current entity resolver.
    */
-  virtual ACEXML_EntityResolver *getEntityResolver (void) const = 0;
+  virtual ACEXML_EntityResolver *getEntityResolver () const = 0;
 
   /**
    * Return the current error handler.
    */
-  virtual ACEXML_ErrorHandler *getErrorHandler (void) const = 0;
+  virtual ACEXML_ErrorHandler *getErrorHandler () const = 0;
 
   /**
    * Look up the value of a feature.  This method allows

@@ -44,17 +44,17 @@ namespace ACE
       Linux_Network_Interface_Monitor (const char *scan_format);
 
       /// Platform-specific implementation.
-      void update_i (void);
+      void update_i ();
 
       /// Platform-specific reset.
-      void clear_impl (void);
+      void clear_impl ();
 
     protected:
       ACE_UINT64 value_;
 
     private:
       /// Common code.
-      void init (void);
+      void init ();
 
     private:
       static const unsigned long MAX_INTERFACES = 10UL;

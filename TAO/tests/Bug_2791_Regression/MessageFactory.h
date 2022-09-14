@@ -5,7 +5,6 @@
 class MessageFactory : public virtual CORBA::ValueFactoryBase
 {
   public:
-
     static int destructorInvoked_;
 
     ~MessageFactory ();

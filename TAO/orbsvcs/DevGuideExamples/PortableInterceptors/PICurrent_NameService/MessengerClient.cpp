@@ -59,7 +59,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var message = CORBA::string_dup( "Hello!" );
       messenger->send_message( "TAO User", "TAO Test", message.inout() );
-
     }
 
   catch(const CORBA::Exception& ex)

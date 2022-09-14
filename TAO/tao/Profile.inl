@@ -2,19 +2,19 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::ULong
-TAO_Profile::tag (void) const
+TAO_Profile::tag () const
 {
   return this->tag_;
 }
 
 ACE_INLINE const TAO_GIOP_Message_Version &
-TAO_Profile::version (void) const
+TAO_Profile::version () const
 {
   return this->version_;
 }
 
 ACE_INLINE TAO_ORB_Core *
-TAO_Profile::orb_core (void) const
+TAO_Profile::orb_core () const
 {
   return this->orb_core_;
 }
@@ -38,7 +38,7 @@ TAO_Profile::forward_to_i (void)
 }
 
 ACE_INLINE const TAO_Tagged_Components&
-TAO_Profile::tagged_components (void) const
+TAO_Profile::tagged_components () const
 {
   return this->tagged_components_;
 }
@@ -50,13 +50,13 @@ TAO_Profile::tagged_components (void)
 }
 
 ACE_INLINE CORBA::Short
-TAO_Profile::addressing_mode (void) const
+TAO_Profile::addressing_mode () const
 {
   return this->addressing_mode_;
 }
 
 ACE_INLINE const TAO::ObjectKey &
-TAO_Profile::object_key (void) const
+TAO_Profile::object_key () const
 {
   return this->ref_object_key_->object_key ();
 }

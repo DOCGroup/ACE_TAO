@@ -77,7 +77,7 @@ namespace TAO_Notify
     if (result)
     {
       this->live_ = false;
-      auto_ptr<ACEXML_FileCharStream> fstm (new ACEXML_FileCharStream);
+      std::unique_ptr<ACEXML_FileCharStream> fstm (new ACEXML_FileCharStream);
       // xml input source will take ownership
 
       if (fstm->open (this->file_name_.c_str ()) == 0)
@@ -127,7 +127,7 @@ namespace TAO_Notify
     ACE_ASSERT (root != 0);
     this->live_ = true;
 
-    auto_ptr<ACEXML_FileCharStream> fstm (new ACEXML_FileCharStream);
+    std::unique_ptr<ACEXML_FileCharStream> fstm (new ACEXML_FileCharStream);
     // xml input source will take ownership
 
     if (fstm->open (this->file_name_.c_str ()) == 0)

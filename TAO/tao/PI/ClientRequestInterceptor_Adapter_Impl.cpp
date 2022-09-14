@@ -255,7 +255,7 @@ namespace TAO
   }
 
   void
-  ClientRequestInterceptor_Adapter_Impl::destroy_interceptors (void)
+  ClientRequestInterceptor_Adapter_Impl::destroy_interceptors ()
   {
     this->interceptor_list_.destroy_interceptors ();
   }

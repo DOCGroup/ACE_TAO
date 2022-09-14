@@ -8,7 +8,7 @@
 #define ENCODING_TAB "./encoding.tab"
 #define CONTENT_TAB  "./content.tab"
 
-int demime(void);
+int demime();
 int decode(char *encoding);
 int view(char *content);
 

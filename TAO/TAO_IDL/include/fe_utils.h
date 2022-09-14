@@ -27,7 +27,7 @@ struct TAO_IDL_FE_Export FE_Utils
     ACE_CString name_;
     ACE_CString seq_param_ref_;
 
-    T_Param_Info (void);
+    T_Param_Info ();
   };
 
   typedef ACE_Unbounded_Queue<T_Param_Info> T_PARAMLIST_INFO;
@@ -36,7 +36,7 @@ struct TAO_IDL_FE_Export FE_Utils
 
   struct T_ARGLIST : ACE_Unbounded_Queue<AST_Decl *>
   {
-    void destroy (void);
+    void destroy ();
   };
 
   /// Convert from a predefined type to an expression type.
@@ -68,7 +68,7 @@ struct TAO_IDL_FE_Export FE_Utils
   /// For the executor IDL file, when a pragma ciao ami receptacle
   /// name is multiplex.
   static void
-  create_implied_ami_uses_stuff (void);
+  create_implied_ami_uses_stuff ();
 
   /// Case insensitive for Windows, otherwise not.
   static int
@@ -97,7 +97,7 @@ struct TAO_IDL_FE_Export FE_Utils
   /// Validate the included idl files, somefiles might have been
   /// ignored by the preprocessor.
   static void
-  validate_included_idl_files (void);
+  validate_included_idl_files ();
 
   /// Check if included file is in TAO specific include dirs.
   static bool

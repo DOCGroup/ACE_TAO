@@ -78,7 +78,7 @@ ClientApp::init(int argc, ACE_TCHAR* argv[])
 
 
 void
-ClientApp::poa_setup(void)
+ClientApp::poa_setup()
 {
   this->poa_ = this->create_poa(this->orb_.in(),
                                 "ChildPoa");
@@ -86,7 +86,7 @@ ClientApp::poa_setup(void)
 
 
 void
-ClientApp::csd_setup(void)
+ClientApp::csd_setup()
 {
   this->tp_strategy_ = new TAO::CSD::TP_Strategy(this->num_csd_threads_);
 
@@ -100,7 +100,7 @@ ClientApp::csd_setup(void)
 
 
 void
-ClientApp::client_setup(void)
+ClientApp::client_setup()
 {
   // Turn the ior_ into a Foo_B obj ref.
   Foo_B_var foo = RefHelper<Foo_B>::string_to_ref(this->orb_.in(),
@@ -119,7 +119,7 @@ ClientApp::client_setup(void)
 
 
 void
-ClientApp::poa_activate(void)
+ClientApp::poa_activate()
 {
   PortableServer::POAManager_var poa_manager
     = this->poa_->the_POAManager();
@@ -135,7 +135,7 @@ ClientApp::run_clients()
 
 
 void
-ClientApp::run_orb_event_loop(void)
+ClientApp::run_orb_event_loop()
 {
   OrbRunner orb_runner(this->orb_.in(), this->num_orb_threads_);
   orb_runner.run();

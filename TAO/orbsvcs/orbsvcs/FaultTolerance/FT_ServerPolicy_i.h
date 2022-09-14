@@ -33,7 +33,6 @@ class TAO_FT_Heart_Beat_Enabled_Policy
   , public ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_FT_Heart_Beat_Enabled_Policy (const CORBA::Boolean boolean);
 
@@ -47,7 +46,7 @@ public:
   // CORBA::ORB::create_policy.
 
   /// Returns a copy of <this>.
-  virtual TAO_FT_Heart_Beat_Enabled_Policy *clone (void) const;
+  virtual TAO_FT_Heart_Beat_Enabled_Policy *clone () const;
 
   // = The FT::HeartBeatPolicy methods
   virtual CORBA::Boolean heartbeat_enabled_policy_value ();
@@ -59,7 +58,6 @@ public:
   virtual void destroy ();
 
 private:
-
   /// indicates whether heartbeating is enabled or not.
   CORBA::Boolean heartbeat_enabled_value_;
 };

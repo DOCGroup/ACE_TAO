@@ -8,13 +8,13 @@ USEFORM("ChatClientWnd.cpp", ChatClientWindow);
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-void ace_init(void)
+void ace_init()
 {
   ACE::init();
 }
 #pragma startup ace_init
 
-void ace_fini(void)
+void ace_fini()
 {
   ACE::fini();
 }

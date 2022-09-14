@@ -17,7 +17,6 @@ namespace ACE
   {
     namespace INet
       {
-
         /**
         * @class ACE_INet_Response
         *
@@ -30,7 +29,6 @@ namespace ACE
               Response ();
               virtual ~Response ();
           };
-
       }
   }
 

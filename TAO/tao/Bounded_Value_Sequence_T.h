@@ -17,8 +17,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
-template<class T, CORBA::ULong MAX>
+template<class T, CORBA::ULong MAX, class Tag=int>
 class bounded_value_sequence
 {
 public:
@@ -102,7 +101,6 @@ public:
 private:
   implementation_type impl_;
 };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

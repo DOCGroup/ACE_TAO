@@ -18,7 +18,7 @@ be_visitor_interface_ex_idl::be_visitor_interface_ex_idl (
 {
 }
 
-be_visitor_interface_ex_idl::~be_visitor_interface_ex_idl (void)
+be_visitor_interface_ex_idl::~be_visitor_interface_ex_idl ()
 {
 }
 
@@ -26,7 +26,7 @@ int
 be_visitor_interface_ex_idl::visit_interface (be_interface *node)
 {
   // Skip implied IDL nodes.
-  if (node->original_interface () != 0)
+  if (node->original_interface () != nullptr)
     {
       return 0;
     }

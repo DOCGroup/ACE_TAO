@@ -81,7 +81,7 @@ TAO::FT_ReplicationManager::FT_ReplicationManager ()
   // init must be called before using this object.
 }
 
-TAO::FT_ReplicationManager::~FT_ReplicationManager (void)
+TAO::FT_ReplicationManager::~FT_ReplicationManager ()
 {
   // cleanup happens in fini
 }
@@ -324,7 +324,7 @@ int TAO::FT_ReplicationManager::idle (int & result)
 
 
 //public
-int TAO::FT_ReplicationManager::fini (void)
+int TAO::FT_ReplicationManager::fini ()
 {
   int result = 0;
 
@@ -487,7 +487,6 @@ void
 TAO::FT_ReplicationManager::set_default_properties (
   const PortableGroup::Properties & props)
 {
-
   this->properties_support_.set_default_properties (props);
   //@@ validate properties?
 }
@@ -543,7 +542,6 @@ TAO::FT_ReplicationManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Properties & overrides)
 {
-
   TAO::PG_Object_Group * group = 0;
   if (this->group_factory_.find_group (object_group, group))
   {
@@ -591,7 +589,6 @@ TAO::FT_ReplicationManager::set_primary_member (
   TAO::PG_Object_Group * group = 0;
   if (this->group_factory_.find_group (object_group, group))
   {
-
     PortableGroup::TagGroupTaggedComponent tag_component;
     TAO_FT_IOGR_Property prop (tag_component);
 
@@ -660,7 +657,6 @@ TAO::FT_ReplicationManager::add_member (
       member);
 
     result = group->reference ();
-
   }
   else
   {
@@ -894,7 +890,6 @@ void
 TAO::FT_ReplicationManager::delete_object (
   const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id)
 {
-
   PortableGroup::ObjectGroupId group_id = 0;
   if (factory_creation_id >>= group_id)
   {

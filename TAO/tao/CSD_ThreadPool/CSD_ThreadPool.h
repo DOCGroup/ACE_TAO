@@ -36,7 +36,7 @@ class TAO_CSD_TP_Export TAO_CSD_ThreadPool
 {
  public:
   /// Used to force the initialization of the ORB code.
-  static int init (void);
+  static int init ();
 };
 
 static int

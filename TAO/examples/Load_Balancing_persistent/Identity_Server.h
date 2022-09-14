@@ -34,12 +34,11 @@
 class Identity_Server
 {
 public:
-
   /// Default constructor.
-  Identity_Server (void);
+  Identity_Server ();
 
   /// Destructor.
-  ~Identity_Server (void);
+  ~Identity_Server ();
 
   /// Parses the commandline arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -48,15 +47,13 @@ public:
   /// ORB event loop.
   int init (int argc, ACE_TCHAR *argv[]);
 
-  int register_groups (void);
+  int register_groups ();
 
 
   /// Run the server.
-  int run (void);
+  int run ();
 
 private:
-
-
   /**
    * Creates the specified number of identity objects, and registers
    * each one with the provided <Object_Group>.  Identity servants are

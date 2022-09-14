@@ -47,7 +47,7 @@ namespace ACE
     }
 
     void
-    CPU_Load_Monitor::update (void)
+    CPU_Load_Monitor::update ()
     {
 #if defined (ACE_HAS_WIN32_PDH)
       this->update_i ();
@@ -82,13 +82,13 @@ namespace ACE
     }
 
     const char*
-    CPU_Load_Monitor::default_name (void)
+    CPU_Load_Monitor::default_name ()
     {
       return CPU_Load_Monitor::default_name_;
     }
 
     void
-    CPU_Load_Monitor::clear_i (void)
+    CPU_Load_Monitor::clear_i ()
     {
 #if defined (ACE_HAS_WIN32_PDH)
       this->clear_impl ();
@@ -99,7 +99,7 @@ namespace ACE
     }
 
     void
-    CPU_Load_Monitor::init (void)
+    CPU_Load_Monitor::init ()
     {
 #if defined (ACE_LINUX)
       /// All data in this file are stored as running 'jiffy' totals, so we

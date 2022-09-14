@@ -49,10 +49,10 @@ public:
   typedef CORBA::Long ID;
 
   /// Destructor
-  virtual ~TAO_Notify_Object (void);
+  virtual ~TAO_Notify_Object ();
 
   /// This Object's ID
-  ID id (void) const;
+  ID id () const;
 
   /// Activate
   virtual CORBA::Object_ptr activate (PortableServer::Servant servant);
@@ -63,45 +63,45 @@ public:
       CORBA::Long id);
 
   /// Deactivate
-  void deactivate (void);
+  void deactivate ();
 
   /// Have we been shutdown. returns true if shutdown.
-  bool has_shutdown (void);
+  bool has_shutdown ();
 
   void execute_task (TAO_Notify_Method_Request& method_request);
 
   /// Get CORBA Ref.
-  CORBA::Object_ptr ref (void);
+  CORBA::Object_ptr ref ();
 
   /// Set the QoS Properties.
   virtual void set_qos (const CosNotification::QoSProperties & qos);
 
   /// Get the QoS Properties.
-  CosNotification::QoSProperties* get_qos (void);
+  CosNotification::QoSProperties* get_qos ();
 
   bool find_qos_property_value (
     const char * name,
     CosNotification::PropertyValue & value)const;
 
   /// Obtain the Timer manager associated with this object.
-  virtual TAO_Notify_Timer* timer (void);
+  virtual TAO_Notify_Timer* timer ();
 
   /// Accessor for the Event Manager
-  TAO_Notify_Event_Manager& event_manager (void);
+  TAO_Notify_Event_Manager& event_manager ();
 
   /// Shutdown. Returns 1 if the shutdown was already run once before.
-  virtual int shutdown (void);
+  virtual int shutdown ();
 
   /// Load our attributes. Each derived type should call the superclass
   /// load first before loading its own attributes.
   virtual void load_attrs(const TAO_Notify::NVPList& attrs);
 
   /// Allow access to the underlying worker task.
-  TAO_Notify_Worker_Task* get_worker_task (void);
+  TAO_Notify_Worker_Task* get_worker_task ();
 
 protected:
   /// Constructor
-  TAO_Notify_Object (void);
+  TAO_Notify_Object ();
 
   /// Init this object with data from <rhs>.
   void initialize (TAO_Notify_Object* parent);
@@ -116,13 +116,13 @@ protected:
   void set_primary_as_proxy_poa();
 
   /// Accessor for the proxy_poa_
-  TAO_Notify_POA_Helper* proxy_poa (void);
+  TAO_Notify_POA_Helper* proxy_poa ();
 
   /// Accessor for the object_poa_
-  TAO_Notify_POA_Helper* object_poa (void);
+  TAO_Notify_POA_Helper* object_poa ();
 
   /// Get the POA assigned to us.
-  TAO_Notify_POA_Helper* poa (void);
+  TAO_Notify_POA_Helper* poa ();
 
   // Sets the admin properties
   void set_event_manager(TAO_Notify_Event_Manager* event_manager);
@@ -131,7 +131,7 @@ protected:
   void set_admin_properties(TAO_Notify_AdminProperties* admin_properties);
 
   /// Accessor for the Admin Properties
-  TAO_Notify_AdminProperties& admin_properties (void);
+  TAO_Notify_AdminProperties& admin_properties ();
 
   /// Notification that can be overridden by subclasses to be informed that
   /// <qos_properties_> have been modified.
@@ -161,24 +161,22 @@ private:
   void set_poa (TAO_Notify_POA_Helper* object_poa);
 
   /// Shutdown the current worker task and delete it if we own it.
-  void shutdown_worker_task (void);
+  void shutdown_worker_task ();
 
   /// Shutdown the current proxy poa.
-  void destroy_proxy_poa (void);
+  void destroy_proxy_poa ();
 
   /// Shutdown the current object poa.
-  void destroy_object_poa (void);
+  void destroy_object_poa ();
 
   /// Shutdown the current poa.
-  void destroy_poa (void);
+  void destroy_poa ();
 
 protected:
-
   /// The mutex to serialize access to state variables.
   TAO_SYNCH_MUTEX lock_;
 
 private:
-
   /// The POA in which the object is activated.
   TAO_Notify_POA_Helper* poa_;
 

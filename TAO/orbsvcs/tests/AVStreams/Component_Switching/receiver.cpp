@@ -11,7 +11,7 @@ static int done = 0;
 /// Flag set when a signal is raised.
 
 // constructor.
-Signal_Handler::Signal_Handler (void)
+Signal_Handler::Signal_Handler ()
 {
 }
 
@@ -68,19 +68,17 @@ Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flows
       /// Store the related streamctrl.
       connection_manager->add_streamctrl (flowname.c_str (),
                                          this);
-
     }
   return 1;
-
 }
 
-Receiver_Callback::Receiver_Callback (void)
+Receiver_Callback::Receiver_Callback ()
   : frame_count_ (1)
 {
 }
 
 ACE_CString &
-Receiver_Callback::flowname (void)
+Receiver_Callback::flowname ()
 {
   return this->flowname_;
 }
@@ -92,7 +90,7 @@ Receiver_Callback::flowname (const ACE_CString &flowname)
 }
 
 int
-Receiver_Callback::handle_destroy (void)
+Receiver_Callback::handle_destroy ()
 {
   /// Called when the sender requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
@@ -136,7 +134,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   return 0;
 }
 
-Receiver::Receiver (void)
+Receiver::Receiver ()
   : mmdevice_ (0),
     output_file_name_ ("output"),
     sender_name_ ("distributer"),
@@ -144,19 +142,18 @@ Receiver::Receiver (void)
 {
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
-
 }
 
 ACE_CString
-Receiver::sender_name (void)
+Receiver::sender_name ()
 {
   return this->sender_name_;
 }
 
 ACE_CString
-Receiver::receiver_name (void)
+Receiver::receiver_name ()
 {
   return this->receiver_name_;
 }
@@ -247,13 +244,13 @@ Receiver::parse_args (int argc,
 }
 
 ACE_CString
-Receiver::output_file_name (void)
+Receiver::output_file_name ()
 {
   return this->output_file_name_;
 }
 
 void
-Receiver::shut_down (void)
+Receiver::shut_down ()
 {
   try
     {
@@ -264,8 +261,6 @@ Receiver::shut_down (void)
       this->connection_manager_.unbind_receiver (this->sender_name_,
                                                  this->receiver_name_,
                                                  mmdevice_obj.in ());
-
-
     }
   catch (const CORBA::Exception& ex)
     {

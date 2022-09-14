@@ -31,7 +31,7 @@ class be_visitor_component_ami_rh_exh
 {
 public:
   be_visitor_component_ami_rh_exh (be_visitor_context *ctx);
-  ~be_visitor_component_ami_rh_exh (void);
+  ~be_visitor_component_ami_rh_exh ();
 
   virtual int visit_uses (be_uses *node);
   virtual int visit_attribute (be_attribute *node);

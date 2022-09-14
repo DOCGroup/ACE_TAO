@@ -31,7 +31,7 @@ Server_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 }
 
 Echo_Server_Request_Interceptor *
-Server_ORBInitializer::server_interceptor (void)
+Server_ORBInitializer::server_interceptor ()
 {
   return this->server_interceptor_;
 }

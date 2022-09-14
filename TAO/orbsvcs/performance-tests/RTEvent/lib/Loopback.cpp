@@ -23,7 +23,7 @@ Loopback::Loopback (CORBA::Long experiment_id,
 }
 
 void
-Loopback::disconnect (void)
+Loopback::disconnect ()
 {
   Auto_Disconnect<Loopback_Pair> disconnect (&this->loopback_pair_);
 

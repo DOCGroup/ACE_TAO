@@ -56,7 +56,6 @@ namespace TAO
         public ::CORBA::LocalObject
     {
     public:
-
       /// Result Type for dispatching method(s).
       enum DispatchResult
       {

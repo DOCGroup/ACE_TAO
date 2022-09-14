@@ -4,7 +4,7 @@
 ifeq (,$(WIND_PLATFORM))
   default:
         @ERROR: you must set your WIND_PLATFORM environment variable
-endif # WIND_BASE
+endif # WIND_PLATFORM
 
 ifeq (vxworks-6.2, $(findstring vxworks-6.2,$(WIND_PLATFORM)))
   include $(ACE_ROOT)/include/makeinclude/platform_vxworks6.2.GNU

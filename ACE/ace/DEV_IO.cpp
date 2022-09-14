@@ -8,9 +8,6 @@
 #include "ace/DEV_IO.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV_IO)
@@ -38,7 +35,7 @@ ACE_DEV_IO::get_remote_addr (ACE_DEV_Addr &addr) const
 }
 
 void
-ACE_DEV_IO::dump (void) const
+ACE_DEV_IO::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_DEV_IO::dump");
@@ -51,7 +48,7 @@ ACE_DEV_IO::dump (void) const
 
 // Simple-minded do nothing constructor.
 
-ACE_DEV_IO::ACE_DEV_IO (void)
+ACE_DEV_IO::ACE_DEV_IO ()
 {
   ACE_TRACE ("ACE_DEV_IO::ACE_DEV_IO");
 }

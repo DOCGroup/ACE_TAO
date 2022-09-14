@@ -14,7 +14,6 @@ namespace ACE
 {
   namespace HTTP
   {
-
     SessionFactoryRegistry::SessionFactoryRegistry ()
       {
       }

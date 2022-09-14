@@ -97,7 +97,7 @@ TAO_SSLIOP_Endpoint::operator= (const TAO_SSLIOP_Endpoint &other)
   return *this;
 }
 
-TAO_SSLIOP_Endpoint::~TAO_SSLIOP_Endpoint (void)
+TAO_SSLIOP_Endpoint::~TAO_SSLIOP_Endpoint ()
 {
   if (this->destroy_iiop_endpoint_)
     delete this->iiop_endpoint_;
@@ -125,7 +125,7 @@ TAO_SSLIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 
 
 TAO_Endpoint *
-TAO_SSLIOP_Endpoint::next (void)
+TAO_SSLIOP_Endpoint::next ()
 {
   return this->next_;
 }
@@ -170,7 +170,7 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 TAO_Endpoint *
-TAO_SSLIOP_Endpoint::duplicate (void)
+TAO_SSLIOP_Endpoint::duplicate ()
 {
   TAO_SSLIOP_Endpoint *endpoint = 0;
 
@@ -190,7 +190,7 @@ TAO_SSLIOP_Endpoint::duplicate (void)
 }
 
 CORBA::ULong
-TAO_SSLIOP_Endpoint::hash (void)
+TAO_SSLIOP_Endpoint::hash ()
 {
   // there is actually the potential for a race of the inverse case,
   // since setting the security attributes will reset the hash_val_,
@@ -230,7 +230,7 @@ TAO_SSLIOP_Endpoint::hash (void)
 
 
 const ACE_INET_Addr &
-TAO_SSLIOP_Endpoint::object_addr (void) const
+TAO_SSLIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode
   // time for several reasons:
@@ -293,7 +293,6 @@ TAO_SSLIOP_Endpoint::set_sec_attrs (::Security::QOP q,
 
 
 
-
 TAO_SSLIOP_Synthetic_Endpoint::~TAO_SSLIOP_Synthetic_Endpoint ()
 {
 }
@@ -345,7 +344,7 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint
 }
 
 TAO_Endpoint *
-TAO_SSLIOP_Synthetic_Endpoint::duplicate (void)
+TAO_SSLIOP_Synthetic_Endpoint::duplicate ()
 {
   TAO_SSLIOP_Synthetic_Endpoint *endpoint = 0;
 

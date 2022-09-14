@@ -22,14 +22,14 @@ public:
   // constructor and destructor
   Test_Wrapper (T *);
 
-  ~Test_Wrapper (void);
+  ~Test_Wrapper ();
 
   /**
    * @brief Run the test.
    *
    * @return The number of errors detected.
    */
-  int run_test (void);
+  int run_test ();
 
 private:
   // This does all the work.

@@ -45,7 +45,7 @@ public:
   Worker (CORBA::ORB_ptr orb);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:
@@ -174,7 +174,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       test_server->shutdown ();
 
       // shutdown worker
-      orb->shutdown (1);
+      orb->shutdown (true);
 
       worker.thr_mgr ()->wait ();
 
@@ -197,7 +197,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {

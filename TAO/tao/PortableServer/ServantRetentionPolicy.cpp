@@ -18,7 +18,7 @@ namespace TAO
     }
 
     CORBA::Policy_ptr
-    ServantRetentionPolicy::copy (void)
+    ServantRetentionPolicy::copy ()
     {
       ServantRetentionPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
@@ -29,30 +29,30 @@ namespace TAO
     }
 
     void
-    ServantRetentionPolicy::destroy (void)
+    ServantRetentionPolicy::destroy ()
     {
     }
 
     ::PortableServer::ServantRetentionPolicyValue
-    ServantRetentionPolicy::value (void)
+    ServantRetentionPolicy::value ()
     {
       return this->value_;
     }
 
     CORBA::PolicyType
-    ServantRetentionPolicy::policy_type (void)
+    ServantRetentionPolicy::policy_type ()
     {
       return ::PortableServer::SERVANT_RETENTION_POLICY_ID;
     }
 
     TAO_Cached_Policy_Type
-    ServantRetentionPolicy::_tao_cached_type (void) const
+    ServantRetentionPolicy::_tao_cached_type () const
     {
       return TAO_CACHED_POLICY_SERVANT_RETENTION;
     }
 
     TAO_Policy_Scope
-    ServantRetentionPolicy::_tao_scope (void) const
+    ServantRetentionPolicy::_tao_scope () const
     {
       return TAO_POLICY_POA_SCOPE;
     }

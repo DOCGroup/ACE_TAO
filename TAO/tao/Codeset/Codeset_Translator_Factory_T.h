@@ -38,8 +38,7 @@ class TAO_Codeset_Translator_Factory_T
 : public TAO_Codeset_Translator_Factory
 {
 public:
-
-  TAO_Codeset_Translator_Factory_T ();
+  TAO_Codeset_Translator_Factory_T () = default;
   virtual ~TAO_Codeset_Translator_Factory_T ();
 
   /// initialize the factory service object. Instantiates the translator.
@@ -62,7 +61,7 @@ public:
   virtual void assign (TAO_OutputCDR *) const;
 
 private:
-  NCS_TO_TCS *translator_;
+  NCS_TO_TCS *translator_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

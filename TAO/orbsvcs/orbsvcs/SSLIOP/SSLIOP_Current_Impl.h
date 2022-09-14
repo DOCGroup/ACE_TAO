@@ -44,10 +44,10 @@ namespace TAO
     {
     public:
       /// Constructor.
-      Current_Impl (void);
+      Current_Impl ();
 
       /// Destructor
-      ~Current_Impl (void);
+      ~Current_Impl ();
 
       /// Implementation of the SSLIOP-specific
       /// SecurityLevel3::client_credentials() method.
@@ -70,19 +70,15 @@ namespace TAO
       void ssl (SSL *s);
 
       /// Return pointer to the SSL session state for the current upcall.
-      SSL *ssl (void);
+      SSL *ssl ();
 
     protected:
       /// Return the unique tag that identifies the concrete subclass.
-      virtual CORBA::ULong tag (void) const;
+      virtual CORBA::ULong tag () const;
 
     private:
-      /// Prevent copying through the copy constructor and the assignment
-      /// operator.
-      //@{
-      Current_Impl (const Current_Impl &);
-      void operator= (const Current_Impl &);
-      //@}
+      Current_Impl (const Current_Impl &) = delete;
+      void operator= (const Current_Impl &) = delete;
 
     private:
       /// The SSL session state corresponding to the current upcall.

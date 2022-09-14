@@ -12,7 +12,7 @@ public:
   bogus ();
   virtual ~bogus ();
 
-  virtual void noop (void);
+  virtual void noop ();
 };
 
 #include /**/ "ace/post.h"

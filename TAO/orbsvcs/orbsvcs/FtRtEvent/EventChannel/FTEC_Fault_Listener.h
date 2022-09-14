@@ -18,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_FTEC_Fault_Listener
 {
 public:
-  virtual ~TAO_FTEC_Fault_Listener(){};
+  virtual ~TAO_FTEC_Fault_Listener() = default;
   virtual void connection_closed()=0;
 };
 

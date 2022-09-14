@@ -26,7 +26,7 @@ ACEXML_URL_Addr::operator= (const ACEXML_URL_Addr &addr)
 }
 
 ACE_INLINE u_long
-ACEXML_URL_Addr::hash (void) const
+ACEXML_URL_Addr::hash () const
 {
   u_long result = this->ACE_INET_Addr::hash ()
                   + ACE::hash_pjw (this->get_path_name ());
@@ -48,7 +48,7 @@ ACEXML_URL_Addr::operator!= (const ACEXML_URL_Addr &addr) const
 }
 
 ACE_INLINE const ACEXML_Char *
-ACEXML_URL_Addr::get_path_name (void) const
+ACEXML_URL_Addr::get_path_name () const
 {
   return this->path_name_;
 }

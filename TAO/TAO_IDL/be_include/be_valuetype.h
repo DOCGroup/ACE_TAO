@@ -41,12 +41,12 @@ public:
                 bool truncatable,
                 bool custom);
 
-  ~be_valuetype (void);
+  ~be_valuetype ();
 
   virtual void redefine (AST_Interface *from);
 
   /// Should generate optimized form?
-  bool opt_accessor (void);
+  bool opt_accessor ();
 
   /// Generate the helper functions definition.
   virtual int gen_helper_header (char *local_name = 0,
@@ -66,17 +66,17 @@ public:
 
   /// Generate the declarations used by the template _var, _out
   /// classes for valuetypes, and by sequence template classes.
-  void gen_var_out_seq_decls (void);
+  void gen_var_out_seq_decls ();
 
   /// Retrieve the fully scoped skel class name.
-  const char *full_obv_skel_name (void);
+  const char *full_obv_skel_name ();
 
-  const char *field_pd_prefix (void);
+  const char *field_pd_prefix ();
 
-  const char *field_pd_postfix (void);
+  const char *field_pd_postfix ();
 
   // For building the name for private data fields.
-  be_valuetype *statefull_inherit (void);
+  be_valuetype *statefull_inherit ();
 
   /// Load the insert queue with all the interfaces we support, and
   /// call the generic version of traverse_inheritance_graph().
@@ -95,21 +95,16 @@ public:
     );
 
   /// Do we support at least one abstract interface?
-  bool supports_abstract (void) const;
+  bool supports_abstract () const;
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
-
- // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_valuetype);
-  DEF_NARROW_FROM_SCOPE (be_valuetype);
+  virtual void destroy ();
 
   /// Compute the fully scoped skel class name.
-  void compute_fullobvskelname (void);
+  void compute_fullobvskelname ();
 
   /// Compute the count of private/public/all data members.
   ACE_CDR::ULong data_members_count (
@@ -123,7 +118,7 @@ public:
                                        TAO_OutStream *os);
 
   /// Accessor to the member.
-  const char *fwd_helper_name (void) const;
+  const char *fwd_helper_name () const;
 
   // There are three possible situations.
   // (1) If there is no initializers but at least one operation.
@@ -146,24 +141,24 @@ public:
   };
 
   /// Determine what kind of factory needed.
-  FactoryStyle determine_factory_style (void);
+  FactoryStyle determine_factory_style ();
 
   /// Recurse down the inheritance tree to determine
   /// if valuetype has at least one operation/attribute.
-  bool have_operation (void);
+  bool have_operation ();
 
   /// Check if VT supports an interface with at least 1 operation.
   static bool have_supported_op (be_interface *node);
 
   /// Use the above enum and methods to determine this after the
   /// node's scope is visited but before code generation.
-  virtual bool will_have_factory (void);
+  virtual bool will_have_factory ();
 
   /// Decides whether to generate the initializing contstructor or not.
-  bool has_member (void);
+  bool has_member ();
 
   /// Accessors for the member
-  bool is_amh_excep_holder (void) const;
+  bool is_amh_excep_holder () const;
   void is_amh_excep_holder (bool val);
 
 private:

@@ -7,7 +7,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-PortableGroup_Request_Dispatcher::~PortableGroup_Request_Dispatcher (void)
+PortableGroup_Request_Dispatcher::~PortableGroup_Request_Dispatcher ()
 {
 }
 

@@ -80,7 +80,6 @@ protected:
 class Library
 {
 public:
-
   Library (const ACE_TCHAR *name = 0 );
   /// Constructor is responsible for loading all of the modules related to the
   /// library

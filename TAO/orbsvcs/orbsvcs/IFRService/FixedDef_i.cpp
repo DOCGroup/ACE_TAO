@@ -9,18 +9,18 @@ TAO_FixedDef_i::TAO_FixedDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_FixedDef_i::~TAO_FixedDef_i (void)
+TAO_FixedDef_i::~TAO_FixedDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_FixedDef_i::def_kind (void)
+TAO_FixedDef_i::def_kind ()
 {
   return CORBA::dk_Fixed;
 }
 
 void
-TAO_FixedDef_i::destroy (void)
+TAO_FixedDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -30,13 +30,13 @@ TAO_FixedDef_i::destroy (void)
 }
 
 void
-TAO_FixedDef_i::destroy_i (void)
+TAO_FixedDef_i::destroy_i ()
 {
   // TODO
 }
 
 CORBA::TypeCode_ptr
-TAO_FixedDef_i::type (void)
+TAO_FixedDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -46,14 +46,14 @@ TAO_FixedDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_FixedDef_i::type_i (void)
+TAO_FixedDef_i::type_i ()
 {
   // TODO
   return CORBA::TypeCode::_nil ();
 }
 
 CORBA::UShort
-TAO_FixedDef_i::digits (void)
+TAO_FixedDef_i::digits ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -63,7 +63,7 @@ TAO_FixedDef_i::digits (void)
 }
 
 CORBA::UShort
-TAO_FixedDef_i::digits_i (void)
+TAO_FixedDef_i::digits_i ()
 {
   // TODO
   return 0;
@@ -87,7 +87,7 @@ TAO_FixedDef_i::digits_i (CORBA::UShort /* digits */
 }
 
 CORBA::Short
-TAO_FixedDef_i::scale (void)
+TAO_FixedDef_i::scale ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -97,7 +97,7 @@ TAO_FixedDef_i::scale (void)
 }
 
 CORBA::Short
-TAO_FixedDef_i::scale_i (void)
+TAO_FixedDef_i::scale_i ()
 {
   // TODO
   return 0;

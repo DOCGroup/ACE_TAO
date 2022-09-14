@@ -34,21 +34,21 @@ class Notify_Logging_Service
   //   Implementation of the Telecom Log Service
 
  public:
-  Notify_Logging_Service (void);
+  Notify_Logging_Service ();
   // Constructor.
 
-  virtual ~Notify_Logging_Service (void);
+  virtual ~Notify_Logging_Service ();
   // Destructor.
 
   int init (int argc, ACE_TCHAR *argv[]);
   // Initializes the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
-  int run (void);
+  int run ();
   // Run the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
-  void shutdown (void);
+  void shutdown ();
   // Shutdown the Telecom Service.
   // Returns 0 on success, -1 on error.
 
@@ -59,7 +59,7 @@ protected:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parses the command line arguments.
 
-  void resolve_naming_service (void);
+  void resolve_naming_service ();
   // Resolve the naming service.
 
   int svc ();

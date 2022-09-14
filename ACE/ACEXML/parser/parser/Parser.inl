@@ -7,25 +7,25 @@
 //=============================================================================
 
 ACEXML_INLINE ACEXML_ContentHandler *
-ACEXML_Parser::getContentHandler (void) const
+ACEXML_Parser::getContentHandler () const
 {
   return this->content_handler_;
 }
 
 ACEXML_INLINE ACEXML_DTDHandler *
-ACEXML_Parser::getDTDHandler (void) const
+ACEXML_Parser::getDTDHandler () const
 {
   return this->dtd_handler_;
 }
 
 ACEXML_INLINE ACEXML_EntityResolver *
-ACEXML_Parser::getEntityResolver (void) const
+ACEXML_Parser::getEntityResolver () const
 {
   return this->entity_resolver_;
 }
 
 ACEXML_INLINE ACEXML_ErrorHandler *
-ACEXML_Parser::getErrorHandler (void) const
+ACEXML_Parser::getErrorHandler () const
 {
   return this->error_handler_;
 }
@@ -171,7 +171,7 @@ ACEXML_Parser::is_whitespace (const ACEXML_Char c) const
 }
 
 ACEXML_INLINE ACEXML_Char
-ACEXML_Parser::skip_whitespace (void)
+ACEXML_Parser::skip_whitespace ()
 {
   ACEXML_Char ch = this->get();
   while (this->is_whitespace (ch))
@@ -193,7 +193,7 @@ ACEXML_Parser::skip_whitespace_count (ACEXML_Char *peeky)
 }
 
 ACEXML_INLINE int
-ACEXML_Parser::skip_equal (void)
+ACEXML_Parser::skip_equal ()
 {
   if (this->skip_whitespace() != '=')
     return -1;
@@ -203,7 +203,7 @@ ACEXML_Parser::skip_equal (void)
 }
 
 ACEXML_INLINE ACEXML_Char
-ACEXML_Parser::get (void)
+ACEXML_Parser::get ()
 {
   ACEXML_Char ch = 0;
   const ACEXML_InputSource* ip = this->current_->getInputSource();
@@ -231,7 +231,7 @@ ACEXML_Parser::get (void)
 }
 
 ACEXML_INLINE ACEXML_Char
-ACEXML_Parser::peek (void)
+ACEXML_Parser::peek ()
 {
   // Using an extra level of indirection so we can
   // manage document location in the future.

@@ -15,7 +15,6 @@
 #include "ace/Service_Config.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Null_Barrier.h"
@@ -29,7 +28,7 @@ public:
                int n_threads,
                int inp_serialize = 1);
 
-  virtual int producer (void);
+  virtual int producer ();
   // produce input for workers
 
   virtual int input (ACE_Message_Block *mb);
@@ -45,7 +44,7 @@ public:
 private:
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv=0);
 
-  virtual int svc (void);
+  virtual int svc ();
   // Iterate <n_iterations> time printing off a message and "waiting"
   // for all other threads to complete this iteration.
 
@@ -140,7 +139,7 @@ Worker_Task<BARRIER>::service (ACE_Message_Block *mb,
 // for all other threads to complete this iteration.
 
 template <class BARRIER> int
-Worker_Task<BARRIER>::svc (void)
+Worker_Task<BARRIER>::svc ()
 {
   // Note that the <ACE_Task::svc_run> method automatically adds us to
   // the Thread_Manager when the thread begins.
@@ -188,7 +187,7 @@ Worker_Task<BARRIER>::svc (void)
 }
 
 template <class BARRIER> int
-Worker_Task<BARRIER>::producer (void)
+Worker_Task<BARRIER>::producer ()
 {
   // Keep reading stdin, until we reach EOF.
 

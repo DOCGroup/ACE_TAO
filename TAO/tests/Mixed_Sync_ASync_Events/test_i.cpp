@@ -87,13 +87,13 @@ Test_i::report (
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
   if (this->mode_ == A::RM_SLAVE && !CORBA::is_nil (this->opponent_.in ()))
   {
     this->opponent_->shutdown ();
   }
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 Test_Reply_i::Test_Reply_i (CORBA::ORB_ptr orb,

@@ -97,7 +97,6 @@ public:
             ACE_ERROR_RETURN ((LM_DEBUG,
                                          "Reference is not of type IF_EXE_M_R::IF_ExeCtrlData\n"),
                                         1);
-
           }
         client->foo (ts);
         if (shutdown)

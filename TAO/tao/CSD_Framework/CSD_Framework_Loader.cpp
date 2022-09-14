@@ -5,18 +5,18 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CSD_Framework_Loader::TAO_CSD_Framework_Loader (void)
+TAO_CSD_Framework_Loader::TAO_CSD_Framework_Loader ()
   : initialized_ (false)
 {
 }
 
-TAO_CSD_Framework_Loader::~TAO_CSD_Framework_Loader (void)
+TAO_CSD_Framework_Loader::~TAO_CSD_Framework_Loader ()
 {
 }
 
 
 int
-TAO_CSD_Framework_Loader::static_init (void)
+TAO_CSD_Framework_Loader::static_init ()
 {
   ACE_Service_Config::process_directive (
       ace_svc_desc_TAO_CSD_Object_Adapter_Factory);

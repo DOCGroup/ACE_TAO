@@ -57,7 +57,7 @@ ACE_URL_Property::decode (void *buf)
 }
 
 void
-ACE_URL_Property::dump (void) const
+ACE_URL_Property::dump () const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
@@ -77,7 +77,7 @@ ACE_URL_Property::dump (void) const
 }
 
 size_t
-ACE_URL_Offer::size (void) const
+ACE_URL_Offer::size () const
 {
   size_t sum = (this->url_.length () + 1) * sizeof (ACE_UINT16);
   sum += ::ace_array_size (this->prop_);
@@ -116,7 +116,7 @@ ACE_URL_Offer::decode (void *buf)
 }
 
 void
-ACE_URL_Offer::dump (void) const
+ACE_URL_Offer::dump () const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 

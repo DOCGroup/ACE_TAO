@@ -48,7 +48,6 @@
 #endif
 
 
-
 // Default number of elements for check buffer, for each tested CDR type.
 // Be aware that time will be affected by the buffer fitting/not fitting
 // in the cache (ie, if default_total*sizeof(T) bytes fit in the cache).
@@ -180,7 +179,7 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
 {
   if (total <= 0)
     {
-      return ;
+      return;
     }
 
   char* srcbuf;
@@ -233,7 +232,6 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
                   CDR_Test<T, H>::do_test(tdelta, niter, 1,
                                           srcbuf, dstbuf,
                                           sk, dk);
-
                 }
             }
         }
@@ -893,7 +891,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("This is ACE Version %u.%u.%u\n\n"),
               ACE::major_version (),
               ACE::minor_version(),
-              ACE::beta_version()));
+              ACE::micro_version()));
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("d:f:q:w:h:c:t:n:"));
   int dtotal = 0;

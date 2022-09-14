@@ -15,7 +15,6 @@
 #include "BPR_Drivers.h"
 
 
-
 // Constructor.
 
 Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr)
@@ -29,7 +28,7 @@ Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_
 
 // Destructor.
 
-Input_Device_Wrapper_Base::~Input_Device_Wrapper_Base (void)
+Input_Device_Wrapper_Base::~Input_Device_Wrapper_Base ()
 {
 }
 
@@ -67,7 +66,7 @@ Input_Device_Wrapper_Base::set_send_count (long count)
 // if it has already done so, or -1 if there is a problem doing so.
 
 int
-Input_Device_Wrapper_Base::request_stop (void)
+Input_Device_Wrapper_Base::request_stop ()
 {
   if (is_active_)
     {
@@ -81,7 +80,7 @@ Input_Device_Wrapper_Base::request_stop (void)
 // This method runs the input device loop in the new thread.
 
 int
-Input_Device_Wrapper_Base::svc (void)
+Input_Device_Wrapper_Base::svc ()
 {
   ACE_Time_Value timeout;
   ACE_Message_Block *message;
@@ -175,7 +174,7 @@ Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
     }
 }
 
-Output_Device_Wrapper_Base::~Output_Device_Wrapper_Base (void)
+Output_Device_Wrapper_Base::~Output_Device_Wrapper_Base ()
 {
 }
 
@@ -204,7 +203,7 @@ Bounded_Packet_Relay::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
 
 // Destructor.
 
-Bounded_Packet_Relay::~Bounded_Packet_Relay (void)
+Bounded_Packet_Relay::~Bounded_Packet_Relay ()
 {
   // Reactivate the queue, and then clear it.
   queue_.activate ();
@@ -220,7 +219,7 @@ Bounded_Packet_Relay::~Bounded_Packet_Relay (void)
 // Requests output be sent to output device.
 
 int
-Bounded_Packet_Relay::send_input (void)
+Bounded_Packet_Relay::send_input ()
 {
   // Don't block, return immediately if queue is empty.
   ACE_Message_Block *item;
@@ -393,7 +392,7 @@ Bounded_Packet_Relay::end_transmission (Transmission_Status status)
 // Requests a report of statistics from the last transmission.
 
 int
-Bounded_Packet_Relay::report_statistics (void)
+Bounded_Packet_Relay::report_statistics ()
 {
   // Serialize access to start and end transmission calls,
   // statistics reporting calls.
@@ -456,7 +455,7 @@ Bounded_Packet_Relay::receive_input (void * arg)
 // Get high water mark for relay queue.
 
 ACE_UINT32
-Bounded_Packet_Relay::queue_hwm (void)
+Bounded_Packet_Relay::queue_hwm ()
 {
   return queue_lwm_;
 }
@@ -473,7 +472,7 @@ Bounded_Packet_Relay::queue_hwm (ACE_UINT32 hwm)
 // Get low water mark for relay queue.
 
 ACE_UINT32
-Bounded_Packet_Relay::queue_lwm (void)
+Bounded_Packet_Relay::queue_lwm ()
 {
   return queue_lwm_;
 }
@@ -487,11 +486,10 @@ Bounded_Packet_Relay::queue_lwm (ACE_UINT32 lwm)
 }
 
 
-
 // Returns string corresponding to current status.
 
 const char *
-Bounded_Packet_Relay::status_msg (void)
+Bounded_Packet_Relay::status_msg ()
 {
   const char *status_msg;
   switch (status_)

@@ -34,20 +34,20 @@ public:
              int proxy_consumer_thread_count);
 
   /// Run
-  void run (void);
+  void run ();
 
 protected:
   // = Protected Methods
 
   /// Connect the Supplier to the EventChannel.
   /// Creates a new proxy consumer and connects to it.
-  void connect (void);
+  void connect ();
 
   /// Disconnect the supplier.
-  void disconnect (void);
+  void disconnect ();
 
   /// Deactivate.
-  void deactivate (void);
+  void deactivate ();
 
   /// Send one event.
   virtual void send_event (const CosNotification::StructuredEvent& event);
@@ -61,7 +61,7 @@ protected:
         const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier method
-  virtual void disconnect_structured_push_supplier (void);
+  virtual void disconnect_structured_push_supplier ();
   /// = Data members
 
   /// ORB Objects.

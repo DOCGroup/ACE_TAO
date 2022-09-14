@@ -6,7 +6,7 @@
 
 // Default do nothing completers.
 
-JAWS_Event_Completer::~JAWS_Event_Completer (void)
+JAWS_Event_Completer::~JAWS_Event_Completer ()
 {
 }
 

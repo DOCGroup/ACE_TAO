@@ -19,7 +19,7 @@ be_visitor_component_ami_rh_exs::be_visitor_component_ami_rh_exs (
 {
 }
 
-be_visitor_component_ami_rh_exs::~be_visitor_component_ami_rh_exs (void)
+be_visitor_component_ami_rh_exs::~be_visitor_component_ami_rh_exs ()
 {
 }
 
@@ -29,19 +29,19 @@ be_visitor_component_ami_rh_exs::visit_uses (be_uses *node)
   this->port_ = node;
 
   this->iface_ =
-    be_interface::narrow_from_decl (node->uses_type ());
+    dynamic_cast<be_interface*> (node->uses_type ());
 
   this->init ();
 
   os_ << be_nl_2
       << this->class_name_ << "::"
-      << this->class_name_ << " (void)" << be_nl
+      << this->class_name_ << " ()" << be_nl
       << "{" << be_nl
       << "}";
 
   os_ << be_nl_2
       << this->class_name_ << "::~"
-      << this->class_name_ << " (void)" << be_nl
+      << this->class_name_ << " ()" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -112,7 +112,7 @@ be_visitor_component_ami_rh_exs::visit_operation (
 
   if (count == 0 && vrt)
     {
-      os_ << "void)";
+      os_ << ")";
     }
   else
     {
@@ -121,25 +121,25 @@ be_visitor_component_ami_rh_exs::visit_operation (
 
   if (!vrt)
     {
-      Identifier *id = 0;
-      UTL_ScopedName *sn = 0;
+      Identifier *id = nullptr;
+      UTL_ScopedName *sn = nullptr;
 
       ACE_NEW_RETURN (id,
                       Identifier ("ami_return_val"),
                       -1);
 
-      UTL_ScopedName *tmp = 0;
+      UTL_ScopedName *tmp = nullptr;
 
       ACE_NEW_RETURN (tmp,
                       UTL_ScopedName (id,
-                                      0),
+                                      nullptr),
                       -1);
 
       sn = (UTL_ScopedName *)node->name ()->copy ();
       sn->nconc (tmp);
 
       // Create the argument.
-      be_argument *arg = 0;
+      be_argument *arg = nullptr;
       ACE_NEW_RETURN (arg,
                       be_argument (AST_Argument::dir_OUT,
                                   node->return_type (),
@@ -225,7 +225,7 @@ be_visitor_component_ami_rh_exs::visit_argument (
 }
 
 void
-be_visitor_component_ami_rh_exs::gen_op_body (void)
+be_visitor_component_ami_rh_exs::gen_op_body ()
 {
   os_ << be_nl
       << "{" << be_idt_nl

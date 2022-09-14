@@ -13,7 +13,7 @@ First_i::First_i (CORBA::ORB_ptr orb, ACE_Auto_Event &two_way_done)
 }
 
 void
-First_i::oneway_method (void)
+First_i::oneway_method ()
 {
   ACE_DEBUG ((LM_DEBUG, "Oneway servant : (%P|%t) one way method called. About to wait for two way call completion\n"));
 

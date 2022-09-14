@@ -34,11 +34,11 @@ namespace TAO
       : public RequestProcessingStrategyServantManager
     {
     public:
-      RequestProcessingStrategyServantLocator (void);
+      RequestProcessingStrategyServantLocator ();
 
-      virtual void strategy_cleanup(void);
+      virtual void strategy_cleanup();
 
-      PortableServer::ServantManager_ptr get_servant_manager (void);
+      PortableServer::ServantManager_ptr get_servant_manager ();
 
       void set_servant_manager (PortableServer::ServantManager_ptr imgr);
 

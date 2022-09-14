@@ -76,14 +76,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Clean up before exit, whether successful or not.
 TAO_IDL_BE_Export void
-BE_cleanup (void)
+BE_cleanup ()
 {
   idl_global->destroy ();
 }
 
 // Abort this run of the BE.
 TAO_IDL_BE_Export void
-BE_abort (void)
+BE_abort ()
 {
   ACE_ERROR ((LM_ERROR,
               "Fatal Error - Aborting\n"));
@@ -97,7 +97,7 @@ BE_visit_root (be_visitor_decl &root_visitor,
                const char *which_pass)
 {
   static be_root *root =
-    be_root::narrow_from_decl (idl_global->root ());
+    dynamic_cast<be_root*> (idl_global->root ());
 
   if (-1 == root->accept (&root_visitor))
     {
@@ -112,7 +112,7 @@ BE_visit_root (be_visitor_decl &root_visitor,
 
 // Do the work of this BE. This is the starting point for code generation.
 TAO_IDL_BE_Export void
-BE_produce (void)
+BE_produce ()
 {
   be_visitor_context ctx;
 

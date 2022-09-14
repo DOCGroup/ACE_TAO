@@ -13,7 +13,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 const S &
-TAO::In_Var_Size_Argument_T<S,Insert_Policy>::arg (void) const
+TAO::In_Var_Size_Argument_T<S,Insert_Policy>::arg () const
 {
   return *this->x_;
 }

@@ -10,7 +10,7 @@ class  Messenger_i : public POA_Messenger
  public:
   Messenger_i (CORBA::ORB_ptr orb);
 
-  virtual ~Messenger_i (void);
+  virtual ~Messenger_i ();
 
   CORBA::Boolean send_message (const char * user_name,
                                const char * subject,

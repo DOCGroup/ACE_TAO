@@ -32,7 +32,6 @@ namespace TAO
   struct TAO_ReplicationManagerLib_Export FT_FaultEventDescriptor
   {
   public:
-
     /// Default constructor.
     FT_FaultEventDescriptor ();
 
@@ -65,9 +64,7 @@ namespace TAO
 
     /// The object group's factories.
     PortableGroup::FactoryInfos_var factories;
-
   };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

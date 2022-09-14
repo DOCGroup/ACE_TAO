@@ -29,18 +29,18 @@ class TAO_RT_Notify_Export TAO_Notify_RT_Properties
 {
 public:
   /// Constructor
-  TAO_Notify_RT_Properties (void);
+  TAO_Notify_RT_Properties ();
 
   /// Destructor
   ~TAO_Notify_RT_Properties ();
 
   /// Return singleton instance of this class.
-  static TAO_Notify_RT_Properties * instance (void);
+  static TAO_Notify_RT_Properties * instance ();
 
-  RTCORBA::RTORB_ptr rt_orb (void);
+  RTCORBA::RTORB_ptr rt_orb ();
   void rt_orb (RTCORBA::RTORB_ptr rt_orb);
 
-  RTCORBA::Current_ptr current (void);
+  RTCORBA::Current_ptr current ();
   void current (RTCORBA::Current_ptr current);
 
 protected:

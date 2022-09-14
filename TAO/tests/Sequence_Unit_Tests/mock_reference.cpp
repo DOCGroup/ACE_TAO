@@ -70,7 +70,7 @@ TAO::Objref_Traits<mock_reference>::release (
 }
 
 mock_reference_ptr
-TAO::Objref_Traits<mock_reference>::nil (void)
+TAO::Objref_Traits<mock_reference>::nil ()
 {
   return mock_reference::_nil ();
 }

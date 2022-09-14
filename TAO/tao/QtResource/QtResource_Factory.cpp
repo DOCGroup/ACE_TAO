@@ -13,7 +13,7 @@ namespace TAO
   }
 
   ACE_Reactor_Impl *
-  QtResource_Factory::reactor_impl (void)
+  QtResource_Factory::reactor_impl ()
   {    // synchronized by external locks
     if (this->qapp_ == 0)
       {

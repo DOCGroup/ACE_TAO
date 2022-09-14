@@ -10,14 +10,12 @@
 #include "ace/INet/INet_Log.h"
 
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace HTTP
   {
-
     const ACE_CString Response::COOKIE = "Set-Cookie";
 
     Response::Response()

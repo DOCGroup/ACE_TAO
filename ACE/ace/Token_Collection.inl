@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_TCHAR *
-ACE_Token_Collection::name (void) const
+ACE_Token_Collection::name () const
 {
   return name_;
 }

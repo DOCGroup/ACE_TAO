@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -81,32 +80,27 @@ class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl,
 public:
   AST_Factory (UTL_ScopedName *n);
 
-  virtual ~AST_Factory (void);
+  virtual ~AST_Factory ();
 
-  UTL_ExceptList *exceptions (void);
+  UTL_ExceptList *exceptions ();
   // Return exception list.
 
-  int n_exceptions (void);
+  int n_exceptions ();
   // Return exception count.
 
-  virtual int argument_count (void);
+  virtual int argument_count ();
   // Return the count of members.
 
-  virtual int has_native (void);
+  virtual int has_native ();
   // Any of the arguments or the return value is a <native> type.
   // This is important because in that case no code should be
   // generated for the stubs.
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Factory);
-  DEF_NARROW_FROM_SCOPE(AST_Factory);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
@@ -134,12 +128,12 @@ protected:
 private:
   // Operations.
 
-  int compute_argument_attr (void);
+  int compute_argument_attr ();
   // Count the number of arguments.
 
   // Scope Management Protocol.
 
-  friend int tao_yyparse (void);
+  friend int tao_yyparse ();
   virtual AST_Argument *fe_add_argument (AST_Argument *a);
   virtual UTL_NameList *fe_add_exceptions (UTL_NameList *e);
 };

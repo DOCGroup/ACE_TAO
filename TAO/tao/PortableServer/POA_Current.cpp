@@ -13,7 +13,7 @@ namespace TAO
   namespace Portable_Server
   {
     PortableServer::POA_ptr
-    POA_Current::get_POA (void)
+    POA_Current::get_POA ()
     {
       POA_Current_Impl *impl = this->implementation ();
 
@@ -23,7 +23,7 @@ namespace TAO
     }
 
     PortableServer::ObjectId *
-    POA_Current::get_object_id (void)
+    POA_Current::get_object_id ()
     {
       POA_Current_Impl *impl = this->implementation ();
 
@@ -33,7 +33,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    POA_Current::get_servant (void)
+    POA_Current::get_servant ()
     {
       POA_Current_Impl *impl = this->implementation ();
 
@@ -43,7 +43,7 @@ namespace TAO
     }
 
     CORBA::Object_ptr
-    POA_Current::get_reference (void)
+    POA_Current::get_reference ()
     {
       POA_Current_Impl *impl = this->implementation ();
 
@@ -53,7 +53,7 @@ namespace TAO
     }
 
     POA_Current_Impl *
-    POA_Current::implementation (void)
+    POA_Current::implementation ()
     {
       return static_cast <POA_Current_Impl *>
                         (TAO_TSS_Resources::instance ()->poa_current_impl_);

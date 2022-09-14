@@ -61,7 +61,7 @@ FP_Task::activate_task (RTScheduling::Current_ptr current,
 }
 
 void
-FP_Task::pre_activate (void)
+FP_Task::pre_activate ()
 {
   CORBA::Object_var object =
     DT_TEST::instance ()->orb ()->resolve_initial_references ("PriorityMappingManager");
@@ -89,7 +89,7 @@ FP_Task::pre_activate (void)
 }
 
 int
-FP_Task::perform_task (void)
+FP_Task::perform_task ()
 {
   static CORBA::ULong prime_number = 9619;
 

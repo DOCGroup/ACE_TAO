@@ -21,7 +21,7 @@ JAWS_Header_Data::JAWS_Header_Data (const char *name, int type,
 {
 }
 
-JAWS_Header_Data::~JAWS_Header_Data (void)
+JAWS_Header_Data::~JAWS_Header_Data ()
 {
   if ( this->header_name_ )
       ACE_OS::free ((void *)this->header_name_);
@@ -32,19 +32,19 @@ JAWS_Header_Data::~JAWS_Header_Data (void)
 }
 
 const char *
-JAWS_Header_Data::header_name (void) const
+JAWS_Header_Data::header_name () const
 {
   return this->header_name_;
 }
 
 const char *
-JAWS_Header_Data::header_value (void) const
+JAWS_Header_Data::header_value () const
 {
   return this->header_value_;
 }
 
 int
-JAWS_Header_Data::header_type (void) const
+JAWS_Header_Data::header_type () const
 {
   return this->header_type_;
 }
@@ -74,17 +74,17 @@ JAWS_Header_Data::header_type (int type)
 
 // Header Table
 
-JAWS_Headers::JAWS_Headers (void)
+JAWS_Headers::JAWS_Headers ()
   : iter_ (*this)
 {
 }
 
-JAWS_Headers::~JAWS_Headers (void)
+JAWS_Headers::~JAWS_Headers ()
 {
 }
 
 JAWS_Header_Table_Iterator &
-JAWS_Headers::iter (void)
+JAWS_Headers::iter ()
 {
   return this->iter_;
 }

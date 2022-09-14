@@ -38,16 +38,15 @@
 class  ATC_Test_i : public virtual POA_Demo::ATC_Test
 {
 public:
-  ATC_Test_i (void);
+  ATC_Test_i ();
 
-  virtual ~ATC_Test_i (void);
+  virtual ~ATC_Test_i ();
 
   virtual char * do_union (const ::CORBA::Any & a);
   virtual char * do_struct (const ::CORBA::Any & a);
   virtual char * do_value (const ::CORBA::Any & a);
 
-  virtual void shutdown (void);
-
+  virtual void shutdown ();
 };
 
 

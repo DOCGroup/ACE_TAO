@@ -25,11 +25,7 @@
 #include "tao/OctetSeqC.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "ace/Thread_Mutex.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -65,40 +61,34 @@ namespace CORBA
 
     // The pseudo object operations.
     static Principal * _duplicate (Principal *);
-    static Principal * _nil (void);
+    static Principal * _nil ();
 
     // = Stuff required for memory management.
-    unsigned long _incr_refcount (void);
-    unsigned long _decr_refcount (void);
+    unsigned long _incr_refcount ();
+    unsigned long _decr_refcount ();
 
-    Principal (void);
+    Principal ();
 
     // Useful for template programming.
     typedef Principal_ptr _ptr_type;
     typedef Principal_var _var_type;
 
   protected:
-
     /// Destructor
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
      */
-    ~Principal (void);
+    ~Principal ();
 
   private:
-
     // = Prevent copying
     Principal &operator = (const CORBA::Principal_ptr &);
     Principal (const CORBA::Principal_ptr &);
 
   private:
     /// Reference counter.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
   };
 }  // End CORBA namespace
 

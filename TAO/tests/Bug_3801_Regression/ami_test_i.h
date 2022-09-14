@@ -26,13 +26,13 @@ public:
   /// ctor
   AMI_Test_i (CORBA::ORB_ptr orb);
 
-  void shutdown (void);
+  void shutdown ();
 
-  CORBA::Long yadda (void);
+  CORBA::Long yadda ();
 
   void yadda (CORBA::Long yadda);
 
-  CORBA::Long dadda (void);
+  CORBA::Long dadda ();
 
   void inout_arg_test (char *& str);
 

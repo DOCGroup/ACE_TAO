@@ -6,7 +6,7 @@
 # include "ACEXML/common/XMLFilterImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl (void)
+ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl ()
   :  parent_ (0),
      // locator_ (0),
      entityResolver_ (0),
@@ -26,7 +26,7 @@ ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl (ACEXML_XMLReader *parent)
 {
 }
 
-ACEXML_XMLFilterImpl::~ACEXML_XMLFilterImpl (void)
+ACEXML_XMLFilterImpl::~ACEXML_XMLFilterImpl ()
 {
   // @@ How are all the object lifecycles managed?
 }
@@ -97,7 +97,7 @@ ACEXML_XMLFilterImpl::setProperty (const ACEXML_Char *name, void *value)
 }
 
 ACEXML_XMLReader *
-ACEXML_XMLFilterImpl::getParent (void) const
+ACEXML_XMLFilterImpl::getParent () const
 {
   return this->parent_;
 }
@@ -118,7 +118,7 @@ ACEXML_XMLFilterImpl::characters (const ACEXML_Char *ch,
 }
 
 void
-ACEXML_XMLFilterImpl::endDocument (void)
+ACEXML_XMLFilterImpl::endDocument ()
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->endDocument ();
@@ -177,7 +177,7 @@ ACEXML_XMLFilterImpl::skippedEntity (const ACEXML_Char *name)
 }
 
 void
-ACEXML_XMLFilterImpl::startDocument (void)
+ACEXML_XMLFilterImpl::startDocument ()
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->startDocument ();
@@ -261,25 +261,25 @@ ACEXML_XMLFilterImpl::warning (ACEXML_SAXParseException &exception)
 }
 
 ACEXML_DTDHandler *
-ACEXML_XMLFilterImpl::getDTDHandler (void) const
+ACEXML_XMLFilterImpl::getDTDHandler () const
 {
   return this->dtdHandler_;
 }
 
 ACEXML_ContentHandler *
-ACEXML_XMLFilterImpl::getContentHandler (void) const
+ACEXML_XMLFilterImpl::getContentHandler () const
 {
   return this->contentHandler_;
 }
 
 ACEXML_EntityResolver *
-ACEXML_XMLFilterImpl::getEntityResolver (void) const
+ACEXML_XMLFilterImpl::getEntityResolver () const
 {
   return this->entityResolver_;
 }
 
 ACEXML_ErrorHandler *
-ACEXML_XMLFilterImpl::getErrorHandler (void) const
+ACEXML_XMLFilterImpl::getErrorHandler () const
 {
   return this->errorHandler_;
 }

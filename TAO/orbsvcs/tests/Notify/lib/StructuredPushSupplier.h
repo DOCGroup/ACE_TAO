@@ -32,7 +32,7 @@ public:
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushSupplier_Traits
 {
 public:
-  TAO_Notify_Tests_StructuredPushSupplier_Traits (void);
+  TAO_Notify_Tests_StructuredPushSupplier_Traits ();
 
   typedef CosNotifyComm::StructuredPushSupplier INTERFACE;
   typedef CosNotifyComm::StructuredPushSupplier_ptr PTR;
@@ -62,7 +62,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushSupplier : public TA
 
 public:
   /// Constructor
-  TAO_Notify_Tests_StructuredPushSupplier (void);
+  TAO_Notify_Tests_StructuredPushSupplier ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_StructuredPushSupplier ();
@@ -75,10 +75,10 @@ protected:
   virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy (void);
+  virtual void disconnect_from_proxy ();
 
   // = StructuredPushSupplier method
-  virtual void disconnect_structured_push_supplier (void);
+  virtual void disconnect_structured_push_supplier ();
 };
 
 #if defined (__ACE_INLINE__)

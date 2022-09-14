@@ -29,7 +29,7 @@ class TAO_RT_Notify_Export TAO_Notify_RT_StructuredProxyPushSupplier :
 {
 public:
   /// Constructor
-  TAO_Notify_RT_StructuredProxyPushSupplier (void);
+  TAO_Notify_RT_StructuredProxyPushSupplier ();
 
   /// Destructor
   ~TAO_Notify_RT_StructuredProxyPushSupplier ();

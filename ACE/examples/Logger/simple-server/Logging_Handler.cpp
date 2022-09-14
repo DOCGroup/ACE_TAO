@@ -3,18 +3,12 @@
 #include "ace/Log_Record.h"
 #include "ace/OS_NS_string.h"
 #include "ace/CDR_Stream.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"
 
-// Default constructor.
-
-Logging_Handler::Logging_Handler (void)
-{
-}
-
-Logging_Handler::~Logging_Handler (void)
+Logging_Handler::~Logging_Handler ()
 {
   // Make sure there are no timers.
   REACTOR::instance ()->cancel_timer (this);
@@ -24,9 +18,8 @@ Logging_Handler::~Logging_Handler (void)
 
 // Extract the underlying ACE_SOCK_Stream (e.g., for purposes of
 // accept()).
-
 ACE_SOCK_Stream &
-Logging_Handler::peer (void)
+Logging_Handler::peer ()
 {
   return this->cli_stream_;
 }
@@ -62,7 +55,7 @@ Logging_Handler::handle_input (ACE_HANDLE)
                   ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE),
                   -1);
 
-  auto_ptr <ACE_Message_Block> header (header_p);
+  std::unique_ptr <ACE_Message_Block> header (header_p);
 
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
@@ -109,7 +102,7 @@ Logging_Handler::handle_input (ACE_HANDLE)
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
                   -1);
-  auto_ptr <ACE_Message_Block> payload (payload_p);
+  std::unique_ptr <ACE_Message_Block> payload (payload_p);
 
   // Ensure there's sufficient room for log record payload.
   ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);
@@ -141,13 +134,13 @@ Logging_Handler::handle_input (ACE_HANDLE)
 // Extract underlying device descriptor.
 
 ACE_HANDLE
-Logging_Handler::get_handle (void) const
+Logging_Handler::get_handle () const
 {
   return this->cli_stream_.get_handle ();
 }
 
 int
-Logging_Handler::open (void)
+Logging_Handler::open ()
 {
   ACE_INET_Addr addr;
 
@@ -180,7 +173,6 @@ Logging_Handler::open (void)
 
 // Perform termination activities when deregistered from the
 // ACE_Reactor.
-
 int
 Logging_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
@@ -190,9 +182,8 @@ Logging_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 }
 
 // Perform termination activities when close fails.
-
 int
-Logging_Handler::close (void)
+Logging_Handler::close ()
 {
   return this->handle_close ();
 }

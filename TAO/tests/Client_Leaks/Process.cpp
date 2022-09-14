@@ -7,13 +7,13 @@ Process::Process (CORBA::ORB_ptr orb)
 }
 
 CORBA::Long
-Process::get_process_id (void)
+Process::get_process_id ()
 {
   return ACE_OS::getpid ();
 }
 
 void
-Process::shutdown (void)
+Process::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

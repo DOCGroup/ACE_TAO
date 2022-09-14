@@ -51,7 +51,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 

@@ -51,7 +51,7 @@ static int check_type_consistency (const ACE_INET_Addr &addr)
   return 0;
 }
 
-static bool test_tao_use (void)
+static bool test_tao_use ()
 {
   char host[256];
   if (::gethostname (host, 255) != 0)
@@ -85,7 +85,7 @@ static bool test_tao_use (void)
   return true;
 }
 
-static bool test_port_assignment (void)
+static bool test_port_assignment ()
 {
 #if defined (ACE_HAS_IPV6)
   ACE_INET_Addr addr1 (static_cast<unsigned short> (0), ACE_IPV6_ANY, AF_INET6);
@@ -110,7 +110,7 @@ static bool test_port_assignment (void)
   return true;
 }
 
-static bool test_multiple (void)
+static bool test_multiple ()
 {
   bool success = true;
 

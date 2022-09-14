@@ -20,10 +20,10 @@ class Notifier : public ACE_Event_Handler
   Notifier (int argc, ACE_TCHAR *argv[]);
 
   /// Destructor.
-  ~Notifier (void);
+  ~Notifier ();
 
   /// Execute the notifier.
-  void run (void);
+  void run ();
 
  private:
   /// Handle signals that shut us down.

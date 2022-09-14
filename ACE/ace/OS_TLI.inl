@@ -9,7 +9,7 @@ ACE_INLINE int
 t_accept (ACE_HANDLE handle, ACE_HANDLE reshandle, struct t_call *call)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_accept (handle, reshandle, call), int, -1);
+  return ::t_accept (handle, reshandle, call);
 #else
   ACE_UNUSED_ARG (call);
   ACE_UNUSED_ARG (reshandle);
@@ -27,11 +27,10 @@ t_alloc (ACE_HANDLE handle, int struct_type, int fields)
   // XPG5 changes t_alloc() return from char* to void*, so ACE_OSCALL_RETURN
   // doesn't compile correctly.
   char *result;
-  ACE_OSCALL (::t_alloc (handle, struct_type, fields), char *, 0, result);
+  ACE_OSCALL (::t_alloc (handle, struct_type, fields), char *, result);
   return result;
 #  else
-  ACE_OSCALL_RETURN (::t_alloc (handle, struct_type, fields),
-                     char *, 0);
+  return ::t_alloc (handle, struct_type, fields);
 #  endif /* XPG4 vs XPG5 */
 #else
   ACE_UNUSED_ARG (fields);
@@ -46,7 +45,7 @@ ACE_INLINE int
 t_bind (ACE_HANDLE handle, ACE_TBIND *req, ACE_TBIND *ret)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_bind (handle, req, ret), int, -1);
+  return ::t_bind (handle, req, ret);
 #else
   ACE_UNUSED_ARG (ret);
   ACE_UNUSED_ARG (req);
@@ -60,7 +59,7 @@ ACE_INLINE int
 t_close (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_close (handle), int, -1);
+  return ::t_close (handle);
 #else
   ACE_UNUSED_ARG (handle);
 
@@ -74,7 +73,7 @@ t_connect(ACE_HANDLE fildes,
           struct t_call *rcvcall)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_connect (fildes, sndcall, rcvcall), int, -1);
+  return ::t_connect (fildes, sndcall, rcvcall);
 #else
   ACE_UNUSED_ARG (fildes);
   ACE_UNUSED_ARG (sndcall);
@@ -102,9 +101,9 @@ ACE_INLINE int
 t_free (char *ptr, int struct_type)
 {
 #if defined (ACE_HAS_TLI)
-  if (ptr == 0)
+  if (!ptr)
     return 0;
-  ACE_OSCALL_RETURN (::t_free (ptr, struct_type), int, -1);
+  return ::t_free (ptr, struct_type);
 #else
   ACE_UNUSED_ARG (struct_type);
   ACE_UNUSED_ARG (ptr);
@@ -117,7 +116,7 @@ ACE_INLINE int
 t_getinfo (ACE_HANDLE handle, struct t_info *info)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_getinfo (handle, info), int, -1);
+  return ::t_getinfo (handle, info);
 #else
   ACE_UNUSED_ARG (info);
   ACE_UNUSED_ARG (handle);
@@ -166,7 +165,7 @@ t_getname (ACE_HANDLE handle, struct netbuf *namep, int type)
   return 0;
 
 #elif defined (ACE_HAS_SVR4_TLI)
-  ACE_OSCALL_RETURN (::t_getname (handle, namep, type), int, -1);
+  return ::t_getname (handle, namep, type);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (namep);
@@ -180,7 +179,7 @@ ACE_INLINE int
 t_getstate (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_getstate (handle), int, -1);
+  return ::t_getstate (handle);
 #else
   ACE_UNUSED_ARG (handle);
 
@@ -192,7 +191,7 @@ ACE_INLINE int
 t_listen (ACE_HANDLE handle, struct t_call *call)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_listen (handle, call), int, -1);
+  return ::t_listen (handle, call);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (call);
@@ -205,7 +204,7 @@ ACE_INLINE int
 t_look (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_look (handle), int, -1);
+  return ::t_look (handle);
 #else
   ACE_UNUSED_ARG (handle);
 
@@ -217,7 +216,7 @@ ACE_INLINE ACE_HANDLE
 t_open (char *path, int oflag, struct t_info *info)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_open (path, oflag, info), ACE_HANDLE, ACE_INVALID_HANDLE);
+  return ::t_open (path, oflag, info);
 #else
   ACE_UNUSED_ARG (path);
   ACE_UNUSED_ARG (oflag);
@@ -231,7 +230,7 @@ ACE_INLINE int
 t_optmgmt (ACE_HANDLE handle, ACE_TOPTMGMT *req, ACE_TOPTMGMT *ret)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_optmgmt (handle, req, ret), int, -1);
+  return ::t_optmgmt (handle, req, ret);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (req);
@@ -248,8 +247,7 @@ t_rcv (ACE_HANDLE handle,
        int *flags)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_rcv (handle, buf, nbytes, flags),
-                     int, -1);
+  return ::t_rcv (handle, buf, nbytes, flags);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (buf);
@@ -264,7 +262,7 @@ ACE_INLINE int
 t_rcvdis (ACE_HANDLE handle, struct t_discon *discon)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_rcvdis (handle, discon), int, -1);
+  return ::t_rcvdis (handle, discon);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (discon);
@@ -277,7 +275,7 @@ ACE_INLINE int
 t_rcvrel (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_rcvrel (handle), int, -1);
+  return ::t_rcvrel (handle);
 #else
   ACE_UNUSED_ARG (handle);
 
@@ -291,8 +289,7 @@ t_rcvudata (ACE_HANDLE handle,
             int *flags)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_rcvudata (handle, unitdata, flags),
-                     int, -1);
+  return ::t_rcvudata (handle, unitdata, flags);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (unitdata);
@@ -306,7 +303,7 @@ ACE_INLINE int
 t_rcvuderr (ACE_HANDLE handle, struct t_uderr *uderr)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_rcvuderr (handle, uderr), int, -1);
+  return ::t_rcvuderr (handle, uderr);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (uderr);
@@ -322,7 +319,7 @@ t_snd (ACE_HANDLE handle,
        int flags)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_snd (handle, (char *) buf, nbytes, flags), int, -1);
+  return ::t_snd (handle, (char *) buf, nbytes, flags);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (buf);
@@ -337,7 +334,7 @@ ACE_INLINE int
 t_snddis (ACE_HANDLE handle, struct t_call *call)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_snddis (handle, call), int, -1);
+  return ::t_snddis (handle, call);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (call);
@@ -350,7 +347,7 @@ ACE_INLINE int
 t_sndrel (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_sndrel (handle), int, -1);
+  return ::t_sndrel (handle);
 #else
   ACE_UNUSED_ARG (handle);
 
@@ -362,7 +359,7 @@ ACE_INLINE int
 t_sync (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_sync (handle), int, -1);
+  return ::t_sync (handle);
 #else
   ACE_UNUSED_ARG (handle);
 
@@ -374,7 +371,7 @@ ACE_INLINE int
 t_unbind (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_unbind (handle), int, -1);
+  return ::t_unbind (handle);
 #else
   ACE_UNUSED_ARG (handle);
 

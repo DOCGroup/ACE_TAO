@@ -1,9 +1,9 @@
 #include "MIF_Scheduler.h"
-#include "ace/Atomic_Op.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 #include "test.h"
+#include <atomic>
 
-ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
+std::atomic<long> server_guid_counter;
 
 DT::DT (TAO_SYNCH_MUTEX &lock,
         int guid)
@@ -14,7 +14,7 @@ DT::DT (TAO_SYNCH_MUTEX &lock,
 }
 
 void
-DT::suspend (void)
+DT::suspend ()
 {
   eligible_ = 0;
   while (!eligible_)
@@ -22,14 +22,14 @@ DT::suspend (void)
 }
 
 void
-DT::resume (void)
+DT::resume ()
 {
   eligible_ = 1;
   this->dt_cond_.signal ();
 }
 
 CORBA::Short
-Segment_Sched_Param_Policy::importance (void)
+Segment_Sched_Param_Policy::importance ()
 {
   return this->importance_;
 }
@@ -41,7 +41,7 @@ Segment_Sched_Param_Policy::importance (CORBA::Short importance)
 }
 
 CORBA::Policy_ptr
-Segment_Sched_Param_Policy::copy (void)
+Segment_Sched_Param_Policy::copy ()
 {
   Segment_Sched_Param_Policy *copy = 0;
   ACE_NEW_THROW_EX (copy,
@@ -54,13 +54,13 @@ Segment_Sched_Param_Policy::copy (void)
 }
 
 CORBA::PolicyType
-Segment_Sched_Param_Policy::policy_type (void)
+Segment_Sched_Param_Policy::policy_type ()
 {
   return 0;
 }
 
 void
-Segment_Sched_Param_Policy::destroy (void)
+Segment_Sched_Param_Policy::destroy ()
 {
 }
 
@@ -88,7 +88,7 @@ MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb)
     }
 }
 
-MIF_Scheduler::~MIF_Scheduler (void)
+MIF_Scheduler::~MIF_Scheduler ()
 {
   while (free_que_.message_count () > 0)
     {
@@ -101,7 +101,7 @@ MIF_Scheduler::~MIF_Scheduler (void)
 }
 
 void
-MIF_Scheduler::incr_thr_count (void)
+MIF_Scheduler::incr_thr_count ()
 {
   lock_.acquire ();
   wait_++;
@@ -109,7 +109,7 @@ MIF_Scheduler::incr_thr_count (void)
 }
 
 void
-MIF_Scheduler::wait (void)
+MIF_Scheduler::wait ()
 {
   lock_.acquire ();
   while (wait_ > 0)
@@ -123,7 +123,7 @@ MIF_Scheduler::wait (void)
 }
 
 void
-MIF_Scheduler::resume_main (void)
+MIF_Scheduler::resume_main ()
 {
   wait_--;
   wait_cond_.signal ();
@@ -371,7 +371,6 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
       free_que_.enqueue_prio (run_dt);
     }
   lock_.release ();
-
 }
 
 void
@@ -381,7 +380,6 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
                                 CORBA::Policy_out sched_param_out,
                                 CORBA::Policy_out /*implicit_sched_param*/)
 {
-
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "MIF_Scheduler::receive_request\n"));
@@ -451,7 +449,6 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
 void
 MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
 {
-
   RTScheduling::Current::IdType_var guid = current_->id ();
 
   size_t count;
@@ -672,7 +669,7 @@ MIF_Scheduler::cancel (const RTScheduling::Current::IdType &)
 }
 
 CORBA::PolicyList*
-MIF_Scheduler::scheduling_policies (void)
+MIF_Scheduler::scheduling_policies ()
 {
   return 0;
 }
@@ -683,13 +680,13 @@ MIF_Scheduler::scheduling_policies (const CORBA::PolicyList &)
 }
 
 CORBA::PolicyList*
-MIF_Scheduler::poa_policies (void)
+MIF_Scheduler::poa_policies ()
 {
         return 0;
 }
 
 char *
-MIF_Scheduler::scheduling_discipline_name (void)
+MIF_Scheduler::scheduling_discipline_name ()
 {
         return 0;
 }

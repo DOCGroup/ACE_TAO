@@ -6,7 +6,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   ACE_DEBUG((LM_INFO,"(%P|%t) Running ORB in a separate thread\n"));
   try

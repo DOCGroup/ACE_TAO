@@ -101,7 +101,6 @@ private:
 
   Functor f_;
 };
-
 } // namespace ACE_Utils
 
 ACE_END_VERSIONED_NAMESPACE_DECL

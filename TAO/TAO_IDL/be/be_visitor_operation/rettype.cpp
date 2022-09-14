@@ -23,7 +23,7 @@ be_visitor_operation_rettype::be_visitor_operation_rettype (be_visitor_context
 {
 }
 
-be_visitor_operation_rettype::~be_visitor_operation_rettype (void)
+be_visitor_operation_rettype::~be_visitor_operation_rettype ()
 {
 }
 
@@ -76,7 +76,7 @@ int
 be_visitor_operation_rettype::visit_predefined_type (
   be_predefined_type *node)
 {
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -195,7 +195,7 @@ be_visitor_operation_rettype::visit_typedef (
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -286,9 +286,9 @@ be_visitor_operation_rettype::visit_valuebox (
 const char *
 be_visitor_operation_rettype::type_name (be_type *node)
 {
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
-  if (this->ctx_->alias () != 0)
+  if (this->ctx_->alias () != nullptr)
     {
       // A typedefed return type.
       bt = this->ctx_->alias ();

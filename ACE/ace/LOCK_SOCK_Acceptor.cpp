@@ -23,7 +23,7 @@ ACE_LOCK_SOCK_Acceptor<ACE_LOCK>::accept (ACE_SOCK_Stream &stream,
 }
 
 template <class ACE_LOCK> ACE_LOCK &
-ACE_LOCK_SOCK_Acceptor<ACE_LOCK>::lock (void)
+ACE_LOCK_SOCK_Acceptor<ACE_LOCK>::lock ()
 {
   return this->lock_;
 }

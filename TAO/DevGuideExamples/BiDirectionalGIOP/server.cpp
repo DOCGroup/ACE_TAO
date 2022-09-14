@@ -84,7 +84,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Our own special orb->run() that knows how to callback clients
     while (true) {
-
       // returns 1 as soon as it has successfully called back.
       if (svt->call_client()) {
         break;

@@ -5,7 +5,7 @@ template<>
 ACE_INLINE void
 CORBA::release<> (CORBA::TypeCode_ptr obj)
 {
-  if (obj != 0)
+  if (obj)
     {
       obj->tao_release ();
     }
@@ -29,37 +29,37 @@ CORBA::TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
 }
 
 ACE_INLINE CORBA::TypeCode_ptr
-CORBA::TypeCode::_nil (void)
+CORBA::TypeCode::_nil ()
 {
-  return static_cast<CORBA::TypeCode_ptr> (0);
+  return nullptr;
 }
 
 ACE_INLINE CORBA::TCKind
-CORBA::TypeCode::kind (void) const
+CORBA::TypeCode::kind () const
 {
   return this->kind_;
 }
 
 ACE_INLINE CORBA::TypeCode_ptr
-CORBA::TypeCode::get_compact_typecode (void) const
+CORBA::TypeCode::get_compact_typecode () const
 {
   return this->get_compact_typecode_i ();
 }
 
 ACE_INLINE char const *
-CORBA::TypeCode::id (void) const
+CORBA::TypeCode::id () const
 {
   return this->id_i ();
 }
 
 ACE_INLINE char const *
-CORBA::TypeCode::name (void) const
+CORBA::TypeCode::name () const
 {
   return this->name_i ();
 }
 
 ACE_INLINE CORBA::ULong
-CORBA::TypeCode::member_count (void) const
+CORBA::TypeCode::member_count () const
 {
   return this->member_count_i ();
 }
@@ -83,37 +83,37 @@ CORBA::TypeCode::member_label (ULong index) const
 }
 
 ACE_INLINE CORBA::TypeCode_ptr
-CORBA::TypeCode::discriminator_type (void) const
+CORBA::TypeCode::discriminator_type () const
 {
   return this->discriminator_type_i ();
 }
 
 ACE_INLINE CORBA::Long
-CORBA::TypeCode::default_index (void) const
+CORBA::TypeCode::default_index () const
 {
   return this->default_index_i ();
 }
 
 ACE_INLINE CORBA::ULong
-CORBA::TypeCode::length (void) const
+CORBA::TypeCode::length () const
 {
   return this->length_i ();
 }
 
 ACE_INLINE CORBA::TypeCode_ptr
-CORBA::TypeCode::content_type (void) const
+CORBA::TypeCode::content_type () const
 {
   return this->content_type_i ();
 }
 
 ACE_INLINE CORBA::UShort
-CORBA::TypeCode::fixed_digits (void) const
+CORBA::TypeCode::fixed_digits () const
 {
   return this->fixed_digits_i ();
 }
 
 ACE_INLINE CORBA::UShort
-CORBA::TypeCode::fixed_scale (void) const
+CORBA::TypeCode::fixed_scale () const
 {
   return this->fixed_scale_i ();
 }
@@ -125,13 +125,13 @@ CORBA::TypeCode::member_visibility (ULong index) const
 }
 
 ACE_INLINE CORBA::ValueModifier
-CORBA::TypeCode::type_modifier (void) const
+CORBA::TypeCode::type_modifier () const
 {
   return this->type_modifier_i ();
 }
 
 ACE_INLINE CORBA::TypeCode_ptr
-CORBA::TypeCode::concrete_base_type (void) const
+CORBA::TypeCode::concrete_base_type () const
 {
   return this->concrete_base_type_i ();
 }
@@ -141,6 +141,5 @@ CORBA::TypeCode::_tao_any_destructor (void * x)
 {
   ::CORBA::release (static_cast <CORBA::TypeCode_ptr> (x));
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -37,9 +37,9 @@ public:
   interop_WChar_Passer_i (CORBA::ORB_ptr o, int verbose);
 
   //Destructor
-  virtual ~interop_WChar_Passer_i (void);
+  virtual ~interop_WChar_Passer_i ();
 
-  virtual char * orb_name (void);
+  virtual char * orb_name ();
 
   virtual CORBA::Boolean wchar_to_server (CORBA::WChar test,
                                           CORBA::Short key);
@@ -82,12 +82,11 @@ public:
 
 virtual void exception_test (CORBA::Short key);
 
-virtual void shutdown (void);
+virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;
   wchar_reference ref_;
-
 };
 
 

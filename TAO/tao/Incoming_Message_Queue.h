@@ -50,23 +50,21 @@ class TAO_Transport;
 class TAO_Export TAO_Incoming_Message_Queue
 {
 public:
-
   /// Constructor.
   TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core);
 
   /// Destructor.
-  ~TAO_Incoming_Message_Queue (void);
+  ~TAO_Incoming_Message_Queue ();
 
   /// Adding and deleting a node from the queue.
-  TAO_Queued_Data *dequeue_head (void);
-  TAO_Queued_Data *dequeue_tail (void);
+  TAO_Queued_Data *dequeue_head ();
+  TAO_Queued_Data *dequeue_tail ();
   int enqueue_tail (TAO_Queued_Data *nd);
 
   /// Return the length of the queue..
-  CORBA::ULong queue_length (void) const;
+  CORBA::ULong queue_length () const;
 
 private:
-
   friend class TAO_Transport;
 
 private:

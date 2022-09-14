@@ -29,11 +29,7 @@
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -62,7 +58,7 @@ namespace CORBA
     ServerRequest (TAO_ServerRequest &orb_server_request);
 
     /// Destructor.
-    ~ServerRequest (void);
+    ~ServerRequest ();
 
     /// Implementation uses this to provide the ORB with the operation's
     /// parameter list ... on return, their values are available; the
@@ -93,36 +89,36 @@ namespace CORBA
     // basic CORBA Object Model.
 
     /// Marshal outgoing parameters.
-    void dsi_marshal (void);
+    void dsi_marshal ();
 
     /// Accessor for the Context member.
-    CORBA::Context_ptr ctx (void) const;
+    CORBA::Context_ptr ctx () const;
 
     /// Mutator for the Context member.
     void ctx (CORBA::Context_ptr);
 
     /// Get the operation name.
-    const char *operation (void) const;
+    const char *operation () const;
 
     // Pseudo object methods.
     static ServerRequest_ptr _duplicate (ServerRequest_ptr);
-    static ServerRequest_ptr _nil (void);
+    static ServerRequest_ptr _nil ();
 
     // = Reference counting.
-    CORBA::ULong _incr_refcount (void);
-    CORBA::ULong _decr_refcount (void);
+    CORBA::ULong _incr_refcount ();
+    CORBA::ULong _decr_refcount ();
 
     /// Set the lazy evaluation flag.
     void _tao_lazy_evaluation (bool lazy_evaluation);
 
     /// Get the byte order of the incoming CDR stream.
-    int _tao_incoming_byte_order (void) const;
+    int _tao_incoming_byte_order () const;
 
     /// Set the byte order of the outgoing CDR stream.
     void _tao_reply_byte_order (int byte_order);
 
     /// Return a reference to the underlying TAO_ServerRequest object.
-    TAO_ServerRequest & _tao_server_request (void);
+    TAO_ServerRequest & _tao_server_request ();
 
     /// Returns a user exception through a TAO gateway without
     /// knowing its type.
@@ -150,11 +146,7 @@ namespace CORBA
     CORBA::Any_ptr exception_;
 
     /// Reference counting.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
     /// Request from the ORB.
     TAO_ServerRequest &orb_server_request_;

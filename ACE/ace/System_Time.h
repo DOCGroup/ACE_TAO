@@ -57,7 +57,7 @@ public:
   ACE_System_Time (const ACE_TCHAR *poolname = 0);
 
   /// Default destructor.
-  ~ACE_System_Time (void);
+  ~ACE_System_Time ();
 
   /// Get the local system time, i.e., the value returned by
   /// ACE_OS::time().

@@ -20,24 +20,24 @@ TAO_Synch_Queued_Message::TAO_Synch_Queued_Message (
 {
 }
 
-TAO_Synch_Queued_Message::~TAO_Synch_Queued_Message (void)
+TAO_Synch_Queued_Message::~TAO_Synch_Queued_Message ()
 {
-  if (this->own_contents_ && this->contents_ != 0)
+  if (this->own_contents_ && this->contents_ != nullptr)
     {
       ACE_Message_Block::release (this->contents_);
     }
 }
 
 const ACE_Message_Block *
-TAO_Synch_Queued_Message::current_block (void) const
+TAO_Synch_Queued_Message::current_block () const
 {
   return this->current_block_;
 }
 
 size_t
-TAO_Synch_Queued_Message::message_length (void) const
+TAO_Synch_Queued_Message::message_length () const
 {
-  if (this->current_block_ == 0)
+  if (this->current_block_ == nullptr)
     {
       return 0;
     }
@@ -46,9 +46,9 @@ TAO_Synch_Queued_Message::message_length (void) const
 }
 
 int
-TAO_Synch_Queued_Message::all_data_sent (void) const
+TAO_Synch_Queued_Message::all_data_sent () const
 {
-  return this->current_block_ == 0;
+  return this->current_block_ == nullptr;
 }
 
 void
@@ -59,7 +59,7 @@ TAO_Synch_Queued_Message::fill_iov (int iovcnt_max,
   ACE_ASSERT (iovcnt_max > iovcnt);
 
   for (const ACE_Message_Block *message_block = this->current_block_;
-       message_block != 0 && iovcnt < iovcnt_max;
+       message_block != nullptr && iovcnt < iovcnt_max;
        message_block = message_block->cont ())
     {
       size_t const message_block_length = message_block->length ();
@@ -82,7 +82,7 @@ TAO_Synch_Queued_Message::bytes_transferred (size_t &byte_count)
 {
   this->state_changed_i (TAO_LF_Event::LFS_ACTIVE);
 
-  while (this->current_block_ != 0 && byte_count > 0)
+  while (this->current_block_ != nullptr && byte_count > 0)
     {
       size_t const l = this->current_block_->length ();
 
@@ -97,14 +97,14 @@ TAO_Synch_Queued_Message::bytes_transferred (size_t &byte_count)
       this->current_block_->rd_ptr (l);
       this->current_block_ = this->current_block_->cont ();
 
-      while (this->current_block_ != 0
+      while (this->current_block_ != nullptr
              && this->current_block_->length () == 0)
         {
           this->current_block_ = this->current_block_->cont ();
         }
     }
 
-  if (this->current_block_ == 0)
+  if (this->current_block_ == nullptr)
     this->state_changed (TAO_LF_Event::LFS_SUCCESS,
                          this->orb_core_->leader_follower ());
 }
@@ -112,7 +112,7 @@ TAO_Synch_Queued_Message::bytes_transferred (size_t &byte_count)
 TAO_Queued_Message *
 TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
 {
-  TAO_Synch_Queued_Message *qm = 0;
+  TAO_Synch_Queued_Message *qm = nullptr;
 
   // Clone the message block.
   // NOTE: We wantedly do the cloning from <current_block_> instead of
@@ -130,26 +130,26 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
                                                        this->orb_core_,
                                                        alloc,
                                                        true),
-                             0);
+                             nullptr);
     }
   else
     {
       ACE_NEW_RETURN (qm,
-                      TAO_Synch_Queued_Message (mb, this->orb_core_, 0, true),
-                      0);
+                      TAO_Synch_Queued_Message (mb, this->orb_core_, nullptr, true),
+                      nullptr);
     }
 
   return qm;
 }
 
 void
-TAO_Synch_Queued_Message::destroy (void)
+TAO_Synch_Queued_Message::destroy ()
 {
   if (this->own_contents_)
     {
       ACE_Message_Block::release (this->contents_);
-      this->current_block_ = 0;
-      this->contents_ = 0;
+      this->current_block_ = nullptr;
+      this->contents_ = nullptr;
     }
 
   if (this->is_heap_created_)
@@ -160,7 +160,6 @@ TAO_Synch_Queued_Message::destroy (void)
         {
           ACE_DES_FREE_THIS (this->allocator_->free,
                              TAO_Synch_Queued_Message);
-
         }
       else // global release..
         {
@@ -176,7 +175,7 @@ TAO_Synch_Queued_Message::copy_if_necessary (const ACE_Message_Block* chain)
     {
       // Go through the message block chain looking for the message block
       // that matches our "current" message block.
-      for (const ACE_Message_Block* mb = chain; mb != 0; mb = mb->cont ())
+      for (const ACE_Message_Block* mb = chain; mb != nullptr; mb = mb->cont ())
         {
           if (mb == this->current_block_)
             {

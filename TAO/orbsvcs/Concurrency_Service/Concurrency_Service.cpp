@@ -23,7 +23,7 @@
 
 // Default Constructor.
 
-Concurrency_Service::Concurrency_Service (void)
+Concurrency_Service::Concurrency_Service ()
   : use_naming_service_ (1),
     ior_file_name_ (0),
     pid_file_name_ (0)
@@ -147,7 +147,7 @@ Concurrency_Service::init (int argc,
 }
 
 int
-Concurrency_Service::init_naming_service (void)
+Concurrency_Service::init_naming_service ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG, "Concurrency_Service::init_naming_service (...)\n"));
   CORBA::ORB_var orb;
@@ -180,7 +180,7 @@ Concurrency_Service::init_naming_service (void)
 // Run the ORB event loop.
 
 int
-Concurrency_Service::run (void)
+Concurrency_Service::run ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "Concurrency_Service::run (...)\n"));
@@ -195,7 +195,7 @@ Concurrency_Service::run (void)
 
 // Destructor.
 
-Concurrency_Service::~Concurrency_Service (void)
+Concurrency_Service::~Concurrency_Service ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "Concurrency_Service::~Concurrency_Service (void)\n"));

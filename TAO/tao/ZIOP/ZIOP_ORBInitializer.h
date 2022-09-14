@@ -58,7 +58,6 @@ public:
   //@}
 
 private:
-
   /// Register policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 

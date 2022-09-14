@@ -9,16 +9,16 @@ static bool initialized = false;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_ServerService_Activate::TAO_FT_ServerService_Activate (void)
+TAO_FT_ServerService_Activate::TAO_FT_ServerService_Activate ()
 {
 }
 
-TAO_FT_ServerService_Activate::~TAO_FT_ServerService_Activate (void)
+TAO_FT_ServerService_Activate::~TAO_FT_ServerService_Activate ()
 {
 }
 
 int
-TAO_FT_ServerService_Activate::Initializer (void)
+TAO_FT_ServerService_Activate::Initializer ()
 {
   if (initialized == false)
     {

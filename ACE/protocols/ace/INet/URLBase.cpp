@@ -16,7 +16,6 @@ namespace ACE
 {
   namespace INet
   {
-
     URLStream::URLStream (const URLStream& url_stream)
       : request_handler_ref_ (url_stream.request_handler_ref_),
         request_handler_ (url_stream.request_handler_)

@@ -64,7 +64,7 @@ public:
                     char *& desc
  );
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// The ORB

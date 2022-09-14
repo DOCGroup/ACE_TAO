@@ -19,7 +19,7 @@ namespace TAO
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyAOMOnly::get_servant_manager (void)
+    RequestProcessingStrategyAOMOnly::get_servant_manager ()
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -39,7 +39,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    RequestProcessingStrategyAOMOnly::get_servant (void)
+    RequestProcessingStrategyAOMOnly::get_servant ()
     {
       throw PortableServer::POA::WrongPolicy ();
     }

@@ -70,7 +70,7 @@ namespace TAO
   {
     namespace IIOP
     {
-      int current_static_initializer (void)
+      int current_static_initializer ()
       {
         ACE_STATIC_SVC_REGISTER (TAO_Transport_IIOP_Current_Loader);
         return 0;

@@ -1,13 +1,13 @@
 #include "Service.h"
 
-Service::Service (void)
+Service::Service ()
   : orb_ (CORBA::ORB::_nil ()),
     test_count_ (0)
 {
 }
 
 void
-Service::dump_results (void)
+Service::dump_results ()
 {
   if (this->test_count_ == 0)
     {

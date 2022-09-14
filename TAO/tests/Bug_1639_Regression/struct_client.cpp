@@ -10,10 +10,8 @@ using namespace DynamicAny;
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 //--------------------------------------------------------------------
 {
-
   // Generic catch handler
   try {
-
     // Initialize the ORB
     // ------------------
     CORBA::ORB_var orb;  // _var, so we don't need/may not CORBA::release(orb)

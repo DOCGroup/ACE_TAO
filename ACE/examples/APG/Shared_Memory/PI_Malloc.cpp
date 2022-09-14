@@ -45,7 +45,7 @@ private:
 };
 // Listing 2
 
-void showRecords (void)
+void showRecords ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("The following records were found:\n")));
@@ -64,7 +64,7 @@ void showRecords (void)
   }
 }
 
-int addRecords (void)
+int addRecords ()
 {
   char buf[32];
 

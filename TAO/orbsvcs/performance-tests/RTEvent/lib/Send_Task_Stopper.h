@@ -28,7 +28,7 @@ public:
                      Send_Task *task);
 
   /// Destructor, stop the task and wait for it
-  ~Send_Task_Stopper (void);
+  ~Send_Task_Stopper ();
 };
 
 #if defined(__ACE_INLINE__)

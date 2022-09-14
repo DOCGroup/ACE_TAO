@@ -46,17 +46,16 @@ class TAO_Reply_Dispatcher;
  */
 class TAO_Export TAO_Muxed_TMS : public TAO_Transport_Mux_Strategy
 {
-
 public:
   /// Constructor.
   TAO_Muxed_TMS (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Muxed_TMS (void);
+  virtual ~TAO_Muxed_TMS ();
 
   /// Generate and return an unique request id for the current
   /// invocation.
-  virtual CORBA::ULong request_id (void);
+  virtual CORBA::ULong request_id ();
 
   // = Please read the documentation in the TAO_Transport_Mux_Strategy
   //   class.
@@ -67,10 +66,10 @@ public:
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
   virtual int reply_timed_out (CORBA::ULong request_id);
 
-  virtual bool idle_after_send (void);
-  virtual bool idle_after_reply (void);
-  virtual void connection_closed (void);
-  virtual bool has_request (void);
+  virtual bool idle_after_send ();
+  virtual bool idle_after_reply ();
+  virtual void connection_closed ();
+  virtual bool has_request ();
 
 private:
   void operator= (const TAO_Muxed_TMS &);
@@ -98,7 +97,7 @@ private:
   /// Table of <Request ID, Reply Dispatcher> pairs.
   REQUEST_DISPATCHER_TABLE dispatcher_table_;
 
-  int clear_cache_i (void);
+  int clear_cache_i ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

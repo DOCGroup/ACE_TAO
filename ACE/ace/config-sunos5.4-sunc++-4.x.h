@@ -46,9 +46,6 @@
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
 
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
-
 // Compiler/platform supports SunOS high resolution timers.
 #define ACE_HAS_HI_RES_TIMER
 
@@ -170,10 +167,6 @@
 
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT
-
-// If exceptions are enabled and we are using Sun/CC then
-// <operator new> throws an exception instead of returning 0.
-#define ACE_NEW_THROWS_EXCEPTIONS
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

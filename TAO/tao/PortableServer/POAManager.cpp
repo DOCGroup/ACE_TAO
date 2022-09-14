@@ -39,7 +39,7 @@ TAO_POA_Manager::TAO_POA_Manager (
 #endif
 
 
-TAO_POA_Manager::~TAO_POA_Manager (void)
+TAO_POA_Manager::~TAO_POA_Manager ()
 {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   poa_manager_factory_._remove_ref ();
@@ -47,13 +47,13 @@ TAO_POA_Manager::~TAO_POA_Manager (void)
 }
 
 char *
-TAO_POA_Manager::get_id (void)
+TAO_POA_Manager::get_id ()
 {
   return CORBA::string_dup (this->id_.in ());
 }
 
 void
-TAO_POA_Manager::activate_i (void)
+TAO_POA_Manager::activate_i ()
 {
   // This operation changes the state of the POA manager to active. If
   // issued while the POA manager is in the inactive state, the
@@ -182,7 +182,6 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion)
   // requests.  Any requests that have been queued but have not
   // started executing will continue to be queued while in the holding
   // state.
-
   if (this->state_ == PortableServer::POAManager::INACTIVE)
     {
       throw PortableServer::POAManager::AdapterInactive ();
@@ -204,7 +203,6 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion)
   // and the current thread is in an invocation context dispatched by
   // some POA belonging to the same ORB as this POA the BAD_INV_ORDER
   // exception is raised and the state is not changed.
-
   if (wait_for_completion)
     {
       for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
@@ -234,7 +232,6 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion)
   // have not started executing are discarded. When a request is
   // discarded, a TRANSIENT system exception is returned to the
   // client.
-
   if (this->state_ == PortableServer::POAManager::INACTIVE)
     {
       throw PortableServer::POAManager::AdapterInactive ();
@@ -304,7 +301,7 @@ TAO_POA_Manager::register_poa (TAO_Root_POA *poa)
 }
 
 void
-TAO_POA_Manager::check_state (void)
+TAO_POA_Manager::check_state ()
 {
   if (state_ == PortableServer::POAManager::ACTIVE)
     {
@@ -370,7 +367,7 @@ TAO_POA_Manager::check_state (void)
 }
 
 CORBA::ORB_ptr
-TAO_POA_Manager::_get_orb (void)
+TAO_POA_Manager::_get_orb ()
 {
   return CORBA::ORB::_duplicate (this->object_adapter_.orb_core ().orb ());
 }

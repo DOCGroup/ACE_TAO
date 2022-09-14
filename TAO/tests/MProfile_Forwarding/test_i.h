@@ -28,16 +28,15 @@ public:
   // ctor
 
   /// ctor
-  Simple_Server_i (void);
+  Simple_Server_i ();
 
   // = The Simple_Server methods.
-  void remote_call (void);
+  void remote_call ();
 
-  void shutdown (void);
+  void shutdown ();
 
  private:
   CORBA::ORB_var orb_;
-
 };
 
 #if defined(__ACE_INLINE__)

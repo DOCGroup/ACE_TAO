@@ -3,77 +3,77 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Marshal_Object::TAO_Marshal_Object (void)
+TAO_Marshal_Object::TAO_Marshal_Object ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_Primitive::TAO_Marshal_Primitive (void)
+TAO_Marshal_Primitive::TAO_Marshal_Primitive ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_Any::TAO_Marshal_Any (void)
+TAO_Marshal_Any::TAO_Marshal_Any ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_Principal::TAO_Marshal_Principal (void)
+TAO_Marshal_Principal::TAO_Marshal_Principal ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_TypeCode::TAO_Marshal_TypeCode (void)
+TAO_Marshal_TypeCode::TAO_Marshal_TypeCode ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_ObjRef::TAO_Marshal_ObjRef (void)
+TAO_Marshal_ObjRef::TAO_Marshal_ObjRef ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_Struct::TAO_Marshal_Struct (void)
+TAO_Marshal_Struct::TAO_Marshal_Struct ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_Union::TAO_Marshal_Union (void)
+TAO_Marshal_Union::TAO_Marshal_Union ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_String::TAO_Marshal_String (void)
+TAO_Marshal_String::TAO_Marshal_String ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_Sequence::TAO_Marshal_Sequence (void)
+TAO_Marshal_Sequence::TAO_Marshal_Sequence ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_Array::TAO_Marshal_Array (void)
+TAO_Marshal_Array::TAO_Marshal_Array ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_Alias::TAO_Marshal_Alias (void)
+TAO_Marshal_Alias::TAO_Marshal_Alias ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_Except::TAO_Marshal_Except (void)
+TAO_Marshal_Except::TAO_Marshal_Except ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_WString::TAO_Marshal_WString (void)
+TAO_Marshal_WString::TAO_Marshal_WString ()
 {
 }
 
 ACE_INLINE
-TAO_Marshal_Value::TAO_Marshal_Value (void)
+TAO_Marshal_Value::TAO_Marshal_Value ()
   : nested_processing_ (false)
 {
 }

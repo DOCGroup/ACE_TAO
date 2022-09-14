@@ -17,12 +17,12 @@
 #define MAX_HOP_COUNT 20
 
 // CTOR
-MT_Object_i::MT_Object_i (void)
+MT_Object_i::MT_Object_i ()
 {
 }
 
 // DTOR
-MT_Object_i::~MT_Object_i (void)
+MT_Object_i::~MT_Object_i ()
 {
 }
 

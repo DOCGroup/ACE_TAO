@@ -7,7 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  FlResource_Loader::FlResource_Loader (void)
+  FlResource_Loader::FlResource_Loader ()
   {
     FlResource_Factory *tmp = 0;
 
@@ -17,7 +17,7 @@ namespace TAO
     TAO_ORB_Core::set_gui_resource_factory (tmp);
   }
 
-  FlResource_Loader::~FlResource_Loader (void)
+  FlResource_Loader::~FlResource_Loader ()
   {
   }
 }

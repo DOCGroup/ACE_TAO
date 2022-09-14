@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Fault_Tolerance_Service::~TAO_Fault_Tolerance_Service (void)
+TAO_Fault_Tolerance_Service::~TAO_Fault_Tolerance_Service ()
 {
   delete this->ft_service_callback_;
 }
@@ -21,7 +21,7 @@ TAO_Fault_Tolerance_Service::init (TAO_ORB_Core *orb_core)
 {
   // Look in to the svc conf stuff to get an instance of the
   // FT_Service.
-  if (this->ft_service_callback_ == 0)
+  if (this->ft_service_callback_ == nullptr)
     {
       TAO_Services_Activate *service =
         ACE_Dynamic_Service <TAO_Services_Activate>::instance ("FT_ClientService_Activate");

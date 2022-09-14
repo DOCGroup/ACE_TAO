@@ -45,7 +45,7 @@ class TAO_Svc_Utils_Export TAO_IOR_Multicast : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  TAO_IOR_Multicast (void);
+  TAO_IOR_Multicast ();
 
   /// Constructor taking the ior of the service.
   TAO_IOR_Multicast (const char *ior,
@@ -66,7 +66,7 @@ public:
             TAO_Service_ID service_id);
 
   /// Destructor.
-  virtual ~TAO_IOR_Multicast (void);
+  virtual ~TAO_IOR_Multicast ();
 
   /// Callback when input is received on the handle.
   virtual int handle_input (ACE_HANDLE n);
@@ -76,7 +76,7 @@ public:
                               const void *arg);
 
   /// Returns the internal handle used to receive multicast.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
 private:
   /// Factor common functionality from the two init functions.

@@ -6,7 +6,6 @@
 #include "Content_Iterator_i.h"
 
 
-
 Content_Iterator_i::Content_Iterator_i (const char *pathname,
                                         CORBA::ULongLong file_size)
   : file_ (ACE_TEXT_CHAR_TO_TCHAR(pathname)),
@@ -17,7 +16,7 @@ Content_Iterator_i::Content_Iterator_i (const char *pathname,
   // Nothing else
 }
 
-Content_Iterator_i::~Content_Iterator_i (void)
+Content_Iterator_i::~Content_Iterator_i ()
 {
   (void) this->file_io_.close ();
 }
@@ -102,7 +101,7 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
 }
 
 void
-Content_Iterator_i::destroy (void)
+Content_Iterator_i::destroy ()
 {
   (void) this->file_io_.close ();
 
@@ -122,7 +121,7 @@ Content_Iterator_i::destroy (void)
 }
 
 int
-Content_Iterator_i::init (void)
+Content_Iterator_i::init ()
 {
   // Open the requested file.
   ACE_FILE_Connector connector;

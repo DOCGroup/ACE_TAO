@@ -65,18 +65,17 @@ namespace ACE
   class Value_Ptr
   {
   public:
-
     /// Constructor.
-    explicit Value_Ptr (T * p = 0) : p_ (p) { }
+    explicit Value_Ptr (T * p = 0) : p_ (p) {}
 
     /// Destructor.
-    ~Value_Ptr (void) { delete this->p_; }
+    ~Value_Ptr () { delete this->p_; }
 
     /// Deference operator.
-    T & operator* (void) const { return *this->p_; }
+    T & operator* () const { return *this->p_; }
 
     /// Pointer operator.
-    T * operator-> (void) const { return this->p_; }
+    T * operator-> () const { return this->p_; }
 
     /// Non-throwing swap operation used to make assignment strongly
     /// exception-safe.
@@ -117,7 +116,6 @@ namespace ACE
     }
 
   private:
-
     /// Copying method invoked when copy constructing.
     template <typename U>
     T * create_from (U const * p) const
@@ -130,9 +128,7 @@ namespace ACE
 
     /// Object owned by this @c Value_Ptr.
     T * p_;
-
   };
-
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

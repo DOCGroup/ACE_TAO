@@ -54,7 +54,7 @@ TAO_Notify_Method_Request_Lookup::work (
   }
 }
 
-int TAO_Notify_Method_Request_Lookup::execute_i (void)
+int TAO_Notify_Method_Request_Lookup::execute_i ()
 {
   if (this->proxy_consumer_->has_shutdown ())
     return 0; // If we were shutdown while waiting in the queue, return with no action.
@@ -155,7 +155,6 @@ TAO_Notify_Method_Request_Lookup::unmarshal (
     }
   }
   return result;
-
 }
 
 
@@ -187,7 +186,7 @@ TAO_Notify_Method_Request_Lookup_Queueable::~TAO_Notify_Method_Request_Lookup_Qu
 }
 
 int
-TAO_Notify_Method_Request_Lookup_Queueable::execute (void)
+TAO_Notify_Method_Request_Lookup_Queueable::execute ()
 {
   return this->execute_i ();
 }
@@ -206,13 +205,13 @@ TAO_Notify_Method_Request_Lookup_No_Copy::~TAO_Notify_Method_Request_Lookup_No_C
 }
 
 int
-TAO_Notify_Method_Request_Lookup_No_Copy::execute (void)
+TAO_Notify_Method_Request_Lookup_No_Copy::execute ()
 {
   return this->execute_i ();
 }
 
 TAO_Notify_Method_Request_Queueable*
-TAO_Notify_Method_Request_Lookup_No_Copy::copy (void)
+TAO_Notify_Method_Request_Lookup_No_Copy::copy ()
 {
   TAO_Notify_Method_Request_Queueable* request;
 

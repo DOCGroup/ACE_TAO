@@ -77,7 +77,6 @@ namespace TAO
     int _tao_byte_order ();
 
   protected:
-
     /// Initialize the @a spec.
     void init_target_spec (TAO_Target_Specification &spec, TAO_OutputCDR& output);
 

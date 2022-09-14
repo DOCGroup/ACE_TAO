@@ -16,7 +16,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename obj_ref_traits>
 class object_reference_const_sequence_element
 {
@@ -45,12 +44,12 @@ public:
   {
   }
 
-  inline operator object_reference_type * (void) const
+  inline operator object_reference_type * () const
   {
     return *this->element_;
   }
 
-  inline object_reference_type * in (void) const
+  inline object_reference_type * in () const
   {
     return *this->element_;
   }
@@ -75,7 +74,6 @@ private:
   value_type const * const element_;
   CORBA::Boolean const release_;
 };
-
 } // namespace details
 } // namespace CORBA
 

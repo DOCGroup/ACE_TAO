@@ -13,23 +13,19 @@ public:
   be_connector (UTL_ScopedName *n,
                 AST_Connector *base_connector);
 
-  virtual ~be_connector (void);
+  virtual ~be_connector ();
 
   /// Cleanup function.
-  virtual void destroy (void);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (be_connector);
-  DEF_NARROW_FROM_SCOPE (be_connector);
+  virtual void destroy ();
 
   /// Visiting.
   virtual int accept (be_visitor *visitor);
 
-  bool dds_connector (void);
-  bool ami_connector (void);
+  bool dds_connector ();
+  bool ami_connector ();
 
 private:
-  void check_ancestors (void);
+  void check_ancestors ();
 
 private:
   bool dds_connector_;

@@ -23,15 +23,15 @@ class Vault_Client_Request_Interceptor
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Client_Request_Interceptor (void);
+  Vault_Client_Request_Interceptor ();
   // ctor.
   virtual ~Vault_Client_Request_Interceptor ();
   // dtor.
 
-  virtual char * name (void);
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
 
@@ -53,15 +53,15 @@ class Vault_Client_Request_Context_Interceptor
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Client_Request_Context_Interceptor (void);
+  Vault_Client_Request_Context_Interceptor ();
   // ctor.
   virtual ~Vault_Client_Request_Context_Interceptor ();
   // dtor.
 
-  virtual char * name (void);
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
 
@@ -83,15 +83,15 @@ class Vault_Client_Request_Dynamic_Interceptor
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Client_Request_Dynamic_Interceptor (void);
+  Vault_Client_Request_Dynamic_Interceptor ();
   // ctor.
   virtual ~Vault_Client_Request_Dynamic_Interceptor ();
   // dtor.
 
-  virtual char * name (void);
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
 
@@ -113,15 +113,15 @@ class Vault_Client_Request_NOOP_Interceptor
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Client_Request_NOOP_Interceptor (void);
+  Vault_Client_Request_NOOP_Interceptor ();
   // ctor.
   virtual ~Vault_Client_Request_NOOP_Interceptor ();
   // dtor.
 
-  virtual char * name (void);
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
 

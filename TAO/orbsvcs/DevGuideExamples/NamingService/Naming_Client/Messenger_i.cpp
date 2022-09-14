@@ -11,13 +11,13 @@
 #include <iostream>
 
 // Implementation skeleton constructor
-Messenger_i::Messenger_i (void)
+Messenger_i::Messenger_i ()
 {
   std::cout << "Hello";
 }
 
 // Implementation skeleton destructor
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 

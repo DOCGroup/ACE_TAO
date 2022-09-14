@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ZIOP_Adapter::~TAO_ZIOP_Adapter (void)
+TAO_ZIOP_Adapter::~TAO_ZIOP_Adapter ()
 {
 }
 

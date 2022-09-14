@@ -29,7 +29,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     /**
      * @class FW_Server_Request_Wrapper
      *
@@ -58,7 +57,6 @@ namespace TAO
     class TAO_CSD_FW_Export FW_Server_Request_Wrapper
     {
     public:
-
       /// Constructor.
       FW_Server_Request_Wrapper(TAO_ServerRequest& server_request);
 
@@ -111,7 +109,6 @@ namespace TAO
       /// Pointer to the underlying TAO_ServerRequest object.
       TAO_ServerRequest* request_;
     };
-
   }
 }
 

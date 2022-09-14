@@ -44,7 +44,7 @@ public:
   List_Node (char *key, int len);
 
   /// Destructor.
-  ~List_Node (void);
+  ~List_Node ();
 
   static void sort (char *base, int len);
 

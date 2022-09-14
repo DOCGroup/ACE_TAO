@@ -45,30 +45,30 @@ public:
 
 protected:
   /// Must be allocated dynamically.
-  ~ACE_TS_Server_Handler (void);
+  ~ACE_TS_Server_Handler ();
 
   // = Helper routines for the operations exported to clients.
 
   /// Give up waiting (e.g., when a timeout occurs or a client shuts
   /// down unexpectedly).
-  virtual int abandon (void);
+  virtual int abandon ();
 
   // = Low level routines for framing requests, dispatching
   // operations, and returning replies.
 
   /// Receive, frame, and decode the client's request.
-  virtual int recv_request (void);
+  virtual int recv_request ();
 
   /// Dispatch the appropriate operation to handle the client's
   /// request.
-  virtual int dispatch (void);
+  virtual int dispatch ();
 
   /// Special kind of reply
   virtual int send_request (ACE_Time_Request &);
 
   // = Demultiplexing hooks.
   /// Return the underlying <ACE_HANDLE>.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Callback method invoked by the <ACE_Reactor> when client events
   /// arrive.
@@ -94,7 +94,6 @@ private:
  */
 class ACE_TS_Server_Acceptor : public ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
 {
-
 public:
   /// Dynamic linking hook.
   virtual int init (int argc, ACE_TCHAR *argv[]);

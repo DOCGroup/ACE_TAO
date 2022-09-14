@@ -27,7 +27,7 @@ class be_visitor_home_ex_idl : public be_visitor_scope
 public:
   be_visitor_home_ex_idl (be_visitor_context *ctx);
 
-  ~be_visitor_home_ex_idl (void);
+  ~be_visitor_home_ex_idl ();
 
   virtual int visit_home (be_home *node);
 
@@ -42,24 +42,24 @@ public:
   virtual int visit_string (be_string *node);
 
 private:
-  void gen_implicit (void);
-  void gen_explicit (void);
-  void gen_derived (void);
+  void gen_implicit ();
+  void gen_explicit ();
+  void gen_derived ();
 
-  void gen_supported (void);
+  void gen_supported ();
 
   void gen_exception_list (UTL_ExceptList *exceptions,
                            const char *prefix = "",
                            bool init_op = false);
 
-  void gen_home_executor (void);
+  void gen_home_executor ();
 
   /// The CCM preproc visitor changed the scoped name and the
   /// defined_in() for the home's members to the implied
   /// *Explicit interface, which isn't a problem unless
   /// they include exceptions raised by a contained operation.
   /// factory or finder. So we restore the members just in case.
-  void restore_scope (void);
+  void restore_scope ();
 
 private:
   be_home *node_;

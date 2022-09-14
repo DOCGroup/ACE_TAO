@@ -37,43 +37,42 @@ class Log
 public:
   Log (Session &s);
 
-  virtual ~Log(void);
+  virtual ~Log();
 
   bool process_file (const ACE_TCHAR *filename, const char *alias = "");
 
 protected:
+  virtual void parse_line ();
 
-  virtual void parse_line (void);
-
-  void get_preamble (void);
-  void get_timestamp (void);
-  void handle_msg_octets (void);
-  bool match_target(void);
+  void get_preamble ();
+  void get_timestamp ();
+  void handle_msg_octets ();
+  bool match_target();
 
   void parse_handler_open_i (bool is_ssl);
-  void parse_connection_handler_ctor_i (void);
-  void parse_dump_giop_msg_i (void);
-  void parse_HEXDUMP_i (void);
-  void parse_open_listener_i (void);
-  void parse_got_existing_i (void);
-  void parse_muxed_tms_i (void);
-  void parse_exclusive_tms_i (void);
-  void parse_process_parsed_msgs_i (void);
-  void parse_wait_for_event_i (void);
-  void parse_wait_on_read_i (void);
-  void parse_make_idle_i (void);
-  void parse_cleanup_queue_i (void);
-  void parse_complete_connection_i (void);
-  void parse_close_connection_i (void);
-  void parse_begin_connection_i (void);
-  void parse_local_addr_i (void);
-  void parse_connection_not_complete_i (void);
-  void parse_open_as_server_i (void);
-  void parse_iiop_connection_handler_ctor_i (void);
-  void parse_wait_for_connection_i (void);
-  void parse_post_open_i (void);
-  void parse_notify_poa_helper_i (void);
-  void parse_notify_object_i (void);
+  void parse_connection_handler_ctor_i ();
+  void parse_dump_giop_msg_i ();
+  void parse_HEXDUMP_i ();
+  void parse_open_listener_i ();
+  void parse_got_existing_i ();
+  void parse_muxed_tms_i ();
+  void parse_exclusive_tms_i ();
+  void parse_process_parsed_msgs_i ();
+  void parse_wait_for_event_i ();
+  void parse_wait_on_read_i ();
+  void parse_make_idle_i ();
+  void parse_cleanup_queue_i ();
+  void parse_complete_connection_i ();
+  void parse_close_connection_i ();
+  void parse_begin_connection_i ();
+  void parse_local_addr_i ();
+  void parse_connection_not_complete_i ();
+  void parse_open_as_server_i ();
+  void parse_iiop_connection_handler_ctor_i ();
+  void parse_wait_for_connection_i ();
+  void parse_post_open_i ();
+  void parse_notify_poa_helper_i ();
+  void parse_notify_object_i ();
 
   ACE_CString origin_;
   ACE_CString alias_;

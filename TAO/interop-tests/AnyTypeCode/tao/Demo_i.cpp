@@ -32,12 +32,12 @@
 #include "ace/Log_Msg.h"
 
 // Implementation skeleton constructor
-ATC_Test_i::ATC_Test_i (void)
+ATC_Test_i::ATC_Test_i ()
 {
 }
 
 // Implementation skeleton destructor
-ATC_Test_i::~ATC_Test_i (void)
+ATC_Test_i::~ATC_Test_i ()
 {
 }
 
@@ -166,7 +166,7 @@ ATC_Test_i::do_value (const ::CORBA::Any & a)
 }
 
 void
-ATC_Test_i::shutdown (void)
+ATC_Test_i::shutdown ()
 {
   int argc = 0;
   ACE_TCHAR **argv = 0;

@@ -26,12 +26,12 @@ Thread_Pool::Thread_Pool (CORBA::ORB_ptr orb,
                 "activate failed\n"));
 }
 
-Thread_Pool::~Thread_Pool (void)
+Thread_Pool::~Thread_Pool ()
 {
 }
 
 int
-Thread_Pool::shutdown (void)
+Thread_Pool::shutdown ()
 {
   thr_mgr_->cancel_grp (grp_id_);
 
@@ -81,7 +81,7 @@ Thread_Pool::put (ACE_Message_Block *mb,
 // for all other threads to complete this iteration.
 
 int
-Thread_Pool::svc (void)
+Thread_Pool::svc ()
 {
   // Note that the <ACE_Task::svc_run> method automatically adds us to
   // the Thread_Manager when the thread begins.
@@ -150,7 +150,6 @@ Thread_Pool::svc (void)
                       pload.length (10);
                       ACE_OS::memset (pload.get_buffer(), pload.length(), 0);
                       echo->echo_payload (pload);
-
                     }
                   else
 #endif /*if 0*/
@@ -173,7 +172,7 @@ Thread_Pool::svc (void)
   --nt_;
   if (nt_ == 0)
     {
-      orb_->shutdown (0);
+      orb_->shutdown (false);
     }
 
   // Note that the <ACE_Task::svc_run> method automatically removes us

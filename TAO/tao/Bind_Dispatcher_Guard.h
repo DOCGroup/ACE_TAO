@@ -29,10 +29,10 @@ public:
                              TAO_Reply_Dispatcher* rd,
                              TAO_Transport_Mux_Strategy* tms);
 
-  ~TAO_Bind_Dispatcher_Guard (void);
+  ~TAO_Bind_Dispatcher_Guard ();
 
   /// Returns 0 if successful and non-zero otherwise.
-  int unbind_dispatcher (void);
+  int unbind_dispatcher ();
 
   /// State information
   enum TAO_Bind_Dispatcher_Status
@@ -44,7 +44,7 @@ public:
     };
 
   /// Get status
-  TAO_Bind_Dispatcher_Status status (void) const;
+  TAO_Bind_Dispatcher_Status status () const;
 
   /// Set status
   void status (TAO_Bind_Dispatcher_Status status);

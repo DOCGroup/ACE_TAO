@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#!/usr/bin/env perl
 eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
     & eval 'exec perl -w -S $0 $argv:q'
     if 0;
@@ -52,6 +52,6 @@ require Driver;
 # ************************************************************
 
 my($driver) = new Driver('UNIX=gnu',
-                         'automatic=ACE_ROOT,TAO_ROOT,CIAO_ROOT,' .
+                         'automatic=ACE_ROOT,TAO_ROOT,' .
                          'DDS_ROOT,ACE_PLATFORM_CONFIG');
 exit($driver->run(\@ARGV));

@@ -3,13 +3,13 @@
 #include "Test_Protocols_Hooks.h"
 #include "TestC.h"
 
-Test_Protocols_Hooks::Test_Protocols_Hooks (void)
+Test_Protocols_Hooks::Test_Protocols_Hooks ()
   : failure_count_ (0)
 {
 }
 
 
-Test_Protocols_Hooks::~Test_Protocols_Hooks (void)
+Test_Protocols_Hooks::~Test_Protocols_Hooks ()
 {
 }
 
@@ -105,7 +105,7 @@ Test_Protocols_Hooks::client_protocol_properties_at_orb_level (
 }
 
 CORBA::Long
-Test_Protocols_Hooks::get_dscp_codepoint (void)
+Test_Protocols_Hooks::get_dscp_codepoint ()
 {
   return -1;
 }

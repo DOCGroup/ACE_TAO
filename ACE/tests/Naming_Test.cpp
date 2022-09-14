@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "randomize.h"
 #include "ace/Lib_Find.h"
@@ -21,7 +20,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if !defined ACE_LACKS_FCNTL || defined ACE_WIN32
 
@@ -265,7 +263,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("%s%d"),
 #endif
                        pname,
-                       (int)(ACE_OS::getpid ()));
+                       (int)ACE_OS::getpid ());
 
       name_options->database (temp_file);
     }

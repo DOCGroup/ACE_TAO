@@ -5,25 +5,25 @@
 #include "ace/OS_NS_sys_select.h"
 #include "ace/Signal.h"
 
-Event_Channel::~Event_Channel (void)
+Event_Channel::~Event_Channel ()
 {
 }
 
-#if defined (ACE_WIN32_VC8)
+#if defined (_MSC_VER)
 #  pragma warning (push)
 #  pragma warning (disable:4355)  /* Use of 'this' in initializer list */
 #  endif
-Event_Channel::Event_Channel (void)
+Event_Channel::Event_Channel ()
   : supplier_acceptor_ (*this, 'S'),
     consumer_acceptor_ (*this, 'C')
 {
 }
-#if defined (ACE_WIN32_VC8)
+#if defined (_MSC_VER)
 #  pragma warning (pop)
 #endif
 
 int
-Event_Channel::compute_performance_statistics (void)
+Event_Channel::compute_performance_statistics ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) doing the performance timeout here...\n"));
   CONNECTION_MAP_ITERATOR cmi (this->connection_map_);
@@ -158,7 +158,6 @@ Event_Channel::subscription_event (ACE_Message_Block *data)
                 "(%t) consumers_[%d] = %d\n",
                 i,
                 subscription->consumers_[i]));
-
 }
 
 void
@@ -341,7 +340,7 @@ Event_Channel::cancel_connection_connection (Connection_Handler *connection_hand
 // Initiate active connections with the Consumer and Supplier Peers.
 
 void
-Event_Channel::initiate_connector (void)
+Event_Channel::initiate_connector ()
 {
   if (Options::instance ()->enabled
       (Options::CONSUMER_CONNECTOR | Options::SUPPLIER_CONNECTOR))
@@ -367,7 +366,7 @@ Event_Channel::initiate_connector (void)
 // to accept.
 
 int
-Event_Channel::initiate_acceptors (void)
+Event_Channel::initiate_acceptors ()
 {
   if (Options::instance ()->enabled (Options::CONSUMER_ACCEPTOR))
     {

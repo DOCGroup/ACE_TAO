@@ -22,15 +22,15 @@ public:
                 ServantActivator &activator,
                 CORBA::Long value);
 
-  virtual CORBA::Long doit (void);
+  virtual CORBA::Long doit ();
 
   // Setup forwarding
-  virtual void forward (void);
+  virtual void forward ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Returns the default POA for this servant.
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
 protected:
   CORBA::ORB_var orb_;

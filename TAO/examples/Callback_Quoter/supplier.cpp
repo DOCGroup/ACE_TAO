@@ -1,7 +1,6 @@
 #include "Supplier_i.h"
 
 // This function runs the Callback Quoter Supplier daemon.
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

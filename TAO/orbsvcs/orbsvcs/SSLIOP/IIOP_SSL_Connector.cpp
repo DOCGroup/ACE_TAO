@@ -15,14 +15,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::IIOP_SSL_Connector::IIOP_SSL_Connector (void)
+TAO::IIOP_SSL_Connector::IIOP_SSL_Connector ()
   : TAO_IIOP_Connector (),
     connect_strategy_ (),
     base_connector_ (0)
 {
 }
 
-TAO::IIOP_SSL_Connector::~IIOP_SSL_Connector (void)
+TAO::IIOP_SSL_Connector::~IIOP_SSL_Connector ()
 {
 }
 
@@ -58,7 +58,7 @@ TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO::IIOP_SSL_Connector::close (void)
+TAO::IIOP_SSL_Connector::close ()
 {
   delete this->base_connector_.creation_strategy ();
   delete this->base_connector_.concurrency_strategy ();

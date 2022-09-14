@@ -7,7 +7,7 @@ be_visitor_operation_direct_proxy_impl_ss (be_visitor_context *ctx)
 }
 
 be_visitor_operation_direct_proxy_impl_ss::
-~be_visitor_operation_direct_proxy_impl_ss (void)
+~be_visitor_operation_direct_proxy_impl_ss ()
 {
 }
 
@@ -32,13 +32,13 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       ? this->ctx_->attribute ()->defined_in ()
       : node->defined_in ();
 
-  be_interface *intf = be_interface::narrow_from_scope (s);
+  be_interface *intf = dynamic_cast<be_interface*> (s);
 
-  if (intf == 0)
+  if (intf == nullptr)
     {
-      be_porttype *pt = be_porttype::narrow_from_scope (s);
+      be_porttype *pt = dynamic_cast<be_porttype*> (s);
 
-      if (pt == 0)
+      if (pt == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_operation_")
@@ -53,8 +53,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
         }
     }
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << "void" << be_nl
       << intf->full_direct_proxy_impl_name () << "::";
@@ -130,7 +129,6 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
 }
 
 
-
 int
 be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
     be_visitor_context & /*ctx*/,
@@ -153,12 +151,12 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
       return 0;
     }
 
-  AST_Argument *arg = 0;
+  AST_Argument *arg = nullptr;
   int index = 1;
 
   for (; !si.is_done (); si.next (), ++index)
     {
-      arg = AST_Argument::narrow_from_decl (si.item ());
+      arg = dynamic_cast<AST_Argument*> (si.item ());
 
       *os << (index == 1 ? "" : ",") << be_nl
           << "((TAO::Arg_Traits< ";

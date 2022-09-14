@@ -6,11 +6,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Policy_Validator::TAO_Policy_Validator (TAO_ORB_Core &orb_core)
   : orb_core_ (orb_core),
-    next_ (0)
+    next_ (nullptr)
 {
 }
 
-TAO_Policy_Validator::~TAO_Policy_Validator (void)
+TAO_Policy_Validator::~TAO_Policy_Validator ()
 {
   delete this->next_;
 }
@@ -25,7 +25,7 @@ void
 TAO_Policy_Validator::add_validator (TAO_Policy_Validator *validator)
 {
   // The validator we're adding can't be part of another list
-  ACE_ASSERT (validator->next_ == 0);
+  ACE_ASSERT (validator->next_ == nullptr);
 
   // Why would we want to add ourself to our list
   if (this != validator)
@@ -33,7 +33,7 @@ TAO_Policy_Validator::add_validator (TAO_Policy_Validator *validator)
       // Get to the end of the list and make sure that the
       // new validator isn't already part of our list
       TAO_Policy_Validator* current = this;
-      while (current->next_ != 0)
+      while (current->next_ != nullptr)
         {
           if (current->next_ == validator)
             {
@@ -55,13 +55,12 @@ TAO_Policy_Validator::add_validator (TAO_Policy_Validator *validator)
     }
 }
 
-
 void
 TAO_Policy_Validator::validate (TAO_Policy_Set &policies)
 {
   this->validate_impl (policies);
 
-  if (this->next_ != 0)
+  if (this->next_ != nullptr)
     {
       this->next_->validate (policies);
     }
@@ -82,7 +81,7 @@ CORBA::Boolean
 TAO_Policy_Validator::legal_policy (CORBA::PolicyType type)
 {
   return (this->legal_policy_impl (type)
-          || ((this->next_ != 0)
+          || ((this->next_ != nullptr)
               && this->next_->legal_policy_impl (type)));
 }
 

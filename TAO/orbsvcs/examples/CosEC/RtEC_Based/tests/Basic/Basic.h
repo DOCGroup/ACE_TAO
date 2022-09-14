@@ -29,10 +29,10 @@ class Basic
 {
 public:
   /// Constructor.
-  Basic (void);
+  Basic ();
 
   /// Destructor.
-  ~Basic (void);
+  ~Basic ();
 
   /// Starts up an ORB and the CosEC.
   /// Returns 0 on success, -1 on error.
@@ -40,10 +40,10 @@ public:
 
   /// Connects a consumer and a supplier to the CosEC and sends 1 event
   /// across.
-  void run (void);
+  void run ();
 
   /// Closes down the CosEC.
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// initializes the ORB.
@@ -52,7 +52,7 @@ private:
 
   /// initializes the COS EC.
   /// Returns 0 on success, -1 on error.
-  void init_CosEC (void);
+  void init_CosEC ();
 
   /// The ORB that we use.
   CORBA::ORB_var orb_;

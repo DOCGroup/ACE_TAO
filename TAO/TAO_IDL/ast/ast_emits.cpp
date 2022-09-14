@@ -15,12 +15,12 @@ AST_Emits::AST_Emits (UTL_ScopedName *n,
 {
 }
 
-AST_Emits::~AST_Emits (void)
+AST_Emits::~AST_Emits ()
 {
 }
 
 AST_Type *
-AST_Emits::emits_type (void) const
+AST_Emits::emits_type () const
 {
   return this->field_type ();
 }
@@ -39,9 +39,7 @@ AST_Emits::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Emits::destroy (void)
+AST_Emits::destroy ()
 {
   this->AST_Field::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Emits)

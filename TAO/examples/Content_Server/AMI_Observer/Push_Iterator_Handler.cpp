@@ -6,7 +6,7 @@
 #include "Push_Iterator_Handler.h"
 #include "Callback_i.h"
 
-Push_Iterator_Handler::Push_Iterator_Handler (void)
+Push_Iterator_Handler::Push_Iterator_Handler ()
   : callback_servant_ (0),
     callback_ (),
     ami_handler_ ()
@@ -14,7 +14,7 @@ Push_Iterator_Handler::Push_Iterator_Handler (void)
   // Nothing else
 }
 
-Push_Iterator_Handler::~Push_Iterator_Handler (void)
+Push_Iterator_Handler::~Push_Iterator_Handler ()
 {
   // Nothing else
 }
@@ -56,7 +56,7 @@ Push_Iterator_Handler::run (int *request_count,
 }
 
 void
-Push_Iterator_Handler::deactivate (void)
+Push_Iterator_Handler::deactivate ()
 {
   // Get the POA used when activating the Reply Handler object.
   PortableServer::POA_var poa = this->_default_POA ();

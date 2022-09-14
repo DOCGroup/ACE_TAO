@@ -129,7 +129,6 @@ CORBA::TypeCode_ptr const CORBA::_tc_ ## name = \
 STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
-
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \
 CORBA::operator<<= (CORBA::Any &any, const CORBA::name &ex) \
@@ -138,8 +137,7 @@ CORBA::operator<<= (CORBA::Any &any, const CORBA::name &ex) \
       any, \
       CORBA::name ::_tao_any_destructor, \
       CORBA::_tc_ ## name, \
-      ex \
-    ); \
+      ex); \
 }
 
 STANDARD_EXCEPTION_LIST
@@ -153,8 +151,7 @@ CORBA::operator<<= (CORBA::Any &any, CORBA::name *ex) \
       any, \
       CORBA::name ::_tao_any_destructor, \
       CORBA::_tc_ ## name, \
-      ex \
-    ); \
+      ex); \
 }
 
 STANDARD_EXCEPTION_LIST

@@ -17,12 +17,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Kokyu_Factory::~TAO_EC_Kokyu_Factory (void)
+TAO_EC_Kokyu_Factory::~TAO_EC_Kokyu_Factory ()
 {
 }
 
 int
-TAO_EC_Kokyu_Factory::init_svcs (void)
+TAO_EC_Kokyu_Factory::init_svcs ()
 {
   return ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_EC_Kokyu_Factory);
@@ -203,7 +203,7 @@ TAO_EC_Kokyu_Factory::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_EC_Kokyu_Factory::fini (void)
+TAO_EC_Kokyu_Factory::fini ()
 {
   return 0;
 }

@@ -43,14 +43,14 @@ namespace TAO
 
     Unknown_IDL_Type (CORBA::TypeCode_ptr);
 
-    virtual ~Unknown_IDL_Type (void);
+    virtual ~Unknown_IDL_Type ();
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
-    virtual const void *value (void) const;
-    virtual void free_value (void);
+    virtual const void *value () const;
+    virtual void free_value ();
 
-    virtual TAO_InputCDR &_tao_get_cdr (void);
-    virtual int _tao_byte_order (void) const;
+    virtual TAO_InputCDR &_tao_get_cdr ();
+    virtual int _tao_byte_order () const;
 
     virtual void _tao_decode (TAO_InputCDR &);
 
@@ -79,7 +79,7 @@ namespace TAO
     typedef ACE_Refcounted_Auto_Ptr<ACE_Lock,
                                     ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >
       LOCK;
-    static LOCK const lock_i (void);
+    static LOCK const lock_i ();
     LOCK const lock_;
     mutable TAO_InputCDR cdr_;
   };

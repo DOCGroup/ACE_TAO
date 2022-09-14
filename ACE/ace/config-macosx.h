@@ -28,6 +28,8 @@
 #include "config-macosx-panther.h"
 #elif __MAC_OS_X_VERSION_MAX_ALLOWED >= 100200
 #include "config-macosx-jaguar.h"
+#else
+#error Cannot detect MacOSX version
 #endif
 
 #endif // ACE_CONFIG_MACOSX_ALL_H

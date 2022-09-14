@@ -5,15 +5,14 @@
 #endif /* __ACE_INLINE__ */
 
 
-
-TAO_Notify_Tests_PushSupplier_Traits::TAO_Notify_Tests_PushSupplier_Traits (void)
+TAO_Notify_Tests_PushSupplier_Traits::TAO_Notify_Tests_PushSupplier_Traits ()
   :type_ (CosNotifyChannelAdmin::ANY_EVENT)
 {
 }
 
 /*******************************************************************/
 
-TAO_Notify_Tests_PushSupplier::TAO_Notify_Tests_PushSupplier (void)
+TAO_Notify_Tests_PushSupplier::TAO_Notify_Tests_PushSupplier ()
 {
 }
 
@@ -36,14 +35,14 @@ TAO_Notify_Tests_PushSupplier::connect_to_peer (Proxy_Traits::PTR proxy_ptr, Pee
 }
 
 void
-TAO_Notify_Tests_PushSupplier::disconnect_from_proxy (void)
+TAO_Notify_Tests_PushSupplier::disconnect_from_proxy ()
 {
   ACE_DEBUG((LM_DEBUG, "\nPush Supplier disconnecting from consumer.\n"));
   this->proxy_->disconnect_push_consumer ();
 }
 
 void
-TAO_Notify_Tests_PushSupplier::disconnect_push_supplier (void)
+TAO_Notify_Tests_PushSupplier::disconnect_push_supplier ()
 {
   bool this_method_used_only_by_notify_service = false;
   ACE_ASSERT(this_method_used_only_by_notify_service);

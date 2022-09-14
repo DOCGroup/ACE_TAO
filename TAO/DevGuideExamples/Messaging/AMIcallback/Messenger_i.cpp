@@ -20,7 +20,7 @@ Messenger_i::Messenger_i (unsigned int seconds_to_wait,
 }
 
 // Implementation skeleton destructor
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 

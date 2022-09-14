@@ -28,7 +28,7 @@ class be_visitor_xplicit_pre_proc : public be_visitor_ccm_pre_proc
 public:
   be_visitor_xplicit_pre_proc (be_visitor_context *ctx);
 
-  virtual ~be_visitor_xplicit_pre_proc (void);
+  virtual ~be_visitor_xplicit_pre_proc ();
 
   virtual int visit_home (be_home *node);
 
@@ -61,7 +61,7 @@ public:
   virtual int visit_predefined_type (be_predefined_type *node);
 
   // Member accessor
-  be_interface *xplicit (void) const;
+  be_interface *xplicit () const;
 
 private:
   void check_and_store (AST_Decl *node);

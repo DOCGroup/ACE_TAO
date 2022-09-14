@@ -5,7 +5,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 #include "LookupManager.h"
 
 TAO_Notify_Tests_Direct_Supplier::TAO_Notify_Tests_Direct_Supplier (ACE_CString& target)
@@ -18,7 +17,7 @@ TAO_Notify_Tests_Direct_Supplier::~TAO_Notify_Tests_Direct_Supplier ()
 }
 
 void
-TAO_Notify_Tests_Direct_Supplier::connect (void)
+TAO_Notify_Tests_Direct_Supplier::connect ()
 {
   // Get the POA
   PortableServer::POA_var poa;

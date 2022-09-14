@@ -19,7 +19,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-
       NContextExt_Client_i client;
 
       if (client.init (argc, argv) != 0)

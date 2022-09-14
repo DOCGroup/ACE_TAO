@@ -88,7 +88,6 @@ protected:
     }
     return 0;
   }
-
 };
 
 #endif /* _REACTIVE_LOGGING_SERVER_EX_H */

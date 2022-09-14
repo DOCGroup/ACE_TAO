@@ -43,7 +43,7 @@ public:
                  size_t size = DEFAULT_SIZE,
                  bool restart = false,
                  ACE_Sig_Handler * = 0);
-  virtual ~ACE_FoxReactor (void);
+  virtual ~ACE_FoxReactor ();
 
   void fxapplication(FXApp* a);
 
@@ -94,7 +94,7 @@ protected:
 private:
   /// This method ensures there's an Fox timeout for the first timeout
   /// in the Reactor's Timer_Queue.
-  void reset_timeout (void);
+  void reset_timeout ();
 
   FXApp *fxapp;
 

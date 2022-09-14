@@ -24,7 +24,7 @@ Server_i::Server_i ()
   this->broadcaster_i_ = tmp;
 }
 
-Server_i::~Server_i (void)
+Server_i::~Server_i ()
 {
   // NO Op.
 }
@@ -82,7 +82,7 @@ Server_i::init (int argc,
 }
 
 int
-Server_i::run (void)
+Server_i::run ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Running chat server...\n")));

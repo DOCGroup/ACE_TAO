@@ -16,7 +16,7 @@ ACE_OS::posix_devctl (int filedes, int dcmd,
   ACE_UNUSED_ARG (nbyte);
   ACE_UNUSED_ARG (dev_info_ptr);
 # if defined ACE_EMULATE_POSIX_DEVCTL && ACE_EMULATE_POSIX_DEVCTL
-  ACE_OSCALL_RETURN (::ioctl (filedes, dcmd, dev_data_ptr), int, -1);
+  return ::ioctl (filedes, dcmd, dev_data_ptr);
 # else
   ACE_UNUSED_ARG (filedes);
   ACE_UNUSED_ARG (dcmd);
@@ -24,8 +24,7 @@ ACE_OS::posix_devctl (int filedes, int dcmd,
   ACE_NOTSUP_RETURN (-1);
 # endif
 #else
-  ACE_OSCALL_RETURN (::posix_devctl (filedes, dcmd, dev_data_ptr, nbyte,
-                                     dev_info_ptr), int, -1);
+  return ::posix_devctl (filedes, dcmd, dev_data_ptr, nbyte, dev_info_ptr);
 #endif
 }
 

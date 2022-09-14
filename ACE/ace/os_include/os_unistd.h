@@ -175,14 +175,6 @@ extern "C"
 
 # endif /* ACE_LACKS_TIMEDWAIT_PROTOTYPES */
 
-#if defined (ACE_LACKS_SWAB_PROTOTYPE)
-  void swab(const void *, void *, ssize_t);
-#endif /* ACE_LACKS_SWAB_PROTOTYPE */
-
-#if defined (ACE_LACKS_GETOPT_PROTOTYPE)
-  int getopt(int, char * const [], const char *);
-#endif /* ACE_LACKS_GETOPT_PROTOTYPE */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

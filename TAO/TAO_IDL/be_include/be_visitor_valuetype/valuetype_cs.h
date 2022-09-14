@@ -26,7 +26,7 @@ class be_visitor_valuetype_cs : public be_visitor_valuetype
 public:
   be_visitor_valuetype_cs (be_visitor_context *ctx);
 
-  ~be_visitor_valuetype_cs (void);
+  ~be_visitor_valuetype_cs ();
 
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_eventtype (be_eventtype *node);
@@ -37,6 +37,8 @@ public:
 private:
   /// Recursive to generate for inherited members.
   void gen_ostream_operator_r (be_valuetype *node, unsigned long &index);
+
+  void marshal_unmarshal_v (be_valuetype *node);
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_CS_H_ */

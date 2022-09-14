@@ -3,7 +3,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
-Smart_Diamond_Top_Factory::Smart_Diamond_Top_Factory (void)
+Smart_Diamond_Top_Factory::Smart_Diamond_Top_Factory ()
 {
   ACE_DEBUG ((LM_DEBUG, "Smart_Diamond_Top_Factory\n"));
 }
@@ -18,7 +18,6 @@ Smart_Diamond_Top_Factory::create_proxy (Diamond::Top_ptr proxy
                                Smart_Diamond_Top_Proxy (proxy),
                                            0);
    return proxy;
-
  }
 
 Smart_Diamond_Top_Proxy::Smart_Diamond_Top_Proxy (Diamond::Top_ptr proxy)

@@ -52,11 +52,11 @@ Hello::get_string (::Test::ThreadId caller_threadid)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
   // Give the client thread time to return from the collocated
   // call to this method before shutting down the ORB.  We sleep
   // to avoid BAD_INV_ORDER exceptions on fast dual processor machines.
   ACE_OS::sleep (1);
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

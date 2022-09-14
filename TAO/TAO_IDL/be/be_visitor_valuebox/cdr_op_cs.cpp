@@ -19,7 +19,7 @@ be_visitor_valuebox_cdr_op_cs::be_visitor_valuebox_cdr_op_cs (
 {
 }
 
-be_visitor_valuebox_cdr_op_cs::~be_visitor_valuebox_cdr_op_cs (void)
+be_visitor_valuebox_cdr_op_cs::~be_visitor_valuebox_cdr_op_cs ()
 {
 }
 
@@ -37,10 +37,9 @@ be_visitor_valuebox_cdr_op_cs::visit_valuebox (be_valuebox *node)
   TAO_OutStream *os = this->ctx_->stream ();
   node->cli_stub_cdr_op_gen (true);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
-*os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->core_versioning_begin () << be_nl;
 
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);

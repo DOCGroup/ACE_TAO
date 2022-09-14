@@ -22,14 +22,14 @@ be_visitor_valuetype_field_ch::be_visitor_valuetype_field_ch (
   setenclosings ("", ";");
 }
 
-be_visitor_valuetype_field_ch::~be_visitor_valuetype_field_ch (void)
+be_visitor_valuetype_field_ch::~be_visitor_valuetype_field_ch ()
 {
 }
 
 int
 be_visitor_valuetype_field_ch::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -63,7 +63,7 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -86,8 +86,7 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))
@@ -117,10 +116,10 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
       // The get method.
       *os << pre_op () << "const _" << bt->local_name ()
           << "_slice * " << ub->local_name ()
-          << " (void) const" << post_op () << be_nl;
+          << " () const" << post_op () << be_nl;
       *os << pre_op () << "_" << bt->local_name ()
           << "_slice * " << ub->local_name ()
-          << " (void)" << post_op ();
+          << " ()" << post_op ();
     }
   else
     {
@@ -131,11 +130,11 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
       // The get method.
       *os << pre_op ()
           << bt->name () << "_slice *" << ub->local_name ()
-          << " (void)" << post_op () << be_nl;
+          << " ()" << post_op () << be_nl;
       // The get (read/write) method.
       *os << pre_op () << "const "
           << bt->name () << "_slice *" << ub->local_name ()
-          << " (void) const" << post_op ();
+          << " () const" << post_op ();
     }
 
   return 0;
@@ -146,7 +145,7 @@ be_visitor_valuetype_field_ch::visit_enum (be_enum *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -169,8 +168,7 @@ be_visitor_valuetype_field_ch::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))
@@ -195,7 +193,7 @@ be_visitor_valuetype_field_ch::visit_enum (be_enum *node)
       << bt->name () << ")" << post_op () << be_nl;
   // The get method.
   *os << pre_op () << bt->name () << " " << ub->local_name ()
-      << " (void) const" << post_op ();
+      << " () const" << post_op ();
 
   return 0;
 }
@@ -205,7 +203,7 @@ be_visitor_valuetype_field_ch::visit_interface (be_interface *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -228,17 +226,16 @@ be_visitor_valuetype_field_ch::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Set method.
-  *os << pre_op () << "void " << ub->local_name () << " ( ::"
+  *os << pre_op () << "void " << ub->local_name () << " (::"
       << bt->name () << "_ptr"
       << ")" << post_op () << be_nl;
   // Get method.
   *os << pre_op ()
       << "::" << bt->name () << "_ptr " << ub->local_name ()
-      << " (void) const" << post_op ();
+      << " () const" << post_op ();
 
   return 0;
 }
@@ -248,7 +245,7 @@ be_visitor_valuetype_field_ch::visit_interface_fwd (be_interface_fwd *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -271,8 +268,7 @@ be_visitor_valuetype_field_ch::visit_interface_fwd (be_interface_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Set method.
   *os << pre_op () << "void " << ub->local_name () << " ("
@@ -281,7 +277,7 @@ be_visitor_valuetype_field_ch::visit_interface_fwd (be_interface_fwd *node)
   // Get method.
   *os << pre_op ()
       << bt->name () << "_ptr " << ub->local_name ()
-      << " (void) const" << post_op ();
+      << " () const" << post_op ();
 
   return 0;
 }
@@ -291,7 +287,7 @@ be_visitor_valuetype_field_ch::visit_valuebox (be_valuebox *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -314,8 +310,7 @@ be_visitor_valuetype_field_ch::visit_valuebox (be_valuebox *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Set method.
   *os << pre_op () << "void " << ub->local_name () << " ("
@@ -324,7 +319,7 @@ be_visitor_valuetype_field_ch::visit_valuebox (be_valuebox *node)
   // Get method.
   *os << pre_op ()
       << bt->name () << " *" << ub->local_name ()
-      << " (void) const" << post_op ();
+      << " () const" << post_op ();
 
   return 0;
 }
@@ -334,7 +329,7 @@ be_visitor_valuetype_field_ch::visit_valuetype (be_valuetype *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -357,8 +352,7 @@ be_visitor_valuetype_field_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Set method.
   *os << pre_op () << "void " << ub->local_name () << " ("
@@ -367,7 +361,7 @@ be_visitor_valuetype_field_ch::visit_valuetype (be_valuetype *node)
   // Get method.
   *os << pre_op ()
       << bt->name () << " *" << ub->local_name ()
-      << " (void) const" << post_op ();
+      << " () const" << post_op ();
 
   return 0;
 }
@@ -383,7 +377,7 @@ be_visitor_valuetype_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -406,8 +400,7 @@ be_visitor_valuetype_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Set method.
   *os << pre_op () << "void " << ub->local_name () << " ("
@@ -416,7 +409,7 @@ be_visitor_valuetype_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
   // Get method.
   *os << pre_op ()
       << bt->name () << " *" << ub->local_name ()
-      << " (void) const" << post_op ();
+      << " () const" << post_op ();
 
   return 0;
 }
@@ -432,7 +425,7 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -455,21 +448,20 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
       // Set method.
-      *os << pre_op () << "void " << ub->local_name () << " ( ::"
+      *os << pre_op () << "void " << ub->local_name () << " (::"
           << bt->name () << "_ptr)"
           << post_op () << be_nl;
       // Get method.
       *os << pre_op ()
           << "::" << bt->name () << "_ptr " << ub->local_name ()
-          << " (void) const" << post_op ();
+          << " () const" << post_op ();
       break;
     case AST_PredefinedType::PT_any:
       // Set method.
@@ -478,11 +470,11 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
           << post_op () << be_nl;
       // Get method (read-only).
       *os << pre_op () << "const ::" << bt->name () << " &"
-          << ub->local_name () << " (void) const"
+          << ub->local_name () << " () const"
           << post_op () << be_nl;
       // Get method (read/write).
       *os << pre_op () << "::" << bt->name () << " &"
-          << ub->local_name () << " (void)"
+          << ub->local_name () << " ()"
           << post_op ();
       break;
     case AST_PredefinedType::PT_void:
@@ -495,7 +487,7 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
       // Get method.
       *os << pre_op () << "::" << bt->name ()
           << " " << ub->local_name ()
-          << " (void) const" << post_op ();
+          << " () const" << post_op ();
     }
 
   return 0;
@@ -506,7 +498,7 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -529,8 +521,7 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Not a typedef and bt is defined here.
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -538,7 +529,7 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
       && this->ctx_->state () != TAO_CodeGen::TAO_VALUETYPE_OBV_CH)
     {
       be_field *member_node =
-        be_field::narrow_from_decl (this->ctx_->node ());
+        dynamic_cast<be_field*> (this->ctx_->node ());
       node->field_node (member_node);
 
       be_visitor_context ctx (*this->ctx_);
@@ -577,11 +568,11 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
       << post_op () << be_nl;
   // Read-only.
   *os << pre_op () << "const " << bt->name () << " &"
-      << ub->local_name  () << " (void) const"
+      << ub->local_name  () << " () const"
       << post_op () << be_nl;
   // Read/write.
   *os << pre_op () << bt->name () << " &" << ub->local_name ()
-      << " (void)"
+      << " ()"
       << post_op ();
 
   return 0;
@@ -604,8 +595,7 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os  << be_nl_2<< "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Three methods to set the string value.
   if (node->width () == (long) sizeof (char))
@@ -621,12 +611,12 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
           << post_op () << be_nl;
       // Get method.
       *os << pre_op () << "const char *" << ub->local_name ()
-          << " (void) const" << post_op ();
+          << " () const" << post_op ();
     }
   else
     {
       *os << pre_op ()
-          << "void " << ub->local_name () << " ( ::CORBA::WChar *val)"
+          << "void " << ub->local_name () << " (::CORBA::WChar *val)"
           << post_op () << be_nl;
       *os << pre_op ()
           << "void " << ub->local_name () << " (const ::CORBA::WChar *val)"
@@ -636,7 +626,7 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
           << post_op () << be_nl;
       // Get method.
       *os << pre_op() << "const ::CORBA::WChar *" << ub->local_name ()
-          << " (void) const" << post_op();
+          << " () const" << post_op();
     }
 
   return 0;
@@ -647,7 +637,7 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -670,8 +660,7 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os  << be_nl_2<< "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Not a typedef and bt is defined here.
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -697,11 +686,11 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
       << post_op () << be_nl;
     // Read-only.
   *os << pre_op () << "const " << bt->name () << " &";
-  *os << ub->local_name  () << " (void) const"
+  *os << ub->local_name  () << " () const"
       << post_op () << be_nl
     // Read/write.
       << pre_op () << bt->name () << " &" << ub->local_name ()
-      << " (void)" << post_op ();
+      << " ()" << post_op ();
 
   return 0;
 }
@@ -723,7 +712,7 @@ be_visitor_valuetype_field_ch::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -732,7 +721,7 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -755,8 +744,7 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os  << be_nl_2<< "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Not a typedef and bt is defined here.
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -782,11 +770,11 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
       << post_op () << be_nl;
     // Read-only.
   *os << pre_op () << "const " << bt->name () << " &"
-      << ub->local_name  () << " (void) const"
+      << ub->local_name  () << " () const"
       << post_op () << be_nl;
     // Read/write.
   *os << pre_op () << bt->name () << " &" << ub->local_name ()
-      << " (void)" << post_op ();
+      << " ()" << post_op ();
 
   return 0;
 }
@@ -800,13 +788,13 @@ be_visitor_valuetype_field_ch::setenclosings (const char *pre,
 }
 
 const char*
-be_visitor_valuetype_field_ch::pre_op (void)
+be_visitor_valuetype_field_ch::pre_op ()
 {
   return pre_op_;
 }
 
 const char*
-be_visitor_valuetype_field_ch::post_op (void)
+be_visitor_valuetype_field_ch::post_op ()
 {
   return post_op_;
 }

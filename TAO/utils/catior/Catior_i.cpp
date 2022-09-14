@@ -90,7 +90,6 @@ Catior_i::decode (const ACE_CString& aString, ACE_CString& output)
 }
 
 
-
 CORBA::Boolean
 Catior_i::catiiop (char* string)
 {
@@ -727,7 +726,6 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
       ACE_OS::snprintf (buf, bufsize,
                        "\t Priority: %d\n", server_priority);
       buffer_ += buf;
-
     } else if (policies[iter].ptype == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE) {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
@@ -1100,7 +1098,7 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
                        "for char.\n"),
                       false);
 
-  ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for char %u\n", c_ccslen);
+  ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for char: %u\n", c_ccslen);
   buffer_ += buf;
 
   if (c_ccslen)
@@ -1131,7 +1129,7 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
                        "for wchar.\n"),
                       false);
 
-  ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for wchar %u\n", w_ccslen);
+  ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for wchar: %u\n", w_ccslen);
   buffer_ += buf;
 
   if (w_ccslen)

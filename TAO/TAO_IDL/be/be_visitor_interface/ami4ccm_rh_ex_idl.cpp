@@ -19,16 +19,14 @@ be_visitor_ami4ccm_rh_ex_idl::be_visitor_ami4ccm_rh_ex_idl (
 {
 }
 
-be_visitor_ami4ccm_rh_ex_idl::~be_visitor_ami4ccm_rh_ex_idl (void)
+be_visitor_ami4ccm_rh_ex_idl::~be_visitor_ami4ccm_rh_ex_idl ()
 {
 }
 
 int
 be_visitor_ami4ccm_rh_ex_idl::visit_interface (be_interface *node)
 {
-  os_ << be_nl
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (&os_);
 
   os_ << be_nl_2
       << "local interface AMI4CCM_"
@@ -106,7 +104,7 @@ be_visitor_ami4ccm_rh_ex_idl::visit_operation (be_operation *node)
   if (!node->void_return_type ())
     {
       be_type *t =
-        be_type::narrow_from_decl (node->return_type ());
+        dynamic_cast<be_type*> (node->return_type ());
 
       os_ << be_nl
           << "in "
@@ -158,7 +156,7 @@ be_visitor_ami4ccm_rh_ex_idl::visit_argument (be_argument *node)
     }
 
   be_type *t =
-    be_type::narrow_from_decl (node->field_type ());
+    dynamic_cast<be_type*> (node->field_type ());
 
   os_ << be_nl
       << "in ";
@@ -206,18 +204,18 @@ int
 be_visitor_ami4ccm_rh_ex_idl::pre_process (be_decl *node)
 {
   be_operation *op =
-    be_operation::narrow_from_scope (this->ctx_->scope ());
+    dynamic_cast<be_operation*> (this->ctx_->scope ());
 
-  if (op == 0)
+  if (op == nullptr)
     {
       return 0;
     }
 
   bool void_ret_type = op->void_return_type ();
 
-  be_argument *arg = be_argument::narrow_from_decl (node);
+  be_argument *arg = dynamic_cast<be_argument*> (node);
 
-  if (arg == 0)
+  if (arg == nullptr)
     {
       return 0;
     }
@@ -258,7 +256,7 @@ be_visitor_ami4ccm_rh_ex_idl::gen_attr_rh_ops (bool is_set_op,
   if (!is_set_op)
     {
       be_type *t =
-        be_type::narrow_from_decl (node->field_type ());
+        dynamic_cast<be_type*> (node->field_type ());
 
       os_ << be_idt_nl << "in ";
 

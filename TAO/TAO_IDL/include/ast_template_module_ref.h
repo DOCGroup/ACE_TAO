@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef AST_TEMPLATE_MODULE_REF_H
 #define AST_TEMPLATE_MODULE_REF_H
 
@@ -15,20 +14,17 @@ public:
                            AST_Template_Module *ref,
                            UTL_StrList *param_refs);
 
-  virtual ~AST_Template_Module_Ref (void);
+  virtual ~AST_Template_Module_Ref ();
 
-  AST_Template_Module *ref (void) const;
+  AST_Template_Module *ref () const;
 
-  UTL_StrList *param_refs (void) const;
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (AST_Template_Module_Ref);
+  UTL_StrList *param_refs () const;
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
@@ -42,7 +38,7 @@ public:
   virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
 
   /// Accessors for the member.
-  bool processed (void) const;
+  bool processed () const;
   void processed (bool val);
 
   static AST_Decl::NodeType const NT;

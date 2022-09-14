@@ -68,7 +68,7 @@ ACE_TMAIN(int, ACE_TCHAR *[])
           PortableServer::POA_var poa =
             PortableServer::POA::_narrow (obj.in ());
 
-          poa->destroy (1, 1);
+          poa->destroy (true, true);
 
           orb->destroy ();
         }

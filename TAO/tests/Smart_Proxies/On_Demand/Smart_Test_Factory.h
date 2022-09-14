@@ -8,8 +8,7 @@ class ACE_Svc_Export Smart_Test_Factory
 
 {
 public:
-
-  Smart_Test_Factory (void);
+  Smart_Test_Factory ();
 
   // This method will create the smart_proxy.
   virtual Test_ptr create_proxy (Test_ptr proxy);

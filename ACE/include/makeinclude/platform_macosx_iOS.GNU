@@ -10,7 +10,7 @@ else
 endif
 
 ifndef IPHONE_TARGET
-  $(error Please set IPHONE_TARGET to SIMULATOR or HARDWARE) 
+  $(error Please set IPHONE_TARGET to SIMULATOR or HARDWARE)
 endif
 
 ifeq ($(IPHONE_TARGET), SIMULATOR)
@@ -62,9 +62,7 @@ CCFLAGS += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK)
 ifneq (,$(HOST_ROOT))
   TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
   TAO_IDL = $(HOST_ROOT)/bin/tao_idl
-  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2
   TAO_IDL_DEP = $(TAO_IDL)
-  TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
   # make sure to use the target compiler, not the cross-compiler
   # as preprocessor for the cross-compiled idl tools
   TAO_IDL_PREPROCESSOR = clang

@@ -68,38 +68,38 @@ public:
                                 unsigned long dynamic_priority_offset);
 
   /// Virtual destructor.
-  virtual ~ACE_Dynamic_Message_Strategy (void);
+  virtual ~ACE_Dynamic_Message_Strategy ();
 
   /// Updates the message's priority and returns its priority status.
   Priority_Status priority_status (ACE_Message_Block &mb,
                                    const ACE_Time_Value &tv);
 
   /// Get static bit field mask.
-  unsigned long static_bit_field_mask (void) const;
+  unsigned long static_bit_field_mask () const;
 
   /// Set static bit field mask.
   void static_bit_field_mask (unsigned long);
 
   /// Get left shift value to make room for static bit field.
-  unsigned long static_bit_field_shift (void) const;
+  unsigned long static_bit_field_shift () const;
 
   /// Set left shift value to make room for static bit field.
   void static_bit_field_shift (unsigned long);
 
   /// Get maximum supported priority value.
-  unsigned long dynamic_priority_max (void) const;
+  unsigned long dynamic_priority_max () const;
 
   /// Set maximum supported priority value.
   void dynamic_priority_max (unsigned long);
 
   /// Get offset to boundary between signed range and unsigned range.
-  unsigned long dynamic_priority_offset (void) const;
+  unsigned long dynamic_priority_offset () const;
 
   /// Set offset to boundary between signed range and unsigned range.
   void dynamic_priority_offset (unsigned long);
 
   /// Dump the state of the strategy.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
 protected:
   /// Hook method for dynamic priority conversion.
@@ -156,14 +156,14 @@ public:
                                  unsigned long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
 
   /// Virtual destructor.
-  virtual ~ACE_Deadline_Message_Strategy (void);
+  virtual ~ACE_Deadline_Message_Strategy ();
 
   /// Dynamic priority conversion function based on time to deadline.
   virtual void convert_priority (ACE_Time_Value &priority,
                                  const ACE_Message_Block &mb);
 
   /// Dump the state of the strategy.
-  virtual void dump (void) const;
+  virtual void dump () const;
 };
 
 /**
@@ -191,14 +191,14 @@ public:
                                unsigned long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
 
   /// virtual dtor.
-  virtual ~ACE_Laxity_Message_Strategy (void);
+  virtual ~ACE_Laxity_Message_Strategy ();
 
   /// Dynamic priority conversion function based on laxity.
   virtual void convert_priority (ACE_Time_Value &priority,
                                  const ACE_Message_Block &mb);
 
   /// Dump the state of the strategy.
-  virtual void dump (void) const;
+  virtual void dump () const;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

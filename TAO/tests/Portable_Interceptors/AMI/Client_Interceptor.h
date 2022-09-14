@@ -16,17 +16,17 @@ class Echo_Client_Request_Interceptor
   , public virtual ::CORBA::LocalObject
 {
 public:
-  Echo_Client_Request_Interceptor (void);
+  Echo_Client_Request_Interceptor ();
 
   static unsigned long request_count;
   static unsigned long reply_count;
   static unsigned long other_count;
   static unsigned long exception_count;
 
-  virtual char * name (void);
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
 

@@ -28,7 +28,7 @@ class TAO_IORManip_Export TAO_IORManip_Loader : public TAO_Object_Loader
 {
 public:
   /// Constructor
-  TAO_IORManip_Loader (void);
+  TAO_IORManip_Loader ();
 
   /// Creates a IORManip factory and returns it.
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
@@ -36,7 +36,7 @@ public:
                                            ACE_TCHAR *argv []);
 
   /// Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 static int

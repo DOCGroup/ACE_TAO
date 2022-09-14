@@ -29,7 +29,7 @@ JAWS_Hash_Bucket_Item<EXT_ID, INT_ID>
 }
 
 template <class EXT_ID, class INT_ID>
-JAWS_Hash_Bucket_Item<EXT_ID, INT_ID>::~JAWS_Hash_Bucket_Item (void)
+JAWS_Hash_Bucket_Item<EXT_ID, INT_ID>::~JAWS_Hash_Bucket_Item ()
 {
   this->next_ = 0;
   this->prev_ = 0;
@@ -53,14 +53,14 @@ JAWS_Hash_Bucket_DLCStack (ACE_Allocator *alloc)
 
 template <class EXT_ID, class INT_ID>
 JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::
-~JAWS_Hash_Bucket_DLCStack (void)
+~JAWS_Hash_Bucket_DLCStack ()
 {
   this->reset ();
 }
 
 template <class EXT_ID, class INT_ID> int
 JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::
-is_empty (void) const
+is_empty () const
 {
   return this->head_ == 0 && this->tail_ == 0;
 }
@@ -99,7 +99,7 @@ push (const EXT_ID &ext_id, const INT_ID &int_id)
 }
 
 template <class EXT_ID, class INT_ID> JAWS_HASH_BUCKET_ITEM *
-JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::pop (void)
+JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::pop ()
 {
   JAWS_HASH_BUCKET_ITEM *item = 0;
 
@@ -124,7 +124,7 @@ JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::pop (void)
 }
 
 template <class EXT_ID, class INT_ID> void
-JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::reset (void)
+JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::reset ()
 {
   JAWS_HASH_BUCKET_ITEM *item = 0;
 
@@ -186,7 +186,7 @@ JAWS_Hash_Bucket_DLCStack_Iterator (const JAWS_HASH_BUCKET_DLCSTACK &dlcstack)
 }
 
 template <class EXT_ID, class INT_ID> int
-JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::first (void)
+JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::first ()
 {
   int result = 0;
 
@@ -202,13 +202,13 @@ JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::first (void)
 }
 
 template <class EXT_ID, class INT_ID> int
-JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::last (void)
+JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::last ()
 {
   return this->first ();
 }
 
 template <class EXT_ID, class INT_ID> int
-JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::advance (void)
+JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::advance ()
 {
   int result = 1;
 
@@ -229,7 +229,7 @@ JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::advance (void)
 }
 
 template <class EXT_ID, class INT_ID> int
-JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::revert (void)
+JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::revert ()
 {
   int result = 1;
 
@@ -288,7 +288,7 @@ prev (JAWS_HASH_BUCKET_ITEM *&item) const
 }
 
 template <class EXT_ID, class INT_ID> int
-JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::done (void) const
+JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::done () const
 {
   return this->done_;
 }
@@ -318,12 +318,12 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::open (ACE_Allocator *alloc)
 }
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC>
-JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::~JAWS_Hash_Bucket_Manager (void)
+JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::~JAWS_Hash_Bucket_Manager ()
 {
 }
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC> int
-JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::close (void)
+JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::close ()
 {
   this->dlcstack_.reset ();
   return 0;

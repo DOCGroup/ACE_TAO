@@ -86,34 +86,34 @@ AST_Factory::AST_Factory (UTL_ScopedName *n)
     AST_Decl (AST_Decl::NT_factory,
               n),
     UTL_Scope (AST_Decl::NT_factory),
-    pd_exceptions (0),
+    pd_exceptions (nullptr),
     pd_n_exceptions (0),
     argument_count_ (-1),
     has_native_ (0)
 {
 }
 
-AST_Factory::~AST_Factory (void)
+AST_Factory::~AST_Factory ()
 {
 }
 
 // Public operations.
 
 UTL_ExceptList *
-AST_Factory::exceptions (void)
+AST_Factory::exceptions ()
 {
   return this->pd_exceptions;
 }
 
 int
-AST_Factory::n_exceptions (void)
+AST_Factory::n_exceptions ()
 {
   return this->pd_n_exceptions;
 }
 
 // Return the member count.
 int
-AST_Factory::argument_count (void)
+AST_Factory::argument_count ()
 {
   this->compute_argument_attr ();
 
@@ -122,7 +122,7 @@ AST_Factory::argument_count (void)
 
 // Return if any argument or the return type is a <native> type.
 int
-AST_Factory::has_native (void)
+AST_Factory::has_native ()
 {
   this->compute_argument_attr ();
 
@@ -130,12 +130,12 @@ AST_Factory::has_native (void)
 }
 
 void
-AST_Factory::destroy (void)
+AST_Factory::destroy ()
 {
-  if (0 != this->pd_exceptions)
+  if (nullptr != this->pd_exceptions)
     {
       this->pd_exceptions->destroy ();
-      this->pd_exceptions = 0;
+      this->pd_exceptions = nullptr;
     }
 
   this->AST_Decl::destroy ();
@@ -145,7 +145,7 @@ AST_Factory::destroy (void)
 UTL_ExceptList *
 AST_Factory::be_add_exceptions (UTL_ExceptList *t)
 {
-  if (this->pd_exceptions != 0)
+  if (this->pd_exceptions != nullptr)
     {
       idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
                                   this);
@@ -153,7 +153,7 @@ AST_Factory::be_add_exceptions (UTL_ExceptList *t)
   else
     {
       this->pd_exceptions = t;
-      this->pd_n_exceptions = (t == 0 ? 0 : t->length ());
+      this->pd_n_exceptions = (t == nullptr ? 0 : t->length ());
     }
 
   return this->pd_exceptions;
@@ -163,16 +163,16 @@ AST_Factory::be_add_exceptions (UTL_ExceptList *t)
 
 // Compute total number of members.
 int
-AST_Factory::compute_argument_attr (void)
+AST_Factory::compute_argument_attr ()
 {
   if (this->argument_count_ != -1)
     {
       return 0;
     }
 
-  AST_Decl *d = 0;
-  AST_Type *type = 0;
-  AST_Argument *arg = 0;
+  AST_Decl *d = nullptr;
+  AST_Type *type = nullptr;
+  AST_Argument *arg = nullptr;
 
   this->argument_count_ = 0;
 
@@ -190,9 +190,9 @@ AST_Factory::compute_argument_attr (void)
             {
               this->argument_count_++;
 
-              arg = AST_Argument::narrow_from_decl (d);
+              arg = dynamic_cast<AST_Argument*> (d);
 
-              type = AST_Type::narrow_from_decl (arg->field_type ());
+              type = dynamic_cast<AST_Type*> (arg->field_type ());
 
               if (type->node_type () == AST_Decl::NT_native)
                 {
@@ -208,19 +208,17 @@ AST_Factory::compute_argument_attr (void)
 AST_Argument *
 AST_Factory::fe_add_argument (AST_Argument *t)
 {
-  return
-    AST_Argument::narrow_from_decl (
-      this->fe_add_ref_decl (t));
+  return dynamic_cast<AST_Argument*> (this->fe_add_ref_decl (t));
 }
 
 UTL_NameList *
 AST_Factory::fe_add_exceptions (UTL_NameList *t)
 {
-  UTL_ScopedName *nl_n = 0;
-  AST_Type *fe = 0;
-  AST_Decl *d = 0;
+  UTL_ScopedName *nl_n = nullptr;
+  AST_Type *fe = nullptr;
+  AST_Decl *d = nullptr;
 
-  this->pd_exceptions = 0;
+  this->pd_exceptions = nullptr;
 
   for (UTL_NamelistActiveIterator nl_i (t);
        !nl_i.is_done ();
@@ -230,10 +228,10 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
 
       d = this->defined_in ()->lookup_by_name (nl_n, true);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           idl_global->err ()->lookup_error (nl_n);
-          return 0;
+          return nullptr;
         }
 
       AST_Decl::NodeType nt = d->node_type ();
@@ -243,17 +241,17 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
                                       this);
-          return 0;
+          return nullptr;
         }
 
-      fe = AST_Type::narrow_from_decl (d);
+      fe = dynamic_cast<AST_Type*> (d);
 
-      UTL_ExceptList *el = 0;
+      UTL_ExceptList *el = nullptr;
       ACE_NEW_RETURN (el,
-                      UTL_ExceptList (fe, 0),
-                      0);
+                      UTL_ExceptList (fe, nullptr),
+                      nullptr);
 
-      if (this->pd_exceptions == 0)
+      if (this->pd_exceptions == nullptr)
         {
           this->pd_exceptions = el;
         }
@@ -270,7 +268,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
   // each place it is passed in.
   t->destroy ();
   delete t;
-  t = 0;
+  t = nullptr;
 
   return t;
 }
@@ -279,7 +277,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
 void
 AST_Factory::dump (ACE_OSTREAM_TYPE &o)
 {
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
 
   this->dump_i (o, "factory ");
   this->local_name ()->dump (o);
@@ -307,7 +305,3 @@ AST_Factory::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_factory (this);
 }
-
-IMPL_NARROW_FROM_DECL(AST_Factory)
-IMPL_NARROW_FROM_SCOPE(AST_Factory)
-

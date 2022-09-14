@@ -14,9 +14,9 @@ public:
   Process (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::Long get_process_id (void);
+  virtual CORBA::Long get_process_id ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

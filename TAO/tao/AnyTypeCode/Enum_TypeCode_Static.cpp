@@ -7,6 +7,7 @@
 #include "tao/SystemException.h"
 
 #include "ace/Dynamic_Service.h"
+#include <cstring>
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Enum_TypeCode_Static.inl"
@@ -58,14 +59,14 @@ TAO::TypeCode::Enum<char const *,
 void
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
-                    TAO::Null_RefCount_Policy>::tao_duplicate (void)
+                    TAO::Null_RefCount_Policy>::tao_duplicate ()
 {
 }
 
 void
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
-                    TAO::Null_RefCount_Policy>::tao_release (void)
+                    TAO::Null_RefCount_Policy>::tao_release ()
 {
 }
 
@@ -73,8 +74,7 @@ CORBA::Boolean
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
                     TAO::Null_RefCount_Policy>::equal_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // This call shouldn't throw since CORBA::TypeCode::equal() verified
   // that the TCKind is the same as our's prior to invoking this
@@ -94,7 +94,7 @@ TAO::TypeCode::Enum<char const *,
         Traits<char const *>::get_string (lhs_enumerator);
       char const * const rhs_name = tc->member_name (i);
 
-      if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
+      if (std::strcmp (lhs_name, rhs_name) != 0)
         return false;
     }
 
@@ -105,8 +105,7 @@ CORBA::Boolean
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
                     TAO::Null_RefCount_Policy>::equivalent_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // Perform a structural comparison, excluding the name() and
   // member_name() operations.
@@ -123,8 +122,7 @@ TAO::TypeCode::Enum<char const *,
 CORBA::TypeCode_ptr
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
-                    TAO::Null_RefCount_Policy>::get_compact_typecode_i (
-  void) const
+                    TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
   ACE_Array_Base<CORBA::String_var> tc_enumerators (this->nenumerators_);
 
@@ -154,15 +152,13 @@ TAO::TypeCode::Enum<char const *,
     adapter->create_enum_tc (this->base_attributes_.id (),
                              ""  /* empty name */,
                              tc_enumerators,
-                             this->nenumerators_
-                            );
+                             this->nenumerators_);
 }
 
 char const *
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
-                    TAO::Null_RefCount_Policy>::id_i (
-  void) const
+                    TAO::Null_RefCount_Policy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -172,8 +168,7 @@ TAO::TypeCode::Enum<char const *,
 char const *
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
-                    TAO::Null_RefCount_Policy>::name_i (
-  void) const
+                    TAO::Null_RefCount_Policy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -183,8 +178,7 @@ TAO::TypeCode::Enum<char const *,
 CORBA::ULong
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
-                    TAO::Null_RefCount_Policy>::member_count_i (
-  void) const
+                    TAO::Null_RefCount_Policy>::member_count_i () const
 {
   return this->nenumerators_;
 }
@@ -193,8 +187,7 @@ char const *
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
                     TAO::Null_RefCount_Policy>::member_name_i (
-  CORBA::ULong index
-  ) const
+  CORBA::ULong index) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.

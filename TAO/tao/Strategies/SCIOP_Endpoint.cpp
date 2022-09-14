@@ -13,6 +13,7 @@
 #include "ace/Synch.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/ORB_Core.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Strategies/SCIOP_Endpoint.inl"
@@ -50,7 +51,7 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const char *host,
 {
 }
 
-TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (void)
+TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint ()
   : TAO_Endpoint (TAO_TAG_SCIOP_PROFILE)
   , host_ ()
   , port_ (683)  // default port (IANA assigned)
@@ -75,10 +76,6 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const char *host,
   , next_ (0)
 {
   this->priority (priority);
-}
-
-TAO_SCIOP_Endpoint::~TAO_SCIOP_Endpoint (void)
-{
 }
 
 TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const TAO_SCIOP_Endpoint &rhs)
@@ -131,7 +128,7 @@ TAO_SCIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   size_t actual_len =
     ACE_OS::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
-    + ACE_OS::strlen ("65536")         // max port
+    + std::strlen ("65536")         // max port
     + sizeof ('\0');
 
   if (length < actual_len)
@@ -152,13 +149,13 @@ TAO_SCIOP_Endpoint::host (const char *h)
 }
 
 TAO_Endpoint *
-TAO_SCIOP_Endpoint::next (void)
+TAO_SCIOP_Endpoint::next ()
 {
   return this->next_;
 }
 
 TAO_Endpoint *
-TAO_SCIOP_Endpoint::duplicate (void)
+TAO_SCIOP_Endpoint::duplicate ()
 {
   TAO_SCIOP_Endpoint *endpoint = 0;
 
@@ -186,7 +183,7 @@ TAO_SCIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 CORBA::ULong
-TAO_SCIOP_Endpoint::hash (void)
+TAO_SCIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
     return this->hash_val_;
@@ -217,7 +214,7 @@ TAO_SCIOP_Endpoint::hash (void)
 }
 
 const ACE_INET_Addr &
-TAO_SCIOP_Endpoint::object_addr (void) const
+TAO_SCIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode
   // time for several reasons:
@@ -243,7 +240,7 @@ TAO_SCIOP_Endpoint::object_addr (void) const
 }
 
 void
-TAO_SCIOP_Endpoint::object_addr_i (void) const
+TAO_SCIOP_Endpoint::object_addr_i () const
 {
   if (this->object_addr_.set (this->port_, this->host_.in ()) == -1)
     {
@@ -348,13 +345,13 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
 }
 
 bool
-TAO_SCIOP_Endpoint::is_preferred_network (void) const
+TAO_SCIOP_Endpoint::is_preferred_network () const
 {
   return (this->preferred_path_.host.in () != 0);
 }
 
 const char *
-TAO_SCIOP_Endpoint::preferred_network (void) const
+TAO_SCIOP_Endpoint::preferred_network () const
 {
   return this->preferred_path_.host.in ();
 }

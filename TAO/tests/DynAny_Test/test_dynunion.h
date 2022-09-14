@@ -18,11 +18,11 @@ class Test_DynUnion
 {
 public:
   Test_DynUnion (CORBA::ORB_var orb, int debug);
-  ~Test_DynUnion (void);
+  ~Test_DynUnion ();
 
-  const char* test_name (void) const;
+  const char* test_name () const;
 
-  int run_test (void);
+  int run_test ();
 
 private:
   CORBA::ORB_var orb_;

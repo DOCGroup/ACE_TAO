@@ -16,7 +16,7 @@ be_visitor_root_svs::be_visitor_root_svs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_root_svs::~be_visitor_root_svs (void)
+be_visitor_root_svs::~be_visitor_root_svs ()
 {
 }
 
@@ -45,7 +45,7 @@ be_visitor_root_svs::visit_root (be_root *node)
 }
 
 int
-be_visitor_root_svs::init (void)
+be_visitor_root_svs::init ()
 {
   // First open the ciao servant source file for writing.
   int const status =

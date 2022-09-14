@@ -74,7 +74,6 @@ namespace TAO
     };
 
     typedef OpenSSL_st_var< ::SSL > SSL_var;
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

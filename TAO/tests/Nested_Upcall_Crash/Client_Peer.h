@@ -17,8 +17,8 @@ public:
   void callme(Test::Peer_ptr callback,
               CORBA::ULong max_depth,
               Test::Payload const &);
-  void crash(void);
-  void noop(void);
+  void crash();
+  void noop();
 
 private:
   CORBA::ORB_var orb_;

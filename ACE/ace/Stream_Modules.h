@@ -50,24 +50,24 @@ class ACE_Stream_Head : public ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 {
 public:
   /// Construction
-  ACE_Stream_Head (void);
+  ACE_Stream_Head ();
 
   /// Destruction
-  virtual ~ACE_Stream_Head (void);
+  virtual ~ACE_Stream_Head ();
 
   // = ACE_Task hooks
   virtual int open (void *a = 0);
   virtual int close (u_long flags = 0);
   virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
-  virtual int svc (void);
+  virtual int svc ();
 
   // = Dynamic linking hooks
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **info_string, size_t length) const;
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -88,24 +88,24 @@ class ACE_Stream_Tail : public ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 {
 public:
   /// Construction
-  ACE_Stream_Tail (void);
+  ACE_Stream_Tail ();
 
   /// Destruction
-  virtual ~ACE_Stream_Tail (void);
+  virtual ~ACE_Stream_Tail ();
 
   // = ACE_Task hooks
   virtual int open (void *a = 0);
   virtual int close (u_long flags = 0);
   virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
-  virtual int svc (void);
+  virtual int svc ();
 
   // = Dynamic linking hooks
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **info_string, size_t length) const;
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -127,24 +127,24 @@ class ACE_Thru_Task : public ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 {
 public:
   /// Construction
-  ACE_Thru_Task (void);
+  ACE_Thru_Task ();
 
   /// Destruction
-  virtual ~ACE_Thru_Task (void);
+  virtual ~ACE_Thru_Task ();
 
   // = ACE_Task hooks
   virtual int open (void *a = 0);
   virtual int close (u_long flags = 0);
   virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
-  virtual int svc (void);
+  virtual int svc ();
 
   // = Dynamic linking hooks
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **info_string, size_t length) const;
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

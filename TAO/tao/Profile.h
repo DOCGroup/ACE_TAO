@@ -22,11 +22,7 @@
 #include "tao/GIOP_Message_Version.h"
 #include "tao/Refcounted_ObjectKey.h"
 #include "tao/Service_Callbacks.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
@@ -66,32 +62,32 @@ public:
   */
   //@{
   /// The tag, each concrete class will have a specific tag value.
-  CORBA::ULong tag (void) const;
+  CORBA::ULong tag () const;
 
   /// Return a pointer to this profile's version.  This object
   /// maintains ownership.
-  const TAO_GIOP_Message_Version &version (void) const;
+  const TAO_GIOP_Message_Version &version () const;
 
   /// Get a pointer to the TAO_ORB_Core.
-  TAO_ORB_Core *orb_core (void) const;
+  TAO_ORB_Core *orb_core () const;
 
   /// Increase the reference count by one on this object.
-  unsigned long _incr_refcnt (void);
+  unsigned long _incr_refcnt ();
 
   /// Decrement the object's reference count.  When this count goes to
   /// 0 this object will be deleted.
-  unsigned long _decr_refcnt (void);
+  unsigned long _decr_refcnt ();
 
   /// Keep a pointer to the forwarded profile
   void forward_to (TAO_MProfile *mprofiles);
 
   /// MProfile accessor
-  TAO_MProfile* forward_to (void);
+  TAO_MProfile* forward_to ();
 
   /// Access the tagged components, notice that they they could be
   /// empty (or ignored) for non-GIOP protocols (and even for GIOP-1.0)
-  const TAO_Tagged_Components& tagged_components (void) const;
-  TAO_Tagged_Components& tagged_components (void);
+  const TAO_Tagged_Components& tagged_components () const;
+  TAO_Tagged_Components& tagged_components ();
 
   /// Add the given tagged component to the profile.
   void add_tagged_component (const IOP::TaggedComponent &component);
@@ -100,14 +96,14 @@ public:
    * Return the current addressing mode for this profile.
    * In almost all cases, this is TAO_Target_Specification::Key_Addr.
    */
-  CORBA::Short addressing_mode (void) const;
+  CORBA::Short addressing_mode () const;
 
   /// @deprecated Return a reference to the Object Key.
-  const TAO::ObjectKey &object_key (void) const;
+  const TAO::ObjectKey &object_key () const;
 
   /// Obtain the object key, return 0 if the profile cannot be parsed.
   /// The memory is owned by the caller!
-  TAO::ObjectKey *_key (void) const;
+  TAO::ObjectKey *_key () const;
   //@}
 
   /**
@@ -130,7 +126,7 @@ public:
    * return the reference to that. This method is necessary for GIOP
    * 1.2.
    */
-  IOP::TaggedProfile *create_tagged_profile (void);
+  IOP::TaggedProfile *create_tagged_profile ();
 
   /// This method sets the client exposed policies, i.e., the ones
   /// propagated in the IOR, for this profile.
@@ -140,10 +136,10 @@ public:
   virtual void  get_policies (CORBA::PolicyList &policy_list);
 
   /// Returns true if this profile can specify multicast endpoints.
-  virtual int supports_multicast (void) const;
+  virtual int supports_multicast () const;
 
   /// Returns true if this profile supports non blocking oneways
-  virtual bool supports_non_blocking_oneways (void) const;
+  virtual bool supports_non_blocking_oneways () const;
 
   /**
    * Set the addressing mode if a remote servant replies with
@@ -175,7 +171,7 @@ public:
   virtual void addressing_mode (CORBA::Short addr_mode);
 
   /// The object key delimiter.
-  virtual char object_key_delimiter (void) const = 0;
+  virtual char object_key_delimiter () const = 0;
 
   /// Initialize this object using the given input string.
   /// Supports URL style of object references
@@ -184,14 +180,14 @@ public:
   /// Return a string representation for this profile.  Client must
   /// deallocate memory. Only one endpoint is included into the
   /// string.
-  virtual char* to_string (void) const = 0;
+  virtual char* to_string () const = 0;
 
   /**
    * Encodes this profile's endpoints into a tagged component.
    * This is done only if RTCORBA is enabled, since currently this is
    * the only case when we have more than one endpoint per profile.
    */
-  virtual int encode_endpoints (void) = 0;
+  virtual int encode_endpoints () = 0;
 
   /**
    * Encodes this profile's endpoints into protocol specific tagged
@@ -199,14 +195,14 @@ public:
    * endpoints on profiles. The only known implementation is IIOP, using
    * TAG_ALTERNATE_IIOP_ADDRESS components.
    */
-  virtual int encode_alternate_endpoints (void);
+  virtual int encode_alternate_endpoints ();
 
   /**
    * Return a pointer to this profile's endpoint.  If the profile
    * contains more than one endpoint, i.e., a list, the method returns
    * the head of the list.
    */
-  virtual TAO_Endpoint *endpoint (void) = 0;
+  virtual TAO_Endpoint *endpoint () = 0;
 
 
   /**
@@ -219,17 +215,17 @@ public:
    * to facilitate the Endpoint Policy's filtering function.
    * The default implementation of base_endpoint simply returns endpoint.
    */
-  virtual TAO_Endpoint *base_endpoint (void);
+  virtual TAO_Endpoint *base_endpoint ();
 
   /// Return how many endpoints this profile contains.
-  virtual CORBA::ULong endpoint_count (void) const = 0;
+  virtual CORBA::ULong endpoint_count () const = 0;
 
   /**
    * Return the first endpoint in the list that matches some filtering
    * constraint, such as IPv6 compatibility for IIOP endpoints. This
    * method is implemented in terms of TAO_Endpoint::next_filtered().
    */
-  TAO_Endpoint *first_filtered_endpoint (void);
+  TAO_Endpoint *first_filtered_endpoint ();
 
   /// Return the next filtered endpoint in the list after the one
   /// passed in. This method is implemented in terms of
@@ -273,11 +269,9 @@ public:
   virtual CORBA::ULong hash (CORBA::ULong max) = 0;
   //@}
 
-  //@@ TAO_PROFILE_SPL_PUBLIC_METHODS_ADD_HOOK
-
 protected:
   /// If you have a virtual method you need a virtual dtor.
-  virtual ~TAO_Profile (void);
+  virtual ~TAO_Profile ();
 
   /**
    * @name Protected template methods.
@@ -296,7 +290,7 @@ protected:
    * version of TAO or some other ORB.  This is not an error, and we
    * must proceed.  Return 0 on success and -1 on failure.
    */
-  virtual int decode_endpoints (void) = 0;
+  virtual int decode_endpoints () = 0;
 
   /// Protocol specific implementation of parse_string ()
   virtual void parse_string_i (const char *string) = 0;
@@ -331,26 +325,22 @@ protected:
   CORBA::ULong hash_service_i (CORBA::ULong m);
 
 private:
-
   /// This object keeps ownership of this object
-  TAO_MProfile *forward_to_i (void);
+  TAO_MProfile *forward_to_i ();
 
   /// Verify that the current ORB's configuration supports tagged
   /// components in IORs.
-  void verify_orb_configuration (void);
+  void verify_orb_configuration ();
 
   /// Verify that the given profile supports tagged components,
   /// i.e. is not a GIOP 1.0 profile.
-  void verify_profile_version (void);
+  void verify_profile_version ();
 
   // Profiles should not be copied or assigned!
   TAO_Profile (const TAO_Profile&);
   void operator= (const TAO_Profile&);
 
-  //@@ TAO_PROFILE_SPL_PROTECTED_METHODS_ADD_HOOK
-
 protected:
-
   /// IIOP version number.
   TAO_GIOP_Message_Version version_;
 
@@ -384,11 +374,7 @@ private:
   TAO_MProfile* forward_to_;
 
   /// Number of outstanding references to this object.
-#if defined (ACE_HAS_CPP11)
-    std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
+  std::atomic<uint32_t> refcount_;
 
   /// A lock that protects creation of the tagged profile
   TAO_SYNCH_MUTEX tagged_profile_lock_;
@@ -396,15 +382,10 @@ private:
   /// Having (tagged_profile_ != 0) doesn't mean yet that
   /// tagged_profile_ building is finished.
   bool tagged_profile_created_;
-
-  //@@ TAO_PROFILE_SPL_PRIVATE_DATA_ADD_HOOK
 };
-
-//@@ TAO_PROFILE_SPL_EXTERN_ADD_HOOK
 
 // A helper class to handle the various kinds of octet sequences used
 // inside the ORB.
-
 typedef TAO::unbounded_value_sequence<CORBA::Octet> TAO_opaque;
 
 TAO_Export CORBA::Boolean
@@ -435,19 +416,19 @@ public:
 
   // = The TAO_Profile methods look above
   virtual void parse_string (const char *string);
-  virtual char object_key_delimiter (void) const;
-  virtual char* to_string (void) const;
+  virtual char object_key_delimiter () const;
+  virtual char* to_string () const;
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
-  virtual int encode_endpoints (void);
+  virtual int encode_endpoints ();
 
-  virtual TAO::ObjectKey *_key (void) const;
-  virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void) const;
+  virtual TAO::ObjectKey *_key () const;
+  virtual TAO_Endpoint *endpoint ();
+  virtual CORBA::ULong endpoint_count () const;
   virtual CORBA::ULong hash (CORBA::ULong max);
 
   virtual int decode_profile (TAO_InputCDR &cdr);
-  virtual int decode_endpoints (void);
+  virtual int decode_endpoints ();
 
 protected:
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile* other_profile);
@@ -461,8 +442,6 @@ private:
 private:
   TAO_opaque body_;
 };
-
-//@@ TAO_PROFILE_SPL_EXTERN_HOOK
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

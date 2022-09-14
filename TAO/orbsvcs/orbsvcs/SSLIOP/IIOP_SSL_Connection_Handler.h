@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class IIOP_SSL_Connection_Handler
    *
@@ -47,14 +46,12 @@ namespace TAO
   class IIOP_SSL_Connection_Handler : public TAO_IIOP_Connection_Handler
   {
   public:
-
     /// Constructor.
     IIOP_SSL_Connection_Handler (ACE_Thread_Manager* t = 0);
     IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core);
 
     /// Destructor.
-    ~IIOP_SSL_Connection_Handler (void);
-
+    ~IIOP_SSL_Connection_Handler ();
   };
 
   // ****************************************************************
@@ -78,16 +75,14 @@ namespace TAO
   class Null_SSL_State_Guard
   {
   public:
-
     /// Constructor that sets up the null TSS SSL state.
     Null_SSL_State_Guard (TAO::SSLIOP::Current_ptr current,
                           int &result);
 
     /// Destructor that restores the previous TSS SSL state.
-    ~Null_SSL_State_Guard (void);
+    ~Null_SSL_State_Guard ();
 
   private:
-
     /// The SSLIOP::Current implementation that was previously
     /// associated with the current thread and invocation.
     /**
@@ -102,9 +97,7 @@ namespace TAO
     /// Flag that specifies whether or not setup of the SSLIOP::Current
     /// object completed for the current thread and invocation.
     bool setup_done_;
-
   };
-
 } // End TAO namespace.
 
 TAO_END_VERSIONED_NAMESPACE_DECL

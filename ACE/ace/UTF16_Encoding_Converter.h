@@ -32,7 +32,7 @@ public:
   ACE_UTF16_Encoding_Converter (bool swap = false);
 
   /// This is a do nothing destructor.
-  virtual ~ACE_UTF16_Encoding_Converter (void);
+  virtual ~ACE_UTF16_Encoding_Converter ();
 
   /// Convert the source from UTF-16 to UTF-8 and store it in the
   /// provided target buffer.
@@ -61,12 +61,12 @@ protected:
   bool is_legal_utf8 (const ACE_Byte* source,
                       size_t length) const;
 
-  static ACE_UINT32 get_UNI_SUR_HIGH_START (void);
-  static ACE_UINT32 get_UNI_SUR_LOW_END (void);
-  static ACE_UINT32 get_UNI_REPLACEMENT_CHAR (void);
-  static const ACE_Byte* get_first_byte_mark (void);
-  static const ACE_Byte* get_trailing_bytes_for_utf8 (void);
-  static const ACE_UINT32* get_offsets_from_utf8 (void);
+  static ACE_UINT32 get_UNI_SUR_HIGH_START ();
+  static ACE_UINT32 get_UNI_SUR_LOW_END ();
+  static ACE_UINT32 get_UNI_REPLACEMENT_CHAR ();
+  static const ACE_Byte* get_first_byte_mark ();
+  static const ACE_Byte* get_trailing_bytes_for_utf8 ();
+  static const ACE_UINT32* get_offsets_from_utf8 ();
 
   bool swap_;
 };

@@ -21,12 +21,12 @@ RPS_Monitor::RPS_Monitor (ServerRequestInterceptor * interceptor)
   this->location_[0].kind = CORBA::string_dup ("UUID");
 }
 
-RPS_Monitor::~RPS_Monitor (void)
+RPS_Monitor::~RPS_Monitor ()
 {
 }
 
 CosLoadBalancing::Location *
-RPS_Monitor::the_location (void)
+RPS_Monitor::the_location ()
 {
   CosLoadBalancing::Location * location;
   ACE_NEW_THROW_EX (location,
@@ -41,7 +41,7 @@ RPS_Monitor::the_location (void)
 }
 
 CosLoadBalancing::LoadList *
-RPS_Monitor::loads (void)
+RPS_Monitor::loads ()
 {
   const ACE_Time_Value current_time = ACE_OS::gettimeofday ();
 

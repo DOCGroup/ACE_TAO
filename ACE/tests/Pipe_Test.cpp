@@ -30,7 +30,7 @@ static int iterations = ACE_MAX_ITERATIONS;
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-d (don't close pipes)] ")

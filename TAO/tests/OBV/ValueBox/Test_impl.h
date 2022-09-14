@@ -8,7 +8,6 @@
 //=============================================================================
 
 
-
 #ifndef TAO_TEST_IMPL_H
 #define TAO_TEST_IMPL_H
 
@@ -103,7 +102,7 @@ public:
                           ::Variable_Union1_out p3);
 
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// The ORB

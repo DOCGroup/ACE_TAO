@@ -17,18 +17,18 @@ unsigned long Echo_Client_Request_Interceptor::other_count = 0;
 unsigned long Echo_Client_Request_Interceptor::exception_count = 0;
 
 Echo_Client_Request_Interceptor::
-Echo_Client_Request_Interceptor (void)
+Echo_Client_Request_Interceptor ()
 {
 }
 
 char *
-Echo_Client_Request_Interceptor::name (void)
+Echo_Client_Request_Interceptor::name ()
 {
   return CORBA::string_dup ("Echo_Client_Interceptor");
 }
 
 void
-Echo_Client_Request_Interceptor::destroy (void)
+Echo_Client_Request_Interceptor::destroy ()
 {
 }
 

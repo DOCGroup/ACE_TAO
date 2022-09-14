@@ -13,13 +13,12 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
                                     const ACE_TCHAR *net_if,
                                     CORBA::ULong sz)
-  : net_if_ (net_if ? ACE_OS::strdup (net_if) : 0)
+  : net_if_ (net_if ? ACE_OS::strdup (net_if) : nullptr)
   , subscriptions_ ()
   , receiver_ (recv)
   , recvbuf_size_ (sz)
@@ -29,7 +28,7 @@ TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
   ACE_ASSERT (this->receiver_);
 }
 
-TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH (void)
+TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH ()
 {
   ACE_OS::free (this->net_if_);
 }
@@ -78,7 +77,7 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec)
 }
 
 int
-TAO_ECG_Mcast_EH::shutdown (void)
+TAO_ECG_Mcast_EH::shutdown ()
 {
   // Already shut down.
   if (!this->receiver_)
@@ -91,11 +90,11 @@ TAO_ECG_Mcast_EH::shutdown (void)
   if (this->observer_.in ())
     {
       this->observer_->shutdown ();
-      this->observer_ = 0;
+      this->observer_ = nullptr;
     }
 
   // Indicates that we are in a shutdown state.
-  this->receiver_ = 0;
+  this->receiver_ = nullptr;
 
   // Deregister from reactor, close and clean up sockets.
   size_t const subscriptions_size = this->subscriptions_.size ();
@@ -303,9 +302,9 @@ TAO_ECG_Mcast_EH::Observer::update_supplier (
 }
 
 void
-TAO_ECG_Mcast_EH::Observer::shutdown (void)
+TAO_ECG_Mcast_EH::Observer::shutdown ()
 {
-  this->eh_ = 0;
+  this->eh_ = nullptr;
   this->deactivator_.deactivate ();
 }
 

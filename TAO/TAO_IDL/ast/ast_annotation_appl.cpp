@@ -2,8 +2,8 @@
 #include "ast_annotation_member.h"
 
 AST_Annotation_Appl::Param::Param ()
-  : id (0),
-    expr (0),
+  : id (nullptr),
+    expr (nullptr),
     used (false)
 {
 }
@@ -30,7 +30,7 @@ AST_Annotation_Appl::delete_params (AST_Annotation_Appl::Params* params)
       Params::ITERATOR iter (*params);
       while (!iter.done ())
         {
-          Param **i = 0;
+          Param **i = nullptr;
           iter.next (i);
           delete *i;
           iter.advance ();
@@ -51,7 +51,7 @@ AST_Annotation_Appl::AST_Annotation_Appl (
     AST_Annotation_Decl (name),
     original_name_ (name->get_string_copy ()),
     params_ (params),
-    annotation_decl_ (0)
+    annotation_decl_ (nullptr)
 {
 }
 
@@ -71,7 +71,7 @@ void AST_Annotation_Appl::dump (ACE_OSTREAM_TYPE &o)
       Params::ITERATOR iter (*params_);
       while (!iter.done ())
         {
-          Param **i = 0;
+          Param **i = nullptr;
           iter.next (i);
           if ((*i)->id)
             {
@@ -103,9 +103,6 @@ const char *AST_Annotation_Appl::original_name () const
   return original_name_;
 }
 
-IMPL_NARROW_FROM_DECL (AST_Annotation_Appl)
-IMPL_NARROW_FROM_SCOPE (AST_Annotation_Appl)
-
 bool
 AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
 {
@@ -117,7 +114,7 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
     si.next ())
     {
       AST_Annotation_Member *member =
-        AST_Annotation_Member::narrow_from_decl (si.item ());
+        dynamic_cast<AST_Annotation_Member*> (si.item ());
       if (member)
         {
           AST_Annotation_Member *new_member = fe_add_annotation_member (
@@ -154,7 +151,7 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
       for (Param::Iterator it (*params_);
           !it.done (); it.advance ())
         {
-          Param **param = 0;
+          Param **param = nullptr;
           it.next (param);
           if ((*param) && !(*param)->used)
             {
@@ -190,18 +187,18 @@ AST_Annotation_Appl::find_param (const char *name)
       // Check for single nameless parameter
       if (params_->size () == 1)
         {
-          Param *top = 0;
+          Param *top = nullptr;
           params_->top (top);
           if (top && !top->id && top->expr)
             {
               // Don't reuse it if used
-              return top->used ? 0 : top;
+              return top->used ? nullptr : top;
             }
         }
       for (Param::Iterator it (*params_);
           !it.done (); it.advance ())
         {
-          Param **param = 0;
+          Param **param = nullptr;
           it.next (param);
           if ((*param) && (*param)->id && !ACE_OS::strcmp ((*param)->id->get_string (), name))
             {
@@ -210,5 +207,5 @@ AST_Annotation_Appl::find_param (const char *name)
         }
     }
 
-  return 0;
+  return nullptr;
 }

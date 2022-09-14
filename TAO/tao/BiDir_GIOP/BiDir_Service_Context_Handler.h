@@ -27,15 +27,15 @@ class TAO_BiDIR_Service_Context_Handler :
   public TAO_Service_Context_Handler
 {
 public:
-  virtual int process_service_context (TAO_Transport& transport,
-                                       const IOP::ServiceContext& context,
-                                       TAO_ServerRequest *request);
-  virtual int generate_service_context (
+  int process_service_context (TAO_Transport& transport,
+                               const IOP::ServiceContext& context,
+                               TAO_ServerRequest *request) override;
+  int generate_service_context (
     TAO_Stub* stub,
     TAO_Transport &transport,
     TAO_Operation_Details &opdetails,
     TAO_Target_Specification &spec,
-    TAO_OutputCDR &msg);
+    TAO_OutputCDR &msg) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

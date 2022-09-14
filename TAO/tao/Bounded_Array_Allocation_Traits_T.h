@@ -17,7 +17,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename T, CORBA::ULong MAX, bool dummy>
 struct bounded_array_allocation_traits
 {
@@ -48,7 +47,6 @@ struct bounded_array_allocation_traits
     delete[] buffer;
   }
 };
-
 } // namespace details
 } // namespace TAO
 

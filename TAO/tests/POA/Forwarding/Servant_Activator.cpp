@@ -12,7 +12,7 @@ PortableServer::Servant
 ServantActivator::incarnate (const PortableServer::ObjectId &,
                              PortableServer::POA_ptr)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 
   // Throw forward exception
   throw PortableServer::ForwardRequest (this->forward_to_.in ());
@@ -29,7 +29,7 @@ ServantActivator::etherealize (const PortableServer::ObjectId &,
 }
 
 void
-ServantActivator::forward_requests (void)
+ServantActivator::forward_requests ()
 {
   if (CORBA::is_nil (this->forward_to_.in ()))
     throw test::Cannot_Forward ();

@@ -1,5 +1,4 @@
 // ACE_HTBP_Filter.cpp
-#include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "HTBP_Session.h"
@@ -8,6 +7,8 @@
 #if !defined (__ACE_INLINE__)
 #include "HTBP_Inside_Squid_Filter.inl"
 #endif
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -89,7 +90,7 @@ ACE::HTBP::Inside_Squid_Filter::send_data_header (ssize_t data_len,
                                                 ACE::HTBP::Channel *ch)
 {
   char *buffer = new char[BUFSIZ];
-  ACE_Auto_Array_Ptr<char> guard (buffer);
+  std::unique_ptr<char[]> guard (buffer);
   ssize_t result = -1;
   if (this->make_request_header (ch,"POST ",buffer,BUFSIZ) != -1)
     {
@@ -174,7 +175,7 @@ int
 ACE::HTBP::Inside_Squid_Filter::send_ack (ACE::HTBP::Channel *ch)
 {
   char *buffer = new char[BUFSIZ];
-  ACE_Auto_Array_Ptr<char> guard (buffer);
+  std::unique_ptr<char[]> guard (buffer);
   ssize_t result = -1;
   if (ch->state() == ACE::HTBP::Channel::Ack_Sent)
     {
@@ -198,7 +199,6 @@ ACE::HTBP::Inside_Squid_Filter::send_ack (ACE::HTBP::Channel *ch)
 int
 ACE::HTBP::Inside_Squid_Filter::recv_ack (ACE::HTBP::Channel *ch)
 {
-
   char *header_end = this->header_complete(ch);
   if (header_end == 0)
     {

@@ -41,7 +41,7 @@ Stock_Consumer::push (const CORBA::Any& data)
 }
 
 void
-Stock_Consumer::disconnect_push_consumer (void)
+Stock_Consumer::disconnect_push_consumer ()
 {
   this->supplier_proxy_ = CosEventChannelAdmin::ProxyPushSupplier::_nil ();
 }

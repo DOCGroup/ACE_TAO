@@ -30,10 +30,10 @@ namespace Stock
   {
   public:
     /// Default constructor.
-    Priority_Mapping (void);
+    Priority_Mapping ();
 
     /// Default destructor.
-    virtual ~Priority_Mapping (void);
+    virtual ~Priority_Mapping ();
 
     /// Stock priorities.
     enum Priority
@@ -48,7 +48,6 @@ namespace Stock
     /// Register mapping.
     static void register_mapping (CORBA::ORB_ptr orb);
   };
-
 }
 
 #endif  // !defined STOCK_PRIORITYMAPPING_

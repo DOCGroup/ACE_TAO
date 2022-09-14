@@ -51,13 +51,13 @@ namespace TAO
 
     virtual void interceptor_value (CORBA::Any *any) const;
 
-    int byte_order (void) const;
+    int byte_order () const;
 
   private:
     CORBA::NamedValue_ptr x_;
 
     /// Byte order that the Request class will use
-    int byte_order_;
+    int byte_order_ {};
   };
 
   /**

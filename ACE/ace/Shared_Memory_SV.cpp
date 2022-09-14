@@ -13,7 +13,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Shared_Memory_SV)
 
 void
-ACE_Shared_Memory_SV::dump (void) const
+ACE_Shared_Memory_SV::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Shared_Memory_SV::dump");
@@ -31,10 +31,9 @@ ACE_Shared_Memory_SV::ACE_Shared_Memory_SV (key_t id,
   ACE_TRACE ("ACE_Shared_Memory_SV::ACE_Shared_Memory_SV");
 }
 
-// The overall size of the segment.
-
+/// The overall size of the segment.
 size_t
-ACE_Shared_Memory_SV::get_segment_size (void) const
+ACE_Shared_Memory_SV::get_segment_size () const
 {
   ACE_TRACE ("ACE_Shared_Memory_SV::get_segment_size");
   // This cast is ok since the 'open' method for this class allows only
@@ -42,19 +41,17 @@ ACE_Shared_Memory_SV::get_segment_size (void) const
   return this->shared_memory_.get_segment_size ();
 }
 
-// Removes the shared memory segment.
-
+/// Removes the shared memory segment.
 int
-ACE_Shared_Memory_SV::remove (void)
+ACE_Shared_Memory_SV::remove ()
 {
   ACE_TRACE ("ACE_Shared_Memory_SV::remove");
   return shared_memory_.remove ();
 }
 
-// Closes (detaches) the shared memory segment.
-
+/// Closes (detaches) the shared memory segment.
 int
-ACE_Shared_Memory_SV::close (void)
+ACE_Shared_Memory_SV::close ()
 {
   ACE_TRACE ("ACE_Shared_Memory_SV::close");
   return shared_memory_.detach ();
@@ -68,7 +65,7 @@ ACE_Shared_Memory_SV::malloc (size_t)
 }
 
 ACE_HANDLE
-ACE_Shared_Memory_SV::get_id (void) const
+ACE_Shared_Memory_SV::get_id () const
 {
   ACE_TRACE ("ACE_Shared_Memory_SV::get_id");
   return this->shared_memory_.get_id ();

@@ -20,7 +20,7 @@ ifr_adding_visitor_exception::ifr_adding_visitor_exception (
 {
 }
 
-ifr_adding_visitor_exception::~ifr_adding_visitor_exception (void)
+ifr_adding_visitor_exception::~ifr_adding_visitor_exception ()
 {
 }
 
@@ -35,9 +35,9 @@ ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
       return ifr_adding_visitor::visit_scope (node);
     }
 
-  AST_Exception *e = AST_Exception::narrow_from_scope (node);
+  AST_Exception *e = dynamic_cast<AST_Exception*> (node);
 
-  CORBA::ULong nfields = static_cast<CORBA::ULong> (e->nfields ());
+  CORBA::ULong const nfields = static_cast<CORBA::ULong> (e->nfields ());
 
   this->members_.length (nfields);
 
@@ -418,7 +418,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
 }
 
 CORBA::IDLType_ptr
-ifr_adding_visitor_exception::ir_current (void) const
+ifr_adding_visitor_exception::ir_current () const
 {
   return this->ir_current_.in ();
 }

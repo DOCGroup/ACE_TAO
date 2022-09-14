@@ -15,11 +15,6 @@ ACE_STATIC_SVC_DEFINE (TAO_UTF8_Latin1_Factory,
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF8_Latin1_Factory)
 
 
-TAO_UTF8_Latin1_Factory::TAO_UTF8_Latin1_Factory()
-  : translator_ (0)
-{
-}
-
 TAO_UTF8_Latin1_Factory::~TAO_UTF8_Latin1_Factory ()
 {
   delete this->translator_;

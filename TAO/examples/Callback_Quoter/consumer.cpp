@@ -1,7 +1,6 @@
 #include "Consumer_Handler.h"
 
 // This function runs the Callback Quoter Consumer application.
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

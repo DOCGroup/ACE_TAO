@@ -386,10 +386,10 @@ If you don't see the line for multicast routing:
 224.0.0.0       *               240.0.0.0       U     0      0        0 eth0
 
 You will need to add in the next step. If you do see that line and the
-problem is still there then contact the tao-users list by using
-email. Please remember to use the problem form. It helps developers to
-have a more educated guess at the exact problem you are having.
-
+problem is still there then contact the tao developers on github at
+https://github.com/DOCGroup/ACE_TAO. Please remember to use the
+problem form. It helps developers to have a more educated guess at the
+exact problem you are having.
 
 ---------------------------------------
 (Step 3)

@@ -21,7 +21,7 @@ HTTP_Request::request_line (void)
 }
 
 ACE_INLINE const Parse_HTTP_Request *
-HTTP_Request::request_line (void) const
+HTTP_Request::request_line () const
 {
   return &(this->request_);
 }

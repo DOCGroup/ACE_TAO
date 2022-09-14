@@ -24,13 +24,12 @@
  */
 class be_visitor_typedef : public be_visitor_decl
 {
-
 public:
   /// constructor
   be_visitor_typedef (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_typedef (void);
+  ~be_visitor_typedef ();
 
   /// must be overridden
   virtual int visit_typedef (be_typedef *node);

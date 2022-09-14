@@ -6,7 +6,7 @@ class NodeFactory : public CORBA::ValueFactoryBase
 {
  public:
   static void register_new_factory(CORBA::ORB& orb);
-  virtual CORBA::ValueBase* create_for_unmarshal(void);
+  virtual CORBA::ValueBase* create_for_unmarshal();
 };
 
 
@@ -14,7 +14,7 @@ class BoxedValueFactory : public CORBA::ValueFactoryBase
 {
  public:
   static void register_new_factory(CORBA::ORB& orb);
-  virtual CORBA::ValueBase* create_for_unmarshal(void);
+  virtual CORBA::ValueBase* create_for_unmarshal();
 };
 
 
@@ -22,7 +22,7 @@ class BaseValueFactory : public CORBA::ValueFactoryBase
 {
  public:
   static void register_new_factory(CORBA::ORB& orb);
-  virtual CORBA::ValueBase* create_for_unmarshal(void);
+  virtual CORBA::ValueBase* create_for_unmarshal();
 };
 
 
@@ -30,14 +30,14 @@ class TValueFactory : public CORBA::ValueFactoryBase
 {
  public:
   static void register_new_factory(CORBA::ORB& orb);
-  virtual CORBA::ValueBase* create_for_unmarshal(void);
+  virtual CORBA::ValueBase* create_for_unmarshal();
 };
 
 class ConfigValueFactory : public CORBA::ValueFactoryBase
 {
  public:
   static void register_new_factory(CORBA::ORB& orb);
-  virtual CORBA::ValueBase* create_for_unmarshal(void);
+  virtual CORBA::ValueBase* create_for_unmarshal();
 };
 
 class ConfigValueImpl : public ::OBV_demo::value::idl::ConfigValue

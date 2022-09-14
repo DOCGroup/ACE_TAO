@@ -1,0 +1,179 @@
+commit b4822ca137fe6622bbe7d2e3a48737a7d4bec21a
+Merge: 6f45d133c86 01865991423
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Jun 28 08:47:31 2022 -0600
+
+    Merge pull request #1868 from mitza-oci/seq-codegen-any
+    
+    Updated sequence Any operators code generation
+
+commit 01865991423cf451a7a689198f54e2715e01f241
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 27 14:42:19 2022 -0500
+
+    Updated .gitignore
+
+commit ccaccc38fc368183e8ac3caff85c85643b95c30b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 27 14:40:32 2022 -0500
+
+    updated namespaces based on review comment
+
+commit 00322cece3e96c695fc20a3fe38be2cbec9682cf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 27 21:32:36 2022 +0200
+
+    Use default/nullptr
+        * TAO/tao/AnyTypeCode/Any.cpp:
+        * TAO/tao/AnyTypeCode/Any.h:
+
+commit 9cb860c2773e35781196fb3fc42d7dbbaeb1a09d
+Merge: 7089ca0a2ca dbc6154a1b9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 27 21:28:27 2022 +0200
+
+    Merge branch 'master' into jwi-addressofany
+
+commit 7089ca0a2cacc8f0c00eca0f4228bcbff35cb12c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 27 21:28:14 2022 +0200
+
+    Make use of addressof/const
+    
+        * TAO/tao/AnyTypeCode/Any.cpp:
+
+commit 13c6769e5ec7caaea332e7f4d5af14f350c41255
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 27 13:23:05 2022 -0500
+
+    fixed whitespace for CodeFactor check
+
+commit 1dcb876984270da8634b6ef95da1a3be2660a5ad
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 27 11:54:17 2022 -0500
+
+    Updated sequence Any operators code generation
+    
+    - Fixed the alternate mapping (std::vector)
+    - Use leading :: to avoid naming collision with CORBA namespace
+
+commit da57b9d4b194ccad355e2a7b0b252d32bfdfd2bc
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 27 09:54:47 2022 -0500
+
+    Updated NEWS
+
+commit 6c1476eef08213a05f0b2b9b4746d4ff7beda437
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 24 15:55:21 2022 -0500
+
+    Removed ACE_ANY_OPS_USE_NAMESPACE as a compile-time option
+
+commit 9fd4f2bd77dd3d54995068f20e711fb3737ef711
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 24 13:45:32 2022 -0500
+
+    Updated NEWS
+
+commit ae3ff95027b1845e284c9869737d94c54e3ed38c
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 23 21:30:05 2022 -0500
+
+    struct anyops: use fully-qualified scope
+
+commit 2c2be5bf757c0d167a38045fdeb598af8d750ac6
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 23 18:53:17 2022 -0500
+
+    moved operator<<= and >>= for CORBA::Any into namespace CORBA
+
+commit 8ab5b907ce4f15c1daf3ce69cb1e07fe43868a4c
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 16 17:01:17 2022 -0500
+
+    fixed whitespace
+
+commit 8a7e22701d1150bbaef3dd3b213693744b18d7c2
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 16 16:57:00 2022 -0500
+
+    Corrected versioned_namespace usage in mpc file
+
+commit ff4b2b64fd8889033117dea0ea75a0d7d00e57a1
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 16 15:54:44 2022 -0500
+
+    TAO_IDL -Wb,versioning options do not depend on ACE_HAS_VERSIONED_NAMESPACE
+
+commit 5fe812b68381b582a63a8a8b761b85776e087c45
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 16 15:17:03 2022 -0500
+
+    TAO_IDL: improve versioned namespace and valuetype support
+    
+    - made versioned namespaces more general
+    - valuetype's traits need to be in TAO's namespace
+    - allow valuetypes with -Scdr
+
+commit cd015ed2ea0f03e51732c7d0213476da4023aeab
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Jun 15 17:10:44 2022 -0500
+
+    Test tao_idl-generated code with versioned namespaces
+    
+    TAO::Value_Traits is generated in the wrong namespace
+
+commit 21cb902c2e5c8296d36e0eb8d6c251b85a046dcb
+Merge: ee4008d6869 e1f7c3ba17c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 14 09:26:11 2022 +0200
+
+    Merge pull request #1854 from jwillemsen/jwi-redundantvoid2
+    
+    Removed redundant void
+
+commit e1f7c3ba17c4f57cc3c624285f7009f4d5145cca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 14 08:40:39 2022 +0200
+
+    Removed redundant void
+    
+        * ACE/ace/NT_Service.h:
+        * TAO/tests/MT_Server/test_i.h:
+
+commit 57cb0af875c71d8b24552c179d94fe83bd20007d
+Merge: 3703b49316d 44292a1fbae
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 7 12:40:16 2022 +0200
+
+    Merge pull request #1850 from jwillemsen/jwi-messagingglobalscope
+    
+    Use global scope for Messaging to fix problems when using an own Mess…
+
+commit 44292a1fbae067464ab2866b4c97d90701e0f324
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 7 09:39:44 2022 +0200
+
+    Use global scope for Messaging to fix problems when using an own Messaging namespace in a different scope
+    
+        * TAO/tao/PI_Server/ServerRequestInfo.h:
+
+commit ef76fa29be7a5dda6319f27eb0eb39a5018f88d2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 3 10:45:39 2022 +0200
+
+    Use override to fix Embarcadero C++ Builder 11.1 warnings
+    
+        * TAO/orbsvcs/tests/Security/Big_Request/TX_Object_i.h:
+
+commit 5abccb83ac1da6be99e28832fde74b835b45ebbc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat May 21 08:42:13 2022 +0200
+
+    Updated for x.0.7 release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

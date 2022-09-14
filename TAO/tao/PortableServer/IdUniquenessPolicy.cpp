@@ -19,7 +19,7 @@ namespace TAO
     }
 
     CORBA::Policy_ptr
-    IdUniquenessPolicy::copy (void)
+    IdUniquenessPolicy::copy ()
     {
       IdUniquenessPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
@@ -30,30 +30,30 @@ namespace TAO
     }
 
     void
-    IdUniquenessPolicy::destroy (void)
+    IdUniquenessPolicy::destroy ()
     {
     }
 
     ::PortableServer::IdUniquenessPolicyValue
-    IdUniquenessPolicy::value (void)
+    IdUniquenessPolicy::value ()
     {
       return value_;
     }
 
     CORBA::PolicyType
-    IdUniquenessPolicy::policy_type (void)
+    IdUniquenessPolicy::policy_type ()
     {
       return ::PortableServer::ID_UNIQUENESS_POLICY_ID;
     }
 
     TAO_Cached_Policy_Type
-    IdUniquenessPolicy::_tao_cached_type (void) const
+    IdUniquenessPolicy::_tao_cached_type () const
     {
       return TAO_CACHED_POLICY_ID_UNIQUENESS;
     }
 
     TAO_Policy_Scope
-    IdUniquenessPolicy::_tao_scope (void) const
+    IdUniquenessPolicy::_tao_scope () const
     {
       return TAO_POLICY_POA_SCOPE;
     }

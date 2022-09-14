@@ -26,14 +26,14 @@ TAO::TypeCode::Base_Attributes<STRING_TYPE>::Base_Attributes (
 
 template <typename STRING_TYPE>
 ACE_INLINE char const *
-TAO::TypeCode::Base_Attributes<STRING_TYPE>::id (void) const
+TAO::TypeCode::Base_Attributes<STRING_TYPE>::id () const
 {
   return Traits<STRING_TYPE>::get_string (this->id_);
 }
 
 template <typename STRING_TYPE>
 ACE_INLINE char const *
-TAO::TypeCode::Base_Attributes<STRING_TYPE>::name (void) const
+TAO::TypeCode::Base_Attributes<STRING_TYPE>::name () const
 {
   return Traits<STRING_TYPE>::get_string (this->name_);
 }
@@ -44,7 +44,6 @@ TAO::TypeCode::Base_Attributes<STRING_TYPE>::name (char const * the_name)
 {
   // This method will only be instantiated in the dynamic TypeCode
   // case, i.e. when STRING_TYPE is CORBA::String_var.
-
   this->name_ = the_name;
 }
 

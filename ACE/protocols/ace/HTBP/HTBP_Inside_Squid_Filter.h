@@ -25,7 +25,6 @@ namespace ACE
 {
   namespace HTBP
   {
-
     /**
      * @class Inside_Squid_Filter
      *
@@ -45,7 +44,7 @@ namespace ACE
     {
     public:
       /// Destructor.
-      virtual ~Inside_Squid_Filter (void);
+      virtual ~Inside_Squid_Filter ();
 
       /// Inside and outside Send filters need to supply a data header
       /// that sets the stage before sending the data body, and then
@@ -74,7 +73,6 @@ namespace ACE
       virtual ssize_t recv_data_trailer(Channel *);
     private:
       int make_request_header (Channel *, const char *, char *, size_t );
-
     };
   }
 }

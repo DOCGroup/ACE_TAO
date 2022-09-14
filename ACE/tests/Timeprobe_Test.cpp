@@ -23,7 +23,6 @@
 #include "ace/Timeprobe.h"
 
 
-
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *events_descriptions_0[] =

@@ -19,7 +19,7 @@ namespace TAO
     }
 
     CORBA::Policy_ptr
-    LifespanPolicy::copy (void)
+    LifespanPolicy::copy ()
     {
       LifespanPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
@@ -30,30 +30,30 @@ namespace TAO
     }
 
     void
-    LifespanPolicy::destroy (void)
+    LifespanPolicy::destroy ()
     {
     }
 
     ::PortableServer::LifespanPolicyValue
-    LifespanPolicy::value (void)
+    LifespanPolicy::value ()
     {
       return value_;
     }
 
     CORBA::PolicyType
-    LifespanPolicy::policy_type (void)
+    LifespanPolicy::policy_type ()
     {
       return ::PortableServer::LIFESPAN_POLICY_ID;
     }
 
     TAO_Cached_Policy_Type
-    LifespanPolicy::_tao_cached_type (void) const
+    LifespanPolicy::_tao_cached_type () const
     {
       return TAO_CACHED_POLICY_LIFESPAN;
     }
 
     TAO_Policy_Scope
-    LifespanPolicy::_tao_scope (void) const
+    LifespanPolicy::_tao_scope () const
     {
       return TAO_POLICY_POA_SCOPE;
     }

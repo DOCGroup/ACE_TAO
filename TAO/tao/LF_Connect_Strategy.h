@@ -42,7 +42,7 @@ public:
   TAO_LF_Connect_Strategy (TAO_ORB_Core *orb, bool no_upcall);
 
   /// Destructor
-  ~TAO_LF_Connect_Strategy (void);
+  ~TAO_LF_Connect_Strategy ();
 
   /**
    * Concrete implementation for this class. Please see

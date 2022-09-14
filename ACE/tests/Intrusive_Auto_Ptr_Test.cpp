@@ -15,17 +15,13 @@
 #include "ace/Intrusive_Auto_Ptr.h"
 #include "ace/Thread_Manager.h"
 
-
-
 class One {
-
   static bool released;
 
-  int m2;
   int ref;
 
 public:
-  One (int refcount) : m2(0), ref(refcount)
+  explicit One (int refcount) : ref(refcount)
   {
     released = false;
   }
@@ -40,7 +36,7 @@ public:
     return this->ref == howmany;
   }
 
-  static bool was_released (void)
+  static bool was_released ()
   {
     return released;
   }
@@ -62,8 +58,6 @@ One::intrusive_remove_ref (One *one) {
   if (one->ref == 0)
     delete one;
 }
-
-
 
 int run_main (int, ACE_TCHAR *[])
 {

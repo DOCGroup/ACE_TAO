@@ -34,7 +34,7 @@ class TAO_FTNS_Notifier : public ACE_Event_Handler
 public:
   TAO_FTNS_Notifier (TAO_FT_Naming_Server &owner, bool iors);
 
-  virtual int handle_exception (ACE_HANDLE );
+  int handle_exception (ACE_HANDLE) override;
 
   TAO_FT_Naming_Server &owner_;
   bool iors_;
@@ -57,7 +57,7 @@ class TAO_FtNaming_Export TAO_FT_Naming_Server : public TAO_Naming_Server
 public:
   friend class TAO_FTNS_Notifier;
 
-  TAO_FT_Naming_Server (void);
+  TAO_FT_Naming_Server ();
 
   /// Initialize the Naming Service and Object Group Manager with the command line
   /// arguments and the ORB. Overrridden from TAO_Naming_Server
@@ -67,12 +67,12 @@ public:
    * Accessors and mutators for object references.
    */
   /// Returns a <NamingContext_ptr> for the root Naming Context.
-  CosNaming::NamingContext_ptr my_root_context (void) const;
-  CosNaming::NamingContext_ptr ft_root_context (void) const;
+  CosNaming::NamingContext_ptr my_root_context () const;
+  CosNaming::NamingContext_ptr ft_root_context () const;
 
   /// Returns the reference for this servers local naming manager servant.
-  ::FT_Naming::NamingManager_ptr my_naming_manager (void) const;
-  ::FT_Naming::NamingManager_ptr ft_naming_manager (void) const;
+  ::FT_Naming::NamingManager_ptr my_naming_manager () const;
+  ::FT_Naming::NamingManager_ptr ft_naming_manager () const;
 
   /// Initialize the naming manager with the ORB.
   int init_naming_manager_with_orb (int , ACE_TCHAR * [], CORBA::ORB_ptr orb);
@@ -85,11 +85,11 @@ public:
   /// Returns 0 on successful pairing with peer.
   /// Returns 1 if peer IOR file is present, but peer is not responding
   /// Returns -1 if pairing is not possible.
-  void init_replication_pairing (void);
+  void init_replication_pairing ();
 
-  void no_replica (void);
+  void no_replica ();
 
-  //  TAO_FTNS_Notifier &notifier (void);
+  //  TAO_FTNS_Notifier &notifier ();
 
   /// Overridden parse operation. Only allows options supported by the FT_Naming_Server
   /// and adds options for the object group manager
@@ -104,13 +104,13 @@ public:
   /// Factory method to create a naming context factory for use with
   /// the -f option.
   virtual TAO_Persistent_Naming_Context_Factory *
-    persistent_naming_context_factory (void);
+    persistent_naming_context_factory ();
 
   /// Returns the IOR of the replication manager.
-  char* replicator_ior (void);
+  char* replicator_ior ();
 
   /// Returns the IOR of the naming manager.
-  char * naming_manager_ior (void);
+  char * naming_manager_ior ();
 
   virtual int update_object_group (
     const ::FT_Naming::ObjectGroupUpdate & group_info);
@@ -121,24 +121,23 @@ public:
   void update_ior (FT_Naming::EntityKind, const CORBA::Object_ptr);
   void combine_iors (FT_Naming::EntityKind, const CORBA::Object_ptr);
 
-  const ACE_CString & ft_endpoint (void);
-  const ACE_Time_Value & ft_update_delay (void);
+  const ACE_CString & ft_endpoint ();
+  const ACE_Time_Value & ft_update_delay ();
 
   /// Destroy the child POAs created in @c init_with_orb,
   /// @c init_naming_manager_with_orb, and
   /// @c init_replication_manager_with_orb
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Destructor.
-  virtual ~TAO_FT_Naming_Server (void);
+  virtual ~TAO_FT_Naming_Server ();
 
   void update_info (FT_Naming::UpdateInfoSeq &infos);
   void update_iors (const FT_Naming::ReplicaInfo & iors);
-  void update_info_i (void);
-  void update_iors_i (void);
+  void update_info_i ();
+  void update_iors_i ();
 
 protected:
-
   enum FT_IOR_Indexes {
     PEER_ROOT = 1,
     FT_ROOT,
@@ -149,7 +148,7 @@ protected:
     IOR_ARRAY_SIZE
   };
 
-  int recover_iors (void);
+  int recover_iors ();
 
   /// The object that implements the ObjectGroupManager, PropertyManager,
   /// and GenericFactory interfaces.
@@ -199,9 +198,7 @@ protected:
   ACE_Unbounded_Queue<FT_Naming::UpdateInfoSeq*> u_infos_;
   TAO_SYNCH_MUTEX ior_lock_;
   TAO_SYNCH_MUTEX info_lock_;
-
-
- };
+};
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -4,8 +4,6 @@
 /**
  *  @file    Auto_Event.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -53,10 +51,10 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  virtual ~ACE_Auto_Event_T (void);
+  virtual ~ACE_Auto_Event_T () = default;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks
   ACE_ALLOC_HOOK_DECLARE;
@@ -87,16 +85,12 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  virtual ~ACE_Auto_Event (void)
+  virtual ~ACE_Auto_Event ()
   {
   }
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "ace/Auto_Event.inl"
-#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Auto_Event.cpp"

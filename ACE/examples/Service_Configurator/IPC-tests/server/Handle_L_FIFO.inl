@@ -77,7 +77,7 @@ Handle_L_FIFO::fini (void)
 }
 
 ACE_INLINE ACE_HANDLE
-Handle_L_FIFO::get_handle (void) const
+Handle_L_FIFO::get_handle () const
 {
   return this->ACE_FIFO::get_handle ();
 }

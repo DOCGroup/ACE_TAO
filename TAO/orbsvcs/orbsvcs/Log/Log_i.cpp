@@ -40,7 +40,7 @@ TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,
 }
 
 void
-TAO_Log_i::init (void)
+TAO_Log_i::init ()
 {
   this->log_ =
     logmgr_i_.create_log_reference (this->logid_);
@@ -89,24 +89,24 @@ TAO_Log_i::init (void)
   this->op_state_ = DsLogAdmin::enabled;
 }
 
-TAO_Log_i::~TAO_Log_i (void)
+TAO_Log_i::~TAO_Log_i ()
 {
 }
 
 DsLogAdmin::LogMgr_ptr
-TAO_Log_i::my_factory (void)
+TAO_Log_i::my_factory ()
 {
   return DsLogAdmin::LogMgr::_duplicate (this->factory_.in ());
 }
 
 DsLogAdmin::LogId
-TAO_Log_i::id (void)
+TAO_Log_i::id ()
 {
   return logid_;
 }
 
 DsLogAdmin::QoSList*
-TAO_Log_i::get_log_qos (void)
+TAO_Log_i::get_log_qos ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -172,7 +172,7 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos)
 }
 
 CORBA::ULong
-TAO_Log_i::get_max_record_life (void)
+TAO_Log_i::get_max_record_life ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -222,7 +222,7 @@ TAO_Log_i::set_max_record_life (CORBA::ULong life)
 }
 
 CORBA::ULongLong
-TAO_Log_i::get_max_size (void)
+TAO_Log_i::get_max_size ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -293,7 +293,7 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size)
 }
 
 CORBA::ULongLong
-TAO_Log_i::get_current_size (void)
+TAO_Log_i::get_current_size ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -304,7 +304,7 @@ TAO_Log_i::get_current_size (void)
 }
 
 CORBA::ULongLong
-TAO_Log_i::get_n_records (void)
+TAO_Log_i::get_n_records ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -315,7 +315,7 @@ TAO_Log_i::get_n_records (void)
 }
 
 DsLogAdmin::LogFullActionType
-TAO_Log_i::get_log_full_action (void)
+TAO_Log_i::get_log_full_action ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -379,7 +379,7 @@ TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action)
 }
 
 DsLogAdmin::AdministrativeState
-TAO_Log_i::get_administrative_state (void)
+TAO_Log_i::get_administrative_state ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -422,7 +422,7 @@ TAO_Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state)
 }
 
 DsLogAdmin::ForwardingState
-TAO_Log_i::get_forwarding_state (void)
+TAO_Log_i::get_forwarding_state ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -466,7 +466,7 @@ TAO_Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state)
 }
 
 DsLogAdmin::OperationalState
-TAO_Log_i::get_operational_state (void)
+TAO_Log_i::get_operational_state ()
 {
   // No locks are necessary, since op_state_ is set in ::init() and
   // never changed.
@@ -474,7 +474,7 @@ TAO_Log_i::get_operational_state (void)
 }
 
 DsLogAdmin::TimeInterval
-TAO_Log_i::get_interval (void)
+TAO_Log_i::get_interval ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -536,7 +536,7 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval)
 }
 
 DsLogAdmin::AvailabilityStatus
-TAO_Log_i::get_availability_status (void)
+TAO_Log_i::get_availability_status ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -547,7 +547,7 @@ TAO_Log_i::get_availability_status (void)
 }
 
 DsLogAdmin::AvailabilityStatus
-TAO_Log_i::get_availability_status_i (void)
+TAO_Log_i::get_availability_status_i ()
 {
   // The log is considered "on duty" if all the following are true:
   //   * operational state is enabled
@@ -575,7 +575,7 @@ TAO_Log_i::get_availability_status_i (void)
 }
 
 DsLogAdmin::CapacityAlarmThresholdList*
-TAO_Log_i::get_capacity_alarm_thresholds (void)
+TAO_Log_i::get_capacity_alarm_thresholds ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -645,7 +645,7 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
 }
 
 DsLogAdmin::WeekMask*
-TAO_Log_i::get_week_mask (void)
+TAO_Log_i::get_week_mask ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -942,14 +942,14 @@ TAO_Log_i::get_record_attribute (DsLogAdmin::RecordId id)
 }
 
 void
-TAO_Log_i::flush (void)
+TAO_Log_i::flush ()
 {
   /// XXX locks?
   this->recordstore_->flush ();
 }
 
 CORBA::Boolean
-TAO_Log_i::scheduled (void)
+TAO_Log_i::scheduled ()
 {
   DsLogAdmin::TimeInterval interval =
     this->recordstore_->get_interval ();
@@ -1043,7 +1043,7 @@ TAO_Log_i::copy_attributes (DsLogAdmin::Log_ptr log)
 }
 
 void
-TAO_Log_i::remove_old_records (void)
+TAO_Log_i::remove_old_records ()
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
@@ -1074,7 +1074,7 @@ TAO_Log_i::remove_old_records (void)
 }
 
 void
-TAO_Log_i::check_capacity_alarm_threshold (void)
+TAO_Log_i::check_capacity_alarm_threshold ()
 {
   const CORBA::ULongLong max_size =
     this->recordstore_->get_max_size ();
@@ -1135,7 +1135,7 @@ TAO_Log_i::check_capacity_alarm_threshold (void)
 }
 
 void
-TAO_Log_i::reset_capacity_alarm_threshold (void)
+TAO_Log_i::reset_capacity_alarm_threshold ()
 {
   const CORBA::ULongLong max_size =
     this->recordstore_->get_max_size ();

@@ -14,11 +14,11 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Constraint_Interpreter::Constraint_Interpreter (void)
+    Constraint_Interpreter::Constraint_Interpreter ()
     {
     }
 
-    Constraint_Interpreter::~Constraint_Interpreter (void)
+    Constraint_Interpreter::~Constraint_Interpreter ()
     {
     }
 

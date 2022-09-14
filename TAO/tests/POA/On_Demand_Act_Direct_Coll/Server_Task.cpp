@@ -43,7 +43,7 @@ Server_Task::Server_Task (const ACE_TCHAR *output,
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
  try
    {
@@ -90,7 +90,6 @@ Server_Task::svc (void)
        first_poa = root_poa->create_POA (name.c_str (),
                                          poa_manager.in (),
                                          policies);
-
      }
 
      // Destroy the policy objects as they have been passed to

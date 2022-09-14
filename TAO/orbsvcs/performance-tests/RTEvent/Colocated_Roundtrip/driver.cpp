@@ -29,7 +29,6 @@
 #include "ace/Barrier.h"
 
 
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   const CORBA::Long experiment_id = 1;

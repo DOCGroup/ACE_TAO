@@ -3,7 +3,6 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "PushConsumer.h"
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
 
@@ -12,9 +11,10 @@
 
 /// include this file to statically linked with Transaction Depth
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
+#include <memory>
 
 CORBA::ORB_var orb;
-auto_ptr<TAO_FTRTEC::FTEC_Gateway> gateway;
+std::unique_ptr<TAO_FTRTEC::FTEC_Gateway> gateway;
 
 RtecEventChannelAdmin::EventChannel_ptr
 get_event_channel(int argc, ACE_TCHAR** argv)
@@ -49,7 +49,6 @@ get_event_channel(int argc, ACE_TCHAR** argv)
       }
     }
 
-
     if (CORBA::is_nil(channel.in()))
     {
       CosNaming::Name name(1);
@@ -65,7 +64,7 @@ get_event_channel(int argc, ACE_TCHAR** argv)
 
     if (use_gateway)
     {
-      ACE_auto_ptr_reset (gateway, new TAO_FTRTEC::FTEC_Gateway(orb.in(), channel.in()));
+      gateway.reset (new TAO_FTRTEC::FTEC_Gateway(orb.in(), channel.in()));
       return gateway->_this();
     }
     else
@@ -114,7 +113,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       qos);
 
     orb->run();
-
   }
   catch (const CORBA::Exception& ex){
     ex._tao_print_exception ("A CORBA Exception occurred.");

@@ -17,19 +17,19 @@
 //               Test_Fixed_Struct
 // ************************************************************************
 
-Test_Fixed_Struct::Test_Fixed_Struct (void)
+Test_Fixed_Struct::Test_Fixed_Struct ()
   : opname_ (CORBA::string_dup ("test_fixed_struct"))
 {
 }
 
-Test_Fixed_Struct::~Test_Fixed_Struct (void)
+Test_Fixed_Struct::~Test_Fixed_Struct ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Fixed_Struct::opname (void) const
+Test_Fixed_Struct::opname () const
 {
   return this->opname_;
 }
@@ -75,7 +75,7 @@ Test_Fixed_Struct::init_parameters (Param_Test_ptr /*objref*/
 }
 
 int
-Test_Fixed_Struct::reset_parameters (void)
+Test_Fixed_Struct::reset_parameters ()
 {
   ACE_OS::memset (&this->inout_,
                   0,
@@ -106,13 +106,12 @@ Test_Fixed_Struct::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Fixed_Struct::run_sii_test\n");
-
     }
   return -1;
 }
 
 CORBA::Boolean
-Test_Fixed_Struct::check_validity (void)
+Test_Fixed_Struct::check_validity ()
 {
   if (this->in_.l == this->inout_.l &&
       this->in_.c == this->inout_.c &&
@@ -148,7 +147,7 @@ Test_Fixed_Struct::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Fixed_Struct::print_values (void)
+Test_Fixed_Struct::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"

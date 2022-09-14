@@ -83,7 +83,7 @@ Client_Task::test_user_exception_not_expected (
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {
@@ -119,5 +119,4 @@ Client_Task::svc (void)
     }
 
   return 0;
-
 }

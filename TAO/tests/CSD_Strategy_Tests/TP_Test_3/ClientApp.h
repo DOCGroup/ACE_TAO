@@ -14,25 +14,22 @@
 class ClientApp : public TestAppBase
 {
   public:
-
     ClientApp();
     virtual ~ClientApp();
 
   protected:
-
     virtual int run_i(int argc, ACE_TCHAR* argv[]);
 
 
   private:
-
     // These are all called, in order, by the run_i() method.
     int init(int argc, ACE_TCHAR* argv[]);
-    void poa_setup(void);
-    void csd_setup(void);
-    void client_setup(void);
-    void poa_activate(void);
+    void poa_setup();
+    void csd_setup();
+    void client_setup();
+    void poa_activate();
     void run_clients();
-    void run_orb_event_loop(void);
+    void run_orb_event_loop();
     bool check_validity ();
     void cleanup();
 

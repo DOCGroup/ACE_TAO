@@ -5,9 +5,8 @@
 #include "ace/ACE.h"
 
 
-
 // Constructor.
-Airplane_Client_i::Airplane_Client_i (void)
+Airplane_Client_i::Airplane_Client_i ()
   : argc_ (0),
     argv_ (0),
     server_key_ (ACE::strnew (ACE_TEXT("key0"))),
@@ -20,7 +19,7 @@ Airplane_Client_i::Airplane_Client_i (void)
 // Parses the command line arguments and returns an error status.
 
 int
-Airplane_Client_i::parse_args (void)
+Airplane_Client_i::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dn:k:"));
   int c;
@@ -88,7 +87,7 @@ Airplane_Client_i::run ()
   return this->get_planes (this->loop_count_);
 }
 
-Airplane_Client_i::~Airplane_Client_i (void)
+Airplane_Client_i::~Airplane_Client_i ()
 {
   // Free resources
   CORBA::release (this->server_);

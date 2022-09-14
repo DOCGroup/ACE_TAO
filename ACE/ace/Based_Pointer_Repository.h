@@ -41,8 +41,8 @@ class ACE_Export ACE_Based_Pointer_Repository
 public:
   // = Use ACE_Null_Mutex to allow locking while iterating.
 
-  ACE_Based_Pointer_Repository (void);
-  ~ACE_Based_Pointer_Repository (void);
+  ACE_Based_Pointer_Repository ();
+  ~ACE_Based_Pointer_Repository ();
 
   // = Search structure methods.
   /**
@@ -68,8 +68,8 @@ private:
   ACE_Based_Pointer_Repository_Rep *rep_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Based_Pointer_Repository &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Based_Pointer_Repository (const ACE_Based_Pointer_Repository &))
+  void operator= (const ACE_Based_Pointer_Repository &) = delete;
+  ACE_Based_Pointer_Repository (const ACE_Based_Pointer_Repository &) = delete;
 };
 
 // ----------------------------------

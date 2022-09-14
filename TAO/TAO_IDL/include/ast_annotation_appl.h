@@ -47,12 +47,6 @@ public:
 
   virtual ~AST_Annotation_Appl ();
 
-  /// Narrowing
-  ///{
-  DEF_NARROW_FROM_DECL (AST_Annotation_Appl);
-  DEF_NARROW_FROM_SCOPE (AST_Annotation_Appl);
-  ///}
-
   /// AST Dumping
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

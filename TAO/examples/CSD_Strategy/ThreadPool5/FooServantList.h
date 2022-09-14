@@ -12,7 +12,6 @@ class Foo_i;
 class FooServantList
 {
   public:
-
     FooServantList(const ACE_TCHAR* prefix,
                    unsigned num_servants,
                    unsigned num_clients,
@@ -24,11 +23,11 @@ class FooServantList
     void create_and_activate(CORBA::ORB_ptr orb,
                              PortableServer::POA_ptr poa);
 
-    void client_done(void);
+    void client_done();
 
     ClientTask* collocated_client () const;
 
-    void deactivate_servant (void);
+    void deactivate_servant ();
 
   private:
     Foo_i** servants_;

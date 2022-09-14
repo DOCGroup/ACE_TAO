@@ -18,18 +18,18 @@ AST_Uses::AST_Uses (UTL_ScopedName *n,
 {
 }
 
-AST_Uses::~AST_Uses (void)
+AST_Uses::~AST_Uses ()
 {
 }
 
 AST_Type *
-AST_Uses::uses_type (void) const
+AST_Uses::uses_type () const
 {
   return this->field_type ();
 }
 
 bool
-AST_Uses::is_multiple (void) const
+AST_Uses::is_multiple () const
 {
   return this->is_multiple_;
 }
@@ -48,9 +48,7 @@ AST_Uses::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Uses::destroy (void)
+AST_Uses::destroy ()
 {
   this->AST_Field::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Uses)

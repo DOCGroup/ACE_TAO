@@ -40,7 +40,6 @@ class Server_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   Server_ORBInitializer (bool & destroy_called);
 
@@ -49,11 +48,9 @@ public:
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
 private:
-
   /// Flag that states whether this interceptor's @c destroy() method
   /// was called.
   bool & destroy_called_;
-
 };
 
 #if defined(_MSC_VER)

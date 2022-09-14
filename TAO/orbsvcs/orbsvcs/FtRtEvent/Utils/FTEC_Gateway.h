@@ -32,16 +32,16 @@ namespace TAO_FTRTEC
           (PortableServer::POA_ptr poa);
 
       RtecEventChannelAdmin::EventChannel_ptr
-        _this(void);
+        _this();
 
       //= The RtecEventChannelAdmin::EventChannel methods
       virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-        for_consumers (void);
+        for_consumers ();
 
       virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-        for_suppliers (void);
+        for_suppliers ();
 
-      virtual void destroy (void);
+      virtual void destroy ();
 
       virtual RtecEventChannelAdmin::Observer_Handle
         append_observer (RtecEventChannelAdmin::Observer_ptr observer);

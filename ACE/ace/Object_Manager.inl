@@ -37,7 +37,7 @@ ACE_Object_Manager::remove_at_exit (void *object)
 
 ACE_INLINE
 ACE_Sig_Set &
-ACE_Object_Manager::default_mask (void)
+ACE_Object_Manager::default_mask ()
 {
   // A safe cast, but this static method shouldn't be used anyways.
   // Use ACE_Object_Manager::default_mask () instead.

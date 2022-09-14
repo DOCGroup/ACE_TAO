@@ -127,7 +127,7 @@ public:
 
   int handle_timeout (const ACE_Time_Value &, const void *)
   {
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
     return 0;
   }
 
@@ -157,7 +157,6 @@ using namespace CORBA;
 using namespace PortableServer;
 
 namespace {
-
   void print_usage ()
   {
     //FUZZ: disable check_for_lack_ACE_OS

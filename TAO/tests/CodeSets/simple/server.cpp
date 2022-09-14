@@ -85,9 +85,9 @@ public:
   };
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void)
+  void shutdown ()
   {
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
   };
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -162,7 +162,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Wait for calls
       orb->run ();
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

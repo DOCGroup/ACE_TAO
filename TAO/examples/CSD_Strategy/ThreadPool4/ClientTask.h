@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    ClientTask.h
@@ -17,20 +15,19 @@
 
 class ClientTask : public ACE_Task_Base
 {
-  public:
+public:
+  ClientTask(Foo_ptr foo,
+              Callback_ptr callback);
 
-    ClientTask(Foo_ptr foo,
-               Callback_ptr callback);
+  virtual ~ClientTask();
 
-    virtual ~ClientTask();
+  virtual int open(void* x = 0);
+  virtual int svc();
+  virtual int close(u_long);
 
-    virtual int open(void* x = 0);
-    virtual int svc();
-    virtual int close(u_long);
-
-  private:
-    Foo_var foo_;
-    Callback_var callback_;
+private:
+  Foo_var foo_;
+  Callback_var callback_;
 };
 
 #endif

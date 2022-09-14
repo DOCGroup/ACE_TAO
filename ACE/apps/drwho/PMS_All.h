@@ -22,7 +22,7 @@
 class PMS_All : public PM_Server
 {
 public:
-  PMS_All (void);
+  PMS_All ();
 
 protected:
   virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record);

@@ -1,6 +1,6 @@
-#! /usr/bin/perl
+#!/usr/bin/env perl
 
-# This module contains a few miscellanous functions and some
+# This module contains a few miscellaneous functions and some
 # startup ARGV processing that is used by all tests.
 
 use PerlACE::Process;
@@ -15,11 +15,6 @@ if(exists $ENV{TAO_ROOT}) {
     $PerlACE::TAO_ROOT = $ENV{TAO_ROOT};
 } else {
     $PerlACE::TAO_ROOT = "$PerlACE::ACE_ROOT/TAO";
-}
-if(exists $ENV{CIAO_ROOT}) {
-    $PerlACE::CIAO_ROOT = $ENV{CIAO_ROOT};
-} else {
-    $PerlACE::CIAO_ROOT = "$PerlACE::TAO_ROOT/CIAO";
 }
 
 my $config = new PerlACE::ConfigList;

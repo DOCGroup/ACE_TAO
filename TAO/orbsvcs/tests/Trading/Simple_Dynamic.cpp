@@ -4,7 +4,6 @@
 #include "Simple_Dynamic.h"
 
 
-
 template <class T>
 TAO_Simple_Dynamic_Property<T>::TAO_Simple_Dynamic_Property (const T& dp)
   : dp_ (dp)

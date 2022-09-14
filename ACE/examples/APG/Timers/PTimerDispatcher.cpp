@@ -1,6 +1,6 @@
 #include "PTimerDispatcher.h"
 
-void PTimer_Dispatcher::wait_for_event (void)
+void PTimer_Dispatcher::wait_for_event ()
 {
   ACE_TRACE ("PTimer_Dispatcher::wait_for_event");
 

@@ -25,7 +25,7 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event)
 
 
 void
-PushConsumer_impl::disconnect_push_consumer (void)
+PushConsumer_impl::disconnect_push_consumer ()
 {
   PortableServer::Current_var current =
     resolve_init<PortableServer::Current>(orb_.in(), "POACurrent");

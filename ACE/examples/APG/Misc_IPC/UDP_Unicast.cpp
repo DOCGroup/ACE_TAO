@@ -26,7 +26,7 @@ int send_unicast (const ACE_INET_Addr &to)
 // Listing 1
 
 // Listing 2 code/ch09
-void echo_dgram (void)
+void echo_dgram ()
 {
   ACE_INET_Addr my_addr (static_cast<u_short> (10102));
   ACE_INET_Addr your_addr;
@@ -44,7 +44,7 @@ void echo_dgram (void)
 // Listing 3 code/ch09
 #include "ace/SOCK_CODgram.h"
 // Exclude 3
-static void show_codgram (void)
+static void show_codgram ()
 {
   char buff[BUFSIZ];
   size_t buflen = sizeof (buff);

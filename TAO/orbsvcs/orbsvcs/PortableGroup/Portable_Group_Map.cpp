@@ -11,7 +11,7 @@ TAO_Portable_Group_Map::TAO_Portable_Group_Map ()
 }
 
 /// Destructor.
-TAO_Portable_Group_Map::~TAO_Portable_Group_Map (void)
+TAO_Portable_Group_Map::~TAO_Portable_Group_Map ()
 {
   for (Iterator i = this->map_.begin ();
        i != this->map_.end ();

@@ -57,6 +57,7 @@ ifeq ($(buildbits),64)
   ARFLAGS   += -X64
 endif
 DCFLAGS         += -g
+DCCFLAGS        += -g
 DLD             = $(CXX)
 LD              = $(CXX)
 # Linking TAO_IDL runs out of TOC space unless -bbigtoc is given to ld.

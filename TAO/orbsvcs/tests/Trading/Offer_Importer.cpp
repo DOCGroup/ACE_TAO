@@ -8,7 +8,7 @@ TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
 }
 
 void
-TAO_Offer_Importer::perform_queries (void)
+TAO_Offer_Importer::perform_queries ()
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Importer::Federated Query.\n"));
 
@@ -22,7 +22,7 @@ TAO_Offer_Importer::perform_queries (void)
 }
 
 void
-TAO_Offer_Importer::perform_directed_queries (void)
+TAO_Offer_Importer::perform_directed_queries ()
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Importer::Directed Query.\n"));
 

@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    timeout_i.cpp
@@ -9,17 +8,12 @@
  */
 //=============================================================================
 
-
 #include "timeout_i.h"
 #include "ace/OS_NS_unistd.h"
 
 Timeout_i::Timeout_i (CORBA::ORB_ptr orb)
 {
   orb_ = CORBA::ORB::_duplicate (orb);
-}
-
-Timeout_i::~Timeout_i ()
-{
 }
 
 void
@@ -40,7 +34,7 @@ Timeout_i::sendTimeToWait (CORBA::Long msec)
 }
 
 void
-Timeout_i::shutdown (void)
+Timeout_i::shutdown ()
 {
   orb_->shutdown ();
   //ACE_DEBUG ((LM_DEBUG,
@@ -58,12 +52,8 @@ TimeoutHandler_i::TimeoutHandler_i ()
   timer_.stop ();
 }
 
-TimeoutHandler_i::~TimeoutHandler_i ()
-{
-}
-
 void
-TimeoutHandler_i::sendTimeToWait (void)
+TimeoutHandler_i::sendTimeToWait ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "reply"));

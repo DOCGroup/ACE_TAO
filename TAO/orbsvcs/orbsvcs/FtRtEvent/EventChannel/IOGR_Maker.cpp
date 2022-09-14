@@ -164,7 +164,6 @@ IOGR_Maker::copy_ft_group_component(CORBA::Object_ptr ior)
 
        if (pfile_tagged.get_component (tagged_components) == 1)
        {
-
           // Grab the object group version
           // @@ NOTE: This involves an allocation and a dellocation. This is
           // really bad.
@@ -233,7 +232,6 @@ IOGR_Maker::set_tag_components(
       // Set the property
     iorm_->set_property (&prop,
                         merged);
-
 
 }
 

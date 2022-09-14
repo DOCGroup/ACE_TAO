@@ -68,7 +68,6 @@ public:
   void shutdown ();
 
 private:
-
   /// The ORB pseudo-reference (for shutdown).
   CORBA::ORB_var orb_;
 

@@ -24,12 +24,12 @@ TAO::TypeCode::String<TAO::Null_RefCount_Policy>::tao_marshal (
 }
 
 void
-TAO::TypeCode::String<TAO::Null_RefCount_Policy>::tao_duplicate (void)
+TAO::TypeCode::String<TAO::Null_RefCount_Policy>::tao_duplicate ()
 {
 }
 
 void
-TAO::TypeCode::String<TAO::Null_RefCount_Policy>::tao_release (void)
+TAO::TypeCode::String<TAO::Null_RefCount_Policy>::tao_release ()
 {
 }
 
@@ -46,8 +46,7 @@ TAO::TypeCode::String<TAO::Null_RefCount_Policy>::equal_i (
 
 CORBA::Boolean
 TAO::TypeCode::String<TAO::Null_RefCount_Policy>::equivalent_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // Since TCKind comparisons must be performed before equal_i() is
   // called, we can also call it to determine equivalence of
@@ -56,8 +55,7 @@ TAO::TypeCode::String<TAO::Null_RefCount_Policy>::equivalent_i (
 }
 
 CORBA::TypeCode_ptr
-TAO::TypeCode::String<TAO::Null_RefCount_Policy>::get_compact_typecode_i (
-  void) const
+TAO::TypeCode::String<TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
   // Already compact since tk_string and tk_wstring TypeCodes have no
   // name or member names, meaning that we can simply call
@@ -70,8 +68,7 @@ TAO::TypeCode::String<TAO::Null_RefCount_Policy>::get_compact_typecode_i (
 }
 
 CORBA::ULong
-TAO::TypeCode::String<TAO::Null_RefCount_Policy>::length_i (
-  void) const
+TAO::TypeCode::String<TAO::Null_RefCount_Policy>::length_i () const
 {
   return this->length_;
 }

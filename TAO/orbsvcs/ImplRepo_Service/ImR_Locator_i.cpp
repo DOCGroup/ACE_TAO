@@ -29,7 +29,6 @@ static const ACE_Time_Value DEFAULT_SHUTDOWN_TIMEOUT (0, 5000 * 1000);
 
 static PortableServer::POA_ptr
 createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name) {
-
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
@@ -53,7 +52,7 @@ createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name) {
 
 int ImR_Locator_i::debug_ = 0;
 
-ImR_Locator_i::ImR_Locator_i (void)
+ImR_Locator_i::ImR_Locator_i ()
   : dsi_forwarder_ (*this)
   , ins_locator_ (0)
   , aam_active_ ()
@@ -70,7 +69,7 @@ ImR_Locator_i::ImR_Locator_i (void)
   ins_locator_ = locator;
 }
 
-ImR_Locator_i::~ImR_Locator_i (void)
+ImR_Locator_i::~ImR_Locator_i ()
 {
 }
 
@@ -238,7 +237,7 @@ ImR_Locator_i::init (Options& opts)
 }
 
 int
-ImR_Locator_i::run (void)
+ImR_Locator_i::run ()
 {
   if (debug_ > 0)
     {
@@ -354,13 +353,13 @@ ImR_Locator_i::shutdown (bool wait_for_completion)
 }
 
 const Options *
-ImR_Locator_i::opts (void) const
+ImR_Locator_i::opts () const
 {
   return this->opts_;
 }
 
 int
-ImR_Locator_i::fini (void)
+ImR_Locator_i::fini ()
 {
   try
     {
@@ -1540,7 +1539,7 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
 }
 
 void
-ImR_Locator_i::auto_start_servers (void)
+ImR_Locator_i::auto_start_servers ()
 {
   if (this->repository_->servers ().current_size () == 0)
     return;
@@ -1630,8 +1629,6 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
                                 this->opts_->ping_external (),
                                 sip->server.in(),
                                 sip->pid);
-
-
     }
   catch (const CORBA::Exception& )
     {
@@ -1660,13 +1657,13 @@ ImR_Locator_i::debug ()
 }
 
 LiveCheck&
-ImR_Locator_i::pinger (void)
+ImR_Locator_i::pinger ()
 {
   return this->pinger_;
 }
 
 PortableServer::POA_ptr
-ImR_Locator_i::root_poa (void)
+ImR_Locator_i::root_poa ()
 {
   return PortableServer::POA::_duplicate (this->root_poa_.in());
 }
@@ -1772,7 +1769,7 @@ SyncListener::~SyncListener ()
 }
 
 bool
-SyncListener::is_alive (void)
+SyncListener::is_alive ()
 {
   this->callback_ = true;
   while (!this->got_it_)
@@ -1810,7 +1807,7 @@ ImR_SyncResponseHandler::ImR_SyncResponseHandler (const char *objkey, CORBA::ORB
 {
 }
 
-ImR_SyncResponseHandler::~ImR_SyncResponseHandler (void)
+ImR_SyncResponseHandler::~ImR_SyncResponseHandler ()
 {
 }
 
@@ -1829,7 +1826,7 @@ ImR_SyncResponseHandler::send_exception (CORBA::Exception *ex)
 }
 
 char *
-ImR_SyncResponseHandler::wait_for_result (void)
+ImR_SyncResponseHandler::wait_for_result ()
 {
   while (this->result_.in() == 0 && this->excep_ == 0)
     {
@@ -1861,7 +1858,7 @@ ImR_Loc_ResponseHandler::ImR_Loc_ResponseHandler
 {
 }
 
-ImR_Loc_ResponseHandler::~ImR_Loc_ResponseHandler (void)
+ImR_Loc_ResponseHandler::~ImR_Loc_ResponseHandler ()
 {
 }
 

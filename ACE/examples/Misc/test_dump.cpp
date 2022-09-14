@@ -9,7 +9,6 @@
 #include "ace/Reactor.h"
 
 
-
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {

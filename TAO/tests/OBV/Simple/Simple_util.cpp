@@ -13,7 +13,7 @@
 // Constructor.
 
 template <class Servant>
-Server<Servant>::Server (void)
+Server<Servant>::Server ()
     : ior_output_file_ (0)
 {
 }
@@ -21,14 +21,14 @@ Server<Servant>::Server (void)
 // Destructor.
 
 template <class Servant>
-Server<Servant>::~Server (void)
+Server<Servant>::~Server ()
 {
 }
 
 // Parse the command-line arguments and set options.
 
 template <class Servant> int
-Server<Servant>::parse_args (void)
+Server<Servant>::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:ni:"));
   int c = 0;
@@ -125,7 +125,7 @@ Server<Servant>::init (const char *servant_name,
 }
 
 template <class Servant>int
-Server<Servant>::run (void)
+Server<Servant>::run ()
 {
     // Run the main event loop for the ORB.
   if (this->orb_manager_.run () == -1)
@@ -137,7 +137,7 @@ Server<Servant>::run (void)
 }
 
 template <class Servant> int
-Server<Servant>::register_name (void)
+Server<Servant>::register_name ()
 {
   return -1;
 }
@@ -145,7 +145,7 @@ Server<Servant>::register_name (void)
 // Constructor.
 
 template <class InterfaceObj, class Var>
-Client<InterfaceObj, Var>::Client (void)
+Client<InterfaceObj, Var>::Client ()
   : ior_ (0)
 {
   //no-op
@@ -184,7 +184,7 @@ Client<InterfaceObj, Var>::read_ior (ACE_TCHAR *filename)
 // Parses the command line arguments and returns an error status.
 
 template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::parse_args (void)
+Client<InterfaceObj, Var>::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:nk:x"));
   int c = 0;
@@ -217,7 +217,7 @@ Client<InterfaceObj, Var>::parse_args (void)
 }
 
 template <class InterfaceObj, class Var>
-Client<InterfaceObj, Var>::~Client (void)
+Client<InterfaceObj, Var>::~Client ()
 {
   ACE_OS::free (this->ior_);
 }
@@ -229,7 +229,6 @@ Client<InterfaceObj, Var>::init (const char *name,
 {
   this->argc_ = argc;
   this->argv_ = argv;
-
 
 
   try
@@ -260,8 +259,6 @@ Client<InterfaceObj, Var>::init (const char *name,
         ACE_ERROR_RETURN ((LM_ERROR,
                            "no ior or naming options  specified\n"),
                           -1);
-
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -275,14 +272,13 @@ Client<InterfaceObj, Var>::init (const char *name,
 
 
 template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::obtain_initial_references (void)
+Client<InterfaceObj, Var>::obtain_initial_references ()
 {
-
   return 0;
 }
 
 template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::shutdown (void )
+Client<InterfaceObj, Var>::shutdown ()
 {
   // Returns the shutdwon flag
   return shutdown_;

@@ -160,7 +160,6 @@ static void OidTest()
   ACE_ASSERT(!(d2 > d2));
   ACE_ASSERT(d2 >= d2);
   ACE_ASSERT(d2 <= d2);
-
 }
 
 int

@@ -18,7 +18,7 @@ const ACEXML_Char ACEXML_SAXParseException::exception_name_[] = ACE_TEXT ("ACEXM
 # include "ACEXML/common/SAXExceptions.inl"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_SAXException::ACEXML_SAXException (void)
+ACEXML_SAXException::ACEXML_SAXException ()
   : message_ (0)
 {
 }
@@ -53,13 +53,13 @@ ACEXML_SAXException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXException*> (ex);
 }
 
-ACEXML_SAXException::~ACEXML_SAXException (void)
+ACEXML_SAXException::~ACEXML_SAXException ()
 {
   ACE::strdelete (this->message_);
 }
 
 ACEXML_Exception *
-ACEXML_SAXException::duplicate (void) const
+ACEXML_SAXException::duplicate () const
 {
   ACEXML_Exception *tmp;
   ACE_NEW_RETURN (tmp, ACEXML_SAXException (*this), 0);
@@ -74,14 +74,14 @@ ACEXML_SAXException::is_a (const ACEXML_Char *name)
 }
 
 void
-ACEXML_SAXException::print (void) const
+ACEXML_SAXException::print () const
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
               this->exception_name_, this->message()));
 }
 
-ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (void)
+ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException ()
 {
 }
 
@@ -109,13 +109,13 @@ ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_C
 {
 }
 
-ACEXML_SAXNotSupportedException::~ACEXML_SAXNotSupportedException (void)
+ACEXML_SAXNotSupportedException::~ACEXML_SAXNotSupportedException ()
 {
 }
 
 
 ACEXML_Exception *
-ACEXML_SAXNotSupportedException::duplicate (void) const
+ACEXML_SAXNotSupportedException::duplicate () const
 {
   ACEXML_Exception *tmp;
   ACE_NEW_RETURN (tmp, ACEXML_SAXNotSupportedException (*this), 0);
@@ -131,14 +131,14 @@ ACEXML_SAXNotSupportedException::is_a (const ACEXML_Char *name)
 }
 
 void
-ACEXML_SAXNotSupportedException::print (void) const
+ACEXML_SAXNotSupportedException::print () const
 {
   ACE_DEBUG ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
               this->exception_name_, this->message()));
 }
 
-ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (void)
+ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException ()
 {
 }
 
@@ -165,12 +165,12 @@ ACEXML_SAXNotRecognizedException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXNotRecognizedException*> (ex);
 }
 
-ACEXML_SAXNotRecognizedException::~ACEXML_SAXNotRecognizedException (void)
+ACEXML_SAXNotRecognizedException::~ACEXML_SAXNotRecognizedException ()
 {
 }
 
 ACEXML_Exception *
-ACEXML_SAXNotRecognizedException::duplicate (void) const
+ACEXML_SAXNotRecognizedException::duplicate () const
 {
   ACEXML_Exception *tmp;
   ACE_NEW_RETURN (tmp, ACEXML_SAXNotRecognizedException (*this), 0);
@@ -186,14 +186,14 @@ ACEXML_SAXNotRecognizedException::is_a (const ACEXML_Char *name)
 }
 
 void
-ACEXML_SAXNotRecognizedException::print (void) const
+ACEXML_SAXNotRecognizedException::print () const
 {
   ACE_DEBUG ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
               this->exception_name_, this->message()));
 }
 
-ACEXML_SAXParseException::ACEXML_SAXParseException (void)
+ACEXML_SAXParseException::ACEXML_SAXParseException ()
 {
 }
 
@@ -220,12 +220,12 @@ ACEXML_SAXParseException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXParseException*> (ex);
 }
 
-ACEXML_SAXParseException::~ACEXML_SAXParseException (void)
+ACEXML_SAXParseException::~ACEXML_SAXParseException ()
 {
 }
 
 ACEXML_Exception *
-ACEXML_SAXParseException::duplicate (void) const
+ACEXML_SAXParseException::duplicate () const
 {
   ACEXML_Exception *tmp;
   ACE_NEW_RETURN (tmp, ACEXML_SAXParseException (*this), 0);
@@ -241,7 +241,7 @@ ACEXML_SAXParseException::is_a (const ACEXML_Char *name)
 }
 
 void
-ACEXML_SAXParseException::print (void) const
+ACEXML_SAXParseException::print () const
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),

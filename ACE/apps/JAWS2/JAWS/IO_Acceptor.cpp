@@ -4,12 +4,11 @@
 #include "ace/OS_NS_sys_socket.h"
 
 
-
-JAWS_IO_Acceptor::JAWS_IO_Acceptor (void)
+JAWS_IO_Acceptor::JAWS_IO_Acceptor ()
 {
 }
 
-JAWS_IO_Acceptor::~JAWS_IO_Acceptor (void)
+JAWS_IO_Acceptor::~JAWS_IO_Acceptor ()
 {
 }
 
@@ -26,7 +25,7 @@ JAWS_IO_Acceptor::open (const ACE_HANDLE &)
 }
 
 void
-JAWS_IO_Acceptor::close (void)
+JAWS_IO_Acceptor::close ()
 {
 }
 
@@ -44,7 +43,7 @@ JAWS_IO_Acceptor::accept (size_t, const void *)
 }
 
 ACE_HANDLE
-JAWS_IO_Acceptor::get_handle (void)
+JAWS_IO_Acceptor::get_handle ()
 {
   return ACE_INVALID_HANDLE;
 }
@@ -87,14 +86,13 @@ JAWS_IO_Synch_Acceptor::accept (size_t, const void *)
 }
 
 ACE_HANDLE
-JAWS_IO_Synch_Acceptor::get_handle (void)
+JAWS_IO_Synch_Acceptor::get_handle ()
 {
   return this->acceptor_.get_handle ();
 }
 
 
-
-JAWS_IO_Asynch_Acceptor::JAWS_IO_Asynch_Acceptor (void)
+JAWS_IO_Asynch_Acceptor::JAWS_IO_Asynch_Acceptor ()
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   : acceptor_ (*(new ACE_Asynch_Acceptor<JAWS_Asynch_Handler>)),
     acceptor_ptr_ (&acceptor_)
@@ -102,7 +100,7 @@ JAWS_IO_Asynch_Acceptor::JAWS_IO_Asynch_Acceptor (void)
 {
 }
 
-JAWS_IO_Asynch_Acceptor::~JAWS_IO_Asynch_Acceptor (void)
+JAWS_IO_Asynch_Acceptor::~JAWS_IO_Asynch_Acceptor ()
 {
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   delete this->acceptor_ptr_;
@@ -173,7 +171,7 @@ JAWS_IO_Asynch_Acceptor::accept (ACE_SOCK_Stream &, ACE_Addr *,
 }
 
 ACE_HANDLE
-JAWS_IO_Asynch_Acceptor::get_handle (void)
+JAWS_IO_Asynch_Acceptor::get_handle ()
 {
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   return this->acceptor_.get_handle ();
@@ -184,7 +182,7 @@ JAWS_IO_Asynch_Acceptor::get_handle (void)
 
 
 void
-JAWS_IO_Asynch_Acceptor::close (void)
+JAWS_IO_Asynch_Acceptor::close ()
 {
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   delete this->acceptor_ptr_;

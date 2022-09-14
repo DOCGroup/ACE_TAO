@@ -16,12 +16,12 @@ ACE_Reactor_Notification_Strategy::ACE_Reactor_Notification_Strategy (
 {
 }
 
-ACE_Reactor_Notification_Strategy::~ACE_Reactor_Notification_Strategy (void)
+ACE_Reactor_Notification_Strategy::~ACE_Reactor_Notification_Strategy ()
 {
 }
 
 int
-ACE_Reactor_Notification_Strategy::notify (void)
+ACE_Reactor_Notification_Strategy::notify ()
 {
   return this->reactor_->notify (this->eh_, this->mask_);
 }

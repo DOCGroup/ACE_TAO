@@ -24,7 +24,7 @@ ACE_Dirent::open (const ACE_TCHAR *dirname)
 }
 
 ACE_INLINE
-ACE_Dirent::ACE_Dirent (void)
+ACE_Dirent::ACE_Dirent ()
   : dirp_ (0)
 {
 }
@@ -40,29 +40,20 @@ ACE_Dirent::ACE_Dirent (const ACE_TCHAR *dirname)
 }
 
 ACE_INLINE
-ACE_Dirent::~ACE_Dirent (void)
+ACE_Dirent::~ACE_Dirent ()
 {
   if (this->dirp_ != 0)
     ACE_OS::closedir (this->dirp_);
 }
 
 ACE_INLINE ACE_DIRENT *
-ACE_Dirent::read (void)
+ACE_Dirent::read ()
 {
   return this->dirp_ ? ACE_OS::readdir (this->dirp_) : 0;
 }
 
-ACE_INLINE int
-ACE_Dirent::read (struct ACE_DIRENT *entry,
-                  struct ACE_DIRENT **result)
-{
-  return this->dirp_
-         ? ACE_OS::readdir_r (this->dirp_, entry, result)
-         : 0;
-}
-
 ACE_INLINE void
-ACE_Dirent::close (void)
+ACE_Dirent::close ()
 {
   if (this->dirp_ != 0)
     {
@@ -74,7 +65,7 @@ ACE_Dirent::close (void)
 }
 
 ACE_INLINE void
-ACE_Dirent::rewind (void)
+ACE_Dirent::rewind ()
 {
   if (this->dirp_)
     ACE_OS::rewinddir (this->dirp_);
@@ -88,7 +79,7 @@ ACE_Dirent::seek (long loc)
 }
 
 ACE_INLINE long
-ACE_Dirent::tell (void)
+ACE_Dirent::tell ()
 {
   return this->dirp_ ? ACE_OS::telldir (this->dirp_) : 0;
 }

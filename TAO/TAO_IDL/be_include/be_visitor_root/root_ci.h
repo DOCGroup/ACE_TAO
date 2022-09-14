@@ -28,13 +28,13 @@ class be_visitor_root_ci : public be_visitor_root
 public:
   be_visitor_root_ci (be_visitor_context *ctx);
 
-  ~be_visitor_root_ci (void);
+  ~be_visitor_root_ci ();
 
   virtual int visit_root (be_root *node);
 
 private:
   /// Open file and initialize stream.
-  int init (void);
+  int init ();
 
   /// Generate OBV definitions in the client inline
   /// file, done after the main scope traversal.

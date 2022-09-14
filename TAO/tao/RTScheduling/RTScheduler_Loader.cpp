@@ -7,12 +7,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RTScheduler_Loader::TAO_RTScheduler_Loader (void)
+TAO_RTScheduler_Loader::TAO_RTScheduler_Loader ()
   : initialized_ (false)
 {
 }
 
-TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader (void)
+TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader ()
 {
 }
 

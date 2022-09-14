@@ -17,7 +17,7 @@ public:
   virtual void slow_operation (const Test::Payload &the_payload,
                                CORBA::ULong sleep_microseconds);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to shutdown the application.

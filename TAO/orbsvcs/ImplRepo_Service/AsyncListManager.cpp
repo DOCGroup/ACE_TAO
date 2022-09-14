@@ -25,7 +25,7 @@ AsyncListManager::AsyncListManager (const Locator_Repository *repo,
 {
 }
 
-AsyncListManager::~AsyncListManager (void)
+AsyncListManager::~AsyncListManager ()
 {
   if (ImR_Locator_i::debug() > 4)
     {
@@ -36,13 +36,13 @@ AsyncListManager::~AsyncListManager (void)
 }
 
 PortableServer::POA_ptr
-AsyncListManager::poa (void)
+AsyncListManager::poa ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in());
 }
 
 void
-AsyncListManager::init_list (void)
+AsyncListManager::init_list ()
 {
   CORBA::ULong const len =
     static_cast<CORBA::ULong> (this->repo_->servers ().current_size ());
@@ -146,7 +146,7 @@ AsyncListManager::make_iterator (ImplementationRepository::ServerInformationIter
 }
 
 void
-AsyncListManager::final_state (void)
+AsyncListManager::final_state ()
 {
   if (ImR_Locator_i::debug() > 4)
     {
@@ -313,14 +313,14 @@ AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status, int pid)
 }
 
 AsyncListManager *
-AsyncListManager::_add_ref (void)
+AsyncListManager::_add_ref ()
 {
   ++this->refcount_;
   return this;
 }
 
 void
-AsyncListManager::_remove_ref (void)
+AsyncListManager::_remove_ref ()
 {
   int const count = --this->refcount_;
 
@@ -348,12 +348,12 @@ ListLiveListener::ListLiveListener (const char *server,
 {
 }
 
-ListLiveListener::~ListLiveListener (void)
+ListLiveListener::~ListLiveListener ()
 {
 }
 
 bool
-ListLiveListener::start (void)
+ListLiveListener::start ()
 {
   bool const rtn = this->pinger_.add_poll_listener (this);
   this->started_ = true;
@@ -361,13 +361,13 @@ ListLiveListener::start (void)
 }
 
 LiveStatus
-ListLiveListener::status (void)
+ListLiveListener::status ()
 {
   return this->status_;
 }
 
 void
-ListLiveListener::cancel (void)
+ListLiveListener::cancel ()
 {
   this->pinger_.remove_listener (this);
 }

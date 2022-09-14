@@ -34,7 +34,7 @@ Hello::get_string (CORBA::Long client_num)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -39,11 +39,7 @@ convert_log_priority (ACE_Log_Priority lm_priority)
   }
 }
 
-ACE_Log_Msg_Android_Logcat::ACE_Log_Msg_Android_Logcat ()
-{
-}
-
-ACE_Log_Msg_Android_Logcat::~ACE_Log_Msg_Android_Logcat (void)
+ACE_Log_Msg_Android_Logcat::~ACE_Log_Msg_Android_Logcat ()
 {
   this->close ();
 }
@@ -55,13 +51,13 @@ ACE_Log_Msg_Android_Logcat::open (const ACE_TCHAR *)
 }
 
 int
-ACE_Log_Msg_Android_Logcat::reset (void)
+ACE_Log_Msg_Android_Logcat::reset ()
 {
   return close ();
 }
 
 int
-ACE_Log_Msg_Android_Logcat::close (void)
+ACE_Log_Msg_Android_Logcat::close ()
 {
   return 0;
 }

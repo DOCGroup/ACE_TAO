@@ -6,13 +6,13 @@
 // This is the interface program that accesses the remote object
 
 // Constructor.
-Bank_Client_i::Bank_Client_i (void)
+Bank_Client_i::Bank_Client_i ()
 {
   //no-op
 }
 
 //Destructor.
-Bank_Client_i::~Bank_Client_i (void)
+Bank_Client_i::~Bank_Client_i ()
 {
   //no-op
 }
@@ -42,7 +42,7 @@ Bank_Client_i::run (const char *name,
 }
 
 int
-Bank_Client_i::check_accounts (void)
+Bank_Client_i::check_accounts ()
 {
   try
     {
@@ -69,9 +69,8 @@ Bank_Client_i::check_accounts (void)
 // This method tests whether an account with a
 // a same name can be opened
 void
-Bank_Client_i::test_for_same_name (void)
+Bank_Client_i::test_for_same_name ()
 {
-
   const char *name = "Name";
   CORBA::Float initial_bal = 0.00;
 
@@ -88,7 +87,7 @@ Bank_Client_i::test_for_same_name (void)
 
 // This method tests whether an account with different names can be opened
 void
-Bank_Client_i::test_for_different_name (void)
+Bank_Client_i::test_for_different_name ()
 {
   const char *name1 = "Name1";
   const char *name2 = "Name2";
@@ -109,7 +108,7 @@ Bank_Client_i::test_for_different_name (void)
 
 // This method tests the Overdraft exception.
 void
-Bank_Client_i::test_for_overdraft (void)
+Bank_Client_i::test_for_overdraft ()
 {
   CORBA::Float initial_bal = 100.0;
   const char *name = "Name";

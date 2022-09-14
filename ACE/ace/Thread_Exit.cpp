@@ -28,7 +28,7 @@ ACE_Thread_Exit::cleanup (void *instance)
 // from being defined.
 
 ACE_Thread_Exit *
-ACE_Thread_Exit::instance (void)
+ACE_Thread_Exit::instance ()
 {
 #if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)
   ACE_OS_TRACE ("ACE_Thread_Exit::instance");
@@ -66,7 +66,7 @@ ACE_Thread_Exit::instance (void)
 // Grab hold of the Task * so that we can close() it in the
 // destructor.
 
-ACE_Thread_Exit::ACE_Thread_Exit (void)
+ACE_Thread_Exit::ACE_Thread_Exit ()
 {
   ACE_OS_TRACE ("ACE_Thread_Exit::ACE_Thread_Exit");
 }
@@ -85,7 +85,7 @@ ACE_Thread_Exit::thr_mgr (ACE_Thread_Manager *tm)
 // When this object is destroyed the Task is automatically closed
 // down!
 
-ACE_Thread_Exit::~ACE_Thread_Exit (void)
+ACE_Thread_Exit::~ACE_Thread_Exit ()
 {
   ACE_OS_TRACE ("ACE_Thread_Exit::~ACE_Thread_Exit");
 }
@@ -101,19 +101,19 @@ ACE_Thread_Exit_Maybe::ACE_Thread_Exit_Maybe (int flag)
     }
 }
 
-ACE_Thread_Exit_Maybe::~ACE_Thread_Exit_Maybe (void)
+ACE_Thread_Exit_Maybe::~ACE_Thread_Exit_Maybe ()
 {
   delete this->instance_;
 }
 
 ACE_Thread_Exit *
-ACE_Thread_Exit_Maybe::operator -> (void) const
+ACE_Thread_Exit_Maybe::operator -> () const
 {
   return this->instance_;
 }
 
 ACE_Thread_Exit *
-ACE_Thread_Exit_Maybe::instance (void) const
+ACE_Thread_Exit_Maybe::instance () const
 {
   return this->instance_;
 }

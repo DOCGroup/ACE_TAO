@@ -13,7 +13,7 @@ Client_Task::Client_Task (const ACE_TCHAR *ior,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   int status = 0;
 
@@ -62,5 +62,4 @@ Client_Task::svc (void)
     }
 
   return status;
-
 }

@@ -27,11 +27,11 @@ typedef ACE_Module<ACE_MT_SYNCH> MT_Module;
 class Quit_Handler : public ACE_Sig_Adapter
 {
 public:
-  Quit_Handler (void);
+  Quit_Handler ();
   virtual int handle_input (ACE_HANDLE fd);
 };
 
-Quit_Handler::Quit_Handler (void)
+Quit_Handler::Quit_Handler ()
   : ACE_Sig_Adapter (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {
   // Register to trap input from the user.

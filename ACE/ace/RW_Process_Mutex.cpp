@@ -2,8 +2,6 @@
 #include "ace/Log_Category.h"
 #include "ace/ACE.h"
 
-
-
 #if !defined (__ACE_INLINE__)
 #include "ace/RW_Process_Mutex.inl"
 #endif /* __ACE_INLINE__ */
@@ -19,7 +17,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
 
 const ACE_TCHAR *
-ACE_RW_Process_Mutex::unique_name (void)
+ACE_RW_Process_Mutex::unique_name ()
 {
   ACE::unique_name (this, this->name_, ACE_UNIQUE_NAME_LEN);
   return this->name_;
@@ -33,13 +31,13 @@ ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (const ACE_TCHAR *name,
 // ACE_TRACE ("ACE_RW_Process_Mutex::ACE_RW_Process_Mutex");
 }
 
-ACE_RW_Process_Mutex::~ACE_RW_Process_Mutex (void)
+ACE_RW_Process_Mutex::~ACE_RW_Process_Mutex ()
 {
 // ACE_TRACE ("ACE_RW_Process_Mutex::~ACE_RW_Process_Mutex");
 }
 
 void
-ACE_RW_Process_Mutex::dump (void) const
+ACE_RW_Process_Mutex::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_RW_Process_Mutex::dump");

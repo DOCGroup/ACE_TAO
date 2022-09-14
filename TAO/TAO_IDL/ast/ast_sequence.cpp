@@ -113,15 +113,14 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
 
   if (bnt == AST_Decl::NT_param_holder)
     {
-      AST_Param_Holder *ph =
-        AST_Param_Holder::narrow_from_decl (bt);
+      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (bt);
 
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
           idl_global->err ()->not_a_type (bt);
           bt->destroy ();
           delete bt;
-          bt = 0;
+          bt = nullptr;
           throw Bailout ();
         }
     }
@@ -129,7 +128,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
   // Check if we are bounded or unbounded. An expression value of 0 means
   // unbounded. If our bound is a template parameter, skip the
   // check altogether, this node will trigger no code generation.
-  if (ms->param_holder () == 0)
+  if (ms->param_holder () == nullptr)
     {
       this->unbounded_ = (ms->ev ()->u.ulval == 0);
     }
@@ -145,7 +144,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     || nt == AST_Decl::NT_param_holder;
 }
 
-AST_Sequence::~AST_Sequence (void)
+AST_Sequence::~AST_Sequence ()
 {
 }
 
@@ -159,9 +158,9 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
   list.enqueue_tail(this);
 
-  AST_Type *type = AST_Type::narrow_from_decl (this->base_type ());
+  AST_Type *type = dynamic_cast<AST_Type*> (this->base_type ());
 
-  if (type == 0)
+  if (type == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("AST_Sequence::in_recursion - ")
@@ -173,7 +172,7 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
   if (nt == AST_Decl::NT_typedef)
     {
-      AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+      AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
       type = td->primitive_base_type ();
       nt = type->node_type ();
     }
@@ -187,7 +186,7 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
     }
 
   bool recursion_found = false;
-  AST_Type** recursable_type = 0;
+  AST_Type** recursable_type = nullptr;
   list.get (recursable_type, 0);
   if (!ACE_OS::strcmp (type->full_name (),
                            (*recursable_type)->full_name ()))
@@ -235,53 +234,64 @@ AST_Sequence::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_Expression *
-AST_Sequence::max_size (void)
+AST_Sequence::max_size ()
 {
   return this->pd_max_size;
 }
 
 AST_Type *
-AST_Sequence::base_type (void) const
+AST_Sequence::base_type () const
 {
   return this->pd_base_type;
 }
 
+AST_Type *
+AST_Sequence::primitive_base_type () const
+{
+  AST_Type *type_node = base_type ();
+  if (type_node && type_node->node_type () == AST_Decl::NT_typedef)
+    {
+      AST_Typedef *const typedef_node = dynamic_cast<AST_Typedef *> (type_node);
+      if (!typedef_node) return nullptr;
+      type_node = typedef_node->primitive_base_type ();
+    }
+  return type_node;
+}
+
 bool
-AST_Sequence::unbounded (void) const
+AST_Sequence::unbounded () const
 {
   return this->unbounded_;
 }
 
 bool
-AST_Sequence::legal_for_primary_key (void) const
+AST_Sequence::legal_for_primary_key () const
 {
   return this->base_type ()->legal_for_primary_key ();
 }
 
 bool
-AST_Sequence::is_defined (void)
+AST_Sequence::is_defined ()
 {
   return this->pd_base_type->is_defined ();
 }
 
 void
-AST_Sequence::destroy (void)
+AST_Sequence::destroy ()
 {
   if (this->owns_base_type_)
     {
       this->pd_base_type->destroy ();
       delete this->pd_base_type;
-      this->pd_base_type = 0;
+      this->pd_base_type = nullptr;
     }
 
   this->pd_max_size->destroy ();
   delete this->pd_max_size;
-  this->pd_max_size = 0;
+  this->pd_max_size = nullptr;
 
   this->AST_ConcreteType::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Sequence)
 
 AST_Annotation_Appls &
 AST_Sequence::base_type_annotations ()

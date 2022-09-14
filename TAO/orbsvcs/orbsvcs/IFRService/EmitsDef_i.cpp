@@ -10,12 +10,12 @@ TAO_EmitsDef_i::TAO_EmitsDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_EmitsDef_i::~TAO_EmitsDef_i (void)
+TAO_EmitsDef_i::~TAO_EmitsDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_EmitsDef_i::def_kind (void)
+TAO_EmitsDef_i::def_kind ()
 {
   return CORBA::dk_Emits;
 }

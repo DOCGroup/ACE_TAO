@@ -2,12 +2,12 @@
 
 ACE_DLL_SERVICE_IMPL (ACE_DLL_TAO_Service, _make_ACE_DLL_TAO_Service)
 
-ACE_DLL_TAO_Service::ACE_DLL_TAO_Service (void)
+ACE_DLL_TAO_Service::ACE_DLL_TAO_Service ()
 {
   ACE_DLL_TAO_SERVICE_TRACE (ACE_TEXT ("ACE_DLL_TAO_Service::ACE_DLL_TAO_Service (void)"));
 }
 
-ACE_DLL_TAO_Service::~ACE_DLL_TAO_Service (void)
+ACE_DLL_TAO_Service::~ACE_DLL_TAO_Service ()
 {
   ACE_DLL_TAO_SERVICE_TRACE (ACE_TEXT ("ACE_DLL_TAO_Service::~ACE_DLL_TAO_Service (void)"));
 }
@@ -42,13 +42,13 @@ int ACE_DLL_TAO_Service::init (int argc, ACE_TCHAR * argv [])
   return 0;
 }
 
-int ACE_DLL_TAO_Service::fini (void)
+int ACE_DLL_TAO_Service::fini ()
 {
   ACE_DLL_TAO_SERVICE_TRACE (ACE_TEXT ("ACE_DLL_TAO_Service::fini (void)"));
 
   try
   {
-    this->orb_->shutdown (1);
+    this->orb_->shutdown (true);
 
     this->root_poa_->destroy (1, 1);
     this->orb_->destroy ();

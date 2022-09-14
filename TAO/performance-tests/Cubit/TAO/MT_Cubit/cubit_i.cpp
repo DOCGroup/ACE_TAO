@@ -9,7 +9,7 @@ Cubit_i::Cubit_i (CORBA::ORB_ptr orb,
 {
 }
 
-Cubit_i::~Cubit_i (void)
+Cubit_i::~Cubit_i ()
 {
 }
 
@@ -44,12 +44,12 @@ Cubit_i::cube_struct (const Cubit::Many &values)
 }
 
 void
-Cubit_i::noop (void)
+Cubit_i::noop ()
 {
   // does nothing.
 }
 
-void Cubit_i::shutdown (void)
+void Cubit_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Calling orb ()->shutdown ()\n"));
@@ -57,7 +57,7 @@ void Cubit_i::shutdown (void)
 }
 
 PortableServer::POA_ptr
-Cubit_i::_default_POA (void)
+Cubit_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

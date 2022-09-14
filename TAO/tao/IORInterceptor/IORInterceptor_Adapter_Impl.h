@@ -49,7 +49,7 @@ class TAO_IORInterceptor_Adapter_Impl
   : public TAO_IORInterceptor_Adapter
 {
 public:
-  virtual ~TAO_IORInterceptor_Adapter_Impl (void);
+  virtual ~TAO_IORInterceptor_Adapter_Impl ();
 
   virtual void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor);
@@ -58,7 +58,7 @@ public:
       PortableInterceptor::IORInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies);
 
-  virtual void destroy_interceptors (void);
+  virtual void destroy_interceptors ();
 
   virtual void establish_components (TAO_Root_POA *poa );
 

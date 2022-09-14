@@ -76,14 +76,14 @@ namespace TAO
                            const CORBA::Any & data);
     //@}
 
-    virtual CORBA::ORB_ptr _get_orb (void);
+    virtual CORBA::ORB_ptr _get_orb ();
 
     /// Number of slots allocated in the slot table.
-    PortableInterceptor::SlotId slot_count (void) const;
+    PortableInterceptor::SlotId slot_count () const;
 
     /// Retrieve the PICurrent implementation from TSS, i.e. the thread
     /// scope current (TSC).
-    PICurrent_Impl * tsc (void);
+    PICurrent_Impl * tsc ();
 
     /// Verify the validity of the given SlotId.
     void check_validity (const PortableInterceptor::SlotId &identifier);
@@ -98,15 +98,11 @@ namespace TAO
      * counted, and should not be destroyed using delete() by anything
      * other than the reference counting mechanism.
      */
-    virtual ~PICurrent (void);
+    virtual ~PICurrent () = default;
 
   private:
-    /// Prevent copying through the copy constructor and the assignment
-    /// operator.
-    //@{
-    PICurrent (const PICurrent &);
-    void operator= (const PICurrent &);
-    //@}
+    PICurrent (const PICurrent &) = delete;
+    void operator= (const PICurrent &) = delete;
 
   private:
     /// Reference to the orb core.

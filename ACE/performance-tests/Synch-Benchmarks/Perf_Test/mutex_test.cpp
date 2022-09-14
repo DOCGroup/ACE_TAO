@@ -7,7 +7,7 @@
 class ACE_Svc_Export Mutex_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   static ACE_Thread_Mutex mutex;
@@ -16,7 +16,7 @@ private:
 ACE_Thread_Mutex Mutex_Test::mutex;
 
 int
-Mutex_Test::svc (void)
+Mutex_Test::svc ()
 {
   // Extract out the unique thread-specific value to be used as an
   // index...

@@ -98,7 +98,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     }
 }
 
-#if defined (linux) && defined (ACE_HAS_THREADS)
+#if defined (ACE_LINUX) && defined (ACE_HAS_THREADS)
 // Only the main thread can handle signals in Linux.  Run the
 // LoadManager in thread other than main().
 extern "C"
@@ -278,7 +278,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                reactor,
                                timer_id);
 
-#if defined (linux) && defined (ACE_HAS_THREADS)
+#if defined (ACE_LINUX) && defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn (::TAO_LB_run_load_monitor,
                                                   orb.in ()) == -1)
         {

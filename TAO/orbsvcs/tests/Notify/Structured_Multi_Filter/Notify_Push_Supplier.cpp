@@ -30,7 +30,7 @@ Notify_Push_Supplier::_connect (
       constraint_list[0].event_types.length (0);
       constraint_list[0].constraint_expr = CORBA::string_dup ("group != 0");
 
-      filter->add_constraints (constraint_list);
+      CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
       proxyconsumer->add_filter (filter.in ());
     }

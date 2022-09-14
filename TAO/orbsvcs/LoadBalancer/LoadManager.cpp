@@ -8,9 +8,9 @@
 
 #include "tao/IORTable/IORTable.h"
 
-#if defined (linux) && defined (ACE_HAS_THREADS)
+#if defined (ACE_LINUX) && defined (ACE_HAS_THREADS)
 # include "ace/Signal.h"
-#endif /* linux && ACE_HAS_THREADS */
+#endif /* ACE_LINUX && ACE_HAS_THREADS */
 
 static const ACE_TCHAR *lm_ior_file = ACE_TEXT("lm.ior");
 static int ping_timeout_milliseconds = 2000;
@@ -83,7 +83,7 @@ parse_args (int argc,
     }
 }
 
-#if defined (linux) && defined (ACE_HAS_THREADS)
+#if defined (ACE_LINUX) && defined (ACE_HAS_THREADS)
 // Only the main thread can handle signals in Linux.  Run the
 // LoadManager in thread other than main().
 extern "C"
@@ -210,7 +210,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf (lm_ior, "%s", str.in ());
       ACE_OS::fclose (lm_ior);
 
-#if defined (linux) && defined (ACE_HAS_THREADS)
+#if defined (ACE_LINUX) && defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn (::TAO_LB_run_load_manager,
                                                   orb.in ()) == -1)
         {

@@ -33,7 +33,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
   try {
-
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     if (parse_args (argc, argv) != 0)
@@ -50,11 +49,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
     Message_var msg = new MessageImpl("Son", "Mom", "Dinner's Ready.", "Hurry home.");
 
     if (tst->send_message(msg)) {
-
       std::cout << "Message sent successfully.\n";
       msg->print();
       std::cout << std::endl;
-
     } else {
       std::cout << "Message refused." << std::endl;
     }
@@ -64,7 +61,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
     }
 
     orb->destroy();
-
   } catch(const CORBA::Exception& e) {
     std::cerr << e << std::endl;
     return 1;

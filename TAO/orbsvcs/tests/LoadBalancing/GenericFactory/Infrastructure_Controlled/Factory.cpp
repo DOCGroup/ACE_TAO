@@ -3,7 +3,7 @@
 
 #include "TestC.h"
 
-Factory::Factory (void)
+Factory::Factory ()
 {
    this->fcid_ = 0;
 }
@@ -51,7 +51,6 @@ Factory::create_object (
   this->oid_ = this->poa_->servant_to_id (servant);
 
   return servant->_this ();
-
 }
 
 void

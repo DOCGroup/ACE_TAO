@@ -54,7 +54,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
-
   // TAO_IDL - Generated from
   // be\be_interface.cpp:646
 
@@ -106,11 +105,10 @@ namespace PortableInterceptor
 
       );
 
-    static PolicyFactory_ptr _nil (void)
+    static PolicyFactory_ptr _nil ()
     {
       return static_cast<PolicyFactory_ptr> (0);
     }
-
 
 
     // TAO_IDL - Generated from
@@ -137,14 +135,14 @@ namespace PortableInterceptor
 
       );
 
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _interface_repository_id () const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
   protected:
     // Abstract or local interface only.
-    PolicyFactory (void);
+    PolicyFactory ();
 
-    virtual ~PolicyFactory (void);
+    virtual ~PolicyFactory ();
 
   private:
     // Private and unimplemented for concrete interfaces.
@@ -166,7 +164,6 @@ namespace PortableInterceptor
 // Traits specializations.
 namespace TAO
 {
-
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY__TRAITS_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY__TRAITS_
 
@@ -179,7 +176,7 @@ namespace TAO
     static void release (
         ::PortableInterceptor::PolicyFactory_ptr
       );
-    static ::PortableInterceptor::PolicyFactory_ptr nil (void);
+    static ::PortableInterceptor::PolicyFactory_ptr nil ();
     static ::CORBA::Boolean marshal (
         ::PortableInterceptor::PolicyFactory_ptr p,
         TAO_OutputCDR & cdr

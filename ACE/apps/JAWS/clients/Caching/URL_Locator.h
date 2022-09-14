@@ -105,7 +105,7 @@ public:
                             const ACE_URL_Property_Seq *modify = 0) = 0;
 
   /// Provide a human readable error status.
-  virtual const char *error_status (void);
+  virtual const char *error_status ();
 };
 
 #endif /* ACE_WEB_LOCATOR_H */

@@ -84,13 +84,13 @@ public:
                  UTL_LabelList *cdr);
 
   // Get list item.
-  AST_UnionLabel *head (void);
+  AST_UnionLabel *head ();
 
   // Override of base class method.
-  virtual UTL_LabelList *copy (void);
+  virtual UTL_LabelList *copy ();
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
 private:
   AST_UnionLabel *pd_car_data;
@@ -103,7 +103,7 @@ public:
   UTL_LabellistActiveIterator (UTL_LabelList *source);
 
   // Get current item.
-  AST_UnionLabel *item (void);
+  AST_UnionLabel *item ();
 };
 
 #endif           // _UTL_LABELLIST_UTL_LABELLIST_HH

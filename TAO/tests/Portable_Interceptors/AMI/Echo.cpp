@@ -17,7 +17,7 @@ Echo::echo_operation(char const * the_input)
 }
 
 void
-Echo::shutdown(void)
+Echo::shutdown()
 {
   this->orb_->shutdown(0);
 }

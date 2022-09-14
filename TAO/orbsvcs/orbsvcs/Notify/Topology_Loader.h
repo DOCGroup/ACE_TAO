@@ -32,7 +32,6 @@ namespace CORBA
 
 namespace TAO_Notify
 {
-
 /// A forward declaration.
 class Topology_Object;
 
@@ -69,9 +68,8 @@ public:
    * vary based on the type of loader, so we can't include it in the
    * interface.
    */
-  virtual void close (void);
+  virtual void close ();
 };
-
 } // namespace TAO_Notify
 
 TAO_END_VERSIONED_NAMESPACE_DECL

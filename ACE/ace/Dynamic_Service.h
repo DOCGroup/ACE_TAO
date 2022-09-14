@@ -63,9 +63,9 @@ public:
 #endif  // ACE_USES_WCHAR
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Service ())
-  ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Service (const ACE_Dynamic_Service&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Service& operator= (const ACE_Dynamic_Service&))
+  ACE_Dynamic_Service () = delete;
+  ACE_Dynamic_Service (const ACE_Dynamic_Service&) = delete;
+  ACE_Dynamic_Service& operator= (const ACE_Dynamic_Service&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

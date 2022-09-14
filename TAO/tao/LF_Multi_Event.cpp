@@ -5,16 +5,16 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-TAO_LF_Multi_Event::TAO_LF_Multi_Event (void)
+TAO_LF_Multi_Event::TAO_LF_Multi_Event ()
   : TAO_LF_Event (),
-    events_ (0),
-    winner_ (0)
+    events_ (nullptr),
+    winner_ (nullptr)
 {
 }
 
-TAO_LF_Multi_Event::~TAO_LF_Multi_Event (void)
+TAO_LF_Multi_Event::~TAO_LF_Multi_Event ()
 {
-  while (this->events_ != 0)
+  while (this->events_ != nullptr)
     {
       Event_Node *n = this->events_->next_;
       delete this->events_;
@@ -30,7 +30,7 @@ TAO_LF_Multi_Event::bind (TAO_LF_Follower *follower)
       return -1;
     }
 
-  for (Event_Node *n = this->events_; n != 0; n = n->next_)
+  for (Event_Node *n = this->events_; n != nullptr; n = n->next_)
     if (n->ptr_->bind(follower) == -1)
       {
         return -1;
@@ -46,7 +46,7 @@ TAO_LF_Multi_Event::unbind (TAO_LF_Follower *follower)
       return -1;
     }
 
-  for (Event_Node *n = this->events_; n != 0; n = n->next_)
+  for (Event_Node *n = this->events_; n != nullptr; n = n->next_)
     if (n->ptr_->unbind (follower) == -1)
       {
         return -1;
@@ -58,7 +58,7 @@ TAO_LF_Multi_Event::unbind (TAO_LF_Follower *follower)
 void
 TAO_LF_Multi_Event::add_event (TAO_Connection_Handler *ev)
 {
-  Event_Node *node = 0;
+  Event_Node *node = nullptr;
   ACE_NEW (node, Event_Node);
   node->next_ = this->events_;
   node->ptr_ = ev;
@@ -67,21 +67,21 @@ TAO_LF_Multi_Event::add_event (TAO_Connection_Handler *ev)
 }
 
 TAO_Connection_Handler*
-TAO_LF_Multi_Event::winner (void)
+TAO_LF_Multi_Event::winner ()
 {
   return this->winner_;
 }
 
 TAO_Transport *
-TAO_LF_Multi_Event::base_transport (void)
+TAO_LF_Multi_Event::base_transport ()
 {
-  return (this->events_ == 0) ? 0 : this->events_->ptr_->transport();
+  return (this->events_ == nullptr) ? nullptr : this->events_->ptr_->transport();
 }
 
 bool
-TAO_LF_Multi_Event::successful_i (void) const
+TAO_LF_Multi_Event::successful_i () const
 {
-  for (Event_Node *n = this->events_; n != 0; n = n->next_)
+  for (Event_Node *n = this->events_; n != nullptr; n = n->next_)
     if (n->ptr_->successful_i())
       {
         this->winner_ = n->ptr_;
@@ -91,9 +91,9 @@ TAO_LF_Multi_Event::successful_i (void) const
 }
 
 bool
-TAO_LF_Multi_Event::error_detected_i (void) const
+TAO_LF_Multi_Event::error_detected_i () const
 {
-  for (Event_Node *n = this->events_; n != 0; n = n->next_)
+  for (Event_Node *n = this->events_; n != nullptr; n = n->next_)
     {
       if (!n->ptr_->error_detected_i ())
         {
@@ -109,9 +109,9 @@ TAO_LF_Multi_Event::state_changed_i (LFS_STATE )
 }
 
 bool
-TAO_LF_Multi_Event::is_state_final (void) const
+TAO_LF_Multi_Event::is_state_final () const
 {
-  for (Event_Node *n = this->events_; n != 0; n = n->next_)
+  for (Event_Node *n = this->events_; n != nullptr; n = n->next_)
     {
       if (!n->ptr_->is_state_final ())
         {

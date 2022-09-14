@@ -49,7 +49,6 @@ Client_ORBInitializer::post_init (
     client_interceptor = interceptor;
 
   info->add_client_request_interceptor (client_interceptor.in ());
-
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

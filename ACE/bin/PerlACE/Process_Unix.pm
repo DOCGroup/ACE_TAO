@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#!/usr/bin/env perl
 
 package PerlACE::Process;
 
@@ -311,10 +311,6 @@ sub CommandLine ()
             "export LIBPATH=$libpath:.:\$LIBPATH\n".
             "export SHLIB_PATH=$libpath:.:\$SHLIB_PATH\n".
             "export PATH=\$PATH:$root/bin:$root/lib:$libpath:.\n";
-        if (defined $self->{TARGET}->{dance_root}) {
-          $run_script .=
-            "export DANCE_ROOT=$self->{TARGET}->{dance_root}\n";
-        }
         if (defined $self->{TARGET}->{ace_root}) {
           $run_script .=
             "export ACE_ROOT=$self->{TARGET}->{ace_root}\n";
@@ -322,10 +318,6 @@ sub CommandLine ()
         if (defined $self->{TARGET}->{tao_root}) {
           $run_script .=
             "export TAO_ROOT=$self->{TARGET}->{tao_root}\n";
-        }
-        if (defined $self->{TARGET}->{ciao_root}) {
-          $run_script .=
-            "export CIAO_ROOT=$self->{TARGET}->{ciao_root}\n";
         }
 
         while ( my ($env_key, $env_value) = each(%$x_env_ref) ) {
@@ -573,34 +565,259 @@ sub Spawn ()
     return 0;
 }
 
-sub WaitKill ($)
+sub print_stacktrace_linux
+{
+    my $self = shift;
+
+    # Get the core file pattern
+    my $core_pattern_file = "/proc/sys/kernel/core_pattern";
+    if (!(-e $core_pattern_file)) {
+        print STDERR "WARNING: print_stacktrace_linux: Core file pattern $core_pattern_file does not exist\n";
+        return;
+    }
+
+    my $pattern_fh;
+    if (!open ($pattern_fh, "<", "$core_pattern_file")) {
+        print STDERR "WARNING: print_stacktrace_linux: Could not open $core_pattern_file: $!\n";
+        return;
+    }
+
+    my $line = <$pattern_fh>;
+    chomp ($line);
+    close ($pattern_fh);
+
+    if ($line =~ /\|/) {
+        print STDERR "WARNING: print_stacktrace_linux: Core files are handled by a separate service. Core pattern: $line\n";
+        return;
+    }
+
+    # Find the core file from the pattern
+    my $path = ".";
+    my $pattern;
+    if ($line =~ /^(.*)\/([^\/]*)$/) {
+        $path = $1;
+        $pattern = $2;
+    }
+    else {
+        $pattern = $line;
+    }
+
+    # If /proc/sys/kernel/core_uses_pid is non-zero and the pattern
+    # doesn't have %p, then .PID is appended to the core file name.
+    my $uses_pid_file = "/proc/sys/kernel/core_uses_pid";
+    my $uses_pid = 0;
+    if (!open (my $uses_pid_fh, "<", "$uses_pid_file")) {
+        print STDERR "WARNING: print_stacktrace_linux: Could not open $uses_pid_file: $!\n";
+    }
+    else {
+        $line = <$uses_pid_fh>;
+        chomp ($line);
+        if ($line ne "" || $line ne "\n") {
+            $uses_pid = $line;
+        }
+        close ($uses_pid_fh);
+    }
+
+    my $exec_path = $self->Executable ();
+
+    my $exec_name_idx = index ($pattern, "%e");
+    if ($exec_name_idx != -1) {
+        my $exec_name = File::Basename::basename ($exec_path);
+        # The core file name contains at most 15 characters from the executable name
+        # (https://man7.org/linux/man-pages/man5/core.5.html).
+        $exec_name = substr ($exec_name, 0, 15);
+        substr ($pattern, $exec_name_idx, 2) = $exec_name;
+    }
+
+    my $hname_idx = index ($pattern, "%h");
+    if ($hname_idx != -1) {
+        substr ($pattern, $hname_idx, 2) = Sys::Hostname::hostname ();
+    }
+
+    my $pid_idx = index ($pattern, "%p");
+    if ($pid_idx != -1) {
+        substr ($pattern, $pid_idx, 2) = $self->{PROCESS};
+    }
+    elsif ($uses_pid != 0) {
+        $pattern = $pattern . "." . $self->{PROCESS};
+    }
+
+    my $timestamp_idx = index ($pattern, "%t");
+    my $core_file_path;
+    if ($timestamp_idx != -1) {
+        my $prefix = substr ($pattern, 0, $timestamp_idx);
+        my $suffix_len = length ($pattern) - $timestamp_idx - 2;
+        my $suffix = substr ($pattern, $timestamp_idx + 2, $suffix_len);
+
+        # Get the core file with latest timestamp.
+        my $dh;
+        if (!opendir ($dh, $path)) {
+            print STDERR "WARNING: print_stacktrace_linux: Couldn't opendir $path: $!\n";
+            return;
+        }
+        my @files = grep (/$prefix[0-9]+$suffix/, readdir ($dh));
+        my $latest_timestamp;
+        my $chosen_core_file;
+        foreach my $file (@files) {
+            my $timestamp_len = length ($file) - $timestamp_idx - $suffix_len;
+            my $timestamp = substr ($file, $timestamp_idx, $timestamp_len);
+            if (!defined $latest_timestamp) {
+                $latest_timestamp = $timestamp;
+                $chosen_core_file = $file;
+            }
+            elsif ($latest_timestamp < $timestamp) {
+                $latest_timestamp = $timestamp;
+                $chosen_core_file = $file;
+            }
+        }
+        closedir ($dh);
+        if (defined $chosen_core_file) {
+            $core_file_path = $path . "/" . $chosen_core_file;
+        }
+        else {
+            print STDERR "WARNING: print_stacktrace_linux: Could not determine a core file with timestamp\n";
+            return;
+        }
+    }
+    else {
+        $core_file_path = $path . "/" . $pattern;
+    }
+
+    my $debugger = "gdb";
+    if ($ENV{ACE_TEST_DEBUGGER}) {
+        $debugger = $ENV{ACE_TEST_DEBUGGER};
+    }
+    $self->print_stacktrace_common($exec_path, $core_file_path, $debugger);
+}
+
+sub print_stacktrace_darwin
+{
+    my $self = shift;
+    my $core_file_path = "/cores/core." . $self->{PROCESS};
+
+    my $debugger = "lldb";
+    if ($ENV{ACE_TEST_DEBUGGER}) {
+        $debugger = $ENV{ACE_TEST_DEBUGGER};
+    }
+    $self->print_stacktrace_common($self->Executable (), $core_file_path, $debugger);
+}
+
+sub print_stacktrace_common
+{
+    my $self = shift;
+    my $exec_path = shift;
+    my $core_file_path = shift;
+    my $preferred_db = shift;
+
+    if (!(-e $core_file_path)) {
+        print STDERR "WARNING: print_stacktrace_common: Core file $core_file_path does not exist\n";
+        return;
+    }
+    if (!defined $preferred_db) {
+        $preferred_db = "gdb";
+    }
+    my $preferred_cmd;
+    my $secondary_db;
+    my $secondary_cmd;
+    my $gdb_args = " $exec_path -c $core_file_path -ex bt -ex quit";
+    my $lldb_args = " $exec_path -c $core_file_path -o bt -o quit";
+
+    if ($preferred_db =~ /gdb/) {
+        $preferred_cmd = $preferred_db . $gdb_args;
+        $secondary_db = "lldb";
+        $secondary_cmd = $secondary_db . $lldb_args;
+    }
+    elsif ($preferred_db =~ /lldb/) {
+        $preferred_cmd = $preferred_db . $lldb_args;
+        $secondary_db = "gdb";
+        $secondary_cmd = $secondary_db . $gdb_args;
+    }
+    else {
+        print STDERR "ERROR: print_stacktrace_common: Unknown debugger ($preferred_db) requested\n";
+        return;
+    }
+
+    my $stack_trace;
+    if (system ("$preferred_db --version") != -1) {
+        $stack_trace = `$preferred_cmd`;
+    }
+    elsif (system ("$secondary_db --version") != -1) {
+        print STDERR "WARNING: print_stacktrace_common: Failed printing stack trace with $preferred_db. Trying $secondary_db...\n";
+        $stack_trace = `$secondary_cmd`;
+    }
+    else {
+        print STDERR "WARNING: print_stacktrace_common: Failed printing stack trace with both $preferred_db and $secondary_db\n";
+    }
+
+    if (defined $stack_trace) {
+        print STDERR "\n======= Begin stack trace of $exec_path from core file $core_file_path =======\n";
+        print STDERR $stack_trace;
+        print STDERR "======= End stack trace =======\n";
+    }
+}
+
+# The second argument is an optional output argument that, if present,
+# will be passed to check_return_value function to get the signal number
+# the process has received, if any, and/or whether there was a core dump.
+sub WaitKill ($;$)
 {
     my $self = shift;
     my $timeout = shift;
+    my $opts = shift;
 
     if ($self->{RUNNING} == 0) {
         return 0;
     }
 
-    my $status = $self->TimedWait ($timeout);
+    my $has_core;
+    my %my_opts = (dump_ref => \$has_core);
+
+    if (defined $opts) {
+        if (defined $opts->{self_crash}) {
+            $my_opts{self_crash} = $opts->{self_crash};
+        }
+        if (defined $opts->{signal_ref}) {
+            $my_opts{signal_ref} = $opts->{signal_ref};
+        }
+    }
+
+    my $status = $self->TimedWait ($timeout, \%my_opts);
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
 
         if ($ENV{ACE_TEST_LOG_STUCK_STACKS}) {
-            my $debugger = ($^O eq 'darwin') ? 'lldb' : 'gdb';
-            my $commands = ($^O eq 'darwin') ? "-o 'bt all'"
-                : "-ex 'set pagination off' -ex 'thread apply all backtrace'";
+            my $debugger = $ENV{ACE_TEST_DEBUGGER};
+            if (!defined $debugger) {
+                $debugger = ($^O eq 'darwin') ? 'lldb' : 'gdb';
+            }
+
+            my $commands = ($debugger eq 'gdb') ?
+              "-ex 'set pagination off' -ex 'thread apply all backtrace'" : "-o 'bt all'";
+            print STDERR "\n======= Begin stuck stacks =======\n";
             system "$debugger --batch -p $self->{PROCESS} $commands";
+            print STDERR "======= End stuck stacks =======\n";
         }
 
         if ($ENV{ACE_TEST_GENERATE_CORE_FILE}) {
             system ($^O ne 'darwin') ? "gcore $self->{PROCESS}"
-                : "lldb -b -p $self->{PROCESS} -o " .
-                "'process save-core core.$self->{PROCESS}'";
+              : "lldb -b -p $self->{PROCESS} -o " .
+              "'process save-core core.$self->{PROCESS}'";
         }
 
         $self->Kill ();
+    }
+    elsif ($status == 255 && $has_core && !$ENV{ACE_TEST_DISABLE_STACK_TRACE}) {
+        if ($^O eq 'linux') {
+            $self->print_stacktrace_linux ();
+        }
+        elsif ($^O eq 'darwin') {
+            $self->print_stacktrace_darwin ();
+        }
+    }
+
+    if (defined $opts && defined $opts->{dump_ref}) {
+        ${$opts->{dump_ref}} = $has_core;
     }
 
     $self->{RUNNING} = 0;
@@ -608,19 +825,18 @@ sub WaitKill ($)
     return $status;
 }
 
-
 # Do a Spawn and immediately WaitKill
-
-sub SpawnWaitKill ($)
+sub SpawnWaitKill ($;$)
 {
     my $self = shift;
     my $timeout = shift;
+    my $opts = shift;
 
     if ($self->Spawn () == -1) {
         return -1;
     }
 
-    return $self->WaitKill ($timeout);
+    return $self->WaitKill ($timeout, $opts);
 }
 
 sub TerminateWaitKill ($)
@@ -633,14 +849,24 @@ sub TerminateWaitKill ($)
         kill ('TERM', $self->{PROCESS});
     }
 
-    return $self->WaitKill ($timeout);
+    return $self->WaitKill ($timeout, {self_crash => 1});
 }
 
-# really only for internal use
+# Really only for internal use.
+# The second optional argument is a hash reference with the following keys.
+# 1. "self_crash" indicates if the process may receive a signal intentionally.
+# In that case, a signal may originate from the process, e.g., by calling abort(),
+# or from an associated Perl script, e.g., by calling kill. If "self_crash" is
+# missing, it has the same meaning as if "self_crash" is evaluated to false.
+# A signal intentionally received can be either KILL, TERM, or ABRT. Any other
+# signal indicates there was an actual error.
+# 2. "signal_ref" is a scalar reference that will hold the signal number, if any.
+# 3. "dump_ref" is a scalar reference that indicates if there was a core dump.
 sub check_return_value ($)
 {
     my $self = shift;
     my $rc = shift;
+    my $opts = shift // {};
 
     # NSK OSS has a 32-bit waitpid() status
     my $is_NSK = ($^O eq "nonstop_kernel");
@@ -656,8 +882,7 @@ sub check_return_value ($)
         return ($rc >> 8);
     }
     elsif (($rc & 0xff) == 0) {
-        $rc >>= 8;
-        return $rc;
+        return ($rc >> 8);
     }
 
     # Ignore NSK 16-bit completion code
@@ -671,9 +896,22 @@ sub check_return_value ($)
         $dump = 1;
     }
 
-    # check for ABRT, KILL or TERM
-    if ($rc == 6 || $rc == 9 || $rc == 15) {
+    # A undef means the process does not self crash
+    my $self_crash = $opts->{self_crash};
+
+    # ABRT, KILL or TERM can be sent deliberately
+    if ($self_crash && ($rc == 6 || $rc == 9 || $rc == 15)) {
         return 0;
+    }
+
+    my $signal_ref = $opts->{signal_ref};
+    if (defined $signal_ref) {
+        ${$signal_ref} = $rc;
+    }
+
+    my $dump_ref = $opts->{dump_ref};
+    if (defined $dump_ref) {
+        ${$dump_ref} = $dump;
     }
 
     print STDERR "ERROR: <", $self->{EXECUTABLE},
@@ -763,7 +1001,7 @@ sub Kill ($)
             my $pid = waitpid ($self->{PROCESS}, WNOHANG);
             if ($pid > 0) {
                 if (! $ignore_return_value) {
-                    $self->check_return_value ($?);
+                    $self->check_return_value ($?, {self_crash => 1});
                 }
                 last;
             }
@@ -798,10 +1036,14 @@ sub Wait ($)
 
 }
 
-sub TimedWait ($)
+# The second argument is an optional output argument that, if present,
+# will contain the signal number that the process has received, if any,
+# and/or whether there was a core dump.
+sub TimedWait ($;$)
 {
     my $self = shift;
     my $timeout = shift;
+    my $opts = shift;
 
     if (!defined $self->{PROCESS}) {
         return 0;
@@ -817,7 +1059,7 @@ sub TimedWait ($)
     while ($timeout-- != 0) {
         my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
         if ($pid != 0 && $? != -1) {
-            return $self->check_return_value ($?);
+            return $self->check_return_value ($?, $opts);
         }
         select(undef, undef, undef, 0.1);
     }

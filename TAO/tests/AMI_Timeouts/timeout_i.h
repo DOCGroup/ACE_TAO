@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    timeout_i.h
@@ -9,12 +8,10 @@
  */
 //=============================================================================
 
-
 #ifndef TIMEOUT_I_H
 #define TIMEOUT_I_H
 
 #include "ace/High_Res_Timer.h"
-
 #include "timeoutS.h"
 
 class Timeout_i
@@ -23,14 +20,13 @@ class Timeout_i
 public:
   Timeout_i (CORBA::ORB_ptr orb);
 
-  ~Timeout_i ();
+  ~Timeout_i () = default;
 
   virtual void sendTimeToWait (CORBA::Long msec);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
-
   CORBA::ORB_var orb_;
 };
 
@@ -40,9 +36,9 @@ class TimeoutHandler_i
 public:
   TimeoutHandler_i ();
 
-  ~TimeoutHandler_i ();
+  ~TimeoutHandler_i () = default;
 
-  virtual void sendTimeToWait (void);
+  virtual void sendTimeToWait ();
 
   virtual void sendTimeToWait_excep (
       ::Messaging::ExceptionHolder * excep_holder);

@@ -21,7 +21,7 @@ class Widget
 {
 public:
   /// Destructor.
-  virtual ~Widget (void);
+  virtual ~Widget ();
 
   /// Add a new part to the widget. The widget takes ownership of the part
   /// object.

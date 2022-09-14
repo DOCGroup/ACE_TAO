@@ -14,7 +14,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Unknown_IDL_Type::LOCK const
-TAO::Unknown_IDL_Type::lock_i (void)
+TAO::Unknown_IDL_Type::lock_i ()
 {
   static LOCK base_lock_ (new ACE_Lock_Adapter<TAO_SYNCH_MUTEX>());
   return base_lock_;
@@ -49,7 +49,7 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc)
 {
 }
 
-TAO::Unknown_IDL_Type::~Unknown_IDL_Type (void)
+TAO::Unknown_IDL_Type::~Unknown_IDL_Type ()
 {
 }
 
@@ -81,25 +81,25 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR & cdr)
 }
 
 const void *
-TAO::Unknown_IDL_Type::value (void) const
+TAO::Unknown_IDL_Type::value () const
 {
   return this->cdr_.start ();
 }
 
 void
-TAO::Unknown_IDL_Type::free_value (void)
+TAO::Unknown_IDL_Type::free_value ()
 {
   ::CORBA::release (this->type_);
 }
 
 TAO_InputCDR &
-TAO::Unknown_IDL_Type::_tao_get_cdr (void)
+TAO::Unknown_IDL_Type::_tao_get_cdr ()
 {
   return this->cdr_;
 }
 
 int
-TAO::Unknown_IDL_Type::_tao_byte_order (void) const
+TAO::Unknown_IDL_Type::_tao_byte_order () const
 {
   return this->cdr_.byte_order ();
 }

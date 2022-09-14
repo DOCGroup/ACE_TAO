@@ -8,7 +8,7 @@
 class HA_CommandHandler : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  virtual int svc (void)
+  virtual int svc ()
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) starting up\n")));
     ACE_Message_Block *mb = 0;

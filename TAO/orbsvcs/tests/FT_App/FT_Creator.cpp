@@ -129,7 +129,6 @@ void FTAPP::FT_Creator::usage(FILE* out)const
 }
 
 
-
 int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb)
 {
   int result = 0;
@@ -172,7 +171,7 @@ int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb)
   return result;
 }
 
-int FTAPP::FT_Creator::run (void)
+int FTAPP::FT_Creator::run ()
 {
   int result = 0;
   size_t typeCount = this->create_roles_.size();
@@ -226,7 +225,6 @@ int FTAPP::FT_Creator::run (void)
     }
 
     iogr_seq_ += 1;
-
   }
 
   typeCount = this->unregister_roles_.size();

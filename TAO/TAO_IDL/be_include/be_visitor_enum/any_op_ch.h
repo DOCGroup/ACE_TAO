@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ENUM_ANY_OP_CH_H_
 #define _BE_VISITOR_ENUM_ANY_OP_CH_H_
 
@@ -24,16 +23,15 @@
  */
 class be_visitor_enum_any_op_ch : public be_visitor_scope
 {
-
 public:
   /// constructor
   be_visitor_enum_any_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_enum_any_op_ch (void);
+  ~be_visitor_enum_any_op_ch () override = default;
 
   /// visit enum
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 };
 
 #endif /* _BE_VISITOR_ENUM_ANY_OP_CH_H_ */

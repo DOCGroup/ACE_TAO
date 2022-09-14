@@ -53,14 +53,13 @@ class TAO_FT_ORB_Utils_Export TAO_FT_IOGR_Property
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Our Constructor
   TAO_FT_IOGR_Property (FT::TagFTGroupTaggedComponent &ft_group);
 
-  TAO_FT_IOGR_Property (void);
+  TAO_FT_IOGR_Property ();
 
   /// Destructor
-  ~TAO_FT_IOGR_Property (void);
+  ~TAO_FT_IOGR_Property ();
 
   /// Set the property for the IOGR
   virtual CORBA::Boolean set_property (
@@ -92,7 +91,6 @@ public:
       FT::TagFTGroupTaggedComponent &ft_group) const;
 
 private:
-
   /// An helper function that gets the primary profile from the <ior>
   TAO_Profile *get_primary_profile (CORBA::Object_ptr ior);
 

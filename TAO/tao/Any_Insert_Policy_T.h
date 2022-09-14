@@ -36,7 +36,6 @@ namespace TAO
   class Any_Insert_Policy_Stream
   {
   public:
-
     static inline void any_insert (CORBA::Any* p, S const & x)
       {
         (*p) <<= x;
@@ -47,7 +46,6 @@ namespace TAO
   class Any_Insert_Policy_AnyTypeCode_Adapter
   {
   public:
-
     static inline void any_insert (CORBA::Any* p, S const & x)
       {
         TAO_AnyTypeCode_Adapter *adapter =
@@ -71,7 +69,6 @@ namespace TAO
   class Any_Insert_Policy_IFR_Client_Adapter
   {
   public:
-
     static inline void any_insert (CORBA::Any* p, S const & x)
       {
         TAO_IFR_Client_Adapter *adapter =
@@ -95,7 +92,6 @@ namespace TAO
   class Any_Insert_Policy_CORBA_Object
   {
   public:
-
     static inline void any_insert (CORBA::Any* , S const &)
       {
         if (TAO_debug_level > 2)

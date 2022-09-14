@@ -129,7 +129,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                          ACE_OS::gethrtime ());
            if (orb->work_pending ())
               orb->perform_work ();
-
          }
 
        ACE_Time_Value tv (0, 2000);
@@ -154,7 +153,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       roundtrip->shutdown ();
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

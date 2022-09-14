@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename S,
          template <typename> class Insert_Policy>
 S const &
-TAO::In_Var_Size_SArgument_T<S,Insert_Policy>::arg (void) const
+TAO::In_Var_Size_SArgument_T<S,Insert_Policy>::arg () const
 {
   return this->x_;
 }

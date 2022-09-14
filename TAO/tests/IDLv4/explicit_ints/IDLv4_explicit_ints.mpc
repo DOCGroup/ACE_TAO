@@ -1,0 +1,10 @@
+project: taoexe {
+  exename = explicit_ints
+  idlflags += --idl-version 4
+  IDL_Files {
+    test.idl
+  }
+  Source_Files {
+    main.cpp
+  }
+}

@@ -46,7 +46,6 @@ public:
   virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                            const CORBA::Any & value);
 private:
-
   TAO_ORB_Core * orb_core_;
 };
 

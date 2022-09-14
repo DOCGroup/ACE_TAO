@@ -31,7 +31,7 @@ TAO_ClientRequestInfo::TAO_ClientRequestInfo (TAO::Invocation_Base *inv)
 }
 
 void
-TAO_ClientRequestInfo::setup_picurrent (void)
+TAO_ClientRequestInfo::setup_picurrent ()
 {
   // Retrieve the thread scope current (no TSS access incurred yet).
   CORBA::Object_ptr pi_current_obj =
@@ -75,7 +75,7 @@ TAO_ClientRequestInfo::get_service_context_i (
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo::target (void)
+TAO_ClientRequestInfo::target ()
 {
   this->check_validity ();
 
@@ -83,7 +83,7 @@ TAO_ClientRequestInfo::target (void)
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo::effective_target (void)
+TAO_ClientRequestInfo::effective_target ()
 {
   this->check_validity ();
 
@@ -91,7 +91,7 @@ TAO_ClientRequestInfo::effective_target (void)
 }
 
 IOP::TaggedProfile *
-TAO_ClientRequestInfo::effective_profile (void)
+TAO_ClientRequestInfo::effective_profile ()
 {
   this->check_validity ();
 
@@ -128,7 +128,7 @@ TAO_ClientRequestInfo::effective_profile (void)
 // exception from an Any. This method is in place just to be compliant
 // with the spec.
 CORBA::Any *
-TAO_ClientRequestInfo::received_exception (void)
+TAO_ClientRequestInfo::received_exception ()
 {
   this->check_validity ();
 
@@ -163,7 +163,7 @@ TAO_ClientRequestInfo::received_exception (void)
 }
 
 char *
-TAO_ClientRequestInfo::received_exception_id (void)
+TAO_ClientRequestInfo::received_exception_id ()
 {
   this->check_validity ();
 
@@ -309,7 +309,7 @@ TAO_ClientRequestInfo::add_request_service_context (
 }
 
 CORBA::ULong
-TAO_ClientRequestInfo::request_id (void)
+TAO_ClientRequestInfo::request_id ()
 {
   this->check_validity ();
 
@@ -393,7 +393,7 @@ TAO_ClientRequestInfo::request_id (void)
 }
 
 char *
-TAO_ClientRequestInfo::operation (void)
+TAO_ClientRequestInfo::operation ()
 {
   this->check_validity ();
 
@@ -401,7 +401,7 @@ TAO_ClientRequestInfo::operation (void)
 }
 
 Dynamic::ParameterList *
-TAO_ClientRequestInfo::arguments (void)
+TAO_ClientRequestInfo::arguments ()
 {
   this->check_validity ();
 
@@ -443,7 +443,7 @@ TAO_ClientRequestInfo::parameter_list (Dynamic::ParameterList &param_list)
 }
 
 Dynamic::ExceptionList *
-TAO_ClientRequestInfo::exceptions (void)
+TAO_ClientRequestInfo::exceptions ()
 {
   this->check_validity ();
 
@@ -481,7 +481,7 @@ TAO_ClientRequestInfo::exception_list (Dynamic::ExceptionList &exception_list)
 }
 
 Dynamic::ContextList *
-TAO_ClientRequestInfo::contexts (void)
+TAO_ClientRequestInfo::contexts ()
 {
   this->check_validity ();
 
@@ -489,7 +489,7 @@ TAO_ClientRequestInfo::contexts (void)
 }
 
 Dynamic::RequestContext *
-TAO_ClientRequestInfo::operation_context (void)
+TAO_ClientRequestInfo::operation_context ()
 {
   this->check_validity ();
 
@@ -497,7 +497,7 @@ TAO_ClientRequestInfo::operation_context (void)
 }
 
 CORBA::Any *
-TAO_ClientRequestInfo::result (void)
+TAO_ClientRequestInfo::result ()
 {
   this->check_validity ();
 
@@ -526,7 +526,7 @@ TAO_ClientRequestInfo::result (CORBA::Any *any)
 }
 
 CORBA::Boolean
-TAO_ClientRequestInfo::response_expected (void)
+TAO_ClientRequestInfo::response_expected ()
 {
   this->check_validity ();
 
@@ -534,7 +534,7 @@ TAO_ClientRequestInfo::response_expected (void)
 }
 
 Messaging::SyncScope
-TAO_ClientRequestInfo::sync_scope (void)
+TAO_ClientRequestInfo::sync_scope ()
 {
   this->check_validity ();
 
@@ -542,7 +542,7 @@ TAO_ClientRequestInfo::sync_scope (void)
 }
 
 PortableInterceptor::ReplyStatus
-TAO_ClientRequestInfo::reply_status (void)
+TAO_ClientRequestInfo::reply_status ()
 {
   this->check_validity ();
 
@@ -558,7 +558,7 @@ TAO_ClientRequestInfo::reply_status (void)
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo::forward_reference (void)
+TAO_ClientRequestInfo::forward_reference ()
 {
   this->check_validity ();
 
@@ -606,7 +606,7 @@ TAO_ClientRequestInfo::get_reply_service_context (IOP::ServiceId id)
 }
 
 void
-TAO_ClientRequestInfo::check_validity (void)
+TAO_ClientRequestInfo::check_validity ()
 {
   if (this->invocation_ == 0)
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
@@ -619,7 +619,7 @@ TAO_ClientRequestInfo::tao_ft_expiration_time (TimeBase::TimeT time)
 }
 
 TimeBase::TimeT
-TAO_ClientRequestInfo::tao_ft_expiration_time (void) const
+TAO_ClientRequestInfo::tao_ft_expiration_time () const
 {
   return this->invocation_->operation_details ().ft_expiration_time ();
 }
@@ -631,7 +631,7 @@ TAO_ClientRequestInfo::tao_ft_retention_id (CORBA::Long request_id)
 }
 
 CORBA::Long
-TAO_ClientRequestInfo::tao_ft_retention_id (void) const
+TAO_ClientRequestInfo::tao_ft_retention_id () const
 {
   return this->invocation_->operation_details ().ft_retention_id ();
 }

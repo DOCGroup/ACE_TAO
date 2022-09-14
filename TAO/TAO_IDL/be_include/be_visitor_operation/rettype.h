@@ -32,7 +32,7 @@ public:
   be_visitor_operation_rettype (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_rettype (void);
+  ~be_visitor_operation_rettype ();
 
   /// visit an array node
   int visit_array (be_array *node);

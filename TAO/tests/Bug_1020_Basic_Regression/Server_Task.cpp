@@ -9,7 +9,7 @@ Server_Task::Server_Task (Test::Echo_ptr echo,
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
   Test::Payload payload (32768);
   payload.length (32768);

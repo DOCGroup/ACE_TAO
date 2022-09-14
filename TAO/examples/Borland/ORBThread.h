@@ -15,12 +15,12 @@ public:
   __fastcall ~TORBThread ();
 
 protected:
-  void __fastcall Execute ();
   // Perform the thread's work.
+  void __fastcall Execute ();
 
 private:
-  CORBA::ORB_var orb_;
   // Reference to the orb.
+  CORBA::ORB_var orb_;
 };
 //---------------------------------------------------------------------------
 #endif

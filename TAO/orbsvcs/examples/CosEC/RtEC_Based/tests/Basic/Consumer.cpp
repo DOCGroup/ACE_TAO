@@ -13,7 +13,7 @@ Consumer::open (CosEventChannelAdmin::EventChannel_ptr event_channel,
 }
 
 void
-Consumer::close (void)
+Consumer::close ()
 {
   this->disconnect ();
 
@@ -22,7 +22,7 @@ Consumer::close (void)
 }
 
 void
-Consumer::connect (void)
+Consumer::connect ()
 {
   if (CORBA::is_nil (this->consumer_admin_.in ()))
     return;
@@ -37,7 +37,7 @@ Consumer::connect (void)
 }
 
 void
-Consumer::disconnect (void)
+Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ())
       || CORBA::is_nil (this->consumer_admin_.in ()))
@@ -59,7 +59,7 @@ Consumer::push (const CORBA::Any &)
 }
 
 void
-Consumer::disconnect_push_consumer (void)
+Consumer::disconnect_push_consumer ()
 {
   // Deactivate this object.
 

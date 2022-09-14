@@ -41,8 +41,7 @@ class TAO_InputCDR;
 class TAO_UTILS_Export TAO_Encodable
 {
 public:
-
-  virtual ~TAO_Encodable (void);
+  virtual ~TAO_Encodable ();
 
   ///  Encodes the object implementing this method into a CDR stream.
   ///  Returns true on success and false on failure.

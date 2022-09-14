@@ -61,7 +61,7 @@ Client_Group::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 }
 
 void
-Client_Group::disconnect (void)
+Client_Group::disconnect ()
 {
   Auto_Disconnect<Client_Pair> client_pair_disconnect (&this->client_pair_);
   Auto_Disconnect<Loopback_Pair> loopback_pair_disconnect (&this->loopback_pair_);

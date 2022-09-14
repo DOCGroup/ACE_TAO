@@ -22,18 +22,18 @@ class Criteria_Evaluator// : public LifeCycleService::Criteria_Evaluator
 {
 public:
   Criteria_Evaluator (const CosLifeCycle::Criteria &criteria);
-  ~Criteria_Evaluator (void);
+  ~Criteria_Evaluator ();
 
-  const LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getInitialization (void);
+  const LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getInitialization ();
 
-  char * getFilter (void);
+  char * getFilter ();
 
-  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getLogicalLocation (void)
+  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getLogicalLocation ()
     {
       return 0;
     }
 
-  char * getPreferences (void)
+  char * getPreferences ()
     {
       return 0;
     }
@@ -45,7 +45,6 @@ private:
 };
 
 #endif /* CRITERIA_EVALUATOR_H */
-
 
 
 

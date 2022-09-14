@@ -120,7 +120,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       server_obj->shutdown ();
 
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
 
       orb->destroy ();
     }

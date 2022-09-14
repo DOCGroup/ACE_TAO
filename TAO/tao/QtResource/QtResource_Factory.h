@@ -44,7 +44,7 @@ namespace TAO
 
   protected:
     /// Create or obtain current reactor implementation
-    virtual ACE_Reactor_Impl *reactor_impl (void);
+    virtual ACE_Reactor_Impl *reactor_impl ();
 
   private:
     /// Reactor created by this factory.

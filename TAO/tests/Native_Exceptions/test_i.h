@@ -31,7 +31,7 @@ public:
 
   CORBA::Long test_raise (CORBA::Long x);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

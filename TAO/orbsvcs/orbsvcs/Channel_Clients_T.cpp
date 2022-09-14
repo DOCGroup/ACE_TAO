@@ -18,7 +18,6 @@ ACE_PushConsumer_Adapter<TARGET>::push (const RtecEventComm::EventSet& events)
 template<class TARGET> void
 ACE_PushConsumer_Adapter<TARGET>::disconnect_push_consumer ()
 {
-
   target_->disconnect_push_consumer ();
 }
 

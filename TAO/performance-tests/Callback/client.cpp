@@ -28,10 +28,10 @@ public:
   Task (Test::Server_ptr server, int iterations);
 
   /// Return 1 when all the messages have been sent
-  int done (void);
+  int done ();
 
   /// Run the experiment
-  int svc (void);
+  int svc ();
 
 private:
   /// The consumer
@@ -232,14 +232,14 @@ Task::Task (Test::Server_ptr server,
 }
 
 int
-Task::done (void)
+Task::done ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 1);
   return this->remaining_messages_ == 0;
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   Test::Payload payload(1024); payload.length(1024);
   try

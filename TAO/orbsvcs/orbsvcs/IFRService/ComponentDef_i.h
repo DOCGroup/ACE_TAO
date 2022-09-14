@@ -43,7 +43,7 @@ public:
   TAO_ComponentDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ComponentDef_i (void);
+  virtual ~TAO_ComponentDef_i ();
 
   /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();
@@ -156,6 +156,5 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #endif /* TAO_COMPONENTDEF_I_H */
-
 
 

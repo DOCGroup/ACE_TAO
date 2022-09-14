@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef BE_TEMPLATE_MODULE_REF_H
 #define BE_TEMPLATE_MODULE_REF_H
 
@@ -15,13 +14,10 @@ public:
                            AST_Template_Module *ref,
                            UTL_StrList *param_refs);
 
-  virtual ~be_template_module_ref (void);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (be_template_module_ref);
+  virtual ~be_template_module_ref ();
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

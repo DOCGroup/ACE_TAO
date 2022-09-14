@@ -18,7 +18,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // constructor.
-TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (void)
+TAO_FlowSpec_Entry::TAO_FlowSpec_Entry ()
   :address_ (0),
    clean_up_address_ (0),
    control_address_ (0),
@@ -137,7 +137,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
 }
 
 // Destructor.
-TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry (void)
+TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry ()
 {
   if (this->delete_peer_addr_)
     delete this->peer_addr_;
@@ -151,7 +151,7 @@ TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry (void)
 }
 
 int
-TAO_FlowSpec_Entry::set_protocol (void)
+TAO_FlowSpec_Entry::set_protocol ()
 {
   if (!this->use_flow_protocol_)
     {
@@ -459,7 +459,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
 }
 
 char *
-TAO_FlowSpec_Entry::get_local_addr_str (void)
+TAO_FlowSpec_Entry::get_local_addr_str ()
 {
   if (this->local_addr_ == 0)
     return 0;
@@ -489,7 +489,7 @@ TAO_FlowSpec_Entry::get_local_addr_str (void)
 //------------------------------------------------------------
 
 // default constructor.
-TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (void)
+TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry ()
 {
 }
 
@@ -525,7 +525,7 @@ TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (const char *flowname,
 {
 }
 
-TAO_Forward_FlowSpec_Entry::~TAO_Forward_FlowSpec_Entry (void)
+TAO_Forward_FlowSpec_Entry::~TAO_Forward_FlowSpec_Entry ()
 {
 }
 
@@ -596,7 +596,6 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "Peer Address %s\n",
                   buf));
-
     }
 
   if (tokenizer [TAO_AV_FLOW_PROTOCOL] != 0)
@@ -607,7 +606,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
 }
 
 TAO_FlowSpec_Entry::Role
-TAO_Forward_FlowSpec_Entry::role (void)
+TAO_Forward_FlowSpec_Entry::role ()
 {
   if (this->role_ != TAO_AV_INVALID_ROLE)
     return this->role_;
@@ -626,7 +625,7 @@ TAO_Forward_FlowSpec_Entry::role (void)
 }
 
 const char *
-TAO_Forward_FlowSpec_Entry::entry_to_string (void)
+TAO_Forward_FlowSpec_Entry::entry_to_string ()
 {
   if (this->flowname_.length() == 0)
     return "";
@@ -736,7 +735,6 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
             //inet_addr->get_host_name (address, BUFSIZ);
 
             //cstring += ACE_OS::itoa (address, BUFSIZ, inet_addr->get_port_number ());
-
           }
           break;
         default:
@@ -821,7 +819,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
 //------------------------------------------------------------
 
 //default constructor.
-TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (void)
+TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry ()
 {
 }
 
@@ -857,12 +855,12 @@ TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (const char *flowname,
 {
 }
 
-TAO_Reverse_FlowSpec_Entry::~TAO_Reverse_FlowSpec_Entry (void)
+TAO_Reverse_FlowSpec_Entry::~TAO_Reverse_FlowSpec_Entry ()
 {
 }
 
 TAO_FlowSpec_Entry::Role
-TAO_Reverse_FlowSpec_Entry::role (void)
+TAO_Reverse_FlowSpec_Entry::role ()
 {
   if (this->role_ != TAO_AV_INVALID_ROLE)
     return this->role_;
@@ -903,7 +901,7 @@ TAO_Reverse_FlowSpec_Entry::parse (const char *flowSpec_entry)
 
 
 const char *
-TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
+TAO_Reverse_FlowSpec_Entry::entry_to_string ()
 {
   if (this->flowname_.length() == 0)
     return "";
@@ -982,7 +980,6 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
       char port_str[10];
       ACE_OS::sprintf(port_str, "%u", control_port);
       address_str += port_str;
-
     }
 
   this->entry_ = this->flowname_;

@@ -20,8 +20,8 @@ class Receiver : public ACE_Service_Handler
   //     the network connection and dump it to a file.
 
 public:
-  Receiver (void);
-  ~Receiver (void);
+  Receiver ();
+  ~Receiver ();
 
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);

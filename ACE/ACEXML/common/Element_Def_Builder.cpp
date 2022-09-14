@@ -2,6 +2,5 @@
 
 ACEXML_Element_Def_Builder::~ACEXML_Element_Def_Builder ()
 {
-
 }
 

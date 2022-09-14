@@ -6,7 +6,6 @@ namespace ACE
 {
   namespace INet
   {
-
     SSL_PasswordCallback::SSL_PasswordCallback ()
       {
       }

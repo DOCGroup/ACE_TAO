@@ -3,12 +3,10 @@
 
 #include "Magazine.h"
 #include "ace/DLL.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
+#include <memory>
 
-
-
-typedef Magazine* (*Magazine_Creator) (void);
+typedef Magazine* (*Magazine_Creator) ();
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -42,7 +40,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   {
-    auto_ptr <Magazine> magazine (mc ());
+    std::unique_ptr<Magazine> magazine (mc ());
 
     magazine->title ();
   }
@@ -76,7 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   {
-    auto_ptr <Magazine> magazine (mc ());
+    std::unique_ptr<Magazine> magazine (mc ());
 
     magazine->title ();
   }

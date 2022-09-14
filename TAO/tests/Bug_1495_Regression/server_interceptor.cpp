@@ -5,7 +5,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Thread.h"
 
-Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
+Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor ()
   : myname_ ("Echo_Server_Interceptor")
 {
 }
@@ -17,7 +17,7 @@ Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (CORBA::Object_
 {
 }
 
-Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor (void)
+Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor ()
 {
 }
 
@@ -34,13 +34,13 @@ Echo_Server_Request_Interceptor::forward_reference (CORBA::Object_ptr forward_lo
 }
 
 char *
-Echo_Server_Request_Interceptor::name (void)
+Echo_Server_Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Server_Request_Interceptor::destroy (void)
+Echo_Server_Request_Interceptor::destroy ()
 {
 }
 
@@ -48,7 +48,6 @@ void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -100,7 +99,6 @@ void
 Echo_Server_Request_Interceptor::send_other (
              PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   // This will throw an exception if a location forward has not
   // occurred.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.

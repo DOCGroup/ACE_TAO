@@ -36,7 +36,6 @@
 class TAO_LB_Push_Handler : public ACE_Event_Handler
 {
 public:
-
   /// Constructor
   TAO_LB_Push_Handler (CosLoadBalancing::LoadMonitor_ptr monitor,
                        const PortableGroup::Location & location,
@@ -47,7 +46,6 @@ public:
                               const void *arg);
 
 private:
-
   /// Reference to the LoadMonitor.
   CosLoadBalancing::LoadMonitor_var monitor_;
 
@@ -56,7 +54,6 @@ private:
 
   /// Reference to the LoadManager.
   CosLoadBalancing::LoadManager_var manager_;
-
 };
 
 #include /**/ "ace/post.h"

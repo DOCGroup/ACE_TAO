@@ -6,7 +6,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC {
-
   namespace {
     Identification_Service* service;
     const char oid[] = "\xF8\xB3\xB1\xFE\xAC\xC6\x07\x11\x02\x0C\x02\x50\xEB\x05\x77\xD0";

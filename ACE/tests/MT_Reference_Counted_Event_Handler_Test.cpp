@@ -138,23 +138,22 @@ disable_signal (int sigmin, int sigmax)
 class Pipe
 {
 public:
-
-  Pipe (void);
+  Pipe ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  int open (void);
+  int open ();
 
-  ACE_HANDLE read_handle (void) const;
+  ACE_HANDLE read_handle () const;
 
-  ACE_HANDLE write_handle (void) const;
+  ACE_HANDLE write_handle () const;
 
 private:
   ACE_HANDLE handles_[2];
 };
 
 int
-Pipe::open (void)
+Pipe::open ()
 {
   ACE_INET_Addr my_addr;
   ACE_SOCK_Acceptor acceptor;
@@ -200,20 +199,20 @@ Pipe::open (void)
   return 0;
 }
 
-Pipe::Pipe (void)
+Pipe::Pipe ()
 {
   this->handles_[0] = ACE_INVALID_HANDLE;
   this->handles_[1] = ACE_INVALID_HANDLE;
 }
 
 ACE_HANDLE
-Pipe::read_handle (void) const
+Pipe::read_handle () const
 {
   return this->handles_[0];
 }
 
 ACE_HANDLE
-Pipe::write_handle (void) const
+Pipe::write_handle () const
 {
   return this->handles_[1];
 }
@@ -226,45 +225,42 @@ static Event_Loop_Thread *global_event_loop_thread_variable = 0;
 class Sender : public ACE_Event_Handler
 {
 public:
-
   Sender (ACE_HANDLE handle,
           Connection_Cache &connection_cache);
 
-  ~Sender (void);
+  ~Sender () override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
-  ssize_t send_message (void);
+  ssize_t send_message ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  void close (void);
+  void close ();
 
   ACE_HANDLE handle_;
 
   Connection_Cache &connection_cache_;
-
 };
 
 class Connection_Cache
 {
 public:
+  Connection_Cache ();
 
-  Connection_Cache (void);
-
-  ~Connection_Cache (void);
+  ~Connection_Cache ();
 
   void add_connection (Sender *sender);
 
   void remove_connection (Sender *sender);
 
-  Sender *acquire_connection (void);
+  Sender *acquire_connection ();
 
   void release_connection (Sender *sender);
 
   int find (Sender *sender);
 
-  ACE_SYNCH_MUTEX &lock (void);
+  ACE_SYNCH_MUTEX &lock ();
 
   enum State
     {
@@ -296,15 +292,15 @@ Sender::Sender (ACE_HANDLE handle,
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Reference count in Sender::Sender() is %d\n"),
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 }
 
-Sender::~Sender (void)
+Sender::~Sender ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Reference count in ~Sender::Sender() is %d\n"),
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 
   // Close the socket that we are responsible for.
   ACE_OS::closesocket (this->handle_);
@@ -316,7 +312,7 @@ Sender::handle_input (ACE_HANDLE)
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Reference count in Sender::handle_input() is %d\n"),
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 
   //
   // In this test, this method is only called when the connection has
@@ -334,7 +330,7 @@ Sender::handle_input (ACE_HANDLE)
 }
 
 void
-Sender::close (void)
+Sender::close ()
 {
   // Remove socket from Reactor (may fail if another thread has already
   // removed the handle from the Reactor).
@@ -348,7 +344,7 @@ Sender::close (void)
 }
 
 ssize_t
-Sender::send_message (void)
+Sender::send_message ()
 {
   ACE_Time_Value timeout (0, close_timeout * 1000);
 
@@ -361,35 +357,32 @@ Sender::send_message (void)
 class Event_Loop_Thread : public ACE_Task_Base
 {
 public:
-
   Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
                      ACE_Reactor &reactor);
 
-  int svc (void);
+  int svc () override;
 
   ACE_Reactor &reactor_;
-
 };
 
 class Receiver : public ACE_Task_Base
 {
 public:
-
   Receiver (ACE_Thread_Manager &thread_manager,
             ACE_HANDLE handle,
             int nested_upcalls);
 
-  ~Receiver (void);
+  ~Receiver () override;
 
-  int svc (void);
+  int svc () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  int close (u_long flags);
+  int close (u_long flags) override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
-  int resume_handler (void);
+  int resume_handler () override;
 
   ACE_HANDLE handle_;
 
@@ -398,7 +391,6 @@ public:
   int nested_upcalls_;
 
   int nested_upcalls_level_;
-
 };
 
 Receiver::Receiver (ACE_Thread_Manager &thread_manager,
@@ -417,22 +409,22 @@ Receiver::Receiver (ACE_Thread_Manager &thread_manager,
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Reference count in Receiver::Receiver() is %d\n"),
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Reference count in ~Receiver::Receiver() is %d\n"),
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 
   // Close the socket that we are responsible for.
   ACE_OS::closesocket (this->handle_);
 }
 
 int
-Receiver::svc (void)
+Receiver::svc ()
 {
   //
   // Continuously receive messages from the Sender.  On error, exit
@@ -522,7 +514,7 @@ Receiver::handle_input (ACE_HANDLE handle)
 }
 
 int
-Receiver::resume_handler (void)
+Receiver::resume_handler ()
 {
   /// The application takes responsibility of resuming the handler.
   return ACE_APPLICATION_RESUMES_HANDLER;
@@ -541,7 +533,6 @@ Receiver::close (u_long)
 class Connector
 {
 public:
-
   Connector (ACE_Thread_Manager &thread_manager,
              ACE_Reactor &reactor,
              int nested_upcalls);
@@ -557,7 +548,6 @@ public:
   ACE_Reactor &reactor_;
 
   int nested_upcalls_;
-
 };
 
 Connector::Connector (ACE_Thread_Manager &thread_manager,
@@ -636,7 +626,7 @@ Connector::connect (ACE_HANDLE &client_handle,
   return 0;
 }
 
-Connection_Cache::Connection_Cache (void)
+Connection_Cache::Connection_Cache ()
 {
   // Initialize the connection cache.
   this->entries_ =
@@ -698,7 +688,7 @@ Connection_Cache::remove_connection (Sender *sender)
 }
 
 Sender *
-Connection_Cache::acquire_connection (void)
+Connection_Cache::acquire_connection ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
@@ -741,12 +731,12 @@ Connection_Cache::release_connection (Sender *sender)
 }
 
 ACE_SYNCH_MUTEX &
-Connection_Cache::lock (void)
+Connection_Cache::lock ()
 {
   return this->lock_;
 }
 
-Connection_Cache::~Connection_Cache (void)
+Connection_Cache::~Connection_Cache ()
 {
   for (int i = 0; i < number_of_connections; ++i)
     {
@@ -760,7 +750,6 @@ Connection_Cache::~Connection_Cache (void)
 class Invocation_Thread : public ACE_Task_Base
 {
 public:
-
   Invocation_Thread (ACE_Thread_Manager &thread_manager,
                      ACE_Reactor &reactor,
                      Connection_Cache &connection_cache,
@@ -769,9 +758,9 @@ public:
                      int run_receiver_thread,
                      int nested_upcalls);
 
-  int svc (void);
+  int svc () override;
 
-  Sender *create_connection (void);
+  Sender *create_connection ();
 
   Connection_Cache &connection_cache_;
 
@@ -786,7 +775,6 @@ public:
   int run_receiver_thread_;
 
   int nested_upcalls_;
-
 };
 
 Invocation_Thread::Invocation_Thread (ACE_Thread_Manager &thread_manager,
@@ -808,7 +796,7 @@ Invocation_Thread::Invocation_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 Sender *
-Invocation_Thread::create_connection (void)
+Invocation_Thread::create_connection ()
 {
   int result = 0;
 
@@ -867,7 +855,7 @@ Invocation_Thread::create_connection (void)
 }
 
 int
-Invocation_Thread::svc (void)
+Invocation_Thread::svc ()
 {
   int connection_counter = 0;
   ACE_DEBUG ((LM_DEBUG,
@@ -970,14 +958,13 @@ Invocation_Thread::svc (void)
 class Close_Socket_Thread : public ACE_Task_Base
 {
 public:
-
   Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
                        ACE_Reactor &reactor,
                        ACE_Auto_Event &new_connection_event,
                        int make_invocations,
                        int run_receiver_thread);
 
-  int svc (void);
+  int svc () override;
 
   ACE_Auto_Event &new_connection_event_;
 
@@ -986,7 +973,6 @@ public:
   int make_invocations_;
 
   int run_receiver_thread_;
-
 };
 
 Close_Socket_Thread::Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
@@ -1003,7 +989,7 @@ Close_Socket_Thread::Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Close_Socket_Thread::svc (void)
+Close_Socket_Thread::svc ()
 {
   unsigned int seed = (unsigned int) ACE_OS::time ();
   ACE_Time_Value timeout (0, close_timeout * 1000);
@@ -1083,7 +1069,7 @@ Event_Loop_Thread::Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Event_Loop_Thread::svc (void)
+Event_Loop_Thread::svc ()
 {
   // Simply run the event loop.
   this->reactor_.owner (ACE_Thread::self ());
@@ -1105,17 +1091,15 @@ Event_Loop_Thread::svc (void)
 class Purger_Thread : public ACE_Task_Base
 {
 public:
-
   Purger_Thread (ACE_Thread_Manager &thread_manager,
                  ACE_Reactor &reactor,
                  Connection_Cache &connection_cache);
 
-  int svc (void);
+  int svc () override;
 
   ACE_Reactor &reactor_;
 
   Connection_Cache &connection_cache_;
-
 };
 
 Purger_Thread::Purger_Thread (ACE_Thread_Manager &thread_manager,
@@ -1128,7 +1112,7 @@ Purger_Thread::Purger_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Purger_Thread::svc (void)
+Purger_Thread::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT("(%t) Purger_Thread::svc commencing\n")));
@@ -1280,7 +1264,6 @@ test<REACTOR_IMPL>::test (int ignore_nested_upcalls,
           (nested_upcalls == -1 ||
            nested_upcalls == test_configs[i][4]))
         {
-
 #if 0 /* defined (ACE_LINUX) */
 
           // @@ I am not sure why but when <make_invocations> is 0 and

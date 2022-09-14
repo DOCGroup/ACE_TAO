@@ -47,7 +47,8 @@ class TAO_Export TAO_IOR_Parser : public ACE_Service_Object
 {
 public:
   /// The destructor
-  virtual ~TAO_IOR_Parser (void);
+  TAO_IOR_Parser () = default;
+  virtual ~TAO_IOR_Parser ();
 
   /// Return true if @a ior_string starts with a prefix known to this IOR
   /// parser
@@ -58,8 +59,7 @@ public:
    * The call may raise the standard system exceptions (NO_MEMORY,
    * INV_OBJREF, etc.)
    */
-  virtual CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb)
-    = 0;
+  virtual CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

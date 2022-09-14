@@ -8,7 +8,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Pluggable_Reply_Params::TAO_Pluggable_Reply_Params (TAO_Transport *t)
-  : input_cdr_ (0)
+  : input_cdr_ (nullptr)
   , transport_ (t)
 {
 }

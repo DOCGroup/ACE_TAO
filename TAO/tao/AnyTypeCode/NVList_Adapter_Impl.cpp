@@ -55,7 +55,7 @@ TAO_NVList_Adapter_Impl::create_named_value (CORBA::NamedValue_ptr &nv)
 }
 
 int
-TAO_NVList_Adapter_Impl::Initializer (void)
+TAO_NVList_Adapter_Impl::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_NVList_Adapter_Impl);
 }

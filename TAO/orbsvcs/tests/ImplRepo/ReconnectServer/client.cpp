@@ -18,7 +18,7 @@ class Client_Task : public ACE_Task_Base
       caught_object_not_exist_ (false)
     {}
 
-    virtual int svc (void)
+    virtual int svc ()
     {
       ACE_Time_Value start = ACE_OS::gettimeofday ();
       ACE_Time_Value elapsed;

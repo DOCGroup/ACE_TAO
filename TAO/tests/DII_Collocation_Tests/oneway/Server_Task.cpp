@@ -19,7 +19,7 @@ Server_Task::Server_Task (const ACE_TCHAR *output,
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
  try
    {

@@ -41,7 +41,6 @@ namespace TAO
    */
   class TAO_XtResource_Export XtResource_Loader
   {
-
   public:
     XtResource_Loader  (XtAppContext context);
 

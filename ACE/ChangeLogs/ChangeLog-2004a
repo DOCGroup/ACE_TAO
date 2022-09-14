@@ -2286,7 +2286,7 @@ Mon Jun 14 08:28:24 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
           should point to
 
-          http://deuce.doc.wustl.edu/bugzilla/index.cgi
+          http://bugzilla.dre.vanderbilt.edu/index.cgi
 
           Thanks to Patrick Bennett <Patrick.Bennett@inin.com> for
           reporting this.
@@ -9596,7 +9596,7 @@ Thu Jan 22 06:47:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Fix for BUGID 1719. Please see
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1719
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1719
 
           for details.
 

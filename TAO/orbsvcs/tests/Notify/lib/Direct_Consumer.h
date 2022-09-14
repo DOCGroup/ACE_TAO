@@ -26,13 +26,13 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Direct_Consumer : public TAO_Notif
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_Direct_Consumer (void);
+  TAO_Notify_Tests_Direct_Consumer ();
 
   /// Destructor
   ~TAO_Notify_Tests_Direct_Consumer ();
 
   /// Connect using options parsed and set initial QoS.
-  virtual void connect (void);
+  virtual void connect ();
 };
 
 #include /**/ "ace/post.h"

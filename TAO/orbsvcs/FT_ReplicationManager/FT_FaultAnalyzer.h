@@ -33,7 +33,6 @@ namespace TAO
   */
   class TAO_ReplicationManagerLib_Export FT_FaultAnalyzer
   {
-
   public:
     /**
     * Default constructor.
@@ -46,7 +45,6 @@ namespace TAO
     virtual ~FT_FaultAnalyzer ();
 
   public:
-
     /**
     * Validate event type to make sure it is one we can handle.
     * @param event The structured fault event, as from the Fault Notifier.
@@ -74,9 +72,7 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
   };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

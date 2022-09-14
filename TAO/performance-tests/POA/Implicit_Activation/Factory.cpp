@@ -7,7 +7,7 @@ Factory::Factory (CORBA::ORB_ptr orb)
 }
 
 Test::Simple_ptr
-Factory::create_simple_object (void)
+Factory::create_simple_object ()
 {
   Simple *simple_impl;
   ACE_NEW_THROW_EX (simple_impl,
@@ -20,7 +20,7 @@ Factory::create_simple_object (void)
 }
 
 void
-Factory::shutdown (void)
+Factory::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

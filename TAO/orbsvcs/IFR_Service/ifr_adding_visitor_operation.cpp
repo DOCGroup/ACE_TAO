@@ -18,7 +18,7 @@ ifr_adding_visitor_operation::ifr_adding_visitor_operation (AST_Decl *scope)
 {
 }
 
-ifr_adding_visitor_operation::~ifr_adding_visitor_operation (void)
+ifr_adding_visitor_operation::~ifr_adding_visitor_operation ()
 {
 }
 

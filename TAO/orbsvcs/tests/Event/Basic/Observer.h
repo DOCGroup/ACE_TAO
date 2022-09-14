@@ -31,9 +31,9 @@ class EC_Observer;
 class EC_Master
 {
 public:
-  EC_Master (void);
+  EC_Master ();
 
-  virtual ~EC_Master (void);
+  virtual ~EC_Master ();
 
   /// Execute the test.
   virtual int run (int argc, ACE_TCHAR* argv[]);
@@ -42,7 +42,7 @@ public:
   virtual void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]);
 
   /// Accessors
-  int channel_count (void) const;
+  int channel_count () const;
   EC_Observer* channel (int i) const;
 
 private:
@@ -79,20 +79,20 @@ public:
                int id);
 
   /// Destructor
-  ~EC_Observer (void);
+  ~EC_Observer ();
 
   // = The EC_Driver methods
   /// add some command line args to enable/disable observerions
   virtual void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]);
   virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
-  virtual void print_args (void) const;
-  virtual void print_usage (void);
+  virtual void print_args () const;
+  virtual void print_usage ();
 
   /// Run the suppliers, using the <thread_manager> parameter
-  void execute_test (void);
-  void run_cleanup (void);
+  void execute_test ();
+  void run_cleanup ();
 
-  void dump_results (void);
+  void dump_results ();
   void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     int i);

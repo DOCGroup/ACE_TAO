@@ -27,7 +27,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Base_Attributes
      *
@@ -42,7 +41,6 @@ namespace TAO
     class Base_Attributes
     {
     public:
-
       /// Constructor.
       Base_Attributes (char const * id,
                        char const * name);
@@ -51,11 +49,11 @@ namespace TAO
       Base_Attributes (char const * id);
 
       /// Get the @c RepositoryId globally identifying the type.
-      char const * id (void) const;
+      char const * id () const;
 
       /// Get the simple name identifying the type within its
       /// enclosing scope.
-      char const * name (void) const;
+      char const * name () const;
 
       /// Set the simple name identifying the type within its
       /// enclosing scope.

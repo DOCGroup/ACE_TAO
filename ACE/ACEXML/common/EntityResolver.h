@@ -41,8 +41,7 @@
 class ACEXML_Export ACEXML_EntityResolver
 {
 public:
-
-  virtual ~ACEXML_EntityResolver (void);
+  virtual ~ACEXML_EntityResolver ();
 
   /**
    * Allow the application to resolve external entities.

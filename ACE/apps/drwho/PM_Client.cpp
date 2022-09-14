@@ -36,9 +36,9 @@ PM_Client::insert_protocol_info (Protocol_Record &protocol_record)
 // friends info in a nicely formatted manner.
 
 void
-PM_Client::process (void)
+PM_Client::process ()
 {
-  const char *(Protocol_Record::*get_name)(void);
+  const char *(Protocol_Record::*get_name)();
 
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
     get_name = &Protocol_Record::get_login;
@@ -128,11 +128,11 @@ PM_Client::handle_protocol_entries (const char *cp,
   return (char *) ACE::strend (cp);
 }
 
-PM_Client::PM_Client (void)
+PM_Client::PM_Client ()
   : max_key_length (0)
 {
 }
 
-PM_Client::~PM_Client (void)
+PM_Client::~PM_Client ()
 {
 }

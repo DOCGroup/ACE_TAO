@@ -70,7 +70,6 @@ CNamingViewerDlg::CNamingViewerDlg(CORBA::ORB_ptr pORB, CWnd* pParent /*=0*/)
   m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
   m_pORB = pORB;
-
 }
 
 void CNamingViewerDlg::DoDataExchange(CDataExchange* pDX)

@@ -33,7 +33,7 @@ public:
   be_visitor_operation_ami_handler_reply_stub_operation_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_ami_handler_reply_stub_operation_cs (void);
+  ~be_visitor_operation_ami_handler_reply_stub_operation_cs ();
 
   /// visit operation.
   virtual int visit_operation (be_operation *node);

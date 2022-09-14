@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 // ===================================================================
 /**
  *  @file   Receiver_i.h
@@ -28,15 +27,15 @@ public:
               CORBA::ULong iter);
 
   ///Destructor
-  virtual ~Receiver_i (void);
+  virtual ~Receiver_i ();
 
   // = The skeleton methods
-  virtual CORBA::Long receive_call (void);
+  virtual CORBA::Long receive_call ();
 
   /// Retun the number of calls that every thread would make...
-  virtual CORBA::Long get_call_count (void);
+  virtual CORBA::Long get_call_count ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Number of calls processed so far..
   CORBA::ULong no_calls_;

@@ -34,7 +34,7 @@ class ACE_Export ACE_Multihomed_INET_Addr : public ACE_INET_Addr
 {
 public:
   /// Default constructor.
-  ACE_Multihomed_INET_Addr (void);
+  ACE_Multihomed_INET_Addr ();
 
   /**
    * Initializes an ACE_Multihomed_INET_Addr from the @a address,
@@ -102,7 +102,7 @@ public:
   /// Use compiler-generated assignment operator.
 
   /// Default destructor.
-  ~ACE_Multihomed_INET_Addr (void);
+  ~ACE_Multihomed_INET_Addr ();
 
   // = Direct initialization methods.
 

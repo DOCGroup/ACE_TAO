@@ -9,7 +9,7 @@ Reply_Handler::Reply_Handler (
 }
 
 void
-Reply_Handler::short_sleep (void)
+Reply_Handler::short_sleep ()
 {
   check_counter();
 
@@ -54,7 +54,7 @@ Reply_Handler::short_sleep_excep (
 }
 
 void Reply_Handler::
-check_counter(void)
+check_counter()
 {
   long const count = --counter_;
   if(count == 0)

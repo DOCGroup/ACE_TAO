@@ -33,16 +33,16 @@ class ACE_Export ACE_Shared_Object
 {
 public:
   /// Constructor
-  ACE_Shared_Object (void);
+  ACE_Shared_Object ();
 
   /// Destructor
-  virtual ~ACE_Shared_Object (void);
+  virtual ~ACE_Shared_Object ();
 
   /// Initializes object when dynamic linking occurs.
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Returns information on a service object.
   virtual int info (ACE_TCHAR **info_string, size_t length = 0) const;

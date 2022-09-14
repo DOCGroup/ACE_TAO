@@ -31,12 +31,11 @@
 class Connection_Handler_Connector : public ACE_Connector<Connection_Handler, ACE_SOCK_CONNECTOR>
 {
 public:
-  Connection_Handler_Connector (void);
+  Connection_Handler_Connector ();
 
   // Initiate (or reinitiate) a connection on the Connection_Handler.
   int initiate_connection (Connection_Handler *,
                            ACE_Synch_Options & = ACE_Synch_Options::synch);
-
 };
 
 #endif /* _IO_HANDLER_CONNECTOR */

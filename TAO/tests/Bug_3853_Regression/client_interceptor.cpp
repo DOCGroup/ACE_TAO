@@ -16,18 +16,18 @@ Echo_Client_Request_Interceptor ()
 {
 }
 
-Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor (void)
+Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor ()
 {
 }
 
 char *
-Echo_Client_Request_Interceptor::name (void)
+Echo_Client_Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Client_Request_Interceptor::destroy (void)
+Echo_Client_Request_Interceptor::destroy ()
 {
 }
 
@@ -51,7 +51,6 @@ Echo_Client_Request_Interceptor::send_request (
   isRecursive ++ ;
   if (isRecursive%2 == 1 )
   {
-
     if (isRecursive == 3) {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)Echo_Client_Request_Interceptor::send_request(%d) ")
                             ACE_TEXT ("shutdown server 1 now. \n"), isRecursive));

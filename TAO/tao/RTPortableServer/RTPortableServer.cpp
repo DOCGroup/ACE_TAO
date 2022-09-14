@@ -14,7 +14,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RTPortableServer_Initializer::TAO_RTPortableServer_Initializer (void)
+TAO_RTPortableServer_Initializer::TAO_RTPortableServer_Initializer ()
 {
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Object_Adapter_Factory);
 }

@@ -1,6 +1,6 @@
 #include "Multiple.h"
 
-Multiple::Multiple (void)
+Multiple::Multiple ()
   : cos_ec_ (CosEventChannelAdmin::EventChannel::_nil ()),
     service_name_ (ACE_TEXT ("CosEventService")),
     orb_ (CORBA::ORB::_nil ())
@@ -9,7 +9,7 @@ Multiple::Multiple (void)
 }
 
 
-Multiple::~Multiple (void)
+Multiple::~Multiple ()
 {
   // No-Op.
 }
@@ -67,7 +67,7 @@ Multiple::init_ORB  (int argc, ACE_TCHAR *argv [])
 }
 
 int
-Multiple::init_CosEC (void)
+Multiple::init_CosEC ()
 {
   try
     {
@@ -102,7 +102,7 @@ Multiple::init_CosEC (void)
 }
 
 int
-Multiple::runORB (void)
+Multiple::runORB ()
 {
   try
     {
@@ -117,7 +117,7 @@ Multiple::runORB (void)
 }
 
 void
-Multiple::shutdown (void)
+Multiple::shutdown ()
 {
   if (!this->orb_->_nil ())
     this->orb_->shutdown ();

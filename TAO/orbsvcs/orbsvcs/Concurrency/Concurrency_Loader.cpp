@@ -15,14 +15,13 @@
 #include "ace/Dynamic_Service.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Concurrency_Loader::TAO_Concurrency_Loader (void)
+TAO_Concurrency_Loader::TAO_Concurrency_Loader ()
 {
 }
 
-TAO_Concurrency_Loader::~TAO_Concurrency_Loader (void)
+TAO_Concurrency_Loader::~TAO_Concurrency_Loader ()
 {
 }
 
@@ -48,7 +47,7 @@ TAO_Concurrency_Loader::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-TAO_Concurrency_Loader::fini (void)
+TAO_Concurrency_Loader::fini ()
 {
   // Remove the Concurrency Service.
   this->concurrency_server_.fini();

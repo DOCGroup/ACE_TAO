@@ -15,9 +15,9 @@
 class transaction;
 class ASNMP_Export transaction_result
 {
-  public:
-    virtual ~transaction_result();
-    virtual void result(transaction * trans, int) = 0;
+public:
+  virtual ~transaction_result();
+  virtual void result(transaction * trans, int) = 0;
 };
 
 #endif

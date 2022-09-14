@@ -100,7 +100,6 @@ validate_connection (CORBA::Object_ptr object)
 static void *
 MTTEST (void *args)
 {
-
   ACE_CString &ior = *(ACE_CString*)args;
   try
     {
@@ -144,7 +143,6 @@ MTTEST (void *args)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB

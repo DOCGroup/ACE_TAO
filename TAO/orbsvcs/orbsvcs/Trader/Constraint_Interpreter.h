@@ -56,7 +56,7 @@ public:
                               const char* constraints);
 
   /// Destructor
-  ~TAO_Constraint_Interpreter (void);
+  ~TAO_Constraint_Interpreter ();
 
   CORBA::Boolean evaluate (CosTrading::Offer* offer);
 
@@ -95,7 +95,7 @@ public:
                               const char* preference);
 
   /// Destructor
-  ~TAO_Preference_Interpreter(void);
+  ~TAO_Preference_Interpreter();
 
   void order_offer (CosTrading::Offer* offer,
                     CosTrading::OfferId offer_id = 0);
@@ -114,7 +114,7 @@ public:
   int remove_offer (CosTrading::Offer*& offer);
 
   /// Return the number of offers remaining in the ordering.
-  size_t num_offers (void);
+  size_t num_offers ();
 
   struct Preference_Info
   {
@@ -134,9 +134,10 @@ public:
   typedef ACE_Unbounded_Queue<Preference_Info> Ordered_Offers;
 
 private:
-  /// Disallow copying.
-  TAO_Preference_Interpreter (const TAO_Preference_Interpreter&);
-  TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&);
+  TAO_Preference_Interpreter (const TAO_Preference_Interpreter&) = delete;
+  TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&) = delete;
+  TAO_Preference_Interpreter (TAO_Preference_Interpreter&&) = delete;
+  TAO_Preference_Interpreter& operator= (TAO_Preference_Interpreter&&) = delete;
 
   /// The ordered list of offers.
   Ordered_Offers offers_;

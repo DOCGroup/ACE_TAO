@@ -17,13 +17,13 @@ TAO_Endpoint::TAO_Endpoint (CORBA::ULong tag,
 }
 
 ACE_INLINE CORBA::ULong
-TAO_Endpoint::tag (void) const
+TAO_Endpoint::tag () const
 {
   return this->tag_;
 }
 
 ACE_INLINE CORBA::Short
-TAO_Endpoint::priority (void) const
+TAO_Endpoint::priority () const
 {
   return this->priority_;
 }

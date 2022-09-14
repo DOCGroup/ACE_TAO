@@ -16,11 +16,10 @@ Server_Task::Server_Task (const ACE_TCHAR *output,
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
  try
    {
-
       CORBA::Object_var poa_object =
         sorb_->resolve_initial_references ("RootPOA");
 
@@ -74,7 +73,7 @@ Server_Task::svc (void)
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
    }
  catch (const CORBA::Exception& ex)
    {
