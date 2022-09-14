@@ -47,12 +47,12 @@
 # define ACE_HAS_BCC32
 #endif
 
+#define ACE_CC_PREPROCESSOR_ARGS "--precompile -q -o%s"
+
 #if defined (ACE_HAS_BCC64)
-# define ACE_CC_PREPROCESSOR_ARGS "--precompile -q -o%s"
 # define ACE_CC_PREPROCESSOR "BCC64.EXE"
 #else
-# define ACE_CC_PREPROCESSOR_ARGS "-Xdriver -E -q -o%s"
-# define ACE_CC_PREPROCESSOR "BCC32C.EXE"
+# define ACE_CC_PREPROCESSOR "BCC32X.EXE"
 #endif
 
 # include "ace/config-win32-common.h"
