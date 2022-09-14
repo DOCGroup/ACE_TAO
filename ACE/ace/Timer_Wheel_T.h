@@ -144,12 +144,12 @@ public:
   /**
    * Destroy timer queue. Cancels all timers.
    */
-  virtual int close (void);
+  virtual int close ();
 
   /// Run the <functor> for all timers whose values are <=
   /// <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.  Returns
   /// the number of timers canceled.
-  virtual int expire (void);
+  virtual int expire ();
 
   // Run the <functor> for all timers whose values are <= @a current_time.
   // This does not account for <timer_skew>.  Returns the number of

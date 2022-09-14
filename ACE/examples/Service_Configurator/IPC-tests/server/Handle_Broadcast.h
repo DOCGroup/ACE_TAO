@@ -20,8 +20,8 @@
 class ACE_Svc_Export Handle_Broadcast : public ACE_Service_Object, public ACE_SOCK_Dgram
 {
 public:
-  Handle_Broadcast (void);
-  ~Handle_Broadcast (void);
+  Handle_Broadcast ();
+  ~Handle_Broadcast ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **, size_t) const;
   virtual int fini ();

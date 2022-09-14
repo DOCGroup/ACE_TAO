@@ -293,7 +293,6 @@ TAO_SSLIOP_Endpoint::set_sec_attrs (::Security::QOP q,
 
 
 
-
 TAO_SSLIOP_Synthetic_Endpoint::~TAO_SSLIOP_Synthetic_Endpoint ()
 {
 }

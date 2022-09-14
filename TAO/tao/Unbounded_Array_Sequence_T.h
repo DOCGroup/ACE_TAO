@@ -15,7 +15,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
 template<typename T_array, typename T_slice, typename T_tag>
 class unbounded_array_sequence
 {

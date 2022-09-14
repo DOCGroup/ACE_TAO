@@ -49,14 +49,14 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::tao_marshal (
 
 template <typename TypeCodeType, class RefCountPolicy>
 void
-TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::tao_duplicate (void)
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::tao_duplicate ()
 {
   this->RefCountPolicy::add_ref ();
 }
 
 template <typename TypeCodeType, class RefCountPolicy>
 void
-TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::tao_release (void)
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::tao_release ()
 {
   this->RefCountPolicy::remove_ref ();
 }

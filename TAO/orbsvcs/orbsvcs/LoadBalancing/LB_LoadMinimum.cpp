@@ -311,7 +311,6 @@ TAO_LB_LoadMinimum::analyze_loads (
             }
           else
             {
-
               CORBA::Float percent_diff =
                 (tmp[j].value / min_load) - 1;
 
@@ -408,7 +407,6 @@ TAO_LB_LoadMinimum::get_location (
 */
           if (load.value < min_load)
             {
-
               if (i > 0 && !ACE::is_equal (load.value, 0.0f))
                 {
                   /*
@@ -469,7 +467,6 @@ TAO_LB_LoadMinimum::get_location (
 //                         ORBSVCS_DEBUG ((LM_DEBUG, "^^^^^ PREVIOUS LOCATION\n"));
 //                       else
 //                         ORBSVCS_DEBUG ((LM_DEBUG, "^^^^^ CURRENT LOCATION\n"));
-
                     }
                   else
                     {

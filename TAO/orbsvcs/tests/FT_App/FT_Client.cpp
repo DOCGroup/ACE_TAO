@@ -23,7 +23,7 @@ public:
 
   ////////////
   // execution
-  int run (void);
+  int run ();
 
   /////////////////
   // implementation
@@ -38,7 +38,7 @@ private:
     );
 
 
-  int next_replica (void);
+  int next_replica ();
 
   ////////////////////
   // forbidden methods
@@ -49,7 +49,6 @@ private:
   ////////////////
   // Data members
  private:
-
   CORBA::ORB_var orb_;
 
   int argc_;
@@ -296,7 +295,6 @@ int FTClientMain::pass (
           }
           echo = 0;
           break;
-
         }
         case '>':
         {
@@ -490,7 +488,7 @@ int FTClientMain::pass (
   return result;
 }
 
-int FTClientMain::next_replica (void)
+int FTClientMain::next_replica ()
 {
   int result = 0;
   if (this->replica_pos_ < this->replica_iors_.size())
@@ -520,7 +518,7 @@ int FTClientMain::next_replica (void)
 }
 
 
-int FTClientMain::run (void)
+int FTClientMain::run ()
 {
   int result = 0;
 

@@ -30,23 +30,22 @@ class TAO_AV_UDP_MCast_Flow_Handler;
 class TAO_AV_UDP_MCast_Transport
   :public TAO_AV_Transport
 {
-
 public:
-  TAO_AV_UDP_MCast_Transport (void);
+  TAO_AV_UDP_MCast_Transport ();
 
   TAO_AV_UDP_MCast_Transport (TAO_AV_UDP_MCast_Flow_Handler *handler);
 
-  virtual ~TAO_AV_UDP_MCast_Transport (void);
+  virtual ~TAO_AV_UDP_MCast_Transport ();
 
   virtual int open (ACE_Addr *address);
 
-  virtual int close (void);
+  virtual int close ();
 
-  virtual int mtu (void);
+  virtual int mtu ();
 
   /// Write the complete Message_Block chain to the connection.
-  virtual ACE_Addr *get_peer_addr (void);
-  virtual ACE_Addr *get_local_addr (void);
+  virtual ACE_Addr *get_peer_addr ();
+  virtual ACE_Addr *get_local_addr ();
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0);
 
@@ -90,8 +89,8 @@ class TAO_AV_UDP_MCast_Flow_Handler
    public virtual ACE_Event_Handler
 {
 public:
-  TAO_AV_UDP_MCast_Flow_Handler (void);
-  virtual ~TAO_AV_UDP_MCast_Flow_Handler (void);
+  TAO_AV_UDP_MCast_Flow_Handler ();
+  virtual ~TAO_AV_UDP_MCast_Flow_Handler ();
   virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);

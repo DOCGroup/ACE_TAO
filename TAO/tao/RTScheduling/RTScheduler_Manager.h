@@ -85,16 +85,16 @@ public:
   operator const TAO_RTScheduler_Manager_ptr &() const;
   operator TAO_RTScheduler_Manager_ptr &();
   TAO_RTScheduler_Manager_ptr in () const;
-  TAO_RTScheduler_Manager_ptr &inout (void);
-  TAO_RTScheduler_Manager_ptr &out (void);
-  TAO_RTScheduler_Manager_ptr _retn (void);
+  TAO_RTScheduler_Manager_ptr &inout ();
+  TAO_RTScheduler_Manager_ptr &out ();
+  TAO_RTScheduler_Manager_ptr _retn ();
   TAO_RTScheduler_Manager_ptr ptr () const;
 
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
   static TAO_RTScheduler_Manager_ptr duplicate (TAO_RTScheduler_Manager_ptr);
   static void release (TAO_RTScheduler_Manager_ptr);
-  static TAO_RTScheduler_Manager_ptr nil (void);
+  static TAO_RTScheduler_Manager_ptr nil ();
   static TAO_RTScheduler_Manager_ptr narrow (CORBA::Object * );
   static CORBA::Object * upcast (void *);
 

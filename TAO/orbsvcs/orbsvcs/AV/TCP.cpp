@@ -642,7 +642,6 @@ TAO_AV_TCP_Flow_Handler::transport ()
 int
 TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
 {
-
 #if defined (TCP_NODELAY)
   int nodelay = 1;
 

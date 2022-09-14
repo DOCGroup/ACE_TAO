@@ -187,7 +187,6 @@ TAO_FTEC_Event_Channel_Impl::TAO_FTEC_Event_Channel_Impl(
     CORBA::Object::_duplicate (attributes.scheduler);
 
   this->create_strategies ();
-
 }
 
 TAO_FTEC_Event_Channel_Impl::~TAO_FTEC_Event_Channel_Impl()
@@ -210,7 +209,6 @@ TAO_FTEC_Event_Channel_Impl::activate_object (
   const FtRtecEventComm::ObjectId& supplier_admin_oid,
   const FtRtecEventComm::ObjectId& consumer_admin_oid)
 {
-
   iogr_maker_.init(orb.in());
 
   TAO_EC_Event_Channel_Base::activate();
@@ -219,7 +217,6 @@ TAO_FTEC_Event_Channel_Impl::activate_object (
 
   consumer_admin()->activate(consumer_admin_oid);
 }
-
 
 
 // = The RtecEventChannelAdmin::EventChannel methods...
@@ -414,7 +411,6 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s)
     }
 
     (update_table[op->param._d()])(this, *op);
-
   }
 }
 

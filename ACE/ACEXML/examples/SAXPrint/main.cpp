@@ -115,7 +115,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   else if (url != 0)
     {
-
       ACE_NEW_RETURN (ustm, ACEXML_HttpCharStream (), -1);
       if (ustm->open (url) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,

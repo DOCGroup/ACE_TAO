@@ -48,11 +48,11 @@ typedef TAO_AMH_Locate_ResponseHandler *TAO_AMH_Locate_ResponseHandler_ptr;
 class TAO_Async_IORTable_Export TAO_AMH_Locate_ResponseHandler_var
 {
 public:
-  TAO_AMH_Locate_ResponseHandler_var (void);
+  TAO_AMH_Locate_ResponseHandler_var ();
   TAO_AMH_Locate_ResponseHandler_var (TAO_AMH_Locate_ResponseHandler_ptr);
   TAO_AMH_Locate_ResponseHandler_var (
       const TAO_AMH_Locate_ResponseHandler_var &);
-  ~TAO_AMH_Locate_ResponseHandler_var (void);
+  ~TAO_AMH_Locate_ResponseHandler_var ();
 
   TAO_AMH_Locate_ResponseHandler_var &operator= (
       TAO_AMH_Locate_ResponseHandler_ptr);
@@ -64,9 +64,9 @@ public:
   operator TAO_AMH_Locate_ResponseHandler_ptr &();
 
   TAO_AMH_Locate_ResponseHandler_ptr in () const;
-  TAO_AMH_Locate_ResponseHandler_ptr &inout (void);
-  TAO_AMH_Locate_ResponseHandler_ptr &out (void);
-  TAO_AMH_Locate_ResponseHandler_ptr _retn (void);
+  TAO_AMH_Locate_ResponseHandler_ptr &inout ();
+  TAO_AMH_Locate_ResponseHandler_ptr &out ();
+  TAO_AMH_Locate_ResponseHandler_ptr _retn ();
   TAO_AMH_Locate_ResponseHandler_ptr ptr () const;
 
 private:
@@ -102,7 +102,7 @@ public:
   typedef TAO_AMH_Locate_ResponseHandler_var _var_type;
 
   TAO_AMH_Locate_ResponseHandler (TAO_ServerRequest &sr);
-  ~TAO_AMH_Locate_ResponseHandler (void);
+  ~TAO_AMH_Locate_ResponseHandler ();
 
   virtual void raise_excep (const CORBA::Exception &ex);
 
@@ -134,7 +134,6 @@ namespace IORTable
 {
   // satisfy the native type requirement for the asnyc locate interface
   typedef const TAO_AMH_Locate_ResponseHandler_var &Locate_ResponseHandler;
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

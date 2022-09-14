@@ -16,7 +16,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::AbstractBase::AbstractBase (void)
+CORBA::AbstractBase::AbstractBase ()
   : is_objref_ (false)
   , refcount_ (1)
   , is_collocated_ (false)
@@ -52,7 +52,7 @@ CORBA::AbstractBase::AbstractBase (TAO_Stub * protocol_proxy,
 }
 
 void
-CORBA::AbstractBase::_add_ref (void)
+CORBA::AbstractBase::_add_ref ()
 {
   ++this->refcount_;
 
@@ -64,7 +64,7 @@ CORBA::AbstractBase::_add_ref (void)
 }
 
 void
-CORBA::AbstractBase::_remove_ref (void)
+CORBA::AbstractBase::_remove_ref ()
 {
   // This is required by the C++ Mapping 1.2.
   if (this->is_objref_)
@@ -90,7 +90,7 @@ CORBA::AbstractBase::_tao_any_destructor (void *x)
 }
 
 CORBA::Object_ptr
-CORBA::AbstractBase::_to_object (void)
+CORBA::AbstractBase::_to_object ()
 {
   if (!this->is_objref_)
     {
@@ -101,7 +101,7 @@ CORBA::AbstractBase::_to_object (void)
 }
 
 CORBA::ValueBase *
-CORBA::AbstractBase::_to_value (void)
+CORBA::AbstractBase::_to_value ()
 {
   if (this->is_objref_)
     {
@@ -376,7 +376,7 @@ CORBA::AbstractBase::_tao_stream_v (std::ostream &strm) const
 #endif /* GEN_OSTREAM_OPS */
 
 CORBA::ValueBase *
-CORBA::AbstractBase::_tao_to_value (void)
+CORBA::AbstractBase::_tao_to_value ()
 {
   return 0;
 }

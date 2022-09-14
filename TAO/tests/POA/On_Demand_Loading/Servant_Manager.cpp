@@ -21,7 +21,7 @@ ServantManager_i::ServantManager_i (CORBA::ORB_ptr orb)
 }
 
 // Destruction.
-ServantManager_i::~ServantManager_i (void)
+ServantManager_i::~ServantManager_i ()
 {
 }
 

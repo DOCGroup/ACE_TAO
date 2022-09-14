@@ -5,7 +5,6 @@
 #include "Supplier_Router.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 typedef Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY> SUPPLIER_FACTORY;
@@ -33,7 +32,7 @@ Supplier_Router::Supplier_Router (ACE_Thread_Manager *tm)
 // Handle incoming messages in a separate thread..
 
 int
-Supplier_Router::svc (void)
+Supplier_Router::svc ()
 {
   ACE_ASSERT (this->is_writer ());
 

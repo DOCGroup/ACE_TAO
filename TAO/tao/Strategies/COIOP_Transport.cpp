@@ -28,13 +28,13 @@ TAO_COIOP_Transport::TAO_COIOP_Transport (TAO_COIOP_Connection_Handler *handler,
 }
 
 ACE_Event_Handler *
-TAO_COIOP_Transport::event_handler_i (void)
+TAO_COIOP_Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO_COIOP_Transport::connection_handler_i (void)
+TAO_COIOP_Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }
@@ -66,7 +66,7 @@ TAO_COIOP_Transport::handle_input (TAO_Resume_Handle &,
 
 
 int
-TAO_COIOP_Transport::register_handler (void)
+TAO_COIOP_Transport::register_handler ()
 {
   // We do never register register the handler with the reactor
   // as we never need to be informed about any incoming data,

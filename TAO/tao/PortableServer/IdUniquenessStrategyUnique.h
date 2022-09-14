@@ -48,7 +48,6 @@ namespace TAO
     private:
       TAO_Root_POA* poa_;
     };
-
   }
 }
 

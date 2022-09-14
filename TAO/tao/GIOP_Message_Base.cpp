@@ -141,7 +141,6 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
 
 
       return -1;
-
     }
 
   return 0;
@@ -580,7 +579,6 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
 
       // Set the <rd_ptr> of the <incoming>..
       qd->msg_block ()->rd_ptr (copy_len);
-
     }
 
   return 0;

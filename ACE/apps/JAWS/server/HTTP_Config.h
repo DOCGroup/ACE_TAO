@@ -25,7 +25,7 @@ class HTTP_Config
 {
 public:
   /// Access the Singleton.
-  static HTTP_Config_Info *instance (void);
+  static HTTP_Config_Info *instance ();
 
 private:
   /// Store the Singleton.
@@ -41,8 +41,8 @@ class HTTP_Config_Info
 {
 friend class HTTP_Config;
 public:
-  HTTP_Config_Info (void);
-  ~HTTP_Config_Info (void);
+  HTTP_Config_Info ();
+  ~HTTP_Config_Info ();
 
   // Accessors to the information
 

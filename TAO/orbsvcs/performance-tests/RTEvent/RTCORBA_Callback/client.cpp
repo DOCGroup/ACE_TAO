@@ -36,7 +36,7 @@ public:
 
   virtual void run_test (void) = 0;
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     this->the_barrier_->wait ();
     try
@@ -72,7 +72,7 @@ public:
   {
   }
 
-  virtual void run_test (void)
+  virtual void run_test ()
   {
     Test::Callback_var cb =
       callback->_this ();
@@ -126,13 +126,13 @@ public:
   {
   }
 
-  void stop (void)
+  void stop ()
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     this->stopped_ = 1;
   }
 
-  virtual void run_test (void)
+  virtual void run_test ()
   {
     Test::Callback_var cb =
       callback->_this ();
@@ -158,7 +158,6 @@ public:
         try{
           CORBA::ULongLong dummy = 0;
           (void) session->sample (dummy);
-
         } catch (const CORBA::Exception&) {
         }
       }

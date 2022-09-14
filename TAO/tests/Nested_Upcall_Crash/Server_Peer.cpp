@@ -54,12 +54,12 @@ Server_Peer::callme(Test::Peer_ptr callback,
 }
 
 void
-Server_Peer::crash(void)
+Server_Peer::crash()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 void
-Server_Peer::noop(void)
+Server_Peer::noop()
 {
 }

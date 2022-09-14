@@ -4,7 +4,6 @@
 #include "ConnectDisconnect.h"
 
 
-
 #define CD_IMPLEMENT_ENTITY(X)\
 \
 CD_##X::CD_##X (ConnectDisconnect* cd, int id) \
@@ -38,7 +37,7 @@ CD_IMPLEMENT_ENTITY(SequencePushSupplier)
 
 //*****************************************************************************************************
 
-ConnectDisconnect::ConnectDisconnect (void)
+ConnectDisconnect::ConnectDisconnect ()
   :any_consumer_ (0),
    structured_consumer_ (0),
    sequence_consumer_ (0),
@@ -63,7 +62,7 @@ ConnectDisconnect::~ConnectDisconnect ()
 }
 
 void
-ConnectDisconnect::on_entity_destroyed (void)
+ConnectDisconnect::on_entity_destroyed ()
 {
   this->result_count_++;
 
@@ -178,7 +177,7 @@ ConnectDisconnect::parse_args(int argc, ACE_TCHAR *argv[])
 }
 
 void
-ConnectDisconnect::create_EC (void)
+ConnectDisconnect::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -190,7 +189,7 @@ ConnectDisconnect::create_EC (void)
 }
 
 void
-ConnectDisconnect::run_test (void)
+ConnectDisconnect::run_test ()
 {
   for (int iterations = 0; iterations < count_; ++iterations)
     {
@@ -274,13 +273,13 @@ ConnectDisconnect::run_test (void)
 }
 
 void
-ConnectDisconnect::end_test (void)
+ConnectDisconnect::end_test ()
 {
   consumer_done( 0 );
 }
 
 int
-ConnectDisconnect::check_results (void)
+ConnectDisconnect::check_results ()
 {
   ACE_DEBUG ((LM_DEBUG, "result_count_ = %d", this->result_count_.value ()));
   ACE_DEBUG ((LM_DEBUG, " expected_count_ = %d\n", this->expected_count_));

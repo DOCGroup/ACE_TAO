@@ -21,7 +21,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #ifdef TAO_LOG_CH_REF_COUNTS
 ACE_Event_Handler::Reference_Count
-TAO_IIOP_Connection_Handler::add_reference (void)
+TAO_IIOP_Connection_Handler::add_reference ()
 {
   Reference_Count rc = TAO_IIOP_SVC_HANDLER::add_reference ();
   if (TAO_debug_level > 9)
@@ -34,11 +34,10 @@ TAO_IIOP_Connection_Handler::add_reference (void)
                   rc));
     }
   return rc;
-
 }
 
 ACE_Event_Handler::Reference_Count
-TAO_IIOP_Connection_Handler::remove_reference (void)
+TAO_IIOP_Connection_Handler::remove_reference ()
 {
   TAO_Transport *tport = this->transport ();
   Reference_Count rc = TAO_IIOP_SVC_HANDLER::remove_reference ();

@@ -155,7 +155,6 @@ struct flock
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-
   /**
    * @class ace_flock_t
    *
@@ -340,14 +339,14 @@ namespace ACE_OS {
   // = Win32 OS version determination function.
   /// Return the win32 OSVERSIONINFO structure.
   ACE_NAMESPACE_INLINE_FUNCTION
-  const ACE_TEXT_OSVERSIONINFO &get_win32_versioninfo (void);
+  const ACE_TEXT_OSVERSIONINFO &get_win32_versioninfo ();
 
   // = A pair of functions for modifying ACE's Win32 resource usage.
   /// Return the handle of the module containing ACE's resources. By
   /// default, for a DLL build of ACE this is a handle to the ACE DLL
   /// itself, and for a static build it is a handle to the executable.
   ACE_NAMESPACE_INLINE_FUNCTION
-  HINSTANCE get_win32_resource_module (void);
+  HINSTANCE get_win32_resource_module ();
 
   /// Allow an application to modify which module contains ACE's
   /// resources. This is mainly useful for a static build of ACE where

@@ -45,12 +45,12 @@ Oneway_Buffering_Admin::request_received (CORBA::ULong payload_length)
 }
 
 void
-Oneway_Buffering_Admin::flush (void)
+Oneway_Buffering_Admin::flush ()
 {
 }
 
 void
-Oneway_Buffering_Admin::shutdown (void)
+Oneway_Buffering_Admin::shutdown ()
 {
   this->orb_->shutdown (false);
 }

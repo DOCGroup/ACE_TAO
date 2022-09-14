@@ -97,7 +97,6 @@ ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 int
 ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
 {
-
   int result_wait=0;
 
   // Wait for the signals.

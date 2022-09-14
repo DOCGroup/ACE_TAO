@@ -25,7 +25,7 @@
 class Base_Time
 {
  public:
-  Base_Time (void);
+  Base_Time ();
   ACE_hrtime_t base_time_;
 };
 
@@ -43,10 +43,10 @@ class Task_Stats
   Task_Stats (size_t max_samples);
 
   /// Destructor
-  ~Task_Stats (void);
+  ~Task_Stats ();
 
   /// Init
-  int init (void);
+  int init ();
 
   /// Set the base time value.
   void base_time (ACE_hrtime_t time);

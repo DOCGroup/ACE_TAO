@@ -119,7 +119,6 @@ ace_yylex (YYSTYPE *ace_yylval, void *YYLEX_PARAM)
                             -1));
 
   return ACE_Svc_Conf_Lexer::yylex (ace_yylval, ACE_SVC_CONF_PARAM);
-
 }
 
 void

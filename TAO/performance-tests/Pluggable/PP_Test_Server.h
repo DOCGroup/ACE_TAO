@@ -37,21 +37,21 @@ class PP_Test_Server
 {
 public:
   /// Default constructor
-  PP_Test_Server (void);
+  PP_Test_Server ();
 
   /// Destructor
-  ~PP_Test_Server (void);
+  ~PP_Test_Server ();
 
   /// Initialize the server state - parsing arguments, etc.
   int init (int argc,
             ACE_TCHAR **argv);
 
   /// Run the orb
-  int run (void);
+  int run ();
 
 private:
   /// Parses the commandline arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// File to output the cubit factory IOR.
   FILE* ior_output_file_;

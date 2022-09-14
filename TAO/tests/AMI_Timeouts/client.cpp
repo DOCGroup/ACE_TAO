@@ -127,7 +127,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));
-
     }
   catch (const CORBA::Exception& ex)
     {

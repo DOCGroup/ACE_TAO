@@ -44,7 +44,7 @@ namespace TAO
     explicit Wait_On_LF_No_Upcall (TAO_Transport *t);
 
     /// Destructor.
-    virtual ~Wait_On_LF_No_Upcall (void);
+    virtual ~Wait_On_LF_No_Upcall ();
 
     /*! @copydoc TAO_Wait_Strategy::wait() */
     virtual int wait (ACE_Time_Value *max_wait_time,
@@ -55,7 +55,6 @@ namespace TAO
 
     /*! @copydoc TAO_Wait_Strategy::defer_upcall() */
     virtual int defer_upcall (ACE_Event_Handler*);
-
   };
 }
 

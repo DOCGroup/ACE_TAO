@@ -4,7 +4,6 @@
 #include "tao/Strategies/advanced_resource.h"
 
 
-
   Hello::Hello (CORBA::ORB_ptr orb,
               ACE_thread_t thrid)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -13,7 +12,7 @@
 }
 
 char *
-Hello::get_string (void)
+Hello::get_string ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
@@ -55,7 +54,7 @@ Hello::get_string (void)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
   // Give the client thread time to return from the collocated
   // call to this method before shutting down the ORB.  We sleep

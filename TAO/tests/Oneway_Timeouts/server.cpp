@@ -157,7 +157,6 @@ using namespace CORBA;
 using namespace PortableServer;
 
 namespace {
-
   void print_usage ()
   {
     //FUZZ: disable check_for_lack_ACE_OS

@@ -68,13 +68,13 @@ public:
                            const DsLogAdmin::CapacityAlarmThresholdList* thresholds);
 
   /// Destructor.
-  virtual ~TAO_Hash_LogRecordStore (void);
+  virtual ~TAO_Hash_LogRecordStore ();
 
   /// Initialization.
-  virtual int open (void);
+  virtual int open ();
 
   /// Close the record store.
-  virtual int close (void);
+  virtual int close ();
 
 
   // = Log Parameters
@@ -135,7 +135,7 @@ public:
   virtual void set_max_size (CORBA::ULongLong size);
 
   /// Get the weekly scheduling parameters
-  virtual DsLogAdmin::WeekMask* get_week_mask (void);
+  virtual DsLogAdmin::WeekMask* get_week_mask ();
 
   /// Set the weekly scheduling parameters.
   virtual void set_week_mask (const DsLogAdmin::WeekMask & masks);
@@ -143,20 +143,20 @@ public:
   // = LogRecordStore status methods
 
   /// Gets the current size of the log data.
-  virtual CORBA::ULongLong get_current_size (void);
+  virtual CORBA::ULongLong get_current_size ();
 
   /// Get the number of records in the log right now.
-  virtual CORBA::ULongLong get_n_records (void);
+  virtual CORBA::ULongLong get_n_records ();
 
 
   // = LogRecordStore gauge
 
   /// Gets the current value of the "gauge" that measures the total
   /// size of the records written to the log.
-  virtual CORBA::ULongLong get_gauge(void);
+  virtual CORBA::ULongLong get_gauge();
 
   /// Resets the "gauge" to 0
-  virtual void reset_gauge(void);
+  virtual void reset_gauge();
 
   // = Record logging, retrieval, update and removal methods.
 
@@ -165,7 +165,7 @@ public:
   virtual int log (const DsLogAdmin::LogRecord &rec);
 
   /// Deletes "old" records from the store.
-  virtual int purge_old_records (void);
+  virtual int purge_old_records ();
 
   /// Set single record attributes.
   virtual void
@@ -186,7 +186,7 @@ public:
 
   /// Ensure changes have been flushed to persistent media
   /// Returns 0 on success, -1 on failure.
-  virtual int flush (void);
+  virtual int flush ();
 
   /// Returns all records in the log that match the given constraint
   /// <c>.
@@ -214,7 +214,7 @@ public:
   virtual CORBA::ULong
     delete_records_by_id (const DsLogAdmin::RecordIdList & ids);
 
-  virtual CORBA::ULong remove_old_records (void);
+  virtual CORBA::ULong remove_old_records ();
 
   /// Read-Write Lock
   virtual ACE_SYNCH_RW_MUTEX& lock();

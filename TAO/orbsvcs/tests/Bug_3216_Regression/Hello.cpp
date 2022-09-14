@@ -1,7 +1,6 @@
 #include "Hello.h"
 
 
-
 CORBA::Boolean
 Hello::normal_context_ok_ = 0;
 

@@ -58,7 +58,7 @@ public:
   Worker (CORBA::ORB_ptr orb);
 
   /// The actual implementation of the test
-  virtual void run_test (void);
+  virtual void run_test ();
 
   virtual int svc ();
 
@@ -145,7 +145,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {
@@ -163,7 +163,7 @@ Worker::svc (void)
 }
 
 void
-Worker::run_test (void)
+Worker::run_test ()
 {
   CORBA::Object_var object =
     this->orb_->string_to_object (ior);

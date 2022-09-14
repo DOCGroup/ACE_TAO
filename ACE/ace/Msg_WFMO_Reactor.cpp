@@ -22,7 +22,7 @@ ACE_Msg_WFMO_Reactor::ACE_Msg_WFMO_Reactor (size_t size,
 {
 }
 
-ACE_Msg_WFMO_Reactor::~ACE_Msg_WFMO_Reactor (void)
+ACE_Msg_WFMO_Reactor::~ACE_Msg_WFMO_Reactor ()
 {
 }
 
@@ -43,7 +43,7 @@ ACE_Msg_WFMO_Reactor::wait_for_multiple_events (int timeout,
 }
 
 int
-ACE_Msg_WFMO_Reactor::dispatch_window_messages (void)
+ACE_Msg_WFMO_Reactor::dispatch_window_messages ()
 {
   int number_of_messages = 0;
   MSG msg;

@@ -103,7 +103,6 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
                           -1);
           CSD_Framework::Strategy_var objref = strategy;
           repo->add_strategy (poa_name, strategy);
-
         }
       else
         {

@@ -128,10 +128,10 @@ public:
   virtual int fini ();
 
   /// Destructor.
-  virtual ~TAO_Naming_Server (void);
+  virtual ~TAO_Naming_Server ();
 
   /// Returns the IOR of the naming service.
-  char * naming_service_ior (void);
+  char * naming_service_ior ();
 
   /// Returns a <NamingContext_ptr> for the root Naming Context.
   CosNaming::NamingContext_ptr operator-> () const;
@@ -188,7 +188,7 @@ protected:
    * the -f option.
    */
   virtual TAO_Persistent_Naming_Context_Factory *
-    persistent_naming_context_factory (void);
+    persistent_naming_context_factory ();
 
   /// The ior_multicast event handler.
   TAO_IOR_Multicast *ior_multicast_;

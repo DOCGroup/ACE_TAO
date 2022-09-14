@@ -37,7 +37,7 @@ class TAO_Policy_Current
 {
 public:
   /// Constructor
-  TAO_Policy_Current (void);
+  TAO_Policy_Current ();
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);

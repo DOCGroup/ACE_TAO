@@ -17,7 +17,7 @@ private:
 ACE_Recursive_Thread_Mutex Recursive_Lock_Test::mutex;
 
 int
-Recursive_Lock_Test::svc (void)
+Recursive_Lock_Test::svc ()
 {
   int ni = this->thr_id ();
   synch_count = 2;

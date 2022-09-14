@@ -24,7 +24,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Servant_Dispatcher::~TAO_RT_Servant_Dispatcher (void)
+TAO_RT_Servant_Dispatcher::~TAO_RT_Servant_Dispatcher ()
 {
 }
 
@@ -154,7 +154,6 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
         {
           if (TAO_debug_level > 0)
             {
-
     // If we are in a multi-threaded configuration, print out the current
     // thread priority.
     #if defined (ACE_HAS_THREADS)

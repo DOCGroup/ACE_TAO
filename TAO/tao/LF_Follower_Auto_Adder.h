@@ -36,7 +36,7 @@ public:
   TAO_LF_Follower_Auto_Adder (TAO_Leader_Follower &, TAO_LF_Follower *follower);
 
   /// Destructor
-  ~TAO_LF_Follower_Auto_Adder (void);
+  ~TAO_LF_Follower_Auto_Adder ();
 
 private:
   /// Keep a reference to the leader follower

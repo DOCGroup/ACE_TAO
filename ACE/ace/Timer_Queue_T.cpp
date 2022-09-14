@@ -286,7 +286,6 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (const ACE_Time_
       this->postinvoke (info, cur_time, upcall_act);
 
       ++number_of_timers_expired;
-
     }
 
   ACE_UNUSED_ARG (result);

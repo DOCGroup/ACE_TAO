@@ -18,7 +18,6 @@
 
 namespace
 {
-
 bool
 compare_string_sequence_elements(
     CORBA::ULong i,
@@ -54,7 +53,7 @@ Test_DynSequence::Test_DynSequence (CORBA::ORB_var orb, int debug)
 {
 }
 
-Test_DynSequence::~Test_DynSequence (void)
+Test_DynSequence::~Test_DynSequence ()
 {
   CORBA::string_free (this->test_name_);
   this->test_name_ = 0;
@@ -67,7 +66,7 @@ Test_DynSequence::test_name () const
 }
 
 int
-Test_DynSequence::run_test (void)
+Test_DynSequence::run_test ()
 {
   Data data (this->orb_);
   DynAnyTests::test_seq ts (2);
@@ -228,7 +227,6 @@ Test_DynSequence::run_test (void)
               this->error_count_++;
           }
       }
-
 
 
       if (this->error_count_ == 0)

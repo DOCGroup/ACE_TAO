@@ -183,7 +183,7 @@ ACE_Pagefile_Memory_Pool::remap (void *addr)
 }
 
 int
-ACE_Pagefile_Memory_Pool::unmap (void)
+ACE_Pagefile_Memory_Pool::unmap ()
 {
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
   ACE_BASED_POINTER_REPOSITORY::instance ()->unbind

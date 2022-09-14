@@ -50,7 +50,7 @@ public:
   friend class TAO_SSLIOP_Profile;
 
   /// Default constructor.
-  TAO_IIOP_Endpoint (void);
+  TAO_IIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.
@@ -69,13 +69,13 @@ public:
                      CORBA::Short priority);
 
   /// Destructor.
-  ~TAO_IIOP_Endpoint (void);
+  ~TAO_IIOP_Endpoint ();
 
 
   // = Implementation of abstract TAO_Endpoint methods.  See
   // Endpoint.h for their documentation.
 
-  virtual TAO_Endpoint *next (void);
+  virtual TAO_Endpoint *next ();
 
   /**
    * Return the next endpoint in the list, but use protocol-specific
@@ -97,14 +97,14 @@ public:
   virtual int addr_to_string (char *buffer, size_t length);
 
   /// Makes a copy of @c this
-  virtual TAO_Endpoint *duplicate (void);
+  virtual TAO_Endpoint *duplicate ();
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their port and host are the same.
   virtual CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
   /// Return a hash value for this object.
-  virtual CORBA::ULong hash (void);
+  virtual CORBA::ULong hash ();
 
   // = IIOP_Endpoint-specific methods.
 
@@ -183,7 +183,6 @@ private:
   TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &);
 
 private:
-
   /// String representing the host name.
   CORBA::String_var host_;
 

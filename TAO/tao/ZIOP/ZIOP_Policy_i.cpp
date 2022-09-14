@@ -18,7 +18,7 @@ CompressorIdLevelListPolicy::CompressorIdLevelListPolicy (
 {
 }
 
-CompressorIdLevelListPolicy::CompressorIdLevelListPolicy (void)
+CompressorIdLevelListPolicy::CompressorIdLevelListPolicy ()
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressorIdLevelListPolicy ()
@@ -37,7 +37,7 @@ CompressorIdLevelListPolicy::CompressorIdLevelListPolicy (const CompressorIdLeve
 }
 
 CORBA::PolicyType
-CompressorIdLevelListPolicy::policy_type (void)
+CompressorIdLevelListPolicy::policy_type ()
 {
   // Future policy implementors: notice how this minimizes the
   // footprint of the class.
@@ -56,7 +56,7 @@ CompressorIdLevelListPolicy::clone () const
 }
 
 CORBA::Policy_ptr
-CompressorIdLevelListPolicy::copy (void)
+CompressorIdLevelListPolicy::copy ()
 {
   CompressorIdLevelListPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp, CompressorIdLevelListPolicy (*this),
@@ -67,12 +67,12 @@ CompressorIdLevelListPolicy::copy (void)
 }
 
 void
-CompressorIdLevelListPolicy::destroy (void)
+CompressorIdLevelListPolicy::destroy ()
 {
 }
 
 ::Compression::CompressorIdLevelList *
-CompressorIdLevelListPolicy::compressor_ids (void)
+CompressorIdLevelListPolicy::compressor_ids ()
 {
   return &this->value_;
 }
@@ -112,7 +112,7 @@ CompressionEnablingPolicy::CompressionEnablingPolicy (
 {
 }
 
-CompressionEnablingPolicy::CompressionEnablingPolicy (void)
+CompressionEnablingPolicy::CompressionEnablingPolicy ()
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressionEnablingPolicy ()
@@ -131,7 +131,7 @@ CompressionEnablingPolicy::CompressionEnablingPolicy (const CompressionEnablingP
 }
 
 CORBA::PolicyType
-CompressionEnablingPolicy::policy_type (void)
+CompressionEnablingPolicy::policy_type ()
 {
   // Future policy implementors: notice how this minimizes the
   // footprint of the class.
@@ -150,7 +150,7 @@ CompressionEnablingPolicy::clone () const
 }
 
 CORBA::Policy_ptr
-CompressionEnablingPolicy::copy (void)
+CompressionEnablingPolicy::copy ()
 {
   // Future policy implementors: notice how the following code is
  // exception safe!
@@ -164,12 +164,12 @@ CompressionEnablingPolicy::copy (void)
 }
 
 void
-CompressionEnablingPolicy::destroy (void)
+CompressionEnablingPolicy::destroy ()
 {
 }
 
 ::CORBA::Boolean
-CompressionEnablingPolicy::compression_enabled (void)
+CompressionEnablingPolicy::compression_enabled ()
 {
   return this->value_;
 }
@@ -220,7 +220,7 @@ CompressionLowValuePolicy::CompressionLowValuePolicy (const CompressionLowValueP
 }
 
 CORBA::PolicyType
-CompressionLowValuePolicy::policy_type (void)
+CompressionLowValuePolicy::policy_type ()
 {
   // Future policy implementors: notice how this minimizes the
   // footprint of the class.
@@ -239,7 +239,7 @@ CompressionLowValuePolicy::clone () const
 }
 
 CORBA::Policy_ptr
-CompressionLowValuePolicy::copy (void)
+CompressionLowValuePolicy::copy ()
 {
   // Future policy implementors: notice how the following code is
  // exception safe!
@@ -253,12 +253,12 @@ CompressionLowValuePolicy::copy (void)
 }
 
 void
-CompressionLowValuePolicy::destroy (void)
+CompressionLowValuePolicy::destroy ()
 {
 }
 
 ::CORBA::ULong
-CompressionLowValuePolicy::low_value (void)
+CompressionLowValuePolicy::low_value ()
 {
   return this->value_;
 }
@@ -290,7 +290,7 @@ CompressionMinRatioPolicy::CompressionMinRatioPolicy (const CompressionMinRatioP
 }
 
 CORBA::PolicyType
-CompressionMinRatioPolicy::policy_type (void)
+CompressionMinRatioPolicy::policy_type ()
 {
   // Future policy implementors: notice how this minimizes the
   // footprint of the class.
@@ -309,7 +309,7 @@ CompressionMinRatioPolicy::clone () const
 }
 
 CORBA::Policy_ptr
-CompressionMinRatioPolicy::copy (void)
+CompressionMinRatioPolicy::copy ()
 {
   // Future policy implementors: notice how the following code is
  // exception safe!
@@ -323,12 +323,12 @@ CompressionMinRatioPolicy::copy (void)
 }
 
 void
-CompressionMinRatioPolicy::destroy (void)
+CompressionMinRatioPolicy::destroy ()
 {
 }
 
 ::Compression::CompressionRatio
-CompressionMinRatioPolicy::ratio (void)
+CompressionMinRatioPolicy::ratio ()
 {
   return this->value_;
 }

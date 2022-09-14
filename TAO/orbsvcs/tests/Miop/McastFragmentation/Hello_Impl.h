@@ -13,7 +13,7 @@ class UIPMC_Object_Impl : public virtual POA_Test::UIPMC_Object
 public:
   UIPMC_Object_Impl (CORBA::ULong payload, CORBA::ULong clients, CORBA::ULong calls);
 
-  ~UIPMC_Object_Impl (void);
+  ~UIPMC_Object_Impl ();
 
   // The skeleton methods
   virtual void process (Test::Octets const &payload);
@@ -39,9 +39,9 @@ public:
   Hello_Impl (CORBA::ORB_ptr orb, Test::UIPMC_Object_ptr obj);
 
   // The skeleton methods
-  virtual Test::UIPMC_Object_ptr get_object (void);
+  virtual Test::UIPMC_Object_ptr get_object ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

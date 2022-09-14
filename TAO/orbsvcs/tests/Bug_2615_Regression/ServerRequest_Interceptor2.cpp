@@ -17,23 +17,23 @@
 CORBA::Boolean
 ServerRequest_Interceptor2::has_ft_request_sc_ = false;
 
-ServerRequest_Interceptor2::ServerRequest_Interceptor2 (void)
+ServerRequest_Interceptor2::ServerRequest_Interceptor2 ()
 : orb_ (0)
 {
 }
 
-ServerRequest_Interceptor2::~ServerRequest_Interceptor2 (void)
+ServerRequest_Interceptor2::~ServerRequest_Interceptor2 ()
 {
 }
 
 char *
-ServerRequest_Interceptor2::name (void)
+ServerRequest_Interceptor2::name ()
 {
   return CORBA::string_dup ("ServerRequest_Interceptor2");
 }
 
 void
-ServerRequest_Interceptor2::destroy (void)
+ServerRequest_Interceptor2::destroy ()
 {
 }
 

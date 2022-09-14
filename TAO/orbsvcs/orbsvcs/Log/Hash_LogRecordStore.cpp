@@ -627,7 +627,6 @@ TAO_Hash_LogRecordStore::set_capacity_alarm_thresholds (const DsLogAdmin::Capaci
 }
 
 
-
 DsLogAdmin::ForwardingState
 TAO_Hash_LogRecordStore::get_forwarding_state () const
 {

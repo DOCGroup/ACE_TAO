@@ -51,7 +51,7 @@ public:
   /**
    * Prepare to exit.
    */
-  int fini (void);
+  int fini ();
 
   /**
    * Return a string to identify this object for logging/console message purposes.
@@ -66,7 +66,7 @@ public:
   int idle(int &result);
 
   // override virtuals
-::PortableServer::POA_ptr _default_POA (void);
+::PortableServer::POA_ptr _default_POA ();
 
   PortableServer::ObjectId objectId()const;
 
@@ -74,7 +74,7 @@ public:
   /**
    * Clean house for process shut down.
    */
-  void shutdown_i (void);
+  void shutdown_i ();
 
   ////////////////////////////////
   // CORBA interface FaultNotifier
@@ -108,7 +108,7 @@ public:
 
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods
-  virtual CORBA::Boolean is_alive (void);
+  virtual CORBA::Boolean is_alive ();
 
   /////////////////
   // Implementation

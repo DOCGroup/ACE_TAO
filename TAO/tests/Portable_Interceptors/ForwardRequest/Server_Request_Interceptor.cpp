@@ -4,14 +4,14 @@
 #include "tao/ORB_Constants.h"
 #include "ace/Log_Msg.h"
 
-Server_Request_Interceptor::Server_Request_Interceptor (void)
+Server_Request_Interceptor::Server_Request_Interceptor ()
   : request_count_ (0)
 {
   this->obj_[0] = CORBA::Object::_nil ();
   this->obj_[1] = CORBA::Object::_nil ();
 }
 
-Server_Request_Interceptor::~Server_Request_Interceptor (void)
+Server_Request_Interceptor::~Server_Request_Interceptor ()
 {
 }
 
@@ -32,13 +32,13 @@ Server_Request_Interceptor::forward_references (
 }
 
 char *
-Server_Request_Interceptor::name (void)
+Server_Request_Interceptor::name ()
 {
   return CORBA::string_dup ("Server_Request_Interceptor");
 }
 
 void
-Server_Request_Interceptor::destroy (void)
+Server_Request_Interceptor::destroy ()
 {
   CORBA::release (this->obj_[0]);
   CORBA::release (this->obj_[1]);
@@ -154,7 +154,6 @@ Server_Request_Interceptor::send_exception (
                   this->request_count_ - 2));
 
       throw PortableInterceptor::ForwardRequest (this->obj_[0]);
-
     }
 
 }

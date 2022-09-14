@@ -44,7 +44,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 //private:
-
   /// The real TS object.
   void * const ts_obj_;
 

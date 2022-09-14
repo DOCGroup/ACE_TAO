@@ -45,7 +45,6 @@ namespace ACE
               bool attach_connection (connection_type* connection);
 
             protected:
-
               void close_connection ();
 
               virtual bool connect_i (const ACE_Synch_Options& sync_opt);

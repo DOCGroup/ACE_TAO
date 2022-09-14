@@ -113,10 +113,8 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
 
       os << "::CORBA::TypeCode_ptr const _tc_"
          << node->local_name ()
-         << " =" << be_idt_nl
-         << "&_tao_tc_"
-         << node->flat_name () << ";"
-         << be_uidt;
+         << " = std::addressof(_tao_tc_"
+         << node->flat_name () << ");";
 
       be_util::gen_nested_namespace_end (&os, module);
     }
@@ -128,13 +126,12 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
       // Tc name generation.
       os << node->tc_name ();
 
-      os << " =" << be_idt_nl
-         << "&_tao_tc_";
+      os << " = std::addressof(_tao_tc_";
 
       // Flat name generation.
       os <<  node->flat_name ();
 
-      os << ";" << be_uidt;
+      os << ");";
     }
 
   return 0;

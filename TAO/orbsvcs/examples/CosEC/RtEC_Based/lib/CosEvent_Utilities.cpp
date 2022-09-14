@@ -6,7 +6,7 @@
 #include "ace/Auto_Ptr.h"
 #include <memory>
 
-CosEC_ServantBase::CosEC_ServantBase (void)
+CosEC_ServantBase::CosEC_ServantBase ()
   :poa_ (PortableServer::POA::_nil ()),
    rtec_servant_ (0),
    cosec_servant_ (0),
@@ -44,7 +44,7 @@ CosEC_ServantBase::init (PortableServer::POA_ptr thispoa,
 }
 
 int
-CosEC_ServantBase::activate (void)
+CosEC_ServantBase::activate ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
   ACE_ASSERT (!CORBA::is_nil (this->thispoa_.in ()));
@@ -102,7 +102,7 @@ CosEC_ServantBase::activate (const char* servant_id)
 }
 
 void
-CosEC_ServantBase::activate_rtec (void)
+CosEC_ServantBase::activate_rtec ()
 {
   // Activate the Rtec
   PortableServer::ObjectId_var oid =
@@ -118,7 +118,7 @@ CosEC_ServantBase::activate_rtec (void)
 }
 
 int
-CosEC_ServantBase::activate_cosec (void)
+CosEC_ServantBase::activate_cosec ()
 {
  // Initialize the CosEC servant.
   RtecBase::handle_t supp_handle = 0;
@@ -160,7 +160,7 @@ CosEC_ServantBase::activate_cosec (void)
 }
 
 void
-CosEC_ServantBase::deactivate (void)
+CosEC_ServantBase::deactivate ()
 {
   // Deactivate all those we control...
   this->deactivate_rtec ();
@@ -176,7 +176,7 @@ CosEC_ServantBase::deactivate (void)
 }
 
 void
-CosEC_ServantBase::deactivate_rtec (void)
+CosEC_ServantBase::deactivate_rtec ()
 {
   // Deactivate the rtec.
   PortableServer::ObjectId_var oid =
@@ -187,7 +187,7 @@ CosEC_ServantBase::deactivate_rtec (void)
 }
 
 void
-CosEC_ServantBase::deactivate_cosec (void)
+CosEC_ServantBase::deactivate_cosec ()
 {
   // Deactivate the cosec.
   PortableServer::ObjectId_var oid =
@@ -198,19 +198,19 @@ CosEC_ServantBase::deactivate_cosec (void)
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-CosEC_ServantBase::for_consumers (void)
+CosEC_ServantBase::for_consumers ()
 {
   return this->cosec_->for_consumers ();
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
-CosEC_ServantBase::for_suppliers (void)
+CosEC_ServantBase::for_suppliers ()
 {
   return this->cosec_->for_suppliers ();
 }
 
 void
-CosEC_ServantBase::destroy (void)
+CosEC_ServantBase::destroy ()
 {
   // Deactivate all the contained servants and ourselves.
   // The poa will "destroy" the ref counted servants.
@@ -219,7 +219,7 @@ CosEC_ServantBase::destroy (void)
 }
 
 POA_RtecEventChannelAdmin::EventChannel_ptr
-CosEC_ServantBase::create_rtec (void)
+CosEC_ServantBase::create_rtec ()
 {
   // Create the RtEC servant.
   TAO_EC_Event_Channel_Attributes attr (this->poa_.in (),
@@ -233,7 +233,7 @@ CosEC_ServantBase::create_rtec (void)
 }
 
 TAO_CosEC_EventChannel_i*
-CosEC_ServantBase::create_cosec (void)
+CosEC_ServantBase::create_cosec ()
 {
   // Create the CosEC servant.
   TAO_CosEC_EventChannel_i* _cosec_servant;

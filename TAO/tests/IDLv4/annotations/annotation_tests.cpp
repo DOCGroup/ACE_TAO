@@ -10,7 +10,6 @@
 #include <string>
 
 namespace {
-
   void assert_node_has_annotation (
     Annotation_Test &t, const char *node_name, AST_Annotation_Decl *annotation)
   {

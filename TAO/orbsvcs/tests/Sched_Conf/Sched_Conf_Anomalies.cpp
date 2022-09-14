@@ -10,7 +10,6 @@
 #include "orbsvcs/Naming/Naming_Server.h"
 
 
-
 const char* service_name = "ScheduleService";
 
 const char* format_string = "{%-12s, %d, %d, %d, %d, %8d, "

@@ -1604,7 +1604,6 @@ ACE_Ordered_MultiSet<T>::find (const T &item,
 }
 
 
-
 template <class T> void
 ACE_Ordered_MultiSet<T>::reset ()
 {

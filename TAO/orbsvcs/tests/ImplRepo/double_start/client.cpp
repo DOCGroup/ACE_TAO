@@ -78,7 +78,7 @@ set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& to)
 }
 
 void
-do_restart_test (void)
+do_restart_test ()
 {
   CORBA::Object_var obj = orb->string_to_object (ior);
   ACE_ASSERT (!CORBA::is_nil(obj.in ()));

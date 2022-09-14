@@ -40,7 +40,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Trading_Serv_Export TAO_Property_Evaluator
 {
 public:
-
   TAO_Property_Evaluator(const CosTrading::PropertySeq& properties,
                          CORBA::Boolean supports_dp = 1);
 
@@ -121,7 +120,6 @@ private:
 class TAO_Trading_Serv_Export TAO_Property_Evaluator_By_Name : public TAO_Property_Evaluator
 {
 public:
-
   TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties
  ,
                                   CORBA::Boolean supports_dp = 1);
@@ -158,7 +156,6 @@ public:
   const CosTrading::Property* get_property (const char* property_name);
 
 private:
-
   TAO_Property_Evaluator_By_Name (const TAO_Property_Evaluator_By_Name&);
   TAO_Property_Evaluator_By_Name& operator= (const TAO_Property_Evaluator_By_Name&);
 
@@ -178,9 +175,9 @@ class TAO_Trading_Serv_Export TAO_Dynamic_Property
 {
 public:
   TAO_Dynamic_Property (void) {}
-  virtual ~TAO_Dynamic_Property (void);
+  virtual ~TAO_Dynamic_Property ();
 
-  void destroy (void);
+  void destroy ();
 
   /// Dynamic property evaluation call-back method.
   virtual CORBA::Any* evalDP(const char* name,
@@ -264,7 +261,7 @@ public:
   // DuplicatePolicyName exception is raised.
   // END SPEC
 
-  ~TAO_Policies (void);
+  ~TAO_Policies ();
 
   CORBA::ULong search_card () const;
 
@@ -428,7 +425,6 @@ public:
                               const CosTrading::Link::LinkInfo& link_info) const;
 
 private:
-
   /// Reconclile a ULong property with its default.
   CORBA::ULong ulong_prop (POLICY_TYPE pol) const;
 
@@ -629,11 +625,11 @@ public:
 
   /// It's ok to consider more offers when lookup hasn't exceeded the
   /// cardinality values for searching and matching offers.
-  CORBA::Boolean ok_to_consider_more (void);
+  CORBA::Boolean ok_to_consider_more ();
 
   /// Signal that the Lookup method has matched an offer; decrement the
   /// match_card.
-  void matched_offer (void);
+  void matched_offer ();
 
   // = Return the limits applied.
   /**
@@ -647,7 +643,7 @@ public:
    * returned.
    * END SPEC
    */
-  CosTrading::PolicyNameSeq* limits_applied (void);
+  CosTrading::PolicyNameSeq* limits_applied ();
 
   /// Accessors to retrieve the adjusted cardinalities.
   CORBA::ULong search_card_remaining () const;

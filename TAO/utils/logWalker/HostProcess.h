@@ -45,7 +45,7 @@ class HostProcess
 {
 public:
   HostProcess (const ACE_CString &src, long pid);
-  ~HostProcess (void);
+  ~HostProcess ();
 
   // set/get the name of the process. This is only provided by
   // an alias supplied to the logWalker command line or manifest file.

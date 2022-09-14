@@ -108,7 +108,7 @@ protected:
     return 0;
   }
 
-  ACE_FILE_Addr get_incoming_message_queue (void)
+  ACE_FILE_Addr get_incoming_message_queue ()
   {
     // Exclude 24
     return ACE_FILE_Addr (ACE_TEXT ("/tmp/incoming_message"));

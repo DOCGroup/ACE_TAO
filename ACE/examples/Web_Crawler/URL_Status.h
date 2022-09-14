@@ -50,7 +50,7 @@ public:
   STATUS_CODE status () const;
   void status (int);
   void status (STATUS_CODE);
-  int destroy (void);
+  int destroy ();
 private:
   STATUS_CODE status_;
 };

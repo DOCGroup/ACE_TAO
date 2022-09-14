@@ -37,7 +37,6 @@ ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_assoc
   ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_open");
 
 
-
   // Only open a new socket if we don't already have a valid handle.
   if (new_association.get_handle () == ACE_INVALID_HANDLE &&
 #if defined (ACE_HAS_LKSCTP)

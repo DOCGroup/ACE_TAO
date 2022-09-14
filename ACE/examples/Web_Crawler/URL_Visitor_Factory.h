@@ -30,9 +30,8 @@
 class URL_Visitor_Factory
 {
 public:
-
   /// Destructor.
-  virtual ~URL_Visitor_Factory (void);
+  virtual ~URL_Visitor_Factory ();
 
   /// Factory Method that makes the appropriate type of <URL_Visitor>.
   virtual URL_Visitor *make_visitor (void) = 0;
@@ -51,12 +50,10 @@ class URL_Validation_Visitor_Factory : public URL_Visitor_Factory
 {
 public:
   /// Factory Method that makes a <URL_Validation_Visitor>.
-  virtual URL_Visitor *make_visitor (void);
+  virtual URL_Visitor *make_visitor ();
 
   /// Factory Method that makes a <FIFO_Command_Processor>.
-  virtual Command_Processor *make_command_processor (void);
-
-
+  virtual Command_Processor *make_command_processor ();
 };
 
 /**
@@ -68,10 +65,10 @@ class URL_Download_Visitor_Factory : public URL_Visitor_Factory
 {
 public:
   /// Factory Method that makes a <URL_Download_Visitor>.
-  virtual URL_Visitor *make_visitor (void);
+  virtual URL_Visitor *make_visitor ();
 
   /// Factory Method that makes a <FIFO_Command_Processor>.
-  virtual Command_Processor *make_command_processor (void);
+  virtual Command_Processor *make_command_processor ();
 };
 
 #endif /* _URL_VISITOR_FACTORY_H */

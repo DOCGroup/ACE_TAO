@@ -130,7 +130,7 @@ DSI_Simple_Server::_primary_interface (const PortableServer::ObjectId &,
 }
 
 PortableServer::POA_ptr
-DSI_Simple_Server::_default_POA (void)
+DSI_Simple_Server::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

@@ -60,7 +60,6 @@ Notifier_Input_Handler::init_naming_service ()
 
       naming_server_->rebind (notifier_obj_name,
                               notifier_obj.in());
-
     }
   catch (const CosNaming::NamingContext::AlreadyBound&)
     {

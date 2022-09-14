@@ -26,7 +26,6 @@
 #include "ace/Tokenizer_T.h"
 
 
-
 #if defined (ACE_WIN32)
 #define EXEC_NAME ACE_TEXT ("MORE.COM")
 const ACE_TCHAR *DATE_PATH = ACE_TEXT ("date.exe");
@@ -113,7 +112,7 @@ parse_args (int argc, ACE_TCHAR **argv)
 
 // This shows how to set handles.
 static void
-test_more (void)
+test_more ()
 {
   ACE_HANDLE infile = ACE_OS::open (print_file, O_RDONLY);
 
@@ -151,7 +150,7 @@ test_more (void)
 // This is a simple usage of ACE_Process.
 
 static void
-test_date (void)
+test_date ()
 {
   ACE_Process_Options options;
   options.command_line (DATE_PATH);
@@ -178,7 +177,7 @@ test_date (void)
 }
 
 static void
-test_ls (void)
+test_ls ()
 {
   ACE_Process_Options options;
 #if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
@@ -204,7 +203,7 @@ test_ls (void)
 }
 
 static void
-test_wait (void)
+test_wait ()
 {
   ACE_Process_Options options;
 #if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
@@ -284,7 +283,7 @@ test_wait (void)
 // This is just to test the direct usage of CreateProcess.  I use this
 // occasionally as a sanity check when ACE_Process breaks.
 static void
-win32_test_ls (void)
+win32_test_ls ()
 {
   PROCESS_INFORMATION process_info;
   ACE_TEXT_STARTUPINFO startup_info;
@@ -347,7 +346,7 @@ win32_test_ls (void)
 // environment variables.
 
 static void
-win32_spawn_environment_process (void)
+win32_spawn_environment_process ()
 {
   PROCESS_INFORMATION process_info;
   ACE_TEXT_STARTUPINFO startup_info;

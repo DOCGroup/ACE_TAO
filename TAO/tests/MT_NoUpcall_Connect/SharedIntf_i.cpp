@@ -21,7 +21,7 @@ Test_Idl_SharedIntf_i::set_upper (const char *ior)
 }
 
 void
-Test_Idl_SharedIntf_i::do_upcall (void)
+Test_Idl_SharedIntf_i::do_upcall ()
 {
    ACE_DEBUG((LM_DEBUG,"(%P|%t) Test_Idl_SharedIntf::do_upcall called\n"));
 

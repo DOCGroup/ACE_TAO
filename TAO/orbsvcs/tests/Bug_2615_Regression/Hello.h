@@ -19,11 +19,11 @@ public:
   Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong server_id = 0);
 
   // = The skeleton methods
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
-  virtual void ping (void);
+  virtual void ping ();
 
-  virtual CORBA::Boolean has_ft_request_service_context (void);
+  virtual CORBA::Boolean has_ft_request_service_context ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

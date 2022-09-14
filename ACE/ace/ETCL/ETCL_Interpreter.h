@@ -91,7 +91,6 @@ public:
   static int copy_into (char* buf, int max_size);
 
 private:
-
   /// Pointers to keep track of the input string.
   static char* string_;
   static char* current_;

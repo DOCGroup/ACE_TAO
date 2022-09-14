@@ -5,13 +5,12 @@
 #endif /* __ACEXML_INLINE__ */
 
 
-ACEXML_Entity_Manager::ACEXML_Entity_Manager (void)
+ACEXML_Entity_Manager::ACEXML_Entity_Manager ()
   : entities_ (0)
 {
-
 }
 
-ACEXML_Entity_Manager::~ACEXML_Entity_Manager (void)
+ACEXML_Entity_Manager::~ACEXML_Entity_Manager ()
 {
   this->reset();
 }

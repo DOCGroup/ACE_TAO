@@ -8,7 +8,6 @@
 #include "ace/Service_Config.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Task.h"
@@ -50,7 +49,7 @@ Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
 // for all other threads to complete this iteration.
 
 int
-Barrier_Task::svc (void)
+Barrier_Task::svc ()
 {
   // Note that the ACE_Task::svc_run() method automatically adds us to
   // the Thread_Manager when the thread begins.

@@ -688,7 +688,6 @@ ACE_AIOCB_Notify_Pipe_Manager::~ACE_AIOCB_Notify_Pipe_Manager ()
   h = this->pipe_.read_handle ();
   if ( h != ACE_INVALID_HANDLE)
      ACE_OS::closesocket (h);
-
 }
 
 
@@ -764,7 +763,6 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations)
   // start pseudo-asynchronous accept task
   // one per all future acceptors
   this->get_asynch_pseudo_task().start ();
-
 }
 
 // Special protected constructor for ACE_SUN_Proactor
@@ -1218,7 +1216,6 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
                                         error_status,
                                         transfer_count))  // completed
         break;
-
     } // end for
 
   if (count == 0) // all processed , nothing found
@@ -1995,7 +1992,6 @@ ACE_POSIX_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
                                        const void * /* completion_key */,
                                        u_long       /*  error */)
 {
-
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != 0)
     handler->handle_wakeup ();

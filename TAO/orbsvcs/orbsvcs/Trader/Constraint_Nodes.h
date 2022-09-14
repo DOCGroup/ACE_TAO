@@ -154,14 +154,14 @@ public:
   TAO_Unary_Constraint (TAO_Expression_Type op_type,
                         TAO_Constraint* operand);
 
-  virtual ~TAO_Unary_Constraint (void);
+  virtual ~TAO_Unary_Constraint ();
 
   virtual int accept (TAO_Constraint_Visitor* visitor);
 
   virtual TAO_Expression_Type expr_type () const
     { return this->op_; }
 
-  TAO_Constraint* operand (void);
+  TAO_Constraint* operand ();
 
 private:
   TAO_Unary_Constraint (const TAO_Unary_Constraint&);
@@ -185,7 +185,7 @@ class TAO_Trading_Serv_Export TAO_Property_Constraint : public TAO_Constraint
 public:
   TAO_Property_Constraint (const char* name);
 
-  virtual ~TAO_Property_Constraint (void);
+  virtual ~TAO_Property_Constraint ();
 
   virtual int accept (TAO_Constraint_Visitor* visitor);
 
@@ -211,7 +211,7 @@ private:
 class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
 {
 public:
-  TAO_Literal_Constraint (void);
+  TAO_Literal_Constraint ();
 
   // = Constructors for each of the various types of literals.
 
@@ -226,7 +226,7 @@ public:
   TAO_Literal_Constraint (const TAO_Literal_Constraint& lit);
 
   /// Destructor.
-  ~TAO_Literal_Constraint(void);
+  ~TAO_Literal_Constraint();
 
   /// Visitor accept methods.
   virtual int accept (TAO_Constraint_Visitor* visitor);

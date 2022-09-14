@@ -22,9 +22,9 @@ class test_i : public virtual POA_test
 public:
   test_i (PortableServer::POA_ptr poa);
 
-  void method (void);
+  void method ();
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
   PortableServer::POA_var poa_;
@@ -38,7 +38,7 @@ test_i::test_i (PortableServer::POA_ptr poa)
 }
 
 void
-test_i::method (void)
+test_i::method ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Entering Worker::svc from %t and sleeping....\n"));
@@ -67,7 +67,7 @@ test_i::method (void)
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (void)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -76,7 +76,7 @@ class Worker : public ACE_Task_Base
 {
 public:
   Worker (test_ptr t);
-  int svc (void);
+  int svc ();
 
 private:
   test_var test_;
@@ -88,7 +88,7 @@ Worker::Worker (test_ptr t)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {

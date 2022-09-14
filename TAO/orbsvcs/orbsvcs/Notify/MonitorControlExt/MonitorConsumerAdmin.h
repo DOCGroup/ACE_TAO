@@ -40,10 +40,10 @@ class TAO_Notify_MC_Ext_Export TAO_MonitorConsumerAdmin
 {
 public:
   /// Construct a monitor supplier admin.
-  TAO_MonitorConsumerAdmin (void);
+  TAO_MonitorConsumerAdmin ();
 
   /// Remove the statistics for this event channel.
-  virtual ~TAO_MonitorConsumerAdmin (void);
+  virtual ~TAO_MonitorConsumerAdmin ();
 
   /// Register our statistic and control objects.
   void register_stats_controls (TAO_MonitorEventChannel* mec,
@@ -72,11 +72,10 @@ public:
 
   virtual void count_queue_overflow (bool local_overflow, bool global_overflow);
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
 private:
-
-  virtual void remove (void);
+  virtual void remove ();
 
   ACE_CString stat_name_;
   ACE_CString queue_size_stat_name_;

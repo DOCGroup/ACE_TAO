@@ -41,9 +41,7 @@ typedef int ACE_Protocol_ID;
  */
 class ACE_QoS_Export ACE_QoS_Session
 {
-
 public:
-
   enum RSVP_Event_Type
   {
     RSVP_PATH_EVENT,
@@ -148,7 +146,6 @@ public:
   virtual int version (void) = 0;
 
 protected:
-
   /// Source port if this is a Sender session. Used for rapi_sender ().
   u_short source_port_;
 
@@ -172,7 +169,6 @@ protected:
 
   RSVP_Event_Type rsvp_event_type_;
   //Has the last rsvp event that occurred
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

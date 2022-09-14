@@ -63,7 +63,6 @@ int ReadHandler::handle_input(ACE_HANDLE) {
     char response = 0;
 
     if (mCallCounter == 0) {
-
         /*
          * This is the first request from the client.
          */
@@ -110,7 +109,6 @@ int ReadHandler::handle_input(ACE_HANDLE) {
             INVOCATION_RETURN(-1); // the client will not send data if response != 'K'
 
     } else if (mCallCounter == 1) {
-
         /*
          * This is the second request from the client.
          */

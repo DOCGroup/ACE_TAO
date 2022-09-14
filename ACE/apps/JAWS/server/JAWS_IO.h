@@ -40,8 +40,8 @@ class JAWS_IO_Handler;
 class JAWS_IO
 {
 public:
-  JAWS_IO (void);
-  virtual ~JAWS_IO (void);
+  JAWS_IO ();
+  virtual ~JAWS_IO ();
   void handler (JAWS_IO_Handler *handler);
 
   virtual void handle (ACE_HANDLE h) = 0;
@@ -84,9 +84,8 @@ protected:
 class JAWS_IO_Handler
 {
 public:
-
   /// Destructor.
-  virtual ~JAWS_IO_Handler (void);
+  virtual ~JAWS_IO_Handler ();
 
   /// This method is called by the IO class when new client data shows
   /// up.
@@ -123,7 +122,6 @@ public:
   /// This method is called by the IO class when the error message has
   /// been delivered to the client.
   virtual void error_message_complete (void) = 0;
-
 };
 
 /**
@@ -134,9 +132,9 @@ public:
 class JAWS_Synch_IO : public JAWS_IO
 {
 public:
-  JAWS_Synch_IO (void);
+  JAWS_Synch_IO ();
 
-  ~JAWS_Synch_IO (void);
+  ~JAWS_Synch_IO ();
 
   virtual void handle (ACE_HANDLE h);
   virtual ACE_HANDLE handle () const;
@@ -178,9 +176,9 @@ protected:
 class JAWS_Asynch_IO : public JAWS_IO, public ACE_Handler
 {
 public:
-  JAWS_Asynch_IO (void);
+  JAWS_Asynch_IO ();
 
-  ~JAWS_Asynch_IO (void);
+  ~JAWS_Asynch_IO ();
 
   virtual void handle (ACE_HANDLE h) { ACE_Handler::handle (h); };
   virtual ACE_HANDLE handle () const { return ACE_Handler::handle (); };
@@ -250,9 +248,9 @@ protected:
 class JAWS_Synch_IO_No_Cache : public JAWS_IO
 {
 public:
-  JAWS_Synch_IO_No_Cache (void);
+  JAWS_Synch_IO_No_Cache ();
 
-  ~JAWS_Synch_IO_No_Cache (void);
+  ~JAWS_Synch_IO_No_Cache ();
 
   virtual void handle (ACE_HANDLE h);
   virtual ACE_HANDLE handle () const;

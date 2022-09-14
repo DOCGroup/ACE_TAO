@@ -16,7 +16,6 @@
 #include "ace/OS_Memory.h"
 
 
-
 class A
 {
 public:

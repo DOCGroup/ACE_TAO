@@ -69,7 +69,6 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       Foo_sequence u;
       Foo_sequence v(u);
       u = v;
-
     }
   catch (const ::CORBA::Exception &)
     {

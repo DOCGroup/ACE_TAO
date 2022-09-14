@@ -78,7 +78,7 @@ public:
                       bool is_heap_allocated = false);
 
   /// Destructor
-  virtual ~TAO_Queued_Message (void);
+  virtual ~TAO_Queued_Message ();
 
   /** @name Intrusive list manipulation
    *
@@ -127,7 +127,6 @@ public:
   /** @name Template Methods
    */
   //@{
-
   /// Return the length of the message
   /**
    * If the message has been partially sent it returns the number of

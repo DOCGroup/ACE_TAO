@@ -12,7 +12,6 @@ TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i ()
 TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf)
 : notify_factory_ (ecf)
 {
-
   CosNotifyChannelAdmin::ChannelID id;
   CosNotifyChannelAdmin::AdminID adminID = 0;
   CosNotification::QoSProperties initial_qos;
@@ -254,7 +253,6 @@ TAO_NotifyLogFactory_i::obtain_push_supplier (
 {
   return consumer_admin_->obtain_push_supplier ();
 }
-
 
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr

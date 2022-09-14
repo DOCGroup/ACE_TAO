@@ -62,7 +62,7 @@ public:
    */
   //@{
   int open (TAO_ORB_Core *orb_core);
-  int close (void);
+  int close ();
 
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
@@ -72,7 +72,6 @@ public:
   //@}
 
 public:
-
   typedef TAO_Connect_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>
           TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY;
 
@@ -100,19 +99,17 @@ protected:
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout = 0);
 
-  virtual TAO_Profile *make_profile (void);
+  virtual TAO_Profile *make_profile ();
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
   //@}
 
 private:
-
   /// Return the remote endpoint, a helper function
   TAO_SHMIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
 private:
-
   /// Local address.
   ACE_MEM_Addr address_;
 

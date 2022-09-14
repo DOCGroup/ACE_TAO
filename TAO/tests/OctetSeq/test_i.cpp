@@ -6,7 +6,7 @@
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-Database_i::~Database_i (void)
+Database_i::~Database_i ()
 {
   delete[] this->elements_;
 }
@@ -63,7 +63,7 @@ Database_i::get_crc (Test::Index i)
 }
 
 void
-Database_i::shutdown (void)
+Database_i::shutdown ()
 {
   this->orb_->shutdown ();
 }

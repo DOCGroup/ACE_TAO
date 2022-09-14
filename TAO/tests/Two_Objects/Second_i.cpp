@@ -11,11 +11,10 @@ Second_i::Second_i (CORBA::ORB_ptr orb,
     length_(len),
     two_way_done_(two_way_done)
 {
-
 }
 
 Two_Objects_Test::Octet_Seq *
-Second_i::twoway_method (void)
+Second_i::twoway_method ()
 {
   Two_Objects_Test::Octet_Seq  *preply_mesg = 0;
 
@@ -46,7 +45,7 @@ Second_i::twoway_method (void)
 }
 
 void
-Second_i::shutdown (void)
+Second_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) about to shutdown the orb\n"));
   this->orb_->shutdown (false);

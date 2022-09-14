@@ -73,7 +73,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 /// interceptor
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {
@@ -93,7 +93,6 @@ server_main (int argc,
              ACE_TCHAR *argv[],
              Test::Server_Request_Interceptor *cri)
 {
-
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
   try
@@ -205,7 +204,6 @@ server_main (int argc,
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server (%P|%t) Invoking orb->destroy ()\n")));
 
       orb->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {

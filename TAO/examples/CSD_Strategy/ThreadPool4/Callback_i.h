@@ -7,14 +7,12 @@
 class Callback_i : public virtual POA_Callback
 {
   public:
-
     Callback_i();
 
     virtual ~Callback_i();
 
     virtual void test_method (
     );
-
 };
 
 

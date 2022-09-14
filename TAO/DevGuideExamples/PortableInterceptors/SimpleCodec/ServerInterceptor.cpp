@@ -21,7 +21,6 @@ ServerInterceptor::ServerInterceptor (IOP::CodecFactory_var cf)
 
   // Obtain the CDR encapsulation Codec.
   this->codec = cf->create_codec (encoding);
-
 }
 
 ServerInterceptor::~ServerInterceptor ()

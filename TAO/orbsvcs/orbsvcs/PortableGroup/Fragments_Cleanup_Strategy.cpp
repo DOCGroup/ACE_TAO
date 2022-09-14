@@ -69,7 +69,6 @@ namespace
 
 namespace TAO_PG
 {
-
   Fragments_Cleanup_Strategy::~Fragments_Cleanup_Strategy ()
   {
   }

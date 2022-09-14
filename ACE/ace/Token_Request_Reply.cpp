@@ -42,7 +42,7 @@ ACE_Token_Request::encode (void *&buf)
 // so that it can be used by the server.
 
 int
-ACE_Token_Request::decode (void)
+ACE_Token_Request::decode ()
 {
   this->token_name_ = this->transfer_.data_;
 
@@ -152,7 +152,7 @@ ACE_Token_Reply::encode (void *&buf)
 // so that it can be used by the client.
 
 int
-ACE_Token_Reply::decode (void)
+ACE_Token_Reply::decode ()
 {
   return 0;
 }

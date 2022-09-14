@@ -52,7 +52,6 @@ FillQoSParams (ACE_QoS_Params &qos_params,
 int
 ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
-
   QoS_Util qos_util(argc, argv);
 
   if (qos_util.parse_args () == -1)
@@ -291,6 +290,5 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                 "Specify a -m option for multicast application\n"));
   return 0;
 }
-
 
 

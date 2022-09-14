@@ -42,7 +42,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Registry
 {
 public:
-
   /// International string
   struct ACE_Export Name_Component
   {
@@ -74,7 +73,7 @@ public:
   struct ACE_Export Binding
   {
     /// Empty (default) constructor
-    Binding (void);
+    Binding ();
 
     /// Constructor
     /// (Name version)
@@ -98,10 +97,10 @@ public:
     void name (ACE_TString &name);
 
     /// Get Name (String version)
-    ACE_TString name (void);
+    ACE_TString name ();
 
     /// Type accessor
-    Binding_Type type (void);
+    Binding_Type type ();
 
   private:
     /// A binding has a name
@@ -189,13 +188,13 @@ public:
     };
 
     /// Empty constructor: keys will be NULL
-    Naming_Context (void);
+    Naming_Context ();
 
     /// Constructor: key_ will be set to @a key
     Naming_Context (const HKEY &key);
 
     /// Destructor will call <Naming_Context::close>.
-    ~Naming_Context (void);
+    ~Naming_Context ();
 
     // The following interfaces are for objects
 
@@ -328,7 +327,7 @@ public:
     int unbind_context (const ACE_TString &name);
 
     /// Same as <unbind_context> with @c this as naming_context
-    int destroy (void);
+    int destroy ();
 
     /**
      * listing function: iterator creator
@@ -348,20 +347,20 @@ public:
     // not part of the CORBA interface
 
     /// Sync content of context to disk
-    int flush (void);
+    int flush ();
 
     /// Close the handle of the context
     /// @note <close> does not call <flush>
-    int close (void);
+    int close ();
 
     // Accessors
 
     /// Get key
-    HKEY key (void);
+    HKEY key ();
 
     // void parent (HKEY parent);
     /// Get parent
-    HKEY parent (void);
+    HKEY parent ();
 
     /// Get name
     /// (Name version)
@@ -371,7 +370,7 @@ public:
     void name (ACE_TString &name);
 
     /// Get name (String version)
-    ACE_TString name (void);
+    ACE_TString name ();
 
   protected:
     /// Set key
@@ -419,7 +418,7 @@ public:
     friend class Naming_Context;
 
     /// Default constructor
-    Binding_Iterator (void);
+    Binding_Iterator ();
 
     /// Next entry
     int next_one (Binding &binding);
@@ -429,16 +428,15 @@ public:
                 Binding_List &list);
 
     /// Cleanup
-    int destroy (void);
+    int destroy ();
 
     /// Reset the internal state of the iterator
-    void reset (void);
+    void reset ();
 
     /// Get naming_context that the iterator is iterating over
-    Naming_Context &naming_context (void);
+    Naming_Context &naming_context ();
 
   private:
-
     /// Set naming_context that the iterator is iterating over
     void naming_context (Naming_Context& naming_context);
 
@@ -458,10 +456,10 @@ public:
       {
       public:
         /// Constructor
-        Iteration_State (void);
+        Iteration_State ();
 
         /// Destructor
-        virtual ~Iteration_State (void);
+        virtual ~Iteration_State ();
 
         /// Set the iterator reference.
         void iterator (Binding_Iterator *iterator);
@@ -471,7 +469,7 @@ public:
                             Binding_List &list) = 0;
 
         /// Reset state
-        void reset (void);
+        void reset ();
 
       protected:
         /// Pointer to parent iterator
@@ -522,7 +520,7 @@ public:
     void current_enumeration (Iteration_State& current_enumeration);
 
     /// Get current_enumeration
-    Iteration_State &current_enumeration (void);
+    Iteration_State &current_enumeration ();
   };
 };
 

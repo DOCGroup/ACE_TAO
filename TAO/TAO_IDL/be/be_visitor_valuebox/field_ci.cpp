@@ -336,7 +336,7 @@ be_visitor_valuebox_field_ci::visit_predefined_type (be_predefined_type *node)
 
       *os << "ACE_INLINE void" << be_nl
           << vb_node_->name () << "::" << field->local_name ()
-          << " ( ::" << bt->name () << "_ptr val)"
+          << " (::" << bt->name () << "_ptr val)"
           << be_nl << "{" << be_idt_nl
           << "this->_pd_value->" << field->local_name ()
           << " = ::" << bt->name() << "::_duplicate (val);" << be_uidt_nl
@@ -561,7 +561,6 @@ be_visitor_valuebox_field_ci::emit_member_set (be_decl *field,
       << "this->_pd_value->" << field->local_name ()
       << " = val;" << be_uidt_nl
       << "}" << be_nl_2;
-
 }
 
 void

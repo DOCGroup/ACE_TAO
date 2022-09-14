@@ -88,7 +88,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 }
 
 
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 
@@ -97,7 +97,6 @@ CORBA::Boolean Messenger_i::send_message (
     const char * subject,
     char *& message)
 {
-
   std::cout << "Message from: " << user_name << std::endl;
   std::cout << "Subject:      " << subject << std::endl;
   std::cout << "Message:      " << message << std::endl;

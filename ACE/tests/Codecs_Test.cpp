@@ -16,7 +16,6 @@
 #include "ace/ACE.h"
 
 
-
 // Don't change the strings thinking that they are typos
 
 const ACE_Byte normal_stream[] = "This is a sample test stream, to test simple Base64 encoding";

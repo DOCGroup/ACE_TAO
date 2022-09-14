@@ -10,7 +10,6 @@ class ClientInterceptor:
   public virtual PortableInterceptor::ClientRequestInterceptor,
   public virtual ::CORBA::LocalObject
 {
-
  public:
   ClientInterceptor (IOP::CodecFactory_var) ;
 
@@ -33,7 +32,6 @@ class ClientInterceptor:
  private:
   const char *myname_;
   IOP::Codec_var codec;
-
 };
 
 #endif

@@ -155,7 +155,6 @@ namespace ACE
         typedef String_IOSBase<char> CString_IOS;
         typedef String_OStreamBase<char> CString_OStream;
         typedef String_IStreamBase<char> CString_IStream;
-
       }
   }
 

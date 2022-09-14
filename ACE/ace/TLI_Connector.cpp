@@ -23,7 +23,7 @@ ACE_TLI_Connector::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_TLI_Connector::ACE_TLI_Connector (void)
+ACE_TLI_Connector::ACE_TLI_Connector ()
 {
   ACE_TRACE ("ACE_TLI_Connector::ACE_TLI_Connector");
 }

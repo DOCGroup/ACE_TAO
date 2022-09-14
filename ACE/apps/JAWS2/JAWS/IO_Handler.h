@@ -45,7 +45,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class JAWS_Export JAWS_Abstract_IO_Handler
 {
 public:
-  virtual ~JAWS_Abstract_IO_Handler (void);
+  virtual ~JAWS_Abstract_IO_Handler ();
 
   virtual void task (JAWS_Pipeline_Handler *ph) = 0;
   virtual JAWS_Pipeline_Handler *task (void) = 0;
@@ -134,7 +134,6 @@ public:
          RECEIVE_OK = 18, RECEIVE_OK_A = 19,
   /// The different states of the handler
          RECEIVE_ERROR = 20, RECEIVE_ERROR_A = 21 };
-
 };
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined(ACE_HAS_AIO_CALLS)
@@ -145,8 +144,8 @@ class JAWS_Asynch_IO_Handler;
 class JAWS_Export JAWS_Asynch_Handler : public ACE_Service_Handler
 {
 public:
-  JAWS_Asynch_Handler (void);
-  virtual ~JAWS_Asynch_Handler (void);
+  JAWS_Asynch_Handler ();
+  virtual ~JAWS_Asynch_Handler ();
 
   /// This method will be called when an asynchronous read completes on
   /// a stream.
@@ -167,9 +166,9 @@ public:
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
 
   virtual void handler (JAWS_Asynch_IO_Handler *ioh);
-  virtual JAWS_Asynch_IO_Handler * handler (void);
+  virtual JAWS_Asynch_IO_Handler * handler ();
 
-  virtual void dispatch_handler (void);
+  virtual void dispatch_handler ();
 
   /// Call back entry point for ACE_Asynch_Acceptor
   virtual void open (ACE_HANDLE h, ACE_Message_Block &mb);
@@ -189,38 +188,38 @@ class JAWS_Export JAWS_IO_Handler : public JAWS_Abstract_IO_Handler
 {
 public:
   JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory);
-  virtual ~JAWS_IO_Handler (void);
+  virtual ~JAWS_IO_Handler ();
 
   // Inherited from JAWS_IO_Handler
 
   virtual void accept_complete (ACE_HANDLE handle);
-  virtual void accept_error (void);
+  virtual void accept_error ();
   virtual void read_complete (ACE_Message_Block *data);
-  virtual void read_error (void);
-  virtual void transmit_file_complete (void);
+  virtual void read_error ();
+  virtual void transmit_file_complete ();
   virtual void transmit_file_error (int result);
-  virtual void receive_file_complete (void);
+  virtual void receive_file_complete ();
   virtual void receive_file_error (int result);
-  virtual void write_error (void);
-  virtual void confirmation_message_complete (void);
-  virtual void error_message_complete (void);
+  virtual void write_error ();
+  virtual void confirmation_message_complete ();
+  virtual void error_message_complete ();
 
-  virtual JAWS_IO_Handler_Factory *factory (void);
+  virtual JAWS_IO_Handler_Factory *factory ();
   virtual ACE_HANDLE handle () const;
 
-  virtual void done (void);
-  virtual int status (void);
-  virtual void idle (void);
+  virtual void done ();
+  virtual int status ();
+  virtual void idle ();
 
-  virtual void acquire (void);
-  virtual void lock (void);
-  virtual void release (void);
+  virtual void acquire ();
+  virtual void lock ();
+  virtual void release ();
 
   virtual void task (JAWS_Pipeline_Handler *ph);
-  virtual JAWS_Pipeline_Handler *task (void);
+  virtual JAWS_Pipeline_Handler *task ();
 
   virtual void message_block (JAWS_Data_Block *mb);
-  virtual JAWS_Data_Block *message_block (void);
+  virtual JAWS_Data_Block *message_block ();
 
 protected:
   /// The state of the handler.
@@ -244,10 +243,10 @@ class JAWS_Export JAWS_IO_Handler_Factory
 {
 public:
   /// Destructor
-  virtual ~JAWS_IO_Handler_Factory (void);
+  virtual ~JAWS_IO_Handler_Factory ();
 
   /// This creates a new JAWS_IO_Handler
-  virtual JAWS_IO_Handler *create_io_handler (void);
+  virtual JAWS_IO_Handler *create_io_handler ();
 
   /// This deletes a JAWS_IO_Handler
   virtual void destroy_io_handler (JAWS_IO_Handler *handler);
@@ -265,10 +264,10 @@ class JAWS_Export JAWS_Asynch_IO_Handler_Factory : public JAWS_IO_Handler_Factor
 {
 public:
   /// Destructor
-  virtual ~JAWS_Asynch_IO_Handler_Factory (void);
+  virtual ~JAWS_Asynch_IO_Handler_Factory ();
 
   /// This creates a new JAWS_IO_Handler
-  virtual JAWS_IO_Handler *create_io_handler (void);
+  virtual JAWS_IO_Handler *create_io_handler ();
 
   /// This deletes a JAWS_IO_Handler
   virtual void destroy_io_handler (JAWS_IO_Handler *handler);
@@ -283,16 +282,15 @@ friend class JAWS_Waiter;
   // Provide implementations for the common functions.
 public:
   explicit JAWS_Asynch_IO_Handler (JAWS_Asynch_IO_Handler_Factory *factory);
-  virtual ~JAWS_Asynch_IO_Handler (void);
+  virtual ~JAWS_Asynch_IO_Handler ();
 
-  virtual ACE_Handler *handler (void);
+  virtual ACE_Handler *handler ();
 
-  virtual void acquire (void);
-  virtual void lock (void);
-  virtual void release (void);
+  virtual void acquire ();
+  virtual void lock ();
+  virtual void release ();
 
 protected:
-
   JAWS_Asynch_Handler *handler_;
   ACE_SYNCH_RW_MUTEX count_;
 };

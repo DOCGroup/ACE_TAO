@@ -89,7 +89,7 @@ extern "C"
   // Return the current thread ID.  OpenSSL uses this on platforms
   // that need it.
   unsigned long
-  ACE_SSL_THREAD_ID_NAME (void)
+  ACE_SSL_THREAD_ID_NAME ()
   {
     return (unsigned long) ACE_VERSIONED_NAMESPACE_NAME::ACE_OS::thr_self ();
   }
@@ -105,7 +105,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_SSL_Context::lock_type * ACE_SSL_Context::locks_ = 0;
 #endif  /* ACE_HAS_THREADS  && (OPENSSL_VERSION_NUMBER < 0x10100000L) */
 
-ACE_SSL_Context::ACE_SSL_Context (void)
+ACE_SSL_Context::ACE_SSL_Context ()
   : context_ (0),
     mode_ (-1),
     default_verify_mode_ (SSL_VERIFY_NONE),
@@ -117,7 +117,7 @@ ACE_SSL_Context::ACE_SSL_Context (void)
   ACE_SSL_Context::ssl_library_init ();
 }
 
-ACE_SSL_Context::~ACE_SSL_Context (void)
+ACE_SSL_Context::~ACE_SSL_Context ()
 {
   ACE_TRACE ("ACE_SSL_Context::~ACE_SSL_Context");
 
@@ -131,7 +131,7 @@ ACE_SSL_Context::~ACE_SSL_Context (void)
 }
 
 ACE_SSL_Context *
-ACE_SSL_Context::instance (void)
+ACE_SSL_Context::instance ()
 {
   ACE_TRACE ("ACE_SSL_Context::instance");
 
@@ -139,7 +139,7 @@ ACE_SSL_Context::instance (void)
 }
 
 void
-ACE_SSL_Context::close (void)
+ACE_SSL_Context::close ()
 {
   ACE_TRACE ("ACE_SSL_Context::close");
 
@@ -147,7 +147,7 @@ ACE_SSL_Context::close (void)
 }
 
 void
-ACE_SSL_Context::ssl_library_init (void)
+ACE_SSL_Context::ssl_library_init ()
 {
   ACE_TRACE ("ACE_SSL_Context::ssl_library_init");
 
@@ -214,7 +214,7 @@ ACE_SSL_Context::ssl_library_init (void)
 }
 
 void
-ACE_SSL_Context::ssl_library_fini (void)
+ACE_SSL_Context::ssl_library_fini ()
 {
   ACE_TRACE ("ACE_SSL_Context::ssl_library_fini");
 
@@ -575,7 +575,7 @@ ACE_SSL_Context::private_key (const char *file_name,
 }
 
 int
-ACE_SSL_Context::verify_private_key (void)
+ACE_SSL_Context::verify_private_key ()
 {
   ACE_TRACE ("ACE_SSL_Context::verify_private_key");
 

@@ -41,26 +41,25 @@
 class Quoter_Server
 {
 public:
-
   /// Default constructor
-  Quoter_Server (void);
+  Quoter_Server ();
 
   /// Destructor
-  ~Quoter_Server (void);
+  ~Quoter_Server ();
 
   /// Initialize the Quoter_Server state - parsing arguments and ...
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Run the server.
-  int run (void);
+  int run ();
 
 private:
   /// Parses the commandline arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// Initializes the name server and registers cubit factory with the
   /// name server.
-  int init_naming_service (void);
+  int init_naming_service ();
 
   /// Number of quoter objects we export.
   int num_of_objs_;

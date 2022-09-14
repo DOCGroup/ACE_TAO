@@ -13,7 +13,7 @@ static const char the_prefix[] = "diop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DIOP_Protocol_Factory::TAO_DIOP_Protocol_Factory (void)
+TAO_DIOP_Protocol_Factory::TAO_DIOP_Protocol_Factory ()
   :  TAO_Protocol_Factory (TAO_TAG_DIOP_PROFILE)
 {
 }
@@ -38,7 +38,7 @@ TAO_DIOP_Protocol_Factory::options_delimiter () const
 }
 
 TAO_Acceptor *
-TAO_DIOP_Protocol_Factory::make_acceptor (void)
+TAO_DIOP_Protocol_Factory::make_acceptor ()
 {
   TAO_Acceptor *acceptor = 0;
 
@@ -56,7 +56,7 @@ TAO_DIOP_Protocol_Factory::init (int /* argc */, ACE_TCHAR* /* argv */ [])
 }
 
 TAO_Connector *
-TAO_DIOP_Protocol_Factory::make_connector (void)
+TAO_DIOP_Protocol_Factory::make_connector ()
 {
   TAO_Connector *connector = 0;
 

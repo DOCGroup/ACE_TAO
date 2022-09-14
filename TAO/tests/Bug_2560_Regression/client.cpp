@@ -42,7 +42,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         cout << "The price of a stock in \"" << full_name.in () << "\" is $" << price << endl;
         cout << "  history: " << history[0] << " " << history[1] << " ... " << history[history->length()-1] << endl ;
-
       } catch (Quoter::Invalid_Stock_Symbol &) {
         cerr << "Invalid stock symbol <" << argv[i] << ">" << endl;
       }

@@ -6,7 +6,6 @@
 #include "Options.h"
 
 
-
 Consumer_Router::Consumer_Router (Peer_Router_Context *prc)
   : Peer_Router (prc)
 {
@@ -59,7 +58,7 @@ Consumer_Router::close (u_long)
 // Handle incoming messages in a separate thread.
 
 int
-Consumer_Router::svc (void)
+Consumer_Router::svc ()
 {
   assert (this->is_writer ());
 

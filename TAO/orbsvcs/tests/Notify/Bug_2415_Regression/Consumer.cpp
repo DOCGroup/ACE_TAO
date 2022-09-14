@@ -162,7 +162,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 status = consumer_1->messages_received() == 1 ? 0 : 1;
 
               ACE_DEBUG((LM_DEBUG, "Test status is %s.\n", status == 1 ? "fail" : "pass"));
-
             }
         }
     }

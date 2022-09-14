@@ -26,14 +26,14 @@ public:
                CORBA::ULong length);
 
   ///Destructor
-  virtual ~Big_Reply_i (void);
+  virtual ~Big_Reply_i ();
 
   // = The skeleton methods
-  virtual Test::Octet_Seq *get_big_reply (void);
+  virtual Test::Octet_Seq *get_big_reply ();
 
-  virtual void ping (void);
+  virtual void ping ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Our local ORB ptr
@@ -44,7 +44,6 @@ private:
 
   /// The reply message
   Test::Octet_Seq_var reply_message_;
-
 };
 
 #include /**/ "ace/post.h"

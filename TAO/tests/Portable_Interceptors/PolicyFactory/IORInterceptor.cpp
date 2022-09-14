@@ -1,24 +1,24 @@
 #include "IORInterceptor.h"
 #include "testC.h"
 
-IORInterceptor::IORInterceptor (void)
+IORInterceptor::IORInterceptor ()
   : success_ (false)
 {
 }
 
-IORInterceptor::~IORInterceptor (void)
+IORInterceptor::~IORInterceptor ()
 {
   ACE_ASSERT (this->success_);
 }
 
 char *
-IORInterceptor::name (void)
+IORInterceptor::name ()
 {
   return CORBA::string_dup ("");
 }
 
 void
-IORInterceptor::destroy (void)
+IORInterceptor::destroy ()
 {
   ACE_ASSERT (this->success_);
 }

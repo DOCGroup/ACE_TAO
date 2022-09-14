@@ -68,7 +68,7 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   // _downcast method
   *os << be_nl_2
       << "static " << node->local_name () << "* "
-      << "_downcast ( ::CORBA::ValueBase *);" << be_nl;
+      << "_downcast (::CORBA::ValueBase *);" << be_nl;
 
   // _copy_value method
   *os << "::CORBA::ValueBase * _copy_value ();" << be_nl_2;
@@ -189,10 +189,10 @@ be_visitor_valuebox_ch::visit_array (be_array *node)
 
   // Overloaded subscript operators
   *os << "const " << node->full_name ()
-      << "_slice & operator[] ( ::CORBA::ULong index) const;" << be_nl;
+      << "_slice & operator[] (::CORBA::ULong index) const;" << be_nl;
 
   *os << node->full_name ()
-      << "_slice &  operator[] ( ::CORBA::ULong index);"
+      << "_slice &  operator[] (::CORBA::ULong index);"
       << be_nl_2;
 
   // Explicit conversion functions
@@ -286,7 +286,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
   if (node->unbounded ())
     {
       // Public constructor with one argument of type ULong
-      *os << vb_node->local_name () << " ( ::CORBA::ULong max);" << be_nl;
+      *os << vb_node->local_name () << " (::CORBA::ULong max);" << be_nl;
     }
 
   // Public constructor for sequence with supplied buffer
@@ -343,7 +343,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
                           "base type visit failed\n"),
                          -1);
     }
-  *os << "& operator[] ( ::CORBA::ULong index);" << be_nl;
+  *os << "& operator[] (::CORBA::ULong index);" << be_nl;
 
   // Generate base type for sequence then remainder of operator []
   *os << "const ";
@@ -357,10 +357,10 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  *os << "& operator[] ( ::CORBA::ULong index) const;" << be_nl_2
+  *os << "& operator[] (::CORBA::ULong index) const;" << be_nl_2
       << "::CORBA::ULong maximum () const;" << be_nl
       << "::CORBA::ULong length () const;" << be_nl
-      << "void length ( ::CORBA::ULong len);" << be_nl_2;
+      << "void length (::CORBA::ULong len);" << be_nl_2;
 
   // Member variable of underlying type;
   this->emit_boxed_member_var (node, "_var");
@@ -450,10 +450,10 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
 
   // Overloaded subscript operators
   *os << "// Allows access and modification using a slot." << be_nl
-      << char_type << " & operator[] ( ::CORBA::ULong slot);"
+      << char_type << " & operator[] (::CORBA::ULong slot);"
       << be_nl_2
       << "// Allows only accessing thru a slot." << be_nl
-      << char_type << " operator[] ( ::CORBA::ULong slot) const;"
+      << char_type << " operator[] (::CORBA::ULong slot) const;"
       << be_nl;
 
   // Member variable of underlying type;

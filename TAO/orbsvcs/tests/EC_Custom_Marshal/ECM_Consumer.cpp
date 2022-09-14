@@ -25,7 +25,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Driver::Driver (void)
+Driver::Driver ()
   : n_consumers_ (1),
     event_count_ (100),
     event_a_ (ACE_ES_EVENT_UNDEFINED),
@@ -274,7 +274,7 @@ Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel)
 }
 
 void
-Driver::disconnect_consumers (void)
+Driver::disconnect_consumers ()
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
@@ -380,11 +380,10 @@ Test_Consumer::connect (int event_a,
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
                                                 qos.get_ConsumerQOS ());
-
 }
 
 void
-Test_Consumer::disconnect (void)
+Test_Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
@@ -403,6 +402,6 @@ Test_Consumer::push (const RtecEventComm::EventSet& events)
 }
 
 void
-Test_Consumer::disconnect_push_consumer (void)
+Test_Consumer::disconnect_push_consumer ()
 {
 }

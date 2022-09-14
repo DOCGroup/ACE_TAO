@@ -30,7 +30,6 @@
 #include <sys/stat.h>
 
 
-
 /* ------------------------------ Constants ------------------------------- */
 
 
@@ -53,7 +52,6 @@
 #define REQ_NOACTION -2
 /* Tear down the session and exit */
 #define REQ_EXIT -3
-
 
 
 /* ------------------------------ Structures ------------------------------ */
@@ -97,7 +95,7 @@ typedef struct {
  * request_create creates a new request structure.
  */
 
-Request *request_create(void);
+Request *request_create();
 
 /*
  * request_free destroys a request structure.

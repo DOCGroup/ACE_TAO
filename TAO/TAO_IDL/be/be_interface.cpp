@@ -615,7 +615,6 @@ be_interface::gen_def_ctors_helper (be_interface* node,
                                     be_interface* base,
                                     TAO_OutStream *os)
 {
-
   static int first = 0;
 
   if (node != base)

@@ -42,7 +42,6 @@ Messenger_Locator_i::postinvoke (const PortableServer::ObjectId &,
                                  void * cookie,
                                  PortableServer::Servant servant)
 {
-
   std::cout << "postinvoke called..." << std::endl;
 
   // Delete the servant as it is no longer needed.

@@ -40,7 +40,6 @@ TAO_Storable_Naming_Context_Activator::incarnate (
     const PortableServer::ObjectId &oid,
     PortableServer::POA_ptr poa)
 {
-
   // Make sure complete initialization has been done
   ACE_ASSERT (persistence_factory_ != 0);
 

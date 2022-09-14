@@ -2,13 +2,13 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-Server_i::Server_i (void)
+Server_i::Server_i ()
   : ior_output_file_ (0),
     policies_ (4)
 {
 }
 
-Server_i::~Server_i (void)
+Server_i::~Server_i ()
 {
   delete this->servant_activator_;
   delete this->servant_locator_;
@@ -121,7 +121,6 @@ Server_i::init (int argc, ACE_TCHAR **argv)
 
       // Get the POAManager of RootPOA
       poa_manager_ = root_poa_->the_POAManager ();
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -209,7 +208,6 @@ Server_i::create_poa (const char *name,
 int
 Server_i::create_activator (PortableServer::POA_var first_poa)
 {
-
   try
     {
       // An Servant Activator object is created which will activate
@@ -257,7 +255,6 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
 int
 Server_i::create_locator (PortableServer::POA_var second_poa)
 {
-
   try
     {
       // An Servant Locator object is created which will activate
@@ -305,9 +302,8 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
 // The execution process of the server.
 
 int
-Server_i::run (void)
+Server_i::run ()
 {
-
   try
     {
       // Invoke object_to_string on the references created in firstPOA

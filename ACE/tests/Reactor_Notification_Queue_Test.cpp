@@ -180,7 +180,6 @@ Event_Handler::handle_exception (ACE_HANDLE)
   {
     if(notifications_curr_ >= max_notifications_)
     {
-
       return 0;
     }
     send_notifications();

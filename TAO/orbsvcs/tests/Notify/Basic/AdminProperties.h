@@ -47,10 +47,9 @@ protected:
  */
 class AdminProperties_Task : public ACE_Task_Base
 {
-
 public:
   /// Constructor.
-  AdminProperties_Task (void);
+  AdminProperties_Task ();
 
   /// Init this object.
   void init (TAO_Notify_Tests_StructuredPushSupplier *supplier, AdminProperties* client);
@@ -83,28 +82,27 @@ private:
  */
 class AdminProperties : public Notify_Test_Client
 {
-
   friend class AdminProperties_StructuredPushConsumer;
   friend class AdminProperties_Task;
 
 public:
-  AdminProperties (void);
-  ~AdminProperties (void);
+  AdminProperties ();
+  ~AdminProperties ();
 
   int parse_args (int argc, ACE_TCHAR *argv[]) ;
 
   // Initialization.
 
   /// Run the test.
-  void run_test (void);
+  void run_test ();
 
 private:
-  void create_suppliers (void);
-  void create_consumers (void);
+  void create_suppliers ();
+  void create_consumers ();
   void create_channel(bool reject);
 
   /// Test MaxSuppliers and MaxConsumers
-  void test_max_clients (void);
+  void test_max_clients ();
 
   /// Test MaxQueueLength properties
   void test_max_queue_length (bool reject);

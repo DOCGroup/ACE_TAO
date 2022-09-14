@@ -207,7 +207,7 @@ public:
       }
   }
 
-  ~stats (void)
+  ~stats ()
   {
     if (this->quantify_)
       {
@@ -327,7 +327,6 @@ child_poa_testing (PortableServer::POA_ptr root_poa)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB first.

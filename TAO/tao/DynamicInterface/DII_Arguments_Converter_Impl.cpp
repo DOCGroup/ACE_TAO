@@ -137,7 +137,7 @@ TAO_DII_Arguments_Converter_Impl::handle_corba_exception (
 // Initialization and registration of dynamic service object.
 
 int
-TAO_DII_Arguments_Converter_Impl::Initializer (void)
+TAO_DII_Arguments_Converter_Impl::Initializer ()
 {
   return ACE_Service_Config::process_directive (
     ace_svc_desc_TAO_DII_Arguments_Converter_Impl);

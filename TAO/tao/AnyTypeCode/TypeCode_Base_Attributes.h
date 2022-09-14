@@ -27,7 +27,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Base_Attributes
      *
@@ -42,7 +41,6 @@ namespace TAO
     class Base_Attributes
     {
     public:
-
       /// Constructor.
       Base_Attributes (char const * id,
                        char const * name);

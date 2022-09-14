@@ -5,7 +5,6 @@
 #include "Options.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 typedef Acceptor_Factory<Consumer_Handler, CONSUMER_KEY> CONSUMER_FACTORY;
@@ -66,7 +65,7 @@ Consumer_Router::close (u_long)
 // Handle incoming messages in a separate thread..
 
 int
-Consumer_Router::svc (void)
+Consumer_Router::svc ()
 {
   ACE_Message_Block *mb = 0;
 

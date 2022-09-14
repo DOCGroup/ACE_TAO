@@ -626,7 +626,6 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
       for (int j = i; j <= argc-1; j++)
         argv[j] = argv[j+1];
       argv[argc] = temp;
-
     }
   return 0;
 }

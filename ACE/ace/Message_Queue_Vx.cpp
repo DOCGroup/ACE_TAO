@@ -69,7 +69,7 @@ ACE_Message_Queue_Vx::ACE_Message_Queue_Vx (size_t max_messages,
     ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("open")));
 }
 
-ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx (void)
+ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx ()
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx");
 
@@ -113,7 +113,7 @@ ACE_Message_Queue_Vx::open (size_t max_messages,
 
 // Clean up the queue if we have not already done so!
 int
-ACE_Message_Queue_Vx::close (void)
+ACE_Message_Queue_Vx::close ()
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::close");
   // Don't lock, because we don't have a lock.  It shouldn't be
@@ -129,14 +129,14 @@ ACE_Message_Queue_Vx::close (void)
 }
 
 bool
-ACE_Message_Queue_Vx::is_empty_i (void)
+ACE_Message_Queue_Vx::is_empty_i ()
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::is_empty_i");
   return ::msgQNumMsgs (msgq ()) == 0;
 }
 
 bool
-ACE_Message_Queue_Vx::is_full_i (void)
+ACE_Message_Queue_Vx::is_full_i ()
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::is_full_i");
   return ::msgQNumMsgs (msgq ()) >= max_messages_;

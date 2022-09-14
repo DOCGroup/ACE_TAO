@@ -76,10 +76,10 @@ public:
   const ACE_TCHAR *filename () const;
 
   /// Close down the shared memory segment.
-  virtual int close (void);
+  virtual int close ();
 
   /// Remove the shared memory segment and the underlying file.
-  virtual int remove (void);
+  virtual int remove ();
 
   // = Allocation and deallocation methods.
   /// Create a new chuck of memory containing @a size bytes.

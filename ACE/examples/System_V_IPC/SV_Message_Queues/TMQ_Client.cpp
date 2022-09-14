@@ -9,7 +9,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {

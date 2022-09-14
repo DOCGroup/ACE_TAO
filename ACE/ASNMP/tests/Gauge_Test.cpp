@@ -54,7 +54,7 @@ DAMAGES.
    value of 2^32-1 (4294967295 dec) for gauges.
  */
 static void
-TestGuage (void)
+TestGuage ()
 {
 #if !defined (ACE_WIN32)
    long l = LONG_MAX, nl = LONG_MIN;  // limits.h

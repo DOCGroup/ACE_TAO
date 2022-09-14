@@ -119,13 +119,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             ACE_DEBUG ((LM_DEBUG, "IOR%d: %s\n",cntr, ior->c_str ()));
             iors [cntr] =
               orb->string_to_object (ior->c_str());
-
           }
 
         ACE_DEBUG ((LM_DEBUG, "Prepare to merge IORs.\n"));
         // Create a merged set 1;
         object = iorm->merge_iors (iors);
-
 
 
         FT::TagFTGroupTaggedComponent ft_tag_component;

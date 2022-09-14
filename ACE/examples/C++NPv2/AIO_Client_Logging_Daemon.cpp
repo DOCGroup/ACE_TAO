@@ -35,7 +35,7 @@ class AIO_CLD_Acceptor
 public:
   //FUZZ: disable check_for_lack_ACE_OS
   // Cancel accept and close all clients.
-  void close (void);
+  void close ();
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Remove handler from client set.
@@ -44,7 +44,7 @@ public:
 
 protected:
   // Service handler factory method.
-  virtual AIO_Input_Handler *make_handler (void);
+  virtual AIO_Input_Handler *make_handler ();
 
   // Set of all connected clients
   ACE_Unbounded_Set<AIO_Input_Handler *> clients_;
@@ -221,7 +221,6 @@ AIO_Input_Handler * AIO_CLD_Acceptor::make_handler (void) {
 int AIO_CLD_Connector::validate_connection
   (const ACE_Asynch_Connect::Result& result,
    const ACE_INET_Addr &remote, const ACE_INET_Addr&) {
-
   remote_addr_ = remote;
   if (!result.success ()) {
     ACE_Time_Value delay (retry_delay_);
@@ -344,7 +343,6 @@ public:
 };
 
 int AIO_Client_Logging_Daemon::init (int, ACE_TCHAR *[]) {
-
   ACE_ERROR_RETURN
     ((LM_ERROR, ACE_TEXT ("This service requires AIO support\n")), -1);
 }

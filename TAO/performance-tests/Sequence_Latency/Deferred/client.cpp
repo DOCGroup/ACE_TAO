@@ -89,7 +89,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 
-
 int
 test_octet_seq (Test::Roundtrip_ptr roundtrip)
 {
@@ -508,7 +507,6 @@ test_double_seq (Test::Roundtrip_ptr roundtrip)
                                          stats.samples_count ());
   return 0;
 }
-
 
 
 // The main() function starts here

@@ -47,7 +47,6 @@ namespace TAO
     class Case_Enum_T : public Case<StringType, TypeCodeType>
     {
     public:
-
       /// Constructor.
       Case_Enum_T (CORBA::TypeCode_ptr discriminator_tc,
                    CORBA::ULong member_label,
@@ -85,7 +84,6 @@ namespace TAO
       /// IDL @c union discriminator typecode.
       CORBA::TypeCode_var discriminator_tc_;
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

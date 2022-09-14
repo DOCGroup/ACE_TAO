@@ -17,11 +17,11 @@ public:
   {
   }
 
-  void simple (void)
+  void simple ()
   {
   }
 
-  void shutdown (void)
+  void shutdown ()
   {
     this->orb_->shutdown ();
   }
@@ -33,7 +33,7 @@ private:
 class Descriptors
 {
 public:
-  Descriptors (void)
+  Descriptors ()
     : min_close_ (0),
       max_close_ (0),
       ok_ (false)
@@ -44,7 +44,7 @@ public:
       }
   }
 
-  int allow_accepts (void)
+  int allow_accepts ()
   {
     cout << "Server: closing " << (this->max_close_ - this->min_close_) + 1
          << " fds" << endl;

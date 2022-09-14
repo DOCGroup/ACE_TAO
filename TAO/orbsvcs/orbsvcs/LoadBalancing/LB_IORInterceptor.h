@@ -68,10 +68,10 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Add the tagged components to the IOR.
   virtual void establish_components (
@@ -92,7 +92,7 @@ public:
 
 private:
   /// Create and register the LoadAlert object with the LoadManager.
-  void register_load_alert (void);
+  void register_load_alert ();
 
 private:
   /// List of stringified object group references.

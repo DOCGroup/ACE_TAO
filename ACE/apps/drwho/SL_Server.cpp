@@ -8,7 +8,7 @@ SL_Server::SL_Server (const char *usr_name)
 }
 
 Protocol_Record *
-SL_Server::get_each_entry (void)
+SL_Server::get_each_entry ()
 {
   Protocol_Record *prp = Single_Lookup::get_each_entry ();
   return prp->get_drwho_list () == 0 ? 0 : prp;

@@ -10,13 +10,13 @@
 #include "ace/OS_NS_string.h"
 #include "Hello.h"
 
-TAO249_ServerRequest_Interceptor::TAO249_ServerRequest_Interceptor (void)
+TAO249_ServerRequest_Interceptor::TAO249_ServerRequest_Interceptor ()
 : orb_ (0),
   client_id_ (0)
 {
 }
 
-TAO249_ServerRequest_Interceptor::~TAO249_ServerRequest_Interceptor (void)
+TAO249_ServerRequest_Interceptor::~TAO249_ServerRequest_Interceptor ()
 {
 }
 
@@ -89,7 +89,6 @@ catch (const CORBA::Exception& ex)
                                "Exception in TAO249_ServerRequest_Interceptor::receive_request\n");
     throw;
   }
-
 
 
 }

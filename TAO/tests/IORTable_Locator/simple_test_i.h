@@ -12,7 +12,7 @@ public:
   Simple_Test_i (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

@@ -27,7 +27,6 @@ struct Quote
 class Collocation_Tester
 {
 public:
-
   // -- Constructor/Destructors --
   Collocation_Tester (CORBA::Object_ptr object);
 
@@ -35,28 +34,27 @@ public:
 
   // -- Command --
   /// Runs the test.
-  void run (void);
+  void run ();
 
 
 private:
-
   // -- Helper Methods --
 
   /// Tests the method accessible thru the
   /// Top interface.
-  int  test_top (void);
+  int  test_top ();
 
   /// Tests the method accessible thru the
   /// Right interface.
-  int test_right (void);
+  int test_right ();
 
   /// Tests the method accessible thru the
   /// Left interface.
-  int test_left (void);
+  int test_left ();
 
   /// Tests the method accessible thru the
   /// Bottom interface.
-  int test_bottom (void);
+  int test_bottom ();
 
   /**
    * This method tests wether the answer obtained
@@ -69,7 +67,7 @@ private:
                      const char *right_answer,
                      const char *method_name);
 
-  void shutdown (void);
+  void shutdown ();
 private:
   CORBA::Object_var object_;
 };

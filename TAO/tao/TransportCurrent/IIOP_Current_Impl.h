@@ -31,7 +31,6 @@ namespace TAO
 {
   namespace Transport
   {
-
     /**
      * @class IIOP_Current_Impl
      *
@@ -77,7 +76,7 @@ namespace TAO
       /// Transport. Will throw NoContext if the (selected) transport
       /// () == 0, or if transport->connection_handler () == 0. Will
       /// throw NoContext, if no transport has been selected yet.
-      TAO_IIOP_Connection_Handler* handler (void);
+      TAO_IIOP_Connection_Handler* handler ();
 
     private:
       IIOP_Current_Impl (const IIOP_Current_Impl &) = delete;

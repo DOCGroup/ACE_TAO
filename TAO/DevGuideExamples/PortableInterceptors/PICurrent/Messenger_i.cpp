@@ -12,12 +12,12 @@
 #include <iostream>
 
 // Implementation skeleton constructor
-Messenger_i::Messenger_i (void)
+Messenger_i::Messenger_i ()
 {
 }
 
 // Implementation skeleton destructor
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 
@@ -34,7 +34,7 @@ CORBA::Boolean Messenger_i::send_message (
   return true;
 }
 
-char * Messenger_i::get_time (void)
+char * Messenger_i::get_time ()
 {
   time_t thetime;
   struct tm * timeinfo = 0;

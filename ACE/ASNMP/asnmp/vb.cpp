@@ -325,7 +325,6 @@ int Vb::get_value( SnmpSyntax &val)
 }
 
 
-
 //-----[ misc]--------------------------------------------------------
 
 // return the current syntax

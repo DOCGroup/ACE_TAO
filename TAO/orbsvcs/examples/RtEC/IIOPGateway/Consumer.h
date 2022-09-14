@@ -27,7 +27,7 @@ class Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
   /// Constructor
-  Consumer (void);
+  Consumer ();
 
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
@@ -36,7 +36,7 @@ public:
 
   // The skeleton methods.
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);

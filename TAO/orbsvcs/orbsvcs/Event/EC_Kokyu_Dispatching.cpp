@@ -174,7 +174,6 @@ TAO_EC_Kokyu_Push_Command::~TAO_EC_Kokyu_Push_Command()
 int
 TAO_EC_Kokyu_Push_Command::execute ()
 {
-
   try
     {
       //ORBSVCS_DEBUG ((LM_DEBUG,

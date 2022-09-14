@@ -147,7 +147,7 @@ be_visitor_home_svs::visit_factory (be_factory *node)
           << "::_duplicate (this->executor_.in ());" << be_uidt
           << be_nl_2;
 
-      os_ << "if ( ::CORBA::is_nil (executor.in ()))" << be_idt_nl
+      os_ << "if (::CORBA::is_nil (executor.in ()))" << be_idt_nl
           << "{"<< be_idt_nl
           << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
           << "}" << be_uidt << be_nl_2;
@@ -177,7 +177,7 @@ be_visitor_home_svs::visit_factory (be_factory *node)
           << "_var _ciao_comp =" << be_idt_nl
           << global << comp_sname << "::CCM_" << comp_lname
           << "::_narrow (_ciao_ec.in ());" << be_uidt << be_nl_2
-          << "if ( ::CORBA::is_nil (_ciao_ec.in ()))" <<  be_idt_nl
+          << "if (::CORBA::is_nil (_ciao_ec.in ()))" <<  be_idt_nl
           << "{" << be_idt_nl
           << "throw ::Components::CreateFailure ();" << be_uidt_nl
           << "}" << be_uidt << be_nl_2
@@ -249,7 +249,7 @@ be_visitor_home_svs::gen_servant_class ()
           << be_uidt_nl
           << "{" << be_idt_nl;
 
-      os_ << "for ( ::CORBA::ULong i = 0; i < descr.length (); ++i)"
+      os_ << "for (::CORBA::ULong i = 0; i < descr.length (); ++i)"
           << be_idt_nl
           << "{" << be_idt_nl
           << "const char * descr_name = descr[i]->name ();"

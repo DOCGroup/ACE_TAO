@@ -74,7 +74,6 @@ private:
   resolve_poa (PortableInterceptor::AdapterName const& name);
 
 private:
-
   class RecordId
   {
   public:

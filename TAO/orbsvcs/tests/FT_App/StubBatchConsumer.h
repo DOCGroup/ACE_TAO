@@ -36,7 +36,7 @@ public:
    */
   virtual ~StubBatchConsumer ();
 
-  ::PortableServer::POA_ptr _default_POA (void);
+  ::PortableServer::POA_ptr _default_POA ();
   ::PortableServer::ObjectId objectId()const;
 
   /**
@@ -64,11 +64,10 @@ public:
   /**
    * Clean house for process shut down.
    */
-  void fini (void);
+  void fini ();
 
 
 public:
-
     ////////////////
     // CORBA methods
 
@@ -93,7 +92,6 @@ private:
   /////////////////////////
   // Implementation methods
 private:
-
   ///////////////
   // Data Members
 private:

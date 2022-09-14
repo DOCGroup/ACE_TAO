@@ -99,7 +99,6 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
 
   *os << be_uidt << be_uidt_nl
       << "}";
-
 }
 
 void

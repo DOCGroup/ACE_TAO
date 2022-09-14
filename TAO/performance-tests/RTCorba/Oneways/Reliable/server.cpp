@@ -35,7 +35,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-set_rt_mode (void)
+set_rt_mode ()
 {
   int policy = ACE_SCHED_FIFO;
   int priority =

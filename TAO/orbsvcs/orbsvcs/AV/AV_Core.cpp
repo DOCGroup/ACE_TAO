@@ -530,7 +530,6 @@ TAO_AV_Core::init_reverse_flows (TAO_Base_StreamEndPoint *endpoint,
   int result = -1;
   switch (direction)
     {
-
     case TAO_AV_Core::TAO_AV_ENDPOINT_A:
       {
         result = this->connector_registry_->open (endpoint,
@@ -565,10 +564,8 @@ TAO_AV_Core::get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
 TAO_AV_Acceptor*
 TAO_AV_Core::get_acceptor (const char *flowname)
 {
-
   try
     {
-
       TAO_AV_AcceptorSetItor acceptor =  this->acceptor_registry_->begin ();
 
       TAO_AV_AcceptorSetItor end =
@@ -590,10 +587,8 @@ TAO_AV_Core::get_acceptor (const char *flowname)
 int
 TAO_AV_Core::remove_acceptor (const char *flowname)
 {
-
   try
     {
-
       TAO_AV_AcceptorSetItor acceptor =  this->acceptor_registry_->begin ();
 
       TAO_AV_AcceptorSetItor end =

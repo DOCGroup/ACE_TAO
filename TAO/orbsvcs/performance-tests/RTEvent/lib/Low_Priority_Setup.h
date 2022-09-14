@@ -51,7 +51,7 @@ public:
                       ACE_Barrier *barrier);
 
   /// Stop all running threads
-  void stop_all_threads (void);
+  void stop_all_threads ();
 
   /// Collect the stats from all the clients
   void collect_basic_stats (ACE_Basic_Stats &stats);

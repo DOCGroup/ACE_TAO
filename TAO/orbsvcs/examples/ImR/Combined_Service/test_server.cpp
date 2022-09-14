@@ -20,7 +20,7 @@ public:
   }
   virtual ~test_i (void) {
   }
-  virtual CORBA::Long get (void)
+  virtual CORBA::Long get ()
   {
     ACE_DEBUG((LM_DEBUG, "dynserver: get() %d\n", ++n_));
     return n_;
@@ -83,7 +83,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
 
     root_poa->destroy(1, 1);
     orb->destroy();
-
   } catch (const CORBA::Exception& e) {
     e._tao_print_exception ("TestServer::init()");
   }

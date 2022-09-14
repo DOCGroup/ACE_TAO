@@ -68,5 +68,4 @@ be_visitor_module_sh::visit_module (be_module *node)
       << node->name ();
 
   return 0;
-
 }

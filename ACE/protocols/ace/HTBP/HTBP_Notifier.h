@@ -36,7 +36,7 @@ namespace ACE
       int handle_input(ACE_HANDLE );
       int handle_output(ACE_HANDLE );
 
-      void unregister (void);
+      void unregister ();
 
       ACE_HANDLE get_handle () const;
 

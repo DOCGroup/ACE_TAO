@@ -15,7 +15,6 @@
 
 namespace TAO
 {
-
   /**
    * @class be_visitor_value_typecode
    *
@@ -27,7 +26,6 @@ namespace TAO
     : public be_visitor_typecode_defn
   {
   public:
-
     /// Constructor.
     be_visitor_value_typecode (be_visitor_context * ctx);
 
@@ -42,7 +40,6 @@ namespace TAO
     virtual int visit_valuetype (be_valuetype * node);
 
   private:
-
     /// Generate valuetype field TypeCode declarations, if necessary.
     int gen_member_typecodes (be_valuetype * node);
 
@@ -50,16 +47,13 @@ namespace TAO
     int visit_members (be_valuetype * node);
 
   private:
-
     /// @c true if the valuetype or eventtype is recursive.
     bool is_recursive_;
 
     /// @c true if this visitor is already visiting an outer scope
     /// struct or exception
     bool is_nested_;
-
   };
-
 }
 
 #endif  /* TAO_BE_VISITOR_VALUE_TYPECODE_H */

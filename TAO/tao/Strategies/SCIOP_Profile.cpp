@@ -61,7 +61,7 @@ TAO_SCIOP_Profile::TAO_SCIOP_Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO_SCIOP_Profile::~TAO_SCIOP_Profile (void)
+TAO_SCIOP_Profile::~TAO_SCIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -284,7 +284,7 @@ TAO_SCIOP_Profile::hash (CORBA::ULong max)
 }
 
 TAO_Endpoint*
-TAO_SCIOP_Profile::endpoint (void)
+TAO_SCIOP_Profile::endpoint ()
 {
   return &this->endpoint_;
 }
@@ -343,7 +343,7 @@ TAO_SCIOP_Profile::to_string () const
 }
 
 const char *
-TAO_SCIOP_Profile::prefix (void)
+TAO_SCIOP_Profile::prefix ()
 {
   return ::prefix_;
 }
@@ -396,7 +396,7 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 }
 
 int
-TAO_SCIOP_Profile::encode_endpoints (void)
+TAO_SCIOP_Profile::encode_endpoints ()
 {
   CORBA::ULong actual_count = 0;
 
@@ -452,7 +452,7 @@ TAO_SCIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_SCIOP_Profile::decode_endpoints (void)
+TAO_SCIOP_Profile::decode_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;

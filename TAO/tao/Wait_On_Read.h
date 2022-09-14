@@ -26,13 +26,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_Wait_On_Read :  public TAO_Wait_Strategy
 {
-
 public:
   /// Constructor.
   explicit TAO_Wait_On_Read (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Wait_On_Read (void);
+  virtual ~TAO_Wait_On_Read ();
 
   /*! @copydoc TAO_Wait_Strategy::sending_request() */
   virtual int sending_request (TAO_ORB_Core *orb_core, TAO_Message_Semantics msg_semantics);
@@ -45,7 +44,7 @@ public:
                     TAO_Synch_Reply_Dispatcher &rd);
 
   /*! @copydoc TAO_Wait_Strategy::register_handler() */
-  virtual int register_handler (void);
+  virtual int register_handler ();
 
   /*! @copydoc TAO_Wait_Strategy::non_blocking() */
   virtual bool non_blocking () const;

@@ -4,13 +4,13 @@
 // This is the interface program that accesses the remote object
 
 // Constructor.
-Time_Client_i::Time_Client_i (void)
+Time_Client_i::Time_Client_i ()
 {
   //no-op
 }
 
 //Destructor.
-Time_Client_i::~Time_Client_i (void)
+Time_Client_i::~Time_Client_i ()
 {
   //no-op
 }

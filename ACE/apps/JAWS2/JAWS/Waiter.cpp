@@ -4,24 +4,23 @@
 #include "JAWS/IO_Handler.h"
 
 
-
-JAWS_Waiter::JAWS_Waiter (void)
+JAWS_Waiter::JAWS_Waiter ()
   : iter_ (*this)
 {
 }
 
-JAWS_Waiter::~JAWS_Waiter (void)
+JAWS_Waiter::~JAWS_Waiter ()
 {
 }
 
 JAWS_Waiter_Base_Iterator &
-JAWS_Waiter::iter (void)
+JAWS_Waiter::iter ()
 {
   return this->iter_;
 }
 
 int
-JAWS_Waiter::index (void)
+JAWS_Waiter::index ()
 {
 #if 0
   // A future version of ACE will support this.

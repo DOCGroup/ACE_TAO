@@ -24,7 +24,6 @@ static int iteration = 1;
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Event_Handler (ACE_Reactor &reactor,
                  ACE_HANDLE read,
                  ACE_HANDLE write);

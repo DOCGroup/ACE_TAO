@@ -28,10 +28,10 @@ public:
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Execute the supplier.
-  void run (void);
+  void run ();
 
   /// Shutdown the application.
-  virtual void close (void);
+  virtual void close ();
 
 private:
   /// Handle shutdown signals.

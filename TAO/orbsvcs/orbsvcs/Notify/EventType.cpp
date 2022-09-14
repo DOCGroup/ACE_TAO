@@ -140,7 +140,6 @@ bool TAO_Notify_EventType::init(const TAO_Notify::NVPList& attrs)
     result = true;
   }
   return result;
-
 }
 
   // TAO_Notify::Topology_Object

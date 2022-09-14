@@ -42,7 +42,7 @@ UTF16_UCS2_Translator::UTF16_UCS2_Translator (CONV_FRAME::CodeSetId tcs)
          this->tcs_));
 }
 
-UTF16_UCS2_Translator::~UTF16_UCS2_Translator (void)
+UTF16_UCS2_Translator::~UTF16_UCS2_Translator ()
 {
 }
 

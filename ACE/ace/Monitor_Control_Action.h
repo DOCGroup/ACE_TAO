@@ -44,8 +44,8 @@ namespace ACE
       virtual void execute (const char* command = 0) = 0;
 
       /// Refcounting methods.
-      void add_ref (void);
-      void remove_ref (void);
+      void add_ref ();
+      void remove_ref ();
 
     protected:
       Control_Action ();

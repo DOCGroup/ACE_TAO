@@ -72,7 +72,6 @@ void
 Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::Boolean server_side =
     this->server_side_test (ri);
 

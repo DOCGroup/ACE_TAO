@@ -22,7 +22,6 @@
 #include "ace/OS_NS_wchar.h"
 
 
-
 static int n = 4096;
 static int nloops = 100;
 

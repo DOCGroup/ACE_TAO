@@ -11,11 +11,11 @@ class Callback
 {
 public:
   /// Constructor
-  Callback (void);
+  Callback ();
 
-  virtual void test_oneway (void);
+  virtual void test_oneway ();
 
-  bool received_callback (void);
+  bool received_callback ();
 
  private:
   bool received_callback_;

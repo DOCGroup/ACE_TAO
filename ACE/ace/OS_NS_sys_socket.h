@@ -75,7 +75,6 @@ class ACE_QoS_Params;
 
 namespace ACE_OS
 {
-
 # if defined (ACE_WIN32)
   /// Keeps track of whether we've already initialized WinSock...
   extern ACE_Export int socket_initialized_;
@@ -315,7 +314,6 @@ namespace ACE_OS
                   int type,
                   int protocol,
                   ACE_HANDLE sv[2]);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -157,7 +157,6 @@ namespace ACE
         typedef Sock_IStreamBase<ACE_NULL_SYNCH> Sock_IStream;
         typedef Sock_OStreamBase<ACE_NULL_SYNCH> Sock_OStream;
         typedef Sock_IOStreamBase<ACE_NULL_SYNCH> Sock_IOStream;
-
       }
   }
 

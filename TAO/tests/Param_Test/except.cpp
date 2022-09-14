@@ -20,13 +20,13 @@
 //               Test_Exception
 // ************************************************************************
 
-Test_Exception::Test_Exception (void)
+Test_Exception::Test_Exception ()
   : opname_ (CORBA::string_dup ("test_exception")),
     iterations_ (0)
 {
 }
 
-Test_Exception::~Test_Exception (void)
+Test_Exception::~Test_Exception ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -230,7 +230,7 @@ Test_Exception::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Exception::reset_parameters (void)
+Test_Exception::reset_parameters ()
 {
   this->inout_ =  0;
   this->out_ =  0;
@@ -380,7 +380,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Exception::check_validity (void)
+Test_Exception::check_validity ()
 {
   if (this->inout_ == this->in_ * 2 &&
       this->out_ == this->in_ * 3 &&
@@ -399,7 +399,7 @@ Test_Exception::check_validity (CORBA::Request_ptr)
 }
 
 void
-Test_Exception::print_values (void)
+Test_Exception::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"
