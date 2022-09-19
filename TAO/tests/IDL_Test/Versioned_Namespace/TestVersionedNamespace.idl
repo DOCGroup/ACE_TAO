@@ -44,7 +44,11 @@ module M2 {
       void op(in S2 s);
     };
 
-    exception E1 { L2 val2; };
+    exception E1 {
+      L2 val2;
+      M1::BooleanUnion1 bool1;
+      M1::BooleanUnion2 bool2;
+    };
 
     local interface L3 {
       void op(in S2 s) raises (E1);
