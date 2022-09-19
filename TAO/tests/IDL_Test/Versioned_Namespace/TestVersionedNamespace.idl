@@ -14,10 +14,23 @@ module M1 {
     LI valLocalIface;
   };
 
+  union BooleanUnion1 switch (boolean)
+    {
+      case TRUE: LI valLocalIface;
+    };
+
+  union BooleanUnion2 switch (boolean)
+    {
+      case TRUE: string valLocalIface;
+    };
+
   valuetype V {
     public string valString;
     public S1 valStruct;
     public LI valLocalIface;
+    public BooleanUnion1 valBoolUnion1;
+    public BooleanUnion2 valBoolUnion2;
+    public X valX;
   };
 };
 
@@ -31,7 +44,7 @@ module M2 {
       void op(in S2 s);
     };
 
-    exception E1 {};
+    exception E1 { L2 val2; };
 
     local interface L3 {
       void op(in S2 s) raises (E1);
