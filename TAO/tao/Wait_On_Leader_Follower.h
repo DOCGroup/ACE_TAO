@@ -42,7 +42,7 @@ public:
   TAO_Wait_On_Leader_Follower (TAO_Transport *transport);
 
   /// Destructor.
-  ~TAO_Wait_On_Leader_Follower () = default;
+  virtual ~TAO_Wait_On_Leader_Follower () = default;
 
    /*! @copydoc TAO_Wait_Strategy::sending_request() */
   virtual int sending_request (TAO_ORB_Core *orb_core, TAO_Message_Semantics msg_semantics);
