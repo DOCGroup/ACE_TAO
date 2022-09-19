@@ -33,20 +33,19 @@ public:
   explicit TAO_Wait_On_Reactor (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Wait_On_Reactor ();
+  ~TAO_Wait_On_Reactor () override = default;
 
   /*! @copydoc TAO_Wait_Strategy::wait() */
-  virtual int wait (ACE_Time_Value *max_wait_time,
-                    TAO_Synch_Reply_Dispatcher &rd);
+  int wait (ACE_Time_Value *max_wait_time, TAO_Synch_Reply_Dispatcher &rd) override;
 
   /*! @copydoc TAO_Wait_Strategy::register_handler() */
-  virtual int register_handler ();
+  int register_handler () override;
 
   /*! @copydoc TAO_Wait_Strategy::non_blocking() */
-  virtual bool non_blocking () const;
+  bool non_blocking () const override;
 
   /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
-  virtual bool can_process_upcalls () const;
+  bool can_process_upcalls () const override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

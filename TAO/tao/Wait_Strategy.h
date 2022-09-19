@@ -45,7 +45,7 @@ public:
   explicit TAO_Wait_Strategy (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Wait_Strategy ();
+  virtual ~TAO_Wait_Strategy () = default;
 
   /**
    * The user is going to send a request, prepare any internal
