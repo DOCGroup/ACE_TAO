@@ -58,7 +58,7 @@ public:
 
   /// Close down a Active_Map_Manager and release dynamically
   /// allocated resources.
-  ~ACE_Active_Map_Manager (void);
+  ~ACE_Active_Map_Manager ();
 
   /// Initialize a Active_Map_Manager with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,

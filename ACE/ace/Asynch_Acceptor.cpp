@@ -34,7 +34,7 @@ ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)
 }
 
 template <class HANDLER>
-ACE_Asynch_Acceptor<HANDLER>::~ACE_Asynch_Acceptor (void)
+ACE_Asynch_Acceptor<HANDLER>::~ACE_Asynch_Acceptor ()
 {
   // Close down the listen socket
   if (this->listen_handle_ != ACE_INVALID_HANDLE)

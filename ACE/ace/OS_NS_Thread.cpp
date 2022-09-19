@@ -2562,7 +2562,7 @@ namespace {
       {
         const int result = attributes ?
           ACE_OS::cond_init (&evtdata->condition_, *attributes, name, arg) :
-          ACE_OS::cond_init (&evtdata->condition_, type, name, arg);
+          ACE_OS::cond_init (&evtdata->condition_, (short) type, name, arg);
 
         if (result != 0)
           return result;
@@ -4932,9 +4932,9 @@ spa (FUNCPTR entry, ...)
                                           0, 0, 0, 0, 0, 0, 0, 0);
   va_end (pvar);
 
-  // ::taskSpawn () returns the taskID on success: return 0 instead if
-  // successful
-  return ret > 0 ? 0 : -1;
+  // ::taskSpawn () returns TASK_ID_ERROR on
+  // error
+  return ret == ACE_VX_TASK_ID_ERROR ? -1 : 0;
 }
 #endif /* !ACE_LACKS_VA_FUNCTIONS */
 
@@ -5006,8 +5006,6 @@ add_to_argv (ACE_VX_USR_ARG_T& argc, char** argv, int max_args, char* string)
     }
 }
 
-#if !defined (ACE_LACKS_VA_FUNCTIONS)
-
 // This global function can be used from the VxWorks shell to pass
 // arguments to a C main () function.
 //
@@ -5055,7 +5053,7 @@ spae (FUNCPTR entry, ...)
 
   // ::taskSpawn () returns the taskID on success: return 0 instead if
   // successful
-  return ret > 0 ? 0 : -1;
+  return ret == ACE_VX_TASK_ID_ERROR ? -1 : 0;
 }
 
 // This global function can be used from the VxWorks shell to pass
@@ -5095,14 +5093,13 @@ spaef (FUNCPTR entry, ...)
   for (i = argc; i < ACE_MAX_ARGS; ++i)
     argv[i] = 0;
 
-  int ret = entry (argc, argv);
+  int const ret = entry (argc, argv);
 
   va_end (pvar);
 
   // Return the return value of the invoked ace_main routine.
   return ret;
 }
-#endif /* !ACE_LACKS_VA_FUNCTIONS */
 
 // This global function can be used from the VxWorks shell to pass
 // arguments to and run a main () function (i.e. ace_main).
@@ -5155,12 +5152,12 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, size_t stacksz, ...)
   if (ret == ACE_VX_TASK_ID_ERROR)
     return 255;
 
-  while( ret > 0 && ::taskIdVerify (ret) != ERROR )
+  while( ::taskIdVerify (ret) != ERROR )
     ::taskDelay (3 * ::sysClkRateGet ());
 
-  // ::taskSpawn () returns the taskID on success: return _vx_call_rc instead if
+  // ::taskSpawn () returns TASK_ID_ERROR on failure: return _vx_call_rc instead if
   // successful
-  return ret > 0 ? _vx_call_rc : 255;
+  return ret == ACE_VX_TASK_ID_ERROR ? 255 : _vx_call_rc;
 }
 
 #if defined(ACE_AS_STATIC_LIBS) && defined (ACE_VXWORKS_DEBUGGING_HELPER)

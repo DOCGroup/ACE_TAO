@@ -53,7 +53,7 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  virtual ~ACE_Auto_Event_T (void);
+  virtual ~ACE_Auto_Event_T ();
 
   /// Dump the state of an object.
   void dump (void) const;

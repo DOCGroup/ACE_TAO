@@ -48,7 +48,7 @@ class ACE_Export ACE_Recyclable
 {
 public:
   /// Destructor.
-  virtual ~ACE_Recyclable (void);
+  virtual ~ACE_Recyclable ();
 
   /// Get the recyclable bit
   ACE_Recyclable_State recycle_state (void) const;

@@ -122,7 +122,7 @@ protected:
    * operator delete() from being called through a base class ACE_SOCK
    * pointer/reference.
    */
-  ~ACE_SOCK (void);
+  ~ACE_SOCK ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

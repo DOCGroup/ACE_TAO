@@ -30,7 +30,7 @@ ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::ACE_ARGV_Queue_Entry_T (const ACE_ARGV_Queue_
 }
 
 template <typename CHAR_TYPE> ACE_INLINE
-ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::~ACE_ARGV_Queue_Entry_T (void)
+ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::~ACE_ARGV_Queue_Entry_T ()
 {
   // No-op just to keep some compilers happy...
 }

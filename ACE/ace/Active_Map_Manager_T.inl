@@ -237,7 +237,7 @@ ACE_Active_Map_Manager<T>::ACE_Active_Map_Manager (size_t size,
 }
 
 template <class T> ACE_INLINE
-ACE_Active_Map_Manager<T>::~ACE_Active_Map_Manager (void)
+ACE_Active_Map_Manager<T>::~ACE_Active_Map_Manager ()
 {
 }
 

@@ -258,7 +258,7 @@ public:
   /// Copy constructor.
   ACE_Cache_Map_Iterator (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
-  virtual ~ACE_Cache_Map_Iterator (void);
+  virtual ~ACE_Cache_Map_Iterator ();
 
   // = Iteration methods.
 
@@ -331,7 +331,7 @@ public:
   /// Copy constructor.
   ACE_Cache_Map_Reverse_Iterator (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
-  ~ACE_Cache_Map_Reverse_Iterator (void);
+  ~ACE_Cache_Map_Reverse_Iterator ();
 
   // = Iteration methods.
 
