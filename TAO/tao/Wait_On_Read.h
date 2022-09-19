@@ -31,7 +31,7 @@ public:
   explicit TAO_Wait_On_Read (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Wait_On_Read ();
+  virtual ~TAO_Wait_On_Read () = default;
 
   /*! @copydoc TAO_Wait_Strategy::sending_request() */
   virtual int sending_request (TAO_ORB_Core *orb_core, TAO_Message_Semantics msg_semantics);

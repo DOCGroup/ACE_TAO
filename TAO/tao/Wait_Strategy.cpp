@@ -13,11 +13,6 @@ TAO_Wait_Strategy::TAO_Wait_Strategy (TAO_Transport *transport)
 {
 }
 
-// Destructor.
-TAO_Wait_Strategy::~TAO_Wait_Strategy ()
-{
-}
-
 int
 TAO_Wait_Strategy::defer_upcall (ACE_Event_Handler*)
 {

@@ -11,10 +11,6 @@ namespace TAO
   {
   }
 
-  Wait_On_LF_No_Upcall::~Wait_On_LF_No_Upcall ()
-  {
-  }
-
   int
   Wait_On_LF_No_Upcall::wait (ACE_Time_Value *max_wait_time,
                               TAO_Synch_Reply_Dispatcher &rd)
