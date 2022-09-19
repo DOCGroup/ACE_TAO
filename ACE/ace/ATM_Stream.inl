@@ -10,7 +10,7 @@ ACE_ATM_Stream::dump () const
 }
 
 ACE_INLINE
-ACE_ATM_Stream::ACE_ATM_Stream (void)
+ACE_ATM_Stream::ACE_ATM_Stream ()
 {
   ACE_TRACE ("ACE_ATM_Stream::ACE_ATM_Stream");
 }
@@ -64,7 +64,7 @@ ACE_ATM_Stream::open (ACE_ATM_Params params)
 
 ACE_INLINE
 int
-ACE_ATM_Stream::close (void)
+ACE_ATM_Stream::close ()
 {
   ACE_TRACE ("ACE_ATM_Stream::close");
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
@@ -76,7 +76,7 @@ ACE_ATM_Stream::close (void)
 
 ACE_INLINE
 ATM_Stream&
-ACE_ATM_Stream::get_stream (void)
+ACE_ATM_Stream::get_stream ()
 {
   ACE_TRACE ("ACE_ATM_Stream::get_stream");
   return stream_;

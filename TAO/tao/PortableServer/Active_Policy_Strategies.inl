@@ -63,7 +63,7 @@ namespace TAO
 
     ACE_INLINE
     Active_Policy_Strategies_Cleanup_Guard
-      ::~Active_Policy_Strategies_Cleanup_Guard (void)
+      ::~Active_Policy_Strategies_Cleanup_Guard ()
     {
       if (this->ptr_)
         {
@@ -73,7 +73,7 @@ namespace TAO
 
     ACE_INLINE
     Active_Policy_Strategies *
-    Active_Policy_Strategies_Cleanup_Guard::_retn (void)
+    Active_Policy_Strategies_Cleanup_Guard::_retn ()
     {
       Active_Policy_Strategies *temp = this->ptr_;
       this->ptr_ = 0;

@@ -132,7 +132,7 @@ public:
   virtual int set_remote_address (ACE_Addr *address);
 
   /// get the underlying event handler. To be overridden by the derived clases.
-  virtual ACE_Event_Handler* event_handler (void) = 0;
+  virtual ACE_Event_Handler* event_handler () = 0;
 
   virtual int change_qos (AVStreams::QoS);
 
@@ -161,11 +161,11 @@ public:
 
   virtual int open (ACE_Addr *address) = 0;
 
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /// Write the complete Message_Block chain to the connection.
-  virtual int mtu (void) = 0;
-  virtual ACE_Addr *get_peer_addr (void) = 0;
+  virtual int mtu () = 0;
+  virtual ACE_Addr *get_peer_addr () = 0;
   virtual ACE_Addr *get_local_addr ();
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0) = 0;
@@ -223,7 +223,7 @@ public:
                             TAO_AV_Core::Flow_Component flow_comp) = 0;
 
   const char *flowname ();
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 protected:
   ACE_CString flowname_;
   TAO_AV_Core *av_core_;
@@ -249,7 +249,7 @@ public:
                        TAO_AV_Transport *&transport,
                        TAO_AV_Core::Flow_Component flow_component) = 0;
 
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 protected:
   ACE_CString flowname_;
 };

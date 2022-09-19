@@ -299,7 +299,7 @@ ACE::HTBP::Session::disable (int flags)
 }
 
 ACE::HTBP::Stream *
-ACE::HTBP::Session::stream (void)const
+ACE::HTBP::Session::stream () const
 {
   return this->stream_;
 }

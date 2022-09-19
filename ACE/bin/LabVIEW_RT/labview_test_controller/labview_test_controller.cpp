@@ -72,7 +72,7 @@ public:
     {}
   ~Test ();
 
-  HANDLE handle (void) { return this->thr_handle_; }
+  HANDLE handle () { return this->thr_handle_; }
   int run ();
   const char *start (const char *name);
   bool status (int *exit_status);

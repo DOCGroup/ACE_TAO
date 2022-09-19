@@ -42,7 +42,7 @@ protected:
 class ClientService : public ACE_Event_Handler
 {
 public:
-  ACE_SOCK_Stream &peer (void) { return this->sock_; }
+  ACE_SOCK_Stream &peer () { return this->sock_; }
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open ();

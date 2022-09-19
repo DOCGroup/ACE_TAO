@@ -66,10 +66,10 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   /// Constructor.
-  Handler (void) {};
+  Handler () {};
 
   /// Destructor.
-    ~Handler (void) {};
+    ~Handler () {};
 
   void foo (CORBA::Long ami_return_val,
             CORBA::Long out_l)

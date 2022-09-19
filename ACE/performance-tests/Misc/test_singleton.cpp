@@ -41,8 +41,8 @@ static const int DEFAULT_ITERATIONS = 100000000;
 class Mutex_Singleton
 {
 public:
-  Mutex_Singleton (void) {}
-  void svc (void) {}
+  Mutex_Singleton () {}
+  void svc () {}
   static Mutex_Singleton *instance ();
 
 private:

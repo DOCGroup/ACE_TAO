@@ -82,7 +82,7 @@ static int initial_read_size = BUFSIZ;
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  int svc (void) ;
+  int svc () ;
 };
 
 

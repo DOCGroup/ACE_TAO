@@ -34,7 +34,7 @@ public:
   {
   }
 
-  virtual void run_test (void) = 0;
+  virtual void run_test () = 0;
 
   virtual int svc ()
   {

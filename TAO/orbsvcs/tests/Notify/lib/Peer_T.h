@@ -92,7 +92,7 @@ protected:
                                          , CosNotification::QoSProperties& qos) = 0;
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy (void) = 0;
+  virtual void disconnect_from_proxy () = 0;
 
   // = Data Members
 

@@ -375,7 +375,7 @@ public:
   bool restart () const;
 
   // = Notice that the following two function is equivalent to
-  //   "void msg_ostream (HANDLE)" and "HANDLE msg_ostream (void)"
+  //   "void msg_ostream (HANDLE)" and "HANDLE msg_ostream ()"
   //   on Windows CE.  There is no <iostream.h> support on CE.
 
   /// Update the ostream without overwriting the delete_ostream_ flag.

@@ -36,7 +36,7 @@ public:
   virtual ~ShutdownCallback ();
 
   /// This method is to be called to shutdown the application.
-  virtual void close (void) = 0;
+  virtual void close () = 0;
 };
 
 /**

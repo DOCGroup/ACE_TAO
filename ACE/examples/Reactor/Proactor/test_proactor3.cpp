@@ -88,10 +88,10 @@ static u_short port = ACE_DEFAULT_SERVER_PORT;
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask (void) : threads_ (0), proactor_ (0) {}
+  MyTask () : threads_ (0), proactor_ (0) {}
 
   int svc ();
-  void waitready (void) { event_.wait (); }
+  void waitready () { event_.wait (); }
 
 private:
   ACE_Recursive_Thread_Mutex mutex_;
@@ -192,7 +192,7 @@ public:
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
 
-  static long get_number_sessions (void) { return sessions_; }
+  static long get_number_sessions () { return sessions_; }
 
 protected:
   // These methods are called by the framework

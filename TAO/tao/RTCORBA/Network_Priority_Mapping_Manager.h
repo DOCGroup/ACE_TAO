@@ -89,10 +89,10 @@ class TAO_RTCORBA_Export TAO_Network_Priority_Mapping_Manager_var
   : private TAO_Base_var
 {
 public:
-  TAO_Network_Priority_Mapping_Manager_var (void); // default constructor
+  TAO_Network_Priority_Mapping_Manager_var (); // default constructor
   TAO_Network_Priority_Mapping_Manager_var (TAO_Network_Priority_Mapping_Manager_ptr);
   TAO_Network_Priority_Mapping_Manager_var (const TAO_Network_Priority_Mapping_Manager_var &); // copy constructor
-  ~TAO_Network_Priority_Mapping_Manager_var (void); // destructor
+  ~TAO_Network_Priority_Mapping_Manager_var (); // destructor
 
   TAO_Network_Priority_Mapping_Manager_var &operator= (TAO_Network_Priority_Mapping_Manager_ptr);
   TAO_Network_Priority_Mapping_Manager_var &operator= (const TAO_Network_Priority_Mapping_Manager_var &);

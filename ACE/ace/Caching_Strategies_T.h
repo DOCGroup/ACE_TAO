@@ -46,10 +46,10 @@ public:
   virtual ~ACE_Caching_Strategy ();
 
   /// Accessor method for the timer attributes.
-  virtual ATTRIBUTES attributes (void) = 0;
+  virtual ATTRIBUTES attributes () = 0;
 
   /// Get the percentage of entries to purge.
-  virtual double purge_percent (void) = 0;
+  virtual double purge_percent () = 0;
 
   /// Set the percentage of entries to purge.
   virtual void purge_percent (double percentage) = 0;
@@ -82,7 +82,7 @@ public:
                              const ATTRIBUTES &attr) = 0;
 
   /// Purge the cache.
-  virtual CACHING_UTILITY &caching_utility (void) = 0;
+  virtual CACHING_UTILITY &caching_utility () = 0;
 
   /// Dumps the state of the object.
   virtual void dump () const = 0;

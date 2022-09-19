@@ -13,7 +13,7 @@ TAO_Transport_Descriptor_Interface::TAO_Transport_Descriptor_Interface (
 }
 
 ACE_INLINE
-TAO_Transport_Descriptor_Interface::TAO_Transport_Descriptor_Interface (void)
+TAO_Transport_Descriptor_Interface::TAO_Transport_Descriptor_Interface ()
   : endpoint_ (0),
     bidir_flag_ (false),
     release_ (false)
@@ -22,7 +22,7 @@ TAO_Transport_Descriptor_Interface::TAO_Transport_Descriptor_Interface (void)
 
 
 ACE_INLINE TAO_Endpoint *
-TAO_Transport_Descriptor_Interface::endpoint (void)
+TAO_Transport_Descriptor_Interface::endpoint ()
 {
   return this->endpoint_;
 }

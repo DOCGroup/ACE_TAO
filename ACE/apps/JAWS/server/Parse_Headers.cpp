@@ -8,7 +8,7 @@
 
 // Implementation of class Headers
 
-Headers::Headers (void) : done_(0)
+Headers::Headers () : done_(0)
 {
 }
 

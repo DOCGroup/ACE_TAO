@@ -13,10 +13,10 @@
 class Errno
 {
 public:
-  int error (void) { return this->errno_; }
+  int error () { return this->errno_; }
   void error (int i) { this->errno_ = i; }
 
-  int line (void) { return this->lineno_; }
+  int line () { return this->lineno_; }
   void line (int l) { this->lineno_ = l; }
 
   // Errno::flags_ is a static variable, so we've got to protect it

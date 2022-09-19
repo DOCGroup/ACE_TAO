@@ -31,7 +31,7 @@ public:
     ACE_OS::strcpy (this->message_, inputMsg);
   }
 
-  ~User_Class (void) { delete [] this->message_; }
+  ~User_Class () { delete [] this->message_; }
 
   const char *message () const
   {

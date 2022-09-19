@@ -31,7 +31,7 @@ public:
     public POA_TAO_Trader_Test::Remote_Output
   {
   public:
-    Remote_Output (void) {}
+    Remote_Output () {}
 
     virtual void confirm ()
       {}
@@ -43,7 +43,7 @@ public:
     public POA_TAO_Trader_Test::Printer
   {
   public:
-    Printer (void) {}
+    Printer () {}
 
     virtual void confirm ()
       {}
@@ -55,7 +55,7 @@ public:
     public POA_TAO_Trader_Test::Plotter
   {
   public:
-    Plotter (void) {}
+    Plotter () {}
 
     virtual void confirm ()
       {}
@@ -67,7 +67,7 @@ public:
     public POA_TAO_Trader_Test::File_System
   {
   public:
-    File_System (void) {}
+    File_System () {}
 
     virtual void confirm ()
       {}
@@ -79,7 +79,7 @@ public:
     public POA_TAO_Trader_Test::PostScript_Printer
   {
   public:
-    PostScript_Printer (void) {}
+    PostScript_Printer () {}
 
     virtual void confirm ()
       {}

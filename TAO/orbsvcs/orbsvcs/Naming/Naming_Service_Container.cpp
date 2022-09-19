@@ -328,7 +328,7 @@ ACE_Unbounded_List_Iterator<T>::operator++ (int)
 template <class T> ACE_Unbounded_List_Iterator<T>&
 ACE_Unbounded_List_Iterator<T>::operator++ ()
 {
-  // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator++ (void)");
+  // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator++ ()");
 
   // prefix operator
 

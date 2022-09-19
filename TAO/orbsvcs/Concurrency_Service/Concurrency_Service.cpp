@@ -29,7 +29,7 @@ Concurrency_Service::Concurrency_Service ()
     pid_file_name_ (0)
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
-             ACE_TEXT("Concurrency_Service::Concurrency_Service (void)\n")));
+             ACE_TEXT("Concurrency_Service::Concurrency_Service ()\n")));
 }
 
 // Constructor taking command-line arguments.
@@ -198,7 +198,7 @@ Concurrency_Service::run ()
 Concurrency_Service::~Concurrency_Service ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
-              "Concurrency_Service::~Concurrency_Service (void)\n"));
+              "Concurrency_Service::~Concurrency_Service ()\n"));
 }
 
 int

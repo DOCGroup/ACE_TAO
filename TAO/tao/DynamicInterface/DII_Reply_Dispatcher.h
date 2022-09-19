@@ -50,7 +50,7 @@ public:
   virtual void connection_closed ();
 
   /// The following methods are not needed for this class..
-  virtual void reply_timed_out (void)  {}
+  virtual void reply_timed_out () {}
   virtual long schedule_timer (CORBA::ULong , const ACE_Time_Value &)
   {
     return 0;

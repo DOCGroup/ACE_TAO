@@ -321,12 +321,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Token
 {
 public:
-  int queueing_strategy (void) { ACE_NOTSUP_RETURN (-1); }
+  int queueing_strategy () { ACE_NOTSUP_RETURN (-1); }
   void queueing_strategy (int /*queueing_strategy*/) { }
   int acquire (ACE_Time_Value * = 0) { ACE_NOTSUP_RETURN (-1); }
-  int tryacquire (void) { ACE_NOTSUP_RETURN (-1); }
-  int remove (void) { ACE_NOTSUP_RETURN (-1); }
-  int release (void) { ACE_NOTSUP_RETURN (-1); }
+  int tryacquire () { ACE_NOTSUP_RETURN (-1); }
+  int remove () { ACE_NOTSUP_RETURN (-1); }
+  int release () { ACE_NOTSUP_RETURN (-1); }
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

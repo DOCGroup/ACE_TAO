@@ -43,8 +43,8 @@ template <ACE_SYNCH_DECL>
 class Tester: public ACE_Task<ACE_SYNCH_USE>
 {
 public:
-  Tester (void) {}
-  ~Tester (void) {}
+  Tester () {}
+  ~Tester () {}
 
   virtual int svc ();
 

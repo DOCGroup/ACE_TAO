@@ -73,7 +73,7 @@ static ACE_Cleanup_Adapter<ACE_Log_Msg>* log_msg_cleanup = 0;
 class ACE_Msg_Log_Cleanup: public ACE_Cleanup_Adapter<ACE_Log_Msg>
 {
 public:
-  virtual ~ACE_Msg_Log_Cleanup (void) {
+  virtual ~ACE_Msg_Log_Cleanup () {
     if (this == log_msg_cleanup)
       log_msg_cleanup = 0;
   }

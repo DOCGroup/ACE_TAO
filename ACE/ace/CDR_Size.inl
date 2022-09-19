@@ -20,7 +20,7 @@ ACE_SizeCDR::good_bit () const
 }
 
 ACE_INLINE void
-ACE_SizeCDR::reset (void)
+ACE_SizeCDR::reset ()
 {
   this->size_ = 0;
 }

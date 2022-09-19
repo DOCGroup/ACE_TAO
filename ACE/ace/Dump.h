@@ -130,7 +130,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_ODB (void); // Ensure we have a Singleton...
+  ACE_ODB (); // Ensure we have a Singleton...
 
   struct Tuple
   {
@@ -147,7 +147,7 @@ private:
     /// and we'll have to check for that).
     const ACE_Dumpable_Ptr dumper_;
 
-    Tuple (void) : this_ (0), dumper_(0) {}
+    Tuple () : this_ (0), dumper_(0) {}
   };
 
   /// Singleton instance of this class.

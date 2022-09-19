@@ -49,7 +49,7 @@ namespace ACE
     public:
       Filter ();
 
-      virtual ~Filter (void) = default;
+      virtual ~Filter () = default;
 
       /// Inside and outside Send filters need to supply a data header that
       /// sets the stage before sending the data body, and then (maybe) send a

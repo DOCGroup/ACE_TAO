@@ -82,7 +82,7 @@ protected:
   // <run> methods to get the header and the buffer to read the data.
   // This method factors out common code.
 
-  virtual int run (void) = 0;
+  virtual int run () = 0;
   // Hook method called by the <svc> template method to do the actual
   // protocol.  Must be overridden by the subclass.
 

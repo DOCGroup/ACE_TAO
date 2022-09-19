@@ -45,7 +45,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Quoted_String : public ACE_IOStream_String
 {
 public:
-  inline ACE_Quoted_String (void) { *this = ""; }
+  inline ACE_Quoted_String () { *this = ""; }
   inline ACE_Quoted_String (const char *c) { *this = ACE_IOStream_String (c); }
   inline ACE_Quoted_String (const ACE_IOStream_String &s) { *this = s; }
   inline ACE_Quoted_String &operator= (const ACE_IOStream_String& s)
@@ -62,7 +62,7 @@ public:
     return *(ACE_IOStream_String *) this < (ACE_IOStream_String) s;
   }
 #    if defined (ACE_WIN32) && defined (_MSC_VER)
-  inline int length (void) { return this->GetLength (); }
+  inline int length () { return this->GetLength (); }
 #    endif /* ACE_WIN32 && defined (_MSC_VER) */
 };
 

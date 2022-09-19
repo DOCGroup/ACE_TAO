@@ -73,7 +73,7 @@ public:
   static const char * const err_name[];
 
   /// Default destructor.
-  virtual ~ACE_URL_Locator (void) = 0;
+  virtual ~ACE_URL_Locator () = 0;
 
   /**
    * Query the locator for HTTP with designate properties (none, some,

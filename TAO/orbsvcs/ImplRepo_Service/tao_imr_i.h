@@ -95,13 +95,13 @@ public:
   virtual int parse (int argc, ACE_TCHAR **argv) = 0;
 
   /// Do the work.
-  virtual int run (void) = 0;
+  virtual int run () = 0;
 
   /// Sets the implrepo locator pointer
   void set_imr (ImplementationRepository::Administration_ptr imr);
 
 protected:
-  TAO_IMR_Op (void) : imr_ (0), quiet_ (false) {}
+  TAO_IMR_Op () : imr_ (0), quiet_ (false) {}
 
   // = Helper methods
 

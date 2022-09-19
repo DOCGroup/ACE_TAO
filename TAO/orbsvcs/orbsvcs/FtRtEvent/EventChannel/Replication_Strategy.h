@@ -60,9 +60,9 @@ public:
 
   virtual Replication_Strategy* make_primary_strategy();
 
-  virtual int  acquire_read (void)=0;
-  virtual int  acquire_write (void)=0;
-  virtual int  release (void)=0;
+  virtual int  acquire_read () = 0;
+  virtual int  acquire_write () = 0;
+  virtual int  release () = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

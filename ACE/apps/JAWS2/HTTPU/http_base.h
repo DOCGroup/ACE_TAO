@@ -39,11 +39,11 @@ public:
   void dump ();
 
 protected:
-  virtual void parse_line (void) = 0;
+  virtual void parse_line () = 0;
   // Hook into the receive function to do specialized parsing of initial line.
   // Sets the status_ variable.
 
-  virtual int espouse_line (void) = 0;
+  virtual int espouse_line () = 0;
   // Hook into the deliver function to do specialized initial line creation.
   // Returns 0 for success and -1 for failure.
 

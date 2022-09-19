@@ -24,7 +24,7 @@
 class TSS_Data
 {
 public:
-  void *data (void) { return this->data_; }
+  void *data () { return this->data_; }
   void data (void *v) { this->data_ = v; }
 
 private:

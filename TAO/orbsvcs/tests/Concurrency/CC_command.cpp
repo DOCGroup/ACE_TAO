@@ -165,7 +165,7 @@ int CC_CreateLockSet_Cmd::execute()
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("CC_CreateLockSet_Cmd::execute(void)");
+      ex._tao_print_exception ("CC_CreateLockSet_Cmd::execute()");
     }
 
   return 1; // CC_SUCCESS
@@ -206,7 +206,7 @@ int CC_Lock_Cmd::execute()
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("CC_Lock_Cmd::execute(void)");
+      ex._tao_print_exception ("CC_Lock_Cmd::execute()");
       return 0;
     }
   return 1; // CC_SUCCESS
@@ -247,7 +247,7 @@ int CC_UnLock_Cmd::execute()
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("CC_UnLock_Cmd::execute(void)");
+      ex._tao_print_exception ("CC_UnLock_Cmd::execute()");
       return 0;
     }
   return 1; // CC_SUCCESS
@@ -301,7 +301,7 @@ int CC_TryLock_Cmd::execute()
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("CC_TryLock_Cmd::execute(void)");
+      ex._tao_print_exception ("CC_TryLock_Cmd::execute()");
       return 0;
     }
 
@@ -349,7 +349,7 @@ int CC_ChangeMode_Cmd::execute()
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("CC_ChangeMode_Cmd::execute(void)");
+      ex._tao_print_exception ("CC_ChangeMode_Cmd::execute()");
     }
   return 1; // CC_SUCCESS
 }
@@ -541,7 +541,7 @@ CC_Lookup_Cmd::execute()
         }
       catch (const CORBA::Exception& ex)
         {
-          ex._tao_print_exception ("CC_UnLock_Cmd::execute(void)");
+          ex._tao_print_exception ("CC_UnLock_Cmd::execute()");
         }
     }
   return 1; // CC_SUCCESS

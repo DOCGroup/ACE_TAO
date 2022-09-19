@@ -93,7 +93,7 @@ protected:
    * endpoint (which will be in the child process)
    * Subclasses will define the functionality for this
    */
-  virtual int get_stream_endpoint (void) = 0;
+  virtual int get_stream_endpoint () = 0;
 
   /// Get the Vdev object reference for the newly created
   /// endpoint

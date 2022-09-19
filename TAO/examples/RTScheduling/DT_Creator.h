@@ -41,7 +41,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
   virtual void yield (time_t suspend_time,
                       Thread_Task* task) = 0;
 
-  virtual void wait (void) = 0;
+  virtual void wait () = 0;
 
   virtual CORBA::Policy_ptr sched_param (int importance) = 0;
 
@@ -51,7 +51,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
           int iter,
           int dist,
           char *job_name) = 0;
-  //  virtual Task* task (void) = 0;
+  //  virtual Task* task () = 0;
 
   /// Resolve the naming service.
   int resolve_naming_service ();
@@ -73,7 +73,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 
   ACE_hrtime_t base_hr_time ();
 
-  virtual int total_load (void) = 0;
+  virtual int total_load () = 0;
 
   Synch_i* synch ();
 

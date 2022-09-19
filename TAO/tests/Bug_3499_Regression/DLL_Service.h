@@ -22,7 +22,7 @@ public:
   extern "C" export_macro ACE_DLL_Service * symbol ()
 
 #define ACE_DLL_SERVICE_IMPL(classname, symbol) \
-  ACE_DLL_Service * symbol (void) \
+  ACE_DLL_Service * symbol () \
   { \
     classname * service = 0; \
     ACE_NEW_RETURN (service, classname (), 0); \

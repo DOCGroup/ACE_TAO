@@ -10,7 +10,7 @@ ACE_MMAP_Memory_Pool::mmap () const
 
 ACE_INLINE
 ACE_Mem_Map &
-ACE_MMAP_Memory_Pool::mmap (void)
+ACE_MMAP_Memory_Pool::mmap ()
 {
   return mmap_;
 }

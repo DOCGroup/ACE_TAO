@@ -33,7 +33,7 @@ class Naming_Test
 public:
   /// Execute the test code.  <root_context> is the context to assume
   /// as the root for all tests operations.
-  virtual ~Naming_Test (void) {}
+  virtual ~Naming_Test () {}
   virtual int execute (TAO_Naming_Client &root_context) = 0;
 };
 
