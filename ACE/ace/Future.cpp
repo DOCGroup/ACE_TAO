@@ -20,7 +20,7 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Future_Rep)
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Future)
 
 template <class T>
-ACE_Future_Holder<T>::ACE_Future_Holder (void)
+ACE_Future_Holder<T>::ACE_Future_Holder ()
 {
 }
 
@@ -31,17 +31,17 @@ ACE_Future_Holder<T>::ACE_Future_Holder (const ACE_Future<T> &item)
 }
 
 template <class T>
-ACE_Future_Holder<T>::~ACE_Future_Holder (void)
+ACE_Future_Holder<T>::~ACE_Future_Holder ()
 {
 }
 
 template <class T>
-ACE_Future_Observer<T>::ACE_Future_Observer (void)
+ACE_Future_Observer<T>::ACE_Future_Observer ()
 {
 }
 
 template <class T>
-ACE_Future_Observer<T>::~ACE_Future_Observer (void)
+ACE_Future_Observer<T>::~ACE_Future_Observer ()
 {
 }
 
@@ -72,7 +72,7 @@ ACE_Future_Rep<T>::dump () const
 }
 
 template <class T> ACE_Future_Rep<T> *
-ACE_Future_Rep<T>::internal_create (void)
+ACE_Future_Rep<T>::internal_create ()
 {
   ACE_Future_Rep<T> *temp = 0;
   ACE_NEW_RETURN (temp,
@@ -82,7 +82,7 @@ ACE_Future_Rep<T>::internal_create (void)
 }
 
 template <class T> ACE_Future_Rep<T> *
-ACE_Future_Rep<T>::create (void)
+ACE_Future_Rep<T>::create ()
 {
   // Yes set ref count to zero.
   ACE_Future_Rep<T> *temp = internal_create ();
@@ -142,7 +142,7 @@ ACE_Future_Rep<T>::assign (ACE_Future_Rep<T>*& rep, ACE_Future_Rep<T>* new_rep)
 }
 
 template <class T>
-ACE_Future_Rep<T>::ACE_Future_Rep (void)
+ACE_Future_Rep<T>::ACE_Future_Rep ()
   : value_ (0),
     ref_count_ (0),
     value_ready_ (value_ready_mutex_)
@@ -150,7 +150,7 @@ ACE_Future_Rep<T>::ACE_Future_Rep (void)
 }
 
 template <class T>
-ACE_Future_Rep<T>::~ACE_Future_Rep (void)
+ACE_Future_Rep<T>::~ACE_Future_Rep ()
 {
   delete this->value_;
 }
@@ -288,7 +288,7 @@ ACE_Future_Rep<T>::operator T ()
 }
 
 template <class T>
-ACE_Future<T>::ACE_Future (void)
+ACE_Future<T>::ACE_Future ()
   : future_rep_ (FUTURE_REP::create ())
 {
 }
@@ -307,7 +307,7 @@ ACE_Future<T>::ACE_Future (const T &r)
 }
 
 template <class T>
-ACE_Future<T>::~ACE_Future (void)
+ACE_Future<T>::~ACE_Future ()
 {
   FUTURE_REP::detach (future_rep_);
 }
@@ -332,7 +332,7 @@ ACE_Future<T>::cancel (const T &r)
 }
 
 template <class T> int
-ACE_Future<T>::cancel (void)
+ACE_Future<T>::cancel ()
 {
   // If this ACE_Future is already attached to a ACE_Future_Rep,
   // detach it (maybe delete the ACE_Future_Rep).

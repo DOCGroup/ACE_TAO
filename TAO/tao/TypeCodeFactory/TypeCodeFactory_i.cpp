@@ -92,11 +92,11 @@ namespace TCF
 }
 
 
-TAO_TypeCodeFactory_i::TAO_TypeCodeFactory_i (void)
+TAO_TypeCodeFactory_i::TAO_TypeCodeFactory_i ()
 {
 }
 
-TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i (void)
+TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i ()
 {
 }
 

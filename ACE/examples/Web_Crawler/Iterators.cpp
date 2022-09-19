@@ -2,12 +2,12 @@
 #include "Options.h"
 #include "Iterators.h"
 
-URL_Iterator::~URL_Iterator (void)
+URL_Iterator::~URL_Iterator ()
 {
 }
 
 int
-URL_Iterator::destroy (void)
+URL_Iterator::destroy ()
 {
   // Commit suicide.
   delete this;

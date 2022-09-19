@@ -19,8 +19,8 @@ class Log_Wrapper
   //      multicast.
 {
 public:
-  Log_Wrapper (void);
-  ~Log_Wrapper (void);
+  Log_Wrapper ();
+  ~Log_Wrapper ();
 
   // = Types of logging messages.
   enum Log_Priority

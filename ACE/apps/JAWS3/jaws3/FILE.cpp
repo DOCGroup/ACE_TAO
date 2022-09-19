@@ -10,13 +10,13 @@
 #include "jaws3/FILE.h"
 
 
-JAWS_FILE::JAWS_FILE (void)
+JAWS_FILE::JAWS_FILE ()
   : map_ (0)
   , can_map_ (0)
 {
 }
 
-JAWS_FILE::~JAWS_FILE (void)
+JAWS_FILE::~JAWS_FILE ()
 {
   delete this->map_;
   this->map_ = 0;

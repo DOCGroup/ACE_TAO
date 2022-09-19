@@ -18,7 +18,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Codeset_Initializer::init (void)
+TAO_Codeset_Initializer::init ()
 {
   int result = 0;
 

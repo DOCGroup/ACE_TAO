@@ -47,7 +47,7 @@ public:
 
   int recursive (size_t depth);
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     return this->recursive (this->depth_);
   }
@@ -71,7 +71,7 @@ My_Task::recursive (size_t depth)
 
 extern "C"
 void
-exithook (void)
+exithook ()
 {
   ACE_TRACE ("void exithook (void)");
 

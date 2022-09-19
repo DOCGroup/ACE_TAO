@@ -57,7 +57,7 @@ public:
      exec_duration_ (exec_duration)
   {}
 
-  int svc (void);
+  int svc ();
 
  private:
   ACE_Barrier& barrier_;
@@ -67,7 +67,7 @@ public:
   int exec_duration_;
 };
 
-int MyTask::svc (void)
+int MyTask::svc ()
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);

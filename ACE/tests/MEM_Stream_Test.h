@@ -38,7 +38,7 @@ public:
   /// The Svc_Handler callbacks.
   Echo_Handler (ACE_Thread_Manager *thr_mgr = 0);
   virtual int open (void *);
-  static void reset_handler (void);
+  static void reset_handler ();
   virtual int handle_input (ACE_HANDLE h);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);

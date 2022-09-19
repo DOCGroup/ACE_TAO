@@ -11,7 +11,7 @@ Stock_Quoter_i::~Stock_Quoter_i ()
 }
 
 void
-Stock_Quoter_i::shutdown (void)
+Stock_Quoter_i::shutdown ()
 {
   this->orb_->shutdown (false);
 }

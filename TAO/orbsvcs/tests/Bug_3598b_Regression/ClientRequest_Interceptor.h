@@ -28,9 +28,9 @@ class ClientRequest_Interceptor
   public virtual ::CORBA::LocalObject
 {
 public:
-ClientRequest_Interceptor (void);
+ClientRequest_Interceptor ();
 
-~ClientRequest_Interceptor (void);
+~ClientRequest_Interceptor ();
 
 /// Canonical name of the interceptor.
 virtual char * name ();

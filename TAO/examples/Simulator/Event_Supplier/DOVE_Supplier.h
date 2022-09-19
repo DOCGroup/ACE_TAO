@@ -34,10 +34,10 @@ public:
   DOVE_Supplier ();
 
   /// Destructor.
-  ~DOVE_Supplier (void);
+  ~DOVE_Supplier ();
 
   /// Initialize the ORB and the connection to the Name Service
-  int init (void);
+  int init ();
 
   /// Connect to the event service.
   int connect (const char * MIB_name = 0,
@@ -69,7 +69,7 @@ private:
     friend class DOVE_Supplier;
 
   public:
-    virtual void disconnect_push_supplier (void)
+    virtual void disconnect_push_supplier ()
     {
     }
 

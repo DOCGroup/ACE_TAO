@@ -6,7 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class Object>
-TAO_ESF_Worker<Object>::~TAO_ESF_Worker (void)
+TAO_ESF_Worker<Object>::~TAO_ESF_Worker ()
 {
 }
 

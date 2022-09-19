@@ -48,11 +48,11 @@ class File_Parser
 {
 public:
   /// Destructor.
-  virtual ~File_Parser (void);
+  virtual ~File_Parser ();
 
   // = Open and Close the file specified
   int open (const ACE_TCHAR filename[]);
-  int close (void);
+  int close ();
 
   virtual FPRT::Return_Type read_entry (ENTRY &entry,
                                         int &line_number) = 0;
@@ -82,7 +82,7 @@ protected:
 
   /// Skips to the remainder of a line, e.g., when we find a comment
   /// character.
-  int skipline (void);
+  int skipline ();
 
   /// Pointer to the file we're reading.
   FILE *infile_;

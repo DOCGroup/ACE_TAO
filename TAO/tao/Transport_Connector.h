@@ -59,7 +59,7 @@ public:
   TAO_Connector (CORBA::ULong tag);
 
   /// The destructor.
-  virtual ~TAO_Connector (void);
+  virtual ~TAO_Connector ();
 
   /**
    * The tag identifying the specific ORB transport layer protocol.
@@ -199,10 +199,10 @@ protected:
   void orb_core (TAO_ORB_Core *orb_core);
 
   /// Create a connect strategy
-  int create_connect_strategy (void);
+  int create_connect_strategy ();
 
   /// Return the TAO_ORB_Core pointer
-  TAO_ORB_Core *orb_core (void);
+  TAO_ORB_Core *orb_core ();
 
 protected:
   /// The (a)synch connect strategy

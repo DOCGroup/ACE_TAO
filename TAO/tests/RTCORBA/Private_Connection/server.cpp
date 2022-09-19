@@ -14,10 +14,10 @@ public:
   // ctor
 
   // = The Test methods.
-  void test_method (void);
+  void test_method ();
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void);
+  void shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -38,7 +38,7 @@ Test_i::test_method (/* */)
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
   this->orb_->shutdown (false);
 }

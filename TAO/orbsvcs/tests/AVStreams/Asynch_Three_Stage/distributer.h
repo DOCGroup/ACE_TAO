@@ -28,7 +28,7 @@ class Distributer_Receiver_Callback : public TAO_AV_Callback
 {
 public:
   /// Constructor.
-  Distributer_Receiver_Callback (void);
+  Distributer_Receiver_Callback ();
 
   // Method that is called when there is data to be received from a
   // sender.
@@ -38,7 +38,7 @@ public:
 
   // Called when the sender is done sending data and wants to close
   // down the connection.
-  int handle_destroy (void);
+  int handle_destroy ();
 
 private:
   /// Count of the frames passing through us.
@@ -111,10 +111,10 @@ class Distributer
 {
 public:
   /// Constructor
-  Distributer (void);
+  Distributer ();
 
   /// Destructor.
-  ~Distributer (void);
+  ~Distributer ();
 
   /// Initialize data components.
   int init (int argc, ACE_TCHAR *argv[]);
@@ -127,7 +127,7 @@ public:
   void done (int);
 
   /// Accessor to connection manager.
-  Connection_Manager &connection_manager (void);
+  Connection_Manager &connection_manager ();
 
 protected:
   /// Connection manager.

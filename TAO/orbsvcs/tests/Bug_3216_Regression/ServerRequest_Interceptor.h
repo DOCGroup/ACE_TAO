@@ -23,10 +23,10 @@ class TAO249_ServerRequest_Interceptor
 {
 public:
 /// Constructor.
-TAO249_ServerRequest_Interceptor (void);
+TAO249_ServerRequest_Interceptor ();
 
 /// Destructor.
-~TAO249_ServerRequest_Interceptor (void);
+~TAO249_ServerRequest_Interceptor ();
 
 /**
  * @name Methods Required by the Server Request Interceptor

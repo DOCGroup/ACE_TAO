@@ -17,7 +17,7 @@ PortableInterceptor::Current_var pic;
 PortableInterceptor::SlotId slot_id;
 const IOP::ServiceId service_id = 0xdeadbeef;
 
-int get_offset (void)
+int get_offset ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, ofs_lock, 0);
   int r = ofs;
@@ -33,7 +33,7 @@ public:
   Worker (Messenger_ptr m)
     : messenger(Messenger::_duplicate (m)) {}
 
-  int svc (void)
+  int svc ()
   {
     int offset = get_offset ();
     CORBA::String_var message = CORBA::string_dup( "Hello!" );
@@ -74,12 +74,12 @@ class Client_Req_Int
     public virtual ::CORBA::LocalObject
 {
 public:
-  virtual char * name (void)
+  virtual char * name ()
   {
     return CORBA::string_dup ("Client_Req_Int");
   }
 
-  virtual void destroy (void)
+  virtual void destroy ()
   {
   }
 

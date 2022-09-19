@@ -229,7 +229,7 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    virtual PortableGroup::Locations * locations_of_members (void);
+    virtual PortableGroup::Locations * locations_of_members ();
 
     /**
      * @@TODO DOC
@@ -241,12 +241,12 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    virtual void initial_populate (void);
+    virtual void initial_populate ();
 
     /**
      * @@TODO DOC
      */
-    virtual void minimum_populate (void);
+    virtual void minimum_populate ();
 
 
     /**
@@ -263,21 +263,21 @@ namespace TAO
 
     virtual void set_name (const char* group_name);
 
-    virtual const char* get_name (void);
+    virtual const char* get_name ();
 
     /////////////////////////
     // Implementation methods
   private:
     int increment_version ();
 
-    void distribute_iogr (void);
+    void distribute_iogr ();
 
     void create_members (size_t count);
 
   protected:
     virtual PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member);
 
-    void clear_members_map (void);
+    void clear_members_map ();
 
     /////////////////////////
     // Forbidden methods

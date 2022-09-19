@@ -28,7 +28,7 @@
 class CACE_Init_TestApp : public CWinApp
 {
 public:
-  CACE_Init_TestApp (void);
+  CACE_Init_TestApp ();
 
   // Overrides
   // ClassWizard generated virtual function overrides

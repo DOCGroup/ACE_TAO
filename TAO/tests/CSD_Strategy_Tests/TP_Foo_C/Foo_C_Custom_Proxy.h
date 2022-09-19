@@ -24,18 +24,18 @@ public:
 
   bool validate_connection ();
 
-  void op1(void);
+  void op1();
   void op2(CORBA::Long x);
   CORBA::Long op3(CORBA::Long x);
   void op4(CORBA::Long x);
-  void op5(void);
-  void done(void);
+  void op5();
+  void done();
 
-  void cust_op1(void);
+  void cust_op1();
   void cust_op2(long x);
   long cust_op3(long x);
   void cust_op4(long x);
-  void cust_op5(void);
+  void cust_op5();
 
 private:
   Foo_C_i*                        servant_;

@@ -11,7 +11,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   template <typename InterceptorType, typename DetailsType>
-  Interceptor_List<InterceptorType,DetailsType>::Interceptor_List (void)
+  Interceptor_List<InterceptorType,DetailsType>::Interceptor_List ()
   {
   }
 

@@ -25,7 +25,7 @@ public:
   Visual_i (CORBA::ORB_ptr orb);
 
   void normal (CORBA::Long arg);
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB pseudo-reference (for shutdown).

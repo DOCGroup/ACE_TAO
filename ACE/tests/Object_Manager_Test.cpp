@@ -20,7 +20,7 @@ static u_int *ip;
 
 extern "C"
 void
-hook1 (void)
+hook1 ()
 {
   delete ip;
   ip = 0;

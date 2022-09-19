@@ -35,7 +35,7 @@ public:
    * used for basic replication strategy. It throws FTRT::OutOfSequence when the
    * incoming request is not valid.
    */
-    virtual void check_validity(void);
+    virtual void check_validity();
 
     typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
       (const FtRtecEventChannelAdmin::ObjectId&);

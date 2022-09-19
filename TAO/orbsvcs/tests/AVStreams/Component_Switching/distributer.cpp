@@ -9,7 +9,7 @@
 typedef ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> DISTRIBUTER;
 
 // constructor.
-Signal_Handler::Signal_Handler (void)
+Signal_Handler::Signal_Handler ()
 {
 }
 
@@ -127,13 +127,13 @@ Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flo
 }
 
 
-Distributer_Receiver_Callback::Distributer_Receiver_Callback (void)
+Distributer_Receiver_Callback::Distributer_Receiver_Callback ()
   : frame_count_ (1)
 {
 }
 
 ACE_CString &
-Distributer_Receiver_Callback::flowname (void)
+Distributer_Receiver_Callback::flowname ()
 {
   return this->flowname_;
 }
@@ -177,7 +177,7 @@ Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-Distributer_Receiver_Callback::handle_destroy (void)
+Distributer_Receiver_Callback::handle_destroy ()
 {
   /// Called when the sender requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
@@ -192,7 +192,7 @@ Distributer_Receiver_Callback::handle_destroy (void)
 }
 
 ACE_CString &
-Distributer_Sender_Callback::flowname (void)
+Distributer_Sender_Callback::flowname ()
 {
   return this->flowname_;
 }
@@ -204,7 +204,7 @@ Distributer_Sender_Callback::flowname (const ACE_CString &flowname)
 }
 
 int
-Distributer_Sender_Callback::handle_destroy (void)
+Distributer_Sender_Callback::handle_destroy ()
 {
   /// Called when the sender requests the stream to be shutdown.
 
@@ -220,7 +220,7 @@ Distributer_Sender_Callback::handle_destroy (void)
   return 0;
 }
 
-Distributer::Distributer (void)
+Distributer::Distributer ()
   : distributer_receiver_mmdevice_ (0),
     sender_name_ ("sender"),
     distributer_name_ ("distributer"),
@@ -229,18 +229,18 @@ Distributer::Distributer (void)
 {
 }
 
-Distributer::~Distributer (void)
+Distributer::~Distributer ()
 {
 }
 
 void
-Distributer::stream_created (void)
+Distributer::stream_created ()
 {
   ++this->stream_count_;
 }
 
 void
-Distributer::stream_destroyed (void)
+Distributer::stream_destroyed ()
 {
   --this->stream_count_;
 
@@ -250,7 +250,7 @@ Distributer::stream_destroyed (void)
 
 
 Connection_Manager &
-Distributer::connection_manager (void)
+Distributer::connection_manager ()
 {
   return this->connection_manager_;
 }
@@ -370,7 +370,7 @@ Distributer::done () const
 }
 
 void
-Distributer::shut_down (void)
+Distributer::shut_down ()
 {
   try
     {

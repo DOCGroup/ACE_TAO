@@ -19,7 +19,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-EC_Schedule::EC_Schedule (void)
+EC_Schedule::EC_Schedule ()
   :  scheduler_impl_ (0)
 {
 }
@@ -40,13 +40,13 @@ EC_Schedule::print_args () const
 }
 
 void
-EC_Schedule::print_usage (void)
+EC_Schedule::print_usage ()
 {
   this->EC_Driver::print_usage ();
 }
 
 void
-EC_Schedule::initialize_ec_impl (void)
+EC_Schedule::initialize_ec_impl ()
 {
   this->scheduler_impl_ = new ACE_Config_Scheduler;
   this->scheduler_ = this->scheduler_impl_->_this ();
@@ -61,14 +61,14 @@ EC_Schedule::modify_attributes (TAO_EC_Event_Channel_Attributes& attr)
 }
 
 void
-EC_Schedule::cleanup_ec (void)
+EC_Schedule::cleanup_ec ()
 {
   this->EC_Driver::cleanup_ec ();
   delete this->scheduler_impl_;
 }
 
 void
-EC_Schedule::execute_test (void)
+EC_Schedule::execute_test ()
 {
   CORBA::Long min_priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -195,6 +195,6 @@ EC_Schedule::build_supplier_qos (
 }
 
 void
-EC_Schedule::dump_results (void)
+EC_Schedule::dump_results ()
 {
 }

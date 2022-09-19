@@ -27,10 +27,10 @@ class BasicLog_Test
   enum
   { MAX_LOG_SIZE = 8192 };
 
-  BasicLog_Test(void);
+  BasicLog_Test();
   // constructor
 
-  ~BasicLog_Test(void);
+  ~BasicLog_Test();
   // destructor
 
   int init(int argc, ACE_TCHAR *argv[]);
@@ -105,7 +105,7 @@ private:
   BasicLog_Test& operator=(const BasicLog_Test&);
 
   int
-    init_factory (void);
+    init_factory ();
 
   int
     parse_args(int argc, ACE_TCHAR *argv[]);
@@ -115,11 +115,11 @@ private:
   // writes enough records to fill the log. Default write enough to fill log. Hopefully, not infinite.
 
   void
-    resolve_basic_factory (void);
+    resolve_basic_factory ();
   // resolve log factory
 
   void
-    resolve_naming_service (void);
+    resolve_naming_service ();
   // resolve nameing service
 
   void

@@ -275,7 +275,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << "TAO_AnyTypeCode_Adapter *adapter =" << be_idt_nl
           << "ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance ("
           << "\"AnyTypeCode_Adapter\");" << be_uidt_nl
-          << "if (adapter == 0)" << be_idt_nl
+          << "if (!adapter)" << be_idt_nl
           << "{" << be_idt_nl
           // FUZZ: disable check_for_ace_log_categories
           << "TAOLIB_ERROR_RETURN ((LM_ERROR," << be_idt_nl

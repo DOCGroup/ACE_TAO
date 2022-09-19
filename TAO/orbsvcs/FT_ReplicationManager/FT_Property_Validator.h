@@ -36,10 +36,10 @@ namespace TAO
   {
   public:
     /// Constructor.
-    FT_Property_Validator (void);
+    FT_Property_Validator ();
 
     /// Destructor.
-    virtual ~FT_Property_Validator (void);
+    virtual ~FT_Property_Validator ();
 
     /// Validate the given properties.  Throw an exception when the
     /// first invalid property is encountered.  The remaining properties

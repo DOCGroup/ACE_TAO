@@ -36,7 +36,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command
   friend class TAO_Notify_Tests_Command_Builder;
 public:
   /// Constructor
-  TAO_Notify_Tests_Command (void);
+  TAO_Notify_Tests_Command ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_Command ();
@@ -51,7 +51,7 @@ public:
   virtual const char* get_name (void)= 0;
 
   ///= Each derived type must also implement the following signature:
-  // static const char* name (void);
+  // static const char* name ();
 
 protected:
   /// Next command after this one.

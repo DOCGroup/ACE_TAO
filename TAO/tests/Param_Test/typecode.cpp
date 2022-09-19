@@ -17,12 +17,12 @@
 //               Test_TypeCode
 // ************************************************************************
 
-Test_TypeCode::Test_TypeCode (void)
+Test_TypeCode::Test_TypeCode ()
   : opname_ (CORBA::string_dup ("test_typecode"))
 {
 }
 
-Test_TypeCode::~Test_TypeCode (void)
+Test_TypeCode::~Test_TypeCode ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -94,7 +94,7 @@ Test_TypeCode::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_TypeCode::reset_parameters (void)
+Test_TypeCode::reset_parameters ()
 {
   this->in_ = this->tc_holder_;
   this->inout_ = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
@@ -124,7 +124,7 @@ Test_TypeCode::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_TypeCode::check_validity (void)
+Test_TypeCode::check_validity ()
 {
   try
     {
@@ -155,6 +155,6 @@ Test_TypeCode::check_validity (CORBA::Request_ptr)
 }
 
 void
-Test_TypeCode::print_values (void)
+Test_TypeCode::print_values ()
 {
 }

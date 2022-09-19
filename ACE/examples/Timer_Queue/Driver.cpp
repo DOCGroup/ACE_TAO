@@ -33,7 +33,7 @@ Command<RECEIVER, ACTION>::Command (RECEIVER &recvr,
 
 // destructor
 template <class RECEIVER, class ACTION>
-Command<RECEIVER, ACTION>::~Command (void)
+Command<RECEIVER, ACTION>::~Command ()
 {
 }
 
@@ -48,12 +48,12 @@ Command<RECEIVER, ACTION>::execute (void *arg)
 // gets the next request from the user input.
 
 template <class TQ, class RECEIVER, class ACTION>
-Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::~Timer_Queue_Test_Driver (void)
+Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::~Timer_Queue_Test_Driver ()
 {
 }
 
 template <class TQ, class RECEIVER, class ACTION> int
-Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::get_next_request (void)
+Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::get_next_request ()
 {
   char buf[BUFSIZ];
 
@@ -73,7 +73,7 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::get_next_request (void)
 // Runs the test.
 
 template <class TQ, class RECEIVER, class ACTION> int
-Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::run_test (void)
+Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::run_test ()
 {
   this->init ();
 

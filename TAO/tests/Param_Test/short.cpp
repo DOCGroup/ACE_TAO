@@ -17,12 +17,12 @@
 //               Test_Short
 // ************************************************************************
 
-Test_Short::Test_Short (void)
+Test_Short::Test_Short ()
   : opname_ (CORBA::string_dup ("test_short"))
 {
 }
 
-Test_Short::~Test_Short (void)
+Test_Short::~Test_Short ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -67,7 +67,7 @@ Test_Short::init_parameters (Param_Test_ptr /*objref*/)
 }
 
 int
-Test_Short::reset_parameters (void)
+Test_Short::reset_parameters ()
 {
   this->inout_ =  0;
   this->out_ =  0;
@@ -94,7 +94,7 @@ Test_Short::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Short::check_validity (void)
+Test_Short::check_validity ()
 {
   if (this->inout_ == this->in_ * 2 &&
       this->out_ == this->in_ * 3 &&
@@ -111,7 +111,7 @@ Test_Short::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Short::print_values (void)
+Test_Short::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"

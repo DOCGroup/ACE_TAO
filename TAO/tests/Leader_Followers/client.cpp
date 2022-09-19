@@ -103,7 +103,7 @@ public:
     {
     }
 
-  int svc (void)
+  int svc ()
     {
       try
         {
@@ -172,7 +172,7 @@ public:
     {
     }
 
-  int svc (void)
+  int svc ()
     {
       try
         {

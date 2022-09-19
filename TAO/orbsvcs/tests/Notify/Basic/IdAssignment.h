@@ -18,17 +18,17 @@
 class IdAssignment
 {
 public:
-  IdAssignment (void);
-  ~IdAssignment (void);
+  IdAssignment ();
+  ~IdAssignment ();
 
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
   void init (int argc,
              ACE_TCHAR *argv[]);
-  void run_test (void);
+  void run_test ();
 
 private:
-  CosNotifyChannelAdmin::ChannelID create_ec (void);
+  CosNotifyChannelAdmin::ChannelID create_ec ();
   void destroy_ec (CosNotifyChannelAdmin::ChannelID id);
 
   CosNotifyChannelAdmin::AdminID create_supplier_admin (

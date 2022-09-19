@@ -23,7 +23,7 @@ class test_i :
 public:
   test_i (PortableServer::POA_ptr poa);
 
-  void method (void);
+  void method ();
 
   PortableServer::POA_var poa_;
 };
@@ -34,7 +34,7 @@ test_i::test_i (PortableServer::POA_ptr poa)
 }
 
 void
-test_i::method (void)
+test_i::method ()
 {
 }
 
@@ -43,7 +43,7 @@ class Task : public ACE_Task_Base
 public:
   void object (test_ptr test);
 
-  int svc (void);
+  int svc ();
 
   test_var test_;
 
@@ -59,7 +59,7 @@ Task::object (test_ptr test)
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   this->test_->method ();
   this->test_ =

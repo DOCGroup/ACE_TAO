@@ -32,7 +32,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_T
 {
 public:
   /// Constructor
-  TAO_Notify_ProxyConsumer_T (void);
+  TAO_Notify_ProxyConsumer_T ();
 
   /// Destructor
   ~TAO_Notify_ProxyConsumer_T ();
@@ -41,7 +41,7 @@ public:
   virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
                                     const CosNotification::EventTypeSeq & removed);
 
-  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (void);
+  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin ();
 
   virtual CosNotification::EventTypeSeq * obtain_subscription_types (
     CosNotifyChannelAdmin::ObtainInfoMode mode);

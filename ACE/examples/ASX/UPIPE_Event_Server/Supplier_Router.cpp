@@ -32,7 +32,7 @@ Supplier_Router::Supplier_Router (ACE_Thread_Manager *tm)
 // Handle incoming messages in a separate thread..
 
 int
-Supplier_Router::svc (void)
+Supplier_Router::svc ()
 {
   ACE_ASSERT (this->is_writer ());
 

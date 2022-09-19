@@ -57,16 +57,16 @@ public:
 
   // = The EndpointPolicy::Policy methods
 
-  virtual CORBA::PolicyType policy_type (void);
+  virtual CORBA::PolicyType policy_type ();
 
-  virtual CORBA::Policy_ptr copy (void);
+  virtual CORBA::Policy_ptr copy ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
-  virtual EndpointPolicy::EndpointList * value (void);
+  virtual EndpointPolicy::EndpointList * value ();
 
 private:
   /// The attribute

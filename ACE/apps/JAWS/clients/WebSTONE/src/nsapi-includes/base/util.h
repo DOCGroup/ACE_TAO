@@ -97,7 +97,7 @@ char *util_env_find(char **env, char *name);
  * You are free to realloc or free this string.
  */
 
-char *util_hostname(void);
+char *util_hostname();
 
 
 /*

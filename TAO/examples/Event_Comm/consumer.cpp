@@ -56,7 +56,7 @@ Consumer::handle_signal (int signum,
 }
 
 void
-Consumer::close (void)
+Consumer::close ()
 {
   // clean up the input handler.
   ih_.close ();
@@ -65,7 +65,7 @@ Consumer::close (void)
 }
 
 int
-Consumer::run (void)
+Consumer::run ()
 {
   // Run the <Consumer_Handler>'s ORB.
   return ch_.run ();

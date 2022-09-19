@@ -6,7 +6,7 @@
 ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_index;
 
 RTScheduling::Current::IdType*
-Thread_Task::guids (void)
+Thread_Task::guids ()
 {
   return this->guid_;
 }
@@ -46,7 +46,7 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
 #endif /* THREAD_CANCELLED */
 
 int
-Thread_Task::svc (void)
+Thread_Task::svc ()
 {
   try
     {

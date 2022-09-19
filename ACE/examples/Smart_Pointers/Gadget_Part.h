@@ -23,7 +23,7 @@ class Gadget_Part
 {
 public:
   /// Destructor.
-  virtual ~Gadget_Part (void);
+  virtual ~Gadget_Part ();
 
   /// Ask the part to print information about itself.
   virtual void print_info (void) = 0;

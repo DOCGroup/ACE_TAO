@@ -16,12 +16,12 @@
 #include "ace/OS_NS_unistd.h"
 
 // CTOR
-Object_B_i::Object_B_i (void)
+Object_B_i::Object_B_i ()
 {
 }
 
 // DTOR
-Object_B_i::~Object_B_i (void)
+Object_B_i::~Object_B_i ()
 {
 }
 
@@ -51,7 +51,7 @@ Object_B_i::foo (Object_A_ptr theObject_A_ptr)
 }
 
 void
-Object_B_i::shutdown (void)
+Object_B_i::shutdown ()
 {
   int argc = 0;
   ACE_TCHAR **argv = 0;

@@ -79,7 +79,7 @@ public:
   virtual ~ST_AMH_Server ();
 
   /// ORB initialization stuff
-  int start_orb_and_poa (void);
+  int start_orb_and_poa ();
 
   /// register the servant with the poa
   virtual void register_servant (ST_AMH_Servant *servant);
@@ -142,7 +142,7 @@ ST_AMH_Server::cleanup ()
 }
 
 int
-ST_AMH_Server::start_orb_and_poa (void)
+ST_AMH_Server::start_orb_and_poa ()
 {
   try
     {

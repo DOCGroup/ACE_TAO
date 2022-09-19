@@ -28,7 +28,7 @@ public:
                int n_threads,
                int inp_serialize = 1);
 
-  virtual int producer (void);
+  virtual int producer ();
   // produce input for workers
 
   virtual int input (ACE_Message_Block *mb);
@@ -139,7 +139,7 @@ Worker_Task<BARRIER>::service (ACE_Message_Block *mb,
 // for all other threads to complete this iteration.
 
 template <class BARRIER> int
-Worker_Task<BARRIER>::svc (void)
+Worker_Task<BARRIER>::svc ()
 {
   // Note that the <ACE_Task::svc_run> method automatically adds us to
   // the Thread_Manager when the thread begins.
@@ -187,7 +187,7 @@ Worker_Task<BARRIER>::svc (void)
 }
 
 template <class BARRIER> int
-Worker_Task<BARRIER>::producer (void)
+Worker_Task<BARRIER>::producer ()
 {
   // Keep reading stdin, until we reach EOF.
 

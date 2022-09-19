@@ -66,14 +66,14 @@ namespace TAO
                 int is_inside);
 
       /// Destructor.
-      ~Acceptor (void);
+      ~Acceptor ();
 
       /// @@ Helper method for the implementation repository, should go
       ///    away
       const ACE::HTBP::Addr& address () const;
 
       /// Returns the array of endpoints in this acceptor
-      const ACE::HTBP::Addr *endpoints (void);
+      const ACE::HTBP::Addr *endpoints ();
 
       typedef TAO_Strategy_Acceptor<Completion_Handler, ACE_SOCK_ACCEPTOR> BASE_ACCEPTOR;
       typedef Creation_Strategy<Completion_Handler> CREATION_STRATEGY;
@@ -97,7 +97,7 @@ namespace TAO
                                 int version_minor,
                                 const char *options = 0);
 
-      virtual int close (void);
+      virtual int close ();
 
       virtual int create_profile (const TAO::ObjectKey &object_key,
                                   TAO_MProfile &mprofile,
@@ -105,7 +105,7 @@ namespace TAO
 
       virtual int is_collocated (const TAO_Endpoint *endpoint);
 
-      virtual CORBA::ULong endpoint_count (void);
+      virtual CORBA::ULong endpoint_count ();
 
       virtual int object_key (IOP::TaggedProfile &profile,
                               TAO::ObjectKey &key);

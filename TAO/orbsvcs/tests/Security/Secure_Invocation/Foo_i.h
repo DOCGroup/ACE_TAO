@@ -24,9 +24,9 @@ public:
          SecurityLevel3::SecurityCurrent_ptr current);
 
   /// Test method.
-  virtual void baz (void);
+  virtual void baz ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Reference to the ORB.

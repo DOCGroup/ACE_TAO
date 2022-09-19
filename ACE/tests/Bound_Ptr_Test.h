@@ -49,7 +49,7 @@ class Scheduler : public ACE_Task<ACE_SYNCH>
   friend class Method_Request_end;
 public:
   /// Constructor.
-  Scheduler (void);
+  Scheduler ();
 
   /// Initializer.
   virtual int open (void *args = 0);
@@ -58,11 +58,11 @@ public:
   virtual int close (u_long flags = 0);
 
   /// Destructor.
-  virtual ~Scheduler (void);
+  virtual ~Scheduler ();
 
   // = These methods are part of the Active Object Proxy interface.
   void print (Printer_var &printer);
-  void end (void);
+  void end ();
 
 protected:
   /// Runs the Scheduler's event loop, which dequeues <Method_Requests>

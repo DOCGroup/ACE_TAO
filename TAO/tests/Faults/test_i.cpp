@@ -64,7 +64,7 @@ Simple_Server_i::shutdown_now (CORBA::Boolean is_clean)
 }
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
   this->orb_->shutdown (false);
 }
@@ -105,7 +105,7 @@ Middle_i::shutdown_now (CORBA::Boolean is_clean)
 }
 
 void
-Middle_i::shutdown (void)
+Middle_i::shutdown ()
 {
   try
     {

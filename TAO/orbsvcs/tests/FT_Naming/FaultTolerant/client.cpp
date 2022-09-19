@@ -37,7 +37,7 @@ public:
   My_Test_Object (CORBA::Short id = 0);
   // Constructor.
 
-  ~My_Test_Object (void);
+  ~My_Test_Object ();
   // Destructor.
 
   // = Interface implementation accessor methods.
@@ -45,7 +45,7 @@ public:
   void id (CORBA::Short id);
   // Sets id.
 
-  CORBA::Short id (void);
+  CORBA::Short id ();
   // Gets id.
 
 private:
@@ -57,12 +57,12 @@ My_Test_Object::My_Test_Object (CORBA::Short id)
 {
 }
 
-My_Test_Object::~My_Test_Object (void)
+My_Test_Object::~My_Test_Object ()
 {
 }
 
 CORBA::Short
-My_Test_Object::id (void)
+My_Test_Object::id ()
 {
   return id_;
 }

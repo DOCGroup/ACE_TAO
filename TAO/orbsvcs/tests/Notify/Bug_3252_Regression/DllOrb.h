@@ -12,8 +12,8 @@
 class bug_3252_Export DllOrb: public ACE_Task_Base
 {
 public:
-  DllOrb (void);
-  virtual ~DllOrb (void);
+  DllOrb ();
+  virtual ~DllOrb ();
 
   CORBA::ORB_ptr orb () const { return CORBA::ORB::_duplicate(mv_orb_.in()); }
 

@@ -42,7 +42,7 @@ class AcceptHandler : public ACE_Event_Handler {
          *
          * @return 0 on success, -1 on failure
          */
-        int open(void);
+        int open();
 
         /**
          * @name Overridden methods from the ACE_Event_Handler

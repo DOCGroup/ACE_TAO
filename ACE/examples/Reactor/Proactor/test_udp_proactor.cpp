@@ -44,8 +44,8 @@ static int done = 0;
 class Receiver : public ACE_Service_Handler
 {
 public:
-  Receiver (void);
-  ~Receiver (void);
+  Receiver ();
+  ~Receiver ();
 
   int open_addr (const ACE_INET_Addr &localAddr);
 
@@ -65,13 +65,13 @@ private:
   const char* act_;
 };
 
-Receiver::Receiver (void)
+Receiver::Receiver ()
   : completion_key_ ("Receiver Completion Key"),
     act_ ("Receiver ACT")
 {
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
   sock_dgram_.close ();
 }
@@ -218,8 +218,8 @@ Receiver::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
 class Sender : public ACE_Handler
 {
 public:
-  Sender (void);
-  ~Sender (void);
+  Sender ();
+  ~Sender ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
@@ -243,13 +243,13 @@ private:
   const char* act_;
 };
 
-Sender::Sender (void)
+Sender::Sender ()
   : completion_key_ ("Sender completion key"),
     act_ ("Sender ACT")
 {
 }
 
-Sender::~Sender (void)
+Sender::~Sender ()
 {
   this->sock_dgram_.close ();
 }

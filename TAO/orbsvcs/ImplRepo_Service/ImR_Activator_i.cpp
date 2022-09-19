@@ -71,7 +71,7 @@ Watchdog::stop()
 }
 #endif /* ACE_WIN32 */
 
-ImR_Activator_i::ImR_Activator_i (void)
+ImR_Activator_i::ImR_Activator_i ()
   : registration_token_(0)
   , debug_(0)
   , notify_imr_ (false)
@@ -279,7 +279,7 @@ ImR_Activator_i::init (Activator_Options& opts)
 }
 
 int
-ImR_Activator_i::fini (void)
+ImR_Activator_i::fini ()
 {
   try
     {
@@ -335,20 +335,20 @@ ImR_Activator_i::fini (void)
 }
 
 int
-ImR_Activator_i::run (void)
+ImR_Activator_i::run ()
 {
   this->orb_->run ();
   return 0;
 }
 
 void
-ImR_Activator_i::shutdown (void)
+ImR_Activator_i::shutdown ()
 {
   this->shutdown (false);
 }
 
 bool
-ImR_Activator_i::in_upcall (void)
+ImR_Activator_i::in_upcall ()
 {
   try
     {

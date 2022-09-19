@@ -17,14 +17,14 @@
 //               Test_Var_Array
 // ************************************************************************
 
-Test_Var_Array::Test_Var_Array (void)
+Test_Var_Array::Test_Var_Array ()
   : opname_ (CORBA::string_dup ("test_var_array")),
     out_ (new Param_Test::Var_Array),
     ret_ (new Param_Test::Var_Array)
 {
 }
 
-Test_Var_Array::~Test_Var_Array (void)
+Test_Var_Array::~Test_Var_Array ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -79,7 +79,7 @@ Test_Var_Array::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Var_Array::reset_parameters (void)
+Test_Var_Array::reset_parameters ()
 {
   // free the out, and return value arrays
   Param_Test::Var_Array_free (this->out_._retn ());
@@ -109,7 +109,7 @@ Test_Var_Array::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Var_Array::check_validity (void)
+Test_Var_Array::check_validity ()
 {
   if (this->compare (this->in_, this->inout_) &&
       this->compare (this->in_, this->out_.in ()) &&
@@ -138,7 +138,7 @@ Test_Var_Array::compare (const Param_Test::Var_Array_slice *a1,
 }
 
 void
-Test_Var_Array::print_values (void)
+Test_Var_Array::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG, "IN array\n"));
   this->print (this->in_);

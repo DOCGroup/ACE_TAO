@@ -79,7 +79,7 @@ class JAWS_Export JAWS_Datagram
 public:
   JAWS_Datagram (JAWS_Datagram_Impl *impl = 0);
 
-  static JAWS_Datagram * instance (void)
+  static JAWS_Datagram * instance ()
   {
     return ACE_Singleton<JAWS_Datagram, ACE_SYNCH_MUTEX>::instance ();
   }

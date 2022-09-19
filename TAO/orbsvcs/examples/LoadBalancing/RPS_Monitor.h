@@ -65,7 +65,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~RPS_Monitor (void);
+  ~RPS_Monitor ();
 
 private:
   /// The name of the location at which this LoadMonitor resides.

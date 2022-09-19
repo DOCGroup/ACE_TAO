@@ -116,25 +116,25 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-  char * the_name (void);
+  char * the_name ();
 
-  PortableServer::POA_ptr the_parent (void);
+  PortableServer::POA_ptr the_parent ();
 
-  PortableServer::POAList *the_children (void);
+  PortableServer::POAList *the_children ();
 
-  PortableServer::POAManager_ptr the_POAManager (void);
+  PortableServer::POAManager_ptr the_POAManager ();
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
-  PortableServer::AdapterActivator_ptr the_activator (void);
+  PortableServer::AdapterActivator_ptr the_activator ();
 
   void the_activator (PortableServer::AdapterActivator_ptr adapter_activator);
 
-  PortableServer::ServantManager_ptr get_servant_manager (void);
+  PortableServer::ServantManager_ptr get_servant_manager ();
 
   void set_servant_manager (PortableServer::ServantManager_ptr imgr);
 
-  PortableServer::Servant get_servant (void);
+  PortableServer::Servant get_servant ();
 
   void set_servant (PortableServer::Servant servant);
 
@@ -168,7 +168,7 @@ public:
 
   CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid);
 
-  CORBA::OctetSeq *id (void);
+  CORBA::OctetSeq *id ();
 
   // End standard POA interface methods.
 
@@ -183,7 +183,7 @@ public:
               TAO_ORB_Core &orb_core,
               TAO_Object_Adapter *object_adapter);
 
-  virtual ~TAO_RT_POA (void);
+  virtual ~TAO_RT_POA ();
 
   void *thread_pool () const;
 
@@ -204,13 +204,13 @@ protected:
 
   void validate_priority (RTCORBA::Priority priority);
 
-  void validate_policies (void);
+  void validate_policies ();
 
   /// Parse the policy list for RT policies and update our
   /// cached policy instance.
   void parse_rt_policies (TAO_POA_Policy_Set &policies);
 
-  size_t endpoint_count (void);
+  size_t endpoint_count ();
 
   TAO_Stub *create_stub_object (const TAO::ObjectKey &object_key,
                                 const char *type_id,

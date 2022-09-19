@@ -39,7 +39,7 @@ class CompressorIdLevelListPolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-  CompressorIdLevelListPolicy (void);
+  CompressorIdLevelListPolicy ();
 
   /// Constructor.
   CompressorIdLevelListPolicy (const ::Compression::CompressorIdLevelList& val);
@@ -52,11 +52,11 @@ public:
 
   virtual ::Compression::CompressorIdLevelList * compressor_ids ();
 
-  virtual CORBA::PolicyType policy_type (void);
+  virtual CORBA::PolicyType policy_type ();
 
-  virtual CORBA::Policy_ptr copy (void);
+  virtual CORBA::Policy_ptr copy ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
@@ -84,7 +84,7 @@ class CompressionEnablingPolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-  CompressionEnablingPolicy (void);
+  CompressionEnablingPolicy ();
 
   /// Constructor.
   CompressionEnablingPolicy (const ::CORBA::Boolean val);
@@ -96,13 +96,13 @@ public:
   virtual CompressionEnablingPolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
-  virtual ::CORBA::Boolean compression_enabled (void);
+  virtual ::CORBA::Boolean compression_enabled ();
 
-  virtual CORBA::PolicyType policy_type (void);
+  virtual CORBA::PolicyType policy_type ();
 
-  virtual CORBA::Policy_ptr copy (void);
+  virtual CORBA::Policy_ptr copy ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
@@ -140,13 +140,13 @@ public:
   virtual CompressionLowValuePolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
-  virtual ::CORBA::ULong low_value (void);
+  virtual ::CORBA::ULong low_value ();
 
-  virtual CORBA::PolicyType policy_type (void);
+  virtual CORBA::PolicyType policy_type ();
 
-  virtual CORBA::Policy_ptr copy (void);
+  virtual CORBA::Policy_ptr copy ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
@@ -174,13 +174,13 @@ public:
   /// Returns a copy of this CompressionMinRatioPolicy.
   virtual CompressionMinRatioPolicy *clone () const;
 
-  virtual ::Compression::CompressionRatio ratio (void);
+  virtual ::Compression::CompressionRatio ratio ();
 
-  virtual CORBA::PolicyType policy_type (void);
+  virtual CORBA::PolicyType policy_type ();
 
-  virtual CORBA::Policy_ptr copy (void);
+  virtual CORBA::Policy_ptr copy ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 

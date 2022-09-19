@@ -145,19 +145,19 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::init (int argc, ACE_TCHAR *argv[])
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
-IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::IPC_Server (void)
+IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::IPC_Server ()
   : done_handler_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::fini (void)
+IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::fini ()
 {
   return 0;
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
-IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::~IPC_Server (void)
+IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::~IPC_Server ()
 {
 }
 
@@ -176,7 +176,7 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::handle_close (ACE_HANDLE handle,
 // Run the interative service.
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::svc (void)
+IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::svc ()
 {
   ACE_TCHAR buf[BUFSIZ];
 

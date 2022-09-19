@@ -42,7 +42,7 @@ class TAO_Optimized_Connection_Endpoint_Selector;
 class TAO_Strategies_Export TAO_OC_Endpoint_Selector_Loader
 {
 public:
-  static int init(void);
+  static int init();
 };
 
 static int

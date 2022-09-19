@@ -35,7 +35,7 @@ ACE_FoxReactor::ACE_FoxReactor (FXApp* a,
 #endif /* ACE_MT_SAFE */
 }
 
-ACE_FoxReactor::~ACE_FoxReactor (void)
+ACE_FoxReactor::~ACE_FoxReactor ()
 {
 }
 
@@ -232,7 +232,7 @@ ACE_FoxReactor::remove_handler_i (const ACE_Handle_Set &handles,
 // timeout in the Reactor's Timer_Queue.
 
 void
-ACE_FoxReactor::reset_timeout (void)
+ACE_FoxReactor::reset_timeout ()
 {
   ACE_Time_Value *max_wait_time =
     this->timer_queue_->calculate_timeout (0);

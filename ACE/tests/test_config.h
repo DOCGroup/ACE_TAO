@@ -173,15 +173,15 @@ size_t const ACE_MAX_THREADS = 4;
 class Test_Output_Export ACE_Test_Output
 {
 public:
-  ACE_Test_Output (void);
-  ~ACE_Test_Output (void);
-  static ACE_Test_Output *instance (void);
+  ACE_Test_Output ();
+  ~ACE_Test_Output ();
+  static ACE_Test_Output *instance ();
   int set_output (const ACE_TCHAR *filename, int append = 0);
-  OFSTREAM *output_file (void);
-  void close (void);
-  const ACE_TCHAR *dll_name (void);
-  const ACE_TCHAR *name (void);
-  static void close_singleton (void);
+  OFSTREAM *output_file ();
+  void close ();
+  const ACE_TCHAR *dll_name ();
+  const ACE_TCHAR *name ();
+  static void close_singleton ();
 
 private:
   static ACE_Test_Output *instance_;

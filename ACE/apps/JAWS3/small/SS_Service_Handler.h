@@ -27,7 +27,7 @@ class TeraSS_Service_Handler
 //     there is less programming effort.
 {
 public:
-  TeraSS_Service_Handler (void);
+  TeraSS_Service_Handler ();
 
   int open (void *);
 

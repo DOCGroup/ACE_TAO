@@ -16,22 +16,22 @@
 class LifeCycle
 {
 public:
-  LifeCycle (void);
-  ~LifeCycle (void);
+  LifeCycle ();
+  ~LifeCycle ();
 
   void init (int argc,
              ACE_TCHAR *argv[]);
-  void run_test (void);
+  void run_test ();
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
 
 private:
-   void create_ec (void);
-   void create_supplier_admin (void);
-   void create_consumer_admin (void);
-   void destroy_ec (void);
-   void destroy_supplier_admin (void);
-   void destroy_consumer_admin (void);
+   void create_ec ();
+   void create_supplier_admin ();
+   void create_consumer_admin ();
+   void destroy_ec ();
+   void destroy_supplier_admin ();
+   void destroy_consumer_admin ();
 
    CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
    CosNotifyChannelAdmin::EventChannel_var ec_;

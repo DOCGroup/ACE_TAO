@@ -2,7 +2,7 @@
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 
-Notify_Test_Client::Notify_Test_Client (void)
+Notify_Test_Client::Notify_Test_Client ()
 : num_clients_( 0 )
 , done_( false )
 {
@@ -77,7 +77,7 @@ Notify_Test_Client::init_ORB (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Notify_Test_Client::resolve_naming_service (void)
+Notify_Test_Client::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
@@ -91,7 +91,7 @@ Notify_Test_Client::resolve_naming_service (void)
 }
 
 void
-Notify_Test_Client::resolve_Notify_factory (void)
+Notify_Test_Client::resolve_Notify_factory ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -105,7 +105,7 @@ Notify_Test_Client::resolve_Notify_factory (void)
 }
 
 int
-Notify_Test_Client::ORB_run (void)
+Notify_Test_Client::ORB_run ()
 {
   while (! is_done())
   {
@@ -156,26 +156,26 @@ Notify_Test_Client::is_done () const
 }
 
 CORBA::ORB_ptr
-Notify_Test_Client::orb (void)
+Notify_Test_Client::orb ()
 {
   return this->orb_.in ();
 }
 
 
 PortableServer::POA_ptr
-Notify_Test_Client::root_poa (void)
+Notify_Test_Client::root_poa ()
 {
   return this->root_poa_.in ();
 }
 
 CosNaming::NamingContext_ptr
-Notify_Test_Client::naming_context (void)
+Notify_Test_Client::naming_context ()
 {
   return this->naming_context_.in ();
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-Notify_Test_Client::notify_factory (void)
+Notify_Test_Client::notify_factory ()
 {
   return this->notify_factory_.in ();
 }

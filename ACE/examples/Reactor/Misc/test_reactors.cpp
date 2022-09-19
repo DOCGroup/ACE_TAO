@@ -17,8 +17,8 @@ static const int MAX_TASKS = 20;
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Test_Task (void);
-  ~Test_Task (void);
+  Test_Task ();
+  ~Test_Task ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *args = 0);
@@ -43,7 +43,7 @@ static ACE_Atomic_Op<ACE_Thread_Mutex, int> done_count = MAX_TASKS * 2;
 
 static ACE_Recursive_Thread_Mutex reclock_;
 
-Test_Task::Test_Task (void)
+Test_Task::Test_Task ()
   : handled_ (0)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, reclock_);
@@ -54,7 +54,7 @@ Test_Task::Test_Task (void)
               Test_Task::task_count_));
 }
 
-Test_Task::~Test_Task (void)
+Test_Task::~Test_Task ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, reclock_);
 
@@ -83,7 +83,7 @@ Test_Task::close (u_long)
 }
 
 int
-Test_Task::svc (void)
+Test_Task::svc ()
 {
   for (int i = 0; i < NUM_INVOCATIONS; i++)
     {

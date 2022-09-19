@@ -64,7 +64,7 @@ public:
   virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
 
   /// Destroy the log object and all contained records.
-  void destroy (void);
+  void destroy ();
 
 protected:
   /// Destructor.
@@ -72,7 +72,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~TAO_BasicLog_i (void);
+  ~TAO_BasicLog_i ();
 
 private:
   /// POA.

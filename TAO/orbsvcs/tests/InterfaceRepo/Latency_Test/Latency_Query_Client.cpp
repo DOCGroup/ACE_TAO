@@ -8,14 +8,14 @@
 
 const CORBA::ULong DEFAULT_NUMCALLS = 20000;
 
-Latency_Query_Client::Latency_Query_Client (void)
+Latency_Query_Client::Latency_Query_Client ()
   : debug_ (false),
     do_dump_history_ (0),
     iterations_ (DEFAULT_NUMCALLS)
 {
 }
 
-Latency_Query_Client::~Latency_Query_Client (void)
+Latency_Query_Client::~Latency_Query_Client ()
 {
 }
 
@@ -74,7 +74,7 @@ Latency_Query_Client::init (int argc,
 }
 
 int
-Latency_Query_Client::run (void)
+Latency_Query_Client::run ()
 {
 //  CORBA::DefinitionKind dk;
   CORBA::AttributeMode am;
@@ -184,7 +184,7 @@ Latency_Query_Client::parse_args (int argc,
 }
 
 int
-Latency_Query_Client::populate_ifr (void)
+Latency_Query_Client::populate_ifr ()
 {
   CORBA::Contained_var irobj = this->repo_->lookup_id ("IDL:dummy/attr:1.0");
 

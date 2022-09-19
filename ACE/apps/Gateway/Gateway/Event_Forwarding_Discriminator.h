@@ -57,7 +57,7 @@ class Event_Forwarding_Discriminator_Iterator
 public:
   Event_Forwarding_Discriminator_Iterator (Event_Forwarding_Discriminator &mm);
   int next (Consumer_Dispatch_Set *&);
-  int advance (void);
+  int advance ();
 
 private:
   /// Map we are iterating over.

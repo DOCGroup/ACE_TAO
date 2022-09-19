@@ -59,7 +59,7 @@ public:
   ACE_HANDLE get_handle () const;
 
   /// Get the underlying stream.
-  ATM_Stream& get_stream (void);
+  ATM_Stream& get_stream ();
 
   /// Get the name of the connected host.
   char* get_peer_name () const;

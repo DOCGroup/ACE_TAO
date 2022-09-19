@@ -115,7 +115,7 @@ public:
 
   /// Iterates through the entire set of registered objects and
   /// dumps their state.
-  void dump_objects (void);
+  void dump_objects ();
 
   /// Add the tuple <dumper, this_> to the list of registered ACE objects.
   void register_object (const ACE_Dumpable *dumper);
@@ -125,7 +125,7 @@ public:
   void remove_object (const void *this_);
 
   /// Interface to the Singleton instance of the object database.
-  static ACE_ODB *instance (void);
+  static ACE_ODB *instance ();
 
   ACE_ALLOC_HOOK_DECLARE;
 

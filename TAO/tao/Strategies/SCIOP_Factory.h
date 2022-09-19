@@ -53,8 +53,8 @@ public:
   virtual char options_delimiter () const;
 
   // = Check Protocol_Factory.h for a description of these methods.
-  virtual TAO_Acceptor  *make_acceptor (void);
-  virtual TAO_Connector *make_connector  (void);
+  virtual TAO_Acceptor  *make_acceptor ();
+  virtual TAO_Connector *make_connector  ();
   virtual int requires_explicit_endpoint () const;
 };
 

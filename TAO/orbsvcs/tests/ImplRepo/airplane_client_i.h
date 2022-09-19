@@ -29,8 +29,8 @@ class Airplane_Client_i
 {
 public:
   // = Constructor and destructor.
-  Airplane_Client_i (void);
-  ~Airplane_Client_i (void);
+  Airplane_Client_i ();
+  ~Airplane_Client_i ();
 
   /// Execute client example code.
   int run ();
@@ -40,7 +40,7 @@ public:
 
 private:
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// Ask the Paper Airplane Server for <count> planes.
   int get_planes (size_t count);

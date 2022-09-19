@@ -32,13 +32,13 @@ Object_Group_Factory_i::Object_Group_Factory_i (CORBA::ORB_ptr orb,
                       &options));
 }
 
-Object_Group_Factory_i::~Object_Group_Factory_i (void)
+Object_Group_Factory_i::~Object_Group_Factory_i ()
 {
   delete this->mem_pool_;
 }
 
 PortableServer::POA_ptr
-Object_Group_Factory_i::_default_POA (void)
+Object_Group_Factory_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -438,13 +438,13 @@ Object_Group_Factory_i::list_groups (int random)
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::round_robin_groups (void)
+Object_Group_Factory_i::round_robin_groups ()
 {
   return list_groups (0);
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::random_groups (void)
+Object_Group_Factory_i::random_groups ()
 {
   return list_groups (1);
 }
@@ -500,7 +500,7 @@ Object_Group_Factory_i::update_flags (int random)
 }
 
 void
-Object_Group_Factory_i::update_objects (void)
+Object_Group_Factory_i::update_objects ()
 {
   // Create an appropriate servant.
   Object_Group_i * group_servant = 0;
@@ -563,7 +563,7 @@ Object_Group_i::Object_Group_i (const char * id,
 }
 
 
-Object_Group_i::~Object_Group_i (void)
+Object_Group_i::~Object_Group_i ()
 {
   // Need to delete all the items from the member_id_list, to avoid
   // memory leaks.
@@ -579,14 +579,14 @@ Object_Group_i::~Object_Group_i (void)
 
 
 PortableServer::POA_ptr
-Object_Group_i::_default_POA (void)
+Object_Group_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 
 char *
-Object_Group_i::id (void)
+Object_Group_i::id ()
 {
   return CORBA::string_dup (id_.c_str ());
 }
@@ -768,7 +768,7 @@ Object_Group_i::resolve_with_id (const char * id)
 }
 
 Load_Balancer::Member_ID_List *
-Object_Group_i::members (void)
+Object_Group_i::members ()
 {
   Load_Balancer::Member_ID_List * list = 0;
 
@@ -799,7 +799,7 @@ Object_Group_i::members (void)
 }
 
 void
-Object_Group_i::destroy (void)
+Object_Group_i::destroy ()
 {
   // Deregister with POA.
   PortableServer::POA_var poa =
@@ -812,7 +812,7 @@ Object_Group_i::destroy (void)
 }
 
 void
-Object_Group_i::read_from_memory (void)
+Object_Group_i::read_from_memory ()
 {
     // Sanity check needs to be done in all the places
   ACE_CString id = this->id ();
@@ -867,7 +867,7 @@ Random_Object_Group::Random_Object_Group (const char *id,
 }
 
 char *
-Random_Object_Group::resolve (void)
+Random_Object_Group::resolve ()
 {
   this->read_from_memory ();
 
@@ -902,7 +902,7 @@ RR_Object_Group::RR_Object_Group (const char *id,
 }
 
 char *
-RR_Object_Group::resolve (void)
+RR_Object_Group::resolve ()
 {
   char *objref = 0;
 

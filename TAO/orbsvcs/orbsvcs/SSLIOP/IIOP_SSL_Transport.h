@@ -60,7 +60,7 @@ namespace TAO
                         TAO_ORB_Core *orb_core);
 
     /// Default destructor.
-    ~IIOP_SSL_Transport (void);
+    ~IIOP_SSL_Transport ();
 
     /** @name Overridden Template Methods
      *

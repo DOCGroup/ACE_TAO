@@ -134,7 +134,7 @@ public:
                   "Callback method <get_yadda_excep> called:\n"));
     };
 
-  void set_yadda (void)
+  void set_yadda ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));
@@ -268,7 +268,7 @@ Client::Client (A::AMI_Test_ptr server,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

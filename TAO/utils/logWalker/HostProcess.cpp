@@ -19,7 +19,7 @@ HostProcess::HostProcess (const ACE_CString &src, long pid)
 {
 }
 
-HostProcess::~HostProcess (void)
+HostProcess::~HostProcess ()
 {
   for (AddrList::ITERATOR i(this->listen_endpoints_);
        !i.done();

@@ -269,21 +269,21 @@ TAO_DTP_Task::clear_request (TAO::CSD::TP_Request_Handle &r)
 }
 
 void
-TAO_DTP_Task::add_busy (void)
+TAO_DTP_Task::add_busy ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->aw_lock_);
   ++this->busy_threads_;
 }
 
 void
-TAO_DTP_Task::remove_busy (void)
+TAO_DTP_Task::remove_busy ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->aw_lock_);
   --this->busy_threads_;
 }
 
 void
-TAO_DTP_Task::add_active (void)
+TAO_DTP_Task::add_active ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->aw_lock_);
   ++this->active_count_;
@@ -303,7 +303,7 @@ TAO_DTP_Task::remove_active (bool force)
 }
 
 bool
-TAO_DTP_Task::need_active (void)
+TAO_DTP_Task::need_active ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->aw_lock_, false);
   return ((this->busy_threads_ == static_cast<unsigned long> (this->active_count_)) &&
@@ -312,14 +312,14 @@ TAO_DTP_Task::need_active (void)
 }
 
 bool
-TAO_DTP_Task::above_minimum (void)
+TAO_DTP_Task::above_minimum ()
 {
   return this->min_pool_threads_ > 0 &&
     this->active_count_ > this->min_pool_threads_;
 }
 
 int
-TAO_DTP_Task::svc (void)
+TAO_DTP_Task::svc ()
 {
   this->add_busy ();
   if (TAO_debug_level > 4)

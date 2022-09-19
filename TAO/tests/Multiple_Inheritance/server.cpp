@@ -6,7 +6,7 @@
 
 static ACE_TCHAR *ior_output_file = 0;
 
-Multiple_Inheritance_i::Multiple_Inheritance_i (void)
+Multiple_Inheritance_i::Multiple_Inheritance_i ()
 {
   // Sun/CC 5.0 crashes if there is no explicit default
   // constructor

@@ -29,7 +29,7 @@ ACE_FlReactor::ACE_FlReactor (size_t size,
 #endif /* ACE_MT_SAFE */
 }
 
-ACE_FlReactor::~ACE_FlReactor (void)
+ACE_FlReactor::~ACE_FlReactor ()
 {
 }
 
@@ -230,7 +230,7 @@ ACE_FlReactor::remove_handler_i (const ACE_Handle_Set &handles,
 // timeout in the Reactor's Timer_Queue.
 
 void
-ACE_FlReactor::reset_timeout (void)
+ACE_FlReactor::reset_timeout ()
 {
   ACE_Time_Value *max_wait_time =
     this->timer_queue_->calculate_timeout (0);

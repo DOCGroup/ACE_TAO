@@ -59,7 +59,7 @@ public:
   /// Destructor.
     ~Handler (void) {};
 
-  void foo (void)
+  void foo ()
     {
     };
 

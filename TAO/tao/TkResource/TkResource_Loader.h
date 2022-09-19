@@ -43,9 +43,9 @@ namespace TAO
   class TAO_TkResource_Export TkResource_Loader
   {
   public:
-    TkResource_Loader (void);
+    TkResource_Loader ();
 
-    virtual ~TkResource_Loader (void);
+    virtual ~TkResource_Loader ();
   };
 }
 

@@ -45,7 +45,7 @@ public:
   ACE_SOCK_Stream &peer (void) { return this->sock_; }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open (void);
+  int open ();
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Get this handler's I/O handle.
@@ -128,7 +128,7 @@ ClientAcceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 
 // Listing 7 code/ch07
 int
-ClientService::open (void)
+ClientService::open ()
 {
   ACE_TCHAR peer_name[MAXHOSTNAMELEN];
   ACE_INET_Addr peer_addr;

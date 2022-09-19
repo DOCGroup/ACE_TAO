@@ -54,7 +54,7 @@ public:
                          TAO_PG_PropertyManager & property_manager);
 
   /// Destructor.
-  ~TAO_PG_GenericFactory (void);
+  ~TAO_PG_GenericFactory ();
 
   /**
    * @name TAO_LoadBalancer::GenericFactory methods

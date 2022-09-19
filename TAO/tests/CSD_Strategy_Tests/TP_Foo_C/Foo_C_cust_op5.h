@@ -24,7 +24,7 @@ public:
   Foo_C_cust_op5(Foo_C_i* servant);
   virtual ~Foo_C_cust_op5();
 
-  void result(void);
+  void result();
 
 protected:
   virtual void execute_i();

@@ -81,7 +81,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      virtual ~SecurityManager (void);
+      virtual ~SecurityManager ();
 
     private:
       /// The ORB-specific SecurityLevel3::CredentialsCurator

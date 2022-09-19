@@ -910,7 +910,7 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
 #if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
 void
-ACE_Process_Options::inherit_environment (void)
+ACE_Process_Options::inherit_environment ()
 {
   // Ensure only once execution.
   if (environment_inherited_)

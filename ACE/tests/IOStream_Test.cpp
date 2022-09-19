@@ -383,7 +383,7 @@ server (void *arg = 0)
 }
 
 static int
-spawn (void)
+spawn ()
 {
   // Acceptor;
   ACE_SOCK_Acceptor acceptor;

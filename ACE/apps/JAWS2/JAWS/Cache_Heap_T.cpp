@@ -31,7 +31,7 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::JAWS_Cache_Heap (ACE_Allocator *alloc,
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
-JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::~JAWS_Cache_Heap (void)
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::~JAWS_Cache_Heap ()
 {
   if (this->heap_ != 0)
     {
@@ -149,7 +149,7 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> void
-JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove_i (void)
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove_i ()
 {
   /* ASSERT: this->size_ > 0 */
   this->size_--;
@@ -279,7 +279,7 @@ JAWS_Cache_Heap_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id)
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> unsigned int
-JAWS_Cache_Heap_Item<EXT_ID,FACT,H_FN,E_FN>::priority (void)
+JAWS_Cache_Heap_Item<EXT_ID,FACT,H_FN,E_FN>::priority ()
 {
   return this->int_id_->priority ();
 }

@@ -127,7 +127,7 @@ ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
      ));
 }
 
-ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream (void)
+ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream ()
 {
   ACE_TRACE ("ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream");
 
@@ -162,7 +162,7 @@ ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream (void)
 // ************************************************************
 
 int
-ACE_SSL_Asynch_Stream::close (void)
+ACE_SSL_Asynch_Stream::close ()
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
@@ -184,7 +184,7 @@ ACE_SSL_Asynch_Stream::close (void)
 //    cancel
 // ************************************************************
 int
-ACE_SSL_Asynch_Stream::cancel (void)
+ACE_SSL_Asynch_Stream::cancel ()
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
@@ -401,7 +401,7 @@ ACE_SSL_Asynch_Stream::write (ACE_Message_Block & message_block,
 //  Main SSL engine
 // ************************************************************
 int
-ACE_SSL_Asynch_Stream::do_SSL_state_machine (void)
+ACE_SSL_Asynch_Stream::do_SSL_state_machine ()
 {
   // this protected member should be called
   // with locked mutex_
@@ -434,7 +434,7 @@ ACE_SSL_Asynch_Stream::do_SSL_state_machine (void)
 // -1  failure
 // ************************************************************
 int
-ACE_SSL_Asynch_Stream::do_SSL_shutdown (void)
+ACE_SSL_Asynch_Stream::do_SSL_shutdown ()
 {
   if (this->flags_ & SF_SHUTDOWN_DONE) // already done
     return 1;
@@ -485,7 +485,7 @@ ACE_SSL_Asynch_Stream::do_SSL_shutdown (void)
 // -1  failure
 // ************************************************************
 int
-ACE_SSL_Asynch_Stream::do_SSL_handshake (void)
+ACE_SSL_Asynch_Stream::do_SSL_handshake ()
 {
   if (SSL_is_init_finished (this->ssl_))
     {
@@ -550,7 +550,7 @@ ACE_SSL_Asynch_Stream::do_SSL_handshake (void)
 }
 
 bool
-ACE_SSL_Asynch_Stream::post_handshake_check (void)
+ACE_SSL_Asynch_Stream::post_handshake_check ()
 {
   return true;
 }
@@ -559,7 +559,7 @@ ACE_SSL_Asynch_Stream::post_handshake_check (void)
 // Perform SSL_read call if necessary and notify user
 // ************************************************************
 int
-ACE_SSL_Asynch_Stream::do_SSL_read (void)
+ACE_SSL_Asynch_Stream::do_SSL_read ()
 {
   if (this->ext_read_result_ == 0)  // nothing to do
     {
@@ -621,7 +621,7 @@ ACE_SSL_Asynch_Stream::do_SSL_read (void)
 // Perform SSL_write call if necessary  and notify user
 // ************************************************************
 int
-ACE_SSL_Asynch_Stream::do_SSL_write (void)
+ACE_SSL_Asynch_Stream::do_SSL_write ()
 {
   if (this->ext_write_result_ == 0)  // nothing to do
     {
@@ -681,7 +681,7 @@ ACE_SSL_Asynch_Stream::do_SSL_write (void)
 //  2  - unable to notify       NOT NOTIFIED
 // ************************************************************
 int
-ACE_SSL_Asynch_Stream::notify_close (void)
+ACE_SSL_Asynch_Stream::notify_close ()
 {
   if (this->flags_ & SF_CLOSE_NTF_SENT)  // already sent
     return 1;
@@ -1041,7 +1041,7 @@ ACE_SSL_Asynch_Stream::handle_read_stream (
 }
 
 void
-ACE_SSL_Asynch_Stream::handle_wakeup (void)
+ACE_SSL_Asynch_Stream::handle_wakeup ()
 {
   ACE_Handler * user_handler = 0;
 
@@ -1058,7 +1058,7 @@ ACE_SSL_Asynch_Stream::handle_wakeup (void)
 }
 
 int
-ACE_SSL_Asynch_Stream::pending_BIO_count (void)
+ACE_SSL_Asynch_Stream::pending_BIO_count ()
 {
   int ret = 0;
 

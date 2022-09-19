@@ -85,7 +85,7 @@ public:
   TAO_Portable_Group_Map ();
 
   /// Destructor.
-  ~TAO_Portable_Group_Map (void);
+  ~TAO_Portable_Group_Map ();
 
   /// Add a GroupId->ObjectKey mapping to the map.
   /// This function takes ownership of the memory pointed to be group_id

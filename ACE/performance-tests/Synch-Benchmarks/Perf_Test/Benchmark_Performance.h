@@ -18,7 +18,7 @@ class ACE_Svc_Export Benchmark_Performance_Test_Base : public Benchmark_Base
   // = TITLE
   //     This class identifies itself as Benmarking Performance Test class.
 protected:
-  Benchmark_Performance_Test_Base (void);
+  Benchmark_Performance_Test_Base ();
 };
 
 class ACE_Svc_Export Benchmark_Performance : public Benchmark_Performance_Test_Base
@@ -36,7 +36,7 @@ public:
   // = Set/get flag that controls how the tests are shut down
   // gracefully.
   static void done (sig_atomic_t);
-  static sig_atomic_t done (void);
+  static sig_atomic_t done ();
 
 protected:
   static sig_atomic_t done_;

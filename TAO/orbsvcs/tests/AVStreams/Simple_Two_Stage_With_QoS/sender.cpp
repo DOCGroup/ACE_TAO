@@ -56,7 +56,7 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
   return 0;
 }
 
-Sender::Sender (void)
+Sender::Sender ()
   : sender_mmdevice_ (0),
     streamctrl_ (0),
     frame_count_ (0),
@@ -183,7 +183,7 @@ Sender::fill_qos (AVStreams::streamQoS &qos)
 
 // Method to get the object reference of the receiver
 int
-Sender::bind_to_receiver (void)
+Sender::bind_to_receiver ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -340,7 +340,7 @@ Sender::init (int argc,
 
 // Method to send data at the specified rate
 int
-Sender::pace_data (void)
+Sender::pace_data ()
 {
   // The time between two consecutive frames.
   inter_frame_time.set (1.0 / this->frame_rate_);

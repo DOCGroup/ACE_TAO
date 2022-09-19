@@ -78,7 +78,7 @@ public:
    * Prepare to exit.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int fini (void);
+  int fini ();
 
   int idle(int & result);
 
@@ -103,7 +103,7 @@ public:
   // CORBA interface
   // See IDL for documentation
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /////////////////////////////////////////
   // CORBA interface GenericFactory methods
@@ -120,7 +120,7 @@ public:
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods
 
-  virtual CORBA::Boolean is_alive (void);
+  virtual CORBA::Boolean is_alive ();
 
   /////////////////////////
   // Implementation methods

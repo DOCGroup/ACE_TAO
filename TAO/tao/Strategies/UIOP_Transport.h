@@ -53,7 +53,7 @@ public:
                       TAO_ORB_Core *orb_core);
 
   /// Default destructor.
-  ~TAO_UIOP_Transport (void);
+  ~TAO_UIOP_Transport ();
 
 protected:
   /** @name Overridden Template Methods
@@ -61,8 +61,8 @@ protected:
    * These are implementations of template methods declared by TAO_Transport.
    */
   //@{
-  virtual ACE_Event_Handler * event_handler_i (void);
-  virtual TAO_Connection_Handler *connection_handler_i (void);
+  virtual ACE_Event_Handler * event_handler_i ();
+  virtual TAO_Connection_Handler *connection_handler_i ();
 
   /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send (iovec *iov, int iovcnt,

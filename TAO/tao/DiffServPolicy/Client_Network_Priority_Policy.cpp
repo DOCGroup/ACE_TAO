@@ -4,7 +4,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Client_Network_Priority_Policy::TAO_Client_Network_Priority_Policy (void)
+TAO_Client_Network_Priority_Policy::TAO_Client_Network_Priority_Policy ()
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , TAO::NetworkPriorityPolicy ()
@@ -58,7 +58,7 @@ TAO_Client_Network_Priority_Policy::create (const CORBA::Any &)
 }
 
 CORBA::PolicyType
-TAO_Client_Network_Priority_Policy::policy_type (void)
+TAO_Client_Network_Priority_Policy::policy_type ()
 {
   return TAO::CLIENT_NETWORK_PRIORITY_TYPE;
 }
@@ -74,7 +74,7 @@ TAO_Client_Network_Priority_Policy::clone () const
 }
 
 TAO::DiffservCodepoint
-TAO_Client_Network_Priority_Policy::request_diffserv_codepoint (void)
+TAO_Client_Network_Priority_Policy::request_diffserv_codepoint ()
 {
   return this->request_diffserv_codepoint_;
 }
@@ -87,7 +87,7 @@ TAO_Client_Network_Priority_Policy::request_diffserv_codepoint (
 }
 
 TAO::DiffservCodepoint
-TAO_Client_Network_Priority_Policy::reply_diffserv_codepoint (void)
+TAO_Client_Network_Priority_Policy::reply_diffserv_codepoint ()
 {
   return this->reply_diffserv_codepoint_;
 }
@@ -100,7 +100,7 @@ TAO_Client_Network_Priority_Policy::reply_diffserv_codepoint (
 }
 
 TAO::NetworkPriorityModel
-TAO_Client_Network_Priority_Policy::network_priority_model (void)
+TAO_Client_Network_Priority_Policy::network_priority_model ()
 {
   return this->network_priority_model_;
 }
@@ -113,7 +113,7 @@ TAO_Client_Network_Priority_Policy::network_priority_model (
 }
 
 CORBA::Policy_ptr
-TAO_Client_Network_Priority_Policy::copy (void)
+TAO_Client_Network_Priority_Policy::copy ()
 {
   TAO_Client_Network_Priority_Policy* servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -124,7 +124,7 @@ TAO_Client_Network_Priority_Policy::copy (void)
 }
 
 void
-TAO_Client_Network_Priority_Policy::destroy (void)
+TAO_Client_Network_Priority_Policy::destroy ()
 {
 }
 

@@ -47,7 +47,7 @@ public:
   // Codes to distinguish marshaled events in persistent storage
   enum {MARSHAL_ANY=1,MARSHAL_STRUCTURED=2};
   /// Constructor
-  TAO_Notify_Event (void);
+  TAO_Notify_Event ();
 
   /// Destructor
   virtual ~TAO_Notify_Event ();
@@ -122,7 +122,7 @@ private:
   /// Return a pointer to a copy of this event on the heap
   virtual TAO_Notify_Event* copy () const = 0;
 
-  virtual void release (void);
+  virtual void release ();
 
   mutable Ptr clone_;
   bool        is_on_heap_;

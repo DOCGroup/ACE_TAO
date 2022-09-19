@@ -65,7 +65,7 @@ Consumer_Router::close (u_long)
 // Handle incoming messages in a separate thread..
 
 int
-Consumer_Router::svc (void)
+Consumer_Router::svc ()
 {
   ACE_Message_Block *mb = 0;
 

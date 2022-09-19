@@ -27,7 +27,7 @@ TAO_DTP_Thread_Lane_Resources_Manager::TAO_DTP_Thread_Lane_Resources_Manager
            TAO_DTP_Thread_Pool_Manager (orb_core));
 }
 
-TAO_DTP_Thread_Lane_Resources_Manager::~TAO_DTP_Thread_Lane_Resources_Manager (void)
+TAO_DTP_Thread_Lane_Resources_Manager::~TAO_DTP_Thread_Lane_Resources_Manager ()
 {
   // Delete the default resources.
   delete this->default_lane_resources_;
@@ -37,7 +37,7 @@ TAO_DTP_Thread_Lane_Resources_Manager::~TAO_DTP_Thread_Lane_Resources_Manager (v
 }
 
 int
-TAO_DTP_Thread_Lane_Resources_Manager::open_default_resources (void)
+TAO_DTP_Thread_Lane_Resources_Manager::open_default_resources ()
 {
   TAO_ORB_Parameters *params =
     this->orb_core_->orb_params ();
@@ -56,14 +56,14 @@ TAO_DTP_Thread_Lane_Resources_Manager::open_default_resources (void)
 }
 
 void
-TAO_DTP_Thread_Lane_Resources_Manager::finalize (void)
+TAO_DTP_Thread_Lane_Resources_Manager::finalize ()
 {
   // Finalize default resources.
   this->default_lane_resources_->finalize ();
 }
 
 void
-TAO_DTP_Thread_Lane_Resources_Manager::shutdown_reactor (void)
+TAO_DTP_Thread_Lane_Resources_Manager::shutdown_reactor ()
 {
   // Shutdown default reactors.
   this->default_lane_resources_->shutdown_reactor ();
@@ -71,7 +71,7 @@ TAO_DTP_Thread_Lane_Resources_Manager::shutdown_reactor (void)
 }
 
 void
-TAO_DTP_Thread_Lane_Resources_Manager::close_all_transports (void)
+TAO_DTP_Thread_Lane_Resources_Manager::close_all_transports ()
 {
   // Shutdown default reactors.
   this->default_lane_resources_->close_all_transports ();
@@ -84,19 +84,19 @@ TAO_DTP_Thread_Lane_Resources_Manager::is_collocated (const TAO_MProfile &mprofi
 }
 
 TAO_Thread_Lane_Resources &
-TAO_DTP_Thread_Lane_Resources_Manager::lane_resources (void)
+TAO_DTP_Thread_Lane_Resources_Manager::lane_resources ()
 {
     return *this->default_lane_resources_;
 }
 
 TAO_Thread_Lane_Resources &
-TAO_DTP_Thread_Lane_Resources_Manager::default_lane_resources (void)
+TAO_DTP_Thread_Lane_Resources_Manager::default_lane_resources ()
 {
   return *this->default_lane_resources_;
 }
 
 TAO_DTP_Thread_Pool_Manager &
-TAO_DTP_Thread_Lane_Resources_Manager::tp_manager (void)
+TAO_DTP_Thread_Lane_Resources_Manager::tp_manager ()
 {
   return *this->tp_manager_;
 }

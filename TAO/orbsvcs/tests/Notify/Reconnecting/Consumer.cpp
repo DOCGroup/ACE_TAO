@@ -679,7 +679,7 @@ ReconnectionCallback_i::reconnect (CORBA::Object_ptr reconnection)
 }
 
 CORBA::Boolean
-ReconnectionCallback_i::is_alive (void)
+ReconnectionCallback_i::is_alive ()
 {
   return true;
 }
@@ -694,7 +694,7 @@ ReconnectionCallback_i::~ReconnectionCallback_i ()
 
 
 void
-ReconnectionCallback_i::fini (void)
+ReconnectionCallback_i::fini ()
 {
   if (this->id_is_valid_)
   {
@@ -1108,7 +1108,7 @@ Consumer_Main::reconnect (
 
 
 int
-Consumer_Main::resolve_naming_service (void)
+Consumer_Main::resolve_naming_service ()
 {
   // ignore redundant calls
   if (CORBA::is_nil (this->naming_context_.in ()))
@@ -1124,7 +1124,7 @@ Consumer_Main::resolve_naming_service (void)
 }
 
 int
-Consumer_Main::find_notify_factory (void)
+Consumer_Main::find_notify_factory ()
 {
   int status = this->resolve_naming_service ();
   if (status)
@@ -1143,7 +1143,7 @@ Consumer_Main::find_notify_factory (void)
 }
 
 int
-Consumer_Main::resolve_notify_factory (void)
+Consumer_Main::resolve_notify_factory ()
 {
   CORBA::Object_var factory_obj =
     this->orb_->resolve_initial_references (NOTIFY_FACTORY_NAME);
@@ -1155,7 +1155,7 @@ Consumer_Main::resolve_notify_factory (void)
 }
 
 void
-Consumer_Main::init_event_channel (void)
+Consumer_Main::init_event_channel ()
 {
   bool ok = false;
   if (this->reconnecting_)
@@ -1275,7 +1275,7 @@ Consumer_Main::init_event_channel (void)
 CosNotifyChannelAdmin::AdminID default_admin_id = static_cast<CosNotifyChannelAdmin::AdminID>(-1);
 
 void
-Consumer_Main::init_consumer_admin (void)
+Consumer_Main::init_consumer_admin ()
 {
   bool ok = false;
   if (this->reconnecting_)
@@ -1388,7 +1388,7 @@ Consumer_Main::init_consumer_admin (void)
   }
 }
 void
-Consumer_Main::init_structured_proxy_supplier (void)
+Consumer_Main::init_structured_proxy_supplier ()
 {
   bool ok = false;
   CosNotifyChannelAdmin::ProxySupplier_var proxy;
@@ -1478,7 +1478,7 @@ Consumer_Main::init_structured_proxy_supplier (void)
 }
 
 void
-Consumer_Main::init_sequence_proxy_supplier (void)
+Consumer_Main::init_sequence_proxy_supplier ()
 {
   bool ok = false;
   CosNotifyChannelAdmin::ProxySupplier_var proxy;
@@ -1580,7 +1580,7 @@ Consumer_Main::set_proxy_qos (CosNotifyChannelAdmin::ProxySupplier_ptr proxy)
 }
 
 void
-Consumer_Main::init_any_proxy_supplier (void)
+Consumer_Main::init_any_proxy_supplier ()
 {
   bool ok = false;
   CosNotifyChannelAdmin::ProxySupplier_var proxy;
@@ -1676,7 +1676,7 @@ Consumer_Main::init_any_proxy_supplier (void)
   this->any_push_consumer_.set_connected(true);
 }
 
-int Consumer_Main::fini (void)
+int Consumer_Main::fini ()
 {
   this->reconnection_callback_.fini ();
 
@@ -1711,7 +1711,7 @@ int Consumer_Main::fini (void)
 }
 
 
-int Consumer_Main::run (void)
+int Consumer_Main::run ()
 {
   int result = 0;
 

@@ -32,10 +32,10 @@ public:
 
   //Initialization and termination methods.
   /// constructor.
-  Fill_ACE_QoS (void);
+  Fill_ACE_QoS ();
 
   /// destructor.
-  ~Fill_ACE_QoS (void);
+  ~Fill_ACE_QoS ();
 
   /// To be used by receivers. Fills the receiver qos and sets the
   /// sender qos to NO_TRAFFIC.
@@ -54,7 +54,7 @@ public:
                        const ACE_CString &send_flow_name);
 
   /// Returns the hash map of flowspecs indexed by flowspec name.
-  FLOW_SPEC_HASH_MAP& map (void);
+  FLOW_SPEC_HASH_MAP& map ();
 
 private:
   // The Service Provider is currently set to NULL for all ACE_QoS.

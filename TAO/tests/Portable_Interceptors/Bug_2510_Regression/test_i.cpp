@@ -49,7 +49,7 @@ Visual_i::normal (CORBA::Long arg)
 }
 
 void
-Visual_i::shutdown (void)
+Visual_i::shutdown ()
 {
   this->orb_->shutdown (false);
 }

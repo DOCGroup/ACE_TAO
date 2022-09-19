@@ -27,8 +27,8 @@ protected:
   virtual int decode (char *packet, int &total_bytes);
 
 public:
-  PMC_All (void);
-  virtual void process (void);
+  PMC_All ();
+  virtual void process ();
 };
 
 #endif /* _PMC_ALL_H */

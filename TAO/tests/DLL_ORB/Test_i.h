@@ -27,14 +27,14 @@ class Test_i : public virtual POA_Test
 {
 public:
   /// Constructor.
-  Test_i (void);
+  Test_i ();
 
   /// Simple two-way operation used to excercise the ORB transport
   /// internals.
-  virtual void invoke_me (void);
+  virtual void invoke_me ();
 
   /// Shutdown the ORB.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Set the ORB to be shutdown by the shutdown() method in this
   /// class.

@@ -13,7 +13,7 @@ class Reply_Handler
     }
 
    virtual void
-   childMethod (void)
+   childMethod ()
     {
     }
 
@@ -32,7 +32,7 @@ class Reply_Handler
     }
 
    virtual void
-   parentMethod (void)
+   parentMethod ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "client: parentMethod reply %d @ %T\n",

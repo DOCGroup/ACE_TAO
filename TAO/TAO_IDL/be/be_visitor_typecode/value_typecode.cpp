@@ -157,12 +157,12 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 
       ACE_ASSERT (base_type);
 
-      os << "std::addressof(" << base_type->tc_name () << ")," << be_nl;
+      os << "&" << base_type->tc_name () << "," << be_nl;
     }
   else
     {
       // No concrete base.
-      os << "std::addressof(::CORBA::_tc_null)," << be_nl;
+      os << "&::CORBA::_tc_null," << be_nl;
     }
 
   // Fields
@@ -279,7 +279,7 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
 
       os << "{ "
          << "\"" << member_decl->original_local_name () << "\", "
-         << "std::addressof("  << member_type->tc_name () << "), ";
+         << "&"  << member_type->tc_name () << ", ";
 
       switch (vis)
         {

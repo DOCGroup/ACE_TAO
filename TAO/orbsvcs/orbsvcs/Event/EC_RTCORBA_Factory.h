@@ -41,7 +41,7 @@ public:
                           const RTCORBA::ThreadpoolLanes &lanes);
 
   /// destructor...
-  virtual ~TAO_EC_RTCORBA_Factory (void);
+  virtual ~TAO_EC_RTCORBA_Factory ();
 
   // Decorated methods...
   virtual int init (int argc, ACE_TCHAR* argv[]);

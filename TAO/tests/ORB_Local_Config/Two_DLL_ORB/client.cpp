@@ -17,7 +17,7 @@ Client_Worker::kind () const
   return ACE_TEXT ("Client");
 }
 
-Client_Worker::~Client_Worker (void)
+Client_Worker::~Client_Worker ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) %@ Client::<dtor>\n", this));
 }

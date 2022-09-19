@@ -93,7 +93,7 @@ TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
 }
 
 int
-TAO_BiDirGIOP_Loader::Initializer (void)
+TAO_BiDirGIOP_Loader::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_BiDirGIOP_Loader);
 }

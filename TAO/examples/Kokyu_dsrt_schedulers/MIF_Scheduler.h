@@ -43,13 +43,13 @@ public MIF_Scheduling::SchedulingParameterPolicy,
      MIF_Sched_Param_Policy ();
      MIF_Sched_Param_Policy (const MIF_Sched_Param_Policy &rhs);
 
-    MIF_Scheduling::SchedulingParameter value (void);
+    MIF_Scheduling::SchedulingParameter value ();
 
     void value (const MIF_Scheduling::SchedulingParameter & value);
 
      virtual CORBA::Policy_ptr copy ();
 
-     virtual CORBA::PolicyType policy_type (void);
+     virtual CORBA::PolicyType policy_type ();
 
      virtual void destroy ();
 
@@ -67,13 +67,13 @@ public ::CORBA::LocalObject
                  int ace_sched_policy,
                  int ace_sched_scope);
 
-  ~MIF_Scheduler (void);
+  ~MIF_Scheduler ();
 
 
   virtual MIF_Scheduling::SchedulingParameterPolicy_ptr
     create_scheduling_parameter (const MIF_Scheduling::SchedulingParameter & value);
 
-  void shutdown (void);
+  void shutdown ();
 
   virtual void begin_new_scheduling_segment (const RTScheduling::Current::IdType & guid,
                                              const char * name,
@@ -121,13 +121,13 @@ public ::CORBA::LocalObject
 
   virtual void cancel (const RTScheduling::Current::IdType & guid);
 
-  virtual CORBA::PolicyList * scheduling_policies (void);
+  virtual CORBA::PolicyList * scheduling_policies ();
 
   virtual void scheduling_policies (const CORBA::PolicyList & scheduling_policies);
 
-  virtual CORBA::PolicyList * poa_policies (void);
+  virtual CORBA::PolicyList * poa_policies ();
 
-  virtual char * scheduling_discipline_name (void);
+  virtual char * scheduling_discipline_name ();
 
   virtual RTScheduling::ResourceManager_ptr create_resource_manager (const char * name,
                                                                      CORBA::Policy_ptr scheduling_parameter);

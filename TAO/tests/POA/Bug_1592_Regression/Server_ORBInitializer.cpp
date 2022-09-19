@@ -2,7 +2,7 @@
 #include "tao/ORB_Constants.h"
 #include "Server_Request_Interceptor.h"
 
-Server_ORBInitializer::Server_ORBInitializer (void)
+Server_ORBInitializer::Server_ORBInitializer ()
 {
 }
 

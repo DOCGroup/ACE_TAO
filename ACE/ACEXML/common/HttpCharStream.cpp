@@ -19,7 +19,7 @@ static const int HDST_CR = 13;
 static const int HDST_CRLF = 14;
 static const int HDST_CRLFCR = 15;
 
-ACEXML_HttpCharStream::ACEXML_HttpCharStream (void)
+ACEXML_HttpCharStream::ACEXML_HttpCharStream ()
   : url_(0),
     url_addr_(0),
     stream_(0),
@@ -30,7 +30,7 @@ ACEXML_HttpCharStream::ACEXML_HttpCharStream (void)
 {
 }
 
-ACEXML_HttpCharStream::~ACEXML_HttpCharStream (void)
+ACEXML_HttpCharStream::~ACEXML_HttpCharStream ()
 {
   this->close ();
 }
@@ -269,7 +269,7 @@ ACEXML_HttpCharStream::get_url (size_t& len)
 
 
 int
-ACEXML_HttpCharStream::send_request (void)
+ACEXML_HttpCharStream::send_request ()
 {
   char* path = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (this->url_addr_->get_path_name()));
   ACE_Auto_Basic_Array_Ptr<char> path_ptr (path);
@@ -301,7 +301,7 @@ ACEXML_HttpCharStream::send_request (void)
 
 
 int
-ACEXML_HttpCharStream::available (void)
+ACEXML_HttpCharStream::available ()
 {
   if (this->stream_ == 0)
     return -1;
@@ -309,7 +309,7 @@ ACEXML_HttpCharStream::available (void)
 }
 
 int
-ACEXML_HttpCharStream::close (void)
+ACEXML_HttpCharStream::close ()
 {
   delete[] this->url_;
   this->url_ = 0;
@@ -333,7 +333,7 @@ ACEXML_HttpCharStream::close (void)
 }
 
 int
-ACEXML_HttpCharStream::determine_encoding (void)
+ACEXML_HttpCharStream::determine_encoding ()
 {
   if (this->stream_ == 0)
     return -1;
@@ -377,7 +377,7 @@ ACEXML_HttpCharStream::determine_encoding (void)
 }
 
 void
-ACEXML_HttpCharStream::rewind (void)
+ACEXML_HttpCharStream::rewind ()
 {
   if (this->stream_ == 0)
     return;
@@ -390,13 +390,13 @@ ACEXML_HttpCharStream::rewind (void)
 }
 
 const ACEXML_Char*
-ACEXML_HttpCharStream::getEncoding (void)
+ACEXML_HttpCharStream::getEncoding ()
 {
   return this->encoding_;
 }
 
 const ACEXML_Char*
-ACEXML_HttpCharStream::getSystemId (void)
+ACEXML_HttpCharStream::getSystemId ()
 {
   return this->url_;
 }
@@ -431,7 +431,7 @@ ACEXML_HttpCharStream::get (ACEXML_Char& ch)
 }
 
 int
-ACEXML_HttpCharStream::peek (void)
+ACEXML_HttpCharStream::peek ()
 {
   if (this->stream_ == 0)
     return -1;
@@ -469,7 +469,7 @@ ACEXML_HttpCharStream::get_i (ACEXML_Char& ch)
 }
 
 int
-ACEXML_HttpCharStream::peek_i (void)
+ACEXML_HttpCharStream::peek_i ()
 {
   // If we are reading a UTF-8 encoded file, just use the plain unget.
   if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)

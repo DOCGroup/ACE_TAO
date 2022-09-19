@@ -61,7 +61,7 @@ RedGreen_Test::parse_args (int argc,
   return 0;
 }
 
-RedGreen_Test::RedGreen_Test (void)
+RedGreen_Test::RedGreen_Test ()
   : burst_size_ (10),
     nthreads_ (2)
 {
@@ -117,7 +117,7 @@ RedGreen_Test::init (int argc,
 }
 
 void
-RedGreen_Test::run (void)
+RedGreen_Test::run ()
 {
   try
   {
@@ -142,7 +142,7 @@ RedGreen_Test::run (void)
 }
 
 void
-RedGreen_Test::done (void)
+RedGreen_Test::done ()
 {
   dump_results ();
   worker_.done ();
@@ -181,7 +181,7 @@ RedGreen_Test::init_ORB (int argc, ACE_TCHAR *argv [])
 }
 
 void
-RedGreen_Test::resolve_naming_service (void)
+RedGreen_Test::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
@@ -197,7 +197,7 @@ RedGreen_Test::resolve_naming_service (void)
 }
 
 void
-RedGreen_Test::resolve_Notify_factory (void)
+RedGreen_Test::resolve_Notify_factory ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -213,7 +213,7 @@ RedGreen_Test::resolve_Notify_factory (void)
 }
 
 void
-RedGreen_Test::create_EC (void)
+RedGreen_Test::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -225,7 +225,7 @@ RedGreen_Test::create_EC (void)
 }
 
 void
-RedGreen_Test::create_supplieradmin (void)
+RedGreen_Test::create_supplieradmin ()
 {
   CosNotifyChannelAdmin::AdminID adminid;
 
@@ -237,7 +237,7 @@ RedGreen_Test::create_supplieradmin (void)
 }
 
 void
-RedGreen_Test::create_consumeradmin (void)
+RedGreen_Test::create_consumeradmin ()
 {
   CosNotifyChannelAdmin::AdminID adminid;
 
@@ -249,7 +249,7 @@ RedGreen_Test::create_consumeradmin (void)
 }
 
 void
-RedGreen_Test::create_consumers (void)
+RedGreen_Test::create_consumers ()
 {
   ACE_NEW (this->normal_consumer_,
            RedGreen_Test_StructuredPushConsumer (this));
@@ -261,7 +261,7 @@ RedGreen_Test::create_consumers (void)
 }
 
 void
-RedGreen_Test::create_suppliers (void)
+RedGreen_Test::create_suppliers ()
 {
   ACE_NEW (this->supplier_,
            RedGreen_Test_StructuredPushSupplier ());
@@ -269,7 +269,7 @@ RedGreen_Test::create_suppliers (void)
 }
 
 void
-RedGreen_Test::send_events (void)
+RedGreen_Test::send_events ()
 {
   // Setup the Consumer 1 to receive
   //event_type : "DOMAIN_GREEN", "DOMAIN_GREEN".
@@ -337,7 +337,7 @@ RedGreen_Test::send_events (void)
 
 
 void
-RedGreen_Test::dump_results (void)
+RedGreen_Test::dump_results ()
 {
   ACE_Throughput_Stats throughput;
   ACE_High_Res_Timer::global_scale_factor_type gsf =
@@ -437,7 +437,7 @@ RedGreen_Test_StructuredPushConsumer::connect (
 }
 
 void
-RedGreen_Test_StructuredPushConsumer::disconnect (void)
+RedGreen_Test_StructuredPushConsumer::disconnect ()
 {
   this->proxy_supplier_->
     disconnect_structured_push_supplier ();
@@ -505,7 +505,7 @@ RedGreen_Test_StructuredPushConsumer::disconnect_structured_push_consumer (
 }
 
 CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr
-RedGreen_Test_StructuredPushConsumer::get_proxy_supplier (void)
+RedGreen_Test_StructuredPushConsumer::get_proxy_supplier ()
 {
   return this->proxy_supplier_.in ();
 }
@@ -587,7 +587,7 @@ RedGreen_Test_StructuredPushSupplier::connect (
 }
 
 void
-RedGreen_Test_StructuredPushSupplier::disconnect (void)
+RedGreen_Test_StructuredPushSupplier::disconnect ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
@@ -637,7 +637,7 @@ RedGreen_Test_StructuredPushSupplier::disconnect_structured_push_supplier (
 
 //*****************************************************************
 
-Worker::Worker (void)
+Worker::Worker ()
 {
 }
 
@@ -648,13 +648,13 @@ Worker::orb (CORBA::ORB_ptr orb)
 }
 
 void
-Worker::done (void)
+Worker::done ()
 {
   consumer_is_done = true;
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
   {

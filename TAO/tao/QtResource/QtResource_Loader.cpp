@@ -16,7 +16,7 @@ namespace TAO
     TAO_ORB_Core::set_gui_resource_factory (tmp);
   }
 
-  QtResource_Loader::~QtResource_Loader (void)
+  QtResource_Loader::~QtResource_Loader ()
   {
   }
 }

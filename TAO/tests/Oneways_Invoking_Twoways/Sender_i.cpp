@@ -8,7 +8,7 @@ Sender_i::Sender_i (CORBA::ORB_ptr orb,
 {
 }
 
-Sender_i::~Sender_i (void)
+Sender_i::~Sender_i ()
 {
 }
 
@@ -45,7 +45,7 @@ Sender_i::ping ( /**/)
 }
 
 void
-Sender_i::shutdown (void)
+Sender_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) About to invoke shutdown...\n"));

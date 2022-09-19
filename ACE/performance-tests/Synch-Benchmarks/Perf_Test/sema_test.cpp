@@ -17,7 +17,7 @@ private:
 ACE_Semaphore Sema_Test::sema (1);
 
 int
-Sema_Test::svc (void)
+Sema_Test::svc ()
 {
   int ni      = this->thr_id ();
   synch_count = 2;

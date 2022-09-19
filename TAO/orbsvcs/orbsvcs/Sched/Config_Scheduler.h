@@ -33,8 +33,8 @@ class TAO_RTSched_Export ACE_Config_Scheduler
   //   distributed with the EC.
 {
 public:
-  ACE_Config_Scheduler (void);
-  virtual ~ACE_Config_Scheduler (void);
+  ACE_Config_Scheduler ();
+  virtual ~ACE_Config_Scheduler ();
 
   virtual RtecScheduler::handle_t create (const char * entry_point);
 
@@ -81,7 +81,7 @@ public:
   // provide the thread priority and queue type for the given priority level
 
   virtual RtecScheduler::Preemption_Priority_t
-      last_scheduled_priority (void);
+      last_scheduled_priority ();
   // Returns the last priority number assigned to an operation in the
   // schedule.
   // The number returned is one less than the total number of

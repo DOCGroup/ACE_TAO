@@ -15,19 +15,19 @@ Basic::Basic (CORBA::Object_ptr object_group,
 }
 
 CORBA::Short
-Basic::number (void)
+Basic::number ()
 {
   return this->number_;
 }
 
 char *
-Basic::get_string (void)
+Basic::get_string ()
 {
   return CORBA::string_dup (this->location_);
 }
 
 void
-Basic::remove_member (void)
+Basic::remove_member ()
 {
   try
     {
@@ -58,7 +58,7 @@ Basic::remove_member (void)
 }
 
 void
-Basic::shutdown (void)
+Basic::shutdown ()
 {
   this->orb_->shutdown (false);
 }

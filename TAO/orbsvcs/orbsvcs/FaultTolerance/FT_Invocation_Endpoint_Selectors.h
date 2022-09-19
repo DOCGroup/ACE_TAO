@@ -46,10 +46,10 @@ class TAO_FT_ClientORB_Export TAO_FT_Invocation_Endpoint_Selector :
 {
 public:
   /// Constructor.
-  TAO_FT_Invocation_Endpoint_Selector (void);
+  TAO_FT_Invocation_Endpoint_Selector ();
 
   /// Destructor.
-  virtual ~TAO_FT_Invocation_Endpoint_Selector (void);
+  virtual ~TAO_FT_Invocation_Endpoint_Selector ();
 
   /// Implementation for FT. Please refer to
   /// $TAO_ROOT/tao/Invocation_Endpoint_Selectors.h  for details of

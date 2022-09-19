@@ -24,7 +24,7 @@ public:
                 CORBA::ULong request_pass_count);
 
   /// Return the number assigned to this object.
-  virtual CORBA::Short collocated_call (void);
+  virtual CORBA::Short collocated_call ();
 
 private:
   /// Id of this instance.

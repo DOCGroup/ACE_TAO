@@ -38,7 +38,7 @@ namespace TAO
     Any_Array_Impl_T (_tao_destructor destructor,
                       CORBA::TypeCode_ptr,
                       T_slice * const);
-    virtual ~Any_Array_Impl_T (void);
+    virtual ~Any_Array_Impl_T ();
 
     static void insert (CORBA::Any &,
                         _tao_destructor destructor,

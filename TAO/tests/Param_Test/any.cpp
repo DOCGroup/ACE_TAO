@@ -20,14 +20,14 @@
 
 size_t Test_Any::counter = 0;
 
-Test_Any::Test_Any (void)
+Test_Any::Test_Any ()
   : opname_ (CORBA::string_dup ("test_any")),
     out_ (new CORBA::Any),
     ret_ (new CORBA::Any)
 {
 }
 
-Test_Any::~Test_Any (void)
+Test_Any::~Test_Any ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -99,7 +99,7 @@ Test_Any::init_parameters (Param_Test_ptr objref)
 }
 
 int
-Test_Any::reset_parameters (void)
+Test_Any::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
   CORBA::ULong index = (counter++ % Test_Any::ANY_LAST_TEST_ITEM);
@@ -273,7 +273,7 @@ Test_Any::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Any::check_validity (void)
+Test_Any::check_validity ()
 {
   CORBA::Short short_in, short_inout, short_out, short_ret;
   const char *str_in;
@@ -462,6 +462,6 @@ Test_Any::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Any::print_values (void)
+Test_Any::print_values ()
 {
 }

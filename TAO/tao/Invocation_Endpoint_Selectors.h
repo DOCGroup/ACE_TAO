@@ -59,7 +59,7 @@ class TAO_Export TAO_Invocation_Endpoint_Selector
 {
 public:
   /// Destructor.
-  virtual ~TAO_Invocation_Endpoint_Selector (void);
+  virtual ~TAO_Invocation_Endpoint_Selector ();
 
   /// Select the endpoint and set @a r's @c profile_
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
@@ -85,7 +85,7 @@ class TAO_Export TAO_Default_Endpoint_Selector
 {
 public:
   /// Destructor.
-  virtual ~TAO_Default_Endpoint_Selector (void);
+  virtual ~TAO_Default_Endpoint_Selector ();
 
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
                                 ACE_Time_Value *val);

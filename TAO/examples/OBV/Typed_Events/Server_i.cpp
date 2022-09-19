@@ -128,7 +128,7 @@ Checkpoint_i::put_event (Event *event)
 
 
 Event_List *
-Checkpoint_i::get_critical_events (void)
+Checkpoint_i::get_critical_events ()
 {
   // The skeleton should not steal our list by decrementing
   // the reference counter.
@@ -144,7 +144,7 @@ Checkpoint_i::get_critical_events (void)
 // Shutdown the server application.
 
 void
-Checkpoint_i::shutdown (void)
+Checkpoint_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nThe Checkpoint server is shutting down\n"));
@@ -156,12 +156,12 @@ Checkpoint_i::shutdown (void)
 
 // Constructor.
 
-Checkpoint_i::Checkpoint_i (void)
+Checkpoint_i::Checkpoint_i ()
 {
 }
 
 // Destructor.
 
-Checkpoint_i::~Checkpoint_i (void)
+Checkpoint_i::~Checkpoint_i ()
 {
 }

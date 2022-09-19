@@ -24,7 +24,7 @@ public:
   virtual void test_method (Test::Timestamp send_time);
   virtual void test_method_excep (::Messaging::ExceptionHolder *holder);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
   virtual void shutdown_excep (::Messaging::ExceptionHolder *holder);
 
 private:

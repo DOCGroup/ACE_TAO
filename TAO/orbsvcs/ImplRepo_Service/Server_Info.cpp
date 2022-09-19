@@ -1,6 +1,6 @@
 #include "Server_Info.h"
 
-Server_Info::Server_Info (void)
+Server_Info::Server_Info ()
 {
   this->clear ();
 }
@@ -99,7 +99,7 @@ Server_Info::Server_Info (const ACE_CString& serverId,
 }
 
 Server_Info *
-Server_Info::active_info (void)
+Server_Info::active_info ()
 {
   return this->alt_info_.null() ? this : this->alt_info_.get();
 }
@@ -152,7 +152,7 @@ Server_Info::is_running () const
 }
 
 bool
-Server_Info::start_allowed (void)
+Server_Info::start_allowed ()
 {
   Server_Info *active = this->active_info ();
   bool allowed = active->start_count_ < active->start_limit_;
@@ -277,7 +277,7 @@ Server_Info::createImRServerInfo () const
 }
 
 void
-Server_Info::clear (void)
+Server_Info::clear ()
 {
   server_id = "";
   poa_name = "";
@@ -301,7 +301,7 @@ Server_Info::clear (void)
 }
 
 void
-Server_Info::reset_runtime (void)
+Server_Info::reset_runtime ()
 {
   this->partial_ior = "";
   Server_Info *startup = this->active_info ();

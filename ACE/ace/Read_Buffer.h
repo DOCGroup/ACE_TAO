@@ -59,7 +59,7 @@ public:
 #endif  // ACE_HAS_WINCE
 
   /// Closes the FILE *.
-  ~ACE_Read_Buffer (void);
+  ~ACE_Read_Buffer ();
 
   /**
    * Returns a pointer dynamically allocated with

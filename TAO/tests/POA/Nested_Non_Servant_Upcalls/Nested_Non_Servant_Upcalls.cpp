@@ -22,9 +22,9 @@ class test_i :
 public:
   test_i (PortableServer::POA_ptr poa);
 
-  ~test_i (void);
+  ~test_i ();
 
-  void method (void);
+  void method ();
 
   PortableServer::POA_var poa_;
 };
@@ -37,7 +37,7 @@ test_i::test_i (PortableServer::POA_ptr poa)
               this));
 }
 
-test_i::~test_i (void)
+test_i::~test_i ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i destroyed: instance %x\n",
@@ -45,7 +45,7 @@ test_i::~test_i (void)
 }
 
 void
-test_i::method (void)
+test_i::method ()
 {
 }
 
@@ -55,7 +55,7 @@ public:
   Object_Activator (ACE_Thread_Manager &thread_manager,
                     PortableServer::POA_ptr poa);
 
-  int svc (void);
+  int svc ();
 
   ACE_Auto_Event object_activated_;
 
@@ -71,7 +71,7 @@ Object_Activator::Object_Activator (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Object_Activator::svc (void)
+Object_Activator::svc ()
 {
   try
     {

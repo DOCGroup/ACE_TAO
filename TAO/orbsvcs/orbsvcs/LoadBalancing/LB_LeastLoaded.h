@@ -84,7 +84,7 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  virtual char * name (void);
+  virtual char * name ();
 
   virtual CosLoadBalancing::Properties * get_properties ();
 
@@ -113,7 +113,7 @@ public:
 
 protected:
   /// Destructor.
-  ~TAO_LB_LeastLoaded (void);
+  ~TAO_LB_LeastLoaded ();
 
   /// Retrieve the least loaded location from the given list of
   /// locations.

@@ -24,7 +24,7 @@ public:
   /// ctor
   Secure_Vault_i (CORBA::ORB_ptr orb);
 
-  virtual CORBA::Short ready (void);
+  virtual CORBA::Short ready ();
 
   /// Passwd sent in the service context list
   virtual void authenticate (const char * user);
@@ -32,7 +32,7 @@ public:
   virtual CORBA::Long update_records (CORBA::Long id,
                                       const Test_Interceptors::Secure_Vault::Record & val);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
  private:
   /// The ORB pointer (for shutdown.)

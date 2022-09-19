@@ -44,7 +44,7 @@ public:
   };
 
   /// Default constructor.
-  ACE_Time_Request (void);
+  ACE_Time_Request ();
 
   /**
    * Create a ACE_Time_Request message.
@@ -87,7 +87,7 @@ public:
   int encode (void *&);
 
   /// Decode message after reception.
-  int decode (void);
+  int decode ();
 
   /// Print out the values of the message for debugging purposes.
   void dump () const;

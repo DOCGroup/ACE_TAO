@@ -3,7 +3,7 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-TAO_Notify_Tests_Options_Parser::TAO_Notify_Tests_Options_Parser (void)
+TAO_Notify_Tests_Options_Parser::TAO_Notify_Tests_Options_Parser ()
 {
 }
 

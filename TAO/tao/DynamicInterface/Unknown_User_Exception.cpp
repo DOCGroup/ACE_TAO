@@ -12,7 +12,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::UnknownUserException::UnknownUserException (void)
+CORBA::UnknownUserException::UnknownUserException ()
   : CORBA::UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0",
                           "UnknownUserException"),
     exception_ (0)
@@ -37,13 +37,13 @@ CORBA::UnknownUserException::UnknownUserException (
            CORBA::Any (*e.exception_));
 }
 
-CORBA::UnknownUserException::~UnknownUserException (void)
+CORBA::UnknownUserException::~UnknownUserException ()
 {
   delete this->exception_;
 }
 
 CORBA::Any &
-CORBA::UnknownUserException::exception (void)
+CORBA::UnknownUserException::exception ()
 {
   return *this->exception_;
 }

@@ -56,10 +56,10 @@ public:
   /// Our Constructor
   TAO_FT_IOGR_Property (FT::TagFTGroupTaggedComponent &ft_group);
 
-  TAO_FT_IOGR_Property (void);
+  TAO_FT_IOGR_Property ();
 
   /// Destructor
-  ~TAO_FT_IOGR_Property (void);
+  ~TAO_FT_IOGR_Property ();
 
   /// Set the property for the IOGR
   virtual CORBA::Boolean set_property (

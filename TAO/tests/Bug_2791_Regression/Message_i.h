@@ -7,7 +7,7 @@ class MessageImpl : public virtual OBV_Message,
   public:
     MessageImpl ();
     MessageImpl (const char *user, const char *subject, const char *text);
-    virtual ::CORBA::ValueBase *_copy_value (void);
+    virtual ::CORBA::ValueBase *_copy_value ();
 
     virtual char *user ();
     virtual void user (const char *);

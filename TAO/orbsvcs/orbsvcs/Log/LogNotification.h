@@ -39,10 +39,10 @@ class TAO_Log_Serv_Export TAO_LogNotification
 {
 public:
   /// Constructor.
-  TAO_LogNotification (void);
+  TAO_LogNotification ();
 
   /// Destructor.
-  virtual ~TAO_LogNotification (void);
+  virtual ~TAO_LogNotification ();
 
   /// Event generated when a new log is created.
   void object_creation (DsLogAdmin::LogId id);

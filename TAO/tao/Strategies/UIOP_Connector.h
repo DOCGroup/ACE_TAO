@@ -50,10 +50,10 @@ public:
    * @@ Do we want to pass in the tag here or should it be statically
    * defined?
    */
-  TAO_UIOP_Connector (void);
+  TAO_UIOP_Connector ();
 
   /// Destructor
-  ~TAO_UIOP_Connector (void);
+  ~TAO_UIOP_Connector ();
 
   /**
    * @name The TAO_Connector Methods
@@ -62,7 +62,7 @@ public:
    */
   //@{
   int open (TAO_ORB_Core *orb_core);
-  int close (void);
+  int close ();
 
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
@@ -104,7 +104,7 @@ protected:
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout = 0);
 
-  virtual TAO_Profile *make_profile (void);
+  virtual TAO_Profile *make_profile ();
 
   //@}
 

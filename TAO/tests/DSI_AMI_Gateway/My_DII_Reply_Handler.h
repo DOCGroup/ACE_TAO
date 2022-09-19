@@ -11,7 +11,7 @@ class My_DII_Reply_Handler : public virtual TAO_DII_Reply_Handler,
 public:
   My_DII_Reply_Handler (TAO_AMH_DSI_Response_Handler_ptr rph,
                         CORBA::ORB_var orb);
-  virtual ~My_DII_Reply_Handler (void);
+  virtual ~My_DII_Reply_Handler ();
 
   // Callback method for deferred synchronous requests.
   virtual void handle_response (TAO_InputCDR &incoming);

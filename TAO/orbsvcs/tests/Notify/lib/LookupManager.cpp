@@ -4,7 +4,7 @@
 
 #include "Name.h"
 
-TAO_Notify_Tests_LookupManager::TAO_Notify_Tests_LookupManager (void)
+TAO_Notify_Tests_LookupManager::TAO_Notify_Tests_LookupManager ()
   : app_ (0)
     , activation_manager_ (0)
     , priority_mapping_ (0)

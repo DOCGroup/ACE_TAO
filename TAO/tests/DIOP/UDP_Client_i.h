@@ -37,7 +37,7 @@ public:
                 ACE_UINT32 iterations);
 
   /// Destructor
-  virtual ~UDP_Client_i (void);
+  virtual ~UDP_Client_i ();
 
 private:
   // Runs in a separate thread.

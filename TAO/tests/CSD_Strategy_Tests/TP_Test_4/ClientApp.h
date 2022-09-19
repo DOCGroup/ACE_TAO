@@ -20,8 +20,8 @@ class ClientApp : public TestAppBase
   private:
     // These are all called, in order, by the run_i() method.
     int init(int argc, ACE_TCHAR* argv[]);
-    void client_setup(void);
-    int  run_engine(void);
+    void client_setup();
+    int  run_engine();
     void cleanup();
 
     // Helper methods used by the methods above.

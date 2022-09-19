@@ -104,7 +104,7 @@ typedef ACE_Singleton<Client_Proactor_Task, ACE_SYNCH_RECURSIVE_MUTEX>
 #define CLIENT_PROACTOR_TASK Client_Proactor_Task_Singleton::instance()
 
 int
-Client_Proactor_Task::svc (void)
+Client_Proactor_Task::svc ()
 {
   // Keep RT signals on POSIX from killing us.
   disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
@@ -133,7 +133,7 @@ typedef ACE_Singleton<Server_Proactor_Task, ACE_SYNCH_RECURSIVE_MUTEX>
 #define SERVER_PROACTOR_TASK Server_Proactor_Task_Singleton::instance ()
 
 int
-Server_Proactor_Task::svc (void)
+Server_Proactor_Task::svc ()
 {
   // Keep RT signals on POSIX from killing us.
   disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
@@ -213,7 +213,7 @@ tmp_dh_callback (SSL *s, int is_export, int keylength)
 }
 
 bool
-init_ssl (void)
+init_ssl ()
 {
   SSL_CTX_set_quiet_shutdown (ACE_SSL_Context::instance ()->context(), 1);
   SSL_CTX_set_options (ACE_SSL_Context::instance ()->context(),
@@ -240,9 +240,9 @@ init_ssl (void)
 class Server_Service_Handler : public ACE_Service_Handler
 {
 public:
-  Server_Service_Handler (void);
+  Server_Service_Handler ();
 
-  virtual ~Server_Service_Handler (void);
+  virtual ~Server_Service_Handler ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   virtual void open (ACE_HANDLE h, ACE_Message_Block&);
@@ -254,13 +254,13 @@ public:
   virtual void handle_write_stream (
     const ACE_Asynch_Write_Stream::Result &result);
 
-  virtual void handle_wakeup (void);
+  virtual void handle_wakeup ();
 
-  void cancel_and_close (void);
+  void cancel_and_close ();
 
-  int read_data (void);
+  int read_data ();
 
-  int write_data (void);
+  int write_data ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   int read (ACE_Message_Block &mb, size_t bytes_to_read);
@@ -290,7 +290,7 @@ Server_Service_Handler::Server_Service_Handler (void) :
 {
 }
 
-Server_Service_Handler::~Server_Service_Handler (void)
+Server_Service_Handler::~Server_Service_Handler ()
 {
   if (ACE_INVALID_HANDLE != this->handle ())
   {
@@ -432,7 +432,7 @@ Server_Service_Handler::handle_write_stream (
 }
 
 void
-Server_Service_Handler::handle_wakeup (void)
+Server_Service_Handler::handle_wakeup ()
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
@@ -440,7 +440,7 @@ Server_Service_Handler::handle_wakeup (void)
 }
 
 void
-Server_Service_Handler::cancel_and_close (void)
+Server_Service_Handler::cancel_and_close ()
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
@@ -450,7 +450,7 @@ Server_Service_Handler::cancel_and_close (void)
 }
 
 int
-Server_Service_Handler::read_data (void)
+Server_Service_Handler::read_data ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
@@ -470,7 +470,7 @@ Server_Service_Handler::read_data (void)
 }
 
 int
-Server_Service_Handler::write_data (void)
+Server_Service_Handler::write_data ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
@@ -543,16 +543,16 @@ Server_Service_Handler::safe_to_delete () const
 class Acceptor : public ACE_Asynch_Acceptor<Server_Service_Handler>
 {
 public:
-  Acceptor (void);
+  Acceptor ();
 
-  virtual ~Acceptor (void);
+  virtual ~Acceptor ();
 
-  virtual int cancel (void);
+  virtual int cancel ();
 
   virtual int validate_connection (const ACE_Asynch_Accept::Result& result,
     const ACE_INET_Addr &remote, const ACE_INET_Addr& local);
 
-  virtual Server_Service_Handler *make_handler (void);
+  virtual Server_Service_Handler *make_handler ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
@@ -580,12 +580,12 @@ Acceptor::Acceptor (void) :
 {
 }
 
-Acceptor::~Acceptor (void)
+Acceptor::~Acceptor ()
 {
 }
 
 int
-Acceptor::cancel (void)
+Acceptor::cancel ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
@@ -635,7 +635,7 @@ Acceptor::validate_connection (const ACE_Asynch_Accept::Result& result,
 }
 
 Server_Service_Handler*
-Acceptor::make_handler (void)
+Acceptor::make_handler ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, 0);
 
@@ -679,9 +679,9 @@ Acceptor::handle_accept (const ACE_Asynch_Accept::Result &result)
 class Client_Service_Handler : public ACE_Service_Handler
 {
 public:
-  Client_Service_Handler (void);
+  Client_Service_Handler ();
 
-  virtual ~Client_Service_Handler (void);
+  virtual ~Client_Service_Handler ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   virtual void open (ACE_HANDLE h, ACE_Message_Block&);
@@ -693,13 +693,13 @@ public:
   virtual void handle_write_stream (
     const ACE_Asynch_Write_Stream::Result &result);
 
-  virtual void handle_wakeup (void);
+  virtual void handle_wakeup ();
 
-  void cancel_and_close (void);
+  void cancel_and_close ();
 
-  int read_data (void);
+  int read_data ();
 
-  int write_data (void);
+  int write_data ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   int read (ACE_Message_Block &mb, size_t bytes_to_read);
@@ -741,7 +741,7 @@ Client_Service_Handler::Client_Service_Handler (void) :
 {
 }
 
-Client_Service_Handler::~Client_Service_Handler (void)
+Client_Service_Handler::~Client_Service_Handler ()
 {
   if (ACE_INVALID_HANDLE != this->handle ())
   {
@@ -893,7 +893,7 @@ Client_Service_Handler::handle_write_stream (
 }
 
 void
-Client_Service_Handler::handle_wakeup (void)
+Client_Service_Handler::handle_wakeup ()
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
@@ -901,7 +901,7 @@ Client_Service_Handler::handle_wakeup (void)
 }
 
 void
-Client_Service_Handler::cancel_and_close (void)
+Client_Service_Handler::cancel_and_close ()
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
@@ -911,7 +911,7 @@ Client_Service_Handler::cancel_and_close (void)
 }
 
 int
-Client_Service_Handler::read_data (void)
+Client_Service_Handler::read_data ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
@@ -931,7 +931,7 @@ Client_Service_Handler::read_data (void)
 }
 
 int
-Client_Service_Handler::write_data (void)
+Client_Service_Handler::write_data ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
@@ -1022,9 +1022,9 @@ Client_Service_Handler::read_successful () const
 class Connector : public ACE_Asynch_Connector<Client_Service_Handler>
 {
 public:
-  Connector (void);
+  Connector ();
 
-  virtual ~Connector (void);
+  virtual ~Connector ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   virtual int connect (
@@ -1047,7 +1047,7 @@ public:
 protected:
   virtual void handle_connect (const ACE_Asynch_Connect::Result &result);
 
-  virtual Client_Service_Handler* make_handler (void);
+  virtual Client_Service_Handler* make_handler ();
 
   mutable ACE_SYNCH_RECURSIVE_MUTEX  mtx_;
   Client_Service_Handler *service_handler_;
@@ -1062,7 +1062,7 @@ Connector::Connector (void) :
 {
 }
 
-Connector::~Connector (void)
+Connector::~Connector ()
 {
 }
 
@@ -1111,7 +1111,7 @@ Connector::handle_connect (const ACE_Asynch_Connect::Result &result)
 }
 
 Client_Service_Handler*
-Connector::make_handler (void)
+Connector::make_handler ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, 0);
 

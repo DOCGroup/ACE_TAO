@@ -7,19 +7,19 @@ Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr, CORBA::ULong)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
   this->orb_->shutdown (false);
 }
 
 void
-Hello::ping (void)
+Hello::ping ()
 {
   return;
 }
 
 void
-Hello::throw_location_forward (void)
+Hello::throw_location_forward ()
 {
   return;
 }

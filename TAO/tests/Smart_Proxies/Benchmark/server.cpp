@@ -21,13 +21,13 @@ class Test_i : public POA_Test
 public:
   Test_i (CORBA::ORB_ptr orb);
 
-  CORBA::Short box_prices  (void);
+  CORBA::Short box_prices  ();
 
   CORBA::Long tickets  (CORBA::Short number);
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  void shutdown  (void);
+  void shutdown  ();
 
 private:
   CORBA::ORB_var orb_;
@@ -39,7 +39,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 CORBA::Short
-Test_i::box_prices (void)
+Test_i::box_prices ()
 {
   return 125;
 }
@@ -51,7 +51,7 @@ Test_i::tickets (CORBA::Short number)
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
   this->orb_->shutdown (false);
 }

@@ -42,7 +42,7 @@ class TAO_LB_Pull_Handler : public ACE_Event_Handler
 {
 public:
   /// Constructor
-  TAO_LB_Pull_Handler (void);
+  TAO_LB_Pull_Handler ();
 
   /// Receive the timeout event.
   virtual int handle_timeout (const ACE_Time_Value &current_time,

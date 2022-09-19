@@ -1399,7 +1399,7 @@ static int input()
   }
 #endif /* YY_NO_INPUT */
 
-void yyflush_current_buffer (void)
+void yyflush_current_buffer ()
 {
   YY_FLUSH_BUFFER;
 }
@@ -1865,7 +1865,7 @@ extract_string(char* str)
 }
 
 int
-yywrap (void)
+yywrap ()
 {
   return 1;
 }

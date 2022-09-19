@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-Identity_Server::Identity_Server (void)
+Identity_Server::Identity_Server ()
   : group_factory_ior_ (0),
     random_objects_ (5),
     rr_objects_ (5)
@@ -99,7 +99,7 @@ Identity_Server::init (int argc,
 }
 
 int
-Identity_Server::register_groups (void)
+Identity_Server::register_groups ()
 {
   // Contact the <Object_Group_Factory> to create 2
   // <Object_Group>s, one random and one rr.
@@ -218,7 +218,7 @@ Identity_Server::create_objects (size_t number_of_objects,
 }
 
 int
- Identity_Server::run (void)
+ Identity_Server::run ()
 {
   int result;
 
@@ -227,7 +227,7 @@ int
   return result;
 }
 
-Identity_Server::~Identity_Server (void)
+Identity_Server::~Identity_Server ()
 {
 }
 

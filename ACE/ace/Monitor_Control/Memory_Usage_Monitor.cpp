@@ -24,7 +24,7 @@ namespace ACE
     }
 
     void
-    Memory_Usage_Monitor::update (void)
+    Memory_Usage_Monitor::update ()
     {
 #if defined (ACE_HAS_WIN32_PDH)
       this->update_i ();
@@ -54,13 +54,13 @@ namespace ACE
     }
 
     const char*
-    Memory_Usage_Monitor::default_name (void)
+    Memory_Usage_Monitor::default_name ()
     {
       return Memory_Usage_Monitor::default_name_;
     }
 
     void
-    Memory_Usage_Monitor::clear_i (void)
+    Memory_Usage_Monitor::clear_i ()
     {
 #if defined (ACE_HAS_WIN32_PDH)
       this->clear_impl ();

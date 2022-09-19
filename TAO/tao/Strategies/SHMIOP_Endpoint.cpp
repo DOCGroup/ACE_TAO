@@ -56,7 +56,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
     this->host_ = host;
 }
 
-TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (void)
+TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint ()
   : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE)
     , host_ ()
     , port_ (0)
@@ -82,7 +82,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
   this->priority (priority);
 }
 
-TAO_SHMIOP_Endpoint::~TAO_SHMIOP_Endpoint (void)
+TAO_SHMIOP_Endpoint::~TAO_SHMIOP_Endpoint ()
 {
 }
 
@@ -151,13 +151,13 @@ TAO_SHMIOP_Endpoint::host (const char *h)
 }
 
 TAO_Endpoint *
-TAO_SHMIOP_Endpoint::next (void)
+TAO_SHMIOP_Endpoint::next ()
 {
   return this->next_;
 }
 
 TAO_Endpoint *
-TAO_SHMIOP_Endpoint::duplicate (void)
+TAO_SHMIOP_Endpoint::duplicate ()
 {
   TAO_SHMIOP_Endpoint *endpoint = 0;
   ACE_NEW_RETURN (endpoint,
@@ -186,7 +186,7 @@ TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 CORBA::ULong
-TAO_SHMIOP_Endpoint::hash (void)
+TAO_SHMIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
     return this->hash_val_;

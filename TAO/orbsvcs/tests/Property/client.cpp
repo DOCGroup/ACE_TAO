@@ -14,7 +14,7 @@
 #include "tao/debug.h"
 
 
-  Client::Client (void)
+  Client::Client ()
 {
 }
 
@@ -52,7 +52,7 @@ Client::init (int argc,
 // Testing the methods of the property service.
 
 int
-Client::property_tester (void)
+Client::property_tester ()
 {
   // = Testing PropertySet & Iterators.
 
@@ -103,7 +103,7 @@ Client::property_tester (void)
 // Testing define_property.
 
 int
-Client::test_define_property (void)
+Client::test_define_property ()
 {
   CORBA::Any anyval;
 
@@ -159,7 +159,7 @@ Client::test_define_property (void)
 // Testing get_all_property_names of the PropertySet.
 
 int
-Client::test_get_all_property_names (void)
+Client::test_get_all_property_names ()
 {
   // Get the size.
   CORBA::ULong num_of_properties =
@@ -233,7 +233,7 @@ Client::test_get_all_property_names (void)
 // properties.
 
 int
-Client::test_get_properties (void)
+Client::test_get_properties ()
 {
   // Get float_property, string_property and no_property. If return
   // value is false and type is tc_void then that name is not there in
@@ -322,7 +322,7 @@ Client::test_get_properties (void)
 // Testing, get_number_of_properties.
 
 int
-Client::test_get_number_of_properties (void)
+Client::test_get_number_of_properties ()
 {
   CORBA::ULong nproperties = this->propsetdef_->get_number_of_properties ();
 
@@ -366,7 +366,7 @@ Client::test_delete_property (const char *property_name)
 // properties.
 
 int
-Client::test_delete_properties (void)
+Client::test_delete_properties ()
 {
   CosPropertyService::PropertyNames prop_names;
   prop_names.length (3);
@@ -383,7 +383,7 @@ Client::test_delete_properties (void)
 // float in the property set.
 
 int
-Client::test_define_properties (void)
+Client::test_define_properties ()
 {
   CosPropertyService::Properties nproperties;
   nproperties.length (4);
@@ -429,7 +429,7 @@ Client::test_define_properties (void)
 // Test get_all_properties.
 
 int
-Client::test_get_all_properties (void)
+Client::test_get_all_properties ()
 {
   // Get the number of current properties.
   CORBA::ULong num_of_properties =
@@ -563,7 +563,7 @@ Client::test_get_all_properties (void)
 // Testing define property with mode.
 // Defines char, short, long and float properties with different modes.
 int
-Client::test_define_property_with_mode (void)
+Client::test_define_property_with_mode ()
 {
   CORBA::Any anyval;
 
@@ -620,7 +620,7 @@ Client::test_define_property_with_mode (void)
 }
 
 int
-Client::test_get_property_value (void)
+Client::test_get_property_value ()
 {
   try
     {

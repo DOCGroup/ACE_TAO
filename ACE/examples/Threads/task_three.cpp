@@ -32,8 +32,8 @@ static const size_t TASK_COUNT = 130;
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Test_Task (void);
-  ~Test_Task (void);
+  Test_Task ();
+  ~Test_Task ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *args = 0);
@@ -55,7 +55,7 @@ size_t Test_Task::done_cnt_ = 0;
 
 static ACE_Thread_Mutex Lock;
 
-Test_Task::Test_Task (void)
+Test_Task::Test_Task ()
 {
   ACE_GUARD (ACE_Thread_Mutex, ace_mon, Lock);
 
@@ -66,7 +66,7 @@ Test_Task::Test_Task (void)
               Test_Task::current_count_));
 }
 
-Test_Task::~Test_Task (void)
+Test_Task::~Test_Task ()
 {
   ACE_GUARD (ACE_Thread_Mutex, ace_mon, Lock);
 
@@ -95,7 +95,7 @@ Test_Task::close (u_long)
 }
 
 int
-Test_Task::svc (void)
+Test_Task::svc ()
 {
   // Every thread must register the same stream to write to file.
   if (out_stream)

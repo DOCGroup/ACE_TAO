@@ -6,14 +6,14 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 char *
-Hello::get_string (void)
+Hello::get_string ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Received call back !!!\n"));
   return CORBA::string_dup ("Hello there!");
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
   this->orb_->shutdown (false);
 }

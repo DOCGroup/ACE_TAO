@@ -27,7 +27,7 @@ TAO_Notify_Lanes_Supplier::init (CosNotifyChannelAdmin::SupplierAdmin_var& admin
 }
 
 void
-TAO_Notify_Lanes_Supplier::run (void)
+TAO_Notify_Lanes_Supplier::run ()
 {
   // The Priority at which we send the first event to the first consumer.
   RTCORBA::Priority priority = 1;
@@ -92,7 +92,7 @@ TAO_Notify_Lanes_Supplier::run (void)
 }
 
 void
-TAO_Notify_Lanes_Supplier::connect (void)
+TAO_Notify_Lanes_Supplier::connect ()
 {
   // Activate the supplier object.
   CosNotifyComm::StructuredPushSupplier_var objref = this->_this ();
@@ -115,7 +115,7 @@ TAO_Notify_Lanes_Supplier::connect (void)
 }
 
 void
-TAO_Notify_Lanes_Supplier::disconnect (void)
+TAO_Notify_Lanes_Supplier::disconnect ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
@@ -123,7 +123,7 @@ TAO_Notify_Lanes_Supplier::disconnect (void)
 }
 
 void
-TAO_Notify_Lanes_Supplier::deactivate (void)
+TAO_Notify_Lanes_Supplier::deactivate ()
 {
   PortableServer::POA_var poa (this->_default_POA ());
 
@@ -155,7 +155,7 @@ TAO_Notify_Lanes_Supplier::send_event (const CosNotification::StructuredEvent& e
 }
 
 void
-TAO_Notify_Lanes_Supplier::disconnect_structured_push_supplier (void)
+TAO_Notify_Lanes_Supplier::disconnect_structured_push_supplier ()
 {
   this->deactivate ();
 }

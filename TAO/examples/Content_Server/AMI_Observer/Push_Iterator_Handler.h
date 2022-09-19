@@ -52,7 +52,7 @@ class Push_Iterator_Handler
 public:
   /// Constructor that creates a content iterator corresponding to the
   /// name of the file being retrieved from the web server.
-  Push_Iterator_Handler (void);
+  Push_Iterator_Handler ();
 
   /**
    * Activate and run this Reply Handler.  The contents (not the
@@ -67,7 +67,7 @@ public:
 private:
   /// Destructor  (private to ensure that Iterator_Handler is allocated
   /// on the heap).
-  ~Push_Iterator_Handler (void);
+  ~Push_Iterator_Handler ();
 
   /// AMI callback that is invoked when a response from the
   /// corresponding server method is received.
@@ -79,7 +79,7 @@ private:
     {}
 
   /// Deactivate this handler.
-  void deactivate (void);
+  void deactivate ();
 
 private:
   /// The servant that accepts data pushed from the content server.

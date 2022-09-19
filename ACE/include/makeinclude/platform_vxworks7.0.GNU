@@ -111,7 +111,7 @@ ifneq ($(rtp),0)
 $(LLD) $(LDFLAGS) $(LD_EMULATION) --allow-shlib-undefined -EL $(VSB_DIR)/usr/lib/common/crt0.o -o $@ $(filter %.o,$^) --start-group --as-needed $(LDLIBS) -lc -lc_internal -lllvm -lcplusplus -lllvmcplus -lnet -ldl --end-group
     endef
     define SOLINK.cc.override
-$(LLD) $(LDFLAGS) $(LD_EMULATION) -shared --exclude-libs libc_internal.a -u __init -u __fini -soname="$@" -o $@ $(filter %.o,$^) -lc -lc_internal -lcplusplus -lnet
+$(LLD) $(LDFLAGS) $(LD_EMULATION) -shared --exclude-libs libc_internal.a -u __init -u __fini -o $@ $(filter %.o,$^) --start-group --as-needed $(ACE_SHLIBS) -lc -lc_internal -lcplusplus -lnet --end-group
     endef
   endif
 endif

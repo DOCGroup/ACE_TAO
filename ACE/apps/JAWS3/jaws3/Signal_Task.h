@@ -11,9 +11,9 @@
 class JAWS_Export JAWS_Signal_Task
 {
 public:
-  JAWS_Signal_Task (void);
+  JAWS_Signal_Task ();
 
-  static JAWS_Signal_Task * instance (void)
+  static JAWS_Signal_Task * instance ()
   {
     return ACE_Singleton<JAWS_Signal_Task, ACE_SYNCH_MUTEX>::instance ();
   }

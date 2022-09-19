@@ -46,7 +46,7 @@ public:
   /// <action_> of the Command to <action>.
   Command (RECEIVER &recvr, ACTION action);
 
-  virtual ~Command (void);
+  virtual ~Command ();
 
   /// Invokes the method <action_> from the object <receiver_>.
   virtual int execute (void *arg);
@@ -77,7 +77,7 @@ class Timer_Queue_Test_Driver
 {
 public:
   /// Default destructor
-  virtual ~Timer_Queue_Test_Driver (void);
+  virtual ~Timer_Queue_Test_Driver ();
 
   /// Breaks up the input string buffer into pieces and executes
   /// the appropriate method to handle that operation.
@@ -88,11 +88,11 @@ public:
    * of the class should normally invoke this method.
    * Returns 0 when successful, or 0 otherwise.
    */
-  virtual int run_test (void);
+  virtual int run_test ();
 
   /// This internal method gets the next request from the user.
   /// Returns -1 when user wants to exit.  Returns 0 otherwise.
-  virtual int get_next_request (void);
+  virtual int get_next_request ();
 
   /**
    * Reads input from the user into the buffer <buf> with a maximum

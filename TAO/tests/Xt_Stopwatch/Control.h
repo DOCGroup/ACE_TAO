@@ -27,16 +27,16 @@ class Control
   Control (Widget &parent);
 
   /// Destructor
-  virtual ~Control (void);
+  virtual ~Control ();
 
   /// Manage the widget
-  virtual void manage (void);
+  virtual void manage ();
 
   /// Return the start widget
-  Widget& startwidget (void);
+  Widget& startwidget ();
 
   /// Return the stop widget..
-  Widget& stopwidget (void);
+  Widget& stopwidget ();
 
  private:
   /// A frame widget...

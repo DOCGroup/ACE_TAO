@@ -41,7 +41,7 @@ public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Worker_Task > Ptr;
 
   /// Constructor
-  TAO_Notify_Worker_Task (void);
+  TAO_Notify_Worker_Task ();
 
   /// Update QoS Properties.
   virtual void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties);

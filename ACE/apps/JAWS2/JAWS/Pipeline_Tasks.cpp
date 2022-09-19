@@ -6,12 +6,12 @@
 #include "JAWS/Policy.h"
 
 
-JAWS_Pipeline_Handler::JAWS_Pipeline_Handler (void)
+JAWS_Pipeline_Handler::JAWS_Pipeline_Handler ()
   : policy_ (0)
 {
 }
 
-JAWS_Pipeline_Handler::~JAWS_Pipeline_Handler (void)
+JAWS_Pipeline_Handler::~JAWS_Pipeline_Handler ()
 {
 }
 
@@ -41,7 +41,7 @@ JAWS_Pipeline_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 }
 
 JAWS_Dispatch_Policy *
-JAWS_Pipeline_Handler::policy (void)
+JAWS_Pipeline_Handler::policy ()
 {
   return this->policy_;
 }

@@ -42,13 +42,13 @@ namespace TAO
   {
   public:
     /// Constructor.
-    IIOP_SSL_Connector (void);
+    IIOP_SSL_Connector ();
 
     /// Destructor.
-    ~IIOP_SSL_Connector (void);
+    ~IIOP_SSL_Connector ();
 
     int open (TAO_ORB_Core *orb_core);
-    int close (void);
+    int close ();
 
   public:
     typedef TAO_Connect_Concurrency_Strategy<IIOP_SSL_Connection_Handler>

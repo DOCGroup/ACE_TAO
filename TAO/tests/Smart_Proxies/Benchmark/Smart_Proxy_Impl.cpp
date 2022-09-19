@@ -1,5 +1,5 @@
 #include "Smart_Proxy_Impl.h"
-Smart_Test_Factory::Smart_Test_Factory (void)
+Smart_Test_Factory::Smart_Test_Factory ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Smart_Test_Factory\n"));
@@ -24,7 +24,7 @@ Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)
 }
 
 CORBA::Short
-Smart_Test_Proxy::box_prices (void)
+Smart_Test_Proxy::box_prices ()
 {
   if (this->price_ == 0)
     {

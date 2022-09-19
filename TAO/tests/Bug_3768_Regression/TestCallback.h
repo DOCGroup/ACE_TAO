@@ -12,7 +12,7 @@ public:
   {
   }
 
-  int svc(void)
+  int svc()
   {
     orb_->run();
     return 0;
@@ -31,9 +31,9 @@ public:
   TestCallback (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void start_threads_and_block (void);
-  virtual void test_call (void);
-  virtual void shutdown (void);
+  virtual void start_threads_and_block ();
+  virtual void test_call ();
+  virtual void shutdown ();
 
 private:
   Worker work_;

@@ -17,13 +17,13 @@
 //               Test_Fixed_Array
 // ************************************************************************
 
-Test_Fixed_Array::Test_Fixed_Array (void)
+Test_Fixed_Array::Test_Fixed_Array ()
   : opname_ (CORBA::string_dup ("test_fixed_array")),
     ret_ (new Param_Test::Fixed_Array)
 {
 }
 
-Test_Fixed_Array::~Test_Fixed_Array (void)
+Test_Fixed_Array::~Test_Fixed_Array ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -78,7 +78,7 @@ Test_Fixed_Array::init_parameters (Param_Test_ptr /*objref*/
 }
 
 int
-Test_Fixed_Array::reset_parameters (void)
+Test_Fixed_Array::reset_parameters ()
 {
   for (CORBA::ULong i=0; i < Param_Test::DIM1; i++)
     {
@@ -111,7 +111,7 @@ Test_Fixed_Array::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Fixed_Array::check_validity (void)
+Test_Fixed_Array::check_validity ()
 {
   if (this->compare (this->in_, this->inout_) &&
       this->compare (this->in_, this->out_) &&
@@ -141,7 +141,7 @@ Test_Fixed_Array::compare (const Param_Test::Fixed_Array_slice *a1,
 }
 
 void
-Test_Fixed_Array::print_values (void)
+Test_Fixed_Array::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG, "IN array\n"));
   this->print (this->in_);

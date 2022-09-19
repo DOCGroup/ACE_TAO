@@ -122,7 +122,7 @@ protected:
   typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY_BASE;
 
   /// Handler for removing cached connections.
-  int out_of_sockets_handler (void);
+  int out_of_sockets_handler ();
 
   CACHED_CONNECT_STRATEGY &caching_connect_strategy_;
 };

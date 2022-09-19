@@ -14,7 +14,7 @@
 #include "ace/OS_NS_string.h"
 
 // Constructor
-Demux_Test_Client::Demux_Test_Client (void)
+Demux_Test_Client::Demux_Test_Client ()
   : argc_ (0),
     argv_ (0),
     is_ (Demux_Test_Client::LINEAR),
@@ -31,7 +31,7 @@ Demux_Test_Client::Demux_Test_Client (void)
 }
 
 // destructor
-Demux_Test_Client::~Demux_Test_Client (void)
+Demux_Test_Client::~Demux_Test_Client ()
 {
 }
 
@@ -122,7 +122,7 @@ Demux_Test_Client::init (int argc, ACE_TCHAR *argv [])
 
 // parse command line arguments (if any).
 int
-Demux_Test_Client::parse_args (void)
+Demux_Test_Client::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("df:m:n:o:p:i:s:"));
   int c;
@@ -234,7 +234,7 @@ Demux_Test_Client::parse_args (void)
 
 // The main program for Demux_Test
 int
-Demux_Test_Client::run (void)
+Demux_Test_Client::run ()
 {
   // open a temporary results file
   if ((this->result_fp_ = ACE_OS::fopen ("results.dat", "w")) == 0)
@@ -301,7 +301,7 @@ Demux_Test_Client::run (void)
 }
 
 int
-Demux_Test_Client::run_linear_test (void)
+Demux_Test_Client::run_linear_test ()
 {
   CORBA::ULong j, k, l, m;
   ACE_hrtime_t start, end;
@@ -327,7 +327,7 @@ Demux_Test_Client::run_linear_test (void)
 }
 
 int
-Demux_Test_Client::run_random_test (void)
+Demux_Test_Client::run_random_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Random test\n"));
@@ -335,7 +335,7 @@ Demux_Test_Client::run_random_test (void)
 }
 
 int
-Demux_Test_Client::run_best_test (void)
+Demux_Test_Client::run_best_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Best Test\n"));
@@ -343,7 +343,7 @@ Demux_Test_Client::run_best_test (void)
 }
 
 int
-Demux_Test_Client::run_worst_test (void)
+Demux_Test_Client::run_worst_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Worst test\n"));
@@ -351,7 +351,7 @@ Demux_Test_Client::run_worst_test (void)
 }
 
 int
-Demux_Test_Client::print_results (void)
+Demux_Test_Client::print_results ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "******** "));

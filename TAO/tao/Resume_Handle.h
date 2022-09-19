@@ -49,7 +49,7 @@ public:
   TAO_Resume_Handle (TAO_ORB_Core *orb_core = 0,
                      ACE_HANDLE h = ACE_INVALID_HANDLE);
   /// Destructor
-  ~TAO_Resume_Handle (void);
+  ~TAO_Resume_Handle ();
 
   enum TAO_Handle_Resume_Flag
   {
@@ -66,7 +66,7 @@ public:
 
   /// Resume the handle in the reactor only if the ORB uses a TP
   /// reactor. Else we don't resume the handle.
-  void resume_handle (void);
+  void resume_handle ();
 
   /// Hook method called at the end of a connection handler's
   /// handle_input function.  Might override the handle_input

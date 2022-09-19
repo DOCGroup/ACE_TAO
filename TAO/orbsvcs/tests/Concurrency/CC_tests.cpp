@@ -20,12 +20,12 @@ CC_Test::CC_Test (CC_naming_service *ns)
 {
 }
 
-CC_Test::~CC_Test (void)
+CC_Test::~CC_Test ()
 {
 }
 
 CosConcurrencyControl::LockSet_ptr
-CC_Test::create_lock_set (void)
+CC_Test::create_lock_set ()
 {
   // Create the lock set and return an obj ref corresponding to the
   // key.
@@ -79,7 +79,7 @@ Test_Single_Lock_With_Mode::Test_Single_Lock_With_Mode (CC_naming_service *namin
 {
 }
 
-Test_Single_Lock_With_Mode::~Test_Single_Lock_With_Mode (void)
+Test_Single_Lock_With_Mode::~Test_Single_Lock_With_Mode ()
 {
 }
 
@@ -152,7 +152,7 @@ Test_Setup_LockSet::Test_Setup_LockSet (CC_naming_service *naming_service,
 {
 }
 
-Test_Setup_LockSet::~Test_Setup_LockSet (void)
+Test_Setup_LockSet::~Test_Setup_LockSet ()
 {
 }
 
@@ -192,7 +192,7 @@ Test_Use_Already_Created_LockSet (CC_naming_service *naming_service,
 {
 }
 
-Test_Use_Already_Created_LockSet::~Test_Use_Already_Created_LockSet (void)
+Test_Use_Already_Created_LockSet::~Test_Use_Already_Created_LockSet ()
 {
 }
 
@@ -229,7 +229,7 @@ Test_Unlock_Already_Created_LockSet (CC_naming_service *naming_service,
 {
 }
 
-Test_Unlock_Already_Created_LockSet::~Test_Unlock_Already_Created_LockSet (void)
+Test_Unlock_Already_Created_LockSet::~Test_Unlock_Already_Created_LockSet ()
 {
 }
 
@@ -264,7 +264,7 @@ Test_Release_Not_Held_Lock::Test_Release_Not_Held_Lock (CC_naming_service *namin
 {
 }
 
-Test_Release_Not_Held_Lock::~Test_Release_Not_Held_Lock (void)
+Test_Release_Not_Held_Lock::~Test_Release_Not_Held_Lock ()
 {
 }
 

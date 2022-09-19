@@ -12,7 +12,7 @@ public:
   {
   }
 
-  int svc(void)
+  int svc()
   {
     orb_->run();
     return 0;

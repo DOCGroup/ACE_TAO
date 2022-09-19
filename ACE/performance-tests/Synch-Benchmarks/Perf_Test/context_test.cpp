@@ -11,7 +11,7 @@ public:
 };
 
 int
-Context_Test::svc (void)
+Context_Test::svc ()
 {
   int ni = this->thr_id ();
 

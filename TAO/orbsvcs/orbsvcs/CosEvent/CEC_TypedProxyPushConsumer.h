@@ -43,14 +43,14 @@ public:
       const ACE_Time_Value &timeout);
 
   /// Destructor
-  virtual ~TAO_CEC_TypedProxyPushConsumer (void);
+  virtual ~TAO_CEC_TypedProxyPushConsumer ();
 
   /// Activate in the POA
   virtual void activate (
       CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr &activated_proxy);
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate ();
 
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
@@ -60,11 +60,11 @@ public:
   CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected);
 
   /// The event channel is shutting down
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   // = The CosEventChannelAdmin::ProxyPushConsumer methods (abstract overloads)...
   virtual void connect_push_supplier (
@@ -74,15 +74,15 @@ public:
 
   virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
 
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
   // = The CosTypedEventComm::TypedPushConsumer methods (abstract overloads)...
-  virtual CORBA::Object_ptr get_typed_consumer (void);
+  virtual CORBA::Object_ptr get_typed_consumer ();
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (void);
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  virtual PortableServer::POA_ptr _default_POA ();
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
 protected:
   /// The guard needs access to the following protected methods.
@@ -92,7 +92,7 @@ protected:
   CORBA::Boolean is_connected_i () const;
 
   /// Release the supplier
-  void cleanup_i (void);
+  void cleanup_i ();
 
   /// Assigns the parameter to both supplier_ and nopolicy_supplier_, and
   /// applies policies (when appropriate) to supplier_.
@@ -156,7 +156,7 @@ public:
       TAO_CEC_TypedProxyPushConsumer *proxy);
 
   /// Destructor
-  ~TAO_CEC_TypedProxyPushConsumer_Guard (void);
+  ~TAO_CEC_TypedProxyPushConsumer_Guard ();
 
   /// Returns 1 if the reference count successfully acquired
   int locked () const;

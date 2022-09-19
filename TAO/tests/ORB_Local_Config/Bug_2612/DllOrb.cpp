@@ -119,7 +119,7 @@ int DllOrb::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-int DllOrb::fini (void)
+int DllOrb::fini ()
 {
   int result;
 
@@ -190,7 +190,7 @@ int DllOrb::fini (void)
   return 0;
 }
 
-int DllOrb::svc (void)
+int DllOrb::svc ()
 {
 #if defined (ACE_HAS_THREADS)
   mp_barrier->wait();

@@ -1,7 +1,7 @@
 #define ACE_BUILD_SVC_DLL
 #include "Smart_Test_Factory.h"
 
-Smart_Test_Factory::Smart_Test_Factory (void)
+Smart_Test_Factory::Smart_Test_Factory ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Smart_Test_Factory\n"));

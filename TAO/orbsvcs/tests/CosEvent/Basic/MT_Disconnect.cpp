@@ -113,7 +113,7 @@ MTD_Task::svc ()
 }
 
 void
-MTD_Task::run_iteration (void)
+MTD_Task::run_iteration ()
 {
   // Obtain the consumer admin..
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =

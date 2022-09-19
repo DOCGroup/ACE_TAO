@@ -283,7 +283,7 @@ ACE_Profile_Timer::dump () const
 }
 
 // Initialize interval timer.
-ACE_Profile_Timer::ACE_Profile_Timer (void)
+ACE_Profile_Timer::ACE_Profile_Timer ()
   : timer_ ()
 {
   ACE_TRACE ("ACE_Profile_Timer::ACE_Profile_Timer");
@@ -394,7 +394,7 @@ ACE_Profile_Timer::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Profile_Timer::ACE_Profile_Timer (void)
+ACE_Profile_Timer::ACE_Profile_Timer ()
   : timer_ ()
 {
   ACE_TRACE ("ACE_Profile_Timer::ACE_Profile_Timer");

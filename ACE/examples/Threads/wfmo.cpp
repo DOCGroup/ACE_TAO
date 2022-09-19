@@ -46,7 +46,7 @@ WFMO_Test::open (void *arg)
 }
 
 int
-WFMO_Test::svc (void)
+WFMO_Test::svc ()
 {
   while(1)
     {

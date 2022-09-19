@@ -50,17 +50,17 @@ namespace ACE
       CPU_Load_Monitor (const char* name);
 
       /// Implementation of the pure virtual method.
-      virtual void update (void);
+      virtual void update ();
 
       /// Stores the default name, used if none is supplied by the user.
-      static const char* default_name (void);
+      static const char* default_name ();
 
     private:
       /// Overridden reset, calls platform-specific reset.
-      virtual void clear_i (void);
+      virtual void clear_i ();
 
       /// Common code to the constructor and to clear_i().
-      void init (void);
+      void init ();
 
     private:
 #if defined (ACE_LINUX)

@@ -12,7 +12,7 @@ class CSD_TP_Foo_B_Export Foo_B_i : public virtual POA_Foo_B
     Foo_B_i();
     virtual ~Foo_B_i();
 
-    virtual void op1(void);
+    virtual void op1();
 
     virtual void op2(CORBA::Long value);
 
@@ -20,7 +20,7 @@ class CSD_TP_Foo_B_Export Foo_B_i : public virtual POA_Foo_B
 
     virtual void op4(CORBA::Long value);
 
-    virtual void op5(void);
+    virtual void op5();
 
     virtual CORBA::Boolean op6(const TimeOfDay& t,
                                char*& message);
@@ -46,7 +46,7 @@ class CSD_TP_Foo_B_Export Foo_B_i : public virtual POA_Foo_B
 
     virtual void test_objref_arg(Callback_ptr cb);
 
-    virtual void done(void);
+    virtual void done();
 
     void gather_stats (Foo_B_Statistics& stats);
 
