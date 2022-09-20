@@ -1,5 +1,4 @@
 module M1 {
-
   struct S1 {
     octet o;
   };
@@ -8,62 +7,9 @@ module M1 {
     void op(in S1 s);
   };
 
-  struct X {
-    string valString;
-    S1 valStruct;
-    LI valLocalIface;
-  };
-
-  union BooleanUnion1 switch (boolean)
-    {
-      case TRUE: LI valLocalIface;
-    };
-
-  union BooleanUnion2 switch (boolean)
-    {
-      case TRUE: string valLocalIface;
-    };
-
   valuetype V {
     public string valString;
     public S1 valStruct;
     public LI valLocalIface;
-    public BooleanUnion1 valBoolUnion1;
-    public BooleanUnion2 valBoolUnion2;
-    public X valX;
-  };
-};
-
-module M2 {
-  module M3 {
-    struct S2 {
-      octet o;
-    };
-
-    local interface L2 {
-      void op(in S2 s);
-    };
-
-    exception E1 {
-      L2 val2;
-      M1::BooleanUnion1 bool1;
-      M1::BooleanUnion2 bool2;
-    };
-
-    local interface L3 {
-      void op(in S2 s) raises (E1);
-    };
-
-    valuetype V2 {
-      public string valString;
-      public S2 valStruct;
-      public L2 valLocalIface;
-      public L3 valLocalIface3;
-    };
-    valuetype V3 {
-      public string valString;
-      public M1::S1 valStruct;
-      public M1::LI valLocalIface;
-    };
   };
 };
