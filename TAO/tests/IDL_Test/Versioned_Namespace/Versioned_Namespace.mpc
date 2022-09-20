@@ -3,6 +3,7 @@ project(IDL_Test_Versioned_Namespace_1): taoidldefaults, valuetype {
   idlflags += -Wb,versioning_begin=BEGIN_USER_VERSIONED_NAMESPACE \
               -Wb,versioning_end=END_USER_VERSIONED_NAMESPACE \
               -Wb,versioning_include=UserVersionedNamespace.h
+  idlflags += -Scdr -Sa
   IDL_Files {
     TestVersionedNamespace.idl
   }
