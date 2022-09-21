@@ -1,5 +1,4 @@
 module M1 {
-
   struct S1 {
     octet o;
   };
@@ -12,29 +11,5 @@ module M1 {
     public string valString;
     public S1 valStruct;
     public LI valLocalIface;
-  };
-
-};
-
-module M2 {
-  module M3 {
-    struct S2 {
-      octet o;
-    };
-
-    local interface L2 {
-      void op(in S2 s);
-    };
-
-    valuetype V2 {
-      public string valString;
-      public S2 valStruct;
-      public L2 valLocalIface;
-    };
-    valuetype V3 {
-      public string valString;
-      public M1::S1 valStruct;
-      public M1::LI valLocalIface;
-    };
   };
 };
