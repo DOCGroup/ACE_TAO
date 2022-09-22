@@ -830,6 +830,14 @@ Foo::bar ()
      <li>Do not use the Win32 <code>TCHAR</code> macros.  The wide character-ness of ACE
          is separate from UNICODE and _UNICODE.
 
+     <li>If you have a <code>printf</code>-like format specifier that
+         uses <code>%s</code> to format a string, certain WCHAR implementations
+         require <code>%ls</code> instead.
+         The macro <code>ACE_TEXT_PRIs</code> contains <code>"s"</code> or <code>"ls"</code>
+         depending upon the WCHAR implementation, and may be used as
+         <code>ACE_TEXT("%") ACE_TEXT_PRI_s</code>, where the first argument may also
+         contain flags and width specifiers.
+
      <li>For TAO, don't use <code>ACE_TCHAR</code> or <code>ACE_TEXT</code>.  The CORBA specification
          defines APIs as using char.  So most of the time there is no need
          to use wide characters.

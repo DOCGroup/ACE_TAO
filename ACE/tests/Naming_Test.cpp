@@ -259,11 +259,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
       // Set the database name using the pid. mktemp isn't always available.
       ACE_OS::snprintf(temp_file, BUFSIZ,
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                       ACE_TEXT ("%ls%d"),
-#else
-                       ACE_TEXT ("%s%d"),
-#endif
+                       ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT ("%d"),
                        pname,
                        (int)(ACE_OS::getpid ()));
 

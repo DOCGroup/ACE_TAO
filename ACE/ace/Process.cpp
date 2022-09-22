@@ -1041,14 +1041,9 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
   ACE_NEW_RETURN (newformat, ACE_TCHAR[buflen], -1);
   ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe_newformat (newformat);
 
-# if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  const ACE_TCHAR *fmt = ACE_TEXT ("%ls=%ls");
-# else
-  const ACE_TCHAR *fmt = ACE_TEXT ("%s=%s");
-# endif
-
   // Add in the variable name.
-  ACE_OS::snprintf (safe_newformat.get (), buflen, fmt,
+  ACE_OS::snprintf (safe_newformat.get (), buflen,
+                    ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT ("=%") ACE_TEXT_PRIs,
                     variable_name, format);
 
   // Add the rest of the varargs.
