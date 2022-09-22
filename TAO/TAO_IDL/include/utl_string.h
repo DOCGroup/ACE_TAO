@@ -96,6 +96,9 @@ public:
   char *get_string () {return this->p_str;}
   // Get contents of utl_string.
 
+  char *get_string () const {return this->p_str;}
+  // Get contents of utl_string.
+
   char *get_canonical_rep ();
   // Get canonical representation. This is (implemented as) the all upper
   // case corresponding string.
