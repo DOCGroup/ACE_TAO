@@ -149,14 +149,12 @@ size_t const ACE_MAX_THREADS = 4;
     }
 
 #else /* ! VXWORKS */
-#  if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-#    define ACE_INIT_LOG_FMT ACE_TEXT ("%ls%ls%ls")
-#  else
-#    define ACE_INIT_LOG_FMT ACE_TEXT ("%s%s%s")
-#  endif /* !ACE_WIN32 && ACE_USES_WCHAR */
 #define ACE_INIT_LOG(NAME) \
   ACE_TCHAR temp[MAXPATHLEN]; \
-  ACE_OS::sprintf (temp, ACE_INIT_LOG_FMT, \
+  ACE_OS::sprintf (temp, \
+                   ACE_TEXT ("%") ACE_TEXT_PRIs \
+                   ACE_TEXT ("%") ACE_TEXT_PRIs \
+                   ACE_TEXT ("%") ACE_TEXT_PRIs, \
                    ACE_LOG_DIRECTORY, \
                    ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR), \
                    ACE_LOG_FILE_EXT_NAME); \
