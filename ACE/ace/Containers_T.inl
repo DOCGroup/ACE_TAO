@@ -156,9 +156,6 @@ ACE_Unbounded_Stack<T>::size () const
 
 // ---
 
-
-// ---
-
 template <class T, size_t ACE_SIZE> ACE_INLINE int
 ACE_Fixed_Set<T, ACE_SIZE>::is_empty () const
 {
@@ -244,10 +241,6 @@ ACE_Ordered_MultiSet_Iterator<T>::dump () const
 // ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::dump");
 #endif /* ACE_HAS_DUMP */
 }
-
-
-
-// --
 
 template <class T> ACE_INLINE int
 ACE_Ordered_MultiSet<T>::is_empty () const
