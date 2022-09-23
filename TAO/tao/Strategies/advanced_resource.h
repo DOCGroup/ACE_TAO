@@ -40,7 +40,7 @@ public:
   TAO_Advanced_Resource_Factory ();
 
   /// Destructor.
-  ~TAO_Advanced_Resource_Factory (void) override;
+  ~TAO_Advanced_Resource_Factory () override;
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
@@ -84,18 +84,18 @@ public:
    * @name Resource Retrieval
    */
   //@{
-  int init_protocol_factories (void) override;
-  ACE_Allocator* input_cdr_dblock_allocator (void) override;
-  ACE_Allocator* input_cdr_buffer_allocator (void) override;
-  ACE_Allocator* input_cdr_msgblock_allocator (void) override;
-  ACE_Allocator* amh_response_handler_allocator (void) override;
-  ACE_Allocator* ami_response_handler_allocator (void) override;
-  int input_cdr_allocator_type_locked (void) override;
-  TAO_ProtocolFactorySet *get_protocol_factories (void) override;
+  int init_protocol_factories () override;
+  ACE_Allocator* input_cdr_dblock_allocator () override;
+  ACE_Allocator* input_cdr_buffer_allocator () override;
+  ACE_Allocator* input_cdr_msgblock_allocator () override;
+  ACE_Allocator* amh_response_handler_allocator () override;
+  ACE_Allocator* ami_response_handler_allocator () override;
+  int input_cdr_allocator_type_locked () override;
+  TAO_ProtocolFactorySet *get_protocol_factories () override;
   //@}
 
-  TAO_Connection_Purging_Strategy *create_purging_strategy (void) override;
-  TAO_LF_Strategy *create_lf_strategy (void) override;
+  TAO_Connection_Purging_Strategy *create_purging_strategy () override;
+  TAO_LF_Strategy *create_lf_strategy () override;
 
 protected:
   /// Obtain the reactor implementation
@@ -125,7 +125,7 @@ protected:
   /// Type of lock used by AMI response handler allocator.
   Allocator_Lock_Type ami_response_handler_allocator_lock_type_;
 
-  int load_default_protocols (void) override;
+  int load_default_protocols () override;
 };
 
 static TAO_Resource_Factory_Changer TAO_changer;

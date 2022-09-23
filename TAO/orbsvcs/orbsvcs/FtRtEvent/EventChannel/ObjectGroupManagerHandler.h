@@ -25,15 +25,15 @@ public:
 
   void start_excep (::Messaging::ExceptionHolder * excep_holder) override;
 
-  void create_group (void) override;
+  void create_group () override;
 
   void create_group_excep (::Messaging::ExceptionHolder * excep_holder) override;
 
-  void add_member (void) override;
+  void add_member () override;
 
   void add_member_excep (::Messaging::ExceptionHolder * excep_holder) override;
 
-  void set_state (void) override;
+  void set_state () override;
 
   void set_state_excep (::Messaging::ExceptionHolder * excep_holder) override;
 private:

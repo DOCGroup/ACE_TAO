@@ -42,13 +42,13 @@ public:
   ServerObject_i (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Ping method.
-  void ping (void) override;
+  void ping () override;
 
   /// Shutdown the server.
-  void shutdown (void) override;
+  void shutdown () override;
 
   /// Returns the default POA for this servant.
-  PortableServer::POA_ptr _default_POA (void) override;
+  PortableServer::POA_ptr _default_POA () override;
 
 protected:
   /// Our ORB.  We need this member in case we need to shutdown the

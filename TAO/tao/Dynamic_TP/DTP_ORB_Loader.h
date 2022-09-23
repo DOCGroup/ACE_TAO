@@ -37,7 +37,7 @@ public:
   TAO_DTP_ORB_Loader ();
 
   /// Destructor.
-  ~TAO_DTP_ORB_Loader (void) override;
+  ~TAO_DTP_ORB_Loader () override;
 
   /// Initialize the DynamicTP loader hooks.
   int init (int argc, ACE_TCHAR* []) override;

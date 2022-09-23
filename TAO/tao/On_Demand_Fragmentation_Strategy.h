@@ -46,7 +46,7 @@ public:
   TAO_On_Demand_Fragmentation_Strategy (TAO_Transport * transport,
                                         ACE_CDR::ULong max_message_size);
 
-  virtual ~TAO_On_Demand_Fragmentation_Strategy (void);
+  virtual ~TAO_On_Demand_Fragmentation_Strategy ();
   int fragment (TAO_OutputCDR & cdr,
                 ACE_CDR::ULong pending_alignment,
                 ACE_CDR::ULong pending_length) override;

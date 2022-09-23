@@ -39,18 +39,18 @@ public:
   TAO_Time_Service_Server ();
 
   /// Destructor.
-  ~TAO_Time_Service_Server (void) override;
+  ~TAO_Time_Service_Server () override;
 
   /// This operation returns the current system time and an estimate of
   /// inaccuracy in a UTO.
-  CosTime::UTO_ptr universal_time (void) override;
+  CosTime::UTO_ptr universal_time () override;
 
   /**
    * This operation returns the current time in a UTO only if the time
    * can be guaranteed to have been obtained securely. Currently this operation
    * is not implemented and throws a CORBA::NO_IMPLEMENT exception, if called.
    */
-  CosTime::UTO_ptr secure_universal_time (void) override;
+  CosTime::UTO_ptr secure_universal_time () override;
 
   /// This creates a new UTO based on the given parameters.
   CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,

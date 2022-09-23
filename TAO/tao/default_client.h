@@ -52,9 +52,9 @@ public:
   // = Check Client_Strategy_Factory.h for the documentation of the
   //   following methods.
   TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport) override;
-  ACE_Lock *create_transport_mux_strategy_lock (void) override;
+  ACE_Lock *create_transport_mux_strategy_lock () override;
   int reply_dispatcher_table_size () const override;
-  int allow_callback (void) override;
+  int allow_callback () override;
   TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport) override;
   TAO_Connect_Strategy *create_connect_strategy (TAO_ORB_Core *) override;
   bool use_cleanup_options () const override;

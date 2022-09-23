@@ -46,7 +46,7 @@ namespace ACE
     public:
       Constraint_Interpreter ();
 
-      ~Constraint_Interpreter (void) override;
+      ~Constraint_Interpreter () override;
 
       /**
        * This method builds an expression tree representing the

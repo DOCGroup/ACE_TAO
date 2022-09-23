@@ -739,7 +739,7 @@ public:
 
 protected:
   /// Destructor - will delete the iterators
-  ~ACE_Configuration_Section_Key_Heap (void) override;
+  ~ACE_Configuration_Section_Key_Heap () override;
 
   // Not used
   ACE_Configuration_Section_Key_Heap (const ACE_Configuration_Section_Key_Heap& rhs);

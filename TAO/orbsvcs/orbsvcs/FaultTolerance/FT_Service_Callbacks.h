@@ -45,7 +45,7 @@ public:
   TAO_FT_Service_Callbacks (TAO_ORB_Core *);
 
   /// Dtor
-  ~TAO_FT_Service_Callbacks (void) override;
+  ~TAO_FT_Service_Callbacks () override;
 
   /// Select the profile from MProfile as the needs of the services
   /// may be. Return the profile in @a pfile

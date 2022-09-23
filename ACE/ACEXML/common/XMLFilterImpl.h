@@ -51,7 +51,7 @@ public:
   /**
    * Destructor.
    */
-  ~ACEXML_XMLFilterImpl (void) override;
+  ~ACEXML_XMLFilterImpl () override;
 
   /*
    * Look up the value of a feature.
@@ -143,7 +143,7 @@ public:
   /*
    * Receive notification of the end of a document.
    */
-  void endDocument (void) override;
+  void endDocument () override;
 
   /*
    * Receive notification of the end of an element.
@@ -183,7 +183,7 @@ public:
   /*
    * Receive notification of the beginning of a document.
    */
-  void startDocument (void) override;
+  void startDocument () override;
 
   /*
    * Receive notification of the beginning of an element.

@@ -32,7 +32,7 @@ public:
   TAO_MonitorEventChannelFactory (const char* name);
 
   /// Remove the factory name from the factory names statistic
-  ~TAO_MonitorEventChannelFactory (void) override;
+  ~TAO_MonitorEventChannelFactory () override;
 
   /// Create a named event channel and associate various statistic
   /// objects with it in the statistic registry

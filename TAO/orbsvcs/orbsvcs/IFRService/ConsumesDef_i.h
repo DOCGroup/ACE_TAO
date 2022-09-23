@@ -41,10 +41,10 @@ public:
     TAO_ConsumesDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_ConsumesDef_i (void) override;
+  ~TAO_ConsumesDef_i () override;
 
   /// Return our definition kind.
-  CORBA::DefinitionKind def_kind (void) override;
+  CORBA::DefinitionKind def_kind () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

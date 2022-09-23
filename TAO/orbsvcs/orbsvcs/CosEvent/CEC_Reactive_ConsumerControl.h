@@ -99,15 +99,15 @@ public:
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
-  ~TAO_CEC_Reactive_ConsumerControl (void) override;
+  ~TAO_CEC_Reactive_ConsumerControl () override;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_CEC_ConsumerControl
-  int activate (void) override;
-  int shutdown (void) override;
+  int activate () override;
+  int shutdown () override;
   void consumer_not_exist (TAO_CEC_ProxyPushSupplier *proxy) override;
   void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy) override;
   void system_exception (TAO_CEC_ProxyPushSupplier *proxy,

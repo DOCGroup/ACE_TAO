@@ -54,7 +54,7 @@ namespace CORBA
     UnknownUserException (const UnknownUserException& e);
 
     /// Destructor.
-    ~UnknownUserException (void) override;
+    ~UnknownUserException () override;
 
     /// Return the any containing the user exception.
     CORBA::Any& exception ();

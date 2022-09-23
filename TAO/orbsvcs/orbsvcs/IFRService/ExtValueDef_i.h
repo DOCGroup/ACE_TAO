@@ -44,7 +44,7 @@ public:
   TAO_ExtValueDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_ExtValueDef_i (void) override;
+  ~TAO_ExtValueDef_i () override;
 
   virtual CORBA::ExtInitializerSeq *ext_initializers ();
 

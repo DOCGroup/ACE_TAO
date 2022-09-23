@@ -71,7 +71,7 @@ namespace TAO
     PG_FactoryRegistry (const char * name = "FactoryRegistry");
 
     /// virtual Destructor
-    ~PG_FactoryRegistry (void) override;
+    ~PG_FactoryRegistry () override;
 
     /**
      * Parse command line arguments.
@@ -120,7 +120,7 @@ namespace TAO
 
     ////////////////////////////////
     // override servant base methods
-    void _remove_ref (void) override;
+    void _remove_ref () override;
 
     //////////////////
     // CORBA interface

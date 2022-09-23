@@ -54,7 +54,7 @@ protected:
 
 private:
   /// Release
-  void release (void) override;
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

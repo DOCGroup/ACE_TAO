@@ -41,7 +41,7 @@ public:
   static int init_svcs ();
 
   /// destructor...
-  ~TAO_EC_Kokyu_Factory (void) override;
+  ~TAO_EC_Kokyu_Factory () override;
 
   // = The Service_Object entry points
   int init (int argc, ACE_TCHAR* argv[]) override;

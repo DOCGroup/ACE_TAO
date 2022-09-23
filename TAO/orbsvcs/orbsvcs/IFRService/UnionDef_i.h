@@ -41,7 +41,7 @@ public:
   TAO_UnionDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_UnionDef_i (void) override;
+  ~TAO_UnionDef_i () override;
 
   /// Return our definition kind.
   CORBA::DefinitionKind def_kind () override;

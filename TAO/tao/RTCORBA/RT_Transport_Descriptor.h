@@ -49,7 +49,7 @@ public:
 
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
-  TAO_Transport_Descriptor_Interface *duplicate (void) override;
+  TAO_Transport_Descriptor_Interface *duplicate () override;
 
   /// Try to determine if this object is same as the <other_prop>.
   CORBA::Boolean is_equivalent (

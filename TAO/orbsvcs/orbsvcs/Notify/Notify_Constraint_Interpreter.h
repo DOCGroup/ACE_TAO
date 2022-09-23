@@ -40,7 +40,7 @@ public:
   TAO_Notify_Constraint_Interpreter ();
 
   /// Destructor
-  ~TAO_Notify_Constraint_Interpreter (void) override;
+  ~TAO_Notify_Constraint_Interpreter () override;
 
   /**
    * This method builds an expression tree representing the

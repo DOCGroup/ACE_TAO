@@ -104,7 +104,7 @@ public:
   /// Factory method to create a naming context factory for use with
   /// the -f option.
   TAO_Persistent_Naming_Context_Factory *
-    persistent_naming_context_factory (void) override;
+    persistent_naming_context_factory () override;
 
   /// Returns the IOR of the replication manager.
   char* replicator_ior ();

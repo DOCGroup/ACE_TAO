@@ -34,7 +34,7 @@ class ACE_Export ACE_Reactive_MEM_IO : public ACE_MEM_SAP
 public:
   ACE_Reactive_MEM_IO ();
 
-  ~ACE_Reactive_MEM_IO (void) override;
+  ~ACE_Reactive_MEM_IO () override;
 
   /**
    * Initialize the MEM_SAP object.

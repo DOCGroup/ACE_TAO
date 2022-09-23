@@ -83,7 +83,7 @@ class TAO_Event_Serv_Export TAO_CEC_Factory : public ACE_Service_Object
 {
 public:
   /// destructor...
-  ~TAO_CEC_Factory (void) override;
+  ~TAO_CEC_Factory () override;
 
   /// Create and destroy the dispatching module.
   virtual TAO_CEC_Dispatching*

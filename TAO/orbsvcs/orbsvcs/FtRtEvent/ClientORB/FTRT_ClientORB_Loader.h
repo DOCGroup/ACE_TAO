@@ -36,7 +36,7 @@ namespace TAO_FTRT {
     FTRT_ClientORB_Loader ();
 
     /// Destructor.
-    ~FTRT_ClientORB_Loader (void) override;
+    ~FTRT_ClientORB_Loader () override;
 
     /// Initialize the TransactionDepth loader hooks.
     int init (int argc,

@@ -43,10 +43,10 @@ public:
   TAO_LocalInterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_LocalInterfaceDef_i (void) override;
+  ~TAO_LocalInterfaceDef_i () override;
 
   /// Return our definition kind.
-  CORBA::DefinitionKind def_kind (void) override;
+  CORBA::DefinitionKind def_kind () override;
 
   CORBA::Boolean is_a (const char *interface_id) override;
 

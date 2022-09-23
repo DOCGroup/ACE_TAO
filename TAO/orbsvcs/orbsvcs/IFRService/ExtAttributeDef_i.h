@@ -40,7 +40,7 @@ public:
   TAO_ExtAttributeDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_ExtAttributeDef_i (void) override;
+  ~TAO_ExtAttributeDef_i () override;
 
   virtual CORBA::ExcDescriptionSeq *get_exceptions ();
 

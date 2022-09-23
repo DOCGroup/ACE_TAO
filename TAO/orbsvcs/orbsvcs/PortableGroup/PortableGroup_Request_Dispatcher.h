@@ -39,7 +39,7 @@ class TAO_PortableGroup_Export PortableGroup_Request_Dispatcher
 
 public:
   /// Destructor.
-  ~PortableGroup_Request_Dispatcher (void) override;
+  ~PortableGroup_Request_Dispatcher () override;
 
   /**
    * Dispatch a request.

@@ -71,7 +71,7 @@ public:
                      TAO_ORB_Core *orb_core);
 
   /// Destructor is to be called only through _decr_refcnt.
-  ~TAO_UIPMC_Profile (void) override;
+  ~TAO_UIPMC_Profile () override;
 
   /// Template methods. Please see tao/Profile.h for documentation.
 
@@ -81,12 +81,12 @@ public:
   int decode (TAO_InputCDR &cdr) override;
   void parse_string (const char *string) override;
   char * to_string () const override;
-  int encode_endpoints (void) override;
+  int encode_endpoints () override;
   virtual void encodeAddressInfo (TAO_OutputCDR &stream) const;
-  TAO_Endpoint *endpoint (void) override;
+  TAO_Endpoint *endpoint () override;
   CORBA::ULong endpoint_count () const override;
   CORBA::ULong hash (CORBA::ULong max) override;
-  virtual IOP::TaggedProfile &create_tagged_profile (void);
+  virtual IOP::TaggedProfile &create_tagged_profile ();
   virtual void request_target_specifier (
     TAO_Target_Specification &target_spec,
     TAO_Target_Specification::TAO_Target_Address r);
@@ -104,11 +104,11 @@ public:
 protected:
   /// Template methods, please see documentation in tao/Profile.h
   int decode_profile (TAO_InputCDR& cdr) override;
-  int decode_endpoints (void) override;
+  int decode_endpoints () override;
   void parse_string_i (const char *) override;
   void create_profile_body (TAO_OutputCDR &cdr) const override;
   CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile) override;
-  virtual void update_cached_group_component (void);
+  virtual void update_cached_group_component ();
 
 protected:
   /**

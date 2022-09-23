@@ -43,7 +43,7 @@ public:
       const ACE_Time_Value &timeout);
 
   /// Destructor
-  ~TAO_CEC_TypedProxyPushConsumer (void) override;
+  ~TAO_CEC_TypedProxyPushConsumer () override;
 
   /// Activate in the POA
   virtual void activate (
@@ -74,15 +74,15 @@ public:
 
   virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
 
-  void disconnect_push_consumer (void) override;
+  void disconnect_push_consumer () override;
 
   // = The CosTypedEventComm::TypedPushConsumer methods (abstract overloads)...
-  CORBA::Object_ptr get_typed_consumer (void) override;
+  CORBA::Object_ptr get_typed_consumer () override;
 
   // = The Servant methods
-  PortableServer::POA_ptr _default_POA (void) override;
-  void _add_ref (void) override;
-  void _remove_ref (void) override;
+  PortableServer::POA_ptr _default_POA () override;
+  void _add_ref () override;
+  void _remove_ref () override;
 
 protected:
   /// The guard needs access to the following protected methods.

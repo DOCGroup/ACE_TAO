@@ -40,11 +40,11 @@ public:
                               RTCORBA::Current_ptr current);
 
   /// Destructor
-  ~TAO_EC_RTCORBA_Dispatching (void) override;
+  ~TAO_EC_RTCORBA_Dispatching () override;
 
   // = The EC_Dispatching methods.
-  void activate (void) override;
-  void shutdown (void) override;
+  void activate () override;
+  void shutdown () override;
   void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,

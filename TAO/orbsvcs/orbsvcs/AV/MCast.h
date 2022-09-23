@@ -35,17 +35,17 @@ public:
 
   TAO_AV_UDP_MCast_Transport (TAO_AV_UDP_MCast_Flow_Handler *handler);
 
-  ~TAO_AV_UDP_MCast_Transport (void) override;
+  ~TAO_AV_UDP_MCast_Transport () override;
 
   int open (ACE_Addr *address) override;
 
-  int close (void) override;
+  int close () override;
 
-  int mtu (void) override;
+  int mtu () override;
 
   /// Write the complete Message_Block chain to the connection.
-  ACE_Addr *get_peer_addr (void) override;
-  ACE_Addr *get_local_addr (void) override;
+  ACE_Addr *get_peer_addr () override;
+  ACE_Addr *get_local_addr () override;
   ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0) override;
 
@@ -89,13 +89,13 @@ class TAO_AV_UDP_MCast_Flow_Handler
    public virtual ACE_Event_Handler
 {
 public:
-  TAO_AV_UDP_MCast_Flow_Handler (void);
-  ~TAO_AV_UDP_MCast_Flow_Handler (void) override;
+  TAO_AV_UDP_MCast_Flow_Handler ();
+  ~TAO_AV_UDP_MCast_Flow_Handler () override;
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE fd) override;
   int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0) override;
   ACE_SOCK_Dgram_Mcast *get_mcast_socket () const;
-  ACE_Event_Handler* event_handler (void) override{ return this; }
+  ACE_Event_Handler* event_handler () override{ return this; }
   void set_peer_addr (ACE_INET_Addr *peer_addr);
 protected:
   ACE_INET_Addr *peer_addr_;

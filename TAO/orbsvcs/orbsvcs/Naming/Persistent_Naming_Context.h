@@ -178,7 +178,7 @@ public:
                                  ACE_UINT32 *counter = 0);
 
   /// Destructor.
-  ~TAO_Persistent_Naming_Context (void) override;
+  ~TAO_Persistent_Naming_Context () override;
 
   // = Utility methods.
   /**
@@ -200,7 +200,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  CosNaming::NamingContext_ptr new_context (void) override;
+  CosNaming::NamingContext_ptr new_context () override;
 
   /**
    * Returns at most the requested number of bindings @a how_many in

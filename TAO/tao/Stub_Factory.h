@@ -48,7 +48,7 @@ class TAO_Export TAO_Stub_Factory : public ACE_Service_Object
 {
 public:
   /// Destructor.
-  ~TAO_Stub_Factory (void) override;
+  ~TAO_Stub_Factory () override;
 
   /// Creates a Stub Object.
   virtual TAO_Stub *create_stub (const char *repository_id,

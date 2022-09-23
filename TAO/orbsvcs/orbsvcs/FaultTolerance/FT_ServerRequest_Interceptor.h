@@ -54,7 +54,7 @@ namespace TAO
     FT_ServerRequest_Interceptor ();
 
     /// Destructor.
-    ~FT_ServerRequest_Interceptor (void) override;
+    ~FT_ServerRequest_Interceptor () override;
 
     /**
      * @name Methods Required by the Server Request Interceptor
@@ -66,9 +66,9 @@ namespace TAO
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    char * name (void) override;
+    char * name () override;
 
-    void destroy (void) override;
+    void destroy () override;
 
     void receive_request_service_contexts (
       PortableInterceptor::ServerRequestInfo_ptr ri) override;

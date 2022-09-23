@@ -58,7 +58,7 @@ namespace TAO
                              const char *orb_id,
                              PortableInterceptor::AdapterName *adapter_name,
                              PortableServer::POA_ptr poa);
-    ::CORBA::ValueBase *_copy_value (void) override;
+    ::CORBA::ValueBase *_copy_value () override;
 
     /**
      * @name PortableInterceptor::ObjectReferenceTemplate Methods
@@ -67,11 +67,11 @@ namespace TAO
      * PortableInterceptor::ObjectReferenceTemplate ValueType.
      */
     //@{
-    char * server_id (void) override;
+    char * server_id () override;
 
-    char * orb_id (void) override;
+    char * orb_id () override;
 
-    PortableInterceptor::AdapterName * adapter_name (void) override;
+    PortableInterceptor::AdapterName * adapter_name () override;
     //@}
 
     /**
@@ -92,7 +92,7 @@ namespace TAO
      * Protected destructor to enforce proper memory management via
      * reference counting.
      */
-    ~ObjectReferenceTemplate (void) override;
+    ~ObjectReferenceTemplate () override;
 
   private:
     const char *server_id_;

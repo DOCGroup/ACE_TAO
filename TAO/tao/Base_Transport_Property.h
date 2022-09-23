@@ -43,14 +43,14 @@ public:
                                CORBA::Boolean flag = false);
 
   /// Destructor
-  ~TAO_Base_Transport_Property (void) override;
+  ~TAO_Base_Transport_Property () override;
 
   /// The copy constructor.
   TAO_Base_Transport_Property (const TAO_Base_Transport_Property &rhs);
 
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
-   TAO_Transport_Descriptor_Interface *duplicate (void) override;
+   TAO_Transport_Descriptor_Interface *duplicate () override;
 
   /// Try to determine if this object is same as the @a other_prop.
   CORBA::Boolean is_equivalent (

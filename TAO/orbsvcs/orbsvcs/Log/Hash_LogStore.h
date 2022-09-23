@@ -49,11 +49,11 @@ public:
 
   /// Lists all logs created by the log factory.
   DsLogAdmin::LogList *
-    list_logs (void) override;
+    list_logs () override;
 
   /// Lists all log ids.
   DsLogAdmin::LogIdList *
-    list_logs_by_id (void) override;
+    list_logs_by_id () override;
 
   /// Returns a reference to the log with the supplied id.
   DsLogAdmin::Log_ptr

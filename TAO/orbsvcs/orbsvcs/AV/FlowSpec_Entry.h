@@ -285,12 +285,12 @@ public:
                               const char *flow_protocol,
                               const char *address);
 
-  ~TAO_Forward_FlowSpec_Entry (void) override;
+  ~TAO_Forward_FlowSpec_Entry () override;
 
   /// converts the entry to a string.
-  const char *entry_to_string (void) override;
+  const char *entry_to_string () override;
 
-  Role role (void) override;
+  Role role () override;
 
   /// construct the entry from a string specified by the flowSpec grammar.
   int parse (const char* flowSpec_entry) override;
@@ -329,12 +329,12 @@ public:
                               const char *flow_protocol,
                               const char *address);
 
-  ~TAO_Reverse_FlowSpec_Entry (void) override;
+  ~TAO_Reverse_FlowSpec_Entry () override;
 
   /// converts the entry to a string.
-  const char *entry_to_string (void) override;
+  const char *entry_to_string () override;
 
-  Role role (void) override;
+  Role role () override;
 
   /// construct the entry from a string specified by the flowSpec grammar.
   int parse (const char* flowSpec_entry) override;

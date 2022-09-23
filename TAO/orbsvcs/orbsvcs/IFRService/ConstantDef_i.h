@@ -42,16 +42,16 @@ public:
     TAO_ConstantDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_ConstantDef_i (void) override;
+  ~TAO_ConstantDef_i () override;
 
   /// Return our definition kind.
-  CORBA::DefinitionKind def_kind (void) override;
+  CORBA::DefinitionKind def_kind () override;
 
   /// From Contained_i's pure virtual function.
-  CORBA::Contained::Description *describe (void) override;
+  CORBA::Contained::Description *describe () override;
 
   /// From Contained_i's pure virtual function.
-  CORBA::Contained::Description *describe_i (void) override;
+  CORBA::Contained::Description *describe_i () override;
 
   virtual CORBA::TypeCode_ptr type ();
 

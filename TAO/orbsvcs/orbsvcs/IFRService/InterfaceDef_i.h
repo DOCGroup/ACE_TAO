@@ -47,26 +47,26 @@ public:
   TAO_InterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_InterfaceDef_i (void) override;
+  ~TAO_InterfaceDef_i () override;
 
   /// Return our definition kind.
-  CORBA::DefinitionKind def_kind (void) override;
+  CORBA::DefinitionKind def_kind () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
-  void destroy_i (void) override;
-
-  /// From Contained_i's pure virtual function.
-  CORBA::Contained::Description *describe (void) override;
+  void destroy_i () override;
 
   /// From Contained_i's pure virtual function.
-  CORBA::Contained::Description *describe_i (void) override;
+  CORBA::Contained::Description *describe () override;
+
+  /// From Contained_i's pure virtual function.
+  CORBA::Contained::Description *describe_i () override;
 
   /// From IDLType_i's pure virtual function.
-  CORBA::TypeCode_ptr type (void) override;
+  CORBA::TypeCode_ptr type () override;
 
   /// From IDLType_i's pure virtual function.
-  CORBA::TypeCode_ptr type_i (void) override;
+  CORBA::TypeCode_ptr type_i () override;
 
   virtual CORBA::InterfaceDefSeq *base_interfaces ();
 

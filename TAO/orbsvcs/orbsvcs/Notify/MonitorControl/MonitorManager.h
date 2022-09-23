@@ -33,7 +33,7 @@ public:
   int run ();
 
   /// This will call the run() method.
-  int resume (void) override;
+  int resume () override;
 
   /// Get the dynamic instance of the TAO_MonitorManager and
   /// shut it down
@@ -43,7 +43,7 @@ private:
   class ORBTask: public ACE_Task_Base
   {
   public:
-    ORBTask (void);
+    ORBTask ();
     int svc () override;
 
     TAO_SYNCH_MUTEX mutex_;

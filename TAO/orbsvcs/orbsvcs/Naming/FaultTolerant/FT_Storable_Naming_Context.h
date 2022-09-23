@@ -80,13 +80,13 @@ public:
    */
   void stale (bool is_stale) override;
 
-  bool stale (void) override;
+  bool stale () override;
 
   /**
    * An internal utility used to signal that this context was updated.
    * Check the last_changed_ attribute for the time of the write.
    */
-  void context_written (void) override;
+  void context_written () override;
 
   /**
    * An internal callback invoked by the File_Open_Lock_and_Check

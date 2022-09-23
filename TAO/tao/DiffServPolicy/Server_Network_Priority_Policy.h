@@ -60,25 +60,25 @@ public:
   /// Returns a copy of <this>.
   TAO_Server_Network_Priority_Policy *clone () const;
 
-  TAO::DiffservCodepoint request_diffserv_codepoint (void) override;
+  TAO::DiffservCodepoint request_diffserv_codepoint () override;
 
   void request_diffserv_codepoint (TAO::DiffservCodepoint req_dscp) override;
 
-  TAO::DiffservCodepoint reply_diffserv_codepoint (void) override;
+  TAO::DiffservCodepoint reply_diffserv_codepoint () override;
 
   void reply_diffserv_codepoint (TAO::DiffservCodepoint reply_dscp) override;
 
-  TAO::NetworkPriorityModel network_priority_model (void) override;
+  TAO::NetworkPriorityModel network_priority_model () override;
 
   void network_priority_model (TAO::NetworkPriorityModel npm) override;
 
   static CORBA::Policy_ptr create (const CORBA::Any &val);
 
-  CORBA::PolicyType policy_type (void) override;
+  CORBA::PolicyType policy_type () override;
 
-  CORBA::Policy_ptr copy (void) override;
+  CORBA::Policy_ptr copy () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   // Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
@@ -93,7 +93,7 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
-  ~TAO_Server_Network_Priority_Policy (void) override;
+  ~TAO_Server_Network_Priority_Policy () override;
 
 private:
   /// The attributes

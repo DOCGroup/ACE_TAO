@@ -44,7 +44,7 @@ public:
   TAO_FT_ClientService_Activate ();
 
   /// The destructor
-  ~TAO_FT_ClientService_Activate (void) override;
+  ~TAO_FT_ClientService_Activate () override;
 
   /**
    * Create and activate the service callbacks into the orb.

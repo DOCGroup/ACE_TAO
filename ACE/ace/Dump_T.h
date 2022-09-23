@@ -39,7 +39,7 @@ class ACE_Dumpable_Adapter : public ACE_Dumpable
 {
 public:
   ACE_Dumpable_Adapter (const Concrete *t);
-  ~ACE_Dumpable_Adapter (void) override;
+  ~ACE_Dumpable_Adapter () override;
 
   /// Concrete dump method (simply delegates to the dump() method of
   /// <class Concrete>).

@@ -78,7 +78,7 @@ public:
   int open (ACE_Reactor_Impl *,
                     ACE_Timer_Queue *timer_queue = 0,
                     int disable_notify = 0) override;
-  int close (void) override;
+  int close () override;
 
   /**
    * Called by a thread when it wants to unblock the Reactor_Impl.
@@ -107,7 +107,7 @@ public:
   /// Returns the ACE_HANDLE of the notify pipe on which the reactor
   /// is listening for notifications so that other threads can unblock
   /// the Reactor_Impl.
-  ACE_HANDLE notify_handle (void) override;
+  ACE_HANDLE notify_handle () override;
 
   /// Verify whether the buffer has dispatchable info or not.
   int is_dispatchable (ACE_Notification_Buffer &buffer) override;
@@ -142,7 +142,7 @@ public:
    * passed in via the notify queue before breaking out of its event
    * loop.
    */
-  int max_notify_iterations (void) override;
+  int max_notify_iterations () override;
 
   /**
    * Purge any notifications pending in this reactor for the specified
@@ -431,7 +431,7 @@ public:
                         int s_queue = ACE_DEV_POLL_TOKEN::FIFO);
 
   /// Close down and release all resources.
-  ~ACE_Dev_Poll_Reactor (void) override;
+  ~ACE_Dev_Poll_Reactor () override;
 
   /// Initialization.
   int open (size_t size,
@@ -461,7 +461,7 @@ public:
   ACE_Timer_Queue *timer_queue () const override;
 
   /// Close down and release all resources.
-  int close (void) override;
+  int close () override;
 
   // = Event loop drivers.
   /**
@@ -522,7 +522,7 @@ public:
    *         non-zero, @c handle_events() and
    *         @c handle_alertable_events() return -1 immediately.
    */
-  int deactivated (void) override;
+  int deactivated () override;
 
   /**
    * Control whether the Reactor will handle any more incoming events
@@ -632,7 +632,7 @@ public:
   int suspend_handler (const ACE_Handle_Set &handles) override;
 
   /// Suspend all handles temporarily.
-  int suspend_handlers (void) override;
+  int suspend_handlers () override;
 
   /// Resume event_handler. Use ACE_Event_Handler::get_handle() to
   /// get the handle.
@@ -645,16 +645,16 @@ public:
   int resume_handler (const ACE_Handle_Set &handles) override;
 
   /// Resume all handles.
-  int resume_handlers (void) override;
+  int resume_handlers () override;
 
   /// Does the reactor allow the application to resume the handle on
   /// its own, i.e., can it pass on the control of handle resumption to
   /// the application.
-  int resumable_handler (void) override;
+  int resumable_handler () override;
 
   /// Return true if we any event associations were made by the reactor
   /// for the handles that it waits on, false otherwise.
-  bool uses_event_associations (void) override;
+  bool uses_event_associations () override;
 
   // = Timer management.
 
@@ -760,7 +760,7 @@ public:
    * via the notify queue before breaking out of its
    * ACE_Message_Queue::dequeue() loop.
    */
-  int max_notify_iterations (void) override;
+  int max_notify_iterations () override;
 
   /**
    * Purge any notifications pending in this reactor for the specified
@@ -795,17 +795,17 @@ public:
 
   /// Returns true if Reactor has been successfully initialized, else
   /// false.
-  bool initialized (void) override;
+  bool initialized () override;
 
   /// Returns the current size of the Reactor's internal descriptor
   /// table.
   size_t size () const override;
 
   /// Returns a reference to the Reactor's internal repository lock.
-  ACE_Lock &lock (void) override;
+  ACE_Lock &lock () override;
 
   /// Wake up all threads waiting in the event loop.
-  void wakeup_all_threads (void) override;
+  void wakeup_all_threads () override;
 
   /// Transfers ownership of Reactor_Impl to the @a new_owner.
   /**
@@ -826,7 +826,7 @@ public:
   int owner (ACE_thread_t *owner) override;
 
   /// Get the existing restart value.
-  bool restart (void) override;
+  bool restart () override;
 
   /// Set a new value for restart and return the original value.
   /**
@@ -848,7 +848,7 @@ public:
   /**
    * @note This is currently a no-op.
    */
-  int requeue_position (void) override;
+  int requeue_position () override;
 
   /**
    * @name Low-level wait_set mask manipulation methods

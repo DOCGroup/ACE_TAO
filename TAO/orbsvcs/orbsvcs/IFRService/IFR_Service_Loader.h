@@ -34,7 +34,7 @@ public:
   TAO_IFR_Service_Loader ();
 
   // Destructor
-  ~TAO_IFR_Service_Loader (void) override;
+  ~TAO_IFR_Service_Loader () override;
 
   // Called by the Service Configurator framework to initialize the
   // Event Service. Defined in <ace/Service_Config.h>

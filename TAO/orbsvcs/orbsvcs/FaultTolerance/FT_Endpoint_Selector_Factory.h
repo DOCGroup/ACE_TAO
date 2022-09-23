@@ -45,7 +45,7 @@ public:
   TAO_FT_Endpoint_Selector_Factory ();
 
   /// Destructor.
-  ~TAO_FT_Endpoint_Selector_Factory (void) override;
+  ~TAO_FT_Endpoint_Selector_Factory () override;
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.

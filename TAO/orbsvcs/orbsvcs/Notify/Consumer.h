@@ -67,7 +67,7 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
   TAO_Notify_ProxySupplier* proxy_supplier ();
 
   /// Access Base Proxy.
-  TAO_Notify_Proxy* proxy (void) override;
+  TAO_Notify_Proxy* proxy () override;
 
   /// Dispatch Event to consumer
   void deliver (TAO_Notify_Method_Request_Event * request);
@@ -97,7 +97,7 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
   void resume ();
 
   /// Shutdown the consumer
-  void shutdown (void) override;
+  void shutdown () override;
 
   /// On reconnect we need to move events from the old consumer
   /// to the new one

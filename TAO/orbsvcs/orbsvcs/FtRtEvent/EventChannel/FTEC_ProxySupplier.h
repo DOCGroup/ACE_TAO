@@ -38,9 +38,9 @@ public:
   void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
                 const RtecEventChannelAdmin::ConsumerQOS &qos) override;
-  void disconnect_push_supplier (void) override;
-  void suspend_connection (void) override;
-  void resume_connection (void) override;
+  void disconnect_push_supplier () override;
+  void suspend_connection () override;
+  void resume_connection () override;
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
 

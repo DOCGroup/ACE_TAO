@@ -49,7 +49,7 @@ public:
   typedef CORBA::Long ID;
 
   /// Destructor
-  ~TAO_Notify_Object (void) override;
+  ~TAO_Notify_Object () override;
 
   /// This Object's ID
   ID id () const;

@@ -45,7 +45,7 @@ public:
                                const TAO_Property_Filter& pfilter);
 
   /// Destructor.
-  ~TAO_Register_Offer_Iterator (void) override;
+  ~TAO_Register_Offer_Iterator () override;
 
   /// Deposit at maximum n offers into the return sequence and return 1,
   /// or return 0 if the iterator is done and no offers are returned.
@@ -58,7 +58,7 @@ public:
    * the trader will have all the offers it has now when the time
    * to return them comes.
    */
-  CORBA::ULong max_left (void) override;
+  CORBA::ULong max_left () override;
 
   /// Add an offer the iterator should iterate over.
   void add_offer (CosTrading::OfferId id,

@@ -46,7 +46,7 @@ public:
   ~TAO_Notify_Method_Request_Updates () override;
 
   /// Execute the Request
-  int execute (void) override;
+  int execute () override;
 };
 
 /*****************************************************************************/
@@ -74,10 +74,10 @@ public:
   ~TAO_Notify_Method_Request_Updates_No_Copy () override;
 
   /// Create a copy of this object.
-  TAO_Notify_Method_Request_Queueable* copy (void) override;
+  TAO_Notify_Method_Request_Queueable* copy () override;
 
   /// Execute the Request
-  int execute (void) override;
+  int execute () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

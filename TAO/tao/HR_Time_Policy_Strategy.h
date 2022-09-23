@@ -41,11 +41,11 @@ class TAO_Export TAO_HR_Time_Policy_Strategy
 public:
   virtual ~TAO_HR_Time_Policy_Strategy ();
 
-  ACE_Timer_Queue * create_timer_queue (void) override;
+  ACE_Timer_Queue * create_timer_queue () override;
 
   void destroy_timer_queue (ACE_Timer_Queue *tmq) override;
 
-  ACE_Dynamic_Time_Policy_Base * get_time_policy (void) override;
+  ACE_Dynamic_Time_Policy_Base * get_time_policy () override;
 
 private:
   static ACE_Time_Policy_T<ACE_HR_Time_Policy>  time_policy_;

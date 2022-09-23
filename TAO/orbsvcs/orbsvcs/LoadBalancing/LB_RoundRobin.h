@@ -49,7 +49,7 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  char * name (void) override;
+  char * name () override;
 
   CosLoadBalancing::Properties * get_properties () override;
 
@@ -76,7 +76,7 @@ public:
 
 protected:
   /// Destructor
-  ~TAO_LB_RoundRobin (void) override;
+  ~TAO_LB_RoundRobin () override;
 
 private:
   /// Keep a copy of location list for verify if the list is changed

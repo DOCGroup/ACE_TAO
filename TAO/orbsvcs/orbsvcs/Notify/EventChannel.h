@@ -74,8 +74,8 @@ public:
   void remove (TAO_Notify_SupplierAdmin* supplier_admin);
 
   /// ServantBase refcount methods.
-  void _add_ref (void) override;
-  void _remove_ref (void) override;
+  void _add_ref () override;
+  void _remove_ref () override;
 
   // TAO_Notify::Topology_Parent
 
@@ -83,7 +83,7 @@ public:
   TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
                                                    CORBA::Long id,
                                                    const TAO_Notify::NVPList& attrs) override;
-  void reconnect (void) override;
+  void reconnect () override;
   virtual void validate ();
 
   TAO_Notify_Object::ID get_id () const override {return id();}
@@ -97,11 +97,11 @@ public:
                               bool experienced_timeout);
 
   /// Shutdown
-  int shutdown (void) override;
+  int shutdown () override;
   void load_attrs(const TAO_Notify::NVPList& attrs) override;
 
   /// TAO_Notify_Container_T requires a destroy method
-  void destroy (void) override;
+  void destroy () override;
 
   /// This is public to allow TAO_MonitorConsumerAdmin access.
   CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -136,11 +136,11 @@ protected:
 
   ::CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory () override;
 
-  ::CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin (void) override;
+  ::CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin () override;
 
-  ::CosNotifyChannelAdmin::SupplierAdmin_ptr default_supplier_admin (void) override;
+  ::CosNotifyChannelAdmin::SupplierAdmin_ptr default_supplier_admin () override;
 
-  ::CosNotifyFilter::FilterFactory_ptr default_filter_factory (void) override;
+  ::CosNotifyFilter::FilterFactory_ptr default_filter_factory () override;
 
   ::CosNotifyChannelAdmin::ConsumerAdmin_ptr new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
                                                                         CosNotifyChannelAdmin::AdminID_out id) override;
@@ -148,24 +148,24 @@ protected:
   ::CosNotifyChannelAdmin::SupplierAdmin_ptr new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
                                                                         CosNotifyChannelAdmin::AdminID_out id) override;
 
-  ::CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins (void) override;
+  ::CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins () override;
 
-  ::CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins (void) override;
+  ::CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins () override;
 
-  ::CosNotification::QoSProperties * get_qos (void) override;
+  ::CosNotification::QoSProperties * get_qos () override;
 
   void set_qos (const CosNotification::QoSProperties & qos) override;
 
   void validate_qos (const CosNotification::QoSProperties & required_qos,
                              CosNotification::NamedPropertyRangeSeq_out available_qos) override;
 
-  ::CosNotification::AdminProperties * get_admin (void) override;
+  ::CosNotification::AdminProperties * get_admin () override;
 
   void set_admin (const CosNotification::AdminProperties & admin) override;
 
-  ::CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void) override;
+  ::CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
-  ::CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void) override;
+  ::CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
 
 private:
   TAO_Notify_ConsumerAdmin_Container& ca_container();
@@ -181,7 +181,7 @@ private:
   CosNotifyFilter::FilterFactory_var default_filter_factory_;
   TAO_Notify_FilterFactory * default_filter_factory_servant_;
 
-  void release (void) override;
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

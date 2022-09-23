@@ -43,15 +43,15 @@ namespace TAO
     void decompress (const ::Compression::Buffer &source,
                              ::Compression::Buffer &target) override = 0;
 
-    ::Compression::CompressorFactory_ptr compressor_factory (void) override;
+    ::Compression::CompressorFactory_ptr compressor_factory () override;
 
-    ::Compression::CompressionLevel compression_level (void) override;
+    ::Compression::CompressionLevel compression_level () override;
 
-    ::CORBA::ULongLong compressed_bytes (void) override;
+    ::CORBA::ULongLong compressed_bytes () override;
 
-    ::CORBA::ULongLong uncompressed_bytes (void) override;
+    ::CORBA::ULongLong uncompressed_bytes () override;
 
-    ::Compression::CompressionRatio compression_ratio (void) override;
+    ::Compression::CompressionRatio compression_ratio () override;
 
   protected:
     void update_stats (::CORBA::ULongLong uncompressed_bytes,

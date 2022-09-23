@@ -119,7 +119,7 @@ namespace RTCORBA
     // Abstract or local interface only.
     ProtocolProperties ();
 
-    ~ProtocolProperties (void) override;
+    ~ProtocolProperties () override;
 
   private:
     // Private and unimplemented for concrete interfaces.

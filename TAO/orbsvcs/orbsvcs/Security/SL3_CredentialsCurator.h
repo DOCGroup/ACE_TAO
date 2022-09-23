@@ -130,7 +130,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~CredentialsCurator (void) override;
+      ~CredentialsCurator () override;
 
     private:
       /// Lock used to synchronize access to underlying tables.

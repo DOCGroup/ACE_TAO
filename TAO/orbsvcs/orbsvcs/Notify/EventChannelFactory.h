@@ -64,8 +64,8 @@ public:
   ~TAO_Notify_EventChannelFactory () override;
 
   /// = ServantBase  Methods
-  void _add_ref (void) override;
-  void _remove_ref (void) override;
+  void _add_ref () override;
+  void _remove_ref () override;
 
   /// Remove @a channel from the <ec_container_>
   virtual void remove (TAO_Notify_EventChannel* channel);
@@ -96,12 +96,12 @@ public:
   bool is_persistent () const override;
 
   void save_persistent (TAO_Notify::Topology_Saver& saver) override;
-  bool change_to_parent (void) override;
+  bool change_to_parent () override;
   TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
                                                    CORBA::Long id,
                                                    const TAO_Notify::NVPList& attrs) override;
-  CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self (void);
-  void reconnect (void) override;
+  CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self ();
+  void reconnect () override;
   virtual void validate ();
 
   /// at shutdown time, this causes the validator thread to exit.
@@ -112,7 +112,7 @@ public:
 
   void load_event_persistence ();
 
-  void save_topology (void) override;
+  void save_topology () override;
 
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
@@ -123,10 +123,10 @@ private:
   /// = Data Members
 
   /// = NotifyExt methods
-  void destroy (void) override;
+  void destroy () override;
 
   /// shutdown
-  int shutdown (void) override;
+  int shutdown () override;
   
   NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
       NotifyExt::ReconnectionCallback_ptr reconnection) override;
@@ -134,7 +134,7 @@ private:
   void unregister_callback (
       NotifyExt::ReconnectionRegistry::ReconnectionID id) override;
 
-  CORBA::Boolean is_alive (void) override;
+  CORBA::Boolean is_alive () override;
 
 protected:
   /// = CosNotifyChannelAdmin Methods
@@ -143,7 +143,7 @@ protected:
       const CosNotification::AdminProperties & initial_admin,
       CosNotifyChannelAdmin::ChannelID_out id) override;
 
-  ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (void) override;
+  ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels () override;
 
   ::CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
       CosNotifyChannelAdmin::ChannelID id) override;
@@ -169,7 +169,7 @@ private:
   Routing_Slip_Set routing_slip_restart_set_;
 
   /// Release this object.
-  void release (void) override;
+  void release () override;
 
   ACE_Auto_Ptr <TAO_Notify_validate_client_Task> validate_client_task_;
 

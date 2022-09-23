@@ -43,7 +43,7 @@ public:
   TAO_MonitorConsumerAdmin ();
 
   /// Remove the statistics for this event channel.
-  ~TAO_MonitorConsumerAdmin (void) override;
+  ~TAO_MonitorConsumerAdmin () override;
 
   /// Register our statistic and control objects.
   void register_stats_controls (TAO_MonitorEventChannel* mec,
@@ -72,7 +72,7 @@ public:
 
   void count_queue_overflow (bool local_overflow, bool global_overflow) override;
 
-  void destroy (void) override;
+  void destroy () override;
 
 private:
   virtual void remove ();

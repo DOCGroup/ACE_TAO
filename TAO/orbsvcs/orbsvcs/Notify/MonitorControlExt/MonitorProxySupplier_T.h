@@ -44,7 +44,7 @@ public:
   TAO_MonitorProxySupplier_T ();
 
   /// Remove the statistics for this event channel
-  ~TAO_MonitorProxySupplier_T (void) override;
+  ~TAO_MonitorProxySupplier_T () override;
 
   /// Configure the statistics after construction
   /// @param admin the parent admin for this proxy

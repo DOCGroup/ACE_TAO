@@ -48,14 +48,14 @@ public:
   TAO_Iterator_i (PortableServer::POA_ptr poa, ACE_Reactor* reactor);
 
   /// Destructor.
-  ~TAO_Iterator_i (void) override;
+  ~TAO_Iterator_i () override;
 
   /// Gets a list of LogRecords.
   DsLogAdmin::RecordList* get (CORBA::ULong position,
                                        CORBA::ULong how_many) override = 0;
 
   /// This destroys the iterator.
-  void destroy (void) override;
+  void destroy () override;
 
 protected:
   /// POA

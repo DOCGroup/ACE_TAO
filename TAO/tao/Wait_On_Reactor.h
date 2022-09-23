@@ -40,7 +40,7 @@ public:
             TAO_Synch_Reply_Dispatcher &rd) override;
 
   /*! @copydoc TAO_Wait_Strategy::register_handler() */
-  int register_handler (void) override;
+  int register_handler () override;
 
   /*! @copydoc TAO_Wait_Strategy::non_blocking() */
   bool non_blocking () const override;

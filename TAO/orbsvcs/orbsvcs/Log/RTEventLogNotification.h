@@ -51,10 +51,10 @@ public:
   TAO_RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr);
 
   /// Destructor.
-  ~TAO_RTEventLogNotification (void) override;
+  ~TAO_RTEventLogNotification () override;
 
   /// The skeleton methods.
-  void disconnect_push_supplier (void) override;
+  void disconnect_push_supplier () override;
 
 protected:
   // = Helper methods

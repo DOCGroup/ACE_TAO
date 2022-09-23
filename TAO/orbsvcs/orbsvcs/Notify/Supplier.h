@@ -42,7 +42,7 @@ public:
   TAO_Notify_ProxyConsumer* proxy_consumer ();
 
   /// Access Base Proxy.
-  TAO_Notify_Proxy* proxy (void) override;
+  TAO_Notify_Proxy* proxy () override;
 
   virtual CORBA::Object_ptr get_supplier () = 0;
 

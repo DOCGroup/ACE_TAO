@@ -44,7 +44,7 @@ public:
                        TAO_ORB_Core *orb_core);
 
   /// Default destructor.
-  ~TAO_UIPMC_Transport (void) override;
+  ~TAO_UIPMC_Transport () override;
 
 protected:
   /** @name Overridden Template Methods
@@ -52,8 +52,8 @@ protected:
    * These are implementations of template methods declared by TAO_Transport.
    */
   //@{
-  ACE_Event_Handler *event_handler_i (void) override;
-  TAO_Connection_Handler *connection_handler_i (void) override;
+  ACE_Event_Handler *event_handler_i () override;
+  TAO_Connection_Handler *connection_handler_i () override;
 
   /// Write the complete Message_Block chain to the connection.
   ssize_t send (iovec *iov, int iovcnt,
@@ -65,7 +65,7 @@ protected:
                         size_t len,
                         ACE_Time_Value const *s = 0) override;
 
-  int register_handler (void) override;
+  int register_handler () override;
 
 public:
   /// @@TODO: These methods IMHO should have more meaningful

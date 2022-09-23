@@ -68,10 +68,10 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  char * name (void) override;
+  char * name () override;
 
   /// Cleanup resources acquired by this IORInterceptor.
-  void destroy (void) override;
+  void destroy () override;
 
   /// Add the tagged components to the IOR.
   void establish_components (

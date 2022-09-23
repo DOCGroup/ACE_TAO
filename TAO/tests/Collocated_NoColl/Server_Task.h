@@ -27,7 +27,7 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc (void) override;
+  int svc () override;
 
 private:
   /// Output file for IOR

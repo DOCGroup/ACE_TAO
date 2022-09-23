@@ -50,7 +50,7 @@ public:
   TAO_IRObject_i (TAO_Repository_i *repo);
 
   /// Destructor.
-  ~TAO_IRObject_i (void) override;
+  ~TAO_IRObject_i () override;
 
   CORBA::DefinitionKind def_kind () override;
 

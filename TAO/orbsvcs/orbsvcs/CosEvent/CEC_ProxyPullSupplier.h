@@ -59,7 +59,7 @@ public:
                              const ACE_Time_Value &timeout);
 
   /// destructor...
-  ~TAO_CEC_ProxyPullSupplier (void) override;
+  ~TAO_CEC_ProxyPullSupplier () override;
 
   /// Activate in the POA
   virtual void activate (
@@ -95,18 +95,18 @@ public:
   // = The CosEventChannelAdmin::ProxyPullSupplier methods...
   void connect_pull_consumer (
                 CosEventComm::PullConsumer_ptr pull_consumer) override;
-  CORBA::Any * pull (void) override;
+  CORBA::Any * pull () override;
   CORBA::Any * try_pull (CORBA::Boolean_out has_event) override;
-  void disconnect_pull_supplier (void) override;
+  void disconnect_pull_supplier () override;
 
   /// Increment and decrement the reference count.
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
 
   // = The Servant methods
-  PortableServer::POA_ptr _default_POA (void) override;
-  void _add_ref (void) override;
-  void _remove_ref (void) override;
+  PortableServer::POA_ptr _default_POA () override;
+  void _add_ref () override;
+  void _remove_ref () override;
 
 protected:
   /// Set the consumer, used by some implementations to change the

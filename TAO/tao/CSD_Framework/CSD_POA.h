@@ -47,7 +47,7 @@ public:
                TAO_Object_Adapter *object_adapter);
 
   /// Destructor
-  ~TAO_CSD_POA (void) override;
+  ~TAO_CSD_POA () override;
 
   /// Pass the Strategy object reference to the CSD poa.
   void set_csd_strategy (::CSD_Framework::Strategy_ptr s) override;

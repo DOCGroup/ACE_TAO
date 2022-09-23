@@ -42,7 +42,7 @@ public:
   TAO_Notify_ProxyConsumer ();
 
   /// Destructor
-  ~TAO_Notify_ProxyConsumer (void) override;
+  ~TAO_Notify_ProxyConsumer () override;
 
   /// init: overrides Topology_Object method
   virtual void init (TAO_Notify::Topology_Parent * topology_parent);
@@ -54,10 +54,10 @@ public:
   void disconnect ();
 
   /// Shutdown  (TAO_Notify_Container_T method)
-  int shutdown (void) override;
+  int shutdown () override;
 
   /// Destroy this object.
-  void destroy (void) override;
+  void destroy () override;
 
   /// Return true if connected
   bool is_connected () const;
@@ -91,7 +91,7 @@ private:
   ACE_Auto_Ptr<TAO_Notify_Supplier> supplier_;
 
   /// Access our Peer.
-  TAO_Notify_Peer* peer (void) override;
+  TAO_Notify_Peer* peer () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

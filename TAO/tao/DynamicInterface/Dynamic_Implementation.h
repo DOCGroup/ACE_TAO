@@ -68,7 +68,7 @@ public:
   CORBA::Object_ptr _this ();
 
   /// Query the Interface Repository for the interface definition.
-  CORBA::InterfaceDef_ptr _get_interface (void) override;
+  CORBA::InterfaceDef_ptr _get_interface () override;
 
 protected:
   /// Return 0.  Should never be used.
@@ -78,7 +78,7 @@ protected:
   virtual void *_downcast (const char *repository_id);
 
   /// This is an auxiliary method for _this() and _narrow().
-  TAO_Stub *_create_stub (void) override;
+  TAO_Stub *_create_stub () override;
 
   /// Turns around and calls invoke.
   void _dispatch (

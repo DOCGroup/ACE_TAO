@@ -46,7 +46,7 @@ class TAO_RTCORBA_Export TAO_RT_Stub_Factory : public TAO_Stub_Factory
 {
 public:
   // -- Ctor/Dtor --
-  ~TAO_RT_Stub_Factory (void) override;
+  ~TAO_RT_Stub_Factory () override;
 
   /// Creates a Stub Object.
   TAO_Stub *create_stub (const char *repository_id,

@@ -60,11 +60,11 @@ public:
                              ACE_Configuration *config);
 
   /// Destructor.
-  ~TAO_ComponentRepository_i (void) override;
+  ~TAO_ComponentRepository_i () override;
 
   /// We create a default servant servant for each IR Object
   /// type and its corresponding POA.
-  int create_servants_and_poas (void) override;
+  int create_servants_and_poas () override;
 
   /// Return one of our servants for internal use.
   TAO_IDLType_i *select_idltype (CORBA::DefinitionKind def_kind) const override;

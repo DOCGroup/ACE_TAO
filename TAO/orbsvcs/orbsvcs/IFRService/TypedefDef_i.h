@@ -45,7 +45,7 @@ public:
   TAO_TypedefDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_TypedefDef_i (void) override;
+  ~TAO_TypedefDef_i () override;
 
   /// From Contained_i's pure virtual function.
   CORBA::Contained::Description *describe () override;

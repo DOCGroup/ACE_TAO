@@ -56,10 +56,10 @@ public:
             int flags = 0);
 
   /// Close down the shared memory segment.
-  int close (void) override;
+  int close () override;
 
   /// Remove the underlying shared memory segment.
-  int remove (void) override;
+  int remove () override;
 
   // = Allocation and deallocation methods.
   /// Create a new chuck of memory containing @a size bytes.

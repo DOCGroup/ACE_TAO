@@ -78,7 +78,7 @@ public:
   TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options);
 
   /// Destructor.
-  ~TAO_AV_Endpoint_Process_Strategy (void) override;
+  ~TAO_AV_Endpoint_Process_Strategy () override;
 
   /// creates a new child process, and waits on a semaphore
   /// until the child process has finished creating the endpoints
@@ -127,7 +127,7 @@ public:
   TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options);
 
   /// Destructor.
-  ~TAO_AV_Endpoint_Process_Strategy_A (void) override;
+  ~TAO_AV_Endpoint_Process_Strategy_A () override;
 
 protected:
   /// Creates an "A" type stream endpoint, and a vdev
@@ -135,7 +135,7 @@ protected:
                         AVStreams::VDev_ptr &vdev) override;
 
   /// Gets the "A" type stream endpoint from the child process
-  int get_stream_endpoint (void) override;
+  int get_stream_endpoint () override;
 };
 
 // ----------------------------------------------------------------------
@@ -152,7 +152,7 @@ public:
   TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options);
 
   /// Destructor.
-  ~TAO_AV_Endpoint_Process_Strategy_B (void) override;
+  ~TAO_AV_Endpoint_Process_Strategy_B () override;
 
 protected:
   /// Creates a "B" type stream endpoint, and a vdev

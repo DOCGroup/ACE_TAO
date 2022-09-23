@@ -37,7 +37,7 @@ class TAO_Notify_Constraint_Expr : public TAO_Notify::Topology_Object
 public:
   friend class TAO_Notify_ETCL_Filter;
 
-  TAO_Notify_Constraint_Expr (void);
+  TAO_Notify_Constraint_Expr ();
   ~TAO_Notify_Constraint_Expr () override;
 
   void save_persistent (
@@ -55,7 +55,7 @@ public:
 
 private:
   /// Release this object.
-  void release (void) override;
+  void release () override;
 
   // = DESCRIPTION
   //   Structure for associating ConstraintInfo with an interpreter.
@@ -83,7 +83,7 @@ public:
                           const TAO_Notify_Object::ID& id);
 
   /// Destructor
-  ~TAO_Notify_ETCL_Filter (void) override;
+  ~TAO_Notify_ETCL_Filter () override;
 
   void save_persistent (TAO_Notify::Topology_Saver& saver) override;
   void load_attrs(const TAO_Notify::NVPList& attrs) override;
@@ -91,7 +91,7 @@ public:
     CORBA::Long id, const TAO_Notify::NVPList& attrs) override;
 
 protected:
-  char * constraint_grammar (void) override;
+  char * constraint_grammar () override;
 
   CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list) override;
 
@@ -100,11 +100,11 @@ protected:
 
   CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list) override;
 
-  CosNotifyFilter::ConstraintInfoSeq * get_all_constraints (void) override;
+  CosNotifyFilter::ConstraintInfoSeq * get_all_constraints () override;
 
-  void remove_all_constraints (void) override;
+  void remove_all_constraints () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   CORBA::Boolean match (const CORBA::Any & filterable_data) override;
 
@@ -116,11 +116,11 @@ protected:
 
   void detach_callback (CosNotifyFilter::CallbackID callback) override;
 
-  CosNotifyFilter::CallbackIDSeq * get_callbacks (void) override;
+  CosNotifyFilter::CallbackIDSeq * get_callbacks () override;
 
 private:
   /// Release this object.
-  void release (void) override;
+  void release () override;
 
   void add_constraints_i (const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq);
   void add_constraint_i (const CosNotifyFilter::ConstraintInfo& constraint,

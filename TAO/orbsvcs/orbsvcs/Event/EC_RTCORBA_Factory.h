@@ -41,7 +41,7 @@ public:
                           const RTCORBA::ThreadpoolLanes &lanes);
 
   /// destructor...
-  ~TAO_EC_RTCORBA_Factory (void) override;
+  ~TAO_EC_RTCORBA_Factory () override;
 
   // Decorated methods...
   int init (int argc, ACE_TCHAR* argv[]) override;

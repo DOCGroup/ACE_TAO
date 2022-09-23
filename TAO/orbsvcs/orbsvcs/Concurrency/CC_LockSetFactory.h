@@ -40,7 +40,7 @@ public:
   CC_LockSetFactory ();
 
   /// Destructor.
-  ~CC_LockSetFactory (void) override;
+  ~CC_LockSetFactory () override;
 
   CosConcurrencyControl::LockSet_ptr create () override;
 

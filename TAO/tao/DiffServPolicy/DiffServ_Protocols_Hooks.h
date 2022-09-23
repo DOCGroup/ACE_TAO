@@ -34,7 +34,7 @@ public:
   TAO_DS_Network_Priority_Protocols_Hooks ();
 
   /// Destructor
-  ~TAO_DS_Network_Priority_Protocols_Hooks (void) override;
+  ~TAO_DS_Network_Priority_Protocols_Hooks () override;
 
   /// Initialize the network priority protocols hooks instance.
   void init_hooks (TAO_ORB_Core *orb_core) override;

@@ -60,15 +60,15 @@ namespace TAO
     int funlock (int whence, int start, int len) override;
 
     /// Returns the last time an open file was changed
-    time_t last_changed (void) override;
+    time_t last_changed () override;
 
-    void rewind (void) override;
+    void rewind () override;
 
-    bool flush (void) override;
+    bool flush () override;
 
     /// Force write of storable data to storage.
     /// Returns 0 on success, otherwise EOF
-    int sync (void) override;
+    int sync () override;
 
     Storable_Base& operator << (const ACE_CString&) override;
     Storable_Base& operator >> (ACE_CString&) override;

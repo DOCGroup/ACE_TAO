@@ -52,7 +52,7 @@ public:
                              const ACE_Time_Value &timeout);
 
   /// destructor...
-  ~TAO_CEC_ProxyPullConsumer (void) override;
+  ~TAO_CEC_ProxyPullConsumer () override;
 
   /// Activate in the POA
   virtual void  activate (
@@ -89,12 +89,12 @@ public:
   // = The CosEventChannelAdmin::ProxyPullConsumer methods...
   void connect_pull_supplier (
                 CosEventComm::PullSupplier_ptr pull_supplier) override;
-  void disconnect_pull_consumer (void) override;
+  void disconnect_pull_consumer () override;
 
   // = The Servant methods
-  PortableServer::POA_ptr _default_POA (void) override;
-  void _add_ref (void) override;
-  void _remove_ref (void) override;
+  PortableServer::POA_ptr _default_POA () override;
+  void _add_ref () override;
+  void _remove_ref () override;
 
 protected:
   /// Set the supplier, used by some implementations to change the

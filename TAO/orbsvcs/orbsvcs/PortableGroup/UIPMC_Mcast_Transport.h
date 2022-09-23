@@ -57,7 +57,7 @@ public:
                              TAO_ORB_Core *orb_core);
 
   /// Default destructor.
-  ~TAO_UIPMC_Mcast_Transport (void) override;
+  ~TAO_UIPMC_Mcast_Transport () override;
 
   /// Look for the documentation in Transport.h.
   int handle_input (TAO_Resume_Handle &rh,
@@ -69,8 +69,8 @@ protected:
    * These are implementations of template methods declared by TAO_Transport.
    */
   //@{
-  ACE_Event_Handler *event_handler_i (void) override;
-  TAO_Connection_Handler *connection_handler_i (void) override;
+  ACE_Event_Handler *event_handler_i () override;
+  TAO_Connection_Handler *connection_handler_i () override;
 
   /// Write the complete Message_Block chain to the connection.
   /// Shouldn't ever be called on the server side.
@@ -84,7 +84,7 @@ protected:
                         size_t,
                         ACE_Time_Value const *) override;
 
-  int register_handler (void) override;
+  int register_handler () override;
 
 public:
   /// @@TODO: These methods IMHO should have more meaningful

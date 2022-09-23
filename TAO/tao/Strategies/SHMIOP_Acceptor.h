@@ -44,7 +44,7 @@ public:
   TAO_SHMIOP_Acceptor ();
 
   /// Destructor.
-  ~TAO_SHMIOP_Acceptor (void) override;
+  ~TAO_SHMIOP_Acceptor () override;
 
   typedef TAO_Strategy_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR> TAO_SHMIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_SHMIOP_Connection_Handler> TAO_SHMIOP_CREATION_STRATEGY;
@@ -68,13 +68,13 @@ public:
                             int version_major,
                             int version_minor,
                             const char *options = 0) override;
-  int close (void) override;
+  int close () override;
   int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority) override;
 
   int is_collocated (const TAO_Endpoint* endpoint) override;
-  CORBA::ULong endpoint_count (void) override;
+  CORBA::ULong endpoint_count () override;
 
   int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key) override;

@@ -49,7 +49,7 @@ public:
   TAO_FT_Invocation_Endpoint_Selector ();
 
   /// Destructor.
-  ~TAO_FT_Invocation_Endpoint_Selector (void) override;
+  ~TAO_FT_Invocation_Endpoint_Selector () override;
 
   /// Implementation for FT. Please refer to
   /// $TAO_ROOT/tao/Invocation_Endpoint_Selectors.h  for details of

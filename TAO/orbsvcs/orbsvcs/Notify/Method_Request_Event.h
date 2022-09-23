@@ -88,7 +88,7 @@ public:
   ~TAO_Notify_Method_Request_Event_Queueable () override;
 
   /// satisfy the pure virtual method.  Should never be called.
-  int execute (void) override;
+  int execute () override;
 private:
   TAO_Notify_Event::Ptr event_var_;
 };

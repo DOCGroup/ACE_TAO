@@ -56,16 +56,16 @@ public:
    * Please check the documentation in Endpoint.h for details.
    */
   //@{
-  TAO_Endpoint *next (void) override;
+  TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
-  TAO_Endpoint *duplicate (void) override;
+  TAO_Endpoint *duplicate () override;
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their rendezvous points are the same.
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint) override;
 
   /// Return a hash value for this object.
-  CORBA::ULong hash (void) override;
+  CORBA::ULong hash () override;
   //@}
 
   // = UIOP_Endpoint-specific methods.

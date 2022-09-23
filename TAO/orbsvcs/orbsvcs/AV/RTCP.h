@@ -114,8 +114,8 @@ class TAO_AV_Export TAO_AV_RTCP_Flow_Factory
   :public TAO_AV_Flow_Protocol_Factory
 {
 public:
-  TAO_AV_RTCP_Flow_Factory (void);
-  ~TAO_AV_RTCP_Flow_Factory (void) override;
+  TAO_AV_RTCP_Flow_Factory ();
+  ~TAO_AV_RTCP_Flow_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
   int match_protocol (const char *flow_string) override;
   TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
@@ -137,13 +137,13 @@ public:
   TAO_AV_RTCP_Callback ();
 
   /// virtual destructor.
-  ~TAO_AV_RTCP_Callback (void) override;
+  ~TAO_AV_RTCP_Callback () override;
 
   /// Called during Streamctrl->start.
-  int handle_start (void) override;
+  int handle_start () override;
 
   /// Called during Streamctrl->stop.
-  int handle_stop (void) override;
+  int handle_stop () override;
 
   /// Called during timeout for Flow Producers.
   int handle_timeout (void *arg) override;
@@ -159,7 +159,7 @@ public:
 
   /// Called during Streamctrl->destroy i.e tear_down  of the stream
   /// @@coryan:Call it handle_destroy or handle_close.
-  int handle_destroy (void) override;
+  int handle_destroy () override;
 
   /// Called to get the timeout. If tv is 0 then the framework stop
   /// calling this.
@@ -199,9 +199,9 @@ public:
                       TAO_AV_Transport *transport = 0);
 
   /// Destructor
-  ~TAO_AV_RTCP_Object (void) override;
+  ~TAO_AV_RTCP_Object () override;
 
-  int handle_input (void) override;
+  int handle_input () override;
   int handle_control_input (ACE_Message_Block *frame,
                                     const ACE_Addr &peer_address) override;
   virtual int handle_control_output (ACE_Message_Block *frame);
@@ -210,8 +210,8 @@ public:
   int set_policies (const TAO_AV_PolicyList &policy_list) override;
 
   /// start/stop the flow.
-  int start (void) override;
-  int stop (void) override;
+  int start () override;
+  int stop () override;
 
   /// send a data frame.
   int send_frame (ACE_Message_Block *frame,
@@ -226,7 +226,7 @@ public:
                           size_t len) override;
 
   /// end the stream.
-  int destroy (void) override;
+  int destroy () override;
 
   void ssrc (ACE_UINT32 ssrc) {this->ssrc_ = ssrc; }
   ACE_UINT32 ssrc () { return this->ssrc_; }

@@ -44,10 +44,10 @@ public:
   ~TAO_Set_Update_Interceptor () override;
   // dtor.
 
-  char * name (void) override;
+  char * name () override;
   // Canonical name of the interceptor.
 
-  void destroy (void) override;
+  void destroy () override;
 
   void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 

@@ -52,7 +52,7 @@ public:
 
 protected:
   // = interface methods
-  CosNotifyChannelAdmin::ProxyType MyType (void) override;
+  CosNotifyChannelAdmin::ProxyType MyType () override;
 
   void connect_structured_push_supplier (
     CosNotifyComm::StructuredPushSupplier_ptr push_supplier
@@ -70,7 +70,7 @@ protected:
 
 private:
   /// Release
-  void release (void) override;
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

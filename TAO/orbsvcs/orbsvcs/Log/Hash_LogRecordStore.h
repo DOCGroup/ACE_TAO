@@ -68,13 +68,13 @@ public:
                            const DsLogAdmin::CapacityAlarmThresholdList* thresholds);
 
   /// Destructor.
-  ~TAO_Hash_LogRecordStore (void) override;
+  ~TAO_Hash_LogRecordStore () override;
 
   /// Initialization.
-  int open (void) override;
+  int open () override;
 
   /// Close the record store.
-  int close (void) override;
+  int close () override;
 
 
   // = Log Parameters
@@ -135,7 +135,7 @@ public:
   void set_max_size (CORBA::ULongLong size) override;
 
   /// Get the weekly scheduling parameters
-  DsLogAdmin::WeekMask* get_week_mask (void) override;
+  DsLogAdmin::WeekMask* get_week_mask () override;
 
   /// Set the weekly scheduling parameters.
   void set_week_mask (const DsLogAdmin::WeekMask & masks) override;
@@ -143,20 +143,20 @@ public:
   // = LogRecordStore status methods
 
   /// Gets the current size of the log data.
-  CORBA::ULongLong get_current_size (void) override;
+  CORBA::ULongLong get_current_size () override;
 
   /// Get the number of records in the log right now.
-  CORBA::ULongLong get_n_records (void) override;
+  CORBA::ULongLong get_n_records () override;
 
 
   // = LogRecordStore gauge
 
   /// Gets the current value of the "gauge" that measures the total
   /// size of the records written to the log.
-  CORBA::ULongLong get_gauge(void) override;
+  CORBA::ULongLong get_gauge() override;
 
   /// Resets the "gauge" to 0
-  void reset_gauge(void) override;
+  void reset_gauge() override;
 
   // = Record logging, retrieval, update and removal methods.
 
@@ -165,7 +165,7 @@ public:
   int log (const DsLogAdmin::LogRecord &rec) override;
 
   /// Deletes "old" records from the store.
-  int purge_old_records (void) override;
+  int purge_old_records () override;
 
   /// Set single record attributes.
   void
@@ -186,7 +186,7 @@ public:
 
   /// Ensure changes have been flushed to persistent media
   /// Returns 0 on success, -1 on failure.
-  int flush (void) override;
+  int flush () override;
 
   /// Returns all records in the log that match the given constraint
   /// <c>.
@@ -214,7 +214,7 @@ public:
   CORBA::ULong
     delete_records_by_id (const DsLogAdmin::RecordIdList & ids) override;
 
-  CORBA::ULong remove_old_records (void) override;
+  CORBA::ULong remove_old_records () override;
 
   /// Read-Write Lock
   ACE_SYNCH_RW_MUTEX& lock() override;

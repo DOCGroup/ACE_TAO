@@ -39,7 +39,7 @@ public:
            TimeBase::TimeT upper);
 
   /// Destructor.
-  ~TAO_TIO (void) override;
+  ~TAO_TIO () override;
 
   /// This is the get method for the attribute time interval.
   TimeBase::IntervalT  time_interval () override;
@@ -70,7 +70,7 @@ public:
    * time interval in the TIO and time value is the midpoint of the
    * interval.
    */
-  CosTime::UTO_ptr time (void) override;
+  CosTime::UTO_ptr time () override;
 
 private:
   /// This attribute returns an IntervalT structure with the values of

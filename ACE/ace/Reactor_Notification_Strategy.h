@@ -36,9 +36,9 @@ public:
                                      ACE_Reactor_Mask mask);
 
   /// Default destructor.
-  ~ACE_Reactor_Notification_Strategy (void) override;
+  ~ACE_Reactor_Notification_Strategy () override;
 
-  int notify (void) override;
+  int notify () override;
 
   int notify (ACE_Event_Handler *eh, ACE_Reactor_Mask mask) override;
 

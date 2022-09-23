@@ -68,7 +68,7 @@ namespace TAO
       //@{
       SecurityLevel3::ClientCredentials_ptr client_credentials () override;
 
-      CORBA::Boolean request_is_local (void) override;
+      CORBA::Boolean request_is_local () override;
       //@}
 
       /// Return the TSS slot ID assigned to the "SecurityCurrent"
@@ -85,7 +85,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~SecurityCurrent (void) override;
+      ~SecurityCurrent () override;
 
     private:
       /// Set the thread-specific storage

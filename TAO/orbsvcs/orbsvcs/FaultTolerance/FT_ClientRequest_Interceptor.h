@@ -73,10 +73,10 @@ namespace TAO
     FT_ClientRequest_Interceptor ();
 
     /// Canonical name of the interceptor.
-    char * name (void) override;
+    char * name () override;
 
 
-    void destroy (void) override;
+    void destroy () override;
 
     void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 
@@ -91,7 +91,7 @@ namespace TAO
     void ft_send_extended_sc (CORBA::Boolean send);
 
   protected:
-    ~FT_ClientRequest_Interceptor (void) override;
+    ~FT_ClientRequest_Interceptor () override;
 
   private:
     void group_version_context (PortableInterceptor::ClientRequestInfo_ptr ri,

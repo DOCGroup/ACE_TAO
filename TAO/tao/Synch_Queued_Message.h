@@ -69,7 +69,7 @@ public:
   void fill_iov (int iovcnt_max, int &iovcnt, iovec iov[]) const override;
   void bytes_transferred (size_t &byte_count) override;
   TAO_Queued_Message *clone (ACE_Allocator *alloc) override;
-  void destroy (void) override;
+  void destroy () override;
   void copy_if_necessary (const ACE_Message_Block* chain) override;
   //@}
 

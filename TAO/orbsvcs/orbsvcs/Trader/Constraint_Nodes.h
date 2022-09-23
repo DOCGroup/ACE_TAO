@@ -154,7 +154,7 @@ public:
   TAO_Unary_Constraint (TAO_Expression_Type op_type,
                         TAO_Constraint* operand);
 
-  ~TAO_Unary_Constraint (void) override;
+  ~TAO_Unary_Constraint () override;
 
   int accept (TAO_Constraint_Visitor* visitor) override;
 
@@ -185,7 +185,7 @@ class TAO_Trading_Serv_Export TAO_Property_Constraint : public TAO_Constraint
 public:
   TAO_Property_Constraint (const char* name);
 
-  ~TAO_Property_Constraint (void) override;
+  ~TAO_Property_Constraint () override;
 
   int accept (TAO_Constraint_Visitor* visitor) override;
 
@@ -226,7 +226,7 @@ public:
   TAO_Literal_Constraint (const TAO_Literal_Constraint& lit);
 
   /// Destructor.
-  ~TAO_Literal_Constraint(void) override;
+  ~TAO_Literal_Constraint() override;
 
   /// Visitor accept methods.
   int accept (TAO_Constraint_Visitor* visitor) override;

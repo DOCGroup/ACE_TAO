@@ -37,10 +37,10 @@ public:
   ~TAO_Notify_Method_Request_Shutdown () override;
 
   /// Create a copy of this object.
-  TAO_Notify_Method_Request_Queueable* copy (void) override;
+  TAO_Notify_Method_Request_Queueable* copy () override;
 
   /// Execute the Request
-  int execute (void) override;
+  int execute () override;
 
 private:
   // Task to shutdown

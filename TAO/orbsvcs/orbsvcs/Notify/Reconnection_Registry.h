@@ -80,7 +80,7 @@ namespace TAO_Notify
     void send_reconnect (CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory);
 
   private:
-    void release (void) override;
+    void release () override;
 
     Reconnection_Registry_Type reconnection_registry_;
     ::NotifyExt::ReconnectionRegistry::ReconnectionID highest_id_;

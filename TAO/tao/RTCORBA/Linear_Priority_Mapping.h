@@ -47,7 +47,7 @@ public:
   TAO_Linear_Priority_Mapping (long policy);
 
   /// The destructor
-  ~TAO_Linear_Priority_Mapping (void) override;
+  ~TAO_Linear_Priority_Mapping () override;
 
   CORBA::Boolean to_native (RTCORBA::Priority corba_priority,
                                     RTCORBA::NativePriority &native_priority) override;

@@ -60,8 +60,8 @@ public:
                             int sched_scope);
 
   // = The EC_Dispatching methods.
-  void activate (void) override;
-  void shutdown (void) override;
+  void activate () override;
+  void shutdown () override;
   void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
@@ -96,11 +96,11 @@ public:
   TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
 
   /// Command callback
-  int execute (void) override;
+  int execute () override;
 
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
-  ~TAO_EC_Kokyu_Shutdown_Command (void) override;
+  ~TAO_EC_Kokyu_Shutdown_Command () override;
 };
 
 // ****************************************************************
@@ -115,11 +115,11 @@ public:
                              ACE_Allocator* allocator);
 
   /// Command callback
-  int execute (void) override;
+  int execute () override;
 
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
-  ~TAO_EC_Kokyu_Push_Command (void) override;
+  ~TAO_EC_Kokyu_Push_Command () override;
 
 private:
   /// The proxy

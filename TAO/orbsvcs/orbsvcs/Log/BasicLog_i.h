@@ -64,7 +64,7 @@ public:
   DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id) override;
 
   /// Destroy the log object and all contained records.
-  void destroy (void) override;
+  void destroy () override;
 
 protected:
   /// Destructor.
@@ -72,7 +72,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~TAO_BasicLog_i (void) override;
+  ~TAO_BasicLog_i () override;
 
 private:
   /// POA.

@@ -41,7 +41,7 @@ public:
   TAO_ComponentModuleDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_ComponentModuleDef_i (void) override;
+  ~TAO_ComponentModuleDef_i () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

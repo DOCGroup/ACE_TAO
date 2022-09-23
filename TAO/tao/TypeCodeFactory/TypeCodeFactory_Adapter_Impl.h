@@ -38,7 +38,7 @@ class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_Adapter_Impl
   : public TAO_TypeCodeFactory_Adapter
 {
 public:
-  ~TAO_TypeCodeFactory_Adapter_Impl (void) override;
+  ~TAO_TypeCodeFactory_Adapter_Impl () override;
 
   CORBA::TypeCode_ptr create_struct_tc (
       const char *id,

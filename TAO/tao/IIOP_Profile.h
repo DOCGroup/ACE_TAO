@@ -93,25 +93,25 @@ public:
 
   /// Encode endpoints for RT profiles, using a single TAO_TAG_ENDPOINT
   /// component.
-  int encode_endpoints (void) override;
+  int encode_endpoints () override;
 
   /// Encode alternate endpoints for non-RT profiles, using multiple
   /// TAG_ALTERNATE_IIOP_ADDRESS components, one endpoint per component
-  int encode_alternate_endpoints (void) override;
-  TAO_Endpoint *endpoint (void) override;
+  int encode_alternate_endpoints () override;
+  TAO_Endpoint *endpoint () override;
 
   /// Since SSLIOP_Profile derives from IIOP_Profile, but SSLIOP_Endpoint
   /// does not derive from IIOP_Endpoint, it is necessary to have a way
   /// of always getting the IIOP_Endpoint using a generic interface
   /// regardless of the final type of the profile.
-  TAO_Endpoint *base_endpoint (void) override;
+  TAO_Endpoint *base_endpoint () override;
 
   CORBA::ULong endpoint_count () const override;
   CORBA::ULong hash (CORBA::ULong max) override;
 
 protected:
   /// Destructor is to be called only through <_decr_refcnt>.
-  ~TAO_IIOP_Profile (void) override;
+  ~TAO_IIOP_Profile () override;
 
   /**
    * Helper method for encode_endpoints to deal with RT requests.
@@ -130,7 +130,7 @@ protected:
 
   /// Template methods. Please see Profile.h for the documentation.
   int decode_profile (TAO_InputCDR &cdr) override;
-  int decode_endpoints (void) override;
+  int decode_endpoints () override;
   void parse_string_i (const char *string) override;
   void create_profile_body (TAO_OutputCDR &cdr) const override;
   CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile) override;

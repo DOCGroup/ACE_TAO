@@ -58,8 +58,8 @@ class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry_Installer
 class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry : public ACE_Service_Object
 {
 public:
-  TAO_DTP_Config_Registry (void);
-  ~TAO_DTP_Config_Registry (void) override;
+  TAO_DTP_Config_Registry ();
+  ~TAO_DTP_Config_Registry () override;
 
   int init (int argc, ACE_TCHAR* []) override;
 
@@ -81,7 +81,7 @@ public:
   TAO_DTP_Config ();
 
   /// Destructor.
-  ~TAO_DTP_Config (void) override;
+  ~TAO_DTP_Config () override;
 
   /// Read a definition parameter set from the supplied args.
   /// There must be a -TPName argument, which, if replicated will cause the set to be ignored, unless -TPOverwrite is also set

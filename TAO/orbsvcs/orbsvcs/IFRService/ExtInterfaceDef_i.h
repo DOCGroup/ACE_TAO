@@ -47,7 +47,7 @@ public:
   TAO_ExtInterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_ExtInterfaceDef_i (void) override;
+  ~TAO_ExtInterfaceDef_i () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

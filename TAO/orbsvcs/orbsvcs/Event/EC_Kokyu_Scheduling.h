@@ -42,7 +42,7 @@ public:
   TAO_EC_Kokyu_Scheduling (RtecScheduler::Scheduler_ptr scheduler);
 
   /// Destructor
-  ~TAO_EC_Kokyu_Scheduling (void) override;
+  ~TAO_EC_Kokyu_Scheduling () override;
 
   void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,

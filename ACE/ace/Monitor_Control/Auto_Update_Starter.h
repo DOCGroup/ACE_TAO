@@ -45,7 +45,7 @@ namespace ACE
     public:
       Auto_Update_Starter ();
 
-      int svc (void) override;
+      int svc () override;
     };
   }
 }

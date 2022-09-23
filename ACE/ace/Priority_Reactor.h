@@ -46,7 +46,7 @@ public:
                         ACE_Timer_Queue * = 0);
 
   /// Close down the select_reactor and release all of its resources.
-  ~ACE_Priority_Reactor (void) override;
+  ~ACE_Priority_Reactor () override;
 
   /// Dump the state of an object.
   void dump () const override;

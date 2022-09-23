@@ -56,7 +56,7 @@ public:
                        RtecScheduler::Info_Type_t info_type);
 
   /// Destructor
-  ~TAO_EC_Sched_Filter (void) override;
+  ~TAO_EC_Sched_Filter () override;
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
@@ -71,7 +71,7 @@ public:
                      TAO_EC_QOS_Info& qos_info) override;
   void push_nocopy (RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info) override;
-  void clear (void) override;
+  void clear () override;
   CORBA::ULong max_event_size () const override;
   int can_match (const RtecEventComm::EventHeader& header) const override;
   int add_dependencies (const RtecEventComm::EventHeader& header,

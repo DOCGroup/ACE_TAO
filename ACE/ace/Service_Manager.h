@@ -54,7 +54,7 @@ public:
   ACE_Service_Manager ();
 
   /// Destructor.
-  ~ACE_Service_Manager (void) override;
+  ~ACE_Service_Manager () override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -76,8 +76,8 @@ protected:
   int fini () override;
 
   // = Scheduling hooks.
-  int suspend (void) override;
-  int resume (void) override;
+  int suspend () override;
+  int resume () override;
 
   /// Dump the state of an object.
   void dump () const;

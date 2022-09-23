@@ -75,7 +75,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_Network_Priority_Mapping_Manager (void) override;
+  ~TAO_Network_Priority_Mapping_Manager () override;
 
 private:
   TAO_Network_Priority_Mapping_Manager (const TAO_Network_Priority_Mapping_Manager &);

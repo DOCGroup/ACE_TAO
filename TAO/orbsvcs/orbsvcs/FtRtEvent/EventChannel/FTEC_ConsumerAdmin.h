@@ -54,11 +54,11 @@ public:
   TAO_FTEC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
-  ~TAO_FTEC_ConsumerAdmin (void) override;
+  ~TAO_FTEC_ConsumerAdmin () override;
 
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
   RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier (void) override;
+      obtain_push_supplier () override;
 
   void disconnect(RtecEventChannelAdmin::ProxyPushSupplier_ptr obj);
 };

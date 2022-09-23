@@ -40,13 +40,13 @@ public:
   void init (CosNotifyComm::SequencePushSupplier_ptr push_supplier);
 
   /// TAO_Notify_Destroy_Callback methods
-  void release (void) override;
+  void release () override;
 
   /// Retrieve the ior of this peer
   ACE_CString get_ior () const override;
 
 protected:
-  CORBA::Object_ptr get_supplier (void) override;
+  CORBA::Object_ptr get_supplier () override;
 
  /// The Supplier
   CosNotifyComm::SequencePushSupplier_var push_supplier_;

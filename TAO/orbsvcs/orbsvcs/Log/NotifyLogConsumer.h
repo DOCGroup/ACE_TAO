@@ -62,7 +62,7 @@ public:
 
 protected:
   /// Destructor.
-  ~TAO_Notify_LogConsumer (void) override;
+  ~TAO_Notify_LogConsumer () override;
 
   // = NotifyPublish method
   void offer_change (
@@ -73,7 +73,7 @@ protected:
   // = PushSupplier methods
   void push (const CORBA::Any & event) override;
 
-  void disconnect_push_consumer (void) override;
+  void disconnect_push_consumer () override;
 
   /// ProxyPushSupplier used to connect to NotifyLog.
   CosNotifyChannelAdmin::ProxyPushSupplier_var proxy_supplier_;

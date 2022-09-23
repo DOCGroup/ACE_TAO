@@ -122,7 +122,7 @@ private:
   /// Return a pointer to a copy of this event on the heap
   virtual TAO_Notify_Event* copy () const = 0;
 
-  void release (void) override;
+  void release () override;
 
   mutable Ptr clone_;
   bool        is_on_heap_;

@@ -60,14 +60,14 @@ public:
     TAO_Notify_Consumer* old_consumer) override;
 
 protected:
-  CORBA::Object_ptr get_consumer (void) override;
+  CORBA::Object_ptr get_consumer () override;
 
   /// The Consumer
   CosNotifyComm::StructuredPushConsumer_var push_consumer_;
 
 private:
   /// Release
-  void release (void) override;
+  void release () override;
 
   /// Connection valid flag
   int connection_valid;

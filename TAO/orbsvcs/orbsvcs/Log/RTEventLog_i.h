@@ -73,15 +73,15 @@ public:
   DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id) override;
 
   /// Destroy the log object and all contained records.
-  void destroy (void) override;
+  void destroy () override;
 
   /// Activate the RTEventLog.
   void activate ();
 
   // = The RtecEventChannelAdmin::EventChannel interface methods.
-  RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void) override;
+  RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
-  RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void) override;
+  RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
 
   RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr) override;

@@ -26,7 +26,7 @@ class ConnectionAcceptHandler : public ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_N
 {
 public:
   int open (void *) override;
-  void destroy (void) override;
+  void destroy () override;
   int close (u_long flags = 0) override;
 protected:
   int handle_input (ACE_HANDLE) override;

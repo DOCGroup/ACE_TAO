@@ -59,7 +59,7 @@ public:
   TAO_FT_IOGR_Property ();
 
   /// Destructor
-  ~TAO_FT_IOGR_Property (void) override;
+  ~TAO_FT_IOGR_Property () override;
 
   /// Set the property for the IOGR
   CORBA::Boolean set_property (

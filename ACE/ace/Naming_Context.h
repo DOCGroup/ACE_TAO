@@ -94,7 +94,7 @@ public:
 
   /// destructor, do some cleanup :TBD: last dtor should "compress"
   /// file
-  ~ACE_Naming_Context (void) override;
+  ~ACE_Naming_Context () override;
 
   // = Dynamic initialization hooks.
   /// Initialize name options and naming context when dynamically

@@ -76,10 +76,10 @@ public:
   const ACE_TCHAR *filename () const;
 
   /// Close down the shared memory segment.
-  int close (void) override;
+  int close () override;
 
   /// Remove the shared memory segment and the underlying file.
-  int remove (void) override;
+  int remove () override;
 
   // = Allocation and deallocation methods.
   /// Create a new chuck of memory containing @a size bytes.

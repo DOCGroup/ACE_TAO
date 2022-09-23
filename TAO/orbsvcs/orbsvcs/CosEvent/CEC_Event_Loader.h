@@ -41,7 +41,7 @@ public:
   TAO_CEC_Event_Loader ();
 
   /// Destructor
-  ~TAO_CEC_Event_Loader (void) override;
+  ~TAO_CEC_Event_Loader () override;
 
   //@{
   /**

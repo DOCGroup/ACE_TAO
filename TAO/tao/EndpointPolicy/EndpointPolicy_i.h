@@ -57,16 +57,16 @@ public:
 
   // = The EndpointPolicy::Policy methods
 
-  CORBA::PolicyType policy_type (void) override;
+  CORBA::PolicyType policy_type () override;
 
-  CORBA::Policy_ptr copy (void) override;
+  CORBA::Policy_ptr copy () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   // Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  EndpointPolicy::EndpointList * value (void) override;
+  EndpointPolicy::EndpointList * value () override;
 
 private:
   /// The attribute

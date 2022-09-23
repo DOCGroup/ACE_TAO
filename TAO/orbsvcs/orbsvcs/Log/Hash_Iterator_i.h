@@ -52,7 +52,7 @@ public:
                        CORBA::ULong max_rec_list_len);
 
   /// Destructor.
-  ~TAO_Hash_Iterator_i (void) override;
+  ~TAO_Hash_Iterator_i () override;
 
   /// Gets a list of LogRecords.
   DsLogAdmin::RecordList* get (CORBA::ULong position,

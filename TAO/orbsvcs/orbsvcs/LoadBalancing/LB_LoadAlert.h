@@ -39,10 +39,10 @@ public:
   //@{
   /// Forward requests back to the load manager via the object group
   /// reference.
-  void enable_alert (void) override;
+  void enable_alert () override;
 
   /// Stop forwarding requests, and begin accepting them again.
-  void disable_alert (void) override;
+  void disable_alert () override;
 
   //@}
 
@@ -56,7 +56,7 @@ public:
    * Protected destructor to enforce correct memory management via
    * reference counting.
    */
-  ~TAO_LB_LoadAlert (void) override;
+  ~TAO_LB_LoadAlert () override;
 
 private:
   /// Has this LoadAlert servant been alerted of a high load condition

@@ -42,10 +42,10 @@ protected:
   void init_i (CORBA::ORB_ptr orb) override;
 
   /// Create the Factory for RT Notify objects.
-  TAO_Notify_Factory* create_factory (void) override;
+  TAO_Notify_Factory* create_factory () override;
 
   /// Creates the Builder for RT Notify objects.
-  TAO_Notify_Builder* create_builder (void) override;
+  TAO_Notify_Builder* create_builder () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

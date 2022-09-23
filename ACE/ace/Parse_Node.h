@@ -86,7 +86,7 @@ class ACE_Suspend_Node : public ACE_Parse_Node
 {
 public:
   ACE_Suspend_Node (const ACE_TCHAR *name);
-  ~ACE_Suspend_Node (void) override;
+  ~ACE_Suspend_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
 
@@ -114,7 +114,7 @@ class ACE_Resume_Node : public ACE_Parse_Node
 {
 public:
   ACE_Resume_Node (const ACE_TCHAR *name);
-  ~ACE_Resume_Node (void) override;
+  ~ACE_Resume_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
 
@@ -142,7 +142,7 @@ class ACE_Remove_Node : public ACE_Parse_Node
 {
 public:
   ACE_Remove_Node (const ACE_TCHAR *name);
-  ~ACE_Remove_Node (void) override;
+  ~ACE_Remove_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
 
@@ -170,7 +170,7 @@ class ACE_Static_Node : public ACE_Parse_Node
 {
 public:
   ACE_Static_Node (const ACE_TCHAR *name, ACE_TCHAR *params = 0);
-  ~ACE_Static_Node (void) override;
+  ~ACE_Static_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
   virtual const ACE_Service_Type *record (const ACE_Service_Gestalt *g) const;
@@ -209,7 +209,7 @@ class ACE_Dynamic_Node : public ACE_Static_Node
 public:
   ACE_Dynamic_Node (ACE_Service_Type_Factory const *, ACE_TCHAR *params);
 
-  ~ACE_Dynamic_Node (void) override;
+  ~ACE_Dynamic_Node () override;
 
   //  virtual const ACE_Service_Type *record () const;
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
@@ -242,7 +242,7 @@ class ACE_Stream_Node : public ACE_Parse_Node
 {
 public:
   ACE_Stream_Node (const ACE_Static_Node *, const ACE_Parse_Node *);
-  ~ACE_Stream_Node (void) override;
+  ~ACE_Stream_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
 
@@ -274,7 +274,7 @@ class ACE_Dummy_Node : public ACE_Parse_Node
 {
 public:
   ACE_Dummy_Node (const ACE_Static_Node *, const ACE_Parse_Node *);
-  ~ACE_Dummy_Node (void) override;
+  ~ACE_Dummy_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
 
@@ -367,7 +367,7 @@ public:
   void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
                         ACE_Service_Object_Exterminator * = 0) override;
-  ~ACE_Object_Node (void) override;
+  ~ACE_Object_Node () override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -400,7 +400,7 @@ public:
   void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
                         ACE_Service_Object_Exterminator *gobbler = 0) override;
-  ~ACE_Function_Node (void) override;
+  ~ACE_Function_Node () override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -455,7 +455,7 @@ public:
   void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
                         ACE_Service_Object_Exterminator * = 0) override;
-  ~ACE_Static_Function_Node (void) override;
+  ~ACE_Static_Function_Node () override;
 
   /// Dump the state of an object.
   void dump () const;

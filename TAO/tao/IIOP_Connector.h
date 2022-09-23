@@ -59,7 +59,7 @@ public:
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
   int open (TAO_ORB_Core *orb_core) override;
-  int close (void) override;
+  int close () override;
   TAO_Profile *create_profile (TAO_InputCDR& cdr) override;
 
   int check_prefix (const char *endpoint) override;
@@ -104,7 +104,7 @@ protected:
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h
-  TAO_Profile *make_profile (void) override;
+  TAO_Profile *make_profile () override;
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;

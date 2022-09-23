@@ -34,7 +34,7 @@ public:
    *
    * Please check the documentation in TAO_LF_Strategy
    */
-  ~TAO_LF_Strategy_Complete (void) override;
+  ~TAO_LF_Strategy_Complete () override;
 
   void set_upcall_thread (TAO_Leader_Follower &) override;
   int set_event_loop_thread (ACE_Time_Value *max_wait_time,

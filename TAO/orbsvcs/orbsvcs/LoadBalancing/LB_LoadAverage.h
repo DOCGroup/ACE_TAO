@@ -66,7 +66,7 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  char * name (void) override;
+  char * name () override;
 
   CosLoadBalancing::Properties * get_properties () override;
 
@@ -96,7 +96,7 @@ public:
 
 protected:
   /// Destructor.
-  ~TAO_LB_LoadAverage (void) override;
+  ~TAO_LB_LoadAverage () override;
 
   /// Return the effective load.
   CORBA::Float effective_load (CORBA::Float previous_load,

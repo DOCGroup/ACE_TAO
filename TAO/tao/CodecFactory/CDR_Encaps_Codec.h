@@ -76,7 +76,7 @@ protected:
    * Only allow this class to be instantiated on the heap since it is
    * reference counted.
    */
-  ~TAO_CDR_Encaps_Codec (void) override;
+  ~TAO_CDR_Encaps_Codec () override;
 
   /// Verify that it is possible to encode the given data using this
   /// Codec.

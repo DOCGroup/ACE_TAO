@@ -74,11 +74,11 @@ namespace TAO
 
       SecurityLevel3::FeatureDirective use_integrity () override;
 
-      CORBA::PolicyType policy_type (void) override;
+      CORBA::PolicyType policy_type () override;
 
-      CORBA::Policy_ptr copy (void) override;
+      CORBA::Policy_ptr copy () override;
 
-      void destroy (void) override;
+      void destroy () override;
       //@}
 
     protected:
@@ -87,7 +87,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ContextEstablishmentPolicy (void) override;
+      ~ContextEstablishmentPolicy () override;
 
     private:
       SecurityLevel3::CredsDirective     creds_directive_;

@@ -42,7 +42,7 @@ public:
   TAO_InterfaceAttrExtension_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_InterfaceAttrExtension_i (void) override;
+  ~TAO_InterfaceAttrExtension_i () override;
 
   virtual
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *

@@ -55,8 +55,8 @@ public:
   TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base* ec);
 
   // = The EC_Dispatching methods.
-  void activate (void) override;
-  void shutdown (void) override;
+  void activate () override;
+  void shutdown () override;
   void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,

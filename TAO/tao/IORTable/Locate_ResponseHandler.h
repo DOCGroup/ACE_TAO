@@ -102,7 +102,7 @@ public:
   typedef TAO_AMH_Locate_ResponseHandler_var _var_type;
 
   TAO_AMH_Locate_ResponseHandler (TAO_ServerRequest &sr);
-  ~TAO_AMH_Locate_ResponseHandler (void) override;
+  ~TAO_AMH_Locate_ResponseHandler () override;
 
   virtual void raise_excep (const CORBA::Exception &ex);
 

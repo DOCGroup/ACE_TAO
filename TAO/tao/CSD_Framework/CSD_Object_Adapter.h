@@ -39,7 +39,7 @@ public:
                           TAO_ORB_Core &orb_core);
 
   /// Destructor
-  ~TAO_CSD_Object_Adapter (void) override;
+  ~TAO_CSD_Object_Adapter () override;
 
   /// Hand the request to the Service_Dispatching_Strategy_Proxy for
   /// dispatching.

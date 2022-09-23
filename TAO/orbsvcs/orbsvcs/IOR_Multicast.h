@@ -66,7 +66,7 @@ public:
             TAO_Service_ID service_id);
 
   /// Destructor.
-  ~TAO_IOR_Multicast (void) override;
+  ~TAO_IOR_Multicast () override;
 
   /// Callback when input is received on the handle.
   int handle_input (ACE_HANDLE n) override;

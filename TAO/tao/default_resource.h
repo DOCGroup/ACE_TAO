@@ -255,7 +255,7 @@ protected:
    */
   bool dynamically_allocated_reactor_;
 
-  int load_default_protocols (void) override;
+  int load_default_protocols () override;
 
   /// This flag is used to determine whether options have been
   /// processed via the init() function.  It is necessary to

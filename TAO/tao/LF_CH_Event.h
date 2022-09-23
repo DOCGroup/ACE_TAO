@@ -52,7 +52,7 @@ public:
   TAO_LF_CH_Event ();
 
   /// Destructor
-  ~TAO_LF_CH_Event (void) override;
+  ~TAO_LF_CH_Event () override;
 
   //@{
 protected:

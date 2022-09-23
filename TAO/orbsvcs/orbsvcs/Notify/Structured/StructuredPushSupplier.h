@@ -43,14 +43,14 @@ public:
   ACE_CString get_ior () const override;
 
 protected:
-  CORBA::Object_ptr get_supplier (void) override;
+  CORBA::Object_ptr get_supplier () override;
 
   /// The Supplier
   CosNotifyComm::StructuredPushSupplier_var push_supplier_;
 
 private:
   /// Release
-  void release (void) override;
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

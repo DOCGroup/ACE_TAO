@@ -46,8 +46,8 @@ public:
                          int force_activate);
 
   // = The EC_Dispatching methods.
-  void activate (void) override;
-  void shutdown (void) override;
+  void activate () override;
+  void shutdown () override;
   void push (TAO_CEC_ProxyPushSupplier* proxy,
                      const CORBA::Any & event) override;
   void push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,

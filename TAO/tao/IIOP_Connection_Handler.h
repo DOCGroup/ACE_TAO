@@ -68,7 +68,7 @@ public:
   TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor.
-  ~TAO_IIOP_Connection_Handler (void) override;
+  ~TAO_IIOP_Connection_Handler () override;
 
   /// Called by the @c Strategy_Acceptor when the handler is completely
   /// connected.  Argument is unused.
@@ -81,8 +81,8 @@ public:
   //@{
   /** @name Event Handler overloads
    */
-  int resume_handler (void) override;
-  int close_connection (void) override;
+  int resume_handler () override;
+  int close_connection () override;
   int handle_input (ACE_HANDLE) override;
   int handle_output (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
@@ -115,7 +115,7 @@ protected:
   /**
    * @name TAO_Connection Handler overloads
    */
-  int release_os_resources (void) override;
+  int release_os_resources () override;
   //@}
 
   int handle_write_ready (const ACE_Time_Value *timeout) override;

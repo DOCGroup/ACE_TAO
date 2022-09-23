@@ -95,10 +95,10 @@ public:
                    int *len);
 
   /// Destructor.
-  ~RTCP_BYE_Packet (void) override;
+  ~RTCP_BYE_Packet () override;
 
   /// Returns the size of the packet in bytes.
-  unsigned int packet_size (void) override;
+  unsigned int packet_size () override;
 
   /// Returns a pointer to a local list of synchronization source ids that are
   /// leaving the session.
@@ -180,10 +180,10 @@ public:
   RTCP_RR_Packet (ACE_UINT32 ssrc, RR_Block *blocks);
 
   /// Destructor.
-  ~RTCP_RR_Packet (void) override;
+  ~RTCP_RR_Packet () override;
 
   /// Returns the size of the packet in bytes.
-  unsigned int packet_size(void) override;
+  unsigned int packet_size() override;
 
   /// Returns the synchronization source id of the source sending this packet.
   ACE_INT32 ssrc () { return this->ssrc_; }
@@ -193,7 +193,7 @@ public:
 
 private:
   /// Used to create the byte representation of the RTCP packet.
-  void build_packet(void) override;
+  void build_packet() override;
 
   /// The synchronization source id of the sender of this report.
   ACE_UINT32 ssrc_;
@@ -281,7 +281,7 @@ public:
   RTCP_SDES_Packet();
 
   /// Destructor.
-  ~RTCP_SDES_Packet(void) override;
+  ~RTCP_SDES_Packet() override;
 
   /// This will add a standard item of type and length for the ssrc specified.
   /// When the first item for a ssrc is added, a chunk is created.  Subsequent
@@ -303,7 +303,7 @@ public:
                      const char *data);
 
   /// Returns the size of the packet in bytes.
-  unsigned int packet_size(void) override;
+  unsigned int packet_size() override;
 
   /// Prints the contents of the packet.
   void dump ();
@@ -315,7 +315,7 @@ public:
 
 private:
   /// Used to create the byte representation of the RTCP packet.
-  void build_packet(void) override;
+  void build_packet() override;
 
   /// Add a chunk to the packet.
   void add_chunk(ACE_UINT32 ssrc);
@@ -354,10 +354,10 @@ public:
                  RR_Block *rrBlocks);
 
   /// Destructor
-  ~RTCP_SR_Packet(void) override;
+  ~RTCP_SR_Packet() override;
 
   /// Returns the size of the packet in bytes.
-  unsigned int packet_size(void) override;
+  unsigned int packet_size() override;
 
   /// Returns the synchronization source id for the sender of this packet.
   ACE_UINT32 ssrc () { return this->ssrc_; }
@@ -373,7 +373,7 @@ public:
 
 private:
   /// Used to create the byte representation of the RTCP packet.
-  void build_packet(void) override;
+  void build_packet() override;
 
   /// The synchronization source id of the sender generating this report.
   ACE_UINT32 ssrc_;

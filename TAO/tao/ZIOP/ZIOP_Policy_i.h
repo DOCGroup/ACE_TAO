@@ -52,11 +52,11 @@ public:
 
   ::Compression::CompressorIdLevelList * compressor_ids () override;
 
-  CORBA::PolicyType policy_type (void) override;
+  CORBA::PolicyType policy_type () override;
 
-  CORBA::Policy_ptr copy (void) override;
+  CORBA::Policy_ptr copy () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
@@ -96,13 +96,13 @@ public:
   virtual CompressionEnablingPolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
-  ::CORBA::Boolean compression_enabled (void) override;
+  ::CORBA::Boolean compression_enabled () override;
 
-  CORBA::PolicyType policy_type (void) override;
+  CORBA::PolicyType policy_type () override;
 
-  CORBA::Policy_ptr copy (void) override;
+  CORBA::Policy_ptr copy () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
@@ -140,13 +140,13 @@ public:
   virtual CompressionLowValuePolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
-  ::CORBA::ULong low_value (void) override;
+  ::CORBA::ULong low_value () override;
 
-  CORBA::PolicyType policy_type (void) override;
+  CORBA::PolicyType policy_type () override;
 
-  CORBA::Policy_ptr copy (void) override;
+  CORBA::Policy_ptr copy () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
@@ -174,13 +174,13 @@ public:
   /// Returns a copy of this CompressionMinRatioPolicy.
   virtual CompressionMinRatioPolicy *clone () const;
 
-  ::Compression::CompressionRatio ratio (void) override;
+  ::Compression::CompressionRatio ratio () override;
 
-  CORBA::PolicyType policy_type (void) override;
+  CORBA::PolicyType policy_type () override;
 
-  CORBA::Policy_ptr copy (void) override;
+  CORBA::Policy_ptr copy () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 

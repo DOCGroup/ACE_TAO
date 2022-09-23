@@ -43,7 +43,7 @@ public:
   TAO_EventPortDef_i (TAO_Repository_i *repo);
 
   //// Destructor
-  ~TAO_EventPortDef_i (void) override;
+  ~TAO_EventPortDef_i () override;
 
   virtual CORBA::ComponentIR::EventDef_ptr event ();
 
@@ -61,15 +61,15 @@ public:
   /// implemented here.
 
   /// From Contained_i's pure virtual function.
-  CORBA::Contained::Description *describe (void) override;
+  CORBA::Contained::Description *describe () override;
 
   /// From Contained_i's pure virtual function.
-  CORBA::Contained::Description *describe_i (void) override;
+  CORBA::Contained::Description *describe_i () override;
 
 private:
   /// Dummy method so we can consolidate derived class methods
   /// in this 'abstract' base class.
-  CORBA::DefinitionKind def_kind (void) override;
+  CORBA::DefinitionKind def_kind () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

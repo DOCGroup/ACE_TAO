@@ -42,10 +42,10 @@ public:
   // = The TAO_Server_Strategy_Factory methods, please read the
   //   documentation in "tao/Server_Strategy_Factory.h"
   int open (TAO_ORB_Core*) override;
-  int activate_server_connections (void) override;
+  int activate_server_connections () override;
   int thread_per_connection_timeout (ACE_Time_Value &timeout) override;
-  int server_connection_thread_flags (void) override;
-  int server_connection_thread_count (void) override;
+  int server_connection_thread_flags () override;
+  int server_connection_thread_count () override;
 
   /// Parse the arguments, check the documentation in
   /// $TAO_ROOT/docs/Options.html for details

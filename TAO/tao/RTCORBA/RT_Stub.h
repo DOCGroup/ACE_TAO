@@ -49,7 +49,7 @@ public:
                const TAO_MProfile &profiles,
                TAO_ORB_Core *orb_core);
 
-  ~TAO_RT_Stub (void) override;
+  ~TAO_RT_Stub () override;
 
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)

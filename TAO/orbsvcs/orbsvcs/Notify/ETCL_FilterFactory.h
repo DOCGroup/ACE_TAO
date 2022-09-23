@@ -52,7 +52,7 @@ public:
   CosNotifyFilter::FilterFactory_ptr create (
       PortableServer::POA_ptr filter_poa) override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   ///= CosNotifyFilter::FilterFactory methods
 
@@ -91,7 +91,7 @@ protected:
   CosNotifyFilter::Filter_ptr find_filter (const TAO_Notify_Object::ID& id);
 
   /// Release this object.
-  void release (void) override;
+  void release () override;
 
   /// The POA in which to activate the Filters.
   PortableServer::POA_var filter_poa_;

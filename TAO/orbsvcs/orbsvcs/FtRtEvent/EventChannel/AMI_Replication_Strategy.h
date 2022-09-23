@@ -43,9 +43,9 @@ public:
                           CORBA::ULong object_group_ref_version) override;
   Replication_Strategy* make_primary_strategy() override;
 
-  int  acquire_read (void) override;
-  int  acquire_write (void) override;
-  int  release (void) override;
+  int  acquire_read () override;
+  int  acquire_write () override;
+  int  release () override;
 private:
   bool mt_;
 };

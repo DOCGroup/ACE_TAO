@@ -247,7 +247,7 @@ public:
    * of scheduled priorities.  All scheduled priorities range from 0
    * to the number returned, inclusive.
    */
-  RtecScheduler::Preemption_Priority_t last_scheduled_priority (void) override;
+  RtecScheduler::Preemption_Priority_t last_scheduled_priority () override;
 
   /// Provides the set of Config_Infos associated with the current schedule.
   void get_config_infos (RtecScheduler::Config_Info_Set_out configs) override;

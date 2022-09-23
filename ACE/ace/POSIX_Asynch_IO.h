@@ -103,7 +103,7 @@ public:
   int post_completion (ACE_Proactor_Impl *proactor) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Result (void) override;
+  ~ACE_POSIX_Asynch_Result () override;
 
   /// Simulate error value to use in the post_completion ()
   void set_error (u_long errcode);
@@ -170,7 +170,7 @@ public:
             ACE_Proactor *proactor = 0) override;
 
   /// Check the documentation for ACE_Asynch_Operation::cancel.
-  int cancel (void) override;
+  int cancel () override;
 
   // = Access methods.
 
@@ -185,7 +185,7 @@ protected:
   ACE_POSIX_Asynch_Operation (ACE_POSIX_Proactor *posix_proactor);
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Operation (void) override;
+  ~ACE_POSIX_Asynch_Operation () override;
 
   // This call is for the POSIX implementation. This method is used by
   // ACE_Asynch_Operation to store some information with the
@@ -259,7 +259,7 @@ protected:
                          u_long error) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Read_Stream_Result (void) override;
+  ~ACE_POSIX_Asynch_Read_Stream_Result () override;
 
   // aiocb::aio_nbytes
   // Bytes requested when the asynchronous read was initiated.
@@ -293,7 +293,7 @@ public:
             int signal_number = 0) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Read_Stream (void) override;
+  ~ACE_POSIX_Asynch_Read_Stream () override;
 };
 
 
@@ -346,7 +346,7 @@ protected:
                          u_long error) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Write_Stream_Result (void) override;
+  ~ACE_POSIX_Asynch_Write_Stream_Result () override;
 
 protected:
   // aiocb::aio_nbytes
@@ -382,7 +382,7 @@ public:
              int signal_number = 0) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Write_Stream (void) override;
+  ~ACE_POSIX_Asynch_Write_Stream () override;
 };
 
 /**
@@ -421,7 +421,7 @@ protected:
                          u_long error) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Read_File_Result (void) override;
+  ~ACE_POSIX_Asynch_Read_File_Result () override;
 };
 
 /**
@@ -461,7 +461,7 @@ public:
             int signal_number = 0) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Read_File (void) override;
+  ~ACE_POSIX_Asynch_Read_File () override;
 
 private:
   /**
@@ -524,7 +524,7 @@ protected:
                          u_long error) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Write_File_Result (void) override;
+  ~ACE_POSIX_Asynch_Write_File_Result () override;
 };
 
 /**
@@ -556,7 +556,7 @@ public:
              int signal_number = 0) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Write_File (void) override;
+  ~ACE_POSIX_Asynch_Write_File () override;
 
 private:
   /**
@@ -625,7 +625,7 @@ protected:
                          u_long error) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Accept_Result (void) override;
+  ~ACE_POSIX_Asynch_Accept_Result () override;
 
   // aiocb::aio_nbytes
   // Bytes requested when the asynchronous read was initiated.
@@ -658,7 +658,7 @@ public:
   ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_proactor);
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Accept (void) override;
+  ~ACE_POSIX_Asynch_Accept () override;
 
  /**
    * This <open> belongs to ACE_POSIX_Asynch_Operation. We forward
@@ -693,7 +693,7 @@ public:
    *  Cancel all pending pseudo-asynchronus requests
    *  Behavior as usual AIO request
    */
-  int cancel (void) override;
+  int cancel () override;
 
   /**
    *  Close performs cancellation of all pending requests
@@ -779,7 +779,7 @@ protected:
                          u_long error) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Connect_Result (void) override;
+  ~ACE_POSIX_Asynch_Connect_Result () override;
 
   // aiocb::aio_filedes
   // I/O handle for the new connection.
@@ -800,7 +800,7 @@ public:
   ACE_POSIX_Asynch_Connect (ACE_POSIX_Proactor * posix_proactor);
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Connect (void) override;
+  ~ACE_POSIX_Asynch_Connect () override;
 
  /**
    * This belongs to ACE_POSIX_Asynch_Operation. We forward
@@ -831,7 +831,7 @@ public:
    *  Cancel all pending pseudo-asynchronus requests
    *  Behavior as usual AIO request
    */
-  int cancel (void) override;
+  int cancel () override;
 
   /**
    *  Close performs cancellation of all pending requests.
@@ -956,7 +956,7 @@ protected:
                          u_long error) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Transmit_File_Result (void) override;
+  ~ACE_POSIX_Asynch_Transmit_File_Result () override;
 
   /// Network I/O handle.
   ACE_HANDLE socket_;
@@ -1015,7 +1015,7 @@ public:
                      int signal_number = 0) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Transmit_File (void) override;
+  ~ACE_POSIX_Asynch_Transmit_File () override;
 };
 
 
@@ -1037,7 +1037,7 @@ class ACE_Export ACE_POSIX_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dg
 public:
   /// Constructor.
   ACE_POSIX_Asynch_Read_Dgram (ACE_POSIX_Proactor *posix_proactor);
-  ~ACE_POSIX_Asynch_Read_Dgram (void) override;
+  ~ACE_POSIX_Asynch_Read_Dgram () override;
 
   /** This method queues an asynchronous read.  Up to
    * @a message_block->total_size() bytes will be read and stored in the
@@ -1122,7 +1122,7 @@ protected:
                          u_long error) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Write_Dgram_Result (void) override;
+  ~ACE_POSIX_Asynch_Write_Dgram_Result () override;
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
@@ -1160,7 +1160,7 @@ public:
   ACE_POSIX_Asynch_Write_Dgram (ACE_POSIX_Proactor *posix_proactor);
 
   /// Destructor
-  ~ACE_POSIX_Asynch_Write_Dgram (void) override;
+  ~ACE_POSIX_Asynch_Write_Dgram () override;
 
   /** This method queues an asynchronous send.  Up to
    * @a message_block->total_length bytes will be sent, beginning at the
@@ -1254,7 +1254,7 @@ protected:
                          u_long error) override;
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Read_Dgram_Result (void) override;
+  ~ACE_POSIX_Asynch_Read_Dgram_Result () override;
 
   /// Bytes requested when the asynchronous read was initiated.
   size_t bytes_to_read_;

@@ -55,9 +55,9 @@ public:
 
   int dispatch_reply (TAO_Pluggable_Reply_Params &params) override;
 
-  void connection_closed (void) override;
+  void connection_closed () override;
 
-  void reply_timed_out (void) override;
+  void reply_timed_out () override;
 
 protected:
   /// The service context list

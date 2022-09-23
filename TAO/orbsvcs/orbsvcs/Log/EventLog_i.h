@@ -73,7 +73,7 @@ public:
 
   /// Destroy the log object and all contained records.
   void
-  destroy (void) override;
+  destroy () override;
 
   /// Activate the EventLog.
   void
@@ -81,10 +81,10 @@ public:
 
   // = The CosEventChannelAdmin::EventChannel interface methods.
   CosEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers (void) override;
+  for_consumers () override;
 
   CosEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers (void) override;
+  for_suppliers () override;
 
 protected:
   /// Destructor

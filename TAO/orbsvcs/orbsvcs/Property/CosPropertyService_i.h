@@ -113,11 +113,11 @@ public:
   TAO_PropertySetFactory ();
   // Constructor.
 
-  ~TAO_PropertySetFactory (void) override;
+  ~TAO_PropertySetFactory () override;
   // Destructor.
 
   CosPropertyService::PropertySet_ptr
-  create_propertyset (void) override;
+  create_propertyset () override;
   // Returns a  new TAO_PropertySet object. "The property set returned
   // will *not* have any initial properties."
 
@@ -157,11 +157,11 @@ public:
   TAO_PropertySetDefFactory();
   // Constructor.
 
-  ~TAO_PropertySetDefFactory (void) override;
+  ~TAO_PropertySetDefFactory () override;
   // Destructor.
 
   CosPropertyService::PropertySetDef_ptr
-  create_propertysetdef (void) override;
+  create_propertysetdef () override;
   // Returns a new TAO_PropertySetDef object.
 
   CosPropertyService::PropertySetDef_ptr
@@ -209,7 +209,7 @@ public:
                    const CORBA::ULong number_of_allowed_propertydefs);
   // PropertySetDef's construction needs this.
 
-  ~TAO_PropertySet (void) override;
+  ~TAO_PropertySet () override;
   // Destructor function.
 
   void define_property (const char *property_name,
@@ -221,7 +221,7 @@ public:
   void define_properties (const CosPropertyService::Properties &nproperties) override;
   // Define a sequence of properties at a time.
 
-  CORBA::ULong get_number_of_properties (void) override;
+  CORBA::ULong get_number_of_properties () override;
   // Get the number of properties that are currently defined in the
   // PropertySet.
 
@@ -251,7 +251,7 @@ public:
   void delete_properties (const CosPropertyService::PropertyNames &property_names) override;
   // Delete all the these properties from this property set.
 
-  CORBA::Boolean delete_all_properties (void) override;
+  CORBA::Boolean delete_all_properties () override;
   // Delete everything from this property set.
 
   CORBA::Boolean is_property_defined (const char *property_name) override;
@@ -326,7 +326,7 @@ public:
   TAO_PropertySetDef (const CosPropertyService::PropertyDefs initial_property_defs);
   // This is also for the factory.
 
-  ~TAO_PropertySetDef (void) override;
+  ~TAO_PropertySetDef () override;
   // Destructor.
 
   void get_allowed_property_types (CosPropertyService::PropertyTypes_out property_types) override;
@@ -409,10 +409,10 @@ public:
   TAO_PropertyNamesIterator (TAO_PropertySet &property_set);
   // Constructor.
 
-  ~TAO_PropertyNamesIterator (void) override;
+  ~TAO_PropertyNamesIterator () override;
   // Destructor.
 
-  void reset (void) override;
+  void reset () override;
   // The reset operation resets the position in an iterator to the
   // first property name, if one exists.
 
@@ -430,7 +430,7 @@ public:
   // with at most the how_many number of names. A return of false
   // signifies no more items in the iterator.
 
-  void destroy (void) override;
+  void destroy () override;
   // Destroys the iterator.
 private:
   typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
@@ -465,10 +465,10 @@ public:
   TAO_PropertiesIterator (TAO_PropertySet &property_set);
   // Constructor.
 
-  ~TAO_PropertiesIterator (void) override;
+  ~TAO_PropertiesIterator () override;
   // Destructor.
 
-  void reset (void) override;
+  void reset () override;
   // Resets the position in an iterator to the first property, if one exists.
 
   CORBA::Boolean next_one (CosPropertyService::Property_out aproperty) override;
@@ -485,7 +485,7 @@ public:
   // at most the how_many number of properties. A return of false
   // signifies no more items in the iterator.
 
-  void destroy (void) override;
+  void destroy () override;
   // Destroys the iterator.
 
 private:

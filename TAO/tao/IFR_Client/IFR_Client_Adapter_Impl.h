@@ -39,7 +39,7 @@ class TAO_IFR_CLIENT_Export TAO_IFR_Client_Adapter_Impl
   : public TAO_IFR_Client_Adapter
 {
 public:
-  ~TAO_IFR_Client_Adapter_Impl (void) override;
+  ~TAO_IFR_Client_Adapter_Impl () override;
 
   CORBA::Boolean interfacedef_cdr_insert (
       TAO_OutputCDR &cdr,

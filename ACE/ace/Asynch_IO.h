@@ -291,7 +291,7 @@ public:
   ACE_Asynch_Read_Stream ();
 
   /// Destructor
-  ~ACE_Asynch_Read_Stream (void) override;
+  ~ACE_Asynch_Read_Stream () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -400,7 +400,7 @@ public:
     Result (ACE_Asynch_Read_Stream_Result_Impl *implementation);
 
     /// Destructor.
-    ~Result (void) override;
+    ~Result () override;
 
     /// The implementation class.
     ACE_Asynch_Read_Stream_Result_Impl *implementation_;
@@ -433,7 +433,7 @@ public:
   ACE_Asynch_Write_Stream ();
 
   /// Destructor.
-  ~ACE_Asynch_Write_Stream (void) override;
+  ~ACE_Asynch_Write_Stream () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -554,7 +554,7 @@ public:
     Result (ACE_Asynch_Write_Stream_Result_Impl *implementation);
 
     /// Destructor.
-    ~Result (void) override;
+    ~Result () override;
 
     /// Implementation class.
     ACE_Asynch_Write_Stream_Result_Impl *implementation_;
@@ -590,7 +590,7 @@ public:
   ACE_Asynch_Read_File ();
 
   /// Destructor.
-  ~ACE_Asynch_Read_File (void) override;
+  ~ACE_Asynch_Read_File () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -698,7 +698,7 @@ public:
     Result (ACE_Asynch_Read_File_Result_Impl *implementation);
 
     /// Destructor.
-    ~Result (void) override;
+    ~Result () override;
 
     /// The implementation class.
     ACE_Asynch_Read_File_Result_Impl *implementation_;
@@ -739,7 +739,7 @@ public:
   ACE_Asynch_Write_File ();
 
   /// Destructor.
-  ~ACE_Asynch_Write_File (void) override;
+  ~ACE_Asynch_Write_File () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -832,7 +832,7 @@ public:
     Result (ACE_Asynch_Write_File_Result_Impl *implementation);
 
     /// Destructor.
-    ~Result (void) override;
+    ~Result () override;
 
     /// The implementation class.
     ACE_Asynch_Write_File_Result_Impl *implementation_;
@@ -871,7 +871,7 @@ public:
   ACE_Asynch_Accept ();
 
   /// Destructor.
-  ~ACE_Asynch_Accept (void) override;
+  ~ACE_Asynch_Accept () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -975,7 +975,7 @@ public:
     Result (ACE_Asynch_Accept_Result_Impl *implementation);
 
     /// Destructor.
-    ~Result (void) override;
+    ~Result () override;
 
     /// Implementation class.
     ACE_Asynch_Accept_Result_Impl *implementation_;
@@ -1006,7 +1006,7 @@ public:
   ACE_Asynch_Connect ();
 
   /// Destructor.
-  ~ACE_Asynch_Connect (void) override;
+  ~ACE_Asynch_Connect () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -1069,7 +1069,7 @@ public:
     Result (ACE_Asynch_Connect_Result_Impl *implementation);
 
     /// Destructor.
-    ~Result (void) override;
+    ~Result () override;
 
     /// Implementation class.
     ACE_Asynch_Connect_Result_Impl *implementation_;
@@ -1111,7 +1111,7 @@ public:
   ACE_Asynch_Transmit_File ();
 
   /// Destructor.
-  ~ACE_Asynch_Transmit_File (void) override;
+  ~ACE_Asynch_Transmit_File () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -1209,7 +1209,7 @@ public:
     Result (ACE_Asynch_Transmit_File_Result_Impl *implementation);
 
     /// Destructor.
-    ~Result (void) override;
+    ~Result () override;
 
     /// The implementation class.
     ACE_Asynch_Transmit_File_Result_Impl *implementation_;
@@ -1316,7 +1316,7 @@ public:
   ACE_Asynch_Read_Dgram ();
 
   /// Destructor
-  ~ACE_Asynch_Read_Dgram (void) override;
+  ~ACE_Asynch_Read_Dgram () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -1415,7 +1415,7 @@ public:
     Result (ACE_Asynch_Read_Dgram_Result_Impl *implementation);
 
     /// Destructor.
-    ~Result (void) override;
+    ~Result () override;
 
     /// The implementation class.
     ACE_Asynch_Read_Dgram_Result_Impl *implementation_;
@@ -1449,7 +1449,7 @@ public:
   ACE_Asynch_Write_Dgram ();
 
   /// Destructor.
-  ~ACE_Asynch_Write_Dgram (void) override;
+  ~ACE_Asynch_Write_Dgram () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -1545,7 +1545,7 @@ public:
     Result (ACE_Asynch_Write_Dgram_Result_Impl *implementation);
 
     /// Destructor.
-    ~Result (void) override;
+    ~Result () override;
 
     /// Implementation class.
     ACE_Asynch_Write_Dgram_Result_Impl *implementation_;
@@ -1702,7 +1702,7 @@ public:
   ACE_Service_Handler ();
 
   /// Virtual destruction.
-  ~ACE_Service_Handler (void) override;
+  ~ACE_Service_Handler () override;
 
   /**
    * {open} is called by ACE_Asynch_Acceptor to initialize a new

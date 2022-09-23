@@ -34,7 +34,7 @@ public:
   ACEXML_HttpCharStream ();
 
   /// Destructor
-  ~ACEXML_HttpCharStream (void) override;
+  ~ACEXML_HttpCharStream () override;
 
   /// Open an URL.
   int open (const ACEXML_Char *url);
@@ -43,12 +43,12 @@ public:
    *  Returns the available ACEXML_Char in the buffer.  -1
    *  if the object is not initialized properly.
    */
-  int available (void) override;
+  int available () override;
 
   /**
    *  Close this stream and release all resources used by it.
    */
-  int close (void) override;
+  int close () override;
 
   /**
    *  Read the next ACEXML_Char.  Return -1 if we are not able to
@@ -65,12 +65,12 @@ public:
    *  Peek the next ACEXML_Char in the CharStream.  Return the
    *  character if succeess, -1 if EOS is reached.
    */
-  int peek (void) override;
+  int peek () override;
 
   /**
    *  Resets the file pointer to the beginning of the stream.
    */
-  void rewind (void) override;
+  void rewind () override;
 
   /**
    *  Determine the encoding of the file.
@@ -80,12 +80,12 @@ public:
   /**
    * Get the encoding of the file
    */
-  const ACEXML_Char* getEncoding (void) override;
+  const ACEXML_Char* getEncoding () override;
 
   /*
    * Get the systemId for the underlying CharStream
    */
-  const ACEXML_Char* getSystemId (void) override;
+  const ACEXML_Char* getSystemId () override;
 
 
 private:

@@ -57,14 +57,14 @@ public:
   TAO_Event_LogConsumer (TAO_EventLog_i *log);
 
   /// Destructor.
-  ~TAO_Event_LogConsumer (void) override;
+  ~TAO_Event_LogConsumer () override;
 
   /// Connect to EventLog.
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 private:
   /// Disconnect from EventLog.
-  void disconnect_push_consumer (void) override;
+  void disconnect_push_consumer () override;
 
   /// This method will call TAO_Log_i::log() to write
   /// the event to the Log.

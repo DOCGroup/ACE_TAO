@@ -60,7 +60,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
    */
-  ~TAO_IIOP_Transport (void) override;
+  ~TAO_IIOP_Transport () override;
 
   /** @name Overridden Template Methods
    *
@@ -68,7 +68,7 @@ protected:
    * details.
    */
   //@{
-  ACE_Event_Handler * event_handler_i (void) override;
+  ACE_Event_Handler * event_handler_i () override;
 
   ssize_t send (iovec *iov, int iovcnt,
                         size_t &bytes_transferred,
@@ -107,7 +107,7 @@ public:
 
   int tear_listen_point_list (TAO_InputCDR &cdr) override;
 
-  TAO_Connection_Handler * connection_handler_i (void) override;
+  TAO_Connection_Handler * connection_handler_i () override;
   //@}
 
 private:

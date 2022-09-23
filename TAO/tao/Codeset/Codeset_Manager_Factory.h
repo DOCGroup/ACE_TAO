@@ -40,7 +40,7 @@ class TAO_Codeset_Export TAO_Codeset_Manager_Factory :
 {
 public:
   ~TAO_Codeset_Manager_Factory () override;
-  TAO_Codeset_Manager *create(void) override;
+  TAO_Codeset_Manager *create() override;
   bool is_default() const override;
 };
 

@@ -26,7 +26,7 @@ public:
   TAO_MonitorSupplierAdmin ();
 
   /// Remove the statistics for this event channel
-  ~TAO_MonitorSupplierAdmin (void) override;
+  ~TAO_MonitorSupplierAdmin () override;
 
   /// Register our statistic and control objects
   void register_stats_controls (TAO_MonitorEventChannel* mec,

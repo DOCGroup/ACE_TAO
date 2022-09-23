@@ -65,9 +65,9 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestInterceptor.
-  char * name (void) override;
+  char * name () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   void send_request (
       PortableInterceptor::ClientRequestInfo_ptr ri) override;

@@ -57,7 +57,7 @@ public:
 
   /// = Servant methods
   // = interface methods
-  CosNotifyChannelAdmin::ProxyType MyType (void) override;
+  CosNotifyChannelAdmin::ProxyType MyType () override;
 
   void connect_structured_push_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer
@@ -72,7 +72,7 @@ public:
 
 private:
   /// Release
-  void release (void) override;
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -33,7 +33,7 @@ class TAO_Export TAO_Protocol_Factory : public ACE_Service_Object
 {
 public:
   TAO_Protocol_Factory (CORBA::ULong tag);
-  ~TAO_Protocol_Factory (void) override;
+  ~TAO_Protocol_Factory () override;
 
   /// Initialization hook.
   int init (int argc, ACE_TCHAR *argv[]) override = 0;

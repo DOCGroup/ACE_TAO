@@ -85,7 +85,7 @@ public:
 protected:
   /// Destructor
   /// Protected to force allocation on the heap.
-  ~TAO_Security_Current (void) override;
+  ~TAO_Security_Current () override;
 
   /// Fully initialize this object.  This method is used predominantly
   /// to set the ORB core pointer.

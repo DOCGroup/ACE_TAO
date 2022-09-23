@@ -67,13 +67,13 @@ public:
       const IOP::TaggedComponent & component,
       IOP::ProfileId profile_id) override;
 
-  char * manager_id (void) override;
+  char * manager_id () override;
 
-  PortableInterceptor::AdapterState state (void) override;
+  PortableInterceptor::AdapterState state () override;
 
-  PortableInterceptor::ObjectReferenceTemplate *adapter_template (void) override;
+  PortableInterceptor::ObjectReferenceTemplate *adapter_template () override;
 
-  PortableInterceptor::ObjectReferenceFactory *current_factory (void) override;
+  PortableInterceptor::ObjectReferenceFactory *current_factory () override;
 
   void current_factory (
       PortableInterceptor::ObjectReferenceFactory * current_factory) override;
@@ -101,7 +101,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management through
   /// the reference counting mechanism.
-  ~TAO_IORInfo (void) override;
+  ~TAO_IORInfo () override;
 
   /// Check if this IORInfo instance is valid.
   /**

@@ -50,7 +50,7 @@ public:
 
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.
-  bool no_leaders_available (void) override;
+  bool no_leaders_available () override;
 
 private:
   /// Lane associated with this leader generator.
@@ -72,7 +72,7 @@ public:
   TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane);
 
   /// Method executed when a thread is spawned.
-  int svc (void) override;
+  int svc () override;
 
   /// Accessor to the lane to which this thread belongs to.
   TAO_Thread_Lane &lane () const;

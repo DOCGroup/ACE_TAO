@@ -140,7 +140,7 @@ public:
                         const OPTIONS *options = 0);
 
   /// Destructor.
-  ~ACE_MMAP_Memory_Pool (void) override;
+  ~ACE_MMAP_Memory_Pool () override;
 
   /// Ask system for initial chunk of shared memory.
   virtual void *init_acquire (size_t nbytes,
@@ -320,7 +320,7 @@ public:
                              const OPTIONS *options = 0);
 
   /// Destructor.
-  ~ACE_Lite_MMAP_Memory_Pool (void) override;
+  ~ACE_Lite_MMAP_Memory_Pool () override;
 
   /// Overwrite the default sync behavior with no-op
   int sync (size_t len, int flags = MS_SYNC) override;

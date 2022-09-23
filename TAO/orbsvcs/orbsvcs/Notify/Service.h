@@ -52,7 +52,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Service : public ACE_Service_Object
 {
 public:
   /// Destructor.
-  ~TAO_Notify_Service (void) override;
+  ~TAO_Notify_Service () override;
 
   /// Load an implementation of the TAO_Notify_Service based on which
   /// implementations are loaded.

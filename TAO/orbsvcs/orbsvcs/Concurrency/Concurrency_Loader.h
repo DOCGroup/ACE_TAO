@@ -34,7 +34,7 @@ public:
   TAO_Concurrency_Loader ();
 
   /// Destructor
-  ~TAO_Concurrency_Loader (void) override;
+  ~TAO_Concurrency_Loader () override;
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>

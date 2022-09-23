@@ -85,8 +85,8 @@ public:
 
 private:
   //NOTE: these functions return -1 on error
-  int send_request (void) override;
-  int receive_reply (void) override;
+  int send_request () override;
+  int receive_reply () override;
   const char *request_prefix_;
   const char *request_suffix_;
 };

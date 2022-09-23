@@ -26,9 +26,9 @@ public:
   ForwardCtrlServerInterceptor();
   ~ForwardCtrlServerInterceptor() override;
 
-  char * name (void) override;
+  char * name () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 

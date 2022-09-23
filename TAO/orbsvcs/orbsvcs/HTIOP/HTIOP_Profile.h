@@ -76,7 +76,7 @@ namespace TAO
       Profile (TAO_ORB_Core *orb_core);
 
       /// Destructor is to be called only through <_decr_refcnt>.
-      ~Profile (void) override;
+      ~Profile () override;
 
       /**
        * Return a string representation for this profile.
@@ -92,10 +92,10 @@ namespace TAO
        * encapsulation of a sequence of structs, each representing a
        * single endpoint.  Data format is specified in iiop_endpoins.pidl.
        */
-      int encode_endpoints (void) override;
+      int encode_endpoints () override;
 
       /// Return pointer to the head of this profile's endpoints list.
-      TAO_Endpoint *endpoint (void) override;
+      TAO_Endpoint *endpoint () override;
 
       /// Return how many endpoints this profile contains.
       CORBA::ULong endpoint_count () const override;
@@ -113,7 +113,7 @@ namespace TAO
     protected:
       /// Template methods. Please see Profile.h for the documentation.
       int decode_profile (TAO_InputCDR &cdr) override;
-      int decode_endpoints (void) override;
+      int decode_endpoints () override;
       void parse_string_i (const char *string) override;
       void create_profile_body (TAO_OutputCDR &cdr) const override;
       CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile) override;

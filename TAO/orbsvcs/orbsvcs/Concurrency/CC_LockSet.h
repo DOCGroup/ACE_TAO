@@ -83,7 +83,7 @@ public:
   CC_LockSet (CosConcurrencyControl::LockSet_ptr related);
 
   /// Destructor.
-  ~CC_LockSet (void) override;
+  ~CC_LockSet () override;
 
   // = CosConcurrencyControl methods
   /// Acquires this lock. Blocks until lock is obtained

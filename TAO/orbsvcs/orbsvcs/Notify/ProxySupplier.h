@@ -56,10 +56,10 @@ public:
   virtual void deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request);
 
   /// Override TAO_Notify_Container_T::shutdown  method
-  int shutdown (void) override;
+  int shutdown () override;
 
   /// Destroy this object.
-  void destroy (void) override;
+  void destroy () override;
 
   /// Destroy this object, but also indicate if it is due to a timeout or
   /// not.
@@ -86,7 +86,7 @@ private:
   TAO_Notify_Consumer::Ptr consumer_;
 
   /// Access our Peer.
-  TAO_Notify_Peer* peer (void) override;
+  TAO_Notify_Peer* peer () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

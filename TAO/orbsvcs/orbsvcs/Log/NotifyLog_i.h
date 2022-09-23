@@ -73,7 +73,7 @@ public:
 
   /// Destroy the log object and all contained records.
   void
-  destroy (void) override;
+  destroy () override;
 
   /// Activate the NotifyLog.
   void
@@ -81,21 +81,21 @@ public:
 
   // = Methods from CosNotifyChannelAdmin::EventChannel.
   CosNotifyFilter::Filter_ptr
-  get_filter (void) override;
+  get_filter () override;
 
   void set_filter (CosNotifyFilter::Filter_ptr filter) override;
 
   CosNotifyChannelAdmin::EventChannelFactory_ptr
-  MyFactory (void) override;
+  MyFactory () override;
 
   CosNotifyChannelAdmin::ConsumerAdmin_ptr
-  default_consumer_admin (void) override;
+  default_consumer_admin () override;
 
   CosNotifyChannelAdmin::SupplierAdmin_ptr
-  default_supplier_admin (void) override;
+  default_supplier_admin () override;
 
   CosNotifyFilter::FilterFactory_ptr
-  default_filter_factory (void) override;
+  default_filter_factory () override;
 
   CosNotifyChannelAdmin::ConsumerAdmin_ptr
   new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
@@ -112,18 +112,18 @@ public:
   get_supplieradmin (CosNotifyChannelAdmin::AdminID id) override;
 
   CosNotifyChannelAdmin::AdminIDSeq*
-  get_all_consumeradmins (void) override;
+  get_all_consumeradmins () override;
 
   CosNotifyChannelAdmin::AdminIDSeq*
-  get_all_supplieradmins (void) override;
+  get_all_supplieradmins () override;
 
   CosNotification::AdminProperties*
-  get_admin (void) override;
+  get_admin () override;
 
   void set_admin (const CosNotification::AdminProperties& admin) override;
 
   CosNotification::QoSProperties*
-  get_qos (void) override;
+  get_qos () override;
 
   void set_qos (const CosNotification::QoSProperties&) override;
 
@@ -132,10 +132,10 @@ public:
 
   // = Methods from DsEventLogAdmin::EventLog.
   CosEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers (void) override;
+  for_consumers () override;
 
   CosEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers (void) override;
+  for_suppliers () override;
 
 private:
   /// The PushConsumer that consumes the events and stores them

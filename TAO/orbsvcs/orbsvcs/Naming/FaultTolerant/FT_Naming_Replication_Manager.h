@@ -70,7 +70,7 @@ public:
 
   TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Server &owner);
 
-  ~TAO_FT_Naming_Replication_Manager(void) override;
+  ~TAO_FT_Naming_Replication_Manager() override;
 
   int svc () override;
   int handle_exception (ACE_HANDLE ) override;

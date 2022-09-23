@@ -38,7 +38,7 @@ public:
   TAO_RT_Protocols_Hooks ();
 
   /// Destructor
-  ~TAO_RT_Protocols_Hooks (void) override;
+  ~TAO_RT_Protocols_Hooks () override;
 
   /// Initialize the protocols hooks instance.
   void init_hooks (TAO_ORB_Core *orb_core) override;
@@ -69,7 +69,7 @@ public:
 
   void client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties) override;
 
-  CORBA::Long get_dscp_codepoint (void) override;
+  CORBA::Long get_dscp_codepoint () override;
 
   void get_selector_hook (CORBA::Policy *model_policy,
                           CORBA::Boolean

@@ -41,7 +41,7 @@ class TAO_CSD_FW_Export TAO_CSD_Framework_Loader : public ACE_Service_Object
   TAO_CSD_Framework_Loader ();
 
   /// Destructor.
-  ~TAO_CSD_Framework_Loader (void) override;
+  ~TAO_CSD_Framework_Loader () override;
 
   /// Used to force the initialization of the ORB code.
   static int static_init ();

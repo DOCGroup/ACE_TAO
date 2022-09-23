@@ -56,7 +56,7 @@ public:
   TAO_ETCL_Literal_Constraint (const ETCL_Literal_Constraint *lit);
 
   /// Destructor.
-  ~TAO_ETCL_Literal_Constraint(void) override;
+  ~TAO_ETCL_Literal_Constraint() override;
 
   /// Assignment operator.
   void operator= (const TAO_ETCL_Literal_Constraint& co);

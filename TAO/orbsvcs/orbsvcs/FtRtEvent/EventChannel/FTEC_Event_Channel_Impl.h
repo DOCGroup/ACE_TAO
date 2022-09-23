@@ -46,11 +46,11 @@ public:
 
   // = The RtecEventChannelAdmin::EventChannel methods...
   RtecEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (void) override;
+      for_consumers () override;
 
 
   RtecEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (void) override;
+      for_suppliers () override;
 
   void get_state (FtRtecEventChannelAdmin::EventChannelState & s) override;
 

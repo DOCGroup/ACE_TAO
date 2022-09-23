@@ -59,7 +59,7 @@ public:
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
-  TAO_Invocation_Endpoint_Selector *get_selector (void) override;
+  TAO_Invocation_Endpoint_Selector *get_selector () override;
 
 private:
   // Prevent copying/assignment.

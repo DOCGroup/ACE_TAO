@@ -123,10 +123,10 @@ public:
   ACE_Timer_Queue *timer_queue () const override;
 
   /// Close down the select_reactor and release all of its resources.
-  int close (void) override;
+  int close () override;
 
   /// Close down the select_reactor and release all of its resources.
-  ~ACE_Select_Reactor_T (void) override;
+  ~ACE_Select_Reactor_T () override;
 
   // = Event loop drivers.
 
@@ -182,7 +182,7 @@ public:
    * actively handling events.  If it returns non-zero, <handling_events> and
    * <handle_alertable_events> return -1 immediately.
    */
-  int deactivated (void) override;
+  int deactivated () override;
 
   /**
    * Control whether the Reactor will handle any more incoming events or not.
@@ -304,7 +304,7 @@ public:
   int suspend_handler (const ACE_Handle_Set &handles) override;
 
   /// Suspend all the <Event_Handlers> in the Select_Reactor.
-  int suspend_handlers (void) override;
+  int suspend_handlers () override;
 
   /// Resume a temporarily suspend Event_Handler associated with
   /// @a eh.
@@ -318,7 +318,7 @@ public:
   int resume_handler (const ACE_Handle_Set &handles) override;
 
   /// Resume all the <Event_Handlers> in the Select_Reactor.
-  int resume_handlers (void) override;
+  int resume_handlers () override;
 
   /**
    * Return true if we any event associations were made by the reactor
@@ -326,7 +326,7 @@ public:
    * Select_Reactor does not do any event associations, this function
    * always return false.
    */
-  bool uses_event_associations (void) override;
+  bool uses_event_associations () override;
 
   // = Timer management.
   /**
@@ -437,10 +437,10 @@ public:
    * dispatch the ACE_Event_Handlers that are passed in via the
    * notify pipe before breaking out of its recv loop.
    */
-  int max_notify_iterations (void) override;
+  int max_notify_iterations () override;
 
   /// Get the existing restart value.
-  bool restart (void) override;
+  bool restart () override;
 
   /// Set a new value for restart and return the original value.
   bool restart (bool r) override;
@@ -451,7 +451,7 @@ public:
 
   /// Get position that the main ACE_Select_Reactor thread is requeued in the
   /// list of waiters during a <notify> callback.
-  int requeue_position (void) override;
+  int requeue_position () override;
 
   // = Low-level wait_set mask manipulation methods.
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the @a eh and
@@ -478,7 +478,7 @@ public:
                          int ops) override;
 
   /// Wake up all threads in waiting in the event loop
-  void wakeup_all_threads (void) override;
+  void wakeup_all_threads () override;
 
   // = Only the owner thread can perform a <handle_events>.
 
@@ -514,7 +514,7 @@ public:
                        ACE_Event_Handler ** = 0) override;
 
   /// Returns true if we've been successfully initialized, else false.
-  bool initialized (void) override;
+  bool initialized () override;
 
   /// Returns the current size of the Reactor's internal descriptor
   /// table.
@@ -527,7 +527,7 @@ public:
    * deadlock efficiently when ACE_Event_Handlers are used in
    * multiple threads.
    */
-  ACE_Lock &lock (void) override;
+  ACE_Lock &lock () override;
 
   /// Dump the state of an object.
   void dump () const override;
@@ -667,7 +667,7 @@ protected:
 
   /// Enqueue ourselves into the list of waiting threads at the
   /// appropriate point specified by <requeue_position_>.
-  void renew (void) override;
+  void renew () override;
 
   /// Synchronization token for the MT_SAFE ACE_Select_Reactor.
   ACE_SELECT_REACTOR_TOKEN token_;

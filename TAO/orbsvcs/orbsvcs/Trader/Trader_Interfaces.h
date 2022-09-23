@@ -267,7 +267,7 @@ class TAO_Register :
 public:
   TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  ~TAO_Register (void) override;
+  ~TAO_Register () override;
 
   CosTrading::OfferId _cxx_export (CORBA::Object_ptr reference,
                                            const char *type,
@@ -511,7 +511,7 @@ class TAO_Admin :
 public:
   TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  ~TAO_Admin (void) override;
+  ~TAO_Admin () override;
 
   // = Importing Parameters (used by the Lookup Interface)
 
@@ -559,7 +559,7 @@ public:
     set_type_repos (CosTrading::TypeRepository_ptr repository) override;
 
   CosTrading::Admin::OctetSeq*
-    request_id_stem (void) override;
+    request_id_stem () override;
 
   CosTrading::Admin::OctetSeq*
     set_request_id_stem (const CosTrading::Admin::OctetSeq& stem) override;
@@ -619,7 +619,7 @@ class TAO_Link :
 public:
   TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  ~TAO_Link (void) override;
+  ~TAO_Link () override;
 
   /**
    * BEGIN SPEC
@@ -706,7 +706,7 @@ public:
   // state.
   // END SPEC
 
-  CosTrading::LinkNameSeq* list_links (void) override;
+  CosTrading::LinkNameSeq* list_links () override;
 
   // BEGIN SPEC
   // The list_links operation returns a list of the names of all
@@ -774,7 +774,7 @@ class TAO_Proxy :
 public:
   TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  ~TAO_Proxy (void) override;
+  ~TAO_Proxy () override;
 
   CosTrading::OfferId
     export_proxy (CosTrading::Lookup_ptr,

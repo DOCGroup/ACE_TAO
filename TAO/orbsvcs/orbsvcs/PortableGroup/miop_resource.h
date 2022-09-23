@@ -52,7 +52,7 @@ public:
   TAO_MIOP_Resource_Factory ();
 
   /// Destructor.
-  ~TAO_MIOP_Resource_Factory (void) override;
+  ~TAO_MIOP_Resource_Factory () override;
 
   /**
    * @name Service Configurator Hooks

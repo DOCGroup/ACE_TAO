@@ -67,21 +67,21 @@ public:
    */
   //@{
   /// Return the factory of the log.
-  DsLogAdmin::LogMgr_ptr my_factory (void) override;
+  DsLogAdmin::LogMgr_ptr my_factory () override;
 
   /// Return the id of the log.
-  DsLogAdmin::LogId id (void) override;
+  DsLogAdmin::LogId id () override;
 
   /// Get the list of the QoS properties supported by the log.
   DsLogAdmin::QoSList*
-  get_log_qos (void) override;
+  get_log_qos () override;
 
   /// Set the list of the QoS properties supported by the log.
   void set_log_qos (const DsLogAdmin::QoSList & qos) override;
 
   /// Get the record life in seconds (0 infinite).
   CORBA::ULong
-  get_max_record_life (void) override;
+  get_max_record_life () override;
 
   /// Set the record life in seconds (0 infinite).
   void
@@ -89,7 +89,7 @@ public:
 
   /// Get the maximum size in octets.
   CORBA::ULongLong
-  get_max_size (void) override;
+  get_max_size () override;
 
   /// Set the maximum size in octets.
   void
@@ -97,15 +97,15 @@ public:
 
   /// Get the current size of the log in octets.
   CORBA::ULongLong
-  get_current_size (void) override;
+  get_current_size () override;
 
   /// Return the number of records in the log.
   CORBA::ULongLong
-  get_n_records (void) override;
+  get_n_records () override;
 
   /// Get the action to be taken when the log reaches its maximum size.
   DsLogAdmin::LogFullActionType
-  get_log_full_action (void) override;
+  get_log_full_action () override;
 
   /// Set the action to be taken when the log reaches its maximum size.
   void
@@ -113,7 +113,7 @@ public:
 
   /// Get the administrative state of the log.
   DsLogAdmin::AdministrativeState
-  get_administrative_state (void) override;
+  get_administrative_state () override;
 
   /// Set the administrative state of the log.
   void
@@ -124,7 +124,7 @@ public:
   /// @@@ Of course!  get_forwarding_state() is virtual in the base
   ///     class dictated by the IDL!  -Ossama
   DsLogAdmin::ForwardingState
-  get_forwarding_state (void) override;
+  get_forwarding_state () override;
 
   /// Set the forwarding state of the log.
   /// @@ Note: is it ok to make this method virtual?
@@ -133,11 +133,11 @@ public:
 
   /// Get the operational state of the log.
   DsLogAdmin::OperationalState
-  get_operational_state (void) override;
+  get_operational_state () override;
 
   /// Get the log duration
   DsLogAdmin::TimeInterval
-  get_interval (void) override;
+  get_interval () override;
 
   /// Set the log duration.
   void
@@ -145,11 +145,11 @@ public:
 
   /// Get the availability status
   DsLogAdmin::AvailabilityStatus
-  get_availability_status (void) override;
+  get_availability_status () override;
 
   /// Get the capacity alarm threshold
   DsLogAdmin::CapacityAlarmThresholdList*
-    get_capacity_alarm_thresholds (void) override;
+    get_capacity_alarm_thresholds () override;
 
   /**
    * Set the capacity alarm threshold. Threshold values represent
@@ -165,7 +165,7 @@ public:
 
   /// Get the weekly scheduling parameters
   DsLogAdmin::WeekMask*
-  get_week_mask (void) override;
+  get_week_mask () override;
 
   /// Set the weekly scheduling parameters.
   void
@@ -229,7 +229,7 @@ public:
   /// Causes all pending events to be written to storage. Raises
   /// DsLogAdmin::UnsupportedQos
   void
-  flush (void) override;
+  flush () override;
   //@}
 
   /// Remove records that have exceeded max_record_life_.

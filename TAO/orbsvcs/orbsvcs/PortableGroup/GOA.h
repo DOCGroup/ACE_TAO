@@ -100,25 +100,25 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  char * the_name (void) override;
+  char * the_name () override;
 
-  PortableServer::POA_ptr the_parent (void) override;
+  PortableServer::POA_ptr the_parent () override;
 
-  PortableServer::POAList *the_children (void) override;
+  PortableServer::POAList *the_children () override;
 
-  PortableServer::POAManager_ptr the_POAManager (void) override;
+  PortableServer::POAManager_ptr the_POAManager () override;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  PortableServer::AdapterActivator_ptr the_activator (void) override;
+  PortableServer::AdapterActivator_ptr the_activator () override;
 
   void the_activator (PortableServer::AdapterActivator_ptr adapter_activator) override;
 
-  PortableServer::ServantManager_ptr get_servant_manager (void) override;
+  PortableServer::ServantManager_ptr get_servant_manager () override;
 
   void set_servant_manager (PortableServer::ServantManager_ptr imgr) override;
 
-  PortableServer::Servant get_servant (void) override;
+  PortableServer::Servant get_servant () override;
 
   void set_servant (PortableServer::Servant servant) override;
 
@@ -148,7 +148,7 @@ public:
 
   CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid) override;
 
-  CORBA::OctetSeq *id (void) override;
+  CORBA::OctetSeq *id () override;
 
   // End standard POA interface methods.
 
@@ -161,7 +161,7 @@ public:
            TAO_ORB_Core &orb_core,
            TAO_Object_Adapter *object_adapter);
 
-  ~TAO_GOA (void) override;
+  ~TAO_GOA () override;
 
     // Used to force the initialization of the code.
     static int Initializer ();

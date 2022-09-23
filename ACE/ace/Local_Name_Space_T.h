@@ -122,7 +122,7 @@ public:
 
   /// Destructor, do some cleanup :TBD: last dtor should "compress"
   /// file
-  ~ACE_Local_Name_Space (void) override;
+  ~ACE_Local_Name_Space () override;
 
   /// Bind a new name to a naming context (Wide character strings).
   int bind (const ACE_NS_WString &name,

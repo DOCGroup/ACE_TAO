@@ -131,7 +131,7 @@ public:
   ACE_Select_Reactor_Notify ();
 
   /// Destructor.
-  ~ACE_Select_Reactor_Notify (void) override;
+  ~ACE_Select_Reactor_Notify () override;
 
   /// Initialize.
   int open (ACE_Reactor_Impl *,
@@ -139,7 +139,7 @@ public:
                     int disable_notify_pipe = ACE_DISABLE_NOTIFY_PIPE_DEFAULT) override;
 
   /// Destroy.
-  int close (void) override;
+  int close () override;
 
   /**
    * Called by a thread when it wants to unblock the
@@ -164,7 +164,7 @@ public:
   /// Returns the ACE_HANDLE of the notify pipe on which the reactor
   /// is listening for notifications so that other threads can unblock
   /// the Select_Reactor
-  ACE_HANDLE notify_handle (void) override;
+  ACE_HANDLE notify_handle () override;
 
   /// Handle one of the notify call on the @c handle. This could be
   /// because of a thread trying to unblock the Reactor_Impl
@@ -206,7 +206,7 @@ public:
    * dispatch the ACE_Event_Handlers that are passed in via the
    * notify pipe before breaking out of its recv loop.
    */
-  int max_notify_iterations (void) override;
+  int max_notify_iterations () override;
 
   /**
    * Purge any notifications pending in this reactor for the specified
@@ -475,7 +475,7 @@ public:
   /// its own ie. can it pass on the control of handle resumption to
   /// the application.  The select reactor has no handlers that can be
   /// resumed by the  application. So return 0;
-  int resumable_handler (void) override;
+  int resumable_handler () override;
 
 protected:
   /// Allow manipulation of the <wait_set_> mask and <ready_set_> mask.

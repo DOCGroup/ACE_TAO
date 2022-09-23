@@ -44,7 +44,7 @@ public:
   TAO_FinderDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_FinderDef_i (void) override;
+  ~TAO_FinderDef_i () override;
 
   /// Return our definition kind.
   CORBA::DefinitionKind def_kind () override;

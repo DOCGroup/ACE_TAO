@@ -44,29 +44,29 @@ public:
   TAO_DTP_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_DTP_Thread_Lane_Resources_Manager (void) override;
+  ~TAO_DTP_Thread_Lane_Resources_Manager () override;
 
   /// Finalize resources.
-  void finalize (void) override;
+  void finalize () override;
 
   /// Open default resources.
-  int open_default_resources (void) override;
+  int open_default_resources () override;
 
   /// Shutdown reactor.
-  void shutdown_reactor (void) override;
+  void shutdown_reactor () override;
 
   /// Certain ORB policies such as dropping replies on shutdown
   /// would need cleanup of transports to wake threads up.
-  void close_all_transports (void) override;
+  void close_all_transports () override;
 
   /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile) override;
 
   /// @name Accessors
   // @{
-  TAO_Thread_Lane_Resources &lane_resources (void) override;
+  TAO_Thread_Lane_Resources &lane_resources () override;
 
-  TAO_Thread_Lane_Resources &default_lane_resources (void) override;
+  TAO_Thread_Lane_Resources &default_lane_resources () override;
 
   TAO_DTP_Thread_Pool_Manager &tp_manager ();
 

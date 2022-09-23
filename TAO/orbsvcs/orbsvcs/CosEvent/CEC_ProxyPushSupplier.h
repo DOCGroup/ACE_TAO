@@ -70,7 +70,7 @@ public:
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
-  ~TAO_CEC_ProxyPushSupplier (void) override;
+  ~TAO_CEC_ProxyPushSupplier () override;
 
   /// Activate in the POA
   virtual void activate (
@@ -119,16 +119,16 @@ public:
   // = The CosEventChannelAdmin::ProxyPushSupplier methods...
   void connect_push_consumer (
                 CosEventComm::PushConsumer_ptr push_consumer) override;
-  void disconnect_push_supplier (void) override;
+  void disconnect_push_supplier () override;
 
   /// Increment and decrement the reference count.
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
 
   // = The Servant methods
-  PortableServer::POA_ptr _default_POA (void) override;
-  void _add_ref (void) override;
-  void _remove_ref (void) override;
+  PortableServer::POA_ptr _default_POA () override;
+  void _add_ref () override;
+  void _remove_ref () override;
 
 protected:
   /// Set the consumer, used by some implementations to change the

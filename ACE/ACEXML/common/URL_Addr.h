@@ -89,7 +89,7 @@ public:
   void operator= (const ACEXML_URL_Addr &addr);
 
   /// Destructor.
-  ~ACEXML_URL_Addr (void) override;
+  ~ACEXML_URL_Addr () override;
 
   /**
    *  Compare two addresses for equality.  The addresses are considered

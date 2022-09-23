@@ -216,7 +216,7 @@ public:
   /// its own ie. can it pass on the control of handle resumption to
   /// the application.  The TP reactor has can allow applications to
   /// resume handles.  So return a positive value.
-  int resumable_handler (void) override;
+  int resumable_handler () override;
 
   /// Called from handle events
   static void no_op_sleep_hook (void *);

@@ -49,7 +49,7 @@ public:
   TAO_Naming_Context (TAO_Naming_Context_Impl *impl);
 
   /// Destructor.
-  ~TAO_Naming_Context (void) override;
+  ~TAO_Naming_Context () override;
 
   // = CosNaming::NamingContext idl interface methods.
 
@@ -131,7 +131,7 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  void destroy (void) override;
+  void destroy () override;
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -180,7 +180,7 @@ public:
   void stale (bool value);
 
   /// Returns the Default POA of this Servant object
-  PortableServer::POA_ptr _default_POA (void) override;
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   enum Hint

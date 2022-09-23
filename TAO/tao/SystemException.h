@@ -185,7 +185,7 @@ namespace CORBA
       CORBA::TypeCode_ptr _tao_type () const override; \
       static void _tao_any_destructor (void*); \
       CORBA::Exception *_tao_duplicate () const override; \
-      static CORBA::SystemException *_tao_create (void); \
+      static CORBA::SystemException *_tao_create (); \
     }; \
 
   TAO_SYSTEM_EXCEPTION(UNKNOWN)          // the unknown exception

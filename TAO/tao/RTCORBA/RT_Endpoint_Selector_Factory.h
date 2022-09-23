@@ -55,9 +55,9 @@ public:
   RT_Endpoint_Selector_Factory ();
 
   /// Destructor.
-  ~RT_Endpoint_Selector_Factory (void) override;
+  ~RT_Endpoint_Selector_Factory () override;
 
-  TAO_Invocation_Endpoint_Selector *get_selector (void) override;
+  TAO_Invocation_Endpoint_Selector *get_selector () override;
 
 private:
   void operator= (const RT_Endpoint_Selector_Factory &);

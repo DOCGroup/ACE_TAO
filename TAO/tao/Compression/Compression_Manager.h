@@ -46,7 +46,7 @@ namespace TAO
       (::Compression::CompressorId compressor_id,
        ::Compression::CompressionLevel compression_level) override;
 
-    ::Compression::CompressorFactorySeq *get_factories (void) override;
+    ::Compression::CompressorFactorySeq *get_factories () override;
 
   private:
     TAO_SYNCH_MUTEX mutex_;

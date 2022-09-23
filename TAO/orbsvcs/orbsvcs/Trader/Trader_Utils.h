@@ -174,8 +174,8 @@ class TAO_Trading_Serv_Export TAO_Dynamic_Property
   : public virtual POA_CosTradingDynamic::DynamicPropEval
 {
 public:
-  TAO_Dynamic_Property (void) {}
-  ~TAO_Dynamic_Property (void) override;
+  TAO_Dynamic_Property () {}
+  ~TAO_Dynamic_Property () override;
 
   void destroy ();
 

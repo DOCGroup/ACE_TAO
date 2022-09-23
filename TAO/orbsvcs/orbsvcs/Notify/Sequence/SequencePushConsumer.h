@@ -71,14 +71,14 @@ public:
   void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer) override;
 
 protected:
-  CORBA::Object_ptr get_consumer (void) override;
+  CORBA::Object_ptr get_consumer () override;
 
   /// The Consumer
   CosNotifyComm::SequencePushConsumer_var push_consumer_;
 
 private:
   /// TAO_Notify_Destroy_Callback methods.
-  void release (void) override;
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

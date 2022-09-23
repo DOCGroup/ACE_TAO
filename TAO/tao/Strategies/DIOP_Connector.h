@@ -58,7 +58,7 @@ public:
    */
   //@{
   int open (TAO_ORB_Core *orb_core) override;
-  int close (void) override;
+  int close () override;
 
   TAO_Profile *create_profile (TAO_InputCDR& cdr) override;
 
@@ -80,7 +80,7 @@ protected:
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout = 0) override;
 
-  TAO_Profile * make_profile (void) override;
+  TAO_Profile * make_profile () override;
   //@}
 
   /// Cancel the passed cvs handler from the connector

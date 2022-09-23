@@ -71,7 +71,7 @@ public:
   /// @note No reason to believe why this would be called. But have
   /// it here for the sake of uniformity.
   TAO_Queued_Message *clone (ACE_Allocator *alloc) override;
-  void destroy (void) override;
+  void destroy () override;
   bool is_expired (const ACE_Time_Value &now) const override;
   void copy_if_necessary (const ACE_Message_Block* chain) override;
   //@}

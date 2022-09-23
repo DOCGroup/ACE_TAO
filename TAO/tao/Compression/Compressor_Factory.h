@@ -33,7 +33,7 @@ namespace TAO
   public:
     CompressorFactory (::Compression::CompressorId compressor_id);
 
-    ::Compression::CompressorId compressor_id (void) override;
+    ::Compression::CompressorId compressor_id () override;
 
     ::Compression::Compressor_ptr get_compressor
       (::Compression::CompressionLevel compression_level) override = 0;

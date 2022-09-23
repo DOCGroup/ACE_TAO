@@ -115,14 +115,14 @@ namespace TAO
         const char * type_id,
         const PortableGroup::Criteria & the_criteria) override;
 
-    PortableGroup::Locations * locations_of_members (void) override;
+    PortableGroup::Locations * locations_of_members () override;
 
     CORBA::Object_ptr get_member_reference (
         const PortableGroup::Location & the_location) override;
 
-    void initial_populate (void) override;
+    void initial_populate () override;
 
-    void minimum_populate (void) override;
+    void minimum_populate () override;
 
     int has_member_at (const PortableGroup::Location & location ) override;
 
@@ -130,7 +130,7 @@ namespace TAO
 
     void set_name (const char* group_name) override;
 
-    const char* get_name (void) override;
+    const char* get_name () override;
 
     PortableGroup::ObjectGroupId  get_object_group_id () const override;
 

@@ -83,8 +83,8 @@ class TAO_AV_Export TAO_AV_Flow_Protocol_Factory : public ACE_Service_Object
 {
 public:
   /// Initialization hook.
-  TAO_AV_Flow_Protocol_Factory (void);
-  ~TAO_AV_Flow_Protocol_Factory (void) override;
+  TAO_AV_Flow_Protocol_Factory ();
+  ~TAO_AV_Flow_Protocol_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
   virtual int match_protocol (const char *flow_string);
   virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,

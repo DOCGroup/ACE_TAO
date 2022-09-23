@@ -47,7 +47,7 @@ public:
   int num_translators () const;
 
   void add_translator (const ACE_TCHAR *name) override;
-  Translator_Node *translators (void);
+  Translator_Node *translators ();
 
 private:
   ACE_CDR::ULong ncs_;

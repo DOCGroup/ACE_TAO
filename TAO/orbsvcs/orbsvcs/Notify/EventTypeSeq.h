@@ -73,7 +73,7 @@ public:
     const TAO_Notify::NVPList& attrs) override;
 
 private:
-  void release (void) override;
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

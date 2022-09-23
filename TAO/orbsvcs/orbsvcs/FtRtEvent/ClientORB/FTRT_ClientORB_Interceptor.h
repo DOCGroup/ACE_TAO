@@ -45,9 +45,9 @@ public:
   ~FTRT_ClientORB_Interceptor () override;
 
   /// Canonical name of the interceptor.
-  char * name (void) override;
+  char * name () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 

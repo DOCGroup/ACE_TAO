@@ -72,12 +72,12 @@ public:
   TAO_Notify_EventChannel * event_channel () const;
 
   /// Shutdown
-  int shutdown (void) override;
+  int shutdown () override;
 
   void save_persistent (TAO_Notify::Topology_Saver& saver) override;
   TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
     CORBA::Long id, const TAO_Notify::NVPList& attrs) override;
-  void reconnect (void) override;
+  void reconnect () override;
 
   virtual void validate ();
 

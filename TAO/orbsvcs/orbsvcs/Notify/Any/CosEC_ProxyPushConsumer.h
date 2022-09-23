@@ -55,10 +55,10 @@ protected:
 
   void connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier) override;
 
-  void disconnect_push_consumer (void) override;
+  void disconnect_push_consumer () override;
 private:
   /// Release
-  void release (void) override;
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

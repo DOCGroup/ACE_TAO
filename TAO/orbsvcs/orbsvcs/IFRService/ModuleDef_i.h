@@ -46,7 +46,7 @@ public:
   TAO_ModuleDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_ModuleDef_i (void) override;
+  ~TAO_ModuleDef_i () override;
 
   /// Return our definition kind.
   CORBA::DefinitionKind def_kind () override;

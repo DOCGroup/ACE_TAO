@@ -38,10 +38,10 @@ public:
    */
   TAO_Service_Type_Repository (ACE_Lock *lock = 0);
 
-  ~TAO_Service_Type_Repository (void) override;
+  ~TAO_Service_Type_Repository () override;
 
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber
-    incarnation (void) override;
+    incarnation () override;
 
   /**
    * BEGIN SPEC

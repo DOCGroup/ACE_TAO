@@ -68,7 +68,7 @@ public:
   void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties) override;
 
   /// The object used by clients to register timers.
-  TAO_Notify_Timer* timer (void) override;
+  TAO_Notify_Timer* timer () override;
 
   /// Provide access to the underlying buffering strategy
   TAO_Notify_Buffering_Strategy* buffering_strategy ();
@@ -79,7 +79,7 @@ protected:
 
 private:
   /// Release
-  void release (void) override;
+  void release () override;
 
   /// The buffering strategy to use.
   ACE_Auto_Ptr< TAO_Notify_Buffering_Strategy > buffering_strategy_;

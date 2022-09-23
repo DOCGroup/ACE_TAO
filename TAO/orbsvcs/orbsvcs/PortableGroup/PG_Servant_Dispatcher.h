@@ -33,7 +33,7 @@ class TAO_PortableGroup_Export TAO_PG_Servant_Dispatcher
   : public TAO_Servant_Dispatcher
 {
 public:
-  ~TAO_PG_Servant_Dispatcher (void) override;
+  ~TAO_PG_Servant_Dispatcher () override;
 
   /// Pre_invoke remote request.
   void pre_invoke_remote_request (TAO_Root_POA &poa,

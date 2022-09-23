@@ -317,8 +317,8 @@ class TAO_AV_Export TAO_AV_Transport_Factory : public ACE_Service_Object
 {
 public:
   /// Initialization hook.
-  TAO_AV_Transport_Factory (void);
-  ~TAO_AV_Transport_Factory (void) override;
+  TAO_AV_Transport_Factory ();
+  ~TAO_AV_Transport_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
   virtual int match_protocol (const char *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor ();

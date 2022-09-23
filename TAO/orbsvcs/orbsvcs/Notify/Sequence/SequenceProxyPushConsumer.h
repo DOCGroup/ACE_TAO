@@ -57,17 +57,17 @@ protected:
   ///= Protected Methods
 
   //= interface methods
-  CosNotifyChannelAdmin::ProxyType MyType (void) override;
+  CosNotifyChannelAdmin::ProxyType MyType () override;
 
   void connect_sequence_push_supplier (CosNotifyComm::SequencePushSupplier_ptr push_supplier) override;
 
   void push_structured_events (const CosNotification::EventBatch & notifications) override;
 
-  void disconnect_sequence_push_consumer (void) override;
+  void disconnect_sequence_push_consumer () override;
 
 private:
   /// TAO_Notify_Destroy_Callback methods
-  void release (void) override;
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

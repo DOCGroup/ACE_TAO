@@ -51,7 +51,7 @@ public:
   Timer_Helper ();
 
   /// Destructor.
-  ~Timer_Helper (void) override;
+  ~Timer_Helper () override;
 
   /// Constructor that sets the clerk.
   Timer_Helper (TAO_Time_Service_Clerk *clerk);

@@ -36,11 +36,11 @@ public:
   TAO_Table_Adapter (TAO_ORB_Core &orb_core);
 
   /// Destructor
-  ~TAO_Table_Adapter (void) override;
+  ~TAO_Table_Adapter () override;
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  void open (void) override;
+  void open () override;
   void close (int wait_for_completion) override;
   void check_close (int wait_for_completion) override;
   int priority () const override;
@@ -49,7 +49,7 @@ public:
                         CORBA::Object_out foward_to) override;
 
   const char *name () const override;
-  CORBA::Object_ptr root (void) override;
+  CORBA::Object_ptr root () override;
   CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &) override;
 

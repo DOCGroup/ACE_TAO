@@ -81,20 +81,20 @@ public:
 
 
   // = Methods from CosNotifyChannelAdmin::ConsumerAdmin.
-  CosNotifyChannelAdmin::AdminID MyID (void) override;
+  CosNotifyChannelAdmin::AdminID MyID () override;
 
-  CosNotifyChannelAdmin::EventChannel_ptr MyChannel (void) override;
+  CosNotifyChannelAdmin::EventChannel_ptr MyChannel () override;
 
-  CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (void) override;
+  CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator () override;
 
-  CosNotifyFilter::MappingFilter_ptr priority_filter (void) override;
+  CosNotifyFilter::MappingFilter_ptr priority_filter () override;
   void priority_filter (CosNotifyFilter::MappingFilter_ptr) override;
 
-  CosNotifyFilter::MappingFilter_ptr lifetime_filter (void) override;
+  CosNotifyFilter::MappingFilter_ptr lifetime_filter () override;
   void lifetime_filter (CosNotifyFilter::MappingFilter_ptr) override;
 
-  CosNotifyChannelAdmin::ProxyIDSeq* pull_suppliers (void) override;
-  CosNotifyChannelAdmin::ProxyIDSeq* push_suppliers (void) override;
+  CosNotifyChannelAdmin::ProxyIDSeq* pull_suppliers () override;
+  CosNotifyChannelAdmin::ProxyIDSeq* push_suppliers () override;
 
   CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (
     CosNotifyChannelAdmin::ProxyID proxy_id) override;
@@ -107,18 +107,18 @@ public:
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID& id) override;
 
-  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (void) override;
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
 
-  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void) override;
+  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   /// CosNotifyComm::NotifySubscribe.
   void subscription_change (const CosNotification::EventTypeSeq& added,
                             const CosNotification::EventTypeSeq& removed) override;
 
   /// CosNotification::QoSAdmin.
-  CosNotification::QoSProperties* get_qos (void) override;
+  CosNotification::QoSProperties* get_qos () override;
   void set_qos (const CosNotification::QoSProperties&) override;
   void validate_qos (const CosNotification::QoSProperties&,
                      CosNotification::NamedPropertyRangeSeq_out) override;
@@ -127,8 +127,8 @@ public:
   CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr) override;
   void remove_filter (CosNotifyFilter::FilterID) override;
   CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID) override;
-  CosNotifyFilter::FilterIDSeq* get_all_filters (void) override;
-  void remove_all_filters (void) override;
+  CosNotifyFilter::FilterIDSeq* get_all_filters () override;
+  void remove_all_filters () override;
 
 protected:
   CORBA::RepositoryId

@@ -44,10 +44,10 @@ namespace TAO
                           PortableServer::POA_ptr poa) override;
 
     /// Accessor methods to ObjectReferenceTemplate template
-    PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void) override;
+    PortableInterceptor::ObjectReferenceTemplate *get_adapter_template () override;
 
     /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
-    PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory (void) override;
+    PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory () override;
 
     /// Set a different ort_factory to be used.
     int set_obj_ref_factory (

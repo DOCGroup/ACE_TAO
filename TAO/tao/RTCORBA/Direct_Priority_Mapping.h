@@ -40,7 +40,7 @@ public:
   TAO_Direct_Priority_Mapping (long);
 
   /// The destructor
-  ~TAO_Direct_Priority_Mapping (void) override;
+  ~TAO_Direct_Priority_Mapping () override;
 
   CORBA::Boolean
       to_native (RTCORBA::Priority corba_priority,

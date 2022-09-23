@@ -85,8 +85,8 @@ public:
                        const void* arg);
 
   // = The CEC_Pulling_Strategy methods.
-  void activate (void) override;
-  void shutdown (void) override;
+  void activate () override;
+  void shutdown () override;
 
 private:
   /// The Adapter for the reactor events

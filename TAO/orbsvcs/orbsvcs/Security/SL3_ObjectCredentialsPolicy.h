@@ -64,11 +64,11 @@ namespace TAO
       //@{
       SecurityLevel3::OwnCredentialsList * creds_list () override;
 
-      CORBA::PolicyType policy_type (void) override;
+      CORBA::PolicyType policy_type () override;
 
-      CORBA::Policy_ptr copy (void) override;
+      CORBA::Policy_ptr copy () override;
 
-      void destroy (void) override;
+      void destroy () override;
       //@}
 
     protected:
@@ -77,7 +77,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ObjectCredentialsPolicy (void) override;
+      ~ObjectCredentialsPolicy () override;
 
     private:
       /// List of POA-specific OwnCredentials.

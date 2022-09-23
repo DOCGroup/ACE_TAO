@@ -52,7 +52,7 @@ public:
   void end_object (CORBA::Long id,
     const ACE_CString& type) override;
 
-  void close (void) override;
+  void close () override;
 
 private:
   void backup_file_name (ACE_TCHAR * file_path, size_t nfile);

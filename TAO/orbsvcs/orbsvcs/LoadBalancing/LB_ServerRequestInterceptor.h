@@ -60,9 +60,9 @@ public:
    * ServerRequestInterceptors.
    */
   //@{
-  char * name (void) override;
+  char * name () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   void receive_request_service_contexts (
       PortableInterceptor::ServerRequestInfo_ptr ri) override;
@@ -86,7 +86,7 @@ protected:
    * Protected destructor to enforce correct memory management via
    * reference counting.
    */
-  ~TAO_LB_ServerRequestInterceptor (void) override;
+  ~TAO_LB_ServerRequestInterceptor () override;
 
 private:
   TAO_LB_LoadAlert & load_alert_;

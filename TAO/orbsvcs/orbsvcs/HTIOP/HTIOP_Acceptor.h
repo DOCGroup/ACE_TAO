@@ -66,7 +66,7 @@ namespace TAO
                 int is_inside);
 
       /// Destructor.
-      ~Acceptor (void) override;
+      ~Acceptor () override;
 
       /// @@ Helper method for the implementation repository, should go
       ///    away
@@ -97,7 +97,7 @@ namespace TAO
                                 int version_minor,
                                 const char *options = 0) override;
 
-      int close (void) override;
+      int close () override;
 
       int create_profile (const TAO::ObjectKey &object_key,
                                   TAO_MProfile &mprofile,
@@ -105,7 +105,7 @@ namespace TAO
 
       int is_collocated (const TAO_Endpoint *endpoint) override;
 
-      CORBA::ULong endpoint_count (void) override;
+      CORBA::ULong endpoint_count () override;
 
       int object_key (IOP::TaggedProfile &profile,
                               TAO::ObjectKey &key) override;

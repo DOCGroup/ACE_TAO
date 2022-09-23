@@ -45,7 +45,7 @@ public:
   TAO_IORManip_IIOP_Filter ();
 
   /// Destructor.
-  ~TAO_IORManip_IIOP_Filter (void) override;
+  ~TAO_IORManip_IIOP_Filter () override;
 
   /// Compares the profile to the profile info.
   virtual CORBA::Boolean compare_profile_info (

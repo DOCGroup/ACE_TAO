@@ -39,7 +39,7 @@ public:
    TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChannel* event_channel);
 
   /// Destructor
-  ~TAO_CEC_TypedSupplierAdmin (void) override;
+  ~TAO_CEC_TypedSupplierAdmin () override;
 
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_TypedProxyPushConsumer> *worker);
@@ -62,13 +62,13 @@ public:
 
   // = The CosEventChannelAdmin::SupplierAdmin methods...
   CosEventChannelAdmin::ProxyPushConsumer_ptr
-    obtain_push_consumer (void) override;
+    obtain_push_consumer () override;
 
   CosEventChannelAdmin::ProxyPullConsumer_ptr
-    obtain_pull_consumer (void) override;
+    obtain_pull_consumer () override;
 
   // = The PortableServer::ServantBase methods
-  PortableServer::POA_ptr _default_POA (void) override;
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   /// The Event Channel we belong to

@@ -60,12 +60,12 @@ public:
   /// RtecEventChannelAdmin::EventChannel Interface
 
   RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers (void) override;
+    for_consumers () override;
 
   RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers (void) override;
+    for_suppliers () override;
 
-  void destroy (void) override;
+  void destroy () override;
 
   RtecEventChannelAdmin::Observer_Handle
     append_observer (RtecEventChannelAdmin::Observer_ptr observer) override;

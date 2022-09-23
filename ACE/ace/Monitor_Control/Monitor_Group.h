@@ -41,14 +41,14 @@ namespace ACE
 
       void add_member (Monitor_Base* member);
 
-      void update (void) override;
+      void update () override;
 
       /// These are overridden to be no-ops.
       void receive (double data) override;
       void receive (size_t data) override;
       void receive (const Monitor_Control_Types::NameList& data) override;
 
-      void clear (void) override;
+      void clear () override;
 
     private:
       typedef ACE_Unbounded_Queue<Monitor_Base *>

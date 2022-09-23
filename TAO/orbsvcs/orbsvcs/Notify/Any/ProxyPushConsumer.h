@@ -54,17 +54,17 @@ public:
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods
 
-  CosNotifyChannelAdmin::ProxyType MyType (void) override;
+  CosNotifyChannelAdmin::ProxyType MyType () override;
 
   void push (const CORBA::Any & data) override;
 
   void connect_any_push_supplier (CosEventComm::PushSupplier_ptr push_supplier) override;
 
-  void disconnect_push_consumer (void) override;
+  void disconnect_push_consumer () override;
 
 private:
   /// Release
-  void release (void) override;
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

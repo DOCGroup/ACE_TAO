@@ -99,10 +99,10 @@ public:
   virtual Proactor_Type  get_impl_type ();
 
   /// Virtual destructor.
-  ~ACE_POSIX_Proactor (void) override;
+  ~ACE_POSIX_Proactor () override;
 
   /// Close down the Proactor.
-  int close (void) override;
+  int close () override;
 
   /**
    * Dispatch a single set of events.  If @a wait_time elapses before
@@ -118,7 +118,7 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  int handle_events (void) override = 0;
+  int handle_events () override = 0;
 
   /**
    * Post a result to the completion port of the Proactor.  If errors
@@ -142,7 +142,7 @@ public:
                                const void *completion_key) override;
 
   /// @@ This is a no-op on POSIX platforms. Returns 0.
-  int wake_up_dispatch_threads (void) override;
+  int wake_up_dispatch_threads () override;
 
   /// @@ This is a no-op on POSIX platforms. Returns 0.
   int close_dispatch_threads (int wait) override;
@@ -157,7 +157,7 @@ public:
   // Methods used to create Asynch IO factory and result objects. We
   // create the right objects here in these methods.
 
-  ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void) override;
+  ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream () override;
   ACE_Asynch_Read_Stream_Result_Impl *
     create_asynch_read_stream_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
@@ -168,7 +168,7 @@ public:
                                       int priority = 0,
                                       int signal_number = ACE_SIGRTMIN) override;
 
-  ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void) override;
+  ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream () override;
   ACE_Asynch_Write_Stream_Result_Impl *
     create_asynch_write_stream_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                        ACE_HANDLE handle,
@@ -179,7 +179,7 @@ public:
                                        int priority = 0,
                                        int signal_number = ACE_SIGRTMIN) override;
 
-  ACE_Asynch_Read_File_Impl *create_asynch_read_file (void) override;
+  ACE_Asynch_Read_File_Impl *create_asynch_read_file () override;
   ACE_Asynch_Read_File_Result_Impl *
     create_asynch_read_file_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                     ACE_HANDLE handle,
@@ -192,7 +192,7 @@ public:
                                     int priority = 0,
                                     int signal_number = ACE_SIGRTMIN) override;
 
-  ACE_Asynch_Write_File_Impl *create_asynch_write_file (void) override;
+  ACE_Asynch_Write_File_Impl *create_asynch_write_file () override;
   ACE_Asynch_Write_File_Result_Impl *
     create_asynch_write_file_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
@@ -205,7 +205,7 @@ public:
                                      int priority = 0,
                                      int signal_number = ACE_SIGRTMIN) override;
 
-  ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram (void) override;
+  ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram () override;
   ACE_Asynch_Read_Dgram_Result_Impl *
     create_asynch_read_dgram_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
@@ -218,7 +218,7 @@ public:
                                      int priority = 0,
                                      int signal_number = ACE_SIGRTMIN) override;
 
-  ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram (void) override;
+  ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram () override;
   ACE_Asynch_Write_Dgram_Result_Impl *
     create_asynch_write_dgram_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
@@ -230,7 +230,7 @@ public:
                                       int priority = 0,
                                       int signal_number = ACE_SIGRTMIN) override;
 
-  ACE_Asynch_Accept_Impl *create_asynch_accept (void) override;
+  ACE_Asynch_Accept_Impl *create_asynch_accept () override;
   ACE_Asynch_Accept_Result_Impl *
     create_asynch_accept_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                  ACE_HANDLE listen_handle,
@@ -242,7 +242,7 @@ public:
                                  int priority = 0,
                                  int signal_number = ACE_SIGRTMIN) override;
 
-  ACE_Asynch_Connect_Impl *create_asynch_connect (void) override;
+  ACE_Asynch_Connect_Impl *create_asynch_connect () override;
   ACE_Asynch_Connect_Result_Impl *
     create_asynch_connect_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE connect_handle,
@@ -251,7 +251,7 @@ public:
                                   int priority = 0,
                                   int signal_number = ACE_SIGRTMIN) override;
 
-  ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void) override;
+  ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file () override;
   ACE_Asynch_Transmit_File_Result_Impl *
     create_asynch_transmit_file_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                         ACE_HANDLE socket,
@@ -338,13 +338,13 @@ public:
   /// which can be started at the same time
   ACE_POSIX_AIOCB_Proactor (size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
-  Proactor_Type  get_impl_type (void) override;
+  Proactor_Type  get_impl_type () override;
 
   /// Destructor.
-  ~ACE_POSIX_AIOCB_Proactor (void) override;
+  ~ACE_POSIX_AIOCB_Proactor () override;
 
   /// Close down the Proactor.
-  int close (void) override;
+  int close () override;
 
   /**
    * Dispatch a single set of events.  If @a wait_time elapses before
@@ -361,7 +361,7 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  int handle_events (void) override;
+  int handle_events () override;
 
   /// Post a result to the completion port of the Proactor.
   int post_completion (ACE_POSIX_Asynch_Result *result) override;
@@ -517,7 +517,7 @@ public:
    */
   ACE_POSIX_SIG_Proactor (size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
-  Proactor_Type get_impl_type (void) override;
+  Proactor_Type get_impl_type () override;
 
   /**
    * This constructor should be used to tell the Proactor to mask and
@@ -529,7 +529,7 @@ public:
                           size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
   /// Destructor.
-  ~ACE_POSIX_SIG_Proactor (void) override;
+  ~ACE_POSIX_SIG_Proactor () override;
 
   /**
    * Dispatch a single set of events.  If @a wait_time elapses before
@@ -546,7 +546,7 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  int handle_events (void) override;
+  int handle_events () override;
 
   /// Post a result to the completion port of the Proactor.
   /// now it is implemented in base ACE_POSIX_AIOCB_Proactor class

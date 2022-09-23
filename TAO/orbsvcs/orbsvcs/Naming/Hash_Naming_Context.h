@@ -119,7 +119,7 @@ public:
   void interface (TAO_Naming_Context *i);
 
   /// Destructor.
-  ~TAO_Hash_Naming_Context (void) override;
+  ~TAO_Hash_Naming_Context () override;
 
   // = Accessors.
 
@@ -205,10 +205,10 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  void destroy (void) override;
+  void destroy () override;
 
   /// Returns the Default POA of this Servant object
-  PortableServer::POA_ptr _default_POA (void) override;
+  PortableServer::POA_ptr _default_POA () override;
 
   TAO_SYNCH_RW_MUTEX &lock ();
 

@@ -20,7 +20,7 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc (void) override;
+  int svc () override;
 
 private:
   const ACE_TCHAR *input_;

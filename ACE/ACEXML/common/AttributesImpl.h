@@ -147,7 +147,7 @@ public:
    */
   ACEXML_AttributesImpl (int size = ACEXML_AttributesImpl_Default_Size);
   ACEXML_AttributesImpl (const ACEXML_AttributesImpl &attrs);
-  ~ACEXML_AttributesImpl (void) override;
+  ~ACEXML_AttributesImpl () override;
 
   /**
    * Add a new attribute using the argument(s) supplied.
@@ -190,7 +190,7 @@ public:
   /**
    * Return the number of attributes in the list.
    */
-  size_t getLength (void) override;
+  size_t getLength () override;
 
   /**
    * Look up an attribute's local name by index.

@@ -40,7 +40,7 @@ public:
   TAO_AbstractInterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_AbstractInterfaceDef_i (void) override;
+  ~TAO_AbstractInterfaceDef_i () override;
 
   /// Return our definition kind.
   CORBA::DefinitionKind def_kind (

@@ -46,27 +46,27 @@ public:
            TimeBase::TdfT tdf);
 
   /// Destructor.
-  ~TAO_UTO (void) override;
+  ~TAO_UTO () override;
 
   /// For the readonly attribute <time>.
   TimeBase::TimeT time () override;
 
   /// For the readonly attribute <inaccuracy>.
-  TimeBase::InaccuracyT  inaccuracy (void) override;
+  TimeBase::InaccuracyT  inaccuracy () override;
 
   /// For the readonly attribute <tdf>, which is the "time displacement
   /// factor".
-  TimeBase::TdfT tdf (void) override;
+  TimeBase::TdfT tdf () override;
 
   /// For the readonly attribute <utc_time>.
-  TimeBase::UtcT utc_time (void) override;
+  TimeBase::UtcT utc_time () override;
 
   /**
    * Absolute time = Relative time + Base time.
    * ?? Find out more about the Base Time, UTC and
    *    Distributed Time Sync. Algos. [3
    */
-  CosTime::UTO_ptr absolute_time (void) override;
+  CosTime::UTO_ptr absolute_time () override;
 
   /// Compares the time contained in the object with the time in the
   /// supplied uto according to the supplied comparison type.
@@ -84,7 +84,7 @@ public:
 
   /// Returns a TIO object representing the error interval around the
   /// time value in the UTO.
-  CosTime::TIO_ptr interval (void) override;
+  CosTime::TIO_ptr interval () override;
 
 private:
   /**

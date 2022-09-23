@@ -77,7 +77,7 @@ public:
 
 protected:
   /// Destructor
-  ~TAO_IOR_Manipulation_impl (void) override;
+  ~TAO_IOR_Manipulation_impl () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

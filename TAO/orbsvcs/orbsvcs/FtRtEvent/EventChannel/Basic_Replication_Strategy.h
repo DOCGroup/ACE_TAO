@@ -33,7 +33,7 @@ public:
   Basic_Replication_Strategy(bool mt);
   ~Basic_Replication_Strategy() override;
 
-  void check_validity(void) override;
+  void check_validity() override;
 
   void replicate_request(const FTRT::State& state,
     RollbackOperation rollback,
@@ -41,9 +41,9 @@ public:
   void add_member(const FTRT::ManagerInfo & info,
                           CORBA::ULong object_group_ref_version) override;
 
-  int  acquire_read (void) override;
-  int  acquire_write (void) override;
-  int  release (void) override;
+  int  acquire_read () override;
+  int  acquire_write () override;
+  int  release () override;
 
 private:
   FTRT::SequenceNumber sequence_num_;

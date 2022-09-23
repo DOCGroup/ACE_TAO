@@ -67,8 +67,8 @@ protected:
    * These are implementations of template methods declared by TAO_Transport.
    */
   //@{
-  ACE_Event_Handler * event_handler_i (void) override;
-  TAO_Connection_Handler *connection_handler_i (void) override;
+  ACE_Event_Handler * event_handler_i () override;
+  TAO_Connection_Handler *connection_handler_i () override;
 
   /// Write the complete Message_Block chain to the connection.
   ssize_t send (iovec *iov, int iovcnt,
@@ -80,7 +80,7 @@ protected:
                         size_t len,
                         const ACE_Time_Value *s = 0) override;
 
-  int register_handler (void) override;
+  int register_handler () override;
 
   ///@}
 public:

@@ -44,7 +44,7 @@ public:
   TAO_Thread_Per_Connection_Handler (TAO_Connection_Handler *ch,
                                      TAO_ORB_Core *oc);
 
-  ~TAO_Thread_Per_Connection_Handler (void) override;
+  ~TAO_Thread_Per_Connection_Handler () override;
 
   /// Template hook method that the thread uses...
   /**

@@ -42,9 +42,9 @@ public:
                                    const FtRtecEventChannelAdmin::ObjectId& oid) override;
   void add_member(const FTRT::ManagerInfo & info,
                           CORBA::ULong object_group_ref_version) override;
-  int  acquire_read (void) override;
-  int  acquire_write (void) override;
-  int  release (void) override;
+  int  acquire_read () override;
+  int  acquire_write () override;
+  int  release () override;
   PortableServer::POA_ptr poa() { return poa_.in(); }
   CORBA::ORB_ptr orb() { return orb_.in();}
 private:

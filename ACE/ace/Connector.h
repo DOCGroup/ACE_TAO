@@ -348,7 +348,7 @@ protected:
 
   /// Return the handle set representing the non-blocking connects in
   /// progress.
-  ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles (void) override;
+  ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles () override;
 
   // = Dynamic linking hooks.
   /// Default version does no work and returns -1.  Must be overloaded
@@ -463,10 +463,10 @@ public:
                     int flags = 0);
 
   /// Shutdown a connector and release resources.
-  ~ACE_Strategy_Connector (void) override;
+  ~ACE_Strategy_Connector () override;
 
   /// Close down the Connector
-  int close (void) override;
+  int close () override;
 
   // = Strategies accessors
   virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy () const;

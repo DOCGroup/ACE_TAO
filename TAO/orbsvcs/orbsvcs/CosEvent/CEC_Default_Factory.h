@@ -46,7 +46,7 @@ public:
   TAO_CEC_Default_Factory ();
 
   /// destructor...
-  ~TAO_CEC_Default_Factory (void) override;
+  ~TAO_CEC_Default_Factory () override;
 
   /// Helper function to register the default factory into the service
   /// configurator.
@@ -110,9 +110,9 @@ public:
       destroy_proxy_pull_supplier_collection (
           TAO_CEC_ProxyPullSupplier_Collection*) override;
 
-  ACE_Lock* create_consumer_lock (void) override;
+  ACE_Lock* create_consumer_lock () override;
   void destroy_consumer_lock (ACE_Lock*) override;
-  ACE_Lock* create_supplier_lock (void) override;
+  ACE_Lock* create_supplier_lock () override;
   void destroy_supplier_lock (ACE_Lock*) override;
 
   TAO_CEC_ConsumerControl*

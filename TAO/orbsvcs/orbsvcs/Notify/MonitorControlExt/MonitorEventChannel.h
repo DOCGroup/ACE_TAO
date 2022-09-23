@@ -45,7 +45,7 @@ public:
   TAO_MonitorEventChannel (const char* name);
 
   /// Remove the statistics for this event channel.
-  ~TAO_MonitorEventChannel (void) override;
+  ~TAO_MonitorEventChannel () override;
 
   /// Return the name of this event channel.
   const ACE_CString& name () const;

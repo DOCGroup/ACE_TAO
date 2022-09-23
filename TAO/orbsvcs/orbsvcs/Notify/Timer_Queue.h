@@ -38,7 +38,7 @@ public:
   TAO_Notify_Timer_Queue ();
 
   /// Destructor
-  ~TAO_Notify_Timer_Queue (void) override;
+  ~TAO_Notify_Timer_Queue () override;
 
   /// Schedule a timer
   long schedule_timer (ACE_Event_Handler *handler,
@@ -57,7 +57,7 @@ protected:
 
 private:
   /// Release
-  void release (void) override;
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

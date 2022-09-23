@@ -76,7 +76,7 @@ public:
                     PortableServer::POA_ptr poa,
                     ACE_Configuration *config);
 
-  ~TAO_Repository_i (void) override;
+  ~TAO_Repository_i () override;
 
   /// Accessor for the readonly attribute.
   CORBA::DefinitionKind def_kind () override;

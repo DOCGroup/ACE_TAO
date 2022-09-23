@@ -38,7 +38,7 @@ public:
   void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
                 const RtecEventChannelAdmin::SupplierQOS& qos) override;
-  void disconnect_push_consumer (void) override;
+  void disconnect_push_consumer () override;
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
   void get_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat& state);

@@ -50,7 +50,7 @@ public:
   TAO_PG_ObjectGroupManager ();
 
   /// Destructor.
-  ~TAO_PG_ObjectGroupManager (void) override;
+  ~TAO_PG_ObjectGroupManager () override;
 
   /**
    * @name PortableGroup::ObjectGroupManager methods

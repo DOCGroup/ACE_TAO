@@ -50,7 +50,7 @@ public:
   TAO_Container_i (TAO_Repository_i *repo);
 
   /// Destructor.
-  ~TAO_Container_i (void) override;
+  ~TAO_Container_i () override;
 
   /// Remove our contents.
   void destroy () override;

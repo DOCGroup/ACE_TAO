@@ -43,7 +43,7 @@ public:
   TAO_SequenceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  ~TAO_SequenceDef_i (void) override;
+  ~TAO_SequenceDef_i () override;
 
   /// Return our definition kind.
   CORBA::DefinitionKind def_kind () override;

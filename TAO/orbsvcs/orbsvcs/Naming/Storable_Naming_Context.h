@@ -131,7 +131,7 @@ public:
   TAO_Storable_Bindings_Map (size_t hash_table_size, CORBA::ORB_ptr orb);
 
   /// Destructor.
-  ~TAO_Storable_Bindings_Map (void) override;
+  ~TAO_Storable_Bindings_Map () override;
 
   // = Accessors.
 
@@ -143,7 +143,7 @@ public:
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.
-  size_t current_size (void) override;
+  size_t current_size () override;
 
   // = Name bindings manipulation methods.
 
@@ -228,7 +228,7 @@ public:
                                size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
 
   /// Destructor.
-  ~TAO_Storable_Naming_Context (void) override;
+  ~TAO_Storable_Naming_Context () override;
 
   // = Utility methods.
   /**
@@ -264,7 +264,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  CosNaming::NamingContext_ptr new_context (void) override;
+  CosNaming::NamingContext_ptr new_context () override;
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -342,7 +342,7 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  void destroy (void) override;
+  void destroy () override;
 
 protected:
   /**
@@ -440,11 +440,11 @@ protected:
   /// Check if the guarded object is current with the last
   /// update which could have been performed independently of
   /// the owner of this object.
-  bool object_obsolete (void) override;
+  bool object_obsolete () override;
 
   /// Mark the object as current with respect to the
   /// file to which it was persisted.
-  void mark_object_current (void) override;
+  void mark_object_current () override;
 
   /// Mark the time at which the object was modified and
   void set_object_last_changed (const time_t & time) override;

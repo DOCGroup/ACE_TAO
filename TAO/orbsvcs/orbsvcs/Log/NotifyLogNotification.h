@@ -48,7 +48,7 @@ public:
   TAO_NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr);
 
   /// Destructor.
-  ~TAO_NotifyLogNotification (void) override;
+  ~TAO_NotifyLogNotification () override;
 
 protected:
   // = Helper methods
@@ -66,7 +66,7 @@ protected:
         const CosNotification::EventTypeSeq & removed) override;
 
   // = StructuredPushSupplier method
-    void disconnect_push_supplier (void) override;
+    void disconnect_push_supplier () override;
 
   /// Send the event on the event channel.
   void send_notification (const CORBA::Any& any) override;

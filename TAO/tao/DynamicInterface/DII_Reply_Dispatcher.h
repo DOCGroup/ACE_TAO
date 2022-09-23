@@ -47,10 +47,10 @@ public:
   /// The Reply_Dispatcher methods
   int dispatch_reply (TAO_Pluggable_Reply_Params &param) override;
 
-  void connection_closed (void) override;
+  void connection_closed () override;
 
   /// The following methods are not needed for this class..
-  void reply_timed_out (void) override  {}
+  void reply_timed_out () override  {}
   long schedule_timer (CORBA::ULong , const ACE_Time_Value &) override
   {
     return 0;
@@ -77,12 +77,12 @@ class TAO_DynamicInterface_Export TAO_DII_Asynch_Reply_Dispatcher
 public:
   TAO_DII_Asynch_Reply_Dispatcher (const Messaging::ReplyHandler_ptr callback,
                                      TAO_ORB_Core *orb_core);
-  ~TAO_DII_Asynch_Reply_Dispatcher (void) override;
+  ~TAO_DII_Asynch_Reply_Dispatcher () override;
 
   /// The Reply_Dispatcher methods
   int dispatch_reply (TAO_Pluggable_Reply_Params &param) override;
 
-  void connection_closed (void) override;
+  void connection_closed () override;
 
 private:
   /// The buffer that is used to initialise the data block

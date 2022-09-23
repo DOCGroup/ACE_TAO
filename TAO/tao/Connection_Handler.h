@@ -51,7 +51,7 @@ public:
   explicit TAO_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor
-  ~TAO_Connection_Handler (void) override;
+  ~TAO_Connection_Handler () override;
 
   /// Return the underlying transport object
   TAO_Transport *transport ();

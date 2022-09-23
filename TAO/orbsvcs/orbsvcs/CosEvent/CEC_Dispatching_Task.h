@@ -78,7 +78,7 @@ public:
                            ACE_Allocator *mb_allocator = 0);
 
   /// Destructor
-  ~TAO_CEC_Dispatch_Command (void) override;
+  ~TAO_CEC_Dispatch_Command () override;
 
   /// Command callback
   virtual int execute () = 0;
@@ -93,7 +93,7 @@ public:
   TAO_CEC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
 
   /// Command callback
-  int execute (void) override;
+  int execute () override;
 };
 
 // ****************************************************************
@@ -108,10 +108,10 @@ public:
                         ACE_Allocator *mb_allocator);
 
   /// Destructor
-  ~TAO_CEC_Push_Command (void) override;
+  ~TAO_CEC_Push_Command () override;
 
   /// Command callback
-  int execute (void) override;
+  int execute () override;
 
 private:
   /// The proxy
@@ -134,10 +134,10 @@ public:
                           ACE_Allocator *mb_allocator);
 
   /// Destructor
-  ~TAO_CEC_Invoke_Command (void) override;
+  ~TAO_CEC_Invoke_Command () override;
 
   /// Command callback
-  int execute (void) override;
+  int execute () override;
 
 private:
   /// The proxy

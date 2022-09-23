@@ -47,7 +47,7 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  char * name (void) override;
+  char * name () override;
 
   CosLoadBalancing::Properties * get_properties () override;
 

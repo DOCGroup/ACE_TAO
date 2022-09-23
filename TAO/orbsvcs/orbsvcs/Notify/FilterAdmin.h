@@ -41,7 +41,7 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   TAO_Notify_FilterAdmin ();
 
   /// Destructor
-  ~TAO_Notify_FilterAdmin (void) override;
+  ~TAO_Notify_FilterAdmin () override;
 
   // = match operation on all the filters
   /// See if any of the filters match.
@@ -73,7 +73,7 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
  private:
   typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, ACE_SYNCH_NULL_MUTEX> FILTER_LIST;
 
-  void release (void) override;
+  void release () override;
 
   /// Mutex to serialize access to data members.
   TAO_SYNCH_MUTEX lock_;

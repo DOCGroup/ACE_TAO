@@ -51,10 +51,10 @@ class TAO_RTCORBA_Export TAO_RT_Mutex
 {
 public:
   /// Acquire the lock.
-  void lock (void) override;
+  void lock () override;
 
   /// Release the lock.
-  void unlock (void) override;
+  void unlock () override;
 
   /**
    * Acquire the lock, but only wait up to @a max_wait time.  Note
@@ -68,7 +68,7 @@ public:
   virtual const char *name () const;
 
   /// Destructor.
-  ~TAO_RT_Mutex (void) override;
+  ~TAO_RT_Mutex () override;
 
 protected:
   /// Synchronization lock.

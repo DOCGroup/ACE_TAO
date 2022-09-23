@@ -101,7 +101,7 @@ public:
    * consistant priority inheritance/piority ceiling semantics
    * can be guaranteed.
    */
-  RTCORBA::Mutex_ptr create_mutex (void) override;
+  RTCORBA::Mutex_ptr create_mutex () override;
 
   /**
    * Destroy a mutex.  Currently this is a no-op since RTCORBA::Mutex
@@ -208,7 +208,7 @@ public:
    * to the server.
    */
   RTCORBA::PrivateConnectionPolicy_ptr
-  create_private_connection_policy (void) override;
+  create_private_connection_policy () override;
 
   /**
    * Create a ServerProtocolPolicy instance to select and configure
@@ -250,7 +250,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_RT_ORB (void) override;
+  ~TAO_RT_ORB () override;
 
 protected:
   /// Reference to our creating ORB Core.

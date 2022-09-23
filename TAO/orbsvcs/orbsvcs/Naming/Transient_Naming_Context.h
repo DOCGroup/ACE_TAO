@@ -43,7 +43,7 @@ public:
   TAO_Transient_Bindings_Map (size_t hash_table_size);
 
   /// Destructor.
-  ~TAO_Transient_Bindings_Map (void) override;
+  ~TAO_Transient_Bindings_Map () override;
 
   // = Accessors.
 
@@ -55,7 +55,7 @@ public:
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.
-  size_t current_size (void) override;
+  size_t current_size () override;
 
   // = Name bindings manipulation methods.
 
@@ -137,7 +137,7 @@ public:
                                 = ACE_DEFAULT_MAP_SIZE);
 
   /// Destructor.
-  ~TAO_Transient_Naming_Context (void) override;
+  ~TAO_Transient_Naming_Context () override;
 
   // = Utility methods.
   /**
@@ -158,7 +158,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  CosNaming::NamingContext_ptr new_context (void) override;
+  CosNaming::NamingContext_ptr new_context () override;
 
   /**
    * Returns at most the requested number of bindings <how_many> in

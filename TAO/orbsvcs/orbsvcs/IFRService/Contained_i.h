@@ -44,7 +44,7 @@ public:
   TAO_Contained_i (TAO_Repository_i *repo);
 
   /// Destructor.
-  ~TAO_Contained_i (void) override;
+  ~TAO_Contained_i () override;
 
   /// Remove the repository entry.
   void destroy () override;
