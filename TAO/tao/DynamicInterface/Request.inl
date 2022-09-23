@@ -33,35 +33,35 @@ CORBA::Request::operation () const
 
 // Return the arguments for the request.
 ACE_INLINE CORBA::NVList_ptr
-CORBA::Request::arguments (void)
+CORBA::Request::arguments ()
 {
   return this->args_;
 }
 
 // Return the result for the request.
 ACE_INLINE CORBA::NamedValue_ptr
-CORBA::Request::result (void)
+CORBA::Request::result ()
 {
   return this->result_;
 }
 
 // Return the exceptions resulting from this request.
 ACE_INLINE CORBA::ExceptionList_ptr
-CORBA::Request::exceptions (void)
+CORBA::Request::exceptions ()
 {
   return this->exceptions_.in ();
 }
 
 // Return the request's contexts
 ACE_INLINE CORBA::ContextList_ptr
-CORBA::Request::contexts (void)
+CORBA::Request::contexts ()
 {
   return this->contexts_;
 }
 
 // The argument manipulation helper functions
 ACE_INLINE CORBA::Any &
-CORBA::Request::add_in_arg (void)
+CORBA::Request::add_in_arg ()
 {
   return this->args_->add_element (CORBA::ARG_IN)->any_;
 }
@@ -73,7 +73,7 @@ CORBA::Request::add_in_arg (const CORBA::Char *name)
 }
 
 ACE_INLINE CORBA::Any &
-CORBA::Request::add_inout_arg (void)
+CORBA::Request::add_inout_arg ()
 {
   return this->args_->add_element (CORBA::ARG_INOUT)->any_;
 }
@@ -85,7 +85,7 @@ CORBA::Request::add_inout_arg (const CORBA::Char *name)
 }
 
 ACE_INLINE CORBA::Any &
-CORBA::Request::add_out_arg (void)
+CORBA::Request::add_out_arg ()
 {
   return this->args_->add_element (CORBA::ARG_OUT)->any_;
 }
@@ -147,13 +147,13 @@ CORBA::Request::raw_user_exception (TAO_InputCDR &cdr)
 }
 
 ACE_INLINE ACE_CString &
-CORBA::Request::raw_user_exception (void)
+CORBA::Request::raw_user_exception ()
 {
   return this->raw_user_exception_;
 }
 
 ACE_INLINE CORBA::Boolean
-CORBA::Request::response_received (void)
+CORBA::Request::response_received ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,

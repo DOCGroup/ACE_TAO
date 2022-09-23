@@ -543,10 +543,10 @@ YY_BUFFER_STATE yy_create_buffer ( FILE *file, int size  );
 void yy_delete_buffer ( YY_BUFFER_STATE b  );
 void yy_flush_buffer ( YY_BUFFER_STATE b  );
 void yypush_buffer_state ( YY_BUFFER_STATE new_buffer  );
-void yypop_buffer_state ( void );
+void yypop_buffer_state ();
 
-static void yyensure_buffer_stack ( void );
-static void yy_load_buffer_state ( void );
+static void yyensure_buffer_stack ();
+static void yy_load_buffer_state ();
 static void yy_init_buffer ( YY_BUFFER_STATE b, FILE *file  );
 #define YY_FLUSH_BUFFER yy_flush_buffer( YY_CURRENT_BUFFER )
 
@@ -591,9 +591,9 @@ int yylineno = 1;
 
 extern char yytext[];
 
-static yy_state_type yy_get_previous_state ( void );
+static yy_state_type yy_get_previous_state ();
 static yy_state_type yy_try_NUL_trans ( yy_state_type current_state  );
-static int yy_get_next_buffer ( void );
+static int yy_get_next_buffer ();
 static void yynoreturn yy_fatal_error ( const char* msg  );
 
 /* Done after the current pattern has been matched and before the
@@ -1468,34 +1468,34 @@ static AST_Decl *           idl_find_node (const char *);
 #define YY_EXTRA_TYPE void *
 #endif
 
-static int yy_init_globals ( void );
+static int yy_init_globals ();
 
 /* Accessor methods to globals.
    These are made visible to non-reentrant scanners for convenience. */
 
-int yylex_destroy ( void );
+int yylex_destroy ();
 
-int yyget_debug ( void );
+int yyget_debug ();
 
 void yyset_debug ( int debug_flag  );
 
-YY_EXTRA_TYPE yyget_extra ( void );
+YY_EXTRA_TYPE yyget_extra ();
 
 void yyset_extra ( YY_EXTRA_TYPE user_defined  );
 
-FILE *yyget_in ( void );
+FILE *yyget_in ();
 
 void yyset_in  ( FILE * _in_str  );
 
-FILE *yyget_out ( void );
+FILE *yyget_out ();
 
 void yyset_out  ( FILE * _out_str  );
 
-            int yyget_leng ( void );
+            int yyget_leng ();
 
-char *yyget_text ( void );
+char *yyget_text ();
 
-int yyget_lineno ( void );
+int yyget_lineno ();
 
 void yyset_lineno ( int _line_number  );
 
@@ -1505,9 +1505,9 @@ void yyset_lineno ( int _line_number  );
 
 #ifndef YY_SKIP_YYWRAP
 #ifdef __cplusplus
-extern "C" int yywrap ( void );
+extern "C" int yywrap ();
 #else
-extern int yywrap ( void );
+extern int yywrap ();
 #endif
 #endif
 
@@ -1527,9 +1527,9 @@ static int yy_flex_strlen ( const char * );
 
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
-static int yyinput ( void );
+static int yyinput ();
 #else
-static int input ( void );
+static int input ();
 #endif
 
 #endif

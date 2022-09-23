@@ -54,7 +54,7 @@ public:
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.
-  virtual size_t current_size (void) = 0;
+  virtual size_t current_size () = 0;
 
   /**
    * Add a binding with the specified parameters to the table.

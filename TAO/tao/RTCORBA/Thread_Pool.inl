@@ -52,7 +52,7 @@ TAO_Thread_Lane::dynamic_threads () const
 
 ACE_INLINE
 TAO_Thread_Lane_Resources &
-TAO_Thread_Lane::resources (void)
+TAO_Thread_Lane::resources ()
 {
   return this->resources_;
 }
@@ -129,7 +129,7 @@ TAO_Thread_Pool::max_request_buffer_size () const
 
 ACE_INLINE
 TAO_Thread_Lane **
-TAO_Thread_Pool::lanes (void)
+TAO_Thread_Pool::lanes ()
 {
   return this->lanes_;
 }

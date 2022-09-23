@@ -34,11 +34,11 @@ public:
   virtual ~URL_Visitor_Factory ();
 
   /// Factory Method that makes the appropriate type of <URL_Visitor>.
-  virtual URL_Visitor *make_visitor (void) = 0;
+  virtual URL_Visitor *make_visitor () = 0;
 
   /// Factory Method that makes the appropriate type of
   /// <Command_Processor>.
-  virtual Command_Processor *make_command_processor (void) = 0;
+  virtual Command_Processor *make_command_processor () = 0;
 };
 
 /**

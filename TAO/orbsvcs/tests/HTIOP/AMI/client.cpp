@@ -91,7 +91,7 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler (void) {};
+  Handler () {};
 
   void foo (CORBA::Long result,
             CORBA::Long out_l)
@@ -145,7 +145,7 @@ public:
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
     };
-  ~Handler (void) {};
+  ~Handler () {};
 };
 
 // ReplyHandler.

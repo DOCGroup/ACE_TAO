@@ -92,7 +92,7 @@ public:
                         int iovcnt,
                         ACE_Time_Value *s = 0);
 
-  TAO_AV_UDP_Flow_Handler *handler (void) { return this->handler_; }
+  TAO_AV_UDP_Flow_Handler *handler () { return this->handler_; }
 
 protected:
   TAO_AV_UDP_Flow_Handler *handler_;
@@ -121,7 +121,7 @@ public:
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
   const ACE_SOCK_Dgram *get_socket () const;
-  virtual ACE_Event_Handler* event_handler (void){ return this; }
+  virtual ACE_Event_Handler* event_handler () { return this; }
   /// Change the QoS
   virtual int change_qos (AVStreams::QoS);
 

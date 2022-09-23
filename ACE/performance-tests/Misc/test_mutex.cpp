@@ -94,8 +94,8 @@ class Mutex_Base
 {
 public:
   virtual ~Mutex_Base ();
-  virtual int acquire (void) = 0;
-  virtual int release (void) = 0;
+  virtual int acquire () = 0;
+  virtual int release () = 0;
 };
 
 Mutex_Base::~Mutex_Base ()

@@ -33,7 +33,7 @@ class Test_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
   Test_Task (ACE_Thread_Manager * = ACE_Thread_Manager::instance ());
-  ~Test_Task (void) {};
+  ~Test_Task () {};
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void * = 0);

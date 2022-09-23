@@ -128,7 +128,7 @@ public:
    * the calling thread.  The function does not cancel asynchronous
    * operations issued by other threads.
    */
-  virtual int cancel (void) = 0;
+  virtual int cancel () = 0;
 
   // = Access methods.
 

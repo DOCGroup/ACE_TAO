@@ -118,7 +118,7 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events (void) = 0;
+  virtual int handle_events () = 0;
 
   /**
    * Post a result to the completion port of the Proactor.  If errors
@@ -408,7 +408,7 @@ protected:
 
   /// Define the maximum number of asynchronous I/O requests
   /// for the current OS
-  void check_max_aio_num (void) ;
+  void check_max_aio_num ();
 
   /// To identify requests from Notify_Pipe_Manager
   void set_notify_handle (ACE_HANDLE h);
@@ -630,7 +630,7 @@ protected:
                           int signal_number = ACE_SIGRTMIN);
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Timer (void) override = default;
+  ~ACE_POSIX_Asynch_Timer () override = default;
 
   /// This method calls the handler's handle_timeout method.
   void complete (size_t bytes_transferred,

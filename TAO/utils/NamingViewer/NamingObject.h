@@ -29,7 +29,7 @@ public:
   CosNaming::Name& Name ();
   // returns the name of the object
 
-  bool IsContext (void) { return m_Context; }
+  bool IsContext () { return m_Context; }
 
   // Returns true if this is a context
 private:

@@ -135,7 +135,7 @@ public:
   virtual ~HTTP_Handler_Factory ();
 
   /// This creates a new HTTP_Handler
-  virtual HTTP_Handler *create_http_handler (void) = 0;
+  virtual HTTP_Handler *create_http_handler () = 0;
 
   /**
    * The HTTP handler will call this method from HTTP_Handler::done to

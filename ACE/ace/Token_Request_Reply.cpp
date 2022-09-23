@@ -131,7 +131,7 @@ ACE_Token_Request::dump () const
 
 // Create a ACE_Token_Reply message.
 
-ACE_Token_Reply::ACE_Token_Reply (void) // Type of reply.
+ACE_Token_Reply::ACE_Token_Reply () // Type of reply.
 {
   this->arg (0);
   this->errnum (0);

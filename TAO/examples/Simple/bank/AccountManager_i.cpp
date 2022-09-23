@@ -4,7 +4,7 @@
 #include "tao/Utils/ORB_Manager.h"
 
 // Constructor
-AccountManager_i::AccountManager_i (void) :
+AccountManager_i::AccountManager_i () :
   orb_manager_ (0)
 {
 }

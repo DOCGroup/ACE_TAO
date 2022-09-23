@@ -15,10 +15,10 @@ using namespace PortableServer;
 class test_i : public virtual POA_test {
   int n_;
 public:
-  test_i (void) : n_(0)
+  test_i () : n_(0)
   {
   }
-  virtual ~test_i (void) {
+  virtual ~test_i () {
   }
   virtual CORBA::Long get ()
   {

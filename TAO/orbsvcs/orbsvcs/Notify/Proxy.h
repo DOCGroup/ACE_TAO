@@ -76,10 +76,10 @@ public:
   CORBA::Boolean updates_off ();
 
   /// Destroy this object.
-  virtual void destroy (void) = 0;
+  virtual void destroy () = 0;
 
   /// Access our Peer.
-  virtual TAO_Notify_Peer* peer (void) = 0;
+  virtual TAO_Notify_Peer* peer () = 0;
 
   /// Implement the Obtain Types.
   virtual CosNotification::EventTypeSeq* obtain_types (

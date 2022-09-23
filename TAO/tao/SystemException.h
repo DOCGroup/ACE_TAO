@@ -176,7 +176,7 @@ namespace CORBA
     class TAO_Export name : public SystemException \
     { \
     public: \
-      name (void); \
+      name (); \
       name (CORBA::ULong code, \
             CORBA::CompletionStatus completed); \
       static name * _downcast (CORBA::Exception* exception); \
@@ -185,7 +185,7 @@ namespace CORBA
       virtual CORBA::TypeCode_ptr _tao_type () const; \
       static void _tao_any_destructor (void*); \
       virtual CORBA::Exception *_tao_duplicate () const; \
-      static CORBA::SystemException *_tao_create (void); \
+      static CORBA::SystemException *_tao_create (); \
     }; \
 
   TAO_SYSTEM_EXCEPTION(UNKNOWN)          // the unknown exception

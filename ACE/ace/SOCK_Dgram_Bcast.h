@@ -37,7 +37,7 @@ public:
                   ACE_Bcast_Node *);
 
   /// Destructor.
-  ~ACE_Bcast_Node (void) = default;
+  ~ACE_Bcast_Node () = default;
 
   /// Broadcast address for the interface.
   ACE_INET_Addr bcast_addr_;

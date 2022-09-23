@@ -641,8 +641,8 @@ public:
   class Timer_Queue {};
   ACE_Proactor (size_t /* number_of_threads */ = 0,
                 Timer_Queue * /* tq */ = 0) {}
-  ~ACE_Proactor (void) {}
-  int handle_events (void) { return -1; }
+  ~ACE_Proactor () {}
+  int handle_events () { return -1; }
   int handle_events (ACE_Time_Value &) { return -1; }
 
   /// Placeholder to enable compilation on non-Win32 platforms

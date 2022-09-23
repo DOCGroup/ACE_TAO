@@ -10,7 +10,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 inline void
-ACE_Handle_Gobbler::close_remaining_handles (void)
+ACE_Handle_Gobbler::close_remaining_handles ()
 {
   ACE_Handle_Set_Iterator iter (this->handle_set_);
   for (ACE_HANDLE h = iter (); h != ACE_INVALID_HANDLE; h = iter ())
@@ -18,7 +18,7 @@ ACE_Handle_Gobbler::close_remaining_handles (void)
 }
 
 inline
-ACE_Handle_Gobbler::~ACE_Handle_Gobbler (void)
+ACE_Handle_Gobbler::~ACE_Handle_Gobbler ()
 {
   this->close_remaining_handles ();
 }

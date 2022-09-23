@@ -74,7 +74,7 @@ namespace TAO
       //@{
       virtual char * creds_id ();
 
-      virtual SecurityLevel3::CredentialsType creds_type (void) = 0;
+      virtual SecurityLevel3::CredentialsType creds_type () = 0;
 
       virtual SecurityLevel3::CredentialsUsage creds_usage ();
 

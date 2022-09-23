@@ -37,7 +37,7 @@ DAMAGES.
 #include "test_config.h"
 
 /*
-   Gauge32( void);
+   Gauge32();
    Gauge32( const unsigned long i);
    Gauge32 ( const Gauge32 &g);
    ~Gauge32();

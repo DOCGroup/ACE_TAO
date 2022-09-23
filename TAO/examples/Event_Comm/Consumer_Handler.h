@@ -35,7 +35,7 @@ public:
   Consumer_Handler ();
 
   /// Destructor.
- virtual ~Consumer_Handler (void) = default;
+ virtual ~Consumer_Handler () = default;
 
   /// Initializes the ORB, gets the Notifier reference from the Naming
   /// Service, and starts the servant for the Consumer object.

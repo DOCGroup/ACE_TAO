@@ -40,7 +40,7 @@ TAO_UIPMC_Endpoint::uint_ip_addr (ACE_UINT32 ip_addr)
 }
 
 ACE_INLINE void
-TAO_UIPMC_Endpoint::update_object_addr (void)
+TAO_UIPMC_Endpoint::update_object_addr ()
 {
   this->object_addr_.set (this->port_,
                           this->uint_ip_addr ());

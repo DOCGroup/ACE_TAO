@@ -45,7 +45,7 @@ public:
   virtual ~URL_Processing_Strategy ();
 
   /// Perform the strategy.
-  virtual int execute (void) = 0;
+  virtual int execute () = 0;
 
   virtual int destroy ();
 
@@ -136,10 +136,10 @@ public:
 
   // = Factory Methods.
   /// Factory Method that makes the header iterator.
-  virtual URL_Iterator *make_header_iterator (void) = 0;
+  virtual URL_Iterator *make_header_iterator () = 0;
 
   /// Factory Method that makes the body iterator.
-  virtual URL_Iterator *make_body_iterator (void) = 0;
+  virtual URL_Iterator *make_body_iterator () = 0;
 
   /// Factory Method that makes the header processing strategy.
   virtual URL_Processing_Strategy *make_header_strategy (URL_Iterator &) = 0;
@@ -148,7 +148,7 @@ public:
   virtual URL_Processing_Strategy *make_body_strategy (URL_Iterator &) = 0;
 
   /// Close down the resources.
-  virtual int destroy (void) = 0;
+  virtual int destroy () = 0;
 
 protected:
   /// Stash the URL so we don't have to pass it around.
@@ -235,7 +235,7 @@ public:
   // virtual int visit (FTP_URL &http_url) = 0;
 
   /// Cleanup the resources.
-  virtual int destroy (void) = 0;
+  virtual int destroy () = 0;
 
 protected:
   /// Make the appropriate <URL_Visitation_Strategy_Factory>.
@@ -386,8 +386,8 @@ class Auto_Destroyer
 {
 public:
   Auto_Destroyer (T *t): t_ (t) {}
-  T *operator-> (void) { return this->t_; }
-  T *operator *(void) { return this->t_; }
+  T *operator-> () { return this->t_; }
+  T *operator *() { return this->t_; }
   void operator= (T *t)
   {
     if (this->t_ != 0)

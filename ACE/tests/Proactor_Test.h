@@ -27,11 +27,11 @@ public:
   Server (TestData *tester, int id);
   ~Server ();
 
-  int id (void) { return this->id_; }
-  size_t get_total_snd (void) { return this->total_snd_; }
-  size_t get_total_rcv (void) { return this->total_rcv_; }
-  long get_total_w   (void) { return this->total_w_; }
-  long get_total_r   (void) { return this->total_r_; }
+  int id () { return this->id_; }
+  size_t get_total_snd () { return this->total_snd_; }
+  size_t get_total_rcv () { return this->total_rcv_; }
+  long get_total_w   () { return this->total_w_; }
+  long get_total_r   () { return this->total_r_; }
 
   // This is called to pass the new connection's addresses.
   virtual void addresses (const ACE_INET_Addr& peer,
@@ -91,11 +91,11 @@ public:
   Client (TestData *tester, int id);
   ~Client ();
 
-  int id (void) { return this->id_; }
-  size_t get_total_snd (void) { return this->total_snd_; }
-  size_t get_total_rcv (void) { return this->total_rcv_; }
-  int    get_total_w   (void) { return this->total_w_; }
-  int    get_total_r   (void) { return this->total_r_; }
+  int id () { return this->id_; }
+  size_t get_total_snd () { return this->total_snd_; }
+  size_t get_total_rcv () { return this->total_rcv_; }
+  int    get_total_w   () { return this->total_w_; }
+  int    get_total_r   () { return this->total_r_; }
 
   // This is called to pass the new connection's addresses.
   virtual void addresses (const ACE_INET_Addr& peer,

@@ -46,7 +46,7 @@ static unsigned short si = 32768;
  #endif /*ACE_WIN32*/
 
 /*
-     SnmpInt32( void);
+     SnmpInt32();
      SnmpInt32 (const long i);
      SnmpInt32 (const SnmpInt32 &c);
      virtual ~SnmpInt32();
@@ -112,7 +112,7 @@ static void TestInteger32()
 }
 
 /*
-     SnmpUInt32( void);
+     SnmpUInt32();
      SnmpUInt32 (const unsigned long i);
      SnmpUInt32( const SnmpUInt32 &c);
      virtual ~SnmpUInt32();

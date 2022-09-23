@@ -81,7 +81,7 @@ public:
   virtual ~TAO_CEC_Dispatch_Command ();
 
   /// Command callback
-  virtual int execute (void) = 0;
+  virtual int execute () = 0;
 };
 
 // ****************************************************************

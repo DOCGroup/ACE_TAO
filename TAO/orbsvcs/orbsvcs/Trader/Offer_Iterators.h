@@ -62,7 +62,7 @@ public:
   virtual void add_offer (CosTrading::OfferId offer_id,
                           const CosTrading::Offer* offer) = 0;
 
-  virtual CORBA::ULong max_left (void) = 0;
+  virtual CORBA::ULong max_left () = 0;
 
   // BEGIN SPEC
   // The max_left operation returns the number of service offers

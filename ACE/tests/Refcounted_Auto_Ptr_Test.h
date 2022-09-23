@@ -20,7 +20,7 @@
 struct Printer
 {
   Printer (const char *message);
-  ~Printer (void) ;
+  ~Printer ();
 
   void print ();
 

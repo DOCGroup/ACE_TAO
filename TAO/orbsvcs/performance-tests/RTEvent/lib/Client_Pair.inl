@@ -5,7 +5,7 @@
  */
 
 ACE_INLINE
-Client_Pair::Client_Pair (void)
+Client_Pair::Client_Pair ()
 {
 }
 

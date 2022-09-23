@@ -78,7 +78,7 @@ public:
 
 private:
   /// The release method is called when the refcount reaches 0.
-  virtual void release (void) = 0;
+  virtual void release () = 0;
 
   /// Use a signed counter so that we can more easily detect
   /// boundary conditions such as too many _decr_refcnt() calls.

@@ -50,7 +50,7 @@ public:
   virtual void shutdown ();
 
   /// Access Proxy.
-  virtual TAO_Notify_Proxy* proxy (void) = 0;
+  virtual TAO_Notify_Proxy* proxy () = 0;
 
   // Dispatch updates
   virtual void dispatch_updates (const TAO_Notify_EventTypeSeq & added,
@@ -72,7 +72,7 @@ protected:
 
 private:
   /// Release
-  virtual void release (void) = 0;
+  virtual void release () = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

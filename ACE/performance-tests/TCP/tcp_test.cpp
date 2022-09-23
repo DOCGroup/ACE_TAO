@@ -304,7 +304,7 @@ private:
   /// Receives datagrams.
   ACE_SOCK_Stream endpoint_;
 
-  Server (void) = delete;
+  Server () = delete;
   Server (const Server &) = delete;
   Server &operator= (const Server &) = delete;
 };

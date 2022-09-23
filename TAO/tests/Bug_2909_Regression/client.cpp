@@ -93,7 +93,7 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler (void) : request_ (0)
+  Handler () : request_ (0)
   {
   };
 

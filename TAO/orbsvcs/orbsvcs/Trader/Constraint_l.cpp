@@ -678,9 +678,9 @@ void yyset_lineno ( int _line_number  );
 
 #ifndef YY_SKIP_YYWRAP
 #ifdef __cplusplus
-extern "C" int yywrap ( void );
+extern "C" int yywrap ();
 #else
-extern int yywrap ( void );
+extern int yywrap ();
 #endif
 #endif
 
@@ -701,9 +701,9 @@ static int yy_flex_strlen ( const char * );
 
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
-static int yyinput ( void );
+static int yyinput ();
 #else
-static int input ( void );
+static int input ();
 #endif
 
 #endif

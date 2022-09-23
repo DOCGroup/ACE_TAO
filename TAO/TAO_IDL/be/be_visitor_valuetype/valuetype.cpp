@@ -842,7 +842,7 @@ be_visitor_valuetype::gen_init_defn (be_valuetype *node)
       << "public:" << be_idt_nl
       << "virtual ~" << node->local_name () << "_init ();" << be_nl;
 
-  *os << "virtual const char* tao_repository_id (void);\n" << be_nl;
+  *os << "virtual const char* tao_repository_id ();\n" << be_nl;
   *os << "// create () goes here" << be_nl;
   *os << be_uidt_nl << "};" << be_nl;
 

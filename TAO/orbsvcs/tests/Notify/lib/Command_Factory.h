@@ -32,7 +32,7 @@ public:
   virtual ~TAO_Notify_Tests_Command_Factory ();
 
   /// Create the command.
-  virtual TAO_Notify_Tests_Command* create (void) = 0;
+  virtual TAO_Notify_Tests_Command* create () = 0;
 };
 
 #include /**/ "ace/post.h"
