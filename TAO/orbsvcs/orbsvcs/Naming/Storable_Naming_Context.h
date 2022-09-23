@@ -37,7 +37,7 @@ class TAO_Naming_Serv_Export TAO_Storable_IntId
 {
 public:
   /// Constructor.
-  TAO_Storable_IntId (void);
+  TAO_Storable_IntId ();
 
   /// Constructor.
   TAO_Storable_IntId (/* in */ const char * ior,
@@ -47,7 +47,7 @@ public:
   TAO_Storable_IntId (const TAO_Storable_IntId & rhs);
 
   /// Destructor.
-  ~TAO_Storable_IntId (void);
+  ~TAO_Storable_IntId ();
 
   /// Assignment operator.
   void operator= (const TAO_Storable_IntId & rhs);
@@ -65,7 +65,7 @@ class TAO_Naming_Serv_Export TAO_Storable_ExtId
 {
 public:
   /// Constructor.
-  TAO_Storable_ExtId (void);
+  TAO_Storable_ExtId ();
 
   /// Constructor.
   TAO_Storable_ExtId (/* in */ const char *id,
@@ -75,7 +75,7 @@ public:
   TAO_Storable_ExtId (const TAO_Storable_ExtId & rhs);
 
   /// Destructor.
-  ~TAO_Storable_ExtId (void);
+  ~TAO_Storable_ExtId ();
 
   // = Assignment and comparison methods.
 
@@ -105,8 +105,8 @@ public:
   // Accessors.
   // follow the mapping rules!
 
-  const char * id (void);
-  const char * kind (void);
+  const char * id ();
+  const char * kind ();
 };
 
 
@@ -136,10 +136,10 @@ public:
   // = Accessors.
 
   /// Get a reference to the underlying hash map.
-  HASH_MAP &map (void);
+  HASH_MAP &map ();
 
   /// Return the size of the underlying hash table.
-  size_t total_size (void);
+  size_t total_size ();
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.
@@ -349,7 +349,7 @@ protected:
    * A helper function to ensure the current object was not destroyed by raising
    * an exception if it was. Uses the lock as a Reader.
    */
-  void verify_not_destroyed (void);
+  void verify_not_destroyed ();
 
   /**
    * A helper function to validate the name argument and return a final context
@@ -364,7 +364,7 @@ protected:
    * This will have been done after the file is closed. Check the
    * last_changed_ attribute for the time of the write.
    */
-  virtual void context_written (void);
+  virtual void context_written ();
 
   /**
    * An internal callback invoked by the File_Open_Lock_and_Check
@@ -461,7 +461,7 @@ protected:
 
 private:
   /// Default constructor
-  File_Open_Lock_and_Check(void);
+  File_Open_Lock_and_Check();
 
   TAO_Storable_Naming_Context * context_;
 }; // end of embedded class File_Open_Lock_and_Check

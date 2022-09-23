@@ -22,7 +22,7 @@ class TAO_Notify_MC_Export TAO_MonitorManager : public ACE_Service_Object
 {
 public:
   /// Perform member initialization
-  TAO_MonitorManager (void);
+  TAO_MonitorManager ();
 
   int init (int argc, ACE_TCHAR* argv[]) override;
   int fini () override;
@@ -30,14 +30,14 @@ public:
   /// Start the ORB task which includes initializtion of the ORB,
   /// creation of the monitor servant and activation.
   /// If run is called more than once, it will silently perform a no-op.
-  int run (void);
+  int run ();
 
   /// This will call the run() method.
   int resume (void) override;
 
   /// Get the dynamic instance of the TAO_MonitorManager and
   /// shut it down
-  static void shutdown (void);
+  static void shutdown ();
 
 private:
   class ORBTask: public ACE_Task_Base

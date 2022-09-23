@@ -36,7 +36,7 @@ class TAO_Export TAO_Base_Transport_Property
 {
 public:
   /// Default constructor
-  TAO_Base_Transport_Property (void);
+  TAO_Base_Transport_Property ();
 
   /// Constructor
   TAO_Base_Transport_Property (TAO_Endpoint *endpoint,

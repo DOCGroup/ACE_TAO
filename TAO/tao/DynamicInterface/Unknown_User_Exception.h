@@ -45,7 +45,7 @@ namespace CORBA
   {
   public:
     /// Constructor.
-    UnknownUserException (void);
+    UnknownUserException ();
 
     /// Constructor.
     UnknownUserException (CORBA::Any& exception);
@@ -57,7 +57,7 @@ namespace CORBA
     ~UnknownUserException (void) override;
 
     /// Return the any containing the user exception.
-    CORBA::Any& exception (void);
+    CORBA::Any& exception ();
 
     /// To throw an UnknownUserException of this type.
     void _raise () const override;

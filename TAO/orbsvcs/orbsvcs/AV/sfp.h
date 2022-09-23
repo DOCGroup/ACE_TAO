@@ -42,7 +42,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_SFP_Fragment_Node
 {
 public:
-  TAO_SFP_Fragment_Node (void) : data_ (0) {}
+  TAO_SFP_Fragment_Node () : data_ (0) {}
   flowProtocol::fragment fragment_info_;
   ACE_Message_Block *data_;
   friend bool operator< (const TAO_SFP_Fragment_Node& left,
@@ -56,7 +56,7 @@ public:
 class TAO_SFP_Fragment_Table_Entry
 {
 public:
-  TAO_SFP_Fragment_Table_Entry (void)
+  TAO_SFP_Fragment_Table_Entry ()
     :last_received_ (0),
      num_fragments_ (0)
     {}
@@ -138,7 +138,7 @@ public:
     START_RECEIVED
   };
 
-  TAO_SFP_Base (void);
+  TAO_SFP_Base ();
   static CORBA::Boolean start_frame (CORBA::Octet flags,
                                      flowProtocol::MsgType type,
                                      TAO_OutputCDR &msg);

@@ -40,7 +40,7 @@ class TAO_ZIOP_Export TAO_ZIOP_Loader : public TAO_ZIOP_Adapter
 {
 public:
   /// Constructor
-  TAO_ZIOP_Loader (void);
+  TAO_ZIOP_Loader ();
 
   /// Destructor
   ~TAO_ZIOP_Loader (void) override;
@@ -57,7 +57,7 @@ public:
   void load_policy_validators (TAO_Policy_Validator &validator) override;
 
   /// Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 
   /// Converts compressor ID to a compressor name.
   static const char * ziop_compressorid_name (::Compression::CompressorId st);

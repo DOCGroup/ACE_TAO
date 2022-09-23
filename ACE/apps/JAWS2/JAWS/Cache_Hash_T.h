@@ -20,7 +20,7 @@ public:
   // number important?  I am trying to maximize scattering when using
   // mod on the hashed value.  This might be bogus though.
 
-  virtual ~JAWS_Cache_Hash (void);
+  virtual ~JAWS_Cache_Hash ();
 
   int find (const EXT_ID &ext_id) const;
   int find (const EXT_ID &ext_id, JAWS_Cache_Object *&int_id) const;

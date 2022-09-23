@@ -9,7 +9,7 @@
 #endif /* __ACE_INLINE__ */
 
 void
-Callback_i::shutdown (void)
+Callback_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
   this->orb_->shutdown (false);
@@ -63,7 +63,7 @@ Simple_Server_i::callback_object (Callback_ptr callback
 
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
   this->orb_->shutdown (false);
 }

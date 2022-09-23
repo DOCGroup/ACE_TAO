@@ -53,7 +53,7 @@ namespace ACE
       void update (void) override;
 
       /// Stores the default name, used if none is supplied by the user.
-      static const char* default_name (void);
+      static const char* default_name ();
 
     private:
       /// Overridden reset, calls platform-specific reset.

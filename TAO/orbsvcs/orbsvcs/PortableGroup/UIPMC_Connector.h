@@ -40,7 +40,7 @@ class TAO_PortableGroup_Export TAO_UIPMC_Connector : public TAO_Connector
 {
 public:
   /// Constructor.
-  TAO_UIPMC_Connector (void);
+  TAO_UIPMC_Connector ();
 
   /// Destructor.
   ~TAO_UIPMC_Connector (void) override;

@@ -5,7 +5,7 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_string.h"
 
-TAO_Notify_Tests_RT_Test_FilterFactory::TAO_Notify_Tests_RT_Test_FilterFactory (void)
+TAO_Notify_Tests_RT_Test_FilterFactory::TAO_Notify_Tests_RT_Test_FilterFactory ()
 {
 }
 
@@ -28,7 +28,7 @@ TAO_Notify_Tests_RT_Test_FilterFactory::create (PortableServer::POA_ptr filter_p
 }
 
 void
-TAO_Notify_Tests_RT_Test_FilterFactory::destroy (void)
+TAO_Notify_Tests_RT_Test_FilterFactory::destroy ()
 {
   if (CORBA::is_nil(this->filter_poa_.in ()))
     return;
@@ -96,7 +96,7 @@ TAO_Notify_Tests_RT_Test_FilterFactory::get_filter (const TAO_Notify_Object::ID&
 }
 
 void
-TAO_Notify_Tests_RT_Test_FilterFactory::release (void)
+TAO_Notify_Tests_RT_Test_FilterFactory::release ()
 {
   delete this;
   //@@ inform factory

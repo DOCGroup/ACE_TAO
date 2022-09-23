@@ -32,7 +32,7 @@ class ACE_Export ACE_DEV_Addr : public ACE_Addr
 {
 public:
   /// Default constructor.
-  ACE_DEV_Addr (void);
+  ACE_DEV_Addr ();
 
   /// Copy constructor.
   ACE_DEV_Addr (const ACE_DEV_Addr &sa);

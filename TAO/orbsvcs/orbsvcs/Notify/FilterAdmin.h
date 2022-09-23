@@ -38,7 +38,7 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
 {
  public:
   /// Constructor
-  TAO_Notify_FilterAdmin (void);
+  TAO_Notify_FilterAdmin ();
 
   /// Destructor
   ~TAO_Notify_FilterAdmin (void) override;
@@ -57,9 +57,9 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
 
   virtual CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter);
 
-  virtual CosNotifyFilter::FilterIDSeq * get_all_filters (void);
+  virtual CosNotifyFilter::FilterIDSeq * get_all_filters ();
 
-  virtual void remove_all_filters (void);
+  virtual void remove_all_filters ();
 
 
   // TAO_Notify::Topology_Object

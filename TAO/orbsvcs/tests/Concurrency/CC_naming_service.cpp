@@ -26,7 +26,7 @@ CC_naming_service::CC_naming_service (CORBA::ORB_var orb)
   instance_ = this;
 }
 
-CC_naming_service::CC_naming_service(void)
+CC_naming_service::CC_naming_service()
   : cc_factory_key_ (0),
     orb_ (0),
     factory_ (0)
@@ -43,7 +43,7 @@ CC_naming_service::Init(CORBA::ORB_var orb)
     throw CORBA::INTERNAL ();
 }
 
-CC_naming_service::~CC_naming_service (void)
+CC_naming_service::~CC_naming_service ()
 {
   //  if(instance_!=0)
   // delete instance_;
@@ -51,7 +51,7 @@ CC_naming_service::~CC_naming_service (void)
 }
 
 CC_naming_service *
-CC_naming_service::Instance(void)
+CC_naming_service::Instance()
 {
   if(instance_ == 0)
     {
@@ -118,13 +118,13 @@ CC_naming_service::bind_name (const char *n,
 }
 
 CosConcurrencyControl::LockSetFactory_var
-CC_naming_service::get_lock_set_factory (void)
+CC_naming_service::get_lock_set_factory ()
 {
   return this->factory_;
 }
 
 int
-CC_naming_service::init_naming_service (void)
+CC_naming_service::init_naming_service ()
 {
   try
     {

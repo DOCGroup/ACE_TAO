@@ -56,7 +56,7 @@ Event_Supplier::init ()
 }
 
 void
-Event_Supplier::start_generating_events (void)
+Event_Supplier::start_generating_events ()
 {
   unsigned long total_sent = 0;
 

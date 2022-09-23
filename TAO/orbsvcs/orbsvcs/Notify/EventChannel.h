@@ -54,7 +54,7 @@ public:
   typedef CosNotifyChannelAdmin::ChannelIDSeq_var SEQ_VAR;
 
   /// Constructor
-  TAO_Notify_EventChannel (void);
+  TAO_Notify_EventChannel ();
 
   /// Destructor
   ~TAO_Notify_EventChannel () override;

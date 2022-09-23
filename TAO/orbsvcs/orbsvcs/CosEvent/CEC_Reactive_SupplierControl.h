@@ -126,7 +126,7 @@ public:
 private:
   /// Check if the suppliers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_suppliers (void);
+  void query_suppliers ();
 
 private:
   /// The polling rate

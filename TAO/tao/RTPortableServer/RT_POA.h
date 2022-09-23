@@ -204,13 +204,13 @@ protected:
 
   void validate_priority (RTCORBA::Priority priority);
 
-  void validate_policies (void);
+  void validate_policies ();
 
   /// Parse the policy list for RT policies and update our
   /// cached policy instance.
   void parse_rt_policies (TAO_POA_Policy_Set &policies);
 
-  size_t endpoint_count (void);
+  size_t endpoint_count ();
 
   TAO_Stub *create_stub_object (const TAO::ObjectKey &object_key,
                                 const char *type_id,

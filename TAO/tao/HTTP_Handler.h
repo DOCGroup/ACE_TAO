@@ -40,7 +40,7 @@ class TAO_Export TAO_HTTP_Handler : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE
 {
 public:
   /// Null constructor, insures that it works properly with Connector
-  TAO_HTTP_Handler (void);
+  TAO_HTTP_Handler ();
 
   /// Always use this constructor to make HTTP_Handlers
   TAO_HTTP_Handler (ACE_Message_Block *mb,
@@ -55,11 +55,11 @@ public:
   /// Close down the Blob
   int close (u_long flags = 0) override;
 
-  ~TAO_HTTP_Handler (void);
+  ~TAO_HTTP_Handler ();
 
 protected:
-  virtual int send_request (void);
-  virtual int receive_reply (void);
+  virtual int send_request ();
+  virtual int receive_reply ();
 
   ACE_Message_Block *mb_;
   ACE_TCHAR *filename_;

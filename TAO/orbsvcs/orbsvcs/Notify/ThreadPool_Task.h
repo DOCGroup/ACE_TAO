@@ -44,7 +44,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ThreadPool_Task
 
 public:
   /// Constructor
-  TAO_Notify_ThreadPool_Task (void);
+  TAO_Notify_ThreadPool_Task ();
 
   /// Destructor
   ~TAO_Notify_ThreadPool_Task () override;
@@ -71,7 +71,7 @@ public:
   TAO_Notify_Timer* timer (void) override;
 
   /// Provide access to the underlying buffering strategy
-  TAO_Notify_Buffering_Strategy* buffering_strategy (void);
+  TAO_Notify_Buffering_Strategy* buffering_strategy ();
 
 protected:
   /// Task svc

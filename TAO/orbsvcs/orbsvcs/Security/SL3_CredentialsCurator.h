@@ -81,10 +81,10 @@ namespace TAO
       typedef Credentials_Table::iterator Credentials_Iterator;
 
       /// Constructor
-      CredentialsCurator (void);
+      CredentialsCurator ();
 
       static CredentialsCurator_ptr _duplicate (CredentialsCurator_ptr obj);
-      static CredentialsCurator_ptr _nil (void);
+      static CredentialsCurator_ptr _nil ();
       static CredentialsCurator_ptr _narrow (CORBA::Object_ptr obj);
 
       /**

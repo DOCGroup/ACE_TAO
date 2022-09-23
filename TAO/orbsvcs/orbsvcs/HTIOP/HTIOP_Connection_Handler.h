@@ -94,7 +94,7 @@ namespace TAO
       //@}
 
       /// Add ourselves to Cache.
-      int add_transport_to_cache (void);
+      int add_transport_to_cache ();
 
       /// Process the <listen_list>
       int process_listen_point_list (::HTIOP::ListenPointList &listen_list);

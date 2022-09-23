@@ -68,17 +68,17 @@ public:
   /// From IDLType_i's pure virtual function.
   CORBA::TypeCode_ptr type_i (void) override;
 
-  virtual CORBA::ComponentIR::HomeDef_ptr base_home (void);
+  virtual CORBA::ComponentIR::HomeDef_ptr base_home ();
 
-  CORBA::ComponentIR::HomeDef_ptr base_home_i (void);
+  CORBA::ComponentIR::HomeDef_ptr base_home_i ();
 
   virtual void base_home (CORBA::ComponentIR::HomeDef_ptr base_home);
 
   void base_home_i (CORBA::ComponentIR::HomeDef_ptr base_home);
 
-  virtual CORBA::InterfaceDefSeq *supported_interfaces (void);
+  virtual CORBA::InterfaceDefSeq *supported_interfaces ();
 
-  CORBA::InterfaceDefSeq *supported_interfaces_i (void);
+  CORBA::InterfaceDefSeq *supported_interfaces_i ();
 
   virtual void supported_interfaces (
       const CORBA::InterfaceDefSeq &supported_interfaces);
@@ -86,9 +86,9 @@ public:
   void supported_interfaces_i (
       const CORBA::InterfaceDefSeq &supported_interfaces);
 
-  virtual CORBA::ComponentIR::ComponentDef_ptr managed_component (void);
+  virtual CORBA::ComponentIR::ComponentDef_ptr managed_component ();
 
-  CORBA::ComponentIR::ComponentDef_ptr managed_component_i (void);
+  CORBA::ComponentIR::ComponentDef_ptr managed_component_i ();
 
   virtual void managed_component (
       CORBA::ComponentIR::ComponentDef_ptr managed_component);
@@ -96,9 +96,9 @@ public:
   void managed_component_i (
       CORBA::ComponentIR::ComponentDef_ptr managed_component);
 
-  virtual CORBA::ValueDef_ptr primary_key (void);
+  virtual CORBA::ValueDef_ptr primary_key ();
 
-  CORBA::ValueDef_ptr primary_key_i (void);
+  CORBA::ValueDef_ptr primary_key_i ();
 
   virtual void primary_key (CORBA::ValueDef_ptr primary_key);
 

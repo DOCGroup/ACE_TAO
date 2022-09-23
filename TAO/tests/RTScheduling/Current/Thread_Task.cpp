@@ -84,7 +84,7 @@ Thread_Task::activate_task (int thr_count)
 }
 
 int
-Thread_Task::svc (void)
+Thread_Task::svc ()
 {
   try
     {
@@ -168,7 +168,7 @@ Thread_Task::svc (void)
   return 0;
 }
 
-Thread_Task::~Thread_Task (void)
+Thread_Task::~Thread_Task ()
 {
   delete shutdown_lock_;
   delete lock_;

@@ -29,7 +29,7 @@ class TAO_LoadBalancing_Export TAO_LB_LoadAlert
 {
 public:
   /// Constructor.
-  TAO_LB_LoadAlert (void);
+  TAO_LB_LoadAlert ();
 
   /**
    * @name CosLoadBalancing::LoadAlert Methods

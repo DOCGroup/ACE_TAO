@@ -46,10 +46,10 @@ public:
 
   virtual
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
-  describe_ext_interface (void);
+  describe_ext_interface ();
 
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
-  describe_ext_interface_i (void);
+  describe_ext_interface_i ();
 
   virtual CORBA::ExtAttributeDef_ptr create_ext_attribute (
       const char *id,

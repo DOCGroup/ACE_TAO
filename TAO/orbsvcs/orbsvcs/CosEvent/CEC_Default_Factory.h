@@ -43,14 +43,14 @@ class TAO_Event_Serv_Export TAO_CEC_Default_Factory : public TAO_CEC_Factory
 {
 public:
   /// Constructor
-  TAO_CEC_Default_Factory (void);
+  TAO_CEC_Default_Factory ();
 
   /// destructor...
   ~TAO_CEC_Default_Factory (void) override;
 
   /// Helper function to register the default factory into the service
   /// configurator.
-  static int init_svcs (void);
+  static int init_svcs ();
 
   // = The Service_Object entry points
   int init (int argc, ACE_TCHAR* argv[]) override;

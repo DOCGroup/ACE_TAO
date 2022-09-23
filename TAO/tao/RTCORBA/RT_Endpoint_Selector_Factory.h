@@ -52,7 +52,7 @@ class TAO_RTCORBA_Export RT_Endpoint_Selector_Factory
 {
 public:
   /// Constructor.
-  RT_Endpoint_Selector_Factory (void);
+  RT_Endpoint_Selector_Factory ();
 
   /// Destructor.
   ~RT_Endpoint_Selector_Factory (void) override;

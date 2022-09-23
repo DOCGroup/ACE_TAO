@@ -64,7 +64,7 @@ namespace TAO_Notify
     ///
     void unregister_callback (::NotifyExt::ReconnectionRegistry::ReconnectionID id);
 
-    CORBA::Boolean is_alive (void);
+    CORBA::Boolean is_alive ();
 
     //////////////////////
     // During topology save

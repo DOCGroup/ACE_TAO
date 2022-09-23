@@ -64,7 +64,7 @@ namespace TAO
       /// until it has been cancelled.
       /// Returns true if the request has been dispatched, and returns
       /// false if the request has been cancelled.
-      bool wait(void);
+      bool wait();
 
     protected:
       /// Note that we do not override our base class implementation of

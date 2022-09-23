@@ -60,11 +60,11 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
   ~TAO_Notify_Consumer () override;
 
   /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   /// Access Specific Proxy.
-  TAO_Notify_ProxySupplier* proxy_supplier (void);
+  TAO_Notify_ProxySupplier* proxy_supplier ();
 
   /// Access Base Proxy.
   TAO_Notify_Proxy* proxy (void) override;
@@ -85,16 +85,16 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
   DispatchStatus dispatch_batch (const CosNotification::EventBatch& batch);
 
   /// Dispatch the pending events
-  void dispatch_pending (void);
+  void dispatch_pending ();
 
   /// Is the connection suspended?
-  CORBA::Boolean is_suspended (void);
+  CORBA::Boolean is_suspended ();
 
   /// Suspend Connection
-  void suspend (void);
+  void suspend ();
 
   /// Resume Connection
-  void resume (void);
+  void resume ();
 
   /// Shutdown the consumer
   void shutdown (void) override;
@@ -118,12 +118,12 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
   ///
   /// The estimate does not include events queued at the admin level which
   /// have not been passed to this consumer for delivery yet.
-  size_t pending_count (void);
+  size_t pending_count ();
 
 protected:
   /// This method is called by the is_alive() method.  It should provide
   /// the connected consumer or nil if there is none.
-  virtual CORBA::Object_ptr get_consumer (void) = 0;
+  virtual CORBA::Object_ptr get_consumer () = 0;
 
   typedef ACE_Unbounded_Queue<TAO_Notify_Method_Request_Event_Queueable *> Request_Queue;
 
@@ -158,7 +158,7 @@ protected:
                                    const CosNotification::EventTypeSeq& removed) override;
 
   /// Get the shared Proxy Lock
-  TAO_SYNCH_MUTEX* proxy_lock (void);
+  TAO_SYNCH_MUTEX* proxy_lock ();
 
 protected:
   int handle_timeout (const ACE_Time_Value& current_time,
@@ -169,7 +169,7 @@ protected:
   void schedule_timer (bool is_error = false);
 
   /// Cancel timer
-  void cancel_timer (void);
+  void cancel_timer ();
 
   ///= Protected Data Members
 protected:

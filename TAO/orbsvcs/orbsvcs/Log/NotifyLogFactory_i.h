@@ -48,7 +48,7 @@ public:
   //= Initialization and termination code.
 
   /// Constructor - default.
-  TAO_NotifyLogFactory_i (void);
+  TAO_NotifyLogFactory_i ();
 
   /// Constructor.
   TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf);

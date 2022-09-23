@@ -84,7 +84,7 @@ private:
                      TAO_TRADER_STANDALONE,
                      TAO_TRADER_LINKED };
 
-  TAO_TRADER* manufacture_trader (void);
+  TAO_TRADER* manufacture_trader ();
 
   void parse_args (int& argc, ACE_TCHAR** argv);
 

@@ -1308,7 +1308,7 @@ ACE_CC_YY_BUFFER_STATE new_buffer;
 
 
 #ifdef ACE_CC_YY_USE_PROTOS
-void ace_cc_yy_load_buffer_state( void )
+void ace_cc_yy_load_buffer_state()
 #else
 void ace_cc_yy_load_buffer_state()
 #endif

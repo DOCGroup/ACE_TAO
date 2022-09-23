@@ -39,10 +39,10 @@ class TAO_Wait_On_Leader_Follower : public TAO_Wait_Strategy
 {
 public:
   /// Constructor.
-  TAO_Wait_On_Leader_Follower (TAO_Transport *transport);
+  explicit TAO_Wait_On_Leader_Follower (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Wait_On_Leader_Follower (void);
+  ~TAO_Wait_On_Leader_Follower () override = default;
 
    /*! @copydoc TAO_Wait_Strategy::sending_request() */
   int sending_request (TAO_ORB_Core *orb_core, TAO_Message_Semantics msg_semantics) override;

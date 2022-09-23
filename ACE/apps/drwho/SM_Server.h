@@ -19,8 +19,8 @@
 class SM_Server : public Select_Manager, public CM_Server
 {
 public:
-  SM_Server (void);
-  virtual ~SM_Server (void);
+  SM_Server ();
+  virtual ~SM_Server ();
   virtual int mux (char *packet, int &packet_length);
   virtual int demux (char *packet, int &packet_length);
 

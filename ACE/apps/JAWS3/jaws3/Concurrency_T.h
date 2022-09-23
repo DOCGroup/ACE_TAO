@@ -26,7 +26,7 @@ public:
   int putq (JAWS_Protocol_Handler *ph);
   int getq (JAWS_Protocol_Handler *&ph);
 
-  void shutdown (void);
+  void shutdown ();
 
 protected:
   CONCURRENCY_IMPL *impl_;

@@ -223,7 +223,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
 // Listing 2
 
 // Listing 3 code/ch17
-int handle_child (void)
+int handle_child ()
 {
   ALLOCATOR *shmem_allocator = 0;
   ACE_MMAP_Memory_Pool_Options options

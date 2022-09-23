@@ -26,7 +26,7 @@ static const char *Coffee_Flavor [] = {
   "Swiss Chocolate Mocha"
 };
 
-Test_ObjRef_Sequence::Test_ObjRef_Sequence (void)
+Test_ObjRef_Sequence::Test_ObjRef_Sequence ()
   : opname_ (CORBA::string_dup ("test_coffe_mix")),
     inout_ (new Param_Test::Coffee_Mix),
     out_ (new Param_Test::Coffee_Mix),
@@ -34,7 +34,7 @@ Test_ObjRef_Sequence::Test_ObjRef_Sequence (void)
 {
 }
 
-Test_ObjRef_Sequence::~Test_ObjRef_Sequence (void)
+Test_ObjRef_Sequence::~Test_ObjRef_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -115,7 +115,7 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref)
 }
 
 int
-Test_ObjRef_Sequence::reset_parameters (void)
+Test_ObjRef_Sequence::reset_parameters ()
 {
   this->inout_ = new Param_Test::Coffee_Mix; // delete the previous ones
   this->out_ = new Param_Test::Coffee_Mix;
@@ -144,7 +144,7 @@ Test_ObjRef_Sequence::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_ObjRef_Sequence::check_validity (void)
+Test_ObjRef_Sequence::check_validity ()
 {
   try
     {
@@ -174,7 +174,7 @@ Test_ObjRef_Sequence::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_ObjRef_Sequence::print_values (void)
+Test_ObjRef_Sequence::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"

@@ -11,7 +11,7 @@ ACE_Reactive_MEM_IO::ACE_Reactive_MEM_IO ()
 
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
 ACE_INLINE
-ACE_MT_MEM_IO::Simple_Queue::Simple_Queue (void)
+ACE_MT_MEM_IO::Simple_Queue::Simple_Queue ()
   : mq_ (0),
     malloc_ (0)
 {
@@ -76,7 +76,7 @@ ACE_Reactive_MEM_IO::get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf)
 
 // Send an n byte message to the connected socket.
 ACE_INLINE
-ACE_MEM_IO::ACE_MEM_IO (void)
+ACE_MEM_IO::ACE_MEM_IO ()
   : deliver_strategy_ (0),
     recv_buffer_ (0),
     buf_size_ (0),
@@ -114,7 +114,7 @@ ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
 }
 
 ACE_INLINE
-ACE_MEM_IO::~ACE_MEM_IO (void)
+ACE_MEM_IO::~ACE_MEM_IO ()
 {
   delete this->deliver_strategy_;
 }

@@ -88,7 +88,7 @@ test_i::method (CORBA::ULong work,
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (void)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -100,7 +100,7 @@ test_i::initialize (CORBA::ULong total_iterations)
 }
 
 int
-test_i::estimate_iterations (void)
+test_i::estimate_iterations ()
 {
   // Estimate for 2 seconds.
   ACE_Time_Value work_time (2);

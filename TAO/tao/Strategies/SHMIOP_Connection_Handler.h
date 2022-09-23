@@ -81,7 +81,7 @@ public:
   //@}
 
   /// Add ourselves to Cache.
-  int add_transport_to_cache (void);
+  int add_transport_to_cache ();
 
 protected:
   //@{

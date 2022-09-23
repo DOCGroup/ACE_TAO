@@ -35,7 +35,7 @@ class TAO_Strategies_Export TAO_UIOP_Protocol_Factory : public TAO_Protocol_Fact
 {
 public:
   /// Constructor.
-  TAO_UIOP_Protocol_Factory (void);
+  TAO_UIOP_Protocol_Factory ();
 
   /// Destructor.
   ~TAO_UIOP_Protocol_Factory (void) override;

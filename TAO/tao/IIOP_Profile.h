@@ -45,7 +45,7 @@ public:
   static const char object_key_delimiter_;
 
   /// Return the char string prefix.
-  static const char *prefix (void);
+  static const char *prefix ();
 
   /// Profile constructor, same as above except the object_key has
   /// already been marshaled.
@@ -126,7 +126,7 @@ protected:
    * encapsulation of a sequence of structs, each representing a
    * single endpoint.  Data format is specified in iiop_endpoins.pidl.
    */
-  int encode_endpoints_for_rt (void);
+  int encode_endpoints_for_rt ();
 
   /// Template methods. Please see Profile.h for the documentation.
   int decode_profile (TAO_InputCDR &cdr) override;

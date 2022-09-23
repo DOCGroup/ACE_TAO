@@ -36,7 +36,7 @@ public:
   Pseudo_Barrier (u_long count);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int wait (void);
+  int wait ();
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -50,7 +50,7 @@ Pseudo_Barrier::Pseudo_Barrier (u_long count)
 }
 
 int
-Pseudo_Barrier::wait (void)
+Pseudo_Barrier::wait ()
 {
   if (--this->counter_ == 0)
     return this->event_.signal ();

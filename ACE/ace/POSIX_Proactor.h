@@ -96,7 +96,7 @@ public:
     ACE_OPCODE_WRITE = 2
   };
 
-  virtual Proactor_Type  get_impl_type (void);
+  virtual Proactor_Type  get_impl_type ();
 
   /// Virtual destructor.
   ~ACE_POSIX_Proactor (void) override;
@@ -279,7 +279,7 @@ public:
 
 protected:
   /// Constructor.
-  ACE_POSIX_Proactor (void);
+  ACE_POSIX_Proactor ();
 
   /**
    * Protect against structured exceptions caused by user code when
@@ -395,20 +395,20 @@ protected:
                                  size_t &transfer_count);
 
   /// Create aiocb list
-  int create_result_aiocb_list (void);
+  int create_result_aiocb_list ();
 
   /// Call this method from derived class when virtual table is
   /// built.
-  int delete_result_aiocb_list (void);
+  int delete_result_aiocb_list ();
 
   /// Call these methods from derived class when virtual table is
   /// built.
-  void create_notify_manager (void);
-  void delete_notify_manager (void);
+  void create_notify_manager ();
+  void delete_notify_manager ();
 
   /// Define the maximum number of asynchronous I/O requests
   /// for the current OS
-  void check_max_aio_num (void) ;
+  void check_max_aio_num ();
 
   /// To identify requests from Notify_Pipe_Manager
   void set_notify_handle (ACE_HANDLE h);
@@ -421,7 +421,7 @@ protected:
   int handle_events_i (u_long milli_seconds);
 
   /// Start deferred AIO if necessary
-  int start_deferred_aio (void);
+  int start_deferred_aio ();
 
   /// Cancel running or deferred AIO
   virtual int cancel_aiocb (ACE_POSIX_Asynch_Result * result);
@@ -446,13 +446,13 @@ protected:
   int  putq_result (ACE_POSIX_Asynch_Result *result);
 
   /// Get "post_completed" result from the internal queue
-  ACE_POSIX_Asynch_Result * getq_result (void);
+  ACE_POSIX_Asynch_Result * getq_result ();
 
   /// Clear the internal results queue
-  int clear_result_queue (void);
+  int clear_result_queue ();
 
   /// Process the internal results queue
-  int process_result_queue (void);
+  int process_result_queue ();
 
 
   /// This class takes care of doing <accept> when we use
@@ -630,7 +630,7 @@ protected:
                           int signal_number = ACE_SIGRTMIN);
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Timer (void) override = default;
+  ~ACE_POSIX_Asynch_Timer () override = default;
 
   /// This method calls the handler's handle_timeout method.
   void complete (size_t bytes_transferred,

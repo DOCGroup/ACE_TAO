@@ -47,7 +47,7 @@ class TAO_AV_Export TAO_AV_UDP_Transport
   :public TAO_AV_Transport
 {
 public:
-  TAO_AV_UDP_Transport (void);
+  TAO_AV_UDP_Transport ();
 
   TAO_AV_UDP_Transport (TAO_AV_UDP_Flow_Handler *handler);
 
@@ -92,7 +92,7 @@ public:
                         int iovcnt,
                         ACE_Time_Value *s = 0) override;
 
-  TAO_AV_UDP_Flow_Handler *handler (void) { return this->handler_; }
+  TAO_AV_UDP_Flow_Handler *handler () { return this->handler_; }
 
 protected:
   TAO_AV_UDP_Flow_Handler *handler_;

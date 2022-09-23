@@ -56,7 +56,7 @@ public:
 
   /// Load an implementation of the TAO_Notify_Service based on which
   /// implementations are loaded.
-  static TAO_Notify_Service* load_default (void);
+  static TAO_Notify_Service* load_default ();
 
   /// Init the service from configurator
   int init (int argc, ACE_TCHAR *argv[]) override = 0;

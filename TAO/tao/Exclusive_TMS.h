@@ -42,7 +42,7 @@ public:
   TAO_Exclusive_TMS (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Exclusive_TMS (void);
+  virtual ~TAO_Exclusive_TMS ();
 
   /**
    * @name The TAO_Transport_Mux_Strategy overrided methods

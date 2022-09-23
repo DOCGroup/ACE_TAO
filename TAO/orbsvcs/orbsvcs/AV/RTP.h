@@ -267,50 +267,50 @@ public:
              ACE_UINT16 dataSize);
 
   /// Destructor
-  ~RTP_Packet(void);
+  ~RTP_Packet();
 
   /// Returns the size of the RTP packet in bytes.
-  ACE_UINT16 packet_size(void);
+  ACE_UINT16 packet_size();
 
   /// Returns the size of the payload in bytes.
-  ACE_UINT16 payload_size(void);
+  ACE_UINT16 payload_size();
 
   /// Populates the passed in frame_info.
   void get_frame_info (TAO_AV_frame_info *frame_info);
 
   /// Returns 1 if packet is valid and 0 if not.
-  int is_valid (void);
+  int is_valid ();
 
   /// Returns the RTP version of the packet.
-  unsigned int ver (void);
+  unsigned int ver ();
 
   /// Returns 1 if the padding bit is set, 0 if not.
-  unsigned int pad (void);
+  unsigned int pad ();
 
   /// Returns 1 if the header extension bit is set, 0 if not.
-  unsigned int ext (void);
+  unsigned int ext ();
 
   /// Returns the number of bytes in the header extension or 0 if no extension.
-  unsigned int ext_bytes (void);
+  unsigned int ext_bytes ();
 
   /// Returns the contributing source count.
   /// This should only be non-zero for mixers.
-  unsigned int cc  (void);
+  unsigned int cc  ();
 
   /// Returns 1 if the marker bit is set, 0 if not.
-  unsigned int mrk (void);
+  unsigned int mrk ();
 
   /// Returns the payload type of the packet.
-  unsigned int pt  (void);
+  unsigned int pt  ();
 
   /// Returns the sequence number of the packet.
-  ACE_UINT16   sn  (void);
+  ACE_UINT16   sn  ();
 
   /// Returns the timestamp of the packet.
-  ACE_UINT32   ts  (void);
+  ACE_UINT32   ts  ();
 
   /// Returns the synchronization source id of the packet.
-  ACE_UINT32  ssrc (void);
+  ACE_UINT32  ssrc ();
 
   /// Returns a pointer to the local contributing source list and its length.
   /// This should be empty except for mixers.

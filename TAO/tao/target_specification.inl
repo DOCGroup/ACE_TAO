@@ -3,7 +3,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Target_Specification::TAO_Target_Specification (void)
+TAO_Target_Specification::TAO_Target_Specification ()
   :specifier_ (TAO_Target_Specification::Key_Addr),
    profile_index_ (0)
 {
@@ -46,7 +46,7 @@ TAO_Target_Specification::target_specifier (IOP::IOR &ior,
 }
 
 ACE_INLINE const TAO::ObjectKey*
-TAO_Target_Specification::object_key (void)
+TAO_Target_Specification::object_key ()
 {
   if (this->specifier_ == TAO_Target_Specification::Key_Addr)
     return this->u_.object_key_;
@@ -55,7 +55,7 @@ TAO_Target_Specification::object_key (void)
 }
 
 ACE_INLINE const IOP::TaggedProfile *
-TAO_Target_Specification::profile (void)
+TAO_Target_Specification::profile ()
 {
   if (this->specifier_ == TAO_Target_Specification::Profile_Addr)
     return this->u_.profile_;
@@ -77,7 +77,7 @@ TAO_Target_Specification::iop_ior (IOP::IOR *& ior)
 }
 
 ACE_INLINE TAO_Target_Specification::TAO_Target_Address
-TAO_Target_Specification::specifier (void)
+TAO_Target_Specification::specifier ()
 {
   return this->specifier_;
 }

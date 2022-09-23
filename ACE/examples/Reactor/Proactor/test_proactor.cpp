@@ -59,13 +59,13 @@ static int done = 0;
 static int initial_read_size = BUFSIZ;
 
 
-Receiver::Receiver (void)
+Receiver::Receiver ()
   : dump_file_ (ACE_INVALID_HANDLE),
     handle_ (ACE_INVALID_HANDLE)
 {
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
   ACE_OS::close (this->dump_file_);
   ACE_OS::closesocket (this->handle_);
@@ -158,7 +158,7 @@ Receiver::open (ACE_HANDLE handle,
 }
 
 int
-Receiver::initiate_read_stream (void)
+Receiver::initiate_read_stream ()
 {
   // Create a new <Message_Block>.  Note that this message block will
   // be used both to <read> data asynchronously from the socket and to
@@ -275,8 +275,8 @@ Receiver::handle_write_file (const ACE_Asynch_Write_File::Result &result)
 class Sender : public ACE_Handler
 {
 public:
-  Sender (void);
-  ~Sender (void);
+  Sender ();
+  ~Sender ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
@@ -300,10 +300,10 @@ protected:
 
 private:
   /// Transmit the entire file in one fell swoop.
-  int transmit_file (void);
+  int transmit_file ();
 
   /// Initiate an asynchronous file read.
-  int initiate_read_file (void);
+  int initiate_read_file ();
 
   /// Network I/O handle
   ACE_SOCK_Stream stream_;
@@ -337,7 +337,7 @@ private:
   int transmit_file_done_;
 };
 
-Sender::Sender (void)
+Sender::Sender ()
   : input_file_ (ACE_INVALID_HANDLE),
     file_offset_ (0),
     file_size_ (0),
@@ -351,7 +351,7 @@ Sender::Sender (void)
   this->welcome_message_.wr_ptr (ACE_OS::strlen (data));
 }
 
-Sender::~Sender (void)
+Sender::~Sender ()
 {
   this->stream_.close ();
 }
@@ -422,7 +422,7 @@ Sender::open (const ACE_TCHAR *host,
 }
 
 int
-Sender::transmit_file (void)
+Sender::transmit_file ()
 {
   // Open file (in SEQUENTIAL_SCAN mode)
   ACE_HANDLE file_handle =
@@ -486,7 +486,7 @@ Sender::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
 }
 
 int
-Sender::initiate_read_file (void)
+Sender::initiate_read_file ()
 {
   // Create a new <Message_Block>.  Note that this message block will
   // be used both to <read> data asynchronously from the file and to

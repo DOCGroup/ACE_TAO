@@ -19,14 +19,14 @@ JAWS_Event_Dispatcher_Proactor_Event_Loop (void *)
 
 
 void
-JAWS_Event_Dispatcher::end_event_loop (void)
+JAWS_Event_Dispatcher::end_event_loop ()
 {
   ACE_Reactor::end_event_loop ();
 }
 
 
 void
-JAWS_Event_Dispatcher::run_event_loop (void)
+JAWS_Event_Dispatcher::run_event_loop ()
 {
   // First, initiate the proactor thread
 

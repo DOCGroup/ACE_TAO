@@ -52,7 +52,7 @@ struct TAO_Dynamic_TP_Export TAO_DTP_Definition
 class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry_Installer
 {
  public:
-  TAO_DTP_Config_Registry_Installer (void);
+  TAO_DTP_Config_Registry_Installer ();
 };
 
 class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry : public ACE_Service_Object
@@ -78,7 +78,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_Config : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  TAO_DTP_Config (void);
+  TAO_DTP_Config ();
 
   /// Destructor.
   ~TAO_DTP_Config (void) override;

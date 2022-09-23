@@ -84,7 +84,7 @@ public:
    * If supported by the platform, initialization code will only run
    * once for a given process.
    */
-  static void init (void);
+  static void init ();
 
 private:
   /// This servant's default POA.

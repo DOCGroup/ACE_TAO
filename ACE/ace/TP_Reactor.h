@@ -47,7 +47,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_EH_Dispatch_Info
 {
 public:
-  ACE_EH_Dispatch_Info (void);
+  ACE_EH_Dispatch_Info ();
 
   void set (ACE_HANDLE handle,
             ACE_Event_Handler *event_handler,
@@ -92,14 +92,14 @@ public:
 
   /// Destructor. This will release the token if it hasnt been
   /// released till this point
-  ~ACE_TP_Token_Guard (void);
+  ~ACE_TP_Token_Guard ();
 
   /// Release the token ..
-  void release_token (void);
+  void release_token ();
 
   /// Returns whether the thread that created this object ownes the
   /// token or not.
-  bool is_owner (void);
+  bool is_owner ();
 
   /// A helper method that grabs the token for us, after which the
   /// thread that owns that can do some actual work.
@@ -281,7 +281,7 @@ protected:
 private:
   /// Get the handle of the notify pipe from the ready set if there is
   /// an event in the notify pipe.
-  ACE_HANDLE get_notify_handle (void);
+  ACE_HANDLE get_notify_handle ();
 
   /// Get socket event dispatch information.
   int get_socket_event_info (ACE_EH_Dispatch_Info &info);

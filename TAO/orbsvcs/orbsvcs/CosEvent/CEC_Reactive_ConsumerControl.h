@@ -125,7 +125,7 @@ public:
 private:
   /// Check if the consumers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_consumers (void);
+  void query_consumers ();
 
 private:
   /// The polling rate

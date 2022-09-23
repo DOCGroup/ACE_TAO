@@ -207,7 +207,7 @@ ACE_Name_Handler::send_request (ACE_Name_Request &request)
 // unexpectedly).
 
 /* VIRTUAL */ int
-ACE_Name_Handler::abandon (void)
+ACE_Name_Handler::abandon ()
 {
   ACE_TRACE ("ACE_Name_Handler::abandon");
   return this->send_reply (-1, errno);
@@ -234,7 +234,7 @@ ACE_Name_Handler::get_handle () const
 // Dispatch the appropriate operation to handle the client request.
 
 /* VIRTUAL */ int
-ACE_Name_Handler::dispatch (void)
+ACE_Name_Handler::dispatch ()
 {
   ACE_TRACE ("ACE_Name_Handler::dispatch");
   // Dispatch the appropriate request.
@@ -254,7 +254,7 @@ ACE_Name_Handler::dispatch (void)
 // should use non-blocking I/O.
 
 /* VIRTUAL */ int
-ACE_Name_Handler::recv_request (void)
+ACE_Name_Handler::recv_request ()
 {
   ACE_TRACE ("ACE_Name_Handler::recv_request");
   // Read the first 4 bytes to get the length of the message This
@@ -336,14 +336,14 @@ ACE_Name_Handler::handle_input (ACE_HANDLE)
 }
 
 int
-ACE_Name_Handler::bind (void)
+ACE_Name_Handler::bind ()
 {
   ACE_TRACE ("ACE_Name_Handler::bind");
   return this->shared_bind (0);
 }
 
 int
-ACE_Name_Handler::rebind (void)
+ACE_Name_Handler::rebind ()
 {
   ACE_TRACE ("ACE_Name_Handler::rebind");
   int result = this->shared_bind (1);
@@ -388,7 +388,7 @@ ACE_Name_Handler::shared_bind (int rebind)
 }
 
 int
-ACE_Name_Handler::resolve (void)
+ACE_Name_Handler::resolve ()
 {
   ACE_TRACE ("ACE_Name_Handler::resolve");
 #if 0
@@ -421,7 +421,7 @@ ACE_Name_Handler::resolve (void)
 }
 
 int
-ACE_Name_Handler::unbind (void)
+ACE_Name_Handler::unbind ()
 {
   ACE_TRACE ("ACE_Name_Handler::unbind");
 #if 0
@@ -472,7 +472,7 @@ ACE_Name_Handler::type_request (ACE_NS_WString *one_type)
 }
 
 int
-ACE_Name_Handler::lists (void)
+ACE_Name_Handler::lists ()
 {
   ACE_TRACE ("ACE_Name_Handler::lists");
 
@@ -523,7 +523,7 @@ ACE_Name_Handler::lists (void)
 }
 
 int
-ACE_Name_Handler::lists_entries (void)
+ACE_Name_Handler::lists_entries ()
 {
   ACE_TRACE ("ACE_Name_Handler::lists_entries");
   ACE_BINDING_SET set;
@@ -612,18 +612,18 @@ ACE_Name_Handler::lists_entries (void)
 }
 
 ACE_Naming_Context *
-ACE_Name_Handler::naming_context (void)
+ACE_Name_Handler::naming_context ()
 {
   return naming_context_;
 }
 
 ACE_Naming_Context *
-ACE_Name_Acceptor::naming_context (void)
+ACE_Name_Acceptor::naming_context ()
 {
   return &naming_context_;
 }
 
-ACE_Name_Handler::~ACE_Name_Handler (void)
+ACE_Name_Handler::~ACE_Name_Handler ()
 {
   ACE_TRACE ("ACE_Name_Handler::~ACE_Name_Handler");
 #if 0

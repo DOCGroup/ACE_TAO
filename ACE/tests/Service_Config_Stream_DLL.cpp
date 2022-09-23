@@ -47,41 +47,41 @@ ACE_FACTORY_DEFINE (Service_Config_Stream_DLL, Test_Task)
 
 // Dynamically linked functions used to control configuration.
 
-extern "C" Service_Config_Stream_DLL_Export MT_Stream *make_stream (void);
-extern "C" Service_Config_Stream_DLL_Export MT_Module *make_da (void);
-extern "C" Service_Config_Stream_DLL_Export MT_Module *make_ea (void);
-extern "C" Service_Config_Stream_DLL_Export MT_Module *make_mr (void);
-extern "C" Service_Config_Stream_DLL_Export MT_Module *make_close (void);
+extern "C" Service_Config_Stream_DLL_Export MT_Stream *make_stream ();
+extern "C" Service_Config_Stream_DLL_Export MT_Module *make_da ();
+extern "C" Service_Config_Stream_DLL_Export MT_Module *make_ea ();
+extern "C" Service_Config_Stream_DLL_Export MT_Module *make_mr ();
+extern "C" Service_Config_Stream_DLL_Export MT_Module *make_close ();
 
 MT_Stream *
-make_stream (void)
+make_stream ()
 {
   return new MT_Stream;
 }
 
 MT_Module *
-make_da (void)
+make_da ()
 {
   return new MT_Module (ACE_TEXT ("Device_Adapter"),
                         new Test_Task, new Test_Task);
 }
 
 MT_Module *
-make_ea (void)
+make_ea ()
 {
   return new MT_Module (ACE_TEXT ("Event_Analyzer"),
                         new Test_Task, new Test_Task);
 }
 
 MT_Module *
-make_mr (void)
+make_mr ()
 {
   return new MT_Module (ACE_TEXT ("Multicast_Router"),
                         new Test_Task, new Test_Task);
 }
 
 MT_Module *
-make_close (void)
+make_close ()
 {
   return new MT_Module (ACE_TEXT ("Close_Test_Module"),
                         new Test_Task, new Test_Task);

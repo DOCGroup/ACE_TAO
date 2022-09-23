@@ -52,10 +52,10 @@ class TAO_Export TAO_Default_Endpoint_Selector_Factory
 {
 public:
   /// Constructor.
-  TAO_Default_Endpoint_Selector_Factory (void);
+  TAO_Default_Endpoint_Selector_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Default_Endpoint_Selector_Factory (void);
+  virtual ~TAO_Default_Endpoint_Selector_Factory ();
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.

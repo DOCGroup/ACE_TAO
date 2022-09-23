@@ -50,9 +50,9 @@ public:
   /// From IDLType_i's pure virtual function.
   CORBA::TypeCode_ptr type_i (void) override;
 
-  virtual CORBA::EnumMemberSeq *members (void);
+  virtual CORBA::EnumMemberSeq *members ();
 
-  CORBA::EnumMemberSeq *members_i (void);
+  CORBA::EnumMemberSeq *members_i ();
 
   virtual void members (const CORBA::EnumMemberSeq &members);
 

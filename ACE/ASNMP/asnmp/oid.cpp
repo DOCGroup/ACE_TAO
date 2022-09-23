@@ -40,7 +40,7 @@ enum Defs {SNMPBUFFSIZE=300,
 
 #define NO_MEM_STR "ERROR: Oid::to_string: memory allocation failure"
 
-//=============[Oid::get_syntax(void)]====================================
+//=============[Oid::get_syntax()]====================================
 SmiUINT32 Oid::get_syntax()
 {
   return sNMP_SYNTAX_OID;

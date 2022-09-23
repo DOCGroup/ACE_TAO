@@ -67,7 +67,7 @@ class ACE_Dev_Poll_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
   /// Constructor
-  ACE_Dev_Poll_Reactor_Notify (void);
+  ACE_Dev_Poll_Reactor_Notify ();
 
   /**
    * @name Initialization and Termination Methods
@@ -314,7 +314,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
   {
   public:
     /// Constructor.
-    Handler_Repository (void);
+    Handler_Repository ();
 
     /// Initialize a repository that can map handles up to the value @a size.
     /// Since the event tuples are accessed directly using the handle as
@@ -322,7 +322,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     int open (size_t size);
 
     /// Close down the repository.
-    int close (void);
+    int close ();
 
     /**
      * @name Repository Manipulation Operations
@@ -346,7 +346,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     int unbind (ACE_HANDLE handle, bool decr_refcnt = true);
 
     /// Remove all the registered tuples.
-    int unbind_all (void);
+    int unbind_all ();
 
     //@}
 
@@ -1096,14 +1096,14 @@ protected:
 
     /// Destructor. This will release the token if it hasn't been
     /// released till this point
-    ~Token_Guard (void);
+    ~Token_Guard ();
 
     /// Release the token ..
-    void release_token (void);
+    void release_token ();
 
     /// Returns whether the thread that created this object owns the
     /// token or not.
-    bool is_owner (void);
+    bool is_owner ();
 
     /// A helper method that acquires the token 1) at a low priority, and
     /// 2) wait quietly for the token, not waking another thread. This
@@ -1162,11 +1162,11 @@ public:
    * The destructor decrements the reference count on the event
    * handler corresponding to the given handle.
    */
-  ~ACE_Dev_Poll_Handler_Guard (void);
+  ~ACE_Dev_Poll_Handler_Guard ();
 
   /// Release the event handler from this guard; when the destructor is
   /// called, the handler's reference count will not be decremented.
-  void release (void);
+  void release ();
 
 private:
   /// The event handler being managed.

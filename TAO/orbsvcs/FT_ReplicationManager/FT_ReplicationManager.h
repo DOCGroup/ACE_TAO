@@ -113,7 +113,7 @@ namespace TAO
      * Prepare to exit.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (void);
+    int fini ();
 
     /**
      * Idle-time activity.
@@ -342,7 +342,7 @@ namespace TAO
     /**
      * Write this factory's IOR to a file
      */
-    int write_ior (void);
+    int write_ior ();
 
     /// Registers the Fault Notifier with the Replication Manager.
     void register_fault_notifier_i (

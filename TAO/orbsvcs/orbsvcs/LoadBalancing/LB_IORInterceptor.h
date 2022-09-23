@@ -92,7 +92,7 @@ public:
 
 private:
   /// Create and register the LoadAlert object with the LoadManager.
-  void register_load_alert (void);
+  void register_load_alert ();
 
 private:
   /// List of stringified object group references.

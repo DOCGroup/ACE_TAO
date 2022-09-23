@@ -166,7 +166,7 @@ public:
 
 
   /// Destructor.
-  virtual ~ACE_Asynch_Result (void);
+  virtual ~ACE_Asynch_Result ();
 
 protected:
   /// Constructor. This implementation will not be deleted.  The
@@ -244,7 +244,7 @@ public:
    *   For requested operations that are successfully canceled, the
    *   associated  error  status is set to ECANCELED.
    */
-  int cancel (void);
+  int cancel ();
 
 
   // = Access methods.
@@ -288,7 +288,7 @@ class ACE_Export ACE_Asynch_Read_Stream : public ACE_Asynch_Operation
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Read_Stream (void);
+  ACE_Asynch_Read_Stream ();
 
   /// Destructor
   ~ACE_Asynch_Read_Stream (void) override;
@@ -430,7 +430,7 @@ class ACE_Export ACE_Asynch_Write_Stream : public ACE_Asynch_Operation
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Write_Stream (void);
+  ACE_Asynch_Write_Stream ();
 
   /// Destructor.
   ~ACE_Asynch_Write_Stream (void) override;
@@ -587,7 +587,7 @@ class ACE_Export ACE_Asynch_Read_File : public ACE_Asynch_Read_Stream
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Read_File (void);
+  ACE_Asynch_Read_File ();
 
   /// Destructor.
   ~ACE_Asynch_Read_File (void) override;
@@ -736,7 +736,7 @@ class ACE_Export ACE_Asynch_Write_File : public ACE_Asynch_Write_Stream
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Write_File (void);
+  ACE_Asynch_Write_File ();
 
   /// Destructor.
   ~ACE_Asynch_Write_File (void) override;
@@ -868,7 +868,7 @@ class ACE_Export ACE_Asynch_Accept : public ACE_Asynch_Operation
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Accept (void);
+  ACE_Asynch_Accept ();
 
   /// Destructor.
   ~ACE_Asynch_Accept (void) override;
@@ -1003,7 +1003,7 @@ class ACE_Export ACE_Asynch_Connect : public ACE_Asynch_Operation
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Connect (void);
+  ACE_Asynch_Connect ();
 
   /// Destructor.
   ~ACE_Asynch_Connect (void) override;
@@ -1108,7 +1108,7 @@ public:
   class Header_And_Trailer;
 
   /// A do nothing constructor.
-  ACE_Asynch_Transmit_File (void);
+  ACE_Asynch_Transmit_File ();
 
   /// Destructor.
   ~ACE_Asynch_Transmit_File (void) override;
@@ -1234,7 +1234,7 @@ public:
                         size_t trailer_bytes = 0);
 
     /// Destructor
-    virtual ~Header_And_Trailer (void);
+    virtual ~Header_And_Trailer ();
 
     /// This method allows all the member to be set in one fell swoop.
     void header_and_trailer (ACE_Message_Block *header = 0,
@@ -1267,7 +1267,7 @@ public:
     void trailer_bytes (size_t bytes);
 
     /// Conversion routine.
-    ACE_LPTRANSMIT_FILE_BUFFERS transmit_buffers (void);
+    ACE_LPTRANSMIT_FILE_BUFFERS transmit_buffers ();
 
   protected:
     /// Header data.
@@ -1313,7 +1313,7 @@ class ACE_Export ACE_Asynch_Read_Dgram : public ACE_Asynch_Operation
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Read_Dgram (void);
+  ACE_Asynch_Read_Dgram ();
 
   /// Destructor
   ~ACE_Asynch_Read_Dgram (void) override;
@@ -1446,7 +1446,7 @@ class ACE_Export ACE_Asynch_Write_Dgram : public ACE_Asynch_Operation
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Write_Dgram (void);
+  ACE_Asynch_Write_Dgram ();
 
   /// Destructor.
   ~ACE_Asynch_Write_Dgram (void) override;
@@ -1567,13 +1567,13 @@ class ACE_Export ACE_Handler
 {
 public:
   /// A do nothing constructor.
-  ACE_Handler (void);
+  ACE_Handler ();
 
   /// A do nothing constructor which allows proactor to be set to \<p\>.
   ACE_Handler (ACE_Proactor *p);
 
   /// Virtual destruction.
-  virtual ~ACE_Handler (void);
+  virtual ~ACE_Handler ();
 
   /// This method will be called when an asynchronous read completes on
   /// a stream.
@@ -1619,10 +1619,10 @@ public:
    * ACE_Proactor. A special {Wake_Up_Completion} is used to wake up
    * all the threads that are blocking for completions.
    */
-  virtual void handle_wakeup (void);
+  virtual void handle_wakeup ();
 
   /// Get the proactor associated with this handler.
-  ACE_Proactor *proactor (void);
+  ACE_Proactor *proactor ();
 
   /// Set the proactor.
   void proactor (ACE_Proactor *p);
@@ -1650,14 +1650,14 @@ public:
   {
   public:
     Proxy (ACE_Handler *handler) : handler_ (handler) {}
-    void reset (void) { this->handler_ = 0; }
-    ACE_Handler *handler (void) { return this->handler_; }
+    void reset () { this->handler_ = 0; }
+    ACE_Handler *handler () { return this->handler_; }
   private:
     ACE_Handler *handler_;
   };
   typedef ACE_Refcounted_Auto_Ptr<Proxy, ACE_SYNCH_MUTEX> Proxy_Ptr;
 
-  Proxy_Ptr &proxy (void);
+  Proxy_Ptr &proxy ();
 
 protected:
   /// The proactor associated with this handler.
@@ -1699,7 +1699,7 @@ class ACE_Export ACE_Service_Handler : public ACE_Handler
 
 public:
   /// A do nothing constructor.
-  ACE_Service_Handler (void);
+  ACE_Service_Handler ();
 
   /// Virtual destruction.
   ~ACE_Service_Handler (void) override;

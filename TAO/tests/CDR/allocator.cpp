@@ -40,7 +40,7 @@ public:
                     int max_fragment_size);
 
   /// Destructor, releases any memory left behind.
-  ~Application_Simulator (void);
+  ~Application_Simulator ();
 
   /**
    * Simulate an upcall. The class allocates some memory and then
@@ -214,7 +214,7 @@ Application_Simulator::Application_Simulator (int max_fragments,
     *i = 0;
 }
 
-Application_Simulator::~Application_Simulator (void)
+Application_Simulator::~Application_Simulator ()
 {
   for (char** i = this->buffers_;
        i != this->buffers_ + this->max_fragments_;

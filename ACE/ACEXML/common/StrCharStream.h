@@ -30,7 +30,7 @@ class ACEXML_Export ACEXML_StrCharStream : public ACEXML_CharStream
 {
 public:
   /// Default constructor.
-  ACEXML_StrCharStream (void);
+  ACEXML_StrCharStream ();
 
   /// Destructor
   ~ACEXML_StrCharStream (void) override;
@@ -52,7 +52,7 @@ public:
   /**
    *  Determine the encoding of the file.
    */
-  virtual int determine_encoding (void);
+  virtual int determine_encoding ();
 
   /**
    * Read the next ACEXML_Char.  Return -1 if we are not able to

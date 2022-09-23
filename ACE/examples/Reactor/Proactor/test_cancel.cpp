@@ -56,13 +56,13 @@ static int done = 0;
 static int read_size = 2;
 
 
-Receiver::Receiver (void)
+Receiver::Receiver ()
   : mb_ (read_size + 1),
     handle_ (ACE_INVALID_HANDLE)
 {
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Receiver: Closing down Remote connection:%d\n",

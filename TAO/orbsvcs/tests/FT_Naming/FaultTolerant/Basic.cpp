@@ -13,13 +13,13 @@ Basic::Basic (CORBA::Object_ptr object_group,
 }
 
 char *
-Basic::get_string (void)
+Basic::get_string ()
 {
   return CORBA::string_dup (this->location_.in ());
 }
 
 void
-Basic::remove_member (void)
+Basic::remove_member ()
 {
   try
     {
@@ -56,7 +56,7 @@ Basic::remove_member (void)
 
 
 void
-Basic::shutdown (void)
+Basic::shutdown ()
 {
   this->orb_->shutdown (false);
 }

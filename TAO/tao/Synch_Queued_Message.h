@@ -57,7 +57,7 @@ public:
                             bool is_heap_allocated = false);
 
   /// Destructor
-  virtual ~TAO_Synch_Queued_Message (void);
+  virtual ~TAO_Synch_Queued_Message ();
 
   const ACE_Message_Block *current_block () const;
 

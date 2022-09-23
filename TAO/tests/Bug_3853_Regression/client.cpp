@@ -29,7 +29,7 @@ public:
   ClientTask () {};
   ~ ClientTask () {};
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     CORBA::Object_var helloObj = orb->string_to_object(server1_ior);
 

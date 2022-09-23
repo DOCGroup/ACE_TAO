@@ -113,7 +113,7 @@ Manager::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Manager::make_merged_iors (void)
+Manager::make_merged_iors ()
 {
   // First  server
   this->object_primary_ =
@@ -146,7 +146,7 @@ Manager::make_merged_iors (void)
 }
 
 int
-Manager::set_properties (void)
+Manager::set_properties ()
 {
   FT::TagFTGroupTaggedComponent ft_tag_component;
 
@@ -188,7 +188,7 @@ Manager::set_properties (void)
 }
 
 int
-Manager::run (void)
+Manager::run ()
 {
   try
     {
@@ -205,7 +205,7 @@ Manager::run (void)
 }
 
 int
-Manager::write_to_file (void)
+Manager::write_to_file ()
 {
   //
   CORBA::String_var iorref =
@@ -227,7 +227,7 @@ Manager::write_to_file (void)
 }
 
 CORBA::ORB_ptr
-Manager::orb (void)
+Manager::orb ()
 {
   return this->orb_.in ();
 }
@@ -241,7 +241,7 @@ void
 run_test (Simple_Server_ptr server);
 
 void
-Client_i::init (void)
+Client_i::init ()
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (ior_output_file,

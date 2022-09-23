@@ -58,7 +58,7 @@ public:
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
   /// Disconnect from NotifyLog.
-  virtual void disconnect (void);
+  virtual void disconnect ();
 
 protected:
   /// Destructor.

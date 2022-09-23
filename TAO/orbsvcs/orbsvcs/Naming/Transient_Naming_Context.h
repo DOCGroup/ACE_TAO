@@ -48,10 +48,10 @@ public:
   // = Accessors.
 
   /// Get a reference to the underlying hash map.
-  HASH_MAP &map (void);
+  HASH_MAP &map ();
 
   /// Return the size of the underlying hash table.
-  size_t total_size (void);
+  size_t total_size ();
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.

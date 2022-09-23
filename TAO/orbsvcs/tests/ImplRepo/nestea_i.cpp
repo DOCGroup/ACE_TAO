@@ -22,7 +22,7 @@ Nestea_i::Nestea_i (CORBA::ORB_ptr orb, const ACE_TCHAR *filename)
 }
 
 
-Nestea_i::~Nestea_i (void)
+Nestea_i::~Nestea_i ()
 {
   delete [] this->data_filename_;
 }
@@ -62,7 +62,7 @@ Nestea_i::crush (CORBA::Long cans)
 // Returns the number of cans in the bookshelf.
 
 CORBA::Long
-Nestea_i::bookshelf_size (void)
+Nestea_i::bookshelf_size ()
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::bookshelf_size\n"));
@@ -73,7 +73,7 @@ Nestea_i::bookshelf_size (void)
 // Returns comments about your collection.
 
 char *
-Nestea_i::get_praise (void)
+Nestea_i::get_praise ()
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::get_praise\n"));
@@ -91,7 +91,7 @@ Nestea_i::get_praise (void)
 }
 
 void
-Nestea_i::shutdown (void)
+Nestea_i::shutdown ()
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::shutdown\n"));
@@ -102,7 +102,7 @@ Nestea_i::shutdown (void)
 // Saves bookshelf data to a file.
 
 int
-Nestea_i::save_data (void)
+Nestea_i::save_data ()
 {
   ACE_FILE_IO file;
   ACE_FILE_Connector connector;
@@ -128,7 +128,7 @@ Nestea_i::save_data (void)
 // Loads bookshelf data from a file.
 
 int
-Nestea_i::load_data (void)
+Nestea_i::load_data ()
 {
   ACE_FILE_IO file;
   ACE_FILE_Connector connector;

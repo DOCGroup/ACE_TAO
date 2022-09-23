@@ -23,13 +23,13 @@ typedef JAWS_Assoc_Array_Iterator<JAWS_Thread_ID, JAWS_IO_Handler *>
 class JAWS_Export JAWS_Waiter : public JAWS_Waiter_Base
 {
 public:
-  JAWS_Waiter (void);
-  ~JAWS_Waiter (void);
+  JAWS_Waiter ();
+  ~JAWS_Waiter ();
 
-  JAWS_Waiter_Base_Iterator &iter (void);
+  JAWS_Waiter_Base_Iterator &iter ();
   // Returns an iterator to the headers container.
 
-  int index (void);
+  int index ();
   // Returns the index into the table associated with calling thread.
 
   JAWS_IO_Handler * wait_for_completion (int i = -1);

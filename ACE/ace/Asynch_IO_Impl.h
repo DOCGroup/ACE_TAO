@@ -46,7 +46,7 @@ class ACE_Proactor_Impl;
 class ACE_Export ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Result_Impl (void);
+  virtual ~ACE_Asynch_Result_Impl ();
 
   /// Number of bytes transferred by the operation.
   virtual size_t bytes_transferred () const = 0;
@@ -97,7 +97,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Result_Impl (void);
+  ACE_Asynch_Result_Impl ();
 };
 
 /**
@@ -110,7 +110,7 @@ protected:
 class ACE_Export ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Operation_Impl (void);
+  virtual ~ACE_Asynch_Operation_Impl ();
 
   /**
    * Initializes the factory with information which will be used with
@@ -128,7 +128,7 @@ public:
    * the calling thread.  The function does not cancel asynchronous
    * operations issued by other threads.
    */
-  virtual int cancel (void) = 0;
+  virtual int cancel () = 0;
 
   // = Access methods.
 
@@ -137,7 +137,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Operation_Impl (void);
+  ACE_Asynch_Operation_Impl ();
 };
 
 /**
@@ -174,7 +174,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Read_Stream_Impl (void);
+  ACE_Asynch_Read_Stream_Impl ();
 };
 
 /**
@@ -201,7 +201,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Read_Stream_Result_Impl (void);
+  ACE_Asynch_Read_Stream_Result_Impl ();
 };
 
 /**
@@ -238,7 +238,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Write_Stream_Impl (void);
+  ACE_Asynch_Write_Stream_Impl ();
 };
 
 /**
@@ -265,7 +265,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Write_Stream_Result_Impl (void);
+  ACE_Asynch_Write_Stream_Result_Impl ();
 };
 
 /**
@@ -331,7 +331,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Read_File_Impl (void);
+  ACE_Asynch_Read_File_Impl ();
 };
 
 /**
@@ -348,7 +348,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Read_File_Result_Impl (void);
+  ACE_Asynch_Read_File_Result_Impl ();
 };
 
 /**
@@ -414,7 +414,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Write_File_Impl (void);
+  ACE_Asynch_Write_File_Impl ();
 };
 
 /**
@@ -431,7 +431,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Write_File_Result_Impl (void);
+  ACE_Asynch_Write_File_Result_Impl ();
 };
 
 /**
@@ -467,7 +467,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Accept_Impl (void);
+  ACE_Asynch_Accept_Impl ();
 };
 
 /**
@@ -497,7 +497,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Accept_Result_Impl (void);
+  ACE_Asynch_Accept_Result_Impl ();
 };
 
 
@@ -526,7 +526,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Connect_Impl (void);
+  ACE_Asynch_Connect_Impl ();
 };
 
 /**
@@ -546,7 +546,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Connect_Result_Impl (void);
+  ACE_Asynch_Connect_Result_Impl ();
 };
 
 
@@ -576,7 +576,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Transmit_File_Impl (void);
+  ACE_Asynch_Transmit_File_Impl ();
 };
 
 /**
@@ -613,7 +613,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Transmit_File_Result_Impl (void);
+  ACE_Asynch_Transmit_File_Result_Impl ();
 };
 
 
@@ -665,7 +665,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Read_Dgram_Impl (void);
+  ACE_Asynch_Read_Dgram_Impl ();
 };
 
 /**
@@ -698,7 +698,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Read_Dgram_Result_Impl (void);
+  ACE_Asynch_Read_Dgram_Result_Impl ();
 };
 
 /**
@@ -749,7 +749,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Write_Dgram_Impl (void);
+  ACE_Asynch_Write_Dgram_Impl ();
 };
 
 /**
@@ -779,7 +779,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_Asynch_Write_Dgram_Result_Impl (void);
+  ACE_Asynch_Write_Dgram_Result_Impl ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

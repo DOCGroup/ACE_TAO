@@ -56,7 +56,7 @@ public:
   /// Our Constructor
   TAO_FT_IOGR_Property (FT::TagFTGroupTaggedComponent &ft_group);
 
-  TAO_FT_IOGR_Property (void);
+  TAO_FT_IOGR_Property ();
 
   /// Destructor
   ~TAO_FT_IOGR_Property (void) override;

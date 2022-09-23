@@ -8,7 +8,7 @@
 const CORBA::ULong request_ctx_id = 0xdead;
 //const CORBA::ULong reply_ctx_id = 0xbeef;   // Never used.
 
-Vault_Client_Request_Interceptor::Vault_Client_Request_Interceptor (void)
+Vault_Client_Request_Interceptor::Vault_Client_Request_Interceptor ()
   : myname_ ("Vault_Client_Interceptor")
 {
 }
@@ -18,13 +18,13 @@ Vault_Client_Request_Interceptor::~Vault_Client_Request_Interceptor ()
 }
 
 char *
-Vault_Client_Request_Interceptor::name (void)
+Vault_Client_Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Vault_Client_Request_Interceptor::destroy (void)
+Vault_Client_Request_Interceptor::destroy ()
 {
 }
 
@@ -119,7 +119,7 @@ Vault_Client_Request_Interceptor::receive_exception (
 
 //////////////////////////////////  Context /////////////////////////
 
-Vault_Client_Request_Context_Interceptor::Vault_Client_Request_Context_Interceptor (void)
+Vault_Client_Request_Context_Interceptor::Vault_Client_Request_Context_Interceptor ()
   : myname_ ("Vault_Client_Context_Interceptor")
 {
 }
@@ -205,7 +205,7 @@ Vault_Client_Request_Context_Interceptor::receive_exception (
 
 ///////////////////////////////////Dynamic ////////////////////////////////////
 
-Vault_Client_Request_Dynamic_Interceptor::Vault_Client_Request_Dynamic_Interceptor (void)
+Vault_Client_Request_Dynamic_Interceptor::Vault_Client_Request_Dynamic_Interceptor ()
   : myname_ ("Vault_Client_Dynamic_Interceptor")
 {
 }
@@ -318,7 +318,7 @@ Vault_Client_Request_Dynamic_Interceptor::receive_exception (
 
 //////////////////////////////NOOP///////////////////////////////////////
 
-Vault_Client_Request_NOOP_Interceptor::Vault_Client_Request_NOOP_Interceptor (void)
+Vault_Client_Request_NOOP_Interceptor::Vault_Client_Request_NOOP_Interceptor ()
   : myname_ ("Vault_Client_NOOP_Interceptor")
 {
 }
@@ -328,7 +328,7 @@ Vault_Client_Request_NOOP_Interceptor::~Vault_Client_Request_NOOP_Interceptor ()
 }
 
 char *
-Vault_Client_Request_NOOP_Interceptor::name (void)
+Vault_Client_Request_NOOP_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }

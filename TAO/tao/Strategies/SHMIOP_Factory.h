@@ -36,7 +36,7 @@ class TAO_Strategies_Export TAO_SHMIOP_Protocol_Factory
 {
 public:
   /// Constructor.
-  TAO_SHMIOP_Protocol_Factory (void);
+  TAO_SHMIOP_Protocol_Factory ();
 
   /// Destructor.
   ~TAO_SHMIOP_Protocol_Factory (void) override;
@@ -70,7 +70,7 @@ public:
   void mmap_file_prefix (const ACE_TCHAR *prefix);
 
   /// Get mmap file prefix
-  const ACE_TCHAR *mmap_file_prefix (void);
+  const ACE_TCHAR *mmap_file_prefix ();
 
 private:
   /// Specify the prefix (full path) for mmap files

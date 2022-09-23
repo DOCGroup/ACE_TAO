@@ -68,7 +68,7 @@ public:
   /// ctor
   Client (Simple_Server_ptr server, ACE_UINT32 niterations);
 
-  virtual ~Client (void) {};
+  virtual ~Client () {};
 
   /// The thread entry point.
   virtual int svc ();
@@ -145,7 +145,7 @@ Client::Client (Simple_Server_ptr server,
 
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

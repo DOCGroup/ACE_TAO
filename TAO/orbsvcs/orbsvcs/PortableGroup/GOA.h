@@ -164,7 +164,7 @@ public:
   ~TAO_GOA (void) override;
 
     // Used to force the initialization of the code.
-    static int Initializer (void);
+    static int Initializer ();
 
 protected:
   /// Template method for creating new POA's of this type.

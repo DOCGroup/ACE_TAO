@@ -42,7 +42,7 @@ public:
   };
 
   /// Constructor.
-  TAO_IORManip_IIOP_Filter (void);
+  TAO_IORManip_IIOP_Filter ();
 
   /// Destructor.
   ~TAO_IORManip_IIOP_Filter (void) override;

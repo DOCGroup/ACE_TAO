@@ -10,7 +10,7 @@ MessengerHandler::MessengerHandler (CORBA::ORB_ptr orb)
 }
 
 // Implementation skeleton destructor
-MessengerHandler::~MessengerHandler (void)
+MessengerHandler::~MessengerHandler ()
 {
 }
 

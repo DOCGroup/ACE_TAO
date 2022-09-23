@@ -9,13 +9,13 @@
 class JAWS_Export JAWS_THYBRID_Concurrency : public JAWS_Concurrency_Impl
 {
 public:
-  JAWS_THYBRID_Concurrency (void);
+  JAWS_THYBRID_Concurrency ();
 
   int putq (JAWS_Protocol_Handler *ph);
 
   int getq (JAWS_Protocol_Handler *&ph);
 
-  static JAWS_THYBRID_Concurrency * instance (void)
+  static JAWS_THYBRID_Concurrency * instance ()
   {
     return ACE_Singleton<JAWS_THYBRID_Concurrency, ACE_SYNCH_MUTEX>
            ::instance ();

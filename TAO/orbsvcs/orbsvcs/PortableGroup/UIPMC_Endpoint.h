@@ -40,7 +40,7 @@ class TAO_PortableGroup_Export TAO_UIPMC_Endpoint : public TAO_Endpoint
 {
 public:
   /// Default constructor.
-  TAO_UIPMC_Endpoint (void);
+  TAO_UIPMC_Endpoint ();
 
   /// Constructor.
   TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr);
@@ -88,7 +88,7 @@ public:
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p); //@@ Frank - deprecate this.
 
-  //TAO_UIPMC_Connection_Handler *&hint (void);
+  //TAO_UIPMC_Connection_Handler *&hint ();
   // Access to our <hint_>.
   /// Do we have a preferred local network interface set for this target?
   bool is_preferred_network () const;
@@ -110,7 +110,7 @@ private:
   void uint_ip_addr (ACE_UINT32 ip_addr);
 
   /// Helper method to update the cached object address.  @@ Vadym - deprecate this.
-  void update_object_addr (void);
+  void update_object_addr ();
 
   /// IP Multicast address.  @@ Frank - deprecate this.
   CORBA::Octet class_d_address_[4];

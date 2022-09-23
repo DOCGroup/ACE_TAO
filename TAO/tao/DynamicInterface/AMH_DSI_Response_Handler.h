@@ -39,11 +39,11 @@ typedef TAO_AMH_DSI_Response_Handler *TAO_AMH_DSI_Response_Handler_ptr;
 class TAO_DynamicInterface_Export TAO_AMH_DSI_Response_Handler_var
 {
 public:
-  TAO_AMH_DSI_Response_Handler_var (void);
+  TAO_AMH_DSI_Response_Handler_var ();
   TAO_AMH_DSI_Response_Handler_var (TAO_AMH_DSI_Response_Handler_ptr);
   TAO_AMH_DSI_Response_Handler_var (
       const TAO_AMH_DSI_Response_Handler_var &);
-  ~TAO_AMH_DSI_Response_Handler_var (void);
+  ~TAO_AMH_DSI_Response_Handler_var ();
 
   TAO_AMH_DSI_Response_Handler_var &operator= (
       TAO_AMH_DSI_Response_Handler_ptr);
@@ -55,9 +55,9 @@ public:
   operator TAO_AMH_DSI_Response_Handler_ptr &();
 
   TAO_AMH_DSI_Response_Handler_ptr in () const;
-  TAO_AMH_DSI_Response_Handler_ptr &inout (void);
-  TAO_AMH_DSI_Response_Handler_ptr &out (void);
-  TAO_AMH_DSI_Response_Handler_ptr _retn (void);
+  TAO_AMH_DSI_Response_Handler_ptr &inout ();
+  TAO_AMH_DSI_Response_Handler_ptr &out ();
+  TAO_AMH_DSI_Response_Handler_ptr _retn ();
   TAO_AMH_DSI_Response_Handler_ptr ptr () const;
 
 private:
@@ -77,11 +77,11 @@ typedef TAO_AMH_DSI_Exception_Holder *TAO_AMH_DSI_Exception_Holder_ptr;
 class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder_var
 {
 public:
-  TAO_AMH_DSI_Exception_Holder_var (void);
+  TAO_AMH_DSI_Exception_Holder_var ();
   TAO_AMH_DSI_Exception_Holder_var (TAO_AMH_DSI_Exception_Holder*);
   TAO_AMH_DSI_Exception_Holder_var (const TAO_AMH_DSI_Exception_Holder*);
   TAO_AMH_DSI_Exception_Holder_var (const TAO_AMH_DSI_Exception_Holder_var &);
-  ~TAO_AMH_DSI_Exception_Holder_var (void);
+  ~TAO_AMH_DSI_Exception_Holder_var ();
 
   TAO_AMH_DSI_Exception_Holder_var &operator= (TAO_AMH_DSI_Exception_Holder*);
   TAO_AMH_DSI_Exception_Holder_var &operator= (
@@ -92,9 +92,9 @@ public:
   operator TAO_AMH_DSI_Exception_Holder*& ();
 
   TAO_AMH_DSI_Exception_Holder* in () const;
-  TAO_AMH_DSI_Exception_Holder*& inout (void);
-  TAO_AMH_DSI_Exception_Holder*& out (void);
-  TAO_AMH_DSI_Exception_Holder* _retn (void);
+  TAO_AMH_DSI_Exception_Holder*& inout ();
+  TAO_AMH_DSI_Exception_Holder*& out ();
+  TAO_AMH_DSI_Exception_Holder* _retn ();
   TAO_AMH_DSI_Exception_Holder* ptr () const;
 
   // Hooks used by template sequence and valuetype manager classes
@@ -124,8 +124,8 @@ public:
   TAO_AMH_DSI_Exception_Holder_out &operator= (
       TAO_AMH_DSI_Exception_Holder*);
   operator TAO_AMH_DSI_Exception_Holder*& ();
-  TAO_AMH_DSI_Exception_Holder*& ptr (void);
-  TAO_AMH_DSI_Exception_Holder* operator-> (void);
+  TAO_AMH_DSI_Exception_Holder*& ptr ();
+  TAO_AMH_DSI_Exception_Holder* operator-> ();
 
 private:
   TAO_AMH_DSI_Exception_Holder* &ptr_;
@@ -163,7 +163,7 @@ public:
   CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const override;
 
 protected:
-  TAO_AMH_DSI_Exception_Holder (void);
+  TAO_AMH_DSI_Exception_Holder ();
   ///  *** Terrible Hack ? ***
   CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const override;
   CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &) override;

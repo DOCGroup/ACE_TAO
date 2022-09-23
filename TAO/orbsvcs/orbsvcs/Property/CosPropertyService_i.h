@@ -42,7 +42,7 @@ class TAO_Property_Serv_Export CosProperty_Hash_Key
   //     Key for the Hash Table. The EXT_ID of the
   //     ACE_Hash_Map_Manager.
 public:
-  CosProperty_Hash_Key (void);
+  CosProperty_Hash_Key ();
   // Default constructor.
 
   CosProperty_Hash_Key (const char * &name);
@@ -54,7 +54,7 @@ public:
   CosProperty_Hash_Key (const CosProperty_Hash_Key &hash_key);
   // Copy constructor.
 
-  virtual ~CosProperty_Hash_Key (void);
+  virtual ~CosProperty_Hash_Key ();
   // Destructor.
 
   virtual bool operator == (const CosProperty_Hash_Key &hash_key) const;
@@ -74,7 +74,7 @@ class TAO_Property_Serv_Export CosProperty_Hash_Value
   //     This will be the value part in the Hash_Table. The INT_ID of
   //     the ACE_Hash_Map_Manager.
 public:
-  CosProperty_Hash_Value (void);
+  CosProperty_Hash_Value ();
   // Default constructor.
 
   CosProperty_Hash_Value (const CORBA::Any &any,
@@ -84,7 +84,7 @@ public:
   CosProperty_Hash_Value (const CosProperty_Hash_Value &hash_value);
   // Copy constructor.
 
-  virtual ~CosProperty_Hash_Value (void);
+  virtual ~CosProperty_Hash_Value ();
   // Destructor.
 
 //private:
@@ -110,7 +110,7 @@ class TAO_Property_Serv_Export TAO_PropertySetFactory :  public virtual POA_CosP
   // = DESCRIPTION
   //     The object may be created with some predfined properties.
 public:
-  TAO_PropertySetFactory (void);
+  TAO_PropertySetFactory ();
   // Constructor.
 
   ~TAO_PropertySetFactory (void) override;
@@ -154,7 +154,7 @@ class TAO_Property_Serv_Export TAO_PropertySetDefFactory : public virtual POA_Co
   // = DESCRIPTION
   //     The object creation may be done with some predefined properties.
 public:
-  TAO_PropertySetDefFactory(void);
+  TAO_PropertySetDefFactory();
   // Constructor.
 
   ~TAO_PropertySetDefFactory (void) override;
@@ -196,7 +196,7 @@ public:
   friend class TAO_PropertiesIterator;
 
   /// Default constructor.
-  TAO_PropertySet (void);
+  TAO_PropertySet ();
 
   TAO_PropertySet (const CosPropertyService::PropertyTypes allowed_property_types,
                    const CosPropertyService::Properties allowed_properties);
@@ -316,7 +316,7 @@ class TAO_Property_Serv_Export TAO_PropertySetDef : public virtual POA_CosProper
   //     provide more client access and control of the characteristics
   //     (metadata) of a PropertySet.
 public:
-  TAO_PropertySetDef (void);
+  TAO_PropertySetDef ();
   // Constructor.
 
   TAO_PropertySetDef (const CosPropertyService::PropertyTypes allowed_property_types,

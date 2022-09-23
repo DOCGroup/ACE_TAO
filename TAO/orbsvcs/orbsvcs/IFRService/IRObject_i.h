@@ -65,7 +65,7 @@ public:
 
 protected:
   /// Set our key from the object ID via POACurrent.
-  void update_key (void);
+  void update_key ();
 
 protected:
   /// Pointer to the repository we were constructed from.

@@ -31,7 +31,7 @@ AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
   this->prev_pid_ = info_->pid;
 }
 
-AsyncAccessManager::~AsyncAccessManager (void)
+AsyncAccessManager::~AsyncAccessManager ()
 {
   if (ImR_Locator_i::debug () > 4)
     {
@@ -40,7 +40,7 @@ AsyncAccessManager::~AsyncAccessManager (void)
 }
 
 void
-AsyncAccessManager::started_running (void)
+AsyncAccessManager::started_running ()
 {
   if (ImR_Locator_i::debug () > 4)
     {
@@ -86,7 +86,7 @@ AsyncAccessManager::report (const char* operation) const
 }
 
 void
-AsyncAccessManager::update_prev_pid (void)
+AsyncAccessManager::update_prev_pid ()
 {
   this->prev_pid_ = this->info_->pid;
 }
@@ -310,7 +310,7 @@ AsyncAccessManager::notify_waiter (ImR_ResponseHandler *rh)
 }
 
 void
-AsyncAccessManager::notify_waiters (void)
+AsyncAccessManager::notify_waiters ()
 {
   if (ImR_Locator_i::debug () > 4)
     {
@@ -443,7 +443,7 @@ AsyncAccessManager::activator_replied_start_running (bool success, int pid)
 }
 
 void
-AsyncAccessManager::shutdown_initiated (void)
+AsyncAccessManager::shutdown_initiated ()
 {
   if (ImR_Locator_i::debug () > 4)
     {
@@ -460,7 +460,7 @@ AsyncAccessManager::shutdown_initiated (void)
 }
 
 void
-AsyncAccessManager::server_is_shutting_down (void)
+AsyncAccessManager::server_is_shutting_down ()
 {
   if (ImR_Locator_i::debug () > 4)
     {
@@ -589,7 +589,7 @@ AsyncAccessManager::notify_child_death (int pid)
 }
 
 void
-AsyncAccessManager::listener_disconnected (void)
+AsyncAccessManager::listener_disconnected ()
 {
   if (ImR_Locator_i::debug () > 4)
     {
@@ -705,7 +705,7 @@ AsyncAccessManager::ping_replied (LiveStatus server)
 }
 
 bool
-AsyncAccessManager::send_start_request (void)
+AsyncAccessManager::send_start_request ()
 {
   if (ImR_Locator_i::debug () > 4)
     {
@@ -803,7 +803,7 @@ AsyncAccessManager::send_start_request (void)
 }
 
 AsyncAccessManager *
-AsyncAccessManager::_add_ref (void)
+AsyncAccessManager::_add_ref ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
   ++this->refcount_;
@@ -812,7 +812,7 @@ AsyncAccessManager::_add_ref (void)
 }
 
 void
-AsyncAccessManager::_remove_ref (void)
+AsyncAccessManager::_remove_ref ()
 {
   int count = 0;
   {
@@ -835,12 +835,12 @@ ActivatorReceiver::ActivatorReceiver (AsyncAccessManager *aam,
 {
 }
 
-ActivatorReceiver::~ActivatorReceiver (void)
+ActivatorReceiver::~ActivatorReceiver ()
 {
 }
 
 void
-ActivatorReceiver::start_server (void)
+ActivatorReceiver::start_server ()
 {
   if (ImR_Locator_i::debug () > 4)
     {
@@ -898,7 +898,7 @@ ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
 }
 
 void
-ActivatorReceiver::shutdown (void)
+ActivatorReceiver::shutdown ()
 {
 }
 
@@ -946,7 +946,7 @@ AccessLiveListener::AccessLiveListener (const char *server,
 {
 }
 
-AccessLiveListener::~AccessLiveListener (void)
+AccessLiveListener::~AccessLiveListener ()
 {
   if (!this->aam_.is_nil())
   {
@@ -955,7 +955,7 @@ AccessLiveListener::~AccessLiveListener (void)
 }
 
 bool
-AccessLiveListener::start (void)
+AccessLiveListener::start ()
 {
   bool const started = this->per_client_ ?
     this->pinger_.add_per_client_listener (this, srv_ref_.in()) :

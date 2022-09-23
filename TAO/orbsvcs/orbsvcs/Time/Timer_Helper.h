@@ -48,7 +48,7 @@ class TAO_Time_Serv_Export Timer_Helper : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Timer_Helper (void);
+  Timer_Helper ();
 
   /// Destructor.
   ~Timer_Helper (void) override;

@@ -38,7 +38,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Active_Policy_Strategies::Active_Policy_Strategies (void)
+    Active_Policy_Strategies::Active_Policy_Strategies ()
       : thread_strategy_ (0),
         request_processing_strategy_ (0),
         id_assignment_strategy_ (0),
@@ -162,7 +162,7 @@ namespace TAO
     }
 
     void
-    Active_Policy_Strategies::cleanup (void)
+    Active_Policy_Strategies::cleanup ()
     {
       if (this->lifespan_strategy_ != 0)
         {

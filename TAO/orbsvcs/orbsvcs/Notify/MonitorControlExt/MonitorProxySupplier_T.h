@@ -41,7 +41,7 @@ class TAO_MonitorProxySupplier_T
 {
 public:
   /// Construct a monitor supplier admin
-  TAO_MonitorProxySupplier_T (void);
+  TAO_MonitorProxySupplier_T ();
 
   /// Remove the statistics for this event channel
   ~TAO_MonitorProxySupplier_T (void) override;
@@ -58,10 +58,10 @@ public:
   void count_queue_overflow (bool local_overflow, bool global_overflow) override;
 
   /// Access to Statistics Name
-  ACE_CString & queue_item_stat_name (void);
+  ACE_CString & queue_item_stat_name ();
 
   /// Access to Statistics Name
-  ACE_CString & overflow_stat_name (void);
+  ACE_CString & overflow_stat_name ();
 
 private:
   ACE_CString base_stat_name_;

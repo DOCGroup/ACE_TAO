@@ -156,7 +156,7 @@ extern "C"
 #elif defined (ACE_HAS_SVR4_SIGNAL_T)
    // SVR4 Signals are inconsistent (e.g., see struct sigaction)..
    using ACE_SignalHandler = void (*)(int);
-   using ACE_SignalHandlerV = void (*)(void);
+   using ACE_SignalHandlerV = void (*)();
 #elif defined (ACE_WIN32)
    using ACE_SignalHandler = void (__cdecl *)(int);
    using ACE_SignalHandlerV = void (__cdecl *)(int);

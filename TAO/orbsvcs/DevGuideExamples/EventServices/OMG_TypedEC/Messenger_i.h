@@ -28,7 +28,7 @@ public:
                int event_limit);
 
   //Destructor
-  virtual ~Messenger_i (void);
+  virtual ~Messenger_i ();
 
   virtual void send_message (const char * user_name,
                              const char * subject,

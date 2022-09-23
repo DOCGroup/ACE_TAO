@@ -42,7 +42,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ETCL_FilterFactory :
 {
 public:
   /// Constructor
-  TAO_Notify_ETCL_FilterFactory (void);
+  TAO_Notify_ETCL_FilterFactory ();
 
   /// Destructor
   ~TAO_Notify_ETCL_FilterFactory () override;

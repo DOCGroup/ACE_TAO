@@ -56,7 +56,7 @@ private:
   TAO_EC_Kokyu_Scheduling& operator= (const TAO_EC_Kokyu_Scheduling&);
 
   /// Initialize our RT_Info handle and dependencies
-  void init_rt_info (void);
+  void init_rt_info ();
 
 private:
   /// The scheduler we are going to use

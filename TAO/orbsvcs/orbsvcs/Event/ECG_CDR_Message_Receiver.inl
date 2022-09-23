@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_ECG_CDR_Message_Receiver::Requests::Requests (void)
+TAO_ECG_CDR_Message_Receiver::Requests::Requests ()
   : fragmented_requests_ (0)
   , size_ (0)
   , id_range_low_ (0)
@@ -27,7 +27,7 @@ TAO_ECG_CDR_Message_Receiver::TAO_ECG_CDR_Message_Receiver (CORBA::Boolean crc)
 }
 
 ACE_INLINE
-TAO_ECG_CDR_Message_Receiver::~TAO_ECG_CDR_Message_Receiver (void)
+TAO_ECG_CDR_Message_Receiver::~TAO_ECG_CDR_Message_Receiver ()
 {
   this->shutdown ();
 }

@@ -39,7 +39,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxySupplier : public virtual TAO_Notif
 public:
   typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier> Ptr;
   /// Constructor
-  TAO_Notify_ProxySupplier (void);
+  TAO_Notify_ProxySupplier ();
 
   /// Destructor
   ~TAO_Notify_ProxySupplier () override;
@@ -50,7 +50,7 @@ public:
   /// Connect
   void connect (TAO_Notify_Consumer* consumer);
   /// Disconnect
-  void disconnect (void);
+  void disconnect ();
 
   /// Dispatch Event to consumer
   virtual void deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request);
@@ -72,10 +72,10 @@ public:
   bool is_connected () const;
 
   /// Access the Consumer
-  TAO_Notify_Consumer* consumer (void);
+  TAO_Notify_Consumer* consumer ();
 
   /// The CA parent.
-  TAO_Notify_ConsumerAdmin& consumer_admin (void);
+  TAO_Notify_ConsumerAdmin& consumer_admin ();
 
 private:
   ///= Data Members.

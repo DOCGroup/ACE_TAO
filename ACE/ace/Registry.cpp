@@ -100,7 +100,7 @@ ACE_Registry::Binding::name (ACE_TString &name)
 // Name accessors
 // (String version)
 ACE_TString
-ACE_Registry::Binding::name (void)
+ACE_Registry::Binding::name ()
 {
   return this->name_;
 }
@@ -108,7 +108,7 @@ ACE_Registry::Binding::name (void)
 
 // Type accessor
 ACE_Registry::Binding_Type
-ACE_Registry::Binding::type (void)
+ACE_Registry::Binding::type ()
 {
   return this->type_;
 }
@@ -168,7 +168,7 @@ ACE_Registry::Object::type () const
 
 
 // Simple context constructor
-ACE_Registry::Naming_Context::Naming_Context (void)
+ACE_Registry::Naming_Context::Naming_Context ()
   : key_ ((HKEY) 0),
     parent_key_ ((HKEY) 0),
     name_ ()
@@ -575,7 +575,7 @@ ACE_Registry::Naming_Context::resolve_context (const ACE_TString &name,
 
 // Same as unbind_context() with <this> as naming_context
 int
-ACE_Registry::Naming_Context::destroy (void)
+ACE_Registry::Naming_Context::destroy ()
 {
   // hopefully the parent_key_ is still open
   long result = ACE_TEXT_RegDeleteKey (this->parent_key_,
@@ -587,7 +587,7 @@ ACE_Registry::Naming_Context::destroy (void)
 
 // Sync content of context to disk
 int
-ACE_Registry::Naming_Context::flush (void)
+ACE_Registry::Naming_Context::flush ()
 {
   long result = ::RegFlushKey (this->key_);
   ACE_REGISTRY_CALL_RETURN (result);
@@ -596,7 +596,7 @@ ACE_Registry::Naming_Context::flush (void)
 
 // Close the handle of the context
 int
-ACE_Registry::Naming_Context::close (void)
+ACE_Registry::Naming_Context::close ()
 {
   long result = this->key_ ? ::RegCloseKey (this->key_) : ERROR_SUCCESS;
   ACE_REGISTRY_CALL_RETURN (result);
@@ -676,7 +676,7 @@ ACE_Registry::Naming_Context::key (HKEY key)
 
 // Get key
 HKEY
-ACE_Registry::Naming_Context::key (void)
+ACE_Registry::Naming_Context::key ()
 {
   return this->key_;
 }
@@ -692,7 +692,7 @@ ACE_Registry::Naming_Context::parent (HKEY parent)
 
 // Get parent
 HKEY
-ACE_Registry::Naming_Context::parent (void)
+ACE_Registry::Naming_Context::parent ()
 {
   return this->parent_key_;
 }
@@ -728,7 +728,7 @@ ACE_Registry::Naming_Context::name (const ACE_TString &name)
 // Get name
 // (String version)
 ACE_TString
-ACE_Registry::Naming_Context::name (void)
+ACE_Registry::Naming_Context::name ()
 {
   return this->name_;
 }
@@ -836,12 +836,12 @@ ACE_Registry::Binding_Iterator::Iteration_State::iterator (Binding_Iterator *ite
 }
 
 
-ACE_Registry::Binding_Iterator::Iteration_State::Iteration_State (void)
+ACE_Registry::Binding_Iterator::Iteration_State::Iteration_State ()
   : index_ (0)
 {
 }
 
-ACE_Registry::Binding_Iterator::Iteration_State::~Iteration_State (void)
+ACE_Registry::Binding_Iterator::Iteration_State::~Iteration_State ()
 {
 }
 
@@ -877,7 +877,7 @@ ACE_Registry::Binding_Iterator::next_n (u_long how_many,
 
 // Destroy iterator
 int
-ACE_Registry::Binding_Iterator::destroy (void)
+ACE_Registry::Binding_Iterator::destroy ()
 {
   this->reset ();
   return 0;
@@ -893,7 +893,7 @@ ACE_Registry::Binding_Iterator::naming_context (Naming_Context &naming_context)
 
 
 ACE_Registry::Naming_Context &
-ACE_Registry::Binding_Iterator::naming_context (void)
+ACE_Registry::Binding_Iterator::naming_context ()
 {
   return *this->naming_context_;
 }
@@ -908,7 +908,7 @@ ACE_Registry::Binding_Iterator::current_enumeration (Iteration_State &current_en
 
 
 ACE_Registry::Binding_Iterator::Iteration_State &
-ACE_Registry::Binding_Iterator::current_enumeration (void)
+ACE_Registry::Binding_Iterator::current_enumeration ()
 {
   return *this->current_enumeration_;
 }

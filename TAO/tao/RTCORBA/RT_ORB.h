@@ -48,12 +48,12 @@ class TAO_RTCORBA_Export TAO_Named_RT_Mutex_Manager
 {
 public:
   /// Constructor.
-  TAO_Named_RT_Mutex_Manager (void);
+  TAO_Named_RT_Mutex_Manager ();
 
   /// Destructor.
-  ~TAO_Named_RT_Mutex_Manager (void);
+  ~TAO_Named_RT_Mutex_Manager ();
 
-  RTCORBA::Mutex_ptr create_mutex (void);
+  RTCORBA::Mutex_ptr create_mutex ();
 
   void destroy_mutex (RTCORBA::Mutex_ptr the_mutex);
 

@@ -77,7 +77,7 @@ public:
 
   /// Activate the NotifyLog.
   void
-  activate (void);
+  activate ();
 
   // = Methods from CosNotifyChannelAdmin::EventChannel.
   CosNotifyFilter::Filter_ptr

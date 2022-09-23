@@ -38,7 +38,7 @@ class TAO_IOR_Manipulation_impl
 {
 public:
   /// Constructor
-  TAO_IOR_Manipulation_impl (void);
+  TAO_IOR_Manipulation_impl ();
 
   CORBA::Object_ptr merge_iors (
     const TAO_IOP::TAO_IOR_Manipulation::IORList & iors) override;

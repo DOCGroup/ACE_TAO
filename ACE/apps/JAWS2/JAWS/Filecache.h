@@ -50,10 +50,10 @@ public:
                     size_t size,
                     JAWS_Filecache_Proxy::Cache_Manager *cm = 0);
 
-  ~JAWS_Cached_FILE (void);
+  ~JAWS_Cached_FILE ();
 
-  ACE_FILE_IO * file (void);
-  ACE_Mem_Map * mmap (void);
+  ACE_FILE_IO * file ();
+  ACE_Mem_Map * mmap ();
 
 private:
   ACE_FILE_IO file_;

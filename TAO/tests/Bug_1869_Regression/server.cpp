@@ -4,9 +4,9 @@
 class  AdderServant :
   public POA_AMI_test::adder {
 public:
-  AdderServant (void) {}
+  AdderServant () {}
 
-  virtual ~AdderServant (void) {}
+  virtual ~AdderServant () {}
 
   virtual
   CORBA::Long add (

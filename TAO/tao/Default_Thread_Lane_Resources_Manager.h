@@ -39,7 +39,7 @@ public:
   TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_Default_Thread_Lane_Resources_Manager (void);
+  ~TAO_Default_Thread_Lane_Resources_Manager ();
 
   /// Finalize resources.
   void finalize (void) override;

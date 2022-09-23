@@ -53,17 +53,17 @@ class ACEXML_Export ACEXML_Mem_Map_Stream
 {
 public:
   /// Default constructor
-  ACEXML_Mem_Map_Stream (void);
+  ACEXML_Mem_Map_Stream ();
 
   /// Initialize this object.
   virtual int open (Connector *connector,
                     const ACE_INET_Addr &);
 
   /// Destructor.
-  virtual ~ACEXML_Mem_Map_Stream (void);
+  virtual ~ACEXML_Mem_Map_Stream ();
 
   /// Returns the underlying <ACE_SOCK_Stream>.
-  ACE_SOCK_Stream &stream (void);
+  ACE_SOCK_Stream &stream ();
 
   /**
    * Send <size> bytes in <buf> to the connected peer.  This is a
@@ -78,7 +78,7 @@ public:
    * position. Returns EOF when the <get> position reaches the end of the
    * HTTP stream.
    */
-  virtual int get_char (void);
+  virtual int get_char ();
 
   /**
    *  Returns a pointer to array of at most <len> characters starting at
@@ -111,7 +111,7 @@ public:
    *  This works since all the data has been cached in the memory-mapped
    *  backing store.
    */
-  virtual void rewind (void);
+  virtual void rewind ();
 
   /**
    *  Returns the nth character <offset> from the <get> position in the
@@ -148,7 +148,7 @@ public:
   virtual int eof () const;
 
   /// Returns the underlying service handler.
-  Svc_Handler *svc_handler (void);
+  Svc_Handler *svc_handler ();
 
 private:
   /**
@@ -156,7 +156,7 @@ private:
    *  extend the mapping to cover this chunk.  Returns -1 on failure or
    *  EOF, else 0.
    */
-  int grow_file_and_remap (void);
+  int grow_file_and_remap ();
 
   /**
    *  Connection to peer. The granularity is at the Svc_Handler level.

@@ -83,7 +83,7 @@ public:
       IOP::ServiceContextList &clist,
       TAO_Profile *profile) override;
 
-  static TimeBase::TimeT now (void);
+  static TimeBase::TimeT now ();
 
 private:
   /// Check whether the right flags are available so that we can issue a

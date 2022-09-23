@@ -1,11 +1,11 @@
 #include "Simple.h"
 
-Simple::Simple (void)
+Simple::Simple ()
 {
 }
 
 void
-Simple::destroy (void)
+Simple::destroy ()
 {
   PortableServer::POA_var poa = this->_default_POA ();
 

@@ -90,7 +90,7 @@ class ACE_Event_Tuple
 {
 public:
   /// Default constructor.
-  ACE_Event_Tuple (void);
+  ACE_Event_Tuple ();
 
   /// Constructor.
   ACE_Event_Tuple (ACE_Event_Handler *eh, ACE_HANDLE h);
@@ -128,7 +128,7 @@ class ACE_Export ACE_Select_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
   /// Constructor.
-  ACE_Select_Reactor_Notify (void);
+  ACE_Select_Reactor_Notify ();
 
   /// Destructor.
   ~ACE_Select_Reactor_Notify (void) override;
@@ -327,7 +327,7 @@ public:
   int open (size_type size);
 
   /// Close down the repository.
-  int close (void);
+  int close ();
 
   // = Search structure operations.
 
@@ -347,7 +347,7 @@ public:
               ACE_Reactor_Mask mask);
 
   /// Remove all the <ACE_HANDLE, ACE_Event_Handler> tuples.
-  int unbind_all (void);
+  int unbind_all ();
 
   // = Sanity checking.
 
@@ -425,7 +425,7 @@ public:
 
   /// Move forward by one element in the set.  Returns @c false when
   /// all the items in the set have been seen, else @c true.
-  bool advance (void);
+  bool advance ();
 
   /// Dump the state of an object.
   void dump () const;
@@ -486,7 +486,7 @@ protected:
 
   /// Enqueue ourselves into the list of waiting threads at the
   /// appropriate point specified by <requeue_position_>.
-  virtual void renew (void) = 0;
+  virtual void renew () = 0;
 
   /// Check to see if the Event_Handler associated with @a handle is
   /// suspended. Returns 0 if not, 1 if so.
@@ -572,7 +572,7 @@ protected:
 
   /// Controls/access whether the notify handler should renew the
   /// Select_Reactor's token or not.
-  bool supress_notify_renew (void);
+  bool supress_notify_renew ();
   void supress_notify_renew (bool sr);
 
 private:

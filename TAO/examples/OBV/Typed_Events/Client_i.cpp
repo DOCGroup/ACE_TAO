@@ -88,13 +88,13 @@ Checkpoint_Client_i::run (const char *name,
 }
 
 // Constructor.
-Checkpoint_Client_i::Checkpoint_Client_i (void)
+Checkpoint_Client_i::Checkpoint_Client_i ()
 {
   //no-op
 }
 
 //Destructor.
-Checkpoint_Client_i::~Checkpoint_Client_i (void)
+Checkpoint_Client_i::~Checkpoint_Client_i ()
 {
   //no-op
 }

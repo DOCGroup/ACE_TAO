@@ -53,21 +53,21 @@ public:
   /// From Contained_i's pure virtual function.
   CORBA::Contained::Description *describe_i (void) override;
 
-  virtual CORBA::TypeCode_ptr type (void);
+  virtual CORBA::TypeCode_ptr type ();
 
-  CORBA::TypeCode_ptr type_i (void);
+  CORBA::TypeCode_ptr type_i ();
 
-  virtual CORBA::IDLType_ptr type_def (void);
+  virtual CORBA::IDLType_ptr type_def ();
 
-  CORBA::IDLType_ptr type_def_i (void);
+  CORBA::IDLType_ptr type_def_i ();
 
   virtual void type_def (CORBA::IDLType_ptr type_def);
 
   void type_def_i (CORBA::IDLType_ptr type_def);
 
-  virtual CORBA::Any *value (void);
+  virtual CORBA::Any *value ();
 
-  CORBA::Any *value_i (void);
+  CORBA::Any *value_i ();
 
   virtual void value (const CORBA::Any &value);
 

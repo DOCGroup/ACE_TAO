@@ -31,8 +31,8 @@
 class Protocol_Manager
 {
 public:
-  Protocol_Manager (void);
-  virtual ~Protocol_Manager (void);
+  Protocol_Manager ();
+  virtual ~Protocol_Manager ();
 
   virtual int encode (char *packet, int &total_bytes) = 0;
   virtual int decode (char *packet, int &total_bytes) = 0;
@@ -41,14 +41,14 @@ protected:
   int total_users;
   Search_Struct *ss;
 
-  int friend_count (void);
+  int friend_count ();
 
   Drwho_Node *get_drwho_node (char *host_name, Drwho_Node *&head);
-  int get_total_users (void);
+  int get_total_users ();
   void increment_total_users (int remote_users = 1);
 
-  Protocol_Record *get_next_friend (void);
-  Protocol_Record *get_each_friend (void);
+  Protocol_Record *get_next_friend ();
+  Protocol_Record *get_each_friend ();
 
   virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) = 0;
 };

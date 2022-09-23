@@ -129,7 +129,7 @@ private:
   TAO_Notify_Constraint_Expr*
     add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id);
 
-  void remove_all_constraints_i (void);
+  void remove_all_constraints_i ();
 
   /// Lock to serialize access to data members.
   TAO_SYNCH_MUTEX lock_;

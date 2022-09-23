@@ -28,25 +28,25 @@ class IDL3_Client
 {
 public:
   /// Constructor
-  IDL3_Client (void);
+  IDL3_Client ();
 
   /// Destructor
-  ~IDL3_Client (void);
+  ~IDL3_Client ();
 
   /// Initialize the ORB and get the IFR object reference.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   /// Execute test code.
-  int run (void);
+  int run ();
 
 private:
   /// Process the command line arguments.
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
 
-  int component_test (void);
-  int home_test (void);
+  int component_test ();
+  int home_test ();
 
   // Also tests eventtype.
   int valuetype_test (const char *repo_id,

@@ -62,7 +62,7 @@ public:
   void sleep_hook (void) ;
 
   /// Get the reactor implementation
-  ACE_Reactor_Impl &reactor (void);
+  ACE_Reactor_Impl &reactor ();
 
   /// Set the reactor implementation
   void reactor (ACE_Reactor_Impl &);

@@ -19,7 +19,7 @@ public:
     const ::Test::BoundSequences::SequenceOf10Long &inSeq
   );
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

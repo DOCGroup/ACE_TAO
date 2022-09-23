@@ -4,7 +4,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
 
-DllOrb::DllOrb (void)
+DllOrb::DllOrb ()
  :
    ma_barrier_(),
    mv_orb_ (),
@@ -12,7 +12,7 @@ DllOrb::DllOrb (void)
 {
 }
 
-DllOrb::~DllOrb (void)
+DllOrb::~DllOrb ()
 {
 }
 
@@ -86,7 +86,7 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
 
 
 int
-DllOrb::fini (void)
+DllOrb::fini ()
 {
   try
   {
@@ -126,7 +126,7 @@ DllOrb::fini (void)
 }
 
 
-int DllOrb::svc (void)
+int DllOrb::svc ()
 {
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("svc mp_barrier->wait() ...\n")));
   ma_barrier_->wait();

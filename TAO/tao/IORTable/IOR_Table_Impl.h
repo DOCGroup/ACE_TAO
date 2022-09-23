@@ -98,7 +98,7 @@ namespace TAO
 
     static void release (TAO_IOR_Table_Impl_ptr);
 
-    static TAO_IOR_Table_Impl_ptr nil (void);
+    static TAO_IOR_Table_Impl_ptr nil ();
 
     static ::CORBA::Boolean marshal (const TAO_IOR_Table_Impl_ptr p,
                                      TAO_OutputCDR &cdr);

@@ -63,11 +63,11 @@ namespace TAO
      * Methods
      */
     //@{
-    virtual char * tao_server_id (void);
+    virtual char * tao_server_id ();
 
-    virtual char * tao_orb_id (void);
+    virtual char * tao_orb_id ();
 
-    virtual PortableInterceptor::AdapterName * tao_adapter_name (void);
+    virtual PortableInterceptor::AdapterName * tao_adapter_name ();
     //@}
 
     /**

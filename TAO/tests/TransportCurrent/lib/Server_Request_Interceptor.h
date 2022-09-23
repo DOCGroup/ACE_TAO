@@ -50,12 +50,12 @@ namespace Test
     Server_Request_Interceptor (const char*orb_id, TEST test);
 
     /// Destructor.
-    virtual ~Server_Request_Interceptor (void);
+    virtual ~Server_Request_Interceptor ();
 
     virtual void test_transport_current (const ACE_TCHAR* amethod);
 
     /// Coherency test
-    virtual bool self_test (void);
+    virtual bool self_test ();
 
     /**
      * @name Methods Required by the Server Request Interceptor
@@ -67,9 +67,9 @@ namespace Test
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name (void);
+    virtual char * name ();
 
-    virtual void destroy (void);
+    virtual void destroy ();
 
     virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri);
 

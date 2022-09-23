@@ -42,7 +42,7 @@ public:
 
 protected:
   /// Constructor.
-  TAO_Smart_Proxy_Base (void);
+  TAO_Smart_Proxy_Base ();
 
   /// Constructor.
   TAO_Smart_Proxy_Base (CORBA::Object_ptr proxy);

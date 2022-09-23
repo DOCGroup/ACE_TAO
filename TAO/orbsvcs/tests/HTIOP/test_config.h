@@ -126,14 +126,12 @@ size_t const ACE_MAX_THREADS = 4;
     }
 
 #else /* ! VXWORKS */
-#  if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-#    define ACE_INIT_LOG_FMT ACE_TEXT ("%ls%ls%ls")
-#  else
-#    define ACE_INIT_LOG_FMT ACE_TEXT ("%s%s%s")
-#  endif /* !ACE_WIN32 && ACE_USES_WCHAR */
 #define ACE_INIT_LOG(NAME) \
   ACE_TCHAR temp[MAXPATHLEN]; \
-  ACE_OS::sprintf (temp, ACE_INIT_LOG_FMT, \
+  ACE_OS::sprintf (temp, \
+                   ACE_TEXT ("%") ACE_TEXT_PRIs \
+                   ACE_TEXT ("%") ACE_TEXT_PRIs \
+                   ACE_TEXT ("%") ACE_TEXT_PRIs, \
                    ACE_LOG_DIRECTORY, \
                    ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR), \
                    ACE_LOG_FILE_EXT_NAME); \
@@ -150,15 +148,15 @@ size_t const ACE_MAX_THREADS = 4;
 class ACE_Test_Output
 {
 public:
-  ACE_Test_Output (void);
-  ~ACE_Test_Output (void);
-  static ACE_Test_Output *instance (void);
+  ACE_Test_Output ();
+  ~ACE_Test_Output ();
+  static ACE_Test_Output *instance ();
   int set_output (const ACE_TCHAR *filename, int append = 0);
-  OFSTREAM *output_file (void);
-  void close (void);
-  const ACE_TCHAR *dll_name (void);
-  const ACE_TCHAR *name (void);
-  static void close_singleton (void);
+  OFSTREAM *output_file ();
+  void close ();
+  const ACE_TCHAR *dll_name ();
+  const ACE_TCHAR *name ();
+  static void close_singleton ();
 
 private:
   static ACE_Test_Output *instance_;

@@ -42,7 +42,7 @@ class TAO_FT_ClientORB_Export TAO_FT_Endpoint_Selector_Factory
 {
 public:
   /// Constructor.
-  TAO_FT_Endpoint_Selector_Factory (void);
+  TAO_FT_Endpoint_Selector_Factory ();
 
   /// Destructor.
   ~TAO_FT_Endpoint_Selector_Factory (void) override;

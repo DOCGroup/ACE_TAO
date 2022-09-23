@@ -42,7 +42,7 @@ public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_SupplierAdmin > Ptr;
 
   /// Constructor
-  TAO_Notify_SupplierAdmin (void);
+  TAO_Notify_SupplierAdmin ();
 
   /// Destructor
   ~TAO_Notify_SupplierAdmin () override;

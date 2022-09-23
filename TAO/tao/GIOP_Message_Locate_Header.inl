@@ -31,19 +31,19 @@ TAO_GIOP_Locate_Request_Header::object_key () const
 }
 
 ACE_INLINE TAO::ObjectKey &
-TAO_GIOP_Locate_Request_Header::object_key (void)
+TAO_GIOP_Locate_Request_Header::object_key ()
 {
   return this->profile_.object_key ();
 }
 
 ACE_INLINE TAO_Tagged_Profile &
-TAO_GIOP_Locate_Request_Header::profile (void)
+TAO_GIOP_Locate_Request_Header::profile ()
 {
   return this->profile_;
 }
 
 ACE_INLINE TAO_InputCDR &
-TAO_GIOP_Locate_Request_Header::incoming_stream (void)
+TAO_GIOP_Locate_Request_Header::incoming_stream ()
 {
   return *this->incoming_;
 }

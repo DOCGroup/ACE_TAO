@@ -5,7 +5,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Log_Msg.h"
 
-POA_Holder::POA_Holder (void)
+POA_Holder::POA_Holder ()
   :priority_model_ (RTCORBA::CLIENT_PROPAGATED),
    server_priority_ (0),
    thread_pool_ (0)

@@ -85,7 +85,7 @@ public:
    * Once the IOR interception points have been invoked, this IORInfo
    * instance is no longer valid.
    */
-  void invalidate (void);
+  void invalidate ();
 
   /// Inform the this IORInfo object that the
   /// IORInterceptor::components_established() interception point has
@@ -96,7 +96,7 @@ public:
    * are invalid.  They are only valid in the
    * IORInterceptor::establish_components() interception point.
    */
-  void components_established (void);
+  void components_established ();
 
 protected:
   /// Protected destructor to enforce proper memory management through
@@ -109,7 +109,7 @@ protected:
    * this IORInfo object is no longer valid.  Throw an exception in
    * that case.
    */
-  void check_validity (void);
+  void check_validity ();
 
 private:
   TAO_IORInfo (const TAO_IORInfo &) = delete;

@@ -17,7 +17,7 @@ HTTP_Parse_URL::HTTP_Parse_URL (const char *url)
   this->init (url);
 }
 
-HTTP_Parse_URL::~HTTP_Parse_URL (void)
+HTTP_Parse_URL::~HTTP_Parse_URL ()
 {
   if (this->url_)
     ACE_OS::free (this->url_);
@@ -63,7 +63,7 @@ HTTP_Parse_URL::init( const char *url )
 
 
 void
-HTTP_Parse_URL::parse_url (void)
+HTTP_Parse_URL::parse_url ()
 {
   char *p = this->url_;
 
@@ -242,7 +242,7 @@ HTTP_Parse_URL::parse_host (char *&p)
 }
 
 void
-HTTP_Parse_URL::set_port_from_scheme (void)
+HTTP_Parse_URL::set_port_from_scheme ()
 {
   if (ACE_OS::strcmp (this->scheme_, "ftp") == 0)
     {

@@ -70,7 +70,7 @@ namespace TAO
       public virtual ::CORBA::LocalObject
   {
   public:
-    FT_ClientRequest_Interceptor (void);
+    FT_ClientRequest_Interceptor ();
 
     /// Canonical name of the interceptor.
     char * name (void) override;

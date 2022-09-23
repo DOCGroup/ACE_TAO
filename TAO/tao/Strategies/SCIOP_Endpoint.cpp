@@ -51,7 +51,7 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const char *host,
 {
 }
 
-TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (void)
+TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint ()
   : TAO_Endpoint (TAO_TAG_SCIOP_PROFILE)
   , host_ ()
   , port_ (683)  // default port (IANA assigned)
@@ -149,13 +149,13 @@ TAO_SCIOP_Endpoint::host (const char *h)
 }
 
 TAO_Endpoint *
-TAO_SCIOP_Endpoint::next (void)
+TAO_SCIOP_Endpoint::next ()
 {
   return this->next_;
 }
 
 TAO_Endpoint *
-TAO_SCIOP_Endpoint::duplicate (void)
+TAO_SCIOP_Endpoint::duplicate ()
 {
   TAO_SCIOP_Endpoint *endpoint = 0;
 
@@ -183,7 +183,7 @@ TAO_SCIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 CORBA::ULong
-TAO_SCIOP_Endpoint::hash (void)
+TAO_SCIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
     return this->hash_val_;

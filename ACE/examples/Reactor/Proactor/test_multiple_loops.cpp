@@ -29,7 +29,7 @@
 class Timeout_Handler : public ACE_Handler, public ACE_Event_Handler
 {
 public:
-  Timeout_Handler (void)
+  Timeout_Handler ()
     {
     }
 
@@ -67,7 +67,7 @@ class Worker : public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
   // Thread fuction.
-  int svc (void)
+  int svc ()
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) Worker started\n"));
 

@@ -44,7 +44,7 @@ public:
   friend class TAO_SHMIOP_Profile;
 
   /// Default constructor.
-  TAO_SHMIOP_Endpoint (void);
+  TAO_SHMIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.

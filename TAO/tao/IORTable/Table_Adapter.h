@@ -79,7 +79,7 @@ class TAO_IORTable_Export TAO_Table_Adapter_Factory : public TAO_Adapter_Factory
 {
 public:
   /// Constructor
-  TAO_Table_Adapter_Factory (void);
+  TAO_Table_Adapter_Factory ();
 
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   /// details.

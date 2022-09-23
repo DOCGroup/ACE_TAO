@@ -41,7 +41,7 @@ public:
   /**
    * Default constructor.  Create with no parent.
    */
-  ACEXML_XMLFilterImpl (void);
+  ACEXML_XMLFilterImpl ();
 
   /**
    * Construct an XML filter with the specified parent.
@@ -241,7 +241,7 @@ public:
    */
   void warning (ACEXML_SAXParseException &exception) override;
 protected:
-  int setupParser (void);
+  int setupParser ();
   // Set up the event handlers of parent parser to this.
   // Returns -1 if no valid parent is set.
 

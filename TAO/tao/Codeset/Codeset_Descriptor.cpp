@@ -117,7 +117,7 @@ TAO_Codeset_Descriptor::add_translator (const ACE_TCHAR *name)
 }
 
 TAO_Codeset_Descriptor::Translator_Node *
-TAO_Codeset_Descriptor::translators (void)
+TAO_Codeset_Descriptor::translators ()
 {
   return this->trans_base_;
 }

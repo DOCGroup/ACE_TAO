@@ -51,10 +51,10 @@ class TAO_Export TAO_IIOP_Connector : public TAO_Connector
 {
 public:
   /// Constructor.
-  TAO_IIOP_Connector (void);
+  TAO_IIOP_Connector ();
 
   /// Destructor.
-  ~TAO_IIOP_Connector (void);
+  ~TAO_IIOP_Connector ();
 
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h

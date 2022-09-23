@@ -74,7 +74,7 @@ public:
 
 protected:
   /// Execute the dispatch operation.
-  int execute_i (void);
+  int execute_i ();
 
 protected:
   /// The Proxy

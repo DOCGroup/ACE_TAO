@@ -48,14 +48,14 @@ public:
 
 protected:
   /// No-op constructor.
-  Cubit_Task (void);
+  Cubit_Task ();
 
 private:
   /// Initialize the ORB, and POA.
-  int initialize_orb (void);
+  int initialize_orb ();
 
   /// Create the servants.
-  int create_servants (void);
+  int create_servants ();
 
   /// All cubit objects will have this as prefix to its key.
   const char *key_;

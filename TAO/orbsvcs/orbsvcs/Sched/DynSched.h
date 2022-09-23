@@ -279,7 +279,7 @@ protected:
     ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set);
 
   /// = store assigned information back into the RT_Infos
-  virtual status_t store_assigned_info (void);
+  virtual status_t store_assigned_info ();
 
   // = Set the minimum priority value.
   void minimum_priority_queue (const Preemption_Priority minimum_priority_queue_number);
@@ -420,11 +420,11 @@ private:
   status_t output_dispatch_priorities (FILE *file);
 
   // = Set up the task entry data structures
-  status_t setup_task_entries (void);
+  status_t setup_task_entries ();
 
   // = Relate the task entries according to the
   //   dependencies of the underlying RT_Infos
-  status_t relate_task_entries (void);
+  status_t relate_task_entries ();
 
   // recursively traverse dependency graph, relating
   // task entries and performing DFS start/end marking
@@ -436,13 +436,13 @@ private:
                       ACE_CString & unresolved_remotes);
 
   // checks for cycles in the dependency graph
-  status_t check_dependency_cycles (void);
+  status_t check_dependency_cycles ();
 
   // recursion used to check for cycles in the dependency graph
   status_t check_dependency_cycles_recurse (Task_Entry &entry);
 
   // = Aggregate the scheduling parameters of the threads
-  status_t aggregate_thread_parameters (void);
+  status_t aggregate_thread_parameters ();
 
   // = recursion over oneway dependencies used to aggregate thread parameters
   status_t aggregate_oneways_recurse (Task_Entry &entry);

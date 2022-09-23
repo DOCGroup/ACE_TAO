@@ -37,12 +37,12 @@ Protocol_Manager::get_drwho_node (char *key_name, Drwho_Node *&head)
   return head;
 }
 
-Protocol_Manager::Protocol_Manager (void)
+Protocol_Manager::Protocol_Manager ()
   : total_users (0)
 {
 }
 
-Protocol_Manager::~Protocol_Manager (void)
+Protocol_Manager::~Protocol_Manager ()
 {
   if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
@@ -52,13 +52,13 @@ Protocol_Manager::~Protocol_Manager (void)
 // Returns the next friend in the sequence of sorted friends.
 
 Protocol_Record *
-Protocol_Manager::get_next_friend (void)
+Protocol_Manager::get_next_friend ()
 {
   return this->ss->get_next_entry ();
 }
 
 Protocol_Record *
-Protocol_Manager::get_each_friend (void)
+Protocol_Manager::get_each_friend ()
 {
   return this->ss->get_each_entry ();
 }
@@ -66,7 +66,7 @@ Protocol_Manager::get_each_friend (void)
 // Returns the number of friends.
 
 int
-Protocol_Manager::friend_count (void)
+Protocol_Manager::friend_count ()
 {
   return this->ss->n_elems ();
 }
@@ -74,7 +74,7 @@ Protocol_Manager::friend_count (void)
 // Returns total number of users logged in throughout the system.
 
 int
-Protocol_Manager::get_total_users (void)
+Protocol_Manager::get_total_users ()
 {
   return Protocol_Manager::total_users;
 }

@@ -176,7 +176,7 @@ namespace CORBA
     class TAO_Export name : public SystemException \
     { \
     public: \
-      name (void); \
+      name (); \
       name (CORBA::ULong code, \
             CORBA::CompletionStatus completed); \
       static name * _downcast (CORBA::Exception* exception); \

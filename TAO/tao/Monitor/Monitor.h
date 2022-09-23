@@ -33,14 +33,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Monitor_Export TAO_Monitor_Init : public TAO_Object_Loader
 {
 public:
-  TAO_Monitor_Init (void);
+  TAO_Monitor_Init ();
 
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
                                            ACE_TCHAR *argv []) override;
 
   /// Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 //#if defined (TAO_AS_STATIC_LIBS)

@@ -23,10 +23,10 @@ class TAO249_ServerRequest_Interceptor
 {
 public:
 /// Constructor.
-TAO249_ServerRequest_Interceptor (void);
+TAO249_ServerRequest_Interceptor ();
 
 /// Destructor.
-~TAO249_ServerRequest_Interceptor (void);
+~TAO249_ServerRequest_Interceptor ();
 
 /**
  * @name Methods Required by the Server Request Interceptor
@@ -38,9 +38,9 @@ TAO249_ServerRequest_Interceptor (void);
  */
 //@{
 /// Return the name of this ServerRequestinterceptor.
-virtual char * name (void);
+virtual char * name ();
 
-virtual void destroy (void);
+virtual void destroy ();
 
 virtual void receive_request_service_contexts (
   PortableInterceptor::ServerRequestInfo_ptr ri);

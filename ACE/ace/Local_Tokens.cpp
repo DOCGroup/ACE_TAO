@@ -28,7 +28,7 @@ ACE_Tokens::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Tokens::ACE_Tokens (void)
+ACE_Tokens::ACE_Tokens ()
   : visited_ (0),
     reference_count_ (0)
 {
@@ -114,7 +114,7 @@ ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
     }
 }
 
-ACE_TPQ_Entry::ACE_TPQ_Entry (void)
+ACE_TPQ_Entry::ACE_TPQ_Entry ()
   : cond_var_ (lock_),
     proxy_ (0),
     nesting_level_ (0),
@@ -130,7 +130,7 @@ ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_TPQ_Entry &rhs)
   *this = rhs;
 }
 
-ACE_TPQ_Entry::~ACE_TPQ_Entry (void)
+ACE_TPQ_Entry::~ACE_TPQ_Entry ()
 {
   ACE_TRACE ("ACE_TPQ_Entry::~ACE_TPQ_Entry");
 }
@@ -196,7 +196,7 @@ ACE_TSS_TPQ_Entry::make_TSS_TYPE () const
   return temp;
 }
 
-ACE_TSS_TPQ_Entry::operator ACE_TPQ_Entry * (void)
+ACE_TSS_TPQ_Entry::operator ACE_TPQ_Entry * ()
 {
 #if !defined (ACE_NO_TSS_TOKENS)
   return  (ACE_TPQ_Entry *) (*((ACE_TSS<ACE_TPQ_Entry> *) this));
@@ -236,7 +236,7 @@ ACE_TPQ_Iterator::done () const
 }
 
 void
-ACE_TPQ_Iterator::advance (void)
+ACE_TPQ_Iterator::advance ()
 {
   ACE_TRACE ("ACE_TPQ_Iterator::advance");
 
@@ -276,7 +276,7 @@ ACE_Token_Proxy_Queue::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Token_Proxy_Queue::ACE_Token_Proxy_Queue (void)
+ACE_Token_Proxy_Queue::ACE_Token_Proxy_Queue ()
   : head_ (0),
     tail_ (0),
     size_ (0)
@@ -337,7 +337,7 @@ ACE_Token_Proxy_Queue::enqueue (ACE_TPQ_Entry *tpq,
 }
 
 void
-ACE_Token_Proxy_Queue::dequeue (void)
+ACE_Token_Proxy_Queue::dequeue ()
 {
   ACE_TRACE ("ACE_Token_Proxy_Queue::dequeue");
 
@@ -447,7 +447,7 @@ ACE_Mutex_Token::ACE_Mutex_Token (const ACE_TCHAR *name)
                     ACE_MAXTOKENNAMELEN);
 }
 
-ACE_Mutex_Token::~ACE_Mutex_Token (void)
+ACE_Mutex_Token::~ACE_Mutex_Token ()
 {
   ACE_TRACE ("ACE_Mutex_Token::~ACE_Mutex_Token");
 }
@@ -704,7 +704,7 @@ ACE_RW_Token::ACE_RW_Token (const ACE_TCHAR *name)
                     ACE_MAXTOKENNAMELEN);
 }
 
-ACE_RW_Token::~ACE_RW_Token (void)
+ACE_RW_Token::~ACE_RW_Token ()
 {
   ACE_TRACE ("ACE_RW_Token::~ACE_RW_Token");
 }
@@ -1103,7 +1103,7 @@ ACE_Token_Proxy::client_id (const ACE_TCHAR *client_id)
 }
 
 const ACE_TCHAR *
-ACE_Token_Proxy::owner_id (void)
+ACE_Token_Proxy::owner_id ()
 {
   ACE_TRACE ("ACE_Token_Proxy::owner_id");
   return this->token_->owner_id ();
@@ -1120,7 +1120,7 @@ ACE_Token_Proxy::name () const
 #  pragma warning (push)
 #  pragma warning (disable:4355)  /* Use of 'this' in initializer list */
 #endif
-ACE_Token_Proxy::ACE_Token_Proxy (void)
+ACE_Token_Proxy::ACE_Token_Proxy ()
 : token_ (0),
   waiter_ (this, 0)
 {
@@ -1142,7 +1142,7 @@ ACE_Token_Proxy::ACE_Token_Proxy (const ACE_Token_Proxy &)
 #endif
 
 // @@ should I do a mutex_->release ()?
-ACE_Token_Proxy::~ACE_Token_Proxy (void)
+ACE_Token_Proxy::~ACE_Token_Proxy ()
 {
   ACE_TRACE ("ACE_Token_Proxy::~ACE_Token_Proxy");
 
@@ -1407,7 +1407,7 @@ ACE_Token_Proxy::remove (ACE_Synch_Options &)
 }
 
 void
-ACE_Token_Proxy::sleep_hook (void)
+ACE_Token_Proxy::sleep_hook ()
 {
   ACE_TRACE ("ACE_Token_Proxy::sleep_hook");
   // Somebody wants our token!  (Let'em wait...)
@@ -1522,13 +1522,13 @@ ACE_Local_Mutex::create_token (const ACE_TCHAR *name)
   return temp;
 }
 
-ACE_Local_Mutex::~ACE_Local_Mutex (void)
+ACE_Local_Mutex::~ACE_Local_Mutex ()
 {
 }
 
 // ************************************************************
 
-ACE_Local_RLock::~ACE_Local_RLock (void)
+ACE_Local_RLock::~ACE_Local_RLock ()
 {
 }
 
@@ -1562,7 +1562,7 @@ ACE_Local_RLock::clone () const
 
 // ************************************************************
 
-ACE_Local_WLock::~ACE_Local_WLock (void)
+ACE_Local_WLock::~ACE_Local_WLock ()
 {
 }
 

@@ -97,7 +97,7 @@ public:
    *        new messages, which can minimize the "silly window syndrome."
    * @param ns Notification strategy. Pointer to an object conforming to the
    *        ACE_Notification_Strategy interface. If set, the object's
-   *        notify(void) method will be called each time data is added to
+   *        notify() method will be called each time data is added to
    *        this ACE_Message_Queue. @see ACE_Reactor_Notification_Strategy.
    */
   ACE_Message_Queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
@@ -1032,7 +1032,7 @@ public:
    *        new messages, which can minimize the "silly window syndrome."
    * @param ns Notification strategy. Pointer to an object conforming to the
    *        ACE_Notification_Strategy interface. If set, the object's
-   *        notify(void) method will be called each time data is added to
+   *        notify() method will be called each time data is added to
    *        this ACE_Message_Queue. @see ACE_Reactor_Notification_Strategy.
    */
   ACE_Message_Queue_Ex (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,

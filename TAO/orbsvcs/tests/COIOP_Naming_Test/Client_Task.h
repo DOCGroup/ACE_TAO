@@ -22,7 +22,7 @@ public:
                CORBA::Boolean result);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   CosNaming::NamingContext_var root_context_;

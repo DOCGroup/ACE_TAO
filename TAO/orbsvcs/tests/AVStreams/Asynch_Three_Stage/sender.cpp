@@ -38,7 +38,7 @@ Sender_StreamEndPoint::set_protocol_object (const char *flowname,
   return 0;
 }
 
-Sender::Sender (void)
+Sender::Sender ()
   : sender_mmdevice_ (0),
     frame_count_ (0),
     filename_ (ACE_TEXT("input")),
@@ -148,7 +148,7 @@ Sender::init (int argc, ACE_TCHAR *argv[])
 
 // Method to send data at the specified rate
 int
-Sender::pace_data (void)
+Sender::pace_data ()
 {
   // The time that should lapse between two consecutive frames sent.
   ACE_Time_Value inter_frame_time;
@@ -267,7 +267,7 @@ Sender::pace_data (void)
 }
 
 Connection_Manager &
-Sender::connection_manager (void)
+Sender::connection_manager ()
 {
   return this->connection_manager_;
 }

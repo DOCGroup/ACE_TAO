@@ -34,13 +34,13 @@ class TAO_Notify_Serv_Export TAO_Notify_Reactive_Task
 {
 public:
   /// Constructor
-  TAO_Notify_Reactive_Task (void);
+  TAO_Notify_Reactive_Task ();
 
   /// Destructor
   ~TAO_Notify_Reactive_Task (void) override;
 
   /// Init the reactive task.
-  void init (void);
+  void init ();
 
   /// Shutdown task
   void shutdown (void) override;
@@ -52,7 +52,7 @@ public:
   TAO_Notify_Timer* timer (void) override;
 
   /// Returns NULL.
-  virtual TAO_Notify_Buffering_Strategy* buffering_strategy (void);
+  virtual TAO_Notify_Buffering_Strategy* buffering_strategy ();
 
 private:
   /// The timer.

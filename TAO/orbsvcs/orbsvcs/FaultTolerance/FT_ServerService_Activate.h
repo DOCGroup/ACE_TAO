@@ -39,13 +39,13 @@ class TAO_FT_ServerORB_Export TAO_FT_ServerService_Activate
 {
 public:
   /// Constructor
-  TAO_FT_ServerService_Activate (void);
+  TAO_FT_ServerService_Activate ();
 
   /// The destructor
   ~TAO_FT_ServerService_Activate (void) override;
 
   /// Used to force the initialization.
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 static int

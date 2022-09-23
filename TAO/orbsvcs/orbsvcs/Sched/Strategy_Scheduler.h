@@ -117,7 +117,7 @@ public:
   ACE_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
   /// Destructor.
-  virtual ~ACE_Scheduler_Strategy (void);
+  virtual ~ACE_Scheduler_Strategy ();
 
     /**
      * = Compares two dispatch entries in strategy specific high to low

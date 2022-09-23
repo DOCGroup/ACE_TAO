@@ -18,7 +18,7 @@
 //               Test_Bounded_WString_Sequence
 // ************************************************************************
 
-Test_Bounded_WString_Sequence::Test_Bounded_WString_Sequence (void)
+Test_Bounded_WString_Sequence::Test_Bounded_WString_Sequence ()
   : opname_ (CORBA::string_dup ("test_bounded_wstrseq")),
     in_ (new Param_Test::Bounded_WStrSeq),
     inout_ (new Param_Test::Bounded_WStrSeq),
@@ -27,7 +27,7 @@ Test_Bounded_WString_Sequence::Test_Bounded_WString_Sequence (void)
 {
 }
 
-Test_Bounded_WString_Sequence::~Test_Bounded_WString_Sequence (void)
+Test_Bounded_WString_Sequence::~Test_Bounded_WString_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -89,7 +89,7 @@ Test_Bounded_WString_Sequence::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Bounded_WString_Sequence::reset_parameters (void)
+Test_Bounded_WString_Sequence::reset_parameters ()
 {
   this->inout_ = new Param_Test::Bounded_WStrSeq; // delete the previous ones
   this->out_ = new Param_Test::Bounded_WStrSeq;
@@ -118,7 +118,7 @@ Test_Bounded_WString_Sequence::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Bounded_WString_Sequence::check_validity (void)
+Test_Bounded_WString_Sequence::check_validity ()
 {
   CORBA::Boolean flag = 0;
   if ((this->in_->length () == this->inout_->length ()) &&
@@ -146,6 +146,6 @@ Test_Bounded_WString_Sequence::check_validity (CORBA::Request_ptr)
 }
 
 void
-Test_Bounded_WString_Sequence::print_values (void)
+Test_Bounded_WString_Sequence::print_values ()
 {
 }

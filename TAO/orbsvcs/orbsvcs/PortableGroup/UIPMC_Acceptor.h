@@ -57,7 +57,7 @@ public:
   const ACE_INET_Addr& address () const;
 
   /// Returns the array of endpoints in this acceptor
-  const ACE_INET_Addr *endpoints (void);
+  const ACE_INET_Addr *endpoints ();
 
   /**
    * The TAO_Acceptor methods, check the documentation in

@@ -51,7 +51,7 @@ namespace TAO
     IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core);
 
     /// Destructor.
-    ~IIOP_SSL_Connection_Handler (void);
+    ~IIOP_SSL_Connection_Handler ();
   };
 
   // ****************************************************************
@@ -80,7 +80,7 @@ namespace TAO
                           int &result);
 
     /// Destructor that restores the previous TSS SSL state.
-    ~Null_SSL_State_Guard (void);
+    ~Null_SSL_State_Guard ();
 
   private:
     /// The SSLIOP::Current implementation that was previously

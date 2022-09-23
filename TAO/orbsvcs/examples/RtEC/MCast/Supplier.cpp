@@ -2,7 +2,7 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-Supplier::Supplier (void)
+Supplier::Supplier ()
 {
 }
 
@@ -30,7 +30,7 @@ Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
 }
 
 void
-Supplier::disconnect (void)
+Supplier::disconnect ()
 {
   // Disconnect from the EC
   try
@@ -49,7 +49,7 @@ Supplier::disconnect (void)
 }
 
 void
-Supplier::perform_push (void)
+Supplier::perform_push ()
 {
   try
     {
@@ -69,7 +69,7 @@ Supplier::perform_push (void)
 }
 
 void
-Supplier::disconnect_push_supplier (void)
+Supplier::disconnect_push_supplier ()
 {
 }
 

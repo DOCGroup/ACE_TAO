@@ -43,7 +43,7 @@ class RTCP_Packet
 {
 public:
   /// Constructor for outgoing RTCP packets.
-  RTCP_Packet(void);
+  RTCP_Packet();
 
   /// Constructor for incoming RTCP packets.
   RTCP_Packet(char *buffer);
@@ -56,7 +56,7 @@ public:
 
   /// Returns the size of the packet.
   /// Defined in child class.
-  virtual unsigned int packet_size(void) = 0;
+  virtual unsigned int packet_size() = 0;
 
   /// Checks the validity of an RTCP packet.  RTCP packets can be sent
   /// together in a compound packet and is_first indicates the first packet
@@ -72,7 +72,7 @@ protected:
 
   /// Used to create the byte representation of the RTCP packet.
   /// Defined in child class.
-  virtual void build_packet(void) = 0;
+  virtual void build_packet() = 0;
 };
 
 /**
@@ -106,10 +106,10 @@ public:
                   unsigned char &length);
 
   /// Returns the reason for leaving the session.
-  const char *reason (void);
+  const char *reason ();
 
   /// Prints the contents of the packet.
-  void dump (void);
+  void dump ();
 
 private:
   /// Used to create the byte representation of the RTCP packet.
@@ -186,10 +186,10 @@ public:
   unsigned int packet_size(void) override;
 
   /// Returns the synchronization source id of the source sending this packet.
-  ACE_INT32 ssrc (void) { return this->ssrc_; }
+  ACE_INT32 ssrc () { return this->ssrc_; }
 
   /// Prints the contents of the packet.
-  void dump (void);
+  void dump ();
 
 private:
   /// Used to create the byte representation of the RTCP packet.
@@ -278,7 +278,7 @@ public:
   RTCP_SDES_Packet(char* buffer, int *len);
 
   /// Constructor for outgoing SDES packets.
-  RTCP_SDES_Packet(void);
+  RTCP_SDES_Packet();
 
   /// Destructor.
   ~RTCP_SDES_Packet(void) override;
@@ -306,12 +306,12 @@ public:
   unsigned int packet_size(void) override;
 
   /// Prints the contents of the packet.
-  void dump (void);
+  void dump ();
 
   /// This returns the synchronization source id for this packet.  This assumes
   /// that this source is only receiving messages from end systems (i.e. only
   /// one source id per SDES)
-  ACE_UINT32 ssrc (void) { return this->chunk_->ssrc_; }
+  ACE_UINT32 ssrc () { return this->chunk_->ssrc_; }
 
 private:
   /// Used to create the byte representation of the RTCP packet.
@@ -360,16 +360,16 @@ public:
   unsigned int packet_size(void) override;
 
   /// Returns the synchronization source id for the sender of this packet.
-  ACE_UINT32 ssrc (void) { return this->ssrc_; }
+  ACE_UINT32 ssrc () { return this->ssrc_; }
 
   /// Returns the most significant word of the NTP timestamp.
-  ACE_UINT32 ntp_ts_msw (void) { return this->ntp_ts_msw_; }
+  ACE_UINT32 ntp_ts_msw () { return this->ntp_ts_msw_; }
 
   /// Returns the least significant word of the NTP timestamp.
-  ACE_UINT32 ntp_ts_lsw (void) { return this->ntp_ts_lsw_; }
+  ACE_UINT32 ntp_ts_lsw () { return this->ntp_ts_lsw_; }
 
   /// Prints the contents of the packet.
-  void dump (void);
+  void dump ();
 
 private:
   /// Used to create the byte representation of the RTCP packet.

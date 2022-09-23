@@ -40,7 +40,7 @@ class ACE_Export ACE_Mem_Map : private ACE_Copy_Disabled
 {
 public:
   /// Default constructor.
-  ACE_Mem_Map (void);
+  ACE_Mem_Map ();
 
   /// Map a file from an open file descriptor @a handle.  This function
   /// will lookup the length of the file if it is not given.

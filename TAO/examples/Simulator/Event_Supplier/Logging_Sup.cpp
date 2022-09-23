@@ -69,7 +69,7 @@ Logging_Supplier::init ()
 }
 
 void
-Logging_Supplier::start_generating_events (void)
+Logging_Supplier::start_generating_events ()
 {
   unsigned long total_sent = 0;
 

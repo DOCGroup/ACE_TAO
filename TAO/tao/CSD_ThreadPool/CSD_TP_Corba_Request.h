@@ -62,7 +62,7 @@ namespace TAO
       void do_clone();
 
       /// Delegate to the FW_Server_Request_Wrapper dispatch() method.
-      void do_dispatch(void);
+      void do_dispatch();
 
       /// Delegate to the FW_Server_Request_Wrapper cancel() method.
       void do_cancel();

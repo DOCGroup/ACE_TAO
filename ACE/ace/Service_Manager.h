@@ -51,7 +51,7 @@ class ACE_Export ACE_Service_Manager : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  ACE_Service_Manager (void);
+  ACE_Service_Manager ();
 
   /// Destructor.
   ~ACE_Service_Manager (void) override;
@@ -64,11 +64,11 @@ protected:
 
   /// Trigger a reconfiguration of the Service Configurator by
   /// re-reading its local <svc.conf> file.
-  virtual int reconfigure_services (void);
+  virtual int reconfigure_services ();
 
   /// Determine all the services offered by this daemon and return the
   /// information back to the client.
-  virtual int list_services (void);
+  virtual int list_services ();
 
   // = Dynamic linking hooks.
   int init (int argc, ACE_TCHAR *argv[]) override;

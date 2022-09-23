@@ -40,7 +40,7 @@ ACE_Allocator *Malloc::instance_ = 0;
 // This is a factory that decides what type of allocator to create.
 
 ACE_Allocator *
-Malloc::instance (void)
+Malloc::instance ()
 {
   if (Malloc::instance_ == 0)
     {

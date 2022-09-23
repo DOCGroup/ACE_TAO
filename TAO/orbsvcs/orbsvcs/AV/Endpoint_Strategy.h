@@ -39,10 +39,10 @@ class TAO_AV_Export TAO_AV_Endpoint_Strategy
 {
 public:
   /// Constructor
-  TAO_AV_Endpoint_Strategy (void);
+  TAO_AV_Endpoint_Strategy ();
 
   /// Destructor
-  virtual ~TAO_AV_Endpoint_Strategy (void);
+  virtual ~TAO_AV_Endpoint_Strategy ();
 
   /// Called by the MMDevice, when it needs to create an A type endpoint
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
@@ -82,22 +82,22 @@ public:
 
   /// creates a new child process, and waits on a semaphore
   /// until the child process has finished creating the endpoints
-  virtual int activate (void);
+  virtual int activate ();
 
 protected:
   /// Bind to the naming service
-  virtual int bind_to_naming_service (void);
+  virtual int bind_to_naming_service ();
 
   /**
    * Get the object reference for the newly created stream
    * endpoint (which will be in the child process)
    * Subclasses will define the functionality for this
    */
-  virtual int get_stream_endpoint (void) = 0;
+  virtual int get_stream_endpoint () = 0;
 
   /// Get the Vdev object reference for the newly created
   /// endpoint
-  virtual int get_vdev (void);
+  virtual int get_vdev ();
 
   /// Naming context
   CosNaming::NamingContext_var naming_context_;

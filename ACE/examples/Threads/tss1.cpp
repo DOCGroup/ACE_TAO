@@ -43,8 +43,8 @@ template <ACE_SYNCH_DECL>
 class Tester: public ACE_Task<ACE_SYNCH_USE>
 {
 public:
-  Tester (void) {}
-  ~Tester (void) {}
+  Tester () {}
+  ~Tester () {}
 
   virtual int svc ();
 
@@ -57,7 +57,7 @@ public:
 };
 
 template <ACE_SYNCH_DECL> int
-Tester<ACE_SYNCH_USE>::svc (void)
+Tester<ACE_SYNCH_USE>::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) svc: setting error code to 1\n"));

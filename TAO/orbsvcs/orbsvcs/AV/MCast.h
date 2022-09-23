@@ -31,7 +31,7 @@ class TAO_AV_UDP_MCast_Transport
   :public TAO_AV_Transport
 {
 public:
-  TAO_AV_UDP_MCast_Transport (void);
+  TAO_AV_UDP_MCast_Transport ();
 
   TAO_AV_UDP_MCast_Transport (TAO_AV_UDP_MCast_Flow_Handler *handler);
 

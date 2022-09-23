@@ -45,7 +45,7 @@ namespace TAO
     {
     public:
       /// Destructor.
-      virtual ~Current_Impl (void);
+      virtual ~Current_Impl ();
 
       /**
        * @name SecurityLevel1::Current Methods

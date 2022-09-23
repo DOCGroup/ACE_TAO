@@ -236,7 +236,7 @@ ACE_Token_Collection::release (const ACE_TCHAR *token_name,
   return temp->release (options);
 }
 
-ACE_Token_Collection::~ACE_Token_Collection (void)
+ACE_Token_Collection::~ACE_Token_Collection ()
 {
   ACE_TRACE ("ACE_Token_Collection::~ACE_Token_Collection");
   COLLECTION::ITERATOR iterator (collection_);

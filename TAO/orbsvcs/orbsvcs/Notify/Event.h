@@ -47,7 +47,7 @@ public:
   // Codes to distinguish marshaled events in persistent storage
   enum {MARSHAL_ANY=1,MARSHAL_STRUCTURED=2};
   /// Constructor
-  TAO_Notify_Event (void);
+  TAO_Notify_Event ();
 
   /// Destructor
   ~TAO_Notify_Event () override;

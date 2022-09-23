@@ -39,7 +39,7 @@ My_Task::sleep_hook (void *)
 // Test out the behavior of the ACE_Token class.
 
 int
-My_Task::svc (void)
+My_Task::svc ()
 {
   for (size_t i = 0; i < 100; i++)
     {

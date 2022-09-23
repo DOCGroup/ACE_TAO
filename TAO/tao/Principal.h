@@ -79,7 +79,7 @@ namespace CORBA
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
      */
-    ~Principal (void);
+    ~Principal ();
 
   private:
     // = Prevent copying

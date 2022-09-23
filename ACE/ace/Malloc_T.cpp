@@ -792,7 +792,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
 
   // Search until we find the location where the blocks belongs.  Note
   // that addresses are kept in sorted order.
-
   ACE_SEH_TRY
     {
       for (;

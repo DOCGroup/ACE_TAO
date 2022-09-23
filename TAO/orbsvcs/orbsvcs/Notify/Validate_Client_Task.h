@@ -56,7 +56,7 @@ public:
 
   int svc () override;
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The delay of first time validate.

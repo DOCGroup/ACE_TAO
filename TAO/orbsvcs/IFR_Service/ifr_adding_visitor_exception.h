@@ -36,7 +36,7 @@ public:
                                 CORBA::Boolean in_reopened_);
 
   /// Destructor.
-  virtual ~ifr_adding_visitor_exception (void);
+  virtual ~ifr_adding_visitor_exception ();
 
   /// Visit a struct.
   int visit_scope (UTL_Scope *node) override;

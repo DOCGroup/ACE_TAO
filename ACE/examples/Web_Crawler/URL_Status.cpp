@@ -30,7 +30,7 @@ URL_Status::status (URL_Status::STATUS_CODE s)
   this->status_ = s;
 }
 
-int URL_Status::destroy (void)
+int URL_Status::destroy ()
 {
   delete this;
   return 0;

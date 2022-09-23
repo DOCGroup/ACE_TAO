@@ -76,7 +76,7 @@ public:
   void destroy (void) override;
 
   /// Activate the RTEventLog.
-  void activate (void);
+  void activate ();
 
   // = The RtecEventChannelAdmin::EventChannel interface methods.
   RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void) override;

@@ -37,10 +37,10 @@ Newsweek::operator delete (void *ptr)
 // Returns the Newsweek class pointer.
 // The ACE_BUILD_SVC_DLL and ACE_Svc_Export directives are necessary to
 // take care of exporting the function for Win32 platforms.
-extern "C" ACE_Svc_Export Magazine *create_magazine (void);
+extern "C" ACE_Svc_Export Magazine *create_magazine ();
 
 Magazine *
-create_magazine (void)
+create_magazine ()
 {
   Magazine *mag = 0;
   ACE_NEW_RETURN (mag, Newsweek, 0);

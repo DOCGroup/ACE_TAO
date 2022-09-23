@@ -15,13 +15,13 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CNamingTreeCtrl
 
-CNamingTreeCtrl::CNamingTreeCtrl (void)
+CNamingTreeCtrl::CNamingTreeCtrl ()
 {
   m_ContextPopup.LoadMenu (IDR_CONTEXT_POPUP);
   m_ObjectPopup.LoadMenu (IDR_OBJECT_POPUP);
 }
 
-CNamingTreeCtrl::~CNamingTreeCtrl (void)
+CNamingTreeCtrl::~CNamingTreeCtrl ()
 {
 }
 

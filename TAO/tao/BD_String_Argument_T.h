@@ -67,9 +67,9 @@ namespace TAO
   {
   public:
     In_BD_String_Clonable_Argument_T (const typename S_var::s_traits::char_type * x);
-    virtual ~In_BD_String_Clonable_Argument_T (void);
+    virtual ~In_BD_String_Clonable_Argument_T ();
 
-    virtual Argument* clone (void);
+    virtual Argument* clone ();
   private:
     bool is_clone_;
   };
@@ -93,7 +93,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_var::s_traits::char_type *& arg (void);
+    typename S_var::s_traits::char_type *& arg ();
 
   private:
     typename S_var::s_traits::char_type *& x_;
@@ -117,7 +117,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_var::s_traits::char_type *& arg (void);
+    typename S_var::s_traits::char_type *& arg ();
 
   private:
     typename S_var::s_traits::char_type *& x_;
@@ -135,16 +135,16 @@ namespace TAO
   class Ret_BD_String_Argument_T : public RetArgument
   {
   public:
-    Ret_BD_String_Argument_T (void);
+    Ret_BD_String_Argument_T ();
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_var::s_traits::char_type *& arg (void);
+    typename S_var::s_traits::char_type *& arg ();
 
-    typename S_var::s_traits::char_type * excp (void);
-    typename S_var::s_traits::char_type * retn (void);
+    typename S_var::s_traits::char_type * excp ();
+    typename S_var::s_traits::char_type * retn ();
 
   private:
     S_var x_;

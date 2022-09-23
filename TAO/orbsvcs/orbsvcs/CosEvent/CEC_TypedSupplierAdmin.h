@@ -51,7 +51,7 @@ public:
 
   /// The typed event channel is shutting down, inform all the consumers of
   /// this
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   // = The CosTypedEventChannelAdmin::TypedSupplierAdmin methods...
   CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr

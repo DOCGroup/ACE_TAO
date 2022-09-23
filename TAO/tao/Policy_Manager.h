@@ -37,7 +37,7 @@ class TAO_Policy_Manager
 {
 public:
   /// constructor
-  TAO_Policy_Manager (void);
+  TAO_Policy_Manager ();
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);

@@ -45,7 +45,7 @@ class TAO_Strategies_Export TAO_DIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_DIOP_Acceptor (void);
+  TAO_DIOP_Acceptor ();
 
   /// Destructor.
   ~TAO_DIOP_Acceptor (void) override;
@@ -55,7 +55,7 @@ public:
   const ACE_INET_Addr& address () const;
 
   /// Returns the array of endpoints in this acceptor
-  const ACE_INET_Addr *endpoints (void);
+  const ACE_INET_Addr *endpoints ();
 
   /// Returns address for default endpoint
   const ACE_INET_Addr& default_address () const;

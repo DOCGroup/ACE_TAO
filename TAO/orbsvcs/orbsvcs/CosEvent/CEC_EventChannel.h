@@ -130,11 +130,11 @@ public:
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
-  virtual void activate (void);
+  virtual void activate ();
 
   /// Shutdown any internal threads, cleanup all the internal
   /// structures, flush all the messages, etc.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Access the dispatching module....
   TAO_CEC_Dispatching* dispatching () const;
@@ -183,14 +183,14 @@ public:
   void destroy_proxy_collection (TAO_CEC_ProxyPullConsumer_Collection*);
 
   /// Access the supplier and consumer POAs from the factory.
-  PortableServer::POA_ptr supplier_poa (void);
-  PortableServer::POA_ptr consumer_poa (void);
+  PortableServer::POA_ptr supplier_poa ();
+  PortableServer::POA_ptr consumer_poa ();
 
   /// Locking strategies for the ProxyPushConsumer and
   /// ProxyPushSupplier objects
-  ACE_Lock* create_consumer_lock (void);
+  ACE_Lock* create_consumer_lock ();
   void destroy_consumer_lock (ACE_Lock*);
-  ACE_Lock* create_supplier_lock (void);
+  ACE_Lock* create_supplier_lock ();
   void destroy_supplier_lock (ACE_Lock*);
 
   /// Used to inform the EC that a Consumer has connected or
@@ -238,7 +238,7 @@ public:
   /// Commit suicide.
   void destroy (void) override;
 
-  ServantRetryMap& get_servant_retry_map (void);
+  ServantRetryMap& get_servant_retry_map ();
 
   /// Forwarded to the factory
   CORBA::Policy_ptr

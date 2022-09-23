@@ -73,7 +73,7 @@ public:
   ~TAO_Trader (void) override;
 
   /// Accessor for the structure with all the service offers.
-  Offer_Database& offer_database (void);
+  Offer_Database& offer_database ();
 
   /// Returns the trader
   ACE_Lock &lock (void) override;

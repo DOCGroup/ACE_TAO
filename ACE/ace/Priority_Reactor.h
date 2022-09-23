@@ -68,7 +68,7 @@ protected:
 
 private:
   /// A small helper to initialize the bucket.
-  void init_bucket (void);
+  void init_bucket ();
 
   /// Build the bucket from the given dispatch_mask.  Return -1 on
   /// failure, 0 otherwise.

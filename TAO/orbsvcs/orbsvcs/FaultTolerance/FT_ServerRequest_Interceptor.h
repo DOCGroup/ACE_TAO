@@ -51,7 +51,7 @@ namespace TAO
   {
   public:
     /// Constructor.
-    FT_ServerRequest_Interceptor (void);
+    FT_ServerRequest_Interceptor ();
 
     /// Destructor.
     ~FT_ServerRequest_Interceptor (void) override;

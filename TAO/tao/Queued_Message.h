@@ -78,7 +78,7 @@ public:
                       bool is_heap_allocated = false);
 
   /// Destructor
-  virtual ~TAO_Queued_Message (void);
+  virtual ~TAO_Queued_Message ();
 
   /** @name Intrusive list manipulation
    *
@@ -190,7 +190,7 @@ public:
    * Asynchronous (SYNC_NONE) messages are allocated from the heap (or
    * a pool), they need to be reclaimed explicitly.
    */
-  virtual void destroy (void) = 0;
+  virtual void destroy () = 0;
 
   /// Check for timeout
   /**

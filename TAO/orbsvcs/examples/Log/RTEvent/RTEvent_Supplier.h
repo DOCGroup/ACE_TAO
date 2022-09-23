@@ -31,7 +31,7 @@ class Supplier : public POA_RtecEventComm::PushSupplier
   //   It simply publishes one event type.
   //
 public:
-  Supplier (void);
+  Supplier ();
   // Constructor
 
   int run (int argc, ACE_TCHAR* argv[]);
@@ -39,7 +39,7 @@ public:
 
   // = The RtecEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
   // The skeleton methods.
 
 private:

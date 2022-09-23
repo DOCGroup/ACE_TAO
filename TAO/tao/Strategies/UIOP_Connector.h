@@ -50,7 +50,7 @@ public:
    * @@ Do we want to pass in the tag here or should it be statically
    * defined?
    */
-  TAO_UIOP_Connector (void);
+  TAO_UIOP_Connector ();
 
   /// Destructor
   ~TAO_UIOP_Connector (void) override;

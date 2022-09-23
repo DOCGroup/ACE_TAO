@@ -33,7 +33,7 @@ namespace TAO_FTRT {
   {
   public:
     /// Constructor.
-    FTRT_ClientORB_Loader (void);
+    FTRT_ClientORB_Loader ();
 
     /// Destructor.
     ~FTRT_ClientORB_Loader (void) override;

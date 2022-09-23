@@ -39,7 +39,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyPushConsumer
  friend class TAO_Notify_Builder;
 public:
   /// Constructor
-  TAO_Notify_ProxyPushConsumer (void);
+  TAO_Notify_ProxyPushConsumer ();
 
   /// Destructor
   ~TAO_Notify_ProxyPushConsumer () override;

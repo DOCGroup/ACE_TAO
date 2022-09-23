@@ -35,7 +35,7 @@ class TAO_RTCORBA_Export TAO_RT_Protocols_Hooks : public TAO_Protocols_Hooks
 {
 public:
   /// Constructor
-  TAO_RT_Protocols_Hooks (void);
+  TAO_RT_Protocols_Hooks ();
 
   /// Destructor
   ~TAO_RT_Protocols_Hooks (void) override;

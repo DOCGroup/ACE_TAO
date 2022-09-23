@@ -10,7 +10,7 @@
 #endif /* __ACE_INLINE__ */
 
 void
-Callback_i::shutdown (void)
+Callback_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
   // Shutdown the server before we shutdown our own ORB
@@ -20,7 +20,7 @@ Callback_i::shutdown (void)
 }
 
 void
-Callback_i::callback_method (void)
+Callback_i::callback_method ()
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Callback method called\n"));
@@ -91,7 +91,7 @@ Simple_Server_i::callback_object (Callback_ptr callback
 
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
   this->orb_->shutdown (false);
 }

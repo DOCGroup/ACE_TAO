@@ -115,12 +115,12 @@ Cubit_Factory_i::Cubit_Factory_i (CORBA::ORB_ptr orb)
 
 // Destructor
 
-Cubit_Factory_i::~Cubit_Factory_i (void)
+Cubit_Factory_i::~Cubit_Factory_i ()
 {
 }
 
 Cubit_ptr
-Cubit_Factory_i::make_cubit (void)
+Cubit_Factory_i::make_cubit ()
 {
   return my_cubit_._this ();
 }
@@ -140,12 +140,12 @@ Cubit_i::Cubit_i (CORBA::ORB_ptr orb)
 
 // Destructor
 
-Cubit_i::~Cubit_i (void)
+Cubit_i::~Cubit_i ()
 {
 }
 
 PortableServer::POA_ptr
-Cubit_i::_default_POA (void)
+Cubit_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -157,13 +157,13 @@ Cubit_i::set_default_poa (PortableServer::POA_ptr poa)
 }
 
 void
-Cubit_i::cube_oneway (void)
+Cubit_i::cube_oneway ()
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_ONEWAY_START);
 }
 
 void
-Cubit_i::cube_void (void)
+Cubit_i::cube_void ()
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_VOID_START);
 }
@@ -407,7 +407,7 @@ Cubit_i::cube_any_struct (const CORBA::Any & any)
 
 // Shutdown.
 
-void Cubit_i::shutdown (void)
+void Cubit_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "%C\n",
@@ -418,7 +418,7 @@ void Cubit_i::shutdown (void)
 
 
 void
-Cubit_i::ping (void)
+Cubit_i::ping ()
 {
   // do nothing
 }

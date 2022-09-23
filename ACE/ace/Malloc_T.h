@@ -416,9 +416,9 @@ class ACE_Malloc_FIFO_Iterator_T;
  *   - constructor (const ACE_TCHAR *pool_name, const MEMORY_POOL_OPTIONS *options)
  *   - void dump () const (needed if ACE is built with ACE_HAS_DUMP defined)
  *   - void *init_acquire (size_t nbytes, size_t &rounded_bytes, int &first_time);
- *   - int release (void)
+ *   - int release ()
  *   - void *acquire (size_t nbytes, size_t &rounded_bytes)
- *   - void *base_addr (void)
+ *   - void *base_addr ()
  *   - seh_selector() (only needed on Windows)
  *
  * Note that the ACE_Allocator_Adapter class can be used to integrate allocator

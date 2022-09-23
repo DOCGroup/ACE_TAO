@@ -22,8 +22,8 @@
 class PMC_Flo : public PM_Client
 {
 public:
-  PMC_Flo (void);
-  virtual void process (void);
+  PMC_Flo ();
+  virtual void process ();
 
 protected:
   virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record);

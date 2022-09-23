@@ -124,12 +124,12 @@ private:
   /// release the request, reset the accepting flag if necessary
   void clear_request (TAO::CSD::TP_Request_Handle &r);
 
-  void add_busy (void);
-  void remove_busy (void);
-  void add_active (void);
+  void add_busy ();
+  void remove_busy ();
+  void add_active ();
   bool remove_active (bool);
-  bool need_active (void);
-  bool above_minimum (void);
+  bool need_active ();
+  bool above_minimum ();
 
   typedef TAO_SYNCH_MUTEX         LockType;
   typedef TAO_Condition<LockType> ConditionType;

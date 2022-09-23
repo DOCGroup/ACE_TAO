@@ -60,7 +60,7 @@ public:
    * (non-virtual, no exception handling) relative of the idl interface
    * implementation <priority_model> below.
    */
-  RTCORBA::PriorityModel get_priority_model (void);
+  RTCORBA::PriorityModel get_priority_model ();
 
   RTCORBA::PriorityModel priority_model (void) override;
 
@@ -96,7 +96,7 @@ protected:
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
   friend class TAO_RT_PolicyFactory;
-  TAO_PriorityModelPolicy (void);
+  TAO_PriorityModelPolicy ();
 
 private:
   /// Attributes.
@@ -169,7 +169,7 @@ class TAO_RTCORBA_Export TAO_PrivateConnectionPolicy
 {
 public:
   /// Constructor.
-  TAO_PrivateConnectionPolicy (void);
+  TAO_PrivateConnectionPolicy ();
 
   /// Copy constructor.
   TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &rhs);
@@ -225,7 +225,7 @@ public:
    * make a copy like the idl accessor <priority_bands> implementation
    * below.)
    */
-  RTCORBA::PriorityBands &priority_bands_rep (void);
+  RTCORBA::PriorityBands &priority_bands_rep ();
 
   RTCORBA::PriorityBands *priority_bands (void) override;
 
@@ -259,7 +259,7 @@ protected:
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
   friend class TAO_RT_PolicyFactory;
-  TAO_PriorityBandedConnectionPolicy (void);
+  TAO_PriorityBandedConnectionPolicy ();
 
 private:
   /// Attribute.
@@ -292,7 +292,7 @@ public:
    * make a copy like the idl accessor <protocols> implementation
    * below.)
    */
-  RTCORBA::ProtocolList & protocols_rep (void);
+  RTCORBA::ProtocolList & protocols_rep ();
 
   RTCORBA::ProtocolList *protocols (void) override;
 
@@ -348,7 +348,7 @@ public:
    * make a copy like the idl accessor <protocols> implementation
    * below.)
    */
-  RTCORBA::ProtocolList & protocols_rep (void);
+  RTCORBA::ProtocolList & protocols_rep ();
 
   RTCORBA::ProtocolList *protocols (void) override;
 
@@ -384,7 +384,7 @@ protected:
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
   friend class TAO_RT_PolicyFactory;
-  TAO_ClientProtocolPolicy (void);
+  TAO_ClientProtocolPolicy ();
 
 private:
   /// Attribute.
@@ -563,7 +563,7 @@ public:
 
   void no_delay (CORBA::Boolean no_delay) override;
 
-  CORBA::Boolean enable_network_priority (void);
+  CORBA::Boolean enable_network_priority ();
 
   CORBA::Long preallocate_buffer_size (void) override;
 
@@ -747,7 +747,7 @@ protected:
   ~TAO_GIOP_Protocol_Properties () override;
 
   friend class TAO_Protocol_Properties_Factory;
-  TAO_GIOP_Protocol_Properties (void);
+  TAO_GIOP_Protocol_Properties ();
 };
 
 //*************************************************************************
@@ -776,7 +776,7 @@ public:
   static RTCORBA::ProtocolProperties *create_orb_protocol_property (IOP::ProfileId id);
 
 private:
-  TAO_Protocol_Properties_Factory (void);
+  TAO_Protocol_Properties_Factory ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

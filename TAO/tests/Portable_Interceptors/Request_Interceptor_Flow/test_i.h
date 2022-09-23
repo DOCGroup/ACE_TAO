@@ -37,7 +37,7 @@ public:
                             CORBA::ULongSeq_out myseq);
 
   /// Shutdown the ORB.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Pseudo-reference to the ORB.

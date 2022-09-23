@@ -47,7 +47,7 @@ public:
   char object_key_delimiter () const override;
 
   /// Return the char string prefix.
-  static const char *prefix (void);
+  static const char *prefix ();
 
   /// Profile constructor, same as above except the object_key has
   /// already been marshaled.

@@ -44,7 +44,7 @@ public:
   TAO_IORInterceptor_Adapter *create (void) override;
 
   // Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 static int

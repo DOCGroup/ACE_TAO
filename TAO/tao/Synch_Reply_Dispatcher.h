@@ -48,10 +48,10 @@ public:
                               IOP::ServiceContextList &sc);
 
   /// Destructor.
-  virtual ~TAO_Synch_Reply_Dispatcher (void);
+  virtual ~TAO_Synch_Reply_Dispatcher ();
 
   /// Return the reply CDR.
-  TAO_InputCDR &reply_cdr (void);
+  TAO_InputCDR &reply_cdr ();
 
   int dispatch_reply (TAO_Pluggable_Reply_Params &params) override;
 

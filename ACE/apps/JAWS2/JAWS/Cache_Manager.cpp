@@ -27,7 +27,7 @@ JAWS_String_Equal_Functor::operator int () const
   return this->i_ == 0;
 }
 
-JAWS_Strdup_String::JAWS_Strdup_String (void)
+JAWS_Strdup_String::JAWS_Strdup_String ()
   : c_ (0),
     s_ (0)
 {
@@ -48,7 +48,7 @@ JAWS_Strdup_String::JAWS_Strdup_String (const JAWS_Strdup_String &s)
   ++*(this->c_);
 }
 
-JAWS_Strdup_String::~JAWS_Strdup_String (void)
+JAWS_Strdup_String::~JAWS_Strdup_String ()
 {
   if (this->c_ && --*(this->c_) == 0)
     {

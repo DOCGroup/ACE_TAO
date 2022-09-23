@@ -34,12 +34,12 @@ class Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
   /// Constructor
-  Supplier (void);
+  Supplier ();
 
   // = The RtecEventComm::PushSupplier methods
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
 private:
 };

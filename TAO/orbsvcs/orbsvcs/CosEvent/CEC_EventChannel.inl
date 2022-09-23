@@ -140,19 +140,19 @@ TAO_CEC_EventChannel::destroy_proxy_collection (TAO_CEC_ProxyPullSupplier_Collec
 }
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_CEC_EventChannel::supplier_poa (void)
+TAO_CEC_EventChannel::supplier_poa ()
 {
   return PortableServer::POA::_duplicate (this->supplier_poa_.in ());
 }
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_CEC_EventChannel::consumer_poa (void)
+TAO_CEC_EventChannel::consumer_poa ()
 {
   return PortableServer::POA::_duplicate (this->consumer_poa_.in ());
 }
 
 ACE_INLINE ACE_Lock*
-TAO_CEC_EventChannel::create_consumer_lock (void)
+TAO_CEC_EventChannel::create_consumer_lock ()
 {
   return this->factory_->create_consumer_lock ();
 }
@@ -164,7 +164,7 @@ TAO_CEC_EventChannel::destroy_consumer_lock (ACE_Lock* x)
 }
 
 ACE_INLINE ACE_Lock*
-TAO_CEC_EventChannel::create_supplier_lock (void)
+TAO_CEC_EventChannel::create_supplier_lock ()
 {
   return this->factory_->create_supplier_lock ();
 }
@@ -194,7 +194,7 @@ TAO_CEC_EventChannel::disconnect_callbacks () const
 }
 
 ACE_INLINE TAO_CEC_EventChannel::ServantRetryMap&
-TAO_CEC_EventChannel::get_servant_retry_map (void)
+TAO_CEC_EventChannel::get_servant_retry_map ()
 {
   return this->retry_map_;
 }

@@ -59,7 +59,7 @@ protected:
   TAO_Notify_Method_Request_Lookup (const TAO_Notify::Delivery_Request_Ptr& delivery, TAO_Notify_ProxyConsumer * proxy);
 
   /// Execute the dispatch operation.
-  int execute_i (void);
+  int execute_i ();
 
   ///= TAO_ESF_Worker method
   void work (TAO_Notify_ProxySupplier* proxy_supplier) override;

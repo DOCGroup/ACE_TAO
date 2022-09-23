@@ -24,12 +24,12 @@ Handler::open (void *)
   return 0;
 }
 
-Handler::Handler (void)
+Handler::Handler ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P) starting handler %x\n", this));
 }
 
-Handler::~Handler (void)
+Handler::~Handler ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P) shutting down handler %x\n", this));
   ACE_Reactor::end_event_loop ();

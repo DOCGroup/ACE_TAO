@@ -47,7 +47,7 @@ namespace TAO
   {
     namespace IIOP
     {
-      int current_static_initializer (void);
+      int current_static_initializer ();
     }
   }
 }

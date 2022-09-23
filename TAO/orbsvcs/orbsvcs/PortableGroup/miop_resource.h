@@ -49,7 +49,7 @@ class TAO_PortableGroup_Export TAO_MIOP_Resource_Factory
 {
 public:
   /// Constructor.
-  TAO_MIOP_Resource_Factory (void);
+  TAO_MIOP_Resource_Factory ();
 
   /// Destructor.
   ~TAO_MIOP_Resource_Factory (void) override;

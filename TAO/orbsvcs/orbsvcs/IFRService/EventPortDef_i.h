@@ -45,9 +45,9 @@ public:
   //// Destructor
   ~TAO_EventPortDef_i (void) override;
 
-  virtual CORBA::ComponentIR::EventDef_ptr event (void);
+  virtual CORBA::ComponentIR::EventDef_ptr event ();
 
-  CORBA::ComponentIR::EventDef_ptr event_i (void);
+  CORBA::ComponentIR::EventDef_ptr event_i ();
 
   virtual void event (CORBA::ComponentIR::EventDef_ptr event);
 

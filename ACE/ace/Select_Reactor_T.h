@@ -594,10 +594,10 @@ protected:
   virtual int any_ready_i (ACE_Select_Reactor_Handle_Set &handle_set);
 
   /// Take corrective action when errors occur.
-  virtual int handle_error (void);
+  virtual int handle_error ();
 
   /// Make sure the handles are all valid.
-  virtual int check_handles (void);
+  virtual int check_handles ();
 
   /// Wait for events to occur.
   virtual int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &,
@@ -676,7 +676,7 @@ protected:
   ACE_Lock_Adapter<ACE_SELECT_REACTOR_TOKEN> lock_adapter_;
 
   /// Release the token lock when a Win32 structured exception occurs.
-  int release_token (void);
+  int release_token ();
 
   /// Stops the VC++ compiler from bitching about exceptions and destructors
   int handle_events_i (ACE_Time_Value *max_wait_time = 0);

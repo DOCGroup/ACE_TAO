@@ -35,7 +35,7 @@ public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer_Reactor > Ptr;
 
   /// Constructor
-  TAO_Notify_Timer_Reactor (void);
+  TAO_Notify_Timer_Reactor ();
 
   /// Destructor
   ~TAO_Notify_Timer_Reactor () override;

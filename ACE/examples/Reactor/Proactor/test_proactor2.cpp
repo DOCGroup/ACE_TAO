@@ -82,7 +82,7 @@ static int initial_read_size = BUFSIZ;
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  int svc (void) ;
+  int svc () ;
 };
 
 
@@ -105,8 +105,8 @@ int MyTask::svc ()
 class Receiver : public ACE_Service_Handler
 {
 public:
-  Receiver (void);
-  ~Receiver (void);
+  Receiver ();
+  ~Receiver ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// This is called after the new connection has been accepted.
@@ -128,7 +128,7 @@ protected:
                                     &result);
 
 private:
-  int  initiate_read_stream  (void);
+  int  initiate_read_stream  ();
   int  initiate_write_stream (ACE_Message_Block & mb, int nBytes );
   bool check_destroy () ;
 
@@ -143,7 +143,7 @@ private:
 
 long Receiver::nSessions = 0 ;
 
-Receiver::Receiver (void)
+Receiver::Receiver ()
   : handle_ (ACE_INVALID_HANDLE),
     nIOCount ( 0 )
 {
@@ -152,7 +152,7 @@ Receiver::Receiver (void)
   ACE_DEBUG ((LM_DEBUG, "Receiver Ctor nSessions=%d\n", nSessions ));
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
   ACE_GUARD (MyMutex, locker, m_Mtx);
   nSessions -- ;
@@ -210,7 +210,7 @@ void Receiver::open (ACE_HANDLE handle,
   check_destroy ();
 }
 
-int Receiver::initiate_read_stream (void)
+int Receiver::initiate_read_stream ()
 {
   ACE_GUARD_RETURN (MyMutex, locker, m_Mtx, -1);
 
@@ -359,8 +359,8 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result
 class Sender : public ACE_Handler
 {
 public:
-  Sender (void);
-  ~Sender (void);
+  Sender ();
+  ~Sender ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
@@ -382,8 +382,8 @@ virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
 &result);
 
 private:
-int initiate_read_stream (void);
-int initiate_write_stream (void);
+int initiate_read_stream ();
+int initiate_write_stream ();
 
 /// Network I/O handle
 ACE_SOCK_Stream stream_;
@@ -403,14 +403,14 @@ long    nIOCount ;
 
 static const char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
 
-Sender::Sender (void)
+Sender::Sender ()
   :nIOCount ( 0 )
 {
   // Moment of inspiration... :-)
   this->welcome_message_.init (data, ACE_OS::strlen (data));
 }
 
-Sender::~Sender (void)
+Sender::~Sender ()
 {
   this->close ();
 }
@@ -474,7 +474,7 @@ int Sender::open (const ACE_TCHAR *host, u_short port)
   return 0;
 }
 
-int Sender::initiate_write_stream (void)
+int Sender::initiate_write_stream ()
 {
   ACE_GUARD_RETURN (MyMutex, locker, m_Mtx, -1);
 
@@ -496,7 +496,7 @@ int Sender::initiate_write_stream (void)
   return 0;
 }
 
-int Sender::initiate_read_stream (void)
+int Sender::initiate_read_stream ()
 {
   ACE_GUARD_RETURN (MyMutex, locker, m_Mtx, -1);
 

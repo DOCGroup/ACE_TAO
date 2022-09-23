@@ -55,7 +55,7 @@ class TAO_Async_IORTable_Export TAO_Async_Table_Adapter_Factory :
 {
 public:
   /// Constructor
-  TAO_Async_Table_Adapter_Factory (void);
+  TAO_Async_Table_Adapter_Factory ();
 
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   /// details.

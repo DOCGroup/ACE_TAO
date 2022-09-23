@@ -41,7 +41,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ConsumerAdmin :
 public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_ConsumerAdmin > Ptr;
   /// Constructor
-  TAO_Notify_ConsumerAdmin (void);
+  TAO_Notify_ConsumerAdmin ();
 
   /// Destructor
   ~TAO_Notify_ConsumerAdmin () override;

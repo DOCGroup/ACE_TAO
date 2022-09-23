@@ -89,7 +89,7 @@ protected:
 
   /// Fully initialize this object.  This method is used predominantly
   /// to set the ORB core pointer.
-  int init (void);
+  int init ();
 
   /// Set the TSS Security::Current implementation.
   /**
@@ -101,7 +101,7 @@ protected:
    * There is no function that places the implementation pointer in
    * TSS.  The underlying security mechanism does that.
    */
-  TAO::Security::Current_Impl *implementation (void);
+  TAO::Security::Current_Impl *implementation ();
 
 private:
   TAO_Security_Current (const TAO_Security_Current &) = delete;

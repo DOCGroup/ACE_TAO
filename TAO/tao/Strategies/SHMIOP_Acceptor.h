@@ -41,7 +41,7 @@ class TAO_Strategies_Export TAO_SHMIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_SHMIOP_Acceptor (void);
+  TAO_SHMIOP_Acceptor ();
 
   /// Destructor.
   ~TAO_SHMIOP_Acceptor (void) override;

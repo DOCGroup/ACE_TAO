@@ -21,7 +21,7 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   void test_system_exception (Test::Hello_ptr hello_ptr);

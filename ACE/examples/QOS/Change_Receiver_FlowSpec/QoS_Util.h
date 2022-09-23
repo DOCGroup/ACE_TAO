@@ -28,10 +28,10 @@ public:
   QoS_Util (int argc, ACE_TCHAR *argv[]);
 
   // destructor.
-  ~QoS_Util (void);
+  ~QoS_Util ();
 
   // Parse command-line arguments.
-  int parse_args (void);
+  int parse_args ();
 
   // GET methods.
   ACE_INET_Addr *mult_session_addr () const;

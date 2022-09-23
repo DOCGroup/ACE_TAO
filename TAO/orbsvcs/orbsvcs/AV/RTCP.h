@@ -134,7 +134,7 @@ class TAO_AV_Export TAO_AV_RTCP_Callback : public TAO_AV_Callback
 {
 public:
   /// RTCP callback.
-  TAO_AV_RTCP_Callback (void);
+  TAO_AV_RTCP_Callback ();
 
   /// virtual destructor.
   ~TAO_AV_RTCP_Callback (void) override;
@@ -168,7 +168,7 @@ public:
 
   int send_report(int bye);
   void schedule (int ms);
-  TAO_AV_RTP_State *state (void);
+  TAO_AV_RTP_State *state ();
   void ts_offset (ACE_UINT32 offset);
 
 protected:
@@ -229,7 +229,7 @@ public:
   int destroy (void) override;
 
   void ssrc (ACE_UINT32 ssrc) {this->ssrc_ = ssrc; }
-  ACE_UINT32 ssrc (void) { return this->ssrc_; }
+  ACE_UINT32 ssrc () { return this->ssrc_; }
 
   void ts_offset (ACE_UINT32 ts_offset);
 

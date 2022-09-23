@@ -43,7 +43,7 @@ public:
   typedef CosNotifyChannelAdmin::ProxyIDSeq_var SEQ_VAR;
 
   /// Constructor
-  TAO_Notify_Proxy (void);
+  TAO_Notify_Proxy ();
 
   /// Destructor
   ~TAO_Notify_Proxy () override;
@@ -57,7 +57,7 @@ public:
       CORBA::Long id) override;
 
   /// Deactivate
-  void deactivate (void);
+  void deactivate ();
 
   /// Obtain the Proxy's subscribed types.
   void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types);
@@ -73,13 +73,13 @@ public:
                       const TAO_Notify_EventTypeSeq& removed);
 
   /// Have updates been turned off.
-  CORBA::Boolean updates_off (void);
+  CORBA::Boolean updates_off ();
 
   /// Destroy this object.
-  virtual void destroy (void) = 0;
+  virtual void destroy () = 0;
 
   /// Access our Peer.
-  virtual TAO_Notify_Peer* peer (void) = 0;
+  virtual TAO_Notify_Peer* peer () = 0;
 
   /// Implement the Obtain Types.
   virtual CosNotification::EventTypeSeq* obtain_types (

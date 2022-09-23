@@ -23,7 +23,7 @@ ACE_SUN_Proactor::ACE_SUN_Proactor (size_t max_aio_operations)
 }
 
 // Destructor.
-ACE_SUN_Proactor::~ACE_SUN_Proactor (void)
+ACE_SUN_Proactor::~ACE_SUN_Proactor ()
 {
   this->close ();
 }
@@ -37,7 +37,7 @@ ACE_SUN_Proactor::handle_events (ACE_Time_Value &wait_time)
 }
 
 int
-ACE_SUN_Proactor::handle_events (void)
+ACE_SUN_Proactor::handle_events ()
 {
   return this->handle_events_i (0);
 }
@@ -304,7 +304,7 @@ ACE_SUN_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result *result)
 }
 
 ACE_POSIX_Proactor::Proactor_Type
-ACE_SUN_Proactor::get_impl_type (void)
+ACE_SUN_Proactor::get_impl_type ()
 {
   return PROACTOR_SUN;
 }

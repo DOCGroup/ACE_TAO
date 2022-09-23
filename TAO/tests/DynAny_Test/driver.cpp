@@ -57,14 +57,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 
 // constructor
-Driver::Driver (void)
+Driver::Driver ()
   : test_type_ (NO_TEST),
     debug_ (0)
 {
 }
 
 // destructor
-Driver::~Driver (void)
+Driver::~Driver ()
 {
   if (this->orb_.in () != 0)
     {
@@ -158,7 +158,7 @@ Driver::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Driver::run (void)
+Driver::run ()
 {
   int error_count = 0;
 

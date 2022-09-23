@@ -33,7 +33,7 @@ class TAO_RTSchedEvent_Export TAO_EC_Sched_Factory : public TAO_EC_Default_Facto
 {
 public:
   /// Constructor
-  TAO_EC_Sched_Factory (void);
+  TAO_EC_Sched_Factory ();
 
   /// destructor...
   ~TAO_EC_Sched_Factory (void) override;

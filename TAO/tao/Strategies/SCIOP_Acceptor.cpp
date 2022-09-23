@@ -18,7 +18,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor (void)
+TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_SCIOP_PROFILE),
     addrs_ (0),
     port_span_ (1),
@@ -34,7 +34,7 @@ TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor (void)
 {
 }
 
-TAO_SCIOP_Acceptor::~TAO_SCIOP_Acceptor (void)
+TAO_SCIOP_Acceptor::~TAO_SCIOP_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -202,7 +202,7 @@ TAO_SCIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO_SCIOP_Acceptor::close (void)
+TAO_SCIOP_Acceptor::close ()
 {
   return this->base_acceptor_.close ();
 }
@@ -851,7 +851,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
 }
 
 CORBA::ULong
-TAO_SCIOP_Acceptor::endpoint_count (void)
+TAO_SCIOP_Acceptor::endpoint_count ()
 {
   return this->endpoint_count_;
 }

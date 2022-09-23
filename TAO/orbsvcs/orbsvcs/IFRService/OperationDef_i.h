@@ -104,7 +104,7 @@ public:
 
   void make_description (CORBA::OperationDescription &desc);
 
-  CORBA::TypeCode_ptr type_i (void);
+  CORBA::TypeCode_ptr type_i ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -146,7 +146,7 @@ public:
   };
 
   /// Modify and get the source for the CDR allocators
-  int cdr_allocator_source (void);
+  int cdr_allocator_source ();
 
   // = Resource Retrieval
   int use_locked_data_blocks () const override;

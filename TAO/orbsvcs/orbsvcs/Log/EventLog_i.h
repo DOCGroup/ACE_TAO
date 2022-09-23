@@ -77,7 +77,7 @@ public:
 
   /// Activate the EventLog.
   void
-  activate (void);
+  activate ();
 
   // = The CosEventChannelAdmin::EventChannel interface methods.
   CosEventChannelAdmin::ConsumerAdmin_ptr

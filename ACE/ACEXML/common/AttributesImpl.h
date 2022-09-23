@@ -41,7 +41,7 @@ public:
   friend class ACEXML_AttributesImpl;
 
   /// Default constructor.
-  ACEXML_Attribute (void);
+  ACEXML_Attribute ();
 
   /// Copy constructor.
   ACEXML_Attribute (const ACEXML_Attribute &attr);
@@ -54,7 +54,7 @@ public:
                     const ACEXML_Char *value);
 
   /// Destructor.
-  ~ACEXML_Attribute (void);
+  ~ACEXML_Attribute ();
 
   /// Set all members.
   void setAttribute (const ACEXML_Char *uri,

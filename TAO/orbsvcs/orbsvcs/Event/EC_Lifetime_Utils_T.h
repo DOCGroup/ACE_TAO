@@ -45,7 +45,7 @@ void activate (T & obj_ref,
  *
  * Template argument requirements:
  *
- * Has void execute (void); method which
+ * Has void execute (); method which
  * can throw ONLY CORBA exceptions.
  * Has default and copy constructors.
  */

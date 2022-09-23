@@ -45,9 +45,9 @@ class ACE_Service_Type;
 class ACE_Parse_Node
 {
 public:
-  ACE_Parse_Node (void);
+  ACE_Parse_Node ();
   explicit ACE_Parse_Node (const ACE_TCHAR *name);
-  virtual ~ACE_Parse_Node (void);
+  virtual ~ACE_Parse_Node ();
 
   ACE_Parse_Node *link () const;
   void link (ACE_Parse_Node *);
@@ -306,13 +306,13 @@ private:
 class ACE_Location_Node
 {
 public:
-  ACE_Location_Node (void);
-  const ACE_DLL &dll (void);
+  ACE_Location_Node ();
+  const ACE_DLL &dll ();
   const ACE_TCHAR *pathname () const;
   void pathname (const ACE_TCHAR *h);
   int dispose () const;
 
-  virtual ~ACE_Location_Node (void);
+  virtual ~ACE_Location_Node ();
   virtual void set_symbol (void *h);
 
   /// Will update the yyerrno member and/or corresponding configuration
@@ -483,7 +483,7 @@ public:
                             ACE_Location_Node *location,
                             bool active);
 
-  ~ACE_Service_Type_Factory (void);
+  ~ACE_Service_Type_Factory ();
 
   ACE_Service_Type *make_service_type (ACE_Service_Gestalt *pcfg) const;
 

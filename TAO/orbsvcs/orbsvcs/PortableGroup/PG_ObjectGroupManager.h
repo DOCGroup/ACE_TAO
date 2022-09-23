@@ -47,7 +47,7 @@ class TAO_PortableGroup_Export TAO_PG_ObjectGroupManager
 {
 public:
   /// Constructor.
-  TAO_PG_ObjectGroupManager (void);
+  TAO_PG_ObjectGroupManager ();
 
   /// Destructor.
   ~TAO_PG_ObjectGroupManager (void) override;

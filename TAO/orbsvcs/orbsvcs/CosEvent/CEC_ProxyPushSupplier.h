@@ -77,7 +77,7 @@ public:
       CosEventChannelAdmin::ProxyPushSupplier_ptr &);
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate ();
 
   /// Return 0 if no consumer is connected...
   CORBA::Boolean is_connected () const;
@@ -91,7 +91,7 @@ public:
   CosEventComm::PushConsumer_ptr consumer () const;
 
   /// The event channel is shutting down
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Internal methods to push an event to each consumer.
   virtual void push (const CORBA::Any &event);
@@ -122,8 +122,8 @@ public:
   void disconnect_push_supplier (void) override;
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   // = The Servant methods
   PortableServer::POA_ptr _default_POA (void) override;
@@ -144,7 +144,7 @@ protected:
   CORBA::Boolean is_connected_i () const;
 
   /// Release the child and the consumer
-  void cleanup_i (void);
+  void cleanup_i ();
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   CORBA::Boolean is_typed_ec () const;

@@ -19,7 +19,7 @@ public:
   CORBA::Double price ();
   void set_price (CORBA::Double new_price);
 
-  void disconnect_push_supplier (void);
+  void disconnect_push_supplier ();
 
   void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
 

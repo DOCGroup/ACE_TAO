@@ -46,7 +46,7 @@ class ACE_Export ACE_Remote_Name_Space : public ACE_Name_Space
 {
 public:
   /// "Do-nothing" constructor.
-  ACE_Remote_Name_Space (void);
+  ACE_Remote_Name_Space ();
 
   /**
    * Specifies the scope of this namespace, opens and memory-maps the

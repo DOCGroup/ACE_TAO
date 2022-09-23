@@ -21,7 +21,7 @@ class ECMcastTests_Export Gateway_EC
 {
 public:
   /// Constructor.
-  Gateway_EC (void);
+  Gateway_EC ();
 
   /// Run the server.
   /// Valid arguments: [-i ior_filename].

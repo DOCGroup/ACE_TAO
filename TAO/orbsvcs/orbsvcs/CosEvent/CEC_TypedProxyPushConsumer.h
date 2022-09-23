@@ -50,7 +50,7 @@ public:
       CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr &activated_proxy);
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate ();
 
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
@@ -60,11 +60,11 @@ public:
   CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected);
 
   /// The event channel is shutting down
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   // = The CosEventChannelAdmin::ProxyPushConsumer methods (abstract overloads)...
   void connect_push_supplier (
@@ -92,7 +92,7 @@ protected:
   CORBA::Boolean is_connected_i () const;
 
   /// Release the supplier
-  void cleanup_i (void);
+  void cleanup_i ();
 
   /// Assigns the parameter to both supplier_ and nopolicy_supplier_, and
   /// applies policies (when appropriate) to supplier_.
@@ -156,7 +156,7 @@ public:
       TAO_CEC_TypedProxyPushConsumer *proxy);
 
   /// Destructor
-  ~TAO_CEC_TypedProxyPushConsumer_Guard (void);
+  ~TAO_CEC_TypedProxyPushConsumer_Guard ();
 
   /// Returns 1 if the reference count successfully acquired
   int locked () const;

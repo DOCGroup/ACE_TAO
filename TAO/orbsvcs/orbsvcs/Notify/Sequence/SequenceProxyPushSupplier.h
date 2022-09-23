@@ -45,7 +45,7 @@ class TAO_Notify_Serv_Export TAO_Notify_SequenceProxyPushSupplier
 
 public:
   /// Constructor
-  TAO_Notify_SequenceProxyPushSupplier (void);
+  TAO_Notify_SequenceProxyPushSupplier ();
 
   /// Destructor
   ~TAO_Notify_SequenceProxyPushSupplier () override;

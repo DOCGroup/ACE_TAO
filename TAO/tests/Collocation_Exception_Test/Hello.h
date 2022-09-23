@@ -20,18 +20,18 @@ public:
          ACE_thread_t thr_id);
 
   // = The skeleton methods
-  virtual char * get_string (void);
+  virtual char * get_string ();
 
-  virtual void system_exception_test (void);
+  virtual void system_exception_test ();
 
-  virtual void user_exception_expected (void);
+  virtual void user_exception_expected ();
 
-  virtual void user_exception_not_expected (void);
+  virtual void user_exception_not_expected ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
-  void throw_internal_b (void);
+  void throw_internal_b ();
 
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.

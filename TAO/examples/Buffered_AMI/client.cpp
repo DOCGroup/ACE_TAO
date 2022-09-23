@@ -69,7 +69,7 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void)
+  void shutdown ()
   {
   }
   //FUZZ: enable check_for_lack_ACE_OS

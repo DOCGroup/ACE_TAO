@@ -59,7 +59,7 @@ public:
   int open (void *) override;
 
   // @@ Frank: Similar to open, but called on server
-  virtual int open_server (void);
+  virtual int open_server ();
 
   //@{
   /**
@@ -85,7 +85,7 @@ public:
   //@}
 
   /// Add ourselves to Cache.
-  int add_transport_to_cache (void);
+  int add_transport_to_cache ();
 
   // @@ Frank: Not needed
   /*
@@ -99,11 +99,11 @@ public:
    *
    */
   //@{
-  const ACE_INET_Addr &addr (void);
+  const ACE_INET_Addr &addr ();
 
   void addr (const ACE_INET_Addr &addr);
 
-  const ACE_INET_Addr &local_addr (void);
+  const ACE_INET_Addr &local_addr ();
 
   void local_addr (const ACE_INET_Addr &addr);
   //@}

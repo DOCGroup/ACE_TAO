@@ -6,11 +6,11 @@
 #include "ace/Log_Record.h"
 #include "ace/os_include/os_netdb.h"
 
-Logger_Factory_i::Logger_Factory_i (void)
+Logger_Factory_i::Logger_Factory_i ()
 {
 }
 
-Logger_Factory_i::~Logger_Factory_i (void)
+Logger_Factory_i::~Logger_Factory_i ()
 {
 }
 
@@ -68,7 +68,7 @@ Logger_i::Logger_i (const char *name)
   // Do nothing
 }
 
-Logger_i::~Logger_i (void)
+Logger_i::~Logger_i ()
 {
   ACE_OS::free (this->name_);
 }

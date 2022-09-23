@@ -8,7 +8,7 @@
 class ThreadOne : public ACE_Task_Base
 {
 public:
-  virtual int svc (void)
+  virtual int svc ()
   {
     ACE_Local_Mutex mutex1 (ACE_TEXT ("resource1"),
                             0, // Deadlock detection enabled.
@@ -24,7 +24,7 @@ public:
 class ThreadTwo : public ACE_Task_Base
 {
 public:
-  virtual int svc (void)
+  virtual int svc ()
   {
     ACE_Local_Mutex mutex2 (ACE_TEXT ("resource2"),
                             0, // Deadlock detection enabled.

@@ -28,18 +28,18 @@ class NContextExt_Client_i
 {
  public:
   // = COnstructor and destructor.
-  NContextExt_Client_i (void);
-  ~NContextExt_Client_i (void);
+  NContextExt_Client_i ();
+  ~NContextExt_Client_i ();
 
   /// Execute the client example code.
-  int run (void);
+  int run ();
 
   /// Initialize the client communication endpoint with the server.
   int init (int argc, ACE_TCHAR *argv[]);
 
  private:
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /**
    * Prints the values of the original name, strigified name and
@@ -55,7 +55,7 @@ class NContextExt_Client_i
                      CORBA::String_var url_string);
 
   /// Generates a random name
-  char * get_name (void);
+  char * get_name ();
 
   /// # of arguments on the command line.
   int argc_;

@@ -68,9 +68,9 @@ public:
   /// From IDLType_i's pure virtual function.
   CORBA::TypeCode_ptr type_i (void) override;
 
-  virtual CORBA::InterfaceDefSeq *base_interfaces (void);
+  virtual CORBA::InterfaceDefSeq *base_interfaces ();
 
-  CORBA::InterfaceDefSeq *base_interfaces_i (void);
+  CORBA::InterfaceDefSeq *base_interfaces_i ();
 
   virtual void base_interfaces (const CORBA::InterfaceDefSeq &base_interfaces);
 
@@ -82,7 +82,7 @@ public:
 
   virtual CORBA::InterfaceDef::FullInterfaceDescription *describe_interface ();
 
-  CORBA::InterfaceDef::FullInterfaceDescription *describe_interface_i (void);
+  CORBA::InterfaceDef::FullInterfaceDescription *describe_interface_i ();
 
   virtual CORBA::AttributeDef_ptr create_attribute (
       const char *id,

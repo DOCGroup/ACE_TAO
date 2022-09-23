@@ -86,13 +86,13 @@ public:
   NSGROUP (int argc, ACE_TCHAR **argv);
 
   /// start the ORB.
-  int start_orb (void);
+  int start_orb ();
 
   /// parse command line, validate arguments and run the command
-  int run_cmd (void);
+  int run_cmd ();
 
   /// Display command line interface usage
-  int show_usage( void );
+  int show_usage();
 
   const ACE_TCHAR * group_arg() const { return group_arg_; }
   const ACE_TCHAR * policy_arg() const { return policy_arg_; }
@@ -102,7 +102,7 @@ public:
 
 private:
   /// parse command line arguments
-  NSGROUP_COMMAND parse_command_line (void);
+  NSGROUP_COMMAND parse_command_line ();
 
 private:
   NS_group_svc svc_;
@@ -135,7 +135,7 @@ private:
 }
 
 int
-NSGROUP::start_orb (void)
+NSGROUP::start_orb ()
 {
   const int RC_SUCCESS =  0;
   const int RC_ERROR   = -1;
@@ -210,7 +210,7 @@ NSGROUP::start_orb (void)
 }
 
 int
-NSGROUP::run_cmd(void)
+NSGROUP::run_cmd()
 {
   const int RC_ERROR   = -1;
   const int RC_BADARG  = -2;
@@ -278,7 +278,7 @@ NSGROUP::run_cmd(void)
 }
 
 NSGROUP::NSGROUP_COMMAND
-NSGROUP::parse_command_line (void)
+NSGROUP::parse_command_line ()
 {
   #if 0
   ACE_DEBUG ((LM_DEBUG,
@@ -451,7 +451,7 @@ NSGROUP::parse_command_line (void)
 
 
 int
-NSGROUP::show_usage ( void )
+NSGROUP::show_usage ()
 {
   const int RC_SUCCESS =  0;
 

@@ -100,7 +100,7 @@ namespace TAO
        * There is no function that places the implementation pointer
        * in TSS.  The underlying security mechanism does that.
        */
-      SecurityCurrent_Impl * implementation (void);
+      SecurityCurrent_Impl * implementation ();
 
     private:
       /**

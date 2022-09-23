@@ -46,7 +46,7 @@ class TAO_FT_ClientORB_Export TAO_FT_Invocation_Endpoint_Selector :
 {
 public:
   /// Constructor.
-  TAO_FT_Invocation_Endpoint_Selector (void);
+  TAO_FT_Invocation_Endpoint_Selector ();
 
   /// Destructor.
   ~TAO_FT_Invocation_Endpoint_Selector (void) override;

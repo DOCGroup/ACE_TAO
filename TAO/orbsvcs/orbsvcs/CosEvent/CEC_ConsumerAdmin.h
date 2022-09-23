@@ -77,7 +77,7 @@ public:
 
   /// The event channel is shutting down, inform all the consumers of
   /// this
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   // = The CosEventChannelAdmin::ConsumerAdmin methods...
   CosEventChannelAdmin::ProxyPushSupplier_ptr

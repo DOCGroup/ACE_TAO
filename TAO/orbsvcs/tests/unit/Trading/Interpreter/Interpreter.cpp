@@ -9,7 +9,7 @@ class Literal_Visitor: public TAO_Constraint_Visitor
 {
 public:
   Literal_Visitor (Literal_Interpreter<T>* interp);
-  virtual ~Literal_Visitor (void);
+  virtual ~Literal_Visitor ();
 
   int visit_constraint (TAO_Unary_Constraint*) override;
 
@@ -55,7 +55,7 @@ Literal_Visitor<T>::Literal_Visitor (Literal_Interpreter<T>* interp)
 }
 
 template<class T>
-Literal_Visitor<T>::~Literal_Visitor (void)
+Literal_Visitor<T>::~Literal_Visitor ()
 {
 }
 
@@ -76,8 +76,8 @@ template<class T>
 class Literal_Interpreter: public TAO_Interpreter
 {
 public:
-  Literal_Interpreter (void);
-  virtual ~Literal_Interpreter (void);
+  Literal_Interpreter ();
+  virtual ~Literal_Interpreter ();
 
   bool test (const char* str,
              T expected);
@@ -91,12 +91,12 @@ private:
 };
 
 template<class T>
-Literal_Interpreter<T>::Literal_Interpreter (void)
+Literal_Interpreter<T>::Literal_Interpreter ()
 {
 }
 
 template<class T>
-Literal_Interpreter<T>::~Literal_Interpreter (void)
+Literal_Interpreter<T>::~Literal_Interpreter ()
 {
 }
 

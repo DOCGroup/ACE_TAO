@@ -19,7 +19,7 @@ class TAO_Connection_Purging_Strategy;
 class TAO_Strategies_Export TAO_Resource_Factory_Changer
 {
 public:
-  TAO_Resource_Factory_Changer (void);
+  TAO_Resource_Factory_Changer ();
 };
 
 /**
@@ -37,7 +37,7 @@ class TAO_Strategies_Export TAO_Advanced_Resource_Factory :
 {
 public:
   /// Constructor.
-  TAO_Advanced_Resource_Factory (void);
+  TAO_Advanced_Resource_Factory ();
 
   /// Destructor.
   ~TAO_Advanced_Resource_Factory (void) override;

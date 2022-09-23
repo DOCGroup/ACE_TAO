@@ -68,7 +68,7 @@ TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set)
 }
 
 void
-TAO_CosEC_PushConsumerWrapper::disconnect_push_consumer (void)
+TAO_CosEC_PushConsumerWrapper::disconnect_push_consumer ()
 {
   // Deactivate the supplier proxy.
   this->consumer_->disconnect_push_consumer ();
@@ -95,7 +95,7 @@ TAO_CosEC_ProxyPushSupplier_i::TAO_CosEC_ProxyPushSupplier_i
 }
 
 void
-TAO_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (void)
+TAO_CosEC_ProxyPushSupplier_i::disconnect_push_supplier ()
 {
   this->pps_->disconnect_push_supplier ();
 
@@ -142,7 +142,7 @@ TAO_CosEC_ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushConsumer
 }
 
 int
-TAO_CosEC_ProxyPushSupplier_i::connected (void)
+TAO_CosEC_ProxyPushSupplier_i::connected ()
 {
   return this->wrapper_ == 0 ? 0 : 1;
 }

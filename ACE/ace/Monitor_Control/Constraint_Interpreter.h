@@ -44,7 +44,7 @@ namespace ACE
       : public ETCL_Interpreter
     {
     public:
-      Constraint_Interpreter (void);
+      Constraint_Interpreter ();
 
       ~Constraint_Interpreter (void) override;
 

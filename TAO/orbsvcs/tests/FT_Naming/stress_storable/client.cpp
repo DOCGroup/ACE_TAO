@@ -31,7 +31,7 @@ public:
     return 0;
   }
 
-  int svc (void)
+  int svc ()
   {
     for (int g = 0, i = 0; i < 100; i++)
       {

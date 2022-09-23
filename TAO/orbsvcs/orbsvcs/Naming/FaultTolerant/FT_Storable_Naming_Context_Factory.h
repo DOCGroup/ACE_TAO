@@ -47,7 +47,7 @@ public:
   /// this class goes out of scope, its hash_map remains in persistent storage.
   ~TAO_FT_Storable_Naming_Context_Factory () override = default;
 
-  TAO_FT_Naming_Replication_Manager * replicator (void);
+  TAO_FT_Naming_Replication_Manager * replicator ();
 
   /// Factory method for creating an implementation object for naming contexts.
   /// If an existing naming context implementation is being rebuilt,

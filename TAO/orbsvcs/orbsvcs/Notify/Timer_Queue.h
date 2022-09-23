@@ -35,7 +35,7 @@ public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer_Queue > Ptr;
 
   /// Constructor
-  TAO_Notify_Timer_Queue (void);
+  TAO_Notify_Timer_Queue ();
 
   /// Destructor
   ~TAO_Notify_Timer_Queue (void) override;
@@ -49,7 +49,7 @@ public:
   int cancel_timer (long timer_id) override;
 
   /// Get the native impl.
-  ACE_Timer_Queue& impl (void);
+  ACE_Timer_Queue& impl ();
 
 protected:
   /// The Timer Queue

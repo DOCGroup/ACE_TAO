@@ -45,7 +45,7 @@ namespace ACE
     {
     public:
       /// Destructor.
-      virtual ~Outside_Squid_Filter (void);
+      virtual ~Outside_Squid_Filter ();
 
       /// Outside and outside Send filters need to supply a data header that
       /// sets the stage before sending the data body, and then (maybe) send a

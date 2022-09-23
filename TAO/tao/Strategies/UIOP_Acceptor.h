@@ -46,7 +46,7 @@ public:
   // Create Acceptor object using addr.
 
   /// Create Acceptor object using addr.
-  TAO_UIOP_Acceptor (void);
+  TAO_UIOP_Acceptor ();
 
   /// Destructor
   ~TAO_UIOP_Acceptor (void) override;
@@ -99,7 +99,7 @@ private:
 
   /// Obtains uiop properties that must be used by this acceptor, i.e.,
   /// initializes <uiop_properties_>.
-  int init_uiop_properties (void);
+  int init_uiop_properties ();
 
   /// Create a UIOP profile representing this acceptor.
   int create_new_profile (const TAO::ObjectKey &object_key,

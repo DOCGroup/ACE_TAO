@@ -58,7 +58,7 @@ public:
 
 
   /// Destructor
-  virtual ~TAO_Asynch_Queued_Message (void);
+  virtual ~TAO_Asynch_Queued_Message ();
 
   /**
    * @name Implement the Template Methods from TAO_Queued_Message

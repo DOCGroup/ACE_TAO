@@ -68,7 +68,7 @@ public:
 
   TAO_Thread_Lane_Resources &default_lane_resources (void) override;
 
-  TAO_DTP_Thread_Pool_Manager &tp_manager (void);
+  TAO_DTP_Thread_Pool_Manager &tp_manager ();
 
   // @}
 

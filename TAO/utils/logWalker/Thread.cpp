@@ -44,7 +44,7 @@ Thread::push_new_connection (PeerProcess *pp)
 }
 
 PeerProcess *
-Thread::pop_new_connection (void)
+Thread::pop_new_connection ()
 {
   PeerProcess *pp = 0;
   this->new_connection_.pop (pp);
@@ -72,7 +72,7 @@ Thread::pending_local_addr () const
 }
 
 void
-Thread::handle_request (void)
+Thread::handle_request ()
 {
   this->server_encounters_++;
   if (this->pending_.size() > 1)
@@ -178,19 +178,19 @@ Thread::set_dup (Thread *other, bool set_other)
 }
 
 void
-Thread::clear_dup (void)
+Thread::clear_dup ()
 {
   this->target_dup_ = 0;
 }
 
 bool
-Thread::has_dup (void)
+Thread::has_dup ()
 {
   return this->target_dup_ != 0;
 }
 
 void
-Thread::swap_target (void)
+Thread::swap_target ()
 {
   if (target_dup_ != 0 && target_dup_->giop_target() != 0)
     {
@@ -208,7 +208,7 @@ Thread::swap_target (void)
 }
 
 GIOP_Buffer *
-Thread::giop_target (void)
+Thread::giop_target ()
 {
   return this->giop_target_;
 }
@@ -237,7 +237,7 @@ Thread::push_invocation (Invocation *inv)
 }
 
 void
-Thread::pop_invocation (void)
+Thread::pop_invocation ()
 {
   Invocation *inv;
   this->current_invocation_.pop (inv);
@@ -381,7 +381,7 @@ Thread::dump_incidents (ostream &strm, const ACE_Time_Value& relstart)
 }
 
 size_t
-Thread::count_nesting (void)
+Thread::count_nesting ()
 {
   std::stack<Invocation *> nested;
   for (ACE_DLList_Iterator <Invocation> i (this->invocations_);

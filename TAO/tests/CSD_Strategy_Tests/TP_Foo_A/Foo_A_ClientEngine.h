@@ -21,7 +21,7 @@ public:
   Foo_A_ClientEngine(Foo_A_ptr obj, unsigned  client_id = 0, bool collocated = false);
   virtual ~Foo_A_ClientEngine();
 
-  virtual bool execute(void);
+  virtual bool execute();
 
   static void expected_results(Foo_A_Statistics& stats);
 

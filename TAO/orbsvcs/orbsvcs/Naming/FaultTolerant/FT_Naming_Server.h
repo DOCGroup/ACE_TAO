@@ -85,11 +85,11 @@ public:
   /// Returns 0 on successful pairing with peer.
   /// Returns 1 if peer IOR file is present, but peer is not responding
   /// Returns -1 if pairing is not possible.
-  void init_replication_pairing (void);
+  void init_replication_pairing ();
 
-  void no_replica (void);
+  void no_replica ();
 
-  //  TAO_FTNS_Notifier &notifier (void);
+  //  TAO_FTNS_Notifier &notifier ();
 
   /// Overridden parse operation. Only allows options supported by the FT_Naming_Server
   /// and adds options for the object group manager
@@ -148,7 +148,7 @@ protected:
     IOR_ARRAY_SIZE
   };
 
-  int recover_iors (void);
+  int recover_iors ();
 
   /// The object that implements the ObjectGroupManager, PropertyManager,
   /// and GenericFactory interfaces.

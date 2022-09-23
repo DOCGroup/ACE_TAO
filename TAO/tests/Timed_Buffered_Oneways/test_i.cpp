@@ -30,7 +30,7 @@ test_i::method (CORBA::ULong request_number,
 }
 
 void
-test_i::flush (void)
+test_i::flush ()
 {
   ACE_DEBUG ((LM_DEBUG, "server: got flush request\n"));
 }

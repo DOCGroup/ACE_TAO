@@ -16,7 +16,7 @@ class JAWS_Reactive_IO;
 class JAWS_Export JAWS_Reactive_IO : public JAWS_IO_Impl
 {
 public:
-  static JAWS_Reactive_IO * instance (void)
+  static JAWS_Reactive_IO * instance ()
   {
     return ACE_Singleton<JAWS_Reactive_IO, ACE_SYNCH_MUTEX>::instance ();
   }

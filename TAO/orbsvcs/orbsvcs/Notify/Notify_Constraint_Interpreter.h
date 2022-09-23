@@ -37,7 +37,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Constraint_Interpreter
   : public ETCL_Interpreter
 {
 public:
-  TAO_Notify_Constraint_Interpreter (void);
+  TAO_Notify_Constraint_Interpreter ();
 
   /// Destructor
   ~TAO_Notify_Constraint_Interpreter (void) override;

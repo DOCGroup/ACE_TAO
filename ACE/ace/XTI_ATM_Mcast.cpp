@@ -18,7 +18,7 @@ ACE_XTI_ATM_Mcast::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_XTI_ATM_Mcast::ACE_XTI_ATM_Mcast (void)
+ACE_XTI_ATM_Mcast::ACE_XTI_ATM_Mcast ()
 {
   ACE_TRACE ("ACE_XTI_ATM_Mcast::ACE_XTI_ATM_Mcast");
 }

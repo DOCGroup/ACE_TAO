@@ -61,10 +61,10 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   /// Constructor.
-  Handler (void) {};
+  Handler () {};
 
   /// Destructor.
-    ~Handler (void) {};
+    ~Handler () {};
 
   void foo (CORBA::Long ami_return_val,
             CORBA::Long out_l)
@@ -142,7 +142,7 @@ public:
                   "Callback method <get_yadda_excep> called:\n"));
     };
 
-  void set_yadda (void)
+  void set_yadda ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));

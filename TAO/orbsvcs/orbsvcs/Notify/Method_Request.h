@@ -36,11 +36,11 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request
 {
 public:
   /// Destructor.
-  virtual ~TAO_Notify_Method_Request (void);
+  virtual ~TAO_Notify_Method_Request ();
 
   /// Execute the Request
-  virtual int execute (void) = 0;
-  virtual TAO_Notify_Method_Request_Queueable* copy (void) = 0;
+  virtual int execute () = 0;
+  virtual TAO_Notify_Method_Request_Queueable* copy () = 0;
 };
 
 /***********************************************************************/

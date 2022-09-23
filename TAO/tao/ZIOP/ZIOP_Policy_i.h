@@ -39,7 +39,7 @@ class CompressorIdLevelListPolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-  CompressorIdLevelListPolicy (void);
+  CompressorIdLevelListPolicy ();
 
   /// Constructor.
   CompressorIdLevelListPolicy (const ::Compression::CompressorIdLevelList& val);
@@ -84,7 +84,7 @@ class CompressionEnablingPolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-  CompressionEnablingPolicy (void);
+  CompressionEnablingPolicy ();
 
   /// Constructor.
   CompressionEnablingPolicy (const ::CORBA::Boolean val);

@@ -48,7 +48,7 @@ Client::Client (CORBA::ORB_ptr orb,
 {
 }
 
-Client::~Client (void)
+Client::~Client ()
 {
   delete this->slider_;
   delete this->push_button_;
@@ -133,7 +133,7 @@ Client::create_widgets (/**/)
 }
 
 void
-Client::show (void)
+Client::show ()
 {
   this->mainwindow_.show ();
 }
@@ -145,7 +145,7 @@ Client::remote_call (int val)
 }
 
 void
-Client::shutdown_call (void)
+Client::shutdown_call ()
 {
   this->server_->shutdown ();
 }

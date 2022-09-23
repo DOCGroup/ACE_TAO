@@ -34,7 +34,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_ORB_Loader : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  TAO_DTP_ORB_Loader (void);
+  TAO_DTP_ORB_Loader ();
 
   /// Destructor.
   ~TAO_DTP_ORB_Loader (void) override;

@@ -37,10 +37,10 @@ class TAO_Export TAO_Default_Client_Strategy_Factory
 {
 public:
   /// Constructor.
-  TAO_Default_Client_Strategy_Factory (void);
+  TAO_Default_Client_Strategy_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Default_Client_Strategy_Factory (void);
+  virtual ~TAO_Default_Client_Strategy_Factory ();
 
   // = Service Configurator hooks.
   /// Dynamic linking hook

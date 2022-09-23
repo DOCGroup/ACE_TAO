@@ -26,7 +26,7 @@ public:
   // Return the any provide as an "in" argument.
   virtual CORBA::Any * get_any (CORBA::Any const & the_any);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// The ORB which will be shutdown by Hello::shutdown().

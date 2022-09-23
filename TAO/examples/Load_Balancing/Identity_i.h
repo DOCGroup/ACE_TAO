@@ -24,7 +24,7 @@ public:
   Identity_i (const char *name);
 
   /// Destructor.
-  ~Identity_i (void);
+  ~Identity_i ();
 
   /// Returns the name of this object.
   virtual void get_name (CORBA::String_out name);

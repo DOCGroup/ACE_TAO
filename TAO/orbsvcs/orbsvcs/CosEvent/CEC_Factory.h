@@ -199,9 +199,9 @@ public:
 
   /// Create and destroy the locking strategies for both
   /// ProxyPushConsumers and ProxyPushSuppliers
-  virtual ACE_Lock* create_consumer_lock (void) = 0;
+  virtual ACE_Lock* create_consumer_lock () = 0;
   virtual void destroy_consumer_lock (ACE_Lock*) = 0;
-  virtual ACE_Lock* create_supplier_lock (void) = 0;
+  virtual ACE_Lock* create_supplier_lock () = 0;
   virtual void destroy_supplier_lock (ACE_Lock*) = 0;
 
   /// The ConsumerControl and SupplierControl strategies are used to

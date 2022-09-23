@@ -34,7 +34,7 @@ ACE_XtReactor::ACE_XtReactor (XtAppContext context,
 #endif /* ACE_MT_SAFE */
 }
 
-ACE_XtReactor::~ACE_XtReactor (void)
+ACE_XtReactor::~ACE_XtReactor ()
 {
   // Delete the remaining items in the linked list.
 
@@ -366,7 +366,7 @@ ACE_XtReactor::compute_Xt_condition(ACE_HANDLE handle)
 // first timeout in the Reactor's Timer_Queue.
 
 void
-ACE_XtReactor::reset_timeout (void)
+ACE_XtReactor::reset_timeout ()
 {
   // Make sure we have a valid context
   ACE_ASSERT (this->context_ != 0);

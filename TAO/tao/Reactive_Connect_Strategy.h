@@ -39,7 +39,7 @@ public:
   TAO_Reactive_Connect_Strategy (TAO_ORB_Core *orb);
 
   /// Destructor
-  ~TAO_Reactive_Connect_Strategy (void);
+  ~TAO_Reactive_Connect_Strategy ();
 
   /*
    * Concrete implementation for this class. Please see

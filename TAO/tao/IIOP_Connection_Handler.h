@@ -58,8 +58,8 @@ class TAO_Export TAO_IIOP_Connection_Handler : public TAO_IIOP_SVC_HANDLER,
 {
 public:
 #ifdef TAO_LOG_CH_REF_COUNTS
-  Reference_Count add_reference (void);
-  Reference_Count remove_reference (void);
+  Reference_Count add_reference ();
+  Reference_Count remove_reference ();
 #endif
 
   TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = 0);
@@ -91,13 +91,13 @@ public:
   //@}
 
   /// Add ourselves to Cache.
-  int add_transport_to_cache (void);
+  int add_transport_to_cache ();
 
   /// Process the @a listen_list
   int process_listen_point_list (IIOP::ListenPointList &listen_list);
 
   /// Check if network priority needs to be enabled
-  int enable_network_priority (void);
+  int enable_network_priority ();
 
   /// Set Diff-Serv codepoint on outgoing packets.
   int set_dscp_codepoint (CORBA::Boolean set_network_priority) override;
@@ -108,7 +108,7 @@ public:
   /// This is used during a canceled connection attempt. Force the
   /// SO_LINGER timeout to 0 so that when the peer is closed, it won't
   /// hang around.
-  void abort (void);
+  void abort ();
 
 protected:
   //@{

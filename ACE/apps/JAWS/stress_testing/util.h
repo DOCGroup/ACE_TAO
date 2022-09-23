@@ -16,7 +16,7 @@ private:
   char *filename_;
 };
 
-void cleanup(void);
+void cleanup();
 void sigint(int);
 int copier(connection in);
 

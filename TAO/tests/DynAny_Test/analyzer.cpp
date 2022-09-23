@@ -68,11 +68,11 @@ void DynAnyAnalyzer::tab (int t)
     }
 }
 
-DynAnyAnalyzer::~DynAnyAnalyzer (void)
+DynAnyAnalyzer::~DynAnyAnalyzer ()
 {
 }
 
-void DynAnyAnalyzer::resetTab (void)
+void DynAnyAnalyzer::resetTab ()
 {
   level_ = 0;
 }

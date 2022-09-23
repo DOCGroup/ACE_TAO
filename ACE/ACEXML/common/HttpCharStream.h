@@ -31,7 +31,7 @@ class ACEXML_Export ACEXML_HttpCharStream : public ACEXML_CharStream
 {
 public:
   /// Default constructor.
-  ACEXML_HttpCharStream (void);
+  ACEXML_HttpCharStream ();
 
   /// Destructor
   ~ACEXML_HttpCharStream (void) override;
@@ -75,7 +75,7 @@ public:
   /**
    *  Determine the encoding of the file.
    */
-  virtual int determine_encoding (void);
+  virtual int determine_encoding ();
 
   /**
    * Get the encoding of the file
@@ -101,14 +101,14 @@ private:
    *  encoding of the file. Subsequent call to get() returns this
    *  character.
    */
-  int peek_i (void);
+  int peek_i ();
 
 #endif /* ACE_USES_WCHAR */
 
   /**
    *  Send a HTTP/1.1 request to fetch the contents of the URL.
    */
-  int send_request (void);
+  int send_request ();
 
   /**
    *  Fetch the URL and save it in backing store.

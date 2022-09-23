@@ -16,7 +16,7 @@ Client_Task::Client_Task (CosNaming::NamingContext_ptr root_context,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {

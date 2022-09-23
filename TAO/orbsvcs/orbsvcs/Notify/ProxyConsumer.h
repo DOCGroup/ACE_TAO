@@ -39,7 +39,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer
 public:
   typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer> Ptr;
   /// Constructor
-  TAO_Notify_ProxyConsumer (void);
+  TAO_Notify_ProxyConsumer ();
 
   /// Destructor
   ~TAO_Notify_ProxyConsumer (void) override;
@@ -51,7 +51,7 @@ public:
   void connect (TAO_Notify_Supplier* supplier);
 
   /// Disconnect
-  void disconnect (void);
+  void disconnect ();
 
   /// Shutdown  (TAO_Notify_Container_T method)
   int shutdown (void) override;
@@ -63,14 +63,14 @@ public:
   bool is_connected () const;
 
   /// The SA parent.
-  TAO_Notify_SupplierAdmin& supplier_admin (void);
+  TAO_Notify_SupplierAdmin& supplier_admin ();
 
   ACE_Time_Value last_ping() const;
   void last_ping(const ACE_Time_Value& tv);
 
 protected:
   /// Access the Supplier
-  TAO_Notify_Supplier* supplier (void);
+  TAO_Notify_Supplier* supplier ();
 
   /// Accept an event from the Supplier
   void push_i (TAO_Notify_Event * event);

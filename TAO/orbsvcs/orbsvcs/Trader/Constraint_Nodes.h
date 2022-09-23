@@ -161,7 +161,7 @@ public:
   TAO_Expression_Type expr_type () const override
     { return this->op_; }
 
-  TAO_Constraint* operand (void);
+  TAO_Constraint* operand ();
 
 private:
   TAO_Unary_Constraint (const TAO_Unary_Constraint&);
@@ -211,7 +211,7 @@ private:
 class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
 {
 public:
-  TAO_Literal_Constraint (void);
+  TAO_Literal_Constraint ();
 
   // = Constructors for each of the various types of literals.
 

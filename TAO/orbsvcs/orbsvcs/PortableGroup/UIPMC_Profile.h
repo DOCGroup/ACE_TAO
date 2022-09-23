@@ -54,7 +54,7 @@ public:
   char object_key_delimiter () const override;
 
   /// Return the char string prefix.
-  static const char *prefix (void);
+  static const char *prefix ();
 
   /// Profile constructor, default. Used when the profile contents
   /// are not yet known or when it is being decoded from an IOR.

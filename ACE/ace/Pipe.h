@@ -43,7 +43,7 @@ class ACE_Export ACE_Pipe
 {
 public:
   /// Default constructor (does nothing...).
-  ACE_Pipe (void);
+  ACE_Pipe ();
 
   /// Open the pipe and initialize the handles.
   ACE_Pipe (ACE_HANDLE handles[2]);
@@ -52,7 +52,7 @@ public:
   ACE_Pipe (ACE_HANDLE read, ACE_HANDLE write);
 
   /// Default dtor.  It doesn't close the handles for you.
-  ~ACE_Pipe (void);
+  ~ACE_Pipe ();
 
   /// Open the pipe and initialize the handles.
   int open (ACE_HANDLE handles[2]);
@@ -61,9 +61,9 @@ public:
   int open (int buffer_size = ACE_DEFAULT_MAX_SOCKET_BUFSIZ);
 
   /// Close down the pipe HANDLEs;
-  int close (void);
-  int close_read (void);
-  int close_write (void);
+  int close ();
+  int close_read ();
+  int close_write ();
 
   // = Accessors.
 

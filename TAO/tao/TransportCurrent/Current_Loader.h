@@ -52,7 +52,7 @@ namespace TAO
 {
   namespace Transport
   {
-    int current_static_initializer (void);
+    int current_static_initializer ();
   }
 }
 

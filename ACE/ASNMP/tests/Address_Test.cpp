@@ -259,7 +259,7 @@ static void TestNetbiosAddress()
 
 // --------------- IPX ---------------
 /*
-  IpxAddress( void);
+  IpxAddress();
   IpxAddress( const char  *inaddr);
   IpxAddress( const IpxAddress  &ipxaddr);
   IpxAddress( const GenAddress &genaddr);
@@ -354,7 +354,7 @@ static void TestIpxAddress()
 }
 
 /*
-  MacAddress( void);
+  MacAddress();
 
   MacAddress( const char  *inaddr);
   MacAddress( const MacAddress  &macaddr);
@@ -428,7 +428,7 @@ static void TestMacAddress()
 }
 
 /*
-  UdpAddress( void);
+  UdpAddress();
   UdpAddress( const char *inaddr);
   UdpAddress( const UdpAddress &udpaddr);
   UdpAddress( const GenAddress &genaddr);

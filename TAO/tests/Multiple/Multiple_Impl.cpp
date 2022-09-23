@@ -10,7 +10,7 @@ Bottom_Impl::Bottom_Impl (CORBA::ORB_ptr orb)
   this->orb_ = CORBA::ORB::_duplicate (orb);
 }
 
-Bottom_Impl::~Bottom_Impl (void)
+Bottom_Impl::~Bottom_Impl ()
 {
   // No-Op.
 }
@@ -40,7 +40,7 @@ Bottom_Impl::bottom_quote ( )
 }
 
 void
-Bottom_Impl::shutdown (void)
+Bottom_Impl::shutdown ()
 {
   this->orb_->shutdown (false);
 }
@@ -55,13 +55,13 @@ Delegated_Bottom_Impl::Delegated_Bottom_Impl (Multiple::Bottom_ptr delegate,
   this->orb_ = CORBA::ORB::_duplicate (orb);
 }
 
-Delegated_Bottom_Impl::~Delegated_Bottom_Impl (void)
+Delegated_Bottom_Impl::~Delegated_Bottom_Impl ()
 {
   // No-Op.
 }
 
 char *
-Delegated_Bottom_Impl::top_quote (void)
+Delegated_Bottom_Impl::top_quote ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating the call: <top_quote>\n")));
@@ -72,7 +72,7 @@ Delegated_Bottom_Impl::top_quote (void)
 }
 
 char *
-Delegated_Bottom_Impl::left_quote (void)
+Delegated_Bottom_Impl::left_quote ()
 {
     ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating the call: <left_quote>\n")));
@@ -83,7 +83,7 @@ Delegated_Bottom_Impl::left_quote (void)
 }
 
 char *
-Delegated_Bottom_Impl::right_quote (void)
+Delegated_Bottom_Impl::right_quote ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating the call: <right_quote>\n")));
@@ -94,7 +94,7 @@ Delegated_Bottom_Impl::right_quote (void)
 }
 
 char *
-Delegated_Bottom_Impl::bottom_quote (void)
+Delegated_Bottom_Impl::bottom_quote ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating the call: <bottom_quote>\n")));
@@ -105,7 +105,7 @@ Delegated_Bottom_Impl::bottom_quote (void)
 }
 
 void
-Delegated_Bottom_Impl::shutdown (void)
+Delegated_Bottom_Impl::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating Shut-Down.\n")));

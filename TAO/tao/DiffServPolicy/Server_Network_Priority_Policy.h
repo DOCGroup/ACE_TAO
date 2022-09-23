@@ -45,7 +45,7 @@ class TAO_DiffServPolicy_Export TAO_Server_Network_Priority_Policy
 {
 public:
   /// default constructor.
-  TAO_Server_Network_Priority_Policy (void);
+  TAO_Server_Network_Priority_Policy ();
 
   /// Constructor.
   TAO_Server_Network_Priority_Policy (

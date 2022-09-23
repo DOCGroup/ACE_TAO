@@ -35,8 +35,8 @@ namespace CORBA
 class TAO_ValueFactory_Map
 {
 public:
-  TAO_ValueFactory_Map (void);
-  ~TAO_ValueFactory_Map (void);
+  TAO_ValueFactory_Map ();
+  ~TAO_ValueFactory_Map ();
 
   /**
    * Associate the factory (int_id) with the repo_id (ext_id).
@@ -62,10 +62,10 @@ public:
   int find (const char *repo_id,
             CORBA::ValueFactory &factory);
 
-  void dump (void);
+  void dump ();
 
   /// Return singleton instance of this class.
-  static TAO_ValueFactory_Map * instance (void);
+  static TAO_ValueFactory_Map * instance ();
 
 private:
   /// The hash table data structure.

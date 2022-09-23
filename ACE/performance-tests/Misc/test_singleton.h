@@ -10,9 +10,9 @@
 class DC_Singleton
 {
 public:
-  DC_Singleton (void) {}
-  void svc (void) {}
-  static DC_Singleton *instance (void);
+  DC_Singleton () {}
+  void svc () {}
+  static DC_Singleton *instance ();
 
 private:
   static ACE_SYNCH_MUTEX lock_;

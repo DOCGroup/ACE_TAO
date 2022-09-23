@@ -43,7 +43,7 @@ public:
   int notify (ACE_Event_Handler *eh, ACE_Reactor_Mask mask) override;
 
   /// Get the reactor
-  ACE_Reactor *reactor (void);
+  ACE_Reactor *reactor ();
 
   /// Set the reactor
   void reactor (ACE_Reactor *r);

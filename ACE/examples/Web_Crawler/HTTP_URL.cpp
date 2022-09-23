@@ -21,7 +21,7 @@ HTTP_URL::HTTP_URL (const ACE_URL_Addr &url_addr,
 }
 
 ssize_t
-HTTP_URL::send_request (void)
+HTTP_URL::send_request ()
 {
   size_t commandsize =
     ACE_OS::strlen (this->url_addr ().get_path_name ())
@@ -76,7 +76,7 @@ HTTP_URL::accept (URL_Visitor *visitor)
 }
 
 int
-HTTP_URL::destroy (void)
+HTTP_URL::destroy ()
 {
   delete this;
   return 0;

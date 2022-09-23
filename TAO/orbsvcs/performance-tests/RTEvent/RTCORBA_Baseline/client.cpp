@@ -28,9 +28,9 @@ public:
   {
   }
 
-  virtual void run_test (void) = 0;
+  virtual void run_test () = 0;
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     this->barrier_->wait ();
     try
@@ -67,7 +67,7 @@ public:
   {
   }
 
-  virtual void run_test (void)
+  virtual void run_test ()
   {
     for (int i = 0; i != this->iterations_; ++i)
       {
@@ -110,13 +110,13 @@ public:
   {
   }
 
-  void stop (void)
+  void stop ()
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     this->stopped_ = 1;
   }
 
-  virtual void run_test (void)
+  virtual void run_test ()
   {
     for (;;)
       {

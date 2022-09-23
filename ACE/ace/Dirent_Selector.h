@@ -35,7 +35,7 @@ class ACE_Export ACE_Dirent_Selector
 {
 public:
   /// Constructor
-  ACE_Dirent_Selector ();
+  ACE_Dirent_Selector () = default;
 
   /// Destructor.
   virtual ~ACE_Dirent_Selector ();
@@ -57,10 +57,10 @@ public:
 
 protected:
   /// Ptr to the namelist array.
-  ACE_DIRENT **namelist_;
+  ACE_DIRENT **namelist_ {};
 
   /// Number of entries in the array.
-  int n_;
+  int n_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

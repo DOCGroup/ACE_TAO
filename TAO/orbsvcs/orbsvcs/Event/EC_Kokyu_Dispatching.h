@@ -74,7 +74,7 @@ public:
 private:
   ACE_Allocator *allocator_;
 
-  void setup_lanes (void);
+  void setup_lanes ();
 
   /// The dispatcher
   Kokyu::Dispatcher_Auto_Ptr dispatcher_;

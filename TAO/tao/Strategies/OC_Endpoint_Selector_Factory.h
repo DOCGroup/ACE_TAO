@@ -67,7 +67,7 @@ protected:
 
   TAO_Optimized_Connection_Endpoint_Selector *oc_endpoint_selector_ {};
 
-  int register_orb_initializer (void);
+  int register_orb_initializer ();
 };
 
 

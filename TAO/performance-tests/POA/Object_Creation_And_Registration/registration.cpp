@@ -207,7 +207,7 @@ public:
       }
   }
 
-  ~stats (void)
+  ~stats ()
   {
     if (this->quantify_)
       {

@@ -8,7 +8,7 @@ class ServerInterceptor
 : public PortableInterceptor::ServerRequestInterceptor
 {
  public:
-  ServerInterceptor (void);
+  ServerInterceptor ();
 
   ~ServerInterceptor ();
 

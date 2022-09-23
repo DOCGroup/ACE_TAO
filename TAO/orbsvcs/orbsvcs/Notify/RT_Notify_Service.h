@@ -29,7 +29,7 @@ class TAO_RT_Notify_Export TAO_RT_Notify_Service : public TAO_CosNotify_Service
 {
 public:
   /// Constructor
-  TAO_RT_Notify_Service (void);
+  TAO_RT_Notify_Service ();
 
   /// Destructor
   ~TAO_RT_Notify_Service () override;

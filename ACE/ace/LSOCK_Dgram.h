@@ -35,7 +35,7 @@ class ACE_Export ACE_LSOCK_Dgram : public ACE_SOCK_Dgram, public ACE_LSOCK
 {
 public:
   /// Default constructor.
-  ACE_LSOCK_Dgram (void);
+  ACE_LSOCK_Dgram ();
 
   /// Initiate a local dgram.
   ACE_LSOCK_Dgram (const ACE_Addr &local,

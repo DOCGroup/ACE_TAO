@@ -29,7 +29,7 @@
 
 #if defined (VME_DRIVER)
 #include <hostLib.h>
-extern "C" STATUS vmeDrv (void);
+extern "C" STATUS vmeDrv ();
 extern "C" STATUS vmeDevCreate (char *);
 #endif /* defined (VME_DRIVER) */
 
@@ -42,65 +42,65 @@ class Client_i : public virtual MT_Priority
 {
 public:
   ///constructor.
-  Client_i (void);
+  Client_i ();
 
   /// destructor.
-  virtual ~Client_i (void);
+  virtual ~Client_i ();
 
   /// Initialize the state of <Client_i>.
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Run the tests.
-  void run (void);
+  void run ();
 
   /// Performs the priority inversion test.
-  int do_priority_inversion_test (void);
+  int do_priority_inversion_test ();
 
   /// Performs the test with 4 threads each sending requests at rates
   /// of 20, 10, 5, and 1Hz.
-  int do_thread_per_rate_test (void);
+  int do_thread_per_rate_test ();
 
   /// Starts the client utilization thread.
-  int start_servant (void);
+  int start_servant ();
 
   /// output the latency results for the requests.
-  void output_latency (void);
+  void output_latency ();
 
 #if defined (VXWORKS)
   /// Outputs the details of this task to a file taskinfo.txt.
-  void output_taskinfo (void);
+  void output_taskinfo ();
 #endif /* VXWORKS */
 
 private:
   /// Sets the priority to be used for the low priority clients.
-  void init_low_priority (void);
+  void init_low_priority ();
 
   /// Calculate the time for one util computation.
-  void calc_util_time (void);
+  void calc_util_time ();
 
   /// Activates the high priority client.
-  int activate_high_client (void);
+  int activate_high_client ();
 
   /// Activates the low priority client.
-  int activate_low_client (void);
+  int activate_low_client ();
 
   /// Activates the utilization thread.
-  int activate_util_thread (void);
+  int activate_util_thread ();
 
   /// Prints the results of the tests.
-  void print_priority_inversion_stats (void);
+  void print_priority_inversion_stats ();
 
   /// Prints the context switch results.
-  void print_context_stats (void);
+  void print_context_stats ();
 
   /// Prints the utilization test results.
-  void print_util_stats (void);
+  void print_util_stats ();
 
   /// Prints the latency and jitter results.
-  void print_latency_stats (void);
+  void print_latency_stats ();
 
   /// gets the number of context switches.
-  void get_context_switches (void);
+  void get_context_switches ();
 
   /// Pointer to the high priority client object.
   Client *high_priority_client_;

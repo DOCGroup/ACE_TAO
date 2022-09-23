@@ -177,7 +177,7 @@ public:
   TAO_Dynamic_Property (void) {}
   ~TAO_Dynamic_Property (void) override;
 
-  void destroy (void);
+  void destroy ();
 
   /// Dynamic property evaluation call-back method.
   CORBA::Any* evalDP(const char* name,
@@ -261,7 +261,7 @@ public:
   // DuplicatePolicyName exception is raised.
   // END SPEC
 
-  ~TAO_Policies (void);
+  ~TAO_Policies ();
 
   CORBA::ULong search_card () const;
 
@@ -625,11 +625,11 @@ public:
 
   /// It's ok to consider more offers when lookup hasn't exceeded the
   /// cardinality values for searching and matching offers.
-  CORBA::Boolean ok_to_consider_more (void);
+  CORBA::Boolean ok_to_consider_more ();
 
   /// Signal that the Lookup method has matched an offer; decrement the
   /// match_card.
-  void matched_offer (void);
+  void matched_offer ();
 
   // = Return the limits applied.
   /**
@@ -643,7 +643,7 @@ public:
    * returned.
    * END SPEC
    */
-  CosTrading::PolicyNameSeq* limits_applied (void);
+  CosTrading::PolicyNameSeq* limits_applied ();
 
   /// Accessors to retrieve the adjusted cardinalities.
   CORBA::ULong search_card_remaining () const;
@@ -681,7 +681,7 @@ public:
   typedef CosTrading::Lookup::SpecifiedProps SPECIFIED_PROPS;
 
   /// An accomplice to g++'s insane lust for copy constructors.
-  TAO_Property_Filter (void) : policy_ (CosTrading::Lookup::all) {}
+  TAO_Property_Filter () : policy_ (CosTrading::Lookup::all) {}
 
   /// Verify that the specified properties are correct.
   TAO_Property_Filter (const SPECIFIED_PROPS& desired_props);

@@ -55,7 +55,7 @@ public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannelFactory > Ptr;
 
   /// Constructor
-  TAO_Notify_EventChannelFactory (void);
+  TAO_Notify_EventChannelFactory ();
 
   /// Init the factory
   void init (PortableServer::POA_ptr poa);
@@ -85,7 +85,7 @@ public:
   /// Use the registered Topology_Factory to create a loader, and
   /// load the topology. If no Topology_Factory is registered
   /// then nothing will be loaded.
-  void load_topology (void);
+  void load_topology ();
 
   /// Use the passed in saver factory to generate topology saver objects.
   /// Does not take ownership.
@@ -105,12 +105,12 @@ public:
   virtual void validate ();
 
   /// at shutdown time, this causes the validator thread to exit.
-  void stop_validator (void);
+  void stop_validator ();
 
   /// Handle change notifications
-  bool handle_change (void);
+  bool handle_change ();
 
-  void load_event_persistence (void);
+  void load_event_persistence ();
 
   void save_topology (void) override;
 

@@ -58,7 +58,7 @@ class Server_Request_Interceptor
 {
 public:
   /// Constructor.
-  Server_Request_Interceptor (void);
+  Server_Request_Interceptor ();
 
   /// Set the references to which requests will be forwarded.
   virtual void forward_references (CORBA::Object_ptr obj1,
@@ -74,9 +74,9 @@ public:
    */
   //@{
   /// Return the name of this ServerRequestinterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void receive_request_service_contexts (
       PortableInterceptor::ServerRequestInfo_ptr ri);
@@ -96,7 +96,7 @@ public:
 
 protected:
   /// Destructor.
-  ~Server_Request_Interceptor (void);
+  ~Server_Request_Interceptor ();
 
 private:
   /// The number of requests intercepted by this interceptor.

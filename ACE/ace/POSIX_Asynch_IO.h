@@ -836,7 +836,7 @@ public:
   /**
    *  Close performs cancellation of all pending requests.
    */
-  int close (void);
+  int close ();
 
   /// virtual from ACE_Event_Handler
   ACE_HANDLE get_handle () const override;
@@ -1070,7 +1070,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_POSIX_Asynch_Read_Dgram (void);
+  ACE_POSIX_Asynch_Read_Dgram ();
 };
 
 /**
@@ -1193,7 +1193,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_POSIX_Asynch_Write_Dgram (void);
+  ACE_POSIX_Asynch_Write_Dgram ();
 };
 
 

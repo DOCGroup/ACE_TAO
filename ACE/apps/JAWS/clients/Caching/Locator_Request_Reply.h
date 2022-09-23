@@ -28,10 +28,10 @@ class ACE_Svc_Export ACE_URL_Locator_Request
 {
 public:
   /// Default ctor.
-  ACE_URL_Locator_Request (void);
+  ACE_URL_Locator_Request ();
 
   /// Default dtor.
-  ~ACE_URL_Locator_Request (void);
+  ~ACE_URL_Locator_Request ();
 
   /**
    * Query the locator for HTTP with designate properties (none, some,
@@ -66,7 +66,7 @@ public:
 
   /// Encode request for network communication.  If succeed,
   /// returns the size of the buffer, otherwise, return 0.
-  size_t encode (void);
+  size_t encode ();
 
   /**
    * Restore from network data.  Returns size of the buffer
@@ -94,7 +94,7 @@ public:
 protected:
   /// Return the size of the buffer required to encode
   /// this request.
-  size_t size (void);
+  size_t size ();
 
   enum {
     VALID_SEQ1 = 0x1,
@@ -147,10 +147,10 @@ class ACE_Svc_Export ACE_URL_Locator_Reply
 {
 public:
   /// Default ctor.
-  ACE_URL_Locator_Reply (void);
+  ACE_URL_Locator_Reply ();
 
   /// Default dtor.
-  ~ACE_URL_Locator_Reply (void);
+  ~ACE_URL_Locator_Reply ();
 
   /// Setup a reply message for EXPORT, WITHDRAW, or MODIFY operations.
   int status_reply (u_int op, int result);
@@ -165,7 +165,7 @@ public:
 
   /// Encode request for network communication.  If succeed,
   /// returns the size of the buffer, otherwise, return 0.
-  size_t encode (void);
+  size_t encode ();
 
   /**
    * Restore from network data.  Returns size of the buffer
@@ -189,7 +189,7 @@ public:
 protected:
   /// Return the size of the buffer required to encode
   /// this request.
-  size_t size (void);
+  size_t size ();
 
   enum {
     VALID_OFFER = 0x1,

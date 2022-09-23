@@ -24,7 +24,7 @@ Test_DynAny::Test_DynAny (CORBA::ORB_var orb, int debug)
 {
 }
 
-Test_DynAny::~Test_DynAny (void)
+Test_DynAny::~Test_DynAny ()
 {
   CORBA::string_free (this->test_name_);
   this->test_name_ = 0;
@@ -37,7 +37,7 @@ Test_DynAny::test_name () const
 }
 
 int
-Test_DynAny::run_test (void)
+Test_DynAny::run_test ()
 {
   Data data (this->orb_);
 

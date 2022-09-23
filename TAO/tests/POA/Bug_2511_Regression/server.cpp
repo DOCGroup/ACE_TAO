@@ -24,11 +24,11 @@ class test_i :
 public:
   test_i (PortableServer::POA_ptr poa);
 
-  void normal (void);
+  void normal ();
 
-  void exceptional (void);
+  void exceptional ();
 
-  void notexisting (void);
+  void notexisting ();
 
   PortableServer::POA_var poa_;
 };
@@ -39,19 +39,19 @@ test_i::test_i (PortableServer::POA_ptr poa)
 }
 
 void
-test_i::normal (void)
+test_i::normal ()
 {
   ACE_DEBUG ((LM_DEBUG, "executing normal\n"));
 }
 
 void
-test_i::exceptional (void)
+test_i::exceptional ()
 {
   ACE_DEBUG ((LM_DEBUG, "executing exceptional\n"));
 }
 
 void
-test_i::notexisting (void)
+test_i::notexisting ()
 {
   ACE_DEBUG ((LM_DEBUG, "executing notexisting\n"));
 }

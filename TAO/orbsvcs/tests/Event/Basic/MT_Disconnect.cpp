@@ -115,7 +115,7 @@ Task::svc ()
 }
 
 void
-Task::run_iteration (void)
+Task::run_iteration ()
 {
   // Obtain the consumer admin..
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =

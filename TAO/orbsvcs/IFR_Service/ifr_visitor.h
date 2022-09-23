@@ -34,7 +34,7 @@
 class ifr_visitor : public ast_visitor
 {
 public:
-  virtual ~ifr_visitor (void);
+  virtual ~ifr_visitor ();
 
   int visit_decl (AST_Decl *d) override;
   int visit_scope (UTL_Scope *node) override;
@@ -93,7 +93,7 @@ public:
 
 protected:
   // Not abstract but we want to force subclassing anyway.
-  ifr_visitor (void);
+  ifr_visitor ();
 
 private:
   /// Lock.

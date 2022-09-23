@@ -76,16 +76,16 @@ public:
                                          TimeBase::TimeT upper) override;
 
   /// Return the globally synchronized time.
-  virtual CORBA::ULongLong get_time (void);
+  virtual CORBA::ULongLong get_time ();
 
   /// Returns the time displacement factor.
-  CORBA::Short time_displacement_factor (void);
+  CORBA::Short time_displacement_factor ();
 
   /// Set the TDF.
   void time_displacement_factor (CORBA::Short);
 
   /// Get method for inaccuracy.
-  TimeBase::InaccuracyT inaccuracy (void);
+  TimeBase::InaccuracyT inaccuracy ();
 
   /// Set method for inaccuracy.
   void inaccuracy (TimeBase::InaccuracyT inaccuracy);

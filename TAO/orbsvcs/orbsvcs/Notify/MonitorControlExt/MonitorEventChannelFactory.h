@@ -70,8 +70,8 @@ private:
   public:
     Unbinder (Map& map,
               const ACE_CString& name);
-    ~Unbinder (void);
-    void release (void);
+    ~Unbinder ();
+    void release ();
 
   private:
     Map& map_;

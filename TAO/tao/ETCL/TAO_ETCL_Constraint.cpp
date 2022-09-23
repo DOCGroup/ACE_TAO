@@ -137,7 +137,7 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
     }
 }
 
-TAO_ETCL_Literal_Constraint::~TAO_ETCL_Literal_Constraint (void)
+TAO_ETCL_Literal_Constraint::~TAO_ETCL_Literal_Constraint ()
 {
   if (this->any_ != 0)
     {
@@ -411,7 +411,7 @@ TAO_ETCL_Literal_Constraint::operator/ (const TAO_ETCL_Literal_Constraint & rhs)
 }
 
 TAO_ETCL_Literal_Constraint
-TAO_ETCL_Literal_Constraint::operator- (void)
+TAO_ETCL_Literal_Constraint::operator- ()
 {
   switch (this->type_)
   {

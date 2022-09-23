@@ -20,13 +20,13 @@ class INS_i : public POA_INS
 {
 public:
   /// Constructor.
-  INS_i (void);
+  INS_i ();
 
   /// Destructor.
-  ~INS_i (void);
+  ~INS_i ();
 
   /// test the INS.
-  char * test_ins (void);
+  char * test_ins ();
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);

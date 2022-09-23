@@ -1124,7 +1124,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   static unsigned int const NUM_CHARS   = 6;  // Do not change!
 
   // Use ACE_Time_Value::msec(ACE_UINT64&) as opposed to
-  // ACE_Time_Value::msec(void) to avoid truncation.
+  // ACE_Time_Value::msec() to avoid truncation.
   ACE_UINT64 msec;
 
   // Use a const ACE_Time_Value to resolve ambiguity between

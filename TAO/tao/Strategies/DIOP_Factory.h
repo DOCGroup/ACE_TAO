@@ -36,7 +36,7 @@ class TAO_Strategies_Export TAO_DIOP_Protocol_Factory
 {
 public:
   /// Constructor.
-  TAO_DIOP_Protocol_Factory (void);
+  TAO_DIOP_Protocol_Factory ();
 
   /// Destructor.
   ~TAO_DIOP_Protocol_Factory (void) override = default;

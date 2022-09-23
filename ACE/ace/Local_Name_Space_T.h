@@ -229,8 +229,8 @@ private:
 
   /// Allocate the appropriate type of map manager that stores the
   /// key/value binding.
-  int create_manager (void);
-  int create_manager_i (void);
+  int create_manager ();
+  int create_manager_i ();
 
   /// Pointer to the allocator
   ALLOCATOR *allocator_;

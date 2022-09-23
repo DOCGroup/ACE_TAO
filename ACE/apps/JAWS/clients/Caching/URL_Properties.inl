@@ -28,7 +28,7 @@ ACE_URL_Property::ACE_URL_Property (const ACE_URL_Property &p)
 }
 
 ACE_INLINE
-ACE_URL_Property::~ACE_URL_Property (void)
+ACE_URL_Property::~ACE_URL_Property ()
 {
 }
 
@@ -60,7 +60,7 @@ ACE_URL_Property::operator!= (const ACE_URL_Property &rhs) const
 }
 
 ACE_INLINE ACE_WString &
-ACE_URL_Property::name_rep (void)
+ACE_URL_Property::name_rep ()
 {
   return this->name_;
 }
@@ -84,7 +84,7 @@ ACE_URL_Property::name (const ACE_UINT16 *n)
 }
 
 ACE_INLINE ACE_WString &
-ACE_URL_Property::value_rep (void)
+ACE_URL_Property::value_rep ()
 {
   return this->value_;
 }
@@ -131,7 +131,7 @@ ACE_URL_Offer::ACE_URL_Offer (const ACE_URL_Offer &o)
 }
 
 ACE_INLINE
-ACE_URL_Offer::~ACE_URL_Offer (void)
+ACE_URL_Offer::~ACE_URL_Offer ()
 {
 }
 
@@ -164,7 +164,7 @@ ACE_URL_Offer::operator!= (const ACE_URL_Offer &rhs) const
 }
 
 ACE_INLINE ACE_WString &
-ACE_URL_Offer::url_rep (void)
+ACE_URL_Offer::url_rep ()
 {
   return this->url_;
 }
@@ -188,7 +188,7 @@ ACE_URL_Offer::url (const char *url)
 }
 
 ACE_INLINE ACE_URL_Property_Seq &
-ACE_URL_Offer::url_properties (void)
+ACE_URL_Offer::url_properties ()
 {
   return this->prop_;
 }

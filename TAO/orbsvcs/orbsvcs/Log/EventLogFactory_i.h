@@ -53,7 +53,7 @@ public:
   //= Initialization and termination code.
 
   /// Constructor.
-  TAO_EventLogFactory_i (void);
+  TAO_EventLogFactory_i ();
 
   /// Destructor.
   ~TAO_EventLogFactory_i () override;

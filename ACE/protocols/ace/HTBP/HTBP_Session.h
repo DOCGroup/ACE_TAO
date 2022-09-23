@@ -72,7 +72,7 @@ namespace ACE
     public:
       // Initialization and termination methods.
       /// Constructor.
-      Session (void);
+      Session ();
 
       /// Constructor (sets the underlying session id with <sid>).
       Session (const Addr& peer,
@@ -88,7 +88,7 @@ namespace ACE
       Session& operator= (const Session &other);
 
       /// Destructor.
-      ~Session (void);
+      ~Session ();
 
       /// The following methods are specific to the Session
       static ACE_UINT32 next_session_id ();
@@ -102,7 +102,7 @@ namespace ACE
       void stream (Stream *);
 
       int enqueue (ACE_Message_Block *msg);
-      int flush_outbound_queue (void);
+      int flush_outbound_queue ();
 
       int close_inbound () const;
       int close_outbound () const;
@@ -137,9 +137,9 @@ namespace ACE
       void local_addr (const Addr &);
 
       /// invoke close on both streams, then remove self from session map
-      int close (void);
+      int close ();
 
-      ACE_Event_Handler *handler (void);
+      ACE_Event_Handler *handler ();
       void handler (ACE_Event_Handler *);
       void reactor (ACE_Reactor *);
       void detach (Channel *);

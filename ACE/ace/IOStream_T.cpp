@@ -89,7 +89,7 @@ ACE_Streambuf_T<STREAM>::recv_n (char *buf,
 }
 
 template <class STREAM> ACE_HANDLE
-ACE_Streambuf_T<STREAM>::get_handle (void)
+ACE_Streambuf_T<STREAM>::get_handle ()
 {
   return peer_ ? peer_->get_handle () : 0;
 }
@@ -124,7 +124,7 @@ ACE_IOStream<STREAM>::ACE_IOStream (u_int streambuf_size)
 // iostream ()
 
 template <class STREAM>
-ACE_IOStream<STREAM>::~ACE_IOStream (void)
+ACE_IOStream<STREAM>::~ACE_IOStream ()
 {
   delete this->streambuf_;
 }
@@ -133,7 +133,7 @@ ACE_IOStream<STREAM>::~ACE_IOStream (void)
 // function.
 
 template <class STREAM> int
-ACE_IOStream<STREAM>::close (void)
+ACE_IOStream<STREAM>::close ()
 {
   return STREAM::close ();
 }

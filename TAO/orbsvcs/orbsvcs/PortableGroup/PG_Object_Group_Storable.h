@@ -165,7 +165,7 @@ namespace TAO
     /**
      * Signals that this context was updated.
      */
-    virtual void state_written (void);
+    virtual void state_written ();
 
     /**
      * A callback invoked by the object group file guard

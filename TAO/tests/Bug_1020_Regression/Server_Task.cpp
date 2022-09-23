@@ -12,7 +12,7 @@ Server_Task::Server_Task(Test::Echo_ptr echo)
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
   Test::Payload pload(16); pload.length(16);
   int stop_loop = 0;

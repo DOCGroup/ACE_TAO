@@ -40,7 +40,7 @@ class TAO_Notify_MC_Ext_Export TAO_MonitorConsumerAdmin
 {
 public:
   /// Construct a monitor supplier admin.
-  TAO_MonitorConsumerAdmin (void);
+  TAO_MonitorConsumerAdmin ();
 
   /// Remove the statistics for this event channel.
   ~TAO_MonitorConsumerAdmin (void) override;
@@ -63,7 +63,7 @@ public:
 
   TAO_MonitorEventChannel* get_ec () const;
 
-  const ACE_CString & stat_name (void)const;
+  const ACE_CString & stat_name () const;
 
 
   /// Receive the queue count and store the approximated queue size in
@@ -75,7 +75,7 @@ public:
   void destroy (void) override;
 
 private:
-  virtual void remove (void);
+  virtual void remove ();
 
   ACE_CString stat_name_;
   ACE_CString queue_size_stat_name_;

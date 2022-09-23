@@ -18,7 +18,7 @@ class JAWS_Export JAWS_Timer_Impl
 //     RHS of the Bridge pattern.
 {
 public:
-  virtual ~JAWS_Timer_Impl (void) {}
+  virtual ~JAWS_Timer_Impl () {}
 
   virtual void schedule_timer ( long *timer_id
                               , const ACE_Time_Value &delta
@@ -54,7 +54,7 @@ class JAWS_Export JAWS_Timer
 public:
   JAWS_Timer (JAWS_Timer_Impl *impl = 0);
 
-  static JAWS_Timer * instance (void)
+  static JAWS_Timer * instance ()
   {
     return ACE_Singleton<JAWS_Timer, ACE_SYNCH_MUTEX>::instance ();
   }

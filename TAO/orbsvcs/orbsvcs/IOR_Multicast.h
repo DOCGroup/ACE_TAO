@@ -45,7 +45,7 @@ class TAO_Svc_Utils_Export TAO_IOR_Multicast : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  TAO_IOR_Multicast (void);
+  TAO_IOR_Multicast ();
 
   /// Constructor taking the ior of the service.
   TAO_IOR_Multicast (const char *ior,

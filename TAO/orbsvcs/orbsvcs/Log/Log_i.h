@@ -58,7 +58,7 @@ public:
   ~TAO_Log_i () override;
 
   /// Initlialize the Log.
-  void init (void);
+  void init ();
 
   /**
    * @name DsLogAdmin::Log Methods
@@ -233,26 +233,26 @@ public:
   //@}
 
   /// Remove records that have exceeded max_record_life_.
-  void remove_old_records (void);
+  void remove_old_records ();
 
 protected:
   /// Get the availability status
   /// @note must be called with locks held
   DsLogAdmin::AvailabilityStatus
-  get_availability_status_i (void);
+  get_availability_status_i ();
 
   /// Tells if the Log is scheduled to run now.
   /// @note must be called with locks held
-  CORBA::Boolean scheduled (void);
+  CORBA::Boolean scheduled ();
 
   /// Copy the attributes of the log being passed.
   void copy_attributes (DsLogAdmin::Log_ptr log);
 
   /// Check if threshold reached.
-  void check_capacity_alarm_threshold (void);
+  void check_capacity_alarm_threshold ();
 
   /// Reset capacity alarm threshold.
-  void reset_capacity_alarm_threshold (void);
+  void reset_capacity_alarm_threshold ();
 
   /// Check that valid threshold values have been given.
   static CORBA::Boolean validate_capacity_alarm_thresholds (

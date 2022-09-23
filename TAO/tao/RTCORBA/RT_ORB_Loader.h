@@ -34,7 +34,7 @@ class TAO_RTCORBA_Export TAO_RT_ORB_Loader : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  TAO_RT_ORB_Loader (void);
+  TAO_RT_ORB_Loader ();
 
   /// Destructor.
   ~TAO_RT_ORB_Loader (void) override;

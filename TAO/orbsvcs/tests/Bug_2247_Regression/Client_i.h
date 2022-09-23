@@ -15,7 +15,7 @@ public:
   Client_i (CORBA::ORB_ptr orb);
   // Our constructor
 
-  int init (void);
+  int init ();
   // Initialize the ORB etc.
 
 private:

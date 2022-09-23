@@ -48,7 +48,7 @@ class ReadHandler : public ACE_Event_Handler {
         /**
          * Initialization.
          */
-        ReadHandler(void);
+        ReadHandler();
 
         /**
          * Clean up data.
@@ -58,7 +58,7 @@ class ReadHandler : public ACE_Event_Handler {
         /**
          * Provide access to the internal stream socket.
          */
-        ACE_SOCK_Stream &getStream(void);
+        ACE_SOCK_Stream &getStream();
 
         /**
          * @name Overridden methods from the ACE_Event_Handler

@@ -31,7 +31,7 @@ class TAO_DiffServPolicy_Export TAO_DiffServPolicy_Initializer
 {
 public:
   /// Used to force the initialization of the ORB code.
-  static int static_init (void);
+  static int static_init ();
 
   /// Initialize the Diffserv loader hooks.
   int init (int argc, ACE_TCHAR* []) override;

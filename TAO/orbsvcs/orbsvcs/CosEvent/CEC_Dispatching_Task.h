@@ -81,7 +81,7 @@ public:
   ~TAO_CEC_Dispatch_Command (void) override;
 
   /// Command callback
-  virtual int execute (void) = 0;
+  virtual int execute () = 0;
 };
 
 // ****************************************************************

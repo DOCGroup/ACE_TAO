@@ -40,7 +40,7 @@ class TAO_Notify_Serv_Export TAO_Notify_StructuredProxyPushConsumer
 
 public:
   /// Constructor
-  TAO_Notify_StructuredProxyPushConsumer (void);
+  TAO_Notify_StructuredProxyPushConsumer ();
 
   /// Destructor
   ~TAO_Notify_StructuredProxyPushConsumer () override;

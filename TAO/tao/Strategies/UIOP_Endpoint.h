@@ -41,7 +41,7 @@ public:
   friend class TAO_UIOP_Profile;
 
   /// Default constructor.
-  TAO_UIOP_Endpoint (void);
+  TAO_UIOP_Endpoint ();
 
   /// Constructor.
   TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr,

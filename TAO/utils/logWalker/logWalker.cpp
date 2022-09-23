@@ -113,7 +113,7 @@ parse_manifest (Session &session, ACE_TCHAR *filename)
 }
 
 void
-print_help (void)
+print_help ()
 {
   ACE_DEBUG ((LM_DEBUG, "tao_logWalker recongizes the following arguments\n"));
   ACE_DEBUG ((LM_DEBUG, "-o <filename> - write all output to specified file\n"));

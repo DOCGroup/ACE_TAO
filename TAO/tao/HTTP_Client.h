@@ -50,8 +50,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_HTTP_Client
 {
 public:
-  TAO_HTTP_Client (void);
-  ~TAO_HTTP_Client (void);
+  TAO_HTTP_Client ();
+  ~TAO_HTTP_Client ();
 
   /// Initializes the class with the given filename, hostname and port.
   /// it should be called with the filename, before any read/write calls

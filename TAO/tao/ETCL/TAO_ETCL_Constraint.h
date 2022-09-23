@@ -40,7 +40,7 @@ class TAO_ETCL_Export TAO_ETCL_Literal_Constraint
   : public ETCL_Literal_Constraint
 {
 public:
-  TAO_ETCL_Literal_Constraint (void);
+  TAO_ETCL_Literal_Constraint ();
 
   // = Constructors for each of the various types of literals.
 
@@ -87,7 +87,7 @@ public:
 
   // Unary minus.
   TAO_ETCL_Literal_Constraint
-  operator- (void);
+  operator- ();
 
   /// Ensure both operands are of the same simple numeric type.
   Literal_Type

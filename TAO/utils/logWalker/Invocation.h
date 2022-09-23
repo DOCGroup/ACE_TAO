@@ -45,7 +45,7 @@ public:
   // initialize a new instance, with the initial request text line and offeset
   Invocation (PeerProcess *peer, Thread *thr, size_t req_id = 0);
   bool init ( const char * text, size_t offset, Thread *thr);
-  ~Invocation (void);
+  ~Invocation ();
 
   // return true if the invocation was a oneway
   bool is_oneway() const;
@@ -54,7 +54,7 @@ public:
   // if it also has all its reply octets. The side-effect of this call
   // is to obtain the target reference from the request buffer and associate
   // it with the peer process.
-  bool message_complete (void);
+  bool message_complete ();
 
   size_t request_id () const;
 
@@ -74,8 +74,8 @@ public:
   GIOP_Buffer *give_octets (bool request);
 
   bool contains (size_t line);
-  size_t req_line (void);
-  size_t repl_line (void);
+  size_t req_line ();
+  size_t repl_line ();
 
   void add_notify_incident (const ACE_CString &text, size_t offset);
   Thread *waiter () const;

@@ -59,7 +59,7 @@ public:
       CosEventChannelAdmin::ProxyPullConsumer_ptr &activated_proxy);
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate ();
 
   /// Return 0 if no supplier is connected...
   CORBA::Boolean is_connected () const;
@@ -70,7 +70,7 @@ public:
 
   /// Pulls from the supplier, verifies that it is connected.
   CORBA::Any* try_pull_from_supplier (CORBA::Boolean_out has_event);
-  CORBA::Any* pull_from_supplier (void);
+  CORBA::Any* pull_from_supplier ();
 
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
@@ -80,11 +80,11 @@ public:
   CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected);
 
   /// The event channel is shutting down
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   // = The CosEventChannelAdmin::ProxyPullConsumer methods...
   void connect_pull_supplier (
@@ -106,7 +106,7 @@ protected:
   CORBA::Boolean is_connected_i () const;
 
   /// Release the supplier
-  void cleanup_i (void);
+  void cleanup_i ();
 
   /// Assigns the parameter to both supplier_ and nopolicy_supplier_, and
   /// applies policies (when appropriate) to supplier_.

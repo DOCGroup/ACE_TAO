@@ -48,7 +48,7 @@ namespace TAO
       friend class TAO_SSLIOP_Profile;
 
       /// Default constructor.
-      Endpoint (void);
+      Endpoint ();
 
       /// Constructor.  This is the most efficient constructor since it
       /// does not require any address resolution processing.
@@ -115,7 +115,7 @@ namespace TAO
       /// This object maintains ownership of this string.
       const char *htid (const char *h);
 
-      //Connection_Handler *&hint (void);
+      //Connection_Handler *&hint ();
       // Access to our <hint_>.
 
     private:

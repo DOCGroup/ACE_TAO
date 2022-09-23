@@ -34,9 +34,9 @@ public:
 
   ~Record() { g_allocator->free (name_.addr ()); }
 
-  char *name (void) { return name_; }
-  int id1 (void) { return id1_; }
-  int id2 (void) { return id2_; }
+  char *name () { return name_; }
+  int id1 () { return id1_; }
+  int id2 () { return id2_; }
 
 private:
   int id1_;
@@ -45,7 +45,7 @@ private:
 };
 // Listing 2
 
-void showRecords (void)
+void showRecords ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("The following records were found:\n")));
@@ -64,7 +64,7 @@ void showRecords (void)
   }
 }
 
-int addRecords (void)
+int addRecords ()
 {
   char buf[32];
 

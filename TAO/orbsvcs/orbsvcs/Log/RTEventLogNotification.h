@@ -61,7 +61,7 @@ protected:
 
   /// Used to connect this PushSupplier to the EventChannel
   /// that will log these events.
-  void obtainProxyConsumer (void);
+  void obtainProxyConsumer ();
 
   // Send the event on the event channel.
   void send_notification (const CORBA::Any& any) override;

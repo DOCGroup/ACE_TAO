@@ -66,7 +66,7 @@ public:
       CosEventChannelAdmin::ProxyPullSupplier_ptr &activated_proxy);
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate ();
 
   /// Return 0 if no consumer is connected...
   CORBA::Boolean is_connected () const;
@@ -80,7 +80,7 @@ public:
   CosEventComm::PullConsumer_ptr consumer () const;
 
   /// The event channel is shutting down
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /**
    * Invoke the _non_existent() pseudo-operation on the consumer. If
@@ -100,8 +100,8 @@ public:
   void disconnect_pull_supplier (void) override;
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   // = The Servant methods
   PortableServer::POA_ptr _default_POA (void) override;
@@ -118,7 +118,7 @@ protected:
   CORBA::Boolean is_connected_i () const;
 
   /// Release the child and the consumer
-  void cleanup_i (void);
+  void cleanup_i ();
 
   /// Assigns the parameter to both consumer_ and nopolicy_consumer_, and
   /// applies policies (when appropriate) to consumer_.

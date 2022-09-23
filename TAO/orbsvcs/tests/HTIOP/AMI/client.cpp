@@ -91,7 +91,7 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler (void) {};
+  Handler () {};
 
   void foo (CORBA::Long result,
             CORBA::Long out_l)
@@ -134,7 +134,7 @@ public:
                   "Callback method <get_yadda_excep> called:\n"));
     };
 
-  void set_yadda (void)
+  void set_yadda ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));
@@ -145,7 +145,7 @@ public:
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
     };
-  ~Handler (void) {};
+  ~Handler () {};
 };
 
 // ReplyHandler.
@@ -268,7 +268,7 @@ Client::Client (A::AMI_Test_ptr server,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

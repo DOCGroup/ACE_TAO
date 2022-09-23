@@ -55,7 +55,7 @@ class TAO_AV_Export AV_Null_MediaCtrl
   : public virtual POA_Null_MediaCtrl
 {
 public:
-  AV_Null_MediaCtrl (void);
+  AV_Null_MediaCtrl ();
 
 protected:
   ~AV_Null_MediaCtrl (void) override;
@@ -72,7 +72,7 @@ class TAO_AV_Export TAO_Basic_StreamCtrl
 {
 public:
   /// Default Constructor
-  TAO_Basic_StreamCtrl (void);
+  TAO_Basic_StreamCtrl ();
 
   /// Stop the transfer of data of the stream
   /// Empty the_spec means apply operation to all flows
@@ -151,7 +151,7 @@ class TAO_AV_Export MMDevice_Map_Hash_Key
 {
 public:
   /// default constructor.
-  MMDevice_Map_Hash_Key (void);
+  MMDevice_Map_Hash_Key ();
 
   /// constructor.
   MMDevice_Map_Hash_Key (AVStreams::MMDevice_ptr mmdevice);
@@ -160,7 +160,7 @@ public:
   MMDevice_Map_Hash_Key (const MMDevice_Map_Hash_Key&);
 
   /// destructor.
-  ~MMDevice_Map_Hash_Key (void);
+  ~MMDevice_Map_Hash_Key ();
 
   /// operator== needed by  ACE_Hash_Map_Manager.
   bool operator == (const MMDevice_Map_Hash_Key &hash_key) const;
@@ -189,7 +189,7 @@ class TAO_AV_Export TAO_StreamCtrl
 {
 public:
   /// Default Constructor
-  TAO_StreamCtrl (void);
+  TAO_StreamCtrl ();
 
   /// virtual destructor.
   ~TAO_StreamCtrl (void) override;
@@ -285,7 +285,7 @@ public:
   };
 
   /// Default constructor.
-  TAO_MCastConfigIf (void);
+  TAO_MCastConfigIf ();
 
   /// Dtor
   ~TAO_MCastConfigIf (void) override;
@@ -327,7 +327,7 @@ class TAO_AV_Export TAO_AV_QoS
 {
 public:
   /// constructor.
-  TAO_AV_QoS (void);
+  TAO_AV_QoS ();
 
   /// constructor taking a stream qos parameter.
   TAO_AV_QoS (AVStreams::streamQoS &stream_qos);
@@ -377,10 +377,10 @@ public:
   ~TAO_Base_StreamEndPoint (void) override;
 
   /// called when streamendpoint is instantiated
-  virtual int handle_open (void);
+  virtual int handle_open ();
 
   /// called when streamendpoint is being destructed
-  virtual int handle_close (void);
+  virtual int handle_close ();
 
   /// Application needs to define this
   virtual int handle_stop (const AVStreams::flowSpec &the_spec);
@@ -415,10 +415,10 @@ public:
   virtual void set_control_flow_handler (const char *flowname,
                                          TAO_AV_Flow_Handler *handler);
 
-  TAO_AV_QoS &qos (void);
+  TAO_AV_QoS &qos ();
 
-  void protocol_object_set (void);
-  int is_protocol_object_set (void);
+  void protocol_object_set ();
+  int is_protocol_object_set ();
 
 protected:
   TAO_AV_QoS qos_;
@@ -444,7 +444,7 @@ class TAO_AV_Export TAO_StreamEndPoint
 {
 public:
   /// Constructor
-  TAO_StreamEndPoint (void);
+  TAO_StreamEndPoint ();
 
    /// Stop the stream. Empty the_spec means, for all the flows
   void stop (const AVStreams::flowSpec &the_spec) override;
@@ -569,7 +569,7 @@ class TAO_AV_Export TAO_StreamEndPoint_A :
 {
 public:
   /// Constructor
-  TAO_StreamEndPoint_A (void);
+  TAO_StreamEndPoint_A ();
 
   /// Used for ATM-style multicast
   CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
@@ -604,7 +604,7 @@ class TAO_AV_Export TAO_StreamEndPoint_B :
   //     The "B" side of a streamendpoint
 public:
   /// Constructor
-  TAO_StreamEndPoint_B (void);
+  TAO_StreamEndPoint_B ();
 
   /// Used for internet-style multicast
   CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
@@ -625,7 +625,7 @@ class TAO_AV_Export TAO_VDev
 {
 public:
   /// Default Constructor
-  TAO_VDev (void);
+  TAO_VDev ();
 
   /// Called to tell the vdev who the streamctrl, peer vdev is
   CORBA::Boolean set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
@@ -782,7 +782,7 @@ class TAO_AV_Export TAO_FlowConnection
 {
 public:
   /// default constructor.
-  TAO_FlowConnection (void);
+  TAO_FlowConnection ();
 
   /// stop this flow.
   void stop (void) override;
@@ -863,7 +863,7 @@ class TAO_AV_Export TAO_FlowEndPoint :
 {
 public:
   ///default constructor.
-  TAO_FlowEndPoint (void);
+  TAO_FlowEndPoint ();
 
   TAO_FlowEndPoint (const char *flowname,
                     AVStreams::protocolSpec &protocols,
@@ -1010,7 +1010,7 @@ class TAO_AV_Export TAO_FlowProducer:
 {
 public:
   /// default constructor
-  TAO_FlowProducer (void);
+  TAO_FlowProducer ();
 
   TAO_FlowProducer (const char *flowname,
                     AVStreams::protocolSpec protocols,

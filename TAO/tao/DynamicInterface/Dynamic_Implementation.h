@@ -65,7 +65,7 @@ public:
   CORBA::Boolean _is_a (const char *logical_type_id) override;
 
   /// Returns a CORBA::Object_ptr for the target object.
-  CORBA::Object_ptr _this (void);
+  CORBA::Object_ptr _this ();
 
   /// Query the Interface Repository for the interface definition.
   CORBA::InterfaceDef_ptr _get_interface (void) override;
@@ -87,7 +87,7 @@ protected:
 
 private:
   /// Encapsulates code common to _is_a(), _get_interface() and _create_stub().
-  CORBA::RepositoryId get_id_from_primary_interface (void);
+  CORBA::RepositoryId get_id_from_primary_interface ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

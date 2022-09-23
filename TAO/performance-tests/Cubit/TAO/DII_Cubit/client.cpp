@@ -50,23 +50,23 @@ class DII_Cubit_Client
 public:
   // = Constructor and destructor.
   /// Constructor.
-  DII_Cubit_Client (void);
+  DII_Cubit_Client ();
 
   /// Destructor.
-  ~DII_Cubit_Client (void);
+  ~DII_Cubit_Client ();
 
   /// Initialize the ORB and gets the Cubit objref.
   int init (int argc, ACE_TCHAR **argv);
 
   /// Execute client example code.
-  int run (void);
+  int run ();
 
 private:
   /// Gets objref through naming service.
-  int init_naming_service (void);
+  int init_naming_service ();
 
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// Function to read the cubit factory IOR from a file.
   int read_ior (ACE_TCHAR *filename);
@@ -77,25 +77,25 @@ private:
 
   // = DII versions of Cubit operations:
 
-  void cube_short_dii (void);
-  void cube_long_dii (void);
-  void cube_octet_dii (void);
-  void cube_union_dii (void);
-  void cube_struct_dii (void);
+  void cube_short_dii ();
+  void cube_long_dii ();
+  void cube_octet_dii ();
+  void cube_union_dii ();
+  void cube_struct_dii ();
   void cube_octet_seq_dii (int length);
   void cube_long_seq_dii (int length);
 
   // = Wrappers for cubing small and large sequences w/o args:
 
   /// Wrapper for the mixin call, just to be neat.
-  void cube_small_long_seq (void);
-  void cube_large_long_seq (void);
-  void cube_small_octet_seq (void);
-  void cube_large_octet_seq (void);
-  void cube_mixin (void);
+  void cube_small_long_seq ();
+  void cube_large_long_seq ();
+  void cube_small_octet_seq ();
+  void cube_large_octet_seq ();
+  void cube_mixin ();
 
   /// Array of pointers to the operation functions.
-  void (DII_Cubit_Client::*op_array_[NUMBER_OF_TESTS])(void);
+  void (DII_Cubit_Client::*op_array_[NUMBER_OF_TESTS])();
 
   /// Array of labels for passing to print_stats.
   static const char *stats_messages_[];
@@ -138,7 +138,7 @@ private:
 };
 
 // Constructor
-DII_Cubit_Client::DII_Cubit_Client (void)
+DII_Cubit_Client::DII_Cubit_Client ()
   : loop_count_ (DEFAULT_LOOP_COUNT),
     shutdown_ (0),
     orb_var_ (0),
@@ -162,7 +162,7 @@ DII_Cubit_Client::DII_Cubit_Client (void)
 }
 
 // Destructor
-DII_Cubit_Client::~DII_Cubit_Client (void)
+DII_Cubit_Client::~DII_Cubit_Client ()
 {
 }
 
@@ -243,7 +243,7 @@ DII_Cubit_Client::init (int argc, ACE_TCHAR **argv)
 // Sort out the args in the command line.
 
 int
-DII_Cubit_Client::parse_args (void)
+DII_Cubit_Client::parse_args ()
 {
   ACE_Get_Opt opts (argc_, argv_, ACE_TEXT("dn:i:f:x"));
   int c;
@@ -356,7 +356,7 @@ DII_Cubit_Client::print_stats (const char *call_name,
 }
 
 void
-DII_Cubit_Client::cube_short_dii (void)
+DII_Cubit_Client::cube_short_dii ()
 {
   try
     {
@@ -395,7 +395,7 @@ DII_Cubit_Client::cube_short_dii (void)
 }
 
 void
-DII_Cubit_Client::cube_long_dii (void)
+DII_Cubit_Client::cube_long_dii ()
 {
   try
     {
@@ -435,7 +435,7 @@ DII_Cubit_Client::cube_long_dii (void)
 }
 
 void
-DII_Cubit_Client::cube_octet_dii (void)
+DII_Cubit_Client::cube_octet_dii ()
 {
   try
     {
@@ -478,7 +478,7 @@ DII_Cubit_Client::cube_octet_dii (void)
 }
 
 void
-DII_Cubit_Client::cube_union_dii (void)
+DII_Cubit_Client::cube_union_dii ()
 {
   try
     {
@@ -528,7 +528,7 @@ DII_Cubit_Client::cube_union_dii (void)
 }
 
 void
-DII_Cubit_Client::cube_struct_dii (void)
+DII_Cubit_Client::cube_struct_dii ()
 {
   try
     {
@@ -691,31 +691,31 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
 // through in run ().
 
 void
-DII_Cubit_Client::cube_small_long_seq (void)
+DII_Cubit_Client::cube_small_long_seq ()
 {
   this->cube_long_seq_dii (SMALL_LONG_SEQ_LENGTH);
 }
 
 void
-DII_Cubit_Client::cube_large_long_seq (void)
+DII_Cubit_Client::cube_large_long_seq ()
 {
   this->cube_long_seq_dii (LARGE_LONG_SEQ_LENGTH);
 }
 
 void
-DII_Cubit_Client::cube_small_octet_seq (void)
+DII_Cubit_Client::cube_small_octet_seq ()
 {
   this->cube_octet_seq_dii (SMALL_OCTET_SEQ_LENGTH);
 }
 
 void
-DII_Cubit_Client::cube_large_octet_seq (void)
+DII_Cubit_Client::cube_large_octet_seq ()
 {
   this->cube_octet_seq_dii (LARGE_OCTET_SEQ_LENGTH);
 }
 
 void
-DII_Cubit_Client::cube_mixin (void)
+DII_Cubit_Client::cube_mixin ()
 {
   this->cube_short_dii ();
   this->cube_octet_dii ();
@@ -723,7 +723,7 @@ DII_Cubit_Client::cube_mixin (void)
 }
 
 int
-DII_Cubit_Client::run (void)
+DII_Cubit_Client::run ()
 {
   // loop counter.
   CORBA::ULong i;

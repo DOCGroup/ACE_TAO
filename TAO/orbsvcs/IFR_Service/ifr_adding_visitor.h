@@ -38,7 +38,7 @@ public:
                       CORBA::Boolean in_reopened = 0,
                       bool allow_duplicate_typedefs = false);
 
-  virtual ~ifr_adding_visitor (void);
+  virtual ~ifr_adding_visitor ();
 
   int visit_scope (UTL_Scope *node) override;
   int visit_predefined_type (AST_PredefinedType *node) override;

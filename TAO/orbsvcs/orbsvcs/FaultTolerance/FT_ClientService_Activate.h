@@ -41,7 +41,7 @@ class TAO_FT_ClientORB_Export TAO_FT_ClientService_Activate : public TAO_Service
 {
 public:
   /// Constructor
-  TAO_FT_ClientService_Activate (void);
+  TAO_FT_ClientService_Activate ();
 
   /// The destructor
   ~TAO_FT_ClientService_Activate (void) override;
@@ -54,7 +54,7 @@ public:
   TAO_Service_Callbacks *activate_services (TAO_ORB_Core *orb) override;
 
   /// Used to force the initialization.
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 static int

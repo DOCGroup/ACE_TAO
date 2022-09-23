@@ -44,7 +44,7 @@ public:
   virtual ~TAO_Notify_Method_Request_Updates_T ();
 
   /// Execute the Request
-  int execute_i (void);
+  int execute_i ();
 
 protected:
   /// Update Added

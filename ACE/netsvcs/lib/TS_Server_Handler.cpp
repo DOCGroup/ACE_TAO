@@ -146,7 +146,7 @@ ACE_TS_Server_Handler::send_request (ACE_Time_Request &request)
 // unexpectedly).
 
 /* VIRTUAL */ int
-ACE_TS_Server_Handler::abandon (void)
+ACE_TS_Server_Handler::abandon ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::abandon");
 
@@ -176,7 +176,7 @@ ACE_TS_Server_Handler::get_handle () const
 // Dispatch the appropriate operation to handle the client request.
 
 /* VIRTUAL */ int
-ACE_TS_Server_Handler::dispatch (void)
+ACE_TS_Server_Handler::dispatch ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::dispatch");
   // Get the system time and then create an ACE_Time_Request
@@ -189,7 +189,7 @@ ACE_TS_Server_Handler::dispatch (void)
 // should use non-blocking I/O.
 
 /* VIRTUAL */ int
-ACE_TS_Server_Handler::recv_request (void)
+ACE_TS_Server_Handler::recv_request ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::recv_request");
   ssize_t const bytes_expected = this->time_request_.size ();
@@ -248,7 +248,7 @@ ACE_TS_Server_Handler::handle_input (ACE_HANDLE)
     return this->dispatch ();
 }
 
-ACE_TS_Server_Handler::~ACE_TS_Server_Handler (void)
+ACE_TS_Server_Handler::~ACE_TS_Server_Handler ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::~ACE_TS_Server_Handler");
   ACE_DEBUG ((LM_DEBUG,

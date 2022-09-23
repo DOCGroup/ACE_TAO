@@ -53,14 +53,14 @@ namespace ACE
       void update (void) override;
 
       /// Stores the default name, used if none is supplied by the user.
-      static const char* default_name (void);
+      static const char* default_name ();
 
     private:
       /// Overridden reset, calls platform-specific reset.
       void clear_i (void) override;
 
       /// Common code to the constructor and to clear_i().
-      void init (void);
+      void init ();
 
     private:
 #if defined (ACE_LINUX)

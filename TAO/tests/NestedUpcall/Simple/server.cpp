@@ -15,7 +15,7 @@ class Server_Task : public ACE_Task_Base
 {
 public:
   Server_Task (CORBA::ORB_ptr orb);
-  int svc (void);
+  int svc ();
 
 private:
   CORBA::ORB_var orb_;
@@ -27,7 +27,7 @@ Server_Task::Server_Task (CORBA::ORB_ptr orb)
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
   try
     {

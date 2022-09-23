@@ -116,7 +116,7 @@ private:
 };
 
 extern "C"
-void ACE_OS_Object_Manager_Internal_Exit_Hook (void);
+void ACE_OS_Object_Manager_Internal_Exit_Hook ();
 
 // @@ This forward declaration should go away.
 class ACE_Log_Msg;

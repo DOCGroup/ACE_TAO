@@ -37,10 +37,10 @@ class TAO_Export TAO_LF_Invocation_Event: public TAO_LF_Event
 {
 public:
   /// Constructor
-  TAO_LF_Invocation_Event (void);
+  TAO_LF_Invocation_Event ();
 
   /// Destructor
-  virtual ~TAO_LF_Invocation_Event (void);
+  virtual ~TAO_LF_Invocation_Event ();
 
 protected:
   /// Validate and perform the state change

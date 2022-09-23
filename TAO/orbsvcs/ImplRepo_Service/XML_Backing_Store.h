@@ -44,7 +44,7 @@ public:
                      CORBA::ORB_ptr orb,
                      bool suppress_erase = false);
 
-  virtual ~XML_Backing_Store (void);
+  virtual ~XML_Backing_Store ();
 
   /// indicate the XML filename as the persistence mode for the repository
   virtual const ACE_TCHAR* repo_mode () const;

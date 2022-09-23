@@ -46,7 +46,7 @@ class TAO_Strategies_Export TAO_DIOP_Connector : public TAO_Connector
 {
 public:
   /// Constructor.
-  TAO_DIOP_Connector (void);
+  TAO_DIOP_Connector ();
 
   /// Destructor.
   ~TAO_DIOP_Connector () override = default;

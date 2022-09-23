@@ -678,9 +678,9 @@ void yyset_lineno ( int _line_number  );
 
 #ifndef YY_SKIP_YYWRAP
 #ifdef __cplusplus
-extern "C" int yywrap ( void );
+extern "C" int yywrap ();
 #else
-extern int yywrap ( void );
+extern int yywrap ();
 #endif
 #endif
 
@@ -701,9 +701,9 @@ static int yy_flex_strlen ( const char * );
 
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
-static int yyinput ( void );
+static int yyinput ();
 #else
-static int input ( void );
+static int input ();
 #endif
 
 #endif
@@ -808,7 +808,7 @@ static int input ( void );
 
 extern int yylex ();
 
-#define YY_DECL int yylex (void)
+#define YY_DECL int yylex ()
 #endif /* !YY_DECL */
 
 
@@ -1477,9 +1477,9 @@ static int yy_get_next_buffer ()
 
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
-    static int yyinput (void)
+    static int yyinput ()
 #else
-    static int input  (void)
+    static int input  ()
 #endif
 
 {
@@ -2288,7 +2288,7 @@ trader_strtoll(const char* s, unsigned int base)
 }
 
 int
-yywrap (void)
+yywrap ()
 {
   return 1;
 }

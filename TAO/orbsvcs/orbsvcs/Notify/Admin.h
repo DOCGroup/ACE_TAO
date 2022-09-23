@@ -57,14 +57,14 @@ public:
                       bool experienced_timeout);
 
   /// Access Admin FilterAdmin.
-  TAO_Notify_FilterAdmin& filter_admin (void);
+  TAO_Notify_FilterAdmin& filter_admin ();
 
   /// Set Filter operator
   void filter_operator (
       CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator);
 
   /// Access Filter operator
-  CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator (void);
+  CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator ();
 
   /// Obtain the Admin's subscribed types.
   void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types);

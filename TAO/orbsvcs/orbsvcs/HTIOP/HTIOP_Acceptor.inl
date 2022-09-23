@@ -15,7 +15,7 @@ TAO::HTIOP::Acceptor::address () const
 }
 
 ACE_INLINE const ACE::HTBP::Addr *
-TAO::HTIOP::Acceptor::endpoints (void)
+TAO::HTIOP::Acceptor::endpoints ()
 {
   ACE_ASSERT (this->addrs_ != 0);
 

@@ -39,12 +39,12 @@ public:
   ~TAO_Notify_Supplier () override;
 
   /// Access Specific Proxy.
-  TAO_Notify_ProxyConsumer* proxy_consumer (void);
+  TAO_Notify_ProxyConsumer* proxy_consumer ();
 
   /// Access Base Proxy.
   TAO_Notify_Proxy* proxy (void) override;
 
-  virtual CORBA::Object_ptr get_supplier (void) = 0;
+  virtual CORBA::Object_ptr get_supplier () = 0;
 
   bool is_alive (bool allow_nil_supplier);
 

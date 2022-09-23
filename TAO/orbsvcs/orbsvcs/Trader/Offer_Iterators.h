@@ -163,7 +163,7 @@ class TAO_Offer_Iterator_Collection :
 public:
   // = Constructors.
 
-  TAO_Offer_Iterator_Collection (void);
+  TAO_Offer_Iterator_Collection ();
 
   ~TAO_Offer_Iterator_Collection (void) override;
 
@@ -212,7 +212,7 @@ class TAO_Offer_Id_Iterator :
 {
  public:
   /// No op constructor
-  TAO_Offer_Id_Iterator(void);
+  TAO_Offer_Id_Iterator();
 
   ~TAO_Offer_Id_Iterator (void) override;
 

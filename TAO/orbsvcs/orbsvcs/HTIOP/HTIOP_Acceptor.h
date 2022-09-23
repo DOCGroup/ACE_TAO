@@ -73,7 +73,7 @@ namespace TAO
       const ACE::HTBP::Addr& address () const;
 
       /// Returns the array of endpoints in this acceptor
-      const ACE::HTBP::Addr *endpoints (void);
+      const ACE::HTBP::Addr *endpoints ();
 
       typedef TAO_Strategy_Acceptor<Completion_Handler, ACE_SOCK_ACCEPTOR> BASE_ACCEPTOR;
       typedef Creation_Strategy<Completion_Handler> CREATION_STRATEGY;
