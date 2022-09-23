@@ -236,7 +236,6 @@ public:
 
   void set_name (UTL_ScopedName *n);
 
-  Identifier *local_name ();
   Identifier *local_name () const;
   void local_name (Identifier *id);
 
