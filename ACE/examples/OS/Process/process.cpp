@@ -125,7 +125,7 @@ test_more (void)
 
   ACE_Process new_process;
   ACE_Process_Options options;
-  options.command_line (executable);
+  options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs, executable);
   options.set_handles (infile);
 
   if (new_process.spawn (options) == -1)
@@ -154,7 +154,7 @@ static void
 test_date (void)
 {
   ACE_Process_Options options;
-  options.command_line (DATE_PATH);
+  options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs, DATE_PATH);
 
   // Try to create a new process running date.
   ACE_Process new_process;
@@ -458,7 +458,7 @@ test_setenv (const ACE_TCHAR *argv0)
   options.setenv (ACE_TEXT ("ACE_PROCESS_TEST= here's a large number %u"),
                   0 - 1);
   options.setenv (ACE_TEXT ("ACE_PROCESS_TEST2"), ACE_TEXT ("ophilli"));
-  options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT (" -g", argv0);
+  options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT (" -g"), argv0);
   ACE_Process process;
   if (process.spawn (options) == -1)
     {
