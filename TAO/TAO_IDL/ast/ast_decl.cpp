@@ -1344,7 +1344,7 @@ AST_Decl::set_name (UTL_ScopedName *n)
 }
 
 Identifier *
-AST_Decl::local_name (void)
+AST_Decl::local_name () const
 {
   return this->pd_local_name;
 }

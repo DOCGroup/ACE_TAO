@@ -93,7 +93,7 @@ public:
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to the ostream.
 
-  char *get_string (void) {return this->p_str;}
+  char *get_string () const {return this->p_str;}
   // Get contents of utl_string.
 
   char *get_canonical_rep (void);
