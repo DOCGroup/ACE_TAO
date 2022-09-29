@@ -44,7 +44,7 @@ namespace TAO
     explicit Wait_On_LF_No_Upcall (TAO_Transport *t);
 
     /// Destructor.
-    ~Wait_On_LF_No_Upcall () override;
+    ~Wait_On_LF_No_Upcall () override = default;
 
     /*! @copydoc TAO_Wait_Strategy::wait() */
     int wait (ACE_Time_Value *max_wait_time,

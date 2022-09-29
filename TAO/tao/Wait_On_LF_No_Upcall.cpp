@@ -49,7 +49,6 @@ namespace TAO
                   this->transport_->id()));
     return this->transport_->orb_core ()->leader_follower ().defer_event (eh);
   }
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
