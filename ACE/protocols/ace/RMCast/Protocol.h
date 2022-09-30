@@ -402,7 +402,7 @@ namespace ACE_RMCast
     }
 
   protected:
-    virtual Profile_ptr
+    Profile_ptr
     clone_ () override
     {
       Profile_ptr p (new From (*this));

@@ -56,7 +56,6 @@ namespace TAO
 
   char * _repository_id (CORBA::Object_ptr target) override;
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-
   };
 }
 
