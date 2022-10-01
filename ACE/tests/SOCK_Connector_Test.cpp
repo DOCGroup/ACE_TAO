@@ -62,7 +62,7 @@ host_is_up (ACE_TCHAR hostname[])
 // The original problem this program tested for was incorrectly saying
 // a non-blocking connect completed successfully when it didn't.  The
 // test doesn't always work when done to localhost
-// (platform-dependant) so we look around for another host - any other
+// (platform-dependent) so we look around for another host - any other
 // one will do.
 
 static void
