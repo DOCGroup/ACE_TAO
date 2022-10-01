@@ -96,11 +96,11 @@ public:
 
   /// The current thread has become the leader thread in the
   /// client side leader-follower set.
-  void set_client_leader_thread (void) ;
+  void set_client_leader_thread ();
 
   /// The current thread is no longer the leader thread in the client
   /// side leader-follower set.
-  void reset_client_leader_thread (void) ;
+  void reset_client_leader_thread ();
 
   /// Sets the thread ID of the leader thread in the leader-follower
   /// model

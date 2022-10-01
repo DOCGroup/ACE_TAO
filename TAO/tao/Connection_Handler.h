@@ -80,7 +80,7 @@ public:
    * @return Return 0 if the connection was already closed, non-zero
    * otherwise.
    */
-  virtual int close_connection (void) = 0;
+  virtual int close_connection () = 0;
 
   /// The event handler calls, here so that other objects who hold a
   /// reference to this object can call the event handler methods.

@@ -40,7 +40,7 @@ ACE_QtReactor::ACE_QtReactor (size_t size,
     reopen_notification_pipe();
 }
 
-void ACE_QtReactor::reopen_notification_pipe( void)
+void ACE_QtReactor::reopen_notification_pipe()
 {
   // When the ACE_Select_Reactor is constructed it creates the notify
   // pipe and registers it with the register_handler_i() method. The

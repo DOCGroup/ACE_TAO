@@ -39,7 +39,7 @@ public:
   /// Destructor
   virtual ~TAO_RT_Transport_Descriptor_Property ();
 
-  virtual TAO_RT_Transport_Descriptor_Property *duplicate (void) = 0;
+  virtual TAO_RT_Transport_Descriptor_Property *duplicate () = 0;
 
   virtual CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop) = 0;
 

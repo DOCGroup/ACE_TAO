@@ -55,10 +55,10 @@ public:
   int updateStatistics(RTCP_RR_Packet *rr);
 
   /// Returns 1 if data has been sent since the last report, 0 if not.
-  int sender (void) { return this->data_since_last_report_; }
+  int sender () { return this->data_since_last_report_; }
 
   /// Returns 1 if this is an active source, 0 if not.
-  int active (void) { return this->active_; }
+  int active () { return this->active_; }
 
 private:
   /// Don't want default constructor.
@@ -187,7 +187,7 @@ public:
   void cname (const char *cname) { this->cname_ = cname; }
 
   /// Returns the canonical name of the source.
-  const char *cname (void) { return this->cname_.c_str(); }
+  const char *cname () { return this->cname_.c_str(); }
 
   /// Returns whether or not this source is active.
   char active ();

@@ -41,7 +41,7 @@ public:
   TAO_Async_IOR_Table_Impl ();
   virtual ~TAO_Async_IOR_Table_Impl ();
 
-  virtual bool async_available (void) { return true; }
+  virtual bool async_available () { return true; }
 
   virtual void async_find (::IORTable::Locate_ResponseHandler rh,
                            const char *object_key);

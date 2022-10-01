@@ -229,7 +229,7 @@ TAO_AMH_DSI_Exception_Holder_out::operator TAO_AMH_DSI_Exception_Holder*& ()
 }
 
 TAO_AMH_DSI_Exception_Holder *&
-TAO_AMH_DSI_Exception_Holder_out::ptr (void) // ptr
+TAO_AMH_DSI_Exception_Holder_out::ptr () // ptr
 {
   return this->ptr_;
 }

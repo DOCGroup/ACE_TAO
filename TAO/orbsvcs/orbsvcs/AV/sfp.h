@@ -42,7 +42,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_SFP_Fragment_Node
 {
 public:
-  TAO_SFP_Fragment_Node (void) : data_ (0) {}
+  TAO_SFP_Fragment_Node () : data_ (0) {}
   flowProtocol::fragment fragment_info_;
   ACE_Message_Block *data_;
   friend bool operator< (const TAO_SFP_Fragment_Node& left,
@@ -220,7 +220,7 @@ public:
   virtual ~TAO_SFP_Object ();
   // Dtor
 
-  virtual int handle_input (void) = 0;
+  virtual int handle_input () = 0;
   virtual int send_frame (ACE_Message_Block *frame,
                           TAO_AV_frame_info *frame_info = 0);
 

@@ -15,7 +15,7 @@ typedef ACE_Task<ACE_SYNCH> JAWS_CONCURRENCY_TASK;
 class JAWS_Export JAWS_Concurrency_Impl : public JAWS_CONCURRENCY_TASK
 {
 public:
-  virtual ~JAWS_Concurrency_Impl (void) {};
+  virtual ~JAWS_Concurrency_Impl () {};
 
   virtual int putq (JAWS_Protocol_Handler *ph) = 0;
 

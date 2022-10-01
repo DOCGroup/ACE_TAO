@@ -21,11 +21,11 @@ public:
   JAWS_Dispatch_Policy ();
   virtual ~JAWS_Dispatch_Policy ();
 
-  virtual int ratio (void) = 0;
-  virtual JAWS_IO * io (void) = 0;
-  virtual JAWS_IO_Handler_Factory *ioh_factory (void) = 0;
-  virtual JAWS_IO_Acceptor *acceptor (void) = 0;
-  virtual JAWS_Concurrency_Base * concurrency (void) = 0;
+  virtual int ratio () = 0;
+  virtual JAWS_IO * io () = 0;
+  virtual JAWS_IO_Handler_Factory *ioh_factory () = 0;
+  virtual JAWS_IO_Acceptor *acceptor () = 0;
+  virtual JAWS_Concurrency_Base * concurrency () = 0;
 
   virtual void ratio (int r) = 0;
   virtual void io (JAWS_IO *iop) = 0;

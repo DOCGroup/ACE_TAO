@@ -192,7 +192,7 @@ void AIO_Input_Handler::handle_read_stream
 
 /********************************************************/
 
-void AIO_CLD_Acceptor::close (void) {
+void AIO_CLD_Acceptor::close () {
   ACE_Unbounded_Set_Iterator<AIO_Input_Handler *>
     iter (clients_.begin ());
   AIO_Input_Handler **ih;
@@ -200,7 +200,7 @@ void AIO_CLD_Acceptor::close (void) {
     delete *ih;
 }
 
-AIO_Input_Handler * AIO_CLD_Acceptor::make_handler (void) {
+AIO_Input_Handler * AIO_CLD_Acceptor::make_handler () {
   AIO_Input_Handler *ih;
   ACE_NEW_RETURN (ih, AIO_Input_Handler (this), 0);
   if (clients_.insert (ih) == -1)
@@ -318,7 +318,7 @@ int AIO_Client_Logging_Daemon::fini () {
   return 0;
 }
 
-int AIO_Client_Logging_Daemon::svc (void) {
+int AIO_Client_Logging_Daemon::svc () {
   if (acceptor_.open (cld_addr_) == -1) return -1;
   if (CLD_CONNECTOR::instance ()->connect (sld_addr_) == 0)
     ACE_Proactor::instance ()->proactor_run_event_loop ();

@@ -57,7 +57,7 @@ class Reply_Handler
         }
    }
 
-   CORBA::ULong reply_count (void) { return parentMethod_count + parentMethod_excep_count; };
+   CORBA::ULong reply_count () { return parentMethod_count + parentMethod_excep_count; };
 
  private:
    // Count of replies and excep

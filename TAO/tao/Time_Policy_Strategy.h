@@ -42,11 +42,11 @@ class TAO_Export TAO_Time_Policy_Strategy
 public:
   virtual ~TAO_Time_Policy_Strategy () {}
 
-  virtual ACE_Timer_Queue * create_timer_queue (void) = 0;
+  virtual ACE_Timer_Queue * create_timer_queue () = 0;
 
   virtual void destroy_timer_queue (ACE_Timer_Queue *tmq) = 0;
 
-  virtual ACE_Dynamic_Time_Policy_Base * get_time_policy (void) = 0;
+  virtual ACE_Dynamic_Time_Policy_Base * get_time_policy () = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

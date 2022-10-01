@@ -607,7 +607,7 @@ typedef ACE_THR_FUNC_RETURN (*ACE_THR_C_FUNC)(void *);
 // Add this macro you one of your cpp file in your dll.  X should
 // be either ACE_DLL_UNLOAD_POLICY_DEFAULT or ACE_DLL_UNLOAD_POLICY_LAZY.
 #define ACE_DLL_UNLOAD_POLICY(CLS,X) \
-extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
+extern "C" u_long CLS##_Export _get_dll_unload_policy () \
   { return X;}
 
 // ============================================================================

@@ -38,7 +38,7 @@ protected:
   virtual int activate ();
 
   /// activates the stream_endpoint with the POA
-  virtual int activate_stream_endpoint (void) = 0;
+  virtual int activate_stream_endpoint () = 0;
 
   /// activates the vdev with the POA
   virtual int activate_vdev ();

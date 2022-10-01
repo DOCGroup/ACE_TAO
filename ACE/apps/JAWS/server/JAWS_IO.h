@@ -93,11 +93,11 @@ public:
 
   /// This method is called by the IO class when there was an error in
   /// reading new data from the client.
-  virtual void read_error (void) = 0;
+  virtual void read_error () = 0;
 
   /// This method is called by the IO class when the requested file has
   /// been successfully transmitted to the client.
-  virtual void transmit_file_complete (void) = 0;
+  virtual void transmit_file_complete () = 0;
 
   /// This method is called by the IO class when there was an error in
   /// transmitting the requested file to the client.
@@ -105,7 +105,7 @@ public:
 
   /// This method is called by the IO class when the requested file has
   /// been successfully received from the client.
-  virtual void receive_file_complete (void) = 0;
+  virtual void receive_file_complete () = 0;
 
   /// This method is called by the IO class when there was an error in
   /// receiving the requested file from the client.
@@ -113,15 +113,15 @@ public:
 
   /// This method is called by the IO class when there was an error in
   /// writing data to the client.
-  virtual void write_error (void) = 0;
+  virtual void write_error () = 0;
 
   /// This method is called by the IO class when the confirmation
   /// message has been delivered to the client.
-  virtual void confirmation_message_complete (void) = 0;
+  virtual void confirmation_message_complete () = 0;
 
   /// This method is called by the IO class when the error message has
   /// been delivered to the client.
-  virtual void error_message_complete (void) = 0;
+  virtual void error_message_complete () = 0;
 };
 
 /**

@@ -18,7 +18,7 @@ public:
     return ACE_Singleton<JAWS_Signal_Task, ACE_SYNCH_MUTEX>::instance ();
   }
 
-  ACE_Sig_Set & sigset (void) { return this->sigset_; }
+  ACE_Sig_Set & sigset () { return this->sigset_; }
 
 private:
   ACE_Sig_Set sigset_;

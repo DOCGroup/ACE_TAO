@@ -173,7 +173,7 @@ bool operator==(const SnmpTarget& lhs, const SnmpTarget& rhs)
 //----------------------------------------------------------------------
 
 
-//---------[ UdpTarget::UdpTarget( void) ]----------------------------------
+//---------[ UdpTarget::UdpTarget() ]----------------------------------
 
 UdpTarget::UdpTarget()
 {

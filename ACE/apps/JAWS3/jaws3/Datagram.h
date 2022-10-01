@@ -13,7 +13,7 @@
 class JAWS_Export JAWS_Datagram_Impl
 {
 public:
-  virtual ~JAWS_Datagram_Impl (void) {}
+  virtual ~JAWS_Datagram_Impl () {}
 
   virtual void accept ( const ACE_Addr &local_sap
                       , ACE_SOCK_Dgram &new_dgram

@@ -125,7 +125,7 @@ public:
   /// prints a message.
   virtual int handle_qos (ACE_HANDLE fd);
   ACE_SOCK_Dgram_Mcast_QoS *get_socket ();
-  virtual ACE_Event_Handler* event_handler (void){ return this; }
+  virtual ACE_Event_Handler* event_handler () { return this; }
   virtual ACE_QoS_Session* qos_session ();
   virtual void qos_session (ACE_QoS_Session *qos_session);
 

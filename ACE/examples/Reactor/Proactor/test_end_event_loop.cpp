@@ -42,7 +42,7 @@ public:
     {}
 
   /// Destructor.
-  virtual ~My_Task (void) {}
+  virtual ~My_Task () {}
 
   //FUZZ: disable check_for_lack_ACE_OS
   // If time_flag is zero do the eventloop indefinitely, otherwise do

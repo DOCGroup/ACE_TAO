@@ -3,7 +3,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE ACE_Netlink_Addr::ACE_Netlink_Addr (void):
+ACE_INLINE ACE_Netlink_Addr::ACE_Netlink_Addr ():
 ACE_Addr (this->determine_type(), sizeof (sockaddr_nl))
 {
   this->nl_.nl_family = AF_NETLINK;
@@ -15,7 +15,7 @@ ACE_INLINE void ACE_Netlink_Addr::set(int pid, int gid)
   this->nl_.nl_groups = gid;
 }
 
-ACE_INLINE void ACE_Netlink_Addr::reset (void)
+ACE_INLINE void ACE_Netlink_Addr::reset ()
 {
   ACE_OS::memset (&this->nl_, 0, sizeof (this->nl_));
   this->nl_.nl_family = AF_NETLINK;

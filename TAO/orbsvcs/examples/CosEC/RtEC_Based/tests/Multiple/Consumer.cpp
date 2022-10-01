@@ -137,7 +137,7 @@ Consumer::init_Consumer ()
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception in Consumer::connect (void)\n");
+      ex._tao_print_exception ("Exception in Consumer::connect ()\n");
       return -1;
     }
 

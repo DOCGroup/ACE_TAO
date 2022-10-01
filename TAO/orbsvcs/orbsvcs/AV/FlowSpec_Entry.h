@@ -107,7 +107,7 @@ public:
   /// accessor to the direction.
   int direction ();
 
-  virtual Role role (void) = 0;
+  virtual Role role () = 0;
   void role (Role role);
   /// accessor to string version of direction .
   const char * direction_str () const;
@@ -142,7 +142,7 @@ public:
   const char *flowname () const;
 
   /// converts the entry to a string.
-  virtual const char *entry_to_string (void) = 0;
+  virtual const char *entry_to_string () = 0;
 
   int set_peer_addr (ACE_Addr *peer_addr);
   ACE_Addr *get_peer_addr ();

@@ -255,7 +255,7 @@ public:
   // Virtual from ACE_Asynch_Acceptor
   virtual Receiver *make_handler ();
 
-  int get_number_sessions (void) { return this->sessions_; }
+  int get_number_sessions () { return this->sessions_; }
 
 private:
   void on_new_receiver (Receiver &rcvr);

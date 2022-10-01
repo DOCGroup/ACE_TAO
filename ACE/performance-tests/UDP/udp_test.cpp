@@ -117,7 +117,7 @@ private:
   /// The address to send messages to.
   ACE_INET_Addr remote_addr_;
 
-  Client (void) = delete;
+  Client () = delete;
   Client (const Client &) = delete;
   Client &operator= (const Client &) = delete;
 };
@@ -481,7 +481,7 @@ private:
   /// Receives datagrams.
   ACE_SOCK_Dgram endpoint_;
 
-  Server (void) = delete;
+  Server () = delete;
   Server (const Server &) = delete;
   Server &operator= (const Server &) = delete;
 };

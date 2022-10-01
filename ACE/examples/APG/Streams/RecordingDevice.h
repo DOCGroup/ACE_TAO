@@ -35,10 +35,10 @@ public:
   }
 
   // Answer the incoming call
-  virtual int answer_call (void) = 0;
+  virtual int answer_call () = 0;
 
   // Fetch some form of caller identification at the hardware level.
-  virtual CallerId *retrieve_callerId (void) = 0;
+  virtual CallerId *retrieve_callerId () = 0;
 
   // Fetch the message at the location specified by 'addr' and play
   // it for the caller.

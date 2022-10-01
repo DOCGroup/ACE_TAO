@@ -10,8 +10,8 @@
 class DC_Singleton
 {
 public:
-  DC_Singleton (void) {}
-  void svc (void) {}
+  DC_Singleton () {}
+  void svc () {}
   static DC_Singleton *instance ();
 
 private:

@@ -167,8 +167,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Scheduler *new_Scheduler): scheduler_ (new_Scheduler) {}
-  virtual ~Method_Request_end (void) {}
-  virtual int call (void) { return -1; }
+  virtual ~Method_Request_end () {}
+  virtual int call () { return -1; }
 
 private:
   /// Keep track of our scheduler.

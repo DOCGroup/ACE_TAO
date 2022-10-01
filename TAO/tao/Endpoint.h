@@ -76,7 +76,7 @@ public:
   /**
    * @return The next endpoint in the list, if any.
    */
-  virtual TAO_Endpoint *next (void) = 0;
+  virtual TAO_Endpoint *next () = 0;
 
   /**
    * Return the next endpoint in the list, but use protocol-specific

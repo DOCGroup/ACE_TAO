@@ -4,12 +4,12 @@ ACE_DLL_SERVICE_IMPL (ACE_DLL_TAO_Service, _make_ACE_DLL_TAO_Service)
 
 ACE_DLL_TAO_Service::ACE_DLL_TAO_Service ()
 {
-  ACE_DLL_TAO_SERVICE_TRACE (ACE_TEXT ("ACE_DLL_TAO_Service::ACE_DLL_TAO_Service (void)"));
+  ACE_DLL_TAO_SERVICE_TRACE (ACE_TEXT ("ACE_DLL_TAO_Service::ACE_DLL_TAO_Service ()"));
 }
 
 ACE_DLL_TAO_Service::~ACE_DLL_TAO_Service ()
 {
-  ACE_DLL_TAO_SERVICE_TRACE (ACE_TEXT ("ACE_DLL_TAO_Service::~ACE_DLL_TAO_Service (void)"));
+  ACE_DLL_TAO_SERVICE_TRACE (ACE_TEXT ("ACE_DLL_TAO_Service::~ACE_DLL_TAO_Service ()"));
 }
 
 int ACE_DLL_TAO_Service::init (int argc, ACE_TCHAR * argv [])
@@ -44,7 +44,7 @@ int ACE_DLL_TAO_Service::init (int argc, ACE_TCHAR * argv [])
 
 int ACE_DLL_TAO_Service::fini ()
 {
-  ACE_DLL_TAO_SERVICE_TRACE (ACE_TEXT ("ACE_DLL_TAO_Service::fini (void)"));
+  ACE_DLL_TAO_SERVICE_TRACE (ACE_TEXT ("ACE_DLL_TAO_Service::fini ()"));
 
   try
   {

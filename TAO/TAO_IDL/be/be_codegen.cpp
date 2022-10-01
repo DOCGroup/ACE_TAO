@@ -3724,7 +3724,7 @@ TAO_CodeGen::make_rand_extension (char * const t)
   size_t const NUM_CHARS = ACE_OS::strlen (t);
 
   /// Use ACE_Time_Value::msec(ACE_UINT64&) as opposed to
-  /// ACE_Time_Value::msec(void) to avoid truncation.
+  /// ACE_Time_Value::msec() to avoid truncation.
   ACE_UINT64 msec;
 
   /// Use a const ACE_Time_Value to resolve ambiguity between

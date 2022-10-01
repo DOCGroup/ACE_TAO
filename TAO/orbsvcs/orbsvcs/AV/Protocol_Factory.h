@@ -39,7 +39,7 @@ public:
   virtual int open (TAO_AV_Callback *callback,
                     TAO_AV_Transport *transport);
 
-  virtual int handle_input (void) = 0;
+  virtual int handle_input () = 0;
 
   /// Called on a control object.
   virtual int handle_control_input (ACE_Message_Block *control_frame,
@@ -67,7 +67,7 @@ public:
 
   /// end the stream.
   virtual void control_object (TAO_AV_Protocol_Object *object);
-  virtual int destroy (void) = 0;
+  virtual int destroy () = 0;
   TAO_AV_Transport *transport ();
 protected:
   TAO_AV_Transport *transport_;

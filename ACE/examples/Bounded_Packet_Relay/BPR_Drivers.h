@@ -215,7 +215,7 @@ public:
 protected:
   /// Creates a new message block, carrying data read from the
   /// underlying input device.
-  virtual ACE_Message_Block *create_input_message (void) = 0;
+  virtual ACE_Message_Block *create_input_message () = 0;
 
   /**
    * Sends a newly created message block, carrying data read from the

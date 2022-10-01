@@ -92,7 +92,7 @@ public:
   int run_cmd ();
 
   /// Display command line interface usage
-  int show_usage( void );
+  int show_usage();
 
   const ACE_TCHAR * group_arg() const { return group_arg_; }
   const ACE_TCHAR * policy_arg() const { return policy_arg_; }
@@ -451,7 +451,7 @@ NSGROUP::parse_command_line ()
 
 
 int
-NSGROUP::show_usage ( void )
+NSGROUP::show_usage ()
 {
   const int RC_SUCCESS =  0;
 

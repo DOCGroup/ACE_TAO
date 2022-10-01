@@ -1650,8 +1650,8 @@ public:
   {
   public:
     Proxy (ACE_Handler *handler) : handler_ (handler) {}
-    void reset (void) { this->handler_ = 0; }
-    ACE_Handler *handler (void) { return this->handler_; }
+    void reset () { this->handler_ = 0; }
+    ACE_Handler *handler () { return this->handler_; }
   private:
     ACE_Handler *handler_;
   };

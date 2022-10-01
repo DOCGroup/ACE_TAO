@@ -86,7 +86,7 @@ public:
   virtual int open (TAO_ORB_Core *orb_core) = 0;
 
   /// Shutdown Connector bridge and concrete Connector.
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /**
    * To support pluggable we need to abstract away the details of the
@@ -121,7 +121,7 @@ protected:
   virtual int supports_parallel_connects () const;
 
   /// Create a profile with a given endpoint.
-  virtual TAO_Profile *make_profile (void) = 0;
+  virtual TAO_Profile *make_profile () = 0;
 
   /// Set and validate endpoint. We need to do this to initialize our
   /// remote *_Addr's which have not been done during IOR decode.

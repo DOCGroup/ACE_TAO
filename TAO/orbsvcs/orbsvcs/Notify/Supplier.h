@@ -44,7 +44,7 @@ public:
   /// Access Base Proxy.
   virtual TAO_Notify_Proxy* proxy ();
 
-  virtual CORBA::Object_ptr get_supplier (void) = 0;
+  virtual CORBA::Object_ptr get_supplier () = 0;
 
   bool is_alive (bool allow_nil_supplier);
 

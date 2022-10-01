@@ -79,7 +79,7 @@ protected:
   const ACE_TCHAR *host_name ();
 
   /// The receiver of log records
-  LOG_MESSAGE_RECEIVER &receiver (void){ return receiver_; }
+  LOG_MESSAGE_RECEIVER &receiver () { return receiver_; }
 };
 
 #if 1   //!defined (ACE_HAS_TLI)

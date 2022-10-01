@@ -78,7 +78,7 @@ ACE_SV_Shared_Memory::get_segment_size () const
 // Removes the shared memory segment.
 
 ACE_INLINE int
-ACE_SV_Shared_Memory::remove (void)
+ACE_SV_Shared_Memory::remove ()
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::remove");
 #if defined (ACE_WIN32)
@@ -92,7 +92,7 @@ ACE_SV_Shared_Memory::remove (void)
 // memory segment.
 
 ACE_INLINE int
-ACE_SV_Shared_Memory::detach (void)
+ACE_SV_Shared_Memory::detach ()
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::detach");
   return ACE_OS::shmdt (this->segment_ptr_);

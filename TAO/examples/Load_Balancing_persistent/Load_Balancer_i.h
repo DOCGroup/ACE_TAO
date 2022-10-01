@@ -217,7 +217,7 @@ public:
    * ``round robin.''  If the group contains no members, <no_such_member>
    * exception is thrown.
    */
-  char * resolve (void) = 0;
+  char * resolve () = 0;
 
   /**
    * Returns an object with the specified <Member_ID>.  If this

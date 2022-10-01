@@ -4,7 +4,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Do nothing constructor.
 
 ACE_INLINE
-ACE_LSOCK_CODgram::ACE_LSOCK_CODgram (void)
+ACE_LSOCK_CODgram::ACE_LSOCK_CODgram ()
 {
   ACE_TRACE ("ACE_LSOCK_CODgram::ACE_LSOCK_CODgram");
 }

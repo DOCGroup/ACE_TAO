@@ -35,11 +35,11 @@ public:
 
   /// Lists all logs created by the log factory.
   virtual DsLogAdmin::LogList *
-    list_logs (void) = 0;
+    list_logs () = 0;
 
   /// Lists all log ids.
   virtual DsLogAdmin::LogIdList *
-    list_logs_by_id (void) = 0;
+    list_logs_by_id () = 0;
 
   /// Returns a reference to the log with the supplied id.
   virtual DsLogAdmin::Log_ptr

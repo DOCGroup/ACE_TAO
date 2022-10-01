@@ -11,7 +11,7 @@ TAO_ESF_RefCount_Guard<T>::
 
 template<class T> ACE_INLINE
 TAO_ESF_RefCount_Guard<T>::
-    ~TAO_ESF_RefCount_Guard (void)
+    ~TAO_ESF_RefCount_Guard ()
 {
   --this->refcount_;
 }

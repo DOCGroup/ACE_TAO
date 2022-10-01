@@ -30,7 +30,7 @@ public:
 
   virtual int open (void *);
 
-  virtual int svc (void) {
+  virtual int svc () {
     for (;;)
       switch (logging_handler_.log_record ()) {
       case -1: return -1; // Error.
@@ -63,7 +63,7 @@ public:
     : PARENT (r), ssl_ctx_ (0), ssl_ (0) {}
 
   // Destructor frees the SSL resources.
-  virtual ~TPC_Logging_Acceptor (void) {
+  virtual ~TPC_Logging_Acceptor () {
     SSL_free (this->ssl_);
     SSL_CTX_free (this->ssl_ctx_);
   }

@@ -3,7 +3,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_Service_Callbacks *
-TAO_Fault_Tolerance_Service::service_callback (void)
+TAO_Fault_Tolerance_Service::service_callback ()
 {
   return this->ft_service_callback_;
 }

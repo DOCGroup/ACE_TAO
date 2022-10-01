@@ -229,7 +229,7 @@ public:
   virtual int destroy ();
 
   void ssrc (ACE_UINT32 ssrc) {this->ssrc_ = ssrc; }
-  ACE_UINT32 ssrc (void) { return this->ssrc_; }
+  ACE_UINT32 ssrc () { return this->ssrc_; }
 
   void ts_offset (ACE_UINT32 ts_offset);
 
