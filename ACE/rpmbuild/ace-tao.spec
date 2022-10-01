@@ -1,6 +1,6 @@
 # Set the version number here.
-%define ACEVER  7.0.8
-%define TAOVER  3.0.8
+%define ACEVER  7.0.9
+%define TAOVER  3.0.9
 
 # Conditional build
 # Default values are
