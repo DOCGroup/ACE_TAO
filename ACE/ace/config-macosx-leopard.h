@@ -211,6 +211,10 @@
 #endif
 #endif
 
+#if __cplusplus >= 201703L && !defined (_LIBCPP_ENABLE_CXX17_REMOVED_AUTO_PTR)
+# define ACE_LACKS_AUTO_PTR
+#endif
+
 // dlcompat package (not part of base Darwin) is needed for dlopen().
 // You may download directly from sourceforge and install or use fink
 // Fink installer puts libraries in /sw/lib and headers in /sw/include
