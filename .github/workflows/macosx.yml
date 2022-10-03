@@ -16,8 +16,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cxxstd: ["03", "11"]
-        os: [macos-10.15, macos-11.0]
+        cxxstd: ["03", "11", "17"]
+        os: [macos-11, macos-12]
         include:
           - platform_file: include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU
     runs-on: ${{ matrix.os }}
