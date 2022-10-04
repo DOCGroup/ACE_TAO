@@ -363,7 +363,7 @@ ACE_OS::gethostbyname_r (const char *name,
   }
   else
   {
-    return (struct hostent *) 0;
+    return nullptr;
   }
 #   else
 #     if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
