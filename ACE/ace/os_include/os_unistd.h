@@ -49,6 +49,11 @@
 #  endif
 // for gethostname()
 #  include /**/ <hostLib.h>
+#  if (ACE_VXWORKS <= 0x700) || defined (GETHOSTBYNAME_REENTRANT)
+// With VxWorks 7 hostLib.h defines GETHOSTBYNAME_REENTRANT when gethostbyname()
+// is reentrant
+#    define ACE_VXWORKS_HAS_GETHOSTBYNAME_REENTRANT
+#  endif
 #endif /* ACE_VXWORKS */
 
 #ifdef ACE_MQX
