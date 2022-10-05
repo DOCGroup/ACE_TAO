@@ -53,7 +53,7 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
   if (0 == addr || '\0' == addr[0])
       return 0;
 
-#   if defined (ACE_VXWORKS)
+#   if defined (ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT)
   // VxWorks 6.x has a gethostbyaddr() that is threadsafe and
   // returns an heap-allocated hostentry structure.
   // just call ACE_OS::gethostbyaddr_r () which knows how to handle this.
@@ -134,7 +134,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   //FUZZ: enable check_for_lack_ACE_OS
   else
     return (struct hostent *) 0;
-#   elif defined (ACE_VXWORKS)
+#   elif defined (ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT)
   ACE_UNUSED_ARG (h_errnop);
   // VxWorks 6.x has a threadsafe gethostbyaddr() which returns a heap-allocated
   // data structure which needs to be freed with hostentFree()

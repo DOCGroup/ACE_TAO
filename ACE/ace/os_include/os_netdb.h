@@ -43,6 +43,11 @@ extern "C"
 // is reentrant
 #    define ACE_VXWORKS_HAS_GETHOSTBYNAME_REENTRANT
 #  endif
+#  if (ACE_VXWORKS <= 0x700) || defined (GETHOSTBYADDR_REENTRANT)
+// With VxWorks 7 hostLib.h defines GETHOSTBYADDR_REENTRANT when gethostbyaddr()
+// is reentrant
+#    define ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT
+#  endif
 #endif /* ACE_VXWORKS */
 
 #if defined (ACE_LACKS_HOSTENT)
