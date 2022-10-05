@@ -13,9 +13,9 @@ BEGIN
     BEGIN
         BLOCK "040904B0"
         BEGIN
-            VALUE "FileDescription", "ACE\0"
+            VALUE "FileDescription", "ACE_Compression\0"
             VALUE "FileVersion", ACE_VERSION "\0"
-            VALUE "InternalName", "ACEDLL\0"
+            VALUE "InternalName", "ACE_CompressionDLL\0"
             VALUE "LegalCopyright", "\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "ACE_Compression.DLL\0"
