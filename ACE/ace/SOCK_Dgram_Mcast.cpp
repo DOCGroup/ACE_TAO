@@ -18,7 +18,7 @@
 #endif
 
 #if defined (ACE_HAS_GETIFADDRS)
-#  if defined (ACE_VXWORKS)
+#  if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x700)
 #    include /**/ <net/ifaddrs.h>
 #  else
 #    include /**/ <ifaddrs.h>
