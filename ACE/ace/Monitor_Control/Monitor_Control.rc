@@ -1,4 +1,4 @@
-#include "..\Version.h"
+#include "../Version.h"
 
 1 VERSIONINFO
  FILEVERSION ACE_MAJOR_VERSION,ACE_MINOR_VERSION,ACE_MICRO_VERSION,0
