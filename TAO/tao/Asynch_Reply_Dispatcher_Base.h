@@ -134,7 +134,6 @@ namespace TAO
   public:
     void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb) throw ();
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

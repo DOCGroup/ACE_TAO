@@ -31,9 +31,9 @@ public:
   void set_poa (PortableServer::POA_ptr poa);
 
   // Canonical name of the interceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
 

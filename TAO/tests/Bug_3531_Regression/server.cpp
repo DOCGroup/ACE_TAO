@@ -149,7 +149,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {

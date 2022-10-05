@@ -55,7 +55,7 @@ public:
                         ACE_Timer_Queue * = 0);
 
   /// Close down the ACE_Msg_WFMO_Reactor and release all of its resources.
-  virtual ~ACE_Msg_WFMO_Reactor (void);
+  virtual ~ACE_Msg_WFMO_Reactor ();
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
@@ -102,7 +102,7 @@ protected:
   virtual DWORD poll_remaining_handles (DWORD index);
 
   /// Dispatches window messages.
-  virtual int dispatch_window_messages (void);
+  virtual int dispatch_window_messages ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

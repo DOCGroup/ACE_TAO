@@ -132,5 +132,4 @@ TAO_Notify_StructuredProxyPushConsumer::configure(
 }
 
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

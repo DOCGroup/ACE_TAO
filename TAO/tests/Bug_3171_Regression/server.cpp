@@ -119,7 +119,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           1);
 
       worker.thr_mgr ()->wait ();
-
     }
     ACE_DEBUG ((LM_DEBUG, "Event loop finished\n"));
   }
@@ -139,7 +138,7 @@ Worker::Worker ()
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   static int threadID = 0;
 

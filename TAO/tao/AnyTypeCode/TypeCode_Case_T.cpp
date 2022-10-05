@@ -63,7 +63,6 @@ namespace TAO
         return CORBA::Any::to_char (v);
       }
     };
-
   } // End TypeCode namespace
 }  // End TAO namespace
 

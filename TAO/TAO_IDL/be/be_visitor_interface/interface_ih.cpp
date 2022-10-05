@@ -91,7 +91,6 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
           << be_global->impl_class_suffix () << "& " << "operator=(const "
           << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << "&);" << be_nl_2;
-
     }
 
   *os << "// Destructor" << be_nl

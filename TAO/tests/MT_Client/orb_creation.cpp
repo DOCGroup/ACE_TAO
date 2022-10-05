@@ -121,7 +121,7 @@ Client::Client (int niterations,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

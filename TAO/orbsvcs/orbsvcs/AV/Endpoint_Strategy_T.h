@@ -35,16 +35,16 @@ protected:
   virtual ~TAO_AV_Endpoint_Reactive_Strategy ();
 
   /// creates and activates the streamendpoint, vdev, and mediacontrol
-  virtual int activate (void);
+  virtual int activate ();
 
   /// activates the stream_endpoint with the POA
-  virtual int activate_stream_endpoint (void) = 0;
+  virtual int activate_stream_endpoint () = 0;
 
   /// activates the vdev with the POA
-  virtual int activate_vdev (void);
+  virtual int activate_vdev ();
 
   /// activates the media controller with the POA
-  virtual int activate_mediactrl (void);
+  virtual int activate_mediactrl ();
 
   /// Bridge method to create a vdev, a la Acceptor. Applications
   /// can override this
@@ -86,17 +86,17 @@ class TAO_AV_Endpoint_Reactive_Strategy_A
   : public TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev , T_MediaCtrl>
 {
 public:
-  TAO_AV_Endpoint_Reactive_Strategy_A (void);
+  TAO_AV_Endpoint_Reactive_Strategy_A ();
 
   /// Constructor
   int init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Reactive_Strategy_A (void);
+  virtual ~TAO_AV_Endpoint_Reactive_Strategy_A ();
 
   /// Overrides the base class stream_endpoint activator, to activate
   /// an "A" type endpoint
-  virtual int activate_stream_endpoint (void);
+  virtual int activate_stream_endpoint ();
 
   /// Called by the MMDevice, when it needs to create an A type endpoint
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
@@ -168,16 +168,16 @@ protected:
   char* activate_with_poa (PortableServer::Servant servant);
 
   /// Removes the vdev and streamendpoint names from the naming service.
-  int unbind_names (void);
+  int unbind_names ();
 
   /// Binds to the naming service
-  int bind_to_naming_service (void);
+  int bind_to_naming_service ();
 
   /// Registers vdev with the naming service
-  int register_vdev (void);
+  int register_vdev ();
 
   /// Registers stream_endpoint with the naming service
-  int register_stream_endpoint (void);
+  int register_stream_endpoint ();
 
   /// Releases the semaphore on which the parent is waiting on
   int release_semaphore ();
@@ -227,7 +227,6 @@ protected:
   CORBA::ORB_ptr orb_;
 
   PortableServer::POA_ptr poa_;
-
 };
 
 // ----------------------------------------------------------------------
@@ -241,10 +240,10 @@ class TAO_AV_Child_Process_A
 {
 public:
   /// Constructor.
-  TAO_AV_Child_Process_A (void);
+  TAO_AV_Child_Process_A ();
 
   /// Destructor.
-  virtual ~TAO_AV_Child_Process_A (void);
+  virtual ~TAO_AV_Child_Process_A ();
 };
 
 // ----------------------------------------------------------------------
@@ -259,10 +258,10 @@ class TAO_AV_Child_Process_B
 {
 public:
   /// Constructor.
-  TAO_AV_Child_Process_B (void);
+  TAO_AV_Child_Process_B ();
 
   /// Destructor.
-  virtual ~TAO_AV_Child_Process_B (void);
+  virtual ~TAO_AV_Child_Process_B ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

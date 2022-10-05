@@ -3,11 +3,10 @@
 
 class  AdderServant :
   public POA_AMI_test::adder {
-
 public:
-  AdderServant (void) {}
+  AdderServant () {}
 
-  virtual ~AdderServant (void) {}
+  virtual ~AdderServant () {}
 
   virtual
   CORBA::Long add (
@@ -21,7 +20,6 @@ public:
 
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
-
   try {
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 

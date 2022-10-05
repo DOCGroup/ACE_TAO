@@ -40,7 +40,7 @@ class TAO_PortableGroup_Export TAO_UIPMC_Endpoint : public TAO_Endpoint
 {
 public:
   /// Default constructor.
-  TAO_UIPMC_Endpoint (void);
+  TAO_UIPMC_Endpoint ();
 
   /// Constructor.
   TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr);
@@ -50,23 +50,23 @@ public:
                       CORBA::UShort port);
 
   /// Destructor.
-  ~TAO_UIPMC_Endpoint (void);
+  ~TAO_UIPMC_Endpoint ();
 
   // = Implementation of abstract TAO_Endpoint methods.  See
   // Endpoint.h for their documentation.
 
-  virtual TAO_Endpoint *next (void);
+  virtual TAO_Endpoint *next ();
   virtual int addr_to_string (char *buffer, size_t length);
 
   /// Makes a copy of this TAO_Endpoint.
-  virtual TAO_Endpoint *duplicate (void);
+  virtual TAO_Endpoint *duplicate ();
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their port and host are the same.
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
   /// Return a hash value for this object.
-  CORBA::ULong hash (void);
+  CORBA::ULong hash ();
 
   // Allocates memory and returns a copy of <this>
 
@@ -88,7 +88,7 @@ public:
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p); //@@ Frank - deprecate this.
 
-  //TAO_UIPMC_Connection_Handler *&hint (void);
+  //TAO_UIPMC_Connection_Handler *&hint ();
   // Access to our <hint_>.
   /// Do we have a preferred local network interface set for this target?
   bool is_preferred_network () const;
@@ -105,13 +105,12 @@ public:
   const char *preferred_if () const;
 
 private:
-
   /// Helper methods for getting and setting the IP address.  @@ Vadym - deprecate these.
   ACE_UINT32 uint_ip_addr () const;
   void uint_ip_addr (ACE_UINT32 ip_addr);
 
   /// Helper method to update the cached object address.  @@ Vadym - deprecate this.
-  void update_object_addr (void);
+  void update_object_addr ();
 
   /// IP Multicast address.  @@ Frank - deprecate this.
   CORBA::Octet class_d_address_[4];

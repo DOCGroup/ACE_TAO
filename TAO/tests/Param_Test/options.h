@@ -74,10 +74,10 @@ public:
   };
 
   /// constructor
-  Options (void);
+  Options ();
 
   /// destructor
-  ~Options (void);
+  ~Options ();
 
   /// Parses the arguments passed on the command line.
   int parse_args (int argc, ACE_TCHAR **argv);
@@ -86,13 +86,13 @@ public:
   char const * param_test_ior () const;
 
   /// what test to run
-  TEST_TYPE test_type (void);
+  TEST_TYPE test_type ();
 
   /// whether to use SII or DII
-  INVOKE_TYPE invoke_type (void);
+  INVOKE_TYPE invoke_type ();
 
   /// number of times to run the test
-  CORBA::ULong loop_count (void);
+  CORBA::ULong loop_count ();
 
   /// whether debug option is on or not
   CORBA::Boolean debug () const;

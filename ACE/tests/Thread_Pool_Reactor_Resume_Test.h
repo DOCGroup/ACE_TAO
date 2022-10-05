@@ -31,19 +31,18 @@
 class Request_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
 {
 public:
-
   /// The default constructor makes sure the right reactor is used.
   Request_Handler (ACE_Thread_Manager *tm = 0);
 
   /// Dtor..
-  ~Request_Handler (void);
+  ~Request_Handler ();
 
   virtual int open (void * = 0);
 
 protected:
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask = 0);
-  virtual int resume_handler (void);
+  virtual int resume_handler ();
 
 private:
   size_t  nr_msgs_rcvd_;

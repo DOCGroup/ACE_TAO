@@ -13,12 +13,12 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 void
-test_i::method (void)
+test_i::method ()
 {
 }
 
 char *
-test_i::get_string (void)
+test_i::get_string ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));

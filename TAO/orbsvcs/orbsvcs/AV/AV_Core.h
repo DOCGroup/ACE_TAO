@@ -87,15 +87,15 @@ public:
   };
 
   /// Default constructor.
-  TAO_AV_Core (void);
+  TAO_AV_Core ();
 
   /// Destructor.
-  ~TAO_AV_Core (void);
+  ~TAO_AV_Core ();
 
   int init (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa);
-  int run (void);
-  int stop_run (void);
+  int run ();
+  int stop_run ();
   int init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                           TAO_AV_FlowSpecSet &flow_spec_set,
                           EndPoint direction,
@@ -104,33 +104,33 @@ public:
                           TAO_AV_FlowSpecSet &forward_flow_spec_set,
                           TAO_AV_FlowSpecSet &reverse_flow_spec_set,
                           EndPoint direction);
-  int init_transport_factories (void);
-  int init_flow_protocol_factories (void);
+  int init_transport_factories ();
+  int init_flow_protocol_factories ();
 
-  int load_default_transport_factories (void);
-  int load_default_flow_protocol_factories (void);
+  int load_default_transport_factories ();
+  int load_default_flow_protocol_factories ();
 
   /// = Get the acceptor registry
   TAO_AV_Acceptor *get_acceptor (const char *flowname);
   TAO_AV_Connector *get_connector (const char *flowname);
   int remove_acceptor (const char *flowname);
   int remove_connector (const char *flowname);
-  TAO_AV_Connector_Registry *connector_registry (void);
+  TAO_AV_Connector_Registry *connector_registry ();
   TAO_FlowSpec_Entry *get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
                                            const char *flowname);
-  TAO_AV_Acceptor_Registry  *acceptor_registry  (void);
+  TAO_AV_Acceptor_Registry  *acceptor_registry  ();
 
   // = Get the protocol factories
   /// = Set/get the <ACE_Reactor>.
   TAO_AV_Flow_Protocol_Factory *get_flow_protocol_factory(const char *flow_protocol);
   TAO_AV_Transport_Factory *get_transport_factory(const char *transport_protocol);
-  TAO_AV_Flow_ProtocolFactorySet *flow_protocol_factories (void);
-  TAO_AV_TransportFactorySet *transport_factories (void);
+  TAO_AV_Flow_ProtocolFactorySet *flow_protocol_factories ();
+  TAO_AV_TransportFactorySet *transport_factories ();
   void reactor (ACE_Reactor *r);
-  ACE_Reactor *reactor (void);
-  CORBA::ORB_ptr orb (void);
+  ACE_Reactor *reactor ();
+  CORBA::ORB_ptr orb ();
   void orb (CORBA::ORB_ptr orb_);
-  PortableServer::POA_ptr poa (void);
+  PortableServer::POA_ptr poa ();
   void poa (PortableServer::POA_ptr poa_);
 
   static int deactivate_servant (PortableServer::Servant servant);

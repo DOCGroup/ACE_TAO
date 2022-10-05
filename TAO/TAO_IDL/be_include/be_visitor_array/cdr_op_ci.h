@@ -24,13 +24,12 @@
  */
 class be_visitor_array_cdr_op_ci : public be_visitor_decl
 {
-
 public:
   /// constructor
   be_visitor_array_cdr_op_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_array_cdr_op_ci (void);
+  ~be_visitor_array_cdr_op_ci ();
 
   /// visit array
   virtual int visit_array (be_array *node);

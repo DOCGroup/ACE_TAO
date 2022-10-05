@@ -5,7 +5,7 @@
  */
 
 ACE_INLINE
-Loopback_Pair::Loopback_Pair (void)
+Loopback_Pair::Loopback_Pair ()
 {
 }
 

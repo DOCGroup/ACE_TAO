@@ -122,7 +122,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << node->full_name () << "_ptr _tao_objptr =" << be_idt_nl
       << node->full_name () << "::_duplicate (_tao_elem);" << be_uidt_nl
-      << "_tao_any <<= &_tao_objptr;" << be_uidt_nl
+      << "_tao_any <<= std::addressof(_tao_objptr);" << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "/// Non-copying insertion." << be_nl

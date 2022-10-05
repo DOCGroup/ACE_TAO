@@ -36,7 +36,6 @@ public:
   CORBA::Object_var reference() const;
 
 protected:
-
   PortableServer::ServantBase* servant_;
   /// Store the default POA.
   PortableServer::POA_var poa_;

@@ -486,7 +486,6 @@ be_generator::create_structure (UTL_ScopedName *n,
 AST_StructureFwd *
 be_generator::create_structure_fwd (UTL_ScopedName *n)
 {
-
   AST_Structure *full_defn = this->create_structure (n,
                                                      false,
                                                      false);

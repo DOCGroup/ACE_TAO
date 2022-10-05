@@ -10,7 +10,7 @@ static void shutdown (Demux_Test_ptr objref)
 }
 //FUZZ: enable check_for_lack_ACE_OS
 
-int Demux_Test_Client::init_operation_db (void)
+int Demux_Test_Client::init_operation_db ()
 {
    this->op_db_[0].op_ = M302;
    this->op_db_[1].op_ = shutdown;

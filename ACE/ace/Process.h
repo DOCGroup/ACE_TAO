@@ -307,7 +307,7 @@ public:
   // = Non-portable accessors for when you "just have to use them."
 
   /// Used for setting and getting.
-  ACE_TEXT_STARTUPINFO *startup_info (void);
+  ACE_TEXT_STARTUPINFO *startup_info ();
 
   /// Get the process_attributes.  Returns NULL if
   /// set_process_attributes has not been set.
@@ -315,7 +315,7 @@ public:
 
   /// If this is called, a non-null process attributes is sent to
   /// CreateProcess.
-  LPSECURITY_ATTRIBUTES set_process_attributes (void);
+  LPSECURITY_ATTRIBUTES set_process_attributes ();
 
   /// Get the thread_attributes.  Returns NULL if set_thread_attributes
   /// has not been set.
@@ -323,7 +323,7 @@ public:
 
   /// If this is called, a non-null thread attributes is sent to
   /// CreateProcess.
-  LPSECURITY_ATTRIBUTES set_thread_attributes (void);
+  LPSECURITY_ATTRIBUTES set_thread_attributes ();
 
   /// Get user token. Return ACE_INVALID_HANDLE if it has not been set.
   HANDLE get_user_token () const;
@@ -365,7 +365,6 @@ public:
   void inherit_environment (bool nv);
 #endif /* ACE_WIN32 */
 protected:
-
 #if !defined (ACE_HAS_WINCE)
   /// Add @a assignment to environment_buf_ and adjust
   /// environment_argv_.  @a len is the strlen of @a assignment.
@@ -385,7 +384,7 @@ protected:
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   /// Helper function to grab win32 environment and stick it in
   /// environment_buf_ using this->setenv_i.
-  void inherit_environment (void);
+  void inherit_environment ();
 
   /// Ensures once only call to inherit environment.
   int environment_inherited_;
@@ -638,7 +637,7 @@ public:
   void close_passed_handles ();
 
 #if defined (ACE_WIN32)
-  PROCESS_INFORMATION process_info (void);
+  PROCESS_INFORMATION process_info ();
 #endif /* ACE_WIN32 */
 
 private:

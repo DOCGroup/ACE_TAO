@@ -65,7 +65,7 @@ namespace TAO
 
     virtual int funlock (int whence, int start, int len) = 0;
 
-    virtual time_t last_changed(void) = 0;
+    virtual time_t last_changed() = 0;
 
     // Mimic a portion of the std::ios interface.  We need to be able
     // to indicate error states from the extraction operators below.
@@ -91,13 +91,13 @@ namespace TAO
 
     static ACE_CString state_as_string (Storable_State state);
 
-    virtual void rewind (void) = 0;
+    virtual void rewind () = 0;
 
-    virtual bool flush (void) = 0;
+    virtual bool flush () = 0;
 
     /// Force write of storable data to storage.
     /// Returns 0 on success, otherwise EOF
-    virtual int sync (void) = 0;
+    virtual int sync () = 0;
 
     virtual Storable_Base& operator << (const ACE_CString&) = 0;
     virtual Storable_Base& operator >> (ACE_CString&) = 0;

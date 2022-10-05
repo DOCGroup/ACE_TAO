@@ -673,7 +673,6 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
               }
             default:
               return -3;
-
             }// end switch on type
 
           line += ACE_TEXT ("\n");
@@ -699,7 +698,6 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
       ++index;
     }
   return 0;
-
 }
 
 // Method to squish leading and trailing whitespaces from a string.

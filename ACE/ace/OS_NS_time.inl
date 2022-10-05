@@ -462,7 +462,7 @@ namespace ACE_OS {
 } /* namespace ACE_OS */
 #else
 ACE_INLINE long
-ACE_OS::timezone (void)
+ACE_OS::timezone ()
 {
   return ::ace_timezone ();
 }

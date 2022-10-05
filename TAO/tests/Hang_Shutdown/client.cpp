@@ -57,9 +57,8 @@ namespace Test
       : h_ (Hang::_duplicate (h))
     {}
 
-    virtual int svc (void)
+    virtual int svc ()
     {
-
       try
         {
           this->h_->send_stuff ("Testing",
@@ -115,9 +114,8 @@ namespace Test
       : o_ (CORBA::ORB::_duplicate (o))
     {}
 
-    virtual int svc (void)
+    virtual int svc ()
     {
-
       try
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -169,7 +167,6 @@ namespace Test
   static int
   try_main (int argc, ACE_TCHAR *argv[])
   {
-
     try
       {
         CORBA::ORB_var orb =
@@ -212,7 +209,6 @@ namespace Test
         ACE_Thread_Manager::instance ()->wait ();
 
         orb->destroy ();
-
       }
     catch (const CORBA::Exception& ex)
       {

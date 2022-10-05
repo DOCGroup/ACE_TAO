@@ -50,7 +50,7 @@ public:
   TAO_IRObject_i (TAO_Repository_i *repo);
 
   /// Destructor.
-  virtual ~TAO_IRObject_i (void);
+  virtual ~TAO_IRObject_i ();
 
   virtual CORBA::DefinitionKind def_kind ();
 
@@ -65,7 +65,7 @@ public:
 
 protected:
   /// Set our key from the object ID via POACurrent.
-  void update_key (void);
+  void update_key ();
 
 protected:
   /// Pointer to the repository we were constructed from.

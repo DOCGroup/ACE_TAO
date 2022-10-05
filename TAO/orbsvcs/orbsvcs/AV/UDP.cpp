@@ -94,7 +94,6 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
   int dscp_flag=0;
   for(i=0; i < qos.QoSParams.length(); i++)
     {
-
       if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
         {
           qos.QoSParams[i].property_value >>= dscp;
@@ -280,7 +279,6 @@ TAO_AV_UDP_Transport::send (const iovec *iov,
   return this->handler_->get_socket ()->send ((const iovec *) iov,
                                               iovcnt,
                                               this->peer_addr_);
-
 }
 
 ssize_t
@@ -678,7 +676,6 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                     control_inet_addr =  dynamic_cast<ACE_INET_Addr*> (entry->control_address ()) ;
                   else
                     {
-
                       if (local_addr != 0)
                         {
                           ACE_TCHAR buf [BUFSIZ];

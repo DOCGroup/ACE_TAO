@@ -86,7 +86,7 @@ public:
   // Constructor, it assumes ownership of the buffers, strings must be
   // allocated using CORBA::string_alloc(), buffers using operator new.
 
-  ~ECM_Federation (void);
+  ~ECM_Federation ();
   // Dtor
 
   const char* name () const;
@@ -117,13 +117,13 @@ public:
              RtecEventChannelAdmin::EventChannel_ptr ec);
   // Connect the UDP sender to the EC.
 
-  void close (void);
+  void close ();
   // Close the UDP sender, disconnect from the EC
 
   int sender_local_addr (ACE_INET_Addr& addr);
   // Return the sender local address
 
-  RtecUDPAdmin::AddrServer_ptr addr_server (void);
+  RtecUDPAdmin::AddrServer_ptr addr_server ();
   // This address server can be used to convert event headers
   // (type,source) to UDP addresses (ipaddr,port)
 
@@ -169,7 +169,7 @@ public:
              RtecEventChannelAdmin::EventChannel_ptr event_channel);
   // This method connects the supplier to the EC.
 
-  void close (void);
+  void close ();
   // Disconnect from the EC.
 
   void activate (RtecEventChannelAdmin::EventChannel_ptr event_channel,
@@ -180,11 +180,11 @@ public:
   // The supplier ID.
 
   void push (const RtecEventComm::EventSet& events);
-  void disconnect_push_consumer (void);
+  void disconnect_push_consumer ();
   // Implement the callbacks for our consumer personality.
 
   // = The POA_RtecEventComm::PushSupplier methods.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
 private:
   ECM_Local_Federation* federation_;
@@ -222,17 +222,17 @@ public:
              unsigned int *seed);
   // This method connects the consumer to the EC.
 
-  void close (void);
+  void close ();
   // Disconnect from the EC.
 
   void connect (unsigned int *seed);
-  void disconnect (void);
+  void disconnect ();
   // Disconnect from the supplier, but do not forget about it or close
   // it.
 
   // = The POA_RtecEventComm::PushComsumer methods.
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
 private:
   ECM_Local_Federation* federation_;
@@ -255,14 +255,14 @@ public:
   ECM_Local_Federation (ECM_Federation *federation,
                         ECM_Driver *driver);
   // Constructor.
-  ~ECM_Local_Federation (void);
+  ~ECM_Local_Federation ();
   // Destructor
 
   void open (int event_count,
              RtecEventChannelAdmin::EventChannel_ptr event_channel);
   // Connect both the supplier and the consumer.
 
-  void close (void);
+  void close ();
   // Disconnect everybody from the EC
 
   void activate (RtecEventChannelAdmin::EventChannel_ptr event_channel,
@@ -283,7 +283,7 @@ public:
                       TAO_ECG_Refcounted_Endpoint ignore_from);
   // Connect the UDP receiver to the EC.
 
-  void close_receiver (void);
+  void close_receiver ();
   // Close the UDP receiver, disconnect from the EC
 
   void dump_results () const;
@@ -386,7 +386,7 @@ class ECM_Driver
   //   receive and send multicast messages, etc.
   //
 public:
-  ECM_Driver (void);
+  ECM_Driver ();
 
   enum {
     MAX_EVENTS = 1024,
@@ -414,7 +414,7 @@ private:
   void activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec);
   // Activate all the federations
 
-  void close_federations (void);
+  void close_federations ();
   // Close the federations, i.e. disconnect from the EC, deactivate
   // the objects, etc.
 
@@ -425,19 +425,19 @@ private:
   // Connect all the receivers, thus we accept events arriving through
   // multicast.
 
-  void close_senders (void);
+  void close_senders ();
   // Close all the senders to cleanup resources.
 
-  void close_receivers (void);
+  void close_receivers ();
   // Close all the receivers to cleanup resources.
 
-  int shutdown (void);
+  int shutdown ();
   // Called when the main thread.
 
   int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line arguments
 
-  int parse_config_file (void);
+  int parse_config_file ();
   // parse the command line arguments
 
   int parse_name_list (FILE* file, int n, char** names,
@@ -448,7 +448,7 @@ private:
                    const char* error_msg);
   // skip the blanks in the file.
 
-  void dump_results (void);
+  void dump_results ();
   // Dump the results to the standard output.
 
 private:

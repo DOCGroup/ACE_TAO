@@ -25,13 +25,13 @@ public:
   Widget_Part_Impl (Widget *owner, const char* name, int size);
 
   /// Destructor.
-  virtual ~Widget_Part_Impl (void);
+  virtual ~Widget_Part_Impl ();
 
   /// Ask the part to print information about itself.
-  virtual void print_info (void);
+  virtual void print_info ();
 
   /// Ask the part to remove itself from the widget that contains it.
-  virtual void remove_from_owner (void);
+  virtual void remove_from_owner ();
 
 private:
   /// The widget that contains this part.

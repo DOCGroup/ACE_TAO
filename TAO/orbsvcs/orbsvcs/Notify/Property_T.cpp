@@ -34,7 +34,6 @@ TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (
     value_ (rhs.value_),
     valid_ (rhs.valid_)
 {
-
 }
 
 template <class TYPE>

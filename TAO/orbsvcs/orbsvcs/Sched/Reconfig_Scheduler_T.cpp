@@ -308,7 +308,7 @@ init (int config_count,
 
 // Closes the scheduler, releasing all current resources.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
-TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (void)
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -624,7 +624,6 @@ reset (RtecScheduler::handle_t handle,
 
   return;
 }
-
 
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
@@ -1159,7 +1158,6 @@ recompute_scheduling (CORBA::Long /* minimum_priority */,
   // If everything is already up to date, we're done.
   if (SCHED_ALL_STABLE == stability_flags_)
     {
-
       // Must always provide a value for an out parameter
       ACE_NEW_THROW_EX (anomalies,
          RtecScheduler::Scheduling_Anomaly_Set (0),
@@ -1173,7 +1171,6 @@ recompute_scheduling (CORBA::Long /* minimum_priority */,
   if ((this->stability_flags_ & SCHED_PROPAGATION_NOT_STABLE)
       || (this->stability_flags_ & SCHED_UTILIZATION_NOT_STABLE))
     {
-
 #if defined (SCHEDULER_LOGGING)
       ACE_Scheduler_Factory::log_scheduling_entries(entry_ptr_array_,
                                                     this->rt_info_count_,
@@ -1437,7 +1434,7 @@ dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 RtecScheduler::Preemption_Priority_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-last_scheduled_priority (void)
+last_scheduled_priority ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -1857,7 +1854,6 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
                    number_of_calls,
                    dependency_type,
                    enabled);
-
 }
 
 
@@ -2176,7 +2172,7 @@ map_dependency_enable_state_i (RtecScheduler::handle_t key,
 // has_unresolved_remote_dependencies_, has_unresolved_local_dependencies_,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-dfs_traverse_i (void)
+dfs_traverse_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2209,12 +2205,11 @@ dfs_traverse_i (void)
 }
 
 
-
 // Sorts an array of RT_info handles in topological order, then
 // checks for loops, marks unresolved remote dependencies.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-detect_cycles_i (void)
+detect_cycles_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2258,7 +2253,7 @@ detect_cycles_i (void)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-perform_admission_i (void)
+perform_admission_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2318,7 +2313,7 @@ perform_admission_i (void)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-crit_dfs_traverse_i (void)
+crit_dfs_traverse_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2352,7 +2347,7 @@ crit_dfs_traverse_i (void)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-propagate_criticalities_i (void)
+propagate_criticalities_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2394,7 +2389,7 @@ propagate_criticalities_i (void)
 // Propagates periods, sets total frame size.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-propagate_characteristics_i (void)
+propagate_characteristics_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2433,7 +2428,7 @@ propagate_characteristics_i (void)
 // Sets last scheduled priority.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-assign_priorities_i (void)
+assign_priorities_i ()
 {
   int i;
 #if defined (SCHEDULER_LOGGING)
@@ -2577,7 +2572,7 @@ assign_priorities_i (void)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-refresh_tuple_ptr_array_i (void)
+refresh_tuple_ptr_array_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2808,7 +2803,7 @@ maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-compute_utilization_i (void)
+compute_utilization_i ()
 {
   TAO_RSE_Utilization_Visitor<RECONFIG_SCHED_STRATEGY> util_visitor;
   for (int i = 0; i < this->rt_info_count_; ++i)

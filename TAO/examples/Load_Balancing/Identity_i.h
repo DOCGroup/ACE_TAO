@@ -20,18 +20,16 @@ class Identity_i :
   // = TITLE
   //    This class implements Identity.idl interface.
 public:
-
   /// Constructor - initializes the name of this object.
   Identity_i (const char *name);
 
   /// Destructor.
-  ~Identity_i (void);
+  ~Identity_i ();
 
   /// Returns the name of this object.
   virtual void get_name (CORBA::String_out name);
 
 private:
-
   /// Stores the name of this object.
   CORBA::String_var name_;
 };

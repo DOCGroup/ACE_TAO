@@ -46,11 +46,11 @@ public:
 
   // = The RtecEventChannelAdmin::EventChannel methods...
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (void);
+      for_consumers ();
 
 
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (void);
+      for_suppliers ();
 
   void get_state (FtRtecEventChannelAdmin::EventChannelState & s);
 

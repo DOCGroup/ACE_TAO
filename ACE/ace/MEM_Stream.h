@@ -59,13 +59,13 @@ public:
 
   // Initialization and termination methods.
   /// Constructor.
-  ACE_MEM_Stream (void);
+  ACE_MEM_Stream ();
 
   /// Constructor (sets the underlying ACE_HANDLE with <h>).
   ACE_MEM_Stream (ACE_HANDLE h);
 
   /// Destructor.
-  ~ACE_MEM_Stream (void);
+  ~ACE_MEM_Stream ();
 
   //= The following two methods use write and read system calls.
   /// Send n bytes, keep trying until n are sent.
@@ -82,17 +82,17 @@ public:
   // = Selectively close endpoints.
 
   /// Close down the reader.
-  int close_reader (void);
+  int close_reader ();
 
   /// Close down the writer.
-  int close_writer (void);
+  int close_writer ();
 
   /**
    * Close down the socket (we need this to make things work correctly
    * on Win32, which requires use to do a <close_writer> before doing
    * the close to avoid losing data).
    */
-  int close (void);
+  int close ();
 
   // = Meta-type info
   typedef ACE_Addr PEER_ADDR;

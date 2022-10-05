@@ -9,7 +9,7 @@ TAO_ORBInitInfo::orb_core () const
 }
 
 ACE_INLINE void
-TAO_ORBInitInfo::invalidate (void)
+TAO_ORBInitInfo::invalidate ()
 {
   this->orb_core_ = 0;
 }

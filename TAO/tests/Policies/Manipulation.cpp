@@ -269,7 +269,7 @@ Manipulation::perform_iteration (unsigned int *seed,
 
 
 int
-Manipulation::svc (void)
+Manipulation::svc ()
 {
   try
     {

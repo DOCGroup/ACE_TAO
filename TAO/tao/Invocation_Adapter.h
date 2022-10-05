@@ -158,7 +158,6 @@ namespace TAO
      * methods to get the right behavior at their level.
      */
     //@{
-
     /// Helper method that prepares the necessary stuff for a remote
     /// invocation.
 

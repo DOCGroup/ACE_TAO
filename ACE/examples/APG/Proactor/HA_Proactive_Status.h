@@ -65,7 +65,7 @@ template <class HANDLER>
 class ACE_Asynch_Acceptor : public ACE_Handler
       ...
 protected:
-  virtual HANDLER *make_handler (void)
+  virtual HANDLER *make_handler ()
   {
     return new HANDLER;
   }

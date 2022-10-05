@@ -13,7 +13,7 @@
 
 ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0;
 
-FilterClient::FilterClient (void)
+FilterClient::FilterClient ()
   :done_ (0)
 {
   g_result_count = 0;
@@ -47,7 +47,7 @@ FilterClient::init (int argc, ACE_TCHAR *argv [])
 }
 
 void
-FilterClient::run (void)
+FilterClient::run ()
 {
   send_events ();
 
@@ -60,7 +60,7 @@ FilterClient::run (void)
 }
 
 void
-FilterClient::done (void)
+FilterClient::done ()
 {
   this->done_ = 1;
 }
@@ -89,7 +89,7 @@ FilterClient::init_ORB (int argc, ACE_TCHAR *argv [])
 }
 
 void
-FilterClient::resolve_naming_service (void)
+FilterClient::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
@@ -103,7 +103,7 @@ FilterClient::resolve_naming_service (void)
 }
 
 void
-FilterClient::resolve_Notify_factory (void)
+FilterClient::resolve_Notify_factory ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -117,7 +117,7 @@ FilterClient::resolve_Notify_factory (void)
 }
 
 void
-FilterClient::create_EC (void)
+FilterClient::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -129,7 +129,7 @@ FilterClient::create_EC (void)
 }
 
 void
-FilterClient::create_supplieradmin (void)
+FilterClient::create_supplieradmin ()
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
 
@@ -161,7 +161,7 @@ FilterClient::create_supplieradmin (void)
 }
 
 void
-FilterClient:: create_consumeradmin (void)
+FilterClient:: create_consumeradmin ()
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
 
@@ -196,7 +196,7 @@ FilterClient:: create_consumeradmin (void)
 }
 
 void
-FilterClient::create_consumers (void)
+FilterClient::create_consumers ()
 {
   // startup the first consumer.
   ACE_NEW_THROW_EX (consumer_1,
@@ -214,7 +214,7 @@ FilterClient::create_consumers (void)
 }
 
 void
-FilterClient::create_suppliers (void)
+FilterClient::create_suppliers ()
 {
   // startup the first supplier
   ACE_NEW_THROW_EX (supplier_1,
@@ -232,7 +232,7 @@ FilterClient::create_suppliers (void)
 }
 
 void
-FilterClient::send_events (void)
+FilterClient::send_events ()
 {
   // operations:
   CosNotification::StructuredEvent event;
@@ -294,7 +294,7 @@ Filter_StructuredPushConsumer::Filter_StructuredPushConsumer (FilterClient* filt
 {
 }
 
-Filter_StructuredPushConsumer::~Filter_StructuredPushConsumer (void)
+Filter_StructuredPushConsumer::~Filter_StructuredPushConsumer ()
 {
 }
 
@@ -321,7 +321,7 @@ Filter_StructuredPushConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr
 }
 
 void
-Filter_StructuredPushConsumer::disconnect (void)
+Filter_StructuredPushConsumer::disconnect ()
 {
   this->proxy_supplier_->
     disconnect_structured_push_supplier();
@@ -360,7 +360,7 @@ Filter_StructuredPushConsumer::push_structured_event
 
 void
 Filter_StructuredPushConsumer::disconnect_structured_push_consumer
-   (void)
+   ()
 {
   // No-Op.
 }
@@ -398,7 +398,7 @@ Filter_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr
 }
 
 void
-Filter_StructuredPushSupplier::disconnect (void)
+Filter_StructuredPushSupplier::disconnect ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
@@ -428,7 +428,7 @@ Filter_StructuredPushSupplier::send_event
 
 void
 Filter_StructuredPushSupplier::disconnect_structured_push_supplier
-   (void)
+   ()
 {
   // No-Op.
 }

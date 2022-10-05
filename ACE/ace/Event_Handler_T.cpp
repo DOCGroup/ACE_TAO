@@ -25,7 +25,7 @@ ACE_Event_Handler_T<T>::dump () const
 }
 
 template<class T>
-ACE_Event_Handler_T<T>::~ACE_Event_Handler_T (void)
+ACE_Event_Handler_T<T>::~ACE_Event_Handler_T ()
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::~ACE_Event_Handler_T");
   if (this->delete_handler_)

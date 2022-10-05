@@ -25,7 +25,7 @@ public:
     return this->location_;
   }
 
-  int querySensor (void)
+  int querySensor ()
   {
     // ...
     return ++this->count_;

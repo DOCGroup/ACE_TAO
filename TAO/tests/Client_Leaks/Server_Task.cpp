@@ -9,7 +9,7 @@ Server_Task::Server_Task (CORBA::ORB_ptr orb,
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting server task\n"));
   try

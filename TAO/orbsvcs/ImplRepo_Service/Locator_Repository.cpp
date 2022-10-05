@@ -26,7 +26,7 @@ Locator_Repository::~Locator_Repository ()
 }
 
 void
-Locator_Repository::shutdown (void)
+Locator_Repository::shutdown ()
 {
   // default impl - no op
 }
@@ -127,7 +127,7 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
 }
 
 int
-Locator_Repository::recover_ior (void)
+Locator_Repository::recover_ior ()
 {
   if (this->registered_)
     {
@@ -592,7 +592,6 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
   this->persistent_update (base, true);
 
   return 0;
-
 }
 
 // -------------------------------------------------------------------------------------
@@ -645,7 +644,7 @@ Locator_Repository::remove_activator (const ACE_CString& name)
 }
 
 Locator_Repository::SIMap&
-Locator_Repository::servers (void)
+Locator_Repository::servers ()
 {
   return server_infos_;
 }
@@ -657,7 +656,7 @@ Locator_Repository::servers () const
 }
 
 Locator_Repository::AIMap&
-Locator_Repository::activators (void)
+Locator_Repository::activators ()
 {
   return activator_infos_;
 }

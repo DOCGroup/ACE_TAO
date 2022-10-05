@@ -1,5 +1,4 @@
 module M1 {
-
   struct S1 {
     octet o;
   };
@@ -13,5 +12,4 @@ module M1 {
     public S1 valStruct;
     public LI valLocalIface;
   };
-
 };

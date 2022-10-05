@@ -836,7 +836,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
     }
   else
     {
-      *os << "::" << ub->local_name () << " ( ::CORBA::WChar *val)";
+      *os << "::" << ub->local_name () << " (::CORBA::WChar *val)";
     }
 
   *os << be_nl

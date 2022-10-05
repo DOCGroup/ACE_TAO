@@ -164,7 +164,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << "OBV_";
         }
 
-      *os << node->local_name () << " ();";
+      *os << node->local_name () << " () = default;";
 
       // Initializing constructor.
       if (node->has_member ())
@@ -238,7 +238,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         }
 
       *os << be_nl
-          << "CORBA::Boolean require_truncation_;" << be_uidt_nl
+          << "CORBA::Boolean require_truncation_ {false};" << be_uidt_nl
           << "};";
     }
 

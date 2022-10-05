@@ -84,8 +84,8 @@ public:
 
   virtual void open (TAO_ORB_Core& core) = 0;
 
-  virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor (void) = 0;
-  virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor (void) = 0;
+  virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor () = 0;
+  virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor () = 0;
 
   virtual void get_ncs (CONV_FRAME::CodeSetId &ncsc,
                         CONV_FRAME::CodeSetId &ncsw) = 0;

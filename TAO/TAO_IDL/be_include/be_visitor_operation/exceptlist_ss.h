@@ -31,7 +31,6 @@
 class be_visitor_operation_exceptlist_ss : public be_visitor_decl
 {
 public:
-
   /// constructor
   be_visitor_operation_exceptlist_ss (be_visitor_context * ctx);
 
@@ -40,7 +39,6 @@ public:
 
   /// visit the operation
   int visit_operation (be_operation * node);
-
 };
 
 #endif /* _BE_VISITOR_OPERATION_EXCEPTIONLIST_SS_H_ */

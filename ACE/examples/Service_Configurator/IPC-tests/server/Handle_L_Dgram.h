@@ -21,7 +21,7 @@
 class ACE_Svc_Export Handle_L_Dgram : public ACE_Service_Object, public ACE_LSOCK_Dgram
 {
 public:
-  Handle_L_Dgram (void);
+  Handle_L_Dgram ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **, size_t) const;
   virtual int fini ();

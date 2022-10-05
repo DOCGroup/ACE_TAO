@@ -64,7 +64,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              "ERROR: Extracted value not equal "
                              "to the encoded value\n"),
                             -1);
-
       }
 
       ACE_DEBUG ((LM_DEBUG,

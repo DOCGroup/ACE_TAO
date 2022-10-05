@@ -49,11 +49,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 // constructor
-Driver::Driver (void)
+Driver::Driver ()
 {
 }
 
-Driver::~Driver (void)
+Driver::~Driver ()
 {
 }
 
@@ -100,7 +100,6 @@ Driver::init (int argc, ACE_TCHAR **argv)
       ACE_OS::strcpy (exception_string,"Param_Test::_narrow () failed.");
 
       this->objref_ = Param_Test::_narrow (temp.in());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -112,7 +111,7 @@ Driver::init (int argc, ACE_TCHAR **argv)
 }
 
 int
-Driver::run (void)
+Driver::run ()
 {
   // serves as a factory of Param_Client objects. It is also responsible to
   // start the test
@@ -616,7 +615,6 @@ Driver::run (void)
 
       this->objref_ = Param_Test::_nil ();
       this->orb_->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {

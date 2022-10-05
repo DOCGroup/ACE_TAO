@@ -132,7 +132,7 @@ int system_fread(SYS_FILE fd, char *buf, int sz);
  * This call stops core dumps in a portable way. Returns -1 on error.
  */
 
-int system_nocoredumps(void);
+int system_nocoredumps();
 
 
 #if defined(FILE_STDIO)

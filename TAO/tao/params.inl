@@ -161,7 +161,7 @@ TAO_ORB_Parameters::nodelay (int x)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::sock_keepalive (void)
+TAO_ORB_Parameters::sock_keepalive ()
 {
   return this->sock_keepalive_;
 }
@@ -173,7 +173,7 @@ TAO_ORB_Parameters::sock_keepalive (int x)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::sock_dontroute (void)
+TAO_ORB_Parameters::sock_dontroute ()
 {
   return this->sock_dontroute_;
 }
@@ -185,7 +185,7 @@ TAO_ORB_Parameters::sock_dontroute (int x)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::ip_hoplimit (void)
+TAO_ORB_Parameters::ip_hoplimit ()
 {
   return this->ip_hoplimit_;
 }
@@ -197,7 +197,7 @@ TAO_ORB_Parameters::ip_hoplimit (int x)
 }
 
 ACE_INLINE bool
-TAO_ORB_Parameters::ip_multicastloop (void)
+TAO_ORB_Parameters::ip_multicastloop ()
 {
   return this->ip_multicastloop_;
 }
@@ -209,7 +209,7 @@ TAO_ORB_Parameters::ip_multicastloop (bool x)
 }
 
 ACE_INLINE u_short
-TAO_ORB_Parameters::iiop_client_port_base (void)
+TAO_ORB_Parameters::iiop_client_port_base ()
 {
   return this->iiop_client_port_base_;
 }
@@ -221,7 +221,7 @@ TAO_ORB_Parameters::iiop_client_port_base (u_short b)
 }
 
 ACE_INLINE u_short
-TAO_ORB_Parameters::iiop_client_port_span (void)
+TAO_ORB_Parameters::iiop_client_port_span ()
 {
   return this->iiop_client_port_base_ ?
     this->iiop_client_port_span_ : 0;

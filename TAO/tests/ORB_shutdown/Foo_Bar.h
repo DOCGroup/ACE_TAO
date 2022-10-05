@@ -14,7 +14,7 @@ public:
   Foo_Bar (CORBA::ORB_ptr orb);
 
   /// Dtor
-  ~Foo_Bar (void);
+  ~Foo_Bar ();
 
 
 private:

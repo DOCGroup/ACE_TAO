@@ -98,7 +98,7 @@ Data::Data (CORBA::ORB_var orb)
     }
 }
 
-Data::~Data (void)
+Data::~Data ()
 {
   CORBA::string_free (m_string1);
   CORBA::string_free (m_string2);

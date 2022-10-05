@@ -32,7 +32,6 @@
 #include "ace/Log_Msg.h"
 
 
-
 // Port used to receive for dgrams.
 static u_short port1;
 

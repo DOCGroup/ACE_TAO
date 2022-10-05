@@ -100,7 +100,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
 TAO_IIOP_Endpoint &
 TAO_IIOP_Endpoint::operator= (const TAO_IIOP_Endpoint &other)
 {
-  if (this != &other)
+  if (this != std::addressof(other))
     {
       this->host_ = other.host_;
       this->port_ = other.port_;
@@ -114,10 +114,6 @@ TAO_IIOP_Endpoint::operator= (const TAO_IIOP_Endpoint &other)
       this->next_ = nullptr; // do not copy list membership, since we are only cloning the values
     }
   return *this;
-}
-
-TAO_IIOP_Endpoint::~TAO_IIOP_Endpoint ()
-{
 }
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &rhs)

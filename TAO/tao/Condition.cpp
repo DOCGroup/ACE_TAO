@@ -21,7 +21,7 @@ TAO_Condition<MUTEX>::TAO_Condition (MUTEX &m)
 }
 
 template <class MUTEX>
-TAO_Condition<MUTEX>::TAO_Condition (void)
+TAO_Condition<MUTEX>::TAO_Condition ()
     : mutex_ (nullptr),
       delete_lock_ (false),
       cond_ (nullptr)
@@ -39,7 +39,7 @@ TAO_Condition<MUTEX>::TAO_Condition (void)
 
 
 template <class MUTEX>
-TAO_Condition<MUTEX>::~TAO_Condition (void)
+TAO_Condition<MUTEX>::~TAO_Condition ()
 {
   if (this->remove () == -1)
     TAOLIB_ERROR ((LM_ERROR,

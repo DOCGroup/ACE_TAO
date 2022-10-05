@@ -11,7 +11,7 @@ EC_Destroyer::EC_Destroyer (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
 }
 
-EC_Destroyer::~EC_Destroyer (void)
+EC_Destroyer::~EC_Destroyer ()
 {
   try{
     this->ec_->destroy ();

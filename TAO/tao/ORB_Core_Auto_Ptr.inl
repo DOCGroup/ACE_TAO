@@ -15,7 +15,7 @@ TAO_ORB_Core_Auto_Ptr::get () const
 }
 
 ACE_INLINE TAO_ORB_Core *
-TAO_ORB_Core_Auto_Ptr::release (void)
+TAO_ORB_Core_Auto_Ptr::release ()
 {
   TAO_ORB_Core *old = this->p_;
   this->p_ = 0;

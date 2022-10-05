@@ -5,7 +5,7 @@
  */
 
 ACE_INLINE CORBA::ORB_ptr
-ORB_Holder::orb (void)
+ORB_Holder::orb ()
 {
   return CORBA::ORB::_duplicate (this->orb_.in ());
 }

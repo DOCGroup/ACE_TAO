@@ -2,14 +2,14 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include <memory>
 
-EC_Wrapper::EC_Wrapper (void)
+EC_Wrapper::EC_Wrapper ()
   : ec_impl_ (0),
     orb_ ()
 {
 }
 
 PortableServer::Servant_var<EC_Wrapper>
-EC_Wrapper::create (void)
+EC_Wrapper::create ()
 {
   PortableServer::Servant_var<EC_Wrapper> w;
   ACE_NEW_RETURN (w,
@@ -18,7 +18,7 @@ EC_Wrapper::create (void)
   return w;
 }
 
-EC_Wrapper::~EC_Wrapper (void)
+EC_Wrapper::~EC_Wrapper ()
 {
   try
     {
@@ -71,7 +71,7 @@ EC_Wrapper::init (CORBA::ORB_ptr orb,
 }
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-EC_Wrapper::for_consumers (void)
+EC_Wrapper::for_consumers ()
 {
   if (this->ec_impl_)
     return this->ec_impl_->for_consumers ();
@@ -80,7 +80,7 @@ EC_Wrapper::for_consumers (void)
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-EC_Wrapper::for_suppliers (void)
+EC_Wrapper::for_suppliers ()
 {
   if (this->ec_impl_)
     return this->ec_impl_->for_suppliers ();
@@ -89,7 +89,7 @@ EC_Wrapper::for_suppliers (void)
 }
 
 void
-EC_Wrapper::destroy_ec (void)
+EC_Wrapper::destroy_ec ()
 {
   std::unique_ptr<TAO_EC_Event_Channel> ec_impl_aptr (this->ec_impl_);
   this->ec_impl_ = 0;
@@ -101,7 +101,7 @@ EC_Wrapper::destroy_ec (void)
 }
 
 void
-EC_Wrapper::destroy (void)
+EC_Wrapper::destroy ()
 {
   // Deregister from POA.
   this->deactivator_.deactivate ();

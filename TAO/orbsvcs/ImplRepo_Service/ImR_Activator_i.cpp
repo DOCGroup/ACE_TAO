@@ -71,7 +71,7 @@ Watchdog::stop()
 }
 #endif /* ACE_WIN32 */
 
-ImR_Activator_i::ImR_Activator_i (void)
+ImR_Activator_i::ImR_Activator_i ()
   : registration_token_(0)
   , debug_(0)
   , notify_imr_ (false)
@@ -279,7 +279,7 @@ ImR_Activator_i::init (Activator_Options& opts)
 }
 
 int
-ImR_Activator_i::fini (void)
+ImR_Activator_i::fini ()
 {
   try
     {
@@ -335,20 +335,20 @@ ImR_Activator_i::fini (void)
 }
 
 int
-ImR_Activator_i::run (void)
+ImR_Activator_i::run ()
 {
   this->orb_->run ();
   return 0;
 }
 
 void
-ImR_Activator_i::shutdown (void)
+ImR_Activator_i::shutdown ()
 {
   this->shutdown (false);
 }
 
 bool
-ImR_Activator_i::in_upcall (void)
+ImR_Activator_i::in_upcall ()
 {
   try
     {
@@ -537,7 +537,7 @@ ImR_Activator_i::start_server(const char* name,
                                  1,
                                  cmdline_buf_len + 1,
                                  this->env_buf_len_, this->max_env_vars_);
-  proc_opts.command_line (ACE_TEXT_CHAR_TO_TCHAR(cmdline));
+  proc_opts.command_line (ACE_TEXT("%") ACE_TEXT_PRIs, ACE_TEXT_CHAR_TO_TCHAR(cmdline));
   proc_opts.working_directory (dir);
   // Win32 does not support the CLOSE_ON_EXEC semantics for sockets
   // the way unix does, so in order to avoid having the child process
@@ -564,13 +564,13 @@ ImR_Activator_i::start_server(const char* name,
     {
       CORBA::String_var ior = orb_->object_to_string (locator_.in ());
       proc_opts.setenv (ACE_TEXT ("ImplRepoServiceIOR"),
-                        ACE_TEXT_CHAR_TO_TCHAR (ior.in ()));
+                        ACE_TEXT("%") ACE_TEXT_PRIs, ACE_TEXT_CHAR_TO_TCHAR (ior.in ()));
     }
 
   for (CORBA::ULong i = 0; i < env.length (); ++i)
     {
       proc_opts.setenv (ACE_TEXT_CHAR_TO_TCHAR (env[i].name.in ()),
-                        ACE_TEXT_CHAR_TO_TCHAR (env[i].value.in ()));
+                        ACE_TEXT("%") ACE_TEXT_PRIs, ACE_TEXT_CHAR_TO_TCHAR (env[i].value.in ()));
     }
 
   pid = this->process_mgr_.spawn (proc_opts, this);

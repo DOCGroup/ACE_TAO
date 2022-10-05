@@ -2,7 +2,6 @@
 #include "tao/RTCORBA/Priority_Mapping.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_RTCORBA_Dispatching::

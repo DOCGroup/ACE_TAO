@@ -89,7 +89,6 @@ public:
   void right (ACE_RB_Tree_Node<EXT_ID, INT_ID> * r);
 
 private:
-
   /// The key.
   EXT_ID k_;
 
@@ -180,7 +179,6 @@ protected:
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree : public ACE_RB_Tree_Base
 {
-
 public:
   friend class ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
@@ -563,7 +561,6 @@ protected:
   int lessthan (const EXT_ID &k1, const EXT_ID &k2);
 
 private:
-
   // = Private members.
 
   /// Synchronization variable for the MT_SAFE ACE_RB_Tree.
@@ -587,9 +584,7 @@ private:
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree_Iterator_Base
 {
-
 public:
-
   /// Copy constructor.
   ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
 
@@ -672,7 +667,6 @@ protected:
 
   /// Pointer to the node currently under the iterator.
   ACE_RB_Tree_Node <EXT_ID, INT_ID> *node_;
-
 };
 
 /**
@@ -748,7 +742,7 @@ public:
    * be declared and defined in both the derived forward and
    * reverse iterator classes rather than in the base iterator
    * class because of a method signature resolution problem
-   * caused by the existence of the deprecated next (void)
+   * caused by the existence of the deprecated next ()
    * method in the derived forward iterator class.  When that
    * deprecated method is removed, this method should be removed
    * from the derived classes and placed in the base class.
@@ -787,7 +781,6 @@ public:
    * node, returns 1 if not.
    */
   int is_done ();
-
 };
 
 /**
@@ -864,7 +857,7 @@ public:
    * be declared and defined in both the derived forward and
    * reverse iterator classes rather than in the base iterator
    * class because of a method signature resolution problem
-   * caused by the existence of the deprecated next (void)
+   * caused by the existence of the deprecated next ()
    * method in the derived forward iterator class.  When that
    * deprecated method is removed, this method should be removed
    * from the derived classes and placed in the base class.

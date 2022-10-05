@@ -56,7 +56,7 @@ ACE_Tokens::remove (ACE_TPQ_Entry *caller)
 }
 
 ACE_INLINE int
-ACE_Tokens::dec_reference (void)
+ACE_Tokens::dec_reference ()
 {
   ACE_TRACE ("ACE_Tokens::dec_reference");
   if (this->reference_count_ == 0)
@@ -69,14 +69,14 @@ ACE_Tokens::dec_reference (void)
 }
 
 ACE_INLINE void
-ACE_Tokens::inc_reference (void)
+ACE_Tokens::inc_reference ()
 {
   ACE_TRACE ("ACE_Tokens::inc_reference");
   ++this->reference_count_;
 }
 
 ACE_INLINE const ACE_TPQ_Entry *
-ACE_Token_Proxy_Queue::head (void)
+ACE_Token_Proxy_Queue::head ()
 {
   ACE_TRACE ("ACE_Token_Proxy_Queue::head");
   if (this->head_ == 0)
@@ -95,14 +95,14 @@ ACE_Tokens::visit (int v)
 }
 
 ACE_INLINE int
-ACE_Tokens::visited (void)
+ACE_Tokens::visited ()
 {
   ACE_TRACE ("ACE_Tokens::visited");
   return visited_;
 }
 
 ACE_INLINE ACE_TPQ_Entry *
-ACE_Tokens::owner (void)
+ACE_Tokens::owner ()
 {
   ACE_TRACE ("ACE_Tokens::owner");
   return (ACE_TPQ_Entry *) this->waiters_.head ();
@@ -119,7 +119,7 @@ ACE_Tokens::owner_id ()
 }
 
 ACE_INLINE const ACE_TCHAR*
-ACE_Tokens::name (void)
+ACE_Tokens::name ()
 {
   ACE_TRACE ("ACE_Tokens::name");
   return this->token_name_;
@@ -156,7 +156,7 @@ ACE_TPQ_Entry::sleep_hook (void (*sh)(void *))
 }
 
 ACE_INLINE void
-ACE_TPQ_Entry::call_sleep_hook (void)
+ACE_TPQ_Entry::call_sleep_hook ()
 {
   ACE_TRACE ("ACE_TPQ_Entry::call_sleep_hook");
 

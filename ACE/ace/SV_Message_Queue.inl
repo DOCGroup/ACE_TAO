@@ -16,7 +16,7 @@ ACE_SV_Message_Queue::open (key_t external_id, int create, int perms)
 // What does it mean to close a message queue?!
 
 ACE_INLINE int
-ACE_SV_Message_Queue::close (void)
+ACE_SV_Message_Queue::close ()
 {
   ACE_TRACE ("ACE_SV_Message_Queue::close");
   this->internal_id_ = -1;
@@ -32,7 +32,7 @@ ACE_SV_Message_Queue::control (int option, void *arg)
 }
 
 ACE_INLINE int
-ACE_SV_Message_Queue::remove (void)
+ACE_SV_Message_Queue::remove ()
 {
   ACE_TRACE ("ACE_SV_Message_Queue::remove");
   int const result = this->control (IPC_RMID);

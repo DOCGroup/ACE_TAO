@@ -48,7 +48,6 @@ struct TAO_Active_Object_Map_Entry;
 class TAO_Active_Object_Map
 {
 public:
-
   /// Constructor.
   TAO_Active_Object_Map (
     int user_id_policy,
@@ -321,7 +320,6 @@ public:
   set_active_object_map (TAO_Active_Object_Map *active_object_map);
 
 protected:
-
   /// Pointer to the active map.
   TAO_Active_Object_Map *active_object_map_;
 };
@@ -336,7 +334,6 @@ protected:
 class TAO_Unique_Id_Strategy : public TAO_Id_Uniqueness_Strategy
 {
 public:
-
   /// Must be used with UNIQUE_ID policy.
   virtual int
   is_servant_in_map (PortableServer::Servant servant,
@@ -385,7 +382,6 @@ public:
 class TAO_Multiple_Id_Strategy : public TAO_Id_Uniqueness_Strategy
 {
 public:
-
   /// Must be used with UNIQUE_ID policy.
   virtual int
   is_servant_in_map (PortableServer::Servant servant,
@@ -435,7 +431,6 @@ public:
 class TAO_Lifespan_Strategy
 {
 public:
-
   /// Virtual destructor.
   virtual ~TAO_Lifespan_Strategy ();
 
@@ -452,7 +447,6 @@ public:
   set_active_object_map (TAO_Active_Object_Map *active_object_map);
 
 protected:
-
   /// Pointer to the active map.
   TAO_Active_Object_Map *active_object_map_;
 };
@@ -522,7 +516,6 @@ public:
   set_active_object_map (TAO_Active_Object_Map *active_object_map);
 
 protected:
-
   /// Pointer to the active map.
   TAO_Active_Object_Map *active_object_map_;
 };

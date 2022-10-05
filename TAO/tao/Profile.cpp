@@ -868,7 +868,6 @@ TAO_Unknown_Profile::create_profile_body (TAO_OutputCDR &) const
 }
 
 
-
 // *************************************************************
 // Operators for TAO_opaque encoding and decoding
 // *************************************************************

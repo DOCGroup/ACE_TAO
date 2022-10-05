@@ -7,7 +7,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-
   /// Constructor
   Client_Task (CORBA::ORB_ptr corb,
     ACE_Thread_Manager *thr_mgr,
@@ -20,7 +19,7 @@ public:
      CORBA::ULong group_version);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   CORBA::ORB_var corb_;

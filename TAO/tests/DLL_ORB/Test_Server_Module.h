@@ -36,7 +36,6 @@
 class Test_Server_Module_Export Test_Server_Module : public ACE_Task_Base
 {
 public:
-
   /// Initializes object when dynamic linking occurs.
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
@@ -46,10 +45,9 @@ public:
   /// Run by a daemon thread to handle deferred processing.
   virtual int svc ();
 
-  virtual ~Test_Server_Module (void);
+  virtual ~Test_Server_Module ();
 
 private:
-
   /// Reference to the ORB.
   CORBA::ORB_var orb_;
 
@@ -61,7 +59,6 @@ private:
 
   /// The servant that implements the "Test" object.
   Test_i servant_;
-
 };
 
 ACE_FACTORY_DECLARE (Test_Server_Module, Test_Server_Module)

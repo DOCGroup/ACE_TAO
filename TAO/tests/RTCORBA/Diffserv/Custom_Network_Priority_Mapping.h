@@ -33,7 +33,7 @@
 class Custom_Network_Priority_Mapping : public TAO_Network_Priority_Mapping
 {
 public:
-  Custom_Network_Priority_Mapping (void);
+  Custom_Network_Priority_Mapping ();
 
   CORBA::Boolean to_network (RTCORBA::Priority corba_priority,
                              RTCORBA::NetworkPriority &network_priority);

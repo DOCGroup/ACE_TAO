@@ -36,7 +36,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_CSD_FW_Export TAO_CSD_Strategy_Repository : public ACE_Service_Object
 {
 public:
-
   /// Constructor.
   TAO_CSD_Strategy_Repository();
 

@@ -59,7 +59,7 @@ public:
                               int policy = ACE_SCHED_FIFO);
 
   /// The destructor
-  virtual ~TAO_Multi_Priority_Mapping (void);
+  virtual ~TAO_Multi_Priority_Mapping ();
 
   virtual CORBA::Boolean
       to_native (RTCORBA::Priority corba_priority,
@@ -69,7 +69,6 @@ public:
                 RTCORBA::Priority &corba_priority);
 
 private:
-
   /// The base settings
   int base_native_priority_;
   int base_corba_priority_;

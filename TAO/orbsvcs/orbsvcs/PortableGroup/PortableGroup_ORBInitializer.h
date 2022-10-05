@@ -41,7 +41,6 @@ public:
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

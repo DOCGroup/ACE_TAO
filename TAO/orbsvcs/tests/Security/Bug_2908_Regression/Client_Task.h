@@ -20,7 +20,7 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
   int result_;
 private:

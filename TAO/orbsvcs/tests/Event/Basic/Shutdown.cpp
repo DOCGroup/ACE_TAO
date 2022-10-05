@@ -3,7 +3,6 @@
 #include "Supplier.h"
 
 
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -13,14 +12,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-EC_Shutdown::EC_Shutdown (void)
+EC_Shutdown::EC_Shutdown ()
   :  consumer_disconnects_ (0),
      supplier_disconnects_ (0)
 {
 }
 
 void
-EC_Shutdown::execute_test (void)
+EC_Shutdown::execute_test ()
 {
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) destroying EC\n"));
@@ -50,7 +49,7 @@ EC_Shutdown::execute_test (void)
 }
 
 void
-EC_Shutdown::dump_results (void)
+EC_Shutdown::dump_results ()
 {
   if (this->consumer_disconnects_ != this->n_consumers_)
     ACE_ERROR ((LM_ERROR,

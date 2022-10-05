@@ -38,7 +38,7 @@ Foo_C_cust_op2::~Foo_C_cust_op2()
 
 
 void
-Foo_C_cust_op2::result(void)
+Foo_C_cust_op2::result()
 {
   if (this->cancelled_)
     {

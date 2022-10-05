@@ -185,7 +185,7 @@ void mes (char *s);
 void pattern (register char *cp, register int cnt);
 char *outfmt (double b);
 static void getrusage (int ignored, register struct rusage *ru);
-void prep_timer (void);
+void prep_timer ();
 double read_timer (char *str, int len);
 static void prusage (register struct rusage *r0, struct rusage *r1, struct timeval *e, struct timeval *b, char *outp);
 static void tvadd (struct timeval *tsum, struct timeval *t0, struct timeval *t1);
@@ -871,7 +871,6 @@ prusage (register struct rusage *r0, struct rusage *r1,
 static void
 tvadd (struct timeval *tsum, struct timeval *t0, struct timeval *t1)
 {
-
   tsum->tv_sec = t0->tv_sec + t1->tv_sec;
   tsum->tv_usec = t0->tv_usec + t1->tv_usec;
   if (tsum->tv_usec > 1000000)
@@ -881,7 +880,6 @@ tvadd (struct timeval *tsum, struct timeval *t0, struct timeval *t1)
 static void
 tvsub (struct timeval *tdiff, struct timeval *t1, struct timeval *t0)
 {
-
   tdiff->tv_sec = t1->tv_sec - t0->tv_sec;
   tdiff->tv_usec = t1->tv_usec - t0->tv_usec;
   if (tdiff->tv_usec < 0)

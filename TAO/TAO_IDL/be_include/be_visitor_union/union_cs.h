@@ -33,7 +33,6 @@ public:
 
   /// visit union. We provide code for this method in the derived class
   virtual int visit_union (be_union *node);
-
 };
 
 #endif /* _BE_VISITOR_UNION_UNION_CS_H_ */

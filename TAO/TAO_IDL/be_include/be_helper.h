@@ -92,7 +92,6 @@ struct TAO_ACE_CHECK
 class TAO_OutStream
 {
 public:
-
   /// Enumerated type to indicate the stream type
   enum STREAM_TYPE
     {

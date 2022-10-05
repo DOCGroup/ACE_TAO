@@ -67,7 +67,7 @@ public:
   };
 
   /// Default constructor.
-  ACE_Name_Request (void);
+  ACE_Name_Request ();
 
   /// Create a ACE_Name_Request message.
   ACE_Name_Request (ACE_INT32 msg_type, // Type of request.
@@ -81,7 +81,7 @@ public:
 
   /// Initialize length_ in order to ensure correct byte ordering
   /// before a request is sent.
-  void init (void);
+  void init ();
 
   // = Set/get the length of the encoded/decoded message.
   ACE_UINT32 length () const;
@@ -127,7 +127,7 @@ public:
   int encode (void *&);
 
   /// Decode message after reception.
-  int decode (void);
+  int decode ();
 
   /// Print out the values of the message for debugging purposes.
   void dump () const;
@@ -201,14 +201,14 @@ public:
   };
 
   /// Default constructor.
-  ACE_Name_Reply (void);
+  ACE_Name_Reply ();
 
   /// Create a ACE_Name_Reply message.
   ACE_Name_Reply (ACE_UINT32 type, ACE_UINT32 err); // Type of reply.
 
   /// Initialize length_ in order to ensure correct byte ordering
   /// before a reply is sent.
-  void init (void);
+  void init ();
 
   // = Set/get the length of the encoded/decoded message.
   ACE_UINT32 length () const;
@@ -230,7 +230,7 @@ public:
   int encode (void *&);
 
   /// Decode a message after reception.
-  int decode (void);
+  int decode ();
 
   /// Print out the values of the message for debugging purposes.
   void dump () const;

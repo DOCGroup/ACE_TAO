@@ -21,7 +21,7 @@ public:
                       unsigned  client_id);
   virtual ~Foo_C_ClientEngine();
 
-  virtual bool execute(void);
+  virtual bool execute();
 
   static void expected_results(Foo_C_Statistics& stats);
 

@@ -1,7 +1,7 @@
 #include "SupplierAdmin_i.h"
 #include <memory>
 
-TAO_CosEC_SupplierAdmin_i::TAO_CosEC_SupplierAdmin_i (void)
+TAO_CosEC_SupplierAdmin_i::TAO_CosEC_SupplierAdmin_i ()
   : qos_ (),
     rtec_supplieradmin_ (RtecEventChannelAdmin::SupplierAdmin::_nil ())
 {
@@ -18,7 +18,7 @@ TAO_CosEC_SupplierAdmin_i::init (const RtecEventChannelAdmin::SupplierQOS &suppl
 }
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
-TAO_CosEC_SupplierAdmin_i::obtain_push_consumer (void)
+TAO_CosEC_SupplierAdmin_i::obtain_push_consumer ()
 {
   CosEventChannelAdmin::ProxyPushConsumer_ptr proxyconsumer_nil =
     CosEventChannelAdmin::ProxyPushConsumer::_nil ();
@@ -46,7 +46,7 @@ TAO_CosEC_SupplierAdmin_i::obtain_push_consumer (void)
 }
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
-TAO_CosEC_SupplierAdmin_i::obtain_pull_consumer (void)
+TAO_CosEC_SupplierAdmin_i::obtain_pull_consumer ()
 {
   // TODO: implement this.
   return CosEventChannelAdmin::ProxyPullConsumer::_nil ();

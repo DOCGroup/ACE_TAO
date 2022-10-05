@@ -912,7 +912,7 @@ TAO::excp_factory excp_array [] = {
 
 // Concrete SystemException constructors
 #define TAO_SYSTEM_EXCEPTION(name) \
-CORBA::name ::name (void) \
+CORBA::name ::name () \
   :  CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
                              #name, \
                              0, \
@@ -989,7 +989,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::SystemException * \
-CORBA::name ::_tao_create (void) \
+CORBA::name ::_tao_create () \
 { \
   CORBA::name *result = 0; \
   ACE_NEW_RETURN (result, CORBA::name (), 0); \

@@ -54,7 +54,6 @@ TestTask::parse_args (int argc, ACE_TCHAR **argv)
 
 int TestTask::svc()
 {
-
   try {
     // Get reference to Root POA
     CORBA::Object_var obj = orb_->resolve_initial_references ("RootPOA");

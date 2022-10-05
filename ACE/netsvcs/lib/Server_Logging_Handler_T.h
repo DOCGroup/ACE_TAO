@@ -55,11 +55,11 @@ public:
 
 protected:
   /// Receive the logging record from a client.
-  int handle_logging_record (void);
+  int handle_logging_record ();
 
   /// Common parts of open function, sets hostname and diables NONBLOCK in peer
   /// called from derived classes open method.
-  int open_common (void);
+  int open_common ();
 
   /// Count the number of logging records that arrive.
   static COUNTER request_count_;
@@ -76,10 +76,10 @@ protected:
   ACE_TString host_name_;
 #endif /* ! __GNUG__ */
   /// Name of the host we are connected to.
-  const ACE_TCHAR *host_name (void);
+  const ACE_TCHAR *host_name ();
 
   /// The receiver of log records
-  LOG_MESSAGE_RECEIVER &receiver (void){ return receiver_; }
+  LOG_MESSAGE_RECEIVER &receiver () { return receiver_; }
 };
 
 #if 1   //!defined (ACE_HAS_TLI)
@@ -105,7 +105,7 @@ class ACE_Server_Logging_Acceptor_T : public ACE_Strategy_Acceptor<SERVER_LOGGIN
 {
 public:
   /// Dynamic linking hook.
-  ACE_Server_Logging_Acceptor_T (void);
+  ACE_Server_Logging_Acceptor_T ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
 protected:
@@ -143,10 +143,10 @@ private:
 #endif /* ! __GNUG__ */
 
   /// The scheduling strategy for the service.
-  SCHEDULE_STRATEGY &scheduling_strategy (void);
+  SCHEDULE_STRATEGY &scheduling_strategy ();
 
   /// The receiver of log records
-  LOG_MESSAGE_RECEIVER &receiver (void);
+  LOG_MESSAGE_RECEIVER &receiver ();
 };
 
 /**
@@ -162,7 +162,6 @@ private:
 template<class LOG_MESSAGE_RECEIVER>
 class ACE_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LOG_MESSAGE_RECEIVER>
 {
-
 public:
   ACE_Server_Logging_Handler (ACE_Thread_Manager * = 0);
   ACE_Server_Logging_Handler (ACE_Thread_Manager *,
@@ -192,7 +191,6 @@ typedef u_long ACE_LOGGER_COUNTER;
 template<class LOG_MESSAGE_RECEIVER>
 class ACE_Thr_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LOG_MESSAGE_RECEIVER>
 {
-
 public:
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = 0);
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *,

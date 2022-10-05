@@ -30,7 +30,7 @@ TAO::Any_Impl_T<T>::Any_Impl_T (_tao_destructor destructor,
 }
 
 template<typename T>
-TAO::Any_Impl_T<T>::~Any_Impl_T (void)
+TAO::Any_Impl_T<T>::~Any_Impl_T ()
 {
 }
 
@@ -163,7 +163,7 @@ TAO::Any_Impl_T<T>::value () const
 
 template<typename T>
 void
-TAO::Any_Impl_T<T>::free_value (void)
+TAO::Any_Impl_T<T>::free_value ()
 {
   if (this->value_destructor_ != 0)
     {

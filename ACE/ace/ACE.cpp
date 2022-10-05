@@ -2342,11 +2342,7 @@ ACE::format_hexdump (const char *buffer,
       textver[j] = 0;
 
       ACE_OS::snprintf (obuf, obuf_sz - (obuf - obuf_start),
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                       ACE_TEXT ("  %ls\n"),
-#else
-                       ACE_TEXT ("  %s\n"),
-#endif
+                       ACE_TEXT ("  %") ACE_TEXT_PRIs ACE_TEXT ("\n"),
                        textver);
 
       while (*obuf != '\0')
@@ -2383,11 +2379,7 @@ ACE::format_hexdump (const char *buffer,
 
       textver[i] = 0;
       ACE_OS::snprintf (obuf, obuf_sz - (obuf - obuf_start),
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                       ACE_TEXT ("  %ls\n"),
-#else
-                       ACE_TEXT ("  %s\n"),
-#endif
+                       ACE_TEXT ("  %") ACE_TEXT_PRIs ACE_TEXT ("\n"),
                        textver);
     }
   return size;
@@ -3367,7 +3359,6 @@ ACE::strnew (const wchar_t *s)
 // helper functions for ACE::wild_match()
 namespace
 {
-
   inline bool equal_char (char a, char b, bool case_sensitive)
   {
     if (case_sensitive)

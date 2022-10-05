@@ -44,7 +44,6 @@ be_visitor_valuetype_marshal_ch::visit_valuetype (be_valuetype *node)
                              "(%N:%l) be_visitor_scope::visit_scope - "
                              "bad node in this scope\n"),
                             -1);
-
         }
 
       be_field *field = dynamic_cast<be_field*> (d);

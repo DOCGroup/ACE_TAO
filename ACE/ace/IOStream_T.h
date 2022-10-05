@@ -68,7 +68,7 @@ public:
                           ACE_Time_Value *tv = 0);
 
 protected:
-  virtual ACE_HANDLE get_handle (void);
+  virtual ACE_HANDLE get_handle ();
 
   /// This will be our ACE_SOCK_Stream or similar object.
   STREAM *peer_;
@@ -119,11 +119,11 @@ public:
 
   /// We have to get rid of the <streambuf_> ourselves since we gave it
   /// to the <iostream> base class;
-  virtual ~ACE_IOStream (void);
+  virtual ~ACE_IOStream ();
 
   /// The only ambiguity in the multiple inheritance is the <close>
   /// function.
-  virtual int close (void);
+  virtual int close ();
 
   /**
    * Returns 1 if we're at the end of the <STREAM>, i.e., if the
@@ -169,9 +169,9 @@ public:
       setstate (failbit);
       return (0);
     }
-  virtual int ipfx0 (void) // Optimized ipfx(0)
+  virtual int ipfx0 () // Optimized ipfx(0)
     {  return ipfx (0); }
-  virtual int ipfx1 (void) // Optimized ipfx(1)
+  virtual int ipfx1 () // Optimized ipfx(1)
     {
       if (good ())
         {
@@ -183,26 +183,26 @@ public:
       setstate (failbit);
       return (0);
     }
-  virtual void isfx (void) { return; }
-  virtual int opfx (void)
+  virtual void isfx () { return; }
+  virtual int opfx ()
     {
       if (good () && tie () != 0)
         tie ()->flush ();
       return good ();
     }
-  virtual void osfx (void) {  if (flags () & unitbuf) flush (); }
+  virtual void osfx () {  if (flags () & unitbuf) flush (); }
 #  else
 #    if defined (__GNUC__)
-  virtual int ipfx0 (void) { return iostream::ipfx0 (); }  // Optimized ipfx(0)
-  virtual int ipfx1 (void) { return iostream::ipfx1 (); }  // Optimized ipfx(1)
+  virtual int ipfx0 () { return iostream::ipfx0 (); }  // Optimized ipfx(0)
+  virtual int ipfx1 () { return iostream::ipfx1 (); }  // Optimized ipfx(1)
 #    else
-  virtual int ipfx0 (void) { return iostream::ipfx (0); }
-  virtual int ipfx1 (void) { return iostream::ipfx (1); }
+  virtual int ipfx0 () { return iostream::ipfx (0); }
+  virtual int ipfx1 () { return iostream::ipfx (1); }
 #    endif /* __GNUC__ */
   virtual int ipfx (int need = 0) {  return iostream::ipfx (need); }
-  virtual void isfx (void)        {  iostream::isfx (); }
-  virtual int opfx (void)         {  return iostream::opfx (); }
-  virtual void osfx (void)        {  iostream::osfx (); }
+  virtual void isfx ()        {  iostream::isfx (); }
+  virtual int opfx ()         {  return iostream::opfx (); }
+  virtual void osfx ()        {  iostream::osfx (); }
 #  endif /* ACE_LACKS_IOSTREAM_FX */
 
   /// Allow the programmer to provide a timeout for read operations.
@@ -243,7 +243,7 @@ template <class STREAM>
 class ACE_SOCK_Dgram_SC : public STREAM
 {
 public:
-  ACE_SOCK_Dgram_SC (void);
+  ACE_SOCK_Dgram_SC ();
   ACE_SOCK_Dgram_SC (STREAM &source,
                      ACE_INET_Addr &dest);
   ssize_t send_n (char *buf, ssize_t len);

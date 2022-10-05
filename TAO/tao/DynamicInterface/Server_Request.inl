@@ -55,7 +55,7 @@ CORBA::ServerRequest::_tao_reply_byte_order (int byte_order)
 }
 
 ACE_INLINE TAO_ServerRequest &
-CORBA::ServerRequest::_tao_server_request (void)
+CORBA::ServerRequest::_tao_server_request ()
 {
   return this->orb_server_request_;
 }

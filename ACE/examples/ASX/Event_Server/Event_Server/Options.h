@@ -15,65 +15,65 @@ class Options
   // = TITLE
   //     Option Singleton for Event Server.
 public:
-  static Options *instance (void);
+  static Options *instance ();
   // Singleton access point.
 
   void parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the command-line arguments and set the options.
 
   // = Timer management.
-  void stop_timer (void);
-  void start_timer (void);
+  void stop_timer ();
+  void start_timer ();
 
   // = Set/get the number of threads.
   void thr_count (size_t count);
-  size_t thr_count (void);
+  size_t thr_count ();
 
   // = Set/get the size of the queue.
   void initial_queue_length (size_t length);
-  size_t initial_queue_length (void);
+  size_t initial_queue_length ();
 
   // = Set/get the high water mark.
   void high_water_mark (size_t size);
-  size_t high_water_mark (void);
+  size_t high_water_mark ();
 
   // = Set/get the high water mark.
   void low_water_mark (size_t size);
-  size_t low_water_mark (void);
+  size_t low_water_mark ();
 
   // = Set/get the size of a message.
   void message_size (size_t size);
-  size_t message_size (void);
+  size_t message_size ();
 
   // = Set/get the number of iterations.
   void iterations (size_t n);
-  size_t iterations (void);
+  size_t iterations ();
 
   // Set/get threading flags.
   void t_flags (long flag);
-  long t_flags (void);
+  long t_flags ();
 
   // Set/get supplier port number.
   void supplier_port (u_short port);
-  u_short supplier_port (void);
+  u_short supplier_port ();
 
   // Set/get consumer port number.
   void consumer_port (u_short port);
-  u_short consumer_port (void);
+  u_short consumer_port ();
 
   // Enabled if we're in debugging mode.
-  int debug (void);
+  int debug ();
 
   // Enabled if we're in verbose mode.
-  int verbose (void);
+  int verbose ();
 
   // Print the results to the STDERR.
-  void print_results (void);
+  void print_results ();
 
 private:
   // = Ensure we're a Singleton.
-  Options (void);
-  ~Options (void);
+  Options ();
+  ~Options ();
 
   ACE_Profile_Timer itimer_;
   // Time the process.
@@ -113,7 +113,6 @@ private:
 
   static Options *instance_;
   // Static Singleton.
-
 };
 
 #include "Options.inl"

@@ -106,7 +106,6 @@ private:
 
     /// Pathname in the file system.
     ACE_TCHAR rendezvous_[MAXPATHLEN + 1];
-
   } SPIPE_addr_;
   // Contents of an SPIPE address.
 };

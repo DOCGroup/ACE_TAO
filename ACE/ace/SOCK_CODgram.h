@@ -35,7 +35,7 @@ class ACE_Export ACE_SOCK_CODgram : public ACE_SOCK_IO
 {
 public:
   /// Default constructor.
-  ACE_SOCK_CODgram (void);
+  ACE_SOCK_CODgram ();
 
   /**
    * Constructor with addresses specified. Calls open().
@@ -78,7 +78,7 @@ public:
                     int reuse_addr = 0);
 
   /// Default dtor.
-  ~ACE_SOCK_CODgram (void);
+  ~ACE_SOCK_CODgram ();
 
   // Initiate a connected dgram.
 

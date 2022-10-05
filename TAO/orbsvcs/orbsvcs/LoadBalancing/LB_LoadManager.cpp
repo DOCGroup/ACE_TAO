@@ -1062,7 +1062,6 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
     }
   else if (ACE_OS::strcmp (info->name.in (), "LoadMinimum") == 0)
     {
-
       if (info->props.length () == 0)
         {
           {
@@ -1104,7 +1103,6 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
     }
   else if (ACE_OS::strcmp (info->name.in (), "LoadAverage") == 0)
     {
-
       if (info->props.length () == 0)
         {
           {

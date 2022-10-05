@@ -283,7 +283,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   // = The following methods do the actual work.
 
   // These methods assume that the locks are held by the private
@@ -390,7 +389,7 @@ protected:
    * free slots in the free list. This function goes through the
    * entire occupied list, moving free slots to the free list.
    */
-  void move_all_free_slots_from_occupied_list (void);
+  void move_all_free_slots_from_occupied_list ();
 
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 

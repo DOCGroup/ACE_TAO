@@ -29,7 +29,7 @@ public:
   ClientTask () {};
   ~ ClientTask () {};
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     CORBA::Object_var helloObj = orb->string_to_object(server1_ior);
 
@@ -42,7 +42,6 @@ public:
     }
     else
     {
-
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ClientTask start.\n")));
       int i = 0;
       ACE_Time_Value due = ACE_OS::gettimeofday () + ACE_Time_Value (test_duration);

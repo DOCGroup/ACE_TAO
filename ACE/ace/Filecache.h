@@ -88,7 +88,6 @@ class ACE_Export ACE_Filecache_Handle
   // Since this design should be simpler, problems should be easier to spot.
   //
 public:
-
   /// Query cache for file, and acquire it.  Assumes the file is being
   /// opened for reading.
   ACE_Filecache_Handle (const ACE_TCHAR *filename,

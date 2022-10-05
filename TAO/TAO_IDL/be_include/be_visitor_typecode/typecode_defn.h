@@ -99,7 +99,6 @@ protected:
   void gen_end_NS_for_anon ();
 
 protected:
-
   /// Queue to keep nodes
   ACE_Unbounded_Queue <QNode*> tc_queue_;
 
@@ -139,7 +138,6 @@ private:
   int pop (ACE_CDR::Long &);
 
 protected:
-
   // queue related routines
 
   const QNode *queue_insert (ACE_Unbounded_Queue <QNode*> &,
@@ -148,7 +146,6 @@ protected:
   const QNode *queue_lookup (ACE_Unbounded_Queue <QNode*> &, be_type *node);
 
   void queue_reset (ACE_Unbounded_Queue <QNode*> &);
-
 };
 
 #endif /* _BE_VISITOR_TYPECODE_TYPECODE_DEFN_H_ */

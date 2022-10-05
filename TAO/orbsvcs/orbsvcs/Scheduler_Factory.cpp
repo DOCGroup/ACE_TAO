@@ -521,7 +521,6 @@ int ACE_Scheduler_Factory::dump_schedule
 
 void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * entry, FILE* file)
 {
-
    if( entry == 0 )
    {
       ACE_OS::fprintf (file, "Entry is NULL");
@@ -596,7 +595,6 @@ void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * 
    log_tuple_subset(entry->prop_tuple_subset(), file);
    ACE_OS::fprintf(file, "\n   }\n}");
 
-
 }
 
 void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
@@ -630,7 +628,6 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
       }
       else
       {
-
       ACE_OS::fprintf (file,
          subset_tuple_format,
          (*tuple_ptr_ptr)->handle,
@@ -670,14 +667,11 @@ ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** en
       TAO_Reconfig_Scheduler_Entry * entry = entry_ptr_array[index];
 
       log_scheduling_entry(entry, file);
-
-
    }
 
 
    ACE_OS::fclose (file);
    return 0;
-
 }
 
 void

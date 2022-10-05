@@ -45,10 +45,10 @@ public:
   virtual int recycle (void * = 0);
 
   /// Send data to server.
-  void send_data (void);
+  void send_data ();
 
   /// Recv data from client.
-  void recv_data (void);
+  void recv_data ();
 
   /// Shutdown the <Svc_Handler>.
   int close (u_long = 0);

@@ -58,10 +58,10 @@ public:
                          PortableServer::POA_ptr poa);
 
   /// Destructor.
-  ~TAO_Bindings_Iterator (void);
+  ~TAO_Bindings_Iterator ();
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
   // = Idl methods.
 
@@ -78,7 +78,7 @@ public:
                          CosNaming::BindingList_out bl);
 
   /// This operation destroys the iterator.
-  void destroy (void);
+  void destroy ();
 
   // = Helper method.
 

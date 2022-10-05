@@ -36,7 +36,7 @@ public:
   virtual void report (
     const char * msg);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;
@@ -115,7 +115,6 @@ public:
 private:
   TestHandler evh_;
 };
-
 
 
 #endif /* TAO_MSAE_TEST_I_H */

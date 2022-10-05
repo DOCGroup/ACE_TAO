@@ -132,7 +132,6 @@ TAO_LB_ObjectReferenceFactory::make_object (
                   "TAO_LB_ObjectReferenceFactory::""make_object");
 
               throw CORBA::BAD_INV_ORDER ();
-
             }
           catch (const PortableGroup::ObjectNotAdded& ex)
             {

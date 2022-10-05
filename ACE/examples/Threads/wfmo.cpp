@@ -11,7 +11,6 @@
 #include "ace/OS_main.h"
 
 
-
 #if defined (ACE_WIN32)
 
 // Number of threads.
@@ -47,7 +46,7 @@ WFMO_Test::open (void *arg)
 }
 
 int
-WFMO_Test::svc (void)
+WFMO_Test::svc ()
 {
   while(1)
     {

@@ -27,7 +27,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Fixed
      *
@@ -43,7 +42,6 @@ namespace TAO
       , private RefCountPolicy
     {
     public:
-
       /// Constructor.
       Fixed (CORBA::UShort digits, CORBA::UShort scale);
 

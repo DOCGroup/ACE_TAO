@@ -8,7 +8,7 @@ Country_i::Country_i (CORBA::ORB_ptr orb) :
 }
 
 // Implementation skeleton destructor
-Country_i::~Country_i (void)
+Country_i::~Country_i ()
 {
 }
 
@@ -22,7 +22,7 @@ void Country_i::update_population (const char * country,
 }
 
 CORBA::Object_ptr
-Country_i::get_typed_consumer (void)
+Country_i::get_typed_consumer ()
 
 {
   //Add your implementation here
@@ -42,7 +42,7 @@ Country_i::push (const CORBA::Any & /* data */)
 }
 
 void
-Country_i::disconnect_push_consumer (void)
+Country_i::disconnect_push_consumer ()
 
 {
   //Add your implementation here

@@ -186,7 +186,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               policies);
 
 
-
       PortableServer::ObjectId_var oid1 =
         first_poa->activate_object (&servant1);
 

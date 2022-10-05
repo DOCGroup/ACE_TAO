@@ -254,7 +254,6 @@ union ACE_max_align_info
 class ACE_Export ACE_Control_Block
 {
 public:
-
   /**
    * @class ACE_Malloc_Header
    *

@@ -37,7 +37,7 @@ ACE_Token_Manager::~ACE_Token_Manager ()
 }
 
 ACE_Token_Manager *
-ACE_Token_Manager::instance (void)
+ACE_Token_Manager::instance ()
 {
   ACE_TRACE ("ACE_Token_Manager::instance");
 

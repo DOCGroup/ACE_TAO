@@ -33,9 +33,8 @@
 class Service_Config_DLL_Export Service_Config_DLL : public ACE_Task_Base
 {
 public:
-
   /// Constructor.
-  Service_Config_DLL (void);
+  Service_Config_DLL ();
 
   /// Initializes object when dynamic linking occurs.
   virtual int init (int argc, ACE_TCHAR *argv[]);
@@ -51,11 +50,9 @@ public:
   virtual int svc ();
 
 private:
-
   /// Directives to be passed to be processed by the Service
   /// Configurator in separate threads.
   ACE_TCHAR directive_[2][BUFSIZ];
-
 };
 
 

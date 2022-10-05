@@ -21,7 +21,6 @@
 #include "ace/OS_main.h"
 
 
-
 // Use the WFMO_Reactor
 static int opt_wfmo_reactor = 0;
 
@@ -57,7 +56,7 @@ public:
   {
   }
 
-  ~Handler (void)
+  ~Handler ()
   {
     this->reactor (0);
   }
@@ -112,13 +111,12 @@ protected:
 class Different_Handler : public ACE_Event_Handler
 {
 public:
-
   Different_Handler (ACE_Pipe &pipe)
     : pipe_ (pipe)
   {
   }
 
-  ~Different_Handler (void)
+  ~Different_Handler ()
   {
     this->reactor (0);
   }
@@ -205,7 +203,7 @@ protected:
 // Selection of which reactor should get created
 //
 ACE_Reactor *
-create_reactor (void)
+create_reactor ()
 {
   ACE_Reactor_Impl *impl = 0;
 

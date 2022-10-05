@@ -301,7 +301,6 @@ namespace
   }
 
 
-
 void reset_buffering (ORB_ptr orb)
 {
   Object_var obj = orb->resolve_initial_references ("PolicyCurrent");
@@ -321,7 +320,6 @@ void reset_buffering (ORB_ptr orb)
 
 int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 {
-
   ACE_Time_Value before = ACE_High_Res_Timer::gettimeofday_hr ();
 
   int num_requests_sent = 0;

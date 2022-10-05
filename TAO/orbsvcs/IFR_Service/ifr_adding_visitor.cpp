@@ -61,7 +61,7 @@ ifr_adding_visitor::ifr_adding_visitor (
 {
 }
 
-ifr_adding_visitor::~ifr_adding_visitor (void)
+ifr_adding_visitor::~ifr_adding_visitor ()
 {
 }
 

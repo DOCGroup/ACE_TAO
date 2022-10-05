@@ -15,7 +15,7 @@ ACE_Typed_SV_Message_Queue<T>::open (key_t external_id,
 // What does it mean to close a message queue?!
 
 template <class T> ACE_INLINE int
-ACE_Typed_SV_Message_Queue<T>::close (void)
+ACE_Typed_SV_Message_Queue<T>::close ()
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::close");
   return 1;
@@ -52,7 +52,7 @@ ACE_Typed_SV_Message_Queue<T>::send (const ACE_Typed_SV_Message<T> &mb,
 }
 
 template <class T> ACE_INLINE int
-ACE_Typed_SV_Message_Queue<T>::remove (void)
+ACE_Typed_SV_Message_Queue<T>::remove ()
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::remove");
 

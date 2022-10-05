@@ -22,7 +22,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE, class ACE_LOCK> void
-TAO_Singleton<TYPE, ACE_LOCK>::dump (void)
+TAO_Singleton<TYPE, ACE_LOCK>::dump ()
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("TAO_Singleton<TYPE, ACE_LOCK>::dump");
@@ -34,13 +34,13 @@ TAO_Singleton<TYPE, ACE_LOCK>::dump (void)
 }
 
 template <class TYPE, class ACE_LOCK> TAO_Singleton<TYPE, ACE_LOCK> *&
-TAO_Singleton<TYPE, ACE_LOCK>::instance_i (void)
+TAO_Singleton<TYPE, ACE_LOCK>::instance_i ()
 {
   return TAO_Singleton<TYPE, ACE_LOCK>::singleton_;
 }
 
 template <class TYPE, class ACE_LOCK> TYPE *
-TAO_Singleton<TYPE, ACE_LOCK>::instance (void)
+TAO_Singleton<TYPE, ACE_LOCK>::instance ()
 {
   ACE_TRACE ("TAO_Singleton<TYPE, ACE_LOCK>::instance");
 
@@ -118,7 +118,7 @@ template <class TYPE, class ACE_LOCK> TAO_TSS_Singleton<TYPE, ACE_LOCK> *
 TAO_TSS_Singleton<TYPE, ACE_LOCK>::singleton_ = 0;
 
 template <class TYPE, class ACE_LOCK> void
-TAO_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
+TAO_TSS_Singleton<TYPE, ACE_LOCK>::dump ()
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("TAO_TSS_Singleton<TYPE, ACE_LOCK>::dump");
@@ -130,13 +130,13 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
 }
 
 template <class TYPE, class ACE_LOCK> TAO_TSS_Singleton<TYPE, ACE_LOCK> *&
-TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance_i (void)
+TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()
 {
   return TAO_TSS_Singleton<TYPE, ACE_LOCK>::singleton_;
 }
 
 template <class TYPE, class ACE_LOCK> TYPE *
-TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
+TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
 {
   ACE_TRACE ("TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance");
 

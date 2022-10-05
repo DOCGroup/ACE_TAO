@@ -24,7 +24,7 @@ TAO::CSD::TP_Collocated_Synch_Request::TP_Collocated_Synch_Request
 
 ACE_INLINE
 bool
-TAO::CSD::TP_Collocated_Synch_Request::wait(void)
+TAO::CSD::TP_Collocated_Synch_Request::wait()
 {
   bool dispatched = this->synch_helper_.wait_while_pending();
 

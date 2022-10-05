@@ -21,18 +21,15 @@ class JAWS_Concurrency_Bridge
 //
 {
 public:
-
   JAWS_Concurrency_Bridge (CONCURRENCY_IMPL *impl = 0);
 
   int putq (JAWS_Protocol_Handler *ph);
   int getq (JAWS_Protocol_Handler *&ph);
 
-  void shutdown (void);
+  void shutdown ();
 
 protected:
-
   CONCURRENCY_IMPL *impl_;
-
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

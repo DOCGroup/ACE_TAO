@@ -7,7 +7,6 @@ void
 TAO::Utils::Implicit_Deactivation_Functor::operator () (
    PortableServer::ServantBase * servant) throw ()
 {
-
   try
     {
       PortableServer::POA_var poa (servant->_default_POA ());

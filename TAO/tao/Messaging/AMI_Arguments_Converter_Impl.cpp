@@ -127,7 +127,6 @@ TAO_AMI_Arguments_Converter_Impl::Initializer ()
 }
 
 
-
 ACE_STATIC_SVC_DEFINE (
   TAO_AMI_Arguments_Converter_Impl,
   ACE_TEXT ("AMI_Arguments_Converter"),

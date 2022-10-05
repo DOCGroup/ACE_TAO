@@ -40,7 +40,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa->destroy (true, true);
 
       orb->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -116,7 +115,7 @@ Task::svc ()
 }
 
 void
-Task::run_iteration (void)
+Task::run_iteration ()
 {
   // Obtain the consumer admin..
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =

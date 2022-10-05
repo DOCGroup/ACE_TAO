@@ -39,7 +39,7 @@ Foo_C_cust_op5::~Foo_C_cust_op5()
 
 
 void
-Foo_C_cust_op5::result(void)
+Foo_C_cust_op5::result()
 {
   if (this->cancelled_)
     {

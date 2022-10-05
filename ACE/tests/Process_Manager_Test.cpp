@@ -75,7 +75,6 @@ spawn_child (const ACE_TCHAR *argv0,
              int sleep_time,
              int my_process_id)
 {
-
 #if defined (ACE_HAS_WINCE)
 const ACE_TCHAR *cmdline_format = ACE_TEXT("%s %d");
 #elif defined (ACE_WIN32)
@@ -241,7 +240,7 @@ command_line_test ()
   ACE_Process_Options options (1, command_len + 1);
 
 #ifndef ACE_LACKS_VA_FUNCTIONS
-  options.command_line (command);
+  options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs, command);
 #endif
 
   ACE_TCHAR * const *procargv = options.command_line_argv ();

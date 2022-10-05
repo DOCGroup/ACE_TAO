@@ -46,13 +46,13 @@ public:
   const TAO::ObjectKey &object_key () const;
 
   /// Get the object_key in read/write mode..
-  TAO::ObjectKey &object_key (void);
+  TAO::ObjectKey &object_key ();
 
   /// Get the reference to the underlying profile
-  TAO_Tagged_Profile &profile (void);
+  TAO_Tagged_Profile &profile ();
 
   /// Get the CDR stream for read/write
-  TAO_InputCDR &incoming_stream (void);
+  TAO_InputCDR &incoming_stream ();
 
 private:
   /// Request id

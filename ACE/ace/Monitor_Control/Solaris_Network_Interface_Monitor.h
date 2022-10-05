@@ -46,10 +46,10 @@ namespace ACE
       Solaris_Network_Interface_Monitor (const ACE_TCHAR *lookup_str);
 
       /// Platform-specific implementation.
-      void update_i (void);
+      void update_i ();
 
       /// Platform-specific reset.
-      void clear_impl (void);
+      void clear_impl ();
 
     protected:
       ACE_UINT64 value_;
@@ -57,7 +57,7 @@ namespace ACE
     private:
       /// Common code.
 
-      void init (void);
+      void init ();
       void access_kstats (ACE_UINT64 &which_member);
       int check_ks_module (const unsigned long ks_instance,
                            const unsigned long which_max,

@@ -16,10 +16,10 @@ public:
   Test_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void test_method (void);
+  void test_method ();
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void);
+  void shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -39,7 +39,7 @@ Test_i::test_method ( /* */)
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
   this->orb_->shutdown (false);
 }
@@ -90,14 +90,12 @@ check_for_nil (CORBA::Object_ptr obj, const char *msg)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -108,7 +106,7 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   try
     {

@@ -232,7 +232,6 @@ TAO_CEC_ProxyPushSupplier::invoke (const TAO_CEC_TypedEvent& typed_event)
                                     this->typed_event_channel_,
                                     this);
   {
-
     ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
     if (!this->is_connected_i ())
@@ -329,7 +328,6 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
     throw CORBA::BAD_PARAM ();
 
   {
-
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
     // Check if we have a typed event channel
     if (this->is_typed_ec () )
@@ -379,7 +377,6 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
                 this->typed_event_channel_->reconnected (this);
               }
               return;
-
             }
 
           this->typed_consumer_ = apply_policy (local_typed_consumer.in () );
@@ -391,7 +388,6 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 
         // Notify the event channel...
         this->typed_event_channel_->connected (this);
-
       } /* this->is_typed_ec */
     else
       {
@@ -405,7 +401,6 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
           }
 
         {
-
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());

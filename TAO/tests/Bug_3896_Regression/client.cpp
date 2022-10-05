@@ -143,7 +143,7 @@ Client::Client (CORBA::ORB_ptr orb)
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

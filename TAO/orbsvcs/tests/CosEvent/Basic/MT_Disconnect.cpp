@@ -38,7 +38,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa->destroy (true, true);
 
       orb->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -114,7 +113,7 @@ MTD_Task::svc ()
 }
 
 void
-MTD_Task::run_iteration (void)
+MTD_Task::run_iteration ()
 {
   // Obtain the consumer admin..
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =

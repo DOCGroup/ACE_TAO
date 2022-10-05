@@ -4,7 +4,7 @@
 #include "ACEXML/common/StreamFactory.h"
 #include "ace/ACE.h"
 
-ACEXML_InputSource::ACEXML_InputSource (void)
+ACEXML_InputSource::ACEXML_InputSource ()
   : charStream_ (0),
     encoding_ (0),
     publicId_ (0),
@@ -40,7 +40,7 @@ ACEXML_InputSource::ACEXML_InputSource (const ACEXML_Char *systemId)
     }
 }
 
-ACEXML_InputSource::~ACEXML_InputSource (void)
+ACEXML_InputSource::~ACEXML_InputSource ()
 {
   delete[] this->publicId_;
   this->publicId_ = 0;

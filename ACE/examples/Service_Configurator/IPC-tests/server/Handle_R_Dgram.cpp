@@ -3,21 +3,21 @@
 #if defined (SunOS4)
 extern "C"
 {
-  int init (void);
-  int fini (void);
+  int init ();
+  int fini ();
   void __sti__Handle_R_Dgram_C_init_();
   void __std__Handle_R_Dgram_C_init_();
 }
 
 int
-init (void)
+init ()
 {
   __sti__Handle_R_Dgram_C_init_();
   return 0;
 }
 
 int
-fini (void)
+fini ()
 {
   __std__Handle_R_Dgram_C_init_();
   return 0;

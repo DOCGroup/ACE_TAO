@@ -42,14 +42,14 @@ public:
   TAO_InterfaceAttrExtension_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_InterfaceAttrExtension_i (void);
+  virtual ~TAO_InterfaceAttrExtension_i ();
 
   virtual
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
-  describe_ext_interface (void);
+  describe_ext_interface ();
 
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
-  describe_ext_interface_i (void);
+  describe_ext_interface_i ();
 
   virtual CORBA::ExtAttributeDef_ptr create_ext_attribute (
       const char *id,

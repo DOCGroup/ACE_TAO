@@ -57,7 +57,7 @@ class Worker : public ACE_Task_Base
 {
 public:
   /// ctor
-  Worker (void);
+  Worker ();
 
   void orb (CORBA::ORB_ptr orb);
 
@@ -82,10 +82,10 @@ friend class LoggingWorker;
 
 public:
   /// Constructor.
-  TAO_Notify_Service_Driver (void);
+  TAO_Notify_Service_Driver ();
 
   /// Destructor.
-  virtual ~TAO_Notify_Service_Driver (void);
+  virtual ~TAO_Notify_Service_Driver ();
 
   /// Initializes the Service.
   /// Returns 0 on success, -1 on error.
@@ -93,7 +93,7 @@ public:
 
   /// run the Service.
   /// Returns 0 on success, -1 on error.
-  int run (void);
+  int run ();
 
   /// Shutdown the Service.
   /// Returns 0 on success, -1 on error.
@@ -112,7 +112,7 @@ protected:
   TAO_Notify_Service* notify_service_;
 
   /// Resolve the naming service.
-  int resolve_naming_service (void);
+  int resolve_naming_service ();
 
   /// Parses the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv []);

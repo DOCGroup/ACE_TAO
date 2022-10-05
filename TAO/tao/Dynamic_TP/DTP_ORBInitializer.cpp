@@ -19,7 +19,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DTP_ORBInitializer::TAO_DTP_ORBInitializer (/*const ACE_CString &tplist*/)
 {
-
 }
 
 void
@@ -72,7 +71,6 @@ TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
         "DTP_Thread_Lane_Resources_Manager_Factory");
   ACE_Service_Config::process_directive (
     ace_svc_desc_TAO_DTP_Thread_Lane_Resources_Manager_Factory);
-
 }
 
 void
@@ -122,7 +120,6 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
       dtp_tlrm.tp_manager().create_threadpool (def);
 
       tao_info->orb_core ()->leader_follower ().set_avoid_client_leader ();
-
     }
 
 

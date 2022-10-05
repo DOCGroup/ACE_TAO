@@ -91,7 +91,6 @@ myallocator (const void *base_addr = 0)
 
   if (static_allocator.get () == 0)
     {
-
 #if defined (ACE_HAS_WINCE) || defined (ACE_OPENVMS)
       // WinCE cannot do fixed base, ever.
       ACE_UNUSED_ARG (base_addr);
@@ -312,7 +311,7 @@ child ()
 // run time check and run the NT4-or-better code unless we're on
 // CE or something other than NT4 (Pharlap reports itself as NT 3.51).
 static void
-get_base_addrs (void)
+get_base_addrs ()
 {
 #   if defined(__clang__)
 #     pragma clang diagnostic push
@@ -358,12 +357,10 @@ run_main (int argc, ACE_TCHAR *argv[])
       // No arguments means we're the parent process.
       ACE_Process_Options options (1);
 
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-      static const ACE_TCHAR* format = ACE_TEXT ("%ls%ls%ls");
-#else
-      static const ACE_TCHAR* format = ACE_TEXT ("%s%s%s");
-#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
-      options.command_line (format, EXE_LOCATION,
+      options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs
+                            ACE_TEXT ("%") ACE_TEXT_PRIs
+                            ACE_TEXT ("%") ACE_TEXT_PRIs,
+                            EXE_LOCATION,
                             argc > 0 ? argv[0] : ACE_TEXT ("Malloc_Test"),
                             ACE_TEXT (" run_as_test"));
 

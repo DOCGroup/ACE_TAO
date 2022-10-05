@@ -65,10 +65,10 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   /// Constructor.
-  Handler (void) : reply_count_ (0) {};
+  Handler () : reply_count_ (0) {};
 
   /// Destructor.
-  ~Handler (void) {};
+  ~Handler () {};
 
   /// Get the reply count
   long reply_count () const

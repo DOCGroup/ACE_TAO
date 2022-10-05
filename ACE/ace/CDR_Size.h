@@ -48,7 +48,7 @@ public:
   bool good_bit () const;
 
   /// Reset current size.
-  void reset (void);
+  void reset ();
 
   /// Return current size.
   size_t total_length () const;

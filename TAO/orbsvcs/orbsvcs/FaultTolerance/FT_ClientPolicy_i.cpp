@@ -11,7 +11,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TimeBase::TimeT

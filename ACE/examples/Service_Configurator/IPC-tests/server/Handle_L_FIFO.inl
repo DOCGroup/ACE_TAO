@@ -7,7 +7,7 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
-Handle_L_FIFO::Handle_L_FIFO (void)
+Handle_L_FIFO::Handle_L_FIFO ()
 {
 }
 
@@ -70,7 +70,7 @@ Handle_L_FIFO::init (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_INLINE int
-Handle_L_FIFO::fini (void)
+Handle_L_FIFO::fini ()
 {
   return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);

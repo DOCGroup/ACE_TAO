@@ -154,7 +154,7 @@ TAO_RTScheduler_Current::spawn (RTScheduling::ThreadAction_ptr start,
 }
 
 RTScheduling::Current::IdType *
-TAO_RTScheduler_Current::id (void)
+TAO_RTScheduler_Current::id ()
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -165,9 +165,8 @@ TAO_RTScheduler_Current::id (void)
 }
 
 CORBA::Policy_ptr
-TAO_RTScheduler_Current::scheduling_parameter (void)
+TAO_RTScheduler_Current::scheduling_parameter ()
 {
-
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
   if (impl == 0)
@@ -177,7 +176,7 @@ TAO_RTScheduler_Current::scheduling_parameter (void)
 }
 
 CORBA::Policy_ptr
-TAO_RTScheduler_Current::implicit_scheduling_parameter (void)
+TAO_RTScheduler_Current::implicit_scheduling_parameter ()
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -188,7 +187,7 @@ TAO_RTScheduler_Current::implicit_scheduling_parameter (void)
 }
 
 RTScheduling::Current::NameList *
-TAO_RTScheduler_Current::current_scheduling_segment_names (void)
+TAO_RTScheduler_Current::current_scheduling_segment_names ()
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -199,7 +198,7 @@ TAO_RTScheduler_Current::current_scheduling_segment_names (void)
 }
 
 RTCORBA::Priority
-TAO_RTScheduler_Current::the_priority (void)
+TAO_RTScheduler_Current::the_priority ()
 {
   return this->rt_current_->the_priority ();
 }
@@ -224,7 +223,7 @@ TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i* new_current)
 }
 
 TAO_RTScheduler_Current_i*
-TAO_RTScheduler_Current::implementation (void)
+TAO_RTScheduler_Current::implementation ()
 {
   TAO_TSS_Resources *tss =
     TAO_TSS_Resources::instance ();
@@ -341,7 +340,6 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
       this->name_ = CORBA::string_dup (name);
       this->sched_param_ = CORBA::Policy::_duplicate (sched_param);
       this->implicit_sched_param_ = CORBA::Policy::_duplicate (implicit_sched_param);
-
     }
   else //Nested segment
     {
@@ -427,7 +425,6 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name)
 
       // A Nested segment.
     } else {
-
       // Inform scheduler of end of nested
       // scheduling segment.
       this->scheduler_->end_nested_scheduling_segment (this->guid_,
@@ -575,7 +572,6 @@ DTTask::svc ()
 {
   try
     {
-
       TAO_TSS_Resources *tss =
         TAO_TSS_Resources::instance ();
 
@@ -602,7 +598,6 @@ DTTask::svc ()
 RTScheduling::Current::IdType *
 TAO_RTScheduler_Current_i::id ()
 {
-
   RTScheduling::Current::IdType_var guid = this->guid_;
   return guid._retn ();
 }
@@ -621,7 +616,7 @@ TAO_RTScheduler_Current_i::implicit_scheduling_parameter ()
 }
 
 RTScheduling::Current::NameList *
-TAO_RTScheduler_Current_i::current_scheduling_segment_names (void)
+TAO_RTScheduler_Current_i::current_scheduling_segment_names ()
 {
   RTScheduling::Current::NameList* name_list;
   ACE_NEW_RETURN (name_list,

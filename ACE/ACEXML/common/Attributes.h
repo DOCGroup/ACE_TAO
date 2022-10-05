@@ -55,7 +55,6 @@
 class ACEXML_Export ACEXML_Attributes
 {
 public:
-
   /// Destructor.
   virtual ~ACEXML_Attributes ();
 

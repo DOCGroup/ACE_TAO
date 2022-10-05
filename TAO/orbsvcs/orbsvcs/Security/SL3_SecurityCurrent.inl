@@ -11,7 +11,7 @@ TAO::SL3::SecurityCurrent::tss_slot () const
 }
 
 ACE_INLINE TAO::SL3::SecurityCurrent_Impl *
-TAO::SL3::SecurityCurrent::implementation (void)
+TAO::SL3::SecurityCurrent::implementation ()
 {
   TAO::SL3::SecurityCurrent_Impl *impl =
     static_cast<TAO::SL3::SecurityCurrent_Impl *> (

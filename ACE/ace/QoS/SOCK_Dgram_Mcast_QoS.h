@@ -40,7 +40,7 @@ public:
   // use <ACE_SOCK_Dgram> or <ACE_SOCK_CODgram> instead.
 
   /// Default dtor.
-  ~ACE_SOCK_Dgram_Mcast_QoS (void);
+  ~ACE_SOCK_Dgram_Mcast_QoS ();
 
   // = Multicast group management routines.
   /**
@@ -96,7 +96,7 @@ public:
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
   /// Returns the QoS manager for this socket.
-  ACE_QoS_Manager qos_manager (void);
+  ACE_QoS_Manager qos_manager ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

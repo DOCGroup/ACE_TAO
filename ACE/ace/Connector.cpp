@@ -44,21 +44,21 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::ACE_NonBlocking_Connect_Handler (A
 }
 
 template <typename SVC_HANDLER>
-ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::~ACE_NonBlocking_Connect_Handler (void)
+ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::~ACE_NonBlocking_Connect_Handler ()
 {
   if (this->cleanup_svc_handler_)
     this->cleanup_svc_handler_->remove_reference ();
 }
 
 template <typename SVC_HANDLER> SVC_HANDLER *
-ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::svc_handler (void)
+ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::svc_handler ()
 {
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::svc_handler");
   return this->svc_handler_;
 }
 
 template <typename SVC_HANDLER> long
-ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::timer_id (void)
+ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::timer_id ()
 {
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::timer_id");
   return this->timer_id_;
@@ -213,7 +213,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_exception (ACE_HANDLE h)
 }
 
 template <typename SVC_HANDLER> int
-ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::resume_handler (void)
+ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::resume_handler ()
 {
   return ACE_Event_Handler::ACE_EVENT_HANDLER_NOT_RESUMED;
 }
@@ -612,7 +612,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::nonblocking_connect
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR>
-ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::~ACE_Connector (void)
+ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::~ACE_Connector ()
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::~ACE_Connector");
 
@@ -669,13 +669,13 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::reactor () const
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> ACE_Unbounded_Set<ACE_HANDLE> &
-ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::non_blocking_handles (void)
+ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::non_blocking_handles ()
 {
   return this->non_blocking_handles_;
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
-ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close (void)
+ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
 {
   // If there are no non-blocking handle pending, return immediately.
   if (this->non_blocking_handles ().size () == 0)
@@ -734,7 +734,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close (void)
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
-ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::fini (void)
+ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::fini ()
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::fini");
 
@@ -751,14 +751,14 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::init (int, ACE_TCHAR *[])
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
-ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::suspend (void)
+ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::suspend ()
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::suspend");
   return -1;
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
-ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::resume (void)
+ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::resume ()
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::resume");
   return -1;
@@ -896,7 +896,7 @@ ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::ACE_Strategy_Connector
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR>
-ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::~ACE_Strategy_Connector (void)
+ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::~ACE_Strategy_Connector ()
 {
   ACE_TRACE ("ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::~ACE_Strategy_Connector");
 
@@ -905,7 +905,7 @@ ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::~ACE_Strategy_Connector (vo
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
-ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::close (void)
+ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
 {
   if (this->delete_creation_strategy_)
     delete this->creation_strategy_;

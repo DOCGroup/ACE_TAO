@@ -12,7 +12,6 @@
 #include "ace/OS_NS_stdio.h"
 
 
-
 #if defined (ACE_HAS_POLL)
 
 // Should we be verbose?
@@ -37,7 +36,7 @@ static struct pollfd poll_array[MAX_HANDLES];
 static Buffer_Info buffer_array[MAX_HANDLES];
 
 static void
-init_poll_array (void)
+init_poll_array ()
 {
   int i;
 

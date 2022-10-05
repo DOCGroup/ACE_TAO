@@ -33,7 +33,7 @@ class ACE_Export ACE_UPIPE_Connector
 {
 public:
   /// Default constructor.
-  ACE_UPIPE_Connector (void);
+  ACE_UPIPE_Connector ();
 
   /**
    * Actively connect and produce a @a new_stream if things go well.

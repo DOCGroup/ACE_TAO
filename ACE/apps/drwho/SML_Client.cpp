@@ -14,7 +14,7 @@ SML_Client::receive (int)
 }
 
 int
-SML_Client::send (void)
+SML_Client::send ()
 {
   if (this->mux (this->send_packet_, this->packet_length) < 0)
     return -1;
@@ -25,10 +25,10 @@ SML_Client::send (void)
   return 1;
 }
 
-SML_Client::SML_Client (void)
+SML_Client::SML_Client ()
 {
 }
 
-SML_Client::~SML_Client (void)
+SML_Client::~SML_Client ()
 {
 }

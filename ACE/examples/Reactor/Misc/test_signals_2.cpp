@@ -102,7 +102,6 @@
 #include "ace/Signal.h"
 
 
-
 class Sig_Handler_1 : public ACE_Event_Handler
 {
 public:

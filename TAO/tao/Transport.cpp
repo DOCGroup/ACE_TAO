@@ -1696,7 +1696,6 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input, ")
                  ACE_TEXT ("error while parsing the head of the queue\n"),
                  this->id()));
-
             }
           return -1;
         }
@@ -1827,7 +1826,6 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
         }
 
       TAO_Queued_Data::release (q_data);
-
     }
 
   return 0;
@@ -2109,7 +2107,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           message_block.copy (this->partial_message_->rd_ptr (),
                               this->partial_message_->length ()) == 0)
         {
-
           recv_size -= this->partial_message_->length ();
           // reset is done later to avoid problem in case of EWOULDBLOCK
           // or EAGAIN errno

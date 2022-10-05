@@ -50,7 +50,6 @@ class TAO_Log_Serv_Export TAO_BasicLog_i :
   public POA_DsLogAdmin::BasicLog
 {
 public:
-
   /// Constructor.
   TAO_BasicLog_i (CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr poa,
@@ -65,19 +64,17 @@ public:
   virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
 
   /// Destroy the log object and all contained records.
-  void destroy (void);
+  void destroy ();
 
 protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~TAO_BasicLog_i (void);
+  ~TAO_BasicLog_i ();
 
 private:
-
   /// POA.
   PortableServer::POA_var poa_;
 };

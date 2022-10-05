@@ -41,7 +41,7 @@ apc_callback (DWORD)
 }
 
 void
-queue_apc (void)
+queue_apc ()
 {
   DWORD result = ::QueueUserAPC (reinterpret_cast<PAPCFUNC> (&apc_callback),
                                                          // pointer to APC function

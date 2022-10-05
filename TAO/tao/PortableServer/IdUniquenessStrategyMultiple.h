@@ -43,7 +43,6 @@ namespace TAO
 
       virtual ::PortableServer::IdUniquenessPolicyValue type() const;
     };
-
   }
 }
 

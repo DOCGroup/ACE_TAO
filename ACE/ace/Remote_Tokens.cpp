@@ -32,18 +32,18 @@ ACE_TSS_Connection::set_server_address (const ACE_INET_Addr &server_address)
 }
 
 // Necessary to make some compilers work...
-ACE_TSS_Connection::ACE_TSS_Connection (void)
+ACE_TSS_Connection::ACE_TSS_Connection ()
 {
   ACE_TRACE ("ACE_TSS_Connection::ACE_TSS_Connection");
 }
 
-ACE_TSS_Connection::~ACE_TSS_Connection (void)
+ACE_TSS_Connection::~ACE_TSS_Connection ()
 {
   ACE_TRACE ("ACE_TSS_Connection::~ACE_TSS_Connection");
 }
 
 ACE_SOCK_Stream *
-ACE_TSS_Connection::get_connection (void)
+ACE_TSS_Connection::get_connection ()
 {
   return ACE_TSS<ACE_SOCK_Stream>::operator-> ();
 }
@@ -71,7 +71,7 @@ ACE_TSS_Connection::make_TSS_TYPE () const
   return stream;
 }
 
-ACE_TSS_Connection::operator ACE_SOCK_Stream *(void)
+ACE_TSS_Connection::operator ACE_SOCK_Stream *()
 {
   return this->get_connection ();
 }
@@ -91,12 +91,12 @@ ACE_TSS_Connection::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Remote_Token_Proxy::ACE_Remote_Token_Proxy (void)
+ACE_Remote_Token_Proxy::ACE_Remote_Token_Proxy ()
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::ACE_Remote_Token_Proxy");
 }
 
-ACE_Remote_Token_Proxy::~ACE_Remote_Token_Proxy (void)
+ACE_Remote_Token_Proxy::~ACE_Remote_Token_Proxy ()
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::~ACE_Remote_Token_Proxy");
 }
@@ -119,7 +119,7 @@ ACE_Remote_Token_Proxy::set_server_address (const ACE_INET_Addr &server_address)
 }
 
 int
-ACE_Remote_Token_Proxy::initiate_connection (void)
+ACE_Remote_Token_Proxy::initiate_connection ()
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::initiate_connection");
   if (token_ == 0)
@@ -377,7 +377,7 @@ ACE_Remote_Token_Proxy::token_acquired (ACE_TPQ_Entry *)
 }
 
 const ACE_TCHAR*
-ACE_Remote_Token_Proxy::owner_id (void)
+ACE_Remote_Token_Proxy::owner_id ()
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::owner_id");
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("owner_id called\n")));

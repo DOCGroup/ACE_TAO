@@ -39,7 +39,7 @@ public:
     ACE_OPEN   = 0
   };
 
-  ACE_SV_Shared_Memory (void);
+  ACE_SV_Shared_Memory ();
   ACE_SV_Shared_Memory (key_t external_id,
                         size_t size,
                         int create,
@@ -66,10 +66,10 @@ public:
   int  attach (void *virtual_addr = 0, int flags = 0);
 
   /// Detach this shared memory segment.
-  int  detach (void);
+  int  detach ();
 
   /// Remove this shared memory segment.
-  int  remove (void);
+  int  remove ();
 
   /// Forward to underlying System V <shmctl>.
   int  control (int cmd, void *buf);

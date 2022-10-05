@@ -18,7 +18,6 @@ class be_visitor_operation_upcall_command_ss
   : public be_visitor_operation
 {
 public:
-
   /// constructor
   be_visitor_operation_upcall_command_ss (be_visitor_context * ctx);
 
@@ -32,10 +31,8 @@ public:
              char const * upcall_command_name);
 
 private:
-
   /// Generate the upcall.
   int gen_upcall (be_operation * node);
-
 };
 
 #endif /* _BE_VISITOR_OPERATION_UPCALL_COMMAND_SS_H_ */

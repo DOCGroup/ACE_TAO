@@ -45,7 +45,7 @@ Connection_Handler::close (u_long)
 }
 
 int
-Connection_Handler::svc (void)
+Connection_Handler::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) in svc()\n")));
 

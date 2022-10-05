@@ -174,7 +174,6 @@ namespace Kokyu
 
     DSRT_ConfigInfo ();
   };
-
 } //end of namespace
 
 //to satisfy ACE_Array<ConfigInfo>

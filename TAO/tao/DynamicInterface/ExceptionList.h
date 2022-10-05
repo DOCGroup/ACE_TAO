@@ -60,18 +60,18 @@ namespace CORBA
     ExceptionList (CORBA::ULong len, CORBA::TypeCode_ptr *tc_list);
 
     /// Destructor.
-    ~ExceptionList (void);
+    ~ExceptionList ();
 
     /// Return the number of elements.
-    CORBA::ULong count (void);
+    CORBA::ULong count ();
 
     /// Increase the reference count.
-    ExceptionList_ptr _duplicate (void);
+    ExceptionList_ptr _duplicate ();
 
     /// Increase the reference count in the spec defined manner.
     static ExceptionList_ptr _duplicate (ExceptionList *);
 
-    void _destroy (void);
+    void _destroy ();
 
     static ExceptionList_ptr _nil ();
 

@@ -350,7 +350,6 @@ TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
 # endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
 
-
 void
 TAO_ServantBase::_repository_id_skel (TAO_ServerRequest & server_request,
                                       TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),

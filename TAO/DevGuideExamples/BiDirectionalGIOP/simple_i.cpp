@@ -39,11 +39,9 @@ int
 Simple_i::call_client()
 {
   if (ready_for_callback_) {
-
     ready_for_callback_ = 0;
 
     for (int times = 0; times < callback_count_; ++times) {
-
       callback_->callback_method();
 
       if (orb_->orb_core()->lane_resources().transport_cache().current_size() > 1)

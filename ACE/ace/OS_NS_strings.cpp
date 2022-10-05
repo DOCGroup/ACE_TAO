@@ -1,7 +1,6 @@
 #include "ace/OS_NS_strings.h"
 
 
-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_strings.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */

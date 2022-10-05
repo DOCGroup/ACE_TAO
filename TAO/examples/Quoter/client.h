@@ -37,11 +37,11 @@ class Quoter_Client
 {
 public:
   // = Constructor and destructor.
-  Quoter_Client (void);
-  ~Quoter_Client (void);
+  Quoter_Client ();
+  ~Quoter_Client ();
 
   /// Execute client example code.
-  int run (void);
+  int run ();
 
   /// Initialize the client communication endpoint with server.
   int init (int argc, ACE_TCHAR **argv);
@@ -51,10 +51,10 @@ private:
   CORBA::ORB_var orb_;
 
   /// Function to initialize the naming service.
-  int init_naming_service (void);
+  int init_naming_service ();
 
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// # of arguments on the command line.
   int argc_;
@@ -109,7 +109,6 @@ private:
   Quoter_Client quoter_client;
   int argc_;
   ACE_TCHAR **argv_;
-
 };
 
 #endif /* QUOTER_CLIENT_H */

@@ -62,7 +62,7 @@ template<typename StringType,
 void
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::tao_duplicate (void)
+                     RefCountPolicy>::tao_duplicate ()
 {
   this->RefCountPolicy::add_ref ();
 }
@@ -73,7 +73,7 @@ template<typename StringType,
 void
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::tao_release (void)
+                     RefCountPolicy>::tao_release ()
 {
   this->RefCountPolicy::remove_ref ();
 }

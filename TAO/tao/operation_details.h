@@ -140,7 +140,6 @@ public:
    * @name Helper methods used by the Invocation classes.
    */
   //@{
-
   /// Marshals the list of @c this->arg_ into the \a cdr.
   bool marshal_args (TAO_OutputCDR &cdr);
 

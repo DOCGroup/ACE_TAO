@@ -6,12 +6,12 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "ace/Null_Mutex.h"
 
-DatabaseImpl::Simpler_Database_Malloc::Simpler_Database_Malloc (void)
+DatabaseImpl::Simpler_Database_Malloc::Simpler_Database_Malloc ()
   //  : DATABASE_MALLOC ()
 {
 }
 
-DatabaseImpl::Simpler_Database_Malloc::~Simpler_Database_Malloc (void)
+DatabaseImpl::Simpler_Database_Malloc::~Simpler_Database_Malloc ()
 {
   this->remove ();
 }
@@ -30,7 +30,7 @@ DatabaseImpl::Entry::Entry (CORBA::ORB_ptr orb,
     PortableServer::Current::_narrow (obj.in ());
 }
 
-DatabaseImpl::Entry::~Entry (void)
+DatabaseImpl::Entry::~Entry ()
 {
 }
 
@@ -106,7 +106,7 @@ DatabaseImpl::Entry::_primary_interface (const PortableServer::ObjectId &/*oid*/
 }
 
 PortableServer::POA_ptr
-DatabaseImpl::Entry::_default_POA (void)
+DatabaseImpl::Entry::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -118,11 +118,10 @@ DatabaseImpl::Agent::Agent (CORBA::ORB_ptr orb,
     common_servant_ (orb,
                      poa)
 {
-
   this->poa_->set_servant (&this->common_servant_);
 }
 
-DatabaseImpl::Agent::~Agent (void)
+DatabaseImpl::Agent::~Agent ()
 {
 }
 
@@ -262,13 +261,13 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
 }
 
 void
-DatabaseImpl::Agent::shutdown (void)
+DatabaseImpl::Agent::shutdown ()
 {
   this->orb_->shutdown ();
 }
 
 PortableServer::POA_ptr
-DatabaseImpl::Agent::_default_POA (void)
+DatabaseImpl::Agent::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -304,7 +303,7 @@ DatabaseImpl::Employee::Employee (const char* name,
   this->name (name);
 }
 
-DatabaseImpl::Employee::~Employee (void)
+DatabaseImpl::Employee::~Employee ()
 {
   DATABASE::instance ()->free (this->name_);
 }

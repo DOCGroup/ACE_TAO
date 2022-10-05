@@ -218,7 +218,7 @@ be_visitor_home_ex_idl::gen_implicit ()
       << "Implicit" << be_nl
       << "{" << be_idt_nl
       << "::Components::EnterpriseComponent create ()" << be_idt_nl
-      << "raises ( ::Components::CCMException);"
+      << "raises (::Components::CCMException);"
       << be_uidt << be_uidt_nl
       << "};";
 }

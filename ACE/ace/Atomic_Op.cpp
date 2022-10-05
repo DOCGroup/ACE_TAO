@@ -12,7 +12,6 @@
 #endif /* ACE_INCLUDE_ATOMIC_OP_SPARC */
 
 namespace {
-
 #if defined (_MSC_VER)
 // Disable "no return value" warning, as we will be putting
 // the return values directly into the EAX register.
@@ -239,7 +238,7 @@ long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange_fn_) (volatile long *, lo
 long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange_add_fn_) (volatile long *, long) = multi_cpu_exchange_add;
 
 void
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::init_functions (void)
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::init_functions ()
 {
   if (ACE_OS::num_processors () == 1)
     {
@@ -272,7 +271,7 @@ long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::exchange_fn_) (volatile l
 long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::exchange_add_fn_) (volatile long *, long) = multi_cpu_exchange_add;
 
 void
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::init_functions (void)
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::init_functions ()
 {
   if (ACE_OS::num_processors () == 1)
     {

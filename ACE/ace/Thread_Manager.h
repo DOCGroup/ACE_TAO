@@ -164,7 +164,6 @@ protected:
  */
 class ACE_Export ACE_Thread_Descriptor_Base : public ACE_OS_Thread_Descriptor
 {
-
   friend class ACE_Thread_Manager;
   friend class ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>;
   friend class ACE_Double_Linked_List_Iterator_Base<ACE_Thread_Descriptor_Base>;
@@ -782,7 +781,6 @@ public:
    * does not support these functions.
    */
   //@{
-
   /// Suspend all threads
   int suspend_all ();
 

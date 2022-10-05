@@ -38,7 +38,7 @@ TAO_AMH_Locate_ResponseHandler::TAO_AMH_Locate_ResponseHandler (
   this->init (sr,0);
 }
 
-TAO_AMH_Locate_ResponseHandler::~TAO_AMH_Locate_ResponseHandler (void)
+TAO_AMH_Locate_ResponseHandler::~TAO_AMH_Locate_ResponseHandler ()
 {
 }
 

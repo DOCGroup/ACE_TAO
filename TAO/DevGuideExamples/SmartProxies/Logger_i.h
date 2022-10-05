@@ -12,8 +12,8 @@
 class  Logger_i : public virtual POA_Logger
 {
 public:
-  Logger_i (void);
-  virtual ~Logger_i (void);
+  Logger_i ();
+  virtual ~Logger_i ();
 private:
   ofstream log_file;      // Output file stream to which messages are logged.
   time_t log_time;        // Needed for creating a time stamp.

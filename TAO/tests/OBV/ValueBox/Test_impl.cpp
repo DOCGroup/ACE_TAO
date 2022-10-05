@@ -326,7 +326,6 @@ Test_impl::array_op4 (const ::StringArray p1,
     }
 
   p3 = sa;
-
 }
 
 
@@ -477,7 +476,7 @@ Test_impl::union_op4 (const ::Variable_Union1 & p1,
 
 
 void
-Test_impl::shutdown (void)
+Test_impl::shutdown ()
 {
   this->orb_->shutdown (false);
 }

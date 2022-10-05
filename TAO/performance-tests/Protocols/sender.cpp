@@ -183,14 +183,13 @@ public:
           CORBA::PolicyManager_ptr policy_manager,
           test_ptr test);
 
-  void run (void);
+  void run ();
 
-  void print_stats (void);
+  void print_stats ();
 
-  void setup (void);
+  void setup ();
 
 private:
-
   ACE_hrtime_t deadline_for_current_call (CORBA::ULong i);
   void missed_start_deadline (CORBA::ULong invocation);
   void missed_end_deadline (CORBA::ULong invocation);
@@ -317,7 +316,7 @@ Worker::Worker (CORBA::ORB_ptr orb,
 }
 
 void
-Worker::print_stats (void)
+Worker::print_stats ()
 {
   CORBA::ULong missed_total_deadlines =
     this->missed_start_deadlines_ + this->missed_end_deadlines_;
@@ -454,7 +453,7 @@ Worker::missed_end_deadline (CORBA::ULong invocation)
 }
 
 void
-Worker::setup (void)
+Worker::setup ()
 {
   // Make sure we have a connection to the server using the test
   // protocol.
@@ -465,7 +464,6 @@ Worker::setup (void)
   // for a few times before giving up.
   for (int j = 0;;)
     {
-
     test_protocol_setup:
 
       try
@@ -503,7 +501,6 @@ Worker::setup (void)
   // for a few times before giving up.
   for (int k = 0;;)
     {
-
     base_protocol_setup:
 
       try
@@ -540,7 +537,7 @@ Worker::setup (void)
 }
 
 void
-Worker::run (void)
+Worker::run ()
 {
   // Select the test protocol for these invocation.
   this->policy_manager_->set_policy_overrides (this->test_protocol_policy_,

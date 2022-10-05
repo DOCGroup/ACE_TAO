@@ -17,8 +17,8 @@
 class SML_Server : public SM_Server
 {
 public:
-  SML_Server (void);
-  virtual ~SML_Server (void);
+  SML_Server ();
+  virtual ~SML_Server ();
 };
 
 #endif /* _SML_SERVER_H */
