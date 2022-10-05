@@ -36,6 +36,15 @@ extern "C"
 #  include /**/ <netdb.h>
 #endif /* !ACE_LACKS_NETDB_H */
 
+#if defined (ACE_VXWORKS)
+#  include /**/ <hostLib.h>
+#  if (ACE_VXWORKS <= 0x700) || defined (GETHOSTBYNAME_REENTRANT)
+// With VxWorks 7 hostLib.h defines GETHOSTBYNAME_REENTRANT when gethostbyname()
+// is reentrant
+#    define ACE_VXWORKS_HAS_GETHOSTBYNAME_REENTRANT
+#  endif
+#endif /* ACE_VXWORKS */
+
 #if defined (ACE_LACKS_HOSTENT)
 struct  hostent {
         char    *h_name;        /* official name of host */
