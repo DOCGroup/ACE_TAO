@@ -136,7 +136,6 @@ ACE_OS::gethostbyaddr_r (const char *addr,
     return (struct hostent *) 0;
 #   elif defined (ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT)
   ACE_UNUSED_ARG (h_errnop);
-  sss
   // VxWorks 6.x has a threadsafe gethostbyaddr() which returns a heap-allocated
   // data structure which needs to be freed with hostentFree()
   //FUZZ: disable check_for_lack_ACE_OS
