@@ -56,9 +56,7 @@ public:
   {
   }
 
-  ~string_sequence_element()
-  {
-  }
+  ~string_sequence_element() = default;
 
   string_sequence_element & operator=(const_value_type rhs)
   {
