@@ -124,7 +124,7 @@ protected:
   mutable TAO_SYNCH_MUTEX addr_lookup_lock_;
 
   /// Cache the hash value
-  CORBA::ULong hash_val_;
+  CORBA::ULong hash_val_ {};
 
   /// IOP tag, identifying the protocol for which this endpoint
   /// contains addressing info.
