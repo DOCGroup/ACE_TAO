@@ -38,12 +38,12 @@ extern "C"
 
 #if defined (ACE_VXWORKS)
 #  include /**/ <hostLib.h>
-#  if (ACE_VXWORKS <= 0x700) || defined (GETHOSTBYNAME_REENTRANT)
+#  if (ACE_VXWORKS < 0x700) || defined (GETHOSTBYNAME_REENTRANT)
 // With VxWorks 7 hostLib.h defines GETHOSTBYNAME_REENTRANT when gethostbyname()
 // is reentrant
 #    define ACE_VXWORKS_HAS_GETHOSTBYNAME_REENTRANT
 #  endif
-#  if (ACE_VXWORKS <= 0x700) || defined (GETHOSTBYADDR_REENTRANT)
+#  if (ACE_VXWORKS < 0x700) || defined (GETHOSTBYADDR_REENTRANT)
 // With VxWorks 7 hostLib.h defines GETHOSTBYADDR_REENTRANT when gethostbyaddr()
 // is reentrant
 #    define ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT
