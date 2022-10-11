@@ -241,7 +241,7 @@ command_line_test (void)
   ACE_Process_Options options (1, command_len + 1);
 
 #ifndef ACE_LACKS_VA_FUNCTIONS
-  options.command_line (command);
+  options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs, command);
 #endif
 
   ACE_TCHAR * const *procargv = options.command_line_argv ();

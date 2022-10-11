@@ -253,11 +253,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   FileTimeToSystemTime (&localtime, &systime);
 
   res->tm_hour = systime.wHour;
-
-  if(pTz.DaylightBias!=0)
-    res->tm_isdst = 1;
-  else
-    res->tm_isdst = 1;
+  res->tm_isdst = pTz.DaylightBias != 0;
 
    int iLeap;
    iLeap = (res->tm_year % 4 == 0 && (res->tm_year% 100 != 0 || res->tm_year % 400 == 0));

@@ -34,13 +34,7 @@ test_setenv (void)
     ACE_OS::strcat (bigval,
                     ACE_TEXT ("01234567890123456789012345678901234567890123456789"));
 #ifndef ACE_LACKS_VA_FUNCTIONS
-# if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  const ACE_TCHAR *fmt = ACE_TEXT ("%ls");
-# else
-  const ACE_TCHAR *fmt = ACE_TEXT ("%s");
-# endif
-
-  if (0 != opts.setenv (ACE_TEXT ("A"), fmt, bigval))
+  if (0 != opts.setenv (ACE_TEXT ("A"), ACE_TEXT ("%") ACE_TEXT_PRIs, bigval))
     {
       status = errno;
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("setenv")));

@@ -358,12 +358,10 @@ run_main (int argc, ACE_TCHAR *argv[])
       // No arguments means we're the parent process.
       ACE_Process_Options options (1);
 
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-      static const ACE_TCHAR* format = ACE_TEXT ("%ls%ls%ls");
-#else
-      static const ACE_TCHAR* format = ACE_TEXT ("%s%s%s");
-#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
-      options.command_line (format, EXE_LOCATION,
+      options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs
+                            ACE_TEXT ("%") ACE_TEXT_PRIs
+                            ACE_TEXT ("%") ACE_TEXT_PRIs,
+                            EXE_LOCATION,
                             argc > 0 ? argv[0] : ACE_TEXT ("Malloc_Test"),
                             ACE_TEXT (" run_as_test"));
 

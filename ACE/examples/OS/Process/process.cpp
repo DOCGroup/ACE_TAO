@@ -125,7 +125,7 @@ test_more (void)
 
   ACE_Process new_process;
   ACE_Process_Options options;
-  options.command_line (executable);
+  options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs, executable);
   options.set_handles (infile);
 
   if (new_process.spawn (options) == -1)
@@ -154,7 +154,7 @@ static void
 test_date (void)
 {
   ACE_Process_Options options;
-  options.command_line (DATE_PATH);
+  options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs, DATE_PATH);
 
   // Try to create a new process running date.
   ACE_Process new_process;
@@ -181,11 +181,7 @@ static void
 test_ls (void)
 {
   ACE_Process_Options options;
-#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-  options.command_line (ACE_TEXT ("%s -al"), LS_PATH);
-#else
-  options.command_line (ACE_TEXT ("%ls -al"), LS_PATH);
-#endif
+  options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT (" -al"), LS_PATH);
   ACE_Process new_process;
   if (new_process.spawn (options) == -1)
     {
@@ -207,11 +203,7 @@ static void
 test_wait (void)
 {
   ACE_Process_Options options;
-#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-  options.command_line (ACE_TEXT ("%s 10"), SLEEP_PATH);
-#else
-  options.command_line (ACE_TEXT ("%ls 10"), SLEEP_PATH);
-#endif
+  options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT (" 10"), SLEEP_PATH);
   ACE_Process process1;
   if (process1.spawn (options) == -1)
     {
@@ -466,11 +458,7 @@ test_setenv (const ACE_TCHAR *argv0)
   options.setenv (ACE_TEXT ("ACE_PROCESS_TEST= here's a large number %u"),
                   0 - 1);
   options.setenv (ACE_TEXT ("ACE_PROCESS_TEST2"), ACE_TEXT ("ophilli"));
-#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-  options.command_line ("%s -g", argv0);
-#else
-  options.command_line ("%ls -g", argv0);
-#endif
+  options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT (" -g"), argv0);
   ACE_Process process;
   if (process.spawn (options) == -1)
     {
@@ -522,13 +510,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (run_all)
     {
-#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-      const ACE_TCHAR *cmdline = ACE_TEXT ("%s -d -l -s -w");
-#else
-      const ACE_TCHAR *cmdline = ACE_TEXT ("%ls -d -l -s -w");
-#endif
       ACE_Process_Options options;
-      options.command_line (cmdline, argv[0]);
+      options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT (" -d -l -s -w"), argv[0]);
       ACE_Process process;
       if (process.spawn (options) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,

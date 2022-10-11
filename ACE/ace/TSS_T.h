@@ -237,11 +237,11 @@ public:
 
   /// TYPE conversion.  Inlined here so that it should _always_ be
   /// inlined.
-  operator TYPE () const { return value_; };
+  operator TYPE () const { return value_; }
 
   /// TYPE & conversion.  Inlined here so that it should _always_ be
   /// inlined.
-  operator TYPE &() { return value_; };
+  operator TYPE &() { return value_; }
 
 private:
   /// The wrapped value.
