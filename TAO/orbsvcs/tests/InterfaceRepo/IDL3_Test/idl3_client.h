@@ -53,8 +53,7 @@ private:
                       const char *prefix);
 
   int component_attribute_test (
-      CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &
-    );
+      CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &);
 
   int component_inheritance_test (CORBA::ComponentIR::ComponentDef_var &);
 
@@ -75,23 +74,19 @@ private:
 
   int valuetype_attribute_test (
       CORBA::ExtValueDef::ExtFullValueDescription_var &,
-      const char *prefix
-    );
+      const char *prefix);
 
   int valuetype_operation_test (
       CORBA::ExtValueDef::ExtFullValueDescription_var &,
-      const char *prefix
-    );
+      const char *prefix);
 
   int valuetype_member_test (
       CORBA::ExtValueDef::ExtFullValueDescription_var &,
-      const char *prefix
-    );
+      const char *prefix);
 
   int valuetype_factory_test (
       CORBA::ExtValueDef::ExtFullValueDescription_var &,
-      const char *prefix
-    );
+      const char *prefix);
 
   int home_inheritance_test (CORBA::ComponentIR::HomeDef_var &);
 

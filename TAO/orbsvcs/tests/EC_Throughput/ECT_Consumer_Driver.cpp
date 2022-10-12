@@ -79,7 +79,7 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
                       this->type_start_,
                       this->type_count_,
 
-                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")) );
+                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
         }
 
       if (this->pid_file_name_ != 0)

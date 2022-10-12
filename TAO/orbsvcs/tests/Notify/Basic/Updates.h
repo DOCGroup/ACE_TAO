@@ -53,8 +53,7 @@ public:
   /// Subscription change is conveyed here.
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-    );
+      const CosNotification::EventTypeSeq & removed);
 
 protected:
   Updates* test_client_;

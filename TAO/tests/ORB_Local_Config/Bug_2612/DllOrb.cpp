@@ -24,7 +24,7 @@ DllOrb::DllOrb (int nthreads)
 {
 }
 
-DllOrb::~DllOrb ( )
+DllOrb::~DllOrb ()
   throw ()
 {
 #if defined (ACE_HAS_THREADS)
@@ -111,8 +111,7 @@ int DllOrb::init (int argc, ACE_TCHAR *argv[])
 
   this->activate(
                  THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED,
-                 threadCnt
-                 );
+                 threadCnt);
   mp_barrier->wait ();
 #endif
 

@@ -59,8 +59,7 @@ int publish()
 
   testBroadcaster.connect(
     v_orb.in(),
-    "corbaname:rir:#Channel1"
-  );
+    "corbaname:rir:#Channel1");
 
   TestListener testListener(
     v_orb.in(),

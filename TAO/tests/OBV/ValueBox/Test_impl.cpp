@@ -282,7 +282,7 @@ Test_impl::array_op3 (::VBstringarray * p1,
                       ::VBstringarray *& p2,
                       ::VBstringarray_out p3)
 {
-  long array_len = sizeof( ::StringArray  ) / sizeof( StringArray_slice );
+  long array_len = sizeof( ::StringArray  ) / sizeof( StringArray_slice);
 
   char * p;
   for (long i=0; i<array_len; i++)
@@ -308,7 +308,7 @@ Test_impl::array_op4 (const ::StringArray p1,
                       ::StringArray p2,
                       ::StringArray_out p3)
 {
-  long array_len = sizeof( ::StringArray  ) / sizeof( StringArray_slice );
+  long array_len = sizeof(::StringArray) / sizeof( StringArray_slice);
 
   char * p;
   long i;

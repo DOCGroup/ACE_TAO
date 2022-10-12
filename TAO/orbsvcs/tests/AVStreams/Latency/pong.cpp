@@ -178,7 +178,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           mmdevice->add_fdev (pong_fdev.in ());
         }
 
-      orb->run ( );
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 

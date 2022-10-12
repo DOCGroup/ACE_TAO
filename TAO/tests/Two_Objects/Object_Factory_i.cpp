@@ -18,7 +18,7 @@ Object_Factory_i::create_first ()
 
   ACE_NEW_THROW_EX (first_impl,
                     First_i (orb_.in(), two_way_done_ ),
-                    CORBA::NO_MEMORY() );
+                    CORBA::NO_MEMORY());
   // Ownership is transfered to the POA.
   PortableServer::ServantBase_var safe (first_impl);
 

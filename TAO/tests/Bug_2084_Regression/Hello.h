@@ -18,7 +18,7 @@ public:
          ACE_thread_t thr_id);
 
   // = The skeleton methods
-  virtual char * get_string ( ::Test::ThreadId caller_threadid);
+  virtual char * get_string (::Test::ThreadId caller_threadid);
 
   virtual void shutdown ();
 

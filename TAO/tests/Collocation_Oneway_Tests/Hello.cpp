@@ -15,7 +15,6 @@ Hello::onewayTest ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) onewayTest() Upcall in process ..\n"));
-  return;
 }
 
 

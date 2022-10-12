@@ -169,7 +169,6 @@ Server_Request_Interceptor::receive_request (
         }
 
     }
-  return;
 }
 
 void

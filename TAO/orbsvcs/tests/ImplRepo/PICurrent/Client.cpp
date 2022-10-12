@@ -36,7 +36,7 @@ public:
   int svc ()
   {
     int offset = get_offset ();
-    CORBA::String_var message = CORBA::string_dup( "Hello!" );
+    CORBA::String_var message = CORBA::string_dup( "Hello!");
     char user [100];
     ACE_OS::snprintf(user, 100, "client %d", offset / 100);
     int try_count = 0;
@@ -50,7 +50,7 @@ public:
         pic->set_slot (slot_id, in);
         try
           {
-            messenger->send_message( user, "Test 1", message.inout() );
+            messenger->send_message( user, "Test 1", message.inout());
 
             ACE_DEBUG ((LM_INFO,
                         ACE_TEXT("(%P|%t) received response for ")
@@ -205,13 +205,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         new ORB_Initializer ();
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
+      CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var obj = orb->string_to_object( ior );
-      Messenger_var messenger = Messenger::_narrow( obj.in() );
+      CORBA::Object_var obj = orb->string_to_object(ior);
+      Messenger_var messenger = Messenger::_narrow(obj.in());
 
       obj = orb->resolve_initial_references ("PICurrent");
       pic = PortableInterceptor::Current::_narrow (obj.in ());

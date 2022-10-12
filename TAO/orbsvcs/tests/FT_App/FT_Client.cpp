@@ -34,9 +34,7 @@ private:
     long & counter,         // inout
     int & more,             // out
     ACE_CString & command,  // inout
-    int retry               // in
-    );
-
+    int retry);             // in
 
   int next_replica ();
 

@@ -96,8 +96,7 @@ convert_surrogate_pair (ACE_UTF16_T high, ACE_UTF16_T low)
 {
   return static_cast<ACE_CDR::WChar> (((high - ACE_UTF16_SURROGATE_HIGH_BEGIN) << ACE_UTF16_SURROGATE_HIGH_SHIFT)
     + (low - ACE_UTF16_SURROGATE_LOW_BEGIN)
-    + ACE_UTF16_SURROGATE_OFFSET
-    );
+    + ACE_UTF16_SURROGATE_OFFSET);
 }
 
 /// load wchar from utf16 buffer

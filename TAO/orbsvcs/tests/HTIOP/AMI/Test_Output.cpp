@@ -147,7 +147,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   ACE_LOG_MSG->msg_ostream (this->output_file ());
 #endif /* ACE_HAS_PHARLAP */
 
-  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
   return 0;

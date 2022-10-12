@@ -258,7 +258,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             caught_expected_exception = true;
           }
 
-        if ( ! caught_expected_exception)
+        if (!caught_expected_exception)
           {
             fail++;
             if (verbose)

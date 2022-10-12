@@ -78,8 +78,7 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
 
   this->activate(
     THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED,
-    threadCnt
-  );
+    threadCnt);
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("init mp_barrier->wait() ...\n")));
   ma_barrier_->wait();
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("init mp_barrier->wait() done\n")));
@@ -165,7 +164,7 @@ int DllOrb::svc ()
   }
 
   return 0;
-} /* end of DllOrb::svc ( ) */
+} /* end of DllOrb::svc () */
 
 
 ACE_FACTORY_DEFINE (bug_3251, DllOrb)

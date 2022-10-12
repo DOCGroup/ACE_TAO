@@ -294,7 +294,7 @@ Sequence::run_test ()
 void
 Sequence::end_test ()
 {
-  consumer_done( 0 );
+  consumer_done(0);
 }
 
 int
@@ -335,7 +335,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       events.run_test ();
 
-      events.ORB_run( );
+      events.ORB_run();
     }
   catch (const CORBA::Exception& se)
     {

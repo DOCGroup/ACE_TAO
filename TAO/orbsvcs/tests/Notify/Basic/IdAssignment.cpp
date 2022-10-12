@@ -104,9 +104,7 @@ IdAssignment::init (int argc,
     }
 
   this->notify_factory_ =
-    CosNotifyChannelAdmin::EventChannelFactory::_narrow (
-        obj.in()
-      );
+    CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in());
 }
 
 CosNotifyChannelAdmin::ChannelID

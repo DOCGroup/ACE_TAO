@@ -209,8 +209,7 @@ EC_Driver::print_args () const
               this->supplier_type_count_,
               this->supplier_type_shift_,
 
-              this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")
-              ) );
+              this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
 }
 
 int

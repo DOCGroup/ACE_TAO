@@ -73,7 +73,7 @@ if ($ARGV[0] eq '-quick')  {
 }
 
 my $client_idx = 0;
-while (($elapsed < $max_running_time) ) {
+while (($elapsed < $max_running_time)) {
     # Start all clients in parallel
     my $args_saved = $CL->Arguments ();
     $CL->Arguments ("$args_saved$client_idx.log") unless $debug_opts eq '';

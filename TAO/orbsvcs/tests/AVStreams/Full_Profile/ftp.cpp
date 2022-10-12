@@ -224,9 +224,9 @@ Client::init (int argc, ACE_TCHAR *argv[])
       this->parse_args (this->argc_, this->argv_);
 
       ACE_NEW_RETURN (this->streamendpoint_a_,
-                      TAO_StreamEndPoint_A, -1 );
+                      TAO_StreamEndPoint_A, -1);
 
-      ACE_NEW_RETURN (this->fep_a_, FTP_Client_Producer, -1 );
+      ACE_NEW_RETURN (this->fep_a_, FTP_Client_Producer, -1);
       this->flowname_ = "Data";
 
       sep_a_ = this->streamendpoint_a_->_this();
@@ -291,7 +291,7 @@ Client::run ()
 
 
       CORBA::Object_var obj_b = this->orb_->string_to_object("corbaname:rir:#Server_StreamEndPoint_b");
-      AVStreams::StreamEndPoint_B_var sep_b = AVStreams::StreamEndPoint_B::_narrow ( obj_b.in() );
+      AVStreams::StreamEndPoint_B_var sep_b = AVStreams::StreamEndPoint_B::_narrow (obj_b.in());
 
       CORBA::Boolean result =
         this->streamctrl_.bind (sep_a_.in(),

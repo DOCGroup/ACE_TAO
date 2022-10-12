@@ -180,7 +180,6 @@ node_impl::add_edge (Supports_Test::Node * neighbor)
   neighbors_ ().length (neighbors_ ().length () + 1);
   neighbors_ ()[neighbors_ ().length () - 1] = neighbor;
   neighbor->_add_ref ();
-  return;
 }
 
 // Remove the edge from this node to neighbor.

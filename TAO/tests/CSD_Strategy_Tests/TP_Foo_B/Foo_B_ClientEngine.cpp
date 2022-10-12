@@ -101,10 +101,10 @@ Foo_B_ClientEngine::execute()
   this->obj_->op7 (this->callback_.in ());
 
   // One-Way calls with various arguments.
-  CORBA::String_var ub_string = CORBA::string_dup( test_str );
+  CORBA::String_var ub_string = CORBA::string_dup( test_str);
   this->obj_->test_unbounded_string_arg (ub_string.in ());
 
-  CORBA::String_var bd_string = CORBA::string_dup( test_str );
+  CORBA::String_var bd_string = CORBA::string_dup( test_str);
   this->obj_->test_bounded_string_arg (bd_string.in ());
 
   Fixed_Array fixed_array;

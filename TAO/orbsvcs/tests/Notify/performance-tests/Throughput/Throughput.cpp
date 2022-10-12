@@ -285,8 +285,7 @@ Notify_Throughput::init (int argc, ACE_TCHAR* argv [])
                       Throughput_StructuredPushSupplier (this),
                       -1);
       suppliers_[i]->TAO_Notify_Tests_StructuredPushSupplier::init (
-                         root_poa_.in ()
-                       );
+                         root_poa_.in ());
       suppliers_[i]->connect (this->supplier_admin_.in ());
     }
 

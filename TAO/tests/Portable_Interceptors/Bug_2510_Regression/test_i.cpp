@@ -16,7 +16,7 @@ Visual_i::normal (CORBA::Long arg)
   // retrieve Slot
   CORBA::Object_var piobj = orb_->resolve_initial_references ("PICurrent");
   PortableInterceptor::Current_var pi_current =
-      PortableInterceptor::Current::_narrow (piobj.in () );
+      PortableInterceptor::Current::_narrow (piobj.in ());
 
   if (CORBA::is_nil (pi_current.in ()))
   {

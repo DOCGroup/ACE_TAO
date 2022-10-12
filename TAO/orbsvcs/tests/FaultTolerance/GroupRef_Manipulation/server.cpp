@@ -99,8 +99,6 @@ add_ft_prop (CORBA::ORB_ptr o,
                                   obj2,
                                   obj2);
     }
-
-  return;
 }
 
 void test_colocal (ForwardRequestTest::test_ptr server)

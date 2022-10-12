@@ -111,7 +111,7 @@ Events::init (int argc,
 
   this->supplier_->connect (this->supplier_admin_.in ());
 
-  consumer_start( 0 );
+  consumer_start(0);
 
   return 0;
 }
@@ -259,7 +259,7 @@ Events::run_test ()
 void
 Events::end_test ()
 {
-  consumer_done( 0 );
+  consumer_done(0);
 }
 
 int
@@ -301,7 +301,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       events.run_test ();
 
-      events.ORB_run( );
+      events.ORB_run();
     }
   catch (const CORBA::Exception& se)
     {

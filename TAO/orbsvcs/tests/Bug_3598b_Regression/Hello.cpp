@@ -15,5 +15,5 @@ Hello::get_string ()
 void
 Hello::shutdown ()
 {
-  this->orb_->shutdown (0 );
+  this->orb_->shutdown (0);
 }

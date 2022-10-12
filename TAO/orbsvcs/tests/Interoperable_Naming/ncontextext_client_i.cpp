@@ -122,7 +122,7 @@ NContextExt_Client_i::get_name ()
         case 7:
         case 8:
         case 9:
-          *name_componentPtr = 'A' + ( ACE_OS::rand () % 26 );
+          *name_componentPtr = 'A' + ( ACE_OS::rand () % 26);
           ++name_componentPtr;
           break;
 

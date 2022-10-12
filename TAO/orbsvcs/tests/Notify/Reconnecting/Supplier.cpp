@@ -402,7 +402,7 @@ Supplier_Main::save_ids()
       static_cast<int> (structured_proxy_id_),
       static_cast<int> (sequence_proxy_id_),
       static_cast<int> (any_proxy_id_),
-      static_cast<int> (endflag) );
+      static_cast<int> (endflag));
     ACE_OS::fclose (idf);
   }
 }
@@ -742,9 +742,7 @@ Supplier_Main::init_structured_proxy_consumer ()
   {
     try
     {
-      proxy = this->sa_->get_proxy_consumer (
-                          this->structured_proxy_id_
-                        );
+      proxy = this->sa_->get_proxy_consumer (this->structured_proxy_id_);
       ok = ! CORBA::is_nil (proxy.in ());
       if (ok && this->verbose_)
       {

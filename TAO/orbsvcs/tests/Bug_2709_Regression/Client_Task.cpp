@@ -128,7 +128,7 @@ int Client_Task::svc ()
 
       if (!collocated_server->_is_collocated())
         { // Collocation is disabled, just skip the test - it has no sense.
-          ACE_DEBUG ((LM_ERROR, "Test has no sense, because collocation is disabled.\n") );
+          ACE_DEBUG ((LM_ERROR, "Test has no sense, because collocation is disabled.\n"));
         }
       else
         {

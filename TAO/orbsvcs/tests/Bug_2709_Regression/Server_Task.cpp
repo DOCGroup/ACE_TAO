@@ -55,7 +55,7 @@ Server_Task::svc ()
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
 
-          ACE_DEBUG ((LM_ERROR, "(%P): Server's IOR was written to file: %s.\n", output_) );
+          ACE_DEBUG ((LM_ERROR, "(%P): Server's IOR was written to file: %s.\n", output_));
         }
 
       // Signal the main thread before we call orb->run ();

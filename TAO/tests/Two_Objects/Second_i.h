@@ -13,11 +13,10 @@ class Second_i
   : public virtual POA_Two_Objects_Test::Second
 {
 public:
-  Second_i ( CORBA::ORB_ptr orb,
-             CORBA::ULong len, ACE_Auto_Event &two_way_done);
+  Second_i (CORBA::ORB_ptr orb,
+            CORBA::ULong len, ACE_Auto_Event &two_way_done);
 
-  Two_Objects_Test::Octet_Seq *
-    twoway_method ();
+  Two_Objects_Test::Octet_Seq *twoway_method ();
 
   void shutdown ();
 

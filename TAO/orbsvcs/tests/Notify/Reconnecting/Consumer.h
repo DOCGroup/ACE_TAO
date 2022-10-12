@@ -26,15 +26,12 @@ public:
   StructuredPushConsumer_i ();
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-    );
+      const CosNotification::EventTypeSeq & removed);
 
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification
-      );
+        const CosNotification::StructuredEvent & notification);
 
-  virtual void disconnect_structured_push_consumer (
-    );
+  virtual void disconnect_structured_push_consumer ();
 
   size_t received () const;
   void set_expectations (size_t expecte, size_t fail, size_t serial_number, bool verbose);
@@ -63,15 +60,12 @@ public:
   SequencePushConsumer_i ();
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-    );
+      const CosNotification::EventTypeSeq & removed);
 
   virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications
-      );
+        const CosNotification::EventBatch & notifications);
 
-  virtual void disconnect_sequence_push_consumer (
-    );
+  virtual void disconnect_sequence_push_consumer ();
 
   size_t received () const;
   void set_expectations (size_t expecte, size_t fail, size_t serial_number, bool verbose);
