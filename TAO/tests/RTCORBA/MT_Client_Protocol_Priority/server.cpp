@@ -33,7 +33,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 void
-Test_i::test_method ( /* */)
+Test_i::test_method ()
 {
   ACE_DEBUG ((LM_DEBUG, "test_method invoked\n"));
 }

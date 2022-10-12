@@ -69,7 +69,7 @@ Echo_Client_Request_Interceptor::send_request (
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)Echo_Client_Request_Interceptor::send_request(%d) ")
                             ACE_TEXT ("call server2 HelloWorld::sayHello() \n"), isRecursive));
       const char* pMsg = " server2 say Hello";
-      hello->sayHello(pMsg) ;
+      hello->sayHello(pMsg);
     }
   }
 }

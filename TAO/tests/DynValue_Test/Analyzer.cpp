@@ -48,14 +48,14 @@ DynAnyAnalyzer::register_factory (
   CORBA::ValueFactoryBase_var factory)
 {
   factory_id * new_fact (
-    dynamic_cast<factory_id *> (factory.in()) );
+    dynamic_cast<factory_id *> (factory.in()));
   if (new_fact)
     {
       tab("Registering factory for ValueType ");
       ACE_DEBUG ((LM_DEBUG, "%C\n", new_fact->id ()));
       CORBA::ValueFactoryBase_var old_fact (
         orb_->register_value_factory (
-          new_fact->id (), factory.in () )  );
+          new_fact->id (), factory.in () ));
     }
 }
 

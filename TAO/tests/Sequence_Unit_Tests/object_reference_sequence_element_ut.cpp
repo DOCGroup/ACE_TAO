@@ -49,8 +49,8 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
       FAIL_RETURN_IF_NOT(mr.expect(1), mr);
     }
 
-    FAIL_RETURN_IF_NOT(d.expect(0),d );
-    FAIL_RETURN_IF_NOT(r.expect(0),r );
+    FAIL_RETURN_IF_NOT(d.expect(0),d);
+    FAIL_RETURN_IF_NOT(r.expect(0),r);
     FAIL_RETURN_IF_NOT(md.expect(0), md);
     FAIL_RETURN_IF_NOT(mr.expect(1), mr);
 
@@ -74,7 +74,7 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
       x = y;
 
-      FAIL_RETURN_IF_NOT(d.expect(0), d );
+      FAIL_RETURN_IF_NOT(d.expect(0), d);
       FAIL_RETURN_IF_NOT(r.expect(0), r);
       FAIL_RETURN_IF_NOT(md.expect(1), md);
       FAIL_RETURN_IF_NOT(mr.expect(1), mr);
@@ -87,7 +87,7 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
       FAIL_RETURN_IF_NOT(mr.expect(2), mr);
     }
 
-    FAIL_RETURN_IF_NOT(d.expect(0),d );
+    FAIL_RETURN_IF_NOT(d.expect(0),d);
     FAIL_RETURN_IF_NOT(r.expect(0), r);
     FAIL_RETURN_IF_NOT(md.expect(0), md);
     FAIL_RETURN_IF_NOT(mr.expect(1), mr);
@@ -159,7 +159,7 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
       tested_element_traits::release(xe);
       tested_element_traits::release(ye);
-      FAIL_RETURN_IF_NOT(r.expect(2),r );
+      FAIL_RETURN_IF_NOT(r.expect(2),r);
       FAIL_RETURN_IF_NOT(mr.expect(2), mr);
     }
 

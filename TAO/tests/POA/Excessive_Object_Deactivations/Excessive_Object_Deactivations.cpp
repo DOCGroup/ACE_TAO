@@ -28,7 +28,7 @@ public:
 };
 
 PortableServer::POA_ptr
-test_i::_default_POA ( /**/)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

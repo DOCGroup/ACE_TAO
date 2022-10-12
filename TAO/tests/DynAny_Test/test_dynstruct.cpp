@@ -314,8 +314,7 @@ Test_DynStruct::run_test ()
 
       DynamicAny::DynAny_var sm_base =
         dynany_factory->create_dyn_any_from_type_code (
-            DynAnyTests::_tc_test_struct
-          );
+            DynAnyTests::_tc_test_struct);
 
       DynamicAny::DynStruct_var sm =
         DynamicAny::DynStruct::_narrow (sm_base.in ());

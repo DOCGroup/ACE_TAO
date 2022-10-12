@@ -26,7 +26,7 @@ Receiver_i::receive_call ()
 }
 
 CORBA::Long
-Receiver_i::get_call_count ( /**/)
+Receiver_i::get_call_count ()
 {
   return this->iteration_;
 }

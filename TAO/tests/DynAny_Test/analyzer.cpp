@@ -17,7 +17,7 @@
 #include "tao/DynamicAny/DynAnyFactory.h"
 
 #define CASEE(type,CT,str) case CORBA::tk_##type: {\
-  CORBA::CT b = da->get_##type() ; \
+  CORBA::CT b = da->get_##type(); \
   tab (level_); \
   if (debug_) \
     ACE_DEBUG ((LM_DEBUG, str , b)); \

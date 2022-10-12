@@ -24,7 +24,7 @@ Second_i::twoway_method ()
 
   Two_Objects_Test::Octet_Seq_var reply_var =
     preply_mesg;
-  reply_var->length ( this->length_);
+  reply_var->length (this->length_);
 
   ACE_DEBUG ((LM_DEBUG,
               "Twoway servant : (%P|%t) two way method called.\n"));

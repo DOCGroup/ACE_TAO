@@ -207,7 +207,7 @@ class ReplicaController: public virtual ServerRequestInterceptor,
 {
   PortableInterceptor::Current_ptr pi_current_;
 public:
-  ReplicaController ( PortableInterceptor::Current_ptr pi_current )
+  ReplicaController (PortableInterceptor::Current_ptr pi_current )
     : pi_current_( pi_current )
   {
   }

@@ -62,10 +62,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     Stock_Quoter_var quoter = Stock_Quoter::_narrow (stock_quoter_obj.in());
 
-    memset( Msg, 1, 1000 ) ;
-    //UDP->send( 10 ) ;
+    memset(Msg, 1, 1000);
+    //UDP->send( 10 );
 
-    server->send( Msg ) ;
+    server->send(Msg);
 
     try
       {

@@ -24,7 +24,7 @@ DllOrb::DllOrb (int nthreads)
 {
 }
 
-DllOrb::~DllOrb ( )
+DllOrb::~DllOrb ()
   throw ()
 {
 #if defined (ACE_HAS_THREADS)

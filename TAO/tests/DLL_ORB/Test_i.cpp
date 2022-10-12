@@ -7,7 +7,7 @@ Test_i::Test_i ()
 }
 
 void
-Test_i::invoke_me ( /* */)
+Test_i::invoke_me ()
 {
   ACE_DEBUG ((LM_INFO,
               "(%P|%t) Test method invoked.\n"));

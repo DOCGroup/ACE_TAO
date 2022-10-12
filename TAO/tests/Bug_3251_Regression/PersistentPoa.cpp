@@ -4,14 +4,14 @@
 
 #include "PersistentPoa.h"
 
-PersistentPoa::PersistentPoa ( )
+PersistentPoa::PersistentPoa ()
 {
-} /* end of PersistentPoa::PersistentPoa ( ) */
+}
 
-PersistentPoa::~PersistentPoa ( )
+PersistentPoa::~PersistentPoa ()
   throw ()
 {
-} /* end of PersistentPoa::~PersistentPoa ( ) */
+}
 
 int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
 {
@@ -59,7 +59,7 @@ int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_ERROR, ACE_TEXT ("POA activated\n")));
 
   return 0;
-} /* end of PersistentPoa::init ( ) */
+}
 
 
 int PersistentPoa::fini ()
@@ -81,7 +81,7 @@ int PersistentPoa::fini ()
   ACE_DEBUG ((LM_ERROR, ACE_TEXT ("POA deactivated\n")));
 
   return 0;
-} /* end of PersistentPoa::fini ( ) */
+}
 
 
 ACE_FACTORY_DEFINE (bug_3251, PersistentPoa)

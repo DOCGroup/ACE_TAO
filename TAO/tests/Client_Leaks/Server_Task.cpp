@@ -16,7 +16,7 @@ Server_Task::svc ()
     {
       // run the test for at most 120 seconds...
       // ACE_Time_Value tv (120, 0);
-      this->orb_->run ( /* tv, */);
+      this->orb_->run (/* tv, */);
     }
   catch (const CORBA::Exception&)
     {

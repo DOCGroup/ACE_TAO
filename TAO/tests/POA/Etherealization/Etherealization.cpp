@@ -18,7 +18,7 @@
 class test_i : public POA_test
 {
 public:
-  void method ( /**/)
+  void method ()
   {
   }
 

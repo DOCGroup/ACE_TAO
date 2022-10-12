@@ -9,15 +9,15 @@
 const ACE_TCHAR *POAname_ = 0;
 const ACE_TCHAR *ORBname_ = 0;
 
-PersistentPoa::PersistentPoa ( )
+PersistentPoa::PersistentPoa ()
 {
-} /* end of PersistentPoa::PersistentPoa ( ) */
+}
 
 
-PersistentPoa::~PersistentPoa ( )
+PersistentPoa::~PersistentPoa ()
   throw ()
 {
-} /* end of PersistentPoa::~PersistentPoa ( ) */
+}
 
 
 int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
@@ -71,8 +71,7 @@ int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
     mv_thisPOA = mv_rootPOA->create_POA(
       ACE_TEXT_ALWAYS_CHAR(POAname_),
       PortableServer::POAManager::_nil(),
-      policies
-    );
+      policies);
     if (CORBA::is_nil(mv_thisPOA.in()))
     {
       ACE_DEBUG((
@@ -113,7 +112,7 @@ int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
   ));
 
   return result;
-} /* end of PersistentPoa::init ( ) */
+}
 
 
 int PersistentPoa::fini ()
@@ -141,7 +140,6 @@ int PersistentPoa::fini ()
   ));
 
   return result;
-} /* end of PersistentPoa::fini ( ) */
-
+}
 
 ACE_FACTORY_DEFINE (bug2936, PersistentPoa)

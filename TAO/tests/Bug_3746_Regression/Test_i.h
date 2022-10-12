@@ -16,8 +16,7 @@ public:
   // = The skeleton methods
   virtual ::CORBA::ULong SendSequenceOf10Long (
     ::CORBA::ULong LengthSent,
-    const ::Test::BoundSequences::SequenceOf10Long &inSeq
-  );
+    const ::Test::BoundSequences::SequenceOf10Long &inSeq);
 
   virtual void shutdown ();
 

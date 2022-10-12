@@ -12,11 +12,10 @@ Bottom_Impl::Bottom_Impl (CORBA::ORB_ptr orb)
 
 Bottom_Impl::~Bottom_Impl ()
 {
-  // No-Op.
 }
 
 char *
-Bottom_Impl::top_quote ( )
+Bottom_Impl::top_quote ()
 {
   return CORBA::string_dup(Quote::top);
 }

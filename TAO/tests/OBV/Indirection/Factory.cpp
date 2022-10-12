@@ -72,8 +72,7 @@ TValueFactory::create_for_unmarshal ()
   ACE_NEW_THROW_EX (
       ret_val,
       OBV_demo::value::idl::TValue,
-      ::CORBA::NO_MEMORY ()
-    );
+      ::CORBA::NO_MEMORY ());
   return ret_val;
 }
 
@@ -92,8 +91,7 @@ ConfigValueFactory::create_for_unmarshal ()
   ACE_NEW_THROW_EX (
       ret_val,
       OBV_demo::value::idl::ConfigValue,
-      ::CORBA::NO_MEMORY ()
-    );
+      ::CORBA::NO_MEMORY ());
   return ret_val;
 }
 

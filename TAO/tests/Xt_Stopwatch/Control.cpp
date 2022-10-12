@@ -7,12 +7,12 @@ Control::Control (Widget &parent)
   this->frame_ = XmCreateFrame (parent,
                                 (char *) "frame",
                                 0,
-                                0 );
+                                0);
 
   this->rowcolumn_ = XmCreateRowColumn (this->frame_,
                                          (char *)"rwc",
                                         0,
-                                        0 );
+                                        0);
 
   this->startwidget_ = XmCreatePushButton (this->rowcolumn_,
                                            (char *) "Start",

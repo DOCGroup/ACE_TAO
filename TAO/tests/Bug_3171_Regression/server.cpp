@@ -69,7 +69,7 @@ class MyORBinitializer
 {
 public:
   MyORBinitializer( ACE_CString orbID )
-    : orbID_( orbID ) {};
+    : orbID_(orbID) {};
 
   virtual
   void
@@ -104,7 +104,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     if (parse_args (argc, argv) != 0)
       return 1;
 
-    if ( g_initInMain )
+    if (g_initInMain)
     {
       initORB(0);
     }
@@ -157,7 +157,7 @@ initORB(int threadID)
 
     ACE_DEBUG ((LM_DEBUG, "Initializing ORB \"%C\"\n", ORBid));
 
-    if ( g_registerORBinitializer )
+    if (g_registerORBinitializer)
     {
       ACE_DEBUG ((LM_DEBUG, "Creating ORB initializer\n"));
       PortableInterceptor::ORBInitializer_var rCOI(
@@ -168,7 +168,7 @@ initORB(int threadID)
     ACE_DEBUG ((LM_DEBUG, "Creating TAO_ORB_Manager\n"));
     TAO_ORB_Manager* pORBmgr = new TAO_ORB_Manager;
 
-    if ( -1 == pORBmgr->init( g_argc, g_argv, ORBid ) )
+    if (-1 == pORBmgr->init(g_argc, g_argv, ORBid))
     {
       ACE_DEBUG ((LM_DEBUG, "Failed to initialize ORB \"%C\"\n", ORBid));
       throw CORBA::INTERNAL();
@@ -176,7 +176,7 @@ initORB(int threadID)
 
     ACE_DEBUG ((LM_DEBUG, "ORB \"%C\" initialized\n", ORBid));
 
-    if ( g_setTimeout )
+    if (g_setTimeout)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Setting connection timeout policy for ORB \"%C\"\n",

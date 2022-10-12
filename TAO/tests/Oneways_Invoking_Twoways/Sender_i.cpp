@@ -39,7 +39,7 @@ Sender_i::send_ready_message (Test::Receiver_ptr receiver)
 }
 
 void
-Sender_i::ping ( /**/)
+Sender_i::ping ()
 {
 }
 

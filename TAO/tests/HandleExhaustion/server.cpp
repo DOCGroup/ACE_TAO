@@ -60,7 +60,7 @@ public:
     for (size_t i = 0; i < 0xffff; i++)
       {
         this->openfds_[i] = ACE_OS::open (file, O_RDONLY);
-        if ( i == 0)
+        if (i == 0)
           {
 #if defined (ACE_WIN32)
             // the test is not valid on windows so just wing this value
