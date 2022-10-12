@@ -21,19 +21,19 @@ Bottom_Impl::top_quote ()
 }
 
 char *
-Bottom_Impl::left_quote ( )
+Bottom_Impl::left_quote ()
 {
   return CORBA::string_dup(Quote::left);
 }
 
 char *
-Bottom_Impl::right_quote ( )
+Bottom_Impl::right_quote ()
 {
   return CORBA::string_dup(Quote::right);
 }
 
 char *
-Bottom_Impl::bottom_quote ( )
+Bottom_Impl::bottom_quote ()
 {
   return CORBA::string_dup(Quote::bottom);
 }
