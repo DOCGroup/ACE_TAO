@@ -69,8 +69,6 @@ Server_Request_Interceptor::receive_request (
       // Throw forward exception
       throw PortableInterceptor::ForwardRequest (this->to_);
     }
-
-  return;
 }
 
 void

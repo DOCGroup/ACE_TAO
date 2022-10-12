@@ -206,8 +206,7 @@ Test_DynStruct::run_test ()
         {
           DynamicAny::DynAny_var ftc2_base =
             dynany_factory->create_dyn_any_from_type_code (
-                                DynAnyTests::_tc_test_struct_alias
-                              );
+                                DynAnyTests::_tc_test_struct_alias);
 
           ftc2 = DynamicAny::DynStruct::_narrow (ftc2_base.in ());
 

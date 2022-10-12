@@ -150,7 +150,7 @@ namespace
         pi_current,
         location,
         correctTSCvalue,
-        correctRSCvalue );
+        correctRSCvalue);
 
     if (number && (0 != ACE_OS::strcmp( location, "receive_request" )))
     {
@@ -159,7 +159,7 @@ namespace
       data <<= number;
 
       ACE_DEBUG ((LM_DEBUG, "SERVER %C -> set_slot(RSC)", location));
-      ri->set_slot( slot_id, data );
+      ri->set_slot( slot_id, data);
 
       ACE_DEBUG ((LM_DEBUG, " -> long (%d)\n", number));
 
@@ -168,7 +168,7 @@ namespace
           pi_current,
           location,
           correctTSCvalue,
-          number );
+          number);
     }
   }
 }
@@ -227,7 +227,7 @@ public:
   virtual void
   tao_ft_interception_point (ServerRequestInfo_ptr ri, OctetSeq_out)
   {
-    getAndSetMySlot( ri, this->pi_current_, "tao_ft_interception_point", 0, 0 );
+    getAndSetMySlot( ri, this->pi_current_, "tao_ft_interception_point", 0, 0);
   }
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
@@ -235,39 +235,37 @@ public:
   receive_request_service_contexts (ServerRequestInfo_ptr ri)
   {
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
-    getAndSetMySlot( ri, this->pi_current_, "receive_request_service_contexts", 0, 61 );
+    getAndSetMySlot( ri, this->pi_current_, "receive_request_service_contexts", 0, 61);
 #else
-    getAndSetMySlot( ri, this->pi_current_, "receive_request_service_contexts", 0, 0 );
+    getAndSetMySlot( ri, this->pi_current_, "receive_request_service_contexts", 0, 0);
 #endif /* TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1 */
   }
 
   virtual void
   receive_request (ServerRequestInfo_ptr ri)
   {
-    getAndSetMySlot( ri, this->pi_current_, "receive_request", 62, 62 );
+    getAndSetMySlot( ri, this->pi_current_, "receive_request", 62, 62);
   }
 
   virtual void
   send_reply (ServerRequestInfo_ptr ri)
   {
-    getAndSetMySlot( ri, this->pi_current_, "send_reply", 62, 62 );
+    getAndSetMySlot( ri, this->pi_current_, "send_reply", 62, 62);
   }
 
   virtual void
   send_exception (ServerRequestInfo_ptr ri)
   {
-    getAndSetMySlot( ri, this->pi_current_, "send_exception", 62, 62 );
+    getAndSetMySlot( ri, this->pi_current_, "send_exception", 62, 62);
   }
 
   virtual void
   send_other (ServerRequestInfo_ptr ri)
   {
-    getAndSetMySlot( ri, this->pi_current_, "send_other", 62, 62 );
+    getAndSetMySlot( ri, this->pi_current_, "send_other", 62, 62);
   }
 };
 
-
-//
 class ORB_Initializer : public virtual ORBInitializer,
                         public virtual ::CORBA::LocalObject
 {

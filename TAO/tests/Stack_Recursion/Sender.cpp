@@ -57,7 +57,6 @@ Sender::get_event_count ()
 void
 Sender::ping ()
 {
-  return;
 }
 
 void

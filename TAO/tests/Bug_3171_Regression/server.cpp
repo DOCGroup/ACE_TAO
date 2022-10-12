@@ -161,8 +161,8 @@ initORB(int threadID)
     {
       ACE_DEBUG ((LM_DEBUG, "Creating ORB initializer\n"));
       PortableInterceptor::ORBInitializer_var rCOI(
-        new MyORBinitializer( ORBid ) );
-      PortableInterceptor::register_orb_initializer( rCOI.in() );
+        new MyORBinitializer(ORBid));
+      PortableInterceptor::register_orb_initializer( rCOI.in());
     }
 
     ACE_DEBUG ((LM_DEBUG, "Creating TAO_ORB_Manager\n"));
@@ -190,12 +190,10 @@ initORB(int threadID)
       CORBA::Any any;
       any <<= connectionTimeout;
 
-      CORBA::ULong l( policyList.length() );
-      policyList.length( l+1 );
+      CORBA::ULong l( policyList.length());
+      policyList.length(l+1);
 
-      policyList[l] = orb->create_policy(
-        TAO::CONNECTION_TIMEOUT_POLICY_TYPE,
-        any );
+      policyList[l] = orb->create_policy(TAO::CONNECTION_TIMEOUT_POLICY_TYPE, any);
 
       ACE_DEBUG ((LM_DEBUG, "Connection timeout policy set for ORB \"%C\"\n",
                   ORBid));

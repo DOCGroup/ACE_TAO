@@ -45,8 +45,7 @@ int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
     mv_thisPOA = mv_rootPOA->create_POA (
       m_poaName.c_str (),
       PortableServer::POAManager::_nil (),
-      policies
-    );
+      policies);
 
     mv_poaManager = mv_thisPOA->the_POAManager ();
     mv_poaManager->activate ();

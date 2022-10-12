@@ -13,8 +13,6 @@ server_i::start (client_ptr c,
 {
   this->client_ = client::_duplicate (c);
   this->ping (time_to_live);
-
-  return;
 }
 
 void

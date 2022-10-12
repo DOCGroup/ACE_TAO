@@ -21,8 +21,6 @@ Echo_Caller::start_task(Test::Echo_ptr client)
     }
 
   ACE_Thread_Manager::instance ()->wait ();
-
-  return;
 }
 
 void

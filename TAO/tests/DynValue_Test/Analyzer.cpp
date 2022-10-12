@@ -173,7 +173,7 @@ DynAnyAnalyzer::analyze (
             ACE_DEBUG ((LM_DEBUG, "{NULL} "));
           }
         ACE_DEBUG ((LM_DEBUG, "ValueBox Type: %C \"%C\": ",
-                    tc->name (), tc->id ())             );
+                    tc->name (), tc->id ()));
         if (box->is_null ())
           {
             ACE_DEBUG ((LM_DEBUG, "\n"));

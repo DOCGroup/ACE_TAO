@@ -16,9 +16,7 @@ public:
   virtual ~Test_Simple_Test_i ();
 
   virtual
-  void test_method (
-      ::CORBA::ULong & error_count
-    );
+  void test_method (::CORBA::ULong & error_count);
 };
 
 /// Implement the Test::Hello interface

@@ -70,7 +70,7 @@ Client_Task::svc ()
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client starting\n"));
 
-      evNode->registerHello( hello_servant.in() );
+      evNode->registerHello( hello_servant.in());
 
       evNode->shutdown ();
     }
