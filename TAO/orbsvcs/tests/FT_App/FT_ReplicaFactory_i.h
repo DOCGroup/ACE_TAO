@@ -110,12 +110,10 @@ public:
   virtual CORBA::Object_ptr create_object (
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
-    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-  );
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id);
 
   virtual void delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
-  );
+    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id);
 
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods

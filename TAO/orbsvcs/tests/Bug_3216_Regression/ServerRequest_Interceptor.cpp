@@ -49,9 +49,7 @@ TAO249_ServerRequest_Interceptor::receive_request (
   try
   {
     IOP::ServiceContext_var sc =
-      ri->get_request_service_context (IOP::FT_GROUP_VERSION
-                                       );
-
+      ri->get_request_service_context (IOP::FT_GROUP_VERSION);
 
     TAO_InputCDR cdr (reinterpret_cast <const char*>
                      (sc->context_data.get_buffer ()),
@@ -64,7 +62,6 @@ TAO249_ServerRequest_Interceptor::receive_request (
         throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
                                CORBA::COMPLETED_NO);
       }
-
 
     cdr.reset_byte_order (static_cast <int> (byte_order));
 

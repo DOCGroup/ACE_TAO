@@ -20,7 +20,7 @@ ORB_Task::svc ()
   {
     CORBA::Object_var ncRef =
         orb_->string_to_object(
-            "corbaloc:iiop:10.175.12.99:15025/NameService" );
+            "corbaloc:iiop:10.175.12.99:15025/NameService");
 
     CORBA::PolicyList policies;
 
@@ -31,8 +31,7 @@ ORB_Task::svc ()
 
     policies.length(1);
     policies[0] = orb_->create_policy(
-      Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-      timeoutAny );
+      Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE, timeoutAny);
 
     CORBA::Object_var object = ncRef->_set_policy_overrides(
       policies, CORBA::SET_OVERRIDE );
@@ -40,7 +39,7 @@ ORB_Task::svc ()
     policies[0]->destroy();
 
     CosNaming::NamingContext_var namingContext =
-      CosNaming::NamingContext::_narrow( object.in() );
+      CosNaming::NamingContext::_narrow( object.in());
     namingContext->_non_existent();
   }
   catch ( const CORBA::TRANSIENT&)

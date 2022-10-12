@@ -33,8 +33,7 @@ public:
 
   // = StructuredPushSupplier methods.
   virtual void push_structured_event (
-      const CosNotification::StructuredEvent & notification
-    );
+      const CosNotification::StructuredEvent & notification);
 
 protected:
   Events * test_client_;

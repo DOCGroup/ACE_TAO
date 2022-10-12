@@ -90,8 +90,7 @@ void loadunloadcycle()
   v_ec = v_notifyFactory->create_channel(
     initialQos,
     initialAdmin,
-    id
-  );
+    id);
 
   ACE_DEBUG((
     LM_DEBUG,

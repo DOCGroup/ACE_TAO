@@ -994,7 +994,7 @@ Consumer_Main::save_ids()
       static_cast<int> (structured_proxy_id_),
       static_cast<int> (sequence_proxy_id_),
       static_cast<int> (any_proxy_id_),
-      static_cast<int> (endflag) );
+      static_cast<int> (endflag));
     ACE_OS::fclose (idf);
   }
 }

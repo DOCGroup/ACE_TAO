@@ -157,7 +157,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Tell the supplier to go
     sig->go ();
 
-    client.ORB_run( );
+    client.ORB_run();
     ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
 
     sig->done ();

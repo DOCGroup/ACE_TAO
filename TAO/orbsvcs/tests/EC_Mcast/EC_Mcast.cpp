@@ -70,7 +70,7 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
                   this->event_count_,
 
                   this->config_filename_?this->config_filename_:ACE_TEXT("nil"),
-                  this->pid_filename_?this->pid_filename_:ACE_TEXT("nil")) );
+                  this->pid_filename_?this->pid_filename_:ACE_TEXT("nil")));
 
       int i;
       for (i = 0; i < this->local_federations_count_; ++i)

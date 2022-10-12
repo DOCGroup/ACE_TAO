@@ -28,8 +28,7 @@ public:
   AdminProperties_StructuredPushConsumer (AdminProperties* client);
 
   // = StructuredPushSupplier methods
-  virtual void push_structured_event (const CosNotification::StructuredEvent & notification
-                                      );
+  virtual void push_structured_event (const CosNotification::StructuredEvent & notification);
 
 protected:
   AdminProperties* client_;

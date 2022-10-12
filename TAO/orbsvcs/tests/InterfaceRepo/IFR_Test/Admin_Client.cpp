@@ -68,9 +68,7 @@ Admin_Client::init (int argc, ACE_TCHAR *argv[])
           ACE_ERROR_RETURN ((
               LM_ERROR,
               "Null objref from resolve_initial_references\n"
-            ),
-            -1
-          );
+            ), -1);
         }
 
       this->repo_ =
@@ -114,8 +112,7 @@ Admin_Client::run ()
         {
           for (CORBA::ULong j = 0; j < this->iterations_; ++j)
             {
-              (this->*test_array_[this->which_test_])(
-                );
+              (this->*test_array_[this->which_test_])();
             }
         }
     }

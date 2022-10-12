@@ -27,8 +27,7 @@ public:
 
   int init(RtecEventChannelAdmin::EventChannel_ptr);
 
-    virtual void  disconnect_push_supplier (
-      );
+    virtual void  disconnect_push_supplier ();
 private:
   class ReactorTask : public ACE_Task_Base
   {
