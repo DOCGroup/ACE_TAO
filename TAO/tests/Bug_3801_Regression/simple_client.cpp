@@ -57,10 +57,10 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   /// Constructor.
-  Handler () {};
+  Handler () = default;
 
   /// Destructor.
-    ~Handler () {};
+    ~Handler () = default;
 
   void get_yadda (CORBA::Long result)
     {

@@ -14,11 +14,9 @@
 
 Test_i::Test_i (CORBA::ORB_ptr orb,
                 A::AMI_TestHandler_ptr rh,
-                CORBA::ULong max_count,
                 A::RunMode mode)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
      rh_ (A::AMI_TestHandler::_duplicate (rh)),
-     max_count_ (max_count),
      mode_(mode)
 {
   time_t _tm = ACE_OS::time ();

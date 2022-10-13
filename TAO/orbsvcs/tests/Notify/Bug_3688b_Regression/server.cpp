@@ -3,13 +3,9 @@
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
 
-
 #include "DllORB.h"
 #include "TestListener.h"
 #include "TestBroadcaster.h"
-
-
-char const * const scpc_orbId = "testDllOrb";
 
 ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testDllOrb",

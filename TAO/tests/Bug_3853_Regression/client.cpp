@@ -26,8 +26,8 @@ bool caught_exception = false;
 class ClientTask : public ACE_Task_Base
 {
 public:
-  ClientTask () {};
-  ~ ClientTask () {};
+  ClientTask () = default;
+  ~ ClientTask () = default;
 
   virtual int svc ()
   {

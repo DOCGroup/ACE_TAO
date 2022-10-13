@@ -20,7 +20,6 @@ Client_Task::Client_Task (const ACE_TCHAR *input,
     corb_ (CORBA::ORB::_duplicate (corb))
 {}
 
-
 int
 Client_Task::svc ()
 {

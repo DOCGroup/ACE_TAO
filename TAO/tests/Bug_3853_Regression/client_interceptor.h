@@ -25,7 +25,7 @@ public:
   Echo_Client_Request_Interceptor ();
   // ctor.
 
-  virtual ~Echo_Client_Request_Interceptor ();
+  virtual ~Echo_Client_Request_Interceptor () = default;
   // dtor.
 
   virtual char * name ();

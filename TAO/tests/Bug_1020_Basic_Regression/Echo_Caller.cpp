@@ -9,8 +9,7 @@ Echo_Caller::Echo_Caller(CORBA::ORB_ptr orb)
 void
 Echo_Caller::start_task(Test::Echo_ptr client)
 {
-  Server_Task task (client,
-                    32768);
+  Server_Task task (client);
 
   if (task.activate (THR_NEW_LWP | THR_JOINABLE,
                      4,

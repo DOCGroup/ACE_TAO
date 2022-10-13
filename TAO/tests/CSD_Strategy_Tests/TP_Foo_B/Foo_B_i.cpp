@@ -13,11 +13,6 @@ Foo_B_i::Foo_B_i()
 }
 
 
-Foo_B_i::~Foo_B_i()
-{
-}
-
-
 void
 Foo_B_i::op1()
 {

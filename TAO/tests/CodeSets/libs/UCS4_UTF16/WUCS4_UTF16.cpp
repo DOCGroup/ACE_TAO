@@ -54,9 +54,6 @@ static const unsigned long ACE_UTF16_RAW_END = 0x00010000LU;
 // largest value that can be represented in UTF16 + 1
 static const unsigned long ACE_UTF16_END = 0x00110000LU;
 
-// largest value that can be represented in UTF-32 + 1
-static const unsigned long ACE_UTF32_END = 0x80000000LU;
-
 static const unsigned short ACE_UNICODE_SUBSTITUTE_CHARACTER = 0xFFFDU;
 static const unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
 static const unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;

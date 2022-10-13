@@ -10,7 +10,7 @@ class CSD_TP_Foo_B_Export Foo_B_i : public virtual POA_Foo_B
 {
   public:
     Foo_B_i();
-    virtual ~Foo_B_i();
+    virtual ~Foo_B_i() = default;
 
     virtual void op1();
 

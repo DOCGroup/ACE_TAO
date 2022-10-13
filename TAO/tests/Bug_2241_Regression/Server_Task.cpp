@@ -36,8 +36,7 @@ Server_Task::svc ()
 
      Hello *hello_impl;
      ACE_NEW_RETURN (hello_impl,
-                     Hello (this->sorb_.in (),
-                            ACE_Thread::self ()),
+                     Hello (this->sorb_.in ()),
                      1);
 
      PortableServer::ServantBase_var owner_transfer(hello_impl);

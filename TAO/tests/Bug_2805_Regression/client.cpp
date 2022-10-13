@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
@@ -96,9 +95,7 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler ()
-  {
-  };
+  Handler () = default;
 
   void foo (CORBA::Long result,
             CORBA::Long out_l)
@@ -160,9 +157,7 @@ public:
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
     };
-  ~Handler ()
-  {
-  };
+  ~Handler () = default;
 
   void inout_arg_test (const char *)
   {
