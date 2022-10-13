@@ -68,7 +68,7 @@ public:
   Handler () : reply_count_ (0) {};
 
   /// Destructor.
-  ~Handler () {};
+  ~Handler () = default;
 
   /// Get the reply count
   long reply_count () const

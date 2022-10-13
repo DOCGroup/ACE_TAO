@@ -60,8 +60,8 @@ CORBA::ORB_ptr orb;
 class FooImpl : public POA_Test::Foo
 {
 public:
-  FooImpl() {}
-  ~FooImpl() {}
+  FooImpl() = default;
+  ~FooImpl() = default;
 
   //-----------------------------------------------------------
 

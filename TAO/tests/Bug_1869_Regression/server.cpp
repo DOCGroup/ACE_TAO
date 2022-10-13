@@ -4,20 +4,16 @@
 class  AdderServant :
   public POA_AMI_test::adder {
 public:
-  AdderServant () {}
+  AdderServant () = default;
 
-  virtual ~AdderServant () {}
+  virtual ~AdderServant () = default;
 
   virtual
-  CORBA::Long add (
-      CORBA::Long a,
-      CORBA::Long b
-    )
+  CORBA::Long add (CORBA::Long a, CORBA::Long b)
     {
       return a + b;
     }
 };
-
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
   try {
