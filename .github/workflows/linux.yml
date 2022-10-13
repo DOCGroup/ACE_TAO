@@ -265,6 +265,7 @@ jobs:
     - name: Build TAO/tests/IDLv4 project
       run: |
         make -j 6 -C ${env:TAO_ROOT}/tests/IDLv4
+      shell: pwsh
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
       if: matrix.feature == 'CodeQL'
