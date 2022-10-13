@@ -1,6 +1,8 @@
 // -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#include "ace/Guard_T.h"
+
 template <class TYPE, class FUNCTOR> ACE_INLINE FUNCTOR &
 ACE_Timer_Queue_Upcall_Base<TYPE, FUNCTOR>::upcall_functor ()
 {
