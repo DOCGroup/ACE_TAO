@@ -16,17 +16,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/ORB_Core.h"
 
-Policy_Tester::Policy_Tester ()
-  : rt_object_properties_ (0),
-    rt_poa_properties_ (0)
-{
-  // No_Op
-}
-
-Policy_Tester::~Policy_Tester ()
-{
-}
-
 void
 Policy_Tester::run ()
 {

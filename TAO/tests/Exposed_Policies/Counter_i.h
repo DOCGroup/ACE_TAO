@@ -22,9 +22,8 @@ class Counter_Servant : public POA_Counter
 {
 public:
   // = Ctor-Dtor Declaration
-
   Counter_Servant (Policy_Tester *policy_tester);
-  virtual ~Counter_Servant ();
+  virtual ~Counter_Servant () = default;
 
   // = Counter Interface Methods Overloading.
 

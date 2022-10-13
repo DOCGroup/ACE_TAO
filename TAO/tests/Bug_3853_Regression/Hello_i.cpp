@@ -7,11 +7,6 @@ Demo_HelloWorld_i::Demo_HelloWorld_i (CORBA::ORB_ptr orb)
 {
 }
 
-// Implementation skeleton destructor
-Demo_HelloWorld_i::~Demo_HelloWorld_i ()
-{
-}
-
 void Demo_HelloWorld_i::sayHello (const char * msg)
 {
   ACE_OS::sleep(1);

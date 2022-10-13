@@ -7,8 +7,7 @@
 const CORBA::ULong freq = 919263;
 
 Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    val_ (1)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 

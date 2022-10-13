@@ -11,11 +11,6 @@ namespace Test {
   IIOP_Server_Request_Interceptor::IIOP_Server_Request_Interceptor (const char* orbid, TEST test)
     : Server_Request_Interceptor (orbid, test)
     , iiop_test_successful_ (true)
-    , mult_thr_test_successful_ (true)
-  {
-  }
-
-  IIOP_Server_Request_Interceptor::~IIOP_Server_Request_Interceptor ()
   {
   }
 

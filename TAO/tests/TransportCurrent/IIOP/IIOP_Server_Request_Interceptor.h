@@ -36,7 +36,7 @@ namespace Test
     IIOP_Server_Request_Interceptor (const char* orbid, TEST test);
 
     /// Destructor.
-    virtual ~IIOP_Server_Request_Interceptor ();
+    virtual ~IIOP_Server_Request_Interceptor () = default;
 
     /// queries the status of the test
     virtual bool self_test ();
@@ -113,9 +113,6 @@ namespace Test
   private:
     /// IIOPTraits test status
     bool iiop_test_successful_;
-
-    /// Multi-threaded test status
-    bool mult_thr_test_successful_;
 
     /// Endpoints hash table
     EndPoint endPoints_[1001];

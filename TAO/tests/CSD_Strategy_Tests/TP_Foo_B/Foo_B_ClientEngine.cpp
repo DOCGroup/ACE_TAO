@@ -9,20 +9,12 @@ const char* ONEWAY_ARG_TEST_STR = "TEST";
 
 Foo_B_ClientEngine::Foo_B_ClientEngine(Foo_B_ptr obj,
                                        Callback_ptr callback,
-                                       unsigned client_id,
-                                       bool collocated)
+                                       unsigned client_id)
   : obj_(Foo_B::_duplicate(obj)),
     callback_(Callback::_duplicate(callback)),
-    client_id_(client_id),
-    collocated_(collocated)
+    client_id_(client_id)
 {
 }
-
-
-Foo_B_ClientEngine::~Foo_B_ClientEngine()
-{
-}
-
 
 bool
 Foo_B_ClientEngine::execute()

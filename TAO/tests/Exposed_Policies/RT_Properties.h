@@ -20,7 +20,7 @@ class RT_Properties
 public:
   // -- Ctor/Dtor --
   RT_Properties ();
-  ~RT_Properties ();
+  ~RT_Properties () = default;
 
   static RT_Properties * read_from (const ACE_TCHAR *file_name);
 

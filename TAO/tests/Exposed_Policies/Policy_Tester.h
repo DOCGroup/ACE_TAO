@@ -25,8 +25,8 @@ class Policy_Tester
 {
 public:
   // Ctor/Dtor.
-  Policy_Tester ();
-  ~Policy_Tester ();
+  Policy_Tester () = default;
+  ~Policy_Tester () = default;
 
   /// Runs the test.
   void run ();
@@ -43,14 +43,12 @@ private:
                                    const char *msg);
 
 private:
-  int is_initialized_;
-
   RTCORBA::RTORB_var rt_orb_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
   RTPortableServer::POA_var child_poa_;
-  RT_Properties *rt_object_properties_;
-  RT_Properties *rt_poa_properties_;
+  RT_Properties *rt_object_properties_ {};
+  RT_Properties *rt_poa_properties_ {};
 };
 
 

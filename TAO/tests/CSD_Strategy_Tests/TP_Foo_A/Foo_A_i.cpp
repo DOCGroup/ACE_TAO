@@ -10,12 +10,6 @@ Foo_A_i::Foo_A_i()
     }
 }
 
-
-Foo_A_i::~Foo_A_i()
-{
-}
-
-
 void
 Foo_A_i::op1()
 {
