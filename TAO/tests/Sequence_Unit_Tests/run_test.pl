@@ -27,8 +27,7 @@ my @testsToRun = qw(unbounded_value_sequence_ut
                Unbounded_Simple_Types
                Bounded_Simple_Types
                Unbounded_String
-               Bounded_String
-              );
+               Bounded_String);
 
 if ($^O ne "MSWin32") {
     push @testsToRun, qw(unbounded_octet_sequence_nocopy_ut);

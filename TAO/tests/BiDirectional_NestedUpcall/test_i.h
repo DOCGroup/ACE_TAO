@@ -62,9 +62,6 @@ private:
   /// The ORB
   CORBA::ORB_var orb_;
 
-  /// Flag to indicate, whether we are ready for a remote call.
-  int flag_;
-
   /// Callback Object
   Callback_var callback_;
 

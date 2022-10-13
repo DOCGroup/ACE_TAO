@@ -75,7 +75,7 @@ Driver::run (int argc, ACE_TCHAR* argv[])
                   this->event_a_,
                   this->event_b_,
 
-                  this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")) );
+                  this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
 
       if (this->pid_file_name_ != 0)
         {

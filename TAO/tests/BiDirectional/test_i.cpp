@@ -17,7 +17,7 @@ Callback_i::shutdown ()
 }
 
 void
-Callback_i::callback_method ( /**/)
+Callback_i::callback_method (/**/)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Callback method called\n"));

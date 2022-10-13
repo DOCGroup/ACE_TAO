@@ -34,8 +34,7 @@ public:
   /// Connect using options parsed and set initial QoS.
   virtual void connect ();
 
-  void push_structured_event (const CosNotification::StructuredEvent &/*notification*/
-                              );
+  void push_structured_event (const CosNotification::StructuredEvent &/*notification*/);
 
 protected:
   /// Destination object.

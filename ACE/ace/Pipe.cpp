@@ -100,7 +100,7 @@ ACE_Pipe::open (int buffer_size)
       ACE_INET_Addr sv_addr;
       if (sv_addr.set (my_addr.get_port_number (), ACE_LOCALHOST) == -1)
         {
-          result == -1;
+          result = -1;
         }
       // Establish a connection within the same process.
       else if (connector.connect (writer, sv_addr) == -1)

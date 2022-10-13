@@ -440,7 +440,7 @@ BasicLog_Test::test_logCompaction(CORBA::ULong lifeExpectancy)
       ACE_ERROR_RETURN((LM_ERROR,
                         "Log compaction failed, because %d records remain.\n",
                         ACE_U64_TO_U32 (new_n_records)),
-                       -1 );
+                       -1);
     }
 
   return 0;

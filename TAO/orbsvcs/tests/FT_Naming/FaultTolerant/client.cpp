@@ -83,7 +83,7 @@ do_failover_name_test (
   ACE_TCHAR *ns1ref,
   int c_breadth,
   int c_depth,
-  int o_breadth );
+  int o_breadth);
 
 /// Failover ObjectGroup Test
 int
@@ -92,7 +92,7 @@ do_failover_objectgroup_test (
   ACE_TCHAR *nm1ref,
   int c_breadth,
   int c_depth,
-  int o_breadth );
+  int o_breadth);
 
 //==============================================================================
 //

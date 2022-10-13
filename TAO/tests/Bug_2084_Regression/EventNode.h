@@ -18,7 +18,7 @@ public:
              ACE_thread_t thr_id);
 
   // = The skeleton methods
-  virtual void registerHello ( ::Test::Hello_ptr h);
+  virtual void registerHello (::Test::Hello_ptr h);
 
   virtual void shutdown ();
 

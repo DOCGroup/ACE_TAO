@@ -68,7 +68,7 @@ public:
   Handler () : reply_count_ (0) {};
 
   /// Destructor.
-  ~Handler () {};
+  ~Handler () = default;
 
   /// Get the reply count
   long reply_count () const
@@ -212,8 +212,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       poa_var->destroy (1,  // ethernalize objects
-                        0  // wait for completion
-                       );
+                        0);  // wait for completion
 
       orb->destroy ();
     }

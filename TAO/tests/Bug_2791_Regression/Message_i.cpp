@@ -22,8 +22,7 @@ MessageImpl::_copy_value ()
       subject_ (),
       text_ ()
     ),
-    ::CORBA::NO_MEMORY ()
-  );
+    ::CORBA::NO_MEMORY ());
   return ret_val;
 }
 

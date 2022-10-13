@@ -125,11 +125,11 @@ Server::run ()
         CORBA::Boolean wp = orb->work_pending ();
         if (wp)
          {
-              orb->perform_work( );
+              orb->perform_work();
          }
       }
 
-      orb->shutdown( 1 );
+      orb->shutdown(true);
     }
     catch (const CORBA::Exception& ex)
     {

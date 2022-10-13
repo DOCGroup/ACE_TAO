@@ -155,7 +155,6 @@ Client::stop_hook ()
     {
       ex._tao_print_exception (
         "Caught an exception in the stop button callback");
-      return;
     }
 }
 

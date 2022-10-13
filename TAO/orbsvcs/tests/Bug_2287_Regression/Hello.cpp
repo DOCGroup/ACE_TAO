@@ -15,11 +15,9 @@ Hello::shutdown ()
 void
 Hello::ping ()
 {
-  return;
 }
 
 void
 Hello::throw_location_forward ()
 {
-  return;
 }

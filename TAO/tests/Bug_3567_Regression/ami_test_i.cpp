@@ -20,7 +20,6 @@ AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb,
                         const char * in_str,
                         bool check_params)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
-     number_ ((CORBA::Long) 931232),
      yadda_ ((CORBA::Long) 140474),
      in_l_ (in_l),
      in_str_(CORBA::string_dup(in_str)),

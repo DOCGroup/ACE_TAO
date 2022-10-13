@@ -5,18 +5,12 @@
 extern const ACE_TCHAR *server2_ior;
 extern CORBA::ORB_var orb;
 
-const IOP::ServiceId service_id = 0xdeadbeef;
-
 int isRecursive = 0;
 extern Demo::HelloWorld_var server1_shutdownObj;
 
 Echo_Client_Request_Interceptor::
 Echo_Client_Request_Interceptor ()
   : myname_ ("Echo_Client_Interceptor")
-{
-}
-
-Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor ()
 {
 }
 
@@ -69,7 +63,7 @@ Echo_Client_Request_Interceptor::send_request (
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)Echo_Client_Request_Interceptor::send_request(%d) ")
                             ACE_TEXT ("call server2 HelloWorld::sayHello() \n"), isRecursive));
       const char* pMsg = " server2 say Hello";
-      hello->sayHello(pMsg) ;
+      hello->sayHello(pMsg);
     }
   }
 }

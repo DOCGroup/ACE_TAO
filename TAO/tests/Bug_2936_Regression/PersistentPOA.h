@@ -15,10 +15,10 @@ class bug2936_Export PersistentPoa
   // public types and methods
   public:
     /// Default constructor.
-    PersistentPoa ( );
+    PersistentPoa ();
 
     /// Destructor.
-    ~PersistentPoa ( )
+    ~PersistentPoa ()
       throw ();
 
   // protected types and methods

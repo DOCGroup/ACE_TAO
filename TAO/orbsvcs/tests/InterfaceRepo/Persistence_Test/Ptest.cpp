@@ -33,9 +33,7 @@ Ptest::init (int argc, ACE_TCHAR *argv[])
           ACE_ERROR_RETURN ((
               LM_ERROR,
               "Null objref from resolve_initial_references\n"
-            ),
-            -1
-          );
+            ), -1);
         }
 
       this->repo_ =

@@ -90,8 +90,6 @@ Server_Request_Interceptor::receive_request (
           "object_group_ref_version is %d\n", group_component.object_group_ref_version));
         }
     }
-
-  return;
 }
 
 void

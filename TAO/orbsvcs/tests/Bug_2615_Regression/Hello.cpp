@@ -17,7 +17,6 @@ Hello::shutdown ()
 void
 Hello::ping ()
 {
-  return;
 }
 
 CORBA::Boolean

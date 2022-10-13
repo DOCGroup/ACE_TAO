@@ -16,9 +16,8 @@ public:
   Middle_Impl(
       Backend_ptr backend,
       CORBA::ORB_ptr orb,
-      bool verbose,
-      long timeout);
-  virtual ~Middle_Impl();
+      bool verbose);
+  virtual ~Middle_Impl() = default;
 
   virtual void startup_test();
   virtual void ping();
@@ -34,9 +33,6 @@ private:
 
   /// Use this flag to decide if the program should produce any output.
   bool verbose_;
-
-  /// Control the freeze time based on the timeout time
-  long timeout_;
 };
 } // namespace Bug_3647_Regression
 

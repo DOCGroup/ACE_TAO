@@ -207,9 +207,7 @@ RedGreen_Test::resolve_Notify_factory ()
     this->naming_context_->resolve (name);
 
   this->notify_factory_ =
-    CosNotifyChannelAdmin::EventChannelFactory::_narrow (
-        obj.in ()
-      );
+    CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
 }
 
 void
@@ -281,10 +279,7 @@ RedGreen_Test::send_events ()
   added_1[0].domain_name =  CORBA::string_dup (DOMAIN_GREEN);
   added_1[0].type_name = CORBA::string_dup (TYPE_GREEN);
 
-  this->normal_consumer_->get_proxy_supplier ()->subscription_change (
-                                                     added_1,
-                                                     removed_1
-                                                   );
+  this->normal_consumer_->get_proxy_supplier ()->subscription_change (added_1, removed_1);
 
   // Setup the Consumer 2 to receive event_type : "DOMAIN_RED", "TYPE_RED"
   CosNotification::EventTypeSeq added_2(1);
@@ -295,10 +290,7 @@ RedGreen_Test::send_events ()
   added_2[0].domain_name =  CORBA::string_dup (DOMAIN_RED);
   added_2[0].type_name = CORBA::string_dup (TYPE_RED);
 
-  this->slow_consumer_->get_proxy_supplier ()->subscription_change (
-                                                   added_2,
-                                                   removed_2
-                                                 );
+  this->slow_consumer_->get_proxy_supplier ()->subscription_change (added_2, removed_2);
 
   // Create the events - one of each type
 
@@ -420,16 +412,14 @@ RedGreen_Test_StructuredPushConsumer::connect (
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (
         CosNotifyChannelAdmin::STRUCTURED_EVENT,
-        proxy_supplier_id_
-      );
+        proxy_supplier_id_);
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
 
   // narrow
   this->proxy_supplier_ =
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (
-        proxysupplier.in ()
-      );
+        proxysupplier.in ());
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
 
@@ -525,22 +515,16 @@ SlowConsumer::push_structured_event (
   // Slow it down ...
   ACE_OS::sleep (1);
 
-  RedGreen_Test_StructuredPushConsumer::push_structured_event (
-      notification
-    );
+  RedGreen_Test_StructuredPushConsumer::push_structured_event (notification);
 }
 
 // *****************************************************************
 
-RedGreen_Test_StructuredPushSupplier::RedGreen_Test_StructuredPushSupplier (
-    void
-  )
+RedGreen_Test_StructuredPushSupplier::RedGreen_Test_StructuredPushSupplier ()
 {
 }
 
-RedGreen_Test_StructuredPushSupplier::~RedGreen_Test_StructuredPushSupplier (
-    void
-  )
+RedGreen_Test_StructuredPushSupplier::~RedGreen_Test_StructuredPushSupplier ()
 {
 }
 
@@ -570,16 +554,14 @@ RedGreen_Test_StructuredPushSupplier::connect (
   CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
     supplier_admin->obtain_notification_push_consumer (
         CosNotifyChannelAdmin::STRUCTURED_EVENT,
-        proxy_consumer_id_
-      );
+        proxy_consumer_id_);
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
 
   // narrow
   this->proxy_consumer_ =
     CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (
-        proxyconsumer.in ()
-      );
+        proxyconsumer.in ());
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer_.in ()));
 
@@ -591,23 +573,20 @@ RedGreen_Test_StructuredPushSupplier::disconnect ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  this->proxy_consumer_->disconnect_structured_push_consumer (
-                           );
+  this->proxy_consumer_->disconnect_structured_push_consumer ();
 }
 
 void
 RedGreen_Test_StructuredPushSupplier::subscription_change (
     const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed */
-  )
+    const CosNotification::EventTypeSeq &) /*removed */
 {
   //No-Op.
 }
 
 void
 RedGreen_Test_StructuredPushSupplier::send_event (
-    CosNotification::StructuredEvent& event
-  )
+    CosNotification::StructuredEvent& event)
 {
   event.filterable_data.length (1);
   event.filterable_data[0].name = CORBA::string_dup("latency_base");
@@ -629,8 +608,7 @@ RedGreen_Test_StructuredPushSupplier::send_event (
 }
 
 void
-RedGreen_Test_StructuredPushSupplier::disconnect_structured_push_supplier (
-  )
+RedGreen_Test_StructuredPushSupplier::disconnect_structured_push_supplier ()
 {
   // No-Op.
 }

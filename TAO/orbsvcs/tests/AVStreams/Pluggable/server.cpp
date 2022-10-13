@@ -187,13 +187,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       while ( !done )
       {
-        if ( orb->work_pending( ) )
+        if ( orb->work_pending())
         {
           orb->perform_work ();
         }
       }
 
-      orb->shutdown( 1 );
+      orb->shutdown(1);
     }
   catch (const CORBA::Exception& ex)
     {

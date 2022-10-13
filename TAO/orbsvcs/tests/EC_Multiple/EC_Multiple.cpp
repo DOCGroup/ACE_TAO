@@ -205,7 +205,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                   this->lpc_event_b_,
 
                   this->schedule_file_?this->schedule_file_:ACE_TEXT("nil"),
-                  this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")) );
+                  this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
 
       print_priority_info ("Test_ECG::run (Main)");
 

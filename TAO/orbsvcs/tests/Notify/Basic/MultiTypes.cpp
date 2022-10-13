@@ -184,7 +184,7 @@ MultiTypes::init (int argc,
 
   sequence_supplier_->connect (this->supplier_admin_.in ());
 
-  consumer_start( 0 );
+  consumer_start(0);
 
   return 0;
 }
@@ -311,7 +311,7 @@ MultiTypes::wait_for_all_consumers (int expected_count_per_consumer)
 void
 MultiTypes::end_test ()
 {
-  consumer_done( 0 );
+  consumer_done(0);
 }
 
 int

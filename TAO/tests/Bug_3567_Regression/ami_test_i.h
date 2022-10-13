@@ -45,8 +45,6 @@ public:
 private:
   CORBA::ORB_var orb_;
 
-  CORBA::Long number_;
-
   CORBA::Long yadda_;
 
   CORBA::Long in_l_;

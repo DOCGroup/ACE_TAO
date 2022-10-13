@@ -36,7 +36,7 @@ void
 do_test ()
 {
   CORBA::Object_var obj = orb->string_to_object (ior);
-  Test_var test = Test::_narrow( obj.in () );
+  Test_var test = Test::_narrow( obj.in ());
   ACE_ASSERT (!CORBA::is_nil(test.in ()));
 
   try
@@ -61,7 +61,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
   {
-    orb = CORBA::ORB_init( argc, argv );
+    orb = CORBA::ORB_init(argc, argv);
   }
   catch(const CORBA::Exception& ex)
   {

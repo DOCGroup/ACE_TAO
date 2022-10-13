@@ -119,8 +119,7 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
                       this->supplier_type_shift_,
 
                       this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil"),
-                      this->ec_concurrency_hwm_
-                      ) );
+                      this->ec_concurrency_hwm_));
         }
 
       if (this->pid_file_name_ != 0)

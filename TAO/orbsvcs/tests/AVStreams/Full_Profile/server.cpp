@@ -123,7 +123,7 @@ Server::init (int argc,
 
       fep_b_obj_ = this->fep_b_->_this ();
 
-      CORBA::String_var s1 = sep_b_->add_fep( fep_b_obj_.in() );
+      CORBA::String_var s1 = sep_b_->add_fep( fep_b_obj_.in());
 
      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %C\n", s1.in() ));
 
