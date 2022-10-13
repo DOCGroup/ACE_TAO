@@ -118,7 +118,6 @@ namespace PortableServer
   /// Compare two Servant_vars for non-equivalence.
   template <class X, class Y>
   bool operator!=(Servant_var<X> const & x, Servant_var<Y> const & y);
-
 } // namespace PortableServer
 
 TAO_END_VERSIONED_NAMESPACE_DECL

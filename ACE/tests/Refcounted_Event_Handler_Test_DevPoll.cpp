@@ -21,7 +21,6 @@
 #include "ace/ACE.h"
 
 
-
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
 
 static const char *message =

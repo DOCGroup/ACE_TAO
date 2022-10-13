@@ -550,7 +550,6 @@ public:
    * strategies implement them correctly.
    */
   //@{
-
   /// Request has been just sent, but the reply is not received. Idle
   /// the transport now.
   bool idle_after_send ();
@@ -615,7 +614,6 @@ public:
    * following methods with the semantics documented below.
    */
   //@{
-
   /// Return the event handler used to receive notifications from the
   /// Reactor.
   /**

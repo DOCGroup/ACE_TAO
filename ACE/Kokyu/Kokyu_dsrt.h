@@ -16,7 +16,6 @@
 
 namespace Kokyu
 {
-
   template <class DSRT_Scheduler_Traits> class DSRT_Dispatcher_Impl;
 
   /**
@@ -151,7 +150,6 @@ namespace Kokyu
     int operator ()(const QoSDesc& qos1,
                     const QoSDesc& qos2);
   };
-
 
 } //end of namespace
 

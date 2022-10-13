@@ -43,10 +43,10 @@ class IPC_Server : public ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>
   // = TITLE
   //     This class illustrates how the <ACE_Oneshot_Acceptor> works.
 public:
-  IPC_Server (void);
+  IPC_Server ();
   // Constructor.
 
-  ~IPC_Server (void);
+  ~IPC_Server ();
   // Destructor.
 
   // = Demultiplexing hooks.

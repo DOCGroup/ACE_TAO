@@ -68,9 +68,8 @@ namespace Kokyu
     cond_t sched_queue_modified_cond_;
 
   private:
-    int svc (void);
+    int svc ();
   };
-
 }
 
 #if !defined (__ACE_INLINE__)

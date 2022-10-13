@@ -51,7 +51,6 @@ My_Accept_Handler::~My_Accept_Handler ()
 int
 My_Accept_Handler::open (ACE_INET_Addr &addr)
 {
-
   if (this->peer_acceptor_.open (addr, 1) == -1)
   {
      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -60,7 +59,6 @@ My_Accept_Handler::open (ACE_INET_Addr &addr)
   }
 
   return 0;
-
 }
 
 ACE_HANDLE
@@ -72,7 +70,6 @@ My_Accept_Handler::get_handle () const
 int
 My_Accept_Handler::handle_input (ACE_HANDLE)
 {
-
   if (this->peer_acceptor_.accept(this->stream_, 0) == -1) {
     ACE_ERROR((LM_ERROR, ACE_TEXT ("%p\n"),
                ACE_TEXT ("peer_acceptor.accept")));
@@ -164,7 +161,6 @@ client (void *arg)
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-
   ACE_START_TEST (ACE_TEXT ("Max_Default_Port_Test"));
 
   ACE_UNUSED_ARG (argc);
@@ -287,7 +283,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("Invalid ACE_MAX_DEFAULT_PORT ")
                   ACE_TEXT ("or %d port may be busy; got to %d\n"),
                   ACE_MAX_DEFAULT_PORT, max_listened_port));
-
     }
 
 #endif // ACE_LACKS_ACCEPT

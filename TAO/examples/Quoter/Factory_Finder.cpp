@@ -13,13 +13,13 @@
 
 #include "Factory_Finder.h"
 
-Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server (void)
+Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server ()
 :   debug_level_ (1)
 {
   // Nothing
 }
 
-Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server (void)
+Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server ()
 {
   try
     {
@@ -146,7 +146,7 @@ Quoter_Factory_Finder_Server::init (int argc,
 }
 
 int
-Quoter_Factory_Finder_Server::run (void)
+Quoter_Factory_Finder_Server::run ()
 {
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -161,7 +161,7 @@ Quoter_Factory_Finder_Server::run (void)
 // Function get_options.
 
 u_int
-Quoter_Factory_Finder_Server::parse_args (void)
+Quoter_Factory_Finder_Server::parse_args ()
 {
   ACE_Get_Opt get_opt (this->argc_, this->argv_, ACE_TEXT("?d:"));
   int opt;

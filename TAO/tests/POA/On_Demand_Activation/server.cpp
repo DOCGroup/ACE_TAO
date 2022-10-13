@@ -97,7 +97,6 @@ write_iors_to_file (const char *first_ior,
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB.
@@ -149,7 +148,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         first_poa = root_poa->create_POA (name.c_str (),
                                           poa_manager.in (),
                                           policies);
-
       }
 
       PortableServer::POA_var second_poa;
@@ -166,7 +164,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         second_poa = root_poa->create_POA (name.c_str (),
                                            poa_manager.in (),
                                            policies);
-
       }
 
       // Destroy the policy objects as they have been passed to

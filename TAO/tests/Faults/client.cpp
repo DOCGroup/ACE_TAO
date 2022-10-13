@@ -168,7 +168,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       root_poa->destroy (true, true);
-
     }
   catch (const CORBA::COMM_FAILURE& x)
     {

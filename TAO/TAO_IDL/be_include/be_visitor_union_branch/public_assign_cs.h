@@ -50,7 +50,6 @@ public:
 
 private:
   int emit_valuetype_common (be_type *node);
-
 };
 
 #endif /* _BE_VISITOR_UNION_BRANCH_PUBLIC_ASSIGN_CS_H_ */

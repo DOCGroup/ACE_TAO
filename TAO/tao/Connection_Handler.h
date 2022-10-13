@@ -47,15 +47,14 @@ class TAO_Transport;
 class TAO_Export TAO_Connection_Handler : public TAO_LF_CH_Event
 {
 public:
-
   /// Constructor
   explicit TAO_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor
-  virtual ~TAO_Connection_Handler (void);
+  virtual ~TAO_Connection_Handler ();
 
   /// Return the underlying transport object
-  TAO_Transport *transport (void);
+  TAO_Transport *transport ();
 
   /// Set the underlying transport object
   void transport (TAO_Transport* transport);
@@ -81,7 +80,7 @@ public:
    * @return Return 0 if the connection was already closed, non-zero
    * otherwise.
    */
-  virtual int close_connection (void) = 0;
+  virtual int close_connection () = 0;
 
   /// The event handler calls, here so that other objects who hold a
   /// reference to this object can call the event handler methods.
@@ -89,7 +88,7 @@ public:
 
   /// This method is invoked from the svc () method of the Svc_Handler
   /// Object.
-  int svc_i (void);
+  int svc_i ();
 
   /// A open () hook
   /**
@@ -108,11 +107,11 @@ public:
   /// the connection handler to know that it is opening as a result of
   /// a delayed asynch connection rather than an immediate synch
   /// connection, which has no additional reference needs.
-  void connection_pending (void);
+  void connection_pending ();
 
   /// A pending connection may be canceled due to an error detected
   /// while the initiating thread is still in the Connector.
-  void cancel_pending_connection (void);
+  void cancel_pending_connection ();
 
   /// Set the Diff-Serv codepoint on outgoing packets.  Only has
   /// effect for remote protocols (e.g., IIOP); no effect for local
@@ -122,18 +121,18 @@ public:
   virtual int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
   /// Release the OS resources related to this handler.
-  virtual int release_os_resources (void);
+  virtual int release_os_resources ();
 
   virtual int handle_write_ready (const ACE_Time_Value *timeout);
 
 protected:
   /// Return our TAO_ORB_Core pointer
-  TAO_ORB_Core *orb_core (void);
+  TAO_ORB_Core *orb_core ();
 
   /// A common function called at the start of any protocol-specific
   /// open. Returns -1 on a failure (although no failure mode is
   /// currently defined).
-  int shared_open (void);
+  int shared_open ();
 
   /// Set options on the socket
   int set_socket_option (ACE_SOCK &sock, int snd_size, int rcv_size);

@@ -12,7 +12,7 @@ ACE_SV_Message::ACE_SV_Message (long t)
 }
 
 ACE_INLINE
-ACE_SV_Message::~ACE_SV_Message (void)
+ACE_SV_Message::~ACE_SV_Message ()
 {
   ACE_TRACE ("ACE_SV_Message::~ACE_SV_Message");
 }

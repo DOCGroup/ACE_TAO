@@ -9,7 +9,7 @@ namespace TAO
   namespace Portable_Server
   {
     ACE_INLINE CORBA::ULong
-    Creation_Time::creation_time_length (void)
+    Creation_Time::creation_time_length ()
     {
       return 2 * sizeof (CORBA::ULong);
     }
@@ -22,7 +22,7 @@ namespace TAO
     }
 
     ACE_INLINE
-    Creation_Time::Creation_Time (void)
+    Creation_Time::Creation_Time ()
     {
       this->time_stamp_[Creation_Time::SEC_FIELD]  = 0;
       this->time_stamp_[Creation_Time::USEC_FIELD] = 0;
@@ -107,7 +107,7 @@ namespace TAO
     }
 
     ACE_INLINE
-    Temporary_Creation_Time::Temporary_Creation_Time (void)
+    Temporary_Creation_Time::Temporary_Creation_Time ()
       : time_stamp_ (0)
     {
     }

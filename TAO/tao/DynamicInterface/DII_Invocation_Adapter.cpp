@@ -43,7 +43,7 @@ namespace TAO
   {
   }
 
-  DII_Invocation_Adapter::~DII_Invocation_Adapter (void)
+  DII_Invocation_Adapter::~DII_Invocation_Adapter ()
   {
     delete[] ex_data_;
   }

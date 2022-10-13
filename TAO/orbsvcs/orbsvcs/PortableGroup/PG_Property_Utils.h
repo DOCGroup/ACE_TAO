@@ -46,7 +46,6 @@ namespace TAO_PG
   TAO_PortableGroup_Export void override_properties (
     const PortableGroup::Properties & overrides,
     PortableGroup::Properties &properties);
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

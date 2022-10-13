@@ -61,7 +61,7 @@ typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 class qchar
 {
 public:
-  qchar (void) { c_ = '\0'; }
+  qchar () { c_ = '\0'; }
 
   qchar (char c) : c_ (c) { };
 
@@ -383,7 +383,7 @@ server (void *arg = 0)
 }
 
 static int
-spawn (void)
+spawn ()
 {
   // Acceptor;
   ACE_SOCK_Acceptor acceptor;

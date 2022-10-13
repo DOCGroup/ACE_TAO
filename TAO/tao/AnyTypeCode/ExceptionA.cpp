@@ -79,7 +79,6 @@ namespace TAO
 
 namespace CORBA
 {
-
 // Insertion of CORBA::Exception - copying.
 void
 operator<<= (CORBA::Any &any, const CORBA::Exception &exception)

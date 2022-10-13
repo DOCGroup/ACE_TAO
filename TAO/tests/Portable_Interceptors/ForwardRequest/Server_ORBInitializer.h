@@ -42,9 +42,8 @@ class Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
-  Server_ORBInitializer (void);
+  Server_ORBInitializer ();
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
@@ -52,10 +51,9 @@ public:
 
   /// Return the created server request interceptor.  Only valid after
   /// post_init(), i.e. ORB_init(), has been called.
-  PortableInterceptor::ServerRequestInterceptor_ptr server_interceptor (void);
+  PortableInterceptor::ServerRequestInterceptor_ptr server_interceptor ();
 
 private:
-
   /// Pointer to the server request interceptor.  ORB is responsible
   /// for storage.
   PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;

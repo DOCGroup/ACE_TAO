@@ -24,7 +24,6 @@
  */
 class be_visitor_module : public be_visitor_scope
 {
-
 public:
   be_visitor_module (be_visitor_context *ctx);
 

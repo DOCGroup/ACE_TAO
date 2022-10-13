@@ -157,7 +157,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting event loop\n"));
   this->orb_->run ();

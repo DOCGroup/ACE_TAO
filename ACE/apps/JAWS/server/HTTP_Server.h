@@ -63,7 +63,7 @@ protected:
   virtual int thread_per_request (HTTP_Handler_Factory &factory);
 
   /// Asynch Thread Pool implementation
-  virtual int asynch_thread_pool (void);
+  virtual int asynch_thread_pool ();
 
   /// Synch Thread Pool implementation
   virtual int synch_thread_pool (HTTP_Handler_Factory &factory);

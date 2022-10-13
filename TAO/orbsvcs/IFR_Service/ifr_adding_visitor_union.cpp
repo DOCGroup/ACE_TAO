@@ -18,7 +18,7 @@ ifr_adding_visitor_union::ifr_adding_visitor_union (AST_Decl *scope)
 {
 }
 
-ifr_adding_visitor_union::~ifr_adding_visitor_union (void)
+ifr_adding_visitor_union::~ifr_adding_visitor_union ()
 {
 }
 

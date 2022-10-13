@@ -82,7 +82,6 @@ typedef ACE_Unbounded_Set_Iterator<ACE_NS_WString> ACE_PWSTRING_ITERATOR;
 class ACE_Export ACE_Name_Space
 {
 public:
-
   /// virtual destructor to ensure destructors of subclasses get
   /// called.
   virtual ~ACE_Name_Space ();

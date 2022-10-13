@@ -46,7 +46,7 @@ test_i::server_test (Test::TestScenario scenario,
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
   ACE_DEBUG ((LM_INFO,
               "Server is shutting down.\n"));

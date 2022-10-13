@@ -19,7 +19,7 @@ Server_Worker::kind () const
 }
 
 //
-Server_Worker::~Server_Worker (void)
+Server_Worker::~Server_Worker ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) %@ Server::<dtor>\n", this));
 }

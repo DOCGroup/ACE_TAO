@@ -37,7 +37,7 @@ DAMAGES.
 #include "test_config.h"
 
 /*
-   Counter32( void);
+   Counter32();
    Counter32( const unsigned long i);
    Counter32( const Counter32 &c);
 *  SmiUINT32 get_syntax();

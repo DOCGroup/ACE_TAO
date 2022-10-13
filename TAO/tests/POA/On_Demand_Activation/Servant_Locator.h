@@ -46,8 +46,5 @@ public:
                            PortableServer::Servant the_servant);
 
 private:
-  /// Counter for number of invocations of this.
-  int counter_;
-
   CORBA::ORB_var orb_;
 };

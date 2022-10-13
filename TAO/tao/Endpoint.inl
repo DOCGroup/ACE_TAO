@@ -9,7 +9,6 @@ TAO_Endpoint::TAO_Endpoint (CORBA::ULong tag,
   //    which case this optimizaton wouldn't work. We can get around
   //    that using a bool. But we don't want to increase the runtime
   //    memory.
-  , hash_val_ (0)
   , tag_ (tag)
   , priority_ (priority)
 

@@ -36,7 +36,6 @@ public:
   { delete this; return 0; }
 
 protected:
-
   // Protected destructor ensures dynamic allocation.
   virtual ~Quit_Handler () {}
 };

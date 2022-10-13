@@ -95,7 +95,7 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
 }
 
 void
-Test_Supplier::disconnect (void)
+Test_Supplier::disconnect ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -216,7 +216,7 @@ Test_Supplier::svc ()
 }
 
 void
-Test_Supplier::disconnect_push_supplier (void)
+Test_Supplier::disconnect_push_supplier ()
 {
 }
 
@@ -226,7 +226,7 @@ int Test_Supplier::supplier_id () const
 }
 
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
-Test_Supplier::consumer_proxy (void)
+Test_Supplier::consumer_proxy ()
 {
   return this->consumer_proxy_.in ();
 }

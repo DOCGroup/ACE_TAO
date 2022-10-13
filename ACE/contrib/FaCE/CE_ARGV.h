@@ -40,23 +40,23 @@ public:
     /**
      * Default Dtor that deletes any memory allocated for the converted string.
      */
-    ~CE_ARGV(void);
+    ~CE_ARGV();
 
     /**
      * Returns the number of command line parameters, same as argc on Unix.
      */
-    int argc(void);
+    int argc();
 
     /**
      * Returns the 'char**' that contains the converted command line parameters.
      */
-    wchar_t** argv(void);
+    wchar_t** argv();
 
 private:
     /**
      * Copy Ctor is not allowed.
      */
-    CE_ARGV(void);
+    CE_ARGV();
 
     /**
      * Copy Ctor is not allowed.

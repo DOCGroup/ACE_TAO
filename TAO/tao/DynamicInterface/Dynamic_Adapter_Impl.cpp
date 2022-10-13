@@ -6,11 +6,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Dynamic_Adapter_Impl::TAO_Dynamic_Adapter_Impl (void)
+TAO_Dynamic_Adapter_Impl::TAO_Dynamic_Adapter_Impl ()
 {
 }
 
-TAO_Dynamic_Adapter_Impl::~TAO_Dynamic_Adapter_Impl (void)
+TAO_Dynamic_Adapter_Impl::~TAO_Dynamic_Adapter_Impl ()
 {
 }
 
@@ -126,7 +126,7 @@ TAO_Dynamic_Adapter_Impl::create_exception_list (
 }
 
 int
-TAO_Dynamic_Adapter_Impl::Initializer (void)
+TAO_Dynamic_Adapter_Impl::Initializer ()
 {
   TAO_ORB_Core::dynamic_adapter_name ("Concrete_Dynamic_Adapter");
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_Dynamic_Adapter_Impl);

@@ -56,7 +56,7 @@ public:
                        RtecScheduler::Info_Type_t info_type);
 
   /// Destructor
-  virtual ~TAO_EC_Kokyu_Filter (void);
+  virtual ~TAO_EC_Kokyu_Filter ();
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
@@ -71,7 +71,7 @@ public:
                      TAO_EC_QOS_Info& qos_info);
   virtual void push_nocopy (RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info);
-  virtual void clear (void);
+  virtual void clear ();
   virtual CORBA::ULong max_event_size () const;
   virtual int can_match (const RtecEventComm::EventHeader& header) const;
   virtual int add_dependencies (const RtecEventComm::EventHeader& header,
@@ -83,7 +83,7 @@ private:
   TAO_EC_Kokyu_Filter& operator= (const TAO_EC_Kokyu_Filter&);
 
   /// Initialize our RT_Info handle and dependencies
-  void init_rt_info (void);
+  void init_rt_info ();
 
   /// Compute a new qos_info to push up.
   void compute_qos_info (TAO_EC_QOS_Info& qos_info);

@@ -55,7 +55,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Event_Manager : public TAO_Notify_Refcou
 public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Event_Manager > Ptr;
   /// Constructor
-  TAO_Notify_Event_Manager (void);
+  TAO_Notify_Event_Manager ();
 
   /// Destructor
   virtual ~TAO_Notify_Event_Manager ();
@@ -63,10 +63,10 @@ public:
   void release();
 
   /// Init
-  void init (void);
+  void init ();
 
   /// Init
-  void shutdown (void);
+  void shutdown ();
 
   /// Connect ProxySupplier
   void connect (TAO_Notify_ProxySupplier* proxy_supplier);
@@ -81,8 +81,8 @@ public:
   void disconnect (TAO_Notify_ProxyConsumer* proxy_consumer);
 
   /// Map accessors.
-  TAO_Notify_Consumer_Map& consumer_map (void);
-  TAO_Notify_Supplier_Map& supplier_map (void);
+  TAO_Notify_Consumer_Map& consumer_map ();
+  TAO_Notify_Supplier_Map& supplier_map ();
 
   /// Offer change received on <proxy_consumer>.
   void offer_change (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);

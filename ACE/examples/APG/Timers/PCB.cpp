@@ -63,14 +63,14 @@ PCB::getID () const
 }
 
 int
-PCB::handleClose (void)
+PCB::handleClose ()
 {
   ACE_TRACE ("PCB::handleClose");
   return 0;
 }
 
 int
-PCB::handleCancel (void)
+PCB::handleCancel ()
 {
   ACE_TRACE ("PCB::handleCancel");
   return 0;

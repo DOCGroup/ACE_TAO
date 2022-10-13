@@ -5,31 +5,31 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_Policy_Validator &
-TAO_Object_Adapter::validator (void)
+TAO_Object_Adapter::validator ()
 {
   return this->default_validator_;
 }
 
 ACE_INLINE TAO_POA_Policy_Set &
-TAO_Object_Adapter::default_poa_policies (void)
+TAO_Object_Adapter::default_poa_policies ()
 {
   return this->default_poa_policies_;
 }
 
 ACE_INLINE ACE_Lock &
-TAO_Object_Adapter::lock (void)
+TAO_Object_Adapter::lock ()
 {
   return *this->lock_;
 }
 
 ACE_INLINE TAO_SYNCH_MUTEX &
-TAO_Object_Adapter::thread_lock (void)
+TAO_Object_Adapter::thread_lock ()
 {
   return this->thread_lock_;
 }
 
 ACE_INLINE ACE_Reverse_Lock<ACE_Lock> &
-TAO_Object_Adapter::reverse_lock (void)
+TAO_Object_Adapter::reverse_lock ()
 {
   return this->reverse_lock_;
 }

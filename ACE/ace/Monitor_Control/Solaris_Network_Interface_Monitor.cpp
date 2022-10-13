@@ -21,20 +21,20 @@ namespace ACE
     }
 
     void
-    Solaris_Network_Interface_Monitor::update_i (void)
+    Solaris_Network_Interface_Monitor::update_i ()
     {
       this->access_kstats (this->value_);
       this->value_ -= this->start_;
     }
 
     void
-    Solaris_Network_Interface_Monitor::clear_impl (void)
+    Solaris_Network_Interface_Monitor::clear_impl ()
     {
       this->init ();
     }
 
     void
-    Solaris_Network_Interface_Monitor::init (void)
+    Solaris_Network_Interface_Monitor::init ()
     {
       unsigned long i;
 

@@ -62,7 +62,7 @@ host_is_up (ACE_TCHAR hostname[])
 // The original problem this program tested for was incorrectly saying
 // a non-blocking connect completed successfully when it didn't.  The
 // test doesn't always work when done to localhost
-// (platform-dependant) so we look around for another host - any other
+// (platform-dependent) so we look around for another host - any other
 // one will do.
 
 static void
@@ -72,7 +72,6 @@ find_another_host (ACE_TCHAR other_host[])
 
   if (cached_other_host[0] == '\0')
     {
-
       ACE_OS::strcpy (other_host,
                       ACE_DEFAULT_SERVER_HOST); // If all else fails
 
@@ -314,6 +313,5 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return status;
 }
-
 
 

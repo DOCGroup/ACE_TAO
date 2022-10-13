@@ -86,7 +86,6 @@ namespace TAO
     class Case_T : public Case<StringType, TypeCodeType>
     {
     public:
-
       /// Constructor.
       Case_T (DiscriminatorType member_label,
               char const * member_name,

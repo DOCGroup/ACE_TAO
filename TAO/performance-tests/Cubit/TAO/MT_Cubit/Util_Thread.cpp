@@ -12,7 +12,7 @@ Util_Thread::Util_Thread (Task_State *ts,
 }
 
 int
-Util_Thread::svc (void)
+Util_Thread::svc ()
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -47,7 +47,7 @@ Util_Thread::svc (void)
 }
 
 u_long
-Util_Thread::get_number_of_computations (void)
+Util_Thread::get_number_of_computations ()
 {
   return this->number_of_computations_;
 }
@@ -56,7 +56,7 @@ Util_Thread::get_number_of_computations (void)
 // separate function to get it's execution time.
 
 void
-Util_Thread::computation (void)
+Util_Thread::computation ()
 {
   // This is the number that the Util_Thread uses to check for
   // primality.
@@ -74,7 +74,7 @@ Util_Thread::computation (void)
 // And you thought your life was boring... :-)
 
 int
-Util_Thread::run_computations (void)
+Util_Thread::run_computations ()
 {
   while (this->done_ == 0)
     {

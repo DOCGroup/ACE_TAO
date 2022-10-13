@@ -56,7 +56,7 @@ Event_Supplier::init ()
 }
 
 void
-Event_Supplier::start_generating_events (void)
+Event_Supplier::start_generating_events ()
 {
   unsigned long total_sent = 0;
 
@@ -78,7 +78,6 @@ Event_Supplier::start_generating_events (void)
 
   do
   {
-
   // Insert the event data
     this->insert_event_data (any,
                              schedule_iter);
@@ -330,7 +329,6 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
       }
 
 
-
             if (last_completion > (*sched_data)->completion_time)
               last_completion = 0;
 
@@ -359,7 +357,6 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
                 "(%t)Error in Event_Supplier::insert_event_data.\n"));
   }
 }
-
 
 
 // Function get_options.
@@ -456,7 +453,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // when done, we clean up
       delete event_Supplier_ptr;
-
     }
   catch (const CORBA::Exception& ex)
     {

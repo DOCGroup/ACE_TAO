@@ -34,8 +34,8 @@ public:
   ACE_Asynch_Pseudo_Task();
   virtual ~ACE_Asynch_Pseudo_Task();
 
-  int start (void);
-  int stop (void);
+  int start ();
+  int stop ();
 
   int register_io_handler (ACE_HANDLE handle,
                            ACE_Event_Handler *handler,

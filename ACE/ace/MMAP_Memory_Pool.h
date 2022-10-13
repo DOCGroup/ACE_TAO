@@ -140,7 +140,7 @@ public:
                         const OPTIONS *options = 0);
 
   /// Destructor.
-  virtual ~ACE_MMAP_Memory_Pool (void);
+  virtual ~ACE_MMAP_Memory_Pool ();
 
   /// Ask system for initial chunk of shared memory.
   virtual void *init_acquire (size_t nbytes,
@@ -219,7 +219,7 @@ public:
   ACE_Mem_Map const & mmap () const;
 
   /// Get reference to underlying ACE_Mem_Map object.
-  ACE_Mem_Map & mmap (void);
+  ACE_Mem_Map & mmap ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -320,7 +320,7 @@ public:
                              const OPTIONS *options = 0);
 
   /// Destructor.
-  virtual ~ACE_Lite_MMAP_Memory_Pool (void);
+  virtual ~ACE_Lite_MMAP_Memory_Pool ();
 
   /// Overwrite the default sync behavior with no-op
   virtual int sync (size_t len, int flags = MS_SYNC);
@@ -333,7 +333,6 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -145,7 +145,7 @@ ACE_Control_Block::ACE_Name_Node::dump () const
 
 
 #if defined (ACE_HAS_MALLOC_STATS)
-ACE_Malloc_Stats::ACE_Malloc_Stats (void)
+ACE_Malloc_Stats::ACE_Malloc_Stats ()
   : nchunks_ (0),
     nblocks_ (0),
     ninuse_ (0)

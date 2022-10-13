@@ -74,7 +74,7 @@ public:
   }
 };
 
-void Dispatcher_shutdown(void)
+void Dispatcher_shutdown()
 {
     std::list<MasterClient::Server_var> copiedlist;
     {

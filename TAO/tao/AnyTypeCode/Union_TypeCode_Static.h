@@ -54,7 +54,6 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-
       /// @typedef Type of individual case array element, not the
       ///          array itself.
       typedef TAO::TypeCode::Case<char const *,
@@ -118,7 +117,6 @@ namespace TAO
        *       increase cache hits by improving spatial locality.
        */
       //@{
-
       /// Base attributes containing repository ID and name of
       /// union type.
       Base_Attributes<char const *> const base_attributes_;
@@ -144,7 +142,6 @@ namespace TAO
 
       //@}
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

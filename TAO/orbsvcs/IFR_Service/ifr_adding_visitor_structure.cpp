@@ -14,7 +14,7 @@ ifr_adding_visitor_structure::ifr_adding_visitor_structure (AST_Decl *scope)
 {
 }
 
-ifr_adding_visitor_structure::~ifr_adding_visitor_structure (void)
+ifr_adding_visitor_structure::~ifr_adding_visitor_structure ()
 {
 }
 

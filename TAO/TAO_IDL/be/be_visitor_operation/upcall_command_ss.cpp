@@ -332,7 +332,6 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
         }
 
       os << be_uidt_nl;
-
     }
 
   --index;

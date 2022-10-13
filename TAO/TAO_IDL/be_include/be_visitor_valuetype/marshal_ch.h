@@ -25,7 +25,6 @@
  */
 class be_visitor_valuetype_marshal_ch : public be_visitor_scope
 {
-
 public:
   /// constructor
   be_visitor_valuetype_marshal_ch (be_visitor_context *ctx);

@@ -61,7 +61,7 @@ namespace TAO
                     "disabling upcalls\n", t->id ()));
     }
 
-    ~Nested_Upcall_Guard (void)
+    ~Nested_Upcall_Guard ()
     {
       if (!this->enable_)
         {
@@ -82,7 +82,7 @@ namespace TAO
     }
 
   private:
-    Nested_Upcall_Guard (void);
+    Nested_Upcall_Guard ();
 
     Nested_Upcall_Guard (const Nested_Upcall_Guard&) = delete;
     Nested_Upcall_Guard &operator= (const Nested_Upcall_Guard&) = delete;

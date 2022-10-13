@@ -40,14 +40,14 @@ template<ACE_SYNCH_DECL>
 ACE_SYNCH_MUTEX_T Log_Message_Receiver_Impl<ACE_SYNCH_USE>::copy_lock_;
 
 template<ACE_SYNCH_DECL>
-Log_Message_Receiver_Impl<ACE_SYNCH_USE>::Log_Message_Receiver_Impl (void)
+Log_Message_Receiver_Impl<ACE_SYNCH_USE>::Log_Message_Receiver_Impl ()
   : count_ (0)
 {
 }
 
 template<ACE_SYNCH_DECL>
 Log_Message_Receiver_Impl<ACE_SYNCH_USE> *
-Log_Message_Receiver_Impl<ACE_SYNCH_USE>::create (void)
+Log_Message_Receiver_Impl<ACE_SYNCH_USE>::create ()
 {
   return new Log_Message_Receiver_Impl<ACE_SYNCH_USE>;
 }
@@ -103,13 +103,13 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_output (const ACE_TCHAR *hostname,
 }
 
 template<ACE_SYNCH_DECL>
-Log_Message_Receiver_Impl<ACE_SYNCH_USE>::~Log_Message_Receiver_Impl (void)
+Log_Message_Receiver_Impl<ACE_SYNCH_USE>::~Log_Message_Receiver_Impl ()
 {
   ACE_ASSERT (count_ == 0 - 1);
 }
 
 template<ACE_SYNCH_DECL>
-Log_Message_Receiver<ACE_SYNCH_USE>::Log_Message_Receiver (void)
+Log_Message_Receiver<ACE_SYNCH_USE>::Log_Message_Receiver ()
   : receiver_impl_ (Log_Message_Receiver_Impl<ACE_SYNCH_USE>::create ())
 {
   ACE_ASSERT (receiver_impl_ != 0);
@@ -142,7 +142,7 @@ Log_Message_Receiver<ACE_SYNCH_USE>::log_output(const ACE_TCHAR *hostname,
 }
 
 template<ACE_SYNCH_DECL>
-Log_Message_Receiver<ACE_SYNCH_USE>::~Log_Message_Receiver (void)
+Log_Message_Receiver<ACE_SYNCH_USE>::~Log_Message_Receiver ()
 {
   ACE_ASSERT (receiver_impl_ != 0);
   Log_Message_Receiver_Impl<ACE_SYNCH_USE>::detach (receiver_impl_);

@@ -19,7 +19,6 @@
 #include "ace/Atomic_Op.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // Default number of iterations.
@@ -92,7 +91,6 @@ find_last ()
     }
 
   return 0;
-
 }
 
 // Explain usage and exit.

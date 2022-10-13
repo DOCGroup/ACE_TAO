@@ -53,10 +53,10 @@ class ACE_Export ACE_MEM_Acceptor : public ACE_SOCK_Acceptor
 {
 public:
   /// Default constructor.
-  ACE_MEM_Acceptor (void);
+  ACE_MEM_Acceptor ();
 
   /// Destructor.
-  ~ACE_MEM_Acceptor (void);
+  ~ACE_MEM_Acceptor ();
 
   /// Initiate a passive mode socket.
   ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,

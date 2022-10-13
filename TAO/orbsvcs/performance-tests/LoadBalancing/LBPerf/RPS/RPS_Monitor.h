@@ -32,7 +32,6 @@ class RPS_Monitor
   : public virtual POA_CosLoadBalancing::LoadMonitor
 {
 public:
-
   /// Constructor
   RPS_Monitor (ServerRequestInterceptor * interceptor);
 
@@ -42,7 +41,6 @@ public:
    * Methods required by the CosLoadBalancing::LoadMonitor interface.
    */
   //@{
-
   /// Return the location at which the LoadMonitor resides.
   /**
    * The returned "Location" is a sequence of length 1.
@@ -61,16 +59,14 @@ public:
   //@}
 
 protected:
-
   /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~RPS_Monitor (void);
+  ~RPS_Monitor ();
 
 private:
-
   /// The name of the location at which this LoadMonitor resides.
   CosLoadBalancing::Location location_;
 

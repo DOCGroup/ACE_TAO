@@ -28,7 +28,6 @@ namespace ACE
 {
   namespace HTBP
   {
-
     /**
      * @class Addr
      *
@@ -80,7 +79,6 @@ namespace ACE
       /// HTID - web-obtained unique-identifier
       ACE_CString htid_;
     };
-
   }
 }
 

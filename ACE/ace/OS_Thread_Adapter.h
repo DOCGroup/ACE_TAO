@@ -55,14 +55,13 @@ public:
    * @c this, thereby rendering the object useless after the call
    * returns.
    */
-  virtual ACE_THR_FUNC_RETURN invoke (void);
+  virtual ACE_THR_FUNC_RETURN invoke ();
 
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Ensure that this object is allocated on the heap.
-  ~ACE_OS_Thread_Adapter (void);
+  ~ACE_OS_Thread_Adapter ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

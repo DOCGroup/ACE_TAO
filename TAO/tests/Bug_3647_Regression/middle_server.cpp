@@ -167,8 +167,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       using namespace Bug_3647_Regression;
       PortableServer::ServantBase_var impl(
-          new Middle_Impl(backend.in(), orb.in(), verbose,
-                          timeout));
+          new Middle_Impl(backend.in(), orb.in(), verbose));
 
       PortableServer::ObjectId_var id =
           root_poa->activate_object (impl.in());

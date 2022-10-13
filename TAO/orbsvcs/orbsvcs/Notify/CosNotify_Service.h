@@ -33,7 +33,7 @@ class TAO_Notify_Serv_Export TAO_CosNotify_Service : public TAO_Notify_Service
 {
 public:
   /// Constructor
-  TAO_CosNotify_Service (void);
+  TAO_CosNotify_Service ();
 
   /// Destructor
   virtual ~TAO_CosNotify_Service ();
@@ -68,12 +68,11 @@ protected:
   virtual void init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb);
 
 private:
-
   /// Create the Factory for Notify objects.
-  virtual TAO_Notify_Factory* create_factory (void);
+  virtual TAO_Notify_Factory* create_factory ();
 
   /// Create the Builder for Notify objects.
-  virtual TAO_Notify_Builder* create_builder (void);
+  virtual TAO_Notify_Builder* create_builder ();
 
   /// Set thread options on @a qos.
   void set_threads (CosNotification::QoSProperties &qos, int threads);

@@ -44,7 +44,7 @@ public:
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer ();
 
   /// Returns a new ProxyPullConsumer_ptr.
-  virtual CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer(void);
+  virtual CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer();
 
 private:
   /// The SupplierQOS specified by the user of this class.

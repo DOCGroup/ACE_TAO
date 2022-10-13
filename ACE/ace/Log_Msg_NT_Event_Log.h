@@ -50,10 +50,10 @@ public:
   int open (const ACE_TCHAR *logger_key) override;
 
   /// Reset the backend.
-  int reset (void) override;
+  int reset () override;
 
   /// Close the backend completely.
-  int close (void) override;
+  int close () override;
 
   /// This is called when we want to log a message.
   ssize_t log (ACE_Log_Record &log_record) override;

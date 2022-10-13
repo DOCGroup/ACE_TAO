@@ -108,7 +108,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       test_i_rh_srv.test_handler ().set_reply_handler (rh.in ());
 
       // create and activate test servant
-      Test_i test_i_srv (orb.in (), rh.in (), max_count, mode_flag);
+      Test_i test_i_srv (orb.in (), rh.in (), mode_flag);
 
       id = root_poa->activate_object (&test_i_srv);
 

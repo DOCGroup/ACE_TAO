@@ -7,7 +7,7 @@ LCD_Display_imp::LCD_Display_imp (CORBA::ORB_ptr orb)
 }
 
 void
-LCD_Display_imp::shutdown (void)
+LCD_Display_imp::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "The ORB has been shutdown, Close the windows to exit\n"));

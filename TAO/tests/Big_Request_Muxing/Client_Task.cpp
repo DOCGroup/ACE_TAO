@@ -44,7 +44,7 @@ Client_Task::ID () const
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   ++tasks_running_;
   if (TAO_debug_level > 0)
@@ -138,7 +138,7 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::validate_connection (void)
+Client_Task::validate_connection ()
 {
   try
     {

@@ -33,7 +33,6 @@ namespace TAO
   class TAO_PortableGroup_Export PG_Utils
   {
     public:
-
     /// Set tagged component for the object group
     static CORBA::Boolean set_tagged_component (
         PortableGroup::ObjectGroup *ior,

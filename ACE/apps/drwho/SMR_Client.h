@@ -18,7 +18,7 @@ class SMR_Client : public SM_Client
 {
 public:
   SMR_Client (short port_number);
-  virtual ~SMR_Client (void);
+  virtual ~SMR_Client ();
 };
 
 #endif /* _SMR_CLIENT_H */

@@ -17,7 +17,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 
 ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (void)
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op ()
   : value_ (0)
 {
 }
@@ -36,7 +36,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (
 }
 
 ACE_INLINE long
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator++ (void)
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator++ ()
 {
 #if defined (ACE_HAS_INTRINSIC_INTERLOCKED)
   return ::_InterlockedIncrement (const_cast<long *> (&this->value_));
@@ -58,7 +58,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator++ (int)
 }
 
 ACE_INLINE long
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-- (void)
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-- ()
 {
 #if defined (ACE_HAS_INTRINSIC_INTERLOCKED)
   return ::_InterlockedDecrement (const_cast<long *> (&this->value_));
@@ -209,14 +209,14 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::value () const
 }
 
 ACE_INLINE volatile long &
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::value_i (void)
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::value_i ()
 {
   return this->value_;
 }
 
 
 ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (void)
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op ()
   : value_ (0)
 {
 }
@@ -235,7 +235,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (
 }
 
 ACE_INLINE unsigned long
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator++ (void)
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator++ ()
 {
 #if defined (ACE_HAS_INTRINSIC_INTERLOCKED)
   return static_cast<unsigned long> (::_InterlockedIncrement (const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))));
@@ -257,7 +257,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator++ (int)
 }
 
 ACE_INLINE unsigned long
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator-- (void)
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator-- ()
 {
 #if defined (ACE_HAS_INTRINSIC_INTERLOCKED)
   return static_cast<unsigned long> (::_InterlockedDecrement (const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))));
@@ -409,7 +409,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::value () const
 }
 
 ACE_INLINE volatile unsigned long &
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::value_i (void)
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::value_i ()
 {
   return this->value_;
 }

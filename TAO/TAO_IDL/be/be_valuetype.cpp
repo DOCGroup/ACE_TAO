@@ -218,7 +218,6 @@ be_valuetype::determine_factory_style ()
                                  ACE_TEXT ("determine_factory_style")
                                  ACE_TEXT ("bad node in this scope\n")),
                                 factory_style);
-
             }
 
           AST_Decl::NodeType node_type = d->node_type ();
@@ -279,7 +278,6 @@ be_valuetype::have_operation ()
                                  ACE_TEXT ("has_operation")
                                  ACE_TEXT ("bad node in this scope\n")),
                                 0);
-
             }
 
           AST_Decl::NodeType nt = d->node_type();

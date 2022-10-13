@@ -15,8 +15,7 @@ Checkpoint_Client_i::run (const char *name,
 
   // Set random seed
   ACE_Time_Value now (ACE_OS::gettimeofday ());
-  ACE_OS::srand ((unsigned int) now.sec () );
-
+  ACE_OS::srand ((unsigned int) now.sec ());
 
   try
     {
@@ -44,13 +43,13 @@ Checkpoint_Client_i::run (const char *name,
 }
 
 // Constructor.
-Checkpoint_Client_i::Checkpoint_Client_i (void)
+Checkpoint_Client_i::Checkpoint_Client_i ()
 {
   //no-op
 }
 
 //Destructor.
-Checkpoint_Client_i::~Checkpoint_Client_i (void)
+Checkpoint_Client_i::~Checkpoint_Client_i ()
 {
   //no-op
 }

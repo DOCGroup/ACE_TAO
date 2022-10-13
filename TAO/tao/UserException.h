@@ -39,12 +39,11 @@ namespace CORBA
   class TAO_Export UserException : public Exception
   {
   public:
-
     /// Copy constructor.
     UserException (UserException const &rhs);
 
     /// Destructor.
-    virtual ~UserException ();
+    virtual ~UserException () = default;
 
     /// Assignment operator.
     UserException &operator= (UserException const &rhs);
@@ -72,7 +71,6 @@ namespace CORBA
     /// Default constructor.
     UserException ();
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

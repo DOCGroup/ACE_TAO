@@ -34,7 +34,7 @@ Timeout_i::sendTimeToWait (CORBA::Long msec)
 }
 
 void
-Timeout_i::shutdown (void)
+Timeout_i::shutdown ()
 {
   orb_->shutdown ();
   //ACE_DEBUG ((LM_DEBUG,
@@ -53,7 +53,7 @@ TimeoutHandler_i::TimeoutHandler_i ()
 }
 
 void
-TimeoutHandler_i::sendTimeToWait (void)
+TimeoutHandler_i::sendTimeToWait ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "reply"));

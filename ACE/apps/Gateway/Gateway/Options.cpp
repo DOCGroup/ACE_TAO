@@ -9,13 +9,12 @@
 #include "ace/os_include/os_fcntl.h"
 
 
-
 // Static initialization.
 Options *Options::instance_ = 0;
 
 // Let's have a usage prompt.
 void
-Options::print_usage (void)
+Options::print_usage ()
 {
   ACE_DEBUG ((LM_INFO,
     "gatewayd [-a {C|S}:acceptor-port] [-c {C|S}:connector-port]"
@@ -37,7 +36,7 @@ Options::print_usage (void)
   ));
 }
 Options *
-Options::instance (void)
+Options::instance ()
 {
   if (Options::instance_ == 0)
     ACE_NEW_RETURN (Options::instance_, Options, 0);
@@ -45,7 +44,7 @@ Options::instance (void)
   return Options::instance_;
 }
 
-Options::Options (void)
+Options::Options ()
   : locking_strategy_ (0),
     performance_window_ (0),
     blocking_semantics_ (ACE_NONBLOCK),
@@ -70,7 +69,7 @@ Options::enabled (int option) const
   return ACE_BIT_ENABLED (this->options_, option);
 }
 
-Options::~Options (void)
+Options::~Options ()
 {
   delete this->locking_strategy_;
 }
@@ -94,7 +93,7 @@ Options::performance_window () const
 }
 
 CONNECTION_ID &
-Options::connection_id (void)
+Options::connection_id ()
 {
   return this->connection_id_;
 }

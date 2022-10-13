@@ -59,7 +59,7 @@ class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
 
 public:
   /// Constructor.
-  ACE_Proactor_Handle_Timeout_Upcall (void);
+  ACE_Proactor_Handle_Timeout_Upcall ();
 
   /// This method is called when a timer is registered.
   int registration (ACE_Proactor_Timer_Queue &timer_queue,
@@ -174,7 +174,7 @@ public:
                 ACE_Proactor_Timer_Queue *tq = 0);
 
   /// Destruction.
-  ~ACE_Proactor (void);
+  ~ACE_Proactor ();
 
   /// Get pointer to a process-wide ACE_Proactor.  @a threads should
   /// be part of another method.
@@ -186,23 +186,23 @@ public:
                                  bool delete_proactor = false);
 
   /// Delete the dynamically allocated Singleton.
-  static void close_singleton (void);
+  static void close_singleton ();
 
   /// Cleanup method, used by the ACE_Object_Manager to destroy the
   /// singleton.
   static void cleanup (void *instance, void *arg);
 
   /// Name of dll in which the singleton instance lives.
-  static const ACE_TCHAR *dll_name (void);
+  static const ACE_TCHAR *dll_name ();
 
   /// Name of component--ACE_Proactor in this case.
-  static const ACE_TCHAR *name (void);
+  static const ACE_TCHAR *name ();
 
   // = Proactor event loop management methods.
 
   /// Run the event loop until the <ACE_Proactor::handle_events> method
   /// returns -1 or the <end_event_loop> method is invoked.
-  static int run_event_loop (void);
+  static int run_event_loop ();
 
   /**
    * Run the event loop until the <ACE_Proactor::handle_events> method
@@ -217,13 +217,13 @@ public:
    * This method wakes up all the threads blocked on waiting for
    * completions and end the event loop.
    */
-  static int end_event_loop (void);
+  static int end_event_loop ();
 
   /**
    * Resets the <ACE_Proactor::end_event_loop_> static so that the
    * <run_event_loop> method can be restarted.
    */
-  static int reset_event_loop (void);
+  static int reset_event_loop ();
 
   /**
    * The singleton proactor is used by the ACE_Service_Config.
@@ -233,14 +233,14 @@ public:
   static int check_reconfiguration (ACE_Proactor *);
 
   /// Report if the <ACE_Proactor::instance> event loop is finished.
-  static int event_loop_done (void);
+  static int event_loop_done ();
 
   /// Close the associated @c ACE_Proactor_Impl implementation object.
   /**
    * If @arg delete_implementation was specified to the @c open() method,
    * the implementation object is also deleted.
    */
-  int close (void);
+  int close ();
 
    /**
    * You can add a hook to various run_event methods and the hook will
@@ -274,14 +274,14 @@ public:
    * and notifies the ACE_Proactor so that it can wake up
    * and close down gracefully.
    */
-  int proactor_end_event_loop (void);
+  int proactor_end_event_loop ();
 
   /// Report if the ACE_Proactor event loop is finished.
-  int proactor_event_loop_done (void);
+  int proactor_event_loop_done ();
 
   /// Resets the <ACE_Proactor::end_event_loop_> static so that the
   /// <run_event_loop> method can be restarted.
-  int proactor_reset_event_loop (void);
+  int proactor_reset_event_loop ();
 
 
   /// This method adds the @a handle to the I/O completion port. This
@@ -354,10 +354,10 @@ public:
    * @return Returns 1 when a completion is dispatched. On error, returns -1
    * and sets errno accordingly.
    */
-  int handle_events (void);
+  int handle_events ();
 
   /// Add wakeup dispatch threads (reinit).
-  int wake_up_dispatch_threads (void);
+  int wake_up_dispatch_threads ();
 
   /// Close all dispatch threads.
   int close_dispatch_threads (int wait);
@@ -391,37 +391,37 @@ public:
 
   /// Create the correct implementation class for doing
   /// Asynch_Read_Stream.
-  ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
+  ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream ();
 
   /// Create the correct implementation class for doing
   /// Asynch_Write_Stream.
-  ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void);
+  ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream ();
 
   /// Create the correct implementation class for doing
   /// Asynch_Read_File.
-  ACE_Asynch_Read_File_Impl *create_asynch_read_file (void);
+  ACE_Asynch_Read_File_Impl *create_asynch_read_file ();
 
   /// Create the correct implementation class for doing
   /// Asynch_Write_File.
-  ACE_Asynch_Write_File_Impl *create_asynch_write_file (void);
+  ACE_Asynch_Write_File_Impl *create_asynch_write_file ();
 
   /// Create the correct implementation class for doing Asynch_Accept.
-  ACE_Asynch_Accept_Impl *create_asynch_accept (void);
+  ACE_Asynch_Accept_Impl *create_asynch_accept ();
 
   /// Create the correct implementation class for doing Asynch_Connect.
-  ACE_Asynch_Connect_Impl *create_asynch_connect (void);
+  ACE_Asynch_Connect_Impl *create_asynch_connect ();
 
   /// Create the correct implementation class for doing
   /// Asynch_Transmit_File.
-  ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
+  ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file ();
 
   /// Create the correct implementation class for doing
   /// Asynch_Read_Dgram.
-  ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram (void);
+  ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram ();
 
   /// Create the correct implementation class for doing
   /// Asynch_Write_Dgram.
-  ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram (void);
+  ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram ();
 
   // = Factory methods for the results
 
@@ -561,7 +561,6 @@ public:
                          int signal_number = ACE_SIGRTMIN);
 
 protected:
-
   /**
    * Post <how_many> completions to the completion port so that all
    * threads can wake up. This is used in conjunction with the
@@ -642,8 +641,8 @@ public:
   class Timer_Queue {};
   ACE_Proactor (size_t /* number_of_threads */ = 0,
                 Timer_Queue * /* tq */ = 0) {}
-  ~ACE_Proactor (void) {}
-  int handle_events (void) { return -1; }
+  ~ACE_Proactor () {}
+  int handle_events () { return -1; }
   int handle_events (ACE_Time_Value &) { return -1; }
 
   /// Placeholder to enable compilation on non-Win32 platforms
@@ -653,19 +652,19 @@ public:
   static ACE_Proactor *instance (ACE_Proactor *);
 
   /// Placeholder to enable compilation on non-Win32 platforms
-  static void close_singleton (void);
+  static void close_singleton ();
 
   /// Placeholder to enable compilation on non-Win32 platforms
-  static int run_event_loop (void);
+  static int run_event_loop ();
 
   /// Placeholder to enable compilation on non-Win32 platforms
   static int run_event_loop (ACE_Time_Value &tv);
 
   /// Placeholder to enable compilation on non-Win32 platforms
-  static int end_event_loop (void);
+  static int end_event_loop ();
 
   /// Placeholder to enable compilation on non-Win32 platforms
-  static sig_atomic_t event_loop_done (void);
+  static sig_atomic_t event_loop_done ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -138,7 +138,6 @@ disable_signal (int sigmin, int sigmax)
 class Pipe
 {
 public:
-
   Pipe ();
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -226,7 +225,6 @@ static Event_Loop_Thread *global_event_loop_thread_variable = 0;
 class Sender : public ACE_Event_Handler
 {
 public:
-
   Sender (ACE_HANDLE handle,
           Connection_Cache &connection_cache);
 
@@ -243,13 +241,11 @@ public:
   ACE_HANDLE handle_;
 
   Connection_Cache &connection_cache_;
-
 };
 
 class Connection_Cache
 {
 public:
-
   Connection_Cache ();
 
   ~Connection_Cache ();
@@ -361,20 +357,17 @@ Sender::send_message ()
 class Event_Loop_Thread : public ACE_Task_Base
 {
 public:
-
   Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
                      ACE_Reactor &reactor);
 
   int svc () override;
 
   ACE_Reactor &reactor_;
-
 };
 
 class Receiver : public ACE_Task_Base
 {
 public:
-
   Receiver (ACE_Thread_Manager &thread_manager,
             ACE_HANDLE handle,
             int nested_upcalls);
@@ -398,7 +391,6 @@ public:
   int nested_upcalls_;
 
   int nested_upcalls_level_;
-
 };
 
 Receiver::Receiver (ACE_Thread_Manager &thread_manager,
@@ -541,7 +533,6 @@ Receiver::close (u_long)
 class Connector
 {
 public:
-
   Connector (ACE_Thread_Manager &thread_manager,
              ACE_Reactor &reactor,
              int nested_upcalls);
@@ -557,7 +548,6 @@ public:
   ACE_Reactor &reactor_;
 
   int nested_upcalls_;
-
 };
 
 Connector::Connector (ACE_Thread_Manager &thread_manager,
@@ -760,7 +750,6 @@ Connection_Cache::~Connection_Cache ()
 class Invocation_Thread : public ACE_Task_Base
 {
 public:
-
   Invocation_Thread (ACE_Thread_Manager &thread_manager,
                      ACE_Reactor &reactor,
                      Connection_Cache &connection_cache,
@@ -786,7 +775,6 @@ public:
   int run_receiver_thread_;
 
   int nested_upcalls_;
-
 };
 
 Invocation_Thread::Invocation_Thread (ACE_Thread_Manager &thread_manager,
@@ -970,7 +958,6 @@ Invocation_Thread::svc ()
 class Close_Socket_Thread : public ACE_Task_Base
 {
 public:
-
   Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
                        ACE_Reactor &reactor,
                        ACE_Auto_Event &new_connection_event,
@@ -986,7 +973,6 @@ public:
   int make_invocations_;
 
   int run_receiver_thread_;
-
 };
 
 Close_Socket_Thread::Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
@@ -1105,7 +1091,6 @@ Event_Loop_Thread::svc ()
 class Purger_Thread : public ACE_Task_Base
 {
 public:
-
   Purger_Thread (ACE_Thread_Manager &thread_manager,
                  ACE_Reactor &reactor,
                  Connection_Cache &connection_cache);
@@ -1115,7 +1100,6 @@ public:
   ACE_Reactor &reactor_;
 
   Connection_Cache &connection_cache_;
-
 };
 
 Purger_Thread::Purger_Thread (ACE_Thread_Manager &thread_manager,
@@ -1280,7 +1264,6 @@ test<REACTOR_IMPL>::test (int ignore_nested_upcalls,
           (nested_upcalls == -1 ||
            nested_upcalls == test_configs[i][4]))
         {
-
 #if 0 /* defined (ACE_LINUX) */
 
           // @@ I am not sure why but when <make_invocations> is 0 and

@@ -1,13 +1,13 @@
 #include "ftp.h"
 
 
-FTP_Client_Callback::FTP_Client_Callback (void)
+FTP_Client_Callback::FTP_Client_Callback ()
   :count_ (0)
 {
 }
 
 int
-FTP_Client_Callback::handle_end_stream (void)
+FTP_Client_Callback::handle_end_stream ()
 {
   TAO_AV_CORE::instance ()->stop_run ();
   return 0;
@@ -73,7 +73,7 @@ FTP_Client_Callback::handle_timeout (void *)
   return 0;
 }
 
-FTP_Client_Producer::FTP_Client_Producer (void)
+FTP_Client_Producer::FTP_Client_Producer ()
   :TAO_FlowProducer ("Data",CLIENT::instance ()->protocols (),CLIENT::instance ()->format ())
 {
 }
@@ -155,19 +155,19 @@ Client::parse_args (int argc,
 }
 
 FILE *
-Client::file (void)
+Client::file ()
 {
   return this->fp_;
 }
 
 const char*
-Client::flowname (void)
+Client::flowname ()
 {
   return this->flowname_.c_str();
 }
 
 AVStreams::protocolSpec
-Client::protocols (void)
+Client::protocols ()
 {
   AVStreams::protocolSpec protocols (1);
   protocols.length (1);
@@ -178,25 +178,25 @@ Client::protocols (void)
 }
 
 const char *
-Client::format (void)
+Client::format ()
 {
   return "UNS:ftp";
 }
 
 const char *
-Client::address (void)
+Client::address ()
 
 {
   return this->address_.c_str ();
 }
 
 TAO_StreamCtrl*
-Client::streamctrl (void)
+Client::streamctrl ()
 {
   return &this->streamctrl_;
 }
 
-Client::Client (void)
+Client::Client ()
   : fp_ (0),
     protocol_ (ACE_OS::strdup ("UDP")),
     orb_ (TAO_AV_CORE::instance ()->orb ()),
@@ -216,7 +216,6 @@ Client::init (int argc, ACE_TCHAR *argv[])
   CORBA::String_var ior;
   try
     {
-
       PortableServer::POAManager_var mgr
         = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
 
@@ -225,9 +224,9 @@ Client::init (int argc, ACE_TCHAR *argv[])
       this->parse_args (this->argc_, this->argv_);
 
       ACE_NEW_RETURN (this->streamendpoint_a_,
-                      TAO_StreamEndPoint_A, -1 );
+                      TAO_StreamEndPoint_A, -1);
 
-      ACE_NEW_RETURN (this->fep_a_, FTP_Client_Producer, -1 );
+      ACE_NEW_RETURN (this->fep_a_, FTP_Client_Producer, -1);
       this->flowname_ = "Data";
 
       sep_a_ = this->streamendpoint_a_->_this();
@@ -259,7 +258,7 @@ Client::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Client::run (void)
+Client::run ()
 {
   try
     {
@@ -292,7 +291,7 @@ Client::run (void)
 
 
       CORBA::Object_var obj_b = this->orb_->string_to_object("corbaname:rir:#Server_StreamEndPoint_b");
-      AVStreams::StreamEndPoint_B_var sep_b = AVStreams::StreamEndPoint_B::_narrow ( obj_b.in() );
+      AVStreams::StreamEndPoint_B_var sep_b = AVStreams::StreamEndPoint_B::_narrow (obj_b.in());
 
       CORBA::Boolean result =
         this->streamctrl_.bind (sep_a_.in(),
@@ -314,7 +313,6 @@ Client::run (void)
       this->orb_->run (tv);
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -354,7 +352,6 @@ ACE_TMAIN (int argc,
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
-
     }
   catch (const CORBA::Exception& ex)
 

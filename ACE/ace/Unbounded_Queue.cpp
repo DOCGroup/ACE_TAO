@@ -25,7 +25,7 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Allocator *alloc)
     cur_size_ (0),
     allocator_ (alloc)
 {
-  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (void)");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue ()");
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
@@ -145,7 +145,7 @@ ACE_Unbounded_Queue<T>::delete_nodes ()
 template <class T>
 ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue ()
 {
-  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue ()");
 
   this->delete_nodes ();
   ACE_DES_FREE_TEMPLATE (head_,

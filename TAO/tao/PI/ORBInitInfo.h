@@ -55,7 +55,6 @@ class TAO_PI_Export TAO_ORBInitInfo
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
                    int argc,
@@ -241,7 +240,6 @@ private:
 
   /// The number of allocated slots.
   PortableInterceptor::SlotId slot_count_;
-
 };
 
 // Traits specializations.

@@ -35,9 +35,7 @@
 class ACEXML_Export ACEXML_Base64 : public ACE_Base64
 {
 public:
-
   //@{
-
   /**
    * Encodes a stream of octets to Base64 data
    *

@@ -8,11 +8,11 @@
 
 // Implementation of class Headers
 
-Headers::Headers (void) : done_(0)
+Headers::Headers () : done_(0)
 {
 }
 
-Headers::~Headers (void)
+Headers::~Headers ()
 {
 }
 
@@ -162,22 +162,22 @@ Headers::end_of_line (char *&line, int &offset) const
 
 // Implementation of class Headers_Map
 
-Headers_Map::Headers_Map (void)
+Headers_Map::Headers_Map ()
   : num_headers_(0)
 {
 }
 
-Headers_Map::~Headers_Map (void)
+Headers_Map::~Headers_Map ()
 {
 }
 
-Headers_Map_Item::Headers_Map_Item (void)
+Headers_Map_Item::Headers_Map_Item ()
   : header_(0),
     value_(0)
 {
 }
 
-Headers_Map_Item::~Headers_Map_Item (void)
+Headers_Map_Item::~Headers_Map_Item ()
 {
   ACE_OS::free ((void *) this->header_);
   ACE_OS::free ((void *) this->value_);

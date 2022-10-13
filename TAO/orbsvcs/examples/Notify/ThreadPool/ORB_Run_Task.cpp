@@ -1,7 +1,6 @@
 #include "ORB_Run_Task.h"
 
 
-
 TAO_Notify_ORB_Run_Task::TAO_Notify_ORB_Run_Task (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
 {
@@ -12,7 +11,7 @@ TAO_Notify_ORB_Run_Task::~TAO_Notify_ORB_Run_Task ()
 }
 
 int
-TAO_Notify_ORB_Run_Task::svc (void)
+TAO_Notify_ORB_Run_Task::svc ()
 {
   try
     {

@@ -41,7 +41,7 @@ public:
   friend class ACE_DEV_Connector;
 
   /// Default constructor.
-  ACE_DEV_IO (void);
+  ACE_DEV_IO ();
 
   // = Various send operations.
   /// send upto @a n bytes in @a buf.

@@ -32,7 +32,7 @@
 #include "ace/OS_NS_stdio.h"
 
 void ace_cc_yyerror (const char* s);
-int ace_cc_yylex(void);
+int ace_cc_yylex();
 
 extern int line_no;
 extern char line_buf[500];
@@ -52,7 +52,6 @@ typedef union {
 #define const
 #endif
 #endif
-
 
 
 #define ACE_CC_YYFINAL    66
@@ -413,7 +412,6 @@ __ace_cc_yy_memcpy (char *to, char *from, unsigned int count)
 #endif
 
 
-
 /* The user can define ACE_CC_YYPARSE_PARAM as the name of an argument to be passed
    into ace_cc_yyparse.  The argument should have type void *.
    It should actually point to an object.
@@ -438,7 +436,7 @@ __ace_cc_yy_memcpy (char *to, char *from, unsigned int count)
 #ifdef ACE_CC_YYPARSE_PARAM
 int ace_cc_yyparse (void *);
 #else
-int ace_cc_yyparse (void);
+int ace_cc_yyparse ();
 #endif
 #endif
 
@@ -739,7 +737,6 @@ ace_cc_yyreduce:
 
 
   switch (ace_cc_yyn) {
-
 case 2:
 { cmdlist->add(new CC_Sleep_Cmd(0));
          /* dummy to check exeption in the last command */

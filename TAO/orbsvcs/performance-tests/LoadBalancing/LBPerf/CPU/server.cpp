@@ -212,7 +212,6 @@ join_object_group (CORBA::ORB_ptr orb,
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
@@ -234,7 +233,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_ERROR ((LM_ERROR,
                     "server (%P|%t): sched_params failed\n"));
     }
-
 
 
   try

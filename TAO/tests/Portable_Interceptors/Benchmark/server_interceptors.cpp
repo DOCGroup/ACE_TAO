@@ -8,7 +8,7 @@
 const CORBA::ULong request_ctx_id = 0xdead;
 //const CORBA::ULong reply_ctx_id = 0xbeef;   // Never used.
 
-Vault_Server_Request_Interceptor::Vault_Server_Request_Interceptor (void)
+Vault_Server_Request_Interceptor::Vault_Server_Request_Interceptor ()
   : myname_ ("Vault_Server_Interceptor")
 {
 }
@@ -18,13 +18,13 @@ Vault_Server_Request_Interceptor::~Vault_Server_Request_Interceptor ()
 }
 
 char *
-Vault_Server_Request_Interceptor::name (void)
+Vault_Server_Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Vault_Server_Request_Interceptor::destroy (void)
+Vault_Server_Request_Interceptor::destroy ()
 {
 }
 
@@ -39,7 +39,6 @@ void
 Vault_Server_Request_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
@@ -73,7 +72,6 @@ void
 Vault_Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
@@ -102,7 +100,7 @@ Vault_Server_Request_Interceptor::send_other (
 
 //////////////////////////////////  Context /////////////////////////
 
-Vault_Server_Request_Context_Interceptor::Vault_Server_Request_Context_Interceptor (void)
+Vault_Server_Request_Context_Interceptor::Vault_Server_Request_Context_Interceptor ()
   : myname_ ("Vault_Server_Context_Interceptor")
 {
 }
@@ -133,7 +131,6 @@ void
 Vault_Server_Request_Context_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   IOP::ServiceId id = request_ctx_id;
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (id);
@@ -148,7 +145,6 @@ void
 Vault_Server_Request_Context_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
-
 }
 
 void
@@ -166,7 +162,7 @@ Vault_Server_Request_Context_Interceptor::send_other (
 
 ///////////////////////////////////Dynamic ////////////////////////////////////
 
-Vault_Server_Request_Dynamic_Interceptor::Vault_Server_Request_Dynamic_Interceptor (void)
+Vault_Server_Request_Dynamic_Interceptor::Vault_Server_Request_Dynamic_Interceptor ()
   : myname_ ("Vault_Server_Dynamic_Interceptor")
 {
 }
@@ -190,7 +186,6 @@ void
 Vault_Server_Request_Dynamic_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
@@ -229,7 +224,6 @@ void
 Vault_Server_Request_Dynamic_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "ready") == 0)
@@ -264,7 +258,7 @@ Vault_Server_Request_Dynamic_Interceptor::send_other (
 
 //////////////////////////////NOOP///////////////////////////////////////
 
-Vault_Server_Request_NOOP_Interceptor::Vault_Server_Request_NOOP_Interceptor (void)
+Vault_Server_Request_NOOP_Interceptor::Vault_Server_Request_NOOP_Interceptor ()
   : myname_ ("Vault_Server_NOOP_Interceptor")
 {
 }
@@ -274,7 +268,7 @@ Vault_Server_Request_NOOP_Interceptor::~Vault_Server_Request_NOOP_Interceptor ()
 }
 
 char *
-Vault_Server_Request_NOOP_Interceptor::name (void)
+Vault_Server_Request_NOOP_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
@@ -301,7 +295,6 @@ void
 Vault_Server_Request_NOOP_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
-
 }
 
 void

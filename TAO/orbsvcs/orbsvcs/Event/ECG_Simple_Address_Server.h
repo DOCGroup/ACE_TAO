@@ -28,7 +28,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Simple_Address_Server :
   public virtual POA_RtecUDPAdmin::AddrServer
 {
 public:
-
   /// Create a new TAO_ECG_Simple_Address_Server object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_Simple_Address_Server objects are heap-allocated.)
@@ -46,7 +45,6 @@ public:
                             RtecUDPAdmin::UDP_Address_out addr6);
 
 protected:
-
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_Simple_Address_Server objects using the static create()
   /// method.

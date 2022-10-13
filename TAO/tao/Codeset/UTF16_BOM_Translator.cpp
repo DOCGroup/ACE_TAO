@@ -470,7 +470,6 @@ TAO_UTF16_BOM_Translator::write_wchar_array_i (ACE_OutputCDR & cdr,
       sb[i] = static_cast<ACE_UTF16_T> (x[i]);
     }
   return 1;
-
 }
 
 ACE_CDR::Boolean

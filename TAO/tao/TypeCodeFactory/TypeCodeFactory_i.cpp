@@ -52,7 +52,6 @@ namespace TCF
                                           CORBA::TypeCode_var,
                                           field_array_type>
       recursive_typecode_type;
-
   }  // End namespace Struct
 
   namespace Union
@@ -93,11 +92,11 @@ namespace TCF
 }
 
 
-TAO_TypeCodeFactory_i::TAO_TypeCodeFactory_i (void)
+TAO_TypeCodeFactory_i::TAO_TypeCodeFactory_i ()
 {
 }
 
-TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i (void)
+TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i ()
 {
 }
 
@@ -567,7 +566,6 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
   if (is_recursive)
     {
-
       recursive_typecode_type * const rtc =
         dynamic_cast<recursive_typecode_type *> (recursive_tc.in ());
 

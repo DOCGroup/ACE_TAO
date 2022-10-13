@@ -7,7 +7,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
 
-Admin_Client::Admin_Client (void)
+Admin_Client::Admin_Client ()
   : debug_ (0),
     all_tests_ (1),
     which_test_ (0),
@@ -27,7 +27,7 @@ Admin_Client::Admin_Client (void)
   this->test_array_[10] = &Admin_Client::module_test;
 }
 
-Admin_Client::~Admin_Client (void)
+Admin_Client::~Admin_Client ()
 {
 }
 
@@ -68,9 +68,7 @@ Admin_Client::init (int argc, ACE_TCHAR *argv[])
           ACE_ERROR_RETURN ((
               LM_ERROR,
               "Null objref from resolve_initial_references\n"
-            ),
-            -1
-          );
+            ), -1);
         }
 
       this->repo_ =
@@ -93,7 +91,7 @@ Admin_Client::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Admin_Client::run (void)
+Admin_Client::run ()
 {
   try
     {
@@ -114,8 +112,7 @@ Admin_Client::run (void)
         {
           for (CORBA::ULong j = 0; j < this->iterations_; ++j)
             {
-              (this->*test_array_[this->which_test_])(
-                );
+              (this->*test_array_[this->which_test_])();
             }
         }
     }
@@ -178,7 +175,7 @@ Admin_Client::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Admin_Client::array_test (void)
+Admin_Client::array_test ()
 {
   if (this->debug_)
     {
@@ -310,7 +307,7 @@ Admin_Client::array_test (void)
 }
 
 void
-Admin_Client::enum_test (void)
+Admin_Client::enum_test ()
 {
   if (this->debug_)
     {
@@ -577,7 +574,7 @@ Admin_Client::enum_test (void)
 }
 
 void
-Admin_Client::alias_test (void)
+Admin_Client::alias_test ()
 {
   if (this->debug_)
     {
@@ -819,7 +816,7 @@ Admin_Client::alias_test (void)
 }
 
 void
-Admin_Client::native_test (void)
+Admin_Client::native_test ()
 {
   if (this->debug_)
     {
@@ -894,7 +891,7 @@ Admin_Client::native_test (void)
 }
 
 void
-Admin_Client::struct_test (void)
+Admin_Client::struct_test ()
 {
   if (this->debug_)
     {
@@ -1289,7 +1286,7 @@ Admin_Client::struct_test (void)
 }
 
 void
-Admin_Client::union_test (void)
+Admin_Client::union_test ()
 {
   if (this->debug_)
     {
@@ -1493,7 +1490,7 @@ Admin_Client::union_test (void)
 }
 
 void
-Admin_Client::exception_test (void)
+Admin_Client::exception_test ()
 {
   if (this->debug_)
     {
@@ -1937,7 +1934,7 @@ Admin_Client::exception_test (void)
 }
 
 void
-Admin_Client::constant_test (void)
+Admin_Client::constant_test ()
 {
   if (this->debug_)
     {
@@ -2117,7 +2114,7 @@ Admin_Client::constant_test (void)
 }
 
 void
-Admin_Client::interface_test (void)
+Admin_Client::interface_test ()
 {
   if (this->debug_)
     {
@@ -2535,7 +2532,7 @@ Admin_Client::interface_test (void)
 }
 
 void
-Admin_Client::move_test (void)
+Admin_Client::move_test ()
 {
   if (this->debug_)
     {
@@ -2916,7 +2913,7 @@ Admin_Client::move_test (void)
 }
 
 void
-Admin_Client::module_test (void)
+Admin_Client::module_test ()
 {
   if (this->debug_)
     {

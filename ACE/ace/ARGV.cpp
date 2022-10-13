@@ -315,7 +315,6 @@ ACE_ARGV_T<CHAR_TYPE>::~ACE_ARGV_T ()
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 
-
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free (this->argv_);
   ACE_Allocator::instance()->free (this->buf_);

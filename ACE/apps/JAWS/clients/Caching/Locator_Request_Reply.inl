@@ -3,7 +3,7 @@
 #include "URL_Locator.h"
 
 ACE_INLINE
-ACE_URL_Locator_Request::ACE_URL_Locator_Request (void)
+ACE_URL_Locator_Request::ACE_URL_Locator_Request ()
   : code_(ACE_URL_Locator::INVALID_OPERATION),
     seq1_ (0),
     seq2_ (0),
@@ -13,7 +13,7 @@ ACE_URL_Locator_Request::ACE_URL_Locator_Request (void)
 }
 
 ACE_INLINE
-ACE_URL_Locator_Request::~ACE_URL_Locator_Request (void)
+ACE_URL_Locator_Request::~ACE_URL_Locator_Request ()
 {
   delete this->seq1_;
   delete this->seq2_;
@@ -82,7 +82,7 @@ ACE_URL_Locator_Request::buffer () const
 }
 
 ACE_INLINE
-ACE_URL_Locator_Reply::ACE_URL_Locator_Reply (void)
+ACE_URL_Locator_Reply::ACE_URL_Locator_Reply ()
   : code_ (ACE_URL_Locator::INVALID_OPERATION),
     offer_ (0),
     offers_ (0),
@@ -91,7 +91,7 @@ ACE_URL_Locator_Reply::ACE_URL_Locator_Reply (void)
 }
 
 ACE_INLINE
-ACE_URL_Locator_Reply::~ACE_URL_Locator_Reply (void)
+ACE_URL_Locator_Reply::~ACE_URL_Locator_Reply ()
 {
   delete this->offer_;
   delete this->offers_;

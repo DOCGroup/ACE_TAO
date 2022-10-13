@@ -17,13 +17,13 @@ namespace TAO
   }
 
   ACE_INLINE CORBA::Object_ptr
-  Invocation_Base::forwarded_reference (void)
+  Invocation_Base::forwarded_reference ()
   {
     return CORBA::Object::_duplicate (this->forwarded_to_.in ());
   }
 
   ACE_INLINE CORBA::Object_ptr
-  Invocation_Base::steal_forwarded_reference (void)
+  Invocation_Base::steal_forwarded_reference ()
   {
     this->reply_status_ = GIOP::NO_EXCEPTION;
     return this->forwarded_to_._retn ();
@@ -60,20 +60,20 @@ namespace TAO
   }
 
   ACE_INLINE TAO_Operation_Details &
-  Invocation_Base::operation_details (void)
+  Invocation_Base::operation_details ()
   {
     return this->details_;
   }
 
 #if TAO_HAS_INTERCEPTORS == 1
   ACE_INLINE size_t &
-  Invocation_Base::stack_size  (void)
+  Invocation_Base::stack_size  ()
   {
     return this->stack_size_;
   }
 
   ACE_INLINE CORBA::Exception *
-  Invocation_Base::caught_exception (void)
+  Invocation_Base::caught_exception ()
   {
     return this->caught_exception_;
   }

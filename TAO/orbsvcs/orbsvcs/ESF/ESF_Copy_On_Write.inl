@@ -3,7 +3,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class COLLECTION, class ITERATOR> ACE_INLINE
 TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::
-    TAO_ESF_Copy_On_Write_Collection (void)
+    TAO_ESF_Copy_On_Write_Collection ()
       :  refcount_ (1)
 {
 }
@@ -24,7 +24,7 @@ TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_LOCK>::
 
 template<class COLLECTION, class ITERATOR, class ACE_LOCK> ACE_INLINE
 TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_LOCK>::
-    ~TAO_ESF_Copy_On_Write_Read_Guard (void)
+    ~TAO_ESF_Copy_On_Write_Read_Guard ()
 {
   if (this->collection != 0)
     {

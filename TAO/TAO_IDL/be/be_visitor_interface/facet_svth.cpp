@@ -24,7 +24,6 @@ be_visitor_facet_svth::~be_visitor_facet_svth ()
 int
 be_visitor_facet_svth::visit_interface (be_interface *node)
 {
-
   if (node->imported () ||
       node->svnt_src_facet_gen () ||
       idl_global->ami_connector_seen_ ||

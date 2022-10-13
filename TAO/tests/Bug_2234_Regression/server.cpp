@@ -60,8 +60,8 @@ CORBA::ORB_ptr orb;
 class FooImpl : public POA_Test::Foo
 {
 public:
-  FooImpl() {}
-  ~FooImpl() {}
+  FooImpl() = default;
+  ~FooImpl() = default;
 
   //-----------------------------------------------------------
 
@@ -71,22 +71,22 @@ public:
     CORBA::Long &c
  )
   {
-    ACE_DEBUG( (LM_INFO, ". in TestLong\n") );
-    if (static_cast<CORBA::Long>( 1 ) != a)
+    ACE_DEBUG( (LM_INFO, ". in TestLong\n"));
+    if (static_cast<CORBA::Long>(1) != a)
     {
-      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (static_cast<CORBA::Long>( 3 ) != c)
+    if (static_cast<CORBA::Long>(3) != c)
     {
-      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
-    b= static_cast<CORBA::Long>(  a << 1 );
+    b= static_cast<CORBA::Long>(  a << 1);
 
-    c+= static_cast<CORBA::Long>( 1 );
-    return static_cast<CORBA::Long>( 7 );
+    c+= static_cast<CORBA::Long>( 1);
+    return static_cast<CORBA::Long>( 7);
   }
 
   //-----------------------------------------------------------
@@ -97,46 +97,46 @@ public:
     char *&c
  )
   {
-    ACE_DEBUG( (LM_INFO, ". in TestString\n") );
+    ACE_DEBUG( (LM_INFO, ". in TestString\n"));
     if (0 == a)
     {
       //FUZZ: disable check_for_NULL
-      ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter a\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter a\n"));
       //FUZZ: enable check_for_NULL
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (1 != ACE_OS::strlen( a ))
     {
-      ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter a\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter a\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if ('1' != *a)
     {
-      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (0 == c)
     {
       //FUZZ: disable check_for_NULL
-      ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter c\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter c\n"));
       //FUZZ: enable check_for_NULL
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (1 != ACE_OS::strlen( c ))
     {
-      ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter c\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter c\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if ('3' != *c)
     {
-      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
-    b= CORBA::string_dup( "0" ); // Create a one character output buffer
+    b= CORBA::string_dup("0"); // Create a one character output buffer
     *b= a[0] + 1;
     *c+= 1;
-    return CORBA::string_dup( "7" );
+    return CORBA::string_dup("7");
   }
 
   //-----------------------------------------------------------
@@ -150,22 +150,22 @@ public:
     Test::MyNonVarStruct
       newret;
 
-    ACE_DEBUG( (LM_INFO, ". in TestNonVarStruct\n") );
-    if (static_cast<CORBA::Long>( 1 ) != a.val)
+    ACE_DEBUG( (LM_INFO, ". in TestNonVarStruct\n"));
+    if (static_cast<CORBA::Long>(1) != a.val)
     {
-      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (static_cast<CORBA::Long>( 3 ) != c.val)
+    if (static_cast<CORBA::Long>(3) != c.val)
     {
-      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
-    newret.val= static_cast<CORBA::Long>( 7 );
+    newret.val= static_cast<CORBA::Long>( 7);
 
     Test::MyNonVarStruct *newval_p;
-    ACE_NEW_RETURN( newval_p, Test::MyNonVarStruct, newret );
+    ACE_NEW_RETURN( newval_p, Test::MyNonVarStruct, newret);
     Test::MyNonVarStruct_var
       newval= newval_p;
 
@@ -184,39 +184,39 @@ public:
     Test::MyVarStruct &c
  )
   {
-    ACE_DEBUG( (LM_INFO, ". in TestVarStruct\n") );
+    ACE_DEBUG( (LM_INFO, ". in TestVarStruct\n"));
     if (0 == a.val.in())
     {
       //FUZZ: disable check_for_NULL
-      ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter a\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter a\n"));
       //FUZZ: enable check_for_NULL
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (1 != ACE_OS::strlen( a.val.in() ))
     {
-      ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter a\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter a\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if ('1' != *a.val.in())
     {
-      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (0 == c.val.in())
     {
       //FUZZ: disable check_for_NULL
-      ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter c\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter c\n"));
       //FUZZ: enable check_for_NULL
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (1 != ACE_OS::strlen( c.val.in() ))
     {
-      ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter c\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter c\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if ('3' != *c.val.in())
     {
-      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
@@ -226,18 +226,18 @@ public:
     Test::MyVarStruct_var
       newval_p,
       newret_p;
-    ACE_NEW_RETURN( newval_p, Test::MyVarStruct(), 0 );
+    ACE_NEW_RETURN( newval_p, Test::MyVarStruct(), 0);
     Test::MyVarStruct_var
       newval= newval_p;
-    ACE_NEW_RETURN( newret_p, Test::MyVarStruct(), 0 );
+    ACE_NEW_RETURN( newret_p, Test::MyVarStruct(), 0);
     Test::MyVarStruct_var
       newret= newret_p;
 
-    newval->val= CORBA::string_dup( ca );
+    newval->val= CORBA::string_dup( ca);
 
     *c.val.inout()+= 1;
 
-    newret->val= CORBA::string_dup( "7" );
+    newret->val= CORBA::string_dup( "7");
 
     b= newval._retn();
     return newret._retn();
@@ -248,29 +248,28 @@ public:
   Test::MyNonVarUnion TestNonVarUnion(
     const Test::MyNonVarUnion &a,
     Test::MyNonVarUnion_out b,
-    Test::MyNonVarUnion &c
- )
+    Test::MyNonVarUnion &c)
   {
     Test::MyNonVarUnion
       newret;
 
-    ACE_DEBUG( (LM_INFO, ". in TestNonVarUnion\n") );
-    if (static_cast<CORBA::Short>( 1 ) != a._d())
+    ACE_DEBUG( (LM_INFO, ". in TestNonVarUnion\n"));
+    if (static_cast<CORBA::Short>(1) != a._d())
     {
-      ACE_DEBUG( (LM_INFO, "* Incorrect type of parameter a\n") );
+      ACE_DEBUG( (LM_INFO, "* Incorrect type of parameter a\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (static_cast<CORBA::Long>( 1 ) != a.valLong())
+    if (static_cast<CORBA::Long>(1) != a.valLong())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (static_cast<CORBA::Short>( 1 ) != c._d())
+    if (static_cast<CORBA::Short>(1) != c._d())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect type of parameter c\n") );
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (static_cast<CORBA::Long>( 3 ) != c.valLong())
+    if (static_cast<CORBA::Long>(3) != c.valLong())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
@@ -284,7 +283,7 @@ public:
     newval->valLong( a.valLong() << 1 );
     c.valLong( c.valLong() + 1 );
 
-    newret.valLong( static_cast<CORBA::Long>( 7 ) );
+    newret.valLong( static_cast<CORBA::Long>(7));
 
     b= newval._retn();
     return newret;
@@ -299,22 +298,22 @@ public:
  )
   {
     ACE_DEBUG( (LM_INFO, ". in TestVarUnion\n") );
-    if (static_cast<CORBA::Short>( 1 ) != a._d())
+    if (static_cast<CORBA::Short>(1) != a._d())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect type of parameter a\n") );
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (static_cast<CORBA::Long>( 1 ) != a.valLong())
+    if (static_cast<CORBA::Long>(1) != a.valLong())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (static_cast<CORBA::Short>( 1 ) != c._d())
+    if (static_cast<CORBA::Short>(1) != c._d())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect type of parameter c\n") );
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (static_cast<CORBA::Long>( 3 ) != c.valLong())
+    if (static_cast<CORBA::Long>(3) != c.valLong())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
@@ -330,10 +329,10 @@ public:
 
     Test::MyVarUnion_var
       newret_p;
-    ACE_NEW_RETURN( newret_p, Test::MyVarUnion(), 0 );
+    ACE_NEW_RETURN( newret_p, Test::MyVarUnion(), 0);
     Test::MyVarUnion_var
       newret= newret_p;
-    newret->valLong( static_cast<CORBA::Short>( 7 ) );
+    newret->valLong( static_cast<CORBA::Short>(7) );
 
     b= newval._retn();
     return newret._retn();
@@ -353,7 +352,7 @@ public:
       ACE_DEBUG( (LM_INFO, "* Incorrect length of parameter a\n") );
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (static_cast<CORBA::Long>( 1 ) != a[0])
+    if (static_cast<CORBA::Long>(1) != a[0])
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
@@ -363,7 +362,7 @@ public:
       ACE_DEBUG( (LM_INFO, "* Incorrect length of parameter c\n") );
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (static_cast<CORBA::Long>( 3 ) != c[0])
+    if (static_cast<CORBA::Long>(3) != c[0])
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
@@ -402,7 +401,7 @@ public:
     CORBA::Long cL;
     if (a >>= aL)
     {
-      if (static_cast<CORBA::Long>( 1 ) != aL)
+      if (static_cast<CORBA::Long>(1) != aL)
       {
         ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
         throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
@@ -415,7 +414,7 @@ public:
     }
     if (c >>= cL)
     {
-      if (static_cast<CORBA::Long>( 3 ) != cL)
+      if (static_cast<CORBA::Long>(3) != cL)
       {
         ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
         throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);

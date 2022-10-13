@@ -31,7 +31,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-ECT_Throughput::ECT_Throughput (void)
+ECT_Throughput::ECT_Throughput ()
   : n_consumers_ (1),
     n_suppliers_ (1),
     burst_count_ (10),
@@ -51,7 +51,7 @@ ECT_Throughput::ECT_Throughput (void)
 {
 }
 
-ECT_Throughput::~ECT_Throughput (void)
+ECT_Throughput::~ECT_Throughput ()
 {
 }
 
@@ -119,8 +119,7 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
                       this->supplier_type_shift_,
 
                       this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil"),
-                      this->ec_concurrency_hwm_
-                      ) );
+                      this->ec_concurrency_hwm_));
         }
 
       if (this->pid_file_name_ != 0)
@@ -364,7 +363,7 @@ ECT_Throughput::connect_suppliers
 }
 
 void
-ECT_Throughput::activate_suppliers (void)
+ECT_Throughput::activate_suppliers ()
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -383,7 +382,7 @@ ECT_Throughput::activate_suppliers (void)
 }
 
 void
-ECT_Throughput::disconnect_suppliers (void)
+ECT_Throughput::disconnect_suppliers ()
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -392,7 +391,7 @@ ECT_Throughput::disconnect_suppliers (void)
 }
 
 void
-ECT_Throughput::disconnect_consumers (void)
+ECT_Throughput::disconnect_consumers ()
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
@@ -401,7 +400,7 @@ ECT_Throughput::disconnect_consumers (void)
 }
 
 void
-ECT_Throughput::dump_results (void)
+ECT_Throughput::dump_results ()
 {
   ACE_High_Res_Timer::global_scale_factor_type gsf =
     ACE_High_Res_Timer::global_scale_factor ();

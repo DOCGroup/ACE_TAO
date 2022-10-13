@@ -122,7 +122,6 @@ namespace ACE_OS
   /// This method computes the base-2 logarithm of x.
   ACE_NAMESPACE_INLINE_FUNCTION
   double log2 (double x);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

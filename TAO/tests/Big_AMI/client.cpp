@@ -65,10 +65,10 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   /// Constructor.
-  Handler (void) : reply_count_ (0) {};
+  Handler () : reply_count_ (0) {};
 
   /// Destructor.
-  ~Handler (void) {};
+  ~Handler () = default;
 
   /// Get the reply count
   long reply_count () const
@@ -212,8 +212,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       poa_var->destroy (1,  // ethernalize objects
-                        0  // wait for completion
-                       );
+                        0);  // wait for completion
 
       orb->destroy ();
     }

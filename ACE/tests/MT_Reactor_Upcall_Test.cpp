@@ -25,7 +25,6 @@
 #include "ace/ACE.h"
 
 
-
 int number_of_event_loop_threads = 3;
 int number_of_messages = 10;
 int sleep_time_in_msec = 100;

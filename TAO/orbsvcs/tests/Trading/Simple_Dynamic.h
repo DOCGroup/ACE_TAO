@@ -29,8 +29,7 @@ public:
 
   virtual CORBA::Any* evalDP (const char* /* name */,
                               CORBA::TypeCode_ptr /* returned_type */,
-                              const CORBA::Any& /* extra_info */
-                              );
+                              const CORBA::Any&); /* extra_info */
 
 private:
   T dp_;

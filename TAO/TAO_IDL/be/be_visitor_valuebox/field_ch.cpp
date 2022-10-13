@@ -497,7 +497,6 @@ be_visitor_valuebox_field_ch::emit_member_set (be_decl *field,
   *os << "void " << field->local_name ()
       << " (" << const_arg << field_type->name () << arg_modifier << ");"
       << be_nl;
-
 }
 
 

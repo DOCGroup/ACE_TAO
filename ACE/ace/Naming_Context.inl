@@ -13,28 +13,28 @@ ACE_Name_Options::use_registry (bool x)
 }
 
 ACE_INLINE bool
-ACE_Name_Options::verbose (void)
+ACE_Name_Options::verbose ()
 {
   ACE_TRACE ("ACE_Name_Options::verbose");
   return this->verbosity_;
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_Name_Options::process_name (void)
+ACE_Name_Options::process_name ()
 {
   ACE_TRACE ("ACE_Name_Options::process_name");
   return this->process_name_;
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_Name_Options::namespace_dir (void)
+ACE_Name_Options::namespace_dir ()
 {
   ACE_TRACE ("ACE_Name_Options::namespace_dir");
   return this->namespace_dir_;
 }
 
 ACE_INLINE bool
-ACE_Name_Options::debug (void)
+ACE_Name_Options::debug ()
 {
   ACE_TRACE ("ACE_Name_Options::debug");
   return this->debugging_;

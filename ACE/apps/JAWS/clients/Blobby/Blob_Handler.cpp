@@ -4,7 +4,7 @@
 #include "ace/OS_NS_strings.h"
 
 // Empty constructor for compliance with new Connector behavior.
-ACE_Blob_Handler::ACE_Blob_Handler (void)
+ACE_Blob_Handler::ACE_Blob_Handler ()
 {
 }
 
@@ -21,7 +21,7 @@ ACE_Blob_Handler::ACE_Blob_Handler (ACE_Message_Block * mb,
 {
 }
 
-ACE_Blob_Handler::~ACE_Blob_Handler (void)
+ACE_Blob_Handler::~ACE_Blob_Handler ()
 {
   if (filename_)
     {
@@ -40,7 +40,6 @@ ACE_Blob_Handler::open (void *)
   if (this->receive_reply () != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob_Handler::open():receive_reply failed"), -1);
   return 0;
-
 }
 
 // No-op
@@ -54,14 +53,14 @@ ACE_Blob_Handler::close (u_long flags)
 
 // Always overridden by the derived classes
 int
-ACE_Blob_Handler::send_request (void)
+ACE_Blob_Handler::send_request ()
 {
   return -1;
 }
 
 // Always overridden by the derived classes
 int
-ACE_Blob_Handler::receive_reply (void)
+ACE_Blob_Handler::receive_reply ()
 {
   return -1;
 }
@@ -69,7 +68,7 @@ ACE_Blob_Handler::receive_reply (void)
 // used to retrieve the number of bytes read/written by the
 // last operation on the Blob
 int
-ACE_Blob_Handler::byte_count (void)
+ACE_Blob_Handler::byte_count ()
 {
   return bytecount_;
 }
@@ -90,7 +89,7 @@ ACE_Blob_Reader::ACE_Blob_Reader (ACE_Message_Block * mb,
 
 // Send the HTTP request
 int
-ACE_Blob_Reader::send_request (void)
+ACE_Blob_Reader::send_request ()
 {
   char mesg [MAX_HEADER_SIZE];
 
@@ -116,7 +115,7 @@ ACE_Blob_Reader::send_request (void)
 
 // Recieve the HTTP Reply
 int
-ACE_Blob_Reader::receive_reply (void)
+ACE_Blob_Reader::receive_reply ()
 {
   ssize_t len;
   char buf [MAX_HEADER_SIZE + 1];
@@ -257,7 +256,7 @@ ACE_Blob_Writer::ACE_Blob_Writer (ACE_Message_Block * mb,
 }
 
 int
-ACE_Blob_Writer::send_request (void)
+ACE_Blob_Writer::send_request ()
 {
   // Check for sanity -- check if we have any data to send.
   if (offset_+ length_ > mb_->length ())
@@ -303,7 +302,7 @@ ACE_Blob_Writer::send_request (void)
 }
 
 int
-ACE_Blob_Writer::receive_reply (void)
+ACE_Blob_Writer::receive_reply ()
 {
   // Allocate a buffer big enough to hold the header
   char buf[MAX_HEADER_SIZE];

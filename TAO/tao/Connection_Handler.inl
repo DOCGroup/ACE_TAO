@@ -5,13 +5,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_ORB_Core *
-TAO_Connection_Handler::orb_core (void)
+TAO_Connection_Handler::orb_core ()
 {
   return this->orb_core_;
 }
 
 ACE_INLINE TAO_Transport *
-TAO_Connection_Handler::transport (void)
+TAO_Connection_Handler::transport ()
 {
   return this->transport_;
 }
@@ -42,7 +42,7 @@ TAO_Connection_Handler::is_connecting () const
 }
 
 ACE_INLINE void
-TAO_Connection_Handler::connection_pending (void)
+TAO_Connection_Handler::connection_pending ()
 {
   if (!this->connection_pending_)
     {
@@ -52,7 +52,7 @@ TAO_Connection_Handler::connection_pending (void)
 }
 
 ACE_INLINE void
-TAO_Connection_Handler::cancel_pending_connection (void)
+TAO_Connection_Handler::cancel_pending_connection ()
 {
   if (this->connection_pending_)
     {

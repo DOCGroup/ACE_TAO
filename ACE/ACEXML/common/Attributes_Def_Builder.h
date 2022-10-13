@@ -66,7 +66,7 @@ public:
   /**
    * Get the name of the attribute.
    */
-  virtual const ACEXML_Char *getName (void) = 0;
+  virtual const ACEXML_Char *getName () = 0;
 
   /**
    * Set the attribute type.
@@ -89,12 +89,12 @@ public:
    *
    * @retval 0 if the attribute is not a valid combo.
    */
-  virtual int validAttr (void) = 0;
+  virtual int validAttr () = 0;
 
   /**
    * Dump the content of the attribute definition.
    */
-  virtual void dump (void) = 0;
+  virtual void dump () = 0;
 };
 
 /**
@@ -125,7 +125,7 @@ public:
   /**
    * Acquire an Attribute_Builder.
    */
-  virtual ACEXML_Attribute_Def_Builder *getAttribute_Def_Builder (void) = 0;
+  virtual ACEXML_Attribute_Def_Builder *getAttribute_Def_Builder () = 0;
 
   /**
    * Add a definition for one attribute.

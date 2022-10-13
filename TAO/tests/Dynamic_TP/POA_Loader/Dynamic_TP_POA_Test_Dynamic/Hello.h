@@ -18,7 +18,7 @@ public:
   virtual void sleep_sec (CORBA::Short sleep_sec);
   virtual char * get_string (CORBA::Long);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

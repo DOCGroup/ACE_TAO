@@ -86,7 +86,6 @@ public:
   char* fragment_buffer (CORBA::ULong fragment_offset);
 
 private:
-
   TAO_ECG_UDP_Request_Entry (const TAO_ECG_UDP_Request_Entry & rhs);
   TAO_ECG_UDP_Request_Entry& operator= (const TAO_ECG_UDP_Request_Entry & rhs);
 
@@ -176,7 +175,6 @@ public:
   static TAO_ECG_UDP_Request_Entry Request_Completed_;
 
 private:
-
   enum {
     ECG_DEFAULT_MAX_FRAGMENTED_REQUESTS = 1024,
     ECG_DEFAULT_FRAGMENTED_REQUESTS_MIN_PURGE_COUNT = 32
@@ -190,7 +188,6 @@ private:
                                ACE_Null_Mutex> Request_Map;
 
 private:
-
   /// Returns 1 on success, 0 if <request_id> has already been
   /// received or is below current request range, and -1 on error.
   int mark_received (const ACE_INET_Addr &from,
@@ -208,7 +205,6 @@ private:
   Request_Map::ENTRY* get_source_entry (const ACE_INET_Addr &from);
 
 private:
-
   /// Ignore any events coming from this IP address.
   TAO_ECG_Refcounted_Endpoint ignore_from_;
 
@@ -257,7 +253,6 @@ struct TAO_ECG_CDR_Message_Receiver::Mcast_Header
 class TAO_ECG_CDR_Message_Receiver::Requests
 {
 public:
-
   Requests ();
   ~Requests ();
 
@@ -274,7 +269,6 @@ public:
   TAO_ECG_UDP_Request_Entry ** get_request (CORBA::ULong request_id);
 
 private:
-
   /// Delete any outstanding requests with ids in the range
   /// [<purge_first>, <purge_last>] from <fragmented_requests> and
   /// and reset their slots.

@@ -33,7 +33,6 @@ namespace TAO
     // Would be nice to have runtime option.
     ACE_NEW (this->lock_,
              ACE_Lock_Adapter<TAO_SYNCH_MUTEX>);
-
   }
 
   FT_ClientRequest_Interceptor::~FT_ClientRequest_Interceptor ()
@@ -269,7 +268,6 @@ namespace TAO
         }
       // Add this context to the service context list.
       ri->add_request_service_context (sc, 0);
-
     }
     catch (const CORBA::Exception&)
     {

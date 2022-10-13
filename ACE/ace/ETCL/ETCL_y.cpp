@@ -64,8 +64,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-extern int yylex (void);
-extern void yyflush_current_buffer (void);
+extern int yylex ();
+extern void yyflush_current_buffer ();
 
 static void yyerror (const char *)
 {
@@ -84,7 +84,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #define const
 #endif
 #endif
-
 
 
 #define  YYFINAL    114
@@ -539,7 +538,7 @@ __yy_memcpy (char *to, char *from, unsigned int count)
 #ifdef YYPARSE_PARAM
 int yyparse (void *);
 #else
-int yyparse (void);
+int yyparse ();
 #endif
 #endif
 
@@ -836,7 +835,6 @@ yyreduce:
 
 
   switch (yyn) {
-
 case 3:
 //#line 97 "ETCL/ETCL.yy"
 { yyval.constraint = new ETCL_Preference (ETCL_MIN, yyvsp[0].constraint); ;

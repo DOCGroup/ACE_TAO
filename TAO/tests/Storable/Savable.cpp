@@ -10,7 +10,6 @@ const int Savable::bytes_size_max = 128;
 class Savable_File_Guard: public TAO::Storable_File_Guard
 {
 public:
-
   Savable_File_Guard (Savable & savable, Method_Type method_type);
 
   ~Savable_File_Guard ();
@@ -91,7 +90,6 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
   : storable_factory_(storable_factory)
   , loaded_from_stream_ (false)
 {
-
   for (int index = 0; index < 2; ++index)
     {
       this->i_[index] = 0;

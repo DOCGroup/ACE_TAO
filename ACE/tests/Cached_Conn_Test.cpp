@@ -39,7 +39,6 @@
 #endif /* _MSC_VER */
 
 
-
 using ATTRIBUTES = size_t;
 using CACHED_HANDLER = std::pair<Svc_Handler *, ATTRIBUTES>;
 using ACE_ADDR = ARHR<ACE_INET_Addr>;

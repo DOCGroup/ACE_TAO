@@ -192,7 +192,6 @@ ThrMgr_Task::svc ()
 static int
 test_task_record_keeping (ACE_Thread_Manager *mgr)
 {
-
   int status = 0;
 
   ThrMgr_Task t1 (mgr), t2 (mgr);

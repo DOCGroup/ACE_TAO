@@ -158,7 +158,6 @@ namespace ACE
         typedef SSLSock_IStreamBase<ACE_NULL_SYNCH> SSLSock_IStream;
         typedef SSLSock_OStreamBase<ACE_NULL_SYNCH> SSLSock_OStream;
         typedef SSLSock_IOStreamBase<ACE_NULL_SYNCH> SSLSock_IOStream;
-
       }
   }
 

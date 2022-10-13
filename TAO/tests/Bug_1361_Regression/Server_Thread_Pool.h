@@ -13,9 +13,9 @@ public:
                int n_threads);
   // Constructor activates <n_threads> in the thread pool.
 
-  virtual ~Thread_Pool (void);
+  virtual ~Thread_Pool ();
   // Destructor...
-  int shutdown (void);
+  int shutdown ();
 
   virtual int svc ();
 

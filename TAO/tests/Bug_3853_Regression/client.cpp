@@ -26,10 +26,10 @@ bool caught_exception = false;
 class ClientTask : public ACE_Task_Base
 {
 public:
-  ClientTask () {};
-  ~ ClientTask () {};
+  ClientTask () = default;
+  ~ ClientTask () = default;
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     CORBA::Object_var helloObj = orb->string_to_object(server1_ior);
 
@@ -42,7 +42,6 @@ public:
     }
     else
     {
-
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ClientTask start.\n")));
       int i = 0;
       ACE_Time_Value due = ACE_OS::gettimeofday () + ACE_Time_Value (test_duration);
@@ -54,7 +53,7 @@ public:
           ++ i;
           ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)======client calling server1 sayHello %d\n"), i));
           const char* pMsg = " server1 say Hello";
-          hello->sayHello(pMsg) ;
+          hello->sayHello(pMsg);
           ACE_OS::sleep(2);
 
           if (caught_exception) {

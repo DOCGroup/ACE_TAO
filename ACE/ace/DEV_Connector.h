@@ -31,7 +31,7 @@ class ACE_Export ACE_DEV_Connector
 {
 public:
   /// Default constructor.
-  ACE_DEV_Connector (void);
+  ACE_DEV_Connector ();
 
   /**
    * Actively connect and produce a @a new_io if things go well.

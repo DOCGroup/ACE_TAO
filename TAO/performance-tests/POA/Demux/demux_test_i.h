@@ -8,8 +8,7 @@
 class Demux_Test_i : public POA_Demux_Test
 {
 public:
-
-  Demux_Test_i (void);
+  Demux_Test_i ();
   //ctor.
 
   Demux_Test_i (PortableServer::POA_ptr poa)
@@ -18,7 +17,7 @@ public:
     };
   // ctor
 
-  ~Demux_Test_i (void);
+  ~Demux_Test_i ();
   // dtor
 
   // Return the Default POA of this Servant
@@ -27,14 +26,13 @@ public:
       return PortableServer::POA::_duplicate (this->poa_.in ());
     };
 
-  virtual void M302 (void);
+  virtual void M302 ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   PortableServer::POA_var poa_;
   // Implement a different _default_POA()
-
 };
 
 #endif /* TAO_DEMUX_TEST_I_H */

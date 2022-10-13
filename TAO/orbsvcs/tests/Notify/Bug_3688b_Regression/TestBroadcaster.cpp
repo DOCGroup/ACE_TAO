@@ -40,22 +40,18 @@ bool TestBroadcaster::connect(
     v_supplierAdmin =
       v_eventChannel->new_for_suppliers (
       CosNotifyChannelAdmin::OR_OP,
-      supplierAdminId
-    );
+      supplierAdminId);
 
     v_proxyConsumer = v_supplierAdmin->obtain_notification_push_consumer(
       CosNotifyChannelAdmin::SEQUENCE_EVENT,
-      proxyConsumerId
-    );
+      proxyConsumerId);
 
     mv_sequenceProxyPushConsumer =
       CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow(
-        v_proxyConsumer.in()
-      );
+        v_proxyConsumer.in());
 
     mv_sequenceProxyPushConsumer->connect_sequence_push_supplier(
-      CosNotifyComm::SequencePushSupplier::_nil()
-    );
+      CosNotifyComm::SequencePushSupplier::_nil());
   }
   catch(...)
   {
@@ -85,7 +81,7 @@ bool TestBroadcaster::disconnect()
 } /* end of TestBroadcaster::disconnect */
 
 
-bool TestBroadcaster::sendData( )
+bool TestBroadcaster::sendData()
 {
   try
   {

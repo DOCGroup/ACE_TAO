@@ -13,7 +13,7 @@ class HTTPU_Export Parse_HTTP_Request : public HTTP_HCodes
 {
 public:
   Parse_HTTP_Request (const char *request = 0);
-  ~Parse_HTTP_Request (void);
+  ~Parse_HTTP_Request ();
 
   void init (const char *request);
 
@@ -32,10 +32,9 @@ public:
   int error () const;
   // 0 -> ok
 
-  void dump (void);
+  void dump ();
 
 private:
-
   HTTP_Hdr_Node *method_;
   int major_version_;
   int minor_version_;
@@ -43,7 +42,6 @@ private:
   char *url_;
   char *request_;
   int error_;
-
 };
 
 #if defined (ACE_HAS_INLINED_OSCALLS)

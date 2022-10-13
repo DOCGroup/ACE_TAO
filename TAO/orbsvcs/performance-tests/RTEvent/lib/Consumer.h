@@ -38,17 +38,17 @@ public:
   void connect (RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Disconnect from the event channel
-  void disconnect (void);
+  void disconnect ();
 
   /// Access the history of samples
-  ACE_Sample_History &sample_history (void);
+  ACE_Sample_History &sample_history ();
 
   //@{
   /** @name The RtecEventComm::PushConsumer methods
    */
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual void disconnect_push_consumer ();
+  virtual PortableServer::POA_ptr _default_POA ();
   //@}
 
 private:

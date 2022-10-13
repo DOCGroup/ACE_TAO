@@ -24,14 +24,14 @@ ACE_Message_Queue_NT::dequeue_head (ACE_Message_Block *&first_item,
 }
 
 ACE_INLINE bool
-ACE_Message_Queue_NT::is_full (void)
+ACE_Message_Queue_NT::is_full ()
 {
   ACE_TRACE ("ACE_Message_Queue_NT::is_full");
   return false; // Always not full.
 }
 
 ACE_INLINE bool
-ACE_Message_Queue_NT::is_empty (void)
+ACE_Message_Queue_NT::is_empty ()
 {
   ACE_TRACE ("ACE_Message_Queue_NT::is_empty");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, false);
@@ -40,7 +40,7 @@ ACE_Message_Queue_NT::is_empty (void)
 }
 
 ACE_INLINE size_t
-ACE_Message_Queue_NT::message_bytes (void)
+ACE_Message_Queue_NT::message_bytes ()
 {
   ACE_TRACE ("ACE_Message_Queue_NT::message_bytes");
   // Accessing to size_t must be atomic.
@@ -48,7 +48,7 @@ ACE_Message_Queue_NT::message_bytes (void)
 }
 
 ACE_INLINE size_t
-ACE_Message_Queue_NT::message_length (void)
+ACE_Message_Queue_NT::message_length ()
 {
   ACE_TRACE ("ACE_Message_Queue_NT::message_length");
   // Accessing to size_t must be atomic.
@@ -56,7 +56,7 @@ ACE_Message_Queue_NT::message_length (void)
 }
 
 ACE_INLINE size_t
-ACE_Message_Queue_NT::message_count (void)
+ACE_Message_Queue_NT::message_count ()
 {
   ACE_TRACE ("ACE_Message_Queue_NT::message_count");
   // Accessing to size_t must be atomic.
@@ -82,14 +82,14 @@ ACE_Message_Queue_NT::message_length (size_t new_value)
 }
 
 ACE_INLINE DWORD
-ACE_Message_Queue_NT::max_threads (void)
+ACE_Message_Queue_NT::max_threads ()
 {
   ACE_TRACE ("ACE_Message_Queue_NT::max_threads");
   return this->max_cthrs_;
 }
 
 ACE_INLINE int
-ACE_Message_Queue_NT::deactivated (void)
+ACE_Message_Queue_NT::deactivated ()
 {
   ACE_TRACE ("ACE_Message_Queue_NT::deactivated");
   // Accessing to int must be atomic.
@@ -97,7 +97,7 @@ ACE_Message_Queue_NT::deactivated (void)
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_Message_Queue_NT::completion_port (void)
+ACE_Message_Queue_NT::completion_port ()
 {
   ACE_TRACE ("ACE_Message_Queue_NT::completion_port");
   return this->completion_port_;
@@ -113,7 +113,7 @@ ACE_Message_Queue_NT::peek_dequeue_head (ACE_Message_Block *&first_item,
 }
 
 ACE_INLINE ACE_Notification_Strategy *
-ACE_Message_Queue_NT::notification_strategy (void)
+ACE_Message_Queue_NT::notification_strategy ()
 {
   ACE_NOTSUP_RETURN (0);
 }

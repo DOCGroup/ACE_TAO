@@ -147,8 +147,8 @@
 #include <fe_utils.h>
 
 void tao_yyerror (const char *);
-int tao_yylex (void);
-extern "C" int tao_yywrap (void);
+int tao_yylex ();
+extern "C" int tao_yywrap ();
 
 extern char tao_yytext[];
 extern int tao_yyleng;
@@ -714,7 +714,6 @@ enum yysymbol_kind_t
   YYSYMBOL_521_192 = 521                   /* $@192  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
-
 
 
 
@@ -2465,7 +2464,6 @@ int yydebug;
 
 
 
-
 /*-----------------------------------------------.
 | Release the memory associated to this symbol.  |
 `-----------------------------------------------*/
@@ -2495,13 +2493,12 @@ int yynerrs;
 
 
 
-
 /*----------.
 | yyparse.  |
 `----------*/
 
 int
-yyparse (void)
+yyparse ()
 {
     yy_state_fast_t yystate = 0;
     /* Number of tokens to shift before error messages enabled.  */
@@ -2531,7 +2528,6 @@ yyparse (void)
   /* The variables used to return semantic value and location from the
      action routines.  */
   YYSTYPE yyval;
-
 
 
 #define YYPOPSTACK(N)   (yyvsp -= (N), yyssp -= (N))
@@ -10379,7 +10375,6 @@ yyreduce:
   case 575: /* formal_parameter: formal_parameter_type IDENTIFIER  */
 #line 6904 "fe/idl.ypp"
         {
-
           ACE_NEW_RETURN ((yyval.pival),
                           FE_Utils::T_Param_Info,
                           1);
@@ -11161,7 +11156,7 @@ yyreturnlab:
  * ???
  */
 int
-tao_yywrap (void)
+tao_yywrap ()
 {
   return 1;
 }

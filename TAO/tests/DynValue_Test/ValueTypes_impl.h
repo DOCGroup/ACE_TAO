@@ -21,7 +21,7 @@ public:
   BaseValue_impl (CORBA::UShort us1, CORBA::UShort us2)
   : OBV_DynValue_Test::BaseValue (us1,us2) {}
   virtual ~BaseValue_impl ();
-  virtual CORBA::ValueBase * _copy_value (void);
+  virtual CORBA::ValueBase * _copy_value ();
   virtual void print ();
 };
 
@@ -42,7 +42,7 @@ public:
   NestedValue_impl (CORBA::Short s1, CORBA::Short s2)
   : OBV_DynValue_Test::NestedValue (s1,s2) {}
   virtual ~NestedValue_impl ();
-  virtual CORBA::ValueBase * _copy_value (void);
+  virtual CORBA::ValueBase * _copy_value ();
 };
 
 class NestedValue_Factory : public factory_id
@@ -60,7 +60,7 @@ class NullValue_impl : public virtual OBV_DynValue_Test::NullValue,
 public:
   NullValue_impl () {}
   virtual ~NullValue_impl ();
-  virtual CORBA::ValueBase * _copy_value (void);
+  virtual CORBA::ValueBase * _copy_value ();
 };
 
 class NullValue_Factory : public factory_id

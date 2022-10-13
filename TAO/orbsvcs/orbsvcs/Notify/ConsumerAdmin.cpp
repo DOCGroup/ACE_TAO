@@ -43,7 +43,6 @@ TAO_Notify_ConsumerAdmin::get_admin_type_name () const
 }
 
 
-
 TAO_Notify_ConsumerAdmin::~TAO_Notify_ConsumerAdmin ()
 {
 }

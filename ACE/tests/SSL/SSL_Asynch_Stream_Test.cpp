@@ -39,7 +39,6 @@
 #include "ace/SSL/SSL_SOCK_Stream.h"
 
 
-
 #if defined (ACE_HAS_THREADS) && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.

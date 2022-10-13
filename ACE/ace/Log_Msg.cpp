@@ -73,7 +73,7 @@ static ACE_Cleanup_Adapter<ACE_Log_Msg>* log_msg_cleanup = 0;
 class ACE_Msg_Log_Cleanup: public ACE_Cleanup_Adapter<ACE_Log_Msg>
 {
 public:
-  virtual ~ACE_Msg_Log_Cleanup (void) {
+  virtual ~ACE_Msg_Log_Cleanup () {
     if (this == log_msg_cleanup)
       log_msg_cleanup = 0;
   }
@@ -1232,11 +1232,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case 'N':             // Source file name
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-#else
-                  ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-#endif
+                  ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp, bspace, format,
                                                  this->file () ?
@@ -1251,11 +1247,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case 'n':             // Program name
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-#else /* ACE_WIN32 && ACE_USES_WCHAR */
-                  ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-#endif
+                  ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp, bspace, format,
                                                  ACE_Log_Msg::program_name_ ?
@@ -1495,11 +1487,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
                       // Nope, print out standard priority_name() string
 
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                      ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-#else
-                      ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-#endif
+                      ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                       if (can_check)
                         this_len = ACE_OS::snprintf
                           (bp, bspace, format,
@@ -1529,11 +1517,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       {
 #endif
 
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                        ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-#else /* ACE_WIN32 && ACE_USES_WCHAR */
-                        ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-#endif
+                        ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format, ACE_TEXT_CHAR_TO_TCHAR (msg));
@@ -1713,11 +1697,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                                       sizeof (day_and_time) / sizeof (ACE_TCHAR),
                                       true);
                     }
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                    ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-#else
-                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-#endif
+                    ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                     if (can_check)
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format, day_and_time);
@@ -1731,11 +1711,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           // hour:minute:sec.usec format.
                   {
                     ACE_TCHAR day_and_time[27];
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                    ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-#else
-                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-#endif
+                    ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                     // Did we find the flag indicating a time value argument
                     if (format[1] == ACE_TEXT('#'))
                     {
@@ -1810,11 +1786,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                     wchar_t *str = va_arg (argp, wchar_t *);
-                    ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
                     ACE_TCHAR *str = va_arg (argp, ACE_TCHAR *);
-                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
+                    ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                     if (can_check)
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format, str ? str : ACE_TEXT ("(null)"));
@@ -2968,11 +2943,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   if (text)
     wr_ptr += ACE_OS::snprintf (wr_ptr,
                                   end_ptr - wr_ptr,
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                                  ACE_TEXT ("%ls - "),
-#else
-                                  ACE_TEXT ("%s - "),
-#endif
+                                  ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT (" - "),
                                   text);
 
   wr_ptr += ACE_OS::snprintf (wr_ptr,

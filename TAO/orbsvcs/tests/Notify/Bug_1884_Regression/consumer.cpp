@@ -24,7 +24,6 @@ namespace CosNotifyCommImpl{
       std::cout << "event.header.fixed_header.event_type.type_name = "
         << event.header.fixed_header.event_type.type_name
         << std::endl;
-
     };
 
     void disconnect_structured_push_consumer()

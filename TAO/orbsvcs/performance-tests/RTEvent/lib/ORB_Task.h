@@ -27,7 +27,7 @@ public:
   ORB_Task (CORBA::ORB_ptr orb);
 
   /// Run the event loop
-  int svc (void);
+  int svc ();
 
   /// Smart-pointer operator
   CORBA::ORB_ptr operator-> () const;

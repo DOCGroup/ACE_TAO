@@ -15,7 +15,6 @@ namespace
 
 namespace Kokyu
 {
-
 typedef ACE_Cached_Allocator<Dispatch_Queue_Item, ACE_SYNCH_MUTEX>
 Dispatch_Queue_Item_Allocator;
 

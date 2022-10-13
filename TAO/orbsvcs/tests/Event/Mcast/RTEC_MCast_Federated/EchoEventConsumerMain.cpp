@@ -99,7 +99,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb->destroy();
 
     return 0;
-
   }
   catch (const CORBA::Exception& exc)
   {

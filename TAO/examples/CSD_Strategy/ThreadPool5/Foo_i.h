@@ -14,15 +14,15 @@ class Foo_i : public virtual POA_Foo
     Foo_i(const char* servant_name, FooServantList* mgr);
     virtual ~Foo_i();
 
-    virtual void op1(void);
+    virtual void op1();
 
     virtual void op2(CORBA::Long value);
 
-    virtual CORBA::Long op3(void);
+    virtual CORBA::Long op3();
 
     virtual void op4(CORBA::Long value);
 
-    virtual void op5(void);
+    virtual void op5();
 
     virtual CORBA::Boolean op6 (
         const char * user_name,
@@ -63,7 +63,7 @@ class Foo_i : public virtual POA_Foo
 
     virtual void test_callback ();
 
-    virtual void done(void);
+    virtual void done();
 
     void active (bool flag);
 

@@ -2,7 +2,6 @@
 #include "URL_Status.h"
 
 
-
 URL_Status::URL_Status (STATUS_CODE code)
   : status_ (code)
 {
@@ -31,7 +30,7 @@ URL_Status::status (URL_Status::STATUS_CODE s)
   this->status_ = s;
 }
 
-int URL_Status::destroy (void)
+int URL_Status::destroy ()
 {
   delete this;
   return 0;

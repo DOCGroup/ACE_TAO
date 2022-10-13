@@ -10,7 +10,7 @@ public:
   void hello (CORBA::Long howmany);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown  (void);
+  void shutdown  ();
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -29,7 +29,7 @@ Test_i::hello (CORBA::Long howmany)
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
   this->orb_->shutdown (false);
 }
@@ -63,7 +63,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
   {
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);

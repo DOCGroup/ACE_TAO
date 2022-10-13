@@ -33,8 +33,7 @@ class ORT_test_IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
-  ORT_test_IORInterceptor (void);
+  ORT_test_IORInterceptor ();
 
   /**
    * @name Methods Required by the IOR Interceptor Interface
@@ -45,10 +44,10 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Add the tagged components to the IOR.
   virtual void establish_components (
@@ -68,11 +67,9 @@ public:
   //@}
 
 private:
-
   CORBA::Long establish_count_;
 
   CORBA::Long components_establish_count_;
-
 };
 
 #if defined(_MSC_VER)

@@ -66,7 +66,7 @@ TAO_DIOP_Profile::TAO_DIOP_Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO_DIOP_Profile::~TAO_DIOP_Profile (void)
+TAO_DIOP_Profile::~TAO_DIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -342,7 +342,7 @@ TAO_DIOP_Profile::hash (CORBA::ULong max)
 }
 
 TAO_Endpoint*
-TAO_DIOP_Profile::endpoint (void)
+TAO_DIOP_Profile::endpoint ()
 {
   return &this->endpoint_;
 }
@@ -438,7 +438,6 @@ TAO_DIOP_Profile::to_string () const
               digits [this->version_.minor],
               endp->host (),
               endp->port ());
-
   }
   ACE_OS::sprintf (buf + ACE_OS::strlen (buf),
                    "%c%s",
@@ -449,7 +448,7 @@ TAO_DIOP_Profile::to_string () const
 }
 
 const char *
-TAO_DIOP_Profile::prefix (void)
+TAO_DIOP_Profile::prefix ()
 {
   return ::the_prefix;
 }
@@ -500,7 +499,7 @@ TAO_DIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 }
 
 int
-TAO_DIOP_Profile::encode_endpoints (void)
+TAO_DIOP_Profile::encode_endpoints ()
 {
   // Create a data structure and fill it with endpoint info for wire
   // transfer.
@@ -553,7 +552,7 @@ TAO_DIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_DIOP_Profile::decode_endpoints (void)
+TAO_DIOP_Profile::decode_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;

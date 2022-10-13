@@ -104,7 +104,6 @@ Request_Context_Repository::get_object_id(
   CORBA::Any_var a = ri->get_slot(object_id_slot);
 
   return ::get_object_id(a);
-
 }
 
 void
@@ -235,7 +234,6 @@ Request_Context_Repository::get_transaction_depth(
   FTRT::TransactionDepth result=0;
   a >>= result;
   return result;
-
 }
 
 FTRT::TransactionDepth
@@ -249,7 +247,6 @@ Request_Context_Repository::get_transaction_depth()
   FTRT::TransactionDepth result=0;
   a >>= result;
   return result;
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

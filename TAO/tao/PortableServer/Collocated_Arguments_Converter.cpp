@@ -5,8 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
-Collocated_Arguments_Converter::~Collocated_Arguments_Converter (void)
+Collocated_Arguments_Converter::~Collocated_Arguments_Converter ()
 {
 }
 

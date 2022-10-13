@@ -214,7 +214,6 @@ private:
   int give_shared_profile (TAO_Profile *pfile);
 
 private:
-
   /**
    * Used for chaning references when the current profile is
    * forwarded.  Note, this will only be valid for an MProfile which

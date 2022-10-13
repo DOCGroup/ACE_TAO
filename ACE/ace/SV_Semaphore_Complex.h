@@ -58,7 +58,7 @@ public:
     ACE_OPEN   = 0
   };
 
-  ACE_SV_Semaphore_Complex (void);
+  ACE_SV_Semaphore_Complex ();
   ACE_SV_Semaphore_Complex (key_t key,
                             short create = ACE_SV_Semaphore_Complex::ACE_CREATE,
                             int initial_value = 1,
@@ -69,7 +69,7 @@ public:
                             int initial_value = 1,
                             u_short nsems = 1,
                             mode_t perms = ACE_DEFAULT_FILE_PERMS);
-  ~ACE_SV_Semaphore_Complex (void);
+  ~ACE_SV_Semaphore_Complex ();
 
   /// Open or create an array of SV_Semaphores.  We return 0 if all is
   /// OK, else -1.
@@ -94,7 +94,7 @@ public:
    * processes using the ACE_SV_Semaphore, and if this was the last
    * one, we can remove the ACE_SV_Semaphore.
    */
-  int close (void);
+  int close ();
 
   // = Semaphore acquire and release methods.
 

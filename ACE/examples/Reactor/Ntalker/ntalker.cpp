@@ -29,7 +29,7 @@ public:
            ACE_Reactor & );
   // Constructor.
 
-  ~Handler (void);
+  ~Handler ();
   // Destructor.
 
   // Event demuxer hooks.
@@ -130,7 +130,7 @@ Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask)
   return 0;
 }
 
-Handler::~Handler (void)
+Handler::~Handler ()
 {
   if (this->mcast_.leave (sockmc_addr_) == -1)
     ACE_ERROR ((LM_ERROR,

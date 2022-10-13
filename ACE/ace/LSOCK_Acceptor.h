@@ -40,7 +40,7 @@ class ACE_Export ACE_LSOCK_Acceptor : public ACE_SOCK_Acceptor
 {
 public:
   /// Default constructor.
-  ACE_LSOCK_Acceptor (void);
+  ACE_LSOCK_Acceptor ();
 
   /// Initiate a passive mode socket.
   ACE_LSOCK_Acceptor (const ACE_Addr &local_sap,
@@ -65,7 +65,7 @@ public:
 
   /// Close down the ACE_LSOCK and remove the rendezvous point from the
   /// file system.
-  int remove (void);
+  int remove ();
 
   /// Return the local endpoint address.
   int get_local_addr (ACE_Addr &) const;

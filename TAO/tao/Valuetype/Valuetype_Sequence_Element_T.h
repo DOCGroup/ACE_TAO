@@ -18,7 +18,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename obj_ref_traits>
 class valuetype_sequence_element
 {
@@ -116,7 +115,6 @@ private:
   value_type * element_;
   CORBA::Boolean release_;
 };
-
 } // namespace details
 } // namespace CORBA
 

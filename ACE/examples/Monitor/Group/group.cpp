@@ -17,7 +17,7 @@ using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 class Monitor_Checker : public ACE_Task_Base
 {
 public:
-  int svc (void)
+  int svc ()
   {
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER* mgr =

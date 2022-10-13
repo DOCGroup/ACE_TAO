@@ -129,7 +129,6 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
 }
 
 
-
 int
 be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
     be_visitor_context & /*ctx*/,

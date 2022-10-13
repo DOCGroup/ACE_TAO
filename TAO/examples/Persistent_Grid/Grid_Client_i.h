@@ -29,10 +29,10 @@ class Grid_Client_i
 {
 public:
   /// Constructor
-  Grid_Client_i (void);
+  Grid_Client_i ();
 
   /// Destructor
-  virtual ~Grid_Client_i (void);
+  virtual ~Grid_Client_i ();
 
   /// Execute the methods.
   virtual int run (const char *, int, ACE_TCHAR *[]);

@@ -235,16 +235,6 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
   /* yyyy-mm-dd hh:mm:ss.mmmmmm<nul> */
   ACE_TCHAR timestamp[27]; // Only used by VERBOSE and VERBOSE_LITE.
 
-  // The sprintf format needs to be different for Windows and POSIX
-  // in the wide-char case.
-#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-  const ACE_TCHAR *verbose_fmt =      ACE_TEXT ("%s@%s@%u@%s@%s");
-  const ACE_TCHAR *verbose_lite_fmt = ACE_TEXT ("%s@%s@%s");
-#else
-  const ACE_TCHAR *verbose_fmt = ACE_TEXT ("%ls@%ls@%u@%ls@%ls");
-  const ACE_TCHAR *verbose_lite_fmt = ACE_TEXT ("%ls@%ls@%ls");
-#endif
-
   if (ACE_BIT_ENABLED (verbose_flag,
                        ACE_Log_Msg::VERBOSE)
       || ACE_BIT_ENABLED (verbose_flag,
@@ -269,7 +259,10 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
                                       ? ACE_TEXT ("<local_host>")
                                       : host_name);
       ACE_OS::snprintf (verbose_msg, verbose_msg_size,
-                       verbose_fmt,
+                       ACE_TEXT ("%") ACE_TEXT_PRIs
+                       ACE_TEXT ("@%") ACE_TEXT_PRIs
+                       ACE_TEXT ("@%u@%") ACE_TEXT_PRIs
+                       ACE_TEXT ("@%") ACE_TEXT_PRIs,
                        timestamp,
                        lhost_name,
                        this->pid_,
@@ -278,7 +271,9 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
     }
   else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
     ACE_OS::snprintf (verbose_msg, verbose_msg_size,
-                     verbose_lite_fmt,
+                     ACE_TEXT ("%") ACE_TEXT_PRIs
+                     ACE_TEXT ("@%") ACE_TEXT_PRIs
+                     ACE_TEXT ("@%") ACE_TEXT_PRIs,
                      timestamp,
                      ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
                      this->msg_data_);
@@ -318,15 +313,9 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
             {
               int const verbose_msg_len =
                 static_cast<int> (ACE_OS::strlen (verbose_msg));
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
               int const fwrite_result = ACE_OS::fprintf (fp,
-                                                         ACE_TEXT ("%ls"),
+                                                         ACE_TEXT ("%") ACE_TEXT_PRIs,
                                                          verbose_msg);
-#else
-              int const fwrite_result = ACE_OS::fprintf (fp,
-                                                         ACE_TEXT ("%s"),
-                                                         verbose_msg);
-#endif
               // We should have written everything
               if (fwrite_result != verbose_msg_len)
                 result = -1;

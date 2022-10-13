@@ -16,7 +16,6 @@
 #include "ace/Null_Mutex.h"
 
 
-
 using HASH_STRING_MAP = ACE_Hash_Multi_Map_Manager<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
 
 using HASH_STRING_ENTRY = HASH_STRING_MAP::ENTRY;

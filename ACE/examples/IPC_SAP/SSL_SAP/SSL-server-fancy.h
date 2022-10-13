@@ -10,10 +10,10 @@ class Options
   //   Define the options for this test.
 {
 public:
-  Options (void);
+  Options ();
   // Constructor.
 
-  ~Options (void);
+  ~Options ();
   // Destructor.
 
   int parse_args (int argc, ACE_TCHAR *argv[]);

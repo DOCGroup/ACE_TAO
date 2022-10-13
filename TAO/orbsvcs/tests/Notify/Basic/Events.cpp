@@ -4,7 +4,6 @@
 #include "Events.h"
 
 
-
 /***************************************************************************/
 
 Event_StructuredPushConsumer::Event_StructuredPushConsumer (Events *test_client)
@@ -37,17 +36,17 @@ Event_StructuredPushSupplier::Event_StructuredPushSupplier (
 {
 }
 
-Event_StructuredPushSupplier::~Event_StructuredPushSupplier (void)
+Event_StructuredPushSupplier::~Event_StructuredPushSupplier ()
 {
 }
 
 /***************************************************************************/
-Events::Events (void)
+Events::Events ()
   : use_default_admin_ (0), event_count_ (5)
 {
 }
 
-Events::~Events (void)
+Events::~Events ()
 {
 }
 
@@ -112,7 +111,7 @@ Events::init (int argc,
 
   this->supplier_->connect (this->supplier_admin_.in ());
 
-  consumer_start( 0 );
+  consumer_start(0);
 
   return 0;
 }
@@ -131,7 +130,6 @@ Events::parse_args (int argc,
         {
           this->use_default_admin_ = 1;
           arg_shifter.consume_arg ();
-
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-events"))))
         {
@@ -161,7 +159,7 @@ Events::parse_args (int argc,
 }
 
 void
-Events::create_EC (void)
+Events::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -192,7 +190,7 @@ Events::create_EC (void)
 }
 
 void
-Events::on_event_received (void)
+Events::on_event_received ()
 {
   ++this->result_count_;
 
@@ -208,7 +206,7 @@ Events::on_event_received (void)
 }
 
 void
-Events::run_test (void)
+Events::run_test ()
 {
   // operations:
   CosNotification::StructuredEvent event;
@@ -259,13 +257,13 @@ Events::run_test (void)
 }
 
 void
-Events::end_test (void)
+Events::end_test ()
 {
-  consumer_done( 0 );
+  consumer_done(0);
 }
 
 int
-Events::check_results (void)
+Events::check_results ()
 {
   // Destroy the channel.
   this->ec_->destroy ();
@@ -303,7 +301,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       events.run_test ();
 
-      events.ORB_run( );
+      events.ORB_run();
     }
   catch (const CORBA::Exception& se)
     {

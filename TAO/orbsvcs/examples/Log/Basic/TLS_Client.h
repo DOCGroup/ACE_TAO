@@ -23,23 +23,23 @@ class TLS_Client
   // = DESCRIPTION
   //   This client demonstates how to use the log service.
  public:
-  TLS_Client (void);
+  TLS_Client ();
   ~TLS_Client ();
 
   void init (int argc, ACE_TCHAR *argv []);
   // Init the Client.
 
-  void run_tests (void);
+  void run_tests ();
   // Run the tests..
 
  protected:
   void init_ORB (int argc, ACE_TCHAR *argv []);
   // Initializes the ORB.
 
-  void resolve_naming_service (void);
+  void resolve_naming_service ();
   // Try to get hold of a running naming service.
 
-  void resolve_TLS_Basic_factory (void);
+  void resolve_TLS_Basic_factory ();
   // Try to resolve the TLS factory from the Naming service.
 
   // = Data Members
@@ -51,7 +51,6 @@ class TLS_Client
 
   DsLogAdmin::BasicLogFactory_var basic_log_factory_;
   // The basic log factory from the Log Service.
-
 
 
 };

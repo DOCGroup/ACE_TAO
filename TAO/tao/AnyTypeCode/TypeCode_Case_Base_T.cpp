@@ -12,7 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType, typename TypeCodeType>
-TAO::TypeCode::Case<StringType, TypeCodeType>::~Case (void)
+TAO::TypeCode::Case<StringType, TypeCodeType>::~Case ()
 {
 }
 

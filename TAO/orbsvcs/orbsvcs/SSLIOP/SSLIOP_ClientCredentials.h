@@ -66,7 +66,7 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * context_id (void);
+      virtual char * context_id ();
 
       virtual SecurityLevel3::Principal * client_principal ();
 
@@ -82,13 +82,13 @@ namespace TAO
 
       virtual SecurityLevel3::OwnCredentials_ptr parent_credentials ();
 
-      virtual CORBA::Boolean client_authentication (void);
+      virtual CORBA::Boolean client_authentication ();
 
-      virtual CORBA::Boolean target_authentication (void);
+      virtual CORBA::Boolean target_authentication ();
 
-      virtual CORBA::Boolean confidentiality (void);
+      virtual CORBA::Boolean confidentiality ();
 
-      virtual CORBA::Boolean integrity (void);
+      virtual CORBA::Boolean integrity ();
       //@}
 
     protected:
@@ -97,7 +97,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ClientCredentials (void);
+      ~ClientCredentials ();
 
     private:
       /// Reference to the OpenSSL @c SSL data structure associated

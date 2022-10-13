@@ -58,14 +58,14 @@ class Sender
 {
 public:
   /// Constructor
-  Sender (void);
+  Sender ();
 
   /// Method to initialize the various data components.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   /// Method to pace and send data from a file.
-  int pace_data (void);
+  int pace_data ();
 
   /// Set the protocol object corresponding to the transport protocol chosen.
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);

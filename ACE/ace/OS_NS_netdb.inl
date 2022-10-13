@@ -53,7 +53,7 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
   if (0 == addr || '\0' == addr[0])
       return 0;
 
-#   if defined (ACE_VXWORKS)
+#   if defined (ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT)
   // VxWorks 6.x has a gethostbyaddr() that is threadsafe and
   // returns an heap-allocated hostentry structure.
   // just call ACE_OS::gethostbyaddr_r () which knows how to handle this.
@@ -134,7 +134,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   //FUZZ: enable check_for_lack_ACE_OS
   else
     return (struct hostent *) 0;
-#   elif defined (ACE_VXWORKS)
+#   elif defined (ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT)
   ACE_UNUSED_ARG (h_errnop);
   // VxWorks 6.x has a threadsafe gethostbyaddr() which returns a heap-allocated
   // data structure which needs to be freed with hostentFree()
@@ -238,10 +238,12 @@ ACE_OS::gethostbyname (const char *name)
   if (0 == name || '\0' == name[0])
       return 0;
 
-#   if defined (ACE_VXWORKS)
+#   if defined (ACE_VXWORKS_HAS_GETHOSTBYNAME_REENTRANT)
   // VxWorks 6.x has a gethostbyname() that is threadsafe and
   // returns an heap-allocated hostentry structure.
   // just call ACE_OS::gethostbyname_r () which knows how to handle this.
+  // With VxWorks 7 it depends on the GETHOSTBYNAME_REENTRANT
+  // define
   struct hostent hentry;
   ACE_HOSTENT_DATA buf;
   int h_error;  // Not the same as errno!
@@ -318,10 +320,11 @@ ACE_OS::gethostbyname_r (const char *name,
   //FUZZ: enable check_for_lack_ACE_OS
   else
     return (struct hostent *) 0;
-#   elif defined (ACE_VXWORKS)
+#   elif defined (ACE_VXWORKS_HAS_GETHOSTBYNAME_REENTRANT)
   ACE_UNUSED_ARG (h_errnop);
   // VxWorks 6.x has a threadsafe gethostbyname() which returns a heap-allocated
   // data structure which needs to be freed with hostentFree()
+  // With VxWorks 7 it depends on the GETHOSTBYNAME_REENTRANT macro
   //FUZZ: disable check_for_lack_ACE_OS
   struct hostent* hp = ::gethostbyname (name);
   //FUZZ: enable check_for_lack_ACE_OS
@@ -363,7 +366,7 @@ ACE_OS::gethostbyname_r (const char *name,
   }
   else
   {
-    return (struct hostent *) 0;
+    return nullptr;
   }
 #   else
 #     if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)

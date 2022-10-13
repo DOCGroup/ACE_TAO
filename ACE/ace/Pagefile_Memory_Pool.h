@@ -127,7 +127,7 @@ protected:
   int map (int &firstTime, size_t appendBytes = 0);
 
   /// Release the mapping.
-  int unmap (void);
+  int unmap ();
 
 private:
   /**

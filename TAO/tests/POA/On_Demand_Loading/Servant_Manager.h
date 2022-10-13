@@ -48,7 +48,7 @@ public:
   ServantManager_i (CORBA::ORB_ptr orb);
 
   /// Destruction.
-   ~ServantManager_i (void);
+   ~ServantManager_i ();
 
   /**
    * Returns an ObjectId when given an DLL name and the factory method
@@ -108,6 +108,5 @@ public:
    * using the unique ObjectId as key.
    */
   SERVANT_MAP servant_map_;
-
 };
 #endif /* SERVANT_MANAGER_H */

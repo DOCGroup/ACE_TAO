@@ -271,15 +271,14 @@ public:
   bool forwarded_on_exception () const;
 
 protected:
-
   /// Destructor is to be called only through _decr_refcnt() to
   /// enforce proper reference counting.
   virtual ~TAO_Stub ();
 
-  /// NON-THREAD SAFE version of reset_profiles (void);
+  /// NON-THREAD SAFE version of reset_profiles ();
   void reset_profiles_i ();
 
-  /// NON-THREAD SAFE version of next_profile (void)
+  /// NON-THREAD SAFE version of next_profile ()
   TAO_Profile *next_profile_i ();
 
 private:
@@ -306,7 +305,6 @@ private:
   int get_profile_ior_info (TAO_MProfile &profile, IOP::IOR *&ior_info);
 
 private:
-
   // = Disallow copy construction and assignment.
   TAO_Stub (const TAO_Stub &);
   TAO_Stub &operator = (const TAO_Stub &);

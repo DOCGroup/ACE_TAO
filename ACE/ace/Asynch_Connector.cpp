@@ -20,7 +20,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class HANDLER>
-ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector (void)
+ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector ()
   : pass_addresses_ (false),
     validate_new_connection_ (false)
 {
@@ -167,7 +167,7 @@ ACE_Asynch_Connector<HANDLER>::validate_connection
 }
 
 template <class HANDLER> int
-ACE_Asynch_Connector<HANDLER>::cancel (void)
+ACE_Asynch_Connector<HANDLER>::cancel ()
 {
   return this->asynch_connect_.cancel ();
 }
@@ -218,13 +218,13 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
 
 
 template <class HANDLER> ACE_Asynch_Connect &
-ACE_Asynch_Connector<HANDLER>::asynch_connect (void)
+ACE_Asynch_Connector<HANDLER>::asynch_connect ()
 {
   return this->asynch_connect_;
 }
 
 template <class HANDLER> HANDLER *
-ACE_Asynch_Connector<HANDLER>::make_handler (void)
+ACE_Asynch_Connector<HANDLER>::make_handler ()
 {
   // Default behavior
   HANDLER *handler = 0;

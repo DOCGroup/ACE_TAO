@@ -17,7 +17,7 @@ private:
 ACE_Token Token_Test::token;
 
 int
-Token_Test::svc (void)
+Token_Test::svc ()
 {
   // Extract out the unique thread-specific value to be used as an
   // index...

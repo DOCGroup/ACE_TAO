@@ -53,14 +53,14 @@ SENDER_ENDPOINT_STRATEGY;
 class Sender
 {
 public:
-  Sender (void);
+  Sender ();
   /// Constructor
 
   int init (int argc,
             ACE_TCHAR *argv[]);
   /// Method to initialize the various data components.
 
-  int pace_data (void);
+  int pace_data ();
   /// Method to pace and send data from a file.
 
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
@@ -70,7 +70,7 @@ private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   /// Method to parse the command line arguments.
 
-  int bind_to_receiver (void);
+  int bind_to_receiver ();
   /// Method that binds the sender to the receiver.
 
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;

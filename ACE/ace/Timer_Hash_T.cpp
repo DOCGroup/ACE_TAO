@@ -18,7 +18,7 @@ class Hash_Token
 {
 public:
   // This constructor is required by ACE_Locked_Free_List::alloc.
-  Hash_Token (void) :
+  Hash_Token () :
     act_ (0),
     pos_ (0),
     orig_id_ (0),
@@ -26,7 +26,7 @@ public:
   {
   }
 
-  Hash_Token<TYPE> *get_next (void)
+  Hash_Token<TYPE> *get_next ()
   {
     return this->next_;
   }
@@ -59,7 +59,7 @@ public:
 // Default constructor
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
-ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Hash_Upcall (void)
+ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Hash_Upcall ()
   : timer_hash_ (0)
 {
   // Nothing
@@ -191,7 +191,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::~ACE_Ti
 // Positions the iterator at the first node in the timing hash table
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY> void
-ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::first (void)
+ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::first ()
 {
   for (this->position_ = 0;
        this->position_ < this->timer_hash_.table_size_;
@@ -214,7 +214,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::first (
 // bucket
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY> void
-ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::next (void)
+ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::next ()
 {
   if (this->isdone ())
     return;
@@ -254,7 +254,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::isdone 
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY>
 ACE_Timer_Node_T<TYPE> *
-ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::item (void)
+ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::item ()
 {
   if (this->isdone ())
     return 0;
@@ -264,7 +264,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::item (v
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY>
 ACE_Timer_Queue_Iterator_T<TYPE> &
-ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::iter (void)
+ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::iter ()
 {
   this->iterator_->first ();
   return *this->iterator_;
@@ -346,7 +346,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T
 // Remove all remaining items in the Queue.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY>
-ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::~ACE_Timer_Hash_T (void)
+ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::~ACE_Timer_Hash_T ()
 {
   ACE_TRACE ("ACE_Timer_Hash_T::~ACE_Timer_Hash_T");
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
@@ -365,7 +365,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::~ACE_Timer_Hash_
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY> int
-ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::close (void)
+ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::close ()
 {
   ACE_TRACE ("ACE_Timer_Hash_T::close");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
@@ -709,7 +709,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::cancel (const TY
 // Removes the earliest node and finds the new earliest position
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY> ACE_Timer_Node_T<TYPE> *
-ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::remove_first (void)
+ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::remove_first ()
 {
   if (this->is_empty ())
     return 0;
@@ -727,7 +727,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::remove_first (vo
 // Finds a new earliest position
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY> void
-ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::find_new_earliest (void)
+ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::find_new_earliest ()
 {
   for (size_t i = 0; i < this->table_size_; ++i)
     if (!this->table_[i]->is_empty ())
@@ -740,7 +740,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::find_new_earlies
 // Returns the earliest node without removing it
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY> ACE_Timer_Node_T<TYPE> *
-ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::get_first (void)
+ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::get_first ()
 {
   ACE_TRACE ("ACE_Timer_Hash_T::get_first");
 

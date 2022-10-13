@@ -8,7 +8,7 @@
 Options *Options::instance_ = 0;
 
 Options *
-Options::instance (void)
+Options::instance ()
 {
   if (Options::instance_ == 0)
     Options::instance_ = new Options ();
@@ -17,73 +17,73 @@ Options::instance (void)
 }
 
 const char *
-Options::program_name (void)
+Options::program_name ()
 {
   return this->program_name_;
 }
 
 const char *
-Options::slave_name (void)
+Options::slave_name ()
 {
   return this->slave_name_;
 }
 
 int
-Options::debug (void)
+Options::debug ()
 {
   return this->debug_;
 }
 
 int
-Options::exec_slave (void)
+Options::exec_slave ()
 {
   return this->exec_slave_;
 }
 
 size_t
-Options::iteration_count (void)
+Options::iteration_count ()
 {
   return this->iteration_count_;
 }
 
 int
-Options::use_sbrk (void)
+Options::use_sbrk ()
 {
   return this->use_sbrk_;
 }
 
 size_t
-Options::max_msg_size (void)
+Options::max_msg_size ()
 {
   return this->max_msg_size_;
 }
 
 size_t
-Options::spawn_count (void)
+Options::spawn_count ()
 {
   return this->spawn_count_;
 }
 
 int
-Options::spawn_threads (void)
+Options::spawn_threads ()
 {
   return this->spawn_threads_;
 }
 
 int
-Options::use_mmap (void)
+Options::use_mmap ()
 {
   return this->use_mmap_;
 }
 
 int
-Options::use_shmem (void)
+Options::use_shmem ()
 {
   return this->use_shmem_;
 }
 
 int
-Options::child (void)
+Options::child ()
 {
   return this->child_;
 }
@@ -91,7 +91,7 @@ Options::child (void)
 // Explain usage and exit.
 
 void
-Options::print_usage_and_die (void)
+Options::print_usage_and_die ()
 {
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_ERROR ((LM_ERROR,
@@ -112,7 +112,7 @@ Options::print_usage_and_die (void)
   /* NOTREACHED */
 }
 
-Options::Options (void)
+Options::Options ()
   : debug_ (0),
     exec_slave_ (0),
     iteration_count_ (100),

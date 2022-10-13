@@ -66,7 +66,7 @@ Client_Pair::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 }
 
 void
-Client_Pair::disconnect (void)
+Client_Pair::disconnect ()
 {
   Auto_Disconnect<Supplier> supplier_disconnect (this->supplier_);
   Auto_Disconnect<Consumer> consumer_disconnect (this->consumer_);

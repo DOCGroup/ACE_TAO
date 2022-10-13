@@ -112,7 +112,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler (int signum,
 
 template <class ACE_SELECT_REACTOR_TOKEN>
 ACE_INLINE bool
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::uses_event_associations (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::uses_event_associations ()
 {
   // Since the Select_Reactor does not do any event associations, this
   // function always return false.
@@ -177,14 +177,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_wakeup (ACE_HANDLE handle
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE ACE_Lock &
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::lock (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::lock ()
 {
   ACE_TRACE ("ACE_Select_Reactor_T::lock");
   return this->lock_adapter_;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE void
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wakeup_all_threads (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wakeup_all_threads ()
 {
   // Send a notification, but don't block if there's no one to receive
   // it.
@@ -204,7 +204,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::alertable_handle_events (ACE_Tim
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::deactivated (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::deactivated ()
 {
   return this->deactivated_;
 }

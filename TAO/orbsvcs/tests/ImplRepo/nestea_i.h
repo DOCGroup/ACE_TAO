@@ -39,7 +39,7 @@ public:
   Nestea_i (CORBA::ORB_ptr orb, const ACE_TCHAR *filename = ACE_TEXT("nestea.dat"));
 
   /// Destructor
-  virtual ~Nestea_i (void);
+  virtual ~Nestea_i ();
 
   /// Add <cans> number of cans to the bookshelf.
   virtual void drink (CORBA::Long cans);
@@ -48,18 +48,18 @@ public:
   virtual void crush (CORBA::Long cans);
 
   /// Returns the number of cans in the bookshelf.
-  virtual CORBA::Long bookshelf_size (void);
+  virtual CORBA::Long bookshelf_size ();
 
   /// Returns comments about your collection.
-  virtual char *get_praise (void);
+  virtual char *get_praise ();
 
-  virtual void shutdown(void);
+  virtual void shutdown();
 private:
   /// Saves bookshelf data to a file.
-  int save_data (void);
+  int save_data ();
 
   /// Loads bookshelf data from a file.
-  int load_data (void);
+  int load_data ();
 
   /// The name of the file to store the data in.
   ACE_TCHAR *data_filename_;

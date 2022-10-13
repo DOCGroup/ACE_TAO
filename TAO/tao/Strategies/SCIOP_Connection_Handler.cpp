@@ -58,7 +58,7 @@ TAO_SCIOP_Connection_Handler::TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_co
   this->transport (specific_transport);
 }
 
-TAO_SCIOP_Connection_Handler::~TAO_SCIOP_Connection_Handler (void)
+TAO_SCIOP_Connection_Handler::~TAO_SCIOP_Connection_Handler ()
 {
   delete this->transport ();
   int const result =
@@ -255,13 +255,13 @@ TAO_SCIOP_Connection_Handler::open (void*)
 }
 
 int
-TAO_SCIOP_Connection_Handler::resume_handler (void)
+TAO_SCIOP_Connection_Handler::resume_handler ()
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
 int
-TAO_SCIOP_Connection_Handler::close_connection (void)
+TAO_SCIOP_Connection_Handler::close_connection ()
 {
   return this->close_connection_eh (this);
 }
@@ -325,13 +325,13 @@ TAO_SCIOP_Connection_Handler::close (u_long flags)
 }
 
 int
-TAO_SCIOP_Connection_Handler::release_os_resources (void)
+TAO_SCIOP_Connection_Handler::release_os_resources ()
 {
   return this->peer().close ();
 }
 
 int
-TAO_SCIOP_Connection_Handler::add_transport_to_cache (void)
+TAO_SCIOP_Connection_Handler::add_transport_to_cache ()
 {
   ACE_INET_Addr addr;
 
@@ -421,7 +421,6 @@ TAO_SCIOP_Connection_Handler::set_tos (int tos)
       // On successful setting of TOS field.
       if (result == 0)
         this->dscp_codepoint_ = tos;
-
     }
 
   return 0;

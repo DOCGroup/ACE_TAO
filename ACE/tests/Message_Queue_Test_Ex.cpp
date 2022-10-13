@@ -373,7 +373,6 @@ MQ_Ex_N_Tester::test_enqueue_head ()
   timer->reset ();
 
   return 0;
-
 }
 
 #if defined (ACE_HAS_THREADS)

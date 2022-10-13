@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     /**
      * @class TP_Servant_State
      *
@@ -74,7 +73,6 @@ namespace TAO
       /// The servant's current "busy" state (true == busy, false == not busy)
       bool busy_flag_;
     };
-
   }
 }
 

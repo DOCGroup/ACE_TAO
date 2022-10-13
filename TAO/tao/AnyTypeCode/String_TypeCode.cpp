@@ -26,14 +26,14 @@ TAO::TypeCode::String<RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr,
 
 template <class RefCountPolicy>
 void
-TAO::TypeCode::String<RefCountPolicy>::tao_duplicate (void)
+TAO::TypeCode::String<RefCountPolicy>::tao_duplicate ()
 {
   this->RefCountPolicy::add_ref ();
 }
 
 template <class RefCountPolicy>
 void
-TAO::TypeCode::String<RefCountPolicy>::tao_release (void)
+TAO::TypeCode::String<RefCountPolicy>::tao_release ()
 {
   this->RefCountPolicy::remove_ref ();
 }

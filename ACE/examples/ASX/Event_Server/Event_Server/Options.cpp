@@ -9,12 +9,11 @@
 #include "Options.h"
 
 
-
 /* static */
 Options *Options::instance_ = 0;
 
 Options *
-Options::instance (void)
+Options::instance ()
 {
   if (Options::instance_ == 0)
     Options::instance_ = new Options;
@@ -22,7 +21,7 @@ Options::instance (void)
   return Options::instance_;
 }
 
-Options::Options (void)
+Options::Options ()
   : thr_count_ (4),
     t_flags_ (0),
     high_water_mark_ (8 * 1024),
@@ -37,11 +36,11 @@ Options::Options (void)
 {
 }
 
-Options::~Options (void)
+Options::~Options ()
 {
 }
 
-void Options::print_results (void)
+void Options::print_results ()
 {
 #if !defined (ACE_WIN32)
   ACE_Profile_Timer::ACE_Elapsed_Time et;

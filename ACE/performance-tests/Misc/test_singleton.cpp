@@ -41,9 +41,9 @@ static const int DEFAULT_ITERATIONS = 100000000;
 class Mutex_Singleton
 {
 public:
-  Mutex_Singleton (void) {}
-  void svc (void) {}
-  static Mutex_Singleton *instance (void);
+  Mutex_Singleton () {}
+  void svc () {}
+  static Mutex_Singleton *instance ();
 
 private:
   static ACE_SYNCH_MUTEX lock_;
@@ -55,7 +55,7 @@ ACE_SYNCH_MUTEX Mutex_Singleton::lock_;
 Mutex_Singleton *Mutex_Singleton::instance_;
 
 Mutex_Singleton *
-Mutex_Singleton::instance (void)
+Mutex_Singleton::instance ()
 {
   // Acquire the lock every time in.
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, Mutex_Singleton::lock_, 0);
@@ -71,7 +71,7 @@ ACE_SYNCH_MUTEX DC_Singleton::lock_;
 DC_Singleton *DC_Singleton::instance_;
 
 DC_Singleton *
-DC_Singleton::instance (void)
+DC_Singleton::instance ()
 {
   if (DC_Singleton::instance_ == 0)
     {

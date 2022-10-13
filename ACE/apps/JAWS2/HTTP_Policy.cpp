@@ -1,7 +1,6 @@
 #include "HTTP_Policy.h"
 
 
-
 HTTP_Policy::HTTP_Policy (JAWS_Concurrency_Base *concurrency)
   : concurrency_ (concurrency)
 {
