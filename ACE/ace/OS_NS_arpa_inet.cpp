@@ -85,7 +85,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
       return 1;
     }
 #  endif // ACE_LACKS_INET_ADDR
-#elif defined (ACE_VXWORKS)
+#elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x700)
   // inet_aton() returns OK (0) on success and ERROR (-1) on failure.
   // Must reset errno first. Refer to WindRiver SPR# 34949, SPR# 36026
   ::errnoSet(0);
