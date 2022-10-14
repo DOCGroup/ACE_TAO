@@ -23,12 +23,6 @@ ServerApp::ServerApp()
 {
 }
 
-
-ServerApp::~ServerApp()
-{
-}
-
-
 int
 ServerApp::run_i(int argc, ACE_TCHAR* argv[])
 {
@@ -162,7 +156,7 @@ ServerApp::collocated_setup()
       FooServantListType::T_stub_var foo
         = this->foo_servants_.objref(servant_index);
       ClientEngine_Handle engine
-        = new Foo_B_SimpleClientEngine(foo.in(), cb.in (), client_id, true);
+        = new Foo_B_SimpleClientEngine(foo.in(), cb.in (), client_id);
       this->collocated_client_task_.add_engine(engine.in());
     }
 }

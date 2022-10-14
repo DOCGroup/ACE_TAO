@@ -13,12 +13,10 @@ class ServerApp : public TestAppBase
 {
   public:
     ServerApp();
-    virtual ~ServerApp();
-
+    virtual ~ServerApp() = default;
 
   protected:
     virtual int run_i(int argc, ACE_TCHAR* argv[]);
-
 
   private:
     // These are all called, in order, by the run_i() method.
