@@ -14,12 +14,10 @@ class ServerApp : public TestAppBase
 {
   public:
     ServerApp();
-    virtual ~ServerApp();
-
+    virtual ~ServerApp() = default;
 
   protected:
     virtual int run_i(int argc, ACE_TCHAR* argv[]);
-
 
   private:
     // These are all called, in order, by the run_i() method.
@@ -33,7 +31,6 @@ class ServerApp : public TestAppBase
     void run_orb_event_loop();
     bool check_validity ();
     void cleanup();
-
 
     // Helper methods used by the methods above.
     int parse_args(int argc, ACE_TCHAR* argv[]);
