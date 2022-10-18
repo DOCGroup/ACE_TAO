@@ -148,10 +148,15 @@ private:
   AST_Expression *pd_max_size;
   // Maximum map size.
 
+  /**
+  * Key type for map
+  **/
   AST_Type *key_pd_type;
-  // map key type.
+
+  /**
+  * Value type for map
+  **/
   AST_Type *value_pd_type;
-  // map value type.
 
   bool unbounded_;
   // Whether we are bounded or unbounded.
