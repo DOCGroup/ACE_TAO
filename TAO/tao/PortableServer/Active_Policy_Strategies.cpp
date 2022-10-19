@@ -123,8 +123,6 @@ namespace TAO
 
       /**/
 
-// @todo, check if all pointers are != 0
-
       if (this->lifespan_strategy_ != 0)
         {
           this->lifespan_strategy_->strategy_init (poa);
