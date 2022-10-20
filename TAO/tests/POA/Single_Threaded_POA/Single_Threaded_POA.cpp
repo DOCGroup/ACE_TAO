@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file     Single_Threaded_POA.cpp
@@ -11,7 +10,6 @@
  *  @author  Irfan Pyarali
  */
 //=============================================================================
-
 
 #include "testS.h"
 #include "ace/Task.h"
@@ -76,7 +74,7 @@ class Worker : public ACE_Task_Base
 {
 public:
   Worker (test_ptr t);
-  int svc ();
+  int svc () override;
 
 private:
   test_var test_;
