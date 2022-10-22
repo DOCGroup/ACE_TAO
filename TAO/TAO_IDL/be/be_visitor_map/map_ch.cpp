@@ -58,8 +58,8 @@ int be_visitor_map_ch::visit_map (be_map *node)
   if (kt->accept (&bt_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                        ACE_TEXT ("be_visitor_sequence_ch::")
-                        ACE_TEXT ("visit_sequence - ")
+                        ACE_TEXT ("be_visitor_map_ch::")
+                        ACE_TEXT ("visit_map - ")
                         ACE_TEXT ("buffer type visit failed\n")),
                         -1);
     }
@@ -69,8 +69,8 @@ int be_visitor_map_ch::visit_map (be_map *node)
   if (vt->accept (&bt_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                        ACE_TEXT ("be_visitor_sequence_ch::")
-                        ACE_TEXT ("visit_sequence - ")
+                        ACE_TEXT ("be_visitor_map_ch::")
+                        ACE_TEXT ("visit_map - ")
                         ACE_TEXT ("buffer type visit failed\n")),
                         -1);
     }
