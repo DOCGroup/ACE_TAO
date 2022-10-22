@@ -202,11 +202,11 @@ be_visitor_map_buffer_type::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "::CORBA::Char *";
+      *os << "const ::CORBA::Char *";
     }
   else
     {
-      *os << "::CORBA::WChar *";
+      *os << "const ::CORBA::WChar *";
     }
 
   return 0;
