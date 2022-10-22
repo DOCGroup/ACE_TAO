@@ -50,9 +50,30 @@ int be_visitor_map_ch::visit_map (be_map *node)
   be_type* kt = node->key_type();
   be_type* vt = node->value_type();
 
-  *os << kt->full_name ();
+  // Generate the base type for the buffer.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_MAP_BUFFER_TYPE_CH);
+  be_visitor_map_buffer_type bt_visitor (&ctx);
+
+  if (kt->accept (&bt_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("be_visitor_sequence_ch::")
+                        ACE_TEXT ("visit_sequence - ")
+                        ACE_TEXT ("buffer type visit failed\n")),
+                        -1);
+    }
+
   *os << ", ";
-  *os << vt->full_name ();
+
+  if (vt->accept (&bt_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("be_visitor_sequence_ch::")
+                        ACE_TEXT ("visit_sequence - ")
+                        ACE_TEXT ("buffer type visit failed\n")),
+                        -1);
+    }
 
   *os << "> " << node->local_name () << ";";
 

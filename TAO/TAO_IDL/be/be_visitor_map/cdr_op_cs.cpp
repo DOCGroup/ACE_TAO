@@ -23,8 +23,72 @@ be_visitor_map_cdr_op_cs::be_visitor_map_cdr_op_cs (be_visitor_context *ctx)
 }
 
 int
-be_visitor_map_cdr_op_cs::visit_map (be_map *)
+be_visitor_map_cdr_op_cs::visit_map (be_map *node)
 {
+  if (this->ctx_->alias ())
+    {
+      return this->visit_node(node);
+    }
+
+  if (node->cli_stub_cdr_op_gen()
+      || node->imported()
+      || node->is_local())
+    {
+      return 0;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  be_type *key_type = dynamic_cast<be_type*> (node->key_type ());
+
+  be_type *value_type = dynamic_cast<be_type*> (node->value_type ());
+
+  TAO_INSERT_COMMENT (os);
+
+  *os << "#if !defined _TAO_CDR_OP_"
+      << node->flat_name () << "_CPP_" << be_nl
+      << "#define _TAO_CDR_OP_" << node->flat_name () << "_CPP_"
+      << be_nl;
+
+  *os << be_global->core_versioning_begin () << be_nl;
+
+  //  Set the sub state as generating code for the output operator.
+  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
+
+  *os << "::CORBA::Boolean operator<< (" << be_idt_nl
+          << "TAO_OutputCDR &," << be_nl
+          << "const std::map<" << key_type->full_name () 
+          << ", " << value_type->full_name()
+          << "> &)"
+          << be_uidt_nl
+          << "{" << be_idt_nl
+          << "throw ::CORBA::NO_IMPLEMENT ();" << be_nl
+          << "return false;" << be_uidt_nl
+          << "}" << be_nl_2;
+
+  *os << "::CORBA::Boolean operator>> (" << be_idt_nl
+          << "TAO_InputCDR &," << be_nl
+          << "std::map<" << key_type->full_name ()
+          << ", " << value_type->full_name()
+          << "> &)"
+          << be_uidt_nl
+          << "{" << be_idt_nl
+          << "throw ::CORBA::NO_IMPLEMENT ();" << be_nl
+          << "return false;" << be_uidt_nl
+          << "}" << be_nl_2;
+
+  if (be_global->gen_ostream_operators ())
+    {
+      node->gen_ostream_operator (os, false);
+    }
+
+  *os << be_nl << be_global->core_versioning_end ();
+
+  *os << be_nl
+      << "#endif /* _TAO_CDR_OP_"
+      << node->flat_name () << "_CPP_ */";
+
+  node->cli_stub_cdr_op_gen (true);
   return 0;
 }
 
