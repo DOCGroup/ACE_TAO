@@ -19,16 +19,16 @@ struct DataStruct {
     // Bounded maps are not actually bounded as std::map doesn't support that
 
     map<int32, int32> intIntMap;
-    map<int32, int32, 4> intIntMapBounded;
+    // map<int32, int32, 4> intIntMapBounded;
 
     map<string, TestStruct> stringStructsMap;
-    map<string, TestStruct, 4> stringStructsMapBounded;
+    // map<string, TestStruct, 4> stringStructsMapBounded;
 
     map<string, TestStructSeq> stringSequenceMap;
-    map<string, TestStructSeq, 2> stringSequenceMapBounded;
+    // map<string, TestStructSeq, 2> stringSequenceMapBounded;
 
     map<string, TestStructMap> stringMapMap;
-    map<string, TestStructMap, 2> stringMapMapBounded;
+    // map<string, TestStructMap, 2> stringMapMapBounded;
 
     map<TestIntStringMap, string> mapStringMap;
 };
