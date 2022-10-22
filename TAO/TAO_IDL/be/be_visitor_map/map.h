@@ -35,6 +35,7 @@
 #include "be_valuetype_fwd.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
+#include "be_sequence.h"
 #include "be_helper.h"
 #include "be_extern.h"
 #include "ast_root.h"
