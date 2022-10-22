@@ -81,7 +81,7 @@ be_visitor_map_cdr_op_ch::visit_map (be_map *node)
       << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << node->name() 
+      << "const " << node->name()
       << " &_tao_map);"
       << be_uidt << be_uidt_nl;
 
