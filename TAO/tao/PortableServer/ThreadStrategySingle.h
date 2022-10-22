@@ -42,11 +42,11 @@ namespace TAO
        public ThreadStrategy
     {
     public:
-      virtual int enter ();
+      int enter () override;
 
-      virtual int exit ();
+      int exit () override;
 
-      virtual ::PortableServer::ThreadPolicyValue type() const;
+      ::PortableServer::ThreadPolicyValue type() const override;
     private:
       TAO_SYNCH_RECURSIVE_MUTEX lock_;
     };
