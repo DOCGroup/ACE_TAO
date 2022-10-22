@@ -680,11 +680,11 @@ be_visitor_field_cdr_op_cs::visit_map (be_map *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "true";
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
 
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "true";
+      *os << "(strm << _tao_aggregate." << f->local_name () << ")";
 
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
