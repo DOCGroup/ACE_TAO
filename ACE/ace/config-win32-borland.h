@@ -31,7 +31,6 @@
 #define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
 #define ACE_CC_BETA_VERSION (0)
 
-
 #if !defined (WIN32)
 # if defined (__WIN32__) || defined (_WIN32)
 #  define WIN32 1
