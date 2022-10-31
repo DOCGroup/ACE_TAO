@@ -18,9 +18,9 @@
 #define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllimport) SINGLETON_TYPE <CLASS, LOCK>;
 
 // Default to no inlining
-#if !defined (__ACE_INLINE__)
-# define __ACE_INLINE__ 0
-#endif /* __ACE_INLINE__ */
+//#if !defined (__ACE_INLINE__)
+//# define __ACE_INLINE__ 0
+//#endif /* __ACE_INLINE__ */
 
 #define ACE_CC_NAME ACE_TEXT ("Embarcadero C++ Builder")
 #define ACE_CC_MAJOR_VERSION (__BORLANDC__ / 0x100)
