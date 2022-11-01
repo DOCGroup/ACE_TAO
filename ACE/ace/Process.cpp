@@ -928,8 +928,8 @@ ACE_Process_Options::inherit_environment ()
       for (WCHAR *iter = existing_wide_env; *iter; ++iter)
         {
           ACE_Wide_To_Ascii wta (iter);
-          size_t len = ACE_OS::strlen (wta.char_rep ());
-          size_t idx = temp_narrow_env.size ();
+          size_t const len = ACE_OS::strlen (wta.char_rep ());
+          size_t const idx = temp_narrow_env.size ();
           temp_narrow_env.resize (idx + len + 1, 0);
           ACE_OS::strncpy (&temp_narrow_env[idx], wta.char_rep (), len);
           iter += len;
@@ -945,7 +945,7 @@ ACE_Process_Options::inherit_environment ()
 
   while (existing_environment[slot] != '\0')
     {
-      size_t len = ACE_OS::strlen (existing_environment + slot);
+      size_t const len = ACE_OS::strlen (existing_environment + slot);
 
       // Add the string to our env buffer.
       if (this->setenv_i (existing_environment + slot, len) == -1)
@@ -984,8 +984,7 @@ ACE_Process_Options::setenv (ACE_TCHAR *envp[])
   int i = 0;
   while (envp[i])
     {
-      if (this->setenv_i (envp[i],
-                          ACE_OS::strlen (envp[i])) == -1)
+      if (this->setenv_i (envp[i], ACE_OS::strlen (envp[i])) == -1)
         return -1;
       i++;
     }
@@ -1009,8 +1008,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
   va_start (argp, format);
 
   // Add the rest of the varargs.
-  int status = ACE_OS::vsnprintf (stack_buf, DEFAULT_COMMAND_LINE_BUF_LEN,
-                                  format, argp);
+  int status = ACE_OS::vsnprintf (stack_buf, DEFAULT_COMMAND_LINE_BUF_LEN, format, argp);
   // End varargs.
   va_end (argp);
 
@@ -1018,8 +1016,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
     return -1;
 
   // Append the string to are environment buffer.
-  if (this->setenv_i (stack_buf,
-                      ACE_OS::strlen (stack_buf)) == -1)
+  if (this->setenv_i (stack_buf, ACE_OS::strlen (stack_buf)) == -1)
     return -1;
 
 #if defined (ACE_WIN32)
@@ -1136,8 +1133,7 @@ ACE_Process_Options::setenv_i (ACE_TCHAR *assignment,
                   len * sizeof (ACE_TCHAR));
 
   // Update the argv array.
-  environment_argv_[environment_argv_index_++] =
-    environment_buf_ + environment_buf_index_;
+  environment_argv_[environment_argv_index_++] = environment_buf_ + environment_buf_index_;
   environment_argv_[environment_argv_index_] = 0;
 
   // Update our index.
@@ -1171,7 +1167,6 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
   // processes that were launched from services.  In this case we need to make
   // sure not to return -1 from setting std_in so that we can process std_out
   // and std_err.
-
   if (std_in)
     {
       if (!::DuplicateHandle (::GetCurrentProcess (),
@@ -1446,10 +1441,6 @@ ACE_Process_Options::passed_handles (ACE_Handle_Set &set) const
   set.reset ();
   set = this->handles_passed_;
   return 1;
-}
-
-ACE_Managed_Process::~ACE_Managed_Process ()
-{
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Managed_Process)
