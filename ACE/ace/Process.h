@@ -687,13 +687,12 @@ class ACE_Export ACE_Managed_Process : public ACE_Process
 {
 public:
   /// Cleanup by deleting @c this.
-  virtual void unmanage ();
+  void unmanage () override;
 
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Make sure that we're allocated dynamically!
-  virtual ~ACE_Managed_Process ();
+  ~ACE_Managed_Process () override = default;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
