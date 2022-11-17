@@ -10,6 +10,8 @@ USER VISIBLE CHANGES BETWEEN ACE-7.0.9 and ACE-7.0.10
 
 . Various cleanup and using more C++11 features
 
+. Embarcadero C++ Builder 11.2 fixes
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.8 and ACE-7.0.9
 ====================================================
 
