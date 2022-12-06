@@ -23,6 +23,13 @@ ACE_UNIX_Addr::set (const wchar_t rendezvous_point[])
 }
 #endif /* ACE_HAS_WCHAR */
 
+ACE_INLINE ACE_UNIX_Addr &
+ACE_UNIX_Addr::operator = (const ACE_UNIX_Addr &rhs)
+{
+  this->set (rhs);
+  return *this;
+}
+
 // Compare two addresses for equality.
 
 ACE_INLINE bool

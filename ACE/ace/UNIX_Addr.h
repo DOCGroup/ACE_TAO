@@ -49,6 +49,9 @@ public:
   /// Creates an ACE_INET_Addr from a sockaddr_un structure.
   ACE_UNIX_Addr (const sockaddr_un *, int len);
 
+  /// Assignment operator
+  ACE_UNIX_Addr &operator = (const ACE_UNIX_Addr &rhs);
+
   /// Creates an ACE_UNIX_Addr from another ACE_UNIX_Addr.
   int set (const ACE_UNIX_Addr &sa);
 

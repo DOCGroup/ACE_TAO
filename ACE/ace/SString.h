@@ -93,6 +93,9 @@ public:
   /// Constructor that copies @a c into dynamically allocated memory.
   ACE_NS_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc = 0);
 
+  /// Assignment operator (does copy memory).
+  ACE_NS_WString &operator = (const ACE_NS_WString &rhs);
+
   /// Transform into a copy of the ASCII character representation.
   /// (caller must delete)
   char *char_rep (void) const;
