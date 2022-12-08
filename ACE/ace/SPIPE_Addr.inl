@@ -4,6 +4,13 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_INLINE ACE_SPIPE_Addr &
+ACE_SPIPE_Addr::operator = (const ACE_SPIPE_Addr &rhs)
+{
+  this->set (rhs);
+  return *this;
+}
+
 // Compare two addresses for equality.
 
 ACE_INLINE bool

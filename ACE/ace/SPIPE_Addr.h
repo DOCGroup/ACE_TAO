@@ -43,6 +43,9 @@ public:
   /// system.
   ACE_SPIPE_Addr (const ACE_TCHAR *rendezvous_point, gid_t = 0, uid_t = 0);
 
+  /// Assignment operator
+  ACE_SPIPE_Addr &operator = (const ACE_SPIPE_Addr &rhs);
+
   /// Acts like a copy constructor...
   int set (const ACE_SPIPE_Addr &sa);
 
