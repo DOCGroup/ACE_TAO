@@ -1538,10 +1538,10 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
        )
     {
       // Create a substring from the current location until the new found separator
-      // Because ACE_TString works with the character length we need to keep in mind
-      // the size of a single character
+      // Because both separator and sub_section are ACE_TCHAR*, the character size is
+      // already taken into account.
       ACE_TString tsub_section (sub_section);
-      ACE_TString const simple_section = tsub_section.substring(0, (separator - sub_section) / sizeof (ACE_TCHAR));
+      ACE_TString const simple_section = tsub_section.substring(0, separator - sub_section);
       int const ret_val = open_simple_section (result, simple_section.c_str(), create, result);
       if (ret_val)
         return ret_val;
