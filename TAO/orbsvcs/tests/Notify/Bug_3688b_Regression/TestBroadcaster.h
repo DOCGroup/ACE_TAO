@@ -15,8 +15,7 @@ class bug3688_Export TestBroadcaster
     TestBroadcaster ();
 
     /// Destructor.
-    ~TestBroadcaster ()
-      throw ();
+    ~TestBroadcaster () noexcept;
 
     bool connect(
       CORBA::ORB_ptr p_orb,

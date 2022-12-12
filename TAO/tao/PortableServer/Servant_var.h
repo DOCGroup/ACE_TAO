@@ -32,7 +32,7 @@ namespace PortableServer
    * @author Jody Hagins
    *
    * @todo Life would be much easier if _add_ref() and _remove_ref() had
-   *       throw specs of "throw ()", that can be hidden in static
+   *       throw specs of "noexcept", that can be hidden in static
    *       methods though.
    */
   template<class T>

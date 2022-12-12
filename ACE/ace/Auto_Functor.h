@@ -46,10 +46,10 @@ struct Auto_Functor_Ref
  *
  * The functor is called in the destructor, and it must implement:
  *
- * Functor() throw();<BR>
- * Functor(Functor const &) throw();<BR>
- * Functor & operator=(Functor const &) throw();<BR>
- * void operator()(X * p) throw();<BR>
+ * Functor() noexcept;<BR>
+ * Functor(Functor const &) noexcept;<BR>
+ * Functor & operator=(Functor const &) noexcept;<BR>
+ * void operator()(X * p) noexcept;<BR>
  */
 template<typename X, typename Functor>
 class Auto_Functor
@@ -60,41 +60,41 @@ public:
 
   /// Constructor
   explicit Auto_Functor (X * p = 0,
-      Functor functor = Functor()); // throw()
+      Functor functor = Functor()); // noexcept
 
-  Auto_Functor (Auto_Functor & rhs); // throw()
+  Auto_Functor (Auto_Functor & rhs); // noexcept
 
-  Auto_Functor<X,Functor>& operator= (Auto_Functor & rhs); // throw()
-
-  template<typename Y>
-  Auto_Functor(Auto_Functor<Y,Functor>& rhs); // throw()
+  Auto_Functor<X,Functor>& operator= (Auto_Functor & rhs); // noexcept
 
   template<typename Y>
-  Auto_Functor<X,Functor>& operator= (Auto_Functor<Y,Functor>& rhs); // throw()
+  Auto_Functor(Auto_Functor<Y,Functor>& rhs); // noexcept
 
-  ~Auto_Functor(); // throw()
+  template<typename Y>
+  Auto_Functor<X,Functor>& operator= (Auto_Functor<Y,Functor>& rhs); // noexcept
 
-  X & operator*() const; // throw()
+  ~Auto_Functor(); // noexcept
 
-  X * operator->() const; // throw()
+  X & operator*() const; // noexcept
 
-  X * get(); // throw()
+  X * operator->() const; // noexcept
 
-  X * release(); // throw()
+  X * get(); // noexcept
 
-  void reset (X * p = 0); // throw()
+  X * release(); // noexcept
 
-  void reset (X * p, Functor f); // throw()
+  void reset (X * p = 0); // noexcept
 
-  Functor const & functor() const; // throw()
+  void reset (X * p, Functor f); // noexcept
 
-  Auto_Functor(Auto_Functor_Ref<X,Functor> rhs); // throw()
+  Functor const & functor() const; // noexcept
 
-  Auto_Functor<X,Functor> & operator=(Auto_Functor_Ref<X,Functor> rhs); // throw()
+  Auto_Functor(Auto_Functor_Ref<X,Functor> rhs); // noexcept
 
-  template<typename Y> operator Auto_Functor_Ref<Y,Functor>(); // throw()
+  Auto_Functor<X,Functor> & operator=(Auto_Functor_Ref<X,Functor> rhs); // noexcept
 
-  template<typename Y> operator Auto_Functor<Y,Functor>(); // throw()
+  template<typename Y> operator Auto_Functor_Ref<Y,Functor>(); // noexcept
+
+  template<typename Y> operator Auto_Functor<Y,Functor>(); // noexcept
 
 private:
   X * p_;
