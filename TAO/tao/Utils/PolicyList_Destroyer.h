@@ -34,7 +34,7 @@ namespace TAO
     {
     public:
       PolicyList_Destroyer(CORBA::ULong length_hint);
-      ~PolicyList_Destroyer() throw ();
+      ~PolicyList_Destroyer() noexcept;
     };
   } // namespace Utils
 } // namespace TAO

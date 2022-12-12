@@ -112,7 +112,7 @@ public:
 
     /// Overloaded new operator, nothrow_t variant.
     void *operator new (size_t bytes, const std::nothrow_t &nt);
-    void operator delete (void *p, const std::nothrow_t&) throw ();
+    void operator delete (void *p, const std::nothrow_t&) noexcept;
     void *operator new (size_t);
     void operator delete (void *pointer);
 

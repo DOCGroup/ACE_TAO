@@ -3740,7 +3740,7 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
 # if defined (ACE_HAS_WTHREADS)
 #   if defined (ACE_HAS_WIN32_TRYLOCK)
   BOOL result = ::TryEnterCriticalSection (m);
-  if (result == TRUE)
+  if (result)
     {
       return 0;
     }

@@ -24,7 +24,7 @@ Newsweek::operator new (size_t bytes, const std::nothrow_t&)
   return ::new (std::nothrow) char[bytes];
 }
 void
-Newsweek::operator delete (void *p, const std::nothrow_t&) throw ()
+Newsweek::operator delete (void *p, const std::nothrow_t&) noexcept
 {
   delete [] static_cast <char *> (p);
 }
