@@ -51,7 +51,7 @@ public:
 
     return 0;
   }
-  void shutdown (void)
+  void shutdown ()
   {
     this->orb_->shutdown (false);
   }

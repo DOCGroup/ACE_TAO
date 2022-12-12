@@ -1,3 +1,53 @@
+USER VISIBLE CHANGES BETWEEN ACE-7.0.10 and ACE-7.0.11
+======================================================
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.9 and ACE-7.0.10
+=====================================================
+
+. Add missing resource files for several DLLs on Windows
+
+. VxWorks runtime fixes
+
+. Various cleanup and using more C++11 features
+
+. Embarcadero C++ Builder 11.2 fixes
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.8 and ACE-7.0.9
+====================================================
+
+. Compile fixes for VxWorks 22.03
+
+. Various cleanup
+
+. Minor fixes
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.7 and ACE-7.0.8
+====================================================
+
+. Minor changes
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.6 and ACE-7.0.7
+====================================================
+
+. Minor changes
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.5 and ACE-7.0.6
+====================================================
+
+. Various cleanup and using more C++11 features
+
+. Various packaging related fixes
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.4 and ACE-7.0.5
+====================================================
+
+. Initial not tested support for Visual Studio 2022
+
+. Fixed compile errors when using Visual Studio 2019 with C++17
+  or C++20 support enabled
+
+. Various cleanup and using more C++11 features
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.3 and ACE-7.0.4
 ====================================================
 
@@ -7,6 +57,10 @@ USER VISIBLE CHANGES BETWEEN ACE-7.0.3 and ACE-7.0.4
 . Allow ACE_Module and ACE_SOCK_Dgram_Mcast to be sub-classed
 
 . Add ACE_SWAP_LONG_LONG byte swap macro for ACE_UINT64
+
+. Improved ACE_Atomic implementation for g++
+
+. Various cleanup and using more C++11 features
 
 USER VISIBLE CHANGES BETWEEN ACE-7.0.2 and ACE-7.0.3
 ====================================================

@@ -51,7 +51,7 @@ public:
   // = Implementation of abstract TAO_Endpoint methods.  See
   // Endpoint.h for their documentation.
 
-  virtual TAO_Endpoint *next (void);
+  virtual TAO_Endpoint *next ();
   virtual int addr_to_string (char *buffer, size_t length);
 
   /// Makes a copy of this TAO_Endpoint.
@@ -84,7 +84,7 @@ public:
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p); //@@ Frank - deprecate this.
 
-  //TAO_UIPMC_Connection_Handler *&hint (void);
+  //TAO_UIPMC_Connection_Handler *&hint ();
   // Access to our <hint_>.
   /// Do we have a preferred local network interface set for this target?
   bool is_preferred_network () const;

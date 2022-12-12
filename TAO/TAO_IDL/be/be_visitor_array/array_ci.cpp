@@ -16,10 +16,6 @@ be_visitor_array_ci::be_visitor_array_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_array_ci::~be_visitor_array_ci ()
-{
-}
-
 int be_visitor_array_ci::visit_array (be_array *node)
 {
   // Nothing to do if we are imported or code is already generated.
@@ -143,8 +139,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the array traits specialization definitions,
   // guarded by #ifdef on unaliased array element type and length.
@@ -261,7 +256,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
           // Generate a loop for each dimension.
-          *os << "for ( ::CORBA::ULong i" << i << " = 0; i" << i << " < "
+          *os << "for (::CORBA::ULong i" << i << " = 0; i" << i << " < "
               << expr->ev ()->u.ulval << "; ++i" << i << ")" << be_idt_nl
               << "{" << be_idt_nl;
         }

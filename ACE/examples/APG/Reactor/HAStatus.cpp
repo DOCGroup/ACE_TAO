@@ -42,10 +42,10 @@ protected:
 class ClientService : public ACE_Event_Handler
 {
 public:
-  ACE_SOCK_Stream &peer (void) { return this->sock_; }
+  ACE_SOCK_Stream &peer () { return this->sock_; }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open (void);
+  int open ();
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Get this handler's I/O handle.
@@ -128,7 +128,7 @@ ClientAcceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 
 // Listing 7 code/ch07
 int
-ClientService::open (void)
+ClientService::open ()
 {
   ACE_TCHAR peer_name[MAXHOSTNAMELEN];
   ACE_INET_Addr peer_addr;
@@ -241,9 +241,7 @@ public:
   LoopStopper (int signum = SIGINT);
 
   // Called when object is signaled by OS.
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 };
 
 LoopStopper::LoopStopper (int signum)
@@ -268,9 +266,7 @@ public:
   LogSwitcher (int on_sig, int off_sig);
 
   // Called when object is signaled by OS.
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
   // Called when an exceptional event occurs.
   virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);

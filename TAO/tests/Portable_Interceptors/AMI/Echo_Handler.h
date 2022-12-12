@@ -13,11 +13,11 @@ class Echo_Handler
   : public POA_Test::AMI_EchoHandler
 {
 public:
-  Echo_Handler(void);
+  Echo_Handler();
 
   virtual void echo_operation(char const * retval);
   virtual void echo_operation_excep(::Messaging::ExceptionHolder * h);
-  virtual void shutdown(void);
+  virtual void shutdown();
   virtual void shutdown_excep(::Messaging::ExceptionHolder * h);
 
   CORBA::ULong replies () const;

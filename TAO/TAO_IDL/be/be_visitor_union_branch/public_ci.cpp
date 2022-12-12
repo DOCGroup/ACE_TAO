@@ -153,8 +153,7 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
     }
 
   // Set method.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -225,8 +224,7 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Set method.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -296,8 +294,7 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Set method.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -386,8 +383,7 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Set method.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -494,8 +490,7 @@ be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Set method.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -573,8 +568,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Set method.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -627,7 +621,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
         *os << "typedef ::CORBA::Object_var OBJECT_FIELD;" << be_nl
             << "ACE_NEW (" << be_idt << be_idt_nl
             << "this->u_." << ub->local_name () << "_," << be_nl
-            << "OBJECT_FIELD ( ::CORBA::Object::_duplicate (val))"
+            << "OBJECT_FIELD (::CORBA::Object::_duplicate (val))"
             << be_uidt_nl
             << ");" << be_uidt << be_uidt_nl;
 
@@ -636,7 +630,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
         *os << "typedef ::CORBA::AbstractBase_var OBJECT_FIELD;" << be_nl
             << "ACE_NEW (" << be_idt << be_idt_nl
             << "this->u_." << ub->local_name () << "_," << be_nl
-            << "OBJECT_FIELD ( ::CORBA::AbstractBase::_duplicate (val))"
+            << "OBJECT_FIELD (::CORBA::AbstractBase::_duplicate (val))"
             << be_uidt_nl
             << ");" << be_uidt << be_uidt_nl;
 
@@ -784,8 +778,7 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // (1) Set from a const.
   *os << "/// Accessor to set the member." << be_nl
@@ -858,8 +851,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
   // Three methods to set the string value.
 
   // (1) Set method from char* or wchar*.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -872,7 +864,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
   else
     {
       *os << bu->name () << "::" << ub->local_name ()
-          << " ( ::CORBA::WChar *val)";
+          << " (::CORBA::WChar *val)";
     }
 
   *os << be_nl
@@ -1061,8 +1053,7 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // (1) Set from a const.
   *os << "/// Accessor to set the member." << be_nl
@@ -1228,8 +1219,7 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // (1) Set from a const.
   *os << "// Accessor to set the member." << be_nl

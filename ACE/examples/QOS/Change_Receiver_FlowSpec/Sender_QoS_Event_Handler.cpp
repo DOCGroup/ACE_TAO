@@ -15,7 +15,7 @@
 #include "Fill_ACE_QoS.h"
 
 // Constructor.
-Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (void)
+Sender_QoS_Event_Handler::Sender_QoS_Event_Handler ()
 {
 }
 
@@ -29,7 +29,7 @@ Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_Q
 }
 
 // Destructor.
-Sender_QoS_Event_Handler::~Sender_QoS_Event_Handler (void)
+Sender_QoS_Event_Handler::~Sender_QoS_Event_Handler ()
 {
 }
 

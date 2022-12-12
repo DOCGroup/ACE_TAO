@@ -37,7 +37,6 @@ class TAO_RelativeRoundtripTimeoutPolicy
   : public Messaging::RelativeRoundtripTimeoutPolicy,
     public ::CORBA::LocalObject
 {
-
 public:
   /// Constructor.
   TAO_RelativeRoundtripTimeoutPolicy (const TimeBase::TimeT& relative_expiry);
@@ -97,7 +96,6 @@ class TAO_Messaging_Export TAO_Sync_Scope_Policy
   : public Messaging::SyncScopePolicy,
     public ::CORBA::LocalObject
 {
-
 public:
   /// Constructor.
   TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization);
@@ -134,7 +132,6 @@ public:
   // Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 private:
-
   /// The attribute
   Messaging::SyncScope synchronization_;
 };

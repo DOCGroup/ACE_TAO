@@ -865,7 +865,6 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
                                               found);
     if (result != 0)
       return result;
-
   }
 
   // If it is a new connection, activate it.
@@ -932,7 +931,6 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
 
     if (result != 0)
       return result;
-
   }
 
   // If it is a new connection, activate it.

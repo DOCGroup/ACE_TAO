@@ -34,7 +34,6 @@ class TAO_RTEvent_Serv_Export TAO_EC_Default_ProxyPushSupplier
     public TAO_EC_ProxyPushSupplier
 {
 public:
-
   /// Constructor...
   TAO_EC_Default_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
@@ -58,7 +57,6 @@ public:
   virtual void _remove_ref ();
 
 private:
-
   virtual PortableServer::ObjectId
             object_id ();
 };

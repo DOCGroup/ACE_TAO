@@ -42,7 +42,6 @@
 #include "ace/TP_Reactor.h"
 
 
-
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
 #include "Thread_Pool_Reactor_Test.h"

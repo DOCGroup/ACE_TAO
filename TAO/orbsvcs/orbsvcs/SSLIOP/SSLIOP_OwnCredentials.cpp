@@ -31,7 +31,6 @@ TAO::SSLIOP::OwnCredentials_ptr
 TAO::SSLIOP::OwnCredentials::_nil ()
 {
   return (OwnCredentials *) 0;
-
 }
 
 SecurityLevel3::CredentialsType

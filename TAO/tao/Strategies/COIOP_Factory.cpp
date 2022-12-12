@@ -13,12 +13,8 @@ static const char the_prefix[] = "COIOP";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_COIOP_Protocol_Factory::TAO_COIOP_Protocol_Factory (void)
+TAO_COIOP_Protocol_Factory::TAO_COIOP_Protocol_Factory ()
   :  TAO_Protocol_Factory (TAO_TAG_COIOP_PROFILE)
-{
-}
-
-TAO_COIOP_Protocol_Factory::~TAO_COIOP_Protocol_Factory (void)
 {
 }
 
@@ -42,7 +38,7 @@ TAO_COIOP_Protocol_Factory::options_delimiter () const
 }
 
 TAO_Acceptor *
-TAO_COIOP_Protocol_Factory::make_acceptor (void)
+TAO_COIOP_Protocol_Factory::make_acceptor ()
 {
   TAO_Acceptor *acceptor = 0;
 
@@ -61,7 +57,7 @@ TAO_COIOP_Protocol_Factory::init (int /* argc */,
 }
 
 TAO_Connector *
-TAO_COIOP_Protocol_Factory::make_connector (void)
+TAO_COIOP_Protocol_Factory::make_connector ()
 {
   TAO_Connector *connector = 0;
 

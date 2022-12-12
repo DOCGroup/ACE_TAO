@@ -126,9 +126,8 @@ private:
 class ACE_Export ACE_Token_Invariant_Manager : public ACE_Cleanup
 {
 public:
-
   /// Singleton access point.
-  static ACE_Token_Invariant_Manager *instance (void);
+  static ACE_Token_Invariant_Manager *instance ();
 
   // = Polymorphic methods.  Just pass in the proxy and the method
   // figures out the type of the token.
@@ -167,10 +166,10 @@ public:
   // = The following two method should be in the protected part of the
   //   class.  Bugs with certain compilers preclude this.
   /// Prevent non-singleton construction.
-  ACE_Token_Invariant_Manager (void);
+  ACE_Token_Invariant_Manager ();
 
   /// Destruction.
-  virtual ~ACE_Token_Invariant_Manager (void);
+  virtual ~ACE_Token_Invariant_Manager ();
 
 protected:
   /// Return or create.

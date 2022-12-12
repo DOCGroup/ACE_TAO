@@ -8,7 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Priority_Mapping_Manager::~TAO_Priority_Mapping_Manager (void)
+TAO_Priority_Mapping_Manager::~TAO_Priority_Mapping_Manager ()
 {
   delete this->mapping_;
 }

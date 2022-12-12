@@ -16,7 +16,7 @@ namespace TAO
     TAO_ORB_Core::set_gui_resource_factory( tmp );
   }
 
-  FoxResource_Loader::~FoxResource_Loader (void)
+  FoxResource_Loader::~FoxResource_Loader ()
   {
   }
 }

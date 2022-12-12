@@ -57,7 +57,7 @@ public:
 
   /// Close down a Active_Map_Manager and release dynamically
   /// allocated resources.
-  ~ACE_Active_Map_Manager ();
+  ~ACE_Active_Map_Manager () = default;
 
   /// Initialize a Active_Map_Manager with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
@@ -177,7 +177,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Private base class
   typedef ACE_Map_Manager<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> ACE_AMM_BASE;
 

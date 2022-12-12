@@ -26,9 +26,7 @@ be_visitor_ami4ccm_rh_ex_idl::~be_visitor_ami4ccm_rh_ex_idl ()
 int
 be_visitor_ami4ccm_rh_ex_idl::visit_interface (be_interface *node)
 {
-  os_ << be_nl
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (&os_);
 
   os_ << be_nl_2
       << "local interface AMI4CCM_"

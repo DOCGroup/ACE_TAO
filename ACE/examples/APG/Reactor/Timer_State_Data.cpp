@@ -25,7 +25,7 @@ public:
     return this->location_;
   }
 
-  int querySensor (void)
+  int querySensor ()
   {
     // ...
     return ++this->count_;
@@ -99,8 +99,7 @@ private:
 class SigintHandler : public ACE_Event_Handler
 {
 public:
-  int handle_signal (int signum, siginfo_t * = 0,
-                     ucontext_t * = 0)
+  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0)
   {
     if (signum == SIGINT)
       {

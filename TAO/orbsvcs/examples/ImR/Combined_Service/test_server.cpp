@@ -15,12 +15,12 @@ using namespace PortableServer;
 class test_i : public virtual POA_test {
   int n_;
 public:
-  test_i (void) : n_(0)
+  test_i () : n_(0)
   {
   }
-  virtual ~test_i (void) {
+  virtual ~test_i () {
   }
-  virtual CORBA::Long get (void)
+  virtual CORBA::Long get ()
   {
     ACE_DEBUG((LM_DEBUG, "dynserver: get() %d\n", ++n_));
     return n_;
@@ -83,7 +83,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
 
     root_poa->destroy(1, 1);
     orb->destroy();
-
   } catch (const CORBA::Exception& e) {
     e._tao_print_exception ("TestServer::init()");
   }

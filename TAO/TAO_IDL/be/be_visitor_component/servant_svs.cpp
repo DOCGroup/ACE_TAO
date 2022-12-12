@@ -17,10 +17,6 @@ be_visitor_servant_svs::be_visitor_servant_svs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_servant_svs::~be_visitor_servant_svs ()
-{
-}
-
 int
 be_visitor_servant_svs::visit_component (be_component *node)
 {
@@ -123,7 +119,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
           << be_uidt_nl
           << "{" << be_idt_nl;
 
-      os_ << "for ( ::CORBA::ULong i = 0; i < descr.length (); ++i)"
+      os_ << "for (::CORBA::ULong i = 0; i < descr.length (); ++i)"
           << be_idt_nl
           << "{" << be_idt_nl
           << "const char * descr_name = descr[i]->name ();"
@@ -668,7 +664,7 @@ be_visitor_servant_svs::gen_provides_top ()
       << "const char * name)" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  os_ << "if (name == 0)" << be_idt_nl
+  os_ << "if (!name)" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt << be_nl_2;
@@ -678,7 +674,7 @@ be_visitor_servant_svs::gen_provides_top ()
       << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
       << "::_duplicate (this->executor_.in ());" << be_uidt << be_nl_2;
 
-  os_ << "if ( ::CORBA::is_nil (executor.in ()))"
+  os_ << "if (::CORBA::is_nil (executor.in ()))"
       << be_idt_nl
       << "{"<< be_idt_nl
       << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
@@ -717,7 +713,7 @@ be_visitor_servant_svs::gen_publishes_top ()
           << be_uidt_nl
           << "{" << be_idt_nl;
 
-      os_ << "if (publisher_name == 0)" << be_idt_nl
+      os_ << "if (!publisher_name)" << be_idt_nl
           << "{" << be_idt_nl
           << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
           << "}" << be_uidt;
@@ -746,7 +742,7 @@ be_visitor_servant_svs::gen_publishes_top ()
           << "::Components::Cookie * ck)" << be_uidt_nl
           << "{" << be_idt_nl;
 
-      os_ << "if (publisher_name == 0)" << be_idt_nl
+      os_ << "if (!publisher_name)" << be_idt_nl
           << "{" << be_idt_nl
           << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
           << "}" << be_uidt;
@@ -823,7 +819,7 @@ be_visitor_servant_svs::gen_uses_top ()
           << "::CORBA::Object_ptr connection)" << be_uidt_nl
           << "{" << be_idt_nl;
 
-      os_ << "if (name == 0)" << be_idt_nl
+      os_ << "if (!name)" << be_idt_nl
           << "{" << be_idt_nl
           << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
           << "}" << be_uidt;
@@ -853,7 +849,7 @@ be_visitor_servant_svs::gen_uses_top ()
           << (this->node_->has_uses_multiple () ? "ck" : "/* ck */")
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "if (name == 0)" << be_idt_nl
+          << "if (!name)" << be_idt_nl
           << "{" << be_idt_nl
           << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
           << "}" << be_uidt;
@@ -940,7 +936,7 @@ be_visitor_servant_svs::gen_emits_top ()
       << be_uidt_nl
       << "{" << be_idt_nl;
 
-  os_ << "if (emitter_name == 0)" << be_idt_nl
+  os_ << "if (!emitter_name)" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt;
@@ -968,7 +964,7 @@ be_visitor_servant_svs::gen_emits_top ()
       << "const char * source_name)" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  os_ << "if (source_name == 0)" << be_idt_nl
+  os_ << "if (!source_name)" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt;
@@ -1269,7 +1265,7 @@ be_visitor_disconnect_block::visit_uses (be_uses *node)
 
   if (is_multiple)
     {
-      os_ << "if (ck == 0)" << be_idt_nl
+      os_ << "if (!ck)" << be_idt_nl
           << "{" << be_idt_nl
           << "throw ::Components::CookieRequired ();" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;

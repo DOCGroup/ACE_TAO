@@ -37,7 +37,6 @@ static int debug = 1;
 class Reference_Counted_Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Reference_Counted_Event_Handler ();
 
   ~Reference_Counted_Event_Handler () override;
@@ -47,7 +46,6 @@ public:
   ACE_Event_Handler::Reference_Count add_reference () override;
 
   ACE_Event_Handler::Reference_Count remove_reference () override;
-
 };
 
 Reference_Counted_Event_Handler::Reference_Counted_Event_Handler ()
@@ -131,7 +129,6 @@ Reference_Counted_Event_Handler::remove_reference ()
 class Simple_Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Simple_Event_Handler (int notifies);
 
   ~Simple_Event_Handler () override;
@@ -172,7 +169,6 @@ Simple_Event_Handler::handle_input (ACE_HANDLE)
 class Event_Loop_Thread : public ACE_Task_Base
 {
 public:
-
   Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
                      ACE_Reactor &reactor,
                      int extra_iterations_needed);

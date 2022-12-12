@@ -435,8 +435,7 @@ be_interface::relative_name (const char *localname,
   // The tricky part here is that it is not enough to check if the
   // typename we are using was defined in the current scope. But we
   // need to ensure that it was not defined in any of our ancestor
-  // scopes as well. If that is the case, then we can generate a fully
-  // scoped name for that type, else we use the ACE_NESTED_CLASS macro.
+  // scopes as well.
 
   // Thus we need some sort of relative name to be generated.
 
@@ -465,10 +464,7 @@ be_interface::relative_name (const char *localname,
   // Traverse every component of the def_scope and use_scope beginning at the
   // root and proceeding towards the leaf trying to see if the components
   // match. Continue until there is a match and keep accumulating the path
-  // traversed. This forms the first argument to the ACE_NESTED_CLASS
-  // macro. Whenever there is no match, the remaining components of the
-  // def_scope form the second argument.
-
+  // traversed.
   ACE_OS::strcpy (def_name,
                   localname);
   ACE_OS::strcpy (use_name,
@@ -619,7 +615,6 @@ be_interface::gen_def_ctors_helper (be_interface* node,
                                     be_interface* base,
                                     TAO_OutStream *os)
 {
-
   static int first = 0;
 
   if (node != base)
@@ -744,8 +739,7 @@ be_interface::gen_var_out_seq_decls ()
   const char *lname = this->local_name ();
   TAO_OutStream *os = tao_cg->client_header ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the ifdefined macro for this interface.
   os->gen_ifdef_macro (this->flat_name (),
@@ -1856,8 +1850,7 @@ be_interface::gen_gperf_things (const char *flat_name)
 
   TAO_OutStream *os = tao_cg->server_skeletons ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the correct class definition for the operation lookup
   // strategy. Then, get the lookup method from GPERF. And then,

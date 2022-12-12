@@ -39,8 +39,7 @@ class TAO_Valuetype_Export TAO_Valuetype_Adapter_Impl
   : public TAO_Valuetype_Adapter
 {
 public:
-
-  virtual ~TAO_Valuetype_Adapter_Impl (void);
+  virtual ~TAO_Valuetype_Adapter_Impl () = default;
 
   virtual CORBA::Object_ptr abstractbase_to_object (
       CORBA::AbstractBase_ptr);

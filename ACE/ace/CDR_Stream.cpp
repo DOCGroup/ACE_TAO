@@ -1053,7 +1053,7 @@ ACE_OutputCDR::register_monitor (const char *id)
 }
 
 void
-ACE_OutputCDR::unregister_monitor (void)
+ACE_OutputCDR::unregister_monitor ()
 {
   this->monitor_->remove_from_registry ();
 }
@@ -1628,7 +1628,6 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
 
           if (this->read_wchar_array (x, len))
             {
-
               //Null character used by applications to find the end of
               //the wstring
               //Is this okay with the GIOP 1.2 spec??
@@ -2338,7 +2337,7 @@ ACE_InputCDR::register_monitor (const char *id)
 }
 
 void
-ACE_InputCDR::unregister_monitor (void)
+ACE_InputCDR::unregister_monitor ()
 {
   this->monitor_->remove_from_registry ();
 }
@@ -2346,10 +2345,6 @@ ACE_InputCDR::unregister_monitor (void)
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 // --------------------------------------------------------------
-
-ACE_Char_Codeset_Translator::~ACE_Char_Codeset_Translator ()
-{
-}
 
 ACE_CDR::Boolean
 ACE_Char_Codeset_Translator::read_string (ACE_InputCDR &cdr,
@@ -2363,10 +2358,6 @@ ACE_Char_Codeset_Translator::read_string (ACE_InputCDR &cdr,
 }
 
 // --------------------------------------------------------------
-
-ACE_WChar_Codeset_Translator::~ACE_WChar_Codeset_Translator ()
-{
-}
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 ACE_CDR::Boolean

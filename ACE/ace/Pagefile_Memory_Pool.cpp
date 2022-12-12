@@ -91,10 +91,6 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_sto
                       ACE_TEXT ("_"));
 }
 
-ACE_Pagefile_Memory_Pool::~ACE_Pagefile_Memory_Pool (void)
-{
-}
-
 void *
 ACE_Pagefile_Memory_Pool::acquire (size_t nbytes,
                                    size_t &rounded_bytes)
@@ -187,7 +183,7 @@ ACE_Pagefile_Memory_Pool::remap (void *addr)
 }
 
 int
-ACE_Pagefile_Memory_Pool::unmap (void)
+ACE_Pagefile_Memory_Pool::unmap ()
 {
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
   ACE_BASED_POINTER_REPOSITORY::instance ()->unbind

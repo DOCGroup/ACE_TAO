@@ -649,7 +649,6 @@ TAO_SFP_Base::send_message (TAO_AV_Transport *transport,
       return -1;
     }
   return 1;
-
 }
 
 int
@@ -1093,7 +1092,6 @@ TAO_SFP_Object::set_policies (const TAO_AV_PolicyList& policies)
       policy = policies[i];
       switch (policies[i]->type ())
         {
-
         case TAO_AV_SFP_CREDIT_POLICY:
           {
             TAO_AV_SFP_Credit_Policy *credit_policy =
@@ -1270,7 +1268,6 @@ TAO_AV_SFP_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
       break;
     case TAO_FlowSpec_Entry::TAO_AV_CONSUMER:
       {
-
         ACE_NEW_RETURN (object,
                         TAO_SFP_Consumer_Object (callback,
                                                  transport,

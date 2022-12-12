@@ -718,7 +718,6 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
     {
       if (ssl_ctx->private_key (private_key_path.in(), private_key_type) != 0)
         {
-
           ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - Unable to set ")
                           ACE_TEXT ("SSL private key ")

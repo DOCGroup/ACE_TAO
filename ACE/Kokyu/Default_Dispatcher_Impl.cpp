@@ -10,7 +10,6 @@
 
 namespace Kokyu
 {
-
 Default_Dispatcher_Impl::Default_Dispatcher_Impl ()
   : activated_ (0)
 {

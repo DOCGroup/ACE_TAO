@@ -223,7 +223,7 @@ ACE_Message_Block::msg_priority (unsigned long pri)
 ACE_INLINE const ACE_Time_Value &
 ACE_Message_Block::msg_execution_time () const
 {
-  ACE_TRACE ("ACE_Message_Block::msg_execution_time (void)");
+  ACE_TRACE ("ACE_Message_Block::msg_execution_time ()");
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   return this->execution_time_;
 #else
@@ -245,7 +245,7 @@ ACE_Message_Block::msg_execution_time (const ACE_Time_Value &et)
 ACE_INLINE const ACE_Time_Value &
 ACE_Message_Block::msg_deadline_time () const
 {
-  ACE_TRACE ("ACE_Message_Block::msg_deadline_time (void)");
+  ACE_TRACE ("ACE_Message_Block::msg_deadline_time ()");
 
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   return this->deadline_time_;

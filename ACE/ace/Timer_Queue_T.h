@@ -43,7 +43,7 @@ class ACE_Timer_Queue_Upcall_Base
 {
 public:
   // Constructor
-  explicit ACE_Timer_Queue_Upcall_Base(FUNCTOR * upcall_functor = 0);
+  explicit ACE_Timer_Queue_Upcall_Base(FUNCTOR * upcall_functor = nullptr);
 
   /// Destructor
   virtual ~ACE_Timer_Queue_Upcall_Base ();

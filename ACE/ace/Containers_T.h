@@ -330,7 +330,6 @@ private:
 };
 
 
-
 /**
  * @class ACE_Unbounded_Stack
  *
@@ -1031,7 +1030,6 @@ public:
    * @name Queue-like insert and delete methods
    */
   //@{
-
   /**
    * Insert pointer for a new item at the tail of the list.
    *
@@ -1086,9 +1084,9 @@ public:
    *
    * @param the_allocator  Allocator to use for allocating ACE_DLList_Node
    *                       objects that wrap T objects for inclusion in the
-   *                       list. If 0, ACE_Allocator::instance() is used.
+   *                       list. If nullptr, ACE_Allocator::instance() is used.
    */
-  ACE_DLList (ACE_Allocator *the_allocator = 0);
+  ACE_DLList (ACE_Allocator *the_allocator = nullptr);
 
   /// Delegates to ACE_Double_Linked_List.
   ACE_DLList (const ACE_DLList<T> &l);
@@ -1102,9 +1100,9 @@ public:
    * @code
         ACE_DLList<Item> list;
         ...   // insert dynamically allocated Items...
-        Item *p;
-        while ((p = list.delete_head()) != 0)
-          delete *p;
+        Item *p = nullptr;
+        while ((p = list.delete_head()) != nullptr)
+          delete p;
       @endcode
    */
   ~ACE_DLList ();

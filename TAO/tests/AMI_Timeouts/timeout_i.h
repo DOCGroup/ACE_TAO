@@ -24,7 +24,7 @@ public:
 
   virtual void sendTimeToWait (CORBA::Long msec);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;
@@ -38,7 +38,7 @@ public:
 
   ~TimeoutHandler_i () = default;
 
-  virtual void sendTimeToWait (void);
+  virtual void sendTimeToWait ();
 
   virtual void sendTimeToWait_excep (
       ::Messaging::ExceptionHolder * excep_holder);

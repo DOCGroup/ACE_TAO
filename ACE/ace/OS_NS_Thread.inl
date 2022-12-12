@@ -218,8 +218,7 @@ ACE_OS::condattr_synctype (ACE_condattr_t &attributes, int& type)
 ACE_INLINE int
 ACE_OS::condattr_setclock (ACE_condattr_t &attributes, clockid_t clock_id)
 {
-#if defined (ACE_HAS_CONDATTR_SETCLOCK) && !defined (ACE_LACKS_CONDATTR_SETCLOCK) && \
-  !defined (ACE_LACKS_CONDATTR_SETCLOCK)
+#if defined (ACE_HAS_CONDATTR_SETCLOCK) && !defined (ACE_LACKS_CONDATTR_SETCLOCK)
   int result = -1;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_condattr_setclock (&attributes, clock_id),
                                        result),
@@ -2568,7 +2567,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   // the system call expects).
   ACE_Time_Value relative_time = tv.to_relative_time ();
 
-  int ticks_per_sec = ::sysClkRateGet ();
+  _Vx_freq_t const ticks_per_sec = ::sysClkRateGet ();
 
   int ticks = relative_time.sec () * ticks_per_sec +
               relative_time.usec () * ticks_per_sec / ACE_ONE_SECOND_IN_USECS;

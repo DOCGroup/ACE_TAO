@@ -33,7 +33,6 @@ namespace TAO
   class TAO_Export Storable_FlatFileStream : public Storable_Base
   {
   public:
-
     Storable_FlatFileStream(const ACE_CString & file, const char * mode,
                             bool use_backup = Storable_Base::use_backup_default,
                             bool retry_on_ebadf = Storable_Base::retry_on_ebadf_default);
@@ -61,15 +60,15 @@ namespace TAO
     virtual int funlock (int whence, int start, int len);
 
     /// Returns the last time an open file was changed
-    virtual time_t last_changed (void);
+    virtual time_t last_changed ();
 
-    virtual void rewind (void);
+    virtual void rewind ();
 
-    virtual bool flush (void);
+    virtual bool flush ();
 
     /// Force write of storable data to storage.
     /// Returns 0 on success, otherwise EOF
-    virtual int sync (void);
+    virtual int sync ();
 
     virtual Storable_Base& operator << (const ACE_CString&);
     virtual Storable_Base& operator >> (ACE_CString&);

@@ -19,7 +19,7 @@ Logging_Handler::~Logging_Handler ()
 // Extract the underlying ACE_SOCK_Stream (e.g., for purposes of
 // accept()).
 ACE_SOCK_Stream &
-Logging_Handler::peer (void)
+Logging_Handler::peer ()
 {
   return this->cli_stream_;
 }
@@ -140,7 +140,7 @@ Logging_Handler::get_handle () const
 }
 
 int
-Logging_Handler::open (void)
+Logging_Handler::open ()
 {
   ACE_INET_Addr addr;
 
@@ -183,7 +183,7 @@ Logging_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 
 // Perform termination activities when close fails.
 int
-Logging_Handler::close (void)
+Logging_Handler::close ()
 {
   return this->handle_close ();
 }

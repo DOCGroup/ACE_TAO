@@ -13,8 +13,4 @@ ACE_Notification_Strategy::ACE_Notification_Strategy (ACE_Event_Handler *eh,
 {
 }
 
-ACE_Notification_Strategy::~ACE_Notification_Strategy ()
-{
-}
-
 ACE_END_VERSIONED_NAMESPACE_DECL

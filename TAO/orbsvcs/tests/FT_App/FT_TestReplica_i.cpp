@@ -146,11 +146,9 @@ void FT_TestReplica_i::suicide(const char * note)
 // class FT_TestReplica_i public, non-CORBA interface
 
 
-
 //static
 const char * FT_TestReplica_i::repository_id()
 {
-
   const char * id =
     FT_TEST::_tc_TestReplica->id();
 
@@ -177,7 +175,7 @@ unsigned long FT_TestReplica_i::factory_id()const
   return this->factory_id_;
 }
 
-::PortableServer::POA_ptr FT_TestReplica_i::_default_POA (void)
+::PortableServer::POA_ptr FT_TestReplica_i::_default_POA ()
 {
   return ::PortableServer::POA::_duplicate(this->poa_.in ());
 }
@@ -233,23 +231,22 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb, const ACE_TCHAR* file_persiste
   return 0;
 }
 
-void FT_TestReplica_i::_remove_ref (void)
+void FT_TestReplica_i::_remove_ref ()
 {
   //////////////////////////////////////////////////
   // WARNING: The following call invokes fini then deletes this object
   this->factory_->remove_replica(this->factory_id_, this);
 }
 
-int FT_TestReplica_i::fini (void)
+int FT_TestReplica_i::fini ()
 {
   return 0;
 }
 
 
-
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  PullMonitorable interface
-CORBA::Boolean FT_TestReplica_i::is_alive (void)
+CORBA::Boolean FT_TestReplica_i::is_alive ()
 {
   KEVORKIAN_RETURN(DURING_IS_ALIVE, is_alive, 0)
   ACE_ERROR ((LM_ERROR,
@@ -265,7 +262,7 @@ CORBA::Boolean FT_TestReplica_i::is_alive (void)
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  Updateable interface
-FT::State * FT_TestReplica_i::get_update (void)
+FT::State * FT_TestReplica_i::get_update ()
 {
   KEVORKIAN_RETURN(DURING_GET_UPDATE, get_update, 0)
   long counter = load();
@@ -289,7 +286,7 @@ void FT_TestReplica_i::set_update (const FT::State & s)
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  Checkpointable interface
-::FT::State * FT_TestReplica_i::get_state (void)
+::FT::State * FT_TestReplica_i::get_state ()
 {
 #if defined(FT_TEST_LACKS_STATE)
   throw FT::NoStateAvailable ();
@@ -349,14 +346,14 @@ CORBA::Long FT_TestReplica_i::increment (CORBA::Long delta)
   return counter;
 }
 
-CORBA::Long FT_TestReplica_i::get (void)
+CORBA::Long FT_TestReplica_i::get ()
 {
   KEVORKIAN_DURING_RETURN(get, 0)
   long counter = load ();
   return counter;
 }
 
-CORBA::Long FT_TestReplica_i::counter (void)
+CORBA::Long FT_TestReplica_i::counter ()
 {
   KEVORKIAN_DURING_RETURN([get]counter, 0)
   long counter = load ();
@@ -379,7 +376,7 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when)
   KEVORKIAN(RIGHT_NOW, die)
 }
 
-void FT_TestReplica_i::shutdown (void)
+void FT_TestReplica_i::shutdown ()
 {
   ACE_OS::fprintf (stdout, "%s@%s#%lu Shut down requested\n",
                    name_.c_str(), this->factory_->location(), this->factory_id_);

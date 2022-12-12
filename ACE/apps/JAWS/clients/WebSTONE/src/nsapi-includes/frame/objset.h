@@ -38,7 +38,6 @@
 #include "frame/object.h"
 
 
-
 /* ------------------------------ Constants ------------------------------- */
 
 
@@ -106,7 +105,7 @@ httpd_objset *objset_scan_buffer(filebuf *buf, char *errstr, httpd_objset *os);
  * objset_create creates a new object set and returns a pointer to it.
  */
 
-httpd_objset *objset_create(void);
+httpd_objset *objset_create();
 
 /*
  * objset_free will free an object set and any associated objects.

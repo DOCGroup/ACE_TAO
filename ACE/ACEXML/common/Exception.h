@@ -34,7 +34,6 @@
 class ACEXML_Export ACEXML_Exception
 {
 public:
-
   /// Destructor.
   virtual ~ACEXML_Exception ();
 

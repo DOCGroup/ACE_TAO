@@ -94,8 +94,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << be_uidt_nl << "}" << be_nl_2;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Default constructor.
   *os << node->name () << "::" << node->local_name ()
@@ -178,7 +177,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   // Non-const downcast method.
   *os << node->name () << " *" << be_nl;
-  *os << node->name () << "::_downcast ( ::CORBA::Exception *_tao_excp)" << be_nl;
+  *os << node->name () << "::_downcast (::CORBA::Exception *_tao_excp)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return dynamic_cast<" << node->local_name ()
       << " *> (_tao_excp);" << be_uidt_nl;
@@ -186,7 +185,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   // Const downcast method.
   *os << "const " << node->name () << " *" << be_nl;
-  *os << node->name () << "::_downcast ( ::CORBA::Exception const *_tao_excp)"
+  *os << node->name () << "::_downcast (::CORBA::Exception const *_tao_excp)"
       << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return dynamic_cast<const " << node->local_name ()
@@ -276,7 +275,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << "TAO_AnyTypeCode_Adapter *adapter =" << be_idt_nl
           << "ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance ("
           << "\"AnyTypeCode_Adapter\");" << be_uidt_nl
-          << "if (adapter == 0)" << be_idt_nl
+          << "if (!adapter)" << be_idt_nl
           << "{" << be_idt_nl
           // FUZZ: disable check_for_ace_log_categories
           << "TAOLIB_ERROR_RETURN ((LM_ERROR," << be_idt_nl

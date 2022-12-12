@@ -31,10 +31,9 @@ class Filter_StructuredPushSupplier;
  */
 class FilterClient
 {
-
  public:
   /// Constructor
-  FilterClient (void);
+  FilterClient ();
 
   /// Destructor
   ~FilterClient ();
@@ -43,38 +42,38 @@ class FilterClient
   void init (int argc, ACE_TCHAR *argv []);
 
   /// Run the demo.
-  void run (void);
+  void run ();
 
   /// Consumer calls done, We're done.
-  void done (void);
+  void done ();
 
  protected:
   /// Initializes the ORB.
   void init_ORB (int argc, ACE_TCHAR *argv []);
 
   /// Try to get hold of a running naming service.
-  void resolve_naming_service (void);
+  void resolve_naming_service ();
 
   /// Try to resolve the Notify factory from the Naming service.
-  void resolve_Notify_factory (void);
+  void resolve_Notify_factory ();
 
   /// Create an EC.
-  void create_EC (void);
+  void create_EC ();
 
   /// Create the Supplier Admin.
-  void create_supplieradmin(void);
+  void create_supplieradmin();
 
   /// Create the Consumer Admin.
-  void create_consumeradmin (void);
+  void create_consumeradmin ();
 
   /// Create and initialize the consumers.
-  void create_consumers (void);
+  void create_consumers ();
 
   /// create and initialize the suppliers.
-  void create_suppliers (void);
+  void create_suppliers ();
 
   /// send the events.
-  void send_events (void);
+  void send_events ();
 
   // = Data Members
   /// Reference to the root poa.
@@ -143,7 +142,7 @@ class Filter_StructuredPushConsumer
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
   /// Disconnect from the supplier.
-  virtual void disconnect (void);
+  virtual void disconnect ();
 
 protected:
   // = Data members
@@ -162,7 +161,7 @@ protected:
 
   // = Methods
   /// Destructor
-  virtual ~Filter_StructuredPushConsumer (void);
+  virtual ~Filter_StructuredPushConsumer ();
 
   // = NotifyPublish method
     virtual void offer_change (
@@ -196,7 +195,7 @@ class Filter_StructuredPushSupplier
   void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin);
 
   /// Disconnect from the supplier.
-  void disconnect (void);
+  void disconnect ();
 
   /// Send one event.
   virtual void send_event (const CosNotification::StructuredEvent& event);

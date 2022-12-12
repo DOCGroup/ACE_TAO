@@ -69,21 +69,20 @@ namespace TAO
     class OpenSSL_st_var
     {
     public:
-
       /**
        * @name Constructors
        *
        * Constructors.
        */
       //@{
-      OpenSSL_st_var (void);
+      OpenSSL_st_var ();
       OpenSSL_st_var (T * st);
       OpenSSL_st_var (OpenSSL_st_var<T> const & v);
       OpenSSL_st_var (T const & st);
       //@}
 
       /// Destructor
-      ~OpenSSL_st_var (void);
+      ~OpenSSL_st_var ();
 
       /**
        * @name Assignment operators.
@@ -97,22 +96,20 @@ namespace TAO
       //@}
 
       T const * operator-> () const;
-      T* operator-> (void);
+      T* operator-> ();
 
       operator const T& () const;
       operator T& ();
 
       T*  in () const;
-      T*& inout (void);
-      T*& out (void);
-      T*  _retn (void);
+      T*& inout ();
+      T*& out ();
+      T*  _retn ();
       T*  ptr () const;
 
     private:
-
       /// The OpenSSL structure whose reference count is managed.
       T * st_;
-
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.

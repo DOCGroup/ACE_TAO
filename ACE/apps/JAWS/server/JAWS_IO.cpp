@@ -14,12 +14,12 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Basic_Types.h"
 
-JAWS_IO::JAWS_IO (void)
+JAWS_IO::JAWS_IO ()
   : handler_ (0)
 {
 }
 
-JAWS_IO::~JAWS_IO (void)
+JAWS_IO::~JAWS_IO ()
 {
 }
 
@@ -29,16 +29,16 @@ JAWS_IO::handler (JAWS_IO_Handler *handler)
   this->handler_ = handler;
 }
 
-JAWS_IO_Handler::~JAWS_IO_Handler (void)
+JAWS_IO_Handler::~JAWS_IO_Handler ()
 {
 }
 
-JAWS_Synch_IO::JAWS_Synch_IO (void)
+JAWS_Synch_IO::JAWS_Synch_IO ()
   : handle_ (ACE_INVALID_HANDLE)
 {
 }
 
-JAWS_Synch_IO::~JAWS_Synch_IO (void)
+JAWS_Synch_IO::~JAWS_Synch_IO ()
 {
   ACE_OS::closesocket (this->handle_);
 }
@@ -190,11 +190,11 @@ JAWS_Synch_IO::send_message (const char *buffer,
 // This only works on Win32
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
-JAWS_Asynch_IO::JAWS_Asynch_IO (void)
+JAWS_Asynch_IO::JAWS_Asynch_IO ()
 {
 }
 
-JAWS_Asynch_IO::~JAWS_Asynch_IO (void)
+JAWS_Asynch_IO::~JAWS_Asynch_IO ()
 {
   ACE_OS::closesocket (this->handle_);
 }
@@ -418,12 +418,12 @@ JAWS_Asynch_IO::handle_write_stream (const ACE_Asynch_Write_Stream::Result &resu
 
 //-------------------Adding SYNCH IO no Caching
 
-JAWS_Synch_IO_No_Cache::JAWS_Synch_IO_No_Cache (void)
+JAWS_Synch_IO_No_Cache::JAWS_Synch_IO_No_Cache ()
   : handle_ (ACE_INVALID_HANDLE)
 {
 }
 
-JAWS_Synch_IO_No_Cache::~JAWS_Synch_IO_No_Cache (void)
+JAWS_Synch_IO_No_Cache::~JAWS_Synch_IO_No_Cache ()
 {
   ACE_OS::closesocket (this->handle_);
 }

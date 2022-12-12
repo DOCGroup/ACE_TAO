@@ -18,7 +18,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 
-Options::Options (void)
+Options::Options ()
   : host_ (ACE_DEFAULT_SERVER_HOST),
     port_ (ACE_DEFAULT_SERVER_PORT),
     sleep_time_ (0, 0), // By default, don't sleep between calls.
@@ -35,7 +35,7 @@ Options::Options (void)
 {
 }
 
-Options::~Options (void)
+Options::~Options ()
 {
   ACE_MT (delete this->barrier_);
   delete [] this->message_buf_;
@@ -45,9 +45,8 @@ Options::~Options (void)
 typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
 
 int
-Options::init (void)
+Options::init ()
 {
-
   ACE_DEBUG((LM_DEBUG,"Options::init, len = %d\n",this->message_len_));
 
   // Check for default case.
@@ -377,7 +376,7 @@ Options::twoway_client_test (void *)
 }
 
 ACE_THR_FUNC
-Options::thr_func (void)
+Options::thr_func ()
 {
   ACE_DEBUG((LM_DEBUG,"(%P|%t) in thread func, mesg len = %d\n",this->message_len()));
   if (this->oneway_ == 0)
@@ -387,7 +386,7 @@ Options::thr_func (void)
 }
 
 static int
-run_client (void)
+run_client ()
 {
   // Raise the socket handle limit to the maximum.
   ACE::set_handle_limit ();

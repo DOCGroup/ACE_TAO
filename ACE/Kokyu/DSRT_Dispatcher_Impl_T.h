@@ -21,7 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-
 namespace Kokyu
 {
   /**
@@ -143,7 +142,6 @@ namespace Kokyu
     virtual ~DSRT_Dispatcher_Impl ();
 
   private:
-
     //following an idiom to avoid public virtual functions.
     //instead make them private and use the template method
     //pattern - "Virtually Yours" article in CUJ Experts Forum
@@ -188,7 +186,6 @@ namespace Kokyu
     ACE_hthread_t curr_scheduled_thr_handle_;
     Guid_t curr_scheduled_guid_;
   };
-
 } //end of namespace
 
 #if defined (__ACE_INLINE__)

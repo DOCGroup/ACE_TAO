@@ -4,7 +4,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #if defined (ACE_HAS_RAPI)
 
 ACE_INLINE
-ACE_RAPI_Session::~ACE_RAPI_Session (void)
+ACE_RAPI_Session::~ACE_RAPI_Session ()
 {
   ACE_TRACE ("ACE_RAPI_Session::~ACE_RAPI_Session");
 }
@@ -40,7 +40,7 @@ ACE_RAPI_Session::session_id (const int session_id)
 
 // Get the RAPI file desciptor for RSVP events.
 ACE_INLINE ACE_HANDLE
-ACE_RAPI_Session::rsvp_events_handle (void)
+ACE_RAPI_Session::rsvp_events_handle ()
 {
   int rapi_fd = rapi_getfd (this->session_id ());
   if (rapi_fd == -1)
@@ -111,7 +111,7 @@ ACE_RAPI_Session::source_addr (ACE_INET_Addr* source_addr)
 
 // RAPI version. Returned value = 100 * major-version + minor-version.
 ACE_INLINE int
-ACE_RAPI_Session::version (void)
+ACE_RAPI_Session::version ()
 {
   return 0;
 }
@@ -119,7 +119,7 @@ ACE_RAPI_Session::version (void)
 #endif /* ACE_HAS_RAPI */
 
 ACE_INLINE
-ACE_GQoS_Session::~ACE_GQoS_Session (void)
+ACE_GQoS_Session::~ACE_GQoS_Session ()
 {
   ACE_TRACE ("ACE_GQoS_Session::~ACE_GQoS_Session");
 }
@@ -157,7 +157,7 @@ ACE_GQoS_Session::session_id (const int session_id)
 // Currently returns 0 because GQoS does not have a special
 // descriptor for QoS events.
 ACE_INLINE ACE_HANDLE
-ACE_GQoS_Session::rsvp_events_handle (void)
+ACE_GQoS_Session::rsvp_events_handle ()
 {
   return 0;
 }
@@ -218,7 +218,7 @@ ACE_GQoS_Session::source_addr (ACE_INET_Addr* source_addr)
 
 // GQoS version.
 ACE_INLINE int
-ACE_GQoS_Session::version (void)
+ACE_GQoS_Session::version ()
 {
   return 0;
 }

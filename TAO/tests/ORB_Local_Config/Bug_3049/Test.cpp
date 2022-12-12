@@ -67,7 +67,6 @@ testBug3049 (int , ACE_TCHAR *[])
 
     if (error > 0)
       return -1;
-
   }
   catch(const CORBA::Exception& ex)
     {

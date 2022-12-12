@@ -78,7 +78,7 @@ ACE_Object_Manager_Base::shutting_down_i ()
 
 extern "C"
 void
-ACE_OS_Object_Manager_Internal_Exit_Hook (void)
+ACE_OS_Object_Manager_Internal_Exit_Hook ()
 {
   if (ACE_OS_Object_Manager::instance_)
     ACE_OS_Object_Manager::instance ()->fini ();
@@ -137,7 +137,7 @@ ACE_OS_Object_Manager::thread_hook ()
 
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 ACE_SEH_EXCEPT_HANDLER
-ACE_OS_Object_Manager::seh_except_selector (void)
+ACE_OS_Object_Manager::seh_except_selector ()
 {
   return ACE_OS_Object_Manager::instance ()->seh_except_selector_;
 }
@@ -154,7 +154,7 @@ ACE_OS_Object_Manager::seh_except_selector (ACE_SEH_EXCEPT_HANDLER n)
 }
 
 ACE_SEH_EXCEPT_HANDLER
-ACE_OS_Object_Manager::seh_except_handler (void)
+ACE_OS_Object_Manager::seh_except_handler ()
 {
   return ACE_OS_Object_Manager::instance ()->seh_except_handler_;
 }
@@ -199,7 +199,6 @@ ACE_OS_Object_Manager::instance ()
       // ACE_ASSERT (instance_pointer == instance_);
 
       instance_pointer->dynamically_allocated_ = true;
-
     }
 
   return instance_;

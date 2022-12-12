@@ -25,7 +25,6 @@ TAO_RTEventLogNotification::TAO_RTEventLogNotification (
   : TAO_LogNotification (),
     event_channel_ (RtecEventChannelAdmin::EventChannel::_duplicate (ec))
 {
-
   obtainProxyConsumer ();
 }
 

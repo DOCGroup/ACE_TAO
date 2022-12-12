@@ -22,7 +22,6 @@ test_with_regular_poa_manager (int argc,
                                int destroy_orb,
                                int destroy_poa)
 {
-
   try
     {
       CORBA::ORB_var orb =
@@ -65,7 +64,6 @@ test_with_funky_poa_manager (int argc,
                              int destroy_poa,
                              int funky_poa_manager)
 {
-
   try
     {
       CORBA::ORB_var orb =

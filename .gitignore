@@ -16,17 +16,21 @@
 *S_T.h
 *S_T.inl
 *.bmak
+*.recipe
 
 .depend.*
 GNUmakefile*
 *.ior
 .obj/
+*.iobj
+*.ipdb
 .shobj/
 lib*.a
 lib*.so*
 lib*.dylib
 *~
 ipch/
+*.vsidx
 
 /ACE/ace/config.h
 /ACE/bin/MakeProjectCreator/config/default.features
@@ -36,6 +40,7 @@ ipch/
 /build
 /ACE/build
 /TAO/build
+/MPC
 
 *.o
 *.res
@@ -43,3 +48,5 @@ ipch/
 *.VC.db*
 *.tds
 *.*codeanalysis*
+read.lock
+fileList.bin

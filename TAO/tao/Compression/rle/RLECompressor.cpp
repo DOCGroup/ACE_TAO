@@ -32,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
 RLECompressor::RLECompressor(::Compression::CompressorFactory_ptr compressor_factory)
     : BaseCompressor (compressor_factory, 0)
 {

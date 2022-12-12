@@ -33,7 +33,7 @@ public:
 class LongWork : public ACE_Method_Request
 {
 public:
-  virtual int call (void)
+  virtual int call ()
   {
     ACE_TRACE ("LongWork::call");
     ACE_DEBUG
@@ -49,7 +49,7 @@ public:
     return 0;
   }
 
-  ACE_Future<ACE_CString*> &future (void)
+  ACE_Future<ACE_CString*> &future ()
   {
     ACE_TRACE ("LongWork::future");
     return result_;
@@ -68,7 +68,7 @@ private:
 class Exit : public ACE_Method_Request
 {
 public:
-  virtual int call (void)
+  virtual int call ()
   {
     ACE_TRACE ("Exit::call");
     return -1;
@@ -80,7 +80,7 @@ class Worker;
 class IManager
 {
 public:
-  virtual ~IManager (void) { }
+  virtual ~IManager () { }
 
   virtual int return_to_work (Worker *worker) = 0;
 };
@@ -99,7 +99,7 @@ public:
     return this->queue_.enqueue (req);
   }
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     thread_id_ = ACE_Thread::self ();
     while (1)
@@ -120,7 +120,7 @@ public:
     return 0;
   }
 
-  ACE_thread_t thread_id (void);
+  ACE_thread_t thread_id ();
 
 private:
   IManager *manager_;
@@ -129,7 +129,7 @@ private:
 };
 // Listing 3
 
-ACE_thread_t Worker::thread_id (void)
+ACE_thread_t Worker::thread_id ()
 {
   return thread_id_;
 }
@@ -152,7 +152,7 @@ public:
     return this->queue_.enqueue (req);
   }
 
-  int svc (void)
+  int svc ()
   {
     ACE_TRACE ("svc");
 
@@ -184,7 +184,7 @@ public:
     return 0;
   }
 
-  int shut_down (void);
+  int shut_down ();
 
   virtual int return_to_work (Worker *worker)
   {
@@ -199,7 +199,7 @@ public:
   }
 
 private:
-  Worker *choose_worker (void)
+  Worker *choose_worker ()
   {
     ACE_GUARD_RETURN
       (ACE_Thread_Mutex, worker_mon, this->workers_lock_, 0)
@@ -212,7 +212,7 @@ private:
     return worker;
   }
 
-  int create_worker_pool (void)
+  int create_worker_pool ()
   {
     ACE_GUARD_RETURN
       (ACE_Thread_Mutex, worker_mon, this->workers_lock_, -1);
@@ -227,7 +227,7 @@ private:
     return 0;
   }
 
-  int done (void)
+  int done ()
   {
     return (shutdown_ == 1);
   }
@@ -247,7 +247,7 @@ private:
 // Listing 4
 
 int
-Manager::shut_down (void)
+Manager::shut_down ()
 {
   ACE_TRACE ("Manager::shut_down");
   ACE_Unbounded_Queue<Worker* >::ITERATOR iter = this->workers_.begin ();
@@ -274,7 +274,6 @@ Manager::shut_down (void)
 
       delete req;
       delete worker;
-
     }
   while (iter.advance ());
 

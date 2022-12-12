@@ -44,7 +44,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class TYPE, class ACE_LOCK>
 class TAO_Singleton : public ACE_Cleanup
 {
-
 public:
   /// Global access point to the Singleton.
   static TYPE *instance ();

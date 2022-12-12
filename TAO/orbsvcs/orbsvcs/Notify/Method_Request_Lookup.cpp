@@ -155,7 +155,6 @@ TAO_Notify_Method_Request_Lookup::unmarshal (
     }
   }
   return result;
-
 }
 
 

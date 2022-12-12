@@ -5,7 +5,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/ARGV.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Signal.h"
 #include "ace/SString.h"
 #include "ace/Log_Category.h"
@@ -27,17 +26,17 @@
 # include <taskLib.h>
 #endif
 
+#include <memory>
+
 // This function acts as a signal handler for SIGCHLD. We don't really want
 // to do anything with the signal - it's just needed to interrupt a sleep.
 // See wait() for more info.
 #if !defined (ACE_WIN32) && !defined(ACE_LACKS_UNIX_SIGNALS)
-static void
-sigchld_nop (int, siginfo_t *, ucontext_t *)
+static void sigchld_nop (int, siginfo_t *, ucontext_t *)
 {
   return;
 }
 #endif /* ACE_WIN32 */
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -407,8 +406,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
 # endif /* ACE_LACKS_SETPGID */
 
 # if !defined (ACE_LACKS_SETREGID)
-      if (options.getrgid () != (uid_t) -1
-          || options.getegid () != (uid_t) -1)
+      if (options.getrgid () != (gid_t) -1
+          || options.getegid () != (gid_t) -1)
         if (ACE_OS::setregid (options.getrgid (),
                               options.getegid ()) == -1)
           {
@@ -695,7 +694,8 @@ ACE_Process::wait (const ACE_Time_Value &tv,
   // open(), and there's already a SIGCHLD action set, so no
   // action is needed here.
   ACE_Sig_Action old_action;
-  ACE_Sig_Action do_sigchld ((ACE_SignalHandler)sigchld_nop);
+  ACE_Sig_Handler_Ex sigchld_nop_ptr = sigchld_nop;
+  ACE_Sig_Action do_sigchld (reinterpret_cast<ACE_SignalHandler> (reinterpret_cast<void*> (sigchld_nop_ptr)));
   do_sigchld.register_action (SIGCHLD, &old_action);
 
   pid_t pid;
@@ -836,8 +836,8 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
     stderr_ (ACE_INVALID_HANDLE),
     ruid_ ((uid_t) -1),
     euid_ ((uid_t) -1),
-    rgid_ ((uid_t) -1),
-    egid_ ((uid_t) -1),
+    rgid_ ((gid_t) -1),
+    egid_ ((gid_t) -1),
 #endif /* ACE_WIN32 */
     handle_inheritance_ (true),
     set_handles_called_ (0),
@@ -910,7 +910,7 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
 #if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
 void
-ACE_Process_Options::inherit_environment (void)
+ACE_Process_Options::inherit_environment ()
 {
   // Ensure only once execution.
   if (environment_inherited_)
@@ -928,8 +928,8 @@ ACE_Process_Options::inherit_environment (void)
       for (WCHAR *iter = existing_wide_env; *iter; ++iter)
         {
           ACE_Wide_To_Ascii wta (iter);
-          size_t len = ACE_OS::strlen (wta.char_rep ());
-          size_t idx = temp_narrow_env.size ();
+          size_t const len = ACE_OS::strlen (wta.char_rep ());
+          size_t const idx = temp_narrow_env.size ();
           temp_narrow_env.resize (idx + len + 1, 0);
           ACE_OS::strncpy (&temp_narrow_env[idx], wta.char_rep (), len);
           iter += len;
@@ -945,7 +945,7 @@ ACE_Process_Options::inherit_environment (void)
 
   while (existing_environment[slot] != '\0')
     {
-      size_t len = ACE_OS::strlen (existing_environment + slot);
+      size_t const len = ACE_OS::strlen (existing_environment + slot);
 
       // Add the string to our env buffer.
       if (this->setenv_i (existing_environment + slot, len) == -1)
@@ -984,8 +984,7 @@ ACE_Process_Options::setenv (ACE_TCHAR *envp[])
   int i = 0;
   while (envp[i])
     {
-      if (this->setenv_i (envp[i],
-                          ACE_OS::strlen (envp[i])) == -1)
+      if (this->setenv_i (envp[i], ACE_OS::strlen (envp[i])) == -1)
         return -1;
       i++;
     }
@@ -1009,8 +1008,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
   va_start (argp, format);
 
   // Add the rest of the varargs.
-  int status = ACE_OS::vsnprintf (stack_buf, DEFAULT_COMMAND_LINE_BUF_LEN,
-                                  format, argp);
+  int status = ACE_OS::vsnprintf (stack_buf, DEFAULT_COMMAND_LINE_BUF_LEN, format, argp);
   // End varargs.
   va_end (argp);
 
@@ -1018,8 +1016,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
     return -1;
 
   // Append the string to are environment buffer.
-  if (this->setenv_i (stack_buf,
-                      ACE_OS::strlen (stack_buf)) == -1)
+  if (this->setenv_i (stack_buf, ACE_OS::strlen (stack_buf)) == -1)
     return -1;
 
 #if defined (ACE_WIN32)
@@ -1039,16 +1036,11 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
   size_t const buflen = ACE_OS::strlen (variable_name) + ACE_OS::strlen (format) + 2;
   ACE_TCHAR *newformat = 0;
   ACE_NEW_RETURN (newformat, ACE_TCHAR[buflen], -1);
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe_newformat (newformat);
-
-# if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  const ACE_TCHAR *fmt = ACE_TEXT ("%ls=%ls");
-# else
-  const ACE_TCHAR *fmt = ACE_TEXT ("%s=%s");
-# endif
+  std::unique_ptr<ACE_TCHAR[]> safe_newformat (newformat);
 
   // Add in the variable name.
-  ACE_OS::snprintf (safe_newformat.get (), buflen, fmt,
+  ACE_OS::snprintf (safe_newformat.get (), buflen,
+                    ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT ("=%") ACE_TEXT_PRIs,
                     variable_name, format);
 
   // Add the rest of the varargs.
@@ -1061,7 +1053,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
 
   ACE_TCHAR *stack_buf = 0;
   ACE_NEW_RETURN (stack_buf, ACE_TCHAR[tmp_buflen], -1);
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe_stack_buf (stack_buf);
+  std::unique_ptr<ACE_TCHAR[]> safe_stack_buf (stack_buf);
 
   do
     {
@@ -1141,8 +1133,7 @@ ACE_Process_Options::setenv_i (ACE_TCHAR *assignment,
                   len * sizeof (ACE_TCHAR));
 
   // Update the argv array.
-  environment_argv_[environment_argv_index_++] =
-    environment_buf_ + environment_buf_index_;
+  environment_argv_[environment_argv_index_++] = environment_buf_ + environment_buf_index_;
   environment_argv_[environment_argv_index_] = 0;
 
   // Update our index.
@@ -1176,7 +1167,6 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
   // processes that were launched from services.  In this case we need to make
   // sure not to return -1 from setting std_in so that we can process std_out
   // and std_err.
-
   if (std_in)
     {
       if (!::DuplicateHandle (::GetCurrentProcess (),
@@ -1451,10 +1441,6 @@ ACE_Process_Options::passed_handles (ACE_Handle_Set &set) const
   set.reset ();
   set = this->handles_passed_;
   return 1;
-}
-
-ACE_Managed_Process::~ACE_Managed_Process ()
-{
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Managed_Process)

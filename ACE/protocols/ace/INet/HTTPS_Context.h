@@ -52,7 +52,7 @@ namespace ACE
 
               bool operator ! () const;
 
-              ACE_SSL_Context& ssl_context (void);
+              ACE_SSL_Context& ssl_context ();
 
               const ACE_SSL_Context& ssl_context () const;
 

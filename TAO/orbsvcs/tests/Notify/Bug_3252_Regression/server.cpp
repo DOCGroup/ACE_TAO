@@ -69,9 +69,7 @@ loadNotify(ACE_Service_Config & service_config)
     p_notifyService->init_service(v_orb.in());
 
     CosNotifyChannelAdmin::EventChannelFactory_var v_notifyFactory =
-      p_notifyService->create(
-        v_rootPOA.in()
-      );
+      p_notifyService->create(v_rootPOA.in());
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("got EventChannelFactory\n")));
 
     // create an event channel
@@ -84,8 +82,7 @@ loadNotify(ACE_Service_Config & service_config)
       v_notifyFactory->create_channel(
         initialQos,
         initialAdmin,
-        id
-      );
+        id);
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("got EventChannel\n")));
 
     CosNotifyFilter::FilterFactory_var v_filterFactory =
@@ -136,7 +133,6 @@ int loadOrb(ACE_Service_Config & service_config)
 }
 
 
-
 int
 ACE_TMAIN(int, ACE_TCHAR **argv)
 {
@@ -157,8 +153,7 @@ ACE_TMAIN(int, ACE_TCHAR **argv)
                                ACE_DEFAULT_LOGGER_KEY,
                                true, // ignore_static_svcs = 1,
                                true, // ignore_default_svc_conf_file = 0,
-                               false  // ignore_debug_flag = 0
-                               );
+                               false);  // ignore_debug_flag = 0
 
   if(0 != result)
     {

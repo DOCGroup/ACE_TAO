@@ -29,7 +29,7 @@ class ACE_Refcountable_T
 {
 public:
   /// Destructor.
-  virtual ~ACE_Refcountable_T ();
+  virtual ~ACE_Refcountable_T () = default;
 
   /// Increment refcount
   long increment ();

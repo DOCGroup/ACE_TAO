@@ -51,7 +51,6 @@ namespace ACE_RMCast
 
       ssock_.get_option (SOL_SOCKET, SO_RCVBUF, &r, &s);
       //cerr << 5 << "send buffer size: " << r << endl;
-
     }
 
     // Bind address and port.

@@ -87,7 +87,6 @@ ClientTask::svc()
       {
         ACE_DEBUG((LM_DEBUG,
                    "(%P|%t) ===> Caught FooException - as expected.\n"));
-
       }
 
       // Two-Way calls with inout parameters.

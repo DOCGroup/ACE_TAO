@@ -14,14 +14,14 @@ public:
   Process_Factory (CORBA::ORB_ptr orb);
 
   /// Return 1 if the shutdown message has been received already
-  int shutdown_received (void);
+  int shutdown_received ();
 
   // = The skeleton methods
-  virtual Test::Process_ptr create_new_process (void);
+  virtual Test::Process_ptr create_new_process ();
 
-  virtual void noop (void);
+  virtual void noop ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

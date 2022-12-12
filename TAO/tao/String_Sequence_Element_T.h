@@ -19,7 +19,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename traits>
 class string_sequence_element
 {
@@ -57,9 +56,7 @@ public:
   {
   }
 
-  ~string_sequence_element()
-  {
-  }
+  ~string_sequence_element() = default;
 
   string_sequence_element & operator=(const_value_type rhs)
   {
@@ -105,7 +102,6 @@ public:
   }
 
   inline string_out out () const {
-
     if (release())
       {
         traits::release(*element_);
@@ -139,7 +135,6 @@ private:
   value_type * element_;
   CORBA::Boolean release_;
 };
-
 } // namespace details
 } // namespace CORBA
 

@@ -14,10 +14,6 @@
 #ifndef _BE_VISITOR_ARGUMENT_VARDECL_SS_H_
 #define _BE_VISITOR_ARGUMENT_VARDECL_SS_H_
 
-// ************************************************************
-// class be_visitor_args_vardecl_ss
-// ************************************************************
-
 /**
  * @class be_visitor_args_vardecl_ss
  *
@@ -93,7 +89,6 @@ public:
  private:
   int emit_common (be_type *node);
   int emit_common2 (be_type *node);
-
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_VARDECL_SS_H_ */

@@ -21,10 +21,6 @@ be_visitor_executor_exs::be_visitor_executor_exs (
 {
 }
 
-be_visitor_executor_exs::~be_visitor_executor_exs ()
-{
-}
-
 int
 be_visitor_executor_exs::visit_operation (be_operation *node)
 {
@@ -219,7 +215,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
           << "reactor = orb->orb_core ()->reactor ();"
           << be_uidt_nl << "}"
           << be_uidt << be_uidt_nl << "}"
-          << be_uidt_nl << "if (reactor == 0)" << be_idt_nl
+          << be_uidt_nl << "if (!reactor)" << be_idt_nl
           << "{" << be_idt_nl
           << "throw ::CORBA::INTERNAL ();"
           << be_uidt_nl << "}"
@@ -286,7 +282,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
       << "this->ciao_context_ =" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context::_narrow (ctx);" << be_uidt << be_nl_2
-      << "if ( ::CORBA::is_nil (this->ciao_context_.in ()))"
+      << "if (::CORBA::is_nil (this->ciao_context_.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
@@ -354,7 +350,7 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
       << node_->local_name () << "_exec_i::get_"
       << port_name << " ()" << be_nl
       << "{" << be_idt_nl
-      << "if ( ::CORBA::is_nil (this->ciao_" << port_name
+      << "if (::CORBA::is_nil (this->ciao_" << port_name
       << "_.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << lname << "_exec_i *tmp {};" << be_nl

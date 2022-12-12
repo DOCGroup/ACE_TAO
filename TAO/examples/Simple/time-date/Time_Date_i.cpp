@@ -21,7 +21,7 @@ Time_Date_i::str_date (CORBA::String_out time_date)
 
 // Shutdown.
 void
-Time_Date_i::shutdown (void)
+Time_Date_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Time_Date_i is shutting down\n")));

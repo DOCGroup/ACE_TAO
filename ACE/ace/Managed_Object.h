@@ -138,7 +138,7 @@ public:
 
 protected:
   // Disallow instantiation of this class.
-  ACE_Managed_Object (void) = delete;
+  ACE_Managed_Object () = delete;
 
 private:
   ACE_Managed_Object (const ACE_Managed_Object<TYPE> &) = delete;

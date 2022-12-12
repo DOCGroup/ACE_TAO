@@ -61,15 +61,14 @@ public:
 
 
 protected:
-
-  virtual CORBA::Object_ptr get_consumer (void);
+  virtual CORBA::Object_ptr get_consumer ();
 
   /// The Consumer
   CosNotifyComm::StructuredPushConsumer_var push_consumer_;
 
 private:
   /// Release
-  virtual void release (void);
+  virtual void release ();
 
   /// Connection valid flag
   int connection_valid;

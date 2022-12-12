@@ -144,7 +144,7 @@ TAO::TypeCode::Value<char const *,
         return false;
 
       char const * const lhs_name =
-        Traits<char const *>::get_string (lhs_field.name);;
+        Traits<char const *>::get_string (lhs_field.name);
       char const * const rhs_name = tc->member_name (i);
 
       if (std::strcmp (lhs_name, rhs_name) != 0)

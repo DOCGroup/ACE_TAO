@@ -138,8 +138,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
                        bt->full_name ());
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
@@ -214,8 +213,7 @@ be_visitor_valuetype_field_cs::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Accessor to set the member." << be_nl
       << this->pre_op() << "void" << be_nl;
@@ -283,8 +281,7 @@ be_visitor_valuetype_field_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
@@ -352,8 +349,7 @@ be_visitor_valuetype_field_cs::visit_interface_fwd (be_interface_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
@@ -426,8 +422,7 @@ be_visitor_valuetype_field_cs::valuetype_common (be_type *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
@@ -507,8 +502,7 @@ be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
@@ -583,8 +577,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
@@ -758,8 +751,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // (1) set from a const
   *os << "/// Accessor to set the member." << be_nl
@@ -830,8 +822,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
 
   // Three methods to set the string value.
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
@@ -845,7 +836,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
     }
   else
     {
-      *os << "::" << ub->local_name () << " ( ::CORBA::WChar *val)";
+      *os << "::" << ub->local_name () << " (::CORBA::WChar *val)";
     }
 
   *os << be_nl
@@ -999,8 +990,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // (1) Set from a const.
   *os << "/// Accessor to set the member." << be_nl
@@ -1116,8 +1106,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Accessor to set the member" << be_nl
       << this->pre_op () << "void" << be_nl;

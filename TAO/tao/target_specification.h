@@ -54,7 +54,6 @@ namespace TAO
 class TAO_Export TAO_Target_Specification
 {
 public:
-
   /// Ctor
   TAO_Target_Specification ();
   enum TAO_Target_Address

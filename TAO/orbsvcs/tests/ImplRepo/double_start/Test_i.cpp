@@ -15,13 +15,13 @@ Test_i::~Test_i ()
 }
 
 void
-Test_i::arm (void)
+Test_i::arm ()
 {
   this->armed_ = true;
 }
 
 void
-Test_i::trigger (void)
+Test_i::trigger ()
 {
   if (this->armed_)
     {

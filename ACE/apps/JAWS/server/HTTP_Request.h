@@ -33,10 +33,10 @@ class HTTP_Request
 {
 public:
   /// Default construction.
-  HTTP_Request (void);
+  HTTP_Request ();
 
   /// Destructor.
-  ~HTTP_Request (void);
+  ~HTTP_Request ();
 
   /// parse an incoming request
   int parse_request (ACE_Message_Block &mb);
@@ -93,22 +93,22 @@ public:
   const char *header_values (int index) const;
 
   /// The buffer into which request data is read
-  char *data (void);
+  char *data ();
 
   /// The length of the request data
-  int data_length (void);
+  int data_length ();
 
   /// The length of incoming content if any
-  int content_length (void);
+  int content_length ();
 
   /// Current status of the incoming request
-  int status (void);
+  int status ();
 
   /// A string describing the state of the incoming request
-  const char *status_string (void);
+  const char *status_string ();
 
   /// Dump the state of the request.
-  void dump (void);
+  void dump ();
 
   enum
   {

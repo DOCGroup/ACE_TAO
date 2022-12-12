@@ -28,7 +28,6 @@ int register_smart_proxy = 1;
 class Marker
 {
  public:
-
   void accumulate_into (ACE_Throughput_Stats &throughput) const
     {
       // Accumulate the throughput statistics into <throughput>
@@ -46,7 +45,6 @@ class Marker
       // get the sample.
       this->throughput_.sample (throughput_diff,
                                 latency_diff);
-
     }
  private:
   /// Keep throughput statistics on a per-thread basis

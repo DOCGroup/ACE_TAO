@@ -13,7 +13,7 @@
 #include "ace/Filecache.h"
 #include "http_handler.h"
 
-HTTP_Handler::HTTP_Handler (void)
+HTTP_Handler::HTTP_Handler ()
 {
 }
 
@@ -62,7 +62,7 @@ HTTP_Handler::open (void *)
 }
 
 int
-HTTP_Handler::svc (void)
+HTTP_Handler::svc ()
 {
   static char buf[BUFSIZ];
   int count = 0;

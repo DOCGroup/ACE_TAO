@@ -24,14 +24,14 @@
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  Event_Handler (void)
+  Event_Handler ()
     : event_ (1)
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Event_Handler created\n"));
   }
 
-  ~Event_Handler (void)
+  ~Event_Handler ()
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Event_Handler destroyed\n"));

@@ -59,7 +59,6 @@ public:
    * interface.
    */
   //@{
-
   /// Set the default properties to be used by all object groups.
   virtual void set_default_properties (
       const PortableGroup::Properties & props);
@@ -145,7 +144,6 @@ private:
    * @todo Strategize the validator, or use template policies.
    */
   TAO_PG_Default_Property_Validator property_validator_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Base_Transport_Property::TAO_Base_Transport_Property (void)
+TAO_Base_Transport_Property::TAO_Base_Transport_Property ()
 {
 }
 

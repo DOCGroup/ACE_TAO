@@ -109,7 +109,7 @@ public:
   typedef void (*PTVF) (void *);
 
   /// Null constructor.
-  ACE_TPQ_Entry (void);
+  ACE_TPQ_Entry ();
 
   /// Constructor.
   ACE_TPQ_Entry (const ACE_Token_Proxy *proxy,
@@ -119,7 +119,7 @@ public:
   ACE_TPQ_Entry (const ACE_TPQ_Entry &rhs);
 
   /// Destructor.
-  ~ACE_TPQ_Entry (void);
+  ~ACE_TPQ_Entry ();
 
   /// Copy operator use by the queue.
   void operator= (const ACE_TPQ_Entry &rhs);
@@ -155,7 +155,7 @@ public:
   PTVF sleep_hook () const;
 
   /// Call the sleep hook function or method passing arg.
-  void call_sleep_hook (void);
+  void call_sleep_hook ();
 
   /// Dump the state of the class.
   void dump () const;
@@ -216,28 +216,27 @@ public:
                      const ACE_TCHAR *client_id);
 
   /// Destructor.
-  virtual ~ACE_TSS_TPQ_Entry (void);
+  virtual ~ACE_TSS_TPQ_Entry () = default;
 
   /// Allows us to pass args to the construction of the TSS object.
   virtual ACE_TPQ_Entry *make_TSS_TYPE () const;
 
   /// Operator overloading and inheritance don't mix.
-  operator ACE_TPQ_Entry *(void);
+  operator ACE_TPQ_Entry *();
 
   /// Dump the state of the class.
   void dump () const;
 
 #if defined (ACE_NO_TSS_TOKENS)
-  ACE_TPQ_Entry *operator-> (void)
+  ACE_TPQ_Entry *operator-> ()
     {
       return (ACE_TPQ_Entry *) this;
     }
 #endif /* ACE_NO_TSS_TOKENS */
 
 private:
-  /// Private: should not be used
-  ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &);
-  void operator= (const ACE_TSS_TPQ_Entry &);
+  ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &) = delete;
+  void operator= (const ACE_TSS_TPQ_Entry &) = delete;
 
   // = These are passed to the constructor of ACE_TPQ_Entry in
   // make_TSS_TYPE
@@ -275,7 +274,7 @@ public:
   int done () const;
 
   /// Move forward by one element in the queue.
-  void advance (void);
+  void advance ();
 
   /// Dump the state of an object.
   void dump () const;
@@ -305,7 +304,7 @@ public:
   friend class ACE_TPQ_Iterator;
 
   /// Constructor.
-  ACE_Token_Proxy_Queue (void);
+  ACE_Token_Proxy_Queue ();
 
   /// Destructor.
   ~ACE_Token_Proxy_Queue () = default;
@@ -319,19 +318,19 @@ public:
                 int position);
 
   /// Top of the queue.
-  const ACE_TPQ_Entry* head (void);
+  const ACE_TPQ_Entry* head ();
 
 //  int member (const ACE_TCHAR *id);
   // Is this id in the waiter list?
 
   /// Remove the top waiter.
-  void dequeue (void);
+  void dequeue ();
 
   /// Remove the waiter whose proxy ref matches @a remove_me.
   void remove (const ACE_TPQ_Entry *remove_me);
 
   /// The number of waiters.
-  int size (void);
+  int size ();
 
   /// Dump the state of the class.
   void dump () const;
@@ -413,22 +412,22 @@ public:
   virtual int is_owner (const ACE_TCHAR *id) = 0;
 
   /// Return the queue of waiters.
-  virtual ACE_Token_Proxy_Queue *waiters (void);
+  virtual ACE_Token_Proxy_Queue *waiters ();
 
   /// Return the number of proxies that are currently waiting to get
   /// the token.
-  virtual int no_of_waiters (void);
+  virtual int no_of_waiters ();
 
   /// The current owner.
-  const ACE_TCHAR *owner_id (void);
+  const ACE_TCHAR *owner_id ();
 
   /// Token name.
-  const ACE_TCHAR* name (void);
+  const ACE_TCHAR* name ();
 
   // = Reference counting.  These are only called by the
   // Token_Manager.
-  void inc_reference (void);
-  int dec_reference (void);
+  void inc_reference ();
+  int dec_reference ();
 
   /// Dump the state of the class.
   void dump () const;
@@ -454,10 +453,10 @@ public:
   void visit (int v);
 
   /// Check if the token has been visited.
-  int visited (void);
+  int visited ();
 
   /// All the data of the current owner.
-  ACE_TPQ_Entry *owner (void);
+  ACE_TPQ_Entry *owner ();
 
 protected:
   /// For the deadlock detection algorithm.
@@ -498,7 +497,7 @@ public:
   explicit ACE_Mutex_Token (const ACE_TCHAR* name);
 
   /// Destructor
-  virtual ~ACE_Mutex_Token (void);
+  virtual ~ACE_Mutex_Token ();
 
   // = Synchronization operations.
   // With acquire, renew, and release, the caller must be specified so
@@ -593,7 +592,7 @@ public:
   explicit ACE_RW_Token (const ACE_TCHAR* name);
 
   /// Destructor.
-  virtual ~ACE_RW_Token (void);
+  virtual ~ACE_RW_Token ();
 
   // = Synchronization operations.
   // With acquire, renew, and release, the caller must be specified so
@@ -696,7 +695,7 @@ public:
   ACE_Token_Name (const ACE_Token_Name &rhs);
 
   /// Destructor.
-  virtual ~ACE_Token_Name (void);
+  virtual ~ACE_Token_Name ();
 
   /// Copy.
   void operator= (const ACE_Token_Name &rhs);
@@ -752,10 +751,10 @@ public:
 
   // Initialization and termination methods.
   /// Construction.
-  ACE_Token_Proxy (void);
+  ACE_Token_Proxy ();
 
   /// Destructor.
-  virtual ~ACE_Token_Proxy (void);
+  virtual ~ACE_Token_Proxy ();
 
   /**
    * Open the <ACE_Token>.
@@ -847,14 +846,14 @@ public:
    * by ACE_Token_xx's when another proxy enters the waiting list and
    * requests that the current token holder be notified.
    */
-  virtual void sleep_hook (void);
+  virtual void sleep_hook ();
 
   /// This is called when a queued (waiting) proxy is removed from the
   /// waiters list and given the token.
   virtual void token_acquired (ACE_TPQ_Entry *);
 
   /// The client id of the current token holder
-  virtual const ACE_TCHAR *owner_id (void);
+  virtual const ACE_TCHAR *owner_id ();
 
   /// Return a dynamically allocated clone of the derived class.
   virtual ACE_Token_Proxy *clone () const = 0;
@@ -905,14 +904,11 @@ protected:
 class ACE_Export ACE_Null_Token : public ACE_Token_Proxy
 {
 public:
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-  // @@ Hopefully, we can remove this ridicules ifdef when CE's compiler becomes more normal.
   /// Construction.
-  ACE_Null_Token (void);
+  ACE_Null_Token () = default;
 
   /// Destructor.
-  ~ACE_Null_Token (void);
-#endif /* ACE_LACKS_INLINE_FUNCTION */
+  ~ACE_Null_Token () = default;
 
   /// Acquire.
   virtual int acquire (int /* notify */ = 0,
@@ -979,7 +975,7 @@ public:
                    int debug = 0);
 
   /// Destructor
-  ~ACE_Local_Mutex (void);
+  ~ACE_Local_Mutex ();
 
   /// Dump the state of the class.
   void dump () const;
@@ -1031,7 +1027,7 @@ public:
                    int debug = 0);
 
   /// Destructor
-  ~ACE_Local_RLock (void);
+  ~ACE_Local_RLock ();
 
   /// Dump the state of the class.
   void dump () const;

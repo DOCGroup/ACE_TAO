@@ -47,7 +47,7 @@ public:
                LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Implicitly destroy the event variable.
-  virtual ~ACE_Event_T ();
+  virtual ~ACE_Event_T () = default;
 
   /// Get the current time of day according to the queue's TIME_POLICY.
   /// Allows users to initialize timeout values using correct time policy.

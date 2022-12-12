@@ -66,7 +66,7 @@ public:
    * Prepare to exit.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int fini (void);
+  int fini ();
 
   /**
    * idle time activity.
@@ -87,9 +87,9 @@ public:
 
   //////////////////////////////////////////
   // Override CORBA servant virtual methods
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
-  virtual void _remove_ref (void);
+  virtual void _remove_ref ();
 
 private:
   ///////////////////////////
@@ -98,29 +98,29 @@ private:
 
   virtual CORBA::Long increment (CORBA::Long delta);
 
-  virtual CORBA::Long get (void);
+  virtual CORBA::Long get ();
 
-  virtual CORBA::Long counter (void);
+  virtual CORBA::Long counter ();
 
   virtual void counter (CORBA::Long counter);
 
   virtual void die (FT_TEST::TestReplica::Bane when);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   ///////////////////////////
   // override PullMonitorable
 
-  virtual CORBA::Boolean is_alive (void);
+  virtual CORBA::Boolean is_alive ();
 
   ///////////////////////////
   // override Updatable
 
-  virtual ::FT::State * get_update (void);
+  virtual ::FT::State * get_update ();
 
   virtual void set_update (const FT::State & s);
 
-  virtual ::FT::State * get_state (void);
+  virtual ::FT::State * get_state ();
 
   virtual void set_state (const FT::State & s);
 
@@ -130,8 +130,7 @@ private:
   virtual void tao_update_object_group (
       const char * iogr,
       PortableGroup::ObjectGroupRefVersion version,
-      CORBA::Boolean is_primary
-    );
+      CORBA::Boolean is_primary);
 
   /////////////////
   // implementation
@@ -197,7 +196,6 @@ private:
    */
 
   const ACE_TCHAR* name_persistent_storage;
-
 };
 
 #include /**/ "ace/post.h"

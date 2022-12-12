@@ -583,9 +583,7 @@ Stop_Handler::open ()
 }
 
 int
-Stop_Handler::handle_signal (int signum,
-                             siginfo_t * ,
-                             ucontext_t *)
+Stop_Handler::handle_signal (int signum, siginfo_t * , ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Stop_Handler::handle_signal - started.\n")));
@@ -617,7 +615,6 @@ Stop_Handler::handle_input (ACE_HANDLE handle)
           // protect from deleted pointer
           try
             {
-
               this->reactor ()->cancel_timer (this->handlers_to_stop_[i]);
               this->reactor ()->remove_handler
                 (this->handlers_to_stop_[i],
@@ -994,7 +991,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         default:
           // return print_usage (argc,argv);
           break;
-
         }
     }
 

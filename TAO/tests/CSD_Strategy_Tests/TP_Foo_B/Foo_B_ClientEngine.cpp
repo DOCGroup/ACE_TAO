@@ -9,23 +9,15 @@ const char* ONEWAY_ARG_TEST_STR = "TEST";
 
 Foo_B_ClientEngine::Foo_B_ClientEngine(Foo_B_ptr obj,
                                        Callback_ptr callback,
-                                       unsigned client_id,
-                                       bool collocated)
+                                       unsigned client_id)
   : obj_(Foo_B::_duplicate(obj)),
     callback_(Callback::_duplicate(callback)),
-    client_id_(client_id),
-    collocated_(collocated)
+    client_id_(client_id)
 {
 }
-
-
-Foo_B_ClientEngine::~Foo_B_ClientEngine()
-{
-}
-
 
 bool
-Foo_B_ClientEngine::execute(void)
+Foo_B_ClientEngine::execute()
 {
   // Make sure the connection is established before making
   // remote invocations.
@@ -101,10 +93,10 @@ Foo_B_ClientEngine::execute(void)
   this->obj_->op7 (this->callback_.in ());
 
   // One-Way calls with various arguments.
-  CORBA::String_var ub_string = CORBA::string_dup( test_str );
+  CORBA::String_var ub_string = CORBA::string_dup( test_str);
   this->obj_->test_unbounded_string_arg (ub_string.in ());
 
-  CORBA::String_var bd_string = CORBA::string_dup( test_str );
+  CORBA::String_var bd_string = CORBA::string_dup( test_str);
   this->obj_->test_bounded_string_arg (bd_string.in ());
 
   Fixed_Array fixed_array;

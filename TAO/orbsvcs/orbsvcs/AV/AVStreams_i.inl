@@ -5,7 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_AV_QoS &
-TAO_Base_StreamEndPoint::qos (void)
+TAO_Base_StreamEndPoint::qos ()
 {
   return this->qos_;
 }

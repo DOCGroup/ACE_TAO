@@ -120,8 +120,7 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
                        bt->full_name ());
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Modifier to set the member." << be_nl;
 
@@ -174,9 +173,7 @@ be_visitor_valuebox_field_ci::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
-
+  TAO_INSERT_COMMENT (os);
 
   this->emit_member_set (field, bt, "", "");
   this->emit_member_get (field, bt, "", "", "const", "");
@@ -211,8 +208,7 @@ be_visitor_valuebox_field_ci::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "// Modifier to set the member." << be_nl;
 
@@ -257,8 +253,7 @@ be_visitor_valuebox_field_ci::visit_interface_fwd (be_interface_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "// Modifier to set the member." << be_nl;
 
@@ -331,8 +326,7 @@ be_visitor_valuebox_field_ci::visit_predefined_type (be_predefined_type *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   switch (node->pt ())
   {
@@ -342,7 +336,7 @@ be_visitor_valuebox_field_ci::visit_predefined_type (be_predefined_type *node)
 
       *os << "ACE_INLINE void" << be_nl
           << vb_node_->name () << "::" << field->local_name ()
-          << " ( ::" << bt->name () << "_ptr val)"
+          << " (::" << bt->name () << "_ptr val)"
           << be_nl << "{" << be_idt_nl
           << "this->_pd_value->" << field->local_name ()
           << " = ::" << bt->name() << "::_duplicate (val);" << be_uidt_nl
@@ -393,8 +387,7 @@ be_visitor_valuebox_field_ci::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_member_set (field, bt, "const ", " &");
   this->emit_member_get (field, bt, "const ", " &", "const", "");
@@ -430,8 +423,7 @@ be_visitor_valuebox_field_ci::visit_string (be_string *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_member_set (field, bt, "", "");
   this->emit_member_set (field, bt, "const ", "");
@@ -488,8 +480,7 @@ be_visitor_valuebox_field_ci::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_member_set (field, bt, "const ", " &");
   this->emit_member_get (field, bt, "const ", " &", "const", "");
@@ -544,8 +535,7 @@ be_visitor_valuebox_field_ci::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_member_set (field, bt, "const ", " &");
   this->emit_member_get (field, bt, "const ", " &", "const", "");
@@ -571,7 +561,6 @@ be_visitor_valuebox_field_ci::emit_member_set (be_decl *field,
       << "this->_pd_value->" << field->local_name ()
       << " = val;" << be_uidt_nl
       << "}" << be_nl_2;
-
 }
 
 void

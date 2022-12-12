@@ -25,7 +25,7 @@ ACE_CString ca_location;
 #endif
 
 void
-usage (void)
+usage ()
 {
   std::cout << "usage: http_simple_wget [options] <url>\n";
   std::cout << "Executes an HTTP GET request and sends the result to STDOUT or file\n";

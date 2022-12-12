@@ -70,12 +70,12 @@ public:
 
   TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Server &owner);
 
-  virtual ~TAO_FT_Naming_Replication_Manager(void);
+  virtual ~TAO_FT_Naming_Replication_Manager();
 
   virtual int svc ();
   virtual int handle_exception (ACE_HANDLE );
 
-  void stop (void);
+  void stop ();
   void send_context_update (const ACE_CString &ctx,
                             FT_Naming::ChangeType update);
   void send_objgrp_update (PortableGroup::ObjectGroupId id,
@@ -88,8 +88,8 @@ public:
   void send_registration (bool use_combo);
   bool update_peer_registration ();
 
-  bool peer_available (void);
-  char * ior (void);
+  bool peer_available ();
+  char * ior ();
 
 private:
   Replica_var me_;

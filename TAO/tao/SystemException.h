@@ -26,12 +26,6 @@
 
 #include "tao/Exception.h"
 
-#ifndef TAO_Exception_Export
-#  define TAO_Exception_Export ACE_Proper_Export_Flag
-# else
-#  define TAO_Exception_Export TAO_Export
-#endif  /* !TAO_Exception_Export */
-
 #ifdef THREAD_CANCELLED
 # undef THREAD_CANCELLED
 #endif /* THREAD_CANCELLED */
@@ -86,7 +80,6 @@ namespace CORBA
   class TAO_Export SystemException : public Exception
   {
   public:
-
     /// Copy constructor.
     /**
      * @note This constructor should be protected, but VC7.1 at
@@ -146,7 +139,6 @@ namespace CORBA
     virtual CORBA::Exception *_tao_duplicate () const;
 
   protected:
-
     /// Default constructor.
     SystemException ();
 
@@ -181,10 +173,10 @@ namespace CORBA
   // inside the ORB.  All minor codes should be symbolically catalogued.
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-    class TAO_Exception_Export name : public SystemException \
+    class TAO_Export name : public SystemException \
     { \
     public: \
-      name (void); \
+      name (); \
       name (CORBA::ULong code, \
             CORBA::CompletionStatus completed); \
       static name * _downcast (CORBA::Exception* exception); \
@@ -193,7 +185,7 @@ namespace CORBA
       virtual CORBA::TypeCode_ptr _tao_type () const; \
       static void _tao_any_destructor (void*); \
       virtual CORBA::Exception *_tao_duplicate () const; \
-      static CORBA::SystemException *_tao_create (void); \
+      static CORBA::SystemException *_tao_create (); \
     }; \
 
   TAO_SYSTEM_EXCEPTION(UNKNOWN)          // the unknown exception

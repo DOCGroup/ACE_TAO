@@ -42,7 +42,6 @@
 #define ACE_LACKS_IFREQ
 #define ACE_LACKS_IP_MREQ
 #define ACE_LACKS_ISCTYPE
-#define ACE_LACKS_MEMORY_H
 #define ACE_LACKS_SELECT // safetyBase headers are missing select()
 #define ACE_LACKS_SETENV
 #define ACE_LACKS_SIGINFO_H

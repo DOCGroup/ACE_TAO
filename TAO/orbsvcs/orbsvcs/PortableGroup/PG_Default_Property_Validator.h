@@ -35,7 +35,7 @@ class TAO_PortableGroup_Export TAO_PG_Default_Property_Validator
 {
 public:
   /// Constructor.
-  TAO_PG_Default_Property_Validator (void);
+  TAO_PG_Default_Property_Validator ();
 
   /// Destructor
   virtual ~TAO_PG_Default_Property_Validator () = default;
@@ -64,7 +64,6 @@ private:
   PortableGroup::Name membership_;
   PortableGroup::Name factories_;
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

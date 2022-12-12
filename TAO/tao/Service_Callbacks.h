@@ -58,7 +58,6 @@ namespace IOP
 class TAO_Export TAO_Service_Callbacks
 {
 public:
-
   enum Profile_Equivalence
   {
     EQUIVALENT,

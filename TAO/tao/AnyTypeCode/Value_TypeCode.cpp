@@ -92,7 +92,7 @@ void
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::tao_duplicate (void)
+                     RefCountPolicy>::tao_duplicate ()
 {
   this->RefCountPolicy::add_ref ();
 }
@@ -105,7 +105,7 @@ void
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::tao_release (void)
+                     RefCountPolicy>::tao_release ()
 {
   this->RefCountPolicy::remove_ref ();
 }

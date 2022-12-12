@@ -272,6 +272,17 @@
 # define ACE_NOTREACHED(a) a
 #endif /* ghs || ..... */
 
+
+// Compiler-specific configs can define ACE_FALLTHROUGH but if not,
+// and it's a C++17 or higher compiler, use the defined mechanism.
+#if !defined ACE_FALLTHROUGH
+#  if defined ACE_HAS_CPP17
+#    define ACE_FALLTHROUGH [[fallthrough]]
+#  else
+#    define ACE_FALLTHROUGH
+#  endif /* ACE_HAS_CPP17 */
+#endif /* ACE_FALLTHROUGH */
+
 // ============================================================================
 // ACE_ALLOC_HOOK* macros
 //
@@ -596,7 +607,7 @@ typedef ACE_THR_FUNC_RETURN (*ACE_THR_C_FUNC)(void *);
 // Add this macro you one of your cpp file in your dll.  X should
 // be either ACE_DLL_UNLOAD_POLICY_DEFAULT or ACE_DLL_UNLOAD_POLICY_LAZY.
 #define ACE_DLL_UNLOAD_POLICY(CLS,X) \
-extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
+extern "C" u_long CLS##_Export _get_dll_unload_policy () \
   { return X;}
 
 // ============================================================================

@@ -12,6 +12,7 @@
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/ACE.h"
+#include "ace/Auto_Ptr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

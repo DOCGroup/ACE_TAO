@@ -91,7 +91,7 @@ if ($TI_status != 0) {
 print "===== Updating a server\n";
 
 $TI->Arguments("-ORBInitRef ImplRepoService=file://$ti_imriorfile"
-                    . " update Foo -w foodir" );
+                    . " update Foo -w foodir");
 
 $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
 if ($TI_status != 0) {

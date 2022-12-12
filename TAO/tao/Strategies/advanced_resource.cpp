@@ -41,9 +41,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
+TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer ()
 {
-
   TAO_ORB_Core::set_resource_factory ("Advanced_Resource_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factory);
 
@@ -68,7 +67,7 @@ TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 #endif /* TAO_HAS_SCIOP == 1 */
 }
 
-TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
+TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory ()
   : reactor_type_ (TAO_DEFAULT_REACTOR_TYPE),
     threadqueue_type_ (TAO_THREAD_QUEUE_NOT_SET),
     cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK),
@@ -78,7 +77,7 @@ TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
   // Constructor
 }
 
-TAO_Advanced_Resource_Factory::~TAO_Advanced_Resource_Factory (void)
+TAO_Advanced_Resource_Factory::~TAO_Advanced_Resource_Factory ()
 {
   // Destructor
   TAO_ProtocolFactorySetItor end = this->protocol_factories_.end ();
@@ -134,7 +133,6 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
                              ACE_TEXT("TAO_Advanced_Resource_Factory::init - ")
                              ACE_TEXT("-ORBReactorRegistry no longer supported\n")),
                             -1);
-
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBReactorLock"))))
@@ -303,7 +301,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 }
 
 int
-TAO_Advanced_Resource_Factory::load_default_protocols (void)
+TAO_Advanced_Resource_Factory::load_default_protocols ()
 {
   int const r =
     this->TAO_Default_Resource_Factory::load_default_protocols ();
@@ -322,7 +320,7 @@ TAO_Advanced_Resource_Factory::load_default_protocols (void)
 
 
 int
-TAO_Advanced_Resource_Factory::init_protocol_factories (void)
+TAO_Advanced_Resource_Factory::init_protocol_factories ()
 {
   // If the default resource factory exists, then disable it.
   // This causes any directives for the "Resource_Factory" to
@@ -377,7 +375,6 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
 #endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */
 
       return 0;
-
     }
 
   for (; factory != end; factory++)
@@ -406,9 +403,8 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
 }
 
 
-
 TAO_ProtocolFactorySet *
-TAO_Advanced_Resource_Factory::get_protocol_factories (void)
+TAO_Advanced_Resource_Factory::get_protocol_factories ()
 {
   return &protocol_factories_;
 }
@@ -504,7 +500,7 @@ typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> NULL_LOCK_MALLOC;
 typedef ACE_Allocator_Adapter<NULL_LOCK_MALLOC> NULL_LOCK_ALLOCATOR;
 
 ACE_Allocator *
-TAO_Advanced_Resource_Factory::input_cdr_dblock_allocator (void)
+TAO_Advanced_Resource_Factory::input_cdr_dblock_allocator ()
 {
   ACE_Allocator *allocator = 0;
   switch (this->cdr_allocator_type_)
@@ -523,7 +519,7 @@ TAO_Advanced_Resource_Factory::input_cdr_dblock_allocator (void)
 }
 
 ACE_Allocator *
-TAO_Advanced_Resource_Factory::input_cdr_buffer_allocator (void)
+TAO_Advanced_Resource_Factory::input_cdr_buffer_allocator ()
 {
   ACE_Allocator *allocator = 0;
   switch (this->cdr_allocator_type_)
@@ -541,7 +537,7 @@ TAO_Advanced_Resource_Factory::input_cdr_buffer_allocator (void)
 }
 
 ACE_Allocator *
-TAO_Advanced_Resource_Factory::input_cdr_msgblock_allocator (void)
+TAO_Advanced_Resource_Factory::input_cdr_msgblock_allocator ()
 {
   ACE_Allocator *allocator = 0;
   switch (this->cdr_allocator_type_)
@@ -560,7 +556,7 @@ TAO_Advanced_Resource_Factory::input_cdr_msgblock_allocator (void)
 }
 
 ACE_Allocator *
-TAO_Advanced_Resource_Factory::amh_response_handler_allocator (void)
+TAO_Advanced_Resource_Factory::amh_response_handler_allocator ()
 {
   ACE_Allocator *allocator = 0;
   switch (this->amh_response_handler_allocator_lock_type_)
@@ -579,7 +575,7 @@ TAO_Advanced_Resource_Factory::amh_response_handler_allocator (void)
 }
 
 ACE_Allocator *
-TAO_Advanced_Resource_Factory::ami_response_handler_allocator (void)
+TAO_Advanced_Resource_Factory::ami_response_handler_allocator ()
 {
   ACE_Allocator *allocator = 0;
   switch (this->ami_response_handler_allocator_lock_type_)
@@ -598,13 +594,13 @@ TAO_Advanced_Resource_Factory::ami_response_handler_allocator (void)
 }
 
 int
-TAO_Advanced_Resource_Factory::input_cdr_allocator_type_locked (void)
+TAO_Advanced_Resource_Factory::input_cdr_allocator_type_locked ()
 {
   return this->cdr_allocator_type_ == TAO_ALLOCATOR_NULL_LOCK ? 0 : 1;
 }
 
 TAO_Connection_Purging_Strategy *
-TAO_Advanced_Resource_Factory::create_purging_strategy (void)
+TAO_Advanced_Resource_Factory::create_purging_strategy ()
 {
   TAO_Connection_Purging_Strategy *strategy = 0;
 
@@ -645,7 +641,7 @@ TAO_Advanced_Resource_Factory::create_purging_strategy (void)
 }
 
 TAO_LF_Strategy *
-TAO_Advanced_Resource_Factory::create_lf_strategy (void)
+TAO_Advanced_Resource_Factory::create_lf_strategy ()
 {
   TAO_LF_Strategy *strategy = 0;
 

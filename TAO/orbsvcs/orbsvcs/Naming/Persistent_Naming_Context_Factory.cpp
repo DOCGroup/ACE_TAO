@@ -6,7 +6,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// Constructor.
 TAO_Persistent_Naming_Context_Factory::TAO_Persistent_Naming_Context_Factory ()
 {
-
 }
 
 /// Destructor.  Does not deallocate the hash map: if an instance of

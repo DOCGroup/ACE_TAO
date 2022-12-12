@@ -10,7 +10,6 @@ TAO_CSD_Object_Adapter::TAO_CSD_Object_Adapter (
   TAO_ORB_Core &orb_core)
   :  TAO_Object_Adapter (creation_parameters, orb_core)
 {
-
 }
 
 TAO_CSD_Object_Adapter::~TAO_CSD_Object_Adapter ()

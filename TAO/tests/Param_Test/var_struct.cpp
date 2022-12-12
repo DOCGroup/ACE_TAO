@@ -17,7 +17,7 @@
 //               Test_Var_Struct
 // ************************************************************************
 
-Test_Var_Struct::Test_Var_Struct (void)
+Test_Var_Struct::Test_Var_Struct ()
   : opname_ (CORBA::string_dup ("test_var_struct")),
     inout_ (new Param_Test::Var_Struct),
     out_ (new Param_Test::Var_Struct),
@@ -25,7 +25,7 @@ Test_Var_Struct::Test_Var_Struct (void)
 {
 }
 
-Test_Var_Struct::~Test_Var_Struct (void)
+Test_Var_Struct::~Test_Var_Struct ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -102,7 +102,7 @@ Test_Var_Struct::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Var_Struct::reset_parameters (void)
+Test_Var_Struct::reset_parameters ()
 {
   this->inout_ = new Param_Test::Var_Struct; // delete the previous ones
   this->out_ = new Param_Test::Var_Struct;
@@ -134,13 +134,12 @@ Test_Var_Struct::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Var_Struct::run_sii_test\n");
-
     }
   return -1;
 }
 
 CORBA::Boolean
-Test_Var_Struct::check_validity (void)
+Test_Var_Struct::check_validity ()
 {
   CORBA::Boolean flag = 0;
   if (ACE::is_equal (this->in_.dbl, this->inout_->dbl) &&
@@ -183,7 +182,7 @@ Test_Var_Struct::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Var_Struct::print_values (void)
+Test_Var_Struct::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n*=*=*=*=*=*=*=*=*=*=\n"

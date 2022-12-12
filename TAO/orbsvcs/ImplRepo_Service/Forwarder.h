@@ -55,7 +55,7 @@ public:
                         CORBA::ORB_ptr orb,
                         TAO_AMH_DSI_Response_Handler_ptr resp);
 
-  virtual ~ImR_DSI_ResponseHandler (void);
+  virtual ~ImR_DSI_ResponseHandler ();
 
   void send_ior (const char *pior);
   void send_exception (CORBA::Exception *ex);
@@ -85,7 +85,7 @@ class Locator_Export ImR_DSI_Forwarder : public virtual TAO_DynamicImplementatio
 {
 public:
   ImR_DSI_Forwarder (ImR_Locator_i& imr_impl);
-  virtual ~ImR_DSI_Forwarder (void);
+  virtual ~ImR_DSI_Forwarder ();
 
   virtual void _dispatch (TAO_ServerRequest& request,
                           TAO::Portable_Server::Servant_Upcall *context);

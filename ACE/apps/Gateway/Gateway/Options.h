@@ -49,10 +49,10 @@ public:
   };
 
   /// Return Singleton.
-  static Options *instance (void);
+  static Options *instance ();
 
   /// Termination.
-  ~Options (void);
+  ~Options ();
 
   /// Parse the arguments and set the options.
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -62,7 +62,7 @@ public:
    * = Accessor methods.
    * Determine if an option is enabled.
    */
-  void print_usage(void);
+  void print_usage();
   int enabled (int option) const;
 
   /**
@@ -125,7 +125,7 @@ public:
   long max_queue_size () const;
 
   /// Returns a reference to the next available connection id;
-  CONNECTION_ID &connection_id (void);
+  CONNECTION_ID &connection_id ();
 
 private:
   enum
@@ -138,7 +138,7 @@ private:
   };
 
   /// Initialization.
-  Options (void);
+  Options ();
 
   /// Options Singleton instance.
   static Options *instance_;

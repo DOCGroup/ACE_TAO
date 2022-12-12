@@ -36,10 +36,10 @@ class TAO_Strategies_Export TAO_DIOP_Protocol_Factory
 {
 public:
   /// Constructor.
-  TAO_DIOP_Protocol_Factory (void);
+  TAO_DIOP_Protocol_Factory ();
 
   /// Destructor.
-  virtual ~TAO_DIOP_Protocol_Factory (void);
+  virtual ~TAO_DIOP_Protocol_Factory () = default;
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
@@ -61,8 +61,8 @@ public:
    * Check Protocol_Factory.h for a description of these methods.
    */
   //@{
-  virtual TAO_Acceptor  *make_acceptor (void);
-  virtual TAO_Connector *make_connector  (void);
+  virtual TAO_Acceptor  *make_acceptor ();
+  virtual TAO_Connector *make_connector  ();
   virtual int requires_explicit_endpoint () const;
   //@}
 };

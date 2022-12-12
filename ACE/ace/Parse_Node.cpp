@@ -12,6 +12,7 @@
 #include "ace/ARGV.h"
 
 #include <list>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -509,7 +510,6 @@ ACE_Location_Node::open_dll (int & yyerrno)
     }
 
   return 0;
-
 }
 
 void
@@ -647,7 +647,7 @@ ACE_Function_Node::make_func_name (ACE_TCHAR const * func_name)
                       ACE_TCHAR[len],
                       0);
 
-      ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe (mangled_func_name);
+      std::unique_ptr<ACE_TCHAR[]> safe (mangled_func_name);
 
       ACE_OS::snprintf (mangled_func_name,
                         len,

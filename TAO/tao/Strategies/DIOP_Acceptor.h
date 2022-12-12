@@ -45,17 +45,17 @@ class TAO_Strategies_Export TAO_DIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_DIOP_Acceptor (void);
+  TAO_DIOP_Acceptor ();
 
   /// Destructor.
-  ~TAO_DIOP_Acceptor (void);
+  ~TAO_DIOP_Acceptor ();
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
   const ACE_INET_Addr& address () const;
 
   /// Returns the array of endpoints in this acceptor
-  const ACE_INET_Addr *endpoints (void);
+  const ACE_INET_Addr *endpoints ();
 
   /// Returns address for default endpoint
   const ACE_INET_Addr& default_address () const;
@@ -80,13 +80,13 @@ public:
                             int version_major,
                             int version_minor,
                             const char *options = 0);
-  virtual int close (void);
+  virtual int close ();
   virtual int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
 
   virtual int is_collocated (const TAO_Endpoint *endpoint);
-  virtual CORBA::ULong endpoint_count (void);
+  virtual CORBA::ULong endpoint_count ();
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key);
@@ -112,7 +112,6 @@ public:
                               char *&host);
 
 protected:
-
   /**
    * Helper method
    * Clear out 'addr' & 'specified_hostname' and initialize them based
@@ -173,7 +172,6 @@ protected:
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
 protected:
-
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
   ACE_INET_Addr *addrs_;
@@ -214,7 +212,6 @@ protected:
 private:
   // @@ Frank: From DIOP_Acceptor.h
   TAO_DIOP_Connection_Handler *connection_handler_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

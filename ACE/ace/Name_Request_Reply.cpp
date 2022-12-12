@@ -10,14 +10,12 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default "do nothing" constructor.
-
 ACE_Name_Request::ACE_Name_Request ()
 {
   ACE_TRACE ("ACE_Name_Request::ACE_Name_Request");
 }
 
 // Create a ACE_Name_Request message.
-
 ACE_Name_Request::ACE_Name_Request (
   ACE_INT32 t, // Type of request.
   const ACE_WCHAR_T name[], // Name

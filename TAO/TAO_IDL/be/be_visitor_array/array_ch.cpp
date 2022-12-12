@@ -17,10 +17,6 @@ be_visitor_array_ch::be_visitor_array_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_array_ch::~be_visitor_array_ch ()
-{
-}
-
 int be_visitor_array_ch::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -48,8 +44,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   AST_Decl::NodeType nt = bt->node_type ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-               << "// " __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // If we contain an anonymous sequence,
   // generate code for the sequence here.
@@ -275,7 +270,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
       // Typedefed array.
       *os << storage_class.c_str() << node->nested_type_name (scope, "_slice")
           << " *" << be_nl;
-      *os << node->nested_type_name (scope, "_alloc") << " (void);"
+      *os << node->nested_type_name (scope, "_alloc") << " ();"
           << be_nl_2;
       *os << storage_class.c_str() << "void" << be_nl
           << node->nested_type_name (scope, "_free")

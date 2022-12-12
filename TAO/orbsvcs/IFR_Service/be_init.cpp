@@ -86,7 +86,7 @@ BE_ifr_orb_init (int &ac, ACE_TCHAR *av[])
 }
 
 TAO_IFR_BE_Export void
-BE_version (void)
+BE_version ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "%s %s\n",

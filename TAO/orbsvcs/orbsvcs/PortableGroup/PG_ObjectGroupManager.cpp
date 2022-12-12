@@ -74,7 +74,6 @@ TAO_PG_ObjectGroupManager::add_member (
                              the_location,
                              member,
                              check_type_id);
-
 }
 
 

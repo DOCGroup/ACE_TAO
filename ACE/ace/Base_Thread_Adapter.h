@@ -51,7 +51,7 @@ public:
   /// Get the thread creation flags.
   long flags () const;
 
-  virtual ~ACE_OS_Thread_Descriptor ();
+  virtual ~ACE_OS_Thread_Descriptor () = default;
 
 protected:
   /// For use by ACE_Thread_Descriptor.
@@ -87,7 +87,7 @@ class ACE_Service_Gestalt;
 class ACE_Export ACE_Base_Thread_Adapter
 {
 public:
-  virtual ~ACE_Base_Thread_Adapter ();
+  virtual ~ACE_Base_Thread_Adapter () = default;
 
   /// Virtual method invoked by the thread entry point.
   virtual ACE_THR_FUNC_RETURN invoke () = 0;
@@ -99,7 +99,7 @@ public:
 #ifdef ACE_USES_GPROF
   /// Accessor to the itimer_
   /// followed http://sam.zoy.org/writings/programming/gprof.html
-  struct itimerval* timerval (void);
+  struct itimerval* timerval ();
 #endif // ACE_USES_PROF
 
   /// Invoke the close_log_msg_hook, if it is present

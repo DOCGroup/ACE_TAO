@@ -114,7 +114,6 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
             }
           // Get the amount of time remaining for ::WaitNamedPipe.
           time_out_value = relative_time.msec ();
-
         }
 
       // Wait for the named pipe to become available.

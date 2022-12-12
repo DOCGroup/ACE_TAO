@@ -11,7 +11,6 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/Object_Manager_Base.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/os_include/sys/os_pstat.h"
 #if defined (ACE_HAS_SYSCTL)
 # include "ace/os_include/sys/os_sysctl.h"
@@ -21,6 +20,8 @@
 # include "vxCpuLib.h"
 # include "cpuset.h"
 #endif /* ACE_HAS_VXCPULIB */
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -303,7 +304,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 # if defined (ACE_WIN32)
 
   ACE_TCHAR *buf = 0;
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe_ptr (buf);
+  std::unique_ptr<ACE_TCHAR[]> safe_ptr (buf);
   if (ACE_OS::argv_to_string (argv, buf) != -1)
     {
       PROCESS_INFORMATION process_info;

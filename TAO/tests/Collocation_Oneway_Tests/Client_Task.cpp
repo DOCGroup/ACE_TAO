@@ -17,7 +17,7 @@ Client_Task::Client_Task (const ACE_TCHAR *ior,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {
@@ -96,5 +96,4 @@ Client_Task::svc (void)
     }
 
   return 0;
-
 }

@@ -28,7 +28,7 @@ ACE_Process_Options::use_unicode_environment () const
 #if defined (ACE_WIN32)
 
 ACE_INLINE PROCESS_INFORMATION
-ACE_Process::process_info (void)
+ACE_Process::process_info ()
 {
   return process_info_;
 }
@@ -168,7 +168,7 @@ ACE_Process_Options::avoid_zombies (int avoid_zombies)
 #if defined (ACE_WIN32)
 
 ACE_INLINE ACE_TEXT_STARTUPINFO *
-ACE_Process_Options::startup_info (void)
+ACE_Process_Options::startup_info ()
 {
 #if !defined (ACE_HAS_WINCE)
   return &startup_info_;
@@ -188,7 +188,7 @@ ACE_Process_Options::get_process_attributes () const
 }
 
 ACE_INLINE LPSECURITY_ATTRIBUTES
-ACE_Process_Options::set_process_attributes (void)
+ACE_Process_Options::set_process_attributes ()
 {
 #if !defined (ACE_HAS_WINCE)
   process_attributes_ = &security_buf1_;
@@ -209,7 +209,7 @@ ACE_Process_Options::get_thread_attributes () const
 }
 
 ACE_INLINE LPSECURITY_ATTRIBUTES
-ACE_Process_Options::set_thread_attributes (void)
+ACE_Process_Options::set_thread_attributes ()
 {
 #if !defined (ACE_HAS_WINCE)
   thread_attributes_ = &security_buf2_;
@@ -291,13 +291,13 @@ ACE_Process_Options::seteuid (uid_t id)
 }
 
 ACE_INLINE void
-ACE_Process_Options::setrgid (uid_t id)
+ACE_Process_Options::setrgid (gid_t id)
 {
   this->rgid_ = id;
 }
 
 ACE_INLINE void
-ACE_Process_Options::setegid (uid_t id)
+ACE_Process_Options::setegid (gid_t id)
 {
   this->egid_ = id;
 }
@@ -314,13 +314,13 @@ ACE_Process_Options::geteuid () const
   return this->euid_;
 }
 
-ACE_INLINE uid_t
+ACE_INLINE gid_t
 ACE_Process_Options::getrgid () const
 {
   return this->rgid_;
 }
 
-ACE_INLINE uid_t
+ACE_INLINE gid_t
 ACE_Process_Options::getegid () const
 {
   return this->egid_;

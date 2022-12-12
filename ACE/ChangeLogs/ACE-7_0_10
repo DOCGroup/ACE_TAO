@@ -1,0 +1,260 @@
+commit 367992d328a3fdbf3465445b1922ea9b21a04f04
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 17 07:58:59 2022 +0100
+
+    Update NEWS files for next release
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit a61fa263db13c5cf6e49a469d06d789a35bcce5e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 2 12:23:32 2022 +0100
+
+    The environment variable set is Z, not ZZ
+    
+        * ACE/tests/Process_Env_Test.cpp:
+
+commit fca859fece1cf48bc3ecbba171286a09b660f879
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 1 11:25:13 2022 +0100
+
+    Use const/override/default and some layout changes
+    
+        * ACE/ace/Process.cpp:
+        * ACE/ace/Process.h:
+        * TAO/tao/ORB_Core.cpp:
+
+commit 4db17ec554e3758aee08b78e676b3f7545f80967
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 31 10:01:59 2022 +0100
+
+    Removed empty line
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit c3005ef6ff3ce5daa18862b59b3f3dfd1d2f0e36
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 31 10:01:31 2022 +0100
+
+    Add original code back
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit 3f220acad9c039b3cb099adc3ca52532e6b5b6ea
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 31 09:47:09 2022 +0100
+
+    Don't disable inlining always
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit 3d67b98a644c748826e76a10659add89497c42b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 19 19:56:03 2022 +0200
+
+    Use override
+    
+        * ACE/ace/OS_NS_stropts.cpp:
+        * TAO/tao/PortableServer/Active_Policy_Strategies.cpp:
+        * TAO/tao/PortableServer/ThreadStrategy.h:
+        * TAO/tao/PortableServer/ThreadStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/ThreadStrategyFactoryImpl.h:
+        * TAO/tao/PortableServer/ThreadStrategyORBControl.h:
+        * TAO/tao/PortableServer/ThreadStrategySingle.h:
+        * TAO/tao/PortableServer/ThreadStrategySingleFactoryImpl.h:
+        * TAO/tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
+
+commit 4f8d9685b45a3f7a0140eb6053fcb096c0f67719
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 7 08:24:40 2022 +0200
+
+    Fixed potential memory leak on an allocation error, use nullptr
+    
+        * ACE/ace/Message_Block.cpp:
+        * ACE/ace/Message_Block.h:
+
+commit 2400ccf08afdf0ea9a60d18777c7a177bca09569
+Merge: f460e34343e d14bdd5c85d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 6 14:01:39 2022 +0200
+
+    Merge pull request #1960 from jwillemsen/jwi-vxworksgethost
+    
+    Updated VxWorks checks
+
+commit d14bdd5c85dc0f4fb21ee6d3443d0e79ac0a652e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 6 14:01:07 2022 +0200
+
+    Updated VxWorks checks
+    
+        * ACE/ace/os_include/os_netdb.h:
+
+commit e1dda342b0805ffc880c618df86550df27cb9ce5
+Merge: 9fb13ed9896 8989a69cac0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 19:20:01 2022 +0200
+
+    Merge pull request #1954 from wkbrd/windows_resource_files
+    
+    Add windows resource files
+
+commit 8989a69cac0086c5f0df20bfdb003a1f8f635c1d
+Author: wkbrd <30599409+wkbrd@users.noreply.github.com>
+Date:   Wed Oct 5 09:18:32 2022 -0400
+
+    Fixed path separators.
+
+commit 6f1bf15c3de6f62b2880a44f1b3977f930fe664a
+Author: wkbrd <30599409+wkbrd@users.noreply.github.com>
+Date:   Wed Oct 5 08:09:35 2022 -0400
+
+    Correct FileDescription and InternalName
+
+commit a0a1c88566526496425aa49046f1caa053ee9247
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 11:46:48 2022 +0200
+
+    VxWorks 7 inet_aton returns 0 on failure, so we don't need the special VxWorks code anymore
+    
+        * ACE/ace/OS_NS_arpa_inet.cpp:
+
+commit 630c8d205b8cfb4a47f259091f8b06d8dc8d8a93
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 09:38:36 2022 +0200
+
+    Corrected version check
+    
+        * ACE/ace/SOCK_Dgram_Mcast.cpp:
+
+commit 88cc7195a5d562822d07376649d3d88550fe0397
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 09:37:36 2022 +0200
+
+    VxWorks 7 has ifaddrs.h
+    
+        * ACE/ace/SOCK_Dgram_Mcast.cpp:
+
+commit bbb1422b27c034970573317df9050ba1fe33d4e0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 09:18:13 2022 +0200
+
+    Removed test compile error
+    
+        * ACE/ace/OS_NS_netdb.inl:
+
+commit 5766ae9409fa036a76b1a5e3155caed3af68e226
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 09:16:53 2022 +0200
+
+    VxWorks 7 also has a non-reentrant gethostbyaddr alternative
+    
+        * ACE/ace/OS_NS_netdb.inl:
+        * ACE/ace/Pipe.cpp:
+        * ACE/ace/os_include/os_netdb.h:
+
+commit 9b8f769e30b631baee892fee94a89ea4208a5cc2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 09:01:36 2022 +0200
+
+    Moved VxWorks define to os_netdb.h
+    
+        * ACE/ace/os_include/os_netdb.h:
+        * ACE/ace/os_include/os_unistd.h:
+
+commit 320486a79260766c61512cc2217a805d915d3106
+Merge: 2ed56466bf3 20941bebd9d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 08:32:31 2022 +0200
+
+    Merge pull request #1953 from jwillemsen/jwi-vxworks7reentrent
+    
+    With VxWorks 7 the gethostbyname() API is not always reentrent
+
+commit 2ed56466bf34f1dd99260514cd6a38ac7497ee9a
+Merge: a575bfe86fc 26ed9970aa4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 08:31:02 2022 +0200
+
+    Merge pull request #1952 from jwillemsen/jwi-pipeopen
+    
+    Use the ACE_INET_Addr::set instead of the constructor so that we can …
+
+commit fb116806b0178616262153f7f6f0c551b643b9d1
+Author: wkbrd <30599409+wkbrd@users.noreply.github.com>
+Date:   Tue Oct 4 21:51:08 2022 -0400
+
+    Rebasing on newer constant names.
+
+commit af00945c38ce0ed6b6d28db5ba79b3aa1bedc8b7
+Author: wkbrd <30599409+wkbrd@users.noreply.github.com>
+Date:   Tue Oct 4 18:48:03 2022 -0400
+
+    Add resource files
+
+commit 20941bebd9d5200ac1e8e1d63c15bdd2c487c531
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 4 18:30:53 2022 +0200
+
+    With VxWorks 7 the gethostbyname() API is not always reentrent
+    
+        * ACE/ace/OS_NS_arpa_inet.inl:
+        * ACE/ace/OS_NS_netdb.inl:
+        * ACE/ace/os_include/os_unistd.h:
+
+commit 26ed9970aa41aac607e9dc9849e14b8ca0458b49
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 4 17:50:06 2022 +0200
+
+    Use the ACE_INET_Addr::set instead of the constructor so that we can check the return value of the set operation
+    
+        * ACE/ace/Pipe.cpp:
+
+commit 4d827f7dbfef927d913e6bc20a8360b78bb07242
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 4 16:54:06 2022 +0200
+
+    Use nullptr/std::addressof/default/uniform initialization
+    :
+        * ACE/ace/OS_NS_netdb.inl:
+        * TAO/tao/Endpoint.h:
+        * TAO/tao/Endpoint.inl:
+        * TAO/tao/IIOP_Endpoint.cpp:
+        * TAO/tao/IIOP_Endpoint.h:
+
+commit d5987833e7a582ff1a72a059f48c5c568a603b65
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 1 14:39:21 2022 +0200
+
+    Make x.0.9 public
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit b785704c6dd43bb9cd36939d40e7d9bcbcc58154
+Merge: a276c37334a 9d6f14ac790
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 1 14:30:56 2022 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into master
+
+commit a276c37334a955f1a7c2aac1aba6b52ddf642e47
+Merge: ee9dff76f82 49bf14b8f41
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 1 14:26:16 2022 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into master
+
+commit ee9dff76f8276b344f18fab1a6c29d09ad56aa0a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 30 11:16:06 2022 +0200
+
+    Fixed typo
+    
+        * ACE/tests/SOCK_Connector_Test.cpp:

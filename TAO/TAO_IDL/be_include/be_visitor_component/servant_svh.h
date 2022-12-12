@@ -27,7 +27,7 @@ class be_visitor_servant_svh : public be_visitor_component_scope
 public:
   be_visitor_servant_svh (be_visitor_context *ctx);
 
-  ~be_visitor_servant_svh ();
+  ~be_visitor_servant_svh () = default;
 
   virtual int visit_component (be_component *node);
   virtual int visit_connector (be_connector *node);

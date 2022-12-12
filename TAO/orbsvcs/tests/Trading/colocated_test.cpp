@@ -121,7 +121,6 @@ int failure = 0;
         TAO_Offer_Importer offer_importer(lookup_if.in(), verbose);
 
         offer_importer.perform_queries ();
-
       }; // End of Trading service scope.
       //-----------------------------------------------------------------------
       ACE_DEBUG ((LM_DEBUG, "*** Shutting down.\n"));

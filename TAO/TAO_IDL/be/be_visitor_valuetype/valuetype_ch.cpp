@@ -46,8 +46,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
   int status = 0;
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   if (node->node_type () == AST_Decl::NT_eventtype)
     {
@@ -173,7 +172,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     {
       // Generate the constructor and destructor and _copy_value.
       *os << be_nl_2
-          << node->local_name () << " ( ::CORBA::Exception *ex)" << be_idt_nl
+          << node->local_name () << " (::CORBA::Exception *ex)" << be_idt_nl
           << ": exception (ex)" << be_uidt_nl
           << "{}" << be_nl_2
           << "virtual ~" << node->local_name () << " ();" << be_nl
@@ -182,7 +181,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   *os << be_nl_2
       << "static " << node->local_name () << "* "
-      << "_downcast ( ::CORBA::ValueBase *v);" << be_nl
+      << "_downcast (::CORBA::ValueBase *v);" << be_nl
       << be_nl
       << "/// TAO extensions or internals" << be_nl
       << "static ::CORBA::Boolean _tao_unmarshal (" << be_idt << be_idt_nl
@@ -234,8 +233,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // If we inherit from CORBA::Object and/or CORBA::AbstractBase
   // (in addition to CORBA::ValueBase) we have to add these
@@ -302,14 +300,18 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (node->opt_accessor ())
     {
       *os << be_uidt_nl << "protected:" << be_idt_nl;
-      *os << "::CORBA::Boolean "
-          << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
-          << "::CORBA::Boolean "
-          << "_tao_unmarshal_state (TAO_InputCDR &);" << be_nl
-          << "virtual void "
-          << "truncation_hook ();"
-          << be_uidt_nl << be_nl;
-      *os << "private:" << be_idt_nl;
+
+      if (be_global->cdr_support ())
+       {
+        *os << "::CORBA::Boolean "
+            << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
+            << "::CORBA::Boolean "
+            << "_tao_unmarshal_state (TAO_InputCDR &);" << be_nl
+            << "virtual void truncation_hook ();" << be_nl;
+       }
+
+     *os  << be_uidt_nl << be_nl
+          << "private:" << be_idt_nl;
 
       this->gen_pd (node);
     }
@@ -329,7 +331,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
                   << "_tao_unmarshal__" << node->flat_name ()
                   << " (TAO_InputCDR &, TAO_ChunkInfo &);";
             }
-          else
+          else if (be_global->cdr_support ())
             {
               *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_marshal__" << node->flat_name ()
@@ -392,8 +394,7 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   // Every operation is declared public and virtual in the client code.
   *os << be_uidt_nl << "public:" << be_idt_nl << "virtual ";
@@ -497,7 +498,6 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
                                             be_interface *base,
                                             TAO_OutStream *os)
 {
-
   AST_Decl *d = nullptr;
   be_visitor_context ctx;
   ctx.stream (os);

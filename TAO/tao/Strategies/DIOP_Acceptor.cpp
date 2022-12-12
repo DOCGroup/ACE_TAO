@@ -10,7 +10,6 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
@@ -19,10 +18,11 @@
 
 #include "ace/os_include/os_netdb.h"
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (void)
+TAO_DIOP_Acceptor::TAO_DIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_DIOP_PROFILE),
     addrs_ (0),
     port_span_ (1),
@@ -39,7 +39,7 @@ TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (void)
 {
 }
 
-TAO_DIOP_Acceptor::~TAO_DIOP_Acceptor (void)
+TAO_DIOP_Acceptor::~TAO_DIOP_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -231,7 +231,7 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO_DIOP_Acceptor::close (void)
+TAO_DIOP_Acceptor::close ()
 {
   return 0;
 }
@@ -787,7 +787,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
 
   // The instantiation for this template is in
   // tao/DIOP_Connector.cpp.
-  ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (if_addrs);
+  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
 #if defined (ACE_HAS_IPV6)
   bool ipv4_only = def_type == AF_INET;
@@ -925,7 +925,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
 }
 
 CORBA::ULong
-TAO_DIOP_Acceptor::endpoint_count (void)
+TAO_DIOP_Acceptor::endpoint_count ()
 {
   return this->endpoint_count_;
 }

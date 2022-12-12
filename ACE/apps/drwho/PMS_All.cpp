@@ -95,6 +95,6 @@ PMS_All::insert_protocol_info (Protocol_Record &protocol_record)
   return prp;
 }
 
-PMS_All::PMS_All (void)
+PMS_All::PMS_All ()
 {
 }

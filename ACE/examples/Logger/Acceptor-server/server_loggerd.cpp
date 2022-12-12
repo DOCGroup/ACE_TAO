@@ -29,7 +29,7 @@
 // Return the port number.
 
 u_short
-Options::port (void)
+Options::port ()
 {
   return this->port_;
 }
@@ -76,7 +76,7 @@ Logging_Acceptor;
 
 // Default constructor.
 
-Logging_Handler::Logging_Handler (void)
+Logging_Handler::Logging_Handler ()
 {
 }
 

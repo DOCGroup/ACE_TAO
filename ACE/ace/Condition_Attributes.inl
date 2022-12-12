@@ -29,9 +29,4 @@ ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy>::ACE_Condition_Attributes_
 #endif
 }
 
-ACE_INLINE
-ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy>::~ACE_Condition_Attributes_T ()
-{
-}
-
 ACE_END_VERSIONED_NAMESPACE_DECL

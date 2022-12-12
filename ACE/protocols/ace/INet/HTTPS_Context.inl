@@ -19,7 +19,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    ACE_SSL_Context& Context::ssl_context (void)
+    ACE_SSL_Context& Context::ssl_context ()
       {
         return *this->ssl_ctx_;
       }

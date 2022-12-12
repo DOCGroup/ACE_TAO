@@ -63,8 +63,6 @@ int run_main (int argc, ACE_TCHAR *argv[])
   sockaddr_in6 in_out_sockaddr6[num_sockaddrs];
 
   for (i = 0; i <= num_secondaries; ++i) {
-
-
     /**** Test set (u_short, const char[], int, int, const char *([]), size_t) ****/
 
 
@@ -101,7 +99,6 @@ int run_main (int argc, ACE_TCHAR *argv[])
     // secondary addresses.
     size_t returned_num_secondaries = addr.get_num_secondary_addresses();
     if (returned_num_secondaries == i) {
-
       // Initialize the stay_out array with the secondary addresses
       for (j = 0; j < i; ++j) {
         stay_out[j].set(port, secondary_ipv6[j]);
@@ -112,9 +109,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
       // Check that the in_out array matches stay_out array
       for (j = 0; j < i; ++j) {
-
         if (in_out[j] != stay_out[j]) {
-
           ACE_TCHAR in_out_string[100];
           ACE_TCHAR stay_out_string[100];
 
@@ -138,13 +133,11 @@ int run_main (int argc, ACE_TCHAR *argv[])
       // matches the primary address reported by the superclass
       if (ACE_OS::memcmp(in_out_sockaddr6, addr.get_addr(),
                          sizeof(sockaddr_in6))) {
-
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Failed second get_addresses check ")
                       ACE_TEXT ("(for primary address)\n")));
 
           status = 1;
-
       }
 
       // Check that the secondary addresses in the in_out_sockaddr
@@ -152,10 +145,8 @@ int run_main (int argc, ACE_TCHAR *argv[])
       for (j = 1, pointer6 = &in_out_sockaddr6[1];
            j < i + 1;
            ++j, ++pointer6) {
-
         if (ACE_OS::memcmp(pointer6, stay_out[j-1].get_addr(),
                            sizeof(sockaddr_in6))) {
-
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Failed get_addresses check ")
                       ACE_TEXT ("(for secondary addresses)\n")));
@@ -164,7 +155,6 @@ int run_main (int argc, ACE_TCHAR *argv[])
         }
       }
     } else {
-
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Failed get_num_secondary_addresses check\n")
                   ACE_TEXT ("%d != %d\n"),
@@ -177,5 +167,4 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_END_TEST;
   return status;
-
 }

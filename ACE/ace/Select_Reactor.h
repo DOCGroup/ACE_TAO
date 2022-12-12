@@ -45,13 +45,13 @@ class ACE_Export ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> >
 public:
   ACE_Guard (ACE_Reactor_Token_T<ACE_Noop_Token> &) {}
   ACE_Guard (ACE_Reactor_Token_T<ACE_Noop_Token> &, int) {}
-  ~ACE_Guard () = default
+  ~ACE_Guard () = default;
 
-  int acquire (void) { return 0; }
-  int tryacquire (void) { return 0; }
-  int release (void) { return 0; }
-  int locked (void) { return 1; }
-  int remove (void) { return 0; }
+  int acquire () { return 0; }
+  int tryacquire () { return 0; }
+  int release () { return 0; }
+  int locked () { return 1; }
+  int remove () { return 0; }
   void dump () const {}
 
 private:

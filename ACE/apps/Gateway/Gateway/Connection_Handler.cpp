@@ -42,7 +42,7 @@ Connection_Handler::total_bytes (size_t bytes)
   this->total_bytes_ += bytes;
 }
 
-Connection_Handler::Connection_Handler (void)
+Connection_Handler::Connection_Handler ()
 {
 }
 
@@ -95,7 +95,7 @@ Connection_Handler::timeout (long to)
 // re-calculation).
 
 long
-Connection_Handler::timeout (void)
+Connection_Handler::timeout ()
 {
   long old_timeout = this->timeout_;
   this->timeout_ *= 2;

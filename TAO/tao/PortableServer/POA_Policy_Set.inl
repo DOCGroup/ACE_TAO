@@ -39,7 +39,7 @@ TAO_POA_Policy_Set::get_policy (CORBA::PolicyType policy)
 }
 
 ACE_INLINE TAO_Policy_Set &
-TAO_POA_Policy_Set::policies (void)
+TAO_POA_Policy_Set::policies ()
 {
   return this->impl_;
 }

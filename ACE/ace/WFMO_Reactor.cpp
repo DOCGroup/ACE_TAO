@@ -12,7 +12,7 @@
 #include "ace/WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -60,7 +60,7 @@ ACE_WFMO_Reactor_Handler_Repository::open (size_t size)
   return 0;
 }
 
-ACE_WFMO_Reactor_Handler_Repository::~ACE_WFMO_Reactor_Handler_Repository (void)
+ACE_WFMO_Reactor_Handler_Repository::~ACE_WFMO_Reactor_Handler_Repository ()
 {
   // Free up dynamically allocated space
   delete [] this->current_handles_;
@@ -577,7 +577,7 @@ ACE_WFMO_Reactor_Handler_Repository::resume_handler_i (ACE_HANDLE handle,
 }
 
 void
-ACE_WFMO_Reactor_Handler_Repository::unbind_all (void)
+ACE_WFMO_Reactor_Handler_Repository::unbind_all ()
 {
   {
     ACE_GUARD (ACE_Process_Mutex, ace_mon, this->wfmo_reactor_.lock_);
@@ -666,7 +666,7 @@ ACE_WFMO_Reactor_Handler_Repository::bind_i (bool io_entry,
 }
 
 int
-ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
+ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos ()
 {
   // Go through the entire valid array and check for all handles that
   // have been schedule for deletion
@@ -778,7 +778,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
 }
 
 int
-ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos (void)
+ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos ()
 {
   // Go through the <suspended_handle> array
   if (this->handles_to_be_deleted_ > 0 || this->handles_to_be_resumed_ > 0)
@@ -886,7 +886,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos (void)
 }
 
 int
-ACE_WFMO_Reactor_Handler_Repository::make_changes_in_to_be_added_infos (void)
+ACE_WFMO_Reactor_Handler_Repository::make_changes_in_to_be_added_infos ()
 {
   // Go through the <to_be_added_*> arrays
   for (size_t i = 0; i < this->handles_to_be_added_; ++i)
@@ -1295,7 +1295,7 @@ ACE_WFMO_Reactor::timer_queue (ACE_Timer_Queue *tq)
 }
 
 int
-ACE_WFMO_Reactor::close (void)
+ACE_WFMO_Reactor::close ()
 {
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
@@ -1343,7 +1343,7 @@ ACE_WFMO_Reactor::close (void)
   return 0;
 }
 
-ACE_WFMO_Reactor::~ACE_WFMO_Reactor (void)
+ACE_WFMO_Reactor::~ACE_WFMO_Reactor ()
 {
   // Assumption: No threads are left in the Reactor when this method
   // is called (i.e., active_threads_ == 0)
@@ -1484,7 +1484,6 @@ ACE_WFMO_Reactor::mask_ops_i (ACE_HANDLE io_handle,
 }
 
 
-
 int
 ACE_WFMO_Reactor_Handler_Repository::modify_network_events_i (ACE_HANDLE io_handle,
                                                               ACE_Reactor_Mask new_masks,
@@ -1621,14 +1620,13 @@ ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
                                               ACE_Event_Handler **user_event_handler)
 {
   long existing_masks = 0;
-  int found = 0;
+  bool found = false;
 
   ACE_Event_Handler_var safe_event_handler =
-    this->handler (handle,
-                   existing_masks);
+    this->handler (handle, existing_masks);
 
   if (safe_event_handler.handler ())
-    found = 1;
+    found = true;
 
   if (!found)
     return -1;
@@ -1639,37 +1637,36 @@ ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::READ_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_READ) &&
         !ACE_BIT_ENABLED (existing_masks, FD_CLOSE))
-      found = 0;
+      found = false;
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::WRITE_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_WRITE))
-      found = 0;
+      found = false;
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::EXCEPT_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_OOB))
-      found = 0;
+      found = false;
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::ACCEPT_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_ACCEPT))
-      found = 0;
+      found = false;
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::CONNECT_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_CONNECT))
-      found = 0;
+      found = false;
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::QOS_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_QOS))
-      found = 0;
-
+      found = false;
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::GROUP_QOS_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_GROUP_QOS))
-      found = 0;
+      found = false;
 
   if (found &&
       user_event_handler)
@@ -1898,12 +1895,12 @@ ACE_WFMO_Reactor::calculate_timeout (ACE_Time_Value *max_wait_time)
     return time->msec ();
 }
 
-
 int
-ACE_WFMO_Reactor::expire_timers (void)
+ACE_WFMO_Reactor::expire_timers ()
 {
   // If "owner" thread
   if (ACE_Thread::self () == this->owner_)
+
     // expire all pending timers.
     return this->timer_queue_->expire ();
 
@@ -2267,7 +2264,7 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
 
 
 int
-ACE_WFMO_Reactor::update_state (void)
+ACE_WFMO_Reactor::update_state ()
 {
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
@@ -2369,7 +2366,7 @@ ACE_WFMO_Reactor_Notify::is_dispatchable (ACE_Notification_Buffer & /*buffer*/)
 }
 
 ACE_HANDLE
-ACE_WFMO_Reactor_Notify::notify_handle (void)
+ACE_WFMO_Reactor_Notify::notify_handle ()
 {
   return ACE_INVALID_HANDLE;
 }
@@ -2388,7 +2385,7 @@ ACE_WFMO_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &)
 }
 
 int
-ACE_WFMO_Reactor_Notify::close (void)
+ACE_WFMO_Reactor_Notify::close ()
 {
   return -1;
 }
@@ -2420,9 +2417,7 @@ ACE_WFMO_Reactor_Notify::get_handle () const
 // Handle all pending notifications.
 
 int
-ACE_WFMO_Reactor_Notify::handle_signal (int signum,
-                                        siginfo_t *siginfo,
-                                        ucontext_t *)
+ACE_WFMO_Reactor_Notify::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 {
   ACE_UNUSED_ARG (signum);
 
@@ -2577,7 +2572,7 @@ ACE_WFMO_Reactor_Notify::max_notify_iterations (int iterations)
 }
 
 int
-ACE_WFMO_Reactor_Notify::max_notify_iterations (void)
+ACE_WFMO_Reactor_Notify::max_notify_iterations ()
 {
   ACE_TRACE ("ACE_WFMO_Reactor_Notify::max_notify_iterations");
   return this->max_notify_iterations_;
@@ -2707,7 +2702,7 @@ ACE_WFMO_Reactor::max_notify_iterations (int iterations)
 }
 
 int
-ACE_WFMO_Reactor::max_notify_iterations (void)
+ACE_WFMO_Reactor::max_notify_iterations ()
 {
   ACE_TRACE ("ACE_WFMO_Reactor::max_notify_iterations");
   ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
@@ -2727,7 +2722,7 @@ ACE_WFMO_Reactor::purge_pending_notifications (ACE_Event_Handler *eh,
 }
 
 int
-ACE_WFMO_Reactor::resumable_handler (void)
+ACE_WFMO_Reactor::resumable_handler ()
 {
   ACE_TRACE ("ACE_WFMO_Reactor::resumable_handler");
   return 0;

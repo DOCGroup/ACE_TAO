@@ -52,7 +52,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
   this->host (host); // With IPv6 performs check for decimal address
 }
 
-TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (void)
+TAO_DIOP_Endpoint::TAO_DIOP_Endpoint ()
   : TAO_Endpoint (TAO_TAG_DIOP_PROFILE),
     host_ (),
     port_ (0),
@@ -79,10 +79,6 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
     next_ (0)
 {
   this->host (host); // With IPv6 performs check for decimal address
-}
-
-TAO_DIOP_Endpoint::~TAO_DIOP_Endpoint (void)
-{
 }
 
 int
@@ -176,13 +172,13 @@ TAO_DIOP_Endpoint::host (const char *h)
 }
 
 TAO_Endpoint *
-TAO_DIOP_Endpoint::next (void)
+TAO_DIOP_Endpoint::next ()
 {
   return this->next_;
 }
 
 TAO_Endpoint *
-TAO_DIOP_Endpoint::duplicate (void)
+TAO_DIOP_Endpoint::duplicate ()
 {
   TAO_DIOP_Endpoint *endpoint = 0;
 
@@ -210,7 +206,7 @@ TAO_DIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 CORBA::ULong
-TAO_DIOP_Endpoint::hash (void)
+TAO_DIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
     return this->hash_val_;

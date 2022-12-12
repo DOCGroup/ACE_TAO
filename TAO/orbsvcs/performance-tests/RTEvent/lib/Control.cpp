@@ -32,7 +32,7 @@ Control::Control (size_t peers_expected,
 {
 }
 
-Control::~Control (void)
+Control::~Control ()
 {
   delete[] this->peers_;
 }
@@ -113,18 +113,14 @@ Control::join (Federated_Test::Peer_ptr peer)
                 this->peers_[j]->setup_loopback (experiment_id,
                                                  base_event_type);
 
-              ACE_auto_ptr_reset (disconnects[lcount],
-                                  new Loopback_Disconnect (
-                                        loopbacks[lcount].in ()));
+              disconnects[lcount].reset (new Loopback_Disconnect (loopbacks[lcount].in ()));
               lcount++;
 
               loopbacks[lcount] =
                 this->peers_[j]->setup_loopback (experiment_id,
                                                  base_event_type + 2);
 
-              ACE_auto_ptr_reset (disconnects[lcount],
-                                  new Loopback_Disconnect (
-                                        loopbacks[lcount].in ()));
+              disconnects[lcount].reset (new Loopback_Disconnect (loopbacks[lcount].in ()));
               lcount++;
             }
         }
@@ -153,7 +149,7 @@ Control::join (Federated_Test::Peer_ptr peer)
 }
 
 PortableServer::POA_ptr
-Control::_default_POA (void)
+Control::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

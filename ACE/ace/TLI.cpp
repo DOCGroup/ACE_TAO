@@ -7,6 +7,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if defined (ACE_HAS_TLI)
 
@@ -26,7 +27,7 @@ ACE_TLI::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_TLI::ACE_TLI (void)
+ACE_TLI::ACE_TLI ()
 {
   ACE_TRACE ("ACE_TLI::ACE_TLI");
 #if defined (ACE_HAS_SVR4_TLI)
@@ -61,7 +62,7 @@ ACE_TLI::open (const char device[], int oflag, struct t_info *info)
   return this->get_handle ();
 }
 
-ACE_TLI::~ACE_TLI (void)
+ACE_TLI::~ACE_TLI ()
 {
   ACE_TRACE ("ACE_TLI::~ACE_TLI");
 #if defined (ACE_HAS_SVR4_TLI)
@@ -100,7 +101,7 @@ ACE_TLI::get_local_addr (ACE_Addr &sa) const
 }
 
 int
-ACE_TLI::close (void)
+ACE_TLI::close ()
 {
   ACE_TRACE ("ACE_TLI::close");
   int result = 0; // Geisler: result must be int
@@ -125,7 +126,7 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
   struct t_optmgmt req, ret;
   ACE_NEW_RETURN (req.opt.buf, char[sizeof (struct t_opthdr) + optlen], -1);
 #  if (_XOPEN_SOURCE - 0 >= 500)
-  auto_ptr<char> req_opt_buf_p (reinterpret_cast<char*> (req.opt.buf));
+  std::unique_ptr<char> req_opt_buf_p (reinterpret_cast<char*> (req.opt.buf));
 #  else
   ACE_Auto_Array_Ptr<char> req_opt_buf_p (req.opt.buf);
 #  endif /* XPG5 vs XPG4 */
@@ -133,7 +134,7 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
     reinterpret_cast<struct t_opthdr *> (req.opt.buf);
   ACE_NEW_RETURN (ret.opt.buf, char[sizeof (struct t_opthdr) + optlen], -1);
 #  if (_XOPEN_SOURCE - 0 >= 500)
-  auto_ptr<char> ret_opt_buf_p (reinterpret_cast<char*> (ret.opt.buf));
+  std::unique_ptr<char> ret_opt_buf_p (reinterpret_cast<char*> (ret.opt.buf));
 #  else
   ACE_Auto_Array_Ptr<char> ret_opt_buf_p (ret.opt.buf);
 #  endif /* XPG5 vs XPG4 */
@@ -190,7 +191,7 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
   struct t_optmgmt req, ret;
   ACE_NEW_RETURN (req.opt.buf, char[sizeof (struct t_opthdr)], -1);
 #  if (_XOPEN_SOURCE - 0 >= 500)
-  auto_ptr<char> req_opt_buf_p (reinterpret_cast<char*> (req.opt.buf));
+  std::unique_ptr<char> req_opt_buf_p (reinterpret_cast<char*> (req.opt.buf));
 #  else
   ACE_Auto_Array_Ptr<char> req_opt_buf_p (req.opt.buf);
 #  endif /* XPG5 vs XPG4 */
@@ -198,7 +199,7 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
     reinterpret_cast<struct t_opthdr *> (req.opt.buf);
   ACE_NEW_RETURN (ret.opt.buf, char[sizeof (struct t_opthdr) + optlen], -1);
 #  if (_XOPEN_SOURCE - 0 >= 500)
-  auto_ptr<char> ret_opt_buf_p (reinterpret_cast<char*> (ret.opt.buf));
+  std::unique_ptr<char> ret_opt_buf_p (reinterpret_cast<char*> (ret.opt.buf));
 #  else
   ACE_Auto_Array_Ptr<char> ret_opt_buf_p (ret.opt.buf);
 #  endif /* XPG5 vs XPG4 */

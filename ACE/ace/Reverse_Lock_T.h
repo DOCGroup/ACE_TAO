@@ -68,7 +68,6 @@ template <class ACE_LOCKING_MECHANISM>
 class ACE_Reverse_Lock : public ACE_Lock
 {
 public:
-
   typedef ACE_LOCKING_MECHANISM ACE_LOCK;
 
   // = Initialization/Finalization methods.
@@ -79,7 +78,7 @@ public:
 
   /// Destructor. If <lock_> was not passed in by the user, it will be
   /// deleted.
-  virtual ~ACE_Reverse_Lock ();
+  virtual ~ACE_Reverse_Lock () = default;
 
   // = Lock accessors.
   /// Release the lock.

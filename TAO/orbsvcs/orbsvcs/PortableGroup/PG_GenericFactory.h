@@ -54,13 +54,12 @@ public:
                          TAO_PG_PropertyManager & property_manager);
 
   /// Destructor.
-  ~TAO_PG_GenericFactory (void);
+  ~TAO_PG_GenericFactory ();
 
   /**
    * @name TAO_LoadBalancer::GenericFactory methods
    */
   //@{
-
   /**
    * Create an object of the specified type that adheres to the
    * restrictions defined by the provided Criteria.  The out
@@ -134,7 +133,6 @@ public:
       const CORBA::Boolean propagate_member_already_present);
 
 private:
-
   /// Populate the object group being created.  Called when the
   /// infrastructure-controlled membership style is used for the
   /// object group being created.
@@ -175,7 +173,6 @@ private:
     PortableGroup::MinimumNumberMembersValue & minimum_number_members);
 
 private:
-
   /// Reference to the POA used to create object group references.
   PortableServer::POA_var poa_;
 
@@ -212,7 +209,6 @@ private:
   /// Lock used to synchronize access to the factory creation id
   /// index (i.e. next_fcid_).
   TAO_SYNCH_MUTEX lock_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

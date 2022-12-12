@@ -23,7 +23,6 @@ project (ACE_XML_Utils) : install, acelib, xerces, ace_output {
     XML_Error_Handler.h
     XercesString.h
     XML_Schema_Resolver.h
-    XML_Typedefs.h
     XML_Helper.h
     XMLSchema
     XSCRT
@@ -33,7 +32,6 @@ project (ACE_XML_Utils) : install, acelib, xerces, ace_output {
     XML_Error_Handler.cpp
     XercesString.cpp
     XML_Schema_Resolver.cpp
-    XML_Typedefs.cpp
   }
 
   Pkgconfig_Files {

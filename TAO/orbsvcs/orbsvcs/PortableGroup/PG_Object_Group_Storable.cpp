@@ -37,11 +37,9 @@ namespace
 
 namespace TAO
 {
-
   class Object_Group_File_Guard : public TAO::Storable_File_Guard
   {
   public:
-
     Object_Group_File_Guard ( TAO::PG_Object_Group_Storable & object_group,
                               Method_Type method_type);
 
@@ -67,10 +65,8 @@ namespace TAO
     virtual TAO::Storable_Base * create_stream (const char * mode);
 
   private:
-
     TAO::PG_Object_Group_Storable & object_group_;
   };
-
 }
 
 TAO::Object_Group_File_Guard::Object_Group_File_Guard (
@@ -153,7 +149,6 @@ TAO::Object_Group_File_Guard::~Object_Group_File_Guard ()
       // Notify if persistent store was updated.
       if (object_group_.write_occurred_)
         object_group_.state_written ();
-
     }
   catch (const TAO::Storable_Exception &se)
     {
@@ -251,8 +246,7 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   // version already exists.
   bool stream_exists = false;
   {
-    ACE_Auto_Ptr<TAO::Storable_Base> stream (
-      this->create_stream ("r"));
+    ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
     if (stream->exists ())
       stream_exists = true;
@@ -290,8 +284,7 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   // version already exists.
   bool stream_exists = false;
   {
-    ACE_Auto_Ptr<TAO::Storable_Base> stream (
-      this->create_stream ("r"));
+    ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
     if (stream->exists ())
       stream_exists = true;
@@ -311,16 +304,13 @@ TAO::PG_Object_Group_Storable::~PG_Object_Group_Storable ()
 {
   if (destroyed_)
     {
-      ACE_Auto_Ptr<TAO::Storable_Base> stream (
-        this->create_stream ("r"));
+      ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
       if (stream->exists ())
         {
           stream->remove ();
         }
-
     }
-
 }
 
 void

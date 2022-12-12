@@ -6,8 +6,6 @@
 
 #include "DllORB.h"
 
-char const * const scpc_orbId = "testDllOrb";
-
 const int max_length = 1000;
 
 #if defined (ACE_USES_WCHAR)
@@ -96,7 +94,6 @@ ACE_OS::sprintf(scpc_loadOrb, str,  hostname, port);
 
 return 0;
 }
-
 
 
 void loadunloadcycle()

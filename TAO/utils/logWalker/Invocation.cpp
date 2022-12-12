@@ -25,7 +25,7 @@ Invocation::Invocation (PeerProcess *peer, Thread *thr, size_t rid)
 {
 }
 
-Invocation::~Invocation (void)
+Invocation::~Invocation ()
 {
   delete this->req_octets_;
   delete this->repl_octets_;
@@ -80,7 +80,7 @@ Invocation::set_target (const char *oid, size_t oid_len)
 }
 
 bool
-Invocation::message_complete (void)
+Invocation::message_complete ()
 {
   if (this->is_oneway())
     {
@@ -187,13 +187,13 @@ Invocation::contains (size_t line)
 }
 
 size_t
-Invocation::req_line (void)
+Invocation::req_line ()
 {
   return this->req_octets_ == 0 ? 0 : this->req_octets_->log_posn();
 }
 
 size_t
-Invocation::repl_line (void)
+Invocation::repl_line ()
 {
   return this->repl_octets_ == 0 ? 0 : this->repl_octets_->log_posn();
 }

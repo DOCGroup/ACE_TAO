@@ -528,7 +528,7 @@ TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
                             PortableServer::POAManager_ptr poa_manager,
                             const TAO_POA_Policy_Set &policies)
 {
-  // This operaton creates a new POA as a child of the target POA. The
+  // This operation creates a new POA as a child of the target POA. The
   // specified name identifies the new POA with respect to other POAs
   // with the same parent POA. If the target POA already has a child
   // POA with the specified name, the AdapterAlreadyExists exception
@@ -1499,7 +1499,6 @@ TAO_Root_POA::cleanup_servant (
 PortableServer::Servant
 TAO_Root_POA::id_to_servant_i (const PortableServer::ObjectId &id)
 {
-
   PortableServer::Servant servant =
     this->active_policy_strategies_.request_processing_strategy()->
       id_to_servant (id);
@@ -1972,7 +1971,6 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
                                             collocated,
                                             servant),
                         CORBA::INTERNAL ());
-
     }
   else
     {

@@ -23,7 +23,7 @@ class TAO_RTEC_Perf_Export RT_Class
 {
 public:
   /// Constructor
-  RT_Class (void);
+  RT_Class ();
 
   /** @name Return the test scheduling parameters
    */

@@ -8,15 +8,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE bool
 ACE_SPIPE_Addr::operator == (const ACE_SPIPE_Addr &sap) const
 {
-  return ACE_OS::strcmp (this->SPIPE_addr_.rendezvous_,
-                         sap.SPIPE_addr_.rendezvous_) == 0;
+  return ACE_OS::strcmp (this->SPIPE_addr_.rendezvous_, sap.SPIPE_addr_.rendezvous_) == 0;
 }
 
 // Compare two addresses for inequality.
 ACE_INLINE bool
 ACE_SPIPE_Addr::operator != (const ACE_SPIPE_Addr &sap) const
 {
-  return !((*this) == sap);     // This is lazy, of course... ;-)
+  return !((*this) == sap);
 }
 
 // Return the path name used for the rendezvous point.

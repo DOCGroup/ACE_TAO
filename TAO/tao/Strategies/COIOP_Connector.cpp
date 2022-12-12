@@ -13,12 +13,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_COIOP_Connector::TAO_COIOP_Connector (void)
+TAO_COIOP_Connector::TAO_COIOP_Connector ()
   : TAO_Connector (TAO_TAG_COIOP_PROFILE)
-{
-}
-
-TAO_COIOP_Connector::~TAO_COIOP_Connector (void)
 {
 }
 
@@ -35,7 +31,7 @@ TAO_COIOP_Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_COIOP_Connector::close (void)
+TAO_COIOP_Connector::close ()
 {
   return 0;
 }
@@ -80,7 +76,7 @@ TAO_COIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_COIOP_Connector::make_profile (void)
+TAO_COIOP_Connector::make_profile ()
 {
   // The endpoint should be of the form:
   //    N.n@uuid/object_key

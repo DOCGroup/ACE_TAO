@@ -293,9 +293,7 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // generate typecode for the base type
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
@@ -456,9 +454,7 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // generate typecode for the base type
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
@@ -551,9 +547,7 @@ be_visitor_typecode_defn::visit_string (be_string * node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // Multiple definition guards.
   // @todo Can we automate duplicate detection within the IDL compiler

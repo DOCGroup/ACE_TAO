@@ -31,7 +31,6 @@ using MT_Module = ACE_Module<ACE_MT_SYNCH>;
 class Close_Handler : public virtual MT_Task
 {
 public:
-
   Close_Handler(bool* close_called_arg)
   : close_called_ (close_called_arg)
   {

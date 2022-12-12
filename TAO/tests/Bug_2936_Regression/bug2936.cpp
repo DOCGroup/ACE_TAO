@@ -2,8 +2,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 
-char const * const scpc_orbId = "testDllOrb";
-
 ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testDllOrb",
   "bug2936",

@@ -116,7 +116,6 @@ parse_args (int argc, ACE_TCHAR **argv)
 test_ptr
 setup_policies (CORBA::ORB_ptr orb, test_ptr object)
 {
-
   test_var object_with_policy;
   CORBA::PolicyList policy_list (1);
   if (timeout == -1)
@@ -168,7 +167,6 @@ setup_policies (CORBA::ORB_ptr orb, test_ptr object)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB.

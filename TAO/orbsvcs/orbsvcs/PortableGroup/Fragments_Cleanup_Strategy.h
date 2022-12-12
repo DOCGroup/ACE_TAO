@@ -98,7 +98,6 @@ namespace TAO_PG
 
     virtual void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets);
   };
-
 } // namespace TAO_PG
 
 TAO_END_VERSIONED_NAMESPACE_DECL

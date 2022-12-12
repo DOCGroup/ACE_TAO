@@ -26,7 +26,7 @@ public:
     return this->when_;
   }
 
-  inline float temp (void)
+  inline float temp ()
   {
     return this->temp_;
   }

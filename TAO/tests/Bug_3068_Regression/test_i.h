@@ -58,7 +58,6 @@ public:
 private:
   /// The orb
   CORBA::ORB_var orb_;
-
 };
 
 /**
@@ -71,10 +70,9 @@ private:
  */
 class Simple_Server_i : public POA_Simple_Server
 {
-
 public:
   /// ctor
-  Simple_Server_i (CORBA::ORB_ptr orb, int no_iterations);
+  Simple_Server_i (CORBA::ORB_ptr orb);
 
   // = The Simple_Server methods.
   void ow_test ();
@@ -89,14 +87,10 @@ private:
   /// The ORB
   CORBA::ORB_var orb_;
 
-  /// Flag to indicate, whether we are ready for a remote call.
-  int flag_;
-
   /// Callback Object
   Caller *caller_;
 
   /// Number of times the callback needs to be called
-  int iterations_;
   int ow_count_;
 };
 

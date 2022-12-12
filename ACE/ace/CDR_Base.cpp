@@ -239,12 +239,12 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
     ACE_CDR::swap_2 (orig, target);
     orig += 2;
     target += 2;
-    // fallthrough
+    ACE_FALLTHROUGH;
   case 2:
     ACE_CDR::swap_2 (orig, target);
     orig += 2;
     target += 2;
-    // fallthrough
+    ACE_FALLTHROUGH;
   case 1:
     ACE_CDR::swap_2 (orig, target);
   }
@@ -433,12 +433,12 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
     ACE_CDR::swap_4 (orig, target);
     orig += 4;
     target += 4;
-    // fallthrough
+    ACE_FALLTHROUGH;
   case 2:
     ACE_CDR::swap_4 (orig, target);
     orig += 4;
     target += 4;
-    // fallthrough
+    ACE_FALLTHROUGH;
   case 1:
     ACE_CDR::swap_4 (orig, target);
   }

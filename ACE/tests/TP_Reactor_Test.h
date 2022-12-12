@@ -38,15 +38,14 @@ class Receiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
 {
   friend class Acceptor;
 public:
-
   Receiver (Acceptor * acceptor=0, size_t index=MAX_RECEIVERS+1);
 
-  ~Receiver (void);
+  ~Receiver ();
 
-  long get_total_snd (void) { return this->total_snd_; }
-  long get_total_rcv (void) { return this->total_rcv_; }
-  long get_total_w   (void) { return this->total_w_; }
-  long get_total_r   (void) { return this->total_r_; }
+  long get_total_snd () { return this->total_snd_; }
+  long get_total_rcv () { return this->total_rcv_; }
+  long get_total_w   () { return this->total_w_; }
+  long get_total_r   () { return this->total_r_; }
 
   // virtual from ACE_Svc_Handler<>
   virtual int open (void * pVoid);
@@ -59,7 +58,7 @@ public:
 private:
   int  terminate_io (ACE_Reactor_Mask mask);
   int  initiate_io (ACE_Reactor_Mask mask);
-  int  check_destroy (void);
+  int  check_destroy ();
 
   Acceptor * acceptor_;
   size_t index_;
@@ -78,23 +77,22 @@ class Acceptor : public ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>
 {
  friend class Receiver;
 public:
-  size_t get_number_sessions (void) { return sessions_; }
-  long get_total_snd (void) { return this->total_snd_; }
-  long get_total_rcv (void) { return this->total_rcv_; }
-  long get_total_w   (void) { return this->total_w_; }
-  long get_total_r   (void) { return this->total_r_; }
+  size_t get_number_sessions () { return sessions_; }
+  long get_total_snd () { return this->total_snd_; }
+  long get_total_rcv () { return this->total_rcv_; }
+  long get_total_w   () { return this->total_w_; }
+  long get_total_r   () { return this->total_r_; }
 
-  Acceptor (void);
-  virtual ~Acceptor (void);
+  Acceptor ();
+  virtual ~Acceptor ();
 
-  void stop (void);
+  void stop ();
   int start (const ACE_INET_Addr & addr);
 
   // virtual from ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>
   virtual int make_svc_handler (Receiver * & sh);
 
 private:
-
   ACE_Recursive_Thread_Mutex mutex_;
   size_t sessions_;
   Receiver *list_receivers_[MAX_RECEIVERS];
@@ -121,12 +119,12 @@ class Sender : public ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>
 public:
   Sender (Connector * connector=0, size_t index=MAX_SENDERS+1);
 
-  ~Sender (void);
+  ~Sender ();
 
-  long get_total_snd (void) { return this->total_snd_; }
-  long get_total_rcv (void) { return this->total_rcv_; }
-  long get_total_w   (void) { return this->total_w_; }
-  long get_total_r   (void) { return this->total_r_; }
+  long get_total_snd () { return this->total_snd_; }
+  long get_total_rcv () { return this->total_rcv_; }
+  long get_total_w   () { return this->total_w_; }
+  long get_total_r   () { return this->total_r_; }
 
   // virtual from ACE_Svc_Handler<>
   virtual int open (void * pVoid);
@@ -140,7 +138,7 @@ private:
   int  terminate_io (ACE_Reactor_Mask mask);
   int  initiate_io (ACE_Reactor_Mask mask);
   int  initiate_write ();
-  int  check_destroy (void);
+  int  check_destroy ();
 
   Connector * connector_;
   size_t  index_;
@@ -161,11 +159,11 @@ class Connector: public ACE_Connector<Sender,ACE_SOCK_CONNECTOR>
 {
   friend class Sender;
 public:
-  size_t get_number_sessions (void) { return sessions_; }
-  long get_total_snd (void) { return this->total_snd_; }
-  long get_total_rcv (void) { return this->total_rcv_; }
-  long get_total_w   (void) { return this->total_w_; }
-  long get_total_r   (void) { return this->total_r_; }
+  size_t get_number_sessions () { return sessions_; }
+  long get_total_snd () { return this->total_snd_; }
+  long get_total_rcv () { return this->total_rcv_; }
+  long get_total_w   () { return this->total_w_; }
+  long get_total_r   () { return this->total_r_; }
 
 
   Connector ();
@@ -178,7 +176,6 @@ public:
   virtual int make_svc_handler (Sender * & sh);
 
 private:
-
   ACE_Recursive_Thread_Mutex mutex_;
   size_t  sessions_;
   Sender * list_senders_ [MAX_SENDERS];

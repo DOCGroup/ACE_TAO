@@ -14,11 +14,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class T>
-ACE_Free_List<T>::~ACE_Free_List ()
-{
-}
-
 // Default constructor that takes in a preallocation number
 // (<prealloc>), a low and high water mark (<lwm> and <hwm>) and an
 // increment value (<inc>)

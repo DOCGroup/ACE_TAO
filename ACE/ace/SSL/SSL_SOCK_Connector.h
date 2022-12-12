@@ -55,7 +55,7 @@ class ACE_SSL_Export ACE_SSL_SOCK_Connector
 {
 public:
   /// Default constructor.
-  ACE_SSL_SOCK_Connector (void);
+  ACE_SSL_SOCK_Connector ();
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_SSL_SOCK_Stream
@@ -160,7 +160,7 @@ public:
                           int perms = 0);
 
   /// Default dtor.
-  ~ACE_SSL_SOCK_Connector (void);
+  virtual ~ACE_SSL_SOCK_Connector ();
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_SSL_SOCK_Stream
@@ -291,8 +291,8 @@ public:
 
 protected:
   /// Complete non-blocking SSL active connection.
-  int ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
-                   const ACE_Time_Value *timeout);
+  virtual int ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
+                           const ACE_Time_Value *timeout);
 
 protected:
   /// The class that does all of the non-secure socket connection.

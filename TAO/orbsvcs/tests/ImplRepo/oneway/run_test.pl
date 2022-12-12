@@ -156,7 +156,7 @@ sub make_server_requests($$)
     my $debug_args = "-ORBDebugLevel $debug_level -ORBLogFile client.log" if ($debug_level > 0);
 
     print "Making requests using $init_ref $svc_conf $debug_args\n";
-    $proc->Arguments ("$init_ref $svc_conf $debug_args" );
+    $proc->Arguments ("$init_ref $svc_conf $debug_args");
 
     $CLI_status = $proc->SpawnWaitKill ($cli->ProcessStartWaitInterval());
     if ($CLI_status != 0) {

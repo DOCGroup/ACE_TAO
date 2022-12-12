@@ -3,15 +3,14 @@
 #include "ace/OS_NS_pwd.h"
 
 
-
 static int dummy;
 
-JAWS_HTTP_10_Request::JAWS_HTTP_10_Request (void)
+JAWS_HTTP_10_Request::JAWS_HTTP_10_Request ()
   : path_ (0)
 {
 }
 
-JAWS_HTTP_10_Request::~JAWS_HTTP_10_Request (void)
+JAWS_HTTP_10_Request::~JAWS_HTTP_10_Request ()
 {
   ACE_OS::free (this->path_);
   this->path_ = 0;

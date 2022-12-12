@@ -29,7 +29,6 @@
 #include "ace/Signal.h"
 
 
-
 #if defined (ACE_WIN32)
 static const ACE_TCHAR *executable = ACE_TEXT("MORE.COM");
 #else
@@ -42,7 +41,7 @@ static ACE_TCHAR *fname = 0;   // File you want to view.
 static int use_named_pipe = 0; // Do we want to use named pipe?
 
 static void
-usage (void)
+usage ()
 {
   ACE_ERROR ((LM_ERROR, "Usage: imore [-n|-u] <filename>\n"
               "\t-n Use named pipe.\n"
@@ -241,7 +240,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
     }
 
-  options.command_line (executable);
+  options.command_line (ACE_TEXT("%") ACE_TEXT_PRIs, executable);
   if (new_process.spawn (options) == -1)
     {
       int const error_number = ACE_OS::last_error ();
@@ -261,7 +260,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // if your child process don't need to interact with the terminal,
   // we can use the exact code for Unixes on NT.
   ACE_Process_Options options;
-  options.command_line (executable);
+  options.command_line (ACE_TEXT("%") ACE_TEXT_PRIs, executable);
   options.set_handles (infile);
   if (new_process.spawn (options) == -1)
     {

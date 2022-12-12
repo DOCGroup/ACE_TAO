@@ -60,8 +60,8 @@ public:
                             int sched_scope);
 
   // = The EC_Dispatching methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
+  virtual void activate ();
+  virtual void shutdown ();
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
@@ -74,7 +74,7 @@ public:
 private:
   ACE_Allocator *allocator_;
 
-  void setup_lanes (void);
+  void setup_lanes ();
 
   /// The dispatcher
   Kokyu::Dispatcher_Auto_Ptr dispatcher_;
@@ -96,12 +96,11 @@ public:
   TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
 
   /// Command callback
-  virtual int execute (void);
+  virtual int execute ();
 
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
-  virtual ~TAO_EC_Kokyu_Shutdown_Command (void);
-
+  virtual ~TAO_EC_Kokyu_Shutdown_Command ();
 };
 
 // ****************************************************************
@@ -116,11 +115,11 @@ public:
                              ACE_Allocator* allocator);
 
   /// Command callback
-  virtual int execute (void);
+  virtual int execute ();
 
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
-  virtual ~TAO_EC_Kokyu_Push_Command (void);
+  virtual ~TAO_EC_Kokyu_Push_Command ();
 
 private:
   /// The proxy

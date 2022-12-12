@@ -4,13 +4,13 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
-ACEXML_StrCharStream::ACEXML_StrCharStream (void)
+ACEXML_StrCharStream::ACEXML_StrCharStream ()
   : start_ (0), ptr_ (0), end_ (0), encoding_ (0), name_ (0)
 {
 }
 
 
-ACEXML_StrCharStream::~ACEXML_StrCharStream (void)
+ACEXML_StrCharStream::~ACEXML_StrCharStream ()
 {
   this->close();
 }
@@ -18,7 +18,6 @@ ACEXML_StrCharStream::~ACEXML_StrCharStream (void)
 int
 ACEXML_StrCharStream::open (const ACEXML_Char *str, const ACEXML_Char* name)
 {
-
   if (str != 0 && name != 0)
     {
       delete [] this->start_;
@@ -35,7 +34,7 @@ ACEXML_StrCharStream::open (const ACEXML_Char *str, const ACEXML_Char* name)
 }
 
 int
-ACEXML_StrCharStream::available (void)
+ACEXML_StrCharStream::available ()
 {
   if (this->start_ != 0)
     return static_cast<int> (this->end_ - this->start_); // @@ Will this work on all platforms?
@@ -43,7 +42,7 @@ ACEXML_StrCharStream::available (void)
 }
 
 int
-ACEXML_StrCharStream::close (void)
+ACEXML_StrCharStream::close ()
 {
   delete[] this->start_;
   delete[] this->encoding_;
@@ -55,7 +54,7 @@ ACEXML_StrCharStream::close (void)
 }
 
 int
-ACEXML_StrCharStream::determine_encoding (void)
+ACEXML_StrCharStream::determine_encoding ()
 {
   if (this->start_ == 0)
     return -1;
@@ -77,7 +76,7 @@ ACEXML_StrCharStream::determine_encoding (void)
 }
 
 void
-ACEXML_StrCharStream::rewind (void)
+ACEXML_StrCharStream::rewind ()
 {
   this->ptr_ = this->start_;
   this->determine_encoding();
@@ -110,7 +109,7 @@ ACEXML_StrCharStream::read (ACEXML_Char *str, size_t len)
 }
 
 int
-ACEXML_StrCharStream::peek (void)
+ACEXML_StrCharStream::peek ()
 {
   if (this->start_ != 0 && this->ptr_ != this->end_)
     return *this->ptr_;
@@ -118,13 +117,13 @@ ACEXML_StrCharStream::peek (void)
 }
 
 const ACEXML_Char*
-ACEXML_StrCharStream::getEncoding (void)
+ACEXML_StrCharStream::getEncoding ()
 {
   return this->encoding_;
 }
 
 const ACEXML_Char*
-ACEXML_StrCharStream::getSystemId(void)
+ACEXML_StrCharStream::getSystemId()
 {
   return this->name_;
 }

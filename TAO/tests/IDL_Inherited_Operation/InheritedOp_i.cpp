@@ -6,13 +6,13 @@ Derived_i::Derived_i (CORBA::ORB_ptr orb)
 }
 
 void
-Derived_i::BaseOp (void)
+Derived_i::BaseOp ()
 {
   ACE_DEBUG ((LM_DEBUG, "BaseOp upcall successful\n"));
 }
 
 void
-Derived_i::shutdown (void)
+Derived_i::shutdown ()
 {
   orb_->shutdown ();
 }

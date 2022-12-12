@@ -10,12 +10,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ETCL_Parser_Export ACE_SYNCH_MUTEX ETCL_Interpreter::parserMutex__;
 
-ETCL_Interpreter::ETCL_Interpreter (void)
+ETCL_Interpreter::ETCL_Interpreter ()
   : root_ (0)
 {
 }
 
-ETCL_Interpreter::~ETCL_Interpreter (void)
+ETCL_Interpreter::~ETCL_Interpreter ()
 {
   delete this->root_;
 }

@@ -41,7 +41,6 @@ namespace TAO
   class In_Object_SArgument_T : public InArgument
   {
   public:
-
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;

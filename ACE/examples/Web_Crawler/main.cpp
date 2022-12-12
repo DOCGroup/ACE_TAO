@@ -17,7 +17,6 @@
 #include "Options.h"
 
 
-
 void sig_handler (int)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -40,6 +39,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else
     return 0;
 }
-
 
 

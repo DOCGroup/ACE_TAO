@@ -595,7 +595,6 @@ TAO_Repository_i::create_sections ()
           this->config_->set_integer_value (key,
                                             "pkind",
                                             i);
-
         }
     }
 

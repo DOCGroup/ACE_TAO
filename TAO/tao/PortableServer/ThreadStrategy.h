@@ -35,9 +35,9 @@ namespace TAO
 
       virtual int exit () = 0;
 
-      virtual void strategy_init (TAO_Root_POA *poa);
+      void strategy_init (TAO_Root_POA *poa) override;
 
-      virtual void strategy_cleanup();
+      void strategy_cleanup() override;
 
       virtual ::PortableServer::ThreadPolicyValue type() const = 0;
     };

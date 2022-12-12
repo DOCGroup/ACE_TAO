@@ -11,7 +11,7 @@ Server_Task::Server_Task (ACE_Thread_Manager *thr_mgr,
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
   try
     {

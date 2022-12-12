@@ -107,7 +107,6 @@ ACE_OS::getenvstrings ()
 // environment variables of form $VAR_NAME.  Note that the pointer is
 // allocated with <ACE_OS::malloc> and must be freed by
 // <ACE_OS::free>.
-
 ACE_TCHAR *
 ACE_OS::strenvdup (const ACE_TCHAR *str)
 {
@@ -152,7 +151,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
             }
         }
       ACE_TCHAR * p = buf_p;
-      size_t len = start - str;
+      size_t const len = start - str;
       ACE_OS::strncpy (p, str, len);
       p += len;
       if (temp != 0)
@@ -185,7 +184,6 @@ ACE_OS::itoa_emulation (int value, char *string, int radix)
   char *b = string;
 
   // Short circuit if 0
-
   if (value == 0)
     {
       string[0] = '0';
@@ -195,7 +193,6 @@ ACE_OS::itoa_emulation (int value, char *string, int radix)
 
   // If negative and base 10, print a - and then do the
   // number.
-
   if (value < 0 && radix == 10)
     {
       string[0] = '-';
@@ -205,10 +202,9 @@ ACE_OS::itoa_emulation (int value, char *string, int radix)
     }
 
   // Convert to base <radix>, but in reverse order
-
   while (value != 0)
     {
-      int mod = value % radix;
+      int const mod = value % radix;
       value = value / radix;
 
       *e++ = (mod < 10) ? '0' + mod : 'a' + mod - 10;
@@ -1128,7 +1124,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   static unsigned int const NUM_CHARS   = 6;  // Do not change!
 
   // Use ACE_Time_Value::msec(ACE_UINT64&) as opposed to
-  // ACE_Time_Value::msec(void) to avoid truncation.
+  // ACE_Time_Value::msec() to avoid truncation.
   ACE_UINT64 msec;
 
   // Use a const ACE_Time_Value to resolve ambiguity between

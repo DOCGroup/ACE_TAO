@@ -66,7 +66,7 @@ enum {
 
 
 static void
-usage (void)
+usage ()
 {
   ACE_ERROR ((LM_ERROR,
               "tcp_test\n"
@@ -94,7 +94,7 @@ class Client : public ACE_Event_Handler
 public:
   Client (const ACE_INET_Addr &remote_addr);
 
-  virtual ~Client (void);
+  virtual ~Client ();
 
   // = Override <ACE_Event_Handler> methods.
   virtual ACE_HANDLE get_handle () const;
@@ -111,11 +111,11 @@ public:
   int get_response (char *buf, size_t len);
 
   /// Send messages to server and record statistics.
-  int run (void);
+  int run ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Send shutdown message to server.
-  int shutdown (void);
+  int shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -149,7 +149,7 @@ Client::Client (const ACE_INET_Addr &remote_addr)
     }
 }
 
-Client::~Client (void)
+Client::~Client ()
 {
 }
 
@@ -201,7 +201,7 @@ Client::get_response (char *buf, size_t len)
 }
 
 int
-Client::run (void)
+Client::run ()
 {
   ACE_OS::memset (sbuf, 0, bufsz);
   ACE_OS::memset (rbuf, 0, bufsz);
@@ -268,7 +268,7 @@ Client::run (void)
 }
 
 int
-Client::shutdown (void)
+Client::shutdown ()
 {
   const char buf = 'S';
   int n = this->endpoint_.send (&buf, 1u);
@@ -292,7 +292,7 @@ class Server : public ACE_Event_Handler
 public:
   Server (const ACE_INET_Addr &addr);
 
-  virtual ~Server (void);
+  virtual ~Server ();
 
   // = Override <ACE_Event_Handler> methods.
   virtual ACE_HANDLE get_handle () const;
@@ -304,7 +304,7 @@ private:
   /// Receives datagrams.
   ACE_SOCK_Stream endpoint_;
 
-  Server (void) = delete;
+  Server () = delete;
   Server (const Server &) = delete;
   Server &operator= (const Server &) = delete;
 };
@@ -365,7 +365,7 @@ Server::Server (const ACE_INET_Addr &addr)
                 "close failed"));
 }
 
-Server::~Server (void)
+Server::~Server ()
 {
   this->endpoint_.close ();
 }

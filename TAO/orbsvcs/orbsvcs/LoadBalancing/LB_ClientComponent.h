@@ -48,7 +48,7 @@ public:
 
 protected:
   /// Register the LB_ClientComponent's ORBInitializer.
-  int register_orb_initializer (void);
+  int register_orb_initializer ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

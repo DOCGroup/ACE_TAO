@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_ECG_Mcast_Gateway::TAO_ECG_Mcast_Gateway (void)
+TAO_ECG_Mcast_Gateway::TAO_ECG_Mcast_Gateway ()
   : service_type_ (TAO_ECG_DEFAULT_SERVICE)
   , handler_type_ (TAO_ECG_DEFAULT_HANDLER)
   , address_server_type_ (TAO_ECG_DEFAULT_ADDRESS_SERVER)
@@ -17,7 +17,7 @@ TAO_ECG_Mcast_Gateway::TAO_ECG_Mcast_Gateway (void)
 }
 
 ACE_INLINE
-TAO_ECG_Mcast_Gateway::Attributes::Attributes (void)
+TAO_ECG_Mcast_Gateway::Attributes::Attributes ()
   : address_server_type (TAO_ECG_DEFAULT_ADDRESS_SERVER)
   , handler_type (TAO_ECG_DEFAULT_HANDLER)
   , service_type (TAO_ECG_DEFAULT_SERVICE)

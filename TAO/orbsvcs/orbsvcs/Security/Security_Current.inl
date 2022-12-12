@@ -8,7 +8,7 @@ TAO_Security_Current::tss_slot () const
 }
 
 ACE_INLINE TAO::Security::Current_Impl *
-TAO_Security_Current::implementation (void)
+TAO_Security_Current::implementation ()
 {
   if (this->orb_core_ == 0 && this->init () != 0)
     return 0;

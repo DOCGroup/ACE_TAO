@@ -10,7 +10,6 @@
 #include "ace/UPIPE_Addr.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "test_upipe.h"

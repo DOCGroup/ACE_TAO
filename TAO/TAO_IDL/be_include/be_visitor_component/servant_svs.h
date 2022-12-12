@@ -24,7 +24,7 @@ class be_visitor_servant_svs
 public:
   be_visitor_servant_svs (be_visitor_context *ctx);
 
-  ~be_visitor_servant_svs ();
+  ~be_visitor_servant_svs () = default;
 
   virtual int visit_component (be_component *node);
   virtual int visit_connector (be_connector *node);

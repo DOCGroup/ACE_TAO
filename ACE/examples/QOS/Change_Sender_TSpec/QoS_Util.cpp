@@ -7,7 +7,6 @@
 #include "ace/OS_NS_strings.h"
 
 
-
 // constructor.
 QoS_Util::QoS_Util (int argc,
                     ACE_TCHAR *argv[])
@@ -25,14 +24,14 @@ QoS_Util::QoS_Util (int argc,
 }
 
 // destructor.
-QoS_Util::~QoS_Util (void)
+QoS_Util::~QoS_Util ()
 {
   delete this->mult_session_addr_;
   delete this->dest_addr_;
 }
 
 int
-QoS_Util::parse_args (void)
+QoS_Util::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("m:n:p:P:c"));
   int c = 0;

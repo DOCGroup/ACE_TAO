@@ -37,7 +37,7 @@ public:
   int use_rt_corba () const;
 
   /// Return the underlying RTCORBA_Setup pointer
-  RTCORBA_Setup *rtcorba_setup (void);
+  RTCORBA_Setup *rtcorba_setup ();
 
 private:
   int use_rt_corba_;

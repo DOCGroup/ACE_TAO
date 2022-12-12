@@ -141,7 +141,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef struct sigaction ACE_SIGACTION;
 
 namespace ACE_OS {
-
   //@{ @name A set of wrappers for Signals.
 
   ACE_NAMESPACE_INLINE_FUNCTION

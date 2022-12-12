@@ -7,7 +7,7 @@ Test_Idl_SharedIntf_i::Test_Idl_SharedIntf_i(CORBA::ORB_ptr orb)
 {
 }
 
-Test_Idl_SharedIntf_i::~Test_Idl_SharedIntf_i(void) {}
+Test_Idl_SharedIntf_i::~Test_Idl_SharedIntf_i() {}
 
 void Test_Idl_SharedIntf_i::ping ()
 {

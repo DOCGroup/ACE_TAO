@@ -29,7 +29,6 @@
 class ACEXML_Export ACEXML_CharStream
 {
 public:
-
   /**
    * Virtual destructor, must have.
    */
@@ -77,7 +76,6 @@ public:
    * Get the systemId for the underlying CharStream
    */
   virtual const ACEXML_Char* getSystemId () = 0;
-
 };
 
 #include /**/ "ace/post.h"

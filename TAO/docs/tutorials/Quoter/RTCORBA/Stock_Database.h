@@ -66,7 +66,7 @@ public:
 
   struct StockInfo
   {
-    StockInfo (void)
+    StockInfo ()
       : name_(""), high_ (0), low_ (0), last_ (0)
     {};
 
@@ -98,10 +98,10 @@ public:
   void update_rate (u_int rate);
 
   /// Launch the active object
-  void start (void);
+  void start ();
 
   /// Stop the active object
-  void stop (void);
+  void stop ();
 
   typedef std::map <std::string, StockInfo> Stock_Map;
 

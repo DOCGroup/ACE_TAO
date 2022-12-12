@@ -54,17 +54,17 @@ public:
   typedef ACE_Rusage Rusage;
 
   /// Default constructor. Clears all time values to 0.
-  ACE_Profile_Timer (void);
+  ACE_Profile_Timer ();
 
   /// Shutdown the timer.
-  ~ACE_Profile_Timer (void);
+  ~ACE_Profile_Timer ();
 
   // = Timer methods.
   /// Activate the timer.
-  int start (void);
+  int start ();
 
   /// Stop the timer.
-  int stop (void);
+  int stop ();
 
   // = Resource utilization methods.
   /// Compute the time elapsed between calls to @c start() and @c stop().

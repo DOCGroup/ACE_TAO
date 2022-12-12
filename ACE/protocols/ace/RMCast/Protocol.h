@@ -750,7 +750,6 @@ namespace ACE_RMCast
   class NAK : public Profile
   {
   public:
-
     static u16 const id;
 
     typedef ACE_Vector<u64, ACE_VECTOR_DEFAULT_SIZE> SerialNumbers;
@@ -1078,7 +1077,6 @@ namespace ACE_RMCast
         os << sn;
         os << addr;
         os << port;
-
       }
     }
 
@@ -1262,7 +1260,6 @@ namespace ACE_RMCast
     u32 of_;
     u64 total_size_;
   };
-
 }
 
 /*

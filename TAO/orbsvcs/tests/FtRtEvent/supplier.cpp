@@ -51,7 +51,6 @@ get_event_channel(int argc, ACE_TCHAR** argv)
                    ACE_TEXT("\n"),
                       argv[0]));
         return 0;
-
       }
     }
 

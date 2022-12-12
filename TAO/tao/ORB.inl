@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // ---------------------------------------------------------------------------
 
 ACE_INLINE ACE_Time_Value *
-CORBA::ORB::get_timeout (void)
+CORBA::ORB::get_timeout ()
 {
   return this->timeout_;
 }
@@ -68,7 +68,7 @@ CORBA::ORB::_use_omg_ior_format (CORBA::Boolean ior)
 }
 
 ACE_INLINE CORBA::Boolean
-CORBA::ORB::_use_omg_ior_format (void)
+CORBA::ORB::_use_omg_ior_format ()
 {
   return this->use_omg_ior_format_;
 }

@@ -40,7 +40,7 @@ public:
                     const char *t);
 
   /// Default constructor.
-  ACE_Name_Binding (void);
+  ACE_Name_Binding ();
 
   /// Copy constructor.
   ACE_Name_Binding (const ACE_Name_Binding &);
@@ -49,7 +49,7 @@ public:
   const ACE_Name_Binding& operator= (const ACE_Name_Binding &);
 
   /// Destructor.
-  ~ACE_Name_Binding (void);
+  ~ACE_Name_Binding ();
 
   /// Test for equality.
   bool operator == (const ACE_Name_Binding &s) const;
@@ -82,10 +82,9 @@ typedef ACE_Unbounded_Set_Iterator<ACE_NS_WString> ACE_PWSTRING_ITERATOR;
 class ACE_Export ACE_Name_Space
 {
 public:
-
   /// virtual destructor to ensure destructors of subclasses get
   /// called.
-  virtual ~ACE_Name_Space (void);
+  virtual ~ACE_Name_Space ();
 
   /// Bind a new name to a naming context (Wide character strings).
   virtual int bind (const ACE_NS_WString &name_in,

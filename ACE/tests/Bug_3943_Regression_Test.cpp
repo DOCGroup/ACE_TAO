@@ -67,7 +67,6 @@
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
 namespace {
-
   const char FINISHED_CHAR = '%';
   const char RESTART_CHAR = '&';
   const char START_CHAR = '0';
@@ -244,7 +243,6 @@ namespace {
     ssize_t send (char send_char, const ACE_TCHAR * const send_desc);
 
     const ACE_Time_Value DEFAULT_TIME_VALUE;
-
   };
 } // namespace ""
 
@@ -974,7 +972,6 @@ client (void *arg)
     {
       // Send the data to the server.
       svc_handler->send_data ();
-
     }
   return 0;
 }

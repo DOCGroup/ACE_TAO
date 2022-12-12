@@ -36,7 +36,6 @@ public:
   /// visit an enum. Required to generate the typecode for an enum definition
   /// appearing side the union
   virtual int visit_enum (be_enum *node);
-
 };
 
 #endif /* _BE_VISITOR_UNION_DISCRIMINANT_CS_H_ */

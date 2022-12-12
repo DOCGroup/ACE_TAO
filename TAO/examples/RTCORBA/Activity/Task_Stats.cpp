@@ -5,7 +5,7 @@
 #include "Task_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
-Base_Time::Base_Time (void)
+Base_Time::Base_Time ()
 {
   base_time_ = ACE_OS::gethrtime ();
 }
@@ -26,14 +26,14 @@ Task_Stats::Task_Stats (size_t max_samples)
 {
 }
 
-Task_Stats::~Task_Stats (void)
+Task_Stats::~Task_Stats ()
 {
   delete[] this->time_inv_;
   delete[] this->time_exec_;
 }
 
 int
-Task_Stats::init (void)
+Task_Stats::init ()
 {
   ACE_NEW_RETURN (this->time_inv_, ACE_UINT64[this->max_samples_], -1);
   ACE_NEW_RETURN (this->time_exec_, ACE_UINT64[this->max_samples_], -1);

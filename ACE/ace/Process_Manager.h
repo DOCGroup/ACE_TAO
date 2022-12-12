@@ -389,12 +389,9 @@ protected:
    * On Win32, this routine is called synchronously, and is passed the
    * HANDLE of the Process that exited, so we can do all our work here
    */
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
 private:
-
   /**
    * @struct Process_Descriptor
    *

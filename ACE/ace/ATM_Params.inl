@@ -40,7 +40,7 @@ ACE_ATM_Params::ACE_ATM_Params (int rw_flag,
 
 // Default dtor.
 ACE_INLINE
-ACE_ATM_Params::~ACE_ATM_Params (void)
+ACE_ATM_Params::~ACE_ATM_Params ()
 {
   ACE_TRACE ("ACE_ATM_Params::~ACE_ATM_Params");
 }
@@ -95,7 +95,7 @@ ACE_ATM_Params::set_type (int type)
 
 ACE_INLINE
 ACE_Protocol_Info*
-ACE_ATM_Params::get_protocol_info( void )
+ACE_ATM_Params::get_protocol_info()
 {
   ACE_TRACE ("ACE_ATM_Params::get_protocol_info");
   return protocol_info_;
@@ -111,7 +111,7 @@ ACE_ATM_Params::set_protocol_info( ACE_Protocol_Info *protocol_info )
 
 ACE_INLINE
 ACE_SOCK_GROUP
-ACE_ATM_Params::get_sock_group( void )
+ACE_ATM_Params::get_sock_group()
 {
   ACE_TRACE ("ACE_ATM_Params::get_sock_group");
   return group_;
@@ -127,7 +127,7 @@ ACE_ATM_Params::set_sock_group( ACE_SOCK_GROUP g )
 
 ACE_INLINE
 u_long
-ACE_ATM_Params::get_flags( void )
+ACE_ATM_Params::get_flags()
 {
   ACE_TRACE ("ACE_ATM_Params::get_flags");
   return flags_;

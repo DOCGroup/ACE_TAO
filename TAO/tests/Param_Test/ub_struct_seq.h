@@ -23,10 +23,10 @@ class Test_Struct_Sequence
 {
 public:
   /// ctor
-  Test_Struct_Sequence (void);
+  Test_Struct_Sequence ();
 
   /// dtor
-  ~Test_Struct_Sequence (void);
+  ~Test_Struct_Sequence ();
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -38,16 +38,16 @@ public:
   int init_parameters (Param_Test_ptr objref);
 
   /// reset values for CORBA
-  int reset_parameters (void);
+  int reset_parameters ();
 
   /// check if results are valid
-  CORBA::Boolean check_validity (void);
+  CORBA::Boolean check_validity ();
 
   /// check if results are valid. This is used for DII results
   CORBA::Boolean check_validity (CORBA::Request_ptr req);
 
   /// print all the values
-  void print_values (void);
+  void print_values ();
 
   /// invoke DII request with appropriate exception handling.
   void dii_req_invoke (CORBA::Request *);
@@ -79,15 +79,14 @@ private:
 };
 
 
-
 class Test_Unbounded_Struct_Sequence
 {
 public:
   /// ctor
-  Test_Unbounded_Struct_Sequence (void);
+  Test_Unbounded_Struct_Sequence ();
 
   /// dtor
-  ~Test_Unbounded_Struct_Sequence (void);
+  ~Test_Unbounded_Struct_Sequence ();
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -99,16 +98,16 @@ public:
   int init_parameters (Param_Test_ptr objref);
 
   /// reset values for CORBA
-  int reset_parameters (void);
+  int reset_parameters ();
 
   /// check if results are valid
-  CORBA::Boolean check_validity (void);
+  CORBA::Boolean check_validity ();
 
   /// check if results are valid. This is used for DII results
   CORBA::Boolean check_validity (CORBA::Request_ptr req);
 
   /// print all the values
-  void print_values (void);
+  void print_values ();
 
   /// invoke DII request with appropriate exception handling.
   void dii_req_invoke (CORBA::Request *);

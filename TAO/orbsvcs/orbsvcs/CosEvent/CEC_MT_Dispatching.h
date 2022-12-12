@@ -46,8 +46,8 @@ public:
                          int force_activate);
 
   // = The EC_Dispatching methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
+  virtual void activate ();
+  virtual void shutdown ();
   virtual void push (TAO_CEC_ProxyPushSupplier* proxy,
                      const CORBA::Any & event);
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,

@@ -83,7 +83,7 @@ ACE_Select_Reactor_Handler_Repository_Iterator::done () const
 // ------------------------------------------------------------------
 
 ACE_INLINE
-ACE_Event_Tuple::ACE_Event_Tuple (void)
+ACE_Event_Tuple::ACE_Event_Tuple ()
   : handle_ (ACE_INVALID_HANDLE),
     event_handler_ (0)
 {
@@ -136,7 +136,7 @@ ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl (bool ms)
 #endif
 
 ACE_INLINE bool
-ACE_Select_Reactor_Impl::supress_notify_renew (void)
+ACE_Select_Reactor_Impl::supress_notify_renew ()
 {
   return this->supress_renew_;
 }

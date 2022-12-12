@@ -33,7 +33,7 @@ Simple_Server_i::echo (CORBA::Long x,
 }
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "server (%P) Received shutdown request from client\n"));

@@ -140,7 +140,6 @@ void getapp::usage()
 
 int getapp::run()
 {
-
    //----------[ create a ASNMP session ]-----------------------------------
    if ( snmp_.valid() != SNMP_CLASS_SUCCESS) {
       cout << "\nASNMP:ERROR:Create session failed: "<<

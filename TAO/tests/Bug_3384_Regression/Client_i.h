@@ -6,7 +6,7 @@ public:
   Client ()
     : POA_Test::Client(),
       reply_count_ (0) {}
-  virtual ~Client ();
+  virtual ~Client () = default;
 
   virtual void reply (
     const char * msg);

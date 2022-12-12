@@ -58,7 +58,7 @@ public:
   };
 
   /// Default constructor.
-  ACE_Token_Request ();
+  ACE_Token_Request () = default;
 
   /**
    * @param token_type MUTEX, RWLOCK
@@ -183,10 +183,10 @@ private:
   } transfer_;
 
   /// Pointer to the beginning of the token name in this->data_.
-  ACE_TCHAR *token_name_;
+  ACE_TCHAR *token_name_ {};
 
   /// Pointer to the beginning of the client id in this->data_;
-  ACE_TCHAR *client_id_;
+  ACE_TCHAR *client_id_ {};
 
   /// Holds arg, sec, usec, etc.
   ACE_Synch_Options options_;

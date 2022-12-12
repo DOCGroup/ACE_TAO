@@ -5,7 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
 ACE_INLINE
-TAO_Pseudo_Var_T<T>::TAO_Pseudo_Var_T (void)
+TAO_Pseudo_Var_T<T>::TAO_Pseudo_Var_T ()
   : ptr_ (T::_nil ())
 {}
 
@@ -24,7 +24,7 @@ TAO_Pseudo_Var_T<T>::TAO_Pseudo_Var_T (const TAO_Pseudo_Var_T<T> & p)
 
 template <typename T>
 ACE_INLINE
-TAO_Pseudo_Var_T<T>::~TAO_Pseudo_Var_T (void)
+TAO_Pseudo_Var_T<T>::~TAO_Pseudo_Var_T ()
 {
   CORBA::release (this->ptr_);
 }
@@ -72,7 +72,7 @@ TAO_Pseudo_Var_T<T>::in () const
 template <typename T>
 ACE_INLINE
 typename T::_ptr_type &
-TAO_Pseudo_Var_T<T>::inout (void)
+TAO_Pseudo_Var_T<T>::inout ()
 {
   return this->ptr_;
 }
@@ -80,7 +80,7 @@ TAO_Pseudo_Var_T<T>::inout (void)
 template <typename T>
 ACE_INLINE
 typename T::_ptr_type &
-TAO_Pseudo_Var_T<T>::out (void)
+TAO_Pseudo_Var_T<T>::out ()
 {
   CORBA::release (this->ptr_);
   this->ptr_ = T::_nil ();
@@ -90,7 +90,7 @@ TAO_Pseudo_Var_T<T>::out (void)
 template <typename T>
 ACE_INLINE
 typename T::_ptr_type
-TAO_Pseudo_Var_T<T>::_retn (void)
+TAO_Pseudo_Var_T<T>::_retn ()
 {
   typename T::_ptr_type val = this->ptr_;
   this->ptr_ = T::_nil ();
@@ -152,7 +152,7 @@ TAO_Pseudo_Out_T<T>::operator= (typename T::_ptr_type p)
 template <typename T>
 ACE_INLINE
 typename T::_ptr_type &
-TAO_Pseudo_Out_T<T>::ptr (void)
+TAO_Pseudo_Out_T<T>::ptr ()
 {
   return this->ptr_;
 }
@@ -167,7 +167,7 @@ TAO_Pseudo_Out_T<T>::operator typename T::_ptr_type & ()
 template <typename T>
 ACE_INLINE
 typename T::_ptr_type
-TAO_Pseudo_Out_T<T>::operator-> (void)
+TAO_Pseudo_Out_T<T>::operator-> ()
 {
   return this->ptr_;
 }

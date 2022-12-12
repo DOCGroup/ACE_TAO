@@ -38,17 +38,17 @@ class ACE_Map_Entry
 {
 public:
   /// Initialize member variables.
-  ACE_Map_Entry ();
+  ACE_Map_Entry () = default;
 
   /// We need this destructor to keep some compilers from complaining.
   /// It's just a no-op, however.
-  ~ACE_Map_Entry ();
+  ~ACE_Map_Entry () = default;
 
   /// Key used to look up an entry.
-  EXT_ID ext_id_;
+  EXT_ID ext_id_ {};
 
   /// The contents of the entry itself.
-  INT_ID int_id_;
+  INT_ID int_id_ {};
 
   /// Dump the state of an object.
   void dump () const;
@@ -72,15 +72,15 @@ public:
   void prev (ACE_UINT32 p);
 
   /// Keeps track of the next entry.
-  ACE_UINT32 next_;
+  ACE_UINT32 next_ {};
 
   /// Keeps track of the previous entry.
-  ACE_UINT32 prev_;
+  ACE_UINT32 prev_ {};
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
   /// Is this entry free?
-  bool free_;
+  bool free_ {true};
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 };
 
@@ -283,7 +283,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   // = The following methods do the actual work.
 
   // These methods assume that the locks are held by the private
@@ -390,7 +389,7 @@ protected:
    * free slots in the free list. This function goes through the
    * entire occupied list, moving free slots to the free list.
    */
-  void move_all_free_slots_from_occupied_list (void);
+  void move_all_free_slots_from_occupied_list ();
 
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 

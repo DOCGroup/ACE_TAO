@@ -42,7 +42,7 @@ public:
   TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_POA_RT_Policy_Validator (void);
+  ~TAO_POA_RT_Policy_Validator () = default;
 
   static RTCORBA::ServerProtocolPolicy_ptr server_protocol_policy_from_thread_pool (TAO_Thread_Pool *thread_pool,
                                                                                     TAO_ORB_Core &orb_core);
@@ -55,7 +55,6 @@ public:
                                                TAO_Policy_Set &policies);
 
 protected:
-
   /**
    * Validate that the policies in the specified set
    * are consistent and legal.  Throw an appropriate exception

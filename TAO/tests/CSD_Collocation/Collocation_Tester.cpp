@@ -13,12 +13,12 @@
 
 #include "Collocation_Tester.h"
 
-Collocation_Test::Collocation_Test (void)
+Collocation_Test::Collocation_Test ()
 {
 }
 
 void
-Collocation_Test::shutdown (void)
+Collocation_Test::shutdown ()
 {
   this->root_poa_->destroy (1, 1);
   this->orb_->destroy ();
@@ -92,7 +92,6 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
 
   return 0;
 
-
 }
 
 int
@@ -103,7 +102,7 @@ Collocation_Test::parse_args (int /*argc*/,
 }
 
 int
-Collocation_Test::test_narrow (void)
+Collocation_Test::test_narrow ()
 {
   Diamond::Top_var top =
     Diamond::Top::_narrow (this->diamond_obj_.in ());
@@ -133,7 +132,7 @@ Collocation_Test::test_narrow (void)
 }
 
 int
-Collocation_Test::run (void)
+Collocation_Test::run ()
 {
   this->poa_manager_->activate ();
 

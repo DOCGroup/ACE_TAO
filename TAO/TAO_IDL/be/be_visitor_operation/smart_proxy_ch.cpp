@@ -28,7 +28,6 @@ be_visitor_operation_smart_proxy_ch::~be_visitor_operation_smart_proxy_ch ()
 int
 be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
 {
-
   if (be_global->gen_smart_proxies ())
     {
       TAO_OutStream *os = this->ctx_->stream ();

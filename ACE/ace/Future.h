@@ -47,7 +47,7 @@ class ACE_Future_Holder
 {
 public:
   ACE_Future_Holder (const ACE_Future<T> &future);
-  ~ACE_Future_Holder (void);
+  ~ACE_Future_Holder ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -55,7 +55,7 @@ public:
   ACE_Future<T> item_;
 
 protected:
-  ACE_Future_Holder (void);
+  ACE_Future_Holder ();
 };
 
 /**
@@ -73,7 +73,7 @@ class ACE_Future_Observer
 {
 public:
   /// Destructor
-  virtual ~ACE_Future_Observer (void);
+  virtual ~ACE_Future_Observer ();
 
   /// Called by the ACE_Future in which we are subscribed to when
   /// its value is written to.
@@ -84,7 +84,7 @@ public:
 
 protected:
   /// Constructor
-  ACE_Future_Observer (void);
+  ACE_Future_Observer ();
 };
 
 /**
@@ -163,10 +163,10 @@ private:
 
   /// Allocate a new ACE_Future_Rep<T> instance, returning NULL if it
   /// cannot be created.
-  static ACE_Future_Rep<T> *internal_create (void);
+  static ACE_Future_Rep<T> *internal_create ();
 
   /// Create a ACE_Future_Rep<T> and initialize the reference count.
-  static ACE_Future_Rep<T> *create (void);
+  static ACE_Future_Rep<T> *create ();
 
   /**
    * Increase the reference count and return argument. Uses the
@@ -214,10 +214,10 @@ private:
   mutable ACE_SYNCH_RECURSIVE_CONDITION value_ready_;
 
 private:
-  ACE_Future_Rep (void);
+  ACE_Future_Rep ();
 
 protected:
-  ~ACE_Future_Rep (void);
+  ~ACE_Future_Rep ();
 };
 
 /**
@@ -232,7 +232,7 @@ class ACE_Future
 {
 public:
   /// Constructor.
-  ACE_Future (void);
+  ACE_Future ();
 
   /// Copy constructor binds @a this and @a r to the same
   /// ACE_Future_Rep. An ACE_Future_Rep is created if necessary.
@@ -243,7 +243,7 @@ public:
   ACE_Future (const T &r);
 
   /// Destructor.
-  ~ACE_Future (void);
+  ~ACE_Future ();
 
   /// Assignment operator that binds @a this and @a r to the same
   /// ACE_Future_Rep. An ACE_Future_Rep is created if necessary.
@@ -259,7 +259,7 @@ public:
    * to reuse the ACE_Future. But remember, the ACE_Future
    * is now bound to a new ACE_Future_Rep.
    */
-  int cancel (void);
+  int cancel ();
 
   /**
    * Equality operator that returns @c true if both ACE_Future objects
@@ -348,13 +348,12 @@ public:
    * rarely, if ever, be used and that modifying the underlying
    * ACE_Future_Rep should be done with extreme caution.
    */
-  ACE_Future_Rep<T> *get_rep (void);
+  ACE_Future_Rep<T> *get_rep ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// The ACE_Future_Rep
   /// Protect operations on the <Future>.
   typedef ACE_Future_Rep<T> FUTURE_REP;

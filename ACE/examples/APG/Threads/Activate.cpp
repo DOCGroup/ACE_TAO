@@ -5,7 +5,7 @@
 class HA_CommandHandler : public ACE_Task_Base
 {
 public:
-  virtual int svc (void)
+  virtual int svc ()
   {
     ACE_DEBUG
       ((LM_DEBUG, ACE_TEXT ("(%t) Handler Thread running\n")));

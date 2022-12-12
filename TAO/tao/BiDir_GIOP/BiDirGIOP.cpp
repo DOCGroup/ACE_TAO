@@ -9,15 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_BiDirGIOP_Loader::TAO_BiDirGIOP_Loader (void)
-  : initialized_ (false)
-{
-}
-
-TAO_BiDirGIOP_Loader::~TAO_BiDirGIOP_Loader (void)
-{
-}
-
 int
 TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 {
@@ -81,7 +72,7 @@ TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
   if (TAO_DEF_GIOP_MINOR < 2)
     return;
 
-  TAO_BiDirPolicy_Validator *validator = 0;
+  TAO_BiDirPolicy_Validator *validator = nullptr;
   ACE_NEW_THROW_EX (validator,
                     TAO_BiDirPolicy_Validator (val.orb_core ()),
                     CORBA::NO_MEMORY (
@@ -102,11 +93,10 @@ TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
 }
 
 int
-TAO_BiDirGIOP_Loader::Initializer (void)
+TAO_BiDirGIOP_Loader::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_BiDirGIOP_Loader);
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_BiDirGIOP_Loader,
                        ACE_TEXT ("BiDirGIOP_Loader"),

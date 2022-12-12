@@ -139,7 +139,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 typedef ACE_Task<ACE_MT_SYNCH> MT_TASK;
 
 /**
@@ -152,7 +151,7 @@ class Peer_Handler : public MT_TASK, public ACE_Handler
 {
 public:
   Peer_Handler (int argc, ACE_TCHAR *argv[]);
-  ~Peer_Handler (void);
+  ~Peer_Handler ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /**
@@ -244,7 +243,7 @@ public:
   virtual int close (u_long = 0);
 
   /// Thread runs here as an active object.
-  int svc (void);
+  int svc ();
 
   int handle_close (ACE_HANDLE,
                     ACE_Reactor_Mask);
@@ -255,7 +254,7 @@ private:
   static void handler (int signum);
 
   /// Helper function to register with the Reactor for thread exit.
-  void register_thread_exit_hook (void);
+  void register_thread_exit_hook ();
 
   /// The STDIN thread has exited.  This means the user hit ^C.  We can
   /// end the event loop.
@@ -298,7 +297,7 @@ Peer_Handler::Peer_Handler (int argc, ACE_TCHAR *argv[])
     }
 }
 
-Peer_Handler::~Peer_Handler (void)
+Peer_Handler::~Peer_Handler ()
 {
 }
 
@@ -472,7 +471,7 @@ STDIN_Handler::close (u_long)
 // Thread runs here.
 
 int
-STDIN_Handler::svc (void)
+STDIN_Handler::svc ()
 {
   this->register_thread_exit_hook ();
 
@@ -513,7 +512,7 @@ STDIN_Handler::svc (void)
 // Register an exit hook with the reactor.
 
 void
-STDIN_Handler::register_thread_exit_hook (void)
+STDIN_Handler::register_thread_exit_hook ()
 {
   // Get a real handle to our thread.
   ACE_Thread_Manager::instance ()->thr_self (this->thr_handle_);
@@ -527,7 +526,6 @@ STDIN_Handler::register_thread_exit_hook (void)
 
 // The STDIN thread has exited.  This means the user hit ^C.  We can
 // end the event loop and delete ourself.
-
 int
 STDIN_Handler::handle_signal (int, siginfo_t *si, ucontext_t *)
 {

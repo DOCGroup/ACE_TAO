@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-CORBA::NamedValue::NamedValue (void)
+CORBA::NamedValue::NamedValue ()
   : refcount_ (1),
     flags_ (0),
     name_ (0)
@@ -52,7 +52,7 @@ CORBA::NamedValue::_nil ()
 // *************************************************************
 
 ACE_INLINE
-CORBA::NVList::NVList (void)
+CORBA::NVList::NVList ()
   : max_ (0),
     refcount_ (1),
     incoming_ (0),

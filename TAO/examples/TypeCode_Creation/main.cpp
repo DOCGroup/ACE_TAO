@@ -3,7 +3,6 @@
 #include "tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h"
 
 
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
@@ -94,7 +93,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ORB-created typecode not correct!\n"),
                              -1);
-
         }
     }
   catch (const CORBA::Exception& ex)

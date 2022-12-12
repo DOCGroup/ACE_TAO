@@ -536,7 +536,7 @@ public:
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   /// Register and unregister our buffer size monitor.
   void register_monitor (const char* id);
-  void unregister_monitor (void);
+  void unregister_monitor ();
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 private:
@@ -1086,11 +1086,10 @@ public:
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   /// Register and unregister our buffer size monitor.
   void register_monitor (const char* id);
-  void unregister_monitor (void);
+  void unregister_monitor ();
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 protected:
-
   /// The start of the chain of message blocks, even though in the
   /// current version the chain always has length 1.
   ACE_Message_Block start_;
@@ -1180,7 +1179,7 @@ private:
 class ACE_Export ACE_Char_Codeset_Translator
 {
 public:
-  virtual ~ACE_Char_Codeset_Translator ();
+  virtual ~ACE_Char_Codeset_Translator () = default;
 
   /// Read a single character from the stream, converting from the
   /// stream codeset to the native codeset
@@ -1288,7 +1287,7 @@ protected:
 class ACE_Export ACE_WChar_Codeset_Translator
 {
 public:
-  virtual ~ACE_WChar_Codeset_Translator ();
+  virtual ~ACE_WChar_Codeset_Translator () = default;
 
   virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR&,
                                        ACE_CDR::WChar&) = 0;
@@ -1371,7 +1370,6 @@ protected:
   ACE_CDR::Octet minor_version (ACE_InputCDR& input);
   ACE_CDR::Octet major_version (ACE_OutputCDR& output);
   ACE_CDR::Octet minor_version (ACE_OutputCDR& output);
-
 };
 
 // @@ These operators should not be inlined since they force SString.h

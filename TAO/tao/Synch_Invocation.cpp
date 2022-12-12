@@ -394,7 +394,6 @@ namespace TAO
                   this->stub()->orb_core ()->service_raise_comm_failure (
                     this->details_.request_service_context ().service_info (),
                     this->resolver_.profile ());
-
               }
             catch (const ::CORBA::Exception&)
               {

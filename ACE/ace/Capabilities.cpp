@@ -13,10 +13,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_CapEntry::~ACE_CapEntry ()
-{
-}
-
 ACE_Capabilities::ACE_Capabilities ()
   : caps_ ()
 {

@@ -28,7 +28,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Sequence
      *
@@ -44,7 +43,6 @@ namespace TAO
       , private RefCountPolicy
     {
     public:
-
       /// Constructor.
       Sequence (CORBA::TCKind kind,
                 TypeCodeType const & content_type,

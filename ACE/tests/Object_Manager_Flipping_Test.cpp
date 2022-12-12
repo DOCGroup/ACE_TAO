@@ -26,7 +26,7 @@ static u_int *ip;
 
 extern "C"
 void
-hook1 (void)
+hook1 ()
 {
   delete ip;
   ip = 0;
@@ -105,5 +105,4 @@ int run_main (int, ACE_TCHAR *[])
   }
 
   return errors == 0 ? 0 : 1;
-
 }

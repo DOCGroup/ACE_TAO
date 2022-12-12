@@ -6,11 +6,10 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 
 static void
-client (void)
+client ()
 {
   ACE_SV_Shared_Memory shm_client;
 
@@ -26,7 +25,7 @@ client (void)
 }
 
 static void
-server (void)
+server ()
 {
   ACE_SV_Shared_Memory shm_server;
 

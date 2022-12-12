@@ -177,7 +177,6 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
 
   // For now we just return the default.
   return access_decision;
-
 }
 
 CORBA::Boolean

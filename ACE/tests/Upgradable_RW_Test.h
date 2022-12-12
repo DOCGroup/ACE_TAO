@@ -53,7 +53,7 @@ public:
   {
   }
 
-  ACE_CString *value (void)
+  ACE_CString *value ()
   {
     return this->item_;
   }
@@ -74,7 +74,7 @@ typedef ACE_Double_Linked_List<Element> Linked_List;
 class Time_Calculation
 {
 public:
-  Time_Calculation (void)
+  Time_Calculation ()
     : reported_times_ (0)
   {
     times_.real_time = 0;
@@ -85,7 +85,7 @@ public:
   /// take the time of the thread and add it to
   void report_time (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
 
-  void print_stats (void);
+  void print_stats ();
 
 private:
   /// add the times incrementally

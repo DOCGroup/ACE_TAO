@@ -64,7 +64,7 @@ namespace TAO
     /**
      * constructor: empty set with no defaults.
      */
-    PG_Property_Set (void);
+    PG_Property_Set ();
 
     /**
      * constructor
@@ -153,7 +153,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /**
      * Protect internal state.
      */

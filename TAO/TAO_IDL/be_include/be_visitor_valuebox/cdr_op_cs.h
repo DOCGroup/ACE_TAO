@@ -25,7 +25,6 @@
  */
 class be_visitor_valuebox_cdr_op_cs : public be_visitor_valuebox
 {
-
 public:
   /// constructor
   be_visitor_valuebox_cdr_op_cs (be_visitor_context *ctx);
@@ -35,7 +34,6 @@ public:
 
   /// visit valuebox
   virtual int visit_valuebox (be_valuebox *node);
-
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_CDR_OP_CS_H_ */

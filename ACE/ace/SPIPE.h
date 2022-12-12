@@ -51,7 +51,7 @@ public:
    * @return 0 for success; -1 for failure. If a failure occurs, further
    * error information is available from ACE_OS::last_error().
    */
-  int close (void);
+  int close ();
 
   /// Close down the SPIPE and remove the rendezvous point from
   /// the file system.
@@ -59,7 +59,7 @@ public:
    * @return 0 for success; -1 for failure. If a failure occurs, further
    * error information is available from ACE_OS::last_error().
    */
-  int remove (void);
+  int remove ();
 
   /// Return the local address of this endpoint.
   /**

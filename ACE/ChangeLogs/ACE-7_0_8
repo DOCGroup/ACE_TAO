@@ -1,0 +1,84 @@
+commit 5fd5dddae69d99c336e41bdd3dd7137e79b4f83b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 28 09:31:45 2022 +0200
+
+    Minor updates, link to github for notifications and commercial support options
+    
+        * ACE/docs/Download.html:
+
+commit 842114c404a60bc1fa8fd867a506d85ae0c17f43
+Merge: 6c1476eef08 94d132b1738
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jun 25 06:49:08 2022 +0200
+
+    Merge branch 'master' into no_ifdef_anyops_ns
+
+commit 94d132b173807bb55f8c7481a57a523b4f07ba7e
+Merge: 0fd01e75a0b 9fd4f2bd77d
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 24 15:13:50 2022 -0600
+
+    Merge pull request #1864 from mitza-oci/g++12
+    
+    GCC 12
+
+commit 6c1476eef08213a05f0b2b9b4746d4ff7beda437
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 24 15:55:21 2022 -0500
+
+    Removed ACE_ANY_OPS_USE_NAMESPACE as a compile-time option
+
+commit 5e9d29efdf8e1654cd19e37edba34c0460521aaf
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 24 10:48:37 2022 -0500
+
+    try building on macOS without ACE_ANY_OPS_USE_NAMESPACE
+
+commit f2fe7927b6894ab38af79cf3c9be760448cf5ee9
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 23 22:51:20 2022 -0500
+
+    -fdelayed-template-parsing workaround for clang no longer needed
+
+commit 2a37e231fb737e52ac2a7028f7cc1afae3fcc6a4
+Author: chaof <fan-chao@users.noreply.github.com>
+Date:   Wed Jun 22 15:53:26 2022 +0800
+
+    Update Service_Gestalt.cpp
+    
+    Fix compiling error resulted from misspelling word std::unique_ptr.
+
+commit e1f7c3ba17c4f57cc3c624285f7009f4d5145cca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 14 08:40:39 2022 +0200
+
+    Removed redundant void
+    
+        * ACE/ace/NT_Service.h:
+        * TAO/tests/MT_Server/test_i.h:
+
+commit ef9ea413c1a7b869969f175be943cb56cc3ca0ce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat May 21 08:59:07 2022 +0200
+
+    Update Download.html
+
+commit 5abccb83ac1da6be99e28832fde74b835b45ebbc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat May 21 08:42:13 2022 +0200
+
+    Updated for x.0.7 release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit 116c58f63888c84be7ae30173eaedc5647f22740
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat May 21 08:38:55 2022 +0200
+
+    Updated versions
+    
+        * ACE/docs/bczar/bczar.html:

@@ -45,7 +45,7 @@ public:
   TAO_MonitorEventChannel (const char* name);
 
   /// Remove the statistics for this event channel.
-  ~TAO_MonitorEventChannel (void);
+  ~TAO_MonitorEventChannel ();
 
   /// Return the name of this event channel.
   const ACE_CString& name () const;
@@ -110,7 +110,7 @@ private:
   TAO_Notify_ThreadPool_Task* get_threadpool_task (
                                 CosNotifyChannelAdmin::AdminID id);
   size_t calculate_queue_size (bool count);
-  double get_oldest_event (void);
+  double get_oldest_event ();
   void determine_slowest_consumer (Monitor_Control_Types::NameList* names);
   bool destroy_consumer (CosNotifyChannelAdmin::ProxyID id);
   bool destroy_supplier (CosNotifyChannelAdmin::ProxyID id);

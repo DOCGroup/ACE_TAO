@@ -40,7 +40,6 @@
 class ACEXML_Export ACEXML_XMLReader
 {
 public:
-
   virtual ~ACEXML_XMLReader ();
 
   /**

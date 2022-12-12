@@ -44,9 +44,8 @@ public:
   /// reading."  This ensures that the fifo never gets EOF, even if there
   /// aren't any writers at the moment!
   //@{
-
   /// Default constructor.
-  ACE_FIFO_Recv (void);
+  ACE_FIFO_Recv ();
 
   /// Open up a bytestream named pipe for reading.
   ACE_FIFO_Recv (const ACE_TCHAR *rendezvous,
@@ -64,7 +63,7 @@ public:
   //@}
 
   /// Close down the fifo.
-  int close (void);
+  int close ();
 
   /// Recv @a buf of up to @a len bytes.
   ssize_t recv (void *buf, size_t len);

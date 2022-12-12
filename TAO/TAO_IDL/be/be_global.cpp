@@ -62,6 +62,8 @@ BE_GlobalData::BE_GlobalData ()
     stripped_filename_ (nullptr),
     core_versioning_begin_ (core_versioned_ns_begin),
     core_versioning_end_ (core_versioned_ns_end),
+    anyops_versioning_begin_ (core_versioning_begin_ + "namespace CORBA {\n"),
+    anyops_versioning_end_ ("\n}" + core_versioning_end_),
     versioning_begin_ (),
     versioning_end_ (),
     versioning_include_ (),
@@ -1150,6 +1152,9 @@ BE_GlobalData::versioning_end (const char * s)
   this->core_versioning_begin_ =
     this->versioning_end_ + // Yes, "end".
     core_versioned_ns_begin;
+
+  this->anyops_versioning_begin_ =
+    this->core_versioning_begin_ + "namespace CORBA {\n";
 }
 
 void
@@ -1164,7 +1169,8 @@ BE_GlobalData::versioning_begin (const char * s)
     core_versioned_ns_end
     + this->versioning_begin_;  // Yes, "begin".
 
-  // Yes, "begin".
+  this->anyops_versioning_end_ =
+    "\n}" + this->core_versioning_end_;
 }
 
 const char *
@@ -1177,6 +1183,18 @@ const char *
 BE_GlobalData::core_versioning_end () const
 {
   return this->core_versioning_end_.c_str ();
+}
+
+const char *
+BE_GlobalData::anyops_versioning_begin () const
+{
+  return this->anyops_versioning_begin_.c_str ();
+}
+
+const char *
+BE_GlobalData::anyops_versioning_end () const
+{
+  return this->anyops_versioning_end_.c_str ();
 }
 
 // Set the client_hdr_ending.
@@ -3743,4 +3761,3 @@ BE_GlobalData::parse_args (long &i, char **av)
         idl_global->parse_args_exit (1);
     }
 }
-

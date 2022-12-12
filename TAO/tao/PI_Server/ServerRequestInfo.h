@@ -107,7 +107,7 @@ namespace TAO
     /// Return the @c sync_scope policy value for the current one-way
     /// operation.  If the operation is not a one-way, a
     /// @c CORBA::BAD_INV_ORDER exception is thrown.
-    virtual Messaging::SyncScope sync_scope ();
+    virtual ::Messaging::SyncScope sync_scope ();
 
     /// Return the reply status for the current request.
     /**
@@ -188,7 +188,6 @@ namespace TAO
      * @name Helper methods specific to TAO.
      */
     //@{
-
     /// Extract the forward object reference from the
     /// @c PortableInterceptor::ForwardRequest exception, and set the
     /// reply status flag accordingly.
@@ -239,7 +238,6 @@ namespace TAO
     /// The number of elements in the @c exceptions_ array.
     CORBA::ULong const nexceptions_;
   };
-
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

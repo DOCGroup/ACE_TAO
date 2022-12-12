@@ -13,13 +13,13 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/Log_Category.h" // for ACE_ASSERT
-#include "ace/Auto_Ptr.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Guard_T.h"
 #ifdef ACE_HAS_GETTID
 #  include "ace/OS_NS_sys_resource.h" // syscall for gettid impl
 #endif
+#include <memory>
 
 extern "C" void
 ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
@@ -346,7 +346,7 @@ ACE_TSS_Ref::ACE_TSS_Ref (ACE_thread_t id)
   ACE_OS_TRACE ("ACE_TSS_Ref::ACE_TSS_Ref");
 }
 
-ACE_TSS_Ref::ACE_TSS_Ref (void)
+ACE_TSS_Ref::ACE_TSS_Ref ()
 {
   ACE_OS_TRACE ("ACE_TSS_Ref::ACE_TSS_Ref");
 }
@@ -386,7 +386,7 @@ ACE_TSS_Info::ACE_TSS_Info (ACE_thread_key_t key,
   ACE_OS_TRACE ("ACE_TSS_Info::ACE_TSS_Info");
 }
 
-ACE_TSS_Info::ACE_TSS_Info (void)
+ACE_TSS_Info::ACE_TSS_Info ()
   : key_ (ACE_OS::NULL_key),
     destructor_ (0),
     thread_count_ (-1)
@@ -413,7 +413,7 @@ ACE_TSS_Info::operator != (const ACE_TSS_Info &info) const
 }
 
 void
-ACE_TSS_Info::dump (void)
+ACE_TSS_Info::dump ()
 {
 # if defined (ACE_HAS_DUMP)
   //  ACE_OS_TRACE ("ACE_TSS_Info::dump");
@@ -430,7 +430,7 @@ ACE_TSS_Info::dump (void)
 // Moved class ACE_TSS_Keys declaration to OS.h so it can be visible
 // to the single file of template instantiations.
 
-ACE_TSS_Keys::ACE_TSS_Keys (void)
+ACE_TSS_Keys::ACE_TSS_Keys ()
 {
   for (u_int i = 0; i < ACE_WORDS; ++i)
     {
@@ -518,10 +518,10 @@ public:
 
   /// Cleanup the thread-specific objects.  Does _NOT_ exit the thread.
   /// For each used key perform the same actions as free_key.
-  void thread_exit (void);
+  void thread_exit ();
 
 private:
-  void dump (void);
+  void dump ();
 
   /// Release a key used by this thread
   /// @param info reference to the info for this key
@@ -546,8 +546,8 @@ private:
   ACE_TSS_Keys *tss_keys ();
 
   /// Ensure singleton.
-  ACE_TSS_Cleanup (void);
-  ~ACE_TSS_Cleanup (void);
+  ACE_TSS_Cleanup ();
+  ~ACE_TSS_Cleanup ();
 
   /// ACE_TSS_Cleanup access only via TSS_Cleanup_Instance
   friend class TSS_Cleanup_Instance;
@@ -604,7 +604,6 @@ public:
   ACE_TSS_Cleanup * operator ->();
 
 private:
-
   ACE_TSS_Cleanup * operator *();
 
 private:
@@ -672,7 +671,7 @@ TSS_Cleanup_Instance::TSS_Cleanup_Instance (Purpose purpose)
   }
 }
 
-TSS_Cleanup_Instance::~TSS_Cleanup_Instance (void)
+TSS_Cleanup_Instance::~TSS_Cleanup_Instance ()
 {
   // Variable to hold the mutex_ to delete outside the scope of the
   // guard.
@@ -736,12 +735,12 @@ ACE_TSS_Cleanup * TSS_Cleanup_Instance::instance_ = 0;
 ACE_Thread_Mutex* TSS_Cleanup_Instance::mutex_ = 0;
 ACE_Condition_Thread_Mutex* TSS_Cleanup_Instance::condition_ = 0;
 
-ACE_TSS_Cleanup::~ACE_TSS_Cleanup (void)
+ACE_TSS_Cleanup::~ACE_TSS_Cleanup ()
 {
 }
 
 void
-ACE_TSS_Cleanup::thread_exit (void)
+ACE_TSS_Cleanup::thread_exit ()
 {
   ACE_OS_TRACE ("ACE_TSS_Cleanup::thread_exit");
   // variables to hold the destructors, keys
@@ -823,7 +822,7 @@ ACE_TSS_Cleanup_keys_destroyer (void *tss_keys)
   delete static_cast <ACE_TSS_Keys *> (tss_keys);
 }
 
-ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)
+ACE_TSS_Cleanup::ACE_TSS_Cleanup ()
   : in_use_ (ACE_OS::NULL_key)
 {
   ACE_OS_TRACE ("ACE_TSS_Cleanup::ACE_TSS_Cleanup");
@@ -976,7 +975,7 @@ ACE_TSS_Cleanup::thread_use_key (ACE_thread_key_t key)
 }
 
 void
-ACE_TSS_Cleanup::dump (void)
+ACE_TSS_Cleanup::dump ()
 {
 # if defined (ACE_HAS_DUMP)
   // Iterate through all the thread-specific items and dump them all.
@@ -1477,7 +1476,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #     elif defined (ACE_VXWORKS)
       // Inline the call to ACE_OS::sema_wait () because it takes an
       // ACE_Time_Value argument.  Avoid the cost of that conversion . . .
-      int const ticks_per_sec = ::sysClkRateGet ();
+      _Vx_freq_t const ticks_per_sec = ::sysClkRateGet ();
       int const ticks = msec_timeout * ticks_per_sec / ACE_ONE_SECOND_IN_MSECS;
       result = ::semTake (cv->sema_.sema_, ticks);
 #     else
@@ -2210,7 +2209,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   // expects).
   ACE_Time_Value relative_time = timeout.to_relative_time ();
 
-  int ticks_per_sec = ::sysClkRateGet ();
+  _Vx_freq_t const ticks_per_sec = ::sysClkRateGet ();
 
   int ticks = relative_time.sec() * ticks_per_sec +
       relative_time.usec () * ticks_per_sec / ACE_ONE_SECOND_IN_USECS;
@@ -2553,7 +2552,7 @@ namespace {
       {
         const int result = attributes ?
           ACE_OS::cond_init (&evtdata->condition_, *attributes, name, arg) :
-          ACE_OS::cond_init (&evtdata->condition_, type, name, arg);
+          ACE_OS::cond_init (&evtdata->condition_, (short) type, name, arg);
 
         if (result != 0)
           return result;
@@ -3175,13 +3174,13 @@ struct RWLockCleaner {
       {
       case RWLC_CondWriters:
         ACE_OS::cond_destroy (&this->rw_->waiting_writers_);
-        // FALLTHROUGH
+        ACE_FALLTHROUGH;
       case RWLC_CondReaders:
         ACE_OS::cond_destroy (&this->rw_->waiting_readers_);
-        // FALLTHROUGH
+        ACE_FALLTHROUGH;
       case RWLC_Lock:
         ACE_OS::mutex_destroy (&this->rw_->lock_);
-        // FALLTHROUGH
+        ACE_FALLTHROUGH;
       case RWLC_CondAttr:
         ACE_OS::condattr_destroy (this->attr_);
       }
@@ -3358,7 +3357,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     }
   else if (sched_params.scope () == ACE_SCOPE_PROCESS)
     {
-
 # if defined (ACE_HAS_PHARLAP_RT)
       ACE_NOTSUP_RETURN (-1);
 # else
@@ -3853,9 +3851,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           return -1;
         }
     }
-#else
-  ACE_UNUSED_ARG (thr_name);
-#   endif
+#   endif /* ACE_HAS_PTHREAD_ATTR_SETNAME */
 
       // *** Set Scope
 #   if !defined (ACE_LACKS_THREAD_PROCESS_SCOPING)
@@ -3883,7 +3879,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         {
            if (ACE_ADAPT_RETVAL(::pthread_attr_setcreatesuspend_np(&attr), result) != 0)
             {
-
               ::pthread_attr_destroy (&attr);
               return -1;
             }
@@ -4004,6 +3999,22 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #   endif /* sun && ACE_HAS_ONLY_SCHED_OTHER */
   auto_thread_args.release ();
+
+  // *** Set pthread name (second try)
+#   if !defined (ACE_HAS_PTHREAD_ATTR_SETNAME)
+#     if defined (ACE_HAS_PTHREAD_SETNAME_NP)
+  if (thr_name && *thr_name)
+    {
+      ACE_OSCALL (ACE_ADAPT_RETVAL(::pthread_setname_np (*thr_id, *thr_name),
+                                   result),
+                  int,
+                  result);
+    }
+#     else
+  ACE_UNUSED_ARG (thr_name);
+#      endif /* ACE_HAS_PTHREAD_SETNAME_NP */
+#   endif   /* !ACE_HAS_PTHREAD_ATTR_SETNAME */
+
   return result;
 # elif defined (ACE_HAS_STHREADS)
   int result;
@@ -4907,9 +4918,9 @@ spa (FUNCPTR entry, ...)
                                           0, 0, 0, 0, 0, 0, 0, 0);
   va_end (pvar);
 
-  // ::taskSpawn () returns the taskID on success: return 0 instead if
-  // successful
-  return ret > 0 ? 0 : -1;
+  // ::taskSpawn () returns TASK_ID_ERROR on
+  // error
+  return ret == ACE_VX_TASK_ID_ERROR ? -1 : 0;
 }
 #endif /* !ACE_LACKS_VA_FUNCTIONS */
 
@@ -4981,8 +4992,6 @@ add_to_argv (ACE_VX_USR_ARG_T& argc, char** argv, int max_args, char* string)
     }
 }
 
-#if !defined (ACE_LACKS_VA_FUNCTIONS)
-
 // This global function can be used from the VxWorks shell to pass
 // arguments to a C main () function.
 //
@@ -5030,7 +5039,7 @@ spae (FUNCPTR entry, ...)
 
   // ::taskSpawn () returns the taskID on success: return 0 instead if
   // successful
-  return ret > 0 ? 0 : -1;
+  return ret == ACE_VX_TASK_ID_ERROR ? -1 : 0;
 }
 
 // This global function can be used from the VxWorks shell to pass
@@ -5070,14 +5079,13 @@ spaef (FUNCPTR entry, ...)
   for (i = argc; i < ACE_MAX_ARGS; ++i)
     argv[i] = 0;
 
-  int ret = entry (argc, argv);
+  int const ret = entry (argc, argv);
 
   va_end (pvar);
 
   // Return the return value of the invoked ace_main routine.
   return ret;
 }
-#endif /* !ACE_LACKS_VA_FUNCTIONS */
 
 // This global function can be used from the VxWorks shell to pass
 // arguments to and run a main () function (i.e. ace_main).
@@ -5130,12 +5138,12 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, size_t stacksz, ...)
   if (ret == ACE_VX_TASK_ID_ERROR)
     return 255;
 
-  while( ret > 0 && ::taskIdVerify (ret) != ERROR )
+  while( ::taskIdVerify (ret) != ERROR )
     ::taskDelay (3 * ::sysClkRateGet ());
 
-  // ::taskSpawn () returns the taskID on success: return _vx_call_rc instead if
+  // ::taskSpawn () returns TASK_ID_ERROR on failure: return _vx_call_rc instead if
   // successful
-  return ret > 0 ? _vx_call_rc : 255;
+  return ret == ACE_VX_TASK_ID_ERROR ? 255 : _vx_call_rc;
 }
 
 #if defined(ACE_AS_STATIC_LIBS) && defined (ACE_VXWORKS_DEBUGGING_HELPER)

@@ -35,23 +35,22 @@ class TAO_Export TAO_Base_Transport_Property
   : public TAO_Transport_Descriptor_Interface
 {
 public:
-
   /// Default constructor
-  TAO_Base_Transport_Property (void);
+  TAO_Base_Transport_Property ();
 
   /// Constructor
   TAO_Base_Transport_Property (TAO_Endpoint *endpoint,
                                CORBA::Boolean flag = false);
 
   /// Destructor
-  virtual ~TAO_Base_Transport_Property (void);
+  virtual ~TAO_Base_Transport_Property ();
 
   /// The copy constructor.
   TAO_Base_Transport_Property (const TAO_Base_Transport_Property &rhs);
 
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
-  virtual  TAO_Transport_Descriptor_Interface *duplicate (void);
+  virtual  TAO_Transport_Descriptor_Interface *duplicate ();
 
   /// Try to determine if this object is same as the @a other_prop.
   virtual CORBA::Boolean is_equivalent (

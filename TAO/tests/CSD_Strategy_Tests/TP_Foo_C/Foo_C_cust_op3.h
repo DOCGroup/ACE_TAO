@@ -24,7 +24,7 @@ public:
   Foo_C_cust_op3(Foo_C_i* servant, long arg);
   virtual ~Foo_C_cust_op3();
 
-  long result(void);
+  long result();
 
 protected:
   virtual void execute_i();

@@ -42,8 +42,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
   ACE_CString class_name;
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // We shall have a POA_ prefix only if we are at the topmost level.
   if (!node->is_nested ())
@@ -113,7 +112,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   // No copy constructor for locality constraint interface.
   *os << class_name.c_str () << " (const " << class_name.c_str ()
       << "& rhs);" << be_nl
-      << "virtual ~" << class_name.c_str () << " (void);\n\n"
+      << "virtual ~" << class_name.c_str () << " () = default;\n\n"
       << be_nl
       << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;
 
@@ -297,7 +296,6 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
                                  ACE_TEXT ("create_response_handler_operation - ")
                                  ACE_TEXT ("bad node in this scope\n")),
                                 -1);
-
             }
 
           AST_Argument *original_arg =

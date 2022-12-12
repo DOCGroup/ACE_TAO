@@ -17,21 +17,18 @@ struct bug3688_Export TestListener
   TestListener(
     CORBA::ORB * p_orb,
     std::string const & rc_channelIor,
-    std::string const & rc_filterExpression = ""
-  );
+    std::string const & rc_filterExpression = "");
 
   ~TestListener();
 
   virtual void push_structured_event (
-    const CosNotification::StructuredEvent & notification
-  );
+    const CosNotification::StructuredEvent & notification);
 
-  virtual void disconnect_structured_push_consumer ( );
+  virtual void disconnect_structured_push_consumer ();
 
   virtual void offer_change(
     const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
-  );
+    const CosNotification::EventTypeSeq & removed);
 
   PortableServer::POA_var mv_rootPOA;
   PortableServer::ObjectId_var mv_oid;

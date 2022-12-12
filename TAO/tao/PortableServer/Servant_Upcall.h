@@ -179,7 +179,6 @@ namespace TAO
       void increment_servant_refcount ();
 
     protected:
-
       void post_invoke_servant_cleanup ();
       void single_threaded_poa_setup ();
       void single_threaded_poa_cleanup ();
@@ -190,7 +189,6 @@ namespace TAO
       void upcall_cleanup ();
 
     protected:
-
       TAO_Object_Adapter *object_adapter_;
 
       ::TAO_Root_POA *poa_;

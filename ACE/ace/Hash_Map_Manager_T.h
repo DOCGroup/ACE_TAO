@@ -1119,7 +1119,6 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Manager : public ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>
 {
 public:
-
   /**
    * Initialize a @c Hash_Map_Manager with default size elements.
    * @param table_alloc is a pointer to a memory allocator used for

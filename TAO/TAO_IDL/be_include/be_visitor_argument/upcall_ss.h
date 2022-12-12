@@ -14,10 +14,6 @@
 #ifndef _BE_VISITOR_ARGUMENT_UPCALL_SS_H_
 #define _BE_VISITOR_ARGUMENT_UPCALL_SS_H_
 
-// ************************************************************
-// class be_visitor_args_upcall_ss
-// ************************************************************
-
 /**
  * @class be_visitor_args_upcall_ss
  *

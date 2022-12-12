@@ -10,7 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK>
 TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    TAO_ESF_Copy_On_Read (void)
+    TAO_ESF_Copy_On_Read ()
 {
 }
 
@@ -101,7 +101,7 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
-TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::shutdown (void)
+TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::shutdown ()
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
