@@ -9,6 +9,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/PortableGroup/UIPMC_Endpoint.inl"
