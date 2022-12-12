@@ -163,7 +163,6 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
                                                       size_t length) const
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info");
-  ACE_TCHAR buf[BUFSIZ];
   ACE_TCHAR addr_str[BUFSIZ];
   typename PEER_ACCEPTOR::PEER_ADDR addr;
 
@@ -172,7 +171,17 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
   else if (addr.addr_to_string (addr_str, sizeof addr_str) == -1)
     return -1;
 
-  ACE_OS::snprintf (buf, BUFSIZ,
+  //
+  // gcc10 complains that it is possible that buf could be truncated by up to
+  // 35 bytes in this call to snprintf.  Technically, this is possible
+  // (however unlikely that may be).  Since addr_str is defined to be of size
+  // BUFSIZ, gcc assumes that the string could actually be BUFSIZ in length.
+  // That makes the possible total length of the combined string (given the
+  // size of the literal string constants) 3 + 12 + BUFSIZE + 19 + 1.
+  //
+  const size_t additional = 35;
+  ACE_TCHAR buf[BUFSIZ + additional];
+  ACE_OS::snprintf (buf, sizeof buf,
                     ACE_TEXT ("%s\t %s %s"),
                     ACE_TEXT ("ACE_Acceptor"),
                     addr_str,
@@ -821,7 +830,6 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
 {
   ACE_TRACE ("ACE_Strategy_Acceptor::info");
 
-  ACE_TCHAR buf[BUFSIZ];
   ACE_TCHAR service_addr_str[BUFSIZ];
   typename PEER_ACCEPTOR::PEER_ADDR addr;
 
@@ -831,8 +839,17 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
                                 sizeof service_addr_str) == -1)
     return -1;
 
-  // @@ Should add the protocol in...
-  ACE_OS::snprintf (buf, BUFSIZ,
+  //
+  // gcc10 complains that it is possible that buf could be truncated by up to
+  // 6 bytes in this call to snprintf.  Technically, this is possible
+  // (however unlikely that may be).  Since service_addr_str is defined to be
+  // of size BUFSIZ, gcc assumes that the string could actually be BUFSIZ in
+  // length.  That makes the possible total length of the combined string
+  // (given the size of the literal string constants) 5 + BUFSIZE + 1.
+  //
+  const size_t additional = 6;
+  ACE_TCHAR buf[BUFSIZ + additional];
+  ACE_OS::snprintf (buf, sizeof buf,
                     ACE_TEXT ("%s\t %s #%s\n"),
                     this->service_name_ == 0
                     ? ACE_TEXT ("<unknown>")

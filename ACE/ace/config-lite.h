@@ -54,7 +54,7 @@ extern "C"
 # if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" {
 # endif /* ACE_HAS_SIG_C_FUNC */
-typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
+typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* noexcept */;
 # if defined (ACE_HAS_SIG_C_FUNC)
 }
 # endif /* ACE_HAS_SIG_C_FUNC */

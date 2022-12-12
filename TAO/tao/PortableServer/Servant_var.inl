@@ -5,7 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
 ACE_INLINE void
-PortableServer::Servant_var<T>::swap (Servant_var<T> & rhs) /* throw () */
+PortableServer::Servant_var<T>::swap (Servant_var<T> & rhs) /* noexcept */
 {
   std::swap (this->ptr_, rhs.ptr_);
 }

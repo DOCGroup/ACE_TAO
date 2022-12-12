@@ -24,8 +24,7 @@ DllOrb::DllOrb (int nthreads)
 {
 }
 
-DllOrb::~DllOrb ()
-  throw ()
+DllOrb::~DllOrb () noexcept
 {
 #if defined (ACE_HAS_THREADS)
   delete mp_barrier;

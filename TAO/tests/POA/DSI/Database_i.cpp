@@ -358,7 +358,7 @@ DatabaseImpl::Employee::operator new (size_t size, const std::nothrow_t &)
 }
 
 void
-DatabaseImpl::Employee::operator delete (void *ptr, const std::nothrow_t&) throw ()
+DatabaseImpl::Employee::operator delete (void *ptr, const std::nothrow_t&) noexcept
 {
   DATABASE::instance ()->free (ptr);
 }
