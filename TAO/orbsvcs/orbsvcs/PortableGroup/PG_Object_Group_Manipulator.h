@@ -43,7 +43,7 @@ namespace TAO
     PG_Object_Group_Manipulator ();
 
     /// Destructor.
-    ~PG_Object_Group_Manipulator ();
+    ~PG_Object_Group_Manipulator () = default;
 
     /**
      * Initializes the group creator.

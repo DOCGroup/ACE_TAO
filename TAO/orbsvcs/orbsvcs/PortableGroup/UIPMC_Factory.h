@@ -32,7 +32,7 @@ class TAO_PortableGroup_Export TAO_UIPMC_Protocol_Factory : public TAO_Protocol_
 {
 public:
   TAO_UIPMC_Protocol_Factory ();
-  virtual ~TAO_UIPMC_Protocol_Factory ();
+  virtual ~TAO_UIPMC_Protocol_Factory () = default;
 
   // = Service Configurator hooks.
   /// Dynamic linking hook

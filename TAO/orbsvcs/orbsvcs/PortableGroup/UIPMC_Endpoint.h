@@ -45,10 +45,6 @@ public:
   /// Constructor.
   TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr);
 
-  /// Constructor. @@ Frank - deprecate this.
-  TAO_UIPMC_Endpoint (const CORBA::Octet class_d_address[4],
-                      CORBA::UShort port);
-
   /// Destructor.
   ~TAO_UIPMC_Endpoint ();
 
@@ -105,16 +101,6 @@ public:
   const char *preferred_if () const;
 
 private:
-  /// Helper methods for getting and setting the IP address.  @@ Vadym - deprecate these.
-  ACE_UINT32 uint_ip_addr () const;
-  void uint_ip_addr (ACE_UINT32 ip_addr);
-
-  /// Helper method to update the cached object address.  @@ Vadym - deprecate this.
-  void update_object_addr ();
-
-  /// IP Multicast address.  @@ Frank - deprecate this.
-  CORBA::Octet class_d_address_[4];
-
   /// String representing the host address.
   CORBA::String_var host_;
 
