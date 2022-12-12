@@ -13,12 +13,9 @@ PersistentPoa::PersistentPoa ()
 {
 }
 
-
-PersistentPoa::~PersistentPoa ()
-  throw ()
+PersistentPoa::~PersistentPoa () noexcept
 {
 }
-
 
 int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
 {

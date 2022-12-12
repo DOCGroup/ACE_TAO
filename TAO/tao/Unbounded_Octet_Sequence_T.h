@@ -223,7 +223,7 @@ public:
     return !this->operator==(rhs);
   }
 
-  inline void swap(unbounded_value_sequence & rhs) throw() {
+  inline void swap(unbounded_value_sequence & rhs) noexcept {
     std::swap (mb_, rhs.mb_);
     std::swap (maximum_, rhs.maximum_);
     std::swap (length_, rhs.length_);

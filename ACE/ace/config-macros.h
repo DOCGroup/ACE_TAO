@@ -293,12 +293,12 @@
 #  define ACE_ALLOC_HOOK_DECLARE \
   void *operator new (size_t bytes); \
   void *operator new (size_t bytes, void *ptr); \
-  void *operator new (size_t bytes, const std::nothrow_t &) throw (); \
+  void *operator new (size_t bytes, const std::nothrow_t &) noexcept; \
   void operator delete (void *ptr); \
   void operator delete (void *ptr, const std::nothrow_t &); \
   void *operator new[] (size_t size); \
   void operator delete[] (void *ptr); \
-  void *operator new[] (size_t size, const std::nothrow_t &) throw (); \
+  void *operator new[] (size_t size, const std::nothrow_t &) noexcept; \
   void operator delete[] (void *ptr, const std::nothrow_t &)
 
 #  define ACE_GENERIC_ALLOCS(MAKE_PREFIX, CLASS) \
@@ -311,7 +311,7 @@
   }                                                               \
   MAKE_PREFIX (void *, CLASS)::operator new (size_t, void *ptr) { return ptr; }\
   MAKE_PREFIX (void *, CLASS)::operator new (size_t bytes, \
-                                             const std::nothrow_t &) throw () \
+                                             const std::nothrow_t &) noexcept \
   { return ACE_Allocator::instance ()->malloc (bytes); } \
   MAKE_PREFIX (void, CLASS)::operator delete (void *ptr) \
   { if (ptr) ACE_Allocator::instance ()->free (ptr); } \
@@ -328,7 +328,7 @@
   MAKE_PREFIX (void, CLASS)::operator delete[] (void *ptr) \
   { if (ptr) ACE_Allocator::instance ()->free (ptr); } \
   MAKE_PREFIX (void *, CLASS)::operator new[] (size_t size, \
-                                               const std::nothrow_t &) throw ()\
+                                               const std::nothrow_t &) noexcept\
   { return ACE_Allocator::instance ()->malloc (size); } \
   MAKE_PREFIX (void, CLASS)::operator delete[] (void *ptr, \
                                                 const std::nothrow_t &) \

@@ -18,16 +18,13 @@ class bug2936_Export PersistentPoa
     PersistentPoa ();
 
     /// Destructor.
-    ~PersistentPoa ()
-      throw ();
+    ~PersistentPoa () noexcept;
 
-  // protected types and methods
   protected:
     virtual int init (int argc, ACE_TCHAR *argv[]);
 
     virtual int fini ();
 
-  // private methods and instance variables
   private:
     CORBA::ORB_var                 mv_orb;
     PortableServer::POA_var        mv_rootPOA;

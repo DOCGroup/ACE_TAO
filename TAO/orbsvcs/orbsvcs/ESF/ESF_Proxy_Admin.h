@@ -55,7 +55,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * /// activate the proxy and return the object reference
  * PROXY::_ptr_type
- * PROXY::activate () throw ();
+ * PROXY::activate () noexcept;
  * @endverbatim
  */
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE>

@@ -92,7 +92,7 @@ public:
     return impl_.get_buffer(orphan);
   }
   // @copydoc TAO::details::generic_sequence::swap()
-  inline void swap(unbounded_object_reference_sequence & rhs) throw() {
+  inline void swap(unbounded_object_reference_sequence & rhs) noexcept {
     impl_.swap(rhs.impl_);
   }
 

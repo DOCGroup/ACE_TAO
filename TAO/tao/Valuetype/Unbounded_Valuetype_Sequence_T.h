@@ -82,7 +82,7 @@ public:
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
-  inline void swap(unbounded_valuetype_sequence & rhs) throw() {
+  inline void swap(unbounded_valuetype_sequence & rhs) noexcept {
     impl_.swap(rhs.impl_);
   }
 
