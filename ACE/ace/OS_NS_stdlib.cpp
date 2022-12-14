@@ -135,20 +135,17 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
       size_t buf_len = ACE_OS::strlen (str) + 1;
       if (temp != 0)
         buf_len += ACE_OS::strlen (temp) - var_len;
-      ACE_TCHAR * buf_p = buf;
-      if (buf_len > ACE_DEFAULT_ARGV_BUFSIZ)
-        {
-          buf_p =
+      ACE_TCHAR * buf_p =
 #if defined (ACE_HAS_ALLOC_HOOKS)
-            (ACE_TCHAR *) ACE_Allocator::instance()->malloc (buf_len * sizeof (ACE_TCHAR));
+        (ACE_TCHAR *) ACE_Allocator::instance()->malloc (buf_len * sizeof (ACE_TCHAR));
 #else
-            (ACE_TCHAR *) ACE_OS::malloc (buf_len * sizeof (ACE_TCHAR));
+        (ACE_TCHAR *) ACE_OS::malloc (buf_len * sizeof (ACE_TCHAR));
 #endif /* ACE_HAS_ALLOC_HOOKS */
-          if (buf_p == 0)
-            {
-              errno = ENOMEM;
-              return 0;
-            }
+
+      if (buf_p == 0)
+        {
+          errno = ENOMEM;
+          return 0;
         }
       ACE_TCHAR * p = buf_p;
       size_t const len = start - str;
@@ -169,7 +166,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
           *p = ACE_TEXT ('\0');
         }
       ACE_OS::strcpy (p, &start[var_len]);
-      return (buf_p == buf) ? ACE_OS::strdup (buf) : buf_p;
+      return buf_p;
     }
   else
     return ACE_OS::strdup (str);
