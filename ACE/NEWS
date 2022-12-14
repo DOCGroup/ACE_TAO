@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN ACE-7.0.10 and ACE-7.0.11
 ======================================================
 
+. Fixed some compiler warnings given by newer compilers
+
+. Make use of noexcept instead of throw()
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.9 and ACE-7.0.10
 =====================================================
 
