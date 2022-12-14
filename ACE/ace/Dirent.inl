@@ -56,9 +56,18 @@ ACE_INLINE int
 ACE_Dirent::read (struct ACE_DIRENT *entry,
                   struct ACE_DIRENT **result)
 {
-  return this->dirp_
-         ? ACE_OS::readdir_r (this->dirp_, entry, result)
-         : 0;
+  int status = EBADF;
+  if (this->dirp_ && entry && result)
+    {
+      ACE_DIRENT* ptr = ACE_OS::readdir (this->dirp_);
+      if (ptr)
+        {
+          *entry = *ptr;
+        }
+      *result = ptr;
+      status = 0;
+    }
+  return status;
 }
 
 ACE_INLINE void
