@@ -83,9 +83,9 @@ ACE_OS::strerror (int errnum)
   if (ACE::is_sock_error (errnum))
     {
       const ACE_TCHAR *errortext = ACE::sock_error (errnum);
-      ACE_OS::strncpy (ret_errortext,
-                       ACE_TEXT_ALWAYS_CHAR (errortext),
-                       sizeof (ret_errortext));
+      ACE_OS::strsncpy (ret_errortext,
+                        ACE_TEXT_ALWAYS_CHAR (errortext),
+                        sizeof (ret_errortext));
       return ret_errortext;
     }
 #if defined (ACE_LACKS_STRERROR)
