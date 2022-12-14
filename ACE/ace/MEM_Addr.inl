@@ -4,6 +4,18 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/// Assignment operator
+ACE_INLINE ACE_MEM_Addr&
+ACE_MEM_Addr::operator= (const ACE_MEM_Addr& rhs)
+{
+  if (this != &rhs)
+    {
+      this->external_.set (rhs.external_);
+      this->internal_.set (rhs.internal_);
+    }
+  return *this;
+}
+
 /// Set the port number.
 ACE_INLINE void
 ACE_MEM_Addr::set_port_number (u_short port_number,

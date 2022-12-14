@@ -40,6 +40,9 @@ public:
   /// Copy constructor.
   ACE_MEM_Addr (const ACE_MEM_Addr &);
 
+  /// Assignment operator
+  ACE_MEM_Addr& operator= (const ACE_MEM_Addr& rhs);
+
   /// Creates an ACE_MEM_Addr from a @a port_number
   ACE_MEM_Addr (u_short port_number);
 
