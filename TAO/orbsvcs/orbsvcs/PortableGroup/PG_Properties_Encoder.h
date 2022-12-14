@@ -61,7 +61,7 @@ namespace TAO_PG
     /**
      * Construct an empty set of properties.
      */
-    Properties_Encoder () = default;
+    Properties_Encoder ();
 
     /// standard destructor
     ~Properties_Encoder () = default;
