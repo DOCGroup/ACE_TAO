@@ -94,7 +94,6 @@ namespace
           {
             if (ACE_OS::fwrite(buffer, 1, n_read, f2) != n_read)
               {
-                ferror (f2);
                 if (TAO_debug_level > 0)
                   {
                     TAOLIB_ERROR ((LM_ERROR,
@@ -109,7 +108,6 @@ namespace
             errno = 0;
             if (!feof (f1))
               {
-                ferror (f1);
                 if (TAO_debug_level > 0)
                   {
                     TAOLIB_ERROR ((LM_ERROR,

@@ -68,15 +68,16 @@ be_visitor_native_ch::visit_native (be_native *node)
       // strip  the "Seq" ending to get the sample's name
       const char * node_name = node->full_name ();
       const size_t max_name_length = 2000;
-      if (ACE_OS::strlen (node_name) >= max_name_length)
+      const size_t node_name_length = ACE_OS::strlen (node_name);
+      if (node_name_length >= max_name_length ||
+          node_name_length <= 3)
         {
           return -1;
         }
       char sample_name[max_name_length];
-      ACE_OS::strncpy (sample_name,
-                       node_name,
-                       ACE_OS::strlen (node_name) - 3);
-      sample_name[ACE_OS::strlen (node_name) - 3] = '\0';
+      // Copy node_name into sample_name and shorten to remove Seq suffix
+      ACE_OS::strcpy (sample_name, node_name);
+      sample_name[node_name_length - 3] = '\0';
 
       *os << be_nl_2
           << "typedef ::TAO::DCPS::ZeroCopyDataSeq< "
