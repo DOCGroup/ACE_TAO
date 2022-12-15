@@ -51,8 +51,11 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
     }
 
   *os << node->local_name () << " (void)" << be_nl;
-  *os << ": require_truncation_ (false)" << be_nl
-      << "{}" << be_nl_2;
+  if (be_global->cdr_support ())
+    {
+      *os << ": require_truncation_ (false)" << be_nl;
+    }
+  *os << "{}" << be_nl_2;
 
   // Initializing constructor.
   if (node->has_member ())
@@ -69,9 +72,12 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       unsigned long index = 0;
       this->gen_obv_init_constructor_args (node, index);
 
-      *os << ")" << be_uidt << be_uidt << be_uidt_nl
-          << ": require_truncation_ (false)" << be_nl
-          << "{" << be_idt;
+      *os << ")" << be_uidt << be_uidt << be_uidt_nl;
+      if (be_global->cdr_support ())
+        {
+          *os << ": require_truncation_ (false)" << be_nl;
+        }
+      *os << "{" << be_idt;
 
       this->gen_obv_init_constructor_inits (node);
 
