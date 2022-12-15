@@ -63,7 +63,8 @@ ACE_Sig_Adapter::handle_signal (int signum,
         // expecting...
         this->sa_.register_action (signum, &old_disp);
 
-        ACE_Sig_Handler_Ex sig_func = ACE_Sig_Handler_Ex (this->sa_.handler ());
+        ACE_SignalHandler sig_handler = this->sa_.handler ();
+        ACE_Sig_Handler_Ex sig_func = reinterpret_cast<ACE_Sig_Handler_Ex> (reinterpret_cast<void*> (sig_handler));
 
         (*sig_func) (signum, siginfo, ucontext);
         // Restore the original disposition.
