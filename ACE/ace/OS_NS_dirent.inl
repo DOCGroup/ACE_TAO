@@ -65,6 +65,7 @@ readdir (ACE_DIR *d)
 #endif /* ACE_HAS_DIRENT */
 }
 
+#if !defined (ACE_DISABLE_READDIR_R)
 ACE_INLINE int
 readdir_r (ACE_DIR *dirp,
            struct ACE_DIRENT *entry,
@@ -94,6 +95,7 @@ readdir_r (ACE_DIR *dirp,
 
 #endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
+#endif /* !ACE_DISABLE_READDIR_R */
 
 ACE_INLINE void
 rewinddir (ACE_DIR *d)

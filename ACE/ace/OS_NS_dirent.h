@@ -86,10 +86,12 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   struct ACE_DIRENT *readdir (ACE_DIR *);
 
+#if !defined (ACE_DISABLE_READDIR_R)
   ACE_NAMESPACE_INLINE_FUNCTION
   int readdir_r (ACE_DIR *dirp,
                  struct ACE_DIRENT *entry,
                  struct ACE_DIRENT **result);
+#endif /* !ACE_DISABLE_READDIR_R */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void rewinddir (ACE_DIR *);
