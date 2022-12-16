@@ -5,6 +5,8 @@ USER VISIBLE CHANGES BETWEEN ACE-7.0.10 and ACE-7.0.11
 
 . Make use of noexcept instead of throw()
 
+. Fixed a bug in ACE_Configuration_Heap with uses_wchar=1 builds
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.9 and ACE-7.0.10
 =====================================================
 
