@@ -1,3 +1,16 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.5.18 and ACE-6.5.19
+======================================================
+
+. Improved VxWorks platform support
+
+. Fixed some compiler warnings given by newer compilers
+
+. Added support for recent macOS release
+
+. Fixed a bug in ACE_Configuration_Heap with uses_wchar=1 builds
+
+. ACE_OS::readdir_r can be omitted by setting ACE_DISABLE_READDIR_R
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.17 and ACE-6.5.18
 ======================================================
 
