@@ -1,0 +1,102 @@
+commit ad1d64dda8e06a3f8a1d7a34824eaf5df34d7a54
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Dec 16 17:06:00 2022 -0600
+
+    NEWS for 6.5.19/2.5.19
+
+commit 96e2b77bc99cf7e2841b84921a7baad3003548e5
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Dec 15 09:06:46 2022 -0600
+
+    Only emit the require_truncation_ boolean if CDR support is enabled.
+
+commit 82e34020efffaadf8c1d0efc3a3ea1d7bc78cf24
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Wed Dec 14 08:08:25 2022 -0600
+
+    Removed calls to ferror() as their return values were no longer used.
+
+commit 5e0418d120dbff81325bd20bb575c09e550023a5
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Wed Dec 14 08:04:51 2022 -0600
+
+    Pulled in changes from ACE 7.
+
+commit 541210abfd4b04c1b9556f4b4ab1d35e19ffd78e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Oct 3 16:47:24 2022 -0500
+
+    Restored broad platform/compiler compatibility
+
+commit 8c727cb8f0d7d6a6330e4581db141c6376b91e68
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 23 09:20:49 2022 +0200
+
+    Merge pull request #1942 from knutpett/knutpett/const_accessor
+    
+    Added const accessors for AST_Decl::local_name () and UTL_String::get_string ()
+    
+    (cherry picked from commit a16ac15dd106967992baef21a91f73f002b2cb79)
+    
+    # Conflicts:
+    #       TAO/TAO_IDL/ast/ast_decl.cpp
+    #       TAO/TAO_IDL/include/ast_decl.h
+    #       TAO/TAO_IDL/include/utl_string.h
+
+commit 7de3e969a94805d8d8969254fd4896792516ec00
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 15 16:00:38 2022 +0200
+
+    Merge pull request #1930 from jwillemsen/jwi-sslcert
+    
+    Generated new certificates, old ones expired
+    
+    (cherry picked from commit 3f1236a89ac9381be2ece19ff833f6a6b5f4ae15)
+
+commit a33cf7cd35bb9735823fa1276617c38edbd8b385
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Sep 22 17:58:28 2022 -0500
+
+    Merge pull request #1907 from lukem/format-security
+    
+    Fix -Wformat-security issues
+    
+    (cherry picked from commit 0b7e12778ae92315cbd51c901cb8402d6bd646a7)
+    
+    # Conflicts:
+    #       ACE/websvcs/lib/URL_Addr.cpp
+
+commit 61a1fbae63918fc59b7d9f2e5b6a902975877078
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 5 08:22:58 2022 +0200
+
+    Merge pull request #1912 from knutpett/warning_extra_semi
+    
+    Remove warnings -Wextra-semi
+    
+    (cherry picked from commit 1bc30d9abfac4b990a8ca25f43c666f28a8d61d2)
+    
+    # Conflicts:
+    #       ACE/ace/Null_Barrier.h
+    #       ACE/ace/Null_Condition.h
+    #       ACE/ace/Refcounted_Auto_Ptr.h
+
+commit 614cfc0d1dbee554513ea345595f445e5b9ad7c1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 18 16:27:20 2022 +0200
+
+    Merge pull request #1887 from jwillemsen/jwi-codesetregistry
+    
+    Minor change for codeset registry generation and removed old Id tags
+    
+    (cherry picked from commit bd92596bbc63635a2ed2131322e6c659a5420586)
+
+commit 77afc7e68752f4483b99f9e7563f1ecfa3eac4d0
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Aug 30 13:29:52 2022 -0500
+
+    Merge pull request #1913 from mitza-oci/ast-mutex
+    
+    Use ACE's Sync(h) traits in AST_Annotation_Appls
+    
+    (cherry picked from commit 156da73ce082722eaa66ddf3c9757f3f47cc310a)

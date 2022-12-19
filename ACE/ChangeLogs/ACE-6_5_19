@@ -1,0 +1,364 @@
+commit ad1d64dda8e06a3f8a1d7a34824eaf5df34d7a54
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Dec 16 17:06:00 2022 -0600
+
+    NEWS for 6.5.19/2.5.19
+
+commit 921366d8fc2a88e7823b68d4a67c1579ee8dc658
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Dec 15 06:32:38 2022 -0600
+
+    Pulled in changes from 362919a40c8652e5465a2240d7524d1cc1aac9ac to silence warnings.
+
+commit 8e6ccc97292c56438e09268ed344d53b5b409591
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Wed Dec 14 15:12:31 2022 -0600
+
+    Use readdir() instead of readdir_r() since it is now deprecated.
+
+commit 55cb9352b26017329cabfd9eb030d6481652802d
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Wed Dec 14 15:11:59 2022 -0600
+
+    Allow the disabling of readdir_r.
+
+commit b7b81d09b6d0a15e384339fb1aa5c614d57435ae
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Wed Dec 14 08:17:08 2022 -0600
+
+    Modified strenvdup() to avoid a second copy (via strdup) and silence a warning from gcc 11 about possibly returning a pointer to a local variable.
+
+commit 5e0418d120dbff81325bd20bb575c09e550023a5
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Wed Dec 14 08:04:51 2022 -0600
+
+    Pulled in changes from ACE 7.
+
+commit 8038e3e754d1307c2d465f3029909fd4f7b27a1b
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Wed Dec 14 08:00:10 2022 -0600
+
+    Added an assignment operator because a copy constructor was defined. (ubuntu 22 - gcc 11 warning)
+
+commit 58508c3d1fd8dd4c3b5398550990fcb88ae48b2f
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Fri Dec 9 11:39:06 2022 -0600
+
+    Remove division by sizeof ACE_TCHAR when calculating the simple_section; pointer arithmetic already accounts for size of the individual elements.
+
+commit b222c09aa3e259839ca2c22c5a033bf29dcebf38
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Dec 8 08:48:01 2022 -0600
+
+    Increased the final buffer size (in the info method) to accommodate the maximum possible string size. (ubuntu 20 - gcc 10 warning)
+
+commit 37fe55c3ad443ba5d2bd2a6ecd7060db349151f3
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Dec 8 07:10:46 2022 -0600
+
+    No need to compare the result of ::TryEnterCriticalSection to an explicit value.  Doing so causes a warning in Release builds.
+
+commit d9c8b11d5890465b6d8bd0723e939e531afd0c94
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Dec 8 06:51:00 2022 -0600
+
+    Added an assignment operator because a copy constructor was defined. (ubuntu 22 - gcc 11 warning)
+
+commit d521401c4965b313d53ed1be3be313c8c360df8e
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Dec 8 06:48:29 2022 -0600
+
+    Pulled in 0c2228f586a6c8fda87b707fcdaf2e861e118eff from master.
+
+commit ef617e3f28567a8bbb356829fa344f90bb7aea9a
+Author: Chad Elliott <elliott_c@ociweb.com>
+Date:   Tue Dec 6 09:12:37 2022 -0600
+
+    Increased the final buffer size (in the info method) to accommodate the maximum possible string size. (ubuntu 20 - gcc 10 warning)
+
+commit 390ee1476a36465d8d70cdf5e315c8007fd3e357
+Author: Chad Elliott <elliott_c@ociweb.com>
+Date:   Tue Dec 6 08:12:41 2022 -0600
+
+    Added assignment operators because a copy constructor was defined. (ubuntu 22 - gcc 11 warning)
+
+commit 201a3a7aa123498b0314bda77589b64dbb8eb118
+Author: Chad Elliott <elliott_c@ociweb.com>
+Date:   Tue Dec 6 08:10:19 2022 -0600
+
+    Added curly braces around an else clause (ubuntu 22 - gcc 11 warning)
+
+commit f0e1da800fdb41eb0b71ef66e5bd561c013f2423
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 1 13:40:52 2021 +0100
+
+    Merge pull request #1741 from iedutu/master
+    
+    Support for macOS major version fallback
+    
+    (cherry picked from commit 61da3abdcfc16295ed34ab552b35dce4f2b78bad)
+    
+    # Conflicts:
+    #       ACE/include/makeinclude/platform_macosx.GNU
+    #       ACE/include/makeinclude/platform_macosx_monterey.GNU
+
+commit 96e74fbfbe2c31f42fdae5624851c3d42304f365
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 09:20:14 2022 +0200
+
+    Merge pull request #1956 from jwillemsen/jwi-vxworksgethostbyaddr
+    
+    VxWorks 7 also has the support for a non-reentrant version of gethostbyaddr
+    
+    (cherry picked from commit 1e84155d462e09d583a472c9fc70a06fa5d3054e)
+    
+    # Conflicts:
+    #       ACE/ace/os_include/os_netdb.h
+
+commit db4f0fb92002573b6b0c571d891ea9fe4e3706be
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Oct 13 10:49:34 2022 -0500
+
+    Merged pull requests 1953 and 1955-1958
+
+commit f63ede24b58993e439c94cf8a3b01773debfba17
+Merge: 1bff842cc58 bdde15c15c3
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Oct 11 15:52:48 2022 -0500
+
+    Merge pull request #1948 from mitza-oci/a6t2-merge
+    
+    [ACE6-TAO2] Merge selected recent changes from ACE7-TAO3
+
+commit bdde15c15c34f8b4fb04823d2c1ca43a66a5d59d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 19:20:01 2022 +0200
+
+    Merge pull request #1954 from wkbrd/windows_resource_files
+    
+    Add windows resource files
+    
+    (cherry picked from commit e1dda342b0805ffc880c618df86550df27cb9ce5)
+
+commit 3a2345afa61fcc88aec57e1f3e15e68faf13da74
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 08:31:02 2022 +0200
+
+    Merge pull request #1952 from jwillemsen/jwi-pipeopen
+    
+    Use the ACE_INET_Addr::set instead of the constructor so that we can …
+    
+    (cherry picked from commit 2ed56466bf34f1dd99260514cd6a38ac7497ee9a)
+    
+    # Conflicts:
+    #       ACE/ace/Pipe.cpp
+
+commit dbc1d4e7b8dcddbfeaf227ecdd2f09dd017f266d
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Mon Oct 3 14:52:43 2022 -0500
+
+    For llvm's libcxx, C++17 or greater implies lack of std::auto_ptr unless defines are set
+
+commit 7d88947492241c86e64ea1191b2c078d98f9a500
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Oct 3 14:50:02 2022 -0500
+
+    fixed merge
+
+commit 9dc726c1ef239348516d792b94b8317dd5924767
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 23 18:28:51 2022 +0200
+
+    Merge pull request #1943 from lukem/format-security-fixup
+    
+    Fix -Wformat-security issues in examples
+    
+    (cherry picked from commit 697cb84ee1a1ebc3aed0e3b3437f246a7c34f3fb)
+
+commit a33cf7cd35bb9735823fa1276617c38edbd8b385
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Sep 22 17:58:28 2022 -0500
+
+    Merge pull request #1907 from lukem/format-security
+    
+    Fix -Wformat-security issues
+    
+    (cherry picked from commit 0b7e12778ae92315cbd51c901cb8402d6bd646a7)
+    
+    # Conflicts:
+    #       ACE/websvcs/lib/URL_Addr.cpp
+
+commit 61a1fbae63918fc59b7d9f2e5b6a902975877078
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 5 08:22:58 2022 +0200
+
+    Merge pull request #1912 from knutpett/warning_extra_semi
+    
+    Remove warnings -Wextra-semi
+    
+    (cherry picked from commit 1bc30d9abfac4b990a8ca25f43c666f28a8d61d2)
+    
+    # Conflicts:
+    #       ACE/ace/Null_Barrier.h
+    #       ACE/ace/Null_Condition.h
+    #       ACE/ace/Refcounted_Auto_Ptr.h
+
+commit 8b83b5df37a2bb8c95aa687d0ca799a345fa306e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 5 14:34:13 2022 +0200
+
+    Merge pull request #1917 from jwillemsen/jwi-redefinedfallthrough
+    
+    Fixed redefined ACE_FALLTHROUGH warnings
+    
+    (cherry picked from commit c8d4a23b971afe8de1128978a7e8e5d25269762b)
+
+commit 69feafc05fd83f1d4b48c4093698e5110ccd03e9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 29 15:24:44 2022 +0200
+
+    Merge pull request #1910 from Erich71/old_gcc_fix
+    
+    Fix ACE_FALLTHROUGH definition for old GCC compilers.
+    
+    (cherry picked from commit 348277c5a753b65b7a0cc206720fd7ea47f81659)
+    
+    # Conflicts:
+    #       ACE/ace/config-g++-common.h
+
+commit 9dc8ff7c9081dbdfc69826f59e12f5e8f11ba675
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 15 09:51:55 2022 +0200
+
+    Merge pull request #1903 from likema/proc-gid
+    
+    Fix incorrect `uid_t` to `gid_t` in `ACE_Process`
+    
+    (cherry picked from commit 73d9dcd44d257cb427c8510bbec52b0df73a9190)
+    
+    # Conflicts:
+    #       ACE/ace/Process.h
+    #       ACE/ace/Process.inl
+
+commit f9e56732cd0cbe20a9addb77be317aa0c665dddc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 15 09:50:23 2022 +0200
+
+    Merge pull request #1902 from likema/win-localtime-r
+    
+    Fix localtime_r emulation for Windows.
+    
+    (cherry picked from commit 49423535b6eabec9e681790581ed56ba4254e599)
+
+commit 614cfc0d1dbee554513ea345595f445e5b9ad7c1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 18 16:27:20 2022 +0200
+
+    Merge pull request #1887 from jwillemsen/jwi-codesetregistry
+    
+    Minor change for codeset registry generation and removed old Id tags
+    
+    (cherry picked from commit bd92596bbc63635a2ed2131322e6c659a5420586)
+
+commit 1ebdbd04da5742d53f78a341ef69e4f9e9df4da7
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Sep 16 14:58:23 2022 -0500
+
+    Merge pull request #1932 from DOCGroup/elliottc/vxworks-layers
+    
+    VxWorks Shared Libraries
+    
+    (cherry picked from commit 14610fc4e135e9a07067353b0fd00f054f1288e5)
+
+commit 93ae4a4ce6e53cc49a2f39522f7c4cf262525f67
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Sep 9 15:50:10 2022 -0500
+
+    Merge pull request #1921 from DOCGroup/vxworks-21.03
+    
+    Added support for VxWorks 21.03, including building for RTP mode.
+    
+    (cherry picked from commit e0df4f59dec11e2cc7ce0d25648eb6b25b3c79ca)
+
+commit 7639cbb1e13338b25bcecf5699f567ccfe2a5384
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 14:08:47 2022 +0200
+
+    Merge pull request #1876 from jwillemsen/jwi-vxworkstaskid
+    
+    VxWorks 22.03 related changes
+    
+    (cherry picked from commit 41e8a43e42d167ac0561adb9e47f092eda16efb4)
+    
+    # Conflicts:
+    #       ACE/ace/ARGV.h
+    #       ACE/ace/ARGV.inl
+    #       ACE/ace/Active_Map_Manager_T.h
+    #       ACE/ace/Active_Map_Manager_T.inl
+    #       ACE/ace/Addr.cpp
+    #       ACE/ace/Addr.h
+    #       ACE/ace/Auto_Event.h
+    #       ACE/ace/Auto_Event.inl
+    #       ACE/ace/Bound_Ptr.h
+    #       ACE/ace/Bound_Ptr.inl
+    #       ACE/ace/CDR_Stream.cpp
+    #       ACE/ace/Capabilities.cpp
+    #       ACE/ace/Condition_Attributes.h
+    #       ACE/ace/Condition_Attributes.inl
+    #       ACE/ace/README
+    #       ACE/ace/Recyclable.cpp
+    #       ACE/ace/Recyclable.h
+    #       ACE/ace/Reverse_Lock_T.cpp
+    #       ACE/ace/Reverse_Lock_T.h
+    #       ACE/ace/SOCK.h
+    #       ACE/ace/SOCK.inl
+
+commit ecdd1a04dc8c7c3bae05818204b90ece09662bb9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 2 09:17:39 2022 +0200
+
+    Merge pull request #1877 from jwillemsen/jwi-vxworks2203
+    
+    Added config file for VxWorks 22.03
+    
+    (cherry picked from commit a9a4ffd350481eb482bd6a738c40c2a8a38515a1)
+
+commit 0a6a483c1c6e0be5f64d0e1c262e4145b297b722
+Author: Simon McQueen <simon.mcqueen@microfocus.com>
+Date:   Wed Aug 31 10:52:06 2022 +0100
+
+    Fix a small part of commit e401f02ed7c5 which broke compilation
+    with Perl 5.8.8. This syntax seemingly post-dates that version.
+
+commit 771c5ec2d24e5ce367b9e9ae5f73637901b31f32
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 19:14:31 2022 +0200
+
+    Merge pull request #1878 from jwillemsen/jwi-sysClkRateGet
+    
+    Use VxWorks type for return value of sysClkRateGet
+    
+    (cherry picked from commit 049a1e9a5c92217a3c257cb0bf6c56d53853fe67)
+
+commit b4a97f95f3d840f2d6864f5307d3d99a76c9028e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 20:13:37 2022 +0200
+
+    Merge pull request #1874 from jwillemsen/jwi-ctdtcompile
+    
+    ctdt is a c file, so compile as c file, not c++
+    
+    (cherry picked from commit eafca4ec3ad0f1f4d9e80737a0ac25c6184d8b85)
+
+commit eb32126b750d7ce4aa9221023fdd874ffac37a53
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 10:27:10 2022 +0200
+
+    Merge pull request #1872 from jwillemsen/jwi-vxworks
+    
+    Fixed VxWorks compile error and minor cleanup
+    
+    (cherry picked from commit e35823e1811b6e38c0b175b4d238c7d9599e6c4e)
+    
+    # Conflicts:
+    #       ACE/ace/OS_NS_unistd.inl
