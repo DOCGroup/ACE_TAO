@@ -48,4 +48,9 @@ project(Monitor_Control) : acelib, ace_etcl_parser, ace_output, install {
     "  ACE_SHLIBS += pdh.lib"
     "endif"
   }
+  verbatim (cmake, top, 1) {
+    "if (WIN32)"
+    "  link_libraries(pdh)"
+    "endif()"
+  }
 }
