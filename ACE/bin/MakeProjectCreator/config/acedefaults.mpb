@@ -18,6 +18,12 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
   specific(prop:windows) {
     lit_libs += iphlpapi
   }
+  verbatim(cmake, top, 1) {
+    set(ACE_ROOT $ENV{ACE_ROOT})
+    if(WIN32)
+    "  link_libraries(iphlpapi)"
+    endif()
+  }
 
   specific(cdt6) {
     win32::platform_libs += ws2_32 mswsock netapi32
