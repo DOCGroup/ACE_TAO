@@ -24,6 +24,9 @@ jobs:
             CXX: g++-12
             PackageDeps: g++-12
             os: ubuntu-22.04
+          - CC: vs2019
+            CXX: vs2019
+            os: windows-2019
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} ${{ matrix.CXX }}
     env:
@@ -48,9 +51,14 @@ jobs:
       run: |
         sudo apt-get --yes update
         sudo apt-get --yes install ${{ matrix.PackageDeps }}
+      if: matrix.PackageDeps != ''
     - name: create $ACE_ROOT/ace/config.h
       run: |
-        '#include "ace/config-linux.h"' > ${env:ACE_ROOT}/ace/config.h
+        '#ifdef linux'                    > ${env:ACE_ROOT}/ace/config.h
+        '# include "ace/config-linux.h"' >> ${env:ACE_ROOT}/ace/config.h
+        '#else'                          >> ${env:ACE_ROOT}/ace/config.h
+        '# include "ace/config-win32.h"' >> ${env:ACE_ROOT}/ace/config.h
+        '#endif'                         >> ${env:ACE_ROOT}/ace/config.h
       shell: pwsh
     - name: Run mwc.pl on $(ACE_ROOT)/ace/ace.mwc
       run: |
