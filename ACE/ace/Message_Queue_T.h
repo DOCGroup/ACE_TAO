@@ -1385,6 +1385,8 @@ public:
   /// Dump the state of an object.
   virtual void dump () const;
 
+  ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &queue () const;
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
