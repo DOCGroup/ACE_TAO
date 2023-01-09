@@ -717,7 +717,7 @@ class Queue_Ex_Iterator_No_Lock
  public:
   typedef ACE_Message_Queue_Ex<User_Class, ACE_SYNCH, ACE_System_Time_Policy> MESSAGE_QUEUE_EX_T;
 
-  Queue_Ex_Iterator_No_Lock (MESSAGE_QUEUE_EX_T& queue_in)
+  explicit Queue_Ex_Iterator_No_Lock (MESSAGE_QUEUE_EX_T& queue_in)
    : inherited (queue_in.queue ())
   {}
   virtual ~Queue_Ex_Iterator_No_Lock () {}
@@ -764,8 +764,8 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b4")), 1);
 
   User_Class* b = 0;
-  int counter = 0;
   { ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, aGuard, q.lock (), 1);
+    int counter = 0;
     for (Queue_Ex_Iterator_No_Lock iterator (q);
          iterator.next (b);
          iterator.advance ())
@@ -788,7 +788,7 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
         }
       }
 
-      b = NULL;
+      b = 0;
     } // end FOR
   } // end lock scope
 
