@@ -763,7 +763,7 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
   if (-1 == q.enqueue_tail (b4.get (), 0))
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b4")), 1);
 
-  User_Class* b = 0;
+  User_Class* b = nullptr;
   { ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, aGuard, q.lock (), 1);
     int counter = 0;
     for (Queue_Ex_Iterator_No_Lock iterator (q);
@@ -788,7 +788,7 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
         }
       }
 
-      b = 0;
+      b = nullptr;
     } // end FOR
   } // end lock scope
 
