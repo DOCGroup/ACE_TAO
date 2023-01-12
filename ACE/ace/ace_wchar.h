@@ -208,9 +208,9 @@ private:
 #endif /* ACE_HAS_ICONV */
 
   /// Disallow these operation.
-  ACE_Ascii_To_Wide ();
-  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &);
-  ACE_Ascii_To_Wide operator= (ACE_Ascii_To_Wide &);
+  ACE_Ascii_To_Wide () = delete;
+  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &) = delete;
+  ACE_Ascii_To_Wide operator= (ACE_Ascii_To_Wide &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
