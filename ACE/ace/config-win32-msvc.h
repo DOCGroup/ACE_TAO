@@ -55,7 +55,7 @@
 // DLL or Debug Multithreaded DLL in the Project Settings
 // under C++ Code Generation.
 #  error You must link against multi-threaded libraries when using ACE (check your project settings)
-# endif /* !_MT && */
+# endif /* !_MT */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
 #include <malloc.h>

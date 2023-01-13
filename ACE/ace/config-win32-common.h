@@ -553,6 +553,12 @@
 
 #define ACE_HAS_LLSEEK
 
+// Needed for obtaining the MAC address
+#include <nb30.h>
+#if defined (_MSC_VER)
+# pragma comment(lib, "netapi32.lib") // needed for obtaing MACaddress
+#endif
+
 #if !defined (WINVER)
 # define WINVER 0x0400 // pretend it's at least WinNT 4.0
 #endif
