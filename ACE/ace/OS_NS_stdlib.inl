@@ -19,8 +19,6 @@ ACE_OS::_exit (int status)
   ACE_OS_TRACE ("ACE_OS::_exit");
 #if defined (ACE_VXWORKS)
   ::exit (status);
-#elif defined (ACE_HAS_WINCE)
-  ::TerminateProcess (::GetCurrentProcess (), status);
 #elif defined (ACE_MQX)
   _mqx_exit (status);
 #elif !defined (ACE_LACKS__EXIT)
@@ -336,7 +334,7 @@ ACE_OS::putenv (const char *string)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_PUTENV_EQUIVALENT)
   return ACE_PUTENV_EQUIVALENT (const_cast <char *> (string));
-#else /* ! ACE_HAS_WINCE */
+#else
   return ACE_STD_NAMESPACE::putenv (const_cast <char *> (string));
 #endif /* ACE_LACKS_PUTENV && ACE_HAS_SETENV */
 }
@@ -430,7 +428,7 @@ ACE_OS::rand_r (unsigned int *seed)
 # endif /* ACE_LACKS_RAND_R */
 }
 
-#  if !defined (ACE_LACKS_REALPATH)
+#if !defined (ACE_LACKS_REALPATH)
 ACE_INLINE char *
 ACE_OS::realpath (const char *file_name,
                   char *resolved_name)
@@ -462,7 +460,7 @@ ACE_OS::realpath (const wchar_t *file_name,
 #    endif /* ! ACE_WIN32 */
 }
 #  endif /* ACE_HAS_WCHAR */
-#endif /* ACE_HAS_WINCE */
+#endif /* !ACE_LACKS_REALPATH */
 
 ACE_INLINE ACE_EXIT_HOOK
 ACE_OS::set_exit_hook (ACE_EXIT_HOOK exit_hook)

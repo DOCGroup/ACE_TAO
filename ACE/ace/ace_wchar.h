@@ -38,8 +38,6 @@
 # elif defined (ACE_OPENVMS)
 #   include /**/ <wchar.h>
 #   include /**/ <wctype.h>
-# elif defined (ACE_HAS_WINCE)
-#   include /**/ <wtypes.h>
 # else
 #   include /**/ <cwchar>
 #   include /**/ <cwctype>

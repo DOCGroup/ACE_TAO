@@ -75,7 +75,7 @@ ACE_OS::access (const wchar_t *path, int amode)
 {
 #if defined (ACE_WIN32) && !defined (ACE_LACKS__WACCESS)
   return ::_waccess (path, amode);
-#else /* ACE_WIN32 && !ACE_HAS_WINCE */
+#else /* ACE_WIN32 && !ACE_LACKS__WACCESS */
   return ACE_OS::access (ACE_Wide_To_Ascii (path).char_rep (), amode);
 #endif /* ACE_WIN32 && !ACE_LACKS__WACCESS */
 }
@@ -157,11 +157,7 @@ ACE_OS::chdir (const wchar_t *path)
 ACE_INLINE int
 ACE_OS::rmdir (const char *path)
 {
-#if defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (ACE_TEXT_CHAR_TO_TCHAR(path)),
-                                          ace_result_),
-                        int, -1);
-#elif defined (ACE_RMDIR_EQUIVALENT)
+#if defined (ACE_RMDIR_EQUIVALENT)
   return ACE_RMDIR_EQUIVALENT (path);
 #else
   return ::rmdir (path);
@@ -172,16 +168,12 @@ ACE_OS::rmdir (const char *path)
 ACE_INLINE int
 ACE_OS::rmdir (const wchar_t *path)
 {
-#if defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectoryW (path),
-                                          ace_result_),
-                        int, -1);
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   return ::_wrmdir (path);
 #else
   ACE_Wide_To_Ascii n_path (path);
   return ACE_OS::rmdir (n_path.char_rep ());
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -257,7 +249,7 @@ ACE_OS::dup(ACE_HANDLE handle, pid_t pid)
 #else
   ACE_UNUSED_ARG (pid);
   return ::dup(handle);
-#endif /*ACE_WIN32 &&  !ACE_HAS_WINCE*/
+#endif /* ACE_LACKS_DUP */
 }
 
 ACE_INLINE int
@@ -431,11 +423,7 @@ ACE_OS::getcwd (char *buf, size_t size)
 ACE_INLINE wchar_t *
 ACE_OS::getcwd (wchar_t *buf, size_t size)
 {
-#  if defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (size);
-  ACE_NOTSUP_RETURN (0);
-#  elif defined (ACE_WIN32)
+#  if defined (ACE_WIN32)
   return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
   char *narrow_buf = new char[size];
@@ -566,7 +554,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
   ACE_UNUSED_ARG (maxnamelen);
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_PHARLAP_RT */
-#elif defined (ACE_VXWORKS) || defined (ACE_HAS_WINCE)
+#elif defined (ACE_VXWORKS)
   return ::gethostname (name, maxnamelen);
 #elif defined (ACE_WIN32)
   if (::gethostname (name, ACE_Utils::truncate_cast<int> (maxnamelen)) == 0)
@@ -607,11 +595,11 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 ACE_INLINE int
 ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
 {
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (GetComputerNameW (name,
                                                         LPDWORD (&maxnamelen)),
                                           ace_result_), int, -1);
-#else /* ACE_WIN32 && !ACE_HAS_WINCE */
+#else /* ACE_WIN32 */
   // Emulate using the char version
   char *char_name = 0;
 
@@ -622,7 +610,7 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
 
   delete [] char_name;
   return result;
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32  */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -1216,10 +1204,6 @@ ACE_OS::unlink (const char *path)
   ACE_OS_TRACE ("ACE_OS::unlink");
 # if defined (ACE_HAS_NONCONST_UNLINK)
   return ::unlink (const_cast<char *> (path));
-# elif defined (ACE_HAS_WINCE)
-  // @@ The problem is, DeleteFile is not actually equals to unlink. ;(
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (ACE_TEXT_CHAR_TO_TCHAR (path)), ace_result_),
-                        int, -1);
 # elif defined (ACE_LACKS_UNLINK)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
@@ -1235,16 +1219,12 @@ ACE_INLINE int
 ACE_OS::unlink (const wchar_t *path)
 {
   ACE_OS_TRACE ("ACE_OS::unlink");
-# if defined (ACE_HAS_WINCE)
-  // @@ The problem is, DeleteFile is not actually equals to unlink. ;(
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFileW (path), ace_result_),
-                        int, -1);
-# elif defined (ACE_WIN32)
+# if defined (ACE_WIN32)
   return ::_wunlink (path);
 # else
   ACE_Wide_To_Ascii npath (path);
   return ACE_OS::unlink (npath.char_rep ());
-# endif /* ACE_HAS_WINCE */
+# endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
 

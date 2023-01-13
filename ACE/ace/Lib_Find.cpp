@@ -190,15 +190,14 @@ ACE::ldfind (const ACE_TCHAR* filename,
   return -1;
 #endif /* ACE_OPENVMS */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && \
-    !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
   ACE_TCHAR expanded_filename[MAXPATHLEN];
   if (ACE_TEXT_ExpandEnvironmentStrings (filename,
                                          expanded_filename,
                                          sizeof expanded_filename
                                          / sizeof (ACE_TCHAR)))
     filename = expanded_filename;
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
 
   ACE_TCHAR tempcopy[MAXPATHLEN + 1];
   ACE_TCHAR searchpathname[MAXPATHLEN + 1];
@@ -338,7 +337,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
       // OS platform).
       else
         {
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
           ACE_TCHAR *file_component = 0;
           DWORD pathlen =
             ACE_TEXT_SearchPath (0,
@@ -388,29 +387,6 @@ ACE::ldfind (const ACE_TCHAR* filename,
           ld_path = wide_ldpath.wchar_rep ();
 #    endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 #  endif /* ACE_DEFAULT_LD_SEARCH_PATH */
-
-#if defined (ACE_HAS_WINCE)
-            ACE_TCHAR *ld_path_temp = 0;
-            if (ld_path != 0)
-              {
-                ld_path_temp = (ACE_TCHAR *)
-                  ACE_OS::malloc ((ACE_OS::strlen (ld_path) + 2)
-                                  * sizeof (ACE_TCHAR));
-                if (ld_path_temp != 0)
-                  {
-                    ACE_OS::strcpy (ld_path_temp,
-                                    ACE_LD_SEARCH_PATH_SEPARATOR_STR);
-
-                    ACE_OS::strcat (ld_path_temp, ld_path);
-                    ld_path = ld_path_temp;
-                  }
-                else
-                  {
-                    ACE_OS::free ((void *) ld_path_temp);
-                    ld_path = ld_path_temp = 0;
-                  }
-              }
-#endif /* ACE_HAS_WINCE */
 
           if (ld_path != 0
               && (ld_path = ACE_OS::strdup (ld_path)) != 0)
@@ -492,10 +468,6 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                      nextholder);
                 }
 
-#if defined (ACE_HAS_WINCE)
-              if (ld_path_temp != 0)
-                ACE_OS::free (ld_path_temp);
-#endif /* ACE_HAS_WINCE */
 #if defined (ACE_HAS_ALLOC_HOOKS)
               ACE_Allocator::instance()->free ((void *) ld_path);
 #else
@@ -506,7 +478,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
 #endif /* ACE_LD_DECORATOR_STR && !ACE_DISABLE_DEBUG_DLL_CHECK */
                 return result;
             }
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 */
         }
 #if defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
     }

@@ -131,15 +131,9 @@ minimal change.
 
 4. Change your 'main()' function part similar to the following example.
 
-   #ifdef ACE_HAS_WINCE
-   #include "FaCE/FaCE.h"   // use the name of subdirectory you created
-   int FaCE_MAIN (int argc, ACE_TCHAR *argv[])
-   #else
    int ACE_TMAIN (int argc, ACE_TCHAR *argv[])  // ACE normal entry point
-   #endif
 
    Change the directory name for "FaCE/FaCE.h" if necessary.
-   For non-ACE users, use 'UNDER_CE' instead of 'ACE_HAS_WINCE'.
 
    == Possible Additional Change
 

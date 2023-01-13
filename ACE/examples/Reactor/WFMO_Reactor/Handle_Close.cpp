@@ -209,7 +209,7 @@ create_reactor ()
 
   if (opt_wfmo_reactor)
     {
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
       ACE_NEW_RETURN (impl,
                       ACE_WFMO_Reactor,
                       0);

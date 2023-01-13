@@ -30,9 +30,6 @@ ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 #if !defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
        (*THR_ID = ::_beginthreadex ((void(_Optlink*)(void*))ENTRY_POINT, STACK, STACKSIZE, ARGS), *THR_ID)
-#elif defined (ACE_HAS_WINCE)
-# define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
-      CreateThread (0, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & (CREATE_SUSPENDED | STACK_SIZE_PARAM_IS_A_RESERVATION), (unsigned long *) THR_ID)
 #elif defined(ACE_HAS_WTHREADS)
   // Green Hills compiler gets confused when __stdcall is embedded in
   // parameter list, so we define the type ACE_WIN32THRFUNC_T and use it
@@ -1920,20 +1917,11 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   switch (lock_scope)
 {
   case USYNC_PROCESS:
-#   if defined (ACE_HAS_WINCE)
-      // @@todo (brunsch) This idea should be moved into ACE_OS_Win32.
       m->proc_mutex_ =
-  ::CreateMutexW (ACE_OS::default_win32_security_attributes_r
-                          (sa, &sa_buffer, &sd_buffer),
-                        FALSE,
-                        ACE_Ascii_To_Wide (name).wchar_rep ());
-#   else /* ACE_HAS_WINCE */
-      m->proc_mutex_ =
-  ::CreateMutexA (ACE_OS::default_win32_security_attributes_r
-                          (sa, &sa_buffer, &sd_buffer),
-                        FALSE,
-                        name);
-#   endif /* ACE_HAS_WINCE */
+        ::CreateMutexA (ACE_OS::default_win32_security_attributes_r
+                                (sa, &sa_buffer, &sd_buffer),
+                              FALSE,
+                              name);
       if (m->proc_mutex_ == 0)
         ACE_FAIL_RETURN (-1);
       else
@@ -2587,20 +2575,11 @@ ACE_OS::event_init (ACE_event_t *event,
   ACE_UNUSED_ARG (arg);
   SECURITY_ATTRIBUTES sa_buffer;
   SECURITY_DESCRIPTOR sd_buffer;
-# if defined (ACE_HAS_WINCE)
-  // @@todo (brunsch) This idea should be moved into ACE_OS_Win32.
-  *event = ::CreateEventW (ACE_OS::default_win32_security_attributes_r
-                             (sa, &sa_buffer, &sd_buffer),
-                           manual_reset,
-                           initial_state,
-                           ACE_Ascii_To_Wide (name).wchar_rep ());
-# else /* ACE_HAS_WINCE */
   *event = ::CreateEventA (ACE_OS::default_win32_security_attributes_r
                              (sa, &sa_buffer, &sd_buffer),
                            manual_reset,
                            initial_state,
                            name);
-# endif /* ACE_HAS_WINCE */
   if (*event == 0)
     ACE_FAIL_RETURN (-1);
   else
@@ -3305,8 +3284,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
       return -1;
     }
 
-#elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-
+#elif defined (ACE_WIN32)
   // PharLap ETS can act on the current thread - it can set the
   // quantum also, unlike Win32. All this only works on the RT
   // version.
@@ -3318,16 +3296,13 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
   if (sched_params.quantum() != ACE_Time_Value::zero)
     EtsSetTimeSlice (sched_params.quantum().msec());
 #   endif
-
 # else
-
   if (sched_params.quantum () != ACE_Time_Value::zero)
     {
       // I don't know of a way to set the quantum on Win32.
       errno = EINVAL;
       return -1;
     }
-
 # endif /* ACE_HAS_PHARLAP_RT */
 
   if (sched_params.scope () == ACE_SCOPE_THREAD)
@@ -4075,7 +4050,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                           flags | THR_SUSPENDED);
       // Have to duplicate the handle because
       // CWinThread::~CWinThread() closes the original handle.
-#     if !defined (ACE_HAS_WINCE)
       (void) ::DuplicateHandle (::GetCurrentProcess (),
                                 cwin_thread->m_hThread,
                                 ::GetCurrentProcess (),
@@ -4083,7 +4057,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                 0,
                                 TRUE,
                                 DUPLICATE_SAME_ACCESS);
-#     endif /* ! ACE_HAS_WINCE */
       *thr_id = cwin_thread->m_nThreadID;
 
       if (ACE_BIT_ENABLED (flags, THR_SUSPENDED) == 0)

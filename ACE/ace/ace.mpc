@@ -402,7 +402,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
 
     ACE_export.h
     Bound_Ptr.h
-    CE_Screen_Output.h
     Codeset_Symbols.h
     CORBA_macros.h
     Codeset_Symbols.h

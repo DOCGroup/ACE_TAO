@@ -145,10 +145,6 @@ extern "C"
 #  define ACE_NSIG NSIG
 #endif /* ACE_VXWORKS */
 
-#if defined (ACE_HAS_WINCE)
-  typedef void (__cdecl * __sighandler_t)(int);
-#endif
-
 #if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
   // Prototypes for both signal() and struct sigaction are consistent..
   using ACE_SignalHandler = void (*)(int);

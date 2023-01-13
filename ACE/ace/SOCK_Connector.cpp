@@ -8,9 +8,7 @@
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-#if !defined (ACE_HAS_WINCE)
 #include "ace/OS_QoS.h"
-#endif  // ACE_HAS_WINCE
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SOCK_Connector.inl"
@@ -216,7 +214,6 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
   return this->shared_connect_finish (new_stream, timeout, result);
 }
 
-#if !defined (ACE_HAS_WINCE)
 int
 ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                              const ACE_Addr &remote_sap,
@@ -264,10 +261,8 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
 
   return this->shared_connect_finish (new_stream, timeout, result);
 }
-#endif  // ACE_HAS_WINCE
 
 // Try to complete a non-blocking connection.
-
 int
 ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
                               ACE_Addr *remote_sap,
@@ -344,7 +339,6 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                 ACE_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
 }
 
-#if !defined (ACE_HAS_WINCE)
 ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                                         const ACE_Addr &remote_sap,
                                         ACE_QoS_Params qos_params,
@@ -374,6 +368,5 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
 }
-#endif  // ACE_HAS_WINCE
 
 ACE_END_VERSIONED_NAMESPACE_DECL

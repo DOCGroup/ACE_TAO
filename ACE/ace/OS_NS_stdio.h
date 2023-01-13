@@ -32,7 +32,7 @@
 #  include "ace/os_include/os_unistd.h"
 #endif /* CYGWIN32 || ACE_OPENVMS */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 # include "io.h"
 #endif
 
@@ -299,7 +299,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE fileno (FILE *stream);
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -307,19 +307,19 @@ namespace ACE_OS {
   FILE *fopen (const char *filename, const char *mode);
 
 #if defined (ACE_HAS_WCHAR)
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* ACE_WIN32 */
   FILE *fopen (const char *filename, const wchar_t *mode);
-#  if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#  if defined (ACE_WIN32)
   extern ACE_Export
 #  else
   ACE_NAMESPACE_INLINE_FUNCTION
 #  endif /* ACE_WIN32 */
   FILE *fopen (const wchar_t *filename, const wchar_t *mode);
-#  if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#  if defined (ACE_WIN32)
   extern ACE_Export
 #  else
   ACE_NAMESPACE_INLINE_FUNCTION

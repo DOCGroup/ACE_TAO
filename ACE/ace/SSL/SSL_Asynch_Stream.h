@@ -18,7 +18,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if OPENSSL_VERSION_NUMBER > 0x0090581fL && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+#if OPENSSL_VERSION_NUMBER > 0x0090581fL && (defined (ACE_WIN32) || (defined (ACE_HAS_AIO_CALLS)))
 
 #include "SSL_Asynch_BIO.h"
 

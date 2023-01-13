@@ -91,15 +91,15 @@ myallocator (const void *base_addr = 0)
 
   if (static_allocator.get () == 0)
     {
-#if defined (ACE_HAS_WINCE) || defined (ACE_OPENVMS)
-      // WinCE cannot do fixed base, ever.
+#if defined (ACE_OPENVMS)
+      // OpenVMS cannot do fixed base, ever.
       ACE_UNUSED_ARG (base_addr);
       ACE_MMAP_Memory_Pool_Options options
         (0,
          ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
 #else
       ACE_MMAP_Memory_Pool_Options options (base_addr);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_OPENVMS */
 
 #if !defined (ACE_TEST_REMAP_ON_FAULT)
       options.minimum_bytes_ = 512 * 1024;
@@ -118,15 +118,15 @@ init_test (const void *base_addr = 0)
 {
   // Cleanup the MMAP file so we won't trip over the leftover mmap
   // file from the previous crash.
-#if defined (ACE_HAS_WINCE) || defined (ACE_OPENVMS)
-  // WinCE cannot do fixed base, ever.
+#if defined (ACE_OPENVMS)
+  // OpenVMS cannot do fixed base, ever.
   ACE_UNUSED_ARG (base_addr);
   ACE_MMAP_Memory_Pool_Options options
     (0,
      ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
 #else
   ACE_MMAP_Memory_Pool_Options options (base_addr);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_OPENVMS */
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_MMAP_Memory_Pool mmap (MMAP_FILENAME, &options);
   //FUZZ: enable check_for_lack_ACE_OS

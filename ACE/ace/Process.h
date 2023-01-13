@@ -169,10 +169,10 @@ public:
 #endif /* !ACE_USES_WCHAR */
     ;
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WCHAR)
   /// Anti-TChar version of command_line ()
   int command_line (const ACE_ANTI_TCHAR *format, ...);
-#endif /* ACE_HAS_WCHAR && !ACE_HAS_WINCE */
+#endif /* ACE_HAS_WCHAR */
 #endif // ACE_LACKS_VA_FUNCTIONS
 
   /// Same as above in argv format.  @a argv must be null terminated.
@@ -365,7 +365,6 @@ public:
   void inherit_environment (bool nv);
 #endif /* ACE_WIN32 */
 protected:
-#if !defined (ACE_HAS_WINCE)
   /// Add @a assignment to environment_buf_ and adjust
   /// environment_argv_.  @a len is the strlen of @a assignment.
   int setenv_i (ACE_TCHAR *assignment, size_t len);
@@ -373,7 +372,6 @@ protected:
   /// Whether the child process inherits the current process
   /// environment.
   bool inherit_environment_;
-#endif /* !ACE_HAS_WINCE */
 
   /// Default 0.
   u_long creation_flags_;
@@ -381,7 +379,7 @@ protected:
   /// Avoid zombies for spawned processes.
   int avoid_zombies_;
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
   /// Helper function to grab win32 environment and stick it in
   /// environment_buf_ using this->setenv_i.
   void inherit_environment ();
@@ -424,7 +422,6 @@ protected:
   /// Default true.
   bool handle_inheritance_;
 
-#if !defined (ACE_HAS_WINCE)
   /// Is 1 if stdhandles was called.
   int set_handles_called_;
 
@@ -452,7 +449,6 @@ protected:
 
   /// The current working directory.
   ACE_TCHAR working_directory_[MAXPATHLEN + 1];
-#endif /* !ACE_HAS_WINCE */
 
   /// Ensures command_line_argv is only calculated once.
   bool command_line_argv_calculated_;
@@ -667,9 +663,7 @@ protected:
   ACE_Handle_Set dup_handles_;
 
 private:
-#if defined (ACE_WIN32) && \
-    defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR) && \
-    !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
   wchar_t* convert_env_buffer (const char* env) const;
 #endif
 };

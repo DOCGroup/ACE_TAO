@@ -45,15 +45,6 @@ ACE_OS::mmap (void *addr,
 #endif /* !defined (ACE_WIN32) || defined (ACE_HAS_PHARLAP) */
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
-
-#  if defined(ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (addr);
-  if (ACE_BIT_ENABLED (flags, MAP_FIXED))     // not supported
-  {
-    errno = EINVAL;
-    return MAP_FAILED;
-  }
-#  else
   if (!ACE_BIT_ENABLED (flags, MAP_FIXED))
     addr = 0;
   else if (addr == 0)   // can not map to address 0
@@ -61,7 +52,6 @@ ACE_OS::mmap (void *addr,
     errno = EINVAL;
     return MAP_FAILED;
   }
-#  endif
 
   int nt_flags = 0;
   ACE_HANDLE local_handle = ACE_INVALID_HANDLE;
@@ -72,14 +62,8 @@ ACE_OS::mmap (void *addr,
 
   if (ACE_BIT_ENABLED (flags, MAP_PRIVATE))
     {
-#  if defined(ACE_HAS_WINCE)
-      // PAGE_WRITECOPY is not avaible on CE, but this should be the same
-      // as PAGE_READONLY according to MSDN
-      nt_flags = FILE_MAP_ALL_ACCESS;
-#  else
       prot = PAGE_WRITECOPY;
       nt_flags = FILE_MAP_COPY;
-#  endif  // ACE_HAS_WINCE
     }
   else if (ACE_BIT_ENABLED (flags, MAP_SHARED))
     {
@@ -124,20 +108,12 @@ ACE_OS::mmap (void *addr,
   DWORD low_off  = ACE_LOW_PART (off);
   DWORD high_off = ACE_HIGH_PART (off);
 
-#  if defined (ACE_HAS_WINCE)
-  void *addr_mapping = ::MapViewOfFile (*file_mapping,
-                                        nt_flags,
-                                        high_off,
-                                        low_off,
-                                        len);
-#  else
   void *addr_mapping = ::MapViewOfFileEx (*file_mapping,
                                           nt_flags,
                                           high_off,
                                           low_off,
                                           len,
                                           addr);
-#  endif /* ACE_HAS_WINCE */
 
   // Only close this down if we used the temporary.
   if (file_mapping == &local_handle)

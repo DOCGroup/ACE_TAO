@@ -11,79 +11,7 @@
 #include "ace/OS_NS_Thread.h"
 #include "ace/Object_Manager_Base.h"
 
-#if defined (ACE_HAS_WINCE)
-#  include "ace/OS_NS_stdio.h"     /* Need ACE_OS::sprintf() */
-
-namespace
-{
-  ACE_TCHAR const * const ACE_OS_day_of_week_name[] =
-    {
-      ACE_TEXT ("Sun"),
-      ACE_TEXT ("Mon"),
-      ACE_TEXT ("Tue"),
-      ACE_TEXT ("Wed"),
-      ACE_TEXT ("Thu"),
-      ACE_TEXT ("Fri"),
-      ACE_TEXT ("Sat")
-    };
-
-  ACE_TCHAR const * const ACE_OS_month_name[] =
-    {
-      ACE_TEXT ("Jan"),
-      ACE_TEXT ("Feb"),
-      ACE_TEXT ("Mar"),
-      ACE_TEXT ("Apr"),
-      ACE_TEXT ("May"),
-      ACE_TEXT ("Jun"),
-      ACE_TEXT ("Jul"),
-      ACE_TEXT ("Aug"),
-      ACE_TEXT ("Sep"),
-      ACE_TEXT ("Oct"),
-      ACE_TEXT ("Nov"),
-      ACE_TEXT ("Dec")
-    };
-
-  static ACE_TCHAR const ACE_OS_CTIME_R_FMTSTR[] = ACE_TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
-} /* end blank namespace */
-#endif /* ACE_HAS_WINCE */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-# if defined (ACE_HAS_WINCE)
-ACE_TCHAR *
-ACE_OS::ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen)
-{
-  // buflen must be at least 26 wchar_t long.
-  if (buflen < 26)              // Again, 26 is a magic number.
-    {
-      errno = ERANGE;
-      return 0;
-    }
-  // This is really stupid, converting FILETIME to timeval back and
-  // forth.  It assumes FILETIME and DWORDLONG are the same structure
-  // internally.
-  ULARGE_INTEGER _100ns;
-  _100ns.QuadPart = (DWORDLONG) *clock * 10000 * 1000
-                     + ACE_Time_Value::FILETIME_to_timval_skew;
-  FILETIME file_time;
-  file_time.dwLowDateTime = _100ns.LowPart;
-  file_time.dwHighDateTime = _100ns.HighPart;
-
-  FILETIME localtime;
-  SYSTEMTIME systime;
-  FileTimeToLocalFileTime (&file_time, &localtime);
-  FileTimeToSystemTime (&localtime, &systime);
-  ACE_OS::snprintf (buf, buflen, ACE_OS_CTIME_R_FMTSTR,
-                    ACE_OS_day_of_week_name[systime.wDayOfWeek],
-                    ACE_OS_month_name[systime.wMonth - 1],
-                    systime.wDay,
-                    systime.wHour,
-                    systime.wMinute,
-                    systime.wSecond,
-                    systime.wYear);
-  return buf;
-}
-# endif /* ACE_HAS_WINCE */
 
 # if defined (ACE_LACKS_DIFFTIME)
 double
@@ -224,51 +152,6 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
 #if defined (ACE_HAS_TR24731_2005_CRT)
   ACE_SECURECRTCALL (localtime_s (res, t), struct tm *, 0, res);
   return res;
-#elif defined (ACE_HAS_WINCE)
-  // This is really stupid, converting FILETIME to timeval back and
-  // forth.  It assumes FILETIME and DWORDLONG are the same structure
-  // internally.
-
-  TIME_ZONE_INFORMATION pTz;
-
-  const unsigned short int __mon_yday[2][13] =
-  {
-    /* Normal years.  */
-    { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 },
-    /* Leap years.  */
-    { 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 }
-  };
-
-  ULARGE_INTEGER _100ns;
-  ::GetTimeZoneInformation (&pTz);
-
-  _100ns.QuadPart = (DWORDLONG) *t * 10000 * 1000 + ACE_Time_Value::FILETIME_to_timval_skew;
-  FILETIME file_time;
-  file_time.dwLowDateTime = _100ns.LowPart;
-  file_time.dwHighDateTime = _100ns.HighPart;
-
-  FILETIME localtime;
-  SYSTEMTIME systime;
-  FileTimeToLocalFileTime (&file_time, &localtime);
-  FileTimeToSystemTime (&localtime, &systime);
-
-  res->tm_hour = systime.wHour;
-  res->tm_isdst = pTz.DaylightBias != 0;
-
-   int iLeap;
-   iLeap = (res->tm_year % 4 == 0 && (res->tm_year% 100 != 0 || res->tm_year % 400 == 0));
-   // based on leap select which group to use
-
-   res->tm_mday = systime.wDay;
-   res->tm_min = systime.wMinute;
-   res->tm_mon = systime.wMonth - 1;
-   res->tm_sec = systime.wSecond;
-   res->tm_wday = systime.wDayOfWeek;
-   res->tm_yday = __mon_yday[iLeap][systime.wMonth] + systime.wDay;
-   res->tm_year = systime.wYear;// this the correct year but bias the value to start at the 1900
-   res->tm_year = res->tm_year - 1900;
-
-   return res;
 #elif defined (ACE_LACKS_LOCALTIME_R)
   ACE_OS_GUARD
 
@@ -291,28 +174,11 @@ time_t
 ACE_OS::mktime (struct tm *t)
 {
   ACE_OS_TRACE ("ACE_OS::mktime");
-#   if defined (ACE_HAS_WINCE)
-  SYSTEMTIME t_sys;
-  FILETIME t_file;
-  t_sys.wSecond = t->tm_sec;
-  t_sys.wMinute = t->tm_min;
-  t_sys.wHour = t->tm_hour;
-  t_sys.wDay = t->tm_mday;
-  t_sys.wMonth = t->tm_mon + 1;  // SYSTEMTIME is 1-indexed, tm is 0-indexed
-  t_sys.wYear = t->tm_year + 1900; // SYSTEMTIME is real; tm is since 1900
-  t_sys.wDayOfWeek = t->tm_wday;  // Ignored in below function call.
-  t_sys.wMilliseconds = 0;
-  if (SystemTimeToFileTime (&t_sys, &t_file) == 0)
-    return -1;
-  ACE_Time_Value tv (t_file);
-  return tv.sec ();
-#   else
-#     if defined (ACE_HAS_THREADS)  &&  !defined (ACE_HAS_MT_SAFE_MKTIME)
+#if defined (ACE_HAS_THREADS)  &&  !defined (ACE_HAS_MT_SAFE_MKTIME)
   ACE_OS_GUARD
-#     endif /* ACE_HAS_THREADS  &&  ! ACE_HAS_MT_SAFE_MKTIME */
+#endif /* ACE_HAS_THREADS  &&  ! ACE_HAS_MT_SAFE_MKTIME */
 
   return std::mktime (t);
-#   endif /* ACE_HAS_WINCE */
 }
 
 #if defined (ACE_LACKS_STRPTIME)

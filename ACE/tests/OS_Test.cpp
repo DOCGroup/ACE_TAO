@@ -108,7 +108,7 @@ rename_test ()
     }
   ACE_OS::fclose (f);
 
-#if defined (ACE_WIN32) && defined (ACE_LACKS_WIN32_MOVEFILEEX) || defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && defined (ACE_LACKS_WIN32_MOVEFILEEX)
   // Can't rename if new_file exists already.
   ACE_OS::unlink (new_file);
 #endif

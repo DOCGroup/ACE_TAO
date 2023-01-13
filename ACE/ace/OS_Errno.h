@@ -55,18 +55,13 @@ public:
   /// Reset the value of @c errno to <error>.
   ~ACE_Errno_Guard ();
 
-#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-  /// Assign @a errno_ref to <error_>.
-  int operator= (const ACE_ERRNO_TYPE &errno_ref);
-#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
-
-  /// Assign <error> to <error_>.
+  /// Assign @a erro> to error_.
   int operator= (int error);
 
-  /// Compare <error> with <error_> for equality.
+  /// Compare @a error with error_ for equality.
   bool operator== (int error);
 
-  /// Compare <error> with <error_> for inequality.
+  /// Compare @a error with error_ for inequality.
   bool operator!= (int error);
 
 private:

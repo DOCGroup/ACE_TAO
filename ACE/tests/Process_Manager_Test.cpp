@@ -75,9 +75,7 @@ spawn_child (const ACE_TCHAR *argv0,
              int sleep_time,
              int my_process_id)
 {
-#if defined (ACE_HAS_WINCE)
-const ACE_TCHAR *cmdline_format = ACE_TEXT("%s %d");
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
 const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" %s %d");
 #elif !defined (ACE_USES_WCHAR)
 const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s %s %d");
@@ -134,9 +132,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
   opts.process_name (argv0);
 #ifndef ACE_LACKS_VA_FUNCTIONS
   opts.command_line (cmdline_format,
-#if !defined (ACE_HAS_WINCE)
                      argv0,
-#endif /* !ACE_HAS_WINCE */
                      cmd,
                      sleep_time);
 #else

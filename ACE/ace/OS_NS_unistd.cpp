@@ -308,7 +308,6 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
   if (ACE_OS::argv_to_string (argv, buf) != -1)
     {
       PROCESS_INFORMATION process_info;
-#   if !defined (ACE_HAS_WINCE)
       ACE_TEXT_STARTUPINFO startup_info;
       ACE_OS::memset ((void *) &startup_info,
                       0,
@@ -325,18 +324,6 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
                                   0, // No current directory.
                                   &startup_info,
                                   &process_info))
-#   else
-      if (ACE_TEXT_CreateProcess (0,
-                                  buf,
-                                  0, // No process attributes.
-                                  0,  // No thread attributes.
-                                  FALSE, // Can's inherit handles on CE
-                                  0, // Don't create a new console window.
-                                  0, // No environment.
-                                  0, // No current directory.
-                                  0, // Can't use startup info on CE
-                                  &process_info))
-#   endif /* ! ACE_HAS_WINCE */
         {
           // Free resources allocated in kernel.
           ACE_OS::close (process_info.hThread);

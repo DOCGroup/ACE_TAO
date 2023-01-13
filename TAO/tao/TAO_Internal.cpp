@@ -964,7 +964,7 @@ namespace
     // NOTE: When adding new global arguments, ensure they are only
     // applied when apply_values is true, but that they are always
     // consumed, if they need to be consumed.
-#if defined (TAO_DEBUG) && !defined (ACE_HAS_WINCE)
+#if defined (TAO_DEBUG)
     // Make it a little easier to debug programs using this code.
     if (apply_values)
       {
@@ -982,7 +982,7 @@ namespace
                         TAO_debug_level));
           }
       }
-#endif  /* TAO_DEBUG && !ACE_HAS_WINCE */
+#endif  /* TAO_DEBUG */
 
     // Extract the Service Configurator ORB options from the argument
     // vector.

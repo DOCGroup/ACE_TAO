@@ -14,10 +14,6 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#if (_WIN32_WCE <= 211)
-#error This project can not be built for H/PC Pro 2.11 or earlier platforms.
-#endif
-
 #define WIN32_LEAN_AND_MEAN     // Exclude rarely-used stuff from Windows headers
 
 //////
@@ -25,7 +21,6 @@
 #ifdef NO_ACE
 
 #include <windows.h>
-#include "CE_Screen_Output.h"
 
 #define ACE_TCHAR wchar_t
 #define ACE_TEXT(STRING) L##STRING

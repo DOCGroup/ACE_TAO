@@ -95,7 +95,6 @@ namespace {
                     const DWORD minorVersion,
                     const BYTE productType)
   {
-#if !defined(ACE_HAS_WINCE)
     OSVERSIONINFOEX versioninfo;
     versioninfo.dwOSVersionInfoSize = sizeof (OSVERSIONINFOEX);
     versioninfo.dwMajorVersion = majorVersion;
@@ -170,27 +169,15 @@ namespace {
       }
 
     return 0;
-#else // defined(ACE_HAS_WINCE)
-    // no version testing of WinCE has been performed
-    ACE_UNUSED_ARG (majorVersion);
-    ACE_UNUSED_ARG (minorVersion);
-    ACE_UNUSED_ARG (productType);
-    return -1;
-#endif /* ACE_HAS_WINCE */
   }
 #endif /* ACE_WIN32 */
 
   int processENOBUFS()
   {
-#if defined (ACE_WIN32) && !defined(ACE_HAS_WINCE)
     // it has been identified that Windows7 does not have the ENOBUFS issue
     // but testing has not been performed on Server 2008 or Vista to identify
     // wether the issue exists or not
     return beforeVersion(6, 1, VER_NT_WORKSTATION);
-#else // defined(ACE_HAS_WINCE)
-    // currently, no versions of WINCE identified to not have the ENOBUFS error
-    return 0;
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
   }
 
   struct IovecGuard
