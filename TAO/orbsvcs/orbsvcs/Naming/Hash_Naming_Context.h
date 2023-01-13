@@ -28,7 +28,7 @@
 #if defined (interface)
 # undef interface
 #endif  // interface
- 
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
