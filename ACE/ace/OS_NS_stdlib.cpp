@@ -84,9 +84,7 @@ ACE_OS::free (void *ptr)
 ACE_TCHAR *
 ACE_OS::getenvstrings ()
 {
-#if defined (ACE_LACKS_GETENVSTRINGS)
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
   return ::GetEnvironmentStringsW ();
 # else /* ACE_USES_WCHAR */
@@ -104,10 +102,6 @@ ACE_OS::getenvstrings ()
 ACE_TCHAR *
 ACE_OS::strenvdup (const ACE_TCHAR *str)
 {
-#if defined (ACE_LACKS_STRENVDUP)
-  ACE_UNUSED_ARG (str);
-  ACE_NOTSUP_RETURN (0);
-#else
   const ACE_TCHAR * start = 0;
   if ((start = ACE_OS::strchr (str, ACE_TEXT ('$'))) != 0)
     {
@@ -161,7 +155,6 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
     }
   else
     return ACE_OS::strdup (str);
-#endif /* ACE_LACKS_STRENVDUP */
 }
 
 #if !defined (ACE_HAS_ITOA)

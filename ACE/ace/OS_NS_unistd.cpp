@@ -52,10 +52,6 @@ ACE_OS::argv_to_string (int argc,
                         bool substitute_env_args,
                         bool quote_args)
 {
-#if defined (ACE_LACKS_STRENVDUP)
-  ACE_UNUSED_ARG (substitute_env_args);
-#endif /* ACE_LACKS_STRENVDUP */
-
   if (argc <= 0 || argv == 0 || argv[0] == 0)
     return 0;
 
@@ -67,7 +63,6 @@ ACE_OS::argv_to_string (int argc,
 
   for (int i = 0; i < argc; ++i)
     {
-#if !defined (ACE_LACKS_STRENVDUP)
       // Account for environment variables.
       if (substitute_env_args
           && ACE_OS::strchr (argv[i], ACE_TEXT ('$')) != 0)
@@ -98,7 +93,6 @@ ACE_OS::argv_to_string (int argc,
               return 0;
             }
         }
-#endif /* ACE_LACKS_STRENVDUP */
       // If must quote, we only do it if the arg contains spaces, or
       // is empty. Perhaps a check for other c | ord(c) <= 32 is in
       // order?
@@ -779,10 +773,6 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
                         ACE_TCHAR **&argv,
                         bool substitute_env_args)
 {
-#if defined (ACE_LACKS_STRENVDUP)
-  ACE_UNUSED_ARG (substitute_env_args);
-#endif /* ACE_LACKS_STRENVDUP */
-
   // Reset the number of arguments
   argc = 0;
 
@@ -888,7 +878,6 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
 
       *cp = ACE_TEXT ('\0');
 
-#if !defined (ACE_LACKS_STRENVDUP)
       // Check for environment variable substitution here.
       if (substitute_env_args) {
           argv[i] = ACE_OS::strenvdup (argp);
@@ -906,7 +895,6 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
             }
       }
       else
-#endif /* ACE_LACKS_STRENVDUP */
         {
           argv[i] = ACE_OS::strdup (argp);
 

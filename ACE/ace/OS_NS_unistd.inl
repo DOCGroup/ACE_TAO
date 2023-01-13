@@ -72,11 +72,11 @@ ACE_OS::access (const char *path, int amode)
 ACE_INLINE int
 ACE_OS::access (const wchar_t *path, int amode)
 {
-#if defined (ACE_WIN32) && !defined (ACE_LACKS__WACCESS)
+#if defined (ACE_WIN32)
   return ::_waccess (path, amode);
-#else /* ACE_WIN32 && !ACE_LACKS__WACCESS */
+#else /* ACE_WIN32 */
   return ACE_OS::access (ACE_Wide_To_Ascii (path).char_rep (), amode);
-#endif /* ACE_WIN32 && !ACE_LACKS__WACCESS */
+#endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -126,10 +126,7 @@ ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::chdir");
-#if defined (ACE_LACKS_CHDIR)
-  ACE_UNUSED_ARG (path);
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_HAS_NONCONST_CHDIR)
+#if defined (ACE_HAS_NONCONST_CHDIR)
   return ::chdir (const_cast<char *> (path));
 #elif defined (ACE_CHDIR_EQUIVALENT)
   return ACE_CHDIR_EQUIVALENT (path);
@@ -142,10 +139,7 @@ ACE_OS::chdir (const char *path)
 ACE_INLINE int
 ACE_OS::chdir (const wchar_t *path)
 {
-#if defined (ACE_LACKS_CHDIR)
-  ACE_UNUSED_ARG (path);
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   return ::_wchdir (path);
 #else /* ACE_WIN32 */
   return ACE_OS::chdir (ACE_Wide_To_Ascii (path).char_rep ());
@@ -405,11 +399,7 @@ ACE_INLINE char *
 ACE_OS::getcwd (char *buf, size_t size)
 {
   ACE_OS_TRACE ("ACE_OS::getcwd");
-#if defined (ACE_LACKS_GETCWD)
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (size);
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_GETCWD_EQUIVALENT)
+#if defined (ACE_GETCWD_EQUIVALENT)
   return ACE_GETCWD_EQUIVALENT (buf, static_cast<int> (size));
 #elif defined (ACE_WIN32)
   return ::getcwd (buf, static_cast<int> (size));

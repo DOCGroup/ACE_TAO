@@ -28,10 +28,6 @@
 #  include /**/ <sys/types.h>
 #endif /* !ACE_LACKS_SYS_TYPES_H */
 
-#if defined (ACE_HAS_TYPES_H)
-#  include /**/ <types.h>
-#endif /* ACE_HAS_TYPES_H */
-
 # if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
              (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
 using std::time_t;
@@ -48,10 +44,6 @@ typedef double ACE_timer_t;
 #if defined (ACE_LACKS_CLOCKID_T)
    typedef int clockid_t;
 #endif /* ACE_LACKS_CLOCKID_T */
-
-#if defined (ACE_LACKS_DEV_T)
-   typedef unsigned int dev_t;
-#endif /* ACE_LACKS_DEV_T */
 
 #if defined(ACE_WIN32) && defined(_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS==64)
   typedef __int64 ACE_OFF_T;

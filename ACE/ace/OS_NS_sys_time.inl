@@ -26,13 +26,6 @@ ACE_OS::gettimeofday ()
     }
 
   return ACE_Time_Value (ts);
-
-#elif defined (ACE_WIN32) && defined (ACE_LACKS_GETSYSTEMTIMEASFILETIME)
-  SYSTEMTIME tsys;
-  FILETIME   tfile;
-  ::GetSystemTime (&tsys);
-  ::SystemTimeToFileTime (&tsys, &tfile);
-  return ACE_Time_Value (tfile);
 #elif defined (ACE_WIN32)
   FILETIME   tfile;
   ::GetSystemTimeAsFileTime (&tfile);
