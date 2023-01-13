@@ -1316,7 +1316,7 @@ Client::initiate_write_stream ()
 
   static const size_t complete_message_length = ACE_OS::strlen (complete_message);
 
-#if (defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   ACE_Message_Block *mb1 = 0,
                     *mb2 = 0,
                     *mb3 = 0;
