@@ -2602,7 +2602,7 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (ht_id, &priority), result), int);
 # elif defined (ACE_HAS_WTHREADS)
   ACE_Errno_Guard error (errno);
-  priority = ::CeGetThreadPriority (ht_id);
+  priority = ::GetThreadPriority (ht_id);
 
 #   if defined (ACE_HAS_PHARLAP)
 #     if defined (ACE_PHARLAP_LABVIEW_RT)
@@ -2612,13 +2612,11 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
   policy = timeslice == 0 ? ACE_SCHED_OTHER : ACE_SCHED_FIFO;
 #     endif /* ACE_PHARLAP_LABVIEW_RT */
 #   else
-  DWORD priority_class = ::GetPriorityClass (::GetCurrentProcess ());
+  DWORD const priority_class = ::GetPriorityClass (::GetCurrentProcess ());
   if (priority_class == 0 && (error = ::GetLastError ()) != NO_ERROR)
     ACE_FAIL_RETURN (-1);
 
-  policy =
-    (priority_class ==
-     REALTIME_PRIORITY_CLASS) ? ACE_SCHED_FIFO : ACE_SCHED_OTHER;
+  policy = (priority_class == REALTIME_PRIORITY_CLASS) ? ACE_SCHED_FIFO : ACE_SCHED_OTHER;
 #   endif /* ACE_HAS_PHARLAP */
 
   return 0;

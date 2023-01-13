@@ -174,10 +174,14 @@ namespace {
 
   int processENOBUFS()
   {
+#if defined (ACE_WIN32)
     // it has been identified that Windows7 does not have the ENOBUFS issue
     // but testing has not been performed on Server 2008 or Vista to identify
-    // wether the issue exists or not
+    // whether the issue exists or not
     return beforeVersion(6, 1, VER_NT_WORKSTATION);
+#else
+    return 0;
+#endif /* ACE_WIN32 */
   }
 
   struct IovecGuard
@@ -192,31 +196,31 @@ namespace {
     static const int ALL_SLOTS = -1;
   };
 
+  /*
+   * This class is the product created by both ACE_Connector
+   * and ACE_Acceptor objects.
+   *
+   * This class gets its own header file to work around AIX C++
+   * compiler "features" related to template instantiation...  It is
+   * only used by Conn_Test.cpp.
+   */
   class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   {
-    // = TITLE
-    //      This class is the product created by both <ACE_Connector>
-    //      and <ACE_Acceptor> objects.
-    //
-    // = DESCRIPTION
-    //    This class gets its own header file to work around AIX C++
-    //    compiler "features" related to template instantiation...  It is
-    //    only used by Conn_Test.cpp.
   public:
-    Svc_Handler (ACE_Thread_Manager * = 0);
     // Do-nothing constructor.
+    Svc_Handler (ACE_Thread_Manager * = nullptr);
 
-    int open (void *) override;
     // Initialization hook.
+    int open (void *) override;
 
-    void send_data ();
     // Send data to server.
+    void send_data ();
 
-    void recv_data ();
     // Recv data from client.
+    void recv_data ();
 
-    int close (u_long = 0) override;
     // Shutdown the <Svc_Handler>.
+    int close (u_long = 0) override;
 
   private:
     enum Direction { READX, WRITEX }; // VxWorks defines READ and WRITE

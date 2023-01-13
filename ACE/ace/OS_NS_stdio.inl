@@ -903,7 +903,7 @@ ACE_OS::rewind (FILE *fp)
 # endif /* ACE_LACKS_REWIND */
 #else
   // This isn't perfect since it doesn't reset EOF, but it's probably
-  // the closest we can get on WINCE.
+  // the closest we can get on MQX.
   (void) std::fseek (fp, 0L, SEEK_SET);
 #endif /* !ACE_MQX */
 }
