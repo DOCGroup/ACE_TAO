@@ -16,10 +16,6 @@
 #  include "ace/OS_NS_stdio.h"
 #endif /* ACE_LACKS_ACCESS */
 
-#if defined (ACE_HAS_ACCESS_EMULATION)
-#  include "ace/os_include/os_unistd.h"
-#endif /* ACE_HAS_ACCESS_EMULATION */
-
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x690)
 #  if defined (__RTP__)
 #    include "ace/os_include/os_strings.h"
@@ -39,22 +35,9 @@ ACE_OS::access (const char *path, int amode)
 {
   ACE_OS_TRACE ("ACE_OS::access");
 #if defined (ACE_LACKS_ACCESS)
-#  if defined (ACE_HAS_ACCESS_EMULATION)
-  // Hard coded read access here.
-  ACE_UNUSED_ARG (amode);
-  FILE* handle = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(path),
-                                ACE_TEXT ("r"));
-  if (handle != 0)
-    {
-      ACE_OS::fclose (handle);
-      return 0;
-    }
-  return -1;
-#  else
     ACE_UNUSED_ARG (path);
     ACE_UNUSED_ARG (amode);
     ACE_NOTSUP_RETURN (-1);
-#  endif  /* ACE_HAS_ACCESS_EMULATION */
 #elif defined(ACE_WIN32)
   // Windows doesn't support checking X_OK(6)
 #  if defined (ACE_ACCESS_EQUIVALENT)
