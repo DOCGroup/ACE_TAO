@@ -264,31 +264,7 @@ typedef struct
 typedef HANDLE ACE_event_t;
 
 #     if defined (ACE_WIN32)
-//@@ ACE_USES_WINCE_SEMA_SIMULATION is used to debug
-//   semaphore simulation on WinNT.  It should be
-//   changed to ACE_USES_HAS_WINCE at some later point.
-#       if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
 typedef HANDLE ACE_sema_t;
-#       else
-/**
- * @class ACE_sema_t
- *
- * @brief Semaphore simulation for Windows CE.
- */
-class ACE_Export ACE_sema_t
-{
-public:
-  /// Serializes access to @c count_.
-  ACE_thread_mutex_t lock_;
-
-  /// This event is signaled whenever the count becomes non-zero.
-  ACE_event_t count_nonzero_;
-
-  /// Current count of the semaphore.
-  u_int count_;
-};
-
-#       endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #     endif /* defined (ACE_WIN32) */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

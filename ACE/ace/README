@@ -145,7 +145,6 @@ ACE_DEFAULT_LD_SEARCH_PATH              Specify the platform default search
                                         paths.  This macro should only be
                                         defined on platforms that don't
                                         support environment variables at all
-                                        (i.e., Windows CE.)
 ACE_THREADS_DONT_INHERIT_LOG_MSG        Specify this if you don't want
                                         threads to inherit parent
                                         thread's ACE_Log_Msg

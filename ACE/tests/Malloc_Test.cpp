@@ -307,7 +307,7 @@ child ()
 // virtual address on every 32 bit process.  On WinNT/2k, memory above
 // 2Gb is reserved for the system.  So, we need to check at runtime
 // (we want an ACE_HAS_WINNT4 == 0 ace to run on either).
-// To catch any odd case arising from Pharlap and/or WinCE, do the
+// To catch any odd case arising from Pharlap, do the
 // run time check and run the NT4-or-better code unless we're on
 // CE or something other than NT4 (Pharlap reports itself as NT 3.51).
 static void

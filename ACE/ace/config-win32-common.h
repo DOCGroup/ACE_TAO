@@ -99,8 +99,6 @@
 # define ACE_MT_SAFE 1
 #endif
 
-// On winCE these classes do not exist. If they are
-// introduced in the future, no changes need to be made
 #if defined (ABOVE_NORMAL_PRIORITY_CLASS) && \
   defined (BELOW_NORMAL_PRIORITY_CLASS) && \
   defined (HIGH_PRIORITY_CLASS) && \

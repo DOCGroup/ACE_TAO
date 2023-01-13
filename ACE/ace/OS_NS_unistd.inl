@@ -40,7 +40,6 @@ ACE_OS::access (const char *path, int amode)
   ACE_OS_TRACE ("ACE_OS::access");
 #if defined (ACE_LACKS_ACCESS)
 #  if defined (ACE_HAS_ACCESS_EMULATION)
-  // @@ WINCE: There should be a Win32 API that can do this.
   // Hard coded read access here.
   ACE_UNUSED_ARG (amode);
   FILE* handle = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(path),

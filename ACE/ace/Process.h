@@ -35,11 +35,6 @@ class ACE_Time_Value;
  *
  * This class controls the options passed to <CreateProcess> (or <fork>
  * and <exec>).
- * Notice that on Windows CE, creating a process merely means
- * instantiating a new process.  You can't set the handles (since
- * there's no stdin, stdout and stderr,) specify process/thread
- * options, set environment,...  So, basically, this class only
- * set the command line and nothing else.
  * Notice that on UNIX platforms, if the <setenv> is used, the
  * <spawn> is using the <execve> system call. It means that the
  * <command_line> should include a full path to the program file

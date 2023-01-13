@@ -1463,13 +1463,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       // Wait to be awakened by a ACE_OS::signal() or
       // ACE_OS::broadcast().
 #     if defined (ACE_WIN32)
-#       if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
       result = ::WaitForSingleObject (cv->sema_, msec_timeout);
-#       else /* ACE_USES_WINCE_SEMA_SIMULATION */
-      // Can't use Win32 API on our simulated semaphores.
-      result = ACE_OS::sema_wait (&cv->sema_,
-                                  timeout);
-#       endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #     elif defined (ACE_VXWORKS)
       // Inline the call to ACE_OS::sema_wait () because it takes an
       // ACE_Time_Value argument.  Avoid the cost of that conversion . . .
@@ -1654,16 +1648,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     return -1;
 
   // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
-#     if defined (ACE_USES_WINCE_SEMA_SIMULATION)
-  // Can't use Win32 API on simulated semaphores.
-  result = ACE_OS::sema_wait (&cv->sema_,
-                              timeout);
-
-  if (result == -1 && errno == ETIME)
-    result = WAIT_TIMEOUT;
-#     else
   result = ::WaitForSingleObject (cv->sema_, msec_timeout);
-#     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
   // Reacquire lock to avoid race conditions.
   if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
@@ -1745,16 +1730,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
   // Wait to be awakened by a ACE_OS::cond_signal() or
   // ACE_OS::cond_broadcast().
-#     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   result = ::WaitForSingleObject (cv->sema_, INFINITE);
-#     else
-  // Can't use Win32 API on simulated semaphores.
-  result = ACE_OS::sema_wait (&cv->sema_);
-
-  if (result != WAIT_OBJECT_0 && errno == ETIME)
-    result = WAIT_TIMEOUT;
-
-#     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
   // Reacquire lock to avoid race conditions.
   if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)

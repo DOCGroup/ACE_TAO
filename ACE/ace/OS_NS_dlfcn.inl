@@ -183,7 +183,6 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 
   // Get the correct OS type.
 #if defined (ACE_USES_WCHAR)
-  // WinCE is WCHAR always; other platforms need a char * symbol name
   ACE_Wide_To_Ascii w_sname (sname);
   char *symbolname = w_sname.char_rep ();
 #elif defined (ACE_VXWORKS)
