@@ -64,11 +64,6 @@ namespace ACE_OS
 #elif defined (ACE_MQX)
     return MQX_Filesystem::inst ().fstat (handle, stp);
 #else
-#  if defined (ACE_OPENVMS)
-    //FUZZ: disable check_for_lack_ACE_OS
-    ::fsync(handle);
-    //FUZZ: enable check_for_lack_ACE_OS
-#  endif
     return ::fstat (handle, stp);
 #endif /* !ACE_HAS_X86_STAT_MACROS */
   }

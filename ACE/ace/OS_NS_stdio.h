@@ -27,10 +27,9 @@
 #include "ace/os_include/os_errno.h"
 #include /**/ "ace/ACE_export.h"
 
-/* OPENVMS needs unistd for cuserid() */
-#if defined (CYGWIN32) || defined (ACE_OPENVMS)
+#if defined (CYGWIN32)
 #  include "ace/os_include/os_unistd.h"
-#endif /* CYGWIN32 || ACE_OPENVMS */
+#endif /* CYGWIN32 */
 
 #if defined (ACE_WIN32)
 # include "io.h"

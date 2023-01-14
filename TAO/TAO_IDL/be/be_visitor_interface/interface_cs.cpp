@@ -65,7 +65,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->name () << "_ptr p)" << be_nl
           << "{" << be_idt_nl;
 
-      // Workaround for broken HP V7.4-004 on OpenVMS IA83
       if (node->has_mixed_parentage ())
         {
           *os << "::CORBA::AbstractBase_ptr abs = p;" << be_nl

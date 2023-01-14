@@ -187,15 +187,11 @@ $(VLIB): $(VLOBJS)
         #### to lib files, for example.
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
   endif # ace_lib_prelink
-  ifeq (1,$(ACE_OPENVMS))
-	find $(TMPINCDIR:%=%) -name "*.$(OBJEXT)" -or -name "*.obj" | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
-  else
-    ifneq (,$(AR.cc.override))
+  ifneq (,$(AR.cc.override))
 	$(AR.cc.override)
     else
 	([ "`echo $(TMPINCDIR:%=%/*.$(OBJEXT))`" != "$(TMPINCDIR:%=%/*.$(OBJEXT))" ] && echo $(TMPINCDIR:%=%/*.$(OBJEXT)); \
 	echo $(filter %.$(OBJEXT), $^)) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
-    endif
   endif
   ifdef ibmcxx_build
 # This is required to get AIX IBM C/C++ to instantiate and compile the needed

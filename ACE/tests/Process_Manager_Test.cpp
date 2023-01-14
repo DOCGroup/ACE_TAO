@@ -566,8 +566,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 #endif /* ACE_HAS_THREADS */
 
-#if !defined (ACE_OPENVMS) && \
-  (defined ACE_WIN32 || !defined ACE_LACKS_UNIX_SIGNALS)
+#if defined ACE_WIN32 || !defined ACE_LACKS_UNIX_SIGNALS
   // --------------------------------------------------
   // Finally, try the reactor stuff...
   mgr.open (ACE_Process_Manager::DEFAULT_SIZE,
@@ -597,7 +596,6 @@ run_main (int argc, ACE_TCHAR *argv[])
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P) %d processes left in manager\n"),
                 nr_procs));
-#endif /* !defined (ACE_OPENVMS) */
 #endif // ACE_HAS_PROCESS_SPAWN
   ACE_END_TEST;
   return test_status;

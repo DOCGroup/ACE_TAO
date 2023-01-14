@@ -255,10 +255,6 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                           -1);
     }
 
-#if defined (ACE_OPENVMS)
-  ::fsync(this->mmap_.handle());
-#endif
-
   // Increment by one to put us at the beginning of the next chunk...
   ++map_size;
 #endif /* __Lynx__ */

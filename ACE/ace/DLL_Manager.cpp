@@ -286,11 +286,7 @@ ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, bool ignore_errors, ACE_TStri
   // BTW. Handle lifecycle management is a little crazy in ACE
   if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
     {
-#if defined (ACE_OPENVMS)
-      void *sym =  ACE::ldsymbol (this->handle_, auto_name.get ());
-#else
       void *sym =  ACE_OS::dlsym (this->handle_, auto_name.get ());
-#endif
 
       // Linux says that the symbol could be null and that it isn't an
       // error.  So you should check the error message also, but since
@@ -758,13 +754,7 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
 
               void * const unload_policy_ptr =
                 dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), 1);
-#if defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
-              int const temp_p =
-                reinterpret_cast<int> (unload_policy_ptr);
-#else
-              intptr_t const temp_p =
-                reinterpret_cast<intptr_t> (unload_policy_ptr);
-#endif
+              intptr_t const temp_p = reinterpret_cast<intptr_t> (unload_policy_ptr);
 
               dll_unload_policy const the_policy =
                 reinterpret_cast<dll_unload_policy> (temp_p);
