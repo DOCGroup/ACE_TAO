@@ -62,6 +62,20 @@ $test5 = $SV->SpawnWaitKill ($server5->ProcessStartWaitInterval());
 
 open (STDERR, ">&STDOUT");
 
+my $server6 = PerlACE::TestTarget::create_target (6) || die "Create target 6 failed\n";
+my $input_file6 = $server6->LocalFile ("exception_misuse1.idl");
+
+# Compile the IDL
+$SV = $server6->CreateProcess ("$tao_idl", "$input_file6");
+$test6 = $SV->SpawnWaitKill ($server6->ProcessStartWaitInterval());
+
+my $server7 = PerlACE::TestTarget::create_target (7) || die "Create target 7 failed\n";
+my $input_file7 = $server7->LocalFile ("exception_misuse2.idl");
+
+# Compile the IDL
+$SV = $server7->CreateProcess ("$tao_idl", "$input_file7");
+$test7 = $SV->SpawnWaitKill ($server7->ProcessStartWaitInterval());
+
 sub analyze_results {
     my $result_file = $_[0];
 
@@ -105,6 +119,14 @@ if ($test5!= 0) {
 }
 if ($match5!= 0) {
     print STDERR "ERROR: tao_idl -Cw should have printed warning for $input_file5\n";
+    $status = 1;
+}
+if ($test6 == 0) {
+    print STDERR "ERROR: tao_idl returned $test6 for $input_file6, should have failed!\n";
+    $status = 1;
+}
+if ($test7 == 0) {
+    print STDERR "ERROR: tao_idl returned $test7 for $input_file7, should have failed!\n";
     $status = 1;
 }
 
