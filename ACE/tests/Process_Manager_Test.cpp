@@ -596,7 +596,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P) %d processes left in manager\n"),
                 nr_procs));
-#endif /* defined (ACE_WIN32) */                
+#endif /* defined (ACE_WIN32) */
 #endif // ACE_HAS_PROCESS_SPAWN
   ACE_END_TEST;
   return test_status;
