@@ -1262,12 +1262,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case 'P':             // Process ID
-#if defined (ACE_OPENVMS)
-                  // Print the process id in hex on OpenVMS.
-                  ACE_OS::strcpy (fp, ACE_TEXT ("x"));
-#else
                   ACE_OS::strcpy (fp, ACE_TEXT ("d"));
-#endif
                   if (can_check)
                     this_len = ACE_OS::snprintf
                       (bp, bspace, format,

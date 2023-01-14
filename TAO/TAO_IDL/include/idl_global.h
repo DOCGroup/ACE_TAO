@@ -657,10 +657,6 @@ public:
   // match the corresponding element on this list, if it is
   // non-zero.
 
-#if defined (ACE_OPENVMS)
-  static char* translateName (const char* name, char *name_buf);
-#endif
-
   AST_Module *corba_module () const;
   void corba_module (AST_Module *m);
   // Accessors for the member.

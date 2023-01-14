@@ -35,7 +35,7 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 #define MMAP_FILENAME ACE_TEXT ("test_file")
 #define MUTEX_NAME ACE_TEXT ("test_lock")
 
-#if !defined (ACE_LINUX) && !defined (ACE_OPENVMS) \
+#if !defined (ACE_LINUX) \
     && !defined (ACE_ANDROID) \
     && !(defined (ACE_WIN32) \
          && (defined (ghs) || defined (__MINGW32__) )) \
@@ -91,15 +91,7 @@ myallocator (const void *base_addr = 0)
 
   if (static_allocator.get () == 0)
     {
-#if defined (ACE_OPENVMS)
-      // OpenVMS cannot do fixed base, ever.
-      ACE_UNUSED_ARG (base_addr);
-      ACE_MMAP_Memory_Pool_Options options
-        (0,
-         ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
-#else
       ACE_MMAP_Memory_Pool_Options options (base_addr);
-#endif /* ACE_OPENVMS */
 
 #if !defined (ACE_TEST_REMAP_ON_FAULT)
       options.minimum_bytes_ = 512 * 1024;
@@ -118,15 +110,7 @@ init_test (const void *base_addr = 0)
 {
   // Cleanup the MMAP file so we won't trip over the leftover mmap
   // file from the previous crash.
-#if defined (ACE_OPENVMS)
-  // OpenVMS cannot do fixed base, ever.
-  ACE_UNUSED_ARG (base_addr);
-  ACE_MMAP_Memory_Pool_Options options
-    (0,
-     ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
-#else
   ACE_MMAP_Memory_Pool_Options options (base_addr);
-#endif /* ACE_OPENVMS */
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_MMAP_Memory_Pool mmap (MMAP_FILENAME, &options);
   //FUZZ: enable check_for_lack_ACE_OS

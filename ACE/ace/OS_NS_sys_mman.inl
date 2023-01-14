@@ -130,11 +130,6 @@ ACE_OS::mmap (void *addr,
   flags |= ACE_OS_EXTRA_MMAP_FLAGS;
 #  endif /* ACE_OS_EXTRA_MMAP_FLAGS */
   ACE_UNUSED_ARG (file_mapping);
-#  if defined (ACE_OPENVMS)
-  //FUZZ: disable check_for_lack_ACE_OS
-  ::fsync(file_handle);
-  //FUZZ: enable check_for_lack_ACE_OS
-#  endif
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN ((void *) ::mmap ((ACE_MMAP_TYPE) addr,
                                       len,
@@ -240,10 +235,6 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
   filename = buf;
 #endif
   return ::shm_open (ACE_TEXT_ALWAYS_CHAR(filename), mode, perms);
-#elif defined (ACE_OPENVMS)
-  //FUZZ: disable check_for_lack_ACE_OS
-  return ::open (filename, mode, perms, ACE_TEXT("shr=get,put,upd"));
-  //FUZZ: enable check_for_lack_ACE_OS
 #else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::open.
   return ACE_OS::open (filename, mode, perms, sa);

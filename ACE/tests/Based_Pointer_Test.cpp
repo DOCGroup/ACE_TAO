@@ -49,7 +49,7 @@ class Void_Pointer : public ACE_Based_Pointer<void>
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
 #endif /* ACE_LD_DECORATOR_STR */
 
-#if defined (ACE_WIN32) || defined (ACE_OPENVMS)
+#if defined (ACE_WIN32)
 #  define OBJ_PREFIX ACE_DLL_PREFIX
 #else
 #  define OBJ_PREFIX ACE_TEXT("./") ACE_DLL_PREFIX
@@ -108,12 +108,7 @@ int singleton_test ()
                            -1);
        }
 
-#if defined (ACE_OPENVMS)
-    // with OPENVMS symbol names > 31 cause us trouble with dlsym()
-    void* foo = dll.symbol (ACE_TEXT ("get_based_pointer_repo_inst"));
-#else
     void* foo = dll.symbol (ACE_TEXT ("get_based_pointer_repository_instance"));
-#endif
 
     // Cast the void* to function* with a long as intermediate.
     ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);

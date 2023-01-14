@@ -149,7 +149,7 @@ MM_Shared_Memory_Test: !VxWorks !nsk !ACE_FOR_TAO !LynxOS
 MT_NonBlocking_Connect_Test: !ST
 MT_Reactor_Timer_Test
 MT_Reactor_Upcall_Test: !nsk
-MT_Reference_Counted_Event_Handler_Test: !OpenVMS_IA64Crash !LynxOS
+MT_Reference_Counted_Event_Handler_Test: !LynxOS
 MT_Reference_Counted_Event_Handler_Test -b 0: LynxOS
 MT_Reference_Counted_Event_Handler_Test -a 0: LynxOS
 MT_Reference_Counted_Notify_Test

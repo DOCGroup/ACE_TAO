@@ -35,9 +35,6 @@
 #     include /**/ <wchar.h>
 #     include /**/ <wctype.h>
 #   endif
-# elif defined (ACE_OPENVMS)
-#   include /**/ <wchar.h>
-#   include /**/ <wctype.h>
 # else
 #   include /**/ <cwchar>
 #   include /**/ <cwctype>
