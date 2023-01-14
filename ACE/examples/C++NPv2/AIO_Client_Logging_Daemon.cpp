@@ -4,7 +4,7 @@
 
 #include "ace/config-all.h"
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
+#if defined (ACE_WIN32) || (defined (ACE_HAS_AIO_CALLS))
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
@@ -351,7 +351,7 @@ int AIO_Client_Logging_Daemon::fini () {
   return 0;
 }
 
-#endif /* (ACE_WIN32 && !ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS */
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 
 ACE_FACTORY_DEFINE (AIO_CLD, AIO_Client_Logging_Daemon)
 

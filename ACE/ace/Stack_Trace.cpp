@@ -470,8 +470,7 @@ ACE_Stack_Trace::generate_trace (ssize_t, size_t)
     "ACE is built with _WIN32_WINNT set to 0x501 or above>");
 }
 
-#elif defined(ACE_WIN32) && !defined(ACE_HAS_WINCE) && !defined (__MINGW32__) \
-      && !defined(__BORLANDC__)
+#elif defined(ACE_WIN32) && !defined (__MINGW32__) && !defined(__BORLANDC__)
 #  include <windows.h>
 #  include <Dbghelp.h>
 

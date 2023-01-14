@@ -49,7 +49,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 {
   ACE_OS_TRACE ("ACE_OS::getmacaddress");
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 # if !defined (ACE_HAS_PHARLAP)
     /** Define a structure for use with the netbios routine */
     struct ADAPTERSTAT

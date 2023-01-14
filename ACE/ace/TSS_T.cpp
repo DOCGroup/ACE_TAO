@@ -156,15 +156,10 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
           // Save/restore errno.
           ACE_Errno_Guard error (errno);
           // What should we do if this call fails?!
-#if defined (ACE_HAS_WINCE)
-          ::MessageBox (0,
-                        ACE_TEXT ("ACE_Thread::keycreate() failed!"),
-                        ACE_TEXT ("ACE_TSS::ACE_TSS"),
-                        MB_OK);
-#elif !defined (ACE_LACKS_VA_FUNCTIONS)
+#if !defined (ACE_LACKS_VA_FUNCTIONS)
           ACE_OS::fprintf (stderr,
                            "ACE_Thread::keycreate() failed!");
-#endif /* ACE_HAS_WINCE */
+#endif /* !ACE_LACKS_VA_FUNCTIONS */
           return;
         }
 

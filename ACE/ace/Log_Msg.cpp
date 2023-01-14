@@ -80,11 +80,11 @@ public:
 };
 #endif /* ACE_MT_SAFE */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_NT_Event_Log
 #elif defined (ACE_ANDROID)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_Android_Logcat
-#elif !defined (ACE_LACKS_UNIX_SYSLOG) && !defined (ACE_HAS_WINCE)
+#elif !defined (ACE_LACKS_UNIX_SYSLOG)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_UNIX_Syslog
 #endif
 

@@ -44,11 +44,7 @@ using QUEUE = ACE_Message_Queue<ACE_NULL_SYNCH>;
 using ITERATOR = ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
 using REVERSE_ITERATOR = ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>;
 
-#if defined (ACE_HAS_WINCE)
-static const int MESSAGE_FACTOR = 10000;
-#else
 static const int MESSAGE_FACTOR = 100000;
-#endif
 static const int MAX_MESSAGES = 10000;
 static const int MAX_MESSAGE_SIZE = 32;
 static const char test_message[] = "ACE_Message_Queue Test Message";

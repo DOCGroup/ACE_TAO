@@ -153,12 +153,7 @@ namespace ACE_OS
   ACE_INLINE int
   mkdir (const char *path, mode_t mode)
   {
-#if defined (ACE_HAS_WINCE)
-    ACE_UNUSED_ARG (mode);
-    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (ACE_TEXT_CHAR_TO_TCHAR (path), 0),
-                                            ace_result_),
-                          int, -1);
-#elif defined (ACE_MKDIR_LACKS_MODE)
+#if defined (ACE_MKDIR_LACKS_MODE)
     ACE_UNUSED_ARG (mode);
 #  if defined (ACE_MKDIR_EQUIVALENT)
     return ACE_MKDIR_EQUIVALENT (path);
@@ -175,17 +170,12 @@ namespace ACE_OS
   ACE_INLINE int
   mkdir (const wchar_t *path, mode_t mode)
   {
-#if defined (ACE_HAS_WINCE)
-    ACE_UNUSED_ARG (mode);
-    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (CreateDirectoryW (path, 0),
-                                            ace_result_),
-                          int, -1);
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+#if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
     ACE_UNUSED_ARG (mode);
     return ::_wmkdir (path);
 #else
     return ACE_OS::mkdir (ACE_Wide_To_Ascii (path).char_rep (), mode);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_WIN32 && ACE_USES_WCHAR */
   }
 
 #endif /* ACE_HAS_WCHAR */
@@ -211,32 +201,6 @@ namespace ACE_OS
     return ::stat (const_cast <char *> (file), stp);
 #elif defined (ACE_LACKS_STAT)
     ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_HAS_WINCE)
-    ACE_TEXT_WIN32_FIND_DATA fdata;
-
-    int rc = 0;
-    HANDLE const fhandle = ::FindFirstFile (ACE_TEXT_CHAR_TO_TCHAR (file), &fdata);
-    if (fhandle == INVALID_HANDLE_VALUE)
-      {
-        ACE_OS::set_errno_to_last_error ();
-        return -1;
-      }
-    else if (fdata.nFileSizeHigh != 0)
-      {
-        errno = EINVAL;
-        rc = -1;
-      }
-    else
-      {
-        stp->st_mode = static_cast<mode_t>(fdata.dwFileAttributes);
-        stp->st_size = fdata.nFileSizeLow;
-        stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
-        stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
-        stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
-      }
-
-    ::FindClose (fhandle);
-    return rc;
 #elif defined (ACE_HAS_X86_STAT_MACROS)
     // Solaris for intel uses an macro for stat(), this macro is a
     // wrapper for _xstat().
@@ -253,40 +217,14 @@ namespace ACE_OS
   stat (const wchar_t *file, ACE_stat *stp)
   {
     ACE_OS_TRACE ("ACE_OS::stat");
-#if defined (ACE_HAS_WINCE)
-    WIN32_FIND_DATAW fdata;
-
-    int rc = 0;
-    HANDLE const fhandle = ::FindFirstFileW (file, &fdata);
-    if (fhandle == INVALID_HANDLE_VALUE)
-      {
-        ACE_OS::set_errno_to_last_error ();
-        return -1;
-      }
-    else if (fdata.nFileSizeHigh != 0)
-      {
-        errno = EINVAL;
-        rc = -1;
-      }
-    else
-      {
-        stp->st_mode = static_cast<mode_t>(fdata.dwFileAttributes);
-        stp->st_size = fdata.nFileSizeLow;
-        stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
-        stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
-        stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
-      }
-
-    ::FindClose (fhandle);
-    return rc;
-#elif defined (__BORLANDC__) \
-      || defined (_MSC_VER) \
-      || (defined (__MINGW32__) && !defined (__MINGW64_VERSION_MAJOR))
+#if defined (__BORLANDC__) \
+    || defined (_MSC_VER) \
+    || (defined (__MINGW32__) && !defined (__MINGW64_VERSION_MAJOR))
     return ACE_WSTAT_FUNC_NAME (file, stp);
-#else /* ACE_HAS_WINCE */
+#else
     ACE_Wide_To_Ascii nfile (file);
     return ACE_OS::stat (nfile.char_rep (), stp);
-#endif /* ACE_HAS_WINCE */
+#endif /* __BORLANDC__  */
   }
 #endif /* ACE_HAS_WCHAR */
 

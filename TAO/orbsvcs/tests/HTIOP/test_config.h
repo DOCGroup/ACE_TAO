@@ -35,13 +35,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Log_Msg.h"
 
-#if defined (ACE_HAS_WINCE)
-// Note that Pocket PC 2002 will NOT create a directory if it does not start with a leading '\'.
-// PPC 2002 only accepts '\log' as a valid directory name, while 'log\' works under WinCE 3.0.
-# define ACE_LOG_DIRECTORY_FOR_MKDIR ACE_TEXT ("\\log")
-# define ACE_LOG_DIRECTORY           ACE_TEXT ("\\log\\")
-# define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\"#X)
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
 # define ACE_LOG_DIRECTORY ACE_TEXT ("log\\")
 # define ACE_LOG_DIRECTORY_FOR_MKDIR ACE_TEXT ("log\\")
 # define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\"#X)
@@ -57,11 +51,11 @@
 
 #define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".log")
 
-#if defined (ACE_HAS_WINCE) || defined (ACE_HAS_PHARLAP)
+#if defined (ACE_HAS_PHARLAP)
 size_t const ACE_MAX_CLIENTS = 4;
 #else
 size_t const ACE_MAX_CLIENTS = 30;
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_HAS_PHARLAP */
 
 size_t const ACE_NS_MAX_ENTRIES = 1000;
 size_t const ACE_DEFAULT_USECS = 1000;

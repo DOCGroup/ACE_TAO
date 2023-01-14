@@ -200,7 +200,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 
   ACE_TEST_ASSERT (this->proactor_ == 0);
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 
   ACE_UNUSED_ARG (type_proactor);
   ACE_UNUSED_ARG (max_op);
@@ -264,7 +264,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       break;
   }
 
-#endif // (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#endif // (ACE_WIN32)
 
   // always delete implementation  1 , not  !(proactor_impl == 0)
   ACE_NEW_RETURN (this->proactor_,
@@ -1316,8 +1316,7 @@ Client::initiate_write_stream ()
 
   static const size_t complete_message_length = ACE_OS::strlen (complete_message);
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
-
+#if defined (ACE_WIN32)
   ACE_Message_Block *mb1 = 0,
                     *mb2 = 0,
                     *mb3 = 0;
@@ -1354,7 +1353,7 @@ Client::initiate_write_stream ()
                         ACE_TEXT ("Client::ACE_Asynch_Stream::writev")),
                        -1);
     }
-#else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#else /* defined (ACE_WIN32) */
 
   ACE_Message_Block *mb = 0;
 
@@ -1381,7 +1380,7 @@ Client::initiate_write_stream ()
                         ACE_TEXT ("write")),
                        -1);
     }
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
   this->io_count_++;
   this->total_w_++;
@@ -1397,7 +1396,7 @@ Client::initiate_read_stream ()
   static const size_t complete_message_length =
     ACE_OS::strlen (complete_message);
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
   ACE_Message_Block *mb1 = 0,
                     *mb2 = 0,
                     *mb3 = 0,
@@ -1446,7 +1445,7 @@ Client::initiate_read_stream ()
                          ACE_TEXT ("Client::ACE_Asynch_Read_Stream::readv")),
                         -1);
     }
-#else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#else /* defined (ACE_WIN32) */
 
   // Try to read more chunks
   size_t blksize = ( complete_message_length > BUFSIZ ) ?
@@ -1479,7 +1478,7 @@ Client::initiate_read_stream ()
                          ACE_TEXT ("read")),
                         -1);
     }
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
   this->io_count_++;
   this->total_r_++;
@@ -1530,7 +1529,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("error"),
                     result.error ()));
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
         size_t bytes_transferred = result.bytes_transferred ();
         char index = 0;
         for (ACE_Message_Block* mb_i = &mb;
@@ -1561,7 +1560,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                         index,
                         mb_i->rd_ptr ()));
           }
-#else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#else /* defined (ACE_WIN32) */
         // write 0 at string end for proper printout (if end of mb, it's 0 already)
         mb.rd_ptr()[0]  = '\0';
         // move rd_ptr backwards as required for printout
@@ -1570,7 +1569,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("%s = %s\n"),
                     ACE_TEXT ("message_block"),
                     mb.rd_ptr ()));
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("**** end of message ****************\n")));

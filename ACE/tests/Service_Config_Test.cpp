@@ -676,7 +676,7 @@ testNonACEThread ()
 
   u_int errors_before = error;
 
-#if defined (ACE_HAS_WTHREADS) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WTHREADS)
   HANDLE thr_h = (HANDLE)_beginthreadex (0,
                                          0,
                                          &nonacethreadentry,

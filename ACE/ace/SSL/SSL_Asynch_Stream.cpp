@@ -1,7 +1,7 @@
 #include "SSL_Asynch_Stream.h"
 
 // This only works on platforms with Asynchronous IO support.
-#if OPENSSL_VERSION_NUMBER > 0x0090581fL && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+#if OPENSSL_VERSION_NUMBER > 0x0090581fL && (defined (ACE_WIN32) || (defined (ACE_HAS_AIO_CALLS)))
 
 #if defined (ACE_WIN32)
 # include "ace/WIN32_Proactor.h"

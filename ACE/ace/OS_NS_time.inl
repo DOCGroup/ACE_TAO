@@ -94,11 +94,6 @@ ACE_OS::ctime (const time_t *t)
 #if defined (ACE_LACKS_CTIME)
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_WINCE)
-  static ACE_TCHAR buf [ctime_buf_size];
-  return ACE_OS::ctime_r (t,
-                          buf,
-                          ctime_buf_size);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   return ::_wctime (t);
 #else
@@ -119,10 +114,9 @@ ACE_OS::ctime (const time_t *t)
 #  else
   return ::ctime (t);
 #  endif /* ACE_USES_WCHAR */
-# endif /* ACE_HAS_WINCE */
+# endif /* ACE_LACKS_CTIME */
 }
 
-#if !defined (ACE_HAS_WINCE)  /* CE version in OS.cpp */
 ACE_INLINE ACE_TCHAR *
 ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 {
@@ -198,7 +192,6 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   return buf;
 #endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
-#endif /* !ACE_HAS_WINCE */
 
 #if defined (ACE_USES_ULONG_FOR_STAT_TIME)
 ACE_INLINE ACE_TCHAR *

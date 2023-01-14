@@ -240,11 +240,9 @@ main (int, char **)
 #else
 # if defined (WIN32) && defined (ACE_USES_WCHAR)
 // Borrow include list from ace_wchar.h
-# if defined (ACE_HAS_WINCE)
-#   include /**/ <wtypes.h>
-# elif !defined (__BORLANDC__)
+# if !defined (__BORLANDC__)
 #   include /**/ <wchar.h>
-# endif /* ACE_HAS_WINCE || __BORLANDC__ */
+# endif /* __BORLANDC__ */
 
 int
 wmain (int, wchar_t **)

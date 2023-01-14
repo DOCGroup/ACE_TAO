@@ -966,11 +966,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
   HKEY result = 0;
   // Make a copy of hKey
   int errnum;
-#if defined (ACE_HAS_WINCE)
-  if ((errnum = RegOpenKeyEx (hKey, 0, 0, 0, &result)) != ERROR_SUCCESS)
-#else
   if ((errnum = RegOpenKey (hKey, 0, &result)) != ERROR_SUCCESS)
-#endif  // ACE_HAS_WINCE
     {
       errno = errnum;
       return 0;
@@ -994,17 +990,9 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
       // Open the key
       HKEY subkey;
 
-#if defined (ACE_HAS_WINCE)
-      if ((errnum = ACE_TEXT_RegOpenKeyEx (result,
-                                           temp,
-                                           0,
-                                           0,
-                                           &subkey)) != ERROR_SUCCESS)
-#else
       if ((errnum = ACE_TEXT_RegOpenKey (result,
                                          temp,
                                          &subkey)) != ERROR_SUCCESS)
-#endif  // ACE_HAS_WINCE
         {
           // try creating it
           if (!create || (errnum = ACE_TEXT_RegCreateKeyEx (result,

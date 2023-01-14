@@ -216,9 +216,6 @@ ACE_OS_Object_Manager::init ()
       if (this == instance_)
         {
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#   if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-          ACE_CE_Errno::init ();
-#   endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
           ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t, ACE_OS_MONITOR_LOCK)
           if (ACE_OS::thread_mutex_init
               // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
@@ -399,9 +396,6 @@ ACE_OS_Object_Manager::fini ()
                                          ACE_TSS_BASE_LOCK)
 #     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #   endif /* ACE_HAS_TSS_EMULATION */
-#   if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-          ACE_CE_Errno::fini ();
-#   endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
     }
@@ -443,39 +437,17 @@ ACE_OS_Object_Manager::print_error_message (unsigned int line_number,
                                             const ACE_TCHAR *message)
 {
   // To avoid duplication of these const strings in OS.o.
-#if !defined (ACE_HAS_WINCE)
-# ifndef ACE_LACKS_STDERR
+#ifndef ACE_LACKS_STDERR
   fprintf (stderr, "ace/Object_Manager_Base.cpp, line %u: %s ",
            line_number,
            ACE_TEXT_ALWAYS_CHAR (message));
-# else
-  ACE_UNUSED_ARG (line_number);
-  ACE_UNUSED_ARG (message);
-# endif
-# if !defined (ACE_LACKS_PERROR)
-  perror ("failed");
-# endif /* ACE_LACKS_PERROR */
 #else
-  // @@ Need to use the following information.
   ACE_UNUSED_ARG (line_number);
   ACE_UNUSED_ARG (message);
-
-  ACE_TCHAR *lpMsgBuf = 0;
-  ::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER |
-                   FORMAT_MESSAGE_FROM_SYSTEM,
-                   0,
-                   ::GetLastError (),
-                   MAKELANGID (LANG_NEUTRAL,
-                               SUBLANG_DEFAULT),
-                   // Default language
-                   (ACE_TCHAR *) &lpMsgBuf,
-                   0,
-                   0);
-  ::MessageBox (0,
-                lpMsgBuf,
-                ACE_TEXT ("ACE_OS error"),
-                MB_OK);
 #endif
+#if !defined (ACE_LACKS_PERROR)
+  perror ("failed");
+#endif /* ACE_LACKS_PERROR */
 }
 
 int

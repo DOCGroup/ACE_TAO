@@ -24,11 +24,9 @@
 
 #include "ace/os_include/sys/os_types.h"
 
-#if !defined (ACE_LACKS_SIGNAL_H)
-   extern "C" {
+extern "C" {
 #  include /**/ <signal.h>
-   }
-#endif /* !ACE_LACKS_SIGNAL_H */
+}
 
 #if defined (ACE_HAS_SIGINFO_T)
 #  if !defined (ACE_LACKS_SIGINFO_H)
@@ -144,10 +142,6 @@ extern "C"
    // highest-numbered signal.
 #  define ACE_NSIG NSIG
 #endif /* ACE_VXWORKS */
-
-#if defined (ACE_HAS_WINCE)
-  typedef void (__cdecl * __sighandler_t)(int);
-#endif
 
 #if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
   // Prototypes for both signal() and struct sigaction are consistent..

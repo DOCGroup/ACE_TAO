@@ -77,7 +77,6 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   // Ignore the error value since the directory may already exist.
   const ACE_TCHAR *test_dir {};
 
-#if !defined (ACE_HAS_WINCE)
 #  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
 #  else
@@ -93,7 +92,6 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 
   if (test_dir == 0)
-#endif /* ACE_HAS_WINCE */
     test_dir = ACE_TEXT ("");
 
   // This could be done with ACE_OS::sprintf() but it requires different
@@ -123,11 +121,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   // directory does exist, it causes a wierd console error message
   // about "cat: input error on standard input: Is a directory".  So,
   // VxWorks users must create the directory manually.
-#   if defined (ACE_HAS_WINCE)
-      ACE_OS::mkdir (ACE_LOG_DIRECTORY_FOR_MKDIR);
-#   else
       ACE_OS::mkdir (ACE_LOG_DIRECTORY);
-#   endif  // ACE_HAS_WINCE
 # endif /* ! VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)

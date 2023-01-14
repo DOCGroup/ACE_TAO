@@ -122,7 +122,7 @@ Dirent_Test: !VxWorks_RTP !LabVIEW_RT
 Dynamic_Priority_Test
 Dynamic_Test
 Enum_Interfaces_Test: !NO_NETWORK !LynxOS
-Env_Value_Test: !WinCE !LabVIEW_RT
+Env_Value_Test: !LabVIEW_RT
 FIFO_Test: !ACE_FOR_TAO
 Framework_Component_Test: !STATIC !nsk
 Future_Set_Test: !nsk !ACE_FOR_TAO
@@ -279,7 +279,7 @@ SOCK_SEQPACK_SCTP_Test: !MSVC !nsk !ACE_FOR_TAO
 SOCK_Test_IPv6: !nsk
 Process_Strategy_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
 Recursive_Condition_Bug_Test: !ST
-UnloadLibACE: !STATIC !WinCE !LabVIEW_RT
+UnloadLibACE: !STATIC !LabVIEW_RT
 UUID_Test: !NO_UUID !ACE_FOR_TAO
 Wild_Match_Test
 SSL/Bug_2912_Regression_Test: SSL !ACE_FOR_TAO !BAD_AIO

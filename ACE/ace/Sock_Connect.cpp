@@ -38,15 +38,6 @@ const struct in6_addr in6addr_linklocal_allnodes = IN6ADDR_LINKLOCAL_ALLNODES_IN
 const struct in6_addr in6addr_linklocal_allrouters = IN6ADDR_LINKLOCAL_ALLROUTERS_INIT;
 #endif /* ACE_VXWORKS <= 0x670 && __RTP__ && ACE_HAS_IPV6 */
 
-#if defined (ACE_HAS_WINCE)
-#include /**/ <iphlpapi.h>
-# if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && (_WIN32_WCE < 0x600) && defined (ACE_HAS_IPV6)
-#  include /**/ <ws2tcpip.h>
-const struct in6_addr in6addr_any = IN6ADDR_ANY_INIT;
-const struct in6_addr in6addr_loopback = IN6ADDR_LOOPBACK_INIT;
-# endif
-#endif  // ACE_HAS_WINCE
-
 #if defined (ACE_WIN32) && defined (ACE_HAS_PHARLAP)
 # include "ace/OS_NS_stdio.h"
 #endif
@@ -468,105 +459,7 @@ static int
 get_ip_interfaces_win32 (size_t &count,
                          ACE_INET_Addr *&addrs)
 {
-# if defined (ACE_HAS_WINCE) && defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  // moved the ACE_HAS_WINCE impl ahaid of ACE_HAS_WINSOCK2 because
-  // WINCE in fact has winsock2, but doesn't properly support the
-  // WSAIoctl for obtaining IPv6 address info.
-  PIP_ADAPTER_ADDRESSES AdapterAddresses = 0;
-  ULONG OutBufferLength = 0;
-  ULONG RetVal = 0;
-  unsigned char *octet_buffer = 0;
-
-  RetVal =
-    GetAdaptersAddresses(AF_UNSPEC,
-                         0,
-                         0,
-                         AdapterAddresses,
-                         &OutBufferLength);
-
-  if (RetVal != ERROR_BUFFER_OVERFLOW)
-    {
-      return -1;
-    }
-
-  ACE_NEW_RETURN (octet_buffer, unsigned char[OutBufferLength],-1);
-  AdapterAddresses = (IP_ADAPTER_ADDRESSES *)octet_buffer;
-
-  RetVal =
-    GetAdaptersAddresses(AF_UNSPEC,
-                         0,
-                         0,
-                         AdapterAddresses,
-                         &OutBufferLength);
-
-  if (RetVal != NO_ERROR)
-    {
-      delete [] octet_buffer;
-      return -1;
-     }
-
-  // If successful, output some information from the data we received
-  PIP_ADAPTER_ADDRESSES AdapterList = AdapterAddresses;
-  while (AdapterList)
-    {
-      if (AdapterList->OperStatus == IfOperStatusUp)
-        {
-          if (AdapterList->IfIndex != 0)
-            ++count;
-          if (AdapterList->Ipv6IfIndex != 0)
-            ++count;
-        }
-      AdapterList = AdapterList->Next;
-    }
-
-  AdapterList = AdapterAddresses;
-
-  ACE_NEW_RETURN (addrs, ACE_INET_Addr[count],-1);
-  count = 0;
-  for (AdapterList =  AdapterAddresses;
-       AdapterList != 0;
-       AdapterList = AdapterList->Next)
-    {
-      if (AdapterList->OperStatus != IfOperStatusUp)
-        continue;
-
-      IP_ADAPTER_UNICAST_ADDRESS *uni = 0;
-      if (AdapterList->IfIndex != 0)
-        for (uni = AdapterList->FirstUnicastAddress;
-             uni != 0;
-             uni = uni->Next)
-          {
-            SOCKET_ADDRESS *sa_addr = &uni->Address;
-            if (sa_addr->lpSockaddr->sa_family == AF_INET)
-              {
-                sockaddr_in *sin = (sockaddr_in*)sa_addr->lpSockaddr;
-                addrs[count].set(sin,sa_addr->iSockaddrLength);
-                ++count;
-                break;
-              }
-          }
-      if (AdapterList->Ipv6IfIndex != 0)
-        {
-        for (uni = AdapterList->FirstUnicastAddress;
-             uni != 0;
-             uni = uni->Next)
-            {
-              SOCKET_ADDRESS *sa_addr = &uni->Address;
-              if (sa_addr->lpSockaddr->sa_family == AF_INET6)
-                {
-                  sockaddr_in *sin = (sockaddr_in*)sa_addr->lpSockaddr;
-                  addrs[count].set(sin,sa_addr->iSockaddrLength);
-                  ++count;
-                  break;
-                }
-            }
-        }
-    }
-
-  delete [] octet_buffer;
-  return 0;
-
-# elif defined (ACE_HAS_PHARLAP)
+# if defined (ACE_HAS_PHARLAP)
   // PharLap ETS has its own kernel routines to rummage through the device
   // configs and extract the interface info, but only for Pharlap RT.
 #   if !defined (ACE_HAS_PHARLAP_RT)
@@ -766,7 +659,7 @@ get_ip_interfaces_win32 (size_t &count,
 
   return 0;
 
-# endif /* ACE_HAS_WINCE */
+# endif /* ACE_HAS_PHARLAP */
 }
 
 #elif defined (ACE_HAS_GETIFADDRS)

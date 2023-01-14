@@ -51,7 +51,7 @@ ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#  elif !defined (ACE_HAS_WINCE)
+#  else
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -94,60 +94,9 @@ ace_os_main_i (ACE_Main_Base &mbase, int argc, char *argv[]) /* user's entry poi
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#  else /* ACE_HAS_WINCE */
+#  endif   /* !ACE_WIN32 */
 
-// CE only gets a command line string;  no argv. So we need to convert it
-// when the main entrypoint expects argc/argv. ACE_ARGV supports this.
-#    include "ace/OS_NS_string.h"
-#    include "ace/OS_NS_ctype.h"
-#    include "ace/ACE.h"
-#    include "ace/ARGV.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-ACE_Main_Base::~ACE_Main_Base ()
-{
-}
-
-int ACE_Main_Base::run (HINSTANCE,
-                        HINSTANCE,
-                        LPWSTR lpCmdLine,
-                        int)
-{
-  ACE_TCHAR cmdline[1024];
-  ACE_TCHAR msg_file [MAXPATHLEN];
-  if (ACE_TEXT_GetModuleFileName (0, msg_file, MAXPATHLEN))
-    {
-      bool quote = false;
-      for (size_t i(0); !quote && msg_file[i]; ++i)
-        {
-          if (ACE_OS::ace_isspace (msg_file[i])) quote = true;
-        }
-      ACE_TCHAR *cmd_iter = cmdline;
-      if (quote)
-        {
-          *cmd_iter++ = ACE_TEXT ('"');
-        }
-      ACE_OS::strcpy (cmd_iter, msg_file);
-      ACE_OS::strcat (cmd_iter, quote ? ACE_TEXT ("\" ") : ACE_TEXT (" "));
-    }
-  else
-    {
-      ACE_OS::strcpy (cmdline, ACE_TEXT ("program "));
-    }
-  ACE_OS::strcat (cmdline, ACE_TEXT_WCHAR_TO_TCHAR (lpCmdLine));
-  ACE_ARGV ce_argv (cmdline);
-  ACE::init ();
-  ACE_MAIN_OBJECT_MANAGER
-  int const i = this->run_i (ce_argv.argc (), ce_argv.argv ());
-  ACE::fini ();
-  return i;
-}
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#  endif   /* !ACE_HAS_WINCE */
-
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
 #endif /* ACE_DOESNT_DEFINE_MAIN */
 
