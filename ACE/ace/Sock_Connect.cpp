@@ -1222,7 +1222,7 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 # endif /* SIOCGLIFNUM */
 return 0;
 
-#elif (defined (__unix) || defined (__unix__) || defined (ACE_OPENVMS) || defined (ACE_HAS_RTEMS) || (defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS))) && !defined (ACE_LACKS_NETWORKING)
+#elif (defined (__unix) || defined (__unix__) || defined (ACE_HAS_RTEMS) || (defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS))) && !defined (ACE_LACKS_NETWORKING)
   // Note: DEC CXX doesn't define "unix".  BSD compatible OS: HP UX,
   // AIX, SunOS 4.x perform some ioctls to retrieve ifconf list of
   // ifreq structs no SIOCGIFNUM on SunOS 4.x, so use guess and scan
