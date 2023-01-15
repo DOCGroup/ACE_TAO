@@ -494,9 +494,6 @@ ACE_HAS_SIG_ATOMIC_T                    Compiler/platform defines the
                                         sig_atomic_t typedef
 ACE_HAS_SIG_C_FUNC                      Compiler requires extern "C"
                                         functions for signals.
-ACE_HAS_SIZET_SOCKET_LEN                OS/compiler uses size_t *
-                                        rather than int * for socket
-                                        lengths
 ACE_HAS_SOCKADDR_IN_SIN_LEN             Platform has sin_len member in struct
                                         sockaddr_in.
 ACE_HAS_SOCKADDR_IN6_SIN_LEN            Platform has sin6_len member in struct
