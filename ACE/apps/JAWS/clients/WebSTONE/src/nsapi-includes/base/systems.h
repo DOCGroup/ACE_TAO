@@ -152,24 +152,6 @@
 #define DLL_CAPABLE
 #define DLL_DLOPEN
 
-#elif defined(HPUX)
-
-#define FILE_UNIX
-#undef FILE_STDIO
-#define DAEMON_UNIX_MOBRULE
-#define DAEMON_NEEDS_SEMAPHORE
-#define NET_SOCKETS
-#define FILE_UNIX_MMAP
-#define FILE_MMAP_FLAGS MAP_PRIVATE
-#undef BSD_SIGNALS
-#undef BSD_RLIMIT
-#undef NEED_CRYPT_H
-#define AUTH_DBM
-#define SEM_FLOCK
-#define ZERO(ptr,len) memset(ptr,0,len)
-#define DLL_CAPABLE
-#define DLL_HPSHL
-
 #else      /* Windows NT */
 
 #include <wtypes.h>

@@ -80,14 +80,10 @@ templates ?= automatic
 versioned_so ?= 1
 with_ld ?=
 ifneq ($(versioned_so),0)
-  ifeq ($(with_ld),hpux)
-    SOFLAGS += -Wl,+h -Wl,$(SONAME)
+  ifeq ($(with_ld),aix)
+  # What to do here???
   else
-    ifeq ($(with_ld),aix)
-    # What to do here???
-    else
-      SOFLAGS += -Wl,-h -Wl,$(SONAME)
-    endif
+    SOFLAGS += -Wl,-h -Wl,$(SONAME)
   endif
 endif
 

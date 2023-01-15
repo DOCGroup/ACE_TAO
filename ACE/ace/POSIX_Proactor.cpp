@@ -75,15 +75,8 @@ ACE_POSIX_Proactor::ACE_POSIX_Proactor ()
     os_id_ = ACE_OS_SUN_57;
   else if (ACE_OS::strcasecmp (Buf , "5.8") == 0)
     os_id_ = ACE_OS_SUN_58;
-
-#elif defined(HPUX)
-
-  os_id_ = ACE_OS_HPUX;   // set family
-
 #elif defined(__OpenBSD)
-
   os_id_ = ACE_OS_OPENBSD; // set family
-
   // do the same
 
 //#else defined (LINUX, __FreeBSD__ ...)
@@ -935,16 +928,12 @@ void ACE_POSIX_AIOCB_Proactor::check_max_aio_num ()
      aiocb_list_max_size_ = max_os_aio_num;
 #endif
 
-#if defined (HPUX) || defined (__FreeBSD__)
-  // Although HPUX 11.00 allows to start 2048 AIO's for all process in
-  // system it has a limit 256 max elements for aio_suspend () It is a
-  // pity, but ...
-
+#if defined (__FreeBSD__)
   long max_os_listio_num = ACE_OS::sysconf (_SC_AIO_LISTIO_MAX);
   if (max_os_listio_num > 0
       && aiocb_list_max_size_ > (unsigned long) max_os_listio_num)
     aiocb_list_max_size_ = max_os_listio_num;
-#endif /* HPUX || __FreeBSD__ */
+#endif /* __FreeBSD__ */
 
   // check for user-defined value
   // ACE_AIO_MAX_SIZE if defined in POSIX_Proactor.h

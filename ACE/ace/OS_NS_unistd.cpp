@@ -403,12 +403,6 @@ ACE_OS::num_processors ()
     return num_processors;
   else
     return -1;
-#elif defined (__hpux)
-  struct pst_dynamic psd;
-  if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
-    return psd.psd_max_proc_cnt;
-  else
-    return -1;
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif
@@ -455,12 +449,6 @@ ACE_OS::num_processors_online ()
   size_t len = sizeof (num_processors);
   if (::sysctl (mib, 2, &num_processors, &len, 0, 0) != -1)
     return num_processors;
-  else
-    return -1;
-#elif defined (__hpux)
-  struct pst_dynamic psd;
-  if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
-    return psd.psd_proc_cnt;
   else
     return -1;
 #else

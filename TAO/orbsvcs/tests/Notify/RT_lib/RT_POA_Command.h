@@ -50,10 +50,6 @@ protected:
   /// Create the POA with the params parsed.
   void create (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa);
 
-#ifdef HPUX_11
-   // Remove clash with /usr/include/machine/cpu.h and /usr/include/pa/cpu.h
-#undef COMMAND
-#endif
   enum COMMAND
   {
     CREATE,

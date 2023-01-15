@@ -107,7 +107,7 @@
 # endif /* ACE_HAS_PROCESS_SPAWN */
 
 # if !defined (ACE_HAS_DYNAMIC_LINKING)
-#   if defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || defined (ACE_WIN32) || defined (ACE_VXWORKS) || defined (__hpux)
+#   if defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || defined (ACE_WIN32) || defined (ACE_VXWORKS)
 #     define ACE_HAS_DYNAMIC_LINKING 1
 #   endif
 # endif /* ACE_HAS_DYNAMIC_LINKING */
@@ -254,7 +254,7 @@
 #if !defined (ACE_UNUSED_ARG)
 # if defined (__GNUC__) || defined (__BORLANDC__)
 #   define ACE_UNUSED_ARG(a) (void) (a)
-# elif defined (ghs) || defined (__hpux) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI)
+# elif defined (ghs) || defined (__rational__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  @note that may only be true if -O is enabled,
@@ -265,7 +265,7 @@
 # endif /* ghs ..... */
 #endif /* !ACE_UNUSED_ARG */
 
-#if defined (_MSC_VER) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || (defined (__HP_aCC) && (__HP_aCC < 39000 || __HP_aCC >= 60500)) || defined (__IAR_SYSTEMS_ICC__)
+#if defined (_MSC_VER) || defined (ghs) || defined(__BORLANDC__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__IAR_SYSTEMS_ICC__)
 # define ACE_NOTREACHED(a)
 #else  /* ghs || ..... */
 # define ACE_NOTREACHED(a) a

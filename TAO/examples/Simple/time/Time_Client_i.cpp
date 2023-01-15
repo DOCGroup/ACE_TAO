@@ -27,13 +27,8 @@ Time_Client_i::run (const char *name,
   try
     {
       // 64-bit OS's require pointers to be aligned on an
-      // 8 byte boundary.  64-bit HP-UX requires a double to do this
-      // while a long does it for 64-bit Solaris.
-#if defined (HPUX)
-      CORBA::Double padding = 0.0;
-#else
+      // 8 byte boundary.
       CORBA::Long padding = 0;
-#endif /* HPUX */
       time_t timedate;
 
       ACE_UNUSED_ARG (padding);

@@ -421,7 +421,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                                 result),
               int, result);
   // We need to adjust this to make the POSIX and Solaris return
-  // values consistent.  EAGAIN is from Pthreads DRAFT4 (HP-UX 10.20 and down)
+  // values consistent.  EAGAIN is from Pthreads DRAFT4
   if (result == -1 &&
       (errno == ETIMEDOUT || errno == EAGAIN))
     errno = ETIME;
@@ -1601,8 +1601,8 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #  else
   if (name)
     {
-#    if defined (sun) || defined (HPUX)
-      // Solaris and HP-UX require the name to start with a slash. Solaris
+#    if defined (sun)
+      // Solaris require the name to start with a slash. Solaris
       // further requires that there be no other slashes than the first.
       const char *last_slash = ACE_OS::strrchr (name, '/');
       char name2[MAXPATHLEN];
@@ -1616,7 +1616,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
       else
         name = last_slash;         // Chop off chars preceding last slash
 #      endif /* sun */
-#    endif /* sun || HPUX */
+#    endif /* sun */
 
       ACE_ALLOCATOR_RETURN (s->name_,
                             ACE_OS::strdup (name),

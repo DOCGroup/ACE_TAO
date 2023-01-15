@@ -49,18 +49,6 @@ const struct in6_addr in6addr_linklocal_allrouters = IN6ADDR_LINKLOCAL_ALLROUTER
 
 # if defined (SIOCGLIFCONF)
 #  define SIOCGIFCONF_CMD SIOCGLIFCONF
-#  if defined (__hpux)
-#   define IFREQ if_laddrreq
-#   define IFCONF if_laddrconf
-#   define IFC_REQ iflc_req
-#   define IFC_LEN iflc_len
-#   define IFC_BUF iflc_buf
-#   define IFR_ADDR iflr_addr
-#   define IFR_NAME iflr_name
-#   define IFR_FLAGS iflr_flags
-#   undef SETFAMILY
-#   define SA_FAMILY sa_family
-#  else
 #   define IFREQ lifreq
 #   define IFCONF lifconf
 #   define IFC_REQ lifc_req
@@ -73,7 +61,6 @@ const struct in6_addr in6addr_linklocal_allrouters = IN6ADDR_LINKLOCAL_ALLROUTER
 #   define IFC_FAMILY lifc_family
 #   define IFC_FLAGS lifc_flags
 #   define SA_FAMILY ss_family
-#  endif
 # else
 #  define SIOCGIFCONF_CMD SIOCGIFCONF
 #  define IFREQ ifreq
@@ -738,177 +725,6 @@ get_ip_interfaces_getifaddrs (size_t &count,
 
   return 0;
 }
-#elif defined (__hpux)
-static int
-get_ip_interfaces_hpux (size_t &count,
-                        ACE_INET_Addr *&addrs)
-{
-  size_t num_ifs = 0;
-  size_t num_ifs_found = 0;
-
-  // Call specific routine as necessary.
-  ACE_HANDLE handle = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
-  ACE_HANDLE handle_ipv6 = ACE_INVALID_HANDLE;
-
-  if (handle == ACE_INVALID_HANDLE)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE::get_ip_interfaces:open")),
-                      -1);
-
-  int result = 0;
-  int tmp_how_many = 0;
-
-  result = ACE_OS::ioctl (handle,
-                          SIOCGIFNUM,
-                          (caddr_t) &tmp_how_many);
-  if (result != -1)
-    num_ifs = (size_t)tmp_how_many;
-
-# if defined (ACE_HAS_IPV6)
-  tmp_how_many = 0;
-  handle_ipv6 = ACE_OS::socket (PF_INET6, SOCK_DGRAM, 0);
-  result = ACE_OS::ioctl (handle_ipv6,
-                          SIOCGLIFNUM,
-                          (caddr_t) &tmp_how_many);
-  if (result != -1)
-    num_ifs += (size_t)tmp_how_many;
-# endif
-
-  if (num_ifs == 0)
-    {
-      ACE_OS::close (handle);
-      ACE_OS::close (handle_ipv6);
-      return -1;
-    }
-
-  // ioctl likes to have an extra IFREQ structure to mark the end of
-  // what it returned, so increase the num_ifs by one.
-  ++num_ifs;
-
-  //HPUX requires two passes, First for IPv4, then for IPv6
-
-  struct ifreq *ifs = 0;
-  ACE_NEW_RETURN (ifs,
-                  struct ifreq[num_ifs],
-                  -1);
-  ACE_OS::memset (ifs, 0, num_ifs * sizeof (struct ifreq));
-
-  ACE_Auto_Array_Ptr<struct ifreq> p_ifs (ifs);
-
-  if (p_ifs.get() == 0)
-    {
-      ACE_OS::close (handle);
-      ACE_OS::close (handle_ipv6);
-      errno = ENOMEM;
-      return -1;
-    }
-
-  struct ifconf ifcfg;
-  ACE_OS::memset (&ifcfg, 0, sizeof (struct ifconf));
-
-  ifcfg.ifc_req = p_ifs.get ();
-  ifcfg.ifc_len = num_ifs * sizeof (struct ifreq);
-
-  if (ACE_OS::ioctl (handle,
-                     SIOCGIFCONF,
-                     (char *) &ifcfg) == -1)
-    {
-      ACE_OS::close (handle);
-      ACELIB_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("ACE::get_ip_interfaces:")
-                         ACE_TEXT ("ioctl - SIOCGIFCONF failed")),
-                        -1);
-    }
-
-  ACE_OS::close (handle);
-
-  // Now create and initialize output array.
-
-  ACE_NEW_RETURN (addrs,
-                  ACE_INET_Addr[num_ifs],
-                  -1); // caller must free
-
-  struct ifreq *pcur = p_ifs.get ();
-  num_ifs_found = ifcfg.ifc_len / sizeof (struct ifreq); // get the number of returned ifs
-
-  for (size_t i = 0;
-       i < num_ifs_found;
-       i++)
-    {
-        struct sockaddr_in *addr =
-            reinterpret_cast<sockaddr_in *> (&pcur->ifr_addr);
-        if (addr->sin_addr.s_addr != 0)
-        {
-            addrs[count].set ((u_short) 0,
-                              addr->sin_addr.s_addr,
-                              0);
-            ++count;
-        }
-        ++pcur;
-    }
-
-# if defined (ACE_HAS_IPV6)
-
-  if (handle_ipv6 != ACE_INVALID_HANDLE)
-    {
-      struct if_laddrreq *lifs = 0;
-      ACE_NEW_RETURN (lifs,
-                      struct if_laddrreq[num_ifs],
-                      -1);
-      ACE_OS::memset (lifs, 0, num_ifs * sizeof (struct if_laddrreq));
-
-      ACE_Auto_Array_Ptr<struct if_laddrreq> p_lifs (lifs);
-
-      if (p_lifs.get() == 0)
-        {
-          ACE_OS::close (handle);
-          ACE_OS::close (handle_ipv6);
-          errno = ENOMEM;
-          return -1;
-        }
-
-      struct if_laddrconf lifcfg;
-      ACE_OS::memset (&lifcfg, 0, sizeof (struct if_laddrconf));
-
-      lifcfg.iflc_req = p_lifs.get ();
-      lifcfg.iflc_len = num_ifs * sizeof (struct if_laddrreq);
-
-      if (ACE_OS::ioctl (handle_ipv6,
-                         SIOCGLIFCONF,
-                         (char *) &lifcfg) == -1)
-        {
-          ACE_OS::close (handle);
-          ACELIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%p\n"),
-                             ACE_TEXT ("ACE::get_ip_interfaces:")
-                             ACE_TEXT ("ioctl - SIOCGLIFCONF failed")),
-                            -1);
-        }
-
-      ACE_OS::close (handle_ipv6);
-
-      struct if_laddrreq *plcur = p_lifs.get ();
-      num_ifs_found = lifcfg.iflc_len / sizeof (struct if_laddrreq);
-
-      for (size_t i = 0;
-           i < num_ifs_found;
-           i++)
-        {
-            struct sockaddr_in *addr =
-                reinterpret_cast<sockaddr_in *> (&plcur->iflr_addr);
-            if (!IN6_IS_ADDR_UNSPECIFIED(&reinterpret_cast<sockaddr_in6 *>(addr)->sin6_addr))
-            {
-                addrs[count].set(addr, sizeof(struct sockaddr_in6));
-                ++count;
-            }
-            ++plcur;
-        }
-    }
-# endif /* ACE_HAS_IPV6 */
-  return 0;
-}
 #elif defined (_AIX)
 static int
 get_ip_interfaces_aix (size_t &count,
@@ -989,7 +805,7 @@ get_ip_interfaces_aix (size_t &count,
   return 0;
 }
 
-#endif // ACE_WIN32 || ACE_HAS_GETIFADDRS || __hpux || _AIX
+#endif // ACE_WIN32 || ACE_HAS_GETIFADDRS _AIX
 
 
 // return an array of all configured IP interfaces on this host, count
@@ -1008,8 +824,6 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   return get_ip_interfaces_win32 (count, addrs);
 #elif defined (ACE_HAS_GETIFADDRS)
   return get_ip_interfaces_getifaddrs (count, addrs);
-#elif defined (__hpux)
-  return get_ip_interfaces_hpux (count, addrs);
 #elif defined (_AIX)
   return get_ip_interfaces_aix (count, addrs);
 #elif (defined (__unix) || defined (__unix__) || (defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS)) || defined (ACE_HAS_RTEMS)) && !defined (ACE_LACKS_NETWORKING)
@@ -1202,7 +1016,7 @@ int
 ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 {
 #if defined (SIOCGIFNUM)
-# if defined (SIOCGLIFNUM) && !defined (ACE_LACKS_STRUCT_LIFNUM)
+# if defined (SIOCGLIFNUM)
   int cmd = SIOCGLIFNUM;
   struct lifnum if_num = {AF_UNSPEC,0,0};
 # else
@@ -1215,7 +1029,7 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
                        ACE_TEXT ("ACE::count_interfaces:")
                        ACE_TEXT ("ioctl - SIOCGLIFNUM failed")),
                       -1);
-# if defined (SIOCGLIFNUM) && !defined (ACE_LACKS_STRUCT_LIFNUM)
+# if defined (SIOCGLIFNUM)
   how_many = if_num.lifn_count;
 # else
   how_many = if_num;
@@ -1341,10 +1155,8 @@ ACE::get_handle ()
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 #if defined (sparc)
   handle = ACE_OS::open ("/dev/udp", O_RDONLY);
-#elif defined (__unix) || defined (__unix__) || defined (_AIX) || defined (__hpux) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600)) || defined (ACE_HAS_RTEMS)
-  // Note: DEC CXX doesn't define "unix" BSD compatible OS: HP UX,
-  // AIX, SunOS 4.x
-
+#elif defined (__unix) || defined (__unix__) || defined (_AIX) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600)) || defined (ACE_HAS_RTEMS)
+  // Note: DEC CXX doesn't define "unix" BSD compatible OS: AIX, SunOS 4.x
   handle = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 #endif /* sparc */
   return handle;

@@ -83,8 +83,6 @@ public:
     ACE_OS_SUN_56   = ACE_OS_SUN | 0x0002,
     ACE_OS_SUN_57   = ACE_OS_SUN | 0x0004,
     ACE_OS_SUN_58   = ACE_OS_SUN | 0x0008,
-    ACE_OS_HPUX     = 0x0400,          // HPUX family
-    ACE_OS_HPUX_11  = ACE_OS_HPUX | 0x0001,
     ACE_OS_LINUX    = 0x0800,          // Linux family
     ACE_OS_FREEBSD  = 0x1000,          // FreeBSD family
     ACE_OS_IRIX     = 0x2000,          // SGI IRIX family

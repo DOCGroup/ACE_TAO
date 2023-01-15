@@ -253,10 +253,6 @@ ACE_HAS_CLOCK_GETTIME_MONOTONIC         Platform supports POSIX.1b
                                         clock_gettime () with the clock-id CLOCK_MONOTONIC
 ACE_HAS_CLOCK_SETTIME                   Platform supports POSIX.1b
                                         clock_settime ()
-ACE_HAS_CONFLICTING_XTI_MACROS          OS's XTI header file defines some
-                                        TCP-related macros that netinet/tcp.h
-                                        also defines, but they conflict
-                                        (only seen on HP-UX 11).
 ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES    Prototypes for both signal()
                                         and struct sigaction are
                                         consistent.
@@ -271,7 +267,7 @@ ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT  When a base-class is a
                                         then this class template must be
                                         explicitly exported
 ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION  For the GCC compiler
-                                        on AIX, HPUX and VxWorks we have to
+                                        on AIX and VxWorks we have to
                                         explicitly instantiate static template
                                         members else we get multiple instances
                                         of the same static.
@@ -498,9 +494,6 @@ ACE_HAS_SIG_ATOMIC_T                    Compiler/platform defines the
                                         sig_atomic_t typedef
 ACE_HAS_SIG_C_FUNC                      Compiler requires extern "C"
                                         functions for signals.
-ACE_HAS_SIZET_SOCKET_LEN                OS/compiler uses size_t *
-                                        rather than int * for socket
-                                        lengths
 ACE_HAS_SOCKADDR_IN_SIN_LEN             Platform has sin_len member in struct
                                         sockaddr_in.
 ACE_HAS_SOCKADDR_IN6_SIN_LEN            Platform has sin6_len member in struct
@@ -744,9 +737,6 @@ ACE_LACKS_READDIR                       Platform lacks readdir and the readdir
 ACE_LACKS_COND_TIMEDWAIT_RESET          pthread_cond_timedwait does
                                         *not* reset the time argument
                                         when the lock is acquired.
-ACE_LACKS_CONST_STRBUF_PTR              Platform uses struct strbuf *
-                                        rather than const struct
-                                        strbuf * (e.g., HP/UX 10.x)
 ACE_LACKS_CONST_TIMESPEC_PTR            Platform forgot const in
                                         cond_timewait (e.g., HP/UX).
 ACE_LACKS_COND_T                        Platform lacks condition
@@ -1087,13 +1077,6 @@ A
      returns.  Note: if the allocated block is beyond the current
      stack limit, the resulting behavior is undefined.
 
-  In HPUX:
-     no equivalent.
-
-  Notes:
-     in HPUX it has to do new and delete. Affects performance.
-
-
 ACE_HAS_AUTOMATIC_INIT_FINI:
 ----------------------------
 
@@ -1112,15 +1095,6 @@ ACE_HAS_AUTOMATIC_INIT_FINI:
      _init() and _fini() to be executed as is:
        dlsym ((char *) handle, "_fini").
 
-  In HPUX:
-     don't set.
-     Maybe have to look into shl_load( ), shl_definesym( ),
-     shl_findsym( ), shl_gethandle( ), shl_getsymbols( ),
-     shl_unload( ), shl_get( )(3X) - explicit load of shared libraries
-     Means Service Configurator won't be available.
-     TBA.
-
-
 ACE_HAS_HI_RES_TIMER:
 ---------------------
 
@@ -1136,10 +1110,6 @@ ACE_HAS_HI_RES_TIMER:
      in the past; it is not correlated in any way to the time  of
      day,  and  thus  is not subject to resetting, drifting, etc.
 
-  In HPUX
-     look into: getclock(), reltimer(), getitimer()
-     maybe even vtimes structure vm_utime, vm_stime ?
-
   Notes:
      TBA
 
@@ -1149,9 +1119,6 @@ ACE_LACKS_T_ERRNO:
 
   Used In:
      ace/OS.h
-
-  HPUX:
-     set it.
 
   Notes:
      if set, adds:
@@ -1163,9 +1130,6 @@ ACE_HAS_POSIX_NONBLOCK:
 
   Used in:
      ace/OS.h
-
-  HPUX:
-     set it.
 
   Notes:
      if defined, sets ACE_NONBLOCK and O_NONBLOCK
@@ -1191,13 +1155,6 @@ ACE_HAS_PROC_FS:
      procfs.h defines things for the prpsinfo structure (basically to
      do a "ps" from inside a program).
 
-  HPUX:
-     don't set: obviously a different mechanism.
-     Look into /usr/include/sys/proc.h.  The structure is proc.  The
-     pointer to the kernel's proc table may be obtained by
-     extern  struct  proc *proc, *procNPROC;
-     extern  int nproc;
-
 
 ACE_HAS_PRUSAGE_T:
 ------------------
@@ -1211,10 +1168,6 @@ ACE_HAS_PRUSAGE_T:
      stop() and basically gets real_time, user_time, system_time for
      an interval.
      This stuff is highly non-portable.
-
-  HPUX:
-     don't set
-
 
 ACE_HAS_SEMUN:
 --------------
@@ -1230,14 +1183,6 @@ ACE_HAS_SEMUN:
            ushort               *array; /* array for GETALL & SETALL */
      };
 
-  HPUX:
-     don't set.
-     in /usr/include/sem.h:
-     /* The fourth argument to semctl() varies depending on the value of
-       its first argument.  If desired, "union semun" can be declared
-       by the user, but this is not necessary since the individual
-       member can just be passed as the argument. */
-
 
 ACE_HAS_SIG_ATOMIC_T:
 ---------------------
@@ -1250,12 +1195,6 @@ ACE_HAS_SIG_ATOMIC_T:
      typedef int sig_atomic_t;
      This is used in the Reactor and service configurator.
 
-  HPUX:
-     set it.
-     in /usr/include/sys/signal.h:
-     typedef unsigned int sig_atomic_t;
-
-
 ACE_HAS_SSIZE_T:
 ----------------
 
@@ -1266,11 +1205,6 @@ ACE_HAS_SSIZE_T:
      if not defined, does a
      typedef int ssize_t;
      used mostly in IPC_SAP.  (don't confuse with size_t).
-
-  HPUX:
-     set it.
-     in /usr/include/sys/types.h
-
 
 ACE_HAS_STRBUF_T:
 -----------------
@@ -1294,10 +1228,6 @@ ACE_HAS_STRBUF_T:
      int putmsg(int fildes, const struct strbuf *ctlptr,
           const struct strbuf *dataptr, int flags);
 
-  HPUX:
-     don't set.
-     no SYS V.4 streams.
-
 
 ACE_HAS_STREAMS:
 ----------------
@@ -1308,10 +1238,6 @@ ACE_HAS_STREAMS:
 
   Notes:
      if defined, includes <stropts.h>
-
-  HPUX:
-     don't set.
-     no SYS V.4 streams.
 
 
 ACE_HAS_STREAM_PIPES:
@@ -1335,10 +1261,6 @@ ACE_HAS_STREAM_PIPES:
      if not set, won't be able to use the SPIPE class (IPC_SAP) with
      rendezvous handles.
 
-  HPUX:
-     don't set.
-     No sysV.4 streams.
-
 
 ACE_HAS_SVR4_DYNAMIC_LINKING:
 -----------------------------
@@ -1350,12 +1272,6 @@ ACE_HAS_SVR4_DYNAMIC_LINKING:
   Notes:
      if defined, includes <dlfcn.h>
      with dlopen(), dlsym(), etc..
-
-  HPUX:
-     don't set.
-     has its own:
-     shl_findsym( ), shl_gethandle( ), shl_getsymbols( ),
-     shl_unload( ), shl_get( )(3X) - explicit load of shared libraries
 
 
 ACE_HAS_SVR4_GETTIMEOFDAY:
@@ -1370,16 +1286,6 @@ ACE_HAS_SVR4_GETTIMEOFDAY:
 
   Solaris:
      gettimeofday (struct timeval *tp)
-
-  HPUX:
-     don't set.
-     it has gettimeofday (struct timeval *tp, struct timezone *tzp);
-     most calls do a:
-     #if defined (ACE_HAS_SVR4_GETTIMEOFDAY)
-      ::gettimeofday (&cur_time);
-     #else
-      ::gettimeofday (&cur_time, 0);
-     #endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
 
 
 ACE_HAS_POLL:
@@ -1401,9 +1307,6 @@ ACE_USE_POLL_IMPLEMENTATION:
   Notes:
     Use the poll() event demultiplexor rather than select().
 
-  HPUX:
-     set it.
-
 
 ACE_HAS_SVR4_SIGNAL_T:
 ----------------------
@@ -1423,9 +1326,6 @@ ACE_HAS_SVR4_SIGNAL_T:
      typedef void (*SignalHandlerV)(...);
      #endif /* ACE_HAS_SVR4_SIGNAL_T */
 
-  HPUX:
-     set it.
-
 
 ACE_HAS_SVR4_TLI:
 -----------------
@@ -1438,10 +1338,6 @@ ACE_HAS_SVR4_TLI:
   Notes:
      TLI is the transport layer calls as in: t_bind(), t_open(), t_unbind(),
      t_optmgmt(), ... in SunOS and Solaris.
-
-  HPUX:
-     don't set.
-     Not supported.
 
 
 ACE_HAS_SYS_FILIO_H:
@@ -1462,12 +1358,6 @@ ACE_HAS_SYS_FILIO_H:
       * WARNING - the support for these ioctls may be withdrawn
       * in the future OS releases.
       */
-
-  HPUX:
-     <sys/ioctl.h> defines FIOASYNC and some other ones,
-     <sgtty.h> defines some like FIOCLEX.
-     some are never defined.
-     use #ifdef HP-UX to modify sysincludes.h
 
 
 ACE_HAS_TEMPLATE_TYPEDEFS:
@@ -1511,9 +1401,6 @@ ACE_HAS_THREADS:
      We use Message_List.h even in a non-threaded environment.
      our XOMessageList.h does this by #ifdefs around Threaded things.
 
-  HPUX:
-     not until 10.0.
-
 
 ACE_HAS_TIMOD_H:
 ----------------
@@ -1532,9 +1419,6 @@ ACE_HAS_TIMOD_H:
      vider that supports the Transport Interface.  This allows  a
      user to initiate certain TI functions as atomic operations.
 
-  HPUX:
-     don't set.
-
 
 ACE_HAS_TIUSER_H:
 -----------------
@@ -1547,9 +1431,6 @@ ACE_HAS_TIUSER_H:
 
   Solaris:
      in conjunction with t_bind, t_accept, etc.. transport layer.
-
-  HPUX:
-     don't set.
 
 
 ACE_USE_POLL_IMPLEMENTATION:

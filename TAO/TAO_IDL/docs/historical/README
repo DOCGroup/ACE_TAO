@@ -148,7 +148,7 @@ platforms. The source distribution expects the following environment:
 - SunPro SparcWorks 3.x or 4.0
 
 As preconfigured, it compiles on Solaris 2.x. It can be reconfigured to
-compile on SunOS 4.x, HPUX or Apollo Domain OS. As far as is known, no use
+compile on SunOS 4.x, or Apollo Domain OS. As far as is known, no use
 is made of Sun Make-specific features, and the Makefiles should be usable
 with other make programs.
 
