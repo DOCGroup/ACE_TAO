@@ -71,7 +71,7 @@
  * (TAO/orbsvcs/orbsvcs/SSLIOP/params_dup.{h,c}) that may indirectly
  * include this
  */
-#else  /* ! __GNUG__ && !__DECCXX && !__INTEL_COMPILER && && !__PGI */
+#else  /* ! __GNUG__ && !__INTEL_COMPILER && && !__PGI */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler in ace/config-linux.h
 #  endif  /* __cplusplus */
