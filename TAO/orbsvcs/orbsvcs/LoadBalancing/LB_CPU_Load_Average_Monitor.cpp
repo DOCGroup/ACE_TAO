@@ -222,7 +222,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
   ACE_UNUSED_ARG (load);
   throw CORBA::NO_IMPLEMENT ();
 
-#endif  /* linux || sun || __hpux  || __NetBSD__ || __APPLE__ */
+#endif  /* linux || sun || __NetBSD__ || __APPLE__ */
 
 }
 
