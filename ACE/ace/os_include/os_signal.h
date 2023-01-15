@@ -135,7 +135,7 @@ extern "C"
 
 #if defined (ACE_VXWORKS)
 #  define ACE_NSIG (_NSIGS + 1)
-#elif defined (__Lynx__) || defined (ACE_HAS_RTEMS)
+#elif defined (__Lynx__)
 #  define ACE_NSIG (NSIG + 1)
 #else
    // All other platforms set NSIG to one greater than the
@@ -157,9 +157,6 @@ extern "C"
 #elif defined (INTEGRITY)
    using ACE_SignalHandler = void (*)();
    using ACE_SignalHandlerV = void (*)(int);
-#elif defined (ACE_HAS_RTEMS)
-   using ACE_SignalHandler = void (*)();
-   using ACE_SignalHandlerV = void (*)();
 #else /* This is necessary for some older broken version of cfront */
 #  if defined (SIG_PF)
 #    define ACE_SignalHandler SIG_PF

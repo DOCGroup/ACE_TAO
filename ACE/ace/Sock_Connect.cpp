@@ -826,7 +826,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   return get_ip_interfaces_getifaddrs (count, addrs);
 #elif defined (_AIX)
   return get_ip_interfaces_aix (count, addrs);
-#elif (defined (__unix) || defined (__unix__) || (defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS)) || defined (ACE_HAS_RTEMS)) && !defined (ACE_LACKS_NETWORKING)
+#elif (defined (__unix) || defined (__unix__) || (defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS))) && !defined (ACE_LACKS_NETWORKING)
   // COMMON (SVR4 and BSD) UNIX CODE
 
   // Call specific routine as necessary.
@@ -938,7 +938,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
             }
         }
 
-#if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_HAS_RTEMS) && !defined (__Lynx__)
+#if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__)
       ++pcur;
 #else
       if (pcur->ifr_addr.sa_len <= sizeof (struct sockaddr))
@@ -950,7 +950,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
            pcur = (struct ifreq *)
                (pcur->ifr_addr.sa_len + (caddr_t) &pcur->ifr_addr);
         }
-#endif /* !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_HAS_RTEMS) && !defined (__Lynx__) */
+#endif /* !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__) */
     }
 
 # if defined (ACE_HAS_IPV6) && !defined (ACE_LACKS_FSCANF)
@@ -1036,7 +1036,7 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 # endif /* SIOCGLIFNUM */
 return 0;
 
-#elif (defined (__unix) || defined (__unix__) || defined (ACE_HAS_RTEMS) || (defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS))) && !defined (ACE_LACKS_NETWORKING)
+#elif (defined (__unix) || defined (__unix__) || (defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS))) && !defined (ACE_LACKS_NETWORKING)
   // Note: DEC CXX doesn't define "unix".  BSD compatible OS: HP UX,
   // AIX, SunOS 4.x perform some ioctls to retrieve ifconf list of
   // ifreq structs no SIOCGIFNUM on SunOS 4.x, so use guess and scan
@@ -1102,7 +1102,7 @@ return 0;
         break;
 
       ++if_count;
-# if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_HAS_RTEMS) && !defined (__Lynx__)
+# if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__)
       ++p_ifs;
 # else
      if (p_ifs->ifr_addr.sa_len <= sizeof (struct sockaddr))
@@ -1114,7 +1114,7 @@ return 0;
           p_ifs = (struct ifreq *)
               (p_ifs->ifr_addr.sa_len + (caddr_t) &p_ifs->ifr_addr);
        }
-# endif /* !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__)  && !defined (ACE_HAS_RTEMS) && !defined (__Lynx__) */
+# endif /* !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__) */
     }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -1155,7 +1155,7 @@ ACE::get_handle ()
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 #if defined (sparc)
   handle = ACE_OS::open ("/dev/udp", O_RDONLY);
-#elif defined (__unix) || defined (__unix__) || defined (_AIX) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600)) || defined (ACE_HAS_RTEMS)
+#elif defined (__unix) || defined (__unix__) || defined (_AIX) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600))
   // Note: DEC CXX doesn't define "unix" BSD compatible OS: AIX, SunOS 4.x
   handle = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 #endif /* sparc */
