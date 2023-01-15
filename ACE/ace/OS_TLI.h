@@ -39,20 +39,8 @@ struct t_uderr { };
 struct netbuf { };
 
 # else /* !(ACE_HAS_TLI || ACE_HAS_XTI) */
-
-#   if defined (ACE_HAS_CONFLICTING_XTI_MACROS)
-      // Make sure tcp.h gets included before sys/xti.h.
-#     include "ace/os_include/netinet/os_tcp.h"
-#     undef TCP_NODELAY
-#     undef TCP_MAXSEG
-#   endif /* ACE_HAS_CONFLICTING_XTI_MACROS */
-
 #   if defined (ACE_HAS_XTI)
-#     if defined (ACE_HAS_SYS_XTI_H)   /* Nonstandard header placement */
-#       define class ace_xti_class
-#       include /**/ <sys/xti.h>
-#       undef class
-#     elif defined (ACE_HAS_FORE_ATM_XTI)
+#     if defined (ACE_HAS_FORE_ATM_XTI)
 #       include /**/ <fore_xti/xti_user_types.h>
 #       include /**/ <fore_xti/xti.h>
 #       include /**/ <fore_xti/xti_atm.h>

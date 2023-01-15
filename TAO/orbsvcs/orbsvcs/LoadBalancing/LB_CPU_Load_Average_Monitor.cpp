@@ -196,28 +196,9 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
     }
   else
     throw CORBA::TRANSIENT ();  // Correct exception?
-
-#elif defined (__hpux)
-
-  struct pst_dynamic psd;
-
-  if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
-    {
-      const long & num_processors = psd.psd_proc_cnt;
-
-      ACE_ASSERT (num_processors > 0);
-
-      if (num_processors > 0)
-        load = psd.psd_avg_1_min / num_processors;
-      else
-        throw CORBA::TRANSIENT ();  // Correct exception?
-    }
-  else
-    throw CORBA::TRANSIENT ();  // Correct exception?
-
 #endif
 
-#if defined (ACE_LINUX) || defined (sun) || defined (__hpux) || defined(__NetBSD__) || defined (__APPLE__)
+#if defined (ACE_LINUX) || defined (sun) || defined(__NetBSD__) || defined (__APPLE__)
   CosLoadBalancing::LoadList * tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),

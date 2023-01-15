@@ -55,7 +55,7 @@ typedef double ACE_timer_t;
    typedef off_t ACE_LOFF_T;
 #elif defined (ACE_HAS_RTEMS) || defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined (__APPLE__)
    typedef off_t ACE_LOFF_T;
-#elif defined (AIX) || defined (HPUX) || defined (__QNX__)
+#elif defined (AIX) || defined (__QNX__)
    typedef off64_t ACE_LOFF_T;
 #elif defined (__sun)
    typedef offset_t ACE_LOFF_T;

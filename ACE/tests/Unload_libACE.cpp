@@ -26,9 +26,9 @@
 #endif /* !ACE_VXWORKS && !__MINGW32__ && !CYGWIN32 */
 #endif /* __GNUC__ */
 
-#if defined (__hpux) || defined (__SUNPRO_CC)
+#if defined (__SUNPRO_CC)
 #define UNLOAD_LIBACE_TEST 1
-#endif /* (__hpux) || (__SUNPRO_CC) */
+#endif /* (__SUNPRO_CC) */
 
 #if defined (ACE_AS_STATIC_LIBS)
 #undef UNLOAD_LIBACE_TEST
@@ -160,9 +160,7 @@ main (int, char **)
 #else
           strcat (buf, "ACE");
 #endif /* ACE_LIB_NAME */
-#if defined (__hpux) && !(defined (__ia64) && (__ia64 == 1))
-          strcat (buf, ".sl");
-#elif defined (__APPLE__)
+#if defined (__APPLE__)
           strcat (buf, ".dylib");
 #else
           strcat (buf, ".so");

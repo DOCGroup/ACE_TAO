@@ -25,10 +25,6 @@ class TAO_Notify_Tests_Command;
  *
  * @brief Template class to create COMMAND specific factories.
  */
-#ifdef HPUX_11
-   // Remove clash with /usr/include/machine/cpu.h and /usr/include/pa/cpu.h
-#undef COMMAND
-#endif
 template <class COMMAND>
 class TAO_Notify_Tests_Command_Factory_T : public TAO_Notify_Tests_Command_Factory, public ACE_Service_Object
 {

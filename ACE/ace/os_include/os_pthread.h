@@ -70,17 +70,7 @@
 #  if defined (_POSIX_PRIORITY_SCHEDULING)
 #    define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
 #    define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
-#    if defined (HPUX)
-       // HP-UX's other is the SCHED_HPUX class, which uses historical
-       // values that have reverse semantics from POSIX (low value is
-       // more important priority). To use these in pthreads calls,
-       // the values need to be converted. The other scheduling classes
-       // don't need this special treatment.
-#      define ACE_PROC_PRI_OTHER_MIN \
-                      (sched_get_priority_min(SCHED_OTHER))
-#    else
-#      define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
-#    endif /* HPUX */
+     define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
 #  else /* UNICOS is missing a sched_get_priority_min() implementation */
 #    define ACE_PROC_PRI_FIFO_MIN  0
 #    define ACE_PROC_PRI_RR_MIN    0
@@ -90,12 +80,7 @@
 #  if defined (_POSIX_PRIORITY_SCHEDULING)
 #    define ACE_PROC_PRI_FIFO_MAX  (sched_get_priority_max(SCHED_FIFO))
 #    define ACE_PROC_PRI_RR_MAX    (sched_get_priority_max(SCHED_RR))
-#    if defined (HPUX)
-#      define ACE_PROC_PRI_OTHER_MAX \
-                      (sched_get_priority_max(SCHED_OTHER))
-#    else
-#      define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
-#    endif /* HPUX */
+     define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
 #  else
 #    define ACE_PROC_PRI_FIFO_MAX  59
 #    define ACE_PROC_PRI_RR_MAX    59

@@ -59,9 +59,6 @@ ACE::out_of_handles (int error)
 #if defined (ACE_WIN32)
       // On Win32, we need to check for ENOBUFS also.
       error == ENOBUFS ||
-#elif defined (HPUX)
-      // On HPUX, we need to check for EADDRNOTAVAIL also.
-      error == EADDRNOTAVAIL ||
 #elif defined (ACE_LINUX)
       // On linux, we need to check for ENOENT also.
       error == ENOENT ||

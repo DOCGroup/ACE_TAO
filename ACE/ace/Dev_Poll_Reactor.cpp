@@ -13,8 +13,6 @@
 # if defined (ACE_HAS_DEV_POLL)
 #    if defined (ACE_LINUX)
 #      include /**/ <linux/devpoll.h>
-#    elif defined (HPUX_VERS) && HPUX_VERS < 1123
-#      include /**/ <devpoll.h>
 #    else
 #      include /**/ <sys/devpoll.h>
 #    endif  /* ACE_LINUX */

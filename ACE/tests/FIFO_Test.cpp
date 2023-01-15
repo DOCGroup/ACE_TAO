@@ -106,9 +106,9 @@ server (void *arg)
 
   // On AIX, select() always seems to select a fifo handle as a normal file,
   // always readable. Just wait a second...
-# if defined (AIX) || defined (HPUX) || defined (__osf__)
+# if defined (AIX) defined (__osf__)
   ACE_OS::sleep (1);
-# endif /* AIX || HPUX */
+# endif /* AIX */
 
   // Read the things the client is sending; alphabet, huge overflow, then
   // alphabet.

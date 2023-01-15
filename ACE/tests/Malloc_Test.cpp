@@ -70,7 +70,7 @@ static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 // processes.  So, though the whole PI pointer thing is tested here,
 // it isn't actually using multiple address ranges.
 
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 && !defined (HPUX))
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 # define CHILD_ADDR_DELTA (1024*1024)
 #else
 # define CHILD_ADDR_DELTA 0
