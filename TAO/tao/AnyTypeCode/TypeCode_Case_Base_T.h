@@ -180,10 +180,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/TypeCode_Case_Base_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("TypeCode_Case_Base_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_TYPECODE_CASE_H */

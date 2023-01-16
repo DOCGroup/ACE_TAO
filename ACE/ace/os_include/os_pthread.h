@@ -37,7 +37,6 @@
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/os_stdint.h"
 
-// This needs to go here *first* to avoid problems with AIX.
 # if defined (ACE_HAS_PTHREADS)
 #   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #     include "ace/os_include/os_signal.h"
@@ -116,30 +115,6 @@
 #    endif /* !ACE_THR_PRI_OTHER_MIN */
 #    if !defined (ACE_THR_PRI_OTHER_MAX)
 #      define ACE_THR_PRI_OTHER_MAX (long) PRI_OTHER_MAX
-#    endif /* !ACE_THR_PRI_OTHER_MAX */
-#  elif defined (AIX)
-     // AIX's priority range is 1 (low) to 127 (high). There aren't
-     // any preprocessor macros I can find. PRIORITY_MIN is for
-     // process priorities, as far as I can see, and does not apply
-     // to thread priority. The 1 to 127 range is from the
-     // pthread_attr_setschedparam man page (Steve Huston, 18-May-2001).
-#    if !defined (ACE_THR_PRI_FIFO_MIN)
-#      define ACE_THR_PRI_FIFO_MIN  (long) 1
-#    endif /* !ACE_THR_PRI_FIFO_MIN */
-#    if !defined (ACE_THR_PRI_FIFO_MAX)
-#      define ACE_THR_PRI_FIFO_MAX  (long) 127
-#    endif /* !ACE_THR_PRI_FIFO_MAX */
-#    if !defined (ACE_THR_PRI_RR_MIN)
-#      define ACE_THR_PRI_RR_MIN    (long) 1
-#    endif /* !ACE_THR_PRI_RR_MIN */
-#    if !defined (ACE_THR_PRI_RR_MAX)
-#      define ACE_THR_PRI_RR_MAX    (long) 127
-#    endif /* !ACE_THR_PRI_RR_MAX */
-#    if !defined (ACE_THR_PRI_OTHER_MIN)
-#      define ACE_THR_PRI_OTHER_MIN (long) 1
-#    endif /* !ACE_THR_PRI_OTHER_MIN */
-#    if !defined (ACE_THR_PRI_OTHER_MAX)
-#      define ACE_THR_PRI_OTHER_MAX (long) 127
 #    endif /* !ACE_THR_PRI_OTHER_MAX */
 #  elif defined (sun)
 #    if !defined (ACE_THR_PRI_FIFO_MIN)

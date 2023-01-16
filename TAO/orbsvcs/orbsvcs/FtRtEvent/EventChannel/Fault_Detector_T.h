@@ -39,8 +39,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Fault_Detector_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif

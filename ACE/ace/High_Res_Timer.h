@@ -29,7 +29,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief A high resolution timer class wrapper that encapsulates
  * OS-specific high-resolution timers, such as those found on
- * Solaris, AIX, Win32/Pentium, and VxWorks.
+ * Solaris, Win32/Pentium, and VxWorks.
  *
  * Most of the member functions don't return values.  The only
  * reason that one would fail is if high-resolution time isn't

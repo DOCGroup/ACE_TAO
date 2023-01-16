@@ -360,9 +360,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Unbounded_Set_Ex.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Unbounded_Set_Ex.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_UNBOUNDED_SET_H */

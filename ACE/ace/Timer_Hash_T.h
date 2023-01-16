@@ -341,9 +341,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Timer_Hash_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE  */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Timer_Hash_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_TIMER_HASH_T_H */

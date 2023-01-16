@@ -93,9 +93,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Countdown_Time_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Countdown_Time_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
-
 #endif /* ACE_COUNTDOWN_TIME_T_H */

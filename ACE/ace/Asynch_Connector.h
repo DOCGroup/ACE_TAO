@@ -158,10 +158,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Asynch_Connector.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Asynch_Connector.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 #include /**/ "ace/post.h"
 #endif /* ACE_ASYNCH_CONNECTOR_H */

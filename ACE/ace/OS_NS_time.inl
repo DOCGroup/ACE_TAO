@@ -250,14 +250,6 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 #if defined (ACE_HAS_HI_RES_TIMER)
   ACE_UNUSED_ARG (op);
   return ::gethrtime ();
-#elif defined (ACE_HAS_AIX_HI_RES_TIMER)
-  ACE_UNUSED_ARG (op);
-  timebasestruct_t tb;
-
-  ::read_real_time(&tb, TIMEBASE_SZ);
-  ::time_base_to_time(&tb, TIMEBASE_SZ);
-
-  return ACE_hrtime_t(tb.tb_high) * ACE_ONE_SECOND_IN_NSECS + tb.tb_low;
 #elif defined (ACE_WIN32)
   ACE_UNUSED_ARG(op);
   LARGE_INTEGER freq;

@@ -161,9 +161,5 @@ namespace Kokyu
 #include "Kokyu_dsrt.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Kokyu_dsrt.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 #endif /* KOKYU_DSRT_H */

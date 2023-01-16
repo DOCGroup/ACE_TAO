@@ -216,9 +216,5 @@ namespace Kokyu
 #include "DSRT_Sched_Queue_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("DSRT_Sched_Queue_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 #endif /* DSRT_SCHED_QUEUE_T_H */

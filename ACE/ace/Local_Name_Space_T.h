@@ -258,9 +258,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Local_Name_Space_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Local_Name_Space_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_LOCAL_NAME_SPACE_T_H */

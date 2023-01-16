@@ -54,10 +54,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/Notify/Save_Persist_Worker_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Save_Persist_Worker_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 
 #endif /* SAVE_PERSIST_WORKER_H */

@@ -43,10 +43,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/Notify/Reconnect_Worker_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Reconnect_Worker_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 
 #endif /* RECONECT_WORKER_H */

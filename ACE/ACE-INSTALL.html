@@ -2097,49 +2097,6 @@ libraries.
       replacements on older SunOS systems are not compatible with the
       SunOS 5.7 system headers.  </P>
 
-  </li><li><b>AIX</b><p>
-
-      ACE is currently supported on AIX 5.2 and higher using IBM's
-      Visual Age C++ 6 and XL C++ 7 compilers as well as g++ 3.2.</p><p>
-
-      The <code>ace/config-aix-5.x.h</code> file is recommended for all
-      compilers on all AIX 5L versions. The Asynchronous I/O functionality
-      is disabled by default because its use requires the system administrator
-      to explicitly enable it in the kernel using SMIT. If this has been
-      done and you want to enable asynchronous I/O support in ACE, add:
-      <code>#define ACE_HAS_AIO_CALLS</code> to your <code>config.h</code>
-      file before including <code>ace/config-aix-5.x.h</code>.</p><p>
-
-      The Visual Age 6.0.0.3 and 6.0.0.4 do have some bugs that makes
-      them unusable for building TAO. TAO has been tested with 6.0.0.12 and
-      had no problems with that version.</p><p>
-
-      For your <code>platform_macros.GNU</code> file, you should use
-      <code>platform_aix_ibm.GNU</code> when building ACE with any of the
-      IBM compilers and <code>platform_aix_g++.GNU</code> when building ACE
-      with g++.</p><p>
-
-      BTW, here's a technique from Rob Jordan &lt;<a href="mailto:jordan@hursley.ibm.com">jordan@hursley.ibm.com</a>&gt;
-      that can reduce the size of the ACE libraries by about one
-      third, and can also be applied to applications.  It works by
-      optimising the sharing of template functions, which are created
-      in an "unusual" way under AIX. It also speeds up
-      compilation.</p><p>
-
-      Here's how to optimise the ACE library generation:</p><p>
-
-      Look at the <a href="ace/GNUmakefile.ACE">ace/GNUmakefile.ACE</a>
-      in <code>$ACE_ROOT/ace</code>. Create a file called
-      <code>ACE_All_Src.cpp</code>, and add a line to #include
-      each of the source files
-      listed under <code>FILES=</code> in the GNUmakefile. Create a
-      file called <code>ACE_All_Tmp.h</code>
-      and add a line to #include each of the .h files listed under
-      <code>TEMPLATE_FILES=</code> in the GNUmakefile. Now update the
-      GNUmakefile so that
-      <code>FILES=ACE_All_Src</code> and
-      <code>TEMPLATE_FILES=ACE_All_Tmp</code>.</p><p>
-
   </p></li><li><b><a name="Linux">Linux</a></b><p>
 
       ACE has been ported to Linux on

@@ -95,8 +95,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("EC_Lifetime_Utils_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif /* EC_LIFETIME_UTILS_T_H */

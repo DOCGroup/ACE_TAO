@@ -30,14 +30,6 @@ ACE_OS::gettimeofday ()
   FILETIME   tfile;
   ::GetSystemTimeAsFileTime (&tfile);
   return ACE_Time_Value (tfile);
-#elif defined (ACE_HAS_AIX_HI_RES_TIMER)
-  timebasestruct_t tb;
-
-  ::read_real_time (&tb, TIMEBASE_SZ);
-  ::time_base_to_time (&tb, TIMEBASE_SZ);
-
-  tv.tv_sec = tb.tb_high;
-  tv.tv_usec = tb.tb_low / 1000L;
 #else
 # if defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) || \
      defined (ACE_HAS_VOIDPTR_GETTIMEOFDAY) || \

@@ -28,8 +28,4 @@ size_t ace_array_decode (void *buf, T &x);
 #include "URL_Array_Helper.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("URL_Array_Helper.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif /* ACE_URL_ARRAY_HELPER_H */

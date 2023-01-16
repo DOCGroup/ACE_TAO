@@ -70,9 +70,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/INet/HTTP_Session.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("HTTP_Session.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_HTTP_SESSION_H */

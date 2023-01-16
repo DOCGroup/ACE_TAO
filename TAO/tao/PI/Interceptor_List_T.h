@@ -92,10 +92,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/PI/Interceptor_List_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Interceptor_List_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_INTERCEPTOR_LIST_H */

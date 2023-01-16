@@ -202,7 +202,7 @@ protected:
   /// Unique thread ID.
   ACE_thread_t thr_id_;
 
-  /// Unique handle to thread (used by Win32 and AIX).
+  /// Unique handle to thread (used by Win32).
   ACE_hthread_t thr_handle_;
 
   /// Group ID.
@@ -240,7 +240,7 @@ public:
   /// Unique thread id.
   ACE_thread_t self () const;
 
-  /// Unique handle to thread (used by Win32 and AIX).
+  /// Unique handle to thread (used by Win32).
   void self (ACE_hthread_t &);
 
   /// Dump the state of an object.

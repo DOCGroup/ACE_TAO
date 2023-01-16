@@ -141,9 +141,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/INet/StreamHandler.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("StreamHandler.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_IOS_STREAM_HANDLER_H */

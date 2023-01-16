@@ -137,11 +137,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/Struct_TypeCode.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("Struct_TypeCode.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_STRUCT_TYPECODE_H */

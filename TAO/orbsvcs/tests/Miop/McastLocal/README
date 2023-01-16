@@ -23,7 +23,7 @@ as loopback multicasting seems to have a hardcoded (and unchangeable) SndSock
 size of 0. It then throws away all data that is being sent by the client,
 therefore the servers will timeout as they won't receive any message.
 
-Some other systems (AIX and MacOS) also have problems with loopback
+Some other systems (MacOS) also have problems with loopback
 multicasting issuing errno such as "Network/address unreachable" for each
 send.
 

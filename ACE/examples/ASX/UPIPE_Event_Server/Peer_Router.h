@@ -116,9 +116,5 @@ private:
 #include "Peer_Router.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Peer_Router.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif /* ACE_HAS_THREADS */
 #endif /* _PEER_ROUTER_H */

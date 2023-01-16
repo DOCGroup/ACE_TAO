@@ -226,10 +226,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Metrics_Cache_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Metrics_Cache_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif /* defined (ACE_COMPILE_TIMEPROBES) */
 
 #endif /* ACE_METRICS_CACHE_T_H */

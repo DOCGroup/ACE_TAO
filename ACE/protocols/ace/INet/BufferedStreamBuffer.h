@@ -99,9 +99,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/INet/BufferedStreamBuffer.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("BufferedStreamBuffer.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_IOS_BUFFERED_STREAM_BUFFER_H */

@@ -264,10 +264,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Asynch_Acceptor.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Asynch_Acceptor.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 #include /**/ "ace/post.h"
 #endif /* ACE_ASYNCH_ACCEPTOR_H */

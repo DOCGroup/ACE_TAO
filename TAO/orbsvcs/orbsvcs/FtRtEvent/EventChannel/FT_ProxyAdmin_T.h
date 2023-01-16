@@ -48,8 +48,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("FT_ProxyAdmin_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif

@@ -2023,10 +2023,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Containers_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Containers_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONTAINERS_T_H */

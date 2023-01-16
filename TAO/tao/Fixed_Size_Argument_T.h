@@ -172,10 +172,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Fixed_Size_Argument_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Fixed_Size_Argument_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_FIXED_SIZE_ARGUMENT_T_H */
