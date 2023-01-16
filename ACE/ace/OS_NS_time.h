@@ -116,7 +116,6 @@ inline struct tm *ace_localtime_r_helper (const time_t *clock, struct tm *res)
 }
 #endif /* !ACE_LACKS_LOCALTIME_R */
 
-#if !defined (ACE_LACKS_DIFFTIME)
 /// Helper for the ACE_OS::difftime() function
 /**
  * We moved the difftime code that used to be in ACE_OS::difftime()
@@ -130,7 +129,6 @@ inline double ace_difftime(time_t t1, time_t t0)
 {
   return difftime (t1, t0);
 }
-#endif /* !ACE_LACKS_DIFFTIME */
 
 # if defined (ACE_WIN32)
 typedef unsigned __int64 ACE_hrtime_t;
@@ -181,11 +179,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_TCHAR *ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen);
 
-#if !defined (ACE_LACKS_DIFFTIME)
   ACE_NAMESPACE_INLINE_FUNCTION
-#else
-  extern ACE_Export
-#endif /* ! ACE_LACKS_DIFFTIME */
   double difftime (time_t t1,
                    time_t t0);
 

@@ -26,8 +26,6 @@
 
 #if defined (ACE_HAS_TIMOD_H)
 #  include /**/ <sys/timod.h>
-#elif defined (ACE_HAS_OSF_TIMOD_H)
-#  include /**/ <tli/timod.h>
 #endif /* ACE_HAS_TIMOD_H */
 
 #if !defined (ACE_LACKS_SYS_IOCTL_H)

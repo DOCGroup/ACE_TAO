@@ -235,13 +235,11 @@ ACE_OS::localtime_r (const unsigned long *clock,
 
 #endif
 
-#if !defined (ACE_LACKS_DIFFTIME)
 ACE_INLINE double
 ACE_OS::difftime (time_t t1, time_t t0)
 {
   return ::ace_difftime (t1, t0);
 }
-#endif /* ! ACE_LACKS_DIFFTIME */
 
 ACE_INLINE ACE_hrtime_t
 ACE_OS::gethrtime (const ACE_HRTimer_Op op)

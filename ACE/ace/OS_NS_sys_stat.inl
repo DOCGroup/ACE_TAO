@@ -192,9 +192,7 @@ namespace ACE_OS
   stat (const char *file, ACE_stat *stp)
   {
     ACE_OS_TRACE ("ACE_OS::stat");
-#if defined (ACE_HAS_NONCONST_STAT)
-    return ::stat (const_cast <char *> (file), stp);
-#elif defined (ACE_LACKS_STAT)
+#if defined (ACE_LACKS_STAT)
     ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_X86_STAT_MACROS)
     // Solaris for intel uses an macro for stat(), this macro is a
@@ -204,7 +202,7 @@ namespace ACE_OS
     return MQX_Filesystem::inst ().stat (file, stp);
 #else
     return ACE_STAT_FUNC_NAME (file, stp);
-#endif /* ACE_HAS_NONCONST_STAT */
+#endif /* ACE_LACKS_STAT */
   }
 
 #if defined (ACE_HAS_WCHAR)

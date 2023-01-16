@@ -3670,9 +3670,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     if defined (ACE_HAS_ONLY_SCHED_OTHER)
           // SunOS, thru version 5.6, only supports SCHED_OTHER.
           spolicy = SCHED_OTHER;
-#     elif defined (ACE_HAS_ONLY_SCHED_FIFO)
-          // NonStop OSS standard pthread supports only SCHED_FIFO.
-          spolicy = SCHED_FIFO;
 #     else
           // Make sure to enable explicit scheduling, in case we didn't
           // enable it above (for non-default priority).
