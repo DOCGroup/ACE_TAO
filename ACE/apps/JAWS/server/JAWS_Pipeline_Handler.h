@@ -20,8 +20,6 @@ public:
   // Callback hook for specialized data processing
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS_Pipeline_Handler.cpp"
-#endif
 
 #endif /* !defined (JAWS_PIPELINE_HANDLER_H) */

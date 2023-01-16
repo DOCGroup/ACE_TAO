@@ -199,8 +199,6 @@ public:
   virtual int svc ();
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Server_Logging_Handler_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ACE_SERVER_LOGGING_HANDLER_T_H */

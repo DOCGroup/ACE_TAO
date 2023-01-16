@@ -126,13 +126,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/PortableServer/Servant_var.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/PortableServer/Servant_var.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("tao/PortableServer/Servant_var.cpp")
-#endif
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_PORTABLESERVER_SERVANT_VAR_H */

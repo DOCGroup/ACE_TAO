@@ -160,8 +160,6 @@ private:
   int logging_level_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "BPR_Drivers_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* _BPR_DRIVERS_T_H_ */

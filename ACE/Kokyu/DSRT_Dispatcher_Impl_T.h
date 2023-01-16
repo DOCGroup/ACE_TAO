@@ -192,9 +192,7 @@ namespace Kokyu
 #include "DSRT_Dispatcher_Impl_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "DSRT_Dispatcher_Impl_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* DSRT_DISPATCHER_IMPL_H */

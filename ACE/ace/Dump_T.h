@@ -68,9 +68,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
           ((void *) this);
 #endif /* ACE_NDEBUG */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Dump_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_DUMP_T_H */

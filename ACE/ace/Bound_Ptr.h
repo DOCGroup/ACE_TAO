@@ -366,9 +366,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Bound_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Bound_Ptr.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 

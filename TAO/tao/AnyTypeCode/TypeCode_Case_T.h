@@ -127,9 +127,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/TypeCode_Case_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/TypeCode_Case_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+#include "tao/AnyTypeCode/TypeCode_Case_T.cpp"
 
 #include /**/ "ace/post.h"
 

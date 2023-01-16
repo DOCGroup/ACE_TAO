@@ -33,9 +33,6 @@
 #ifndef ACE_LACKS_UNBUFFERED_STREAMBUF
 #define ACE_LACKS_UNBUFFERED_STREAMBUF 1
 #endif /* ACE_LACKS_UNBUFFERED_STREAMBUF */
-#ifndef ACE_TEMPLATES_REQUIRE_SOURCE
-#define ACE_TEMPLATES_REQUIRE_SOURCE            1
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 // Forte 7 seems to botch this one...
 #ifndef ACE_HAS_THR_C_DEST
 #define ACE_HAS_THR_C_DEST                      1

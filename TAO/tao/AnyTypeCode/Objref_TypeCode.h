@@ -102,9 +102,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/Objref_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
-#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/Objref_TypeCode.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+#include "tao/AnyTypeCode/Objref_TypeCode.cpp"
 
 #include /**/ "ace/post.h"
 

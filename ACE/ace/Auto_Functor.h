@@ -109,9 +109,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # include "ace/Auto_Functor.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined(ACE_TEMPLATES_REQUIRE_SOURCE)
-# include "ace/Auto_Functor.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+#include "ace/Auto_Functor.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* ACE_AUTO_FUNCTOR_H*/

@@ -320,9 +320,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/ARGV.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/ARGV.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_ARGUMENT_VECTOR_H */

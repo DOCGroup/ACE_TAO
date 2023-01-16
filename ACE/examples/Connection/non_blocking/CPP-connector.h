@@ -84,8 +84,6 @@ private:
   // signal.
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "CPP-connector.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* CPP_CONNECTOR_H */

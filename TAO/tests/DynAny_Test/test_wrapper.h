@@ -36,8 +36,6 @@ private:
   TEST_OBJECT* test_object_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "test_wrapper.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TEST_WRAPPER_H */

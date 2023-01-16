@@ -62,8 +62,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Time_Policy_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Time_Policy_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ACE_TIME_POLICY_T_H */

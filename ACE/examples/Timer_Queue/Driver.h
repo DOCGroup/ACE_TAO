@@ -128,8 +128,6 @@ protected:
   Command<RECEIVER, ACTION> *shutdown_cmd_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Driver.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* _DRIVER_H_ */

@@ -132,16 +132,12 @@ private:
   ACE_Unbounded_Queue<ACE_Command_Base*> command_queue_;
 };
 
-// ****************************************************************
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/ESF/ESF_Delayed_Changes.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/ESF/ESF_Delayed_Changes.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_ESF_DELAYED_CHANGES_H */

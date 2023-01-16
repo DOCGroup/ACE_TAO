@@ -55,7 +55,6 @@ extern "C" {
 #define ACE_RENAME_EQUIVALENT MQX_Filesystem::inst().rename
 
 #define ACE_MQX
-#define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_PAGE_SIZE 4096
 #define ACE_SOCKET_LEN uint16_t
 #define ACE_SOCKOPT_LEN socklen_t

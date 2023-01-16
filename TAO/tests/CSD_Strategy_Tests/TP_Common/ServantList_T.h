@@ -49,9 +49,6 @@ private:
 };
 
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ServantList_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
 #endif /* SERVANTLIST_T_H */
 

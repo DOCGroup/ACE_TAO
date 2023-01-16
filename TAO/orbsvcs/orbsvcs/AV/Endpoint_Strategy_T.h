@@ -266,9 +266,7 @@ public:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/AV/Endpoint_Strategy_T.cpp"
-#endif /*ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_AV_ENDPOINT_STRATEGY_T_H */

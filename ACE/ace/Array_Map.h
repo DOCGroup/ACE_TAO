@@ -287,9 +287,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # include "ace/Array_Map.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-# include "ace/Array_Map.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+#include "ace/Array_Map.cpp"
 
 #include /**/ "ace/post.h"
 

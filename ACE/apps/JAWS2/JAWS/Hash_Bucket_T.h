@@ -188,9 +188,6 @@ private:
   JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID> dlcstack_;
 };
 
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Hash_Bucket_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* JAWS_HASH_BUCKET_T_H */

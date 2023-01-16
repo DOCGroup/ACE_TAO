@@ -97,9 +97,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Hash_Map_With_Allocator_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Hash_Map_With_Allocator_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_HASH_MAP_WITH_ALLOCATOR_T_H */

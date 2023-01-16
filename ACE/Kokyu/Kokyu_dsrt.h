@@ -157,9 +157,7 @@ namespace Kokyu
 #include "Kokyu_dsrt.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Kokyu_dsrt.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* KOKYU_DSRT_H */

@@ -177,9 +177,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Vector_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Vector_Argument_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 

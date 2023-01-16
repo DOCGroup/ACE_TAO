@@ -24,8 +24,6 @@ size_t ace_array_encode (void *buf, const T &x);
 template <class T>
 size_t ace_array_decode (void *buf, T &x);
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "URL_Array_Helper.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ACE_URL_ARRAY_HELPER_H */
