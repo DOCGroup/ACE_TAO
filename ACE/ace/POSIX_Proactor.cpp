@@ -1826,7 +1826,7 @@ ACE_POSIX_SIG_Proactor::handle_events_i (const ACE_Time_Value *timeout)
   int error_status = 0;
   size_t transfer_count = 0;
 
-  if (sig_info.si_code == SI_ASYNCIO || this->os_id_ == ACE_OS_SUN_56)
+  if (sig_info.si_code == SI_ASYNCIO)
     {
       flg_aio = 1;  // AIO signal received
       // define index to start

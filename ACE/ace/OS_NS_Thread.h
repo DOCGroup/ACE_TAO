@@ -76,6 +76,10 @@ extern "C" {
 
 # if defined (ACE_HAS_THREADS)
 
+#   define ACE_SCOPE_PROCESS 0
+#   define ACE_SCOPE_LWP 1
+#   define ACE_SCOPE_THREAD 2
+
 #   if !defined (ACE_HAS_PTHREADS)
 #     define ACE_SCHED_OTHER 0
 #     define ACE_SCHED_FIFO 1
