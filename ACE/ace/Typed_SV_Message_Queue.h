@@ -77,9 +77,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Typed_SV_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Typed_SV_Message_Queue.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TYPED_MESSAGE_QUEUE_H */

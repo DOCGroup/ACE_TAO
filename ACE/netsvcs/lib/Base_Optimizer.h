@@ -35,8 +35,6 @@ public:
   Member m_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Base_Optimizer.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* BASE_OPTIMIZER_H */

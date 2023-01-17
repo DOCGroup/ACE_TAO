@@ -43,9 +43,7 @@ public:
   TAO_Notify_Tests_Command* create ();
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Command_Factory_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_COMMAND_FACTORY_T_H */

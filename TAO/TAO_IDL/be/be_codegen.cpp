@@ -1795,13 +1795,9 @@ TAO_CodeGen::end_server_template_header ()
 
   // Insert the code to include the template source file.
   *this->server_template_header_
-      << be_nl_2 << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)";
-  *this->server_template_header_
       << be_nl << "#include \""
       << be_global->be_get_server_template_skeleton_fname (true)
       << "\"";
-  *this->server_template_header_ << be_nl
-      << "#endif /* defined REQUIRED SOURCE */";
 
   // Code to put the last #endif.
   *this->server_template_header_ << "\n\n";
@@ -1906,12 +1902,9 @@ int
 TAO_CodeGen::end_ciao_svnt_template_header ()
 {
   *this->ciao_svnt_template_header_ << be_nl_2
-                                    << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)"
-                                    << be_nl << "#include \""
+                                    << "#include \""
                                     << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
-                                    << "\"" << be_nl
-                                    << "#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */"
-                                    << be_nl;
+                                    << "\"" << be_nl;
 
   if (be_global->post_include () != nullptr)
     {

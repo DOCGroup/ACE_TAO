@@ -92,9 +92,7 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Auto_Event.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_AUTO_EVENT_H */

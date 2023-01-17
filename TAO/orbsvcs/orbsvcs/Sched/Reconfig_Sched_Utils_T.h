@@ -489,9 +489,7 @@ protected:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_RECONFIG_SCHED_UTILS_T_H */

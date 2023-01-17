@@ -173,9 +173,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Event_Handler_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Event_Handler_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_EVENT_HANDLER_H */

@@ -77,9 +77,7 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif // TAO_HAS_MONITOR_FRAMEWORK == 1
 

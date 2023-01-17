@@ -252,9 +252,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/TSS_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/TSS_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TSS_T_H */

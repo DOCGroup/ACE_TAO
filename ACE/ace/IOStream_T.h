@@ -266,13 +266,11 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#  if defined (__ACE_INLINE__)
-#    include "ace/IOStream_T.inl"
-#  endif /* __ACE_INLINE__ */
+#if defined (__ACE_INLINE__)
+# include "ace/IOStream_T.inl"
+#endif /* __ACE_INLINE__ */
 
-#  if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#    include "ace/IOStream_T.cpp"
-#  endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+#include "ace/IOStream_T.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* ACE_IOSTREAM_T_H */

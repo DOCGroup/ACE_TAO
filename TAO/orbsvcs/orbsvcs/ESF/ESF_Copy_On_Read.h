@@ -52,12 +52,8 @@ private:
   ACE_LOCK lock_;
 };
 
-// ****************************************************************
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/ESF/ESF_Copy_On_Read.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_ESF_COPY_ON_READ_H */

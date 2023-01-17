@@ -79,10 +79,6 @@ ACE_HAS_TRACE                           Defined when ACE_NTRACE=0 to
 ACE_PAGE_SIZE                           Defines the page size of the
                                         system (not used on Win32 or
                                         with ACE_HAS_GETPAGESIZE).
-ACE_TEMPLATES_REQUIRE_SOURCE            Compiler's template mechanim
-                                        must see source code (i.e.,
-                                        .cpp files).  This is used for
-                                        GNU G++.
 ACE_TIMEPROBE_ASSERTS_FIXED_SIZE        If enabled then ACE_Timeprobe_Ex<>::timeprobe()
                                         will assert if the end of the
                                         buffer is reached.  If disabled, the

@@ -226,9 +226,7 @@ typedef ACE_Tokenizer_T <ACE_TCHAR> ACE_Tokenizer;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Tokenizer_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 

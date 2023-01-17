@@ -558,8 +558,6 @@ private:
   long il;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "utl_scope_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif           // _UTL_SCOPE_UTL_SCOPE_HH

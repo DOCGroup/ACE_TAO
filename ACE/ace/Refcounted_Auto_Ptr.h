@@ -183,9 +183,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include "ace/Refcounted_Auto_Ptr.inl"
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Refcounted_Auto_Ptr.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 

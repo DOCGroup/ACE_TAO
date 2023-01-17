@@ -16,8 +16,6 @@ public:
                           ACE_Reactor *reactor);
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Reactor_Logging_Server_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* _REACTOR_LOGGING_SERVER_T_H */

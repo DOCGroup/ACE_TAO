@@ -63,8 +63,6 @@ protected:
 
 extern ACE_Service_Object_Type rts;
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Handle_Thr_Stream.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 #endif /* ACE_HAS_THREADS */
 #endif /* _HANDLE_THR_STREAM_H */

@@ -378,9 +378,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Guard_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Guard_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_GUARD_T_H */

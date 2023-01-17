@@ -38,7 +38,5 @@
 # define ACE_LACKS_PRAGMA_ONCE
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
 
-#define ACE_TEMPLATES_REQUIRE_SOURCE
-
 #include /**/ "ace/post.h"
 #endif /* ACE_SUNCC_COMMON_H */

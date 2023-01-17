@@ -58,8 +58,6 @@ private:
   Results results_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "client.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ALT_MAPPING_CLIENT_H */

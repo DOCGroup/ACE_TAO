@@ -80,8 +80,6 @@ private:
   // signal.
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "CPP-acceptor.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* CPP_ACCEPTOR_H */

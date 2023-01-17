@@ -192,9 +192,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Auto_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Auto_Ptr.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (_MSC_VER)
 // Restore the warning state to what it was before entry.

@@ -91,8 +91,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* EC_LIFETIME_UTILS_T_H */

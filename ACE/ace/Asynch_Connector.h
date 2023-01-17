@@ -154,9 +154,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Asynch_Connector.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 #include /**/ "ace/post.h"

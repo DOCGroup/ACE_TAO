@@ -88,8 +88,6 @@ protected:
   FILE *infile_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "File_Parser.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* _FILE_PARSER */

@@ -876,9 +876,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/String_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/String_Base.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 
