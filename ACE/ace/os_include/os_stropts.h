@@ -24,10 +24,6 @@
 
 #include "ace/os_include/os_unistd.h"
 
-#if defined (ACE_HAS_TIMOD_H)
-#  include /**/ <sys/timod.h>
-#endif /* ACE_HAS_TIMOD_H */
-
 #if !defined (ACE_LACKS_SYS_IOCTL_H)
 #  include /**/ <sys/ioctl.h>
 #endif /* !ACE_LACKS_SYS_IOCTL_H */

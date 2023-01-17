@@ -3559,20 +3559,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     endif /*  PTHREAD_MAX_PRIORITY */
 
           {
-#       if defined (sun)  &&  defined (ACE_HAS_ONLY_SCHED_OTHER)
-            // SunOS, through 5.6, POSIX only allows priorities > 0 to
-            // ::pthread_attr_setschedparam.  If a priority of 0 was
-            // requested, set the thread priority after creating it, below.
-            if (priority > 0)
-#       endif /* sun && ACE_HAS_ONLY_SCHED_OTHER */
+            (void) ACE_ADAPT_RETVAL(::pthread_attr_setschedparam (&attr, &sparam),
+                                    result);
+            if (result != 0)
               {
-                (void) ACE_ADAPT_RETVAL(::pthread_attr_setschedparam (&attr, &sparam),
-                                        result);
-                if (result != 0)
-                  {
-                    ::pthread_attr_destroy (&attr);
-                    return -1;
-                  }
+                ::pthread_attr_destroy (&attr);
+                return -1;
               }
           }
         }
@@ -4311,36 +4303,7 @@ ACE_OS::thr_setprio (const ACE_Sched_Priority prio)
   ACE_hthread_t my_thread_id;
   ACE_OS::thr_self (my_thread_id);
 
-  int const status = ACE_OS::thr_setprio (my_thread_id, prio);
-
-#if defined (ACE_NEEDS_LWP_PRIO_SET)
-  // If the thread is in the RT class, then set the priority on its
-  // LWP.  (Instead of doing this if the thread is in the RT class, it
-  // should be done for all bound threads.  But, there doesn't appear
-  // to be an easy way to determine if the thread is bound.)
-
-  if (status == 0)
-    {
-      // Find what scheduling class the thread's LWP is in.
-      ACE_Sched_Params sched_params (ACE_SCHED_OTHER, 0);
-      if (ACE_OS::lwp_getparams (sched_params) == -1)
-        {
-          return -1;
-        }
-      else if (sched_params.policy () == ACE_SCHED_FIFO  ||
-               sched_params.policy () == ACE_SCHED_RR)
-        {
-          // This thread's LWP is in the RT class, so we need to set
-          // its priority.
-          sched_params.priority (prio);
-          return ACE_OS::lwp_setparams (sched_params);
-        }
-      // else this is not an RT thread.  Nothing more needs to be
-      // done.
-    }
-#endif /* ACE_NEEDS_LWP_PRIO_SET */
-
-  return status;
+  return ACE_OS::thr_setprio (my_thread_id, prio);
 }
 
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)

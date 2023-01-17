@@ -26,10 +26,6 @@
 #endif /* !ACE_VXWORKS && !__MINGW32__ && !CYGWIN32 */
 #endif /* __GNUC__ */
 
-#if defined (__SUNPRO_CC)
-#define UNLOAD_LIBACE_TEST 1
-#endif /* (__SUNPRO_CC) */
-
 #if defined (ACE_AS_STATIC_LIBS)
 #undef UNLOAD_LIBACE_TEST
 #endif /* ACE_AS_STATIC_LIBS */

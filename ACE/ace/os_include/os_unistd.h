@@ -33,10 +33,6 @@
 #  include /**/ <io.h>
 #endif /* ACE_HAS_IO_H */
 
-#if defined (ACE_HAS_SYS_SYSTEMINFO_H)
-#  include /**/ <sys/systeminfo.h>
-#endif /* ACE_HAS_SYS_SYSTEMINFO_H */
-
 #if !defined (ACE_LACKS_UNISTD_H)
 #  include /**/ <unistd.h>
 #endif /* !ACE_LACKS_UNISTD_H */
@@ -94,20 +90,6 @@ extern "C"
 #  endif
 #endif /* ACE_WIN32 */
 
-#if (!defined (_BSD_SOURCE) && \
-    !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)) \
-    || (defined (_XOPEN_SOURCE) && defined (__GNUC__))
-
-# if defined (ACE_LACKS_SETREUID_PROTOTYPE)
-  extern int setreuid (uid_t ruid, uid_t euid);
-# endif /* ACE_LACKS_SETREUID_PROTOTYPE */
-
-# if defined (ACE_LACKS_SETREGID_PROTOTYPE)
-  extern int setregid (gid_t rgid, gid_t egid);
-# endif /* ACE_LACKS_SETREGID_PROTOTYPE */
-#endif  /* !_BSD_SOURCE && !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED
-           || _XOPEN_SOURCE && __GNUC__ */
-
   // for use by access()
 # if !defined (R_OK)
 #   define R_OK    04      /* Test for Read permission. */
@@ -129,10 +111,6 @@ extern "C"
 # if !defined (F_OK)
 #   define F_OK    0       /* Test for existence of File. */
 # endif /* F_OK */
-
-#if defined (ACE_LACKS_UALARM_PROTOTYPE)
-   u_int ualarm (u_int usecs, u_int interval);
-#endif /* ACE_LACKS_UALARM_PROTOTYPE */
 
 #if defined (ACE_LACKS_GETPGID_PROTOTYPE) && \
     !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)

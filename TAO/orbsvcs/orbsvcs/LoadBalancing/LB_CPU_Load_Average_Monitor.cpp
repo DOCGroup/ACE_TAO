@@ -107,7 +107,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
       load = ((system_ll - idle_ll) * 100 / system_ll)  / sys_info.dwNumberOfProcessors;
     }
 
-#elif defined (ACE_LINUX) || defined (sun)
+#elif defined (ACE_LINUX)
 
   // Only bother getting the load average over the last minute.
   //
@@ -198,7 +198,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
     throw CORBA::TRANSIENT ();  // Correct exception?
 #endif
 
-#if defined (ACE_LINUX) || defined (sun) || defined(__NetBSD__) || defined (__APPLE__)
+#if defined (ACE_LINUX) || defined(__NetBSD__) || defined (__APPLE__)
   CosLoadBalancing::LoadList * tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),
@@ -222,7 +222,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
   ACE_UNUSED_ARG (load);
   throw CORBA::NO_IMPLEMENT ();
 
-#endif  /* linux || sun || __NetBSD__ || __APPLE__ */
+#endif  /* linux || __NetBSD__ || __APPLE__ */
 
 }
 

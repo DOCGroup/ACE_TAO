@@ -668,11 +668,7 @@ typedef DWORD ACE_id_t;
 typedef int ACE_pri_t;
 #   define ACE_SELF (0)
 #else /* !defined (ACE_WIN32) */
-#   if defined (ACE_HAS_IDTYPE_T)
-  typedef idtype_t ACE_idtype_t;
-#   else
   typedef int ACE_idtype_t;
-#   endif /* ACE_HAS_IDTYPE_T */
   typedef long ACE_id_t;
 #     define ACE_SELF (-1)
   typedef short ACE_pri_t;

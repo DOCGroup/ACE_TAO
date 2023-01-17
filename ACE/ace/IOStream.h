@@ -420,10 +420,6 @@ typedef ostream& (*__omanip_)(ostream&);
         inline virtual MT& operator<<(__omanip_ func) CODE2 \
         inline virtual MT& operator<<(__manip_ func)  CODE2
 
-#  if defined (ACE_LACKS_SIGNED_CHAR)
-  #define GET_FUNC_SET1(MT,CODE,CODE2) GET_FUNC_SET0(MT,CODE,CODE2)
-  #define PUT_FUNC_SET1(MT,CODE,CODE2) PUT_FUNC_SET0(MT,CODE,CODE2)
-#  else
   #define GET_FUNC_SET1(MT,CODE,CODE2) \
           GET_PROT(MT,signed char &,CODE) \
           GET_PROT(MT,signed char *,CODE) \
@@ -433,7 +429,6 @@ typedef ostream& (*__omanip_)(ostream&);
           PUT_FUNC(MT,signed char) \
           PUT_FUNC(MT,const signed char *) \
           PUT_FUNC_SET0(MT,CODE,CODE2)
-#  endif /* ACE_LACKS_SIGNED_CHAR */
 
 #define GET_MANIP_CODE  { if (ipfx ()) { (*func) (*this); } isfx (); return *this; }
 #define PUT_MANIP_CODE  { if (opfx ()) { (*func) (*this); } osfx (); return *this; }

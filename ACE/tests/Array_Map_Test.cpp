@@ -296,7 +296,7 @@ index_operator_test ()
 
       const_reverse_iterator const rlast = const_phonetic.rend ();
       for (const_reverse_iterator r = const_phonetic.rbegin ();
-           !(r == rlast); // Sun C++ Forte doesn't support operator!=
+           (r != rlast);
            ++r, --letter, --word)
         {
           if ((*r).first != *letter || (*r).second != *word)

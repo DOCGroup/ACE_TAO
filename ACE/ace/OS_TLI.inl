@@ -87,11 +87,7 @@ ACE_INLINE void
 t_error (const char *errmsg)
 {
 #if defined (ACE_HAS_TLI)
-#if defined (ACE_HAS_BROKEN_T_ERROR)
-  ::t_error (const_cast<char *> (errmsg));
-#else
   ::t_error (errmsg);
-#endif /* ACE_HAS_BROKEN_T_ERROR */
 #else
   ACE_UNUSED_ARG (errmsg);
 #endif /* ACE_HAS_TLI */

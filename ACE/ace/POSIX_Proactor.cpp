@@ -6,10 +6,6 @@
 #include "ace/POSIX_Proactor.inl"
 #endif /* __ACE_INLINE__ */
 
-# if defined (ACE_HAS_SYS_SYSTEMINFO_H)
-#   include /**/ <sys/systeminfo.h>
-# endif /* ACE_HAS_SYS_SYSTEMINFO_H */
-
 #include "ace/ACE.h"
 #include "ace/Flag_Manip.h"
 #include "ace/Task_T.h"

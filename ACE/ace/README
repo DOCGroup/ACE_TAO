@@ -211,10 +211,6 @@ ACE_HAS_BROKEN_MMAP_H                   HP/UX does not wrap the
 ACE_HAS_BROKEN_NESTED_TEMPLATES         MSVC has trouble with defining
                                         STL containers for nested
                                         structs and classes
-ACE_HAS_BROKEN_T_ERROR                  Compiler/platform has the wrong
-                                        prototype for t_error(), i.e.,
-                                        t_error(char *) rather than
-                                        t_error(const char *).
 ACE_HAS_BYTESEX_H                       Platform has <bytesex.h>.
 ACE_HAS_CANCEL_IO                       Platform supports the Win32
                                         CancelIO() function (WinNT 4.0
@@ -274,8 +270,6 @@ ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT Optimize
 ACE_HAS_LLSEEK                          Platform supports llseek.
 ACE_HAS_HI_RES_TIMER                    Compiler/platform supports
                                         SunOS high resolution timers
-ACE_HAS_IDTYPE_T                        Compiler/platform supports
-                                        idtype_t.
 ACE_HAS_INLINED_OSCALLS                 Inline all the static class OS
                                         methods to remove call
                                         overhead
@@ -283,8 +277,6 @@ ACE_HAS_INT_SWAB                        Platform's swab function has length
                                         argument of type int, not ssize_t.
 ACE_HAS_IP_MULTICAST                    Platform supports IP multicast
 ACE_HAS_IPV6                            Platform supports IPv6.
-ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED   gethostbyaddr does not handle
-                                        IPv6-mapped-IPv4 addresses
 ACE_USES_IPV4_IPV6_MIGRATION            Enable IPv6 support in ACE on
                                         platforms that don't have IPv6
                                         turned on by default.
@@ -383,8 +375,6 @@ ACE_HAS_PROC_FS                         Platform supports the /proc
                                         in <sys/procfs.h>
 ACE_HAS_POWERPC_TIMER                   Platform supports PowerPC
                                         time-base register.
-ACE_HAS_PRUSAGE_T                       Platform supports the
-                                        prusage_t struct
 ACE_HAS_PTHREADS                        Platform supports POSIX
                                         Pthreads, of one form or
                                         another.  This macro says the
@@ -491,8 +481,6 @@ ACE_HAS_SYSCALL_GETRUSAGE               HP/UX has an undefined syscall
                                         for GETRUSAGE...
 ACE_HAS_SYSENT_H                        Platform provides <sysent.h>
                                         header
-ACE_HAS_SYSV_SYSINFO                    Platform supports system
-                                        configuration information
 ACE_HAS_SYSV_IPC                        Platform supports System V IPC
                                         (most versions of UNIX, but
                                         not Win32)
@@ -546,10 +534,6 @@ ACE_HAS_TIMEZONE                        Platform/compiler supports
 ACE_HAS_TIMEZONE_GETTIMEOFDAY           Platform/compiler supports
                                         timezone * as second parameter
                                         to gettimeofday()
-ACE_HAS_TIMOD_H                         Platform supports TLI timod
-                                        STREAMS module
-ACE_HAS_TIUSER_H                        Platform provides TLI tiuser.h
-                                        header file.
 ACE_HAS_TLI                             Platform supports TLI.  Also
                                         see ACE_TLI_TCP_DEVICE. If the
                                         platform supports XTI, set ACE_HAS_XTI
@@ -814,8 +798,6 @@ ACE_LACKS_SETSCHED                      Platform lacks
                                         (e.g. MVS)
 ACE_LACKS_SIGACTION                     Platform lacks struct
                                         sigaction (e.g., Win32)
-ACE_LACKS_SIGNED_CHAR                   Platform lacks "signed char"
-                                        type (broken!)
 ACE_LACKS_SIGSET                        Platform lacks signal sets
                                         (e.g., Win32)
 ACE_LACKS_STRPTIME                      Platform/compiler lacks the strptime()
@@ -865,9 +847,6 @@ ACE_LACKS_TIMESPEC_T                    Platform does not define
                                         struct timespec.
 ACE_LACKS_TRUNCATE                      Platform doesn't have truncate()
                                         (e.g., vxworks)
-ACE_LACKS_UALARM_PROTOTYPE              Platform/compiler lacks the
-                                        ualarm() prototype (e.g.,
-                                        Solaris)
 ACE_LACKS_CHAR_RIGHT_SHIFTS             Compiler does not have any istream
                                         operator>> for chars, u_chars, or
                                         signed chars.
@@ -900,16 +879,8 @@ ACE_LACKS_WIN32_SECURITY_DESCRIPTORS    The Windows platform doesn't have
                                         security descriptor support.
 ACE_LACKS_WRITEV                        Platform doesn't define
                                         writev, so use our own
-
-ACE_NEEDS_DEV_IO_CONVERSION             Necessary with some compilers
-                                        to pass ACE_TTY_IO as
-                                        parameter to DEV_Connector.
 ACE_NEEDS_HUGE_THREAD_STACKSIZE         Required by platforms with
                                         small default stacks.
-ACE_NEEDS_LWP_PRIO_SET                  OS has LWPs, and when the
-                                        priority of a bound thread is
-                                        set, then the LWP priority
-                                        must be set also.
 ACE_NEEDS_SCHED_H                       Platform needs to #include
                                         <sched.h>
                                         to get thread scheduling
@@ -1310,24 +1281,6 @@ ACE_HAS_THREADS:
   Notes:
      We use Message_List.h even in a non-threaded environment.
      our XOMessageList.h does this by #ifdefs around Threaded things.
-
-
-ACE_HAS_TIMOD_H:
-----------------
-
-  Used in:
-     ace/OS.h
-
-  Notes:
-     if defined, include <sys/timod.h>
-
-  Solaris:
-     timod is a STREAMS module for use with the Transport  Inter-
-     face  (TI)  functions  of the Network Services library.  The
-     timod module converts a set of ioctl(2) calls  into  STREAMS
-     messages  that  may be consumed by a transport protocol pro-
-     vider that supports the Transport Interface.  This allows  a
-     user to initiate certain TI functions as atomic operations.
 
 
 ACE_HAS_TIUSER_H:

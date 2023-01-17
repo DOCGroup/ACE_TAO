@@ -57,8 +57,6 @@ typedef double ACE_timer_t;
    typedef off_t ACE_LOFF_T;
 #elif defined (__QNX__)
    typedef off64_t ACE_LOFF_T;
-#elif defined (__sun)
-   typedef offset_t ACE_LOFF_T;
 #elif defined (WIN32)
    typedef __int64  ACE_LOFF_T;
 #elif (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x700)) || defined (ACE_LYNXOS_MAJOR)

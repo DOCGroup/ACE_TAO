@@ -26,7 +26,6 @@
 #                   to CPPFLAGS, PLATFORM_DMALLOC_LDFLAGS to LDFLAGS, and
 #                   PLATFORM_DMALLOC_LIBS to LIBS. For more information on
 #                   dmalloc, see http://dmalloc.com.
-#  fast             Enable -fast option, e.g., with Sun C++.
 #  inline           Enable ACE inlining.  Some platforms enable inlining by
 #                   default, others do not. If platform_macros.GNU does not
 #                   set this, inline is enabled.

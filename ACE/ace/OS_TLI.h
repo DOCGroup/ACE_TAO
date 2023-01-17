@@ -100,12 +100,6 @@ extern "C"
 }
 #     endif /* !ACE_HAS_TLI_PROTOTYPES */
 
-#     if defined (ACE_HAS_TIUSER_H)
-#       include /**/ <tiuser.h>
-#     else
-       /* What to do here??? Is there a tli.h? */
-#     endif /* ACE_HAS_TIUSER_H */
-
 #   endif /* !ACE_HAS_XTI */
 
 # endif /* ACE_HAS_XTI || ACE_HAS_TLI */

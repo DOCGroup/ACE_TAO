@@ -1,29 +1,5 @@
 #include "Handle_Timeout.h"
 
-#if defined (SunOS4)
-extern "C"
-{
-  int init ();
-  int fini ();
-  void __sti__Handle_Timeout_C_init_();
-  void __std__Handle_Timeout_C_init_();
-}
-
-int
-init ()
-{
-  __sti__Handle_Timeout_C_init_();
-  return 0;
-}
-
-int
-fini ()
-{
-  __std__Handle_Timeout_C_init_();
-  return 0;
-}
-#endif /* SunOS4 */
-
 #if !defined (__ACE_INLINE__)
 #include "Handle_Timeout.inl"
 #endif /* __ACE_INLINE__ */

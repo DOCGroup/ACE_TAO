@@ -104,7 +104,8 @@ public:
   typedef value_type const *                     const_iterator;
   typedef ptrdiff_t                              difference_type;
   typedef size_t                                 size_type;
-  ACE_DECLARE_STL_REVERSE_ITERATORS
+  typedef std::reverse_iterator<iterator>        reverse_iterator;
+  typedef std::reverse_iterator<const_iterator>  const_reverse_iterator;
 
   /// Default Constructor.
   /**

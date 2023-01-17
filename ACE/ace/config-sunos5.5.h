@@ -129,7 +129,6 @@
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
 // Platform supports system configuration information.
-#define ACE_HAS_SYS_SYSTEMINFO_H
 #define ACE_HAS_SYSV_SYSINFO
 
 // Platform supports recvmsg and sendmsg.

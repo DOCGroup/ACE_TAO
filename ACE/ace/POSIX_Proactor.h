@@ -64,9 +64,6 @@ public:
     /// Signals notifications
     PROACTOR_SIG    = 2,
 
-    /// SUN specific aiowait()
-    PROACTOR_SUN    = 3,
-
     /// Callback notifications
     PROACTOR_CB     = 4
   };
