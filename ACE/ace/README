@@ -312,8 +312,6 @@ ACE_HAS_LINUX_NPTL                      Linux platform (with kernel >= 2.6.x)
 ACE_HAS_LOG_MSG_NT_EVENT_LOG            Platform supports Windows NT event
                                         log so we can create an
                                         ACE_Log_Msg_Backend to log to it.
-ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as
-                                        a long constant.
 ACE_HAS_MALLOC_STATS                    Enabled malloc statistics
                                         collection.
 ACE_HAS_MEMCHR                          Use native implementation of memchr.
@@ -328,15 +326,9 @@ ACE_HAS_MT_SAFE_MKTIME                  Platform supports MT safe
 ACE_HAS_MUTEX_TIMEOUTS                  Compiler supports timed mutex
                                         acquisitions
                                         (e.g. pthread_mutex_timedlock()).
-ACE_HAS_NONCONST_CHDIR                  Platform uses non-const char *
-                                        in call to chdir
 ACE_HAS_NONCONST_CLOCK_SETTIME          Platform uses non-const
                                         struct timespec * in call to
                                         clock_settime
-ACE_HAS_NONCONST_OPENDIR                Platform uses non-const char *
-                                        in call to opendir
-ACE_HAS_NONCONST_UNLINK                 Platform uses non-const char *
-                                        in call to unlink
 ACE_HAS_NONCONST_GETBY                  Platform uses non-const char *
                                         in calls to gethostbyaddr,
                                         gethostbyname, getservbyname
@@ -353,26 +345,16 @@ ACE_HAS_NONCONST_SENDMSG                Platform omits const qualifier
 ACE_HAS_NONCONST_SETRLIMIT              Platform omits const qualifier
                                         from rlimit parameter in setrlimit()
                                         prototype.
-ACE_HAS_NONCONST_STAT                   Platform's stat function has non const
-                                        name argument
 ACE_HAS_NONCONST_SWAB                   Platform's swab function has non
                                         const src argument
 ACE_HAS_NONCONST_WRITEV                 Platform omits const qualifier from
                                         iovec parameter in writev() prototype.
-ACE_HAS_OLD_MALLOC                      Compiler/platform uses old
-                                        malloc()/free() prototypes
-                                        (ugh)
-ACE_HAS_ONLY_SCHED_FIFO                 Platform, e.g., HP NonStop OSS,
-                                        only supports SCHED_FIFO
-                                        POSIX scheduling policy.
 ACE_HAS_ONLY_SCHED_OTHER                Platform, e.g., Solaris 2.5,
                                         only supports SCHED_OTHER
                                         POSIX scheduling policy.
 ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R   Uses ctime_r & asctime_r with
                                         only two parameters
                                         vs. three.
-ACE_HAS_OSF_TIMOD_H                     Platform supports the OSF TLI
-                                        timod STREAMS module
 ACE_HAS_3_PARAM_WCSTOK                  Platform has 3-parameter version
                                         of wcstok(), which was added in
                                         1994 in the ISO C standard Normative
@@ -457,8 +439,6 @@ ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL For Win32: Use Select_Reactor
 ACE_HAS_SEMUN                           Compiler/platform defines a
                                         union semun for SysV shared
                                         memory
-ACE_HAS_SET_T_ERRNO                     Platform has a function to set
-                                        t_errno (e.g., Tandem).
 ACE_HAS_SIGACTION_CONSTP2               Platform's sigaction() function takes
                                         const sigaction* as 2nd parameter.
 ACE_HAS_SIGINFO_T                       Platform supports SVR4
@@ -487,9 +467,6 @@ ACE_HAS_SOCKLEN_T                       Platform provides socklen_t
                                         glibc2.
 ACE_HAS_SOCK_BUF_SIZE_MAX               Platform limits the maximum socket
                                         message size.
-ACE_HAS_SPARCWORKS_401_SIGNALS          Compiler has brain-damaged
-                                        SPARCwork SunOS 4.x signal
-                                        prototype...
 ACE_HAS_SSIZE_T                         Compiler supports the ssize_t
                                         typedef
 ACE_HAS_STHREADS                        Platform supports Solaris
@@ -511,8 +488,6 @@ ACE_HAS_STRICT                          Use the STRICT compilation mode on Win32
 ACE_HAS_STRUCT_NETDB_DATA               Compiler/platform has strange
                                         hostent API for socket *_r()
                                         calls
-ACE_HAS_SUNOS4_SIGNAL_T                 Compiler has horrible SunOS
-                                        4.x signal handlers...
 ACE_HAS_SVR4_DYNAMIC_LINKING            Compiler/platform supports
                                         SVR4 dynamic linking semantics
 ACE_HAS_SVR4_GETTIMEOFDAY               Compiler/platform supports
@@ -622,8 +597,6 @@ ACE_HAS_VERSIONED_NAMESPACE             Wrap all library code within a
                                         defining preprocessor symbol
                                         ACE_VERSIONED_NAMESPACE_NAME
                                         to desired name.
-ACE_LACKS_INTMAX_T                      Platform lacks the intmax_t type
-ACE_LACKS_UINTMAX_T                     Platform lacks the uintmax_t type.
 ACE_LACKS_INTPTR_T                      Platform lacks the intptr_t type
 ACE_LACKS_UINTPTR_T                     Platform lacks the uintptr_t type.
 
@@ -694,9 +667,6 @@ ACE_HAS_XTI                             Platform has XTI
 ACE_INITIALIZE_MEMORY_BEFORE_USE        Memory is explicitly initialized before
                                         use. Useful when using a profiler like
                                         purify or valgrind
-ACE_HRTIME_T_IS_BASIC_TYPE              ACE_hrtime_t is a basic type that
-                                        doesn't require ACE_U64_TO_U32
-                                        conversion
 ACE_LACKS_ACCESS                        Platform lacks access() (e.g.,
                                         VxWorks)
 ACE_LACKS_ACE_IOSTREAM                  Platform can not build
@@ -728,7 +698,6 @@ ACE_LACKS_CONDATTR_PSHARED              Platform has no implementation
                                         pthread_condattr_setpshared(),
                                         even though it supports
                                         pthreads!
-ACE_LACKS_DIFFTIME                      Platform lacks difftime() implementation
 ACE_LACKS_DUP2                          Platform lacks dup2().
 ACE_LACKS_FCNTL                         Platform lacks POSIX-style fcntl ().
 ACE_LACKS_FSYNC                         Platform lacks fsync().

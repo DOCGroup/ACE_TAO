@@ -109,13 +109,11 @@ ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::chdir");
-#if defined (ACE_HAS_NONCONST_CHDIR)
-  return ::chdir (const_cast<char *> (path));
-#elif defined (ACE_CHDIR_EQUIVALENT)
+#if defined (ACE_CHDIR_EQUIVALENT)
   return ACE_CHDIR_EQUIVALENT (path);
 #else
   return ::chdir (path);
-#endif /* ACE_HAS_NONCONST_CHDIR */
+#endif /* ACE_CHDIR_EQUIVALENT */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -1174,16 +1172,14 @@ ACE_INLINE int
 ACE_OS::unlink (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::unlink");
-# if defined (ACE_HAS_NONCONST_UNLINK)
-  return ::unlink (const_cast<char *> (path));
-# elif defined (ACE_LACKS_UNLINK)
+#if defined (ACE_LACKS_UNLINK)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_UNLINK_EQUIVALENT)
+#elif defined (ACE_UNLINK_EQUIVALENT)
   return ACE_UNLINK_EQUIVALENT (path);
-# else
+#else
   return ::unlink (path);
-# endif /* ACE_HAS_NONCONST_UNLINK */
+#endif /* ACE_LACKS_UNLINK */
 }
 
 #if defined (ACE_HAS_WCHAR)

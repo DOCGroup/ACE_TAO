@@ -37,8 +37,6 @@ opendir (const ACE_TCHAR *filename)
   return ::ACE_OS::opendir_emulation (filename);
 #  elif defined (ACE_HAS_WOPENDIR) && defined (ACE_USES_WCHAR)
   return ::wopendir (filename);
-#    elif defined (ACE_HAS_NONCONST_OPENDIR)
-  return ::opendir (const_cast<char *> (filename));
 #    else /* ! ACE_WIN32 && ACE_LACKS_OPENDIR */
   return ::opendir (ACE_TEXT_ALWAYS_CHAR (filename));
 #    endif /* ACE_WIN32 && ACE_LACKS_OPENDIR */

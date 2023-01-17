@@ -81,9 +81,6 @@ PAGE_NOCACHE  */
 
 # if !defined (MAP_FAILED)
 #   define MAP_FAILED ((void *) -1)
-# elif defined (ACE_HAS_LONG_MAP_FAILED)
-#   undef MAP_FAILED
-#   define MAP_FAILED ((void *) -1L)
 # endif /* !MAP_FAILED */
 
 #if !defined (PROT_RDWR)
