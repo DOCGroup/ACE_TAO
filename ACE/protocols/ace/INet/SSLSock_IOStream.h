@@ -167,9 +167,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/INet/SSLSock_IOStream.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("SSLSock_IOStream.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_IOS_SSLSOCK_IOSTREAM_H */

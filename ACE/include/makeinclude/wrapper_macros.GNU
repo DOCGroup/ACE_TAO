@@ -224,7 +224,6 @@ endif # alternate_platform_macros
 
 # Define some variables to silence warnings
 GHS ?=
-AIX_TEMPLATE_HACK ?=
 
 # $(ACE_PLATFORM_CONFIG) is used in dependency rules and corresponds to the
 # platform dependent config-*.h file included in config.h, and can be set

@@ -177,8 +177,7 @@
 /* Mutexes are inherently recursive (e.g., Win32) */
 /* #undef ACE_HAS_RECURSIVE_MUTEXES */
 
-/* Platform will recurse infinitely on thread exits from TSS cleanup routines
-   (e.g., AIX) */
+/* Platform will recurse infinitely on thread exits from TSS cleanup routines */
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS 1
 
 /* Platform supports reentrant functions (i.e., all the POSIX *_r functions).

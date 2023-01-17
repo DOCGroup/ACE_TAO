@@ -1,7 +1,6 @@
 // -*- C++ -*-
 #include "ace/Log_Category.h"
 
-// AIX defines bzero() in this odd file... used by FD_ZERO
 #if defined (ACE_HAS_STRINGS)
 #  include "ace/os_include/os_strings.h"
 #endif /* ACE_HAS_STRINGS */

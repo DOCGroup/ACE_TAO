@@ -164,9 +164,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/INet/String_IOStream.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("String_IOStream.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_IOS_STRING_IOSTREAM_H */

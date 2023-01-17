@@ -3,9 +3,7 @@
 /**
  *  @file    Upgradable_RW_Test.h
  *
- *  This class gets its own header file to work around AIX C++
- *  compiler "features" related to template instantiation...  It is
- *  only used by Upgradable_RW_Test.cpp.
+ *  It is only used by Upgradable_RW_Test.cpp.
  *
  *  @author Michael Kircher <mk1@cs.wustl.edu>
  */

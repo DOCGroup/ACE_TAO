@@ -42,27 +42,9 @@
 #  include /**/ <sys/sockio.h>
 #endif /* ACE_HAS_SOCKIO_H */
 
-// This is sorta counter intuitive, but this is how it was done in OS.h
-// @todo: fix this...  dhinton
-#if defined (ACE_HAS_STREAMS)
-#  if defined (AIX)
-#    if !defined (_XOPEN_EXTENDED_SOURCE)
-#      define _XOPEN_EXTENDED_SOURCE
-#    endif /* !_XOPEN_EXTENDED_SOURCE */
-#  endif /* AIX */
-#endif /* ACE_HAS_STREAMS */
-
 #if !defined (ACE_LACKS_STROPTS_H)
 #  include /**/ <stropts.h>
 #endif /* !ACE_LACKS_STROPTS_H */
-
-// This is sorta counter intuitive, but this is how it was done in OS.h
-// @todo: fix this...  dhinton
-#if defined (ACE_HAS_STREAMS)
-#  if defined (AIX)
-#    undef _XOPEN_EXTENDED_SOURCE
-#  endif /* AIX */
-#endif /* ACE_HAS_STREAMS */
 
 #if defined (ACE_VXWORKS)
 // for ioctl()

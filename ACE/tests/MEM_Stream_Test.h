@@ -5,8 +5,7 @@
  *  @file    MEM_Stream_Test.h
  *
  * This file has the class definitions needed for template generation in
- * MEM_Stream_Test.cpp.  They have to be in a separate file so AIX xlC can
- * find them at auto-instantiate time.
+ * MEM_Stream_Test.cpp.
  *
  *  @author Steve Huston <shuston@riverace.com>
  */

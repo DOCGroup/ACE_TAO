@@ -83,14 +83,8 @@ private:
   ACE_TSS_TYPE (JAWS_CACHED_ALLOCATOR(T)) ts_allocator_;
 };
 
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "jaws3/Cached_Allocator_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Cached_Allocator_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 
 #endif /* JAWS_CACHED_ALLOCATOR_T_H */

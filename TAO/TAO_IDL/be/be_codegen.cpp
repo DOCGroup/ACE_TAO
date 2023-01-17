@@ -1803,16 +1803,6 @@ TAO_CodeGen::end_server_template_header ()
   *this->server_template_header_ << be_nl
       << "#endif /* defined REQUIRED SOURCE */";
 
-  // Insert the code to include the template pragma.
-  *this->server_template_header_
-      << be_nl_2 << "#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)";
-  *this->server_template_header_
-      << be_nl << "#pragma implementation (\""
-      << be_global->be_get_server_template_skeleton_fname (true)
-      << "\")";
-  *this->server_template_header_ << be_nl
-      << "#endif /* defined REQUIRED PRAGMA */";
-
   // Code to put the last #endif.
   *this->server_template_header_ << "\n\n";
 
@@ -1921,12 +1911,6 @@ TAO_CodeGen::end_ciao_svnt_template_header ()
                                     << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
                                     << "\"" << be_nl
                                     << "#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */"
-                                    << be_nl_2
-                                    << "#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)"
-                                    << be_nl << "#pragma implementation (\""
-                                    << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
-                                    << "\")"
-                                    << be_nl << "#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */"
                                     << be_nl;
 
   if (be_global->post_include () != nullptr)
@@ -2768,7 +2752,6 @@ TAO_CodeGen::gen_stub_src_includes ()
 
   if (be_global->gen_amh_classes ())
     {
-      // Necessary for the AIX compiler.
       this->gen_standard_include (this->client_stubs_,
                                   "ace/Auto_Ptr.h");
     }

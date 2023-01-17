@@ -81,9 +81,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "fe_utils.h"
 
-// This is for AIX w/IBM C++.
 class Identifier;
-
 class AST_PredefinedType;
 class AST_Module;
 class AST_Template_Module_Inst;
@@ -563,9 +561,5 @@ private:
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "utl_scope_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("utl_scope_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif           // _UTL_SCOPE_UTL_SCOPE_HH

@@ -162,9 +162,5 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/ESF/ESF_Proxy_Collection.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Proxy_Collection.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_ESF_PROXY_COLLECTION_H */

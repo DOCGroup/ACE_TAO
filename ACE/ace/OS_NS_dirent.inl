@@ -88,11 +88,7 @@ scandir (const ACE_TCHAR *dirname,
 #if defined (ACE_HAS_SCANDIR)
   return ::scandir (ACE_TEXT_ALWAYS_CHAR (dirname),
                     namelist,
-#  if defined (ACE_SCANDIR_SEL_LACKS_CONST)
-                    reinterpret_cast<ACE_SCANDIR_OS_SELECTOR> (selector),
-#  else
                     selector,
-#  endif /* ACE_SCANDIR_SEL_LACKS_CONST */
 #  if defined (ACE_SCANDIR_CMP_USES_VOIDPTR) || \
       defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
                     reinterpret_cast<ACE_SCANDIR_OS_COMPARATOR> (comparator));

@@ -366,10 +366,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Future.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Future.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif /* ACE_HAS_THREADS */
 
 #include /**/ "ace/post.h"

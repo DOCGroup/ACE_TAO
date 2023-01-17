@@ -252,9 +252,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // Although most systems provide some mechanism to do this, the code
       // in this test uses Linux-specific techniques. Thus, although it
       // is possible to add the code for the checks on, for example,
-      // HP-UX (pstat_getproc, pstat_getpathname) and
-      // AIX (/proc is available, but there's no self and the fds are not links
-      // to the opened file names), the code isn't here at present.
+      // HP-UX (pstat_getproc, pstat_getpathname)
 #if defined (ACE_LACKS_FORK) || defined (ACE_LACKS_READLINK) || !defined(ACE_LINUX)
       ACE_ERROR ((LM_INFO,
                   ACE_TEXT ("The remainder of this test is not supported on this platform\n")));

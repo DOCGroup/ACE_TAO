@@ -341,10 +341,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Svc_Handler.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Svc_Handler.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 
 #endif /* ACE_SVC_HANDLER_H */

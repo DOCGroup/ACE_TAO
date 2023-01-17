@@ -155,11 +155,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/Union_TypeCode.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("Union_TypeCode.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_UNION_TYPECODE_H */

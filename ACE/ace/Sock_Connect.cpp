@@ -22,9 +22,6 @@
 #if defined (ACE_HAS_IPV6)
 #  include "ace/Guard_T.h"
 #  include "ace/Recursive_Thread_Mutex.h"
-# if defined (_AIX)
-#  include /**/ <netinet/in6_var.h>
-# endif /* _AIX */
 #endif /* ACE_HAS_IPV6 */
 
 #if defined (ACE_HAS_GETIFADDRS)
@@ -205,7 +202,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
                       sizeof ip_addr.sin_addr);
     }
 
-#if !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__)
+#if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__)
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
        n--, ifr++)
 #else
@@ -218,7 +215,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
             ifr = (struct ifreq *)
               ((caddr_t) &ifr->ifr_addr + ifr->ifr_addr.sa_len)) :
           (nbytes -= sizeof (struct ifreq), ifr++)))
-#endif /* !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__) */
+#endif /* !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__) */
     {
       struct sockaddr_in if_addr;
 
@@ -725,87 +722,7 @@ get_ip_interfaces_getifaddrs (size_t &count,
 
   return 0;
 }
-#elif defined (_AIX)
-static int
-get_ip_interfaces_aix (size_t &count,
-                       ACE_INET_Addr *&addrs)
-{
-  ACE_HANDLE handle = ACE::get_handle();
-  size_t num_ifs = 0;
-  struct ifconf ifc;
-
-  if (handle == ACE_INVALID_HANDLE)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE::get_ip_interfaces_aix:")),
-                      -1);
-
-  if (ACE_OS::ioctl (handle,
-                     SIOCGSIZIFCONF,
-                     (caddr_t)&ifc.ifc_len) == -1)
-  {
-      ACE_OS::close (handle);
-      ACELIB_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("get ifconf size")),
-                       -1);
-  }
-
-  ACE_NEW_RETURN (ifc.ifc_buf,char [ifc.ifc_len], -1);
-
-  ACE_Auto_Array_Ptr<char> safe_buf (ifc.ifc_buf);
-  ACE_OS::memset (safe_buf.get(), 0, ifc.ifc_len);
-
-  if (ACE_OS::ioctl(handle, SIOCGIFCONF, (caddr_t)&ifc) == -1)
-  {
-      ACE_OS::close (handle);
-      ACELIB_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("get ifconf")),
-                       -1);
-  }
-
-  ACE_OS::close (handle);
-
-  char *buf_start = safe_buf.get();
-  char *buf_end = buf_start + ifc.ifc_len;
-
-  num_ifs = 0;
-  for (char *ptr = buf_start; ptr < buf_end; )
-    {
-      struct ifreq *req = reinterpret_cast<struct ifreq *>(ptr);
-      ptr += IFNAMSIZ;
-      ptr += req->ifr_addr.sa_len;
-     if (req->ifr_addr.sa_family == AF_INET
-# if defined (ACE_HAS_IPV6)
-        || req->ifr_addr.sa_family == AF_INET6
-# endif
-        )
-       ++num_ifs;
-    }
-  ACE_NEW_RETURN (addrs,ACE_INET_Addr[num_ifs], -1);
-
-  for (char * ptr = buf_start;  ptr < buf_end; )
-  {
-    struct ifreq *req = reinterpret_cast<struct ifreq *>(ptr);
-    // skip the interface name
-    ptr += IFNAMSIZ;
-    if (req->ifr_addr.sa_family == AF_INET
-# if defined (ACE_HAS_IPV6)
-        || req->ifr_addr.sa_family == AF_INET6
-# endif
-        )
-      {
-        sockaddr_in *addr = (sockaddr_in*)&req->ifr_addr;
-        addrs[count++].set(addr, addr->sin_len);
-      }
-    ptr += req->ifr_addr.sa_len;
-  }
-
-  return 0;
-}
-
-#endif // ACE_WIN32 || ACE_HAS_GETIFADDRS _AIX
+#endif // ACE_WIN32 || ACE_HAS_GETIFADDRS
 
 
 // return an array of all configured IP interfaces on this host, count
@@ -824,8 +741,6 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   return get_ip_interfaces_win32 (count, addrs);
 #elif defined (ACE_HAS_GETIFADDRS)
   return get_ip_interfaces_getifaddrs (count, addrs);
-#elif defined (_AIX)
-  return get_ip_interfaces_aix (count, addrs);
 #elif (defined (__unix) || defined (__unix__) || (defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS))) && !defined (ACE_LACKS_NETWORKING)
   // COMMON (SVR4 and BSD) UNIX CODE
 
@@ -1038,7 +953,7 @@ return 0;
 
 #elif (defined (__unix) || defined (__unix__) || (defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS))) && !defined (ACE_LACKS_NETWORKING)
   // Note: DEC CXX doesn't define "unix".  BSD compatible OS: HP UX,
-  // AIX, SunOS 4.x perform some ioctls to retrieve ifconf list of
+  // SunOS 4.x perform some ioctls to retrieve ifconf list of
   // ifreq structs no SIOCGIFNUM on SunOS 4.x, so use guess and scan
   // algorithm
 
@@ -1155,8 +1070,8 @@ ACE::get_handle ()
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 #if defined (sparc)
   handle = ACE_OS::open ("/dev/udp", O_RDONLY);
-#elif defined (__unix) || defined (__unix__) || defined (_AIX) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600))
-  // Note: DEC CXX doesn't define "unix" BSD compatible OS: AIX, SunOS 4.x
+#elif defined (__unix) || defined (__unix__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600))
+  // Note: DEC CXX doesn't define "unix" BSD compatible OS: SunOS 4.x
   handle = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 #endif /* sparc */
   return handle;

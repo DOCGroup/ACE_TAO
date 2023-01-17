@@ -58,9 +58,5 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/Event/EC_Busy_Lock.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("EC_Busy_Lock.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_BUSY_LOCK_H */

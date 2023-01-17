@@ -63,10 +63,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Intrusive_Ref_Count_Object_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Intrusive_Ref_Count_Object_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_INTRUSIVE_REF_COUNT_OBJECT_T_H */

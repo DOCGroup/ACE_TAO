@@ -291,10 +291,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # include "ace/Array_Map.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Array_Map.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 
 #endif  /* ACE_ARRAY_MAP_H */

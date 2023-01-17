@@ -128,10 +128,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Pseudo_VarOut_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Pseudo_VarOut_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_PSEUDO_VAROUT_T_H */

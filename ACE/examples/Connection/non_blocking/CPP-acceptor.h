@@ -84,8 +84,4 @@ private:
 #include "CPP-acceptor.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("CPP-acceptor.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif /* CPP_ACCEPTOR_H */

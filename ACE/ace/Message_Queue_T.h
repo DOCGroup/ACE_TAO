@@ -1565,10 +1565,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Message_Queue_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Message_Queue_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 
 #endif /* ACE_MESSAGE_QUEUE_T_H */

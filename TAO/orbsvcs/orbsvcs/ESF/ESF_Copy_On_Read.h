@@ -60,8 +60,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/ESF/ESF_Copy_On_Read.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Copy_On_Read.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif /* TAO_ESF_COPY_ON_READ_H */

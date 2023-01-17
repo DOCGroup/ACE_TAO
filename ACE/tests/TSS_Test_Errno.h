@@ -4,9 +4,7 @@
 /**
  *  @file    TSS_Test_Errno.h
  *
- *  This file contains the definition of Errno.  Some compilers need
- *  it in a .h file for template instantiation (such as AIX C Set
- *  ++).
+ *  This file contains the definition of Errno.
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
@@ -21,9 +19,7 @@
  *
  * @brief Define a simple Errno abstraction
  *
- * This class gets its own header file to work around AIX C++
- * compiler "features" related to template instantiation...  It is
- * only used by TSS_Test.cpp.
+ * It is only used by TSS_Test.cpp.
  */
 class Errno
 {

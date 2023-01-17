@@ -746,10 +746,9 @@ struct Session_Data
 // indicating the addressing info for the client.
 // Master is initialized with a count of the number of expected sessions. After
 // this number are set up, Master will stop listening for session requests.
-// This is a bit fragile but is necessary because on HP-UX, AIX, et al., it
-// is impossible to close/cancel a socket with an outstanding UDP recieve
-// (on AIX the process is so wedged the machine needs to be rebooted to
-// clear it!). So, this bit of messiness is necessary for portability.
+// This is a bit fragile but is necessary because on HP-UX, et al., it
+// is impossible to close/cancel a socket with an outstanding UDP receive
+// So, this bit of messiness is necessary for portability.
 // When the Master is destroyed, it will try to stop establishing sessions
 // but this will only work on Windows.
 class Master : public ACE_Handler

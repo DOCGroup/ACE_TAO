@@ -248,11 +248,6 @@ int run_main (int, ACE_TCHAR *[])
                     static_cast<const struct sockaddr_in6*> (addr_port.get_addr());
                   const struct sockaddr_in6 *check_in6 =
                     static_cast<const struct sockaddr_in6*> (check.get_addr());
-# if defined(AIX)
-
-                  ACE_ERROR((LM_ERROR, ACE_TEXT ("  addr_port_in6->sin6_len=%d, check_in6->sin6_len=%d\n")
-                    , (int)addr_port_in6->sin6_len, (int)check_in6->sin6_len));
-# endif
 
                   ACE_ERROR((LM_ERROR, ACE_TEXT ("  addr_port_in6->sin6_family=%d, check_in6->sin6_family=%d\n")
                     , (int)addr_port_in6->sin6_family, (int)check_in6->sin6_family));

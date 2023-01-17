@@ -81,11 +81,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#include "orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.cpp"
-#pragma implementation ("MonitorProxySupplier_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif // TAO_HAS_MONITOR_FRAMEWORK == 1
 
 #include /**/ "ace/post.h"
