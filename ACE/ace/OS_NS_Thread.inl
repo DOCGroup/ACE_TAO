@@ -534,13 +534,9 @@ ACE_OS::event_init (ACE_event_t *event,
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE long
-ACE_OS::priority_control (ACE_idtype_t idtype, ACE_id_t identifier, int cmd, void *arg)
+ACE_OS::priority_control (ACE_idtype_t /*idtype*/, ACE_id_t /*identifier*/, int cmd, void */*arg*/)
 {
   ACE_OS_TRACE ("ACE_OS::priority_control");
-  ACE_UNUSED_ARG (idtype);
-  ACE_UNUSED_ARG (identifier);
-  ACE_UNUSED_ARG (cmd);
-  ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
 }
 

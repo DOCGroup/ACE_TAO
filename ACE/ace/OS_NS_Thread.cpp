@@ -3285,19 +3285,14 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 }
 
 int
-ACE_OS::scheduling_class (const char *class_name, ACE_id_t &id)
+ACE_OS::scheduling_class (const char */*class_name*/, ACE_id_t &/*id*/)
 {
-  ACE_UNUSED_ARG (class_name);
-  ACE_UNUSED_ARG (id);
   ACE_NOTSUP_RETURN (-1);
 }
 
 int
-ACE_OS::set_scheduling_params (const ACE_Sched_Params &sched_params,
-                               ACE_id_t id)
+ACE_OS::set_scheduling_params (const ACE_Sched_Params &/*sched_params*/, ACE_id_t /*id*/)
 {
-  ACE_UNUSED_ARG (sched_params);
-  ACE_UNUSED_ARG (id);
   ACE_NOTSUP_RETURN (-1);
 }
 

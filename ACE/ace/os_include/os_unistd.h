@@ -118,17 +118,6 @@ extern "C"
 #endif  /* ACE_LACKS_GETPGID_PROTOTYPE &&
            !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED */
 
-#if !defined (_LARGEFILE64_SOURCE)
-#  if defined (ACE_LACKS_LSEEK64_PROTOTYPE) && \
-      defined (ACE_LACKS_LLSEEK_PROTOTYPE)
-#    error Define either ACE_LACKS_LSEEK64_PROTOTYPE or ACE_LACKS_LLSEEK_PROTOTYPE, not both!
-#  elif defined (ACE_LACKS_LSEEK64_PROTOTYPE)
-     ACE_LOFF_T lseek64 (int fd, ACE_LOFF_T offset, int whence);
-#  elif defined (ACE_LACKS_LLSEEK_PROTOTYPE)
-     ACE_LOFF_T llseek (int fd, ACE_LOFF_T offset, int whence);
-#  endif
-#endif  /* _LARGEFILE64_SOURCE */
-
 #if defined (__BORLANDC__)
 #  define _isatty isatty
 #endif /* __BORLANDC__ */
