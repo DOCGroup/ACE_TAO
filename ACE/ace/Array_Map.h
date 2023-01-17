@@ -86,7 +86,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *       -# operator=
  */
 template<typename Key, typename Value, class EqualTo = std::equal_to<Key>,
-         class Alloc = ACE_ARRAY_MAP_DEFAULT_ALLOCATOR (Key, Value) >
+         class Alloc = std::allocator<std::pair<Key,Value>>>
 class ACE_Array_Map
 {
 public:
