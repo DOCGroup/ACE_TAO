@@ -45,18 +45,6 @@
 # endif
 # define ACE_EXPORT_MACRO ACE_Export
 
-# if defined (ACE_HAS_PRIOCNTL)
-  // Need to #include thread.h before #defining THR_BOUND, etc.,
-  // when building without threads on SunOS 5.x.
-#   if defined (sun)
-#     include /**/ <thread.h>
-#   endif /* sun */
-
-  // Need to #include these before #defining USYNC_PROCESS on SunOS 5.x.
-#   include /**/ <sys/rtpriocntl.h>
-#   include /**/ <sys/tspriocntl.h>
-# endif /* ACE_HAS_PRIOCNTL */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_WIN32)
@@ -88,75 +76,13 @@ extern "C" {
 
 # if defined (ACE_HAS_THREADS)
 
-#   if defined (ACE_HAS_STHREADS)
-#     include /**/ <synch.h>
-#     include /**/ <thread.h>
-#     define ACE_SCOPE_PROCESS P_PID
-#     define ACE_SCOPE_LWP P_LWPID
-#     define ACE_SCOPE_THREAD (ACE_SCOPE_LWP + 1)
-#   else
-#     define ACE_SCOPE_PROCESS 0
-#     define ACE_SCOPE_LWP 1
-#     define ACE_SCOPE_THREAD 2
-#   endif /* ACE_HAS_STHREADS */
-
 #   if !defined (ACE_HAS_PTHREADS)
 #     define ACE_SCHED_OTHER 0
 #     define ACE_SCHED_FIFO 1
 #     define ACE_SCHED_RR 2
 #   endif /* ! ACE_HAS_PTHREADS */
 
-#   if defined (ACE_HAS_PTHREADS)
-// moved to pthread.h
-#   elif defined (ACE_HAS_STHREADS)
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// Solaris threads, without PTHREADS.
-// Typedefs to help compatibility with Windows NT and Pthreads.
-typedef thread_t ACE_thread_t;
-// Native TSS key type (not for general use)
-typedef thread_key_t ACE_OS_thread_key_t;
-// Application TSS key type (use this type except in TSS Emulation)
-#   if defined (ACE_HAS_TSS_EMULATION)
-      typedef u_int ACE_thread_key_t;
-#   else  /* ! ACE_HAS_TSS_EMULATION */
-      typedef ACE_OS_thread_key_t ACE_thread_key_t;
-#   endif /* ! ACE_HAS_TSS_EMULATION */
-typedef mutex_t ACE_mutex_t;
-#     if !defined (ACE_LACKS_RWLOCK_T)
-typedef rwlock_t ACE_rwlock_t;
-#     endif /* !ACE_LACKS_RWLOCK_T */
-#     if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_USES_FIFO_SEM)
-typedef sema_t ACE_sema_t;
-#     endif /* !ACE_HAS_POSIX_SEM */
-
-typedef cond_t ACE_cond_t;
-struct ACE_Export ACE_condattr_t
-{
-  int type;
-};
-struct ACE_Export ACE_mutexattr_t
-{
-  int type;
-};
-typedef ACE_thread_t ACE_hthread_t;
-typedef ACE_mutex_t ACE_thread_mutex_t;
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#     define THR_CANCEL_DISABLE      0
-#     define THR_CANCEL_ENABLE       0
-#     define THR_CANCEL_DEFERRED     0
-#     define THR_CANCEL_ASYNCHRONOUS 0
-#     define THR_JOINABLE            0
-#     define THR_SCHED_FIFO          0
-#     define THR_SCHED_RR            0
-#     define THR_SCHED_DEFAULT       0
-#     define THR_INHERIT_SCHED       0
-#     define THR_SCOPE_PROCESS       0
-
-#   elif defined (ACE_VXWORKS)
+#   if defined (ACE_VXWORKS)
 #     include /**/ <sysLib.h> // for sysClkRateGet()
 #     include /**/ <types/vxTypes.h>
 #     if !defined (__RTP__)
@@ -230,8 +156,8 @@ typedef struct
 typedef ACE_VX_TASK_ID ACE_thread_t;
 typedef ACE_VX_TASK_ID ACE_hthread_t;
 // Key type: the ACE TSS emulation requires the key type be unsigned,
-// for efficiency.  (Current POSIX and Solaris TSS implementations also
-// use u_int, so the ACE TSS emulation is compatible with them.)
+// for efficiency.  (Current POSIX implementation use u_int, so the
+// ACE TSS emulation is compatible with them.)
 // Native TSS key type
 typedef u_int ACE_OS_thread_key_t;
 // Application TSS key type (use this type except in TSS Emulation)
@@ -423,11 +349,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef pthread_rwlock_t ACE_rwlock_t;
-ACE_END_VERSIONED_NAMESPACE_DECL
-#   elif defined (ACE_HAS_STHREADS)
-#     include /**/ <synch.h>
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef rwlock_t ACE_rwlock_t;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #   endif /* ACE_LACKS_RWLOCK_T */
 
@@ -748,18 +669,9 @@ typedef int ACE_pri_t;
 #   else
   typedef int ACE_idtype_t;
 #   endif /* ACE_HAS_IDTYPE_T */
-#   if defined (ACE_HAS_STHREADS)
-#     if defined (ACE_LACKS_PRI_T)
-    typedef int pri_t;
-#     endif /* ACE_LACKS_PRI_T */
-  typedef id_t ACE_id_t;
-#     define ACE_SELF P_MYID
-  typedef pri_t ACE_pri_t;
-#   else  /* ! ACE_HAS_STHREADS */
   typedef long ACE_id_t;
 #     define ACE_SELF (-1)
   typedef short ACE_pri_t;
-#   endif /* ! ACE_HAS_STHREADS */
 #endif /* !defined (ACE_WIN32) */
 
 # if defined (ACE_HAS_TSS_EMULATION)
@@ -1031,10 +943,6 @@ extern "C" ACE_Export void ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 # elif defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CLEANUP)
-// Though we are defining a extern "C" function to match the prototype of
-// pthread_cleanup_push, it is undone by the Solaris header file
-// /usr/include/pthread.h. So this macro generates a warning under Solaris
-// with SunCC. This is a bug in the Solaris header file.
 extern "C" ACE_Export void ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
@@ -1335,10 +1243,6 @@ namespace ACE_OS {
   //@}
 
   /// Low-level interface to @c priocntl(2).
-  /**
-   * Can't call the following priocntl, because that's a macro on
-   * Solaris.
-   */
   ACE_NAMESPACE_INLINE_FUNCTION
   long priority_control (ACE_idtype_t, ACE_id_t, int, void *);
 

@@ -6,11 +6,7 @@
  *   This test program stresses how many threads can be
  *   consecutively (not simultaneously) created on a platform.
  *   Rather than testing exhaustively, it establishes a
- *   semi-arbitrary upper limit (MAX_THREAD)of threads.  The limit
- *   is only partly arbitrary because it was chosen as a value that
- *   exceeded an observed upper limit on the values that Solaris 9
- *   will accept as arguments to thr_concurrency(), used by
- *   ACE_OS::thr_create(THR_NEW_LWP).
+ *   semi-arbitrary upper limit (MAX_THREAD)of threads.
  *
  *  @author Chris Cleeland <cleeland@ociweb.com>
  */

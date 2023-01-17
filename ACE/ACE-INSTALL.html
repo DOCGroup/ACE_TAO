@@ -2064,39 +2064,6 @@ libraries.
       Please see the <a href="#NonStaticObjectManager">Non-static
       ACE_Object_Manager</a> discussion below.</p><p>
 
-  </p></li><li><b> Solaris 7, 8, 9, and 10 using Sun ONE Studio 8 (C++ 5.5)
-       or higher, Centerline C++ 2.x, GNU gcc 2.95 and
-       later.</b><p>
-
-      All the source code and tests should build and run without any
-      problems on Solaris 7, 8, and 9 platforms using the above
-      Sun C++ compilers.
-
-      There are likely to be build problems with older versions or
-      different patchlevels of Sun C++.  Likewise, on
-      Solaris with g++ you may need to use GNU as instead of
-      /usr/ccs/bin/as, if you want -gstabs+ and -pipe support.
-
-      Thanks to Susan Liebeskind &lt;shl@janis.gtri.gatech.edu&gt;
-      for providing the following useful information:</p><p>
-
-      By default, ACE uses both the Solaris and POSIX thread
-      interface.  To disable use of the Solaris thread interface, add
-      <code>-D_POSIX_PTHREAD_SEMANTICS</code> to the
-      <code>CFLAGS</code> in your
-      <code>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</code>.
-      See the Solaris Intro (3) man page for more information.</p><p>
-
-      To disable ACE thread support completely, build with the
-      <code>threads=0</code> make flag.  See the <a href="#flags">Makefile Flags</a> section below for more
-      information on make flags.</p><p>
-
-      If you use g++ on Solaris 7, you might need to rebuild
-      it on a SunOS 5.7 (Solaris 7) host.  Some versions of g++
-      provide replacements for system header files.  The
-      replacements on older SunOS systems are not compatible with the
-      SunOS 5.7 system headers.  </P>
-
   </p></li><li><b><a name="Linux">Linux</a></b><p>
 
       ACE has been ported to Linux on
@@ -2519,14 +2486,6 @@ If you use the GNU GCC g++ compiler please note the following:
       <code>--prefix</code> option to <code>configure</code> instead
       of hacking its output.<p>
 
-  </p></li><li>If you are getting weird link errors when building libACE
-      on Solaris you are probably using the GNU linker.  Try using the
-      Sun linker (/usr/ccs/bin/ld) instead.  Note that gcc first looks
-      for the GNU linker if it is installed along with gcc.  The only
-      way to not use the GNU linker is to delete it from the
-      installation or to build your own compiler with no linker.  Be
-      aware that you still need the libraries and includes of gcc.<p>
-
       NOTE: if you do use the GNU linker, you might need to change
       the <code>-G</code> flag to <code>-shared</code> in
       the <code>SOFLAGS</code> definition in your
@@ -2937,7 +2896,6 @@ include_env      Support old-style ACE_TRY_ENV declarations in methods.
                  parameters when using include_env=1.
                  If possible, do not use it, but instead change your TAO
                  applications to use the ACE_ENV_ARG macros.
-fast             Enable -fast option, e.g., with Sun C++.
 inline           Enable ACE inlining.  Some platforms enable inlining by
                    default, others do not.
 optimize         Enable optimization; see OCFLAGS and OCCFLAGS.

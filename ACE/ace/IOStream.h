@@ -343,16 +343,6 @@ typedef ostream& (*__omanip_)(ostream&);
 // operators.  Notice how the <ipfx> and <isfx> functions are used.
 
 #define GET_SIG(MT,DT)          inline virtual MT& operator>> (DT v)
-#  if (defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510)
-#define GET_CODE {                      \
-        if (ipfx (0))                                   \
-        {                                               \
-                (*((istream*)this)) >> (v);             \
-        }                                               \
-        isfx ();                                        \
-        return *this;                                   \
-        }
-#  else
 #define GET_CODE {                      \
         if (ipfx (0))                                   \
         {                                               \
@@ -361,7 +351,6 @@ typedef ostream& (*__omanip_)(ostream&);
         isfx ();                                        \
         return *this;                                   \
         }
-#  endif
 #define GET_PROT(MT,DT,CODE)    GET_SIG(MT,DT)  CODE
 #define GET_FUNC(MT,DT)         GET_PROT(MT,DT,GET_CODE)
 
@@ -370,16 +359,6 @@ typedef ostream& (*__omanip_)(ostream&);
 // operators.  Notice how the <opfx> and <osfx> functions are used.
 
 #define PUT_SIG(MT,DT)          inline virtual MT& operator<< (DT v)
-#  if (defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510)
-#define PUT_CODE {                      \
-        if (opfx ())                                    \
-        {                                               \
-                (*((ostream *) this)) << (v);            \
-        }                                               \
-        osfx ();                                        \
-        return *this;                                   \
-        }
-#  else
 #define PUT_CODE {                      \
         if (opfx ())                                    \
         {                                               \
@@ -388,7 +367,6 @@ typedef ostream& (*__omanip_)(ostream&);
         osfx ();                                        \
         return *this;                                   \
         }
-#  endif
 #define PUT_PROT(MT,DT,CODE)    PUT_SIG(MT,DT)  CODE
 #define PUT_FUNC(MT,DT)         PUT_PROT(MT,DT,PUT_CODE)
 

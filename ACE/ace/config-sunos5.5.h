@@ -45,7 +45,6 @@
 # endif /* __SUNPRO_CC >= 0x500 */
 # endif /* __SUNPRO_CC >= 0x420 */
 
-# define ACE_CAST_CONST const
 # define ACE_HAS_HI_RES_TIMER
 # define ACE_HAS_SIG_C_FUNC /* Sun CC 5.0 needs this, 4.2 doesn't mind. */
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR
@@ -269,7 +268,6 @@
           _POSIX_PTHREAD_SEMANTICS */
 #endif /* !ACE_MT_SAFE || ACE_MT_SAFE == 1 */
 
-#define ACE_HAS_PRIOCNTL
 
 // Platform supports ACE_TLI timod STREAMS module.
 #define ACE_HAS_TIMOD_H

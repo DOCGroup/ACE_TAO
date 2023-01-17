@@ -7,11 +7,6 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/ACE.h"
-
-#if defined (sparc)
-#  include "ace/OS_NS_fcntl.h"
-#endif  // sparc
-
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
@@ -1062,21 +1057,16 @@ return 0;
 }
 
 // Routine to return a handle from which ioctl() requests can be made.
-
 ACE_HANDLE
 ACE::get_handle ()
 {
-  // Solaris 2.x
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
-#if defined (sparc)
-  handle = ACE_OS::open ("/dev/udp", O_RDONLY);
-#elif defined (__unix) || defined (__unix__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600))
+#if defined (__unix) || defined (__unix__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600))
   // Note: DEC CXX doesn't define "unix" BSD compatible OS: SunOS 4.x
   handle = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
-#endif /* sparc */
+#endif /* __unux */
   return handle;
 }
-
 
 #if defined (ACE_HAS_IPV6)
 static int

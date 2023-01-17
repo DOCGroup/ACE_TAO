@@ -22,18 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_PRIOCNTL)
-   // Need to #include thread.h before #defining THR_BOUND, etc.,
-   // when building without threads on SunOS 5.x.
-#  if defined (sun)
-#    include /**/ <thread.h>
-#  endif /* sun */
-
-   // Need to #include these before #defining USYNC_PROCESS on SunOS 5.x.
-#  include /**/ <sys/rtpriocntl.h>
-#  include /**/ <sys/tspriocntl.h>
-#endif /* ACE_HAS_PRIOCNTL */
-
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/os_stdint.h"
 
@@ -218,14 +206,12 @@
 #    endif /* PTHREAD_MUTEXTYPE_FAST */
 #  endif /* PTHREAD_PROCESS_SHARED */
 
-#  if !defined (ACE_HAS_STHREADS)
-#    if !defined (USYNC_THREAD)
-#      define USYNC_THREAD PTHREAD_PROCESS_PRIVATE
-#    endif /* ! USYNC_THREAD */
-#      if !defined (USYNC_PROCESS)
-#        define USYNC_PROCESS PTHREAD_PROCESS_SHARED
-#      endif /* ! USYNC_PROCESS */
-#  endif /* ACE_HAS_STHREADS */
+#  if !defined (USYNC_THREAD)
+#    define USYNC_THREAD PTHREAD_PROCESS_PRIVATE
+#  endif /* ! USYNC_THREAD */
+#    if !defined (USYNC_PROCESS)
+#      define USYNC_PROCESS PTHREAD_PROCESS_SHARED
+#    endif /* ! USYNC_PROCESS */
 
    /* MM-Graz:  prevent warnings */
 #  undef THR_BOUND
@@ -252,7 +238,7 @@
 #  define THR_EXPLICIT_SCHED      0x00800000
 #  define THR_SCHED_IO            0x01000000
 
-#  if !defined (ACE_HAS_STHREADS) && !defined (ACE_MQX)
+#  if !defined (ACE_MQX)
 #    if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_USES_FIFO_SEM)
 
 // This needs to be moved out of here.
@@ -282,8 +268,6 @@ public:
 #    endif /* !ACE_HAS_POSIX_SEM */
 
 #    if defined (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD)
-       // If we are on Solaris we can just reuse the existing
-       // implementations of these synchronization types.
 #      if !defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 #        include /**/ <synch.h>
          typedef rwlock_t ACE_rwlock_t;
@@ -295,7 +279,7 @@ public:
 #    if !defined (ACE_HAS_POSIX_SEM)
        typedef sema_t ACE_sema_t;
 #    endif /* !ACE_HAS_POSIX_SEM */
-#  endif /* !ACE_HAS_STHREADS */
+#  endif /* !ACE_MQX */
 
 #  if defined (ACE_HAS_PTHREADS_UNIX98_EXT) && !defined (ACE_LACKS_RWLOCK_T)
      typedef pthread_rwlock_t ACE_rwlock_t;
@@ -322,26 +306,6 @@ public:
 #    endif  /* _XOPEN_SOURCE && _XOPEN_SOURCE < 600 */
 
 #  endif  /* ACE_LINUX && ((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) */
-
-#elif defined (ACE_HAS_STHREADS)
-#  if !defined (ACE_THR_PRI_FIFO_MIN)
-#    define ACE_THR_PRI_FIFO_MIN  (long) 0
-#  endif /* !ACE_THR_PRI_FIFO_MIN */
-#  if !defined (ACE_THR_PRI_FIFO_MAX)
-#    define ACE_THR_PRI_FIFO_MAX  (long) 59
-#  endif /* !ACE_THR_PRI_FIFO_MAX */
-#  if !defined (ACE_THR_PRI_RR_MIN)
-#    define ACE_THR_PRI_RR_MIN    (long) 0
-#  endif /* !ACE_THR_PRI_RR_MIN */
-#  if !defined (ACE_THR_PRI_RR_MAX)
-#    define ACE_THR_PRI_RR_MAX    (long) 59
-#  endif /* !ACE_THR_PRI_RR_MAX */
-#  if !defined (ACE_THR_PRI_OTHER_MIN)
-#    define ACE_THR_PRI_OTHER_MIN (long) 0
-#  endif /* !ACE_THR_PRI_OTHER_MIN */
-#  if !defined (ACE_THR_PRI_OTHER_MAX)
-#    define ACE_THR_PRI_OTHER_MAX (long) 127
-#  endif /* !ACE_THR_PRI_OTHER_MAX */
 #endif /* ACE_HAS_PTHREADS */
 
 #include /**/ "ace/post.h"

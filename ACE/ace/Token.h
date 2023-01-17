@@ -56,8 +56,8 @@ class ACE_Time_Value;
  * <acquire> multiple times, however, it must call <release> an
  * equal number of times before the token is actually released.
  * Threads that are blocked awaiting the token are serviced in
- * strict FIFO/LIFO order as other threads release the token (Solaris
- * and Pthread mutexes don't strictly enforce an acquisition
+ * strict FIFO/LIFO order as other threads release the token
+ * (Pthread mutexes don't strictly enforce an acquisition
  * order).  There are two lists within the class.  Write
  * acquires always have higher priority over read acquires.  Which
  * means, if you use both write/read operations, care must be

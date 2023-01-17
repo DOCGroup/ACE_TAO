@@ -74,7 +74,7 @@ private:
   typedef ACE_Auto_Array_Ptr<CORBA::Long> GridArray;
   GridArray array_;
 
-  /// Solaris and some Windows compilers don't have min in std namespaces
+  /// Some Windows compilers don't have min in std namespaces
   static CORBA::UShort ushort_min (CORBA::UShort, CORBA::UShort);
 };
 

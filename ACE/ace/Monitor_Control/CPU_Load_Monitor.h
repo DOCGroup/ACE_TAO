@@ -23,8 +23,6 @@
 
 #if defined (ACE_HAS_PDH_H) && !defined (ACE_LACKS_PDH_H)
 #include "ace/Monitor_Control/Windows_Monitor.h"
-#elif defined (ACE_HAS_KSTAT)
-#include "ace/os_include/os_kstat.h"
 #endif
 
 #include "ace/Monitor_Control/Monitor_Control_export.h"
@@ -67,15 +65,11 @@ namespace ACE
       void access_proc_stat (unsigned long *which_idle);
 #endif
 
-#if defined (ACE_HAS_KSTAT)
-      void access_kstats (unsigned long *which_idle);
-#endif
-
     private:
       static const char* default_name_;
 
-      /// Common to Linux and Solaris implementations.
-#if defined (ACE_LINUX) || defined (ACE_HAS_KSTAT)
+      /// Linux implementation
+#if defined (ACE_LINUX)
       unsigned long user_;
       unsigned long wait_;
       unsigned long kernel_;
@@ -86,10 +80,6 @@ namespace ACE
 #if defined (ACE_LINUX)
       FILE *file_ptr_;
       char buf_[1024];
-#elif defined (ACE_HAS_KSTAT)
-      kstat_ctl_t *kstats_;
-      kstat_t *kstat_;
-      kid_t kstat_id_;
 #endif
     };
   }

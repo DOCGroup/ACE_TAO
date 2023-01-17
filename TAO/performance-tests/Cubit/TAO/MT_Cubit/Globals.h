@@ -108,7 +108,7 @@ public:
   int parse_args (int argc, ACE_TCHAR **argv);
 
   /**
-   * Enables fifo scheduling eg., RT scheduling class on solaris.
+   * Enables fifo scheduling.
    * Returns 0 on success, 1 if insufficient permission, or -1
    * for other failure.  As a side effect, sets thr_create_flags
    * appropriately.

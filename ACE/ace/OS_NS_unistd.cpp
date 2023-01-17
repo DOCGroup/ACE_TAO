@@ -255,12 +255,7 @@ ACE_OS::fork (const ACE_TCHAR *program_name)
   ACE_UNUSED_ARG (program_name);
   ACE_NOTSUP_RETURN (pid_t (-1));
 # else
-  pid_t const pid =
-# if defined (ACE_HAS_STHREADS)
-    ::fork1 ();
-#else
-    ::fork ();
-#endif /* ACE_HAS_STHREADS */
+  pid_t const pid = ::fork ();
 
 #if !defined (ACE_HAS_MINIMAL_ACE_OS) && !defined (ACE_HAS_THREADS)
 

@@ -26,11 +26,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Specialize ACE_SOCK_Acceptor to lock around <accept>;
  *
- * This class is necessary since some OS platforms (e.g.,
- * Solaris 2.5) do not allow multiple threads/processes to
- * simultaneously call <accept> on the same listen-mode
- * port/socket.  Thus, we need to protect against multiple
- * concurrent accesses by using the appropriate type of lock.
+ * This class is necessary since some OS platforms do not allow
+ * multiple threads/processes to simultaneously call @c accept
+ * on the same listen-mode port/socket.  Thus, we need to
+ * protect against multiple concurrent accesses by using
+ * the appropriate type of lock.
  */
 template <class ACE_LOCK>
 class ACE_LOCK_SOCK_Acceptor : public ACE_SOCK_Acceptor

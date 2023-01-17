@@ -27,7 +27,7 @@
  *                on UN*X platform.
  *
  *            -t: Measure the performance of native thread creation
- *                mechanisms.  On Solaris, this is thr_create ().
+ *                mechanisms.
  *                On NT, this is CreateThread ().  Currently, only
  *                these two platforms are implemented.
  *
@@ -171,7 +171,7 @@ prof_fork (size_t iteration)
 static double
 prof_native_thread (size_t iteration)
 {
-#if defined (ACE_HAS_THREADS)  && (defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_STHREADS))
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_WTHREADS)
   if (iteration != 0)
     {
       ACE_Profile_Timer ptimer;
@@ -191,14 +191,6 @@ prof_native_thread (size_t iteration)
                                   0,
                                   CREATE_SUSPENDED,
                                   0) == 0)
-#elif defined (ACE_HAS_STHREADS)
-                //FUZZ: disable check_for_lack_ACE_OS
-                if (::thr_create (0,
-                                  0,
-                                  &ace_empty,
-                                  0,
-                                  THR_SUSPENDED,
-                                  0) != 0)
 #endif
                   ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
                 //FUZZ: enable check_for_lack_ACE_OS

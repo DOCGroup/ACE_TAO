@@ -36,10 +36,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * (ACE_SCHED_OTHER), to which many systems default; priority;
  * and a time-slice quantum for round-robin scheduling.  A
  * "scope" parameter specifies whether the ACE_Sched_Params
- * applies to the current process, current lightweight process
- * (LWP) (on Solaris), or current thread.  Please see the "NOTE"
- * below about not all combinations of parameters being legal on
- * a particular platform.
+ * applies to the current process, or current thread.  Please
+ * see the "NOTE" below about not all combinations of parameters
+ * being legal on a particular platform.
  * For the case of thread priorities, it is intended that
  * <ACE_OS::sched_params> usually be called from <main> before
  * any threads have been spawned.  If spawned threads inherit
@@ -57,11 +56,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_Export ACE_Sched_Params
 {
-  //    NOTE: Solaris 2.5.x threads in the RT class must set the
-  //    priority of their LWP.  The only way to do that through ACE is
-  //    for the RT thread itself to call <ACE_OS::thr_setprio> with
-  //    it's own priority.
-
   //    OS Scheduling parameters are complicated and often confusing.
   //    Many thanks to Thilo Kielmann
   //    <kielmann@informatik.uni-siegen.de> for his careful review of
@@ -142,8 +136,6 @@ private:
    *     process, and the process priority.  On some platforms,
    *     such as Win32, the scheduling policy can _only_ be
    *     set at process scope.
-   *   ACE_SCOPE_LWP: lightweight process scope, only used with
-   *     Solaris threads.
    *   ACE_SCOPE_THREAD: sets the scheduling policy for the thread,
    *     if the OS supports it, such as with Posix threads, and the
    *     thread priority.

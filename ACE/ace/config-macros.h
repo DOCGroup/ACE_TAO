@@ -84,7 +84,7 @@
 // Perfect Multicast filtering refers to RFC 3376, where a socket is only
 // delivered dgrams for groups joined even if it didn't bind the group
 // address.  We turn this option off by default, although most OS's
-// except for Windows and Solaris probably lack perfect filtering.
+// except for Windows probably lack perfect filtering.
 // =========================================================================
 
 # if !defined (ACE_LACKS_PERFECT_MULTICAST_FILTERING)
@@ -232,17 +232,6 @@
 // ============================================================================
 
 #   define ACE_sap_any_cast(TYPE)                                      reinterpret_cast<TYPE> (const_cast<ACE_Addr &> (ACE_Addr::sap_any))
-
-# if !defined (ACE_CAST_CONST)
-    // Sun CC 4.2, for example, requires const in reinterpret casts of
-    // data members in const member functions.  But, other compilers
-    // complain about the useless const.  This keeps everyone happy.
-#   if defined (__SUNPRO_CC)
-#     define ACE_CAST_CONST const
-#   else  /* ! __SUNPRO_CC */
-#     define ACE_CAST_CONST
-#   endif /* ! __SUNPRO_CC */
-# endif /* ! ACE_CAST_CONST */
 
 // ============================================================================
 // Compiler Silencing macros

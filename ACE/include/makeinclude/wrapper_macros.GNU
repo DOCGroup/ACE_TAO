@@ -842,10 +842,6 @@ ifdef quantify
   PURELINK += quantify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
               -max_threads=100 $(PLATFORM_QUANTIFY_OPTIONS)
   CPPFLAGS += -DACE_HAS_QUANTIFY -I$(ACE_QUANTIFY_DIR)
-
-  ifeq ($(shell uname -p),sparc)
-    PURELINK += -record-register-window-traps
-  endif # sparc
 endif # quantify
 
 repo ?=

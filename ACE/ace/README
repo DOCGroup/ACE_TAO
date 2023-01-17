@@ -20,9 +20,6 @@ ACE_HAS_DUMP                            Used to enable the dump()
                                         out in order to reduce
                                         footprint.  By default, it is
                                         not defined.
-ACE_CAST_CONST                          Used to work around broken
-                                        SunCC ANSI casts that require
-                                        an extra const.
 ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES
                                         Win32 only.  Users want to use
                                         a predefined security
@@ -148,7 +145,6 @@ ACE_THREAD_MANAGER_USES_SAFE_SPAWN      Disable the "check before lock" feature
                                         on platforms with aggressive read/write
                                         reordering.
 ACE_HAS_CPU_SET_T                       Platform delivers cpu_set_t.
-ACE_HAS_PRIOCNTL                        OS has priocntl (2).
 ACE_HAS_RECURSIVE_MUTEXES               Mutexes are inherently recursive
                                         (e.g., Win32)
 ACE_HAS_NONRECURSIVE_MUTEXES            In addition to recursive mutexes,
@@ -349,8 +345,7 @@ ACE_HAS_NONCONST_SWAB                   Platform's swab function has non
                                         const src argument
 ACE_HAS_NONCONST_WRITEV                 Platform omits const qualifier from
                                         iovec parameter in writev() prototype.
-ACE_HAS_ONLY_SCHED_OTHER                Platform, e.g., Solaris 2.5,
-                                        only supports SCHED_OTHER
+ACE_HAS_ONLY_SCHED_OTHER                Platform, only supports SCHED_OTHER
                                         POSIX scheduling policy.
 ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R   Uses ctime_r & asctime_r with
                                         only two parameters
@@ -376,7 +371,7 @@ ACE_HAS_POSIX_REALTIME_SIGNALS          Platform supports POSIX RT signals.
                                         constant in <unistd.h>.
 ACE_HAS_POSIX_SEM                       Platform supports POSIX
                                         real-time semaphores (e.g.,
-                                        VxWorks and Solaris).  Corresponds
+                                        VxWorks).  Corresponds
                                         to _POSIX_SEMAPHORES constant
                                         in <unistd.h>
 ACE_HAS_POSIX_SEM_TIMEOUT               Platform supports timed wait operation
@@ -469,8 +464,6 @@ ACE_HAS_SOCK_BUF_SIZE_MAX               Platform limits the maximum socket
                                         message size.
 ACE_HAS_SSIZE_T                         Compiler supports the ssize_t
                                         typedef
-ACE_HAS_STHREADS                        Platform supports Solaris
-                                        threads
 ACE_HAS_STRBUF_T                        Compiler/platform supports
                                         struct strbuf
 ACE_HAS_STRDUP_EMULATION                Use ACE's strdup() emulation (even
@@ -494,12 +487,6 @@ ACE_HAS_SVR4_GETTIMEOFDAY               Compiler/platform supports
                                         SVR4 gettimeofday() prototype
 ACE_HAS_SVR4_SIGNAL_T                   Compiler/platform supports
                                         SVR4 signal typedef
-ACE_HAS_SVR4_TLI                        Compiler/platform supports
-                                        SVR4 TLI; that is, TLI with extensions
-                                        like t_getname(). This is sometimes
-                                        used as a pseudonym for TLI on SunOS4.
-                                        This is a modifier to ACE_HAS_TLI and
-                                        isn't used if ACE_HAS_XTI is set.
 ACE_HAS_SYSCALL_GETRUSAGE               HP/UX has an undefined syscall
                                         for GETRUSAGE...
 ACE_HAS_SYSENT_H                        Platform provides <sysent.h>
@@ -871,17 +858,6 @@ ACE_LACKS_TELLDIR                       Platform uses ACE_HAS_DIRENT
 ACE_LACKS_THREAD_STACK_SIZE             Platform lacks
                                         pthread_attr_setstacksize()
                                         (e.g., Linux pthreads)
-ACE_LACKS_THR_CONCURRENCY_FUNCS    (ONLY APPLIES TO SOLARIS)
-                                        Platform does not support
-                                        thr_getconcurrency/thr_setconcurrency
-                                        functions, or their implementation
-                                        is effectively a "no-op".  This
-                                        notably applies for Solaris >= 5.9.
-                                        Note that if you build on Solaris 8
-                                        and run on Solaris 9+, you can
-                                        encounter thread creation errors
-                                        unless you rebuild on the target
-                                        platform.
 ACE_LACKS_TIMEDWAIT_PROTOTYPES          MIT pthreads platform lacks
                                         the timedwait prototypes
 ACE_LACKS_TIMESPEC_T                    Platform does not define
@@ -1272,19 +1248,6 @@ ACE_HAS_SVR4_SIGNAL_T:
      #define SignalHandler SIG_PF
      typedef void (*SignalHandlerV)(...);
      #endif /* ACE_HAS_SVR4_SIGNAL_T */
-
-
-ACE_HAS_SVR4_TLI:
------------------
-
-  Used in:
-     libsrc/IPC_SAP/TLI_SAP/TLI.C
-     libsrc/IPC_SAP/TLI_SAP/TLI.h
-     libsrc/IPC_SAP/TLI_SAP/TLI_Stream.C
-
-  Notes:
-     TLI is the transport layer calls as in: t_bind(), t_open(), t_unbind(),
-     t_optmgmt(), ... in SunOS and Solaris.
 
 
 ACE_HAS_SYS_FILIO_H:

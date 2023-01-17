@@ -163,16 +163,13 @@ t_getname (ACE_HANDLE handle, struct netbuf *namep, int type)
   else
     namep->len = peer.addr.len;
   return 0;
-
-#elif defined (ACE_HAS_SVR4_TLI)
-  return ::t_getname (handle, namep, type);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (namep);
   ACE_UNUSED_ARG (type);
 
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_SVR4_TLI */
+#endif /* ACE_HAS_XTI */
 }
 
 ACE_INLINE int

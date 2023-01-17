@@ -233,11 +233,6 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::svc ()
   this->thr_id_ = ACE_Thread::self ();
 
   // Thread cancellation point, if ACE supports it.
-  //
-  // Note: This call generates a warning under Solaris because the header
-  //       file /usr/include/pthread.h redefines the routine argument. This
-  //       is a bug in the Solaris header files and has nothing to do with
-  //       ACE.
 # if !defined (ACE_LACKS_PTHREAD_CANCEL)
   ACE_PTHREAD_CLEANUP_PUSH (&this->condition_.mutex ().get_nesting_mutex ());
 # endif /* ACE_LACKS_PTHREAD_CANCEL */

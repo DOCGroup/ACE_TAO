@@ -10,9 +10,6 @@
  *    and is adapted from examples shown in relevant documentation
  *    and repeated elsewhere, e.g.,
  *    http://www.linuxselfhelp.com/gnu/glibc/html_chapter/libc_33.html
- *  - the Solaris stack generation is adapted from a 1995 post on
- *    comp.unix.solaris by Bart Smaalders,
- *    http://groups.google.com/group/comp.unix.solaris/browse_thread/thread/8b9f3de8be288f1c/31550f93a48231d5?lnk=gst&q=how+to+get+stack+trace+on+solaris+group:comp.unix.solaris#31550f93a48231d5
  *  - VxWorks kernel-mode stack tracing is adapted from a code example
  *    in the VxWorks FAQ at http://www.xs4all.nl/~borkhuis/vxworks/vxw_pt5.html
  *    although the undocumented functions it uses are also mentioned in
@@ -314,16 +311,6 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
 #  include <sys/reg.h>
 #  include <sys/frame.h>
 #  define ACE_STACK_TRACE_BIAS 0
-
-#  if defined(sparc) || defined(__sparc)
-#    define ACE_STACK_TRACE_FLUSHWIN() asm("ta 3");
-#    define ACE_STACK_TRACE_FRAME_PTR_INDEX 1
-#    define ACE_STACK_TRACE_SKIP_FRAMES 0
-#    if defined(__sparcv9)
-#      undef  ACE_STACK_TRACE_BIAS
-#      define ACE_STACK_TRACE_BIAS 2047
-#    endif
-#  endif
 
 #  if defined(i386) || defined(__i386)
 #    define ACE_STACK_TRACE_FLUSHWIN()

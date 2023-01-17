@@ -412,9 +412,6 @@ reference_count_test ()
     std::pair<Map::iterator, bool> result;
 
     {
-      // Enter a new scope block to assure destruction of temporaries
-      // on systems like Solaris / Sun C++.
-
       result = map.insert (std::make_pair (ACE_TString (ACE_TEXT ("Two")),
                                            counted));
 
@@ -424,9 +421,6 @@ reference_count_test ()
     ACE_TEST_ASSERT (counted.refcount () == 3);
 
     {
-      // Enter a new scope block to assure destruction of temporaries
-      // on systems like Solaris / Sun C++.
-
       result = map.insert (std::make_pair (ACE_TString (ACE_TEXT ("Three")),
                                            counted));
 

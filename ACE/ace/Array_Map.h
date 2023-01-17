@@ -33,13 +33,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined __SUNPRO_CC && !defined _RWSTD_ALLOCATOR
-# define ACE_ARRAY_MAP_DEFAULT_ALLOCATOR(K, V) std::allocator_interface< \
-                                                 std::allocator<void>,   \
-                                                 std::pair<K, V> >
-#else
-# define ACE_ARRAY_MAP_DEFAULT_ALLOCATOR(K, V) std::allocator<std::pair<K, V> >
-#endif
+#define ACE_ARRAY_MAP_DEFAULT_ALLOCATOR(K, V) std::allocator<std::pair<K, V> >
 
 /**
  * @class ACE_Array_Map

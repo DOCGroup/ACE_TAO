@@ -153,8 +153,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     TAO_ECG_UDP_Out_Endpoint endpoint;
     // need to be explicit about the address type when built with
     // IPv6 support, otherwise SOCK_DGram::open defaults to ipv6 when
-    // given a sap_any address. This causes trouble on at least solaris
-    // and windows, or at most on not-linux.
+    // given a sap_any address. This causes trouble on at least windows,
+    // or at most on not-linux.
     if (endpoint.dgram ().open (ACE_Addr::sap_any,
                                 send_addr.get_type()) == -1)
       {

@@ -122,8 +122,6 @@
 # endif /* _REENTRANT */
 #endif /* !ACE_MT_SAFE */
 
-// Platform supports Solaris threads.
-#define ACE_HAS_STHREADS
 
 // Platform supports threads.
 #define ACE_HAS_THREADS
@@ -136,7 +134,6 @@
 
 /* end threading defines */
 
-#define ACE_HAS_PRIOCNTL
 #define ACE_NEEDS_LWP_PRIO_SET
 
 // Platform supports TLI timod STREAMS module.

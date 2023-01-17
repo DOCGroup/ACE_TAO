@@ -62,8 +62,7 @@ interfaces:
       WaitForMultipleObjects and I/O completion ports;
 
 . Multi-threading and synchronization
-  -- e.g., Solaris threads, POSIX Pthreads, and Win32
-      threads;
+  -- e.g., POSIX Pthreads, and Win32 threads;
 
 . Explicit dynamic linking
   -- e.g., dlopen/dlsym on UNIX and LoadLibrary/GetProc

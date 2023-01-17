@@ -24,7 +24,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     ATM_QoS.cpp
     ATM_Stream.cpp
     Atomic_Op.cpp
-    Atomic_Op_Sparc.c
     Barrier.cpp
     Base_Thread_Adapter.cpp
     Based_Pointer_Repository.cpp
@@ -244,7 +243,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Stack_Trace.cpp
     Stats.cpp
     String_Base_Const.cpp
-    SUN_Proactor.cpp
     SV_Message.cpp
     SV_Message_Queue.cpp
     SV_Semaphore_Complex.cpp

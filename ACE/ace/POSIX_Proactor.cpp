@@ -19,10 +19,6 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_unistd.h"
 
-#if defined (sun)
-#  include "ace/OS_NS_strings.h"
-#endif /* sun */
-
 // *********************************************************************
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -59,23 +55,7 @@ public:
 ACE_POSIX_Proactor::ACE_POSIX_Proactor ()
   :  os_id_ (ACE_OS_UNDEFINED)
 {
-#if defined(sun)
-
-  os_id_ = ACE_OS_SUN; // set family
-
-  char Buf [32];
-
-  ::memset(Buf,0,sizeof(Buf));
-
-  ACE_OS::sysinfo (SI_RELEASE , Buf, sizeof(Buf)-1);
-
-  if (ACE_OS::strcasecmp (Buf , "5.6") == 0)
-    os_id_ = ACE_OS_SUN_56;
-  else if (ACE_OS::strcasecmp (Buf , "5.7") == 0)
-    os_id_ = ACE_OS_SUN_57;
-  else if (ACE_OS::strcasecmp (Buf , "5.8") == 0)
-    os_id_ = ACE_OS_SUN_58;
-#elif defined(__OpenBSD)
+#if defined(__OpenBSD)
   os_id_ = ACE_OS_OPENBSD; // set family
   // do the same
 
@@ -1856,21 +1836,6 @@ ACE_POSIX_SIG_Proactor::handle_events_i (const ACE_Time_Value *timeout)
 #else
       index = static_cast<size_t> (sig_info.si_value.sival_int);
 #endif /* ACE_HAS_SIGVAL_SIGVAL_INT */
-      // Assume we have a correctly-functioning implementation, and that
-      // there is one I/O to process, and it's correctly specified in the
-      // siginfo received. There are, however, some special situations
-      // where this isn't true...
-      if (os_id_ == ACE_OS_SUN_56) // Solaris 6
-        {
-          // 1. Solaris 6 always loses any RT signal,
-          //    if it has more SIGQUEMAX=32 pending signals
-          //    so we should scan the whole aiocb list
-          // 2. Moreover,it has one more bad habit
-          //    to notify aio completion
-          //    with SI_QUEUE code instead of SI_ASYNCIO, hence the
-          //    OS_SUN_56 addition to the si_code check, above.
-          count = aiocb_list_max_size_;
-        }
     }
   else if (sig_info.si_code != SI_QUEUE)
     {
