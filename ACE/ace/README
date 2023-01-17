@@ -286,9 +286,6 @@ ACE_HAS_NONSTATIC_OBJECT_MANAGER        Causes the ACE_Object_Manager
                                         a static (global) instance.
 ACE_HAS_THR_KEYDELETE                   Platform supports
                                         thr_keydelete (e.g,. UNIXWARE)
-ACE_HAS_THR_MINSTACK                    Platform calls thr_minstack()
-                                        rather than thr_min_stack()
-                                        (e.g., Tandem).
 ACE_HAS_LIMITED_RUSAGE_T                The rusage_t structure has
                                         only two fields.
 ACE_HAS_LINUX_NPTL                      Linux platform (with kernel >= 2.6.x)
@@ -743,8 +740,6 @@ ACE_LACKS_PERFECT_MULTICAST_FILTERING   Platform lacks IGMPv3 "perfect" filterin
                                         socket, and all future joins on that
                                         socket will fail with an error.
 ACE_LACKS_PRAGMA_ONCE                   Compiler complains about #pragma once
-ACE_LACKS_PRI_T                         Platform lacks pri_t (e.g.,
-                                        Tandem NonStop UNIX).
 ACE_LACKS_PTHREAD_CANCEL                Platform lacks
                                         pthread_cancel().
 ACE_LACKS_PTHREAD_SCOPE_PROCESS         Platform lacks support for
