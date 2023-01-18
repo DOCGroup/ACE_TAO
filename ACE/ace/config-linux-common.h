@@ -57,8 +57,6 @@
 #  include "ace/config-icc-common.h"
 #elif defined (__GNUG__)
 #  include "ace/config-g++-common.h"
-#elif defined (__SUNCC_PRO) || defined (__SUNPRO_CC)
-#  include "ace/config-suncc-common.h"
 #elif defined (__PGI)
 // Portable group compiler
 #  define ACE_LACKS_SWAB

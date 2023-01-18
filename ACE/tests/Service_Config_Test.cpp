@@ -183,7 +183,7 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
   // Configurator file appropriate to the platform.
   // For example, Windows Unicode uses UTF-16.
   //
-  //          iconv(1) found on Linux and Solaris, for example, can
+  //          iconv(1) found on Linux, for example, can
   //          be used to convert between encodings.
   //
   //          Byte ordering is also an issue, so we should be
@@ -285,7 +285,7 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
   // Configurator file appropriate to the platform.
   // For example, Windows Unicode uses UTF-16.
   //
-  //          iconv(1) found on Linux and Solaris, for example, can
+  //          iconv(1) found on Linux, for example, can
   //          be used to convert between encodings.
   //
   //          Byte ordering is also an issue, so we should be

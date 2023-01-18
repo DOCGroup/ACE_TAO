@@ -359,9 +359,6 @@
 /* Compiler complains about use of obsolete "pragma once" */
 #define ACE_LACKS_PRAGMA_ONCE 1
 
-/* Define to 1 if the system lacks the type 'pri_t'. */
-#define ACE_LACKS_PRI_T 1
-
 /* Define to 1 if platform lacks pthread_thr_sigsetmask(). */
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK 1
 

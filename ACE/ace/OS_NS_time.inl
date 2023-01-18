@@ -381,8 +381,7 @@ ACE_OS::nanosleep (const struct timespec *requested,
 #if defined (ACE_HAS_CLOCK_GETTIME)
   // ::nanosleep () is POSIX 1003.1b.  So is ::clock_gettime ().  So,
   // if ACE_HAS_CLOCK_GETTIME is defined, then ::nanosleep () should
-  // be available on the platform.  On Solaris 2.x, both functions
-  // require linking with -lposix4.
+  // be available on the platform
   return ::nanosleep ((ACE_TIMESPEC_PTR) requested, remaining);
 #else
   ACE_UNUSED_ARG (remaining);

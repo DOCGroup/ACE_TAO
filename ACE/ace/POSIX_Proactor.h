@@ -64,9 +64,6 @@ public:
     /// Signals notifications
     PROACTOR_SIG    = 2,
 
-    /// SUN specific aiowait()
-    PROACTOR_SUN    = 3,
-
     /// Callback notifications
     PROACTOR_CB     = 4
   };
@@ -78,11 +75,6 @@ public:
     ACE_OS_WIN      = 0x0100,          // for future
     ACE_OS_WIN_NT   = ACE_OS_WIN | 0x0001,
     ACE_OS_WIN_2000 = ACE_OS_WIN | 0x0002,
-    ACE_OS_SUN      = 0x0200,          // Sun Solaris family
-    ACE_OS_SUN_55   = ACE_OS_SUN | 0x0001,
-    ACE_OS_SUN_56   = ACE_OS_SUN | 0x0002,
-    ACE_OS_SUN_57   = ACE_OS_SUN | 0x0004,
-    ACE_OS_SUN_58   = ACE_OS_SUN | 0x0008,
     ACE_OS_LINUX    = 0x0800,          // Linux family
     ACE_OS_FREEBSD  = 0x1000,          // FreeBSD family
     ACE_OS_IRIX     = 0x2000,          // SGI IRIX family

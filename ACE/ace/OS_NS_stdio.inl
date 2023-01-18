@@ -1068,7 +1068,6 @@ ACE_INLINE int
 ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 {
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
-     (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
       defined (ACE_HAS_VSWPRINTF) || \
       (defined (_MSC_VER))
 
@@ -1148,10 +1147,8 @@ ACE_INLINE int
 ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_list ap)
 {
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
-     (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
       defined (ACE_HAS_VSWPRINTF) || \
       defined (ACE_WIN32)
-
   int result;
 
 # if defined (ACE_WIN32) && !defined (ACE_HAS_C99_VSNWPRINTF)

@@ -13,10 +13,7 @@
  *  cancel the operation and so the program exits closing the
  *  connection.
  *
- *  Works fine on NT. On Solaris platforms, the asynch read is
- *  pending, but the cancel returns with the value <AIO_ALLDONE>
- *  indicating all the operations in that handle are done.
- *  But, LynxOS has a good <aio_cancel> implementation. It works
+ *  Works fine on NT. LynxOS has a good <aio_cancel> implementation. It works
  *  fine.
  *
  * = RUN

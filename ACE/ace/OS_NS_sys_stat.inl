@@ -28,12 +28,7 @@ namespace ACE_OS
   fstat (ACE_HANDLE handle, ACE_stat *stp)
   {
     ACE_OS_TRACE ("ACE_OS::fstat");
-#if defined (ACE_HAS_X86_STAT_MACROS)
-    // Solaris for intel uses an macro for fstat(), this is a wrapper
-    // for _fxstat() use of the macro.
-    // causes compile and runtime problems.
-    return ::_fxstat (_STAT_VER, handle, stp);
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
     BY_HANDLE_FILE_INFORMATION fdata;
 
     if (::GetFileInformationByHandle (handle, &fdata) == FALSE)
@@ -65,7 +60,7 @@ namespace ACE_OS
     return MQX_Filesystem::inst ().fstat (handle, stp);
 #else
     return ::fstat (handle, stp);
-#endif /* !ACE_HAS_X86_STAT_MACROS */
+#endif /* !ACE_WIN32 */
   }
 
   // This function returns the number of bytes in the file referenced by
@@ -123,11 +118,7 @@ namespace ACE_OS
     ACE_OS_TRACE ("ACE_OS::lstat");
 # if defined (ACE_LACKS_LSTAT)
     return ACE_OS::stat (file, stp);
-# elif defined (ACE_HAS_X86_STAT_MACROS)
-    // Solaris for intel uses an macro for lstat(), this macro is a
-    // wrapper for _lxstat().
-    return ::_lxstat (_STAT_VER, file, stp);
-# else /* !ACE_HAS_X86_STAT_MACROS */
+# else /* !ACE_LACKS_LSTAT */
     return ::lstat (file, stp);
 # endif /* ACE_LACKS_LSTAT */
   }
@@ -194,10 +185,6 @@ namespace ACE_OS
     ACE_OS_TRACE ("ACE_OS::stat");
 #if defined (ACE_LACKS_STAT)
     ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_HAS_X86_STAT_MACROS)
-    // Solaris for intel uses an macro for stat(), this macro is a
-    // wrapper for _xstat().
-    return ::_xstat (_STAT_VER, file, stp);
 #elif defined (ACE_MQX)
     return MQX_Filesystem::inst ().stat (file, stp);
 #else

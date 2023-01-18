@@ -21,10 +21,6 @@
 #include "ace/OS_NS_strings.h"
 #include <memory>
 
-#if defined (sun)
-# include <sys/lwp.h> /* for _lwp_self */
-#endif /* sun */
-
 Test_ECG::Test_ECG ()
   : lcl_name_ ("Test_ECG"),
     rmt_name_ (""),
@@ -60,22 +56,13 @@ Test_ECG::Test_ECG ()
 void
 print_priority_info (const char *const name)
 {
-#if defined (ACE_HAS_PTHREADS) || defined (sun)
+#if defined (ACE_HAS_PTHREADS)
 #if defined (ACE_HAS_PTHREADS)
   struct sched_param param;
   int policy, status;
 
   if ((status = pthread_getschedparam (pthread_self (), &policy,
                                        &param)) == 0) {
-#   ifdef sun
-    ACE_DEBUG ((LM_DEBUG,
-                "%C (%lu|%u); policy is %d, priority is %d\n",
-                name,
-                ACE_OS::getpid (),
-                _lwp_self (),
-                pthread_self (),
-                policy, param.sched_priority));
-#   else  /* ! sun */
     ACE_DEBUG ((LM_DEBUG,
                 "%C (%lu|%u); policy is %d, priority is %d\n",
                 name,
@@ -83,7 +70,6 @@ print_priority_info (const char *const name)
                 0,
                 pthread_self (),
                 policy, param.sched_priority ));
-#   endif /* ! sun */
   } else {
     ACE_DEBUG ((LM_DEBUG,"pthread_getschedparam failed: %d\n", status));
   }
@@ -119,7 +105,7 @@ print_priority_info (const char *const name)
 #endif /* sun */
 #else
   ACE_UNUSED_ARG (name);
-#endif /* ACE_HAS_PTHREADS || sun */
+#endif /* ACE_HAS_PTHREADS */
 }
 
 int
@@ -222,7 +208,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
       int min_priority =
         ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
-        // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      // Enable FIFO scheduling
 
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                                   min_priority,

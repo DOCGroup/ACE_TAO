@@ -76,7 +76,7 @@ int
 Globals::sched_fifo_init ()
 {
 #if defined (ACE_HAS_THREADS)
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
 # if defined (__APPLE__) || defined (BSD)
   int scope = ACE_SCOPE_THREAD;
 # else

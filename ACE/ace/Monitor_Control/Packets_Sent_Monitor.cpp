@@ -20,8 +20,6 @@ namespace ACE
       , Linux_Network_Interface_Monitor (
             " %*[^:]: %*u %*u %*u %*u %*u %*u %*u %*u %*u %lu")
             /// Scan format for /proc/net/dev
-#elif defined (ACE_HAS_KSTAT)
-      , Solaris_Network_Interface_Monitor (ACE_TEXT ("opackets"))
 #elif defined (__NetBSD__) || defined (__OpenBSD__)
       , BSD_Network_Interface_Monitor (ACE_TEXT ("opackets"))
 #elif defined (__FreeBSD__) || defined (__Lynx__)

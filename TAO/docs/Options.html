@@ -1012,8 +1012,7 @@ having them use the same configurator file.
         <td>Use this option to cycle through profiles when it has
 	been detected that a connection is closed when reading a server reply
         and having the server possibly process the reqest more than once
-        is acceptable. This option currently does not work under FreeBSD,
-        and Solaris.
+        is acceptable. This option currently does not work under FreeBSD.
         The number of retries will not exceed <em>limit</em>.
 	If this option is used then -ORBForwardOnTransientLimit should
 	also be used to avoid a TRANSIENT exception being thrown.
@@ -1509,7 +1508,7 @@ thread-pool reactor which is the default.</td>
               highly scalable replacement for the
               <code>select()</code> based reactors.  The
               ACE_Dev_Poll_Reactor is currently only supported on
-              HP-UX, Solaris and Linux. Be aware that dev_poll
+              Linux. Be aware that dev_poll
               support is experimental!</td>
             </tr>
           </tbody>

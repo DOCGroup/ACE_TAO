@@ -56,7 +56,6 @@ struct netbuf { };
       // desired, local or peer, while t_getprotaddr() gets both at once.
       // t_getname() has values defined for the type, so these aren't defined
       // for XTI systems. So, define them here for ACE API users to use.
-      // These values were taken from sys/tiuser.h on Solaris.
 #     if !defined (LOCALNAME)
 #       define LOCALNAME  0
 #     endif
@@ -101,18 +100,6 @@ extern "C"
 }
 #     endif /* !ACE_HAS_TLI_PROTOTYPES */
 
-#     if defined (ACE_HAS_TIUSER_H)
-#       include /**/ <tiuser.h>
-#     else
-       /* What to do here??? Is there a tli.h? */
-#     endif /* ACE_HAS_TIUSER_H */
-
-#     if defined (ACE_HAS_SVR4_TLI)
-         // t_getname is a TLI extension added by some platforms before XTI
-         // was widely available. However, it's not often in the system's
-         // header files. Sun OS, for example, is like this.
-         extern "C" int t_getname (int, struct netbuf *, int);
-#     endif /* ACE_HAS_SVR4_TLI */
 #   endif /* !ACE_HAS_XTI */
 
 # endif /* ACE_HAS_XTI || ACE_HAS_TLI */

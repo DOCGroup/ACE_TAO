@@ -30,25 +30,6 @@ ACE_TLI::dump () const
 ACE_TLI::ACE_TLI ()
 {
   ACE_TRACE ("ACE_TLI::ACE_TLI");
-#if defined (ACE_HAS_SVR4_TLI)
-// Solaris 2.4 ACE_TLI option handling is broken.  Thus, we must do
-// the memory allocation ourselves...  Thanks to John P. Hearn
-// (jph@ccrl.nj.nec.com) for the help.
-
-  this->so_opt_req.opt.maxlen = sizeof (opthdr) + sizeof (long);
-  ACE_NEW (this->so_opt_req.opt.buf,
-           char[this->so_opt_req.opt.maxlen]);
-
-  this->so_opt_ret.opt.maxlen = sizeof (opthdr) + sizeof (long);
-  ACE_NEW (this->so_opt_ret.opt.buf,
-           char[this->so_opt_ret.opt.maxlen]);
-
-  if (this->so_opt_ret.opt.buf == 0)
-    {
-      delete [] this->so_opt_req.opt.buf;
-      this->so_opt_req.opt.buf = 0;
-    }
-#endif /* ACE_HAS_SVR4_TLI */
 }
 
 ACE_HANDLE
@@ -65,15 +46,6 @@ ACE_TLI::open (const char device[], int oflag, struct t_info *info)
 ACE_TLI::~ACE_TLI ()
 {
   ACE_TRACE ("ACE_TLI::~ACE_TLI");
-#if defined (ACE_HAS_SVR4_TLI)
-  if (this->so_opt_req.opt.buf)
-    {
-      delete [] this->so_opt_req.opt.buf;
-      delete [] this->so_opt_ret.opt.buf;
-      this->so_opt_req.opt.buf = 0;
-      this->so_opt_ret.opt.buf = 0;
-    }
-#endif /* ACE_HAS_SVR4_TLI */
 }
 
 ACE_TLI::ACE_TLI (const char device[], int oflag, struct t_info *info)
@@ -147,35 +119,13 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
   opthdr->len   = req.opt.len;   // We only request one option at a time.
   ACE_OS::memcpy (&opthdr[1], optval, optlen);
   return ACE_OS::t_optmgmt (this->get_handle (), &req, &ret);
-
-#elif defined (ACE_HAS_SVR4_TLI)
-  struct opthdr *opthdr = 0; /* See <sys/socket.h> for info on this format */
-
-  this->so_opt_req.flags = T_NEGOTIATE;
-  this->so_opt_req.opt.len = sizeof *opthdr + OPTLEN (optlen);
-
-  if (this->so_opt_req.opt.len > this->so_opt_req.opt.maxlen)
-    {
-      t_errno = TBUFOVFLW;
-      return -1;
-    }
-
-  opthdr = reinterpret_cast<struct opthdr *> (this->so_opt_req.opt.buf);
-  opthdr->level = level;
-  opthdr->name  = option;
-  opthdr->len   = OPTLEN (optlen);
-  ACE_OS::memcpy (OPTVAL (opthdr), optval, optlen);
-
-  return ACE_OS::t_optmgmt (this->get_handle (),
-                            &this->so_opt_req,
-                            &this->so_opt_ret);
 #else
   ACE_UNUSED_ARG (level);
   ACE_UNUSED_ARG (option);
   ACE_UNUSED_ARG (optval);
   ACE_UNUSED_ARG (optlen);
   return -1;
-#endif /* ACE_HAS_XTI, else ACE_HAS_SVR4_TLI */
+#endif /* ACE_HAS_XTI */
 }
 
 int
@@ -222,37 +172,13 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
           return 0;
         }
     }
-
-#elif defined (ACE_HAS_SVR4_TLI)
-  struct opthdr *opthdr = 0; /* See <sys/socket.h> for details on this format */
-
-  this->so_opt_req.flags = T_CHECK;
-  this->so_opt_ret.opt.len = sizeof *opthdr + OPTLEN (optlen);
-
-  if (this->so_opt_ret.opt.len > this->so_opt_ret.opt.maxlen)
-    {
-      t_errno = TBUFOVFLW;
-      return -1;
-    }
-
-  opthdr        = (struct opthdr *) this->so_opt_req.opt.buf;
-  opthdr->level = level;
-  opthdr->name  = option;
-  opthdr->len   = OPTLEN (optlen);
-  if (ACE_OS::t_optmgmt (this->get_handle (), &this->so_opt_req, &this->so_opt_ret) == -1)
-    return -1;
-  else
-    {
-      ACE_OS::memcpy (optval, OPTVAL (opthdr), optlen);
-      return 0;
-    }
 #else
   ACE_UNUSED_ARG (level);
   ACE_UNUSED_ARG (option);
   ACE_UNUSED_ARG (optval);
   ACE_UNUSED_ARG (optlen);
   return -1;
-#endif /* ACE_HAS_SVR4_TLI */
+#endif /* ACE_HAS_XTI */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

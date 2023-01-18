@@ -55,8 +55,8 @@ public:
   typedef value_type const *             const_pointer;
   typedef ptrdiff_t                      difference_type;
   typedef ACE_Allocator::size_type       size_type;
-
-  ACE_DECLARE_STL_REVERSE_ITERATORS
+  typedef std::reverse_iterator<iterator>       reverse_iterator;
+  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
   /// Dynamically create an uninitialized array.
   ACE_Array_Base (size_type size = 0,

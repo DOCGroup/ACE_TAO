@@ -37,8 +37,6 @@ Time_Client_i::run (const char *name,
       timedate = static_cast <time_t> (client_->current_time ());
 
       // Print out value
-      // Use ACE_OS::ctime_r(), ctime() doesn't seem to work properly
-      // under 64-bit solaris.
       ACE_TCHAR ascii_timedate[64] = ACE_TEXT ("");
 
       ACE_OS::ctime_r (&timedate, ascii_timedate, 64);

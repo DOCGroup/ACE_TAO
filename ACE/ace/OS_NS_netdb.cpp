@@ -34,12 +34,6 @@
 # include "ace/Malloc_Base.h"
 #endif
 
-// Include if_arp so that getmacaddr can use the
-// arp structure.
-#if defined (sun)
-# include /**/ <net/if_arp.h>
-#endif
-
 #include <algorithm>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -131,58 +125,6 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
       ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_PHARLAP_RT */
 # endif /* ACE_HAS_PHARLAP */
-#elif defined (sun)
-
-  /** obtain the local host name */
-  char hostname [MAXHOSTNAMELEN];
-  ACE_OS::hostname (hostname, sizeof (hostname));
-
-  /** Get the hostent to use with ioctl */
-  struct hostent *phost =
-    ACE_OS::gethostbyname (hostname);
-
-  if (phost == 0)
-    return -1;
-
-  ACE_HANDLE handle =
-    ACE_OS::socket (PF_INET, SOCK_DGRAM, IPPROTO_UDP);
-
-  if (handle == ACE_INVALID_HANDLE)
-    return -1;
-
-  char **paddrs = phost->h_addr_list;
-
-  struct arpreq ar;
-
-  struct sockaddr_in *psa =
-    (struct sockaddr_in *)&(ar.arp_pa);
-
-  ACE_OS::memset (&ar,
-                  0,
-                  sizeof (struct arpreq));
-
-  psa->sin_family = AF_INET;
-
-  ACE_OS::memcpy (&(psa->sin_addr),
-                  *paddrs,
-                  sizeof (struct in_addr));
-
-  if (ACE_OS::ioctl (handle,
-                     SIOCGARP,
-                     &ar) == -1)
-    {
-      ACE_OS::close (handle);
-      return -1;
-    }
-
-  ACE_OS::close (handle);
-
-  ACE_OS::memcpy (node->node,
-                  ar.arp_ha.sa_data,
-                  6);
-
-  return 0;
-
 #elif defined (ACE_LINUX) && !defined (ACE_LACKS_NETWORKING)
 
   // It's easiest to know the first MAC-using interface. Use the BSD

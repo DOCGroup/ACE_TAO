@@ -533,9 +533,6 @@
 #define ACE_HAS_NONCONST_SWAB
 #define ACE_HAS_INT_SWAB
 
-// gethostbyaddr does not handle IPv6-mapped-IPv4 addresses
-#define ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED
-
 #if defined (ACE_WIN64)
 // Data must be aligned on 8-byte boundaries, at a minimum.
 #  define ACE_MALLOC_ALIGN 8
