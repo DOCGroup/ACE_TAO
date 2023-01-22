@@ -121,13 +121,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.inl"
 #endif  /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 # include "orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-# pragma implementation ("SSLIOP_OpenSSL_st_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

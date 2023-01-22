@@ -87,8 +87,6 @@ private:
   // The next item to be pointed to by iterator.
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Assoc_Array.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* !defined (JAWS_ASSOC_ARRAY_H) */

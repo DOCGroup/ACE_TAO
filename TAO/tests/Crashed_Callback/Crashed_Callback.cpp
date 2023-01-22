@@ -15,14 +15,7 @@ Crashed_Callback::crash_now_please ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Crashed_Callback - crashing application\n"));
-// OpenVMS seems to hang and not abort and dump core when abort() is called
-// here. This needs further
-#if defined (ACE_OPENVMS)
-  ACE_OS::_exit();
-#else
   ACE_OS::abort();
-#endif
-
 }
 
 void

@@ -32,13 +32,6 @@ protected:
   CONCURRENCY_IMPL *impl_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "jaws3/Concurrency_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Concurrency_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 
 #endif /* JAWS_CONCURRENCY_T_H */

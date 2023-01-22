@@ -28,14 +28,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 
-#if defined (ACE_OPENVMS)
-// need this to circumvent link error on OpenVMS
-// has to do with interference in template instantiations
-// for the server build by previous compilation of
-// components which are reused here without recompilation
-ACE_Time_Value dum = ACE_Time_Value::zero;
-#endif
-
 static const char usage [] =
 "[[-?]\n"
 "                 [-O[RBport] ORB port number]\n"

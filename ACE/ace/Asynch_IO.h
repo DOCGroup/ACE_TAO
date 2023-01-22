@@ -4,9 +4,8 @@
 /**
  *  @file    Asynch_IO.h
  *
- *  This works on Win32 (defined (ACE_WIN32) && !defined
- *  (ACE_HAS_WINCE)) platforms and on POSIX4 platforms with {aio_*}
- *  routines (defined (ACE_HAS_AIO_CALLS))
+ *  This works on Win32 (defined (ACE_WIN32)) platforms and on
+ *  POSIX4 platforms with {aio_*} routines (defined (ACE_HAS_AIO_CALLS))
  *
  *  On Win32 platforms, the implementation of
  *  {ACE_Asynch_Transmit_File} and {ACE_Asynch_Accept} are only
@@ -639,7 +638,7 @@ public:
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
@@ -653,7 +652,7 @@ public:
              const void *act = 0,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
@@ -774,7 +773,7 @@ public:
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
@@ -788,7 +787,7 @@ public:
               const void *act = 0,
               int priority = 0,
               int signal_number = ACE_SIGRTMIN);
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
   /// Return the underlying implementation class.
   //  (this should be protected...)

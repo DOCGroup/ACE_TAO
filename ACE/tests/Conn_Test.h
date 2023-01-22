@@ -4,9 +4,6 @@
 /**
  *  @file    Conn_Test.h
  *
- *  Define class needed for generating templates. IBM C++ requires this to
- *  be in its own file for auto template instantiation.
- *
  *  @author Irfan Pyarali  <irfan@cs.wustl.edu>
  */
 //=============================================================================
@@ -27,10 +24,6 @@
  *
  * @brief This class is the product created by both <ACE_Connector>
  * and <ACE_Acceptor> objects.
- *
- * This class gets its own header file to work around AIX C++
- * compiler "features" related to template instantiation...  It is
- * only used by Conn_Test.cpp.
  */
 class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {

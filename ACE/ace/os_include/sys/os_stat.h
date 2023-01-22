@@ -82,12 +82,9 @@ extern "C"
 #  if !defined (S_IXOTH)
 #    define S_IXOTH 00001
 #  endif /* S_IXOTH */
-
-// WinCE's S_IFLNK is defined with the other bits, below.
-#if !defined (S_IFLNK) && !defined (ACE_HAS_WINCE)
-#define S_IFLNK 0200000
-#endif /* S_IFLNK && !ACE_HAS_WINCE */
-
+#  if !defined (S_IFLNK)
+#    define S_IFLNK 0200000
+#  endif /* S_IFLNK */
 #endif /* ACE_LACKS_MODE_MASKS */
 
 // Some systems (VxWorks) don't define S_ISLNK
@@ -103,55 +100,6 @@ extern "C"
 #if !defined (S_ISDIR)
 # define S_ISDIR(mode)   ((mode&S_IFMT) == S_IFDIR)
 #endif
-
-#if defined (ACE_HAS_WINCE)
-
-// Translate the WinCE bits into names expected by our callers.
-// The dwFileAttributes parameter doesn't have protection info, so
-// S_IFMT is the whole thing. Since there are no symbolic links, S_IFLNK is 0.
-#  define S_IFMT 0xFFFF
-#  define S_IFDIR FILE_ATTRIBUTE_DIRECTORY
-#  define S_IFREG FILE_ATTRIBUTE_NORMAL
-#  define S_IFLNK 0
-#  define S_IFCHR 0
-
-#  if !defined (__MINGW32__)
-   // Since CE does not have _stat by default as NT/2000 does, the 'stat'
-   // struct defined here will be used.  Also note that CE file system
-   // struct is only for the CE 3.0 or later.
-   // Refer to the WCHAR.H from Visual C++ and WIBASE.H from eVC 3.0.
-   struct stat
-   {
-      /// always 0 on Windows platforms
-      dev_t st_dev;
-
-      /// always 0 on Windows platforms
-      dev_t st_rdev;
-
-      /// file attribute
-      mode_t st_mode;
-
-      /// number of hard links
-      nlink_t st_nlink;
-
-      /// time of last access
-      time_t st_atime;
-
-      /// time of last data modification
-      time_t st_mtime;
-
-      /// time of creation
-      time_t st_ctime;
-
-      /// file size, in bytes
-      ACE_OFF_T st_size;
-
-      // Following members do not have direct conversion in Window platforms.
-      //u_long st_blksize;        // optimal blocksize for I/O
-      //u_long st_flags;          // user defined flags for file
-   };
-   #endif
-#endif /* ACE_HAS_WINCE */
 
 #ifdef __cplusplus
 }

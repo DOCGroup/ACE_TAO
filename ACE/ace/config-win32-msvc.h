@@ -30,12 +30,7 @@
   #define ACE_LACKS_NATIVE_WCHAR_T
 #endif
 
-// Win Mobile still does thread exits differently than PC Windows.
-#if defined (_WIN32_WCE)
-#  define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
-#else
 #  define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
-#endif /* _WIN32_WCE */
 
 //FUZZ: disable check_for_msc_ver
 #if (_MSC_VER >= 1930)
@@ -54,13 +49,13 @@
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // must have _MT defined to include multithreading
 // features from win32 headers
-# if !defined(_MT) && !defined (ACE_HAS_WINCE)
+# if !defined(_MT)
 // *** DO NOT *** defeat this error message by defining _MT yourself.
 // On MSVC, this is changed by selecting the Multithreaded
 // DLL or Debug Multithreaded DLL in the Project Settings
 // under C++ Code Generation.
 #  error You must link against multi-threaded libraries when using ACE (check your project settings)
-# endif /* !_MT && !ACE_HAS_WINCE */
+# endif /* !_MT */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
 #include <malloc.h>

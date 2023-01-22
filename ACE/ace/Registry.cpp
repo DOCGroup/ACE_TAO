@@ -1071,12 +1071,6 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
                                          HKEY predefined,
                                          const ACE_TCHAR *machine_name)
 {
-#if defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG(naming_context);
-  ACE_UNUSED_ARG(predefined);
-  ACE_UNUSED_ARG(machine_name);
-  return -1;
-#else
   long result = -1;
 
   if (machine_name != 0 && ACE_OS::strcmp (ACE_TEXT ("localhost"), machine_name) == 0)
@@ -1101,10 +1095,9 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
     }
 
   ACE_REGISTRY_CALL_RETURN (result);
-#endif  // ACE_HAS_WINCE
 }
 
-// Check if <machine_name> is the local host
+/// Check if @a machine_name is the local host
 /* static */
 int
 ACE_Predefined_Naming_Contexts::is_local_host (const ACE_TCHAR *machine_name)

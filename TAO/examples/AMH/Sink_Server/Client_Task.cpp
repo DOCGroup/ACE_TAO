@@ -61,7 +61,7 @@ Client_Task::try_RT_scheduling ()
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                               priority);
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)

@@ -164,8 +164,6 @@ ACE_OS::uname (ACE_utsname *name)
 #     endif
         case PROCESSOR_ARCHITECTURE_UNKNOWN:
         default:
-          // @@ We could provide WinCE specific info here.  But let's
-          //    defer that to some later point.
           ACE_OS::strcpy (processor, "Unknown");
           break;
         }

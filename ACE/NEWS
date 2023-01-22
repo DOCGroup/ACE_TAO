@@ -1,5 +1,8 @@
-USER VISIBLE CHANGES BETWEEN ACE-7.0.11 and ACE-7.0.12
-======================================================
+USER VISIBLE CHANGES BETWEEN ACE-7.0.11 and ACE-7.1.0
+=====================================================
+
+. Removed support for Windows CE, OpenVMS, HPUX, AIX, RTEMS,
+  and Solaris
 
 USER VISIBLE CHANGES BETWEEN ACE-7.0.10 and ACE-7.0.11
 ======================================================

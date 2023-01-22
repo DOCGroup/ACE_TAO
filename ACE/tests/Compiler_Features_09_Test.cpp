@@ -71,10 +71,6 @@ run_main (int, ACE_TCHAR *[])
   // ... with a compliant implementation of std::auto_ptr<> you should be
   // able to write:
   //    x = y;
-  // but the Solaris compiler was broken as of August, 2009!!  So you have
-  // to work around in the following way.  This compiler is important
-  // enough for the ACE community, so we have to support this broken
-  // configuration ...
   x.reset(y.release());
 
   // ... there should be just one destruction so far ...

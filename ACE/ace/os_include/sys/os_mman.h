@@ -81,9 +81,6 @@ PAGE_NOCACHE  */
 
 # if !defined (MAP_FAILED)
 #   define MAP_FAILED ((void *) -1)
-# elif defined (ACE_HAS_LONG_MAP_FAILED)
-#   undef MAP_FAILED
-#   define MAP_FAILED ((void *) -1L)
 # endif /* !MAP_FAILED */
 
 #if !defined (PROT_RDWR)
@@ -99,10 +96,6 @@ PAGE_NOCACHE  */
 # if !defined (MS_SYNC)
 #   define MS_SYNC 0x0
 # endif /* !MS_SYNC */
-
-#if !defined (ACE_LACKS_MADVISE) && defined (ACE_LACKS_MADVISE_PROTOTYPE)
-  extern "C" int madvise(caddr_t, size_t, int);
-#endif /* !ACE_LACKS_MADVISE && ACE_LACKS_MADVISE_PROTOTYPE */
 
 #ifdef __cplusplus
 }

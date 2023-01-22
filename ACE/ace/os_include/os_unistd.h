@@ -33,10 +33,6 @@
 #  include /**/ <io.h>
 #endif /* ACE_HAS_IO_H */
 
-#if defined (ACE_HAS_SYS_SYSTEMINFO_H)
-#  include /**/ <sys/systeminfo.h>
-#endif /* ACE_HAS_SYS_SYSTEMINFO_H */
-
 #if !defined (ACE_LACKS_UNISTD_H)
 #  include /**/ <unistd.h>
 #endif /* !ACE_LACKS_UNISTD_H */
@@ -72,15 +68,9 @@ extern "C"
 #if defined (ACE_WIN32)
 // The following are #defines and #includes that are specific to
 // WIN32.
-#  if defined (ACE_HAS_WINCE)
-#    define ACE_STDIN _fileno (stdin)
-#    define ACE_STDOUT _fileno (stdout)
-#    define ACE_STDERR _fileno (stderr)
-#  else
 #    define ACE_STDIN GetStdHandle (STD_INPUT_HANDLE)
 #    define ACE_STDOUT GetStdHandle (STD_OUTPUT_HANDLE)
 #    define ACE_STDERR GetStdHandle (STD_ERROR_HANDLE)
-#  endif  // ACE_HAS_WINCE
 // The following are #defines and #includes that are specific to UNIX.
 #else /* !ACE_WIN32 */
 #  if defined (STDIN_FILENO)
@@ -99,20 +89,6 @@ extern "C"
 #    define ACE_STDERR 2
 #  endif
 #endif /* ACE_WIN32 */
-
-#if (!defined (_BSD_SOURCE) && \
-    !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)) \
-    || (defined (_XOPEN_SOURCE) && defined (__GNUC__))
-
-# if defined (ACE_LACKS_SETREUID_PROTOTYPE)
-  extern int setreuid (uid_t ruid, uid_t euid);
-# endif /* ACE_LACKS_SETREUID_PROTOTYPE */
-
-# if defined (ACE_LACKS_SETREGID_PROTOTYPE)
-  extern int setregid (gid_t rgid, gid_t egid);
-# endif /* ACE_LACKS_SETREGID_PROTOTYPE */
-#endif  /* !_BSD_SOURCE && !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED
-           || _XOPEN_SOURCE && __GNUC__ */
 
   // for use by access()
 # if !defined (R_OK)
@@ -136,26 +112,11 @@ extern "C"
 #   define F_OK    0       /* Test for existence of File. */
 # endif /* F_OK */
 
-#if defined (ACE_LACKS_UALARM_PROTOTYPE)
-   u_int ualarm (u_int usecs, u_int interval);
-#endif /* ACE_LACKS_UALARM_PROTOTYPE */
-
 #if defined (ACE_LACKS_GETPGID_PROTOTYPE) && \
     !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)
    pid_t getpgid (pid_t pid);
 #endif  /* ACE_LACKS_GETPGID_PROTOTYPE &&
            !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED */
-
-#if !defined (_LARGEFILE64_SOURCE)
-#  if defined (ACE_LACKS_LSEEK64_PROTOTYPE) && \
-      defined (ACE_LACKS_LLSEEK_PROTOTYPE)
-#    error Define either ACE_LACKS_LSEEK64_PROTOTYPE or ACE_LACKS_LLSEEK_PROTOTYPE, not both!
-#  elif defined (ACE_LACKS_LSEEK64_PROTOTYPE)
-     ACE_LOFF_T lseek64 (int fd, ACE_LOFF_T offset, int whence);
-#  elif defined (ACE_LACKS_LLSEEK_PROTOTYPE)
-     ACE_LOFF_T llseek (int fd, ACE_LOFF_T offset, int whence);
-#  endif
-#endif  /* _LARGEFILE64_SOURCE */
 
 #if defined (__BORLANDC__)
 #  define _isatty isatty

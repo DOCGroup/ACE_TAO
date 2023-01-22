@@ -8,10 +8,6 @@
 # include <vxAtomicLib.h>
 #endif
 
-#if defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-# include <atomic.h>
-#endif
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
@@ -44,8 +40,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator++ ()
   return ::InterlockedIncrement (const_cast<long *> (&this->value_));
 #elif defined (ACE_HAS_VXATOMICLIB)
   return ::vxAtomicInc (reinterpret_cast <atomic_t*>(const_cast<long *> (&this->value_))) + 1;
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  return ::atomic_inc_ulong_nv (reinterpret_cast<volatile unsigned long*>(&this->value_));
 #else /* WIN32 */
   return (*increment_fn_) (&this->value_);
 #endif /* WIN32 */
@@ -66,8 +60,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-- ()
   return ::InterlockedDecrement (const_cast<long *> (&this->value_));
 #elif defined (ACE_HAS_VXATOMICLIB)
   return ::vxAtomicDec (reinterpret_cast <atomic_t*>(const_cast<long *> (&this->value_))) - 1;
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  return ::atomic_dec_ulong_nv (reinterpret_cast<volatile unsigned long*>(&this->value_));
 #else /* WIN32 */
   return (*decrement_fn_) (&this->value_);
 #endif /* WIN32 */
@@ -90,8 +82,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator+= (long rhs)
                                    rhs) + rhs;
 #elif defined (ACE_HAS_VXATOMICLIB)
   return ::vxAtomicAdd (reinterpret_cast <atomic_t*>(const_cast<long *> (&this->value_)), rhs) + rhs;
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  return ::atomic_add_long_nv (reinterpret_cast<volatile unsigned long*>(&this->value_), rhs);
 #else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
   return (*exchange_add_fn_) (&this->value_, rhs) + rhs;
 #endif /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
@@ -108,8 +98,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-= (long rhs)
                                    -rhs) - rhs;
 #elif defined (ACE_HAS_VXATOMICLIB)
   return ::vxAtomicSub (reinterpret_cast <atomic_t*>(const_cast<long *> (&this->value_)), rhs) - rhs;
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  return ::atomic_add_long_nv (reinterpret_cast<volatile unsigned long*>(&this->value_), -rhs);
 #else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
   return (*exchange_add_fn_) (&this->value_, -rhs) - rhs;
 #endif /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
@@ -160,8 +148,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (long rhs)
   ::InterlockedExchange (const_cast<long *> (&this->value_), rhs);
 #elif defined (ACE_HAS_VXATOMICLIB)
   ::vxAtomicSet (reinterpret_cast <atomic_t*>(const_cast<long *> (&this->value_)), rhs);
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  ::atomic_swap_ulong (reinterpret_cast<volatile unsigned long*>(&this->value_), rhs);
 #else /* WIN32 */
   (*exchange_fn_) (&this->value_, rhs);
 #endif /* WIN32 */
@@ -178,8 +164,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (
   ::InterlockedExchange (const_cast<long *> (&this->value_), rhs.value_);
 #elif defined (ACE_HAS_VXATOMICLIB)
   ::vxAtomicSet (reinterpret_cast <atomic_t*>(const_cast<long *> (&this->value_)), rhs.value_);
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  ::atomic_swap_ulong (reinterpret_cast<volatile unsigned long*>(&this->value_), rhs.value_);
 #else /* WIN32 */
   (*exchange_fn_) (&this->value_, rhs.value_);
 #endif /* WIN32 */
@@ -195,8 +179,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange (long newval)
   return ::InterlockedExchange (const_cast<long *> (&this->value_), newval);
 #elif defined (ACE_HAS_VXATOMICLIB)
   return ::vxAtomicSet (reinterpret_cast <atomic_t*>(const_cast<long *> (&this->value_)), newval);
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  return ::atomic_swap_ulong (reinterpret_cast<volatile unsigned long*>(&this->value_), newval);
 #else /* WIN32 */
   return (*exchange_fn_) (&this->value_, newval);
 #endif /* WIN32 */
@@ -243,8 +225,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator++ ()
   return static_cast<unsigned long> (::InterlockedIncrement (const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))));
 #elif defined (ACE_HAS_VXATOMICLIB)
   return static_cast<unsigned long> (::vxAtomicInc (reinterpret_cast <atomic_t*>(const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))))) + 1;
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  return ::atomic_inc_ulong_nv (&this->value_);
 #else /* WIN32 */
   return static_cast<unsigned long> ((*increment_fn_) (reinterpret_cast<volatile long *> (&this->value_)));
 #endif /* WIN32 */
@@ -265,8 +245,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator-- ()
   return static_cast<unsigned long> (::InterlockedDecrement (const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))));
 #elif defined (ACE_HAS_VXATOMICLIB)
   return static_cast<unsigned long> (::vxAtomicDec (reinterpret_cast <atomic_t*>(const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))))) - 1;
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  return ::atomic_dec_ulong_nv (&this->value_);
 #else /* WIN32 */
   return static_cast<unsigned long> ((*decrement_fn_) (reinterpret_cast<volatile long *> (&this->value_)));
 #endif /* WIN32 */
@@ -289,8 +267,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator+= (unsigned long rhs)
                                    rhs)) + rhs;
 #elif defined (ACE_HAS_VXATOMICLIB)
   return static_cast<unsigned long> (::vxAtomicAdd (reinterpret_cast <atomic_t*>(const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))), rhs)) + rhs;
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  return ::atomic_add_long_nv (&this->value_, rhs);
 #else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
   return static_cast<unsigned long> ((*exchange_add_fn_) (reinterpret_cast<volatile long *> (&this->value_), rhs)) + rhs;
 #endif /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
@@ -307,8 +283,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator-= (unsigned long rhs)
                                    -static_cast<long>(rhs))) - rhs;
 #elif defined (ACE_HAS_VXATOMICLIB)
   return static_cast<unsigned long> (::vxAtomicSub (reinterpret_cast <atomic_t*>(const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))), rhs)) - rhs;
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  return ::atomic_add_long_nv (&this->value_, -rhs);
 #else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
   long l_rhs = static_cast<long> (rhs);
   return static_cast<unsigned long> ((*exchange_add_fn_) (reinterpret_cast<volatile long *> (&this->value_), -l_rhs)) - rhs;
@@ -360,8 +334,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator= (unsigned long rhs)
   ::InterlockedExchange (const_cast<long *> (reinterpret_cast<volatile long*> (&this->value_)), rhs);
 #elif defined (ACE_HAS_VXATOMICLIB)
   ::vxAtomicSet (reinterpret_cast <atomic_t*>(const_cast<long *> (reinterpret_cast<volatile long*> (&this->value_))), rhs);
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  ::atomic_swap_ulong (&this->value_, rhs);
 #else /* WIN32 */
   (*exchange_fn_) (reinterpret_cast<volatile long *> (&this->value_), rhs);
 #endif /* WIN32 */
@@ -378,8 +350,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator= (
   ::InterlockedExchange (const_cast<long *> (reinterpret_cast<volatile long*> (&this->value_)), rhs.value_);
 #elif defined (ACE_HAS_VXATOMICLIB)
   ::vxAtomicSet (reinterpret_cast <atomic_t*>(const_cast<long *> (reinterpret_cast<volatile long*> (&this->value_))), rhs.value_);
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  ::atomic_swap_ulong (&this->value_, rhs.value_);
 #else /* WIN32 */
   (*exchange_fn_) (reinterpret_cast<volatile long *> (&this->value_), rhs.value_);
 #endif /* WIN32 */
@@ -395,8 +365,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::exchange (unsigned long newval)
   return ::InterlockedExchange (const_cast<long *> (reinterpret_cast<volatile long*> (&this->value_)), newval);
 #elif defined (ACE_HAS_VXATOMICLIB)
   return ::vxAtomicSet (reinterpret_cast <atomic_t*>(const_cast<long *> (reinterpret_cast<volatile long*> (&this->value_))), newval);
-#elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
-  return ::atomic_swap_ulong (&this->value_, newval);
 #else /* WIN32 */
   return (*exchange_fn_) (reinterpret_cast<volatile long *> (&this->value_), newval);
 #endif /* WIN32 */

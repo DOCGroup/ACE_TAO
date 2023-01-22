@@ -75,13 +75,7 @@ protected:
       const CosNotification::EventTypeSeq & removed);
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Supplier_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Supplier_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_SUPPLIER_T_H */

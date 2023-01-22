@@ -104,11 +104,6 @@ public:
 
   /** Interface for reading/writing serial device parameters. */
   int control (Control_Mode cmd, Serial_Params *arg) const;
-
-#if defined (ACE_NEEDS_DEV_IO_CONVERSION)
-  /** This is necessary to pass ACE_TTY_IO as parameter to DEV_Connector. */
-  operator ACE_DEV_IO &();
-#endif /* ACE_NEEDS_DEV_IO_CONVERSION */
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -419,8 +419,8 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 
   // Determine the total length of all the buffers in <iov>.
   for (i = 0; i < n; i++)
-#if ! (defined(ACE_LACKS_IOVEC) || defined(ACE_LINUX) || defined(ACE_HAS_RTEMS))
-    // The iov_len is unsigned on Linux, RTEMS and when using the ACE iovec struct. If we go
+#if ! (defined(ACE_LACKS_IOVEC) || defined(ACE_LINUX))
+    // The iov_len is unsigned on Linux and when using the ACE iovec struct. If we go
     // ahead and try the if, it will emit a warning.
     if (iov[i].iov_len < 0)
       return -1;
@@ -480,8 +480,8 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   ACE_UNUSED_ARG (to_addr);
 
   for (i = 0; i < n; i++)
-#if ! (defined(ACE_LACKS_IOVEC) || defined(ACE_LINUX) || defined(ACE_HAS_RTEMS))
-    // The iov_len is unsigned on Linux, RTEMS and when using the ACE iovec struct. If we go
+#if ! (defined(ACE_LACKS_IOVEC) || defined(ACE_LINUX))
+    // The iov_len is unsigned on Linux and when using the ACE iovec struct. If we go
     // ahead and try the if, it will emit a warning.
     if (iov[i].iov_len < 0)
       return -1;

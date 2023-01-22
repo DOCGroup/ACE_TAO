@@ -14,7 +14,7 @@
 #include "ace/Process.h"
 #include "ace/SString.h"
 
-#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR)
 using setenvfn_t = void (*)(const ACE_TCHAR *, const ACE_TCHAR *, void *);
 
 void create_large_env (setenvfn_t setenv, void *ctx)
@@ -54,7 +54,7 @@ run_main (int, ACE_TCHAR*[])
   int test_status = 0;
   ACE_START_TEST (ACE_TEXT ("Process_Env_Test"));
 
-#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR)
   ACE_Process_Options options (
                         0,
                         ACE_Process_Options::DEFAULT_COMMAND_LINE_BUF_LEN,
@@ -120,7 +120,7 @@ run_main (int, ACE_TCHAR*[])
 
 #else
   ACE_DEBUG ((LM_INFO, "This test is for Win32 without ACE_USES_WCHAR\n"));
-#endif /* ACE_WIN32 && !ACE_USES_WCHAR && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 && !ACE_USES_WCHAR */
 
   ACE_END_TEST;
   return test_status;
