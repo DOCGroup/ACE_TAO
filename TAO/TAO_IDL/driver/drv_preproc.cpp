@@ -73,11 +73,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 
 #include "ace/Version.h"
-#include "ace/Process_Manager.h"
+#include "ace/Process.h"
 #include "ace/SString.h"
 #include "ace/Env_Value_T.h"
 #include "ace/ARGV.h"
-#include "ace/UUID.h"
 #include "ace/Dirent.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Truncate.h"
