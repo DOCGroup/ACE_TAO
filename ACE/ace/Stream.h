@@ -84,7 +84,7 @@ public:
   virtual int close (int flags = M_DELETE);
 
   /// Close down the stream and release all the resources.
-  virtual ~ACE_Stream (void);
+  virtual ~ACE_Stream ();
 
   // = ACE_Stream plumbing operations
 
@@ -117,10 +117,10 @@ public:
                       int flags = M_DELETE);
 
   /// Return current stream head.
-  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *head (void);
+  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *head ();
 
   /// Return current stream tail.
-  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *tail (void);
+  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *tail ();
 
   /// Find a particular ACE_Module.
   virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *find (const ACE_TCHAR *mod);
@@ -129,7 +129,7 @@ public:
   virtual int link (ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &);
 
   /// Remove a pipe formed between two Streams.
-  virtual int unlink (void);
+  virtual int unlink ();
 
   // = Blocking data transfer operations
   /**
@@ -154,28 +154,15 @@ public:
                        void *args);
 
   /// Synchronize with the final close of the stream.
-  virtual int wait (void);
+  virtual int wait ();
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-private:
-  /// Actually perform the unlinking of two Streams (must be called
-  /// with locks held).
-  int unlink_i (void);
-
-  /// Actually perform the linking of two Streams (must be called with
-  /// locks held).
-  int link_i (ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &);
-
-  /// Must a new module onto the Stream.
-  int push_module (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *,
-                   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = 0,
-                   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = 0);
-
+protected:
   /// Pointer to the head of the stream.
   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_head_;
 
@@ -187,7 +174,7 @@ private:
 
   // = Synchronization objects used for thread-safe streams.
   /// Protect the stream against race conditions.
-  ACE_SYNCH_MUTEX_T lock_;
+  mutable ACE_SYNCH_MUTEX_T lock_;
 
 #if defined (ACE_HAS_THREADS)
   /// Attributes to initialize condition with.
@@ -199,6 +186,20 @@ private:
 
   /// Use to tell all threads waiting on the close that we are done.
   ACE_SYNCH_CONDITION_T final_close_;
+
+private:
+  /// Actually perform the unlinking of two Streams (must be called
+  /// with locks held).
+  int unlink_i ();
+
+  /// Actually perform the linking of two Streams (must be called with
+  /// locks held).
+  int link_i (ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &);
+
+  /// Must a new module onto the Stream.
+  int push_module (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *,
+                   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = 0,
+                   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = 0);
 };
 
 /**
@@ -219,11 +220,11 @@ public:
   int next (const ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *&next_item);
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
-  int advance (void);
+  int advance ();
 
 private:
   /// Next ACE_Module that we haven't yet seen.
@@ -236,13 +237,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Stream.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Stream.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Stream.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

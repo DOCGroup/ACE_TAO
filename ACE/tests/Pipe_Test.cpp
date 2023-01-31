@@ -30,7 +30,7 @@ static int iterations = ACE_MAX_ITERATIONS;
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-d (don't close pipes)] ")
@@ -113,14 +113,10 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_START_TEST (ACE_TEXT("Pipe_Test"));
       ACE_INIT_LOG (ACE_TEXT("Pipe_Test-children"));
 
-#  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-      const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%s -c%s");
-#  else
-      const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%ls -c%ls");
-#  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
       ACE_Process_Options options;
 #  ifndef ACE_LACKS_VA_FUNCTIONS
-      options.command_line (cmdline_fmt,
+      options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs
+                            ACE_TEXT (" -c%") ACE_TEXT_PRIs,
                             argc > 0 ? argv[0] : ACE_TEXT ("Pipe_Test"),
                             close_pipe == 0 ? ACE_TEXT (" -d") : ACE_TEXT (""));
 #  else

@@ -41,11 +41,11 @@ private:
   CosNotifyChannelAdmin::AdminID id_;
 };
 
-TAO_MonitorSupplierAdmin::TAO_MonitorSupplierAdmin (void)
+TAO_MonitorSupplierAdmin::TAO_MonitorSupplierAdmin ()
 {
 }
 
-TAO_MonitorSupplierAdmin::~TAO_MonitorSupplierAdmin (void)
+TAO_MonitorSupplierAdmin::~TAO_MonitorSupplierAdmin ()
 {
   // First, make sure we can get down to the real ec type
   TAO_MonitorEventChannel* ec =

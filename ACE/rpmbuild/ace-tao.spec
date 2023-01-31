@@ -1,6 +1,6 @@
 # Set the version number here.
-%define ACEVER  6.5.8
-%define TAOVER  2.5.8
+%define ACEVER  7.0.11
+%define TAOVER  3.0.11
 
 # Conditional build
 # Default values are
@@ -84,7 +84,7 @@ BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define _extension .gz
 
 %if 0%{?fedora} || 0%{?rhel}
-BuildRequires: redhat-rpm-config elfutils sendmail
+BuildRequires: redhat-rpm-config elfutils
 %endif
 
 %if !0%{?suse_version}
@@ -949,7 +949,6 @@ EOF
 
 cat > $ACE_ROOT/bin/MakeProjectCreator/config/default.features <<EOF
 ssl=1
-cidl=0
 EOF
 
 %if %{?_with_bzip2:1}%{!?_with_bzip2:0}
@@ -1129,13 +1128,13 @@ cat mmraw.list |\
         sort -u > allhdrs.list
 
 # Add missing headers.
-echo ace/QtReactor/QtReactor.h >> allhdrs.list
+ls ace/*{.h,.inl,.cpp} >> allhdrs.list
 %if 0%{?_with_tao:1}%{?_without_tao:0}
-echo TAO/tao/QtResource/QtResource_Factory.h >> allhdrs.list
-echo TAO/tao/QtResource/QtResource_Loader.h >> allhdrs.list
-echo TAO/tao/PortableServer/get_arg.h >> allhdrs.list
-echo TAO/orbsvcs/orbsvcs/ESF/ESF_Proxy_List.{h,inl,cpp} >> allhdrs.list
-echo TAO/orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.{h,inl,cpp} >> allhdrs.list
+ls TAO/tao/*{.h,.inl,_T.cpp} >> allhdrs.list
+ls TAO/tao/*/*{.h,.inl,.cpp} >> allhdrs.list
+ls TAO/orbsvcs/orbsvcs/*{.idl,.h,.inl,_T.cpp} >> allhdrs.list
+ls TAO/orbsvcs/orbsvcs/*/*{.h,.inl,_T.cpp} >> allhdrs.list
+ls TAO/orbsvcs/orbsvcs/ESF/*.cpp >> allhdrs.list
 %endif
 
 # Install headers and create header lists
@@ -1220,6 +1219,7 @@ install ${ACE_ROOT}/bin/ace_gperf %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/tao_idl %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/tao_imr %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/tao_ifr %{buildroot}%{_bindir}
+install ${ACE_ROOT}/TAO/orbsvcs/IFR_Service/tao_ifr_service %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/tao_catior %{buildroot}%{_bindir}/tao_catior
 install ${ACE_ROOT}/bin/tao_nsadd %{buildroot}%{_bindir}/tao_nsadd
 install ${ACE_ROOT}/bin/tao_nsdel %{buildroot}%{_bindir}/tao_nsdel
@@ -2277,6 +2277,7 @@ fi
 
 %{_bindir}/tao_imr
 %{_bindir}/tao_ifr
+%{_bindir}/tao_ifr_service
 %{_datadir}/tao/MPC
 %{_bindir}/tao_idl
 %attr(0644,root,root) %doc %{_mandir}/man1/tao_idl.1%{_extension}

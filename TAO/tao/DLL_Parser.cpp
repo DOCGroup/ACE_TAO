@@ -16,11 +16,6 @@ static const char dll_prefix[] = "DLL:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DLL_Parser::~TAO_DLL_Parser (void)
-{
-}
-
-
 bool
 TAO_DLL_Parser::match_prefix (const char *ior_string) const
 {
@@ -44,7 +39,7 @@ TAO_DLL_Parser::parse_string (const char *ior,
     ACE_Dynamic_Service<TAO_Object_Loader>::instance
       (oc->configuration(), name);
 
-  if (loader == 0)
+  if (loader == nullptr)
     {
       throw
          CORBA::INV_OBJREF
@@ -54,7 +49,7 @@ TAO_DLL_Parser::parse_string (const char *ior,
           CORBA::COMPLETED_NO);
     }
 
-  return loader->create_object (orb, 0, 0);
+  return loader->create_object (orb, 0, nullptr);
 }
 
 

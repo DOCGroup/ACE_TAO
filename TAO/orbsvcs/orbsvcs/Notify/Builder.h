@@ -43,7 +43,7 @@ class TAO_Notify_Object;
 class TAO_Notify_Serv_Export TAO_Notify_Builder
 {
 public:
-  TAO_Notify_Builder (void);
+  TAO_Notify_Builder ();
 
   virtual ~TAO_Notify_Builder ();
 

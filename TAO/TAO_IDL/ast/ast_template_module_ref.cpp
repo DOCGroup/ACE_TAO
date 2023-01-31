@@ -23,19 +23,18 @@ AST_Template_Module_Ref::AST_Template_Module_Ref (
 {
 }
 
-AST_Template_Module_Ref::~AST_Template_Module_Ref (void)
+AST_Template_Module_Ref::~AST_Template_Module_Ref ()
 {
 }
 
 AST_Template_Module *
-AST_Template_Module_Ref::ref (void) const
+AST_Template_Module_Ref::ref () const
 {
-  return
-    AST_Template_Module::narrow_from_decl (this->field_type ());
+  return dynamic_cast<AST_Template_Module*> (this->field_type ());
 }
 
 UTL_StrList *
-AST_Template_Module_Ref::param_refs (void) const
+AST_Template_Module_Ref::param_refs () const
 {
   return this->param_refs_;
 }
@@ -47,11 +46,11 @@ AST_Template_Module_Ref::dump (ACE_OSTREAM_TYPE &)
 }
 
 void
-AST_Template_Module_Ref::destroy (void)
+AST_Template_Module_Ref::destroy ()
 {
   this->param_refs_->destroy ();
   delete this->param_refs_;
-  this->param_refs_ = 0;
+  this->param_refs_ = nullptr;
 
   this->AST_Field::destroy ();
 }
@@ -73,11 +72,11 @@ AST_Template_Module_Ref::adjust_found (
   bool ignore_fwd,
   bool /*full_def_only*/)
 {
-  return ignore_fwd ? 0 : this;
+  return ignore_fwd ? nullptr : this;
 }
 
 bool
-AST_Template_Module_Ref::processed (void) const
+AST_Template_Module_Ref::processed () const
 {
   return this->processed_;
 }
@@ -87,6 +86,3 @@ AST_Template_Module_Ref::processed (bool val)
 {
   this->processed_ = val;
 }
-
-IMPL_NARROW_FROM_DECL (AST_Template_Module_Ref)
-

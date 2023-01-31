@@ -30,7 +30,7 @@ ACE_TS_Clerk_Handler::state (ACE_TS_Clerk_Handler::State state)
 
 // Get the connection state
 ACE_TS_Clerk_Handler::State
-ACE_TS_Clerk_Handler::state (void)
+ACE_TS_Clerk_Handler::state ()
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::state");
   return this->state_;
@@ -51,7 +51,7 @@ ACE_TS_Clerk_Handler::timeout (long to)
 // backoff.  Returns the original timeout (i.e., before the
 // recalculation).
 long
-ACE_TS_Clerk_Handler::timeout (void)
+ACE_TS_Clerk_Handler::timeout ()
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::timeout");
   long old_timeout = this->timeout_;
@@ -64,7 +64,6 @@ ACE_TS_Clerk_Handler::timeout (void)
 }
 
 // This is called when a <send> to the logging server fails...
-
 int
 ACE_TS_Clerk_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
@@ -81,7 +80,7 @@ ACE_TS_Clerk_Handler::max_timeout (long mto)
 
 // Gets the max timeout delay.
 long
-ACE_TS_Clerk_Handler::max_timeout (void)
+ACE_TS_Clerk_Handler::max_timeout ()
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::max_timeout");
   return this->max_timeout_;
@@ -127,7 +126,7 @@ ACE_TS_Clerk_Handler::open (void *)
 }
 
 ACE_HANDLE
-ACE_TS_Clerk_Handler::get_handle (void) const
+ACE_TS_Clerk_Handler::get_handle () const
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::get_handle");
   return this->peer().get_handle ();
@@ -147,7 +146,7 @@ ACE_TS_Clerk_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-ACE_TS_Clerk_Handler::reinitiate_connection (void)
+ACE_TS_Clerk_Handler::reinitiate_connection ()
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::reinitiate_connection");
   // Skip over deactivated descriptors.
@@ -224,7 +223,7 @@ ACE_TS_Clerk_Handler::remote_addr (ACE_INET_Addr &addr)
 }
 
 ACE_INET_Addr &
-ACE_TS_Clerk_Handler::remote_addr (void)
+ACE_TS_Clerk_Handler::remote_addr ()
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::remote_addr");
   return this->remote_addr_;
@@ -246,11 +245,11 @@ ACE_TS_Clerk_Handler::recv_reply (ACE_Time_Request &reply)
         {
         case -1:
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("****************** recv_reply returned -1\n")));
-          // FALLTHROUGH
+          ACE_FALLTHROUGH;
         default:
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
                       ACE_TEXT ("recv failed"), n, bytes_expected));
-          // FALLTHROUGH
+          ACE_FALLTHROUGH;
         case 0:
           // We've shutdown unexpectedly
           return -1;
@@ -324,7 +323,7 @@ ACE_TS_Clerk_Processor::ACE_TS_Clerk_Processor ()
 }
 
 void
-ACE_TS_Clerk_Processor::alloc (void)
+ACE_TS_Clerk_Processor::alloc ()
 {
   ACE_TRACE ("ACE_TS_Clerk_Processor::alloc");
   ACE_NEW (this->shmem_, ALLOCATOR (this->poolname_));
@@ -425,7 +424,7 @@ ACE_TS_Clerk_Processor::update_time ()
 
 
 int
-ACE_TS_Clerk_Processor::fini (void)
+ACE_TS_Clerk_Processor::fini ()
 {
   ACE_TRACE ("ACE_TS_Clerk_Processor::fini");
 
@@ -609,14 +608,14 @@ ACE_TS_Clerk_Processor::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TS_Clerk_Processor::suspend (void)
+ACE_TS_Clerk_Processor::suspend ()
 {
   ACE_TRACE ("ACE_TS_Clerk_Processor::suspend");
   return 0;
 }
 
 int
-ACE_TS_Clerk_Processor::resume (void)
+ACE_TS_Clerk_Processor::resume ()
 {
   ACE_TRACE ("ACE_TS_Clerk_Processor::resume");
   return 0;

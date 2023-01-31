@@ -46,7 +46,7 @@ public:
   TAO_Log_Constraint_Interpreter (const char* constraints);
 
   /// Destructor.
-  ~TAO_Log_Constraint_Interpreter (void);
+  ~TAO_Log_Constraint_Interpreter ();
 
   /// Returns true if the constraint is evaluated successfully by
   /// the evaluator.

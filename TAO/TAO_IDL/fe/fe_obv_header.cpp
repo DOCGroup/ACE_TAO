@@ -66,10 +66,10 @@ FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
                         false,
                         false,
                         false),
-    supports_ (0),
+    supports_ (nullptr),
     n_supports_ (0),
-    inherits_concrete_ (0),
-    supports_concrete_ (0),
+    inherits_concrete_ (nullptr),
+    supports_concrete_ (nullptr),
     truncatable_ (truncatable)
 {
   this->compile_inheritance (inherits,
@@ -81,42 +81,42 @@ FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
     }
 }
 
-FE_OBVHeader::~FE_OBVHeader (void)
+FE_OBVHeader::~FE_OBVHeader ()
 {
 }
 
 AST_Type **
-FE_OBVHeader::supports (void) const
+FE_OBVHeader::supports () const
 {
   return this->supports_;
 }
 
 long
-FE_OBVHeader::n_supports (void) const
+FE_OBVHeader::n_supports () const
 {
   return this->n_supports_;
 }
 
 AST_Type *
-FE_OBVHeader::inherits_concrete (void) const
+FE_OBVHeader::inherits_concrete () const
 {
   return this->inherits_concrete_;
 }
 
 AST_Type *
-FE_OBVHeader::supports_concrete (void) const
+FE_OBVHeader::supports_concrete () const
 {
   return this->supports_concrete_;
 }
 
 bool
-FE_OBVHeader::truncatable (void) const
+FE_OBVHeader::truncatable () const
 {
   return this->truncatable_;
 }
 
 void
-FE_OBVHeader::destroy (void)
+FE_OBVHeader::destroy ()
 {
   this->FE_InterfaceHeader::destroy ();
 }
@@ -131,9 +131,9 @@ FE_OBVHeader::compile_inheritance (UTL_NameList *vtypes,
   if (this->n_inherits_ > 0)
     {
       AST_Type *t = this->inherits_[0];
-      AST_ValueType *vt = AST_ValueType::narrow_from_decl (t);
+      AST_ValueType *vt = dynamic_cast<AST_ValueType*> (t);
 
-      if (vt != 0
+      if (vt != nullptr
           && vt->is_abstract () == false)
         {
           this->inherits_concrete_ = vt;
@@ -166,9 +166,9 @@ FE_OBVHeader::compile_inheritance (UTL_NameList *vtypes,
 void
 FE_OBVHeader::compile_supports (UTL_NameList *supports)
 {
-  if (supports == 0)
+  if (supports == nullptr)
     {
-      this->supports_ = 0;
+      this->supports_ = nullptr;
       this->n_supports_ = 0;
       return;
     }
@@ -179,10 +179,10 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
   ACE_NEW (this->supports_,
            AST_Type *[length]);
 
-  AST_Decl *d = 0;
-  UTL_ScopedName *item = 0;
-  AST_Interface *iface = 0;
-  AST_Type *t = 0;
+  AST_Decl *d = nullptr;
+  UTL_ScopedName *item = nullptr;
+  AST_Interface *iface = nullptr;
+  AST_Type *t = nullptr;
   int i = 0;
 
   for (UTL_NamelistActiveIterator l (supports); !l.is_done (); l.next ())
@@ -190,7 +190,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       item = l.item ();
 
       // Check that scope stack is valid.
-      if (idl_global->scopes ().top () == 0)
+      if (idl_global->scopes ().top () == nullptr)
         {
           idl_global->err ()->lookup_error (item);
 
@@ -204,20 +204,20 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
 
       d = s->lookup_by_name  (item, true);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           AST_Decl *sad = ScopeAsDecl (s);
 
           if (sad->node_type () == AST_Decl::NT_module)
             {
-              AST_Module *m = AST_Module::narrow_from_decl (sad);
+              AST_Module *m = dynamic_cast<AST_Module*> (sad);
 
               d = m->look_in_prev_mods_local (item->last_component ());
             }
         }
 
       // Not found?
-      if (d == 0)
+      if (d == nullptr)
         {
           idl_global->err ()->lookup_error (item);
 
@@ -229,20 +229,20 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       // Remove typedefs, if any.
       if (d->node_type () == AST_Decl::NT_typedef)
         {
-          d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
+          d = dynamic_cast<AST_Typedef*> (d)->primitive_base_type ();
         }
 
       AST_Decl::NodeType nt = d->node_type ();
-      t = AST_Type::narrow_from_decl (d);
+      t = dynamic_cast<AST_Type*> (d);
 
       if (nt == AST_Decl::NT_interface)
         {
-          iface = AST_Interface::narrow_from_decl (d);
+          iface = dynamic_cast<AST_Interface*> (d);
         }
       else if (nt == AST_Decl::NT_param_holder)
         {
           AST_Param_Holder *ph =
-            AST_Param_Holder::narrow_from_decl (d);
+            dynamic_cast<AST_Param_Holder*> (d);
 
           nt = ph->info ()->type_;
 
@@ -263,14 +263,14 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
         }
 
       // Forward declared interface?
-      if (iface != 0 && !iface->is_defined ())
+      if (iface != nullptr && !iface->is_defined ())
         {
           idl_global->err ()->supports_fwd_error (this->interface_name_,
                                                   iface);
           continue;
         }
 
-      if (iface != 0 && !iface->is_abstract ())
+      if (iface != nullptr && !iface->is_abstract ())
         {
           if (i == 0)
             {
@@ -303,16 +303,16 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
       return true;
     }
 
-  AST_ValueType *vt = 0;
-  AST_Type *concrete = 0;
-  AST_Interface *ancestor = 0;
+  AST_ValueType *vt = nullptr;
+  AST_Type *concrete = nullptr;
+  AST_Interface *ancestor = nullptr;
 
   for (long i = 0; i < this->n_inherits_; ++i)
     {
-      vt = AST_ValueType::narrow_from_decl (this->inherits_[i]);
+      vt = dynamic_cast<AST_ValueType*> (this->inherits_[i]);
       concrete = vt->supports_concrete ();
 
-      if (0 == concrete)
+      if (nullptr == concrete)
         {
           return true;
         }

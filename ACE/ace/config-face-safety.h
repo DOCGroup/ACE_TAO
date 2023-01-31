@@ -216,8 +216,8 @@
 
 #ifdef ACE_FACE_SAFETY_EXTENDED
 
-# if defined ACE_WIN32 || defined ACE_HAS_WINCE
-#  error "FACE Safety profile not compatible with win32 or winCE"
+# if defined ACE_WIN32
+#  error "FACE Safety profile not compatible with win32"
 # endif
 
 # ifndef ACE_EMULATE_POSIX_DEVCTL
@@ -305,7 +305,8 @@
 # define ACE_LACKS_FSETPOS
 # define ACE_LACKS_GETC
 # define ACE_LACKS_GETTIMEOFDAY
-# define ACE_LACKS_IF_NAME_INDEX
+# define ACE_LACKS_IF_NAMEINDEX
+# define ACE_LACKS_IF_NAMETOINDEX
 # define ACE_LACKS_IOCTL
 # define ACE_LACKS_LOCALECONV
 # define ACE_LACKS_MUNMAP

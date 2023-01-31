@@ -7,25 +7,25 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Protocol_Item::TAO_Protocol_Item (const ACE_CString &name)
   : name_ (name),
-    factory_ (0),
+    factory_ (nullptr),
     factory_owner_ (0)
 {
 }
 
-TAO_Protocol_Item::~TAO_Protocol_Item (void)
+TAO_Protocol_Item::~TAO_Protocol_Item ()
 {
   if (this->factory_owner_ == 1)
     delete this->factory_;
 }
 
 const ACE_CString &
-TAO_Protocol_Item::protocol_name (void)
+TAO_Protocol_Item::protocol_name ()
 {
   return this->name_;
 }
 
 TAO_Protocol_Factory *
-TAO_Protocol_Item::factory (void)
+TAO_Protocol_Item::factory ()
 {
   return this->factory_;
 }
@@ -42,24 +42,24 @@ TAO_Protocol_Item::factory (TAO_Protocol_Factory *factory,
 
 // ********************************************************************
 
-TAO_Resource_Factory::TAO_Resource_Factory (void)
+TAO_Resource_Factory::TAO_Resource_Factory ()
 {
 }
 
-TAO_Resource_Factory::~TAO_Resource_Factory (void)
+TAO_Resource_Factory::~TAO_Resource_Factory ()
 {
 }
 
 int
-TAO_Resource_Factory::use_locked_data_blocks (void) const
+TAO_Resource_Factory::use_locked_data_blocks () const
 {
   return 0;
 }
 
 ACE_Reactor *
-TAO_Resource_Factory::get_reactor (void)
+TAO_Resource_Factory::get_reactor ()
 {
-  return 0;
+  return nullptr;
 }
 
 void
@@ -69,15 +69,15 @@ TAO_Resource_Factory::reclaim_reactor (ACE_Reactor *)
 }
 
 TAO_Connector_Registry *
-TAO_Resource_Factory::get_connector_registry (void)
+TAO_Resource_Factory::get_connector_registry ()
 {
-  return 0;
+  return nullptr;
 }
 
 TAO_Acceptor_Registry *
-TAO_Resource_Factory::get_acceptor_registry (void)
+TAO_Resource_Factory::get_acceptor_registry ()
 {
-  return 0;
+  return nullptr;
 }
 
 void
@@ -86,91 +86,91 @@ TAO_Resource_Factory::use_local_memory_pool (bool)
 }
 
 ACE_Allocator *
-TAO_Resource_Factory::input_cdr_dblock_allocator (void)
+TAO_Resource_Factory::input_cdr_dblock_allocator ()
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_Allocator *
-TAO_Resource_Factory::input_cdr_buffer_allocator (void)
+TAO_Resource_Factory::input_cdr_buffer_allocator ()
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_Allocator *
-TAO_Resource_Factory::input_cdr_msgblock_allocator (void)
+TAO_Resource_Factory::input_cdr_msgblock_allocator ()
 {
-  return 0;
+  return nullptr;
 }
 
 int
-TAO_Resource_Factory::input_cdr_allocator_type_locked (void)
+TAO_Resource_Factory::input_cdr_allocator_type_locked ()
 {
   return -1;
 }
 
 ACE_Allocator *
-TAO_Resource_Factory::output_cdr_dblock_allocator (void)
+TAO_Resource_Factory::output_cdr_dblock_allocator ()
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_Allocator *
-TAO_Resource_Factory::output_cdr_buffer_allocator (void)
+TAO_Resource_Factory::output_cdr_buffer_allocator ()
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_Allocator *
-TAO_Resource_Factory::output_cdr_msgblock_allocator (void)
+TAO_Resource_Factory::output_cdr_msgblock_allocator ()
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_Allocator *
-TAO_Resource_Factory::amh_response_handler_allocator (void)
+TAO_Resource_Factory::amh_response_handler_allocator ()
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_Allocator *
-TAO_Resource_Factory::ami_response_handler_allocator (void)
+TAO_Resource_Factory::ami_response_handler_allocator ()
 {
-  return 0;
+  return nullptr;
 }
 
 TAO_ProtocolFactorySet *
-TAO_Resource_Factory::get_protocol_factories (void)
+TAO_Resource_Factory::get_protocol_factories ()
 {
-  return 0;
+  return nullptr;
 }
 
 int
-TAO_Resource_Factory::init_protocol_factories (void)
+TAO_Resource_Factory::init_protocol_factories ()
 {
   return -1;
 }
 
 TAO_Codeset_Manager *
-TAO_Resource_Factory::codeset_manager (void)
+TAO_Resource_Factory::codeset_manager ()
 {
-  return 0;
+  return nullptr;
 }
 
 int
-TAO_Resource_Factory::cache_maximum (void) const
+TAO_Resource_Factory::cache_maximum () const
 {
   return TAO_CONNECTION_CACHE_MAXIMUM;
 }
 
 int
-TAO_Resource_Factory::purge_percentage (void) const
+TAO_Resource_Factory::purge_percentage () const
 {
   return 0;
 }
 
 int
-TAO_Resource_Factory::max_muxed_connections (void) const
+TAO_Resource_Factory::max_muxed_connections () const
 {
   return 0;
 }
@@ -183,19 +183,19 @@ TAO_Resource_Factory::get_parser_names (char **&, int &)
 }
 
 ACE_Lock *
-TAO_Resource_Factory::create_cached_connection_lock (void)
+TAO_Resource_Factory::create_cached_connection_lock ()
+{
+  return nullptr;
+}
+
+int
+TAO_Resource_Factory::locked_transport_cache ()
 {
   return 0;
 }
 
 int
-TAO_Resource_Factory::locked_transport_cache (void)
-{
-  return 0;
-}
-
-int
-TAO_Resource_Factory::load_default_protocols (void)
+TAO_Resource_Factory::load_default_protocols ()
 {
   return 0;
 }

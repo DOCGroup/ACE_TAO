@@ -31,7 +31,7 @@ public:
   be_visitor_scope (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_scope (void);
+  ~be_visitor_scope ();
 
   /// visit scope
   int visit_scope (be_scope *node);
@@ -44,7 +44,7 @@ public:
   virtual int pre_process (be_decl *);
 
   /// return the element number that is being processed
-  virtual int elem_number (void);
+  virtual int elem_number ();
 
   /// get the successor to elem
   virtual int next_elem (be_decl *elem, be_decl *&);

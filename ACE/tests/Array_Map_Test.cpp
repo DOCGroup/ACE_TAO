@@ -40,10 +40,10 @@ static size_t const words_len   = sizeof (words)   / sizeof (words[0]);
 // --------------------------------------------------------------
 
 bool
-insertion_removal_test (void)
+insertion_removal_test ()
 {
   // Instantiate the map.
-  typedef ACE_Array_Map<char, ACE_TString> Map;
+  using Map = ACE_Array_Map<char, ACE_TString>;
   Map phonetic[2];
 
   ACE_TEST_ASSERT (phonetic[0] == phonetic[1]);  // Sanity check.
@@ -220,10 +220,10 @@ insertion_removal_test (void)
 // --------------------------------------------------------------
 
 bool
-index_operator_test (void)
+index_operator_test ()
 {
   // Instantiate the map.
-  typedef ACE_Array_Map<char, ACE_TString> Map;
+  using Map = ACE_Array_Map<char, ACE_TString>;
   Map phonetic;
 
   ACE_TEST_ASSERT (phonetic.size () == 0 && phonetic.is_empty ());
@@ -250,7 +250,7 @@ index_operator_test (void)
 
       ACE_TEST_ASSERT (phonetic.size () == letters_len);
 
-      typedef Map::const_iterator         const_iterator;
+      using const_iterator = Map::const_iterator;
 
       // Access the elements that were inserted into the map.
       char const * letter = letters;
@@ -281,7 +281,7 @@ index_operator_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("... in reverse ...\n")));
 
-      typedef Map::const_reverse_iterator const_reverse_iterator;
+      using const_reverse_iterator = Map::const_reverse_iterator;
 
       letter = letters + letters_len - 1;
       word = words + words_len - 1;
@@ -296,7 +296,7 @@ index_operator_test (void)
 
       const_reverse_iterator const rlast = const_phonetic.rend ();
       for (const_reverse_iterator r = const_phonetic.rbegin ();
-           !(r == rlast); // Sun C++ Forte doesn't support operator!=
+           (r != rlast);
            ++r, --letter, --word)
         {
           if ((*r).first != *letter || (*r).second != *word)
@@ -336,8 +336,7 @@ index_operator_test (void)
 class RefCounted
 {
 public:
-
-  RefCounted (void)
+  RefCounted ()
     : refcount_ (0)
   {
   }
@@ -347,7 +346,7 @@ public:
   {
   }
 
-  ~RefCounted (void)
+  ~RefCounted ()
   {
     if (this->refcount_)
       --(*this->refcount_);
@@ -370,29 +369,27 @@ public:
   }
 
   unsigned int *
-  refcount_ptr (void) const
+  refcount_ptr () const
   {
     return this->refcount_;
   }
 
   unsigned int
-  refcount (void) const
+  refcount () const
   {
     return *this->refcount_;
   }
 
 private:
-
   unsigned int * refcount_;
-
 };
 
 // --------
 
 bool
-reference_count_test (void)
+reference_count_test ()
 {
-  typedef ACE_Array_Map<ACE_TString, RefCounted> Map;
+  using Map = ACE_Array_Map<ACE_TString, RefCounted>;
 
   static Map::size_type const CAPACITY = 30;
 
@@ -415,9 +412,6 @@ reference_count_test (void)
     std::pair<Map::iterator, bool> result;
 
     {
-      // Enter a new scope block to assure destruction of temporaries
-      // on systems like Solaris / Sun C++.
-
       result = map.insert (std::make_pair (ACE_TString (ACE_TEXT ("Two")),
                                            counted));
 
@@ -427,9 +421,6 @@ reference_count_test (void)
     ACE_TEST_ASSERT (counted.refcount () == 3);
 
     {
-      // Enter a new scope block to assure destruction of temporaries
-      // on systems like Solaris / Sun C++.
-
       result = map.insert (std::make_pair (ACE_TString (ACE_TEXT ("Three")),
                                            counted));
 

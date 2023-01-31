@@ -3,8 +3,7 @@
 /**
  *  @file    Framework_Component_DLL.h
  *
- *  Define class needed for generating templates. IBM C++ requires this to
- *  be in its own file for auto template instantiation.
+ *  Define class needed for generating templates.
  *
  *  @author Don Hinton <dhinton@ieee.org>
  */
@@ -23,14 +22,11 @@
 class Simple_Service
 {
 public:
-  Simple_Service (void);
+  Simple_Service ();
 
-  virtual ~Simple_Service (void);
+  virtual ~Simple_Service ();
 
-  //virtual const ACE_TCHAR *dll_name (void);
-
-  virtual const ACE_TCHAR *name (void);
-
+  virtual const ACE_TCHAR *name ();
 };
 
 // Adapter that contains the required dll_name() method and
@@ -39,7 +35,7 @@ template <class TYPE>
 class FWCT_DLL_Singleton_Adapter_T : public TYPE
 {
 public:
-  const ACE_TCHAR *dll_name (void)
+  const ACE_TCHAR *dll_name ()
   {
     FRAMEWORK_COMPONENT_DLL_TRACE ("FWCT_DLL_Singleton_Adapter_T::dll_name");
     return ACE_TEXT("Framework_Component_DLL");

@@ -32,7 +32,7 @@
 # include "quantify.h"
 #endif /* ACE_HAS_QUANTIFY */
 
-Server::Server (void)
+Server::Server ()
   :argc_ (0),
    argv_ (0),
    cubits_ (0),
@@ -64,7 +64,7 @@ Server::init (int argc, ACE_TCHAR **argv)
 }
 
 int
-Server::run (void)
+Server::run ()
 {
   STOP_QUANTIFY;
   CLEAR_QUANTIFY;
@@ -83,7 +83,7 @@ Server::run (void)
 }
 
 void
-Server::prelim_args_process (void)
+Server::prelim_args_process ()
 {
   int i;
 
@@ -97,7 +97,7 @@ Server::prelim_args_process (void)
 }
 
 void
-Server::init_low_priority (void)
+Server::init_low_priority ()
 {
   ACE_Sched_Priority prev_priority = this->high_priority_;
 
@@ -122,7 +122,7 @@ Server::init_low_priority (void)
 // Write the ior's to a file so the client can read them.
 
 int
-Server::write_iors (void)
+Server::write_iors ()
 {
   u_int j;
 
@@ -168,7 +168,7 @@ Server::write_iors (void)
 }
 
 int
-Server::activate_high_servant (void)
+Server::activate_high_servant ()
 {
   ACE_TCHAR orbendpoint[BUFSIZ];
 
@@ -220,7 +220,7 @@ Server::activate_high_servant (void)
 }
 
 int
-Server::activate_low_servants (void)
+Server::activate_low_servants ()
 {
   if (static_cast<int> (this->num_low_priority_) > 0)
     {
@@ -323,7 +323,7 @@ Server::activate_low_servants (void)
 }
 
 int
-Server::start_servants (void)
+Server::start_servants ()
 {
   // Do the preliminary argument processing for options -p and -h.
   this->prelim_args_process ();

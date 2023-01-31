@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef SUPPLIER_TIMER_HANDLER_H
 #define SUPPLIER_TIMER_HANDLER_H
 #include "ace/Reactor.h"
@@ -36,22 +35,20 @@ class Supplier;
 class Supplier_Timer_Handler : public ACE_Event_Handler
 {
 public:
-  /// Initilization.
+  /// Initialization.
   Supplier_Timer_Handler (Supplier *supplier,
                           ACE_Reactor *reactor,
                           FILE *file_ptr);
 
   /// Destructor.
-  ~Supplier_Timer_Handler (void);
+  ~Supplier_Timer_Handler () = default;
 
   /// Method which will be called by the Reactor when timeout occurs.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
+  int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0) override;
 
 private:
-
   /// The values of the stock and its rate are got from the file.
-  int get_stock_information (void);
+  int get_stock_information ();
 
   /// The supplier instance.
   Supplier *supplier_obj_;

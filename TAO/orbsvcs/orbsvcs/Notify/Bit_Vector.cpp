@@ -4,7 +4,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 Bit_Vector::Bit_Vector()
   : size_(0)
   , first_set_bit_(0)

@@ -247,15 +247,15 @@ class Acceptor : public ACE_Asynch_Acceptor<Receiver>
   friend class Receiver;
 
 public:
-  Acceptor (void);
-  virtual ~Acceptor (void);
+  Acceptor ();
+  virtual ~Acceptor ();
 
-  void stop (void);
+  void stop ();
 
   // Virtual from ACE_Asynch_Acceptor
-  virtual Receiver *make_handler (void);
+  virtual Receiver *make_handler ();
 
-  int get_number_sessions (void) { return this->sessions_; }
+  int get_number_sessions () { return this->sessions_; }
 
 private:
   void on_new_receiver (Receiver &rcvr);
@@ -275,7 +275,7 @@ class Receiver : public ACE_Service_Handler
 
 public:
   Receiver  (Acceptor *acceptor = 0, int index = -1);
-  virtual ~Receiver (void);
+  virtual ~Receiver ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// This is called after the new connection has been accepted.
@@ -289,9 +289,9 @@ protected:
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
 
 private:
-  int initiate_read_stream (void);
+  int initiate_read_stream ();
 
-  void check_destroy (void);
+  void check_destroy ();
 
   Acceptor *acceptor_;
   int index_;
@@ -317,11 +317,11 @@ class Writer : public ACE_Handler
   friend class Receiver;
 
 public:
-  Writer (void);
-  virtual ~Writer (void);
+  Writer ();
+  virtual ~Writer ();
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void open (void);
+  void open ();
   //FUZZ: enable check_for_lack_ACE_OS
 
   // this is *not* a callback from the framework
@@ -338,7 +338,7 @@ protected:
   virtual void handle_write_file (const ACE_Asynch_Write_File::Result &result);
 
 private:
-  int initiate_write_file (void);
+  int initiate_write_file ();
 
 private:
    // Output file
@@ -384,7 +384,7 @@ Receiver::Receiver (Acceptor * acceptor, int index)
     this->acceptor_->on_new_receiver (*this);
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Receiver::~Receiver\n")));
@@ -405,7 +405,7 @@ Receiver::~Receiver (void)
 }
 
 void
-Receiver::check_destroy (void)
+Receiver::check_destroy ()
 {
   if (this->io_count_ <= 0)
     delete this;
@@ -433,7 +433,7 @@ Receiver::open (ACE_HANDLE handle, ACE_Message_Block &)
 }
 
 int
-Receiver::initiate_read_stream (void)
+Receiver::initiate_read_stream ()
 {
   if (!Receiver::writer_)
     return -1;
@@ -571,21 +571,21 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 //   Acceptor Impl
 // *************************************************************
 
-Acceptor::Acceptor (void)
+Acceptor::Acceptor ()
   : sessions_ (0)
 {
   for (int i = 0; i < RECEIVERS; ++i)
      this->list_receivers_[i] = 0;
 }
 
-Acceptor::~Acceptor (void)
+Acceptor::~Acceptor ()
 {
   this->stop ();
 }
 
 
 void
-Acceptor::stop (void)
+Acceptor::stop ()
 {
   // This method can be called only after proactor event loop is done
   // in all threads.
@@ -621,7 +621,7 @@ Acceptor::on_delete_receiver (Receiver & rcvr)
 }
 
 Receiver *
-Acceptor::make_handler (void)
+Acceptor::make_handler ()
 {
   if (this->sessions_ >= RECEIVERS)
     return 0;
@@ -644,7 +644,7 @@ Acceptor::make_handler (void)
 //   Writer Impl
 // *************************************************************
 
-Writer::Writer (void)
+Writer::Writer ()
 : output_file_handle_ (ACE_INVALID_HANDLE),
   writing_file_offset_ (0),
   reported_file_offset_ (0),
@@ -655,7 +655,7 @@ Writer::Writer (void)
 {
 }
 
-Writer::~Writer (void)
+Writer::~Writer ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Writer::~Writer\n")));
@@ -693,7 +693,7 @@ Writer::on_delete_receiver ()
 }
 
 void
-Writer::open (void)
+Writer::open ()
 {
   // Open the file for output
   if (ACE_INVALID_HANDLE == (this->output_file_handle_ = ACE_OS::open (output_file,
@@ -728,7 +728,7 @@ Writer::handle_read_chunks_chain (ACE_Message_Block *mb,
 }
 
 int
-Writer::initiate_write_file (void)
+Writer::initiate_write_file ()
 {
   // find out how much can we merge
   ACE_Message_Block *dummy_last = 0;
@@ -891,17 +891,17 @@ class Connector : public ACE_Asynch_Connector<Sender>
   friend class Sender;
 
 public:
-  Connector (void);
-  virtual ~Connector (void);
+  Connector ();
+  virtual ~Connector ();
 
   // Address to pass to Sender for secondary connect.
   void set_address (const ACE_INET_Addr &addr);
-  const ACE_INET_Addr &get_address (void);
+  const ACE_INET_Addr &get_address ();
 
-  void stop (void);
+  void stop ();
 
   // Virtual from ACE_Asynch_Connector
-  virtual Sender *make_handler (void);
+  virtual Sender *make_handler ();
 
 private:
   void on_new_sender  (Sender &rcvr);
@@ -916,10 +916,9 @@ class Sender : public ACE_Service_Handler
 {
   friend class Connector;
 public:
-
   Sender  (Connector *connector = 0, int index = -1);
 
-  virtual ~Sender (void);
+  virtual ~Sender ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// This is called after the new connection has been established.
@@ -936,9 +935,9 @@ public:
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
 
 private:
-  void check_destroy (void);
+  void check_destroy ();
 
-  int initiate_read_file (void);
+  int initiate_read_file ();
 
   int initiate_write_stream (ACE_Message_Block &mb);
 
@@ -962,14 +961,14 @@ private:
 //   Connector Impl
 // *************************************************************
 
-Connector::Connector (void)
+Connector::Connector ()
   : sessions_ (0)
 {
   for (int i = 0; i < SENDERS; ++i)
      this->list_senders_[i] = 0;
 }
 
-Connector::~Connector (void)
+Connector::~Connector ()
 {
   this->stop ();
 }
@@ -982,13 +981,13 @@ Connector::set_address (const ACE_INET_Addr &addr)
 }
 
 const ACE_INET_Addr &
-Connector::get_address (void)
+Connector::get_address ()
 {
   return this->addr_;
 }
 
 void
-Connector::stop (void)
+Connector::stop ()
 {
   // This method can be called only after proactor event loop is done
   // in all threads.
@@ -1025,7 +1024,7 @@ Connector::on_delete_sender (Sender &sndr)
 }
 
 Sender *
-Connector::make_handler (void)
+Connector::make_handler ()
 {
   if (this->sessions_ >= SENDERS)
     return 0;
@@ -1061,7 +1060,7 @@ Sender::Sender (Connector * connector, int index)
     this->connector_->on_new_sender (*this);
 }
 
-Sender::~Sender (void)
+Sender::~Sender ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Sender::~Sender\n")));
@@ -1084,7 +1083,7 @@ Sender::~Sender (void)
 
 //  return true if we alive, false  we commited suicide
 void
-Sender::check_destroy (void)
+Sender::check_destroy ()
 {
   if (this->io_count_ <= 0)
     delete this;
@@ -1151,7 +1150,7 @@ Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
 }
 
 int
-Sender::initiate_read_file (void)
+Sender::initiate_read_file ()
 {
   ACE_TEST_ASSERT (0 == this->file_offset_ % chunk_size);
 

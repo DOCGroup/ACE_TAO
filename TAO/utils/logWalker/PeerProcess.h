@@ -28,14 +28,14 @@ enum EndpointRole {
 class Endpoint
 {
 public:
-  Endpoint (void);
+  Endpoint ();
   Endpoint (const Endpoint &other);
   Endpoint (const char *addr, EndpointRole role = ER_UNKNOWN);
   void assign (const char *addr, EndpointRole role = ER_UNKNOWN);
   Endpoint & operator = (const Endpoint &other);
   bool operator == (const Endpoint &other) const;
   bool operator < (const Endpoint &other) const;
-  bool is_client (void) const;
+  bool is_client () const;
 
   ACE_CString addr_;
   ACE_CString host_;
@@ -70,24 +70,24 @@ public:
   static char *nextIdent(bool is_server);
   PeerProcess (size_t offset, const ACE_CString &time, bool is_server);
 
-  virtual ~PeerProcess (void);
+  virtual ~PeerProcess ();
 
-  const char * id (void) const;
+  const char * id () const;
   void split_filename (char *buffer, size_t len) const;
 
   void set_owner (HostProcess *host);
-  HostProcess *owner (void);
+  HostProcess *owner ();
 
   void match_hosts (Session *session);
   void set_server_addr (const ACE_CString &addr);
-  const Endpoint &server_addr (void) const;
-  const Endpoint &last_client_addr (void) const;
+  const Endpoint &server_addr () const;
+  const Endpoint &last_client_addr () const;
 
-  bool is_server (void) const;
-  size_t offset (void) const;
+  bool is_server () const;
+  size_t offset () const;
   void ssl (bool is_ssl);
   void add_transport (Transport *t);
-  Transport *last_transport (void);
+  Transport *last_transport ();
   Transport *find_transport (long handle);
 
   bool match_local (const char *addr) const;

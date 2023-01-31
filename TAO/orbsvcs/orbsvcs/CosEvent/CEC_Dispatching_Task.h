@@ -47,7 +47,7 @@ public:
   TAO_CEC_Dispatching_Task (ACE_Thread_Manager* thr_manager = 0);
 
   /// Process the events in the queue.
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
                      CORBA::Any& event);
@@ -78,10 +78,10 @@ public:
                            ACE_Allocator *mb_allocator = 0);
 
   /// Destructor
-  virtual ~TAO_CEC_Dispatch_Command (void);
+  virtual ~TAO_CEC_Dispatch_Command ();
 
   /// Command callback
-  virtual int execute (void) = 0;
+  virtual int execute () = 0;
 };
 
 // ****************************************************************
@@ -93,7 +93,7 @@ public:
   TAO_CEC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
 
   /// Command callback
-  virtual int execute (void);
+  virtual int execute ();
 };
 
 // ****************************************************************
@@ -108,10 +108,10 @@ public:
                         ACE_Allocator *mb_allocator);
 
   /// Destructor
-  virtual ~TAO_CEC_Push_Command (void);
+  virtual ~TAO_CEC_Push_Command ();
 
   /// Command callback
-  virtual int execute (void);
+  virtual int execute ();
 
 private:
   /// The proxy
@@ -134,10 +134,10 @@ public:
                           ACE_Allocator *mb_allocator);
 
   /// Destructor
-  virtual ~TAO_CEC_Invoke_Command (void);
+  virtual ~TAO_CEC_Invoke_Command ();
 
   /// Command callback
-  virtual int execute (void);
+  virtual int execute ();
 
 private:
   /// The proxy

@@ -38,7 +38,7 @@ public:
             PortableServer::POA_ptr poa_ptr = 0);
 
   /// Destructor
-  ~Quoter_i (void);
+  ~Quoter_i ();
 
   /// Returns the current quote for the stock <stock_name>
   virtual CORBA::Long get_quote (const char *stock_name);
@@ -54,7 +54,7 @@ public:
                      const CosLifeCycle::Criteria &the_criteria);
 
   /// Removes the object.
-  virtual void remove (void);
+  virtual void remove ();
 
 private:
   /// This flag defines if a Generic Factory is used (0 by default) or
@@ -84,10 +84,10 @@ public:
   Quoter_Factory_i (size_t num, PortableServer::POA_ptr poa_ptr);
 
   /// Destructor.
-  ~Quoter_Factory_i (void);
+  ~Quoter_Factory_i ();
 
   /// Initialize everything in the factory
-  int init (void);
+  int init ();
 
   /// Return the quoter by the id <name>.
   virtual Stock::Quoter_ptr create_quoter (const char *name);

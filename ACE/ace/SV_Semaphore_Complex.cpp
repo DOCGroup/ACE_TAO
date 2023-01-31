@@ -14,7 +14,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_SV_Semaphore_Complex)
 
 void
-ACE_SV_Semaphore_Complex::dump (void) const
+ACE_SV_Semaphore_Complex::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SV_Semaphore_Complex::dump");
@@ -185,7 +185,7 @@ ACE_SV_Semaphore_Complex::open (const char *name,
 // the ACE_SV_Semaphore.
 
 int
-ACE_SV_Semaphore_Complex::close (void)
+ACE_SV_Semaphore_Complex::close ()
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::close");
   int semval;
@@ -257,14 +257,14 @@ ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (const char *name,
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_SV_Semaphore_Complex")));
 }
 
-ACE_SV_Semaphore_Complex::~ACE_SV_Semaphore_Complex (void)
+ACE_SV_Semaphore_Complex::~ACE_SV_Semaphore_Complex ()
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::~ACE_SV_Semaphore_Complex");
   if (this->internal_id_ >= 0)
     this->close ();
 }
 
-ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (void)
+ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex ()
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex");
 #ifdef ACE_HAS_SYSV_IPC

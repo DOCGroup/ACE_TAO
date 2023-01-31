@@ -15,13 +15,13 @@ Session::sample (Test::Timestamp the_timestamp)
 }
 
 void
-Session::shutdown (void)
+Session::shutdown ()
 {
   Implicit_Deactivator deactivator (this);
 }
 
 PortableServer::POA_ptr
-Session::_default_POA (void)
+Session::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

@@ -84,22 +84,22 @@ public:
                       bool is_abstract,
                       bool compile_now);
 
-  virtual ~FE_InterfaceHeader (void);
+  virtual ~FE_InterfaceHeader ();
 
   // Data Accessors.
-  UTL_ScopedName *name (void) const;
-  AST_Type **inherits (void) const;
-  long n_inherits (void) const;
-  AST_Interface **inherits_flat (void) const;
-  long n_inherits_flat (void) const;
+  UTL_ScopedName *name () const;
+  AST_Type **inherits () const;
+  long n_inherits () const;
+  AST_Interface **inherits_flat () const;
+  long n_inherits_flat () const;
 
-  bool is_local (void) const;
+  bool is_local () const;
   // See if we are a local interface.
 
-  bool is_abstract (void) const;
+  bool is_abstract () const;
   // See if we are an abstract interface.
 
-  virtual void destroy (void);
+  virtual void destroy ();
   // Destroy anything allocated for this class.
 
   // Operations.
@@ -121,9 +121,9 @@ protected:
   bool already_seen (AST_Type *ip);
   bool already_seen_flat (AST_Interface *ip);
 
-  void install_in_header (void);
+  void install_in_header ();
 
-  void destroy_flat_arrays (void);
+  void destroy_flat_arrays ();
 
   // Data.
 protected:

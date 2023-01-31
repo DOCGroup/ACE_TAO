@@ -2,13 +2,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
-TAO_EC_ProxyPushSupplier::suspend_connection_i (void)
+TAO_EC_ProxyPushSupplier::suspend_connection_i ()
 {
   this->suspended_ = 1;
 }
 
 ACE_INLINE void
-TAO_EC_ProxyPushSupplier::suspend_connection_locked (void)
+TAO_EC_ProxyPushSupplier::suspend_connection_locked ()
 {
   ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -19,13 +19,13 @@ TAO_EC_ProxyPushSupplier::suspend_connection_locked (void)
 }
 
 ACE_INLINE void
-TAO_EC_ProxyPushSupplier::resume_connection_i (void)
+TAO_EC_ProxyPushSupplier::resume_connection_i ()
 {
   this->suspended_ = 0;
 }
 
 ACE_INLINE void
-TAO_EC_ProxyPushSupplier::resume_connection_locked (void)
+TAO_EC_ProxyPushSupplier::resume_connection_locked ()
 {
   ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -36,13 +36,13 @@ TAO_EC_ProxyPushSupplier::resume_connection_locked (void)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_EC_ProxyPushSupplier::is_connected_i (void) const
+TAO_EC_ProxyPushSupplier::is_connected_i () const
 {
   return !CORBA::is_nil (this->consumer_.in ());
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_EC_ProxyPushSupplier::is_connected (void) const
+TAO_EC_ProxyPushSupplier::is_connected () const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
@@ -50,7 +50,7 @@ TAO_EC_ProxyPushSupplier::is_connected (void) const
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_EC_ProxyPushSupplier::is_suspended (void) const
+TAO_EC_ProxyPushSupplier::is_suspended () const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
@@ -58,7 +58,7 @@ TAO_EC_ProxyPushSupplier::is_suspended (void) const
 }
 
 ACE_INLINE RtecEventComm::PushConsumer_ptr
-TAO_EC_ProxyPushSupplier::consumer (void) const
+TAO_EC_ProxyPushSupplier::consumer () const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
   return RtecEventComm::PushConsumer::_duplicate (this->consumer_.in ());
@@ -79,7 +79,7 @@ TAO_EC_ProxyPushSupplier::consumer (RtecEventComm::PushConsumer_ptr consumer)
 }
 
 ACE_INLINE const RtecEventChannelAdmin::ConsumerQOS&
-TAO_EC_ProxyPushSupplier::subscriptions (void) const
+TAO_EC_ProxyPushSupplier::subscriptions () const
 {
   // @@ TODO There should be a better way to signal errors here.
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, this->qos_);

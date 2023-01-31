@@ -55,7 +55,7 @@ TAO_CEC_TypedEventChannel (const TAO_CEC_TypedEventChannel_Attributes& attr,
 }
 
 // Implementation skeleton destructor
-TAO_CEC_TypedEventChannel::~TAO_CEC_TypedEventChannel (void)
+TAO_CEC_TypedEventChannel::~TAO_CEC_TypedEventChannel ()
 {
   this->clear_ifr_cache ();
   this->interface_description_.close ();
@@ -73,7 +73,7 @@ TAO_CEC_TypedEventChannel::~TAO_CEC_TypedEventChannel (void)
 }
 
 void
-TAO_CEC_TypedEventChannel::activate (void)
+TAO_CEC_TypedEventChannel::activate ()
 {
   this->dispatching_->activate ();
   this->consumer_control_->activate ();
@@ -90,7 +90,7 @@ namespace
 
     virtual int handle_timeout (const ACE_Time_Value&, const void*)
     {
-      orb_->shutdown (1);
+      orb_->shutdown (true);
       return 0;
     }
 
@@ -98,7 +98,7 @@ namespace
 }
 
 void
-TAO_CEC_TypedEventChannel::shutdown (void)
+TAO_CEC_TypedEventChannel::shutdown ()
 {
   this->dispatching_->shutdown ();
   this->supplier_control_->shutdown ();
@@ -213,7 +213,7 @@ TAO_CEC_TypedEventChannel::insert_into_ifr_cache (const char *operation_,
 
 // Clear the ifr cache, freeing up all its contents.
 int
-TAO_CEC_TypedEventChannel::clear_ifr_cache (void)
+TAO_CEC_TypedEventChannel::clear_ifr_cache ()
 {
   for (Iterator i = this->interface_description_.begin ();
        i != this->interface_description_.end ();
@@ -502,7 +502,6 @@ TAO_CEC_TypedEventChannel::create_operation_list (TAO_CEC_Operation_Params *oper
 
   for (CORBA::ULong param=0; param<oper_params->num_params_; param++)
     {
-
       CORBA::Any any_1;
       any_1._tao_set_typecode(oper_params->parameters_[param].type_.in ());
 
@@ -522,19 +521,19 @@ TAO_CEC_TypedEventChannel::create_list (CORBA::Long count,
 
 // The CosTypedEventChannelAdmin::TypedEventChannel methods...
 CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr
-TAO_CEC_TypedEventChannel::for_consumers (void)
+TAO_CEC_TypedEventChannel::for_consumers ()
 {
   return this->typed_consumer_admin_->_this ();
 }
 
 CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
-TAO_CEC_TypedEventChannel::for_suppliers (void)
+TAO_CEC_TypedEventChannel::for_suppliers ()
 {
   return this->typed_supplier_admin_->_this ();
 }
 
 void
-TAO_CEC_TypedEventChannel::destroy (void)
+TAO_CEC_TypedEventChannel::destroy ()
 {
   if (!destroyed_)
     {

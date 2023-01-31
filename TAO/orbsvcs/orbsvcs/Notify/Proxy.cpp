@@ -14,7 +14,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Proxy::TAO_Notify_Proxy (void)
+TAO_Notify_Proxy::TAO_Notify_Proxy ()
   : updates_off_ (0)
 {
 }
@@ -41,7 +41,7 @@ TAO_Notify_Proxy::activate (PortableServer::Servant servant,
 }
 
 void
-TAO_Notify_Proxy::deactivate (void)
+TAO_Notify_Proxy::deactivate ()
 {
   ACE_ASSERT (this->proxy_poa() != 0 );
   this->proxy_poa()->deactivate (this->id());

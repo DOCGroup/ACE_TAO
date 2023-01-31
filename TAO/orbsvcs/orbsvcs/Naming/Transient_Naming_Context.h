@@ -43,19 +43,19 @@ public:
   TAO_Transient_Bindings_Map (size_t hash_table_size);
 
   /// Destructor.
-  virtual ~TAO_Transient_Bindings_Map (void);
+  virtual ~TAO_Transient_Bindings_Map ();
 
   // = Accessors.
 
   /// Get a reference to the underlying hash map.
-  HASH_MAP &map (void);
+  HASH_MAP &map ();
 
   /// Return the size of the underlying hash table.
-  size_t total_size (void);
+  size_t total_size ();
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.
-  virtual size_t current_size (void);
+  virtual size_t current_size ();
 
   // = Name bindings manipulation methods.
 
@@ -100,7 +100,6 @@ public:
                     CosNaming::BindingType &type);
 
 private:
-
   /// Helper: factors common code from <bind> and <rebind>.
   int shared_bind (const char *id,
                    const char *kind,
@@ -138,7 +137,7 @@ public:
                                 = ACE_DEFAULT_MAP_SIZE);
 
   /// Destructor.
-  virtual ~TAO_Transient_Naming_Context (void);
+  virtual ~TAO_Transient_Naming_Context ();
 
   // = Utility methods.
   /**
@@ -159,7 +158,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (void);
+  virtual CosNaming::NamingContext_ptr new_context ();
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -172,7 +171,6 @@ public:
                      CosNaming::BindingIterator_out &bi);
 
 protected:
-
   /// Counter used for generation of POA ids for children Naming
   /// Contexts.
   ACE_UINT32 counter_;

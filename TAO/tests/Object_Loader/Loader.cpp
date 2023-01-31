@@ -1,7 +1,7 @@
 #include "Loader.h"
 #include "Test_i.h"
 
-Loader::Loader (void)
+Loader::Loader ()
 {
 }
 

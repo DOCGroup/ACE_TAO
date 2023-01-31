@@ -25,7 +25,7 @@ bool ACE_Trace::enable_tracing_ = ACE_Trace::DEFAULT_TRACING;
 ACE_ALLOC_HOOK_DEFINE(ACE_Trace)
 
 void
-ACE_Trace::dump (void) const
+ACE_Trace::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 #endif /* ACE_HAS_DUMP */
@@ -34,7 +34,7 @@ ACE_Trace::dump (void) const
 // Determine whether or not tracing is enabled
 
 bool
-ACE_Trace::is_tracing (void)
+ACE_Trace::is_tracing ()
 {
   return ACE_Trace::enable_tracing_;
 }
@@ -42,7 +42,7 @@ ACE_Trace::is_tracing (void)
 // Enable the tracing facility.
 
 void
-ACE_Trace::start_tracing (void)
+ACE_Trace::start_tracing ()
 {
   ACE_Trace::enable_tracing_ = true;
 }
@@ -50,7 +50,7 @@ ACE_Trace::start_tracing (void)
 // Disable the tracing facility.
 
 void
-ACE_Trace::stop_tracing (void)
+ACE_Trace::stop_tracing ()
 {
   ACE_Trace::enable_tracing_ = false;
 }
@@ -66,7 +66,7 @@ ACE_Trace::set_nesting_indent (int indent)
 // Get the nesting indentation level.
 
 int
-ACE_Trace::get_nesting_indent (void)
+ACE_Trace::get_nesting_indent ()
 {
   return ACE_Trace::nesting_indent_;
 }
@@ -109,7 +109,7 @@ ACE_Trace::ACE_Trace (const ACE_TCHAR *n,
 // Perform the second part of the trace, which prints out the NAME as
 // the function is exited.
 
-ACE_Trace::~ACE_Trace (void)
+ACE_Trace::~ACE_Trace ()
 {
   // If ACE has not yet been initialized, don't try to trace... there's
   // too much stuff not yet initialized.

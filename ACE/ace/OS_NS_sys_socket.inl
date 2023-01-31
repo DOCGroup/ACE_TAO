@@ -137,7 +137,7 @@ ACE_OS::closesocket (ACE_HANDLE handle)
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
 #else
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_OSCALL_RETURN (::close (handle), int, -1);
+  return ::close (handle);
   //FUZZ: enable check_for_lack_ACE_OS
 #endif /* ACE_WIN32 */
 }
@@ -1015,59 +1015,58 @@ ACE_OS::socketpair (int domain, int type,
 
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::socketpair (domain, type, protocol, sv),
-                     int, -1);
+  return ::socketpair (domain, type, protocol, sv);
 #endif /* ACE_LACKS_SOCKETPAIR */
 }
 
-#if defined (ACE_LINUX) && defined (ACE_HAS_IPV6)
 ACE_INLINE unsigned int
 ACE_OS::if_nametoindex (const char *ifname)
 {
   ACE_OS_TRACE ("ACE_OS::if_nametoindex");
-#if defined (ACE_LACKS_IF_NAME_INDEX)
+#ifdef ACE_LACKS_IF_NAMETOINDEX
   ACE_UNUSED_ARG (ifname);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::if_nametoindex (ifname), int, 0);
-#endif /* ACE_LACKS_IF_NAME_INDEX */
+  return ::if_nametoindex (ifname);
+#endif /* ACE_LACKS_IF_NAMETOINDEX */
 }
 
 ACE_INLINE char *
 ACE_OS::if_indextoname (unsigned int ifindex, char *ifname)
 {
   ACE_OS_TRACE ("ACE_OS::if_indextoname");
-#if defined (ACE_LACKS_IF_NAME_INDEX)
+#ifdef ACE_LACKS_IF_NAMETOINDEX
   ACE_UNUSED_ARG (ifindex);
   ACE_UNUSED_ARG (ifname);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::if_indextoname (ifindex, ifname), char *, 0);
-#endif /* ACE_LACKS_IF_NAME_INDEX */
+  return ::if_indextoname (ifindex, ifname);
+#endif /* ACE_LACKS_IF_NAMETOINDEX */
 }
 
 ACE_INLINE struct if_nameindex *
-ACE_OS::if_nameindex (void)
+ACE_OS::if_nameindex ()
 {
   ACE_OS_TRACE ("ACE_OS::if_nameindex");
-#if defined (ACE_LACKS_IF_NAME_INDEX)
+#ifdef ACE_LACKS_IF_NAMEINDEX
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::if_nameindex (), struct if_nameindex *, 0);
-#endif /* ACE_LACKS_IF_NAME_INDEX */
+  return ::if_nameindex ();
+#endif /* ACE_LACKS_IF_NAMEINDEX */
 }
 
 ACE_INLINE void
 ACE_OS::if_freenameindex (struct if_nameindex *ptr)
 {
   ACE_OS_TRACE ("ACE_OS::if_freenameindex");
-#if defined (ACE_LACKS_IF_NAME_INDEX)
+#ifdef ACE_LACKS_IF_NAMEINDEX
   ACE_UNUSED_ARG (ptr);
 #else
-  if (ptr != 0)
+  if (ptr)
+  {
     ::if_freenameindex (ptr);
-#endif /* ACE_LACKS_IF_NAME_INDEX */
+  }
+#endif /* ACE_LACKS_IF_NAMEINDEX */
 }
-#endif /* ACE_LINUX && ACE_HAS_IPV6 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -18,7 +18,7 @@ ACE_OS::uname (ACE_utsname *name)
 {
   ACE_OS_TRACE ("ACE_OS::uname");
 #if !defined (ACE_LACKS_UNAME)
-  ACE_OSCALL_RETURN (::uname (name), int, -1);
+  return ::uname (name);
 #elif defined (ACE_WIN32)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname, "Win32");
@@ -164,8 +164,6 @@ ACE_OS::uname (ACE_utsname *name)
 #     endif
         case PROCESSOR_ARCHITECTURE_UNKNOWN:
         default:
-          // @@ We could provide WinCE specific info here.  But let's
-          //    defer that to some later point.
           ACE_OS::strcpy (processor, "Unknown");
           break;
         }

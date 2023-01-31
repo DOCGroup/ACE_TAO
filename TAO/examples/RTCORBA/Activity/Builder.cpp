@@ -6,7 +6,7 @@
 #include "Thread_Task.h"
 #include "Activity.h"
 
-Builder::Builder(void)
+Builder::Builder()
   :poa_count_ (0),
    poa_list_ (0),
    task_count_ (0),
@@ -17,7 +17,7 @@ Builder::Builder(void)
   ACTIVITY::instance()->builder (this);
 }
 
-Builder::~Builder(void)
+Builder::~Builder()
 {
 }
 
@@ -128,7 +128,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Builder::fini (void)
+Builder::fini ()
 {
   // It's only a hack for proper cleanup of this badly designed test.
   static bool already_cleaned = false;

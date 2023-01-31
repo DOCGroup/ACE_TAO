@@ -86,7 +86,7 @@ public:
   ACE_Shared_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                           const OPTIONS *options = 0);
 
-  virtual ~ACE_Shared_Memory_Pool (void);
+  virtual ~ACE_Shared_Memory_Pool () = default;
 
   /// Ask system for initial chunk of local memory.
   virtual void *init_acquire (size_t nbytes,
@@ -125,10 +125,10 @@ public:
 
   /// Return the base address of this memory pool, 0 if base_addr
   /// never changes.
-  virtual void *base_addr (void) const;
+  virtual void *base_addr () const;
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

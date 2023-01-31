@@ -155,19 +155,12 @@ namespace ACE
         typedef String_IOSBase<char> CString_IOS;
         typedef String_OStreamBase<char> CString_OStream;
         typedef String_IStreamBase<char> CString_IStream;
-
       }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/INet/String_IOStream.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("String_IOStream.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_IOS_STRING_IOSTREAM_H */

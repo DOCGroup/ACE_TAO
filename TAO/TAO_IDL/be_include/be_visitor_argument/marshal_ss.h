@@ -14,10 +14,6 @@
 #ifndef _BE_VISITOR_ARGUMENT_MARSHAL_SS_H_
 #define _BE_VISITOR_ARGUMENT_MARSHAL_SS_H_
 
-// ************************************************************
-// class be_visitor_args_marshal_ss
-// ************************************************************
-
 /**
  * @class be_visitor_args_marshal_ss
  *
@@ -32,7 +28,7 @@ public:
   be_visitor_args_marshal_ss (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_args_marshal_ss (void);
+  virtual ~be_visitor_args_marshal_ss ();
 
   /// visit the argument node
   virtual int visit_argument (be_argument *node);
@@ -94,7 +90,7 @@ public:
   virtual int visit_home (be_home *node);
 
  private:
-  int emit_common (void);
+  int emit_common ();
   int emit_common2 (be_type *node);
 };
 

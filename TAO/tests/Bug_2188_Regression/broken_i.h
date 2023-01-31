@@ -38,13 +38,12 @@ class ServerAdmin_i : public virtual POA_ServerAdmin
 {
 public:
   ServerAdmin_i (ArrayTest_ptr target);
-  virtual ~ServerAdmin_i (void);
-  ArrayTest_ptr target(void);
+  virtual ~ServerAdmin_i ();
+  ArrayTest_ptr target();
 
-  void shutdown (void);
+  void shutdown ();
 private:
   ArrayTest_var target_;
-
 };
 
 class  ArrayTest_i : public virtual POA_ArrayTest
@@ -68,210 +67,155 @@ private:
   CORBA::Char char_;
 public:
   //Constructor
-  ArrayTest_i (void);
+  ArrayTest_i ();
 
   //Destructor
-  virtual ~ArrayTest_i (void);
+  virtual ~ArrayTest_i ();
 
   virtual
   ::LongArray_slice * longArrayOp (
       const ::LongArray p1,
       ::LongArray p2,
-      ::LongArray_out p3
-    );
+      ::LongArray_out p3);
 
   virtual
   ::StringArray_slice * stringArrayOp (
       const ::StringArray p1,
       ::StringArray p2,
-      ::StringArray_out p3
-    );
+      ::StringArray_out p3);
 
   virtual
   ::ShortArray_slice * shortArrayOp (
       const ::ShortArray p1,
       ::ShortArray p2,
-      ::ShortArray_out p3
-    );
+      ::ShortArray_out p3);
 
   virtual
   ::UShortArray_slice * ushortArrayOp (
       const ::UShortArray p1,
       ::UShortArray p2,
-      ::UShortArray_out p3
-    );
+      ::UShortArray_out p3);
 
   virtual
   ::CharArray_slice * charArrayOp (
       const ::CharArray p1,
       ::CharArray p2,
-      ::CharArray_out p3
-    );
+      ::CharArray_out p3);
 
   virtual
   ::OctetArray_slice * octetArrayOp (
       const ::OctetArray p1,
       ::OctetArray p2,
-      ::OctetArray_out p3
-    );
+      ::OctetArray_out p3);
 
   virtual
   ::DoubleArray_slice * doubleArrayOp (
       const ::DoubleArray p1,
       ::DoubleArray p2,
-      ::DoubleArray_out p3
-    );
+      ::DoubleArray_out p3);
 
   virtual
-  ::LongArray_slice * a_longArray (
-
-    );
+  ::LongArray_slice * a_longArray ();
 
   virtual
   void a_longArray (
-      const ::LongArray a_longArray
-    );
+      const ::LongArray a_longArray);
 
   virtual
-  ::ULongArray_slice * a_ulongArray (
-
-    );
+  ::ULongArray_slice * a_ulongArray ();
 
   virtual
   void a_ulongArray (
-      const ::ULongArray a_ulongArray
-    );
+      const ::ULongArray a_ulongArray);
 
   virtual
-  ::StringArray_slice * a_stringArray (
-
-    );
+  ::StringArray_slice * a_stringArray ();
 
   virtual
   void a_stringArray (
-      const ::StringArray a_stringArray
-    );
+      const ::StringArray a_stringArray);
 
   virtual
-  ::ShortArray_slice * a_shortArray (
-
-    );
+  ::ShortArray_slice * a_shortArray ();
 
   virtual
   void a_shortArray (
-      const ::ShortArray a_shortArray
-    );
+      const ::ShortArray a_shortArray);
 
   virtual
-  ::UShortArray_slice * a_ushortArray (
-
-    );
+  ::UShortArray_slice * a_ushortArray ();
 
   virtual
   void a_ushortArray (
-      const ::UShortArray a_ushortArray
-    );
+      const ::UShortArray a_ushortArray);
 
   virtual
-  CORBA::Char a_char (
-
-    );
+  CORBA::Char a_char ();
 
   virtual
-  void a_char (
-      ::CORBA::Char a_char
-    );
+  void a_char (::CORBA::Char a_char);
 
   virtual
-  ::CharArray_slice * a_charArray (
-
-    );
+  ::CharArray_slice * a_charArray ();
 
   virtual
-  void a_charArray (
-      const ::CharArray a_charArray
-    );
+  void a_charArray (const ::CharArray a_charArray);
 
   virtual
-  ::OctetArray_slice * a_octetArray (
-
-    );
+  ::OctetArray_slice * a_octetArray ();
 
   virtual
   void a_octetArray (
-      const ::OctetArray a_octetArray
-    );
+      const ::OctetArray a_octetArray);
 
   virtual
-  ::DoubleArray_slice * a_doubleArray (
-
-    );
+  ::DoubleArray_slice * a_doubleArray ();
 
   virtual
   void a_doubleArray (
-      const ::DoubleArray a_doubleArray
-    );
+      const ::DoubleArray a_doubleArray);
 
   virtual
-  ::FloatArray_slice * a_floatArray (
-
-    );
+  ::FloatArray_slice * a_floatArray ();
 
   virtual
   void a_floatArray (
-      const ::FloatArray a_floatArray
-    );
+      const ::FloatArray a_floatArray);
 
   virtual
-  ::BucketArray_slice * a_bucketArray (
-
-    );
+  ::BucketArray_slice * a_bucketArray ();
 
   virtual
   void a_bucketArray (
-      const ::BucketArray a_bucketArray
-    );
+      const ::BucketArray a_bucketArray);
 
   virtual
-  ::AccountArray_slice * a_accountArray (
-
-    );
+  ::AccountArray_slice * a_accountArray ();
 
   virtual
   void a_accountArray (
-      const ::AccountArray a_accountArray
-    );
+      const ::AccountArray a_accountArray);
 
   virtual
-  ::BooleanArray_slice * a_booleanArray (
-
-    );
+  ::BooleanArray_slice * a_booleanArray ();
 
   virtual
   void a_booleanArray (
-      const ::BooleanArray a_booleanArray
-    );
+      const ::BooleanArray a_booleanArray);
 
   virtual
-  ::LongArrayArray_slice * a_longArrayArray (
-
-    );
+  ::LongArrayArray_slice * a_longArrayArray ();
 
   virtual
   void a_longArrayArray (
-      const ::LongArrayArray a_longArrayArray
-    );
+      const ::LongArrayArray a_longArrayArray);
 
   virtual
-  ::MyEnumArray_slice * a_myEnumArray (
-
-    );
+  ::MyEnumArray_slice * a_myEnumArray ();
 
   virtual
   void a_myEnumArray (
-      const ::MyEnumArray a_myEnumArray
-    );
+      const ::MyEnumArray a_myEnumArray);
 };
-
 
 #endif /* BROKEN_I_H_  */

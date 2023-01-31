@@ -16,14 +16,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-EC_Master::EC_Master (void)
+EC_Master::EC_Master ()
   :  seed_ (0),
      n_channels_ (4),
      channels_ (0)
 {
 }
 
-EC_Master::~EC_Master (void)
+EC_Master::~EC_Master ()
 {
   if (this->channels_ != 0)
     {
@@ -193,7 +193,7 @@ EC_Master::parse_args (int &argc, ACE_TCHAR *argv [])
 }
 
 int
-EC_Master::channel_count (void) const
+EC_Master::channel_count () const
 {
   return this->n_channels_;
 }
@@ -220,7 +220,7 @@ EC_Observer::EC_Observer (EC_Master *master,
   this->root_poa_ = PortableServer::POA::_duplicate (root_poa);
 }
 
-EC_Observer::~EC_Observer (void)
+EC_Observer::~EC_Observer ()
 {
   if (this->gwys_ != 0)
     delete[] this->gwys_;
@@ -238,19 +238,19 @@ EC_Observer::parse_args (int& argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_Observer::print_args (void) const
+EC_Observer::print_args () const
 {
   this->EC_Driver::print_args ();
 }
 
 void
-EC_Observer::print_usage (void)
+EC_Observer::print_usage ()
 {
   this->EC_Driver::print_usage ();
 }
 
 void
-EC_Observer::execute_test (void)
+EC_Observer::execute_test ()
 {
   int peer_count = this->master_->channel_count ();
   ACE_NEW (this->gwys_, TAO_EC_Gateway_IIOP[peer_count]);
@@ -273,7 +273,6 @@ EC_Observer::execute_test (void)
         rmt_ec->append_observer (obs.in ());
 
       this->gwys_[i].observer_handle (h);
-
     }
 
   if (this->allocate_tasks () == -1)
@@ -287,7 +286,7 @@ EC_Observer::execute_test (void)
 }
 
 void
-EC_Observer::run_cleanup (void)
+EC_Observer::run_cleanup ()
 {
   for (int j = 0; j != this->master_->channel_count (); ++j)
     {
@@ -303,7 +302,7 @@ EC_Observer::run_cleanup (void)
 }
 
 void
-EC_Observer::dump_results (void)
+EC_Observer::dump_results ()
 {
   ACE_DEBUG ((LM_DEBUG, "===== Results for %d =====\n", this->id_));
 

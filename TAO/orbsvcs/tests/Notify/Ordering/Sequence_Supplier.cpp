@@ -12,7 +12,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 static TAO_Notify_Tests_SequencePushSupplier* supplier_1 = 0;
 static CORBA::Short order_policy = CosNotification::FifoOrder;
@@ -29,12 +29,12 @@ public:
   {
   }
 
-  void go (void)
+  void go ()
   {
     started_ = true;
   }
 
-  void done (void)
+  void done ()
   {
     started_ = false;
   }
@@ -192,7 +192,7 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Auto_Ptr< sig_i > sig_impl;
+  std::unique_ptr<sig_i> sig_impl;
   try
   {
     Supplier_Client client;
@@ -211,7 +211,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     CORBA::ORB_ptr orb = client.orb ();
 
-    sig_impl.reset( new sig_i( orb ) );
+    sig_impl.reset( new sig_i(orb));
     sig_var sig = sig_impl->_this ();
 
     CORBA::String_var ior =

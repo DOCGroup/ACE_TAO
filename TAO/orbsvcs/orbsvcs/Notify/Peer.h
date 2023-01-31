@@ -36,21 +36,21 @@ class TAO_Notify_Serv_Export TAO_Notify_Peer
 public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Peer > Ptr;
   /// Constructor
-  TAO_Notify_Peer (void);
+  TAO_Notify_Peer ();
 
   /// Destructor
   virtual ~TAO_Notify_Peer ();
 
   /// This method sigantures deliberately match the RefCounting methods
   /// required for ESF Proxy
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   /// Shutdown the peer.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Access Proxy.
-  virtual TAO_Notify_Proxy* proxy (void) = 0;
+  virtual TAO_Notify_Proxy* proxy () = 0;
 
   // Dispatch updates
   virtual void dispatch_updates (const TAO_Notify_EventTypeSeq & added,
@@ -60,10 +60,10 @@ public:
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
   /// Handle dispatch exceptions.
-  void handle_dispatch_exception (void);
+  void handle_dispatch_exception ();
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior (void) const = 0;
+  virtual ACE_CString get_ior () const = 0;
 
 protected:
   /// Implementation of Peer specific dispatch_updates
@@ -72,7 +72,7 @@ protected:
 
 private:
   /// Release
-  virtual void release (void) = 0;
+  virtual void release () = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

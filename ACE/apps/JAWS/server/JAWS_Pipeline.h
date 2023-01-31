@@ -22,7 +22,7 @@ class JAWS_Pipeline : public JAWS_Pipeline_Task
   //   Methods that are common to pipeline components
 {
 public:
-  JAWS_Pipeline (void);
+  JAWS_Pipeline ();
   // ACE_Task hooks
 
   virtual int open (void * = 0);

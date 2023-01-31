@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Select_Reactor_Handler_Repository::size_type
-ACE_Select_Reactor_Handler_Repository::size (void) const
+ACE_Select_Reactor_Handler_Repository::size () const
 {
 #ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   return this->event_handlers_.total_size ();
@@ -14,7 +14,7 @@ ACE_Select_Reactor_Handler_Repository::size (void) const
 }
 
 ACE_INLINE ACE_Select_Reactor_Handler_Repository::max_handlep1_type
-ACE_Select_Reactor_Handler_Repository::max_handlep1 (void) const
+ACE_Select_Reactor_Handler_Repository::max_handlep1 () const
 {
 #ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   return this->event_handlers_.current_size ();
@@ -70,7 +70,7 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
 // ------------------------------------------------------------------
 
 ACE_INLINE bool
-ACE_Select_Reactor_Handler_Repository_Iterator::done (void) const
+ACE_Select_Reactor_Handler_Repository_Iterator::done () const
 {
 #ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   return this->current_ == this->rep_->event_handlers_.end ();
@@ -83,7 +83,7 @@ ACE_Select_Reactor_Handler_Repository_Iterator::done (void) const
 // ------------------------------------------------------------------
 
 ACE_INLINE
-ACE_Event_Tuple::ACE_Event_Tuple (void)
+ACE_Event_Tuple::ACE_Event_Tuple ()
   : handle_ (ACE_INVALID_HANDLE),
     event_handler_ (0)
 {
@@ -109,7 +109,7 @@ ACE_Event_Tuple::operator!= (const ACE_Event_Tuple &rhs) const
   return !(*this == rhs);
 }
 
-#if defined (ACE_WIN32_VC8) || defined (ACE_WIN32_VC9)
+#if defined (_MSC_VER)
 #  pragma warning (push)
 #  pragma warning (disable:4355)  /* Use of 'this' in initializer list */
 #endif
@@ -131,12 +131,12 @@ ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl (bool ms)
   , supress_renew_ (0)
 {
 }
-#if defined (ACE_WIN32_VC8) || defined (ACE_WIN32_VC9)
+#if defined (_MSC_VER)
 #  pragma warning (pop)
 #endif
 
 ACE_INLINE bool
-ACE_Select_Reactor_Impl::supress_notify_renew (void)
+ACE_Select_Reactor_Impl::supress_notify_renew ()
 {
   return this->supress_renew_;
 }

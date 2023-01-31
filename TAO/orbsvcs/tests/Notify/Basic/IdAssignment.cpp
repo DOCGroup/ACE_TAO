@@ -5,7 +5,7 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "IdAssignment.h"
 
-IdAssignment::IdAssignment (void)
+IdAssignment::IdAssignment ()
   : iter_ (3),
     ec_count_ (3),
     consumer_admin_count_ (3),
@@ -13,7 +13,7 @@ IdAssignment::IdAssignment (void)
 {
 }
 
-IdAssignment::~IdAssignment (void)
+IdAssignment::~IdAssignment ()
 {
 }
 
@@ -86,7 +86,6 @@ IdAssignment::init (int argc,
       ACE_ERROR ((LM_ERROR,
                   " (%P|%t) Unable to resolve naming service !\n"));
       return;
-
     }
   CosNaming::NamingContext_var rootNC =
     CosNaming::NamingContext::_narrow (rootObj.in ());
@@ -105,14 +104,11 @@ IdAssignment::init (int argc,
     }
 
   this->notify_factory_ =
-    CosNotifyChannelAdmin::EventChannelFactory::_narrow (
-        obj.in()
-      );
-
+    CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in());
 }
 
 CosNotifyChannelAdmin::ChannelID
-IdAssignment::create_ec (void)
+IdAssignment::create_ec ()
 {
   CosNotifyChannelAdmin::ChannelID id;
   CosNotification::QoSProperties initial_qos;
@@ -366,7 +362,7 @@ IdAssignment::destroy_supplier_admin (
 }
 
 void
-IdAssignment::run_test(void)
+IdAssignment::run_test()
 {
   CosNotifyChannelAdmin::ChannelID* ec_id = 0;
   ACE_NEW (ec_id,

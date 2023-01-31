@@ -22,8 +22,10 @@ namespace TAO
           ThreadStrategyFactory *strategy_factory =
             ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategySingleFactory");
 
-          if (strategy_factory != 0)
-            strategy = strategy_factory->create (value);
+          if (strategy_factory)
+            {
+              strategy = strategy_factory->create (value);
+            }
           else
             TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
@@ -37,7 +39,7 @@ namespace TAO
           strategy =
             ACE_Dynamic_Service<ThreadStrategy>::instance ("ThreadStrategyORBControl");
 
-          if (strategy == 0)
+          if (!strategy)
             TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
                         ACE_TEXT ("ERROR, Unable to get ")
@@ -52,8 +54,7 @@ namespace TAO
 
     void
     ThreadStrategyFactoryImpl::destroy (
-      ThreadStrategy *strategy
-      )
+      ThreadStrategy *strategy)
     {
       switch (strategy->type ())
       {
@@ -62,7 +63,7 @@ namespace TAO
           ThreadStrategyFactory *strategy_factory =
             ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategySingleFactory");
 
-          if (strategy_factory != 0)
+          if (strategy_factory)
             {
               strategy_factory->destroy (strategy);
             }

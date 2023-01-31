@@ -14,7 +14,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-EC_Reconnect::EC_Reconnect (void)
+EC_Reconnect::EC_Reconnect ()
   : allow_consumer_reconnect_ (0),
     allow_supplier_reconnect_ (0),
     disconnections_ (1000)
@@ -55,7 +55,7 @@ EC_Reconnect::parse_args (int& argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_Reconnect::print_args (void) const
+EC_Reconnect::print_args () const
 {
   this->EC_Driver::print_args ();
 
@@ -69,7 +69,7 @@ EC_Reconnect::print_args (void) const
 }
 
 void
-EC_Reconnect::print_usage (void)
+EC_Reconnect::print_usage ()
 {
   this->EC_Driver::print_usage ();
 
@@ -84,7 +84,7 @@ EC_Reconnect::modify_attributes (TAO_EC_Event_Channel_Attributes& attr)
 }
 
 void
-EC_Reconnect::execute_test (void)
+EC_Reconnect::execute_test ()
 {
   this->execute_consumer_test ();
   this->execute_supplier_test ();
@@ -98,12 +98,12 @@ EC_Reconnect::execute_test (void)
 }
 
 void
-EC_Reconnect::dump_results (void)
+EC_Reconnect::dump_results ()
 {
 }
 
 void
-EC_Reconnect::execute_consumer_test (void)
+EC_Reconnect::execute_consumer_test ()
 {
   RtecEventChannelAdmin::ConsumerQOS qos;
   int shutdown_event_type;
@@ -159,7 +159,7 @@ EC_Reconnect::execute_consumer_test (void)
 }
 
 void
-EC_Reconnect::execute_supplier_test (void)
+EC_Reconnect::execute_supplier_test ()
 {
   RtecEventChannelAdmin::SupplierQOS qos;
   int shutdown_event_type;

@@ -4,10 +4,8 @@
 #include "tao/ORB_Table.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
 
-Hello::Hello (CORBA::ORB_ptr orb,
-              ACE_thread_t thrid)
+Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
-  , thr_id_ (thrid)
 {
 }
 
@@ -52,11 +50,11 @@ Hello::get_string (::Test::ThreadId caller_threadid)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
   // Give the client thread time to return from the collocated
   // call to this method before shutting down the ORB.  We sleep
   // to avoid BAD_INV_ORDER exceptions on fast dual processor machines.
   ACE_OS::sleep (1);
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

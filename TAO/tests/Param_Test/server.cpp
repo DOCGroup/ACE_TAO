@@ -143,7 +143,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb_ptr->run ();
 
-      good_poa->destroy (1, 1);
+      good_poa->destroy (true, true);
 
       oa_ptr->destroy (1, 1);
     }

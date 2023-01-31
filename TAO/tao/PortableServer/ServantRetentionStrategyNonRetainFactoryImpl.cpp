@@ -39,8 +39,7 @@ namespace TAO
 
     void
     ServantRetentionStrategyNonRetainFactoryImpl::destroy (
-      ServantRetentionStrategy *strategy
-      )
+      ServantRetentionStrategy *strategy)
     {
       strategy->strategy_cleanup ();
 

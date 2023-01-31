@@ -13,14 +13,14 @@ typedef ACE_DLList<DataElement> MyList;
 class ListTest
 {
 public:
-  int run (void);
+  int run ();
   void displayList (MyList & list); // Display all elements.
   void destroyList (MyList& list);  // Destroy all elements.
 };
 // Listing 2
 // Listing 3 code/ch05
 int
-ListTest::run (void)
+ListTest::run ()
 {
   ACE_TRACE ("ListTest::run");
 

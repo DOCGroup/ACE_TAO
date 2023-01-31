@@ -84,13 +84,13 @@ int connection::read_n(void *buffer, size_t maxlen, unsigned int timeout_seconds
   return 1;
 }
 
-int connection::close(void) {
+int connection::close() {
   stream_.close_reader();
   stream_.close_writer();
   stream_.close();
   return 0;
 }
 
-connection::~connection(void) {
+connection::~connection() {
   this->close();
 }

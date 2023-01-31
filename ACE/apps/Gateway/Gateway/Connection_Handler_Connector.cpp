@@ -1,7 +1,7 @@
 #include "Connection_Handler_Connector.h"
 #include "ace/os_include/os_netdb.h"
 
-Connection_Handler_Connector::Connection_Handler_Connector (void)
+Connection_Handler_Connector::Connection_Handler_Connector ()
 {
 }
 

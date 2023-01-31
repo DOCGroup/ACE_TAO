@@ -1,7 +1,6 @@
 #include "ace/OS_NS_dirent.h"
 
 
-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_dirent.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
@@ -181,7 +180,6 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
   int nfiles = 0;
   int fail = 0;
 
-  // @@ This code shoulduse readdir_r() rather than readdir().
   for (dp = ACE_OS::readdir (dirp);
        dp != 0;
        dp = ACE_OS::readdir (dirp))

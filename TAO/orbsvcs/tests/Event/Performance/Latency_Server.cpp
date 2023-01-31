@@ -11,7 +11,6 @@
 #include "ace/OS_NS_errno.h"
 
 
-
 const ACE_TCHAR *ior_file_name = ACE_TEXT("ec.ior");
 
 /// Parse the arguments.
@@ -27,8 +26,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                   priority);
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
 
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)

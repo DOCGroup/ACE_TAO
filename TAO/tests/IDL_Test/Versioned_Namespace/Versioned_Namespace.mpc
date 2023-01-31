@@ -1,0 +1,29 @@
+// -*- MPC -*-
+project(IDL_Test_Versioned_Namespace_1): taoidldefaults, valuetype {
+  idlflags += -Wb,versioning_begin=BEGIN_USER_VERSIONED_NAMESPACE \
+              -Wb,versioning_end=END_USER_VERSIONED_NAMESPACE \
+              -Wb,versioning_include=UserVersionedNamespace.h
+  idlflags += -Scdr -Sa
+  IDL_Files {
+    TestVersionedNamespace.idl
+  }
+
+  Source_Files {
+    TestVersionedNamespaceC.cpp
+    TestVersionedNamespaceS.cpp
+  }
+}
+
+project(IDL_Test_Versioned_Namespace_2): taoidldefaults, valuetype, amh {
+  idlflags += -Wb,versioning_begin=BEGIN_USER_VERSIONED_NAMESPACE \
+              -Wb,versioning_end=END_USER_VERSIONED_NAMESPACE \
+              -Wb,versioning_include=UserVersionedNamespace.h
+  IDL_Files {
+    TestVersionedNamespace2.idl
+  }
+
+  Source_Files {
+    TestVersionedNamespace2C.cpp
+    TestVersionedNamespace2S.cpp
+  }
+}

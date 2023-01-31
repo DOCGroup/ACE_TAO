@@ -9,7 +9,7 @@ Top_i::~Top_i ()
 }
 
 char *
-Top_i::shape (void)
+Top_i::shape ()
 {
   return CORBA::string_dup ("a point.");
 }
@@ -25,13 +25,13 @@ Left_i::~Left_i ()
 }
 
 char *
-Left_i::shape (void)
+Left_i::shape ()
 {
   return CORBA::string_dup ("the left line");
 }
 
 char *
-Left_i::color (void)
+Left_i::color ()
 {
   return CORBA::string_dup ("black");
 }
@@ -45,20 +45,20 @@ Right_i::~Right_i ()
 }
 
 char *
-Right_i::shape (void)
+Right_i::shape ()
 {
   return CORBA::string_dup ("the right line");
 }
 
 char *
-Right_i::color (void)
+Right_i::color ()
 {
   return CORBA::string_dup ("red");
   //
 }
 
 CORBA::Long
-Right_i::width (void)
+Right_i::width ()
 {
   return 0;
 }
@@ -72,25 +72,25 @@ Buttom_i::~Buttom_i ()
 }
 
 char *
-Buttom_i::shape (void)
+Buttom_i::shape ()
 {
   return CORBA::string_dup ("a diamond");
 }
 
 char *
-Buttom_i::color (void)
+Buttom_i::color ()
 {
   return CORBA::string_dup ("translucent");
 }
 
 CORBA::Long
-Buttom_i::width (void)
+Buttom_i::width ()
 {
   return 100;
 }
 
 char *
-Buttom_i::name (void)
+Buttom_i::name ()
 {
   return CORBA::string_dup ("Jubilee");
 }

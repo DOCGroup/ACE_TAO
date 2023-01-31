@@ -12,18 +12,18 @@ TAO_LB_ServerRequestInterceptor::TAO_LB_ServerRequestInterceptor (
 {
 }
 
-TAO_LB_ServerRequestInterceptor::~TAO_LB_ServerRequestInterceptor (void)
+TAO_LB_ServerRequestInterceptor::~TAO_LB_ServerRequestInterceptor ()
 {
 }
 
 char *
-TAO_LB_ServerRequestInterceptor::name (void)
+TAO_LB_ServerRequestInterceptor::name ()
 {
   return CORBA::string_dup ("TAO_LB_ServerRequestInterceptor");
 }
 
 void
-TAO_LB_ServerRequestInterceptor::destroy (void)
+TAO_LB_ServerRequestInterceptor::destroy ()
 {
 }
 
@@ -125,7 +125,6 @@ TAO_LB_ServerRequestInterceptor::send_exception (
     {
       // A CORBA::TRANSIENT is thrown when the LoadManager informs the
       // LoadAlert object that its member is overloaded, for example.
-
       ORBSVCS_DEBUG ((LM_INFO,
                   ACE_TEXT ("TAO_LB_ServerRequestInterceptor -- ")
                   ACE_TEXT ("Exception thrown.\n")));

@@ -6,7 +6,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Reactor_Token_T)
 
 template <class ACE_TOKEN_TYPE> void
-ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::dump (void) const
+ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Reactor_Token_T::dump");
@@ -38,13 +38,13 @@ ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::ACE_Reactor_Token_T (int s_queue)
 }
 
 template <class ACE_TOKEN_TYPE>
-ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::~ACE_Reactor_Token_T (void)
+ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::~ACE_Reactor_Token_T ()
 {
   ACE_TRACE ("ACE_Reactor_Token_T::~ACE_Reactor_Token_T");
 }
 
 template <class ACE_TOKEN_TYPE> ACE_Reactor_Impl &
-ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::reactor (void)
+ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::reactor ()
 {
   return *this->reactor_;
 }
@@ -58,7 +58,7 @@ ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::reactor (ACE_Reactor_Impl &reactor)
 // Used to wakeup the reactor.
 
 template <class ACE_TOKEN_TYPE> void
-ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::sleep_hook (void)
+ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::sleep_hook ()
 {
   ACE_TRACE ("ACE_Reactor_Token_T::sleep_hook");
   ACE_Time_Value ping (ACE_Time_Value::zero);

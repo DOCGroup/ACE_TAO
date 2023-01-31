@@ -15,7 +15,7 @@ private:
 
 public:
   DynAnyAnalyzer (int argc, ACE_TCHAR *argv[]);
-  ~DynAnyAnalyzer (void) {orb_->destroy ();}
+  ~DynAnyAnalyzer () {orb_->destroy ();}
 
   DynamicAny::DynAny_ptr DynAny_NoTrunc (const CORBA::Any &);
   DynamicAny::DynAny_ptr DynAny (const CORBA::Any &);

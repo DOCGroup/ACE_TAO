@@ -8,7 +8,6 @@ namespace ACE
 {
   namespace HTTPS
   {
-
     SessionFactory_Impl::SessionHolder_Impl::SessionHolder_Impl ()
       : session_ (true)
       {

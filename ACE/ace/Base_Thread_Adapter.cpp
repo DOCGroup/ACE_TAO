@@ -23,10 +23,10 @@ ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter (
      void *arg,
      ACE_THR_C_FUNC entry_point,
      ACE_OS_Thread_Descriptor *td
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
      , ACE_SEH_EXCEPT_HANDLER selector
      , ACE_SEH_EXCEPT_HANDLER handler
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
      , long cancel_flags
    )
   : user_func_ (user_func)
@@ -41,22 +41,18 @@ ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter (
   if (ACE_Base_Thread_Adapter::init_log_msg_hook_ != 0)
     (*ACE_Base_Thread_Adapter::init_log_msg_hook_) (
           this->log_msg_attributes_
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
           , selector
           , handler
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
           );
 #ifdef ACE_USES_GPROF
   getitimer (ITIMER_PROF, &itimer_);
 #endif // ACE_USES_GPROF
 }
 
-ACE_Base_Thread_Adapter::~ACE_Base_Thread_Adapter (void)
-{
-}
-
 void
-ACE_Base_Thread_Adapter::inherit_log_msg (void)
+ACE_Base_Thread_Adapter::inherit_log_msg ()
 {
   if (ACE_Base_Thread_Adapter::inherit_log_msg_hook_ != 0)
     (*ACE_Base_Thread_Adapter::inherit_log_msg_hook_)(
@@ -70,7 +66,7 @@ ACE_Base_Thread_Adapter::inherit_log_msg (void)
 }
 
 void
-ACE_Base_Thread_Adapter::close_log_msg (void)
+ACE_Base_Thread_Adapter::close_log_msg ()
 {
   if (ACE_Base_Thread_Adapter::close_log_msg_hook_ != 0)
     (*ACE_Base_Thread_Adapter::close_log_msg_hook_) ();
@@ -83,12 +79,8 @@ ACE_Base_Thread_Adapter::sync_log_msg (const ACE_TCHAR *prg)
     (*ACE_Base_Thread_Adapter::sync_log_msg_hook_) (prg);
 }
 
-ACE_OS_Thread_Descriptor::~ACE_OS_Thread_Descriptor (void)
-{
-}
-
 ACE_OS_Thread_Descriptor *
-ACE_Base_Thread_Adapter::thr_desc_log_msg (void)
+ACE_Base_Thread_Adapter::thr_desc_log_msg ()
 {
   if (ACE_Base_Thread_Adapter::thr_desc_log_msg_hook_ != 0)
     return (*ACE_Base_Thread_Adapter::thr_desc_log_msg_hook_) ();

@@ -47,7 +47,6 @@ namespace TAO
     class Case_Enum_T : public Case<StringType, TypeCodeType>
     {
     public:
-
       /// Constructor.
       Case_Enum_T (CORBA::TypeCode_ptr discriminator_tc,
                    CORBA::ULong member_label,
@@ -71,8 +70,8 @@ namespace TAO
        * @see @c TAO::TypeCode::Case
        */
       //@{
-      Case<StringType, TypeCodeType> * clone (void) const;
-      virtual CORBA::Any * label (void) const;
+      Case<StringType, TypeCodeType> * clone () const;
+      virtual CORBA::Any * label () const;
       virtual bool marshal_label (TAO_OutputCDR & cdr) const;
       virtual bool equal_label (CORBA::ULong index,
                                 CORBA::TypeCode_ptr tc) const;
@@ -85,7 +84,6 @@ namespace TAO
       /// IDL @c union discriminator typecode.
       CORBA::TypeCode_var discriminator_tc_;
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 
@@ -96,13 +94,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/TypeCode_Case_Enum_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/TypeCode_Case_Enum_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("TypeCode_Case_Enum_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "tao/AnyTypeCode/TypeCode_Case_Enum_T.cpp"
 
 #include /**/ "ace/post.h"
 

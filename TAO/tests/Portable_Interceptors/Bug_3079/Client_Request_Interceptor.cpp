@@ -19,13 +19,13 @@ Client_Request_Interceptor::Client_Request_Interceptor (
 }
 
 char *
-Client_Request_Interceptor::name (void)
+Client_Request_Interceptor::name ()
 {
   return CORBA::string_dup ("Client_Request_Interceptor");
 }
 
 void
-Client_Request_Interceptor::destroy (void)
+Client_Request_Interceptor::destroy ()
 {
 }
 
@@ -89,8 +89,7 @@ Client_Request_Interceptor::receive_exception (
       tc = ex->type ();
       id = tc->id ();
 
-      if (ACE_OS_String::strcmp (id,
-                                 "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
+      if (ACE_OS::strcmp (id, "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
           throw ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 }

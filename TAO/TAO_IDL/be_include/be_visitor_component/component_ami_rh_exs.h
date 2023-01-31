@@ -26,7 +26,7 @@ class be_visitor_component_ami_rh_exs
 {
 public:
   be_visitor_component_ami_rh_exs (be_visitor_context *ctx);
-  ~be_visitor_component_ami_rh_exs (void);
+  ~be_visitor_component_ami_rh_exs ();
 
   virtual int visit_uses (be_uses *node);
   virtual int visit_operation (be_operation *node);
@@ -34,7 +34,7 @@ public:
   virtual int visit_argument (be_argument *node);
 
 private:
-  virtual void gen_op_body (void);
+  virtual void gen_op_body ();
 
 private:
   const char *your_code_here_;

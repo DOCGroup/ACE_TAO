@@ -17,7 +17,7 @@ be_visitor_exception_cdr_op_cs::be_visitor_exception_cdr_op_cs (
 {
 }
 
-be_visitor_exception_cdr_op_cs::~be_visitor_exception_cdr_op_cs (void)
+be_visitor_exception_cdr_op_cs::~be_visitor_exception_cdr_op_cs ()
 {
 }
 
@@ -44,8 +44,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -177,7 +176,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  node->cli_stub_cdr_op_gen (1);
+  node->cli_stub_cdr_op_gen (true);
   return 0;
 }
 

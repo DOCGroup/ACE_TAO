@@ -19,7 +19,7 @@ TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (TAO_ORB_Core *)
 {
 }
 
-TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks (void)
+TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks ()
 {
 }
 
@@ -82,7 +82,6 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
 
   // If it reaches here then it should be nill
   return true;
-
 }
 
 TAO_Service_Callbacks::Profile_Equivalence
@@ -325,7 +324,7 @@ TAO_FT_Service_Callbacks::restart_policy_check (
 }
 
 TimeBase::TimeT
-TAO_FT_Service_Callbacks::now (void)
+TAO_FT_Service_Callbacks::now ()
 {
   // Grab the localtime on the machine where this is running
   ACE_Time_Value time_val = ACE_OS::gettimeofday ();

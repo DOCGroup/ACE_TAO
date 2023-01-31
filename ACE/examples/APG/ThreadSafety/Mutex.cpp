@@ -13,7 +13,7 @@ public:
   {
   }
 
-  virtual int priority (void)
+  virtual int priority ()
   {
     return NORMAL;
   }
@@ -21,7 +21,7 @@ public:
 
 class CriticalLogMessage : public LogMessage
 {
-  virtual int priority (void)
+  virtual int priority ()
   {
     return LogMessage::CRITICAL;
   }

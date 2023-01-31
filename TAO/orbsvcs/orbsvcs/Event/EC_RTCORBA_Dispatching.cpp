@@ -2,7 +2,6 @@
 #include "tao/RTCORBA/Priority_Mapping.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_RTCORBA_Dispatching::
@@ -19,13 +18,13 @@ TAO_EC_RTCORBA_Dispatching::
     this->tasks_[i].thr_mgr (&this->thread_manager_);
 }
 
-TAO_EC_RTCORBA_Dispatching::~TAO_EC_RTCORBA_Dispatching (void)
+TAO_EC_RTCORBA_Dispatching::~TAO_EC_RTCORBA_Dispatching ()
 {
   delete[] this->tasks_;
 }
 
 void
-TAO_EC_RTCORBA_Dispatching::activate (void)
+TAO_EC_RTCORBA_Dispatching::activate ()
 {
   for (CORBA::ULong i = 0; i != this->lanes_.length (); ++i)
     {
@@ -48,7 +47,7 @@ TAO_EC_RTCORBA_Dispatching::activate (void)
 }
 
 void
-TAO_EC_RTCORBA_Dispatching::shutdown (void)
+TAO_EC_RTCORBA_Dispatching::shutdown ()
 {
   for (CORBA::ULong i = 0; i != this->lanes_.length (); ++i)
     {

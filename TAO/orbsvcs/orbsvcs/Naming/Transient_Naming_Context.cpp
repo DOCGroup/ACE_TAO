@@ -12,7 +12,6 @@
 #include "ace/OS_NS_stdio.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
@@ -65,24 +64,24 @@ TAO_Transient_Bindings_Map::TAO_Transient_Bindings_Map (size_t hash_table_size)
 {
 }
 
-TAO_Transient_Bindings_Map::~TAO_Transient_Bindings_Map (void)
+TAO_Transient_Bindings_Map::~TAO_Transient_Bindings_Map ()
 {
 }
 
 TAO_Transient_Bindings_Map::HASH_MAP &
-TAO_Transient_Bindings_Map::map (void)
+TAO_Transient_Bindings_Map::map ()
 {
   return map_;
 }
 
 size_t
-TAO_Transient_Bindings_Map::current_size (void)
+TAO_Transient_Bindings_Map::current_size ()
 {
   return map_.current_size ();
 }
 
 size_t
-TAO_Transient_Bindings_Map::total_size (void)
+TAO_Transient_Bindings_Map::total_size ()
 {
   return map_.total_size ();
 }
@@ -130,7 +129,7 @@ TAO_Transient_Naming_Context::TAO_Transient_Naming_Context (PortableServer::POA_
   context_ = transient_context_;
 }
 
-TAO_Transient_Naming_Context::~TAO_Transient_Naming_Context (void)
+TAO_Transient_Naming_Context::~TAO_Transient_Naming_Context ()
 {
 }
 
@@ -181,7 +180,7 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 }
 
 CosNaming::NamingContext_ptr
-TAO_Transient_Naming_Context::new_context (void)
+TAO_Transient_Naming_Context::new_context ()
 {
   // Generate a POA id for the new context.
   char poa_id[BUFSIZ];

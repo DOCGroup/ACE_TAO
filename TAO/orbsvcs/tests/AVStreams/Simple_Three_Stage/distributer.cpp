@@ -39,7 +39,7 @@ Distributer_Receiver_StreamEndPoint::get_callback (const char *,
   return 0;
 }
 
-Distributer_Receiver_Callback::Distributer_Receiver_Callback (void)
+Distributer_Receiver_Callback::Distributer_Receiver_Callback ()
   : frame_count_ (1)
 {
 }
@@ -69,7 +69,7 @@ Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-Distributer_Receiver_Callback::handle_destroy (void)
+Distributer_Receiver_Callback::handle_destroy ()
 {
   // Called when the sender requests the stream to be shutdown.
   try
@@ -104,12 +104,12 @@ Distributer::sender_protocol_object (TAO_AV_Protocol_Object *object)
 }
 
 TAO_AV_Protocol_Object *
-Distributer::sender_protocol_object (void)
+Distributer::sender_protocol_object ()
 {
   return this->sender_protocol_object_;
 }
 
-Distributer::Distributer (void)
+Distributer::Distributer ()
   : distributer_receiver_mmdevice_ (0),
     distributer_sender_mmdevice_ (0),
     sender_protocol_object_ (0),
@@ -119,7 +119,7 @@ Distributer::Distributer (void)
 {
 }
 
-Distributer::~Distributer (void)
+Distributer::~Distributer ()
 {
 }
 
@@ -263,13 +263,13 @@ Distributer::init (int /*argc*/,
 }
 
 TAO_StreamCtrl *
-Distributer::receiver_streamctrl (void)
+Distributer::receiver_streamctrl ()
 {
   return this->receiver_streamctrl_;
 }
 
 int
-Distributer::done (void) const
+Distributer::done () const
 {
   return this->done_;
 }

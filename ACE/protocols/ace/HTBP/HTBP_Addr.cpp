@@ -28,12 +28,6 @@ ACE::HTBP::Addr::Addr (const ACE::HTBP::Addr &other)
   : ACE_INET_Addr (other),
     htid_(other.htid_)
 {
-
-}
-
-// Destructor
-ACE::HTBP::Addr::~Addr ()
-{
 }
 
 int
@@ -55,7 +49,7 @@ ACE::HTBP::Addr::set_htid (const char *htid)
 }
 
 const char *
-ACE::HTBP::Addr::get_htid (void) const
+ACE::HTBP::Addr::get_htid () const
 {
   return this->htid_.c_str();
 }

@@ -31,14 +31,14 @@ Param_Test_Client<T>::Param_Test_Client (CORBA::ORB_ptr orb,
 
 // destructor
 template <class T>
-Param_Test_Client<T>::~Param_Test_Client (void)
+Param_Test_Client<T>::~Param_Test_Client ()
 {
   delete this->test_object_;
 }
 
 // All the individual tests.
 template <class T> int
-Param_Test_Client<T>::run_sii_test (void)
+Param_Test_Client<T>::run_sii_test ()
 {
   CORBA::ULong i = 0;  // loop index
   Options *opt = OPTIONS::instance (); // get the options
@@ -46,7 +46,7 @@ Param_Test_Client<T>::run_sii_test (void)
 
   if (opt->debug ())
     ACE_DEBUG ((LM_DEBUG,
-                "********** %s SII *********\n",
+                "********** %C SII *********\n",
                 opname));
 
   // Initialize call count and error count.
@@ -62,7 +62,7 @@ Param_Test_Client<T>::run_sii_test (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) client.cpp - run_sii_test:"
-                         "init_parameters failed for opname - %s",
+                         "init_parameters failed for opname - %C",
                          opname),
                         -1);
     }
@@ -98,7 +98,6 @@ Param_Test_Client<T>::run_sii_test (void)
         }
       catch (const CORBA::Exception& ex)
         {
-
           this->results_.error_count (this->results_.error_count () + 1);
           ex._tao_print_exception (opname);
           ACE_ERROR ((LM_ERROR,
@@ -106,7 +105,6 @@ Param_Test_Client<T>::run_sii_test (void)
                       "run_sii_test exception in iteration %d",
                       i));
           goto loop_around;
-
         }
 
       if (!this->test_object_->check_validity ())
@@ -122,7 +120,7 @@ Param_Test_Client<T>::run_sii_test (void)
       if (this->test_object_->reset_parameters () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) client.cpp - run_sii_test:"
-                           "init_parameters failed for opname - %s",
+                           "init_parameters failed for opname - %C",
                            opname), -1);
     loop_around: continue;
     }
@@ -132,13 +130,13 @@ Param_Test_Client<T>::run_sii_test (void)
   if (this->results_.error_count () != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "********** Error running %s SII *********\n",
+                  "********** Error running %C SII *********\n",
                   opname));
     }
   else if (opt->debug ())
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "********** Finished running %s SII *********\n",
+                  "********** Finished running %C SII *********\n",
                   opname));
     }
   return this->results_.error_count ()? -1:0;
@@ -146,14 +144,14 @@ Param_Test_Client<T>::run_sii_test (void)
 
 // use DII
 template <class T> int
-Param_Test_Client<T>::run_dii_test (void)
+Param_Test_Client<T>::run_dii_test ()
 {
   const char *opname = this->test_object_->opname ();
   Options *opt = OPTIONS::instance ();
 
   if (opt->debug ())
     ACE_DEBUG ((LM_DEBUG,
-                "********** %s DII *********\n",
+                "********** %C DII *********\n",
                 opname));
 
   // initialize call count and error count
@@ -169,7 +167,7 @@ Param_Test_Client<T>::run_dii_test (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) client.cpp - run_dii_test:"
-                         "init_parameters failed for opname - %s",
+                         "init_parameters failed for opname - %C",
                          opname),
                         -1);
     }
@@ -238,13 +236,13 @@ Param_Test_Client<T>::run_dii_test (void)
   if (this->results_.error_count () != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "********** Error running %s DII *********\n",
+                  "********** Error running %C DII *********\n",
                   opname));
     }
   else if (opt->debug ())
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "********** Finished running %s DII *********\n",
+                  "********** Finished running %C DII *********\n",
                   opname));
     }
   return this->results_.error_count () ? -1 : 0;

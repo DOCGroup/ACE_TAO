@@ -48,7 +48,6 @@ class Client_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   Client_Request_Interceptor (const char *orb_id,
                               const char *forward_str);
@@ -63,9 +62,9 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestinterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void send_request (
       PortableInterceptor::ClientRequestInfo_ptr ri);
@@ -84,7 +83,6 @@ public:
   //@}
 
 private:
-
   ///The ID of the ORB this interceptor is registered with.
   CORBA::String_var orb_id_;
 
@@ -98,7 +96,6 @@ private:
   /// Stringified reference to the object the initial request will be
   /// forwarded to by this interceptor.
   CORBA::String_var forward_str_;
-
 };
 
 #if defined(_MSC_VER)

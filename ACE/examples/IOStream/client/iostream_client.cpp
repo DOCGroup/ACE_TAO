@@ -32,7 +32,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int i;
   float f;
 
-#if defined (ACE_HAS_STRING_CLASS)
   ACE_IOStream_String s1;
   ACE_IOStream_String s2;
   server >> s1 >> i >> f >> s2;
@@ -42,13 +41,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   cerr << i << " ";
   cerr << f << " ";
   cerr << s2 << endl;
-#else
-  server >> i >> f;
-
-  cerr << "(" << ACE_OS::getpid () << ") Server sent:\n\t";
-  cerr << "(" << i << ") ";
-  cerr << "(" << f << ")" << endl;
-#endif /* ACE_HAS_STRING_CLASS */
 
   if (server.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

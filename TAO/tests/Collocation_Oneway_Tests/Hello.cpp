@@ -11,16 +11,15 @@ Hello::Hello (CORBA::ORB_ptr orb,
 }
 
 void
-Hello::onewayTest (void)
+Hello::onewayTest ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) onewayTest() Upcall in process ..\n"));
-  return;
 }
 
 
 char *
-Hello::get_string (void)
+Hello::get_string ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
@@ -63,7 +62,7 @@ Hello::get_string (void)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

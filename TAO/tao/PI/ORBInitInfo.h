@@ -55,7 +55,6 @@ class TAO_PI_Export TAO_ORBInitInfo
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
                    int argc,
@@ -71,14 +70,14 @@ public:
   //@{
   /// Return the argument vector for the ORB currently being
   /// initialized as a string sequence.
-  virtual CORBA::StringSeq * arguments (void);
+  virtual CORBA::StringSeq * arguments ();
 
   /// Return the ORBid for the ORB currently being initialized.
-  virtual char * orb_id (void);
+  virtual char * orb_id ();
 
   /// Return the CodecFactory for the ORB currently being
   /// initialized.
-  virtual IOP::CodecFactory_ptr codec_factory (void);
+  virtual IOP::CodecFactory_ptr codec_factory ();
 
   /// Register a mapping between a string and a corresponding object
   /// reference with the ORB being initialized.
@@ -132,7 +131,7 @@ public:
 
   /// Reserve a slot in table found within the
   /// PortableInterceptor::Current object.
-  virtual PortableInterceptor::SlotId allocate_slot_id (void);
+  virtual PortableInterceptor::SlotId allocate_slot_id ();
 
   /// Register a policy factory of the given policy type with the ORB
   /// currently being initialized.
@@ -140,7 +139,7 @@ public:
       CORBA::PolicyType type,
       PortableInterceptor::PolicyFactory_ptr policy_factory);
 
-  virtual CORBA::ORB_ptr _get_orb (void);
+  virtual CORBA::ORB_ptr _get_orb ();
   //@}
 
   /**
@@ -171,18 +170,18 @@ public:
    *
    * @note Only use this method if you know what you are doing.
    */
-  TAO_ORB_Core *orb_core (void) const;
+  TAO_ORB_Core *orb_core () const;
 
   /// Invalidate this ORBInitInfo instance.
   /**
    * @note This method is only meant to be called by the
    *       CORBA::ORB_init() function.
    */
-  void invalidate (void);
+  void invalidate ();
 
   /// Return the number of allocated slots in for the PICurrent
   /// object.
-  PortableInterceptor::SlotId slot_count (void) const;
+  PortableInterceptor::SlotId slot_count () const;
   //@}
 
   /**
@@ -202,34 +201,29 @@ public:
   static TAO_ORBInitInfo_ptr _unchecked_narrow (CORBA::Object_ptr obj);
 
 
-  static TAO_ORBInitInfo_ptr _nil (void)
+  static TAO_ORBInitInfo_ptr _nil ()
     {
-      return (TAO_ORBInitInfo_ptr)0;
+      return nullptr;
     }
   //@}
 
-  virtual const char* _interface_repository_id (void) const;
+  virtual const char* _interface_repository_id () const;
 
 protected:
-
   /// Destructor is protected to enforce proper memory management
   /// through the reference counting mechanism.
-  ~TAO_ORBInitInfo (void);
+  ~TAO_ORBInitInfo ();
 
   /// Check if this ORBInitInfo instance is valid.  Once post_init()
   /// has been called on each of the ORBInitializers, this ORBInitInfo
   /// is no longer valid.  Throw an exception in that case.
-  void check_validity (void);
+  void check_validity ();
 
 private:
-
-  /// Prevent copying through the copy constructor and the assignment
-  /// operator.
-  TAO_ORBInitInfo (const TAO_ORBInitInfo &);
-  void operator= (const TAO_ORBInitInfo &);
+  TAO_ORBInitInfo (const TAO_ORBInitInfo &) = delete;
+  void operator= (const TAO_ORBInitInfo &) = delete;
 
 private:
-
   /// Reference to the ORB Core.
   TAO_ORB_Core *orb_core_;
 
@@ -246,7 +240,6 @@ private:
 
   /// The number of allocated slots.
   PortableInterceptor::SlotId slot_count_;
-
 };
 
 // Traits specializations.
@@ -258,7 +251,7 @@ namespace TAO
   {
     static TAO_ORBInitInfo_ptr duplicate (TAO_ORBInitInfo_ptr);
     static void release (TAO_ORBInitInfo_ptr);
-    static TAO_ORBInitInfo_ptr nil (void);
+    static TAO_ORBInitInfo_ptr nil ();
     static CORBA::Boolean marshal (TAO_ORBInitInfo_ptr p, TAO_OutputCDR & cdr);
   };
 }

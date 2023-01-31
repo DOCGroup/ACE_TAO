@@ -39,27 +39,26 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Allocator
 {
 public:
-
   /// Unsigned integer type used for specifying memory block lengths.
   typedef size_t size_type;
 
   // = Memory Management
 
   /// Get pointer to a default ACE_Allocator.
-  static ACE_Allocator *instance (void);
+  static ACE_Allocator *instance ();
 
   /// Set pointer to a process-wide ACE_Allocator and return existing
   /// pointer.
   static ACE_Allocator *instance (ACE_Allocator *);
 
   /// Delete the dynamically allocated Singleton
-  static void close_singleton (void);
+  static void close_singleton ();
 
   /// "No-op" constructor (needed to make certain compilers happy).
-  ACE_Allocator (void);
+  ACE_Allocator ();
 
   /// Virtual destructor
-  virtual ~ACE_Allocator (void);
+  virtual ~ACE_Allocator ();
 
   /// Allocate @a nbytes, but don't give them any initial value.
   virtual void *malloc (size_type nbytes) = 0;
@@ -67,7 +66,7 @@ public:
   /// Allocate @a nbytes, giving them @a initial_value.
   virtual void *calloc (size_type nbytes, char initial_value = '\0') = 0;
 
-  /// Allocate <n_elem> each of size @a elem_size, giving them
+  /// Allocate @a n_elem each of size @a elem_size, giving them
   /// @a initial_value.
   virtual void *calloc (size_type n_elem,
                         size_type elem_size,
@@ -77,7 +76,7 @@ public:
   virtual void free (void *ptr) = 0;
 
   /// Remove any resources associated with this memory manager.
-  virtual int remove (void) = 0;
+  virtual int remove () = 0;
 
   // = Map manager like functions
 
@@ -146,20 +145,17 @@ public:
 
 #if defined (ACE_HAS_MALLOC_STATS)
   /// Dump statistics of how malloc is behaving.
-  virtual void print_stats (void) const = 0;
+  virtual void print_stats () const = 0;
 #endif /* ACE_HAS_MALLOC_STATS */
 
   /// Dump the state of the object.
-  virtual void dump (void) const = 0;
+  virtual void dump () const = 0;
 private:
   // DO NOT ADD ANY STATE (DATA MEMBERS) TO THIS CLASS!!!!  See the
   // <ACE_Allocator::instance> implementation for explanation.
 
   /// Pointer to a process-wide ACE_Allocator instance.
   static ACE_Allocator *allocator_;
-
-  /// Must delete the <allocator_> if non-0.
-  static int delete_allocator_;
 };
 
 /**
@@ -182,7 +178,7 @@ public:
   typedef std::ptrdiff_t difference_type;
   template <typename U> struct rebind { typedef ACE_Allocator_Std_Adapter<U> other; };
 
-  ACE_Allocator_Std_Adapter() {}
+  ACE_Allocator_Std_Adapter() = default;
 
   template <typename U>
   ACE_Allocator_Std_Adapter(const ACE_Allocator_Std_Adapter<U>&) {}

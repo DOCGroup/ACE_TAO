@@ -59,7 +59,7 @@ public:
   }
 };
 
-DynServer_Loader::DynServer_Loader(void)
+DynServer_Loader::DynServer_Loader()
 {
 }
 
@@ -67,7 +67,6 @@ int
 DynServer_Loader::init (int argc, ACE_TCHAR* argv[])
 {
   try {
-
     orb_ = ORB_init(argc, argv, "DynServer");
 
     Object_var obj = orb_->resolve_initial_references("RootPOA");
@@ -110,7 +109,6 @@ DynServer_Loader::init (int argc, ACE_TCHAR* argv[])
     runner_->activate();
 
     ACE_DEBUG((LM_DEBUG, "dynserver: running.\n"));
-
   } catch (Exception& e) {
     e._tao_print_exception ("DynServer::init()");
   }
@@ -118,11 +116,10 @@ DynServer_Loader::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-DynServer_Loader::fini (void)
+DynServer_Loader::fini ()
 {
   ACE_ASSERT(runner_.get() != 0);
   try {
-
     ACE_DEBUG((LM_DEBUG, "dynserver: shutting down.\n"));
 
     runner_->end();
@@ -134,7 +131,6 @@ DynServer_Loader::fini (void)
     ACE_DEBUG((LM_DEBUG, "dynserver: shut down successfully.\n"));
 
     return 0;
-
   } catch (Exception& e) {
     e._tao_print_exception ("DynServer::fini()");
   }

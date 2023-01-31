@@ -9,30 +9,30 @@ TAO_PrimitiveDef_i::TAO_PrimitiveDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_PrimitiveDef_i::~TAO_PrimitiveDef_i (void)
+TAO_PrimitiveDef_i::~TAO_PrimitiveDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_PrimitiveDef_i::def_kind (void)
+TAO_PrimitiveDef_i::def_kind ()
 {
   return CORBA::dk_Primitive;
 }
 
 void
-TAO_PrimitiveDef_i::destroy (void)
+TAO_PrimitiveDef_i::destroy ()
 {
   this->destroy_i ();
 }
 
 void
-TAO_PrimitiveDef_i::destroy_i (void)
+TAO_PrimitiveDef_i::destroy_i ()
 {
   throw CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 }
 
 CORBA::TypeCode_ptr
-TAO_PrimitiveDef_i::type (void)
+TAO_PrimitiveDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -42,7 +42,7 @@ TAO_PrimitiveDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_PrimitiveDef_i::type_i (void)
+TAO_PrimitiveDef_i::type_i ()
 {
   u_int pkind = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -101,7 +101,7 @@ TAO_PrimitiveDef_i::type_i (void)
 }
 
 CORBA::PrimitiveKind
-TAO_PrimitiveDef_i::kind (void)
+TAO_PrimitiveDef_i::kind ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::pk_null);
 
@@ -111,7 +111,7 @@ TAO_PrimitiveDef_i::kind (void)
 }
 
 CORBA::PrimitiveKind
-TAO_PrimitiveDef_i::kind_i (void)
+TAO_PrimitiveDef_i::kind_i ()
 {
   u_int pkind = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,

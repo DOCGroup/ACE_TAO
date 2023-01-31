@@ -13,7 +13,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-Identity_Server::Identity_Server (void)
+Identity_Server::Identity_Server ()
   : group_factory_ior_ (0),
     random_objects_ (5),
     rr_objects_ (5)
@@ -164,7 +164,7 @@ Identity_Server::create_objects (size_t number_of_objects,
 }
 
 int
-Identity_Server::run (void)
+Identity_Server::run ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Identity_Server: Initialized\n"));
@@ -176,7 +176,7 @@ Identity_Server::run (void)
   return result;
 }
 
-Identity_Server::~Identity_Server (void)
+Identity_Server::~Identity_Server ()
 {
 }
 

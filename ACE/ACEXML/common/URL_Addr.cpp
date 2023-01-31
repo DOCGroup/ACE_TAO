@@ -1,7 +1,5 @@
 #include "ACEXML/common/URL_Addr.h"
 
-
-
 #if !defined (__ACEXML_INLINE__)
 #include "ACEXML/common/URL_Addr.inl"
 #endif /* __ACEXML_INLINE__ */
@@ -13,7 +11,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 
-ACEXML_URL_Addr::ACEXML_URL_Addr (void)
+ACEXML_URL_Addr::ACEXML_URL_Addr ()
   : path_name_ (0),
     addr_string_ (0),
     addr_string_len_ (0)
@@ -168,7 +166,7 @@ ACEXML_URL_Addr::ACEXML_URL_Addr (const ACEXML_Char *host_name,
 {
 }
 
-ACEXML_URL_Addr::~ACEXML_URL_Addr (void)
+ACEXML_URL_Addr::~ACEXML_URL_Addr ()
 {
   ACE_OS::free (this->path_name_);
   ACE_OS::free (this->addr_string_);

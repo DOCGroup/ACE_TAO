@@ -36,7 +36,6 @@
 #include "ace/os_include/os_netdb.h"
 
 
-
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 // This test doesn't work well using fork() on MacOS X.  So we
@@ -66,28 +65,17 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
      typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
 #  else
 #    include "ace/Process_Mutex.h"
-     typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
+     using ACCEPTOR_LOCKING = ACE_Process_Mutex;
 #    define CLEANUP_PROCESS_MUTEX
 #  endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 #endif /* ACE_LACKS_FORK */
 
-typedef ACE_Oneshot_Acceptor<Svc_Handler,
-                             ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING> >
-        ACCEPTOR;
-typedef ACE_Connector<Svc_Handler,
-                      ACE_SOCK_CONNECTOR>
-        CONNECTOR;
-typedef ACE_Strategy_Connector<Svc_Handler,
-                               ACE_SOCK_CONNECTOR>
-        STRAT_CONNECTOR;
-typedef ACE_NOOP_Creation_Strategy<Svc_Handler>
-        NULL_CREATION_STRATEGY;
-typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler>
-        NULL_ACTIVATION_STRATEGY;
-typedef ACE_Cached_Connect_Strategy<Svc_Handler,
-                                    ACE_SOCK_CONNECTOR,
-                                    ACE_SYNCH_MUTEX>
-        CACHED_CONNECT_STRATEGY;
+using ACCEPTOR = ACE_Oneshot_Acceptor<Svc_Handler, ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>>;
+using CONNECTOR = ACE_Connector<Svc_Handler, ACE_SOCK_Connector>;
+using STRAT_CONNECTOR = ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_Connector>;
+using NULL_CREATION_STRATEGY = ACE_NOOP_Creation_Strategy<Svc_Handler>;
+using NULL_ACTIVATION_STRATEGY = ACE_NOOP_Concurrency_Strategy<Svc_Handler>;
+using CACHED_CONNECT_STRATEGY = ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_Connector, ACE_MT_SYNCH::MUTEX>;
 
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
@@ -136,7 +124,7 @@ Svc_Handler::recycle (void *)
 }
 
 void
-Svc_Handler::send_data (void)
+Svc_Handler::send_data ()
 {
   // Send data to server.
 
@@ -148,7 +136,7 @@ Svc_Handler::send_data (void)
 }
 
 void
-Svc_Handler::recv_data (void)
+Svc_Handler::recv_data ()
 {
   ACE_SOCK_Stream &new_stream = this->peer ();
 

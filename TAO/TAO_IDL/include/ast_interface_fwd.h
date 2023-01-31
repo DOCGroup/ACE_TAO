@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -77,9 +76,9 @@ public:
   AST_InterfaceFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~AST_InterfaceFwd (void);
+  virtual ~AST_InterfaceFwd ();
 
-  AST_Interface *full_definition (void);
+  AST_Interface *full_definition ();
 
   /**
    * Sets the full definition. If there is an existing dummy definition, it
@@ -87,7 +86,7 @@ public:
    */
   void set_full_definition (AST_Interface *nfd);
 
-  virtual bool is_defined (void);
+  virtual bool is_defined ();
   void set_as_defined ();
 
   /**
@@ -98,18 +97,14 @@ public:
    */
   void disown_full_definition ();
 
-  virtual bool is_local (void);
-  virtual bool is_valuetype (void);
-  virtual bool is_abstract_valuetype (void);
+  virtual bool is_local ();
+  virtual bool is_valuetype ();
+  virtual bool is_abstract_valuetype ();
 
-  bool full_def_seen (void);
+  bool full_def_seen ();
 
   // Cleanup function.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_InterfaceFwd);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);
@@ -118,7 +113,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Is this decl a forward declared type (Yes)
-  virtual bool is_fwd (void);
+  virtual bool is_fwd ();
 
   // We don't actually want the forward declaration,
   // but want to return the full definition member,

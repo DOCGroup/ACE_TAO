@@ -157,6 +157,71 @@ native          return IDL_NATIVE;
 local           return IDL_LOCAL;
 abstract        return IDL_ABSTRACT;
 
+int8 {
+  if (idl_global->idl_version_ >= IDL_VERSION_4)
+    return IDL_INT8;
+  else
+    {
+      REJECT;
+    }
+}
+uint8 {
+  if (idl_global->idl_version_ >= IDL_VERSION_4)
+    return IDL_UINT8;
+  else
+    {
+      REJECT;
+    }
+}
+int16 {
+  if (idl_global->idl_version_ >= IDL_VERSION_4)
+    return IDL_INT16;
+  else
+    {
+      REJECT;
+    }
+}
+uint16 {
+  if (idl_global->idl_version_ >= IDL_VERSION_4)
+    return IDL_UINT16;
+  else
+    {
+      REJECT;
+    }
+}
+int32 {
+  if (idl_global->idl_version_ >= IDL_VERSION_4)
+    return IDL_INT32;
+  else
+    {
+      REJECT;
+    }
+}
+uint32 {
+  if (idl_global->idl_version_ >= IDL_VERSION_4)
+    return IDL_UINT32;
+  else
+    {
+      REJECT;
+    }
+}
+int64 {
+  if (idl_global->idl_version_ >= IDL_VERSION_4)
+    return IDL_INT64;
+  else
+    {
+      REJECT;
+    }
+}
+uint64 {
+  if (idl_global->idl_version_ >= IDL_VERSION_4)
+    return IDL_UINT64;
+  else
+    {
+      REJECT;
+    }
+}
+
 custom          return IDL_CUSTOM;
 factory         return IDL_FACTORY;
 private         return IDL_PRIVATE;
@@ -518,20 +583,6 @@ idl_parse_line_and_file (char *buf)
         }
 
       h[i] = '\0';
-#if defined (ACE_OPENVMS)
-      // translate this into *nix format as the OpenVMS preprocessor
-      // possibly produced VMS-style paths here.
-      char trans_path[MAXPATHLEN] = "";
-      char *temp_h = IDL_GlobalData::translateName (h, trans_path);
-      if (temp_h)
-        h = temp_h;
-      else
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Unable to construct full file pathname\n")));
-          throw Bailout ();
-        }
-#endif
       ACE_NEW (tmp,
                UTL_String (h, true));
       idl_global->update_prefix (tmp->get_string ());
@@ -550,21 +601,10 @@ idl_parse_line_and_file (char *buf)
 
   if (!is_real_filename)
     {
-#if defined (ACE_OPENVMS)
-      char full_path[MAXPATHLEN] = "";
-      char *full_fname = ACE_OS::realpath (fname->get_string (), full_path);
-      // I don't see the benefit of using ->compare since this is targeted at IDL identifiers
-      // not at filenames and in the case of OpenVMS (case-insensitive filesystem) gets really
-      // problematic as filenames retrieved through different mechanisms may give different
-      // casing.
-      is_main_filename = FE_Utils::path_cmp (idl_global->main_filename ()->get_string (),
-                                             full_fname) == 0;
-#else
       is_main_filename =
         fname->compare (idl_global->main_filename ())
         || same_file (fname->get_string (),
                       idl_global->main_filename ()->get_string ());
-#endif
     }
 
   if (is_real_filename || is_main_filename)
@@ -971,7 +1011,7 @@ idl_store_pragma (char *buf)
 static ACE_CDR::LongLong
 idl_atoi (char *s, long b)
 {
-  ACE_CDR::LongLong r = ACE_CDR_LONGLONG_INITIALIZER;
+  ACE_CDR::LongLong r = 0;
 
   // Skip over the dash and possibly spaces after the dash
   while (*s == '-' || *s == ' ' || *s == '\t')
@@ -1251,33 +1291,29 @@ idl_get_pragma_string (char *pragma)
   // Get pointers to each end of the substring between the quotes.
   const char *firstquote = ACE_OS::strchr (pragma, '"');
 
-  if (firstquote == 0)
+  if (!firstquote)
     {
-      idl_global->err ()->syntax_error (
-          IDL_GlobalData::PS_PragmaPrefixSyntax
-        );
+      idl_global->err ()->syntax_error (IDL_GlobalData::PS_PragmaPrefixSyntax);
 
-      return 0;
+      return nullptr;
     }
 
   const char *start = firstquote + 1;
   const char *end = ACE_OS::strchr (start, '"');
 
-  if (end == 0)
+  if (!end)
     {
-      idl_global->err ()->syntax_error (
-          IDL_GlobalData::PS_PragmaPrefixSyntax
-        );
+      idl_global->err ()->syntax_error (IDL_GlobalData::PS_PragmaPrefixSyntax);
 
-      return 0;
+      return nullptr;
     }
 
-  int len = static_cast<int> (end - start);
-  char *retval = 0;
+  size_t const len = end - start;
+  char *retval {};
 
   ACE_NEW_RETURN (retval,
                   char[len + 1],
-                  0);
+                  nullptr);
 
   ACE_OS::strncpy (retval,
                    start,

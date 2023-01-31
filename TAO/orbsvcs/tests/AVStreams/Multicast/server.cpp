@@ -2,7 +2,7 @@
 
 int done = 0;
 
-FTP_Server_StreamEndPoint::FTP_Server_StreamEndPoint (void)
+FTP_Server_StreamEndPoint::FTP_Server_StreamEndPoint ()
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::FTP_Server_StreamEndPoint\n"));
 }
@@ -19,7 +19,7 @@ FTP_Server_StreamEndPoint::get_callback (const char *,
 }
 
 int
-FTP_Server_Callback::handle_stop (void)
+FTP_Server_Callback::handle_stop ()
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop\n"));
   ACE_OS::fclose (FTP_SERVER::instance ()->file ());
@@ -47,14 +47,14 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-FTP_Server_Callback::handle_end_stream (void)
+FTP_Server_Callback::handle_end_stream ()
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::end_stream\n"));
   done = 1;
   return 0;
 }
 
-Server::Server (void)
+Server::Server ()
 {
   reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                       TAO_AV_CORE::instance ()->poa ());
@@ -66,7 +66,6 @@ Server::init (int argc,
 {
   try
     {
-
       PortableServer::POAManager_var mgr
         = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
 
@@ -116,22 +115,21 @@ Server::init (int argc,
 }
 
 int
-Server::run (void)
+Server::run ()
 {
   CORBA::ORB_ptr orb = TAO_AV_CORE::instance ()->orb();
   try
     {
-
       while( !done )
       {
         CORBA::Boolean wp = orb->work_pending ();
         if (wp)
          {
-              orb->perform_work( );
+              orb->perform_work();
          }
       }
 
-      orb->shutdown( 1 );
+      orb->shutdown(true);
     }
     catch (const CORBA::Exception& ex)
     {
@@ -171,7 +169,7 @@ Server::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 FILE*
-Server::file (void)
+Server::file ()
 {
   return this->fp_;
 }

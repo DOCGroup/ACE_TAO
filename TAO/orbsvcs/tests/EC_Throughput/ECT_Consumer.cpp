@@ -71,7 +71,7 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
 }
 
 void
-Test_Consumer::disconnect (void)
+Test_Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
@@ -165,6 +165,6 @@ Test_Consumer::push (const RtecEventComm::EventSet& events)
 }
 
 void
-Test_Consumer::disconnect_push_consumer (void)
+Test_Consumer::disconnect_push_consumer ()
 {
 }

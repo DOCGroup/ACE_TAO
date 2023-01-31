@@ -8,10 +8,9 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ECG_UDP_Out_Endpoint::~TAO_ECG_UDP_Out_Endpoint (void)
+TAO_ECG_UDP_Out_Endpoint::~TAO_ECG_UDP_Out_Endpoint ()
 {
   this->dgram_.close ();
 
@@ -36,7 +35,7 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
   if (from.get_port_number () != this->port_number_)
     return false;
 
-  if (this->ifs_ == 0)
+  if (this->ifs_ == nullptr)
     {
       ACE::get_ip_interfaces (this->if_count_, this->ifs_);
     }
@@ -62,7 +61,7 @@ TAO_ECG_UDP_Out_Endpoint::operator= (const TAO_ECG_UDP_Out_Endpoint& rhs)
       this->if_count_ = rhs.if_count_;
 
       delete [] this->ifs_;
-      this->ifs_ = 0;
+      this->ifs_ = nullptr;
 
       if (this->if_count_ != 0)
         {

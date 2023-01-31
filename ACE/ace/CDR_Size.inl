@@ -14,19 +14,19 @@ ACE_SizeCDR::ACE_SizeCDR (ACE_CDR::Octet major_version,
 }
 
 ACE_INLINE bool
-ACE_SizeCDR::good_bit (void) const
+ACE_SizeCDR::good_bit () const
 {
   return this->good_bit_;
 }
 
 ACE_INLINE void
-ACE_SizeCDR::reset (void)
+ACE_SizeCDR::reset ()
 {
   this->size_ = 0;
 }
 
 ACE_INLINE size_t
-ACE_SizeCDR::total_length (void) const
+ACE_SizeCDR::total_length () const
 {
   return this->size_;
 }

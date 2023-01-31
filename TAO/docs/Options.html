@@ -813,7 +813,7 @@ is set. The default is true. </td>
       <tr>
         <td><code>-ORBUseParallelConnects</code> <em>boolean (0|1)</em></td>
         <td><a name="-ORBUseParallelConnects"></a>This option allows users to
-        specify the ORB attempt to connect simultaniously to all endpoints
+        specify the ORB attempt to connect simultaneously to all endpoints
         listed in profiles, rather than stepping through individual endpoints,
         trying and possibly failing, before moving on to the next. For this
         feature to work, the server must be using shared profiles.
@@ -1012,8 +1012,7 @@ having them use the same configurator file.
         <td>Use this option to cycle through profiles when it has
 	been detected that a connection is closed when reading a server reply
         and having the server possibly process the reqest more than once
-        is acceptable. This option currently does not work under FreeBSD,
-        OpenVMS, AIX, and Solaris.
+        is acceptable. This option currently does not work under FreeBSD.
         The number of retries will not exceed <em>limit</em>.
 	If this option is used then -ORBForwardOnTransientLimit should
 	also be used to avoid a TRANSIENT exception being thrown.
@@ -1509,7 +1508,7 @@ thread-pool reactor which is the default.</td>
               highly scalable replacement for the
               <code>select()</code> based reactors.  The
               ACE_Dev_Poll_Reactor is currently only supported on
-              HP-UX, Solaris and Linux. Be aware that dev_poll
+              Linux. Be aware that dev_poll
               support is experimental!</td>
             </tr>
           </tbody>

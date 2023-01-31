@@ -24,7 +24,7 @@ be_visitor_connector_dds_exs::be_visitor_connector_dds_exs (
   export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_connector_dds_exs::~be_visitor_connector_dds_exs (void)
+be_visitor_connector_dds_exs::~be_visitor_connector_dds_exs ()
 {
 }
 
@@ -46,7 +46,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
     {
       os_ << be_nl
           << this->node_->local_name () << "_exec_i::"
-          << this->node_->local_name () << "_exec_i (void)"
+          << this->node_->local_name () << "_exec_i ()"
           << be_idt_nl
           << ": " << this->base_tname_ << "_Connector_T";
 
@@ -61,7 +61,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
           !i.done ();
           i.advance (), ++slot)
         {
-          AST_Decl **item = 0;
+          AST_Decl **item = nullptr;
           i.next (item);
           AST_Decl *d = *item;
 
@@ -77,7 +77,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
 
           bool needs_bool = false;
           bool is_fixed = false;
-          FE_Utils::T_Param_Info *param = 0;
+          FE_Utils::T_Param_Info *param = nullptr;
 
           if (this->t_params_->get (param, slot - 1) != 0)
             {
@@ -91,13 +91,13 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
           if (d->node_type () == AST_Decl::NT_typedef)
             {
               /// Strip away all layers of typedef before narrowing.
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
               d = td->primitive_base_type ();
             }
 
           /// No need to check if this is 0, but must narrow
           /// to call virtual function size_type() below.
-          AST_Type *t = AST_Type::narrow_from_decl (d);
+          AST_Type *t = dynamic_cast<AST_Type*> (d);
 
           switch (param->type_)
             {
@@ -130,12 +130,11 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
 
       os_ << be_nl_2
           << this->node_->local_name () << "_exec_i::~"
-          << this->node_->local_name () << "_exec_i (void)" << be_nl
+          << this->node_->local_name () << "_exec_i ()" << be_nl
           << "{" << be_nl
           << "}";
 
       this->gen_exec_entrypoint_defn ();
-
     }
 
   os_ << be_uidt_nl

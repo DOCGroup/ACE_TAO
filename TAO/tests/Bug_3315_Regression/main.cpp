@@ -5,9 +5,6 @@
 
 int result = 0;
 
-#if defined (__SUNPRO_CC)
-extern "C"
-#endif /* __SUNPRO_CC */
 ACE_THR_FUNC_RETURN main_orb(void*)
 {
   try

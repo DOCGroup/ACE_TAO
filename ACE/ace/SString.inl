@@ -1,7 +1,5 @@
 // -*- C++ -*-
-// Include ACE.h only if it hasn't already been included, e.g., if
-// ACE_TEMPLATES_REQUIRE_SOURCE, ACE.h won't have been pulled in by
-// String_Base.cpp.
+// Include ACE.h only if it hasn't already been included
 #ifndef ACE_ACE_H
 #  include "ace/ACE.h"
 #endif /* !ACE_ACE_H */
@@ -38,12 +36,6 @@ ACE_NS_WString::ACE_NS_WString (size_type len, ACE_Allocator *alloc)
 }
 
 ACE_INLINE
-ACE_NS_WString::ACE_NS_WString (const ACE_NS_WString &s)
-  : ACE_WString (s)
-{
-}
-
-ACE_INLINE
 ACE_NS_WString::ACE_NS_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc)
   : ACE_WString (c, alloc)
 {
@@ -60,7 +52,7 @@ operator+ (const ACE_NS_WString &s, const ACE_NS_WString &t)
 // -------------------------------------------------------
 
 ACE_INLINE
-ACE_SString::~ACE_SString (void)
+ACE_SString::~ACE_SString ()
 {
 }
 
@@ -92,7 +84,7 @@ ACE_SString::operator[] (size_type slot)
 // Get the underlying pointer (does not make a copy, so beware!).
 
 ACE_INLINE const char *
-ACE_SString::rep (void) const
+ACE_SString::rep () const
 {
   ACE_TRACE ("ACE_SString::rep");
   return this->rep_;
@@ -101,7 +93,7 @@ ACE_SString::rep (void) const
 // Get the underlying pointer (does not make a copy, so beware!).
 
 ACE_INLINE const char *
-ACE_SString::fast_rep (void) const
+ACE_SString::fast_rep () const
 {
   ACE_TRACE ("ACE_SString::fast_rep");
   return this->rep_;
@@ -110,7 +102,7 @@ ACE_SString::fast_rep (void) const
 // Get the underlying pointer (does not make a copy, so beware!).
 
 ACE_INLINE const char *
-ACE_SString::c_str (void) const
+ACE_SString::c_str () const
 {
   ACE_TRACE ("ACE_SString::c_str");
   return this->rep_;
@@ -127,7 +119,6 @@ ACE_SString::operator== (const ACE_SString &s) const
 }
 
 // Less than comparison operator.
-
 ACE_INLINE bool
 ACE_SString::operator < (const ACE_SString &s) const
 {
@@ -218,13 +209,13 @@ ACE_SString::rfind (char c, size_type pos) const
 }
 
 ACE_INLINE u_long
-ACE_SString::hash (void) const
+ACE_SString::hash () const
 {
   return ACE::hash_pjw (this->rep_);
 }
 
 ACE_INLINE ACE_SString::size_type
-ACE_SString::length (void) const
+ACE_SString::length () const
 {
   ACE_TRACE ("ACE_SString::length");
   return this->len_;
@@ -266,13 +257,13 @@ ACE_Auto_String_Free::operator= (ACE_Auto_String_Free& rhs)
 }
 
 ACE_INLINE
-ACE_Auto_String_Free::~ACE_Auto_String_Free (void)
+ACE_Auto_String_Free::~ACE_Auto_String_Free ()
 {
   this->reset (0);
 }
 
 ACE_INLINE char*
-ACE_Auto_String_Free::operator* (void) const
+ACE_Auto_String_Free::operator* () const
 {
   return this->p_;
 }
@@ -284,13 +275,13 @@ ACE_Auto_String_Free::operator[] (size_t i) const
 }
 
 ACE_INLINE char*
-ACE_Auto_String_Free::get (void) const
+ACE_Auto_String_Free::get () const
 {
   return this->p_;
 }
 
 ACE_INLINE char*
-ACE_Auto_String_Free::release (void)
+ACE_Auto_String_Free::release ()
 {
   char* p = this->p_;
   this->p_ = 0;

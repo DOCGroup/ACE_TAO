@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 #include "ClientTask.h"
 #include "tao/Exception.h"
 #include "ace/SString.h"

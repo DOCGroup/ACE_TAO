@@ -55,7 +55,6 @@ extern "C" {
 #define ACE_RENAME_EQUIVALENT MQX_Filesystem::inst().rename
 
 #define ACE_MQX
-#define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_PAGE_SIZE 4096
 #define ACE_SOCKET_LEN uint16_t
 #define ACE_SOCKOPT_LEN socklen_t
@@ -331,8 +330,6 @@ inline int puts(const char* str) {
 #define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_DIRENT
 
-#define ACE_NEW_THROWS_EXCEPTIONS
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
 #define ACE_TEXT_WIN32_FIND_DATA MFS_SEARCH_DATA
 
 #define ACE_LACKS_UNIX_SIGNALS

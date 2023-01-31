@@ -54,7 +54,7 @@ ACE_hrtime_t total_ltime;
 ACE_hrtime_t ltime;
 
 static void
-usage (void)
+usage ()
 {
   ACE_ERROR ((LM_ERROR,
               "%s\n"
@@ -86,10 +86,10 @@ public:
   Client (const ACE_INET_Addr &addr,
           const ACE_INET_Addr &remote_addr);
 
-  virtual ~Client (void);
+  virtual ~Client ();
 
   // = Override <ACE_Event_Handler> methods.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
@@ -103,11 +103,11 @@ public:
   int get_response (char *buf, size_t len);
 
   /// Send messages to server and record statistics.
-  int run (void);
+  int run ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Send shutdown message to server.
-  int shutdown (void);
+  int shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -117,9 +117,9 @@ private:
   /// The address to send messages to.
   ACE_INET_Addr remote_addr_;
 
-  ACE_UNIMPLEMENTED_FUNC (Client (void))
-  ACE_UNIMPLEMENTED_FUNC (Client (const Client &))
-  ACE_UNIMPLEMENTED_FUNC (Client &operator= (const Client &))
+  Client () = delete;
+  Client (const Client &) = delete;
+  Client &operator= (const Client &) = delete;
 };
 
 Client::Client (const ACE_INET_Addr &addr,
@@ -136,12 +136,12 @@ Client::Client (const ACE_INET_Addr &addr,
     }
 }
 
-Client::~Client (void)
+Client::~Client ()
 {
 }
 
 ACE_HANDLE
-Client::get_handle (void) const
+Client::get_handle () const
 {
   return endpoint_.get_handle ();
 }
@@ -190,7 +190,7 @@ Client::get_response (char *buf, size_t len)
 }
 
 int
-Client::run (void)
+Client::run ()
 {
   int ndist = 0;
   int i;
@@ -447,7 +447,7 @@ Client::run (void)
 }
 
 int
-Client::shutdown (void)
+Client::shutdown ()
 {
   const char buf = 'S';
   const int n = endpoint_.send (&buf, 1u, remote_addr_);
@@ -469,10 +469,10 @@ class Server : public ACE_Event_Handler
 public:
   Server (const ACE_INET_Addr &addr);
 
-  virtual ~Server (void);
+  virtual ~Server ();
 
   // = Override <ACE_Event_Handler> methods.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
@@ -481,9 +481,9 @@ private:
   /// Receives datagrams.
   ACE_SOCK_Dgram endpoint_;
 
-  ACE_UNIMPLEMENTED_FUNC (Server (void))
-  ACE_UNIMPLEMENTED_FUNC (Server (const Server &))
-  ACE_UNIMPLEMENTED_FUNC (Server &operator= (const Server &))
+  Server () = delete;
+  Server (const Server &) = delete;
+  Server &operator= (const Server &) = delete;
 };
 
 Server::Server (const ACE_INET_Addr &addr)
@@ -499,12 +499,12 @@ Server::Server (const ACE_INET_Addr &addr)
     }
 }
 
-Server::~Server (void)
+Server::~Server ()
 {
 }
 
 ACE_HANDLE
-Server::get_handle (void) const
+Server::get_handle () const
 {
   return endpoint_.get_handle ();
 }

@@ -1,7 +1,6 @@
 #include "orbsvcs/Event/EC_Masked_Type_Filter.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Masked_Type_Filter::
@@ -16,24 +15,24 @@ TAO_EC_Masked_Type_Filter::
 {
 }
 
-TAO_EC_Masked_Type_Filter::~TAO_EC_Masked_Type_Filter (void)
+TAO_EC_Masked_Type_Filter::~TAO_EC_Masked_Type_Filter ()
 {
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Masked_Type_Filter::begin (void) const
+TAO_EC_Masked_Type_Filter::begin () const
 {
-  return 0;
+  return nullptr;
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Masked_Type_Filter::end (void) const
+TAO_EC_Masked_Type_Filter::end () const
 {
-  return 0;
+  return nullptr;
 }
 
 int
-TAO_EC_Masked_Type_Filter::size (void) const
+TAO_EC_Masked_Type_Filter::size () const
 {
   return 0;
 }
@@ -49,7 +48,7 @@ TAO_EC_Masked_Type_Filter::filter (const RtecEventComm::EventSet& event,
       || (event[0].header.source & this->source_mask_) != this->source_value_)
     return 0;
 
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     {
       this->parent ()->push (event, qos_info);
     }
@@ -67,7 +66,7 @@ TAO_EC_Masked_Type_Filter::filter_nocopy (RtecEventComm::EventSet& event,
       || (event[0].header.source & this->source_mask_) != this->source_value_)
     return 0;
 
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     {
       this->parent ()->push_nocopy (event, qos_info);
     }
@@ -87,12 +86,12 @@ TAO_EC_Masked_Type_Filter::push_nocopy (RtecEventComm::EventSet &,
 }
 
 void
-TAO_EC_Masked_Type_Filter::clear (void)
+TAO_EC_Masked_Type_Filter::clear ()
 {
 }
 
 CORBA::ULong
-TAO_EC_Masked_Type_Filter::max_event_size (void) const
+TAO_EC_Masked_Type_Filter::max_event_size () const
 {
   return 1;
 }

@@ -20,7 +20,7 @@ be_visitor_operation_ch::be_visitor_operation_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_ch::~be_visitor_operation_ch (void)
+be_visitor_operation_ch::~be_visitor_operation_ch ()
 {
 }
 
@@ -34,7 +34,7 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
   *os << be_nl_2;
 
   // STEP I: generate the return type.
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
@@ -52,8 +52,6 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
            *os << "/// Setter for " << node->local_name() << " attribute" << be_nl
                << "/// @param[in] " << node->local_name() << " - New value for "
                << node->local_name() << " attribute" << be_nl;
-
-
         }
       else
         {
@@ -97,12 +95,12 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
     }
 
   be_interface *intf =
-    be_interface::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_interface*> (node->defined_in ());
 
   /// If we are in a reply handler, are not an excep_* operation,
   /// and have no native args, then generate the AMI static
   /// reply stub declaration.
-  if (intf != 0
+  if (intf != nullptr
       && intf->is_ami_rh ()
       && !node->is_excep_ami ()
       && !node->has_native ())

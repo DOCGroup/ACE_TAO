@@ -29,12 +29,11 @@ RTEC_Initializer::create (PortableServer::POA_ptr consumer_poa,
 
   TAO_EC_Factory *body =
     ACE_Dynamic_Service<TAO_EC_Factory>::instance ("EC_Factory");
-  auto_ptr<TAO_EC_Factory> factory (
+  std::unique_ptr<TAO_EC_Factory> factory (
       new TAO_EC_RTCORBA_Factory (body,
                                   rtcorba_setup->lanes ()));
 
-  TAO_EC_Event_Channel *ec =
-    new TAO_EC_Event_Channel (attr, factory.get (), 1);
+  TAO_EC_Event_Channel *ec = new TAO_EC_Event_Channel (attr, factory.get (), 1);
   factory.release ();
 
   return ec;

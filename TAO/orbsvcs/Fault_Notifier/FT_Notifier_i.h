@@ -69,7 +69,7 @@ namespace TAO
      * Prepare to exit
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (void);
+    int fini ();
 
     /**
      * Identify this fault notifier.
@@ -110,13 +110,13 @@ namespace TAO
 
     //////////////////////////////////////////
     // CORBA interface PullMonitorable methods
-    virtual CORBA::Boolean is_alive (void);
+    virtual CORBA::Boolean is_alive ();
 
     /////////////////////////////////////////
     // Override CORBA servant virtual methods
-    virtual PortableServer::POA_ptr _default_POA (void);
+    virtual PortableServer::POA_ptr _default_POA ();
 
-    virtual void _remove_ref (void);
+    virtual void _remove_ref ();
 
     /////////////////////////
     // Implementation methods
@@ -226,7 +226,6 @@ namespace TAO
      * boolean: set true when CORBA is done with this object.
      */
     int gone_;
-
   };
 } // namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL

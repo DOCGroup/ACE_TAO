@@ -16,7 +16,6 @@
 #include "ace/ACE.h"
 
 
-
 // Don't change the strings thinking that they are typos
 
 const ACE_Byte normal_stream[] = "This is a sample test stream, to test simple Base64 encoding";
@@ -88,7 +87,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("This is ACE Version %u.%u.%u\n\n"),
               ACE::major_version (),
               ACE::minor_version(),
-              ACE::beta_version()));
+              ACE::micro_version()));
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing ACE Base64 - normal stream\n\n")));

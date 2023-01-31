@@ -41,7 +41,7 @@ template<class Object>
 class TAO_ESF_Worker
 {
 public:
-  virtual ~TAO_ESF_Worker (void);
+  virtual ~TAO_ESF_Worker ();
 
   /// Used by the collection to inform the worker
   /// the number of proxies in the collection.
@@ -53,12 +53,6 @@ public:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/ESF/ESF_Worker.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Worker.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_ESF_WORKER_H */

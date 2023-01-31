@@ -42,9 +42,8 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
-  Server_Request_Interceptor (void);
+  Server_Request_Interceptor ();
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -56,9 +55,9 @@ public:
    */
   //@{
   /// Return the name of this ServerRequestinterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void receive_request_service_contexts (
       PortableInterceptor::ServerRequestInfo_ptr ri);
@@ -77,10 +76,8 @@ public:
   //@}
 
 protected:
-
   /// Destructor.
-  ~Server_Request_Interceptor (void);
-
+  ~Server_Request_Interceptor ();
 };
 
 #if defined(_MSC_VER)

@@ -27,7 +27,6 @@
 #include "ace/Barrier.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 int nthreads   = 0;
 int high_priority_period = 0;

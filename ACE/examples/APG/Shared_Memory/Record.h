@@ -28,9 +28,9 @@ public:
     ACE_OS::strcpy (recName_, name);
     this->name_ = recName_;
   }
-  char *name (void) { return recName_; }
-  int id1 (void) { return id1_; }
-  int id2 (void) { return id2_; }
+  char *name () { return recName_; }
+  int id1 () { return id1_; }
+  int id2 () { return id2_; }
 
 private:
   int id1_;

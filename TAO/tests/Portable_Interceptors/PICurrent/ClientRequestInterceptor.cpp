@@ -18,7 +18,7 @@ ClientRequestInterceptor::name ()
 }
 
 void
-ClientRequestInterceptor::destroy (void)
+ClientRequestInterceptor::destroy ()
 {
 }
 

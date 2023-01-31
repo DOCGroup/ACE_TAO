@@ -28,7 +28,7 @@ TAO_Operation_Details::corba_exception (const char *id) const
       // Create an exception object
       CORBA::Exception *exception = this->ex_data_[i].alloc ();
 
-      if (exception == 0)
+      if (!exception)
         {
           throw ::CORBA::NO_MEMORY (0, CORBA::COMPLETED_YES);
         }

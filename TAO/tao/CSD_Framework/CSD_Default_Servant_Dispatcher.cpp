@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CSD_Default_Servant_Dispatcher::~TAO_CSD_Default_Servant_Dispatcher (void)
+TAO_CSD_Default_Servant_Dispatcher::~TAO_CSD_Default_Servant_Dispatcher ()
 {
 }
 
@@ -30,8 +30,7 @@ TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                  lock,
                                  thread_lock,
                                  orb_core,
-                                 object_adapter
-                                ),
+                                 object_adapter),
                     CORBA::NO_MEMORY ());
 
 

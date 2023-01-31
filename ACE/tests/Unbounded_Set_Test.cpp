@@ -11,13 +11,9 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include <ace/Unbounded_Set.h>
-#include <ace/Auto_Ptr.h>
 #include <ace/SString.h>
-
-
 
 struct MyNode
 {
@@ -25,7 +21,11 @@ struct MyNode
   MyNode () : k (0) {}
   MyNode (int pk) : k (pk) {}
   MyNode (const MyNode& o) : k (o.k) {}
+  MyNode (MyNode&& o) : k(o.k) {}
+  MyNode& operator=(const MyNode& o) { k = o.k; return *this; }
+  MyNode& operator=(MyNode&& o) { k = o.k; return *this; }
   bool operator== (const MyNode& o) const { return (k == o.k); }
+  bool operator!= (const MyNode& o) const { return (k != o.k); }
 };
 
 size_t count_const_set (const ACE_Unbounded_Set<MyNode>& cubs)
@@ -100,7 +100,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Test assigment of sets.
   // To do that, we also test some of the iterator methods.
-  typedef ACE_Unbounded_Set<MyNode> MySet;
+  using MySet = ACE_Unbounded_Set<MyNode>;
   MySet ubs2 = ubs;              // Test a typedef of a set.
   if (ubs2.size() != ubs.size())
     {

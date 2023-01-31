@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE::HTBP::Addr &
-TAO::HTIOP::Endpoint::object_addr (void) const
+TAO::HTIOP::Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode
   // time for several reasons:
@@ -50,19 +50,19 @@ TAO::HTIOP::Endpoint::object_addr (void) const
 }
 
 ACE_INLINE const char *
-TAO::HTIOP::Endpoint::host (void) const
+TAO::HTIOP::Endpoint::host () const
 {
   return this->host_.in ();
 }
 
 ACE_INLINE const char *
-TAO::HTIOP::Endpoint::htid (void) const
+TAO::HTIOP::Endpoint::htid () const
 {
   return this->htid_.in ();
 }
 
 ACE_INLINE CORBA::UShort
-TAO::HTIOP::Endpoint::port (void) const
+TAO::HTIOP::Endpoint::port () const
 {
   return this->port_;
 }

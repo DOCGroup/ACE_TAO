@@ -36,7 +36,6 @@
 class TAO_RTSched_Export ACE_RT_Info : public RtecScheduler::RT_Info
 {
 public:
-
   /// Construct a helper class instance from values for
   /// the fields of the IDL struct it wraps.
   ACE_RT_Info (const char* entry_point,
@@ -54,7 +53,6 @@ public:
   /// Add a dependency of one RT_Info upon another.
   int add_dependency(RtecScheduler::handle_t dep,
                      int number_of_calls = 1);
-
 };
 
 #if defined (__ACE_INLINE__)

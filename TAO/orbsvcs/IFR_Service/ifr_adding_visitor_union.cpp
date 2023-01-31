@@ -18,7 +18,7 @@ ifr_adding_visitor_union::ifr_adding_visitor_union (AST_Decl *scope)
 {
 }
 
-ifr_adding_visitor_union::~ifr_adding_visitor_union (void)
+ifr_adding_visitor_union::~ifr_adding_visitor_union ()
 {
 }
 
@@ -33,9 +33,9 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
       return ifr_adding_visitor::visit_scope (node);
     }
 
-  AST_Union *u = AST_Union::narrow_from_scope (node);
+  AST_Union *u = dynamic_cast<AST_Union*> (node);
 
-  CORBA::ULong nfields = static_cast<CORBA::ULong> (u->nfields ());
+  CORBA::ULong const nfields = static_cast<CORBA::ULong> (u->nfields ());
 
   this->members_.length (nfields);
 
@@ -111,7 +111,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
           // Get the case label(s).
 
           AST_UnionLabel *case_label = 0;
-          AST_UnionBranch *ub = AST_UnionBranch::narrow_from_decl (*f);
+          AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (*f);
           unsigned long len = ub->label_list_length ();
 
           // If there are multiple case labels, we will have an element
@@ -459,7 +459,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
 }
 
 CORBA::IDLType_ptr
-ifr_adding_visitor_union::ir_current (void) const
+ifr_adding_visitor_union::ir_current () const
 {
   return this->ir_current_.in ();
 }

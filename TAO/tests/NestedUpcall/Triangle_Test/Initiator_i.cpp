@@ -22,12 +22,12 @@ Initiator_i::Initiator_i (Object_A_ptr object_A_ptr,
 }
 
 // DTOR
-Initiator_i::~Initiator_i (void)
+Initiator_i::~Initiator_i ()
 {
 }
 
 void
-Initiator_i::foo_object_B (void)
+Initiator_i::foo_object_B ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Initiator_i::foo_object_B ()\n"));

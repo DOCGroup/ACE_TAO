@@ -23,14 +23,13 @@
 #include "ace/OS_NS_time.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
-typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
-typedef ACE_Module<ACE_MT_SYNCH> MT_Module;
-typedef ACE_Task<ACE_MT_SYNCH> MT_Task;
+using MT_Stream = ACE_Stream<ACE_MT_SYNCH>;
+using MT_Module = ACE_Module<ACE_MT_SYNCH>;
+using MT_Task = ACE_Task<ACE_MT_SYNCH>;
 
 /**
  * @class Common_Task
@@ -40,13 +39,13 @@ typedef ACE_Task<ACE_MT_SYNCH> MT_Task;
 class Common_Task : public MT_Task
 {
 public:
-  Common_Task (void) {}
+  Common_Task () {}
 
   //FUZZ: disable check_for_lack_ACE_OS
   // = ACE_Task hooks.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int open (void * = 0);
-  virtual int close (u_long = 0);
+  int open (void * = 0) override;
+  int close (u_long = 0) override;
 };
 
 /**
@@ -57,10 +56,10 @@ public:
 class Supplier : public Common_Task
 {
 public:
-  Supplier (void) {}
+  Supplier () {}
 
   /// Read data from stdin and pass to consumer.
-  virtual int svc (void);
+  int svc () override;
 };
 
 /**
@@ -71,16 +70,15 @@ public:
 class Consumer : public Common_Task
 {
 public:
-  Consumer (void) {}
+  Consumer () {}
 
   /// Enqueue the message on the ACE_Message_Queue for subsequent
   /// handling in the svc() method.
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0) override;
 
   /// Receive message from Supplier and print to stdout.
-  virtual int svc (void);
+  int svc () override;
 private:
-
   /// Amount of time to wait for a timeout.
   ACE_Time_Value timeout_;
 };
@@ -116,7 +114,7 @@ Common_Task::close (u_long exit_status)
 // know when to exit.
 
 int
-Supplier::svc (void)
+Supplier::svc ()
 {
   ACE_Message_Block *mb = 0;
 
@@ -161,7 +159,7 @@ Consumer::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 // reading and exit.
 
 int
-Consumer::svc (void)
+Consumer::svc ()
 {
   ACE_Message_Block *mb = 0;
   int result;

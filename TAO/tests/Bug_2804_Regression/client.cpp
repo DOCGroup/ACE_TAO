@@ -87,7 +87,6 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
 
   ::perform_invocation<Test::NonRecursiveUnionWithStringStruct3> (hello,
                                                                   the_any);
-
 }
 
 /**

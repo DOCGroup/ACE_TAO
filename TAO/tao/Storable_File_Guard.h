@@ -18,7 +18,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class Storable_File_Guard
    * @brief Base class to use with TAO_Storable_Base to synch object state
@@ -32,16 +31,15 @@ namespace TAO
   class TAO_Export Storable_File_Guard
   {
   public:
-
     Storable_File_Guard (bool redundant,
                          bool use_backup = Storable_Base::use_backup_default);
 
-    virtual ~Storable_File_Guard () ACE_NOEXCEPT_FALSE;
+    virtual ~Storable_File_Guard () noexcept(false);
 
     /// Releases the lock, closes the file, and deletes the I/O stream.
     /// Destructors of derived classes should call this this will
     /// virtual functions are available.
-    void release (void);
+    void release ();
 
     /// Return when the object in memory has last changed
     virtual time_t get_object_last_changed () = 0;
@@ -54,7 +52,6 @@ namespace TAO
     /// the persistent store.
     enum Method_Type
     {
-
       /// Construction with persistent file already existing
       CREATE_WITH_FILE,
 
@@ -69,7 +66,6 @@ namespace TAO
     };
 
   protected:
-
     /// Should be called by constructors of derived classes
     /// since can't call the virtual functions below in constructor
     /// of this class.
@@ -83,13 +79,13 @@ namespace TAO
 
     /// Complete the initialization of the containing object, should
     /// be called with lock held after calling init_no_load
-    void reload (void);
+    void reload ();
 
     /// Check if the object is current with the last update.
-    virtual bool object_obsolete (void);
+    virtual bool object_obsolete ();
 
     /// Mark the object as up to date
-    virtual void mark_object_current (void);
+    virtual void mark_object_current ();
 
     /// Indicate when the object in memory has last changed
     virtual void set_object_last_changed (const time_t & time) = 0;
@@ -106,8 +102,7 @@ namespace TAO
     Storable_Base *fl_;
 
   private:
-
-    // Return 0 if succesful.
+    // Return 0 if successful.
     int load ();
 
     bool redundant_;
@@ -123,9 +118,7 @@ namespace TAO
 
     /// Symbolic values for the flags in the above
     enum { mode_write = 1, mode_read = 2, mode_create = 4 };
-
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

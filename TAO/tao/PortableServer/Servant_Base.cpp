@@ -29,8 +29,6 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
 
-//@@ TAO_SERVANT_BASE_INCLUDE_ADD_HOOK
-
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Servant_Base.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -81,12 +79,12 @@ TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
   return *this;
 }
 
-TAO_ServantBase::~TAO_ServantBase (void)
+TAO_ServantBase::~TAO_ServantBase ()
 {
 }
 
 PortableServer::POA_ptr
-TAO_ServantBase::_default_POA (void)
+TAO_ServantBase::_default_POA ()
 {
   CORBA::Object_var object = TAO_ORB_Core_instance ()->root_poa ();
 
@@ -352,7 +350,6 @@ TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
 # endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
 
-
 void
 TAO_ServantBase::_repository_id_skel (TAO_ServerRequest & server_request,
                                       TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
@@ -436,13 +433,13 @@ TAO_ServantBase::_is_a (const char *logical_type_id)
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 CORBA::Boolean
-TAO_ServantBase::_non_existent (void)
+TAO_ServantBase::_non_existent ()
 {
   return false;
 }
 
 CORBA::InterfaceDef_ptr
-TAO_ServantBase::_get_interface (void)
+TAO_ServantBase::_get_interface ()
 {
   TAO_IFR_Client_Adapter *adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
@@ -461,13 +458,13 @@ TAO_ServantBase::_get_interface (void)
 
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 CORBA::Object_ptr
-TAO_ServantBase::_get_component (void)
+TAO_ServantBase::_get_component ()
 {
   return CORBA::Object::_nil ();
 }
 #endif
 char *
-TAO_ServantBase::_repository_id (void)
+TAO_ServantBase::_repository_id ()
 {
   return CORBA::string_dup (this->_interface_repository_id ());
 }
@@ -495,7 +492,7 @@ TAO_ServantBase::_find (const char *opname,
 }
 
 TAO_Stub *
-TAO_ServantBase::_create_stub (void)
+TAO_ServantBase::_create_stub ()
 {
   TAO_Stub *stub = 0;
 
@@ -568,12 +565,6 @@ TAO_ServantBase::synchronous_upcall_dispatch (
       // results.  De/marshaling will only occur in the not collocated
       // case.
       skel (req, servant_upcall, derived_this);
-
-      /*
-       * Dispatch resolution specialization add hook.
-       * Over-ridden with code to handle optimized dispatch.
-       */
-      //@@ TAO_DISPATCH_RESOLUTION_OPT_ADD_HOOK
 
       // It is our job to send the already marshaled reply, but only
       // send if it is expected and it has not already been sent
@@ -653,13 +644,13 @@ TAO_ServantBase::asynchronous_upcall_dispatch (
 }
 
 void
-TAO_ServantBase::_add_ref (void)
+TAO_ServantBase::_add_ref ()
 {
   ++this->ref_count_;
 }
 
 void
-TAO_ServantBase::_remove_ref (void)
+TAO_ServantBase::_remove_ref ()
 {
   CORBA::ULong const new_count = --this->ref_count_;
 
@@ -670,13 +661,9 @@ TAO_ServantBase::_remove_ref (void)
 }
 
 CORBA::ULong
-TAO_ServantBase::_refcount_value (void) const
+TAO_ServantBase::_refcount_value () const
 {
-#if defined (ACE_HAS_CPP11)
   return this->ref_count_;
-#else
-  return this->ref_count_.value ();
-#endif /* ACE_HAS_CPP11 */
 }
 
 void

@@ -24,11 +24,9 @@
 
 #include "ace/os_include/sys/os_types.h"
 
-#if !defined (ACE_LACKS_SIGNAL_H)
-   extern "C" {
+extern "C" {
 #  include /**/ <signal.h>
-   }
-#endif /* !ACE_LACKS_SIGNAL_H */
+}
 
 #if defined (ACE_HAS_SIGINFO_T)
 #  if !defined (ACE_LACKS_SIGINFO_H)
@@ -137,7 +135,7 @@ extern "C"
 
 #if defined (ACE_VXWORKS)
 #  define ACE_NSIG (_NSIGS + 1)
-#elif defined (__Lynx__) || defined (ACE_HAS_RTEMS)
+#elif defined (__Lynx__)
 #  define ACE_NSIG (NSIG + 1)
 #else
    // All other platforms set NSIG to one greater than the
@@ -145,37 +143,27 @@ extern "C"
 #  define ACE_NSIG NSIG
 #endif /* ACE_VXWORKS */
 
-#if defined (ACE_HAS_WINCE)
-  typedef void (__cdecl * __sighandler_t)(int);
-#endif
-
 #if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
   // Prototypes for both signal() and struct sigaction are consistent..
-  typedef void (*ACE_SignalHandler)(int);
-  typedef void (*ACE_SignalHandlerV)(int);
-#elif defined (ACE_HAS_LYNXOS4_SIGNALS) || defined (ACE_HAS_TANDEM_SIGNALS)
-   typedef void (*ACE_SignalHandler)(...);
-   typedef void (*ACE_SignalHandlerV)(...);
+  using ACE_SignalHandler = void (*)(int);
+  using ACE_SignalHandlerV = void (*)(int);
 #elif defined (ACE_HAS_SVR4_SIGNAL_T)
    // SVR4 Signals are inconsistent (e.g., see struct sigaction)..
-   typedef void (*ACE_SignalHandler)(int);
-   typedef void (*ACE_SignalHandlerV)(void);
+   using ACE_SignalHandler = void (*)(int);
+   using ACE_SignalHandlerV = void (*)();
 #elif defined (ACE_WIN32)
-   typedef void (__cdecl *ACE_SignalHandler)(int);
-   typedef void (__cdecl *ACE_SignalHandlerV)(int);
+   using ACE_SignalHandler = void (__cdecl *)(int);
+   using ACE_SignalHandlerV = void (__cdecl *)(int);
 #elif defined (INTEGRITY)
-   typedef void (*ACE_SignalHandler)();
-   typedef void (*ACE_SignalHandlerV)(int);
-#elif defined (ACE_HAS_RTEMS)
-   typedef void (*ACE_SignalHandler)();
-   typedef void (*ACE_SignalHandlerV)();
+   using ACE_SignalHandler = void (*)();
+   using ACE_SignalHandlerV = void (*)(int);
 #else /* This is necessary for some older broken version of cfront */
 #  if defined (SIG_PF)
 #    define ACE_SignalHandler SIG_PF
 #  else
-     typedef void (*ACE_SignalHandler)(int);
+     using ACE_SignalHandler = void (*)(int);
 #  endif /* SIG_PF */
-   typedef void (*ACE_SignalHandlerV)(...);
+   using ACE_SignalHandlerV = void (*)(...);
 #endif /* ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
 
 #if defined (ACE_LACKS_SIGACTION)

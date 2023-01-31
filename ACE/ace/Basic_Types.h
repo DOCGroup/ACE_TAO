@@ -29,8 +29,8 @@
  *    - ACE_UINT16
  *    - ACE_INT32
  *    - ACE_UINT32
- *    - ACE_UINT64
  *    - ACE_INT64
+ *    - ACE_UINT64
  *
  *  Byte-order (endian-ness) determination:
  *    ACE_BYTE_ORDER, to either ACE_BIG_ENDIAN or ACE_LITTLE_ENDIAN
@@ -84,7 +84,6 @@
 // i.e. determining the type at compile-time rather than at
 // preprocessing-time, will work for all platforms, and does not
 // depend on ACE developer-defined configuration parameters.
-
 typedef ACE::If_Then_Else<
   (sizeof (void*) == sizeof (signed int)),
   signed int,
@@ -201,115 +200,23 @@ typedef ACE::If_Then_Else<
 #   endif
 # endif /* !defined (ACE_SIZEOF_LONG_LONG) */
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// The sizes of the commonly implemented types are now known.  Set up
-// typedefs for whatever we can.  Some of these are needed for certain
-// cases of ACE_UINT64, so do them before the 64-bit stuff.
-
-#if defined (ACE_INT8_TYPE)
-  typedef ACE_INT8_TYPE         ACE_INT8;
-#elif defined (ACE_HAS_INT8_T)
-  typedef int8_t                ACE_INT8;
-#elif !defined (ACE_LACKS_SIGNED_CHAR)
-  typedef signed char           ACE_INT8;
-#else
-  typedef char                  ACE_INT8;
-#endif /* defined (ACE_INT8_TYPE) */
-
-#if defined (ACE_UINT8_TYPE)
-  typedef ACE_UINT8_TYPE        ACE_UINT8;
-#elif defined (ACE_HAS_UINT8_T)
-  typedef uint8_t               ACE_UINT8;
-#else
-  typedef unsigned char         ACE_UINT8;
-#endif /* defined (ACE_UINT8_TYPE) */
-
-#if defined (ACE_INT16_TYPE)
-  typedef ACE_INT16_TYPE        ACE_INT16;
-#elif defined (ACE_HAS_INT16_T)
-  typedef int16_t               ACE_INT16;
-#elif ACE_SIZEOF_SHORT == 2
-  typedef short                 ACE_INT16;
-#elif ACE_SIZEOF_INT == 2
-  typedef int                   ACE_INT16;
-#else
-# error Have to add to the ACE_INT16 type setting
-#endif  /* defined (ACE_INT16_TYPE) */
-
-#if defined (ACE_UINT16_TYPE)
-  typedef ACE_UINT16_TYPE       ACE_UINT16;
-#elif defined (ACE_HAS_UINT16_T)
-  typedef uint16_t              ACE_UINT16;
-#elif ACE_SIZEOF_SHORT == 2
-  typedef unsigned short        ACE_UINT16;
-#elif ACE_SIZEOF_INT == 2
-  typedef unsigned int          ACE_UINT16;
-#else
-# error Have to add to the ACE_UINT16 type setting
-#endif /* defined (ACE_UINT16_TYPE) */
-
-#if defined (ACE_INT32_TYPE)
-  typedef ACE_INT32_TYPE        ACE_INT32;
-#elif defined (ACE_HAS_INT32_T)
-  typedef int32_t               ACE_INT32;
-#elif ACE_SIZEOF_INT == 4
-  typedef int                   ACE_INT32;
-#elif ACE_SIZEOF_LONG == 4
-  typedef long                  ACE_INT32;
-#else
-# error Have to add to the ACE_INT32 type setting
-#endif /* defined (ACE_INT32_TYPE) */
-
-#if defined (ACE_UINT32_TYPE)
-  typedef ACE_UINT32_TYPE       ACE_UINT32;
-#elif defined (ACE_HAS_UINT32_T)
-  typedef uint32_t              ACE_UINT32;
-#elif ACE_SIZEOF_INT == 4
-  typedef unsigned int          ACE_UINT32;
-#elif ACE_SIZEOF_LONG == 4
-  typedef unsigned long         ACE_UINT32;
-#else
-# error Have to add to the ACE_UINT32 type setting
-#endif /* defined (ACE_UINT32_TYPE) */
-
-#if defined (ACE_INT64_TYPE)
-  typedef ACE_INT64_TYPE        ACE_INT64;
-#elif defined (ACE_HAS_INT64_T)
-  typedef int64_t               ACE_INT64;
-#elif ACE_SIZEOF_LONG == 8
-  typedef long                  ACE_INT64;
-#elif ACE_SIZEOF_LONG_LONG == 8
-# ifdef __GNUC__
-  // Silence g++ "-pedantic" warnings regarding use of "long long"
-  // type.
-  __extension__
-# endif  /* __GNUC__ */
-  typedef long long             ACE_INT64;
-#endif /* defined (ACE_INT64_TYPE) */
-
-#if defined (ACE_UINT64_TYPE)
-  typedef ACE_UINT64_TYPE       ACE_UINT64;
-#elif defined (ACE_HAS_UINT64_T)
-  typedef uint64_t              ACE_UINT64;
-#elif ACE_SIZEOF_LONG == 8
-  typedef unsigned long         ACE_UINT64;
-#elif ACE_SIZEOF_LONG_LONG == 8
-# ifdef __GNUC__
-  // Silence g++ "-pedantic" warnings regarding use of "long long"
-  // type.
-  __extension__
-# endif  /* __GNUC__ */
-  typedef unsigned long long    ACE_UINT64;
-#endif /* defined (ACE_UINT64_TYPE) */
+// The sizes of the commonly implemented types are known.
+typedef int8_t   ACE_INT8;
+typedef uint8_t  ACE_UINT8;
+typedef int16_t  ACE_INT16;
+typedef uint16_t ACE_UINT16;
+typedef int32_t  ACE_INT32;
+typedef uint32_t ACE_UINT32;
+typedef int64_t  ACE_INT64;
+typedef uint64_t ACE_UINT64;
 
 /// Define a generic byte for use in codecs
 typedef unsigned char ACE_Byte;
 
 // Define a pseudo wide character type when wchar is not supported so we
 // can support basic wide character string operations.
-
 #if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
 #  define ACE_WINT_T wint_t
 #  define ACE_WCHAR_T wchar_t
@@ -359,12 +266,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #else /* ! BYTE_ORDER && ! __BYTE_ORDER */
   // We weren't explicitly told, so we have to figure it out . . .
   // Note that Itanium hardware (IA64) can run in either byte order. It's
-  // selected by the OS when loading; Windows runs little, HP-UX runs big.
+  // selected by the OS when loading; Windows runs little.
 #   if defined (i386) || defined (__i386__) || defined (_M_IX86) || \
-     defined (vax) || defined (__alpha) || defined (__LITTLE_ENDIAN__) || \
+     defined (vax) || defined (__LITTLE_ENDIAN__) || \
      defined (ARM) || defined (_M_IA64) || defined (_M_AMD64) || \
      defined (__amd64) || \
-     ((defined (__ia64__) || defined (__ia64)) && !defined (__hpux))
+     ((defined (__ia64__) || defined (__ia64)))
     // We know these are little endian.
 #     define ACE_LITTLE_ENDIAN 0x0123
 #     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
@@ -378,9 +285,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // Byte swapping macros to deal with differences between little endian
 // and big endian machines.  Note that "long" here refers to 32 bit
 // quantities.
+# define ACE_SWAP_LONG_LONG(LL) ((ACE_SWAP_LONG ((LL)&0xFFFFFFFF) << 32) \
+            | ACE_SWAP_LONG(((LL) >> 32) & 0xFFFFFFFF))
 # define ACE_SWAP_LONG(L) ((ACE_SWAP_WORD ((L) & 0xFFFF) << 16) \
             | ACE_SWAP_WORD(((L) >> 16) & 0xFFFF))
-# define ACE_SWAP_WORD(L) ((((L) & 0x00FF) << 8) | (((L) & 0xFF00) >> 8))
+# define ACE_SWAP_WORD(W) ((((W) & 0x00FF) << 8) | (((W) & 0xFF00) >> 8))
 
 # define ACE_HTONL(X) htonl (X)
 # define ACE_NTOHL(X) ntohl (X)
@@ -429,9 +338,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  define ACE_UINT64_LITERAL(n) n ## ui64
 #  define ACE_INT64_LITERAL(n) n ## i64
 # endif /* defined (__MINGW32__) */
-#elif defined (__TANDEM)
-#   define ACE_UINT64_LITERAL(n) n ## LL
-#   define ACE_INT64_LITERAL(n) n ## LL
 #else  /* ! ACE_WIN32  */
 #   define ACE_UINT64_LITERAL(n) n ## ull
 #   define ACE_INT64_LITERAL(n) n ## ll
@@ -658,25 +564,30 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # endif /* ACE_SIZEOF_LONG_DOUBLE */
 
 // Max and min sizes for the ACE integer types.
-#define ACE_CHAR_MAX 0x7F
-#define ACE_CHAR_MIN -(ACE_CHAR_MAX)-1
-#define ACE_OCTET_MAX 0xFF
+#define ACE_INT8_MAX 0x7F
+#define ACE_INT8_MIN -(ACE_INT8_MAX) - 1
+#define ACE_UINT8_MAX 0xFF
+#define ACE_CHAR_MAX (ACE_INT8_MAX)
+#define ACE_CHAR_MIN (ACE_INT8_MIN)
+#define ACE_OCTET_MAX (ACE_UINT8_MAX)
 #define ACE_INT16_MAX 0x7FFF
-#define ACE_INT16_MIN -(ACE_INT16_MAX)-1
+#define ACE_INT16_MIN -(ACE_INT16_MAX) - 1
 #define ACE_UINT16_MAX 0xFFFF
 #define ACE_WCHAR_MAX ACE_UINT16_MAX
 #define ACE_INT32_MAX 0x7FFFFFFF
-#define ACE_INT32_MIN -(ACE_INT32_MAX)-1
+#define ACE_INT32_MIN -(ACE_INT32_MAX) - 1
 #define ACE_UINT32_MAX 0xFFFFFFFF
 #define ACE_INT64_MAX ACE_INT64_LITERAL(0x7FFFFFFFFFFFFFFF)
-#define ACE_INT64_MIN -(ACE_INT64_MAX)-1
+#define ACE_INT64_MIN -(ACE_INT64_MAX) - 1
 #define ACE_UINT64_MAX ACE_UINT64_LITERAL (0xFFFFFFFFFFFFFFFF)
 
 // These use ANSI/IEEE format.
 #define ACE_FLT_MAX 3.402823466e+38F
 #define ACE_FLT_MIN 1.175494351e-38F
+#define ACE_FLT_LOWEST -(ACE_FLT_MAX)
 #define ACE_DBL_MAX 1.7976931348623158e+308
 #define ACE_DBL_MIN 2.2250738585072014e-308
+#define ACE_DBL_LOWEST -(ACE_DBL_MAX)
 
 # include /**/ "ace/post.h"
 #endif /* ACE_BASIC_TYPES_H */

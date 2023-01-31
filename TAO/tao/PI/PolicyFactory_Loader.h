@@ -31,10 +31,10 @@ class TAO_PI_Export TAO_PolicyFactory_Loader
 {
 public:
   /// Creates a Codec factory and returns it.
-  virtual TAO::PolicyFactory_Registry_Adapter* create (void);
+  virtual TAO::PolicyFactory_Registry_Adapter* create ();
 
   /// Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 static int

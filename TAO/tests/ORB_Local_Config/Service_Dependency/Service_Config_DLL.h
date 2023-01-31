@@ -33,29 +33,26 @@
 class Service_Config_DLL_Export Service_Config_DLL : public ACE_Task_Base
 {
 public:
-
   /// Constructor.
-  Service_Config_DLL (void);
+  Service_Config_DLL ();
 
   /// Initializes object when dynamic linking occurs.
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Run by a daemon thread.
   /**
    * Each thread will invoke the Service Configurator via this
    * method unless the object is the "FINAL" object.
    */
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
-
   /// Directives to be passed to be processed by the Service
   /// Configurator in separate threads.
   ACE_TCHAR directive_[2][BUFSIZ];
-
 };
 
 

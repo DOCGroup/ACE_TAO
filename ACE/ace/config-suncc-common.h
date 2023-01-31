@@ -3,12 +3,6 @@
 #define ACE_SUNCC_COMMON_H
 #include /**/ "ace/pre.h"
 
-# define ACE_HAS_CPLUSPLUS_HEADERS
-# define ACE_HAS_STDCPP_STL_INCLUDES
-# define ACE_HAS_STANDARD_CPP_LIBRARY 1
-# define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-# define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-# define ACE_HAS_STRING_CLASS
 # define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
 # define ACE_HAS_THR_C_DEST 1
 # define ACE_LACKS_SWAB
@@ -25,8 +19,6 @@
 #  define ACE_IMPORT_SINGLETON_DECLARATION(T) __extension__ extern template class T
 #  define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
 #endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
-
-#define ACE_NEW_THROWS_EXCEPTIONS
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
 # define ACE_SIZEOF_LONG_DOUBLE 12
@@ -45,13 +37,6 @@
   // We define it with a -D with make depend.
 # define ACE_LACKS_PRAGMA_ONCE
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
-
-#define ACE_TEMPLATES_REQUIRE_SOURCE
-
-// Solaris Studio 12.4 implements symbol lookup correctly.
-#if defined (__SUNPRO_CC) && (__SUNPRO_CC >= 0x5130)
-#define ACE_ANY_OPS_USE_NAMESPACE
-#endif
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SUNCC_COMMON_H */

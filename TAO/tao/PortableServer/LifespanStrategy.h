@@ -33,17 +33,17 @@ namespace TAO
       : public Policy_Strategy
     {
     public:
-      LifespanStrategy (void);
+      LifespanStrategy ();
 
       virtual void strategy_init (TAO_Root_POA *poa);
 
-      virtual void strategy_cleanup (void);
+      virtual void strategy_cleanup ();
 
       void create (const char *name, const TAO::ObjectKey &key);
 
-      virtual void notify_startup (void) = 0;
+      virtual void notify_startup () = 0;
 
-      virtual void notify_shutdown (void) = 0;
+      virtual void notify_shutdown () = 0;
 
       /**
        * Validate the passed object key if it belongs to this POA.
@@ -53,12 +53,12 @@ namespace TAO
       /**
        * Returns the length of the key type
        */
-      virtual CORBA::ULong key_length (void) const = 0;
+      virtual CORBA::ULong key_length () const = 0;
 
-      CORBA::ULong key_type_length (void) const;
+      CORBA::ULong key_type_length () const;
 
       /// Do we have set persistent or not,
-      virtual CORBA::Boolean is_persistent (void) const = 0;
+      virtual CORBA::Boolean is_persistent () const = 0;
 
       virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at) = 0;
 
@@ -68,7 +68,7 @@ namespace TAO
         const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const = 0;
 
       /// Check the state of the POA.
-      virtual void check_state (void) = 0;
+      virtual void check_state () = 0;
 
       virtual ::PortableServer::LifespanPolicyValue type () const = 0;
 
@@ -81,7 +81,6 @@ namespace TAO
     protected:
       TAO_Root_POA *poa_;
     };
-
   } /* namespace Portable_Server */
 } /* namespace TAO */
 

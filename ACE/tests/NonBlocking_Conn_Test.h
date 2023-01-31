@@ -24,7 +24,6 @@
 class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-
   enum Connection_Status
     {
       Conn_SUCCEEDED,
@@ -50,7 +49,7 @@ public:
 
   Connection_Status *status_;
   int *completion_counter_;
-  bool is_ref_counted_;
+  bool const is_ref_counted_;
 };
 
 #endif /* NONBLOCKING_CONN_TEST_H */

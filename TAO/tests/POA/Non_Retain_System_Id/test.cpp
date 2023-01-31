@@ -20,7 +20,7 @@ class ID_Check_i : public POA_ID_Check
 {
 public:
   ID_Check_i (int num);
-  ~ID_Check_i (void);
+  ~ID_Check_i ();
 
   void set_id (int index, PortableServer::ObjectId_var oid);
 
@@ -46,7 +46,7 @@ ID_Check_i::ID_Check_i (int num)
   oids_ = new PortableServer::ObjectId_var[num];
 }
 
-ID_Check_i::~ID_Check_i (void)
+ID_Check_i::~ID_Check_i ()
 {
   delete [] oids_;
 }

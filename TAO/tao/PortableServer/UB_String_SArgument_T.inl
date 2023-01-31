@@ -3,12 +3,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S, typename S_var>
 ACE_INLINE
-TAO::In_UB_String_SArgument_T<S,S_var>::In_UB_String_SArgument_T (void)
+TAO::In_UB_String_SArgument_T<S,S_var>::In_UB_String_SArgument_T ()
 {}
 
 template<typename S, typename S_var>
 const S *
-TAO::In_UB_String_SArgument_T<S,S_var>::arg (void) const
+TAO::In_UB_String_SArgument_T<S,S_var>::arg () const
 {
   return this->x_.in ();
 }
@@ -17,13 +17,13 @@ TAO::In_UB_String_SArgument_T<S,S_var>::arg (void) const
 
 template<typename S, typename S_var>
 ACE_INLINE
-TAO::Inout_UB_String_SArgument_T<S,S_var>::Inout_UB_String_SArgument_T (void)
+TAO::Inout_UB_String_SArgument_T<S,S_var>::Inout_UB_String_SArgument_T ()
 {}
 
 template<typename S, typename S_var>
 ACE_INLINE
 S *&
-TAO::Inout_UB_String_SArgument_T<S,S_var>::arg (void)
+TAO::Inout_UB_String_SArgument_T<S,S_var>::arg ()
 {
   return this->x_.inout ();
 }
@@ -40,7 +40,7 @@ TAO::Out_UB_String_SArgument_T<S,S_var>::Out_UB_String_SArgument_T (
 template<typename S, typename S_var>
 ACE_INLINE
 S *&
-TAO::Out_UB_String_SArgument_T<S,S_var>::arg (void)
+TAO::Out_UB_String_SArgument_T<S,S_var>::arg ()
 {
   return this->x_.out ();
 }
@@ -49,12 +49,12 @@ TAO::Out_UB_String_SArgument_T<S,S_var>::arg (void)
 
 template<typename S, typename S_var>
 ACE_INLINE
-TAO::Ret_UB_String_SArgument_T<S,S_var>::Ret_UB_String_SArgument_T (void)
+TAO::Ret_UB_String_SArgument_T<S,S_var>::Ret_UB_String_SArgument_T ()
 {}
 
 template<typename S, typename S_var>
 S *&
-TAO::Ret_UB_String_SArgument_T<S,S_var>::arg (void)
+TAO::Ret_UB_String_SArgument_T<S,S_var>::arg ()
 {
   return this->x_.out ();
 }

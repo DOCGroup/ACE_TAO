@@ -24,9 +24,9 @@ typedef Job_i **JOB_LIST;
 class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 {
  public:
-  DT_Creator (void);
+  DT_Creator ();
 
-  virtual ~DT_Creator (void);
+  virtual ~DT_Creator ();
 
   int init (int argc, ACE_TCHAR *argv []);
 
@@ -34,14 +34,14 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 
   virtual void create_distributable_threads (RTScheduling::Current_ptr  current);
 
-  void activate_poa_list (void);
-  void activate_job_list (void);
-  void activate_schedule (void);
+  void activate_poa_list ();
+  void activate_job_list ();
+  void activate_schedule ();
 
   virtual void yield (time_t suspend_time,
                       Thread_Task* task) = 0;
 
-  virtual void wait (void) = 0;
+  virtual void wait () = 0;
 
   virtual CORBA::Policy_ptr sched_param (int importance) = 0;
 
@@ -51,39 +51,37 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
           int iter,
           int dist,
           char *job_name) = 0;
-  //  virtual Task* task (void) = 0;
+  //  virtual Task* task () = 0;
 
   /// Resolve the naming service.
-  int resolve_naming_service (void);
+  int resolve_naming_service ();
 
-  int dt_count (void);
+  int dt_count ();
 
-  void dt_ended (void);
-  void job_ended (void);
+  void dt_ended ();
+  void job_ended ();
 
-  void check_ifexit (void);
+  void check_ifexit ();
 
   void log_msg (char* msg);
 
   void orb (CORBA::ORB_ptr);
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
-  ACE_Time_Value* base_time (void);
+  ACE_Time_Value* base_time ();
   void base_time (ACE_Time_Value*);
 
-  ACE_hrtime_t base_hr_time (void);
+  ACE_hrtime_t base_hr_time ();
 
-  virtual int total_load (void) = 0;
+  virtual int total_load () = 0;
 
-  Synch_i* synch (void);
+  Synch_i* synch ();
 
-  void register_synch_obj (void);
+  void register_synch_obj ();
 
-  int activate_root_poa (void);
+  int activate_root_poa ();
 
  protected:
-
-
   DT_LIST dt_list_;
   POA_LIST poa_list_;
   JOB_LIST job_list_;

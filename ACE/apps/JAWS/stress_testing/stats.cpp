@@ -16,7 +16,6 @@ void Stats::log(int id, float throughput, float latency) {
 
 // Unused for now.
 void Stats::print(char *message) {
-
   ACE_UNUSED_ARG (message);
 
   // char time_buf[64];
@@ -34,7 +33,6 @@ void Stats::print(char *message) {
 
 
 int comp(const void *a, const void *b) {
-
   Init_Fini_t *A = (Init_Fini_t *)a;
   Init_Fini_t *B = (Init_Fini_t *)b;
 
@@ -67,18 +65,14 @@ void Stats::output() {
 
 
 void Stats::i_have_started(int id) {
-
   init_fini_[2*id].type = THREAD_START;
   init_fini_[2*id].timestamp = ACE_OS::gettimeofday();
-
 }
 
 void Stats::i_am_done(int id) {
-
   init_fini_[(2*id)+1].type = THREAD_END;
 
   init_fini_[(2*id)+1].timestamp = ACE_OS::gettimeofday();
-
 }
 
 

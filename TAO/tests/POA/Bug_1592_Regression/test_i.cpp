@@ -7,12 +7,12 @@ test_i::test_i (CORBA::ORB_ptr orb)
 {
 }
 
-test_i::~test_i (void)
+test_i::~test_i ()
 {
 }
 
 void
-test_i::op (void)
+test_i::op ()
 {
   // PortableInterceptor::ServerRequestInterceptor::receive_request()
   // should have been invoked.
@@ -28,7 +28,7 @@ test_i::op (void)
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

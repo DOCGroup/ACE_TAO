@@ -47,7 +47,7 @@ namespace TAO
     virtual void destroy (TAO::ORT_Adapter * adapter);
 
     /// Used to force the initialization of the code.
-    static int Initializer (void);
+    static int Initializer ();
   };
 }
 

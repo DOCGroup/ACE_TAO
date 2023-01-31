@@ -24,7 +24,6 @@
 
 
 
-
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 
 // The shared memory allocator, which uses up the ACE_DEFAULT_SEM_KEY.
@@ -34,7 +33,7 @@
 
 static
 ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> &
-myallocator (void)
+myallocator ()
 {
   static ACE_Malloc<ACE_SHARED_MEMORY_POOL,
                     ACE_SV_Semaphore_Simple> myallocator;

@@ -63,7 +63,7 @@ Test_i::test_method (CORBA::Short priority)
 void
 Test_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 //*************************************************************************
@@ -100,14 +100,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -118,7 +116,7 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   try
     {
@@ -213,7 +211,6 @@ Task::svc (void)
         ACE_DEBUG ((LM_DEBUG,
                     "Final priority of the servant thread"
                     " == its initial priority\n"));
-
     }
   catch (const ::CORBA::Exception & ex)
     {

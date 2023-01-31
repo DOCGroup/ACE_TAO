@@ -28,7 +28,7 @@ public:
                int event_limit);
 
   //Destructor
-  virtual ~Messenger_i (void);
+  virtual ~Messenger_i ();
 
   virtual void send_message (const char * user_name,
                              const char * subject,
@@ -38,7 +38,6 @@ private:
   CORBA::ORB_var orb_;
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_;
   int event_limit_;
-
 };
 
 

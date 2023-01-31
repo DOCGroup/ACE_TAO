@@ -32,9 +32,9 @@ namespace TAO
     {
     public:
       /// Create a new servant retention strategy
-      virtual ThreadStrategy* create (::PortableServer::ThreadPolicyValue value);
+      ThreadStrategy* create (::PortableServer::ThreadPolicyValue value) override;
 
-      virtual void destroy (ThreadStrategy *strategy);
+      void destroy (ThreadStrategy *strategy) override;
     };
   }
 }

@@ -30,7 +30,6 @@ int printUsage(ACE_TCHAR *arg) {
 }
 
 int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
-
     // size and count for transmissions
     int size = 0, count = -1;
 
@@ -67,7 +66,6 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
 
     // -1 is running indefinitely
     while ((count == -1) || (count-- != 0)) {
-
         // some output, that we know something is happening
         //ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l: Passes left: %i\n"), count));
         ACE_DEBUG((LM_DEBUG, ACE_TEXT(".")));
@@ -81,7 +79,6 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
         }
 
         try {
-
             // send the request to the server (number of MiB in the next call)
             // Note: only use the sizeof and pointer to int on compatible
             //       platforms (i.e. little-endian/big-endian, data type size)
@@ -100,7 +97,6 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
 
             // server answer, 'K" indicates a positive answer
             if (answer == 'K') {
-
                 // send a huge message to the server
                 if (stream.send_n(someData, size, &connTimeout) != size) {
                   ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send ")

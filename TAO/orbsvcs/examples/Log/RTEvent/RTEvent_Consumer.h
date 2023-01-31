@@ -32,7 +32,7 @@ class Consumer : public POA_RtecEventComm::PushConsumer
   //   It simply registers for one event type.
   //
 public:
-  Consumer (void);
+  Consumer ();
   // Constructor
 
   int run (int argc, ACE_TCHAR* argv[]);
@@ -41,7 +41,7 @@ public:
   // = The RtecEventComm::PushConsumer methods
 
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
   // The skeleton methods.
 
 private:
@@ -60,7 +60,6 @@ private:
 
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_;
   // The proxy that we are connected to.
-
 };
 
 #endif /* RTEVENT_CONSUMER_H */

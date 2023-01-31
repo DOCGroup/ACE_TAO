@@ -86,7 +86,7 @@ ACE_URL_Locator_Request::modify_offer (const ACE_WString &offer_id,
    LEN += sizeof (ACE_UINT32);
 
 size_t
-ACE_URL_Locator_Request::encode (void)
+ACE_URL_Locator_Request::encode ()
 {
   ACE_TRACE ("ACE_URL_Locator_Request::encode");
 
@@ -192,7 +192,7 @@ ACE_URL_Locator_Request::decode (void *buffer)
 
 
 size_t
-ACE_URL_Locator_Request::size (void)
+ACE_URL_Locator_Request::size ()
 {
   ACE_TRACE ("ACE_URL_Locator_Request::size");
 
@@ -227,7 +227,7 @@ ACE_URL_Locator_Request::size (void)
 }
 
 void
-ACE_URL_Locator_Request::dump (void) const
+ACE_URL_Locator_Request::dump () const
 {
   //ACE_TRACE ("ACE_URL_Locator_Request::dump");
 
@@ -313,7 +313,7 @@ ACE_URL_Locator_Reply::describe_reply (int result,
 }
 
 size_t
-ACE_URL_Locator_Reply::encode (void)
+ACE_URL_Locator_Reply::encode ()
 {
   ACE_TRACE ("ACE_URL_Locator_Reply::encode");
 
@@ -398,7 +398,7 @@ ACE_URL_Locator_Reply::decode (void *buffer)
 }
 
 size_t
-ACE_URL_Locator_Reply::size (void)
+ACE_URL_Locator_Reply::size ()
 {
   ACE_TRACE ("ACE_URL_Locator_Reply:size");
 
@@ -421,7 +421,7 @@ ACE_URL_Locator_Reply::size (void)
 }
 
 void
-ACE_URL_Locator_Reply::dump (void) const
+ACE_URL_Locator_Reply::dump () const
 {
   //ACE_TRACE ("ACE_URL_Locator_Reply::dump");
 

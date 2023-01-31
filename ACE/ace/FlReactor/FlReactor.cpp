@@ -29,7 +29,7 @@ ACE_FlReactor::ACE_FlReactor (size_t size,
 #endif /* ACE_MT_SAFE */
 }
 
-ACE_FlReactor::~ACE_FlReactor (void)
+ACE_FlReactor::~ACE_FlReactor ()
 {
 }
 
@@ -86,7 +86,6 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
                                handle_set.wr_mask_,
                                handle_set.ex_mask_,
                                &zero);
-
     } while (nfound == -1 && this->handle_error () > 0);
 
   if (nfound > 0)
@@ -231,7 +230,7 @@ ACE_FlReactor::remove_handler_i (const ACE_Handle_Set &handles,
 // timeout in the Reactor's Timer_Queue.
 
 void
-ACE_FlReactor::reset_timeout (void)
+ACE_FlReactor::reset_timeout ()
 {
   ACE_Time_Value *max_wait_time =
     this->timer_queue_->calculate_timeout (0);

@@ -15,7 +15,6 @@ GroupInfoPublisherBase::GroupInfoPublisherBase()
 }
 
 
-
 void
 GroupInfoPublisherBase::subscribe(TAO_FTEC_Become_Primary_Listener* listener)
 {
@@ -46,13 +45,11 @@ GroupInfoPublisherBase::successor() const
 }
 
 
-
 const GroupInfoPublisherBase::BackupList&
 GroupInfoPublisherBase::backups() const
 {
   return info_->backups;
 }
-
 
 
 GroupInfoPublisherBase::Info*
@@ -144,7 +141,7 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
       }
     }
   }
-  info_ = info;
+  info_ = std::move(info);
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

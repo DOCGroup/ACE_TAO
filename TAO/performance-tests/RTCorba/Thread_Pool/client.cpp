@@ -44,7 +44,7 @@ static int count_missed_end_deadlines = 0;
 
 struct Synchronizers
 {
-  Synchronizers (void)
+  Synchronizers ()
     : worker_lock_ (),
       workers_ (1),
       workers_ready_ (0),
@@ -406,11 +406,11 @@ public:
                 RTCORBA::PriorityMapping &priority_mapping,
                 Synchronizers &synchronizers);
 
-  int svc (void);
+  int svc ();
   ACE_hrtime_t deadline_for_current_call (CORBA::ULong i);
-  void reset_priority (void);
+  void reset_priority ();
   void print_stats (ACE_hrtime_t test_end);
-  int setup (void);
+  int setup ();
   void missed_start_deadline (CORBA::ULong invocation);
   void missed_end_deadline (CORBA::ULong invocation);
 
@@ -461,7 +461,7 @@ Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
 }
 
 void
-Paced_Worker::reset_priority (void)
+Paced_Worker::reset_priority ()
 {
   if (set_priority)
     {
@@ -574,7 +574,7 @@ Paced_Worker::print_stats (ACE_hrtime_t test_end)
 }
 
 int
-Paced_Worker::setup (void)
+Paced_Worker::setup ()
 {
   if (priority_setting == AFTER_THREAD_CREATION)
     {
@@ -614,7 +614,7 @@ Paced_Worker::missed_end_deadline (CORBA::ULong invocation)
 }
 
 int
-Paced_Worker::svc (void)
+Paced_Worker::svc ()
 {
   try
     {
@@ -689,11 +689,11 @@ public:
                      RTCORBA::PriorityMapping &priority_mapping,
                      Synchronizers &synchronizers);
 
-  int svc (void);
+  int svc ();
   void print_stats (ACE_Sample_History &history,
                     ACE_hrtime_t test_end);
-  int setup (void);
-  void print_collective_stats (void);
+  int setup ();
+  void print_collective_stats ();
 
   test_var test_;
   CORBA::ULong iterations_;
@@ -764,7 +764,7 @@ Continuous_Worker::print_stats (ACE_Sample_History &history,
 }
 
 void
-Continuous_Worker::print_collective_stats (void)
+Continuous_Worker::print_collective_stats ()
 {
   if (continuous_workers > 0)
     {
@@ -794,7 +794,7 @@ Continuous_Worker::print_collective_stats (void)
 }
 
 int
-Continuous_Worker::setup (void)
+Continuous_Worker::setup ()
 {
   if (priority_setting == AFTER_THREAD_CREATION)
     {
@@ -819,7 +819,7 @@ Continuous_Worker::setup (void)
 }
 
 int
-Continuous_Worker::svc (void)
+Continuous_Worker::svc ()
 {
   try
     {
@@ -863,14 +863,12 @@ Continuous_Worker::svc (void)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -881,7 +879,7 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   Synchronizers synchronizers;
 

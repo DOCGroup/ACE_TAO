@@ -64,12 +64,12 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
                    memcpy_tradeoff,
                    major_version,
                    minor_version)
-  , fragmentation_strategy_ (0)
+  , fragmentation_strategy_ (nullptr)
   , more_fragments_ (false)
   , request_id_ (0)
-  , stub_ (0)
+  , stub_ (nullptr)
   , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
-  , timeout_ (0)
+  , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
 
@@ -100,12 +100,12 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                    memcpy_tradeoff,
                    major_version,
                    minor_version)
-  , fragmentation_strategy_ (0)
+  , fragmentation_strategy_ (nullptr)
   , more_fragments_ (false)
   , request_id_ (0)
-  , stub_ (0)
+  , stub_ (nullptr)
   , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
-  , timeout_ (0)
+  , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR2_ENTER);
 }
@@ -132,9 +132,9 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
   , fragmentation_strategy_ (fs)
   , more_fragments_ (false)
   , request_id_ (0)
-  , stub_ (0)
+  , stub_ (nullptr)
   , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
-  , timeout_ (0)
+  , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
 }
@@ -149,12 +149,12 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
                    memcpy_tradeoff,
                    major_version,
                    minor_version)
-  , fragmentation_strategy_ (0)
+  , fragmentation_strategy_ (nullptr)
   , more_fragments_ (false)
   , request_id_ (0)
-  , stub_ (0)
+  , stub_ (nullptr)
   , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
-  , timeout_ (0)
+  , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR4_ENTER);
 }
@@ -175,9 +175,9 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Data_Block *data_block,
   , fragmentation_strategy_ (fs)
   , more_fragments_ (false)
   , request_id_ (0)
-  , stub_ (0)
+  , stub_ (nullptr)
   , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
-  , timeout_ (0)
+  , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR5_ENTER);
 }
@@ -226,7 +226,6 @@ TAO_OutputCDR::throw_skel_exception (int error_num )
 
     default :
       throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_YES);
-
     }
 }
 
@@ -243,7 +242,6 @@ TAO_OutputCDR::fragment_stream (ACE_CDR::ULong pending_alignment,
 
   return true;  // Success.
 }
-
 
 
 int
@@ -291,15 +289,15 @@ TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
   : ACE_InputCDR (rhs,
                   buffer_allocator
                   ? buffer_allocator
-                  : (orb_core ? orb_core->output_cdr_buffer_allocator () : 0),
+                  : (orb_core ? orb_core->output_cdr_buffer_allocator () : nullptr),
                   data_block_allocator
                   ? data_block_allocator
                   : (orb_core ? orb_core->output_cdr_dblock_allocator () :
-                     0),
+                     nullptr),
                   message_block_allocator
                   ? message_block_allocator
                   : (orb_core ?
-                     orb_core->output_cdr_msgblock_allocator () : 0)),
+                     orb_core->output_cdr_msgblock_allocator () : nullptr)),
   orb_core_ (orb_core)
 {
 }
@@ -346,7 +344,6 @@ TAO_InputCDR::throw_skel_exception (int error_num )
 
     default :
       throw ::CORBA::MARSHAL();
-
     }
 }
 

@@ -71,7 +71,7 @@ public:
   // Constructor
 
   // = The Task_Base methods
-  virtual int svc (void);
+  virtual int svc ();
 
   // Caught any exception ?
   int received_ex_kind () const;
@@ -83,7 +83,6 @@ public:
   void done ();
 
 private:
-
   // The ORB reference
   CORBA::ORB_var orb_;
   // The exceptions caught.
@@ -180,7 +179,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {
@@ -208,7 +207,6 @@ Worker::svc (void)
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) unexpected result = %d\n",
                         r));
-
         }
         catch (const CORBA::OBJECT_NOT_EXIST &)
           {

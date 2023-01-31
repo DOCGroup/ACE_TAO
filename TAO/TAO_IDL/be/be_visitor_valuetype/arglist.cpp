@@ -25,7 +25,7 @@ be_visitor_obv_operation_arglist::be_visitor_obv_operation_arglist (
 {
 }
 
-be_visitor_obv_operation_arglist::~be_visitor_obv_operation_arglist (void)
+be_visitor_obv_operation_arglist::~be_visitor_obv_operation_arglist ()
 {
 }
 
@@ -33,15 +33,15 @@ bool
 be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)
 {
   UTL_Scope *scope = node->defined_in ();
-  be_interface *iface = be_interface::narrow_from_scope (scope);
+  be_interface *iface = dynamic_cast<be_interface*> (scope);
 
-  if (iface != 0)
+  if (iface != nullptr)
     {
       if (ACE_OS::strncmp (iface->local_name (), "AMH_", 4) == 0)
         {
           const char *last_E = ACE_OS::strrchr (iface->full_name (), 'E');
 
-          if (last_E != 0
+          if (last_E != nullptr
               && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
             {
               return true;
@@ -79,7 +79,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
     }
   else
     {
-      *os << "void)";
+      *os << ")";
     }
 
   be_visitor_context ctx = *this->ctx_;
@@ -121,16 +121,16 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
   // inside the scope of the interface node. In such cases, we would like to
   // generate the appropriate relative scoped names.
   be_operation *op =
-    be_operation::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_operation*> (this->ctx_->node ());
 
   // Sometimes the operation is stored in the context scope instead.
-  if (op == 0)
+  if (op == nullptr)
     {
       op =
-        be_operation::narrow_from_scope (this->ctx_->scope ());
+        dynamic_cast<be_operation*> (this->ctx_->scope ());
     }
 
-  if (op == 0)
+  if (op == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arglist::"
@@ -144,8 +144,8 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
   // information from the context.
   // %! use AST_Interface
   be_interface *intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (op->defined_in ());
+    ? dynamic_cast<be_interface*> (this->ctx_->attribute ()->defined_in ())
+    : dynamic_cast<be_interface*> (op->defined_in ());
 
   if (!intf)
     {
@@ -160,7 +160,7 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
   ctx.node (node); // save the argument node
 
   // Retrieve the type.
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

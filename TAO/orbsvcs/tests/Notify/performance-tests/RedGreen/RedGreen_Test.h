@@ -42,15 +42,15 @@ class Worker : public ACE_Task_Base
 {
 public:
   /// Constructor.
-  Worker (void);
+  Worker ();
 
   void orb (CORBA::ORB_ptr orb);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   // Shutdown ORB
-  void done (void);
+  void done ();
 
 private:
   /// The orb
@@ -66,28 +66,27 @@ private:
  */
 class RedGreen_Test
 {
-
  public:
   // = Initialization
-  RedGreen_Test (void);
+  RedGreen_Test ();
 
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
 
-  void dump_results (void);
+  void dump_results ();
 
   /// Initialize the Client.
   void init (int argc,
              ACE_TCHAR *argv []);
 
   /// Run the demo.
-  void run (void);
+  void run ();
 
   /// Called when all events we are waiting for have occurred.
-  void done (void);
+  void done ();
 
   /// Destroy from the EC
-  void destroy_ec (void);
+  void destroy_ec ();
 
   int burst_size_;
   Worker worker_;
@@ -99,28 +98,28 @@ class RedGreen_Test
                  ACE_TCHAR *argv []);
 
   /// Try to get hold of a running naming service.
-  void resolve_naming_service (void);
+  void resolve_naming_service ();
 
   /// Try to resolve the Notify factory from the Naming service.
-  void resolve_Notify_factory (void);
+  void resolve_Notify_factory ();
 
   /// Create an EC.
-  void create_EC (void);
+  void create_EC ();
 
   /// Create the Supplier Admin.
-  void create_supplieradmin(void);
+  void create_supplieradmin();
 
   /// Create the Consumer Admin.
-  void create_consumeradmin (void);
+  void create_consumeradmin ();
 
   /// Create and initialize the consumers.
-  void create_consumers (void);
+  void create_consumers ();
 
   /// create and initialize the suppliers.
-  void create_suppliers (void);
+  void create_suppliers ();
 
   /// send the events.
-  void send_events (void);
+  void send_events ();
 
   // = Data Members.
   /// Reference to the root poa.
@@ -178,10 +177,10 @@ public:
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
   /// Disconnect from the supplier.
-  virtual void disconnect (void);
+  virtual void disconnect ();
 
   /// Accessor for the Proxy that we're connected to.
-  CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (void);
+  CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier ();
 
   /// Accumulate the throughput statistics into <throughput>
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
@@ -211,7 +210,7 @@ protected:
 
   // = Methods
   /// Destructor
-  virtual ~RedGreen_Test_StructuredPushConsumer (void);
+  virtual ~RedGreen_Test_StructuredPushConsumer ();
 
   // = NotifyPublish method
   virtual void offer_change (
@@ -248,14 +247,14 @@ class RedGreen_Test_StructuredPushSupplier
   //
 public:
   /// Constructor.
-  RedGreen_Test_StructuredPushSupplier (void);
+  RedGreen_Test_StructuredPushSupplier ();
 
   /// Connect the Supplier to the EventChannel.
   /// Creates a new proxy supplier and connects to it.
   void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin);
 
   /// Disconnect from the supplier.
-  void disconnect (void);
+  void disconnect ();
 
   /// Send one event.
   virtual void send_event (CosNotification::StructuredEvent& event);

@@ -27,8 +27,6 @@ public:
                                 const char *object_id);
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "RIR_Narrow.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_PERF_RTEC_RIR_NARROW_H */

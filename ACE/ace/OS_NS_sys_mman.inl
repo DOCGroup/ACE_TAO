@@ -19,7 +19,7 @@ ACE_OS::madvise (caddr_t addr, size_t len, int map_advice)
 {
   ACE_OS_TRACE ("ACE_OS::madvise");
 #if !defined (ACE_LACKS_MADVISE)
-  ACE_OSCALL_RETURN (::madvise (addr, len, map_advice), int, -1);
+  return ::madvise (addr, len, map_advice);
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
@@ -45,15 +45,6 @@ ACE_OS::mmap (void *addr,
 #endif /* !defined (ACE_WIN32) || defined (ACE_HAS_PHARLAP) */
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
-
-#  if defined(ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (addr);
-  if (ACE_BIT_ENABLED (flags, MAP_FIXED))     // not supported
-  {
-    errno = EINVAL;
-    return MAP_FAILED;
-  }
-#  else
   if (!ACE_BIT_ENABLED (flags, MAP_FIXED))
     addr = 0;
   else if (addr == 0)   // can not map to address 0
@@ -61,7 +52,6 @@ ACE_OS::mmap (void *addr,
     errno = EINVAL;
     return MAP_FAILED;
   }
-#  endif
 
   int nt_flags = 0;
   ACE_HANDLE local_handle = ACE_INVALID_HANDLE;
@@ -72,14 +62,8 @@ ACE_OS::mmap (void *addr,
 
   if (ACE_BIT_ENABLED (flags, MAP_PRIVATE))
     {
-#  if defined(ACE_HAS_WINCE)
-      // PAGE_WRITECOPY is not avaible on CE, but this should be the same
-      // as PAGE_READONLY according to MSDN
-      nt_flags = FILE_MAP_ALL_ACCESS;
-#  else
       prot = PAGE_WRITECOPY;
       nt_flags = FILE_MAP_COPY;
-#  endif  // ACE_HAS_WINCE
     }
   else if (ACE_BIT_ENABLED (flags, MAP_SHARED))
     {
@@ -124,20 +108,12 @@ ACE_OS::mmap (void *addr,
   DWORD low_off  = ACE_LOW_PART (off);
   DWORD high_off = ACE_HIGH_PART (off);
 
-#  if defined (ACE_HAS_WINCE)
-  void *addr_mapping = ::MapViewOfFile (*file_mapping,
-                                        nt_flags,
-                                        high_off,
-                                        low_off,
-                                        len);
-#  else
   void *addr_mapping = ::MapViewOfFileEx (*file_mapping,
                                           nt_flags,
                                           high_off,
                                           low_off,
                                           len,
                                           addr);
-#  endif /* ACE_HAS_WINCE */
 
   // Only close this down if we used the temporary.
   if (file_mapping == &local_handle)
@@ -154,11 +130,6 @@ ACE_OS::mmap (void *addr,
   flags |= ACE_OS_EXTRA_MMAP_FLAGS;
 #  endif /* ACE_OS_EXTRA_MMAP_FLAGS */
   ACE_UNUSED_ARG (file_mapping);
-#  if defined (ACE_OPENVMS)
-  //FUZZ: disable check_for_lack_ACE_OS
-  ::fsync(file_handle);
-  //FUZZ: enable check_for_lack_ACE_OS
-#  endif
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN ((void *) ::mmap ((ACE_MMAP_TYPE) addr,
                                       len,
@@ -166,7 +137,7 @@ ACE_OS::mmap (void *addr,
                                       flags,
                                       file_handle,
                                       off),
-                     void *, MAP_FAILED);
+                     void *);
   //FUZZ: enable check_for_lack_ACE_OS
 #else
   ACE_UNUSED_ARG (addr);
@@ -194,7 +165,7 @@ ACE_OS::mprotect (void *addr, size_t len, int prot)
   DWORD dummy; // Sigh!
   return ::VirtualProtect(addr, len, prot, &dummy) ? 0 : -1;
 #elif !defined (ACE_LACKS_MPROTECT)
-  ACE_OSCALL_RETURN (::mprotect ((ACE_MMAP_TYPE) addr, len, prot), int, -1);
+  return ::mprotect ((ACE_MMAP_TYPE) addr, len, prot);
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
@@ -212,7 +183,7 @@ ACE_OS::msync (void *addr, size_t len, int sync)
 
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FlushViewOfFile (addr, len), ace_result_), int, -1);
 #elif !defined (ACE_LACKS_MSYNC)
-  ACE_OSCALL_RETURN (::msync ((ACE_MMAP_TYPE) addr, len, sync), int, -1);
+  return ::msync ((ACE_MMAP_TYPE) addr, len, sync);
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
@@ -230,7 +201,7 @@ ACE_OS::munmap (void *addr, size_t len)
 
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::UnmapViewOfFile (addr), ace_result_), int, -1);
 #elif !defined (ACE_LACKS_MMAP) && !defined (ACE_LACKS_MUNMAP)
-  ACE_OSCALL_RETURN (::munmap ((ACE_MMAP_TYPE) addr, len), int, -1);
+  return ::munmap ((ACE_MMAP_TYPE) addr, len);
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
@@ -263,11 +234,7 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
     }
   filename = buf;
 #endif
-  ACE_OSCALL_RETURN (::shm_open (ACE_TEXT_ALWAYS_CHAR(filename), mode, perms), ACE_HANDLE, ACE_INVALID_HANDLE);
-#elif defined (ACE_OPENVMS)
-  //FUZZ: disable check_for_lack_ACE_OS
-  ACE_OSCALL_RETURN (::open (filename, mode, perms, ACE_TEXT("shr=get,put,upd")), ACE_HANDLE, ACE_INVALID_HANDLE);
-  //FUZZ: enable check_for_lack_ACE_OS
+  return ::shm_open (ACE_TEXT_ALWAYS_CHAR(filename), mode, perms);
 #else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::open.
   return ACE_OS::open (filename, mode, perms, sa);
@@ -299,7 +266,7 @@ ACE_OS::shm_unlink (const ACE_TCHAR *path)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
 # else
-  ACE_OSCALL_RETURN (::shm_unlink (ACE_TEXT_ALWAYS_CHAR(path)), int, -1);
+  return ::shm_unlink (ACE_TEXT_ALWAYS_CHAR(path));
 # endif /* ACE_LACKS_SHM_UNLINK */
 #else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::unlink.

@@ -18,10 +18,6 @@ be_visitor_array_any_op_ch::be_visitor_array_any_op_ch (
 {
 }
 
-be_visitor_array_any_op_ch::~be_visitor_array_any_op_ch (void)
-{
-}
-
 int
 be_visitor_array_any_op_ch::visit_array (be_array *node)
 {
@@ -33,18 +29,17 @@ be_visitor_array_any_op_ch::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   *os << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
       << "_forany &);" << be_nl;
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
       << node->name () << "_forany &);";
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
-  node->cli_hdr_any_op_gen (1);
+  node->cli_hdr_any_op_gen (true);
   return 0;
 }

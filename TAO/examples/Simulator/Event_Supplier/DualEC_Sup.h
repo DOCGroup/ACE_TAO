@@ -50,29 +50,27 @@ struct Schedule_Viewer_Data
 class DualEC_Supplier
 {
 public:
-
   DualEC_Supplier (int argc, ACE_TCHAR** argv);
 
-  ~DualEC_Supplier (void);
+  ~DualEC_Supplier ();
 
   /// Initialize: set up, resolve ORB services,
   /// connect the DOVE_Suppliers.
-  int init (void);
+  int init ();
 
   /// Compute schedule priorities, possibly dump
   /// data into runtime scheduler header files.
-  void compute_schedules (void);
+  void compute_schedules ();
 
   /// here is really something going on,
   /// here we deliver the messages
-  void start_generating_events (void);
+  void start_generating_events ();
 
   /// Load the scheduling information into memory
   void load_schedule_data ();
 
 
 private:
-
 /**
  * @class Terminator
  *
@@ -80,7 +78,7 @@ private:
  */
   class Terminator : public POA_NavWeapTerminator
   {
-    void shutdown (void);
+    void shutdown ();
   };
 
   /// Run the orb event loop.
@@ -94,11 +92,11 @@ private:
 
   /// Create two scheduling service instances, registers
   /// them with the Naming Service.
-  int create_schedulers (void);
+  int create_schedulers ();
 
   /// Create two event service instances, registers
   /// them with the Naming Service.
-  int create_event_channels (void);
+  int create_event_channels ();
 
   /// Get command line options.
   unsigned int get_options (int argc, ACE_TCHAR *argv []);

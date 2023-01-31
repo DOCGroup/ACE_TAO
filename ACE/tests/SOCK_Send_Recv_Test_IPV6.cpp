@@ -313,7 +313,7 @@ server (void *arg)
 
 #if defined (ACE_HAS_IPV6)
 static void
-spawn (void)
+spawn ()
 {
   // Acceptor
   ACE_SOCK_Acceptor peer_acceptor;

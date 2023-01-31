@@ -41,7 +41,7 @@ class ACE_Blob_Handler : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH
 {
 public:
   /// Null constructor, insures that it works properly with Connector
-  ACE_Blob_Handler (void);
+  ACE_Blob_Handler ();
 
   /// Always use this constructor to make Blob_Handlers
   ACE_Blob_Handler (ACE_Message_Block *mb,
@@ -50,7 +50,7 @@ public:
                     ACE_TCHAR *filename);
 
   /// returns the number of bytes read/written in the last operation.
-  int byte_count (void);
+  int byte_count ();
 
   /// Activate this instance of the <ACE_Blob_Handler>
   virtual int open (void * = 0);
@@ -58,11 +58,11 @@ public:
   /// Close down the Blob
   virtual int close (u_long flags = 0);
 
-  ~ACE_Blob_Handler (void);
+  ~ACE_Blob_Handler ();
 
 protected:
-  virtual int send_request (void);
-  virtual int receive_reply (void);
+  virtual int send_request ();
+  virtual int receive_reply ();
 
   ACE_Message_Block *mb_;
   size_t length_;
@@ -88,8 +88,8 @@ public:
                    const char *request_suffix = "HTTP/1.0\r\n\r\n");
 
 private:
-  int send_request (void);
-  int receive_reply (void);
+  int send_request ();
+  int receive_reply ();
   const char *request_prefix_;
   const char *request_suffix_;
 };
@@ -105,8 +105,8 @@ public:
                    const char *request_suffix = "HTTP/1.0\nContent-length:");
 
 private:
-  int send_request (void);
-  int receive_reply (void);
+  int send_request ();
+  int receive_reply ();
   const char *request_prefix_;
   const char *request_suffix_;
 };

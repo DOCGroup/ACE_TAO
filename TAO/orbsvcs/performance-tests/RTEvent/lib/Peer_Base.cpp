@@ -38,12 +38,12 @@ Peer_Base::Peer_Base (CORBA::ORB_ptr orb,
     RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ());
 }
 
-Peer_Base::~Peer_Base (void)
+Peer_Base::~Peer_Base ()
 {
 }
 
 void
-Peer_Base::shutdown (void)
+Peer_Base::shutdown ()
 {
   {
     EC_Destroyer ec_destroyer (this->event_channel_.in ());
@@ -51,11 +51,11 @@ Peer_Base::shutdown (void)
       RtecEventChannelAdmin::EventChannel::_nil ();
   }
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 CORBA::Object_ptr
-Peer_Base::channel (void)
+Peer_Base::channel ()
 {
   return CORBA::Object::_duplicate (this->event_channel_.in ());
 }
@@ -105,7 +105,7 @@ Peer_Base::setup_loopback (CORBA::Long experiment_id,
 }
 
 PortableServer::POA_ptr
-Peer_Base::_default_POA (void)
+Peer_Base::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

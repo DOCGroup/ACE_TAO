@@ -5,14 +5,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (void)
+TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i ()
 {
 }
 
 TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf)
 : notify_factory_ (ecf)
 {
-
   CosNotifyChannelAdmin::ChannelID id;
   CosNotifyChannelAdmin::AdminID adminID = 0;
   CosNotification::QoSProperties initial_qos;
@@ -172,25 +171,25 @@ TAO_NotifyLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
 }
 
 CosNotifyChannelAdmin::AdminID
-TAO_NotifyLogFactory_i::MyID (void)
+TAO_NotifyLogFactory_i::MyID ()
 {
   return consumer_admin_->MyID ();
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
-TAO_NotifyLogFactory_i::MyChannel (void)
+TAO_NotifyLogFactory_i::MyChannel ()
 {
   throw CORBA::NO_IMPLEMENT();
 }
 
 CosNotifyChannelAdmin::InterFilterGroupOperator
-TAO_NotifyLogFactory_i::MyOperator (void)
+TAO_NotifyLogFactory_i::MyOperator ()
 {
   return consumer_admin_->MyOperator ();
 }
 
 CosNotifyFilter::MappingFilter_ptr
-TAO_NotifyLogFactory_i::priority_filter (void)
+TAO_NotifyLogFactory_i::priority_filter ()
 {
   return consumer_admin_->priority_filter ();
 }
@@ -202,7 +201,7 @@ TAO_NotifyLogFactory_i::priority_filter (CosNotifyFilter::MappingFilter_ptr filt
 }
 
 CosNotifyFilter::MappingFilter_ptr
-TAO_NotifyLogFactory_i::lifetime_filter (void)
+TAO_NotifyLogFactory_i::lifetime_filter ()
 {
   return consumer_admin_->lifetime_filter ();
 }
@@ -214,13 +213,13 @@ TAO_NotifyLogFactory_i::lifetime_filter (CosNotifyFilter::MappingFilter_ptr filt
 }
 
 CosNotifyChannelAdmin::ProxyIDSeq*
-TAO_NotifyLogFactory_i::pull_suppliers (void)
+TAO_NotifyLogFactory_i::pull_suppliers ()
 {
   return consumer_admin_->pull_suppliers ();
 }
 
 CosNotifyChannelAdmin::ProxyIDSeq*
-TAO_NotifyLogFactory_i::push_suppliers (void)
+TAO_NotifyLogFactory_i::push_suppliers ()
 {
   return consumer_admin_->push_suppliers ();
 }
@@ -256,7 +255,6 @@ TAO_NotifyLogFactory_i::obtain_push_supplier (
 }
 
 
-
 CosEventChannelAdmin::ProxyPullSupplier_ptr
 TAO_NotifyLogFactory_i::obtain_pull_supplier (
       )
@@ -266,7 +264,7 @@ TAO_NotifyLogFactory_i::obtain_pull_supplier (
 }
 
 void
-TAO_NotifyLogFactory_i::destroy (void)
+TAO_NotifyLogFactory_i::destroy ()
 {
   // No-Op.
 }
@@ -280,7 +278,7 @@ TAO_NotifyLogFactory_i::subscription_change (const CosNotification::EventTypeSeq
 }
 
 CosNotification::QoSProperties*
-TAO_NotifyLogFactory_i::get_qos (void)
+TAO_NotifyLogFactory_i::get_qos ()
 {
   return consumer_admin_->get_qos ();
 }
@@ -317,13 +315,13 @@ TAO_NotifyLogFactory_i::get_filter (CosNotifyFilter::FilterID id)
 }
 
 CosNotifyFilter::FilterIDSeq*
-TAO_NotifyLogFactory_i::get_all_filters (void)
+TAO_NotifyLogFactory_i::get_all_filters ()
 {
   return consumer_admin_->get_all_filters ();
 }
 
 void
-TAO_NotifyLogFactory_i::remove_all_filters (void)
+TAO_NotifyLogFactory_i::remove_all_filters ()
 {
   consumer_admin_->remove_all_filters ();
 }

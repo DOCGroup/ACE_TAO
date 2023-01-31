@@ -117,9 +117,9 @@ PMC_Ruser::handle_protocol_entries (const char *cp,
 }
 
 void
-PMC_Ruser::process (void)
+PMC_Ruser::process ()
 {
-  const char *(Drwho_Node::*get_name)(void);
+  const char *(Drwho_Node::*get_name)();
 
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
     get_name = &Drwho_Node::get_login_name;
@@ -172,6 +172,6 @@ PMC_Ruser::process (void)
     }
 }
 
-PMC_Ruser::PMC_Ruser (void)
+PMC_Ruser::PMC_Ruser ()
 {
 }

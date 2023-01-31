@@ -6,7 +6,7 @@
 #include /**/ "ace/pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
-#error Use config-win32.h in config.h instead of this header
+# error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
 #define ACE_HAS_CUSTOM_EXPORT_MACROS 1
@@ -26,14 +26,10 @@
 #  define __ACE_INLINE__ 1
 # endif /* __ACE_INLINE__ */
 
-# define ACE_CC_NAME ACE_TEXT ("Embarcadero C++ Builder")
-# define ACE_CC_MAJOR_VERSION (__BORLANDC__ / 0x100)
-# define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
-# define ACE_CC_BETA_VERSION (0)
-
-#if (__BORLANDC__ >= 0x620)
-# define ACE_CC_PREPROCESSOR_ARGS "-q -Sl -o%s"
-#endif
+#define ACE_CC_NAME ACE_TEXT ("Embarcadero C++ Builder")
+#define ACE_CC_MAJOR_VERSION (__BORLANDC__ / 0x100)
+#define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
+#define ACE_CC_BETA_VERSION (0)
 
 #if !defined (WIN32)
 # if defined (__WIN32__) || defined (_WIN32)
@@ -54,19 +50,20 @@
 # define ACE_HAS_BCC32
 #endif
 
+#define ACE_CC_PREPROCESSOR_ARGS "--precompile -q -o%s"
+
 #if defined (ACE_HAS_BCC64)
-// Use 32bit pre processor because cpp64 doesn't have the same
-// options
-# define ACE_CC_PREPROCESSOR "CPP32.EXE"
+# define ACE_CC_PREPROCESSOR "BCC64.EXE"
 #else
-# define ACE_CC_PREPROCESSOR "CPP32.EXE"
+# define ACE_CC_PREPROCESSOR "BCC32X.EXE"
 #endif
 
 # include "ace/config-win32-common.h"
 
-# define ACE_WSTRING_HAS_USHORT_SUPPORT 1
-# define ACE_HAS_DIRENT
+#define ACE_WSTRING_HAS_USHORT_SUPPORT 1
+#define ACE_HAS_DIRENT
 
+#define ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS
 #define ACE_USES_STD_NAMESPACE_FOR_STDC_LIB 1
 
 #define ACE_LACKS_TERMIOS_H
@@ -96,11 +93,8 @@
 #define ACE_LACKS_SYS_IOCTL_H
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_WCSRTOMBS
+#define ACE_LACKS_SET_ABORT_BEHAVIOR
 
-#undef ACE_LACKS_STRUCT_DIR
-#undef ACE_LACKS_CLOSEDIR
-#undef ACE_LACKS_OPENDIR
-#undef ACE_LACKS_READDIR
 #undef ACE_LACKS_REWINDDIR
 
 #define ACE_HAS_WOPENDIR
@@ -115,23 +109,15 @@
 # define ACE_HAS_TIME_T_LONG_MISMATCH
 #endif
 
-#define ACE_HAS_CPLUSPLUS_HEADERS 1
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_SIG_ATOMIC_T
-#define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#define ACE_HAS_STDCPP_STL_INCLUDES 1
-#define ACE_HAS_STRING_CLASS 1
 #define ACE_HAS_USER_MODE_MASKS 1
 #define ACE_LACKS_ACE_IOSTREAM 1
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
-#define ACE_HAS_NEW_NOTHROW
-#define ACE_TEMPLATES_REQUIRE_SOURCE 1
 #if defined (ACE_HAS_BCC32)
 # define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%Lu"
 # define ACE_INT64_FORMAT_SPECIFIER_ASCII "%Ld"
 #endif
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#define ACE_USES_STD_NAMESPACE_FOR_ABS 1
 #define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -145,19 +131,14 @@
 # endif /* !__MT__ */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if (__BORLANDC__ <= 0x740)
-# define ACE_LACKS_ISWCTYPE
-# define ACE_LACKS_ISCTYPE
-#endif
-
-#if (__BORLANDC__ >= 0x640) && (__BORLANDC__ <= 0x740)
-# define ACE_LACKS_STRTOK_R
-#endif
+#define ACE_LACKS_ISWCTYPE
+#define ACE_LACKS_ISCTYPE
+#define ACE_LACKS_STRTOK_R
+#define ACE_LACKS_ASCTIME_R
 
 #if (__BORLANDC__ <= 0x740)
 # define ACE_LACKS_LOCALTIME_R
 # define ACE_LACKS_GMTIME_R
-# define ACE_LACKS_ASCTIME_R
 #endif
 
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
@@ -165,7 +146,7 @@
 #define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
 #define ACE_WTOF_EQUIVALENT ::_wtof
 #define ACE_FILENO_EQUIVALENT(X) (_get_osfhandle (::_fileno (X)))
-#define ACE_HAS_ITOA 1
+#define ACE_HAS_ITOA
 
 #if defined (ACE_HAS_BCC64)
 # if (__BORLANDC__ <= 0x730)
@@ -174,25 +155,28 @@
 #endif
 
 #if defined (ACE_HAS_BCC32)
-// The bcc32 compiler can't handle assembly in inline methods or
-// templates (E2211). When we build for pentium optimized and we are inlining
-// then we disable inline assembly
-# if defined (ACE_HAS_PENTIUM) && defined(__ACE_INLINE__) && !defined(__clang__)
-#  define ACE_LACKS_INLINE_ASSEMBLY
-# endif
 # define ACE_SIZEOF_LONG_DOUBLE 10
 # define ACE_NEEDS_DL_UNDERSCORE
 #endif
 
-#ifdef __clang__
-# define ACE_ANY_OPS_USE_NAMESPACE
-# define ACE_HAS_BUILTIN_BSWAP16
-# define ACE_HAS_BUILTIN_BSWAP32
-# define ACE_HAS_BUILTIN_BSWAP64
-# define ACE_LACKS_INLINE_ASSEMBLY
-#endif /* __clang__ */
+#define ACE_HAS_BUILTIN_BSWAP16
+#define ACE_HAS_BUILTIN_BSWAP32
+#define ACE_HAS_BUILTIN_BSWAP64
+#define ACE_LACKS_INLINE_ASSEMBLY
+#define ACE_LACKS_PID_T
 
+#if __cplusplus >= 201103L
+# define ACE_HAS_CPP11
+#endif
+#if __cplusplus >= 201402L
+# define ACE_HAS_CPP14
+#endif
+#if __cplusplus >= 201703L
+# define ACE_HAS_CPP17
+#endif
+#if __cplusplus >= 202002L
+# define ACE_HAS_CPP20
+#endif
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */
-

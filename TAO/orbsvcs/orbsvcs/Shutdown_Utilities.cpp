@@ -42,16 +42,10 @@ Service_Shutdown::set_signals (ACE_Sig_Set& which_signals)
       {
         if (this->shutdown_.register_handler (i, this) == -1)
           {
-#if defined(__TANDEM)
-// Tandem NSK platform has no signal 10 so do not emit a warning for it
-            if (i != 10)
-#endif
-              {
-                ORBSVCS_DEBUG ((LM_WARNING,
-                            "WARNING: Failed to register signal handler "
-                            "for signal %d: %p\n",
-                            i, ACE_TEXT ("register_handler")));
-              }
+            ORBSVCS_DEBUG ((LM_WARNING,
+                        "WARNING: Failed to register signal handler "
+                        "for signal %d: %p\n",
+                        i, ACE_TEXT ("register_handler")));
           }
         else
           {

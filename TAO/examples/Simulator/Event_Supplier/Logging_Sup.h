@@ -43,17 +43,16 @@ struct Schedule_Viewer_Data
 class Logging_Supplier
 {
 public:
-
   Logging_Supplier (int argc, ACE_TCHAR** argv);
 
-  ~Logging_Supplier (void);
+  ~Logging_Supplier ();
 
   /// connect the DOVE_Supplier
-  int init (void);
+  int init ();
 
   /// here is really something going on,
   /// here we deliver the messages
-  void start_generating_events (void);
+  void start_generating_events ();
 
   /// Load the scheduling information into memory
   void load_schedule_data (ACE_Unbounded_Queue<Schedule_Viewer_Data *> &schedule_data);
