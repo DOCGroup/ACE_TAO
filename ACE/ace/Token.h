@@ -27,7 +27,7 @@
 
 #include "ace/Thread_Mutex.h"
 
-#if (defined (ACE_WIN32) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)) || defined (ACE_HAS_VXTHREADS)
+#if defined (ACE_WIN32) || defined (ACE_HAS_VXTHREADS)
 // If platforms support semaphores with timed wait, then we use semaphores instead of c.v.
 # define ACE_TOKEN_USES_SEMAPHORE
 #endif /* ACE_WIN32 || ACE_HAS_VXTHREADS */
@@ -56,8 +56,8 @@ class ACE_Time_Value;
  * <acquire> multiple times, however, it must call <release> an
  * equal number of times before the token is actually released.
  * Threads that are blocked awaiting the token are serviced in
- * strict FIFO/LIFO order as other threads release the token (Solaris
- * and Pthread mutexes don't strictly enforce an acquisition
+ * strict FIFO/LIFO order as other threads release the token
+ * (Pthread mutexes don't strictly enforce an acquisition
  * order).  There are two lists within the class.  Write
  * acquires always have higher priority over read acquires.  Which
  * means, if you use both write/read operations, care must be

@@ -57,8 +57,6 @@
 #  include "ace/config-icc-common.h"
 #elif defined (__GNUG__)
 #  include "ace/config-g++-common.h"
-#elif defined (__SUNCC_PRO) || defined (__SUNPRO_CC)
-#  include "ace/config-suncc-common.h"
 #elif defined (__PGI)
 // Portable group compiler
 #  define ACE_LACKS_SWAB
@@ -71,7 +69,7 @@
  * (TAO/orbsvcs/orbsvcs/SSLIOP/params_dup.{h,c}) that may indirectly
  * include this
  */
-#else  /* ! __GNUG__ && !__DECCXX && !__INTEL_COMPILER && && !__PGI */
+#else  /* ! __GNUG__ && !__INTEL_COMPILER && && !__PGI */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler in ace/config-linux.h
 #  endif  /* __cplusplus */

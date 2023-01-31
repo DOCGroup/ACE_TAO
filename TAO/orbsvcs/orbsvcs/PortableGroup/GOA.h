@@ -54,7 +54,6 @@ public:
   virtual PortableServer::ObjectId * create_id_for_reference (
       CORBA::Object_ptr the_ref);
 
-
   virtual PortableGroup::IDs * reference_to_ids (
       CORBA::Object_ptr the_ref);
 

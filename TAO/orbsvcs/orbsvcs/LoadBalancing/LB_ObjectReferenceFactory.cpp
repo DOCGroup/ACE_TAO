@@ -58,8 +58,6 @@ TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory ()
 {
   // No need to call CORBA::remove_ref() on this->old_orf_.  It is a
   // "_var" object, meaning that will be done automatically.
-
-
   if (!CORBA::is_nil (this->lm_.in ()))
     {
       const CORBA::ULong len = this->fcids_.size ();

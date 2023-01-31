@@ -364,7 +364,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
       ::remCurIdGet (user, 0);
       return user;
     }
-#elif defined (ACE_HAS_PHARLAP) || defined (ACE_HAS_WINCE)
+#elif defined (ACE_HAS_PHARLAP)
   ACE_UNUSED_ARG (user);
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
@@ -458,11 +458,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
 ACE_INLINE wchar_t *
 ACE_OS::cuserid (wchar_t *user, size_t maxlen)
 {
-# if defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (user);
-  ACE_UNUSED_ARG (maxlen);
-  ACE_NOTSUP_RETURN (0);
-# elif defined (ACE_WIN32)
+# if defined (ACE_WIN32)
   BOOL const result = GetUserNameW (user, (u_long *) &maxlen);
   if (result == FALSE)
     ACE_FAIL_RETURN (0);
@@ -499,13 +495,7 @@ ACE_INLINE FILE *
 ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fdopen");
-#if defined (ACE_HAS_WINCE)
-# if defined (ACE_HAS_NONCONST_WFDOPEN)
-  return ::_wfdopen ((int)handle, const_cast <ACE_TCHAR*> (ACE_TEXT_ALWAYS_WCHAR (mode)));
-# else
-  return ::_wfdopen (handle, ACE_TEXT_ALWAYS_WCHAR (mode));
-# endif
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   // kernel file handle -> FILE* conversion...
   // Options: _O_APPEND, _O_RDONLY and _O_TEXT are lost
 
@@ -534,7 +524,7 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
   ACE_NOTSUP_RETURN (0);
 #else
   return ::fdopen (handle, ACE_TEXT_ALWAYS_CHAR (mode));
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE int
@@ -612,7 +602,7 @@ ACE_OS::fileno (FILE *stream)
 #endif
 }
 
-#if !(defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if !defined (ACE_WIN32)
 // Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
 ACE_INLINE FILE *
 ACE_OS::fopen (const char *filename, const char *mode)
@@ -636,28 +626,20 @@ ACE_INLINE FILE *
 ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
-#if defined (ACE_HAS_WINCE)
-  return ::_wfopen (filename, mode);
-#else
   // Non-Windows doesn't use wchar_t file systems.
   ACE_Wide_To_Ascii n_filename (filename);
   ACE_Wide_To_Ascii n_mode (mode);
   return ::fopen (n_filename.char_rep (), n_mode.char_rep ());
-#endif /* ACE_HAS_WINCE */
 }
+
 // Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
 ACE_INLINE FILE *
 ACE_OS::fopen (const wchar_t *filename, const char *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
-#if defined (ACE_HAS_WINCE)
-  ACE_Ascii_To_Wide n_mode (mode);
-  return ::_wfopen (filename, n_mode.wchar_rep ());
-#else
   // Non-Windows doesn't use wchar_t file systems.
   ACE_Wide_To_Ascii n_filename (filename);
   return ::fopen (n_filename.char_rep (), mode);
-#endif /* ACE_HAS_WINCE */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -803,7 +785,7 @@ ACE_OS::perror (const char *s)
   ACE_UNUSED_ARG (s);
 #else
   ::perror (s);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_PERROR */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -859,13 +841,6 @@ ACE_OS::rename (const char *old_name,
   ACE_UNUSED_ARG (new_name);
   ACE_UNUSED_ARG (flags);
   ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_HAS_WINCE)
-  // Win CE is always wide-char.
-  ACE_UNUSED_ARG (flags);
-  if (0 == ::MoveFile (ACE_TEXT_CHAR_TO_TCHAR (old_name),
-                       ACE_TEXT_CHAR_TO_TCHAR (new_name)))
-    ACE_FAIL_RETURN (-1);
-  return 0;
 # elif defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_MOVEFILEEX)
   // NT4 (and up) provides a way to rename/move a file with similar semantics
   // to what's usually done on UNIX - if there's an existing file with
@@ -881,7 +856,7 @@ ACE_OS::rename (const char *old_name,
 # else
   ACE_UNUSED_ARG (flags);
   return ::rename (old_name, new_name);
-# endif /* ACE_HAS_WINCE */
+# endif /* ACE_LACKS_RENAME */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -895,11 +870,6 @@ ACE_OS::rename (const wchar_t *old_name,
   ACE_UNUSED_ARG (new_name);
   ACE_UNUSED_ARG (flags);
   ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (flags);
-  if (::MoveFileW (old_name, new_name) == 0)
-    ACE_FAIL_RETURN (-1);
-  return 0;
 # elif defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_MOVEFILEEX)
   // NT4 (and up) provides a way to rename/move a file with similar semantics
   // to what's usually done on UNIX - if there's an existing file with
@@ -917,14 +887,14 @@ ACE_OS::rename (const wchar_t *old_name,
   ACE_Wide_To_Ascii nold_name (old_name);
   ACE_Wide_To_Ascii nnew_name (new_name);
   return ACE_OS::rename (nold_name.char_rep (), nnew_name.char_rep (), flags);
-# endif /* ACE_HAS_WINCE */
+# endif /* ACE_LACKS_RENAME */
 }
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE void
 ACE_OS::rewind (FILE *fp)
 {
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_MQX)
+#if !defined (ACE_MQX)
   ACE_OS_TRACE ("ACE_OS::rewind");
 # if defined (ACE_LACKS_REWIND)
   ACE_UNUSED_ARG (fp);
@@ -933,9 +903,9 @@ ACE_OS::rewind (FILE *fp)
 # endif /* ACE_LACKS_REWIND */
 #else
   // This isn't perfect since it doesn't reset EOF, but it's probably
-  // the closest we can get on WINCE.
+  // the closest we can get on MQX.
   (void) std::fseek (fp, 0L, SEEK_SET);
-#endif /* ACE_HAS_WINCE */
+#endif /* !ACE_MQX */
 }
 
 #if !defined (ACE_DISABLE_TEMPNAM)
@@ -1098,9 +1068,8 @@ ACE_INLINE int
 ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 {
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
-     (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
       defined (ACE_HAS_VSWPRINTF) || \
-      (defined (_MSC_VER) && !defined (ACE_HAS_WINCE))
+      (defined (_MSC_VER))
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
@@ -1178,10 +1147,8 @@ ACE_INLINE int
 ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_list ap)
 {
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
-     (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
       defined (ACE_HAS_VSWPRINTF) || \
       defined (ACE_WIN32)
-
   int result;
 
 # if defined (ACE_WIN32) && !defined (ACE_HAS_C99_VSNWPRINTF)

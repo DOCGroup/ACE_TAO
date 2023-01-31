@@ -59,9 +59,6 @@ ACE::out_of_handles (int error)
 #if defined (ACE_WIN32)
       // On Win32, we need to check for ENOBUFS also.
       error == ENOBUFS ||
-#elif defined (HPUX)
-      // On HPUX, we need to check for EADDRNOTAVAIL also.
-      error == EADDRNOTAVAIL ||
 #elif defined (ACE_LINUX)
       // On linux, we need to check for ENOENT also.
       error == ENOENT ||
@@ -69,11 +66,6 @@ ACE::out_of_handles (int error)
       error == EINVAL ||
       // Without threads check for EOPNOTSUPP
       error == EOPNOTSUPP ||
-#elif defined (sun)
-      // On sun, we need to check for ENOSR also.
-      error == ENOSR ||
-      // Without threads check for ENOTSUP
-      error == ENOTSUP ||
 #elif defined (__FreeBSD__)
       // On FreeBSD we need to check for EOPNOTSUPP (LinuxThreads) or
       // ENOSYS (libc_r threads) also.

@@ -18,13 +18,7 @@
 
 namespace
 {
-#if defined (ACE_OPENVMS)
-  // less threads on OpenVMS otherwise this test
-  // (although working correctly) takes far too long.
-  const size_t N_THREADS = 10;
-#else
   const size_t N_THREADS = 20;
-#endif
   const size_t N_ITERATIONS = 100;
 }
 

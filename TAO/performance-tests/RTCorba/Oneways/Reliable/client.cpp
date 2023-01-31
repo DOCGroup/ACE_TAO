@@ -366,7 +366,7 @@ set_rt_mode ()
     (ACE_Sched_Params::priority_min (policy)
      + ACE_Sched_Params::priority_max (policy)) / 2;
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   int result =
     ACE_OS::sched_params (ACE_Sched_Params (policy,
                                             priority,

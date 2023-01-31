@@ -25,7 +25,7 @@ Today::operator new (size_t bytes, const std::nothrow_t&)
   return ::new (std::nothrow) char[bytes];
 }
 void
-Today::operator delete (void *p, const std::nothrow_t&) throw ()
+Today::operator delete (void *p, const std::nothrow_t&) noexcept
 {
   delete [] static_cast <char *> (p);
 }

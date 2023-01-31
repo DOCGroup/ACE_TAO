@@ -21,7 +21,7 @@ run_main (int, ACE_TCHAR *[])
 
   int ret = 0;
 
-#if defined(ACE_WIN32) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)
+#if defined(ACE_WIN32)
   int lastError;
 
   // ACE_OS::event_init()

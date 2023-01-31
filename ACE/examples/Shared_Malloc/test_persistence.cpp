@@ -63,7 +63,7 @@ public:
   {
     return shmem_allocator->malloc (sizeof (Employee));
   }
-  void operator delete (void *p, const std::nothrow_t&) throw ()
+  void operator delete (void *p, const std::nothrow_t&) noexcept
   {
     shmem_allocator->free (p);
   }

@@ -42,9 +42,6 @@ extern "C" {
   typedef int (*ACE_SCANDIR_OS_COMPARATOR)(const void *f1, const void *f2);
 #endif /* ACE_SCANDIR_CMP_USES_VOIDPTR */
   typedef int (*ACE_SCANDIR_COMPARATOR)(const ACE_DIRENT **f1, const ACE_DIRENT **f2);
-#if defined (ACE_SCANDIR_SEL_LACKS_CONST)
-  typedef int (*ACE_SCANDIR_OS_SELECTOR)(ACE_DIRENT *filename);
-#endif /* ACE_SCANDIR_SEL_LACKS_CONST */
   typedef int (*ACE_SCANDIR_SELECTOR)(const ACE_DIRENT *filename);
 }
 

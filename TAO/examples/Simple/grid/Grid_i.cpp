@@ -1,7 +1,7 @@
 // -*- C++ -*-
 #include "Grid_i.h"
 
-// Solaris and some Windows compilers don't have min in std namespaces
+// Some Windows compilers don't have min in std namespaces
 // moreover on Windows 'min' is a macro, so we have to avoid using it literally.
 CORBA::UShort
 Grid_i::ushort_min (CORBA::UShort a, CORBA::UShort b)

@@ -27,7 +27,7 @@ ECM_Federation::supplier_types () const
 ACE_INLINE const char*
 ECM_Federation::supplier_name (CORBA::ULong i) const
 {
-  if (i < static_cast<ACE_CAST_CONST CORBA::ULong> (this->supplier_types_))
+  if (i < static_cast<CORBA::ULong> (this->supplier_types_))
     return this->supplier_names_[i];
   return 0;
 }
@@ -35,7 +35,7 @@ ECM_Federation::supplier_name (CORBA::ULong i) const
 ACE_INLINE CORBA::ULong
 ECM_Federation::supplier_ipaddr (CORBA::ULong i) const
 {
-  if (i < static_cast<ACE_CAST_CONST CORBA::ULong> (this->supplier_types_))
+  if (i < static_cast<CORBA::ULong> (this->supplier_types_))
     return this->supplier_ipaddr_[i];
   return 0;
 }
@@ -49,7 +49,7 @@ ECM_Federation::consumer_types () const
 ACE_INLINE const char*
 ECM_Federation::consumer_name (CORBA::ULong i) const
 {
-  if (i < static_cast<ACE_CAST_CONST CORBA::ULong> (this->consumer_types_))
+  if (i < static_cast<CORBA::ULong> (this->consumer_types_))
     return this->consumer_names_[i];
   return 0;
 }
@@ -57,7 +57,7 @@ ECM_Federation::consumer_name (CORBA::ULong i) const
 ACE_INLINE CORBA::ULong
 ECM_Federation::consumer_ipaddr (CORBA::ULong i) const
 {
-  if (i < static_cast<ACE_CAST_CONST CORBA::ULong> (this->consumer_types_))
+  if (i < static_cast<CORBA::ULong> (this->consumer_types_))
     return this->consumer_ipaddr_[i];
   return 0;
 }

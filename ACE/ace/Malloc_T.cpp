@@ -476,17 +476,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open ()
                                    0,
                                    this->cb_ptr_);
 
-          // Why aC++ in 64-bit mode can't grok this, I have no
-          // idea... but it ends up with an extra bit set which makes
-          // size_ really big without this hack.
-#if defined (__hpux) && defined (__LP64__)
-          size_t hpux11_hack = (rounded_bytes - sizeof *this->cb_ptr_)
-                               / sizeof (MALLOC_HEADER);
-          p->size_ = hpux11_hack;
-#else
-          p->size_ = (rounded_bytes - sizeof *this->cb_ptr_)
-            / sizeof (MALLOC_HEADER);
-#endif /* (__hpux) && defined (__LP64__) */
+          p->size_ = (rounded_bytes - sizeof *this->cb_ptr_) / sizeof (MALLOC_HEADER);
 
           ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nchunks_);
           ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nblocks_);

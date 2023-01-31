@@ -177,8 +177,7 @@
 /* Mutexes are inherently recursive (e.g., Win32) */
 /* #undef ACE_HAS_RECURSIVE_MUTEXES */
 
-/* Platform will recurse infinitely on thread exits from TSS cleanup routines
-   (e.g., AIX) */
+/* Platform will recurse infinitely on thread exits from TSS cleanup routines */
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS 1
 
 /* Platform supports reentrant functions (i.e., all the POSIX *_r functions).
@@ -359,9 +358,6 @@
 
 /* Compiler complains about use of obsolete "pragma once" */
 #define ACE_LACKS_PRAGMA_ONCE 1
-
-/* Define to 1 if the system lacks the type 'pri_t'. */
-#define ACE_LACKS_PRI_T 1
 
 /* Define to 1 if platform lacks pthread_thr_sigsetmask(). */
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK 1

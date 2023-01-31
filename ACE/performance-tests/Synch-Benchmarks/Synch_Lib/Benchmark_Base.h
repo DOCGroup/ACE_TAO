@@ -29,7 +29,7 @@ class Thr_ID
   //
   // DESCRIPTION
   //   Pthreads are too lame to have a sensible scalar values for the
-  //   thread id (unlike Solaris threads).   Therefore, we have to
+  //   thread id.   Therefore, we have to
   //   emulate this ourselves with this class (gag).
 {
 public:

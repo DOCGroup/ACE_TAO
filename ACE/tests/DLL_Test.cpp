@@ -26,7 +26,7 @@
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
 #endif /* ACE_LD_DECORATOR_STR */
 
-#if defined (ACE_WIN32) || defined (ACE_OPENVMS)
+#if defined (ACE_WIN32)
 #  define OBJ_PREFIX ACE_DLL_PREFIX
 #else
 #  define OBJ_PREFIX ACE_TEXT("./") ACE_DLL_PREFIX

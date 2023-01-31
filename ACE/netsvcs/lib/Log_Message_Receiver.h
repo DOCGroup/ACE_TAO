@@ -198,12 +198,6 @@ private:
   Log_Message_Receiver_Impl (const Log_Message_Receiver_Impl<ACE_SYNCH_USE> &) = delete;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Log_Message_Receiver.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Log_Message_Receiver.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* LOG_MESSAGE_RECEIVER_H */

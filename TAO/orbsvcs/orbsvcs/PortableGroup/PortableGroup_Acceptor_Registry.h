@@ -63,7 +63,7 @@ public:
   };
 
   ///  Default constructor.
-  TAO_PortableGroup_Acceptor_Registry ();
+  TAO_PortableGroup_Acceptor_Registry () = default;
 
   ///  Default destructor.
   ~TAO_PortableGroup_Acceptor_Registry ();

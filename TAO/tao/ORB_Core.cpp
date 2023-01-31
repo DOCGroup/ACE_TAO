@@ -3242,7 +3242,7 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
 
 #define TOCSRi TAO_ORB_Core_Static_Resources::instance ()
 
-  // A consern was raised that since this function is called by two
+  // A concern was raised that since this function is called by two
   // different initializers there may be a race condition that might
   // require a lock. We are not using a lock at this time because of
   // two callers, one happens only during service directive processing
@@ -3250,14 +3250,13 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
   // happens when the OC_Endpoint_Selector_Factory is loaded, the
   // latter is part of the messaging library. The messaging library
   // calls this function as part of pre_init processing, and this call
-  // happes for every ORB instance. This was the case before these The
+  // happens for every ORB instance. This was the case before these The
   // latter call occurs when the messaging library is loaded. The
   // redundant calls occurred then as well. Second, it isn't clear how
   // a lock in this static method would react in the face of windows
   // dlls, shared memory segments, etc. Therefore we are continuing to
   // keep this code lockless as it always was, assuming no
-  // simultanious overwrite will occur.
-
+  // simultaneous overwrite will occur.
   if (TOCSRi->connection_timeout_hook_ == nullptr)
     {
       if (TAO_debug_level > 2)

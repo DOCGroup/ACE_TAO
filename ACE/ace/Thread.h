@@ -40,7 +40,7 @@ struct cancel_state
  * @brief Provides a wrapper for threads.
  *
  * This class provides a common interface that is mapped onto
- * POSIX Pthreads, Solaris threads, Win32 threads, VxWorks
+ * POSIX Pthreads, Win32 threads, VxWorks
  * threads, or pSoS threads.  Note, however, that it is
  * generally a better idea to use the ACE_Thread_Manager
  * programming API rather than the <ACE_Thread> API since the
@@ -152,7 +152,6 @@ public:
    *                  If @a thread_id is 0, join() waits for any
    *                  undetached thread in the process to terminate
    *                  on platforms that support this capability
-   *                  (for example, Solaris).
    * @param departed  points to a location that is set to the ID of the
    *                  terminated thread if join() returns successfully.
    *                  If @a departed is 0, it is ignored.

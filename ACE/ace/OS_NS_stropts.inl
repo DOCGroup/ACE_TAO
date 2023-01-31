@@ -13,11 +13,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_LACKS_CONST_STRBUF_PTR)
-typedef struct strbuf *ACE_STRBUF_TYPE;
-#else
 typedef const struct strbuf *ACE_STRBUF_TYPE;
-#endif /* ACE_LACKS_CONST_STRBUF_PTR */
 
 ACE_INLINE
 ACE_Str_Buf::ACE_Str_Buf (void *b, int l, int max)

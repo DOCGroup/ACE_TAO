@@ -69,14 +69,9 @@ namespace
 
 namespace TAO_PG
 {
-  Fragments_Cleanup_Strategy::~Fragments_Cleanup_Strategy ()
-  {
-  }
-
   void
   Time_Bound_Fragments_Cleanup_Strategy::cleanup (
-    TAO_UIPMC_Mcast_Transport::Packets_Map &packets
-  )
+    TAO_UIPMC_Mcast_Transport::Packets_Map &packets)
   {
      // bound_ is in milliseconds.
      ACE_Time_Value const delay (0, 1000 * this->bound_);
@@ -114,8 +109,7 @@ namespace TAO_PG
 
   void
   Number_Bound_Fragments_Cleanup_Strategy::cleanup (
-    TAO_UIPMC_Mcast_Transport::Packets_Map &packets
-  )
+    TAO_UIPMC_Mcast_Transport::Packets_Map &packets)
   {
     int const current_size = static_cast<int> (packets.current_size ());
 
@@ -165,8 +159,7 @@ namespace TAO_PG
 
   void
   Memory_Bound_Fragments_Cleanup_Strategy::cleanup (
-    TAO_UIPMC_Mcast_Transport::Packets_Map &packets
-  )
+    TAO_UIPMC_Mcast_Transport::Packets_Map &packets)
   {
     // First we need to calculate the size of packets. Since we anyway run
     // this loop we can also cleanup broken packets.

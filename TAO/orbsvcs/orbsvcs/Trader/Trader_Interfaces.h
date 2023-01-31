@@ -804,9 +804,7 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Trader/Trader_Interfaces.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

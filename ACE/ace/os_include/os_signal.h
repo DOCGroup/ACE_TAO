@@ -24,11 +24,9 @@
 
 #include "ace/os_include/sys/os_types.h"
 
-#if !defined (ACE_LACKS_SIGNAL_H)
-   extern "C" {
+extern "C" {
 #  include /**/ <signal.h>
-   }
-#endif /* !ACE_LACKS_SIGNAL_H */
+}
 
 #if defined (ACE_HAS_SIGINFO_T)
 #  if !defined (ACE_LACKS_SIGINFO_H)
@@ -137,17 +135,13 @@ extern "C"
 
 #if defined (ACE_VXWORKS)
 #  define ACE_NSIG (_NSIGS + 1)
-#elif defined (__Lynx__) || defined (ACE_HAS_RTEMS)
+#elif defined (__Lynx__)
 #  define ACE_NSIG (NSIG + 1)
 #else
    // All other platforms set NSIG to one greater than the
    // highest-numbered signal.
 #  define ACE_NSIG NSIG
 #endif /* ACE_VXWORKS */
-
-#if defined (ACE_HAS_WINCE)
-  typedef void (__cdecl * __sighandler_t)(int);
-#endif
 
 #if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
   // Prototypes for both signal() and struct sigaction are consistent..
@@ -163,9 +157,6 @@ extern "C"
 #elif defined (INTEGRITY)
    using ACE_SignalHandler = void (*)();
    using ACE_SignalHandlerV = void (*)(int);
-#elif defined (ACE_HAS_RTEMS)
-   using ACE_SignalHandler = void (*)();
-   using ACE_SignalHandlerV = void (*)();
 #else /* This is necessary for some older broken version of cfront */
 #  if defined (SIG_PF)
 #    define ACE_SignalHandler SIG_PF

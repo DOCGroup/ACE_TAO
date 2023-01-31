@@ -8,8 +8,7 @@ PersistentPoa::PersistentPoa ()
 {
 }
 
-PersistentPoa::~PersistentPoa ()
-  throw ()
+PersistentPoa::~PersistentPoa () noexcept
 {
 }
 

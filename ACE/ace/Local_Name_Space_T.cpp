@@ -439,8 +439,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
   ACE_TCHAR lock_name_for_backing_store [MAXPATHLEN + MAXNAMELEN];
   const ACE_TCHAR *postfix = database;
 
-  size_t length = 0;
-  length = sizeof lock_name_for_local_name_space / sizeof (ACE_TCHAR);
+  size_t length = sizeof lock_name_for_local_name_space / sizeof (ACE_TCHAR);
   ACE_OS::strsncpy (lock_name_for_local_name_space,
                     dir,
                     length);

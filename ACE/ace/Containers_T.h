@@ -986,18 +986,6 @@ template <class T> class ACE_DLList_Reverse_Iterator;
 
 typedef ACE_Double_Linked_List<ACE_DLList_Node> ACE_DLList_Base;
 
-//typedef ACE_Double_Linked_List_Iterator <ACE_DLList_Node>
-//        ACE_DLList_Iterator_Base;
-//typedef ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>
-//        ACE_DLList_Reverse_Iterator_Base;
-//@@ These two typedefs (inherited from James Hu's original design)
-// have been removed because Sun CC 4.2 had problems with it. I guess
-// having the DLList_Iterators inheriting from a class which is
-// actually a typedef leads to problems. #define'ing rather than
-// typedef'ing worked, but as per Carlos's reccomendation, I'm just
-// replacing all references to the base classes with their actual
-// type.  Matt Braun (6/15/99)
-
 /**
  * @class ACE_DLList
  *
@@ -2019,13 +2007,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Containers_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Containers_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Containers_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

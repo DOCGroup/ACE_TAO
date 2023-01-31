@@ -35,11 +35,6 @@
 #     include /**/ <wchar.h>
 #     include /**/ <wctype.h>
 #   endif
-# elif defined (ACE_OPENVMS)
-#   include /**/ <wchar.h>
-#   include /**/ <wctype.h>
-# elif defined (ACE_HAS_WINCE)
-#   include /**/ <wtypes.h>
 # else
 #   include /**/ <cwchar>
 #   include /**/ <cwctype>
@@ -208,9 +203,9 @@ private:
 #endif /* ACE_HAS_ICONV */
 
   /// Disallow these operation.
-  ACE_Ascii_To_Wide ();
-  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &);
-  ACE_Ascii_To_Wide operator= (ACE_Ascii_To_Wide &);
+  ACE_Ascii_To_Wide () = delete;
+  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &) = delete;
+  ACE_Ascii_To_Wide operator= (ACE_Ascii_To_Wide &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

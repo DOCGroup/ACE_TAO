@@ -25,11 +25,8 @@
 // @todo should we include anything from signal.h?
 #include "ace/os_include/sys/os_types.h"
 
-// To get the proper select() signature, this is required for HP-UX, and
-// maybe other platforms that offer both int and fdset forms of select().
-// For HP-UX, sys/time.h must be included before time.h, or
-// _XOPEN_SOURCE_EXTENDED must be defined. It's not nice to require
-// the preprocessor macro, so we force our select() preference this way.
+// To get the proper select() signature, this is required for maybe other platforms
+// that offer both int and fdset forms of select().
 #if !defined (ACE_LACKS_SYS_TIME_H)
 #  include /**/ <sys/time.h>
 #endif /* !ACE_LACKS_SYS_TIME_H */
@@ -56,13 +53,6 @@ typedef struct timespec
   /// Nanoseconds
   long tv_nsec;
 } timespec_t;
-# elif defined (ACE_HAS_BROKEN_POSIX_TIME)
-#  if defined (ACE_OPENVMS)
-#     include /**/ <timers.h>
-#  else
-// OSF/1 defines struct timespec in <sys/timers.h> - Tom Marrs
-#     include /**/ <sys/timers.h>
-#  endif
 # endif /* !ACE_HAS_POSIX_TIME */
 
 # if defined(ACE_LACKS_TIMESPEC_T)
@@ -82,8 +72,7 @@ extern "C"
 // straightening them out.
 #if defined (ACE_HAS_PTHREADS)    /* POSIX.1c threads (pthreads) */
    // ... and 2-parameter asctime_r and ctime_r
-#  if !defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) && \
-      !defined (ACE_HAS_STHREADS) && !defined (ACE_VXWORKS)
+#  if !defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) && !defined (ACE_VXWORKS)
 #    define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #  endif
 #endif /* ACE_HAS_PTHREADS */

@@ -28,10 +28,6 @@
 #  include /**/ <sys/types.h>
 #endif /* !ACE_LACKS_SYS_TYPES_H */
 
-#if defined (ACE_HAS_TYPES_H)
-#  include /**/ <types.h>
-#endif /* ACE_HAS_TYPES_H */
-
 # if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
              (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
 using std::time_t;
@@ -49,14 +45,6 @@ typedef double ACE_timer_t;
    typedef int clockid_t;
 #endif /* ACE_LACKS_CLOCKID_T */
 
-#if defined (ACE_LACKS_DEV_T)
-   typedef unsigned int dev_t;
-#endif /* ACE_LACKS_DEV_T */
-
-#if defined (ACE_HAS_WINCE)
-  typedef long off_t;
-#endif
-
 #if defined(ACE_WIN32) && defined(_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS==64)
   typedef __int64 ACE_OFF_T;
 #else
@@ -65,18 +53,13 @@ typedef double ACE_timer_t;
 
 #if defined (ACE_SIZEOF_LONG) && ACE_SIZEOF_LONG == 8
    typedef off_t ACE_LOFF_T;
-#elif defined (ACE_HAS_RTEMS) || defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined (__APPLE__) || \
-  (defined (ACE_OPENVMS) && defined (_LARGEFILE))
+#elif defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined (__APPLE__)
    typedef off_t ACE_LOFF_T;
-#elif defined (AIX) || defined (HPUX) || defined (__QNX__)
+#elif defined (__QNX__)
    typedef off64_t ACE_LOFF_T;
-#elif defined (__sun)
-   typedef offset_t ACE_LOFF_T;
 #elif defined (WIN32)
    typedef __int64  ACE_LOFF_T;
-#elif (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x700)) || \
-  defined (ACE_LYNXOS_MAJOR) || \
-  (defined (ACE_OPENVMS) && !defined (_LARGEFILE))
+#elif (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x700)) || defined (ACE_LYNXOS_MAJOR)
    typedef long long ACE_LOFF_T;
 #else
    typedef loff_t ACE_LOFF_T;

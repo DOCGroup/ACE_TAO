@@ -56,7 +56,7 @@ sigaction (int signum, const ACE_SIGACTION *nsa, ACE_SIGACTION *osa)
   ACE_OS_TRACE ("ACE_OS::sigaction");
   if (signum == 0)
     return 0;
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
   struct sigaction sa;
 
   if (osa == 0)
@@ -78,7 +78,7 @@ sigaction (int signum, const ACE_SIGACTION *nsa, ACE_SIGACTION *osa)
   return ::sigaction (signum, const_cast<ACE_SIGACTION*> (nsa), osa);
 #else
   return ::sigaction (signum, nsa, osa);
-#endif /* ACE_WIN32 !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE int
@@ -189,15 +189,16 @@ signal (int signum, ACE_SignalHandler func)
   if (signum == 0)
     return 0;
   else
-#if (defined ACE_WIN32 && !defined ACE_HAS_WINCE) || \
+    {
+#if (defined ACE_WIN32) || \
     (!defined ACE_LACKS_UNIX_SIGNALS && !defined ACE_LACKS_SIGNAL)
-    return ::signal (signum, func);
+      return ::signal (signum, func);
 #else
-    // @@ WINCE: Don't know how to implement signal on WinCE (yet.)
-    ACE_UNUSED_ARG (signum);
-    ACE_UNUSED_ARG (func);
-    ACE_NOTSUP_RETURN (0);     // Should return SIG_ERR but it is not defined on WinCE.
-#endif /* defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) || !defined (ACE_LACKS_UNIX_SIGNALS) */
+      ACE_UNUSED_ARG (signum);
+      ACE_UNUSED_ARG (func);
+      ACE_NOTSUP_RETURN (0);     // Should return SIG_ERR but maybe not defined on all platforms
+#endif /* defined (ACE_WIN32) || !defined (ACE_LACKS_UNIX_SIGNALS) */
+    }
 }
 
 ACE_INLINE int

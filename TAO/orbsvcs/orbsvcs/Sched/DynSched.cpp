@@ -26,11 +26,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //////////////////////
 
 // compare the DFS finish times of two task entries, order higher time *first*
-#if defined (ACE_HAS_WINCE)
-int _cdecl compare_entry_finish_times (const void *first, const void *second)
-#else
 extern "C" int compare_entry_finish_times (const void *first, const void *second)
-#endif  // ACE_HAS_WINCE
 {
   // sort blank entries to the end
   if (! first)

@@ -59,7 +59,6 @@
 #endif /* __GLIBC__ */
 
 #define ACE_HAS_LSEEK64
-//#define ACE_LACKS_LSEEK64_PROTOTYPE
 
 #define ACE_HAS_P_READ_WRITE
 // Use ACE's alternate cuserid() implementation since the use of the

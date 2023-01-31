@@ -38,7 +38,7 @@ public:
   TAO_PG_Default_Property_Validator ();
 
   /// Destructor
-  virtual ~TAO_PG_Default_Property_Validator ();
+  virtual ~TAO_PG_Default_Property_Validator () = default;
 
   /// Validate the given properties.  Throw an exception when the
   /// first invalid property is encountered.  The remaining properties
