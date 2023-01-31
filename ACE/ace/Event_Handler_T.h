@@ -90,7 +90,7 @@ public:
                        IO_HANDLER except = 0);
 
   /// Close down and delete the <op_handler>
-  ~ACE_Event_Handler_T (void);
+  ~ACE_Event_Handler_T ();
 
   // = Override all the ACE_Event_Handler methods.
 
@@ -105,7 +105,7 @@ public:
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
   // = Get/set the operations handler.
-  T *op_handler (void);
+  T *op_handler ();
   void op_handler (T *);
 
   // = Get/set the target pointer-to-method used for dispatching.
@@ -173,13 +173,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Event_Handler_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Event_Handler_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Event_Handler_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_EVENT_HANDLER_H */

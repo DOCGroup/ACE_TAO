@@ -21,8 +21,8 @@
 class ACE_Svc_Export Handle_L_Stream : public ACE_Service_Object, public ACE_LSOCK_Acceptor
 {
 public:
-  Handle_L_Stream (void);
-  ~Handle_L_Stream (void);
+  Handle_L_Stream ();
+  ~Handle_L_Stream ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **, size_t) const;
   virtual int fini ();

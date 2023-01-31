@@ -19,7 +19,7 @@ public:
     ACE_OS::strcpy (programName_, program_name);
   }
 
-  int doWork (void)
+  int doWork ()
   {
     ACE_TRACE ("Manager::doWork");
 
@@ -43,7 +43,7 @@ public:
 
 private:
   // Listing 3 code/ch10
-  int dumpRun (void)
+  int dumpRun ()
   {
     ACE_TRACE ("Manager::dumpRun");
 
@@ -132,7 +132,7 @@ public:
     ACE_TRACE ("Slave::Slave");
   }
 
-  int doWork (void)
+  int doWork ()
   {
     ACE_TRACE ("Slave::doWork");
 
@@ -155,7 +155,7 @@ public:
   }
 // Listing 4
 
-  void showWho (void)
+  void showWho ()
   {
     ACE_TRACE ("Slave::showWho");
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)

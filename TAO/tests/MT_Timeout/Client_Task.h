@@ -48,14 +48,14 @@ public:
   int too_big_difference_calls () const;
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   /// Run one iteration of the test
-  int one_iteration (void);
+  int one_iteration ();
 
   /// Make sure that the thread has a connection available
-  void validate_connection (void);
+  void validate_connection ();
 
 private:
   /// A reference to the ORB

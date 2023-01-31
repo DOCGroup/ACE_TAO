@@ -35,14 +35,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-set_rt_mode (void)
+set_rt_mode ()
 {
   int policy = ACE_SCHED_FIFO;
   int priority =
     (ACE_Sched_Params::priority_min (policy)
      + ACE_Sched_Params::priority_max (policy)) / 2;
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   int result =
     ACE_OS::sched_params (ACE_Sched_Params (policy,
                                             priority,

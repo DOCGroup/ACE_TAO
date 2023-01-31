@@ -35,7 +35,7 @@
 
 ACE_Test_Output *ACE_Test_Output::instance_ = 0;
 
-ACE_Test_Output::ACE_Test_Output (void)
+ACE_Test_Output::ACE_Test_Output ()
   : output_file_ (0)
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -43,7 +43,7 @@ ACE_Test_Output::ACE_Test_Output (void)
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 }
 
-ACE_Test_Output::~ACE_Test_Output (void)
+ACE_Test_Output::~ACE_Test_Output ()
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   ACE_LOG_MSG->msg_ostream (&cerr);
@@ -58,7 +58,7 @@ ACE_Test_Output::~ACE_Test_Output (void)
 }
 
 OFSTREAM *
-ACE_Test_Output::output_file (void)
+ACE_Test_Output::output_file ()
 {
   return this->output_file_;
 }
@@ -77,7 +77,6 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   // Ignore the error value since the directory may already exist.
   const ACE_TCHAR *test_dir {};
 
-#if !defined (ACE_HAS_WINCE)
 #  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
 #  else
@@ -93,7 +92,6 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 
   if (test_dir == 0)
-#endif /* ACE_HAS_WINCE */
     test_dir = ACE_TEXT ("");
 
   // This could be done with ACE_OS::sprintf() but it requires different
@@ -123,11 +121,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   // directory does exist, it causes a wierd console error message
   // about "cat: input error on standard input: Is a directory".  So,
   // VxWorks users must create the directory manually.
-#   if defined (ACE_HAS_WINCE)
-      ACE_OS::mkdir (ACE_LOG_DIRECTORY_FOR_MKDIR);
-#   else
       ACE_OS::mkdir (ACE_LOG_DIRECTORY);
-#   endif  // ACE_HAS_WINCE
 # endif /* ! VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -147,14 +141,14 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   ACE_LOG_MSG->msg_ostream (this->output_file ());
 #endif /* ACE_HAS_PHARLAP */
 
-  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
   return 0;
 }
 
 void
-ACE_Test_Output::close (void)
+ACE_Test_Output::close ()
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   this->output_file_->flush ();
@@ -186,19 +180,19 @@ ACE_Test_Output::instance ()
 }
 
 const ACE_TCHAR *
-ACE_Test_Output::dll_name (void)
+ACE_Test_Output::dll_name ()
 {
   return ACE_TEXT ("Test_Output");
 }
 
 const ACE_TCHAR *
-ACE_Test_Output::name (void)
+ACE_Test_Output::name ()
 {
   return ACE_TEXT ("ACE_Test_Output");
 }
 
 void
-ACE_Test_Output::close_singleton (void)
+ACE_Test_Output::close_singleton ()
 {
   delete ACE_Test_Output::instance_;
   ACE_Test_Output::instance_ = 0;

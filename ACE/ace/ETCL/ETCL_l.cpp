@@ -1399,7 +1399,7 @@ static int input()
   }
 #endif /* YY_NO_INPUT */
 
-void yyflush_current_buffer (void)
+void yyflush_current_buffer ()
 {
   YY_FLUSH_BUFFER;
 }
@@ -1451,7 +1451,7 @@ YY_BUFFER_STATE new_buffer;
 
 
 #ifdef YY_USE_PROTOS
-void yy_load_buffer_state( void )
+void yy_load_buffer_state()
 #else
 void yy_load_buffer_state()
 #endif
@@ -1514,7 +1514,6 @@ YY_BUFFER_STATE b;
   }
 
 
-
 #ifdef YY_USE_PROTOS
 void yy_init_buffer( YY_BUFFER_STATE b, FILE *file )
 #else
@@ -1530,18 +1529,7 @@ FILE *file;
   b->yy_input_file = file;
   b->yy_fill_buffer = 1;
 
-#if defined (ACE_HAS_WINCE)
-    // Mimic the behavior as WinCE does not have isatty().
-    if ((file != 0) && (file == ACE_OS::fileno(file))) {
-        b->yy_is_interactive = 1;
-    }
-    else {
-        b->yy_is_interactive = 0;
-    }
-#else
   b->yy_is_interactive = file ? (ACE_OS::isatty( ACE_OS::fileno(file) ) > 0) : 0;
-#endif  // ACE_HAS_WINCE
-
   }
 
 
@@ -1737,7 +1725,6 @@ char msg[];
   }
 
 
-
 /* Redefine yyless() so it works in section 3 code. */
 
 #undef yyless
@@ -1867,7 +1854,7 @@ extract_string(char* str)
 }
 
 int
-yywrap (void)
+yywrap ()
 {
   return 1;
 }

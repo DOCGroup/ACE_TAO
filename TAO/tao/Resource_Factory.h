@@ -108,7 +108,6 @@ typedef ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>
 class TAO_Export TAO_Resource_Factory : public ACE_Service_Object
 {
 public:
-
   enum Purging_Strategy
   {
     /// Least Recently Used
@@ -262,7 +261,6 @@ protected:
    * without calling unnecessary functions.
    */
   virtual int load_default_protocols ();
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

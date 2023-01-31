@@ -32,12 +32,11 @@
 class Connection_Manager
 {
 public:
-
   /// Constructor
-  Connection_Manager (void);
+  Connection_Manager ();
 
   /// Destructor
-  ~Connection_Manager (void);
+  ~Connection_Manager ();
 
   /// Initialize this class.
   int init (CORBA::ORB_ptr orb);
@@ -48,7 +47,7 @@ public:
                           AVStreams::MMDevice_ptr sender);
 
   /// Connect to the receivers that we found.
-  void connect_to_receivers (void);
+  void connect_to_receivers ();
 
   /// Bind receiver to the sender.
   void bind_to_sender (const ACE_CString &sender_name,
@@ -56,7 +55,7 @@ public:
                        AVStreams::MMDevice_ptr receiver);
 
   /// Connect to the sender that we found.
-  void connect_to_sender (void);
+  void connect_to_sender ();
 
   /// Destroy streams associated with <flowname>.
   void destroy (const ACE_CString &flowname);
@@ -93,13 +92,12 @@ public:
           StreamCtrls;
 
   // Map accessors.
-  Receivers &receivers (void);
-  Protocol_Objects &protocol_objects (void);
-  StreamCtrls &streamctrls (void);
+  Receivers &receivers ();
+  Protocol_Objects &protocol_objects ();
+  StreamCtrls &streamctrls ();
 
 protected:
-
-  void find_receivers (void);
+  void find_receivers ();
 
   void add_to_receivers (CosNaming::BindingList &binding_list);
 

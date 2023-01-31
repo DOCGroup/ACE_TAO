@@ -18,7 +18,7 @@
 #endif
 
 #if defined (ACE_HAS_GETIFADDRS)
-#  if defined (ACE_VXWORKS)
+#  if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x700)
 #    include /**/ <net/ifaddrs.h>
 #  else
 #    include /**/ <ifaddrs.h>
@@ -466,7 +466,6 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
     }
 
   return 0;
-
 }
 
 int
@@ -691,8 +690,6 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
             }
 
           return 1;
-
-
         }
       else
         {
@@ -743,7 +740,6 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
             }
 
           return 1;
-
         }
 #else /* ACE_HAS_IPV6 */
       // Unsubscribe on all local multicast-capable network interfaces, by

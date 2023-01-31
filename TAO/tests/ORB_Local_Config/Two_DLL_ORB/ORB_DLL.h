@@ -30,7 +30,7 @@ class Abstract_Worker
 {
 public:
   Abstract_Worker (const ACE_TCHAR *ior);
-  virtual ~Abstract_Worker (void);
+  virtual ~Abstract_Worker ();
   virtual int test_main (int argc,
                     ACE_TCHAR *argv[]) = 0;
   virtual const ACE_TCHAR * kind () const = 0;
@@ -45,7 +45,7 @@ class Server_Worker : public Abstract_Worker
 {
 public:
   Server_Worker ();
-  ~Server_Worker (void);
+  ~Server_Worker ();
   int test_main (int argc, ACE_TCHAR *argv[]);
   const ACE_TCHAR * kind () const;
 
@@ -60,7 +60,7 @@ class Client_Worker : public Abstract_Worker
 {
 public:
   Client_Worker ();
-  ~Client_Worker (void);
+  ~Client_Worker ();
   int test_main (int argc, ACE_TCHAR *argv[]);
   const ACE_TCHAR * kind () const;
 
@@ -78,10 +78,9 @@ class Service_Config_ORB_DLL_Export Service_Config_ORB_DLL
   : public ACE_Task_Base
 {
 public:
-
   /// Constructor.
-  Service_Config_ORB_DLL (void);
-  ~Service_Config_ORB_DLL (void);
+  Service_Config_ORB_DLL ();
+  ~Service_Config_ORB_DLL ();
 
   /// Initializes object when dynamic linking occurs.
   virtual int init (int argc, ACE_TCHAR *argv[]);

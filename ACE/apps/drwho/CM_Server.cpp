@@ -69,7 +69,7 @@ CM_Server::receive (int)
 }
 
 int
-CM_Server::send (void)
+CM_Server::send ()
 {
   int  packet_length = 0;
 
@@ -93,11 +93,11 @@ CM_Server::send (void)
   return 1;
 }
 
-CM_Server::CM_Server (void)
+CM_Server::CM_Server ()
 {
 }
 
-CM_Server::~CM_Server (void)
+CM_Server::~CM_Server ()
 {
   if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,

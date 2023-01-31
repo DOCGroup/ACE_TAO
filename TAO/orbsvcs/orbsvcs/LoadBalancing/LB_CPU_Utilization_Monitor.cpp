@@ -124,7 +124,7 @@ TAO_LB_CPU_Utilization_Monitor::loads ()
 {
   CORBA::Float load = 0;
 
-#if defined (ACE_LINUX) || defined (sun)
+#if defined (ACE_LINUX)
   double load_double = calc_cpu_loading ();
   load = load_double;
 
@@ -153,7 +153,7 @@ TAO_LB_CPU_Utilization_Monitor::loads ()
   ACE_UNUSED_ARG (load);
   throw CORBA::NO_IMPLEMENT ();
 
-#endif  /* linux || sun */
+#endif  /* linux */
 
 }
 

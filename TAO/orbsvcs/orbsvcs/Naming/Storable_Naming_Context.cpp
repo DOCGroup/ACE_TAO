@@ -307,7 +307,6 @@ bool
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::object_obsolete ()
 {
-
   // Query the underlying context if it is obsolete with respect
   // to the provided file last-changed time
   return (context_->is_obsolete (fl_->last_changed ()));

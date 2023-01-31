@@ -67,7 +67,7 @@ ETCL_Literal_Constraint::ETCL_Literal_Constraint (
   this->op_.str_ = ACE::strnew (str);
 }
 
-ETCL_Literal_Constraint::~ETCL_Literal_Constraint (void)
+ETCL_Literal_Constraint::~ETCL_Literal_Constraint ()
 {
   if (this->type_ == ACE_ETCL_STRING)
     {
@@ -384,7 +384,7 @@ ETCL_Literal_Constraint::operator/ (const ETCL_Literal_Constraint & rhs)
 }
 
 ETCL_Literal_Constraint
-ETCL_Literal_Constraint::operator- (void)
+ETCL_Literal_Constraint::operator- ()
 {
   switch (this->type_)
   {
@@ -465,7 +465,7 @@ ETCL_Identifier::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Union_Value::~ETCL_Union_Value (void)
+ETCL_Union_Value::~ETCL_Union_Value ()
 {
   delete this->string_;
   delete this->integer_;
@@ -479,7 +479,7 @@ ETCL_Union_Value::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Union_Pos::~ETCL_Union_Pos (void)
+ETCL_Union_Pos::~ETCL_Union_Pos ()
 {
   delete this->component_;
   delete this->union_value_;
@@ -493,7 +493,7 @@ ETCL_Union_Pos::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Component_Pos::~ETCL_Component_Pos (void)
+ETCL_Component_Pos::~ETCL_Component_Pos ()
 {
   delete this->component_;
   delete this->integer_;
@@ -507,7 +507,7 @@ ETCL_Component_Pos::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Component_Assoc::~ETCL_Component_Assoc (void)
+ETCL_Component_Assoc::~ETCL_Component_Assoc ()
 {
   delete this->component_;
   delete this->identifier_;
@@ -521,7 +521,7 @@ ETCL_Component_Assoc::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Component_Array::~ETCL_Component_Array (void)
+ETCL_Component_Array::~ETCL_Component_Array ()
 {
   delete this->component_;
   delete this->integer_;
@@ -543,7 +543,7 @@ ETCL_Special::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Component::~ETCL_Component (void)
+ETCL_Component::~ETCL_Component ()
 {
   delete this->component_;
   delete this->identifier_;
@@ -557,7 +557,7 @@ ETCL_Component::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Dot::~ETCL_Dot (void)
+ETCL_Dot::~ETCL_Dot ()
 {
   delete this->component_;
 }
@@ -570,7 +570,7 @@ ETCL_Dot::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Eval::~ETCL_Eval (void)
+ETCL_Eval::~ETCL_Eval ()
 {
   delete this->component_;
 }
@@ -583,7 +583,7 @@ ETCL_Eval::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Default::~ETCL_Default (void)
+ETCL_Default::~ETCL_Default ()
 {
   delete this->component_;
 }
@@ -596,7 +596,7 @@ ETCL_Default::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Exist::~ETCL_Exist (void)
+ETCL_Exist::~ETCL_Exist ()
 {
   delete this->component_;
 }
@@ -609,7 +609,7 @@ ETCL_Exist::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Unary_Expr::~ETCL_Unary_Expr (void)
+ETCL_Unary_Expr::~ETCL_Unary_Expr ()
 {
   delete this->subexpr_;
 }
@@ -622,7 +622,7 @@ ETCL_Unary_Expr::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Binary_Expr::~ETCL_Binary_Expr (void)
+ETCL_Binary_Expr::~ETCL_Binary_Expr ()
 {
   delete this->lhs_;
   delete this->rhs_;
@@ -636,7 +636,7 @@ ETCL_Binary_Expr::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
-ETCL_Preference::~ETCL_Preference (void)
+ETCL_Preference::~ETCL_Preference ()
 {
   delete this->subexpr_;
 }

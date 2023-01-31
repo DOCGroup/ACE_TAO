@@ -33,9 +33,7 @@ public:
   Event_AnyPushConsumer (Simple_Test *test_client);
 
   // = PushSupplier methods
-  virtual void push (
-      const CORBA::Any & data
-    );
+  virtual void push (const CORBA::Any & data);
 
 protected:
   Simple_Test * test_client_;
@@ -50,7 +48,7 @@ public:
   Event_AnyPushSupplier (Simple_Test * test_client);
 
   /// Destructor.
-  virtual ~Event_AnyPushSupplier (void);
+  virtual ~Event_AnyPushSupplier ();
 
 protected:
   Simple_Test* test_client_;
@@ -62,8 +60,8 @@ class Simple_Test : public Notify_Test_Client
 {
 public:
   // Initialization and termination code
-  Simple_Test (void);
-  virtual ~Simple_Test (void);
+  Simple_Test ();
+  virtual ~Simple_Test ();
 
   int parse_args (int argc,
                   ACE_TCHAR *argv[]) ;
@@ -73,20 +71,20 @@ public:
             ACE_TCHAR *argv []);
 
   /// Called when an event is received.
-  void on_event_received (void);
+  void on_event_received ();
 
   /// Run the test.
-  void run_test (void);
+  void run_test ();
 
   /// End the test.
-  void end_test (void);
+  void end_test ();
 
   /// check if we got the expected results.
-  int check_results (void);
+  int check_results ();
 
 protected:
   /// Create EC
-  void create_EC (void);
+  void create_EC ();
 
   /// Number of events received so far.
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;

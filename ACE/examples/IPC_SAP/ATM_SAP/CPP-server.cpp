@@ -5,7 +5,6 @@
 #include "ace/Log_Msg.h"
 
 
-
 #if defined (ACE_HAS_ATM)
 // ACE_ATM Server
 

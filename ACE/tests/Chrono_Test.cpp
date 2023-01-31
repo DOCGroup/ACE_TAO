@@ -289,7 +289,6 @@ test_streamers ()
   }
 
 
-
   ACE_Time_Value const test_sec {12, 132};
   // Seconds
   s << test_sec;

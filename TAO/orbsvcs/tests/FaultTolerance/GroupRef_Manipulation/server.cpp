@@ -99,8 +99,6 @@ add_ft_prop (CORBA::ORB_ptr o,
                                   obj2,
                                   obj2);
     }
-
-  return;
 }
 
 void test_colocal (ForwardRequestTest::test_ptr server)
@@ -184,7 +182,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->create_POA ("first POA",
                               poa_manager.in (),
                               policies);
-
 
 
       PortableServer::ObjectId_var oid1 =

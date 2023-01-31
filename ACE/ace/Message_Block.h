@@ -175,15 +175,15 @@ public:
    */
   ACE_Message_Block (size_t size,
                      ACE_Message_Type type = MB_DATA,
-                     ACE_Message_Block *cont = 0,
-                     const char *data = 0,
-                     ACE_Allocator *allocator_strategy = 0,
-                     ACE_Lock *locking_strategy = 0,
+                     ACE_Message_Block *cont = nullptr,
+                     const char *data = nullptr,
+                     ACE_Allocator *allocator_strategy = nullptr,
+                     ACE_Lock *locking_strategy = nullptr,
                      unsigned long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
                      const ACE_Time_Value &execution_time = ACE_Time_Value::zero,
                      const ACE_Time_Value &deadline_time = ACE_Time_Value::max_time,
-                     ACE_Allocator *data_block_allocator = 0,
-                     ACE_Allocator *message_block_allocator = 0);
+                     ACE_Allocator *data_block_allocator = nullptr,
+                     ACE_Allocator *message_block_allocator = nullptr);
 
   /**
    * A copy constructor. This constructor is a bit different. If the

@@ -288,7 +288,7 @@
 
 /* C99 systems have <inttypes.h>. Non-C99 systems may or may not. */
 
-#if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L || defined (__HP_aCC)
+#if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
 
 /* C99 says to define __STDC_LIMIT_MACROS before including stdint.h,
  * if you want the limit (max/min) macros for int types.
@@ -543,10 +543,10 @@ YY_BUFFER_STATE yy_create_buffer ( FILE *file, int size  );
 void yy_delete_buffer ( YY_BUFFER_STATE b  );
 void yy_flush_buffer ( YY_BUFFER_STATE b  );
 void yypush_buffer_state ( YY_BUFFER_STATE new_buffer  );
-void yypop_buffer_state ( void );
+void yypop_buffer_state ();
 
-static void yyensure_buffer_stack ( void );
-static void yy_load_buffer_state ( void );
+static void yyensure_buffer_stack ();
+static void yy_load_buffer_state ();
 static void yy_init_buffer ( YY_BUFFER_STATE b, FILE *file  );
 #define YY_FLUSH_BUFFER yy_flush_buffer( YY_CURRENT_BUFFER )
 
@@ -591,9 +591,9 @@ int yylineno = 1;
 
 extern char yytext[];
 
-static yy_state_type yy_get_previous_state ( void );
+static yy_state_type yy_get_previous_state ();
 static yy_state_type yy_try_NUL_trans ( yy_state_type current_state  );
-static int yy_get_next_buffer ( void );
+static int yy_get_next_buffer ();
 static void yynoreturn yy_fatal_error ( const char* msg  );
 
 /* Done after the current pattern has been matched and before the
@@ -1468,34 +1468,34 @@ static AST_Decl *           idl_find_node (const char *);
 #define YY_EXTRA_TYPE void *
 #endif
 
-static int yy_init_globals ( void );
+static int yy_init_globals ();
 
 /* Accessor methods to globals.
    These are made visible to non-reentrant scanners for convenience. */
 
-int yylex_destroy ( void );
+int yylex_destroy ();
 
-int yyget_debug ( void );
+int yyget_debug ();
 
 void yyset_debug ( int debug_flag  );
 
-YY_EXTRA_TYPE yyget_extra ( void );
+YY_EXTRA_TYPE yyget_extra ();
 
 void yyset_extra ( YY_EXTRA_TYPE user_defined  );
 
-FILE *yyget_in ( void );
+FILE *yyget_in ();
 
 void yyset_in  ( FILE * _in_str  );
 
-FILE *yyget_out ( void );
+FILE *yyget_out ();
 
 void yyset_out  ( FILE * _out_str  );
 
-            int yyget_leng ( void );
+            int yyget_leng ();
 
-char *yyget_text ( void );
+char *yyget_text ();
 
-int yyget_lineno ( void );
+int yyget_lineno ();
 
 void yyset_lineno ( int _line_number  );
 
@@ -1505,9 +1505,9 @@ void yyset_lineno ( int _line_number  );
 
 #ifndef YY_SKIP_YYWRAP
 #ifdef __cplusplus
-extern "C" int yywrap ( void );
+extern "C" int yywrap ();
 #else
-extern int yywrap ( void );
+extern int yywrap ();
 #endif
 #endif
 
@@ -1527,9 +1527,9 @@ static int yy_flex_strlen ( const char * );
 
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
-static int yyinput ( void );
+static int yyinput ();
 #else
-static int input ( void );
+static int input ();
 #endif
 
 #endif
@@ -1614,9 +1614,9 @@ static int input ( void );
 #ifndef YY_DECL
 #define YY_DECL_IS_OURS 1
 
-extern int yylex (void);
+extern int yylex ();
 
-#define YY_DECL int yylex (void)
+#define YY_DECL int yylex ()
 #endif /* !YY_DECL */
 
 /* Code executed at the beginning of each rule, after yytext and yyleng
@@ -2712,7 +2712,7 @@ ECHO;
  *    EOB_ACT_CONTINUE_SCAN - continue scanning from current position
  *    EOB_ACT_END_OF_FILE - end of file
  */
-static int yy_get_next_buffer (void)
+static int yy_get_next_buffer ()
 {
         char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
     char *source = (yytext_ptr);
@@ -2766,7 +2766,6 @@ static int yy_get_next_buffer (void)
 
             YY_FATAL_ERROR(
 "input buffer overflow, can't enlarge buffer because scanner uses REJECT" );
-
             }
 
         if ( num_to_read > YY_READ_BUF_SIZE )
@@ -2820,7 +2819,7 @@ static int yy_get_next_buffer (void)
 
 /* yy_get_previous_state - get the state just before the EOB char was reached */
 
-    static yy_state_type yy_get_previous_state (void)
+    static yy_state_type yy_get_previous_state ()
 {
     yy_state_type yy_current_state;
     char *yy_cp;
@@ -2914,9 +2913,9 @@ static int yy_get_next_buffer (void)
 
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
-    static int yyinput (void)
+    static int yyinput ()
 #else
-    static int input  (void)
+    static int input  ()
 #endif
 
 {
@@ -2995,7 +2994,6 @@ static int yy_get_next_buffer (void)
  */
     void yyrestart  (FILE * input_file )
 {
-
     if ( ! YY_CURRENT_BUFFER ){
         yyensure_buffer_stack ();
         YY_CURRENT_BUFFER_LVALUE =
@@ -3012,7 +3010,6 @@ static int yy_get_next_buffer (void)
  */
     void yy_switch_to_buffer  (YY_BUFFER_STATE  new_buffer )
 {
-
     /* TODO. We should be able to replace this entire function body
      * with
      *        yypop_buffer_state();
@@ -3041,7 +3038,7 @@ static int yy_get_next_buffer (void)
     (yy_did_buffer_switch_on_eof) = 1;
 }
 
-static void yy_load_buffer_state  (void)
+static void yy_load_buffer_state  ()
 {
         (yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_n_chars;
     (yytext_ptr) = (yy_c_buf_p) = YY_CURRENT_BUFFER_LVALUE->yy_buf_pos;
@@ -3085,7 +3082,6 @@ static void yy_load_buffer_state  (void)
  */
     void yy_delete_buffer (YY_BUFFER_STATE  b )
 {
-
     if ( ! b )
         return;
 
@@ -3189,7 +3185,7 @@ void yypush_buffer_state (YY_BUFFER_STATE new_buffer )
  *  The next element becomes the new top.
  *
  */
-void yypop_buffer_state (void)
+void yypop_buffer_state ()
 {
         if (!YY_CURRENT_BUFFER)
         return;
@@ -3208,12 +3204,11 @@ void yypop_buffer_state (void)
 /* Allocates the stack if it does not exist.
  *  Guarantees space for at least one push.
  */
-static void yyensure_buffer_stack (void)
+static void yyensure_buffer_stack ()
 {
     yy_size_t num_to_alloc;
 
     if (!(yy_buffer_stack)) {
-
         /* First allocation is just for 2 elements, since we don't know if this
          * scanner will even need a stack. We use 2 instead of 1 to avoid an
          * immediate realloc on the next call.
@@ -3233,7 +3228,6 @@ static void yyensure_buffer_stack (void)
     }
 
     if ((yy_buffer_stack_top) >= ((yy_buffer_stack_max)) - 1){
-
         /* Increase the buffer to prepare for a possible push. */
         yy_size_t grow_size = 8 /* arbitrary grow size */;
 
@@ -3296,7 +3290,6 @@ YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )
  */
 YY_BUFFER_STATE yy_scan_string (const char * yystr )
 {
-
     return yy_scan_bytes( yystr, (int) strlen(yystr) );
 }
 
@@ -3369,16 +3362,15 @@ static void yynoreturn yy_fatal_error (const char* msg )
 /** Get the current line number.
  *
  */
-int yyget_lineno  (void)
+int yyget_lineno  ()
 {
-
     return yylineno;
 }
 
 /** Get the input stream.
  *
  */
-FILE *yyget_in  (void)
+FILE *yyget_in  ()
 {
         return yyin;
 }
@@ -3386,7 +3378,7 @@ FILE *yyget_in  (void)
 /** Get the output stream.
  *
  */
-FILE *yyget_out  (void)
+FILE *yyget_out  ()
 {
         return yyout;
 }
@@ -3394,7 +3386,7 @@ FILE *yyget_out  (void)
 /** Get the length of the current token.
  *
  */
-int yyget_leng  (void)
+int yyget_leng  ()
 {
         return yyleng;
 }
@@ -3403,7 +3395,7 @@ int yyget_leng  (void)
  *
  */
 
-char *yyget_text  (void)
+char *yyget_text  ()
 {
         return yytext;
 }
@@ -3414,7 +3406,6 @@ char *yyget_text  (void)
  */
 void yyset_lineno (int  _line_number )
 {
-
     yylineno = _line_number;
 }
 
@@ -3434,7 +3425,7 @@ void yyset_out (FILE *  _out_str )
         yyout = _out_str ;
 }
 
-int yyget_debug  (void)
+int yyget_debug  ()
 {
         return yy_flex_debug;
 }
@@ -3444,7 +3435,7 @@ void yyset_debug (int  _bdebug )
         yy_flex_debug = _bdebug ;
 }
 
-static int yy_init_globals (void)
+static int yy_init_globals ()
 {
         /* Initialization is the same as for the non-reentrant scanner.
      * This function is called from yylex_destroy(), so don't allocate here.
@@ -3478,9 +3469,8 @@ static int yy_init_globals (void)
 }
 
 /* yylex_destroy is for both reentrant and non-reentrant scanners. */
-int yylex_destroy  (void)
+int yylex_destroy  ()
 {
-
     /* Pop the buffer stack, destroying each element. */
     while(YY_CURRENT_BUFFER){
         yy_delete_buffer( YY_CURRENT_BUFFER  );
@@ -3509,7 +3499,6 @@ int yylex_destroy  (void)
 #ifndef yytext_ptr
 static void yy_flex_strncpy (char* s1, const char * s2, int n )
 {
-
     int i;
     for ( i = 0; i < n; ++i )
         s1[i] = s2[i];
@@ -3534,7 +3523,6 @@ void *yyalloc (yy_size_t  size )
 
 void *yyrealloc  (void * ptr, yy_size_t  size )
 {
-
     /* The cast to (char *) in the following accommodates both
      * implementations that use char* generic pointers, and those
      * that use void* generic pointers.  It works with the latter
@@ -3656,20 +3644,6 @@ idl_parse_line_and_file (char *buf)
         }
 
       h[i] = '\0';
-#if defined (ACE_OPENVMS)
-      // translate this into *nix format as the OpenVMS preprocessor
-      // possibly produced VMS-style paths here.
-      char trans_path[MAXPATHLEN] = "";
-      char *temp_h = IDL_GlobalData::translateName (h, trans_path);
-      if (temp_h)
-        h = temp_h;
-      else
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Unable to construct full file pathname\n")));
-          throw Bailout ();
-        }
-#endif
       ACE_NEW (tmp,
                UTL_String (h, true));
       idl_global->update_prefix (tmp->get_string ());
@@ -3688,21 +3662,10 @@ idl_parse_line_and_file (char *buf)
 
   if (!is_real_filename)
     {
-#if defined (ACE_OPENVMS)
-      char full_path[MAXPATHLEN] = "";
-      char *full_fname = ACE_OS::realpath (fname->get_string (), full_path);
-      // I don't see the benefit of using ->compare since this is targeted at IDL identifiers
-      // not at filenames and in the case of OpenVMS (case-insensitive filesystem) gets really
-      // problematic as filenames retrieved through different mechanisms may give different
-      // casing.
-      is_main_filename = FE_Utils::path_cmp (idl_global->main_filename ()->get_string (),
-                                             full_fname) == 0;
-#else
       is_main_filename =
         fname->compare (idl_global->main_filename ())
         || same_file (fname->get_string (),
                       idl_global->main_filename ()->get_string ());
-#endif
     }
 
   if (is_real_filename || is_main_filename)

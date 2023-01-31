@@ -155,7 +155,6 @@ namespace CORBA
     friend class Request;
 
   public:
-
     /// return the current number of elements in the list
     ULong count () const;
 

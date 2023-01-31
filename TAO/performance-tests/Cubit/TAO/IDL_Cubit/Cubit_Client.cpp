@@ -208,7 +208,7 @@ Cubit_Client::read_ior (const ACE_TCHAR *filename)
 // Parses the command line arguments and returns an error status.
 
 int
-Cubit_Client::parse_args (void)
+Cubit_Client::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("b:t:z:ovdn:f:k:xsq"));
   int c = 0;
@@ -383,7 +383,7 @@ Cubit_Client::check_enabled (u_int mask) const
 // Exercise the union.  Cube a union.
 
 void
-Cubit_Client::cube_union (void)
+Cubit_Client::cube_union ()
 {
   try
     {
@@ -1513,7 +1513,6 @@ Cubit_Client::run ()
           for (i = 0; i < this->loop_count_; ++i)
             {
               this->cube_any_struct (i);
-
             }
 
           timer.stop ();
@@ -1563,7 +1562,7 @@ Cubit_Client::shutdown_server (int do_shutdown)
   return 0;
 }
 
-Cubit_Client::~Cubit_Client (void)
+Cubit_Client::~Cubit_Client ()
 {
   // Free resources and close the IOR files.
   if (this->cubit_factory_ior_file_)

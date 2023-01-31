@@ -546,7 +546,6 @@ TAO_IIOP_Profile::to_string () const
               digits [this->version_.minor],
               endp->host (),
               endp->port () );
-
   }
   ACE_OS::sprintf (buf + std::strlen(buf),
           "%c%s",

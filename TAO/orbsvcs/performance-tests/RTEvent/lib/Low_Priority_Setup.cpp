@@ -80,7 +80,7 @@ Low_Priority_Setup (int consumer_count,
 }
 
 template<class Client_Type> void
-Low_Priority_Setup<Client_Type>::stop_all_threads (void)
+Low_Priority_Setup<Client_Type>::stop_all_threads ()
 {
   ACE_DEBUG ((LM_DEBUG, "Stopping:"));
   for (int i = 0; i != this->nthreads_; ++i)

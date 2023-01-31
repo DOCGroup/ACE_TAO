@@ -15,7 +15,7 @@ class DynServer_Export DynServer
 {
   int n_;
 public:
-  DynServer(void);
+  DynServer();
   virtual ~DynServer();
   virtual CORBA::Long get();
 };

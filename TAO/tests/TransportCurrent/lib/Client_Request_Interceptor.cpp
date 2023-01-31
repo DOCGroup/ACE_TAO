@@ -7,7 +7,6 @@
 
 namespace Test
 {
-
   Client_Request_Interceptor::Client_Request_Interceptor (const char *orb_id,
                                                           TEST test)
     : orb_id_ (CORBA::string_dup (orb_id))
@@ -18,13 +17,13 @@ namespace Test
   }
 
   CORBA::Long
-  Client_Request_Interceptor::interceptions (void)
+  Client_Request_Interceptor::interceptions ()
   {
     return this->request_count_;
   }
 
   char *
-  Client_Request_Interceptor::name (void)
+  Client_Request_Interceptor::name ()
   {
     return CORBA::string_dup ("Client_Request_Interceptor");
   }
@@ -54,7 +53,7 @@ namespace Test
   }
 
   void
-  Client_Request_Interceptor::destroy (void)
+  Client_Request_Interceptor::destroy ()
   {
   }
 

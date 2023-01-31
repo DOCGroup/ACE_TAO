@@ -724,11 +724,4 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 #endif /* ACE_HAS_TERMIOS || ACE_HAS_TERMIO */
 }
 
-#if defined (ACE_NEEDS_DEV_IO_CONVERSION)
-ACE_TTY_IO::operator ACE_DEV_IO &()
-{
-  return static_cast<ACE_DEV_IO &>(*this);
-}
-#endif /* ACE_NEEDS_DEV_IO_CONVERSION */
-
 ACE_END_VERSIONED_NAMESPACE_DECL

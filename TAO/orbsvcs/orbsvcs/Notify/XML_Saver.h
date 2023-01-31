@@ -24,7 +24,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 /**
  * \brief Save Notification Service Topology to an XML file.
  */
@@ -53,7 +52,7 @@ public:
   virtual void end_object (CORBA::Long id,
     const ACE_CString& type);
 
-  virtual void close (void);
+  virtual void close ();
 
 private:
   void backup_file_name (ACE_TCHAR * file_path, size_t nfile);
@@ -72,9 +71,7 @@ private:
 
   /// A string consisting of spaces that is our current indentation level.
   ACE_CString indent_;
-
 };
-
 } // namespace TAO_Notify
 
 TAO_END_VERSIONED_NAMESPACE_DECL

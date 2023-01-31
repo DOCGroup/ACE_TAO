@@ -21,7 +21,7 @@ static const ACE_TCHAR *rendezvous = ACE_TEXT ("/tmp/foo_pipe");
 static const ACE_TCHAR *file_name = ACE_TEXT ("local_data");
 
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("usage: %s [-r rendezvous] [-f file]\n"),

@@ -114,7 +114,6 @@ TAO_RTScheduler_ORB_Initializer::pre_init (
 void
 TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   // @@ This is busted.  TAO_ORBInitInfo should do proper reference
   //    counting.
   // Narrow to a TAO_ORBInitInfo object to get access to the

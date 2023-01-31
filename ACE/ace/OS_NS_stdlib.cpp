@@ -37,13 +37,7 @@ ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
 void *
 ACE_OS::calloc (size_t elements, size_t sizeof_elements)
 {
-#if !defined (ACE_HAS_WINCE)
   return ACE_CALLOC_FUNC (elements, sizeof_elements);
-#else
-  // @@ This will probably not work since it doesn't consider
-  // alignment properly.
-  return ACE_MALLOC_FUNC (elements * sizeof_elements);
-#endif /* ACE_HAS_WINCE */
 }
 
 void
@@ -51,13 +45,13 @@ ACE_OS::exit (int status)
 {
   ACE_OS_TRACE ("ACE_OS::exit");
 
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
+#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
   // Shut down the ACE_Object_Manager, if it had registered its exit_hook.
   // With ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
   // instantiated on the main's stack.  ::exit () doesn't destroy it.
   if (exit_hook_)
     (*exit_hook_) ();
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
 #if defined (ACE_WIN32)
   ::ExitProcess ((UINT) status);
@@ -90,9 +84,7 @@ ACE_OS::free (void *ptr)
 ACE_TCHAR *
 ACE_OS::getenvstrings ()
 {
-#if defined (ACE_LACKS_GETENVSTRINGS)
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
   return ::GetEnvironmentStringsW ();
 # else /* ACE_USES_WCHAR */
@@ -110,13 +102,6 @@ ACE_OS::getenvstrings ()
 ACE_TCHAR *
 ACE_OS::strenvdup (const ACE_TCHAR *str)
 {
-#if defined (ACE_HAS_WINCE)
-  // WinCE doesn't have environment variables so we just skip it.
-  return ACE_OS::strdup (str);
-#elif defined (ACE_LACKS_STRENVDUP)
-  ACE_UNUSED_ARG (str);
-  ACE_NOTSUP_RETURN (0);
-#else
   const ACE_TCHAR * start = 0;
   if ((start = ACE_OS::strchr (str, ACE_TEXT ('$'))) != 0)
     {
@@ -135,20 +120,17 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
       size_t buf_len = ACE_OS::strlen (str) + 1;
       if (temp != 0)
         buf_len += ACE_OS::strlen (temp) - var_len;
-      ACE_TCHAR * buf_p = buf;
-      if (buf_len > ACE_DEFAULT_ARGV_BUFSIZ)
-        {
-          buf_p =
+      ACE_TCHAR * buf_p =
 #if defined (ACE_HAS_ALLOC_HOOKS)
-            (ACE_TCHAR *) ACE_Allocator::instance()->malloc (buf_len * sizeof (ACE_TCHAR));
+        (ACE_TCHAR *) ACE_Allocator::instance()->malloc (buf_len * sizeof (ACE_TCHAR));
 #else
-            (ACE_TCHAR *) ACE_OS::malloc (buf_len * sizeof (ACE_TCHAR));
+        (ACE_TCHAR *) ACE_OS::malloc (buf_len * sizeof (ACE_TCHAR));
 #endif /* ACE_HAS_ALLOC_HOOKS */
-          if (buf_p == 0)
-            {
-              errno = ENOMEM;
-              return 0;
-            }
+
+      if (buf_p == 0)
+        {
+          errno = ENOMEM;
+          return 0;
         }
       ACE_TCHAR * p = buf_p;
       size_t const len = start - str;
@@ -169,11 +151,10 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
           *p = ACE_TEXT ('\0');
         }
       ACE_OS::strcpy (p, &start[var_len]);
-      return (buf_p == buf) ? ACE_OS::strdup (buf) : buf_p;
+      return buf_p;
     }
   else
     return ACE_OS::strdup (str);
-#endif /* ACE_HAS_WINCE */
 }
 
 #if !defined (ACE_HAS_ITOA)
@@ -1124,7 +1105,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   static unsigned int const NUM_CHARS   = 6;  // Do not change!
 
   // Use ACE_Time_Value::msec(ACE_UINT64&) as opposed to
-  // ACE_Time_Value::msec(void) to avoid truncation.
+  // ACE_Time_Value::msec() to avoid truncation.
   ACE_UINT64 msec;
 
   // Use a const ACE_Time_Value to resolve ambiguity between

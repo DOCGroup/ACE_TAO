@@ -3,13 +3,12 @@
 #include "Web_Crawler.h"
 
 
-
-Web_Crawler::~Web_Crawler (void)
+Web_Crawler::~Web_Crawler ()
 {
   delete this->url_visitor_factory_;
 }
 
-Web_Crawler::Web_Crawler (void)
+Web_Crawler::Web_Crawler ()
   : url_visitor_factory_ (0)
 {
 }
@@ -31,7 +30,7 @@ Web_Crawler::open (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Web_Crawler::run (void)
+Web_Crawler::run ()
 {
   // Make the appropriate <URL_Visitor>.
   Auto_Destroyer<URL_Visitor> visitor (this->url_visitor_factory_->make_visitor ());

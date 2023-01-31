@@ -48,7 +48,6 @@ TAO_DTP_POA_Strategy::CustomRequestOutcome
 TAO_DTP_POA_Strategy::custom_asynch_request (
   TAO::CSD::TP_Custom_Request_Operation* op)
 {
-
   TAO::CSD::TP_Servant_State::HandleType servant_state =
     this->get_servant_state (op->servant ());
 
@@ -66,7 +65,6 @@ TAO_DTP_POA_Strategy::custom_asynch_request (
 bool
 TAO_DTP_POA_Strategy::poa_activated_event_i (TAO_ORB_Core& orb_core)
 {
-
   this->dtp_task_.thr_mgr (orb_core.thr_mgr ());
 
   // Activates the worker threads, and waits until all have been started.
@@ -95,7 +93,6 @@ TAO_DTP_POA_Strategy::poa_activated_event_i (TAO_ORB_Core& orb_core)
                           ACE_TEXT ("TAO (%P|%t) - DTP_POA_Strategy - ")
                           ACE_TEXT ("warning: config not found...using ")
                           ACE_TEXT ("defaults!\n")));
-
             }
           this->set_dtp_config (config_entry);
           //this->dtp_task_.set_init_pool_threads(config_entry.init_threads_);
@@ -107,10 +104,8 @@ TAO_DTP_POA_Strategy::poa_activated_event_i (TAO_ORB_Core& orb_core)
         }
 
 
-
     }
   return (this->dtp_task_.open () == 0);
-
 }
 
 void
@@ -181,8 +176,6 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
                               const char*                     operation,
                               PortableServer::Servant         servant)
 {
-
-
   TAO::CSD::TP_Servant_State::HandleType servant_state =
                         this->get_servant_state (servant);
 
@@ -218,7 +211,6 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
     }
   else if (is_synchronous)
     {
-
       TAO::CSD::TP_Collocated_Synch_Request *req_ptr;
       ACE_NEW_RETURN (req_ptr,
                       TAO::CSD::TP_Collocated_Synch_Request (

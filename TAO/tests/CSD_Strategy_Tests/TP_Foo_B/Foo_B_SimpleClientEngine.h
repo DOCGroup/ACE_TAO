@@ -21,12 +21,11 @@ class CSD_TP_Foo_B_Export Foo_B_SimpleClientEngine : public ClientEngine
 public:
   Foo_B_SimpleClientEngine(Foo_B_ptr obj,
                             Callback_ptr callback,
-                            unsigned client_id = 0,
-                            bool collocated = false);
+                            unsigned client_id = 0);
 
-  virtual ~Foo_B_SimpleClientEngine();
+  virtual ~Foo_B_SimpleClientEngine() = default;
 
-  virtual bool execute(void);
+  virtual bool execute();
 
   static void expected_results(Foo_B_Statistics& stats);
   static unsigned expected_callbacks ();
@@ -35,7 +34,6 @@ private:
   Foo_B_var obj_;
   Callback_var callback_;
   unsigned client_id_;
-  bool collocated_;
 };
 
 #endif

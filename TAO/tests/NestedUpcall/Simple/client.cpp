@@ -19,7 +19,7 @@ class Client_Task
 public:
   Client_Task (client_ptr c,
                server_ptr s);
-  int svc (void);
+  int svc ();
 
 private:
   client_var client_;
@@ -34,7 +34,7 @@ Client_Task::Client_Task (client_ptr c,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {

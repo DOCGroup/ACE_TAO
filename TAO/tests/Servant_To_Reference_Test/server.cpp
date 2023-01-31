@@ -19,7 +19,7 @@ public:
   {
   }
 
-  int svc (void);
+  int svc ();
 
 private:
   PortableServer::POA_var p_;
@@ -29,9 +29,8 @@ private:
 };
 
 int
-MT_Task::svc (void)
+MT_Task::svc ()
 {
-
   try
     {
       for (CORBA::Long i = 0;

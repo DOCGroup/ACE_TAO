@@ -331,7 +331,6 @@ TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb)
         }
 
       this->init_i2 (orb, TAO_Notify_PROPERTIES::instance()->dispatching_orb());
-
     }
   else
     {

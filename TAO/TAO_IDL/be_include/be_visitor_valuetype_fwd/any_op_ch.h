@@ -24,7 +24,6 @@
  */
 class be_visitor_valuetype_fwd_any_op_ch : public be_visitor_decl
 {
-
 public:
   /// constructor
   be_visitor_valuetype_fwd_any_op_ch (be_visitor_context *ctx);

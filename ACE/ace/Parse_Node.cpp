@@ -510,7 +510,6 @@ ACE_Location_Node::open_dll (int & yyerrno)
     }
 
   return 0;
-
 }
 
 void
@@ -701,14 +700,9 @@ ACE_Function_Node::symbol (ACE_Service_Gestalt *,
           return 0;
         }
 
-#if defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
-      int const temp_p = reinterpret_cast<int> (func_p);
-#else
       intptr_t const temp_p = reinterpret_cast<intptr_t> (func_p);
-#endif
 
-      ACE_Service_Factory_Ptr func =
-        reinterpret_cast<ACE_Service_Factory_Ptr> (temp_p);
+      ACE_Service_Factory_Ptr func = reinterpret_cast<ACE_Service_Factory_Ptr> (temp_p);
 
       // Invoke the factory function and record it's return value.
       this->symbol_ = (*func) (gobbler);

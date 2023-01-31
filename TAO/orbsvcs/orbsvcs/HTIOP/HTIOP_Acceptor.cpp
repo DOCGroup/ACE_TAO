@@ -456,7 +456,6 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
       ACE_Auto_Array_Ptr<ACE_TCHAR> guard (htid);
       this->addrs_[0] = ACE_TEXT_ALWAYS_CHAR (htid);
       return 0;
-
     }
 
   // Check for multiple network interfaces.

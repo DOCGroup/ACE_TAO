@@ -59,7 +59,6 @@ public:
   virtual void setLocator(ACEXML_LocatorImpl* locator);
 
 private:
-
   /// Copy constructor
   ACEXML_Parser_Context (const ACEXML_Parser_Context& src);
 

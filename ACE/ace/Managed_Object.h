@@ -100,6 +100,9 @@ template <class TYPE>
 class ACE_Managed_Object
 {
 public:
+  /// Get the preallocated object identified by "id".  Returns a
+  /// pointer to the object.  Beware: no error indication is provided,
+  /// because it can _only_ be used for accessing preallocated objects.
   static TYPE *get_preallocated_object (ACE_Object_Manager::Preallocated_Object identifier)
   {
     // The preallocated objects are in a separate, "read-only" array so
@@ -112,12 +115,9 @@ public:
     return &((ACE_Cleanup_Adapter<TYPE> *)
              ACE_Object_Manager::preallocated_object[identifier])->object ();
   }
-  // Get the preallocated object identified by "id".  Returns a
-  // pointer to the object.  Beware: no error indication is provided,
-  // because it can _only_ be used for accessing preallocated objects.
-  // @note The function definition is inlined here so that it compiles
-  // on AIX 4.1 w/xlC v. 3.01.
-
+  /// Get the preallocated array identified by "id".  Returns a
+  /// pointer to the array.  Beware: no error indication is provided,
+  /// because it can _only_ be used for accessing preallocated arrays.
   static TYPE *get_preallocated_array (ACE_Object_Manager::Preallocated_Array identifier)
   {
     // The preallocated array are in a separate, "read-only" array so
@@ -130,15 +130,10 @@ public:
     return &((ACE_Cleanup_Adapter<TYPE> *)
              ACE_Object_Manager::preallocated_array[identifier])->object ();
   }
-  // Get the preallocated array identified by "id".  Returns a
-  // pointer to the array.  Beware: no error indication is provided,
-  // because it can _only_ be used for accessing preallocated arrays.
-  // @note The function definition is inlined here so that it compiles
-  // on AIX 4.1 w/xlC v. 3.01.
 
 protected:
   // Disallow instantiation of this class.
-  ACE_Managed_Object (void) = delete;
+  ACE_Managed_Object () = delete;
 
 private:
   ACE_Managed_Object (const ACE_Managed_Object<TYPE> &) = delete;
@@ -151,13 +146,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Managed_Object.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Managed_Object.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Managed_Object.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

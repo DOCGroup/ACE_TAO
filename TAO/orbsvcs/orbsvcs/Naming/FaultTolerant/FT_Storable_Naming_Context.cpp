@@ -54,7 +54,6 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
   CORBA::Object_var resolved_ref = TAO_Storable_Naming_Context::resolve(n);
 
   try {
-
     // Make sure object is an object group.
     // We will return the object reference as is all the way back
     // out to the client if not

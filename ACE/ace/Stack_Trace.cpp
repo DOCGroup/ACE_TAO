@@ -10,9 +10,6 @@
  *    and is adapted from examples shown in relevant documentation
  *    and repeated elsewhere, e.g.,
  *    http://www.linuxselfhelp.com/gnu/glibc/html_chapter/libc_33.html
- *  - the Solaris stack generation is adapted from a 1995 post on
- *    comp.unix.solaris by Bart Smaalders,
- *    http://groups.google.com/group/comp.unix.solaris/browse_thread/thread/8b9f3de8be288f1c/31550f93a48231d5?lnk=gst&q=how+to+get+stack+trace+on+solaris+group:comp.unix.solaris#31550f93a48231d5
  *  - VxWorks kernel-mode stack tracing is adapted from a code example
  *    in the VxWorks FAQ at http://www.xs4all.nl/~borkhuis/vxworks/vxw_pt5.html
  *    although the undocumented functions it uses are also mentioned in
@@ -302,157 +299,6 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
       pc = prevPc;
     }
 }
-
-#elif defined(sun)
-/*
- * walks up call stack, printing library:routine+offset for each routine
- */
-
-#  include <dlfcn.h>
-#  include <setjmp.h>
-#  include <sys/types.h>
-#  include <sys/reg.h>
-#  include <sys/frame.h>
-#  define ACE_STACK_TRACE_BIAS 0
-
-#  if defined(sparc) || defined(__sparc)
-#    define ACE_STACK_TRACE_FLUSHWIN() asm("ta 3");
-#    define ACE_STACK_TRACE_FRAME_PTR_INDEX 1
-#    define ACE_STACK_TRACE_SKIP_FRAMES 0
-#    if defined(__sparcv9)
-#      undef  ACE_STACK_TRACE_BIAS
-#      define ACE_STACK_TRACE_BIAS 2047
-#    endif
-#  endif
-
-#  if defined(i386) || defined(__i386)
-#    define ACE_STACK_TRACE_FLUSHWIN()
-#    define ACE_STACK_TRACE_FRAME_PTR_INDEX 3
-#    define ACE_STACK_TRACE_SKIP_FRAMES 0
-#  endif
-
-#  if defined(__amd64) || defined(__x86_64)
-#    define ACE_STACK_TRACE_FLUSHWIN()
-#    define ACE_STACK_TRACE_FRAME_PTR_INDEX 5
-#    define ACE_STACK_TRACE_SKIP_FRAMES 0
-#  endif
-
-#  if defined(ppc) || defined(__ppc)
-#    define ACE_STACK_TRACE_FLUSHWIN()
-#    define ACE_STACK_TRACE_FRAME_PTR_INDEX 0
-#    define ACE_STACK_TRACE_SKIP_FRAMES 2
-#  endif
-
-static frame*
-cs_frame_adjust(frame* sp)
-{
-  unsigned char* sp_byte = (unsigned char*)sp;
-  sp_byte += ACE_STACK_TRACE_BIAS;
-  return (frame*) sp_byte;
-}
-
-/*
-  this function walks up call stack, calling user-supplied
-  function once for each stack frame, passing the pc and the user-supplied
-  usrarg as the argument.
-  */
-
-static int
-cs_operate(int (*func)(void *, void *), void * usrarg,
-           size_t starting_frame, size_t num_frames_arg)
-{
-  ACE_STACK_TRACE_FLUSHWIN();
-
-  jmp_buf env;
-  setjmp(env);
-  frame* sp = cs_frame_adjust((frame*) env[ACE_STACK_TRACE_FRAME_PTR_INDEX]);
-
-  // make a copy of num_frames_arg to eliminate the following warning on some
-  // solaris platforms:
-  // Stack_Trace.cpp:318: warning: argument `size_t num_frames' might be clobbered by `longjmp' or `vfork'
-  size_t num_frames = num_frames_arg;
-
-  // I would like to use ACE_MAX below rather than ?:, but
-  // I get linker relocation errors such as the following when
-  // I use it:
-  // ld: fatal: relocation error: file: .shobj/Stack_Trace.o section:
-  // .rela.debug_line symbol: : relocation against a discarded symbol,
-  //         symbol is part of discarded section:
-  //         .text%const __type_0&ace_max<unsig\ned>(const __type_0&,const __type_0&)
-  //
-  const size_t starting_skip = starting_frame - 1;
-#if ACE_STACK_TRACE_SKIP_FRAMES == 0
-  size_t skip_frames = starting_skip;
-#else
-  size_t skip_frames =
-    ACE_STACK_TRACE_SKIP_FRAMES > starting_skip ?
-    ACE_STACK_TRACE_SKIP_FRAMES : starting_skip;
-#endif /* ACE_STACK_TRACE_SKIP_FRAMES == 0 */
-  size_t i;
-  for (i = 0; i < skip_frames && sp; ++i)
-    {
-      sp = cs_frame_adjust((frame*) sp->fr_savfp);
-    }
-
-  i = 0;
-
-  while (    sp
-          && sp->fr_savpc
-          && ++i
-          && --num_frames
-          && (*func)((void*)sp->fr_savpc, usrarg))
-    {
-      sp = cs_frame_adjust((frame*) sp->fr_savfp);
-    }
-
-  return(i);
-}
-
-static int
-add_frame_to_buf (void* pc, void* usrarg)
-{
-  char* buf = (char*)usrarg;
-  Dl_info info;
-  const char* func = "??";
-  const char* lib = "??";
-
-  if(dladdr(pc, & info) != 0)
-    {
-      lib = (const char *) info.dli_fname;
-      func = (const char *) info.dli_sname;
-    }
-
-  (void) ACE_OS::snprintf(buf,
-                          ACE_Stack_Trace::SYMBUFSIZ,
-                          "%s%s:%s+0x%x\n",
-                          buf,
-                          lib,
-                          func,
-                          //@@ Should the arithmetic on the following
-                          //line be done with two void* ptrs?  The result
-                          //would be ptrdiff_t, and what is the correct
-                          //sprintf() conversion character for that?
-                          (size_t)pc - (size_t)info.dli_saddr);
-
-  return(1);
-}
-
-void
-ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
-                                 size_t num_frames)
-{
-  const size_t MAX_FRAMES = 128;
-  const ssize_t INITIAL_FRAME = 3;
-
-  if (num_frames == 0)
-    num_frames = MAX_FRAMES;
-
-  size_t starting_frame =
-    determine_starting_frame (INITIAL_FRAME, starting_frame_offset);
-
-  cs_operate (&add_frame_to_buf, &this->buf_[0], starting_frame, num_frames);
-}
-
 #elif defined(ACE_WIN64) && (_WIN32_WINNT <= _WIN32_WINNT_WIN2K)
 #  if defined(_MSC_VER)
 #    define STRING2(X) #X
@@ -470,8 +316,7 @@ ACE_Stack_Trace::generate_trace (ssize_t, size_t)
     "ACE is built with _WIN32_WINNT set to 0x501 or above>");
 }
 
-#elif defined(ACE_WIN32) && !defined(ACE_HAS_WINCE) && !defined (__MINGW32__) \
-      && !defined(__BORLANDC__)
+#elif defined(ACE_WIN32) && !defined (__MINGW32__) && !defined(__BORLANDC__)
 #  include <windows.h>
 #  include <Dbghelp.h>
 

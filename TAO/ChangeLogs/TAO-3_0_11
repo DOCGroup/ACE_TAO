@@ -1,0 +1,292 @@
+commit d9c5ee83df0e28aca1fcaaa22430c17ddd73171a
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Dec 16 17:07:33 2022 -0600
+
+    Updated NEWS for 7.0.11/3.0.11
+
+commit ac06b99dc48c9aa4a9b3409f214d396e819ed983
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Dec 15 09:41:37 2022 -0600
+
+    Only emit the require_truncation_ boolean if CDR support is enabled.
+
+commit b5eb7cc3715e4a458ef63d1a8175c7c901eec121
+Merge: 34a585c202d 633be2b32bd
+Author: ocielliottc <elliottc@objectcomputing.com>
+Date:   Thu Dec 15 06:07:46 2022 -0600
+
+    Merge pull request #1998 from DOCGroup/elliottc/715-additional-master
+    
+    Fix additional warnings from OpenDDS builds.
+
+commit 633be2b32bdb9ff00658511693d7545e34f9acb8
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Wed Dec 14 08:33:09 2022 -0600
+
+    Removed calls to ferror() as their return values were no longer used.
+
+commit 167bdcb15282991d199f2fdb1b2c0827187d77c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 14 11:17:51 2022 +0100
+
+    Document changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 00ba6104ccbe84a2782d03c5a69baa431e877b59
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 14 11:15:59 2022 +0100
+
+    Add back Properties_Encoder constructor, looks MinGW doesn't like the default here
+    
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h:
+
+commit c35922f48773b120e75210dda841dfab025c5019
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 13 09:06:19 2022 +0100
+
+    Upgrade all doxygen config files
+    
+        * ACE/etc/ace.doxygen:
+        * ACE/etc/ace_inet.doxygen:
+        * ACE/etc/ace_qos.doxygen:
+        * ACE/etc/ace_rmcast.doxygen:
+        * ACE/etc/ace_ssl.doxygen:
+        * ACE/etc/acexml.doxygen:
+        * TAO/etc/tao.doxygen:
+        * TAO/etc/tao_anytypecode.doxygen:
+        * TAO/etc/tao_av.doxygen:
+        * TAO/etc/tao_compression.doxygen:
+        * TAO/etc/tao_cosevent.doxygen:
+        * TAO/etc/tao_cosnaming.doxygen:
+        * TAO/etc/tao_cosnotification.doxygen:
+        * TAO/etc/tao_costime.doxygen:
+        * TAO/etc/tao_costrader.doxygen:
+        * TAO/etc/tao_dynamicany.doxygen:
+        * TAO/etc/tao_dynamicinterface.doxygen:
+        * TAO/etc/tao_esf.doxygen:
+        * TAO/etc/tao_ifr.doxygen:
+        * TAO/etc/tao_implrepo.doxygen:
+        * TAO/etc/tao_iormanip.doxygen:
+        * TAO/etc/tao_iortable.doxygen:
+        * TAO/etc/tao_pi.doxygen:
+        * TAO/etc/tao_pi_server.doxygen:
+        * TAO/etc/tao_portablegroup.doxygen:
+        * TAO/etc/tao_portableserver.doxygen:
+        * TAO/etc/tao_rtcorba.doxygen:
+        * TAO/etc/tao_rtevent.doxygen:
+        * TAO/etc/tao_rtportableserver.doxygen:
+        * TAO/etc/tao_security.doxygen:
+        * TAO/etc/tao_smartproxies.doxygen:
+        * TAO/etc/tao_ssliop.doxygen:
+        * TAO/etc/tao_strategies.doxygen:
+        * TAO/etc/tao_transportcurrent.doxygen:
+        * TAO/etc/tao_ziop.doxygen:
+
+commit 96ed7f47169fa450fd2f1ec0ff701aa5df41e47d
+Merge: a49c9dee83b 7d7b690e33a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 12 20:09:53 2022 +0100
+
+    Merge branch 'jwi-portablegroupcleanup' of https://github.com/jwillemsen/ATCD into jwi-portablegroupcleanup
+
+commit a49c9dee83b0d6029834126e8fb39cf9b04faba5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 12 20:09:45 2022 +0100
+
+    Layout change
+    
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+
+commit 780421e6430ae7d5682b0f505392c65dc1222d86
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 12 20:09:35 2022 +0100
+
+    Add missing include
+    
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+
+commit 7d7b690e33ab7753eefe831d3ae1f224da18bb53
+Merge: 3ed653f53a1 cfebb9c5c61
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 12 19:05:05 2022 +0100
+
+    Merge branch 'master' into jwi-portablegroupcleanup
+
+commit 3ed653f53a19d234e395f68a25cb8f42f9695bad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 12 16:03:46 2022 +0100
+
+    Removed incorrect code
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.h:
+
+commit 37a525baec16f7caaa2252394041051c949f301d
+Merge: 87e4cdb2c15 7f583531526
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 12 16:02:27 2022 +0100
+
+    Fixed merge conflicts
+
+commit 0ddf6649d679123b281879416b46e42933b82a21
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 12 09:57:46 2022 +0100
+
+    Make use of noexcept instead of throw()
+    
+        * ACE/ace/Auto_Functor.h:
+        * ACE/ace/Local_Name_Space_T.cpp:
+        * ACE/ace/Svc_Handler.cpp:
+        * ACE/ace/Svc_Handler.h:
+        * ACE/ace/config-lite.h:
+        * ACE/ace/config-macros.h:
+        * ACE/examples/DLL/Newsweek.cpp:
+        * ACE/examples/DLL/Newsweek.h:
+        * ACE/examples/DLL/Today.cpp:
+        * ACE/examples/DLL/Today.h:
+        * ACE/examples/Shared_Malloc/test_persistence.cpp:
+        * ACE/tests/DLL_Test_Impl.cpp:
+        * ACE/tests/DLL_Test_Impl.h:
+        * ACE/tests/Dynamic_Test.cpp:
+        * TAO/orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
+        * TAO/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.h:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/Utils/ScopeGuard.h:
+        * TAO/orbsvcs/tests/Notify/Bug_3688b_Regression/TestBroadcaster.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_3688b_Regression/TestBroadcaster.h:
+        * TAO/tao/Asynch_Reply_Dispatcher_Base.h:
+        * TAO/tao/Asynch_Reply_Dispatcher_Base.inl:
+        * TAO/tao/Bounded_Array_Sequence_T.h:
+        * TAO/tao/Bounded_Basic_String_Sequence_T.h:
+        * TAO/tao/Bounded_Object_Reference_Sequence_T.h:
+        * TAO/tao/Bounded_Value_Sequence_T.h:
+        * TAO/tao/Generic_Sequence_T.h:
+        * TAO/tao/Messaging/AMH_Response_Handler.cpp:
+        * TAO/tao/Messaging/AMH_Response_Handler.h:
+        * TAO/tao/PortableServer/Servant_var.cpp:
+        * TAO/tao/PortableServer/Servant_var.h:
+        * TAO/tao/PortableServer/Servant_var.inl:
+        * TAO/tao/Unbounded_Array_Sequence_T.h:
+        * TAO/tao/Unbounded_Basic_String_Sequence_T.h:
+        * TAO/tao/Unbounded_Object_Reference_Sequence_T.h:
+        * TAO/tao/Unbounded_Octet_Sequence_T.h:
+        * TAO/tao/Unbounded_Value_Sequence_T.h:
+        * TAO/tao/Utils/Implicit_Deactivator.cpp:
+        * TAO/tao/Utils/Implicit_Deactivator.h:
+        * TAO/tao/Utils/ORB_Destroyer.cpp:
+        * TAO/tao/Utils/ORB_Destroyer.h:
+        * TAO/tao/Utils/PolicyList_Destroyer.cpp:
+        * TAO/tao/Utils/PolicyList_Destroyer.h:
+        * TAO/tao/Valuetype/Bounded_Valuetype_Sequence_T.h:
+        * TAO/tao/Valuetype/Unbounded_Valuetype_Sequence_T.h:
+        * TAO/tests/Bug_2936_Regression/PersistentPOA.cpp:
+        * TAO/tests/Bug_2936_Regression/PersistentPOA.h:
+        * TAO/tests/Bug_3251_Regression/PersistentPoa.cpp:
+        * TAO/tests/Bug_3251_Regression/PersistentPoa.h:
+        * TAO/tests/ORB_Local_Config/Bug_2612/DllOrb.cpp:
+        * TAO/tests/ORB_Local_Config/Bug_2612/DllOrb.h:
+        * TAO/tests/POA/DSI/Database_i.cpp:
+        * TAO/tests/POA/DSI/Database_i.h:
+        * TAO/utils/wxNamingViewer/wxAutoDialog.h:
+
+commit 139feb142fbfb12dc97bd09f66dbfc4ff9755263
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 25 16:09:12 2022 +0100
+
+    Update LB_ObjectReferenceFactory.cpp
+    
+    Removed redundant empty lines
+
+commit 2a0c3dc2f672cff50cda70183b992f2a8e40088a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 25 16:08:53 2022 +0100
+
+    Update FT_EventService.cpp
+    
+    Fix conversion warning
+
+commit b0e766146110d476f86919741ca35c5ae1baa4b9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 17 10:07:57 2022 +0100
+
+    Make x.0.10 publicly available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit 87e4cdb2c157eb359d394c40115e0e6a91c68920
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 20 10:39:33 2021 +0200
+
+    More cleanup
+    
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Null_Property_Validator.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Object_Adapter_Factory.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.h:
+
+commit 6d8af9237c8e0549e3e577dd135fa377d9481347
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 20 10:26:20 2021 +0200
+
+    Removed obsolete ipv4 code which caused warnings with ipv6 enabled, use nullptr, default, override, delete, layout changes
+    
+        * TAO/orbsvcs/orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/GOA.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/MIOP.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Location_Equal_To.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Property_Set_Find.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Utils.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/README:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.inl:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport_Recv_Packet.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/miop_resource.h:

@@ -13,10 +13,6 @@ TAO_Wait_On_Reactor::TAO_Wait_On_Reactor (TAO_Transport *transport)
 {
 }
 
-TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor ()
-{
-}
-
 int
 TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
                            TAO_Synch_Reply_Dispatcher &rd)

@@ -84,7 +84,6 @@ namespace ACE
               void close ();
 
             protected:
-
               bool reconnect_needed ();
 
               void close_streams ();

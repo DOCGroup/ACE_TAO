@@ -87,10 +87,10 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   // The _downcast method.
   *os << be_nl_2
       << node->name () << " *" << be_nl << node->name ()
-      << "::_downcast ( ::CORBA::ValueBase *v)" << be_nl
+      << "::_downcast (::CORBA::ValueBase *v)" << be_nl
       << "{" << be_idt_nl
-      << "return dynamic_cast< ::" << node->name ()
-      << " * > (v);" << be_uidt_nl
+      << "return dynamic_cast<::" << node->name ()
+      << " *> (v);" << be_uidt_nl
       << "}" << be_nl_2;
 
   // The _tao_obv_repository_id method.
@@ -170,7 +170,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   // Nothing to marshal if abstract valuetype.
   if (!node->is_abstract () && !is_an_amh_exception_holder)
     {
-
       this->marshal_unmarshal_v (node);
 
       *os << "::CORBA::Boolean" << be_nl
@@ -181,7 +180,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "return formal_type_id == reinterpret_cast<ptrdiff_t> ("
           << node->name() << "::_downcast);" << be_uidt_nl
           << "}" << be_nl_2;
-
     }
   else if (is_an_amh_exception_holder)
     {
@@ -198,8 +196,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "ACE_NEW_THROW_EX (" << be_idt_nl
           << "ret_val," << be_nl
           << node->local_name () << " ()," << be_nl
-          << "::CORBA::NO_MEMORY ()" << be_uidt_nl
-          << ");" << be_nl
+          << "::CORBA::NO_MEMORY ());" << be_uidt
+          << be_nl
           << "return ret_val;" << be_uidt_nl
           << "}" << be_nl_2;
 
@@ -269,8 +267,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   *os << "::CORBA::Boolean" << be_nl << node->name()
       << "::_tao_unmarshal (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
-      << node->local_name () << " *&new_object" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << node->local_name () << " *&new_object)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl
       << "::CORBA::ValueBase *base {};" << be_nl
       << "::CORBA::Boolean is_indirected = false;" << be_nl
@@ -294,7 +292,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "// Now base must point to the unmarshaled object." << be_nl
       << "// Align the pointer to the right subobject." << be_nl
       << "new_object = " << node->local_name () << "::_downcast (base);" << be_nl
-      << "if (0 == new_object)" << be_idt_nl
+      << "if (nullptr == new_object)" << be_idt_nl
       << "return false;" << be_uidt_nl << be_nl
       << "if (is_indirected)" << be_idt_nl
       << "new_object->_add_ref ();" << be_uidt_nl << be_nl

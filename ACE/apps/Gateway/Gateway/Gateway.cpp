@@ -29,10 +29,10 @@ protected:
 
   // = Configuration methods.
   // Parse the proxy configuration file.
-  int parse_connection_config_file (void);
+  int parse_connection_config_file ();
 
   // Parse the consumer configuration file.
-  int parse_consumer_config_file (void);
+  int parse_consumer_config_file ();
 
   // = Lifecycle management methods.
   // Shut down the Gateway when input comes in from the controlling
@@ -135,7 +135,7 @@ Gateway::init (int argc, ACE_TCHAR *argv[])
 // This method is automatically called when the Gateway is shutdown.
 
 int
-Gateway::fini (void)
+Gateway::fini ()
 {
   // Remove the handler that receive events on stdin.  Otherwise, we
   // will crash on shutdown.
@@ -170,7 +170,7 @@ Gateway::info (ACE_TCHAR **strp, size_t length) const
 // Parse and build the proxy table.
 
 int
-Gateway::parse_connection_config_file (void)
+Gateway::parse_connection_config_file ()
 {
   // File that contains the proxy configuration information.
   Connection_Config_File_Parser connection_file;
@@ -256,7 +256,7 @@ Gateway::parse_connection_config_file (void)
 }
 
 int
-Gateway::parse_consumer_config_file (void)
+Gateway::parse_consumer_config_file ()
 {
   // File that contains the consumer event forwarding information.
   Consumer_Config_File_Parser consumer_file;

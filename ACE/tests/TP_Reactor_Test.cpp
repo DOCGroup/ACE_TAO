@@ -106,7 +106,6 @@ static char data[] =
 class LogLocker
 {
 public:
-
   LogLocker () { ACE_LOG_MSG->acquire (); }
   virtual ~LogLocker () { ACE_LOG_MSG->release (); }
 };
@@ -693,13 +692,11 @@ Connector::on_delete_sender (Sender & sndr)
               bufs,
               bufr,
               this->sessions_));
-
 }
 
 int
 Connector::start (const ACE_INET_Addr & addr, int num)
 {
-
   if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>::open (ACE_Reactor::instance (),
                                                       ACE_NONBLOCK) < 0)
     ACE_ERROR_RETURN
@@ -1176,7 +1173,6 @@ run_main (int argc, ACE_TCHAR *argv[])
           if (addr.set (port, host, 1, addr.get_type ()) == -1)
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
           rc += connector.start (addr, senders);
-
         }
 
       if (rc > 0)

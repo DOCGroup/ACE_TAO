@@ -45,7 +45,7 @@ public:
   TAO_FT_Service_Callbacks (TAO_ORB_Core *);
 
   /// Dtor
-  virtual ~TAO_FT_Service_Callbacks (void);
+  virtual ~TAO_FT_Service_Callbacks ();
 
   /// Select the profile from MProfile as the needs of the services
   /// may be. Return the profile in @a pfile
@@ -83,15 +83,13 @@ public:
       IOP::ServiceContextList &clist,
       TAO_Profile *profile);
 
-  static TimeBase::TimeT now (void);
+  static TimeBase::TimeT now ();
 
 private:
-
   /// Check whether the right flags are available so that we can issue a
   /// restart.
   CORBA::Boolean restart_policy_check (IOP::ServiceContextList &service_list,
                                        const TAO_Profile *profile);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

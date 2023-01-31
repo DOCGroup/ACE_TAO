@@ -17,17 +17,19 @@
 #define ACE_IMPORT_SINGLETON_DECLARATION(T) template class __declspec (dllimport) T
 #define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllimport) SINGLETON_TYPE <CLASS, LOCK>;
 
-// Default to no inlining
-#if !defined (__ACE_INLINE__)
-# define __ACE_INLINE__ 0
-#endif /* __ACE_INLINE__ */
+// In later versions of C++Builder we will prefer inline functions by
+// default. The debug configuration of ACE is built with functions
+// out-of-line, so when linking your application against a debug ACE
+// build, you can choose to use the out-of-line functions by adding
+// ACE_NO_INLINE=1 to your project settings.
+# if !defined (__ACE_INLINE__)
+#  define __ACE_INLINE__ 1
+# endif /* __ACE_INLINE__ */
 
 #define ACE_CC_NAME ACE_TEXT ("Embarcadero C++ Builder")
 #define ACE_CC_MAJOR_VERSION (__BORLANDC__ / 0x100)
 #define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
 #define ACE_CC_BETA_VERSION (0)
-
-#define ACE_CC_PREPROCESSOR_ARGS "-Xdriver -E -q -o%s"
 
 #if !defined (WIN32)
 # if defined (__WIN32__) || defined (_WIN32)
@@ -48,10 +50,12 @@
 # define ACE_HAS_BCC32
 #endif
 
+#define ACE_CC_PREPROCESSOR_ARGS "--precompile -q -o%s"
+
 #if defined (ACE_HAS_BCC64)
 # define ACE_CC_PREPROCESSOR "BCC64.EXE"
 #else
-# define ACE_CC_PREPROCESSOR "BCC32C.EXE"
+# define ACE_CC_PREPROCESSOR "BCC32X.EXE"
 #endif
 
 # include "ace/config-win32-common.h"
@@ -110,7 +114,6 @@
 #define ACE_HAS_USER_MODE_MASKS 1
 #define ACE_LACKS_ACE_IOSTREAM 1
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
-#define ACE_TEMPLATES_REQUIRE_SOURCE 1
 #if defined (ACE_HAS_BCC32)
 # define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%Lu"
 # define ACE_INT64_FORMAT_SPECIFIER_ASCII "%Ld"

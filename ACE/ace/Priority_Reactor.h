@@ -46,7 +46,7 @@ public:
                         ACE_Timer_Queue * = 0);
 
   /// Close down the select_reactor and release all of its resources.
-  virtual ~ACE_Priority_Reactor (void);
+  virtual ~ACE_Priority_Reactor ();
 
   /// Dump the state of an object.
   void dump () const;
@@ -68,7 +68,7 @@ protected:
 
 private:
   /// A small helper to initialize the bucket.
-  void init_bucket (void);
+  void init_bucket ();
 
   /// Build the bucket from the given dispatch_mask.  Return -1 on
   /// failure, 0 otherwise.

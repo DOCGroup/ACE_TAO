@@ -99,7 +99,6 @@ public:
   /// Factory method.
   virtual TAO_Thread_Lane_Resources_Manager *
   create_thread_lane_resources_manager (TAO_ORB_Core &core) = 0;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -8,7 +8,6 @@
 #include "ace/Default_Constants.h"
 
 
-
 /* BSD socket client */
 
 int

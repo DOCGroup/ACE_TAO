@@ -519,7 +519,6 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
                 ),
                 0
               );
-
             }
 
           AST_Argument *original_arg = dynamic_cast<AST_Argument*> (d);
@@ -653,7 +652,6 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
                                  ACE_TEXT ("create_reply_handler_operation - ")
                                  ACE_TEXT ("bad node in this scope\n")),
                                 -1);
-
             }
 
           AST_Argument *original_arg = dynamic_cast<AST_Argument*> (d);
@@ -847,7 +845,6 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
                                  "(%N:%l) be_visitor_scope::visit_scope - "
                                  "bad node in this scope\n"),
                                 -1);
-
             }
 
           if (!d->ami_visit())

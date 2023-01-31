@@ -9,11 +9,11 @@ ACE_High_Res_Timer last_frame_sent_time;
 ACE_Time_Value inter_frame_time;
 // The time that should lapse between two consecutive frames sent.
 
-FTP_Client_Callback::FTP_Client_Callback (void)
+FTP_Client_Callback::FTP_Client_Callback ()
 {
 }
 
-FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (void)
+FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint ()
 {
 }
 
@@ -36,7 +36,7 @@ FTP_Client_StreamEndPoint::set_protocol_object (const char *,
   return 0;
 }
 
-Client::Client (void)
+Client::Client ()
   :client_mmdevice_ (&endpoint_strategy_),
    count_ (0),
    address_ (0),
@@ -99,26 +99,26 @@ Client::parse_args (int argc,
 }
 
 FILE *
-Client::file (void)
+Client::file ()
 {
   return this->fp_;
 }
 
 char*
-Client::flowname (void)
+Client::flowname ()
 {
   return this->flowname_;
 }
 
 TAO_StreamCtrl*
-Client::streamctrl (void)
+Client::streamctrl ()
 {
   return &this->streamctrl_;
 }
 
 
 int
-Client::frame_rate (void)
+Client::frame_rate ()
 {
   return this->frame_rate_;
 }
@@ -126,7 +126,7 @@ Client::frame_rate (void)
 
 // Method to get the object reference of the server
 int
-Client::bind_to_server (void)
+Client::bind_to_server ()
 {
   // Initialize the naming services
   if (my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
@@ -278,9 +278,8 @@ Client::init (int argc,
 
 // Method to send data at the specified rate
 int
-Client::pace_data (void)
+Client::pace_data ()
 {
-
   // Rate at which frames of data need to be sent.
   this->frame_rate_ = CLIENT::instance ()->frame_rate ();
 
@@ -303,7 +302,6 @@ Client::pace_data (void)
 
   try
     {
-
       // Continue to send data till the file is read to the end.
       while (1)
         {
@@ -377,7 +375,6 @@ Client::pace_data (void)
 
           // Reset the mb.
           this->mb.reset ();
-
         } // end while
 
       // Since the file is read stop the stream.
@@ -386,7 +383,6 @@ Client::pace_data (void)
 
       // Shut the orb down.
       TAO_AV_CORE::instance ()->orb ()->shutdown (0);
-
     }
   catch (const CORBA::Exception& ex)
     {

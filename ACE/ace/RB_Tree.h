@@ -89,7 +89,6 @@ public:
   void right (ACE_RB_Tree_Node<EXT_ID, INT_ID> * r);
 
 private:
-
   /// The key.
   EXT_ID k_;
 
@@ -119,11 +118,9 @@ public:
   /**
    * @note This method is inlined here rather than in RB_Tree.inl
    *       since that file may be included multiple times when
-   *       inlining is disabled and on platforms where
-   *       @c ACE_TEMPLATES_REQUIRE_SOURCE is defined.  In those
-   *       platform/configuration combinations, multiple definitions
-   *       of this method occurred.  Placing the definition inline in
-   *       the header avoids such errors.
+   *       inlining is disabled.  In those platform/configuration
+   *       combinations, multiple definitions of this method occurred.
+   *       Placing the definition inline in the header avoids such errors.
    */
   ACE_Allocator * allocator () const { return this->allocator_; }
 
@@ -180,7 +177,6 @@ protected:
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree : public ACE_RB_Tree_Base
 {
-
 public:
   friend class ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
@@ -563,7 +559,6 @@ protected:
   int lessthan (const EXT_ID &k1, const EXT_ID &k2);
 
 private:
-
   // = Private members.
 
   /// Synchronization variable for the MT_SAFE ACE_RB_Tree.
@@ -587,9 +582,7 @@ private:
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree_Iterator_Base
 {
-
 public:
-
   /// Copy constructor.
   ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
 
@@ -672,7 +665,6 @@ protected:
 
   /// Pointer to the node currently under the iterator.
   ACE_RB_Tree_Node <EXT_ID, INT_ID> *node_;
-
 };
 
 /**
@@ -748,7 +740,7 @@ public:
    * be declared and defined in both the derived forward and
    * reverse iterator classes rather than in the base iterator
    * class because of a method signature resolution problem
-   * caused by the existence of the deprecated next (void)
+   * caused by the existence of the deprecated next ()
    * method in the derived forward iterator class.  When that
    * deprecated method is removed, this method should be removed
    * from the derived classes and placed in the base class.
@@ -787,7 +779,6 @@ public:
    * node, returns 1 if not.
    */
   int is_done ();
-
 };
 
 /**
@@ -864,7 +855,7 @@ public:
    * be declared and defined in both the derived forward and
    * reverse iterator classes rather than in the base iterator
    * class because of a method signature resolution problem
-   * caused by the existence of the deprecated next (void)
+   * caused by the existence of the deprecated next ()
    * method in the derived forward iterator class.  When that
    * deprecated method is removed, this method should be removed
    * from the derived classes and placed in the base class.
@@ -878,13 +869,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/RB_Tree.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/RB_Tree.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("RB_Tree.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ! defined (ACE_RB_TREE_H) */

@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-CORBA::UserException::UserException (void)
+CORBA::UserException::UserException ()
 {
 }
 

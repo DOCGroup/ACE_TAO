@@ -118,7 +118,6 @@ namespace TAO
      * This method returns an exception when there is an error.
      */
     Invocation_Status check_reply_status (TAO_Synch_Reply_Dispatcher &rd);
-
   };
 
   /**
@@ -186,7 +185,6 @@ namespace TAO
     Invocation_Base * const invocation_;
     Invocation_Status status_;
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

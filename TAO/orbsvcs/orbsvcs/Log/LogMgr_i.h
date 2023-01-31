@@ -47,11 +47,11 @@ public:
 
   /// Lists all log object references.
   DsLogAdmin::LogList *
-    list_logs (void);
+    list_logs ();
 
   /// Lists all log ids.
   DsLogAdmin::LogIdList *
-    list_logs_by_id (void);
+    list_logs_by_id ();
 
   /// Returns a reference to the log with the supplied id.
   DsLogAdmin::Log_ptr

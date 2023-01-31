@@ -2,12 +2,12 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
-ior_mcast_Client_i::ior_mcast_Client_i (void)
+ior_mcast_Client_i::ior_mcast_Client_i ()
 {
   // Constructor
 }
 
-ior_mcast_Client_i::~ior_mcast_Client_i (void)
+ior_mcast_Client_i::~ior_mcast_Client_i ()
 {
 }
 

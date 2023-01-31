@@ -1,5 +1,5 @@
 #include "tao/RTScheduling/RTScheduler_include.pidl"
 local interface test
 {
-   void bar (in CORBA::VoidData data );
+   void bar (in CORBA::VoidData data);
 };

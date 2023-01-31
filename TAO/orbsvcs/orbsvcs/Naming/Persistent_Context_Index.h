@@ -99,7 +99,7 @@ public:
    * not deleted, since we want it to keep the state of the Naming
    * Service until the next run.
    */
-  ~TAO_Persistent_Context_Index (void);
+  ~TAO_Persistent_Context_Index ();
 
   // = Methods for adding/removing entries.
 
@@ -117,14 +117,14 @@ public:
   // = Accessors.
 
   /// Return allocator.
-  ACE_Allocator *allocator (void);
+  ACE_Allocator *allocator ();
 
   /// Return orb pointer.
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
   /// Return a pointer to the root Naming Context (returns a copy - must be
   /// deallocated by the user).
-  CosNaming::NamingContext_ptr root_context (void);
+  CosNaming::NamingContext_ptr root_context ();
 
 private:
   /// Helper for the <init> method.  Iterates over <index_>, and

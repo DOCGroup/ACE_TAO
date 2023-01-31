@@ -17,7 +17,7 @@
 //               Test_Nested_Struct
 // ************************************************************************
 
-Test_Nested_Struct::Test_Nested_Struct (void)
+Test_Nested_Struct::Test_Nested_Struct ()
   : opname_ (CORBA::string_dup ("test_nested_struct")),
     inout_ (new Param_Test::Nested_Struct),
     out_ (new Param_Test::Nested_Struct),
@@ -25,7 +25,7 @@ Test_Nested_Struct::Test_Nested_Struct (void)
 {
 }
 
-Test_Nested_Struct::~Test_Nested_Struct (void)
+Test_Nested_Struct::~Test_Nested_Struct ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -100,7 +100,7 @@ Test_Nested_Struct::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Nested_Struct::reset_parameters (void)
+Test_Nested_Struct::reset_parameters ()
 {
   this->inout_ = new Param_Test::Nested_Struct; // delete the previous ones
   this->out_ = new Param_Test::Nested_Struct;
@@ -132,13 +132,12 @@ Test_Nested_Struct::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Nested_Struct::run_sii_test\n");
-
     }
   return -1;
 }
 
 CORBA::Boolean
-Test_Nested_Struct::check_validity (void)
+Test_Nested_Struct::check_validity ()
 {
   CORBA::Boolean flag = 0;
   if ((this->in_.vs.seq.length () == this->inout_->vs.seq.length ()) &&
@@ -167,7 +166,7 @@ Test_Nested_Struct::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Nested_Struct::print_values (void)
+Test_Nested_Struct::print_values ()
 {
   for (CORBA::ULong i=0; i < this->in_.vs.seq.length (); i++)
     {

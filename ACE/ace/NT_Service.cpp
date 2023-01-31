@@ -17,7 +17,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_NT_Service)
 
 // ACE_NT_Service destructor.
 
-ACE_NT_Service::~ACE_NT_Service (void)
+ACE_NT_Service::~ACE_NT_Service ()
 {
   if (this->svc_sc_handle_ != 0)
     {
@@ -75,7 +75,6 @@ ACE_NT_Service::open (void *args)
     }
 
   return svc_return;
-
 }
 
 int
@@ -234,11 +233,10 @@ ACE_NT_Service::insert (DWORD start_type,
   this->svc_sc_handle_ = sh;
 
   return 0;
-
 }
 
 int
-ACE_NT_Service::remove (void)
+ACE_NT_Service::remove ()
 {
   if (this->svc_sc_handle () == 0)
     return -1;
@@ -277,7 +275,7 @@ ACE_NT_Service::startup (DWORD startup)
 // Returns the current startup type.
 
 DWORD
-ACE_NT_Service::startup (void)
+ACE_NT_Service::startup ()
 {
   // The query buffer will hold strings as well as the defined struct.
   // The string pointers in the struct point to other areas in the
@@ -302,7 +300,6 @@ ACE_NT_Service::startup (void)
   // Zero is a valid return value for QueryServiceConfig, so if
   // QueryServiceConfig fails, return the DWORD equivalent of -1.
   return MAXDWORD;
-
 }
 
 void
@@ -519,7 +516,7 @@ ACE_NT_Service::report_status (DWORD new_status,
 }
 
 SC_HANDLE
-ACE_NT_Service::svc_sc_handle (void)
+ACE_NT_Service::svc_sc_handle ()
 {
   if (this->svc_sc_handle_ == 0)
     {

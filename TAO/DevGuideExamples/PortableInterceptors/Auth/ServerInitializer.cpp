@@ -17,7 +17,6 @@ void
 ServerInitializer::post_init (
                               PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   // Create and register the request interceptors.
   PortableInterceptor::ServerRequestInterceptor_ptr si =
     PortableInterceptor::ServerRequestInterceptor::_nil ();

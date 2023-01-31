@@ -122,7 +122,7 @@ Dirent_Test: !VxWorks_RTP !LabVIEW_RT
 Dynamic_Priority_Test
 Dynamic_Test
 Enum_Interfaces_Test: !NO_NETWORK !LynxOS
-Env_Value_Test: !WinCE !LabVIEW_RT
+Env_Value_Test: !LabVIEW_RT
 FIFO_Test: !ACE_FOR_TAO
 Framework_Component_Test: !STATIC !nsk
 Future_Set_Test: !nsk !ACE_FOR_TAO
@@ -149,7 +149,7 @@ MM_Shared_Memory_Test: !VxWorks !nsk !ACE_FOR_TAO !LynxOS
 MT_NonBlocking_Connect_Test: !ST
 MT_Reactor_Timer_Test
 MT_Reactor_Upcall_Test: !nsk
-MT_Reference_Counted_Event_Handler_Test: !OpenVMS_IA64Crash !LynxOS
+MT_Reference_Counted_Event_Handler_Test: !LynxOS
 MT_Reference_Counted_Event_Handler_Test -b 0: LynxOS
 MT_Reference_Counted_Event_Handler_Test -a 0: LynxOS
 MT_Reference_Counted_Notify_Test
@@ -194,7 +194,7 @@ Proactor_UDP_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
 Process_Env_Test: !VxWorks !PHARLAP
 Process_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 Process_Manager_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
-Process_Manual_Event_Test: !HPUX !VxWorks !ACE_FOR_TAO !PHARLAP
+Process_Manual_Event_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 Process_Semaphore_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 RB_Tree_Test
@@ -279,7 +279,7 @@ SOCK_SEQPACK_SCTP_Test: !MSVC !nsk !ACE_FOR_TAO
 SOCK_Test_IPv6: !nsk
 Process_Strategy_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
 Recursive_Condition_Bug_Test: !ST
-UnloadLibACE: !STATIC !WinCE !LabVIEW_RT
+UnloadLibACE: !STATIC !LabVIEW_RT
 UUID_Test: !NO_UUID !ACE_FOR_TAO
 Wild_Match_Test
 SSL/Bug_2912_Regression_Test: SSL !ACE_FOR_TAO !BAD_AIO

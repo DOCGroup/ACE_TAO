@@ -35,7 +35,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-
   //@{ @name A set of wrappers for memory mapped files.
   ACE_NAMESPACE_INLINE_FUNCTION
   int madvise (caddr_t addr,
@@ -76,7 +75,6 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int shm_unlink (const ACE_TCHAR *path);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -38,16 +38,16 @@ public:
     ACE_NOWAIT = IPC_NOWAIT
   };
 
-  ACE_Typed_SV_Message_Queue (void);
+  ACE_Typed_SV_Message_Queue ();
   ACE_Typed_SV_Message_Queue (key_t external_id,
                               int create = ACE_OPEN,
                               int perms = ACE_DEFAULT_FILE_PERMS);
   int open (key_t external_id,
             int create = ACE_OPEN,
             int perms = ACE_DEFAULT_FILE_PERMS);
-  int close (void);
-  int remove (void);
-  ~ACE_Typed_SV_Message_Queue (void);
+  int close ();
+  int remove ();
+  ~ACE_Typed_SV_Message_Queue ();
 
   /// Send method.
   int send (const ACE_Typed_SV_Message<T> &mb, int mflags = 0);
@@ -77,13 +77,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Typed_SV_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Typed_SV_Message_Queue.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Typed_SV_Message_Queue.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TYPED_MESSAGE_QUEUE_H */

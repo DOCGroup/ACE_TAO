@@ -521,7 +521,6 @@ int ACE_Scheduler_Factory::dump_schedule
 
 void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * entry, FILE* file)
 {
-
    if( entry == 0 )
    {
       ACE_OS::fprintf (file, "Entry is NULL");
@@ -596,7 +595,6 @@ void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * 
    log_tuple_subset(entry->prop_tuple_subset(), file);
    ACE_OS::fprintf(file, "\n   }\n}");
 
-
 }
 
 void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
@@ -630,7 +628,6 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
       }
       else
       {
-
       ACE_OS::fprintf (file,
          subset_tuple_format,
          (*tuple_ptr_ptr)->handle,
@@ -670,14 +667,11 @@ ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** en
       TAO_Reconfig_Scheduler_Entry * entry = entry_ptr_array[index];
 
       log_scheduling_entry(entry, file);
-
-
    }
 
 
    ACE_OS::fclose (file);
    return 0;
-
 }
 
 void
@@ -722,11 +716,6 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
 
    ACE_OS::fclose (file);
 }
-#if defined (HPUX) && !defined (__GNUG__)
-  // aCC can't handle RtecScheduler::Preemption_Priority_t used as an operator
-  // name.
-  typedef CORBA::Long RtecScheduler_Preemption_Priority_t;
-#endif /* HPUX && !g++ */
 
 RtecScheduler::Preemption_Priority_t
 ACE_Scheduler_Factory::preemption_priority ()
@@ -737,15 +726,8 @@ ACE_Scheduler_Factory::preemption_priority ()
     {
       ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> *tss =
         ace_scheduler_factory_data->preemption_priority_;
-      // egcs 1.0.1 raises an internal compiler error if we implicitly
-      // call the type conversion operator.  So, call it explicitly.
-#if defined (HPUX) && !defined (__GNUG__)
-      const RtecScheduler::Preemption_Priority_t preemption_priority =
-        static_cast<RtecScheduler::Preemption_Priority_t> (tss->operator RtecScheduler_Preemption_Priority_t ());
-#else
       const RtecScheduler::Preemption_Priority_t preemption_priority =
         static_cast<RtecScheduler::Preemption_Priority_t> (tss->operator RtecScheduler::Preemption_Priority_t ());
-#endif /* HPUX && !g++ */
       return preemption_priority;
     }
   else
@@ -766,12 +748,7 @@ ACE_Scheduler_Factory::set_preemption_priority
         return;
 
   ace_scheduler_factory_data->preemption_priority_->
-#if defined (HPUX) && !defined (__GNUG__)
-    // aCC can't handle the typedef.
-    operator RtecScheduler_Preemption_Priority_t & () = preemption_priority;
-#else
     operator RtecScheduler::Preemption_Priority_t & () = preemption_priority;
-#endif /* HPUX && !g++ */
 }
 
 

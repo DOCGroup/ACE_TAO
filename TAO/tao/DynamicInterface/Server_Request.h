@@ -58,7 +58,7 @@ namespace CORBA
     ServerRequest (TAO_ServerRequest &orb_server_request);
 
     /// Destructor.
-    ~ServerRequest (void);
+    ~ServerRequest ();
 
     /// Implementation uses this to provide the ORB with the operation's
     /// parameter list ... on return, their values are available; the
@@ -89,7 +89,7 @@ namespace CORBA
     // basic CORBA Object Model.
 
     /// Marshal outgoing parameters.
-    void dsi_marshal (void);
+    void dsi_marshal ();
 
     /// Accessor for the Context member.
     CORBA::Context_ptr ctx () const;
@@ -118,7 +118,7 @@ namespace CORBA
     void _tao_reply_byte_order (int byte_order);
 
     /// Return a reference to the underlying TAO_ServerRequest object.
-    TAO_ServerRequest & _tao_server_request (void);
+    TAO_ServerRequest & _tao_server_request ();
 
     /// Returns a user exception through a TAO gateway without
     /// knowing its type.

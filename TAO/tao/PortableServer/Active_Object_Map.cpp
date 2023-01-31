@@ -322,7 +322,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 }
 
-TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
+TAO_Active_Object_Map::~TAO_Active_Object_Map ()
 {
   user_id_map::iterator iterator = this->user_id_map_->begin ();
   user_id_map::iterator end = this->user_id_map_->end ();
@@ -377,7 +377,7 @@ TAO_Active_Object_Map::is_user_id_in_map (
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_Id_Uniqueness_Strategy::~TAO_Id_Uniqueness_Strategy (void)
+TAO_Id_Uniqueness_Strategy::~TAO_Id_Uniqueness_Strategy ()
 {
 }
 
@@ -790,7 +790,7 @@ TAO_Multiple_Id_Strategy::remaining_activations (
 }
 #endif
 
-TAO_Lifespan_Strategy::~TAO_Lifespan_Strategy (void)
+TAO_Lifespan_Strategy::~TAO_Lifespan_Strategy ()
 {
 }
 
@@ -913,7 +913,7 @@ TAO_Active_Object_Map_Entry *&entry)
 }
 #endif
 
-TAO_Id_Assignment_Strategy::~TAO_Id_Assignment_Strategy (void)
+TAO_Id_Assignment_Strategy::~TAO_Id_Assignment_Strategy ()
 {
 }
 
@@ -1071,7 +1071,7 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_Id_Hint_Strategy::~TAO_Id_Hint_Strategy (void)
+TAO_Id_Hint_Strategy::~TAO_Id_Hint_Strategy ()
 {
 }
 
@@ -1082,7 +1082,7 @@ TAO_Active_Hint_Strategy::TAO_Active_Hint_Strategy (CORBA::ULong map_size)
 {
 }
 
-TAO_Active_Hint_Strategy::~TAO_Active_Hint_Strategy (void)
+TAO_Active_Hint_Strategy::~TAO_Active_Hint_Strategy ()
 {
 }
 
@@ -1118,7 +1118,7 @@ TAO_Active_Hint_Strategy::find (const PortableServer::ObjectId &system_id,
 }
 
 size_t
-TAO_Active_Hint_Strategy::hint_size (void)
+TAO_Active_Hint_Strategy::hint_size ()
 {
   return ACE_Active_Map_Manager_Key::size ();
 }
@@ -1135,7 +1135,7 @@ TAO_Active_Hint_Strategy::system_id (PortableServer::ObjectId_out system_id,
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_No_Hint_Strategy::~TAO_No_Hint_Strategy (void)
+TAO_No_Hint_Strategy::~TAO_No_Hint_Strategy ()
 {
 }
 
@@ -1172,7 +1172,7 @@ TAO_No_Hint_Strategy::find (const PortableServer::ObjectId &,
 }
 
 size_t
-TAO_No_Hint_Strategy::hint_size (void)
+TAO_No_Hint_Strategy::hint_size ()
 {
   return 0;
 }

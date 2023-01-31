@@ -13,7 +13,7 @@ Messenger_i::Messenger_i (
   {
   }
 
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
   {
   }
 

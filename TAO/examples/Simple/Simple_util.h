@@ -114,7 +114,7 @@ public:
   ServerInterface *operator-> () { return server_.in (); }
 
   /// Returns the shutdown flag.
-  int do_shutdown (void);
+  int do_shutdown ();
 
   /// Fills in the shutdwon flag.
   void do_shutdown (int);
@@ -122,7 +122,7 @@ public:
   /// Initialize naming service
   int obtain_initial_references (const char *name);
 
-  CORBA::ORB_ptr orb (void)
+  CORBA::ORB_ptr orb ()
     {
       return CORBA::ORB::_duplicate (this->orb_.in ());
     }
@@ -132,7 +132,7 @@ private:
   int read_ior (ACE_TCHAR *filename);
 
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// Remember our orb.
   CORBA::ORB_var orb_;
@@ -160,11 +160,6 @@ private:
   int do_shutdown_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Simple_util.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Simple_util.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_UTIL_H */

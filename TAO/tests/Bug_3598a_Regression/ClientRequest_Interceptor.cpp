@@ -7,12 +7,12 @@
   CORBA::Boolean
   ClientRequest_Interceptor::success_flag_ = 0;
 
-  ClientRequest_Interceptor::ClientRequest_Interceptor (void)
+  ClientRequest_Interceptor::ClientRequest_Interceptor ()
     : name_ ("ClientRequest_Interceptor")
   {
   }
 
-  ClientRequest_Interceptor::~ClientRequest_Interceptor (void)
+  ClientRequest_Interceptor::~ClientRequest_Interceptor ()
   {
   }
 

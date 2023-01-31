@@ -1,7 +1,37 @@
+USER VISIBLE CHANGES BETWEEN ACE-7.0.11 and ACE-7.1.0
+=====================================================
+
+. Removed support for Windows CE, OpenVMS, HPUX, AIX, RTEMS,
+  and Solaris
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.10 and ACE-7.0.11
+======================================================
+
+. Fixed some compiler warnings given by newer compilers
+
+. Make use of noexcept instead of throw()
+
+. Fixed a bug in ACE_Configuration_Heap with uses_wchar=1 builds
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.9 and ACE-7.0.10
+=====================================================
+
+. Add missing resource files for several DLLs on Windows
+
+. VxWorks runtime fixes
+
+. Various cleanup and using more C++11 features
+
+. Embarcadero C++ Builder 11.2 fixes
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.8 and ACE-7.0.9
 ====================================================
 
 . Compile fixes for VxWorks 22.03
+
+. Various cleanup
+
+. Minor fixes
 
 USER VISIBLE CHANGES BETWEEN ACE-7.0.7 and ACE-7.0.8
 ====================================================

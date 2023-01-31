@@ -90,11 +90,7 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
   int err = 0;
   size_t len = 0;
 
-#ifndef ACE_HAS_VOID_PTR_SCTP_GETLADDRS
   err = sctp_getladdrs(this->get_handle(), 0, &laddrs);
-#else
-  err = sctp_getladdrs(this->get_handle(), 0, reinterpret_cast<void**>(&laddrs));
-#endif /* ACE_HAS_VOID_PTR_SCTP_GETPADDRS */
   if (err > 0)
   {
     len = err;

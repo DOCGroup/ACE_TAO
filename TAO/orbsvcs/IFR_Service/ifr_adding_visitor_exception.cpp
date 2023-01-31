@@ -20,7 +20,7 @@ ifr_adding_visitor_exception::ifr_adding_visitor_exception (
 {
 }
 
-ifr_adding_visitor_exception::~ifr_adding_visitor_exception (void)
+ifr_adding_visitor_exception::~ifr_adding_visitor_exception ()
 {
 }
 

@@ -76,13 +76,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/Channel_Clients_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Channel_Clients_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Channel_Clients_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CHANNEL_CLIENTS_T_H */

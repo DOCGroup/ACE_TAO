@@ -158,10 +158,6 @@ TAO_EC_Basic_Factory::destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy* x
 TAO_EC_ProxyPushConsumer_Collection*
 TAO_EC_Basic_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Channel_Base *)
 {
-#if defined (__SUNPRO_CC)
-  // This typedef is a workaround for a SunCC 4.2 bug
-  typedef TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>::Iterator TAO_EC_Consumer_List_Iterator;
-#endif
   return new TAO_ESF_Delayed_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>::Iterator,

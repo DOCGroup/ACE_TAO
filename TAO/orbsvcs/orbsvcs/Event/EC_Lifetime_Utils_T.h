@@ -45,7 +45,7 @@ void activate (T & obj_ref,
  *
  * Template argument requirements:
  *
- * Has void execute (void); method which
+ * Has void execute (); method which
  * can throw ONLY CORBA exceptions.
  * Has default and copy constructors.
  */
@@ -82,7 +82,6 @@ public:
   void execute ();
 
 private:
-
   T target_;
 };
 
@@ -92,12 +91,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("EC_Lifetime_Utils_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* EC_LIFETIME_UTILS_T_H */

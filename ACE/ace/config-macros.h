@@ -84,7 +84,7 @@
 // Perfect Multicast filtering refers to RFC 3376, where a socket is only
 // delivered dgrams for groups joined even if it didn't bind the group
 // address.  We turn this option off by default, although most OS's
-// except for Windows and Solaris probably lack perfect filtering.
+// except for Windows probably lack perfect filtering.
 // =========================================================================
 
 # if !defined (ACE_LACKS_PERFECT_MULTICAST_FILTERING)
@@ -101,14 +101,13 @@
 
 # if !defined (ACE_HAS_PROCESS_SPAWN)
 #   if !defined (ACE_LACKS_FORK) || \
-       (defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)) || \
-       defined (ACE_WINCE) || defined (ACE_OPENVMS)
+       (defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP))
 #     define ACE_HAS_PROCESS_SPAWN 1
 #   endif
 # endif /* ACE_HAS_PROCESS_SPAWN */
 
 # if !defined (ACE_HAS_DYNAMIC_LINKING)
-#   if defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || defined (ACE_WIN32) || defined (ACE_VXWORKS) || defined (__hpux)
+#   if defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || defined (ACE_WIN32) || defined (ACE_VXWORKS)
 #     define ACE_HAS_DYNAMIC_LINKING 1
 #   endif
 # endif /* ACE_HAS_DYNAMIC_LINKING */
@@ -234,17 +233,6 @@
 
 #   define ACE_sap_any_cast(TYPE)                                      reinterpret_cast<TYPE> (const_cast<ACE_Addr &> (ACE_Addr::sap_any))
 
-# if !defined (ACE_CAST_CONST)
-    // Sun CC 4.2, for example, requires const in reinterpret casts of
-    // data members in const member functions.  But, other compilers
-    // complain about the useless const.  This keeps everyone happy.
-#   if defined (__SUNPRO_CC)
-#     define ACE_CAST_CONST const
-#   else  /* ! __SUNPRO_CC */
-#     define ACE_CAST_CONST
-#   endif /* ! __SUNPRO_CC */
-# endif /* ! ACE_CAST_CONST */
-
 // ============================================================================
 // Compiler Silencing macros
 //
@@ -255,7 +243,7 @@
 #if !defined (ACE_UNUSED_ARG)
 # if defined (__GNUC__) || defined (__BORLANDC__)
 #   define ACE_UNUSED_ARG(a) (void) (a)
-# elif defined (ghs) || defined (__hpux) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI)
+# elif defined (ghs) || defined (__rational__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  @note that may only be true if -O is enabled,
@@ -266,7 +254,7 @@
 # endif /* ghs ..... */
 #endif /* !ACE_UNUSED_ARG */
 
-#if defined (_MSC_VER) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || (defined (__HP_aCC) && (__HP_aCC < 39000 || __HP_aCC >= 60500)) || defined (__IAR_SYSTEMS_ICC__)
+#if defined (_MSC_VER) || defined (ghs) || defined(__BORLANDC__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__IAR_SYSTEMS_ICC__)
 # define ACE_NOTREACHED(a)
 #else  /* ghs || ..... */
 # define ACE_NOTREACHED(a) a
@@ -293,12 +281,12 @@
 #  define ACE_ALLOC_HOOK_DECLARE \
   void *operator new (size_t bytes); \
   void *operator new (size_t bytes, void *ptr); \
-  void *operator new (size_t bytes, const std::nothrow_t &) throw (); \
+  void *operator new (size_t bytes, const std::nothrow_t &) noexcept; \
   void operator delete (void *ptr); \
   void operator delete (void *ptr, const std::nothrow_t &); \
   void *operator new[] (size_t size); \
   void operator delete[] (void *ptr); \
-  void *operator new[] (size_t size, const std::nothrow_t &) throw (); \
+  void *operator new[] (size_t size, const std::nothrow_t &) noexcept; \
   void operator delete[] (void *ptr, const std::nothrow_t &)
 
 #  define ACE_GENERIC_ALLOCS(MAKE_PREFIX, CLASS) \
@@ -311,7 +299,7 @@
   }                                                               \
   MAKE_PREFIX (void *, CLASS)::operator new (size_t, void *ptr) { return ptr; }\
   MAKE_PREFIX (void *, CLASS)::operator new (size_t bytes, \
-                                             const std::nothrow_t &) throw () \
+                                             const std::nothrow_t &) noexcept \
   { return ACE_Allocator::instance ()->malloc (bytes); } \
   MAKE_PREFIX (void, CLASS)::operator delete (void *ptr) \
   { if (ptr) ACE_Allocator::instance ()->free (ptr); } \
@@ -328,7 +316,7 @@
   MAKE_PREFIX (void, CLASS)::operator delete[] (void *ptr) \
   { if (ptr) ACE_Allocator::instance ()->free (ptr); } \
   MAKE_PREFIX (void *, CLASS)::operator new[] (size_t size, \
-                                               const std::nothrow_t &) throw ()\
+                                               const std::nothrow_t &) noexcept\
   { return ACE_Allocator::instance ()->malloc (size); } \
   MAKE_PREFIX (void, CLASS)::operator delete[] (void *ptr, \
                                                 const std::nothrow_t &) \
@@ -607,7 +595,7 @@ typedef ACE_THR_FUNC_RETURN (*ACE_THR_C_FUNC)(void *);
 // Add this macro you one of your cpp file in your dll.  X should
 // be either ACE_DLL_UNLOAD_POLICY_DEFAULT or ACE_DLL_UNLOAD_POLICY_LAZY.
 #define ACE_DLL_UNLOAD_POLICY(CLS,X) \
-extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
+extern "C" u_long CLS##_Export _get_dll_unload_policy () \
   { return X;}
 
 // ============================================================================

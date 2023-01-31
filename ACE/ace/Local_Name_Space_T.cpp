@@ -139,7 +139,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
   const char *type,
   int rebind)
 {
-
   ACE_TRACE ("ACE_Local_Name_Space::shared_bind_i");
   const size_t name_len = (name.length () + 1) * sizeof (ACE_WCHAR_T);
   const size_t value_len = (value.length () + 1) * sizeof (ACE_WCHAR_T);
@@ -232,7 +231,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind (
     {
     }
   return result;
-
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
@@ -360,7 +358,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::open (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (void)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space ()
   : allocator_ (0),
     name_space_map_ (0),
     name_options_ (0)
@@ -383,7 +381,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::~ACE_Local_Name_Space (void)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::~ACE_Local_Name_Space ()
 {
   ACE_TRACE ("ACE_Local_Name_Space::~ACE_Local_Name_Space");
 
@@ -395,7 +393,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::~ACE_Local_Name_Space (void)
 ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Local_Name_Space)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager (void)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager ()
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -413,7 +411,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager (void)
 
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
 {
   ACE_TRACE ("ACE_Local_Name_Space::create_manager_i");
   // Get directory name
@@ -441,8 +439,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   ACE_TCHAR lock_name_for_backing_store [MAXPATHLEN + MAXNAMELEN];
   const ACE_TCHAR *postfix = database;
 
-  size_t length = 0;
-  length = sizeof lock_name_for_local_name_space / sizeof (ACE_TCHAR);
+  size_t length = sizeof lock_name_for_local_name_space / sizeof (ACE_TCHAR);
   ACE_OS::strsncpy (lock_name_for_local_name_space,
                     dir,
                     length);

@@ -9,7 +9,6 @@
 #include "ace/Atomic_Op.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> ATOMIC_INT;
@@ -68,7 +67,7 @@ Task_Test::close (u_long)
 }
 
 int
-Task_Test::svc (void)
+Task_Test::svc ()
 {
   wait_count++;
   max_count++;

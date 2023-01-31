@@ -38,7 +38,6 @@ class TAO_ORB_Core;
  */
 class TAO_Export TAO_Fault_Tolerance_Service
 {
-
 public:
   /// Ctor
   TAO_Fault_Tolerance_Service () = default;
@@ -57,7 +56,6 @@ private:
   TAO_Fault_Tolerance_Service (const TAO_Fault_Tolerance_Service &);
 
 private:
-
   /// hook to callback on to the service
   TAO_Service_Callbacks *ft_service_callback_ {};
 };

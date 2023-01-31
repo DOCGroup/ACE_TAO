@@ -53,10 +53,6 @@ if ($^O eq "MSWin32") {
     $server_args =
         "-b bands.nt";
 }
-elsif ($^O eq "hpux") {
-    $server_args =
-        "-b bands.hpux";
-}
 else {
     $server_args =
         "-b bands.unix";

@@ -23,7 +23,7 @@ TAO_RT_Stub::TAO_RT_Stub (const char *repository_id,
 {
 }
 
-TAO_RT_Stub::~TAO_RT_Stub (void)
+TAO_RT_Stub::~TAO_RT_Stub ()
 {
   if (this->priority_model_policy_.in ())
     this->priority_model_policy_->destroy ();
@@ -36,7 +36,7 @@ TAO_RT_Stub::~TAO_RT_Stub (void)
 }
 
 void
-TAO_RT_Stub::parse_policies (void)
+TAO_RT_Stub::parse_policies ()
 {
   CORBA::PolicyList_var policy_list
     = this->base_profiles_.policy_list ();
@@ -70,7 +70,7 @@ TAO_RT_Stub::parse_policies (void)
 }
 
 CORBA::Policy *
-TAO_RT_Stub::exposed_priority_model (void)
+TAO_RT_Stub::exposed_priority_model ()
 {
   if (!this->are_policies_parsed_)
     {
@@ -87,7 +87,7 @@ TAO_RT_Stub::exposed_priority_model (CORBA::Policy_ptr policy)
 }
 
 CORBA::Policy *
-TAO_RT_Stub::exposed_priority_banded_connection (void)
+TAO_RT_Stub::exposed_priority_banded_connection ()
 {
   if (!this->are_policies_parsed_)
     {
@@ -104,7 +104,7 @@ TAO_RT_Stub::exposed_priority_banded_connection (CORBA::Policy_ptr policy)
 }
 
 CORBA::Policy *
-TAO_RT_Stub::exposed_client_protocol (void)
+TAO_RT_Stub::exposed_client_protocol ()
 {
   if (!this->are_policies_parsed_)
     {
@@ -197,7 +197,7 @@ TAO_RT_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 }
 
 CORBA::Policy_ptr
-TAO_RT_Stub::effective_priority_banded_connection (void)
+TAO_RT_Stub::effective_priority_banded_connection ()
 {
   // Get effective override.
   CORBA::Policy_var override =
@@ -245,7 +245,7 @@ TAO_RT_Stub::effective_priority_banded_connection (void)
 }
 
 CORBA::Policy_ptr
-TAO_RT_Stub::effective_client_protocol (void)
+TAO_RT_Stub::effective_client_protocol ()
 {
   // Get effective override.
   CORBA::Policy_var override =

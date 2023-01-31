@@ -42,18 +42,6 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   TAO_INSERT_COMMENT (os);
 
-  // Default constructor.
-  *os << node->full_obv_skel_name () << "::";
-
-  if (! node->is_nested ())
-    {
-      *os << "OBV_";
-    }
-
-  *os << node->local_name () << " ()" << be_nl;
-  *os << ": require_truncation_ (false)" << be_nl
-      << "{}" << be_nl_2;
-
   // Initializing constructor.
   if (node->has_member ())
     {
@@ -70,7 +58,6 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       this->gen_obv_init_constructor_args (node, index);
 
       *os << ")" << be_uidt << be_uidt << be_uidt_nl
-          << ": require_truncation_ (false)" << be_nl
           << "{" << be_idt;
 
       this->gen_obv_init_constructor_inits (node);
@@ -117,8 +104,8 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           *os << be_uidt_nl;
         }
       *os << ")," << be_nl
-          << "::CORBA::NO_MEMORY ()" << be_uidt_nl
-          << ");" << be_nl
+          << "::CORBA::NO_MEMORY ());" << be_uidt
+          << be_nl
           << "return ret_val;" << be_uidt_nl
           << "}";
     }

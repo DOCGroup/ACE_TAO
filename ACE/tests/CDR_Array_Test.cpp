@@ -48,7 +48,6 @@
 #endif
 
 
-
 // Default number of elements for check buffer, for each tested CDR type.
 // Be aware that time will be affected by the buffer fitting/not fitting
 // in the cache (ie, if default_total*sizeof(T) bytes fit in the cache).
@@ -233,7 +232,6 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
                   CDR_Test<T, H>::do_test(tdelta, niter, 1,
                                           srcbuf, dstbuf,
                                           sk, dk);
-
                 }
             }
         }

@@ -18,13 +18,13 @@ Callback_Handler::Callback_Handler (const char *pathname,
   // Nothing else
 }
 
-Callback_Handler::~Callback_Handler (void)
+Callback_Handler::~Callback_Handler ()
 {
   // Nothing else
 }
 
 void
-Callback_Handler::next_chunk (void)
+Callback_Handler::next_chunk ()
 {
   if (this->last_chunk_ == 1)
     {
@@ -97,7 +97,7 @@ Callback_Handler::next_chunk_excep
 }
 
 void
-Callback_Handler::run (void)
+Callback_Handler::run ()
 {
   // Open the file to be downloaded
   this->open_file ();
@@ -112,7 +112,7 @@ Callback_Handler::run (void)
 }
 
 void
-Callback_Handler::open_file (void)
+Callback_Handler::open_file ()
 {
   // Create a temporary file to store the retrieved data.
   ACE_FILE_Connector connector;
@@ -128,7 +128,7 @@ Callback_Handler::open_file (void)
 }
 
 void
-Callback_Handler::deactivate (void)
+Callback_Handler::deactivate ()
 {
   // Close the file that was sent to the client.
   (void) this->file_io_.close ();

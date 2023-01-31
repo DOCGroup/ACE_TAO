@@ -59,7 +59,7 @@ public:
 
   virtual ~Locator_Repository();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   int unregister_if_address_reused (const ACE_CString& fqname,
                                     const char* partial_ior,
@@ -113,10 +113,10 @@ public:
   int remove_activator (const ACE_CString& name);
 
   /// Returns the internal hash map containing the server information.
-  SIMap& servers(void);
+  SIMap& servers();
   const SIMap& servers() const;
   /// Returns the internal hash map containing the activator information.
-  AIMap& activators(void);
+  AIMap& activators();
   const AIMap& activators() const;
 
   /// Indicate the persistence mode for the repository
@@ -143,7 +143,7 @@ protected:
   /// perform sync of repo with backing store
   /// defaults to no-op, only shared backing stores
   /// need to sync
-  virtual int sync_load (void);
+  virtual int sync_load ();
 
   /// perform server persistent update
   virtual int persistent_update (const Server_Info_Ptr& info, bool add) = 0;
@@ -155,7 +155,7 @@ protected:
   virtual int persistent_remove (const ACE_CString& name, bool activator) = 0;
 
   /// recover the ImR Locator's IOR from the persisted file
-  virtual int recover_ior (void);
+  virtual int recover_ior ();
 
   int setup_multicast (ACE_Reactor* reactor, const char* imr_ior);
   void teardown_multicast ();

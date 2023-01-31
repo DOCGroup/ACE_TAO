@@ -93,11 +93,11 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler (void) : request_ (0)
+  Handler () : request_ (0)
   {
   };
 
-  void foo (void)
+  void foo ()
     {
       int const reply = --number_of_replies;
 
@@ -152,7 +152,7 @@ public:
       ++request_;
     };
 
-  ~Handler (void)
+  ~Handler ()
   {
   };
 private:
@@ -279,7 +279,7 @@ Client::Client (A::AMI_Test_ptr server,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

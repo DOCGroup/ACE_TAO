@@ -26,13 +26,13 @@ TAO_Profile::forward_to (TAO_MProfile *mprofiles)
 }
 
 ACE_INLINE TAO_MProfile *
-TAO_Profile::forward_to (void)
+TAO_Profile::forward_to ()
 {
   return this->forward_to_;
 }
 
 ACE_INLINE TAO_MProfile *
-TAO_Profile::forward_to_i (void)
+TAO_Profile::forward_to_i ()
 {
   return this->forward_to_;
 }
@@ -44,7 +44,7 @@ TAO_Profile::tagged_components () const
 }
 
 ACE_INLINE TAO_Tagged_Components&
-TAO_Profile::tagged_components (void)
+TAO_Profile::tagged_components ()
 {
   return this->tagged_components_;
 }
@@ -62,13 +62,13 @@ TAO_Profile::object_key () const
 }
 
 ACE_INLINE unsigned long
-TAO_Profile::_incr_refcnt (void)
+TAO_Profile::_incr_refcnt ()
 {
   return ++this->refcount_;
 }
 
 ACE_INLINE unsigned long
-TAO_Profile::_decr_refcnt (void)
+TAO_Profile::_decr_refcnt ()
 {
   unsigned long count = --this->refcount_;
   if (count == 0)

@@ -11,7 +11,7 @@ Stock_StockNameConsumer_i::Stock_StockNameConsumer_i (Stock_StockBroker_i &conte
 }
 
 // Implementation skeleton destructor
-Stock_StockNameConsumer_i::~Stock_StockNameConsumer_i (void)
+Stock_StockNameConsumer_i::~Stock_StockNameConsumer_i ()
 {
 }
 

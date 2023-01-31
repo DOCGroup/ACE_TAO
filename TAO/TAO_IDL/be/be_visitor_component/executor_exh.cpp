@@ -338,7 +338,6 @@ Exec_Attr_Decl_Generator::emit (
   TAO_OutStream *  /*os*/,
   be_interface * base_interface)
 {
-
   // Even though this call seems unaware of CCM types, the
   // visitor must inherit from be_visitor_component_scope so
   // it will pick up attributes via porttypes.

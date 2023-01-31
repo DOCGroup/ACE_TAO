@@ -179,7 +179,6 @@ TAO_Asynch_Queued_Message::destroy ()
         {
           ACE_DES_FREE_THIS (this->allocator_->free,
                              TAO_Asynch_Queued_Message);
-
         }
       else // global release..
         {

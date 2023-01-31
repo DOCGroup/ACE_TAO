@@ -7,14 +7,12 @@
 #include "ace/INet/INet_Log.h"
 
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace INet
   {
-
     ConnectionKey::ConnectionKey ()
       {}
 

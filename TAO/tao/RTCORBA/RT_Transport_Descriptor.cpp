@@ -30,7 +30,7 @@ TAO_RT_Transport_Descriptor::~TAO_RT_Transport_Descriptor ()
 }
 
 TAO_Transport_Descriptor_Interface *
-TAO_RT_Transport_Descriptor::duplicate (void)
+TAO_RT_Transport_Descriptor::duplicate ()
 {
   // Get a copy of the underlying endpoint
   TAO_Endpoint *endpoint =

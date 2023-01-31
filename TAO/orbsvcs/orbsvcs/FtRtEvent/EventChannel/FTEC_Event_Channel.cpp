@@ -198,7 +198,6 @@ TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle)
 }
 
 
-
 CORBA::Boolean
 TAO_FTEC_Event_Channel::start (
         FTRT::FaultListener_ptr listener,
@@ -271,7 +270,6 @@ TAO_FTEC_Event_Channel::connect_push_supplier (
       )
 {
   return ec_impl_->connect_push_supplier(push_supplier, qos);
-
 }
 
 void

@@ -32,17 +32,17 @@ public:
   virtual int svc ();
 
   /// Gets the number of computations the thread was able to perform.
-  u_long get_number_of_computations (void);
+  u_long get_number_of_computations ();
 
   /// this is the actual "computation" being performed.
-  void computation (void);
+  void computation ();
 
   /// Indicates whether we're done.
   int done_;
 
 private:
   /// Run the computations.
-  int run_computations (void);
+  int run_computations ();
 
   /// This stores the number of computations performed
   /// by the Util_Thread so far

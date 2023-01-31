@@ -24,7 +24,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 static const char *message =
 "Hello there! Hope you get this message";
 

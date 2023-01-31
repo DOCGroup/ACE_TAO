@@ -35,10 +35,10 @@ public:
   }
 
   // Answer the incoming call
-  virtual int answer_call (void) = 0;
+  virtual int answer_call () = 0;
 
   // Fetch some form of caller identification at the hardware level.
-  virtual CallerId *retrieve_callerId (void) = 0;
+  virtual CallerId *retrieve_callerId () = 0;
 
   // Fetch the message at the location specified by 'addr' and play
   // it for the caller.
@@ -49,7 +49,7 @@ public:
   virtual MessageType *record_message (ACE_FILE_Addr &addr) = 0;
 
   // Release the RecordingDevice to accept another incoming call
-  virtual void release (void)
+  virtual void release ()
   {
     this->release_semaphore ();
   }
@@ -61,7 +61,7 @@ public:
     return 0;
   }
 
-  virtual RecordingDevice *wait_for_activity (void)
+  virtual RecordingDevice *wait_for_activity ()
   {
     // Block on a semaphore until it says we're ready to do
     // work.
@@ -90,12 +90,12 @@ public:
   }
 
 protected:
-  void acquire_semaphore (void)
+  void acquire_semaphore ()
   {
     this->semaphore_.acquire ();
   }
 
-  void release_semaphore (void)
+  void release_semaphore ()
   {
     // Reset the semaphore so that wait_for_activity() will
     // unblock.

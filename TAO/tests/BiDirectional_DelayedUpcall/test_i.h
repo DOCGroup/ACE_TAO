@@ -29,10 +29,10 @@ public:
   Callback_i (CORBA::ORB_ptr orb, Simple_Server_ptr srv);
 
   /// Safe way to shutdown
-  void shutdown (void);
+  void shutdown ();
 
   /// The callback method
-  void callback_method (void);
+  void callback_method ();
 
 private:
   /// The orb
@@ -59,7 +59,7 @@ public:
 
   void callback_object (Callback_ptr callback);
 
-  void shutdown (void);
+  void shutdown ();
 
   virtual int handle_timeout (const ACE_Time_Value &current_time,
                               const void *act = 0);
@@ -67,9 +67,6 @@ public:
 private:
   /// The ORB
   CORBA::ORB_var orb_;
-
-  /// Flag to indicate, whether we are ready for a remote call.
-  int flag_;
 
   /// Callback Object
   Callback_var callback_;

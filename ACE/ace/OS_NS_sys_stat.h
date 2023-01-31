@@ -37,7 +37,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef struct stati64 ACE_stat;
 #       define ACE_STAT_FUNC_NAME ::_stati64
 #       define ACE_WSTAT_FUNC_NAME ::_wstati64
-#   elif !defined (ACE_HAS_WINCE) && defined (_MSC_VER)
+#   elif defined (_MSC_VER)
 typedef struct _stat64 ACE_stat;
 #       define ACE_STAT_FUNC_NAME ::_stat64
 #       define ACE_WSTAT_FUNC_NAME ::_wstat64
@@ -52,7 +52,7 @@ typedef struct stat ACE_stat;
 #   endif  /**/
 # else
 //  Default file offset case.
-#   if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#   if defined (ACE_WIN32)
 typedef struct _stat ACE_stat;
 #     define ACE_STAT_FUNC_NAME ::_stat
 #     define ACE_WSTAT_FUNC_NAME ::_wstat
@@ -65,7 +65,6 @@ typedef struct stat ACE_stat;
 
 namespace ACE_OS
 {
-
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE creat (const ACE_TCHAR *filename,
                     mode_t mode);
@@ -118,7 +117,6 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   mode_t umask (mode_t cmask);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

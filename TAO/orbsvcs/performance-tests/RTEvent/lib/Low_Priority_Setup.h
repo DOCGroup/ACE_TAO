@@ -51,7 +51,7 @@ public:
                       ACE_Barrier *barrier);
 
   /// Stop all running threads
-  void stop_all_threads (void);
+  void stop_all_threads ();
 
   /// Collect the stats from all the clients
   void collect_basic_stats (ACE_Basic_Stats &stats);
@@ -74,8 +74,6 @@ private:
   ACE_Thread_Manager thr_mgr_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Low_Priority_Setup.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_PERF_RTEC_LOW_PRIORITY_SETUP_H */

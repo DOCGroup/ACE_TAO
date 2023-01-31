@@ -83,11 +83,11 @@ public:
                                     bool is_multi_prot) const;
 
   /// Host attribute get/set operators.
-  char * host (void);
+  char * host ();
   void host (const char * h);
 
   /// Port attribute get/set operators.
-  CORBA::UShort port (void);
+  CORBA::UShort port ();
   void port (CORBA::UShort p);
 
   // Protocol tag get operator, inherited from EndpointValueBase

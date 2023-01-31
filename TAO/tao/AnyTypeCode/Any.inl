@@ -360,13 +360,13 @@ CORBA::Any_out::operator CORBA::Any *&()
 }
 
 ACE_INLINE CORBA::Any *&
-CORBA::Any_out::ptr (void)
+CORBA::Any_out::ptr ()
 {
   return this->ptr_;
 }
 
 ACE_INLINE CORBA::Any *
-CORBA::Any_out::operator-> (void)
+CORBA::Any_out::operator-> ()
 {
   return this->ptr_;
 }

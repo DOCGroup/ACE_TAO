@@ -67,7 +67,7 @@ public:
     : handler_ (handler), ssl_ctx_ (0), ssl_ (0) {}
 
   // Destructor frees the SSL resources.
-  virtual ~AC_CLD_Connector (void) {
+  virtual ~AC_CLD_Connector () {
     SSL_free (ssl_);
     SSL_CTX_free (ssl_ctx_);
   }

@@ -412,8 +412,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Field field;
       field.value.strValue (
-          CORBA::string_dup ("duplicate case label test string")
-        );
+          CORBA::string_dup ("duplicate case label test string"));
       field.value._d (FTYPE_VARCHAR);
       CORBA::Any any1;
       any1 <<= field;

@@ -74,7 +74,6 @@ public:
   T * ptr () const;
 
 private:
-
   // Prevent widening assignment.
   TAO_Value_Var_T (const TAO_Base_var &);
   void operator= (const TAO_Base_var &);
@@ -112,13 +111,7 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Valuetype/Value_VarOut_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Value_VarOut_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

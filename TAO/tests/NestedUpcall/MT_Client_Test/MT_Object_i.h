@@ -25,10 +25,10 @@ class MT_Object_i : public POA_MT_Object
 {
 public:
   /// Constructor.
-  MT_Object_i (void);
+  MT_Object_i ();
 
   /// Destructor.
-  virtual ~MT_Object_i (void);
+  virtual ~MT_Object_i ();
 
   virtual CORBA::Long yadda (CORBA::Long hop_count,
                              MT_Object_ptr partner);

@@ -26,7 +26,6 @@
 #                   to CPPFLAGS, PLATFORM_DMALLOC_LDFLAGS to LDFLAGS, and
 #                   PLATFORM_DMALLOC_LIBS to LIBS. For more information on
 #                   dmalloc, see http://dmalloc.com.
-#  fast             Enable -fast option, e.g., with Sun C++.
 #  inline           Enable ACE inlining.  Some platforms enable inlining by
 #                   default, others do not. If platform_macros.GNU does not
 #                   set this, inline is enabled.
@@ -224,7 +223,6 @@ endif # alternate_platform_macros
 
 # Define some variables to silence warnings
 GHS ?=
-AIX_TEMPLATE_HACK ?=
 
 # $(ACE_PLATFORM_CONFIG) is used in dependency rules and corresponds to the
 # platform dependent config-*.h file included in config.h, and can be set
@@ -843,10 +841,6 @@ ifdef quantify
   PURELINK += quantify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
               -max_threads=100 $(PLATFORM_QUANTIFY_OPTIONS)
   CPPFLAGS += -DACE_HAS_QUANTIFY -I$(ACE_QUANTIFY_DIR)
-
-  ifeq ($(shell uname -p),sparc)
-    PURELINK += -record-register-window-traps
-  endif # sparc
 endif # quantify
 
 repo ?=

@@ -18,7 +18,7 @@ CORBA::ExceptionList::ExceptionList (CORBA::ULong len,
     }
 }
 
-CORBA::ExceptionList::~ExceptionList (void)
+CORBA::ExceptionList::~ExceptionList ()
 {
   for (CORBA::ULong i = 0; i < this->count (); ++i)
     {

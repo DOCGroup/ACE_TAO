@@ -19,7 +19,6 @@ public:
                 ACE_OS::ctime(&epoch)));
     return 0;
   }
-
 };
 
 // Listing 1 code/ch07

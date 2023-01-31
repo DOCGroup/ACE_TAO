@@ -146,8 +146,8 @@
 #include <fe_utils.h>
 
 void tao_yyerror (const char *);
-int tao_yylex (void);
-extern "C" int tao_yywrap (void);
+int tao_yylex ();
+extern "C" int tao_yywrap ();
 
 extern char tao_yytext[];
 extern int tao_yyleng;
@@ -709,7 +709,6 @@ typedef enum yysymbol_kind_t yysymbol_kind_t;
 
 
 
-
 #ifdef short
 # undef short
 #endif
@@ -745,18 +744,6 @@ typedef __INT_LEAST16_TYPE__ yytype_int16;
 typedef int_least16_t yytype_int16;
 #else
 typedef short yytype_int16;
-#endif
-
-/* Work around bug in HP-UX 11.23, which defines these macros
-   incorrectly for preprocessor constants.  This workaround can likely
-   be removed in 2023, as HPE has promised support for HP-UX 11.23
-   (aka HP-UX 11i v2) only through the end of 2022; see Table 2 of
-   <https://h20195.www2.hpe.com/V2/getpdf.aspx/4AA4-7673ENW.pdf>.  */
-#ifdef __hpux
-# undef UINT_LEAST8_MAX
-# undef UINT_LEAST16_MAX
-# define UINT_LEAST8_MAX 255
-# define UINT_LEAST16_MAX 65535
 #endif
 
 #if defined __UINT_LEAST8_MAX__ && __UINT_LEAST8_MAX__ <= __INT_MAX__
@@ -2446,7 +2433,6 @@ int yydebug;
 
 
 
-
 /*-----------------------------------------------.
 | Release the memory associated to this symbol.  |
 `-----------------------------------------------*/
@@ -2476,13 +2462,12 @@ int yynerrs;
 
 
 
-
 /*----------.
 | yyparse.  |
 `----------*/
 
 int
-yyparse (void)
+yyparse ()
 {
     yy_state_fast_t yystate = 0;
     /* Number of tokens to shift before error messages enabled.  */
@@ -2512,7 +2497,6 @@ yyparse (void)
   /* The variables used to return semantic value and location from the
      action routines.  */
   YYSTYPE yyval;
-
 
 
 #define YYPOPSTACK(N)   (yyvsp -= (N), yyssp -= (N))
@@ -10123,7 +10107,6 @@ yyreduce:
   case 566: /* formal_parameter: formal_parameter_type IDENTIFIER  */
 #line 6685 "fe/idl.ypp"
         {
-
           ACE_NEW_RETURN ((yyval.pival),
                           FE_Utils::T_Param_Info,
                           1);
@@ -10906,7 +10889,7 @@ yyreturn:
  * ???
  */
 int
-tao_yywrap (void)
+tao_yywrap ()
 {
   return 1;
 }

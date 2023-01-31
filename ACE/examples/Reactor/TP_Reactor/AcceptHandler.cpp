@@ -23,8 +23,8 @@ AcceptHandler::~AcceptHandler() {
     ACE_TRACE("AcceptHandler::~AcceptHandler()");
 }
 
-int AcceptHandler::open(void) {
-    ACE_TRACE("AcceptHandler::open(void)");
+int AcceptHandler::open() {
+    ACE_TRACE("AcceptHandler::open()");
 
     // create the local address used for the service (PORT is from common.h)
     ACE_INET_Addr addr(PORT);
@@ -52,7 +52,7 @@ int AcceptHandler::open(void) {
 }
 
 ACE_HANDLE AcceptHandler::get_handle() const {
-    ACE_TRACE("AcceptHandler::get_handle(void)");
+    ACE_TRACE("AcceptHandler::get_handle()");
     return mAcceptor.get_handle();
 }
 

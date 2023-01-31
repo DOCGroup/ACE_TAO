@@ -16,7 +16,7 @@ class HTTPU_Export HTTP_Parse_URL
 
 public:
   HTTP_Parse_URL (const char *url = 0);
-  ~HTTP_Parse_URL (void);
+  ~HTTP_Parse_URL ();
 
   void init (const char *url);
 
@@ -36,13 +36,13 @@ public:
   int is_cgi () const;
 
 private:
-  void parse_url (void);
+  void parse_url ();
   void parse_scheme (char *&p);
   void parse_host (char *&p);
   void parse_url_path (char *&p);
   void is_cgi (const char *path);
 
-  void set_port_from_scheme (void);
+  void set_port_from_scheme ();
 
 private:
   char *url_;

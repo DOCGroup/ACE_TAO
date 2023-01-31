@@ -30,7 +30,6 @@
 class Activator_Export Activator_Options
 {
 public:
-
   enum SERVICE_COMMAND {
     SC_NONE,
     SC_INSTALL,
@@ -97,7 +96,6 @@ private:
   int load_registry_options ();
 
 private:
-
   /// Our extra command line arguments
   ACE_CString cmdline_;
 

@@ -32,7 +32,7 @@ class Task_Stats;
 class Periodic_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
-  Periodic_Task (void);
+  Periodic_Task ();
   ~Periodic_Task ();
 
   /// Init the state of this object.
@@ -46,7 +46,7 @@ class Periodic_Task : public ACE_Task <ACE_SYNCH>
 
   /// = Job get/set
   /// Returns the name of the Job exec'ed by this Task.
-  const char* job (void);
+  const char* job ();
 
   /// Sets the Job to exec.
   void job (Job_ptr job);

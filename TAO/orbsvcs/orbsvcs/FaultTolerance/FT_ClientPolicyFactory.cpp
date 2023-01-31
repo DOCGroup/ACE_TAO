@@ -10,7 +10,6 @@ TAO_FT_ClientPolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &val)
 {
-
   if (type ==  FT::REQUEST_DURATION_POLICY)
     return TAO_FT_Request_Duration_Policy::create (val);
   else if (type == FT::HEARTBEAT_POLICY)

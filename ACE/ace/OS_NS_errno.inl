@@ -52,29 +52,4 @@ ACE_OS::set_errno_to_wsa_last_error ()
 # endif /* defined(ACE_WIN32) */
 }
 
-#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-
-ACE_INLINE ACE_CE_Errno *
-ACE_CE_Errno::instance ()
-{
-  // This should be inlined.
-  return ACE_CE_Errno::instance_;
-}
-
-ACE_INLINE
-ACE_CE_Errno::operator int () const
-{
-  return (int) TlsGetValue (ACE_CE_Errno::errno_key_);
-}
-
-ACE_INLINE int
-ACE_CE_Errno::operator= (int x)
-{
-  // error checking?
-  TlsSetValue (ACE_CE_Errno::errno_key_, (void *) x);
-  return x;
-}
-
-#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
-
 ACE_END_VERSIONED_NAMESPACE_DECL

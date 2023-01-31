@@ -29,7 +29,7 @@ class TAO_PortableGroup_Export TAO_PG_Object_Adapter_Factory : public TAO_Object
 {
 public:
   /// Constructor
-  TAO_PG_Object_Adapter_Factory (void);
+  TAO_PG_Object_Adapter_Factory ();
 
   /// Create adapter.
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);

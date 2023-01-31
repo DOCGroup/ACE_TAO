@@ -23,7 +23,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-ECT_Supplier_Driver::ECT_Supplier_Driver (void)
+ECT_Supplier_Driver::ECT_Supplier_Driver ()
   : n_suppliers_ (1),
     burst_count_ (10),
     burst_size_ (100),
@@ -35,7 +35,7 @@ ECT_Supplier_Driver::ECT_Supplier_Driver (void)
 {
 }
 
-ECT_Supplier_Driver::~ECT_Supplier_Driver (void)
+ECT_Supplier_Driver::~ECT_Supplier_Driver ()
 {
 }
 
@@ -90,7 +90,7 @@ ECT_Supplier_Driver::run (int argc, ACE_TCHAR* argv[])
                       this->type_start_,
                       this->type_count_,
 
-                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")) );
+                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
         }
 
       if (this->pid_file_name_ != 0)
@@ -104,10 +104,9 @@ ECT_Supplier_Driver::run (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      int min_priority =
-        ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
-        // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      int min_priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 
+      // Enable FIFO scheduling
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                                   min_priority,
                                                   ACE_SCOPE_PROCESS)) != 0)
@@ -231,7 +230,7 @@ ECT_Supplier_Driver::connect_suppliers
 }
 
 void
-ECT_Supplier_Driver::activate_suppliers (void)
+ECT_Supplier_Driver::activate_suppliers ()
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -240,7 +239,7 @@ ECT_Supplier_Driver::activate_suppliers (void)
 }
 
 void
-ECT_Supplier_Driver::disconnect_suppliers (void)
+ECT_Supplier_Driver::disconnect_suppliers ()
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -252,7 +251,7 @@ ECT_Supplier_Driver::disconnect_suppliers (void)
 }
 
 void
-ECT_Supplier_Driver::dump_results (void)
+ECT_Supplier_Driver::dump_results ()
 {
   ACE_High_Res_Timer::global_scale_factor_type gsf =
     ACE_High_Res_Timer::global_scale_factor ();

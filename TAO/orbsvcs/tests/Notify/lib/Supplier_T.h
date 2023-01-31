@@ -50,13 +50,13 @@ class TAO_Notify_Tests_Supplier_T : public TAO_Notify_Tests_Peer_T <Supplier_Tra
 
 public:
   /// Constructor
-  TAO_Notify_Tests_Supplier_T (void);
+  TAO_Notify_Tests_Supplier_T ();
 
   /// Destructor
   ~TAO_Notify_Tests_Supplier_T ();
 
   /// For backward compatibility. use <get_proxy> instead.
-  Proxy_Traits_PTR get_proxy_consumer (void);
+  Proxy_Traits_PTR get_proxy_consumer ();
 
   /// Send offer change.
   void offer_change (CosNotification::EventTypeSeq &added, CosNotification::EventTypeSeq& removed);
@@ -75,13 +75,7 @@ protected:
       const CosNotification::EventTypeSeq & removed);
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Supplier_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Supplier_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_SUPPLIER_T_H */

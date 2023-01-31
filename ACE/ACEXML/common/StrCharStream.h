@@ -30,10 +30,10 @@ class ACEXML_Export ACEXML_StrCharStream : public ACEXML_CharStream
 {
 public:
   /// Default constructor.
-  ACEXML_StrCharStream (void);
+  ACEXML_StrCharStream ();
 
   /// Destructor
-  virtual ~ACEXML_StrCharStream (void);
+  virtual ~ACEXML_StrCharStream ();
 
   /// Initializing StrCharStream with @a str and @a name
   int open (const ACEXML_Char *str, const ACEXML_Char* name);
@@ -42,17 +42,17 @@ public:
    * Returns the available ACEXML_Char in the buffer.  -1
    * if the object is not initialized properly.
    */
-  virtual int available (void);
+  virtual int available ();
 
   /**
    * Close this stream and release all resources used by it.
    */
-  virtual int close (void);
+  virtual int close ();
 
   /**
    *  Determine the encoding of the file.
    */
-  virtual int determine_encoding (void);
+  virtual int determine_encoding ();
 
   /**
    * Read the next ACEXML_Char.  Return -1 if we are not able to
@@ -69,22 +69,22 @@ public:
    * Peek the next ACEXML_Char in the CharStream.  Return the
    * character if succeess, -1 if EOS is reached.
    */
-  virtual int peek (void);
+  virtual int peek ();
 
   /*
    * Get the character encoding for a byte stream or URI.
    */
-  virtual const ACEXML_Char *getEncoding (void);
+  virtual const ACEXML_Char *getEncoding ();
 
   /*
    * Get the systemId for the underlying CharStream
    */
-  virtual const ACEXML_Char* getSystemId (void);
+  virtual const ACEXML_Char* getSystemId ();
 
   /**
    *  Resets the pointer to the beginning of the stream.
    */
-  virtual void rewind (void);
+  virtual void rewind ();
 
 private:
   ACEXML_Char *start_;
@@ -92,7 +92,6 @@ private:
   ACEXML_Char *end_;
   ACEXML_Char* encoding_;
   ACEXML_Char* name_;
-
 };
 
 #include /**/ "ace/post.h"

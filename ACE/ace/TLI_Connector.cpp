@@ -23,7 +23,7 @@ ACE_TLI_Connector::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_TLI_Connector::ACE_TLI_Connector (void)
+ACE_TLI_Connector::ACE_TLI_Connector ()
 {
   ACE_TRACE ("ACE_TLI_Connector::ACE_TLI_Connector");
 }
@@ -221,7 +221,7 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
     {
       if (remote_sap != 0)
         {
-#if defined (ACE_HAS_XTI) || defined (ACE_HAS_SVR4_TLI)
+#if defined (ACE_HAS_XTI)
           struct netbuf name;
 
           name.maxlen = remote_sap->get_size ();
@@ -230,9 +230,9 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
           if (ACE_OS::t_getname (new_stream.get_handle (),
                                  &name,
                                  REMOTENAME) == -1)
-#else /* SunOS4 */
+#else /* ACE_HAS_XTI */
           if (0)
-#endif /* ACE_HAS_XTI || ACE_HAS_SVR4_TLI */
+#endif /* ACE_HAS_XTI */
             {
               new_stream.close ();
               return -1;

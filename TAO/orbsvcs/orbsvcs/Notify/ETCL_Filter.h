@@ -35,10 +35,9 @@ class TAO_Notify_ETCL_Filter;
 class TAO_Notify_Constraint_Expr : public TAO_Notify::Topology_Object
 {
 public:
-
   friend class TAO_Notify_ETCL_Filter;
 
-  TAO_Notify_Constraint_Expr (void);
+  TAO_Notify_Constraint_Expr ();
   virtual ~TAO_Notify_Constraint_Expr ();
 
   void save_persistent (
@@ -56,7 +55,7 @@ public:
 
 private:
   /// Release this object.
-  virtual void release (void);
+  virtual void release ();
 
   // = DESCRIPTION
   //   Structure for associating ConstraintInfo with an interpreter.
@@ -84,7 +83,7 @@ public:
                           const TAO_Notify_Object::ID& id);
 
   /// Destructor
-  virtual ~TAO_Notify_ETCL_Filter (void);
+  virtual ~TAO_Notify_ETCL_Filter ();
 
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
   void load_attrs(const TAO_Notify::NVPList& attrs);
@@ -92,7 +91,7 @@ public:
     CORBA::Long id, const TAO_Notify::NVPList& attrs);
 
 protected:
-  virtual char * constraint_grammar (void);
+  virtual char * constraint_grammar ();
 
   virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list);
 
@@ -101,11 +100,11 @@ protected:
 
   virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list);
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints (void);
+  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints ();
 
-  virtual void remove_all_constraints (void);
+  virtual void remove_all_constraints ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual CORBA::Boolean match (const CORBA::Any & filterable_data);
 
@@ -117,12 +116,11 @@ protected:
 
   virtual void detach_callback (CosNotifyFilter::CallbackID callback);
 
-  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (void);
+  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks ();
 
 private:
-
   /// Release this object.
-  virtual void release (void);
+  virtual void release ();
 
   void add_constraints_i (const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq);
   void add_constraint_i (const CosNotifyFilter::ConstraintInfo& constraint,
@@ -131,7 +129,7 @@ private:
   TAO_Notify_Constraint_Expr*
     add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id);
 
-  void remove_all_constraints_i (void);
+  void remove_all_constraints_i ();
 
   /// Lock to serialize access to data members.
   TAO_SYNCH_MUTEX lock_;

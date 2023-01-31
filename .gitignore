@@ -30,6 +30,7 @@ lib*.so*
 lib*.dylib
 *~
 ipch/
+*.vsidx
 
 /ACE/ace/config.h
 /ACE/bin/MakeProjectCreator/config/default.features
@@ -39,6 +40,7 @@ ipch/
 /build
 /ACE/build
 /TAO/build
+/MPC
 
 *.o
 *.res
@@ -46,3 +48,5 @@ ipch/
 *.VC.db*
 *.tds
 *.*codeanalysis*
+read.lock
+fileList.bin

@@ -187,7 +187,6 @@ be_union::destroy ()
   this->be_scope::destroy ();
   this->be_type::destroy ();
   this->AST_Union::destroy ();
-
 }
 
 // Visitor method.

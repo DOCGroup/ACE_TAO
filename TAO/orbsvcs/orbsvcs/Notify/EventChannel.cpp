@@ -627,5 +627,4 @@ TAO_Notify_EventChannel::validate ()
 }
 
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

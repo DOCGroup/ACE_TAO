@@ -25,7 +25,7 @@ public:
     const char* txt
     );
 
-  virtual ::CORBA::ValueBase *_copy_value (void);
+  virtual ::CORBA::ValueBase *_copy_value ();
 
   virtual ::Message::AddrList* getAddresses();
   virtual void addAddress(const char*);

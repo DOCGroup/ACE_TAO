@@ -21,7 +21,6 @@
  */
 class be_visitor_interface_direct_proxy_impl_ss : public be_visitor_interface
 {
-
 public:
   // -- Ctor/Dtor Decl. --
   be_visitor_interface_direct_proxy_impl_ss (be_visitor_context *ctx);

@@ -17,7 +17,7 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               ACE_THR_PRI_FIFO_DEF,
                                               ACE_SCOPE_PROCESS)) != 0)

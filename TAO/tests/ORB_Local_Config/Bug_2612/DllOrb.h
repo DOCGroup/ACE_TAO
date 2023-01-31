@@ -26,7 +26,7 @@ class DllOrb_Export DllOrb
     DllOrb (int nthreads = 1);
 
     /// Destructor.
-    ~DllOrb (void) throw ();
+    ~DllOrb () noexcept;
 
     CORBA::ORB_ptr orb () const;
 

@@ -5,7 +5,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Pipe::~ACE_Pipe (void)
+ACE_Pipe::~ACE_Pipe ()
 {
   ACE_TRACE ("ACE_Pipe::~ACE_Pipe");
   // Notice that the destructor doesn't close the handles for you.

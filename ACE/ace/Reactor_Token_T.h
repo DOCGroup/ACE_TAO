@@ -55,14 +55,14 @@ public:
   ACE_Reactor_Token_T (ACE_Reactor_Impl &r,
                        int s_queue = ACE_TOKEN_TYPE::FIFO);
   ACE_Reactor_Token_T (int s_queue = ACE_TOKEN_TYPE::FIFO);
-  virtual ~ACE_Reactor_Token_T (void);
+  virtual ~ACE_Reactor_Token_T ();
 
   /// Called just before a token waiter goes to sleep.
   /// @see ACE_Token::sleep_hook
-  virtual void sleep_hook (void);
+  virtual void sleep_hook ();
 
   /// Get the reactor implementation
-  ACE_Reactor_Impl &reactor (void);
+  ACE_Reactor_Impl &reactor ();
 
   /// Set the reactor implementation
   void reactor (ACE_Reactor_Impl &);
@@ -79,13 +79,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Reactor_Token_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Reactor_Token_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_REACTOR_TOKEN_T_H */

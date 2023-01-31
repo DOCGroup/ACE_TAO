@@ -30,7 +30,7 @@
 class HTTP_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  HTTP_Handler (void);
+  HTTP_Handler ();
   HTTP_Handler (const char * path);
 
   /// Open hook.

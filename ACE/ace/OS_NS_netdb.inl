@@ -4,7 +4,7 @@
 #include "ace/OS_NS_errno.h"
 
 #if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
-# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && !defined (HPUX_11)
+# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #   define ACE_NETDBCALL_RETURN(OP,TYPE,FAILVALUE,TARGET,SIZE) \
   do \
   { \
@@ -22,7 +22,7 @@
         return ace_result_; \
       } \
   } while(0)
-# else /* ! (ACE_MT_SAFE && ACE_MT_SAFE != 0 && !HPUX_11) */
+# else /* ! (ACE_MT_SAFE && ACE_MT_SAFE != 0) */
 #   define ACE_NETDBCALL_RETURN(OP,TYPE,FAILVALUE,TARGET,SIZE) \
   do \
   { \
@@ -53,7 +53,7 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
   if (0 == addr || '\0' == addr[0])
       return 0;
 
-#   if defined (ACE_VXWORKS)
+#   if defined (ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT)
   // VxWorks 6.x has a gethostbyaddr() that is threadsafe and
   // returns an heap-allocated hostentry structure.
   // just call ACE_OS::gethostbyaddr_r () which knows how to handle this.
@@ -104,20 +104,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   if (0 == addr || '\0' == addr[0])
       return 0;
 
-#   if defined (AIX)
-  ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
-
-  //FUZZ: disable check_for_lack_ACE_OS
-  if (::gethostbyaddr_r ((char *) addr, length, type, result,
-                         (struct hostent_data *) buffer)== 0)
-    return result;
-  //FUZZ: enable check_for_lack_ACE_OS
-  else
-    {
-      *h_errnop = h_errno;
-      return (struct hostent *) 0;
-    }
-#   elif defined (__GLIBC__)
+#   if defined (__GLIBC__)
   // GNU C library has a different signature
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
@@ -134,7 +121,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   //FUZZ: enable check_for_lack_ACE_OS
   else
     return (struct hostent *) 0;
-#   elif defined (ACE_VXWORKS)
+#   elif defined (ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT)
   ACE_UNUSED_ARG (h_errnop);
   // VxWorks 6.x has a threadsafe gethostbyaddr() which returns a heap-allocated
   // data structure which needs to be freed with hostentFree()
@@ -199,7 +186,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
                        struct hostent *, 0);
   //FUZZ: enable check_for_lack_ACE_OS
 #     endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
-#   endif /* defined (AIX) */
+#   endif /* defined (__GLIBC__) */
 # elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
@@ -238,10 +225,12 @@ ACE_OS::gethostbyname (const char *name)
   if (0 == name || '\0' == name[0])
       return 0;
 
-#   if defined (ACE_VXWORKS)
+#   if defined (ACE_VXWORKS_HAS_GETHOSTBYNAME_REENTRANT)
   // VxWorks 6.x has a gethostbyname() that is threadsafe and
   // returns an heap-allocated hostentry structure.
   // just call ACE_OS::gethostbyname_r () which knows how to handle this.
+  // With VxWorks 7 it depends on the GETHOSTBYNAME_REENTRANT
+  // define
   struct hostent hentry;
   ACE_HOSTENT_DATA buf;
   int h_error;  // Not the same as errno!
@@ -281,29 +270,7 @@ ACE_OS::gethostbyname_r (const char *name,
   if (0 == name || '\0' == name[0])
       return (struct hostent *)0;
 
-# if (defined (ACE_AIX_MINOR_VERS) && (ACE_AIX_MINOR_VERS > 2))
-  ACE_UNUSED_ARG (result);
-  ACE_UNUSED_ARG (buffer);
-  ACE_UNUSED_ARG (h_errnop);
-
-  // gethostbyname returns thread-specific storage on Digital Unix and
-  // AIX 4.3
-  //FUZZ: disable check_for_lack_ACE_OS
-  ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
-  //FUZZ: enable check_for_lack_ACE_OS
-#   elif defined (AIX)
-  ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
-
-  //FUZZ: disable check_for_lack_ACE_OS
-  if (::gethostbyname_r (name, result, (struct hostent_data *) buffer) == 0)
-    return result;
-  //FUZZ: enable check_for_lack_ACE_OS
-  else
-    {
-      *h_errnop = h_errno;
-      return (struct hostent *) 0;
-    }
-#   elif defined (__GLIBC__)
+#   if defined (__GLIBC__)
   // GNU C library has a different signature
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
@@ -318,10 +285,11 @@ ACE_OS::gethostbyname_r (const char *name,
   //FUZZ: enable check_for_lack_ACE_OS
   else
     return (struct hostent *) 0;
-#   elif defined (ACE_VXWORKS)
+#   elif defined (ACE_VXWORKS_HAS_GETHOSTBYNAME_REENTRANT)
   ACE_UNUSED_ARG (h_errnop);
   // VxWorks 6.x has a threadsafe gethostbyname() which returns a heap-allocated
   // data structure which needs to be freed with hostentFree()
+  // With VxWorks 7 it depends on the GETHOSTBYNAME_REENTRANT macro
   //FUZZ: disable check_for_lack_ACE_OS
   struct hostent* hp = ::gethostbyname (name);
   //FUZZ: enable check_for_lack_ACE_OS
@@ -363,7 +331,7 @@ ACE_OS::gethostbyname_r (const char *name,
   }
   else
   {
-    return (struct hostent *) 0;
+    return nullptr;
   }
 #   else
 #     if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
@@ -383,7 +351,7 @@ ACE_OS::gethostbyname_r (const char *name,
                        0);
   //FUZZ: enable check_for_lack_ACE_OS
 #     endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
-#   endif /* defined (AIX) */
+#   endif /* defined (__GLIBC__) */
 # elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
@@ -509,14 +477,7 @@ ACE_OS::getprotobyname_r (const char *name,
   ACE_UNUSED_ARG (buffer);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
-# if defined (AIX)
-  //FUZZ: disable check_for_lack_ACE_OS
-  if (::getprotobyname_r (name, result, (struct protoent_data *) buffer) == 0)
-    return result;
-  else
-    return 0;
-  //FUZZ: enable check_for_lack_ACE_OS
-# elif defined (__GLIBC__)
+#if defined (__GLIBC__)
   // GNU C library has a different signature
   //FUZZ: disable check_for_lack_ACE_OS
   if (::getprotobyname_r (name,
@@ -545,7 +506,7 @@ ACE_OS::getprotobyname_r (const char *name,
                        struct protoent *, 0);
     //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
-# endif /* defined (AIX) */
+# endif /* defined (__GLIBC__) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
@@ -590,14 +551,7 @@ ACE_OS::getprotobynumber_r (int proto,
   ACE_UNUSED_ARG (buffer);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
-# if defined (AIX)
-  //FUZZ: disable check_for_lack_ACE_OS
-  if (::getprotobynumber_r (proto, result, (struct protoent_data *) buffer) == 0)
-    return result;
-  //FUZZ: enable check_for_lack_ACE_OS
-  else
-    return 0;
-# elif defined (__GLIBC__)
+# if defined (__GLIBC__)
   // GNU C library has a different signature
   //FUZZ: disable check_for_lack_ACE_OS
   if (::getprotobynumber_r (proto,
@@ -623,7 +577,7 @@ ACE_OS::getprotobynumber_r (int proto,
                        struct protoent *, 0);
   //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
-# endif /* defined (AIX) */
+# endif /* defined (__GLIBC__) */
 #else
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (result);
@@ -674,16 +628,7 @@ ACE_OS::getservbyname_r (const char *svc,
   ACE_UNUSED_ARG (buf);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
-# if defined (AIX)
-  ACE_OS::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
-
-  //FUZZ: disable check_for_lack_ACE_OS
-  if (::getservbyname_r (svc, proto, result, (struct servent_data *) buf) == 0)
-    return result;
-  //FUZZ: enable check_for_lack_ACE_OS
-  else
-    return (struct servent *) 0;
-# elif defined (__GLIBC__)
+# if defined (__GLIBC__)
   // GNU C library has a different signature
   ACE_OS::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
 
@@ -713,7 +658,7 @@ ACE_OS::getservbyname_r (const char *svc,
                        struct servent *, 0);
   //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
-# endif /* defined (AIX) */
+# endif /* defined (__GLIBC__) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (result);
@@ -734,7 +679,6 @@ ACE_OS::getservbyname_r (const char *svc,
   //FUZZ: enable check_for_lack_ACE_OS
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) */
 }
-
 
 ACE_INLINE int
 ACE_OS::getaddrinfo (const char *name, const char *service,

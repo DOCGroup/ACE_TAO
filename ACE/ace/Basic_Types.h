@@ -266,12 +266,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #else /* ! BYTE_ORDER && ! __BYTE_ORDER */
   // We weren't explicitly told, so we have to figure it out . . .
   // Note that Itanium hardware (IA64) can run in either byte order. It's
-  // selected by the OS when loading; Windows runs little, HP-UX runs big.
+  // selected by the OS when loading; Windows runs little.
 #   if defined (i386) || defined (__i386__) || defined (_M_IX86) || \
      defined (vax) || defined (__LITTLE_ENDIAN__) || \
      defined (ARM) || defined (_M_IA64) || defined (_M_AMD64) || \
      defined (__amd64) || \
-     ((defined (__ia64__) || defined (__ia64)) && !defined (__hpux))
+     ((defined (__ia64__) || defined (__ia64)))
     // We know these are little endian.
 #     define ACE_LITTLE_ENDIAN 0x0123
 #     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN

@@ -408,7 +408,6 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                       ACE_TEXT ("TAO (%P|%t) - The default ")
                       ACE_TEXT ("ORB must have completed the global ")
                       ACE_TEXT ("initialization...\n")));
-
       }
     else
       {
@@ -572,7 +571,6 @@ namespace
                            bool skip_service_config_open,
                            bool ignore_default_svc_conf_file)
   {
-
     if (skip_service_config_open)
       {
         return 0;
@@ -966,7 +964,7 @@ namespace
     // NOTE: When adding new global arguments, ensure they are only
     // applied when apply_values is true, but that they are always
     // consumed, if they need to be consumed.
-#if defined (TAO_DEBUG) && !defined (ACE_HAS_WINCE)
+#if defined (TAO_DEBUG)
     // Make it a little easier to debug programs using this code.
     if (apply_values)
       {
@@ -984,7 +982,7 @@ namespace
                         TAO_debug_level));
           }
       }
-#endif  /* TAO_DEBUG && !ACE_HAS_WINCE */
+#endif  /* TAO_DEBUG */
 
     // Extract the Service Configurator ORB options from the argument
     // vector.

@@ -5,7 +5,6 @@
 #include "Options.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 typedef Acceptor_Factory<Consumer_Handler, CONSUMER_KEY> CONSUMER_FACTORY;
@@ -66,7 +65,7 @@ Consumer_Router::close (u_long)
 // Handle incoming messages in a separate thread..
 
 int
-Consumer_Router::svc (void)
+Consumer_Router::svc ()
 {
   ACE_Message_Block *mb = 0;
 
@@ -117,13 +116,10 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
   if (sa.get_local_addr (addr) == -1)
     return -1;
 
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-# define FMTSTR ACE_TEXT ("%ls\t %ls/ %ls")
-#else
-# define FMTSTR ACE_TEXT ("%s\t %s/ %s")
-#endif
-
-  ACE_OS::sprintf (buf, FMTSTR,
+  ACE_OS::sprintf (buf,
+                   ACE_TEXT ("%") ACE_TEXT_PRIs
+                   ACE_TEXT ("\t %") ACE_TEXT_PRIs
+                   ACE_TEXT ("/ %") ACE_TEXT_PRIs,
                    module_name, ACE_TEXT ("upipe"),
                    ACE_TEXT ("# consumer router\n"));
 

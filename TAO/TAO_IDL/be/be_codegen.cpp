@@ -1795,23 +1795,9 @@ TAO_CodeGen::end_server_template_header ()
 
   // Insert the code to include the template source file.
   *this->server_template_header_
-      << be_nl_2 << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)";
-  *this->server_template_header_
       << be_nl << "#include \""
       << be_global->be_get_server_template_skeleton_fname (true)
       << "\"";
-  *this->server_template_header_ << be_nl
-      << "#endif /* defined REQUIRED SOURCE */";
-
-  // Insert the code to include the template pragma.
-  *this->server_template_header_
-      << be_nl_2 << "#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)";
-  *this->server_template_header_
-      << be_nl << "#pragma implementation (\""
-      << be_global->be_get_server_template_skeleton_fname (true)
-      << "\")";
-  *this->server_template_header_ << be_nl
-      << "#endif /* defined REQUIRED PRAGMA */";
 
   // Code to put the last #endif.
   *this->server_template_header_ << "\n\n";
@@ -1916,18 +1902,9 @@ int
 TAO_CodeGen::end_ciao_svnt_template_header ()
 {
   *this->ciao_svnt_template_header_ << be_nl_2
-                                    << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)"
-                                    << be_nl << "#include \""
+                                    << "#include \""
                                     << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
-                                    << "\"" << be_nl
-                                    << "#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */"
-                                    << be_nl_2
-                                    << "#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)"
-                                    << be_nl << "#pragma implementation (\""
-                                    << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
-                                    << "\")"
-                                    << be_nl << "#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */"
-                                    << be_nl;
+                                    << "\"" << be_nl;
 
   if (be_global->post_include () != nullptr)
     {
@@ -2336,7 +2313,6 @@ TAO_CodeGen::gen_stub_hdr_includes ()
                                && !be_global->gen_anyop_files (),
                                "tao/AnyTypeCode/Any.h",
                                this->client_header_);
-
 
 
   if (idl_global->abstract_iface_seen_ || idl_global->abstractbase_seen_)
@@ -2769,7 +2745,6 @@ TAO_CodeGen::gen_stub_src_includes ()
 
   if (be_global->gen_amh_classes ())
     {
-      // Necessary for the AIX compiler.
       this->gen_standard_include (this->client_stubs_,
                                   "ace/Auto_Ptr.h");
     }
@@ -3725,7 +3700,7 @@ TAO_CodeGen::make_rand_extension (char * const t)
   size_t const NUM_CHARS = ACE_OS::strlen (t);
 
   /// Use ACE_Time_Value::msec(ACE_UINT64&) as opposed to
-  /// ACE_Time_Value::msec(void) to avoid truncation.
+  /// ACE_Time_Value::msec() to avoid truncation.
   ACE_UINT64 msec;
 
   /// Use a const ACE_Time_Value to resolve ambiguity between

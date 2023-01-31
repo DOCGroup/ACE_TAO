@@ -43,13 +43,13 @@ class ACE_Caching_Strategy
 {
 public:
   /// Destructor.
-  virtual ~ACE_Caching_Strategy (void);
+  virtual ~ACE_Caching_Strategy ();
 
   /// Accessor method for the timer attributes.
-  virtual ATTRIBUTES attributes (void) = 0;
+  virtual ATTRIBUTES attributes () = 0;
 
   /// Get the percentage of entries to purge.
-  virtual double purge_percent (void) = 0;
+  virtual double purge_percent () = 0;
 
   /// Set the percentage of entries to purge.
   virtual void purge_percent (double percentage) = 0;
@@ -82,7 +82,7 @@ public:
                              const ATTRIBUTES &attr) = 0;
 
   /// Purge the cache.
-  virtual CACHING_UTILITY &caching_utility (void) = 0;
+  virtual CACHING_UTILITY &caching_utility () = 0;
 
   /// Dumps the state of the object.
   virtual void dump () const = 0;
@@ -113,13 +113,13 @@ public:
                                 bool delete_implementation = false);
 
   /// Destructor.
-  ~ACE_Caching_Strategy_Adapter (void);
+  ~ACE_Caching_Strategy_Adapter ();
 
   /// Accessor method for the timer attributes.
-  ATTRIBUTES attributes (void);
+  ATTRIBUTES attributes ();
 
   /// Get the percentage of entries to purge.
-  double purge_percent (void);
+  double purge_percent ();
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
@@ -152,10 +152,10 @@ public:
                      const ATTRIBUTES &attr);
 
   /// Accessor to the implementation.
-  IMPLEMENTATION &implementation (void);
+  IMPLEMENTATION &implementation ();
 
   /// Purge the cache.
-  CACHING_UTILITY &caching_utility (void);
+  CACHING_UTILITY &caching_utility ();
 
   /// Dumps the state of the object.
   void dump () const;
@@ -209,15 +209,15 @@ public:
    * in the cache which can be purged automagically and by default is
    * set to 10%.
    */
-  ACE_LRU_Caching_Strategy (void);
+  ACE_LRU_Caching_Strategy ();
 
   // = Operations of the strategy.
 
   /// Accessor method for the timer attributes.
-  ATTRIBUTES attributes (void);
+  ATTRIBUTES attributes ();
 
   /// Get the percentage of entries to purge.
-  double purge_percent (void);
+  double purge_percent ();
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
@@ -251,7 +251,7 @@ public:
                      const ATTRIBUTES &attr);
 
   /// Purge the cache.
-  CACHING_UTILITY &caching_utility (void);
+  CACHING_UTILITY &caching_utility ();
 
   /// Dumps the state of the object.
   void dump () const;
@@ -310,15 +310,15 @@ public:
    * in the cache which can be purged automagically and by default is
    * set to 10%.
    */
-  ACE_LFU_Caching_Strategy (void);
+  ACE_LFU_Caching_Strategy ();
 
   // = Strategy methods.
 
   /// Access the attributes.
-  ATTRIBUTES attributes (void);
+  ATTRIBUTES attributes ();
 
   /// Get the percentage of entries to purge.
-  double purge_percent (void);
+  double purge_percent ();
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
@@ -350,7 +350,7 @@ public:
                      const ATTRIBUTES &attr);
 
   /// Purge the cache.
-  CACHING_UTILITY &caching_utility (void);
+  CACHING_UTILITY &caching_utility ();
 
   /// Dumps the state of the object.
   void dump () const;
@@ -402,15 +402,15 @@ public:
    * in the cache which can be purged automagically and by default is
    * set to 10%.
    */
-  ACE_FIFO_Caching_Strategy (void);
+  ACE_FIFO_Caching_Strategy ();
 
   // = Strategy methods.
 
   /// Accessor method.
-  ATTRIBUTES attributes (void);
+  ATTRIBUTES attributes ();
 
   /// Get the percentage of entries to purge.
-  double purge_percent (void);
+  double purge_percent ();
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
@@ -441,7 +441,7 @@ public:
                      const ATTRIBUTES &attr);
 
   /// Purge the cache.
-  CACHING_UTILITY &caching_utility (void);
+  CACHING_UTILITY &caching_utility ();
 
   /// Dumps the state of the object.
   void dump () const;
@@ -484,10 +484,10 @@ public:
   // = Strategy methods. All are NO_OP methods!!!
 
   /// Accessor method.
-  ATTRIBUTES attributes (void);
+  ATTRIBUTES attributes ();
 
   /// Get the percentage of entries to purge.
-  double purge_percent (void);
+  double purge_percent ();
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
@@ -518,7 +518,7 @@ public:
                      const ATTRIBUTES &attr);
 
   /// Purge the cache.
-  CACHING_UTILITY &caching_utility (void);
+  CACHING_UTILITY &caching_utility ();
 
   /// Dumps the state of the object.
   void dump () const;
@@ -538,13 +538,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Caching_Strategies_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Caching_Strategies_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Caching_Strategies_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

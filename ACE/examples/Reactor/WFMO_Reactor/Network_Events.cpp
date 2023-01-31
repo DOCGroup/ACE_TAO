@@ -31,7 +31,6 @@
 #include "ace/OS_main.h"
 
 
-
 class Network_Handler : public ACE_Event_Handler
 {
 public:
@@ -44,7 +43,6 @@ public:
   virtual ACE_HANDLE  get_handle () const;
 
   ACE_SOCK_Stream stream_;
-
 };
 
 Network_Handler::Network_Handler (ACE_SOCK_Stream &s)
@@ -112,8 +110,8 @@ class Network_Listener : public ACE_Event_Handler
 public:
   /// Default constructor
   /// Default constructor
-  Network_Listener (void);
-  ~Network_Listener (void);
+  Network_Listener ();
+  ~Network_Listener ();
 
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE handle,
@@ -124,7 +122,7 @@ public:
   ACE_SOCK_Acceptor acceptor_;
 };
 
-Network_Listener::Network_Listener (void)
+Network_Listener::Network_Listener ()
   : local_address_ (ACE_DEFAULT_SERVER_PORT),
     acceptor_ (local_address_, 1)
 {
@@ -134,7 +132,7 @@ Network_Listener::Network_Listener (void)
   ACE_TEST_ASSERT (result == 0);
 }
 
-Network_Listener::~Network_Listener (void)
+Network_Listener::~Network_Listener ()
 {
 }
 

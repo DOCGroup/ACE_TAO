@@ -1,10 +1,6 @@
 #ifndef TAO_VAR_SIZE_SARGUMENT_T_CPP
 #define TAO_VAR_SIZE_SARGUMENT_T_CPP
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#include "tao/PortableServer/Var_Size_SArgument_T.h"
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)

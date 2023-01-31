@@ -6,7 +6,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   XtResource_Factory::XtResource_Factory (XtAppContext p_context):
     reactor_impl_(nullptr),
     context_(p_context)
@@ -14,7 +13,7 @@ namespace TAO
   }
 
   ACE_Reactor_Impl *
-  XtResource_Factory::reactor_impl (void)
+  XtResource_Factory::reactor_impl ()
   {
     // synchronized by external locks
     if (!this->context_)

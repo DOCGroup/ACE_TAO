@@ -21,7 +21,7 @@ TAO_AV_UDP_Flow_Handler::open (ACE_Addr &address)
 
 ACE_INLINE
 int
-TAO_AV_UDP_Flow_Handler::close (void)
+TAO_AV_UDP_Flow_Handler::close ()
 {
   return  this->sock_dgram_.close ();
 }

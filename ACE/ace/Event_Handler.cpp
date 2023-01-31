@@ -362,7 +362,6 @@ bool
 ACE_Event_Handler_var::operator !=(std::nullptr_t) const
 {
   return this->ptr_ != nullptr;
-
 }
 
 // ---------------------------------------------------------------------

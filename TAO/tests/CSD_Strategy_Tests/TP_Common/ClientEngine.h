@@ -25,7 +25,7 @@ public:
   ClientEngine();
   virtual ~ClientEngine();
 
-  virtual bool execute(void) = 0;
+  virtual bool execute() = 0;
 };
 
 #endif

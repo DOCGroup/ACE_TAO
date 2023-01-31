@@ -5,9 +5,8 @@
 #include "Mem_Map_Stream.h"
 
 
-
 ACE_SOCK_Stream &
-Mem_Map_Stream::stream (void)
+Mem_Map_Stream::stream ()
 {
   return svc_handler_->peer ();
 }
@@ -25,7 +24,7 @@ Mem_Map_Stream::eof () const
 }
 
 int
-Mem_Map_Stream::get_char (void)
+Mem_Map_Stream::get_char ()
 {
   if (this->eof () && this->grow_file_and_remap () == -1)
     return EOF;
@@ -34,7 +33,7 @@ Mem_Map_Stream::get_char (void)
 }
 
 int
-Mem_Map_Stream::rewind (void)
+Mem_Map_Stream::rewind ()
 {
   this->recv_pos_ =
     reinterpret_cast<char *> (this->mem_map_.addr ());
@@ -127,7 +126,7 @@ Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
 }
 
 Mem_Map_Stream::Svc_Handler *
-Mem_Map_Stream::svc_handler (void)
+Mem_Map_Stream::svc_handler ()
 {
   return this->svc_handler_;
 }
@@ -145,7 +144,6 @@ Mem_Map_Stream::open (STRAT_CONNECTOR *connector,
   if (connector->connect (svc_handler_,
                           addr) == -1)
     {
-
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p %s %d\n",
                          "Connect failed",
@@ -181,7 +179,7 @@ Mem_Map_Stream::open (STRAT_CONNECTOR *connector,
 }
 
 int
-Mem_Map_Stream::grow_file_and_remap (void)
+Mem_Map_Stream::grow_file_and_remap ()
 {
   char buf[BUFSIZ + 1];
 
@@ -232,7 +230,7 @@ Mem_Map_Stream::grow_file_and_remap (void)
   return 0;
 }
 
-Mem_Map_Stream::~Mem_Map_Stream (void)
+Mem_Map_Stream::~Mem_Map_Stream ()
 {
   // Remove the mapping and the file.
   this->mem_map_.remove ();

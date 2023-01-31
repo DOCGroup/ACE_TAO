@@ -348,7 +348,7 @@ protected:
 
   /// Return the handle set representing the non-blocking connects in
   /// progress.
-  ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles (void);
+  ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles ();
 
   // = Dynamic linking hooks.
   /// Default version does no work and returns -1.  Must be overloaded
@@ -463,10 +463,10 @@ public:
                     int flags = 0);
 
   /// Shutdown a connector and release resources.
-  virtual ~ACE_Strategy_Connector (void);
+  virtual ~ACE_Strategy_Connector ();
 
   /// Close down the Connector
-  virtual int close (void);
+  virtual int close ();
 
   // = Strategies accessors
   virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy () const;
@@ -564,13 +564,7 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Connector.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Connector.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

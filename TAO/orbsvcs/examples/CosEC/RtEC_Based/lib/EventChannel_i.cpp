@@ -1,7 +1,7 @@
 #include "EventChannel_i.h"
 #include <memory>
 
-TAO_CosEC_EventChannel_i::TAO_CosEC_EventChannel_i (void)
+TAO_CosEC_EventChannel_i::TAO_CosEC_EventChannel_i ()
   : consumer_admin_ (0),
     supplier_admin_ (0),
     consumeradmin_ (CosEventChannelAdmin::ConsumerAdmin::_nil ()),
@@ -78,7 +78,7 @@ TAO_CosEC_EventChannel_i::for_suppliers ()
 }
 
 void
-TAO_CosEC_EventChannel_i::destroy (void)
+TAO_CosEC_EventChannel_i::destroy ()
 {
   // Deactivate the CosEventChannel
   PortableServer::POA_var poa =
@@ -93,7 +93,7 @@ TAO_CosEC_EventChannel_i::destroy (void)
 }
 
 void
-TAO_CosEC_EventChannel_i::shutdown (void)
+TAO_CosEC_EventChannel_i::shutdown ()
 {
   this->destroy ();
 }

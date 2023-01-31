@@ -69,21 +69,20 @@ namespace TAO
     class OpenSSL_st_var
     {
     public:
-
       /**
        * @name Constructors
        *
        * Constructors.
        */
       //@{
-      OpenSSL_st_var (void);
+      OpenSSL_st_var ();
       OpenSSL_st_var (T * st);
       OpenSSL_st_var (OpenSSL_st_var<T> const & v);
       OpenSSL_st_var (T const & st);
       //@}
 
       /// Destructor
-      ~OpenSSL_st_var (void);
+      ~OpenSSL_st_var ();
 
       /**
        * @name Assignment operators.
@@ -97,22 +96,20 @@ namespace TAO
       //@}
 
       T const * operator-> () const;
-      T* operator-> (void);
+      T* operator-> ();
 
       operator const T& () const;
       operator T& ();
 
       T*  in () const;
-      T*& inout (void);
-      T*& out (void);
-      T*  _retn (void);
+      T*& inout ();
+      T*& out ();
+      T*  _retn ();
       T*  ptr () const;
 
     private:
-
       /// The OpenSSL structure whose reference count is managed.
       T * st_;
-
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
@@ -124,13 +121,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.inl"
 #endif  /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 # include "orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-# pragma implementation ("SSLIOP_OpenSSL_st_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

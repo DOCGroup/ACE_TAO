@@ -14,7 +14,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-
 enum ClientSyncModeEnum {
    MODE_NONE,
    MODE_TRANSPORT,
@@ -29,7 +28,7 @@ enum ClientSyncModeEnum {
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   const ACE_TCHAR *input_;

@@ -154,7 +154,7 @@ public:
                        void *args);
 
   /// Synchronize with the final close of the stream.
-  virtual int wait (void);
+  virtual int wait ();
 
   /// Dump the state of an object.
   virtual void dump () const;
@@ -190,7 +190,7 @@ protected:
 private:
   /// Actually perform the unlinking of two Streams (must be called
   /// with locks held).
-  int unlink_i (void);
+  int unlink_i ();
 
   /// Actually perform the linking of two Streams (must be called with
   /// locks held).
@@ -224,7 +224,7 @@ public:
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
-  int advance (void);
+  int advance ();
 
 private:
   /// Next ACE_Module that we haven't yet seen.
@@ -237,13 +237,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Stream.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Stream.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Stream.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

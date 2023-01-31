@@ -47,9 +47,8 @@ class Scheduler : public ACE_Task_Base
   friend class Method_Request_name;
   friend class Method_Request_end;
 public:
-
   Scheduler (const char *, Scheduler * = 0);
-  virtual ~Scheduler (void);
+  virtual ~Scheduler ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// The method that is used to start the active object.
@@ -59,8 +58,8 @@ public:
   // = Here are the methods exported by the class. They return an
   // <ACE_Future>.
   ACE_Future<u_long> work (u_long param, int count = 1);
-  ACE_Future<char*> name (void);
-  void end (void);
+  ACE_Future<char*> name ();
+  void end ();
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
@@ -73,7 +72,7 @@ private:
 
   // = Implementation methods.
   u_long work_i (u_long, int);
-  char *name_i (void);
+  char *name_i ();
 
   char *name_;
   ACE_Activation_Queue activation_queue_;
@@ -89,8 +88,8 @@ class Method_Request_work : public ACE_Method_Request
 {
 public:
   Method_Request_work (Scheduler *, u_long, int, ACE_Future<u_long> &);
-  virtual ~Method_Request_work (void);
-  virtual int call (void);
+  virtual ~Method_Request_work ();
+  virtual int call ();
 
 private:
   Scheduler *scheduler_;
@@ -110,12 +109,12 @@ Method_Request_work::Method_Request_work (Scheduler* new_Scheduler,
 {
 }
 
-Method_Request_work::~Method_Request_work (void)
+Method_Request_work::~Method_Request_work ()
 {
 }
 
 int
-Method_Request_work::call (void)
+Method_Request_work::call ()
 {
   return this->future_result_.set (this->scheduler_->work_i (this->param_, this->count_));
 }
@@ -129,8 +128,8 @@ class Method_Request_name : public ACE_Method_Request
 {
 public:
   Method_Request_name (Scheduler *, ACE_Future<char*> &);
-  virtual ~Method_Request_name (void);
-  virtual int call (void);
+  virtual ~Method_Request_name ();
+  virtual int call ();
 
 private:
   Scheduler *scheduler_;
@@ -147,14 +146,14 @@ Method_Request_name::Method_Request_name (Scheduler *new_scheduler,
               " (%t) Method_Request_name created\n"));
 }
 
-Method_Request_name::~Method_Request_name (void)
+Method_Request_name::~Method_Request_name ()
 {
   ACE_DEBUG ((LM_DEBUG,
               " (%t) Method_Request_name will be deleted.\n"));
 }
 
 int
-Method_Request_name::call (void)
+Method_Request_name::call ()
 {
   return future_result_.set (scheduler_->name_i ());
 }
@@ -168,8 +167,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Scheduler *new_Scheduler): scheduler_ (new_Scheduler) {}
-  virtual ~Method_Request_end (void) {}
-  virtual int call (void) { return -1; }
+  virtual ~Method_Request_end () {}
+  virtual int call () { return -1; }
 
 private:
   /// Keep track of our scheduler.
@@ -186,7 +185,7 @@ Scheduler::Scheduler (const char *newname, Scheduler *new_Scheduler)
 }
 
 // Destructor
-Scheduler::~Scheduler (void)
+Scheduler::~Scheduler ()
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s will be destroyed\n", this->name_));
 }
@@ -208,7 +207,7 @@ Scheduler::close (u_long)
 }
 
 int
-Scheduler::svc (void)
+Scheduler::svc ()
 {
   // Main event loop for this active object.
   for (;;)
@@ -229,7 +228,7 @@ Scheduler::svc (void)
 }
 
 void
-Scheduler::end (void)
+Scheduler::end ()
 {
   this->activation_queue_.enqueue (new Method_Request_end (this));
 }
@@ -245,7 +244,7 @@ Scheduler::work_i (u_long param,
 }
 
 char *
-Scheduler::name_i (void)
+Scheduler::name_i ()
 {
   char *the_name;
 
@@ -256,7 +255,7 @@ Scheduler::name_i (void)
 }
 
 ACE_Future<char *>
-Scheduler::name (void)
+Scheduler::name ()
 {
   if (this->scheduler_)
     // Delegate to the other scheduler
@@ -308,7 +307,7 @@ Scheduler::work (u_long newparam, int newcount)
 }
 
 static int
-determine_iterations (void)
+determine_iterations ()
 {
   int n_iterations;
 

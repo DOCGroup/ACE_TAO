@@ -26,7 +26,6 @@
  */
 class be_visitor_union_cdr_op_ch : public be_visitor_union
 {
-
 public:
   /// constructor
   be_visitor_union_cdr_op_ch (be_visitor_context *ctx);
@@ -36,7 +35,6 @@ public:
 
   /// visit union
   virtual int visit_union (be_union *node);
-
 };
 
 #endif /* _BE_VISITOR_UNION_CDR_OP_CH_H_ */

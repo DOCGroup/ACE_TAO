@@ -5,7 +5,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 {
 }
 
-void Messenger_i::send (void)
+void Messenger_i::send ()
 {
   this->orb_->shutdown (false);
 }

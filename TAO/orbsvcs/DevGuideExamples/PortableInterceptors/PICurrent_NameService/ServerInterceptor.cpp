@@ -9,7 +9,7 @@ static const char* allowed_users[num_allowed_users+1] =
   {"Ron Klein", "Scott Case", "Mark Hodge", "Greg Black", 0};
 const char* restricted_interfaces[1] = {"IDL:Messenger:1.0"};
 
-ServerInterceptor::ServerInterceptor (void)
+ServerInterceptor::ServerInterceptor ()
   : myname_ ("Server_Authentication_Interceptor")
 {
   std::cout << "Calling ServerInterceptor constructor." << std::endl;

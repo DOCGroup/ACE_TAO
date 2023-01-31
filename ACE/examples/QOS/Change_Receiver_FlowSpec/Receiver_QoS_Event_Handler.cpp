@@ -15,7 +15,7 @@
 #include "Fill_ACE_QoS.h"
 
 // Constructor.
-Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler (void)
+Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler ()
 {
 }
 
@@ -28,7 +28,7 @@ Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler (const ACE_SOCK_Dgram_Mca
 }
 
 // Destructor.
-Receiver_QoS_Event_Handler::~Receiver_QoS_Event_Handler (void)
+Receiver_QoS_Event_Handler::~Receiver_QoS_Event_Handler ()
 {
 }
 

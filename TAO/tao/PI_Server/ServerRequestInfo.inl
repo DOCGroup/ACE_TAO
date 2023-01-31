@@ -44,7 +44,7 @@ TAO::ServerRequestInfo::forward_reference (CORBA::Object_ptr obj)
 }
 
 ACE_INLINE TAO_ServerRequest &
-TAO::ServerRequestInfo::server_request (void)
+TAO::ServerRequestInfo::server_request ()
 {
   return this->server_request_;
 }

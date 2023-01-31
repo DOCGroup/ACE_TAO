@@ -169,13 +169,13 @@ ACE_Reactor::name ()
 int
 ACE_Reactor::check_reconfiguration (ACE_Reactor *)
 {
-#if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_SVCCONF)
+#if !defined (ACE_LACKS_ACE_SVCCONF)
   if (ACE_Service_Config::reconfig_occurred ())
     {
       ACE_Service_Config::reconfigure ();
       return 1;
     }
-#endif /* ! ACE_HAS_WINCE || ! ACE_LACKS_ACE_SVCCONF */
+#endif /* !ACE_LACKS_ACE_SVCCONF */
   return 0;
 }
 

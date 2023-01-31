@@ -397,7 +397,6 @@
  * @name Default values to control CDR classes memory allocation strategies
  */
 //@{
-
 /// Control the initial size of all CDR buffers, application
 /// developers may want to optimize this value to fit their request
 /// size

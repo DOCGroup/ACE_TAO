@@ -55,15 +55,14 @@ public:
     TAO_Notify_Consumer* old_consumer);
 
 protected:
-
-  virtual CORBA::Object_ptr get_consumer (void);
+  virtual CORBA::Object_ptr get_consumer ();
 
   /// The Consumer
   CosEventComm::PushConsumer_var push_consumer_;
 
 private:
   /// TAO_Notify_Destroy_Callback methods.
-  virtual void release (void);
+  virtual void release ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

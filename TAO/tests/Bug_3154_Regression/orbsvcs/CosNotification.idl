@@ -311,8 +311,8 @@ module CosNotification
      *   implemented or is invalid.  The exception contents describe
      *   the problem(s) in detail.
      */
-    void set_qos ( in QoSProperties qos)
-      raises ( UnsupportedQoS );
+    void set_qos (in QoSProperties qos)
+      raises (UnsupportedQoS);
 
     /// Validate a set of QoS properties
     /**
@@ -327,7 +327,7 @@ module CosNotification
      */
     void validate_qos (in QoSProperties required_qos,
                        out NamedPropertyRangeSeq available_qos )
-      raises ( UnsupportedQoS );
+      raises (UnsupportedQoS);
   };
 
   //@{
@@ -380,7 +380,7 @@ module CosNotification
      *   cannot be implemented or are invalid
      */
     void set_admin (in AdminProperties admin)
-      raises ( UnsupportedAdmin);
+      raises (UnsupportedAdmin);
   };
 
 };

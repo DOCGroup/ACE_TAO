@@ -13,10 +13,8 @@ Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
                                            const char *,
                                            void * & cookie)
 {
-
   // Check to see if the object ID is valid
   try {
-
     // Get the ObjectID in string format
     CORBA::String_var oid_str =
       PortableServer::ObjectId_to_string (oid);
@@ -46,7 +44,6 @@ Quoter_Stock_Factory_Locator_i::postinvoke (const PortableServer::ObjectId &,
                                             void * cookie,
                                             PortableServer::Servant servant)
 {
-
   // Delete the servant as it is no longer needed.
   PortableServer::Servant my_servant = (PortableServer::Servant) cookie;
   if (servant == my_servant)

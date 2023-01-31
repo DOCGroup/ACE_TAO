@@ -46,7 +46,7 @@ class TAO_Strategies_Export TAO_COIOP_Connector : public TAO_Connector
 {
 public:
   /// Constructor.
-  TAO_COIOP_Connector (void);
+  TAO_COIOP_Connector ();
 
   /// Destructor.
   ~TAO_COIOP_Connector () = default;
@@ -58,7 +58,7 @@ public:
    */
   //@{
   int open (TAO_ORB_Core *orb_core);
-  int close (void);
+  int close ();
 
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
@@ -68,7 +68,6 @@ public:
   //@}
 
 protected:
-
   /**
    * @name More TAO_Connector Methods
    *
@@ -81,14 +80,13 @@ protected:
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout = 0);
 
-  virtual TAO_Profile * make_profile (void);
+  virtual TAO_Profile * make_profile ();
   //@}
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
 private:
-
   /// Return the remote endpoint, a helper function
   TAO_COIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 };

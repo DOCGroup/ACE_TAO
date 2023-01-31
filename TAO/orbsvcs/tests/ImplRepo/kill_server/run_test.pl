@@ -323,7 +323,7 @@ sub make_server_requests()
 
     ##### Run client against servers to active them #####
     for(my $i = 0; $i < $servers_count; $i++ ) {
-	$CLI->Arguments ("-ORBInitRef Test=corbaloc::localhost:$port/$objprefix" . '_' . $i . "_a" . $debug );
+	$CLI->Arguments ("-ORBInitRef Test=corbaloc::localhost:$port/$objprefix" . '_' . $i . "_a" . $debug);
 	$CLI_status = $CLI->SpawnWaitKill ($cli->ProcessStartWaitInterval());
 	if ($CLI_status != 0) {
 	    print STDERR "ERROR: client returned $CLI_status\n";
@@ -368,7 +368,7 @@ sub shutdown_servers(@)
 	my $status_file_name = $objprefix . "_$i.status";
         # Shutting down any server object within the server will shutdown the whole server
         $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                        "kill $objprefix" . '_' . $i . "_a -s $signum" );
+                        "kill $objprefix" . '_' . $i . "_a -s $signum");
         $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
         if ($TI_status != 0 && $TI_status != 5) {
             print STDERR "ERROR: tao_imr kill returned $TI_status\n";

@@ -110,5 +110,4 @@ TAO_Notify_ProxyPushSupplier::configure(
 }
 
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

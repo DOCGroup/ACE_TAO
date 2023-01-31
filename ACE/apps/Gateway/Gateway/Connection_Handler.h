@@ -40,7 +40,7 @@ class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
 public:
   /// Default constructor (needed to make <ACE_Connector> happy).
-  Connection_Handler (void);
+  Connection_Handler ();
 
   /// Real constructor.
   Connection_Handler (const Connection_Config_Info &);
@@ -77,7 +77,7 @@ public:
 
   // = Set/get the current retry timeout delay.
   void timeout (long);
-  long timeout (void);
+  long timeout ();
 
   // = Set/get the maximum retry timeout delay.
   void max_timeout (long);

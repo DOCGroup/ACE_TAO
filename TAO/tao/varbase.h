@@ -34,10 +34,8 @@ public:
   TAO_Base_var () {}
 
 private:
-
   TAO_Base_var (const TAO_Base_var &);
   TAO_Base_var & operator= (const TAO_Base_var &);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

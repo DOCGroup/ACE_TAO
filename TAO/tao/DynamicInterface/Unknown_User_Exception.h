@@ -45,7 +45,7 @@ namespace CORBA
   {
   public:
     /// Constructor.
-    UnknownUserException (void);
+    UnknownUserException ();
 
     /// Constructor.
     UnknownUserException (CORBA::Any& exception);
@@ -54,10 +54,10 @@ namespace CORBA
     UnknownUserException (const UnknownUserException& e);
 
     /// Destructor.
-    virtual ~UnknownUserException (void);
+    virtual ~UnknownUserException ();
 
     /// Return the any containing the user exception.
-    CORBA::Any& exception (void);
+    CORBA::Any& exception ();
 
     /// To throw an UnknownUserException of this type.
     virtual void _raise () const;

@@ -95,7 +95,6 @@ public:
   virtual const ACEXML_Char* getSystemId ();
 
 private:
-
   /** Read the next character as a normal character. Return -1 if EOF is
    *  reached, else return 0.
    */
@@ -113,7 +112,7 @@ private:
    *  encoding of the file. Subsequent call to get() returns this
    *  character.
    */
-  int peek_i (void);
+  int peek_i ();
 
 #endif /* ACE_USES_WCHAR */
 

@@ -12,7 +12,6 @@ class AST_ValueType;
 class TAO_IDL_FE_Export FE_OBVHeader : public FE_InterfaceHeader
 {
 public:
-
   FE_OBVHeader (UTL_ScopedName *n,
                 UTL_NameList *inherits,
                 UTL_NameList *supports,

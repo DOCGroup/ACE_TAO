@@ -21,7 +21,7 @@
 class ACE_Svc_Export Handle_L_CODgram : public ACE_Service_Object, public ACE_LSOCK_CODgram
 {
 public:
-  Handle_L_CODgram (void);
+  Handle_L_CODgram ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **, size_t) const;
   virtual int fini ();

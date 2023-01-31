@@ -66,7 +66,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_list (void);
+  int group_list ();
 
   /**
    *  The naming service shall provide a command line utility to modify the load

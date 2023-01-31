@@ -35,7 +35,6 @@ class ACE_Time_Value;
 
 namespace ACE_OS
 {
-
   /// Compares two strings (case insensitive const char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   int strcasecmp (const char *s, const char *t);

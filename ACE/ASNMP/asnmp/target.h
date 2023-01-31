@@ -73,7 +73,6 @@ enum ASNMP_Defs {
 class ASNMP_Export SnmpTarget
 {
 public:
-
   /// allow destruction of derived classes
   virtual ~SnmpTarget();
 

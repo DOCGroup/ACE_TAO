@@ -144,7 +144,6 @@ TAO_Persistent_Context_Index::init (size_t context_size)
     // CASE 1:there are no Naming Contexts registered.  We need to create
     // one.
     {
-
       this->root_context_ =
         TAO_Persistent_Naming_Context::make_new_context (poa_.in (),
                                                          TAO_ROOT_NAMING_CONTEXT,
@@ -222,7 +221,6 @@ TAO_Persistent_Context_Index::recreate_all ()
       // If this is the root Naming Context, take a note of it.
       if (context_impl->root ())
           this->root_context_= result._retn ();
-
     } while (index_iter->advance ());
 
   return 0;

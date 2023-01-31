@@ -46,7 +46,7 @@ public:
   virtual void load_policy_validators (TAO_Policy_Validator &validator) = 0;
 
   /// The virtual destructor
-  virtual ~TAO_ZIOP_Adapter (void);
+  virtual ~TAO_ZIOP_Adapter ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

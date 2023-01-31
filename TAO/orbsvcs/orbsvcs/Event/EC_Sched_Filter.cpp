@@ -3,7 +3,6 @@
 #include "orbsvcs/Log_Macros.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Sched_Filter::
@@ -208,7 +207,6 @@ TAO_EC_Sched_Filter::init_rt_info ()
       ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
                   info->entry_point.in (),
                   this->name_.c_str ()));
-
     }
 #endif /* 0 */
 

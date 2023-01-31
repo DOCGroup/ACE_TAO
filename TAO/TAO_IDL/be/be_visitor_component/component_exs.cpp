@@ -29,7 +29,6 @@ be_visitor_component_exs::~be_visitor_component_exs ()
 int
 be_visitor_component_exs::visit_component (be_component *node)
 {
-
   if (node->imported ())
     {
       return 0;

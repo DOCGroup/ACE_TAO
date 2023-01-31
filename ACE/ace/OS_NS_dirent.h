@@ -41,12 +41,7 @@ extern "C" {
 #elif defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
   typedef int (*ACE_SCANDIR_OS_COMPARATOR)(const void *f1, const void *f2);
 #endif /* ACE_SCANDIR_CMP_USES_VOIDPTR */
-  typedef int (*ACE_SCANDIR_COMPARATOR)(const ACE_DIRENT **f1,
-                                        const ACE_DIRENT **f2);
-
-#if defined (ACE_SCANDIR_SEL_LACKS_CONST)
-  typedef int (*ACE_SCANDIR_OS_SELECTOR)(ACE_DIRENT *filename);
-#endif /* ACE_SCANDIR_SEL_LACKS_CONST */
+  typedef int (*ACE_SCANDIR_COMPARATOR)(const ACE_DIRENT **f1, const ACE_DIRENT **f2);
   typedef int (*ACE_SCANDIR_SELECTOR)(const ACE_DIRENT *filename);
 }
 
@@ -56,7 +51,6 @@ extern "C" {
  * be usable later as there is no way to save the macro definition
  * using the pre-processor.
  */
-
 #if !defined (ACE_LACKS_REWINDDIR)
 #  if !defined (ACE_HAS_WREWINDDIR) || !defined (ACE_USES_WCHAR)
 inline void ace_rewinddir_helper (ACE_DIR *dir)
@@ -74,7 +68,6 @@ inline void ace_rewinddir_helper (ACE_DIR *dir)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-
   ACE_NAMESPACE_INLINE_FUNCTION
   void closedir (ACE_DIR *);
 

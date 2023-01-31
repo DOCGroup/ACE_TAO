@@ -602,7 +602,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
           // Generate a loop for each dimension.
-          *os << be_nl << "for ( ::CORBA::ULong i" << i
+          *os << be_nl << "for (::CORBA::ULong i" << i
               << " = 0; i" << i << " < "
               << expr->ev ()->u.ulval << " && _tao_marshal_flag; ++i" << i
               << ")" << be_idt_nl

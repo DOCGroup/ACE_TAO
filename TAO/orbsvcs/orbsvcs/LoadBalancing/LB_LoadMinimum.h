@@ -85,7 +85,7 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  virtual char * name (void);
+  virtual char * name ();
 
   virtual CosLoadBalancing::Properties * get_properties ();
 
@@ -114,7 +114,7 @@ public:
 
 protected:
   /// Destructor.
-  ~TAO_LB_LoadMinimum (void);
+  ~TAO_LB_LoadMinimum ();
 
   /// Retrieve the least loaded location from the given list of
   /// locations.
@@ -158,7 +158,6 @@ private:
    * Cached LoadMinimum load balancing strategy property values.
    */
   //@{
-
   ///
   CORBA::Float tolerance_;
 

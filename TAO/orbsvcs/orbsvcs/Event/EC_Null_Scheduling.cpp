@@ -7,7 +7,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 void
 TAO_EC_Null_Scheduling::add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *,

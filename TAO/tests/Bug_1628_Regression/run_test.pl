@@ -46,7 +46,7 @@ if ($server->WaitForFileTimed ($TestCaseC_i,
 # Body_dup is there, then all the Body_* methods are also there.
 #
 $found = 0 ;
-open (I_FILE, "$server_TestCaseC_i") ;
+open (I_FILE, "$server_TestCaseC_i");
 while( <I_FILE> ){
    chomp ;
    if( $_ =~ /Body_dup/ ){

@@ -11,7 +11,7 @@ class PCB;
 class PTimer_Dispatcher
 {
 public:
-  void wait_for_event (void);
+  void wait_for_event ();
 
   long schedule (PCB *cb,
                  void *arg,

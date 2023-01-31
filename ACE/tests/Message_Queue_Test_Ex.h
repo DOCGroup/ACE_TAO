@@ -4,8 +4,7 @@
 /**
  * @file Message_Queue_Test_Ex.h
  *
- * Define class needed for generating templates. IBM C++ requires this
- * to be in its own file for auto template instantiation.
+ * Define class needed for generating templates.
  *
  * @author Michael Vitlo <mvitalo@sprynet.com>
  * @author Irfan Pyarali <irfan@cs.wustl.edu>
@@ -31,7 +30,7 @@ public:
     ACE_OS::strcpy (this->message_, inputMsg);
   }
 
-  ~User_Class (void) { delete [] this->message_; }
+  ~User_Class () { delete [] this->message_; }
 
   const char *message () const
   {
@@ -60,10 +59,10 @@ struct Receive_Messages;
 class MQ_Ex_N_Tester
 {
 public:
-  int single_thread_performance_test (void);
+  int single_thread_performance_test ();
 
 #if defined (ACE_HAS_THREADS)
-  int performance_test (void);
+  int performance_test ();
 
   /// Sender runs with an autonomous thread
   static ACE_THR_FUNC_RETURN sender (void *);
@@ -80,8 +79,8 @@ public:
 
 private:
   /// Helper methods
-  int test_enqueue_head (void);
-  int test_enqueue_tail (void);
+  int test_enqueue_head ();
+  int test_enqueue_tail ();
 };
 
 #endif /* ACE_TESTS_MESSAGE_QUEUE_TEST_EX_H */

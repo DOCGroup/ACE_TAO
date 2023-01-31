@@ -27,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   Profile_Transport_Resolver::~Profile_Transport_Resolver ()
   {
     if (this->profile_)
