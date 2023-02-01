@@ -1031,21 +1031,16 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
 {
   ACE_OS_TRACE ("ACE_OS::truncate");
 #if defined (ACE_WIN32)
-  ACE_HANDLE handle = ACE_OS::open (filename,
-                                    O_WRONLY,
-                                    ACE_DEFAULT_FILE_PERMS);
+  ACE_HANDLE handle = ACE_OS::open (filename, O_WRONLY, ACE_DEFAULT_FILE_PERMS);
 
   LARGE_INTEGER loffset;
   loffset.QuadPart = offset;
 
   if (handle == ACE_INVALID_HANDLE)
-    ACE_FAIL_RETURN (-1);
-
-  else if (::SetFilePointer (handle,
-                             low_offset,
-                             &high_offset,
-                             FILE_BEGIN) != INVALID_SET_FILE_POINTER
-           || GetLastError () == NO_ERROR)
+    {
+      ACE_FAIL_RETURN (-1);
+    }
+  else if (::SetFilePointerEx (handle, loffset, 0, FILE_BEGIN))
     {
       BOOL result = ::SetEndOfFile (handle);
       ::CloseHandle (handle);
