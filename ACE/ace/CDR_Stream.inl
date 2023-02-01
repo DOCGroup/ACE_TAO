@@ -1434,7 +1434,7 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_string x)
     }
 
   os.write_string (len, x.val_);
-  return (ACE_(os.good_bit () && (!x.bound_ || len <= x.bound_));
+  return (os.good_bit () && (!x.bound_ || len <= x.bound_));
 }
 
 ACE_INLINE ACE_CDR::Boolean
