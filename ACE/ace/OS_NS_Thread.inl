@@ -2095,10 +2095,6 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
       if (expired)
         error = ETIME;
-
-#     if defined (ACE_LACKS_COND_TIMEDWAIT_RESET)
-      tv = tv.now ();
-#     endif /* ACE_LACKS_COND_TIMEDWAIT_RESET */
     }
 
   if (result != -2)
@@ -2173,9 +2169,6 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
   if (result == 0)
     {
-#     if defined (ACE_LACKS_COND_TIMEDWAIT_RESET)
-      tv = tv.now ();
-#     endif /* ACE_LACKS_COND_TIMEDWAIT_RESET */
       --s->count_;
     }
 

@@ -21,10 +21,5 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_SYS_PSTAT_H)
-#  include /**/ <sys/param.h>
-#  include /**/ <sys/pstat.h>
-#endif /* ACE_HAS_SYS_PSTAT_H */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_OS_PSTAT_H */

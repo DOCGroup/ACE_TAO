@@ -175,10 +175,6 @@ ACE_SCANDIR_CMP_USES_VOIDPTR            The OS's scandir() comparator function
 ACE_SCANDIR_CMP_USES_CONST_VOIDPTR      The OS's scandir() comparator function
                                         is int (*compare)(const void*,
                                                           const void*).
-ACE_HAS_STDARG_THR_DEST                 Platform has void (*)(...)
-                                        prototype for
-                                        pthread_key_create()
-                                        destructor (e.g., LynxOS).
 ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS     Platform/compiler supports
                                         Win32 structural exceptions
 ACE_HAS_4_4BSD_SENDMSG_RECVMSG          Platform has BSD 4.4
@@ -197,20 +193,6 @@ ACE_HAS_BIG_FD_SET                      Compiler/platform has typedef
 ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
                                         with a NULL addr to accept()
                                         (e.g, VxWorks < 6.9).
-ACE_HAS_BROKEN_DGRAM_SENDV              Platform sendv() does not work
-                                        properly with datagrams,
-                                        i.e. it fails when the iovec
-                                        size is IOV_MAX.
-ACE_HAS_BROKEN_MAP_FAILED               Platform doesn't cast MAP_FAILED
-                                        to a void *.
-ACE_HAS_BROKEN_MSG_H                    Platform headers don't support
-                                        <msg.h> prototypes
-ACE_HAS_BROKEN_MMAP_H                   HP/UX does not wrap the
-                                        mmap(2) header files with
-                                        extern "C".
-ACE_HAS_BROKEN_NESTED_TEMPLATES         MSVC has trouble with defining
-                                        STL containers for nested
-                                        structs and classes
 ACE_HAS_BYTESEX_H                       Platform has <bytesex.h>.
 ACE_HAS_CANCEL_IO                       Platform supports the Win32
                                         CancelIO() function (WinNT 4.0
@@ -286,8 +268,6 @@ ACE_HAS_NONSTATIC_OBJECT_MANAGER        Causes the ACE_Object_Manager
                                         a static (global) instance.
 ACE_HAS_THR_KEYDELETE                   Platform supports
                                         thr_keydelete (e.g,. UNIXWARE)
-ACE_HAS_LIMITED_RUSAGE_T                The rusage_t structure has
-                                        only two fields.
 ACE_HAS_LINUX_NPTL                      Linux platform (with kernel >= 2.6.x)
                                         with GLibc including new NPTL (Native
                                         POSIX Thread Library).
@@ -427,7 +407,7 @@ ACE_HAS_SIGINFO_T                       Platform supports SVR4
                                         extended signals
 ACE_HAS_SIGSUSPEND                      Platform supports sigsuspend()
 ACE_HAS_SIGISMEMBER_BUG                 Platform has bug with
-                                        sigismember() (HP/UX 11).
+                                        sigismember()
 ACE_HAS_SIGNAL_OBJECT_AND_WAIT          Platform supports the Win32
                                         SignalObjectAndWait() function
                                         (WinNT 4.0 and beyond).
@@ -465,39 +445,21 @@ ACE_HAS_STRNLEN                         Platform supports strnlen(3).
 ACE_HAS_STREAMS                         Platform supports STREAMS
 ACE_HAS_STREAM_PIPES                    Platform supports STREAM pipes
 ACE_HAS_STRICT                          Use the STRICT compilation mode on Win32.
-ACE_HAS_STRUCT_NETDB_DATA               Compiler/platform has strange
-                                        hostent API for socket *_r()
-                                        calls
 ACE_HAS_SVR4_DYNAMIC_LINKING            Compiler/platform supports
                                         SVR4 dynamic linking semantics
 ACE_HAS_SVR4_GETTIMEOFDAY               Compiler/platform supports
                                         SVR4 gettimeofday() prototype
 ACE_HAS_SVR4_SIGNAL_T                   Compiler/platform supports
                                         SVR4 signal typedef
-ACE_HAS_SYSCALL_GETRUSAGE               HP/UX has an undefined syscall
-                                        for GETRUSAGE...
-ACE_HAS_SYSENT_H                        Platform provides <sysent.h>
-                                        header
 ACE_HAS_SYSV_IPC                        Platform supports System V IPC
                                         (most versions of UNIX, but
                                         not Win32)
 ACE_HAS_SYS_FILIO_H                     Platform provides
                                         <sys/filio.h> header
-ACE_HAS_SYS_LOADAVG_H                   Compiler/platform contains the
-                                        <sys/loadavg.h> file.
-ACE_HAS_SYS_PSTAT_H                     Compiler/platform contains the
-                                        <sys/pstat.h> file.
 ACE_HAS_SYS_SOCKIO_H                    Compiler/platform provides the
                                         sockio.h file
 ACE_HAS_SYS_SYSCALL_H                   Compiler/platform contains the
                                         <sys/syscall.h> file.
-ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA   Compiler's template
-                                        instantiation mechanism
-                                        supports the use of "#pragma
-                                        instantiate".  Edison Design
-                                        Group compilers, e.g., SGI C++
-                                        and Green Hills 1.8.8 and
-                                        later, support this.
 ACE_HAS_TEMPLATE_TYPEDEFS               Compiler implements templates
                                         that support typedefs inside
                                         of classes used as formal
@@ -547,9 +509,6 @@ ACE_HAS_UALARM                          Platform supports ualarm()
 ACE_HAS_UCONTEXT_T                      Platform supports ucontext_t
                                         (which is used in the extended
                                         signal API).
-ACE_HAS_UNION_WAIT                      The wait() system call takes a
-                                        (union wait *) rather than int
-                                        *
 ACE_HAS_VALGRIND                        Running with valgrind
 ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in
                                         ACE_NOTSUP.  Useful for
@@ -653,9 +612,6 @@ ACE_LACKS_OPENDIR                       Platform lacks opendir and the opendir
                                         emulation must be used
 ACE_LACKS_READDIR                       Platform lacks readdir and the readdir
                                         emulation must be used
-ACE_LACKS_COND_TIMEDWAIT_RESET          pthread_cond_timedwait does
-                                        *not* reset the time argument
-                                        when the lock is acquired.
 ACE_LACKS_CONST_TIMESPEC_PTR            Platform forgot const in
                                         cond_timewait (e.g., HP/UX).
 ACE_LACKS_COND_T                        Platform lacks condition
@@ -731,8 +687,6 @@ ACE_LACKS_NETDB_REENTRANT_FUNCTIONS     Platform does not support
                                         getservbyname_r).
 ACE_LACKS_NEW_H                         OS doesn't have, or we don't want to
                                         use, new.h.
-ACE_LACKS_NULL_PTHREAD_STATUS           OS requires non-null status pointer
-                                        for ::pthread_join ().
 ACE_LACKS_PERFECT_MULTICAST_FILTERING   Platform lacks IGMPv3 "perfect" filtering
                                         of multicast dgrams at the socket level.
                                         If == 1, ACE_SOCK_Dgram_Mcast will bind
@@ -751,8 +705,6 @@ ACE_LACKS_PTHREAD_THR_SIGSETMASK        Platform lacks
 ACE_LACKS_PUTENV_PROTOTYPE              Platform/compiler lacks the
                                         putenv() prototype (e.g.,
                                         LynxOS)
-ACE_LACKS_PWD_REENTRANT_FUNCTIONS       Platform lacks getpwnam_r()
-                                        methods (e.g., SGI 6.2).
 ACE_LACKS_QSORT                         Compiler/platform lacks the
                                         standard C library qsort()
                                         function
@@ -842,12 +794,6 @@ ACE_LACKS_TIMESPEC_T                    Platform does not define
                                         struct timespec.
 ACE_LACKS_TRUNCATE                      Platform doesn't have truncate()
                                         (e.g., vxworks)
-ACE_LACKS_CHAR_RIGHT_SHIFTS             Compiler does not have any istream
-                                        operator>> for chars, u_chars, or
-                                        signed chars.
-ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS        Compiler does not have
-                                        operator>> (istream &, u_char *) or
-                                        operator>> (istream &, signed char *)
 ACE_LACKS_UCONTEXT_H                    Platform lacks the ucontext.h
                                         file
 ACE_LACKS_UMASK                         Platform lacks umask function
@@ -859,9 +805,6 @@ ACE_LACKS_UNIX_DOMAIN_SOCKETS           ACE platform has no UNIX
                                         domain sockets
 ACE_LACKS_UNIX_SIGNALS                  Platform lacks full signal
                                         support (e.g., Win32).
-ACE_LACKS_UNSIGNEDLONGLONG_T            Compiler/platform does not
-                                        support the unsigned long
-                                        long datatype.
 ACE_LACKS_UTSNAME_T                     Platform lacks struct utsname
                                         (e.g., Win32 and VxWorks)
 ACE_LACKS_UNAME                         Platform lacks uname calls
@@ -886,10 +829,6 @@ ACE_NO_WIN32_LEAN_AND_MEAN              If this is set, then ACE does not
                                         including <windows.h>. Needed for
                                         code that uses non-lean Win32
                                         facilities such as COM.
-
-ACE_SHM_OPEN_REQUIRES_ONE_SLASH         The path specified on shm_open() must
-                                        have a leading, single slash and not
-                                        have any other slashes.
 
 ACE_WSTRING_HAS_USHORT_SUPPORT          If a platform has wchar_t as a
                                         separate type, then
@@ -1187,16 +1126,6 @@ ACE_HAS_POLL:
      #include /**/ <poll.h>
      #endif /* ACE_HAS_POLL */
 
-ACE_USE_POLL_IMPLEMENTATION:
-------------------
-
-  Used in:
-     ace/OS.h
-
-  Notes:
-    Use the poll() event demultiplexor rather than select().
-
-
 ACE_HAS_SVR4_SIGNAL_T:
 ----------------------
 
@@ -1290,19 +1219,6 @@ ACE_HAS_TIUSER_H:
   Solaris:
      in conjunction with t_bind, t_accept, etc.. transport layer.
 
-
-ACE_USE_POLL_IMPLEMENTATION:
-----------------------------
-
-  Used in:
-     libsrc/Reactor/Reactor.i
-     include/Event_Handler.h
-     ace/OS.h
-     include/Reactor.h
-
-  Notes:
-     in the reactor, use poll instead of select.  In general,
-     good thing to have set.
 
 ACE_USES_GPROF:
 ----------------------------

@@ -2552,16 +2552,6 @@ ACE_OS::event_init (ACE_event_t *event,
   if (type == USYNC_PROCESS)
     {
       const char *name_p = name;
-#  if defined (ACE_SHM_OPEN_REQUIRES_ONE_SLASH)
-      char adj_name[MAXPATHLEN];
-      if (name[0] != '/')
-        {
-          adj_name[0] = '/';
-          ACE_OS::strsncpy (&adj_name[1], name, MAXPATHLEN-1);
-          name_p = adj_name;
-        }
-#  endif /* ACE_SHM_OPEN_REQUIRES_ONE_SLASH */
-
       bool owner = false;
       // Let's see if the shared memory entity already exists.
       ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name_p),
