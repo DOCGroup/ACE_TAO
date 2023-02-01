@@ -1,5 +1,5 @@
 #include "ace/config-all.h"
-#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
+#if defined (ACE_WIN32)
 
 #include "ace/NT_Service.h"
 
@@ -610,4 +610,4 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
+#endif /* ACE_WIN32 */

@@ -49,12 +49,7 @@
 
 #define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".log")
 
-#if defined (ACE_HAS_PHARLAP)
-const size_t ACE_MAX_CLIENTS = 4;
-#else
 const size_t ACE_MAX_CLIENTS = 30;
-#endif /* ACE_HAS_PHARLAP */
-
 const size_t ACE_NS_MAX_ENTRIES = 1000;
 const size_t ACE_DEFAULT_USECS = 1000;
 const size_t ACE_MAX_TIMERS = 4;
@@ -170,7 +165,7 @@ inline ACE_Test_Output::~ACE_Test_Output ()
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_HAS_PHARLAP)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   delete this->output_file_;
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 }
@@ -184,13 +179,6 @@ ACE_Test_Output::output_file ()
 inline int
 ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 {
-#if defined (ACE_HAS_PHARLAP)
-  // For PharLap, just send it all to the host console for now - redirect
-  // to a file there for saving/analysis.
-  EtsSelectConsole(ETS_CO_HOST);
-  ACE_LOG_MSG->msg_ostream (&cout);
-
-#else
   ACE_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
   const ACE_TCHAR *test_dir {};
@@ -243,8 +231,6 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->msg_ostream (this->output_file ());
-#endif /* ACE_HAS_PHARLAP */
-
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 

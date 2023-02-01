@@ -380,9 +380,7 @@ ACE_OS::num_processors ()
 {
   ACE_OS_TRACE ("ACE_OS::num_processors");
 
-#if defined (ACE_HAS_PHARLAP)
-  return 1;
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
   return sys_info.dwNumberOfProcessors;
@@ -408,9 +406,7 @@ ACE_OS::num_processors_online ()
 {
   ACE_OS_TRACE ("ACE_OS::num_processors_online");
 
-#if defined (ACE_HAS_PHARLAP)
-  return 1;
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
   long active_processors = 0;

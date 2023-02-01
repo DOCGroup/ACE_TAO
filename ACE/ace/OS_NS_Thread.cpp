@@ -3176,34 +3176,12 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     }
 
 #elif defined (ACE_WIN32)
-  // PharLap ETS can act on the current thread - it can set the
-  // quantum also, unlike Win32. All this only works on the RT
-  // version.
-# if defined (ACE_HAS_PHARLAP_RT)
-  if (id != ACE_SELF)
-    ACE_NOTSUP_RETURN (-1);
-
-#   if !defined (ACE_PHARLAP_LABVIEW_RT)
-  if (sched_params.quantum() != ACE_Time_Value::zero)
-    EtsSetTimeSlice (sched_params.quantum().msec());
-#   endif
-# else
-  if (sched_params.quantum () != ACE_Time_Value::zero)
-    {
-      // I don't know of a way to set the quantum on Win32.
-      errno = EINVAL;
-      return -1;
-    }
-# endif /* ACE_HAS_PHARLAP_RT */
-
   if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
       // Setting the REALTIME_PRIORITY_CLASS on Windows is almost always
       // a VERY BAD THING. This include guard will allow people
       // to easily disable this feature in ACE.
-      // It won't work at all for Pharlap since there's no SetPriorityClass.
-#if !defined (ACE_HAS_PHARLAP) && \
-    !defined (ACE_DISABLE_WIN32_INCREASE_PRIORITY)
+#if !defined (ACE_DISABLE_WIN32_INCREASE_PRIORITY)
       // Set the priority class of this process to the REALTIME process class
       // _if_ the policy is ACE_SCHED_FIFO.  Otherwise, set to NORMAL.
       if (!::SetPriorityClass (::GetCurrentProcess (),
@@ -3223,9 +3201,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     }
   else if (sched_params.scope () == ACE_SCOPE_PROCESS)
     {
-# if defined (ACE_HAS_PHARLAP_RT)
-      ACE_NOTSUP_RETURN (-1);
-# else
       HANDLE hProcess
         = ::OpenProcess (PROCESS_SET_INFORMATION,
                          FALSE,
@@ -3253,8 +3228,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
         }
       ::CloseHandle (hProcess);
       return 0;
-#endif /* ACE_HAS_PHARLAP_RT */
-
     }
   else
     {

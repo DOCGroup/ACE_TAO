@@ -19,7 +19,7 @@
 #include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1  */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
 #define ACE_MAP_FILE(_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd) \
   MapViewOfFileEx (_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd)
 
@@ -217,7 +217,6 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
   // Create file mapping, if not yet done
   if (object_handle_ == 0)
     {
-#if !defined (ACE_LACKS_WIN32_SECURITY_DESCRIPTORS)
       // Allow access by all users.
       SECURITY_ATTRIBUTES sa;
       SECURITY_DESCRIPTOR sd;
@@ -230,7 +229,6 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
       sa.nLength = sizeof (SECURITY_ATTRIBUTES);
       sa.lpSecurityDescriptor = &sd;
       sa.bInheritHandle = FALSE;
-#endif /* ACE_LACKS_WIN32_SECURITY_DESCRIPTORS */
 
       // Get an object handle to the named reserved memory object.
       DWORD size_high;
@@ -245,11 +243,7 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
 
       object_handle_ =
         ACE_TEXT_CreateFileMapping (INVALID_HANDLE_VALUE,
-#if !defined (ACE_LACKS_WIN32_SECURITY_DESCRIPTORS)
                                     &sa,
-#else
-                                    0,
-#endif /* !ACE_LACKS_WIN32_SECURITY_DESCRIPTORS */
                                     PAGE_READWRITE | SEC_RESERVE,
                                     size_high,
                                     size_low,
@@ -369,4 +363,4 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */

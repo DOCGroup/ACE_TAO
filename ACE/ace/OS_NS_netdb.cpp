@@ -5,10 +5,6 @@
 # include "ace/OS_NS_netdb.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_PHARLAP)
-# include "ace/OS_NS_stdio.h"
-#endif
-
 #include "ace/os_include/net/os_if.h"
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_arpa_inet.h"
@@ -44,7 +40,6 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   ACE_OS_TRACE ("ACE_OS::getmacaddress");
 
 #if defined (ACE_WIN32)
-# if !defined (ACE_HAS_PHARLAP)
     /** Define a structure for use with the netbios routine */
     struct ADAPTERSTAT
     {
@@ -96,35 +91,6 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
         }
       }
     return 0;
-# else
-#   if defined (ACE_HAS_PHARLAP_RT)
-      DEVHANDLE ip_dev = (DEVHANDLE)0;
-      EK_TCPIPCFG *devp = 0;
-      size_t i;
-      ACE_TCHAR dev_name[16];
-
-      for (i = 0; i < 10; i++)
-        {
-          // Ethernet.
-          ACE_OS::snprintf (dev_name, 16, "ether%d", i);
-          ip_dev = EtsTCPGetDeviceHandle (dev_name);
-          if (ip_dev != 0)
-            break;
-        }
-      if (ip_dev == 0)
-        return -1;
-      devp = EtsTCPGetDeviceCfg (ip_dev);
-      if (devp == 0)
-        return -1;
-      ACE_OS::memcpy (node->node,
-            &devp->EthernetAddress[0],
-            6);
-      return 0;
-#   else
-      ACE_UNUSED_ARG (node);
-      ACE_NOTSUP_RETURN (-1);
-#   endif /* ACE_HAS_PHARLAP_RT */
-# endif /* ACE_HAS_PHARLAP */
 #elif defined (ACE_LINUX) && !defined (ACE_LACKS_NETWORKING)
 
   // It's easiest to know the first MAC-using interface. Use the BSD

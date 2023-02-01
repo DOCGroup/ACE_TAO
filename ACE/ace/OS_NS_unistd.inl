@@ -79,7 +79,7 @@ ACE_INLINE long
 ACE_OS::getpagesize ()
 {
   ACE_OS_TRACE ("ACE_OS::getpagesize");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
   return (long) sys_info.dwPageSize;
@@ -356,16 +356,9 @@ ACE_OS::ftruncate (ACE_HANDLE handle, ACE_OFF_T offset)
 {
   ACE_OS_TRACE ("ACE_OS::ftruncate");
 #if defined (ACE_WIN32)
-#  if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
   LARGE_INTEGER loff;
   loff.QuadPart = offset;
   if (::SetFilePointerEx (handle, loff, 0, FILE_BEGIN))
-#  else
-  if (::SetFilePointer (handle,
-                        offset,
-                        0,
-                        FILE_BEGIN) != INVALID_SET_FILE_POINTER)
-#  endif
     ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
   else
     ACE_FAIL_RETURN (-1);
@@ -512,19 +505,7 @@ ACE_INLINE int
 ACE_OS::hostname (char name[], size_t maxnamelen)
 {
   ACE_OS_TRACE ("ACE_OS::hostname");
-#if defined (ACE_HAS_PHARLAP)
-  // PharLap only can do net stuff with the RT version.
-#   if defined (ACE_HAS_PHARLAP_RT)
-  // @@This is not at all reliable... requires ethernet and BOOTP to be used.
-  // A more reliable way is to go thru the devices w/ EtsTCPGetDeviceCfg until
-  // a legit IP address is found, then get its name w/ gethostbyaddr.
-  ACE_SOCKCALL_RETURN (gethostname (name, maxnamelen), int, SOCKET_ERROR);
-#   else
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (maxnamelen);
-  ACE_NOTSUP_RETURN (-1);
-#   endif /* ACE_HAS_PHARLAP_RT */
-#elif defined (ACE_VXWORKS)
+#if defined (ACE_VXWORKS)
   return ::gethostname (name, maxnamelen);
 #elif defined (ACE_WIN32)
   if (::gethostname (name, ACE_Utils::truncate_cast<int> (maxnamelen)) == 0)
@@ -548,7 +529,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
   return -1;
 #elif defined (ACE_LACKS_GETHOSTNAME)
   ACE_NOTSUP_RETURN (-1);
-#else /* ACE_HAS_PHARLAP */
+#else /* ACE_VXWORKS */
   ACE_utsname host_info;
 
   if (ACE_OS::uname (&host_info) == -1)
@@ -558,7 +539,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
       ACE_OS::strsncpy (name, host_info.nodename, maxnamelen);
       return 0;
     }
-#endif /* ACE_HAS_PHARLAP */
+#endif /* ACE_VXWORKS */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -687,7 +668,6 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
   return ::lseek64 (handle, offset, whence);
 #elif defined (ACE_HAS_LLSEEK)
 # if defined (ACE_WIN32)
-#  ifndef ACE_LACKS_WIN32_SETFILEPOINTEREX
   LARGE_INTEGER distance, new_file_pointer;
 
   distance.QuadPart = offset;
@@ -696,22 +676,6 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
     (::SetFilePointerEx (handle, distance, &new_file_pointer, whence)
      ? new_file_pointer.QuadPart
      : static_cast<ACE_LOFF_T> (-1));
-#  else
-  LARGE_INTEGER l_offset;
-  l_offset.QuadPart = offset;
-  LONG low_offset = l_offset.LowPart;
-  LONG high_offset = l_offset.HighPart;
-
-  l_offset.LowPart = ::SetFilePointer (handle,
-                                       low_offset,
-                                       &high_offset,
-                                       whence);
-  if (l_offset.LowPart == INVALID_SET_FILE_POINTER &&
-      GetLastError () != NO_ERROR)
-    return static_cast<ACE_LOFF_T> (-1);
-  l_offset.HighPart = high_offset;
-  return l_offset.QuadPart;
-#  endif  /* ACE_LACKS_WIN32_SETFILEPOINTEREX */
 # else
     return ::llseek (handle, offset, whence);
 # endif /* WIN32 */
@@ -1071,29 +1035,17 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
                                     O_WRONLY,
                                     ACE_DEFAULT_FILE_PERMS);
 
-#  if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
   LARGE_INTEGER loffset;
   loffset.QuadPart = offset;
-#else
-  LONG low_offset = ACE_LOW_PART(offset);
-  LONG high_offset = ACE_HIGH_PART(offset);
-#endif
 
   if (handle == ACE_INVALID_HANDLE)
     ACE_FAIL_RETURN (-1);
 
-#  if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
-  else if (::SetFilePointerEx (handle,
-                               loffset,
-                               0,
-                               FILE_BEGIN))
-#  else
   else if (::SetFilePointer (handle,
                              low_offset,
                              &high_offset,
                              FILE_BEGIN) != INVALID_SET_FILE_POINTER
            || GetLastError () == NO_ERROR)
-#  endif /* ACE_LACKS_WIN32_SETFILEPOINTEREX */
     {
       BOOL result = ::SetEndOfFile (handle);
       ::CloseHandle (handle);
