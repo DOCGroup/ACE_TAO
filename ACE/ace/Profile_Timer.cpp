@@ -64,7 +64,6 @@ void
 ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
 {
   ACE_TRACE ("ACE_Profile_Timer::elapsed_rusage");
-#    if !defined (ACE_HAS_LIMITED_RUSAGE_T)
   // integral shared memory size
   usage.ru_ixrss =
     this->end_usage_.ru_ixrss - this->last_usage_.ru_ixrss;
@@ -110,9 +109,6 @@ ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
   this->subtract (usage.ru_stime,
                   this->end_usage_.ru_stime,
                   this->last_usage_.ru_stime);
-#    else
-  ACE_UNUSED_ARG(usage);
-#    endif /* ACE_HAS_LIMITED_RUSAGE_T */
 }
 
 void
