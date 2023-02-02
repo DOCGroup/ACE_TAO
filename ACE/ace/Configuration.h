@@ -407,7 +407,7 @@ protected:
   ACE_Configuration_Section_Key root_;
 };
 
-#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
+#if defined (ACE_WIN32)
 
 /**
  * @class ACE_Section_Key_Win32
@@ -534,7 +534,7 @@ protected:
 
   const u_long security_access_;
 };
-#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
+#endif /* ACE_WIN32 */
 
 // ACE_Allocator version
 

@@ -81,16 +81,8 @@ using CACHED_CONNECT_STRATEGY = ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOC
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
 // Default number of clients/servers.
-#if defined (ACE_HAS_PHARLAP)
-// PharLap is, by default, resource contrained. Test for something that works
-// on the default configuration.
-static int n_servers = 2;
-static int n_clients = 4;
-#else
 static int n_servers = 5;
 static int n_clients = 5;
-#endif /* ACE_HAS_PHARLAP */
-
 static int n_client_iterations = 3;
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *)

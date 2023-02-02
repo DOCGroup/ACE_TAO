@@ -80,7 +80,7 @@ public:
 };
 #endif /* ACE_MT_SAFE */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_NT_Event_Log
 #elif defined (ACE_ANDROID)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_Android_Logcat
@@ -1313,10 +1313,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       {
                         errno = ACE::map_errno (this->errnum ());
                         ACE_TCHAR *lpMsgBuf = 0;
-
-     // PharLap can't do FormatMessage, so try for socket
-     // error.
-# if !defined (ACE_HAS_PHARLAP)
                         ACE_TEXT_FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER
                                                   | FORMAT_MESSAGE_MAX_WIDTH_MASK
                                                   | FORMAT_MESSAGE_FROM_SYSTEM,
@@ -1328,7 +1324,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                                                   (ACE_TCHAR *) &lpMsgBuf,
                                                   0,
                                                   0);
-# endif /* ACE_HAS_PHARLAP */
 
                         // If we don't get a valid response from
                         // <FormatMessage>, we'll assume this is a
@@ -1521,10 +1516,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       {
                         errno = ACE::map_errno (this->errnum ());
                         ACE_TCHAR *lpMsgBuf = 0;
-
-     // PharLap can't do FormatMessage, so try for socket
-     // error.
-# if !defined (ACE_HAS_PHARLAP)
                         ACE_TEXT_FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER
                                                   | FORMAT_MESSAGE_MAX_WIDTH_MASK
                                                   | FORMAT_MESSAGE_FROM_SYSTEM,
@@ -1536,7 +1527,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                                                   (ACE_TCHAR *) &lpMsgBuf,
                                                   0,
                                                   0);
-# endif /* ACE_HAS_PHARLAP */
 
                         // If we don't get a valid response from
                         // <FormatMessage>, we'll assume this is a
