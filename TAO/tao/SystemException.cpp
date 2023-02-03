@@ -86,10 +86,6 @@ CORBA::SystemException::SystemException (const CORBA::SystemException &src)
 {
 }
 
-CORBA::SystemException::~SystemException ()
-{
-}
-
 CORBA::SystemException &
 CORBA::SystemException::operator= (const CORBA::SystemException &src)
 {
