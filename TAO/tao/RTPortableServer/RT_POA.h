@@ -120,12 +120,13 @@ public:
 
   PortableServer::POA_ptr the_parent () override;
 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   PortableServer::POAList *the_children () override;
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::POAManager_ptr the_POAManager () override;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-
   PortableServer::AdapterActivator_ptr the_activator () override;
 
   void the_activator (PortableServer::AdapterActivator_ptr adapter_activator) override;
@@ -137,7 +138,6 @@ public:
   PortableServer::Servant get_servant () override;
 
   void set_servant (PortableServer::Servant servant) override;
-
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant) override;

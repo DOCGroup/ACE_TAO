@@ -173,14 +173,15 @@ public:
   PortableServer::RequestProcessingPolicy_ptr
   create_request_processing_policy (
       PortableServer::RequestProcessingPolicyValue value);
-
 #endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
   char * the_name ();
 
   PortableServer::POA_ptr the_parent ();
 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   PortableServer::POAList *the_children ();
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
   PortableServer::POAManager_ptr the_POAManager ();
 

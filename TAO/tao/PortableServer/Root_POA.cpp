@@ -736,6 +736,8 @@ TAO_Root_POA::servant_to_reference (PortableServer::Servant servant)
   return this->servant_to_reference_i (servant);
 }
 
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 PortableServer::POAList *
 TAO_Root_POA::the_children ()
 {
@@ -744,7 +746,7 @@ TAO_Root_POA::the_children ()
 
   return this->the_children_i ();
 }
-
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
 PortableServer::Servant
 TAO_Root_POA::id_to_servant (const PortableServer::ObjectId &oid)
