@@ -258,11 +258,9 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
   // minimum POA builds, remove this code and remove the guards
   // in Object_Adapter.cpp when changing the default policy for the
   // RootPOA.
-  if (ACE_OS::strcmp (this->name_.c_str (),
-                      TAO_DEFAULT_ROOTPOA_NAME) == 0)
+  if (ACE_OS::strcmp (this->name_.c_str (), TAO_DEFAULT_ROOTPOA_NAME) == 0)
     {
-      this->cached_policies_.implicit_activation
-        (PortableServer::IMPLICIT_ACTIVATION);
+      this->cached_policies_.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
     }
 #endif /* TAO_HAS_MINIMUM_POA == 1 */
 
@@ -270,7 +268,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
   this->active_policy_strategies_.update (this->cached_policies_,
                                           this);
   TAO::Portable_Server::Active_Policy_Strategies_Cleanup_Guard aps_cleanup_guard (
-    &this->active_policy_strategies_);
+    std::addressof(this->active_policy_strategies_));
 
   // Set the folded name of this POA.
   this->set_folded_name (parent);
@@ -2189,7 +2187,7 @@ TAO_Root_POA::client_exposed_policies (CORBA::Short /* object_priority */)
   return policies._retn ();
 }
 
-TAO_SERVANT_LOCATION
+TAO_Servant_Location
 TAO_Root_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
                                 PortableServer::Servant &servant)
 {
@@ -2197,7 +2195,7 @@ TAO_Root_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
           locate_servant (system_id, servant);
 }
 
-TAO_SERVANT_LOCATION
+TAO_Servant_Location
 TAO_Root_POA::servant_present (const PortableServer::ObjectId &system_id,
                                PortableServer::Servant &servant)
 {

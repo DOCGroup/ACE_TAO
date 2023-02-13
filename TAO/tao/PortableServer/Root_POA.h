@@ -391,7 +391,7 @@ public:
 
   PortableServer::Servant find_servant (const PortableServer::ObjectId &system_id);
 
-  TAO_SERVANT_LOCATION servant_present (
+  TAO_Servant_Location servant_present (
     const PortableServer::ObjectId &system_id,
     PortableServer::Servant &servant);
 
@@ -620,7 +620,7 @@ protected:
     PortableInterceptor::ObjectReferenceFactory *current_factory);
 
 
-  TAO_SERVANT_LOCATION locate_servant_i (const PortableServer::ObjectId &id,
+  TAO_Servant_Location locate_servant_i (const PortableServer::ObjectId &id,
                                          PortableServer::Servant &servant);
 
   PortableServer::Servant locate_servant_i (

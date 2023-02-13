@@ -108,12 +108,6 @@ namespace TAO
     {
       return CORBA::Object::_nil();
     }
-
-    ::PortableServer::LifespanPolicyValue
-    LifespanStrategyTransient::type () const
-    {
-      return ::PortableServer::TRANSIENT;
-    }
   } /* namespace Portable_Server */
 } /* namespace TAO */
 
