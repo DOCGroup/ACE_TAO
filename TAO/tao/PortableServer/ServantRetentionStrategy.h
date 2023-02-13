@@ -38,9 +38,9 @@ namespace TAO
       ServantRetentionStrategy ();
       virtual ~ServantRetentionStrategy () = default;
 
-      virtual void strategy_init (TAO_Root_POA *poa);
+      virtual void strategy_init (TAO_Root_POA *poa) = 0;
 
-      virtual void strategy_cleanup();
+      virtual void strategy_cleanup() = 0;
 
       virtual CORBA::ULong waiting_servant_deactivation () const = 0;
 

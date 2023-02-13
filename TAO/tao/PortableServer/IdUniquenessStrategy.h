@@ -32,9 +32,9 @@ namespace TAO
       IdUniquenessStrategy ();
       virtual ~IdUniquenessStrategy () = default;
 
-      virtual void strategy_init (TAO_Root_POA *poa);
+      virtual void strategy_init (TAO_Root_POA *poa) = 0;
 
-      virtual void strategy_cleanup ();
+      virtual void strategy_cleanup () = 0;
 
       /*
        * Validate if the servant may be activated

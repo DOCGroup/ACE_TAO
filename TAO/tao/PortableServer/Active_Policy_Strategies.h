@@ -100,7 +100,6 @@ namespace TAO
       Active_Policy_Strategies_Cleanup_Guard () = delete;
       Active_Policy_Strategies_Cleanup_Guard (Active_Policy_Strategies *p);
       ~Active_Policy_Strategies_Cleanup_Guard ();
-
       Active_Policy_Strategies *_retn ();
 
     private:

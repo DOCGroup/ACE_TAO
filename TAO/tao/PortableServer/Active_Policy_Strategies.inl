@@ -62,8 +62,7 @@ namespace TAO
     }
 
     ACE_INLINE
-    Active_Policy_Strategies_Cleanup_Guard
-      ::~Active_Policy_Strategies_Cleanup_Guard ()
+    Active_Policy_Strategies_Cleanup_Guard::~Active_Policy_Strategies_Cleanup_Guard ()
     {
       if (this->ptr_)
         {
