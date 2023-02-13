@@ -7,10 +7,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Base_Transport_Property::~TAO_Base_Transport_Property ()
-{
-}
-
 TAO_Transport_Descriptor_Interface *
 TAO_Base_Transport_Property::duplicate ()
 {

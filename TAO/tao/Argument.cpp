@@ -3,10 +3,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::Argument::~Argument ()
-{
-}
-
 CORBA::Boolean
 TAO::Argument::marshal (TAO_OutputCDR &)
 {
