@@ -45,15 +45,10 @@ TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,
                      lock,
                      thread_lock,
                      orb_core,
-                     object_adapter),
-  thread_pool_ (0)
+                     object_adapter)
 {
   // Parse the RT policies and update our policy cache.
   this->parse_rt_policies (this->policies ());
-}
-
-TAO_RT_POA::~TAO_RT_POA ()
-{
 }
 
 TAO_Root_POA *

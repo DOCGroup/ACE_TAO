@@ -42,7 +42,7 @@ public:
   TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_POA_RT_Policy_Validator () = default;
+  ~TAO_POA_RT_Policy_Validator () override = default;
 
   static RTCORBA::ServerProtocolPolicy_ptr server_protocol_policy_from_thread_pool (TAO_Thread_Pool *thread_pool,
                                                                                     TAO_ORB_Core &orb_core);
@@ -71,7 +71,7 @@ protected:
    * potentially specify policies that are unknown to an
    * validate () routine, and these need to be caught.
    */
-  virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type);
+  CORBA::Boolean legal_policy_impl (CORBA::PolicyType type) override;
 
 private:
   void validate_server_protocol (TAO_Policy_Set &policies);
