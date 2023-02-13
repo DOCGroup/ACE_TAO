@@ -28,6 +28,14 @@
 #include "tao/PortableServer/ImplicitActivationPolicyC.h"
 #include "tao/PortableServer/RequestProcessingPolicyC.h"
 
+#include "tao/PortableServer/ThreadStrategy.h"
+#include "tao/PortableServer/IdAssignmentStrategy.h"
+#include "tao/PortableServer/IdUniquenessStrategy.h"
+#include "tao/PortableServer/ImplicitActivationStrategy.h"
+#include "tao/PortableServer/LifespanStrategy.h"
+#include "tao/PortableServer/RequestProcessingStrategy.h"
+#include "tao/PortableServer/ServantRetentionStrategy.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Root_POA;
@@ -37,13 +45,6 @@ namespace TAO
   namespace Portable_Server
   {
     class Cached_Policies;
-    class ThreadStrategy;
-    class RequestProcessingStrategy;
-    class IdAssignmentStrategy;
-    class LifespanStrategy;
-    class IdUniquenessStrategy;
-    class ImplicitActivationStrategy;
-    class ServantRetentionStrategy;
 
     /**
      * This class stores the active policy strategies used for a certain POA.

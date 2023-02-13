@@ -12,13 +12,12 @@
 #define TAO_THREAD_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/ThreadPolicyC.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
