@@ -275,10 +275,7 @@ public:
 
   static CORBA::ULong name_separator_length ();
 
-  enum
-  {
-    TAO_OBJECTKEY_PREFIX_SIZE = 4
-  };
+  static constexpr size_t TAO_OBJECTKEY_PREFIX_SIZE = 4;
 
   static CORBA::Octet const objectkey_prefix[TAO_OBJECTKEY_PREFIX_SIZE];
 
