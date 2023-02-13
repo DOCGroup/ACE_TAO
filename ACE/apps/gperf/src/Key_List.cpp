@@ -501,7 +501,6 @@ Key_List::reorder ()
 // Outputs the maximum and minimum hash values.  Since the list is
 // already sorted by hash value all we need to do is find the final
 // item!
-
 void
 Key_List::output_min_max ()
 {
@@ -817,7 +816,7 @@ Key_List::output_keyword_table ()
   int pointer_and_type_enabled = option[POINTER] && option[TYPE];
   ACE_OS::printf ("%sstatic %s%swordlist[] =\n%s%s{\n",
           indent,
-          option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
+          option[CONSTANT] || pointer_and_type_enabled == 0 ? "constexpr " : "",
           struct_tag,
           indent,
           indent);
@@ -1145,7 +1144,7 @@ Key_List::output_hash_function ()
 
   // Generate the asso_values table.
   ACE_OS::printf ("  static %sunsigned %s asso_values[] =\n    {",
-                  option[CONSTANT] ? "const " : "",
+                  option[CONSTANT] ? "constexpr " : "",
                   max_hash_value < ((int) UCHAR_MAX) ? "char" : (max_hash_value < ((int) USHRT_MAX) ? "short" : "int"));
 
 #if ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE
@@ -1443,7 +1442,7 @@ Key_List::output_lookup_array ()
 
       const char *indent = option[GLOBAL] ? "" : "  ";
 
-      ACE_OS::printf ("%sstatic %ssigned %s lookup[] =\n%s%s{\n%s", indent, option[CONSTANT] ? "const " : "",
+      ACE_OS::printf ("%sstatic %ssigned %s lookup[] =\n%s%s{\n%s", indent, option[CONSTANT] ? "constexpr " : "",
               max <= SCHAR_MAX ? "char" : (max <= SHRT_MAX ? "short" : "int"),
               indent, indent, option[DEBUGGING] ? "" : "      ");
 
