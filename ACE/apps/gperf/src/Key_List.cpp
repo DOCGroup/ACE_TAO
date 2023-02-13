@@ -816,7 +816,7 @@ Key_List::output_keyword_table ()
   int pointer_and_type_enabled = option[POINTER] && option[TYPE];
   ACE_OS::printf ("%sstatic %s%swordlist[] =\n%s%s{\n",
           indent,
-          option[CONSTANT] || pointer_and_type_enabled == 0 ? "constexpr " : "",
+          option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
           struct_tag,
           indent,
           indent);
