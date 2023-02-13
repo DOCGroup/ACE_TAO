@@ -42,22 +42,22 @@ namespace TAO
       this->create (policies.request_processing(), policies.servant_retention());
 
       /**/
-      if (this->lifespan_strategy_ != 0)
+      if (this->lifespan_strategy_)
         {
           this->lifespan_strategy_->strategy_init (poa);
         }
 
-      if (this->request_processing_strategy_ != 0)
+      if (this->request_processing_strategy_)
         {
           this->request_processing_strategy_->strategy_init (poa);
         }
 
-      if (this->id_uniqueness_strategy_ != 0)
+      if (this->id_uniqueness_strategy_)
         {
           this->id_uniqueness_strategy_->strategy_init (poa);
         }
 
-      if (this->servant_retention_strategy_ != 0)
+      if (this->servant_retention_strategy_)
         {
           this->servant_retention_strategy_->strategy_init (poa);
         }
@@ -66,15 +66,27 @@ namespace TAO
     void
     Active_Policy_Strategies::cleanup ()
     {
-      this->lifespan_strategy_->strategy_cleanup ();
+      if (this->lifespan_strategy_)
+        {
+          this->lifespan_strategy_->strategy_cleanup ();
+        }
       this->lifespan_strategy_.reset (nullptr);
-      this->request_processing_strategy_->strategy_cleanup ();
+      if (this->request_processing_strategy_)
+        {
+          this->request_processing_strategy_->strategy_cleanup ();
+        }
       this->request_processing_strategy_.reset (nullptr);
-      this->id_uniqueness_strategy_->strategy_cleanup ();
+      if (this->id_uniqueness_strategy_)
+        {
+          this->id_uniqueness_strategy_->strategy_cleanup ();
+        }
       this->id_uniqueness_strategy_.reset (nullptr);
       this->implicit_activation_strategy_.reset (nullptr);
       this->thread_strategy_.reset (nullptr);
-      this->servant_retention_strategy_->strategy_cleanup ();
+      if (this->servant_retention_strategy_)
+        {
+          this->servant_retention_strategy_->strategy_cleanup ();
+        }
       this->servant_retention_strategy_.reset (nullptr);
       this->id_assignment_strategy_.reset (nullptr);
     }
