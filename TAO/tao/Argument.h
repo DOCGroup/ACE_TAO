@@ -50,7 +50,7 @@ namespace TAO
   {
   public:
     /// Destructor.
-    virtual ~Argument () = default;
+    virtual ~Argument ();
 
     /// Marshal the argument into the given CDR output stream.
     /**
