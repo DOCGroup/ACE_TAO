@@ -6,10 +6,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Acceptor_Filter_Factory::~TAO_Acceptor_Filter_Factory()
-{
-}
-
 TAO_Acceptor_Filter*
 TAO_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& )
 {
