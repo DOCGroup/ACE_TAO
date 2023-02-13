@@ -60,10 +60,10 @@ protected:
    * are consistent and legal.  Throw an appropriate exception
    * if that is not the case.
    */
-  void validate_impl (TAO_Policy_Set &policies);
+  void validate_impl (TAO_Policy_Set &policies) override;
 
   /// Add/merge policies.
-  void merge_policies_impl (TAO_Policy_Set &policies);
+  void merge_policies_impl (TAO_Policy_Set &policies) override;
 
   /**
    * Return whether the specified policy type is legal for the

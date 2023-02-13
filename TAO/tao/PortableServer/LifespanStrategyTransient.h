@@ -40,7 +40,7 @@ namespace TAO
 
       CORBA::Boolean is_persistent () const override;
 
-      CORBA::ULong key_length () const;
+      CORBA::ULong key_length () const override;
 
       void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at) override;
 

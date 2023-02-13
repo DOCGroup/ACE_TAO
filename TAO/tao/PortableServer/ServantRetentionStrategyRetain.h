@@ -120,7 +120,7 @@ namespace TAO
       int unbind_using_user_id (
         const PortableServer::ObjectId &user_id) override;
 
-      TAO_Active_Object_Map * get_active_object_map() const;
+      TAO_Active_Object_Map * get_active_object_map() const override;
 
     private:
       std::unique_ptr<TAO_Active_Object_Map> active_object_map_;

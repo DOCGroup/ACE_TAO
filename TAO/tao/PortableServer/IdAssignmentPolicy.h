@@ -43,13 +43,13 @@ namespace TAO
     public:
       IdAssignmentPolicy (::PortableServer::IdAssignmentPolicyValue value);
 
-      CORBA::Policy_ptr copy ();
+      CORBA::Policy_ptr copy () override;
 
-      void destroy ();
+      void destroy () override;
 
-      ::PortableServer::IdAssignmentPolicyValue value ();
+      ::PortableServer::IdAssignmentPolicyValue value () override;
 
-      CORBA::PolicyType policy_type ();
+      CORBA::PolicyType policy_type () override;
 
       /// Return the cached policy type for this policy.
       TAO_Cached_Policy_Type _tao_cached_type () const override;

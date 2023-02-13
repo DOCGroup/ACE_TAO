@@ -47,7 +47,7 @@ public:
             const unsigned int length = 0) override;
 
   int bind (const char *opname,
-            const TAO::Operation_Skeletons skelptr);
+            const TAO::Operation_Skeletons skelptr) override;
 
 private:
   // = Method that should defined by the subclasses. GPERF program

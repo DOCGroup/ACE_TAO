@@ -185,7 +185,7 @@ public:
 
   ~TAO_RT_POA () override = default;
 
-  void *thread_pool () const;
+  void *thread_pool () const override;
 
 protected:
   /// Template method for creating new POA's of this type.
