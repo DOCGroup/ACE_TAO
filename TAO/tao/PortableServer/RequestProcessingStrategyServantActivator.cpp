@@ -17,11 +17,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategyServantActivator::RequestProcessingStrategyServantActivator () :
-      etherealize_objects_ (true)
-    {
-    }
-
     void
     RequestProcessingStrategyServantActivator::strategy_cleanup ()
     {
@@ -61,20 +56,20 @@ namespace TAO
       this->validate_servant_manager (this->servant_activator_.in ());
     }
 
-    TAO_SERVANT_LOCATION
+    TAO_Servant_Location
     RequestProcessingStrategyServantActivator::locate_servant (
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant)
     {
-      TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
+      TAO_Servant_Location location = TAO_Servant_Location::Not_Found;
 
       location = this->poa_->servant_present (system_id, servant);
 
-      if (location == TAO_SERVANT_NOT_FOUND)
+      if (location == TAO_Servant_Location::Not_Found)
         {
           if (!CORBA::is_nil (this->servant_activator_.in ()))
             {
-              location = TAO_SERVANT_MANAGER;
+              location = TAO_Servant_Location::Servant_Manager;
             }
         }
 

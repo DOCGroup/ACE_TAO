@@ -16,7 +16,7 @@
 // This is used by GIOP1.2. This is to align the message body on a
 // 8-octet boundary. This is declared static so that it is in file
 // scope.
-static const size_t TAO_GIOP_MESSAGE_ALIGN_PTR = 8;
+static constexpr size_t TAO_GIOP_MESSAGE_ALIGN_PTR = 8;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
