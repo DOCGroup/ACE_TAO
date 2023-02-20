@@ -39,8 +39,6 @@
 # include "ace/config-win32-msvc-142.h"
 #elif (_MSC_VER >= 1910)
 # include "ace/config-win32-msvc-141.h"
-#elif (_MSC_VER >= 1900)
-# include "ace/config-win32-msvc-14.h"
 #else
 # error This version of Microsoft Visual C++ is not supported.
 #endif
