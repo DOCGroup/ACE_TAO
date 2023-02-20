@@ -45,6 +45,10 @@ ifeq ($(c++11),1)
   CCFLAGS += -std=c++11
 endif
 
+ifeq ($(c++14),1)
+  CCFLAGS += -std=c++14
+endif
+
 ifeq ($(no_deprecated),1)
   CCFLAGS += -Wno-deprecated-declarations
 endif

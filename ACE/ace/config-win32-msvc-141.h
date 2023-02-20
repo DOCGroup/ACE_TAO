@@ -23,6 +23,9 @@
 #  define ACE_WIN32_VC141
 #endif
 
+// Visual Studio 2017 has adequate C++14 support
+#define ACE_HAS_CPP14
+
 #include "ace/config-win32-msvc-14.h"
 
 #if _MSVC_LANG >= 201402L
