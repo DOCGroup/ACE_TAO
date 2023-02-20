@@ -18,20 +18,6 @@ else
 CXX_MAJOR_VERSION := $(shell $(CXX) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
 endif
 
-# clang5/6/7/8 have C++11 as default C++ version, enable this to be C++14
-ifeq ($(findstring $(CXX_MAJOR_VERSION),5),$(CXX_MAJOR_VERSION))
-  c++14 ?= 1
-endif
-ifeq ($(findstring $(CXX_MAJOR_VERSION),6),$(CXX_MAJOR_VERSION))
-  c++14 ?= 1
-endif
-ifeq ($(findstring $(CXX_MAJOR_VERSION),7),$(CXX_MAJOR_VERSION))
-  c++14 ?= 1
-endif
-ifeq ($(findstring $(CXX_MAJOR_VERSION),8),$(CXX_MAJOR_VERSION))
-  c++14 ?= 1
-endif
-
 CCFLAGS += $(CFLAGS)
 DCFLAGS += -g
 DLD     = $(CXX)
