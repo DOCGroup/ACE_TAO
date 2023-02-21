@@ -59,7 +59,7 @@
 
 #if !defined (ACE_HAS_CPP14)
 # error ACE/TAO require C++14 compliance, please upgrade your compiler and/or fix the platform configuration for your environment
-#endif /* !ACE_HAS_CPP11 */
+#endif
 
 #define ACE_UNIMPLEMENTED_FUNC(f) f = delete;
 
