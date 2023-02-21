@@ -99,13 +99,13 @@ namespace TAO
         case ::PortableServer::SINGLE_THREAD_MODEL :
         {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
-          this->thread_strategy_.reset (new ThreadStrategySingle ());
+          this->thread_strategy_ = std::make_unique<ThreadStrategySingle> ();
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
           break;
         }
         case ::PortableServer::ORB_CTRL_MODEL :
         {
-          this->thread_strategy_.reset (new ThreadStrategyORBControl ());
+          this->thread_strategy_ = std::make_unique<ThreadStrategyORBControl> ();
           break;
         }
       }
@@ -118,13 +118,13 @@ namespace TAO
       {
         case ::PortableServer::SYSTEM_ID :
         {
-          this->id_assignment_strategy_.reset (new IdAssignmentStrategySystem ());
+          this->id_assignment_strategy_ = std::make_unique<IdAssignmentStrategySystem> ();
           break;
         }
         case ::PortableServer::USER_ID :
         {
 #if !defined (CORBA_E_MICRO)
-          this->id_assignment_strategy_.reset (new IdAssignmentStrategyUser ());
+          this->id_assignment_strategy_ = std::make_unique<IdAssignmentStrategyUser> ();
 #endif /* CORBA_E_MICRO */
           break;
         }
@@ -139,13 +139,13 @@ namespace TAO
         case ::PortableServer::MULTIPLE_ID :
         {
 #if !defined (CORBA_E_MICRO)
-          this->id_uniqueness_strategy_.reset (new IdUniquenessStrategyMultiple ());
+          this->id_uniqueness_strategy_ = std::make_unique<IdUniquenessStrategyMultiple> ();
 #endif /* CORBA_E_MICRO */
           break;
         }
         case ::PortableServer::UNIQUE_ID :
         {
-          this->id_uniqueness_strategy_.reset (new IdUniquenessStrategyUnique ());
+          this->id_uniqueness_strategy_ = std::make_unique<IdUniquenessStrategyUnique> ();
           break;
         }
       }
@@ -158,13 +158,13 @@ namespace TAO
       {
         case ::PortableServer::RETAIN :
         {
-          this->servant_retention_strategy_.reset (new ServantRetentionStrategyRetain ());
+          this->servant_retention_strategy_ = std::make_unique<ServantRetentionStrategyRetain> ();
           break;
         }
         case ::PortableServer::NON_RETAIN :
         {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
-          this->servant_retention_strategy_.reset (new ServantRetentionStrategyNonRetain ());
+          this->servant_retention_strategy_ = std::make_unique<ServantRetentionStrategyNonRetain> ();
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
           break;
         }
@@ -179,13 +179,13 @@ namespace TAO
         case ::PortableServer::PERSISTENT :
         {
 #if !defined (CORBA_E_MICRO)
-          this->lifespan_strategy_.reset (new LifespanStrategyPersistent ());
+          this->lifespan_strategy_ = std::make_unique<LifespanStrategyPersistent> ();
 #endif /* CORBA_E_MICRO */
           break;
         }
         case ::PortableServer::TRANSIENT :
         {
-          this->lifespan_strategy_.reset (new LifespanStrategyTransient ());
+          this->lifespan_strategy_ = std::make_unique<LifespanStrategyTransient> ();
           break;
         }
       }
@@ -199,13 +199,13 @@ namespace TAO
         case ::PortableServer::IMPLICIT_ACTIVATION :
         {
 #if !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
-          this->implicit_activation_strategy_.reset (new ImplicitActivationStrategyImplicit ());
+          this->implicit_activation_strategy_= std::make_unique<ImplicitActivationStrategyImplicit> ();
 #endif /* CORBA_E_MICRO */
           break;
         }
         case ::PortableServer::NO_IMPLICIT_ACTIVATION :
         {
-          this->implicit_activation_strategy_.reset (new ImplicitActivationStrategyExplicit ());
+          this->implicit_activation_strategy_ = std::make_unique<ImplicitActivationStrategyExplicit> ();
           break;
         }
       }
@@ -220,13 +220,13 @@ namespace TAO
       {
         case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
         {
-          this->request_processing_strategy_.reset (new RequestProcessingStrategyAOMOnly ());
+          this->request_processing_strategy_ = std::make_unique<RequestProcessingStrategyAOMOnly> ();
           break;
         }
         case ::PortableServer::USE_DEFAULT_SERVANT :
         {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-          this->request_processing_strategy_.reset (new RequestProcessingStrategyDefaultServant ());
+          this->request_processing_strategy_ = std::make_unique<RequestProcessingStrategyDefaultServant> ();
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
           break;
         }
@@ -237,14 +237,14 @@ namespace TAO
             case ::PortableServer::RETAIN :
             {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-              this->request_processing_strategy_.reset (new RequestProcessingStrategyServantActivator ());
+              this->request_processing_strategy_ = std::make_unique<RequestProcessingStrategyServantActivator> ();
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
               break;
             }
             case ::PortableServer::NON_RETAIN :
             {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-              this->request_processing_strategy_.reset (new RequestProcessingStrategyServantLocator ());
+              this->request_processing_strategy_ = std::make_unique<RequestProcessingStrategyServantLocator> ();
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
               break;
             }
