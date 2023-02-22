@@ -138,5 +138,9 @@
 # define ACE_HAS_CPP17
 #endif /* _MSVC_LANG >= 201703L */
 
+#if _MSVC_LANG >= 202002L
+# define ACE_HAS_CPP20
+#endif /* _MSVC_LANG >= 202002L */
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_141_H */
