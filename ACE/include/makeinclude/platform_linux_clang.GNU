@@ -18,12 +18,6 @@ else
 CXX_MAJOR_VERSION := $(shell $(CXX) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
 endif
 
-# clang5 has C++03 as default C++ version, enable this to be C++11
-# the older clang versions all return 4.2.1 as part of dumpversion
-ifeq ($(findstring $(CXX_MAJOR_VERSION),4),$(CXX_MAJOR_VERSION))
-  c++11 ?= 1
-endif
-
 CCFLAGS += $(CFLAGS)
 DCFLAGS += -g
 DLD     = $(CXX)
@@ -43,6 +37,10 @@ endif
 
 ifeq ($(c++11),1)
   CCFLAGS += -std=c++11
+endif
+
+ifeq ($(c++14),1)
+  CCFLAGS += -std=c++14
 endif
 
 ifeq ($(no_deprecated),1)
