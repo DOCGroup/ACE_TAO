@@ -19,6 +19,9 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
+#ifndef ACE_WIN32_VC14
+#  define ACE_WIN32_VC14
+#endif
 #ifndef ACE_WIN32_VC141
 #  define ACE_WIN32_VC141
 #endif
