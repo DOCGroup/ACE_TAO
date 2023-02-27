@@ -49,22 +49,25 @@ extern "C"
 #  define MAP_FIXED 0
 #elif defined (ACE_WIN32)
    // These two may be used for internal flags soon:
-#  define MAP_PRIVATE 1
-#  define MAP_SHARED  2
-#  define MAP_FIXED   4
+#  if !defined (MAP_PRIVATE)
+#    define MAP_PRIVATE 1
+#  endif
+#  if !defined (MAP_SHARED)
+#    define MAP_SHARED  2
+#  endif
+#  if !defined (MAP_FIXED)
+#    define MAP_FIXED   4
+#  endif
    // MMAP flags
-#  define PROT_READ PAGE_READONLY
-#  define PROT_WRITE PAGE_READWRITE
-#  define PROT_RDWR PAGE_READWRITE
-/* If we can find suitable use for these flags, here they are:
-PAGE_WRITECOPY
-PAGE_EXECUTE
-PAGE_EXECUTE_READ
-PAGE_EXECUTE_READWRITE
-PAGE_EXECUTE_WRITECOPY
-PAGE_GUARD
-PAGE_NOACCESS
-PAGE_NOCACHE  */
+#  if !defined (PROT_READ)
+#    define PROT_READ PAGE_READONLY
+#  endif
+#  if !defined (PROT_WRITE)
+#    define PROT_WRITE PAGE_READWRITE
+#  endif
+#  if !defined (PROT_RDWR)
+#    define PROT_RDWR PAGE_READWRITE
+#  endif
 #endif /* !ACE_LACKS_SYS_MMAN_H && !ACE_WIN32*/
 
 # if !defined (ACE_MAP_PRIVATE)
