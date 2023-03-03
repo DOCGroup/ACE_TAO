@@ -1019,7 +1019,7 @@ ACE_OS::sysconf (int name)
 }
 
 ACE_INLINE long
-ACE_OS::sysinfo (int /*cmd*/, char */*buf*/, long /*count*/)
+ACE_OS::sysinfo (int /*cmd*/, char * /*buf*/, long /*count*/)
 {
   ACE_OS_TRACE ("ACE_OS::sysinfo");
   ACE_NOTSUP_RETURN (0);
