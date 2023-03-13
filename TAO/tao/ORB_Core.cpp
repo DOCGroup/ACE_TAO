@@ -803,15 +803,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
       else if (nullptr != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBResources"))))
-        {
-          TAOLIB_DEBUG ((LM_WARNING,
-                      ACE_TEXT ("\"-ORBResources\" has been ")
-                      ACE_TEXT ("deprecated.\n")));
-
-          arg_shifter.consume_arg ();
-        }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBLogFile"))))
         {
           // redirect all TAOLIB_DEBUG and TAOLIB_ERROR output to a file
