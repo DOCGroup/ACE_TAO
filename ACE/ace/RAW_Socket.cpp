@@ -31,7 +31,7 @@ ACE_RAW_SOCKET::ACE_RAW_SOCKET ()
 /// @param local    the local address supporting ACE_Addr::sap_any
 /// @param protocol filter the protocol based on IP network layer
 /// @param reuse_addr Maybe no any meaning for raw socket
-ACE_RAW_SOCKET::ACE_RAW_SOCKET (ACE_Addr const & local,
+ACE_RAW_SOCKET::ACE_RAW_SOCKET (ACE_INET_Addr const & local,
                                 int protocol,
                                 int reuse_addr)
 {
@@ -116,7 +116,7 @@ ACE_RAW_SOCKET::send (const void *buf,
 ssize_t
 ACE_RAW_SOCKET::send (const iovec iov[],
                       int n,
-                      const ACE_Addr &addr,
+                      const ACE_INET_Addr &addr,
                       int flags) const
 {
   ACE_TRACE ("ACE_RAW_SOCKET::send");
@@ -161,7 +161,7 @@ ACE_RAW_SOCKET::send (const iovec iov[],
 ssize_t
 ACE_RAW_SOCKET::recv (iovec iov[],
                       int n,
-                      ACE_Addr &addr,
+                      ACE_INET_Addr &addr,
                       int flags,
                       ACE_INET_Addr *to_addr) const
 {
@@ -260,7 +260,7 @@ ACE_RAW_SOCKET::recv (iovec iov[],
 #endif
 
 int
-ACE_RAW_SOCKET::open (ACE_Addr const & local, int protocol, int reuse_addr)
+ACE_RAW_SOCKET::open (ACE_INET_Addr const & local, int protocol, int reuse_addr)
 {
   ACE_TRACE ("ACE_RAW_SOCKET::open");
 
@@ -269,13 +269,8 @@ ACE_RAW_SOCKET::open (ACE_Addr const & local, int protocol, int reuse_addr)
       return -1;
   }
 
-  int protocol_family = PF_UNSPEC;
+  int protocol_family = local.get_type ();
   
-  if (local != ACE_Addr::sap_any)
-  {
-      protocol_family = local.get_type ();
-  }
-
   if (protocol_family == PF_UNSPEC)
   {
       #if defined (ACE_HAS_IPV6)
