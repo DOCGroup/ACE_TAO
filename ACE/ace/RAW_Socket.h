@@ -4,7 +4,7 @@
 /**
  *  @file RAW_Socket.h
  *
- *  @author Smith.Achang
+ *  @author Smith.Achang <changyunlei@126.com>
  */
 //=============================================================================
 
@@ -35,9 +35,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief An RAW Socket implemention class.
  * 
  * An RAW Socket can be used for some user-space network protocol stack.
- * - setting the protocol para to be IPPROTO_UDP or other e.g. IPPROTO_SCTP will filter all relative packages with the destination is its bound address.
+ * - setting the protocol para to be IPPROTO_UDP will filter all UPD protocol packages with the destination is its bound address.
+ *   It can reduce the total num of needed socket with only port difference
+ * 
+ * - setting the protocol para to be IPPROTO_SCTP will filter all SCTP protocol packages with the destination is its bound address.
+ *   It can form the basis of a user-space SCTP protocol stack in more general platforms
+ * 
  * - setting the protocol para to be IPPROTO_RAW will make it as a send only socket for any customized dgram formed from IP header.
  *   Notice the source address if provided can be different from its bound address.
+ *   Notice the RAW socket does not support fragment function when passed package exceeds the MTU, so it need a upper layer framment before called
  * 
  * @note If you really want to receive all IP packets, use a packet(7) socket with the ETH_P_IP protocol. 
  *       For "Single Responsibility Principle" the behavior has notable difference, so the feature is not implemented here.
@@ -74,7 +80,7 @@ public:
    */
   ssize_t send (const void *buf,
                 size_t n,
-                const ACE_Addr &addr,
+                const ACE_INET_Addr &addr,
                 int flags = 0,
                 const ACE_Time_Value *timeout = NULL) const;
 
@@ -90,32 +96,10 @@ public:
    */
   ssize_t recv (void *buf,
                 size_t n,
-                ACE_Addr &addr,
+                ACE_INET_Addr &addr,
                 int flags = 0,
                 const ACE_Time_Value *timeout = NULL) const;
 
-#if defined (ACE_HAS_MSG)
-
-  /// Send an <iovec> of size @a n to the datagram socket (uses
-  /// <sendmsg(3)>) with Scatter-Gather I/O.
-  ssize_t send (const iovec iov[],
-                int n,
-                const ACE_INET_Addr &addr,
-                int flags = 0) const;
-
-  /// Recv an <iovec> of size @a n to the datagram socket (uses
-  /// <recvmsg(3)>) with Scatter-Gather I/O.  The IP destination address will be placed in @a
-  /// *to_addr if it is not null and set_option has been called with
-  /// 1) level IPPROTO_IP, option ACE_RECVPKTINFO, and value 1 for
-  /// IPV4 addresses or 2) IPPROTO_IPV6, option ACE_RECVPKTINFO6, and
-  /// value 1 for IPV6 addresses.
-  ssize_t recv (iovec iov[],
-                int n,
-                ACE_INET_Addr &addr,
-                int flags = 0,
-                ACE_INET_Addr *to_addr = 0) const;
-
-  #endif
 
   //@}
 
@@ -134,13 +118,26 @@ public:
 
   /// Dump the state of object.
   void dump () const;
+  
+  
+  /// Return @c true if the protocol is IPPROTO_RAW.
+  bool is_send_only () const;
+
+  /// Return the protocol field value.
+  int protocol () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+private:
+  int protocol_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+#include "ace/RAW_Socket.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
