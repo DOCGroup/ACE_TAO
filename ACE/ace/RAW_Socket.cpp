@@ -86,7 +86,7 @@ ACE_RAW_SOCKET::send (const void *buf,
       return -1;
   }
 
-  if(is_send_only())
+  if(this->is_send_only())
   {
     return -1;
   }
