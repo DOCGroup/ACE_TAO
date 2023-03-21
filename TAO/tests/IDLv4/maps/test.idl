@@ -1,8 +1,6 @@
 struct RecurseStruct;
 typedef map<int32, RecurseStruct> IntRecursedMap;
-typedef map<RecurseStruct, int32> RecursedMapInt;
 struct RecurseStruct {
-    RecursedMapInt rMapI;
     IntRecursedMap iMapR;
 };
 
