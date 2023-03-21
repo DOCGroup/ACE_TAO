@@ -128,5 +128,10 @@
 
 #define ACE_DLL_PREFIX ACE_TEXT ("lib")
 
+#if defined(_UCRT)
+# define ACE_HAS_3_PARAM_WCSTOK
+#endif
+
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MINGW64_H */

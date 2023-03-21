@@ -6,7 +6,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
-#include "ace/os_include/sys/os_loadavg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

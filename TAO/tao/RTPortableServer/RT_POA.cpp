@@ -45,15 +45,10 @@ TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,
                      lock,
                      thread_lock,
                      orb_core,
-                     object_adapter),
-  thread_pool_ (0)
+                     object_adapter)
 {
   // Parse the RT policies and update our policy cache.
   this->parse_rt_policies (this->policies ());
-}
-
-TAO_RT_POA::~TAO_RT_POA ()
-{
 }
 
 TAO_Root_POA *
@@ -574,11 +569,13 @@ TAO_RT_POA::the_parent ()
   return this->TAO_Regular_POA::the_parent ();
 }
 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 PortableServer::POAList *
 TAO_RT_POA::the_children ()
 {
   return this->TAO_Regular_POA::the_children ();
 }
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 PortableServer::POAManager_ptr
 TAO_RT_POA::the_POAManager ()
@@ -586,9 +583,7 @@ TAO_RT_POA::the_POAManager ()
   return this->TAO_Regular_POA::the_POAManager ();
 }
 
-
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-
 PortableServer::AdapterActivator_ptr
 TAO_RT_POA::the_activator ()
 {

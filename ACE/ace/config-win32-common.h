@@ -460,7 +460,7 @@
 
 // PharLap ETS has its own winsock lib, so don't grab the one
 // supplied with the OS.
-# if defined (_MSC_VER) && !defined (ACE_HAS_PHARLAP)
+# if defined (_MSC_VER)
 #  pragma comment(lib, "wsock32.lib")
 # endif /* _MSC_VER */
 
@@ -490,17 +490,14 @@
 
 #define ACE_HAS_INTERLOCKED_EXCHANGEADD
 
-#if !defined (ACE_HAS_PHARLAP)
-
-# if _WIN32_WINNT >= 0x400
-#  define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
-# endif
+#if _WIN32_WINNT >= 0x400
+# define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
+#endif
 
 // If CancelIO is undefined get the updated sp2-sdk from MS
-# define ACE_HAS_CANCEL_IO
-# define ACE_HAS_WIN32_OVERLAPPED_IO
-# define ACE_HAS_WIN32_NAMED_PIPES
-#endif /* !ACE_HAS_PHARLAP */
+#define ACE_HAS_CANCEL_IO
+#define ACE_HAS_WIN32_OVERLAPPED_IO
+#define ACE_HAS_WIN32_NAMED_PIPES
 
 #if !defined (ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION)
 # define ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION EXCEPTION_CONTINUE_SEARCH
@@ -544,9 +541,7 @@
 # define ACE_DISABLES_THREAD_LIBRARY_CALLS 0
 #endif /* ACE_DISABLES_THREAD_LIBRARY_CALLS */
 
-#if !defined (ACE_HAS_PHARLAP)
-#  define ACE_HAS_LOG_MSG_NT_EVENT_LOG
-#endif /* !ACE_HAS_PHARLAP */
+#define ACE_HAS_LOG_MSG_NT_EVENT_LOG
 
 #define ACE_HAS_LLSEEK
 

@@ -127,12 +127,6 @@ namespace TAO
       this->poa_->tao_poa_manager().check_state ();
     }
 
-    ::PortableServer::LifespanPolicyValue
-    LifespanStrategyPersistent::type() const
-    {
-      return ::PortableServer::PERSISTENT;
-    }
-
     bool
     LifespanStrategyPersistent::use_imr () const
     {

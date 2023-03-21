@@ -26,10 +26,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Binary_Search_OpTable::~TAO_Binary_Search_OpTable ()
-{
-}
-
 int
 TAO_Binary_Search_OpTable::find (const char *opname,
                                  TAO_Skeleton &skelfunc,

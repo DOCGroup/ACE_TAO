@@ -25,14 +25,14 @@ ACE::ldfind (const ACE_TCHAR* filename,
 {
   ACE_TRACE ("ACE::ldfind");
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
   ACE_TCHAR expanded_filename[MAXPATHLEN];
   if (ACE_TEXT_ExpandEnvironmentStrings (filename,
                                          expanded_filename,
                                          sizeof expanded_filename
                                          / sizeof (ACE_TCHAR)))
     filename = expanded_filename;
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */
 
   ACE_TCHAR tempcopy[MAXPATHLEN + 1];
   ACE_TCHAR searchpathname[MAXPATHLEN + 1];

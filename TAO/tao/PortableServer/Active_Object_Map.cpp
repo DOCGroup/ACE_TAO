@@ -377,10 +377,6 @@ TAO_Active_Object_Map::is_user_id_in_map (
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_Id_Uniqueness_Strategy::~TAO_Id_Uniqueness_Strategy ()
-{
-}
-
 void
 TAO_Id_Uniqueness_Strategy::set_active_object_map (
   TAO_Active_Object_Map *active_object_map)
@@ -790,10 +786,6 @@ TAO_Multiple_Id_Strategy::remaining_activations (
 }
 #endif
 
-TAO_Lifespan_Strategy::~TAO_Lifespan_Strategy ()
-{
-}
-
 void
 TAO_Lifespan_Strategy::set_active_object_map (
   TAO_Active_Object_Map *active_object_map)
@@ -912,10 +904,6 @@ TAO_Active_Object_Map_Entry *&entry)
   return result;
 }
 #endif
-
-TAO_Id_Assignment_Strategy::~TAO_Id_Assignment_Strategy ()
-{
-}
 
 void
 TAO_Id_Assignment_Strategy::set_active_object_map (
@@ -1071,18 +1059,8 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_Id_Hint_Strategy::~TAO_Id_Hint_Strategy ()
-{
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 TAO_Active_Hint_Strategy::TAO_Active_Hint_Strategy (CORBA::ULong map_size)
   : system_id_map_ (map_size)
-{
-}
-
-TAO_Active_Hint_Strategy::~TAO_Active_Hint_Strategy ()
 {
 }
 
@@ -1134,10 +1112,6 @@ TAO_Active_Hint_Strategy::system_id (PortableServer::ObjectId_out system_id,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-TAO_No_Hint_Strategy::~TAO_No_Hint_Strategy ()
-{
-}
 
 int
 TAO_No_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id,

@@ -43,7 +43,7 @@ public:
                                CORBA::Boolean flag = false);
 
   /// Destructor
-  virtual ~TAO_Base_Transport_Property ();
+  virtual ~TAO_Base_Transport_Property () = default;
 
   /// The copy constructor.
   TAO_Base_Transport_Property (const TAO_Base_Transport_Property &rhs);

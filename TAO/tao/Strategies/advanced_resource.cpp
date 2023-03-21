@@ -452,9 +452,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
 #endif /* ACE_WIN32 */
       break;
 
-#if defined(ACE_WIN32) \
-  && !defined (ACE_LACKS_MSG_WFMO) \
-  && !defined (ACE_HAS_PHARLAP)
+#if defined(ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
     case TAO_REACTOR_MSGWFMO:
       ACE_NEW_RETURN (impl, ACE_Msg_WFMO_Reactor (0, tmq.get ()), 0);
       break;

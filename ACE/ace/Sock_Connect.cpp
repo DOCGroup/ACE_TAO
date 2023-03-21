@@ -30,7 +30,7 @@ const struct in6_addr in6addr_linklocal_allnodes = IN6ADDR_LINKLOCAL_ALLNODES_IN
 const struct in6_addr in6addr_linklocal_allrouters = IN6ADDR_LINKLOCAL_ALLROUTERS_INIT;
 #endif /* ACE_VXWORKS <= 0x670 && __RTP__ && ACE_HAS_IPV6 */
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
 # include "ace/OS_NS_stdio.h"
 #endif
 
@@ -438,89 +438,6 @@ static int
 get_ip_interfaces_win32 (size_t &count,
                          ACE_INET_Addr *&addrs)
 {
-# if defined (ACE_HAS_PHARLAP)
-  // PharLap ETS has its own kernel routines to rummage through the device
-  // configs and extract the interface info, but only for Pharlap RT.
-#   if !defined (ACE_HAS_PHARLAP_RT)
-  ACE_NOTSUP_RETURN (-1);
-#   endif /* ACE_HAS_PHARLAP_RT */
-
-  // Locate all of the IP devices in the system, saving a DEVHANDLE
-  // for each. Then allocate the ACE_INET_Addrs needed and fetch all
-  // the IP addresses.  To locate the devices, try the available
-  // device name roots and increment the device number until the
-  // kernel says there are no more of that type.
-  const size_t ACE_MAX_ETS_DEVICES = 64;  // Arbitrary, but should be enough.
-  DEVHANDLE ip_dev[ACE_MAX_ETS_DEVICES];
-  EK_TCPIPCFG *devp = 0;
-  size_t i, j;
-  ACE_TCHAR dev_name[16];
-
-  count = 0;
-  for (i = 0; count < ACE_MAX_ETS_DEVICES; i++, ++count)
-    {
-      // Ethernet.
-      ACE_OS::sprintf (dev_name,
-                       "ether%d",
-                       i);
-      ip_dev[count] = EtsTCPGetDeviceHandle (dev_name);
-      if (ip_dev[count] == 0)
-        break;
-    }
-  for (i = 0; count < ACE_MAX_ETS_DEVICES; i++, ++count)
-    {
-      // SLIP.
-      ACE_OS::sprintf (dev_name,
-                       "sl%d",
-                       i);
-      ip_dev[count] = EtsTCPGetDeviceHandle (dev_name);
-      if (ip_dev[count] == 0)
-        break;
-    }
-  for (i = 0; count < ACE_MAX_ETS_DEVICES; i++, ++count)
-    {
-      // PPP.
-      ACE_OS::sprintf (dev_name,
-                       "ppp%d",
-                       i);
-      ip_dev[count] = EtsTCPGetDeviceHandle (dev_name);
-      if (ip_dev[count] == 0)
-        break;
-    }
-
-  if (count > 0)
-    ACE_NEW_RETURN (addrs,
-                    ACE_INET_Addr[count],
-                    -1);
-  else
-    addrs = 0;
-
-  for (i = 0, j = 0; i < count; i++)
-    {
-      devp = EtsTCPGetDeviceCfg (ip_dev[i]);
-      if (devp != 0)
-        {
-          addrs[j].set (0,
-                        devp->nwIPAddress,
-                        0); // Already in net order.
-          ++j;
-        }
-      // There's no call to close the DEVHANDLE.
-    }
-
-  count = j;
-  if (count == 0 && addrs != 0)
-    {
-      delete [] addrs;
-      addrs = 0;
-    }
-
-  return 0;
-
-
-# else
-  // All non-CE, non-Pharlap Windows. Must support Winsock2.
-
   int i, n_interfaces, status;
 
   INTERFACE_INFO info[64];
@@ -637,8 +554,6 @@ get_ip_interfaces_win32 (size_t &count,
     }
 
   return 0;
-
-# endif /* ACE_HAS_PHARLAP */
 }
 
 #elif defined (ACE_HAS_GETIFADDRS)

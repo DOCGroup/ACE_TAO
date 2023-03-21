@@ -12,16 +12,17 @@
 #define TAO_PORTABLESERVER_LIFESPANPOLICY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/Policy_Strategy.h"
+#include "tao/PortableServer/LifespanPolicyC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/LifespanPolicyC.h"
 #include "tao/Object_KeyC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Root_POA;
 
 namespace TAO
 {
@@ -30,10 +31,10 @@ namespace TAO
     class Temporary_Creation_Time;
 
     class LifespanStrategy
-      : public Policy_Strategy
     {
     public:
-      LifespanStrategy ();
+      LifespanStrategy () = default;
+      virtual ~LifespanStrategy () = default;
 
       virtual void strategy_init (TAO_Root_POA *poa);
 
@@ -70,8 +71,6 @@ namespace TAO
       /// Check the state of the POA.
       virtual void check_state () = 0;
 
-      virtual ::PortableServer::LifespanPolicyValue type () const = 0;
-
       virtual bool use_imr () const = 0;
 
       virtual CORBA::Object_ptr imr_key_to_object (
@@ -79,7 +78,7 @@ namespace TAO
         const char *type_id) const = 0;
 
     protected:
-      TAO_Root_POA *poa_;
+      TAO_Root_POA *poa_ {};
     };
   } /* namespace Portable_Server */
 } /* namespace TAO */

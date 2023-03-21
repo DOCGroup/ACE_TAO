@@ -197,7 +197,7 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
                 }
             }
 
-          return (CORBA::Boolean) strm.good_bit ();
+          return strm.good_bit ();
         }
     }
   else
