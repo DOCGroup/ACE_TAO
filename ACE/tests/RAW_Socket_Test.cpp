@@ -182,7 +182,6 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
 
      if(local.get_type() == AF_INET)
      {
-       IPv4_HEADER_t_Ptr ptIPv4Header = (IPv4_HEADER_t_Ptr)recvbuf;
        UDP_HEADER_t_Ptr  ptUDPHeader  = (UDP_HEADER_t_Ptr)(recvbuf + sizeof(IPv4_HEADER_t));
        u_short nDstPort = ntohs(ptUDPHeader->u16DstPort) ;
        if(port == nDstPort && len == (n + sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t)))
@@ -201,7 +200,7 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
 }
 
 static int
-run_data_transfer_test_common_child_flow_sendby_self (ACE_RAW_SOCKET& raw, ACE_INET_Addr& client_addr, ACE_INET_Addr& server_addr, size_t n)
+run_raw_udp_test_child_flow_sendby_self (ACE_RAW_SOCKET& raw, ACE_INET_Addr& client_addr, ACE_INET_Addr& server_addr, size_t n)
 {
    ACE_DEBUG ((LM_INFO, "%s begin to run when sending data by self ...\n", __func__));
    IPv4_HEADER_t_Ptr  ptIPv4Header = (IPv4_HEADER_t_Ptr)sendbuf;
@@ -223,9 +222,9 @@ run_data_transfer_test_common_child_flow_sendby_self (ACE_RAW_SOCKET& raw, ACE_I
 }
 
 static int
-run_data_transfer_test_common ()
+run_raw_udp_test ()
 {
-  ACE_DEBUG ((LM_INFO, "%s begin to run using the port assigned by OS to avoid conflict ...\n", __func__));
+  ACE_DEBUG ((LM_INFO, "%s begin to run using the port auto assigned by OS to avoid port conflict ...\n", __func__));
 
   ACE_INET_Addr addr((u_short)0, "127.0.0.1");
   
@@ -256,15 +255,86 @@ run_data_transfer_test_common ()
 
   EXCEPTION_RETURN(rc != 0, "  can recv test pkg from raw socket\n");
 
-  rc = run_data_transfer_test_common_child_flow_sendby_self (rawSocket, client_addr, server_addr, n + 1);
+  rc = run_raw_udp_test_child_flow_sendby_self (rawSocket, client_addr, server_addr, n + 1);
   EXCEPTION_RETURN(rc != 0, "  can recv test pkg from raw socket when sending by self\n");
 
-  ACE_DEBUG ((LM_INFO, "%s test send & recv big pkt ...\n", __func__));
-  rc = run_data_transfer_test_common_child_flow_sendby_self (rawSocket, client_addr, server_addr, n + 2048);
-  EXCEPTION_RETURN(rc != 0, "  can recv test pkg from raw socket when sending big pkg by self\n");
-  
-  
+  if(ACE_OS::getuid() == 0)
+  {
+      ACE_DEBUG ((LM_INFO, "%s test send & recv big pkt ...\n", __func__));
+      rc = run_raw_udp_test_child_flow_sendby_self (rawSocket, client_addr, server_addr, n + 2048);
+      EXCEPTION_RETURN(rc != 0, "  can recv test pkg from raw socket when sending big pkg by self\n");
+  }
+    
   return 0;
+}
+
+static int
+run_raw_generic_test ()
+{
+   ACE_INET_Addr bindAddr((u_short)0, "127.0.0.1"), remote;
+    ACE_INET_Addr client_addr((u_short)0, "127.0.0.7") ,server_addr((u_short)0, "127.0.0.8");
+   ACE_SOCK_Dgram  client_dgram(client_addr);
+   SockGuard client_dgram_guard(client_dgram);
+
+   ACE_SOCK_Dgram  server_dgram(server_addr);
+   SockGuard server_dgram_guard(server_dgram);
+
+   ACE_RAW_SOCKET  rawSocket(bindAddr, IPPROTO_RAW);
+   SockGuard raw_guard(rawSocket);
+
+   EXCEPTION_RETURN(rawSocket.is_send_only() == false, "  raw socket is not send only\n");
+
+   ssize_t len = rawSocket.recv(recvbuf, sizeof(recvbuf),  remote);
+   EXCEPTION_RETURN(len  != -1, "  raw generic socket is send only , must not can recv data\n");
+
+  
+   client_dgram.get_local_addr (client_addr);
+   server_dgram.get_local_addr (server_addr);
+
+   IPv4_HEADER_t_Ptr  ptIPv4Header    = (IPv4_HEADER_t_Ptr)sendbuf;
+   UDP_HEADER_t_Ptr   ptUDPHeader     = (UDP_HEADER_t_Ptr)(sendbuf + sizeof(IPv4_HEADER_t));
+   u_short n = 2048;
+
+   *ptIPv4Header = {};
+
+   ptIPv4Header->bVersionAndHeaderLen = 0x45;
+   ptIPv4Header->u16TotalLenOfPacket  = htons(sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n);     // 数据包长度
+   ptIPv4Header->u16PacketID          = ACE_OS::rand();  
+   ptIPv4Header->bTTL                 = 64;
+   ptIPv4Header->bTypeOfProtocol      = IPPROTO_UDP; 
+   ptIPv4Header->u16CheckSum          = 0;
+   ptIPv4Header->u32SourIp            = (static_cast<sockaddr_in*>(client_addr.get_addr()))->sin_addr.s_addr;
+   ptIPv4Header->u32DestIp            = (static_cast<sockaddr_in*>(server_addr.get_addr()))->sin_addr.s_addr;
+
+   u_short client_port_number = client_addr.get_port_number();
+   u_short server_port_number = server_addr.get_port_number();
+
+
+   ptUDPHeader->u16SrcPort  = htons(client_port_number);
+   ptUDPHeader->u16DstPort  = htons(server_port_number);
+   ptUDPHeader->u16Length   = htons(sizeof(UDP_HEADER_t) + n);
+   ptUDPHeader->u16CheckSum = 0;
+
+   if(ACE_OS::getuid() == 0)
+   {
+      n = 2048;
+      len = rawSocket.send(sendbuf, sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n,  remote);
+      EXCEPTION_RETURN(len  != -1, "  raw generic socket can not send pkg more than MTU\n");
+   }
+   
+   n = 468;
+   ptUDPHeader->u16Length   = htons(sizeof(UDP_HEADER_t) + n);
+   len = rawSocket.send(sendbuf, sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n,  remote);
+   EXCEPTION_RETURN(static_cast<size_t>(len)  != (sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n), "  raw generic socket send pkg in failure\n");
+
+   ACE_OS::sleep(1);
+   ACE_DEBUG ((LM_INFO, "%s enable nonblock status ...\n", __func__));
+   server_dgram.enable(ACE_NONBLOCK);
+   len = server_dgram.recv(recvbuf, sizeof(recvbuf), remote);
+   EXCEPTION_RETURN(static_cast<size_t>(len)  !=  n, "  server socket receives pkg in failure length is not the same\n");
+   EXCEPTION_RETURN(static_cast<sockaddr_in*>(remote.get_addr())->sin_addr.s_addr  !=  static_cast<sockaddr_in*>(client_addr.get_addr())->sin_addr.s_addr, "  server socket receives pkg in failure: the source IP is not the same\n");
+   
+   return 0;
 }
 
 int
@@ -273,12 +343,31 @@ run_main (int, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("RAW_Socket_Test"));
   ACE_UNUSED_ARG (argv);
   int retval = 0;
+
+  // set the lo interface MTU
+  if(ACE_OS::getuid() == 0)
+  {
+    ACE_INET_Addr anyAddr((u_short)0);
+    ACE_SOCK_Dgram  netdevice(anyAddr);
+    SockGuard dgram_guard(netdevice);
+
+    struct ifreq tReq = {};
+    ACE_OS::snprintf(tReq.ifr_name, sizeof(tReq.ifr_name), "%s", "lo");
+    tReq.ifr_mtu = 1400;
+    ACE_OS::ioctl(netdevice.get_handle(), SIOCSIFMTU, &tReq);
+
+    tReq.ifr_mtu = 0;
+    ACE_OS::ioctl(netdevice.get_handle(), SIOCGIFMTU, &tReq);
+    EXCEPTION_RETURN(tReq.ifr_mtu != 1400, "  can set MTU for lo interface\n");
+  }
+  
  
 
   // Run the tests for each type of ordering.
   retval = run_option_test ();
   retval += run_reopen_test();
-  retval += run_data_transfer_test_common();
+  retval += run_raw_udp_test();
+  retval += run_raw_generic_test();
   
 
   ACE_END_TEST;

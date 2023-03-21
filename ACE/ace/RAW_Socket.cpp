@@ -33,12 +33,12 @@ ACE_RAW_SOCKET::ACE_RAW_SOCKET (ACE_INET_Addr const & local,
                                 int reuse_addr) : protocol_(protocol)
 {
   ACE_TRACE ("ACE_RAW_SOCKET::ACE_RAW_SOCKET");
+  
   if (this->open (local, protocol, reuse_addr) == -1)
-  {
       ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_RAW_SOCKET")));
-  }
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_RAW_SOCKET")));
+  
 }
 
 ssize_t
@@ -50,14 +50,13 @@ ACE_RAW_SOCKET::recv (void *buf,
 {
 
   if (this->get_handle () == ACE_INVALID_HANDLE)
-  {
       return -1;
-  }
 
+  if(this->is_send_only())
+    return -1;
+  
   if(timeout && ACE::handle_read_ready (this->get_handle (), timeout) != 1)
-  {
       return -1;
-  }
   
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int addr_len    = addr.get_size ();
@@ -82,21 +81,11 @@ ACE_RAW_SOCKET::send (const void *buf,
 {
   // Check the status of the current socket.
   if (this->get_handle () == ACE_INVALID_HANDLE)
-  {
       return -1;
-  }
-
-  if(this->is_send_only())
-  {
-    return -1;
-  }
   
   if(timeout && ACE::handle_write_ready (this->get_handle (), timeout) != 1)
-  {
       return -1;
-  }
   
-
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int len         = addr.get_size ();
   return ACE_OS::sendto (this->get_handle (),
@@ -114,17 +103,13 @@ ACE_RAW_SOCKET::open (ACE_INET_Addr const & local, int protocol, int reuse_addr)
   ACE_TRACE ("ACE_RAW_SOCKET::open");
 
   if (this->get_handle () != ACE_INVALID_HANDLE)
-  {
-      return -1;
-  }
+        return -1;
 
   int protocol_family = local.get_type ();
   
   
   if(ACE_SOCK::open (SOCK_RAW, protocol_family, protocol, reuse_addr) == -1)
-  {
     return -1;
-  }
 
   this->protocol_ = protocol;
 
