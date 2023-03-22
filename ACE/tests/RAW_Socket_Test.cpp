@@ -166,17 +166,18 @@ run_reopen_test ()
   return 0;
 }
 
-static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port, size_t n, ACE_INET_Addr& remote, ACE_INET_Addr* to_addr)
+static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port, size_t n, ACE_INET_Addr& remote, ACE_INET_Addr* to_addr = nullptr)
 {
    ACE_INET_Addr local;
    raw.get_local_addr(local);
 
    ssize_t len = 0;
+   ssize_t expectedLen;
 
    do
    {
      
-     if(to_addr == NULL)
+     if(to_addr == nullptr)
      {
          len = raw.recv(recvbuf, sizeof(recvbuf), remote); 
      }
@@ -188,6 +189,7 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
 
      if(len < 0)
      {
+         ACE_DEBUG ((LM_INFO, "%s IPv6 recv expected pkgs ...\n", __func__));
          return -1;
      }
 
@@ -195,21 +197,29 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
      if(local.get_type() == AF_INET)
      {
        ptUDPHeader  = (UDP_HEADER_t_Ptr)(recvbuf + sizeof(IPv4_HEADER_t));
+       expectedLen  = (n + sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t));
+       u_short nDstPort    = ntohs(ptUDPHeader->u16DstPort);
+
+       if(port == nDstPort && len == expectedLen)
+       {
+        ACE_DEBUG ((LM_INFO, "%s IPv4 recv expected pkgs ...\n", __func__));
+        break;
+       }
      }
      else
      {
-      ptUDPHeader  = (UDP_HEADER_t_Ptr)recvbuf;
-     }
+       ptUDPHeader         = (UDP_HEADER_t_Ptr)recvbuf;
+       expectedLen         = (n + sizeof(UDP_HEADER_t));
+       u_short nDstPort    = ntohs(ptUDPHeader->u16DstPort);
 
-     u_short nDstPort = ntohs(ptUDPHeader->u16DstPort) ;
-     if(port == nDstPort && len == (n + sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t)))
-     {
-        ACE_DEBUG ((LM_INFO, "%s recv expected pkgs ...\n", __func__));
+       if(port == nDstPort && len == expectedLen)
+       {
+        ACE_DEBUG ((LM_INFO, "%s IPv6 recv expected pkgs ...\n", __func__));
         break;
+       }
      }
-
      
-     ACE_DEBUG ((LM_DEBUG, "%s recv unexpected pkgs ...\n", __func__));
+     ACE_DEBUG ((LM_DEBUG, "%s recv unexpected pkgs len: %d, expectedLen: %d ...\n", __func__, len, expectedLen));
      ACE_OS::sleep(1);
    } while (1);
    
@@ -220,7 +230,7 @@ static int
 run_raw_udp_test_child_flow_sendby_self (ACE_RAW_SOCKET& raw, ACE_INET_Addr& client_addr, ACE_INET_Addr& server_addr, size_t n)
 {
    ACE_DEBUG ((LM_INFO, "%s begin to run when sending data by self ...\n", __func__));
-   IPv4_HEADER_t_Ptr  ptIPv4Header = (IPv4_HEADER_t_Ptr)sendbuf;
+
    UDP_HEADER_t_Ptr   ptUDPHeader  = (UDP_HEADER_t_Ptr)(sendbuf + sizeof(IPv4_HEADER_t_Ptr));
 
    ptUDPHeader->u16SrcPort  = htons(client_addr.get_port_number());
@@ -229,7 +239,8 @@ run_raw_udp_test_child_flow_sendby_self (ACE_RAW_SOCKET& raw, ACE_INET_Addr& cli
    ptUDPHeader->u16CheckSum = 0;
 
    int rc = raw.send(ptUDPHeader, n + sizeof(UDP_HEADER_t), server_addr);
-   EXCEPTION_RETURN(rc != (n + sizeof(UDP_HEADER_t)), "  raw socket can not send test pkg to server\n");
+   ssize_t expectedLen = n + sizeof(UDP_HEADER_t);
+   EXCEPTION_RETURN(rc != expectedLen, "  raw socket can not send test pkg to server\n");
 
    u_short server_port = server_addr.get_port_number();
    ACE_INET_Addr remote;
@@ -264,7 +275,7 @@ run_raw_udp_test ()
 
   EXCEPTION_RETURN(rc < 0, "  can not get server address\n");
 
-  size_t n = 512;
+  ssize_t n = 512;
   rc = dgram.send(sendbuf, n, server_addr);
   EXCEPTION_RETURN(rc != n, "  can send test pkg to server\n");
 
@@ -337,20 +348,25 @@ run_raw_generic_test ()
 
    if(ACE_OS::getuid() == 0)
    {
+      ACE_DEBUG ((LM_INFO, "%s raw generic socket will send bytes exceeding the MTU  ...\n", __func__));
       n = 2048;
-      len = rawSocket.send(sendbuf, sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n,  remote);
+      len = rawSocket.send(sendbuf, sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n,  server_addr);
       EXCEPTION_RETURN(len  != -1, "  raw generic socket can not send pkg more than MTU\n");
    }
    
    n = 468;
    ptUDPHeader->u16Length   = htons(sizeof(UDP_HEADER_t) + n);
-   len = rawSocket.send(sendbuf, sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n,  remote);
-   EXCEPTION_RETURN(static_cast<size_t>(len)  != (sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n), "  raw generic socket send pkg in failure\n");
+   len = rawSocket.send(sendbuf, sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n,  server_addr);
+   size_t expectedLen = (sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n);
+   ACE_DEBUG ((LM_INFO, "%s raw generic socket send %d bytes, expected %u bytes  ...\n", __func__, len, expectedLen));
+   EXCEPTION_RETURN(static_cast<size_t>(len)  != expectedLen, "  raw generic socket send pkg in failure\n");
 
    ACE_OS::sleep(1);
    ACE_DEBUG ((LM_INFO, "%s enable nonblock status ...\n", __func__));
    server_dgram.enable(ACE_NONBLOCK);
    len = server_dgram.recv(recvbuf, sizeof(recvbuf), remote);
+   expectedLen =  n;
+   ACE_DEBUG ((LM_INFO, "%s udp server socket recv %d bytes, expected %u bytes  ...\n", __func__, len, expectedLen));
    EXCEPTION_RETURN(static_cast<size_t>(len)  !=  n, "  server socket receives pkg in failure length is not the same\n");
    EXCEPTION_RETURN(static_cast<sockaddr_in*>(remote.get_addr())->sin_addr.s_addr  !=  static_cast<sockaddr_in*>(client_addr.get_addr())->sin_addr.s_addr, "  server socket receives pkg in failure: the source IP is not the same\n");
    
@@ -363,11 +379,12 @@ run_ipv6_pkginfo_test ()
 {
    ACE_DEBUG ((LM_INFO, "%s begin to run IPv6 pkginfo test ...\n", __func__));
 
-   ACE_INET_Addr bindAddr((u_short)0, "::1"), remote;
+   ACE_INET_Addr bindAddr((u_short)0, "::1");
    ACE_INET_Addr anyAddr((u_short)0, "::");
 
    ACE_INET_Addr client_addr((u_short)0, "::1") ,server_addr((u_short)0, "::1");
 
+   
    ACE_SOCK_Dgram  client_dgram(client_addr);
    SockGuard client_dgram_guard(client_dgram);
    client_dgram.get_local_addr(client_addr);
@@ -376,33 +393,52 @@ run_ipv6_pkginfo_test ()
    SockGuard server_dgram_guard(server_dgram);
    server_dgram.get_local_addr(server_addr);
 
+   ACE_DEBUG ((LM_INFO, "%s get the real bound addr and port client_port: %u, server_port: %u...\n", __func__, client_addr.get_port_number(), server_addr.get_port_number()));
+
+   
+
    ACE_RAW_SOCKET  rawSocket(bindAddr, IPPROTO_UDP);
    rawSocket.enable(ACE_NONBLOCK);
    SockGuard raw_guard(rawSocket);
+
    ACE_RAW_SOCKET  rawWildcardSocket(anyAddr, IPPROTO_UDP);
    rawWildcardSocket.enable(ACE_NONBLOCK);
-   SockGuard raw_guard(rawWildcardSocket);
+   SockGuard raw_wildcard_guard(rawWildcardSocket);
    
+   client_dgram.send("hello world", sizeof("hello world"), server_addr);
+   
+   ACE_DEBUG ((LM_INFO, "%s the send pkg will be received by two raw sockets ...\n", __func__));
+   ACE_OS::sleep(1);
+
+   ACE_INET_Addr remote;   
+   int rc = raw_recv_data_until_meet_condition(rawSocket, server_addr.get_port_number(), sizeof("hello world"), remote);
+   
+   EXCEPTION_RETURN(rc != 0, "  non wildcard raw socket can not recv expectedRecvLen\n");
+
+   ACE_INET_Addr to_addr;
+
+   ACE_DEBUG ((LM_INFO, "%s send pkg again to test common raw socket with to_adr parameter ...\n", __func__));
    client_dgram.send("hello world", sizeof("hello world"), server_addr);
    ACE_OS::sleep(1);
 
-      
-   int rc = raw_recv_data_until_meet_condition(rawSocket, server_addr.get_port_number(), sizeof("hello world"), remote);
-   
-   EXCEPTION_RETURN(rc != 0, "  can not recv expectedRecvLen\n");
-
-   ACE_INET_Addr to_addr;
-   rc = raw_recv_data_until_meet_condition(rawWildcardSocket, server_addr.get_port_number(), sizeof("hello world"), remote, &to_addr);
-   EXCEPTION_RETURN(rc != 0, "  can not recv expectedRecvLen with to_addr when provided to wildcard RAW socket\n");
-   EXCEPTION_RETURN(remote != to_addr, "  to_addr with invalid value when provided to wildcard RAW socket\n");
-
-
-   client_dgram.send("hello world", sizeof("hello world"), server_addr);
+   int yes = 1;
    
    rc = raw_recv_data_until_meet_condition(rawSocket, server_addr.get_port_number(), sizeof("hello world"), remote, &to_addr);
-   EXCEPTION_RETURN(len != expectedRecvLen, "  can not recv expectedRecvLen with to_addr when provided to non wildcard RAW socket\n");
-   EXCEPTION_RETURN(remote != to_addr, "  to_addr with invalid value when provided to non wildcard RAW socket\n");
+   EXCEPTION_RETURN(rc != 0, "  non wildcard raw socket can not recv expectedRecvLen with to_addr parameter\n");
+    
+   in6_addr* remote_sin6_addr = &(static_cast<sockaddr_in6 *>(remote.get_addr())->sin6_addr);
+   in6_addr* to_sin6_addr     = &(static_cast<sockaddr_in6 *>(to_addr.get_addr())->sin6_addr);
+   int cmp = ACE_OS::memcmp(remote_sin6_addr, to_sin6_addr, sizeof(*to_sin6_addr));
+   EXCEPTION_RETURN(cmp != 0, "  non wildcard raw socket got to_addr with invalid value\n");
 
+  
+   rc = raw_recv_data_until_meet_condition(rawWildcardSocket, server_addr.get_port_number(), sizeof("hello world"), remote, &to_addr);
+   EXCEPTION_RETURN(rc != 0, "  can not recv expectedRecvLen with to_addr when provided to wildcard RAW socket\n");
+   remote_sin6_addr = &(static_cast<sockaddr_in6 *>(remote.get_addr())->sin6_addr);
+   to_sin6_addr     = &(static_cast<sockaddr_in6 *>(to_addr.get_addr())->sin6_addr);
+   cmp = ACE_OS::memcmp(remote_sin6_addr, to_sin6_addr, sizeof(*to_sin6_addr));
+   EXCEPTION_RETURN(cmp != 0, "  to_addr with invalid value when provided to wildcard RAW socket\n");
+       
    return 0;
 }
 #endif
@@ -442,6 +478,8 @@ run_main (int, ACE_TCHAR *argv[])
 
   #if defined (ACE_HAS_IPV6)
   retval += run_ipv6_pkginfo_test();
+  #elif
+  ACE_DEBUG ((LM_INFO, "%s without IPv6 macro ...\n", __func__));
   #endif
   
 

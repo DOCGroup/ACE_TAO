@@ -32,13 +32,29 @@ ACE_RAW_SOCKET::ACE_RAW_SOCKET (ACE_INET_Addr const & local,
                                 int protocol) : protocol_(protocol)
 {
   ACE_TRACE ("ACE_RAW_SOCKET::ACE_RAW_SOCKET");
-  /// reuse_addr Maybe meaningless for RAW Socket
-  const int reuse_addr = 1;
-  if (this->open (local, protocol, reuse_addr) == -1)
+
+  if (this->open (local, protocol) == -1)
       ACELIB_ERROR ((LM_ERROR,
                      ACE_TEXT ("%p\n"),
                      ACE_TEXT ("ACE_RAW_SOCKET")));
   
+}
+
+static inline ssize_t using_common_recv(const ACE_RAW_SOCKET* raw, void *buf, size_t n, ACE_INET_Addr &addr, int flags)
+{
+    sockaddr *saddr      = (sockaddr *) addr.get_addr ();
+    int addr_len         = addr.get_size ();
+
+    ssize_t const status = ACE_OS::recvfrom (raw->get_handle (),
+                                      (char *) buf,
+                                      n,
+                                      flags,
+                                      (sockaddr *) saddr,
+                                      &addr_len);
+
+    addr.set_size (addr_len);
+    addr.set_type (saddr->sa_family);
+    return status;
 }
 
 ssize_t
@@ -46,7 +62,7 @@ ACE_RAW_SOCKET::recv (void *buf,
                       size_t n,
                       ACE_INET_Addr &addr,
                       int flags,
-                      const ACE_Time_Value *timeout
+                      const ACE_Time_Value *timeout,
                       ACE_INET_Addr *to_addr) const
 {
 
@@ -62,39 +78,14 @@ ACE_RAW_SOCKET::recv (void *buf,
 
   if(to_addr == NULL)
   {
-
-    sockaddr *saddr      = (sockaddr *) addr.get_addr ();
-    int addr_len         = addr.get_size ();
-
-    ssize_t const status = ACE_OS::recvfrom (this->get_handle (),
-                                      (char *) buf,
-                                      n,
-                                      flags,
-                                      (sockaddr *) saddr,
-                                      &addr_len);
-
-    addr.set_size (addr_len);
-    addr.set_type (saddr->sa_family);
-    return status;
+    return using_common_recv(this, buf, n, addr, flags);
   }
   else
   {
     this->get_local_addr (*to_addr);
-    if(!local.is_any())
+    if(!to_addr->is_any())
     {
-       sockaddr *saddr      = (sockaddr *) addr.get_addr ();
-       int addr_len         = addr.get_size ();
-
-       ssize_t const status = ACE_OS::recvfrom (this->get_handle (),
-                                      (char *) buf,
-                                      n,
-                                      flags,
-                                      (sockaddr *) saddr,
-                                      &addr_len);
-    
-       addr.set_size (addr_len);
-       addr.set_type (saddr->sa_family);
-       return status;
+       return using_common_recv(this, buf, n, addr, flags);
     }
 
   }
@@ -116,8 +107,8 @@ ACE_RAW_SOCKET::recv (void *buf,
   #endif
 
   struct iovec iov;
-  iov.io_base = buf;
-  iov.iov_len = n;
+  iov.iov_base = buf;
+  iov.iov_len  = n;
 
   msghdr recv_msg     = {};
   recv_msg.msg_iov    = (iovec*)&iov;
@@ -131,8 +122,8 @@ ACE_RAW_SOCKET::recv (void *buf,
     recv_msg.msg_namelen = addr.get_size ();
 
   #ifdef ACE_USE_MSG_CONTROL
-    recv_msg.msg_control    =  &cbuf
-    recv_msg.msg_controllen =  sizeof (cbuf) ;
+    recv_msg.msg_control    =  &cbuf;
+    recv_msg.msg_controllen =  sizeof (cbuf);
   #elif !defined ACE_LACKS_SENDMSG
     recv_msg.msg_accrights    = 0;
     recv_msg.msg_accrightslen = 0;
@@ -212,7 +203,7 @@ ACE_RAW_SOCKET::send (const void *buf,
 }
 
 int
-ACE_RAW_SOCKET::open (ACE_INET_Addr const & local, int protocol, int reuse_addr)
+ACE_RAW_SOCKET::open (ACE_INET_Addr const & local, int protocol)
 {
   ACE_TRACE ("ACE_RAW_SOCKET::open");
 
@@ -220,13 +211,22 @@ ACE_RAW_SOCKET::open (ACE_INET_Addr const & local, int protocol, int reuse_addr)
         return -1;
 
   int protocol_family = local.get_type ();
-  
-  
+  /// reuse_addr Maybe meaningless for RAW Socket
+  const int reuse_addr = 1;
+
   if(ACE_SOCK::open (SOCK_RAW, protocol_family, protocol, reuse_addr) == -1)
     return -1;
 
   this->protocol_ = protocol;
-
+ 
+  ACE_INET_Addr bindAddr;
+  this->get_local_addr(bindAddr);
+  if(bindAddr.is_any())
+  {
+    int yes = 1;
+    this->set_option(IPPROTO_IPV6, IPV6_RECVPKTINFO, &yes, sizeof(yes));
+  }
+  
   return  0;
 }
 

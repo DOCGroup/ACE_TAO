@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file RAW_Socket.h
+ *  @file   RAW_Socket.h
  *
  *  @author Smith.Achang <changyunlei@126.com>
  */
@@ -56,7 +56,7 @@ public:
   
   /// Constructor that bind a local address and fiter UDP protocol.
   /// @param local      local IP address to bind
-  /// @param protocol   IPPROTO_UDP as default value. often used as a user-space UDP stack
+  /// @param protocol   IPPROTO_UDP as default value because often used as a user-space UDP stack
   ACE_RAW_SOCKET (ACE_INET_Addr const & local, int protocol = IPPROTO_UDP);
                   
 
@@ -70,7 +70,7 @@ public:
   /**
    * Wait up to @a timeout amount of time to send a datagram to
    * @a buf.  The ACE_Time_Value indicates how long to blocking
-   * trying to receive.  If @a timeout == 0, the caller will block
+   * trying to receive.  If @a timeout == nullptr, the caller will block
    * until action is possible, else will wait until the relative time
    * specified in *@a timeout elapses).  If <send> times out a -1 is
    * returned with @c errno == ETIME.  If it succeeds the number of
@@ -80,13 +80,13 @@ public:
                 size_t n,
                 const ACE_INET_Addr &addr,
                 int flags = 0,
-                const ACE_Time_Value *timeout = NULL) const;
+                const ACE_Time_Value *timeout = nullptr) const;
 
 
   /**
    * Wait up to @a timeout amount of time to receive a datagram into
    * @a buf.  The ACE_Time_Value indicates how long to blocking
-   * trying to receive.  If @a timeout == 0, the caller will block
+   * trying to receive.  If @a timeout == nullptr, the caller will block
    * until action is possible, else will wait until the relative time
    * specified in *@a timeout elapses).  If <recv> times out a -1 is
    * returned with @c errno == ETIME.  If it succeeds the number of
@@ -97,8 +97,8 @@ public:
                 size_t n,
                 ACE_INET_Addr &addr,
                 int flags = 0,
-                const ACE_Time_Value *timeout = NULL,
-                ACE_INET_Addr *to_addr = NULL) const;
+                const ACE_Time_Value *timeout = nullptr,
+                ACE_INET_Addr *to_addr = nullptr) const;
 
 
   //@}
@@ -107,14 +107,11 @@ public:
    * Wrapper around the BSD-style @c socket system call (no QoS).
    * @param local      local IP address to bind
    * @param protocol   filter the protocol based on IP network layer. Using IPPROTO_UDP as default value for often used as a user-space UDP stack
-   * @param reuse_addr Maybe meaningless for RAW Socket
    * 
    * @attention can be re-opened after closed
    */
  
-  int open (ACE_INET_Addr const & local,
-            int protocol   = IPPROTO_UDP,
-            int reuse_addr = 1);
+  int open (ACE_INET_Addr const & local, int protocol = IPPROTO_UDP);
 
   /// Dump the state of object.
   void dump () const;
