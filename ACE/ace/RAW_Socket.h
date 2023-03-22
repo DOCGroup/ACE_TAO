@@ -35,15 +35,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief An RAW Socket implemention class.
  * 
  * An RAW Socket can be used for some user-space network protocol stack.
- * - setting the protocol para to be IPPROTO_UDP will filter all UPD protocol packages with the destination is its bound address.
- *   It can reduce the total num of needed socket with only port difference
+ * - Setting the protocol para to be IPPROTO_UDP will filter all UDP protocol packages with the destination is its bound address.
+ *   IT can reduce the total num of socket needed with only port difference.
  * 
- * - setting the protocol para to be IPPROTO_SCTP will filter all SCTP protocol packages with the destination is its bound address.
- *   It can form the basis of a user-space SCTP protocol stack in more general platforms
+ * - Setting the protocol para to be IPPROTO_SCTP will filter all SCTP protocol packages with the destination is its bound address.
+ *   It can form the basis of a user-space SCTP protocol stack in more general platforms.
  * 
- * - setting the protocol para to be IPPROTO_RAW will make it as a send only socket for any customized dgram formed from IP header.
- *   Notice the source address if provided can be different from its bound address.
- *   Notice the RAW socket does not support fragment function when passed package exceeds the MTU, so it need a upper layer framment before called
+ * - Setting the protocol para to be IPPROTO_RAW will make it as a send only socket for any customized package formed from IP header to be send.
+ *   Notice the source address if provided in the customized package can be different from its bound address.
+ *   Notice the RAW socket does not support fragment function when the passed package exceeds the MTU, so it need a upper layer framment before called
  * 
  * @note If you really want to receive all IP packets, use a packet(7) socket with the ETH_P_IP protocol. 
  *       For "Single Responsibility Principle" the behavior has notable difference, so the feature is not implemented here.
@@ -57,10 +57,8 @@ public:
   /// Constructor that bind a local address and fiter UDP protocol.
   /// @param local      local IP address to bind
   /// @param protocol   IPPROTO_UDP as default value. often used as a user-space UDP stack
-  /// @param reuse_addr Maybe meaningless for RAW Socket
-  ACE_RAW_SOCKET (ACE_INET_Addr const & local,
-                  int protocol   = IPPROTO_UDP,
-                  int reuse_addr = 1);
+  ACE_RAW_SOCKET (ACE_INET_Addr const & local, int protocol = IPPROTO_UDP);
+                  
 
   /**
    * @name Data transfer routines.
@@ -92,13 +90,15 @@ public:
    * until action is possible, else will wait until the relative time
    * specified in *@a timeout elapses).  If <recv> times out a -1 is
    * returned with @c errno == ETIME.  If it succeeds the number of
-   * bytes received is returned.
+   * bytes received is returned. 
+   * When the RAW socket is bound to wildcard address, @a to_addr can get the destination info
    */
   ssize_t recv (void *buf,
                 size_t n,
                 ACE_INET_Addr &addr,
                 int flags = 0,
-                const ACE_Time_Value *timeout = NULL) const;
+                const ACE_Time_Value *timeout = NULL,
+                ACE_INET_Addr *to_addr = NULL) const;
 
 
   //@}

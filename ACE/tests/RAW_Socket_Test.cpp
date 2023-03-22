@@ -166,29 +166,46 @@ run_reopen_test ()
   return 0;
 }
 
-static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port, size_t n)
+static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port, size_t n, ACE_INET_Addr& remote, ACE_INET_Addr* to_addr)
 {
    ACE_INET_Addr local;
    raw.get_local_addr(local);
+
+   ssize_t len = 0;
+
    do
    {
-     ACE_INET_Addr remote;
-     ssize_t len = raw.recv(recvbuf, sizeof(recvbuf), remote);
+     
+     if(to_addr == NULL)
+     {
+         len = raw.recv(recvbuf, sizeof(recvbuf), remote); 
+     }
+     else
+     {
+         len = raw.recv(recvbuf, sizeof(recvbuf), remote, 0/*flags*/, nullptr, to_addr); 
+     }
+     
 
      if(len < 0)
      {
-      return 1;
+         return -1;
      }
 
+     UDP_HEADER_t_Ptr  ptUDPHeader;
      if(local.get_type() == AF_INET)
      {
-       UDP_HEADER_t_Ptr  ptUDPHeader  = (UDP_HEADER_t_Ptr)(recvbuf + sizeof(IPv4_HEADER_t));
-       u_short nDstPort = ntohs(ptUDPHeader->u16DstPort) ;
-       if(port == nDstPort && len == (n + sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t)))
-       {
+       ptUDPHeader  = (UDP_HEADER_t_Ptr)(recvbuf + sizeof(IPv4_HEADER_t));
+     }
+     else
+     {
+      ptUDPHeader  = (UDP_HEADER_t_Ptr)recvbuf;
+     }
+
+     u_short nDstPort = ntohs(ptUDPHeader->u16DstPort) ;
+     if(port == nDstPort && len == (n + sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t)))
+     {
         ACE_DEBUG ((LM_INFO, "%s recv expected pkgs ...\n", __func__));
         break;
-       }
      }
 
      
@@ -215,7 +232,8 @@ run_raw_udp_test_child_flow_sendby_self (ACE_RAW_SOCKET& raw, ACE_INET_Addr& cli
    EXCEPTION_RETURN(rc != (n + sizeof(UDP_HEADER_t)), "  raw socket can not send test pkg to server\n");
 
    u_short server_port = server_addr.get_port_number();
-   rc = raw_recv_data_until_meet_condition(raw, server_port, n);
+   ACE_INET_Addr remote;
+   rc = raw_recv_data_until_meet_condition(raw, server_port, n, remote);
    EXCEPTION_RETURN(rc != 0, "  can recv test pkg from raw socket\n");
    
    return 0;
@@ -237,7 +255,7 @@ run_raw_udp_test ()
   ACE_RAW_SOCKET  rawSocket(addr);
   SockGuard raw_guard(rawSocket);
 
-  ACE_INET_Addr client_addr ,server_addr;
+  ACE_INET_Addr client_addr ,server_addr,remote;
   int rc = dgram.get_local_addr (client_addr);
 
   EXCEPTION_RETURN(rc < 0, "  can not get client bound address\n");
@@ -251,7 +269,7 @@ run_raw_udp_test ()
   EXCEPTION_RETURN(rc != n, "  can send test pkg to server\n");
 
   u_short server_port = server_addr.get_port_number();
-  rc = raw_recv_data_until_meet_condition(rawSocket, server_port, n);
+  rc = raw_recv_data_until_meet_condition(rawSocket, server_port, n, remote);
 
   EXCEPTION_RETURN(rc != 0, "  can recv test pkg from raw socket\n");
 
@@ -271,8 +289,10 @@ run_raw_udp_test ()
 static int
 run_raw_generic_test ()
 {
+   ACE_DEBUG ((LM_INFO, "%s begin to run generic raw socket i.e. send only RAW socket  ...\n", __func__));
+
    ACE_INET_Addr bindAddr((u_short)0, "127.0.0.1"), remote;
-    ACE_INET_Addr client_addr((u_short)0, "127.0.0.7") ,server_addr((u_short)0, "127.0.0.8");
+   ACE_INET_Addr client_addr((u_short)0, "127.0.0.7") ,server_addr((u_short)0, "127.0.0.8");
    ACE_SOCK_Dgram  client_dgram(client_addr);
    SockGuard client_dgram_guard(client_dgram);
 
@@ -337,12 +357,63 @@ run_raw_generic_test ()
    return 0;
 }
 
+#if defined (ACE_HAS_IPV6)
+static int
+run_ipv6_pkginfo_test ()
+{
+   ACE_DEBUG ((LM_INFO, "%s begin to run IPv6 pkginfo test ...\n", __func__));
+
+   ACE_INET_Addr bindAddr((u_short)0, "::1"), remote;
+   ACE_INET_Addr anyAddr((u_short)0, "::");
+
+   ACE_INET_Addr client_addr((u_short)0, "::1") ,server_addr((u_short)0, "::1");
+
+   ACE_SOCK_Dgram  client_dgram(client_addr);
+   SockGuard client_dgram_guard(client_dgram);
+   client_dgram.get_local_addr(client_addr);
+
+   ACE_SOCK_Dgram  server_dgram(server_addr);
+   SockGuard server_dgram_guard(server_dgram);
+   server_dgram.get_local_addr(server_addr);
+
+   ACE_RAW_SOCKET  rawSocket(bindAddr, IPPROTO_UDP);
+   rawSocket.enable(ACE_NONBLOCK);
+   SockGuard raw_guard(rawSocket);
+   ACE_RAW_SOCKET  rawWildcardSocket(anyAddr, IPPROTO_UDP);
+   rawWildcardSocket.enable(ACE_NONBLOCK);
+   SockGuard raw_guard(rawWildcardSocket);
+   
+   client_dgram.send("hello world", sizeof("hello world"), server_addr);
+   ACE_OS::sleep(1);
+
+      
+   int rc = raw_recv_data_until_meet_condition(rawSocket, server_addr.get_port_number(), sizeof("hello world"), remote);
+   
+   EXCEPTION_RETURN(rc != 0, "  can not recv expectedRecvLen\n");
+
+   ACE_INET_Addr to_addr;
+   rc = raw_recv_data_until_meet_condition(rawWildcardSocket, server_addr.get_port_number(), sizeof("hello world"), remote, &to_addr);
+   EXCEPTION_RETURN(rc != 0, "  can not recv expectedRecvLen with to_addr when provided to wildcard RAW socket\n");
+   EXCEPTION_RETURN(remote != to_addr, "  to_addr with invalid value when provided to wildcard RAW socket\n");
+
+
+   client_dgram.send("hello world", sizeof("hello world"), server_addr);
+   
+   rc = raw_recv_data_until_meet_condition(rawSocket, server_addr.get_port_number(), sizeof("hello world"), remote, &to_addr);
+   EXCEPTION_RETURN(len != expectedRecvLen, "  can not recv expectedRecvLen with to_addr when provided to non wildcard RAW socket\n");
+   EXCEPTION_RETURN(remote != to_addr, "  to_addr with invalid value when provided to non wildcard RAW socket\n");
+
+   return 0;
+}
+#endif
+
 int
 run_main (int, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("RAW_Socket_Test"));
   ACE_UNUSED_ARG (argv);
   int retval = 0;
+  int oldMTU = 1500;
 
   // set the lo interface MTU
   if(ACE_OS::getuid() == 0)
@@ -368,9 +439,26 @@ run_main (int, ACE_TCHAR *argv[])
   retval += run_reopen_test();
   retval += run_raw_udp_test();
   retval += run_raw_generic_test();
+
+  #if defined (ACE_HAS_IPV6)
+  retval += run_ipv6_pkginfo_test();
+  #endif
   
 
   ACE_END_TEST;
+
+ if(ACE_OS::getuid() == 0)
+  {
+    ACE_INET_Addr anyAddr((u_short)0);
+    ACE_SOCK_Dgram  netdevice(anyAddr);
+    SockGuard dgram_guard(netdevice);
+
+    struct ifreq tReq = {};
+    ACE_OS::snprintf(tReq.ifr_name, sizeof(tReq.ifr_name), "%s", "lo");
+    tReq.ifr_mtu = oldMTU;
+    ACE_OS::ioctl(netdevice.get_handle(), SIOCSIFMTU, &tReq);
+  }
+  
 
   return retval;
 }
