@@ -166,7 +166,7 @@ run_reopen_test ()
   return 0;
 }
 
-static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port, size_t n, ACE_INET_Addr& remote, ACE_INET_Addr* to_addr = nullptr)
+static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port, size_t n, ACE_INET_Addr& remote, ACE_INET_Addr* to_addr = NULL)
 {
    ACE_INET_Addr local;
    raw.get_local_addr(local);
@@ -177,13 +177,13 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
    do
    {
      
-     if(to_addr == nullptr)
+     if(to_addr == NULL)
      {
          len = raw.recv(recvbuf, sizeof(recvbuf), remote); 
      }
      else
      {
-         len = raw.recv(recvbuf, sizeof(recvbuf), remote, 0/*flags*/, nullptr, to_addr); 
+         len = raw.recv(recvbuf, sizeof(recvbuf), remote, 0/*flags*/, NULL, to_addr); 
      }
      
 
@@ -202,8 +202,8 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
 
        if(port == nDstPort && len == expectedLen)
        {
-        ACE_DEBUG ((LM_INFO, "%s IPv4 recv expected pkgs ...\n", __func__));
-        break;
+         ACE_DEBUG ((LM_INFO, "%s IPv4 recv expected pkgs ...\n", __func__));
+         break;
        }
      }
      else
@@ -214,8 +214,8 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
 
        if(port == nDstPort && len == expectedLen)
        {
-        ACE_DEBUG ((LM_INFO, "%s IPv6 recv expected pkgs ...\n", __func__));
-        break;
+         ACE_DEBUG ((LM_INFO, "%s IPv6 recv expected pkgs ...\n", __func__));
+         break;
        }
      }
      
@@ -420,8 +420,6 @@ run_ipv6_pkginfo_test ()
    ACE_DEBUG ((LM_INFO, "%s send pkg again to test common raw socket with to_adr parameter ...\n", __func__));
    client_dgram.send("hello world", sizeof("hello world"), server_addr);
    ACE_OS::sleep(1);
-
-   int yes = 1;
    
    rc = raw_recv_data_until_meet_condition(rawSocket, server_addr.get_port_number(), sizeof("hello world"), remote, &to_addr);
    EXCEPTION_RETURN(rc != 0, "  non wildcard raw socket can not recv expectedRecvLen with to_addr parameter\n");
@@ -460,6 +458,11 @@ run_main (int, ACE_TCHAR *argv[])
 
     struct ifreq tReq = {};
     ACE_OS::snprintf(tReq.ifr_name, sizeof(tReq.ifr_name), "%s", "lo");
+
+    tReq.ifr_mtu = 0;
+    ACE_OS::ioctl(netdevice.get_handle(), SIOCGIFMTU, &tReq);
+    oldMTU = tReq.ifr_mtu;
+
     tReq.ifr_mtu = 1400;
     ACE_OS::ioctl(netdevice.get_handle(), SIOCSIFMTU, &tReq);
 
@@ -478,7 +481,7 @@ run_main (int, ACE_TCHAR *argv[])
 
   #if defined (ACE_HAS_IPV6)
   retval += run_ipv6_pkginfo_test();
-  #elif
+  #else
   ACE_DEBUG ((LM_INFO, "%s without IPv6 macro ...\n", __func__));
   #endif
   

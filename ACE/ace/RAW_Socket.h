@@ -70,7 +70,7 @@ public:
   /**
    * Wait up to @a timeout amount of time to send a datagram to
    * @a buf.  The ACE_Time_Value indicates how long to blocking
-   * trying to receive.  If @a timeout == nullptr, the caller will block
+   * trying to receive.  If @a timeout == NULL, the caller will block
    * until action is possible, else will wait until the relative time
    * specified in *@a timeout elapses).  If <send> times out a -1 is
    * returned with @c errno == ETIME.  If it succeeds the number of
@@ -80,13 +80,13 @@ public:
                 size_t n,
                 const ACE_INET_Addr &addr,
                 int flags = 0,
-                const ACE_Time_Value *timeout = nullptr) const;
+                const ACE_Time_Value *timeout = NULL) const;
 
 
   /**
    * Wait up to @a timeout amount of time to receive a datagram into
    * @a buf.  The ACE_Time_Value indicates how long to blocking
-   * trying to receive.  If @a timeout == nullptr, the caller will block
+   * trying to receive.  If @a timeout == NULL, the caller will block
    * until action is possible, else will wait until the relative time
    * specified in *@a timeout elapses).  If <recv> times out a -1 is
    * returned with @c errno == ETIME.  If it succeeds the number of
@@ -97,8 +97,8 @@ public:
                 size_t n,
                 ACE_INET_Addr &addr,
                 int flags = 0,
-                const ACE_Time_Value *timeout = nullptr,
-                ACE_INET_Addr *to_addr = nullptr) const;
+                const ACE_Time_Value *timeout = NULL,
+                ACE_INET_Addr *to_addr = NULL) const;
 
 
   //@}
