@@ -1,14 +1,23 @@
 #include "ace/RAW_Socket.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/RAW_Socket.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/ACE.h"
 #include "ace/Log_Category.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
+
+// Included so users have access to ACE_RECVPKTINFO and ACE_RECVPKTINFO6 .
+#include "ace/OS_NS_sys_socket.h"
+
+#if defined (ACE_HAS_IPV6) && defined (ACE_WIN32)
+#include /**/ <iphlpapi.h>
+#endif
+
+
+#if !defined (__ACE_INLINE__)
+#include "ace/RAW_Socket.inl"
+#endif /* __ACE_INLINE__ */
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -45,7 +54,7 @@ static inline ssize_t using_common_recv(const ACE_RAW_SOCKET* raw, void *buf, si
     sockaddr *saddr      = (sockaddr *) addr.get_addr ();
     int addr_len         = addr.get_size ();
 
-    ssize_t const status = ACE_OS::recvfrom (raw->get_handle (),
+    ssize_t status = ACE_OS::recvfrom (raw->get_handle (),
                                       (char *) buf,
                                       n,
                                       flags,
@@ -107,7 +116,7 @@ ACE_RAW_SOCKET::recv (void *buf,
   #endif
 
   struct iovec iov;
-  iov.iov_base = buf;
+  iov.iov_base = static_cast<char*>(buf);
   iov.iov_len  = n;
 
   msghdr recv_msg     = {};
@@ -221,12 +230,15 @@ ACE_RAW_SOCKET::open (ACE_INET_Addr const & local, int protocol)
  
   ACE_INET_Addr bindAddr;
   this->get_local_addr(bindAddr);
-  if(bindAddr.is_any())
+
+#if defined (ACE_HAS_IPV6) && defined (IPV6_PKTINFO) && defined(IPV6_RECVPKTINFO)
+  if (bindAddr.is_any())
   {
-    int yes = 1;
-    this->set_option(IPPROTO_IPV6, IPV6_RECVPKTINFO, &yes, sizeof(yes));
+      int yes = 1;
+      this->set_option(IPPROTO_IPV6, IPV6_RECVPKTINFO, &yes, sizeof(yes));
   }
-  
+#endif
+ 
   return  0;
 }
 
