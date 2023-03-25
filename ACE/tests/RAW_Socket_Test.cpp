@@ -16,7 +16,13 @@
 #include "test_config.h"
 #include "ace/RAW_Socket.h"
 #include "ace/SOCK_Dgram.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
 
+
+#pragma pack(push)
+#pragma pack(1)
 typedef struct _IP_HEADER_t
 {
    uint8_t  bVersionAndHeaderLen;      // 版本信息(前4位)，头长度(后4位)
@@ -29,7 +35,7 @@ typedef struct _IP_HEADER_t
    uint16_t u16CheckSum;        // 校验和
    uint32_t u32SourIp;         // 源ip
    uint32_t u32DestIp;        // 目的ip
-} __attribute__((packed)) IPv4_HEADER_t, *IPv4_HEADER_t_Ptr;
+} IPv4_HEADER_t, *IPv4_HEADER_t_Ptr;
 
 typedef struct _IPv6_HEADER_t
 {
@@ -57,7 +63,7 @@ typedef struct _IPv6_HEADER_t
       uint64_t au64DstAddr[2];
    };
 
-} __attribute__((packed)) IPv6_HEADER_t, *IPv6_HEADER_t_Ptr;
+} IPv6_HEADER_t, *IPv6_HEADER_t_Ptr;
 
 typedef struct _UDP_HEADER_t
 {
@@ -65,7 +71,9 @@ typedef struct _UDP_HEADER_t
    uint16_t u16DstPort;
    uint16_t u16Length;
    uint16_t u16CheckSum;
-} __attribute__((packed)) UDP_HEADER_t, *UDP_HEADER_t_Ptr;
+} UDP_HEADER_t, *UDP_HEADER_t_Ptr;
+
+#pragma pack(pop)
 
 
 class SockGuard : private ACE_Copy_Disabled 
@@ -449,6 +457,8 @@ run_main (int, ACE_TCHAR *argv[])
   int retval = 0;
   int oldMTU = 1500;
 
+
+#if !defined (ACE_WIN32) 
   // set the lo interface MTU
   if(ACE_OS::getuid() == 0)
   {
@@ -470,6 +480,7 @@ run_main (int, ACE_TCHAR *argv[])
     ACE_OS::ioctl(netdevice.get_handle(), SIOCGIFMTU, &tReq);
     EXCEPTION_RETURN(tReq.ifr_mtu != 1400, "  can set MTU for lo interface\n");
   }
+#endif
   
  
 
@@ -488,6 +499,7 @@ run_main (int, ACE_TCHAR *argv[])
 
   ACE_END_TEST;
 
+#if !defined (ACE_WIN32) 
  if(ACE_OS::getuid() == 0)
   {
     ACE_INET_Addr anyAddr((u_short)0);
@@ -499,6 +511,7 @@ run_main (int, ACE_TCHAR *argv[])
     tReq.ifr_mtu = oldMTU;
     ACE_OS::ioctl(netdevice.get_handle(), SIOCSIFMTU, &tReq);
   }
+#endif
   
 
   return retval;
