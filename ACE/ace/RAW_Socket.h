@@ -76,7 +76,7 @@ public:
    * returned with @c errno == ETIME.  If it succeeds the number of
    * bytes sent is returned.
    */
-  ssize_t send (const void *buf,
+ssize_t send (const void *buf,
                 size_t n,
                 const ACE_INET_Addr &addr,
                 int flags = 0,
@@ -91,7 +91,7 @@ public:
    * specified in *@a timeout elapses).  If <recv> times out a -1 is
    * returned with @c errno == ETIME.  If it succeeds the number of
    * bytes received is returned. 
-   * When the RAW socket is bound to wildcard address, @a to_addr can get the destination info
+   * The IP destination address will be placed in @a *to_addr if it is not null
    */
   ssize_t recv (void *buf,
                 size_t n,
@@ -100,6 +100,25 @@ public:
                 const ACE_Time_Value *timeout = NULL,
                 ACE_INET_Addr *to_addr = NULL) const;
 
+/**
+ * Send an <iovec> of size @a n to the datagram socket (uses<sendmsg(3)>)
+ * The IP destination address will be placed in @a *to_addr if it is not null
+*/
+ssize_t send (const iovec iov[],
+              size_t n,
+              const ACE_INET_Addr &addr,
+              int flags = 0,
+              const ACE_Time_Value *timeout = NULL) const;
+/**
+ * Recv an <iovec> of size @a n to the datagram socket (uses <recvmsg(3)>).
+ * The IP destination address will be placed in @a *to_addr if it is not null.
+ */
+ssize_t recv (iovec iov[],
+              size_t n,
+              ACE_INET_Addr &addr,
+              int flags = 0,
+              const ACE_Time_Value *timeout = NULL,
+              ACE_INET_Addr *to_addr = NULL) const;
 
   //@}
 
