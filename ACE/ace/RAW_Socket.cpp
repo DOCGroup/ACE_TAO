@@ -223,6 +223,73 @@ ACE_RAW_SOCKET::recv (void *buf,
 
 
 ssize_t
+ACE_RAW_SOCKET::send (const void *buf,
+                      size_t n,
+                      const ACE_INET_Addr &addr,
+                      int flags,
+                      const ACE_Time_Value *timeout) const
+{
+  ACE_TRACE ("ACE_RAW_SOCKET::send");
+
+  // Check the status of the current socket.
+  SEND_EXCEPTION_RETURN();
+  
+  sockaddr *saddr = (sockaddr *) addr.get_addr ();
+  int len         = addr.get_size ();
+  return ACE_OS::sendto (this->get_handle (),
+                    (const char *) buf,
+                    n,
+                    flags,
+                    (struct sockaddr *) saddr,
+                    len);
+  
+}
+
+#if defined (ACE_HAS_MSG)
+ssize_t 
+ACE_RAW_SOCKET::send (const iovec iov[],
+                size_t n,
+                const ACE_INET_Addr &addr,
+                int flags,
+                const ACE_Time_Value *timeout) const
+{
+    ACE_TRACE ("ACE_RAW_SOCKET::send");
+
+    // Check the status of the current socket.
+    SEND_EXCEPTION_RETURN();
+
+    msghdr send_msg     = {};
+
+    send_msg.msg_iov    = (iovec *) iov;
+    send_msg.msg_iovlen = n;
+
+  #if defined (ACE_HAS_SOCKADDR_MSG_NAME)
+    send_msg.msg_name = (struct sockaddr *) addr.get_addr ();
+  #else
+    send_msg.msg_name    = (char *) addr.get_addr ();
+  #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
+    send_msg.msg_namelen = addr.get_size ();
+
+  #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+    send_msg.msg_control    = 0;
+    send_msg.msg_controllen = 0;
+    send_msg.msg_flags      = 0;
+  #elif !defined ACE_LACKS_SENDMSG
+    send_msg.msg_accrights    = 0;
+    send_msg.msg_accrightslen = 0;
+  #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+
+  #ifdef ACE_WIN32
+    send_msg.msg_control    = 0;
+    send_msg.msg_controllen = 0;
+  #endif
+
+    return ACE_OS::sendmsg (this->get_handle (), &send_msg, flags);
+
+}
+
+
+ssize_t
 ACE_RAW_SOCKET::recv (iovec iov[],
                       size_t n,
                       ACE_INET_Addr &addr,
@@ -267,28 +334,7 @@ ACE_RAW_SOCKET::recv (iovec iov[],
   return status;
 }
 
-ssize_t
-ACE_RAW_SOCKET::send (const void *buf,
-                      size_t n,
-                      const ACE_INET_Addr &addr,
-                      int flags,
-                      const ACE_Time_Value *timeout) const
-{
-  ACE_TRACE ("ACE_RAW_SOCKET::send");
-
-  // Check the status of the current socket.
-  SEND_EXCEPTION_RETURN();
-  
-  sockaddr *saddr = (sockaddr *) addr.get_addr ();
-  int len         = addr.get_size ();
-  return ACE_OS::sendto (this->get_handle (),
-                    (const char *) buf,
-                    n,
-                    flags,
-                    (struct sockaddr *) saddr,
-                    len);
-  
-}
+#else
 
 ssize_t 
 ACE_RAW_SOCKET::send (const iovec iov[],
@@ -297,40 +343,29 @@ ACE_RAW_SOCKET::send (const iovec iov[],
                 int flags,
                 const ACE_Time_Value *timeout) const
 {
-    ACE_TRACE ("ACE_RAW_SOCKET::send");
+  ACE_TRACE ("ACE_RAW_SOCKET::send iovec");
 
-    // Check the status of the current socket.
-    SEND_EXCEPTION_RETURN();
+ 
+  // immediately fail when unsupported
+  return -1;
+}               
 
-    msghdr send_msg     = {};
+ssize_t
+ACE_RAW_SOCKET::recv (iovec iov[],
+                      size_t n,
+                      ACE_INET_Addr &addr,
+                      int flags,
+                      const ACE_Time_Value *timeout,
+                      ACE_INET_Addr *to_addr) const
+{
+  ACE_TRACE ("ACE_RAW_SOCKET::recv iovec");
 
-    send_msg.msg_iov    = (iovec *) iov;
-    send_msg.msg_iovlen = n;
-
-  #if defined (ACE_HAS_SOCKADDR_MSG_NAME)
-    send_msg.msg_name = (struct sockaddr *) addr.get_addr ();
-  #else
-    send_msg.msg_name    = (char *) addr.get_addr ();
-  #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
-    send_msg.msg_namelen = addr.get_size ();
-
-  #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-    send_msg.msg_control    = 0;
-    send_msg.msg_controllen = 0;
-    send_msg.msg_flags      = 0;
-  #elif !defined ACE_LACKS_SENDMSG
-    send_msg.msg_accrights    = 0;
-    send_msg.msg_accrightslen = 0;
-  #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
-
-  #ifdef ACE_WIN32
-    send_msg.msg_control    = 0;
-    send_msg.msg_controllen = 0;
-  #endif
-
-    return ACE_OS::sendmsg (this->get_handle (), &send_msg, flags);
-
+ 
+  // immediately fail when unsupported
+  return -1;
 }
+
+#endif
 
 int
 ACE_RAW_SOCKET::open (ACE_INET_Addr const & local, int protocol)
@@ -340,12 +375,16 @@ ACE_RAW_SOCKET::open (ACE_INET_Addr const & local, int protocol)
   if (this->get_handle () != ACE_INVALID_HANDLE)
         return -1;
 
-  int protocol_family = local.get_type ();
+  int protocol_family  = local.get_type ();
   /// reuse_addr Maybe meaningless for RAW Socket
   const int reuse_addr = 1;
 
   if(ACE_SOCK::open (SOCK_RAW, protocol_family, protocol, reuse_addr) == -1)
     return -1;
+
+  if(ACE_OS::bind (this->get_handle (), (struct sockaddr *)local.get_addr(), local.get_addr_size()) == -1)
+    return -1;
+                                    
 
   this->protocol_ = protocol;
  

@@ -75,6 +75,80 @@ typedef struct _UDP_HEADER_t
 
 #pragma pack(pop)
 
+uint32_t Checksum(uint32_t cksum, uint8_t *pBuffer, uint32_t size)
+{
+   
+  if ((NULL == pBuffer) || (0 == size))
+  {
+      // return passed value
+      return cksum;
+  }
+
+  uint32_t num = 0;
+  uint8_t *p   = pBuffer;
+
+  while (size > 1)
+  {
+
+      cksum += ((uint16_t)p[num] << 8 & 0xff00) | (uint16_t)p[num + 1] & 0x00FF;
+      size  -= 2;
+      num   += 2;
+  }
+
+  if (size > 0)
+  {
+    cksum += ((uint16_t)p[num] << 8) & 0xFFFF;
+    num += 1;
+  }
+
+  while (cksum >> 16)
+  {
+    cksum = (cksum & 0xFFFF) + (cksum >> 16);
+  }
+
+  return cksum;
+}
+
+void ipv4_header_checksum(IPv4_HEADER_t_Ptr pIpHeader)
+{
+   uint8_t ipHeadLen      = (pIpHeader->bVersionAndHeaderLen & 0x0F) << 2;
+
+   pIpHeader->u16CheckSum = 0;
+
+   uint32_t sum = Checksum(0, (uint8_t *)pIpHeader, ipHeadLen);
+
+   pIpHeader->u16CheckSum = htons((uint16_t)(~sum));
+
+}
+
+void udp6_header_checksum(IPv6_HEADER_t_Ptr pIpHeader, UDP_HEADER_t_Ptr ptUDPHeader, size_t udpLen)
+{
+    uint32_t sum = 0;
+
+    //udpLen  = sizeof(UDP_HEADER_T) + contentLen;
+
+    //
+     ptUDPHeader->u16Length = htons(udpLen);
+     sum += udpLen;
+   
+    //sum += (ptUDPHeader->u16Length >> 8 & 0x00FF);
+    //sum += (ptUDPHeader->u16Length << 8 & 0xFF00);
+    
+    sum  = Checksum(sum, (uint8_t *)&pIpHeader->abSrcAddr, 16);
+    sum  = Checksum(sum, (uint8_t *)&pIpHeader->abDstAddr, 16);
+
+    sum += ((uint16_t)pIpHeader->bNextHeader & 0x00FF);             
+    //finish the pseudo header checksum
+    
+    //udp section
+    ptUDPHeader->u16CheckSum = 0;
+    sum = Checksum(sum, (uint8_t *)ptUDPHeader, udpLen);
+
+    ptUDPHeader->u16CheckSum = htons((uint16_t)(~sum));
+
+}
+
+
 
 class SockGuard : private ACE_Copy_Disabled 
 { 
@@ -548,29 +622,24 @@ run_iovec_IPv6_api_test ()
    ACE_DEBUG ((LM_INFO, "%s test iovec send ...\n", __func__));
  
 
-   IPv4_HEADER_t_Ptr  ptIPv4Header    = (IPv4_HEADER_t_Ptr)sendbuf;
-   UDP_HEADER_t_Ptr   ptUDPHeader     = (UDP_HEADER_t_Ptr)(sendbuf + sizeof(IPv4_HEADER_t));
+   IPv6_HEADER_t_Ptr  ptIPv6Header    = (IPv6_HEADER_t_Ptr)sendbuf;
+   UDP_HEADER_t_Ptr   ptUDPHeader     = (UDP_HEADER_t_Ptr)(sendbuf + sizeof(IPv6_HEADER_t));
    u_short n = sizeof("hello world");
 
-   *ptIPv4Header = {};
-
-   ptIPv4Header->bVersionAndHeaderLen = 0x45;
-   ptIPv4Header->u16TotalLenOfPacket  = htons(sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n);     // 数据包长度
-   ptIPv4Header->u16PacketID          = ACE_OS::rand();  
-   ptIPv4Header->bTTL                 = 64;
-   ptIPv4Header->bTypeOfProtocol      = IPPROTO_UDP; 
-   ptIPv4Header->u16CheckSum          = 0;
-   ptIPv4Header->u32SourIp            = (static_cast<sockaddr_in*>(client_addr.get_addr()))->sin_addr.s_addr;
-   ptIPv4Header->u32DestIp            = (static_cast<sockaddr_in*>(server_addr.get_addr()))->sin_addr.s_addr;
-
+   *ptIPv6Header = {};
+   ptIPv6Header->bNextHeader          = IPPROTO_UDP; 
+   memcpy(ptIPv6Header->abSrcAddr, static_cast<sockaddr_in6*>(client_addr.get_addr())->sin6_addr.s6_addr, 16);
+   memcpy(ptIPv6Header->abDstAddr, static_cast<sockaddr_in6*>(server_addr.get_addr())->sin6_addr.s6_addr, 16);
+  
    u_short client_port_number = client_addr.get_port_number();
    u_short server_port_number = server_addr.get_port_number();
 
 
    ptUDPHeader->u16SrcPort  = htons(client_port_number);
    ptUDPHeader->u16DstPort  = htons(server_port_number);
-   ptUDPHeader->u16Length   = htons(sizeof(UDP_HEADER_t) + n);
-   ptUDPHeader->u16CheckSum = 0;
+   //fill content
+   ACE_OS::strcpy(sendbuf + sizeof(IPv6_HEADER_t) + sizeof(UDP_HEADER_t), "hello world");
+   udp6_header_checksum(ptIPv6Header, ptUDPHeader, sizeof(UDP_HEADER_t) + n);
    
 
    iovec   iov_udp[2];
