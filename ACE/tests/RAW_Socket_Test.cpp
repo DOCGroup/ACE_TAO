@@ -288,11 +288,11 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
 
         if(to_addr == NULL)
         {
-          raw.recv(vec, (sizeof(vec)/sizeof(vec[0])) , remote);
+          raw.recv(vec, (int)(sizeof(vec)/sizeof(vec[0])) , remote);
         }
         else
         {
-          len = raw.recv(vec, (sizeof(vec)/sizeof(vec[0])), remote, 0/*flags*/, NULL, to_addr); 
+          len = raw.recv(vec, (int)(sizeof(vec)/sizeof(vec[0])), remote, 0/*flags*/, NULL, to_addr); 
         } 
      }
      else
@@ -658,7 +658,7 @@ run_iovec_IPv6_api_test ()
 
    ACE_DEBUG ((LM_INFO, "%s must set port to zero ??? ...\n", __func__));
    iov_server_addr.set_port_number(0);
-   rc = rawSocket.send(iov_udp, sizeof(iov_udp)/sizeof(iov_udp[0]), iov_server_addr);
+   rc = rawSocket.send(iov_udp, (int)(sizeof(iov_udp)/sizeof(iov_udp[0])), iov_server_addr);
    EXCEPTION_RETURN(rc  == -1, "  raw6 socket can not send using iov \n");
    ACE_OS::sleep(1);
 
@@ -755,7 +755,7 @@ run_iovec_IPv4_api_test ()
    iov_udp[1].iov_base = (void*)"hello world";
    iov_udp[1].iov_len  = sizeof("hello world");
 
-   rc = rawSocket.send(iov_udp, sizeof(iov_udp)/sizeof(iov_udp[0]), server_addr);
+   rc = rawSocket.send(iov_udp, (int)(sizeof(iov_udp)/sizeof(iov_udp[0])), server_addr);
    EXCEPTION_RETURN(rc  == -1, "  raw4 socket can send using iov\n");
    ACE_OS::sleep(1);
 
