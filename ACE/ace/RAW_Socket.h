@@ -103,18 +103,20 @@ ssize_t send (const void *buf,
 /**
  * Send an <iovec> of size @a n to the datagram socket (uses<sendmsg(3)>)
  * The IP destination address will be placed in @a *to_addr if it is not null
+ * @return if iovec call is unsupported by platforms, the method will return -1 immediately
 */
 ssize_t send (const iovec iov[],
-              size_t n,
+              int n,
               const ACE_INET_Addr &addr,
               int flags = 0,
               const ACE_Time_Value *timeout = NULL) const;
 /**
  * Recv an <iovec> of size @a n to the datagram socket (uses <recvmsg(3)>).
  * The IP destination address will be placed in @a *to_addr if it is not null.
+ * @return if iovec call is unsupported by platforms, the method will return -1 immediately
  */
 ssize_t recv (iovec iov[],
-              size_t n,
+              int n,
               ACE_INET_Addr &addr,
               int flags = 0,
               const ACE_Time_Value *timeout = NULL,
@@ -134,7 +136,6 @@ ssize_t recv (iovec iov[],
 
   /// Dump the state of object.
   void dump () const;
-  
   
   /// Return @c true if the protocol is IPPROTO_RAW.
   bool is_send_only () const;

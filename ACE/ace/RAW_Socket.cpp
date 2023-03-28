@@ -118,43 +118,43 @@ static inline void fillMsgHdr(msghdr& recv_msg, ACE_INET_Addr &addr, void* pcbuf
 
 static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
 {
-#ifdef ACE_USE_MSG_CONTROL
-      if (to_addr.get_type() == AF_INET) {
-  #if defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)
-        for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
-          #if defined (IP_RECVDSTADDR)
-          if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_RECVDSTADDR) {
-            to_addr->set_address ((const char *) (ACE_CMSG_DATA (ptr)),
-                                  sizeof (struct in_addr),
-                                  0);
-            break;
+  #ifdef ACE_USE_MSG_CONTROL
+        if (to_addr.get_type() == AF_INET) {
+    #if defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)
+          for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
+            #if defined (IP_RECVDSTADDR)
+            if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_RECVDSTADDR) {
+              to_addr.set_address ((const char *) (ACE_CMSG_DATA (ptr)),
+                                    sizeof (struct in_addr),
+                                    0);
+              break;
+            }
+            #else
+            if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_PKTINFO) {
+              to_addr.set_address ((const char *) &(((in_pktinfo *) (ACE_CMSG_DATA (ptr)))->ipi_addr),
+                                    sizeof (struct in_addr),
+                                    0);
+              break;
+            }
+            #endif
           }
-          #else
-          if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_PKTINFO) {
-            to_addr.set_address ((const char *) &(((in_pktinfo *) (ACE_CMSG_DATA (ptr)))->ipi_addr),
-                                  sizeof (struct in_addr),
-                                  0);
-            break;
-          }
-          #endif
+    #endif
         }
-  #endif
-      }
 
-  #if defined (ACE_HAS_IPV6) && defined (IPV6_PKTINFO)
-      else if (to_addr.get_type() == AF_INET6) {
-        for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
-          if (ptr->cmsg_level == IPPROTO_IPV6 && ptr->cmsg_type == IPV6_PKTINFO) {
-            to_addr.set_address ((const char *) &(((in6_pktinfo *)(ACE_CMSG_DATA (ptr)))->ipi6_addr),
-                                  sizeof (struct in6_addr),
-                                  0);
+    #if defined (ACE_HAS_IPV6) && defined (IPV6_PKTINFO)
+        else if (to_addr.get_type() == AF_INET6) {
+          for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
+            if (ptr->cmsg_level == IPPROTO_IPV6 && ptr->cmsg_type == IPV6_PKTINFO) {
+              to_addr.set_address ((const char *) &(((in6_pktinfo *)(ACE_CMSG_DATA (ptr)))->ipi6_addr),
+                                    sizeof (struct in6_addr),
+                                    0);
 
-            break;
+              break;
+            }
           }
         }
-      }
+    #endif
   #endif
-#endif
 
 }
 
@@ -203,7 +203,7 @@ ACE_RAW_SOCKET::recv (void *buf,
     fillMsgHdr(recv_msg, addr, NULL, 0);
   }
   #else
-  fillMsgHdr(recv_msg, addr, NULL, 0);
+    fillMsgHdr(recv_msg, addr, NULL, 0);
   #endif
 
   ssize_t status = ACE_OS::recvmsg (this->get_handle (),
@@ -242,13 +242,12 @@ ACE_RAW_SOCKET::send (const void *buf,
                     flags,
                     (struct sockaddr *) saddr,
                     len);
-  
 }
 
 #if defined (ACE_HAS_MSG)
 ssize_t 
 ACE_RAW_SOCKET::send (const iovec iov[],
-                size_t n,
+                int n,
                 const ACE_INET_Addr &addr,
                 int flags,
                 const ACE_Time_Value *timeout) const
@@ -263,35 +262,34 @@ ACE_RAW_SOCKET::send (const iovec iov[],
     send_msg.msg_iov    = (iovec *) iov;
     send_msg.msg_iovlen = n;
 
-  #if defined (ACE_HAS_SOCKADDR_MSG_NAME)
-    send_msg.msg_name = (struct sockaddr *) addr.get_addr ();
-  #else
-    send_msg.msg_name    = (char *) addr.get_addr ();
-  #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
-    send_msg.msg_namelen = addr.get_size ();
+    #if defined (ACE_HAS_SOCKADDR_MSG_NAME)
+      send_msg.msg_name = (struct sockaddr *) addr.get_addr ();
+    #else
+      send_msg.msg_name    = (char *) addr.get_addr ();
+    #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
+      send_msg.msg_namelen = addr.get_size ();
 
-  #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-    send_msg.msg_control    = 0;
-    send_msg.msg_controllen = 0;
-    send_msg.msg_flags      = 0;
-  #elif !defined ACE_LACKS_SENDMSG
-    send_msg.msg_accrights    = 0;
-    send_msg.msg_accrightslen = 0;
-  #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+    #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+      send_msg.msg_control    = 0;
+      send_msg.msg_controllen = 0;
+      send_msg.msg_flags      = 0;
+    #elif !defined ACE_LACKS_SENDMSG
+      send_msg.msg_accrights    = 0;
+      send_msg.msg_accrightslen = 0;
+    #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
-  #ifdef ACE_WIN32
-    send_msg.msg_control    = 0;
-    send_msg.msg_controllen = 0;
-  #endif
+    #ifdef ACE_WIN32
+      send_msg.msg_control    = 0;
+      send_msg.msg_controllen = 0;
+    #endif
 
     return ACE_OS::sendmsg (this->get_handle (), &send_msg, flags);
-
 }
 
 
 ssize_t
 ACE_RAW_SOCKET::recv (iovec iov[],
-                      size_t n,
+                      int n,
                       ACE_INET_Addr &addr,
                       int flags,
                       const ACE_Time_Value *timeout,
@@ -335,10 +333,10 @@ ACE_RAW_SOCKET::recv (iovec iov[],
 }
 
 #else
-
+// not supported will fail immediately
 ssize_t 
 ACE_RAW_SOCKET::send (const iovec iov[],
-                size_t n,
+                int n,
                 const ACE_INET_Addr &addr,
                 int flags,
                 const ACE_Time_Value *timeout) const
@@ -352,7 +350,7 @@ ACE_RAW_SOCKET::send (const iovec iov[],
 
 ssize_t
 ACE_RAW_SOCKET::recv (iovec iov[],
-                      size_t n,
+                      int n,
                       ACE_INET_Addr &addr,
                       int flags,
                       const ACE_Time_Value *timeout,
