@@ -79,12 +79,12 @@ ACE_RAW_SOCKET::ACE_RAW_SOCKET (ACE_INET_Addr const & local,
   
 }
 
-static inline ssize_t using_common_recv(const ACE_RAW_SOCKET* raw, void *buf, size_t n, ACE_INET_Addr &addr, int flags)
+static inline ssize_t using_common_recv(const ACE_RAW_SOCKET& raw, void *buf, size_t n, ACE_INET_Addr &addr, int flags)
 {
-    sockaddr *saddr      = (sockaddr *) addr.get_addr ();
+    sockaddr *saddr      = static_cast<sockaddr *>(addr.get_addr ());
     int addr_len         = addr.get_size ();
 
-    ssize_t status = ACE_OS::recvfrom (raw->get_handle (),
+    const ssize_t status = ACE_OS::recvfrom (raw.get_handle (),
                                       (char *) buf,
                                       n,
                                       flags,
@@ -96,12 +96,12 @@ static inline ssize_t using_common_recv(const ACE_RAW_SOCKET* raw, void *buf, si
     return status;
 }
 
-static inline void fillMsgHdr(msghdr& recv_msg, ACE_INET_Addr &addr, void* pcbuf, size_t cbuf_size)
+static inline void fillMsgHdr(msghdr& recv_msg, const ACE_INET_Addr &addr, void* pcbuf, int cbuf_size)
 {
   #if defined (ACE_HAS_SOCKADDR_MSG_NAME)
-    recv_msg.msg_name = (struct sockaddr *) addr.get_addr ();
+    recv_msg.msg_name = static_cast<struct sockaddr *> (addr.get_addr ());
   #else
-    recv_msg.msg_name = (char *) addr.get_addr ();
+    recv_msg.msg_name = static_cast<char *>(addr.get_addr ());
   #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
   
   recv_msg.msg_namelen = addr.get_size ();
@@ -124,7 +124,7 @@ static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
           for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
             #if defined (IP_RECVDSTADDR)
             if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_RECVDSTADDR) {
-              to_addr.set_address ((const char *) (ACE_CMSG_DATA (ptr)),
+              to_addr.set_address (reinterpret_cast<char *>(ACE_CMSG_DATA (ptr)),
                                     sizeof (struct in_addr),
                                     0);
               break;
@@ -145,7 +145,7 @@ static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
         else if (to_addr.get_type() == AF_INET6) {
           for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
             if (ptr->cmsg_level == IPPROTO_IPV6 && ptr->cmsg_type == IPV6_PKTINFO) {
-              to_addr.set_address ((const char *) &(((in6_pktinfo *)(ACE_CMSG_DATA (ptr)))->ipi6_addr),
+              to_addr.set_address (reinterpret_cast<char *>(&((reinterpret_cast<in6_pktinfo*>((ACE_CMSG_DATA(ptr))))->ipi6_addr)),
                                     sizeof (struct in6_addr),
                                     0);
 
@@ -172,24 +172,24 @@ ACE_RAW_SOCKET::recv (void *buf,
 
   if(to_addr == NULL)
   {
-    return using_common_recv(this, buf, n, addr, flags);
+    return using_common_recv(*this, buf, n, addr, flags);
   }
   else
   {
     this->get_local_addr (*to_addr);
     if(!to_addr->is_any())
     {
-       return using_common_recv(this, buf, n, addr, flags);
+       return using_common_recv(*this, buf, n, addr, flags);
     }
 
   }
 
   struct iovec iov;
   iov.iov_base = static_cast<char*>(buf);
-  iov.iov_len  = n;
+  iov.iov_len  = static_cast<int>(n);
 
   msghdr recv_msg     = {};
-  recv_msg.msg_iov    = (iovec*)&iov;
+  recv_msg.msg_iov    = &iov;
   recv_msg.msg_iovlen = 1;
 
   #ifdef ACE_USE_MSG_CONTROL
@@ -206,12 +206,12 @@ ACE_RAW_SOCKET::recv (void *buf,
     fillMsgHdr(recv_msg, addr, NULL, 0);
   #endif
 
-  ssize_t status = ACE_OS::recvmsg (this->get_handle (),
+  const ssize_t status = ACE_OS::recvmsg (this->get_handle (),
                                       &recv_msg,
                                       flags);
 
   addr.set_size (recv_msg.msg_namelen);
-  addr.set_type (((sockaddr_in *) addr.get_addr())->sin_family);
+  addr.set_type ((static_cast<sockaddr_in *>(addr.get_addr()))->sin_family);
 
   #ifdef ACE_USE_MSG_CONTROL
   if(to_addr != NULL)
@@ -234,8 +234,8 @@ ACE_RAW_SOCKET::send (const void *buf,
   // Check the status of the current socket.
   SEND_EXCEPTION_RETURN();
   
-  sockaddr *saddr = (sockaddr *) addr.get_addr ();
-  int len         = addr.get_size ();
+  sockaddr *saddr = static_cast<sockaddr *>(addr.get_addr ());
+  const int len   = addr.get_size ();
   return ACE_OS::sendto (this->get_handle (),
                     (const char *) buf,
                     n,
@@ -259,11 +259,11 @@ ACE_RAW_SOCKET::send (const iovec iov[],
 
     msghdr send_msg     = {};
 
-    send_msg.msg_iov    = (iovec *) iov;
+    send_msg.msg_iov    = const_cast<iovec *>(iov);
     send_msg.msg_iovlen = n;
 
     #if defined (ACE_HAS_SOCKADDR_MSG_NAME)
-      send_msg.msg_name = (struct sockaddr *) addr.get_addr ();
+      send_msg.msg_name = static_cast<struct sockaddr *>(addr.get_addr());
     #else
       send_msg.msg_name    = (char *) addr.get_addr ();
     #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
@@ -301,7 +301,7 @@ ACE_RAW_SOCKET::recv (iovec iov[],
 
   
   msghdr recv_msg     = {};
-  recv_msg.msg_iov    = (struct iovec *)iov;
+  recv_msg.msg_iov    = static_cast<struct iovec *>(iov);
   recv_msg.msg_iovlen = n;
 
   /*default*/
@@ -317,12 +317,12 @@ ACE_RAW_SOCKET::recv (iovec iov[],
   }
   #endif
 
-  ssize_t status = ACE_OS::recvmsg (this->get_handle (),
+  const ssize_t status = ACE_OS::recvmsg (this->get_handle (),
                                       &recv_msg,
                                       flags);
 
   addr.set_size (recv_msg.msg_namelen);
-  addr.set_type (((sockaddr_in *) addr.get_addr())->sin_family);
+  addr.set_type ((static_cast<sockaddr_in *>(addr.get_addr()))->sin_family);
 
   #ifdef ACE_USE_MSG_CONTROL
   if(to_addr != NULL)
@@ -373,14 +373,14 @@ ACE_RAW_SOCKET::open (ACE_INET_Addr const & local, int protocol)
   if (this->get_handle () != ACE_INVALID_HANDLE)
         return -1;
 
-  int protocol_family  = local.get_type ();
+  const int protocol_family  = local.get_type ();
   /// reuse_addr Maybe meaningless for RAW Socket
   const int reuse_addr = 1;
 
   if(ACE_SOCK::open (SOCK_RAW, protocol_family, protocol, reuse_addr) == -1)
     return -1;
 
-  if(ACE_OS::bind (this->get_handle (), (struct sockaddr *)local.get_addr(), local.get_addr_size()) == -1)
+  if(ACE_OS::bind (this->get_handle (), static_cast<struct sockaddr *>(local.get_addr()), local.get_addr_size()) == -1)
     return -1;
                                     
 
