@@ -342,7 +342,7 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
        }
      }
      
-     ACE_DEBUG ((LM_DEBUG, "%s recv unexpected pkgs len: %d, expectedLen: %d ...\n", __func__, len, expectedLen));
+     ACE_DEBUG ((LM_DEBUG, "%s recv unexpected pkgs len: %d, srcPort: %u, dstPort:%u; expectedLen: %d, expectedPort: %u ...\n", __func__, len, ntohs(ptUDPHeader->u16SrcPort), ntohs(ptUDPHeader->u16DstPort), expectedLen, port));
      ACE_OS::sleep(1);
    } while (1);
    
@@ -401,6 +401,9 @@ run_raw_udp_test ()
   ssize_t n = 512;
   rc = dgram.send(sendbuf, n, server_addr);
   EXCEPTION_RETURN(rc != n, "  can send test pkg to server\n");
+
+  rc = dgram_server.recv(recvbuf, sizeof(recvbuf), remote);
+  EXCEPTION_RETURN(rc != n, "  server socket can not recv the pkg client has send. It will be recv lately by raw socket\n");
 
   u_short server_port = server_addr.get_port_number();
   rc = raw_recv_data_until_meet_condition(rawSocket, server_port, n, remote);
@@ -643,9 +646,9 @@ run_iovec_IPv6_api_test ()
    
 
    iovec   iov_udp[2];
-   iov_udp[0].iov_base = ptUDPHeader;
+   iov_udp[0].iov_base = reinterpret_cast<char*>(ptUDPHeader);
    iov_udp[0].iov_len  = sizeof(UDP_HEADER_t);
-   iov_udp[1].iov_base = (void*)"hello world";
+   iov_udp[1].iov_base = "hello world";
    iov_udp[1].iov_len  = sizeof("hello world");
 
    ACE_DEBUG ((LM_INFO, "%s test iovec using common udp6 socket ...\n", __func__));
@@ -750,9 +753,9 @@ run_iovec_IPv4_api_test ()
    ACE_OS::strcpy(sendbuf + sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t), "hello world");
 
    iovec   iov_udp[2];
-   iov_udp[0].iov_base = ptUDPHeader;
+   iov_udp[0].iov_base = reinterpret_cast<char*>(ptUDPHeader);
    iov_udp[0].iov_len  = sizeof(UDP_HEADER_t);
-   iov_udp[1].iov_base = (void*)"hello world";
+   iov_udp[1].iov_base = "hello world";
    iov_udp[1].iov_len  = sizeof("hello world");
 
    rc = rawSocket.send(iov_udp, (int)(sizeof(iov_udp)/sizeof(iov_udp[0])), server_addr);
