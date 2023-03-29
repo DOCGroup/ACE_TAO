@@ -413,12 +413,14 @@ run_raw_udp_test ()
   rc = run_raw_udp_test_child_flow_sendby_self (rawSocket, client_addr, server_addr, n + 1);
   EXCEPTION_RETURN(rc != 0, "  can recv test pkg from raw socket when sending by self\n");
 
+  #if !defined (ACE_WIN32) 
   if(ACE_OS::getuid() == 0)
   {
       ACE_DEBUG ((LM_INFO, "%s test send & recv big pkt ...\n", __func__));
       rc = run_raw_udp_test_child_flow_sendby_self (rawSocket, client_addr, server_addr, n + 2048);
       EXCEPTION_RETURN(rc != 0, "  can recv test pkg from raw socket when sending big pkg by self\n");
   }
+  #endif
     
   return 0;
 }
@@ -472,6 +474,7 @@ run_raw_generic_test ()
    ptUDPHeader->u16Length   = htons(sizeof(UDP_HEADER_t) + n);
    ptUDPHeader->u16CheckSum = 0;
 
+   #if !defined (ACE_WIN32) 
    if(ACE_OS::getuid() == 0)
    {
       ACE_DEBUG ((LM_INFO, "%s raw generic socket will send bytes exceeding the MTU  ...\n", __func__));
@@ -479,6 +482,7 @@ run_raw_generic_test ()
       len = rawSocket.send(sendbuf, sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n,  server_addr);
       EXCEPTION_RETURN(len  != -1, "  raw generic socket can not send pkg more than MTU\n");
    }
+   #endif
    
    n = 468;
    ptUDPHeader->u16Length   = htons(sizeof(UDP_HEADER_t) + n);
@@ -648,8 +652,13 @@ run_iovec_IPv6_api_test ()
    iovec   iov_udp[2];
    iov_udp[0].iov_base = reinterpret_cast<char*>(ptUDPHeader);
    iov_udp[0].iov_len  = sizeof(UDP_HEADER_t);
+   #if defined (ACE_WIN32) 
    iov_udp[1].iov_base = "hello world";
    iov_udp[1].iov_len  = sizeof("hello world");
+   #else
+   iov_udp[1].iov_base = const_cast<char*>("hello world");
+   iov_udp[1].iov_len  = sizeof("hello world");
+   #endif
 
    ACE_DEBUG ((LM_INFO, "%s test iovec using common udp6 socket ...\n", __func__));
 
@@ -755,8 +764,13 @@ run_iovec_IPv4_api_test ()
    iovec   iov_udp[2];
    iov_udp[0].iov_base = reinterpret_cast<char*>(ptUDPHeader);
    iov_udp[0].iov_len  = sizeof(UDP_HEADER_t);
+   #if defined (ACE_WIN32) 
    iov_udp[1].iov_base = "hello world";
    iov_udp[1].iov_len  = sizeof("hello world");
+   #else
+   iov_udp[1].iov_base = const_cast<char*>("hello world");
+   iov_udp[1].iov_len  = sizeof("hello world");
+   #endif
 
    rc = rawSocket.send(iov_udp, (int)(sizeof(iov_udp)/sizeof(iov_udp[0])), server_addr);
    EXCEPTION_RETURN(rc  == -1, "  raw4 socket can send using iov\n");
