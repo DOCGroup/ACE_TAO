@@ -184,7 +184,7 @@ static int
 run_option_test ()
 {
  
-  ACE_DEBUG ((LM_INFO, "%s begin to run ...\n", __func__));
+  ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
 
   ACE_INET_Addr addr(u_short(0), "127.0.0.1");
   ACE_RAW_SOCKET  rawSocket(addr);
@@ -225,7 +225,7 @@ static int
 run_reopen_test ()
 {
  
-  ACE_DEBUG ((LM_INFO, "%s begin to run ...\n", __func__));
+  ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
   
   ACE_INET_Addr addr((u_short)0, "127.0.0.1");
   ACE_RAW_SOCKET  rawSocket(addr);
@@ -276,7 +276,7 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
      {
         iovec  vec[5];
         unsigned int i=0;
-        const unsigned int oneByteRecvVecNum = (sizeof(vec)/sizeof(vec[0])) - 1;
+        unsigned int const oneByteRecvVecNum = (sizeof(vec)/sizeof(vec[0])) - 1;
         for(; i< oneByteRecvVecNum; ++i)
         {
           vec[i].iov_base = &recvbuf[i];
@@ -312,7 +312,7 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
 
      if(len < 0)
      {
-         ACE_DEBUG ((LM_INFO, "%s receive prcess reach the end ...\n", __func__));
+         ACE_DEBUG ((LM_INFO, "%C receive prcess reach the end ...\n", __func__));
          return -1;
      }
 
@@ -325,7 +325,7 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
 
        if(port == nDstPort && len == expectedLen)
        {
-         ACE_DEBUG ((LM_INFO, "%s IPv4 recv expected pkgs ...\n", __func__));
+         ACE_DEBUG ((LM_INFO, "%C IPv4 recv expected pkgs ...\n", __func__));
          break;
        }
      }
@@ -337,12 +337,12 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
 
        if(port == nDstPort && len == expectedLen)
        {
-         ACE_DEBUG ((LM_INFO, "%s IPv6 recv expected pkgs ...\n", __func__));
+         ACE_DEBUG ((LM_INFO, "%C IPv6 recv expected pkgs ...\n", __func__));
          break;
        }
      }
      
-     ACE_DEBUG ((LM_DEBUG, "%s recv unexpected pkgs len: %d, srcPort: %u, dstPort:%u; expectedLen: %d, expectedPort: %u ...\n", __func__, len, ntohs(ptUDPHeader->u16SrcPort), ntohs(ptUDPHeader->u16DstPort), expectedLen, port));
+     ACE_DEBUG ((LM_DEBUG, "%C recv unexpected pkgs len: %d, srcPort: %u, dstPort:%u; expectedLen: %d, expectedPort: %u ...\n", __func__, len, ntohs(ptUDPHeader->u16SrcPort), ntohs(ptUDPHeader->u16DstPort), expectedLen, port));
      ACE_OS::sleep(1);
    } while (1);
    
@@ -352,7 +352,7 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
 static int
 run_raw_udp_test_child_flow_sendby_self (ACE_RAW_SOCKET& raw, ACE_INET_Addr& client_addr, ACE_INET_Addr& server_addr, size_t n)
 {
-   ACE_DEBUG ((LM_INFO, "%s begin to run when sending data by self ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C begin to run when sending data by self ...\n", __func__));
 
    UDP_HEADER_t_Ptr   ptUDPHeader  = (UDP_HEADER_t_Ptr)(sendbuf + sizeof(IPv4_HEADER_t_Ptr));
 
@@ -376,7 +376,7 @@ run_raw_udp_test_child_flow_sendby_self (ACE_RAW_SOCKET& raw, ACE_INET_Addr& cli
 static int
 run_raw_udp_test ()
 {
-  ACE_DEBUG ((LM_INFO, "%s begin to run using the port auto assigned by OS to avoid port conflict ...\n", __func__));
+  ACE_DEBUG ((LM_INFO, "%C begin to run using the port auto assigned by OS to avoid port conflict ...\n", __func__));
 
   ACE_INET_Addr addr((u_short)0, "127.0.0.1");
   
@@ -416,7 +416,7 @@ run_raw_udp_test ()
   #if !defined (ACE_WIN32) 
   if(ACE_OS::getuid() == 0)
   {
-      ACE_DEBUG ((LM_INFO, "%s test send & recv big pkt ...\n", __func__));
+      ACE_DEBUG ((LM_INFO, "%C test send & recv big pkt ...\n", __func__));
       rc = run_raw_udp_test_child_flow_sendby_self (rawSocket, client_addr, server_addr, n + 2048);
       EXCEPTION_RETURN(rc != 0, "  can recv test pkg from raw socket when sending big pkg by self\n");
   }
@@ -428,7 +428,7 @@ run_raw_udp_test ()
 static int
 run_raw_generic_test ()
 {
-   ACE_DEBUG ((LM_INFO, "%s begin to run generic raw socket i.e. send only RAW socket  ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C begin to run generic raw socket i.e. send only RAW socket  ...\n", __func__));
 
    ACE_INET_Addr bindAddr((u_short)0, "127.0.0.1"), remote;
    ACE_INET_Addr client_addr((u_short)0, "127.0.0.7") ,server_addr((u_short)0, "127.0.0.8");
@@ -477,7 +477,7 @@ run_raw_generic_test ()
    #if !defined (ACE_WIN32) 
    if(ACE_OS::getuid() == 0)
    {
-      ACE_DEBUG ((LM_INFO, "%s raw generic socket will send bytes exceeding the MTU  ...\n", __func__));
+      ACE_DEBUG ((LM_INFO, "%C raw generic socket will send bytes exceeding the MTU  ...\n", __func__));
       n = 2048;
       len = rawSocket.send(sendbuf, sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n,  server_addr);
       EXCEPTION_RETURN(len  != -1, "  raw generic socket can not send pkg more than MTU\n");
@@ -488,15 +488,15 @@ run_raw_generic_test ()
    ptUDPHeader->u16Length   = htons(sizeof(UDP_HEADER_t) + n);
    len = rawSocket.send(sendbuf, sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n,  server_addr);
    size_t expectedLen = (sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t) + n);
-   ACE_DEBUG ((LM_INFO, "%s raw generic socket send %d bytes, expected %u bytes  ...\n", __func__, len, expectedLen));
+   ACE_DEBUG ((LM_INFO, "%C raw generic socket send %d bytes, expected %u bytes  ...\n", __func__, len, expectedLen));
    EXCEPTION_RETURN(static_cast<size_t>(len)  != expectedLen, "  raw generic socket send pkg in failure\n");
 
    ACE_OS::sleep(1);
-   ACE_DEBUG ((LM_INFO, "%s enable nonblock status ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C enable nonblock status ...\n", __func__));
    server_dgram.enable(ACE_NONBLOCK);
    len = server_dgram.recv(recvbuf, sizeof(recvbuf), remote);
    expectedLen =  n;
-   ACE_DEBUG ((LM_INFO, "%s udp server socket recv %d bytes, expected %u bytes  ...\n", __func__, len, expectedLen));
+   ACE_DEBUG ((LM_INFO, "%C udp server socket recv %d bytes, expected %u bytes  ...\n", __func__, len, expectedLen));
    EXCEPTION_RETURN(static_cast<size_t>(len)  !=  n, "  server socket receives pkg in failure length is not the same\n");
    EXCEPTION_RETURN(static_cast<sockaddr_in*>(remote.get_addr())->sin_addr.s_addr  !=  static_cast<sockaddr_in*>(client_addr.get_addr())->sin_addr.s_addr, "  server socket receives pkg in failure: the source IP is not the same\n");
    
@@ -507,7 +507,7 @@ run_raw_generic_test ()
 static int
 run_ipv6_pkginfo_test ()
 {
-   ACE_DEBUG ((LM_INFO, "%s begin to run IPv6 pkginfo test ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C begin to run IPv6 pkginfo test ...\n", __func__));
 
    ACE_INET_Addr bindAddr((u_short)0, "::1");
    ACE_INET_Addr anyAddr((u_short)0, "::");
@@ -523,7 +523,7 @@ run_ipv6_pkginfo_test ()
    SockGuard server_dgram_guard(server_dgram);
    server_dgram.get_local_addr(server_addr);
 
-   ACE_DEBUG ((LM_INFO, "%s get the real bound addr and port client_port: %u, server_port: %u...\n", __func__, client_addr.get_port_number(), server_addr.get_port_number()));
+   ACE_DEBUG ((LM_INFO, "%C get the real bound addr and port client_port: %u, server_port: %u...\n", __func__, client_addr.get_port_number(), server_addr.get_port_number()));
 
    
 
@@ -537,7 +537,7 @@ run_ipv6_pkginfo_test ()
    
    client_dgram.send("hello world", sizeof("hello world"), server_addr);
    
-   ACE_DEBUG ((LM_INFO, "%s the send pkg will be received by two raw sockets ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C the send pkg will be received by two raw sockets ...\n", __func__));
    ACE_OS::sleep(1);
 
    ACE_INET_Addr remote;   
@@ -547,7 +547,7 @@ run_ipv6_pkginfo_test ()
 
    ACE_INET_Addr to_addr;
 
-   ACE_DEBUG ((LM_INFO, "%s send pkg again to test common raw socket with to_adr parameter ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C send pkg again to test common raw socket with to_adr parameter ...\n", __func__));
    client_dgram.send("hello world", sizeof("hello world"), server_addr);
    ACE_OS::sleep(1);
    
@@ -575,7 +575,7 @@ run_ipv6_pkginfo_test ()
 static int
 run_iovec_IPv6_api_test ()
 {
-   ACE_DEBUG ((LM_INFO, "%s begin to run IPv6 iovec api test ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C begin to run IPv6 iovec api test ...\n", __func__));
 
    ACE_INET_Addr bindAddr((u_short)0, "::1");
    ACE_INET_Addr anyAddr((u_short)0, "::");
@@ -592,7 +592,7 @@ run_iovec_IPv6_api_test ()
    SockGuard server_dgram_guard(server_dgram);
    server_dgram.get_local_addr(server_addr);
 
-   ACE_DEBUG ((LM_INFO, "%s get the real bound addr and port client_port: %u, server_port: %u...\n", __func__, client_addr.get_port_number(), server_addr.get_port_number()));
+   ACE_DEBUG ((LM_INFO, "%C get the real bound addr and port client_port: %u, server_port: %u...\n", __func__, client_addr.get_port_number(), server_addr.get_port_number()));
 
    
 
@@ -602,7 +602,7 @@ run_iovec_IPv6_api_test ()
 
    client_dgram.send("hello world", sizeof("hello world"), server_addr);
    
-   ACE_DEBUG ((LM_INFO, "%s the send pkg will be received by raw sockets ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C the send pkg will be received by raw sockets ...\n", __func__));
    ACE_OS::sleep(1);
 
    ACE_INET_Addr remote;   
@@ -613,7 +613,7 @@ run_iovec_IPv6_api_test ()
 
    ACE_INET_Addr to_addr;
 
-   ACE_DEBUG ((LM_INFO, "%s send pkg again to test common raw socket with to_adr parameter ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C send pkg again to test common raw socket with to_adr parameter ...\n", __func__));
    client_dgram.send("hello world", sizeof("hello world"), server_addr);
    ACE_OS::sleep(1);
    
@@ -626,7 +626,7 @@ run_iovec_IPv6_api_test ()
    int cmp = ACE_OS::memcmp(remote_sin6_addr, to_sin6_addr, sizeof(*to_sin6_addr));
    EXCEPTION_RETURN(cmp != 0, "  raw socket got to_addr with invalid value\n");
    
-   ACE_DEBUG ((LM_INFO, "%s test iovec send ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C test iovec send ...\n", __func__));
  
 
    IPv6_HEADER_t_Ptr  ptIPv6Header    = (IPv6_HEADER_t_Ptr)sendbuf;
@@ -660,7 +660,7 @@ run_iovec_IPv6_api_test ()
    iov_udp[1].iov_len  = sizeof("hello world");
    #endif
 
-   ACE_DEBUG ((LM_INFO, "%s test iovec using common udp6 socket ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C test iovec using common udp6 socket ...\n", __func__));
 
    rc = client_dgram.send(iov_udp, (int)(sizeof(iov_udp)/sizeof(iov_udp[0])), server_addr);
    EXCEPTION_RETURN(rc  == -1, "  udp6 socket can not send using iov \n");
@@ -668,7 +668,7 @@ run_iovec_IPv6_api_test ()
    readUdpSocektToEmpty(server_dgram);
    ACE_INET_Addr  iov_server_addr(server_addr);
 
-   ACE_DEBUG ((LM_INFO, "%s must set port to zero ??? ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C must set port to zero ??? ...\n", __func__));
    iov_server_addr.set_port_number(0);
    rc = rawSocket.send(iov_udp, (int)(sizeof(iov_udp)/sizeof(iov_udp[0])), iov_server_addr);
    EXCEPTION_RETURN(rc  == -1, "  raw6 socket can not send using iov \n");
@@ -683,7 +683,7 @@ run_iovec_IPv6_api_test ()
 static int
 run_iovec_IPv4_api_test ()
 {
-   ACE_DEBUG ((LM_INFO, "%s begin to run IPv4 iovec api test ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C begin to run IPv4 iovec api test ...\n", __func__));
 
    ACE_INET_Addr bindAddr((u_short)0, "127.0.0.1");
 
@@ -699,7 +699,7 @@ run_iovec_IPv4_api_test ()
    SockGuard server_dgram_guard(server_dgram);
    server_dgram.get_local_addr(server_addr);
 
-   ACE_DEBUG ((LM_INFO, "%s get the real bound addr and port client_port: %u, server_port: %u...\n", __func__, client_addr.get_port_number(), server_addr.get_port_number()));
+   ACE_DEBUG ((LM_INFO, "%C get the real bound addr and port client_port: %u, server_port: %u...\n", __func__, client_addr.get_port_number(), server_addr.get_port_number()));
 
    
 
@@ -709,7 +709,7 @@ run_iovec_IPv4_api_test ()
 
    client_dgram.send("hello world", sizeof("hello world"), server_addr);
    
-   ACE_DEBUG ((LM_INFO, "%s the send pkg will be received by raw sockets ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C the send pkg will be received by raw sockets ...\n", __func__));
    ACE_OS::sleep(1);
 
    ACE_INET_Addr remote;   
@@ -720,7 +720,7 @@ run_iovec_IPv4_api_test ()
 
    ACE_INET_Addr to_addr;
 
-   ACE_DEBUG ((LM_INFO, "%s send pkg again to test common raw socket with to_adr parameter ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C send pkg again to test common raw socket with to_adr parameter ...\n", __func__));
    client_dgram.send("hello world", sizeof("hello world"), server_addr);
    ACE_OS::sleep(1);
    
@@ -733,7 +733,7 @@ run_iovec_IPv4_api_test ()
    int cmp = ACE_OS::memcmp(remote_sin_addr, to_sin_addr, sizeof(*to_sin_addr));
    EXCEPTION_RETURN(cmp != 0, "  raw socket got to_addr with invalid value\n");
 
-   ACE_DEBUG ((LM_INFO, "%s test iovec send ...\n", __func__));
+   ACE_DEBUG ((LM_INFO, "%C test iovec send ...\n", __func__));
    readUdpSocektToEmpty(server_dgram);
 
    IPv4_HEADER_t_Ptr  ptIPv4Header    = (IPv4_HEADER_t_Ptr)sendbuf;
@@ -831,7 +831,7 @@ run_main (int, ACE_TCHAR *argv[])
   #if defined (ACE_HAS_IPV6)
   retval += run_ipv6_pkginfo_test();
   #else
-  ACE_DEBUG ((LM_INFO, "%s without IPv6 macro ...\n", __func__));
+  ACE_DEBUG ((LM_INFO, "%C without IPv6 macro ...\n", __func__));
   #endif
   
 

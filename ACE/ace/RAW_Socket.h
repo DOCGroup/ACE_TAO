@@ -35,15 +35,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief An RAW Socket implemention class.
  * 
  * An RAW Socket can be used for some user-space network protocol stack.
- * - Setting the protocol para to be IPPROTO_UDP will filter all UDP protocol packages with the destination is its bound address.
- *   IT can reduce the total num of socket needed with only port difference.
+ * - Setting the protocol parameter to be IPPROTO_UDP will filter all UDP protocol packages with the destination is its bound address.
+ *   It can reduce the total num of socket needed with only port difference.
  * 
- * - Setting the protocol para to be IPPROTO_SCTP will filter all SCTP protocol packages with the destination is its bound address.
- *   It can form the basis of a user-space SCTP protocol stack in more general platforms.
+ * - Setting the protocol parameter to be IPPROTO_SCTP will filter all SCTP protocol packages with the destination is its bound address.
+ *   It can form the basis of a user-space SCTP protocol stack in more general way.
  * 
- * - Setting the protocol para to be IPPROTO_RAW will make it as a send only socket for any customized package formed from IP header to be send.
- *   Notice the source address if provided in the customized package can be different from its bound address.
- *   Notice the RAW socket does not support fragment function when the passed package exceeds the MTU, so it need a upper layer framment before called
+ * - Setting the protocol parameter to be IPPROTO_RAW will make it as a send only socket for any customized datagram formed from the IP header to be sent.
+ *   Notice the source address can be different from its bound address if provided in the customized package or keep them default to zero.
+ *   Notice the IPPROTO_RAW RAW socket does not support fragment function when the passed package exceeds the MTU, so it need a upper layer fragment before called
  * 
  * @note If you really want to receive all IP packets, use a packet(7) socket with the ETH_P_IP protocol. 
  *       For "Single Responsibility Principle" the behavior has notable difference, so the feature is not implemented here.
