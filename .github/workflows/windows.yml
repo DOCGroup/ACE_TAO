@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  msvc:
+  msvc:lastUpdateReceived
     strategy:
       fail-fast: false
       matrix:
@@ -129,9 +129,9 @@ jobs:
         '{"name": "tao","version-string": "githubaction","dependencies": [ ${{ matrix.vcpkgpackages }} ]}' > vcpkg.json
       shell: pwsh
     - name: Install vcpkg
-      uses: lukka/run-vcpkg@v10
+      uses: lukka/run-vcpkg@v11
       with:
-        vcpkgGitCommitId: 94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
+        vcpkgGitCommitId: 5b1214315250939257ef5d62ecdcbca18cf4fb1c
         appendedCacheKey: ${{ matrix.name }}
         runVcpkgInstall: true
     - name: create $ACE_ROOT/ace/config.h
