@@ -34,7 +34,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_RAW_SOCKET)
 #if defined (ACE_HAS_IPV6)
     u_char padding6[ACE_CMSG_SPACE (sizeof (in6_pktinfo))];
 #endif
-  }; 
+  };
 #endif
 
 #define ACE_SEND_EXCEPTION_RETURN() do{\
@@ -52,7 +52,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_RAW_SOCKET)
   if(timeout && ACE::handle_read_ready (this->get_handle (), timeout) != 1)\
       return -1; \
 }while(0)
-  
+
 
 void
 ACE_RAW_SOCKET::dump () const
@@ -76,7 +76,7 @@ ACE_RAW_SOCKET::ACE_RAW_SOCKET (ACE_INET_Addr const & local,
       ACELIB_ERROR ((LM_ERROR,
                      ACE_TEXT ("%p\n"),
                      ACE_TEXT ("ACE_RAW_SOCKET")));
-  
+
 }
 
 static inline ssize_t using_common_recv(const ACE_RAW_SOCKET& raw, void *buf, size_t n, ACE_INET_Addr &addr, int flags)
@@ -103,7 +103,7 @@ static inline void fillMsgHdr(msghdr& recv_msg, const ACE_INET_Addr &addr, void*
   #else
     recv_msg.msg_name = static_cast<char *>(addr.get_addr ());
   #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
-  
+
   recv_msg.msg_namelen = addr.get_size ();
 
   #ifdef ACE_USE_MSG_CONTROL
@@ -170,7 +170,7 @@ ACE_RAW_SOCKET::recv (void *buf,
 
   ACE_RECV_EXCEPTION_RETURN();
 
-  if(to_addr == NULL)
+  if(to_addr == nullptr)
   {
     return using_common_recv(*this, buf, n, addr, flags);
   }
@@ -193,17 +193,17 @@ ACE_RAW_SOCKET::recv (void *buf,
   recv_msg.msg_iovlen = 1;
 
   #ifdef ACE_USE_MSG_CONTROL
-  union control_buffer  cbuf; 
-  if(to_addr != NULL)
+  union control_buffer  cbuf;
+  if(to_addr != nullptr)
   {
     fillMsgHdr(recv_msg, addr, &cbuf, sizeof(cbuf));
   }
   else
   {
-    fillMsgHdr(recv_msg, addr, NULL, 0);
+    fillMsgHdr(recv_msg, addr, nullptr, 0);
   }
   #else
-    fillMsgHdr(recv_msg, addr, NULL, 0);
+    fillMsgHdr(recv_msg, addr, nullptr, 0);
   #endif
 
   ssize_t const status = ACE_OS::recvmsg (this->get_handle (),
@@ -214,10 +214,10 @@ ACE_RAW_SOCKET::recv (void *buf,
   addr.set_type ((static_cast<sockaddr_in *>(addr.get_addr()))->sin_family);
 
   #ifdef ACE_USE_MSG_CONTROL
-  if(to_addr != NULL)
+  if(to_addr != nullptr)
     getToAddrFromMsgHdr(recv_msg, *to_addr);
   #endif
-  
+
   return status;
 }
 
@@ -233,7 +233,7 @@ ACE_RAW_SOCKET::send (const void *buf,
 
   // Check the status of the current socket.
   ACE_SEND_EXCEPTION_RETURN();
-  
+
   sockaddr *saddr = static_cast<sockaddr *>(addr.get_addr ());
   int const len   = addr.get_size ();
   return ACE_OS::sendto (this->get_handle (),
@@ -245,7 +245,7 @@ ACE_RAW_SOCKET::send (const void *buf,
 }
 
 #if defined (ACE_HAS_MSG)
-ssize_t 
+ssize_t
 ACE_RAW_SOCKET::send (const iovec iov[],
                 int n,
                 const ACE_INET_Addr &addr,
@@ -299,20 +299,20 @@ ACE_RAW_SOCKET::recv (iovec iov[],
 
   ACE_RECV_EXCEPTION_RETURN();
 
-  
+
   msghdr recv_msg     = {};
   recv_msg.msg_iov    = static_cast<struct iovec *>(iov);
   recv_msg.msg_iovlen = n;
 
   /*default*/
-  fillMsgHdr(recv_msg, addr, NULL, 0);
+  fillMsgHdr(recv_msg, addr, nullptr, 0);
 
   #ifdef ACE_USE_MSG_CONTROL
-  union control_buffer  cbuf; 
-  if(to_addr != NULL)
+  union control_buffer  cbuf;
+  if(to_addr != nullptr)
   {
     this->get_local_addr(*to_addr);
-    
+
     fillMsgHdr(recv_msg, addr, &cbuf, sizeof(cbuf));
   }
   #endif
@@ -325,16 +325,16 @@ ACE_RAW_SOCKET::recv (iovec iov[],
   addr.set_type ((static_cast<sockaddr_in *>(addr.get_addr()))->sin_family);
 
   #ifdef ACE_USE_MSG_CONTROL
-  if(to_addr != NULL)
+  if(to_addr != nullptr)
     getToAddrFromMsgHdr(recv_msg, *to_addr);
   #endif
-  
+
   return status;
 }
 
 #else
 // not supported will fail immediately
-ssize_t 
+ssize_t
 ACE_RAW_SOCKET::send (const iovec iov[],
                 int n,
                 const ACE_INET_Addr &addr,
@@ -343,10 +343,10 @@ ACE_RAW_SOCKET::send (const iovec iov[],
 {
   ACE_TRACE ("ACE_RAW_SOCKET::send iovec");
 
- 
+
   // immediately fail when unsupported
   return -1;
-}               
+}
 
 ssize_t
 ACE_RAW_SOCKET::recv (iovec iov[],
@@ -358,7 +358,7 @@ ACE_RAW_SOCKET::recv (iovec iov[],
 {
   ACE_TRACE ("ACE_RAW_SOCKET::recv iovec");
 
- 
+
   // immediately fail when unsupported
   return -1;
 }
@@ -382,10 +382,10 @@ ACE_RAW_SOCKET::open (ACE_INET_Addr const & local, int protocol)
 
   if(ACE_OS::bind (this->get_handle (), static_cast<struct sockaddr *>(local.get_addr()), local.get_addr_size()) == -1)
     return -1;
-                                    
+
 
   this->protocol_ = protocol;
- 
+
   ACE_INET_Addr bindAddr;
   this->get_local_addr(bindAddr);
 
@@ -405,7 +405,7 @@ ACE_RAW_SOCKET::open (ACE_INET_Addr const & local, int protocol)
   }
   #endif
 
- 
+
   return  0;
 }
 
