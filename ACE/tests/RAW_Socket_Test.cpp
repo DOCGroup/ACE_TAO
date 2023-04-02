@@ -641,13 +641,9 @@ run_iovec_IPv6_api_test ()
    iovec   iov_udp[2];
    iov_udp[0].iov_base = reinterpret_cast<char*>(ptUDPHeader);
    iov_udp[0].iov_len  = sizeof(UDP_HEADER_t);
-   #if defined (ACE_WIN32)
-   iov_udp[1].iov_base = "hello world";
-   iov_udp[1].iov_len  = sizeof("hello world");
-   #else
    iov_udp[1].iov_base = const_cast<char*>("hello world");
    iov_udp[1].iov_len  = sizeof("hello world");
-   #endif
+
 
    ACE_DEBUG ((LM_INFO, "%C test iovec using common udp6 socket ...\n", __func__));
 
@@ -751,13 +747,8 @@ run_iovec_IPv4_api_test ()
    iovec   iov_udp[2];
    iov_udp[0].iov_base = reinterpret_cast<char*>(ptUDPHeader);
    iov_udp[0].iov_len  = sizeof(UDP_HEADER_t);
-   #if defined (ACE_WIN32)
-   iov_udp[1].iov_base = "hello world";
-   iov_udp[1].iov_len  = sizeof("hello world");
-   #else
    iov_udp[1].iov_base = const_cast<char*>("hello world");
    iov_udp[1].iov_len  = sizeof("hello world");
-   #endif
 
    rc = rawSocket.send(iov_udp, (int)(sizeof(iov_udp)/sizeof(iov_udp[0])), server_addr);
    ACE_TEST_EXCEPTION_RETURN(rc  == -1, "  raw4 socket can send using iov\n");
