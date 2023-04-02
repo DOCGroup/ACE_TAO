@@ -90,7 +90,7 @@ uint32_t Checksum(uint32_t cksum, uint8_t *pBuffer, uint32_t size)
   while (size > 1)
   {
 
-      cksum += ((uint16_t)p[num] << 8 & 0xff00) | (uint16_t)p[num + 1] & 0x00FF;
+      cksum += ((uint16_t)p[num] << 8 & 0xff00) | ((uint16_t)p[num + 1] & 0x00FF);
       size  -= 2;
       num   += 2;
   }
