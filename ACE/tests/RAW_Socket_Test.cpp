@@ -115,7 +115,7 @@ void ipv4_header_checksum(IPv4_HEADER_t_Ptr pIpHeader)
 
    pIpHeader->u16CheckSum = 0;
 
-   uint32_t sum = Checksum(0, (uint8_t *)pIpHeader, ipHeadLen);
+   uint32_t sum = Checksum(0, reinterpret_cast<uint8_t *>(pIpHeader), ipHeadLen);
 
    pIpHeader->u16CheckSum = htons((uint16_t)(~sum));
 
@@ -134,15 +134,15 @@ void udp6_header_checksum(IPv6_HEADER_t_Ptr pIpHeader, UDP_HEADER_t_Ptr ptUDPHea
     //sum += (ptUDPHeader->u16Length >> 8 & 0x00FF);
     //sum += (ptUDPHeader->u16Length << 8 & 0xFF00);
 
-    sum  = Checksum(sum, (uint8_t *)&pIpHeader->abSrcAddr, 16);
-    sum  = Checksum(sum, (uint8_t *)&pIpHeader->abDstAddr, 16);
+    sum  = Checksum(sum, &pIpHeader->abSrcAddr[0], 16);
+    sum  = Checksum(sum, &pIpHeader->abDstAddr[0], 16);
 
     sum += ((uint16_t)pIpHeader->bNextHeader & 0x00FF);
     //finish the pseudo header checksum
 
     //udp section
     ptUDPHeader->u16CheckSum = 0;
-    sum = Checksum(sum, (uint8_t *)ptUDPHeader, udpLen);
+    sum = Checksum(sum,  reinterpret_cast<uint8_t *>(ptUDPHeader), udpLen);
 
     ptUDPHeader->u16CheckSum = htons((uint16_t)(~sum));
 
@@ -153,7 +153,7 @@ void udp6_header_checksum(IPv6_HEADER_t_Ptr pIpHeader, UDP_HEADER_t_Ptr ptUDPHea
 class SockGuard : private ACE_Copy_Disabled
 {
 public:
-SockGuard(ACE_SOCK& sock):sock_(sock){};
+explicit SockGuard(ACE_SOCK& sock):sock_(sock){};
 ~SockGuard(){ sock_.close(); };
 
 private:
@@ -207,6 +207,7 @@ run_option_test ()
   rc = rawSocket.set_option(SOL_SOCKET, SO_RCVBUF, &new_optval, sizeof(new_optval));
 
   ACE_TEST_EXCEPTION_RETURN(rc < 0, "  set SO_RCVBUF new value in failure\n");
+  ACE_UNUSED_ARG(new_optval);
 
   new_optval = 0;
   optlen  = sizeof(new_optval);
@@ -317,7 +318,7 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
      UDP_HEADER_t_Ptr  ptUDPHeader;
      if(local.get_type() == AF_INET)
      {
-       ptUDPHeader  = (UDP_HEADER_t_Ptr)(recvbuf + sizeof(IPv4_HEADER_t));
+       ptUDPHeader  = reinterpret_cast<UDP_HEADER_t_Ptr>(recvbuf + sizeof(IPv4_HEADER_t));
        expectedLen  = (n + sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t));
        u_short nDstPort    = ntohs(ptUDPHeader->u16DstPort);
 
@@ -329,7 +330,7 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
      }
      else
      {
-       ptUDPHeader         = (UDP_HEADER_t_Ptr)recvbuf;
+       ptUDPHeader         = reinterpret_cast<UDP_HEADER_t_Ptr>(recvbuf);
        expectedLen         = (n + sizeof(UDP_HEADER_t));
        u_short nDstPort    = ntohs(ptUDPHeader->u16DstPort);
 
@@ -352,7 +353,7 @@ run_raw_udp_test_child_flow_sendby_self (ACE_RAW_SOCKET& raw, ACE_INET_Addr& cli
 {
    ACE_DEBUG ((LM_INFO, "%C begin to run when sending data by self ...\n", __func__));
 
-   UDP_HEADER_t_Ptr   ptUDPHeader  = (UDP_HEADER_t_Ptr)(sendbuf + sizeof(IPv4_HEADER_t_Ptr));
+   UDP_HEADER_t_Ptr   ptUDPHeader  = reinterpret_cast<UDP_HEADER_t_Ptr>(sendbuf + sizeof(IPv4_HEADER_t_Ptr));
 
    ptUDPHeader->u16SrcPort  = htons(client_addr.get_port_number());
    ptUDPHeader->u16DstPort  = htons(server_addr.get_port_number());
@@ -448,8 +449,8 @@ run_raw_generic_test ()
    client_dgram.get_local_addr (client_addr);
    server_dgram.get_local_addr (server_addr);
 
-   IPv4_HEADER_t_Ptr  ptIPv4Header    = (IPv4_HEADER_t_Ptr)sendbuf;
-   UDP_HEADER_t_Ptr   ptUDPHeader     = (UDP_HEADER_t_Ptr)(sendbuf + sizeof(IPv4_HEADER_t));
+   IPv4_HEADER_t_Ptr  ptIPv4Header    = reinterpret_cast<IPv4_HEADER_t_Ptr>(sendbuf);
+   UDP_HEADER_t_Ptr   ptUDPHeader     = reinterpret_cast<UDP_HEADER_t_Ptr>(sendbuf + sizeof(IPv4_HEADER_t));
    u_short n = 2048;
 
    *ptIPv4Header = {};
@@ -619,8 +620,8 @@ run_iovec_IPv6_api_test ()
 
    ACE_DEBUG ((LM_INFO, "%C test iovec send ...\n", __func__));
 
-   IPv6_HEADER_t_Ptr  ptIPv6Header    = (IPv6_HEADER_t_Ptr)sendbuf;
-   UDP_HEADER_t_Ptr   ptUDPHeader     = (UDP_HEADER_t_Ptr)(sendbuf + sizeof(IPv6_HEADER_t));
+   IPv6_HEADER_t_Ptr  ptIPv6Header    = reinterpret_cast<IPv6_HEADER_t_Ptr>(sendbuf);
+   UDP_HEADER_t_Ptr   ptUDPHeader     = reinterpret_cast<UDP_HEADER_t_Ptr>(sendbuf + sizeof(IPv6_HEADER_t));
    u_short n = sizeof("hello world");
 
    *ptIPv6Header = {};
@@ -767,7 +768,7 @@ run_main (int, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("RAW_Socket_Test"));
   ACE_UNUSED_ARG (argv);
   int retval = 0;
-  int oldMTU = 1500;
+  int oldMTU;
 
 
 #if !defined (ACE_WIN32)

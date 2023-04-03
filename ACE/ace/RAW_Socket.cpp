@@ -81,14 +81,14 @@ ACE_RAW_SOCKET::ACE_RAW_SOCKET (ACE_INET_Addr const & local,
 
 static inline ssize_t using_common_recv(const ACE_RAW_SOCKET& raw, void *buf, size_t n, ACE_INET_Addr &addr, int flags)
 {
-    sockaddr *saddr      = static_cast<sockaddr *>(addr.get_addr ());
-    int addr_len         = addr.get_size ();
+    struct sockaddr *saddr      = static_cast<struct sockaddr *>(addr.get_addr ());
+    int addr_len                = addr.get_size ();
 
     ssize_t const status = ACE_OS::recvfrom (raw.get_handle (),
-                                      (char *) buf,
+                                      static_cast<char*>(buf),
                                       n,
                                       flags,
-                                      (sockaddr *) saddr,
+                                      saddr,
                                       &addr_len);
 
     addr.set_size (addr_len);
@@ -107,8 +107,8 @@ static inline void fillMsgHdr(msghdr& recv_msg, const ACE_INET_Addr &addr, void*
   recv_msg.msg_namelen = addr.get_size ();
 
   #ifdef ACE_USE_MSG_CONTROL
-    recv_msg.msg_control    =  pcbuf;
-    recv_msg.msg_controllen =  cbuf_size;
+    recv_msg.msg_control      =  pcbuf;
+    recv_msg.msg_controllen   =  cbuf_size;
   #elif !defined ACE_LACKS_SENDMSG
     recv_msg.msg_accrights    = 0;
     recv_msg.msg_accrightslen = 0;
@@ -234,13 +234,13 @@ ACE_RAW_SOCKET::send (const void *buf,
   // Check the status of the current socket.
   ACE_SEND_EXCEPTION_RETURN();
 
-  sockaddr *saddr = static_cast<sockaddr *>(addr.get_addr ());
+  struct sockaddr *saddr = static_cast<struct sockaddr *>(addr.get_addr ());
   int const len   = addr.get_size ();
   return ACE_OS::sendto (this->get_handle (),
-                    (const char *) buf,
+                    static_cast<const char *>(buf),
                     n,
                     flags,
-                    (struct sockaddr *) saddr,
+                    saddr,
                     len);
 }
 
@@ -265,7 +265,7 @@ ACE_RAW_SOCKET::send (const iovec iov[],
     #if defined (ACE_HAS_SOCKADDR_MSG_NAME)
       send_msg.msg_name = static_cast<struct sockaddr *>(addr.get_addr());
     #else
-      send_msg.msg_name    = (char *) addr.get_addr ();
+      send_msg.msg_name    = static_cast<char*>(addr.get_addr ());
     #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
       send_msg.msg_namelen = addr.get_size ();
 
