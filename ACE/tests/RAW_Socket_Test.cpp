@@ -90,14 +90,14 @@ uint32_t Checksum(uint32_t cksum, uint8_t *pBuffer, uint32_t size)
   while (size > 1)
   {
 
-      cksum += ((uint16_t)p[num] << 8 & 0xff00) | ((uint16_t)p[num + 1] & 0x00FF);
+      cksum += (static_cast<uint16_t>(p[num]) << 8 & 0xff00) | (static_cast<uint16_t>(p[num + 1]) & 0x00FF);
       size  -= 2;
       num   += 2;
   }
 
   if (size > 0)
   {
-    cksum += ((uint16_t)p[num] << 8) & 0xFFFF;
+    cksum += (static_cast<uint16_t>(p[num]) << 8) & 0xFFFF;
     num += 1;
   }
 
@@ -117,7 +117,7 @@ void ipv4_header_checksum(IPv4_HEADER_t_Ptr pIpHeader)
 
    uint32_t sum = Checksum(0, reinterpret_cast<uint8_t *>(pIpHeader), ipHeadLen);
 
-   pIpHeader->u16CheckSum = htons((uint16_t)(~sum));
+   pIpHeader->u16CheckSum = htons(static_cast<uint16_t>(~sum));
 
 }
 
@@ -137,14 +137,14 @@ void udp6_header_checksum(IPv6_HEADER_t_Ptr pIpHeader, UDP_HEADER_t_Ptr ptUDPHea
     sum  = Checksum(sum, &pIpHeader->abSrcAddr[0], 16);
     sum  = Checksum(sum, &pIpHeader->abDstAddr[0], 16);
 
-    sum += ((uint16_t)pIpHeader->bNextHeader & 0x00FF);
+    sum += (static_cast<uint16_t>(pIpHeader->bNextHeader) & 0x00FF);
     //finish the pseudo header checksum
 
     //udp section
     ptUDPHeader->u16CheckSum = 0;
     sum = Checksum(sum,  reinterpret_cast<uint8_t *>(ptUDPHeader), udpLen);
 
-    ptUDPHeader->u16CheckSum = htons((uint16_t)(~sum));
+    ptUDPHeader->u16CheckSum = htons(static_cast<uint16_t>(~sum));
 
 }
 
@@ -186,7 +186,7 @@ run_option_test ()
 
   ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
 
-  ACE_INET_Addr addr(u_short(0), "127.0.0.1");
+  ACE_INET_Addr addr(static_cast<u_short>(0), "127.0.0.1");
   ACE_RAW_SOCKET  rawSocket(addr);
   SockGuard guard(rawSocket);
 
@@ -228,7 +228,7 @@ run_reopen_test ()
 
   ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
 
-  ACE_INET_Addr addr((u_short)0, "127.0.0.1");
+  ACE_INET_Addr addr(static_cast<u_short>(0), "127.0.0.1");
   ACE_RAW_SOCKET  rawSocket(addr);
   SockGuard guard(rawSocket);
 
@@ -239,7 +239,7 @@ run_reopen_test ()
 
   ACE_TEST_EXCEPTION_RETURN(rawSocket.get_handle() != ACE_INVALID_HANDLE, "  close in failure\n");
 
-  ACE_INET_Addr addr2((u_short)0, "127.0.0.8");
+  ACE_INET_Addr addr2(static_cast<u_short>(0), "127.0.0.8");
   int rc = rawSocket.open(addr2);
 
   ACE_TEST_EXCEPTION_RETURN(rc < 0, "  reopen in failue\n");
@@ -289,11 +289,11 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
 
         if(to_addr == nullptr)
         {
-          raw.recv(vec, (int)(sizeof(vec)/sizeof(vec[0])) , remote);
+          raw.recv(vec, static_cast<int>(sizeof(vec)/sizeof(vec[0])) , remote);
         }
         else
         {
-          len = raw.recv(vec, (int)(sizeof(vec)/sizeof(vec[0])), remote, 0/*flags*/, nullptr, to_addr);
+          len = raw.recv(vec, static_cast<int>(sizeof(vec)/sizeof(vec[0])), remote, 0/*flags*/, nullptr, to_addr);
         }
      }
      else
@@ -377,7 +377,7 @@ run_raw_udp_test ()
 {
   ACE_DEBUG ((LM_INFO, "%C begin to run using the port auto assigned by OS to avoid port conflict ...\n", __func__));
 
-  ACE_INET_Addr addr((u_short)0, "127.0.0.1");
+  ACE_INET_Addr addr(static_cast<u_short>(0), "127.0.0.1");
 
   ACE_SOCK_Dgram  dgram(addr);
   SockGuard dgram_guard(dgram);
@@ -429,8 +429,8 @@ run_raw_generic_test ()
 {
    ACE_DEBUG ((LM_INFO, "%C begin to run generic raw socket i.e. send only RAW socket  ...\n", __func__));
 
-   ACE_INET_Addr bindAddr((u_short)0, "127.0.0.1"), remote;
-   ACE_INET_Addr client_addr((u_short)0, "127.0.0.7") ,server_addr((u_short)0, "127.0.0.8");
+   ACE_INET_Addr bindAddr(static_cast<u_short>(0), "127.0.0.1"), remote;
+   ACE_INET_Addr client_addr(static_cast<u_short>(0), "127.0.0.7") ,server_addr(static_cast<u_short>(0), "127.0.0.8");
    ACE_SOCK_Dgram  client_dgram(client_addr);
    SockGuard client_dgram_guard(client_dgram);
 
@@ -508,10 +508,10 @@ run_ipv6_pkginfo_test ()
 {
    ACE_DEBUG ((LM_INFO, "%C begin to run IPv6 pkginfo test ...\n", __func__));
 
-   ACE_INET_Addr bindAddr((u_short)0, "::1");
-   ACE_INET_Addr anyAddr((u_short)0, "::");
+   ACE_INET_Addr bindAddr(static_cast<u_short>(0), "::1");
+   ACE_INET_Addr anyAddr(static_cast<u_short>(0), "::");
 
-   ACE_INET_Addr client_addr((u_short)0, "::1") ,server_addr((u_short)0, "::1");
+   ACE_INET_Addr client_addr(static_cast<u_short>(0), "::1") ,server_addr(static_cast<u_short>(0), "::1");
 
 
    ACE_SOCK_Dgram  client_dgram(client_addr);
@@ -572,10 +572,10 @@ run_iovec_IPv6_api_test ()
 {
    ACE_DEBUG ((LM_INFO, "%C begin to run IPv6 iovec api test ...\n", __func__));
 
-   ACE_INET_Addr bindAddr((u_short)0, "::1");
-   ACE_INET_Addr anyAddr((u_short)0, "::");
+   ACE_INET_Addr bindAddr(static_cast<u_short>(0), "::1");
+   ACE_INET_Addr anyAddr(static_cast<u_short>(0), "::");
 
-   ACE_INET_Addr client_addr((u_short)0, "::1") ,server_addr((u_short)0, "::1");
+   ACE_INET_Addr client_addr(static_cast<u_short>(0), "::1") ,server_addr(static_cast<u_short>(0), "::1");
 
    ACE_SOCK_Dgram  client_dgram(client_addr);
    SockGuard client_dgram_guard(client_dgram);
@@ -648,7 +648,7 @@ run_iovec_IPv6_api_test ()
 
    ACE_DEBUG ((LM_INFO, "%C test iovec using common udp6 socket ...\n", __func__));
 
-   rc = client_dgram.send(iov_udp, (int)(sizeof(iov_udp)/sizeof(iov_udp[0])), server_addr);
+   rc = client_dgram.send(iov_udp, static_cast<int>(sizeof(iov_udp)/sizeof(iov_udp[0])), server_addr);
    ACE_TEST_EXCEPTION_RETURN(rc  == -1, "  udp6 socket can not send using iov \n");
 
    readUdpSocektToEmpty(server_dgram);
@@ -656,7 +656,7 @@ run_iovec_IPv6_api_test ()
 
    ACE_DEBUG ((LM_INFO, "%C must set port to zero ??? ...\n", __func__));
    iov_server_addr.set_port_number(0);
-   rc = rawSocket.send(iov_udp, (int)(sizeof(iov_udp)/sizeof(iov_udp[0])), iov_server_addr);
+   rc = rawSocket.send(iov_udp, static_cast<int>(sizeof(iov_udp)/sizeof(iov_udp[0])), iov_server_addr);
    ACE_TEST_EXCEPTION_RETURN(rc  == -1, "  raw6 socket can not send using iov \n");
    ACE_OS::sleep(1);
 
@@ -672,9 +672,9 @@ run_iovec_IPv4_api_test ()
 {
    ACE_DEBUG ((LM_INFO, "%C begin to run IPv4 iovec api test ...\n", __func__));
 
-   ACE_INET_Addr bindAddr((u_short)0, "127.0.0.1");
+   ACE_INET_Addr bindAddr(static_cast<u_short>(0), "127.0.0.1");
 
-   ACE_INET_Addr client_addr((u_short)0, "127.0.0.1") ,server_addr((u_short)0, "127.0.0.1");
+   ACE_INET_Addr client_addr(static_cast<u_short>(0), "127.0.0.1") ,server_addr(static_cast<u_short>(0), "127.0.0.1");
 
    ACE_SOCK_Dgram  client_dgram(client_addr);
    SockGuard client_dgram_guard(client_dgram);
@@ -720,8 +720,8 @@ run_iovec_IPv4_api_test ()
    ACE_DEBUG ((LM_INFO, "%C test iovec send ...\n", __func__));
    readUdpSocektToEmpty(server_dgram);
 
-   IPv4_HEADER_t_Ptr  ptIPv4Header    = (IPv4_HEADER_t_Ptr)sendbuf;
-   UDP_HEADER_t_Ptr   ptUDPHeader     = (UDP_HEADER_t_Ptr)(sendbuf + sizeof(IPv4_HEADER_t));
+   IPv4_HEADER_t_Ptr  ptIPv4Header    = reinterpret_cast<IPv4_HEADER_t_Ptr>(sendbuf);
+   UDP_HEADER_t_Ptr   ptUDPHeader     = reinterpret_cast<UDP_HEADER_t_Ptr>(sendbuf + sizeof(IPv4_HEADER_t));
    u_short n = sizeof("hello world");
 
    *ptIPv4Header = {};
@@ -751,7 +751,7 @@ run_iovec_IPv4_api_test ()
    iov_udp[1].iov_base = const_cast<char*>("hello world");
    iov_udp[1].iov_len  = sizeof("hello world");
 
-   rc = rawSocket.send(iov_udp, (int)(sizeof(iov_udp)/sizeof(iov_udp[0])), server_addr);
+   rc = rawSocket.send(iov_udp, static_cast<int>(sizeof(iov_udp)/sizeof(iov_udp[0])), server_addr);
    ACE_TEST_EXCEPTION_RETURN(rc  == -1, "  raw4 socket can send using iov\n");
    ACE_OS::sleep(1);
 
@@ -768,14 +768,13 @@ run_main (int, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("RAW_Socket_Test"));
   ACE_UNUSED_ARG (argv);
   int retval = 0;
-  int oldMTU;
-
 
 #if !defined (ACE_WIN32)
   // set the lo interface MTU
+  int oldMTU;
   if(ACE_OS::getuid() == 0)
   {
-    ACE_INET_Addr anyAddr((u_short)0);
+    ACE_INET_Addr anyAddr(static_cast<u_short>(0));
     ACE_SOCK_Dgram  netdevice(anyAddr);
     SockGuard dgram_guard(netdevice);
 
@@ -814,7 +813,7 @@ run_main (int, ACE_TCHAR *argv[])
 #if !defined (ACE_WIN32)
  if(ACE_OS::getuid() == 0)
   {
-    ACE_INET_Addr anyAddr((u_short)0);
+    ACE_INET_Addr anyAddr(static_cast<u_short>(0));
     ACE_SOCK_Dgram  netdevice(anyAddr);
     SockGuard dgram_guard(netdevice);
 
