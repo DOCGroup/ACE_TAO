@@ -98,7 +98,6 @@ uint32_t Checksum(uint32_t cksum, uint8_t *pBuffer, uint32_t size)
   if (size > 0)
   {
     cksum += (static_cast<uint16_t>(p[num]) << 8) & 0xFFFF;
-    num += 1;
   }
 
   while (cksum >> 16)
@@ -207,7 +206,7 @@ run_option_test ()
   rc = rawSocket.set_option(SOL_SOCKET, SO_RCVBUF, &new_optval, sizeof(new_optval));
 
   ACE_TEST_EXCEPTION_RETURN(rc < 0, "  set SO_RCVBUF new value in failure\n");
-  ACE_UNUSED_ARG(new_optval);
+  ACE_DEBUG ((LM_INFO, "%C set_option got optlen: %d ...\n", __func__, optlen));
 
   new_optval = 0;
   optlen  = sizeof(new_optval);
