@@ -9,6 +9,8 @@
 // Included so users have access to ACE_RECVPKTINFO and ACE_RECVPKTINFO6 .
 #include "ace/OS_NS_sys_socket.h"
 
+#include "ace/SOCK_Dgram.h"
+
 #if defined (ACE_HAS_IPV6) && defined (ACE_WIN32)
 #include /**/ <iphlpapi.h>
 #endif
@@ -115,14 +117,6 @@ static inline void fillMsgHdr(msghdr& recv_msg, const ACE_INET_Addr &addr, void*
   #endif
 
 }
-
-#ifndef IP_RECVDSTADDR
-#define IP_RECVDSTADDR 25
-#endif
-
-#ifndef IP_PKTINFO
-#  define IP_PKTINFO 19
-#endif
 
 static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
 {
