@@ -118,25 +118,25 @@ static inline void fillMsgHdr(msghdr& recv_msg, const ACE_INET_Addr &addr, void*
 
 static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
 {
-    #ifdef ACE_USE_MSG_CONTROL
+    #if defined(ACE_HAS_4_4BSD_SENDMSG_RECVMSG) || defined ACE_WIN32
         if (to_addr.get_type() == AF_INET) {
     #if defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)
           for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
-            #if defined (IP_RECVDSTADDR)
+    #if defined (IP_RECVDSTADDR)
             if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_RECVDSTADDR) {
-              to_addr.set_address (reinterpret_cast<char *>(ACE_CMSG_DATA (ptr)),
+                to_addr.set_address (reinterpret_cast<char *>(ACE_CMSG_DATA (ptr)),
                                     sizeof (struct in_addr),
                                     0);
-              break;
+                break;
             }
-            #else
+    #else
             if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_PKTINFO) {
-              to_addr.set_address ((const char *) &(((in_pktinfo *) (ACE_CMSG_DATA (ptr)))->ipi_addr),
+                to_addr.set_address ((const char *) &(((in_pktinfo *) (ACE_CMSG_DATA (ptr)))->ipi_addr),
                                     sizeof (struct in_addr),
                                     0);
-              break;
+                break;
             }
-            #endif
+    #endif
           }
     #endif
         }
@@ -145,11 +145,10 @@ static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
         else if (to_addr.get_type() == AF_INET6) {
           for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
             if (ptr->cmsg_level == IPPROTO_IPV6 && ptr->cmsg_type == IPV6_PKTINFO) {
-              to_addr.set_address (reinterpret_cast<char *>(&((reinterpret_cast<in6_pktinfo*>((ACE_CMSG_DATA(ptr))))->ipi6_addr)),
+                to_addr.set_address (reinterpret_cast<char *>(&((reinterpret_cast<in6_pktinfo*>((ACE_CMSG_DATA(ptr))))->ipi6_addr)),
                                     sizeof (struct in6_addr),
                                     0);
-
-              break;
+                break;
             }
           }
         }
@@ -157,8 +156,7 @@ static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
     #else
         ACE_UNUSED_ARG(recv_msg);
         ACE_UNUSED_ARG (to_addr);
-  #endif
-
+    #endif
 }
 
 ssize_t
@@ -194,7 +192,7 @@ ACE_RAW_SOCKET::recv (void *buf,
     recv_msg.msg_iov    = &iov;
     recv_msg.msg_iovlen = 1;
 
-    #ifdef ACE_USE_MSG_CONTROL
+#ifdef ACE_USE_MSG_CONTROL
     union control_buffer  cbuf;
     if(to_addr != nullptr)
     {
@@ -204,9 +202,9 @@ ACE_RAW_SOCKET::recv (void *buf,
     {
         fillMsgHdr(recv_msg, addr, nullptr, 0);
     }
-    #else
+#else
     fillMsgHdr(recv_msg, addr, nullptr, 0);
-    #endif
+#endif
 
     ssize_t const status = ACE_OS::recvmsg (this->get_handle (),
                                         &recv_msg,
@@ -215,10 +213,10 @@ ACE_RAW_SOCKET::recv (void *buf,
     addr.set_size (recv_msg.msg_namelen);
     addr.set_type ((static_cast<sockaddr_in *>(addr.get_addr()))->sin_family);
 
-    #ifdef ACE_USE_MSG_CONTROL
+#ifdef ACE_USE_MSG_CONTROL
     if(to_addr != nullptr)
         getToAddrFromMsgHdr(recv_msg, *to_addr);
-    #endif
+#endif
 
     return status;
 }
@@ -309,7 +307,7 @@ ACE_RAW_SOCKET::recv (iovec iov[],
     /*default*/
     fillMsgHdr(recv_msg, addr, nullptr, 0);
 
-    #ifdef ACE_USE_MSG_CONTROL
+#ifdef ACE_USE_MSG_CONTROL
     union control_buffer  cbuf;
     if(to_addr != nullptr)
     {
@@ -317,7 +315,7 @@ ACE_RAW_SOCKET::recv (iovec iov[],
 
         fillMsgHdr(recv_msg, addr, &cbuf, sizeof(cbuf));
     }
-    #endif
+#endif
 
     ssize_t const status = ACE_OS::recvmsg (this->get_handle (),
                                         &recv_msg,
@@ -326,10 +324,10 @@ ACE_RAW_SOCKET::recv (iovec iov[],
     addr.set_size (recv_msg.msg_namelen);
     addr.set_type ((static_cast<sockaddr_in *>(addr.get_addr()))->sin_family);
 
-    #ifdef ACE_USE_MSG_CONTROL
+#ifdef ACE_USE_MSG_CONTROL
     if(to_addr != nullptr)
         getToAddrFromMsgHdr(recv_msg, *to_addr);
-    #endif
+#endif
 
     return status;
 }
@@ -391,21 +389,21 @@ ACE_RAW_SOCKET::open (ACE_INET_Addr const & local, int protocol)
     ACE_INET_Addr bindAddr;
     this->get_local_addr(bindAddr);
 
-    #if defined (ACE_HAS_IPV6) && defined (IPV6_PKTINFO) && defined(IPV6_RECVPKTINFO)
+#if defined (ACE_HAS_IPV6) && defined (IPV6_PKTINFO) && defined(IPV6_RECVPKTINFO)
     if (bindAddr.get_type() == PF_INET6 && bindAddr.is_any())
     {
         int yes = 1;
         this->set_option(IPPROTO_IPV6, ACE_RECVPKTINFO6, &yes, sizeof(yes));
     }
-    #endif
+#endif
 
-    #if defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)
+#if defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)
     if (bindAddr.get_type() == PF_INET && bindAddr.is_any())
     {
         int yes = 1;
         this->set_option(IPPROTO_IP, ACE_RECVPKTINFO, &yes, sizeof(yes));
     }
-    #endif
+#endif
 
 
     return  0;
