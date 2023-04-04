@@ -116,10 +116,18 @@ static inline void fillMsgHdr(msghdr& recv_msg, const ACE_INET_Addr &addr, void*
 
 }
 
+#ifndef IP_RECVDSTADDR
+#define IP_RECVDSTADDR 25
+#endif
+
+#ifndef IP_PKTINFO
+#  define IP_PKTINFO 19
+#endif
+
 static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
 {
-    #if defined(ACE_HAS_4_4BSD_SENDMSG_RECVMSG) || defined ACE_WIN32
-        if (to_addr.get_type() == AF_INET) {
+    #if defined(ACE_USE_MSG_CONTROL)
+    if (to_addr.get_type() == AF_INET) {
     #if defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)
           for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
     #if defined (IP_RECVDSTADDR)
