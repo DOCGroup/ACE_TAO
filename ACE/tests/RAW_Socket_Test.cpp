@@ -257,7 +257,7 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
    ACE_INET_Addr local;
    raw.get_local_addr(local);
 
-   ssize_t len = 0;
+   ssize_t len;
    ssize_t expectedLen;
 
    do
