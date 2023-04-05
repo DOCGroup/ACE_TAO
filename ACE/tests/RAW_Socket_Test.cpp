@@ -262,80 +262,63 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
 
    do
    {
-     ACE_OS::memset(recvbuf, 0, sizeof(recvbuf));
+        ACE_OS::memset(recvbuf, 0, sizeof(recvbuf));
 
-     if(bUseIOVec)
-     {
-        iovec  vec[5];
-        unsigned int i=0;
-        unsigned int const oneByteRecvVecNum = (sizeof(vec)/sizeof(vec[0])) - 1;
-        for(; i< oneByteRecvVecNum; ++i)
+        if(bUseIOVec)
         {
-          vec[i].iov_base = &recvbuf[i];
-          vec[i].iov_len  = 1;
-        }
+            iovec  vec[5];
+            unsigned int i = 0;
+            unsigned int const oneByteRecvVecNum = (sizeof(vec)/sizeof(vec[0])) - 1;
+            for(; i< oneByteRecvVecNum; ++i)
+            {
+                vec[i].iov_base = &recvbuf[i];
+                vec[i].iov_len  = 1;
+            }
 
-        vec[i].iov_base = &recvbuf[i];
-        vec[i].iov_len  = sizeof(recvbuf) - oneByteRecvVecNum;
+            vec[i].iov_base = &recvbuf[i];
+            vec[i].iov_len  = sizeof(recvbuf) - oneByteRecvVecNum;
 
-        if(to_addr == nullptr)
-        {
-          raw.recv(vec, static_cast<int>(sizeof(vec)/sizeof(vec[0])) , remote);
-        }
-        else
-        {
-          len = raw.recv(vec, static_cast<int>(sizeof(vec)/sizeof(vec[0])), remote, 0/*flags*/, nullptr, to_addr);
-        }
-     }
-     else
-     {
-        if(to_addr == nullptr)
-        {
-            len = raw.recv(recvbuf, sizeof(recvbuf), remote);
+            len = raw.recv(vec, static_cast<int>(sizeof(vec)/sizeof(vec[0])), remote, 0/*flags*/, nullptr, to_addr); 
         }
         else
         {
             len = raw.recv(recvbuf, sizeof(recvbuf), remote, 0/*flags*/, nullptr, to_addr);
         }
-     }
 
-     if(len < 0)
-     {
-         ACE_DEBUG ((LM_INFO, "%C receive prcess reach the end ...\n", __func__));
-         return -1;
-     }
+        if(len < 0)
+        {
+            ACE_DEBUG ((LM_INFO, "%C receive prcess reach the end ...\n", __func__));
+            return -1;
+        }
 
-     UDP_HEADER_t_Ptr  ptUDPHeader;
-     if(local.get_type() == AF_INET)
-     {
-       ptUDPHeader  = reinterpret_cast<UDP_HEADER_t_Ptr>(recvbuf + sizeof(IPv4_HEADER_t));
-       expectedLen  = (n + sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t));
-       u_short nDstPort    = ntohs(ptUDPHeader->u16DstPort);
+        u_short nDstPort;
+        char const* szInetType;
+        UDP_HEADER_t_Ptr  ptUDPHeader;
+        if(local.get_type() == AF_INET)
+        {
+            ptUDPHeader  = reinterpret_cast<UDP_HEADER_t_Ptr>(recvbuf + sizeof(IPv4_HEADER_t));
+            expectedLen  = (n + sizeof(IPv4_HEADER_t) + sizeof(UDP_HEADER_t));
+            szInetType   = "IPv4";
+        }
+        else
+        {
+            ptUDPHeader  = reinterpret_cast<UDP_HEADER_t_Ptr>(recvbuf);
+            expectedLen  = (n + sizeof(UDP_HEADER_t));
+            szInetType   = "IPv6";
+        }
 
-       if(port == nDstPort && len == expectedLen)
-       {
-         ACE_DEBUG ((LM_INFO, "%C IPv4 recv expected pkgs ...\n", __func__));
-         break;
-       }
-     }
-     else
-     {
-       ptUDPHeader         = reinterpret_cast<UDP_HEADER_t_Ptr>(recvbuf);
-       expectedLen         = (n + sizeof(UDP_HEADER_t));
-       u_short nDstPort    = ntohs(ptUDPHeader->u16DstPort);
+        nDstPort = ntohs (ptUDPHeader->u16DstPort);
+        if (port == nDstPort && len == expectedLen)
+        {
+            ACE_DEBUG ((LM_INFO, "%C %C recv expected pkgs ...\n", __func__, szInetType));
+            break;
+        }
 
-       if(port == nDstPort && len == expectedLen)
-       {
-         ACE_DEBUG ((LM_INFO, "%C IPv6 recv expected pkgs ...\n", __func__));
-         break;
-       }
-     }
-
-     ACE_DEBUG ((LM_DEBUG, "%C recv unexpected pkgs len: %d, srcPort: %u, dstPort:%u; expectedLen: %d, expectedPort: %u ...\n", __func__, len, ntohs(ptUDPHeader->u16SrcPort), ntohs(ptUDPHeader->u16DstPort), expectedLen, port));
-     ACE_OS::sleep(1);
+        ACE_DEBUG ((LM_DEBUG, "%C recv unexpected pkgs len: %d, srcPort: %u, dstPort:%u; expectedLen: %d, expectedPort: %u ...\n", __func__, len, ntohs(ptUDPHeader->u16SrcPort), ntohs(ptUDPHeader->u16DstPort), expectedLen, port));
+        ACE_OS::sleep(1);
    } while (1);
 
-  return 0;
+   return 0;
 }
 
 static int
