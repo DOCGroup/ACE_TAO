@@ -278,7 +278,7 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
             vec[i].iov_base = &recvbuf[i];
             vec[i].iov_len  = sizeof(recvbuf) - oneByteRecvVecNum;
 
-            len = raw.recv(vec, static_cast<int>(sizeof(vec)/sizeof(vec[0])), remote, 0/*flags*/, nullptr, to_addr); 
+            len = raw.recv(vec, static_cast<int>(sizeof(vec)/sizeof(vec[0])), remote, 0/*flags*/, nullptr, to_addr);
         }
         else
         {
