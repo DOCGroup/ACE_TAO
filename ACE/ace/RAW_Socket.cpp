@@ -76,7 +76,6 @@ ACE_RAW_SOCKET::ACE_RAW_SOCKET (ACE_INET_Addr const & local,
         ACELIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("ACE_RAW_SOCKET")));
-
 }
 
 static inline ssize_t using_common_recv(const ACE_RAW_SOCKET& raw, void *buf, size_t n, ACE_INET_Addr &addr, int flags)
@@ -113,7 +112,6 @@ static inline void fillMsgHdr(msghdr& recv_msg, const ACE_INET_Addr &addr, void*
     recv_msg.msg_accrights    = 0;
     recv_msg.msg_accrightslen = 0;
   #endif
-
 }
 
 static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)

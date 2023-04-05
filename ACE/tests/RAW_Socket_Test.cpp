@@ -62,7 +62,6 @@ typedef struct _IPv6_HEADER_t
       uint32_t au32DstAddr[4];
       uint64_t au64DstAddr[2];
    };
-
 } IPv6_HEADER_t, *IPv6_HEADER_t_Ptr;
 
 typedef struct _UDP_HEADER_t
@@ -77,7 +76,6 @@ typedef struct _UDP_HEADER_t
 
 uint32_t Checksum(uint32_t cksum, uint8_t *pBuffer, uint32_t size)
 {
-
   if ((nullptr == pBuffer) || (0 == size))
   {
       // return passed value
@@ -89,7 +87,6 @@ uint32_t Checksum(uint32_t cksum, uint8_t *pBuffer, uint32_t size)
 
   while (size > 1)
   {
-
       cksum += (static_cast<uint16_t>(p[num]) << 8 & 0xff00) | (static_cast<uint16_t>(p[num + 1]) & 0x00FF);
       size  -= 2;
       num   += 2;
@@ -117,7 +114,6 @@ void ipv4_header_checksum(IPv4_HEADER_t_Ptr pIpHeader)
    uint32_t sum = Checksum(0, reinterpret_cast<uint8_t *>(pIpHeader), ipHeadLen);
 
    pIpHeader->u16CheckSum = htons(static_cast<uint16_t>(~sum));
-
 }
 
 void udp6_header_checksum(IPv6_HEADER_t_Ptr pIpHeader, UDP_HEADER_t_Ptr ptUDPHeader, size_t udpLen)
@@ -144,7 +140,6 @@ void udp6_header_checksum(IPv6_HEADER_t_Ptr pIpHeader, UDP_HEADER_t_Ptr ptUDPHea
     sum = Checksum(sum,  reinterpret_cast<uint8_t *>(ptUDPHeader), udpLen);
 
     ptUDPHeader->u16CheckSum = htons(static_cast<uint16_t>(~sum));
-
 }
 
 
@@ -182,7 +177,6 @@ static char  recvbuf[4096];
 static int
 run_option_test ()
 {
-
   ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
 
   ACE_INET_Addr addr(static_cast<u_short>(0), "127.0.0.1");
@@ -224,7 +218,6 @@ run_option_test ()
 static int
 run_reopen_test ()
 {
-
   ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
 
   ACE_INET_Addr addr(static_cast<u_short>(0), "127.0.0.1");
@@ -257,7 +250,6 @@ static void readUdpSocektToEmpty(ACE_SOCK_Dgram& udpSock)
     if(rc == -1)
       break;
   }
-
 }
 
 static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port, size_t n, ACE_INET_Addr& remote, bool bUseIOVec = false, ACE_INET_Addr* to_addr = nullptr)
@@ -305,7 +297,6 @@ static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port,
         {
             len = raw.recv(recvbuf, sizeof(recvbuf), remote, 0/*flags*/, nullptr, to_addr);
         }
-
      }
 
      if(len < 0)
