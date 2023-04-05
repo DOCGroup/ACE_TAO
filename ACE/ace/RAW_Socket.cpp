@@ -9,8 +9,6 @@
 // Included so users have access to ACE_RECVPKTINFO and ACE_RECVPKTINFO6 .
 #include "ace/OS_NS_sys_socket.h"
 
-#include "ace/SOCK_Dgram.h"
-
 #if defined (ACE_HAS_IPV6) && defined (ACE_WIN32)
 #include /**/ <iphlpapi.h>
 #endif
@@ -121,18 +119,22 @@ static inline void fillMsgHdr(msghdr& recv_msg, const ACE_INET_Addr &addr, void*
 static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
 {
     #if defined(ACE_USE_MSG_CONTROL)
-    if (to_addr.get_type() == AF_INET) {
-    #if defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)
-          for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
+    if (to_addr.get_type() == AF_INET) 
+    {
+          for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) 
+          {
     #if defined (IP_RECVDSTADDR)
-            if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_RECVDSTADDR) {
+            if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_RECVDSTADDR) 
+            {
                 to_addr.set_address (reinterpret_cast<char *>(ACE_CMSG_DATA (ptr)),
                                     sizeof (struct in_addr),
                                     0);
                 break;
             }
-    #else
-            if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_PKTINFO) {
+    #endif
+    #if defined(IP_PKTINFO)
+            if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_PKTINFO) 
+            {
                 to_addr.set_address ((const char *) &(((in_pktinfo *) (ACE_CMSG_DATA (ptr)))->ipi_addr),
                                     sizeof (struct in_addr),
                                     0);
@@ -140,24 +142,25 @@ static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
             }
     #endif
           }
-    #endif
-        }
-
+    }
     #if defined (ACE_HAS_IPV6) && defined (IPV6_PKTINFO)
-        else if (to_addr.get_type() == AF_INET6) {
-          for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
-            if (ptr->cmsg_level == IPPROTO_IPV6 && ptr->cmsg_type == IPV6_PKTINFO) {
+    else if (to_addr.get_type() == AF_INET6) 
+    {
+        for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) 
+        {
+            if (ptr->cmsg_level == IPPROTO_IPV6 && ptr->cmsg_type == IPV6_PKTINFO) 
+            {
                 to_addr.set_address (reinterpret_cast<char *>(&((reinterpret_cast<in6_pktinfo*>((ACE_CMSG_DATA(ptr))))->ipi6_addr)),
                                     sizeof (struct in6_addr),
                                     0);
                 break;
             }
-          }
         }
+    }
     #endif
     #else
-        ACE_UNUSED_ARG(recv_msg);
-        ACE_UNUSED_ARG (to_addr);
+    ACE_UNUSED_ARG(recv_msg);
+    ACE_UNUSED_ARG (to_addr);
     #endif
 }
 
