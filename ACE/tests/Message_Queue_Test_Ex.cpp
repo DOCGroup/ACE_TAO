@@ -712,33 +712,38 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
 class Queue_Ex_Iterator_No_Lock
  : public ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>
 {
-  typedef ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy> inherited;
-
  public:
   typedef ACE_Message_Queue_Ex<User_Class, ACE_SYNCH, ACE_System_Time_Policy> MESSAGE_QUEUE_EX_T;
 
   explicit Queue_Ex_Iterator_No_Lock (MESSAGE_QUEUE_EX_T& queue_in)
-   : inherited (queue_in.queue ())
+    : ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy> (queue_in.queue ())
   {}
-  virtual ~Queue_Ex_Iterator_No_Lock () {}
+  virtual ~Queue_Ex_Iterator_No_Lock () = default;
 
   int next (User_Class*& message_inout)
   {
-    if (inherited::curr_)
+    if (ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_)
     {
-      message_inout = reinterpret_cast<User_Class*> (inherited::curr_->base ());
+      message_inout =
+            reinterpret_cast<User_Class*> (ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_->base ());
       return 1;
-    } // end IF
+    }
 
     return 0;
   }
-  int done (void) const { return (!inherited::curr_ ? 1 : 0); }
-  int advance (void)
-  {
-    if (inherited::curr_)
-      inherited::curr_ = inherited::curr_->next ();
 
-    return (inherited::curr_ ? 1 : 0);
+  int done () const
+  {
+    return (!ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_ ? 1 : 0);
+  }
+
+  int advance ()
+  {
+    if (ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_)
+      ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_ =
+        ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_->next ();
+
+    return (ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_ ? 1 : 0);
   }
 };
 
@@ -749,11 +754,11 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Iterator test queue not empty\n")), 1);
 
   // Set up a few objects with names for how they should come out of the queue.
-  ACE_Auto_Basic_Ptr<User_Class> b1, b2, b3, b4;
-  b1.reset (new User_Class ("first"));
-  b2.reset (new User_Class ("second"));
-  b3.reset (new User_Class ("third"));
-  b4.reset (new User_Class ("fourth"));
+  std::unique_ptr<User_Class> b1, b2, b3, b4;
+  b1 = std::make_unique<User_Class> ("first");
+  b2 = std::make_unique<User_Class> ("second");
+  b3 = std::make_unique<User_Class> ("third");
+  b4 = std::make_unique<User_Class> ("fourth");
   if (-1 == q.enqueue_tail (b1.get (), 0))
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b1")), 1);
   if (-1 == q.enqueue_tail (b2.get (), 0))
