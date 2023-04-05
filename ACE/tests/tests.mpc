@@ -1169,13 +1169,6 @@ project(Message Queue Test) : acetest {
   Source_Files {
     Message_Queue_Test.cpp
   }
-  verbatim(gnuace,local) {
-    # Needs a larger heap on AIX to avoid overwriting stacks in the counting
-    # part of the test.
-    ifdef AIX_VERS
-      LDFLAGS += -bmaxdata:0x20000000
-    endif
-  }
 }
 
 project(Monotonic_Manual_Event Test) : acetest {
@@ -2194,7 +2187,6 @@ project(Based Pointer Test) : acetest {
 }
 
 project(Library Unload): unload_libace {
-  avoids += wince
   exename = UnloadLibACE
   staticflags += ACE_AS_STATIC_LIBS
   Source_Files {

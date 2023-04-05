@@ -27,7 +27,6 @@ ACE_MEM_Acceptor::accept (ACE_SOCK_Stream &new_stream,
     (new_stream, remote_addr, timeout, restart, reset_new_handle);
 }
 
-#if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
 ACE_MEM_Acceptor::accept (ACE_SOCK_Stream &new_stream,
                           ACE_Accept_QoS_Params qos_params,
@@ -39,7 +38,6 @@ ACE_MEM_Acceptor::accept (ACE_SOCK_Stream &new_stream,
   return this->ACE_SOCK_Acceptor::accept
     (new_stream, qos_params, remote_addr, timeout, restart, reset_new_handle);
 }
-#endif  // ACE_HAS_WINCE
 
 ACE_INLINE int
 ACE_MEM_Acceptor::get_local_addr (ACE_MEM_Addr &sap) const

@@ -137,31 +137,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
         }
     }
 
-#if defined (ACE_HAS_WINCE)
-  // Note that WinCE does not have process name included in the command line as argv[0]
-  // like other OS environment.  Therefore, it is user's whole responsibility to call
-  // 'ACE_Process_Options::process_name(const ACE_TCHAR *name)' to set the proper
-  // process name (the execution file name with path if needed).
-  BOOL fork_result =
-    ACE_TEXT_CreateProcess (options.process_name(),
-                            options.command_line_buf(),
-                            options.get_process_attributes(),  // must be NULL in CE
-                            options.get_thread_attributes(),   // must be NULL in CE
-                            options.handle_inheritance(),      // must be false in CE
-                            options.creation_flags(),          // must be NULL in CE
-                            options.env_buf(),                 // environment variables, must be NULL in CE
-                            options.working_directory(),       // must be NULL in CE
-                            options.startup_info(),            // must be NULL in CE
-                            &this->process_info_);
-
-  if (fork_result)
-    {
-      parent (this->getpid ());
-      return this->getpid ();
-    }
-  return ACE_INVALID_PID;
-
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   void* env_buf = options.env_buf ();
   DWORD flags = options.creation_flags ();
 # if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
@@ -214,67 +190,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
       return this->getpid ();
     }
   return ACE_INVALID_PID;
-
-#elif defined(ACE_OPENVMS)
-  if (ACE_BIT_ENABLED (options.creation_flags (),
-                       ACE_Process_Options::NO_EXEC))
-    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-
-  int saved_stdin = ACE_STDIN;
-  int saved_stdout = ACE_STDOUT;
-  int saved_stderr = ACE_STDERR;
-  // Save STD file descriptors and redirect
-  if (options.get_stdin () != ACE_INVALID_HANDLE) {
-    if ((saved_stdin = ACE_OS::dup (ACE_STDIN)) == -1 && errno != EBADF)
-      ACE_OS::exit (errno);
-    if (ACE_OS::dup2 (options.get_stdin (), ACE_STDIN) == -1)
-      ACE_OS::exit (errno);
-  }
-  if (options.get_stdout () != ACE_INVALID_HANDLE) {
-    if ((saved_stdout = ACE_OS::dup (ACE_STDOUT)) == -1 && errno != EBADF)
-      ACE_OS::exit (errno);
-    if (ACE_OS::dup2 (options.get_stdout (), ACE_STDOUT) == -1)
-      ACE_OS::exit (errno);
-  }
-  if (options.get_stderr () != ACE_INVALID_HANDLE) {
-    if ((saved_stderr = ACE_OS::dup (ACE_STDERR)) == -1 && errno != EBADF)
-      ACE_OS::exit (errno);
-    if (ACE_OS::dup2 (options.get_stderr (), ACE_STDERR) == -1)
-      ACE_OS::exit (errno);
-  }
-
-  if (options.working_directory () != 0)
-    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-
-  this->child_id_ = vfork();
-  if (this->child_id_ == 0) {
-      ACE_OS::execvp (options.process_name (),
-                options.command_line_argv ());
-      // something went wrong
-      this->child_id_ = ACE_INVALID_PID;
-  }
-
-  // restore STD file descriptors (if necessary)
-  if (options.get_stdin () != ACE_INVALID_HANDLE) {
-    if (saved_stdin == -1)
-      ACE_OS::close (ACE_STDIN);
-    else
-      ACE_OS::dup2 (saved_stdin, ACE_STDIN);
-  }
-  if (options.get_stdout () != ACE_INVALID_HANDLE) {
-    if (saved_stdout == -1)
-      ACE_OS::close (ACE_STDOUT);
-    else
-      ACE_OS::dup2 (saved_stdout, ACE_STDOUT);
-  }
-  if (options.get_stderr () != ACE_INVALID_HANDLE) {
-    if (saved_stderr == -1)
-      ACE_OS::close (ACE_STDERR);
-    else
-      ACE_OS::dup2 (saved_stderr, ACE_STDERR);
-  }
-
-  return this->child_id_;
 #elif defined (ACE_VXWORKS) && defined (__RTP__)
   if (ACE_BIT_ENABLED (options.creation_flags (),
                        ACE_Process_Options::NO_EXEC))
@@ -761,8 +676,7 @@ ACE_Process::close_passed_handles ()
 }
 
 #if defined (ACE_WIN32) && \
-    defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR) && \
-    !defined (ACE_HAS_WINCE)
+    defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
 wchar_t*
 ACE_Process::convert_env_buffer (const char* env) const
 {
@@ -818,12 +732,9 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
                                           size_t max_env_args,
                                           size_t max_cmdline_args)
   :
-#if !defined (ACE_HAS_WINCE)
     inherit_environment_ (inherit_environment),
-#endif /* ACE_HAS_WINCE */
     creation_flags_ (0),
     avoid_zombies_ (0),
-#if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
     environment_inherited_ (0),
     process_attributes_ (0),
@@ -847,7 +758,6 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
     environment_buf_len_ (env_buf_len),
     max_environment_args_ (max_env_args),
     max_environ_argv_index_ (max_env_args - 1),
-#endif /* !ACE_HAS_WINCE */
     command_line_argv_calculated_ (false),
     command_line_buf_ (0),
     command_line_copy_ (0),
@@ -867,13 +777,6 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
   command_line_buf_[0] = '\0';
   process_name_[0] = '\0';
 
-#if defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG(inherit_environment);
-  ACE_UNUSED_ARG(env_buf_len);
-  ACE_UNUSED_ARG(max_env_args);
-#endif
-
-#if !defined (ACE_HAS_WINCE)
   working_directory_[0] = '\0';
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR (environment_buf_,
@@ -897,7 +800,6 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
                   sizeof this->startup_info_);
   this->startup_info_.cb = sizeof this->startup_info_;
 #endif /* ACE_WIN32 */
-#endif /* !ACE_HAS_WINCE */
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR (command_line_argv_,
                  static_cast<ACE_TCHAR**>(ACE_Allocator::instance()->malloc(sizeof(ACE_TCHAR*) * max_cmdline_args)));
@@ -907,7 +809,6 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
 #endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
-#if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
 void
 ACE_Process_Options::inherit_environment ()
@@ -975,7 +876,6 @@ ACE_Process_Options::env_argv ()
 {
   return environment_argv_;
 }
-
 #endif /* ACE_WIN32 */
 
 int
@@ -1229,12 +1129,9 @@ ACE_Process_Options::release_handles ()
       set_handles_called_ = 0;
     }
 }
-#endif /* !ACE_HAS_WINCE */
-
 
 ACE_Process_Options::~ACE_Process_Options ()
 {
-#if !defined (ACE_HAS_WINCE)
   release_handles();
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(environment_buf_);
@@ -1243,7 +1140,6 @@ ACE_Process_Options::~ACE_Process_Options ()
   delete [] environment_buf_;
   delete [] environment_argv_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
-#endif /* !ACE_HAS_WINCE */
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(command_line_buf_);
 #else
@@ -1326,11 +1222,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
   return 0;
 }
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_HAS_WINCE)
-/**
- * @note Not available on Windows CE because it doesn't have a char version of
- * vsprintf.
- */
+#if defined (ACE_HAS_WCHAR)
 int
 ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
 {
@@ -1357,20 +1249,16 @@ ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
   command_line_argv_calculated_ = false;
   return 0;
 }
-#endif /* ACE_HAS_WCHAR && !ACE_HAS_WINCE */
+#endif /* ACE_HAS_WCHAR */
 #endif // ACE_LACKS_VA_FUNCTIONS
 
 ACE_TCHAR *
 ACE_Process_Options::env_buf ()
 {
-#if !defined (ACE_HAS_WINCE)
   if (environment_buf_[0] == '\0')
     return 0;
   else
     return environment_buf_;
-#else
-  return 0;
-#endif /* !ACE_HAS_WINCE */
 }
 
 ACE_TCHAR * const *
@@ -1411,12 +1299,8 @@ ACE_Process_Options::command_line_argv ()
 int
 ACE_Process_Options::pass_handle (ACE_HANDLE h)
 {
-#if defined (ACE_HAS_WINCE)
-  ACE_NOTSUP_RETURN (-1);
-#else
   this->handles_passed_.set_bit (h);
   return 0;
-#endif /* ACE_HAS_WINCE */
 }
 
 // Get a copy of the handles the ACE_Process_Options duplicated

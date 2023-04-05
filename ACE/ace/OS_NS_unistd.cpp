@@ -52,10 +52,6 @@ ACE_OS::argv_to_string (int argc,
                         bool substitute_env_args,
                         bool quote_args)
 {
-#if defined (ACE_LACKS_STRENVDUP)
-  ACE_UNUSED_ARG (substitute_env_args);
-#endif /* ACE_LACKS_STRENVDUP */
-
   if (argc <= 0 || argv == 0 || argv[0] == 0)
     return 0;
 
@@ -67,7 +63,6 @@ ACE_OS::argv_to_string (int argc,
 
   for (int i = 0; i < argc; ++i)
     {
-#if !defined (ACE_LACKS_STRENVDUP)
       // Account for environment variables.
       if (substitute_env_args
           && ACE_OS::strchr (argv[i], ACE_TEXT ('$')) != 0)
@@ -98,7 +93,6 @@ ACE_OS::argv_to_string (int argc,
               return 0;
             }
         }
-#endif /* ACE_LACKS_STRENVDUP */
       // If must quote, we only do it if the arg contains spaces, or
       // is empty. Perhaps a check for other c | ord(c) <= 32 is in
       // order?
@@ -261,12 +255,7 @@ ACE_OS::fork (const ACE_TCHAR *program_name)
   ACE_UNUSED_ARG (program_name);
   ACE_NOTSUP_RETURN (pid_t (-1));
 # else
-  pid_t const pid =
-# if defined (ACE_HAS_STHREADS)
-    ::fork1 ();
-#else
-    ::fork ();
-#endif /* ACE_HAS_STHREADS */
+  pid_t const pid = ::fork ();
 
 #if !defined (ACE_HAS_MINIMAL_ACE_OS) && !defined (ACE_HAS_THREADS)
 
@@ -308,7 +297,6 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
   if (ACE_OS::argv_to_string (argv, buf) != -1)
     {
       PROCESS_INFORMATION process_info;
-#   if !defined (ACE_HAS_WINCE)
       ACE_TEXT_STARTUPINFO startup_info;
       ACE_OS::memset ((void *) &startup_info,
                       0,
@@ -325,18 +313,6 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
                                   0, // No current directory.
                                   &startup_info,
                                   &process_info))
-#   else
-      if (ACE_TEXT_CreateProcess (0,
-                                  buf,
-                                  0, // No process attributes.
-                                  0,  // No thread attributes.
-                                  FALSE, // Can's inherit handles on CE
-                                  0, // Don't create a new console window.
-                                  0, // No environment.
-                                  0, // No current directory.
-                                  0, // Can't use startup info on CE
-                                  &process_info))
-#   endif /* ! ACE_HAS_WINCE */
         {
           // Free resources allocated in kernel.
           ACE_OS::close (process_info.hThread);
@@ -422,12 +398,6 @@ ACE_OS::num_processors ()
     return num_processors;
   else
     return -1;
-#elif defined (__hpux)
-  struct pst_dynamic psd;
-  if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
-    return psd.psd_max_proc_cnt;
-  else
-    return -1;
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif
@@ -474,12 +444,6 @@ ACE_OS::num_processors_online ()
   size_t len = sizeof (num_processors);
   if (::sysctl (mib, 2, &num_processors, &len, 0, 0) != -1)
     return num_processors;
-  else
-    return -1;
-#elif defined (__hpux)
-  struct pst_dynamic psd;
-  if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
-    return psd.psd_proc_cnt;
   else
     return -1;
 #else
@@ -792,10 +756,6 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
                         ACE_TCHAR **&argv,
                         bool substitute_env_args)
 {
-#if defined (ACE_LACKS_STRENVDUP)
-  ACE_UNUSED_ARG (substitute_env_args);
-#endif /* ACE_LACKS_STRENVDUP */
-
   // Reset the number of arguments
   argc = 0;
 
@@ -901,7 +861,6 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
 
       *cp = ACE_TEXT ('\0');
 
-#if !defined (ACE_LACKS_STRENVDUP)
       // Check for environment variable substitution here.
       if (substitute_env_args) {
           argv[i] = ACE_OS::strenvdup (argp);
@@ -919,7 +878,6 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
             }
       }
       else
-#endif /* ACE_LACKS_STRENVDUP */
         {
           argv[i] = ACE_OS::strdup (argp);
 

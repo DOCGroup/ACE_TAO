@@ -1004,7 +1004,7 @@ DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   int min_priority =
     ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 

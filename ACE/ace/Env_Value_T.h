@@ -78,9 +78,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Env_Value_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Env_Value_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -150,10 +148,6 @@ ACE_Convert (const ACE_TCHAR *s, T &t)
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Env_Value_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_ENV_VALUE_T_H */

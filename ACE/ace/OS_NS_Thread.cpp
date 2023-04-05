@@ -30,9 +30,6 @@ ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 #if !defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
        (*THR_ID = ::_beginthreadex ((void(_Optlink*)(void*))ENTRY_POINT, STACK, STACKSIZE, ARGS), *THR_ID)
-#elif defined (ACE_HAS_WINCE)
-# define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
-      CreateThread (0, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & (CREATE_SUSPENDED | STACK_SIZE_PARAM_IS_A_RESERVATION), (unsigned long *) THR_ID)
 #elif defined(ACE_HAS_WTHREADS)
   // Green Hills compiler gets confused when __stdcall is embedded in
   // parameter list, so we define the type ACE_WIN32THRFUNC_T and use it
@@ -1466,13 +1463,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       // Wait to be awakened by a ACE_OS::signal() or
       // ACE_OS::broadcast().
 #     if defined (ACE_WIN32)
-#       if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
       result = ::WaitForSingleObject (cv->sema_, msec_timeout);
-#       else /* ACE_USES_WINCE_SEMA_SIMULATION */
-      // Can't use Win32 API on our simulated semaphores.
-      result = ACE_OS::sema_wait (&cv->sema_,
-                                  timeout);
-#       endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #     elif defined (ACE_VXWORKS)
       // Inline the call to ACE_OS::sema_wait () because it takes an
       // ACE_Time_Value argument.  Avoid the cost of that conversion . . .
@@ -1657,16 +1648,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     return -1;
 
   // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
-#     if defined (ACE_USES_WINCE_SEMA_SIMULATION)
-  // Can't use Win32 API on simulated semaphores.
-  result = ACE_OS::sema_wait (&cv->sema_,
-                              timeout);
-
-  if (result == -1 && errno == ETIME)
-    result = WAIT_TIMEOUT;
-#     else
   result = ::WaitForSingleObject (cv->sema_, msec_timeout);
-#     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
   // Reacquire lock to avoid race conditions.
   if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
@@ -1748,16 +1730,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
   // Wait to be awakened by a ACE_OS::cond_signal() or
   // ACE_OS::cond_broadcast().
-#     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   result = ::WaitForSingleObject (cv->sema_, INFINITE);
-#     else
-  // Can't use Win32 API on simulated semaphores.
-  result = ACE_OS::sema_wait (&cv->sema_);
-
-  if (result != WAIT_OBJECT_0 && errno == ETIME)
-    result = WAIT_TIMEOUT;
-
-#     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
   // Reacquire lock to avoid race conditions.
   if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
@@ -1904,14 +1877,6 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
     ::pthread_mutexattr_destroy (&l_attributes);
 
   return result;
-# elif defined (ACE_HAS_STHREADS)
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (sa);
-  ACE_UNUSED_ARG (lock_type);
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init (m, lock_scope, attributes),
-  result),
-  int);
 # elif defined (ACE_HAS_WTHREADS)
   m->type_ = lock_scope;
 
@@ -1920,20 +1885,11 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   switch (lock_scope)
 {
   case USYNC_PROCESS:
-#   if defined (ACE_HAS_WINCE)
-      // @@todo (brunsch) This idea should be moved into ACE_OS_Win32.
       m->proc_mutex_ =
-  ::CreateMutexW (ACE_OS::default_win32_security_attributes_r
-                          (sa, &sa_buffer, &sd_buffer),
-                        FALSE,
-                        ACE_Ascii_To_Wide (name).wchar_rep ());
-#   else /* ACE_HAS_WINCE */
-      m->proc_mutex_ =
-  ::CreateMutexA (ACE_OS::default_win32_security_attributes_r
-                          (sa, &sa_buffer, &sd_buffer),
-                        FALSE,
-                        name);
-#   endif /* ACE_HAS_WINCE */
+        ::CreateMutexA (ACE_OS::default_win32_security_attributes_r
+                                (sa, &sa_buffer, &sd_buffer),
+                              FALSE,
+                              name);
       if (m->proc_mutex_ == 0)
         ACE_FAIL_RETURN (-1);
       else
@@ -1985,9 +1941,6 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_destroy (m), result), int);
 #  endif /* ACE_LACKS_PTHREAD_MUTEX_DESTROY */
-# elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_destroy (m), result), int);
 # elif defined (ACE_HAS_WTHREADS)
   switch (m->type_)
 {
@@ -2069,9 +2022,6 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
   // Note, don't use "::" here since the following call is often a macro.
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_lock (m), result), int);
-# elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_lock (m), result), int);
 # elif defined (ACE_HAS_WTHREADS)
   switch (m->type_)
 {
@@ -2243,9 +2193,6 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
   // Note, don't use "::" here since the following call is often a macro.
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_trylock (m), result), int);
-# elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_trylock (m), result), int);
 # elif defined (ACE_HAS_WTHREADS)
   switch (m->type_)
 {
@@ -2344,9 +2291,6 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
   // Note, don't use "::" here since the following call is often a macro.
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_unlock (m), result), int);
-# elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_unlock (m), result), int);
 # elif defined (ACE_HAS_WTHREADS)
   switch (m->type_)
 {
@@ -2587,20 +2531,11 @@ ACE_OS::event_init (ACE_event_t *event,
   ACE_UNUSED_ARG (arg);
   SECURITY_ATTRIBUTES sa_buffer;
   SECURITY_DESCRIPTOR sd_buffer;
-# if defined (ACE_HAS_WINCE)
-  // @@todo (brunsch) This idea should be moved into ACE_OS_Win32.
-  *event = ::CreateEventW (ACE_OS::default_win32_security_attributes_r
-                             (sa, &sa_buffer, &sd_buffer),
-                           manual_reset,
-                           initial_state,
-                           ACE_Ascii_To_Wide (name).wchar_rep ());
-# else /* ACE_HAS_WINCE */
   *event = ::CreateEventA (ACE_OS::default_win32_security_attributes_r
                              (sa, &sa_buffer, &sd_buffer),
                            manual_reset,
                            initial_state,
                            name);
-# endif /* ACE_HAS_WINCE */
   if (*event == 0)
     ACE_FAIL_RETURN (-1);
   else
@@ -3055,72 +2990,15 @@ ACE_OS::event_timedwait (ACE_event_t *event,
 int
 ACE_OS::lwp_getparams (ACE_Sched_Params &sched_params)
 {
-#if defined (ACE_HAS_STHREADS) || defined (sun)
-  // Get the class TS and RT class IDs.
-  ACE_id_t rt_id;
-  ACE_id_t ts_id;
-  if (ACE_OS::scheduling_class ("RT", rt_id) == -1
-      || ACE_OS::scheduling_class ("TS", ts_id) == -1)
-    return -1;
-
-  // Get this LWP's scheduling parameters.
-  pcparms_t pcparms;
-  // The following is just to avoid Purify warnings about unitialized
-  // memory reads.
-  ACE_OS::memset (&pcparms, 0, sizeof pcparms);
-  pcparms.pc_cid = PC_CLNULL;
-
-  if (ACE_OS::priority_control (P_LWPID,
-                                P_MYID,
-                                PC_GETPARMS,
-                                (char *) &pcparms) == -1)
-    return -1;
-  else if (pcparms.pc_cid == rt_id)
-    {
-      // RT class.
-      rtparms_t rtparms;
-      ACE_OS::memcpy (&rtparms, pcparms.pc_clparms, sizeof rtparms);
-
-      sched_params.policy (ACE_SCHED_FIFO);
-      sched_params.priority (rtparms.rt_pri);
-      sched_params.scope (ACE_SCOPE_THREAD);
-      ACE_Time_Value quantum (rtparms.rt_tqsecs,
-                              rtparms.rt_tqnsecs == RT_TQINF
-                              ? 0 : rtparms.rt_tqnsecs * 1000);
-      sched_params.quantum (quantum);
-      return 0;
-    }
-  else if (pcparms.pc_cid == ts_id)
-    {
-      /* TS class */
-      tsparms_t tsparms;
-      ACE_OS::memcpy (&tsparms, pcparms.pc_clparms, sizeof tsparms);
-
-      sched_params.policy (ACE_SCHED_OTHER);
-      sched_params.priority (tsparms.ts_upri);
-      sched_params.scope (ACE_SCOPE_THREAD);
-      return 0;
-    }
-  else
-    return -1;
-
-#else  /* ! ACE_HAS_STHREADS && ! sun */
   ACE_UNUSED_ARG (sched_params);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ! ACE_HAS_STHREADS && ! sun */
 }
 
 int
 ACE_OS::lwp_setparams (const ACE_Sched_Params &sched_params)
 {
-#if defined (ACE_HAS_STHREADS) || defined (sun)
-  ACE_Sched_Params lwp_params (sched_params);
-  lwp_params.scope (ACE_SCOPE_LWP);
-  return ACE_OS::sched_params (lwp_params);
-#else  /* ! ACE_HAS_STHREADS && ! sun */
   ACE_UNUSED_ARG (sched_params);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ! ACE_HAS_STHREADS && ! sun */
 }
 
 #if defined ACE_HAS_THREADS && defined ACE_LACKS_RWLOCK_T
@@ -3250,9 +3128,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                       ACE_id_t id)
 {
   ACE_OS_TRACE ("ACE_OS::sched_params");
-#if defined (ACE_HAS_STHREADS)
-  return ACE_OS::set_scheduling_params (sched_params, id);
-#elif defined (ACE_HAS_PTHREADS) && \
+#if defined (ACE_HAS_PTHREADS) && \
       (!defined (ACE_LACKS_SETSCHED) || \
       defined (ACE_HAS_PTHREAD_SCHEDPARAM))
   if (sched_params.quantum () != ACE_Time_Value::zero)
@@ -3293,20 +3169,13 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                                            result),
                          int);
     }
-# if defined (sun)
-  // We need to be able to set LWP priorities on Suns, even without
-  // ACE_HAS_STHREADS, to obtain preemption.
-  else if (sched_params.scope () == ACE_SCOPE_LWP)
-    return ACE_OS::set_scheduling_params (sched_params, id);
-# endif /* sun */
   else // sched_params.scope () == ACE_SCOPE_LWP, which isn't POSIX
     {
       errno = EINVAL;
       return -1;
     }
 
-#elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-
+#elif defined (ACE_WIN32)
   // PharLap ETS can act on the current thread - it can set the
   // quantum also, unlike Win32. All this only works on the RT
   // version.
@@ -3318,16 +3187,13 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
   if (sched_params.quantum() != ACE_Time_Value::zero)
     EtsSetTimeSlice (sched_params.quantum().msec());
 #   endif
-
 # else
-
   if (sched_params.quantum () != ACE_Time_Value::zero)
     {
       // I don't know of a way to set the quantum on Win32.
       errno = EINVAL;
       return -1;
     }
-
 # endif /* ACE_HAS_PHARLAP_RT */
 
   if (sched_params.scope () == ACE_SCOPE_THREAD)
@@ -3415,132 +3281,19 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
   ACE_UNUSED_ARG (sched_params);
   ACE_UNUSED_ARG (id);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_STHREADS */
+#endif /* ACE_HAS_PTHREADS */
 }
 
 int
-ACE_OS::scheduling_class (const char *class_name, ACE_id_t &id)
+ACE_OS::scheduling_class (const char */*class_name*/, ACE_id_t &/*id*/)
 {
-#if defined (ACE_HAS_PRIOCNTL)
-  // Get the priority class ID.
-  pcinfo_t pcinfo;
-  // The following is just to avoid Purify warnings about unitialized
-  // memory reads.
-  ACE_OS::memset (&pcinfo, 0, sizeof pcinfo);
-
-  ACE_OS::strcpy (pcinfo.pc_clname, class_name);
-  if (ACE_OS::priority_control (P_ALL /* ignored */,
-                                P_MYID /* ignored */,
-                                PC_GETCID,
-                                (char *) &pcinfo) == -1)
-    {
-      return -1;
-    }
-  else
-    {
-      id = pcinfo.pc_cid;
-      return 0;
-    }
-#else  /* ! ACE_HAS_PRIOCNTL */
-  ACE_UNUSED_ARG (class_name);
-  ACE_UNUSED_ARG (id);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ! ACE_HAS_PRIOCNTL */
 }
 
 int
-ACE_OS::set_scheduling_params (const ACE_Sched_Params &sched_params,
-                               ACE_id_t id)
+ACE_OS::set_scheduling_params (const ACE_Sched_Params &/*sched_params*/, ACE_id_t /*id*/)
 {
-#if defined (ACE_HAS_PRIOCNTL)
-  // Set priority class, priority, and quantum of this LWP or process as
-  // specified in sched_params.
-
-  // Get the priority class ID.
-  ACE_id_t class_id;
-  if (ACE_OS::scheduling_class (sched_params.policy() == ACE_SCHED_OTHER  ?
-                                  "TS"  :
-                                  "RT", class_id) == -1)
-    {
-      return -1;
-    }
-
-  pcparms_t pcparms;
-  // The following is just to avoid Purify warnings about unitialized
-  // memory reads.
-  ACE_OS::memset (&pcparms, 0, sizeof pcparms);
-
-  pcparms.pc_cid = class_id;
-
-  if (sched_params.policy () == ACE_SCHED_OTHER  &&
-      sched_params.quantum () == ACE_Time_Value::zero)
-      // SunOS doesn't support non-zero quantums in time-sharing class:  use
-      // real-time class instead.
-    {
-      tsparms_t tsparms;
-      // The following is just to avoid Purify warnings about unitialized
-      // memory reads.
-      ACE_OS::memset (&tsparms, 0, sizeof tsparms);
-
-      // Don't change ts_uprilim (user priority limit)
-      tsparms.ts_uprilim = TS_NOCHANGE;
-      tsparms.ts_upri = sched_params.priority ();
-
-      // Package up the TS class ID and parameters for the
-      // priority_control () call.
-      ACE_OS::memcpy (pcparms.pc_clparms, &tsparms, sizeof tsparms);
-    }
-  else if (sched_params.policy () == ACE_SCHED_FIFO  ||
-           (sched_params.policy () == ACE_SCHED_RR &&
-            sched_params.quantum () != ACE_Time_Value::zero))
-           // must have non-zero quantum for RR, to make it meaningful
-           // A zero quantum with FIFO has special significance:  it actually
-           // means infinite time quantum, i.e., run-to-completion.
-    {
-      rtparms_t rtparms;
-      // The following is just to avoid Purify warnings about unitialized
-      // memory reads.
-      ACE_OS::memset (&rtparms, 0, sizeof rtparms);
-
-      rtparms.rt_pri = sched_params.priority ();
-
-      if (sched_params.quantum () == ACE_Time_Value::zero)
-        {
-          // rtparms.rt_tqsecs is ignored with RT_TQINF
-          rtparms.rt_tqnsecs = RT_TQINF;
-        }
-      else
-        {
-          rtparms.rt_tqsecs = (ulong) sched_params.quantum ().sec ();
-          rtparms.rt_tqnsecs = sched_params.quantum ().usec () * 1000;
-        }
-
-      // Package up the RT class ID and parameters for the
-      // priority_control () call.
-      ACE_OS::memcpy (pcparms.pc_clparms, &rtparms, sizeof rtparms);
-    }
-  else
-    {
-      errno = EINVAL;
-      return -1;
-    }
-
-  if (ACE_OS::priority_control ((idtype_t) (sched_params.scope () == ACE_SCOPE_THREAD
-                                            ? ACE_SCOPE_PROCESS
-                                            : sched_params.scope ()),
-                                id,
-                                PC_SETPARMS,
-                                (char *) &pcparms) < 0)
-    {
-      return ACE_OS::last_error ();
-    }
-
-  return 0;
-#else  /* ! ACE_HAS_PRIOCNTL */
-  ACE_UNUSED_ARG (sched_params);
-  ACE_UNUSED_ARG (id);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ! ACE_HAS_PRIOCNTL */
 }
 
 int
@@ -3719,9 +3472,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     if defined (ACE_HAS_ONLY_SCHED_OTHER)
           // SunOS, thru version 5.6, only supports SCHED_OTHER.
           spolicy = SCHED_OTHER;
-#     elif defined (ACE_HAS_ONLY_SCHED_FIFO)
-          // NonStop OSS standard pthread supports only SCHED_FIFO.
-          spolicy = SCHED_FIFO;
 #     else
           // Make sure to enable explicit scheduling, in case we didn't
           // enable it above (for non-default priority).
@@ -3782,7 +3532,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     if defined (PTHREAD_MAX_PRIORITY) && !defined(ACE_HAS_PTHREADS)
           /* For MIT pthreads... */
           sparam.prio = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);
-#     elif defined(ACE_HAS_PTHREADS) && !defined (ACE_HAS_STHREADS)
+#     elif defined(ACE_HAS_PTHREADS)
           // The following code forces priority into range.
           if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
             sparam.sched_priority =
@@ -3804,20 +3554,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     endif /*  PTHREAD_MAX_PRIORITY */
 
           {
-#       if defined (sun)  &&  defined (ACE_HAS_ONLY_SCHED_OTHER)
-            // SunOS, through 5.6, POSIX only allows priorities > 0 to
-            // ::pthread_attr_setschedparam.  If a priority of 0 was
-            // requested, set the thread priority after creating it, below.
-            if (priority > 0)
-#       endif /* sun && ACE_HAS_ONLY_SCHED_OTHER */
+            (void) ACE_ADAPT_RETVAL(::pthread_attr_setschedparam (&attr, &sparam),
+                                    result);
+            if (result != 0)
               {
-                (void) ACE_ADAPT_RETVAL(::pthread_attr_setschedparam (&attr, &sparam),
-                                        result);
-                if (result != 0)
-                  {
-                    ::pthread_attr_destroy (&attr);
-                    return -1;
-                  }
+                ::pthread_attr_destroy (&attr);
+                return -1;
               }
           }
         }
@@ -3885,7 +3627,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         }
 #   endif /* !ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP */
 
-#   if ! defined(ACE_LACKS_THR_CONCURRENCY_FUNCS)
       if (ACE_BIT_ENABLED (flags, THR_NEW_LWP))
         {
           // Increment the number of LWPs by one to emulate the
@@ -3912,7 +3653,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                 return -1;
             }
         }
-#   endif /* ! ACE_LACKS_THR_CONCURRENCY_FUNCS */
     }
 
   ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id,
@@ -3929,75 +3669,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (result != -1)
     *thr_handle = *thr_id;
 
-#   if defined (sun)  &&  defined (ACE_HAS_ONLY_SCHED_OTHER)
-  // SunOS prior to 5.7:
-
-  // If the priority is 0, then we might have to set it now because we
-  // couldn't set it with ::pthread_attr_setschedparam, as noted
-  // above.  This doesn't provide strictly correct behavior, because
-  // the thread was created (above) with the priority of its parent.
-  // (That applies regardless of the inherit_sched attribute: if it
-  // was PTHREAD_INHERIT_SCHED, then it certainly inherited its
-  // parent's priority.  If it was PTHREAD_EXPLICIT_SCHED, then "attr"
-  // was initialized by the SunOS ::pthread_attr_init () to contain
-  // NULL for the priority, which indicated to SunOS ::pthread_create
-  // () to inherit the parent priority.)
-  if (priority == 0)
-    {
-      // Check the priority of this thread, which is the parent
-      // of the newly created thread.  If it is 0, then the
-      // newly created thread will have inherited the priority
-      // of 0, so there's no need to explicitly set it.
-      struct sched_param sparam;
-      int policy = 0;
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_self (),
-                                                             &policy,
-                                                             &sparam),
-                                    result), int,
-                  result);
-
-      // The only policy supported by by SunOS, thru version 5.6,
-      // is SCHED_OTHER, so that's hard-coded here.
-      policy = ACE_SCHED_OTHER;
-
-      if (sparam.sched_priority != 0)
-        {
-          ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
-          // The memset to 0 sets the priority to 0, so we don't need
-          // to explicitly set sparam.sched_priority.
-
-          ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (*thr_id,
-                                                                        policy,
-                                                                        &sparam),
-                                               result),
-                             int);
-        }
-    }
-
-#     if defined (ACE_NEEDS_LWP_PRIO_SET)
-#       if 0
-  // It would be useful if we could make this work.  But, it requires
-  // a mechanism for determining the ID of an LWP to which another
-  // thread is bound.  Is there a way to do that?  Instead, just rely
-  // on the code in ACE_Thread_Adapter::invoke () to set the LWP
-  // priority.
-
-  // If the thread is bound, then set the priority on its LWP.
-  if (ACE_BIT_ENABLED (flags, THR_BOUND))
-    {
-      ACE_Sched_Params sched_params (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO) ||
-                                     ACE_BIT_ENABLED (flags, THR_SCHED_RR)  ?
-                                     ACE_SCHED_FIFO  :
-                                     ACE_SCHED_OTHER,
-                                     priority);
-      result = ACE_OS::lwp_setparams (sched_params,
-                                      /* ? How do we find the ID of the LWP
-                                         to which *thr_id is bound? */);
-    }
-#       endif /* 0 */
-#     endif /* ACE_NEEDS_LWP_PRIO_SET */
-
-#   endif /* sun && ACE_HAS_ONLY_SCHED_OTHER */
   auto_thread_args.release ();
 
   // *** Set pthread name (second try)
@@ -4016,51 +3687,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #   endif   /* !ACE_HAS_PTHREAD_ATTR_SETNAME */
 
   return result;
-# elif defined (ACE_HAS_STHREADS)
-  int result;
-  int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
-
-  if (priority != ACE_DEFAULT_THREAD_PRIORITY)
-    // If we need to set the priority, then we need to start the
-    // thread in a suspended mode.
-    ACE_SET_BITS (flags, THR_SUSPENDED);
-
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::thr_create (stack, stacksize,
-                                              thread_args->entry_point (),
-                                              thread_args,
-                                              flags, thr_id), result),
-              int, result);
-
-  if (result != -1)
-    {
-      // With SunOS threads, ACE_thread_t and ACE_hthread_t are the same.
-      *thr_handle = *thr_id;
-
-      if (priority != ACE_DEFAULT_THREAD_PRIORITY)
-        {
-          // Set the priority of the new thread and then let it
-          // continue, but only if the user didn't start it suspended
-          // in the first place!
-          result = ACE_OS::thr_setprio (*thr_id, priority);
-          if (result != 0)
-            {
-              errno = result;
-              return -1;
-            }
-
-          if (start_suspended == 0)
-            {
-              result = ACE_OS::thr_continue (*thr_id);
-              if (result != 0)
-                {
-                  errno = result;
-                  return -1;
-                }
-            }
-        }
-    }
-  auto_thread_args.release ();
-  return result;
 # elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (thr_name);
   ACE_UNUSED_ARG (stack);
@@ -4075,7 +3701,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                           flags | THR_SUSPENDED);
       // Have to duplicate the handle because
       // CWinThread::~CWinThread() closes the original handle.
-#     if !defined (ACE_HAS_WINCE)
       (void) ::DuplicateHandle (::GetCurrentProcess (),
                                 cwin_thread->m_hThread,
                                 ::GetCurrentProcess (),
@@ -4083,7 +3708,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                 0,
                                 TRUE,
                                 DUPLICATE_SAME_ACCESS);
-#     endif /* ! ACE_HAS_WINCE */
       *thr_id = cwin_thread->m_nThreadID;
 
       if (ACE_BIT_ENABLED (flags, THR_SUSPENDED) == 0)
@@ -4220,7 +3844,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       return 0;
     }
 
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (func);
   ACE_UNUSED_ARG (args);
@@ -4242,8 +3866,6 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_EXIT)
     ::pthread_exit (status);
-# elif defined (ACE_HAS_STHREADS)
-    ::thr_exit (status);
 # elif defined (ACE_HAS_WTHREADS)
     // Can't call it here because on NT, the thread is exited
     // directly by ACE_Thread_Adapter::invoke ().
@@ -4519,11 +4141,6 @@ ACE_OS::thr_keycreate_native (ACE_OS_thread_key_t *key,
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
                                          result),
                        int);
-#   elif defined (ACE_HAS_STHREADS)
-    int result;
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
-                                         result),
-                       int);
 #   elif defined (ACE_HAS_WTHREADS)
     ACE_UNUSED_ARG (dest);
     *key = ::TlsAlloc ();
@@ -4531,7 +4148,7 @@ ACE_OS::thr_keycreate_native (ACE_OS_thread_key_t *key,
     if (*key == ACE_SYSCALL_FAILED)
       ACE_FAIL_RETURN (-1);
     return 0;
-#   endif /* ACE_HAS_STHREADS */
+#   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (dest);
@@ -4625,9 +4242,6 @@ ACE_OS::thr_keyfree_native (ACE_OS_thread_key_t key)
 #    endif /* ACE_LACKS_PTHREAD_KEY_DELETE */
 #   elif defined (ACE_HAS_THR_KEYDELETE)
     return ::thr_keydelete (key);
-#   elif defined (ACE_HAS_STHREADS)
-    ACE_UNUSED_ARG (key);
-    ACE_NOTSUP_RETURN (-1);
 #   elif defined (ACE_HAS_WTHREADS)
     ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::TlsFree (key), ace_result_), int, -1);
 #   else
@@ -4684,36 +4298,7 @@ ACE_OS::thr_setprio (const ACE_Sched_Priority prio)
   ACE_hthread_t my_thread_id;
   ACE_OS::thr_self (my_thread_id);
 
-  int const status = ACE_OS::thr_setprio (my_thread_id, prio);
-
-#if defined (ACE_NEEDS_LWP_PRIO_SET)
-  // If the thread is in the RT class, then set the priority on its
-  // LWP.  (Instead of doing this if the thread is in the RT class, it
-  // should be done for all bound threads.  But, there doesn't appear
-  // to be an easy way to determine if the thread is bound.)
-
-  if (status == 0)
-    {
-      // Find what scheduling class the thread's LWP is in.
-      ACE_Sched_Params sched_params (ACE_SCHED_OTHER, 0);
-      if (ACE_OS::lwp_getparams (sched_params) == -1)
-        {
-          return -1;
-        }
-      else if (sched_params.policy () == ACE_SCHED_FIFO  ||
-               sched_params.policy () == ACE_SCHED_RR)
-        {
-          // This thread's LWP is in the RT class, so we need to set
-          // its priority.
-          sched_params.priority (prio);
-          return ACE_OS::lwp_setparams (sched_params);
-        }
-      // else this is not an RT thread.  Nothing more needs to be
-      // done.
-    }
-#endif /* ACE_NEEDS_LWP_PRIO_SET */
-
-  return status;
+  return ACE_OS::thr_setprio (my_thread_id, prio);
 }
 
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
@@ -4727,17 +4312,14 @@ ACE_OS::thr_setspecific_native (ACE_OS_thread_key_t key, void *data)
       ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setspecific (key, data),
                                            result),
                          int);
-#     elif defined (ACE_HAS_STHREADS)
-      int result;
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), result), int);
 #     elif defined (ACE_HAS_WTHREADS)
       ::TlsSetValue (key, data);
       return 0;
-#     else /* ACE_HAS_STHREADS */
+#     else /* ACE_HAS_PTHREADS */
       ACE_UNUSED_ARG (key);
       ACE_UNUSED_ARG (data);
       ACE_NOTSUP_RETURN (-1);
-#     endif /* ACE_HAS_STHREADS */
+#     endif /* ACE_HAS_PTHREADS */
 #   else
     ACE_UNUSED_ARG (key);
     ACE_UNUSED_ARG (data);

@@ -42,9 +42,6 @@
 #   define _C99
 #  endif
 # endif
-
-#elif defined (__DCC__)
-# define ACE_TEMPLATES_REQUIRE_SOURCE
 #else  /* ! __GNUG__ && !__DCC__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler on VxWorks

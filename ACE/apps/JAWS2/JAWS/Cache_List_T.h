@@ -95,8 +95,6 @@ private:
   JAWS_Cache_List_Item *prev_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Cache_List_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* JAWS_CACHE_LIST_T_H */

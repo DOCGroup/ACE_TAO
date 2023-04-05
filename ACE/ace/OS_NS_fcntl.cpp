@@ -76,16 +76,6 @@ ACE_OS::open (const char *filename,
   SECURITY_ATTRIBUTES sa_buffer;
   SECURITY_DESCRIPTOR sd_buffer;
 
-#if defined (ACE_HAS_WINCE)
-  ACE_HANDLE h = ::CreateFileW (ACE_Ascii_To_Wide (filename).wchar_rep (),
-                                access,
-                                shared_mode,
-                                ACE_OS::default_win32_security_attributes_r
-                                  (sa, &sa_buffer, &sd_buffer),
-                                creation,
-                                flags,
-                                0);
-#else /* ACE_HAS_WINCE */
   ACE_HANDLE h = ::CreateFileA (filename,
                                 access,
                                 shared_mode,
@@ -94,7 +84,6 @@ ACE_OS::open (const char *filename,
                                 creation,
                                 flags,
                                 0);
-#endif /* ACE_HAS_WINCE */
 
   if (ACE_BIT_ENABLED (mode, _O_APPEND))
     {

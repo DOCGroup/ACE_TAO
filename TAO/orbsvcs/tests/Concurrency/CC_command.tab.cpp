@@ -256,13 +256,6 @@ static const short ace_cc_yycheck[] = {     4,
  #pragma alloca
 #define ACE_CC_YYSTACK_USE_ALLOCA
 #else /* not MSDOS, or __TURBOC__, or _AIX */
-#if 0
-#ifdef __hpux /* haible@ilog.fr says this works for HPUX 9.05 and up,
-     and on HPUX 10.  Eventually we can turn this on.  */
-#define ACE_CC_YYSTACK_USE_ALLOCA
-#define alloca __builtin_alloca
-#endif /* __hpux */
-#endif
 #endif /* not _AIX */
 #endif /* not MSDOS, or __TURBOC__ */
 #endif /* not sparc */

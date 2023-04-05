@@ -697,7 +697,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Dynamic_Priority_Test"));
 
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (
         ACE_Sched_Params (
           ACE_SCHED_FIFO,

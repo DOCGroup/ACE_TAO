@@ -30,18 +30,7 @@
 #pragma warning(disable:4503)
 #endif /* _MSC_VER */
 
-// Note: To keep both sunCC5.0 without debugging symbols and gcc2.7.3
-// happy, it was necessary to have the definitions of the methods of
-// the Accept_Strategy before the instantiations.
-
-// HPUX doesn't accept these declaration after their usage.
-
-// For some strange reason this must *not* be static since otherwise
-// certain versions of SunC++ will not link properly.
 int connection_accepted = 0;
-
-// For some strange reason this must *not* be static since otherwise
-// certain versions of SunC++ will not link properly.
 int debug = 0;
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>

@@ -37,10 +37,6 @@ if ($^O eq "MSWin32") {
     $priority1 = 2;
     $priority2 = 1;
 }
-elsif ($^O eq "hpux") {
-    $priority1 = 17;
-    $priority2 = 22;
-}
 else {
     $priority1 = 45;
     $priority2 = 50;

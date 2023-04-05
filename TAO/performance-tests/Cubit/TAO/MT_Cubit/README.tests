@@ -23,7 +23,7 @@ The percentage of overhead is calculated in the following way:
 Latency Test
 ------------------------
 -- configuration:
-  (1) su to root when running Solaris or LynxOS.
+  (1) su to root when on LynxOS.
   (2) Make yourself an Administrator in Windows NT
 
 on the server side:

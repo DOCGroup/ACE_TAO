@@ -70,13 +70,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Codeset/Codeset_Translator_Factory_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Codeset_Translator_Factory_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Codeset_Translator_Factory_T */

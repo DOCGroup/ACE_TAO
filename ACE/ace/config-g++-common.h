@@ -14,8 +14,6 @@
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 #define ACE_CC_BETA_VERSION (0)
 
-#define ACE_TEMPLATES_REQUIRE_SOURCE
-
 #if __cplusplus >= 202002L
 # define ACE_HAS_CPP20
 #endif

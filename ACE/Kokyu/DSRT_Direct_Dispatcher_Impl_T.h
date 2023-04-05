@@ -72,17 +72,7 @@ namespace Kokyu
   };
 }
 
-#if !defined (__ACE_INLINE__)
-//#include "DSRT_Direct_Dispatcher_Impl_T.i"
-#endif /* __ACE_INLINE__ */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "DSRT_Direct_Dispatcher_Impl_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("DSRT_Direct_Dispatcher_Impl_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* DSRT_DIRECT_DISPATCHER_IMPL_T_H */

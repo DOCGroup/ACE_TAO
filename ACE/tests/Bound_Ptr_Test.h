@@ -3,8 +3,7 @@
 /**
  *  @file    Bound_Ptr_Test.h
  *
- *  Define class needed for generating templates. IBM C++ requires this to
- *  be in its own file for auto template instantiation.
+ *  Define class needed for generating templates.
  *
  *  @author @author Christopher Kohlhoff <chris@kohlhoff.com>
  */

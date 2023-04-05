@@ -4,8 +4,7 @@
 /**
  * @file Message_Queue_Test_Ex.h
  *
- * Define class needed for generating templates. IBM C++ requires this
- * to be in its own file for auto template instantiation.
+ * Define class needed for generating templates.
  *
  * @author Michael Vitlo <mvitalo@sprynet.com>
  * @author Irfan Pyarali <irfan@cs.wustl.edu>

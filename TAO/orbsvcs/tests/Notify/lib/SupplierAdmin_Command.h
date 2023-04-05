@@ -44,10 +44,6 @@ public:
   static const char* name ();
 
 protected:
-#ifdef HPUX_11
-   // Remove clash with /usr/include/machine/cpu.h and /usr/include/pa/cpu.h
-#undef COMMAND
-#endif
   enum COMMAND
   {
     CREATE,
