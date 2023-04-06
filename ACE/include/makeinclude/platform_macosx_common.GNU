@@ -42,7 +42,7 @@ SOBUILD   = -o $(VSHDIR)$*.dylib $<
 ifeq ($(findstring g++,$(CXX)),)#
   include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 else
-  c++11 ?= 1
+  c++14 ?= 1
   include $(ACE_ROOT)/include/makeinclude/platform_clang_common.GNU
 endif
 

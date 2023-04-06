@@ -1,6 +1,6 @@
 #include "ace/Registry.h"
 
-#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
+#if defined (ACE_WIN32)
 
 #  include "ace/os_include/os_netdb.h"
 #  include "ace/OS_NS_unistd.h"
@@ -1113,4 +1113,4 @@ ACE_Predefined_Naming_Contexts::is_local_host (const ACE_TCHAR *machine_name)
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
+#endif /* ACE_WIN32 */

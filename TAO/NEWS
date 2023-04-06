@@ -1,5 +1,11 @@
+USER VISIBLE CHANGES BETWEEN TAO-3.1.0 and TAO-3.1.1
+====================================================
+
 USER VISIBLE CHANGES BETWEEN TAO-3.0.11 and TAO-3.1.0
 =====================================================
+
+. Removed usage of ACE service configurator for all
+  POA internal strategy classes
 
 USER VISIBLE CHANGES BETWEEN TAO-3.0.10 and TAO-3.0.11
 ======================================================

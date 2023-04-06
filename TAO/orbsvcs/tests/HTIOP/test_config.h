@@ -51,12 +51,7 @@
 
 #define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".log")
 
-#if defined (ACE_HAS_PHARLAP)
-size_t const ACE_MAX_CLIENTS = 4;
-#else
 size_t const ACE_MAX_CLIENTS = 30;
-#endif /* ACE_HAS_PHARLAP */
-
 size_t const ACE_NS_MAX_ENTRIES = 1000;
 size_t const ACE_DEFAULT_USECS = 1000;
 size_t const ACE_MAX_TIMERS = 4;

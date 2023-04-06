@@ -92,7 +92,7 @@ namespace CORBA
     SystemException (const SystemException & src);
 
     /// Destructor.
-    virtual ~SystemException ();
+    virtual ~SystemException () = default;
 
     /// Get the minor status.
     ULong minor () const;

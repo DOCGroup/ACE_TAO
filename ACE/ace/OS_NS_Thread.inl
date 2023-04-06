@@ -534,7 +534,7 @@ ACE_OS::event_init (ACE_event_t *event,
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE long
-ACE_OS::priority_control (ACE_idtype_t /*idtype*/, ACE_id_t /*identifier*/, int /*cmd*/, void */*arg*/)
+ACE_OS::priority_control (ACE_idtype_t /*idtype*/, ACE_id_t /*identifier*/, int /*cmd*/, void * /*arg*/)
 {
   ACE_OS_TRACE ("ACE_OS::priority_control");
   ACE_NOTSUP_RETURN (-1);
@@ -2095,10 +2095,6 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
       if (expired)
         error = ETIME;
-
-#     if defined (ACE_LACKS_COND_TIMEDWAIT_RESET)
-      tv = tv.now ();
-#     endif /* ACE_LACKS_COND_TIMEDWAIT_RESET */
     }
 
   if (result != -2)
@@ -2173,9 +2169,6 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
   if (result == 0)
     {
-#     if defined (ACE_LACKS_COND_TIMEDWAIT_RESET)
-      tv = tv.now ();
-#     endif /* ACE_LACKS_COND_TIMEDWAIT_RESET */
       --s->count_;
     }
 
@@ -2495,22 +2488,11 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
 # elif defined (ACE_HAS_WTHREADS)
   ACE_Errno_Guard error (errno);
   priority = ::GetThreadPriority (ht_id);
-
-#   if defined (ACE_HAS_PHARLAP)
-#     if defined (ACE_PHARLAP_LABVIEW_RT)
-  policy = ACE_SCHED_FIFO;
-#     else
-  DWORD timeslice = ::EtsGetTimeSlice ();
-  policy = timeslice == 0 ? ACE_SCHED_OTHER : ACE_SCHED_FIFO;
-#     endif /* ACE_PHARLAP_LABVIEW_RT */
-#   else
   DWORD const priority_class = ::GetPriorityClass (::GetCurrentProcess ());
   if (priority_class == 0 && (error = ::GetLastError ()) != NO_ERROR)
     ACE_FAIL_RETURN (-1);
 
   policy = (priority_class == REALTIME_PRIORITY_CLASS) ? ACE_SCHED_FIFO : ACE_SCHED_OTHER;
-#   endif /* ACE_HAS_PHARLAP */
-
   return 0;
 # elif defined (ACE_HAS_VXTHREADS)
   return ::taskPriorityGet (ht_id, &priority);
