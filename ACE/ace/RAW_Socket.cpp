@@ -114,14 +114,6 @@ static inline void fillMsgHdr(msghdr& recv_msg, const ACE_INET_Addr &addr, void*
   #endif
 }
 
-#ifndef IP_RECVDSTADDR
-#define IP_RECVDSTADDR 25
-#endif
-
-#ifndef IP_PKTINFO
-#  define IP_PKTINFO 19
-#endif
-
 static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
 {
     #if defined(ACE_USE_MSG_CONTROL)
