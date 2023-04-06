@@ -740,8 +740,10 @@ class Queue_Ex_Iterator_No_Lock
   int advance ()
   {
     if (ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_)
+    {
       ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_ =
         ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_->next ();
+    }
 
     return (ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_ ? 1 : 0);
   }
@@ -754,11 +756,10 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Iterator test queue not empty\n")), 1);
 
   // Set up a few objects with names for how they should come out of the queue.
-  std::unique_ptr<User_Class> b1, b2, b3, b4;
-  b1 = std::make_unique<User_Class> ("first");
-  b2 = std::make_unique<User_Class> ("second");
-  b3 = std::make_unique<User_Class> ("third");
-  b4 = std::make_unique<User_Class> ("fourth");
+  std::unique_ptr<User_Class> b1 = std::make_unique<User_Class> ("first");
+  std::unique_ptr<User_Class> b2 = std::make_unique<User_Class> ("second");
+  std::unique_ptr<User_Class> b3 = std::make_unique<User_Class> ("third");
+  std::unique_ptr<User_Class> b4 = std::make_unique<User_Class> ("fourth");
   if (-1 == q.enqueue_tail (b1.get (), 0))
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b1")), 1);
   if (-1 == q.enqueue_tail (b2.get (), 0))
@@ -769,7 +770,8 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b4")), 1);
 
   User_Class* b = nullptr;
-  { ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, aGuard, q.lock (), 1);
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, aGuard, q.lock (), 1);
     int counter = 0;
     for (Queue_Ex_Iterator_No_Lock iterator (q);
          iterator.next (b);
@@ -794,10 +796,9 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
       }
 
       b = nullptr;
-    } // end FOR
-  } // end lock scope
+    }
+  }
 
-  // clean up
   while (!q.is_empty ())
     q.dequeue_head (b, 0);
 
