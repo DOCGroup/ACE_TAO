@@ -72,28 +72,25 @@ using SYNCH_QUEUE = ACE_Message_Queue_Ex<User_Class, ACE_MT_SYNCH>;
 struct Queue_Wrapper
 {
   /// The message queue.
-  SYNCH_QUEUE *q_;
+  SYNCH_QUEUE *q_ {};
 
   /// Pointer to messages blocks for sender to send to reciever.
-  User_Class **send_block_;
+  User_Class **send_block_ {};
 
   /// Default constructor.
-  Queue_Wrapper ()
-    : q_ (0), send_block_ (0)
-  {
-  }
+  Queue_Wrapper () = default;
 };
 
+/**
+ * Container for data passed to sender in the MQ_Ex_N_Tester
+ * performance test.
+ *
+ * For use in multithreaded performance test.
+ */
 struct MQ_Ex_N_Tester_Wrapper
 {
-  //  = TITLE
-  //      Container for data passed to sender in the MQ_Ex_N_Tester
-  //      performance test.
-  //
-  //  = DESCRIPTION
-  //     For use in multithreaded performance test.
-  MQ_Ex_N_Tester *tester_;
-  User_Class     *head_send_block_;
+  MQ_Ex_N_Tester *tester_ {};
+  User_Class     *head_send_block_ {};
 };
 
 #endif /* ACE_HAS_THREADS */
