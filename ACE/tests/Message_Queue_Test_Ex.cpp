@@ -776,7 +776,7 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     for (Queue_Ex_Iterator_No_Lock iterator (q);
          iterator.next (b);
          iterator.advance ())
-    { 
+    {
       ACE_ASSERT (b);
       ++counter;
       if (counter == 1)
