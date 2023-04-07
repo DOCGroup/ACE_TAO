@@ -706,6 +706,105 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
   return status;
 }
 
+class Queue_Ex_Iterator_No_Lock
+ : public ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>
+{
+ public:
+  typedef ACE_Message_Queue_Ex<User_Class, ACE_SYNCH, ACE_System_Time_Policy> MESSAGE_QUEUE_EX_T;
+
+  explicit Queue_Ex_Iterator_No_Lock (MESSAGE_QUEUE_EX_T& queue_in)
+    : ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy> (queue_in.queue ())
+  {}
+  virtual ~Queue_Ex_Iterator_No_Lock () = default;
+
+  int next (User_Class*& message_inout)
+  {
+    if (ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_)
+    {
+      message_inout =
+            reinterpret_cast<User_Class*> (ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_->base ());
+      return 1;
+    }
+
+    return 0;
+  }
+
+  int done () const
+  {
+    return (!ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_ ? 1 : 0);
+  }
+
+  int advance ()
+  {
+    if (ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_)
+    {
+      ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_ =
+        ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_->next ();
+    }
+
+    return (ACE_Message_Queue_Iterator<ACE_SYNCH, ACE_System_Time_Policy>::curr_ ? 1 : 0);
+  }
+};
+
+int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
+{
+  int status = 0;
+  if (!q.is_empty ())
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Iterator test queue not empty\n")), 1);
+
+  // Set up a few objects with names for how they should come out of the queue.
+  std::unique_ptr<User_Class> b1 = std::make_unique<User_Class> ("first");
+  std::unique_ptr<User_Class> b2 = std::make_unique<User_Class> ("second");
+  std::unique_ptr<User_Class> b3 = std::make_unique<User_Class> ("third");
+  std::unique_ptr<User_Class> b4 = std::make_unique<User_Class> ("fourth");
+  if (-1 == q.enqueue_tail (b1.get (), 0))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b1")), 1);
+  if (-1 == q.enqueue_tail (b2.get (), 0))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b2")), 1);
+  if (-1 == q.enqueue_tail (b3.get (), 0))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b3")), 1);
+  if (-1 == q.enqueue_tail (b4.get (), 0))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b4")), 1);
+
+  User_Class* b = nullptr;
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, aGuard, q.lock (), 1);
+    int counter = 0;
+    for (Queue_Ex_Iterator_No_Lock iterator (q);
+         iterator.next (b);
+         iterator.advance ())
+    { 
+      ACE_ASSERT (b);
+      ++counter;
+      if (counter == 1)
+      {
+        if (ACE_OS::strcmp (b->message (), "first") != 0)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("First message was %C\n"), b->message ()));
+          ++status;
+        }
+      }
+      else if (counter == 4)
+      {
+        if (ACE_OS::strcmp (b->message (), "fourth") != 0)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Fourth message was %C\n"), b->message ()));
+          ++status;
+        }
+      }
+
+      b = nullptr;
+    }
+  }
+
+  while (!q.is_empty ())
+    q.dequeue_head (b, 0);
+
+  if (status == 0)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Iterator test: OK\n")));
+  return status;
+}
+
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
@@ -738,6 +837,12 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // Check priority operations.
   if (0 != queue_priority_test (q1))
+    {
+      ++status;
+    }
+
+  // Check iterator operations.
+  if (0 != queue_iterator_test (q1))
     {
       ++status;
     }
