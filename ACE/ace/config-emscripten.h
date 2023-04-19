@@ -40,10 +40,13 @@
 #define ACE_HAS_DIRENT
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 
+// These exist, but don't seem to work correctly
+#define ACE_LACKS_PWD_FUNCTIONS
+
 #include "config-posix.h"
 #include "config-g++-common.h"
 
-// Not supported? https://github.com/emscripten-core/emscripten/issues/18050
+// Not supported: https://github.com/emscripten-core/emscripten/issues/18050
 #ifdef ACE_HAS_AIO_CALLS
 #  undef ACE_HAS_AIO_CALLS
 #endif
