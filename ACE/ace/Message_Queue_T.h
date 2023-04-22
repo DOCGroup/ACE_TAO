@@ -1388,6 +1388,9 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// Returns a reference to the underlying queue.
+  virtual ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &queue ();
+
 protected:
   /// Implement this via an ACE_Message_Queue.
   ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> queue_;
