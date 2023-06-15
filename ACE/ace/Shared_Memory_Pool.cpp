@@ -44,9 +44,7 @@ ACE_Shared_Memory_Pool::in_use (ACE_OFF_T &offset,
   SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->base_addr_);
   shmid_ds buf;
 
-  for (counter = 0;
-       counter < this->max_segments_ && st[counter].used_ == 1;
-       counter++)
+  for (counter = 0; counter < this->max_segments_ && st[counter].used_ == true; counter++)
     {
       if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
         ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -75,10 +73,7 @@ ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
   SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->base_addr_);
   shmid_ds buf;
 
-  for (counter = 0;
-       counter < this->max_segments_
-         && st[counter].used_ == 1;
-       counter++)
+  for (counter = 0; counter < this->max_segments_ && st[counter].used_ == true; counter++)
     {
       if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
         ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -109,6 +104,13 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::commit_backing_store_name");
 
+  if (this->base_addr_ == nullptr)
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                        "ACE_Shared_Memory_Pool::commit_backing_store_name, base address is zero\n"),
+                        -1);
+    }
+
   size_t counter;
   SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->base_addr_);
 
@@ -116,12 +118,14 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
     return -1;
 
   if (counter == this->max_segments_)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                      "ACE_Shared_Memory_Pool::commit_backing_store_name, exceeded max number of segments = %d, base = %u, offset = %u\n",
-                       counter,
-                       this->base_addr_,
-                       static_cast<unsigned int>(offset)),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                        "ACE_Shared_Memory_Pool::commit_backing_store_name, exceeded max number of segments = %d, base = %u, offset = %u\n",
+                        counter,
+                        this->base_addr_,
+                        static_cast<unsigned int>(offset)),
+                        -1);
+    }
   else
     {
       int const shmid = ACE_OS::shmget (st[counter].key_,
@@ -133,12 +137,10 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                            ACE_TEXT ("shmget")),
                           -1);
       st[counter].shmid_ = shmid;
-      st[counter].used_ = 1;
+      st[counter].used_ = true;
 
       void *address = (void *) (((char *) this->base_addr_) + offset);
-      void *shmem = ACE_OS::shmat (st[counter].shmid_,
-                                   (char *) address,
-                                   0);
+      void *shmem = ACE_OS::shmat (st[counter].shmid_, (char *) address, 0);
 
       if (shmem != address)
         ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -147,6 +149,8 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                            shmem,
                            address),
                           -1);
+
+      shm_addr_table_[counter] = shmem;
     }
   return 0;
 }
@@ -222,7 +226,7 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
 ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (
   const ACE_TCHAR *backing_store_name,
   const OPTIONS *options)
-  : base_addr_ (0),
+  : base_addr_ (nullptr),
     file_perms_ (ACE_DEFAULT_FILE_PERMS),
     max_segments_ (ACE_DEFAULT_MAX_SEGMENTS),
     minimum_bytes_ (0),
@@ -230,16 +234,17 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool");
 
-  // Only change the defaults if <options> != 0.
+  // Only change the defaults if options != nullptr.
   if (options)
     {
-      this->base_addr_ =
-        reinterpret_cast<void *> (const_cast<char *> (options->base_addr_));
+      this->base_addr_ = reinterpret_cast<void *> (const_cast<char *> (options->base_addr_));
       this->max_segments_ = options->max_segments_;
       this->file_perms_ = options->file_perms_;
       this->minimum_bytes_ = options->minimum_bytes_;
       this->segment_size_ = options->segment_size_;
     }
+
+  this->shm_addr_table_ = std::make_unique<void*[]>(this->max_segments_);
 
 #ifndef ACE_HAS_SYSV_IPC
   ACE_UNUSED_ARG (backing_store_name);
@@ -250,39 +255,45 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (
       // key.
       int segment_key = 0;
 #if !defined (ACE_LACKS_SSCANF)
-      int result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (backing_store_name),
-                             "%d",
-                             &segment_key);
+      int const result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (backing_store_name),
+                                   "%d",
+                                   &segment_key);
 #else
-      int result = 0;
+      int const result = 0;
 #endif /* ACE_LACKS_SSCANF */
       if (result == 0 || result == EOF)
-        // The conversion to a number failed so hash with crc32
-        // ACE::crc32 is also used in <SV_Semaphore_Simple>.
-        this->base_shm_key_ =
-          (key_t) ACE::crc32 (ACE_TEXT_ALWAYS_CHAR (backing_store_name));
+        {
+          // The conversion to a number failed so hash with crc32
+          // ACE::crc32 is also used in <SV_Semaphore_Simple>.
+          this->base_shm_key_ = (key_t) ACE::crc32 (ACE_TEXT_ALWAYS_CHAR (backing_store_name));
+        }
       else
-        this->base_shm_key_ = segment_key;
+        {
+          this->base_shm_key_ = segment_key;
+        }
 
       if (this->base_shm_key_ == IPC_PRIVATE)
-        // Make sure that the segment can be shared between unrelated
-        // processes.
-        this->base_shm_key_ = ACE_DEFAULT_SHM_KEY;
+        {
+          // Make sure that the segment can be shared between unrelated
+          // processes.
+          this->base_shm_key_ = ACE_DEFAULT_SHM_KEY;
+        }
     }
   else
     this->base_shm_key_ = ACE_DEFAULT_SHM_KEY;
 #endif // ACE_HAS_SYSV_IPC
 
   if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool, %p\n"),
-                ACE_TEXT ("ACE_Sig_Handler::register_handler")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                  ACE_TEXT ("ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool, %p\n"),
+                  ACE_TEXT ("ACE_Sig_Handler::register_handler")));
+    }
 }
 
 /// Ask system for more shared memory.
 void *
-ACE_Shared_Memory_Pool::acquire (size_t nbytes,
-                                 size_t &rounded_bytes)
+ACE_Shared_Memory_Pool::acquire (size_t nbytes, size_t &rounded_bytes)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::acquire");
 
@@ -293,7 +304,7 @@ ACE_Shared_Memory_Pool::acquire (size_t nbytes,
   ACE_OFF_T offset;
 
   if (this->commit_backing_store_name (rounded_bytes, offset) == -1)
-    return 0;
+    return nullptr;
 
   // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::acquire, acquired more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
   return ((char *) this->base_addr_) + offset;
@@ -307,14 +318,13 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::init_acquire");
 
-  ACE_OFF_T shm_table_offset = ACE::round_to_pagesize (sizeof (SHM_TABLE));
+  ACE_OFF_T const shm_table_offset = ACE::round_to_pagesize (sizeof (SHM_TABLE));
   rounded_bytes = this->round_up (nbytes > (size_t) this->minimum_bytes_
                                   ? nbytes
                                   : (size_t) this->minimum_bytes_);
 
   // Acquire the semaphore to serialize initialization and prevent
   // race conditions.
-
   int shmid = ACE_OS::shmget (this->base_shm_key_,
                               rounded_bytes + shm_table_offset,
                               this->file_perms_ | IPC_CREAT | IPC_EXCL);
@@ -335,40 +345,39 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
                            ACE_TEXT ("shmget")),
                           0);
 
-      // This implementation doesn't care if we don't get the key we
-      // want...
-      this->base_addr_ =
-        ACE_OS::shmat (shmid,
-                       reinterpret_cast<char *> (this->base_addr_),
-                       0);
+      // This implementation doesn't care if we don't get the key we want...
+      this->base_addr_ = ACE_OS::shmat (shmid, reinterpret_cast<char *> (this->base_addr_), 0);
+      shm_addr_table_[0] = this->base_addr_;
+
       if (this->base_addr_ == reinterpret_cast<void *> (-1))
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::init_acquire, %p, base_addr = %u\n"),
-                           ACE_TEXT("shmat"),
-                           this->base_addr_),
-                          0);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::init_acquire, %p, base_addr = %u\n"),
+                            ACE_TEXT("shmat"),
+                            this->base_addr_),
+                            0);
+        }
     }
   else
     {
       first_time = 1;
 
-      // This implementation doesn't care if we don't get the key we
-      // want...
-      this->base_addr_ =
-        ACE_OS::shmat (shmid,
-                       reinterpret_cast<char *> (this->base_addr_),
-                       0);
+      // This implementation doesn't care if we don't get the key we want...
+      this->base_addr_ = ACE_OS::shmat (shmid, reinterpret_cast<char *> (this->base_addr_), 0);
+
       if (this->base_addr_ == reinterpret_cast<char *> (-1))
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::init_acquire, %p, base_addr = %u\n"),
-                           ACE_TEXT("shmat"),
-                           this->base_addr_), 0);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::init_acquire, %p, base_addr = %u\n"),
+                            ACE_TEXT("shmat"),
+                            this->base_addr_), 0);
+        }
 
       SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->base_addr_);
       st[0].key_ = this->base_shm_key_;
       st[0].shmid_ = shmid;
-
-      st[0].used_ = 1;
+      st[0].used_ = true;
+      shm_addr_table_[0] = this->base_addr_;
 
       for (size_t counter = 1; // Skip over the first entry...
            counter < this->max_segments_;
@@ -378,7 +387,8 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
           st[counter].key_ = this->base_shm_key_ + counter;
 #endif
           st[counter].shmid_ = 0;
-          st[counter].used_ = 0;
+          st[counter].used_ = false;
+          shm_addr_table_[counter] = nullptr;
         }
     }
 
@@ -387,18 +397,72 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 
 /// Instruct the memory pool to release all of its resources.
 int
-ACE_Shared_Memory_Pool::release (int)
+ACE_Shared_Memory_Pool::release (int destroy)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::release");
 
   int result = 0;
-  SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->base_addr_);
 
-  for (size_t counter = 0;
-       counter < this->max_segments_ && st[counter].used_ == 1;
-       counter++)
-    if (ACE_OS::shmctl (st[counter].shmid_, IPC_RMID, 0) == -1)
-      result = -1;
+  if (this->base_addr_)
+  {
+    SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->base_addr_);
+    ACE_DEBUG((LM_DEBUG, "Close shared memory\n"));
+
+    // Release the shared memory segments except the first segment, there
+    // we store the shared memory table, so we don't destroy this here
+    // yet
+    for (size_t counter = 1; // Skip over the first entry...
+         counter < this->max_segments_;
+         counter++)
+    {
+    ACE_DEBUG((LM_DEBUG, "Close shared memory counter %d\n", counter));
+      if (st[counter].used_ == true)
+        {
+          // Detach the shared memory segment from our address space
+          if (ACE_OS::shmdt (shm_addr_table_[counter]) == -1)
+            {
+              ACE_DEBUG((LM_DEBUG, "Detach FAILED shared memory\n"));
+              result = -1;
+            }
+          shm_addr_table_[counter] = nullptr;
+
+          // When we are asked to destroy the shared memory we instruct
+          // the OS to release the segment
+          if (destroy == 1)
+            {
+              ACE_DEBUG((LM_DEBUG, "Remove shared memory %d\n", st[counter].shmid_));
+              if (ACE_OS::shmctl (st[counter].shmid_, IPC_RMID, 0) == -1)
+                {
+                  result = -1;
+                }
+            }
+        }
+    }
+
+    // Only when we are asked to destroy the shared memory we destroy
+    // the last segment, that contains all the shared memory id's
+    if (destroy == 1)
+    {
+      // Store a copy of the shmid on the stack, after shmdt we can't
+      // read it anymore
+      int const shmid = st[0].shmid_;
+
+      // Detach the shared memory segment from our address space
+      if (ACE_OS::shmdt (shm_addr_table_[0]) == -1)
+        {
+          ACE_DEBUG((LM_DEBUG, "Detach FAILED shared memory\n"));
+          result = -1;
+        }
+      // Instruct the OS to release this last segment
+      if (ACE_OS::shmctl (shmid, IPC_RMID, 0) == -1)
+        {
+          ACE_DEBUG((LM_DEBUG, "Detach FAILED shared memory\n"));
+          result = -1;
+        }
+      shm_addr_table_[0] = nullptr;
+      this->base_addr_ = nullptr;
+    }
+  }
 
   return result;
 }

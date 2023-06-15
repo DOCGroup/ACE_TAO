@@ -577,7 +577,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_T ()
 }
 
 // Clean up the resources allocated by ACE_Malloc_T.
-
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove ()
 {
@@ -601,7 +600,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove ()
   // Also notice that we are leaving the decision of removing
   // the pool to users so they can map to the same mmap file
   // again.
-  this->cb_ptr_ = 0;
+  this->cb_ptr_ = nullptr;
 
   return result;
 }
