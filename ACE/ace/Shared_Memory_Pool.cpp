@@ -418,7 +418,6 @@ ACE_Shared_Memory_Pool::release (int destroy)
           // Detach the shared memory segment from our address space
           if (ACE_OS::shmdt (shm_addr_table_[counter]) == -1)
             {
-              ACE_DEBUG((LM_DEBUG, "Detach FAILED shared memory\n"));
               result = -1;
             }
           shm_addr_table_[counter] = nullptr;
@@ -427,7 +426,6 @@ ACE_Shared_Memory_Pool::release (int destroy)
           // the OS to release the related segment
           if (destroy == 1)
             {
-              ACE_DEBUG((LM_DEBUG, "Remove shared memory %d\n", st[counter].shmid_));
               if (ACE_OS::shmctl (st[counter].shmid_, IPC_RMID, 0) == -1)
                 {
                   result = -1;
@@ -440,7 +438,6 @@ ACE_Shared_Memory_Pool::release (int destroy)
     // when it hasn't been detached yet
     if (ACE_OS::shmdt (shm_addr_table_[0]) == -1)
       {
-        ACE_DEBUG((LM_DEBUG, "Detach FAILED shared memory\n"));
         result = -1;
       }
     this->shm_addr_table_[0] = nullptr;
@@ -453,7 +450,6 @@ ACE_Shared_Memory_Pool::release (int destroy)
     // Instruct the OS to release this base segment
     if (ACE_OS::shmctl (this->base_shm_id_, IPC_RMID, 0) == -1)
       {
-        ACE_DEBUG((LM_DEBUG, "Detach FAILED base shared memory\n"));
         result = -1;
       }
 
