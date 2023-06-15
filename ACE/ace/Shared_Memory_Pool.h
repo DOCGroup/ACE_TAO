@@ -106,7 +106,7 @@ public:
   virtual int release (int destroy = 1);
 
   /// Sync the memory region to the backing store starting at
-  /// @c this->base_addr_.
+  /// @c shm_addr_table_[0].
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
 
   /// Sync the memory region to the backing store starting at @a addr.
@@ -114,7 +114,7 @@ public:
 
   /**
    * Change the protection of the pages of the mapped region to @a prot
-   * starting at @c this->base_addr_ up to @a len bytes.  If @a len == -1
+   * starting at @c shm_addr_table_[0] up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
@@ -123,7 +123,7 @@ public:
   /// starting at @a addr up to @a len bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
 
-  /// Return the base address of this memory pool, nullptr if base_addr
+  /// Return the base address of this memory pool, nullptr if shm_addr_table_[0]
   /// never changes.
   virtual void *base_addr () const;
 
@@ -162,16 +162,12 @@ protected:
 
   /// Small table with the addresses of the shared memory segments mapped
   /// into this address space. We need these addresses to call shmdt at
-  /// the release
+  /// the release.
+  /// shm_addr_table_[0] is the base address of the shared memory segment
+  /// If this has the value of nullptr then the OS is free to select any address,
+  /// otherwise this value is what the OS must try to use to map the shared memory
+  /// segment.
   std::unique_ptr<void*[]> shm_addr_table_;
-
-  /**
-   * Base address of the shared memory segment.  If this has the value
-   * of nullptr then the OS is free to select any address, otherwise this
-   * value is what the OS must try to use to map the shared memory
-   * segment.
-   */
-  void *base_addr_;
 
   /// File permissions to use when creating/opening a segment.
   size_t file_perms_;
@@ -187,6 +183,9 @@ protected:
 
   /// Base shared memory key for the segment.
   key_t base_shm_key_;
+
+  /// Base shared memory id
+  int base_shm_id_ {};
 
   /// Find the segment that contains the @a searchPtr
   virtual int find_seg (const void *const searchPtr,
