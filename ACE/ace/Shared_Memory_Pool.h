@@ -157,7 +157,7 @@ protected:
     int shmid_;
 
     /// Is the segment currently used
-    bool used_;
+    int used_;
   };
 
   /// Small table with the addresses of the shared memory segments mapped

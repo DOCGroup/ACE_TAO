@@ -44,7 +44,7 @@ ACE_Shared_Memory_Pool::in_use (ACE_OFF_T &offset,
   SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
   shmid_ds buf;
 
-  for (counter = 0; counter < this->max_segments_ && st[counter].used_ == true; counter++)
+  for (counter = 0; counter < this->max_segments_ && st[counter].used_ == 1; counter++)
     {
       if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
         ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -73,7 +73,7 @@ ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
   SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
   shmid_ds buf;
 
-  for (counter = 0; counter < this->max_segments_ && st[counter].used_ == true; counter++)
+  for (counter = 0; counter < this->max_segments_ && st[counter].used_ == 1; counter++)
     {
       if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
         ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -137,7 +137,7 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                            ACE_TEXT ("shmget")),
                           -1);
       st[counter].shmid_ = shmid;
-      st[counter].used_ = true;
+      st[counter].used_ = 1;
 
       void *address = (void *) (((char *) this->shm_addr_table_[0]) + offset);
       void *shmem = ACE_OS::shmat (st[counter].shmid_, (char *) address, 0);
@@ -375,7 +375,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
       SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
       st[0].key_ = this->base_shm_key_;
       st[0].shmid_ = shmid;
-      st[0].used_ = true;
+      st[0].used_ = 1;
       base_shm_id_ = shmid;
 
       for (size_t counter = 1; // Skip over the first entry...
@@ -386,7 +386,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
           st[counter].key_ = this->base_shm_key_ + counter;
 #endif
           st[counter].shmid_ = 0;
-          st[counter].used_ = false;
+          st[counter].used_ = 0;
           shm_addr_table_[counter] = nullptr;
         }
     }
@@ -413,7 +413,7 @@ ACE_Shared_Memory_Pool::release (int destroy)
          counter < this->max_segments_;
          counter++)
     {
-      if (st[counter].used_ == true)
+      if (st[counter].used_ == 1)
         {
           // Detach the shared memory segment from our address space
           if (ACE_OS::shmdt (shm_addr_table_[counter]) == -1)
