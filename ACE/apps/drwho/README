@@ -115,7 +115,7 @@ or
   4802 ?        0:07 mwm
 % foreach host (`drwho -r -l -w schmidt`)
 ? echo $host
-? rsh $host w | egrep schmidt
+? rsh $host w | grep -E schmidt
 ? end
 
 ----------------------------------------
