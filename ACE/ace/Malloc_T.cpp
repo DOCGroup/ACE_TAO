@@ -1125,8 +1125,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance ()
     return this->curr_ != 0;
 
   while (this->curr_ != 0
-         && std::strcmp (this->name_,
-                            this->curr_->name ()) != 0)
+         && std::strcmp (this->name_, this->curr_->name ()) != 0)
     this->curr_ = this->curr_->next_;
 
   return this->curr_ != 0;
@@ -1221,8 +1220,7 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance ()
     return this->curr_ != 0;
 
   while (this->curr_ != 0
-         && std::strcmp (this->name_,
-                            this->curr_->name ()) != 0)
+         && std::strcmp (this->name_, this->curr_->name ()) != 0)
     this->curr_ = this->curr_->prev_;
 
   return this->curr_ != 0;
