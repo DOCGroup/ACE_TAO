@@ -487,7 +487,7 @@ public:
 
   /// Release ref counter.
   /// @retval 0 Success
-  /// @retval -1 Failure to missing control block
+  /// @retval -1 Failure due to missing control block
   /// @retval >0 Memory not release because refcount is not zero
   int release (int close = 0);
 
