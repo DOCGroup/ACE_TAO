@@ -345,7 +345,6 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
                           0);
 
       // This implementation doesn't care if we don't get the key we want...
-      this->base_shm_id_ = shmid;
       this->shm_addr_table_[0] = ACE_OS::shmat (shmid, reinterpret_cast<char *> (this->shm_addr_table_[0]), 0);
 
       if (this->shm_addr_table_[0] == reinterpret_cast<void *> (-1))
@@ -376,7 +375,6 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
       st[0].key_ = this->base_shm_key_;
       st[0].shmid_ = shmid;
       st[0].used_ = 1;
-      base_shm_id_ = shmid;
 
       for (size_t counter = 1; // Skip over the first entry...
            counter < this->max_segments_;
@@ -402,59 +400,46 @@ ACE_Shared_Memory_Pool::release (int destroy)
 
   int result = 0;
 
+  // At the moment we have attached any segments we have to release/destroy these
   if (this->shm_addr_table_[0])
-  {
-    SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
-
-    // Release the shared memory segments except the first segment, there
-    // we store the shared memory table, so we don't destroy this here
-    // yet
-    for (size_t counter = 1; // Skip over the first entry...
-         counter < this->max_segments_;
-         counter++)
     {
-      if (st[counter].used_ == 1)
-        {
-          // Detach the shared memory segment from our address space
-          if (ACE_OS::shmdt (shm_addr_table_[counter]) == -1)
-            {
-              result = -1;
-            }
-          shm_addr_table_[counter] = nullptr;
+      // The shared memory table is store in segment[0]
+      SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
 
-          // When we are asked to destroy the shared memory we instruct
-          // the OS to release the related segment
-          if (destroy == 1)
+      // Detach the mapped shared memory segments in reverse order.
+      // We store the shared memory table in segment[0], so we have to destroy that
+      // as last
+      size_t counter = this->max_segments_;
+      while (counter > 0)
+        {
+          --counter;
+
+          // Get the shared memory id and used flag on the stack as we can't read the shared memory
+          // anymore after we detached it
+          int const shmid = st[counter].shmid_;
+          int const used = st[counter].used_;
+
+          // When we have an address attached for this segment we have to detach it
+          if (this->shm_addr_table_[counter])
             {
-              if (ACE_OS::shmctl (st[counter].shmid_, IPC_RMID, 0) == -1)
+              if (ACE_OS::shmdt (shm_addr_table_[counter]) == -1)
+                {
+                  result = -1;
+                }
+              this->shm_addr_table_[counter] = nullptr;
+            }
+
+          // When the segment is used and we are asked to destroy it we instruct the
+          // OS to release it
+          if (destroy == 1 && used == 1)
+            {
+              if (ACE_OS::shmctl (shmid, IPC_RMID, 0) == -1)
                 {
                   result = -1;
                 }
             }
         }
     }
-
-    // Detach the base shared memory segment from our address space
-    // when it hasn't been detached yet
-    if (ACE_OS::shmdt (shm_addr_table_[0]) == -1)
-      {
-        result = -1;
-      }
-    this->shm_addr_table_[0] = nullptr;
-  }
-
-  // Only when we are asked to destroy the shared memory we destroy
-  // the base segment, that contains all the shared memory id's
-  if (destroy == 1 && this->base_shm_id_ != 0)
-  {
-    // Instruct the OS to release this base segment
-    if (ACE_OS::shmctl (this->base_shm_id_, IPC_RMID, 0) == -1)
-      {
-        result = -1;
-      }
-
-    this->base_shm_id_ = 0;
-  }
 
   return result;
 }

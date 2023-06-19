@@ -163,10 +163,6 @@ protected:
   /// Small table with the addresses of the shared memory segments mapped
   /// into this address space. We need these addresses to call shmdt at
   /// the release.
-  /// shm_addr_table_[0] is the base address of the shared memory segment
-  /// If this has the value of nullptr then the OS is free to select any address,
-  /// otherwise this value is what the OS must try to use to map the shared memory
-  /// segment.
   std::unique_ptr<void*[]> shm_addr_table_;
 
   /// File permissions to use when creating/opening a segment.
@@ -183,9 +179,6 @@ protected:
 
   /// Base shared memory key for the segment.
   key_t base_shm_key_;
-
-  /// Base shared memory id
-  int base_shm_id_ {};
 
   /// Find the segment that contains the @a searchPtr
   virtual int find_seg (const void *const searchPtr,
