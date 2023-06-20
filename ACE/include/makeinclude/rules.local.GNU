@@ -204,12 +204,12 @@ endif # SOLINK
 #### in the platform_macros.GNU file.
 show_statics:
 	-@$(TOOLDIR)nm$(TOOLENV) -Co $(VSHDIR)*o | \
-	  egrep ' global destructors '; true
+	  grep -E ' global destructors '; true
 
 #### show_uninit shows uninitialized data in locally-created object files.
 #### TOOLENV selects the proper nm in VxWorks host environments.
 show_uninit:
-	-@$(TOOLDIR)nm$(TOOLENV) -Co $(VSHDIR)*o | egrep ' b '
+	-@$(TOOLDIR)nm$(TOOLENV) -Co $(VSHDIR)*o | grep -E ' b '
 
 #----------------------------------------------------------------------------
 #       Installation targets
