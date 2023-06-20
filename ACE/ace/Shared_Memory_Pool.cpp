@@ -422,7 +422,7 @@ ACE_Shared_Memory_Pool::release (int destroy)
           // When we have an address attached for this segment we have to detach it
           if (this->shm_addr_table_[counter])
             {
-              if (ACE_OS::shmdt (shm_addr_table_[counter]) == -1)
+              if (ACE_OS::shmdt (this->shm_addr_table_[counter]) == -1)
                 {
                   result = -1;
                 }
