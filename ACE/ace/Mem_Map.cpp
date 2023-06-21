@@ -246,7 +246,6 @@ ACE_Mem_Map::ACE_Mem_Map ()
 }
 
 // Map a file specified by FILE_NAME.
-
 ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
                           size_t len,
                           int flags,
@@ -279,7 +278,6 @@ ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
 
 // Map a file from an open file descriptor HANDLE.  This function will
 // lookup the length of the file if it is not given.
-
 ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
                           size_t len,
                           int prot,

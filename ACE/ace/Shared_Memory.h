@@ -32,7 +32,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This is a very simple-minded wrapper, i.e., it really is only
  * useful for allocating large contiguous chunks of shared
  * memory.  For a much more sophisticated version, please check
- * out the <ACE_Malloc> class.
+ * out the ACE_Malloc class.
  */
 class ACE_Export ACE_Shared_Memory
 {
