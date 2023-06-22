@@ -486,6 +486,9 @@ public:
   int ref_counter (void);
 
   /// Release ref counter.
+  /// @retval 0 Success
+  /// @retval -1 Failure due to missing control block
+  /// @retval >0 Memory not release because refcount is not zero
   int release (int close = 0);
 
   /// Releases resources allocated by this object.

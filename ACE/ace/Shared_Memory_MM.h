@@ -87,7 +87,7 @@ public:
   virtual void *malloc (size_t size = 0);
 
   /// Free a chuck of memory allocated by
-  /// <ACE_Shared_Memory_MM::malloc>.
+  /// ACE_Shared_Memory_MM::malloc.
   virtual int free (void *p);
 
   /// Return the size of the shared memory segment.

@@ -99,14 +99,13 @@ public:
    * semaphore that ensures proper serialization of Memory_Pool
    * initialization across processes.
    */
-  virtual void *acquire (size_t nbytes,
-                         size_t &rounded_bytes);
+  virtual void *acquire (size_t nbytes, size_t &rounded_bytes);
 
   /// Instruct the memory pool to release all of its resources.
   virtual int release (int destroy = 1);
 
   /// Sync the memory region to the backing store starting at
-  /// @c this->base_addr_.
+  /// @c shm_addr_table_[0].
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
 
   /// Sync the memory region to the backing store starting at @a addr.
@@ -114,7 +113,7 @@ public:
 
   /**
    * Change the protection of the pages of the mapped region to @a prot
-   * starting at @c this->base_addr_ up to @a len bytes.  If @a len == -1
+   * starting at @c shm_addr_table_[0] up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
@@ -123,7 +122,7 @@ public:
   /// starting at @a addr up to @a len bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
 
-  /// Return the base address of this memory pool, 0 if base_addr
+  /// Return the base address of this memory pool, nullptr if shm_addr_table_[0]
   /// never changes.
   virtual void *base_addr (void) const;
 
@@ -146,34 +145,32 @@ protected:
   virtual int commit_backing_store_name (size_t rounded_bytes,
                                          ACE_OFF_T &offset);
 
-  /// Keeps track of all the segments being used.
+  /// Keeps track of all the segments being used. The shared memory
+  /// table is stored in the first shared memory segment
   struct SHM_TABLE
   {
-    /// Shared memory segment key.
+    /// Shared memory segment key
     key_t key_;
 
-    /// Shared memory segment internal id.
+    /// Shared memory segment internal id
     int shmid_;
 
-    /// Is the segment currently used.;
+    /// Is the segment currently used
     int used_;
   };
 
-  /**
-   * Base address of the shared memory segment.  If this has the value
-   * of 0 then the OS is free to select any address, otherwise this
-   * value is what the OS must try to use to map the shared memory
-   * segment.
-   */
-  void *base_addr_;
+  /// Small table with the addresses of the shared memory segments mapped
+  /// into this address space. We need these addresses to call shmdt at
+  /// the release.
+  std::unique_ptr<void*[]> shm_addr_table_;
 
   /// File permissions to use when creating/opening a segment.
   size_t file_perms_;
 
-  /// Number of shared memory segments in the <SHM_TABLE> table.
+  /// Number of shared memory segments in the SHM_TABLE table.
   size_t max_segments_;
 
-  /// What the minimim bytes of the initial segment should be.
+  /// What the minimum bytes of the initial segment should be.
   ACE_OFF_T minimum_bytes_;
 
   /// Shared memory segment size.
@@ -188,8 +185,7 @@ protected:
                         size_t &counter);
 
   /// Determine how much memory is currently in use.
-  virtual int in_use (ACE_OFF_T &offset,
-                      size_t &counter);
+  virtual int in_use (ACE_OFF_T &offset, size_t &counter);
 
   /// Handles SIGSEGV.
   ACE_Sig_Handler signal_handler_;
