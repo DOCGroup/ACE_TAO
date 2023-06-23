@@ -227,19 +227,17 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (
   const ACE_TCHAR *backing_store_name,
   const OPTIONS *options)
   : file_perms_ (ACE_DEFAULT_FILE_PERMS),
-    max_segments_ (ACE_DEFAULT_MAX_SEGMENTS),
+    max_segments_ (options ? options->max_segments_ : ACE_DEFAULT_MAX_SEGMENTS),
     minimum_bytes_ (0),
-    segment_size_ (ACE_DEFAULT_SEGMENT_SIZE)
+    segment_size_ (ACE_DEFAULT_SEGMENT_SIZE),
+    shm_addr_table_ (std::make_unique<void *[]> (this->max_segments_))
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool");
-
-  this->shm_addr_table_ = std::make_unique<void*[]>(this->max_segments_);
 
   // Only change the defaults if options != nullptr.
   if (options)
     {
       this->shm_addr_table_[0] = reinterpret_cast<void *> (const_cast<char *> (options->base_addr_));
-      this->max_segments_ = options->max_segments_;
       this->file_perms_ = options->file_perms_;
       this->minimum_bytes_ = options->minimum_bytes_;
       this->segment_size_ = options->segment_size_;
