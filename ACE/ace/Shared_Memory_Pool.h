@@ -86,7 +86,7 @@ public:
   ACE_Shared_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                           const OPTIONS *options = 0);
 
-  virtual ~ACE_Shared_Memory_Pool (void);
+  virtual ~ACE_Shared_Memory_Pool ();
 
   /// Ask system for initial chunk of local memory.
   virtual void *init_acquire (size_t nbytes,
@@ -122,12 +122,11 @@ public:
   /// starting at @a addr up to @a len bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
 
-  /// Return the base address of this memory pool, nullptr if shm_addr_table_[0]
-  /// never changes.
-  virtual void *base_addr (void) const;
+  /// Return the base address of this memory pool
+  virtual void *base_addr () const;
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -159,16 +158,11 @@ protected:
     int used_;
   };
 
-  /// Small table with the addresses of the shared memory segments mapped
-  /// into this address space. We need these addresses to call shmdt at
-  /// the release.
-  std::unique_ptr<void*[]> shm_addr_table_;
-
   /// File permissions to use when creating/opening a segment.
   size_t file_perms_;
 
   /// Number of shared memory segments in the SHM_TABLE table.
-  size_t max_segments_;
+  size_t const max_segments_;
 
   /// What the minimum bytes of the initial segment should be.
   ACE_OFF_T minimum_bytes_;
@@ -178,6 +172,11 @@ protected:
 
   /// Base shared memory key for the segment.
   key_t base_shm_key_;
+
+  /// Small table with the addresses of the shared memory segments mapped
+  /// into this address space. We need these addresses to call shmdt at
+  /// the release.
+  void **const shm_addr_table_;
 
   /// Find the segment that contains the @a searchPtr
   virtual int find_seg (const void *const searchPtr,
