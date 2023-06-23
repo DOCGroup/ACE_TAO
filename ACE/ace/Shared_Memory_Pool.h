@@ -159,16 +159,16 @@ protected:
   };
 
   /// File permissions to use when creating/opening a segment.
-  size_t file_perms_;
+  size_t const file_perms_;
 
   /// Number of shared memory segments in the SHM_TABLE table.
   size_t const max_segments_;
 
   /// What the minimum bytes of the initial segment should be.
-  ACE_OFF_T minimum_bytes_;
+  ACE_OFF_T const minimum_bytes_;
 
   /// Shared memory segment size.
-  size_t segment_size_;
+  size_t const segment_size_;
 
   /// Base shared memory key for the segment.
   key_t base_shm_key_;
