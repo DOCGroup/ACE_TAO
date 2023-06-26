@@ -330,7 +330,6 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
 // Ask operating system for more shared memory, increasing the mapping
 // accordingly.  Note that this routine assumes that the appropriate
 // locks are held when it is called.
-
 void *
 ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
                                size_t &rounded_bytes)

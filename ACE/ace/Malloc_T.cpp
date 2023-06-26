@@ -13,6 +13,7 @@
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -428,7 +429,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::free (void *ptr)
 // rounding...).  Depending on the type of <MEM_POOL> (i.e., shared
 // vs. local) subsequent calls from other processes will only
 // initialize the control block pointer.
-
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
 {
@@ -588,7 +588,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_T (void)
 }
 
 // Clean up the resources allocated by ACE_Malloc_T.
-
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove (void)
 {
@@ -853,8 +852,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_find (const char *name)
       for (NAME_NODE *node = this->cb_ptr_->name_head_;
            node != 0;
            node = node->next_)
-        if (ACE_OS::strcmp (node->name (),
-                            name) == 0)
+        if (std::strcmp (node->name (), name) == 0)
           return node;
     }
   ACE_SEH_EXCEPT (this->memory_pool_.seh_selector (GetExceptionInformation ()))
@@ -867,7 +865,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_bind (const char *name,
                                                              void *pointer)
 {
-  if (this->cb_ptr_ == 0)
+  if (!this->cb_ptr_)
     return -1;
 
   // Combine the two allocations into one to avoid overhead...
@@ -1003,7 +1001,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name, void *
        curr != 0;
        curr = curr->next_)
     {
-      if (ACE_OS::strcmp (curr->name (), name) == 0)
+      if (std::strcmp (curr->name (), name) == 0)
         {
           pointer = (char *) curr->pointer_;
 
@@ -1139,8 +1137,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance (void)
     return this->curr_ != 0;
 
   while (this->curr_ != 0
-         && ACE_OS::strcmp (this->name_,
-                            this->curr_->name ()) != 0)
+         && std::strcmp (this->name_, this->curr_->name ()) != 0)
     this->curr_ = this->curr_->next_;
 
   return this->curr_ != 0;
@@ -1235,8 +1232,7 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance (void)
     return this->curr_ != 0;
 
   while (this->curr_ != 0
-         && ACE_OS::strcmp (this->name_,
-                            this->curr_->name ()) != 0)
+         && std::strcmp (this->name_, this->curr_->name ()) != 0)
     this->curr_ = this->curr_->prev_;
 
   return this->curr_ != 0;
