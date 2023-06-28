@@ -1,3 +1,11 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.5.19 and ACE-6.5.20
+======================================================
+
+. Fixed shared memory leak by ACE_Shared_Memory_Pool
+
+. Fixed ACE_INET_Addr::set when ACE_LACKS_GETSERVBYNAME has
+  been defined
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.18 and ACE-6.5.19
 ======================================================
 
