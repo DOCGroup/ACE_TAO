@@ -1,0 +1,70 @@
+commit eefe601e29b1664c3f600cf92e2d4125ca054b0a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 28 09:21:16 2023 +0200
+
+    Update NEWS
+
+commit 6995956534aabbb26ef7abf1807dd33bc9e37f0b
+Author: Justin Wilson <wilsonj@unityfoundation.io>
+Date:   Tue Jun 27 09:21:17 2023 -0500
+
+    Merge pull request #2080 from jrw972/port0-ace-lacks-getservbyname
+    
+    `ACE_INET_Addr::set` errantly succeeds when ACE_LACKS_GETSERVBYNAME
+    
+    (cherry picked from commit a65d91cdc463e7cf6cf509138956b2d38c5e5727)
+
+commit d11fbb2a8ab5d3b9bb87339c7b26588308376c20
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 23 11:30:33 2023 +0200
+
+    Merge pull request #2083 from jwillemsen/jwi-shmmem
+    
+    Make more members of ACE_Shared_Memory_Pool const
+    
+    (cherry picked from commit a5c5e60e6cf72ed056038b7c0307f14b06130f82)
+    
+    # Conflicts:
+    #       ACE/ace/Shared_Memory_Pool.cpp
+
+commit a6271864578cd207c59ff764d220a2a8d4997e0b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 22 21:24:30 2023 -0500
+
+    Adapted change to Shared_Memory_Pool from PR 2077
+
+commit 4a8be40863006b69f545a3f0c52e581faf51ef44
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 22 17:26:37 2023 -0500
+
+    Merge pull request #2077 from DOCGroup/jwi-shmem
+    
+    Fix ACE_Shared_Memory_Pool
+    
+    (cherry picked from commit 7ee08390b66dd92fcd9b30aeccad70e31379be7e)
+    
+    # Conflicts:
+    #       ACE/NEWS
+    #       ACE/ace/SV_Shared_Memory.h
+    #       ACE/ace/Shared_Memory_Pool.cpp
+    #       ACE/examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp
+    #       ACE/tests/SV_Shared_Memory_Test.cpp
+
+commit 2e70d6aa938d04bb800aea99301a1aceb9a3af03
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 22 17:06:49 2023 -0500
+
+    Replaced egrep with grep -E
+
+commit 909039b840cb1c6ff4bc58d1ba15357bae2af7ce
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 22 17:04:45 2023 -0500
+
+    Merge pull request #2078 from jwillemsen/jwi-egrep
+    
+    Use ‘grep -E’ as egrep is obsolescent
+    
+    (cherry picked from commit 5ea3ce0f676f3ae3d9347cf43b762d09c32745fd)
+    
+    # Conflicts:
+    #       ACE/include/makeinclude/platform_gcc_clang_common.GNU
