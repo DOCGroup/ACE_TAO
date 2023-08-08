@@ -63,7 +63,7 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
             }
           else
             {
-              *os << ", 0";
+              *os << ", nullptr";
             }
 
           *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_uidt_nl
