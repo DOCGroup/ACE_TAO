@@ -2302,7 +2302,7 @@ ifr_adding_visitor::visit_sequence (AST_Sequence *node)
 }
 
 int
-ifr_adding_visitor::visit_map (AST_Map *node)
+ifr_adding_visitor::visit_map (AST_Map *)
 {
   ORBSVCS_ERROR_RETURN ((
             LM_ERROR,
