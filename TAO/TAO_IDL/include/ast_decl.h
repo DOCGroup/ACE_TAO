@@ -149,6 +149,7 @@ public:
       , NT_wstring                  // Denotes an IDL wstring
       , NT_array                    // Denotes an IDL array
       , NT_sequence                 // Denotes an IDL sequence
+      , NT_map                      // Denotes an IDL map
       , NT_typedef                  // Denotes a typedef
       , NT_pre_defined              // Denotes a predefined type
       , NT_native                   // Denotes a native type

@@ -272,6 +272,7 @@ IDL_GlobalData::reset_flag_seen ()
   seq_seen_ = false;
   short_seq_seen_ = false;
   special_basic_decl_seen_ = false;
+  map_seen_ = false;
   string_seen_ = false;
   string_member_seen_ = false;
   string_seq_seen_ = false;

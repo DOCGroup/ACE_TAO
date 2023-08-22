@@ -142,6 +142,7 @@ public:
 
       // For sequence buffer types.
       TAO_SEQUENCE_BUFFER_TYPE_CH,
+      TAO_MAP_BUFFER_TYPE_CH,
 
       // Emitting code for the public members of the union.
       TAO_UNION_PUBLIC_CH,
