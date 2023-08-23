@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN TAO-3.1.1 and TAO-3.1.2
 ====================================================
 
+- TAO_IDL: Added support for the map data type
+
 USER VISIBLE CHANGES BETWEEN TAO-3.1.0 and TAO-3.1.1
 ====================================================
 
