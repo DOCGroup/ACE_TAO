@@ -68,16 +68,9 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-// NOTE: ACE7 and TAO3 require C++11 support or newer; jwillemsen commented on Jun 1, 2021
 #if !defined (ACE_LACKS_AUTO_PTR)
-#  include <memory>
-
-#  ifdef ACE_HAS_CPP17
-// NOTE: we must only use std::unique_ptr; CK
-#  else
-// FIXME: we are still using std::auto_ptr;
-#  endif
-
+#  include <memory>  // NOTE:  Workaround only, still needed! 2023-08-23 CK
+using std::auto_ptr; // FIXME(CK): This does NOT compile with c++17 or newer!!!
 #else /* !ACE_LACKS_AUTO_PTR */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
