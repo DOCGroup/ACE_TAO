@@ -134,14 +134,17 @@ public:
   virtual int visit_enum_val (AST_EnumVal *node) = 0;
   virtual int visit_array (AST_Array *node) = 0;
   virtual int visit_sequence (AST_Sequence *node) = 0;
-  virtual int visit_map (AST_Map *node) = 0;
   virtual int visit_string (AST_String *node) = 0;
   virtual int visit_typedef (AST_Typedef *node) = 0;
   virtual int visit_root (AST_Root *node) = 0;
   virtual int visit_native (AST_Native *node) = 0;
   virtual int visit_valuebox (AST_ValueBox *node) = 0;
+
+  // These are implemented as nops for backwards compatibility. New node types
+  // should go here.
   virtual int visit_fixed (AST_Fixed *node);
   virtual int visit_annotation_decl (AST_Annotation_Decl *node);
+  virtual int visit_map (AST_Map *node);
 
 protected:
   // For abstract class.
