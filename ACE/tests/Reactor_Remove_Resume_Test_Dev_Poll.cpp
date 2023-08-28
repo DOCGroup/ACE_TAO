@@ -375,7 +375,7 @@ dev_poll_reactor_factory ()
  *
  * Reactor test execution functor.
  */
-struct Run_Test : public std::unary_function<reactor_factory_type, void>
+struct Run_Test : public std::function<void(reactor_factory_type)>
 {
   /// Function call operator overload.
   void operator() (reactor_factory_type factory)
