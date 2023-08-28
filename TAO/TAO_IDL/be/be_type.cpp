@@ -38,8 +38,8 @@ be_type::be_type (AST_Decl::NodeType nt,
     tc_name_ (nullptr),
     common_varout_gen_ (false),
     seen_in_sequence_ (false),
-    seen_in_operation_ (false),
-    seen_in_map_(false)
+    seen_in_map_(false),
+    seen_in_operation_ (false)
 {
   if (n != nullptr)
     {
