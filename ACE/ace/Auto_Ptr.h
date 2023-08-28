@@ -69,8 +69,8 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if !defined (ACE_LACKS_AUTO_PTR)
-#  include <memory>  // NOTE:  Workaround only, still needed! 2023-08-23 CK
-using std::auto_ptr; // FIXME(CK): This does NOT compile with c++17 or newer!!!
+#  include <memory>
+using std::auto_ptr;
 #else /* !ACE_LACKS_AUTO_PTR */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
