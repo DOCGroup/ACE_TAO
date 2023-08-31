@@ -170,11 +170,6 @@ be_map::gen_name ()
 int
 be_map::create_name (be_typedef *node)
 {
-  UTL_ScopedName *n = nullptr;
-
-  // Scope in which we are defined.
-  be_decl *scope = nullptr;
-
   // If there is a typedef node, we use its name as our name.
   if (node)
     {
@@ -187,14 +182,12 @@ be_map::create_name (be_typedef *node)
       char *namebuf = this->gen_name ();
 
       // Now see if we have a fully scoped name and if so, generate one.
-      UTL_Scope *us = this->defined_in ();
-
-      scope = dynamic_cast<be_scope*> (us)->decl ();
+      be_decl *const scope = dynamic_cast<be_scope*> (defined_in ())->decl ();
 
       if (scope != nullptr)
         {
           // Make a copy of the enclosing scope's name.
-          n = static_cast<UTL_ScopedName *> (scope->name ()->copy ());
+          UTL_ScopedName *const n = static_cast<UTL_ScopedName *> (scope->name ()->copy ());
 
           Identifier *id = nullptr;
           ACE_NEW_RETURN (id,
