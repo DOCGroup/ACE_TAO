@@ -180,8 +180,7 @@ public:
  */
 template<typename AUTO_PTR_TYPE, typename PTR_TYPE>
 inline void
-ACE_auto_ptr_reset (AUTO_PTR_TYPE & ap,
-                    PTR_TYPE * p)
+ACE_auto_ptr_reset (AUTO_PTR_TYPE & ap, PTR_TYPE * p)
 {
   ap.reset (p);
 }

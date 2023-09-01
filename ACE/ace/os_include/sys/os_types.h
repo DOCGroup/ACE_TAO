@@ -119,7 +119,7 @@ typedef DWORD nlink_t;
 
 #if defined (ACE_LACKS_PID_T)
    typedef int pid_t;
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_PID_T */
 
 # if !defined (ACE_INVALID_PID)
 # define ACE_INVALID_PID ((pid_t) -1)

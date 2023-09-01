@@ -36,17 +36,37 @@ extern "C"
 #endif /* __cplusplus */
 
 #if defined (__BORLANDC__)
+# if !defined (_O_CREAT)
 #  define _O_CREAT O_CREAT
-#  define _O_EXCL  O_EXCL
+# endif
+# if !defined (_O_EXCL)
+#  define _O_EXCL O_EXCL
+# endif
+# if !defined (_O_TRUNC)
 #  define _O_TRUNC O_TRUNC
+# endif
+# if !defined (_O_TEMPORARY)
    // 0x0800 is used for O_APPEND.  0x08 looks free.
 #  define _O_TEMPORARY 0x08 /* see fcntl.h */
-#  define _O_RDWR   O_RDWR
+# endif
+# if !defined (_O_RDWR)
+#  define _O_RDWR O_RDWR
+# endif
+# if !defined (_O_WRONLY)
 #  define _O_WRONLY O_WRONLY
+# endif
+# if !defined (_O_RDONLY)
 #  define _O_RDONLY O_RDONLY
+# endif
+# if !defined (_O_APPEND)
 #  define _O_APPEND O_APPEND
+# endif
+# if !defined (_O_BINARY)
 #  define _O_BINARY O_BINARY
-#  define _O_TEXT   O_TEXT
+# endif
+# if !defined (_O_TEXT)
+#  define _O_TEXT O_TEXT
+# endif
 #endif /* __BORLANDC__ */
 
 // defined Win32 specific macros for UNIX platforms
