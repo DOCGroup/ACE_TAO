@@ -38,6 +38,7 @@ be_type::be_type (AST_Decl::NodeType nt,
     tc_name_ (nullptr),
     common_varout_gen_ (false),
     seen_in_sequence_ (false),
+    seen_in_map_(false),
     seen_in_operation_ (false)
 {
   if (n != nullptr)
@@ -345,6 +346,18 @@ void
 be_type::seen_in_sequence (bool val)
 {
   this->seen_in_sequence_ = val;
+}
+
+bool
+be_type::seen_in_map () const
+{
+  return this->seen_in_map_;
+}
+
+void
+be_type::seen_in_map (bool val)
+{
+  this->seen_in_map_ = val;
 }
 
 bool

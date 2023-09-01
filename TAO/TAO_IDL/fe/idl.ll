@@ -138,6 +138,7 @@ enum            return IDL_ENUM;
 string          return IDL_STRING;
 wstring         return IDL_WSTRING;
 sequence        return IDL_SEQUENCE;
+map             return IDL_MAP;
 union           return IDL_UNION;
 fixed           return IDL_FIXED;
 switch          return IDL_SWITCH;
@@ -216,6 +217,14 @@ int64 {
 uint64 {
   if (idl_global->idl_version_ >= IDL_VERSION_4)
     return IDL_UINT64;
+  else
+    {
+      REJECT;
+    }
+}
+map {
+  if (idl_global->idl_version_ >= IDL_VERSION_4)
+    return IDL_MAP;
   else
     {
       REJECT;

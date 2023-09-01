@@ -65,7 +65,7 @@
 #endif
 
 #ifndef TAO_IDL_HAS_MAP
-#  define TAO_IDL_HAS_MAP 0
+#  define TAO_IDL_HAS_MAP TAO_IDL_IDL_VERSION >= 0x40000
 #endif
 
 #ifndef TAO_IDL_HAS_BITSET
