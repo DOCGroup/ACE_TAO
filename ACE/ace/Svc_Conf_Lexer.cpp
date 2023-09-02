@@ -34,7 +34,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 # define ACE_TEMPORARY_STRING(X,SIZE) \
    char* X = 0; \
    char X ## buf[ACE_YY_BUF_SIZE]; \
-   std::unique_ptr<char> X ## bufp (0); \
+   std::unique_ptr<char> X ## bufp (nullptr); \
    if (SIZE > ACE_YY_BUF_SIZE) { \
      X ## bufp.reset (new char[SIZE]); \
      X = X ## bufp.get (); \
