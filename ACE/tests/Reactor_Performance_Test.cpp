@@ -196,7 +196,7 @@ client (void *arg)
   ACE_NEW_RETURN (temp_addresses,
                   ACE_INET_Addr [opt_nconnections],
                   0);
-  ACE_Auto_Array_Ptr <ACE_INET_Addr> addresses (temp_addresses);
+  std::unique_ptr <ACE_INET_Addr[]> addresses (temp_addresses);
 
   // Initialize array.
   for (i = 0; i < opt_nconnections; i++)

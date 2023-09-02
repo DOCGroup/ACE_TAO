@@ -534,7 +534,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_Auto_Array_Ptr<char> owner_buffer (buffer);
+      std::unique_ptr<char[]> owner_buffer (buffer);
       ACE_Data_Block db (complete->data_length () + ACE_CDR::MAX_ALIGNMENT,
                          ACE_Message_Block::MB_DATA,
                          buffer,

@@ -80,7 +80,7 @@ namespace ACE
               int flush_buffer ();
 
               std::streamsize bufsize_;
-              ACE_Auto_Array_Ptr<char_type> buffer_;
+              std::unique_ptr<char_type[]> buffer_;
               typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode_;
               interceptor_type* interceptor_;
 

@@ -19,7 +19,7 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
   int i;
   char **array = 0;
   ACE_NEW_RETURN (array, char*[argc], -1);
-  ACE_Auto_Array_Ptr<char *> char_argv (array);
+  std::unique_ptr<char *[]> char_argv (array);
 
   for (i = 0; i < argc; ++i)
     char_argv[i] = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (argv[i]));

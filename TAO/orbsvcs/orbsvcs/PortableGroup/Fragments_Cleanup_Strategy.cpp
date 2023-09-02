@@ -118,7 +118,7 @@ namespace TAO_PG
 
     DESCRIPTOR_SET sorted_set;
     ACE_NEW (sorted_set, HASH_MAP_ENTRY*[current_size]);
-    ACE_Auto_Array_Ptr<HASH_MAP_ENTRY*> owner (sorted_set);
+    std::unique_ptr<HASH_MAP_ENTRY*[]> owner (sorted_set);
 
     HASH_MAP_ITER iter = packets.begin ();
 
@@ -196,7 +196,7 @@ namespace TAO_PG
 
     DESCRIPTOR_SET sorted_set;
     ACE_NEW (sorted_set, HASH_MAP_ENTRY*[current_size]);
-    ACE_Auto_Array_Ptr<HASH_MAP_ENTRY*> owner (sorted_set);
+    std::unique_ptr<HASH_MAP_ENTRY*[]> owner (sorted_set);
 
     iter = packets.begin ();
 

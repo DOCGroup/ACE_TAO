@@ -34,7 +34,7 @@ namespace ACE
           if (scheme == SCHEME)
             {
               size_t out_len = 0;
-              ACE_Auto_Array_Ptr<ACE_Byte> safe_buf (ACE_Base64::decode ((const ACE_Byte*)info.c_str (),
+              std::unique_ptr<ACE_Byte[]> safe_buf (ACE_Base64::decode ((const ACE_Byte*)info.c_str (),
                                                                          &out_len));
               ACE_CString credentials ((char*)safe_buf.get (), out_len);
               ACE_CString::size_type pos = credentials.find (':');
@@ -57,7 +57,7 @@ namespace ACE
         credentials += ':';
         credentials += this->passwd_;
         size_t out_len = 0;
-        ACE_Auto_Array_Ptr<ACE_Byte> safe_buf (
+        std::unique_ptr<ACE_Byte[]> safe_buf (
             ACE_Base64::encode ((const ACE_Byte*)credentials.c_str (),
                                 credentials.length (),
                                 &out_len,

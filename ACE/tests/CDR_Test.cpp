@@ -242,9 +242,9 @@ short_stream ()
   is >> str1;
   ACE_InputCDR::to_wstring twstr (wstr1, 0);
   is >> twstr;
-  // @todo Lose the ACE_Auto_Array_Ptr.  We should be using a
+  // @todo Lose the std::unique_ptr.  We should be using a
   //       std::string, or the like.
-  ACE_Auto_Array_Ptr<ACE_CDR::WChar> safe_wstr (wstr1);
+  std::unique_ptr<ACE_CDR::WChar[]> safe_wstr (wstr1);
   is >> std_str1;
 #if !defined(ACE_LACKS_STD_WSTRING)
   is >> std_wstr1;

@@ -121,7 +121,7 @@ void
 Grid_i::destroy ()
 {
   // Delete the array.
-  ACE_Auto_Array_Ptr<CORBA::Long> tmp (this->array_.release ());
+  std::unique_ptr<CORBA::Long[]> tmp (this->array_.release ());
   this->width_ = 0;
   this->height_ = 0;
 
