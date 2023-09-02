@@ -61,7 +61,7 @@ private:
   ImplementationRepository::Administration_var imr_;
 
   /// What we need to do.
-  ACE_Auto_Ptr<TAO_IMR_Op> op_;
+  std::unique_ptr<TAO_IMR_Op> op_;
 };
 
 

@@ -16,7 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char * TAO_Storable_Naming_Context::root_name_;
 ACE_UINT32 TAO_Storable_Naming_Context::gcounter_;
-ACE_Auto_Ptr<TAO::Storable_Base> TAO_Storable_Naming_Context::gfl_;
+std::unique_ptr<TAO::Storable_Base> TAO_Storable_Naming_Context::gfl_;
 int TAO_Storable_Naming_Context::redundant_;
 
 TAO_Storable_IntId::TAO_Storable_IntId ()
@@ -414,7 +414,7 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context ()
       ACE_CString file_name = this->context_name_;
 
       // Now delete the file
-      ACE_Auto_Ptr<TAO::Storable_Base>
+      std::unique_ptr<TAO::Storable_Base>
         fl (
           this->factory_->create_stream(file_name.c_str(), "r")
           );
@@ -1074,7 +1074,7 @@ TAO_Storable_Naming_Context::recreate_all (
 
   // Now does this already exist on disk?
   ACE_CString file_name = poa_id;
-  ACE_Auto_Ptr<TAO::Storable_Base> fl (
+  std::unique_ptr<TAO::Storable_Base> fl (
     pers_factory->create_stream (file_name.c_str (), "r"));
   if (fl->exists ())
   {

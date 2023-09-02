@@ -418,7 +418,7 @@ protected:
   static const char * root_name_;
 
   /// The pointer to the global file used to allocate new contexts
-  static ACE_Auto_Ptr<TAO::Storable_Base> gfl_;
+  static std::unique_ptr<TAO::Storable_Base> gfl_;
 
 /**
  * @class File_Open_Lock_and_Check

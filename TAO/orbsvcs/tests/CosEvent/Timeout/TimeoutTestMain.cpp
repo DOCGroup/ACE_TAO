@@ -125,7 +125,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           servant.activate ();
         }
 
-      ACE_Auto_Ptr<SupplierTask> pST;
+      std::unique_ptr<SupplierTask> pST;
       if (supplier)
         {
           // The supplier will use its own ORB.

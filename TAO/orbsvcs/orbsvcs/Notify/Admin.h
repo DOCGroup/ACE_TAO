@@ -112,7 +112,7 @@ private:
   void remove (TAO_Notify_Proxy *proxy);
 
   /// The Proxy Container.
-  ACE_Auto_Ptr< TAO_Notify_Proxy_Container > proxy_container_;
+  std::unique_ptr< TAO_Notify_Proxy_Container > proxy_container_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

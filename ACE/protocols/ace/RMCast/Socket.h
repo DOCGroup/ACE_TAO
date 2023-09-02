@@ -89,7 +89,7 @@ namespace ACE_RMCast
     get_handle ();
 
   private:
-    ACE_Auto_Ptr<Socket_Impl> impl_;
+    std::unique_ptr<Socket_Impl> impl_;
   };
 }
 

@@ -154,7 +154,7 @@ HTTP_Server::init (int argc, ACE_TCHAR *argv[])
   //NOTE: At this point f better not be a NULL pointer,
   //so please do not change the ACE_NEW_RETURN macros unless
   //you know what you are doing
-  ACE_Auto_Ptr<HTTP_Handler_Factory> factory (f);
+  std::unique_ptr<HTTP_Handler_Factory> factory (f);
 
   // Choose what concurrency strategy to run.
   switch (this->strategy_)

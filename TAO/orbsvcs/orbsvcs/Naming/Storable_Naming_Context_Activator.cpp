@@ -57,7 +57,7 @@ TAO_Storable_Naming_Context_Activator::incarnate (
   { // Does this already exist on disk?
 
     ACE_CString file_name = poa_id.in ();
-    ACE_Auto_Ptr<TAO::Storable_Base> fl (
+    std::unique_ptr<TAO::Storable_Base> fl (
        persistence_factory_->create_stream (file_name.c_str (),
                                             "rw"));
 

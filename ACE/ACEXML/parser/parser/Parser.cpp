@@ -12,6 +12,7 @@
 #include "ACEXML/parser/parser/ParserInternals.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
+#include <memory>
 
 static const ACEXML_Char default_attribute_type[] = ACE_TEXT ("CDATA");
 static const ACEXML_Char empty_string[] = { 0 };
