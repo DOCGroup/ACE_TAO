@@ -45,7 +45,7 @@ TAO_Notify_EventChannel::TAO_Notify_EventChannel ()
   , ca_container_ (0)
   , sa_container_ (0)
   , default_filter_factory_ (CosNotifyFilter::FilterFactory::_nil ())
-  , default_filter_factory_servant_ (0)
+  , default_filter_factory_servant_ (nullptr)
 {
 }
 
