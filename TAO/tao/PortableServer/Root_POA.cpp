@@ -46,14 +46,12 @@
 #include "tao/TSS_Resources.h"
 #include "tao/IORInterceptor_Adapter.h"
 #include "tao/debug.h"
-
-// auto_ptr class
-#include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Root_POA.inl"
