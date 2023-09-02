@@ -682,7 +682,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
     }
 
   char *last_addr = nullptr;
-  ACE_Auto_Basic_Array_Ptr<char> addr_str (addrs.rep ());
+  std::unique_ptr<char[]> addr_str (addrs.rep ());
 
   const char *astr = ACE_OS::strtok_r (addr_str.get (), ",", &last_addr);
 

@@ -4,13 +4,10 @@
 #include "orbsvcs/IFRService/ExtValueDef_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
-
 #include "tao/IFR_Client/IFR_ComponentsC.h"
-
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

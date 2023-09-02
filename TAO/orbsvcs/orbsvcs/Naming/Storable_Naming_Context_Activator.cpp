@@ -74,9 +74,9 @@ TAO_Storable_Naming_Context_Activator::incarnate (
                                                              poa_id.in (),
                                                              persistence_factory_);
 
-  // Put <context_impl> into the auto pointer temporarily, in case next
+  // Put <context_impl> into the unique pointer temporarily, in case next
   // allocation fails.
-  ACE_Auto_Basic_Ptr<TAO_Storable_Naming_Context> temp (context_impl);
+  std::unique_ptr<TAO_Storable_Naming_Context> temp (context_impl);
 
   TAO_Naming_Context *context = 0;
   ACE_NEW_THROW_EX (context,
@@ -86,7 +86,7 @@ TAO_Storable_Naming_Context_Activator::incarnate (
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
 
-  // Release auto pointer, and start using reference counting to
+  // Release unique pointer, and start using reference counting to
   // control our servant.
   temp.release ();
 

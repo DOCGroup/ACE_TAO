@@ -91,7 +91,7 @@ Low_Priority_Setup<Client_Type>::stop_all_threads ()
   ACE_DEBUG ((LM_DEBUG, "\n"));
   this->thr_mgr_.wait ();
 
-  /// Resetting the auto_ptr<> destroys all the objects.  The
+  /// Resetting the unique_ptr<> destroys all the objects.  The
   /// destructors automatically stop and wait for all the threads.
   /// Depending on your personal bias this is either "super neat" or
   /// "a horrible kludge", IMHO is just good use of the language :-)

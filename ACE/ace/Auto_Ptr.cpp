@@ -3,6 +3,8 @@
 
 #include "ace/Auto_Ptr.h"
 
+#if !defined (ACE_HAS_CPP17)
+
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -17,5 +19,7 @@ ACE_ALLOC_HOOK_DEFINE_Tt(ACE_Auto_Basic_Ptr)
 ACE_ALLOC_HOOK_DEFINE_Tt(ACE_Auto_Basic_Array_Ptr)
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_HAS_CPP17 */
 
 #endif /* ACE_AUTO_PTR_CPP */

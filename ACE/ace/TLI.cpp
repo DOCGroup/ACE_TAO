@@ -6,7 +6,6 @@
 #include "ace/OS_TLI.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
-#include "ace/Auto_Ptr.h"
 #include <memory>
 
 #if defined (ACE_HAS_TLI)

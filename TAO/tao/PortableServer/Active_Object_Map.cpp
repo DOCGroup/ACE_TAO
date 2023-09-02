@@ -115,7 +115,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 #endif
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Id_Uniqueness_Strategy> new_id_uniqueness_strategy (id_uniqueness_strategy);
 
   TAO_Lifespan_Strategy *lifespan_strategy = 0;
@@ -139,7 +139,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                         CORBA::NO_MEMORY ());
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Lifespan_Strategy> new_lifespan_strategy (lifespan_strategy);
 
   TAO_Id_Assignment_Strategy *id_assignment_strategy = 0;
@@ -174,7 +174,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 #endif
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Id_Assignment_Strategy> new_id_assignment_strategy (id_assignment_strategy);
 
   TAO_Id_Hint_Strategy *id_hint_strategy = 0;
@@ -196,7 +196,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                         CORBA::NO_MEMORY ());
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Id_Hint_Strategy> new_id_hint_strategy (id_hint_strategy);
 
   servant_map *sm = 0;
@@ -230,7 +230,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
         }
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<servant_map> new_servant_map (sm);
 
   user_id_map *uim = 0;
@@ -300,7 +300,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
         }
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<user_id_map> new_user_id_map (uim);
 
   id_uniqueness_strategy->set_active_object_map (this);
@@ -308,7 +308,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
   id_assignment_strategy->set_active_object_map (this);
 
   // Finally everything is fine.  Make sure to take ownership away
-  // from the auto pointer.
+  // from the unique pointer.
   this->id_uniqueness_strategy_ = std::move(new_id_uniqueness_strategy);
   this->lifespan_strategy_ =  std::move(new_lifespan_strategy);
   this->id_assignment_strategy_ = std::move(new_id_assignment_strategy);

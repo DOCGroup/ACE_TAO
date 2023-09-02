@@ -2757,7 +2757,7 @@ TAO_ORB_Core::resolve_ior_table_i ()
 
       this->adapter_registry_.insert (iortable_adapter.get ());
 
-      // It is now (exception) safe to release ownership from the auto pointers
+      // It is now (exception) safe to release ownership from the unique pointers
       this->ior_table_= tmp_root._retn ();
       iortable_adapter.release ();
     }
@@ -2791,7 +2791,7 @@ TAO_ORB_Core::resolve_async_ior_table_i ()
 
       this->adapter_registry_.insert (iortable_adapter.get ());
 
-      // It is now (exception) safe to release ownership from the auto pointers
+      // It is now (exception) safe to release ownership from the unique pointers
       this->async_ior_table_= tmp_root._retn ();
       iortable_adapter.release ();
     }

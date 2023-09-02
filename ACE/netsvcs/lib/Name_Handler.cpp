@@ -404,7 +404,7 @@ ACE_Name_Handler::resolve ()
   char *atype;
   if (this->naming_context ()->resolve (a_name, avalue, atype) == 0)
     {
-      ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> avalue_urep (avalue.rep ());
+      std::unique_ptr<ACE_WCHAR_T[]> avalue_urep (avalue.rep ());
       ACE_Name_Request nrq (ACE_Name_Request::RESOLVE,
                             0,
                             0,
@@ -440,7 +440,7 @@ ACE_Name_Request
 ACE_Name_Handler::name_request (ACE_NS_WString *one_name)
 {
   ACE_TRACE ("ACE_Name_Handler::name_request");
-  ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> one_name_urep (one_name->rep ());
+  std::unique_ptr<ACE_WCHAR_T[]> one_name_urep (one_name->rep ());
   return ACE_Name_Request (ACE_Name_Request::LIST_NAMES,
                            one_name_urep.get (),
                            one_name->length () * sizeof (ACE_WCHAR_T),
@@ -452,7 +452,7 @@ ACE_Name_Request
 ACE_Name_Handler::value_request (ACE_NS_WString *one_value)
 {
   ACE_TRACE ("ACE_Name_Handler::value_request");
-  ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> one_value_urep (one_value->rep ());
+  std::unique_ptr<ACE_WCHAR_T[]> one_value_urep (one_value->rep ());
   return ACE_Name_Request (ACE_Name_Request::LIST_VALUES,
                            0, 0,
                            one_value_urep.get (),
@@ -467,7 +467,7 @@ ACE_Name_Handler::type_request (ACE_NS_WString *one_type)
   return ACE_Name_Request (ACE_Name_Request::LIST_TYPES,
                            0, 0,
                            0, 0,
-                           ACE_Auto_Basic_Array_Ptr<char> (one_type->char_rep ()).get (),
+                           std::unique_ptr<char[]> (one_type->char_rep ()).get (),
                            one_type->length ());
 }
 
@@ -577,10 +577,8 @@ ACE_Name_Handler::lists_entries ()
            set_iterator.next (one_entry) !=0;
            set_iterator.advance())
         {
-           ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T>
-             name_urep (one_entry->name_.rep ());
-           ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T>
-             value_urep (one_entry->value_.rep ());
+           std::unique_ptr<ACE_WCHAR_T[]> name_urep (one_entry->name_.rep ());
+           std::unique_ptr<ACE_WCHAR_T[]> value_urep (one_entry->value_.rep ());
            ACE_Name_Request mynrq (this->name_request_.msg_type (),
                                   name_urep.get (),
                                   one_entry->name_.length () * sizeof (ACE_WCHAR_T),

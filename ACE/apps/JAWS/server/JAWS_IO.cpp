@@ -508,7 +508,7 @@ JAWS_Synch_IO_No_Cache::transmit_file (const char *filename,
   }
 
   char* f = new char[size];
-  ACE_Auto_Basic_Array_Ptr<char> file (f);
+  std::unique_ptr<char[]> file (f);
 
   ACE_OS::read_n (handle, f, size);
 

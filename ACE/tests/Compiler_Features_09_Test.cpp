@@ -2,7 +2,7 @@
  * @file
  *
  * This program checks if the compiler / platform supports the
- * std::auto_ptr<> correctly.  The motivation for this test was a discussion
+ * std::unique_ptr<> correctly.  The motivation for this test was a discussion
  * on the development mailing list, and the documentation was captured
  * in:
  *
@@ -63,12 +63,12 @@ run_main (int, ACE_TCHAR *[])
   // failure
   int status = 0;
 
-  // ... this works with the ACE version of auto_ptr (well, the
+  // ... this works with the ACE version of unique_ptr (well, the
   // namespace is broken, but you get the idea) ...
   std::unique_ptr<Base> x(new Base);
   std::unique_ptr<Derived> y(new Derived);
 
-  // ... with a compliant implementation of std::auto_ptr<> you should be
+  // ... with a compliant implementation of std::unique_ptr<> you should be
   // able to write:
   //    x = y;
   x.reset(y.release());

@@ -17,7 +17,7 @@ namespace
 
     char *tmp = 0;
     ACE_NEW_THROW_EX (tmp, char [size], CORBA::NO_MEMORY ());
-    ACE_Auto_Basic_Array_Ptr<char> buf (tmp);
+    std::unique_ptr<char[]> buf (tmp);
     stream.read (size, buf.get ());
 
     TAO_InputCDR cdr (buf.get (), size);

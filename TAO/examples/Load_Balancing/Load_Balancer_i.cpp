@@ -72,7 +72,7 @@ Object_Group_Factory_i::make_group (int random,
                           CORBA::NO_MEMORY ());
 
       // Temporarily put the servant into the auto_ptr.
-      ACE_Auto_Basic_Ptr<Object_Group_i> temp (group_servant);
+      std::unique_ptr<Object_Group_i> temp (group_servant);
 
       // Register with the poa, begin using ref. counting.
       group = group_servant->_this ();

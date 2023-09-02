@@ -58,7 +58,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 {
   // Manage memory automagically.
   ACE_Reactor_Impl *impl = new ACE_Msg_WFMO_Reactor;
-  auto_ptr<ACE_Reactor> reactor (new ACE_Reactor (impl, 1));
+  std::unique_ptr<ACE_Reactor> reactor (new ACE_Reactor (impl, 1));
   ACE_Reactor::instance (reactor.get ());
 
   Event_Handler event_handler;

@@ -40,7 +40,7 @@ TAO::CSD::TP_Collocated_Synch_Request::wait()
           CORBA::Exception* ex = this->exception_;
           this->exception_ = 0;
 
-          ACE_Auto_Basic_Ptr<CORBA::Exception> ex_holder(ex);
+          std::unique_ptr<CORBA::Exception> ex_holder(ex);
           ex->_raise ();
         }
     }

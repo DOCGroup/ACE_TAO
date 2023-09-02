@@ -212,7 +212,7 @@ Scheduler::svc ()
   // Main event loop for this active object.
   for (;;)
     {
-      // Dequeue the next method object (we use an auto pointer in
+      // Dequeue the next method object (we use an unique pointer in
       // case an exception is thrown in the <call>).
       std::unique_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
 

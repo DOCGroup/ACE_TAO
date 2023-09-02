@@ -67,7 +67,7 @@ void
 TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier)
 {
   // Adopt the supplier
-  ACE_Auto_Ptr< TAO_Notify_Supplier > auto_supplier (supplier);
+  std::unique_ptr<TAO_Notify_Supplier> auto_supplier (supplier);
 
   TAO_Notify_Atomic_Property_Long& supplier_count = this->admin_properties().suppliers ();
   const TAO_Notify_Property_Long& max_suppliers = this->admin_properties().max_suppliers ();

@@ -41,7 +41,7 @@ supplier (void *)
                 "(%t) %p\n",
                 "ACE_UPIPE_Acceptor.connect failed"));
 
-  ACE_Auto_Basic_Array_Ptr<char> mybuf (new char[size]);
+  std::unique_ptr<char[]> mybuf (new char[size]);
 
   for (int i = 0; i < size; i++)
     mybuf[i] = 'a';
@@ -90,7 +90,7 @@ consumer (void *)
                 "ACE_UPIPE_Acceptor.accept failed"));
 
   // Ensure deletion upon exit.
-  ACE_Auto_Basic_Array_Ptr<char> mybuf (new char[size]);
+  std::unique_ptr<char[]> mybuf (new char[size]);
   time_t currsec;
 
   ACE_OS::time (&currsec);

@@ -498,7 +498,7 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
                            ACE_TEXT ("read_string2[%d] failed\n"),
                            i),
                           1);
-      ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char> auto_xstr (xstr);
+      std::unique_ptr<ACE_CDR::Char[]> auto_xstr (xstr);
       if (ACE_OS::strcmp (auto_xstr.get (), this->str) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("string[%d] differs\n"),
@@ -512,7 +512,7 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
                             i),
                            1);
       // zero length
-      ACE_Auto_Basic_Array_Ptr<ACE_CDR::WChar> auto_xwstr (wstr1);
+      std::unique_ptr<ACE_CDR::WChar[]> auto_xwstr (wstr1);
        if (ACE_OS::wslen(auto_xwstr.get () ))
          ACE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("wstring[%d] differs\n"),

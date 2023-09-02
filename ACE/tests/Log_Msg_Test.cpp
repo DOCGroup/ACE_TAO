@@ -532,7 +532,7 @@ test_ostream ()
                   char[info.size_ + 1],
                   -1);
   // Make sure <buffer> is released automagically.
-  ACE_Auto_Basic_Array_Ptr<char> b (buffer);
+  std::unique_ptr<char[]> b (buffer);
 
   // Read the file into the buffer.
   ssize_t size = file.recv (buffer,

@@ -13,8 +13,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Atomic_Op.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,7 +29,7 @@ template <class X, class ACE_LOCK> class ACE_Refcounted_Auto_Ptr;
 /**
  * @class ACE_Refcounted_Auto_Ptr
  *
- * @brief This class implements support for a reference counted auto_ptr.
+ * @brief This class implements support for a reference counted unique_ptr.
  * Assigning or copying instances of an ACE_Refcounted_Auto_Ptr
  * will automatically increment the reference count. When the last
  * instance that references a ACE_Refcounted_Auto_Ptr instance is
@@ -51,7 +51,7 @@ class ACE_Refcounted_Auto_Ptr
 public:
   /// Constructor that initializes an ACE_Refcounted_Auto_Ptr to
   /// the specified pointer value.
-  explicit ACE_Refcounted_Auto_Ptr (X *p = 0);
+  explicit ACE_Refcounted_Auto_Ptr (X *p = nullptr);
 
   /// Copy constructor binds the new ACE_Refcounted_Auto_Ptr to the
   /// representation object referenced by @a r.
@@ -98,7 +98,7 @@ public:
 
   /// Releases the current pointer value and then sets a new
   /// pointer value specified by @a p.
-  void reset (X *p = 0);
+  void reset (X *p = nullptr);
 
   /// Get the pointer value.
   X *get () const;
@@ -168,14 +168,14 @@ private:
   static void detach (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *&rep);
 
   /// Pointer to the result.
-  ACE_Auto_Basic_Ptr<X> ptr_;
+  std::unique_ptr<X> ptr_;
 
   /// Reference count.
   mutable ACE_Atomic_Op<ACE_LOCK, long> ref_count_;
 
 private:
   // = Constructor and destructor private.
-  ACE_Refcounted_Auto_Ptr_Rep (X *p = 0);
+  ACE_Refcounted_Auto_Ptr_Rep (X *p = nullptr);
   ~ACE_Refcounted_Auto_Ptr_Rep ();
 };
 

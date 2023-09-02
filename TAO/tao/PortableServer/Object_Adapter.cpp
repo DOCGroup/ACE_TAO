@@ -165,7 +165,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     ACE_NEW (hint_strategy,
              No_Hint_Strategy);
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<Hint_Strategy> new_hint_strategy (hint_strategy);
 
   new_hint_strategy->object_adapter (this);
@@ -192,7 +192,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
                persistent_poa_name_hash_map (creation_parameters.poa_map_size_));
       break;
     }
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<persistent_poa_name_map> new_persistent_poa_name_map (ppnm);
 
   transient_poa_map *tpm = 0;
@@ -222,7 +222,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
                transient_poa_active_map (creation_parameters.poa_map_size_));
       break;
     }
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<transient_poa_map> new_transient_poa_map (tpm);
 
   this->hint_strategy_ = new_hint_strategy.release ();

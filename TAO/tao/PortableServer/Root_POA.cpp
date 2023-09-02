@@ -2024,7 +2024,7 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
                       0);
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Acceptor_Filter> new_filter (filter);
 
   TAO_Stub *data =

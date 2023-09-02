@@ -29,7 +29,6 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/Containers_T.h"
-#include "ace/Auto_Ptr.h"
 #include "ACEXML/parser/parser/Entity_Manager.h"
 #include "ACEXML/parser/parser/ParserInternals.h"
 #include "ACEXML/parser/parser/ParserContext.h"

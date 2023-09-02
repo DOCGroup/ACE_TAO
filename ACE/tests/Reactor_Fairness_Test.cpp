@@ -182,7 +182,7 @@ sender (void *arg)
   ACE_NEW_RETURN (temp_socks,
                   ACE_SOCK_Stream [opt_nconnections],
                   0);
-  ACE_Auto_Basic_Array_Ptr <ACE_SOCK_Stream> socks (temp_socks);
+  std::unique_ptr <ACE_SOCK_Stream[]> socks (temp_socks);
 
   // Connection all <opt_nconnections> connections before sending data.
   ACE_SOCK_Connector c;

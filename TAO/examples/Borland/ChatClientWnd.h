@@ -4,12 +4,12 @@
 //---------------------------------------------------------------------------
 #include "ReceiverImpl.h"
 #include "BroadcasterC.h"
-#include "ace/Auto_Ptr.h"
 #include "ORBThread.h"
 #include <Classes.hpp>
 #include <Dialogs.hpp>
 #include <Controls.hpp>
 #include <StdCtrls.hpp>
+#include <memory>
 
 //---------------------------------------------------------------------------
 // Message used to notify window of incoming data
@@ -38,7 +38,7 @@ private:
   String nickname_;
 
   // We run the orb's main loop in a separate thread.
-  auto_ptr<TORBThread> orb_thread_;
+  std::unique_ptr<TORBThread> orb_thread_;
 
   // Our orb. Order is important! The orb must have a longer lifetime than
   // any of the servants or stub vars/ptrs. Therefore we declare the orb var

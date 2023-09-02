@@ -24,10 +24,10 @@
 #include "Key_List.h"
 #include "Hash_Table.h"
 #include "ace/Read_Buffer.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 /// Default type for generated code.
 const char *const Key_List::default_array_type = "char *";
@@ -556,7 +556,7 @@ Key_List::output_switch (int use_keyword_table)
         output_keyword_table ();
     }
 
-  ACE_Auto_Basic_Array_Ptr<char> safe_comp_buffer;
+  std::unique_ptr<char[]> safe_comp_buffer;
   char * comp_buffer;
 
   List_Node *curr = head;

@@ -3,7 +3,6 @@
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
 #include "tao/Monitor/Monitor_Impl.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/Monitor_Base.h"
 
@@ -90,7 +89,7 @@ NotificationServiceMonitor_i::get_statistics (const Monitor::NameList& names)
                   Monitor::DataList (
                     length),
                   0);
-  ACE_Auto_Basic_Ptr<Monitor::DataList> safe_data (data);
+  std::unique_ptr<Monitor::DataList> safe_data (data);
 
   data->length (length);
 

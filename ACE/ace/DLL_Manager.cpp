@@ -1,6 +1,5 @@
 #include "ace/DLL_Manager.h"
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Log_Category.h"
 #include "ace/ACE.h"
 #include "ace/Framework_Component.h"
@@ -12,6 +11,7 @@
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_dlfcn.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -243,7 +243,7 @@ ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, bool ignore_errors, ACE_TStri
   ACE_TRACE ("ACE_DLL_Handle::symbol");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
-  ACE_Auto_Array_Ptr <ACE_TCHAR> auto_name (ACE::ldname (sym_name));
+  std::unique_ptr <ACE_TCHAR[]> auto_name (ACE::ldname (sym_name));
   // handle_ can be invalid especially when ACE_DLL_Handle resigned ownership
   // BTW. Handle lifecycle management is a little crazy in ACE
   if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)

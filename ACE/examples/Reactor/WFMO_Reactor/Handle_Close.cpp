@@ -279,7 +279,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Different_Handler different_handler (pipe2);
 
   // Manage memory automagically.
-  auto_ptr<ACE_Reactor> reactor (create_reactor ());
+  std::unique_ptr<ACE_Reactor> reactor (create_reactor ());
 
   // Register handlers
   ACE_Reactor_Mask handler_mask =

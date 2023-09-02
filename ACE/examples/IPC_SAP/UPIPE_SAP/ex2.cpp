@@ -31,7 +31,7 @@ supplier (void *)
 
   ACE_UPIPE_Addr c_addr (ACE_TEXT("pattern"));
 
-  ACE_Auto_Basic_Array_Ptr<char> mybuf (new char[size]);
+  std::unique_ptr<char[]> mybuf (new char[size]);
 
   for (int i = 0; i < size; i++)
     mybuf[i] = 'a';

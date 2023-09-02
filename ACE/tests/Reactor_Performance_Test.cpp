@@ -183,13 +183,13 @@ client (void *arg)
   ACE_NEW_RETURN (temp_writers,
                   Write_Handler *[opt_nconnections],
                   0);
-  ACE_Auto_Basic_Array_Ptr <Write_Handler *> writers (temp_writers);
+  std::unique_ptr <Write_Handler *[]> writers (temp_writers);
 
   ACE_TCHAR *temp_failed = 0;
   ACE_NEW_RETURN (temp_failed,
                   ACE_TCHAR[opt_nconnections],
                   0);
-  ACE_Auto_Basic_Array_Ptr <ACE_TCHAR> failed_svc_handlers (temp_failed);
+  std::unique_ptr <ACE_TCHAR[]> failed_svc_handlers (temp_failed);
 
   // Automagic memory cleanup.
   ACE_INET_Addr *temp_addresses;
