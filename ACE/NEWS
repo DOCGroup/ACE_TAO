@@ -1,6 +1,12 @@
 USER VISIBLE CHANGES BETWEEN ACE-7.1.1 and ACE-7.1.2
 ====================================================
 
+. C++17 removed std::auto_ptr, updated ACE/TAO to not
+  use std::auto_ptr anymore and also not provide our
+  own auto_ptr. With C++17 ACE doesn't provide ACE_Auto_Ptr,
+  ACE_Auto_Basic_Ptr, ACE_Auto_Basic_Array_Ptr, ACE_Auto_Array_Ptr,
+  and ACE_auto_ptr_reset anymore, just use std::unique_ptr
+
 USER VISIBLE CHANGES BETWEEN ACE-7.1.0 and ACE-7.1.1
 ====================================================
 
