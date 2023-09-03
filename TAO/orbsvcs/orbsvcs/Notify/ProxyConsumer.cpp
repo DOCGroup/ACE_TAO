@@ -88,7 +88,7 @@ TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier)
       }
 
     // Adopt the supplier
-    this->supplier_ = auto_supplier;
+    this->supplier_ = std::move(auto_supplier);
 
     this->supplier_admin_->subscribed_types (this->subscribed_types_); // get the parents subscribed types.
   }
