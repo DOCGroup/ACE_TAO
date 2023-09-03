@@ -20,8 +20,8 @@
 #include "ace/Future.h"
 #include "ace/Method_Request.h"
 #include "ace/Activation_Queue.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Atomic_Op.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 

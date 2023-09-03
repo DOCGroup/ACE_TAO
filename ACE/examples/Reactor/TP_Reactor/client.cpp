@@ -4,7 +4,6 @@
  * Date: 26-Jan-2006
  */
 
-#include <ace/Auto_Ptr.h>
 #include <ace/INET_Addr.h>
 #include <ace/Log_Msg.h>
 #include <ace/SOCK_Acceptor.h>
@@ -12,7 +11,7 @@
 #include <ace/SOCK_Stream.h>
 #include <ace/streams.h>
 #include <ace/OS_NS_stdlib.h>
-
+#include <memory>
 #include "common.h"
 
 /**

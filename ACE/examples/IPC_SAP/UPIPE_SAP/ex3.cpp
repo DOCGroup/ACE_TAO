@@ -11,13 +11,11 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 #include "ace/UPIPE_Connector.h"
 #include "ace/UPIPE_Acceptor.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_time.h"
-
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 

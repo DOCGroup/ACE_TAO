@@ -8,7 +8,7 @@
 
 
 #include "Load_Balancer_i.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_time.h"
 
 Object_Group_Factory_i::Object_Group_Factory_i ()

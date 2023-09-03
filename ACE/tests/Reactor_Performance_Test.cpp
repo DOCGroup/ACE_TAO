@@ -15,7 +15,7 @@
 #include "Reactor_Performance_Test.h"
 
 #include "ace/Acceptor.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Connector.h"
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"

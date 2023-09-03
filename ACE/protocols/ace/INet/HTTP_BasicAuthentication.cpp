@@ -1,6 +1,6 @@
 #include "ace/INet/HTTP_BasicAuthentication.h"
 #include "ace/Codecs.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INet/HTTP_BasicAuthentication.inl"

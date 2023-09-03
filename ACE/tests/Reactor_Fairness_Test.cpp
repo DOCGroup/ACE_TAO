@@ -22,7 +22,7 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/TP_Reactor.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Numeric_Limits.h"
 #include "ace/Signal.h"
 #include "ace/Atomic_Op.h"

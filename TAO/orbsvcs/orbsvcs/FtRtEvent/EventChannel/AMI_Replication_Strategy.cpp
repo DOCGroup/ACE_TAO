@@ -1,7 +1,7 @@
 #include "orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.h"
 #include "orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

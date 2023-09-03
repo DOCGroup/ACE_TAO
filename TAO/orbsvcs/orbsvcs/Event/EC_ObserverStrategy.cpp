@@ -5,7 +5,7 @@
 #include "orbsvcs/Event/EC_ConsumerAdmin.h"
 #include "orbsvcs/Event/EC_SupplierAdmin.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_ObserverStrategy.inl"

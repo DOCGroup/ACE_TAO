@@ -93,7 +93,7 @@ Grid_i::width (CORBA::Short x)
           ACE_OS::memcpy (array.get () + x * ctr, this->array_.get () + this->width_ * ctr,
                           Grid_i::ushort_min (this->width_, x) * sizeof (CORBA::Long));
         }
-      this->array_ = array;
+      this->array_ = std::move(array);
       array.release ();
       this->width_ = x;
     }
@@ -110,7 +110,7 @@ Grid_i::height (CORBA::Short y)
           ACE_OS::memcpy (array.get () + this->width_ * ctr, this->array_.get () + this->width_ * ctr,
                           this->width_ * sizeof (CORBA::Long));
         }
-      this->array_ = array;
+      this->array_ = std::move(array);
       array.release ();
       this->height_ = y;
     }

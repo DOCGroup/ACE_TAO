@@ -5,7 +5,7 @@
 #include "tao/PI/PI.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 
 //const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");

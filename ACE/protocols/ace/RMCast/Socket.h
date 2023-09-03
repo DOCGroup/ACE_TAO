@@ -5,7 +5,7 @@
 
 #include "ace/config-lite.h" // ACE_HANDLE
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/INET_Addr.h"
 #include "ace/Time_Value.h"
 

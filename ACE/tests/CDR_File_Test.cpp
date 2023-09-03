@@ -16,7 +16,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/CDR_Stream.h"
 #include "ace/FILE_Connector.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 #include "ace/Truncate.h"

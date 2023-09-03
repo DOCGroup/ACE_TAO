@@ -6,7 +6,7 @@
 
 #include "ace/INet/INet_Log.h"
 #include "ace/INet/String_IOStream.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_ctype.h"
 #include "ace/Connector.h"
 #include "ace/Acceptor.h"

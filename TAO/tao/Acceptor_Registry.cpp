@@ -14,7 +14,7 @@
 # include "tao/IIOP_Acceptor.h"
 #endif /* ACE_WIN32 && ACE_HAS_IPV6 */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include <cstring>

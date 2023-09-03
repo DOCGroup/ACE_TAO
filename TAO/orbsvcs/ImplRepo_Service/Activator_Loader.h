@@ -7,7 +7,7 @@
 
 #include "tao/Object_Loader.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

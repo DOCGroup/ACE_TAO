@@ -14,7 +14,7 @@
 
 #include "GridS.h"
 #include "ace/Vector_T.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 /**
  * @class Grid_i:

@@ -3,7 +3,7 @@
 #include "tao/Storable_Factory.h"
 #include "tao/Storable_File_Guard.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 const int Savable::bytes_size_max = 128;
 

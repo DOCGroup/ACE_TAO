@@ -16,10 +16,9 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Pipe.h"
 #include "ace/OS_main.h"
-
+#include <memory>
 
 // Use the WFMO_Reactor
 static int opt_wfmo_reactor = 0;

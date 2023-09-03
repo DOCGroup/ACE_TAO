@@ -10,7 +10,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/SString.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Singleton.h"
 #include "ace/SSL/SSL_Context.h"
 #include "ace/INet/SSL_CallbackManager.h"

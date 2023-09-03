@@ -15,7 +15,7 @@
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 #include "tao/Storable_File_Guard.h"
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include "orbsvcs/Naming/Storable.h"
 

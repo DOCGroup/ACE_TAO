@@ -1,6 +1,6 @@
 // -*- C++ -*-
 #include "test_i.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 A_i::A_i (CORBA::ORB_ptr orb,
           CORBA::ValueFactoryBase *vtp_factory)

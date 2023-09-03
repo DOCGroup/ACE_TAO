@@ -15,7 +15,7 @@
 #include "tao/ImR_Client/ImplRepoC.h"
 #include "tao/corba.h"
 #include "ace/SString.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 // Forward Declaration
 class TAO_IMR_Op;

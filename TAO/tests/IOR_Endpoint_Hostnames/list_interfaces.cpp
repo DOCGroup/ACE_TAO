@@ -7,7 +7,7 @@
 
 #include "tao/corba.h"
 #include "ace/ACE.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"

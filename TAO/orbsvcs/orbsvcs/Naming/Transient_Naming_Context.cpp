@@ -6,7 +6,7 @@
  */
 //=============================================================================
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "orbsvcs/Naming/Transient_Naming_Context.h"
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
 #include "ace/OS_NS_stdio.h"

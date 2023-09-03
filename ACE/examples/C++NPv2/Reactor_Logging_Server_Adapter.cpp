@@ -6,12 +6,12 @@
 #define _REACTOR_LOGGING_SERVER_ADAPTER_C
 
 #include "ace/ACE.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/INET_Addr.h"
 #include "ace/Truncate.h"
 #include "Reactor_Logging_Server_Adapter.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
+#include <memory>
 
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,

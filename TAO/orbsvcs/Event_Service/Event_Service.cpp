@@ -2,7 +2,7 @@
 #include "Event_Service.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_unistd.h"

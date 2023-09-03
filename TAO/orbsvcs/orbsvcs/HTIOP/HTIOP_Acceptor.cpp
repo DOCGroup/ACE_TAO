@@ -13,7 +13,7 @@
 #include "tao/CDR.h"
 #include "tao/Codeset_Manager.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/HTIOP/HTIOP_Acceptor.inl"

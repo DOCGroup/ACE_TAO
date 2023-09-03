@@ -5,7 +5,6 @@
 #ifndef _TP_LOGGING_SERVER_H
 #define _TP_LOGGING_SERVER_H
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
@@ -13,6 +12,7 @@
 #include "Logging_Event_Handler.h"
 #include "Reactor_Logging_Server_T.h"
 #include "TPLS_export.h"
+#include <memory>
 
 class TP_Logging_Task : public ACE_Task<ACE_SYNCH> {
          // Instantiated with an MT synchronization trait.

@@ -13,7 +13,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 
 // -- ACE Include --
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 

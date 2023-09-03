@@ -1,10 +1,9 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-#include "ace/Auto_Ptr.h"
 #include "URL_Visitor.h"
 #include "Options.h"
 #include "HTTP_URL.h"
-
+#include <memory>
 
 const ACE_URL_Addr &
 HTTP_URL::url_addr () const

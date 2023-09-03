@@ -7,7 +7,7 @@
 
 #include "tao/SystemException.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/CORBA_macros.h"
 #include "tao/debug.h"
 #include "PortableServer_Functions.h"

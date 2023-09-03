@@ -16,7 +16,7 @@
 
 #if defined (ACE_HAS_SCTP)
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Service_Config.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "ace/SOCK_SEQPACK_Association.h"

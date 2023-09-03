@@ -20,7 +20,7 @@
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Message_Queue.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"

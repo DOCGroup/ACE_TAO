@@ -12,7 +12,7 @@
 
 #include "test_config.h"
 #include "ace/Codecs.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/ACE.h"
 
 

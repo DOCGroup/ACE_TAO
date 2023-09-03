@@ -18,7 +18,7 @@
 #include "ace/streams.h"
 
 #include "ace/FILE_Connector.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
 #include "ace/OS_NS_fcntl.h"

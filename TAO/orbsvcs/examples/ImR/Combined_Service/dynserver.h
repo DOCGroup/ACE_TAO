@@ -7,7 +7,7 @@
 
 #include "tao/Object_Loader.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 // Trivial test corba object
 class DynServer_Export DynServer

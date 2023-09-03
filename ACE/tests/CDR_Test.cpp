@@ -12,7 +12,7 @@
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/CDR_Stream.h"
 #include "ace/CDR_Size.h"
 #include "ace/SString.h"

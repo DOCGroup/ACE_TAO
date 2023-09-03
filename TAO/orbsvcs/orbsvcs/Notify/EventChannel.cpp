@@ -41,9 +41,9 @@ typedef TAO_Notify_Seq_Worker_T<TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdm
 typedef TAO_Notify_Seq_Worker_T<TAO_Notify_SupplierAdmin> TAO_Notify_SupplierAdmin_Seq_Worker;
 
 TAO_Notify_EventChannel::TAO_Notify_EventChannel ()
-  : ecf_ (0)
-  , ca_container_ (0)
-  , sa_container_ (0)
+  : ecf_ (nullptr)
+  , ca_container_ (nullptr)
+  , sa_container_ (nullptr)
   , default_filter_factory_ (CosNotifyFilter::FilterFactory::_nil ())
   , default_filter_factory_servant_ (nullptr)
 {

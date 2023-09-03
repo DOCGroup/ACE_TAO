@@ -8,7 +8,7 @@
 #include "tao/Storable_Base.h"
 #include "tao/Storable_Factory.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
 
