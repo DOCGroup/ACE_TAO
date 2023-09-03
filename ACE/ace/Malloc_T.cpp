@@ -177,6 +177,170 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
     this->free_list_.add ((ACE_Cached_Mem_Pool_Node<char> *) ptr);
 }
 
+template <class ACE_LOCK>
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Cascaded_Dynamic_Cached_Allocator
+  (size_t initial_n_chunks, size_t chunk_size)
+    : initial_n_chunks_ (initial_n_chunks),
+      chunk_size_ (chunk_size)
+{
+  ACE_ASSERT (chunk_size > 0);
+
+  comb_alloc_ptr tmp;
+  ACE_NEW (tmp, comb_alloc_type(this->initial_n_chunks_, this->chunk_size_));
+  hierarchy_.push_back(tmp);
+}
+
+template <class ACE_LOCK>
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::~ACE_Cascaded_Dynamic_Cached_Allocator ()
+{
+  for (size_t c = 0;
+           c < hierarchy_.size();
+           c++)
+  {
+          delete hierarchy_[c];
+  }
+
+  hierarchy_.clear();
+  this->initial_n_chunks_ = 0;
+  this->chunk_size_       = 0;
+}
+
+template <class ACE_LOCK> void *
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
+{
+  // Check if size requested fits within pre-determined size.
+  if (nbytes > chunk_size_)
+    return nullptr;
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, nullptr));
+
+  void * ptr = nullptr;
+
+  for (size_t c = 0;
+           c < hierarchy_.size();
+           c++)
+  {
+          ptr =  hierarchy_[c]->malloc(nbytes);
+          if(ptr != nullptr)
+            break;
+  }
+
+  if(ptr == nullptr)
+  {
+      comb_alloc_ptr tmp;
+      ACE_NEW_RETURN (tmp, comb_alloc_type(this->initial_n_chunks_ * 2 * hierarchy_.size(), this->chunk_size_), nullptr); 
+      hierarchy_.push_back(tmp);
+      ptr = tmp->malloc(nbytes);
+  }
+
+
+  return ptr;
+}
+
+template <class ACE_LOCK> void *
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t nbytes,
+                                                char initial_value)
+{
+  // Check if size requested fits within pre-determined size.
+  if (nbytes > chunk_size_)
+    return 0;
+
+  // No need any lock
+  void *ptr = malloc(nbytes);
+  if (ptr != nullptr)
+    ACE_OS::memset (ptr, initial_value, chunk_size_);
+
+  return ptr;
+}
+
+template <class ACE_LOCK> void *
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t, size_t, char)
+{
+  ACE_NOTSUP_RETURN (0);
+}
+
+template <class ACE_LOCK> void
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
+{
+  ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
+
+  if (ptr != nullptr)
+    hierarchy_[0]->free(ptr);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::remove ()
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::bind (const char *, void *, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::trybind (const char *, void *&)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::find (const char *, void *&)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::find (const char *)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::unbind (const char *)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::unbind (const char *, void *&)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::sync (ssize_t, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::sync (void *, size_t, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::protect (ssize_t, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> int
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::protect (void *, size_t, int)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+template <class ACE_LOCK> void
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::dump () const
+{
+#if defined (ACE_HAS_DUMP)
+#endif /* ACE_HAS_DUMP */
+}
+
 ACE_ALLOC_HOOK_DEFINE_Tmcc (ACE_Malloc_T)
 
 template <class MALLOC> void *

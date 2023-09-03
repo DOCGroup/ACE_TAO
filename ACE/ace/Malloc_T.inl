@@ -38,6 +38,29 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::pool_depth ()
   return this->free_list_.size ();
 }
 
+template <class ACE_LOCK> ACE_INLINE size_t
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::pool_depth ()
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, 0));
+
+  size_t pool_depth = 0;
+
+  for (size_t c = 0;
+           c < hierarchy_.size();
+           c++)
+  {
+          pool_depth +=  hierarchy_[c]->pool_depth();
+  }
+
+  return pool_depth;
+}
+
+template <class ACE_LOCK> ACE_INLINE ACE_LOCK & 
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::mutex ()
+{
+  return this->mutex_;
+}
+
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ref_counter ()
 {
