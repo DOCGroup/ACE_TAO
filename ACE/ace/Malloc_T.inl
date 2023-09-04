@@ -55,7 +55,7 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::pool_depth ()
   return pool_depth;
 }
 
-template <class ACE_LOCK> ACE_INLINE ACE_LOCK & 
+template <class ACE_LOCK> ACE_INLINE ACE_LOCK &
 ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::mutex ()
 {
   return this->mutex_;

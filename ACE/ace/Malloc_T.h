@@ -5,7 +5,7 @@
  *  @file    Malloc_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and
- *          Irfan Pyarali <irfan@cs.wustl.edu> and 
+ *          Irfan Pyarali <irfan@cs.wustl.edu> and
             smithAchang <changyunlei@126.com>
  */
 //==========================================================================
@@ -217,11 +217,11 @@ private:
  * must be greater than or equal to <code> sizeof (void*) </code> for
  * this to work properly.
  *
- * Notice that when the latest allocator is empty, the allocator will create a fresh 
+ * Notice that when the latest allocator is empty, the allocator will create a fresh
  * @a ACE_Dynamic_Cached_Allocator allocator again with
  * <code> init_n_chunks* the sum of current allocators </code> as it's constructor parameter,
  * so all the allocators will form a cascaded hierarchy.
- 
+
  * This class can be configured flexibly with different types of
  * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a
  * ACE_Process_Mutex constructor API.
@@ -231,7 +231,7 @@ private:
 template <class ACE_LOCK>
 class ACE_Cascaded_Dynamic_Cached_Allocator : public ACE_Allocator
 {
-public: 
+public:
   /// Create a cached memory pool with @a n_chunks chunks
   /// each with @a chunk_size size.
   ACE_Cascaded_Dynamic_Cached_Allocator (size_t initial_n_chunks, size_t chunk_size);
