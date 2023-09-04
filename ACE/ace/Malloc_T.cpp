@@ -228,7 +228,7 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   if(ptr == nullptr)
   {
       comb_alloc_ptr tmp;
-      ACE_NEW_RETURN (tmp, comb_alloc_type(this->initial_n_chunks_ * 2 * hierarchy_.size(), this->chunk_size_), nullptr); 
+      ACE_NEW_RETURN (tmp, comb_alloc_type(this->initial_n_chunks_ * 2 * hierarchy_.size(), this->chunk_size_), nullptr);
       hierarchy_.push_back(tmp);
       ptr = tmp->malloc(nbytes);
   }
