@@ -16,7 +16,7 @@
 #include "HTBP_Session.h"
 #include "HTBP_Filter_Factory.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Message_Block.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/netinet/os_tcp.h"
@@ -415,7 +415,7 @@ ACE::HTBP::Channel::recvv (iovec iov[],
     {
       int ndx = 0;
       iovec *iov2 = new iovec[iovcnt];
-      ACE_Auto_Array_Ptr<iovec> guard (iov2);
+      std::unique_ptr<iovec[]> guard (iov2);
       for (int i = 0; i < iovcnt; i++)
         {
           size_t n = ACE_MIN ((size_t) iov[i].iov_len ,

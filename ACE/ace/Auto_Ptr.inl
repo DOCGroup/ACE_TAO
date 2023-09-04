@@ -1,6 +1,8 @@
 // -*- C++ -*-
 #include "ace/Global_Macros.h"
 
+#if !defined (ACE_HAS_CPP17)
+
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -42,7 +44,7 @@ ACE_Auto_Basic_Ptr<X>::release ()
 {
   ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::release");
   X *old = this->p_;
-  this->p_ = 0;
+  this->p_ = nullptr;
   return old;
 }
 
@@ -175,3 +177,5 @@ ACE_Auto_Array_Ptr<X>::operator->() const
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_HAS_CPP17 */

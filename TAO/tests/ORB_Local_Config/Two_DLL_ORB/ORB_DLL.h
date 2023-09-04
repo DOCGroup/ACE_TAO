@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Task.h"
 #include "ace/ARGV.h"
 #include "ace/String_Base.h"
@@ -94,8 +94,8 @@ public:
 
 private:
   signed char is_server_;
-  ACE_Auto_Ptr<Abstract_Worker> worker_;
-  ACE_Auto_Ptr<ACE_ARGV> argv_;
+  std::unique_ptr<Abstract_Worker> worker_;
+  std::unique_ptr<ACE_ARGV> argv_;
 };
 
 ACE_FACTORY_DECLARE (Service_Config_ORB_DLL, Service_Config_ORB_DLL)

@@ -32,7 +32,7 @@
 #include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Arg_Shifter.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 

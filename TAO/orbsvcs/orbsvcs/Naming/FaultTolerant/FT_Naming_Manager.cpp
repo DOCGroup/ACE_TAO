@@ -781,7 +781,7 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
   ::FT_Naming::LoadBalancingStrategyValue load_bal_strategy = this->global_strategy_;
   if (!this->use_global_)
     {
-      ACE_Auto_Ptr<PortableGroup::Properties> props
+      std::unique_ptr<PortableGroup::Properties> props
         (this->get_properties (object_group));
       PortableGroup::Value value;
       CORBA::Boolean found =

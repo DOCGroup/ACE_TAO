@@ -4,7 +4,7 @@
 
 #include "testS.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/SString.h"
 
 class Server_i

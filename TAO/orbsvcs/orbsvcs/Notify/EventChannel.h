@@ -172,10 +172,10 @@ private:
   TAO_Notify_SupplierAdmin_Container& sa_container();
 
   /// ConsumerAdmin Container.
-  ACE_Auto_Ptr< TAO_Notify_ConsumerAdmin_Container > ca_container_;
+  std::unique_ptr<TAO_Notify_ConsumerAdmin_Container> ca_container_;
 
   /// SupplierAdmin Container.
-  ACE_Auto_Ptr< TAO_Notify_SupplierAdmin_Container > sa_container_;
+  std::unique_ptr<TAO_Notify_SupplierAdmin_Container> sa_container_;
 
   /// The default filter factory.
   CosNotifyFilter::FilterFactory_var default_filter_factory_;

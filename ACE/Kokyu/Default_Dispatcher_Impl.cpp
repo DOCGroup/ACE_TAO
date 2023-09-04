@@ -36,7 +36,7 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
   //ACE_DEBUG ((LM_DEBUG, "after new on task array\n" ));
   tasks_.reset(tasks_array);
 
-  //ACE_DEBUG ((LM_DEBUG, "task array auto_ptr set\n" ));
+  //ACE_DEBUG ((LM_DEBUG, "task array unique_ptr set\n" ));
 
   ConfigInfoSet& config_set =
     const_cast<ConfigInfoSet&> (attrs.config_info_set_);
@@ -52,8 +52,8 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
                       Dispatcher_Task (*config,
                                        ACE_Thread_Manager::instance()),
                       -1);
-      std::unique_ptr<Dispatcher_Task> tmp_task_auto_ptr (task);
-      tasks_[i++] = std::move(tmp_task_auto_ptr);
+      std::unique_ptr<Dispatcher_Task> tmp_task_unique_ptr (task);
+      tasks_[i++] = std::move(tmp_task_unique_ptr);
     }
 
   this->thr_creation_flags_ = attrs.thread_creation_flags ();

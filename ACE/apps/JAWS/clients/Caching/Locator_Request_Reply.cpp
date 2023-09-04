@@ -7,10 +7,10 @@
 #include "Locator_Request_Reply.inl"
 #endif
 
-#include "ace/Auto_Ptr.h"
 #include "URL_Properties.h"
 #include "URL_Array_Helper.h"
 #include "URL_Locator.h"
+#include <memory>
 
 int
 ACE_URL_Locator_Request::url_query (const int how,
@@ -265,13 +265,13 @@ ACE_URL_Locator_Request::dump () const
 
   if (this->id_.length () > 0)
     ACE_DEBUG ((LM_DEBUG, "Offer ID: %s\n",
-                ACE_Auto_Basic_Array_Ptr<char> (this->id_.char_rep ()).get ()));
+                std::unique_ptr<char[]> (this->id_.char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "Offer ID: \"\"\n"));
 
   if (this->url_.length () > 0)
     ACE_DEBUG ((LM_DEBUG, "URL: %s\n",
-                ACE_Auto_Basic_Array_Ptr<char> (this->url_.char_rep ()).get ()));
+                std::unique_ptr<char[]> (this->url_.char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "URL: \"\"\n"));
 

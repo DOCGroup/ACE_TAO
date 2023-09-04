@@ -21,6 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// C++17 removed std::auto_ptr<>, so also disable the ACE versions when
+// using C++17.
+#if !defined (ACE_HAS_CPP17)
+
 #if defined (_MSC_VER)
 // Suppress warning e.g. "return type for
 // 'ACE_Auto_Array_Pointer<type>::operator ->' is 'type *' (i.e., not a UDT
@@ -44,7 +48,7 @@ class ACE_Auto_Basic_Ptr
 public:
   typedef X element_type;
 
-  explicit ACE_Auto_Basic_Ptr (X * p = 0) : p_ (p) {}
+  explicit ACE_Auto_Basic_Ptr (X * p = nullptr) : p_ (p) {}
 
   ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> & ap);
   ACE_Auto_Basic_Ptr<X> &operator= (ACE_Auto_Basic_Ptr<X> & rhs);
@@ -54,7 +58,7 @@ public:
   X &operator *() const;
   X *get () const;
   X *release ();
-  void reset (X * p = 0);
+  void reset (X * p = nullptr);
 
   /// Dump the state of an object.
   void dump () const;
@@ -197,6 +201,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // Restore the warning state to what it was before entry.
 #  pragma warning(pop)
 #endif /* _MSC_VER */
+
+#endif /* ACE_HAS_CPP17 */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_AUTO_PTR_H */

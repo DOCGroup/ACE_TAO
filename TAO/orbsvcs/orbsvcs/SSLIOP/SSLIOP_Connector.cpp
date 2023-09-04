@@ -17,7 +17,7 @@
 #include "tao/Blocked_Connect_Strategy.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Profile_Transport_Resolver.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/os_include/os_netdb.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

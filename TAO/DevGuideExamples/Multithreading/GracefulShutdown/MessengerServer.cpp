@@ -152,7 +152,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     // Create a MessengerServer object.
     MessengerServer * server = new MessengerServer (orb.in());
-    ACE_Auto_Ptr<MessengerServer> safe_ptr (server);
+    std::unique_ptr<MessengerServer> safe_ptr (server);
 
     // Parse arguments to determine how we should shutdown.
     if (server->parse_args (argc, argv) != 0)

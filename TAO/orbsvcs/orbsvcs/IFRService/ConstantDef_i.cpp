@@ -2,11 +2,9 @@
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "orbsvcs/IFRService/IDLType_i.h"
-
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -167,7 +165,7 @@ TAO_ConstantDef_i::value_i ()
                             );
 
   char *data = static_cast<char *> (ref);
-  ACE_Auto_Basic_Array_Ptr<char> safety (data);
+  std::unique_ptr<char[]> safety (data);
 
   ACE_Message_Block mb (data,
                         length);
@@ -232,7 +230,7 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value)
       TAO_InputCDR in (out);
       mb = in.steal_contents ();
     }
-  ACE_Auto_Ptr<ACE_Message_Block> safe (mb);
+  std::unique_ptr<ACE_Message_Block> safe (mb);
 
   CORBA::TCKind kind = val_tc->kind ();
 

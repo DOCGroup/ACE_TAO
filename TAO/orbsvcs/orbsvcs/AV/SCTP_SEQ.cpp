@@ -171,7 +171,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   this->reactor_ = reactor;
   this->entry_ = entry;
 
-  ACE_Auto_Array_Ptr<ACE_UINT32> local_ip_addr
+  std::unique_ptr<ACE_UINT32[]> local_ip_addr
     (new ACE_UINT32[entry->num_local_sec_addrs ()]);
   ACE_INET_Addr ip_addr;
   char** addrs = entry->get_local_sec_addr ();
@@ -491,7 +491,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
                       -1);
     }
 
-  ACE_Auto_Array_Ptr<ACE_UINT32> local_ip_addr
+  std::unique_ptr<ACE_UINT32[]> local_ip_addr
     (new ACE_UINT32[entry->num_peer_sec_addrs ()]);
   ACE_INET_Addr ip_addr;
   char** addrs = entry->get_peer_sec_addr ();
