@@ -17,6 +17,7 @@
 #include "ace/Malloc.h"               /* Need ACE_Control_Block */
 #include "ace/Malloc_Base.h"          /* Need ACE_Allocator */
 #include "ace/Vector_T.h"             /* Need ACE_Vector<T> */
+#include "ace/Null_Mutex.h"           /* Need ACE_Null_Mutex */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -212,12 +213,12 @@ private:
  * but with a hierarchy of cascaded, nested allocators
  *
  * This class enables caching of dynamically allocated,
- * fixed-size chunks. Notice that the <code>chunk_size</code>
+ * fixed-size chunks. Notice that the @a chunk_size
  * must be greater than or equal to <code> sizeof (void*) </code> for
  * this to work properly.
  *
  * Notice that when the latest allocator is empty, the allocator will create a fresh 
- * <code> ACE_Dynamic_Cached_Allocator </code> allocator again with
+ * @a ACE_Dynamic_Cached_Allocator allocator again with
  * <code> init_n_chunks* the sum of current allocators </code> as it's constructor parameter,
  * so all the allocators will form a cascaded hierarchy.
  

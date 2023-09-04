@@ -14,9 +14,8 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Synch_Traits.h"
+s
 #include "ace/Malloc_T.h"
-#include "ace/Null_Mutex.h"
 
 #define ACE_TEST_EXCEPTION_RETURN(expression, message)        \
 do                                                            \
@@ -39,7 +38,7 @@ run_free_lock_cascaded_allocator_test ()
 
    ACE_Cascaded_Dynamic_Cached_Allocator<ACE_Null_Mutex> alloc (initial_n_chunks, sizeof (void*));
 
-   ptr = alloc.calloc (1, 1, chunk_size);
+   ptr = alloc.calloc (1, sizeof(void*));
 
    ACE_TEST_EXCEPTION_RETURN (ptr != nullptr, "  pool must return nullptr for ccalloc(size_t n_elem, size_t elem_size, char initial_value) call\n");
 
@@ -55,11 +54,17 @@ run_free_lock_cascaded_allocator_test ()
    ACE_DEBUG ((LM_INFO, "%C will test cascaded allocator ...\n", __func__));
    ptr = alloc.malloc (nbytes);
    ptr1 = alloc.malloc (nbytes);
-   ACE_TEST_EXCEPTION_RETURN (alloc.pool_depth () != 1, "  cascaded pool depth must be one after alloc twice\n");
+   ACE_TEST_EXCEPTION_RETURN (alloc.pool_depth () != 1, "  cascaded pool depth must can support to alloc twice\n");
 
 
    ptr2 = alloc.calloc (nbytes);
    ACE_TEST_EXCEPTION_RETURN (*(ACE_UINT64*)ptr2 != 0, "  calloc call will clear the memory to zero\n");
+
+   alloc.free (ptr);
+   alloc.free (ptr1);
+   alloc.free (ptr2);
+   ACE_TEST_EXCEPTION_RETURN (alloc.pool_depth () != (initial_n_chunks + 2 * initial_n_chunks),
+                              "  cascaded pool depth must be three after freed all malloc ptrs\n");
 
 
    return 0;
