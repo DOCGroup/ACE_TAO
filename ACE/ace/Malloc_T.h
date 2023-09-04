@@ -16,7 +16,6 @@
 
 #include "ace/Malloc.h"               /* Need ACE_Control_Block */
 #include "ace/Malloc_Base.h"          /* Need ACE_Allocator */
-#include "ace/Vector_T.h"             /* Need ACE_Vector<T> */
 #include "ace/Null_Mutex.h"           /* Need ACE_Null_Mutex */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -26,6 +25,8 @@
 #include "ace/Malloc_Allocator.h"
 #include "ace/Free_List.h"
 #include "ace/Guard_T.h"
+
+#include <vector>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -285,14 +286,14 @@ public:
 
 private:
   // Useful STL-style traits.
-  typedef typename ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex>  comb_alloc_type;
+  typedef typename ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex> comb_alloc_type;
   typedef typename comb_alloc_type* comb_alloc_ptr;
 
   /// Synchronization variable for API.
   ACE_LOCK mutex_;
 
   /// Remember how we allocate the memory so we can clear things up later.
-  ACE_Vector<comb_alloc_ptr> hierarchy_;
+  std::vector<comb_alloc_ptr> hierarchy_;
 
   /// Remember the size of initial n_chunks for creating fresh allocator in future.
   size_t initial_n_chunks_;
