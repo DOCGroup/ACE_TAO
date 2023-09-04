@@ -1,6 +1,6 @@
 // file      : RolyPoly/ORB_Initializer.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "tao/corba.h"
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"

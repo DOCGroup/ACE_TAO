@@ -17,12 +17,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Auto_Ptr.h"
 #include "Driver.h"
-
+#include <memory>
 
 // constructor
-
 template <class RECEIVER, class ACTION>
 Command<RECEIVER, ACTION>::Command (RECEIVER &recvr,
                                     ACTION action)

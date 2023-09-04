@@ -17,7 +17,7 @@
 #include "tao/debug.h"
 #include "tao/Timeprobe.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

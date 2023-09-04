@@ -12,6 +12,7 @@
 #include "ACEXML/parser/parser/ParserInternals.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
+#include <memory>
 
 static const ACEXML_Char default_attribute_type[] = ACE_TEXT ("CDATA");
 static const ACEXML_Char empty_string[] = { 0 };
@@ -318,7 +319,7 @@ ACEXML_Parser::parse_external_dtd ()
   if (this->validate_)
     {
       ACEXML_Char* uri = this->normalize_systemid (systemId);
-      ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_uri (uri);
+      std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
       ACEXML_InputSource* ip = 0;
       if (this->entity_resolver_)
         {
@@ -2091,7 +2092,7 @@ ACEXML_Parser::parse_entity_reference ()
   else
     {
       ACEXML_Char* uri = this->normalize_systemid (systemId);
-      ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_uri (uri);
+      std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
       ACEXML_InputSource* ip = 0;
       if (this->entity_resolver_)
         {
@@ -2184,7 +2185,7 @@ ACEXML_Parser::parse_PE_reference ()
   else if (this->external_entity_ && this->validate_)
     {
       ACEXML_Char* uri = this->normalize_systemid (systemId);
-      ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_uri (uri);
+      std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
       ACEXML_InputSource* ip = 0;
       if (this->entity_resolver_)
         {

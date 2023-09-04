@@ -52,7 +52,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Static_Object_Lock.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/CORBA_macros.h"
 #include "ace/Logging_Strategy.h"
 
@@ -2757,7 +2757,7 @@ TAO_ORB_Core::resolve_ior_table_i ()
 
       this->adapter_registry_.insert (iortable_adapter.get ());
 
-      // It is now (exception) safe to release ownership from the auto pointers
+      // It is now (exception) safe to release ownership from the unique pointers
       this->ior_table_= tmp_root._retn ();
       iortable_adapter.release ();
     }
@@ -2791,7 +2791,7 @@ TAO_ORB_Core::resolve_async_ior_table_i ()
 
       this->adapter_registry_.insert (iortable_adapter.get ());
 
-      // It is now (exception) safe to release ownership from the auto pointers
+      // It is now (exception) safe to release ownership from the unique pointers
       this->async_ior_table_= tmp_root._retn ();
       iortable_adapter.release ();
     }

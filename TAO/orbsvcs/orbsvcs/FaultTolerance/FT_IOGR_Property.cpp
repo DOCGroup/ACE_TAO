@@ -8,7 +8,7 @@
 #include "tao/Tagged_Components.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)

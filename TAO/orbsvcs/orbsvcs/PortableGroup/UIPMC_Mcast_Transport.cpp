@@ -81,7 +81,7 @@ TAO_UIPMC_Mcast_Transport::cleanup_packets (bool expired_only)
                           (*cur_iter).item ()->data_length ()));
             }
 
-          ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> guard ((*cur_iter).item ());
+          std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> guard ((*cur_iter).item ());
           this->incomplete_.unbind (cur_iter);
         }
     }
@@ -514,7 +514,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
     }
 
   // Grab the next completed MIOP message to process from the FIFO Queue.
-  ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> complete_owner (this->recv_all (rh));
+  std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> complete_owner (this->recv_all (rh));
   if (TAO_PG::UIPMC_Recv_Packet *complete = complete_owner.get ())
     {
       if (TAO_debug_level >= 9)
@@ -534,7 +534,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_Auto_Array_Ptr<char> owner_buffer (buffer);
+      std::unique_ptr<char[]> owner_buffer (buffer);
       ACE_Data_Block db (complete->data_length () + ACE_CDR::MAX_ALIGNMENT,
                          ACE_Message_Block::MB_DATA,
                          buffer,

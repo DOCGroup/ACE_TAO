@@ -22,7 +22,7 @@
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/RTPortableServer/RT_Policy_Validator.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/RTPortableServer/RT_POA.inl"

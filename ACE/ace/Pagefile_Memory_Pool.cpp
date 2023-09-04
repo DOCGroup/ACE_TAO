@@ -6,7 +6,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Category.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/OS_NS_sys_mman.h"
 #include "ace/OS_NS_string.h"

@@ -7,7 +7,7 @@
 #include "orbsvcs/IOR_Multicast.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/ORB_Core.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 IFR_Service::IFR_Service ()
 {

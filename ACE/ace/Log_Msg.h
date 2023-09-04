@@ -657,7 +657,7 @@ private:
   /// passed "true" for the delete_ostream argument to msg_ostream).
   /// If we are reference counting, this points to a shared count that will
   /// be deleted when it reaches zero.  Since we want optional but shared
-  /// ownership neither std::auto_ptr nor ACE_Strong_Bound_Ptr have the right
+  /// ownership neither std::unique_ptr nor ACE_Strong_Bound_Ptr have the right
   /// semantics.  *Bound_Ptr also doesn't take advantage of Atomic_Op.
   typedef ACE_Atomic_Op<ACE_SYNCH_MUTEX, unsigned long> Atomic_ULong;
   Atomic_ULong *ostream_refcount_;

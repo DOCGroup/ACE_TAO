@@ -21,7 +21,7 @@ namespace TAO
   /**
    * @class First_Request_Guard
    *
-   * @brief Auto pointer like class for first_request flag in transport.
+   * @brief Unique pointer like class for first_request flag in transport.
    *
    * Since codeset service context is only sent in the first request it might
    * happen that after LocateRequest (which doesn't include service context)

@@ -20,8 +20,8 @@ Abstract_Worker::~Abstract_Worker ()
 //
 Service_Config_ORB_DLL::Service_Config_ORB_DLL ()
   : is_server_ (-1)
-  , worker_ (0)
-  , argv_ (0)
+  , worker_ (nullptr)
+  , argv_ (nullptr)
 {
 }
 

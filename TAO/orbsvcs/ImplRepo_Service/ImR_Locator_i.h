@@ -12,7 +12,7 @@
 #include "ImR_ResponseHandler.h"
 #include "Locator_Options.h"
 #include "UpdateableServerInfo.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "AsyncAccessManager.h"
 #include "tao/IORTable/IORTable.h"
 

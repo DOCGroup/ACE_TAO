@@ -16,7 +16,7 @@
 
 #if defined (ACE_HAS_SCTP)
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Service_Config.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "ace/SOCK_SEQPACK_Association.h"
@@ -32,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_Unbounded_Set <ACE_CString> Interface_Seq;
 typedef ACE_Unbounded_Set_Iterator <ACE_CString> Interface_Seq_Itor;
 
-//typedef auto_ptr <Interface_Seq> Interface_Seq_Ptr;
 typedef ACE_Hash_Map_Manager <ACE_CString,Interface_Seq,ACE_Null_Mutex>  Secondary_Addr_Map;
 typedef ACE_Hash_Map_Entry <ACE_CString,Interface_Seq> Secondary_Addr_Map_Entry;
 typedef ACE_Hash_Map_Iterator <ACE_CString,Interface_Seq,ACE_Null_Mutex>  Secondary_Addr_Map_Iterator;

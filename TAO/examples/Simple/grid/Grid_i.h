@@ -14,7 +14,7 @@
 
 #include "GridS.h"
 #include "ace/Vector_T.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 /**
  * @class Grid_i:
@@ -71,7 +71,7 @@ private:
   CORBA::Short height_;
 
   /// Pointer to the matrix.  This is organized as an "array of arrays."
-  typedef ACE_Auto_Array_Ptr<CORBA::Long> GridArray;
+  typedef std::unique_ptr<CORBA::Long[]> GridArray;
   GridArray array_;
 
   /// Some Windows compilers don't have min in std namespaces

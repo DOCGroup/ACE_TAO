@@ -17,7 +17,7 @@
 #include "ace/Malloc_T.h"
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Process.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Process_Mutex.h"
 #include "ace/PI_Malloc.h"
 #include "ace/RW_Thread_Mutex.h"

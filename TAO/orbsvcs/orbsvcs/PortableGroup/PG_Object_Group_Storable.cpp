@@ -17,7 +17,7 @@ namespace
 
     char *tmp = 0;
     ACE_NEW_THROW_EX (tmp, char [size], CORBA::NO_MEMORY ());
-    ACE_Auto_Basic_Array_Ptr<char> buf (tmp);
+    std::unique_ptr<char[]> buf (tmp);
     stream.read (size, buf.get ());
 
     TAO_InputCDR cdr (buf.get (), size);
@@ -246,7 +246,7 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   // version already exists.
   bool stream_exists = false;
   {
-    ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
+    std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
     if (stream->exists ())
       stream_exists = true;
@@ -284,7 +284,7 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   // version already exists.
   bool stream_exists = false;
   {
-    ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
+    std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
     if (stream->exists ())
       stream_exists = true;
@@ -304,7 +304,7 @@ TAO::PG_Object_Group_Storable::~PG_Object_Group_Storable ()
 {
   if (destroyed_)
     {
-      ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
+      std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
       if (stream->exists ())
         {

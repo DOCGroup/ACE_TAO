@@ -8,7 +8,7 @@
 
 
 #include "Load_Balancer_i.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_time.h"
 
 Object_Group_Factory_i::Object_Group_Factory_i ()
@@ -72,7 +72,7 @@ Object_Group_Factory_i::make_group (int random,
                           CORBA::NO_MEMORY ());
 
       // Temporarily put the servant into the auto_ptr.
-      ACE_Auto_Basic_Ptr<Object_Group_i> temp (group_servant);
+      std::unique_ptr<Object_Group_i> temp (group_servant);
 
       // Register with the poa, begin using ref. counting.
       group = group_servant->_this ();
