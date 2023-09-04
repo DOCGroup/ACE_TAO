@@ -14,7 +14,6 @@
 // ============================================================================
 
 #include "test_config.h"
-s
 #include "ace/Malloc_T.h"
 
 #define ACE_TEST_EXCEPTION_RETURN(expression, message)        \
