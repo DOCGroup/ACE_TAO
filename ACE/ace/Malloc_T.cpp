@@ -218,7 +218,7 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
        c < hierarchy_.size();
        c++)
   {
-       ptr =  hierarchy_[c]->malloc(nbytes);
+       ptr = hierarchy_[c]->malloc(nbytes);
        if(ptr != nullptr)
            break;
   }
@@ -262,8 +262,8 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
 
   // Use first allocator as a free chunk manager for all allocators when chunk freed.
-  if (ptr != nullptr)
-    hierarchy_[0]->free(ptr);
+  if (ptr != nullptr && hierarchy_.size () > 0)
+      hierarchy_[0]->free(ptr);
 }
 
 template <class ACE_LOCK> int
