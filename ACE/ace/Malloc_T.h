@@ -286,7 +286,7 @@ public:
 
 private:
   // Useful STL-style traits.
-  typedef ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex> comb_alloc_type;
+  using comb_alloc_type = ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex>;
   typedef comb_alloc_type* comb_alloc_ptr;
 
   /// Synchronization variable for API.
