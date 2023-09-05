@@ -66,9 +66,7 @@ namespace TAO
             orb_core->_incr_refcnt ();
             TAO_ORB_Core_Auto_Ptr my_orb_core (orb_core);
 
-            dispatcher->dispatch (orb_core,
-                                  request,
-                                  this->forwarded_to_.out ());
+            dispatcher->dispatch (orb_core, request, this->forwarded_to_.out ());
 
             if (request.is_forwarded ())
               {

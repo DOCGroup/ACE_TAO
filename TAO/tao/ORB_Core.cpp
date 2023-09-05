@@ -2089,8 +2089,7 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
         if (this->is_collocation_enabled (other_core, mprofile))
           {
             other_core->_incr_refcnt();
-             TAO_ORB_Core_Auto_Ptr tmp_auto_ptr (other_core);
-             collocated_orb_core = tmp_auto_ptr;
+            collocated_orb_core.reset(other_core);
             break;
           }
       }
@@ -2154,12 +2153,10 @@ TAO_ORB_Core::initialize_object_i (TAO_Stub *stub, const TAO_MProfile &mprofile)
       {
         TAO_ORB_Core * const other_core = (*i).second.core ();
 
-        if (this->is_collocation_enabled (other_core,
-                                          mprofile))
+        if (this->is_collocation_enabled (other_core, mprofile))
           {
             other_core->_incr_refcnt ();
-            TAO_ORB_Core_Auto_Ptr tmp_auto_ptr (other_core);
-            collocated_orb_core = tmp_auto_ptr;
+            collocated_orb_core.reset(other_core);
             break;
           }
       }
