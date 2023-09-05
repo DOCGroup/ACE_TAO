@@ -313,7 +313,6 @@ protected:
    *
    * This <B>must</B> be the first field of the class, otherwise the
    * TAO_ORB_Core is destroyed too early!
-   *
    */
   TAO_ORB_Core_Auto_Ptr orb_core_;
 
@@ -405,31 +404,19 @@ protected:
   std::atomic<bool> forwarded_on_exception_;
 };
 
-// Define a TAO_Stub auto_ptr class.
 /**
- * @class TAO_Stub_Auto_Ptr
- *
- * @brief Implements the draft C++ standard auto_ptr abstraction.
- * This class allows one to work Stub Objects *Only*!
+ * Custom deleter to decrement the refcount when called
  */
-class TAO_Export TAO_Stub_Auto_Ptr
+struct TAO_Export TAO_Stub_Decr_Refcnt
 {
-public:
-  explicit TAO_Stub_Auto_Ptr (TAO_Stub *p = nullptr);
-  TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &ap);
-  TAO_Stub_Auto_Ptr &operator= (TAO_Stub_Auto_Ptr &rhs);
-  ~TAO_Stub_Auto_Ptr ();
-
-  // = Accessor methods.
-  TAO_Stub &operator *() const;
-  TAO_Stub *get () const;
-  TAO_Stub *release ();
-  void reset (TAO_Stub *p = 0);
-  TAO_Stub *operator-> () const;
-
-protected:
-  TAO_Stub *p_;
+  void operator()(TAO_Stub* stub) const { if (stub) stub->_decr_refcnt(); }
 };
+
+/**
+ * TAO_Stub_Auto_Ptr will decrement the refcount when going our of scope
+ * using std::unique_ptr and a custom deleter
+ */
+using TAO_Stub_Auto_Ptr = std::unique_ptr<TAO_Stub, TAO_Stub_Decr_Refcnt>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

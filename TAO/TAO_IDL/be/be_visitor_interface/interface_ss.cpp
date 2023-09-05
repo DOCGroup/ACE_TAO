@@ -360,37 +360,28 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << node->full_skel_name ()
       << "::_this ()" << be_nl
       << "{" << be_idt_nl
-      << "TAO_Stub *stub = this->_create_stub ();"
-      << be_nl_2
-      << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl;
+      << "TAO_Stub_Auto_Ptr stub (this->_create_stub ());"
+      << be_nl;
+
+  *os << "::CORBA::Boolean const _tao_opt_colloc = "
+      << "stub->servant_orb_var ()->orb_core ()->"
+      << "optimize_collocation_objects ();" << be_nl;
 
   /* Coverity whines about an unused return value from _nil() when
      initializing tmp.  Just use zero instead. */
-  *os << "::CORBA::Object_ptr tmp {};"
-      << be_nl_2;
+  *os << "::CORBA::Object_var obj = "
+      << "new (std::nothrow) ::CORBA::Object (stub.get (), _tao_opt_colloc, this);" << be_nl
+      << "if (obj.ptr ())" << be_idt_nl
+      << "{" << be_idt_nl;
 
-  *os << "::CORBA::Boolean const _tao_opt_colloc ="
-      << be_idt_nl
-      << "stub->servant_orb_var ()->orb_core ()->"
-      << "optimize_collocation_objects ();" << be_uidt_nl << be_nl;
-
-  *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-      << "tmp," << be_nl
-      << "::CORBA::Object (stub, ";
-
-  *os << "_tao_opt_colloc";
-
-  *os << ", this)," << be_nl
-      << "nullptr);" << be_uidt << be_uidt_nl << be_nl;
-
-  *os << "::CORBA::Object_var obj = tmp;" << be_nl
-      << "(void) safe_stub.release ();" << be_nl_2
+  *os << "(void) stub.release ();" << be_nl
       << "return "
-      << "TAO::Narrow_Utils< ::" << node->name () << ">::unchecked_narrow ("
+      << "TAO::Narrow_Utils<::" << node->name () << ">::unchecked_narrow ("
       << "obj.in ());";
 
   *os << be_uidt_nl
-      << "}";
+      << "}"
+      << be_uidt_nl << "return {};" << be_uidt_nl << "}";
 }
 
 void
