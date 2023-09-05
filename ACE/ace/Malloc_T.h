@@ -296,10 +296,10 @@ private:
   std::vector<comb_alloc_ptr> hierarchy_;
 
   /// Remember the size of initial n_chunks for creating fresh allocator in future.
-  size_t initial_n_chunks_;
+  const size_t initial_n_chunks_;
 
   /// Remember the size of our chunks for creating fresh allocator in future.
-  size_t chunk_size_;
+  const size_t chunk_size_;
 };
 
 /**

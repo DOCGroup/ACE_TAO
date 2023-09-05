@@ -46,10 +46,10 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::pool_depth ()
   size_t pool_depth = 0;
 
   for (size_t c = 0;
-           c < hierarchy_.size();
-           c++)
+       c < hierarchy_.size();
+       c++)
   {
-          pool_depth +=  hierarchy_[c]->pool_depth();
+       pool_depth += hierarchy_[c]->pool_depth();
   }
 
   return pool_depth;
