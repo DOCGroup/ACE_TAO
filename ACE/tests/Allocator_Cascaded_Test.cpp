@@ -57,7 +57,7 @@ run_free_lock_cascaded_allocator_test ()
 
 
    ptr2 = alloc.calloc (nbytes);
-   ACE_TEST_EXCEPTION_RETURN (*(ACE_UINT64*)ptr2 != 0, "  calloc call will clear the memory to zero\n");
+   ACE_TEST_EXCEPTION_RETURN (*static_cast<ACE_UINT64*>(ptr2) != 0, "  calloc call will clear the memory to zero\n");
 
    alloc.free (ptr);
    alloc.free (ptr1);
