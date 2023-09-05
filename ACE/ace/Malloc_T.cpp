@@ -183,7 +183,7 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Cascaded_Dynamic_Cached_All
     : initial_n_chunks_ (initial_n_chunks),
       chunk_size_ (chunk_size)
 {
-  ACE_ASSERT (chunk_size > 0);
+  ACE_ASSERT (chunk_size_ > 0);
 
   comb_alloc_ptr tmp;
   ACE_NEW (tmp, comb_alloc_type(this->initial_n_chunks_, this->chunk_size_));
@@ -260,6 +260,8 @@ template <class ACE_LOCK> void
 ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
 {
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
+
+  ACE_ASSERT (hierarchy_.size () > 0);
 
   // Use first allocator as a free chunk manager for all allocators when chunk freed.
   if (ptr != nullptr && hierarchy_.size () > 0)
