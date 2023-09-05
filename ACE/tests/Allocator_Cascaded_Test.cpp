@@ -13,8 +13,8 @@
 //
 // ============================================================================
 
-#include "test_config.h"
 #include "ace/Malloc_T.h"
+#include "test_config.h"
 
 #define ACE_TEST_EXCEPTION_RETURN(expression, message)        \
 do                                                            \
@@ -70,21 +70,16 @@ run_free_lock_cascaded_allocator_test ()
 }
 
 int
-run_main (int, ACE_TCHAR *argv[])
+run_main (int, ACE_TCHAR *[])
 {
-  ACE_UNUSED_ARG (argv);
-
-  ACE_START_TEST (ACE_TEXT ("ACE_Cascaded_Dynamic_Cached_Allocator_Test"));
+  ACE_START_TEST (ACE_TEXT ("Allocator_Cascaded_Test"));
 
   int retval = 0;
-
 
   // Run the tests for each type of ordering.
   retval = run_free_lock_cascaded_allocator_test ();
 
-
   ACE_END_TEST;
-
 
   return retval;
 }
