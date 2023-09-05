@@ -55,7 +55,6 @@ run_free_lock_cascaded_allocator_test ()
    ptr1 = alloc.malloc (nbytes);
    ACE_TEST_EXCEPTION_RETURN (alloc.pool_depth () != 1, "  cascaded pool depth must can support to alloc twice\n");
 
-
    ptr2 = alloc.calloc (nbytes);
    ACE_TEST_EXCEPTION_RETURN (*static_cast<ACE_UINT64*>(ptr2) != 0, "  calloc call will clear the memory to zero\n");
 
@@ -64,7 +63,6 @@ run_free_lock_cascaded_allocator_test ()
    alloc.free (ptr2);
    ACE_TEST_EXCEPTION_RETURN (alloc.pool_depth () != (initial_n_chunks + 2 * initial_n_chunks),
                               "  cascaded pool depth must be three after freed all malloc ptrs\n");
-
 
    return 0;
 }
