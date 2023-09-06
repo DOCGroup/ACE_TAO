@@ -6,13 +6,12 @@
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-// Included so users have access to ACE_RECVPKTINFO and ACE_RECVPKTINFO6 .
+// Included so users have access to ACE_RECVPKTINFO and ACE_RECVPKTINFO6.
 #include "ace/OS_NS_sys_socket.h"
 
 #if defined (ACE_HAS_IPV6) && defined (ACE_WIN32)
 #include /**/ <iphlpapi.h>
 #endif
-
 
 #if !defined (__ACE_INLINE__)
 #  include "ace/RAW_Socket.inl"
@@ -52,7 +51,6 @@ ACE_ALLOC_HOOK_DEFINE (ACE_RAW_SOCKET)
   if(timeout && ACE::handle_read_ready (this->get_handle (), timeout) != 1)\
       return -1; \
 }while(0)
-
 
 void
 ACE_RAW_SOCKET::dump () const
@@ -97,32 +95,32 @@ static inline ssize_t using_common_recv(const ACE_RAW_SOCKET& raw, void *buf, si
 
 static inline void fillMsgHdr(msghdr& recv_msg, const ACE_INET_Addr &addr, void* pcbuf, int cbuf_size)
 {
-  #if defined (ACE_HAS_SOCKADDR_MSG_NAME)
+#if defined (ACE_HAS_SOCKADDR_MSG_NAME)
     recv_msg.msg_name = static_cast<struct sockaddr *> (addr.get_addr ());
-  #else
+#else
     recv_msg.msg_name = static_cast<char *>(addr.get_addr ());
-  #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
+#endif /* ACE_HAS_SOCKADDR_MSG_NAME */
 
   recv_msg.msg_namelen = addr.get_size ();
 
-  #ifdef ACE_USE_MSG_CONTROL
+#ifdef ACE_USE_MSG_CONTROL
     recv_msg.msg_control      =  pcbuf;
     recv_msg.msg_controllen   =  cbuf_size;
-  #elif !defined ACE_LACKS_SENDMSG
+#elif !defined ACE_LACKS_SENDMSG
     recv_msg.msg_accrights    = 0;
     recv_msg.msg_accrightslen = 0;
-  #endif
+#endif
 }
 
 static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
 {
-    #if defined(ACE_USE_MSG_CONTROL)
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG) || defined ACE_WIN32
     if (to_addr.get_type() == AF_INET)
     {
-    #if defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)
+#if defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)
           for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr))
           {
-    #if defined (IP_RECVDSTADDR)
+#if defined (IP_RECVDSTADDR)
             if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_RECVDSTADDR)
             {
                 to_addr.set_address (reinterpret_cast<char *>(ACE_CMSG_DATA (ptr)),
@@ -130,8 +128,8 @@ static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
                                     0);
                 break;
             }
-    #endif
-    #if defined(IP_PKTINFO)
+#endif
+#if defined(IP_PKTINFO)
             if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_PKTINFO)
             {
                 to_addr.set_address (reinterpret_cast<const char *>(&((reinterpret_cast<in_pktinfo *>(ACE_CMSG_DATA (ptr)))->ipi_addr)),
@@ -139,11 +137,11 @@ static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
                                     0);
                 break;
             }
-    #endif
+#endif
           }
-    #endif
+#endif
     }
-    #if defined (ACE_HAS_IPV6) && defined (IPV6_PKTINFO)
+#if defined (ACE_HAS_IPV6) && defined (IPV6_PKTINFO)
     else if (to_addr.get_type() == AF_INET6)
     {
         for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr))
@@ -157,11 +155,11 @@ static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
             }
         }
     }
-    #endif
-    #else
+#endif
+#else
     ACE_UNUSED_ARG(recv_msg);
     ACE_UNUSED_ARG (to_addr);
-    #endif
+#endif
 }
 
 ssize_t
@@ -267,26 +265,26 @@ ACE_RAW_SOCKET::send (const iovec iov[],
     send_msg.msg_iov    = const_cast<iovec *>(iov);
     send_msg.msg_iovlen = n;
 
-    #if defined (ACE_HAS_SOCKADDR_MSG_NAME)
-        send_msg.msg_name = static_cast<struct sockaddr *>(addr.get_addr());
-    #else
-        send_msg.msg_name    = static_cast<char*>(addr.get_addr ());
-    #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
-        send_msg.msg_namelen = addr.get_size ();
+#if defined (ACE_HAS_SOCKADDR_MSG_NAME)
+    send_msg.msg_name = static_cast<struct sockaddr *>(addr.get_addr());
+#else
+    send_msg.msg_name    = static_cast<char*>(addr.get_addr ());
+#endif /* ACE_HAS_SOCKADDR_MSG_NAME */
+    send_msg.msg_namelen = addr.get_size ();
 
-    #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-        send_msg.msg_control    = 0;
-        send_msg.msg_controllen = 0;
-        send_msg.msg_flags      = 0;
-    #elif !defined ACE_LACKS_SENDMSG
-        send_msg.msg_accrights    = 0;
-        send_msg.msg_accrightslen = 0;
-    #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+    send_msg.msg_control    = 0;
+    send_msg.msg_controllen = 0;
+    send_msg.msg_flags      = 0;
+#elif !defined ACE_LACKS_SENDMSG
+    send_msg.msg_accrights    = 0;
+    send_msg.msg_accrightslen = 0;
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
-    #ifdef ACE_WIN32
-        send_msg.msg_control    = 0;
-        send_msg.msg_controllen = 0;
-    #endif
+#ifdef ACE_WIN32
+    send_msg.msg_control    = 0;
+    send_msg.msg_controllen = 0;
+#endif
 
     return ACE_OS::sendmsg (this->get_handle (), &send_msg, flags);
 }
@@ -410,10 +408,7 @@ ACE_RAW_SOCKET::open (ACE_INET_Addr const & local, int protocol)
     }
 #endif
 
-
     return  0;
 }
 
-
 ACE_END_VERSIONED_NAMESPACE_DECL
-
