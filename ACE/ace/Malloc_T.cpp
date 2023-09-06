@@ -186,6 +186,7 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Cascaded_Dynamic_Cached_All
   ACE_ASSERT (chunk_size_ > 0);
 
   comb_alloc_ptr tmp;
+  // If ACE_NEW fails, the hierarchy_ will be reconstructed when malloc API is called.
   ACE_NEW (tmp, comb_alloc_type(this->initial_n_chunks_, this->chunk_size_));
   hierarchy_.push_back(tmp);
 }
