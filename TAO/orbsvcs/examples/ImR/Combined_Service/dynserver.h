@@ -7,7 +7,7 @@
 
 #include "tao/Object_Loader.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 // Trivial test corba object
 class DynServer_Export DynServer
@@ -44,7 +44,7 @@ private:
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
   DynServer service_;
-  ACE_Auto_Ptr<DynServer_ORB_Runner> runner_;
+  std::unique_ptr<DynServer_ORB_Runner> runner_;
 
 private:
   DynServer_Loader (const DynServer_Loader &) = delete;

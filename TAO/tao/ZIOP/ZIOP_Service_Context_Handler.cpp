@@ -58,7 +58,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
               {
                 TAO::CompressionEnablingPolicy *enabled= 0;
                 ACE_NEW_RETURN (enabled, TAO::CompressionEnablingPolicy (), 0);
-                ACE_Auto_Basic_Ptr<TAO::CompressionEnablingPolicy> guard (enabled);
+                std::unique_ptr<TAO::CompressionEnablingPolicy> guard (enabled);
                 if (enabled->_tao_decode (policy_cdr))
                   {
                     req->clientCompressionEnablingPolicy (guard.release ());
@@ -70,7 +70,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
               {
                 TAO::CompressorIdLevelListPolicy *id_list= 0;
                 ACE_NEW_RETURN (id_list, TAO::CompressorIdLevelListPolicy (), 0);
-                ACE_Auto_Basic_Ptr<TAO::CompressorIdLevelListPolicy> guard (id_list);
+                std::unique_ptr<TAO::CompressorIdLevelListPolicy> guard (id_list);
                 if (id_list->_tao_decode (policy_cdr))
                   {
                     req->clientCompressorIdLevelListPolicy (guard.release ());

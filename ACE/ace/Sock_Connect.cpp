@@ -2,7 +2,6 @@
 #include "ace/INET_Addr.h"
 #include "ace/Log_Category.h"
 #include "ace/Handle_Set.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"
@@ -681,7 +680,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
                   -1);
   ACE_OS::memset (ifs, 0, num_ifs * sizeof (struct IFREQ));
 
-  ACE_Auto_Array_Ptr<struct IFREQ> p_ifs (ifs);
+  std::unique_ptr<struct IFREQ[]> p_ifs (ifs);
 
   if (p_ifs.get() == 0)
     {

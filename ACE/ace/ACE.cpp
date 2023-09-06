@@ -2,7 +2,6 @@
 
 #include "ace/Basic_Types.h"
 #include "ace/Handle_Set.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/Version.h"
 #include "ace/Message_Block.h"

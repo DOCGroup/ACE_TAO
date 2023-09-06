@@ -6,7 +6,6 @@
 #include "ace/OS_TLI.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
-#include "ace/Auto_Ptr.h"
 #include <memory>
 
 #if defined (ACE_HAS_TLI)
@@ -100,7 +99,7 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
 #  if (_XOPEN_SOURCE - 0 >= 500)
   std::unique_ptr<char> req_opt_buf_p (reinterpret_cast<char*> (req.opt.buf));
 #  else
-  ACE_Auto_Array_Ptr<char> req_opt_buf_p (req.opt.buf);
+  std::unique_ptr<char[]> req_opt_buf_p (req.opt.buf);
 #  endif /* XPG5 vs XPG4 */
   struct t_opthdr *opthdr =
     reinterpret_cast<struct t_opthdr *> (req.opt.buf);
@@ -108,7 +107,7 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
 #  if (_XOPEN_SOURCE - 0 >= 500)
   std::unique_ptr<char> ret_opt_buf_p (reinterpret_cast<char*> (ret.opt.buf));
 #  else
-  ACE_Auto_Array_Ptr<char> ret_opt_buf_p (ret.opt.buf);
+  std::unique_ptr<char[]> ret_opt_buf_p (ret.opt.buf);
 #  endif /* XPG5 vs XPG4 */
 
   req.flags = T_NEGOTIATE;
@@ -139,7 +138,7 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
 #  if (_XOPEN_SOURCE - 0 >= 500)
   std::unique_ptr<char> req_opt_buf_p (reinterpret_cast<char*> (req.opt.buf));
 #  else
-  ACE_Auto_Array_Ptr<char> req_opt_buf_p (req.opt.buf);
+  std::unique_ptr<char[]> req_opt_buf_p (req.opt.buf);
 #  endif /* XPG5 vs XPG4 */
   struct t_opthdr *opthdr =
     reinterpret_cast<struct t_opthdr *> (req.opt.buf);
@@ -147,7 +146,7 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
 #  if (_XOPEN_SOURCE - 0 >= 500)
   std::unique_ptr<char> ret_opt_buf_p (reinterpret_cast<char*> (ret.opt.buf));
 #  else
-  ACE_Auto_Array_Ptr<char> ret_opt_buf_p (ret.opt.buf);
+  std::unique_ptr<char[]> ret_opt_buf_p (ret.opt.buf);
 #  endif /* XPG5 vs XPG4 */
 
   req.flags = T_CURRENT;

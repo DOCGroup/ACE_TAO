@@ -15,7 +15,7 @@
 #include "Reactor_Performance_Test.h"
 
 #include "ace/Acceptor.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Connector.h"
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
@@ -183,20 +183,20 @@ client (void *arg)
   ACE_NEW_RETURN (temp_writers,
                   Write_Handler *[opt_nconnections],
                   0);
-  ACE_Auto_Basic_Array_Ptr <Write_Handler *> writers (temp_writers);
+  std::unique_ptr <Write_Handler *[]> writers (temp_writers);
 
   ACE_TCHAR *temp_failed = 0;
   ACE_NEW_RETURN (temp_failed,
                   ACE_TCHAR[opt_nconnections],
                   0);
-  ACE_Auto_Basic_Array_Ptr <ACE_TCHAR> failed_svc_handlers (temp_failed);
+  std::unique_ptr <ACE_TCHAR[]> failed_svc_handlers (temp_failed);
 
   // Automagic memory cleanup.
   ACE_INET_Addr *temp_addresses;
   ACE_NEW_RETURN (temp_addresses,
                   ACE_INET_Addr [opt_nconnections],
                   0);
-  ACE_Auto_Array_Ptr <ACE_INET_Addr> addresses (temp_addresses);
+  std::unique_ptr <ACE_INET_Addr[]> addresses (temp_addresses);
 
   // Initialize array.
   for (i = 0; i < opt_nconnections; i++)

@@ -9,7 +9,6 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sample_History.h"
 #include "ace/Basic_Stats.h"

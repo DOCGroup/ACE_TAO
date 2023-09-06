@@ -21,7 +21,7 @@
 #include "ace/Message_Queue.h"
 #include "ace/Reactor.h"
 #include "ace/Null_Condition.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -82,7 +82,7 @@ private:
   virtual void release ();
 
   /// The buffering strategy to use.
-  ACE_Auto_Ptr< TAO_Notify_Buffering_Strategy > buffering_strategy_;
+  std::unique_ptr<TAO_Notify_Buffering_Strategy> buffering_strategy_;
 
   /// Shutdown
   bool shutdown_;

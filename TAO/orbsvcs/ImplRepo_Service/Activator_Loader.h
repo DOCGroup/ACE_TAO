@@ -7,7 +7,7 @@
 
 #include "tao/Object_Loader.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,7 +34,7 @@ public:
 private:
   ImR_Activator_i service_;
   Activator_Options opts_;
-  ACE_Auto_Ptr<ImR_Activator_ORB_Runner> runner_;
+  std::unique_ptr<ImR_Activator_ORB_Runner> runner_;
 
 private:
   ImR_Activator_Loader (const ImR_Activator_Loader &) = delete;

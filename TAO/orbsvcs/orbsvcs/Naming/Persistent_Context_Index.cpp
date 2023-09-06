@@ -5,7 +5,7 @@
 
 #include "tao/debug.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_unistd.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -167,7 +167,7 @@ TAO_Persistent_Context_Index::recreate_all ()
                   (CONTEXT_INDEX::ITERATOR) (*index_),
                   -1);
 
-  ACE_Auto_Basic_Ptr<CONTEXT_INDEX::ITERATOR> it (index_iter);
+  std::unique_ptr<CONTEXT_INDEX::ITERATOR> it (index_iter);
 
   // Because of broken old g++!!!
   typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId,
@@ -192,9 +192,9 @@ TAO_Persistent_Context_Index::recreate_all ()
                                                                  entry->int_id_.hash_map_,
                                                                  entry->int_id_.counter_);
 
-      // Put <context_impl> into the auto pointer temporarily, in case next
+      // Put <context_impl> into the unique pointer temporarily, in case next
       // allocation fails.
-      ACE_Auto_Basic_Ptr<TAO_Persistent_Naming_Context> temp (context_impl);
+      std::unique_ptr<TAO_Persistent_Naming_Context> temp (context_impl);
 
       TAO_Naming_Context *context = 0;
       ACE_NEW_RETURN (context,
@@ -204,7 +204,7 @@ TAO_Persistent_Context_Index::recreate_all ()
       // Let <implementation> know about it's <interface>.
       context_impl->interface (context);
 
-      // Release auto pointer and start using reference counting to
+      // Release unique pointer and start using reference counting to
       // control our servant.
       temp.release ();
       PortableServer::ServantBase_var s = context;

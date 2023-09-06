@@ -15,7 +15,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/INet/StreamInterceptor.h"
 #include <streambuf>
 #include <iosfwd>
@@ -87,8 +87,8 @@ namespace ACE
               int flush_buffer ();
 
               std::streamsize bufsize_;
-              ACE_Auto_Array_Ptr<char_type> read_buffer_;
-              ACE_Auto_Array_Ptr<char_type> write_buffer_;
+              std::unique_ptr<char_type[]> read_buffer_;
+              std::unique_ptr<char_type[]> write_buffer_;
               openmode        mode_;
               STREAM_HANDLER *stream_;
               interceptor_type* interceptor_;

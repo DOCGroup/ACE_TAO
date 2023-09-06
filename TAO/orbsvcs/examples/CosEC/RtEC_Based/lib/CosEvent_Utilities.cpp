@@ -3,7 +3,7 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "EventChannel_i.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include <memory>
 
 CosEC_ServantBase::CosEC_ServantBase ()

@@ -157,7 +157,7 @@ namespace PortableInterceptor
  */
 class TAO_Export TAO_ORB_Core
 {
-  friend class TAO_ORB_Core_Auto_Ptr;
+  friend class TAO_ORB_Core_Decr_Refcnt;
   friend TAO_Export CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          ACE_TCHAR *argv[],
                                          const char *);
@@ -1362,8 +1362,7 @@ public:
 //private:
   /// Constructor.
   TAO_ORB_Core_Static_Resources ();
-  TAO_ORB_Core_Static_Resources& operator=
-      (const TAO_ORB_Core_Static_Resources&);
+  TAO_ORB_Core_Static_Resources& operator= (const TAO_ORB_Core_Static_Resources&);
 
 private:
   /// Mostly unused variable whose sole purpose is to enforce

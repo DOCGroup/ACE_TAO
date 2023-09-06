@@ -32,7 +32,7 @@ void EventNode::registerHello (::Test::Hello_ptr h)
             TAO::ORB_Table::instance ();
 
           TAO_ORB_Core_Auto_Ptr tmp (orb_table->find ("server_orb"));
-          if (tmp.get () == 0)
+          if (tmp.get () == nullptr)
             {
               // We are running on a single ORB and this is an error.
               ACE_ERROR ((LM_ERROR,

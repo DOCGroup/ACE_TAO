@@ -15,7 +15,7 @@
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/AnyTypeCode/ValueModifierC.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_fcntl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

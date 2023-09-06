@@ -17,7 +17,7 @@
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Pipe.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include <algorithm>
 #include <functional>

@@ -15,7 +15,7 @@
 #include "tao/ImR_Client/ImplRepoC.h"
 #include "tao/corba.h"
 #include "ace/SString.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 // Forward Declaration
 class TAO_IMR_Op;
@@ -61,7 +61,7 @@ private:
   ImplementationRepository::Administration_var imr_;
 
   /// What we need to do.
-  ACE_Auto_Ptr<TAO_IMR_Op> op_;
+  std::unique_ptr<TAO_IMR_Op> op_;
 };
 
 

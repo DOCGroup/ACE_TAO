@@ -6,7 +6,7 @@
 
 #include "tao/Object_Loader.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +33,7 @@ public:
 private:
   ImR_Locator_i service_;
   Options opts_;
-  ACE_Auto_Ptr<ImR_Locator_ORB_Runner> runner_;
+  std::unique_ptr<ImR_Locator_ORB_Runner> runner_;
 private:
   ImR_Locator_Loader (const ImR_Locator_Loader &) = delete;
   ImR_Locator_Loader &operator = (const ImR_Locator_Loader &) = delete;

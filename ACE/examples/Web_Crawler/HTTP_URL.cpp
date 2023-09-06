@@ -1,10 +1,9 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-#include "ace/Auto_Ptr.h"
 #include "URL_Visitor.h"
 #include "Options.h"
 #include "HTTP_URL.h"
-
+#include <memory>
 
 const ACE_URL_Addr &
 HTTP_URL::url_addr () const
@@ -36,7 +35,7 @@ HTTP_URL::send_request ()
                   -1);
 
   // Ensure that the <command> memory is deallocated.
-  ACE_Auto_Basic_Array_Ptr<char> cmd_ptr (command);
+  std::unique_ptr<char[]> cmd_ptr (command);
 
   ACE_OS::sprintf (cmd_ptr.get (),
                    "GET /%s HTTP/1.1\r\n",

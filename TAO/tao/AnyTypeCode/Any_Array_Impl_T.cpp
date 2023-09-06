@@ -10,7 +10,7 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Any_Array_Impl_T.inl"

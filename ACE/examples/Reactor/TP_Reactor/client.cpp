@@ -4,7 +4,6 @@
  * Date: 26-Jan-2006
  */
 
-#include <ace/Auto_Ptr.h>
 #include <ace/INET_Addr.h>
 #include <ace/Log_Msg.h>
 #include <ace/SOCK_Acceptor.h>
@@ -12,7 +11,7 @@
 #include <ace/SOCK_Stream.h>
 #include <ace/streams.h>
 #include <ace/OS_NS_stdlib.h>
-
+#include <memory>
 #include "common.h"
 
 /**
@@ -51,7 +50,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
                          ACE_TEXT ("data buffer.\n")), -1);
 
     // put someData in a kind of auto_ptr so it gets deleted automatically
-    ACE_Auto_Array_Ptr<char> pSomeData(someData);
+    std::unique_ptr<char[]> pSomeData(someData);
 
     // parse the <count> argument if available
     if ((argc == 3) && (((count = ACE_OS::strtol(argv[2], 0, 10)) < 1) ||

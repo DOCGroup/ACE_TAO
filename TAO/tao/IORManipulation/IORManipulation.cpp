@@ -6,7 +6,7 @@
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -18,7 +18,7 @@
 #include "ace/streams.h"
 
 #include "ace/FILE_Connector.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
 #include "ace/OS_NS_fcntl.h"
@@ -532,7 +532,7 @@ test_ostream ()
                   char[info.size_ + 1],
                   -1);
   // Make sure <buffer> is released automagically.
-  ACE_Auto_Basic_Array_Ptr<char> b (buffer);
+  std::unique_ptr<char[]> b (buffer);
 
   // Read the file into the buffer.
   ssize_t size = file.recv (buffer,
