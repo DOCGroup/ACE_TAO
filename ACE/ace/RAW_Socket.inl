@@ -4,7 +4,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 ACE_INLINE bool
 ACE_RAW_SOCKET::is_send_only () const
 {
@@ -16,7 +15,6 @@ ACE_RAW_SOCKET:: protocol () const
 {
   return this->protocol_;
 }
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

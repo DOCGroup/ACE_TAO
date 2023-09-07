@@ -19,7 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "ace/SOCK.h"
 #include "ace/Copy_Disabled.h"
 
@@ -59,7 +58,6 @@ public:
   /// @param protocol   IPPROTO_UDP as default value because often used as a user-space UDP stack
   ACE_RAW_SOCKET (ACE_INET_Addr const & local, int protocol = IPPROTO_UDP);
 
-
   /**
    * @name Data transfer routines.
    *
@@ -76,7 +74,7 @@ public:
    * returned with @c errno == ETIME.  If it succeeds the number of
    * bytes sent is returned.
    */
-ssize_t send (const void *buf,
+  ssize_t send (const void *buf,
                 size_t n,
                 const ACE_INET_Addr &addr,
                 int flags = 0,
@@ -100,27 +98,27 @@ ssize_t send (const void *buf,
                 const ACE_Time_Value *timeout = nullptr,
                 ACE_INET_Addr *to_addr = nullptr) const;
 
-/**
- * Send an <iovec> of size @a n to the datagram socket (uses<sendmsg(3)>)
- * The IP destination address will be placed in @a *to_addr if it is not null
- * @return if iovec call is unsupported by platforms, the method will return -1 immediately
-*/
-ssize_t send (const iovec iov[],
-              int n,
-              const ACE_INET_Addr &addr,
-              int flags = 0,
-              const ACE_Time_Value *timeout = nullptr) const;
-/**
- * Recv an <iovec> of size @a n to the datagram socket (uses <recvmsg(3)>).
- * The IP destination address will be placed in @a *to_addr if it is not null.
- * @return if iovec call is unsupported by platforms, the method will return -1 immediately
- */
-ssize_t recv (iovec iov[],
-              int n,
-              ACE_INET_Addr &addr,
-              int flags = 0,
-              const ACE_Time_Value *timeout = nullptr,
-              ACE_INET_Addr *to_addr = nullptr) const;
+  /**
+   * Send an <iovec> of size @a n to the datagram socket (uses<sendmsg(3)>)
+   * The IP destination address will be placed in @a *to_addr if it is not null
+   * @return if iovec call is unsupported by platforms, the method will return -1 immediately
+  */
+  ssize_t send (const iovec iov[],
+                int n,
+                const ACE_INET_Addr &addr,
+                int flags = 0,
+                const ACE_Time_Value *timeout = nullptr) const;
+  /**
+   * Recv an <iovec> of size @a n to the datagram socket (uses <recvmsg(3)>).
+   * The IP destination address will be placed in @a *to_addr if it is not null.
+   * @return if iovec call is unsupported by platforms, the method will return -1 immediately
+   */
+  ssize_t recv (iovec iov[],
+                int n,
+                ACE_INET_Addr &addr,
+                int flags = 0,
+                const ACE_Time_Value *timeout = nullptr,
+                ACE_INET_Addr *to_addr = nullptr) const;
 
   //@}
 
@@ -131,7 +129,6 @@ ssize_t recv (iovec iov[],
    *
    * @attention can be re-opened after closed
    */
-
   int open (ACE_INET_Addr const & local, int protocol = IPPROTO_UDP);
 
   /// Dump the state of object.
