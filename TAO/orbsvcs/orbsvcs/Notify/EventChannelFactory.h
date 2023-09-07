@@ -25,7 +25,7 @@
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/NotifyExtS.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -155,7 +155,7 @@ private:
   TAO_Notify_EventChannel_Container& ec_container();
 
   /// Container for Event Channels.
-  ACE_Auto_Ptr< TAO_Notify_EventChannel_Container > ec_container_;
+  std::unique_ptr< TAO_Notify_EventChannel_Container > ec_container_;
 
   TAO_SYNCH_MUTEX topology_save_lock_;
 
@@ -172,7 +172,7 @@ private:
   /// Release this object.
   virtual void release ();
 
-  ACE_Auto_Ptr <TAO_Notify_validate_client_Task> validate_client_task_;
+  std::unique_ptr <TAO_Notify_validate_client_Task> validate_client_task_;
 
   PortableServer::POA_var poa_;
 };

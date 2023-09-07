@@ -13,7 +13,7 @@
 #include "tao/CDR.h"
 #include "tao/Codeset_Manager.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/HTIOP/HTIOP_Acceptor.inl"
@@ -453,7 +453,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
 
       ACE::HTBP::ID_Requestor req(ht_env_);
       ACE_TCHAR *htid = req.get_HTID ();
-      ACE_Auto_Array_Ptr<ACE_TCHAR> guard (htid);
+      std::unique_ptr<ACE_TCHAR[]> guard (htid);
       this->addrs_[0] = ACE_TEXT_ALWAYS_CHAR (htid);
       return 0;
     }
@@ -674,7 +674,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
 
   // The instantiation for this template is in
   // HTIOP/HTIOP_Connector.cpp.
-  ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (inet_addrs);
+  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (inet_addrs);
 
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise

@@ -2746,7 +2746,7 @@ TAO_CodeGen::gen_stub_src_includes ()
   if (be_global->gen_amh_classes ())
     {
       this->gen_standard_include (this->client_stubs_,
-                                  "ace/Auto_Ptr.h");
+                                  "memory");
     }
 }
 

@@ -33,7 +33,7 @@
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (TAO_DEFAULT_REACTOR_TYPE)
 #define TAO_DEFAULT_REACTOR_TYPE TAO_REACTOR_TP

@@ -18,7 +18,7 @@
 #include "ace/os_include/os_ctype.h"
 
 #if !defined (__GNUG__)
-# include "ace/Auto_Ptr.h"
+# include <memory>
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -34,7 +34,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 # define ACE_TEMPORARY_STRING(X,SIZE) \
    char* X = 0; \
    char X ## buf[ACE_YY_BUF_SIZE]; \
-   ACE_Auto_Ptr<char> X ## bufp (0); \
+   std::unique_ptr<char> X ## bufp (nullptr); \
    if (SIZE > ACE_YY_BUF_SIZE) { \
      X ## bufp.reset (new char[SIZE]); \
      X = X ## bufp.get (); \

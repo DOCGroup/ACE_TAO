@@ -23,7 +23,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "ace/Map_T.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
 #include "ace/Monitor_Size.h"

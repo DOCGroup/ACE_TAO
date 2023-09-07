@@ -15,8 +15,6 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/OS_NS_stdio.h"
 
-#include "ace/Auto_Ptr.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RTEventLogFactory_i::TAO_RTEventLogFactory_i () :

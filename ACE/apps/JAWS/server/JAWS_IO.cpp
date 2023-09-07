@@ -11,8 +11,8 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Basic_Types.h"
+#include <memory>
 
 JAWS_IO::JAWS_IO ()
   : handler_ (0)
@@ -508,7 +508,7 @@ JAWS_Synch_IO_No_Cache::transmit_file (const char *filename,
   }
 
   char* f = new char[size];
-  ACE_Auto_Basic_Array_Ptr<char> file (f);
+  std::unique_ptr<char[]> file (f);
 
   ACE_OS::read_n (handle, f, size);
 
