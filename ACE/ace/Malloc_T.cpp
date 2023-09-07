@@ -198,7 +198,7 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::~ACE_Cascaded_Dynamic_Cached_Al
        c < hierarchy_.size();
        c++)
   {
-          delete hierarchy_[c];
+    delete hierarchy_[c];
   }
 
   hierarchy_.clear();
@@ -219,17 +219,17 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
        c < hierarchy_.size();
        c++)
   {
-       ptr = hierarchy_[c]->malloc(nbytes);
-       if(ptr != nullptr)
-           break;
+    ptr = hierarchy_[c]->malloc(nbytes);
+    if(ptr != nullptr)
+      break;
   }
 
   if(ptr == nullptr)
   {
-       comb_alloc_ptr tmp;
-       ACE_NEW_RETURN (tmp, comb_alloc_type(this->initial_n_chunks_ * 2 * hierarchy_.size(), this->chunk_size_), nullptr);
-       hierarchy_.push_back(tmp);
-       ptr = tmp->malloc(nbytes);
+    comb_alloc_ptr tmp;
+    ACE_NEW_RETURN (tmp, comb_alloc_type(this->initial_n_chunks_ * 2 * hierarchy_.size(), this->chunk_size_), nullptr);
+    hierarchy_.push_back(tmp);
+    ptr = tmp->malloc(nbytes);
   }
 
   return ptr;
@@ -241,12 +241,12 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t nbytes,
 {
   // Check if size requested fits within pre-determined size.
   if (nbytes > chunk_size_)
-      return nullptr;
+    return nullptr;
 
   // No need any lock.
   void *ptr = malloc(nbytes);
   if (ptr != nullptr)
-      ACE_OS::memset (ptr, initial_value, chunk_size_);
+    ACE_OS::memset (ptr, initial_value, chunk_size_);
 
   return ptr;
 }
@@ -266,7 +266,7 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
 
   // Use first allocator as a free chunk manager for all allocators when chunk freed.
   if (ptr != nullptr && hierarchy_.size () > 0)
-      hierarchy_[0]->free(ptr);
+    hierarchy_[0]->free(ptr);
 }
 
 template <class ACE_LOCK> int

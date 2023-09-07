@@ -6,7 +6,7 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and
  *          Irfan Pyarali <irfan@cs.wustl.edu> and
-            smithAchang <changyunlei@126.com>
+ *          smithAchang <changyunlei@126.com>
  */
 //==========================================================================
 
