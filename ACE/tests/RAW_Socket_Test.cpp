@@ -153,12 +153,12 @@ private:
 
 
 #define ACE_TEST_EXCEPTION_RETURN(expression, message)\
-do{\
+do {\
     if(expression)\
     {\
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (message)), 1);\
     }\
-}while(0)
+} while(0)
 
 static char  sendbuf[4096];
 static char  recvbuf[4096];
@@ -169,8 +169,6 @@ static char  recvbuf[4096];
  * It returns 0 for success and 1 for error so we can keep track of the
  * total error count.
  */
-
-
 static int
 run_option_test ()
 {
@@ -234,7 +232,8 @@ run_reopen_test ()
   return 0;
 }
 
-static void readUdpSocektToEmpty(ACE_SOCK_Dgram& udpSock)
+static void 
+readUdpSocektToEmpty(ACE_SOCK_Dgram& udpSock)
 {
   ACE_INET_Addr remote;
   while(1)
@@ -245,7 +244,8 @@ static void readUdpSocektToEmpty(ACE_SOCK_Dgram& udpSock)
   }
 }
 
-static int raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port, size_t n, ACE_INET_Addr& remote, bool bUseIOVec = false, ACE_INET_Addr* to_addr = nullptr)
+static int 
+raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port, size_t n, ACE_INET_Addr& remote, bool bUseIOVec = false, ACE_INET_Addr* to_addr = nullptr)
 {
   ACE_INET_Addr local;
   raw.get_local_addr(local);

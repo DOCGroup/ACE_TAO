@@ -80,7 +80,6 @@ public:
                 int flags = 0,
                 const ACE_Time_Value *timeout = nullptr) const;
 
-
   /**
    * Wait up to @a timeout amount of time to receive a datagram into
    * @a buf.  The ACE_Time_Value indicates how long to blocking
@@ -108,6 +107,7 @@ public:
                 const ACE_INET_Addr &addr,
                 int flags = 0,
                 const ACE_Time_Value *timeout = nullptr) const;
+
   /**
    * Recv an <iovec> of size @a n to the datagram socket (uses <recvmsg(3)>).
    * The IP destination address will be placed in @a *to_addr if it is not null.
