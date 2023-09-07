@@ -14,7 +14,7 @@
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL

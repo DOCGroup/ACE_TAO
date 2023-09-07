@@ -10,7 +10,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/SString.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Singleton.h"
 #include "ace/SSL/SSL_Context.h"
 #include "ace/INet/SSL_CallbackManager.h"
@@ -83,7 +83,7 @@ namespace ACE
               Context (const Context&);
 
               ACE_SSL_Context* ssl_ctx_;
-              ACE_Auto_Ptr<ACE_SSL_Context> alloc_safe;
+              std::unique_ptr<ACE_SSL_Context> alloc_safe;
 
               static int ssl_mode_;
               static bool ssl_strict_;

@@ -5,7 +5,6 @@
 #include "ace/Service_Manager.h"
 #include "ace/Service_Types.h"
 #include "ace/Containers.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/DLL.h"

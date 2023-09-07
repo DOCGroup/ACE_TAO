@@ -18,7 +18,7 @@
 #include "tao/Protocol_Factory.h"
 #include "tao/Resource_Factory.h"
 #include "tao/debug.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Dynamic_Service.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

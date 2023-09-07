@@ -33,11 +33,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 # if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64 && defined (ACE_WIN32)
-#   if defined (__BORLANDC__)
-typedef struct stati64 ACE_stat;
-#       define ACE_STAT_FUNC_NAME ::_stati64
-#       define ACE_WSTAT_FUNC_NAME ::_wstati64
-#   elif defined (_MSC_VER)
+#   if defined (_MSC_VER)
 typedef struct _stat64 ACE_stat;
 #       define ACE_STAT_FUNC_NAME ::_stat64
 #       define ACE_WSTAT_FUNC_NAME ::_wstat64
@@ -45,6 +41,10 @@ typedef struct _stat64 ACE_stat;
 typedef struct _stati64 ACE_stat;
 #     define ACE_STAT_FUNC_NAME ::_stati64
 #     define ACE_WSTAT_FUNC_NAME ::_wstati64
+#   elif defined (__BORLANDC__)
+typedef struct stati64 ACE_stat;
+#       define ACE_STAT_FUNC_NAME ::_stati64
+#       define ACE_WSTAT_FUNC_NAME ::_wstati64
 #   else
 typedef struct stat ACE_stat;
 #     define ACE_STAT_FUNC_NAME ::stat

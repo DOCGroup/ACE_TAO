@@ -10,7 +10,7 @@
 #include "tao/SystemException.h"
 #include "tao/debug.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)

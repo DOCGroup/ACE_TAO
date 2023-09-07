@@ -20,7 +20,7 @@
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Message_Queue.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
@@ -619,7 +619,7 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Prio test queue not empty\n")), 1);
 
   // Set up a few objects with names for how they should come out of the queue.
-  ACE_Auto_Basic_Ptr<User_Class> b1, b2, b3, b4;
+  std::unique_ptr<User_Class> b1, b2, b3, b4;
   b1.reset (new User_Class ("first"));
   b2.reset (new User_Class ("second"));
   b3.reset (new User_Class ("third"));

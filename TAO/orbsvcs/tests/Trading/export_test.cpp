@@ -2,7 +2,7 @@
 #include "Offer_Exporter.h"
 #include "Offer_Importer.h"
 #include "Service_Type_Exporter.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 #include "ace/Get_Opt.h"

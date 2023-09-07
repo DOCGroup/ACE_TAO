@@ -58,8 +58,6 @@ endif
 
 ifeq ($(c++11),1)
   CCFLAGS += -std=c++11
-  # This is needed due to the use of the deprecated auto_ptr class
-  CCFLAGS += -Wno-deprecated
 endif
 
 CFLAGS  += -w1

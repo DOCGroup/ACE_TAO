@@ -20,9 +20,8 @@
 #include "ace/Future.h"
 #include "ace/Method_Request.h"
 #include "ace/Activation_Queue.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Atomic_Op.h"
-
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -215,7 +214,7 @@ Scheduler::svc ()
 {
   for (;;)
     {
-      // Dequeue the next method object (we use an auto pointer in
+      // Dequeue the next method object (we use an unique pointer in
       // case an exception is thrown in the <call>).
       std::unique_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
 

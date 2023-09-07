@@ -9,7 +9,7 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/CDR_Stream.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/SString.h"
 #include "ace/INET_Addr.h"
 #include "Client_Logging_Handler.h"

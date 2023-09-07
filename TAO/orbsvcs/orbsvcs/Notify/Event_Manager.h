@@ -9,7 +9,6 @@
 #define TAO_Notify_EVENT_MANAGER_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Auto_Ptr.h"
 
 #include "orbsvcs/Notify/Refcountable.h"
 
@@ -20,8 +19,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/orbconf.h"
-
 #include "ace/CORBA_macros.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -116,10 +115,10 @@ private:
   TAO_Notify_Event_Manager& operator= (TAO_Notify_Event_Manager&&) = delete;
 
   /// Consumer Map
-  ACE_Auto_Ptr< TAO_Notify_Consumer_Map > consumer_map_;
+  std::unique_ptr<TAO_Notify_Consumer_Map> consumer_map_;
 
   /// Supplier Map
-  ACE_Auto_Ptr< TAO_Notify_Supplier_Map > supplier_map_;
+  std::unique_ptr<TAO_Notify_Supplier_Map> supplier_map_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

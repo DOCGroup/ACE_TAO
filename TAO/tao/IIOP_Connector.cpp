@@ -40,7 +40,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_Event_Handler_Array_var
  *
- * @brief Auto pointer like class for an array of Event Handlers.
+ * @brief Unique pointer like class for an array of Event Handlers.
  *
  * Used to manage lifecycle of handlers. This class calls
  * ACE_Event_Handler::remove_reference() on each handler in its destructor
