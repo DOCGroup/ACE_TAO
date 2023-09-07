@@ -103,7 +103,11 @@
 #define ACE_HAS_WREWINDDIR
 
 #define ACE_LACKS_STRRECVFD
-#define ACE_USES_EXPLICIT_STD_NAMESPACE
+
+#if !defined (__MINGW64__)
+# define ACE_USES_EXPLICIT_STD_NAMESPACE
+# define ACE_LACKS_PID_T
+#endif
 
 #if defined (ACE_HAS_BCC64)
 # define ACE_HAS_TIME_T_LONG_MISMATCH
@@ -163,7 +167,20 @@
 #define ACE_HAS_BUILTIN_BSWAP32
 #define ACE_HAS_BUILTIN_BSWAP64
 #define ACE_LACKS_INLINE_ASSEMBLY
-#define ACE_LACKS_PID_T
+
+#if defined(__MINGW64__)
+# define ACE_LACKS_PID_T
+# define ACE_LACKS_GID_T
+# undef ACE_LACKS_USECONDS_T
+# define ACE_HAS_POSIX_TIME
+# define ACE_LACKS_TIMESPEC_T
+# define ACE_LACKS_UID_T
+# define ACE_LACKS_GMTIME_R
+# define ACE_LACKS_LOCALTIME_R
+# define ACE_LACKS_NLINK_T
+# define ACE_HAS_3_PARAM_WCSTOK
+# define ACE_LACKS_STRPTIME
+#endif
 
 #if __cplusplus >= 201103L
 # define ACE_HAS_CPP11
