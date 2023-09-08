@@ -233,6 +233,10 @@ template <class ACE_LOCK>
 class ACE_Cascaded_Dynamic_Cached_Allocator : public ACE_Allocator
 {
 public:
+  // Useful STL-style traits.
+  using comb_alloc_type = ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex>;
+  using comb_alloc_ptr  = comb_alloc_type*;
+
   /// Create a cached memory pool with @a n_chunks chunks
   /// each with @a chunk_size size.
   ACE_Cascaded_Dynamic_Cached_Allocator (size_t initial_n_chunks, size_t chunk_size);
@@ -285,10 +289,6 @@ public:
   ACE_LOCK &mutex ();
 
 private:
-  // Useful STL-style traits.
-  using comb_alloc_type = ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex>;
-  using comb_alloc_ptr  = comb_alloc_type*;
-
   /// Synchronization variable for API.
   ACE_LOCK mutex_;
 
