@@ -115,7 +115,7 @@ static inline void fillMsgHdr(msghdr& recv_msg, const ACE_INET_Addr &addr, void*
 
 static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
 {
-#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG) || defined ACE_WIN32
+#ifdef ACE_USE_MSG_CONTROL
   if (to_addr.get_type() == AF_INET)
   {
 #if defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)
@@ -129,8 +129,7 @@ static inline void getToAddrFromMsgHdr(msghdr& recv_msg, ACE_INET_Addr& to_addr)
                              0);
         break;
       }
-#endif
-#if defined(IP_PKTINFO)
+#else
       if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_PKTINFO)
       {
         to_addr.set_address (reinterpret_cast<const char *>(&((reinterpret_cast<in_pktinfo *>(ACE_CMSG_DATA (ptr)))->ipi_addr)),

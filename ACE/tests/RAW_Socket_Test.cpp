@@ -232,7 +232,7 @@ run_reopen_test ()
   return 0;
 }
 
-static void 
+static void
 readUdpSocektToEmpty(ACE_SOCK_Dgram& udpSock)
 {
   ACE_INET_Addr remote;
@@ -244,7 +244,7 @@ readUdpSocektToEmpty(ACE_SOCK_Dgram& udpSock)
   }
 }
 
-static int 
+static int
 raw_recv_data_until_meet_condition(ACE_RAW_SOCKET& raw, u_short port, size_t n, ACE_INET_Addr& remote, bool bUseIOVec = false, ACE_INET_Addr* to_addr = nullptr)
 {
   ACE_INET_Addr local;
