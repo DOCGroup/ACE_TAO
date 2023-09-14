@@ -443,8 +443,7 @@ FE_populate ()
 void
 FE_extract_env_include_paths (ACE_Unbounded_Queue<ACE_CString> &list)
 {
-  ACE_Env_Value<char*> incl_paths (ACE_TEXT ("INCLUDE"),
-                                   (char *) nullptr);
+  ACE_Env_Value<char*> incl_paths (ACE_TEXT ("INCLUDE"), nullptr);
   const char *aggr_str = incl_paths;
 
   if (aggr_str != nullptr)
@@ -491,8 +490,7 @@ FE_get_cpp_loc_from_env ()
   const char *cpp_loc = nullptr;
 
   // See if TAO_IDL_PREPROCESSOR is defined.
-  ACE_Env_Value<char*> preprocessor (ACE_TEXT ("TAO_IDL_PREPROCESSOR"),
-                                     (char *) nullptr);
+  ACE_Env_Value<char*> preprocessor (ACE_TEXT ("TAO_IDL_PREPROCESSOR"), nullptr);
 
   // Set cpp_loc to the built in location, unless it has been overriden by
   // environment variables.
@@ -503,8 +501,7 @@ FE_get_cpp_loc_from_env ()
   else
     {
       // Check for the deprecated CPP_LOCATION environment variable
-      ACE_Env_Value<char*> cpp_path (ACE_TEXT ("CPP_LOCATION"),
-                                     (char *) nullptr);
+      ACE_Env_Value<char*> cpp_path (ACE_TEXT ("CPP_LOCATION"), nullptr);
 
       if (cpp_path != 0)
         {
@@ -531,8 +528,7 @@ FE_get_cpp_args_from_env ()
   const char *cpp_args = nullptr;
 
   // Added some customizable preprocessor options
-  ACE_Env_Value<char*> args1 (ACE_TEXT ("TAO_IDL_PREPROCESSOR_ARGS"),
-                              (char *) nullptr);
+  ACE_Env_Value<char*> args1 (ACE_TEXT ("TAO_IDL_PREPROCESSOR_ARGS"), nullptr);
 
   if (args1 != 0)
     {
@@ -542,8 +538,7 @@ FE_get_cpp_args_from_env ()
     {
       // Check for the deprecated TAO_IDL_DEFAULT_CPP_FLAGS environment
       // variable.
-      ACE_Env_Value<char*> args2 (ACE_TEXT ("TAO_IDL_DEFAULT_CPP_FLAGS"),
-                                  (char *) nullptr);
+      ACE_Env_Value<char*> args2 (ACE_TEXT ("TAO_IDL_DEFAULT_CPP_FLAGS"), nullptr);
 
       if (args2 != 0)
         {

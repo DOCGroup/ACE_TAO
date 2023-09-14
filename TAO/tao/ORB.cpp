@@ -1689,7 +1689,7 @@ CORBA::ORB::url_ior_string_to_object (const char* str)
     }
 
   // Now make the TAO_Stub.
-  TAO_Stub *data = this->orb_core_->create_stub ((char *) nullptr, mprofile);
+  TAO_Stub *data = this->orb_core_->create_stub (nullptr, mprofile);
 
   TAO_Stub_Auto_Ptr safe_objdata (data);
 

@@ -47,7 +47,7 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
                                               TAO_MProfile &mprofile)
 {
   // Create a TAO_Stub.
-  TAO_Stub *data = orb->orb_core ()->create_stub ((const char *) nullptr, mprofile);
+  TAO_Stub *data = orb->orb_core ()->create_stub (nullptr, mprofile);
 
   TAO_Stub_Auto_Ptr safe_data (data);
 

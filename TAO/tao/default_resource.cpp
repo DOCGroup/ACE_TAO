@@ -760,7 +760,7 @@ TAO_Default_Resource_Factory::allocate_reactor_impl () const
   ACE_NEW_RETURN (impl,
                   ACE_TP_Reactor (ACE::max_handles (),
                                   1,
-                                  (ACE_Sig_Handler*)nullptr,
+                                  nullptr,
                                   tmq.get (),
                                   this->reactor_mask_signals_,
                                   ACE_Select_Reactor_Token::LIFO),

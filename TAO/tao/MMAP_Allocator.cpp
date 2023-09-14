@@ -55,7 +55,7 @@ namespace
 // /dev/zero file descriptor simply returns zero, as /dev/zero was
 // designed to do.  So unfortunate. :)
 TAO_MMAP_Allocator::TAO_MMAP_Allocator ()
-  : TAO_MMAP_Allocator_Base ((char const *) nullptr /* pool name */,
+  : TAO_MMAP_Allocator_Base (nullptr /* pool name */,
                              nullptr,  // No need to explicitly name the lock.
                              &the_pool_options)
 {
