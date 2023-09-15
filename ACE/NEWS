@@ -7,6 +7,9 @@ USER VISIBLE CHANGES BETWEEN ACE-7.1.1 and ACE-7.1.2
   ACE_Auto_Basic_Ptr, ACE_Auto_Basic_Array_Ptr, ACE_Auto_Array_Ptr,
   and ACE_auto_ptr_reset anymore, just use std::unique_ptr
 
+. Add c++std which can be used in the platform_macros.GNU
+  to set the C++ revision to be used (results in -std= flag)
+
 USER VISIBLE CHANGES BETWEEN ACE-7.1.0 and ACE-7.1.1
 ====================================================
 
