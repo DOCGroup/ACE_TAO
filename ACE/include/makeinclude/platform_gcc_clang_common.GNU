@@ -53,6 +53,10 @@ else
   CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
 endif # shared_libs
 
+ifneq ($(c++std),)
+  CCFLAGS += -std=$(c++std)
+endif
+
 ifeq ($(c++20),1)
   CCFLAGS += -std=c++20
 else
