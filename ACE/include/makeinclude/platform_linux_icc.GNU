@@ -56,10 +56,6 @@ ifeq ($(ipo),1)
   CPPFLAGS += -ipo
 endif
 
-ifeq ($(c++11),1)
-  CCFLAGS += -std=c++11
-endif
-
 CFLAGS  += -w1
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT
