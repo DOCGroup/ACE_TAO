@@ -267,6 +267,9 @@ public:
   /// Return a chunk of memory back to free list cache.
   virtual void free (void *ptr);
 
+  /// Dump the state of this object.
+  virtual void dump () const;
+
   /// These methods are no-ops.
   virtual int remove ();
   virtual int bind (const char *name, void *pointer, int duplicates = 0);
@@ -279,7 +282,6 @@ public:
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
-  virtual void dump () const;
 
   /// Return the number of chunks available in the hierarchy.
   size_t pool_depth ();

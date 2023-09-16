@@ -338,7 +338,20 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::protect (void *, size_t, int)
 template <class ACE_LOCK> void
 ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::dump () const
 {
-#if defined (ACE_HAS_DUMP)
+#if defined (ACE_HAS_DUMP) 
+  ACE_TRACE ("ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::dump");
+
+  ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("initial_n_chunks_ = %u\n"), this->initial_n_chunks_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("chunk_size_ = %u\n"), this->chunk_size_));
+
+  for (size_t c = 0; c < hierarchy_.size (); c++)
+  {
+    hierarchy_[c]->dump ();
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  }
+
+  ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
