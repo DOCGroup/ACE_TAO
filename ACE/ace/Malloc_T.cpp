@@ -338,7 +338,7 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::protect (void *, size_t, int)
 template <class ACE_LOCK> void
 ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::dump () const
 {
-#if defined (ACE_HAS_DUMP) 
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
