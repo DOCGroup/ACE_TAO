@@ -345,7 +345,9 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("initial_n_chunks_ = %u\n"), this->initial_n_chunks_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("chunk_size_ = %u\n"), this->chunk_size_));
 
-  for (size_t c = 0; c < hierarchy_.size (); c++)
+  for (size_t c = 0;
+       c < hierarchy_.size ();
+       c++)
   {
     hierarchy_[c]->dump ();
     ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
