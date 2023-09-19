@@ -6,6 +6,7 @@ debug ?= 1
 optimize ?= 0
 threads ?= 1
 pipes ?= 0
+c++std ?= gnu++14
 
 CCFLAGS += -fexceptions
 LDFLAGS += -fexceptions
@@ -16,6 +17,7 @@ else
 CCFLAGS += -fno-inline
 endif # inline
 
+CCFLAGS  += -fno-builtin
 DCFLAGS  += -ggdb
 DCCFLAGS += -ggdb
 
@@ -23,8 +25,10 @@ ifeq ($(optimize),1)
 OCFLAGS += -O3
 endif #optimize
 
-DLD     = $(CXX)
-LD      = $(CXX)
+CC ?= qcc
+CXX ?= q++
+DLD = $(CXX)
+LD = $(CXX)
 
 LIBS    += -lsocket -lstdc++ -lm
 
