@@ -17,7 +17,6 @@ else
 CCFLAGS += -fno-inline
 endif # inline
 
-CCFLAGS  += -fno-builtin
 DCFLAGS  += -ggdb
 DCCFLAGS += -ggdb
 
