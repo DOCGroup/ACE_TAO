@@ -308,7 +308,6 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 
 // Recv an iovec of size N to ADDR as a datagram (connectionless
 // version).
-
 ssize_t
 ACE_SOCK_Dgram::recv (iovec iov[],
                       int n,
@@ -346,16 +345,14 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   recv_msg.msg_namelen = addr.get_size ();
 
 #ifdef ACE_USE_MSG_CONTROL
-  recv_msg.msg_control = to_addr ? &cbuf : 0;
+  recv_msg.msg_control = to_addr ? std::addressof(cbuf) : nullptr;
   recv_msg.msg_controllen = to_addr ? sizeof (cbuf) : 0;
 #elif !defined ACE_LACKS_SENDMSG
-  recv_msg.msg_accrights = 0;
+  recv_msg.msg_accrights = nullptr;
   recv_msg.msg_accrightslen = 0;
 #endif
 
-  ssize_t status = ACE_OS::recvmsg (this->get_handle (),
-                                    &recv_msg,
-                                    flags);
+  ssize_t const status = ACE_OS::recvmsg (this->get_handle (), std::addressof(recv_msg), flags);
   addr.set_size (recv_msg.msg_namelen);
   addr.set_type (((sockaddr_in *) addr.get_addr())->sin_family);
 
@@ -404,8 +401,8 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 
 #else /* ACE_HAS_MSG */
 
-// Send an iovec of size N to ADDR as a datagram (connectionless
-// version).
+/// Send an iovec of size N to ADDR as a datagram (connectionless
+/// version).
 ssize_t
 ACE_SOCK_Dgram::send (const iovec iov[],
                       int n,
@@ -489,7 +486,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 #endif
       length += iov[i].iov_len;
 
-  char *buf = 0;
+  char *buf = nullptr;
 
 #if defined (ACE_HAS_ALLOCA)
   buf = alloca (length);
