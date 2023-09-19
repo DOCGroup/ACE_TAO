@@ -145,9 +145,7 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
 #endif /* ACE_HAS_IPV6 */
           )
         {
-          if (ACE::bind_port (this->get_handle (),
-                              INADDR_ANY,
-                              protocol_family) == -1)
+          if (ACE::bind_port (this->get_handle (), INADDR_ANY, protocol_family) == -1)
             error = true;
         }
     }
@@ -180,9 +178,7 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
                       flags,
                       reuse_addr) == -1)
     return -1;
-  else if (this->shared_open (local,
-                              protocol_family,
-                              ipv6_only) == -1)
+  else if (this->shared_open (local, protocol_family, ipv6_only) == -1)
     return -1;
   else
     return 0;
@@ -210,15 +206,10 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
 #endif /* ACE_HAS_IPV6 */
     }
 
-  if (ACE_SOCK::open (SOCK_DGRAM,
-                      protocol_family,
-                      protocol,
-                      reuse_addr) == -1)
+  if (ACE_SOCK::open (SOCK_DGRAM, protocol_family, protocol, reuse_addr) == -1)
     return -1;
   else
-    return this->shared_open (local,
-                              protocol_family,
-                              ipv6_only);
+    return this->shared_open (local, protocol_family, ipv6_only);
 }
 
 // Here's the general-purpose constructor used by a connectionless
@@ -301,14 +292,11 @@ ACE_SOCK_Dgram::send (const iovec iov[],
   send_msg.msg_controllen = 0;
 #endif
 
-  return ACE_OS::sendmsg (this->get_handle (),
-                          &send_msg,
-                          flags);
+  return ACE_OS::sendmsg (this->get_handle (), &send_msg, flags);
 }
 
 // Recv an iovec of size N to ADDR as a datagram (connectionless
 // version).
-
 ssize_t
 ACE_SOCK_Dgram::recv (iovec iov[],
                       int n,
@@ -346,16 +334,14 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   recv_msg.msg_namelen = addr.get_size ();
 
 #ifdef ACE_USE_MSG_CONTROL
-  recv_msg.msg_control = to_addr ? &cbuf : 0;
+  recv_msg.msg_control = to_addr ? std::addressof(cbuf) : nullptr;
   recv_msg.msg_controllen = to_addr ? sizeof (cbuf) : 0;
 #elif !defined ACE_LACKS_SENDMSG
-  recv_msg.msg_accrights = 0;
+  recv_msg.msg_accrights = nullptr;
   recv_msg.msg_accrightslen = 0;
 #endif
 
-  ssize_t status = ACE_OS::recvmsg (this->get_handle (),
-                                    &recv_msg,
-                                    flags);
+  ssize_t const status = ACE_OS::recvmsg (this->get_handle (), std::addressof(recv_msg), flags);
   addr.set_size (recv_msg.msg_namelen);
   addr.set_type (((sockaddr_in *) addr.get_addr())->sin_family);
 
@@ -404,8 +390,8 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 
 #else /* ACE_HAS_MSG */
 
-// Send an iovec of size N to ADDR as a datagram (connectionless
-// version).
+/// Send an iovec of size N to ADDR as a datagram (connectionless
+/// version).
 ssize_t
 ACE_SOCK_Dgram::send (const iovec iov[],
                       int n,
@@ -489,7 +475,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 #endif
       length += iov[i].iov_len;
 
-  char *buf = 0;
+  char *buf = nullptr;
 
 #if defined (ACE_HAS_ALLOCA)
   buf = alloca (length);
@@ -511,9 +497,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
       char *ptr = buf;
       int copyn = length;
 
-      for (i = 0;
-           i < n && copyn > 0;
-           i++)
+      for (i = 0; i < n && copyn > 0; i++)
         {
           ACE_OS::memcpy (iov[i].iov_base, ptr,
                           // iov_len is int on some platforms, size_t on others
@@ -614,9 +598,7 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
     {
       ACE_INET_Addr addr (static_cast<u_short> (0));
       ip_mreq  send_mreq;
-      if (this->make_multicast_ifaddr (&send_mreq,
-                                       addr,
-                                       net_if) == -1)
+      if (this->make_multicast_ifaddr (&send_mreq, addr, net_if) == -1)
         {
           if (!ipv6_mif_set)
             return -1;
@@ -768,9 +750,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
   ACE_TRACE ("ACE_SOCK_Dgram::make_multicast_ifaddr6");
   ipv6_mreq  lmreq;       // Scratch copy.
 
-  ACE_OS::memset (&lmreq,
-                  0,
-                  sizeof (lmreq));
+  ACE_OS::memset (&lmreq, 0, sizeof (lmreq));
 
 #if defined (ACE_WIN32) || !defined (ACE_LACKS_IF_NAMETOINDEX)
   if (net_if != 0)
@@ -782,7 +762,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
         (if_ix = ACE_OS::atoi (net_if)) > 0;
 
       ULONG bufLen = 15000; // Initial size as per Microsoft
-      char *buf = 0;
+      char *buf = nullptr;
       ACE_NEW_RETURN (buf, char[bufLen], -1);
       DWORD dwRetVal = 0;
       ULONG iterations = 0;
