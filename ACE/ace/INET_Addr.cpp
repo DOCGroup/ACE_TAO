@@ -165,7 +165,8 @@ ACE_INET_Addr::reset ()
 }
 
 ACE_INET_Addr::ACE_INET_Addr ()
-  : ACE_Addr (determine_type (), sizeof (inet_addr_))
+  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
+    if_name_( 0 )
 {
   // ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->reset_i ();
@@ -290,7 +291,8 @@ ACE_INET_Addr::set (const char address[], int address_family)
 }
 
 ACE_INET_Addr::ACE_INET_Addr (const char address[], int address_family)
-  : ACE_Addr (determine_type (), sizeof (inet_addr_))
+  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
+    if_name_( 0 )
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (address, address_family);
@@ -298,7 +300,8 @@ ACE_INET_Addr::ACE_INET_Addr (const char address[], int address_family)
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INET_Addr::ACE_INET_Addr (const wchar_t address[], int address_family)
-  : ACE_Addr (determine_type (), sizeof (inet_addr_))
+  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
+    if_name_( 0 )
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (address, address_family);
@@ -309,10 +312,15 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t address[], int address_family)
 // Copy constructor.
 
 ACE_INET_Addr::ACE_INET_Addr (const ACE_INET_Addr &sa)
-  : ACE_Addr (sa.get_type (), sa.get_size())
+  : ACE_Addr (sa.get_type (), sa.get_size()),
+    if_name_( 0 )
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (sa);
+  if (sa.if_name_)
+    {
+      this->set_interface_name ( sa.if_name_ );
+    }
 }
 
 // Initializes a ACE_INET_Addr from a PORT_NUMBER and a 32 bit Internet
@@ -540,7 +548,8 @@ ACE_INET_Addr::set (const char port_name[],
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               const char host_name[],
                               int address_family)
-  : ACE_Addr (determine_type (), sizeof (inet_addr_))
+  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
+    if_name_( 0 )
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
@@ -558,7 +567,8 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               const wchar_t host_name[],
                               int address_family)
-  : ACE_Addr (determine_type (), sizeof (inet_addr_))
+  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
+    if_name_( 0 )
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
@@ -657,7 +667,8 @@ ACE_INET_Addr::set_addr (const void *addr, int /* len */, int map)
 
 // Creates a ACE_INET_Addr from a sockaddr_in structure.
 ACE_INET_Addr::ACE_INET_Addr (const sockaddr_in *addr, int len)
-  : ACE_Addr (determine_type (), sizeof (inet_addr_))
+  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
+    if_name_( 0 )
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (addr, len);
@@ -666,7 +677,8 @@ ACE_INET_Addr::ACE_INET_Addr (const sockaddr_in *addr, int len)
 // Creates a ACE_INET_Addr from a PORT_NUMBER and an Internet address.
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               ACE_UINT32 inet_address)
-  : ACE_Addr (determine_type (), sizeof (inet_addr_))
+  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
+    if_name_( 0 )
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number, inet_address) == -1)
@@ -680,7 +692,8 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
                               const char host_name[],
                               const char protocol[])
-  : ACE_Addr (determine_type (), sizeof (inet_addr_))
+  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
+    if_name_( 0 )
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,
@@ -694,7 +707,8 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
 ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
                               const wchar_t host_name[],
                               const wchar_t protocol[])
-  : ACE_Addr (determine_type (), sizeof (inet_addr_))
+  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
+    if_name_( 0 )
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,
@@ -709,7 +723,8 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
 ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
                               ACE_UINT32 inet_address,
                               const char protocol[])
-  : ACE_Addr (determine_type (), sizeof (inet_addr_))
+  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
+    if_name_( 0 )
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,
@@ -723,7 +738,8 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
 ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
                               ACE_UINT32 inet_address,
                               const wchar_t protocol[])
-  : ACE_Addr (determine_type (), sizeof (inet_addr_))
+  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
+    if_name_( 0 )
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,
@@ -736,6 +752,7 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
 
 ACE_INET_Addr::~ACE_INET_Addr ()
 {
+  delete [] this->if_name_;
 }
 
 int
@@ -1001,6 +1018,37 @@ ACE_INET_Addr::set_interface (const char *intf_name)
     return 0;
 }
 #endif /* ACE_LINUX && ACE_HAS_IPV6 */
+
+const char *
+ACE_INET_Addr::get_interface_name () const
+{
+  return this->if_name_;
+}
+
+void
+ACE_INET_Addr::set_interface_name (const char * if_name)
+{
+  int length (if_name == 0 ? 0 : strnlen (if_name, 52)); // stops counting at 52 if null byte not found by then
+  if (length > 50)
+    {
+      // Interface names are usually just a few characters, Windows are the longest, as they are UUIDs
+      std::string msg("ACE_INET_Addr::set_interface_name: if_name is too long and likely not an interface name: ");
+      msg += if_name;
+      msg += "\n";
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT (msg.c_str())));
+      return;
+    }
+  delete [] this->if_name_;
+  if (length == 0)
+    {
+      this->if_name_ = 0;
+    }
+  else
+    {
+      this->if_name_ = new char [length + 1];
+      ACE_OS::strncpy (this->if_name_, if_name, length + 1);
+    }
+}
 
 const char *
 ACE_INET_Addr::get_host_addr (char *dst, int size) const

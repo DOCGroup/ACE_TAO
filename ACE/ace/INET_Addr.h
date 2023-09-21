@@ -283,6 +283,23 @@ public:
   int set_interface (const char *intf_name);
 #endif /* (ACE_LINUX || ACE_WIN32) && ACE_HAS_IPV6 */
 
+  /**
+   * For informational purposes only, get the name of the network interface to
+   * which this IP address is assigned (such as en0, eth2, utun4, etc.). This
+   * name is not used automatically by any parts of INET_Addr, nor is it stored
+   * in the internal IP address scope ID (see set_interface for that). It is
+   * applicable only in certain, limited scopes, notably calls to
+   * ACE::get_ip_interfaces().
+   */
+  const char * get_interface_name () const;
+
+  /**
+   * For informational purposes only, set the name of the network interface to
+   * which this IP address is assigned. See get_interface_name for more
+   * information.
+   */
+  void set_interface_name (const char * if_name);
+
   /// Return the port number, converting it into host byte-order.
   u_short get_port_number () const;
 
@@ -417,6 +434,8 @@ private:
   // holds all of them; one is always copied to inet_addr_.
   std::vector<union ip46> inet_addrs_;
   std::vector<union ip46>::iterator inet_addrs_iter_;
+
+  char * if_name_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
