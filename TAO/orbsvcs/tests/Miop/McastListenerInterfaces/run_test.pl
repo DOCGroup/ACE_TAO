@@ -44,6 +44,7 @@ if ($helper_rc == 0) {
                 "interface" => $if_name,
                 "address" => $addr,
                 "via" => "*=$addr",
+                $COPY_PREFERRED_INTERFACES => 0,
             };
             push @TESTS, {
                 "version" => $type eq "LOv6" || $type eq "ETHv6" ? $IPv6 : $IPv4,
@@ -51,6 +52,7 @@ if ($helper_rc == 0) {
                 "interface" => $if_name,
                 "address" => $addr,
                 "via" => "*=$if_name",
+                $COPY_PREFERRED_INTERFACES => 0,
             };
             if ($type eq "ETHv4" || $type eq "ETHv6") {
                 push @TESTS, {
@@ -58,7 +60,16 @@ if ($helper_rc == 0) {
                     "type" => $type eq "LOv4" || $type eq "LOv6" ? $LOOPBACK : $PUBLIC,
                     "interface" => $if_name,
                     "address" => $addr,
-                    "via" => $COPY_PREFERRED_INTERFACES,
+                    "via" => "*=$addr",
+                    $COPY_PREFERRED_INTERFACES => 1,
+                };
+                push @TESTS, {
+                    "version" => $type eq "LOv6" || $type eq "ETHv6" ? $IPv6 : $IPv4,
+                    "type" => $type eq "LOv4" || $type eq "LOv6" ? $LOOPBACK : $PUBLIC,
+                    "interface" => $if_name,
+                    "address" => $addr,
+                    "via" => "*=$if_name",
+                    $COPY_PREFERRED_INTERFACES => 1,
                 };
             }
         } else {
@@ -92,7 +103,8 @@ sub testToString ($) {
            ($test->{"version"} == $IPv4 ? "IPv4" : "IPv6") . ", " .
            ($test->{"type"} == $LOOPBACK ? "loopback interface" : "public interface") . ", interface '" .
            $test->{"interface"} . "', address '" . $test->{"address"} . "', multicast address '" .
-           $MULTICAST_ADDRESSES{$test->{"version"}} . "', via '" . $test->{"via"} . "'";
+           $MULTICAST_ADDRESSES{$test->{"version"}} . "', via '" . $test->{"via"} ."', $COPY_PREFERRED_INTERFACES = " .
+           ($test->{$COPY_PREFERRED_INTERFACES} ? "true" : "false");
     ;
 }
 
@@ -153,7 +165,7 @@ for my $test (@TESTS) {
 
     my $unicast_address = $test->{"address"};
     my $multicast_address = $MULTICAST_ADDRESSES{$test->{"version"}};
-    my $via = $test->{"via"};
+    my $via = $test->{$COPY_PREFERRED_INTERFACES} ? $COPY_PREFERRED_INTERFACES : $test->{"via"};
 
     my $svc_conf = "
 dynamic UIPMC_Factory Service_Object * TAO_PortableGroup:_make_TAO_UIPMC_Protocol_Factory() \"-ORBListenerInterfaces $via\"
@@ -190,11 +202,12 @@ dynamic PortableGroup_Loader Service_Object * TAO_PortableGroup:_make_TAO_Portab
         "-o $server_ior_file -u corbaloc:miop:1.0\@1.0-foo-1/$multicast_address:$port -ORBSvcConf $server_svc_conf_file"
     );
     my $client = undef;
-    if ($via eq $COPY_PREFERRED_INTERFACES) {
-        print "Testing with '-ORBPreferredInterfaces *=$unicast_address' as well\n";
+    if ($test->{$COPY_PREFERRED_INTERFACES} ) {
+        $via = $test->{"via"};
+        print "Testing with '-ORBPreferredInterfaces $via' as well\n";
         $client = $client_box->CreateProcess (
             "client",
-            "-ORBPreferredInterfaces *=$unicast_address -ORBEnforcePreferredInterfaces=1 -ORBSvcConf $client_svc_conf_file -ORBIPMulticastLoop 1 -k corbaloc:miop:1.0\@1.0-foo-1/$multicast_address:$port"
+            "-ORBPreferredInterfaces $via -ORBEnforcePreferredInterfaces=1 -ORBSvcConf $client_svc_conf_file -ORBIPMulticastLoop 1 -k corbaloc:miop:1.0\@1.0-foo-1/$multicast_address:$port"
         );
     } else {
         $client = $client_box->CreateProcess (

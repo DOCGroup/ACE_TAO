@@ -10,6 +10,9 @@
 #include <locale>
 #include <codecvt>
 
+#include "ace/OS_main.h"
+#include "ace/ace_wchar.h"
+
 #pragma comment(lib, "IPHLPAPI.lib")
 #pragma comment(lib, "ws2_32.lib")
 
@@ -87,7 +90,7 @@ class WSACleanupHelper
   };
 
 int
-main (int, char * [])
+ACE_TMAIN (int, ACE_TCHAR * [])
   {
     WORD wVersionRequested = MAKEWORD (2, 2);
     WSADATA wsaData;
@@ -103,30 +106,30 @@ main (int, char * [])
 
     DWORD dwRetVal = 0;
 
-    PIP_ADAPTER_ADDRESSES pAddresses = NULL;
+    PIP_ADAPTER_ADDRESSES pAddresses = nullptr;
     ULONG outBufLen = 0;
     ULONG Iterations = 0;
 
-    PIP_ADAPTER_ADDRESSES pCurrAddresses = NULL;
+    PIP_ADAPTER_ADDRESSES pCurrAddresses = nullptr;
 
     // Allocate a 15 KB buffer to start with.
     outBufLen = WORKING_BUFFER_SIZE;
 
     do
       {
-        pAddresses = (IP_ADAPTER_ADDRESSES *) MALLOC (outBufLen);
-        if (pAddresses == NULL)
+        pAddresses = reinterpret_cast <IP_ADAPTER_ADDRESSES *> (MALLOC (outBufLen));
+        if (pAddresses == nullptr)
         {
           ::std::cout << "Memory allocation failed for IP_ADAPTER_ADDRESSES struct" << ::std::endl;
           return 1;
         }
 
-        dwRetVal = ::GetAdaptersAddresses (AF_UNSPEC, GAA_FLAG_INCLUDE_PREFIX, NULL, pAddresses, &outBufLen);
+        dwRetVal = ::GetAdaptersAddresses (AF_UNSPEC, GAA_FLAG_INCLUDE_PREFIX, nullptr, pAddresses, &outBufLen);
 
         if (dwRetVal == ERROR_BUFFER_OVERFLOW)
           {
               FREE (pAddresses);
-              pAddresses = NULL;
+              pAddresses = nullptr;
           }
         else
           {
@@ -165,7 +168,7 @@ main (int, char * [])
                 structLen = sizeof (struct sockaddr_in6);
               }
             int len = hostlen;
-            s = ::WSAAddressToStringW (sa, structLen, NULL, host, (LPDWORD)&len);
+            s = ::WSAAddressToStringW (sa, structLen, nullptr, host, (LPDWORD)&len);
             if (s != 0)
               {
                 ::std::cout << "WARNING: WSAAddressToString() failed: WSAGetLastError() = " << ::WSAGetLastError () << ::std::endl;
@@ -180,7 +183,6 @@ main (int, char * [])
               }
             if (sa->sa_family == AF_INET)
               {
-                sockaddr_in *sin = (sockaddr_in *)sa;
                 if (hostStr.rfind ("127.", 0) == 0)
                   {
                     if (!hasLOv4)
@@ -201,7 +203,7 @@ main (int, char * [])
               }
             else if (sa->sa_family == AF_INET6)
               {
-                sockaddr_in6 *sin = (sockaddr_in6*)sa;
+                struct sockaddr_in6 *sin = reinterpret_cast <sockaddr_in6 *> (sa);
                 if (is_loopback (&sin->sin6_addr))
                   {
                     if (!hasLOv6)
@@ -227,12 +229,9 @@ main (int, char * [])
         pAddresses = pAddresses->Next;
       }
 
-    if (pAddresses)
-      {
-        FREE (pAddresses);
-      }
+    FREE (pAddresses);
 
-    return 1;
+    return 0;
   }
 
 #else
@@ -247,8 +246,11 @@ main (int, char * [])
 #include <sys/ioctl.h>
 #include <net/if.h>
 
+#include "ace/OS_main.h"
+#include "ace/ace_wchar.h"
+
 int
-main (int, char * [])
+ACE_TMAIN (int, ACE_TCHAR * [])
   {
     struct ifaddrs *ifaddr;
     if (::getifaddrs (&ifaddr) == -1)
@@ -309,8 +311,7 @@ main (int, char * [])
 
         else if (ifa->ifa_addr->sa_family == AF_INET6)
           {
-            struct sockaddr_in6 *addr =
-              reinterpret_cast<sockaddr_in6 *> (ifa->ifa_addr);
+            struct sockaddr_in6 *addr = reinterpret_cast <sockaddr_in6 *> (ifa->ifa_addr);
             s = ::getnameinfo (ifa->ifa_addr,
                                sizeof(struct sockaddr_in6),
                                host, hostlen,

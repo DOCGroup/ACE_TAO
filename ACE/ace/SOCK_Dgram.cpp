@@ -817,8 +817,11 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
               IP_ADAPTER_UNICAST_ADDRESS *uni = 0;
               for (uni = pAddrs->FirstUnicastAddress; uni != 0; uni = uni->Next)
                 {
-                  sockaddr_in6 *sin = (sockaddr_in6*)uni->Address.lpSockaddr;
-                  if (std::memcmp ((void *)&net_if_in6_addr, (void *)&sin->sin6_addr, sizeof (in6_addr)) == 0)
+                  struct sockaddr_in6 *sin = reinterpret_cast <sockaddr_in6 *> (uni->Address.lpSockaddr);
+                  if (std::memcmp (
+                       reinterpret_cast <void *> (&net_if_in6_addr),
+                       reinterpret_cast <void *> (&sin->sin6_addr),
+                       sizeof (in6_addr)) == 0)
                     {
                       lmreq.ipv6mr_interface = pAddrs->Ipv6IfIndex;
                       break;

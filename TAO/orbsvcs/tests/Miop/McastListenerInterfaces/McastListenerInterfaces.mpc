@@ -32,7 +32,7 @@ project(*Client): taoexe {
   }
 }
 
-project(*if_addrs_helper) {
+project(*Helper) {
   exename = if_addrs_helper
 
   Header_Files {
