@@ -835,7 +835,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
           else if ((num_if && pAddrs->Ipv6IfIndex == static_cast<unsigned int>(if_ix))
                    || (!num_if &&
                        (ACE_OS::strcmp (net_if_char, pAddrs->AdapterName) == 0
-                        || ACE_OS::strcmp (net_if_char, pAddrs->FriendlyName) == 0)))
+                        || ACE_OS::strcmp (ACE_TEXT_CHAR_TO_TCHAR (net_if_char), pAddrs->FriendlyName) == 0)))
             {
               lmreq.ipv6mr_interface = pAddrs->Ipv6IfIndex;
               break;
