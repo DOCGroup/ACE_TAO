@@ -1028,7 +1028,7 @@ ACE_INET_Addr::get_interface_name () const
 void
 ACE_INET_Addr::set_interface_name (const char * if_name)
 {
-  int length (if_name == 0 ? 0 : strnlen (if_name, 52)); // stops counting at 52 if null byte not found by then
+  size_t length (if_name == 0 ? 0 : strnlen (if_name, 52)); // stops counting at 52 if null byte not found by then
   if (length > 50)
     {
       // Interface names are usually just a few characters, Windows are the longest, as they are UUIDs
