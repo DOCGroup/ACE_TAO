@@ -1035,7 +1035,7 @@ ACE_INET_Addr::set_interface_name (const char * if_name)
       std::string msg("ACE_INET_Addr::set_interface_name: if_name is too long and likely not an interface name: ");
       msg += if_name;
       msg += "\n";
-      ACELIB_ERROR ((LM_ERROR, ACE_TEXT (msg.c_str())));
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT_CHAR_TO_TCHAR (msg.c_str())));
       return;
     }
   delete [] this->if_name_;
