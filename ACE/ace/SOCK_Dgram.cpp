@@ -684,7 +684,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
           while (pAddrs && set_result == -1)
             {
               if (ACE_OS::strcmp (net_if_char, pAddrs->AdapterName) == 0 ||
-                  ACE_OS::strcmp (ACE_TEXT_ALWAYS_WCHAR (net_if_char), pAddrs->FriendlyName) == 0)
+                  ACE_OS::strcmp (ACE_TEXT_CHAR_TO_TCHAR (net_if_char), pAddrs->FriendlyName) == 0)
                 {
                   PIP_ADAPTER_UNICAST_ADDRESS pUnicast = pAddrs->FirstUnicastAddress;
                   LPSOCKADDR sa = pUnicast->Address.lpSockaddr;
