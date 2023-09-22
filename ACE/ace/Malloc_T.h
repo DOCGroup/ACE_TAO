@@ -286,6 +286,9 @@ public:
   /// Return the number of chunks available in the hierarchy.
   size_t pool_depth ();
 
+  /// Return the sum of chunks including used and freed in the hierarchy.
+  size_t pool_sum ();
+
   /// Returns a reference to the lock used to provide mutual exclusion to
   /// the allocator hierarchy.
   ACE_LOCK &mutex ();
@@ -302,6 +305,9 @@ private:
 
   /// Remember the size of our chunks for creating fresh allocator in future.
   const size_t chunk_size_;
+
+  /// Remember the sum of our chunks including used and freed
+  size_t chunk_sum_;
 };
 
 /**
