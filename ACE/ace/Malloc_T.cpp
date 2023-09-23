@@ -385,6 +385,7 @@ ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::ACE_Cascaded_Multi_Size_Based
   comb_alloc_ptr tmp;
   // If ACE_NEW fails, the hierarchy_ will be reconstructed when malloc API is called.
   ACE_NEW (tmp, comb_alloc_type (this->initial_n_chunks_, this->chunk_size_));
+
   this->hierarchy_.push_back (tmp);
 }
 
@@ -405,22 +406,23 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   // Check if size requested fits within pre-determined size.
   if (nbytes > this->chunk_size_)
     return nullptr;
-  
+
+  // Will be assigned by lately Binary Search process.
+  size_t chunk_size;
+
   // Use Binary Search to find minimal pos that value is bigger than nbytes.
   size_t m = 0;
   size_t l = 0;
-  size_t h = 0;
-
-  // Must has initial value When hierarchy_ is empty
-  size_t chunk_size = this->chunk_size_;
+  size_t h = this->hierarchy_.size();
 
   while (l <= h)
   {
     m = (l + h) / 2;
     chunk_size = this->chunk_size_ << m;
+
     if (chunk_size >= nbytes)
     {
-      // End loop
+      // End loop.
       if (m == 0)
         break;
 
@@ -432,7 +434,7 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
     }
   }
 
-  // Not in hierarchy or less than nbytes when search
+  // Not in hierarchy or less than nbytes when Binary Search.
   while (chunk_size < nbytes)
   {
     chunk_size <<= 1;
@@ -444,7 +446,7 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, nullptr));
 
-  if (m < this->hierarchy_.size () && this->hierarchy_[m] != nullptr)
+  if (m < this->hierarchy_.size() && this->hierarchy_[m] != nullptr)
   {
     void* ptr = this->hierarchy_[m]->malloc(nbytes);
     if (ptr == nullptr)
