@@ -379,8 +379,8 @@ template <class ACE_LOCK>
 ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::ACE_Cascaded_Multi_Size_Based_Allocator
 (size_t initial_n_chunks, size_t chunk_size, size_t min_initial_n_chunks)
   : initial_n_chunks_ (initial_n_chunks),
-    chunk_size_ (chunk_size),
-    min_initial_n_chunks_ (min_initial_n_chunks)
+    min_initial_n_chunks_ (min_initial_n_chunks),
+    chunk_size_ (chunk_size)
 {
   ACE_ASSERT (this->chunk_size_ > 0);
 
