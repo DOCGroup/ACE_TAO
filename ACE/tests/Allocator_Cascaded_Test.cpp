@@ -15,6 +15,7 @@
 
 #include "ace/Malloc_T.h"
 #include "test_config.h"
+#include <vector>
 
 #define ACE_TEST_EXCEPTION_RETURN(expression, message)   \
 do                                                       \
@@ -25,6 +26,19 @@ do                                                       \
   }                                                      \
 }                                                        \
 while (0)
+
+#define ACE_ASSERT_RETURN(expression, message)  \
+do                                                        \
+{                                                         \
+  if (!(expression))                                      \
+  {                                                       \
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (message)), 1); \
+  }                                                       \
+}                                                         \
+while (0)
+
+#define DELTA(level, initial_chunks, min_initial_chunks) \
+  (initial_chunks >> level) > min_initial_chunks ? (initial_chunks >> level) : min_initial_chunks
 
 static int
 run_free_lock_cascaded_allocator_test ()
@@ -79,59 +93,158 @@ run_free_lock_cascaded_allocator_test ()
 }
 
 static int
-run_free_lock_cascaded_multi_size_based_allocator_test ()
+run_cascaded_multi_size_based_allocator_basic_test ()
 {
   ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
 
-  const size_t initial_n_chunks = 2;
-  const size_t chunk_size = sizeof (void*);
+  const size_t initial_n_chunks = 11;
+  const size_t min_initial_n_chunks = 2;
+  const size_t chunk_size = sizeof (void*) + 5;
+  const size_t nbytes = chunk_size;
 
+  std::vector<void*> ptrs;
   void *ptr, *ptr1, *ptr2;
-  size_t nbytes = chunk_size;
-  size_t chunk_sum, old_chunk_sum;
-  char initial_value = '\0';
+  size_t pool_sum, pool_depth;
 
-  ACE_Cascaded_Multi_Size_Based_Allocator<ACE_SYNCH_MUTEX> alloc (initial_n_chunks, sizeof (void*));
-  chunk_sum = alloc.pool_sum ();
-  ACE_TEST_EXCEPTION_RETURN (chunk_sum != initial_n_chunks, "  initial pool sum must be initial_n_chunks\n");
+ 
+  const char initial_value = '\0';
+
+  ACE_Cascaded_Multi_Size_Based_Allocator<ACE_SYNCH_MUTEX> alloc (initial_n_chunks, chunk_size, min_initial_n_chunks);
+  pool_sum = alloc.pool_sum ();
+  ACE_ASSERT_RETURN (pool_sum == initial_n_chunks, "  initial pool sum must be initial_n_chunks\n");
 
   ACE_DEBUG ((LM_INFO, "%C will test unsupported API ...\n", __func__));
   ptr = alloc.calloc (1, sizeof (void*), initial_value);
-  ACE_TEST_EXCEPTION_RETURN (
-    ptr != nullptr, "  pool must return nullptr for calloc(size_t n_elem, size_t elem_size, char initial_value) call\n");
-  ACE_TEST_EXCEPTION_RETURN (alloc.pool_depth () != initial_n_chunks,
+  ACE_ASSERT_RETURN (ptr == nullptr, 
+                             "  pool must return nullptr for calloc(size_t n_elem, size_t elem_size, char initial_value) call\n");
+
+  pool_depth = alloc.pool_depth ();
+  ACE_ASSERT_RETURN (pool_depth == initial_n_chunks,
                              "  initial pool depth must keep unchanged for call of unsupported API\n");
 
   ptr = alloc.malloc (nbytes);
-  ACE_TEST_EXCEPTION_RETURN (alloc.pool_depth () != 0, "  initial pool depth must be zero\n");
+  pool_depth = alloc.pool_depth ();
+  ACE_ASSERT_RETURN (pool_depth == (initial_n_chunks - 1), 
+                     "  initial pool depth must decrease by one\n");
   alloc.free (ptr);
-  ACE_TEST_EXCEPTION_RETURN (alloc.pool_depth () != initial_n_chunks,
-                             "  initial pool depth must be initial_n_chunks after free\n");
+  pool_depth = alloc.pool_depth ();
+  ACE_ASSERT_RETURN (pool_depth == initial_n_chunks,
+                     "  initial pool depth must restore to initial_n_chunks after free\n");
 
-  ACE_DEBUG ((LM_INFO, "%C will test cascaded allocator ...\n", __func__));
+  ACE_DEBUG ((LM_INFO, "%C will test first level cascaded allocator ...\n", __func__));
+
+  for (size_t i = 0; i < (2 * initial_n_chunks); ++i) 
+  {
+    ptr = alloc.malloc (nbytes);
+    ACE_ASSERT_RETURN (ptr != nullptr,
+                       "  pool must return valid ptr, cascaded pool must support to alloc more times firstly\n");
+    ptrs.push_back (ptr);
+  }
+
+  pool_sum = alloc.pool_sum ();
+  ACE_ASSERT_RETURN (pool_sum == (3 * initial_n_chunks),
+                     "  cascaded pool only has two levels, so the pool sum must be 3*initial_n_chunks after alloced 2 * initial_n_chunks times\n");
+
+  pool_depth = alloc.pool_depth ();
+  ACE_ASSERT_RETURN (pool_depth == (initial_n_chunks),
+                     "  cascaded pool only has two levels, so the pool depth must be initial_n_chunks after alloced 2 * initial_n_chunks times\n");
+ 
+  for (size_t i = 0; i < ptrs.size(); ++i)
+  {
+    alloc.free (ptrs[i]);
+  }
+
+  pool_sum = alloc.pool_sum ();
+  ACE_ASSERT_RETURN (pool_sum == (3 * initial_n_chunks),
+                     "  first cascaded allocator only has two levels, so the pool sum must be 3*initial_n_chunks after all freed\n");
+
+  pool_depth = alloc.pool_depth ();
+  ACE_ASSERT_RETURN (pool_depth == (3 * initial_n_chunks),
+                     "  first cascaded allocator only has two levels, so the pool depth must be initial_n_chunks after all freed\n");
+
+  return 0;
+}
+
+static int
+run_cascaded_multi_size_based_allocator_hierarchy_test ()
+{
+  ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
+
+  const size_t initial_n_chunks = 11;
+  const size_t min_initial_n_chunks = 2;
+  const size_t chunk_size = sizeof (void*) + 5;
+
+  void *ptr;
+  size_t pool_sum, old_pool_sum, pool_depth, old_pool_depth;
+  size_t level  = 0, delta;
+  size_t nbytes = chunk_size;
+
+
+  ACE_Cascaded_Multi_Size_Based_Allocator<ACE_SYNCH_MUTEX> alloc (initial_n_chunks, chunk_size, min_initial_n_chunks);
+  ACE_DEBUG ((LM_INFO, "%C Only test the basic malloc API  ...\n", __func__));
   ptr = alloc.malloc (nbytes);
-  ACE_TEST_EXCEPTION_RETURN (ptr == nullptr,
-                             "  pool must return valid ptr, cascaded pool must support to alloc more times firstly\n");
+  ACE_ASSERT_RETURN (ptr != nullptr,
+                     "  pool must return valid ptr when requesting initial chunk_size\n");
+  alloc.free (ptr);
 
-  ptr1 = alloc.malloc (nbytes);
-  ACE_TEST_EXCEPTION_RETURN (ptr1 == nullptr,
-                             "  pool must return valid ptr, cascaded pool must support to alloc more times secondly\n");
-  ACE_TEST_EXCEPTION_RETURN (alloc.pool_depth () != 1, "  cascaded pool depth must support to alloc twice\n");
+  ACE_DEBUG ((LM_INFO, "%C Will trigger the creation of nested allocator on next level  ...\n", __func__));
+  level = 1;
+  old_pool_sum   = alloc.pool_sum ();
+  old_pool_depth = alloc.pool_depth ();
+  nbytes         = chunk_size << level;
+  ptr            = alloc.malloc (nbytes );
+  ACE_ASSERT_RETURN (ptr != nullptr,
+                     "  pool must return valid ptr when requesting 2 * chunk_size\n");
 
-  old_chunk_sum = chunk_sum;
-  chunk_sum = alloc.pool_sum ();
-  ACE_TEST_EXCEPTION_RETURN (chunk_sum < old_chunk_sum, "  cascaded pool sum must be bigger than that of initial pool\n");
-  ACE_TEST_EXCEPTION_RETURN (chunk_sum != (3 * initial_n_chunks),
-                             "  cascaded pool sum must be as expected, pool has been enlarged\n");
+  pool_sum   = alloc.pool_sum ();
+  delta      = DELTA (level, initial_n_chunks, min_initial_n_chunks);
+  ACE_ASSERT_RETURN (pool_sum = (old_pool_sum + delta), 
+                     "  pool sum must increase as delta\n");
+  
+  alloc.free (ptr);
+  pool_depth = alloc.pool_depth ();
+  ACE_ASSERT_RETURN (pool_depth = (old_pool_depth + delta), 
+                     "  pool depth must increase as delta\n");
 
-  ptr2 = alloc.calloc (nbytes);
-  ACE_TEST_EXCEPTION_RETURN (*static_cast<ACE_UINT64*> (ptr2) != 0, "  calloc call will clear the memory to zero\n");
+
+  ACE_DEBUG ((LM_INFO, "%C Will trigger the creation of allocator on more lowwer level  ...\n", __func__));
+  level = 11;
+  old_pool_sum   = alloc.pool_sum ();
+  old_pool_depth = alloc.pool_depth ();
+  nbytes         = chunk_size << level;
+  ptr            = alloc.malloc (nbytes);
+  ACE_ASSERT_RETURN (ptr != nullptr,
+                     "  pool must return valid ptr when requesting chunk_size << 11\n");
+
+  pool_sum = alloc.pool_sum ();
+  delta    = DELTA (level, initial_n_chunks, min_initial_n_chunks);
+  ACE_ASSERT_RETURN (pool_sum = (old_pool_sum + delta), 
+                    "  pool sum must increase as delta only created request level\n");
 
   alloc.free (ptr);
-  alloc.free (ptr1);
-  alloc.free (ptr2);
-  ACE_TEST_EXCEPTION_RETURN (alloc.pool_depth () != (initial_n_chunks + (2 * initial_n_chunks)),
-                             "  cascaded pool depth must be three after having freed all malloc ptrs\n");
+  pool_depth = alloc.pool_depth ();
+  ACE_ASSERT_RETURN (pool_depth = (old_pool_depth + delta), 
+                     "  pool depth must increase as delta only created request level\n");
+
+  for (size_t i = 2; i < level; ++i) 
+  {
+    old_pool_sum    = alloc.pool_sum ();
+    old_pool_depth  = alloc.pool_depth ();
+    nbytes          = chunk_size << i;
+    ptr             = alloc.malloc (nbytes);
+    ACE_ASSERT_RETURN (ptr != nullptr, 
+                       "  pool must return valid ptr when requesting chunk_size << 11\n");
+
+    pool_sum = alloc.pool_sum ();
+    delta = DELTA (i, initial_n_chunks, min_initial_n_chunks);
+    ACE_ASSERT_RETURN (pool_sum = (old_pool_sum + delta),
+                       "  pool sum must increase as delta only created request level\n");
+
+    alloc.free (ptr);
+    pool_depth = alloc.pool_depth ();
+    ACE_ASSERT_RETURN (pool_depth = (old_pool_depth + delta),
+                       "  pool depth must increase as delta only created request level\n"); 
+  }
 
   return 0;
 }
@@ -143,8 +256,12 @@ run_main (int, ACE_TCHAR *[])
 
   int retval = 0;
 
-  // Run the tests for each type of ordering.
-  retval = run_free_lock_cascaded_allocator_test ();
+  ACE_DEBUG ((LM_INFO, "%C Run the tests for Cascaded_Allocator ...\n", __func__));
+  retval = run_free_lock_cascaded_allocator_test();
+
+  ACE_DEBUG ((LM_INFO, "%C Run the tests for Cascaded_Multi_Size_Based_Allocator ...\n", __func__));
+  retval = run_cascaded_multi_size_based_allocator_basic_test();
+  retval = run_cascaded_multi_size_based_allocator_hierarchy_test ();
 
   ACE_END_TEST;
 

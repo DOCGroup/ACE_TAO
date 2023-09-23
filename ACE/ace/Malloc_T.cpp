@@ -396,7 +396,8 @@ ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::~ACE_Cascaded_Multi_Size_Base
 {
   for (size_t h = 0; h < this->hierarchy_.size (); h++)
   {
-    delete this->hierarchy_[h];
+    if (this->hierarchy_[h] != nullptr)
+      delete this->hierarchy_[h];
   }
 
   this->hierarchy_.clear ();
@@ -405,10 +406,6 @@ ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::~ACE_Cascaded_Multi_Size_Base
 template <class ACE_LOCK>
 void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
 {
-  // Check if size requested fits within pre-determined size.
-  if (nbytes > this->chunk_size_)
-    return nullptr;
-
   // Will be assigned by lately Binary Search process.
   size_t chunk_size;
 
@@ -509,9 +506,14 @@ void ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::free (void* ptr)
 
   ACE_ASSERT (this->hierarchy_.size () > 0);
 
-  // Use first allocator as a free chunk manager for all allocators when chunk freed.
-  if (ptr != nullptr && this->hierarchy_.size () > 0)
-    this->hierarchy_[0]->free (ptr);
+  if (ptr != nullptr) 
+  {
+    void* const hdr_ptr = static_cast<ACE_UINT8*> (ptr) - sizeof (ACE_UINT8);
+    const size_t h      = *static_cast<ACE_UINT8*> (hdr_ptr);
+
+    if (h < this->hierarchy_.size () && this->hierarchy_[h] != nullptr)
+      this->hierarchy_[h]->free (ptr);
+  }
 }
 
 template <class ACE_LOCK>
@@ -589,7 +591,8 @@ size_t ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::pool_depth ()
 
   for (size_t h = 0; h < this->hierarchy_.size (); h++)
   {
-    pool_depth += this->hierarchy_[h]->pool_depth ();
+    if (this->hierarchy_[h] != nullptr)
+      pool_depth += this->hierarchy_[h]->pool_depth ();
   }
 
   return pool_depth;
@@ -604,7 +607,8 @@ size_t ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::pool_sum ()
 
   for (size_t h = 0; h < this->hierarchy_.size (); h++)
   {
-    pool_sum += this->hierarchy_[h]->pool_sum ();
+    if (this->hierarchy_[h] != nullptr)
+      pool_sum += this->hierarchy_[h]->pool_sum ();
   }
 
   return pool_sum;
