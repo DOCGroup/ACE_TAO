@@ -189,8 +189,9 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Cascaded_Dynamic_Cached_All
   comb_alloc_ptr tmp;
   // If ACE_NEW fails, the hierarchy_ will be reconstructed when malloc API is called.
   ACE_NEW (tmp, comb_alloc_type(this->initial_n_chunks_, this->chunk_size_));
-  // Increase the chunk sum.
-  this->chunk_sum_ += tmp->pool_depth ();
+
+  // Increase the chunk sum if succeed.
+  this->chunk_sum_ += tmp->pool_depth();
   this->hierarchy_.push_back(tmp);
 }
 
@@ -227,8 +228,9 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   {
     comb_alloc_ptr tmp;
     ACE_NEW_RETURN (tmp, comb_alloc_type(this->initial_n_chunks_ * 2 * this->hierarchy_.size(), this->chunk_size_), nullptr);
-    // Increase the chunk sum.
-    this->chunk_sum_ += tmp->pool_depth ();
+
+    // Increase the chunk sum if succeed.
+    this->chunk_sum_ += tmp->pool_depth();
     this->hierarchy_.push_back(tmp);
     ptr = tmp->malloc(nbytes);
   }
@@ -263,10 +265,10 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
 {
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
 
-  ACE_ASSERT (this->hierarchy_.size () > 0);
+  ACE_ASSERT (this->hierarchy_.size() > 0);
 
   // Use first allocator as a free chunk manager for all allocators when chunk freed.
-  if (ptr != nullptr && this->hierarchy_.size () > 0)
+  if (ptr != nullptr && this->hierarchy_.size() > 0)
     this->hierarchy_[0]->free(ptr);
 }
 
@@ -343,9 +345,9 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::pool_depth ()
 
   size_t pool_depth = 0;
 
-  for (size_t h = 0; h < this->hierarchy_.size (); h++)
+  for (size_t h = 0; h < this->hierarchy_.size(); h++)
   {
-    pool_depth += this->hierarchy_[h]->pool_depth ();
+    pool_depth += this->hierarchy_[h]->pool_depth();
   }
 
   return pool_depth;
@@ -361,11 +363,11 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("initial_n_chunks_ = %u\n"), this->initial_n_chunks_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("chunk_size_ = %u\n"), this->chunk_size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("chunk_sum_ = %u\n"), this->chunk_sum_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("hierarchy_ size = %u\n"), this->hierarchy_.size ()));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("hierarchy_ size = %u\n"), this->hierarchy_.size()));
 
-  for (size_t h = 0; h < this->hierarchy_.size (); h++)
+  for (size_t h = 0; h < this->hierarchy_.size(); h++)
   {
-    this->hierarchy_[h]->dump ();
+    this->hierarchy_[h]->dump();
     ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   }
 
