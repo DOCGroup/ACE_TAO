@@ -313,18 +313,18 @@ private:
 /**
  * @class ACE_Cascaded_Multi_Size_Based_Allocator
  *
- * @brief A allocator nests a vector of various size-based allocator forming a allocator hierarchy.
- * that caches blocks for quicker access,
- * but with a hierarchy of cascaded, nested allocators
+ * @brief A allocator nests a vector of various size-based allocators using @a ACE_Cascaded_Dynamic_Cached_Allocator
+ * forming a allocator hierarchy, so, it will has 'infinite' space as your host.
+ * This allocator will decrease the complicated management overhead of @a ACE_Malloc
+ * when it has a very long linked list, but with various, random chunk size by a cost of O(1).
  *
- * This class enables caching of dynamically allocated,
- * fixed-size chunks. Notice that the @a chunk_size
- * must be greater than or equal to <code> sizeof (void*) </code> for
+ * Notice that the @a chunk_size must be greater than or equal to <code> sizeof (void*) </code> for
  * this to work properly.
  *
- * Notice that when the latest allocator is empty, the allocator will create a fresh
+ * Notice when requested memory space can't be meet, the allocator will create a fresh
  * @a ACE_Cascaded_Dynamic_Cached_Allocator allocator again with
- * <code> init_n_chunks* the sum of current allocators </code> as it's constructor parameter,
+ * <code> init_n_chunks </code> as its constructor parameter, but decreased according to its level order,
+ * <code> chunk_size </code> as its constructor parameter, but increased according to its level order,
  * so all the allocators will form a cascaded hierarchy.
 
  * This class can be configured flexibly with different types of
@@ -341,11 +341,15 @@ public:
   using comb_alloc_type = ACE_Cascaded_Dynamic_Cached_Allocator<ACE_Null_Mutex>;
   using comb_alloc_ptr  = comb_alloc_type*;
 
-  /// Create a cached memory pool with @a initial_n_chunks chunks
-  /// each with @a chunk_size size as its initial capacity.
-  /// When create a fresh allocator, it's constructor parameter <code> initial_n_chunks </code>
-  /// muse be greater than or equal to @a min_initial_n_chunks
-  ACE_Cascaded_Multi_Size_Based_Allocator (size_t initial_n_chunks, size_t chunk_size, size_t min_initial_n_chunks = 1);
+  /// Create a cached memory pool with @a initial_n_chunks and @a initial_chunk_size as pool starting base
+  /// and @a min_initial_n_chunks as a adjustable threshold.
+  /// When creating a fresh @a ACE_Cascaded_Dynamic_Cached_Allocator, its constructor parameter <code> initial_n_chunks </code>
+  /// will be decreased by @a initial_chunk_size is be shifted right according to its level order,
+  /// but <code> initial_n_chunks </code> must be greater than or equal to @a min_initial_n_chunks,
+  /// and its another constructor parameter <code> chunk_size </code> will be increased
+  /// by @a initial_chunk_size is be shifted left according to its level order e.g. greater than previous level
+
+  ACE_Cascaded_Multi_Size_Based_Allocator (size_t initial_n_chunks, size_t initial_chunk_size, size_t min_initial_n_chunks = 1);
 
   /// Clear things up.
   ~ACE_Cascaded_Multi_Size_Based_Allocator ();
