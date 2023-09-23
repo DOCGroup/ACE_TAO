@@ -463,7 +463,7 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
 
   const size_t reinitial_n_chunks = this->initial_n_chunks_ >> m;
   comb_alloc_ptr newly_alloc;
-  ACE_NEW_RETURN (newly_alloc, 
+  ACE_NEW_RETURN (newly_alloc,
                   comb_alloc_type (reinitial_n_chunks > this->min_initial_n_chunks_ ? reinitial_n_chunks : this->min_initial_n_chunks_,
                                    chunk_size + sizeof(ACE_UINT8)),
                   nullptr
@@ -506,7 +506,7 @@ void ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::free (void* ptr)
 
   ACE_ASSERT (this->hierarchy_.size () > 0);
 
-  if (ptr != nullptr) 
+  if (ptr != nullptr)
   {
     void* const hdr_ptr = static_cast<ACE_UINT8*> (ptr) - sizeof (ACE_UINT8);
     const size_t h      = *static_cast<ACE_UINT8*> (hdr_ptr);

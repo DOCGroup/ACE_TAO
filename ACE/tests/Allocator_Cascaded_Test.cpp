@@ -108,7 +108,6 @@ run_cascaded_multi_size_based_allocator_basic_test ()
   void *ptr;
   size_t pool_sum, pool_depth;
 
- 
   const char initial_value = '\0';
 
   ACE_Cascaded_Multi_Size_Based_Allocator<ACE_SYNCH_MUTEX> alloc (initial_n_chunks, chunk_size, min_initial_n_chunks);
@@ -117,7 +116,7 @@ run_cascaded_multi_size_based_allocator_basic_test ()
 
   ACE_DEBUG ((LM_INFO, "%C will test unsupported API ...\n", __func__));
   ptr = alloc.calloc (1, sizeof (void*), initial_value);
-  ACE_ASSERT_RETURN (ptr == nullptr, 
+  ACE_ASSERT_RETURN (ptr == nullptr,
                              "  pool must return nullptr for calloc(size_t n_elem, size_t elem_size, char initial_value) call\n");
 
   pool_depth = alloc.pool_depth ();
@@ -126,7 +125,7 @@ run_cascaded_multi_size_based_allocator_basic_test ()
 
   ptr = alloc.malloc (nbytes);
   pool_depth = alloc.pool_depth ();
-  ACE_ASSERT_RETURN (pool_depth == (initial_n_chunks - 1), 
+  ACE_ASSERT_RETURN (pool_depth == (initial_n_chunks - 1),
                      "  initial pool depth must decrease by one\n");
   alloc.free (ptr);
   pool_depth = alloc.pool_depth ();
@@ -135,7 +134,7 @@ run_cascaded_multi_size_based_allocator_basic_test ()
 
   ACE_DEBUG ((LM_INFO, "%C will test first level cascaded allocator ...\n", __func__));
 
-  for (size_t i = 0; i < (2 * initial_n_chunks); ++i) 
+  for (size_t i = 0; i < (2 * initial_n_chunks); ++i)
   {
     ptr = alloc.malloc (nbytes);
     ACE_ASSERT_RETURN (ptr != nullptr,
@@ -150,7 +149,7 @@ run_cascaded_multi_size_based_allocator_basic_test ()
   pool_depth = alloc.pool_depth ();
   ACE_ASSERT_RETURN (pool_depth == (initial_n_chunks),
                      "  cascaded pool only has two levels, so the pool depth must be initial_n_chunks after alloced 2 * initial_n_chunks times\n");
- 
+
   for (size_t i = 0; i < ptrs.size(); ++i)
   {
     alloc.free (ptrs[i]);
@@ -200,12 +199,12 @@ run_cascaded_multi_size_based_allocator_hierarchy_test ()
 
   pool_sum   = alloc.pool_sum ();
   delta      = DELTA (level, initial_n_chunks, min_initial_n_chunks);
-  ACE_ASSERT_RETURN (pool_sum = (old_pool_sum + delta), 
+  ACE_ASSERT_RETURN (pool_sum = (old_pool_sum + delta),
                      "  pool sum must increase as delta\n");
-  
+
   alloc.free (ptr);
   pool_depth = alloc.pool_depth ();
-  ACE_ASSERT_RETURN (pool_depth = (old_pool_depth + delta), 
+  ACE_ASSERT_RETURN (pool_depth = (old_pool_depth + delta),
                      "  pool depth must increase as delta\n");
 
   ACE_DEBUG ((LM_INFO, "%C Will trigger the creation of allocator on more lowwer level  ...\n", __func__));
@@ -219,15 +218,15 @@ run_cascaded_multi_size_based_allocator_hierarchy_test ()
 
   pool_sum = alloc.pool_sum ();
   delta    = DELTA (level, initial_n_chunks, min_initial_n_chunks);
-  ACE_ASSERT_RETURN (pool_sum = (old_pool_sum + delta), 
+  ACE_ASSERT_RETURN (pool_sum = (old_pool_sum + delta),
                     "  pool sum must increase as delta only created request level\n");
 
   alloc.free (ptr);
   pool_depth = alloc.pool_depth ();
-  ACE_ASSERT_RETURN (pool_depth = (old_pool_depth + delta), 
+  ACE_ASSERT_RETURN (pool_depth = (old_pool_depth + delta),
                      "  pool depth must increase as delta only created request level\n");
 
-  for (size_t i = 2; i < level; ++i) 
+  for (size_t i = 2; i < level; ++i)
   {
     std::stringstream ss;
     old_pool_sum    = alloc.pool_sum ();
@@ -247,7 +246,7 @@ run_cascaded_multi_size_based_allocator_hierarchy_test ()
     alloc.free (ptr);
     pool_depth = alloc.pool_depth ();
     ss << "  pool depth must increase as delta: " << delta << " because only created request level: " << i << std::endl;
-    ACE_ASSERT_RETURN (pool_depth = (old_pool_depth + delta), ss.str ().c_str ()); 
+    ACE_ASSERT_RETURN (pool_depth = (old_pool_depth + delta), ss.str ().c_str ());
   }
 
   return 0;
@@ -276,8 +275,7 @@ run_cascaded_multi_size_based_allocator_hierarchy_free_test ()
   ACE_ASSERT_RETURN (ptr != nullptr, ss.str().c_str());
   alloc.free (ptr);
 
-  
-  for (size_t i = 3; i < 6; ++i) 
+  for (size_t i = 3; i < 6; ++i)
   {
     level = i;
     ACE_DEBUG ((LM_INFO, "%C test level: %u size-based cascaded allocator ...\n", __func__, level));
@@ -421,7 +419,7 @@ run_cascaded_multi_size_based_allocator_hierarchy_differential_test ()
     ss.str ("");
     ss << "  next level: " << next_level << " pool depth must unchanged" << std::endl;
     ACE_ASSERT_RETURN ((old_pool_depth) == pool_depth, ss.str ().c_str ());
-    
+
     ss.str ("");
     ss << "  next level: " << next_level << " pool sum must unchanged" << std::endl;
     ACE_ASSERT_RETURN ((old_pool_sum) == pool_sum, ss.str ().c_str ());
