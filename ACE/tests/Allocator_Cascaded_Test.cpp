@@ -37,13 +37,14 @@ run_free_lock_cascaded_allocator_test ()
   void *ptr, *ptr1, *ptr2;
   size_t nbytes = chunk_size;
   size_t chunk_sum, old_chunk_sum;
+  char initial_value = '\0';
 
-  ACE_Cascaded_Dynamic_Cached_Allocator<ACE_Null_Mutex> alloc (initial_n_chunks, sizeof (void*));
+  ACE_Cascaded_Dynamic_Cached_Allocator<ACE_SYNCH_MUTEX> alloc (initial_n_chunks, sizeof (void*));
   chunk_sum = alloc.pool_sum ();
   ACE_TEST_EXCEPTION_RETURN (chunk_sum != initial_n_chunks, "  initial pool sum must be initial_n_chunks\n");
 
   ACE_DEBUG ((LM_INFO, "%C will test unsupported API ...\n", __func__));
-  ptr = alloc.calloc (1, sizeof(void*));
+  ptr = alloc.calloc (1, sizeof (void*), initial_value);
   ACE_TEST_EXCEPTION_RETURN (ptr != nullptr, "  pool must return nullptr for calloc(size_t n_elem, size_t elem_size, char initial_value) call\n");
   ACE_TEST_EXCEPTION_RETURN(alloc.pool_depth() != initial_n_chunks, "  initial pool depth must keep unchanged for call of unsupported API\n");
 

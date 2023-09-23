@@ -210,7 +210,7 @@ private:
 /**
  * @class ACE_Cascaded_Dynamic_Cached_Allocator
  *
- * @brief A fixed-size-based allocator that caches blocks for quicker access,
+ * @brief A size-based allocator that caches blocks for quicker access,
  * but with a hierarchy of cascaded, nested allocators
  *
  * This class enables caching of dynamically allocated,
@@ -224,8 +224,8 @@ private:
  * so all the allocators will form a cascaded hierarchy.
 
  * This class can be configured flexibly with different types of
- * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a
- * ACE_Process_Mutex constructor API.
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and
+ * @a ACE_Process_Mutex constructor API.
  *
  * @sa ACE_Dynamic_Cached_Allocator
  */
@@ -237,7 +237,7 @@ public:
   using comb_alloc_type = ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex>;
   using comb_alloc_ptr  = comb_alloc_type*;
 
-  /// Create a cached memory pool with @a n_chunks chunks
+  /// Create a cached memory pool with @a initial_n_chunks chunks
   /// each with @a chunk_size size.
   ACE_Cascaded_Dynamic_Cached_Allocator (size_t initial_n_chunks, size_t chunk_size);
 
