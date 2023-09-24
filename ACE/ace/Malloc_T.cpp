@@ -618,7 +618,7 @@ template <class ACE_LOCK>
 void ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::dump () const
 {
 #if defined(ACE_HAS_DUMP)
-  ACE_TRACE ("ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::dump");
+  ACE_TRACE ("ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("initial_n_chunks_ = %u\n"), this->initial_n_chunks_));
@@ -628,8 +628,11 @@ void ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::dump () const
 
   for (size_t h = 0; h < this->hierarchy_.size (); h++)
   {
-    this->hierarchy_[h]->dump ();
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+    if (this->hierarchy_[h] != nullptr)
+    {
+      this->hierarchy_[h]->dump ();
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+    }
   }
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
