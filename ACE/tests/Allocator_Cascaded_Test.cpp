@@ -101,8 +101,8 @@ run_cascaded_multi_size_based_allocator_basic_test ()
 
   const size_t initial_n_chunks = 11;
   const size_t min_initial_n_chunks = 2;
-  const size_t chunk_size = sizeof (void*) + 5;
-  const size_t nbytes = chunk_size;
+  const size_t initial_chunk_size = sizeof (void*) + 5;
+  const size_t nbytes = initial_chunk_size;
 
   std::vector<void*> ptrs;
   void *ptr;
@@ -110,7 +110,7 @@ run_cascaded_multi_size_based_allocator_basic_test ()
 
   const char initial_value = '\0';
 
-  ACE_Cascaded_Multi_Size_Based_Allocator<ACE_SYNCH_MUTEX> alloc (initial_n_chunks, chunk_size, min_initial_n_chunks);
+  ACE_Cascaded_Multi_Size_Based_Allocator<ACE_SYNCH_MUTEX> alloc (initial_n_chunks, initial_chunk_size, min_initial_n_chunks);
   pool_sum = alloc.pool_sum ();
   ACE_ASSERT_RETURN (pool_sum == initial_n_chunks, "  initial pool sum must be initial_n_chunks\n");
 
@@ -118,6 +118,14 @@ run_cascaded_multi_size_based_allocator_basic_test ()
   ptr = alloc.calloc (1, sizeof (void*), initial_value);
   ACE_ASSERT_RETURN (ptr == nullptr,
                              "  pool must return nullptr for calloc(size_t n_elem, size_t elem_size, char initial_value) call\n");
+
+  ptr = alloc.calloc (nbytes, initial_value);
+  ACE_ASSERT_RETURN (ptr != nullptr,
+                     "  pool must return valid ptr for calloc(size_t nbytes, char initial_value) call\n");
+  char zeros[nbytes] = {};
+  ACE_ASSERT_RETURN (ACE_OS::memcmp (ptr, zeros, nbytes) == 0,
+                     "  the memory returned by calloc(size_t nbytes, char initial_value) must all be zero!\n");
+  alloc.free (ptr);
 
   pool_depth = alloc.pool_depth ();
   ACE_ASSERT_RETURN (pool_depth == initial_n_chunks,
@@ -173,26 +181,40 @@ run_cascaded_multi_size_based_allocator_hierarchy_test ()
 
   const size_t initial_n_chunks = 11;
   const size_t min_initial_n_chunks = 2;
-  const size_t chunk_size = sizeof (void*) + 5;
+  const size_t initial_chunk_size = sizeof (void*) + 5;
 
   void *ptr;
   size_t pool_sum, old_pool_sum, pool_depth, old_pool_depth;
   size_t level  = 0, delta;
-  size_t nbytes = chunk_size;
+  size_t nbytes = initial_chunk_size;
 
-
-  ACE_Cascaded_Multi_Size_Based_Allocator<ACE_SYNCH_MUTEX> alloc (initial_n_chunks, chunk_size, min_initial_n_chunks);
+  ACE_Cascaded_Multi_Size_Based_Allocator<ACE_SYNCH_MUTEX> alloc (initial_n_chunks, initial_chunk_size, min_initial_n_chunks);
   ACE_DEBUG ((LM_INFO, "%C Only test the basic malloc API  ...\n", __func__));
   ptr = alloc.malloc (nbytes);
   ACE_ASSERT_RETURN (ptr != nullptr,
                      "  pool must return valid ptr when requesting initial chunk_size\n");
   alloc.free (ptr);
 
+  ACE_DEBUG ((LM_INFO, "%C Only test the basic calloc API  ...\n", __func__));
+  char initial_value = '\0';
+  const size_t CMP_ARRAY_LEN = initial_chunk_size + 1024;
+  char cmpvalues[CMP_ARRAY_LEN];
+  for (nbytes = initial_chunk_size; nbytes < CMP_ARRAY_LEN; ++nbytes) 
+  {
+    ACE_OS::memset (cmpvalues, initial_value, CMP_ARRAY_LEN);
+    ptr = alloc.calloc (nbytes, initial_value);
+    ACE_ASSERT_RETURN (ptr != nullptr,
+                       "  pool must return valid ptr when callinging calloc API wiht various valid chunk_size\n");
+    ACE_ASSERT_RETURN (ACE_OS::memcmp (ptr, cmpvalues, nbytes) == 0,
+                       "  pool return memory must be the same as cmpvalues when callinging calloc API wiht various valid chunk_size\n");
+    alloc.free (ptr);
+  }
+
   ACE_DEBUG ((LM_INFO, "%C Will trigger the creation of nested allocator on next level  ...\n", __func__));
   level = 1;
   old_pool_sum   = alloc.pool_sum ();
   old_pool_depth = alloc.pool_depth ();
-  nbytes         = chunk_size << level;
+  nbytes         = initial_chunk_size << level;
   ptr            = alloc.malloc (nbytes );
   ACE_ASSERT_RETURN (ptr != nullptr,
                      "  pool must return valid ptr when requesting 2 * chunk_size\n");
@@ -211,7 +233,7 @@ run_cascaded_multi_size_based_allocator_hierarchy_test ()
   level = 11;
   old_pool_sum   = alloc.pool_sum ();
   old_pool_depth = alloc.pool_depth ();
-  nbytes         = chunk_size << level;
+  nbytes         = initial_chunk_size << level;
   ptr            = alloc.malloc (nbytes);
   ACE_ASSERT_RETURN (ptr != nullptr,
                      "  pool must return valid ptr when requesting chunk_size << 11\n");
@@ -231,7 +253,7 @@ run_cascaded_multi_size_based_allocator_hierarchy_test ()
     std::stringstream ss;
     old_pool_sum    = alloc.pool_sum ();
     old_pool_depth  = alloc.pool_depth ();
-    nbytes          = chunk_size << i;
+    nbytes          = initial_chunk_size << i;
     ptr             = alloc.malloc (nbytes);
     ss << "  pool must return valid ptr when requesting chunk_size: << " << nbytes << std::endl;
     ACE_ASSERT_RETURN (ptr != nullptr, ACE_TEXT_CHAR_TO_TCHAR(ss.str().c_str()));
