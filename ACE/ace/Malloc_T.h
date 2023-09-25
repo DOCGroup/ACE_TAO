@@ -416,8 +416,8 @@ private:
   /// Remember the min size of initial n_chunks for creating fresh allocator in future.
   const size_t min_initial_n_chunks_;
 
-  /// Remember the size of our chunks for creating fresh allocator in future.
-  const size_t chunk_size_;
+  /// Remember the initial size of our chunks for creating fresh allocator in future.
+  const size_t initial_chunk_size_;
 };
 
 /**

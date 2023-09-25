@@ -377,16 +377,16 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::dump () const
 
 template <class ACE_LOCK>
 ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::ACE_Cascaded_Multi_Size_Based_Allocator
-(size_t initial_n_chunks, size_t chunk_size, size_t min_initial_n_chunks)
+(size_t initial_n_chunks, size_t initial_chunk_size, size_t min_initial_n_chunks)
   : initial_n_chunks_ (initial_n_chunks),
     min_initial_n_chunks_ (min_initial_n_chunks),
-    chunk_size_ (chunk_size)
+    initial_chunk_size_ (initial_chunk_size)
 {
-  ACE_ASSERT (this->chunk_size_ > 0);
+  ACE_ASSERT (this->initial_chunk_size_ > 0);
 
   comb_alloc_ptr tmp;
   // If ACE_NEW fails, the hierarchy_ will be reconstructed when malloc API is called.
-  ACE_NEW (tmp, comb_alloc_type (this->initial_n_chunks_, this->chunk_size_));
+  ACE_NEW (tmp, comb_alloc_type (this->initial_n_chunks_, this->initial_chunk_size_));
 
   this->hierarchy_.push_back (tmp);
 }
@@ -417,7 +417,7 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   while (l <= h)
   {
     m = (l + h) / 2;
-    chunk_size = this->chunk_size_ << m;
+    chunk_size = this->initial_chunk_size_ << m;
 
     if (chunk_size >= nbytes)
     {
@@ -481,14 +481,10 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
 template <class ACE_LOCK>
 void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::calloc (size_t nbytes, char initial_value)
 {
-  // Check if size requested fits within pre-determined size.
-  if (nbytes > this->chunk_size_)
-    return nullptr;
-
   // No need any lock.
   void* ptr = malloc (nbytes);
   if (ptr != nullptr)
-    ACE_OS::memset (ptr, initial_value, this->chunk_size_);
+    ACE_OS::memset (ptr, initial_value, nbytes);
 
   return ptr;
 }
@@ -496,7 +492,7 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::calloc (size_t nbytes, 
 template <class ACE_LOCK>
 void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::calloc (size_t, size_t, char)
 {
-  ACE_NOTSUP_RETURN (0);
+  ACE_NOTSUP_RETURN (nullptr);
 }
 
 template <class ACE_LOCK>
@@ -623,7 +619,7 @@ void ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("initial_n_chunks_ = %u\n"), this->initial_n_chunks_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("min_initial_n_chunks_ = %u\n"), this->min_initial_n_chunks_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("chunk_size_ = %u\n"), this->chunk_size_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("chunk_size_ = %u\n"), this->initial_chunk_size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("hierarchy_ size = %u\n"), this->hierarchy_.size ()));
 
   for (size_t h = 0; h < this->hierarchy_.size (); h++)
