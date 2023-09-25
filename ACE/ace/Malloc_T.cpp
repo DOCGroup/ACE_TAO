@@ -257,7 +257,7 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t nbytes,
 template <class ACE_LOCK> void *
 ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t, size_t, char)
 {
-  ACE_NOTSUP_RETURN (0);
+  ACE_NOTSUP_RETURN (nullptr);
 }
 
 template <class ACE_LOCK> void

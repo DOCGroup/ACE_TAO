@@ -43,7 +43,7 @@ while (0)
   (initial_n_chunks >> level) > min_initial_n_chunks ? (initial_n_chunks >> level) : min_initial_n_chunks
 
 static int
-run_free_lock_cascaded_allocator_test ()
+run_cascaded_allocator_test ()
 {
   ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
 
@@ -452,7 +452,7 @@ run_main (int, ACE_TCHAR *[])
   int retval = 0;
 
   ACE_DEBUG ((LM_INFO, "%C Run the tests for Cascaded_Allocator ...\n", __func__));
-  retval += run_free_lock_cascaded_allocator_test();
+  retval += run_cascaded_allocator_test();
 
   ACE_DEBUG ((LM_INFO, "%C Run the tests for Cascaded_Multi_Size_Based_Allocator ...\n", __func__));
   retval += run_cascaded_multi_size_based_allocator_basic_test();
