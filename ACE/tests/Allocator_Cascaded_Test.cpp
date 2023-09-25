@@ -199,7 +199,7 @@ run_cascaded_multi_size_based_allocator_hierarchy_test ()
   char initial_value = '\0';
   const size_t CMP_ARRAY_LEN = initial_chunk_size + 1024;
   char cmpvalues[CMP_ARRAY_LEN];
-  for (nbytes = initial_chunk_size; nbytes < CMP_ARRAY_LEN; ++nbytes) 
+  for (nbytes = initial_chunk_size; nbytes < CMP_ARRAY_LEN; ++nbytes, ++initial_value)
   {
     ACE_OS::memset (cmpvalues, initial_value, CMP_ARRAY_LEN);
     ptr = alloc.calloc (nbytes, initial_value);

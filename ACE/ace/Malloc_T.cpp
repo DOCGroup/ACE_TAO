@@ -409,6 +409,9 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   // Will be assigned by lately Binary Search process.
   size_t chunk_size;
 
+  // Need one octet to record hierarchy pos
+  nbytes += sizeof (ACE_UINT8);
+
   // Use Binary Search to find minimal pos that value is bigger than nbytes.
   size_t m = 0;
   size_t l = 0;
@@ -465,7 +468,7 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   comb_alloc_ptr newly_alloc;
   ACE_NEW_RETURN (newly_alloc,
                   comb_alloc_type (reinitial_n_chunks > this->min_initial_n_chunks_ ? reinitial_n_chunks : this->min_initial_n_chunks_,
-                                   chunk_size + sizeof(ACE_UINT8)),
+                                   chunk_size),
                   nullptr
                  );
 
