@@ -27,7 +27,7 @@ do                                                       \
 while (0)
 
 static int
-run_free_lock_cascaded_allocator_test ()
+run_cascaded_allocator_test ()
 {
   ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
 
@@ -86,7 +86,7 @@ run_main (int, ACE_TCHAR *[])
   int retval = 0;
 
   // Run the tests for each type of ordering.
-  retval = run_free_lock_cascaded_allocator_test ();
+  retval = run_cascaded_allocator_test ();
 
   ACE_END_TEST;
 
