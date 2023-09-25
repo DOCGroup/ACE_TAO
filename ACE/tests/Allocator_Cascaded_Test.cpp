@@ -204,9 +204,9 @@ run_cascaded_multi_size_based_allocator_hierarchy_test ()
     ACE_OS::memset (cmpvalues, initial_value, CMP_ARRAY_LEN);
     ptr = alloc.calloc (nbytes, initial_value);
     ACE_ASSERT_RETURN (ptr != nullptr,
-                       "  pool must return valid ptr when callinging calloc API wiht various valid chunk_size\n");
+                       "  pool must return valid ptr when callinging calloc API with various valid chunk_size\n");
     ACE_ASSERT_RETURN (ACE_OS::memcmp (ptr, cmpvalues, nbytes) == 0,
-                       "  pool return memory must be the same as cmpvalues when callinging calloc API wiht various valid chunk_size\n");
+                       "  pool return memory must be the same as cmpvalues when callinging calloc API with various valid chunk_size\n");
     alloc.free (ptr);
   }
 
