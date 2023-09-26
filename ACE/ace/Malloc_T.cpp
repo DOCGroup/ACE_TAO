@@ -513,7 +513,7 @@ void ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::free (void* ptr)
     const size_t h      = *static_cast<ACE_UINT8*> (hdr_ptr);
 
     if (h < this->hierarchy_.size () && this->hierarchy_[h] != nullptr)
-      this->hierarchy_[h]->free (ptr);
+      this->hierarchy_[h]->free (hdr_ptr);
   }
 }
 
