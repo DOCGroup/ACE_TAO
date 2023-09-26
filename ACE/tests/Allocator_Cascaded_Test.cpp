@@ -130,7 +130,7 @@ run_cascaded_allocator_test ()
   char cmpvalues[chunk_size];
   char initial_cmp_value = initial_value;
   std::vector<void*> ptrs;
-  for (long i = 0; i < totalAllocSum; ++i, ++initial_cmp_value)
+  for (size_t i = 0; i < totalAllocSum; ++i, ++initial_cmp_value)
   {
     ACE_OS::memset (cmpvalues, initial_cmp_value, chunk_size);
     ptr = alloc.calloc (nbytes, initial_cmp_value);
@@ -154,7 +154,7 @@ run_cascaded_allocator_test ()
   ACE_TEST_EXCEPTION_RETURN (pool_depth != pool_sum,
                              "  pool depth must equal to pool sum after all chunks has been freed for deeply test\n");
 
-  for (long i = 0; i < totalAllocSum; ++i, ++initial_cmp_value)
+  for (size_t i = 0; i < totalAllocSum; ++i, ++initial_cmp_value)
   {
     ACE_OS::memset (cmpvalues, initial_cmp_value, chunk_size);
     ptr = alloc.calloc (nbytes, initial_cmp_value);
@@ -530,10 +530,10 @@ run_main (int, ACE_TCHAR *[])
   retval += run_cascaded_allocator_test();
 
   ACE_DEBUG ((LM_INFO, "%C Run the tests for Cascaded_Multi_Size_Based_Allocator ...\n", __func__));
-  //retval += run_cascaded_multi_size_based_allocator_basic_test();
+  retval += run_cascaded_multi_size_based_allocator_basic_test();
   retval += run_cascaded_multi_size_based_allocator_hierarchy_test ();
-  //retval += run_cascaded_multi_size_based_allocator_hierarchy_free_test ();
-  //retval += run_cascaded_multi_size_based_allocator_hierarchy_differential_test ();
+  retval += run_cascaded_multi_size_based_allocator_hierarchy_free_test ();
+  retval += run_cascaded_multi_size_based_allocator_hierarchy_differential_test ();
 
   ACE_END_TEST;
 
