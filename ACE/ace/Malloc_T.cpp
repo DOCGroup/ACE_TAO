@@ -386,7 +386,10 @@ ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::ACE_Cascaded_Multi_Size_Based
 
   comb_alloc_ptr tmp;
   // If ACE_NEW fails, the hierarchy_ will be reconstructed when malloc API is called.
-  ACE_NEW (tmp, comb_alloc_type (this->initial_n_chunks_, this->initial_chunk_size_ + sizeof(ACE_UINT8)));
+  // Notice: need one octet to record hierarchy pos
+  ACE_NEW (tmp, comb_alloc_type (this->initial_n_chunks_,
+                                 this->initial_chunk_size_ + sizeof(ACE_UINT8))
+          );
 
   this->hierarchy_.push_back (tmp);
 }
@@ -408,9 +411,6 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
 {
   // Will be assigned by lately Binary Search process.
   size_t chunk_size;
-
-  // Need one octet to record hierarchy pos
-  nbytes += sizeof (ACE_UINT8);
 
   // Use Binary Search to find minimal pos that value is bigger than nbytes.
   size_t m = 0;
@@ -467,6 +467,7 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
 
   const size_t reinitial_n_chunks = this->initial_n_chunks_ >> m;
   comb_alloc_ptr newly_alloc;
+  // Notice: need one octet to record hierarchy pos
   ACE_NEW_RETURN (newly_alloc,
                   comb_alloc_type (reinitial_n_chunks > this->min_initial_n_chunks_ ? reinitial_n_chunks : this->min_initial_n_chunks_,
                                    chunk_size + sizeof(ACE_UINT8)),
