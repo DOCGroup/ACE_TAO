@@ -404,6 +404,9 @@ public:
   ACE_LOCK& mutex ();
 
 private:
+  /// Chunk control header type.
+  typedef ACE_UINT8 comb_chunk_header_type;
+
   /// Synchronization variable for API.
   ACE_LOCK mutex_;
 

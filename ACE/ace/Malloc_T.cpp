@@ -388,7 +388,7 @@ ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::ACE_Cascaded_Multi_Size_Based
   // If ACE_NEW fails, the hierarchy_ will be reconstructed when malloc API is called.
   // Notice: need one octet to record hierarchy pos.
   ACE_NEW (tmp, comb_alloc_type (this->initial_n_chunks_,
-                                 this->initial_chunk_size_ + sizeof(ACE_UINT8))
+                                 this->initial_chunk_size_ + sizeof(comb_chunk_header_type))
           );
 
   this->hierarchy_.push_back (tmp);
@@ -455,8 +455,8 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
     if (ptr == nullptr)
       return nullptr;
 
-    *static_cast<ACE_UINT8*> (ptr) = static_cast<ACE_UINT8> (m);
-    return static_cast<ACE_UINT8*> (ptr) + sizeof (ACE_UINT8);
+    *static_cast<comb_chunk_header_type*> (ptr) = static_cast<comb_chunk_header_type> (m);
+    return static_cast<comb_chunk_header_type*> (ptr) + sizeof (comb_chunk_header_type);
   }
 
   // The found pos maybe nullptr or beyond the current hierarchy_ size.
@@ -470,7 +470,7 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   // Notice: need one octet to record hierarchy pos.
   ACE_NEW_RETURN (newly_alloc,
                   comb_alloc_type (reinitial_n_chunks > this->min_initial_n_chunks_ ? reinitial_n_chunks : this->min_initial_n_chunks_,
-                                   chunk_size + sizeof(ACE_UINT8)),
+                                   chunk_size + sizeof(comb_chunk_header_type)),
                   nullptr
                  );
 
@@ -479,8 +479,8 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   if (ptr == nullptr)
     return nullptr;
 
-  *static_cast<ACE_UINT8*> (ptr) = static_cast<ACE_UINT8> (m);
-  return static_cast<ACE_UINT8*> (ptr) + sizeof (ACE_UINT8);
+  *static_cast<comb_chunk_header_type*> (ptr) = static_cast<comb_chunk_header_type> (m);
+  return static_cast<comb_chunk_header_type*> (ptr) + sizeof (comb_chunk_header_type);
 }
 
 template <class ACE_LOCK>
@@ -503,18 +503,18 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::calloc (size_t, size_t,
 template <class ACE_LOCK>
 void ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::free (void* ptr)
 {
+  if (ptr == nullptr)
+    return;
+
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
 
   ACE_ASSERT (this->hierarchy_.size () > 0);
 
-  if (ptr != nullptr)
-  {
-    void* const hdr_ptr = static_cast<ACE_UINT8*> (ptr) - sizeof (ACE_UINT8);
-    const size_t h      = *static_cast<ACE_UINT8*> (hdr_ptr);
+  void* const hdr_ptr = static_cast<comb_chunk_header_type*> (ptr) - sizeof (comb_chunk_header_type);
+  const size_t h      = *static_cast<comb_chunk_header_type*> (hdr_ptr);
 
-    if (h < this->hierarchy_.size () && this->hierarchy_[h] != nullptr)
-      this->hierarchy_[h]->free (ptr);
-  }
+  if (h < this->hierarchy_.size () && this->hierarchy_[h] != nullptr)
+    this->hierarchy_[h]->free (hdr_ptr);
 }
 
 template <class ACE_LOCK>
