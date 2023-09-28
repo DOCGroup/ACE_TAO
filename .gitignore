@@ -51,10 +51,3 @@ ipch/
 *.*codeanalysis*
 read.lock
 fileList.bin
-
-# compiled test binaries, so that git status doesn't show untracked files
-/ACE/protocols/examples/INet/ftp_simple_wget
-/ACE/protocols/examples/INet/http_simple_wget
-/ACE/protocols/tests/HTBP/Send_Recv_Tests/client
-/ACE/protocols/tests/HTBP/Send_Recv_Tests/server
-/ACE/protocols/tests/INet/MT_Get/mt_get
