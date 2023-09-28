@@ -165,8 +165,7 @@ ACE_INET_Addr::reset ()
 }
 
 ACE_INET_Addr::ACE_INET_Addr ()
-  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
-    if_name_ (nullptr)
+  : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   // ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->reset_i ();
@@ -291,8 +290,7 @@ ACE_INET_Addr::set (const char address[], int address_family)
 }
 
 ACE_INET_Addr::ACE_INET_Addr (const char address[], int address_family)
-  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
-    if_name_ (nullptr)
+  : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (address, address_family);
@@ -300,8 +298,7 @@ ACE_INET_Addr::ACE_INET_Addr (const char address[], int address_family)
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INET_Addr::ACE_INET_Addr (const wchar_t address[], int address_family)
-  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
-    if_name_ (nullptr)
+  : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (address, address_family);
@@ -312,8 +309,7 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t address[], int address_family)
 // Copy constructor.
 
 ACE_INET_Addr::ACE_INET_Addr (const ACE_INET_Addr &sa)
-  : ACE_Addr (sa.get_type (), sa.get_size()),
-    if_name_ (nullptr)
+  : ACE_Addr (sa.get_type (), sa.get_size())
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (sa);
@@ -548,8 +544,7 @@ ACE_INET_Addr::set (const char port_name[],
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               const char host_name[],
                               int address_family)
-  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
-    if_name_ (nullptr)
+  : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
@@ -567,8 +562,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               const wchar_t host_name[],
                               int address_family)
-  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
-    if_name_ (nullptr)
+  : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
@@ -667,8 +661,7 @@ ACE_INET_Addr::set_addr (const void *addr, int /* len */, int map)
 
 // Creates a ACE_INET_Addr from a sockaddr_in structure.
 ACE_INET_Addr::ACE_INET_Addr (const sockaddr_in *addr, int len)
-  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
-    if_name_ (nullptr)
+  : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (addr, len);
@@ -677,8 +670,7 @@ ACE_INET_Addr::ACE_INET_Addr (const sockaddr_in *addr, int len)
 // Creates a ACE_INET_Addr from a PORT_NUMBER and an Internet address.
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               ACE_UINT32 inet_address)
-  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
-    if_name_ (nullptr)
+  : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number, inet_address) == -1)
@@ -692,8 +684,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
                               const char host_name[],
                               const char protocol[])
-  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
-    if_name_ (nullptr)
+  : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,
@@ -707,8 +698,7 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
 ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
                               const wchar_t host_name[],
                               const wchar_t protocol[])
-  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
-    if_name_ (nullptr)
+  : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,
@@ -723,8 +713,7 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
 ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
                               ACE_UINT32 inet_address,
                               const char protocol[])
-  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
-    if_name_ (nullptr)
+  : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,
@@ -738,8 +727,7 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
 ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
                               ACE_UINT32 inet_address,
                               const wchar_t protocol[])
-  : ACE_Addr (determine_type (), sizeof (inet_addr_)),
-    if_name_ (nullptr)
+  : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name,

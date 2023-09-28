@@ -438,7 +438,7 @@ private:
   std::vector<union ip46> inet_addrs_;
   std::vector<union ip46>::iterator inet_addrs_iter_;
 
-  std::shared_ptr<const std::string> if_name_;
+  std::shared_ptr<const std::string> if_name_ = nullptr;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
