@@ -239,6 +239,7 @@ TAO/orbsvcs/tests/Miop/McastPreferredInterfaces/run_test.pl: !MINIMUM !CORBA_E_C
 TAO/orbsvcs/tests/Miop/McastPreferredInterfaces/run_test_ipv6.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST IPV6 !NO_LOOPBACK_MCAST
 TAO/orbsvcs/tests/Miop/McastFragmentation/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST
 TAO/orbsvcs/tests/Miop/McastFragmentation/run_test_ipv6.pl: IPV6 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST
+TAO/orbsvcs/tests/Miop/McastListenerInterfaces/run_test.pl: IPV6 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !NO_MCAST !NO_LOOPBACK_MCAST
 # The following 2 tests use dynamic loading to change the default reactor on Windows !VxWorks !VxWorks_RTP !LabVIEW_RT
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ACE_FOR_TAO !LynxOS !ST
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ACE_FOR_TAO !LynxOS
