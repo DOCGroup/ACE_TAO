@@ -877,8 +877,11 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 
                       if (net_if_ace_inet_addr.is_ip_equal (if_addrs[if_cnt]))
                         {
-                          if (if_addrs[if_cnt].get_interface_name ())
-                            lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (if_addrs[if_cnt].get_interface_name ());
+                          auto if_name = if_addrs[if_cnt].get_interface_name ();
+                          if (if_name)
+                            {
+                              lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (if_name->c_str ());
+                            }
                           break;
                         }
                     }

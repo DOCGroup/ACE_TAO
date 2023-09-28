@@ -19,6 +19,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Addr.h"
+
+#include <memory>
+#include <string>
 #include <vector>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -291,7 +294,7 @@ public:
    * applicable only in certain, limited scopes, notably calls to
    * ACE::get_ip_interfaces().
    */
-  const char * get_interface_name () const;
+  std::shared_ptr<const std::string> get_interface_name () const;
 
   /**
    * For informational purposes only, set the name of the network interface to
@@ -435,7 +438,7 @@ private:
   std::vector<union ip46> inet_addrs_;
   std::vector<union ip46>::iterator inet_addrs_iter_;
 
-  char * if_name_;
+  std::shared_ptr<const std::string> if_name_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

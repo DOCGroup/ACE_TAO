@@ -1,4 +1,8 @@
 #include <iostream>
+#include <string>
+
+#define IPV4_MIN_LENGTH 7
+#define IPV6_MIN_LENGTH 3
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
 
@@ -21,6 +25,88 @@
 
 #define MALLOC(x) HeapAlloc(GetProcessHeap(), 0, (x))
 #define FREE(x) HeapFree(GetProcessHeap(), 0, (x))
+
+class WinsockHelper
+  {
+  public:
+    WinsockHelper () : status (-1)
+      {
+        WORD wVersionRequested = MAKEWORD (2, 2);
+        WSADATA wsaData;
+
+        int err = WSAStartup (wVersionRequested, &wsaData);
+        if (err != 0)
+          {
+            ::std::cout << "WSAStartup failed with error: " << err << ::std::endl;
+            this->status = 1;
+            return;
+          }
+
+        this->status = 0;
+      }
+
+    ~WinsockHelper ()
+      {
+        WSACleanup ();
+      }
+
+    int status;
+  };
+
+class AddressesHelper
+  {
+  public:
+    AddressesHelper () : pAddresses (nullptr), status (-2)
+      {
+        DWORD dwRetVal = 0;
+        ULONG iterations = 0;
+
+        // Allocate a 15 KB buffer to start with.
+        ULONG outBufLen = WORKING_BUFFER_SIZE;
+
+        do
+          {
+            this->pAddresses = reinterpret_cast <IP_ADAPTER_ADDRESSES *> (MALLOC (outBufLen));
+            if (this->pAddresses == nullptr)
+            {
+              ::std::cout << "Memory allocation failed for IP_ADAPTER_ADDRESSES struct" << ::std::endl;
+              this->status = 2;
+              return;
+            }
+
+            dwRetVal = ::GetAdaptersAddresses (AF_UNSPEC, GAA_FLAG_INCLUDE_PREFIX, nullptr, this->pAddresses, &outBufLen);
+
+            if (dwRetVal == ERROR_BUFFER_OVERFLOW)
+              {
+                  FREE (this->pAddresses);
+                  this->pAddresses = nullptr;
+              }
+            else
+              {
+                  break;
+              }
+
+            iterations++;
+          } while (dwRetVal == ERROR_BUFFER_OVERFLOW && iterations < MAX_TRIES);
+
+        if (dwRetVal != NO_ERROR)
+          {
+            ::std::cout << "Call to GetAdaptersAddresses failed with error: " << dwRetVal << ::std::endl;
+            this->status = 2;
+            return;
+          }
+
+        this->status = 0;
+      }
+
+    ~AddressesHelper ()
+      {
+        FREE (this->pAddresses);
+      }
+
+    PIP_ADAPTER_ADDRESSES pAddresses;
+    int status;
+  };
 
 bool
 is_loopback (const struct in6_addr * a)
@@ -80,128 +166,103 @@ is_v4_translated (const struct in6_addr * a)
             a->s6_words[5] == 0);
   }
 
-class WSACleanupHelper
+int
+address_to_string (LPSOCKADDR sa, ::std::string & host)
   {
-  public:
-    ~WSACleanupHelper()
+    static const DWORD ipv4_struct_length (sizeof (struct sockaddr_in));
+    static const DWORD ipv6_struct_length (sizeof (struct sockaddr_in6));
+    static const DWORD host_length = 100;
+
+    ::std::string::size_type min_length (IPV4_MIN_LENGTH);
+    DWORD struct_length (ipv4_struct_length);
+    if (sa->sa_family == AF_INET6)
       {
-        WSACleanup();
+        min_length = IPV6_MIN_LENGTH;
+        struct_length = ipv6_struct_length;
       }
-  };
+
+    DWORD length (host_length);
+    wchar_t host_wchars [host_length];
+
+    int err = ::WSAAddressToStringW (sa, struct_length, nullptr, host_wchars, &length);
+    if (err != 0)
+      {
+        ::std::cout << "WARNING: WSAAddressToString() failed: WSAGetLastError() = " <<
+                       ::WSAGetLastError () << ::std::endl;
+        return 1;
+      }
+    ::std::wstring whost (host_wchars);
+    // IP addresses never need > 1 byte/character
+    host = ::std::wstring_convert<::std::codecvt_utf8<wchar_t>, wchar_t> ().to_bytes (whost);
+    if (host.length () < min_length)
+      {
+        ::std::cout << "WARNING: WSAAddressToString() returned a too-short value: " << host << ::std::endl;
+        return 1;
+      }
+
+    return 0;
+  }
 
 int
 ACE_TMAIN (int, ACE_TCHAR * [])
   {
-    WORD wVersionRequested = MAKEWORD (2, 2);
-    WSADATA wsaData;
-
-    int err = WSAStartup (wVersionRequested, &wsaData);
-    if (err != 0)
+    WinsockHelper winsock;
+    if (winsock.status != 0)
       {
-        ::std::cout << "WSAStartup failed with error: " << err << ::std::endl;
-        return 1;
+        return winsock.status;
       }
 
-    WSACleanupHelper helper; // use RAII, since we return in numerous places
-
-    DWORD dwRetVal = 0;
-
-    PIP_ADAPTER_ADDRESSES pAddresses = nullptr;
-    ULONG outBufLen = 0;
-    ULONG Iterations = 0;
-
-    PIP_ADAPTER_ADDRESSES pCurrAddresses = nullptr;
-
-    // Allocate a 15 KB buffer to start with.
-    outBufLen = WORKING_BUFFER_SIZE;
-
-    do
+    AddressesHelper addresses;
+    if (addresses.status != 0)
       {
-        pAddresses = reinterpret_cast <IP_ADAPTER_ADDRESSES *> (MALLOC (outBufLen));
-        if (pAddresses == nullptr)
-        {
-          ::std::cout << "Memory allocation failed for IP_ADAPTER_ADDRESSES struct" << ::std::endl;
-          return 1;
-        }
-
-        dwRetVal = ::GetAdaptersAddresses (AF_UNSPEC, GAA_FLAG_INCLUDE_PREFIX, nullptr, pAddresses, &outBufLen);
-
-        if (dwRetVal == ERROR_BUFFER_OVERFLOW)
-          {
-              FREE (pAddresses);
-              pAddresses = nullptr;
-          }
-        else
-          {
-              break;
-          }
-
-        Iterations++;
-      } while (dwRetVal == ERROR_BUFFER_OVERFLOW && Iterations < MAX_TRIES);
-
-    if (dwRetVal != NO_ERROR)
-      {
-        ::std::cout << "Call to GetAdaptersAddresses failed with error: " << dwRetVal << ::std::endl;
-        if (pAddresses)
-          {
-            FREE (pAddresses);
-          }
-        return 1;
+        return addresses.status;
       }
-
-    int s;
-    static const int hostlen = 100;
-    wchar_t host [hostlen];
 
     bool hasLOv4 (false), hasETHv4 (false), hasLOv6 (false), hasETHv6 (false);
 
-    while (pAddresses)
+    while (addresses.pAddresses)
       {
+        if (addresses.pAddresses->OperStatus != IfOperStatusUp)
+          {
+            continue;
+          }
+
         IP_ADAPTER_UNICAST_ADDRESS *uni = 0;
-        for (uni = pAddresses->FirstUnicastAddress; uni != 0; uni = uni->Next)
+        for (uni = addresses.pAddresses->FirstUnicastAddress; uni != 0; uni = uni->Next)
           {
             LPSOCKADDR sa = uni->Address.lpSockaddr;
-            int minStrLen (7), structLen (sizeof (struct sockaddr_in));
-            if (sa->sa_family == AF_INET6)
+            if (sa->sa_family != AF_INET && sa->sa_family != AF_INET6)
               {
-                minStrLen = 3;
-                structLen = sizeof (struct sockaddr_in6);
-              }
-            int len = hostlen;
-            s = ::WSAAddressToStringW (sa, structLen, nullptr, host, (LPDWORD)&len);
-            if (s != 0)
-              {
-                ::std::cout << "WARNING: WSAAddressToString() failed: WSAGetLastError() = " << ::WSAGetLastError () << ::std::endl;
                 continue;
               }
-            ::std::wstring hostWstr (host);
-            // IP addresses never need > 1B/character
-            ::std::string hostStr (std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> ().to_bytes (hostWstr));
-            if (hostStr.length () < minStrLen)
+
+            ::std::string host;
+            if (address_to_string (sa, host) != 0)
               {
-                ::std::cout << "WARNING: WSAAddressToString() returned a too-short value: " << host << ::std::endl;
+                continue;
               }
+
             if (sa->sa_family == AF_INET)
               {
-                if (hostStr.rfind ("127.", 0) == 0)
+                if (host.rfind ("127.", 0) == 0)
                   {
                     if (!hasLOv4)
                       {
                         hasLOv4 = true;
-                        ::std::cout << "LOv4: " << pAddresses->AdapterName << " " << hostStr << ::std::endl;
+                        ::std::cout << "LOv4: " << addresses.pAddresses->AdapterName << " " << host << ::std::endl;
                       }
                   }
-                else if (hostStr.rfind ("0.", 0) != 0 &&
-                         hostStr.rfind ("169.254.", 0) != 0)
+                else if (host.rfind ("0.", 0) != 0 &&
+                         host.rfind ("169.254.", 0) != 0)
                   {
                     if (!hasETHv4)
                       {
                         hasETHv4 = true;
-                        ::std::cout << "ETHv4: " << pAddresses->AdapterName << " " << hostStr << ::std::endl;
+                        ::std::cout << "ETHv4: " << addresses.pAddresses->AdapterName << " " << host << ::std::endl;
                       }
                   }
               }
-            else if (sa->sa_family == AF_INET6)
+            else
               {
                 struct sockaddr_in6 *sin = reinterpret_cast <sockaddr_in6 *> (sa);
                 if (is_loopback (&sin->sin6_addr))
@@ -209,7 +270,7 @@ ACE_TMAIN (int, ACE_TCHAR * [])
                     if (!hasLOv6)
                       {
                         hasLOv6 = true;
-                        ::std::cout << "LOv6: " << pAddresses->AdapterName << " " << hostStr << ::std::endl;
+                        ::std::cout << "LOv6: " << addresses.pAddresses->AdapterName << " " << host << ::std::endl;
                       }
                   }
                 else if (!is_link_local (&sin->sin6_addr) &&
@@ -220,16 +281,19 @@ ACE_TMAIN (int, ACE_TCHAR * [])
                     if (!hasETHv6)
                       {
                         hasETHv6 = true;
-                        ::std::cout << "ETHv6: " << pAddresses->AdapterName << " " << hostStr << ::std::endl;
+                        ::std::cout << "ETHv6: " << addresses.pAddresses->AdapterName << " " << host << ::std::endl;
                       }
                   }
               }
+
+            if (hasLOv4 && hasLOv6 && hasETHv4 && hasETHv6)
+              {
+                break;
+              }
           }
 
-        pAddresses = pAddresses->Next;
+        addresses.pAddresses = addresses.pAddresses->Next;
       }
-
-    FREE (pAddresses);
 
     return 0;
   }
@@ -250,6 +314,40 @@ ACE_TMAIN (int, ACE_TCHAR * [])
 #include "ace/ace_wchar.h"
 
 int
+address_to_string (struct sockaddr *ifa_addr, ::std::string & host)
+  {
+    static const size_t ipv4_struct_length (sizeof (struct sockaddr_in));
+    static const size_t ipv6_struct_length (sizeof (struct sockaddr_in6));
+    static const size_t host_length = 100;
+
+    ::std::string::size_type min_length (IPV4_MIN_LENGTH);
+    size_t struct_length (ipv4_struct_length);
+    if (ifa_addr->sa_family == AF_INET6)
+      {
+        min_length = IPV6_MIN_LENGTH;
+        struct_length = ipv6_struct_length;
+      }
+
+    char host_chars [host_length];
+
+    int err = ::getnameinfo (ifa_addr, struct_length, host_chars, host_length, 0, 0, NI_NUMERICHOST);
+    if (err != 0)
+      {
+        ::std::cout << "WARNING: getnameinfo() failed: " << ::gai_strerror (err) << ::std::endl;
+        return 1;
+      }
+
+    host = ::std::string (host_chars);
+    if (host.length () < min_length)
+      {
+        ::std::cout << "WARNING: getnameinfo() returned a too-short value: " << host << ::std::endl;
+        return 1;
+      }
+
+    return 0;
+  }
+
+int
 ACE_TMAIN (int, ACE_TCHAR * [])
   {
     struct ifaddrs *ifaddr;
@@ -259,38 +357,25 @@ ACE_TMAIN (int, ACE_TCHAR * [])
         return 1;
       }
 
-    int s;
-    static const size_t hostlen = 100;
-    char host [hostlen];
-
     bool hasLOv4 (false), hasETHv4 (false), hasLOv6 (false), hasETHv6 (false);
 
     for (struct ifaddrs *ifa = ifaddr; ifa != 0; ifa = ifa->ifa_next)
       {
-        if (ifa->ifa_addr == 0)
+        if (ifa->ifa_addr == 0 || (ifa->ifa_flags & IFF_UP) != IFF_UP || (
+              ifa->ifa_addr->sa_family != AF_INET && ifa->ifa_addr->sa_family != AF_INET6))
           {
             continue;
           }
 
-        // Check to see if it's up.
-        if ((ifa->ifa_flags & IFF_UP) != IFF_UP)
+        ::std::string host;
+        if (address_to_string (ifa->ifa_addr, host) != 0)
           {
             continue;
           }
 
         if (ifa->ifa_addr->sa_family == AF_INET)
           {
-            s = ::getnameinfo (ifa->ifa_addr,
-                               sizeof(struct sockaddr_in),
-                               host, hostlen,
-                               0, 0, NI_NUMERICHOST);
-            if (s != 0)
-              {
-                ::std::cout << "WARNING: getnameinfo() failed: " << ::gai_strerror (s) << ::std::endl;
-                continue;
-              }
-            ::std::string hostStr (host);
-            if (hostStr.rfind ("127.", 0) == 0)
+            if (host.rfind ("127.", 0) == 0)
               {
                 if (!hasLOv4)
                   {
@@ -298,8 +383,8 @@ ACE_TMAIN (int, ACE_TCHAR * [])
                     ::std::cout << "LOv4: " << ifa->ifa_name << " " << host << ::std::endl;
                   }
               }
-            else if (hostStr.rfind ("0.", 0) != 0 &&
-                     hostStr.rfind ("169.254.", 0) != 0)
+            else if (host.rfind ("0.", 0) != 0 &&
+                     host.rfind ("169.254.", 0) != 0)
               {
                 if (!hasETHv4)
                   {
@@ -309,18 +394,9 @@ ACE_TMAIN (int, ACE_TCHAR * [])
               }
           }
 
-        else if (ifa->ifa_addr->sa_family == AF_INET6)
+        else
           {
             struct sockaddr_in6 *addr = reinterpret_cast <sockaddr_in6 *> (ifa->ifa_addr);
-            s = ::getnameinfo (ifa->ifa_addr,
-                               sizeof(struct sockaddr_in6),
-                               host, hostlen,
-                               0, 0, NI_NUMERICHOST);
-            if (s != 0)
-              {
-                ::std::cout << "WARNING: getnameinfo() failed: " << ::gai_strerror (s) << ::std::endl;
-                continue;
-              }
             if (IN6_IS_ADDR_LOOPBACK (&addr->sin6_addr) && (ifa->ifa_flags & IFF_LOOPBACK) == IFF_LOOPBACK)
               {
                 if (!hasLOv6)

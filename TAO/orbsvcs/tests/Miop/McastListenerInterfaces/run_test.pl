@@ -150,6 +150,7 @@ for my $test (@TESTS) {
         print "--------------------------------------------------------------------------------\n\n";
     }
     print "////// RUNNING TEST #$i //////\nDetails: " . testToString ($test) . "\n";
+    $i++;
 
     my $timeout_override = 0;
     if ($ATTACHING_DEBUGGER) {
@@ -227,6 +228,8 @@ dynamic PortableGroup_Loader Service_Object * TAO_PortableGroup:_make_TAO_Portab
         $server_status = timedWaitWrapper ($server, 0.1);
         if ($server_status != -1) {
             print STDERR "ERROR: server died with rc $server_status before IOR file was created.\n";
+            $server->Kill ();
+            timedWaitWrapper ($server, 1);
             $status = 1;
             next;
         }
@@ -278,7 +281,6 @@ dynamic PortableGroup_Loader Service_Object * TAO_PortableGroup:_make_TAO_Portab
     }
 
     unlink $SVC_CONF_BASE;
-    $i++;
 }
 
 print "\n";
