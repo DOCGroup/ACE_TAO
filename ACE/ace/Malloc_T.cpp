@@ -240,7 +240,6 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
 
     // Consider the exception of vector push_back call
     std::unique_ptr<comb_alloc_type> smart_ptr(tmp);
-    const auto old_size = this->hierarchy_.size();
     // Has strong exception safety guarantee for call of push_back.
     this->hierarchy_.push_back(smart_ptr.get());
 
