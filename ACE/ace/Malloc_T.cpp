@@ -466,7 +466,8 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, nullptr));
 
-  if (m < this->hierarchy_.size() && this->hierarchy_[m] != nullptr)
+  const auto size = this->hierarchy_.size();
+  if (m < size && this->hierarchy_[m] != nullptr)
   {
     void* ptr = this->hierarchy_[m]->malloc(nbytes);
     if (ptr == nullptr)
@@ -477,9 +478,14 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   }
 
   // The found pos maybe nullptr or beyond the current hierarchy_ size.
-  if (m >= this->hierarchy_.size())
+  if (m >= size)
   {
     this->hierarchy_.resize (m + 1, nullptr);
+    // Consider the exception of vector resize call
+    if (size == this->hierarchy_.size())
+    {
+      return nullptr;
+    }
   }
 
   const size_t reinitial_n_chunks = this->initial_n_chunks_ >> m;
