@@ -99,7 +99,8 @@ run_cascaded_allocator_test ()
   ptr1 = alloc.malloc (nbytes);
   ACE_TEST_EXCEPTION_RETURN (ptr1 == nullptr,
                              "  pool must return valid ptr, cascaded pool must support to alloc more times secondly\n");
-  ACE_TEST_EXCEPTION_RETURN (alloc.pool_depth () != 1,
+  pool_depth = alloc.pool_depth ();
+  ACE_TEST_EXCEPTION_RETURN (pool_depth != 1,
                              "  cascaded pool depth must support to alloc twice\n");
 
   old_pool_depth = alloc.pool_depth();
