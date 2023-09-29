@@ -190,9 +190,10 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Cascaded_Dynamic_Cached_All
   // If ACE_NEW fails, the hierarchy_ will be reconstructed when malloc API is called.
   ACE_NEW (tmp, comb_alloc_type(this->initial_n_chunks_, this->chunk_size_));
 
-  // Increase the chunk sum if succeed.
-  this->chunk_sum_ += tmp->pool_depth();
   this->hierarchy_.push_back(tmp);
+
+  // Increase the chunk sum if all points having potential risk of exception is passed.
+  this->chunk_sum_ += tmp->pool_depth ();
 }
 
 template <class ACE_LOCK>
@@ -231,9 +232,10 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
                     this->chunk_size_),
                     nullptr);
 
-    // Increase the chunk sum if succeed.
-    this->chunk_sum_ += tmp->pool_depth();
     this->hierarchy_.push_back(tmp);
+
+    // Increase the chunk sum if all points having potential risk of exception is passed.
+    this->chunk_sum_ += tmp->pool_depth ();
     ptr = tmp->malloc(nbytes);
   }
 
