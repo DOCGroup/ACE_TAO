@@ -14,6 +14,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 #include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -191,15 +192,18 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Cascaded_Dynamic_Cached_All
   ACE_NEW (tmp, comb_alloc_type(this->initial_n_chunks_, this->chunk_size_));
 
   // Consider the exception of vector push_back call
-  this->hierarchy_.push_back(tmp);
+  std::unique_ptr<comb_alloc_type> smart_ptr(tmp);
+  // Has strong exception safety guarantee for call of push_back.
+  this->hierarchy_.push_back (smart_ptr.get());
   if (0 == this->hierarchy_.size())
   {
-    delete tmp;
     return;
   }
 
   // Increase the chunk sum if all points having potential risk of exception is passed.
-  this->chunk_sum_ += tmp->pool_depth ();
+  this->chunk_sum_ += smart_ptr->pool_depth();
+
+  smart_ptr.release();
 }
 
 template <class ACE_LOCK>
@@ -239,17 +243,20 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
                     nullptr);
 
     // Consider the exception of vector push_back call
+    std::unique_ptr<comb_alloc_type> smart_ptr(tmp);
     const auto old_size = this->hierarchy_.size();
-    this->hierarchy_.push_back(tmp);
+    // Has strong exception safety guarantee for call of push_back.
+    this->hierarchy_.push_back(smart_ptr.get());
     if (old_size == this->hierarchy_.size())
     {
-      delete tmp;
       return nullptr;
     }
 
     // Increase the chunk sum if all points having potential risk of exception is passed.
-    this->chunk_sum_ += tmp->pool_depth ();
-    ptr = tmp->malloc(nbytes);
+    this->chunk_sum_ += smart_ptr->pool_depth();
+    ptr = smart_ptr->malloc(nbytes);
+
+    smart_ptr.release();
   }
 
   return ptr;
