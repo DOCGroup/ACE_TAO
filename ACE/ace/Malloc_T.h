@@ -220,7 +220,7 @@ private:
  *
  * Notice that when the latest allocator is empty, the allocator will create a fresh
  * @a ACE_Dynamic_Cached_Allocator allocator again with
- * <code> init_n_chunks* the sum of current allocators </code> as it's constructor parameter,
+ * <code> init_n_chunks * ( 1 << the sum of current allocators ) </code> as it's constructor parameter,
  * so all the allocators will form a cascaded hierarchy.
 
  * This class can be configured flexibly with different types of
