@@ -163,11 +163,11 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
               bytes_read = -1;
               break;
             }
-          int substat = ACE::handle_ready (handle,
-                                           timeout,
-                                           status == SSL_ERROR_WANT_READ,
-                                           status == SSL_ERROR_WANT_WRITE,
-                                           false);
+          const int substat = ACE::handle_ready (handle,
+                                                 timeout,
+                                                 status == SSL_ERROR_WANT_READ,
+                                                 status == SSL_ERROR_WANT_WRITE,
+                                                 false);
           if (substat == 1)   // Now ready to proceed
             {
               retry = true;
@@ -197,7 +197,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
         case SSL_ERROR_SSL:
           if (ERR_GET_REASON (::ERR_peek_last_error ()) != SSL_R_UNEXPECTED_EOF_WHILE_READING)
             goto default_; // --> handle as default error
-          ACE_FALLTHROUGH
+          ACE_FALLTHROUGH;
 
 #endif // OPENSSL_VERSION_NUMBER >= 0x30000000L || OPENSSL_VERSION_NUMBER == 0x1010105fL
         case SSL_ERROR_SYSCALL:
