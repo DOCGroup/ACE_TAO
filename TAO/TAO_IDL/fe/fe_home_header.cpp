@@ -28,24 +28,24 @@ FE_HomeHeader::FE_HomeHeader (UTL_ScopedName *n,
   this->compile_primary_key (primary_key);
 }
 
-FE_HomeHeader::~FE_HomeHeader (void)
+FE_HomeHeader::~FE_HomeHeader ()
 {
 }
 
 AST_Home *
-FE_HomeHeader::base_home (void) const
+FE_HomeHeader::base_home () const
 {
   return this->base_home_;
 }
 
 AST_Component *
-FE_HomeHeader::managed_component (void) const
+FE_HomeHeader::managed_component () const
 {
   return this->managed_component_;
 }
 
 AST_Type *
-FE_HomeHeader::primary_key (void) const
+FE_HomeHeader::primary_key () const
 {
   return this->primary_key_;
 }

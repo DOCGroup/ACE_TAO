@@ -13,7 +13,7 @@
 #include "be_extern.h"
 #include "be_helper.h"
 
-be_visitor_context::be_visitor_context (void)
+be_visitor_context::be_visitor_context ()
   : ast_visitor_context (),
     state_ (TAO_CodeGen::TAO_INITIAL),
     sub_state_ (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN),
@@ -67,7 +67,7 @@ be_visitor_context::operator= (const be_visitor_context &ctx)
   return *this;
 }
 
-be_visitor_context::~be_visitor_context (void)
+be_visitor_context::~be_visitor_context ()
 {
   // We do not own anything.
 }
@@ -75,7 +75,7 @@ be_visitor_context::~be_visitor_context (void)
 //= helpers
 
 void
-be_visitor_context::reset (void)
+be_visitor_context::reset ()
 {
   this->state_ = TAO_CodeGen::TAO_INITIAL;
   this->sub_state_ = TAO_CodeGen::TAO_SUB_STATE_UNKNOWN;
@@ -100,7 +100,7 @@ be_visitor_context::stream (TAO_OutStream *os)
 }
 
 TAO_OutStream *
-be_visitor_context::stream (void)
+be_visitor_context::stream ()
 {
   static TAO_OutStream null_stream;
   return os_ ? os_ : &null_stream;
@@ -113,7 +113,7 @@ be_visitor_context::scope (be_scope *s)
 }
 
 be_scope *
-be_visitor_context::scope (void)
+be_visitor_context::scope ()
 {
   return this->scope_;
 }
@@ -125,7 +125,7 @@ be_visitor_context::node (be_decl *n)
 }
 
 be_decl *
-be_visitor_context::node (void)
+be_visitor_context::node ()
 {
   return this->node_;
 }
@@ -137,7 +137,7 @@ be_visitor_context::state (TAO_CodeGen::CG_STATE st)
 }
 
 TAO_CodeGen::CG_STATE
-be_visitor_context::state (void)
+be_visitor_context::state ()
 {
   return this->state_;
 }
@@ -149,7 +149,7 @@ be_visitor_context::sub_state (TAO_CodeGen::CG_SUB_STATE st)
 }
 
 TAO_CodeGen::CG_SUB_STATE
-be_visitor_context::sub_state (void)
+be_visitor_context::sub_state ()
 {
   return this->sub_state_;
 }
@@ -161,7 +161,7 @@ be_visitor_context::tdef (be_typedef *node)
 }
 
 be_typedef *
-be_visitor_context::tdef (void)
+be_visitor_context::tdef ()
 {
   return this->tdef_;
 }
@@ -173,7 +173,7 @@ be_visitor_context::alias (be_typedef *node)
 }
 
 be_typedef *
-be_visitor_context::alias (void)
+be_visitor_context::alias ()
 {
   return this->alias_;
 }
@@ -185,7 +185,7 @@ be_visitor_context::attribute (be_attribute *node)
 }
 
 be_attribute *
-be_visitor_context::attribute (void)
+be_visitor_context::attribute ()
 {
   return this->attr_;
 }
@@ -197,7 +197,7 @@ be_visitor_context::exception (bool ib)
 }
 
 bool
-be_visitor_context::exception (void)
+be_visitor_context::exception ()
 {
   return this->exception_;
 }
@@ -209,7 +209,7 @@ be_visitor_context::comma (bool ib)
 }
 
 bool
-be_visitor_context::comma (void)
+be_visitor_context::comma ()
 {
   return this->comma_;
 }
@@ -221,19 +221,19 @@ be_visitor_context::interface (be_interface *interface)
 }
 
 be_interface *
-be_visitor_context::interface (void) const
+be_visitor_context::interface () const
 {
   return this->interface_;
 }
 
 ACE_CString &
-be_visitor_context::port_prefix (void)
+be_visitor_context::port_prefix ()
 {
   return this->port_prefix_;
 }
 
 const char *
-be_visitor_context::export_macro (void) const
+be_visitor_context::export_macro () const
 {
   switch (this->state_)
     {
@@ -258,7 +258,7 @@ be_visitor_context::export_macro (void) const
 }
 
 const char *
-be_visitor_context::non_null_export_macro (void) const
+be_visitor_context::non_null_export_macro () const
 {
   const char *anyop_export = be_global->anyop_export_macro ();
 

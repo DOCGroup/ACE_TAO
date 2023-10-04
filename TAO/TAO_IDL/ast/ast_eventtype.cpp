@@ -49,12 +49,12 @@ AST_EventType::AST_EventType (UTL_ScopedName *n,
 {
 }
 
-AST_EventType::~AST_EventType (void)
+AST_EventType::~AST_EventType ()
 {
 }
 
 void
-AST_EventType::destroy (void)
+AST_EventType::destroy ()
 {
   this->AST_ValueType::destroy ();
 }

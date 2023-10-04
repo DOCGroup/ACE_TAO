@@ -22,7 +22,7 @@ be_visitor_attr_return::be_visitor_attr_return  (
 {
 }
 
-be_visitor_attr_return::~be_visitor_attr_return (void)
+be_visitor_attr_return::~be_visitor_attr_return ()
 {
 }
 

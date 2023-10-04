@@ -110,7 +110,7 @@ char* IDL_GlobalData::translateName(const char* name, char *name_buf)
 }
 #endif
 
-IDL_GlobalData::IDL_GlobalData (void)
+IDL_GlobalData::IDL_GlobalData ()
   : syntax_only_ (false),
     parse_args_exit_ (false),
     parse_args_exit_status_ (0),
@@ -241,13 +241,13 @@ IDL_GlobalData::IDL_GlobalData (void)
   this->reset_flag_seen ();
 }
 
-IDL_GlobalData::~IDL_GlobalData (void)
+IDL_GlobalData::~IDL_GlobalData ()
 {
 }
 
 // When starting to process the next command line input idl file, reset.
 void
-IDL_GlobalData::reset_flag_seen (void)
+IDL_GlobalData::reset_flag_seen ()
 {
   abstract_iface_seen_ = false;
   abstractbase_seen_ = false;
@@ -289,6 +289,7 @@ IDL_GlobalData::reset_flag_seen (void)
   seq_seen_ = false;
   short_seq_seen_ = false;
   special_basic_decl_seen_ = false;
+  map_seen_ = false;
   string_seen_ = false;
   string_member_seen_ = false;
   string_seq_seen_ = false;
@@ -314,14 +315,14 @@ IDL_GlobalData::reset_flag_seen (void)
 
 // Get or set scopes stack
 UTL_ScopeStack &
-IDL_GlobalData::scopes (void)
+IDL_GlobalData::scopes ()
 {
   return this->pd_scopes;
 }
 
 // Get or set root of AST
 AST_Root *
-IDL_GlobalData::root (void)
+IDL_GlobalData::root ()
 {
   return this->pd_root;
 }
@@ -334,7 +335,7 @@ IDL_GlobalData::set_root (AST_Root *r)
 
 // Get or set generator object
 AST_Generator *
-IDL_GlobalData::gen (void)
+IDL_GlobalData::gen ()
 {
   return this->pd_gen;
 }
@@ -347,7 +348,7 @@ IDL_GlobalData::set_gen (AST_Generator *g)
 
 // Get or set PrimaryKeyBase object
 AST_ValueType *
-IDL_GlobalData::primary_key_base (void)
+IDL_GlobalData::primary_key_base ()
 {
   return this->pd_primary_key_base;
 }
@@ -360,7 +361,7 @@ IDL_GlobalData::primary_key_base (AST_ValueType *v)
 
 // Get or set error object
 UTL_Error *
-IDL_GlobalData::err (void)
+IDL_GlobalData::err ()
 {
   return this->pd_err;
 }
@@ -373,7 +374,7 @@ IDL_GlobalData::set_err (UTL_Error *e)
 
 // Get or set error count
 int
-IDL_GlobalData::err_count (void)
+IDL_GlobalData::err_count ()
 {
   return this->pd_err_count;
 }
@@ -386,7 +387,7 @@ IDL_GlobalData::set_err_count (int c)
 
 // Get or set line number
 long
-IDL_GlobalData::lineno (void)
+IDL_GlobalData::lineno ()
 {
   return this->pd_lineno;
 }
@@ -399,7 +400,7 @@ IDL_GlobalData::set_lineno (long n)
 
 // Get or set file name being read now
 UTL_String *
-IDL_GlobalData::filename (void)
+IDL_GlobalData::filename ()
 {
   return this->pd_filename;
 }
@@ -419,7 +420,7 @@ IDL_GlobalData::set_filename (UTL_String *s)
 
 // Get or set main file name
 UTL_String *
-IDL_GlobalData::main_filename (void)
+IDL_GlobalData::main_filename ()
 {
   return this->pd_main_filename;
 }
@@ -438,7 +439,7 @@ IDL_GlobalData::set_main_filename (UTL_String *n)
 
 // Get or set real file name
 UTL_String *
-IDL_GlobalData::real_filename (void)
+IDL_GlobalData::real_filename ()
 {
   return this->pd_real_filename;
 }
@@ -458,13 +459,13 @@ IDL_GlobalData::set_real_filename (UTL_String *n)
 
 // Get or set indicator whether import is on
 bool
-IDL_GlobalData::imported (void)
+IDL_GlobalData::imported ()
 {
   return this->pd_in_main_file ? false : pd_import;
 }
 
 bool
-IDL_GlobalData::import (void)
+IDL_GlobalData::import ()
 {
   return this->pd_import;
 }
@@ -477,7 +478,7 @@ IDL_GlobalData::set_import (bool is_in)
 
 // Get or set indicator whether we're reading the main file now
 bool
-IDL_GlobalData::in_main_file (void)
+IDL_GlobalData::in_main_file ()
 {
   return this->pd_in_main_file;
 }
@@ -490,7 +491,7 @@ IDL_GlobalData::set_in_main_file (bool is_in)
 
 // Get or set stripped file name
 UTL_String *
-IDL_GlobalData::stripped_filename (void)
+IDL_GlobalData::stripped_filename ()
 {
   return this->pd_stripped_filename;
 }
@@ -508,7 +509,7 @@ IDL_GlobalData::set_stripped_filename (UTL_String *nm)
 
 // Get or set cache value for argv[0]
 const char *
-IDL_GlobalData::prog_name (void)
+IDL_GlobalData::prog_name ()
 {
   return this->pd_prog_name;
 }
@@ -521,7 +522,7 @@ IDL_GlobalData::set_prog_name (const char *pn)
 
 // Get or set location to find C preprocessor
 const char *
-IDL_GlobalData::cpp_location (void)
+IDL_GlobalData::cpp_location ()
 {
   return this->pd_cpp_location;
 }
@@ -534,7 +535,7 @@ IDL_GlobalData::set_cpp_location (const char *l)
 
 // Get or set IDL compiler flags
 long
-IDL_GlobalData::compile_flags (void)
+IDL_GlobalData::compile_flags ()
 {
   return this->pd_compile_flags;
 }
@@ -556,7 +557,7 @@ IDL_GlobalData::set_compile_flags (long cf)
 // Get or set local escapes string. This provides an additional
 // mechanism to pass information to a BE.
 char *
-IDL_GlobalData::local_escapes (void)
+IDL_GlobalData::local_escapes ()
 {
   return this->pd_local_escapes;
 }
@@ -574,7 +575,7 @@ IDL_GlobalData::set_local_escapes (const char *e)
 
 // Get or set indent object
 UTL_Indenter *
-IDL_GlobalData::indent (void)
+IDL_GlobalData::indent ()
 {
   return this->pd_indent;
 }
@@ -665,7 +666,7 @@ IDL_GlobalData::set_include_file_names (UTL_String **ns)
 }
 
 UTL_String **
-IDL_GlobalData::include_file_names (void)
+IDL_GlobalData::include_file_names ()
 {
   return this->pd_include_file_names;
 }
@@ -677,7 +678,7 @@ IDL_GlobalData::set_n_include_file_names (unsigned long n)
 }
 
 unsigned long
-IDL_GlobalData::n_include_file_names (void)
+IDL_GlobalData::n_include_file_names ()
 {
   return pd_n_include_file_names;
 }
@@ -735,13 +736,13 @@ IDL_GlobalData::add_to_included_idl_files (const char *file_name)
 }
 
 char**
-IDL_GlobalData::included_idl_files (void)
+IDL_GlobalData::included_idl_files ()
 {
   return this->included_idl_files_;
 }
 
 size_t
-IDL_GlobalData::n_included_idl_files (void)
+IDL_GlobalData::n_included_idl_files ()
 {
   return this->n_included_idl_files_;
 }
@@ -762,13 +763,13 @@ IDL_GlobalData::set_parse_state(ParseState ps)
 }
 
 IDL_GlobalData::ParseState
-IDL_GlobalData::parse_state (void)
+IDL_GlobalData::parse_state ()
 {
   return pd_parse_state;
 }
 
 // returns the IDL source file being copiled
-UTL_String* IDL_GlobalData::idl_src_file (void)
+UTL_String* IDL_GlobalData::idl_src_file ()
 {
   return this->pd_idl_src_file;
 }
@@ -810,7 +811,7 @@ IDL_GlobalData::temp_dir (const char *s)
 }
 
 const char *
-IDL_GlobalData::temp_dir (void) const
+IDL_GlobalData::temp_dir () const
 {
   return this->temp_dir_;
 }
@@ -823,7 +824,7 @@ IDL_GlobalData::tao_root (const char *s)
 }
 
 const char *
-IDL_GlobalData::tao_root (void) const
+IDL_GlobalData::tao_root () const
 {
   return this->tao_root_;
 }
@@ -836,7 +837,7 @@ IDL_GlobalData::gperf_path (const char *s)
 }
 
 const char *
-IDL_GlobalData::gperf_path (void) const
+IDL_GlobalData::gperf_path () const
 {
   return this->gperf_path_;
 }
@@ -849,7 +850,7 @@ IDL_GlobalData::ident_string (const char *s)
 }
 
 const char *
-IDL_GlobalData::ident_string (void) const
+IDL_GlobalData::ident_string () const
 {
   return this->ident_string_;
 }
@@ -861,7 +862,7 @@ IDL_GlobalData::case_diff_error (bool val)
 }
 
 bool
-IDL_GlobalData::case_diff_error (void)
+IDL_GlobalData::case_diff_error ()
 {
   return this->case_diff_error_;
 }
@@ -873,13 +874,13 @@ IDL_GlobalData::nest_orb (bool val)
 }
 
 bool
-IDL_GlobalData::nest_orb (void)
+IDL_GlobalData::nest_orb ()
 {
   return this->nest_orb_;
 }
 
 void
-IDL_GlobalData::destroy (void)
+IDL_GlobalData::destroy ()
 {
   if (this->pd_filename != 0)
     {
@@ -972,19 +973,19 @@ IDL_GlobalData::append_idl_flag (const char *s)
 }
 
 const char *
-IDL_GlobalData::idl_flags (void) const
+IDL_GlobalData::idl_flags () const
 {
   return this->idl_flags_.c_str ();
 }
 
 ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> &
-IDL_GlobalData::idl_keywords (void)
+IDL_GlobalData::idl_keywords ()
 {
   return this->idl_keywords_;
 }
 
 ACE_Unbounded_Stack<char *> &
-IDL_GlobalData::pragma_prefixes (void)
+IDL_GlobalData::pragma_prefixes ()
 {
   return this->pragma_prefixes_;
 }
@@ -1073,7 +1074,7 @@ IDL_GlobalData::update_prefix (char *filename)
  Should be true when being used by the IFR Service
  */
 bool
-IDL_GlobalData::preserve_cpp_keywords (void)
+IDL_GlobalData::preserve_cpp_keywords ()
 {
   return preserve_cpp_keywords_;
 }
@@ -1103,7 +1104,7 @@ IDL_GlobalData::add_rel_include_path (const char *s)
 }
 
 ACE_Unbounded_Queue<char *> const &
-IDL_GlobalData::rel_include_paths (void) const
+IDL_GlobalData::rel_include_paths () const
 {
   return this->rel_include_paths_;
 }
@@ -1115,7 +1116,7 @@ IDL_GlobalData::add_ciao_lem_file_names (const char *s)
 }
 
 ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_lem_file_names (void)
+IDL_GlobalData::ciao_lem_file_names ()
 {
   return this->ciao_lem_file_names_;
 }
@@ -1127,7 +1128,7 @@ IDL_GlobalData::add_ciao_rti_ts_file_names (const char *s)
 }
 
 ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_rti_ts_file_names (void)
+IDL_GlobalData::ciao_rti_ts_file_names ()
 {
   return this->ciao_rti_ts_file_names_;
 }
@@ -1139,7 +1140,7 @@ IDL_GlobalData::add_ciao_spl_ts_file_names (const char *s)
 }
 
 ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_spl_ts_file_names (void)
+IDL_GlobalData::ciao_spl_ts_file_names ()
 {
   return this->ciao_spl_ts_file_names_;
 }
@@ -1151,7 +1152,7 @@ IDL_GlobalData::add_ciao_oci_ts_file_names (const char *s)
 }
 
 ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_oci_ts_file_names (void)
+IDL_GlobalData::ciao_oci_ts_file_names ()
 {
   return this->ciao_oci_ts_file_names_;
 }
@@ -1163,7 +1164,7 @@ IDL_GlobalData::add_ciao_coredx_ts_file_names (const char *s)
 }
 
 ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_coredx_ts_file_names (void)
+IDL_GlobalData::ciao_coredx_ts_file_names ()
 {
   return this->ciao_coredx_ts_file_names_;
 }
@@ -1175,7 +1176,7 @@ IDL_GlobalData::add_ciao_ami_iface_names (const char *s)
 }
 
 ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_ami_iface_names (void)
+IDL_GlobalData::ciao_ami_iface_names ()
 {
   return this->ciao_ami_iface_names_;
 }
@@ -1187,7 +1188,7 @@ IDL_GlobalData::add_ciao_ami_recep_names (const char *s)
 }
 
 ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_ami_recep_names (void)
+IDL_GlobalData::ciao_ami_recep_names ()
 {
   return this->ciao_ami_recep_names_;
 }
@@ -1199,13 +1200,13 @@ IDL_GlobalData::add_included_ami_recep_names (const char *s)
 }
 
 ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::included_ami_recep_names (void)
+IDL_GlobalData::included_ami_recep_names ()
 {
   return this->included_ami_recep_names_;
 }
 
 bool
-IDL_GlobalData::included_ami_receps_done (void) const
+IDL_GlobalData::included_ami_receps_done () const
 {
   return this->included_ami_receps_done_;
 }
@@ -1223,7 +1224,7 @@ IDL_GlobalData::add_ciao_ami_idl_fnames (const char *s)
 }
 
 ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_ami_idl_fnames (void)
+IDL_GlobalData::ciao_ami_idl_fnames ()
 {
   return this->ciao_ami_idl_fnames_;
 }
@@ -1235,25 +1236,25 @@ IDL_GlobalData::add_dds4ccm_impl_fnames (const char *s)
 }
 
 ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::dds4ccm_impl_fnames (void)
+IDL_GlobalData::dds4ccm_impl_fnames ()
 {
   return this->dds4ccm_impl_fnames_;
 }
 
 ACE_Unbounded_Queue<AST_Interface *> &
-IDL_GlobalData::mixed_parentage_interfaces (void)
+IDL_GlobalData::mixed_parentage_interfaces ()
 {
   return this->mixed_parentage_interfaces_;
 }
 
 ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
-IDL_GlobalData::file_prefixes (void)
+IDL_GlobalData::file_prefixes ()
 {
   return this->file_prefixes_;
 }
 
 bool
-IDL_GlobalData::pass_orb_idl (void) const
+IDL_GlobalData::pass_orb_idl () const
 {
   return this->pass_orb_idl_;
 }
@@ -1265,7 +1266,7 @@ IDL_GlobalData::pass_orb_idl (bool val)
 }
 
 bool
-IDL_GlobalData::using_ifr_backend (void) const
+IDL_GlobalData::using_ifr_backend () const
 {
   return this->using_ifr_backend_;
 }
@@ -1277,7 +1278,7 @@ IDL_GlobalData::using_ifr_backend (bool val)
 }
 
 bool
-IDL_GlobalData::ignore_idl3 (void) const
+IDL_GlobalData::ignore_idl3 () const
 {
   return this->ignore_idl3_;
 }
@@ -1289,7 +1290,7 @@ IDL_GlobalData::ignore_idl3 (bool val)
 }
 
 bool
-IDL_GlobalData::dcps_support_zero_copy_read (void) const
+IDL_GlobalData::dcps_support_zero_copy_read () const
 {
   return this->dcps_support_zero_copy_read_;
 }
@@ -1301,7 +1302,7 @@ IDL_GlobalData::dcps_support_zero_copy_read (bool val)
 }
 
 bool
-IDL_GlobalData::dcps_gen_zero_copy_read (void) const
+IDL_GlobalData::dcps_gen_zero_copy_read () const
 {
   return this->dcps_gen_zero_copy_read_;
 }
@@ -1315,7 +1316,7 @@ IDL_GlobalData::dcps_gen_zero_copy_read (bool val)
 // Return 0 on success, -1 failure. The <errno> corresponding to the
 // error that caused the GPERF execution is also set.
 int
-IDL_GlobalData::check_gperf (void)
+IDL_GlobalData::check_gperf ()
 {
   // If absolute path is not specified yet, let us call just
   // "gperf". Hopefully PATH is set up correctly to locate the gperf.
@@ -1420,7 +1421,7 @@ IDL_GlobalData::check_gperf (void)
 }
 
 void
-IDL_GlobalData::fini (void)
+IDL_GlobalData::fini ()
 {
   if (0 != this->pd_root)
     {
@@ -1596,13 +1597,13 @@ IDL_GlobalData::fini (void)
 }
 
 ACE_Unbounded_Queue<AST_ValueType *> &
-IDL_GlobalData::primary_keys (void)
+IDL_GlobalData::primary_keys ()
 {
   return this->primary_keys_;
 }
 
 void
-IDL_GlobalData::check_primary_keys (void)
+IDL_GlobalData::check_primary_keys ()
 {
   AST_ValueType *holder = 0;
 
@@ -1625,7 +1626,7 @@ IDL_GlobalData::check_primary_keys (void)
 }
 
 const char *
-IDL_GlobalData::recursion_start (void) const
+IDL_GlobalData::recursion_start () const
 {
   return this->recursion_start_;
 }
@@ -1651,7 +1652,7 @@ IDL_GlobalData::recursion_start (const char *val)
 }
 
 bool
-IDL_GlobalData::multi_file_input (void) const
+IDL_GlobalData::multi_file_input () const
 {
   return this->multi_file_input_;
 }
@@ -1663,13 +1664,13 @@ IDL_GlobalData::multi_file_input (bool val)
 }
 
 const char *
-IDL_GlobalData::big_file_name (void) const
+IDL_GlobalData::big_file_name () const
 {
   return this->big_file_name_;
 }
 
 FE_Utils::T_PARAMLIST_INFO const *
-IDL_GlobalData::current_params (void) const
+IDL_GlobalData::current_params () const
 {
   return this->current_params_;
 }
@@ -1682,7 +1683,7 @@ FE_Utils::T_PARAMLIST_INFO *params)
 }
 
 UTL_StrList const *
-IDL_GlobalData::alias_params (void) const
+IDL_GlobalData::alias_params () const
 {
   return this->alias_params_;
 }
@@ -1695,7 +1696,7 @@ UTL_StrList *params)
 }
 
 UTL_StrList const *
-IDL_GlobalData::for_new_holder (void) const
+IDL_GlobalData::for_new_holder () const
 {
   return this->for_new_holder_;
 }
@@ -1818,7 +1819,7 @@ IDL_GlobalData::is_dcps_type (UTL_ScopedName* target)
 }
 
 AST_Module *
-IDL_GlobalData::corba_module (void) const
+IDL_GlobalData::corba_module () const
 {
   return this->corba_module_;
 }
@@ -1830,7 +1831,7 @@ IDL_GlobalData::corba_module (AST_Module *m)
 }
 
 IDL_GlobalData::Unbounded_Paths_Queue &
-IDL_GlobalData::include_paths (void)
+IDL_GlobalData::include_paths ()
 {
   return this->include_paths_;
 }
@@ -1850,7 +1851,7 @@ IDL_GlobalData::explicit_anon_type_diagnostic () const
 }
 
 bool
-IDL_GlobalData::anon_error (void) const
+IDL_GlobalData::anon_error () const
 {
   if (idl_version_ >= IDL_VERSION_4 && !explicit_anon_type_diagnostic_) {
     return false;
@@ -1859,7 +1860,7 @@ IDL_GlobalData::anon_error (void) const
 }
 
 bool
-IDL_GlobalData::anon_warning (void) const
+IDL_GlobalData::anon_warning () const
 {
   if (idl_version_ >= IDL_VERSION_4 && !explicit_anon_type_diagnostic_) {
     return false;
@@ -1868,7 +1869,7 @@ IDL_GlobalData::anon_warning (void) const
 }
 
 bool
-IDL_GlobalData::anon_silent (void) const
+IDL_GlobalData::anon_silent () const
 {
   if (idl_version_ >= IDL_VERSION_4 && !explicit_anon_type_diagnostic_) {
     return true;
@@ -1877,7 +1878,7 @@ IDL_GlobalData::anon_silent (void) const
 }
 
 bool
-IDL_GlobalData::in_typedef (void) const
+IDL_GlobalData::in_typedef () const
 {
   return this->in_typedef_;
 }
@@ -1889,7 +1890,7 @@ IDL_GlobalData::in_typedef (bool val)
 }
 
 bool
-IDL_GlobalData::in_tmpl_mod_no_alias (void) const
+IDL_GlobalData::in_tmpl_mod_no_alias () const
 {
   return this->in_tmpl_mod_no_alias_;
 }
@@ -1901,7 +1902,7 @@ IDL_GlobalData::in_tmpl_mod_no_alias (bool val)
 }
 
 bool
-IDL_GlobalData::in_tmpl_mod_alias (void) const
+IDL_GlobalData::in_tmpl_mod_alias () const
 {
   return this->in_tmpl_mod_alias_;
 }

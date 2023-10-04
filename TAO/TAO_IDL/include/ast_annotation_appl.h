@@ -113,4 +113,9 @@ struct Decl_Annotations_Pair {
   AST_Annotation_Appls *annotations;
 };
 
+struct Decl_Annotations_Pair_Pair {
+  Decl_Annotations_Pair *first;
+  Decl_Annotations_Pair *second;
+};
+
 #endif

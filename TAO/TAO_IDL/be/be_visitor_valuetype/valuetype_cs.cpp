@@ -20,7 +20,7 @@ be_visitor_valuetype_cs::be_visitor_valuetype_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_cs::~be_visitor_valuetype_cs (void)
+be_visitor_valuetype_cs::~be_visitor_valuetype_cs ()
 {
 }
 
@@ -187,7 +187,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "return formal_type_id == reinterpret_cast<ptrdiff_t> ("
           << node->name() << "::_downcast);" << be_uidt_nl
           << "}" << be_nl_2;
-
     }
   else if (is_an_amh_exception_holder)
     {

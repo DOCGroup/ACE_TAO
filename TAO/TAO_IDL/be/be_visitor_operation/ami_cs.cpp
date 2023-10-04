@@ -18,7 +18,7 @@ be_visitor_operation_ami_cs::be_visitor_operation_ami_cs (
 {
 }
 
-be_visitor_operation_ami_cs::~be_visitor_operation_ami_cs (void)
+be_visitor_operation_ami_cs::~be_visitor_operation_ami_cs ()
 {
 }
 

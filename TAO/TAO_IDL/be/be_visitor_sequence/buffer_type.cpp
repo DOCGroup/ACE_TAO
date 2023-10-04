@@ -22,7 +22,7 @@ be_visitor_sequence_buffer_type::be_visitor_sequence_buffer_type (
 {
 }
 
-be_visitor_sequence_buffer_type::~be_visitor_sequence_buffer_type (void)
+be_visitor_sequence_buffer_type::~be_visitor_sequence_buffer_type ()
 {
 }
 

@@ -23,12 +23,12 @@ AST_Native::AST_Native (UTL_ScopedName *n)
 {
 }
 
-AST_Native::~AST_Native (void)
+AST_Native::~AST_Native ()
 {
 }
 
 void
-AST_Native::destroy (void)
+AST_Native::destroy ()
 {
   this->AST_Exception::destroy ();
 }

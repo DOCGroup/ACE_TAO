@@ -17,7 +17,7 @@ be_visitor_array_ch::be_visitor_array_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_array_ch::~be_visitor_array_ch (void)
+be_visitor_array_ch::~be_visitor_array_ch ()
 {
 }
 

@@ -35,12 +35,12 @@ be_factory::be_factory (UTL_ScopedName *n)
 {
 }
 
-be_factory::~be_factory (void)
+be_factory::~be_factory ()
 {
 }
 
 void
-be_factory::destroy (void)
+be_factory::destroy ()
 {
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();

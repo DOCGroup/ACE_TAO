@@ -22,7 +22,7 @@ be_visitor_union_branch_public_ch::be_visitor_union_branch_public_ch (
 {
 }
 
-be_visitor_union_branch_public_ch::~be_visitor_union_branch_public_ch (void)
+be_visitor_union_branch_public_ch::~be_visitor_union_branch_public_ch ()
 {
 }
 

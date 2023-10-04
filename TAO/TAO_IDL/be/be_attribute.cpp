@@ -49,7 +49,7 @@ be_attribute::be_attribute (bool ro,
 }
 
 be_type *
-be_attribute::field_type (void) const
+be_attribute::field_type () const
 {
   return dynamic_cast<be_type*>  (this->AST_Attribute::field_type ());
 }
@@ -61,7 +61,7 @@ be_attribute::accept (be_visitor *visitor)
 }
 
 void
-be_attribute::destroy (void)
+be_attribute::destroy ()
 {
   this->be_decl::destroy ();
   this->AST_Attribute::destroy ();

@@ -91,13 +91,13 @@ AST_Enum::AST_Enum (UTL_ScopedName *n,
   this->size_type (AST_Type::FIXED);
 }
 
-AST_Enum::~AST_Enum (void)
+AST_Enum::~AST_Enum ()
 {
 }
 
 // Return the member count.
 int
-AST_Enum::member_count (void)
+AST_Enum::member_count ()
 {
   if (this->member_count_ == -1)
     {
@@ -171,7 +171,7 @@ AST_Enum::lookup_by_value (const AST_Expression *v)
 // Compute the value to be assigned to the next enumerator. Bump the
 // counter.
 unsigned long
-AST_Enum::next_enum_val (void)
+AST_Enum::next_enum_val ()
 {
   unsigned long i = pd_enum_counter++;
 
@@ -215,7 +215,7 @@ munge_name_for_enumval (UTL_ScopedName *n,
 
 // Compute total number of members.
 int
-AST_Enum::compute_member_count (void)
+AST_Enum::compute_member_count ()
 {
   this->member_count_ = 0;
 
@@ -366,7 +366,7 @@ AST_Enum::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Enum::destroy (void)
+AST_Enum::destroy ()
 {
   this->UTL_Scope::destroy ();
   this->AST_ConcreteType::destroy ();

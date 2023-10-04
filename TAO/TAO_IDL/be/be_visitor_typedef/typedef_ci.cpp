@@ -20,7 +20,7 @@ be_visitor_typedef_ci::be_visitor_typedef_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_typedef_ci::~be_visitor_typedef_ci (void)
+be_visitor_typedef_ci::~be_visitor_typedef_ci ()
 {
 }
 

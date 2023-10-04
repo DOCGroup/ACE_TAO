@@ -25,7 +25,7 @@ be_visitor_field_cs::be_visitor_field_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_field_cs::~be_visitor_field_cs (void)
+be_visitor_field_cs::~be_visitor_field_cs ()
 {
 }
 
@@ -123,6 +123,12 @@ be_visitor_field_cs::visit_sequence (be_sequence *node)
         }
     }
 
+  return 0;
+}
+
+int
+be_visitor_field_cs::visit_map (be_map *)
+{
   return 0;
 }
 

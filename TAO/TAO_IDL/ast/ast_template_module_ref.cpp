@@ -23,18 +23,18 @@ AST_Template_Module_Ref::AST_Template_Module_Ref (
 {
 }
 
-AST_Template_Module_Ref::~AST_Template_Module_Ref (void)
+AST_Template_Module_Ref::~AST_Template_Module_Ref ()
 {
 }
 
 AST_Template_Module *
-AST_Template_Module_Ref::ref (void) const
+AST_Template_Module_Ref::ref () const
 {
   return dynamic_cast<AST_Template_Module*> (this->field_type ());
 }
 
 UTL_StrList *
-AST_Template_Module_Ref::param_refs (void) const
+AST_Template_Module_Ref::param_refs () const
 {
   return this->param_refs_;
 }
@@ -46,7 +46,7 @@ AST_Template_Module_Ref::dump (ACE_OSTREAM_TYPE &)
 }
 
 void
-AST_Template_Module_Ref::destroy (void)
+AST_Template_Module_Ref::destroy ()
 {
   this->param_refs_->destroy ();
   delete this->param_refs_;
@@ -76,7 +76,7 @@ AST_Template_Module_Ref::adjust_found (
 }
 
 bool
-AST_Template_Module_Ref::processed (void) const
+AST_Template_Module_Ref::processed () const
 {
   return this->processed_;
 }

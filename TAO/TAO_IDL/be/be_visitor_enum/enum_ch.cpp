@@ -22,7 +22,7 @@ be_visitor_enum_ch::be_visitor_enum_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_enum_ch::~be_visitor_enum_ch (void)
+be_visitor_enum_ch::~be_visitor_enum_ch ()
 {
 }
 

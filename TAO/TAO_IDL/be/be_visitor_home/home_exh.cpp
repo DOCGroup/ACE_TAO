@@ -20,7 +20,7 @@ be_visitor_home_exh::be_visitor_home_exh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_home_exh::~be_visitor_home_exh (void)
+be_visitor_home_exh::~be_visitor_home_exh ()
 {
 }
 
@@ -98,7 +98,7 @@ be_visitor_home_exh::visit_factory (be_factory *node)
 }
 
 int
-be_visitor_home_exh::gen_exec_class (void)
+be_visitor_home_exh::gen_exec_class ()
 {
   // We don't want a '_cxx_' prefix here.
   const char *lname =
@@ -178,7 +178,7 @@ be_visitor_home_exh::gen_exec_class (void)
 }
 
 void
-be_visitor_home_exh::gen_entrypoint (void)
+be_visitor_home_exh::gen_entrypoint ()
 {
   os_ << be_nl_2
       << "/// Factory method for " << node_->full_name () << be_nl

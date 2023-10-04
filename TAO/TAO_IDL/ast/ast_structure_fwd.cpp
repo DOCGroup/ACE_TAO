@@ -23,7 +23,7 @@ AST_StructureFwd::AST_StructureFwd (AST_Structure *full_defn,
 {
 }
 
-AST_StructureFwd::~AST_StructureFwd (void)
+AST_StructureFwd::~AST_StructureFwd ()
 {
 }
 
@@ -46,7 +46,7 @@ AST_StructureFwd::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_Structure *
-AST_StructureFwd::full_definition (void)
+AST_StructureFwd::full_definition ()
 {
   return this->pd_full_definition;
 }
@@ -63,19 +63,19 @@ AST_StructureFwd::set_full_definition (AST_Structure *nfd)
 }
 
 bool
-AST_StructureFwd::is_defined (void)
+AST_StructureFwd::is_defined ()
 {
   return this->is_defined_;
 }
 
 void
-AST_StructureFwd::set_as_defined (void)
+AST_StructureFwd::set_as_defined ()
 {
   this->is_defined_ = true;
 }
 
 void
-AST_StructureFwd::destroy (void)
+AST_StructureFwd::destroy ()
 {
   if (!this->is_defined_ && 0 != this->pd_full_definition)
     {
@@ -88,7 +88,7 @@ AST_StructureFwd::destroy (void)
 }
 
 bool
-AST_StructureFwd::is_fwd (void)
+AST_StructureFwd::is_fwd ()
 {
   return true; // This is a fwd declared type
 }

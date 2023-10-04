@@ -134,7 +134,7 @@ be_predefined_type::gen_member_ostream_operator (TAO_OutStream *os,
 
 // Overriden method.
 void
-be_predefined_type::compute_tc_name (void)
+be_predefined_type::compute_tc_name ()
 {
   // Start with the head as the CORBA namespace.
   Identifier *corba_id = 0;
@@ -254,7 +254,7 @@ be_predefined_type::compute_tc_name (void)
 }
 
 void
-be_predefined_type::compute_repoID (void)
+be_predefined_type::compute_repoID ()
 {
   switch (this->pt ())
     {
@@ -275,7 +275,7 @@ be_predefined_type::accept (be_visitor *visitor)
 }
 
 void
-be_predefined_type::destroy (void)
+be_predefined_type::destroy ()
 {
   this->AST_PredefinedType::destroy ();
   this->be_type::destroy ();

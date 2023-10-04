@@ -19,7 +19,7 @@ be_visitor_valuetype_init_cs::be_visitor_valuetype_init_cs (
 {
 }
 
-be_visitor_valuetype_init_cs::~be_visitor_valuetype_init_cs (void)
+be_visitor_valuetype_init_cs::~be_visitor_valuetype_init_cs ()
 {
 }
 

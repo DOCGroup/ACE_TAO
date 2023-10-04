@@ -56,7 +56,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
     }
 }
 
-AST_Home::~AST_Home (void)
+AST_Home::~AST_Home ()
 {
 }
 
@@ -135,7 +135,7 @@ AST_Home::special_lookup (UTL_ScopedName *e,
 }
 
 AST_Home *
-AST_Home::base_home (void) const
+AST_Home::base_home () const
 {
   return this->pd_base_home;
 }
@@ -144,7 +144,7 @@ AST_Home::base_home (void) const
 // create separate visitors for homes in the back end.
 
 AST_Type **
-AST_Home::supports (void) const
+AST_Home::supports () const
 {
   return
     this->pd_base_home == 0
@@ -153,19 +153,19 @@ AST_Home::supports (void) const
 }
 
 long
-AST_Home::n_supports (void) const
+AST_Home::n_supports () const
 {
   return this->n_inherits ();
 }
 
 AST_Component *
-AST_Home::managed_component (void) const
+AST_Home::managed_component () const
 {
   return this->pd_managed_component;
 }
 
 AST_Type *
-AST_Home::primary_key (void) const
+AST_Home::primary_key () const
 {
   return this->pd_primary_key;
 }
@@ -205,7 +205,7 @@ AST_Home::transfer_scope_elements (AST_Interface *dst)
 }
 
 void
-AST_Home::destroy (void)
+AST_Home::destroy ()
 {
   // If it's a param holder, it was created on the fly.
   if (owns_primary_key_)

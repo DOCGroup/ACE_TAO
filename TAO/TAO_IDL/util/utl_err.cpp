@@ -915,7 +915,7 @@ UTL_Error::version_syntax_error (const char *msg)
 
 // Report an attempt to set the version a second time.
 void
-UTL_Error::version_reset_error (void)
+UTL_Error::version_reset_error ()
 {
   idl_error_header (EIDL_VERSION_RESET);
   ACE_ERROR ((LM_ERROR,
@@ -1393,7 +1393,7 @@ UTL_Error::back_end (long lineno,
 }
 
 void
-UTL_Error::illegal_infix (void)
+UTL_Error::illegal_infix ()
 {
   idl_error_header (EIDL_ILLEGAL_INFIX);
   ACE_ERROR ((LM_ERROR,
@@ -1511,7 +1511,7 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
 }
 
 void
-UTL_Error::anonymous_type_diagnostic (void)
+UTL_Error::anonymous_type_diagnostic ()
 {
   if (idl_global->anon_silent () || idl_global->in_typedef ())
     {

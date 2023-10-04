@@ -20,7 +20,7 @@ be_visitor_typedef_ch::be_visitor_typedef_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_typedef_ch::~be_visitor_typedef_ch (void)
+be_visitor_typedef_ch::~be_visitor_typedef_ch ()
 {
 }
 
@@ -448,6 +448,53 @@ be_visitor_typedef_ch::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_sequence - "
+                             "base class visitor failed\n"),
+                            -1);
+        }
+    }
+  else
+    {
+      TAO_INSERT_COMMENT (os);
+
+      // Typedef the type.
+      *os << "typedef " << bt->nested_type_name (scope)
+          << " " << tdef->nested_type_name (scope) << ";" << be_nl;
+      // Typedef the _var and _out types.
+      *os << "typedef " << bt->nested_type_name (scope, "_var")
+          << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
+      *os << "typedef " << bt->nested_type_name (scope, "_out")
+          << " " << tdef->nested_type_name (scope, "_out") << ";";
+    }
+
+  return 0;
+}
+
+int
+be_visitor_typedef_ch::visit_map (be_map *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *tdef = this->ctx_->tdef ();
+  be_decl *scope = this->ctx_->scope ()->decl ();
+  be_type *bt = 0;
+
+  // Typedef of a typedef?
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (bt->node_type () == AST_Decl::NT_map)
+    {
+      // Let the base class visitor handle this case.
+      if (this->be_visitor_typedef::visit_map (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typedef_ch::"
+                             "visit_map - "
                              "base class visitor failed\n"),
                             -1);
         }

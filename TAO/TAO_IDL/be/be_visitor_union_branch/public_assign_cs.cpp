@@ -25,7 +25,7 @@ be_visitor_union_branch_public_assign_cs (be_visitor_context *ctx)
 
 // destructor
 be_visitor_union_branch_public_assign_cs::
-~be_visitor_union_branch_public_assign_cs (void)
+~be_visitor_union_branch_public_assign_cs ()
 {
 }
 

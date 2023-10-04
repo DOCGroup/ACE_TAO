@@ -20,7 +20,7 @@ be_visitor_operation_ch::be_visitor_operation_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_ch::~be_visitor_operation_ch (void)
+be_visitor_operation_ch::~be_visitor_operation_ch ()
 {
 }
 

@@ -19,7 +19,7 @@ be_visitor_field_ci::be_visitor_field_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_field_ci::~be_visitor_field_ci (void)
+be_visitor_field_ci::~be_visitor_field_ci ()
 {
 }
 
@@ -79,6 +79,12 @@ be_visitor_field_ci::visit_array (be_array *node)
 
 int
 be_visitor_field_ci::visit_sequence (be_sequence *)
+{
+  return 0;
+}
+
+int
+be_visitor_field_ci::visit_map (be_map *)
 {
   return 0;
 }

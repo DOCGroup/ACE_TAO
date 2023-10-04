@@ -24,7 +24,7 @@ be_module::be_module (UTL_ScopedName *n, AST_Module *previous)
 }
 
 void
-be_module::destroy (void)
+be_module::destroy ()
 {
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();

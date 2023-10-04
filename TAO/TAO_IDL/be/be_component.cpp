@@ -73,12 +73,12 @@ be_component::be_component (UTL_ScopedName *n,
   this->has_constructor (true);
 }
 
-be_component::~be_component (void)
+be_component::~be_component ()
 {
 }
 
 be_component *
-be_component::base_component (void) const
+be_component::base_component () const
 {
   return dynamic_cast<be_component*> (this->AST_Component::base_component ());
 }
@@ -119,49 +119,49 @@ be_component::be_add_typedef (AST_Typedef *t)
 }
 
 ACE_CDR::ULong
-be_component::n_provides (void) const
+be_component::n_provides () const
 {
   return this->n_provides_;
 }
 
 ACE_CDR::ULong
-be_component::n_remote_provides (void) const
+be_component::n_remote_provides () const
 {
   return this->n_remote_provides_;
 }
 
 ACE_CDR::ULong
-be_component::n_uses (void) const
+be_component::n_uses () const
 {
   return this->n_uses_;
 }
 
 ACE_CDR::ULong
-be_component::n_remote_uses (void) const
+be_component::n_remote_uses () const
 {
   return this->n_remote_uses_;
 }
 
 bool
-be_component::has_uses_multiple (void) const
+be_component::has_uses_multiple () const
 {
   return this->has_uses_multiple_;
 }
 
 ACE_CDR::ULong
-be_component::n_publishes (void) const
+be_component::n_publishes () const
 {
   return this->n_publishes_;
 }
 
 ACE_CDR::ULong
-be_component::n_consumes (void) const
+be_component::n_consumes () const
 {
   return this->n_consumes_;
 }
 
 ACE_CDR::ULong
-be_component::n_emits (void) const
+be_component::n_emits () const
 {
   return this->n_emits_;
 }

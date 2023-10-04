@@ -32,6 +32,7 @@ public:
   virtual int visit_array (be_array *node);
   virtual int visit_enum (be_enum *node);
   virtual int visit_sequence (be_sequence *node);
+  virtual int visit_map (be_map *node);
   virtual int visit_structure (be_structure *node);
   virtual int visit_structure_fwd (be_structure_fwd *node);
   virtual int visit_typedef (be_typedef *node);

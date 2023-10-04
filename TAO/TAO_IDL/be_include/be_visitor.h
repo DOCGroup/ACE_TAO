@@ -62,6 +62,7 @@ class be_constant;
 class be_enum_val;
 class be_array;
 class be_sequence;
+class be_map;
 class be_string;
 class be_typedef;
 class be_root;
@@ -134,6 +135,7 @@ public:
   virtual int visit_enum_val (be_enum_val *node);
   virtual int visit_array (be_array *node);
   virtual int visit_sequence (be_sequence *node);
+  virtual int visit_map (be_map *node);
   virtual int visit_string (be_string *node);
   virtual int visit_typedef (be_typedef *node);
   virtual int visit_root (be_root *node);

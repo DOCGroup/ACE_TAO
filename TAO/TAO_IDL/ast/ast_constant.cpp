@@ -126,7 +126,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
     }
 }
 
-AST_Constant::~AST_Constant (void)
+AST_Constant::~AST_Constant ()
 {
 }
 
@@ -154,7 +154,7 @@ AST_Constant::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Constant::destroy (void)
+AST_Constant::destroy ()
 {
   if (this->pd_constant_value != 0)
     {
@@ -169,19 +169,19 @@ AST_Constant::destroy (void)
 // Data accessors.
 
 AST_Expression *
-AST_Constant::constant_value (void)
+AST_Constant::constant_value ()
 {
   return this->pd_constant_value;
 }
 
 AST_Expression::ExprType
-AST_Constant::et (void)
+AST_Constant::et ()
 {
   return this->pd_et;
 }
 
 bool
-AST_Constant::ifr_added (void)
+AST_Constant::ifr_added ()
 {
   return this->ifr_added_;
 }
@@ -193,7 +193,7 @@ AST_Constant::ifr_added (bool val)
 }
 
 UTL_ScopedName *
-AST_Constant::enum_full_name (void)
+AST_Constant::enum_full_name ()
 {
   if (this->pd_et == AST_Expression::EV_enum)
     {

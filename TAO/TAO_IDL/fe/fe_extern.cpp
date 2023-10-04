@@ -77,7 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/OS_NS_stdio.h"
 
-extern int tao_yyparse (void);
+extern int tao_yyparse ();
 
 #ifdef USE_MCPP_BUFFER_LEXING
 char *tao_preproc_buffer = 0;
@@ -88,7 +88,7 @@ extern FILE *tao_yyin;
 #endif /* USE_MCPP_BUFFER_LEXING */
 
 int
-FE_yyparse (void)
+FE_yyparse ()
 {
   int const result = tao_yyparse ();
 
@@ -130,7 +130,7 @@ FE_set_yyin (FILE * f)
 // Constructor interfaces.
 
 UTL_Error *
-FE_new_UTL_Error (void)
+FE_new_UTL_Error ()
 {
   UTL_Error *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -141,7 +141,7 @@ FE_new_UTL_Error (void)
 }
 
 UTL_Indenter *
-FE_new_UTL_Indenter (void)
+FE_new_UTL_Indenter ()
 {
   UTL_Indenter *retval = 0;
   ACE_NEW_RETURN (retval,

@@ -22,7 +22,7 @@ be_visitor_valuetype_field_ci::be_visitor_valuetype_field_ci (
   setenclosings ("");
 }
 
-be_visitor_valuetype_field_ci::~be_visitor_valuetype_field_ci (void)
+be_visitor_valuetype_field_ci::~be_visitor_valuetype_field_ci ()
 {
 }
 

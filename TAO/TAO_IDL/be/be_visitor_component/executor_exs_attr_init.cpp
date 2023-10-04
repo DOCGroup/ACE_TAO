@@ -19,7 +19,7 @@ be_visitor_executor_exs_attr_init::be_visitor_executor_exs_attr_init (
 {
 }
 
-be_visitor_executor_exs_attr_init::~be_visitor_executor_exs_attr_init (void)
+be_visitor_executor_exs_attr_init::~be_visitor_executor_exs_attr_init ()
 {
 }
 
@@ -100,7 +100,7 @@ be_visitor_executor_exs_attr_init::pre_process (be_decl *node)
 }
 
 bool
-be_visitor_executor_exs_attr_init::attr_generated (void) const
+be_visitor_executor_exs_attr_init::attr_generated () const
 {
   return this->semicolon_generated_;
 }

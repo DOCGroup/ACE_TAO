@@ -229,7 +229,7 @@ DRV_cpp_expand_output_arg (const char *filename)
 
 // calculate the total size of all commandline arguments
 unsigned int
-DRV_cpp_calc_total_argsize(void)
+DRV_cpp_calc_total_argsize()
 {
   unsigned long size = 0;
   unsigned long ix = 0;
@@ -299,7 +299,7 @@ DRV_get_line (FILE *file)
 
 // Initialize the cpp argument list.
 void
-DRV_cpp_init (void)
+DRV_cpp_init ()
 {
   // Create the line buffer.
   // (JP) Deleting this at the end or DRV_pre_proc() causes
@@ -623,7 +623,7 @@ DRV_add_include_path (ACE_CString& include_path,
 // Adds additional include paths, but after parse_args() has
 // added user-defined include paths.
 void
-DRV_cpp_post_init (void)
+DRV_cpp_post_init ()
 {
   char idl_version_arg[128];
   ACE_OS::sprintf (idl_version_arg, "-D__TAO_IDL_IDL_VERSION=%s",
@@ -962,7 +962,7 @@ namespace
 } // End of local/internal namespace
 
 void
-DRV_get_orb_idl_includes (void)
+DRV_get_orb_idl_includes ()
 {
   static char const orb_idl[] = "tao/orb.idl";
 

@@ -24,7 +24,7 @@ be_visitor_valuetype_field_cdr_ch::be_visitor_valuetype_field_cdr_ch (
 {
 }
 
-be_visitor_valuetype_field_cdr_ch::~be_visitor_valuetype_field_cdr_ch (void)
+be_visitor_valuetype_field_cdr_ch::~be_visitor_valuetype_field_cdr_ch ()
 {
 }
 

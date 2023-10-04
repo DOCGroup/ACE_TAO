@@ -12,6 +12,7 @@
 #include "field.h"
 #include "be_visitor_enum/enum_ch.h"
 #include "be_visitor_sequence/sequence_ch.h"
+#include "be_visitor_map/map_ch.h"
 #include "nr_extern.h"
 
 // **********************************************
@@ -23,7 +24,7 @@ be_visitor_field_ch::be_visitor_field_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_field_ch::~be_visitor_field_ch (void)
+be_visitor_field_ch::~be_visitor_field_ch ()
 {
 }
 
@@ -363,6 +364,85 @@ be_visitor_field_ch::visit_sequence (be_sequence *node)
   // is necessary if the struct, union, or valuetype containing this
   // field was not defined inside a module. In such a case, VC++
   // complains that the non-module scope is not yet fully defined.
+  UTL_Scope *holds_container =
+    this->ctx_->scope ()->decl ()->defined_in ();
+  AST_Decl *hc_decl = ScopeAsDecl (holds_container);
+
+  if (hc_decl->node_type () != AST_Decl::NT_module
+      || !tdef)
+    {
+      *os << bt->nested_type_name (this->ctx_->scope ()->decl ());
+    }
+  else
+    {
+      *os << bt->name ();
+    }
+
+  return 0;
+}
+
+int
+be_visitor_field_ch::visit_map (be_map *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt = 0;
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (!this->ctx_->alias ()
+      && node->is_child (this->ctx_->scope ()->decl ()))
+    {
+      // Put the field node into the (anonymous) sequence node, to be
+      // used later for unique name generation.
+      be_field *member_node =
+        dynamic_cast<be_field*> (this->ctx_->node ());
+      node->field_node (member_node);
+
+      // This was already generated in the corresponding valuetype class.
+      if (this->ctx_->state () != TAO_CodeGen::TAO_VALUETYPE_OBV_CH)
+        {
+          be_visitor_context ctx (*this->ctx_);
+          ctx.node (node);
+
+          // First generate the map declaration.
+          be_visitor_map_ch visitor (&ctx);
+          if (node->accept (&visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                "(%N:%l) be_visitor_field_ch::"
+                                "visit_map - "
+                                "codegen failed\n"),
+                                -1);
+            }
+        }
+
+        // If we are being reused by valutype, this would get generated
+        // in the private section of the OBV_xx class, so we must
+        // generate the typedef for that case elsewhere.
+        AST_Decl::NodeType snt =
+          this->ctx_->scope ()->decl ()->node_type ();
+
+        if (snt != AST_Decl::NT_valuetype && snt != AST_Decl::NT_eventtype)
+          {
+            // Generate the anonymous sequence member typedef.
+            be_decl *bs = this->ctx_->scope ()->decl ();
+
+            TAO_INSERT_COMMENT (os);
+
+            *os << "typedef " << bt->nested_type_name (bs)
+                << " _" << this->ctx_->node ()->local_name ()
+                << "_map;" << be_nl;
+          }
+    }
+
+  be_typedef *tdef = dynamic_cast<be_typedef*> (bt);
+
   UTL_Scope *holds_container =
     this->ctx_->scope ()->decl ()->defined_in ();
   AST_Decl *hc_decl = ScopeAsDecl (holds_container);

@@ -17,7 +17,7 @@ be_visitor_context_svth::be_visitor_context_svth (be_visitor_context *ctx)
 {
 }
 
-be_visitor_context_svth::~be_visitor_context_svth (void)
+be_visitor_context_svth::~be_visitor_context_svth ()
 {
 }
 

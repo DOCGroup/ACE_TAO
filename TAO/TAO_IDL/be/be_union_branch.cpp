@@ -186,7 +186,7 @@ be_union_branch::accept (be_visitor *visitor)
 }
 
 void
-be_union_branch::destroy (void)
+be_union_branch::destroy ()
 {
   this->be_decl::destroy ();
   this->AST_UnionBranch::destroy ();

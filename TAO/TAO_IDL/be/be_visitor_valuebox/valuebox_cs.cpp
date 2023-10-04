@@ -16,7 +16,7 @@ be_visitor_valuebox_cs::be_visitor_valuebox_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuebox_cs::~be_visitor_valuebox_cs (void)
+be_visitor_valuebox_cs::~be_visitor_valuebox_cs ()
 {
 }
 
@@ -734,7 +734,7 @@ be_visitor_valuebox_cs::visit_union (be_union *)
 }
 
 void
-be_visitor_valuebox_cs::emit_destructor (void)
+be_visitor_valuebox_cs::emit_destructor ()
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 

@@ -21,11 +21,11 @@
 
 #include "ace/config-all.h"
 
-be_visitor::be_visitor (void)
+be_visitor::be_visitor ()
 {
 }
 
-be_visitor::~be_visitor (void)
+be_visitor::~be_visitor ()
 {
 }
 
@@ -301,6 +301,12 @@ be_visitor::visit_enum_val (be_enum_val *)
 
 int
 be_visitor::visit_array (be_array *)
+{
+  return 0;
+}
+
+int
+be_visitor::visit_map (be_map *)
 {
   return 0;
 }

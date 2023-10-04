@@ -133,14 +133,14 @@ AST_Operation::AST_Operation (AST_Type *rt,
     }
 }
 
-AST_Operation::~AST_Operation (void)
+AST_Operation::~AST_Operation ()
 {
 }
 
 // Public operations.
 
 bool
-AST_Operation::void_return_type (void)
+AST_Operation::void_return_type ()
 {
   AST_Type* type = this->return_type ();
 
@@ -151,7 +151,7 @@ AST_Operation::void_return_type (void)
 
 // Return the member count.
 int
-AST_Operation::argument_count (void)
+AST_Operation::argument_count ()
 {
   this->compute_argument_attr ();
 
@@ -160,7 +160,7 @@ AST_Operation::argument_count (void)
 
 // Return the IN/INOUT member flag.
 bool
-AST_Operation::has_in_arguments (void)
+AST_Operation::has_in_arguments ()
 {
   this->compute_argument_attr ();
 
@@ -190,7 +190,7 @@ AST_Operation::count_arguments_with_direction (int direction_mask)
 
 // Return if any argument or the return type is a <native> type.
 int
-AST_Operation::has_native (void)
+AST_Operation::has_native ()
 {
   this->compute_argument_attr ();
 
@@ -198,7 +198,7 @@ AST_Operation::has_native (void)
 }
 
 void
-AST_Operation::destroy (void)
+AST_Operation::destroy ()
 {
   // No need to delete our exception list, the
   // destroy() method does it. The UTL_ExceptList
@@ -235,7 +235,7 @@ AST_Operation::be_add_exceptions (UTL_ExceptList *t)
 
 // Compute total number of members.
 int
-AST_Operation::compute_argument_attr (void)
+AST_Operation::compute_argument_attr ()
 {
   if (this->argument_count_ != -1)
     {
@@ -533,25 +533,25 @@ AST_Operation::ast_accept (ast_visitor *visitor)
 // Data accessors
 
 AST_Type *
-AST_Operation::return_type (void)
+AST_Operation::return_type ()
 {
   return this->pd_return_type;
 }
 
 AST_Operation::Flags
-AST_Operation::flags (void)
+AST_Operation::flags ()
 {
   return this->pd_flags;
 }
 
 UTL_StrList *
-AST_Operation::context (void)
+AST_Operation::context ()
 {
   return this->pd_context;
 }
 
 UTL_ExceptList *
-AST_Operation::exceptions (void)
+AST_Operation::exceptions ()
 {
   return this->pd_exceptions;
 }

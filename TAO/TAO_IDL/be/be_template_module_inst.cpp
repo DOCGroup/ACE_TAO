@@ -24,12 +24,12 @@ be_template_module_inst::be_template_module_inst (
 {
 }
 
-be_template_module_inst::~be_template_module_inst (void)
+be_template_module_inst::~be_template_module_inst ()
 {
 }
 
 void
-be_template_module_inst::destroy (void)
+be_template_module_inst::destroy ()
 {
   this->AST_Template_Module_Inst::destroy ();
 }

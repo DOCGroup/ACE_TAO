@@ -62,7 +62,7 @@ ast_visitor_tmpl_module_inst::ast_visitor_tmpl_module_inst (
 {
 }
 
-ast_visitor_tmpl_module_inst::~ast_visitor_tmpl_module_inst (void)
+ast_visitor_tmpl_module_inst::~ast_visitor_tmpl_module_inst ()
 {
 }
 
@@ -628,6 +628,12 @@ ast_visitor_tmpl_module_inst::visit_array (AST_Array *)
 
 int
 ast_visitor_tmpl_module_inst::visit_sequence (AST_Sequence *)
+{
+  return 0;
+}
+
+int
+ast_visitor_tmpl_module_inst::visit_map (AST_Map *)
 {
   return 0;
 }

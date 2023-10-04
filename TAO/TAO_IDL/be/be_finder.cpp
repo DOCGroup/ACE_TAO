@@ -29,12 +29,12 @@ be_finder::be_finder (UTL_ScopedName *n)
 {
 }
 
-be_finder::~be_finder (void)
+be_finder::~be_finder ()
 {
 }
 
 void
-be_finder::destroy (void)
+be_finder::destroy ()
 {
   // Call the destroy methods of our base classes.
   this->be_factory::destroy ();

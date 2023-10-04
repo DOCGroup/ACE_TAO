@@ -57,7 +57,7 @@ be_valuebox::accept (be_visitor *visitor)
 
 
 void
-be_valuebox::destroy (void)
+be_valuebox::destroy ()
 {
   // Call the destroy methods of our base classes.
   this->AST_ValueBox::destroy ();

@@ -509,4 +509,5 @@ TAO/DevGuideExamples/AMH/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
 TAO/DevGuideExamples/AMH_AMI/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
 TAO/tests/IDLv4/annotations/run_test.pl
 TAO/tests/IDLv4/explicit_ints/run_test.pl
+TAO/tests/IDLv4/maps/run_test.pl
 TAO/tests/AST_Unit_Tests/run_test.pl

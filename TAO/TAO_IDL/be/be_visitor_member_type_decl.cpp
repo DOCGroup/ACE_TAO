@@ -21,7 +21,7 @@ be_visitor_member_type_decl::be_visitor_member_type_decl  (
 {
 }
 
-be_visitor_member_type_decl::~be_visitor_member_type_decl (void)
+be_visitor_member_type_decl::~be_visitor_member_type_decl ()
 {
 }
 

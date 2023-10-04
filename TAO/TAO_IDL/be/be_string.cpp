@@ -95,7 +95,7 @@ be_string::gen_member_ostream_operator (TAO_OutStream *os,
 
 // Overriden method.
 void
-be_string::compute_tc_name (void)
+be_string::compute_tc_name ()
 {
   Identifier * id = 0;
   ACE_CDR::ULong val = 0UL;
@@ -169,7 +169,7 @@ be_string::accept (be_visitor * visitor)
 }
 
 void
-be_string::destroy (void)
+be_string::destroy ()
 {
   this->be_type::destroy ();
   this->AST_String::destroy ();

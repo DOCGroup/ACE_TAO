@@ -17,7 +17,7 @@ be_visitor_amh_interface_sh::be_visitor_amh_interface_sh (
 {
 }
 
-be_visitor_amh_interface_sh::~be_visitor_amh_interface_sh (void)
+be_visitor_amh_interface_sh::~be_visitor_amh_interface_sh ()
 {
 }
 

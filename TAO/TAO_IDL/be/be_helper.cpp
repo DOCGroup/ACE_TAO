@@ -46,12 +46,12 @@ static const char copyright[] =
 " *     https://www.dre.vanderbilt.edu/~schmidt/TAO.html\n"
 " **/";
 
-TAO_NL::TAO_NL (void)
+TAO_NL::TAO_NL ()
 {
   ACE_UNUSED_ARG (copyright);
 }
 
-TAO_NL_2::TAO_NL_2 (void)
+TAO_NL_2::TAO_NL_2 ()
 {
   ACE_UNUSED_ARG (copyright);
 }
@@ -75,7 +75,7 @@ const TAO_UNINDENT be_uidt_nl (1);
 
 // Methods of the TAO_OutStream class.
 
-TAO_OutStream::TAO_OutStream (void)
+TAO_OutStream::TAO_OutStream ()
   : fp_ (0),
     st_ (TAO_CLI_HDR),
     indent_level_ (0)
@@ -86,7 +86,7 @@ TAO_OutStream::TAO_OutStream (void)
     }
 }
 
-TAO_OutStream::~TAO_OutStream (void)
+TAO_OutStream::~TAO_OutStream ()
 {
   // Close the underlying I/O handle only if it exists.
   if (this->fp_ != 0)
@@ -140,7 +140,7 @@ TAO_OutStream::stream_type (TAO_OutStream::STREAM_TYPE st)
 }
 
 TAO_OutStream::STREAM_TYPE
-TAO_OutStream::stream_type (void)
+TAO_OutStream::stream_type ()
 {
   return this->st_;
 }
@@ -148,7 +148,7 @@ TAO_OutStream::stream_type (void)
 // Return the underlying lowlevel file pointer.
 // indentation.
 FILE *&
-TAO_OutStream::file (void)
+TAO_OutStream::file ()
 {
   return this->fp_;
 }
@@ -192,7 +192,7 @@ TAO_OutStream::decr_indent (unsigned short flag)
 }
 
 int
-TAO_OutStream::reset (void)
+TAO_OutStream::reset ()
 {
   this->indent_level_ = 0;
   return 0;
@@ -200,7 +200,7 @@ TAO_OutStream::reset (void)
 
 // Indented print.
 int
-TAO_OutStream::indent (void)
+TAO_OutStream::indent ()
 {
   // Based on the current indentation level, leave appropriate number of blank
   // spaces in the output.
@@ -216,7 +216,7 @@ TAO_OutStream::indent (void)
 }
 
 int
-TAO_OutStream::nl (void)
+TAO_OutStream::nl ()
 {
   ACE_OS::fprintf (this->fp_, "\n");
   this->indent ();
@@ -287,7 +287,7 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
 }
 
 int
-TAO_OutStream::gen_endif (void)
+TAO_OutStream::gen_endif ()
 {
   *this << "\n\n#endif /* end #if !defined */";
 

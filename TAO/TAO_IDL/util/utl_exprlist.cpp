@@ -82,13 +82,13 @@ UTL_ExprList::UTL_ExprList (AST_Expression *s,
 
 // Get list item.
 AST_Expression *
-UTL_ExprList::head (void)
+UTL_ExprList::head ()
 {
   return this->pd_car_data;
 }
 
 void
-UTL_ExprList::destroy (void)
+UTL_ExprList::destroy ()
 {
   if (this->pd_car_data != 0)
     {
@@ -107,7 +107,7 @@ UTL_ExprlistActiveIterator::UTL_ExprlistActiveIterator (UTL_ExprList *s)
 
 // Get current item.
 AST_Expression *
-UTL_ExprlistActiveIterator::item (void)
+UTL_ExprlistActiveIterator::item ()
 {
   if (source == 0)
     {

@@ -131,7 +131,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
     }
 }
 
-be_valuetype::~be_valuetype (void)
+be_valuetype::~be_valuetype ()
 {
 }
 
@@ -153,14 +153,14 @@ be_valuetype::redefine (AST_Interface *from)
 // Is true if non-virtual accessor and modifier should be generated
 // If #pragma TAO OBV opt_accessor (todo) is used or -Wb,obv_opt_accessor.
 bool
-be_valuetype::opt_accessor (void)
+be_valuetype::opt_accessor ()
 {
   return be_global->obv_opt_accessor ();
 }
 
 // Compute stringified fully scoped skeleton name (OBV_name).
 void
-be_valuetype::compute_fullobvskelname (void)
+be_valuetype::compute_fullobvskelname ()
 {
   this->compute_full_skel_name ("OBV_",
                                 this->full_obv_skel_name_);
@@ -168,7 +168,7 @@ be_valuetype::compute_fullobvskelname (void)
 
 // Retrieve the fully scoped skeleton name.
 const char*
-be_valuetype::full_obv_skel_name (void)
+be_valuetype::full_obv_skel_name ()
 {
   if (0 == this->full_obv_skel_name_)
     {
@@ -179,13 +179,13 @@ be_valuetype::full_obv_skel_name (void)
 }
 
 const char *
-be_valuetype::fwd_helper_name (void) const
+be_valuetype::fwd_helper_name () const
 {
   return this->fwd_helper_name_.fast_rep ();
 }
 
 be_valuetype::FactoryStyle
-be_valuetype::determine_factory_style (void)
+be_valuetype::determine_factory_style ()
 {
   FactoryStyle factory_style = FS_UNKNOWN;
 
@@ -249,7 +249,7 @@ be_valuetype::determine_factory_style (void)
 }
 
 bool
-be_valuetype::have_operation (void)
+be_valuetype::have_operation ()
 {
   // Check whatever scope we get for operations/attributes.
 
@@ -397,7 +397,7 @@ be_valuetype::have_supported_op (be_interface * node)
 }
 
 bool
-be_valuetype::will_have_factory (void)
+be_valuetype::will_have_factory ()
 {
   FactoryStyle fs = this->determine_factory_style ();
 
@@ -405,7 +405,7 @@ be_valuetype::will_have_factory (void)
 }
 
 bool
-be_valuetype::has_member (void)
+be_valuetype::has_member ()
 {
   AST_Type *parent = this->pd_inherits_concrete;
 
@@ -435,7 +435,7 @@ be_valuetype::has_member (void)
 }
 
 bool
-be_valuetype::is_amh_excep_holder (void) const
+be_valuetype::is_amh_excep_holder () const
 {
   return this->is_amh_excep_holder_;
 }
@@ -553,7 +553,7 @@ be_valuetype::gen_ostream_operator (TAO_OutStream *os,
 // interface _var and _out template classes, as well as by the
 // template sequence classes for object references.
 void
-be_valuetype::gen_var_out_seq_decls (void)
+be_valuetype::gen_var_out_seq_decls ()
 {
   if (this->var_out_seq_decls_gen_)
     {
@@ -590,19 +590,19 @@ be_valuetype::gen_var_out_seq_decls (void)
 
 // For building the pre and postfix of private data fields.
 const char *
-be_valuetype::field_pd_prefix (void)
+be_valuetype::field_pd_prefix ()
 {
   return "_pd_";
 }
 
 const char *
-be_valuetype::field_pd_postfix (void)
+be_valuetype::field_pd_postfix ()
 {
   return "";
 }
 
 be_valuetype *
-be_valuetype::statefull_inherit (void)
+be_valuetype::statefull_inherit ()
 {
   if (this->pd_inherits_concrete != 0)
     {
@@ -624,7 +624,7 @@ be_valuetype::accept (be_visitor *visitor)
 }
 
 void
-be_valuetype::destroy (void)
+be_valuetype::destroy ()
 {
   delete [] this->full_obv_skel_name_;
   this->full_obv_skel_name_ = 0;
@@ -673,7 +673,7 @@ be_valuetype::data_members_count (AST_Field::Visibility vis)
 }
 
 bool
-be_valuetype::supports_abstract (void) const
+be_valuetype::supports_abstract () const
 {
   return this->supports_abstract_;
 }

@@ -91,7 +91,7 @@ AST_Type::AST_Type (AST_Decl::NodeType nt,
 {
 }
 
-AST_Type::~AST_Type (void)
+AST_Type::~AST_Type ()
 {
   destroy ();
 }
@@ -100,7 +100,7 @@ AST_Type::~AST_Type (void)
 
 // Return our size type.
 AST_Type::SIZE_TYPE
-AST_Type::size_type (void)
+AST_Type::size_type ()
 {
   if (this->size_type_ == AST_Type::SIZE_UNKNOWN)
     {
@@ -131,7 +131,7 @@ AST_Type::size_type (AST_Type::SIZE_TYPE st)
 
 // Compute the size type of the node in question
 int
-AST_Type::compute_size_type (void)
+AST_Type::compute_size_type ()
 {
   return 0;
 }
@@ -144,7 +144,7 @@ AST_Type::in_recursion (ACE_Unbounded_Queue<AST_Type *> & /*list*/)
 }
 
 bool
-AST_Type::ifr_added (void)
+AST_Type::ifr_added ()
 {
   return this->ifr_added_;
 }
@@ -156,7 +156,7 @@ AST_Type::ifr_added (bool val)
 }
 
 bool
-AST_Type::ifr_fwd_added (void)
+AST_Type::ifr_fwd_added ()
 {
   return this->ifr_fwd_added_;
 }
@@ -168,7 +168,7 @@ AST_Type::ifr_fwd_added (bool val)
 }
 
 bool
-AST_Type::has_constructor (void)
+AST_Type::has_constructor ()
 {
   return this->has_constructor_;
 }
@@ -209,7 +209,7 @@ AST_Type::nested_type_name (AST_Decl *use_scope,
 }
 
 AST_Type *
-AST_Type::unaliased_type (void)
+AST_Type::unaliased_type ()
 {
   AST_Type *t = this;
   AST_Typedef *td = 0;
@@ -226,7 +226,7 @@ AST_Type::unaliased_type (void)
 }
 
 bool
-AST_Type::legal_for_primary_key (void) const
+AST_Type::legal_for_primary_key () const
 {
   return true;
 }
@@ -535,7 +535,7 @@ AST_Type::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Type::destroy (void)
+AST_Type::destroy ()
 {
   delete [] this->nested_type_name_;
   this->nested_type_name_ = 0;
