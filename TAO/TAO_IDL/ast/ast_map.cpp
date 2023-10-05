@@ -170,6 +170,9 @@ AST_Map::AST_Map (AST_Expression *ms,
     || vnt == AST_Decl::NT_param_holder;
 }
 
+AST_Map::~AST_Map ()
+{}
+
 // Public operations.
 
 bool
