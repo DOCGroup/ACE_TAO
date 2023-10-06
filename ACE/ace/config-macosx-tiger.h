@@ -9,13 +9,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 #if !defined (ACE_SIZEOF_LONG_DOUBLE)
-# if (__GNUC__ == 3 && __GNUC_MINOR__ == 3)
-   // Size of long double in GCC 3.3 is 8.
-#  define ACE_SIZEOF_LONG_DOUBLE 8
-# else // Else, the compiler is GCC4
-   // For GCC4, the size is 16.
-#  define ACE_SIZEOF_LONG_DOUBLE 16
-# endif // GCC 3.3
+#  define ACE_SIZEOF_LONG_DOUBLE __SIZEOF_LONG_DOUBLE__
 #endif // ACE_SIZEOF_LONG_DOUBLE
 
 #if defined (__GNUG__)
