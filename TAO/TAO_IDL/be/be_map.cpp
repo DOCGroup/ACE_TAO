@@ -146,7 +146,7 @@ be_map::gen_name ()
                         0);
     }
 
-  std::snprintf (namebuf,
+  ACE_OS::snprintf (namebuf,
                     NAMEBUFSIZE,
                     "_tao_map_%s_%s_",
                     kt->flat_name (), vt->flat_name ());
@@ -155,10 +155,10 @@ be_map::gen_name ()
   if (this->unbounded () == false)
     {
       char ulval_str [NAMEBUFSIZE];
-      std::snprintf (ulval_str,
-                      NAMEBUFSIZE,
-                      "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
-                      this->max_size ()->ev ()->u.ulval);
+      ACE_OS::snprintf (ulval_str,
+                        NAMEBUFSIZE,
+                        "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
+                        this->max_size ()->ev ()->u.ulval);
       ACE_OS::strcat (namebuf,
                       ulval_str);
     }

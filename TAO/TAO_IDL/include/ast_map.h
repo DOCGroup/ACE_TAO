@@ -81,7 +81,7 @@ public:
            bool local,
            bool abstract);
 
-  virtual ~AST_Map () = default;
+  virtual ~AST_Map ();
 
   virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Are we or the node represented by node involved in recursion.
