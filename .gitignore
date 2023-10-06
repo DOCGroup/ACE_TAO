@@ -20,6 +20,7 @@
 
 .depend.*
 GNUmakefile*
+local.mwc
 *.ior
 .obj/
 *.iobj
