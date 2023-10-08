@@ -174,16 +174,16 @@ run_cascaded_multi_size_based_allocator_basic_test ()
 {
   ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
 
-  const size_t initial_n_chunks = 11;
-  const size_t min_initial_n_chunks = 2;
-  const size_t initial_chunk_size = sizeof (void*) + 5;
-  const size_t nbytes = initial_chunk_size;
+  size_t const initial_n_chunks = 11;
+  size_t const min_initial_n_chunks = 2;
+  size_t const initial_chunk_size = sizeof (void*) + 5;
+  size_t const nbytes = initial_chunk_size;
 
   std::vector<void*> ptrs;
   void *ptr;
   size_t pool_sum, pool_depth;
 
-  const char initial_value = '\0';
+  char const initial_value = '\0';
 
   ACE_Cascaded_Multi_Size_Based_Allocator<ACE_SYNCH_MUTEX> alloc (initial_n_chunks, initial_chunk_size, min_initial_n_chunks);
   pool_sum = alloc.pool_sum ();
@@ -254,9 +254,9 @@ run_cascaded_multi_size_based_allocator_hierarchy_test ()
 {
   ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
 
-  const size_t initial_n_chunks = 11;
-  const size_t min_initial_n_chunks = 2;
-  const size_t initial_chunk_size = sizeof (void*) + 5;
+  size_t const initial_n_chunks = 11;
+  size_t const min_initial_n_chunks = 2;
+  size_t const initial_chunk_size = sizeof (void*) + 5;
 
   void *ptr;
   size_t pool_sum, old_pool_sum, pool_depth, old_pool_depth;
@@ -333,7 +333,7 @@ run_cascaded_multi_size_based_allocator_hierarchy_test ()
 
   ACE_DEBUG ((LM_INFO, "%C Only test the basic calloc API  ...\n", __func__));
   char initial_value = '\0';
-  const size_t CMP_ARRAY_LEN = initial_chunk_size + 1024;
+  size_t const CMP_ARRAY_LEN = initial_chunk_size + 1024;
   char cmpvalues[CMP_ARRAY_LEN];
   for (nbytes = initial_chunk_size; nbytes < CMP_ARRAY_LEN; ++nbytes, ++initial_value)
   {
@@ -355,11 +355,11 @@ run_cascaded_multi_size_based_allocator_hierarchy_free_test ()
 {
   ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
 
-  const size_t initial_n_chunks = 11;
-  const size_t min_initial_n_chunks = 2;
-  const size_t chunk_size = sizeof (void*) + 5;
+  size_t const initial_n_chunks = 11;
+  size_t const min_initial_n_chunks = 2;
+  size_t const chunk_size = sizeof (void*) + 5;
 
-  void* ptr;
+  void *ptr;
   size_t level  = 3;
   size_t nbytes = chunk_size << level;
   std::stringstream ss;
@@ -428,9 +428,9 @@ run_cascaded_multi_size_based_allocator_hierarchy_differential_test ()
 {
   ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
 
-  const size_t initial_n_chunks = 11;
-  const size_t min_initial_n_chunks = 2;
-  const size_t chunk_size = sizeof (void*) + 5;
+  size_t const initial_n_chunks = 11;
+  size_t const min_initial_n_chunks = 2;
+  size_t const chunk_size = sizeof (void*) + 5;
 
   ACE_Cascaded_Multi_Size_Based_Allocator<ACE_SYNCH_MUTEX> alloc (initial_n_chunks, chunk_size, min_initial_n_chunks);
   ACE_DEBUG ((LM_INFO, "%C Only test the hierarchy differential ...\n", __func__));
@@ -472,7 +472,7 @@ run_cascaded_multi_size_based_allocator_hierarchy_differential_test ()
     old_pool_depth = alloc.pool_depth ();
     old_pool_sum   = alloc.pool_sum ();
 
-    const size_t next_level = level + 1;
+    size_t const next_level = level + 1;
     delta = DELTA (next_level, initial_n_chunks, min_initial_n_chunks);
     ptr = alloc.malloc (nbytes + 1);
     alloc.free (ptr);
@@ -487,7 +487,7 @@ run_cascaded_multi_size_based_allocator_hierarchy_differential_test ()
     ss << "  next level: " << next_level << " must be created, pool sum must increased by " << delta << std::endl;
     ACE_ASSERT_RETURN ((old_pool_sum + delta) == pool_sum, ss.str().c_str());
 
-    const size_t next_nbytes = chunk_size << next_level;
+    size_t const next_nbytes = chunk_size << next_level;
     old_pool_depth = alloc.pool_depth ();
     old_pool_sum   = alloc.pool_sum ();
     std::vector<void*> ptrs;

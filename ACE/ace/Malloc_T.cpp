@@ -470,7 +470,7 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
 
   if (m < this->hierarchy_.size() && this->hierarchy_[m] != nullptr)
   {
-    void* ptr = this->hierarchy_[m]->malloc(nbytes);
+    void *ptr = this->hierarchy_[m]->malloc(nbytes);
     if (ptr == nullptr)
       return nullptr;
 
@@ -494,7 +494,7 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
                   nullptr);
 
   this->hierarchy_[m] = newly_alloc;
-  void* ptr = newly_alloc->malloc (nbytes);
+  void *ptr = newly_alloc->malloc (nbytes);
   if (ptr == nullptr)
     return nullptr;
 
@@ -506,7 +506,7 @@ template <class ACE_LOCK>
 void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::calloc (size_t nbytes, char initial_value)
 {
   // No need any lock.
-  void* ptr = malloc (nbytes);
+  void *ptr = malloc (nbytes);
   if (ptr != nullptr)
     ACE_OS::memset (ptr, initial_value, nbytes);
 
