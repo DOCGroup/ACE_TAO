@@ -407,10 +407,10 @@ ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::ACE_Cascaded_Multi_Size_Based
           );
 
   // Consider the exception of vector push_back call.
-  std::unique_ptr<comb_alloc_type> smart_ptr(tmp);
-  this->hierarchy_.push_back(smart_ptr.get());
+  std::unique_ptr<comb_alloc_type> smart_ptr (tmp);
+  this->hierarchy_.push_back (smart_ptr.get ());
 
-  smart_ptr.release();
+  smart_ptr.release ();
 }
 
 template <class ACE_LOCK>
@@ -434,7 +434,7 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   // Use Binary Search to find minimal pos that value is bigger than nbytes.
   size_t m = 0;
   size_t l = 0;
-  size_t h = this->hierarchy_.size();
+  size_t h = this->hierarchy_.size ();
 
   while (l <= h)
   {
@@ -468,7 +468,7 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, nullptr));
 
-  if (m < this->hierarchy_.size() && this->hierarchy_[m] != nullptr)
+  if (m < this->hierarchy_.size () && this->hierarchy_[m] != nullptr)
   {
     void *ptr = this->hierarchy_[m]->malloc(nbytes);
     if (ptr == nullptr)
@@ -479,10 +479,10 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   }
 
   // The found pos maybe nullptr or beyond the current hierarchy_ size.
-  if (m >= this->hierarchy_.size())
+  if (m >= this->hierarchy_.size ())
   {
     // Has strong exception safety guarantee for call of resize, maybe throw.
-    this->hierarchy_.resize(m + 1, nullptr);
+    this->hierarchy_.resize (m + 1, nullptr);
   }
 
   size_t const reinitial_n_chunks = this->initial_n_chunks_ >> m;
