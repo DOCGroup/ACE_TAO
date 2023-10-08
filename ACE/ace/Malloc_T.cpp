@@ -191,7 +191,7 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Cascaded_Dynamic_Cached_All
   // If ACE_NEW fails, the hierarchy_ will be reconstructed when malloc API is called.
   ACE_NEW (tmp, comb_alloc_type(this->initial_n_chunks_, this->chunk_size_));
 
-  // Consider the exception of vector push_back call
+  // Consider the exception of vector push_back call.
   std::unique_ptr<comb_alloc_type> smart_ptr(tmp);
   // Has strong exception safety guarantee for call of push_back.
   this->hierarchy_.push_back (smart_ptr.get());
@@ -238,7 +238,7 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
                     this->chunk_size_),
                     nullptr);
 
-    // Consider the exception of vector push_back call
+    // Consider the exception of vector push_back call.
     std::unique_ptr<comb_alloc_type> smart_ptr(tmp);
     // Has strong exception safety guarantee for call of push_back.
     this->hierarchy_.push_back(smart_ptr.get());
