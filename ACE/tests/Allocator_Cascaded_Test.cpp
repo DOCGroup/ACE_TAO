@@ -47,8 +47,8 @@ run_cascaded_allocator_test ()
 {
   ACE_DEBUG ((LM_INFO, "%C begin to run ...\n", __func__));
 
-  const size_t initial_n_chunks  = 1;
-  const size_t chunk_size        = sizeof(void*) + 7;
+  size_t const initial_n_chunks  = 1;
+  size_t const chunk_size        = sizeof(void*) + 7;
 
   void *ptr, *ptr1, *ptr2;
   size_t nbytes = chunk_size;
@@ -127,7 +127,7 @@ run_cascaded_allocator_test ()
 
   ACE_DEBUG ((LM_INFO, "%C will test cascaded allocator deeply ...\n", __func__));
   old_pool_sum = alloc.pool_sum ();
-  const size_t totalAllocSum = 8 * 1024;
+  size_t const totalAllocSum = 8 * 1024;
   char cmpvalues[chunk_size];
   char initial_cmp_value = initial_value;
   std::vector<void*> ptrs;
