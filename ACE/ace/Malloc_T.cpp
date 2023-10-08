@@ -14,6 +14,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 #include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -190,9 +191,15 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Cascaded_Dynamic_Cached_All
   // If ACE_NEW fails, the hierarchy_ will be reconstructed when malloc API is called.
   ACE_NEW (tmp, comb_alloc_type(this->initial_n_chunks_, this->chunk_size_));
 
-  // Increase the chunk sum if succeed.
-  this->chunk_sum_ += tmp->pool_depth();
-  this->hierarchy_.push_back(tmp);
+  // Consider the exception of vector push_back call
+  std::unique_ptr<comb_alloc_type> smart_ptr(tmp);
+  // Has strong exception safety guarantee for call of push_back.
+  this->hierarchy_.push_back (smart_ptr.get());
+
+  // Increase the chunk sum if all points having potential risk of exception is passed.
+  this->chunk_sum_ += smart_ptr->pool_depth();
+
+  smart_ptr.release();
 }
 
 template <class ACE_LOCK>
@@ -227,12 +234,20 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   if(ptr == nullptr)
   {
     comb_alloc_ptr tmp;
-    ACE_NEW_RETURN (tmp, comb_alloc_type(this->initial_n_chunks_ * 2 * this->hierarchy_.size(), this->chunk_size_), nullptr);
+    ACE_NEW_RETURN (tmp, comb_alloc_type(this->initial_n_chunks_ * (1 << this->hierarchy_.size()),
+                    this->chunk_size_),
+                    nullptr);
 
-    // Increase the chunk sum if succeed.
-    this->chunk_sum_ += tmp->pool_depth();
-    this->hierarchy_.push_back(tmp);
-    ptr = tmp->malloc(nbytes);
+    // Consider the exception of vector push_back call
+    std::unique_ptr<comb_alloc_type> smart_ptr(tmp);
+    // Has strong exception safety guarantee for call of push_back.
+    this->hierarchy_.push_back(smart_ptr.get());
+
+    // Increase the chunk sum if all points having potential risk of exception is passed.
+    this->chunk_sum_ += smart_ptr->pool_depth();
+    ptr = smart_ptr->malloc(nbytes);
+
+    smart_ptr.release();
   }
 
   return ptr;
@@ -391,7 +406,11 @@ ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::ACE_Cascaded_Multi_Size_Based
                                  this->initial_chunk_size_ + sizeof(comb_chunk_header_type))
           );
 
-  this->hierarchy_.push_back (tmp);
+  // Consider the exception of vector push_back call
+  std::unique_ptr<comb_alloc_type> smart_ptr(tmp);
+  this->hierarchy_.push_back(smart_ptr.get());
+
+  smart_ptr.release();
 }
 
 template <class ACE_LOCK>
@@ -462,7 +481,8 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   // The found pos maybe nullptr or beyond the current hierarchy_ size.
   if (m >= this->hierarchy_.size())
   {
-    this->hierarchy_.resize (m + 1, nullptr);
+    // Has strong exception safety guarantee for call of resize, maybe throw.
+    this->hierarchy_.resize(m + 1, nullptr);
   }
 
   const size_t reinitial_n_chunks = this->initial_n_chunks_ >> m;
