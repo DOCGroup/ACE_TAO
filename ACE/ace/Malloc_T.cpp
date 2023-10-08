@@ -189,28 +189,28 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Cascaded_Dynamic_Cached_All
 
   comb_alloc_ptr tmp;
   // If ACE_NEW fails, the hierarchy_ will be reconstructed when malloc API is called.
-  ACE_NEW (tmp, comb_alloc_type(this->initial_n_chunks_, this->chunk_size_));
+  ACE_NEW (tmp, comb_alloc_type (this->initial_n_chunks_, this->chunk_size_));
 
   // Consider the exception of vector push_back call.
-  std::unique_ptr<comb_alloc_type> smart_ptr(tmp);
+  std::unique_ptr<comb_alloc_type> smart_ptr (tmp);
   // Has strong exception safety guarantee for call of push_back.
-  this->hierarchy_.push_back (smart_ptr.get());
+  this->hierarchy_.push_back (smart_ptr.get ());
 
   // Increase the chunk sum if all points having potential risk of exception is passed.
-  this->chunk_sum_ += smart_ptr->pool_depth();
+  this->chunk_sum_ += smart_ptr->pool_depth ();
 
-  smart_ptr.release();
+  smart_ptr.release ();
 }
 
 template <class ACE_LOCK>
 ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::~ACE_Cascaded_Dynamic_Cached_Allocator ()
 {
-  for (size_t h = 0; h < this->hierarchy_.size(); h++)
+  for (size_t h = 0; h < this->hierarchy_.size (); h++)
   {
     delete this->hierarchy_[h];
   }
 
-  this->hierarchy_.clear();
+  this->hierarchy_.clear ();
 }
 
 template <class ACE_LOCK> void *
@@ -222,16 +222,16 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, nullptr));
 
-  void * ptr = nullptr;
+  void *ptr = nullptr;
 
-  for (size_t h = 0; h < this->hierarchy_.size(); h++)
+  for (size_t h = 0; h < this->hierarchy_.size (); h++)
   {
-    ptr = this->hierarchy_[h]->malloc(nbytes);
-    if(ptr != nullptr)
+    ptr = this->hierarchy_[h]->malloc (nbytes);
+    if (ptr != nullptr)
       break;
   }
 
-  if(ptr == nullptr)
+  if (ptr == nullptr)
   {
     comb_alloc_ptr tmp;
     ACE_NEW_RETURN (tmp, comb_alloc_type(this->initial_n_chunks_ * (1 << this->hierarchy_.size()),
@@ -239,15 +239,15 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
                     nullptr);
 
     // Consider the exception of vector push_back call.
-    std::unique_ptr<comb_alloc_type> smart_ptr(tmp);
+    std::unique_ptr<comb_alloc_type> smart_ptr (tmp);
     // Has strong exception safety guarantee for call of push_back.
-    this->hierarchy_.push_back(smart_ptr.get());
+    this->hierarchy_.push_back (smart_ptr.get ());
 
     // Increase the chunk sum if all points having potential risk of exception is passed.
-    this->chunk_sum_ += smart_ptr->pool_depth();
-    ptr = smart_ptr->malloc(nbytes);
+    this->chunk_sum_ += smart_ptr->pool_depth ();
+    ptr = smart_ptr->malloc (nbytes);
 
-    smart_ptr.release();
+    smart_ptr.release ();
   }
 
   return ptr;
@@ -280,11 +280,11 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
 {
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
 
-  ACE_ASSERT (this->hierarchy_.size() > 0);
+  ACE_ASSERT (this->hierarchy_.size () > 0);
 
   // Use first allocator as a free chunk manager for all allocators when chunk freed.
-  if (ptr != nullptr && this->hierarchy_.size() > 0)
-    this->hierarchy_[0]->free(ptr);
+  if (ptr != nullptr && this->hierarchy_.size () > 0)
+    this->hierarchy_[0]->free (ptr);
 }
 
 template <class ACE_LOCK> int
@@ -360,9 +360,9 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::pool_depth ()
 
   size_t pool_depth = 0;
 
-  for (size_t h = 0; h < this->hierarchy_.size(); h++)
+  for (size_t h = 0; h < this->hierarchy_.size (); h++)
   {
-    pool_depth += this->hierarchy_[h]->pool_depth();
+    pool_depth += this->hierarchy_[h]->pool_depth ();
   }
 
   return pool_depth;
@@ -378,11 +378,11 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("initial_n_chunks_ = %u\n"), this->initial_n_chunks_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("chunk_size_ = %u\n"), this->chunk_size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("chunk_sum_ = %u\n"), this->chunk_sum_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("hierarchy_ size = %u\n"), this->hierarchy_.size()));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("hierarchy_ size = %u\n"), this->hierarchy_.size ()));
 
-  for (size_t h = 0; h < this->hierarchy_.size(); h++)
+  for (size_t h = 0; h < this->hierarchy_.size (); h++)
   {
-    this->hierarchy_[h]->dump();
+    this->hierarchy_[h]->dump ();
     ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   }
 
