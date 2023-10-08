@@ -445,7 +445,7 @@ run_cascaded_multi_size_based_allocator_hierarchy_differential_test ()
 
     ACE_DEBUG ((LM_INFO, "%C test level: %u size-based cascaded allocator ...\n", __func__, level));
     size_t nbytes = chunk_size << level;
-    void* ptr = alloc.malloc (nbytes);
+    void *ptr = alloc.malloc (nbytes);
     ss.str ("");
     ss << "  level: " << level
        << " size-based cascaded allocator must return valid ptr when requesting normal chunk_size: " << nbytes
