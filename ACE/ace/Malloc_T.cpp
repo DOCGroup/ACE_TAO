@@ -406,7 +406,7 @@ ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::ACE_Cascaded_Multi_Size_Based
                                  this->initial_chunk_size_ + sizeof(comb_chunk_header_type))
           );
 
-  // Consider the exception of vector push_back call
+  // Consider the exception of vector push_back call.
   std::unique_ptr<comb_alloc_type> smart_ptr(tmp);
   this->hierarchy_.push_back(smart_ptr.get());
 
@@ -485,14 +485,13 @@ void* ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::malloc (size_t nbytes)
     this->hierarchy_.resize(m + 1, nullptr);
   }
 
-  const size_t reinitial_n_chunks = this->initial_n_chunks_ >> m;
+  size_t const reinitial_n_chunks = this->initial_n_chunks_ >> m;
   comb_alloc_ptr newly_alloc;
   // Notice: need one octet to record hierarchy pos.
   ACE_NEW_RETURN (newly_alloc,
                   comb_alloc_type (reinitial_n_chunks > this->min_initial_n_chunks_ ? reinitial_n_chunks : this->min_initial_n_chunks_,
                                    chunk_size + sizeof(comb_chunk_header_type)),
-                  nullptr
-                 );
+                  nullptr);
 
   this->hierarchy_[m] = newly_alloc;
   void* ptr = newly_alloc->malloc (nbytes);
@@ -531,7 +530,7 @@ void ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::free (void* ptr)
   ACE_ASSERT (this->hierarchy_.size () > 0);
 
   void* const hdr_ptr = static_cast<comb_chunk_header_type*> (ptr) - sizeof (comb_chunk_header_type);
-  const size_t h      = *static_cast<comb_chunk_header_type*> (hdr_ptr);
+  size_t const h      = *static_cast<comb_chunk_header_type*> (hdr_ptr);
 
   if (h < this->hierarchy_.size () && this->hierarchy_[h] != nullptr)
     this->hierarchy_[h]->free (hdr_ptr);
