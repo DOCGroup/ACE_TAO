@@ -502,8 +502,8 @@ WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
       if (this->write_4 (cdr, &l) && x != 0)
         {
           this->write_2 (cdr, &bom);
-          len--;
-          length--;
+          --len;
+          --length;
           return this->write_measured_wchar_array (cdr, x, len, length);
         }
     }
