@@ -31,7 +31,7 @@ public:
   be_visitor_map_cdr_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_map_cdr_op_ch (void);
+  ~be_visitor_map_cdr_op_ch ();
 
   /// visit map
   virtual int visit_map (be_map *node);
