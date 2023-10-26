@@ -31,10 +31,10 @@ public:
   be_visitor_map_cdr_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_map_cdr_op_ch () = default;
+  ~be_visitor_map_cdr_op_ch ();
 
   /// visit map
-  int visit_map (be_map *node) override;
+  virtual int visit_map (be_map *node);
 };
 
 #endif /* _BE_VISITOR_MAP_CDR_OP_CH_H_ */
