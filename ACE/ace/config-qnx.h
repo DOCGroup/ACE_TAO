@@ -139,7 +139,15 @@
 # define ACE_LACKS_WCSNICMP
 # define ACE_LACKS_WCSDUP
 # define ACE_LACKS_STD_WSTRING
-
+// /usr/nto/include/float.h defines
+//  FLT_MAX_EXP 127
+//  DBL_MAX_EXP 1023
+//  ace expects 128 & 1024 respectively
+//  to set the following macros in ace/Basic_Types.h
+//  These macros are:
+# define ACE_SIZEOF_DOUBLE   8
+# define ACE_SIZEOF_FLOAT    4
+# define _POSIX_C_SOURCE 199506
 #endif
 
 #define ACE_LACKS_ISCTYPE
