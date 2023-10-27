@@ -10,6 +10,8 @@ USER VISIBLE CHANGES BETWEEN ACE-7.1.1 and ACE-7.1.2
 . Add c++std which can be used in the platform_macros.GNU
   to set the C++ revision to be used (results in -std= flag)
 
+. Improve support for QNX 7.1
+
 USER VISIBLE CHANGES BETWEEN ACE-7.1.0 and ACE-7.1.1
 ====================================================
 
