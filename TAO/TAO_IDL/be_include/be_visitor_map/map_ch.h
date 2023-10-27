@@ -30,7 +30,7 @@ public:
   be_visitor_map_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_map_ch () = default;
+  ~be_visitor_map_ch ();
 
   /// visit map node.
   virtual int visit_map (be_map *node);

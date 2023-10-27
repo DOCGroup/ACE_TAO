@@ -22,6 +22,10 @@ be_visitor_map_cdr_op_cs::be_visitor_map_cdr_op_cs (be_visitor_context *ctx)
 {
 }
 
+be_visitor_map_cdr_op_cs::~be_visitor_map_cdr_op_cs ()
+{
+}
+
 int
 be_visitor_map_cdr_op_cs::visit_map (be_map *node)
 {
