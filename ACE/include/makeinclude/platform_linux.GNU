@@ -21,18 +21,6 @@ ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
     no_hidden_visibility ?= 1
   endif
 endif
-ifeq (Red Hat, $(findstring Red Hat,$(CXX_FULL_VERSION)))
-  ifeq (4.1.1, $(findstring 4.1.1,$(CXX_VERSION)))
-    gcc_template_instantiation_visibility ?= 1
-  endif
-  ifeq (4.1.2, $(findstring 4.1.2,$(CXX_VERSION)))
-    gcc_template_instantiation_visibility ?= 1
-  endif
-endif
-# Mandriva 2007
-ifeq (4.1.1-3mdk, $(findstring 4.1.1-3mdk,$(CXX_FULL_VERSION)))
-  gcc_template_instantiation_visibility ?= 1
-endif
 
 ifeq ($(buildbits),32)
   FLAGS_C_CC += -m32
