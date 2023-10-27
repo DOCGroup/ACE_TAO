@@ -13,8 +13,6 @@
 #  error "Could not detect QNX version from macro _NTO_VERSION"
 #endif
 
-#define _POSIX_C_SOURCE 199506
-
 // The following defines the Neutrino compiler.
 // gcc should know to call g++ as necessary
 #ifdef __GNUC__
@@ -100,7 +98,6 @@
 //
 //                ACE_LACKS Section
 /////////////////////////////////////////////////////////////////
-//#define ACE_LACKS_CONST_TIMESPEC_PTR
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_MADVISE
 // Multicast_Tests reports for NTO 621 frames from unsubscribed groups
@@ -129,6 +126,20 @@
 # define ACE_HAS_POLL 1
 # define ACE_HAS_WCHAR 1
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR 1
+#endif
+
+#if _NTO_VERSION < 710
+# define ACE_LACKS_CONST_TIMESPEC_PTR
+# define ACE_LACKS_RWLOCK_T
+# define ACE_LACKS_SO_SNDBUF
+# define ACE_LACKS_SO_RCVBUF
+# define ACE_LACKS_SYSCALL
+# define ACE_LACKS_ITOW
+# define ACE_LACKS_WCSICMP
+# define ACE_LACKS_WCSNICMP
+# define ACE_LACKS_WCSDUP
+# define ACE_LACKS_STD_WSTRING
+
 #endif
 
 #define ACE_LACKS_ISCTYPE
