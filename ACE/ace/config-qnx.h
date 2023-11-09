@@ -138,6 +138,8 @@
 # define ACE_SIZEOF_DOUBLE   8
 # define ACE_SIZEOF_FLOAT    4
 # define _POSIX_C_SOURCE 199506
+#else
+# define ACE_HAS_NONCONST_CMSG_SPACE
 #endif
 
 #define ACE_LACKS_ISCTYPE
