@@ -311,12 +311,12 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 #define ACE_USE_MSG_CONTROL
   union control_buffer {
     cmsghdr control_msg_header;
-#if defined (IP_RECVDSTADDR)
+#if defined (IP_RECVDSTADDR) && !defined (ACE_HAS_NONCONST_CMSG_SPACE)
     u_char padding[ACE_CMSG_SPACE (sizeof (in_addr))];
-#elif defined (IP_PKTINFO)
+#elif defined (IP_PKTINFO) && !defined (ACE_HAS_NONCONST_CMSG_SPACE)
     u_char padding[ACE_CMSG_SPACE (sizeof (in_pktinfo))];
 #endif
-#if defined (ACE_HAS_IPV6)
+#if defined (ACE_HAS_IPV6) && !defined (ACE_HAS_NONCONST_CMSG_SPACE)
     u_char padding6[ACE_CMSG_SPACE (sizeof (in6_pktinfo))];
 #endif
   } cbuf;
@@ -349,7 +349,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   if (to_addr) {
     this->get_local_addr (*to_addr);
     if (to_addr->get_type() == AF_INET) {
-#if defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)
+#if (defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)) && !defined (ACE_HAS_NONCONST_CMSG_SPACE)
       for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
 #if defined (IP_RECVDSTADDR)
         if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_RECVDSTADDR) {
@@ -369,7 +369,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
       }
 #endif
     }
-#if defined (ACE_HAS_IPV6) && defined (IPV6_PKTINFO)
+#if defined (ACE_HAS_IPV6) && defined (IPV6_PKTINFO) && !defined (ACE_HAS_NONCONST_CMSG_SPACE)
     else if (to_addr->get_type() == AF_INET6) {
       for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
         if (ptr->cmsg_level == IPPROTO_IPV6 && ptr->cmsg_type == IPV6_PKTINFO) {
