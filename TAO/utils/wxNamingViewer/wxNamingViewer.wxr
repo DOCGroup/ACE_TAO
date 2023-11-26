@@ -1,5 +1,5 @@
 static char *bindObject = "dialog(name = 'bindObject',\
-  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'Bind Object/Context',\
   id = 133,\
   x = -1, y = -1, width = 274, height = 66,\
@@ -27,7 +27,7 @@ static char *bindObject = "dialog(name = 'bindObject',\
       [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
 
 static char *addNameServer = "dialog(name = 'addNameServer',\
-  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'Add Name Server',\
   id = 136,\
   x = -1, y = -1, width = 186, height = 69,\
@@ -49,7 +49,7 @@ static char *addNameServer = "dialog(name = 'addNameServer',\
       [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
 
 static char *bindNewContext = "dialog(name = 'bindNewContext',\
-  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'Bind New Context',\
   id = 134,\
   x = -1, y = -1, width = 154, height = 76,\
@@ -71,7 +71,7 @@ static char *bindNewContext = "dialog(name = 'bindNewContext',\
       [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
 
 static char *viewIOR = "dialog(name = 'viewIOR',\
-  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'View IOR',\
   id = 102,\
   x = -1, y = -1, width = 394, height = 127,\
@@ -93,7 +93,7 @@ static char *viewIOR = "dialog(name = 'viewIOR',\
       [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
 
 static char *selectNS = "dialog(name = 'selectNS',\
-  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'Select Naming Service',\
   id = 135,\
   x = -1, y = -1, width = 181, height = 94,\

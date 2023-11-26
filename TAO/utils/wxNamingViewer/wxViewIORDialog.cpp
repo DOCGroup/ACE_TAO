@@ -134,7 +134,13 @@ WxViewIORDialog::WxViewIORDialog(
       "View IOR",
       wxDefaultPosition,
       wxSize(394,127),
-      wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU,
+      wxRAISED_BORDER | wxCAPTION |
+#if wxABI_VERSION < 20800
+      wxTHICK_FRAME |
+#else
+      wxRESIZE_BORDER |
+#endif
+      wxSYSTEM_MENU,
       "viewIOR")
 #endif  // defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
   , orb( orb)

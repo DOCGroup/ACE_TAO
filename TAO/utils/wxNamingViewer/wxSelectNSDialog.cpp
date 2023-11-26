@@ -93,7 +93,13 @@ WxSelectNSDialog::WxSelectNSDialog( wxWindow* parent)
       "Select Naming Service",
       wxDefaultPosition,
       wxSize(181,94),
-      wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU,
+      wxRAISED_BORDER | wxCAPTION |
+#if wxABI_VERSION < 20800
+      wxTHICK_FRAME |
+#else
+      wxRESIZE_BORDER |
+#endif
+      wxSYSTEM_MENU,
       "selectNS")
 #endif  // defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
   , config( 0)

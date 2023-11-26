@@ -82,7 +82,13 @@ WxBindDialog::WxBindDialog(
       "Bind Object/Context",
       wxDefaultPosition,
       wxSize( 300, 75),
-      wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU,
+      wxRAISED_BORDER | wxCAPTION |
+#if wxABI_VERSION < 20800
+      wxTHICK_FRAME |
+#else
+      wxRESIZE_BORDER |
+#endif
+      wxSYSTEM_MENU,
       "bindObject")
 #endif  // defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
   , ior()
