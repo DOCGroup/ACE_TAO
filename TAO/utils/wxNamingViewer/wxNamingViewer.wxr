@@ -1,4 +1,4 @@
-static char *bindObject = "dialog(name = 'bindObject',\
+static const char *bindObject = "dialog(name = 'bindObject',\
   style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'Bind Object/Context',\
   id = 133,\
@@ -26,7 +26,7 @@ static char *bindObject = "dialog(name = 'bindObject',\
   control = [1018, wxButton, 'View IOR', '0', 'viewIORButton', 222, 26, 50, 12, '',\
       [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
 
-static char *addNameServer = "dialog(name = 'addNameServer',\
+static const char *addNameServer = "dialog(name = 'addNameServer',\
   style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'Add Name Server',\
   id = 136,\
@@ -48,7 +48,7 @@ static char *addNameServer = "dialog(name = 'addNameServer',\
   control = [5105, wxStaticText, 'IOR:', '0', 'statictext7', 7, 30, 24, 6, '',\
       [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
 
-static char *bindNewContext = "dialog(name = 'bindNewContext',\
+static const char *bindNewContext = "dialog(name = 'bindNewContext',\
   style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'Bind New Context',\
   id = 134,\
@@ -70,7 +70,7 @@ static char *bindNewContext = "dialog(name = 'bindNewContext',\
   control = [5105, wxStaticText, 'Kind:', '0', 'statictext7', 7, 34, 15, 6, '',\
       [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
 
-static char *viewIOR = "dialog(name = 'viewIOR',\
+static const char *viewIOR = "dialog(name = 'viewIOR',\
   style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'View IOR',\
   id = 102,\
@@ -92,7 +92,7 @@ static char *viewIOR = "dialog(name = 'viewIOR',\
   control = [1007, wxTextCtrl, '', 'wxTE_READONLY', 'typeIDText', 57, 27, 274, 12, '',\
       [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
 
-static char *selectNS = "dialog(name = 'selectNS',\
+static const char *selectNS = "dialog(name = 'selectNS',\
   style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'Select Naming Service',\
   id = 135,\
