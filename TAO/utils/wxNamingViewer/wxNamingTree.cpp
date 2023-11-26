@@ -90,7 +90,7 @@ void WxNamingTree::clearChildren()
 
 void WxNamingTree::clearChildren( wxTreeItemId& item)
 {
-  long cookie;
+  wxTreeItemIdValue cookie;
   wxTreeItemId child = GetFirstChild( item, cookie);
   while( child) {
     clearChildren( child);
