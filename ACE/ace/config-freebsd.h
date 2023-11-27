@@ -43,7 +43,6 @@
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_RTLD_LAZY_V
-#define ACE_HAS_SEMUN
 #define ACE_HAS_SIGISMEMBER_BUG
 #define ACE_HAS_SIGSUSPEND
 #define ACE_HAS_SIGWAIT
@@ -180,6 +179,14 @@ enum schedparam_policy {
 
 #if (__FreeBSD_version < 700038)
 # define ACE_HAS_VOID_UNSETENV
+#endif
+
+#if (__FreeBSD_version >= 800025)
+# define ACE_HAS_CPUSET_T
+#endif
+
+#if (__FreeBSD_version < 1200059)
+# define ACE_HAS_SEMUN
 #endif
 
 #include /**/ "ace/post.h"
