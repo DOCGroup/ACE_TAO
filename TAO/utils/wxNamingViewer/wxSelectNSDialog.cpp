@@ -162,10 +162,10 @@ void WxSelectNSDialog::onAdd( wxCommandEvent& WXUNUSED(event))
         dialog->getServerName(),
         new wxString( dialog->getIor()));
     ACE_Configuration_Section_Key section = config->root_section();
-    ACE_TString value = dialog->getIor().c_str();
+    ACE_TString value = dialog->getIor().c_str().AsChar();
     config->set_string_value(
         section,
-        dialog->getServerName().c_str(),
+        dialog->getServerName().c_str().AsChar(),
         value);
   }
 }
