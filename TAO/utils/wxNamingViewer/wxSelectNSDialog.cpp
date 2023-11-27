@@ -186,7 +186,7 @@ void WxSelectNSDialog::onInitDialog( wxInitDialogEvent& event)
 }
 
 
-void WxSelectNSDialog::onLeftDClick( wxMouseEvent& event)
+void WxSelectNSDialog::onLeftDClick( wxCommandEvent& event)
 {
   ACE_UNUSED_ARG( event);
 
