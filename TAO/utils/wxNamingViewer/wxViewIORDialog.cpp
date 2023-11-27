@@ -214,15 +214,24 @@ void WxViewIORDialog::decodeIOR()
     } catch (const CORBA::Exception& ex) {
       wxMessageBox( ex._info().c_str(), "CORBA::Exception");
     }
-
   }
   profiles->Expand( rootItem);
 }
 
 
-void WxViewIORDialog::OnApply( wxCommandEvent& event)
+#if defined(ANCIENT_WX_WINDOWS)
+#define ONLY_ANCIENT_WX_USES(x) (x)
+#else
+#define ONLY_ANCIENT_WX_USES(x) WXUNUSED(x)
+#endif
+
+void WxViewIORDialog::OnApply( wxCommandEvent& ONLY_ANCIENT_WX_USES(event))
 {
+#if defined(ANCIENT_WX_WINDOWS)
   wxDialog::OnApply( event);
+#else
+  wxDialog::EndModal( wxID_APPLY);
+#endif
   try {
     object = orb->string_to_object( ior);
     decodeIOR();
