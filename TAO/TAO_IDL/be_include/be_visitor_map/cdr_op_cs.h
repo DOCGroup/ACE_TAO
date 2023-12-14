@@ -29,7 +29,7 @@ public:
   be_visitor_map_cdr_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_map_cdr_op_cs () = default;
+  ~be_visitor_map_cdr_op_cs ();
 
   /// visit map
   virtual int visit_map (be_map *node);

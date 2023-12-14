@@ -17,6 +17,10 @@ be_visitor_map_ch::be_visitor_map_ch (be_visitor_context *ctx)
 {
 }
 
+be_visitor_map_ch::~be_visitor_map_ch ()
+{
+}
+
 int be_visitor_map_ch::visit_map (be_map *node)
 {
   if (node->defined_in () == 0)
@@ -45,7 +49,7 @@ int be_visitor_map_ch::visit_map (be_map *node)
 
   *os << be_nl_2;
 
-  *os << "using " << node->local_name () << " = std::map<";
+  *os << "typedef " << "std::map< ";
 
   be_type* kt = node->key_type();
   be_type* vt = node->value_type();
@@ -75,7 +79,7 @@ int be_visitor_map_ch::visit_map (be_map *node)
                         -1);
     }
 
-  *os << ">;";
+  *os << "> " << node->local_name () << ";";
 
   os->gen_endif ();
   node->cli_hdr_gen (true);
