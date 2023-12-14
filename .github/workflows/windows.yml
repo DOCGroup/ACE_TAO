@@ -24,7 +24,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: 'openssl xerces-c[xmlch-wchar]'
+            vcpkgpackages: '"openssl", {"name": "xerces-c", "features": ["xmlch-wchar"]}'
             OptionalFeatures: uses_wchar=1
           - name: VS2019Debug64
             vmimage: windows-2019
@@ -33,7 +33,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c
+            vcpkgpackages: '"openssl", "xerces-c"'
           - name: VS2019Release64
             vmimage: windows-2019
             mpctype: vs2019
@@ -41,7 +41,7 @@ jobs:
             BuildConfiguration: Release
             vcpkgarch: x64-windows
             vcpkglibdir: lib
-            vcpkgpackages: openssl xerces-c
+            vcpkgpackages: '"openssl", "xerces-c"'
           - name: VS2019Debug32
             vmimage: windows-2019
             mpctype: vs2019
@@ -49,7 +49,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x86-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c
+            vcpkgpackages: '"openssl", "xerces-c"'
           - name: VS2019Release32
             vmimage: windows-2019
             mpctype: vs2019
@@ -57,7 +57,7 @@ jobs:
             BuildConfiguration: Release
             vcpkgarch: x86-windows
             vcpkglibdir: lib
-            vcpkgpackages: openssl xerces-c
+            vcpkgpackages: '"openssl", "xerces-c"'
           - name: VS2019Debug64Cxx17
             vmimage: windows-2019
             mpctype: vs2019
@@ -65,7 +65,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
             OptionalMpcArgs: -value_template LanguageStandard=stdcpp17
           - name: VS2019Debug64Cxx20
             vmimage: windows-2019
@@ -74,7 +74,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
             OptionalMpcArgs: -value_template LanguageStandard=stdcpp20
     runs-on: ${{ matrix.vmimage }}
     name: ${{ matrix.name }}
