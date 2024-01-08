@@ -197,7 +197,7 @@ private:
   int ready () const;
 
   /// Pointer to the result.
-  T *value_;
+  std::atomic<T*> value_;
 
   /// Reference count.
   int ref_count_;
