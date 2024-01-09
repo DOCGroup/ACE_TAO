@@ -127,6 +127,7 @@ FIFO_Test: !ACE_FOR_TAO
 Framework_Component_Test: !STATIC !nsk
 Future_Set_Test: !nsk !ACE_FOR_TAO
 Future_Test: !nsk !ACE_FOR_TAO
+Future_Stress_Test: !nsk !ACE_FOR_TAO
 Get_Opt_Test
 Handle_Set_Test: !ACE_FOR_TAO
 Hash_Map_Bucket_Iterator_Test
