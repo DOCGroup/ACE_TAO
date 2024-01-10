@@ -70,7 +70,7 @@ void* runner (void* args)
     int expected_res = config.a+config.b*config.c;
     int actual_res = -1;
     if (ACE_Thread::spawn((ACE_THR_FUNC)worker,
-                        (void *)&config, THR_NEW_LWP | THR_JOINABLE, 0,
+                        static_cast<void*>(&config), THR_NEW_LWP | THR_JOINABLE, 0,
                         &thread_id) == -1)
     {
         ACE_ERROR ((LM_INFO,
@@ -128,7 +128,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   {
     ACE_Thread_Manager::instance ()->spawn_n (n_threads,
       ACE_THR_FUNC (runner),
-      (void *) &duration,
+      static_cast<void*>(&duration),
       THR_NEW_LWP | THR_DETACHED);
 
     ACE_Thread_Manager::instance ()->wait ();
