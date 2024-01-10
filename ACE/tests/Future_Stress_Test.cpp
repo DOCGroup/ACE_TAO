@@ -3,10 +3,10 @@
 /**
  *  @file    Future_Stress_Test.cpp
  *
- *  This example tests the ACE Future set() and get() operations in 
+ *  This example tests the ACE Future set() and get() operations in
  *  multithreaded environment and concurrent access.
  *
- *  Usage: Future_Stress_Test [-t <duration in seconds>]   
+ *  Usage: Future_Stress_Test [-t <duration in seconds>]
  *            [-n <number of threads>]
  *
  *  @see https://github.com/DOCGroup/ACE_TAO/issues/2163
@@ -45,11 +45,11 @@ void* worker (void* args)
 
 void* runner (void* args)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner start\n")));      
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner start\n")));
 
   std::random_device              rd;
   std::mt19937                    gen(rd());
-  std::uniform_int_distribution<> dis(1,1000000);  
+  std::uniform_int_distribution<> dis(1,1000000);
   ACE_Time_Value* duration = static_cast<ACE_Time_Value*>(args);
   ACE_Countdown_Time timer(duration);
   timer.start();
@@ -58,17 +58,17 @@ void* runner (void* args)
   {
     if( ++runNum % 5000 == 0 )
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner iteration %u\n"), runNum));      
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner iteration %u\n"), runNum));
     }
     ACE_Future<int> result;
     Worker_Config config;
     config.a = dis(gen);
     config.b = dis(gen);
-    config.c = dis(gen);    
+    config.c = dis(gen);
     config.result = result;
     ACE_hthread_t thread_id;
     int expected_res = config.a+config.b*config.c;
-    int actual_res = -1;    
+    int actual_res = -1;
     if (ACE_Thread::spawn((ACE_THR_FUNC)worker,
                         (void *)&config, THR_NEW_LWP | THR_JOINABLE, 0,
                         &thread_id) == -1)
@@ -82,13 +82,13 @@ void* runner (void* args)
       // hit the bug...
       ACE_ERROR ((LM_INFO,
           ACE_TEXT ("unexpected ACE_Future result\n")));
-      abort(); 
-    } 
+      abort();
+    }
     ACE_THR_FUNC_RETURN status;
     ACE_Thread::join(thread_id, &status);
     timer.update();
   } while( *duration != ACE_Time_Value::zero );
-   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner done\n"), runNum));        
+   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner done\n"), runNum));
 
    return 0;
 }
@@ -97,7 +97,7 @@ int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Future_Stress_Test"));
-   
+
   ACE_Time_Value duration(5);
   long n_threads = 5;
 
@@ -122,17 +122,17 @@ run_main (int argc, ACE_TCHAR *argv[])
         valid = false;
         break;
     }
-  }  
+  }
 
   if (valid)
   {
-    ACE_Thread_Manager::instance ()->spawn_n (n_threads, 
+    ACE_Thread_Manager::instance ()->spawn_n (n_threads,
       ACE_THR_FUNC (runner),
       (void *) &duration,
       THR_NEW_LWP | THR_DETACHED);
 
     ACE_Thread_Manager::instance ()->wait ();
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) All threads finished, cleanup and exit\n")));   
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) All threads finished, cleanup and exit\n")));
   }
   ACE_END_TEST;
   return 0;
