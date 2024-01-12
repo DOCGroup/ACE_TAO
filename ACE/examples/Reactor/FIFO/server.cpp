@@ -7,12 +7,11 @@
 #include "ace/OS_NS_stropts.h"
 
 
-
 class FIFO_Recv_Handler : public ACE_Event_Handler
 {
 public:
-  FIFO_Recv_Handler (void);
-  ~FIFO_Recv_Handler (void);
+  FIFO_Recv_Handler ();
+  ~FIFO_Recv_Handler ();
 
   virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE fd);
@@ -21,7 +20,7 @@ private:
   ACE_FIFO_Recv_Msg fifo_reader_;
 };
 
-FIFO_Recv_Handler::FIFO_Recv_Handler (void)
+FIFO_Recv_Handler::FIFO_Recv_Handler ()
 {
   ACE_OS::unlink (ACE_DEFAULT_RENDEZVOUS);
 
@@ -42,7 +41,7 @@ FIFO_Recv_Handler::get_handle () const
   return this->fifo_reader_.get_handle ();
 }
 
-FIFO_Recv_Handler::~FIFO_Recv_Handler (void)
+FIFO_Recv_Handler::~FIFO_Recv_Handler ()
 {
   this->fifo_reader_.close ();
   this->fifo_reader_.remove ();

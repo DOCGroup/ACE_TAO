@@ -22,22 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_PRIOCNTL)
-   // Need to #include thread.h before #defining THR_BOUND, etc.,
-   // when building without threads on SunOS 5.x.
-#  if defined (sun)
-#    include /**/ <thread.h>
-#  endif /* sun */
-
-   // Need to #include these before #defining USYNC_PROCESS on SunOS 5.x.
-#  include /**/ <sys/rtpriocntl.h>
-#  include /**/ <sys/tspriocntl.h>
-#endif /* ACE_HAS_PRIOCNTL */
-
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/os_stdint.h"
 
-// This needs to go here *first* to avoid problems with AIX.
 # if defined (ACE_HAS_PTHREADS)
 #   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #     include "ace/os_include/os_signal.h"
@@ -70,17 +57,7 @@
 #  if defined (_POSIX_PRIORITY_SCHEDULING)
 #    define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
 #    define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
-#    if defined (HPUX)
-       // HP-UX's other is the SCHED_HPUX class, which uses historical
-       // values that have reverse semantics from POSIX (low value is
-       // more important priority). To use these in pthreads calls,
-       // the values need to be converted. The other scheduling classes
-       // don't need this special treatment.
-#      define ACE_PROC_PRI_OTHER_MIN \
-                      (sched_get_priority_min(SCHED_OTHER))
-#    else
-#      define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
-#    endif /* HPUX */
+#    define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
 #  else /* UNICOS is missing a sched_get_priority_min() implementation */
 #    define ACE_PROC_PRI_FIFO_MIN  0
 #    define ACE_PROC_PRI_RR_MIN    0
@@ -90,12 +67,7 @@
 #  if defined (_POSIX_PRIORITY_SCHEDULING)
 #    define ACE_PROC_PRI_FIFO_MAX  (sched_get_priority_max(SCHED_FIFO))
 #    define ACE_PROC_PRI_RR_MAX    (sched_get_priority_max(SCHED_RR))
-#    if defined (HPUX)
-#      define ACE_PROC_PRI_OTHER_MAX \
-                      (sched_get_priority_max(SCHED_OTHER))
-#    else
-#      define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
-#    endif /* HPUX */
+#    define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
 #  else
 #    define ACE_PROC_PRI_FIFO_MAX  59
 #    define ACE_PROC_PRI_RR_MAX    59
@@ -131,49 +103,6 @@
 #    endif /* !ACE_THR_PRI_OTHER_MIN */
 #    if !defined (ACE_THR_PRI_OTHER_MAX)
 #      define ACE_THR_PRI_OTHER_MAX (long) PRI_OTHER_MAX
-#    endif /* !ACE_THR_PRI_OTHER_MAX */
-#  elif defined (AIX)
-     // AIX's priority range is 1 (low) to 127 (high). There aren't
-     // any preprocessor macros I can find. PRIORITY_MIN is for
-     // process priorities, as far as I can see, and does not apply
-     // to thread priority. The 1 to 127 range is from the
-     // pthread_attr_setschedparam man page (Steve Huston, 18-May-2001).
-#    if !defined (ACE_THR_PRI_FIFO_MIN)
-#      define ACE_THR_PRI_FIFO_MIN  (long) 1
-#    endif /* !ACE_THR_PRI_FIFO_MIN */
-#    if !defined (ACE_THR_PRI_FIFO_MAX)
-#      define ACE_THR_PRI_FIFO_MAX  (long) 127
-#    endif /* !ACE_THR_PRI_FIFO_MAX */
-#    if !defined (ACE_THR_PRI_RR_MIN)
-#      define ACE_THR_PRI_RR_MIN    (long) 1
-#    endif /* !ACE_THR_PRI_RR_MIN */
-#    if !defined (ACE_THR_PRI_RR_MAX)
-#      define ACE_THR_PRI_RR_MAX    (long) 127
-#    endif /* !ACE_THR_PRI_RR_MAX */
-#    if !defined (ACE_THR_PRI_OTHER_MIN)
-#      define ACE_THR_PRI_OTHER_MIN (long) 1
-#    endif /* !ACE_THR_PRI_OTHER_MIN */
-#    if !defined (ACE_THR_PRI_OTHER_MAX)
-#      define ACE_THR_PRI_OTHER_MAX (long) 127
-#    endif /* !ACE_THR_PRI_OTHER_MAX */
-#  elif defined (sun)
-#    if !defined (ACE_THR_PRI_FIFO_MIN)
-#      define ACE_THR_PRI_FIFO_MIN  (long) 0
-#    endif /* !ACE_THR_PRI_FIFO_MIN */
-#    if !defined (ACE_THR_PRI_FIFO_MAX)
-#      define ACE_THR_PRI_FIFO_MAX  (long) 59
-#    endif /* !ACE_THR_PRI_FIFO_MAX */
-#    if !defined (ACE_THR_PRI_RR_MIN)
-#      define ACE_THR_PRI_RR_MIN    (long) 0
-#    endif /* !ACE_THR_PRI_RR_MIN */
-#    if !defined (ACE_THR_PRI_RR_MAX)
-#      define ACE_THR_PRI_RR_MAX    (long) 59
-#    endif /* !ACE_THR_PRI_RR_MAX */
-#    if !defined (ACE_THR_PRI_OTHER_MIN)
-#      define ACE_THR_PRI_OTHER_MIN (long) 0
-#    endif /* !ACE_THR_PRI_OTHER_MIN */
-#    if !defined (ACE_THR_PRI_OTHER_MAX)
-#      define ACE_THR_PRI_OTHER_MAX (long) 127
 #    endif /* !ACE_THR_PRI_OTHER_MAX */
 #  else
 #    if !defined (ACE_THR_PRI_FIFO_MIN)
@@ -258,14 +187,12 @@
 #    endif /* PTHREAD_MUTEXTYPE_FAST */
 #  endif /* PTHREAD_PROCESS_SHARED */
 
-#  if !defined (ACE_HAS_STHREADS)
-#    if !defined (USYNC_THREAD)
-#      define USYNC_THREAD PTHREAD_PROCESS_PRIVATE
-#    endif /* ! USYNC_THREAD */
-#      if !defined (USYNC_PROCESS)
-#        define USYNC_PROCESS PTHREAD_PROCESS_SHARED
-#      endif /* ! USYNC_PROCESS */
-#  endif /* ACE_HAS_STHREADS */
+#  if !defined (USYNC_THREAD)
+#    define USYNC_THREAD PTHREAD_PROCESS_PRIVATE
+#  endif /* ! USYNC_THREAD */
+#    if !defined (USYNC_PROCESS)
+#      define USYNC_PROCESS PTHREAD_PROCESS_SHARED
+#    endif /* ! USYNC_PROCESS */
 
    /* MM-Graz:  prevent warnings */
 #  undef THR_BOUND
@@ -292,7 +219,7 @@
 #  define THR_EXPLICIT_SCHED      0x00800000
 #  define THR_SCHED_IO            0x01000000
 
-#  if !defined (ACE_HAS_STHREADS) && !defined (ACE_MQX)
+#  if !defined (ACE_MQX)
 #    if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_USES_FIFO_SEM)
 
 // This needs to be moved out of here.
@@ -322,8 +249,6 @@ public:
 #    endif /* !ACE_HAS_POSIX_SEM */
 
 #    if defined (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD)
-       // If we are on Solaris we can just reuse the existing
-       // implementations of these synchronization types.
 #      if !defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 #        include /**/ <synch.h>
          typedef rwlock_t ACE_rwlock_t;
@@ -335,7 +260,7 @@ public:
 #    if !defined (ACE_HAS_POSIX_SEM)
        typedef sema_t ACE_sema_t;
 #    endif /* !ACE_HAS_POSIX_SEM */
-#  endif /* !ACE_HAS_STHREADS */
+#  endif /* !ACE_MQX */
 
 #  if defined (ACE_HAS_PTHREADS_UNIX98_EXT) && !defined (ACE_LACKS_RWLOCK_T)
      typedef pthread_rwlock_t ACE_rwlock_t;
@@ -362,26 +287,6 @@ public:
 #    endif  /* _XOPEN_SOURCE && _XOPEN_SOURCE < 600 */
 
 #  endif  /* ACE_LINUX && ((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) */
-
-#elif defined (ACE_HAS_STHREADS)
-#  if !defined (ACE_THR_PRI_FIFO_MIN)
-#    define ACE_THR_PRI_FIFO_MIN  (long) 0
-#  endif /* !ACE_THR_PRI_FIFO_MIN */
-#  if !defined (ACE_THR_PRI_FIFO_MAX)
-#    define ACE_THR_PRI_FIFO_MAX  (long) 59
-#  endif /* !ACE_THR_PRI_FIFO_MAX */
-#  if !defined (ACE_THR_PRI_RR_MIN)
-#    define ACE_THR_PRI_RR_MIN    (long) 0
-#  endif /* !ACE_THR_PRI_RR_MIN */
-#  if !defined (ACE_THR_PRI_RR_MAX)
-#    define ACE_THR_PRI_RR_MAX    (long) 59
-#  endif /* !ACE_THR_PRI_RR_MAX */
-#  if !defined (ACE_THR_PRI_OTHER_MIN)
-#    define ACE_THR_PRI_OTHER_MIN (long) 0
-#  endif /* !ACE_THR_PRI_OTHER_MIN */
-#  if !defined (ACE_THR_PRI_OTHER_MAX)
-#    define ACE_THR_PRI_OTHER_MAX (long) 127
-#  endif /* !ACE_THR_PRI_OTHER_MAX */
 #endif /* ACE_HAS_PTHREADS */
 
 #include /**/ "ace/post.h"

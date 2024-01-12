@@ -2,12 +2,12 @@
 #include "ace/OS_NS_time.h"
 #include <iostream>
 
-Logger_i::Logger_i (void)
+Logger_i::Logger_i ()
 {
   log_file.open("Logger.txt");
 }
 
-Logger_i::~Logger_i (void)
+Logger_i::~Logger_i ()
 {
   log_file.close();
 }

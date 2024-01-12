@@ -90,7 +90,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i (int signum,
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> bool
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::initialized (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::initialized ()
 {
   ACE_TRACE ("ACE_Select_Reactor_T::initialized");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, false));
@@ -125,7 +125,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::owner (ACE_thread_t *t_id)
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> bool
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::restart (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::restart ()
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, false));
   return this->restart_;
@@ -155,7 +155,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::requeue_position (int rp)
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::requeue_position (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::requeue_position ()
 {
   ACE_TRACE ("ACE_Select_Reactor_T::requeue_position");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
@@ -172,7 +172,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::max_notify_iterations (int itera
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::max_notify_iterations (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::max_notify_iterations ()
 {
   ACE_TRACE ("ACE_Select_Reactor_T::max_notify_iterations");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
@@ -181,7 +181,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::max_notify_iterations (void)
 
 // Enqueue ourselves into the list of waiting threads.
 template <class ACE_SELECT_REACTOR_TOKEN> void
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::renew (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::renew ()
 {
   ACE_TRACE ("ACE_Select_Reactor_T::renew");
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -225,7 +225,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handler (ACE_HANDLE hand
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handlers (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handlers ()
 {
   ACE_TRACE ("ACE_Select_Reactor_T::suspend_handlers");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
@@ -243,7 +243,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handlers (void)
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handlers (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handlers ()
 {
   ACE_TRACE ("ACE_Select_Reactor_T::resume_handlers");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
@@ -420,6 +420,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
     {
       ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("ACE_Select_Reactor_T::open, ")
                   ACE_TEXT ("notification pipe open failed")));
       result = -1;
     }
@@ -556,7 +557,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
 // event loop thread...
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close ()
 {
   ACE_TRACE ("ACE_Select_Reactor_T::close");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
@@ -605,7 +606,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::current_info
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN>
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::~ACE_Select_Reactor_T (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::~ACE_Select_Reactor_T ()
 {
   ACE_TRACE ("ACE_Select_Reactor_T::~ACE_Select_Reactor_T");
   this->close ();
@@ -769,7 +770,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_error (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_error ()
 {
   ACE_TRACE ("ACE_Select_Reactor_T::handle_error");
 #if defined (ACE_LINUX) && defined (ERESTARTNOHAND)
@@ -983,7 +984,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::is_suspended_i (ACE_HANDLE handl
   return this->suspend_set_.rd_mask_.is_set (handle) ||
          this->suspend_set_.wr_mask_.is_set (handle) ||
          this->suspend_set_.ex_mask_.is_set (handle);
-
 }
 
 // Must be called with locks held
@@ -1215,7 +1215,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_set
 
       if (this->state_changed_)
         {
-
           handle_iter.reset_state ();
           this->state_changed_ = false;
         }
@@ -1385,7 +1384,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::release_token (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::release_token ()
 {
 #if defined (ACE_WIN32)
   this->token_.release ();
@@ -1469,7 +1468,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events_i
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles ()
 {
   ACE_TRACE ("ACE_Select_Reactor_T::check_handles");
 
@@ -1499,7 +1498,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
   ACE_Handle_Set_Iterator check_iter (check_set);
   while ((h = check_iter ()) != ACE_INVALID_HANDLE)
     {
-
 #if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_VXWORKS)
       // Win32 needs to do the check this way because fstat won't work on
       // a socket handle.  MVS Open Edition needs to do it this way because,

@@ -29,7 +29,7 @@ public:
   // = The Simple_Server methods.
   void send_line (const char *line);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

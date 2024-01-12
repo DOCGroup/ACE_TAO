@@ -21,10 +21,6 @@ TAO_UIPMC_Protocol_Factory::TAO_UIPMC_Protocol_Factory ()
 {
 }
 
-TAO_UIPMC_Protocol_Factory::~TAO_UIPMC_Protocol_Factory ()
-{
-}
-
 int
 TAO_UIPMC_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {

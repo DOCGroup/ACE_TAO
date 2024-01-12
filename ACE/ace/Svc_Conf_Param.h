@@ -52,7 +52,6 @@ extern void ace_yy_delete_buffer (ace_yy_buffer_state *buffer);
 class ACE_Svc_Conf_Param
 {
 public:
-
   enum SVC_CONF_PARAM_TYPE
     {
       /// The lexer will scan a file containing one or more directives.
@@ -86,13 +85,12 @@ public:
     source.directive = directive;
   }
 
-  ~ACE_Svc_Conf_Param (void)
+  ~ACE_Svc_Conf_Param ()
   {
     ace_yy_delete_buffer (this->buffer);
   }
 
 public:
-
   union
   {
     /// FILE stream from which directives will be scanned and parsed.
@@ -100,7 +98,6 @@ public:
 
     /// String containing directive that will be scanned and parsed.
     const ACE_TCHAR *directive;
-
   } source;
 
   /// Discriminant use to determine which union member to use.

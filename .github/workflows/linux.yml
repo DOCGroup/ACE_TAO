@@ -11,75 +11,79 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build:
+    permissions:
+      actions: read  # for github/codeql-action/init to get workflow details
+      contents: read  # for actions/checkout to fetch code
+      security-events: write  # for github/codeql-action/analyze to upload SARIF results
     strategy:
       fail-fast: false
       matrix:
         include:
-          - CC: gcc-4.8
-            CXX: g++-4.8
-            PackageDeps: g++-4.8
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
-          - CC: gcc-6
-            CXX: g++-6
-            PackageDeps: g++-6
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
           - CC: gcc-7
             CXX: g++-7
             PackageDeps: g++-7
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-20.04
             CheckPkgConfig: 1
           - CC: gcc-8
             CXX: g++-8
             PackageDeps: g++-8
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-20.04
           - CC: gcc-9
             CXX: g++-9
             PackageDeps: g++-9
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-20.04
           - CC: gcc-10
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-20.04
           - CC: gcc-11
             CXX: g++-11
             PackageDeps: g++-11
-            optional_macros: CCFLAGS+=-std=c++20
+            optional_macros: c++std=c++20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
-          - CC: clang-5.0
-            CXX: clang++-5.0
-            PackageDeps: clang-5.0
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
+          - CC: gcc-12
+            CXX: g++-12
+            PackageDeps: g++-12
+            optional_macros: c++std=c++20
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-22.04
+          - CC: gcc-13
+            CXX: g++-13
+            PackageDeps: g++-13
+            optional_macros: c++std=c++20
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-22.04
           - CC: clang-6.0
             CXX: clang++-6.0
             PackageDeps: clang-6.0
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-18.04
+            os: ubuntu-20.04
           - CC: clang-7
             CXX: clang++-7
             PackageDeps: clang-7
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-18.04
+            os: ubuntu-20.04
           - CC: clang-8
             CXX: clang++-8
             PackageDeps: clang-8
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-18.04
+            os: ubuntu-20.04
           - CC: clang-9
             CXX: clang++-9
             PackageDeps: clang-9
             Repo: llvm-toolchain-$(lsb_release -cs)-9
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-18.04
+            os: ubuntu-20.04
           - CC: clang-10
             CXX: clang++-10
             PackageDeps: clang-10
@@ -104,12 +108,24 @@ jobs:
             Repo: llvm-toolchain-$(lsb_release -cs)-13
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
             os: ubuntu-20.04
+          - CC: clang-14
+            CXX: clang++-14
+            PackageDeps: clang-14
+            Repo: llvm-toolchain-$(lsb_release -cs)-14
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            os: ubuntu-22.04
+          - CC: clang-15
+            CXX: clang++-15
+            PackageDeps: clang-15
+            Repo: llvm-toolchain-$(lsb_release -cs)-15
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            os: ubuntu-22.04
           - feature: CORBA/e micro
             CC: gcc-10
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-20.04
             optional_feature: corba_e_micro=1
             optional_macros: corba_e_micro=1
           - feature: CORBA/e compact
@@ -117,7 +133,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-20.04
             optional_feature: corba_e_compact=1
             optional_macros: corba_e_compact=1
           - feature: ACE for TAO
@@ -152,17 +168,21 @@ jobs:
       CXX: ${{ matrix.CXX }}
     steps:
     - name: Checkout ACE_TAO
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Checkout MPC
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
-    - name: Add apt repo ${{ matrix.Repo }}
+    - name: Add LLVM apt repo ${{ matrix.Repo }}
       run: |
-        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
         sudo apt-add-repository "deb http://apt.llvm.org/$(lsb_release -cs)/ ${{ matrix.Repo }} main"
-      if: matrix.Repo != ''
+      if: startsWith (matrix.Repo, 'llvm-toolchain')
+    - name: Add PPA apt repo ${{ matrix.Repo }}
+      run: |
+        sudo apt-add-repository ${{ matrix.Repo }}
+      if: startsWith (matrix.Repo, 'ppa:')
     - name: Add apt packages ${{ matrix.PackageDeps }}
       run: |
         sudo apt-get --yes update
@@ -200,7 +220,7 @@ jobs:
       if: matrix.optional_feature != ''
       shell: pwsh
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v3
       with:
         languages: cpp
       if: matrix.feature == 'CodeQL'
@@ -216,6 +236,10 @@ jobs:
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/tests/IDL_Test -workers 4
       shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/tests/IDLv4
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/tests/IDLv4 -workers 4
+      shell: pwsh
     - name: Build TAO_ACE workspace
       run: |
         make -j 6 -C ${env:TAO_ROOT}
@@ -229,8 +253,12 @@ jobs:
         make -j 6 -C ${env:TAO_ROOT}/tests/IDL_Test
       shell: pwsh
       if: matrix.feature != 'CORBA/e micro'
+    - name: Build TAO/tests/IDLv4 project
+      run: |
+        make -j 6 -C ${env:TAO_ROOT}/tests/IDLv4
+      shell: pwsh
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v3
       if: matrix.feature == 'CodeQL'
     - name: Install TAO_ACE workspace
       run: |

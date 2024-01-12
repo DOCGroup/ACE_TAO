@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Remote_Mutex::ACE_Remote_Mutex (void)
+ACE_Remote_Mutex::ACE_Remote_Mutex ()
 {
   ACE_TRACE ("ACE_Remote_Mutex::ACE_Remote_Mutex");
 }

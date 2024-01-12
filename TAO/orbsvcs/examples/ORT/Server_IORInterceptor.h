@@ -22,7 +22,6 @@ class Server_IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   Server_IORInterceptor (Gateway::Object_Factory_ptr gateway_object_factory);
 
   /**
@@ -34,10 +33,10 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Add the tagged components to the IOR.
   virtual void establish_components (
@@ -57,13 +56,10 @@ public:
   //@}
 
 protected:
-
-  ~Server_IORInterceptor (void);
+  ~Server_IORInterceptor ();
 
 private:
-
   Gateway::Object_Factory_ptr gateway_object_factory_;
-
 };
 
 #if defined(_MSC_VER)

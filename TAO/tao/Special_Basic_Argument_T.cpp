@@ -39,7 +39,7 @@ template<typename S,
          typename to_S,
          typename from_S,
          template <typename> class Insert_Policy>
-TAO::In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy>::~In_Special_Basic_Clonable_Argument_T (void)
+TAO::In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy>::~In_Special_Basic_Clonable_Argument_T ()
 {
   if (this->is_clone_)
     {
@@ -53,7 +53,7 @@ template<typename S,
          typename from_S,
          template <typename> class Insert_Policy>
 TAO::Argument*
-TAO::In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy>::clone (void)
+TAO::In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy>::clone ()
 {
   S* clone_x = new S (this->x_);
   In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy>* clone_arg

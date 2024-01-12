@@ -30,14 +30,13 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 
 #if defined (ACE_AS_STATIC_LIBS) || \
-  (!defined (ACE_WIN32) && !defined (ACE_HAS_SVR4_DYNAMIC_LINKING) && \
-   !defined (__hpux))
+  (!defined (ACE_WIN32) && !defined (ACE_HAS_SVR4_DYNAMIC_LINKING))
 #include "ace/Logging_Strategy.h"
 #endif
 
@@ -430,9 +429,7 @@ int run_main (int argc, ACE_TCHAR *argv [])
   // though, and you may activate the logging strategy as described in
   // the non-DLL section below under DLL environments as well.
 
-#if !defined (ACE_AS_STATIC_LIBS) && \
-  (defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
-   defined (__hpux))
+#if !defined (ACE_AS_STATIC_LIBS) && (defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING))
 
   // Platform support DLLs, and not configured to link statically
   ACE_TCHAR arg_str[250];
@@ -457,7 +454,7 @@ int run_main (int argc, ACE_TCHAR *argv [])
       // statically
   ACE_Logging_Strategy logging_strategy;
   unsigned char ls_argc = argc - 1;
-  ACE_Auto_Basic_Ptr<ACE_TCHAR *> ls_argv (new ACE_TCHAR *[ls_argc]);
+  std::unique_ptr<ACE_TCHAR *> ls_argv (new ACE_TCHAR *[ls_argc]);
 
   for (unsigned char c = 0; c < ls_argc; c++)
     (ls_argv.get ())[c] = argv[c+1];
@@ -467,8 +464,7 @@ int run_main (int argc, ACE_TCHAR *argv [])
        ((LM_ERROR,
          "Error initializing the ACE_Logging_Strategy.\n"),
                        1);
-#endif /* !ACE_AS_STATIC_LIBS && (ACE_WIN32 ||
-          ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux) */
+#endif /* !ACE_AS_STATIC_LIBS && (ACE_WIN32 ACE_HAS_SVR4_DYNAMIC_LINKING) */
 
   // launch a new Thread
   if (ACE_Thread_Manager::instance ()->spawn

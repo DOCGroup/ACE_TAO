@@ -14,34 +14,34 @@ class Options
   //   Options Singleton.
 {
 public:
-  static Options *instance (void);
+  static Options *instance ();
   // Return Singleton.
 
   void parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the arguments.
 
   // = Accessor methods.
-  const char *program_name (void);
-  const char *slave_name (void);
-  int debug (void);
-  int exec_slave (void);
-  size_t iteration_count (void);
-  int use_sbrk (void);
-  int use_shmem (void);
-  size_t max_msg_size (void);
-  size_t spawn_count (void);
-  int spawn_threads (void);
-  int use_mmap (void);
-  int child (void);
+  const char *program_name ();
+  const char *slave_name ();
+  int debug ();
+  int exec_slave ();
+  size_t iteration_count ();
+  int use_sbrk ();
+  int use_shmem ();
+  size_t max_msg_size ();
+  size_t spawn_count ();
+  int spawn_threads ();
+  int use_mmap ();
+  int child ();
 
 private:
-  Options (void);
+  Options ();
   // Ensure Singleton.
 
   static Options *instance_;
   // Singleton.
 
-  void print_usage_and_die (void);
+  void print_usage_and_die ();
   // Explain usage and exit.
 
   char program_name_[MAXPATHLEN];

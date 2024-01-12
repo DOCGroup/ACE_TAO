@@ -90,7 +90,7 @@ TAO::FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
 ////////////////////////////////////////////
 // FT_FaultDetectorFactory_i private methods
 
-void TAO::FT_FaultDetectorFactory_i::shutdown_i(void)
+void TAO::FT_FaultDetectorFactory_i::shutdown_i()
 {
   // assume mutex is locked
   for (size_t nDetector = 0; nDetector < this->detectors_.size(); ++nDetector)
@@ -103,7 +103,7 @@ void TAO::FT_FaultDetectorFactory_i::shutdown_i(void)
   }
 }
 
-int TAO::FT_FaultDetectorFactory_i::write_ior(void)
+int TAO::FT_FaultDetectorFactory_i::write_ior()
 {
   int result = -1;
   FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
@@ -346,7 +346,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
   return result;
 }
 
-int TAO::FT_FaultDetectorFactory_i::fini (void)
+int TAO::FT_FaultDetectorFactory_i::fini ()
 {
   if (this->ior_output_file_ != 0)
   {
@@ -465,7 +465,7 @@ void TAO::FT_FaultDetectorFactory_i::change_properties (
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::change_properties);
 }
 
-void TAO::FT_FaultDetectorFactory_i::shutdown (void)
+void TAO::FT_FaultDetectorFactory_i::shutdown ()
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::shutdown);
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->internals_);
@@ -654,7 +654,7 @@ void TAO::FT_FaultDetectorFactory_i::delete_object (
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::delete_object);
 }
 
-CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive (void)
+CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive ()
 {
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::is_alive)
     1;

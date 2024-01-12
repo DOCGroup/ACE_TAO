@@ -12,7 +12,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
   : infile_ (0)
 {
@@ -57,7 +56,7 @@ Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT ("register_stdin_handler")));
 }
 
-Dump_Restore::~Dump_Restore (void)
+Dump_Restore::~Dump_Restore ()
 {
   // Deregister this handler with the ACE_Reactor.
   ACE_Reactor::instance ()->remove_handler
@@ -136,7 +135,7 @@ Dump_Restore::handle_input (ACE_HANDLE)
 }
 
 void
-Dump_Restore::display_menu (void)
+Dump_Restore::display_menu ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n")));
@@ -196,7 +195,7 @@ Dump_Restore::display_menu (void)
 
 
 int
-Dump_Restore::set_proc_local (void)
+Dump_Restore::set_proc_local ()
 {
   // Set Name Options
   this->name_options_->nameserver_host (ACE_TEXT ("localhost"));
@@ -224,7 +223,7 @@ Dump_Restore::set_proc_local (void)
 }
 
 int
-Dump_Restore::set_node_local (void)
+Dump_Restore::set_node_local ()
 {
   // Set Name Options
   this->name_options_->nameserver_host (ACE_TEXT ("localhost"));
@@ -442,13 +441,13 @@ Dump_Restore::rebind (const char *key,
 }
 
 int
-Dump_Restore::quit (void)
+Dump_Restore::quit ()
 {
   return ACE_OS::kill (ACE_OS::getpid (), SIGINT);
 }
 
 void
-Dump_Restore::dump (void)
+Dump_Restore::dump ()
 {
   ofstream output_file (dump_filename_);
 

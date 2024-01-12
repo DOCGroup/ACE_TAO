@@ -25,7 +25,6 @@
 #include "ace/Handle_Set.h"
 
 
-
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 void *

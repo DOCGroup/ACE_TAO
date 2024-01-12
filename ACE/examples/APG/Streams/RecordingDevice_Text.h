@@ -39,11 +39,11 @@ public:
 
   ACE_Event_Handler *get_handler () const;
 
-  virtual RecordingDevice *wait_for_activity (void);
+  virtual RecordingDevice *wait_for_activity ();
 
-  virtual int answer_call (void);
+  virtual int answer_call ();
 
-  virtual CallerId *retrieve_callerId (void);
+  virtual CallerId *retrieve_callerId ();
 
   virtual int play_message (ACE_FILE_Addr &addr);
 
@@ -61,15 +61,15 @@ public:
 
   virtual const ACE_TCHAR *get_name () const;
 
-  int answer_call (void);
+  int answer_call ();
 
-  CallerId *retrieve_callerId (void);
+  CallerId *retrieve_callerId ();
 
   int play_message (ACE_FILE_Addr &addr);
 
   MessageType *record_message (ACE_FILE_Addr &addr);
 
-  virtual void release (void);
+  virtual void release ();
   // Listing 01
   // Listing 02 code/ch18
 private:

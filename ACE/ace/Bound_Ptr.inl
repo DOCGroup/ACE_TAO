@@ -121,11 +121,6 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::ACE_Bound_Ptr_Counter (long init_obj_ref_count)
 {
 }
 
-template <class ACE_LOCK> inline
-ACE_Bound_Ptr_Counter<ACE_LOCK>::~ACE_Bound_Ptr_Counter ()
-{
-}
-
 template <class X, class ACE_LOCK> inline
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::ACE_Strong_Bound_Ptr (X *p)
   : counter_ (COUNTER::create_strong ()),

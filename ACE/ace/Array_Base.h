@@ -55,8 +55,8 @@ public:
   typedef value_type const *             const_pointer;
   typedef ptrdiff_t                      difference_type;
   typedef ACE_Allocator::size_type       size_type;
-
-  ACE_DECLARE_STL_REVERSE_ITERATORS
+  typedef std::reverse_iterator<iterator>       reverse_iterator;
+  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
   /// Dynamically create an uninitialized array.
   ACE_Array_Base (size_type size = 0,
@@ -159,7 +159,6 @@ public:
   void swap (ACE_Array_Base<T> & array);
 
 protected:
-
   /// Returns 1 if @a slot is within range, i.e., 0 >= @a slot <
   /// @c cur_size_, else returns 0.
   bool in_range (size_type slot) const;
@@ -237,13 +236,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Array_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Array_Base.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Array_Base.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

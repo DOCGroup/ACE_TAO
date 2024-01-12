@@ -14,7 +14,7 @@ StubFaultConsumer::~StubFaultConsumer ()
 {
 }
 
-::PortableServer::POA_ptr StubFaultConsumer::_default_POA (void)
+::PortableServer::POA_ptr StubFaultConsumer::_default_POA ()
 {
   return ::PortableServer::POA::_duplicate(this->poa_.in ());
 }
@@ -215,7 +215,7 @@ const char * StubFaultConsumer::identity () const
 /**
  * Clean house for process shut down.
  */
-int StubFaultConsumer::fini (void)
+int StubFaultConsumer::fini ()
 {
   this->notifier_->disconnect_consumer(this->consumer_id_);
   return 0;
@@ -284,7 +284,7 @@ void StubFaultConsumer::offer_change (
   ));
 }
 
-void StubFaultConsumer::disconnect_structured_push_consumer(void)
+void StubFaultConsumer::disconnect_structured_push_consumer()
 {
   ACE_ERROR ((LM_ERROR,
     "StubFaultConsumer:disconnect_structured_push_consumer interpreted as quit request.\n"

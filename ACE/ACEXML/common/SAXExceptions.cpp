@@ -18,7 +18,7 @@ const ACEXML_Char ACEXML_SAXParseException::exception_name_[] = ACE_TEXT ("ACEXM
 # include "ACEXML/common/SAXExceptions.inl"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_SAXException::ACEXML_SAXException (void)
+ACEXML_SAXException::ACEXML_SAXException ()
   : message_ (0)
 {
 }
@@ -53,7 +53,7 @@ ACEXML_SAXException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXException*> (ex);
 }
 
-ACEXML_SAXException::~ACEXML_SAXException (void)
+ACEXML_SAXException::~ACEXML_SAXException ()
 {
   ACE::strdelete (this->message_);
 }
@@ -81,7 +81,7 @@ ACEXML_SAXException::print () const
               this->exception_name_, this->message()));
 }
 
-ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (void)
+ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException ()
 {
 }
 
@@ -109,7 +109,7 @@ ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_C
 {
 }
 
-ACEXML_SAXNotSupportedException::~ACEXML_SAXNotSupportedException (void)
+ACEXML_SAXNotSupportedException::~ACEXML_SAXNotSupportedException ()
 {
 }
 
@@ -138,7 +138,7 @@ ACEXML_SAXNotSupportedException::print () const
               this->exception_name_, this->message()));
 }
 
-ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (void)
+ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException ()
 {
 }
 
@@ -165,7 +165,7 @@ ACEXML_SAXNotRecognizedException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXNotRecognizedException*> (ex);
 }
 
-ACEXML_SAXNotRecognizedException::~ACEXML_SAXNotRecognizedException (void)
+ACEXML_SAXNotRecognizedException::~ACEXML_SAXNotRecognizedException ()
 {
 }
 
@@ -193,7 +193,7 @@ ACEXML_SAXNotRecognizedException::print () const
               this->exception_name_, this->message()));
 }
 
-ACEXML_SAXParseException::ACEXML_SAXParseException (void)
+ACEXML_SAXParseException::ACEXML_SAXParseException ()
 {
 }
 
@@ -220,7 +220,7 @@ ACEXML_SAXParseException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXParseException*> (ex);
 }
 
-ACEXML_SAXParseException::~ACEXML_SAXParseException (void)
+ACEXML_SAXParseException::~ACEXML_SAXParseException ()
 {
 }
 

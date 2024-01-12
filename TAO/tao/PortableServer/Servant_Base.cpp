@@ -72,7 +72,7 @@ TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
 TAO_ServantBase &
 TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
 {
-  if (this != &rhs)
+  if (this != std::addressof(rhs))
   {
     this->optable_ = rhs.optable_;
   }
@@ -97,11 +97,6 @@ TAO_ServantBase::_is_a_skel (TAO_ServerRequest & server_request,
                              TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR(servant_upcall),
                              TAO_ServantBase *servant)
 {
-#if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const * const exceptions = 0;
-  static ::CORBA::ULong const nexceptions = 0;
-#endif /* TAO_HAS_INTERCEPTORS */
-
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
   TAO::SArg_Traits< char *>::in_arg_val _tao_repository_id;
 
@@ -111,8 +106,6 @@ TAO_ServantBase::_is_a_skel (TAO_ServerRequest & server_request,
       &_tao_repository_id
     };
 
-  static size_t const nargs = 2;
-
   _is_a_Upcall_Command command (
     servant,
     args);
@@ -120,12 +113,12 @@ TAO_ServantBase::_is_a_skel (TAO_ServerRequest & server_request,
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
-                         , nargs
+                         , 2
                          , command
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
-                         , exceptions
-                         , nexceptions
+                         , nullptr
+                         , 0
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
 }
@@ -135,11 +128,6 @@ TAO_ServantBase::_is_a_thru_poa_skel (TAO_ServerRequest & server_request,
                                       TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                       TAO_ServantBase *servant)
 {
-#if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const * const exceptions = 0;
-  static ::CORBA::ULong const nexceptions = 0;
-#endif /* TAO_HAS_INTERCEPTORS */
-
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
   TAO::SArg_Traits< char *>::in_arg_val _tao_repository_id;
 
@@ -149,8 +137,6 @@ TAO_ServantBase::_is_a_thru_poa_skel (TAO_ServerRequest & server_request,
       &_tao_repository_id
     };
 
-  static size_t const nargs = 2;
-
   _is_a_thru_poa_Upcall_Command command (
     servant,
     server_request.operation_details (),
@@ -159,12 +145,12 @@ TAO_ServantBase::_is_a_thru_poa_skel (TAO_ServerRequest & server_request,
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
-                         , nargs
+                         , 2
                          , command
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
-                         , exceptions
-                         , nexceptions
+                         , nullptr
+                         , 0
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
 }
@@ -176,19 +162,12 @@ TAO_ServantBase::_non_existent_skel (TAO_ServerRequest & server_request,
                                     TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                     TAO_ServantBase *servant)
 {
-#if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const * const exceptions = 0;
-  static ::CORBA::ULong const nexceptions = 0;
-#endif /* TAO_HAS_INTERCEPTORS */
-
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
       &retval
     };
-
-  static size_t const nargs = 1;
 
   _non_existent_Upcall_Command command (
     servant,
@@ -197,12 +176,12 @@ TAO_ServantBase::_non_existent_skel (TAO_ServerRequest & server_request,
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
-                         , nargs
+                         , 1
                          , command
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
-                         , exceptions
-                         , nexceptions
+                         , nullptr
+                         , 0
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
 }
@@ -211,19 +190,12 @@ void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_re
                                                   TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                                   TAO_ServantBase *servant)
 {
-#if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const * const exceptions = 0;
-  static ::CORBA::ULong const nexceptions = 0;
-#endif /* TAO_HAS_INTERCEPTORS */
-
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
       &retval
     };
-
-  static size_t const nargs = 1;
 
   _non_existent_thru_poa_Upcall_Command command (
     servant,
@@ -233,12 +205,12 @@ void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_re
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
-                         , nargs
+                         , 1
                          , command
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
-                         , exceptions
-                         , nexceptions
+                         , nullptr
+                         , 0
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
 }
@@ -279,19 +251,12 @@ TAO_ServantBase::_component_skel (TAO_ServerRequest & server_request,
                                   TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                   TAO_ServantBase *servant)
 {
-#if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const * const exceptions = 0;
-  static ::CORBA::ULong const nexceptions = 0;
-#endif /* TAO_HAS_INTERCEPTORS */
-
   TAO::SArg_Traits< ::CORBA::Object>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
       &retval
     };
-
-  static size_t const nargs = 1;
 
   _get_component_Upcall_Command command (
     servant,
@@ -300,12 +265,12 @@ TAO_ServantBase::_component_skel (TAO_ServerRequest & server_request,
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
-                         , nargs
+                         , 1
                          , command
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
-                         , exceptions
-                         , nexceptions
+                         , nullptr
+                         , 0
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
 }
@@ -315,19 +280,12 @@ TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
                                           TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                           TAO_ServantBase *servant)
 {
-#if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const * const exceptions = 0;
-  static ::CORBA::ULong const nexceptions = 0;
-#endif /* TAO_HAS_INTERCEPTORS */
-
   TAO::SArg_Traits< ::CORBA::Object>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
       &retval
     };
-
-  static size_t const nargs = 1;
 
   _get_component_thru_poa_Upcall_Command command (
     servant,
@@ -337,12 +295,12 @@ TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
-                         , nargs
+                         , 1
                          , command
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
-                         , exceptions
-                         , nexceptions
+                         , nullptr
+                         , 0
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
 }
@@ -350,25 +308,17 @@ TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
 # endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
 
-
 void
 TAO_ServantBase::_repository_id_skel (TAO_ServerRequest & server_request,
                                       TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                       TAO_ServantBase *servant)
 {
-#if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const * const exceptions = 0;
-  static ::CORBA::ULong const nexceptions = 0;
-#endif /* TAO_HAS_INTERCEPTORS */
-
   TAO::SArg_Traits< char *>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
       &retval
     };
-
-  static size_t const nargs = 1;
 
   _repository_id_Upcall_Command command (
     servant,
@@ -377,12 +327,12 @@ TAO_ServantBase::_repository_id_skel (TAO_ServerRequest & server_request,
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
-                         , nargs
+                         , 1
                          , command
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
-                         , exceptions
-                         , nexceptions
+                         , nullptr
+                         , 0
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
 }
@@ -392,19 +342,12 @@ TAO_ServantBase::_repository_id_thru_poa_skel (TAO_ServerRequest & server_reques
                                               TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                               TAO_ServantBase *servant)
 {
-#if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const * const exceptions = 0;
-  static ::CORBA::ULong const nexceptions = 0;
-#endif /* TAO_HAS_INTERCEPTORS */
-
   TAO::SArg_Traits< char *>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
       &retval
     };
-
-  static size_t const nargs = 1;
 
   _repository_id_thru_poa_Upcall_Command command (
     servant,
@@ -414,12 +357,12 @@ TAO_ServantBase::_repository_id_thru_poa_skel (TAO_ServerRequest & server_reques
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
-                         , nargs
+                         , 1
                          , command
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
-                         , exceptions
-                         , nexceptions
+                         , nullptr
+                         , 0
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
 }
@@ -495,13 +438,13 @@ TAO_ServantBase::_find (const char *opname,
 TAO_Stub *
 TAO_ServantBase::_create_stub ()
 {
-  TAO_Stub *stub = 0;
+  TAO_Stub *stub = nullptr;
 
   TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
     static_cast<TAO::Portable_Server::POA_Current_Impl *>
                     (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
-  CORBA::ORB_ptr servant_orb = 0;
+  CORBA::ORB_ptr servant_orb = nullptr;
 
   if (poa_current_impl != 0
       && this == poa_current_impl->servant ())

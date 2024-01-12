@@ -13,7 +13,6 @@
 class TAO_IDL_FE_Export AST_Annotation_Decl : public virtual AST_Structure
 {
 public:
-
   AST_Annotation_Decl (UTL_ScopedName *name);
 
   virtual ~AST_Annotation_Decl ();

@@ -91,16 +91,6 @@ namespace ACE_OS
     return std::floor (x);
   }
 
-#if defined (ACE_HAS_WINCE)
-  /// Windows CE has an intrinsic floor for float
-  template <>
-  inline
-  float floor (float x)
-  {
-    return std::floorf (x);
-  }
-#endif
-
   /// This method computes the smallest integral value not less than x.
   template <typename T>
   inline
@@ -109,20 +99,9 @@ namespace ACE_OS
     return std::ceil (x);
   }
 
-#if defined (ACE_HAS_WINCE)
-  /// Windows CE has an intrinsic ceil for float
-  template <>
-  inline
-  float ceil (float x)
-  {
-    return std::ceilf (x);
-  }
-#endif
-
   /// This method computes the base-2 logarithm of x.
   ACE_NAMESPACE_INLINE_FUNCTION
   double log2 (double x);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

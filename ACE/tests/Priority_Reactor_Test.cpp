@@ -23,14 +23,13 @@
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Connector.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Priority_Reactor.h"
 #include "Priority_Reactor_Test.h"
 
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
 #include <utility>
-
 
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";

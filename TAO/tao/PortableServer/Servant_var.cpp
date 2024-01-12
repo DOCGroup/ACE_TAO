@@ -31,7 +31,7 @@ PortableServer::Servant_var<T>::_duplicate (T * p)
 }
 
 template <class T>
-PortableServer::Servant_var<T>::~Servant_var (void)  /* throw () */
+PortableServer::Servant_var<T>::~Servant_var ()  /* noexcept */
 {
   // Unfortunately, there is no throw spec on _remove_ref, so we
   // can't assume that it will not throw.  If it does, then we are in

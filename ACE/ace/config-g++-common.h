@@ -14,21 +14,25 @@
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 #define ACE_CC_BETA_VERSION (0)
 
-#define ACE_TEMPLATES_REQUIRE_SOURCE
-
-#if __cplusplus >= 201103L
-# define ACE_HAS_CPP11
-# define ACE_FALLTHROUGH [[gnu::fallthrough]]
-#endif
-#if __cplusplus >= 201402L
-# define ACE_HAS_CPP14
-# define ACE_FALLTHROUGH [[gnu::fallthrough]]
+#if __cplusplus >= 202002L
+# define ACE_HAS_CPP20
 #endif
 #if __cplusplus >= 201703L
 # define ACE_HAS_CPP17
+# define ACE_FALLTHROUGH [[fallthrough]]
 #endif
-#if __cplusplus >= 202002L
-# define ACE_HAS_CPP20
+#if __cplusplus >= 201402L
+# define ACE_HAS_CPP14
+#endif
+#if __cplusplus >= 201103L
+# define ACE_HAS_CPP11
+# if !defined (ACE_FALLTHROUGH)
+#  if __GNUC__ >= 7
+#   define ACE_FALLTHROUGH [[gnu::fallthrough]]
+#  else
+#   define ACE_FALLTHROUGH
+#  endif
+# endif
 #endif
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)

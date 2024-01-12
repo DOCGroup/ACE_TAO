@@ -43,7 +43,7 @@ Roundtrip_Handler::test_method_excep (::Messaging::ExceptionHolder *holder)
 }
 
 void
-Roundtrip_Handler::shutdown (void)
+Roundtrip_Handler::shutdown ()
 {
 }
 

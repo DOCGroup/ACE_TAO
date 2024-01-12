@@ -28,14 +28,13 @@
  */
 class IOR_corbaloc_Client_i
 {
-
  public:
   // = Constructor and destructor.
-  IOR_corbaloc_Client_i (void);
-  ~IOR_corbaloc_Client_i (void);
+  IOR_corbaloc_Client_i ();
+  ~IOR_corbaloc_Client_i ();
 
   /// Execute the client example code.
-  int run (void);
+  int run ();
 
   /// Initialize the client communication endpoint with the server.
   int init (int& argc, ACE_TCHAR *argv[]);

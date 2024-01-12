@@ -29,7 +29,7 @@ public:
   // = The Simple_Server methods.
   CORBA::Long echo (CORBA::Long x,
                     CORBA::Long msecs);
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB

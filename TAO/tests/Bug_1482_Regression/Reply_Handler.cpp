@@ -8,14 +8,12 @@ Reply_Handler::Reply_Handler (CORBA::ORB_ptr o)
 void
 Reply_Handler::next_prime (CORBA::ULong)
 {
-  return;
 }
 
 void
 Reply_Handler::next_prime_excep (
     ::Messaging::ExceptionHolder *ex)
 {
-
   try
     {
       ex->raise_exception ();

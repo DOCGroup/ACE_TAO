@@ -35,6 +35,7 @@ project(TAO_IDL_BE) : acelib, install_lib, tao_rules, tao_output, tao_vc8warning
       be/be_visitor_operation
       be/be_visitor_root
       be/be_visitor_sequence
+      be/be_visitor_map
       be/be_visitor_structure
       be/be_visitor_structure_fwd
       be/be_visitor_typecode
@@ -219,6 +220,7 @@ project(TAO_IDL_BE_VIS_S) : acelib, install_lib, tao_rules, tao_output, tao_vc8w
   Source_Files {
     conditional(prop:static) {
       be/be_visitor_sequence
+      be/be_visitor_map
       be/be_visitor_structure
       be/be_visitor_structure_fwd
       be/be_visitor_typecode

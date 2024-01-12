@@ -582,7 +582,7 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
   else
     {
       *os << be_nl_2
-          << "void " << ub->local_name () << " ( ::CORBA::WChar *);" << be_nl;
+          << "void " << ub->local_name () << " (::CORBA::WChar *);" << be_nl;
       *os << "void " << ub->local_name () << " (const ::CORBA::WChar *);"
           << be_nl;
       *os << "void " << ub->local_name () << " (const ::CORBA::WString_var&);"

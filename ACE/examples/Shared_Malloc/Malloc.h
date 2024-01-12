@@ -17,11 +17,11 @@ class Malloc
   //      Allocator Singleton.
 {
 public:
-  static ACE_Allocator *instance (void);
+  static ACE_Allocator *instance ();
   // Returns static instance.
 
 private:
-  Malloc (void);
+  Malloc ();
   // Ensure Singleton.
 
   static ACE_Allocator *instance_;

@@ -53,7 +53,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace RTCORBA
 {
-
   // TAO_IDL - Generated from
   // be\be_interface.cpp:638
 
@@ -118,9 +117,9 @@ namespace RTCORBA
 
   protected:
     // Abstract or local interface only.
-    ProtocolProperties (void);
+    ProtocolProperties ();
 
-    virtual ~ProtocolProperties (void);
+    virtual ~ProtocolProperties ();
 
   private:
     // Private and unimplemented for concrete interfaces.
@@ -148,7 +147,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Traits specializations.
 namespace TAO
 {
-
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES__TRAITS_)
 #define _RTCORBA_PROTOCOLPROPERTIES__TRAITS_
 
@@ -161,7 +159,7 @@ namespace TAO
     static void release (
         ::RTCORBA::ProtocolProperties_ptr
       );
-    static ::RTCORBA::ProtocolProperties_ptr nil (void);
+    static ::RTCORBA::ProtocolProperties_ptr nil ();
     static ::CORBA::Boolean marshal (
         const ::RTCORBA::ProtocolProperties_ptr p,
         TAO_OutputCDR & cdr
@@ -174,7 +172,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 
 

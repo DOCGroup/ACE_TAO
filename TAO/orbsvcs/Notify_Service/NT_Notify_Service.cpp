@@ -14,7 +14,7 @@
 #define TAO_NOTIFY_SERVICE_OPTS_NAME ACE_TEXT ("TaoNotifyServiceOptions")
 #define TAO_SERVICE_PARAM_COUNT ACE_TEXT ("TaoServiceParameterCount")
 
-TAO_NT_Notify_Service::TAO_NT_Notify_Service (void)
+TAO_NT_Notify_Service::TAO_NT_Notify_Service ()
   : argc_ (0),
     argc_save_ (0),
     argv_ (0),
@@ -22,7 +22,7 @@ TAO_NT_Notify_Service::TAO_NT_Notify_Service (void)
 {
 }
 
-TAO_NT_Notify_Service::~TAO_NT_Notify_Service (void)
+TAO_NT_Notify_Service::~TAO_NT_Notify_Service ()
 {
   if (argv_save_)
     {
@@ -149,7 +149,6 @@ TAO_NT_Notify_Service::arg_manip (char *args, DWORD arglen, bool query)
     }
 
   RegCloseKey (hkey);
-
 }
 
 int
@@ -239,7 +238,7 @@ TAO_NT_Notify_Service::init (int argc,
 }
 
 int
-TAO_NT_Notify_Service::svc (void)
+TAO_NT_Notify_Service::svc ()
 {
   TAO_Notify_Service_Driver notify_service;
 

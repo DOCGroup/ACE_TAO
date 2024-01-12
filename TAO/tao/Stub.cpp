@@ -22,7 +22,7 @@
 # include "tao/Stub.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -569,7 +569,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
       // release ACE_Lock
     }
 
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

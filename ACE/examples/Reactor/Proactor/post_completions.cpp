@@ -54,7 +54,6 @@ static ACE_Atomic_Op <ACE_SYNCH_MUTEX, size_t> Completions_To_Go;
  */
 class My_Result : public RESULT_CLASS
 {
-
 public:
   My_Result (ACE_Handler &handler,
              const void *act,
@@ -71,7 +70,7 @@ public:
     {}
   // Constructor.
 
-  virtual ~My_Result (void)
+  virtual ~My_Result ()
     {}
   // Destructor.
 
@@ -117,13 +116,12 @@ private:
  */
 class My_Handler : public  ACE_Handler
 {
-
 public:
   /// Constructor.
-  My_Handler (void) {}
+  My_Handler () {}
 
   /// Destructor.
-  virtual ~My_Handler (void) {}
+  virtual ~My_Handler () {}
 };
 
 /**
@@ -136,10 +134,10 @@ class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
   /// Constructor.
-  My_Task (void) {}
+  My_Task () {}
 
   /// Destructor.
-  virtual ~My_Task (void) {}
+  virtual ~My_Task () {}
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void *proactor)
@@ -153,7 +151,7 @@ public:
       return 0;
     }
 
-  int svc (void)
+  int svc ()
     {
       // Handle events for 13 seconds.
       ACE_Time_Value run_time (13);

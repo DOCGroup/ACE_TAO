@@ -27,9 +27,8 @@ class Client_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
-  Client_Request_Interceptor (void);
+  Client_Request_Interceptor ();
 
   /**
    * @name Methods Required by the Client Request Interceptor
@@ -41,9 +40,9 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestinterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void send_request (
       PortableInterceptor::ClientRequestInfo_ptr ri);

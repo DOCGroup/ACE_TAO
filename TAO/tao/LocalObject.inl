@@ -34,7 +34,7 @@ CORBA::LocalObject::_narrow (CORBA::Object_ptr obj)
 }
 
 ACE_INLINE
-CORBA::LocalObject::LocalObject (void)
+CORBA::LocalObject::LocalObject ()
   : Object (0)
 {
 }

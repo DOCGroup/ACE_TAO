@@ -10,7 +10,7 @@
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
@@ -54,7 +54,7 @@ TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (CORBA::TypeCode_ptr tc)
 }
 
 template<typename T>
-TAO::Any_Dual_Impl_T<T>::~Any_Dual_Impl_T (void)
+TAO::Any_Dual_Impl_T<T>::~Any_Dual_Impl_T ()
 {
 }
 
@@ -200,7 +200,7 @@ TAO::Any_Dual_Impl_T<T>::value () const
 
 template<typename T>
 void
-TAO::Any_Dual_Impl_T<T>::free_value (void)
+TAO::Any_Dual_Impl_T<T>::free_value ()
 {
   if (this->value_destructor_ != 0)
     {

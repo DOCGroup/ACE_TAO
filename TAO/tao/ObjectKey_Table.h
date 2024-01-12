@@ -30,7 +30,6 @@ class TAO_ORB_Core;
 
 namespace TAO
 {
-
   // Forward declarations within the namespace..
   class Refcounted_ObjectKey;
   class ObjectKey;

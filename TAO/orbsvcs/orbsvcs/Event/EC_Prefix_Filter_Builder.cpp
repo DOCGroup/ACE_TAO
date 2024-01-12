@@ -14,7 +14,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Prefix_Filter_Builder::~TAO_EC_Prefix_Filter_Builder ()

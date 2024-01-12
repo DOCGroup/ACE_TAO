@@ -15,10 +15,7 @@ $status = 0;
 $iiop_port = 27532;
 $tp_iiop_port = 27533;
 
-$continuous = ($^O eq 'hpux');
-
-$extra_server_args = ($continuous ? "-ORBSvcConf continuous$PerlACE::svcconf_ext " : '') .
-                     "-d 1 -ORBEndpoint iiop://1.2\@:$iiop_port -ORBLaneEndpoint 2:0 iiop://1.2\@:$tp_iiop_port";
+$extra_server_args = "-d 1 -ORBEndpoint iiop://1.2\@:$iiop_port -ORBLaneEndpoint 2:0 iiop://1.2\@:$tp_iiop_port";
 
 @iorfiles =
     (

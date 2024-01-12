@@ -12,14 +12,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DS_Network_Priority_Protocols_Hooks::
-TAO_DS_Network_Priority_Protocols_Hooks (void)
+TAO_DS_Network_Priority_Protocols_Hooks ()
   : orb_core_ (0)
 {
 }
 
 
 TAO_DS_Network_Priority_Protocols_Hooks::
-~TAO_DS_Network_Priority_Protocols_Hooks (void)
+~TAO_DS_Network_Priority_Protocols_Hooks ()
 {
 }
 

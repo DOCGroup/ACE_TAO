@@ -305,7 +305,6 @@ TAO_LB_LoadAverage::analyze_loads (
 */
 
                 load_manager->enable_alert (loc);
-
               }
 
             }

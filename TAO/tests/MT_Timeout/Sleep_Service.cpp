@@ -17,7 +17,7 @@ Sleep_Service::go_to_sleep (CORBA::ULong microseconds)
 }
 
 void
-Sleep_Service::shutdown (void)
+Sleep_Service::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "Shutting down the ORB\n"));
   this->orb_->shutdown (false);

@@ -51,7 +51,7 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  virtual ~ACE_Auto_Event_T ();
+  virtual ~ACE_Auto_Event_T () = default;
 
   /// Dump the state of an object.
   void dump () const;
@@ -92,17 +92,7 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (__ACE_INLINE__)
-#include "ace/Auto_Event.inl"
-#endif /* __ACE_INLINE__ */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Auto_Event.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Auto_Event.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_AUTO_EVENT_H */

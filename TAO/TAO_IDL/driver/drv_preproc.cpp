@@ -73,11 +73,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 
 #include "ace/Version.h"
-#include "ace/Process_Manager.h"
+#include "ace/Process.h"
 #include "ace/SString.h"
 #include "ace/Env_Value_T.h"
 #include "ace/ARGV.h"
-#include "ace/UUID.h"
 #include "ace/Dirent.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Truncate.h"
@@ -1230,35 +1229,10 @@ DRV_pre_proc (const char *myfile)
 
   UTL_String *utl_string = nullptr;
 
-#if defined (ACE_OPENVMS)
-  {
-    char main_abspath[MAXPATHLEN] = "";
-    char trans_path[MAXPATHLEN] = "";
-    char *main_fullpath =
-      ACE_OS::realpath (IDL_GlobalData::translateName (myfile, trans_path),
-                        main_abspath);
-
-    if (main_fullpath == 0)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Unable to construct full file pathname\n")));
-
-        (void) ACE_OS::unlink (tmp_ifile);
-        (void) ACE_OS::unlink (tmp_file);
-        throw Bailout ();
-      }
-
-    ACE_NEW (utl_string,
-             UTL_String (main_fullpath, true));
-
-    idl_global->set_main_filename (utl_string);
-  }
-#else
   ACE_NEW (utl_string,
            UTL_String (myfile, true));
 
   idl_global->set_main_filename (utl_string);
-#endif
 
   ACE_Auto_String_Free safety (ACE_OS::strdup (myfile));
 
@@ -1347,17 +1321,9 @@ DRV_pre_proc (const char *myfile)
       // If the following open() fails, then we're either being hit with a
       // symbolic link attack, or another process opened the file before
       // us.
-#if defined (ACE_OPENVMS)
-      //FUZZ: disable check_for_lack_ACE_OS
-      fd = ::open (t_file, O_WRONLY | O_CREAT | O_EXCL,
-                   ACE_DEFAULT_FILE_PERMS,
-                   "shr=get,put,upd", "ctx=rec", "fop=dfw");
-      //FUZZ: enable check_for_lack_ACE_OS
-#else
       fd = ACE_OS::open (t_file,
                          O_WRONLY | O_CREAT | O_EXCL,
                          ACE_DEFAULT_FILE_PERMS);
-#endif
 
       if (fd == ACE_INVALID_HANDLE)
         {
@@ -1475,11 +1441,6 @@ DRV_pre_proc (const char *myfile)
   // version the current process
   // would exit if the pre-processor
   // returned with error.
-
-#if defined (ACE_OPENVMS)
-  cpp_options.release_handles();
-#endif
-
   FILE * const yyin = ACE_OS::fopen (t_file, "r");
 
   if (yyin == nullptr)

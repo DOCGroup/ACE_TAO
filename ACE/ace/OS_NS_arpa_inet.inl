@@ -69,7 +69,6 @@ ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
 #if defined ACE_HAS_IPV6 && !defined ACE_LACKS_INET_PTON
   return ::inet_pton (family, strptr, addrptr);
 #else
-
   if (family == AF_INET)
     {
       if (ACE_OS::inet_aton (strptr, static_cast<in_addr *> (addrptr)))

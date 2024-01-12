@@ -5,7 +5,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_MEM_Stream::ACE_MEM_Stream (void)
+ACE_MEM_Stream::ACE_MEM_Stream ()
 {
   // ACE_TRACE ("ACE_MEM_Stream::ACE_MEM_Stream");
 }
@@ -18,13 +18,13 @@ ACE_MEM_Stream::ACE_MEM_Stream (ACE_HANDLE h)
 }
 
 ACE_INLINE
-ACE_MEM_Stream::~ACE_MEM_Stream (void)
+ACE_MEM_Stream::~ACE_MEM_Stream ()
 {
   // ACE_TRACE ("ACE_MEM_Stream::~ACE_MEM_Stream");
 }
 
 ACE_INLINE int
-ACE_MEM_Stream::close_reader (void)
+ACE_MEM_Stream::close_reader ()
 {
   ACE_TRACE ("ACE_MEM_Stream::close_reader");
   if (this->get_handle () != ACE_INVALID_HANDLE)
@@ -36,7 +36,7 @@ ACE_MEM_Stream::close_reader (void)
 // Shut down just the writing end of a ACE_SOCK.
 
 ACE_INLINE int
-ACE_MEM_Stream::close_writer (void)
+ACE_MEM_Stream::close_writer ()
 {
   ACE_TRACE ("ACE_MEM_Stream::close_writer");
   if (this->get_handle () != ACE_INVALID_HANDLE)

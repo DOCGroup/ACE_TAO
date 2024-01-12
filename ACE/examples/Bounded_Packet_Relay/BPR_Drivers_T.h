@@ -44,10 +44,10 @@ class Bounded_Packet_Relay_Driver
 {
 public:
   /// Constructor.
-  Bounded_Packet_Relay_Driver (void);
+  Bounded_Packet_Relay_Driver ();
 
   /// Destructor.
-  virtual ~Bounded_Packet_Relay_Driver (void);
+  virtual ~Bounded_Packet_Relay_Driver ();
 
   /// Breaks up the input string buffer into pieces and executes the
   /// appropriate method to handle that operation.
@@ -58,11 +58,11 @@ public:
    * class should normally invoke this method.  Returns 0 when
    * successful, or 0 otherwise.
    */
-  virtual int run (void);
+  virtual int run ();
 
   /// This internal method gets the next request from the user.
   /// Returns -1 when user wants to exit.  Returns 0 otherwise.
-  virtual int get_next_request (void);
+  virtual int get_next_request ();
 
   /**
    * Reads input from the user into the buffer <buf> with a maximum of
@@ -73,37 +73,37 @@ public:
   virtual ssize_t read_input (char *buf, size_t bufsiz);
 
   /// Prints the user interface for the driver to STDERR.
-  virtual int display_menu (void)=0;
+  virtual int display_menu () = 0;
 
   /// Initializes values and operations for the driver.
-  virtual int init (void)=0;
+  virtual int init () = 0;
 
   /// Get count of packets to send in a transmission.
-  u_long packet_count (void);
+  u_long packet_count ();
 
   /// Set count of packets to send in a transmission.
   void packet_count (u_long pc);
 
   /// Get rate at which input packets are to arrive.
-  u_long arrival_period (void);
+  u_long arrival_period ();
 
   /// Set rate at which input packets are to arrive.
   void arrival_period (u_long ap);
 
   /// Get rate at which packets are to be relayed (usec).
-  u_long send_period (void);
+  u_long send_period ();
 
   /// Set rate at which packets are to be relayed (usec).
   void send_period (u_long sp);
 
   /// Get limit on the duration of the transmission (usec).
-  u_long duration_limit (void);
+  u_long duration_limit ();
 
   /// Set limit on the duration of the transmission (usec).
   void duration_limit (u_long dl);
 
   /// Get logging level.
-  int logging_level (void);
+  int logging_level ();
 
   /// Set logging level.
   void logging_level (int ll);
@@ -160,12 +160,6 @@ private:
   int logging_level_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "BPR_Drivers_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("BPR_Drivers_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* _BPR_DRIVERS_T_H_ */

@@ -199,7 +199,6 @@ namespace ACE_Utils
   class ACE_Export UUID_Generator
   {
   public:
-
     enum {ACE_UUID_CLOCK_SEQ_MASK = 0x3FFF};
 
     /// Default constructor.

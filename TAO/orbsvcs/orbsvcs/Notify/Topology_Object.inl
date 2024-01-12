@@ -12,7 +12,7 @@ namespace TAO_Notify
 
   ACE_INLINE
   bool
-  Topology_Parent::child_change (void)
+  Topology_Parent::child_change ()
   {
     this->children_changed_ = true;
     return send_change ();

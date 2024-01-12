@@ -95,7 +95,7 @@ namespace CORBA
 
   typedef CORBA::ULong PolicyType;
 
-  // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
+  // TODO - implement OMG's 'ORBid CORBA::ORB::id ()'.
 
   typedef
     TAO_VarSeq_Var_T<

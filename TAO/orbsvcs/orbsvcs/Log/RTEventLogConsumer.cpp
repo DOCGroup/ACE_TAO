@@ -48,7 +48,6 @@ TAO_Rtec_LogConsumer::push (const RtecEventComm::EventSet& events)
 
   this->log_->write_recordlist (recList);
 
-
 }
 
 void

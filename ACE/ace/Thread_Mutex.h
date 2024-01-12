@@ -38,7 +38,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * in the same process.  It maps to <CRITICAL_SECTION>s on NT
  * and <ACE_mutex_t> with <type> set to <USYNC_THREAD> on UNIX.
  * ACE_Thread_Mutex is recursive on some platforms (like
- * Win32). However, on most platforms (like Solaris) it is not
+ * Win32). However, on most platforms it is not
  * recursive.  To be totally safe and portable, developers
  * should use ACE_Recursive_Thread_Mutex when they need a
  * recursive mutex.

@@ -101,7 +101,6 @@ class SIPAddress; // aka ipv6
  */
 class  ASNMP_Export Address: public  SnmpSyntax
 {
-
 public:
    /// allow destruction of derived classes
    virtual ~Address();
@@ -294,7 +293,6 @@ protected:
   /// thread safe routine to lookup name given ip address
   /// return <> 0 on error
   static int resolve_to_hostname(const in_addr& quad_addr, char *hostname);
-
 };
 
 //------------------------------------------------------------------------
@@ -477,7 +475,6 @@ protected:
 class  ASNMP_Export NetbiosAddress : public Address
 {
 public:
-
    /// default constructor with string arg
    NetbiosAddress( const char *inaddr = "");
 
@@ -702,7 +699,6 @@ protected:
   /// uses same separator as when constructed
   virtual void format_output();
 };
-
 
 
 //------------------------------------------------------------------------

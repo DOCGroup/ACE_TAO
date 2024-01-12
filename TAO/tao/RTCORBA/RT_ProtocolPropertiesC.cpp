@@ -33,7 +33,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:72
 
@@ -53,7 +52,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 
 
@@ -77,7 +75,7 @@ TAO::Objref_Traits<RTCORBA::ProtocolProperties>::release (
 }
 
 RTCORBA::ProtocolProperties_ptr
-TAO::Objref_Traits<RTCORBA::ProtocolProperties>::nil (void)
+TAO::Objref_Traits<RTCORBA::ProtocolProperties>::nil ()
 {
   return RTCORBA::ProtocolProperties::_nil ();
 }
@@ -90,10 +88,10 @@ TAO::Objref_Traits<RTCORBA::ProtocolProperties>::marshal (
   return ::CORBA::Object::marshal (p, cdr);
 }
 
-RTCORBA::ProtocolProperties::ProtocolProperties (void)
+RTCORBA::ProtocolProperties::ProtocolProperties ()
 {}
 
-RTCORBA::ProtocolProperties::~ProtocolProperties (void)
+RTCORBA::ProtocolProperties::~ProtocolProperties ()
 {}
 
 void

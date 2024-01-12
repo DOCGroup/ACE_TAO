@@ -44,25 +44,25 @@ public:
   // entry in the vtbl) and if, by chance, someone does delete a
   // derived-class though this classes ptr, we are still safe.  The
   // short answer to your question is : I don't know. :)
-  virtual ~Base_Server (void);
+  virtual ~Base_Server ();
 
   // Just parse the command line for the output-file (-o) option.
   // return -1 if -o option is not present
-  virtual int parse_args (void);
+  virtual int parse_args ();
 
   /// try and schedule using FIFO
-  void try_RT_scheduling (void);
+  void try_RT_scheduling ();
 
   /// ORB inititalisation stuff
-  int start_orb_and_poa (void);
+  int start_orb_and_poa ();
 
-  int shutdown_orb_and_poa (void);
+  int shutdown_orb_and_poa ();
 
   /// register the servant with the poa
   virtual void register_servant (AMH_Servant *servant);
 
   /// orb-perform_work () abstraction
-  virtual void run_event_loop (void);
+  virtual void run_event_loop ();
 
 public:
   // @@ Mayur, please put inlined methods in a separate `.inl' file,
@@ -71,7 +71,7 @@ public:
   // Mayur: A separate file for just one method? AAAGH. OK.
 
   /// Accesor method (for servants) to the initialised ORB
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
 protected:
   int &argc_;

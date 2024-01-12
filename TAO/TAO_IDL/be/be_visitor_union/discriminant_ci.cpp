@@ -201,7 +201,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
       << "// Accessor to set the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << bu->name () << "::_d ( ::" << bt->name ()
+      << bu->name () << "::_d (::" << bt->name ()
       << " discval)" << be_nl
       << "{" << be_idt_nl
       << "this->disc_ = discval;" << be_uidt_nl

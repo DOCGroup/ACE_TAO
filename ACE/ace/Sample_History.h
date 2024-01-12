@@ -46,7 +46,7 @@ public:
   ACE_Sample_History (size_t max_samples);
 
   /// Destructor
-  ~ACE_Sample_History (void);
+  ~ACE_Sample_History ();
 
   /// Record one sample.
   /**

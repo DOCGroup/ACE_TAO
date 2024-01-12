@@ -50,26 +50,25 @@ class TAO_Strategies_Export TAO_OC_Endpoint_Selector_Factory
 {
 public:
   /// Constructor.
-  TAO_OC_Endpoint_Selector_Factory (void);
+  TAO_OC_Endpoint_Selector_Factory () = default;
 
   /// Destructor.
-  virtual ~TAO_OC_Endpoint_Selector_Factory (void);
+  virtual ~TAO_OC_Endpoint_Selector_Factory ();
 
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
-  virtual TAO_Invocation_Endpoint_Selector *get_selector (void);
+  virtual TAO_Invocation_Endpoint_Selector *get_selector ();
 
 protected:
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
 
-  TAO_Optimized_Connection_Endpoint_Selector *oc_endpoint_selector_;
+  TAO_Optimized_Connection_Endpoint_Selector *oc_endpoint_selector_ {};
 
-  int register_orb_initializer (void);
+  int register_orb_initializer ();
 };
-
 
 
 

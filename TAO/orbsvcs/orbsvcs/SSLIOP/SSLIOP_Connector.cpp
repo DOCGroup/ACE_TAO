@@ -17,7 +17,7 @@
 #include "tao/Blocked_Connect_Strategy.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Profile_Transport_Resolver.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/os_include/os_netdb.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -255,7 +255,6 @@ TAO::SSLIOP::Connector::make_secure_profile ()
 
   return profile;
 }
-
 
 
 TAO_Profile *
@@ -513,13 +512,11 @@ TAO::SSLIOP::Connector::ssliop_connect (
               ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect,")
                           ACE_TEXT ("wait for completion failed\n")));
-
             }
         }
     }
   else
     {
-
       bool make_new_connection =
         (found == TAO::Transport_Cache_Manager::CACHE_FOUND_NONE) ||
         (found == TAO::Transport_Cache_Manager::CACHE_FOUND_BUSY
@@ -527,7 +524,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
       if (make_new_connection)
         {
-
           if (TAO_debug_level > 4)
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, ")
@@ -764,7 +760,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
             }
 
           svc_handler_auto_ptr.release ();
-
         }
       else // not making new connection
         {

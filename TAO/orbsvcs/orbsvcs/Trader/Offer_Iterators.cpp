@@ -62,7 +62,6 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
   // populate the sequence.
   for (CORBA::ULong i = 0; i < offers_in_sequence; i++)
     {
-
       CosTrading::Offer *source = 0;
       this->offers_.dequeue_head (source);
       this->pfilter_.filter_offer (source, offers[i]);

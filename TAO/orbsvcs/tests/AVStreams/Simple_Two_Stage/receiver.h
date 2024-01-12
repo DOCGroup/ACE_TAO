@@ -28,9 +28,8 @@
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-
   /// Constructor.
-  Receiver_Callback (void);
+  Receiver_Callback ();
 
   // Method that is called when there is data to be received from a
   // sender.
@@ -40,7 +39,7 @@ public:
 
   // Called when the sender is done sending data and wants to close
   // down the connection.
-  int handle_destroy (void);
+  int handle_destroy ();
 
   void dump_samples (const char* file);
 
@@ -49,7 +48,6 @@ private:
   int frame_count_;
 
   Receiver_Stats stats_;
-
 };
 
 /**
@@ -69,7 +67,6 @@ public:
 private:
   /// Receiver application callback.
   Receiver_Callback callback_;
-
 };
 
 /**
@@ -84,10 +81,10 @@ class Receiver
 {
 public:
   /// Constructor
-  Receiver (void);
+  Receiver ();
 
   /// Destructor.
-  ~Receiver (void);
+  ~Receiver ();
 
   /// Initialize data components.
   int init (int argc,
@@ -104,6 +101,4 @@ protected:
 
   /// Receiver MMDevice.
   TAO_MMDevice *mmdevice_;
-
-
 };

@@ -59,14 +59,14 @@ public:
                              const ACE_Time_Value &timeout);
 
   /// destructor...
-  virtual ~TAO_CEC_ProxyPullSupplier (void);
+  virtual ~TAO_CEC_ProxyPullSupplier ();
 
   /// Activate in the POA
   virtual void activate (
       CosEventChannelAdmin::ProxyPullSupplier_ptr &activated_proxy);
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate ();
 
   /// Return 0 if no consumer is connected...
   CORBA::Boolean is_connected () const;
@@ -80,7 +80,7 @@ public:
   CosEventComm::PullConsumer_ptr consumer () const;
 
   /// The event channel is shutting down
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /**
    * Invoke the _non_existent() pseudo-operation on the consumer. If
@@ -95,18 +95,18 @@ public:
   // = The CosEventChannelAdmin::ProxyPullSupplier methods...
   virtual void connect_pull_consumer (
                 CosEventComm::PullConsumer_ptr pull_consumer);
-  virtual CORBA::Any * pull (void);
+  virtual CORBA::Any * pull ();
   virtual CORBA::Any * try_pull (CORBA::Boolean_out has_event);
-  virtual void disconnect_pull_supplier (void);
+  virtual void disconnect_pull_supplier ();
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (void);
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  virtual PortableServer::POA_ptr _default_POA ();
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
 protected:
   /// Set the consumer, used by some implementations to change the
@@ -118,7 +118,7 @@ protected:
   CORBA::Boolean is_connected_i () const;
 
   /// Release the child and the consumer
-  void cleanup_i (void);
+  void cleanup_i ();
 
   /// Assigns the parameter to both consumer_ and nopolicy_consumer_, and
   /// applies policies (when appropriate) to consumer_.

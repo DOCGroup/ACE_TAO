@@ -7,7 +7,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)) && !defined(ACE_HAS_WINCE)
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async I/O.
 
 #include "ace/OS_NS_sys_socket.h"
@@ -20,16 +20,10 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class HANDLER>
-ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector (void)
+ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector ()
   : pass_addresses_ (false),
     validate_new_connection_ (false)
 {
-}
-
-template <class HANDLER>
-ACE_Asynch_Connector<HANDLER>::~ACE_Asynch_Connector (void)
-{
-  //this->asynch_connect_.close ();
 }
 
 template <class HANDLER> int
@@ -173,7 +167,7 @@ ACE_Asynch_Connector<HANDLER>::validate_connection
 }
 
 template <class HANDLER> int
-ACE_Asynch_Connector<HANDLER>::cancel (void)
+ACE_Asynch_Connector<HANDLER>::cancel ()
 {
   return this->asynch_connect_.cancel ();
 }
@@ -224,13 +218,13 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
 
 
 template <class HANDLER> ACE_Asynch_Connect &
-ACE_Asynch_Connector<HANDLER>::asynch_connect (void)
+ACE_Asynch_Connector<HANDLER>::asynch_connect ()
 {
   return this->asynch_connect_;
 }
 
 template <class HANDLER> HANDLER *
-ACE_Asynch_Connector<HANDLER>::make_handler (void)
+ACE_Asynch_Connector<HANDLER>::make_handler ()
 {
   // Default behavior
   HANDLER *handler = 0;

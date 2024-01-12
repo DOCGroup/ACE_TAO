@@ -8,9 +8,8 @@ static int authorize_1 = 1;
 static int authorize_2 = 1;
 
 CORBA::Boolean
-SLevel1_Server_i::authorize_level1 (void)
+SLevel1_Server_i::authorize_level1 ()
 {
-
   /// Get a reference to the SecurityCurrent object.
   CORBA::Object_var obj =
     orb->resolve_initial_references ("SecurityCurrent");
@@ -102,7 +101,7 @@ SLevel1_Server_i::authorize_level1 (void)
 
 
 CORBA::Boolean
-SLevel1_Server_i::authorize_level2 (void)
+SLevel1_Server_i::authorize_level2 ()
 {
   /// If the owner of this invocation is authorized to invoke this
   /// method, return 0 else return 1.

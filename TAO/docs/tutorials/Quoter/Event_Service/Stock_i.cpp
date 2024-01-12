@@ -42,7 +42,7 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 }
 
 void
-Quoter_Stock_i::disconnect_push_supplier (void)
+Quoter_Stock_i::disconnect_push_supplier ()
 {
   // Forget about the consumer it is not there anymore
   this->consumer_proxy_ =

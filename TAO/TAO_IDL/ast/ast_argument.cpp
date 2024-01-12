@@ -70,6 +70,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_argument.h"
 #include "ast_visitor.h"
+#include "ast_type.h"
+
+#include "utl_err.h"
+
+#include "global_extern.h"
 
 // Static functions.
 
@@ -101,6 +106,12 @@ AST_Argument::AST_Argument (Direction d,
     AST_Field (AST_Decl::NT_argument, ft, n),
     pd_direction (d)
 {
+  AST_Decl::NodeType fnt = ft->node_type ();
+
+  if (fnt == AST_Decl::NT_except)
+    {
+      idl_global->err ()->not_a_type (ft);
+    }
 }
 
 AST_Argument::~AST_Argument ()

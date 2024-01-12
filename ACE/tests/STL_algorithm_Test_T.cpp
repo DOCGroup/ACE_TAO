@@ -9,10 +9,9 @@ template <typename T>
 class Element_Counter
 {
 public:
-  Element_Counter (void)
+  Element_Counter ()
     : count_ (0)
   {
-
   }
 
   void operator () (typename T::value_type & item)

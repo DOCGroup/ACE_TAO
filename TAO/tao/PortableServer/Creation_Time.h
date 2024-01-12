@@ -52,7 +52,6 @@ namespace TAO
       bool operator!= (const Temporary_Creation_Time &rhs) const;
 
     protected:
-
       enum
       {
         SEC_FIELD = 0,
@@ -61,7 +60,6 @@ namespace TAO
 
       /// Timestamp
       CORBA::ULong time_stamp_[2];
-
     };
 
     /**
@@ -75,7 +73,6 @@ namespace TAO
     class Temporary_Creation_Time
     {
     public:
-
       Temporary_Creation_Time ();
 
       void creation_time (const void *creation_time);
@@ -85,7 +82,6 @@ namespace TAO
       bool operator!= (const Creation_Time &rhs) const;
 
     protected:
-
       void *time_stamp_;
     };
   }

@@ -11,12 +11,12 @@ TAO_Scheduler::TAO_Scheduler (CORBA::ORB_ptr orb)
   current_ = RTScheduling::Current::_narrow (current_obj.in ());
 }
 
-TAO_Scheduler::~TAO_Scheduler (void)
+TAO_Scheduler::~TAO_Scheduler ()
 {
 }
 
 CORBA::PolicyList*
-TAO_Scheduler::scheduling_policies (void)
+TAO_Scheduler::scheduling_policies ()
 {
   return 0;
 }
@@ -27,13 +27,13 @@ TAO_Scheduler::scheduling_policies (const CORBA::PolicyList &)
 }
 
 CORBA::PolicyList*
-TAO_Scheduler::poa_policies (void)
+TAO_Scheduler::poa_policies ()
 {
   return 0;
 }
 
 char *
-TAO_Scheduler::scheduling_discipline_name (void)
+TAO_Scheduler::scheduling_discipline_name ()
 {
   return 0;
 }

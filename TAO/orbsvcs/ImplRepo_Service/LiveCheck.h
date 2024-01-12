@@ -76,7 +76,7 @@ class Locator_Export LiveListener
   /// look up a listener entry in the LiveCheck map.
   LiveListener (const char *server);
 
-  virtual ~LiveListener (void);
+  virtual ~LiveListener ();
 
   /// called by the asynch ping receiver when a reply or an exception
   /// is received. Returns true if finished listening
@@ -85,8 +85,8 @@ class Locator_Export LiveListener
   /// Accessor for the server name. Used by the LiveCheck to associate a listener
   const char *server () const;
 
-  LiveListener *_add_ref (void);
-  void _remove_ref (void);
+  LiveListener *_add_ref ();
+  void _remove_ref ();
 
  protected:
   ACE_CString server_;
@@ -116,25 +116,25 @@ class Locator_Export LiveEntry
              bool may_ping,
              ImplementationRepository::ServerObject_ptr ref,
              int pid);
-  ~LiveEntry (void);
+  ~LiveEntry ();
 
-  void release_callback (void);
+  void release_callback ();
   void add_listener (LiveListener *ll);
   void remove_listener (LiveListener *ll);
   LiveStatus status () const;
   void status (LiveStatus l);
-  void reset_status (void);
+  void reset_status ();
 
   /// the current state value as text
   static const char *status_name (LiveStatus s);
 
-  void update_listeners (void);
+  void update_listeners ();
   bool validate_ping (bool &want_reping, ACE_Time_Value &next);
   void do_ping (PortableServer::POA_ptr poa);
   const ACE_Time_Value &next_check () const;
   static void set_reping_limit (int max);
   bool reping_available () const;
-  int next_reping (void);
+  int next_reping ();
   void max_retry_msec (int max);
   const char *server_name () const;
   void set_pid (int pid);
@@ -176,14 +176,14 @@ class Locator_Export PingReceiver :
 {
  public:
   PingReceiver (LiveEntry * entry, PortableServer::POA_ptr poa);
-  virtual ~PingReceiver (void);
+  virtual ~PingReceiver ();
 
   /// Called by the entry if it is no longer interested in the result of
   /// a ping.
-  void cancel (void);
+  void cancel ();
 
   /// Called when an anticipated ping reply is received
-  void ping (void);
+  void ping ();
 
   /// Called when an anticipated ping raises an exception
   void ping_excep (Messaging::ExceptionHolder * excep_holder);
@@ -222,7 +222,7 @@ class Locator_Export LC_TimeoutGuard
 
   /// Releases the flag. If the LiveCheck received any requests for an immediate
   /// or deferred ping during this time, schedule it now.
-  ~LC_TimeoutGuard (void);
+  ~LC_TimeoutGuard ();
 
   /// Returns true if the in handle timeout in the owner was already set.
   bool blocked () const;
@@ -250,11 +250,11 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   friend class LC_TimeoutGuard;
 
   LiveCheck ();
-  ~LiveCheck (void);
+  ~LiveCheck ();
 
   void init (CORBA::ORB_ptr orb,
              const ACE_Time_Value &interval);
-  void shutdown (void);
+  void shutdown ();
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void *act = 0);
   bool has_server (const char *server);
@@ -275,10 +275,10 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   const ACE_Time_Value &ping_interval () const;
 
  private:
-  void enter_handle_timeout (void);
-  void exit_handle_timeout (void);
-  bool in_handle_timeout (void);
-  void remove_deferred_servers (void);
+  void enter_handle_timeout ();
+  void exit_handle_timeout ();
+  bool in_handle_timeout ();
+  void remove_deferred_servers ();
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                   LiveEntry *,

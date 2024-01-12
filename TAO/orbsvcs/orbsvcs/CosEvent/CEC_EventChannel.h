@@ -126,15 +126,15 @@ public:
                         int own_factory = 0);
 
   /// destructor
-  virtual ~TAO_CEC_EventChannel (void);
+  virtual ~TAO_CEC_EventChannel ();
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
-  virtual void activate (void);
+  virtual void activate ();
 
   /// Shutdown any internal threads, cleanup all the internal
   /// structures, flush all the messages, etc.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Access the dispatching module....
   TAO_CEC_Dispatching* dispatching () const;
@@ -183,14 +183,14 @@ public:
   void destroy_proxy_collection (TAO_CEC_ProxyPullConsumer_Collection*);
 
   /// Access the supplier and consumer POAs from the factory.
-  PortableServer::POA_ptr supplier_poa (void);
-  PortableServer::POA_ptr consumer_poa (void);
+  PortableServer::POA_ptr supplier_poa ();
+  PortableServer::POA_ptr consumer_poa ();
 
   /// Locking strategies for the ProxyPushConsumer and
   /// ProxyPushSupplier objects
-  ACE_Lock* create_consumer_lock (void);
+  ACE_Lock* create_consumer_lock ();
   void destroy_consumer_lock (ACE_Lock*);
-  ACE_Lock* create_supplier_lock (void);
+  ACE_Lock* create_supplier_lock ();
   void destroy_supplier_lock (ACE_Lock*);
 
   /// Used to inform the EC that a Consumer has connected or
@@ -228,17 +228,17 @@ public:
   /// The default implementation is:
   ///    this->consumer_admin ()->_this (env);
   virtual CosEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (void);
+      for_consumers ();
 
   /// The default implementation is:
   ///    this->supplier_admin ()->_this (env);
   virtual CosEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (void);
+      for_suppliers ();
 
   /// Commit suicide.
-  virtual void destroy (void);
+  virtual void destroy ();
 
-  ServantRetryMap& get_servant_retry_map (void);
+  ServantRetryMap& get_servant_retry_map ();
 
   /// Forwarded to the factory
   CORBA::Policy_ptr

@@ -129,7 +129,7 @@ Client::Client (Simple_Server_ptr server,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

@@ -336,7 +336,6 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                 }// end else if values match.
 
               ++valueIndex;
-
             }// end value while loop
 
           // look in the rhs for values not in this
@@ -361,7 +360,6 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
         }// end else if sections match.
 
       ++sectionIndex;
-
     }// end section while loop
 
   // Finally, make sure that there are no sections in rhs that do not
@@ -403,7 +401,7 @@ ACE_Configuration::operator!= (const ACE_Configuration& rhs) const
 
 //////////////////////////////////////////////////////////////////////////////
 
-#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
+#if defined (ACE_WIN32)
 
 static constexpr int ACE_DEFAULT_BUFSIZE = 256;
 
@@ -419,7 +417,7 @@ ACE_Section_Key_Win32::ACE_Section_Key_Win32 (HKEY hKey)
 {
 }
 
-ACE_Section_Key_Win32::~ACE_Section_Key_Win32 (void)
+ACE_Section_Key_Win32::~ACE_Section_Key_Win32 ()
 {
   ::RegCloseKey (hKey_);
 }
@@ -451,7 +449,7 @@ ACE_Configuration_Win32Registry::ACE_Configuration_Win32Registry (HKEY hKey, u_l
 }
 
 
-ACE_Configuration_Win32Registry::~ACE_Configuration_Win32Registry (void)
+ACE_Configuration_Win32Registry::~ACE_Configuration_Win32Registry ()
 {
 }
 
@@ -968,11 +966,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
   HKEY result = 0;
   // Make a copy of hKey
   int errnum;
-#if defined (ACE_HAS_WINCE)
-  if ((errnum = RegOpenKeyEx (hKey, 0, 0, 0, &result)) != ERROR_SUCCESS)
-#else
   if ((errnum = RegOpenKey (hKey, 0, &result)) != ERROR_SUCCESS)
-#endif  // ACE_HAS_WINCE
     {
       errno = errnum;
       return 0;
@@ -996,17 +990,9 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
       // Open the key
       HKEY subkey;
 
-#if defined (ACE_HAS_WINCE)
-      if ((errnum = ACE_TEXT_RegOpenKeyEx (result,
-                                           temp,
-                                           0,
-                                           0,
-                                           &subkey)) != ERROR_SUCCESS)
-#else
       if ((errnum = ACE_TEXT_RegOpenKey (result,
                                          temp,
                                          &subkey)) != ERROR_SUCCESS)
-#endif  // ACE_HAS_WINCE
         {
           // try creating it
           if (!create || (errnum = ACE_TEXT_RegCreateKeyEx (result,
@@ -1034,7 +1020,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
   return result;
 }
 
-#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
+#endif /* ACE_WIN32 */
 
 ///////////////////////////////////////////////////////////////
 
@@ -1158,7 +1144,6 @@ ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (const ACE_Conf
   : value_hash_map_ (rhs.value_hash_map_),
     section_hash_map_ (rhs.section_hash_map_)
 {
-
 }
 
 ACE_Configuration_Section_IntId::~ACE_Configuration_Section_IntId ()
@@ -1509,10 +1494,10 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
        )
     {
       // Create a substring from the current location until the new found separator
-      // Because ACE_TString works with the character length we need to keep in mind
-      // the size of a single character
+      // Because both separator and sub_section are ACE_TCHAR*, the character size is
+      // already taken into account.
       ACE_TString tsub_section (sub_section);
-      ACE_TString const simple_section = tsub_section.substring(0, (separator - sub_section) / sizeof (ACE_TCHAR));
+      ACE_TString const simple_section = tsub_section.substring(0, separator - sub_section);
       int const ret_val = open_simple_section (result, simple_section.c_str(), create, result);
       if (ret_val)
         return ret_val;

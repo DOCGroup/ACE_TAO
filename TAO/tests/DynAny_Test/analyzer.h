@@ -27,9 +27,9 @@ public:
 
   void tab (int t);
 
-  ~DynAnyAnalyzer (void);
+  ~DynAnyAnalyzer ();
 
-  void resetTab (void);
+  void resetTab ();
 
   void analyze (DynamicAny::DynAny_ptr da);
 

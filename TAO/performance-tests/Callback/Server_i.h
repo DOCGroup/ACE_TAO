@@ -8,10 +8,10 @@ class Server_i : public POA_Test::Server
 {
 public:
   /// Constructor.
-  Server_i (void);
+  Server_i ();
 
   /// Return 1 when the shutdown method has been invoked.
-  int done (void);
+  int done ();
 
   /// Implement the CORBA methods
   //@{
@@ -20,7 +20,7 @@ public:
   void request (Test::TimeStamp,
                 const Test::Payload &);
 
-  void shutdown (void);
+  void shutdown ();
 
   //@}
 

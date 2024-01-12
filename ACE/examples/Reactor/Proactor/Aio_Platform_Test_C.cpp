@@ -11,7 +11,6 @@
 //=============================================================================
 
 
-
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -25,8 +24,8 @@
 
 #include <aio.h>
 
-int do_sysconf (void);
-int have_asynchio (void);
+int do_sysconf ();
+int have_asynchio ();
 
 static int file_handle = -1;
 char mb1 [BUFSIZ + 1];
@@ -35,15 +34,15 @@ aiocb aiocb1, aiocb2;
 sigset_t completion_signal;
 
 // For testing the <aio> stuff.
-int test_aio_calls (void);
-int issue_aio_calls (void);
-int query_aio_completions (void);
-int setup_signal_delivery (void);
-int do_sysconf (void);
-int have_asynchio (void);
+int test_aio_calls ();
+int issue_aio_calls ();
+int query_aio_completions ();
+int setup_signal_delivery ();
+int do_sysconf ();
+int have_asynchio ();
 
 int
-do_sysconf (void)
+do_sysconf ()
 {
   // Call sysconf to find out runtime values.
   errno = 0;
@@ -85,7 +84,7 @@ do_sysconf (void)
 }
 
 int
-have_asynchio (void)
+have_asynchio ()
 {
 #if defined (_POSIX_ASYNCHRONOUS_IO)
   // POSIX Asynch IO is present in this system.

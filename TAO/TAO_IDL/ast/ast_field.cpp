@@ -115,6 +115,10 @@ AST_Field::AST_Field (AST_Type *ft,
           idl_global->err ()->not_a_type (ft);
         }
     }
+  else if (fnt == AST_Decl::NT_except)
+    {
+      idl_global->err ()->not_a_type (ft);
+    }
 }
 
 // To be used when constructing a node of a subclass of AST_Field.

@@ -55,7 +55,7 @@ int CommandTask::close (u_long flags)
 
 // Listing 06 code/ch18
 // Listing 061 code/ch18
-int CommandTask::svc (void)
+int CommandTask::svc ()
 {
   ACE_Message_Block *message;
 

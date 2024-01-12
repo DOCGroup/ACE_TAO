@@ -34,7 +34,6 @@ TAO::Less_Than_ObjectKey::operator () (const TAO::ObjectKey &lhs,
 TAO::ObjectKey_Table::ObjectKey_Table ()
   : table_ ()
 {
-
 }
 
 TAO::ObjectKey_Table::~ObjectKey_Table ()

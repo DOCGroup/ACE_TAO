@@ -62,7 +62,6 @@ TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
   this->proxy_container_.reset (proxy_container);
 
   this->proxy_container().init ();
-
 }
 
 void
@@ -221,7 +220,6 @@ TAO_Notify_Admin::validate ()
   TAO_Notify::Validate_Worker<TAO_Notify_Proxy> wrk;
   this->proxy_container().collection()->for_each(&wrk);
 }
-
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

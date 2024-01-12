@@ -111,7 +111,6 @@ TAO::SL3::CredentialsCurator::acquire_credentials (
     }
 
   throw CORBA::BAD_PARAM ();
-
 }
 
 SecurityLevel3::OwnCredentialsList *

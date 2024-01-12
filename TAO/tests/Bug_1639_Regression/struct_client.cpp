@@ -10,10 +10,8 @@ using namespace DynamicAny;
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 //--------------------------------------------------------------------
 {
-
   // Generic catch handler
   try {
-
     // Initialize the ORB
     // ------------------
     CORBA::ORB_var orb;  // _var, so we don't need/may not CORBA::release(orb)
@@ -78,13 +76,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     try {
       DynAny_var da_struct_alias = daf->create_dyn_any_from_type_code (tc_struct_alias.in());
-    } catch ( const CORBA::UNKNOWN &) {
+    } catch (const CORBA::UNKNOWN &) {
       cout << "CORBA::UNKNOWN exception when calling create_dyn_any_from_type_code (tc_struct_alias)" << endl;
     }
 
     try {
       DynAny_var da_struct_alias = daf->create_dyn_any (any_struct_alias);
-    } catch ( const CORBA::UNKNOWN &) {
+    } catch (const CORBA::UNKNOWN &) {
       cout << "CORBA::UNKNOWN exception when calling create_dyn_any (any_struct_alias)" << endl;
     }
 
@@ -92,13 +90,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     try {
       DynAny_var da_union_alias = daf->create_dyn_any_from_type_code (tc_union_alias.in());
-    } catch ( const CORBA::UNKNOWN &) {
+    } catch (const CORBA::UNKNOWN &) {
       cout << "CORBA::UNKNOWN exception when calling create_dyn_any_from_type_code (tc_union_alias)" << endl;
     }
 
     try {
       DynAny_var da_union_alias = daf->create_dyn_any (any_union_alias);
-    } catch ( const CORBA::UNKNOWN &) {
+    } catch (const CORBA::UNKNOWN &) {
       cout << "CORBA::UNKNOWN exception when calling create_dyn_any (any_union_alias)" << endl;
     }
 

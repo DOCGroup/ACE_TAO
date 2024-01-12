@@ -42,18 +42,6 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   TAO_INSERT_COMMENT (os);
 
-  // Default constructor.
-  *os << node->full_obv_skel_name () << "::";
-
-  if (! node->is_nested ())
-    {
-      *os << "OBV_";
-    }
-
-  *os << node->local_name () << " ()" << be_nl;
-  *os << ": require_truncation_ (false)" << be_nl
-      << "{}" << be_nl_2;
-
   // Initializing constructor.
   if (node->has_member ())
     {
@@ -70,7 +58,6 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       this->gen_obv_init_constructor_args (node, index);
 
       *os << ")" << be_uidt << be_uidt << be_uidt_nl
-          << ": require_truncation_ (false)" << be_nl
           << "{" << be_idt;
 
       this->gen_obv_init_constructor_inits (node);
@@ -117,8 +104,8 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           *os << be_uidt_nl;
         }
       *os << ")," << be_nl
-          << "::CORBA::NO_MEMORY ()" << be_uidt_nl
-          << ");" << be_nl
+          << "::CORBA::NO_MEMORY ());" << be_uidt
+          << be_nl
           << "return ret_val;" << be_uidt_nl
           << "}";
     }
@@ -127,21 +114,24 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   // or the valuetype is abstract.
   if (!node->opt_accessor ())
     {
-      *os << be_nl_2 << "::CORBA::Boolean" << be_nl
-          << node->full_obv_skel_name ()
-          << "::_tao_marshal__" << node->flat_name ()
-          <<    " (TAO_OutputCDR &strm, TAO_ChunkInfo& ci) const" << be_nl
-          << "{" << be_idt_nl
-          << "return _tao_marshal_state (strm, ci);" << be_uidt_nl
-          << "}" << be_nl_2;
+      if (be_global->cdr_support ())
+        {
+          *os << be_nl_2 << "::CORBA::Boolean" << be_nl
+              << node->full_obv_skel_name()
+              << "::_tao_marshal__" << node->flat_name()
+              << " (TAO_OutputCDR &strm, TAO_ChunkInfo& ci) const" << be_nl
+              << "{" << be_idt_nl
+              << "return _tao_marshal_state (strm, ci);" << be_uidt_nl
+              << "}" << be_nl_2;
 
-      *os << "::CORBA::Boolean" << be_nl
-          << node->full_obv_skel_name ()
-          << "::_tao_unmarshal__" << node->flat_name ()
-          << " (TAO_InputCDR &strm, TAO_ChunkInfo& ci)" << be_nl
-          << "{" << be_idt_nl
-          << "return _tao_unmarshal_state (strm, ci);" << be_uidt_nl
-          << "}";
+          *os << "::CORBA::Boolean" << be_nl
+              << node->full_obv_skel_name()
+              << "::_tao_unmarshal__" << node->flat_name()
+              << " (TAO_InputCDR &strm, TAO_ChunkInfo& ci)" << be_nl
+              << "{" << be_idt_nl
+              << "return _tao_unmarshal_state (strm, ci);" << be_uidt_nl
+              << "}";
+        }
 
       if (this->visit_scope (node) == -1)
         {

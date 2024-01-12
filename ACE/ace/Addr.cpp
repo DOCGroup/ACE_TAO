@@ -28,10 +28,6 @@ ACE_Addr::ACE_Addr (int type, int size) :
 {
 }
 
-ACE_Addr::~ACE_Addr ()
-{
-}
-
 void *
 ACE_Addr::get_addr () const
 {

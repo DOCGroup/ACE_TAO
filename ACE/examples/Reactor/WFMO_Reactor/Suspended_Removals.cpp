@@ -20,7 +20,6 @@
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-
   ACE_HANDLE get_handle () const
   {
     return this->event_.handle ();

@@ -8,7 +8,6 @@
 class CSD_PT_TestInf_Export AppShutdown
 {
   public:
-
     AppShutdown();
     virtual ~AppShutdown();
 

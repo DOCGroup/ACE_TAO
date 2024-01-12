@@ -44,7 +44,7 @@ TAO_ECG_UDP_Sender::get_local_addr (ACE_INET_Addr& addr)
 
 ACE_INLINE
 TAO_ECG_UDP_Sender_Disconnect_Command::
-TAO_ECG_UDP_Sender_Disconnect_Command (void)
+TAO_ECG_UDP_Sender_Disconnect_Command ()
   : proxy_ ()
 {
 }
@@ -77,7 +77,7 @@ TAO_ECG_UDP_Sender_Disconnect_Command::operator= (
 }
 
 ACE_INLINE void
-TAO_ECG_UDP_Sender_Disconnect_Command::execute (void)
+TAO_ECG_UDP_Sender_Disconnect_Command::execute ()
 {
   if (CORBA::is_nil (this->proxy_.in ()))
     // We are not connected.

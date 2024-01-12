@@ -11,13 +11,11 @@ Trading_Shutdown::Trading_Shutdown (Trading_Service& trader)
                 ACE_TEXT("%p\n"),
                 ACE_TEXT("register_handler")));
 
-#ifndef ACE_HAS_WINCE
   if (this->shutdown_.register_handler (SIGTERM,
                                         this) == -1)
     ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT("%p\n"),
                 ACE_TEXT("register_handler")));
-#endif  // ACE_HAS_WINCE
 }
 
 int

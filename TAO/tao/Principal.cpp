@@ -34,7 +34,7 @@ operator<< (TAO_OutputCDR & cdr, CORBA::Principal * x)
       cdr.write_ulong (0);
     }
 
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
 CORBA::Boolean
@@ -54,7 +54,7 @@ operator>> (TAO_InputCDR & cdr, CORBA::Principal *& x)
       cdr.read_octet_array (x->id.get_buffer (), length);
     }
 
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -17,7 +17,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
 template<class T, class Tag=int>
 class unbounded_value_sequence
 {
@@ -78,7 +77,7 @@ public:
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
-  inline void swap(unbounded_value_sequence & rhs) throw() {
+  inline void swap(unbounded_value_sequence & rhs) noexcept {
     impl_.swap(rhs.impl_);
   }
   static value_type * allocbuf(CORBA::ULong maximum) {
@@ -91,7 +90,6 @@ public:
 private:
   implementation_type impl_;
 };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

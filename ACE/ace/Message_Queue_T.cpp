@@ -347,7 +347,6 @@ ACE_Message_Queue_Ex_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::
 ACE_Message_Queue_Ex_Iterator (ACE_Message_Queue_Ex <ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY> & queue)
 : iter_ (queue.queue_)
 {
-
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY> int
@@ -388,7 +387,6 @@ ACE_Message_Queue_Ex_Reverse_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLI
 ACE_Message_Queue_Ex_Reverse_Iterator (ACE_Message_Queue_Ex <ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY> & queue)
 : iter_ (queue.queue_)
 {
-
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY> int
@@ -691,6 +689,13 @@ void
 ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::set_time_policy (TIME_POLICY const & rhs)
 {
   this->queue_.set_time_policy (rhs);
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY>
+ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::queue ()
+{
+  return this->queue_;
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>

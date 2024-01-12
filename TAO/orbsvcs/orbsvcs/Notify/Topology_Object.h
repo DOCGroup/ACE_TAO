@@ -55,7 +55,7 @@ namespace TAO_Notify
   {
    public:
     /// Destructor.
-    virtual ~Topology_Savable (void);
+    virtual ~Topology_Savable ();
 
     /// Save our state to a Topology_Saver.
     ///
@@ -92,8 +92,7 @@ namespace TAO_Notify
     /// to any external objects with whom we were interacting.  We should
     /// call the reconnect() method on all of our children to give them
     /// the chance to do the same.
-    virtual void reconnect (void);
-
+    virtual void reconnect ();
   };
 
   /// \brief Base class for Persistent Topology Objects.
@@ -150,7 +149,7 @@ namespace TAO_Notify
     ///
     ///  see also Topology_Parent::child_change ()
     /// \return false if save will never happen
-    bool self_change (void);
+    bool self_change ();
 
     /// \brief pointer to our topological parent
     ///
@@ -160,7 +159,7 @@ namespace TAO_Notify
     /// \brief Handle details of propagating change
     ///
     /// \return false if save will never happen
-    bool send_change (void);
+    bool send_change ();
 
     /// \brief Handle details of propagating change
     ///  for a deleted object.
@@ -175,7 +174,7 @@ namespace TAO_Notify
     /// (top level of tree)
     /// private virtual because this should only be called from send_change()
     /// \return false if save will never happen
-    virtual bool change_to_parent (void);
+    virtual bool change_to_parent ();
 
   protected:
     /// true if this object changed since last save_persistent
@@ -198,9 +197,8 @@ namespace TAO_Notify
     /// Called by a child that has changed.
     /// A child calls this method to report that it has changed.
     /// \return false if save will never happen
-    bool child_change (void);
+    bool child_change ();
   };
-
 } // namespace TAO_Notify
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -7,6 +7,7 @@
 
 #include <map>
 #include <string>
+#include <memory>
 #include <typeinfo.h>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -44,8 +45,8 @@ private:
   TAO_Notify_Tracker();
   ~TAO_Notify_Tracker();
 
-  friend class std::auto_ptr< TAO_Notify_Tracker >;
-  static std::auto_ptr< TAO_Notify_Tracker > s_instance;
+  friend class std::unique_ptr< TAO_Notify_Tracker >;
+  static std::unique_ptr< TAO_Notify_Tracker > s_instance;
   mutable TAO_SYNCH_MUTEX lock_;
   typedef std::map<int, Entry> EntityMap;
   EntityMap map_;
@@ -133,7 +134,7 @@ TAO_Notify_Refcountable::_decr_refcnt ()
 
 #if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
 
-std::auto_ptr< TAO_Notify_Tracker > TAO_Notify_Tracker::s_instance;
+std::unique_ptr< TAO_Notify_Tracker > TAO_Notify_Tracker::s_instance;
 
 TAO_Notify_Tracker::TAO_Notify_Tracker()
 : id_counter_(0)

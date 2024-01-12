@@ -435,8 +435,7 @@ be_interface::relative_name (const char *localname,
   // The tricky part here is that it is not enough to check if the
   // typename we are using was defined in the current scope. But we
   // need to ensure that it was not defined in any of our ancestor
-  // scopes as well. If that is the case, then we can generate a fully
-  // scoped name for that type, else we use the ACE_NESTED_CLASS macro.
+  // scopes as well.
 
   // Thus we need some sort of relative name to be generated.
 
@@ -465,10 +464,7 @@ be_interface::relative_name (const char *localname,
   // Traverse every component of the def_scope and use_scope beginning at the
   // root and proceeding towards the leaf trying to see if the components
   // match. Continue until there is a match and keep accumulating the path
-  // traversed. This forms the first argument to the ACE_NESTED_CLASS
-  // macro. Whenever there is no match, the remaining components of the
-  // def_scope form the second argument.
-
+  // traversed.
   ACE_OS::strcpy (def_name,
                   localname);
   ACE_OS::strcpy (use_name,
@@ -619,7 +615,6 @@ be_interface::gen_def_ctors_helper (be_interface* node,
                                     be_interface* base,
                                     TAO_OutStream *os)
 {
-
   static int first = 0;
 
   if (node != base)
@@ -2017,20 +2012,10 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   tao_cg->gperf_input_stream ()->file () = nullptr;
 
   // Open the temp file.
-#if defined (ACE_OPENVMS)
-  //FUZZ: disable check_for_lack_ACE_OS
-  ACE_HANDLE input = ::open (tao_cg->gperf_input_filename (),
-                             O_RDONLY,
-                             "shr=get,put,upd",
-                             "ctx=rec",
-                             "fop=dfw");
-  //FUZZ: enable check_for_lack_ACE_OS
-#else
   ACE_HANDLE input =
     ACE::open_temp_file (
       ACE_TEXT_CHAR_TO_TCHAR (tao_cg->gperf_input_filename ()),
       O_RDONLY);
-#endif
 
   if (input == ACE_INVALID_HANDLE)
     {
@@ -2043,40 +2028,16 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
         -1);
     }
 
-#ifndef ACE_OPENVMS
   // Flush the output stream.  Gperf also uses it as output.  Ensure
   // current contents are written before gperf writes.
   ACE_OS::fflush (tao_cg->server_skeletons ()->file ());
-#endif  /* !ACE_OPENVMS */
 
   // Stdout is server skeleton.  Do *not* close the file, just open
   // again with <ACE_OS::open> with WRITE + APPEND option.. After
   // this, remember to update the file offset to the correct location.
-
-#if defined (ACE_OPENVMS)
-  char* gperfOutput = ACE_OS::tempnam (0, "idl_");
-
-  if (gperfOutput == 0)
-    {
-      ACE_OS::close (input);
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("failed to allocate memory\n")),
-                        -1);
-    }
-
-  //FUZZ: disable check_for_lack_ACE_OS
-  ACE_HANDLE output = ::open (gperfOutput,
-                              O_WRONLY | O_CREAT | O_EXCL,
-                              ACE_DEFAULT_FILE_PERMS,
-                              "shr=get,put,upd",
-                              "ctx=rec",
-                              "fop=dfw");
-  //FUZZ: enable check_for_lack_ACE_OS
-#else
   ACE_HANDLE output =
     ACE_OS::open (be_global->be_get_server_skeleton_fname (),
                   O_WRONLY | O_APPEND);
-#endif
 
   if (output == ACE_INVALID_HANDLE)
     {
@@ -2211,49 +2172,6 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
 
   ACE_OS::close (output);
   ACE_OS::close (input);
-
-#if defined (ACE_OPENVMS)
-  ACE_OS::unlink (tao_cg->gperf_input_filename ());
-  process_options.release_handles ();
-
-  if (result != -1)
-    {
-      FILE* gperfOutputFile = ACE_OS::fopen (gperfOutput, "r");
-
-      if (gperfOutputFile == 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Error:%p: Couldn't open ")
-                      ACE_TEXT ("gperf output file\n"),
-                      "fopen"));
-          result = -1;
-        }
-      else
-        {
-          FILE* out = tao_cg->server_skeletons ()->file ();
-          int c;
-
-          while ((c = ACE_OS::fgetc(gperfOutputFile)) != EOF)
-            {
-              ACE_OS::fputc (c, out);
-            }
-
-          if (ferror (gperfOutputFile) || ferror (out))
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("Error:%p: Couldn't open ")
-                          ACE_TEXT ("gperf output file\n"),
-                          "get/put"));
-              result = -1;
-            }
-
-          ACE_OS::fclose (gperfOutputFile);
-        }
-    }
-
-  ACE_OS::unlink (gperfOutput);
-  ACE_OS::free (gperfOutput);
-#endif /* ACE_OPENVMS */
 
   return result;
 }

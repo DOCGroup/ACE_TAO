@@ -801,6 +801,9 @@ AST_Decl::node_type_to_string (NodeType nt)
     case NT_sequence:
       return "sequence";
 
+    case NT_map:
+      return "map";
+
     case NT_typedef:
       return "typedef";
 
@@ -1344,7 +1347,7 @@ AST_Decl::set_name (UTL_ScopedName *n)
 }
 
 Identifier *
-AST_Decl::local_name ()
+AST_Decl::local_name () const
 {
   return this->pd_local_name;
 }

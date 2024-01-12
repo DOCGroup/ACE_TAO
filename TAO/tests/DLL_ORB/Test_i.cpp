@@ -1,20 +1,20 @@
 // -*- C++ -*-
 #include "Test_i.h"
 
-Test_i::Test_i (void)
+Test_i::Test_i ()
   : orb_ ()
 {
 }
 
 void
-Test_i::invoke_me ( /* */)
+Test_i::invoke_me ()
 {
   ACE_DEBUG ((LM_INFO,
               "(%P|%t) Test method invoked.\n"));
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
   ACE_DEBUG ((LM_INFO,
               "Server is shutting down.\n"));

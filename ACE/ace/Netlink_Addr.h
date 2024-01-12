@@ -37,7 +37,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Netlink_Addr : public ACE_Addr {
 public:
   /// Default constructor.
-  ACE_Netlink_Addr (void);
+  ACE_Netlink_Addr ();
 
   /// Copy constructor.
   ACE_Netlink_Addr (const ACE_Netlink_Addr &);
@@ -93,7 +93,7 @@ private:
   /**
    * set nl_  @see nl_ to zero and sets address family to default value
    */
-  void reset (void);
+  void reset ();
 
   sockaddr_nl  nl_;
 };
@@ -109,6 +109,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* ACE_NETLINK_ADDR_H */
-
 
 

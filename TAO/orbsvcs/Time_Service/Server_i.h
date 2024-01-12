@@ -31,33 +31,32 @@ class Server_i
 {
 public:
   /// Constructor.
-  Server_i (void);
+  Server_i ();
 
   /// Destructor.
-  ~Server_i (void);
+  ~Server_i ();
 
   /// Initialize the Server state.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   /// Run the orb.
-  int run (void);
+  int run ();
 
   /// Initialises the name client.
   int init_naming_service ();
 
   /// Create the time server object.
-  int create_server (void);
+  int create_server ();
 
   /// Register the time server object with the Naming Service.
-  int register_server (void);
+  int register_server ();
 
   /// Parse the commandline arguments.
   int parse_args (int argc,
                   ACE_TCHAR* argv[]);
 
 private:
-
   /// My orb.
   CORBA::ORB_var orb_;
 

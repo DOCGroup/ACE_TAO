@@ -7,7 +7,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Reverse_Lock_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -74,7 +74,6 @@ TAO_PG_ObjectGroupManager::add_member (
                              the_location,
                              member,
                              check_type_id);
-
 }
 
 

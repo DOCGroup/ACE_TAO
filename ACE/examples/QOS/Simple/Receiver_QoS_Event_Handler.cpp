@@ -14,7 +14,7 @@
 #include "ace/OS_NS_string.h"
 
 // Constructor.
-Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler (void)
+Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler ()
 {
 }
 
@@ -27,7 +27,7 @@ Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler (const ACE_SOCK_Dgram_Mca
 }
 
 // Destructor.
-Receiver_QoS_Event_Handler::~Receiver_QoS_Event_Handler (void)
+Receiver_QoS_Event_Handler::~Receiver_QoS_Event_Handler ()
 {
 }
 
@@ -128,5 +128,4 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
               ace_get_qos.sending_flowspec ()->minimum_policed_size ()));
 
   return 0;
-
 }

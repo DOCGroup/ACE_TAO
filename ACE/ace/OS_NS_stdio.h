@@ -27,12 +27,11 @@
 #include "ace/os_include/os_errno.h"
 #include /**/ "ace/ACE_export.h"
 
-/* OPENVMS needs unistd for cuserid() */
-#if defined (CYGWIN32) || defined (ACE_OPENVMS)
+#if defined (CYGWIN32)
 #  include "ace/os_include/os_unistd.h"
-#endif /* CYGWIN32 || ACE_OPENVMS */
+#endif /* CYGWIN32 */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 # include "io.h"
 #endif
 
@@ -135,10 +134,9 @@ inline char *ace_cuserid(char *user)
 #endif /* !ACE_LACKS_CUSERID && !ACE_HAS_ALT_CUSERID && ... */
 
 # if defined (ACE_LACKS_FILELOCKS)
-#   if ! defined (ACE_VXWORKS) && ! defined (ACE_HAS_RTEMS) && !defined (INTEGRITY)
+#   if ! defined (ACE_VXWORKS) && !defined (INTEGRITY)
 // VxWorks defines struct flock in sys/fcntlcom.h.  But it doesn't
-// appear to support flock ().  RTEMS defines struct flock but
-// currently does not support locking.
+// appear to support flock ().
 struct flock
 {
   short l_type;
@@ -155,7 +153,6 @@ struct flock
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-
   /**
    * @class ace_flock_t
    *
@@ -300,7 +297,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE fileno (FILE *stream);
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -308,19 +305,19 @@ namespace ACE_OS {
   FILE *fopen (const char *filename, const char *mode);
 
 #if defined (ACE_HAS_WCHAR)
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* ACE_WIN32 */
   FILE *fopen (const char *filename, const wchar_t *mode);
-#  if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#  if defined (ACE_WIN32)
   extern ACE_Export
 #  else
   ACE_NAMESPACE_INLINE_FUNCTION
 #  endif /* ACE_WIN32 */
   FILE *fopen (const wchar_t *filename, const wchar_t *mode);
-#  if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#  if defined (ACE_WIN32)
   extern ACE_Export
 #  else
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -340,14 +337,14 @@ namespace ACE_OS {
   // = Win32 OS version determination function.
   /// Return the win32 OSVERSIONINFO structure.
   ACE_NAMESPACE_INLINE_FUNCTION
-  const ACE_TEXT_OSVERSIONINFO &get_win32_versioninfo (void);
+  const ACE_TEXT_OSVERSIONINFO &get_win32_versioninfo ();
 
   // = A pair of functions for modifying ACE's Win32 resource usage.
   /// Return the handle of the module containing ACE's resources. By
   /// default, for a DLL build of ACE this is a handle to the ACE DLL
   /// itself, and for a static build it is a handle to the executable.
   ACE_NAMESPACE_INLINE_FUNCTION
-  HINSTANCE get_win32_resource_module (void);
+  HINSTANCE get_win32_resource_module ();
 
   /// Allow an application to modify which module contains ACE's
   /// resources. This is mainly useful for a static build of ACE where

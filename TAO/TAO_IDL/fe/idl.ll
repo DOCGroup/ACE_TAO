@@ -138,6 +138,7 @@ enum            return IDL_ENUM;
 string          return IDL_STRING;
 wstring         return IDL_WSTRING;
 sequence        return IDL_SEQUENCE;
+map             return IDL_MAP;
 union           return IDL_UNION;
 fixed           return IDL_FIXED;
 switch          return IDL_SWITCH;
@@ -216,6 +217,14 @@ int64 {
 uint64 {
   if (idl_global->idl_version_ >= IDL_VERSION_4)
     return IDL_UINT64;
+  else
+    {
+      REJECT;
+    }
+}
+map {
+  if (idl_global->idl_version_ >= IDL_VERSION_4)
+    return IDL_MAP;
   else
     {
       REJECT;
@@ -583,20 +592,6 @@ idl_parse_line_and_file (char *buf)
         }
 
       h[i] = '\0';
-#if defined (ACE_OPENVMS)
-      // translate this into *nix format as the OpenVMS preprocessor
-      // possibly produced VMS-style paths here.
-      char trans_path[MAXPATHLEN] = "";
-      char *temp_h = IDL_GlobalData::translateName (h, trans_path);
-      if (temp_h)
-        h = temp_h;
-      else
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Unable to construct full file pathname\n")));
-          throw Bailout ();
-        }
-#endif
       ACE_NEW (tmp,
                UTL_String (h, true));
       idl_global->update_prefix (tmp->get_string ());
@@ -615,21 +610,10 @@ idl_parse_line_and_file (char *buf)
 
   if (!is_real_filename)
     {
-#if defined (ACE_OPENVMS)
-      char full_path[MAXPATHLEN] = "";
-      char *full_fname = ACE_OS::realpath (fname->get_string (), full_path);
-      // I don't see the benefit of using ->compare since this is targeted at IDL identifiers
-      // not at filenames and in the case of OpenVMS (case-insensitive filesystem) gets really
-      // problematic as filenames retrieved through different mechanisms may give different
-      // casing.
-      is_main_filename = FE_Utils::path_cmp (idl_global->main_filename ()->get_string (),
-                                             full_fname) == 0;
-#else
       is_main_filename =
         fname->compare (idl_global->main_filename ())
         || same_file (fname->get_string (),
                       idl_global->main_filename ()->get_string ());
-#endif
     }
 
   if (is_real_filename || is_main_filename)

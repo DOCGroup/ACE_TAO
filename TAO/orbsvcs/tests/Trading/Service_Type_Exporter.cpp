@@ -16,7 +16,7 @@ TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
   this->create_types ();
 }
 
-TAO_Service_Type_Exporter::~TAO_Service_Type_Exporter (void)
+TAO_Service_Type_Exporter::~TAO_Service_Type_Exporter ()
 {
   try
   {
@@ -28,7 +28,7 @@ TAO_Service_Type_Exporter::~TAO_Service_Type_Exporter (void)
 }
 
 void
-TAO_Service_Type_Exporter::remove_all_types (void)
+TAO_Service_Type_Exporter::remove_all_types ()
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::removing all"
               " types from the Repository.\n"));
@@ -57,7 +57,7 @@ TAO_Service_Type_Exporter::remove_all_types (void)
 }
 
 void
-TAO_Service_Type_Exporter::add_all_types (void)
+TAO_Service_Type_Exporter::add_all_types ()
 
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
@@ -66,7 +66,7 @@ TAO_Service_Type_Exporter::add_all_types (void)
 }
 
 void
-TAO_Service_Type_Exporter::add_all_types_to_all (void)
+TAO_Service_Type_Exporter::add_all_types_to_all ()
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
               "add all types to all repositories.\n"));
@@ -98,7 +98,6 @@ TAO_Service_Type_Exporter::add_all_types_to_all (void)
 
           str =
             CosTradingRepos::ServiceTypeRepository::_narrow (remote_repos.in ());
-
         }
       catch (const CORBA::Exception& e)
         {
@@ -164,7 +163,7 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
 }
 
 void
-TAO_Service_Type_Exporter::list_all_types (void)
+TAO_Service_Type_Exporter::list_all_types ()
 {
   try
     {
@@ -203,7 +202,7 @@ TAO_Service_Type_Exporter::list_all_types (void)
 }
 
 void
-TAO_Service_Type_Exporter::describe_all_types (void)
+TAO_Service_Type_Exporter::describe_all_types ()
 {
   try
     {
@@ -230,7 +229,7 @@ TAO_Service_Type_Exporter::describe_all_types (void)
 }
 
 void
-TAO_Service_Type_Exporter::fully_describe_all_types (void)
+TAO_Service_Type_Exporter::fully_describe_all_types ()
 {
   try
     {
@@ -288,7 +287,7 @@ dump_typestruct (const char* type_name,
 }
 
 void
-TAO_Service_Type_Exporter::create_types (void)
+TAO_Service_Type_Exporter::create_types ()
 {
   TT_Info::Remote_Output ro;
   this->type_structs_[TT_Info::REMOTE_IO].props.length (6);

@@ -30,7 +30,7 @@ class TAO_EndpointPolicy_Export TAO_EndpointPolicy_Initializer
 {
 public:
   /// Used to force the initialization of the ORB code.
-  static int static_init (void);
+  static int static_init ();
 
   /// Initialize the Endpoint Policy loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
@@ -38,7 +38,6 @@ public:
 
 static int
 TAO_Requires_EndpointPolicy_Initializer = TAO_EndpointPolicy_Initializer::static_init ();
-
 
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_EndpointPolicy, TAO_EndpointPolicy_Initializer)

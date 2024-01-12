@@ -193,7 +193,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /**
    * Schedule a timer that may optionally auto-reset.
    * Schedule @a type that will expire at @a future_time,
@@ -333,13 +332,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Timer_Heap_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Timer_Heap_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TIMER_HEAP_T_H */

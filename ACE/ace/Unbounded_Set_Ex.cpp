@@ -355,7 +355,7 @@ ACE_Unbounded_Set_Ex_Iterator<T, C>::operator++ (int)
 template <class T, class C> ACE_Unbounded_Set_Ex_Iterator<T, C>&
 ACE_Unbounded_Set_Ex_Iterator<T, C>::operator++ ()
 {
-  // ACE_TRACE ("ACE_Unbounded_Set_Ex_Iterator<T, C>::operator++ (void)");
+  // ACE_TRACE ("ACE_Unbounded_Set_Ex_Iterator<T, C>::operator++ ()");
 
   // prefix operator
 
@@ -462,7 +462,7 @@ ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator++ (int)
 template <class T, class C> ACE_Unbounded_Set_Ex_Const_Iterator<T, C>&
 ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator++ ()
 {
-  // ACE_TRACE ("ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator++ (void)");
+  // ACE_TRACE ("ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator++ ()");
 
   // prefix operator
 

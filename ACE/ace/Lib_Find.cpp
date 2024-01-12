@@ -16,102 +16,6 @@
 #  include "ace/OS_NS_strings.h"
 #endif /* ACE_WIN32 */
 
-#if defined (ACE_OPENVMS)
-#include "ace/RB_Tree.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Singleton.h"
-
-#include /**/ "descrip.h"
-#include /**/ "chfdef.h"
-#include /**/ "stsdef.h"
-#include /**/ "libdef.h"
-
-extern "C" int LIB$FIND_IMAGE_SYMBOL(...);
-
-/**
- * @internal
- *
- * Implements a class to register symbols and addresses for use with DLL
- * symbol retrieval.
- *
- * OpenVMS restricts symbol length to 31 characters encoding any symbols
- * longer than that. In these cases dlsym() only works with the encoded
- * names.
- * This creates serious problems for the service configurator framework
- * where the factory method names often exceed 31 chars and where loading
- * is based on retrieval of method pointers using the *full* name.
- * For OpenVMS we therefor added this singleton class and the
- * ACE_Dynamic_Svc_Registrar class which registers full names and function
- * pointers with this singleton at the time the static ACE_Dynamic_Svc_Registrar
- * object is created in a (service) DLL.
- * By forcing the DLL to load using a common symbol ("NULL") we trigger static
- * object creation *before* the full names are referenced.
- * Symbol references will be resolved as follows on OpenVMS:
- * - first try directly from DLL using the RTL dlsym() function and if that fails;
- * - try to find symbol in singleton registry.
- */
-class ACE_LD_Symbol_Registry
-{
-public:
-  typedef ACE_RB_Tree<const ACE_TCHAR*,
-                      void*,
-                      ACE_Less_Than<const ACE_TCHAR*>,
-                      ACE_Thread_Mutex>
-          TREE;
-
-  void register_symbol (const ACE_TCHAR* symname, void* symaddr);
-
-  void* find_symbol (const ACE_TCHAR* symname);
-
-  ACE_LD_Symbol_Registry () = default;
-
-private:
-  TREE symbol_registry_;
-};
-
-void
-ACE_LD_Symbol_Registry::register_symbol (const ACE_TCHAR* symname,
-                                         void* symaddr)
-{
-  int const result = symbol_registry_.bind (symname, symaddr);
-  if (result == 1)
-    {
-      ACELIB_DEBUG((LM_INFO, ACE_TEXT ("ACE_LD_Symbol_Registry:")
-                          ACE_TEXT (" duplicate symbol %s registered\n"),
-                          ACE_TEXT_ALWAYS_CHAR (symname)));
-    }
-  else if (result == -1)
-    {
-      ACELIB_ERROR((LM_ERROR, ACE_TEXT ("ACE_LD_Symbol_Registry:")
-                           ACE_TEXT (" failed to register symbol %s\n"),
-                           ACE_TEXT_ALWAYS_CHAR (symname)));
-    }
-}
-
-void*
-ACE_LD_Symbol_Registry::find_symbol (const ACE_TCHAR* symname)
-{
-  void* symaddr = 0;
-  int const result = symbol_registry_.find (symname, symaddr);
-
-  return (result == 0 ? symaddr : 0);
-}
-
-/// Declare a process wide singleton
-ACE_SINGLETON_DECLARE (ACE_Singleton,
-                       ACE_LD_Symbol_Registry,
-                       ACE_Thread_Mutex)
-
-typedef ACE_Singleton<ACE_LD_Symbol_Registry, ACE_Thread_Mutex>
-        ACE_LD_SYMBOL_REGISTRY;
-
-ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, ACE_LD_Symbol_Registry, ACE_SYNCH_MUTEX);
-
-
-#endif
-
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
@@ -120,86 +24,15 @@ ACE::ldfind (const ACE_TCHAR* filename,
              size_t maxpathnamelen)
 {
   ACE_TRACE ("ACE::ldfind");
-#if defined (ACE_OPENVMS)
-  if (ACE_OS::strlen (filename) >= maxpathnamelen)
-    {
-      errno = ENOMEM;
-      return -1;
-    }
 
-  dsc$descriptor nameDsc;
-  nameDsc.dsc$b_class = DSC$K_CLASS_S;
-  nameDsc.dsc$b_dtype = DSC$K_DTYPE_T;
-  nameDsc.dsc$w_length = ACE_OS::strlen (filename);
-  nameDsc.dsc$a_pointer = (char*)filename;
-
-  char symbol[] = "NULL";
-  dsc$descriptor symbolDsc;
-  symbolDsc.dsc$b_class = DSC$K_CLASS_S;
-  symbolDsc.dsc$b_dtype = DSC$K_DTYPE_T;
-  symbolDsc.dsc$w_length = ACE_OS::strlen (symbol);
-  symbolDsc.dsc$a_pointer = symbol;
-
-  int symbolValue;
-  int result;
-  try
-    {
-      result = LIB$FIND_IMAGE_SYMBOL (&nameDsc, &symbolDsc, &symbolValue, 0, 0);
-    }
-  catch (chf$signal_array &sig)
-    {
-      result = sig.chf$l_sig_name;
-    }
-
-  int severity = result & STS$M_SEVERITY;
-  int conditionId = result & STS$M_COND_ID;
-  if (severity == STS$K_SUCCESS || severity == STS$K_WARNING || severity == STS$K_INFO ||
-      (severity == STS$K_ERROR && conditionId == (LIB$_KEYNOTFOU & STS$M_COND_ID)))
-    {
-      ACE_OS::strcpy (pathname, filename);
-      return 0;
-    }
-
-  if (ACE_OS::strlen (filename) + ACE_OS::strlen (ACE_DLL_PREFIX) >= maxpathnamelen)
-    {
-      errno = ENOMEM;
-      return -1;
-    }
-
-
-  ACE_OS::strcpy (pathname, ACE_DLL_PREFIX);
-  ACE_OS::strcat (pathname, filename);
-  nameDsc.dsc$w_length = ACE_OS::strlen (pathname);
-  nameDsc.dsc$a_pointer = pathname;
-  try
-    {
-      result = LIB$FIND_IMAGE_SYMBOL (&nameDsc, &symbolDsc, &symbolValue, 0, 0);
-    }
-  catch (chf$signal_array &sig)
-    {
-      result = sig.chf$l_sig_name;
-    }
-
-  severity = result & STS$M_SEVERITY;
-  conditionId = result & STS$M_COND_ID;
-  if (severity == STS$K_SUCCESS || severity == STS$K_WARNING || severity == STS$K_INFO ||
-      (severity == STS$K_ERROR && conditionId == (LIB$_KEYNOTFOU & STS$M_COND_ID)))
-    {
-      return 0;
-    }
-  errno = ENOENT;
-  return -1;
-#endif /* ACE_OPENVMS */
-
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && \
-    !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
   ACE_TCHAR expanded_filename[MAXPATHLEN];
   if (ACE_TEXT_ExpandEnvironmentStrings (filename,
                                          expanded_filename,
                                          sizeof expanded_filename
                                          / sizeof (ACE_TCHAR)))
     filename = expanded_filename;
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */
 
   ACE_TCHAR tempcopy[MAXPATHLEN + 1];
   ACE_TCHAR searchpathname[MAXPATHLEN + 1];
@@ -339,7 +172,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
       // OS platform).
       else
         {
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
           ACE_TCHAR *file_component = 0;
           DWORD pathlen =
             ACE_TEXT_SearchPath (0,
@@ -389,29 +222,6 @@ ACE::ldfind (const ACE_TCHAR* filename,
           ld_path = wide_ldpath.wchar_rep ();
 #    endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 #  endif /* ACE_DEFAULT_LD_SEARCH_PATH */
-
-#if defined (ACE_HAS_WINCE)
-            ACE_TCHAR *ld_path_temp = 0;
-            if (ld_path != 0)
-              {
-                ld_path_temp = (ACE_TCHAR *)
-                  ACE_OS::malloc ((ACE_OS::strlen (ld_path) + 2)
-                                  * sizeof (ACE_TCHAR));
-                if (ld_path_temp != 0)
-                  {
-                    ACE_OS::strcpy (ld_path_temp,
-                                    ACE_LD_SEARCH_PATH_SEPARATOR_STR);
-
-                    ACE_OS::strcat (ld_path_temp, ld_path);
-                    ld_path = ld_path_temp;
-                  }
-                else
-                  {
-                    ACE_OS::free ((void *) ld_path_temp);
-                    ld_path = ld_path_temp = 0;
-                  }
-              }
-#endif /* ACE_HAS_WINCE */
 
           if (ld_path != 0
               && (ld_path = ACE_OS::strdup (ld_path)) != 0)
@@ -493,10 +303,6 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                      nextholder);
                 }
 
-#if defined (ACE_HAS_WINCE)
-              if (ld_path_temp != 0)
-                ACE_OS::free (ld_path_temp);
-#endif /* ACE_HAS_WINCE */
 #if defined (ACE_HAS_ALLOC_HOOKS)
               ACE_Allocator::instance()->free ((void *) ld_path);
 #else
@@ -507,7 +313,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
 #endif /* ACE_LD_DECORATOR_STR && !ACE_DISABLE_DEBUG_DLL_CHECK */
                 return result;
             }
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 */
         }
 #if defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
     }
@@ -572,29 +378,6 @@ ACE::ldname (const ACE_TCHAR *entry_point)
   return new_name;
 #endif /* ACE_NEEDS_DL_UNDERSCORE */
 }
-
-#if defined (ACE_OPENVMS)
-void
-ACE::ldregister (const ACE_TCHAR *entry_point,
-                 void* entry_addr)
-{
-  ACE_LD_SYMBOL_REGISTRY::instance ()->register_symbol (entry_point,
-                                                        entry_addr);
-}
-
-void *
-ACE::ldsymbol (ACE_SHLIB_HANDLE sh, const ACE_TCHAR *entry_point)
-{
-  void* symaddr = ACE_OS::dlsym (sh, entry_point);
-  // if not found through dlsym() try registry
-  if (!symaddr)
-    {
-      symaddr = ACE_LD_SYMBOL_REGISTRY::instance ()->find_symbol (entry_point);
-    }
-
-  return symaddr;
-}
-#endif
 
 int
 ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)

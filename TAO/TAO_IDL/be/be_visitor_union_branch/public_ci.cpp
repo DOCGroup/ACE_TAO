@@ -621,7 +621,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
         *os << "typedef ::CORBA::Object_var OBJECT_FIELD;" << be_nl
             << "ACE_NEW (" << be_idt << be_idt_nl
             << "this->u_." << ub->local_name () << "_," << be_nl
-            << "OBJECT_FIELD ( ::CORBA::Object::_duplicate (val))"
+            << "OBJECT_FIELD (::CORBA::Object::_duplicate (val))"
             << be_uidt_nl
             << ");" << be_uidt << be_uidt_nl;
 
@@ -630,7 +630,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
         *os << "typedef ::CORBA::AbstractBase_var OBJECT_FIELD;" << be_nl
             << "ACE_NEW (" << be_idt << be_idt_nl
             << "this->u_." << ub->local_name () << "_," << be_nl
-            << "OBJECT_FIELD ( ::CORBA::AbstractBase::_duplicate (val))"
+            << "OBJECT_FIELD (::CORBA::AbstractBase::_duplicate (val))"
             << be_uidt_nl
             << ");" << be_uidt << be_uidt_nl;
 
@@ -864,7 +864,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
   else
     {
       *os << bu->name () << "::" << ub->local_name ()
-          << " ( ::CORBA::WChar *val)";
+          << " (::CORBA::WChar *val)";
     }
 
   *os << be_nl

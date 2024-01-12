@@ -26,9 +26,8 @@
 template<class Base, class Member>
 class Base_Optimizer : public Base
 {
-
 public:
-  Base_Optimizer (void);
+  Base_Optimizer ();
   Base_Optimizer (const Base &base);
   Base_Optimizer (const Base &base,
                   const Member &member);
@@ -36,12 +35,6 @@ public:
   Member m_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Base_Optimizer.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Base_Optimizer.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* BASE_OPTIMIZER_H */

@@ -81,7 +81,7 @@ char Options::key_positions_[MAX_KEY_POS];
 
 /// Prints program usage to standard error stream.
 void
-Options::usage (void)
+Options::usage ()
 {
   ACE_ERROR ((LM_ERROR,
               "Usage: %n [-abBcCdDef[num]gGhH<hashname>i<init>IjJ"
@@ -92,7 +92,7 @@ Options::usage (void)
 
 /// Output command-line Options.
 void
-Options::print_options (void)
+Options::print_options ()
 {
   ACE_OS::printf ("/* Command-line: ");
 
@@ -132,7 +132,7 @@ Options::key_sort (char *base, int len)
 
 // Sets the default Options.
 
-Options::Options (void)
+Options::Options ()
 {
   key_positions_[0] = WORD_START;
   key_positions_[1] = WORD_END;
@@ -151,7 +151,7 @@ Options::Options (void)
 }
 
 /// Dumps option status when debug is set.
-Options::~Options (void)
+Options::~Options ()
 {
   if (ACE_BIT_ENABLED (option_word_, DEBUGGING))
     {
@@ -730,14 +730,14 @@ Options::operator != (enum Option_Type opt)
 
 /// Initializes the key Iterator.
 void
-Options::reset (void)
+Options::reset ()
 {
   key_pos_ = 0;
 }
 
 /// Returns current key_position and advanced index.
 int
-Options::get (void)
+Options::get ()
 {
   return key_positions_[key_pos_++];
 }
@@ -751,14 +751,14 @@ Options::asso_max (int r)
 
 /// Returns the size of the table size.
 int
-Options::asso_max (void)
+Options::asso_max ()
 {
   return size_;
 }
 
 /// Returns total distinct key positions.
 u_int
-Options::max_keysig_size (void)
+Options::max_keysig_size ()
 {
   return total_keysig_size_;
 }
@@ -772,70 +772,70 @@ Options::keysig_size (u_int a_size)
 
 /// Returns the jump value.
 int
-Options::jump (void)
+Options::jump ()
 {
   return jump_;
 }
 
 /// Returns the generated function name.
 const char *
-Options::function_name (void)
+Options::function_name ()
 {
   return function_name_.c_str ();
 }
 
 /// Returns the fill default
 const char *
-Options::fill_default (void)
+Options::fill_default ()
 {
   return fill_default_.c_str ();
 }
 
 /// Returns the keyword key name.
 const char *
-Options::key_name (void)
+Options::key_name ()
 {
   return key_name_.c_str ();
 }
 
 /// Returns the hash function name.
 const char *
-Options::hash_name (void)
+Options::hash_name ()
 {
   return hash_name_.c_str ();
 }
 
 /// Returns the generated class name.
 const char *
-Options::class_name (void)
+Options::class_name ()
 {
   return class_name_.c_str ();
 }
 
 /// Returns the initial associated character value.
 int
-Options::initial_value (void)
+Options::initial_value ()
 {
   return initial_asso_value_;
 }
 
 /// Returns the iterations value.
 int
-Options::iterations (void)
+Options::iterations ()
 {
   return iterations_;
 }
 
 /// Returns the string used to delimit keywords from other attributes.
 const char *
-Options::delimiter (void)
+Options::delimiter ()
 {
   return delimiters_.c_str ();
 }
 
 /// Gets the total number of switch statements to generate.
 int
-Options::total_switches (void)
+Options::total_switches ()
 {
   return total_switches_;
 }

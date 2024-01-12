@@ -42,7 +42,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ETCL_FilterFactory :
 {
 public:
   /// Constructor
-  TAO_Notify_ETCL_FilterFactory (void);
+  TAO_Notify_ETCL_FilterFactory ();
 
   /// Destructor
   virtual ~TAO_Notify_ETCL_FilterFactory ();
@@ -52,7 +52,7 @@ public:
   virtual CosNotifyFilter::FilterFactory_ptr create (
       PortableServer::POA_ptr filter_poa);
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   ///= CosNotifyFilter::FilterFactory methods
 
@@ -82,7 +82,6 @@ public:
 
 
 protected:
-
   CosNotifyFilter::Filter_ptr
     create_filter (const char *constraint_grammar,
                    const TAO_Notify_Object::ID& id,
@@ -92,7 +91,7 @@ protected:
   CosNotifyFilter::Filter_ptr find_filter (const TAO_Notify_Object::ID& id);
 
   /// Release this object.
-  virtual void release (void);
+  virtual void release ();
 
   /// The POA in which to activate the Filters.
   PortableServer::POA_var filter_poa_;
@@ -106,7 +105,6 @@ protected:
 
   FILTERMAP filters_;
   TAO_SYNCH_MUTEX mtx_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

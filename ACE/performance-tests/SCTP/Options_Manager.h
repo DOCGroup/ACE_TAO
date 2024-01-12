@@ -16,7 +16,6 @@
 class Options_Manager
 {
 public:
-
   Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * const opts_set);
 
   // constant string size
@@ -59,7 +58,6 @@ public:
 private:
   static ACE_CDR::Boolean __initialized;
   static ACE_TCHAR __program_name[string_len];
-
 };
 
 #endif /* OPTIONS_MANAGER_H */

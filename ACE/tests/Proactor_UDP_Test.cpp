@@ -47,12 +47,11 @@
 
 #  include "ace/POSIX_Proactor.h"
 #  include "ace/POSIX_CB_Proactor.h"
-#  include "ace/SUN_Proactor.h"
 
 #endif /* ACE_WIN32 */
 
 // Proactor Type (UNIX only, Win32 ignored)
-using ProactorType = enum { DEFAULT = 0, AIOCB, SIG, SUN, CB };
+using ProactorType = enum { DEFAULT = 0, AIOCB, SIG, CB };
 static ProactorType proactor_type = DEFAULT;
 
 // POSIX : > 0 max number aio operations  proactor,
@@ -100,7 +99,6 @@ static char close_ack_msg[] = "CLOSE-ACK";
 class LogLocker
 {
 public:
-
   LogLocker () { ACE_LOG_MSG->acquire (); }
   virtual ~LogLocker () { ACE_LOG_MSG->release (); }
 };
@@ -184,7 +182,6 @@ private:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Thread_Semaphore sem_;
   ACE_Proactor * proactor_;
-
 };
 
 int
@@ -234,16 +231,6 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
                   ACE_TEXT ("(%t) Create Proactor Type = SIG\n")));
       break;
 #endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
-
-#  if defined (sun)
-    case SUN:
-      ACE_NEW_RETURN (proactor_impl,
-                      ACE_SUN_Proactor (max_op),
-                      -1);
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("(%t) Create Proactor Type = SUN\n")));
-      break;
-#  endif /* sun */
 
 #  if !defined(ACE_HAS_BROKEN_SIGEVENT_STRUCT)
     case CB:
@@ -748,10 +735,9 @@ struct Session_Data
 // indicating the addressing info for the client.
 // Master is initialized with a count of the number of expected sessions. After
 // this number are set up, Master will stop listening for session requests.
-// This is a bit fragile but is necessary because on HP-UX, AIX, et al., it
-// is impossible to close/cancel a socket with an outstanding UDP recieve
-// (on AIX the process is so wedged the machine needs to be rebooted to
-// clear it!). So, this bit of messiness is necessary for portability.
+// This is a bit fragile but is necessary because on HP-UX, et al., it
+// is impossible to close/cancel a socket with an outstanding UDP receive
+// So, this bit of messiness is necessary for portability.
 // When the Master is destroyed, it will try to stop establishing sessions
 // but this will only work on Windows.
 class Master : public ACE_Handler
@@ -1991,7 +1977,6 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
       ACE_TEXT ("\n    a AIOCB")
       ACE_TEXT ("\n    i SIG")
       ACE_TEXT ("\n    c CB")
-      ACE_TEXT ("\n    s SUN")
       ACE_TEXT ("\n    d default")
       ACE_TEXT ("\n-d <duplex mode 1-on/0-off>")
       ACE_TEXT ("\n-h <host> for Client mode")
@@ -2030,11 +2015,6 @@ set_proactor_type (const ACE_TCHAR *ptype)
     case 'I':
       proactor_type = SIG;
       return 1;
-#if defined (sun)
-    case 'S':
-      proactor_type = SUN;
-      return 1;
-#endif /* sun */
 #if !defined (ACE_HAS_BROKEN_SIGEVENT_STRUCT)
      case 'C':
        proactor_type = CB;
@@ -2117,13 +2097,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         return print_usage (argc, argv);
       } // switch
     } // while
-
-  if (proactor_type == SUN && threads > 1)
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sun aiowait is not thread-safe; ")
-                  ACE_TEXT ("changing to 1 thread\n")));
-      threads = 1;
-    }
 
   return 0;
 }

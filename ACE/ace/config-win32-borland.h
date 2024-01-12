@@ -17,17 +17,19 @@
 #define ACE_IMPORT_SINGLETON_DECLARATION(T) template class __declspec (dllimport) T
 #define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllimport) SINGLETON_TYPE <CLASS, LOCK>;
 
-// Default to no inlining
-#if !defined (__ACE_INLINE__)
-# define __ACE_INLINE__ 0
-#endif /* __ACE_INLINE__ */
+// In later versions of C++Builder we will prefer inline functions by
+// default. The debug configuration of ACE is built with functions
+// out-of-line, so when linking your application against a debug ACE
+// build, you can choose to use the out-of-line functions by adding
+// ACE_NO_INLINE=1 to your project settings.
+# if !defined (__ACE_INLINE__)
+#  define __ACE_INLINE__ 1
+# endif /* __ACE_INLINE__ */
 
 #define ACE_CC_NAME ACE_TEXT ("Embarcadero C++ Builder")
 #define ACE_CC_MAJOR_VERSION (__BORLANDC__ / 0x100)
 #define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
 #define ACE_CC_BETA_VERSION (0)
-
-#define ACE_CC_PREPROCESSOR_ARGS "-Xdriver -E -q -o%s"
 
 #if !defined (WIN32)
 # if defined (__WIN32__) || defined (_WIN32)
@@ -48,10 +50,12 @@
 # define ACE_HAS_BCC32
 #endif
 
+#define ACE_CC_PREPROCESSOR_ARGS "--precompile -q -o%s"
+
 #if defined (ACE_HAS_BCC64)
 # define ACE_CC_PREPROCESSOR "BCC64.EXE"
 #else
-# define ACE_CC_PREPROCESSOR "BCC32C.EXE"
+# define ACE_CC_PREPROCESSOR "BCC32X.EXE"
 #endif
 
 # include "ace/config-win32-common.h"
@@ -60,7 +64,6 @@
 #define ACE_HAS_DIRENT
 
 #define ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS
-#define ACE_USES_STD_NAMESPACE_FOR_STDC_LIB 1
 
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_NETINET_TCP_H
@@ -99,7 +102,12 @@
 #define ACE_HAS_WREWINDDIR
 
 #define ACE_LACKS_STRRECVFD
-#define ACE_USES_EXPLICIT_STD_NAMESPACE
+
+#if !defined (__MINGW64__)
+# define ACE_USES_EXPLICIT_STD_NAMESPACE
+# define ACE_LACKS_PID_T
+# define ACE_USES_STD_NAMESPACE_FOR_STDC_LIB 1
+#endif
 
 #if defined (ACE_HAS_BCC64)
 # define ACE_HAS_TIME_T_LONG_MISMATCH
@@ -110,7 +118,6 @@
 #define ACE_HAS_USER_MODE_MASKS 1
 #define ACE_LACKS_ACE_IOSTREAM 1
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
-#define ACE_TEMPLATES_REQUIRE_SOURCE 1
 #if defined (ACE_HAS_BCC32)
 # define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%Lu"
 # define ACE_INT64_FORMAT_SPECIFIER_ASCII "%Ld"
@@ -156,12 +163,23 @@
 # define ACE_NEEDS_DL_UNDERSCORE
 #endif
 
-#define ACE_ANY_OPS_USE_NAMESPACE
 #define ACE_HAS_BUILTIN_BSWAP16
 #define ACE_HAS_BUILTIN_BSWAP32
 #define ACE_HAS_BUILTIN_BSWAP64
 #define ACE_LACKS_INLINE_ASSEMBLY
-#define ACE_LACKS_PID_T
+
+#if defined(__MINGW64__)
+# define ACE_LACKS_GID_T
+# undef ACE_LACKS_USECONDS_T
+# define ACE_HAS_POSIX_TIME
+# define ACE_LACKS_TIMESPEC_T
+# define ACE_LACKS_UID_T
+# define ACE_LACKS_GMTIME_R
+# define ACE_LACKS_LOCALTIME_R
+# define ACE_LACKS_NLINK_T
+# define ACE_HAS_3_PARAM_WCSTOK
+# define ACE_LACKS_STRPTIME
+#endif
 
 #if __cplusplus >= 201103L
 # define ACE_HAS_CPP11
@@ -178,4 +196,3 @@
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */
-

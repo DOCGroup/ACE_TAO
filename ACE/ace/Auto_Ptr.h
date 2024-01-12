@@ -21,6 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// C++17 removed std::auto_ptr<>, so also disable the ACE versions when
+// using C++17.
+#if !defined (ACE_HAS_CPP17)
+
 #if defined (_MSC_VER)
 // Suppress warning e.g. "return type for
 // 'ACE_Auto_Array_Pointer<type>::operator ->' is 'type *' (i.e., not a UDT
@@ -44,7 +48,7 @@ class ACE_Auto_Basic_Ptr
 public:
   typedef X element_type;
 
-  explicit ACE_Auto_Basic_Ptr (X * p = 0) : p_ (p) {}
+  explicit ACE_Auto_Basic_Ptr (X * p = nullptr) : p_ (p) {}
 
   ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> & ap);
   ACE_Auto_Basic_Ptr<X> &operator= (ACE_Auto_Basic_Ptr<X> & rhs);
@@ -54,7 +58,7 @@ public:
   X &operator *() const;
   X *get () const;
   X *release ();
-  void reset (X * p = 0);
+  void reset (X * p = nullptr);
 
   /// Dump the state of an object.
   void dump () const;
@@ -69,7 +73,7 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if !defined (ACE_LACKS_AUTO_PTR)
-#include <memory>
+#  include <memory>
 using std::auto_ptr;
 #else /* !ACE_LACKS_AUTO_PTR */
 
@@ -180,8 +184,7 @@ public:
  */
 template<typename AUTO_PTR_TYPE, typename PTR_TYPE>
 inline void
-ACE_auto_ptr_reset (AUTO_PTR_TYPE & ap,
-                    PTR_TYPE * p)
+ACE_auto_ptr_reset (AUTO_PTR_TYPE & ap, PTR_TYPE * p)
 {
   ap.reset (p);
 }
@@ -192,18 +195,14 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Auto_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Auto_Ptr.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Auto_Ptr.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #if defined (_MSC_VER)
 // Restore the warning state to what it was before entry.
 #  pragma warning(pop)
 #endif /* _MSC_VER */
+
+#endif /* ACE_HAS_CPP17 */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_AUTO_PTR_H */

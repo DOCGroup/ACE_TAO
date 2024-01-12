@@ -1741,7 +1741,6 @@ public:
   int transmit ();
 
 protected:
-
   /// The asynch result pointer made from the initial transmit file
   /// request.
   ACE_POSIX_Asynch_Transmit_File_Result *result_;
@@ -1968,7 +1967,6 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read_File:
   // Failure.
   if (result.success () == 0)
     {
-      //
       ACE_SEH_TRY
         {
           this->result_->complete (this->bytes_transferred_,

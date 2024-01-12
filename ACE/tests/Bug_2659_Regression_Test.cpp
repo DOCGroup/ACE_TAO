@@ -67,7 +67,6 @@ private:
 #endif // if defined RUN_DEBUG
 
 
-
 static void
 handle_signal (int )
 {
@@ -79,7 +78,6 @@ handle_signal (int )
 class ReactorTask : public ACE_Task_Base
 {
 public:
-
   ~ReactorTask () override
   {
     EE_DEBUG ("ReactorTask", "~ReactorTask", this);

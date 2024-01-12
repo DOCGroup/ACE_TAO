@@ -247,7 +247,6 @@ TAO_MonitorConsumerAdmin::remove ()
 }
 
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */

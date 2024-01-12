@@ -33,7 +33,6 @@ namespace TAO
   class In_Var_Size_SArgument_T : public InArgument
   {
   public:
-
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
@@ -150,13 +149,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/PortableServer/Var_Size_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/PortableServer/Var_Size_SArgument_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Var_Size_SArgument_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

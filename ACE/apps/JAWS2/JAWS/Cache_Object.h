@@ -21,7 +21,7 @@ class JAWS_Cache_Object
 {
 public:
   JAWS_Cache_Object (const void *, size_t);
-  virtual ~JAWS_Cache_Object (void);
+  virtual ~JAWS_Cache_Object ();
 
   void *internal () const;
   void internal (void *);
@@ -30,8 +30,8 @@ public:
   size_t size () const;
   unsigned int count () const;
 
-  int acquire (void);
-  int release (void);
+  int acquire ();
+  int release ();
 
   time_t last_access () const;
   time_t first_access () const;
@@ -43,17 +43,15 @@ public:
   void *heap_item () const;
   void heap_item (void *item);
 
-  virtual ACE_Lock & lock (void) = 0;
+  virtual ACE_Lock & lock () = 0;
 
 protected:
-
   virtual unsigned int count_i () const = 0;
-  virtual int acquire_i (void) = 0;
-  virtual int release_i (void) = 0;
+  virtual int acquire_i () = 0;
+  virtual int release_i () = 0;
   virtual unsigned int priority_i () const = 0;
 
 private:
-
   void *internal_;
   const void *data_;
   size_t size_;
@@ -63,61 +61,53 @@ private:
   time_t new_last_access_;
 
   void *heap_item_;
-
 };
 
 class JAWS_Referenced_Cache_Object : public JAWS_Cache_Object
 {
 public:
   JAWS_Referenced_Cache_Object (const void *, size_t);
-  virtual ~JAWS_Referenced_Cache_Object (void);
+  virtual ~JAWS_Referenced_Cache_Object ();
 
-  virtual ACE_Lock & lock (void);
+  virtual ACE_Lock & lock ();
 
 protected:
-
   virtual unsigned int count_i () const;
-  virtual int acquire_i (void);
-  virtual int release_i (void);
+  virtual int acquire_i ();
+  virtual int release_i ();
   virtual unsigned int priority_i () const;
 
 private:
-
   mutable ACE_SYNCH_RW_MUTEX count_;
   mutable ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX> lock_adapter_;
-
 };
 
 class JAWS_Counted_Cache_Object : public JAWS_Cache_Object
 {
 public:
   JAWS_Counted_Cache_Object (const void *, size_t);
-  virtual ~JAWS_Counted_Cache_Object (void);
+  virtual ~JAWS_Counted_Cache_Object ();
 
-  virtual ACE_Lock & lock (void);
+  virtual ACE_Lock & lock ();
 
 protected:
-
   virtual unsigned int count_i () const;
-  virtual int acquire_i (void);
-  virtual int release_i (void);
+  virtual int acquire_i ();
+  virtual int release_i ();
   virtual unsigned int priority_i () const;
 
 private:
-
   unsigned int count_;
   unsigned int new_count_;
   mutable ACE_SYNCH_MUTEX lock_;
   mutable ACE_Lock_Adapter<ACE_SYNCH_MUTEX> lock_adapter_;
-
 };
 
 class JAWS_Cache_Object_Factory
 {
 public:
-
   JAWS_Cache_Object_Factory (ACE_Allocator *alloc = 0);
-  virtual ~JAWS_Cache_Object_Factory (void);
+  virtual ~JAWS_Cache_Object_Factory ();
 
   int open (ACE_Allocator *alloc = 0);
 
@@ -125,31 +115,27 @@ public:
   virtual void destroy (JAWS_Cache_Object *) = 0;
 
 protected:
-
   ACE_Allocator *allocator_;
-
 };
 
 class JAWS_Referenced_Cache_Object_Factory : public JAWS_Cache_Object_Factory
 {
 public:
   JAWS_Referenced_Cache_Object_Factory (ACE_Allocator *alloc = 0);
-  virtual ~JAWS_Referenced_Cache_Object_Factory (void);
+  virtual ~JAWS_Referenced_Cache_Object_Factory ();
 
   virtual JAWS_Cache_Object * create (const void *, size_t);
   virtual void destroy (JAWS_Cache_Object *);
-
 };
 
 class JAWS_Counted_Cache_Object_Factory : public JAWS_Cache_Object_Factory
 {
 public:
   JAWS_Counted_Cache_Object_Factory (ACE_Allocator *alloc = 0);
-  virtual ~JAWS_Counted_Cache_Object_Factory (void);
+  virtual ~JAWS_Counted_Cache_Object_Factory ();
 
   virtual JAWS_Cache_Object * create (const void *, size_t);
   virtual void destroy (JAWS_Cache_Object *);
-
 };
 
 #endif /* JAWS_CACHE_OBJECT_H */

@@ -42,7 +42,7 @@ private:
   static void get_serial_id (time_t &t, size_t &s);
 
   /// Get the lock instance.
-  static ACE_SYNCH_MUTEX *get_lock (void);
+  static ACE_SYNCH_MUTEX *get_lock ();
 
   /// Record the time last offer ID generated.
   static time_t last_time_;

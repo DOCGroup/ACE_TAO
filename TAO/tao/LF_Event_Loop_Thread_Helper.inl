@@ -14,7 +14,7 @@ TAO_LF_Event_Loop_Thread_Helper::TAO_LF_Event_Loop_Thread_Helper (
 }
 
 ACE_INLINE
-TAO_LF_Event_Loop_Thread_Helper::~TAO_LF_Event_Loop_Thread_Helper (void)
+TAO_LF_Event_Loop_Thread_Helper::~TAO_LF_Event_Loop_Thread_Helper ()
 {
   int const call_reset = (this->event_loop_return_ == 0);
   this->lf_strategy_.reset_event_loop_thread (call_reset,

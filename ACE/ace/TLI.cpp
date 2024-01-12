@@ -6,7 +6,6 @@
 #include "ace/OS_TLI.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
-#include "ace/Auto_Ptr.h"
 #include <memory>
 
 #if defined (ACE_HAS_TLI)
@@ -27,28 +26,9 @@ ACE_TLI::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_TLI::ACE_TLI (void)
+ACE_TLI::ACE_TLI ()
 {
   ACE_TRACE ("ACE_TLI::ACE_TLI");
-#if defined (ACE_HAS_SVR4_TLI)
-// Solaris 2.4 ACE_TLI option handling is broken.  Thus, we must do
-// the memory allocation ourselves...  Thanks to John P. Hearn
-// (jph@ccrl.nj.nec.com) for the help.
-
-  this->so_opt_req.opt.maxlen = sizeof (opthdr) + sizeof (long);
-  ACE_NEW (this->so_opt_req.opt.buf,
-           char[this->so_opt_req.opt.maxlen]);
-
-  this->so_opt_ret.opt.maxlen = sizeof (opthdr) + sizeof (long);
-  ACE_NEW (this->so_opt_ret.opt.buf,
-           char[this->so_opt_ret.opt.maxlen]);
-
-  if (this->so_opt_ret.opt.buf == 0)
-    {
-      delete [] this->so_opt_req.opt.buf;
-      this->so_opt_req.opt.buf = 0;
-    }
-#endif /* ACE_HAS_SVR4_TLI */
 }
 
 ACE_HANDLE
@@ -62,18 +42,9 @@ ACE_TLI::open (const char device[], int oflag, struct t_info *info)
   return this->get_handle ();
 }
 
-ACE_TLI::~ACE_TLI (void)
+ACE_TLI::~ACE_TLI ()
 {
   ACE_TRACE ("ACE_TLI::~ACE_TLI");
-#if defined (ACE_HAS_SVR4_TLI)
-  if (this->so_opt_req.opt.buf)
-    {
-      delete [] this->so_opt_req.opt.buf;
-      delete [] this->so_opt_ret.opt.buf;
-      this->so_opt_req.opt.buf = 0;
-      this->so_opt_ret.opt.buf = 0;
-    }
-#endif /* ACE_HAS_SVR4_TLI */
 }
 
 ACE_TLI::ACE_TLI (const char device[], int oflag, struct t_info *info)
@@ -101,7 +72,7 @@ ACE_TLI::get_local_addr (ACE_Addr &sa) const
 }
 
 int
-ACE_TLI::close (void)
+ACE_TLI::close ()
 {
   ACE_TRACE ("ACE_TLI::close");
   int result = 0; // Geisler: result must be int
@@ -128,7 +99,7 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
 #  if (_XOPEN_SOURCE - 0 >= 500)
   std::unique_ptr<char> req_opt_buf_p (reinterpret_cast<char*> (req.opt.buf));
 #  else
-  ACE_Auto_Array_Ptr<char> req_opt_buf_p (req.opt.buf);
+  std::unique_ptr<char[]> req_opt_buf_p (req.opt.buf);
 #  endif /* XPG5 vs XPG4 */
   struct t_opthdr *opthdr =
     reinterpret_cast<struct t_opthdr *> (req.opt.buf);
@@ -136,7 +107,7 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
 #  if (_XOPEN_SOURCE - 0 >= 500)
   std::unique_ptr<char> ret_opt_buf_p (reinterpret_cast<char*> (ret.opt.buf));
 #  else
-  ACE_Auto_Array_Ptr<char> ret_opt_buf_p (ret.opt.buf);
+  std::unique_ptr<char[]> ret_opt_buf_p (ret.opt.buf);
 #  endif /* XPG5 vs XPG4 */
 
   req.flags = T_NEGOTIATE;
@@ -147,39 +118,13 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
   opthdr->len   = req.opt.len;   // We only request one option at a time.
   ACE_OS::memcpy (&opthdr[1], optval, optlen);
   return ACE_OS::t_optmgmt (this->get_handle (), &req, &ret);
-
-#elif defined (ACE_HAS_SVR4_TLI)
-  struct opthdr *opthdr = 0; /* See <sys/socket.h> for info on this format */
-
-  this->so_opt_req.flags = T_NEGOTIATE;
-  this->so_opt_req.opt.len = sizeof *opthdr + OPTLEN (optlen);
-
-  if (this->so_opt_req.opt.len > this->so_opt_req.opt.maxlen)
-    {
-#  if !defined (ACE_HAS_SET_T_ERRNO)
-      t_errno = TBUFOVFLW;
-#  else
-      set_t_errno (TBUFOVFLW);
-#  endif /* ACE_HAS_SET_T_ERRNO */
-      return -1;
-    }
-
-  opthdr = reinterpret_cast<struct opthdr *> (this->so_opt_req.opt.buf);
-  opthdr->level = level;
-  opthdr->name  = option;
-  opthdr->len   = OPTLEN (optlen);
-  ACE_OS::memcpy (OPTVAL (opthdr), optval, optlen);
-
-  return ACE_OS::t_optmgmt (this->get_handle (),
-                            &this->so_opt_req,
-                            &this->so_opt_ret);
 #else
   ACE_UNUSED_ARG (level);
   ACE_UNUSED_ARG (option);
   ACE_UNUSED_ARG (optval);
   ACE_UNUSED_ARG (optlen);
   return -1;
-#endif /* ACE_HAS_XTI, else ACE_HAS_SVR4_TLI */
+#endif /* ACE_HAS_XTI */
 }
 
 int
@@ -193,7 +138,7 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
 #  if (_XOPEN_SOURCE - 0 >= 500)
   std::unique_ptr<char> req_opt_buf_p (reinterpret_cast<char*> (req.opt.buf));
 #  else
-  ACE_Auto_Array_Ptr<char> req_opt_buf_p (req.opt.buf);
+  std::unique_ptr<char[]> req_opt_buf_p (req.opt.buf);
 #  endif /* XPG5 vs XPG4 */
   struct t_opthdr *opthdr =
     reinterpret_cast<struct t_opthdr *> (req.opt.buf);
@@ -201,7 +146,7 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
 #  if (_XOPEN_SOURCE - 0 >= 500)
   std::unique_ptr<char> ret_opt_buf_p (reinterpret_cast<char*> (ret.opt.buf));
 #  else
-  ACE_Auto_Array_Ptr<char> ret_opt_buf_p (ret.opt.buf);
+  std::unique_ptr<char[]> ret_opt_buf_p (ret.opt.buf);
 #  endif /* XPG5 vs XPG4 */
 
   req.flags = T_CURRENT;
@@ -226,41 +171,13 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
           return 0;
         }
     }
-
-#elif defined (ACE_HAS_SVR4_TLI)
-  struct opthdr *opthdr = 0; /* See <sys/socket.h> for details on this format */
-
-  this->so_opt_req.flags = T_CHECK;
-  this->so_opt_ret.opt.len = sizeof *opthdr + OPTLEN (optlen);
-
-  if (this->so_opt_ret.opt.len > this->so_opt_ret.opt.maxlen)
-    {
-#if !defined (ACE_HAS_SET_T_ERRNO)
-      t_errno = TBUFOVFLW;
-#else
-      set_t_errno (TBUFOVFLW);
-#endif /* ACE_HAS_SET_T_ERRNO */
-      return -1;
-    }
-
-  opthdr        = (struct opthdr *) this->so_opt_req.opt.buf;
-  opthdr->level = level;
-  opthdr->name  = option;
-  opthdr->len   = OPTLEN (optlen);
-  if (ACE_OS::t_optmgmt (this->get_handle (), &this->so_opt_req, &this->so_opt_ret) == -1)
-    return -1;
-  else
-    {
-      ACE_OS::memcpy (optval, OPTVAL (opthdr), optlen);
-      return 0;
-    }
 #else
   ACE_UNUSED_ARG (level);
   ACE_UNUSED_ARG (option);
   ACE_UNUSED_ARG (optval);
   ACE_UNUSED_ARG (optlen);
   return -1;
-#endif /* ACE_HAS_SVR4_TLI */
+#endif /* ACE_HAS_XTI */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

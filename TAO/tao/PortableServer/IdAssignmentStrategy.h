@@ -12,13 +12,11 @@
 #define TAO_ID_ASSIGNMENT_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/Policy_Strategy.h"
+#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Basic_Types.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,12 +25,10 @@ namespace TAO
   namespace Portable_Server
   {
     class IdAssignmentStrategy
-      : public Policy_Strategy
     {
     public:
-      virtual void strategy_init(TAO_Root_POA *poa);
-
-      virtual void strategy_cleanup();
+      IdAssignmentStrategy () = default;
+      virtual ~IdAssignmentStrategy () = default;
 
       /**
        * Returns the key type the says which specific policy we have

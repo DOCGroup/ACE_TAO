@@ -18,7 +18,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if OPENSSL_VERSION_NUMBER > 0x0090581fL && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+#if OPENSSL_VERSION_NUMBER > 0x0090581fL && (defined (ACE_WIN32) || (defined (ACE_HAS_AIO_CALLS)))
 
 #include "SSL_Asynch_BIO.h"
 
@@ -144,7 +144,6 @@ class ACE_SSL_Export ACE_SSL_Asynch_Stream
     public ACE_Handler
 {
 public:
-
   // Use a class/struct to work around scoping
   // problems for extern "C" free functions with some compilers.  For
   // example, some can't handle
@@ -177,11 +176,11 @@ public:
                          ACE_SSL_Context * context = 0);
 
   /// Destructor
-  virtual ~ACE_SSL_Asynch_Stream (void);
+  virtual ~ACE_SSL_Asynch_Stream ();
 
-  int cancel (void);
+  int cancel ();
 
-  int close (void);
+  int close ();
 
   /// Return a pointer to the underlying SSL structure.
   SSL *ssl () const;
@@ -293,7 +292,7 @@ protected:
 
   /// This method is called when all SSL sessions are closed and no
   /// more pending AIOs exist.  It also calls users handle_wakeup().
-  virtual void handle_wakeup (void);
+  virtual void handle_wakeup ();
 
   /**
    * This method will be called after a successful SSL handshake indicating
@@ -327,23 +326,23 @@ protected:
    *
    * true  - Proceed with connection.  The default implementation returns true.
    */
-  virtual bool post_handshake_check (void);
+  virtual bool post_handshake_check ();
 
   /**
    * @name SSL State Machine
    */
   //@{
-  int do_SSL_state_machine (void);
-  int do_SSL_handshake (void);
-  int do_SSL_read (void);
-  int do_SSL_write(void);
-  int do_SSL_shutdown(void);
+  int do_SSL_state_machine ();
+  int do_SSL_handshake ();
+  int do_SSL_read ();
+  int do_SSL_write();
+  int do_SSL_shutdown();
   //@}
 
   void print_error (int err_ssl,
                     const ACE_TCHAR *pText);
 
-  int pending_BIO_count (void);
+  int pending_BIO_count ();
 
   /// This method is called to notify user handler when user's read in
   /// done.
@@ -356,7 +355,7 @@ protected:
   /// This method is called to notify ourself that SSL session is
   /// shutdown and that there is no more I/O activity now and in the
   /// future.
-  int notify_close(void);
+  int notify_close();
 
   /**
    * @name BIO Helpers

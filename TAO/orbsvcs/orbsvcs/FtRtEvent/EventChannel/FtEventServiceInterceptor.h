@@ -52,9 +52,9 @@ public:
   ~FtEventServiceInterceptor();
 
   static FtEventServiceInterceptor* instance();
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
 

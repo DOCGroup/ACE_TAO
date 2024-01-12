@@ -69,7 +69,7 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void)
+  void shutdown ()
   {
   }
   //FUZZ: enable check_for_lack_ACE_OS
@@ -229,7 +229,6 @@ setup_buffering_constraints (CORBA::ORB_ptr orb)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB.

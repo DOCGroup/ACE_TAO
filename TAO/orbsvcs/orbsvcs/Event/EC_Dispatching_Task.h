@@ -96,7 +96,6 @@ protected:
 class TAO_RTEvent_Serv_Export TAO_EC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
-
 #ifdef ACE_WIN32_VC14
   // Work around for Connect #2869042 Bugzilla #4215
   TAO_EC_Dispatching_Task (ACE_Thread_Manager *thr_manager, TAO_EC_Queue_Full_Service_Object *queue_full_service_object = 0);

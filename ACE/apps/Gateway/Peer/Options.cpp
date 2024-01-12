@@ -12,14 +12,14 @@
 Options *Options::instance_ = 0;
 
 void
-Options::print_usage_and_die (void)
+Options::print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%n [-a {C|S}:acceptor-port] [-c {C|S}:connector-port] [-C connection-id] [-h gateway-host] [-q max-queue-size] [-t timeout] [-v]\n")));
   ACE_OS::exit (1);
 }
 
-Options::Options (void)
+Options::Options ()
   : options_ (0),
     supplier_acceptor_port_ (DEFAULT_PEER_SUPPLIER_PORT),
     consumer_acceptor_port_ (DEFAULT_PEER_CONSUMER_PORT),
@@ -39,7 +39,7 @@ Options::Options (void)
 }
 
 Options *
-Options::instance (void)
+Options::instance ()
 {
   if (Options::instance_ == 0)
     ACE_NEW_RETURN (Options::instance_, Options, 0);
@@ -54,7 +54,7 @@ Options::timeout () const
 }
 
 CONNECTION_ID &
-Options::connection_id (void)
+Options::connection_id ()
 {
   return this->connection_id_;
 }

@@ -32,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 /// \brief An interface to allow callbacks on completion of persistent storage
 /// requests.
 class TAO_Notify_Serv_Export Persistent_Callback
@@ -197,7 +196,6 @@ private:
   bool thread_active_;
   ACE_SYNCH_CONDITION wake_up_thread_;
 };
-
 } /* namespace TAO_Notify */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

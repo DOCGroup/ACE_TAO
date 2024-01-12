@@ -8,7 +8,7 @@
 #include "Time_Request_Reply.h"
 
 // Default "do nothing" constructor.
-ACE_Time_Request::ACE_Time_Request (void)
+ACE_Time_Request::ACE_Time_Request ()
 {
   ACE_TRACE ("ACE_Time_Request::ACE_Time_Request");
 }
@@ -135,7 +135,7 @@ ACE_Time_Request::encode (void *&buf)
 // Decode the transfer buffer into host byte byte order
 // so that it can be used by the server.
 int
-ACE_Time_Request::decode (void)
+ACE_Time_Request::decode ()
 {
   ACE_TRACE ("ACE_Time_Request::decode");
   // Decode

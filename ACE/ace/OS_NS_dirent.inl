@@ -37,8 +37,6 @@ opendir (const ACE_TCHAR *filename)
   return ::ACE_OS::opendir_emulation (filename);
 #  elif defined (ACE_HAS_WOPENDIR) && defined (ACE_USES_WCHAR)
   return ::wopendir (filename);
-#    elif defined (ACE_HAS_NONCONST_OPENDIR)
-  return ::opendir (const_cast<char *> (filename));
 #    else /* ! ACE_WIN32 && ACE_LACKS_OPENDIR */
   return ::opendir (ACE_TEXT_ALWAYS_CHAR (filename));
 #    endif /* ACE_WIN32 && ACE_LACKS_OPENDIR */
@@ -88,11 +86,7 @@ scandir (const ACE_TCHAR *dirname,
 #if defined (ACE_HAS_SCANDIR)
   return ::scandir (ACE_TEXT_ALWAYS_CHAR (dirname),
                     namelist,
-#  if defined (ACE_SCANDIR_SEL_LACKS_CONST)
-                    reinterpret_cast<ACE_SCANDIR_OS_SELECTOR> (selector),
-#  else
                     selector,
-#  endif /* ACE_SCANDIR_SEL_LACKS_CONST */
 #  if defined (ACE_SCANDIR_CMP_USES_VOIDPTR) || \
       defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
                     reinterpret_cast<ACE_SCANDIR_OS_COMPARATOR> (comparator));

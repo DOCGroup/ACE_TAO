@@ -135,7 +135,6 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
           << "}";
 
       this->gen_exec_entrypoint_defn ();
-
     }
 
   os_ << be_uidt_nl

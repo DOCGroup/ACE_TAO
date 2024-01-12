@@ -41,7 +41,7 @@ class TAO_Notify_Tests_Peer_T : public TAO_Notify_Tests_Peer, public Peer_Traits
 
 public:
   /// Constructor
-  TAO_Notify_Tests_Peer_T (void);
+  TAO_Notify_Tests_Peer_T ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_Peer_T ();
@@ -55,29 +55,29 @@ public:
   void connect (Admin_Traits_PTR admin_ptr);
 
   /// Connect using options parsed and set initial QoS.
-  virtual void connect (void);
+  virtual void connect ();
 
   // Disconnect from the Peer.
-  void disconnect (void);
+  void disconnect ();
 
   /// Set Qos
   void set_qos (CosNotification::QoSProperties& qos);
 
   /// Dump status
-  void status (void);
+  void status ();
 
   // Accessor for <proxy_>.
-  Proxy_Traits_PTR get_proxy (void);
+  Proxy_Traits_PTR get_proxy ();
 
   /// Deactivate the object.
-  void deactivate (void);
+  void deactivate ();
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
 protected:
   /// Activate this object in the default POA.
-  virtual Peer_Traits_PTR activate (void);
+  virtual Peer_Traits_PTR activate ();
 
   ///= To be implemented by specializations.
 
@@ -92,7 +92,7 @@ protected:
                                          , CosNotification::QoSProperties& qos) = 0;
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy (void) = 0;
+  virtual void disconnect_from_proxy () = 0;
 
   // = Data Members
 
@@ -103,13 +103,7 @@ protected:
    typename Proxy_Traits::ID proxy_id_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Peer_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Peer_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_PEER_T_H */

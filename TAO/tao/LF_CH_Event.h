@@ -49,10 +49,10 @@ public:
   friend class TAO_LF_Multi_Event;
 
   /// Constructor
-  TAO_LF_CH_Event (void);
+  TAO_LF_CH_Event ();
 
   /// Destructor
-  virtual ~TAO_LF_CH_Event (void);
+  virtual ~TAO_LF_CH_Event ();
 
   //@{
 protected:

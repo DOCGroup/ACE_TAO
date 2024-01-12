@@ -6,7 +6,6 @@
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
 
-
 static ACE_Token_Proxy *global_rlock;
 static ACE_Token_Proxy *global_wlock;
 

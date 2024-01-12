@@ -7,7 +7,7 @@ Service::Service (CORBA::ORB_ptr orb)
 }
 
 void
-Service::dump_results (void)
+Service::dump_results ()
 {
   if (this->test_count_ == 0)
     {

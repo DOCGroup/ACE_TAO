@@ -12,6 +12,7 @@
 #include "ACEXML/parser/parser/ParserInternals.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
+#include <memory>
 
 static const ACEXML_Char default_attribute_type[] = ACE_TEXT ("CDATA");
 static const ACEXML_Char empty_string[] = { 0 };
@@ -28,7 +29,7 @@ ACEXML_Parser::namespace_prefixes_feature_[] = ACE_TEXT ("http://xml.org/sax/fea
 const ACEXML_Char
 ACEXML_Parser::validation_feature_[] = ACE_TEXT ("http://xml.org/sax/features/validation");
 
-ACEXML_Parser::ACEXML_Parser (void)
+ACEXML_Parser::ACEXML_Parser ()
   :   dtd_handler_ (0),
       entity_resolver_ (0),
       content_handler_ (0),
@@ -51,9 +52,8 @@ ACEXML_Parser::ACEXML_Parser (void)
 {
 }
 
-ACEXML_Parser::~ACEXML_Parser (void)
+ACEXML_Parser::~ACEXML_Parser ()
 {
-
 }
 
 int
@@ -203,7 +203,7 @@ ACEXML_Parser::parse (ACEXML_InputSource *input)
 }
 
 int
-ACEXML_Parser::parse_doctypedecl (void)
+ACEXML_Parser::parse_doctypedecl ()
 {
   if (this->parse_token (ACE_TEXT ("DOCTYPE")) < 0)
     {
@@ -263,7 +263,7 @@ ACEXML_Parser::parse_doctypedecl (void)
 }
 
 int
-ACEXML_Parser::parse_internal_dtd (void)
+ACEXML_Parser::parse_internal_dtd ()
 {
   this->ref_state_ = ACEXML_ParserInt::IN_INT_DTD;
   ACEXML_Char nextch = this->skip_whitespace ();
@@ -307,7 +307,7 @@ ACEXML_Parser::parse_internal_dtd (void)
 }
 
 int
-ACEXML_Parser::parse_external_dtd (void)
+ACEXML_Parser::parse_external_dtd ()
 {
   this->ref_state_ = ACEXML_ParserInt::IN_EXT_DTD;
   ACEXML_Char* publicId = 0;
@@ -319,7 +319,7 @@ ACEXML_Parser::parse_external_dtd (void)
   if (this->validate_)
     {
       ACEXML_Char* uri = this->normalize_systemid (systemId);
-      ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_uri (uri);
+      std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
       ACEXML_InputSource* ip = 0;
       if (this->entity_resolver_)
         {
@@ -349,7 +349,7 @@ ACEXML_Parser::parse_external_dtd (void)
 
 
 int
-ACEXML_Parser::parse_external_subset (void)
+ACEXML_Parser::parse_external_subset ()
 {
   this->ref_state_ = ACEXML_ParserInt::IN_EXT_DTD;
   this->external_subset_ = 1;
@@ -396,7 +396,7 @@ ACEXML_Parser::parse_external_subset (void)
 }
 
 int
-ACEXML_Parser::parse_conditional_section (void)
+ACEXML_Parser::parse_conditional_section ()
 {
   ACEXML_Char ch = this->get ();
   int include = 0;
@@ -458,7 +458,7 @@ ACEXML_Parser::parse_conditional_section (void)
 }
 
 int
-ACEXML_Parser::parse_ignoresect (void)
+ACEXML_Parser::parse_ignoresect ()
 {
   ACEXML_Char nextch = this->skip_whitespace();
   int count = 0;
@@ -511,7 +511,7 @@ ACEXML_Parser::parse_ignoresect (void)
 }
 
 int
-ACEXML_Parser::parse_includesect (void)
+ACEXML_Parser::parse_includesect ()
 {
   ACEXML_Char nextch = this->skip_whitespace();
   do {
@@ -562,7 +562,7 @@ ACEXML_Parser::parse_includesect (void)
 }
 
 int
-ACEXML_Parser::parse_markup_decl (void)
+ACEXML_Parser::parse_markup_decl ()
 {
   ACEXML_Char nextch = this->peek ();
   switch (nextch)
@@ -1004,7 +1004,7 @@ ACEXML_Parser::parse_content (const ACEXML_Char* startname,
 
 
 int
-ACEXML_Parser::parse_cdata (void)
+ACEXML_Parser::parse_cdata ()
 {
   if (this->parse_token (ACE_TEXT ("[CDATA[")) < 0)
     {
@@ -1042,7 +1042,7 @@ ACEXML_Parser::parse_cdata (void)
 
 
 int
-ACEXML_Parser::parse_entity_decl (void)
+ACEXML_Parser::parse_entity_decl ()
 {
   ACEXML_Char nextch = 0;
 
@@ -1169,7 +1169,7 @@ ACEXML_Parser::parse_entity_decl (void)
 }
 
 int
-ACEXML_Parser::parse_attlist_decl (void)
+ACEXML_Parser::parse_attlist_decl ()
 {
   if (this->parse_token (ACE_TEXT ("ATTLIST")) < 0)
     {
@@ -1228,7 +1228,7 @@ ACEXML_Parser::parse_attlist_decl (void)
 }
 
 int
-ACEXML_Parser::check_for_PE_reference (void)
+ACEXML_Parser::check_for_PE_reference ()
 {
   ACEXML_Char fwd = '\xFF';
   // Skip any leading whitespaces and store the number of such chars skipped
@@ -1262,7 +1262,7 @@ ACEXML_Parser::check_for_PE_reference (void)
 }
 
 ACEXML_Char*
-ACEXML_Parser::parse_attname (void)
+ACEXML_Parser::parse_attname ()
 {
   // Parse attribute name
   ACEXML_Char *att_name = this->parse_name ();
@@ -1274,7 +1274,7 @@ ACEXML_Parser::parse_attname (void)
 }
 
 int
-ACEXML_Parser::parse_defaultdecl (void)
+ACEXML_Parser::parse_defaultdecl ()
 {
   // DefaultDecl ::=  '#REQUIRED' | '#IMPLIED' | (('#FIXED' S)? AttValue)
   ACEXML_Char nextch = this->peek ();
@@ -1334,7 +1334,7 @@ ACEXML_Parser::parse_defaultdecl (void)
 }
 
 int
-ACEXML_Parser::parse_tokenized_type (void)
+ACEXML_Parser::parse_tokenized_type ()
 {
   ACEXML_Char ch = this->get();
   switch (ch)
@@ -1452,7 +1452,7 @@ ACEXML_Parser::parse_tokenized_type (void)
  *                                  [VC: Enumeration]
  */
 int
-ACEXML_Parser::parse_atttype (void)
+ACEXML_Parser::parse_atttype ()
 {
   ACEXML_Char nextch = this->peek();
   switch (nextch)
@@ -1547,7 +1547,7 @@ ACEXML_Parser::parse_atttype (void)
 }
 
 int
-ACEXML_Parser::parse_notation_decl (void)
+ACEXML_Parser::parse_notation_decl ()
 {
   if (this->parse_token (ACE_TEXT ("NOTATION")) < 0)
     {
@@ -1611,7 +1611,7 @@ ACEXML_Parser::parse_notation_decl (void)
 }
 
 int
-ACEXML_Parser::parse_element_decl (void)
+ACEXML_Parser::parse_element_decl ()
 {
   if (this->parse_token (ACE_TEXT ("LEMENT")) < 0)
     {
@@ -1665,7 +1665,7 @@ ACEXML_Parser::parse_element_decl (void)
 
 
 int
-ACEXML_Parser::parse_children_definition (void)
+ACEXML_Parser::parse_children_definition ()
 {
   this->get ();                 // consume the '('
   this->check_for_PE_reference ();
@@ -1902,7 +1902,7 @@ ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t& len)
 }
 
 ACEXML_Char*
-ACEXML_Parser::parse_reference_name (void)
+ACEXML_Parser::parse_reference_name ()
 {
   ACEXML_Char ch = this->get ();
   if (!this->isLetter (ch) && (ch != '_' && ch != ':'))
@@ -1996,7 +1996,7 @@ ACEXML_Parser::parse_attvalue (ACEXML_Char *&str)
 }
 
 int
-ACEXML_Parser::parse_entity_reference (void)
+ACEXML_Parser::parse_entity_reference ()
 {
   ACEXML_Char* replace = this->parse_reference_name ();
   if (replace == 0)
@@ -2092,7 +2092,7 @@ ACEXML_Parser::parse_entity_reference (void)
   else
     {
       ACEXML_Char* uri = this->normalize_systemid (systemId);
-      ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_uri (uri);
+      std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
       ACEXML_InputSource* ip = 0;
       if (this->entity_resolver_)
         {
@@ -2122,7 +2122,7 @@ ACEXML_Parser::parse_entity_reference (void)
 }
 
 int
-ACEXML_Parser::parse_PE_reference (void)
+ACEXML_Parser::parse_PE_reference ()
 {
   ACEXML_Char* replace = this->parse_reference_name ();
   if (replace == 0)
@@ -2185,7 +2185,7 @@ ACEXML_Parser::parse_PE_reference (void)
   else if (this->external_entity_ && this->validate_)
     {
       ACEXML_Char* uri = this->normalize_systemid (systemId);
-      ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_uri (uri);
+      std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
       ACEXML_InputSource* ip = 0;
       if (this->entity_resolver_)
         {
@@ -2613,7 +2613,6 @@ ACEXML_Parser::getFeature (const ACEXML_Char *name)
 }
 
 
-
 void
 ACEXML_Parser::setFeature (const ACEXML_Char *name, int boolean_value)
 {
@@ -2683,7 +2682,7 @@ ACEXML_Parser::fatal_error (const ACEXML_Char* msg)
 }
 
 void
-ACEXML_Parser::parse_version_info (void)
+ACEXML_Parser::parse_version_info ()
 {
   ACEXML_Char* astring;
   if (this->parse_token (ACE_TEXT("ersion")) < 0
@@ -2701,7 +2700,7 @@ ACEXML_Parser::parse_version_info (void)
 }
 
 void
-ACEXML_Parser::parse_encoding_decl (void)
+ACEXML_Parser::parse_encoding_decl ()
 {
   ACEXML_Char* astring = 0;
   if ((this->parse_token (ACE_TEXT("ncoding")) < 0)
@@ -2722,7 +2721,7 @@ ACEXML_Parser::parse_encoding_decl (void)
 }
 
 int
-ACEXML_Parser::parse_text_decl (void)
+ACEXML_Parser::parse_text_decl ()
 {
   // Read xml
   if (this->parse_token (ACE_TEXT("xml")) < 0)
@@ -2756,7 +2755,7 @@ ACEXML_Parser::parse_text_decl (void)
 }
 
 void
-ACEXML_Parser::parse_xml_decl (void)
+ACEXML_Parser::parse_xml_decl ()
 {
   // Read <?xml
   if (this->parse_token (ACE_TEXT("xml")) < 0)
@@ -2802,7 +2801,7 @@ ACEXML_Parser::parse_xml_decl (void)
 }
 
 int
-ACEXML_Parser::parse_comment (void)
+ACEXML_Parser::parse_comment ()
 {
   int state = 0;
 
@@ -2827,7 +2826,7 @@ ACEXML_Parser::parse_comment (void)
 }
 
 int
-ACEXML_Parser::parse_processing_instruction (void)
+ACEXML_Parser::parse_processing_instruction ()
 {
   const ACEXML_Char *pitarget = this->parse_name ();
   ACEXML_Char *instruction = 0;
@@ -2873,7 +2872,7 @@ ACEXML_Parser::parse_processing_instruction (void)
 }
 
 void
-ACEXML_Parser::reset (void)
+ACEXML_Parser::reset ()
 {
   this->doctype_ = 0;
   if (this->ctx_stack_.pop (this->current_) == -1)

@@ -19,19 +19,19 @@ class Supplier : public ACE_Event_Handler, public ShutdownCallback
 public:
   // Initialization and Termination methods.
   /// Constructor.
-  Supplier (void) = default;
+  Supplier () = default;
 
   /// Destructor.
-  ~Supplier (void) = default;
+  ~Supplier () = default;
 
   /// Initialization method. returns 0 on success, -1 on error.
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Execute the supplier.
-  void run (void);
+  void run ();
 
   /// Shutdown the application.
-  virtual void close (void);
+  virtual void close ();
 
 private:
   /// Handle shutdown signals.

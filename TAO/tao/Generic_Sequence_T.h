@@ -65,7 +65,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename T,
          class ALLOCATION_TRAITS,
          class ELEMENT_TRAITS>
@@ -316,7 +315,7 @@ public:
     return tmp.buffer_;
   }
 
-  void swap(generic_sequence & rhs) throw()
+  void swap(generic_sequence & rhs) noexcept
   {
     std::swap(maximum_, rhs.maximum_);
     std::swap(length_, rhs.length_);

@@ -533,7 +533,6 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
       TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")
                   ACE_TEXT ("could not make cached reply\n")));
-
     }
 
   /// Append reply here....

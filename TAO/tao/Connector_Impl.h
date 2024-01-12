@@ -58,7 +58,6 @@ private:
 };
 
 
-
 /**
  * @class TAO_Connect_Concurrency_Strategy
  *
@@ -88,14 +87,7 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Connector_Impl.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Connector_Impl.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /*TAO_CONNECTOR_IMPL_H*/

@@ -27,7 +27,6 @@
  */
 class be_visitor_typedef_any_op_ch : public be_visitor_typedef
 {
-
 public:
   /// constructor
   be_visitor_typedef_any_op_ch (be_visitor_context *ctx);
@@ -55,7 +54,6 @@ public:
 
   /// visit a union
   virtual int visit_union (be_union *node);
-
 };
 
 #endif /* _BE_VISITOR_TYPEDEF_ANY_OP_CH_H_*/

@@ -69,11 +69,10 @@ int
 ACE::HTBP::Notifier::handle_output (ACE_HANDLE )
 {
   return -1;
-
 }
 
 void
-ACE::HTBP::Notifier::unregister (void)
+ACE::HTBP::Notifier::unregister ()
 {
   if (this->reactor())
     this->reactor()->remove_handler(this,

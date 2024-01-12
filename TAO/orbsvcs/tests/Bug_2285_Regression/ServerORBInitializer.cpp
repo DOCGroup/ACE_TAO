@@ -9,7 +9,6 @@ void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
 {
-
 }
 
 void

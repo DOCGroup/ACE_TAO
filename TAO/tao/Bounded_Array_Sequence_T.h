@@ -15,7 +15,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
 template<typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
 class bounded_array_sequence
 {
@@ -73,7 +72,7 @@ public:
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
-  inline void swap(bounded_array_sequence & rhs) throw() {
+  inline void swap(bounded_array_sequence & rhs) noexcept {
     impl_.swap(rhs.impl_);
   }
   static value_type * allocbuf(CORBA::ULong maximum) {

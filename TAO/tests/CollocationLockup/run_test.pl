@@ -14,11 +14,6 @@ $debug_level = '0';
 # 20 seconds and when the bug was fixed it returned before 20 seconds.
 $timeout = 0;
 
-if ($^O eq "VMS") {
-    # On OpenVMS this test does not lock up but takes much longer
-    $timeout = 280;
-}
-
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';

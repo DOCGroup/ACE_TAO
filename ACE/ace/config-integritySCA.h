@@ -24,7 +24,6 @@
 #define ACE_LACKS_GETEGID
 #define ACE_LACKS_GETGID
 
-#define ACE_TEMPLATES_REQUIRE_SOURCE 1
 #define TAO_USE_SEQUENCE_TEMPLATES
 #define _REENTRANT
 #define ACE_MT_SAFE 1
@@ -85,7 +84,6 @@
 #define ACE_LACKS_MKSTEMP
 #define ACE_LACKS_MPROTECT
 #define ACE_LACKS_MUTEXATTR_PSHARED
-#define ACE_LACKS_PIPE
 #define ACE_LACKS_RLIMIT
 #define ACE_LACKS_RECVMSG
 #define ACE_LACKS_RWLOCK_T
@@ -132,8 +130,6 @@
 
 /***** Not tied to standards AFAIK ****/
 #define ACE_LACKS_MADVISE /* paging optimization not needed with INTEGRITY */
-#define ACE_LACKS_MALLOC_H /* netbsd's just includes stdlib.h */
-#define ACE_LACKS_MEMORY_H /* netbsd's just includes string.h */
 #define ACE_LACKS_INTTYPES_H
 #define ACE_LACKS_SYS_RESOURCE_H
 #define ACE_LACKS_SYS_WAIT_H

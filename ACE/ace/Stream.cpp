@@ -540,7 +540,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::link (ACE_Stream<ACE_SYNCH_USE, TIME_POL
 // Must be called with locks held...
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
-ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink_i (void)
+ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink_i ()
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink_i");
 
@@ -571,7 +571,6 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink_i (void)
             other_tail = other_tail->next ();
 
           other_tail->writer ()->next (this->linked_us_->stream_tail_->writer ());
-
         }
 
       // Make sure the other side is also aware that it's been unlinked!
@@ -585,7 +584,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink_i (void)
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
-ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink (void)
+ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink ()
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
@@ -613,7 +612,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::ACE_Stream (void * a,
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
-ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Stream (void)
+ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Stream ()
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Stream");
 

@@ -229,7 +229,7 @@ be_visitor_valuetype_field_ch::visit_interface (be_interface *node)
   TAO_INSERT_COMMENT (os);
 
   // Set method.
-  *os << pre_op () << "void " << ub->local_name () << " ( ::"
+  *os << pre_op () << "void " << ub->local_name () << " (::"
       << bt->name () << "_ptr"
       << ")" << post_op () << be_nl;
   // Get method.
@@ -455,7 +455,7 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
       // Set method.
-      *os << pre_op () << "void " << ub->local_name () << " ( ::"
+      *os << pre_op () << "void " << ub->local_name () << " (::"
           << bt->name () << "_ptr)"
           << post_op () << be_nl;
       // Get method.
@@ -616,7 +616,7 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
   else
     {
       *os << pre_op ()
-          << "void " << ub->local_name () << " ( ::CORBA::WChar *val)"
+          << "void " << ub->local_name () << " (::CORBA::WChar *val)"
           << post_op () << be_nl;
       *os << pre_op ()
           << "void " << ub->local_name () << " (const ::CORBA::WChar *val)"

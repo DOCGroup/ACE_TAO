@@ -255,10 +255,6 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                           -1);
     }
 
-#if defined (ACE_OPENVMS)
-  ::fsync(this->mmap_.handle());
-#endif
-
   // Increment by one to put us at the beginning of the next chunk...
   ++map_size;
 #endif /* __Lynx__ */
@@ -294,11 +290,7 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
                        0,
                        this->sa_) == -1
       || (this->base_addr_ != 0
-#ifdef ACE_HAS_WINCE
-      && this->mmap_.addr () == 0))  // WinCE does not allow users to specify alloc addr.
-#else
       && this->mmap_.addr () != this->base_addr_))
-#endif  // ACE_HAS_WINCE
     {
 #if 0
       ACELIB_ERROR ((LM_ERROR,
@@ -330,7 +322,6 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
 // Ask operating system for more shared memory, increasing the mapping
 // accordingly.  Note that this routine assumes that the appropriate
 // locks are held when it is called.
-
 void *
 ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
                                size_t &rounded_bytes)

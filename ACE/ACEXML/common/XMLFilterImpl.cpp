@@ -6,7 +6,7 @@
 # include "ACEXML/common/XMLFilterImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl (void)
+ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl ()
   :  parent_ (0),
      // locator_ (0),
      entityResolver_ (0),
@@ -26,7 +26,7 @@ ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl (ACEXML_XMLReader *parent)
 {
 }
 
-ACEXML_XMLFilterImpl::~ACEXML_XMLFilterImpl (void)
+ACEXML_XMLFilterImpl::~ACEXML_XMLFilterImpl ()
 {
   // @@ How are all the object lifecycles managed?
 }
@@ -118,7 +118,7 @@ ACEXML_XMLFilterImpl::characters (const ACEXML_Char *ch,
 }
 
 void
-ACEXML_XMLFilterImpl::endDocument (void)
+ACEXML_XMLFilterImpl::endDocument ()
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->endDocument ();
@@ -177,7 +177,7 @@ ACEXML_XMLFilterImpl::skippedEntity (const ACEXML_Char *name)
 }
 
 void
-ACEXML_XMLFilterImpl::startDocument (void)
+ACEXML_XMLFilterImpl::startDocument ()
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->startDocument ();

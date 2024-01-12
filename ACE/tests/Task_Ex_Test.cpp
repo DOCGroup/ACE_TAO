@@ -13,7 +13,7 @@
 #include "Task_Ex_Test.h"
 #include "ace/Task_Ex_T.h"
 #include "ace/Log_Msg.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -41,7 +41,6 @@ public:
   /// svc thread entry point
   int svc () override;
 private:
-
 };
 
 int Consumer::open (void*)

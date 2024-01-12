@@ -86,7 +86,6 @@ TAO_GIOP_Message_Generator_Parser::parse_locate_reply (
   params.locate_reply_status (static_cast <GIOP::LocateStatusType> (locate_reply_status));
 
   return 0;
-
 }
 
 bool

@@ -42,8 +42,6 @@ private:
   TAO_UTF8_Latin1_Translator *translator_ {};
 };
 
-
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Codeset, TAO_UTF8_Latin1_Factory)
 ACE_FACTORY_DECLARE (TAO_Codeset, TAO_UTF8_Latin1_Factory)
 TAO_END_VERSIONED_NAMESPACE_DECL

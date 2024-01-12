@@ -8,19 +8,19 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Mutex::~TAO_RT_Mutex (void)
+TAO_RT_Mutex::~TAO_RT_Mutex ()
 {
 }
 
 void
-TAO_RT_Mutex::lock (void)
+TAO_RT_Mutex::lock ()
 {
   if (this->mu_.acquire () != 0)
     throw ::CORBA::INTERNAL ();
 }
 
 void
-TAO_RT_Mutex::unlock (void)
+TAO_RT_Mutex::unlock ()
 {
   if (this->mu_.release () != 0)
     throw ::CORBA::INTERNAL ();

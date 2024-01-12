@@ -21,7 +21,7 @@ ServantManager_i::ServantManager_i (CORBA::ORB_ptr orb)
 }
 
 // Destruction.
-ServantManager_i::~ServantManager_i (void)
+ServantManager_i::~ServantManager_i ()
 {
 }
 
@@ -73,11 +73,7 @@ ServantManager_i::obtain_servant (const ACE_TCHAR *str,
   // Cannot go from void* to function pointer directly. Cast the void*
   // to long first.
   void *symbol = dll->symbol (create_symbol_.c_str ());
-#if defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
-  int function = reinterpret_cast<int> (symbol);
-#else
   intptr_t function = reinterpret_cast<intptr_t> (symbol);
-#endif
 
   SERVANT_FACTORY servant_creator =
     reinterpret_cast<SERVANT_FACTORY> (function);

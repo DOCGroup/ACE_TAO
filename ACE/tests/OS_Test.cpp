@@ -108,7 +108,7 @@ rename_test ()
     }
   ACE_OS::fclose (f);
 
-#if defined (ACE_WIN32) && defined (ACE_LACKS_WIN32_MOVEFILEEX) || defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && defined (ACE_LACKS_WIN32_MOVEFILEEX)
   // Can't rename if new_file exists already.
   ACE_OS::unlink (new_file);
 #endif
@@ -603,8 +603,6 @@ snprintf_test (SNPrintF_t fn)
   ACE_OS::memset(buf, 0xab, 2*BUFFER_SIZE);
   retval = fn (buf, BUFFER_SIZE, "%d", 1234);
 
-  // HP-UX has broken vsnprintf
-#if !defined (HPUX)
   if (retval != 4)
     {
       ACE_ERROR ((LM_ERROR,
@@ -612,7 +610,6 @@ snprintf_test (SNPrintF_t fn)
                   retval));
       ++error_count;
     }
-#endif /* !HPUX */
 
   if (buf[3] != 0)
     {
@@ -861,7 +858,6 @@ string_strsncpy_test ()
                         9) == 0);
     // size should be 9 (+ '\0' char)
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(ACE_OS::strlen(strsncpy2) == 9);
-
   }
 
 #if defined (ACE_HAS_WCHAR)

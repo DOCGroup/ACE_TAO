@@ -142,7 +142,6 @@ Supplier::send_market_status (const char *stock_name, long value)
 {
   try
     {
-
       // Make the RMI.
       this->notifier_->market_status (stock_name,
                                       value);

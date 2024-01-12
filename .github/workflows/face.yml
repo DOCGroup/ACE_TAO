@@ -11,6 +11,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build:
     strategy:
@@ -21,7 +24,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-20.04
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} ${{ matrix.CXX }} ${{ matrix.feature }}
     env:
@@ -32,9 +35,9 @@ jobs:
       CXX: ${{ matrix.CXX }}
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: checkout MPC
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}

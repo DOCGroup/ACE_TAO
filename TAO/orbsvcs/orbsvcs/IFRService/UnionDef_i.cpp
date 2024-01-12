@@ -6,7 +6,7 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
