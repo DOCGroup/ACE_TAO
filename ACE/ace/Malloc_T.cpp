@@ -222,33 +222,37 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, nullptr));
 
-  void *ptr = nullptr;
+  size_t const size = this->hierarchy_.size ();
+  if (size == 0)
+    return nullptr;
 
-  for (size_t h = 0; h < this->hierarchy_.size (); h++)
+  // Only the first and last child allocator maybe has free chunks, the others are empty.
+  void* ptr = this->hierarchy_[0]->malloc (nbytes);
+  if (ptr != nullptr)
+    return ptr;
+
+  if (size > 1)
   {
-    ptr = this->hierarchy_[h]->malloc (nbytes);
+    ptr = this->hierarchy_[size - 1]->malloc (nbytes);
     if (ptr != nullptr)
-      break;
+      return ptr;
   }
 
-  if (ptr == nullptr)
-  {
-    comb_alloc_ptr tmp;
-    ACE_NEW_RETURN (tmp, comb_alloc_type (this->initial_n_chunks_ * (1 << this->hierarchy_.size()),
-                    this->chunk_size_),
-                    nullptr);
+  // Need alloc a new child allocator.
+  comb_alloc_ptr tmp;
+  ACE_NEW_RETURN (tmp, comb_alloc_type (this->initial_n_chunks_ * (1 << this->hierarchy_.size()),
+                  this->chunk_size_),
+                  nullptr);
 
-    // Consider the exception of vector push_back call.
-    std::unique_ptr<comb_alloc_type> smart_ptr (tmp);
-    // Has strong exception safety guarantee for call of push_back.
-    this->hierarchy_.push_back (smart_ptr.get ());
+  // Consider the exception of vector push_back call.
+  std::unique_ptr<comb_alloc_type> smart_ptr (tmp);
+  // Has strong exception safety guarantee for call of push_back.
+  this->hierarchy_.push_back (smart_ptr.get ());
 
-    // Increase the chunk sum if all points having potential risk of exception is passed.
-    this->chunk_sum_ += smart_ptr->pool_depth ();
-    ptr = smart_ptr->malloc (nbytes);
-
-    smart_ptr.release ();
-  }
+  // Increase the chunk sum if all points having potential risk of exception is passed.
+  this->chunk_sum_ += smart_ptr->pool_depth ();
+  ptr = smart_ptr->malloc (nbytes);
+  smart_ptr.release ();
 
   return ptr;
 }
@@ -278,12 +282,15 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t, size_t, char)
 template <class ACE_LOCK> void
 ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
 {
+  if (ptr == nullptr)
+    return;
+
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
 
   ACE_ASSERT (this->hierarchy_.size () > 0);
 
   // Use first allocator as a free chunk manager for all allocators when chunk freed.
-  if (ptr != nullptr && this->hierarchy_.size () > 0)
+  if (this->hierarchy_.size () != 0)
     this->hierarchy_[0]->free (ptr);
 }
 
@@ -358,12 +365,15 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::pool_depth ()
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, 0));
 
-  size_t pool_depth = 0;
+  size_t const size = this->hierarchy_.size ();
+  if (size == 0)
+    return 0;
 
-  for (size_t h = 0; h < this->hierarchy_.size (); h++)
-  {
-    pool_depth += this->hierarchy_[h]->pool_depth ();
-  }
+  // Only the first and last child allocator maybe has non-zero value, the others have zero value.
+  size_t pool_depth = this->hierarchy_[0]->pool_depth ();
+
+  if (size > 1)
+    pool_depth += this->hierarchy_[size - 1]->pool_depth ();
 
   return pool_depth;
 }

@@ -6,7 +6,6 @@ CCFLAGS += -Wnon-virtual-dtor
 # Suppress "Creating *.a" Message
 ARFLAGS += -c
 
-gcc_template_instantiation_visibility ?= 0
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
     # Add all symbols to the dynamic symbol table.  Needed to enable
@@ -34,9 +33,6 @@ ifeq ($(shared_libs), 1)
     # improved shared library binaries.
     ifneq ($(no_hidden_visibility),1)
       CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
-      ifeq ($(gcc_template_instantiation_visibility),1)
-        CCFLAGS += -DACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS=1
-      endif # gcc_template_instantiation_visibility
     else
       CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
     endif # no_hidden_visibility
@@ -53,6 +49,10 @@ else
   CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
 endif # shared_libs
 
+ifneq ($(c++std),)
+  CCFLAGS += -std=$(c++std)
+endif
+
 ifeq ($(c++20),1)
   CCFLAGS += -std=c++20
 else
@@ -61,10 +61,6 @@ else
   else
     ifeq ($(c++14),1)
       CCFLAGS += -std=c++14
-    else
-      ifeq ($(c++11),1)
-        CCFLAGS += -std=c++11
-      endif # c++11
     endif # c++14
   endif #c++17
 endif #c++20

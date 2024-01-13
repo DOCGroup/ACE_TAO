@@ -72,15 +72,6 @@ else
 CXX_MINOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/^[0-9]*\.//' | sed -e 's/\..*$$//')
 endif
 
-# gcc 4 has C++03 as default C++ version, enable this to be C++11
-ifeq ($(findstring $(CXX_MAJOR_VERSION),4),$(CXX_MAJOR_VERSION))
-  c++11 ?= 1
-  # gcc 4 has a problem that it warnings about missing initializers
-  # for an std::array containing std::string even when {{}} is used
-  # as it should
-  FLAGS_C_CC += -Wno-missing-field-initializers
-endif
-
 CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
 
 # Only modify LDFLAGS if DLD has been set.

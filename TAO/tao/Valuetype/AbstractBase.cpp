@@ -20,7 +20,7 @@ CORBA::AbstractBase::AbstractBase ()
   : is_objref_ (false)
   , refcount_ (1)
   , is_collocated_ (false)
-  , servant_ (0)
+  , servant_ (nullptr)
   , equivalent_obj_ (CORBA::Object::_nil ())
 {
 }
@@ -105,12 +105,12 @@ CORBA::AbstractBase::_to_value ()
 {
   if (this->is_objref_)
     {
-      return 0;
+      return nullptr;
     }
 
   CORBA::ValueBase *retval = this->_tao_to_value ();
 
-  if (retval != 0)
+  if (retval != nullptr)
     {
       retval->_add_ref ();
     }
@@ -229,10 +229,10 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
 CORBA::Boolean
 operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 {
-  abs = 0;
+  abs = nullptr;
   CORBA::Boolean discriminator = false;
   ACE_InputCDR::to_boolean tb (discriminator);
-  TAO_ORB_Core *orb_core = 0;
+  TAO_ORB_Core *orb_core = nullptr;
 
   if (strm >> tb)
     {
@@ -378,7 +378,7 @@ CORBA::AbstractBase::_tao_stream_v (std::ostream &strm) const
 CORBA::ValueBase *
 CORBA::AbstractBase::_tao_to_value ()
 {
-  return 0;
+  return nullptr;
 }
 
 CORBA::Object_ptr

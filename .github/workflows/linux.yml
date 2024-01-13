@@ -48,19 +48,19 @@ jobs:
           - CC: gcc-11
             CXX: g++-11
             PackageDeps: g++-11
-            optional_macros: CCFLAGS+=-std=c++20
+            optional_macros: c++std=c++20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
             os: ubuntu-22.04
           - CC: gcc-12
             CXX: g++-12
             PackageDeps: g++-12
-            optional_macros: CCFLAGS+=-std=c++20
+            optional_macros: c++std=c++20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
             os: ubuntu-22.04
           - CC: gcc-13
             CXX: g++-13
             PackageDeps: g++-13
-            optional_macros: CCFLAGS+=-std=c++20
+            optional_macros: c++std=c++20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
             os: ubuntu-22.04
           - CC: clang-6.0
@@ -220,7 +220,7 @@ jobs:
       if: matrix.optional_feature != ''
       shell: pwsh
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         languages: cpp
       if: matrix.feature == 'CodeQL'
@@ -258,7 +258,7 @@ jobs:
         make -j 6 -C ${env:TAO_ROOT}/tests/IDLv4
       shell: pwsh
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
       if: matrix.feature == 'CodeQL'
     - name: Install TAO_ACE workspace
       run: |
