@@ -35,10 +35,6 @@ ifeq ($(optimize),0)
   CPPFLAGS += -O0
 endif
 
-ifeq ($(c++11),1)
-  CCFLAGS += -std=c++11
-endif
-
 ifeq ($(c++14),1)
   CCFLAGS += -std=c++14
 endif

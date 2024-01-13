@@ -77,7 +77,7 @@ report process</a>.<p>
   <li><a href="#eclipse">Working with ACE in Eclipse</a></li>
   <li><a href="#advanced">Advanced Topics</a></li>
   <li><a href="#power">Building from git</a></li>
-</li></ul>
+</ul>
 
 
 <p></p><hr><p>
@@ -329,7 +329,7 @@ per-platform configuration method:</p>
       source tree.  The ACE recursive Makefile scheme needs this information.
       There are several ways to set the ACE_ROOT variable.  For example:
       <blockquote>
-      TSCH/CSH:
+      TCSH/CSH:
       <code>setenv ACE_ROOT /home/cs/faculty/schmidt/ACE_wrappers</code>
       </blockquote>
       <blockquote>
@@ -427,6 +427,9 @@ INSTALL_PREFIX = /usr/local
   </li>
   <li>If you've set the INSTALL_PREFIX before building, now run
 <blockquote><code>% make install</code></blockquote>
+    <p>An alternative to directly running <code>make install</make> is to use <code>$ACE_ROOT/bin/install_proj.sh</code>
+       which will only install projects that are built (instead of trying to build each one during <code>make install</code>).
+    </p>
   </li>
   <li>If you need to regenerate the <code>ace/Svc_Conf_y.cpp</code> file,
       you'll need to
@@ -675,15 +678,10 @@ to check <a href="#win32nonic">here</a> first. <p>
       Codeguard support. Should only be used when DEBUG is also set<br>
       <code>set CODEGUARD=1</code><br>
       <br>
-      By default we are using the clang based compilers. At the moment you
-      want to compile using the old bcc32 compiler set the CLASIC environment variable<br>
-      <code>set CLASSIC=1</code><br>
+      Set one of the following environment variable to 1 to select which Embarcadero
+      C++ compiler has to be used. Valid environment variables are BCC32, BCC32C, and BCC64.
       <br>
-      Set the environment variable below to build a version of ACE optimized
-      for a certain CPU. For this there are special compiler flags
-      (-3/-4/-5/-6), see the Embarcadero help for more info.<br>
-      <code>set CPU_FLAG=-6</code><br>
-      <br>
+      <code>set BCC32=1</code><br>
       You can then start the build with the command
       <br><code>make -f Makefile.bmak all</code><br>
       <br>
@@ -2474,7 +2472,7 @@ perl bin/mwc.pl  -type vc71 -relative ACE_ROOT=C:/ace/ACE_wrappers -relative TAO
 If you use the GNU GCC g++ compiler please note the following:
 
 <ul>
-  </p></li><li>ACE/TAO needs g++ 4.8 or better. Older versions are not usable anymore<p>
+  </p><li>ACE/TAO needs g++ 4.8 or better. Older versions are not usable anymore<p>
 
   </p></li><li>Make sure to update your gcc <code>config.status</code>
       file.  This file is produced when installing gcc; it specifies

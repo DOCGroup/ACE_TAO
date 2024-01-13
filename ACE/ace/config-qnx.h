@@ -13,8 +13,6 @@
 #  error "Could not detect QNX version from macro _NTO_VERSION"
 #endif
 
-#define _POSIX_C_SOURCE 199506
-
 // The following defines the Neutrino compiler.
 // gcc should know to call g++ as necessary
 #ifdef __GNUC__
@@ -24,19 +22,6 @@
 #endif
 
 #include "ace/config-g++-common.h"
-
-// /usr/nto/include/float.h defines
-//  FLT_MAX_EXP 127
-//  DBL_MAX_EXP 1023
-//  ace expects 128 & 1024 respectively
-//  to set the following macros in ace/Basic_Types.h
-//  These macros are:
-#define ACE_SIZEOF_DOUBLE   8
-#define ACE_SIZEOF_FLOAT    4
-
-// At least qnx 6.3.2 uses a void return for unsetenv
-// This assumes that older versions do too.
-#define ACE_HAS_VOID_UNSETENV
 
 /////////////////////////////////////////////////////////////////
 //    Definition of the features that are available.
@@ -113,18 +98,13 @@
 //
 //                ACE_LACKS Section
 /////////////////////////////////////////////////////////////////
-#define ACE_LACKS_CONST_TIMESPEC_PTR
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_MADVISE
 // Multicast_Tests reports for NTO 621 frames from unsubscribed groups
 #define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
-#define ACE_LACKS_RWLOCK_T
-#define ACE_LACKS_SO_SNDBUF
-#define ACE_LACKS_SO_RCVBUF
 #define ACE_LACKS_STREAM_MODULES
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_STRRECVFD
-#define ACE_LACKS_SYSCALL
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_TIMESPEC_T
@@ -134,18 +114,32 @@
 #define ACE_HAS_SYSCTL
 #define ACE_HAS_SIGACTION_CONSTP2 1
 #define ACE_LACKS_PTHREAD_SCOPE_PROCESS
+#define ACE_HAS_POLL 1
+#define ACE_HAS_WCHAR 1
+#define ACE_HAS_XPG4_MULTIBYTE_CHAR 1
 
-#if _NTO_VERSION < 650
-# define ACE_LACKS_NFDBITS
-# define ACE_LACKS_FD_MASK
-# define ACE_LACKS_SYS_MSG_H
-# define ACE_LACKS_ALPHASORT
-# define ACE_LACKS_STRPTIME
-# define ACE_LACKS_POLL_H
+#if _NTO_VERSION < 710
+# define ACE_LACKS_CONST_TIMESPEC_PTR
+# define ACE_LACKS_RWLOCK_T
+# define ACE_LACKS_SO_SNDBUF
+# define ACE_LACKS_SO_RCVBUF
+# define ACE_LACKS_SYSCALL
+# define ACE_LACKS_ITOW
+# define ACE_LACKS_WCSICMP
+# define ACE_LACKS_WCSNICMP
+# define ACE_LACKS_WCSDUP
+# define ACE_LACKS_STD_WSTRING
+// /usr/nto/include/float.h defines
+//  FLT_MAX_EXP 127
+//  DBL_MAX_EXP 1023
+//  ace expects 128 & 1024 respectively
+//  to set the following macros in ace/Basic_Types.h
+//  These macros are:
+# define ACE_SIZEOF_DOUBLE   8
+# define ACE_SIZEOF_FLOAT    4
+# define _POSIX_C_SOURCE 199506
 #else
-# define ACE_HAS_POLL 1
-# define ACE_HAS_WCHAR 1
-# define ACE_HAS_XPG4_MULTIBYTE_CHAR 1
+# define ACE_HAS_NONCONST_CMSG_SPACE
 #endif
 
 #define ACE_LACKS_ISCTYPE
@@ -162,13 +156,6 @@
 
 #define ACE_SIZEOF_WCHAR 4
 
-// No prototypes
-#define ACE_LACKS_ITOW
-#define ACE_LACKS_WCSICMP
-#define ACE_LACKS_WCSNICMP
-#define ACE_LACKS_WCSDUP
-#define ACE_LACKS_STD_WSTRING
-
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 # define ACE_HAS_THREADS
 # define ACE_HAS_PTHREADS
@@ -177,13 +164,15 @@
 # define ACE_HAS_PTHREAD_GETCONCURRENCY
 #endif /* ACE_MT_SAFE */
 
-
 // The default value of FD_SETSIZE is 32, but actually x86 NTO
 // supports by default at least 1000 descriptors in fd_set.
 #if defined( FD_SETSIZE )
 #undef FD_SETSIZE
 #endif
 #define FD_SETSIZE 1000
+
+#define ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "%ld"
+#define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_QNX_H */

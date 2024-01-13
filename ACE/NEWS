@@ -1,3 +1,6 @@
+USER VISIBLE CHANGES BETWEEN ACE-7.1.2 and ACE-7.1.3
+====================================================
+
 USER VISIBLE CHANGES BETWEEN ACE-7.1.1 and ACE-7.1.2
 ====================================================
 
@@ -6,6 +9,13 @@ USER VISIBLE CHANGES BETWEEN ACE-7.1.1 and ACE-7.1.2
   own auto_ptr. With C++17 ACE doesn't provide ACE_Auto_Ptr,
   ACE_Auto_Basic_Ptr, ACE_Auto_Basic_Array_Ptr, ACE_Auto_Array_Ptr,
   and ACE_auto_ptr_reset anymore, just use std::unique_ptr
+
+. Add c++std which can be used in the platform_macros.GNU
+  to set the C++ revision to be used (results in -std= flag)
+
+. Improve support for QNX 7.1
+
+. Embarcadero C++ Builder enhancements
 
 USER VISIBLE CHANGES BETWEEN ACE-7.1.0 and ACE-7.1.1
 ====================================================

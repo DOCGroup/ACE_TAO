@@ -245,7 +245,7 @@ ACE_Future_Rep<T>::attach (ACE_Future_Observer<T> *observer,
   if (this->value_ == 0)
     result = this->observer_collection_.insert (observer);
   else
-      observer->update (caller);
+    observer->update (caller);
 
   return result;
 }
