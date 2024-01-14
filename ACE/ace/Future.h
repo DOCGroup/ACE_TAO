@@ -16,6 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
+#include <atomic>
 #include "ace/Unbounded_Set.h"
 #include "ace/Strategies_T.h"
 
