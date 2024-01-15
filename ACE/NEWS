@@ -1,6 +1,13 @@
 USER VISIBLE CHANGES BETWEEN ACE-7.1.2 and ACE-7.1.3
 ====================================================
 
+. Fixed possible race conditions in extreme use case
+  in the barriar and future implementations
+
+. Improve support for QNX 7.1 and FreeBSD
+
+. Integrated debian packaging changes
+
 USER VISIBLE CHANGES BETWEEN ACE-7.1.1 and ACE-7.1.2
 ====================================================
 
