@@ -4,7 +4,7 @@
 
 #define ACE_MAJOR_VERSION 7
 #define ACE_MINOR_VERSION 1
-#define ACE_MICRO_VERSION 2
-#define ACE_VERSION "7.1.2"
-#define ACE_VERSION_CODE 0x70102
+#define ACE_MICRO_VERSION 3
+#define ACE_VERSION "7.1.3"
+#define ACE_VERSION_CODE 0x70103
 #define ACE_MAKE_VERSION_CODE(a,b,c) (((a) << 16) + ((b) << 8) + (c))
