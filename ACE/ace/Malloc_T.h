@@ -5,7 +5,8 @@
  *  @file    Malloc_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and
- *          Irfan Pyarali <irfan@cs.wustl.edu>
+ *          Irfan Pyarali <irfan@cs.wustl.edu> and
+ *          smithAchang <changyunlei@126.com>
  */
 //==========================================================================
 
@@ -15,6 +16,7 @@
 
 #include "ace/Malloc.h"               /* Need ACE_Control_Block */
 #include "ace/Malloc_Base.h"          /* Need ACE_Allocator */
+#include "ace/Null_Mutex.h"           /* Need ACE_Null_Mutex */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,6 +25,8 @@
 #include "ace/Malloc_Allocator.h"
 #include "ace/Free_List.h"
 #include "ace/Guard_T.h"
+
+#include <vector>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -201,6 +205,109 @@ private:
 
   /// Remember the size of our chunks.
   size_t chunk_size_;
+};
+
+/**
+ * @class ACE_Cascaded_Dynamic_Cached_Allocator
+ *
+ * @brief A size-based allocator that caches blocks for quicker access,
+ * but with a hierarchy of cascaded, nested allocators
+ *
+ * This class enables caching of dynamically allocated,
+ * fixed-size chunks. Notice that the @a chunk_size
+ * must be greater than or equal to <code> sizeof (void*) </code> for
+ * this to work properly.
+ *
+ * Notice that when the latest allocator is empty, the allocator will create a fresh
+ * @a ACE_Dynamic_Cached_Allocator allocator again with
+ * <code> init_n_chunks * ( 1 << the sum of current allocators ) </code> as it's constructor parameter,
+ * so all the allocators will form a cascaded hierarchy.
+
+ * This class can be configured flexibly with different types of
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and
+ * @a ACE_Process_Mutex constructor API.
+ *
+ * @sa ACE_Dynamic_Cached_Allocator
+ */
+template <class ACE_LOCK>
+class ACE_Cascaded_Dynamic_Cached_Allocator : public ACE_Allocator
+{
+public:
+  // Useful STL-style traits.
+  using comb_alloc_type = ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex>;
+  using comb_alloc_ptr  = comb_alloc_type*;
+
+  /// Create a cached memory pool with @a initial_n_chunks chunks
+  /// each with @a chunk_size size.
+  ACE_Cascaded_Dynamic_Cached_Allocator (size_t initial_n_chunks, size_t chunk_size);
+
+  /// Clear things up.
+  ~ACE_Cascaded_Dynamic_Cached_Allocator ();
+
+  /**
+   * Get a chunk of memory from free list cache.  Note that @a nbytes is
+   * only checked to make sure that it's less or equal to @a chunk_size,
+   * and is otherwise ignored since malloc() always returns a pointer to an
+   * item of @a chunk_size size.
+   */
+  virtual void *malloc (size_t nbytes);
+
+  /**
+   * Get a chunk of memory from free list cache, giving them
+   * @a initial_value.  Note that @a nbytes is only checked to make sure
+   * that it's less or equal to @a chunk_size, and is otherwise ignored
+   * since calloc() always returns a pointer to an item of @a chunk_size.
+   */
+  virtual void *calloc (size_t nbytes, char initial_value = '\0');
+
+  /// This method is a no-op and just returns 0 since the free list
+  /// only works with fixed sized entities.
+  virtual void *calloc (size_t n_elem, size_t elem_size, char initial_value = '\0');
+
+  /// Return a chunk of memory back to free list cache.
+  virtual void free (void *ptr);
+
+  /// Dump the state of this object.
+  virtual void dump () const;
+
+  /// These methods are no-ops.
+  virtual int remove ();
+  virtual int bind (const char *name, void *pointer, int duplicates = 0);
+  virtual int trybind (const char *name, void *&pointer);
+  virtual int find (const char *name, void *&pointer);
+  virtual int find (const char *name);
+  virtual int unbind (const char *name);
+  virtual int unbind (const char *name, void *&pointer);
+  virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
+  virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
+  virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
+  virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
+
+  /// Return the number of chunks available in the hierarchy.
+  size_t pool_depth ();
+
+  /// Return the sum of chunks including used and freed in the hierarchy.
+  size_t pool_sum ();
+
+  /// Returns a reference to the lock used to provide mutual exclusion to
+  /// the allocator hierarchy.
+  ACE_LOCK &mutex ();
+
+private:
+  /// Synchronization variable for API.
+  ACE_LOCK mutex_;
+
+  /// Remember how we allocate the memory so we can clear things up later.
+  std::vector<comb_alloc_ptr> hierarchy_;
+
+  /// Remember the size of initial n_chunks for creating fresh allocator in future.
+  const size_t initial_n_chunks_;
+
+  /// Remember the size of our chunks for creating fresh allocator in future.
+  const size_t chunk_size_;
+
+  /// Remember the sum of our chunks including used and freed
+  size_t chunk_sum_;
 };
 
 /**
