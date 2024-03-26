@@ -131,7 +131,7 @@ jobs:
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v11
       with:
-        vcpkgGitCommitId: fba75d09065fcc76a25dcf386b1d00d33f5175af
+        vcpkgGitCommitId: a34c873a9717a888f58dc05268dea15592c2f0ff
         runVcpkgInstall: true
     - name: create $ACE_ROOT/ace/config.h
       run: |
