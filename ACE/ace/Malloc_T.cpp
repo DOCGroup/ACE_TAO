@@ -231,16 +231,18 @@ ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   if (ptr != nullptr)
     return ptr;
 
-  if (size > 1)
+  // The code will possibly be optimized by compiler when using const var.
+  size_t const lastAllocatorPos = size - 1;
+  if (lastAllocatorPos > 0)
   {
-    ptr = this->hierarchy_[size - 1]->malloc (nbytes);
+    ptr = this->hierarchy_[lastAllocatorPos]->malloc (nbytes);
     if (ptr != nullptr)
       return ptr;
   }
 
   // Need alloc a new child allocator.
   comb_alloc_ptr tmp;
-  ACE_NEW_RETURN (tmp, comb_alloc_type (this->initial_n_chunks_ * (1 << this->hierarchy_.size()),
+  ACE_NEW_RETURN (tmp, comb_alloc_type (this->initial_n_chunks_ * (1 << size),
                   this->chunk_size_),
                   nullptr);
 
