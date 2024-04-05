@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-7.1.3 and ACE-7.1.4
 ====================================================
 
+. With g++ versions < 11 we default to C++17 as
+  minimum C++ standards level
+
 USER VISIBLE CHANGES BETWEEN ACE-7.1.2 and ACE-7.1.3
 ====================================================
 
