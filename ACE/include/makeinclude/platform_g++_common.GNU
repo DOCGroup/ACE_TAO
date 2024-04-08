@@ -74,6 +74,20 @@ endif
 
 CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
 
+# Minimum C++ level is now C++17, gcc until version 11 have an older version as default
+ifeq ($(findstring $(CXX_MAJOR_VERSION),7),$(CXX_MAJOR_VERSION))
+  c++std ?= c++17
+endif
+ifeq ($(findstring $(CXX_MAJOR_VERSION),8),$(CXX_MAJOR_VERSION))
+  c++std ?= c++17
+endif
+ifeq ($(findstring $(CXX_MAJOR_VERSION),9),$(CXX_MAJOR_VERSION))
+  c++std ?= c++17
+endif
+ifeq ($(findstring $(CXX_MAJOR_VERSION),10),$(CXX_MAJOR_VERSION))
+  c++std ?= c++17
+endif
+
 # Only modify LDFLAGS if DLD has been set.
 ifneq ($(DLD),)
   ifeq ($(DLD),$(CXX_FOR_VERSION_TEST)) # only try this is we are using ld through gcc
