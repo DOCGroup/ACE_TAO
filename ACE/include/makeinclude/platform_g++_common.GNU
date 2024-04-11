@@ -111,13 +111,11 @@ ifeq ($(no_strict_aliasing), 1)
   FLAGS_C_CC += -fno-strict-aliasing
 else
   ifneq ($(no_strict_aliasing), 0)
-    # if not explicitly disabled enable suppression of strict-aliasing checks by default
-    # for GCC >= 4.2; these checks and the resulting warnings are very controversial and
+    # if not explicitly disabled enable suppression of strict-aliasing checks by default;
+    # these checks and the resulting warnings are very controversial and
     # popular opinion on the web seems to be that it brings little practical value and a
     # lot of pain to attempt to solve code issues and the best way to deal is to suppress
-    ifneq ($(findstring $(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION),4.1),$(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION))
-      FLAGS_C_CC += -fno-strict-aliasing
-    endif
+    FLAGS_C_CC += -fno-strict-aliasing
   endif
 endif
 
