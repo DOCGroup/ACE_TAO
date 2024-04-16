@@ -182,8 +182,7 @@ namespace ACE
 
     ACE_WString URL_Base::to_wstring () const
       {
-        ACE_Ascii_To_Wide ws(this->to_string().c_str ());
-        return ws.wchar_rep ();
+        return ACE_Ascii_To_Wide (this->to_string().c_str ()).wchar_rep ();
       }
 
     URL_Base* URL_Base::create_from_wstring (const ACE_WString& url_string)
