@@ -1,7 +1,0 @@
-// -*- MPC -*-
-project {
-  specific(nmake) {
-    add_compile -= /Wp64
-  }
-}
-
