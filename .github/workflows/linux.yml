@@ -230,6 +230,10 @@ jobs:
       with:
         languages: cpp
       if: matrix.feature == 'CodeQL'
+    - name: Print compiler version
+      run: |
+        ${env:CXX} -dumpversion
+      shell: pwsh
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
