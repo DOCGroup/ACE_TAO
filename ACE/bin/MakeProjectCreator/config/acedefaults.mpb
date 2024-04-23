@@ -61,7 +61,7 @@ feature(ace_languagestandard2017) {
   specific(vs2017,vs2019,vs2022) {
     LanguageStandard = stdcpp17
   }
-  specific(cmake)
+  specific(cmake) {
     languagestandard = 17
   }
 }
