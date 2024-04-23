@@ -20,7 +20,7 @@ CXX_MAJOR_VERSION := $(call CXX_MAJOR_DOT,$(CXX_VERSION),1)
 endif
 
 # clang 16 and newer default to C++17
-ifeq ($(CXX_MAJOR_VERSION),$(filter $(CXX_MAJOR_VERSION),6 7 8 9 10 11 12 13 14 15))
+ifeq ($(CXX_MAJOR_VERSION),$(filter $(CXX_MAJOR_VERSION),4 5 6 7 8 9 10 11 12 13 14 15))
   c++std ?= c++17
 endif
 
