@@ -15,7 +15,8 @@ endif
 ifeq (cmd,$(findstring cmd,$(SHELL)))
 CXX_MAJOR_VERSION := $(firstword $(subst ., ,$(CXX_VERSION)))
 else
-CXX_MAJOR_VERSION := $(shell $(CXX) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
+CXX_MAJOR_DOT = $(word $2,$(subst ., ,$1))
+CXX_MAJOR_VERSION := $(call CXX_MAJOR_DOT,$(CXX_VERSION),1)
 endif
 
 # clang 16 and newer default to C++17
