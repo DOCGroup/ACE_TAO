@@ -40,8 +40,9 @@ jobs:
     - name: checkout MPC
       uses: actions/checkout@v4
       with:
-        repository: DOCGroup/MPC
+        repository: jwillemsen/MPC
         path: ${{ env.MPC_ROOT }}
+        ref: jwi-cmakelanguagestandard
     - name: Add Repo
       run: |
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
