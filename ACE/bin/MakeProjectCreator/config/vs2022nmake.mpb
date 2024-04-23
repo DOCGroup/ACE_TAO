@@ -28,3 +28,9 @@ feature(vc_avoid_hides_class_member) {
     DisableSpecificWarnings += 4458
   }
 }
+
+feature(vc_languagestandard) {
+  specific(nmake) {
+    languagestandard = /std:c++17
+  }
+}

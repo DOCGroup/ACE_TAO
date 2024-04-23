@@ -56,3 +56,9 @@ feature(!threads) {
     platform_libs -= rt
   }
 }
+
+feature(vc_languagestandard) {
+  specific(vs2017,vs2019,vs2022) {
+    languagestandard = /std:c++17
+  }
+}
