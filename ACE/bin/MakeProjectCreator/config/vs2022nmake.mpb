@@ -29,8 +29,8 @@ feature(vc_avoid_hides_class_member) {
   }
 }
 
-feature(vc_languagestandard) {
+feature(vc_languagestandard2017) {
   specific(nmake) {
-    languagestandard = /std:c++17
+    compile_flags += /std:c++17
   }
 }

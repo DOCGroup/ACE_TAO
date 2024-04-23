@@ -57,8 +57,8 @@ feature(!threads) {
   }
 }
 
-feature(vc_languagestandard) {
+feature(vc_languagestandard2017) {
   specific(vs2017,vs2019,vs2022) {
-    languagestandard = /std:c++17
+    LanguageStandard = stdcpp17
   }
 }
