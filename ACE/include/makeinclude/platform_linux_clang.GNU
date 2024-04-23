@@ -41,10 +41,6 @@ ifeq ($(optimize),0)
   CPPFLAGS += -O0
 endif
 
-ifeq ($(CXX_MAJOR_VERSION),7)
-  c++std ?= c++17
-endif
-
 ifneq ($(c++std),)
   CCFLAGS += -std=$(c++std)
 endif
