@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN ACE-7.1.4 and ACE-7.1.5
 ====================================================
 
+. ACE/TAO now require C++17 or newer
+
+. Add support for Embarcadero C++ Builder bcc64x compiler
+
 USER VISIBLE CHANGES BETWEEN ACE-7.1.3 and ACE-7.1.4
 ====================================================
 
