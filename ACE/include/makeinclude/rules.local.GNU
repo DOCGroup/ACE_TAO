@@ -267,19 +267,7 @@ else
 ARCH_SOURCE_DIR := $(patsubst %/,%,$(call PWD)/$(ARCH))
 endif
 
-$(INSBIN)/%$(VAR)$(EXEEXT) \
-$(INSINC)/ace% \
-$(INSLIB)/% \
-$(INSMAN)/man1/% \
-$(INSMAN)/man2/% \
-$(INSMAN)/man3/% \
-$(INSMAN)/man4/% \
-$(INSMAN)/man5/% \
-$(INSMAN)/man6/% \
-$(INSMAN)/man7/% \
-$(INSMAN)/man8/% \
-$(INSMAN)/manl/% \
-$(INSMAN)/mann/% :
+$(INSLIB)/% :
 	@$(MKDIR) $(@D)
 ifeq ($(vxworks_ntbuild),1)
   ifeq ($(SOVERSION),)
