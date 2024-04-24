@@ -43,17 +43,11 @@ endif
 
 ifneq ($(c++std),)
   CCFLAGS += -std=$(c++std)
-endif
-
-ifeq ($(c++20),1)
+else ifeq ($(c++20),1)
   CCFLAGS += -std=c++20
-endif
-
-ifeq ($(c++17),1)
+else ifeq ($(c++17),1)
   CCFLAGS += -std=c++17
-endif
-
-ifeq ($(c++14),1)
+else ifeq ($(c++14),1)
   CCFLAGS += -std=c++14
 endif
 
