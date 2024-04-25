@@ -51,6 +51,17 @@ feature(vc_avoid_winsock_warnings) {
   }
 }
 
+feature(vc_avoid_stdext_arr_iters_warning) {
+  specific(prop:microsoft) {
+    macros += _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING
+  }
+  verbatim(cmake, macros, 1) {
+    if(MSVC)
+    "  add_compile_definitions(_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)"
+    endif()
+  }
+}
+
 feature(vc_avoid_hides_local_declaration) {
   specific(vc14) {
     DisableSpecificWarnings += 4456

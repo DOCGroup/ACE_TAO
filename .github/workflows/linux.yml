@@ -120,6 +120,12 @@ jobs:
             Repo: llvm-toolchain-$(lsb_release -cs)-15
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
             os: ubuntu-22.04
+          - CC: clang-16
+            CXX: clang++-16
+            PackageDeps: clang-16
+            Repo: llvm-toolchain-$(lsb_release -cs)-16
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            os: ubuntu-22.04
           - feature: CORBA/e micro
             CC: gcc-10
             CXX: g++-10

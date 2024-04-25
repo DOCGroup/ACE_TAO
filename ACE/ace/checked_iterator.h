@@ -11,7 +11,7 @@
  * Some compilers (e.g. MSVC++ >= 8) issue security related
  * diagnostics if algorithms such as std::copy() are used in an unsafe
  * way.  Normally this isn't an issue if STL container iterators are
- * used in conjuction with the standard algorithms.  However, in cases
+ * used in conjunction with the standard algorithms.  However, in cases
  * where application-specific iterators are use with standard
  * algorithms that could potentially overrun a buffer, extra care must
  * be taken to prevent such an overrun.  If supported, checked

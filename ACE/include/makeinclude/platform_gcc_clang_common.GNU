@@ -51,19 +51,13 @@ endif # shared_libs
 
 ifneq ($(c++std),)
   CCFLAGS += -std=$(c++std)
-endif
-
-ifeq ($(c++20),1)
+else ifeq ($(c++20),1)
   CCFLAGS += -std=c++20
-else
-  ifeq ($(c++17),1)
-    CCFLAGS += -std=c++17
-  else
-    ifeq ($(c++14),1)
-      CCFLAGS += -std=c++14
-    endif # c++14
-  endif #c++17
-endif #c++20
+else ifeq ($(c++17),1)
+  CCFLAGS += -std=c++17
+else ifeq ($(c++14),1)
+  CCFLAGS += -std=c++14
+endif
 
 # If no option has been specified, set templates to automatic
 # version of the compiler.
