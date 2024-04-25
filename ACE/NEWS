@@ -5,6 +5,9 @@ USER VISIBLE CHANGES BETWEEN ACE-7.1.4 and ACE-7.2.0
 
 . Add support for Embarcadero C++ Builder bcc64x compiler
 
+. Removed ace/Auto_Ptr.*, with C++17 std::auto_ptr is not
+  available anymore
+
 USER VISIBLE CHANGES BETWEEN ACE-7.1.3 and ACE-7.1.4
 ====================================================
 
