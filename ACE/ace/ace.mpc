@@ -297,7 +297,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Auto_Event.cpp
     Auto_Functor.cpp
     Auto_IncDec_T.cpp
-    Auto_Ptr.cpp
     Based_Pointer_T.cpp
     Bound_Ptr.cpp
     Cache_Map_Manager_T.cpp

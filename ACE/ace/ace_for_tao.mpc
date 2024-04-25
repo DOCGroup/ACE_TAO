@@ -218,7 +218,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Auto_Event.cpp
     Auto_Functor.cpp
     Auto_IncDec_T.cpp
-    Auto_Ptr.cpp
     Based_Pointer_T.cpp
     Cache_Map_Manager_T.cpp
     Cached_Connect_Strategy_T.cpp
