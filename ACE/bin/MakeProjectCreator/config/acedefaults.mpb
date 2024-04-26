@@ -9,13 +9,14 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
     unicode_flags += -DACE_USES_WCHAR
     macros += MPC_LIB_MODIFIER=\\"$(LIBMODIFIER)$(ULIBMODIFIER)\\"
     debug_macros += ACE_NO_INLINE=1
+    platform_libs += iphlpapi
   }
 
   specific(prop:microsoft) {
     macro_for_lib_modifier=1
   }
 
-  specific(prop:windows) {
+  specific(prop:microsoft,iar,uvis,wix) {
     lit_libs += iphlpapi
   }
   verbatim(cmake, top, 1) {
@@ -26,7 +27,7 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
   }
 
   specific(cdt6) {
-    win32::platform_libs += ws2_32 mswsock netapi32
+    win32::platform_libs += ws2_32 mswsock netapi32 iphlpapi
     release::macros += ACE_NDEBUG
   }
 
