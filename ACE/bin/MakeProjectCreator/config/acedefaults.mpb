@@ -4,21 +4,24 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
   includes    += $(ACE_ROOT)
   libpaths    += $(ACE_ROOT)/lib
 
+
+  specific(prop:microsoft) {
+    macro_for_lib_modifier=1
+  }
+
+  specific(prop:windows) {
+    lit_libs += iphlpapi
+  }
+
   // Support the alternative Borland Make project type
   specific(bmake) {
     unicode_flags += -DACE_USES_WCHAR
     macros += MPC_LIB_MODIFIER=\\"$(LIBMODIFIER)$(ULIBMODIFIER)\\"
     debug_macros += ACE_NO_INLINE=1
     platform_libs += iphlpapi
+    lit_libs -= iphlpapi
   }
 
-  specific(prop:microsoft) {
-    macro_for_lib_modifier=1
-  }
-
-  specific(prop:microsoft,iar,uvis,wix) {
-    lit_libs += iphlpapi
-  }
   verbatim(cmake, top, 1) {
     set(ACE_ROOT $ENV{ACE_ROOT})
     if(WIN32)
@@ -27,7 +30,7 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
   }
 
   specific(cdt6) {
-    win32::platform_libs += ws2_32 mswsock netapi32 iphlpapi
+    win32::platform_libs += ws2_32 mswsock netapi32
     release::macros += ACE_NDEBUG
   }
 
