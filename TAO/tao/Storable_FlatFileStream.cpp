@@ -16,7 +16,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/Numeric_Limits.h"
 #include "ace/Truncate.h"
 #include "tao/debug.h"
 
@@ -24,6 +23,7 @@
 #include <mntent.h>
 #endif /* ACE_HAS_MNTENT */
 
+#include <limits>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -417,8 +417,8 @@ TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
 {
   int bufSize = 0;
   ACE_CString::size_type const max_buf_len =
-    ACE_Numeric_Limits<ACE_CString::size_type>::max ();
-  int const max_int = ACE_Numeric_Limits<int>::max ();
+    std::numeric_limits<ACE_CString::size_type>::max ();
+  int const max_int = std::numeric_limits<int>::max ();
   switch (fscanf(fl_, "%d\n", &bufSize))
     {
     case 0:

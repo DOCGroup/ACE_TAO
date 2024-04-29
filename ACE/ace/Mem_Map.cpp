@@ -121,7 +121,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
           // Make sure that we have not been asked to do the impossible.
           if (static_cast<ACE_UINT64> (length_request)
               + static_cast<ACE_UINT64> (offset)
-              > static_cast<ACE_UINT64> (ACE_Numeric_Limits<ACE_OFF_T>::max ()))
+              > static_cast<ACE_UINT64> (std::numeric_limits<ACE_OFF_T>::max ()))
             return -1;
 
           // File length implicitly requested by user

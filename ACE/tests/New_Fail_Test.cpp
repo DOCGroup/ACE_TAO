@@ -20,7 +20,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 #include "ace/CORBA_macros.h"
-#include "ace/Numeric_Limits.h"
+#include <limits>
 
 // This test allocates all of the heap memory, forcing 'new' to fail
 // because of a lack of memory.  The ACE_NEW macros should prevent an
@@ -33,7 +33,7 @@
 
 // Most we can do, by half. Using max alone gets "invalid allocation size"
 // messages on stdout on Windows.
-static const size_t BIG_BLOCK = ACE_Numeric_Limits<size_t>::max () / 2;
+static const size_t BIG_BLOCK = std::numeric_limits<size_t>::max () / 2;
 
 // Shouldn't take many "as much as possible" tries to get a failure.
 static const int MAX_ALLOCS_IN_TEST = 2;
