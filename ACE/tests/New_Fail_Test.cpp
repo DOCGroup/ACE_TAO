@@ -31,12 +31,12 @@
 // wrong.  The allocated memory is always freed to avoid masking a leak
 // somewhere else in the test.
 
-// Most we can do, by half. Using max alone gets "invalid allocation size"
+// Most we can do, by quarter. Using max alone gets "invalid allocation size"
 // messages on stdout on Windows.
-static const size_t BIG_BLOCK = std::numeric_limits<size_t>::max () / 2;
+constexpr size_t BIG_BLOCK = std::numeric_limits<size_t>::max () / 4;
 
 // Shouldn't take many "as much as possible" tries to get a failure.
-static const int MAX_ALLOCS_IN_TEST = 2;
+constexpr int MAX_ALLOCS_IN_TEST = 2;
 
 static void
 try_ace_new (char **p)
