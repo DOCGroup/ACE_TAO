@@ -1,4 +1,4 @@
-USER VISIBLE CHANGES BETWEEN ACE-7.1.4 and ACE-7.2.0
+USER VISIBLE CHANGES BETWEEN ACE-7.1.4 and ACE-8.0.0
 ====================================================
 
 . ACE/TAO now require C++17 or newer
