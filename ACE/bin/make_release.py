@@ -448,20 +448,20 @@ def get_comp_versions (component):
 
 
 def update_latest_branch (product, which, main_branch):
-    """Update one of the Latest_ACE7TAO3_* branches to point to the new release.
+    """Update one of the Latest_ACE8TAO4_* branches to point to the new release.
     """
 
-    name = "Latest_ACE7TAO3_" + which
+    name = "Latest_ACE8TAO4_" + which
 
     vprint ('Fast-forwarding', name, 'to', main_branch)
     ex ("cd $DOC_ROOT/" + product + " && git fetch . " + main_branch +  ":" + name)
 
 
 def push_latest_branch (product, which, main_branch):
-    """Update one of the remote Latest_ACE7TAO3_* branches to point to the new release.
+    """Update one of the remote Latest_ACE8TAO4_* branches to point to the new release.
     """
 
-    name = "Latest_ACE7TAO3_" + which
+    name = "Latest_ACE8TAO4_" + which
 
     if opts.push:
         vprint ("Pushing branch", name)
