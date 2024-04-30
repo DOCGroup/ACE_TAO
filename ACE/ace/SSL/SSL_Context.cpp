@@ -268,7 +268,7 @@ ACE_SSL_Context::set_mode (int mode)
     case ACE_SSL_Context::TLS_client:
       method = ::TLS_client_method ();
       break;
-    case ACE_SSL_Context::SSLv23_server:  
+    case ACE_SSL_Context::SSLv23_server:
     case ACE_SSL_Context::TLS_server:
       method = ::TLS_server_method ();
       break;
