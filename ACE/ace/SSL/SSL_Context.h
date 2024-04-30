@@ -104,15 +104,12 @@ public:
 
   enum {
     INVALID_METHOD = -1,
-#if OPENSSL_VERSION_NUMBER >= 0x10100000L
     TLS_client,
     TLS_server,
-    TLS
-#else
-    SSLv23_client,
-    SSLv23_server,
-    SSLv23
-#endif
+    TLS,
+    SSLv23_client [[deprecated("Use TLS_client instead.")]],
+    SSLv23_server [[deprecated("Use TLS_server instead.")]],
+    SSLv23 [[deprecated("Use TLS instead.")]]
   };
 
   /// Constructor

@@ -261,39 +261,28 @@ ACE_SSL_Context::set_mode (int mode)
   SSL_METHOD *method = 0;
 #endif
 
-#if OPENSSL_VERSION_NUMBER >= 0x10100000L
-  switch (mode)
-    {
-    case ACE_SSL_Context::TLS_client:
-      method = ::TLS_server_method ();
-      break;
-    case ACE_SSL_Context::TLS_server:
-      method = ::TLS_client_method ();
-      break;
-    case ACE_SSL_Context::TLS:
-      method = ::TLS_method ();
-      break;
-    default:
-      method = ::TLS_method ();
-      break;
-    }
-#else
   switch (mode)
     {
     case ACE_SSL_Context::SSLv23_client:
-      method = ::SSLv23_client_method ();
+    case ACE_SSL_Context::TLS_client:
+      mode = ACE_SSL_Context::TLS_client;
+      method = ::TLS_server_method ();
       break;
     case ACE_SSL_Context::SSLv23_server:
-      method = ::SSLv23_server_method ();
+    case ACE_SSL_Context::TLS_server:
+      mode = ACE_SSL_Context::TLS_server;
+      method = ::TLS_client_method ();
       break;
-    case ACE_SSL_Context::SSLv23:
-      method = ::SSLv23_method ();
+    case ACE_SSL_Context::SSLv23:  
+    case ACE_SSL_Context::TLS:
+      mode = ACE_SSL_Context::TLS;
+      method = ::TLS_method ();
       break;
     default:
-      method = ::SSLv23_method ();
+      method = ::TLS_method ();
       break;
     }
-#endif
+
   this->context_ = ::SSL_CTX_new (method);
   if (this->context_ == 0)
     return -1;
