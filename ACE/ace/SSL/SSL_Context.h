@@ -108,10 +108,14 @@ public:
     TLS_client,
     TLS_server,
     TLS,
-#endif
     SSLv23_client [[deprecated("Use TLS_client instead.")]],
     SSLv23_server [[deprecated("Use TLS_server instead.")]],
     SSLv23 [[deprecated("Use TLS instead.")]]
+#else
+    SSLv23_client,
+    SSLv23_server,
+    SSLv23
+#endif
   };
 
   /// Constructor
