@@ -680,7 +680,7 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy () \
 #endif
 
 #ifndef ACE_DEPRECATED
-# define ACE_DEPRECATED
+# define ACE_DEPRECATED [[deprecated]]
 #endif
 
 #ifndef ACE_HAS_REACTOR_NOTIFICATION_QUEUE
