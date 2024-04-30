@@ -60,10 +60,6 @@
 #define ACE_HAS_GCC_DESTRUCTOR_ATTRIBUTE 1
 #endif
 
-#if !defined (ACE_HAS_GCC_DEPRECATED_ATTRIBUTE)
-#define ACE_HAS_GCC_DEPRECATED_ATTRIBUTE 1
-#endif
-
 #if !defined (ACE_HAS_GCC_FORMAT_ATTRIBUTE)
 #define ACE_HAS_GCC_FORMAT_ATTRIBUTE 1
 #endif
@@ -74,10 +70,6 @@
 
 #if (ACE_HAS_GCC_DESTRUCTOR_ATTRIBUTE == 1)
 # define ACE_GCC_DESTRUCTOR_ATTRIBUTE __attribute__ ((destructor))
-#endif
-
-#if (ACE_HAS_GCC_DEPRECATED_ATTRIBUTE == 1)
-#define ACE_DEPRECATED __attribute__ ((deprecated))
 #endif
 
 #if (ACE_HAS_GCC_FORMAT_ATTRIBUTE == 1)
