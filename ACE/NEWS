@@ -1,3 +1,17 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.5.21 and ACE-6.5.22
+======================================================
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.20 and ACE-6.5.21
+======================================================
+
+. Updated and improved support for Embarcadero C++ Builder
+
+. Avoid errors when tcl/tk packages are not installed
+
+. MacOS: sizeof long double is different on ARM64
+
+. Avoid potential out-of-bounds read in ACE_CDR::Fixed::from_string
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.19 and ACE-6.5.20
 ======================================================
 
