@@ -1,0 +1,59 @@
+commit 90258afc7c510ead3ace1e30382bb5ba877610b3
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 9 15:06:03 2024 +0000
+
+    Avoid potential out-of-bounds read in ACE_CDR::Fixed::from_string
+
+commit 7d824f7c3230c55a7594626f4e8e439ff85fd527
+Author: Justin Wilson <wilsonj@unityfoundation.io>
+Date:   Wed Dec 13 13:17:38 2023 -0600
+
+    Merge pull request #2171 from mitza-oci/install_proj
+    
+    Added a script install_proj.sh that can be used to run make install
+    
+    (cherry picked from commit 58ea863f3a2e50b6a3045b59c7f1f060a8b7b5ae)
+    
+    # Conflicts:
+    #       ACE/ACE-INSTALL.html
+
+commit c7d61bcaa7ebe73a75011d6823315f1f409a8243
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 23 17:07:39 2023 +0200
+
+    Fixed incorrect preprocessor define check
+    
+        * ACE/examples/APG/Timers/Timers.cpp:
+    
+    (cherry picked from commit 2c1fa440731455b69c4fe4cda641062b790572c8)
+
+commit c63f996d0b04005f9d3d2096f5121b707487f14f
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Oct 6 08:34:10 2023 -0500
+
+    Merge pull request #2142 from mitza-oci/macos-long-double
+    
+    macOS: sizeof long double is different on ARM64
+    (cherry picked from commit 1affc2bd31c38b55cd0b11a5665055821890c541)
+    
+    # Conflicts:
+    #       ACE/ace/config-macosx-leopard.h
+    #       ACE/ace/config-macosx-tiger.h
+
+commit ce7e6113808504e40b18e6c29e2f826e9a816ced
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Oct 5 07:47:30 2023 -0500
+
+    Merge pull request #2139 from mitza-oci/tcltk
+    
+    platform_linux: avoid errors when tcl/tk packages are not installed
+    
+    (cherry picked from commit 854bfeeb364bdad54ac3c600437392ca823274ce)
+
+commit 20215d5a619275c1a80babf4d671b2b2302676fd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 11 09:10:10 2023 +0200
+
+    Updated documentation for new Embarcadero C++ Builder compiler selection
+    
+        * ACE/ACE-INSTALL.html:

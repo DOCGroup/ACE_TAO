@@ -1,0 +1,650 @@
+commit a43a9df97954bfe20f7b2dfae4d4e8daa0d51670
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Oct 27 10:00:19 2023 -0400
+
+    added space to generated code to produce "< ::"
+
+commit 481b1f839e08c91b8458d458f5e05f6b82dc806c
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Oct 27 08:27:43 2023 -0400
+
+    added non defaulted desctructors
+
+commit 22d636533dbc3c07aa3a0c5dabf55417caaa5259
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Thu Oct 26 09:12:16 2023 -0400
+
+    switched map to typedef
+
+commit 08f7e1c5b8a92117ae62f7b0bfa5b6ab5e9956e6
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Wed Oct 25 11:28:32 2023 -0400
+
+    added desctructor
+
+commit f718eaf4fd99ac9ca55340a398904172b759dc49
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Wed Oct 25 10:55:53 2023 -0400
+
+    fixed warning
+
+commit 36ee6b421f1c4e5215679fd310067367c64a5b14
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Wed Oct 25 10:51:13 2023 -0400
+
+    Fix be_visitor_map_cdr_op_ch
+
+commit 2515d8e78980668c55c64f65c75bf4fad160f88c
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Oct 5 13:49:33 2023 -0500
+
+    IDL map: more TAO2 compatibility
+
+commit 057337c2421f23e51174eedf8fae3631173e3568
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Sep 29 19:45:53 2023 -0500
+
+    Add Note About Maps Not Usable in TAO
+
+commit bb4676026f51b8242339bb0678fc61858db0bcb2
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Aug 31 15:26:23 2023 -0500
+
+    Add map to NEWS
+
+commit 6e073fbd189edff6f0d03145d267a3c3ae8e014f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Aug 31 15:18:05 2023 -0500
+
+    Fix Codacy Issues in be_map
+
+commit 23853e9e7b4679661dfc1b582f6d2f51f050536c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 7 15:24:43 2020 +0100
+
+    Fixed fuzz
+
+commit 0a2e7640fd6739fdf14f2ca26a854603bab34a68
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Aug 31 12:41:30 2023 -0500
+
+    Fix Uninitialized Member, Regen Flex/Bison
+
+commit 42e12a8654ab218249dc71d193b1891ab3674884
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 28 16:18:17 2023 +0200
+
+    Add IDL4 maps test
+    
+        * TAO/bin/tao_orb_tests.lst:
+
+commit 935f39de782bf2972ecd92022d96e8950fc5fcc6
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Aug 24 13:23:24 2023 -0500
+
+    Remove Semicolon
+
+commit 3f2b269b7a6a99faea17ffc61b8b636b66c9d34c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Aug 24 12:22:58 2023 -0500
+
+    Make `ast_visitor::visit_map` a nop impl
+
+commit df844c930c337d34dce6a34b48bb2c693927a5ca
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Aug 18 13:44:10 2023 -0400
+
+    Update TAO/orbsvcs/IFR_Service/ifr_adding_visitor.cpp
+    
+    Co-authored-by: Fred Hornsey <fred@hornsey.us>
+
+commit 8ba3442a6462cc4d39be015cbd2a73800b967f35
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Aug 18 13:44:05 2023 -0400
+
+    Update TAO/TAO_IDL/be/be_visitor_map/map_cs.cpp
+    
+    Co-authored-by: Fred Hornsey <fred@hornsey.us>
+
+commit 3bfcfd3e99ecf6c5ab943f1bdaa0961261ae84f0
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Mon Mar 20 23:05:26 2023 -0400
+
+    C++ sometimes struggles with structs as map keys
+
+commit aa7931d2920370548725f0787e1c89f793321dc2
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:30:21 2022 -0400
+
+    switched typedef to using
+
+commit e01ca86a71a12206c5fe8a777a2f87b1133213b0
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:25:36 2022 -0400
+
+    whitespace
+
+commit 2a54f6e00bbfedf50e0d4a9fde352689a0cb96ba
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:23:32 2022 -0400
+
+    added map to node_type_to_string
+
+commit 16c17aa2941483ae26fb703c0bec2f3f2e48aca3
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:21:01 2022 -0400
+
+    fixed warnings
+
+commit 9839f7e65c942278ff7056921791617574ccb5fe
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:17:09 2022 -0400
+
+    proper map key/val type code gen
+
+commit 49ac27a736993fa5610dac5773a0014bd439e080
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:16:08 2022 -0400
+
+    remove bounded maps
+
+commit b70eff794bbd90cb627b982118528f8dcd6ace37
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:04:25 2022 -0400
+
+    fixed cdr op
+
+commit 8612ebc18fd772592fba18832dabc738d42b2e62
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 13:01:05 2022 -0400
+
+    removed support for bounded maps
+    
+    This was causing issues with the code generation.
+    A bounded map isn't supported with std::map
+
+commit 8f74cc4f546f615aec1bf68a79ac44b5651eb3f4
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 00:53:58 2022 -0400
+
+    Almost working stream operators
+
+commit f338e0b27a427b68ccb049459efd5b429825627a
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Tue Oct 18 00:06:29 2022 -0400
+
+    fixed comments, removed unused
+
+commit 3d8b7ed49a8319c527426b40bd74c0ec8afa17c9
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Oct 13 18:50:35 2022 -0400
+
+    cleaned up some generated code
+
+commit 549f8ce335e21507cd333afbbd4e3585d46f0595
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Oct 13 17:24:01 2022 -0400
+
+    Added tests/IDLv4 to github actions
+
+commit 03b756636e0234b418d8b327ea55ef59fb969f34
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Sep 30 15:11:43 2022 -0400
+
+    Update TAO/TAO_IDL/include/ast_generator.h
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit 21b3446f2da31b1080d26eee5dcf5c7bd2bb5a89
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Sep 30 15:11:38 2022 -0400
+
+    Update TAO/TAO_IDL/include/ast_visitor_reifying.h
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit 422a0d16abc4dcc2ee52bfc681e2160dae3c4e85
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Sep 30 15:11:27 2022 -0400
+
+    Update TAO/TAO_IDL/include/ast_visitor_tmpl_module_inst.h
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit 98259a89a68b16d865e36f6fe41c4f9901b713ae
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Sep 30 15:11:15 2022 -0400
+
+    Update TAO/TAO_IDL/include/idl_global.h
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit 5e7bb97cd5af3b62ca82d1cbf95e9b58238aee59
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Aug 19 21:38:38 2022 -0400
+
+    Typo
+
+commit b51045c0e05d0ebaf7f3ff12f581e84c507c86c8
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 13 14:59:46 2022 -0400
+
+    another switch
+
+commit 6a748de67e9820293b93ed780e67c2df549fa102
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 13 14:58:25 2022 -0400
+
+    Switched to std::snprintf
+
+commit e0070f49e7817f581e5f93cae46ae1bceba859c8
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 13 13:30:28 2022 -0400
+
+    Fixed recursive type test
+
+commit 5d0c0dd8f351d2244873d8475d0de1b1af495d07
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 13 13:30:16 2022 -0400
+
+    Fixed recursion check
+    
+    Checks both key and val types
+
+commit abad5d77fce00990e7a78a63260596bab632bdb0
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 13 13:27:26 2022 -0400
+
+    comment
+
+commit 71644e82d1067df73f9caab39e37797b2dc8f3ea
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Aug 12 18:37:48 2022 -0400
+
+    fixed whitespace
+
+commit e835440c96b5bce98a19fd53f95f042b928f6e24
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Aug 12 18:27:29 2022 -0400
+
+    cleaned up old comments
+
+commit f919937c2ccf605595fa9ae22ec8da9ee2cb3581
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Aug 12 18:21:56 2022 -0400
+
+    cleaned test file
+
+commit 2ecc711c61bafbcc82cbfe3c5be68d886240d29e
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Aug 12 18:21:26 2022 -0400
+
+    Updated comments / author notes
+
+commit 9a9140d01af4d3b1d86538301cfb9c8f349b5f35
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 6 16:02:31 2022 -0400
+
+    Created recursive example that fails
+
+commit a6604e32d4c0ef2222b0383fabb4a5b714b5f3f9
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 6 16:02:11 2022 -0400
+
+    typos
+
+commit 93d24d11174a9355b3c9d48bf1b2be5180e939d5
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Aug 4 19:30:51 2022 -0400
+
+    Fixed issue with names
+
+commit 2594690e64b5b8fb0fecf82aed3d5a898968f9a4
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jul 22 19:13:01 2022 -0400
+
+    Started on some more testing
+
+commit d8d7b70f436240b26d77ecc32963746fa6e06a93
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jul 22 19:00:20 2022 -0400
+
+    fixed some things, switched to std::strcmp
+
+commit a20d0eada241d1f524d2e64b054e4e60ac0c08e8
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jul 22 18:59:18 2022 -0400
+
+    Formatted
+
+commit 529d37adf91824a8f12755ca71d52931b3dcf69e
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Tue Jul 12 17:59:13 2022 -0400
+
+    Fixed error messaging in ifr_adding_visitor
+
+commit 9b83599bc601546ad3a5f1a87f0a1bdfb1aa91f4
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jul 7 18:19:28 2022 -0400
+
+    Removed comments
+
+commit 3d3eb1d7cb937d2885a68fc2a831d859a9c1825d
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jul 7 18:10:45 2022 -0400
+
+    Fixed formatting
+
+commit 8252a63b6f91b6fcd91ecd931c72dea3db952682
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jul 7 18:09:07 2022 -0400
+
+    Fixed TAO_IDL_IDL_VERSION macro
+
+commit 783b4fc7c0bec867256f3431b10e8dfe81ce1195
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Tue Jul 5 20:33:51 2022 -0400
+
+    cleaned up default destructors + using is_empty
+
+commit 457cad17122b258b9d2486cccd72e9a7e5b112ba
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed Jun 29 17:55:30 2022 -0400
+
+    Cleaned up some final comments and stubbed code and fixed formatting
+
+commit d74406f0a3f2abcf264bdea70703a0a5cc77aed8
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Mon Jun 27 18:47:17 2022 -0400
+
+    Fixed double free error
+
+commit 0220d28a6e34aa3b6a6b8e3a2f6aa2bed440ffd5
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Mon Jun 27 18:47:07 2022 -0400
+
+    Cleaned up the maps test
+
+commit 1b701debc7805d7268bffa5ac5213ea23df0ae74
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sun Jun 26 16:13:26 2022 -0400
+
+    added ast_map.h to ast.h
+
+commit 17bfe408367fbde27fc2326825a466bae30d858c
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Jun 25 12:00:37 2022 -0400
+
+    No more generated warnings and fixed the last codacy warning
+
+commit ffd48feb145eb517155f6a616f9681f9cb6016b3
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 18:24:56 2022 -0400
+
+    cleaned up some warnings
+
+commit b022cc424654620abc566740767e88cc0f10ccad
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 16:29:08 2022 -0400
+
+    used the wrong vars for the check
+
+commit bc4bbbd13ed1df6343430587c8bd55875e65ad40
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 15:44:44 2022 -0400
+
+    Should silence the codacy check
+
+commit 47c82f94ff1c30d8248e25755f8d42c6547ad454
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 09:44:51 2022 -0400
+
+    generating <map> include conditionally
+
+commit 0060579dfa9381842e3d405fe8bca6f8b4570d79
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 08:28:52 2022 -0400
+
+    whitespace
+
+commit 589006fb5ae15d4e734919c672cd0835d9ab82c2
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 08:27:43 2022 -0400
+
+    whitespace
+
+commit c811e25cbed530728fdc1bd2db76d0f1cd3611aa
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 08:26:48 2022 -0400
+
+    Finished test
+
+commit 1921cb9cb14df192a2cdbc3339ec93ae746575d9
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 08:14:00 2022 -0400
+
+    generating typedefs + maps with maps as values
+
+commit 0458cd3e2d9ce6216e7bacd323362fe9a0791194
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 23 22:58:20 2022 -0400
+
+    removed whitespace
+
+commit df2c8192d883743cf6f5382ee31fd8bbed63424b
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 23 22:42:18 2022 -0400
+
+    Fixed static analysis
+
+commit b9de3b62d67110926458577966bc1cdbd0515826
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 23 22:36:20 2022 -0400
+
+    more cleanup of stubbed code
+
+commit 573b826ce85eae3720792111d81bcdb9275a431b
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 23 21:43:44 2022 -0400
+
+    code generation working properly
+    
+    Map with anonymous maps not working yet
+
+commit dd117cfc97add201bc03edeffa279fdc8c3513a7
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed Jun 22 20:25:31 2022 -0400
+
+    Fixed fuzzing
+
+commit 2d5659d192e3078dfc8a67722d5f285d637258c6
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sun Jun 19 20:56:16 2022 -0400
+
+    Updated test, and stubbed stream operators
+
+commit 94563afe022dd1cd80ffe13151462ab38e92b911
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Jun 18 21:22:10 2022 -0400
+
+    Cleaned up CDR progress
+
+commit 302e029737dd9f19dff00294904cc372bfafb744
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 17 21:00:19 2022 -0400
+
+    Fixed fuzzing
+
+commit 6fac5a79dfbd8f8bc9ef7e2d8f81a21b3fe47228
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 17 20:56:51 2022 -0400
+
+    remove whitespace
+
+commit b6fe25974efed6c1857bacce04ab11538f9f6549
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 17 20:53:29 2022 -0400
+
+    updated include
+
+commit 479b0915cf36c412e40af2b6ed8e736c852d3e8a
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 17 20:15:22 2022 -0400
+
+    Cleaned up some be_map functions
+
+commit 8969c54b46db0fa1ca364a10348132f3d0530d4a
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 16 21:06:59 2022 -0400
+
+    Fixed fuzz
+
+commit d503540a70fa4e958c4b8fc6d299537053419e90
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 16 21:00:48 2022 -0400
+
+    Removed whitespaces
+
+commit 475166fc1dc5ba6c74460158c9934d618690a0a3
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 16 20:57:13 2022 -0400
+
+    maps almost being generated via code, still very messy
+
+commit a1bf3b4d1407a156237b27af24dc8bf75820f8fd
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 10 21:56:43 2022 -0400
+
+    Added maps in the idl_features
+
+commit 8b851854e73699b7013ef0846e3dc2d173026689
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed Jun 8 18:30:26 2022 -0400
+
+    added map_head rules to parser, for proper null scope
+
+commit 25dbfa22911b99e84111c738fa134b147d0a8574
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 3 21:18:35 2022 -0400
+
+    Fixed typo
+
+commit 18152addf39183aa036d53bb7847955fc58c56bd
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 3 21:09:56 2022 -0400
+
+    fixed whitespace
+
+commit fb3fb48519baba36da35b3c23f91d53426e9b4e7
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 3 21:08:24 2022 -0400
+
+    removed whitespace
+
+commit 4101f3f5e4863372a83d060af42a4b4b3ccec4f5
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 3 21:04:24 2022 -0400
+
+    Updated idl for null scope
+
+commit 8958a765a2d827a8d52cd3df8d4925df05ab9912
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 3 20:14:48 2022 -0400
+
+    Updated bison, pushing null scope
+
+commit bdcaf51e9d92f3d22617d4bfbe33b5becdb40364
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 3 20:13:34 2022 -0400
+
+    key_type + value_type code, and cleanup
+
+commit fafd19ffea1b521bb8db628de93af4b97625eb16
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 2 20:33:17 2022 -0400
+
+    fixes based on the code review
+
+commit 4f284f3db0ae10760e5cd5e3e7ab9766e700ca52
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed Jun 1 21:21:08 2022 -0400
+
+    cleaned up
+
+commit a40016c63b2a6b2b76159059a53451cdcb61c0b2
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed May 25 21:35:42 2022 -0400
+
+    trailing whitespace
+
+commit 30d52082958779aec010f84567ec3bddea0d6b08
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed May 25 21:32:15 2022 -0400
+
+    removed whitespace
+
+commit 8016f9aa63b16b977268c91fd3845f9f4f394edb
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed May 25 21:31:16 2022 -0400
+
+    Simplified bison
+
+commit d9ee304c546d92fbf9a09d055046624ca8608d1b
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed May 25 20:48:45 2022 -0400
+
+    Adding bounds to bison
+
+commit 0f7b7d630bcd00abba99cb9e171891197d51b229
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Tue May 24 21:47:06 2022 -0400
+
+    ifr_visitor
+
+commit 8bba68b97036bc6280465d0274757e4c1f801278
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Mon May 23 12:07:47 2022 -0400
+
+    Removed blank lines
+
+commit 2d81e8c055a5752d493be115c4cf19088a2b37c7
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Mon May 23 11:49:30 2022 -0400
+
+    Added functions for ast_visitor
+
+commit c4f3890eadbeaec9c9e15c94f22728f408a4dfe8
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sun May 22 22:54:19 2022 -0400
+
+    More ast
+
+commit a971dbf1fc0e75e28e95da290496fb1c4a37158a
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sun May 22 22:47:03 2022 -0400
+
+    Updated flex and bison
+
+commit a1db4fd262284963d24c5558f44636e7fe92f0bb
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sun May 22 22:44:31 2022 -0400
+
+    Added AST for map
+
+commit 9e1bd3e6588031daaa4bf563c17a68ae58eca8cc
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sun May 22 22:39:38 2022 -0400
+
+    Fixed test.idl
+
+commit 42eaf131fd5d731618487387f5a3760b3ac1f794
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat May 21 13:48:26 2022 -0400
+
+    Added a test for maps
+
+commit 781163e8f28f3876c3bf09bb21119d9e05573336
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 7 14:43:23 2020 +0100
+
+    Remove redundant void from tao_idl
