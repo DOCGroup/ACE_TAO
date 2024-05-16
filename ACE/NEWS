@@ -11,6 +11,9 @@ USER VISIBLE CHANGES BETWEEN ACE-7.1.4 and ACE-8.0.0
 . Removed ace/Auto_Ptr.*, with C++17 std::auto_ptr is not
   available anymore
 
+. New Latest_ACE8TAO4_Micro, Latest_ACE8TAO4_Minor, and Latest_ACE8TAO4_Major
+  branches
+
 USER VISIBLE CHANGES BETWEEN ACE-7.1.3 and ACE-7.1.4
 ====================================================
 
