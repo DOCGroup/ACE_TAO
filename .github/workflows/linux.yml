@@ -62,7 +62,7 @@ jobs:
             PackageDeps: g++-13
             optional_macros: c++std=c++20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-22.04
+            os: ubuntu-24.04
           - CC: clang-6.0
             CXX: clang++-6.0
             PackageDeps: clang-6.0
