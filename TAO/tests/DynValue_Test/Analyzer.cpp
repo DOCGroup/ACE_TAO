@@ -256,13 +256,13 @@ DynAnyAnalyzer::analyze (
                   base = get_correct_base_type (
                            base_types,
                            sub_member_number);
-                const char *const visability =
+                const char *const visibility =
                   ((CORBA::PRIVATE_MEMBER ==
                     base->member_visibility (sub_member_number)) ?
                     "Private" : "Public ");
                 tab ("[");
                 ACE_DEBUG ((LM_DEBUG, "%03u] %C \"%C\": ",
-                  ++member_number, visability, fn.in ()   ));
+                  ++member_number, visibility, fn.in ()   ));
                 if (CORBA::is_nil (cc.in ()))
                   {
                     ACE_DEBUG ((LM_DEBUG, " {Null}\n"));

@@ -79,7 +79,7 @@ namespace TAO
     size_t size () const;
 
   private:
-    typedef ACE_Array_Base<RegisteredInterceptor > RegisteredArray;
+    typedef ACE_Array_Base<RegisteredInterceptor> RegisteredArray;
 
     /// Dynamic array of registered interceptors.
     RegisteredArray interceptors_;
