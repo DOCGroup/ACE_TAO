@@ -923,7 +923,7 @@ TAO_DynCommon::get_abstract ()
       CORBA::AbstractBase_var retval;
       TAO::Any_Impl *any_impl = this->any_.impl ();
 
-      if (any_impl == 0)
+      if (!any_impl)
         {
           throw DynamicAny::DynAny::InvalidValue ();
         }

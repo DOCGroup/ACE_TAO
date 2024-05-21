@@ -384,11 +384,11 @@ TAO_DynValueBox_i::to_any ()
 
   // Convert the out_cdr into a new any.
   TAO_InputCDR in_cdr (out_cdr);
-  TAO::Unknown_IDL_Type * unk = 0;
+  TAO::Unknown_IDL_Type * unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (), in_cdr),
                     CORBA::NO_MEMORY ());
-  CORBA::Any_ptr retval = 0;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (retval, CORBA::Any, CORBA::NO_MEMORY ());
   retval->replace (unk);
   return retval;

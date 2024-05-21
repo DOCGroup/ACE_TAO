@@ -566,7 +566,7 @@ TAO_DynValue_i::get_val ()
 
   // Now read in this stream to create the actual value.
   TAO_InputCDR for_reading (out_cdr);
-  CORBA::ValueBase *retval = 0;
+  CORBA::ValueBase *retval {};
   if (!CORBA::ValueBase::_tao_unmarshal (
         for_reading, retval ))
     {
@@ -590,12 +590,12 @@ TAO_DynValue_i::to_any ()
 
   // Convert the out_cdr into a new any.
   TAO_InputCDR in_cdr (out_cdr);
-  TAO::Unknown_IDL_Type *unk = 0;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (
     unk,
     TAO::Unknown_IDL_Type (this->type_.in (), in_cdr),
     CORBA::NO_MEMORY () );
-  CORBA::Any_ptr retval = 0;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (
     retval,
     CORBA::Any,
@@ -1113,7 +1113,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
         {
           // Need to create an any for this field.
           TAO_InputCDR unk_in (strm);
-          TAO::Unknown_IDL_Type *unk= 0;
+          TAO::Unknown_IDL_Type *unk {};
           ACE_NEW_THROW_EX (
             unk,
             TAO::Unknown_IDL_Type (field_tc.in (), unk_in),

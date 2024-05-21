@@ -369,7 +369,7 @@ TAO_DynSequence_i::get_elements_as_dyn_any ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  DynamicAny::DynAnySeq *retval = 0;
+  DynamicAny::DynAnySeq *retval {};
   ACE_NEW_THROW_EX (retval,
                     DynamicAny::DynAnySeq (this->component_count_),
                     CORBA::NO_MEMORY ());
@@ -522,7 +522,7 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any)
         {
           CORBA::Any field_any;
           TAO_InputCDR unk_in (cdr);
-          TAO::Unknown_IDL_Type *field_unk = 0;
+          TAO::Unknown_IDL_Type *field_unk {};
           ACE_NEW (field_unk,
                    TAO::Unknown_IDL_Type (field_tc.in (),
                                           unk_in));
@@ -614,12 +614,12 @@ TAO_DynSequence_i::to_any ()
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval = 0;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *unk = 0;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),

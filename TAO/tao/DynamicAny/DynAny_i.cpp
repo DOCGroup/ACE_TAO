@@ -142,7 +142,7 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc)
         TAO_OutputCDR stream;
         stream << CORBA::Object::_nil ();
         TAO_InputCDR in (stream);
-        TAO::Unknown_IDL_Type *unk = 0;
+        TAO::Unknown_IDL_Type *unk {};
         ACE_NEW (unk,
                  TAO::Unknown_IDL_Type (tc, in));
         this->any_.replace (unk);
