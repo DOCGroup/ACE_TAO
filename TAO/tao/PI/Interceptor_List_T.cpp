@@ -87,7 +87,7 @@ namespace TAO
 
         /// Increase the length of the Interceptor sequence by one.
         size_t const new_len = old_len + 1;
-        this->interceptors_.size (new_len);
+        this->interceptors_.resize (new_len);
 
         // Add the interceptor
         this->interceptors_[old_len].interceptor_ =
@@ -162,7 +162,7 @@ namespace TAO
 
         /// Increase the length of the Interceptor sequence by one.
         size_t const new_len = old_len + 1;
-        this->interceptors_.size (new_len);
+        this->interceptors_.resize (new_len);
 
         // Add the interceptor
         this->interceptors_[old_len].interceptor_ =
@@ -207,7 +207,7 @@ namespace TAO
             // since some interceptors may not have been destroyed yet.
             // Note that this size reduction is fast since no memory is
             // actually deallocated.
-            this->interceptors_.size (ilen);
+            this->interceptors_.resize (ilen);
           }
       }
     catch (...)
