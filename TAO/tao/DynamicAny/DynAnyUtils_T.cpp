@@ -128,7 +128,7 @@ namespace TAO
         // Currently only TAO_DynValue_i can throw the original (duplicate
         // of a previously found TAO_DynValue_i). The new BLANK one created
         // above on which we called init() will be deleted automatically by
-        // the ACE_Auto_Basic_Ptr.
+        // the unique_ptr.
         return original;
       }
 
@@ -157,7 +157,7 @@ namespace TAO
         // Currently only TAO_DynValue_i can throw the original (duplicate
         // of a previously found TAO_DynValue_i). The new BLANK one created
         // above on which we called init() will be deleted automatically by
-        // the ACE_Auto_Basic_Ptr.
+        // the unique_ptr.
         return original;
       }
 

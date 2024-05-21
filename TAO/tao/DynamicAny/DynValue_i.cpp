@@ -89,7 +89,7 @@ TAO_DynValue_i::init_helper (CORBA::TypeCode_ptr tc)
   get_base_types (tc, this->da_base_types_, &this->component_count_);
   this->da_members_.resize (this->component_count_);
 
-  // And initalize all of the DynCommon mix-in
+  // And initialize all of the DynCommon mix-in
 
   this->init_common ();
 }
@@ -1091,7 +1091,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
         {
           // This is recursive, keep reading from our inputCDR
           // this allows for indirection
-          this->da_members_[currentMember]=
+          this->da_members_[currentMember] =
             TAO::CreateDynAnyUtils<TAO_DynValue_i, TAO_InputCDR &>
               ::create_dyn_any_t (
                 field_tc.in (),
