@@ -106,7 +106,7 @@ TAO_DynValue_i::get_base_types (
   // starting with.
   CORBA::ULong numberOfBases = 1u;
   base_types.resize (numberOfBases);
-  base_types[0] = CORBA::TypeCode::_duplicate(TAO_DynAnyFactory::strip_alias (tc));
+  base_types[0] = TAO_DynAnyFactory::strip_alias (tc);
   if (total_member_count)
     {
       *total_member_count = base_types[0]->member_count ();
