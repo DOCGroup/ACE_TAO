@@ -667,8 +667,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
       CORBA::ULong trunc_ids;
       for (trunc_ids= 0u; trunc_ids < num_ids - 1u; ++trunc_ids)
         {
-          CORBA::TypeCode_var dbt = CORBA::TypeCode::_duplicate(this->da_base_types_[trunc_ids]);
-          if (CORBA::VM_TRUNCATABLE != dbt->type_modifier ())
+          if (CORBA::VM_TRUNCATABLE != this->da_base_types_[trunc_ids]->type_modifier ())
             {
               break; // Found the first type that is not truncatable
             }
@@ -686,8 +685,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
         {
           for (CORBA::ULong i= trunc_ids - 1u; i < num_ids; ++i)
             {
-              CORBA::TypeCode_var dbt = CORBA::TypeCode::_duplicate(this->da_base_types_[i]);
-              if (CORBA::VM_CUSTOM == dbt->type_modifier ())
+              if (CORBA::VM_CUSTOM == this->da_base_types_[i]->type_modifier ())
                 {
                   we_are_chunking = true;
                   break;
@@ -736,8 +734,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
 
           // Using the dealliased tc for this current type, find
           // the next non-dealliased base typecode.
-          CORBA::TypeCode_var dbt = CORBA::TypeCode::_duplicate (this->da_base_types_[i]);
-          next = dbt->concrete_base_type ();
+          next = this->da_base_types_[i]->concrete_base_type ();
         }
 
       // Write out the start chunking markers for the number
@@ -841,8 +838,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
             }
 
           // Are we ending the current base-type?
-          CORBA::TypeCode_var dbt = CORBA::TypeCode::_duplicate (this->da_base_types_[currentBase]);
-          if (dbt->member_count () <= ++currentBaseMember)
+          if (this->da_base_types_[currentBase]->member_count () <= ++currentBaseMember)
             {
               // Remind us to start again with the next derived type
               // for the next member to be writen.
@@ -989,8 +985,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
   // Work out if the encoded valuetype inside the any is
   // required to be truncated into our DynValue.
   CORBA::Boolean requires_truncation = false;
-  CORBA::TypeCode_var dbt = CORBA::TypeCode::_duplicate(this->da_base_types_[0]);
-  const char *const our_id = dbt->id ();
+  const char *const our_id = this->da_base_types_[0]->id ();
   CORBA::ULong i;
   for (i= 0u; i < num_ids; ++i)
     {
@@ -1085,8 +1080,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
         }
 
       // OK read in the current member
-      CORBA::TypeCode_var dbt = CORBA::TypeCode::_duplicate (this->da_base_types_[currentBase]);
-      CORBA::TypeCode_var field_tc (dbt->member_type (currentBaseMember));
+      CORBA::TypeCode_var field_tc (this->da_base_types_[currentBase]->member_type (currentBaseMember));
       if (CORBA::tk_value == field_tc->kind ())
         {
           // This is recursive, keep reading from our inputCDR
@@ -1128,8 +1122,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
         }
 
       // Are we ending the current base-type?
-      CORBA::TypeCode_var currentdbt = CORBA::TypeCode::_duplicate(this->da_base_types_[currentBase]);
-      if (currentdbt->member_count () <= ++currentBaseMember)
+      if (this->da_base_types_[currentBase]->member_count () <= ++currentBaseMember)
         {
           // Remind us to start again with the next derived type
           // for the next member to be written.
