@@ -231,7 +231,7 @@ TAO_DynValueBox_i::destroy ()
           this->boxed_.in ()->destroy ();
         }
 
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 
