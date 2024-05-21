@@ -792,7 +792,7 @@ TAO_DynUnion_i::destroy ()
 
       this->discriminator_->destroy ();
 
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 

@@ -518,7 +518,7 @@ TAO_DynArray_i::destroy ()
           this->da_members_[i]->destroy ();
         }
 
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 

@@ -803,7 +803,7 @@ TAO_DynAny_i::destroy ()
 
   if (!this->ref_to_component_ || this->container_is_destroying_)
     {
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 

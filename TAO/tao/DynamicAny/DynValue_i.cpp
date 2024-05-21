@@ -164,7 +164,7 @@ TAO_DynValue_i::get_correct_base_type (
       TAOLIB_DEBUG ((LM_DEBUG,
         ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::get_correct_base_type () ")
         ACE_TEXT ("BaseTypesList_t is not initialised\n")));
-      return 0;
+      return nullptr;
     }
 
   while (base_types[--currentBase]->member_count () <= index)
@@ -189,8 +189,7 @@ TAO_DynValue_i::get_member_type (
   const BaseTypesList_t &base_types,
   CORBA::ULong index)
 {
-  const CORBA::TypeCode_ptr
-    base = get_correct_base_type (base_types, index);
+  const CORBA::TypeCode_ptr base = get_correct_base_type (base_types, index);
   return base->member_type (index);
 }
 
@@ -199,18 +198,15 @@ TAO_DynValue_i::get_member_name (
   const BaseTypesList_t &base_types,
   CORBA::ULong index)
 {
-  const CORBA::TypeCode_ptr
-    base = get_correct_base_type (base_types, index);
+  const CORBA::TypeCode_ptr base = get_correct_base_type (base_types, index);
   return base->member_name (index);
 }
 
 void
 TAO_DynValue_i::set_to_value ()
 {
-  this->component_count_ =
-    static_cast <CORBA::ULong> (this->da_members_.size ());
-  this->current_position_ =
-    this->component_count_ ? 0 : -1;
+  this->component_count_ = static_cast <CORBA::ULong> (this->da_members_.size ());
+  this->current_position_ = this->component_count_ ? 0 : -1;
   this->is_null_ = false;
 }
 
@@ -229,7 +225,7 @@ TAO_DynValue_i *
 TAO_DynValue_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   return (CORBA::is_nil (_tao_objref)) ?
-         0 :
+         nullptr :
          dynamic_cast<TAO_DynValue_i *> (_tao_objref);
 }
 
@@ -295,10 +291,8 @@ TAO_DynValue_i::get_members ()
        i < this->component_count_;
        ++i)
     {
-      safe_retval[i].id = CORBA::string_dup (
-        this->get_member_name (this->da_base_types_, i));
-      CORBA::Any_var
-        temp (this->da_members_[i]->to_any ());
+      safe_retval[i].id = CORBA::string_dup (this->get_member_name (this->da_base_types_, i));
+      CORBA::Any_var temp (this->da_members_[i]->to_any ());
       safe_retval[i].value = temp.in ();
     }
 
@@ -327,10 +321,8 @@ TAO_DynValue_i::set_members (
   CORBA::ULong i;
   for (i = 0u; i < length; ++i)
     {
-      CORBA::TypeCode_var my_member (
-        get_member_type (this->da_base_types_, i));
-      CORBA::TypeCode_var value_member (
-        values[i].value.type ());
+      CORBA::TypeCode_var my_member (get_member_type (this->da_base_types_, i));
+      CORBA::TypeCode_var value_member (values[i].value.type ());
       if (!my_member->equivalent (value_member.in ()))
         {
           throw DynamicAny::DynAny::TypeMismatch ();
@@ -359,14 +351,13 @@ TAO_DynValue_i::get_members_as_dyn_any ()
     }
 
   // Create the return NameDynAnyPairSeq
-  DynamicAny::NameDynAnyPairSeq *members = 0;
+  DynamicAny::NameDynAnyPairSeq *members = nullptr;
   ACE_NEW_THROW_EX (
     members,
     DynamicAny::NameDynAnyPairSeq (this->component_count_),
     CORBA::NO_MEMORY ());
   members->length (this->component_count_);
-  DynamicAny::NameDynAnyPairSeq_var
-    safe_retval (members);
+  DynamicAny::NameDynAnyPairSeq_var safe_retval (members);
 
   // Assign name and value to each pearl on the string.
   for (CORBA::ULong i = 0u;
@@ -439,8 +430,7 @@ TAO_DynValue_i::from_any (const CORBA::Any &any)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var
-    tc (any.type ());
+  CORBA::TypeCode_var tc (any.type ());
   if (!this->type_->equivalent (tc.in ()))
     {
       throw DynamicAny::DynAny::TypeMismatch ();
@@ -459,14 +449,12 @@ TAO_DynValue_i::equal (DynamicAny::DynAny_ptr rhs)
 
   CORBA::TypeCode_var tc (rhs->type ());
   if (!tc->equivalent (this->type_.in ()) ||
-      this->component_count_ !=
-        rhs->component_count ()  )
+      this->component_count_ != rhs->component_count ())
     {
       return false;
     }
 
-  TAO_DynValue_i *rhs_v=
-    dynamic_cast<TAO_DynValue_i *> (rhs);
+  TAO_DynValue_i *rhs_v = dynamic_cast<TAO_DynValue_i *> (rhs);
 
   if (!rhs_v || this->is_null () != rhs_v->is_null ())
     {
@@ -479,8 +467,7 @@ TAO_DynValue_i::equal (DynamicAny::DynAny_ptr rhs)
            i < this->component_count_;
            ++i)
         {
-          if (!rhs_v->da_members_[i]
-              ->equal (this->da_members_[i].in ()))
+          if (!rhs_v->da_members_[i]->equal (this->da_members_[i].in ()))
             {
               return false;
             }
@@ -498,23 +485,18 @@ TAO_DynValue_i::destroy ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  if (!this->ref_to_component_ ||
-      this->container_is_destroying_)
+  if (!this->ref_to_component_ || this->container_is_destroying_)
     {
       // Do a deep destroy.
-      this->component_count_ =
-        static_cast <CORBA::ULong> (
-          this->da_members_.size () );
+      this->component_count_ = static_cast <CORBA::ULong> (this->da_members_.size () );
 
-      for (CORBA::ULong i = 0u;
-           i < this->component_count_;
-           ++i)
+      for (CORBA::ULong i = 0u; i < this->component_count_; ++i)
         {
           this->set_flag (da_members_[i].in (), 1);
           this->da_members_[i]->destroy ();
         }
 
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 
