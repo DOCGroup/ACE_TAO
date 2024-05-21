@@ -59,9 +59,7 @@ TAO_DynValue_i::init (CORBA::TypeCode_ptr tc)
        i < this->component_count_;
        ++i)
     {
-      CORBA::TypeCode_var
-        member_type (
-          get_member_type (this->da_base_types_, i));
+      CORBA::TypeCode_var member_type (get_member_type (this->da_base_types_, i));
 
       this->da_members_[i] = TAO::MakeDynAnyUtils::
         make_dyn_any_t<CORBA::TypeCode_ptr>
@@ -371,11 +369,7 @@ TAO_DynValue_i::set_members_as_dyn_any (
   CORBA::ULong i = 0u;
   for (; i < length; ++i)
     {
-      CORBA::TypeCode_var
-        my_member (
-          get_member_type (this->da_base_types_, i)),
-        value_member (
-          values[i].value->type ());
+      CORBA::TypeCode_var my_member (get_member_type (this->da_base_types_, i)), value_member (values[i].value->type ());
       if (!my_member->equivalent (value_member.in ()))
         {
           throw DynamicAny::DynAny::TypeMismatch ();
@@ -670,13 +664,11 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
         TAO_OBV_GIOP_Flags::Value_tag_base |
         TAO_OBV_GIOP_Flags::Type_info_single;
 
-      const CORBA::ULong num_ids =
-          ACE_Utils::truncate_cast<CORBA::ULong> (this->da_base_types_.size ());
+      CORBA::ULong const num_ids = ACE_Utils::truncate_cast<CORBA::ULong> (this->da_base_types_.size ());
       CORBA::ULong trunc_ids;
       for (trunc_ids= 0u; trunc_ids < num_ids - 1u; ++trunc_ids)
         {
-          if (CORBA::VM_TRUNCATABLE !=
-              this->da_base_types_[trunc_ids]->type_modifier ())
+          if (CORBA::VM_TRUNCATABLE != this->da_base_types_[trunc_ids]->type_modifier ())
             {
               break; // Found the first type that is not truncatable
             }
@@ -694,8 +686,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
         {
           for (CORBA::ULong i= trunc_ids - 1u; i < num_ids; ++i)
             {
-              if (CORBA::VM_CUSTOM ==
-                  this->da_base_types_[i]->type_modifier ())
+              if (CORBA::VM_CUSTOM == this->da_base_types_[i]->type_modifier ())
                 {
                   we_are_chunking = true;
                   break;
@@ -1059,9 +1050,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
   // Now read in every member's value (reading further chunking
   // marks for each separate base-type's state we pass).
   CORBA::Boolean need_first = true;
-  CORBA::ULong
-    currentBase = ACE_Utils::truncate_cast<CORBA::ULong> (this->da_base_types_.size ()),
-    currentBaseMember = 0u;
+  CORBA::ULong currentBase = ACE_Utils::truncate_cast<CORBA::ULong> (this->da_base_types_.size ()), currentBaseMember = 0u;
   for (CORBA::ULong currentMember= 0u;
        currentMember < num_fields;
        ++currentMember)
@@ -1071,8 +1060,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
         {
           // Move on to the next derived type in the
           // list of our type hierarchy
-          while (!this->da_base_types_[--currentBase]
-                  ->member_count ())
+          while (!this->da_base_types_[--currentBase]->member_count ())
             {
               // Skipping over all types that have no
               // state (i.e. no members to write).
@@ -1095,9 +1083,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
         }
 
       // OK read in the current member
-      CORBA::TypeCode_var
-        field_tc (this->da_base_types_[currentBase]
-                  ->member_type (currentBaseMember));
+      CORBA::TypeCode_var field_tc (this->da_base_types_[currentBase]->member_type (currentBaseMember));
       if (CORBA::tk_value == field_tc->kind ())
         {
           // This is recursive, keep reading from our inputCDR
