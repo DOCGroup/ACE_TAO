@@ -122,15 +122,12 @@ void
 TAO_DynEnum_i::set_as_string (const char *value_as_string)
 {
   CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
-
-  CORBA::ULong count = ct.in ()->member_count ();
-
+  CORBA::ULong const count = ct.in ()->member_count ();
   CORBA::ULong i {};
-  const char *temp {};
 
   for (i = 0; i < count; ++i)
     {
-      temp = ct.in ()->member_name (i);
+      const char *temp = ct.in ()->member_name (i);
 
       if (!ACE_OS::strcmp (value_as_string, temp))
         {
