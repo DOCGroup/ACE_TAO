@@ -20,7 +20,7 @@
 
 #include "tao/DynamicAny/DynCommon.h"
 #include "tao/LocalObject.h"
-#include "ace/Containers.h"
+#include <vector>
 
 #if defined (_MSC_VER)
 # pragma warning(push)
@@ -94,12 +94,14 @@ private:
   void init_common ();
 
   // = Use copy() or assign() instead of these.
-  TAO_DynStruct_i (const TAO_DynStruct_i &src);
-  TAO_DynStruct_i &operator= (const TAO_DynStruct_i &src);
+  TAO_DynStruct_i (const TAO_DynStruct_i &) = delete;
+  TAO_DynStruct_i &operator= (const TAO_DynStruct_i &) = delete;
+  TAO_DynStruct_i& operator= (TAO_DynStruct_i&&) = delete;
+  TAO_DynStruct_i (TAO_DynStruct_i&&) = delete;
 
 private:
   /// Each component is also a DynAny.
-  ACE_Array_Base<DynamicAny::DynAny_var> da_members_;
+  std::vector<DynamicAny::DynAny_var> da_members_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

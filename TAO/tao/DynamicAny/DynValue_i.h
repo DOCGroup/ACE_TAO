@@ -86,7 +86,7 @@ public:
 
 private:
   /// List of base types.
-  typedef ACE_Array_Base<CORBA::TypeCode_var> BaseTypesList_t;
+  using BaseTypesList_t = std::vector<CORBA::TypeCode_var>;
 
   /// Decompose the given TypeCode into its hierarchical list of
   /// basetypes. The first element of the list is our actual type,
@@ -142,7 +142,7 @@ private:
   TAO_DynValue_i (TAO_DynValue_i&&) = delete;
 
   /// Each component of DynValue and DynValueBox is also a DynAny.
-  ACE_Array_Base<DynamicAny::DynAny_var> da_members_;
+  std::vector<DynamicAny::DynAny_var> da_members_;
 
   /// First element of this is our type, each basetype follows
   /// in order backwards down the hierarchy. All types stored are

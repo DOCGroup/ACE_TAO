@@ -91,13 +91,9 @@ TAO_DynValue_i::init_helper (CORBA::TypeCode_ptr tc)
   this->type_ = CORBA::TypeCode::_duplicate (tc);
 
   // Work out how many total members and types there
-  // are in total in this derived->base hiarchy.
-
-  get_base_types (
-    tc,
-    this->da_base_types_,
-    &this->component_count_);
-  this->da_members_.size (this->component_count_);
+  // are in total in this derived->base hierarchy.
+  get_base_types (tc, this->da_base_types_, &this->component_count_);
+  this->da_members_.resize (this->component_count_);
 
   // And initalize all of the DynCommon mix-in
 
@@ -110,11 +106,11 @@ TAO_DynValue_i::get_base_types (
   BaseTypesList_t &base_types,
   CORBA::ULong *total_member_count)
 {
-  // First initalize to the fully derived type we are
+  // First initialize to the fully derived type we are
   // starting with.
 
   CORBA::ULong numberOfBases = 1u;
-  base_types.size (numberOfBases);
+  base_types.resize (numberOfBases);
   base_types[0] = TAO_DynAnyFactory::strip_alias (tc);
   if (total_member_count)
     {
@@ -138,9 +134,8 @@ TAO_DynValue_i::get_base_types (
           *total_member_count += base->member_count ();
         }
 
-      base_types.size (numberOfBases + 1);
-      base_types[numberOfBases++] =
-        CORBA::TypeCode::_duplicate (base.in ());
+      base_types.resize (numberOfBases + 1);
+      base_types[numberOfBases++] = CORBA::TypeCode::_duplicate (base.in ());
       base = base->concrete_base_type();
     }
 }
@@ -954,9 +949,9 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
     }
   if (is_indirected)
     {
-      // Effectivly this member? is the same ValueType as previous
+      // Effectively this member? is the same ValueType as previous
       // seen either in another member of this container OR the
-      // whole container itself. (Possiably can happen as a
+      // whole container itself. (Possibly can happen as a
       // circular linked list?)
       if (TAO_debug_level)
         {
@@ -1007,7 +1002,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
     }
 
   // Ok since we are not indirected (this time), record "this"
-  // DynValue_i for later possiable indirections to use.
+  // DynValue_i for later possible indirections to use.
   if (strm.get_value_map ()->get()
         ->bind (
           start_of_valuetype,
@@ -1020,7 +1015,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
     }
 
   // Work out how many total types there
-  // are in this derived->base hiarchy.
+  // are in this derived->base hierarchy.
   const CORBA::ULong
     num_fields = static_cast <CORBA::ULong> (this->da_members_.size ()),
     num_ids =    static_cast <CORBA::ULong> (ids.size ());
@@ -1044,7 +1039,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
         }
 
       // Since this does not match we must be attempting
-      // to truncated to a base-type, thus the incomming
+      // to truncated to a base-type, thus the incoming
       // any must be chuncked and this outer type must
       // allow truncation.
       if (!is_chunked)
@@ -1088,7 +1083,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
     }
 
   // Now read in every member's value (reading further chunking
-  // marks for each seporate base-type's state we pass).
+  // marks for each separate base-type's state we pass).
   CORBA::Boolean need_first = true;
   CORBA::ULong
     currentBase = ACE_Utils::truncate_cast<CORBA::ULong> (this->da_base_types_.size ()),
@@ -1101,7 +1096,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
       if (!currentBaseMember)
         {
           // Move on to the next derived type in the
-          // list of our type hyarchy
+          // list of our type hierarchy
           while (!this->da_base_types_[--currentBase]
                   ->member_count ())
             {
@@ -1174,7 +1169,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
           <= ++currentBaseMember)
         {
           // Remind us to start again with the next derived type
-          // for the next member to be writen.
+          // for the next member to be written.
           currentBaseMember= 0u;
 
           if (currentBase < num_ids)

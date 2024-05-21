@@ -65,11 +65,10 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (any._tao_get_typecode ());
 
-  CORBA::ULong numfields =
-    unaliased_tc->member_count ();
+  CORBA::ULong const numfields = unaliased_tc->member_count ();
 
   // Resize the array.
-  this->da_members_.size (numfields);
+  this->da_members_.resize (numfields);
 
   this->init_common ();
 
@@ -140,11 +139,10 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc)
   CORBA::TypeCode_var unaliased_tc =
   TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  this->component_count_ =
-    unaliased_tc->member_count ();
+  this->component_count_ = unaliased_tc->member_count ();
 
   // Resize the array.
-  this->da_members_.size (this->component_count_);
+  this->da_members_.resize (this->component_count_);
 
   this->init_common ();
 

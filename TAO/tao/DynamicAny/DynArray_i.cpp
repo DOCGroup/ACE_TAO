@@ -45,9 +45,9 @@ TAO_DynArray_i::init (const CORBA::Any & any)
 
   this->type_ = tc;
 
-  CORBA::ULong numfields = this->get_tc_length (tc.in ());
+  CORBA::ULong const numfields = this->get_tc_length (tc.in ());
   // Resize the array.
-  this->da_members_.size (numfields);
+  this->da_members_.resize (numfields);
 
   this->init_common ();
 
@@ -110,10 +110,10 @@ TAO_DynArray_i::init (CORBA::TypeCode_ptr tc)
 
   this->type_ = CORBA::TypeCode::_duplicate (tc);
 
-  CORBA::ULong numfields = this->get_tc_length (tc);
+  CORBA::ULong const numfields = this->get_tc_length (tc);
 
   // Resize the array.
-  this->da_members_.size (numfields);
+  this->da_members_.resize (numfields);
 
   this->init_common ();
 

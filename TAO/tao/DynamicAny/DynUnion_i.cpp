@@ -885,14 +885,20 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
                 // shared by another Any, so we use this to copy the
                 // state, not the buffer.
                 TAO_InputCDR for_reading (other_unk->_tao_get_cdr ());
-                for_reading.read_ulong (other_val);
+                if (!for_reading.read_ulong (other_val))
+                  {
+                    throw CORBA::INTERNAL ();
+                  }
               }
             else
               {
                 TAO_OutputCDR other_out;
                 other_impl->marshal_value (other_out);
                 TAO_InputCDR other_in (other_out);
-                other_in.read_ulong (other_val);
+                if (!other_in.read_ulong (other_val))
+                  {
+                    throw CORBA::INTERNAL ();
+                  }
               }
           }
         else
@@ -959,7 +965,10 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
             // We don't want unk's rd_ptr to move, in case we are shared by
             // another Any, so we use this to copy the state, not the buffer.
             TAO_InputCDR for_reading (my_unk->_tao_get_cdr ());
-            for_reading.read_ulong (my_val);
+            if (!for_reading.read_ulong (my_val))
+              {
+                throw CORBA::INTERNAL ();
+              }
           }
         else
           {
@@ -982,7 +991,10 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
             // We don't want unk's rd_ptr to move, in case we are shared by
             // another Any, so we use this to copy the state, not the buffer.
             TAO_InputCDR for_reading (other_unk->_tao_get_cdr ());
-            for_reading.read_ulong (other_val);
+            if (!for_reading.read_ulong (other_val))
+              {
+                throw CORBA::INTERNAL ();
+              }
           }
         else
           {

@@ -57,14 +57,20 @@ TAO_DynEnum_i::init (const CORBA::Any &any)
       // We don't want unk's rd_ptr to move, in case we are shared by
       // another Any, so we use this to copy the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
-      for_reading.read_ulong (this->value_);
+      if (!for_reading.read_ulong (this->value_))
+        {
+          throw CORBA::INTERNAL ();
+        }
     }
   else
     {
       TAO_OutputCDR out;
       impl->marshal_value (out);
       TAO_InputCDR in (out);
-      in.read_ulong (this->value_);
+      if (!in.read_ulong (this->value_))
+        {
+          throw CORBA::INTERNAL ();
+        }
     }
 
   this->init_common ();
@@ -255,7 +261,10 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs)
       // We don't want unk's rd_ptr to move, in case we are shared by
       // another Any, so we use this to copy the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
-      for_reading.read_ulong (value);
+      if (!for_reading.read_ulong (value))
+        {
+          throw CORBA::INTERNAL ();
+        }
     }
   else
     {
