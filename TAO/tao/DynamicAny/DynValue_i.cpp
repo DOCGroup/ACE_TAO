@@ -21,10 +21,6 @@ TAO_DynValue_i::TAO_DynValue_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynValue_i::~TAO_DynValue_i ()
-{
-}
-
 void
 TAO_DynValue_i::init (const CORBA::Any & any)
 {
@@ -108,26 +104,21 @@ TAO_DynValue_i::get_base_types (
 {
   // First initialize to the fully derived type we are
   // starting with.
-
   CORBA::ULong numberOfBases = 1u;
   base_types.resize (numberOfBases);
-  base_types[0] = TAO_DynAnyFactory::strip_alias (tc);
+  base_types[0] = CORBA::TypeCode::_duplicate(TAO_DynAnyFactory::strip_alias (tc));
   if (total_member_count)
     {
-      *total_member_count =
-        base_types[0]->member_count ();
+      *total_member_count = base_types[0]->member_count ();
     }
 
   // Obtain each derived type's basetype and add this to
   // the list.
-
-  CORBA::TypeCode_var
-    base (base_types[0]->concrete_base_type());
+  CORBA::TypeCode_var base (base_types[0]->concrete_base_type());
   while (base.in() &&
          CORBA::tk_value ==
            (base= // assignment
-             TAO_DynAnyFactory::strip_alias (base.in()))
-           ->kind ())
+             TAO_DynAnyFactory::strip_alias (base.in()))->kind ())
     {
       if (total_member_count)
         {
@@ -152,8 +143,7 @@ TAO_DynValue_i::get_correct_base_type (
   // derived type until that type's members are exhausted
   // and so on until we reach the member we have asked for.
 
-  CORBA::ULong
-    currentBase = ACE_Utils::truncate_cast<CORBA::ULong> (base_types.size ());
+  CORBA::ULong currentBase = ACE_Utils::truncate_cast<CORBA::ULong> (base_types.size ());
   if (!currentBase)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
@@ -180,18 +170,14 @@ TAO_DynValue_i::get_correct_base_type (
 }
 
 CORBA::TypeCode_ptr
-TAO_DynValue_i::get_member_type (
-  const BaseTypesList_t &base_types,
-  CORBA::ULong index)
+TAO_DynValue_i::get_member_type (const BaseTypesList_t &base_types, CORBA::ULong index)
 {
   const CORBA::TypeCode_ptr base = get_correct_base_type (base_types, index);
   return base->member_type (index);
 }
 
 const char *
-TAO_DynValue_i::get_member_name (
-  const BaseTypesList_t &base_types,
-  CORBA::ULong index)
+TAO_DynValue_i::get_member_name (const BaseTypesList_t &base_types, CORBA::ULong index)
 {
   const CORBA::TypeCode_ptr base = get_correct_base_type (base_types, index);
   return base->member_name (index);
@@ -237,10 +223,7 @@ TAO_DynValue_i::current_member_name ()
       throw DynamicAny::DynAny::InvalidValue ();
     }
 
-  return CORBA::string_dup (
-    this->get_member_name (
-      this->da_base_types_,
-      this->current_position_));
+  return CORBA::string_dup (this->get_member_name (this->da_base_types_, this->current_position_));
 }
 
 CORBA::TCKind
@@ -256,10 +239,7 @@ TAO_DynValue_i::current_member_kind ()
       throw DynamicAny::DynAny::InvalidValue ();
     }
 
-  CORBA::TypeCode_var tc (
-    get_member_type (
-      this->da_base_types_,
-      this->current_position_));
+  CORBA::TypeCode_var tc (get_member_type (this->da_base_types_, this->current_position_));
   return TAO_DynAnyFactory::unalias (tc.in ());
 }
 
@@ -272,19 +252,16 @@ TAO_DynValue_i::get_members ()
     }
 
   // Create the return NameValuePairSeq
-  DynamicAny::NameValuePairSeq *members = 0;
+  DynamicAny::NameValuePairSeq *members {};
   ACE_NEW_THROW_EX (
     members,
     DynamicAny::NameValuePairSeq (this->component_count_),
     CORBA::NO_MEMORY ());
   members->length (this->component_count_);
-  DynamicAny::NameValuePairSeq_var
-    safe_retval (members);
+  DynamicAny::NameValuePairSeq_var safe_retval (members);
 
   // Assign member name and value to each slot.
-  for (CORBA::ULong i = 0u;
-       i < this->component_count_;
-       ++i)
+  for (CORBA::ULong i = 0u; i < this->component_count_; ++i)
     {
       safe_retval[i].id = CORBA::string_dup (this->get_member_name (this->da_base_types_, i));
       CORBA::Any_var temp (this->da_members_[i]->to_any ());
@@ -304,10 +281,8 @@ TAO_DynValue_i::set_members (
     }
 
   // Check lengths match.
-  const CORBA::ULong length = values.length ();
-  if (length !=
-      static_cast <CORBA::ULong>
-        (this->da_members_.size ()))
+  CORBA::ULong const length = values.length ();
+  if (length != static_cast <CORBA::ULong>(this->da_members_.size ()))
     {
       throw DynamicAny::DynAny::InvalidValue ();
     }
@@ -327,8 +302,7 @@ TAO_DynValue_i::set_members (
   // Copy in the new values to each member ()
   for (i = 0u; i < length; ++i)
     {
-      this->da_members_[i] = TAO::MakeDynAnyUtils::
-        make_dyn_any_t<const CORBA::Any&> (
+      this->da_members_[i] = TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
           values[i].value._tao_get_typecode (),
           values[i].value,
           this->allow_truncation_);
@@ -346,7 +320,7 @@ TAO_DynValue_i::get_members_as_dyn_any ()
     }
 
   // Create the return NameDynAnyPairSeq
-  DynamicAny::NameDynAnyPairSeq *members = nullptr;
+  DynamicAny::NameDynAnyPairSeq *members {};
   ACE_NEW_THROW_EX (
     members,
     DynamicAny::NameDynAnyPairSeq (this->component_count_),

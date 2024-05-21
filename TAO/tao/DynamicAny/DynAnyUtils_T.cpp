@@ -113,7 +113,7 @@ namespace TAO
     ANY_TC any_tc,
     CORBA::Boolean allow_truncation)
   {
-    DA_IMPL *p = 0;
+    DA_IMPL *p {};
     ACE_NEW_THROW_EX (p,
                       DA_IMPL (allow_truncation),
                       CORBA::NO_MEMORY ());
@@ -142,7 +142,7 @@ namespace TAO
     ANY_TC any_tc,
     CORBA::Boolean allow_truncation)
   {
-    DA_IMPL *p = 0;
+    DA_IMPL *p {};
     ACE_NEW_THROW_EX (p,
                       DA_IMPL (allow_truncation),
                       CORBA::NO_MEMORY ());

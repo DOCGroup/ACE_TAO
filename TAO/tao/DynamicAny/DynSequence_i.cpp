@@ -88,7 +88,7 @@ TAO_DynSequence_i::init (const CORBA::Any& any)
     {
       CORBA::Any field_any;
       TAO_InputCDR unk_in (cdr);
-      TAO::Unknown_IDL_Type *field_unk = 0;
+      TAO::Unknown_IDL_Type *field_unk {};
       ACE_NEW (field_unk,
                TAO::Unknown_IDL_Type (field_tc.in (), unk_in));
       field_any.replace (field_unk);

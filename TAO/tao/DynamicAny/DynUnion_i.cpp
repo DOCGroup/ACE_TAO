@@ -149,7 +149,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
     tc->discriminator_type ();
 
   CORBA::Any disc_any;
-  TAO::Unknown_IDL_Type *unk = 0;
+  TAO::Unknown_IDL_Type *unk {};
 
   // Get a CDR stream - if the Any doesn't have one, make one.
   TAO::Any_Impl *impl = any.impl ();
@@ -228,7 +228,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
       CORBA::TypeCode_var member_tc = tc->member_type (i);
 
       CORBA::Any member_any;
-      TAO::Unknown_IDL_Type *unk = 0;
+      TAO::Unknown_IDL_Type *unk {};
       ACE_NEW (unk,
                TAO::Unknown_IDL_Type (member_tc.in (),
                                       in));
@@ -266,7 +266,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
             tc->member_type (index);
 
           CORBA::Any default_any;
-          TAO::Unknown_IDL_Type *unk = 0;
+          TAO::Unknown_IDL_Type *unk {};
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (default_tc.in (),
                                           in));
@@ -332,7 +332,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  CORBA::Boolean match = 0;
+  CORBA::Boolean match = false;
 
   for (i = 0; i < length; ++i)
     {
@@ -728,12 +728,12 @@ TAO_DynUnion_i::to_any ()
   // Make the Any.
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval = 0;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *unk = 0;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
@@ -753,9 +753,9 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
 
   TAO_DynUnion_i *impl = TAO_DynUnion_i::_narrow (rhs);
 
-  if (impl == 0)
+  if (!impl)
     {
-      return 0;
+      return false;
     }
 
   CORBA::Boolean equivalent =
@@ -763,7 +763,7 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
 
   if (!equivalent)
     {
-      return 0;
+      return false;
     }
 
   CORBA::Boolean member_equal =

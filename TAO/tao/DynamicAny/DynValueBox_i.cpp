@@ -310,7 +310,7 @@ TAO_DynValueBox_i::set_from_any (const CORBA::Any & any)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
   CORBA::TypeCode_var boxed_tc (unaliased_tc->content_type ());
-  TAO::Unknown_IDL_Type * unk = 0;
+  TAO::Unknown_IDL_Type * unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (boxed_tc.in (), in),
                     CORBA::NO_MEMORY ());

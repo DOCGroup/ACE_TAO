@@ -125,8 +125,8 @@ TAO_DynEnum_i::set_as_string (const char *value_as_string)
 
   CORBA::ULong count = ct.in ()->member_count ();
 
-  CORBA::ULong i;
-  const char *temp = 0;
+  CORBA::ULong i {};
+  const char *temp {};
 
   for (i = 0; i < count; ++i)
     {
@@ -223,7 +223,7 @@ TAO_DynEnum_i::to_any ()
                     CORBA::NO_MEMORY ());
 
   TAO_InputCDR in_cdr (out_cdr);
-  TAO::Unknown_IDL_Type *unk = 0;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
