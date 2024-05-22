@@ -137,8 +137,7 @@ DynAnyAnalyzer::get_correct_base_type (
 
 #define CASEE(type,CT,str) case CORBA::tk_##type: {\
   CORBA::CT b = da->get_##type();\
-  if (!newline) tab(""); \
-  ACE_DEBUG ((LM_DEBUG, str , b));\
+  if (!newline) tab(""); ACE_DEBUG ((LM_DEBUG, str , b));\
 } break;
 
 void
@@ -256,13 +255,13 @@ DynAnyAnalyzer::analyze (
                   base = get_correct_base_type (
                            base_types,
                            sub_member_number);
-                const char *const visibility =
+                const char *const visability =
                   ((CORBA::PRIVATE_MEMBER ==
                     base->member_visibility (sub_member_number)) ?
                     "Private" : "Public ");
                 tab ("[");
                 ACE_DEBUG ((LM_DEBUG, "%03u] %C \"%C\": ",
-                  ++member_number, visibility, fn.in ()   ));
+                  ++member_number, visability, fn.in ()   ));
                 if (CORBA::is_nil (cc.in ()))
                   {
                     ACE_DEBUG ((LM_DEBUG, " {Null}\n"));

@@ -42,7 +42,7 @@ class TAO_DynamicAny_Export TAO_DynEnum_i
 {
 public:
   /// Constructor.
-  TAO_DynEnum_i (CORBA::Boolean allow_truncation = true);
+  TAO_DynEnum_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
   ~TAO_DynEnum_i ();
@@ -83,10 +83,8 @@ private:
   void init_common ();
 
   // = Use copy() or assign() instead of these.
-  TAO_DynEnum_i (const TAO_DynEnum_i &) = delete;
-  TAO_DynEnum_i &operator= (const TAO_DynEnum_i &) = delete;
-  TAO_DynEnum_i& operator= (TAO_DynEnum_i&&) = delete;
-  TAO_DynEnum_i (TAO_DynEnum_i&&) = delete;
+  TAO_DynEnum_i (const TAO_DynEnum_i &src);
+  TAO_DynEnum_i &operator= (const TAO_DynEnum_i &src);
 
 private:
   /// Current numeric value of the enum.

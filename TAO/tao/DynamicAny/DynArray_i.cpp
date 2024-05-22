@@ -45,9 +45,9 @@ TAO_DynArray_i::init (const CORBA::Any & any)
 
   this->type_ = tc;
 
-  CORBA::ULong const numfields = this->get_tc_length (tc.in ());
+  CORBA::ULong numfields = this->get_tc_length (tc.in ());
   // Resize the array.
-  this->da_members_.resize (numfields);
+  this->da_members_.size (numfields);
 
   this->init_common ();
 
@@ -79,7 +79,7 @@ TAO_DynArray_i::init (const CORBA::Any & any)
   for (CORBA::ULong i = 0; i < numfields; ++i)
     {
       CORBA::Any field_any;
-      TAO::Unknown_IDL_Type *field_unk {};
+      TAO::Unknown_IDL_Type *field_unk = 0;
       TAO_InputCDR unk_in (cdr);
       ACE_NEW (field_unk,
                TAO::Unknown_IDL_Type (field_tc.in (), unk_in));
@@ -110,10 +110,10 @@ TAO_DynArray_i::init (CORBA::TypeCode_ptr tc)
 
   this->type_ = CORBA::TypeCode::_duplicate (tc);
 
-  CORBA::ULong const numfields = this->get_tc_length (tc);
+  CORBA::ULong numfields = this->get_tc_length (tc);
 
   // Resize the array.
-  this->da_members_.resize (numfields);
+  this->da_members_.size (numfields);
 
   this->init_common ();
 
@@ -191,7 +191,7 @@ TAO_DynArray_i::get_elements ()
 
   CORBA::ULong length = static_cast<CORBA::ULong> (this->da_members_.size ());
 
-  DynamicAny::AnySeq *elements {};
+  DynamicAny::AnySeq *elements = 0;
   ACE_NEW_THROW_EX (elements,
                     DynamicAny::AnySeq (length),
                     CORBA::NO_MEMORY ());
@@ -262,7 +262,7 @@ TAO_DynArray_i::get_elements_as_dyn_any ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  DynamicAny::DynAnySeq *retval {};
+  DynamicAny::DynAnySeq *retval = 0;
   ACE_NEW_THROW_EX (retval,
                     DynamicAny::DynAnySeq (this->component_count_),
                     CORBA::NO_MEMORY ());
@@ -375,7 +375,7 @@ TAO_DynArray_i::from_any (const CORBA::Any& any)
         {
           CORBA::Any field_any;
           TAO_InputCDR unk_in (cdr);
-          TAO::Unknown_IDL_Type *field_unk {};
+          TAO::Unknown_IDL_Type *field_unk = 0;
           ACE_NEW (field_unk,
                    TAO::Unknown_IDL_Type (field_tc.in (), unk_in));
           field_any.replace (field_unk);
@@ -452,7 +452,7 @@ TAO_DynArray_i::to_any ()
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *unk {};
+  TAO::Unknown_IDL_Type *unk = 0;
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
@@ -518,7 +518,7 @@ TAO_DynArray_i::destroy ()
           this->da_members_[i]->destroy ();
         }
 
-      this->destroyed_ = true;
+      this->destroyed_ = 1;
     }
 }
 

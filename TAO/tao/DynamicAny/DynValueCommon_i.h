@@ -56,10 +56,8 @@ public:
 
 private:
   // = Use copy() or assign() instead of these.
-  TAO_DynValueCommon_i (const TAO_DynValueCommon_i &) = delete;
-  TAO_DynValueCommon_i &operator= (const TAO_DynValueCommon_i &) = delete;
-  TAO_DynValueCommon_i& operator= (TAO_DynValueCommon_i&&) = delete;
-  TAO_DynValueCommon_i (TAO_DynValueCommon_i&&) = delete;
+  TAO_DynValueCommon_i (const TAO_DynValueCommon_i &src);
+  TAO_DynValueCommon_i &operator= (const TAO_DynValueCommon_i &src);
 
   /// Check if the typecode is acceptable. Needs to be provided by DynValue or DynValueBox
   virtual void check_typecode (CORBA::TypeCode_ptr tc)=0;

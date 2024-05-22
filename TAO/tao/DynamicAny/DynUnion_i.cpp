@@ -75,13 +75,15 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc)
   CORBA::TypeCode_var unaliased_tc =
   TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  CORBA::Any_var first_label = unaliased_tc->member_label (this->current_position_);
+  CORBA::Any_var first_label =
+    unaliased_tc->member_label (this->current_position_);
 
   // Initialize the discriminator to the label value of the first member.
   CORBA::TypeCode_var disc_tc = unaliased_tc->discriminator_type ();
   CORBA::TCKind disc_kind = TAO_DynAnyFactory::unalias (disc_tc.in ());
   CORBA::TCKind label_kind = TAO_DynAnyFactory::unalias (first_label->_tao_get_typecode ());
-  if (disc_kind == CORBA::tk_enum && label_kind == CORBA::tk_ulong)
+  if (disc_kind == CORBA::tk_enum &&
+      label_kind == CORBA::tk_ulong)
     {
       // incase the discriminator is an enum type we have to walk
       // a slightly more complex path because enum labels are
@@ -91,15 +93,10 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc)
           disc_tc.in (),
           disc_tc.in (),
           this->allow_truncation_ );
-      CORBA::ULong label_val {};
-      if (first_label >>= label_val)
-        {
-          TAO_DynEnum_i::_narrow (this->discriminator_.in ())->set_as_ulong (label_val);
-        }
-      else
-        {
-          throw CORBA::INTERNAL ();
-        }
+      CORBA::ULong label_val;
+      first_label >>= label_val;
+      TAO_DynEnum_i::_narrow (this->discriminator_.in ())
+                                    ->set_as_ulong (label_val);
     }
   else
     {
@@ -149,7 +146,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
     tc->discriminator_type ();
 
   CORBA::Any disc_any;
-  TAO::Unknown_IDL_Type *unk {};
+  TAO::Unknown_IDL_Type *unk = 0;
 
   // Get a CDR stream - if the Any doesn't have one, make one.
   TAO::Any_Impl *impl = any.impl ();
@@ -228,7 +225,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
       CORBA::TypeCode_var member_tc = tc->member_type (i);
 
       CORBA::Any member_any;
-      TAO::Unknown_IDL_Type *unk {};
+      TAO::Unknown_IDL_Type *unk = 0;
       ACE_NEW (unk,
                TAO::Unknown_IDL_Type (member_tc.in (),
                                       in));
@@ -266,7 +263,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
             tc->member_type (index);
 
           CORBA::Any default_any;
-          TAO::Unknown_IDL_Type *unk {};
+          TAO::Unknown_IDL_Type *unk = 0;
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (default_tc.in (),
                                           in));
@@ -332,7 +329,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  CORBA::Boolean match = false;
+  CORBA::Boolean match = 0;
 
   for (i = 0; i < length; ++i)
     {
@@ -364,15 +361,10 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
           // incase the discriminator is an enum type we have to walk
           // a slightly more complex path because enum labels are
           // stored as ulong in the union tc
-          CORBA::ULong label_val {};
-          if (label_any >>= label_val)
-            {
-              TAO_DynEnum_i::_narrow (this->discriminator_.in ())->set_as_ulong (label_val);
-            }
-          else
-            {
-              throw CORBA::INTERNAL ();
-            }
+          CORBA::ULong label_val;
+          label_any >>= label_val;
+          TAO_DynEnum_i::_narrow (this->discriminator_.in ())
+                                        ->set_as_ulong (label_val);
         }
       else
         {
@@ -728,12 +720,12 @@ TAO_DynUnion_i::to_any ()
   // Make the Any.
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval {};
+  CORBA::Any_ptr retval = 0;
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *unk {};
+  TAO::Unknown_IDL_Type *unk = 0;
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
@@ -753,9 +745,9 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
 
   TAO_DynUnion_i *impl = TAO_DynUnion_i::_narrow (rhs);
 
-  if (!impl)
+  if (impl == 0)
     {
-      return false;
+      return 0;
     }
 
   CORBA::Boolean equivalent =
@@ -763,7 +755,7 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
 
   if (!equivalent)
     {
-      return false;
+      return 0;
     }
 
   CORBA::Boolean member_equal =
@@ -800,7 +792,7 @@ TAO_DynUnion_i::destroy ()
 
       this->discriminator_->destroy ();
 
-      this->destroyed_ = true;
+      this->destroyed_ = 1;
     }
 }
 
@@ -836,7 +828,8 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
   // if we are iterating through the union type code's
   // member_label() calls.
   CORBA::TypeCode_var tc = my_any.type ();
-  CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc.in ());
+
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
   // No need to do any type checking - it was done before this
   // call was made.
@@ -844,62 +837,41 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
   {
     case CORBA::tk_octet:
       // Default case label - just skip it.
-      return false;
+      return 0;
     case CORBA::tk_short:
       {
-        CORBA::Short my_val {};
-        CORBA::Short other_val {};
-        if (!(my_any >>= my_val))
-          {
-            throw CORBA::INTERNAL ();
-          }
-        if (!(other_any >>= other_val))
-          {
-            throw CORBA::INTERNAL ();
-          }
+        CORBA::Short my_val;
+        CORBA::Short other_val;
+        my_any >>= my_val;
+        other_any >>= other_val;
         return my_val == other_val;
       }
     case CORBA::tk_long:
       {
-        CORBA::Long my_val {};
-        if (!(my_any >>= my_val))
-          {
-            throw CORBA::INTERNAL ();
-          }
-        CORBA::Long other_val {};
-        if (!(other_any >>= other_val))
-          {
-            throw CORBA::INTERNAL ();
-          }
+        CORBA::Long my_val;
+        CORBA::Long other_val;
+        my_any >>= my_val;
+        other_any >>= other_val;
         return my_val == other_val;
       }
     case CORBA::tk_ushort:
       {
         CORBA::UShort my_val;
-        if (!(my_any >>= my_val))
-          {
-            throw CORBA::INTERNAL ();
-          }
         CORBA::UShort other_val;
-        if (!(other_any >>= other_val))
-          {
-            throw CORBA::INTERNAL ();
-          }
+        my_any >>= my_val;
+        other_any >>= other_val;
         return my_val == other_val;
       }
     case CORBA::tk_ulong:
       {
-        CORBA::ULong my_val {};
-        CORBA::ULong other_val {};
-        if (!(my_any >>= my_val))
-          {
-            throw CORBA::INTERNAL ();
-          }
+        CORBA::ULong my_val;
+        CORBA::ULong other_val;
+        my_any >>= my_val;
 
         // check whether the discriminator is possibly an enum type
         // since these get stored as ulong label values as well
         CORBA::TypeCode_var other_tc = other_any.type ();
-        CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (other_tc.in ());
+        CORBA::TCKind kind = TAO_DynAnyFactory::unalias (other_tc.in ());
         if (kind == CORBA::tk_enum)
           {
             TAO::Any_Impl *other_impl = other_any.impl ();
@@ -913,107 +885,67 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
                 // shared by another Any, so we use this to copy the
                 // state, not the buffer.
                 TAO_InputCDR for_reading (other_unk->_tao_get_cdr ());
-                if (!for_reading.read_ulong (other_val))
-                  {
-                    throw CORBA::INTERNAL ();
-                  }
+                for_reading.read_ulong (other_val);
               }
             else
               {
                 TAO_OutputCDR other_out;
                 other_impl->marshal_value (other_out);
                 TAO_InputCDR other_in (other_out);
-                if (!other_in.read_ulong (other_val))
-                  {
-                    throw CORBA::INTERNAL ();
-                  }
+                other_in.read_ulong (other_val);
               }
           }
         else
-          {
-            if (!(other_any >>= other_val))
-              {
-                throw CORBA::INTERNAL ();
-              }
-          }
+          other_any >>= other_val;
 
         return my_val == other_val;
       }
     case CORBA::tk_boolean:
       {
-        CORBA::Boolean my_val {};
-        CORBA::Boolean other_val {};
-        if (!(my_any >>= CORBA::Any::to_boolean (my_val)))
-          {
-            throw CORBA::INTERNAL ();
-          }
-        if (!(other_any >>= CORBA::Any::to_boolean (other_val)))
-          {
-            throw CORBA::INTERNAL ();
-          }
+        CORBA::Boolean my_val;
+        CORBA::Boolean other_val;
+        my_any >>= CORBA::Any::to_boolean (my_val);
+        other_any >>= CORBA::Any::to_boolean (other_val);
         return my_val == other_val;
       }
     case CORBA::tk_char:
       {
-        CORBA::Char my_val {};
-        CORBA::Char other_val {};
-        if (!(my_any >>= CORBA::Any::to_char (my_val)))
-          {
-            throw CORBA::INTERNAL ();
-          }
-        if (!(other_any >>= CORBA::Any::to_char (other_val)))
-          {
-            throw CORBA::INTERNAL ();
-          }
+        CORBA::Char my_val;
+        CORBA::Char other_val;
+        my_any >>= CORBA::Any::to_char (my_val);
+        other_any >>= CORBA::Any::to_char (other_val);
         return my_val == other_val;
       }
 // For platforms without native 64-bit ints.
     case CORBA::tk_longlong:
       {
-        CORBA::LongLong my_val {};
-        CORBA::LongLong other_val {};
-        if (!(my_any >>= my_val))
-          {
-            throw CORBA::INTERNAL ();
-          }
-        if (!(other_any >>= other_val))
-          {
-            throw CORBA::INTERNAL ();
-          }
+        CORBA::LongLong my_val;
+        CORBA::LongLong other_val;
+        my_any >>= my_val;
+        other_any >>= other_val;
         return my_val == other_val;
       }
     case CORBA::tk_ulonglong:
       {
         CORBA::ULongLong my_val;
         CORBA::ULongLong other_val;
-        if (!(my_any >>= my_val))
-          {
-            throw CORBA::INTERNAL ();
-          }
-        if (!(other_any >>= other_val))
-          {
-            throw CORBA::INTERNAL ();
-          }
+        my_any >>= my_val;
+        other_any >>= other_val;
         return my_val == other_val;
       }
     case CORBA::tk_wchar:
       {
         CORBA::WChar my_val;
         CORBA::WChar other_val;
-        if (!(my_any >>= CORBA::Any::to_wchar (my_val)))
-          {
-            throw CORBA::INTERNAL ();
-          }
-        if (!(other_any >>= CORBA::Any::to_wchar (other_val)))
-          {
-            throw CORBA::INTERNAL ();
-          }
+        my_any >>= CORBA::Any::to_wchar (my_val);
+        other_any >>= CORBA::Any::to_wchar (other_val);
         return my_val == other_val;
       }
     case CORBA::tk_enum:
       {
-        CORBA::ULong my_val {};
-        CORBA::ULong other_val {};
+        CORBA::ULong my_val;
+        CORBA::ULong other_val;
+
         TAO::Any_Impl *my_impl = my_any.impl ();
 
         if (my_impl->encoded ())
@@ -1027,20 +959,14 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
             // We don't want unk's rd_ptr to move, in case we are shared by
             // another Any, so we use this to copy the state, not the buffer.
             TAO_InputCDR for_reading (my_unk->_tao_get_cdr ());
-            if (!for_reading.read_ulong (my_val))
-              {
-                throw CORBA::INTERNAL ();
-              }
+            for_reading.read_ulong (my_val);
           }
         else
           {
             TAO_OutputCDR my_out;
             my_impl->marshal_value (my_out);
             TAO_InputCDR my_in (my_out);
-            if (!(my_in.read_ulong (my_val)))
-              {
-                throw CORBA::INTERNAL ();
-              }
+            my_in.read_ulong (my_val);
           }
 
         TAO::Any_Impl *other_impl = other_any.impl ();
@@ -1056,27 +982,21 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
             // We don't want unk's rd_ptr to move, in case we are shared by
             // another Any, so we use this to copy the state, not the buffer.
             TAO_InputCDR for_reading (other_unk->_tao_get_cdr ());
-            if (!for_reading.read_ulong (other_val))
-              {
-                throw CORBA::INTERNAL ();
-              }
+            for_reading.read_ulong (other_val);
           }
         else
           {
             TAO_OutputCDR other_out;
             other_impl->marshal_value (other_out);
             TAO_InputCDR other_in (other_out);
-            if (!(other_in.read_ulong (other_val)))
-              {
-                throw CORBA::INTERNAL ();
-              }
+            other_in.read_ulong (other_val);
           }
 
         return my_val == other_val;
       }
     // Cannot happen - we've covered all the legal discriminator types.
     default:
-      return false;
+      return 0;
   }
 }
 
