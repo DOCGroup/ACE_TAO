@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_DYNVALUE_I_H
 #define TAO_DYNVALUE_I_H
 #include /**/ "ace/pre.h"
@@ -17,6 +16,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include <vector>
 
 #if defined (_MSC_VER)
 # pragma warning(push)
@@ -36,10 +37,10 @@ class TAO_DynamicAny_Export TAO_DynValue_i
 {
 public:
   /// Constructor.
-  TAO_DynValue_i (CORBA::Boolean allow_truncation=true);
+  TAO_DynValue_i (CORBA::Boolean allow_truncation = true);
 
   /// Destructor.
-  ~TAO_DynValue_i ();
+  ~TAO_DynValue_i () = default;
 
   /// Initialize using an Any.
   void init (const CORBA::Any& any);
@@ -87,11 +88,11 @@ public:
 
 private:
   /// List of base types.
-  typedef ACE_Array_Base<CORBA::TypeCode_var> BaseTypesList_t;
+  using BaseTypesList_t = std::vector<CORBA::TypeCode_var>;
 
-  /// Decompose the given TypeCode into its hiarchical list of
+  /// Decompose the given TypeCode into its hierarchical list of
   /// basetypes. The first element of the list is our actual type,
-  /// each basetype follows in order backwards down the hiarchy.
+  /// each basetype follows in order backwards down the hierarchy.
   /// All types stored in the list are de-aliased. Optionally
   /// return the total_member_count of the fully derived type.
   static void get_base_types (
@@ -100,20 +101,20 @@ private:
     CORBA::ULong *total_member_count = 0);
 
   /// Return the unaliased valuetype typecode that corresponds to
-  /// index (0..total_members-1) from the given hiarchical list of
+  /// index (0..total_members-1) from the given hierarchical list of
   /// the derived type and it basetypes.
   static CORBA::TypeCode_ptr get_correct_base_type (
     const BaseTypesList_t &base_types,
     CORBA::ULong &index);
 
   /// Return the member_type at index (0..total_members-1) from
-  /// the given hiarchical list of the derived type and it basetypes.
+  /// the given hierarchical list of the derived type and it basetypes.
   static CORBA::TypeCode_ptr get_member_type (
     const BaseTypesList_t &,
     CORBA::ULong index);
 
   /// Return the member_name at index (0..total_members-1) from
-  /// the given hiarchical list of the derived type and it basetypes.
+  /// the given hierarchical list of the derived type and it basetypes.
   static const char * get_member_name (
     const BaseTypesList_t &,
     CORBA::ULong index);
@@ -135,16 +136,18 @@ private:
   /// Read the value from the input stream
   void from_inputCDR (TAO_InputCDR &);
 
-  /// These are not implimented!
+  /// These are not implemented!
   /// Use copy() or assign() instead of these.
-  TAO_DynValue_i (const TAO_DynValue_i &src);
-  TAO_DynValue_i &operator= (const TAO_DynValue_i &src);
+  TAO_DynValue_i (const TAO_DynValue_i &) = delete;
+  TAO_DynValue_i &operator= (const TAO_DynValue_i &) = delete;
+  TAO_DynValue_i& operator= (TAO_DynValue_i&&) = delete;
+  TAO_DynValue_i (TAO_DynValue_i&&) = delete;
 
   /// Each component of DynValue and DynValueBox is also a DynAny.
-  ACE_Array_Base<DynamicAny::DynAny_var> da_members_;
+  std::vector<DynamicAny::DynAny_var> da_members_;
 
   /// First element of this is our type, each basetype follows
-  /// in order backwards down the hiarchy. All types stored are
+  /// in order backwards down the hierarchy. All types stored are
   /// de-aliased.
   BaseTypesList_t da_base_types_;
 };

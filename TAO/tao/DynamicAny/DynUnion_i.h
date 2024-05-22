@@ -99,8 +99,10 @@ private:
                               const CORBA::Any &other_any);
 
   /// Use copy() or assign() instead of these.
-  TAO_DynUnion_i (const TAO_DynUnion_i &src);
-  TAO_DynUnion_i &operator= (const TAO_DynUnion_i &src);
+  TAO_DynUnion_i (const TAO_DynUnion_i &) = delete;
+  TAO_DynUnion_i &operator= (const TAO_DynUnion_i &) = delete;
+  TAO_DynUnion_i& operator= (TAO_DynUnion_i&&) = delete;
+  TAO_DynUnion_i (TAO_DynUnion_i&&) = delete;
 
 private:
   /// Just two components.

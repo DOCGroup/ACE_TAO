@@ -142,7 +142,7 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc)
         TAO_OutputCDR stream;
         stream << CORBA::Object::_nil ();
         TAO_InputCDR in (stream);
-        TAO::Unknown_IDL_Type *unk = 0;
+        TAO::Unknown_IDL_Type *unk {};
         ACE_NEW (unk,
                  TAO::Unknown_IDL_Type (tc, in));
         this->any_.replace (unk);
@@ -262,7 +262,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
   TAO_DynAny_i *rhs_n = TAO_DynAny_i::_narrow (rhs);
 
-  if (rhs_n == 0)
+  if (rhs_n == nullptr)
     {
       return false;
     }
@@ -281,115 +281,198 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
       return true;
     case CORBA::tk_short:
       {
-        CORBA::Short rhs_v;
-        rhs_n->any_ >>= rhs_v;
-        CORBA::Short lhs_v;
-        this->any_ >>= lhs_v;
+        CORBA::Short rhs_v {};
+        if (!(rhs_n->any_ >>= rhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::Short lhs_v {};
+        if (!(this->any_ >>= lhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return (lhs_v == rhs_v);
       }
     case CORBA::tk_long:
       {
-        CORBA::Long rhs_v;
-        rhs_n->any_ >>= rhs_v;
-        CORBA::Long lhs_v;
-        this->any_ >>= lhs_v;
+        CORBA::Long rhs_v {};
+        if (!(rhs_n->any_ >>= rhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::Long lhs_v {};
+        if (!(this->any_ >>= lhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return (lhs_v == rhs_v);
       }
     case CORBA::tk_ushort:
       {
-        CORBA::UShort rhs_v;
-        rhs_n->any_ >>= rhs_v;
-        CORBA::UShort lhs_v;
-        this->any_ >>= lhs_v;
+        CORBA::UShort rhs_v {};
+        if (!(rhs_n->any_ >>= rhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::UShort lhs_v {};
+        if (!(this->any_ >>= lhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return (lhs_v == rhs_v);
       }
     case CORBA::tk_ulong:
       {
-        CORBA::ULong rhs_v;
-        rhs_n->any_ >>= rhs_v;
-        CORBA::ULong lhs_v;
-        this->any_ >>= lhs_v;
+        CORBA::ULong rhs_v {};
+        if (!(rhs_n->any_ >>= rhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::ULong lhs_v {};
+        if (!(this->any_ >>= lhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return (lhs_v == rhs_v);
       }
     case CORBA::tk_float:
       {
-        CORBA::Float rhs_v;
-        rhs_n->any_ >>= rhs_v;
-        CORBA::Float lhs_v;
-        this->any_ >>= lhs_v;
+        CORBA::Float rhs_v {};
+        if (!(rhs_n->any_ >>= rhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::Float lhs_v {};
+        if (!(this->any_ >>= lhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return ACE::is_equal (lhs_v, rhs_v);
       }
     case CORBA::tk_double:
       {
-        CORBA::Double rhs_v;
-        rhs_n->any_ >>= rhs_v;
-        CORBA::Double lhs_v;
-        this->any_ >>= lhs_v;
+        CORBA::Double rhs_v {};
+        if (!(rhs_n->any_ >>= rhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::Double lhs_v {};
+        if (!(this->any_ >>= lhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return ACE::is_equal (lhs_v, rhs_v);
       }
     case CORBA::tk_longdouble:
       {
-        CORBA::LongDouble rhs_v;
-        rhs_n->any_ >>= rhs_v;
-        CORBA::LongDouble lhs_v;
-        this->any_ >>= lhs_v;
+        CORBA::LongDouble rhs_v {};
+        if (!(rhs_n->any_ >>= rhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::LongDouble lhs_v {};
+        if (!(this->any_ >>= lhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return ACE::is_equal (lhs_v, rhs_v);
       }
     case CORBA::tk_longlong:
       {
-        CORBA::LongLong rhs_v;
-        rhs_n->any_ >>= rhs_v;
-        CORBA::LongLong lhs_v;
-        this->any_ >>= lhs_v;
+        CORBA::LongLong rhs_v {};
+        if (!(rhs_n->any_ >>= rhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::LongLong lhs_v {};
+        if (!(this->any_ >>= lhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return (lhs_v == rhs_v);
       }
     case CORBA::tk_ulonglong:
       {
-        CORBA::ULongLong rhs_v;
-        rhs_n->any_ >>= rhs_v;
-        CORBA::ULongLong lhs_v;
-        this->any_ >>= lhs_v;
+        CORBA::ULongLong rhs_v {};
+        if (!(rhs_n->any_ >>= rhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::ULongLong lhs_v {};
+        if (!(this->any_ >>= lhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return (lhs_v == rhs_v);
       }
     case CORBA::tk_boolean:
       {
-        CORBA::Boolean rhs_v;
-        rhs_n->any_ >>= CORBA::Any::to_boolean (rhs_v);
-        CORBA::Boolean lhs_v;
-        this->any_ >>= CORBA::Any::to_boolean (lhs_v);
+        CORBA::Boolean rhs_v {};
+        if (!(rhs_n->any_ >>= CORBA::Any::to_boolean (rhs_v)))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::Boolean lhs_v {};
+        if (!(this->any_ >>= CORBA::Any::to_boolean (lhs_v)))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return (lhs_v == rhs_v);
       }
     case CORBA::tk_char:
       {
-        CORBA::Char rhs_v;
-        rhs_n->any_ >>= CORBA::Any::to_char (rhs_v);
-        CORBA::Char lhs_v;
-        this->any_ >>= CORBA::Any::to_char (lhs_v);
+        CORBA::Char rhs_v {};
+        if (!(rhs_n->any_ >>= CORBA::Any::to_char (rhs_v)))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::Char lhs_v {};
+        if (!(this->any_ >>= CORBA::Any::to_char (lhs_v)))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return (lhs_v == rhs_v);
       }
     case CORBA::tk_wchar:
       {
-        CORBA::WChar rhs_v;
-        rhs_n->any_ >>= CORBA::Any::to_wchar (rhs_v);
-        CORBA::WChar lhs_v;
-        this->any_ >>= CORBA::Any::to_wchar (lhs_v);
+        CORBA::WChar rhs_v {};
+        if (!(rhs_n->any_ >>= CORBA::Any::to_wchar (rhs_v)))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::WChar lhs_v {};
+        if (!(this->any_ >>= CORBA::Any::to_wchar (lhs_v)))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return (lhs_v == rhs_v);
       }
     case CORBA::tk_octet:
       {
-        CORBA::Octet rhs_v;
-        rhs_n->any_ >>= CORBA::Any::to_octet (rhs_v);
-        CORBA::Octet lhs_v;
-        this->any_ >>= CORBA::Any::to_octet (lhs_v);
+        CORBA::Octet rhs_v {};
+        if (!(rhs_n->any_ >>= CORBA::Any::to_octet (rhs_v)))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::Octet lhs_v {};
+        if (!(this->any_ >>= CORBA::Any::to_octet (lhs_v)))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return (lhs_v == rhs_v);
       }
     case CORBA::tk_any:
       {
-        const CORBA::Any *rhs_v;
-        rhs_n->any_ >>= rhs_v;
-        const CORBA::Any *lhs_v;
-        this->any_ >>= lhs_v;
-
+        const CORBA::Any *rhs_v {};
+        if (!(rhs_n->any_ >>= rhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        const CORBA::Any *lhs_v {};
+        if (!(this->any_ >>= lhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
         DynamicAny::DynAny_var rhs_dyn =
           TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
             rhs_v->_tao_get_typecode (),
@@ -412,31 +495,39 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
       }
     case CORBA::tk_TypeCode:
       {
-        CORBA::TypeCode_ptr rhs_v;
-        rhs_n->any_ >>= rhs_v;
-        CORBA::TypeCode_ptr lhs_v;
-        this->any_ >>= lhs_v;
+        CORBA::TypeCode_ptr rhs_v {};
+        if (!(rhs_n->any_ >>= rhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::TypeCode_ptr lhs_v {};
+        if (!(this->any_ >>= lhs_v))
+          {
+            throw CORBA::INTERNAL ();
+          }
         // See CORBA 2.4.2 - must use equal() here.
         return lhs_v->equal (lhs_v);
       }
     case CORBA::tk_objref:
       {
-        CORBA::Object_ptr rhs_v;
-        rhs_n->any_ >>= CORBA::Any::to_object (rhs_v);
-        CORBA::Object_ptr lhs_v;
-        this->any_ >>= CORBA::Any::to_object (lhs_v);
+        CORBA::Object_ptr rhs_v {};
+        if (!(rhs_n->any_ >>= CORBA::Any::to_object (rhs_v)))
+          {
+            throw CORBA::INTERNAL ();
+          }
+        CORBA::Object_ptr lhs_v {};
+        if (!(this->any_ >>= CORBA::Any::to_object (lhs_v)))
+          {
+            throw CORBA::INTERNAL ();
+          }
         return lhs_v->_is_equivalent (lhs_v);
       }
     case CORBA::tk_string:
       {
-        CORBA::TypeCode_var unaliased_tc =
-          TAO_DynAnyFactory::strip_alias (this->type_.in ());
-
-        CORBA::ULong bound =
-          unaliased_tc->length ();
-
-        const char *rhs_v, *lhs_v;
-        CORBA::Boolean rstatus, lstatus;
+        CORBA::TypeCode_var unaliased_tc = TAO_DynAnyFactory::strip_alias (this->type_.in ());
+        CORBA::ULong const bound = unaliased_tc->length ();
+        const char *rhs_v {}, *lhs_v {};
+        CORBA::Boolean rstatus {}, lstatus {};
 
         if (bound == 0)
           {
@@ -445,7 +536,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             if ((rstatus && lstatus) == 0)
               {
-                return 0;
+                return false;
               }
           }
         else
@@ -455,7 +546,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
             if ((rstatus && lstatus) == 0)
               {
-                return 0;
+                return false;
               }
           }
 
@@ -463,14 +554,11 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
       }
     case CORBA::tk_wstring:
       {
-        CORBA::TypeCode_var unaliased_tc =
-          TAO_DynAnyFactory::strip_alias (this->type_.in ());
+        CORBA::TypeCode_var unaliased_tc = TAO_DynAnyFactory::strip_alias (this->type_.in ());
+        CORBA::ULong const bound = unaliased_tc->length ();
 
-        CORBA::ULong bound =
-          unaliased_tc->length ();
-
-        const CORBA::WChar *rhs_v, *lhs_v;
-        CORBA::Boolean rstatus, lstatus;
+        const CORBA::WChar *rhs_v {}, *lhs_v {};
+        CORBA::Boolean rstatus {}, lstatus {};
 
         if (bound == 0)
           {
@@ -484,10 +572,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
           }
         else
           {
-            rstatus = rhs_n->any_ >>= CORBA::Any::to_wstring (rhs_v,
-                                                              bound);
-            lstatus = this->any_ >>= CORBA::Any::to_wstring (lhs_v,
-                                                             bound);
+            rstatus = rhs_n->any_ >>= CORBA::Any::to_wstring (rhs_v, bound);
+            lstatus = this->any_ >>= CORBA::Any::to_wstring (lhs_v, bound);
 
             if ((rstatus && lstatus) == 0)
               {
@@ -803,7 +889,7 @@ TAO_DynAny_i::destroy ()
 
   if (!this->ref_to_component_ || this->container_is_destroying_)
     {
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 

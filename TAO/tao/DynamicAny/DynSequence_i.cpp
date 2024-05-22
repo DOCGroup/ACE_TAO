@@ -70,10 +70,13 @@ TAO_DynSequence_i::init (const CORBA::Any& any)
 
   // If the any is a sequence, first 4 bytes of cdr hold the
   // length.
-  cdr.read_ulong (length);
+  if (!cdr.read_ulong (length))
+    {
+      throw CORBA::INTERNAL ();
+    }
 
   // Resize the array.
-  this->da_members_.size (length);
+  this->da_members_.resize (length);
 
   this->init_common ();
 
@@ -85,7 +88,7 @@ TAO_DynSequence_i::init (const CORBA::Any& any)
     {
       CORBA::Any field_any;
       TAO_InputCDR unk_in (cdr);
-      TAO::Unknown_IDL_Type *field_unk = 0;
+      TAO::Unknown_IDL_Type *field_unk {};
       ACE_NEW (field_unk,
                TAO::Unknown_IDL_Type (field_tc.in (), unk_in));
       field_any.replace (field_unk);
@@ -114,7 +117,7 @@ TAO_DynSequence_i::init (CORBA::TypeCode_ptr tc)
     }
 
   // Empty sequence.
-  this->da_members_.size (0);
+  this->da_members_.clear ();
 
   this->init_common ();
 
@@ -217,18 +220,17 @@ TAO_DynSequence_i::set_length (CORBA::ULong length)
   if (length > this->component_count_)
     {
       // Grow array first, then initialize new members.
-      this->da_members_.size (length);
+      this->da_members_.resize (length);
 
-      CORBA::TypeCode_var elemtype =
-        stripped_tc->content_type ();
+      CORBA::TypeCode_var elemtype = stripped_tc->content_type ();
 
       for (CORBA::ULong i = this->component_count_; i < length; ++i)
         {
           this->da_members_[i] =
-        TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
-          elemtype.in (),
-          elemtype.in (),
-          this->allow_truncation_ );
+            TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
+              elemtype.in (),
+              elemtype.in (),
+              this->allow_truncation_ );
         }
     }
   else if (length < this->component_count_)
@@ -239,7 +241,7 @@ TAO_DynSequence_i::set_length (CORBA::ULong length)
           this->da_members_[j]->destroy ();
         }
 
-      this->da_members_.size (length);
+      this->da_members_.resize (length);
     }
 
   // Now we can update component_count_.
@@ -309,7 +311,7 @@ TAO_DynSequence_i::set_elements (const DynamicAny::AnySeq & value)
   // If the array grows, we must do it now.
   if (length > this->component_count_)
     {
-      this->da_members_.size (length);
+      this->da_members_.resize (length);
     }
 
   CORBA::TypeCode_var element_type = this->get_element_type ();
@@ -352,7 +354,7 @@ TAO_DynSequence_i::set_elements (const DynamicAny::AnySeq & value)
   // If the array shrinks, we must wait until now to do it.
   if (length < this->component_count_)
     {
-      this->da_members_.size (length);
+      this->da_members_.resize (length);
     }
 
   // Now we can update component_count_.
@@ -367,7 +369,7 @@ TAO_DynSequence_i::get_elements_as_dyn_any ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  DynamicAny::DynAnySeq *retval = 0;
+  DynamicAny::DynAnySeq *retval {};
   ACE_NEW_THROW_EX (retval,
                     DynamicAny::DynAnySeq (this->component_count_),
                     CORBA::NO_MEMORY ());
@@ -411,7 +413,7 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
   // If the array grows, we must do it now.
   if (length > this->component_count_)
     {
-      this->da_members_.size (length);
+      this->da_members_.resize (length);
     }
 
   CORBA::TypeCode_var element_type =
@@ -452,7 +454,7 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
   // If the array shrinks, we must wait until now to do it.
   if (length < this->component_count_)
     {
-      this->da_members_.size (length);
+      this->da_members_.resize (length);
     }
 
   // Now we can update component_count_.
@@ -502,12 +504,15 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any)
 
       // If the any is a sequence, first 4 bytes of cdr hold the
       // length.
-      cdr.read_ulong (arg_length);
+      if (!cdr.read_ulong (arg_length))
+        {
+          throw CORBA::INTERNAL ();
+        }
 
       // If the array grows, we must do it now.
       if (arg_length > this->component_count_)
         {
-          this->da_members_.size (arg_length);
+          this->da_members_.resize (arg_length);
         }
 
       CORBA::TypeCode_var field_tc =
@@ -517,7 +522,7 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any)
         {
           CORBA::Any field_any;
           TAO_InputCDR unk_in (cdr);
-          TAO::Unknown_IDL_Type *field_unk = 0;
+          TAO::Unknown_IDL_Type *field_unk {};
           ACE_NEW (field_unk,
                    TAO::Unknown_IDL_Type (field_tc.in (),
                                           unk_in));
@@ -547,7 +552,7 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any)
       // If the array shrinks, we must wait until now to do it.
       if (arg_length < this->component_count_)
         {
-          this->da_members_.size (arg_length);
+          this->da_members_.resize (arg_length);
         }
 
       // Now we can update component_count_.
@@ -609,12 +614,12 @@ TAO_DynSequence_i::to_any ()
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval = 0;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *unk = 0;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
@@ -685,7 +690,7 @@ TAO_DynSequence_i::destroy ()
           this->da_members_[i]->destroy ();
         }
 
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 

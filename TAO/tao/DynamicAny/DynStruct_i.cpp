@@ -65,11 +65,10 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (any._tao_get_typecode ());
 
-  CORBA::ULong numfields =
-    unaliased_tc->member_count ();
+  CORBA::ULong const numfields = unaliased_tc->member_count ();
 
   // Resize the array.
-  this->da_members_.size (numfields);
+  this->da_members_.resize (numfields);
 
   this->init_common ();
 
@@ -77,7 +76,7 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any)
   TAO::Any_Impl *impl = any.impl ();
   TAO_OutputCDR out;
   TAO_InputCDR in (static_cast<ACE_Message_Block *> (0));
-  TAO::Unknown_IDL_Type *unk = 0;
+  TAO::Unknown_IDL_Type *unk {};
 
   if (impl->encoded ())
     {
@@ -140,11 +139,10 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc)
   CORBA::TypeCode_var unaliased_tc =
   TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  this->component_count_ =
-    unaliased_tc->member_count ();
+  this->component_count_ = unaliased_tc->member_count ();
 
   // Resize the array.
-  this->da_members_.size (this->component_count_);
+  this->da_members_.resize (this->component_count_);
 
   this->init_common ();
 
@@ -441,7 +439,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any)
       TAO::Any_Impl *impl = any.impl ();
       TAO_OutputCDR out;
       TAO_InputCDR in (static_cast<ACE_Message_Block *> (0));
-      TAO::Unknown_IDL_Type *unk = 0;
+      TAO::Unknown_IDL_Type *unk {};
 
       if (impl->encoded ())
         {
@@ -479,7 +477,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any)
 
           CORBA::Any field_any;
           TAO_InputCDR unk_in (in);
-          TAO::Unknown_IDL_Type *unk = 0;
+          TAO::Unknown_IDL_Type *unk {};
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (field_tc.in (),
                                           unk_in));
@@ -523,8 +521,8 @@ TAO_DynStruct_i::to_any ()
       out_cdr << this->type_->id ();
     }
 
-  TAO::Any_Impl *field_impl = 0;
-  TAO::Unknown_IDL_Type *field_unk = 0;
+
+  TAO::Unknown_IDL_Type *field_unk {};
   TAO_InputCDR field_in_cdr (static_cast<ACE_Message_Block *> (0));
 
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
@@ -537,12 +535,11 @@ TAO_DynStruct_i::to_any ()
         this->da_members_[i]->to_any ();
 
       TAO_OutputCDR field_out_cdr;
-      field_impl = field_any->impl ();
+      TAO::Any_Impl *field_impl = field_any->impl ();
 
       if (field_impl->encoded ())
         {
-          field_unk =
-            dynamic_cast<TAO::Unknown_IDL_Type *> (field_impl);
+          field_unk = dynamic_cast<TAO::Unknown_IDL_Type *> (field_impl);
 
           if (!field_unk)
             throw CORBA::INTERNAL ();
@@ -563,12 +560,12 @@ TAO_DynStruct_i::to_any ()
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval = 0;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *unk = 0;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
@@ -632,7 +629,7 @@ TAO_DynStruct_i::destroy ()
           this->da_members_[i]->destroy ();
         }
 
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 

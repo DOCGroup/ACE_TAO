@@ -231,7 +231,7 @@ TAO_DynValueBox_i::destroy ()
           this->boxed_.in ()->destroy ();
         }
 
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 
@@ -310,7 +310,7 @@ TAO_DynValueBox_i::set_from_any (const CORBA::Any & any)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
   CORBA::TypeCode_var boxed_tc (unaliased_tc->content_type ());
-  TAO::Unknown_IDL_Type * unk = 0;
+  TAO::Unknown_IDL_Type * unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (boxed_tc.in (), in),
                     CORBA::NO_MEMORY ());
@@ -384,11 +384,11 @@ TAO_DynValueBox_i::to_any ()
 
   // Convert the out_cdr into a new any.
   TAO_InputCDR in_cdr (out_cdr);
-  TAO::Unknown_IDL_Type * unk = 0;
+  TAO::Unknown_IDL_Type * unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (), in_cdr),
                     CORBA::NO_MEMORY ());
-  CORBA::Any_ptr retval = 0;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (retval, CORBA::Any, CORBA::NO_MEMORY ());
   retval->replace (unk);
   return retval;
