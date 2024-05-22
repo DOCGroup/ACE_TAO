@@ -83,8 +83,8 @@ namespace TAO
     /// been changed.)
     void set_callback_for_impending_change (PICurrent_Impl *p);
 
-    /// Typedef for the underyling "slot table."
-    typedef ACE_Array_Base<CORBA::Any> Table;
+    /// Type for the underyling "slot table."
+    using Table = ACE_Array_Base<CORBA::Any>;
 
     /// Return a reference to the slot table currently associated
     /// with this PICurrent_Impl object.

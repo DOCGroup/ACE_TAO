@@ -14,13 +14,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Array_Base.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -79,7 +79,7 @@ namespace TAO
     size_t size () const;
 
   private:
-    typedef ACE_Array_Base<RegisteredInterceptor> RegisteredArray;
+    using RegisteredArray = std::vector<RegisteredInterceptor>;
 
     /// Dynamic array of registered interceptors.
     RegisteredArray interceptors_;
