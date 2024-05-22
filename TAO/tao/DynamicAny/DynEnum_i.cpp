@@ -57,20 +57,14 @@ TAO_DynEnum_i::init (const CORBA::Any &any)
       // We don't want unk's rd_ptr to move, in case we are shared by
       // another Any, so we use this to copy the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
-      if (!for_reading.read_ulong (this->value_))
-        {
-          throw CORBA::INTERNAL ();
-        }
+      for_reading.read_ulong (this->value_);
     }
   else
     {
       TAO_OutputCDR out;
       impl->marshal_value (out);
       TAO_InputCDR in (out);
-      if (!in.read_ulong (this->value_))
-        {
-          throw CORBA::INTERNAL ();
-        }
+      in.read_ulong (this->value_);
     }
 
   this->init_common ();
@@ -122,12 +116,15 @@ void
 TAO_DynEnum_i::set_as_string (const char *value_as_string)
 {
   CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
-  CORBA::ULong const count = ct.in ()->member_count ();
-  CORBA::ULong i {};
+
+  CORBA::ULong count = ct.in ()->member_count ();
+
+  CORBA::ULong i;
+  const char *temp = 0;
 
   for (i = 0; i < count; ++i)
     {
-      const char *temp = ct.in ()->member_name (i);
+      temp = ct.in ()->member_name (i);
 
       if (!ACE_OS::strcmp (value_as_string, temp))
         {
@@ -220,7 +217,7 @@ TAO_DynEnum_i::to_any ()
                     CORBA::NO_MEMORY ());
 
   TAO_InputCDR in_cdr (out_cdr);
-  TAO::Unknown_IDL_Type *unk {};
+  TAO::Unknown_IDL_Type *unk = 0;
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
@@ -258,10 +255,7 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs)
       // We don't want unk's rd_ptr to move, in case we are shared by
       // another Any, so we use this to copy the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
-      if (!for_reading.read_ulong (value))
-        {
-          throw CORBA::INTERNAL ();
-        }
+      for_reading.read_ulong (value);
     }
   else
     {
