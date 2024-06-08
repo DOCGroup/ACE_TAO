@@ -11,7 +11,7 @@
 #include "tao/debug.h"
 #include "tao/SystemException.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Log_Msg.h"
 #include "ace/CORBA_macros.h"
 
@@ -145,7 +145,6 @@ CORBA::NVList::add_value (const char *name,
 CORBA::NamedValue_ptr
 CORBA::NVList::add_item_consume (char *name, CORBA::Flags flags)
 {
-
   // call the helper to allocate a NamedValue element
   CORBA::NamedValue_ptr nv = this->add_element (flags);
 

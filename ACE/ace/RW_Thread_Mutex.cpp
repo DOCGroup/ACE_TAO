@@ -1,8 +1,6 @@
 /**
  * @file RW_Thread_Mutex.cpp
  *
- * Originally in Synch.cpp
- *
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 
@@ -19,8 +17,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Guard_T.h"
-
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -15,7 +15,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 template <class TYPE> TYPE *
 ACE_Dynamic_Service<TYPE>::instance (const ACE_TCHAR *name)
 {

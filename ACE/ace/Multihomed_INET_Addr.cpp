@@ -31,7 +31,6 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
                                                    int address_family,
                                                    const char *(secondary_host_names[]),
                                                    size_t size){
-
   // Initialize the primary INET addr
   ACE_INET_Addr::set(port_number, host_name, encode, address_family);
 
@@ -67,7 +66,6 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
                                                    int address_family,
                                                    const wchar_t *(secondary_host_names[]),
                                                    size_t size){
-
   // Initialize the primary INET addr
   ACE_INET_Addr::set(port_number, host_name, encode, address_family);
 
@@ -102,7 +100,6 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
                                                    int encode,
                                                    const ACE_UINT32 *secondary_ip_addrs,
                                                    size_t size){
-
   // Initialize the primary INET addr
   ACE_INET_Addr::set(port_number, primary_ip_addr, encode);
 
@@ -143,7 +140,6 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
   this->secondaries_.size(size);
 
   for (size_t i = 0; i < size; ++i) {
-
     int const ret = this->secondaries_[i].set(port_number,
                                               secondary_host_names[i],
                                               encode,
@@ -171,7 +167,6 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
   this->secondaries_.size(size);
 
   for (size_t i = 0; i < size; ++i) {
-
     int ret = this->secondaries_[i].set(port_number,
                                        secondary_host_names[i],
                                        encode,
@@ -195,7 +190,6 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
   this->secondaries_.size(size);
 
   for (size_t i = 0; i < size; ++i) {
-
     int ret = this->secondaries_[i].set(port_number,
                                        secondary_ip_addrs[i],
                                        encode);
@@ -228,7 +222,6 @@ ACE_Multihomed_INET_Addr::get_secondary_addresses(ACE_INET_Addr *secondary_addrs
 
   for (size_t i = 0; i < top; ++i)
     {
-
       int ret =
         secondary_addrs[i].set (this->secondaries_[i]);
 
@@ -325,7 +318,6 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
 
 ACE_Multihomed_INET_Addr::~ACE_Multihomed_INET_Addr ()
 {
-
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

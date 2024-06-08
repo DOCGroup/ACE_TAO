@@ -26,13 +26,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ServantRetentionStrategyRetain::ServantRetentionStrategyRetain () :
-      ServantRetentionStrategyNonRetain (),
-      active_object_map_ (),
-      waiting_servant_deactivation_ (0)
-    {
-    }
-
     void
     ServantRetentionStrategyRetain::strategy_init (TAO_Root_POA *poa)
     {
@@ -47,7 +40,7 @@ namespace TAO
                                                poa->orb_core().server_factory ()->active_object_map_creation_parameters ()
                                               ), CORBA::NO_MEMORY ());
 
-      ACE_auto_ptr_reset (this->active_object_map_, active_object_map);
+      this->active_object_map_.reset (active_object_map);
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
       ACE_CString name_str ("Active_Object_Map_");
@@ -234,7 +227,7 @@ namespace TAO
         }
     }
 
-    TAO_SERVANT_LOCATION
+    TAO_Servant_Location
     ServantRetentionStrategyRetain::servant_present (
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant)
@@ -256,11 +249,11 @@ namespace TAO
       if (result == 0)
         {
           // Success
-          return TAO_SERVANT_FOUND;
+          return TAO_Servant_Location::Found;
         }
       else
         {
-          return TAO_SERVANT_NOT_FOUND;
+          return TAO_Servant_Location::Not_Found;
         }
     }
 
@@ -959,13 +952,6 @@ namespace TAO
       PortableServer::Servant servant)
     {
       return this->active_object_map_->remaining_activations (servant);
-    }
-
-
-    ::PortableServer::ServantRetentionPolicyValue
-    ServantRetentionStrategyRetain::type() const
-    {
-      return ::PortableServer::RETAIN;
     }
 
     TAO_Active_Object_Map *

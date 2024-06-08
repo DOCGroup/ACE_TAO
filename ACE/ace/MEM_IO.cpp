@@ -8,8 +8,6 @@
 #include "ace/MEM_IO.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_IO)
@@ -132,7 +130,7 @@ ACE_MT_MEM_IO::Simple_Queue::read ()
     {
       retv = this->mq_->head_;
       // Here, we assume we already have acquired the lock necessary
-      // and there are soemthing in the queue.
+      // and there are something in the queue.
       if (this->mq_->head_ == this->mq_->tail_)
         {
           // Last message in the queue.

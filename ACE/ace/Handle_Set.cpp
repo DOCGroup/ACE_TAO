@@ -1,4 +1,3 @@
-// Handle_Set.cpp
 #include "ace/Handle_Set.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
@@ -118,7 +117,6 @@ ACE_Handle_Set::ACE_Handle_Set (const fd_set &fd_mask)
 int
 ACE_Handle_Set::count_bits (u_long n)
 {
-
  ACE_TRACE ("ACE_Handle_Set::count_bits");
 #if defined (ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT)
   int rval = 0;
@@ -419,11 +417,9 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
   ACE_TRACE ("ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator");
 #if !defined (ACE_HANDLE_SET_USES_FD_ARRAY) && !defined (ACE_HAS_BIG_FD_SET)
   // No sense searching further than the max_handle_ + 1;
-  ACE_HANDLE maxhandlep1 =
-    this->handles_.max_handle_ + 1;
+  ACE_HANDLE maxhandlep1 = this->handles_.max_handle_ + 1;
 
-  fd_mask *maskp =
-    (fd_mask *)(this->handles_.mask_.fds_bits);
+  fd_mask *maskp = (fd_mask *)(this->handles_.mask_.fds_bits);
 
   // Loop until we've found the first non-zero bit or we run past the
   // <maxhandlep1> of the bitset.
@@ -454,8 +450,7 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
       }
     else
       {
-        this->word_num_ =
-          ACE_DIV_BY_WORDSIZE (this->handles_.min_handle_) - 1;
+        this->word_num_ = ACE_DIV_BY_WORDSIZE (this->handles_.min_handle_) - 1;
         this->word_val_ = 0;
       }
 #endif /* !ACE_HANDLE_SET_USES_FD_ARRAY && !ACE_HAS_BIG_FD_SET */
@@ -478,11 +473,9 @@ ACE_Handle_Set_Iterator::reset_state ()
 
 #if !defined (ACE_HANDLE_SET_USES_FD_ARRAY) && !defined (ACE_HAS_BIG_FD_SET)
   // No sense searching further than the max_handle_ + 1;
-  ACE_HANDLE maxhandlep1 =
-    this->handles_.max_handle_ + 1;
+  ACE_HANDLE maxhandlep1 = this->handles_.max_handle_ + 1;
 
-  fd_mask *maskp =
-    (fd_mask *)(this->handles_.mask_.fds_bits);
+  fd_mask *maskp = (fd_mask *)(this->handles_.mask_.fds_bits);
 
   // Loop until we've found the first non-zero bit or we run past the
   // <maxhandlep1> of the bitset.

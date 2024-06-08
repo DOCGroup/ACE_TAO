@@ -1,7 +1,5 @@
 #include "ace/UNIX_Addr.h"
 
-
-
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #if defined (ACE_HAS_ALLOC_HOOKS)

@@ -16,22 +16,21 @@ Job_i::Job_i (DT_Creator* dt_creator)
   // create the stat object.
   ACE_NEW (task_stats_, Task_Stats);
   task_stats_->init (100);
-
 }
 
-Job_i::~Job_i (void)
+Job_i::~Job_i ()
 {
   delete task_stats_;
 }
 
 const ACE_CString&
-Job_i::name (void)
+Job_i::name ()
 {
   return job_name_;
 }
 
 const ACE_CString&
-Job_i::poa (void)
+Job_i::poa ()
 {
   return POA_name_;
 }
@@ -129,19 +128,19 @@ Job_i::post_work (int /*guid*/,
 }
 
 int
-Job_i::guid (void)
+Job_i::guid ()
 {
   return this->guid_;
 }
 
 void
-Job_i::shutdown (void)
+Job_i::shutdown ()
 {
   dt_creator_->job_ended ();
 }
 
 void
-Job_i::dump_stats (void)
+Job_i::dump_stats ()
 {
   ACE_TCHAR fname [BUFSIZ];
   ACE_OS::sprintf (fname,

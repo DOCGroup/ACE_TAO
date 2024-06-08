@@ -38,17 +38,17 @@ class TAO_Event_Serv_Export TAO_CEC_Event_Loader : public TAO_Object_Loader
 {
 public:
   /// Constructor
-  TAO_CEC_Event_Loader (void);
+  TAO_CEC_Event_Loader ();
 
   /// Destructor
-  ~TAO_CEC_Event_Loader (void);
+  ~TAO_CEC_Event_Loader ();
 
   //@{
   /**
    * @name Derived from ACE_Service_Object
    */
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini (void);
+  virtual int fini ();
   //@}
 
   //@{

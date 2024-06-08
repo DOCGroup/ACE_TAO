@@ -198,7 +198,7 @@ public:
    */
   //@{
   typedef bool Boolean;
-  typedef unsigned char Octet;
+  typedef ACE_Byte Octet;
   typedef char Char;
   typedef ACE_WCHAR_T WChar;
   typedef ACE_INT16 Short;
@@ -207,6 +207,14 @@ public:
   typedef ACE_UINT32 ULong;
   typedef ACE_INT64 LongLong;
   typedef ACE_UINT64 ULongLong;
+  typedef ACE_INT8 Int8;
+  typedef ACE_UINT8 UInt8;
+  typedef Short Int16;
+  typedef UShort UInt16;
+  typedef Long Int32;
+  typedef ULong UInt32;
+  typedef LongLong Int64;
+  typedef ULongLong UInt64;
 
 #   if ACE_SIZEOF_FLOAT == 4
       typedef float Float;
@@ -256,7 +264,7 @@ public:
        // VxWorks' compiler (gcc 2.96) gets confused by the operator long
        // double, so we avoid using long double as the NativeImpl.
        // Linux's x86 long double format (12 or 16 bytes) is incompatible
-       // with Windows, Solaris, AIX, MacOS X and HP-UX (and probably others)
+       // with Windows, and MacOS X (and probably others)
        // long double format (8 or 16 bytes).  If you need 32-bit Linux to
        // inter-operate with 64-bit Linux you will want to define this
        // macro to 0 so that "long double" is used.  Otherwise, do not define

@@ -95,32 +95,16 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   if (idl_global->dcps_sequence_type_defined (node->full_name ()))
     {
-      // generate the sequence declaration as if it was native. This
-      // to satisfy DDS
-
-      // strip  the "Seq" ending to get the sample's name
-      const char * node_name = node->full_name ();
-      const size_t max_name_length = 2000;
-      if (ACE_OS::strlen (node_name) >= max_name_length)
-        {
-          return -1;
-        }
-      char sample_name[max_name_length];
-      ACE_OS::strncpy (sample_name,
-                       node_name,
-                       ACE_OS::strlen (node_name) - 3);
-      sample_name[ACE_OS::strlen (node_name) - 3] = '\0';
-
+      // Special Implementation for OpenDDS
       *os << be_nl_2
           << "typedef ::TAO::DCPS::ZeroCopyDataSeq< "
-          << sample_name
+          << node->base_type ()->full_name ()
           << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE> "
-          << node->local_name ()
+          << node->original_local_name ()
           << ";" << be_nl;
     }
   else
@@ -195,12 +179,12 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << "public:" << be_idt;
 
       *os << be_nl
-          << node->local_name () << " ();";
+          << node->local_name () << " () = default;";
 
       if (node->unbounded ())
         {
           *os << be_nl
-              << node->local_name () << " ( ::CORBA::ULong max);";
+              << node->local_name () << " (::CORBA::ULong max);";
         }
 
       /// If we are using std::vector, we can't implement this
@@ -245,7 +229,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << node->local_name () << "& operator= (" << node->local_name () << " &&) = default;"
           << be_nl;
 
-      *os << "virtual ~" << node->local_name () << " ();";
+      *os << "virtual ~" << node->local_name () << " () = default;";
 
       if (be_global->alt_mapping () && node->unbounded ())
         {

@@ -1,5 +1,4 @@
 // Defines the Internet domain address family address format.
-
 #include "ace/INET_Addr.h"
 
 #if !defined (__ACE_INLINE__)
@@ -50,20 +49,12 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
     + 5 // ACE_OS::strlen ("65535"), Assuming the max port number.
     + 1 // sizeof (':'), addr/port sep
     + 1; // sizeof ('\0'), terminating NUL
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_TCHAR const *format = ACE_TEXT("%ls:%d");
-#else
-  ACE_TCHAR const *format = ACE_TEXT("%s:%d");
-#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
+  ACE_TCHAR const *format = ACE_TEXT("%") ACE_TEXT_PRIs ACE_TEXT(":%d");
 #if defined (ACE_HAS_IPV6)
   if (ACE_OS::strchr (hoststr, ACE_TEXT (':')) != 0)
     {
       total_len += 2; // ACE_OS::strlen ("[]") IPv6 addr frames
-#  if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-      format = ACE_TEXT("[%ls]:%d");
-#  else
-      format = ACE_TEXT("[%s]:%d");
-#  endif /* !ACE_WIN32 && ACE_USES_WCHAR */
+      format = ACE_TEXT("[%") ACE_TEXT_PRIs ACE_TEXT("]:%d");
     }
 #endif // ACE_HAS_IPV6
 
@@ -139,7 +130,6 @@ ACE_INET_Addr::is_ip_equal (const ACE_INET_Addr &sap) const
 #endif /* ACE_HAS_IPV6 */
   return this->get_ip_address () == sap.get_ip_address();
 }
-
 
 u_long
 ACE_INET_Addr::hash () const
@@ -454,8 +444,7 @@ ACE_INET_Addr::set (u_short port_number,
   return 0;
 }
 
-// Helper function to get a port number from a port name.
-
+/// Helper function to get a port number from a port name.
 static int get_port_number_from_name (const char port_name[],
                                       const char protocol[])
 {
@@ -479,12 +468,11 @@ static int get_port_number_from_name (const char port_name[],
     }
 
   // We try to resolve port number from its name.
+  port_number = -1;
 #if defined (ACE_LACKS_GETSERVBYNAME)
-  port_number = 0;
   ACE_UNUSED_ARG (port_name);
   ACE_UNUSED_ARG (protocol);
 #else
-  port_number = -1;
   servent sentry;
   ACE_SERVENT_DATA buf;
   servent *sp = ACE_OS::getservbyname_r (port_name,
@@ -986,7 +974,6 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
   // Here with an unrecognized length.
   errno = EAFNOSUPPORT;
   return -1;
-
 }
 
 #if (defined (ACE_LINUX) || defined (ACE_WIN32)) && defined (ACE_HAS_IPV6)
@@ -1012,7 +999,6 @@ ACE_INET_Addr::set_interface (const char *intf_name)
     }
   else
     return 0;
-
 }
 #endif /* ACE_LINUX && ACE_HAS_IPV6 */
 
@@ -1098,7 +1084,7 @@ ACE_INET_Addr::get_ip_address () const
   if (this->get_type () == AF_INET6)
     {
       if (IN6_IS_ADDR_V4MAPPED (&this->inet_addr_.in6_.sin6_addr) ||
-          IN6_IS_ADDR_V4COMPAT (&this->inet_addr_.in6_.sin6_addr)    )
+          IN6_IS_ADDR_V4COMPAT (&this->inet_addr_.in6_.sin6_addr))
         {
           ACE_UINT32 addr;
           // Return the last 32 bits of the address

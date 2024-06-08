@@ -38,17 +38,17 @@ class ACE_Map_Entry
 {
 public:
   /// Initialize member variables.
-  ACE_Map_Entry ();
+  ACE_Map_Entry () = default;
 
   /// We need this destructor to keep some compilers from complaining.
   /// It's just a no-op, however.
-  ~ACE_Map_Entry ();
+  ~ACE_Map_Entry () = default;
 
   /// Key used to look up an entry.
-  EXT_ID ext_id_;
+  EXT_ID ext_id_ {};
 
   /// The contents of the entry itself.
-  INT_ID int_id_;
+  INT_ID int_id_ {};
 
   /// Dump the state of an object.
   void dump () const;
@@ -72,15 +72,15 @@ public:
   void prev (ACE_UINT32 p);
 
   /// Keeps track of the next entry.
-  ACE_UINT32 next_;
+  ACE_UINT32 next_ {};
 
   /// Keeps track of the previous entry.
-  ACE_UINT32 prev_;
+  ACE_UINT32 prev_ {};
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
   /// Is this entry free?
-  bool free_;
+  bool free_ {true};
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 };
 
@@ -145,15 +145,15 @@ public:
   typedef ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> reverse_iterator;
 
   /// Initialize a ACE_Map_Manager with the ACE_DEFAULT_MAP_SIZE.
-  ACE_Map_Manager (ACE_Allocator *alloc = 0);
+  ACE_Map_Manager (ACE_Allocator *alloc = nullptr);
 
   /// Initialize a ACE_Map_Manager with @a size entries.
   ACE_Map_Manager (size_t size,
-                   ACE_Allocator *alloc = 0);
+                   ACE_Allocator *alloc = nullptr);
 
   /// Initialize a ACE_Map_Manager with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-            ACE_Allocator *alloc = 0);
+            ACE_Allocator *alloc = nullptr);
 
   /// Close down a ACE_Map_Manager and release dynamically allocated
   /// resources.
@@ -283,7 +283,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   // = The following methods do the actual work.
 
   // These methods assume that the locks are held by the private
@@ -390,7 +389,7 @@ protected:
    * free slots in the free list. This function goes through the
    * entire occupied list, moving free slots to the free list.
    */
-  void move_all_free_slots_from_occupied_list (void);
+  void move_all_free_slots_from_occupied_list ();
 
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
@@ -433,8 +432,8 @@ protected:
 
 private:
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Map_Manager (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &))
+  void operator= (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &) = delete;
+  ACE_Map_Manager (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &) = delete;
 };
 
 /**
@@ -697,13 +696,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Map_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Map_Manager.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Map_Manager.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

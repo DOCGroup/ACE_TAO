@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_ACTIVE_MAP_MANAGER_T_H
 #define ACE_ACTIVE_MAP_MANAGER_T_H
 #include /**/ "ace/pre.h"
@@ -50,19 +49,19 @@ public:
   typedef REVERSE_ITERATOR reverse_iterator;
 
   /// Initialize a Active_Map_Manager with the ACE_DEFAULT_MAP_SIZE.
-  ACE_Active_Map_Manager (ACE_Allocator *alloc = 0);
+  ACE_Active_Map_Manager (ACE_Allocator *alloc = nullptr);
 
   /// Initialize a Active_Map_Manager with @a size entries.
   ACE_Active_Map_Manager (size_t size,
-                          ACE_Allocator *alloc = 0);
+                          ACE_Allocator *alloc = nullptr);
 
   /// Close down a Active_Map_Manager and release dynamically
   /// allocated resources.
-  ~ACE_Active_Map_Manager ();
+  ~ACE_Active_Map_Manager () = default;
 
   /// Initialize a Active_Map_Manager with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-            ACE_Allocator *alloc = 0);
+            ACE_Allocator *alloc = nullptr);
 
   /// Close down a Active_Map_Manager and release dynamically
   /// allocated resources.
@@ -178,14 +177,13 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Private base class
   typedef ACE_Map_Manager<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> ACE_AMM_BASE;
 
 private:
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Active_Map_Manager<T> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Active_Map_Manager (const ACE_Active_Map_Manager<T> &))
+  void operator= (const ACE_Active_Map_Manager<T> &) = delete;
+  ACE_Active_Map_Manager (const ACE_Active_Map_Manager<T> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -194,13 +192,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Active_Map_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Active_Map_Manager_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Active_Map_Manager_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_ACTIVE_MAP_MANAGER_T_H */

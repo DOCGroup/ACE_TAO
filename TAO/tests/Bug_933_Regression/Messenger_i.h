@@ -13,16 +13,15 @@ class  Messenger_i : public virtual POA_Messenger
 public:
   Messenger_i (CORBA::ORB_ptr orb);
 
-  virtual ~Messenger_i (void);
+  virtual ~Messenger_i ();
 
   virtual void send_message (const CORBA::OctetSeq & user_name);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
-
 };
 
 

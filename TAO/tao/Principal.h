@@ -61,29 +61,27 @@ namespace CORBA
 
     // The pseudo object operations.
     static Principal * _duplicate (Principal *);
-    static Principal * _nil (void);
+    static Principal * _nil ();
 
     // = Stuff required for memory management.
-    unsigned long _incr_refcount (void);
-    unsigned long _decr_refcount (void);
+    unsigned long _incr_refcount ();
+    unsigned long _decr_refcount ();
 
-    Principal (void);
+    Principal ();
 
     // Useful for template programming.
     typedef Principal_ptr _ptr_type;
     typedef Principal_var _var_type;
 
   protected:
-
     /// Destructor
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
      */
-    ~Principal (void);
+    ~Principal ();
 
   private:
-
     // = Prevent copying
     Principal &operator = (const CORBA::Principal_ptr &);
     Principal (const CORBA::Principal_ptr &);

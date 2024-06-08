@@ -21,7 +21,6 @@
 #include "ace/Recursive_Thread_Mutex.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Guard_T.h"

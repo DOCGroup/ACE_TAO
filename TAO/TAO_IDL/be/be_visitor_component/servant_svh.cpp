@@ -17,10 +17,6 @@ be_visitor_servant_svh::be_visitor_servant_svh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_servant_svh::~be_visitor_servant_svh ()
-{
-}
-
 int
 be_visitor_servant_svh::visit_component (be_component *node)
 {
@@ -339,7 +335,7 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
       os_ << be_nl_2
           << "/// Inherited from ::Components::EventConsumerBase." << be_nl
           << "virtual void" << be_nl
-          << "push_event ( ::Components::EventBase * ev);";
+          << "push_event (::Components::EventBase * ev);";
 
       os_ << be_nl_2
           << "/// Get component implementation." << be_nl

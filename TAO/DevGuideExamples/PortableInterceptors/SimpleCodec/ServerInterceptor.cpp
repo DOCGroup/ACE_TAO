@@ -21,7 +21,6 @@ ServerInterceptor::ServerInterceptor (IOP::CodecFactory_var cf)
 
   // Obtain the CDR encapsulation Codec.
   this->codec = cf->create_codec (encoding);
-
 }
 
 ServerInterceptor::~ServerInterceptor ()
@@ -88,7 +87,7 @@ ServerInterceptor::receive_request (
     std::cout << "Permission Granted " << std::endl;
   }
   else {
-    std::cout << "Permission Denied " << std::endl;;
+    std::cout << "Permission Denied " << std::endl;
   }
 }
 

@@ -19,7 +19,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Task.h"
 #include "ace/Pipe.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Thread_Semaphore.h"
@@ -446,7 +446,6 @@ run_test (int disable_notify_pipe,
  */
 class Purged_Notify : public ACE_Event_Handler
 {
-
   int handle_exception (ACE_HANDLE = ACE_INVALID_HANDLE) override
   {
     ACE_ERROR_RETURN ((LM_ERROR,

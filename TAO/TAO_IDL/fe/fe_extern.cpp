@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -75,7 +74,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_root.h"
 
-#include "ace/UUID.h"
+#include "ace/OS_NS_stdio.h"
 
 extern int tao_yyparse ();
 

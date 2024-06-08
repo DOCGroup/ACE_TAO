@@ -59,7 +59,6 @@
 #define YYLSP_NEEDED 0
 
 
-
 /* Tokens.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
@@ -97,7 +96,6 @@
 #define ACE_PATHNAME 269
 #define ACE_IDENT 270
 #define ACE_STRING 271
-
 
 
 
@@ -147,8 +145,6 @@ static ACE_Module_Type *
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-
-
 /* Enabling traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -173,7 +169,6 @@ typedef int YYSTYPE;
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1
 #endif
-
 
 
 /* Copy the second part of user declarations.  */
@@ -886,7 +881,6 @@ int ace_yydebug;
 #endif
 
 
-
 #if YYERROR_VERBOSE
 
 # ifndef ace_yystrlen
@@ -1123,7 +1117,6 @@ ace_yydestruct (ace_yymsg, ace_yytype, ace_yyvaluep)
 
   switch (ace_yytype)
     {
-
       default:
   break;
     }
@@ -1140,12 +1133,11 @@ int ace_yyparse ();
 #endif
 #else /* ! YYPARSE_PARAM */
 #if defined __STDC__ || defined __cplusplus
-int ace_yyparse (void);
+int ace_yyparse ();
 #else
 int ace_yyparse ();
 #endif
 #endif /* ! YYPARSE_PARAM */
-
 
 
 
@@ -1169,7 +1161,7 @@ ace_yyparse (YYPARSE_PARAM)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 int
-ace_yyparse (void)
+ace_yyparse ()
 #else
 int
 ace_yyparse ()
@@ -1217,7 +1209,6 @@ int ace_yynerrs;
   YYSTYPE ace_yyvsa[YYINITDEPTH];
   YYSTYPE *ace_yyvs = ace_yyvsa;
   YYSTYPE *ace_yyvsp;
-
 
 
 #define YYPOPSTACK(N)   (ace_yyvsp -= (N), ace_yyssp -= (N))
@@ -1773,7 +1764,6 @@ ace_yyerrlab:
     }
 
 
-
   if (ace_yyerrstatus == 3)
     {
       /* If just tried and failed to reuse look-ahead token after an
@@ -1912,7 +1902,6 @@ ace_yyreturn:
   /* Make sure YYID is used.  */
   return YYID (ace_yyresult);
 }
-
 
 
 

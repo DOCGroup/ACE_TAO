@@ -19,12 +19,12 @@
 class SM_Client : public Select_Manager, public CM_Client
 {
 public:
-  SM_Client (void);
-  virtual ~SM_Client (void);
+  SM_Client ();
+  virtual ~SM_Client ();
 
   virtual int mux (char *packet, int &packet_length);
   virtual int demux (char *packet, int &packet_length);
-  virtual void process (void);
+  virtual void process ();
 
 private:
   PM_Client *pm_client;

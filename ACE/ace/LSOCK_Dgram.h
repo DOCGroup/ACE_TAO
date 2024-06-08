@@ -35,7 +35,7 @@ class ACE_Export ACE_LSOCK_Dgram : public ACE_SOCK_Dgram, public ACE_LSOCK
 {
 public:
   /// Default constructor.
-  ACE_LSOCK_Dgram (void);
+  ACE_LSOCK_Dgram ();
 
   /// Initiate a local dgram.
   ACE_LSOCK_Dgram (const ACE_Addr &local,
@@ -48,7 +48,7 @@ public:
             int protocol = 0);
 
   /// Get handle.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /// Set handle.
   void set_handle (ACE_HANDLE);

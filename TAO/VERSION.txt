@@ -1,8 +1,6 @@
-This is TAO version 2.5.12, released Tue Oct 27 12:46:14 CET 2020
+This is TAO version 4.0.0, released Thu May 16 12:27:08 CEST 2024
 
-If you have any problems with or questions about TAO, please send
-e-mail to the TAO mailing list (tao-bugs@list.isis.vanderbilt.edu),
-using the form found in the file TAO/PROBLEM-REPORT-FORM. In order
-to post to the list you must subscribe to it.
-
-See https://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html
+If you have any problems with or questions about TAO, please open
+a issue or discussion on the ACE_TAO github project at
+https://github.com/DOCGroup/ACE_TAO using the form found in the
+file PROBLEM-REPORT-FORM.

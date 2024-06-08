@@ -108,9 +108,8 @@ public:
   const TAO_GIOP_Message_State& state () const;
 
 private:
-
   /// The message block that contains the message.
-  ACE_Message_Block *msg_block_;
+  ACE_Message_Block *msg_block_ {};
 
   /*!
     @name Missing Data details
@@ -122,21 +121,21 @@ private:
   /*! Data missing in the above message that hasn't been read or processed yet,
       the value TAO_MISSING_DATA_UNDEFINED indicates it hasn't been processed yet,
       otherwise greater or equal zero. */
-  size_t missing_data_;
+  size_t missing_data_ {};
   //@}
 
   /// State of this queued data
   TAO_GIOP_Message_State state_;
 
   /// Pounter to the next element in the queue.
-  TAO_Queued_Data *next_;
+  TAO_Queued_Data *next_ {};
 
   /// Replace the datablock with a one allocated on the heap or
   /// allocator
   static void replace_data_block (ACE_Message_Block &mb);
 
   /// The allocator used to allocate this class.
-  ACE_Allocator *allocator_;
+  ACE_Allocator *allocator_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -19,26 +19,22 @@
  */
 class Visual_i : public virtual POA_Test_Interceptors::Visual
 {
-
 public:
-
   Visual_i (CORBA::ORB_ptr orb);
 
   void normal (CORBA::Long arg);
 
-  void nothing (void);
+  void nothing ();
 
-  void user (void);
+  void user ();
 
-  void system (void);
+  void system ();
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
-
   /// The ORB pseudo-reference (for shutdown).
   CORBA::ORB_var orb_;
-
 };
 
 #endif /* SERVICE_CONTEXT_MANIPULATION_COLLOCATED_TEST_I_H */

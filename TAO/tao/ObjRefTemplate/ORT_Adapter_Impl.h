@@ -44,10 +44,10 @@ namespace TAO
                           PortableServer::POA_ptr poa);
 
     /// Accessor methods to ObjectReferenceTemplate template
-    virtual PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void);
+    virtual PortableInterceptor::ObjectReferenceTemplate *get_adapter_template ();
 
     /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
-    virtual PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory (void);
+    virtual PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory ();
 
     /// Set a different ort_factory to be used.
     virtual int set_obj_ref_factory (
@@ -63,11 +63,11 @@ namespace TAO
      * Methods
      */
     //@{
-    virtual char * tao_server_id (void);
+    virtual char * tao_server_id ();
 
-    virtual char * tao_orb_id (void);
+    virtual char * tao_orb_id ();
 
-    virtual PortableInterceptor::AdapterName * tao_adapter_name (void);
+    virtual PortableInterceptor::AdapterName * tao_adapter_name ();
     //@}
 
     /**
@@ -83,7 +83,6 @@ namespace TAO
     //@}
 
   private:
-
     /// The ORT Template, this is the factory and its identity.
     PortableInterceptor::ObjectReferenceTemplate_var ort_template_;
 

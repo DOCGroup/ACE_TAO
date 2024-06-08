@@ -18,11 +18,6 @@ namespace ACE
         ACE_Singleton<Monitor_Point_Registry, ACE_SYNCH_MUTEX>::instance ();
     }
 
-    Monitor_Point_Registry::Monitor_Point_Registry ()
-      : constraint_id_ (0)
-    {
-    }
-
     bool
     Monitor_Point_Registry::add (Monitor_Base* type)
     {
@@ -41,9 +36,6 @@ namespace ACE
         type->add_ref ();
 
         status = this->map_.bind (type->name (), type);
-
-        /// Temporary debugging code.
-//        ACELIB_DEBUG ((LM_DEBUG, "adding %s\n", type->name ()));
       }
 
       if (status == -1)
@@ -74,9 +66,6 @@ namespace ACE
 
         ACE_CString name_str (name, 0, false);
         status = this->map_.unbind (name_str, mp);
-
-        /// Temporary debugging code.
-//        ACELIB_DEBUG ((LM_DEBUG, "removing %s\n", name_str.c_str ()));
       }
 
       if (status == -1)

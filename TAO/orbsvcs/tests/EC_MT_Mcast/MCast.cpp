@@ -26,7 +26,6 @@ static const int data_items = 60000;
 void *
 run_orb_within_thread (void *)
 {
-
   while (! terminate_threads)
     {
       try
@@ -328,7 +327,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Now we can destroy the POA, the flags mean that we want to
       // wait until the POA is really destroyed
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
 
       // Finally destroy the ORB
       orb->destroy ();

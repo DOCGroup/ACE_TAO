@@ -432,7 +432,6 @@ be_visitor_args_vardecl_ss::emit_common (
 }
 
 
-
 int
 be_visitor_args_vardecl_ss::emit_common2 (be_type *node)
 {

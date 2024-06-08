@@ -14,10 +14,6 @@ TAO_PG_Default_Property_Validator::TAO_PG_Default_Property_Validator ()
   this->factories_[0].id = CORBA::string_dup ("org.omg.PortableGroup.Factories");
 }
 
-TAO_PG_Default_Property_Validator::~TAO_PG_Default_Property_Validator ()
-{
-}
-
 void
 TAO_PG_Default_Property_Validator::validate_property (
     const PortableGroup::Properties & props)

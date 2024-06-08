@@ -51,15 +51,13 @@
 
 #  include "ace/POSIX_Proactor.h"
 #  include "ace/POSIX_CB_Proactor.h"
-#  include "ace/SUN_Proactor.h"
 
 #endif /* defined (ACE_HAS_WIN32_OVERLAPPED_IO) */
 
 #include "Proactor_Test.h"
 
-
 // Proactor Type (UNIX only, Win32 ignored)
-using ProactorType = enum { DEFAULT = 0, AIOCB, SIG, SUN, CB };
+using ProactorType = enum { DEFAULT = 0, AIOCB, SIG, CB };
 static ProactorType proactor_type = DEFAULT;
 
 // POSIX : > 0 max number aio operations  proactor,
@@ -104,12 +102,11 @@ static char complete_message[] =
 class LogLocker
 {
 public:
-
   LogLocker () { ACE_LOG_MSG->acquire (); }
   virtual ~LogLocker () { ACE_LOG_MSG->release (); }
 };
 
-
+#if defined (ACE_HAS_IPV6)
 
 // Function to remove signals from the signal mask.
 static int
@@ -144,7 +141,6 @@ disable_signal (int sigmin, int sigmax)
 
   return 0;
 }
-
 
 // *************************************************************
 //  MyTask is ACE_Task resposible for :
@@ -191,7 +187,6 @@ private:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Thread_Semaphore sem_;
   ACE_Proactor * proactor_;
-
 };
 
 int
@@ -204,7 +199,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 
   ACE_TEST_ASSERT (this->proactor_ == 0);
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 
   ACE_UNUSED_ARG (type_proactor);
   ACE_UNUSED_ARG (max_op);
@@ -242,16 +237,6 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       break;
 #endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
 
-#  if defined (sun)
-    case SUN:
-      ACE_NEW_RETURN (proactor_impl,
-                      ACE_SUN_Proactor (max_op),
-                      -1);
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("(%t) Create Proactor Type = SUN\n")));
-      break;
-#  endif /* sun */
-
 #  if !defined(ACE_HAS_BROKEN_SIGEVENT_STRUCT)
     case CB:
       ACE_NEW_RETURN (proactor_impl,
@@ -268,7 +253,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       break;
   }
 
-#endif // (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#endif // (ACE_WIN32)
 
   // always delete implementation  1 , not  !(proactor_impl == 0)
   ACE_NEW_RETURN (this->proactor_,
@@ -357,7 +342,7 @@ MyTask::svc ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) MyTask finished\n")));
   return 0;
 }
-
+#endif /* ACE_HAS_IPV6 */
 
 // TestData collects and reports on test-related transfer and connection
 // statistics.
@@ -616,7 +601,6 @@ TestData::report ()
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("It appears that this test didn't ")
                 ACE_TEXT ("really do anything. Something is very wrong.\n")));
 }
-
 
 class Acceptor : public ACE_Asynch_Acceptor<Server>
 {
@@ -1321,8 +1305,7 @@ Client::initiate_write_stream ()
 
   static const size_t complete_message_length = ACE_OS::strlen (complete_message);
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
-
+#if defined (ACE_WIN32)
   ACE_Message_Block *mb1 = 0,
                     *mb2 = 0,
                     *mb3 = 0;
@@ -1359,7 +1342,7 @@ Client::initiate_write_stream ()
                         ACE_TEXT ("Client::ACE_Asynch_Stream::writev")),
                        -1);
     }
-#else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#else /* defined (ACE_WIN32) */
 
   ACE_Message_Block *mb = 0;
 
@@ -1386,7 +1369,7 @@ Client::initiate_write_stream ()
                         ACE_TEXT ("write")),
                        -1);
     }
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
   this->io_count_++;
   this->total_w_++;
@@ -1402,7 +1385,7 @@ Client::initiate_read_stream ()
   static const size_t complete_message_length =
     ACE_OS::strlen (complete_message);
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
   ACE_Message_Block *mb1 = 0,
                     *mb2 = 0,
                     *mb3 = 0,
@@ -1451,7 +1434,7 @@ Client::initiate_read_stream ()
                          ACE_TEXT ("Client::ACE_Asynch_Read_Stream::readv")),
                         -1);
     }
-#else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#else /* defined (ACE_WIN32) */
 
   // Try to read more chunks
   size_t blksize = ( complete_message_length > BUFSIZ ) ?
@@ -1484,7 +1467,7 @@ Client::initiate_read_stream ()
                          ACE_TEXT ("read")),
                         -1);
     }
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
   this->io_count_++;
   this->total_r_++;
@@ -1535,7 +1518,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("error"),
                     result.error ()));
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
         size_t bytes_transferred = result.bytes_transferred ();
         char index = 0;
         for (ACE_Message_Block* mb_i = &mb;
@@ -1566,7 +1549,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                         index,
                         mb_i->rd_ptr ()));
           }
-#else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#else /* defined (ACE_WIN32) */
         // write 0 at string end for proper printout (if end of mb, it's 0 already)
         mb.rd_ptr()[0]  = '\0';
         // move rd_ptr backwards as required for printout
@@ -1575,7 +1558,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("%s = %s\n"),
                     ACE_TEXT ("message_block"),
                     mb.rd_ptr ()));
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("**** end of message ****************\n")));
@@ -1765,7 +1748,6 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
       ACE_TEXT ("\n    a AIOCB")
       ACE_TEXT ("\n    i SIG")
       ACE_TEXT ("\n    c CB")
-      ACE_TEXT ("\n    s SUN")
       ACE_TEXT ("\n    d default")
       ACE_TEXT ("\n-d <duplex mode 1-on/0-off>")
       ACE_TEXT ("\n-h <host> for Client mode")
@@ -1804,11 +1786,6 @@ set_proactor_type (const ACE_TCHAR *ptype)
     case 'I':
       proactor_type = SIG;
       return 1;
-#if defined (sun)
-    case 'S':
-      proactor_type = SUN;
-      return 1;
-#endif /* sun */
 #if !defined (ACE_HAS_BROKEN_SIGEVENT_STRUCT)
      case 'C':
        proactor_type = CB;
@@ -1895,13 +1872,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         return print_usage (argc, argv);
       } // switch
     } // while
-
-  if (proactor_type == SUN && threads > 1)
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sun aiowait is not thread-safe; ")
-                  ACE_TEXT ("changing to 1 thread\n")));
-      threads = 1;
-    }
 
   return 0;
 }

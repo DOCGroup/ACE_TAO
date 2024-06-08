@@ -40,7 +40,7 @@ public:
   TAO_Direct_Priority_Mapping (long);
 
   /// The destructor
-  virtual ~TAO_Direct_Priority_Mapping (void);
+  virtual ~TAO_Direct_Priority_Mapping ();
 
   virtual CORBA::Boolean
       to_native (RTCORBA::Priority corba_priority,

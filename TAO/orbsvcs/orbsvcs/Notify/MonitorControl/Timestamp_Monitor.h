@@ -14,7 +14,7 @@
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/notify_mc_export.h"
+#include "orbsvcs/Notify/MonitorControl/notify_mc_export.h"
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 

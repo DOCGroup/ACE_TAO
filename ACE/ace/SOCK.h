@@ -39,7 +39,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SOCK : public ACE_IPC_SAP
 {
 public:
-
   /// Wrapper around the @c setsockopt system call.
   int set_option (int level,
                   int option,
@@ -94,7 +93,6 @@ public:
             int reuse_addr);
 
 protected:
-
   /// Constructor with arguments to call the BSD-style @c socket system
   /// call (no QoS).
   ACE_SOCK (int type,
@@ -122,7 +120,7 @@ protected:
    * operator delete() from being called through a base class ACE_SOCK
    * pointer/reference.
    */
-  ~ACE_SOCK ();
+  ~ACE_SOCK () = default;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

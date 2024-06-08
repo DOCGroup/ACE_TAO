@@ -26,10 +26,6 @@
 #  include /**/ <dlfcn.h>
 #endif /* !ACE_LACKS_DLFCN_H */
 
-#if defined (__hpux)
-#  include /**/ <dl.h>
-#endif /* __hpux */
-
 #if defined (ACE_VXWORKS) && !defined (__RTP__)
 #  include /**/ <loadLib.h> /* for module load */
 #  include /**/ <unldLib.h> /* for module unload */
@@ -66,15 +62,7 @@ extern "C"
 #  if !defined (ACE_DEFAULT_SHLIB_MODE)
 #    define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GLOBAL
 #  endif
-#elif defined (__hpux)
-   typedef shl_t ACE_SHLIB_HANDLE;
-#  if !defined (ACE_SHLIB_INVALID_HANDLE)
-#    define ACE_SHLIB_INVALID_HANDLE 0
-#  endif /* ACE_SHLIB_INVALID_HANDLE */
-#  if !defined (ACE_DEFAULT_SHLIB_MODE)
-#    define ACE_DEFAULT_SHLIB_MODE BIND_DEFERRED | DYNAMIC_PATH
-#  endif /* ACE_DEFAULT_SHLIB_MODE */
-#else /* !ACE_WIN32 && !ACE_HAS_SVR4_DYNAMIC_LINKING && !__hpux */
+#else /* !ACE_WIN32 && !ACE_HAS_SVR4_DYNAMIC_LINKING */
    typedef void *ACE_SHLIB_HANDLE;
 #  if !defined (ACE_SHLIB_INVALID_HANDLE)
 #    define ACE_SHLIB_INVALID_HANDLE 0

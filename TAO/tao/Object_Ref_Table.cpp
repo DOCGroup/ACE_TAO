@@ -5,6 +5,7 @@
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
+#include <cstring>
 
 #ifndef __ACE_INLINE__
 # include "tao/Object_Ref_Table.inl"
@@ -65,7 +66,7 @@ TAO_Object_Ref_Table::bind_i (const char *id, CORBA::Object_ptr obj)
   // Make sure that the supplied Object reference is valid,
   // i.e. not nil.
   if (id == nullptr
-      || ACE_OS::strlen (id) == 0
+      || std::strlen (id) == 0
       || ::CORBA::is_nil (obj))
     {
       errno = EINVAL;

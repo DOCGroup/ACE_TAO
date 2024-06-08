@@ -124,14 +124,6 @@ ACE_Asynch_Operation::proactor () const
   return this->implementation ()->proactor ();
 }
 
-ACE_Asynch_Operation::ACE_Asynch_Operation ()
-{
-}
-
-ACE_Asynch_Operation::~ACE_Asynch_Operation ()
-{
-}
-
 ACE_Proactor *
 ACE_Asynch_Operation::get_proactor (ACE_Proactor *user_proactor,
                                     ACE_Handler &handler) const
@@ -440,7 +432,7 @@ ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                       signal_number);
 }
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
 int
 ACE_Asynch_Read_File::readv (ACE_Message_Block &message_block,
                              size_t bytes_to_read,
@@ -463,7 +455,7 @@ ACE_Asynch_Read_File::readv (ACE_Message_Block &message_block,
                                        priority,
                                        signal_number);
 }
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
 ACE_Asynch_Operation_Impl *
 ACE_Asynch_Read_File::implementation () const
@@ -548,7 +540,7 @@ ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                        signal_number);
 }
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
 int
 ACE_Asynch_Write_File::writev (ACE_Message_Block &message_block,
                                size_t bytes_to_write,
@@ -571,7 +563,7 @@ ACE_Asynch_Write_File::writev (ACE_Message_Block &message_block,
                                         priority,
                                         signal_number);
 }
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
 ACE_Asynch_Operation_Impl *
 ACE_Asynch_Write_File::implementation () const
@@ -705,7 +697,6 @@ ACE_Asynch_Accept::Result::implementation () const
 {
   return this->implementation_;
 }
-
 
 
 // *********************************************************************

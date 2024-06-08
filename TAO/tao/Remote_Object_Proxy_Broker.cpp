@@ -90,8 +90,7 @@ namespace TAO
   {
     TAO_IFR_Client_Adapter *adapter =
       ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ()
-      );
+        TAO_ORB_Core::ifr_client_adapter_name ());
 
   if (adapter == nullptr)
     {

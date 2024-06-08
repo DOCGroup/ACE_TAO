@@ -59,7 +59,7 @@ class ACE_Export ACE_ATM_Acceptor
 {
 public:
   /// Default constructor.
-  ACE_ATM_Acceptor (void);
+  ACE_ATM_Acceptor ();
 
   ~ACE_ATM_Acceptor ();
 
@@ -74,7 +74,7 @@ public:
                    ACE_ATM_Params params = ACE_ATM_Params());
 
   /// Close down the acceptor and release resources.
-  int close (void);
+  int close ();
 
   // = Passive connection acceptance method.
 
@@ -90,7 +90,7 @@ public:
               ACE_ATM_QoS qos = ACE_ATM_QoS());
 
   /// Get the local address currently listening on
-  int get_local_addr( ACE_ATM_Addr &local_addr );
+  int get_local_addr(ACE_ATM_Addr &local_addr);
 
   // = Meta-type info
   typedef ACE_ATM_Addr PEER_ADDR;

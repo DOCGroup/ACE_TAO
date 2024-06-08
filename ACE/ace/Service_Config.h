@@ -542,16 +542,6 @@ private:
   /// from the ACE_Reactor, and unlinking it if necessary.
   static int remove (const ACE_TCHAR svc_name[]);
 
-#if defined (ACE_HAS_WINCE) && defined (ACE_USES_WCHAR)
-  // We must provide these function to bridge the Svc_Conf parser
-  // with ACE.
-  static int initialize (const ACE_Service_Type *, ACE_ANTI_TCHAR []);
-  static int initialize (const char svc_name[], ACE_ANTI_TCHAR parameters[]);
-  static int resume (const ACE_ANTI_TCHAR svc_name[]);
-  static int suspend (const ACE_ANTI_TCHAR svc_name[]);
-  static int remove (const ACE_ANTI_TCHAR svc_name[]);
-#endif /* ACE_HAS_WINCE */
-
   /// Dump the state of an object.
   void dump () const;
 
@@ -718,9 +708,8 @@ public:
   ~ACE_Service_Config_Guard ();
 
 private:
-  // Private AND not implemented to disable copying
-  ACE_Service_Config_Guard(const ACE_Service_Config_Guard&);
-  ACE_Service_Config_Guard& operator= (const ACE_Service_Config_Guard&);
+  ACE_Service_Config_Guard(const ACE_Service_Config_Guard&) = delete;
+  ACE_Service_Config_Guard& operator= (const ACE_Service_Config_Guard&) = delete;
 
 private:
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> saved_;

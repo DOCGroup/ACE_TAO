@@ -53,18 +53,6 @@ if ($^O eq "MSWin32") {
     $server_args =
         "-b bands.nt";
 }
-elsif ($^O eq "dec_osf") {
-    $server_args =
-        "-b bands.tru64";
-}
-elsif ($^O eq "hpux") {
-    $server_args =
-        "-b bands.hpux";
-}
-elsif ($^O eq "irix") {
-    $server_args =
-        "-b bands.irix";
-}
 else {
     $server_args =
         "-b bands.unix";

@@ -234,13 +234,13 @@ public:
    * Initialize an empty set using the allocation strategy of the user if
    * provided.
    */
-  ACE_Unbounded_Set_Ex (ACE_Allocator *alloc = 0);
+  ACE_Unbounded_Set_Ex (ACE_Allocator *alloc = nullptr);
 
   /**
    * Initialize an empty set using the allocation strategy of the user if
    * provided, and a given comparator functor.
    */
-  ACE_Unbounded_Set_Ex (const C &comparator, ACE_Allocator *alloc = 0);
+  ACE_Unbounded_Set_Ex (const C &comparator, ACE_Allocator *alloc = nullptr);
 
   /// Copy constructor.
   /**
@@ -356,13 +356,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Unbounded_Set_Ex.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Unbounded_Set_Ex.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Unbounded_Set_Ex.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_UNBOUNDED_SET_H */

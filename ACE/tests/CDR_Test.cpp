@@ -12,7 +12,7 @@
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/CDR_Stream.h"
 #include "ace/CDR_Size.h"
 #include "ace/SString.h"
@@ -20,7 +20,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
-
 
 
 static int n = 4096;
@@ -243,9 +242,9 @@ short_stream ()
   is >> str1;
   ACE_InputCDR::to_wstring twstr (wstr1, 0);
   is >> twstr;
-  // @todo Lose the ACE_Auto_Array_Ptr.  We should be using a
+  // @todo Lose the std::unique_ptr.  We should be using a
   //       std::string, or the like.
-  ACE_Auto_Array_Ptr<ACE_CDR::WChar> safe_wstr (wstr1);
+  std::unique_ptr<ACE_CDR::WChar[]> safe_wstr (wstr1);
   is >> std_str1;
 #if !defined(ACE_LACKS_STD_WSTRING)
   is >> std_wstr1;
@@ -499,7 +498,7 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
                            ACE_TEXT ("read_string2[%d] failed\n"),
                            i),
                           1);
-      ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char> auto_xstr (xstr);
+      std::unique_ptr<ACE_CDR::Char[]> auto_xstr (xstr);
       if (ACE_OS::strcmp (auto_xstr.get (), this->str) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("string[%d] differs\n"),
@@ -513,7 +512,7 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
                             i),
                            1);
       // zero length
-      ACE_Auto_Basic_Array_Ptr<ACE_CDR::WChar> auto_xwstr (wstr1);
+      std::unique_ptr<ACE_CDR::WChar[]> auto_xwstr (wstr1);
        if (ACE_OS::wslen(auto_xwstr.get () ))
          ACE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("wstring[%d] differs\n"),
@@ -852,7 +851,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("This is ACE Version %u.%u.%u\n\n"),
               ACE::major_version (),
               ACE::minor_version(),
-              ACE::beta_version()));
+              ACE::micro_version()));
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("dn:l:"));
   int opt;

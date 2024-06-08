@@ -39,7 +39,7 @@ class ACE_Dumpable_Adapter : public ACE_Dumpable
 {
 public:
   ACE_Dumpable_Adapter (const Concrete *t);
-  ~ACE_Dumpable_Adapter (void);
+  ~ACE_Dumpable_Adapter ();
 
   /// Concrete dump method (simply delegates to the dump() method of
   /// <class Concrete>).
@@ -68,13 +68,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
           ((void *) this);
 #endif /* ACE_NDEBUG */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Dump_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Dump_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_DUMP_T_H */

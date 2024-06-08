@@ -9,12 +9,12 @@
 ACE_High_Res_Timer::global_scale_factor_type Task_Stats::gsf_ =
   ACE_High_Res_Timer::global_scale_factor ();
 
-Base_Time::Base_Time (void)
+Base_Time::Base_Time ()
 {
   base_time_ = ACE_OS::gethrtime ();
 }
 
-Task_Stats::Task_Stats (void)
+Task_Stats::Task_Stats ()
   : base_time_(0),
     end_time_ (0),
     max_samples_ (0),
@@ -26,7 +26,7 @@ Task_Stats::Task_Stats (void)
 {
 }
 
-Task_Stats::~Task_Stats (void)
+Task_Stats::~Task_Stats ()
 {
   delete[] this->time_inv_;
   delete[] this->time_exec_;

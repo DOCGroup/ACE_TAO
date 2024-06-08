@@ -35,18 +35,10 @@
 #     include /**/ <wchar.h>
 #     include /**/ <wctype.h>
 #   endif
-# elif defined (ACE_OPENVMS)
-#   include /**/ <wchar.h>
-#   include /**/ <wctype.h>
-# elif defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
-    (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+# else
 #   include /**/ <cwchar>
 #   include /**/ <cwctype>
-# elif defined (ACE_HAS_WINCE)
-#   include /**/ <wtypes.h>
-# else
-#   include /**/ <wchar.h>
-# endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+# endif /* ACE_VXWORKS */
 #endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_HAS_ICONV)
@@ -94,6 +86,11 @@ typedef char ACE_ANTI_TCHAR;
 # define ACE_TEXT_CHAR_TO_TCHAR(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
 # define ACE_TEXT_WCHAR_TO_TCHAR(STRING) STRING
 # define ACE_TEXT_ANTI_TO_TCHAR(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
+# if !defined (ACE_WIN32)
+#   define ACE_TEXT_PRIs ACE_TEXT("ls")
+# else
+#   define ACE_TEXT_PRIs ACE_TEXT("s")
+# endif
 #else /* ACE_USES_WCHAR */
 typedef char ACE_TCHAR;
 typedef wchar_t ACE_ANTI_TCHAR;
@@ -103,6 +100,7 @@ typedef wchar_t ACE_ANTI_TCHAR;
 # define ACE_TEXT_CHAR_TO_TCHAR(STRING) STRING
 # define ACE_TEXT_WCHAR_TO_TCHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
 # define ACE_TEXT_ANTI_TO_TCHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
+# define ACE_TEXT_PRIs ACE_TEXT("s")
 #endif /* ACE_USES_WCHAR */
 
 // The OS_String module defines some wide-char functions that are not
@@ -205,9 +203,9 @@ private:
 #endif /* ACE_HAS_ICONV */
 
   /// Disallow these operation.
-  ACE_Ascii_To_Wide ();
-  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &);
-  ACE_Ascii_To_Wide operator= (ACE_Ascii_To_Wide &);
+  ACE_Ascii_To_Wide () = delete;
+  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &) = delete;
+  ACE_Ascii_To_Wide operator= (ACE_Ascii_To_Wide &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

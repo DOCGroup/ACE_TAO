@@ -16,7 +16,7 @@ public:
   Demo_HelloWorld_i (CORBA::ORB_ptr orb);
 
   // Destructor
-  virtual ~Demo_HelloWorld_i (void);
+  virtual ~Demo_HelloWorld_i () = default;
 
   virtual void sayHello (const char * msg);
 

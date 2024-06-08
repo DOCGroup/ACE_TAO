@@ -7,7 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_SOCK_Dgram_Mcast_QoS *
-TAO_AV_UDP_QoS_Flow_Handler::get_socket (void)
+TAO_AV_UDP_QoS_Flow_Handler::get_socket ()
 {
   return &this->qos_sock_dgram_;
 }
@@ -22,7 +22,7 @@ TAO_AV_UDP_QoS_Flow_Handler::open (ACE_Addr &address)
 }
 
 ACE_INLINE ACE_QoS_Session*
-TAO_AV_UDP_QoS_Flow_Handler::qos_session (void)
+TAO_AV_UDP_QoS_Flow_Handler::qos_session ()
 {
   return this->qos_session_;
 }
@@ -46,7 +46,7 @@ TAO_AV_UDP_QoS_Flow_Handler::endpoint (TAO_Base_StreamEndPoint *endpoint)
 }
 
 ACE_INLINE TAO_Base_StreamEndPoint *
-TAO_AV_UDP_QoS_Flow_Handler::endpoint (void)
+TAO_AV_UDP_QoS_Flow_Handler::endpoint ()
 {
   return this->endpoint_;
 }
@@ -58,7 +58,7 @@ TAO_AV_UDP_QoS_Flow_Handler::flowspec_entry (TAO_FlowSpec_Entry *entry)
 }
 
 ACE_INLINE TAO_FlowSpec_Entry *
-TAO_AV_UDP_QoS_Flow_Handler::flowspec_entry (void)
+TAO_AV_UDP_QoS_Flow_Handler::flowspec_entry ()
 {
   return this->entry_;
 }
@@ -70,7 +70,7 @@ TAO_AV_UDP_QoS_Flow_Handler::av_core (TAO_AV_Core *avcore)
 }
 
 ACE_INLINE TAO_AV_Core *
-TAO_AV_UDP_QoS_Flow_Handler::av_core (void)
+TAO_AV_UDP_QoS_Flow_Handler::av_core ()
 {
   return this->av_core_;
 }

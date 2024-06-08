@@ -318,7 +318,6 @@ public:
    * lock atomically over a number of calls to ACE_Log_Msg.
    */
   //@{
-
   /// Acquire the internal lock.
   int acquire ();
 
@@ -374,10 +373,6 @@ public:
   /// Get the field that indicates whether interrupted calls should be
   /// restarted.
   bool restart () const;
-
-  // = Notice that the following two function is equivalent to
-  //   "void msg_ostream (HANDLE)" and "HANDLE msg_ostream (void)"
-  //   on Windows CE.  There is no <iostream.h> support on CE.
 
   /// Update the ostream without overwriting the delete_ostream_ flag.
   void msg_ostream (ACE_OSTREAM_TYPE *);
@@ -611,10 +606,10 @@ public:
    * @a attributes argument
    */
   static void init_hook (ACE_OS_Log_Msg_Attributes &attributes
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
                          , ACE_SEH_EXCEPT_HANDLER selector = 0
                          , ACE_SEH_EXCEPT_HANDLER handler = 0
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
                          );
 
   /**
@@ -662,7 +657,7 @@ private:
   /// passed "true" for the delete_ostream argument to msg_ostream).
   /// If we are reference counting, this points to a shared count that will
   /// be deleted when it reaches zero.  Since we want optional but shared
-  /// ownership neither std::auto_ptr nor ACE_Strong_Bound_Ptr have the right
+  /// ownership neither std::unique_ptr nor ACE_Strong_Bound_Ptr have the right
   /// semantics.  *Bound_Ptr also doesn't take advantage of Atomic_Op.
   typedef ACE_Atomic_Op<ACE_SYNCH_MUTEX, unsigned long> Atomic_ULong;
   Atomic_ULong *ostream_refcount_;
@@ -928,13 +923,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # define ACE_TSS_CLEANUP_NAME ACE_TSS_cleanup
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
 
-
 LOCAL_EXTERN_PREFIX
 void
 ACE_TSS_CLEANUP_NAME (void *ptr);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ACE_MT_SAFE */
-
 
 #if defined (__ACE_INLINE__)
 #include "ace/Log_Msg.inl"

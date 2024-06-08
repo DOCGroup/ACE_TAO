@@ -137,7 +137,7 @@ ACE_OS::closesocket (ACE_HANDLE handle)
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
 #else
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_OSCALL_RETURN (::close (handle), int, -1);
+  return ::close (handle);
   //FUZZ: enable check_for_lack_ACE_OS
 #endif /* ACE_WIN32 */
 }
@@ -400,13 +400,6 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
     }
   else
     {
-#  if defined (ACE_HAS_PHARLAP)
-      // Pharlap ETS (at least to v13) returns a legit address but doesn't
-      // include the sin_zero[8] bytes in the count. Correct for this here.
-      if (addrlen != 0 && addr != 0 &&
-          *addrlen == 8 && addr->sa_family == AF_INET)
-        *addrlen = sizeof(sockaddr_in);
-#  endif /* ACE_HAS_PHARLAP */
       return result;
     }
 #else /* non Win32 */
@@ -1015,8 +1008,7 @@ ACE_OS::socketpair (int domain, int type,
 
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::socketpair (domain, type, protocol, sv),
-                     int, -1);
+  return ::socketpair (domain, type, protocol, sv);
 #endif /* ACE_LACKS_SOCKETPAIR */
 }
 
@@ -1028,7 +1020,7 @@ ACE_OS::if_nametoindex (const char *ifname)
   ACE_UNUSED_ARG (ifname);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::if_nametoindex (ifname), int, 0);
+  return ::if_nametoindex (ifname);
 #endif /* ACE_LACKS_IF_NAMETOINDEX */
 }
 
@@ -1041,7 +1033,7 @@ ACE_OS::if_indextoname (unsigned int ifindex, char *ifname)
   ACE_UNUSED_ARG (ifname);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::if_indextoname (ifindex, ifname), char *, 0);
+  return ::if_indextoname (ifindex, ifname);
 #endif /* ACE_LACKS_IF_NAMETOINDEX */
 }
 
@@ -1052,7 +1044,7 @@ ACE_OS::if_nameindex ()
 #ifdef ACE_LACKS_IF_NAMEINDEX
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::if_nameindex (), struct if_nameindex *, 0);
+  return ::if_nameindex ();
 #endif /* ACE_LACKS_IF_NAMEINDEX */
 }
 
@@ -1063,8 +1055,10 @@ ACE_OS::if_freenameindex (struct if_nameindex *ptr)
 #ifdef ACE_LACKS_IF_NAMEINDEX
   ACE_UNUSED_ARG (ptr);
 #else
-  if (ptr != 0)
+  if (ptr)
+  {
     ::if_freenameindex (ptr);
+  }
 #endif /* ACE_LACKS_IF_NAMEINDEX */
 }
 

@@ -17,6 +17,7 @@
 
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -366,7 +367,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - ")
                       ACE_TEXT ("IIOP_Acceptor::open, ")
-                      ACE_TEXT ("Overriding address in IOR with %C\n"),
+                      ACE_TEXT ("overriding address in IOR with %C\n"),
                       this->hostname_in_ior_));
         }
       specified_hostname = this->hostname_in_ior_;
@@ -595,8 +596,8 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
     {
       if (TAO_debug_level >= 5)
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor - ")
-                      ACE_TEXT ("Overriding the hostname with <%C>\n"),
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::hostname, ")
+                      ACE_TEXT ("overriding the hostname with <%C>\n"),
                       this->hostname_in_ior_));
 
       host = CORBA::string_dup (this->hostname_in_ior_);
@@ -654,7 +655,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
     specified_hostname.clear();
   }
 
-  const char *port_separator_loc = ACE_OS::strchr (address, ':');
+  const char *port_separator_loc = std::strchr (address, ':');
   char tmp_host[MAXHOSTNAMELEN + 1];
   tmp_host[0] = '\0';
   bool host_defaulted = port_separator_loc == address;
@@ -671,7 +672,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      char const * const cp_pos = ACE_OS::strchr (address, ']');
+      char const * const cp_pos = std::strchr (address, ']');
       if (cp_pos == 0)
         {
           // No valid IPv6 address specified.
@@ -898,7 +899,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
 
   // The instantiation for this template is in
   // tao/IIOP_Connector.cpp.
-  ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (if_addrs);
+  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
 #if defined (ACE_HAS_IPV6)
   bool ipv4_only = def_type == AF_INET;

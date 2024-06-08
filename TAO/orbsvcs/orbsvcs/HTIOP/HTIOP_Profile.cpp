@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/HTIOP/HTIOP_Profile.h"
@@ -86,7 +85,6 @@ TAO::HTIOP::Profile::~Profile ()
 int
 TAO::HTIOP::Profile::decode_profile (TAO_InputCDR& cdr)
 {
-
   // Decode host and port into the <endpoint_>.
   if (cdr.read_string (this->endpoint_.host_.out ()) == 0
       || cdr.read_ushort (this->endpoint_.port_) == 0
@@ -315,7 +313,6 @@ TAO::HTIOP::Profile::to_string () const
 
   return buf;
 }
-
 
 
 const char *

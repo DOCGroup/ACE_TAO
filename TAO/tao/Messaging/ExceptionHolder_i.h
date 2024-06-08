@@ -67,7 +67,6 @@ namespace TAO
     virtual CORBA::ValueBase* _copy_value ();
 
   protected:
-
     virtual ~ExceptionHolder ();
 
   private:
@@ -90,7 +89,6 @@ namespace TAO
   public:
     virtual CORBA::ValueBase * create_for_unmarshal ();
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

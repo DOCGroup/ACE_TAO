@@ -205,7 +205,7 @@ lookup_one_type (const char* type,
   // @@ Would have used Offer_Database::offer_iterator for less
   // coupling between TAO_Lookup and Offer_Database, but g++ barfs on
   // that.
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && !defined (ACE_HAS_CPP20)
   TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
     offer_iter (type, offer_database);
 #else
@@ -958,7 +958,7 @@ withdraw_using_constraint (const char *type,
   // Try to find the map of offers of desired service type.
   // @@ Again, should be Offer_Database::offer_iterator
   {
-#if defined (_MSC_VER)
+#if defined (_MSC_VER) && !defined (ACE_HAS_CPP20)
     TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
       offer_iter (type, offer_database);
 #else

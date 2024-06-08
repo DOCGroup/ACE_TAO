@@ -347,7 +347,6 @@ ACE_Message_Queue_Ex_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::
 ACE_Message_Queue_Ex_Iterator (ACE_Message_Queue_Ex <ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY> & queue)
 : iter_ (queue.queue_)
 {
-
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY> int
@@ -388,7 +387,6 @@ ACE_Message_Queue_Ex_Reverse_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLI
 ACE_Message_Queue_Ex_Reverse_Iterator (ACE_Message_Queue_Ex <ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY> & queue)
 : iter_ (queue.queue_)
 {
-
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY> int
@@ -691,6 +689,13 @@ void
 ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::set_time_policy (TIME_POLICY const & rhs)
 {
   this->queue_.set_time_policy (rhs);
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY>
+ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::queue ()
+{
+  return this->queue_;
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
@@ -2714,7 +2719,6 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_pending_queue (co
                                      (int) current_status),
                                     -1);
                 }
-              /* FALLTHROUGH */
             }
           else
             {
@@ -2725,6 +2729,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_pending_queue (co
               this->pending_tail_ = 0;
               break; // switch
             }
+          ACE_FALLTHROUGH;
 
         case ACE_Dynamic_Message_Strategy::LATE:
           // Make sure the head of the late queue is set (there may

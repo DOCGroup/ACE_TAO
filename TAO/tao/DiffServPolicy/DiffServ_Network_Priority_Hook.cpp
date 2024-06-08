@@ -14,7 +14,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-TAO_DiffServ_Network_Priority_Hook::~TAO_DiffServ_Network_Priority_Hook(void)
+TAO_DiffServ_Network_Priority_Hook::~TAO_DiffServ_Network_Priority_Hook()
 {
 }
 

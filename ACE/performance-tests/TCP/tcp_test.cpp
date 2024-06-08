@@ -66,7 +66,7 @@ enum {
 
 
 static void
-usage (void)
+usage ()
 {
   ACE_ERROR ((LM_ERROR,
               "tcp_test\n"
@@ -94,10 +94,10 @@ class Client : public ACE_Event_Handler
 public:
   Client (const ACE_INET_Addr &remote_addr);
 
-  virtual ~Client (void);
+  virtual ~Client ();
 
   // = Override <ACE_Event_Handler> methods.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
@@ -111,11 +111,11 @@ public:
   int get_response (char *buf, size_t len);
 
   /// Send messages to server and record statistics.
-  int run (void);
+  int run ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Send shutdown message to server.
-  int shutdown (void);
+  int shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -125,9 +125,9 @@ private:
   /// The address to send messages to.
   ACE_INET_Addr remote_addr_;
 
-  ACE_UNIMPLEMENTED_FUNC (Client (void))
-  ACE_UNIMPLEMENTED_FUNC (Client (const Client &))
-  ACE_UNIMPLEMENTED_FUNC (Client &operator= (const Client &))
+  Client () = delete;
+  Client (const Client &) = delete;
+  Client &operator= (const Client &) = delete;
 };
 
 Client::Client (const ACE_INET_Addr &remote_addr)
@@ -149,12 +149,12 @@ Client::Client (const ACE_INET_Addr &remote_addr)
     }
 }
 
-Client::~Client (void)
+Client::~Client ()
 {
 }
 
 ACE_HANDLE
-Client::get_handle (void) const
+Client::get_handle () const
 {
   return this->endpoint_.get_handle ();
 }
@@ -201,7 +201,7 @@ Client::get_response (char *buf, size_t len)
 }
 
 int
-Client::run (void)
+Client::run ()
 {
   ACE_OS::memset (sbuf, 0, bufsz);
   ACE_OS::memset (rbuf, 0, bufsz);
@@ -268,7 +268,7 @@ Client::run (void)
 }
 
 int
-Client::shutdown (void)
+Client::shutdown ()
 {
   const char buf = 'S';
   int n = this->endpoint_.send (&buf, 1u);
@@ -292,10 +292,10 @@ class Server : public ACE_Event_Handler
 public:
   Server (const ACE_INET_Addr &addr);
 
-  virtual ~Server (void);
+  virtual ~Server ();
 
   // = Override <ACE_Event_Handler> methods.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
@@ -304,9 +304,9 @@ private:
   /// Receives datagrams.
   ACE_SOCK_Stream endpoint_;
 
-  ACE_UNIMPLEMENTED_FUNC (Server (void))
-  ACE_UNIMPLEMENTED_FUNC (Server (const Server &))
-  ACE_UNIMPLEMENTED_FUNC (Server &operator= (const Server &))
+  Server () = delete;
+  Server (const Server &) = delete;
+  Server &operator= (const Server &) = delete;
 };
 
 Server::Server (const ACE_INET_Addr &addr)
@@ -365,13 +365,13 @@ Server::Server (const ACE_INET_Addr &addr)
                 "close failed"));
 }
 
-Server::~Server (void)
+Server::~Server ()
 {
   this->endpoint_.close ();
 }
 
 ACE_HANDLE
-Server::get_handle (void) const
+Server::get_handle () const
 {
   return this->endpoint_.get_handle ();
 }
@@ -516,8 +516,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                               priority);
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-
+  // Enable FIFO scheduling, e.g.
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)

@@ -199,12 +199,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // Spawn off ACE_MAX_ITERATIONS of tasks, passing each one their
   // iteration number as their priority.
-
-  // NOTE: on Solaris, for example, this requests the min FIFO
-  // priority.  But, this test doesn't use the Realtime scheduling
-  // class.  The FIFO priorities are used because they're all
-  // nonnegative.
-
   ACE_Sched_Priority_Iterator priority (ACE_SCHED_FIFO,
                                         ACE_SCOPE_THREAD);
 

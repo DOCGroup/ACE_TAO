@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_EC_Default_Factory::TAO_EC_Default_Factory (void)
+TAO_EC_Default_Factory::TAO_EC_Default_Factory ()
   :  dispatching_ (TAO_EC_DEFAULT_DISPATCHING),
      filtering_ (TAO_EC_DEFAULT_CONSUMER_FILTER),
      supplier_filtering_ (TAO_EC_DEFAULT_SUPPLIER_FILTER),
@@ -30,25 +30,25 @@ TAO_EC_Default_Factory::TAO_EC_Default_Factory (void)
 }
 
 ACE_INLINE int
-TAO_EC_Default_Factory::consumer_collection (void) const
+TAO_EC_Default_Factory::consumer_collection () const
 {
   return this->consumer_collection_;
 }
 
 ACE_INLINE int
-TAO_EC_Default_Factory::supplier_collection (void) const
+TAO_EC_Default_Factory::supplier_collection () const
 {
   return this->supplier_collection_;
 }
 
 ACE_INLINE int
-TAO_EC_Default_Factory::supplier_filtering (void) const
+TAO_EC_Default_Factory::supplier_filtering () const
 {
   return this->supplier_filtering_;
 }
 
 ACE_INLINE const ACE_CString&
-TAO_EC_Default_Factory::orb_id (void) const
+TAO_EC_Default_Factory::orb_id () const
 {
   return this->orbid_;
 }

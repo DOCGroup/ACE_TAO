@@ -9,7 +9,7 @@
 #include "tao/SystemException.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Any_Basic_Impl_T.inl"
@@ -27,7 +27,7 @@ TAO::Any_Basic_Impl_T<T>::Any_Basic_Impl_T (CORBA::TypeCode_ptr tc,
 }
 
 template<typename T>
-TAO::Any_Basic_Impl_T<T>::~Any_Basic_Impl_T (void)
+TAO::Any_Basic_Impl_T<T>::~Any_Basic_Impl_T ()
 {
 }
 
@@ -121,7 +121,7 @@ TAO::Any_Basic_Impl_T<T>::marshal_value (TAO_OutputCDR &cdr)
 
 template<typename T>
 const void *
-TAO::Any_Basic_Impl_T<T>::value (void) const
+TAO::Any_Basic_Impl_T<T>::value () const
 {
   return &this->value_;
 }

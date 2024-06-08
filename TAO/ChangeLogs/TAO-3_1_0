@@ -1,0 +1,393 @@
+commit cfc83e2d8bfa83ba08452767d8ab943f539e3ae8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 21 13:28:15 2023 +0100
+
+    Make use of std::make_unique
+    
+        * TAO/tao/PortableServer/Active_Policy_Strategies.cpp:
+
+commit 5df6c5248e1c1be3aeaefa10ff9eb9be593ec2fd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 17:04:40 2023 +0100
+
+    Reduced usage of static as we do in generated code
+    
+        * TAO/tao/PortableServer/Servant_Base.cpp:
+
+commit 94392eaddf51af04621f46337b392c688171434f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 16:51:27 2023 +0100
+
+    Use constexpr
+    
+        * TAO/tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * TAO/tao/Codeset/UTF16_BOM_Translator.cpp:
+        * TAO/tao/GIOP_Message_Generator_Parser_12.cpp:
+
+commit d2b7bf891f0b11840b5528b89cac105daef04f33
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 16:51:14 2023 +0100
+
+    Revert default
+    
+        * TAO/tao/Argument.cpp:
+        * TAO/tao/Argument.h:
+
+commit 80ef4188441e6a0b786e48659af9e39ecd4b9735
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 16:38:30 2023 +0100
+
+    Use default destructor
+    
+        * TAO/tao/Argument.cpp:
+        * TAO/tao/Argument.h:
+        * TAO/tao/Base_Transport_Property.cpp:
+        * TAO/tao/Base_Transport_Property.h:
+
+commit 45fa63be04357683ab473a2f993e621508ecb5f7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 16:29:08 2023 +0100
+
+    Fixed warnings
+    
+        * TAO/tao/PortableServer/IdAssignmentPolicy.h:
+        * TAO/tao/PortableServer/IdUniquenessPolicy.h:
+        * TAO/tao/PortableServer/LifespanStrategyPersistent.h:
+        * TAO/tao/PortableServer/LifespanStrategyTransient.h:
+        * TAO/tao/PortableServer/Operation_Table_Linear_Search.h:
+        * TAO/tao/PortableServer/ServantRetentionStrategyNonRetain.h:
+        * TAO/tao/PortableServer/ServantRetentionStrategyRetain.h:
+        * TAO/tao/RTPortableServer/RT_POA.h:
+        * TAO/tao/RTPortableServer/RT_Policy_Validator.h:
+
+commit 88ce4a3384ee967a8007a3575bfca9d2dde0dc7a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 16:23:46 2023 +0100
+
+    Replace enum with static constexpr
+    
+        * TAO/tao/PortableServer/Root_POA.h:
+
+commit d9b768c3239be29c3219f2fca81b39e2dc8787b1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 15:29:08 2023 +0100
+
+    the_children is not available in all CORBA profiles
+    
+        * TAO/tao/PortableServer/Root_POA.cpp:
+        * TAO/tao/PortableServer/Root_POA.h:
+        * TAO/tao/RTPortableServer/RT_POA.cpp:
+        * TAO/tao/RTPortableServer/RT_POA.h:
+
+commit 53cabe442f3b082ee21458dfa2095fd0b5b0ba6b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 14:33:33 2023 +0100
+
+    Use default
+    
+        * TAO/tao/PortableServer/Acceptor_Filter_Factory.cpp:
+        * TAO/tao/PortableServer/Default_Acceptor_Filter.cpp:
+        * TAO/tao/PortableServer/Default_Acceptor_Filter.h:
+
+commit 48b96dee6147efa609f1536296929489203f3193
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 14:16:16 2023 +0100
+
+    Another default destructor
+    
+        * TAO/tao/PortableServer/Acceptor_Filter_Factory.cpp:
+        * TAO/tao/PortableServer/Acceptor_Filter_Factory.h:
+
+commit 8c215112dfc278f704ba37db8699a829f9cabf3a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 14:13:15 2023 +0100
+
+    Compile fixes
+    
+        * TAO/tao/PortableServer/Active_Policy_Strategies.h:
+        * TAO/tao/PortableServer/ThreadStrategy.h:
+
+commit 5a66fa9c3a3c1d265808ee2049dabaef4bf1a3db
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 14:01:06 2023 +0100
+
+    Check for nil pointers in cleanup
+    
+        * TAO/tao/PortableServer/Active_Policy_Strategies.cpp:
+
+commit c35277837fe52adb19a22a9d18931b3e804b8358
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 12:43:48 2023 +0100
+
+    Use override/default for RTPortableServer
+    
+        * TAO/NEWS:
+        * TAO/tao/RTPortableServer/RT_Acceptor_Filters.h:
+        * TAO/tao/RTPortableServer/RT_Collocation_Resolver.h:
+        * TAO/tao/RTPortableServer/RT_Object_Adapter_Factory.h:
+        * TAO/tao/RTPortableServer/RT_POA.cpp:
+        * TAO/tao/RTPortableServer/RT_POA.h:
+        * TAO/tao/RTPortableServer/RT_Policy_Validator.h:
+        * TAO/tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+        * TAO/tao/RTPortableServer/RT_Servant_Dispatcher.h:
+
+commit 4db6c4351dfd785f59a9b16122e52eeec44520c0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 12:30:59 2023 +0100
+
+    Fixed unresolved exports, more override
+    
+        * ACE/protocols/ace/HTBP/HTBP_Addr.cpp:
+        * ACE/protocols/ace/HTBP/HTBP_Addr.h:
+        * TAO/tao/PortableServer/Active_Object_Map.cpp:
+        * TAO/tao/PortableServer/Active_Object_Map.h:
+        * TAO/tao/PortableServer/Active_Policy_Strategies.h:
+        * TAO/tao/PortableServer/Active_Policy_Strategies.inl:
+        * TAO/tao/PortableServer/IdUniquenessStrategy.h:
+        * TAO/tao/PortableServer/Operation_Table_Binary_Search.cpp:
+        * TAO/tao/PortableServer/Operation_Table_Binary_Search.h:
+        * TAO/tao/PortableServer/Operation_Table_Dynamic_Hash.h:
+        * TAO/tao/PortableServer/Operation_Table_Linear_Search.cpp:
+        * TAO/tao/PortableServer/Operation_Table_Linear_Search.h:
+        * TAO/tao/PortableServer/Operation_Table_Perfect_Hash.cpp:
+        * TAO/tao/PortableServer/Operation_Table_Perfect_Hash.h:
+        * TAO/tao/PortableServer/POA_Current_Factory.cpp:
+        * TAO/tao/PortableServer/POA_Current_Impl.cpp:
+        * TAO/tao/PortableServer/POA_Current_Impl.h:
+        * TAO/tao/PortableServer/POA_Policy_Set.h:
+        * TAO/tao/PortableServer/ServantRetentionStrategy.h:
+
+commit 322d0a3e30d2e608108e0d7caf6bdcddbd728081
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 13 11:42:23 2023 +0100
+
+    Major cleanup in PortableServer library
+
+commit 69fbec6c475060cf01a710a3d7ed6e756538858c
+Merge: 7e8b94b728b 89a05c65fd6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 6 09:21:37 2023 +0100
+
+    Merge pull request #2046 from jwillemsen/jwinullptrexce
+    
+    Use nullptr and make destructor of TAO SystemException default
+
+commit 716ee59f4081486404adae50f46172a39518e619
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 3 19:49:42 2023 +0100
+
+    Make destructor default
+    
+        * TAO/tao/SystemException.cpp:
+        * TAO/tao/SystemException.h:
+
+commit 7e8b94b728b886d14fc17b6af789e9ba0c50a050
+Merge: 4961b8026b5 ec19b2725b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 2 09:13:03 2023 +0100
+
+    Merge pull request #2042 from jwillemsen/jwi-cleanupmacros
+    
+    Cleanup unused macros
+
+commit 757fd0a5eef53e1c9e1a8327eb5d4b34e81d7cb9
+Merge: 107d2bfea7c 7f4365e6544
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 2 09:09:17 2023 +0100
+
+    Merge pull request #2043 from jwillemsen/jwi-pharlapcleanup
+    
+    Removed pharlap support
+
+commit ec19b2725b53eba54c4ba434d371ae569832f762
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 1 18:15:12 2023 +0100
+
+    Removed include
+    
+        * TAO/orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
+
+commit c67f33599590cf2e229da6a141fef90d0af6f034
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 1 15:57:28 2023 +0100
+
+    Remove includes
+    
+        * TAO/orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+
+commit 6198126ce20cc418252f461621c81d19ee2b36e4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 1 15:44:33 2023 +0100
+
+    Removed pharlap support
+
+commit c3e71f69e85deb48d5f3cdba355679da4deffdb3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 1 10:51:23 2023 +0100
+
+    good_bit is a bool and removed some uncessary c-style casts
+
+commit e5391a0076f5e370f929b111a8a6ed52ee4cb5da
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 12:32:56 2023 +0100
+
+    More Sun OS/compiler cleanup
+
+commit 73bdf800479e53a11143735e48348bb88c527c24
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 09:44:30 2023 +0100
+
+    Cleanup Solaris support
+
+commit dcb4692364d4a9175db59b9280dbbd54524bb3ce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 16 16:45:00 2023 +0100
+
+    Removed checks for ACE_TEMPLATES_REQUIRE_SOURCE
+
+commit f25410e018ff6b65ec24df5ba249447f74eb0198
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 16 15:47:01 2023 +0100
+
+    Removed AIX support
+
+commit d645bf461a41039dda402e1674ed7a6d40620957
+Merge: c9c577ffbe6 098b5aa5257
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 16:14:12 2023 +0100
+
+    Merge pull request #2028 from jwillemsen/jwi-removehpux
+    
+    Remove HPUX support
+
+commit c9c577ffbe64efca48e6a05add0e0070add7da6d
+Merge: 6f36dbed40c 0a572bec884
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 14:04:11 2023 +0100
+
+    Merge pull request #2027 from jwillemsen/jwi-openvmscleanup
+    
+    Removed some OpenVMS code
+
+commit b5aeaf20ef9d15d09acb52b4c8ac77762937ae26
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 12:28:28 2023 +0100
+
+    More cleanup
+    
+        * ACE/ace/config-linux-common.h:
+        * ACE/ace/config-macros.h:
+        * TAO/TAO_IDL/fe/idl.yy.cpp:
+
+commit f865e5929c4668611213fc1ee677ef47ad0f6482
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 12:26:51 2023 +0100
+
+    Removed HPUX support
+
+commit da66efe89c66a7997f6728759c196643c3910018
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 11:02:36 2023 +0100
+
+    Updated NEWS files
+
+commit b30753f1a1b18c831e89223ec01db66231b5a64a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 11:01:49 2023 +0100
+
+    Removed HPUX support
+
+commit 0a572bec8848eabb70c652fffa043ec335f45454
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 15 10:34:15 2023 +0100
+
+    Removed some OpenVMS code
+    
+        * ACE/ace/SSL/SSL_Context.cpp:
+        * ACE/ace/Sock_Connect.cpp:
+        * TAO/TAO-INSTALL.html:
+
+commit f790b484f95da51afd080f5cc73209c086476ad2
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Sat Jan 14 23:33:27 2023 +0100
+
+    Address issue #2015 : In TAO/TAO_IDL/ast/ast_field.cpp constructor handle AST_Decl::NT_except.
+
+commit 2916b2fa78bc0fdcae44b590af9543245d481e15
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 14 10:09:54 2023 +0100
+
+    Removed OpenVMS support
+
+commit 20da1c5dcbed95befc08ccf258f62c91a16762f4
+Merge: 158938dceab cc5865a9582
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 14 09:53:44 2023 +0100
+
+    Merge pull request #2014 from jwillemsen/jwi-doxygen196
+    
+    Upgrade doxygen configuration files to latest doxygen release
+
+commit def8e4413d0d9c8ac4e3da85d0e9578594996992
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 21:23:59 2023 +0100
+
+    Update Hash_Naming_Context.h
+
+commit 975c3a5bf969f623848919f5b2f085da87fecf70
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 20:23:28 2023 +0100
+
+    Update Hash_Naming_Context.h
+
+commit 8f0f05f51c0cf595654a35f9dc47d82809c2268d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 09:58:03 2023 +0100
+
+    More Windows CE cleanup
+
+commit 378fbc350bc7d7d940523ac194b646e94caf312d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 09:41:15 2023 +0100
+
+    Removed Windows CE support
+
+commit cc5865a958281cb7706a1421a4b96d3becd39c93
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 12 11:46:29 2023 +0100
+
+    Upgrade doxygen configuration files to latest doxygen release
+
+commit 309f09e15602b400dcf1947422b4029bd32a5b03
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Fri Jan 6 07:07:54 2023 -0600
+
+    Removed unnecessary includes and added necessary ones.
+
+commit d613e17b4531f57bc51a7075588daddf9514a2ac
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Fri Nov 18 11:34:22 2022 -0600
+
+    Corrected #include's
+
+commit 6756ee16851ac1daa006f1b30b8987bd03a9c42e
+Merge: ec326c77c9a 44d0b213860
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 19 12:19:34 2022 +0100
+
+    Merge pull request #2005 from jwillemsen/jwi-x711
+    
+    Make ACE 7.0.11 and TAO 3.0.11 public available
+
+commit 44d0b213860be8801160f0519c77b648a0316033
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 19 12:18:46 2022 +0100
+
+    Make ACE 7.0.11 and TAO 3.0.11 public available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

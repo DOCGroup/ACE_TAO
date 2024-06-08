@@ -7,7 +7,6 @@ Patterns'' (C++NPv1) by Douglas C. Schmidt and Stephen D. Huston
 
 We have compiled and run these files on the following platforms:
 
-        Sun Solaris 8 on SPARC using Sun Forte 6.
         Redhat Linux 7.1 using g++ 2.96.
         Microsoft Windows 2000 using Microsoft Visual C++ 6.
 

@@ -12,7 +12,7 @@ class ORB_Killer : public ACE_Task_Base
 public:
   /// Constructor
   ORB_Killer (CORBA::ORB_ptr orb);
-  virtual int svc (void);
+  virtual int svc ();
 private:
   CORBA::ORB_var orb_;
 };
@@ -26,9 +26,9 @@ public:
   test_i (ORB_Killer *k);
 
   // = The skeleton methods
-  virtual void ping (void);
+  virtual void ping ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

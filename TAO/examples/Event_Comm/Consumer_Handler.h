@@ -32,35 +32,35 @@ class Consumer_Handler
 {
 public:
   /// Constructor.
-  Consumer_Handler (void);
+  Consumer_Handler ();
 
   /// Destructor.
- virtual ~Consumer_Handler (void);
+ virtual ~Consumer_Handler () = default;
 
   /// Initializes the ORB, gets the Notifier reference from the Naming
   /// Service, and starts the servant for the Consumer object.
   int init (int argc, ACE_TCHAR *argv[], ShutdownCallback *_shutdowncallback);
 
   /// runs the ORB.
-  int run (void);
+  int run ();
 
   /// shutdown the orb.
-  void close (void);
+  void close ();
 
   /// called to shutdown the consumer application.
-  void shutdown (void);
+  void shutdown ();
 
   // = Accessors
-  Event_Comm::Consumer *receiver (void);
-  Event_Comm::Notifier *notifier (void);
+  Event_Comm::Consumer *receiver ();
+  Event_Comm::Notifier *notifier ();
 
   /// returns the ORB's reactor.
-  ACE_Reactor *reactor (void);
+  ACE_Reactor *reactor ();
 
 private:
   /// gets the notifier reference from the naming service.
   /// returns 0 on success, -1 on error.
-  int get_notifier (void);
+  int get_notifier ();
 
   /// Remember our orb.
   CORBA::ORB_var orb_;

@@ -6,7 +6,7 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -244,7 +244,7 @@ namespace TAO
   void
   Any_Basic_Impl::_tao_decode (TAO_InputCDR &cdr)
   {
-    if (! this->demarshal_value (cdr))
+    if (!this->demarshal_value (cdr))
       {
         throw ::CORBA::MARSHAL ();
       }

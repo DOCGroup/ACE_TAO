@@ -658,7 +658,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
               // a dh parameter file and we were unable to actually find it
               // and load from it.
               ORBSVCS_ERROR ((LM_ERROR,
-                              ACE_TEXT ("(%P|%t) - SSLIOP_Factory: ")
+                              ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory: ")
                               ACE_TEXT ("unable to set ")
                               ACE_TEXT ("DH parameters <%C>\n"),
                               dhparams_path.in () ));
@@ -668,7 +668,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               if (TAO_debug_level > 0)
                 ORBSVCS_DEBUG ((LM_INFO,
-                                ACE_TEXT ("(%P|%t) - SSLIOP_Factory: ")
+                                ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory: ")
                                 ACE_TEXT ("No DH parameters found in ")
                                 ACE_TEXT ("certificate <%C>; either none ")
                                 ACE_TEXT ("are needed (RSA) or problems ")
@@ -680,7 +680,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         {
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_INFO,
-                            ACE_TEXT ("(%P|%t) - SSLIOP loaded ")
+                            ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
                             ACE_TEXT ("Diffie-Hellman params ")
                             ACE_TEXT ("from %C\n"),
                             dhparams_path.in ()));
@@ -693,8 +693,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   // in the underlying SSL_CTX.
   if (certificate_path.in() != 0)
     {
-      if (ssl_ctx->certificate (certificate_path.in(),
-                                certificate_type) != 0)
+      if (ssl_ctx->certificate (certificate_path.in(), certificate_type) != 0)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - Unable to set ")
@@ -719,7 +718,6 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
     {
       if (ssl_ctx->private_key (private_key_path.in(), private_key_type) != 0)
         {
-
           ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - Unable to set ")
                           ACE_TEXT ("SSL private key ")

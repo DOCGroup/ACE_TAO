@@ -7,12 +7,12 @@ Big_Reply_i::Big_Reply_i (CORBA::ORB_ptr orb,
 {
 }
 
-Big_Reply_i::~Big_Reply_i (void)
+Big_Reply_i::~Big_Reply_i ()
 {
 }
 
 Test::Octet_Seq *
-Big_Reply_i::get_big_reply ( /**/)
+Big_Reply_i::get_big_reply (/**/)
 {
   Test::Octet_Seq_var reply_mesg =
     new Test::Octet_Seq (this->length_);
@@ -23,12 +23,12 @@ Big_Reply_i::get_big_reply ( /**/)
 }
 
 void
-Big_Reply_i::ping ( /**/)
+Big_Reply_i::ping (/**/)
 {
 }
 
 void
-Big_Reply_i::shutdown ( /**/)
+Big_Reply_i::shutdown (/**/)
 {
   this->orb_->shutdown ();
 }

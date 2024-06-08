@@ -59,7 +59,7 @@ public:
             mode_t mode = 0);
 
   /// Remove a File lock by releasing it and closing down the <handle_>.
-  ~ACE_File_Lock (void);
+  ~ACE_File_Lock ();
 
   /// Remove a File lock by releasing it and closing down the
   /// <handle_>.  If @a unlink_file is true then we unlink the file.
@@ -119,7 +119,7 @@ public:
   int tryacquire_read (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /// Get underlying ACE_HANDLE for the file.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /**
    * Set underlying ACE_HANDLE.  Note that this method assumes
@@ -153,9 +153,8 @@ protected:
   bool const unlink_in_destructor_;
 
 private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_File_Lock &);
-  ACE_File_Lock (const ACE_File_Lock &);
+  void operator= (const ACE_File_Lock &) = delete;
+  ACE_File_Lock (const ACE_File_Lock &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

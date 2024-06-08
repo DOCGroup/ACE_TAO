@@ -42,11 +42,11 @@ public:
                               const void *);
 protected:
   // = These methods implement the State pattern.
-  int uninitialized (void);
-  int connected (void);
-  int stdio (void);
+  int uninitialized ();
+  int connected ();
+  int stdio ();
 
-  int (Peer_Handler<PEER_STREAM>::*action_) (void);
+  int (Peer_Handler<PEER_STREAM>::*action_) ();
   // Keeps track of which state we are in.
 };
 
@@ -56,20 +56,20 @@ class IPC_Client : public ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>
   // = TITLE
   //   This class illustrates how the <ACE_Connector> works.
 public:
-  IPC_Client (void);
+  IPC_Client ();
   // Constructor.
 
-  ~IPC_Client (void);
+  ~IPC_Client ();
   // Destructor.
 
   // = Dynamic linking hooks.
   virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the IPC client.
 
-  virtual int fini (void);
+  virtual int fini ();
   // Destroy the IPC client.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Run the svc.
 
 private:
@@ -84,12 +84,6 @@ private:
   // signal.
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "CPP-connector.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("CPP-connector.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* CPP_CONNECTOR_H */

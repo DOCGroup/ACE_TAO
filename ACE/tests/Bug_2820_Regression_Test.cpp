@@ -14,7 +14,7 @@
  */
 
 #include "test_config.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 
@@ -68,7 +68,7 @@ run_main (int, ACE_TCHAR *[])
                  notify_count, pre_notify_count, pos_notify_count));
     }
 
-  ACE_auto_ptr_reset(reactor, (ACE_Reactor*)0);
+  reactor.reset ();
 
   // Reset the reactor in the event handler, since it is gone.p
   v->reactor(0);

@@ -63,7 +63,6 @@ template <typename T>
 class TAO_Intrusive_Ref_Count_Handle
 {
 public:
-
   /// Default Constructor - enters the "nil" state.
   TAO_Intrusive_Ref_Count_Handle ();
 
@@ -120,7 +119,6 @@ public:
   bool operator== (const TAO_Intrusive_Ref_Count_Handle& h) const;
 
 private:
-
   /// Claim a "copy" of the reference-counted object by adding
   /// one to its reference counter.  Do nothing if this smart pointer
   /// object is currently in the "nil" state.
@@ -146,13 +144,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Intrusive_Ref_Count_Handle_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Intrusive_Ref_Count_Handle_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Intrusive_Ref_Count_Handle_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

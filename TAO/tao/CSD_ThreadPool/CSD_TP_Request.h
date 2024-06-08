@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Request;
     typedef TAO_Intrusive_Ref_Count_Handle<TP_Request> TP_Request_Handle;
 
@@ -50,7 +49,6 @@ namespace TAO
       : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
-
       /// Virtual Destructor.
       virtual ~TP_Request();
 
@@ -116,7 +114,6 @@ namespace TAO
       /// Reference to the servant "state" object (contains the busy flag).
       TP_Servant_State::HandleType servant_state_;
     };
-
   }
 }
 

@@ -80,5 +80,5 @@ bool operator != (const Kokyu::ConfigInfo& lhs,
 {
   return (lhs.preemption_priority_ != rhs.preemption_priority_ ||
           lhs.thread_priority_ != rhs.thread_priority_ ||
-          lhs.dispatching_type_ != rhs.dispatching_type_ );
+          lhs.dispatching_type_ != rhs.dispatching_type_);
 }

@@ -128,10 +128,9 @@ ACE_Condition<MUTEX>::wait (MUTEX &mutex,
     }
 }
 
-// Peform an "alertable" timed wait.  If the argument ABSTIME == 0
-// then we do a regular cond_wait(), else we do a timed wait for up to
-// ABSTIME using the Solaris cond_timedwait() function.
-
+/// Peform an "alertable" timed wait.  If @a abstime == 0
+/// then we do a regular cond_wait(), else we do a timed wait for up to
+/// @a abstime
 template <class MUTEX> int
 ACE_Condition<MUTEX>::wait (const ACE_Time_Value *abstime)
 {

@@ -145,7 +145,7 @@ public:
 
 #if defined (ACE_HAS_MALLOC_STATS)
   /// Dump statistics of how malloc is behaving.
-  virtual void print_stats (void) const = 0;
+  virtual void print_stats () const = 0;
 #endif /* ACE_HAS_MALLOC_STATS */
 
   /// Dump the state of the object.
@@ -178,7 +178,7 @@ public:
   typedef std::ptrdiff_t difference_type;
   template <typename U> struct rebind { typedef ACE_Allocator_Std_Adapter<U> other; };
 
-  ACE_Allocator_Std_Adapter() {}
+  ACE_Allocator_Std_Adapter() = default;
 
   template <typename U>
   ACE_Allocator_Std_Adapter(const ACE_Allocator_Std_Adapter<U>&) {}

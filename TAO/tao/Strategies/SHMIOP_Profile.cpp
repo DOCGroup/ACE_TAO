@@ -13,6 +13,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/Truncate.h"
+#include <cstring>
 
 static const char prefix_[] = "shmiop";
 
@@ -21,7 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 const char TAO_SHMIOP_Profile::object_key_delimiter_ = '/';
 
 char
-TAO_SHMIOP_Profile::object_key_delimiter (void) const
+TAO_SHMIOP_Profile::object_key_delimiter () const
 {
   return TAO_SHMIOP_Profile::object_key_delimiter_;
 }
@@ -64,7 +65,7 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO_SHMIOP_Profile::~TAO_SHMIOP_Profile (void)
+TAO_SHMIOP_Profile::~TAO_SHMIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -80,13 +81,13 @@ TAO_SHMIOP_Profile::~TAO_SHMIOP_Profile (void)
 }
 
 TAO_Endpoint*
-TAO_SHMIOP_Profile::endpoint (void)
+TAO_SHMIOP_Profile::endpoint ()
 {
   return &this->endpoint_;
 }
 
 CORBA::ULong
-TAO_SHMIOP_Profile::endpoint_count (void) const
+TAO_SHMIOP_Profile::endpoint_count () const
 {
   return this->count_;
 }
@@ -130,7 +131,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
   CORBA::String_var copy (string);
 
   char *start = copy.inout ();
-  char *cp = ACE_OS::strchr (start, ':');  // Look for a port
+  char *cp = std::strchr (start, ':');  // Look for a port
 
   if (cp == 0)
     {
@@ -142,7 +143,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
                    CORBA::COMPLETED_NO);
     }
 
-  char *okd = ACE_OS::strchr (start, this->object_key_delimiter_);
+  char *okd = std::strchr (start, this->object_key_delimiter_);
 
   if (okd == 0)
     {
@@ -321,7 +322,7 @@ TAO_SHMIOP_Profile::add_endpoint (TAO_SHMIOP_Endpoint *endp)
 }
 
 char *
-TAO_SHMIOP_Profile::to_string (void) const
+TAO_SHMIOP_Profile::to_string () const
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
@@ -358,7 +359,7 @@ TAO_SHMIOP_Profile::to_string (void) const
 }
 
 const char *
-TAO_SHMIOP_Profile::prefix (void)
+TAO_SHMIOP_Profile::prefix ()
 {
   return ::prefix_;
 }
@@ -394,7 +395,7 @@ TAO_SHMIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 }
 
 int
-TAO_SHMIOP_Profile::encode_endpoints (void)
+TAO_SHMIOP_Profile::encode_endpoints ()
 {
   // Create a data structure and fill it with endpoint info for wire
   // transfer.
@@ -448,7 +449,7 @@ TAO_SHMIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_SHMIOP_Profile::decode_endpoints (void)
+TAO_SHMIOP_Profile::decode_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;

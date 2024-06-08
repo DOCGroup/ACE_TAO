@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Asynch_Reply_Dispatcher.h
@@ -8,7 +6,6 @@
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_ASYNCH_REPLY_DISPATCHER_H
 #define TAO_ASYNCH_REPLY_DISPATCHER_H
@@ -42,7 +39,7 @@ public:
       ACE_Allocator *allocator);
 
   /// Destructor.
-  virtual ~TAO_Asynch_Reply_Dispatcher ();
+  virtual ~TAO_Asynch_Reply_Dispatcher () = default;
 
   /// @name The Reply Dispatcher methods
   //@{

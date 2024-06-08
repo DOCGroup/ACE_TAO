@@ -1,9 +1,9 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/ETCL_Filter.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
+#include <memory>
 
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -91,7 +91,6 @@ TAO_Notify_Constraint_Expr::release ()
   delete this;
   //@@ inform factory
 }
-
 
 
 TAO_Notify_ETCL_Filter::TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa,

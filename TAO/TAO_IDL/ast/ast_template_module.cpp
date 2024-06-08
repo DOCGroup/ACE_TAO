@@ -68,17 +68,16 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
 
       FE_Utils::T_Param_Info *param = nullptr;
       (void) this->template_params_->get (param, slot);
-      const char *s = nullptr;
 
-      if (! this->match_one_param (param, d))
+      if (!this->match_one_param (param, d))
         {
           UTL_ScopedName *n = d->name ();
+          const char *s = nullptr;
 
-          if (n == nullptr)
+          if (!n)
             {
-              AST_Constant *c = dynamic_cast<AST_Constant*> (d);
-
-              s = c->exprtype_to_string ();
+              AST_Constant *c = dynamic_cast<AST_Constant *> (d);
+              s = AST_Expression::exprtype_to_string (c->et ());
             }
           else
             {

@@ -9,7 +9,7 @@
 #include "tao/ORB.h"
 #include "tao/Object_KeyC.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Lock_Adapter_T.h"
 #include "ace/SString.h"
 
@@ -595,7 +595,6 @@ TAO_Repository_i::create_sections ()
           this->config_->set_integer_value (key,
                                             "pkind",
                                             i);
-
         }
     }
 
@@ -1044,7 +1043,7 @@ TAO_Repository_i::num_pkinds () const
 void
 TAO_Repository_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

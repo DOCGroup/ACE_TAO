@@ -209,8 +209,7 @@ namespace TAO
               int_id.transport ()->id (),
               ext_id.hash (),
               ext_id.index (),
-              this->current_size ()
-              ));
+              this->current_size ()));
           }
       }
 
@@ -308,8 +307,7 @@ namespace TAO
                       ACE_TEXT ("found available Transport[%d] @hash:index {%d:%d}\n"),
                       entry->item ().transport ()->id (),
                       entry->ext_id_.hash (),
-                      entry->ext_id_.index ()
-                      ));
+                      entry->ext_id_.index ()));
                   }
               }
             else if (this->is_entry_connecting_i (*entry))
@@ -321,8 +319,7 @@ namespace TAO
                       ACE_TEXT ("found connecting Transport[%d] @hash:index {%d:%d}\n"),
                       entry->item ().transport ()->id (),
                       entry->ext_id_.hash (),
-                      entry->ext_id_.index ()
-                      ));
+                      entry->ext_id_.index ()));
                   }
                 // if this is the first interesting entry
                 if (found != CACHE_FOUND_CONNECTING)
@@ -660,8 +657,7 @@ namespace TAO
         TAOLIB_DEBUG ((LM_INFO,
           ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge, ")
           ACE_TEXT ("Cache size after purging is [%d]\n"),
-          this->current_size ()
-          ));
+          this->current_size ()));
       }
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)

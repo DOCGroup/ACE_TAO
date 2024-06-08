@@ -27,7 +27,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/Timer_Heap.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include "Network_Adapters_Test.h"
 
@@ -583,9 +583,7 @@ Stop_Handler::open ()
 }
 
 int
-Stop_Handler::handle_signal (int signum,
-                             siginfo_t * ,
-                             ucontext_t *)
+Stop_Handler::handle_signal (int signum, siginfo_t * , ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Stop_Handler::handle_signal - started.\n")));
@@ -614,19 +612,14 @@ Stop_Handler::handle_input (ACE_HANDLE handle)
       // remove from the reactor's tables all non-null entries
       if (this->handlers_to_stop_[i])
         {
-#if defined ACE_HAS_EXCEPTIONS
-
           // protect from deleted pointer
           try
             {
-#endif // ACE_HAS_EXCEPTIONS
-
               this->reactor ()->cancel_timer (this->handlers_to_stop_[i]);
               this->reactor ()->remove_handler
                 (this->handlers_to_stop_[i],
                  ACE_Event_Handler::ALL_EVENTS_MASK
                  | ACE_Event_Handler::DONT_CALL);
-#if defined ACE_HAS_EXCEPTIONS
             }
           catch (...)
             {
@@ -635,7 +628,6 @@ Stop_Handler::handle_input (ACE_HANDLE handle)
                           ACE_TEXT ("EXCEPTION CATCHED. Most probably ")
                           ACE_TEXT ("handler's pointer has been deleted.\n")));
             }
-#endif // ACE_HAS_EXCEPTIONS
           this->handlers_to_stop_[i] = 0;
         }
     }
@@ -843,7 +835,7 @@ extern "C"
 }
 #endif /* #if defined (ACE_HAS_SIG_C_FUNC) */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 static BOOL WINAPI CtrlHandler(DWORD fdwCtrlType)
 {
   switch (fdwCtrlType)
@@ -999,7 +991,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         default:
           // return print_usage (argc,argv);
           break;
-
         }
     }
 
@@ -1020,9 +1011,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Network_Adapters_Test"));
 
 #if defined (ACE_WIN32)
-#if !defined (ACE_HAS_WINCE)
   SetConsoleCtrlHandler(&CtrlHandler, TRUE);
-#endif
 #else /* #if defined (ACE_WIN32) */
   // Set a handler for SIGSEGV signal to call for abort.
   ACE_Sig_Action sa1 ((ACE_SignalHandler) sigsegv_handler, SIGSEGV);

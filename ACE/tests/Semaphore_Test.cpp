@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Thread_Semaphore.h"
 #include "ace/Thread.h"
@@ -20,11 +19,9 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
-
-
 // msec that times are allowed to differ before test fails.
-#if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER) || \
-    defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER) || \
+#if defined (ACE_HAS_HI_RES_TIMER) || \
+    defined (ACE_HAS_PENTIUM) || \
     defined (ACE_HAS_POWERPC_TIMER)
 # define ACE_ALLOWED_SLACK 100
 #else  /* don't have a high-res timer */

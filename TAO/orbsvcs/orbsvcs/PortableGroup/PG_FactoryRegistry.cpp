@@ -6,7 +6,6 @@
 #include "ace/Vector_T.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/POAManagerC.h"
@@ -169,7 +168,6 @@ void TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr 
 
   // and create a ior string
   this->ior_ = this->orb_->object_to_string (this->this_obj_.in ());
-
 }
 
 int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
@@ -298,7 +296,7 @@ void TAO::PG_FactoryRegistry::register_factory (
                         RoleInfo(5),
                         CORBA::NO_MEMORY());
 
-      ACE_auto_ptr_reset (safe_entry, role_info);
+      safe_entry.reset (role_info);
       role_info->type_id_ = type_id;
     }
   else
@@ -309,7 +307,7 @@ void TAO::PG_FactoryRegistry::register_factory (
         }
     }
 
-  PortableGroup::FactoryInfos & infos = role_info->infos_;;
+  PortableGroup::FactoryInfos & infos = role_info->infos_;
   CORBA::ULong length = infos.length();
   for (CORBA::ULong nInfo = 0u; nInfo < length; ++nInfo)
     {
@@ -505,7 +503,6 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
       PortableGroup::FactoryInfo & info = infos[nInfo];
       if (info.the_location == location)
       {
-
         ORBSVCS_ERROR((LM_INFO,
           "%s: Unregister_factory_by_location: Removing: [%d] %s@%s\n",
           this->identity_.c_str(),

@@ -72,8 +72,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // Now generate the operations on the union such as the copy constructor
   // and the assignment operator.
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the copy constructor and the assignment operator here.
   *os << be_nl_2
@@ -219,7 +218,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       << node->name () << " &u)" << be_nl;
   *os << "{" << be_idt_nl;
   // First check for self-assignment.
-  *os << "if (&u == this)" << be_idt_nl
+  *os << "if (std::addressof(u) == this)" << be_idt_nl
       << "{" << be_idt_nl
       << "return *this;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;

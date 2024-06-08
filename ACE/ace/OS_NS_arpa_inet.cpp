@@ -85,17 +85,17 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
       return 1;
     }
 #  endif // ACE_LACKS_INET_ADDR
-#elif defined (ACE_VXWORKS)
+#elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x700)
   // inet_aton() returns OK (0) on success and ERROR (-1) on failure.
   // Must reset errno first. Refer to WindRiver SPR# 34949, SPR# 36026
   ::errnoSet(0);
   int result = ERROR;
-  ACE_OSCALL (::inet_aton (const_cast <char*>(host_name), addr), int, ERROR, result);
+  ACE_OSCALL (::inet_aton (const_cast <char*>(host_name), addr), int, result);
   return (result == ERROR) ? 0 : 1;
 #else
   // inet_aton() returns 0 upon failure, not -1 since -1 is a valid
   // address (255.255.255.255).
-  ACE_OSCALL_RETURN (::inet_aton (host_name, addr), int, 0);
+  return ::inet_aton (host_name, addr);
 #endif  /* ACE_LACKS_INET_ATON */
 }
 

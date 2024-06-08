@@ -8,8 +8,7 @@
 #include "JAWS/Reaper.h"
 
 
-
-JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
+JAWS_Concurrency_Base::JAWS_Concurrency_Base ()
   : ACE_Task<ACE_SYNCH> (new ACE_Thread_Manager),
     mb_acquired_ (0),
     mb_ (0),
@@ -17,14 +16,14 @@ JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
 {
 }
 
-JAWS_Concurrency_Base::~JAWS_Concurrency_Base (void)
+JAWS_Concurrency_Base::~JAWS_Concurrency_Base ()
 {
   delete this->thr_mgr_;
   delete this->reaper_;
 }
 
 ACE_Message_Block *
-JAWS_Concurrency_Base::singleton_mb (void)
+JAWS_Concurrency_Base::singleton_mb ()
 {
   if (this->mb_acquired_ == 0)
     {
@@ -55,7 +54,7 @@ JAWS_Concurrency_Base::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 }
 
 int
-JAWS_Concurrency_Base::svc (void)
+JAWS_Concurrency_Base::svc ()
 {
   JAWS_TRACE ("JAWS_Concurrency_Base::svc");
 
@@ -202,12 +201,12 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
 }
 
 int
-JAWS_Concurrency_Base::activate_hook (void)
+JAWS_Concurrency_Base::activate_hook ()
 {
   return 0;
 }
 
-JAWS_Dispatcher::JAWS_Dispatcher (void)
+JAWS_Dispatcher::JAWS_Dispatcher ()
   : policy_(0)
 {
 }
@@ -219,7 +218,7 @@ JAWS_Dispatcher::dispatch (ACE_Message_Block *mb)
 }
 
 JAWS_Dispatch_Policy *
-JAWS_Dispatcher::policy (void)
+JAWS_Dispatcher::policy ()
 {
   return this->policy_;
 }
@@ -296,7 +295,7 @@ JAWS_Thread_Per_Task::svc_loop (JAWS_Data_Block *db)
 }
 
 int
-JAWS_Thread_Per_Task::activate_hook (void)
+JAWS_Thread_Per_Task::activate_hook ()
 {
   const int force_active = 1;
   const int nthreads = 1;

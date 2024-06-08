@@ -166,7 +166,6 @@ TAO_Naming_Context::to_string (const CosNaming::Name &n)
   // Stringify the name
   for (i=0; i < n.length (); ++i)
     {
-
       // Stringify Id
       //
       const char *id = n[i].id.in ();

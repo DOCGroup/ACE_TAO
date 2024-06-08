@@ -73,18 +73,18 @@ static ACE_Cleanup_Adapter<ACE_Log_Msg>* log_msg_cleanup = 0;
 class ACE_Msg_Log_Cleanup: public ACE_Cleanup_Adapter<ACE_Log_Msg>
 {
 public:
-  virtual ~ACE_Msg_Log_Cleanup (void) {
+  virtual ~ACE_Msg_Log_Cleanup () {
     if (this == log_msg_cleanup)
       log_msg_cleanup = 0;
   }
 };
 #endif /* ACE_MT_SAFE */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_NT_Event_Log
 #elif defined (ACE_ANDROID)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_Android_Logcat
-#elif !defined (ACE_LACKS_UNIX_SYSLOG) && !defined (ACE_HAS_WINCE)
+#elif !defined (ACE_LACKS_UNIX_SYSLOG)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_UNIX_Syslog
 #endif
 
@@ -217,15 +217,6 @@ ACE_Log_Msg_Manager::get_lock ()
 void
 ACE_Log_Msg_Manager::close ()
 {
-#if defined (ACE_HAS_STHREADS) && ! defined (ACE_HAS_TSS_EMULATION) && ! defined (ACE_HAS_EXCEPTIONS)
-  // Delete the (main thread's) Log_Msg instance.  I think that this
-  // is only "necessary" if exception handling is not enabled.
-  // Without exception handling, main thread TSS destructors don't
-  // seem to be called.  It's not really necessary anyways, because
-  // this one leak is harmless on Solaris.
-  delete ACE_Log_Msg::instance ();
-#endif /* ACE_HAS_STHREADS && ! TSS_EMULATION && ! ACE_HAS_EXCEPTIONS */
-
   // Ugly, ugly, but don't know a better way.
   delete ACE_Log_Msg_Manager::lock_;
   ACE_Log_Msg_Manager::lock_ = 0;
@@ -1241,11 +1232,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case 'N':             // Source file name
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-#else
-                  ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-#endif
+                  ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp, bspace, format,
                                                  this->file () ?
@@ -1260,11 +1247,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case 'n':             // Program name
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-#else /* ACE_WIN32 && ACE_USES_WCHAR */
-                  ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-#endif
+                  ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp, bspace, format,
                                                  ACE_Log_Msg::program_name_ ?
@@ -1279,12 +1262,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case 'P':             // Process ID
-#if defined (ACE_OPENVMS)
-                  // Print the process id in hex on OpenVMS.
-                  ACE_OS::strcpy (fp, ACE_TEXT ("x"));
-#else
                   ACE_OS::strcpy (fp, ACE_TEXT ("d"));
-#endif
                   if (can_check)
                     this_len = ACE_OS::snprintf
                       (bp, bspace, format,
@@ -1335,10 +1313,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       {
                         errno = ACE::map_errno (this->errnum ());
                         ACE_TCHAR *lpMsgBuf = 0;
-
-     // PharLap can't do FormatMessage, so try for socket
-     // error.
-# if !defined (ACE_HAS_PHARLAP)
                         ACE_TEXT_FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER
                                                   | FORMAT_MESSAGE_MAX_WIDTH_MASK
                                                   | FORMAT_MESSAGE_FROM_SYSTEM,
@@ -1350,7 +1324,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                                                   (ACE_TCHAR *) &lpMsgBuf,
                                                   0,
                                                   0);
-# endif /* ACE_HAS_PHARLAP */
 
                         // If we don't get a valid response from
                         // <FormatMessage>, we'll assume this is a
@@ -1417,11 +1390,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #     if defined (ACE_WIN32) // Windows uses 'c' for a wide character
                     ACE_OS::strcpy (fp, ACE_TEXT ("c"));
 #     else // Other platforms behave differently
-#         if defined (HPUX) // HP-Unix compatible
-                  ACE_OS::strcpy (fp, ACE_TEXT ("C"));
-#         else // Other
                   ACE_OS::strcpy (fp, ACE_TEXT ("lc"));
-#         endif /* HPUX */
 #     endif
 
 # else /* ACE_USES_WCHAR */
@@ -1504,11 +1473,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
                       // Nope, print out standard priority_name() string
 
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                      ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-#else
-                      ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-#endif
+                      ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                       if (can_check)
                         this_len = ACE_OS::snprintf
                           (bp, bspace, format,
@@ -1538,11 +1503,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       {
 #endif
 
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                        ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-#else /* ACE_WIN32 && ACE_USES_WCHAR */
-                        ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-#endif
+                        ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format, ACE_TEXT_CHAR_TO_TCHAR (msg));
@@ -1555,10 +1516,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       {
                         errno = ACE::map_errno (this->errnum ());
                         ACE_TCHAR *lpMsgBuf = 0;
-
-     // PharLap can't do FormatMessage, so try for socket
-     // error.
-# if !defined (ACE_HAS_PHARLAP)
                         ACE_TEXT_FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER
                                                   | FORMAT_MESSAGE_MAX_WIDTH_MASK
                                                   | FORMAT_MESSAGE_FROM_SYSTEM,
@@ -1570,7 +1527,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                                                   (ACE_TCHAR *) &lpMsgBuf,
                                                   0,
                                                   0);
-# endif /* ACE_HAS_PHARLAP */
 
                         // If we don't get a valid response from
                         // <FormatMessage>, we'll assume this is a
@@ -1633,7 +1589,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           // according to %I
                   *bp++ = '\n';
                   --bspace;
-                  /* fallthrough */
+                  ACE_FALLTHROUGH;
 
                 case 'I': // Indent with nesting_depth*width spaces
                   // Caller can do %*I to override nesting indent, and
@@ -1722,11 +1678,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                                       sizeof (day_and_time) / sizeof (ACE_TCHAR),
                                       true);
                     }
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                    ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-#else
-                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-#endif
+                    ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                     if (can_check)
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format, day_and_time);
@@ -1740,11 +1692,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           // hour:minute:sec.usec format.
                   {
                     ACE_TCHAR day_and_time[27];
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                    ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-#else
-                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-#endif
+                    ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                     // Did we find the flag indicating a time value argument
                     if (format[1] == ACE_TEXT('#'))
                     {
@@ -1819,11 +1767,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                     wchar_t *str = va_arg (argp, wchar_t *);
-                    ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
                     ACE_TCHAR *str = va_arg (argp, ACE_TCHAR *);
-                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
+                    ACE_OS::strcpy (fp, ACE_TEXT_PRIs);
                     if (can_check)
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format, str ? str : ACE_TEXT ("(null)"));
@@ -1856,9 +1803,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
 #if defined (ACE_HAS_WCHAR)
                     wchar_t *wchar_str = va_arg (argp, wchar_t *);
-# if defined (HPUX)
-                    ACE_OS::strcpy (fp, ACE_TEXT ("S"));
-# elif defined (ACE_WIN32)
+# if defined (ACE_WIN32)
 #   if defined (ACE_USES_WCHAR)
                     ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 #   else /* ACE_USES_WCHAR */
@@ -1866,7 +1811,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #   endif /* ACE_USES_WCHAR */
 # else
                     ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-# endif /* HPUX */
+# endif /* ACE_HAS_WCHAR */
                     if (can_check)
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format, wchar_str ? wchar_str : ACE_TEXT_WIDE("(null)"));
@@ -1892,11 +1837,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     this_len = ACE_OS::sprintf
                       (bp, format, va_arg (argp, int));
 #elif defined (ACE_USES_WCHAR)
-# if defined (HPUX)
-                  ACE_OS::strcpy (fp, ACE_TEXT ("C"));
-# else
                   ACE_OS::strcpy (fp, ACE_TEXT ("lc"));
-# endif /* HPUX */
                   if (can_check)
                     this_len = ACE_OS::snprintf
                       (bp, bspace, format, va_arg (argp, wint_t));
@@ -1928,11 +1869,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     ACE_OS::strcpy (fp, ACE_TEXT ("C"));
 # endif /* ACE_USES_WCHAR */
 #elif defined (ACE_USES_WCHAR)
-# if defined (HPUX)
-                    ACE_OS::strcpy (fp, ACE_TEXT ("C"));
-# else
                     ACE_OS::strcpy (fp, ACE_TEXT ("lc"));
-# endif /* HPUX */
 #else /* ACE_WIN32 */
                     ACE_OS::strcpy (fp, ACE_TEXT ("u"));
 #endif /* ACE_WIN32 */
@@ -1975,11 +1912,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   ACE_OS::strcpy (fp, ACE_TEXT ("S"));
 # endif /* ACE_USES_WCHAR */
 #elif defined (ACE_HAS_WCHAR)
-# if defined (HPUX)
-                  ACE_OS::strcpy (fp, ACE_TEXT ("S"));
-# else
                   ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
-# endif /* HPUX */
 #endif /* ACE_WIN32 / ACE_HAS_WCHAR */
                   if (can_check)
                     this_len = ACE_OS::snprintf
@@ -2367,7 +2300,7 @@ bool ACE_Log_Formatter::process_conversion ()
     // from the "varags" list so they will end up returning true (keep parsing)
     case '$':
       this->copy_trunc ("\n", 1);
-      // fall-through
+      ACE_FALLTHROUGH;
     case 'I':
       len = std::min (static_cast<int> (this->bspace_),
                       this->logger_->trace_depth_ *
@@ -2552,7 +2485,7 @@ bool ACE_Log_Formatter::process_conversion ()
       ACE_OS::strcpy (this->fp_, "ls");
       return false;
     case 'Z':
-#if (defined ACE_WIN32 && !defined ACE_USES_WCHAR) || defined HPUX
+#if (defined ACE_WIN32 && !defined ACE_USES_WCHAR)
       ACE_OS::strcpy (this->fp_, "S");
 #elif defined ACE_WIN32
       ACE_OS::strcpy (this->fp_, "s");
@@ -2977,11 +2910,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   if (text)
     wr_ptr += ACE_OS::snprintf (wr_ptr,
                                   end_ptr - wr_ptr,
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                                  ACE_TEXT ("%ls - "),
-#else
-                                  ACE_TEXT ("%s - "),
-#endif
+                                  ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT (" - "),
                                   text);
 
   wr_ptr += ACE_OS::snprintf (wr_ptr,
@@ -3217,16 +3146,16 @@ ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
 
 void
 ACE_Log_Msg::init_hook (ACE_OS_Log_Msg_Attributes &attributes
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
                         , ACE_SEH_EXCEPT_HANDLER selector
                         , ACE_SEH_EXCEPT_HANDLER handler
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
                                    )
 {
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   attributes.seh_except_selector_ = selector;
   attributes.seh_except_handler_ = handler;
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
   if (ACE_Log_Msg::exists ())
     {
       ACE_Log_Msg *inherit_log = ACE_LOG_MSG;
@@ -3254,7 +3183,7 @@ ACE_Log_Msg::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)  && \
     !defined (ACE_HAS_MINIMAL_ACE_OS)
   // Inherit the logging features if the parent thread has an
-  // <ACE_Log_Msg>.  Note that all of the following operations occur
+  // ACE_Log_Msg.  Note that all of the following operations occur
   // within thread-specific storage.
   ACE_Log_Msg *new_log = ACE_LOG_MSG;
 

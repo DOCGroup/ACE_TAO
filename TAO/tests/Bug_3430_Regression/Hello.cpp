@@ -13,7 +13,7 @@ Hello::method(Test::Hello_out r)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

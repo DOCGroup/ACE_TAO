@@ -36,7 +36,7 @@ HTTP_Request::static_method_strings_[HTTP_Request::NUM_METHOD_STRINGS] =
 // For reasons of efficiency, this class expects buffer to be
 // null-terminated, and buflen does NOT include the \0.
 
-HTTP_Request::HTTP_Request (void)
+HTTP_Request::HTTP_Request ()
   : got_request_line_ (0),
     method_ (0),
     uri_ (0),
@@ -50,14 +50,13 @@ HTTP_Request::HTTP_Request (void)
     header_strings_ (HTTP_Request::static_header_strings_),
     method_strings_ (HTTP_Request::static_method_strings_)
 {
-
   for (size_t i = 0;
        i < HTTP_Request::NUM_HEADER_STRINGS;
        i++)
     this->headers_.recognize (this->header_strings_[i]);
 }
 
-HTTP_Request::~HTTP_Request (void)
+HTTP_Request::~HTTP_Request ()
 {
   ACE_OS::free (this->method_);
   ACE_OS::free (this->uri_);
@@ -177,73 +176,73 @@ HTTP_Request::init (char *const buffer,
 }
 
 const char *
-HTTP_Request::method (void) const
+HTTP_Request::method () const
 {
   return this->method_;
 }
 
 const char *
-HTTP_Request::uri (void) const
+HTTP_Request::uri () const
 {
   return this->uri_;
 }
 
 const char *
-HTTP_Request::version (void) const
+HTTP_Request::version () const
 {
   return this->version_;
 }
 
 const char *
-HTTP_Request::path (void) const
+HTTP_Request::path () const
 {
   return this->path_;
 }
 
 int
-HTTP_Request::cgi (void) const
+HTTP_Request::cgi () const
 {
   return this->cgi_;
 }
 
 const char **
-HTTP_Request::cgi_env (void) const
+HTTP_Request::cgi_env () const
 {
   return (const char **)this->cgi_env_;
 }
 
 const char *
-HTTP_Request::cgi_args (void) const
+HTTP_Request::cgi_args () const
 {
   return this->cgi_args_;
 }
 
 const char *
-HTTP_Request::query_string (void) const
+HTTP_Request::query_string () const
 {
   return this->query_string_;
 }
 
 const char *
-HTTP_Request::path_info (void) const
+HTTP_Request::path_info () const
 {
   return this->path_info_;
 }
 
 int
-HTTP_Request::got_request_line (void) const
+HTTP_Request::got_request_line () const
 {
   return this->got_request_line_;
 }
 
 int
-HTTP_Request::type (void) const
+HTTP_Request::type () const
 {
   return type_;
 }
 
 const Headers &
-HTTP_Request::headers (void) const
+HTTP_Request::headers () const
 {
   return this->headers_;
 }
@@ -275,19 +274,19 @@ HTTP_Request::header_values (int index) const
 }
 
 char *
-HTTP_Request::data (void)
+HTTP_Request::data ()
 {
   return data_;
 }
 
 int
-HTTP_Request::data_length (void)
+HTTP_Request::data_length ()
 {
   return datalen_;
 }
 
 int
-HTTP_Request::content_length (void)
+HTTP_Request::content_length ()
 {
   if (this->content_length_ == -1)
     {
@@ -299,19 +298,19 @@ HTTP_Request::content_length (void)
 }
 
 int
-HTTP_Request::status (void)
+HTTP_Request::status ()
 {
   return this->status_;
 }
 
 const char *
-HTTP_Request::status_string (void)
+HTTP_Request::status_string ()
 {
   return HTTP_Status_Code::instance ()[this->status_];
 }
 
 void
-HTTP_Request::dump (void)
+HTTP_Request::dump ()
 {
   ACE_DEBUG ((LM_DEBUG, "%s command.\n"
               "filename is %s,"

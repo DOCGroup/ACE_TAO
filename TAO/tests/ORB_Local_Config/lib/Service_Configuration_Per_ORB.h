@@ -26,7 +26,7 @@ class ACE_Service_Gestalt_Test : public ACE_Service_Gestalt
     {
     };
 
-  ~ACE_Service_Gestalt_Test (void)
+  ~ACE_Service_Gestalt_Test ()
     {
       if (this->teardown_)
         {
@@ -40,22 +40,22 @@ class ACE_Service_Gestalt_Test : public ACE_Service_Gestalt
         }
     };
 
-  size_t command_line_directives_count (void) const
+  size_t command_line_directives_count () const
   {
     return this->svc_queue_->size ();
   };
 
-  size_t service_config_files_count (void) const
+  size_t service_config_files_count () const
   {
     return this->svc_conf_file_queue_->size ();
   };
 
-  size_t services_count (void) const
+  size_t services_count () const
   {
     return this->repo_->current_size ();
   };
 
-  bool has_same_service_repository ( ACE_Service_Gestalt_Test const * psg)
+  bool has_same_service_repository (ACE_Service_Gestalt_Test const * psg)
   {
     return (this->repo_ == psg->repo_);
   }

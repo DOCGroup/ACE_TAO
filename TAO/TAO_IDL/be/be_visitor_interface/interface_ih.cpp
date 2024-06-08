@@ -42,8 +42,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
   if (be_global->gen_impl_debug_info ())
     {
-      *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      TAO_INSERT_COMMENT (os);
     }
 
   // Now generate the class definition.
@@ -92,7 +91,6 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
           << be_global->impl_class_suffix () << "& " << "operator=(const "
           << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << "&);" << be_nl_2;
-
     }
 
   *os << "// Destructor" << be_nl

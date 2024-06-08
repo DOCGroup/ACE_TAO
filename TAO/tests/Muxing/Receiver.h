@@ -22,13 +22,13 @@ public:
   Receiver (CORBA::ORB_ptr orb);
 
   /// Print out the results
-  void dump_results (void);
+  void dump_results ();
 
   // = The skeleton methods
   virtual void receive_data (const Test::Payload &payload);
-  virtual CORBA::Long get_event_count (void);
+  virtual CORBA::Long get_event_count ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   TAO_SYNCH_MUTEX mutex_;

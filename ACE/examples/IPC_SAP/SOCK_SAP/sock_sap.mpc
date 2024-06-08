@@ -7,7 +7,6 @@ project(*C_inclient) : aceexe {
 }
 
 project(*C_inserver) : aceexe {
-  avoids += wince
   exename = C-inserver
   Source_Files {
     C-inserver.cpp

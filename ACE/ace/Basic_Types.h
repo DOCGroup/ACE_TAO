@@ -266,12 +266,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #else /* ! BYTE_ORDER && ! __BYTE_ORDER */
   // We weren't explicitly told, so we have to figure it out . . .
   // Note that Itanium hardware (IA64) can run in either byte order. It's
-  // selected by the OS when loading; Windows runs little, HP-UX runs big.
+  // selected by the OS when loading; Windows runs little.
 #   if defined (i386) || defined (__i386__) || defined (_M_IX86) || \
-     defined (vax) || defined (__alpha) || defined (__LITTLE_ENDIAN__) || \
+     defined (vax) || defined (__LITTLE_ENDIAN__) || \
      defined (ARM) || defined (_M_IA64) || defined (_M_AMD64) || \
      defined (__amd64) || \
-     ((defined (__ia64__) || defined (__ia64)) && !defined (__hpux))
+     ((defined (__ia64__) || defined (__ia64)))
     // We know these are little endian.
 #     define ACE_LITTLE_ENDIAN 0x0123
 #     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
@@ -285,9 +285,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // Byte swapping macros to deal with differences between little endian
 // and big endian machines.  Note that "long" here refers to 32 bit
 // quantities.
+# define ACE_SWAP_LONG_LONG(LL) ((ACE_SWAP_LONG ((LL)&0xFFFFFFFF) << 32) \
+            | ACE_SWAP_LONG(((LL) >> 32) & 0xFFFFFFFF))
 # define ACE_SWAP_LONG(L) ((ACE_SWAP_WORD ((L) & 0xFFFF) << 16) \
             | ACE_SWAP_WORD(((L) >> 16) & 0xFFFF))
-# define ACE_SWAP_WORD(L) ((((L) & 0x00FF) << 8) | (((L) & 0xFF00) >> 8))
+# define ACE_SWAP_WORD(W) ((((W) & 0x00FF) << 8) | (((W) & 0xFF00) >> 8))
 
 # define ACE_HTONL(X) htonl (X)
 # define ACE_NTOHL(X) ntohl (X)
@@ -562,25 +564,30 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # endif /* ACE_SIZEOF_LONG_DOUBLE */
 
 // Max and min sizes for the ACE integer types.
-#define ACE_CHAR_MAX 0x7F
-#define ACE_CHAR_MIN -(ACE_CHAR_MAX)-1
-#define ACE_OCTET_MAX 0xFF
+#define ACE_INT8_MAX 0x7F
+#define ACE_INT8_MIN -(ACE_INT8_MAX) - 1
+#define ACE_UINT8_MAX 0xFF
+#define ACE_CHAR_MAX (ACE_INT8_MAX)
+#define ACE_CHAR_MIN (ACE_INT8_MIN)
+#define ACE_OCTET_MAX (ACE_UINT8_MAX)
 #define ACE_INT16_MAX 0x7FFF
-#define ACE_INT16_MIN -(ACE_INT16_MAX)-1
+#define ACE_INT16_MIN -(ACE_INT16_MAX) - 1
 #define ACE_UINT16_MAX 0xFFFF
 #define ACE_WCHAR_MAX ACE_UINT16_MAX
 #define ACE_INT32_MAX 0x7FFFFFFF
-#define ACE_INT32_MIN -(ACE_INT32_MAX)-1
+#define ACE_INT32_MIN -(ACE_INT32_MAX) - 1
 #define ACE_UINT32_MAX 0xFFFFFFFF
 #define ACE_INT64_MAX ACE_INT64_LITERAL(0x7FFFFFFFFFFFFFFF)
-#define ACE_INT64_MIN -(ACE_INT64_MAX)-1
+#define ACE_INT64_MIN -(ACE_INT64_MAX) - 1
 #define ACE_UINT64_MAX ACE_UINT64_LITERAL (0xFFFFFFFFFFFFFFFF)
 
 // These use ANSI/IEEE format.
 #define ACE_FLT_MAX 3.402823466e+38F
 #define ACE_FLT_MIN 1.175494351e-38F
+#define ACE_FLT_LOWEST -(ACE_FLT_MAX)
 #define ACE_DBL_MAX 1.7976931348623158e+308
 #define ACE_DBL_MIN 2.2250738585072014e-308
+#define ACE_DBL_LOWEST -(ACE_DBL_MAX)
 
 # include /**/ "ace/post.h"
 #endif /* ACE_BASIC_TYPES_H */

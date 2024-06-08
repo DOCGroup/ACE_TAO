@@ -19,7 +19,6 @@ void
 Echo_Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   PortableInterceptor::ClientRequestInterceptor_ptr interceptor =
     PortableInterceptor::ClientRequestInterceptor::_nil ();
 

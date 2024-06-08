@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Any_Impl_T.h
@@ -7,7 +5,6 @@
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
 //=============================================================================
-
 
 #ifndef TAO_ANY_IMPL_T_H
 #define TAO_ANY_IMPL_T_H
@@ -80,13 +77,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/AnyTypeCode/Any_Impl_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Any_Impl_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

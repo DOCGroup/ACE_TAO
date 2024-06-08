@@ -28,7 +28,6 @@ class Echo_Client_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-
   Echo_Client_ORBInitializer
     (PortableInterceptor::ProcessingMode proc_mode);
 
@@ -37,7 +36,6 @@ public:
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
 private:
-
   PortableInterceptor::ProcessingMode processing_mode_;
 };
 

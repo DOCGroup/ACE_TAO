@@ -44,7 +44,7 @@ public:
   };
 
   /// Open a message queue using the <external_id>.
-  ACE_SV_Message_Queue (void);
+  ACE_SV_Message_Queue ();
   ACE_SV_Message_Queue (key_t external_id,
                         int create = ACE_SV_Message_Queue::ACE_OPEN,
                         int perms = ACE_DEFAULT_FILE_PERMS);
@@ -52,14 +52,14 @@ public:
             int create = ACE_SV_Message_Queue::ACE_OPEN,
             int perms = ACE_DEFAULT_FILE_PERMS);
 
-  ~ACE_SV_Message_Queue (void);
+  ~ACE_SV_Message_Queue ();
 
   /// Close down this instance of the message queue without removing it
   /// from the system.
-  int close (void);
+  int close ();
 
   /// Close down and remove the message queue from the system.
-  int remove (void);
+  int remove ();
 
   // = Message transfer methods.
   ssize_t recv (ACE_SV_Message &mb,
@@ -75,7 +75,7 @@ public:
   int control (int option, void *arg = 0);
 
   /// Get the underly internal id.
-  int get_id (void) const;
+  int get_id () const;
 
   /// Set the underly internal id.
   void set_id (int);

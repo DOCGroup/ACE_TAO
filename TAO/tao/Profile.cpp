@@ -868,7 +868,6 @@ TAO_Unknown_Profile::create_profile_body (TAO_OutputCDR &) const
 }
 
 
-
 // *************************************************************
 // Operators for TAO_opaque encoding and decoding
 // *************************************************************
@@ -890,7 +889,7 @@ operator<< (TAO_OutputCDR& cdr, const TAO_opaque& x)
       cdr.write_octet_array (x.get_buffer (), length);
     }
 
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
 CORBA::Boolean
@@ -905,9 +904,7 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
      && (cdr.orb_core() == nullptr
          || 1 == cdr.orb_core()->
          resource_factory()->
-         input_cdr_allocator_type_locked()
-         )
-     )
+         input_cdr_allocator_type_locked()))
     {
       x.replace (length, cdr.start ());
       x.mb ()->wr_ptr (x.mb ()->rd_ptr () + length);
@@ -920,7 +917,7 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
       cdr.read_octet_array (x.get_buffer (), length);
     }
 
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

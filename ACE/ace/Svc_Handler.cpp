@@ -10,7 +10,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Object_Manager.h"
 #include "ace/Connection_Recycling_Strategy.h"
-
 #include "ace/Dynamic.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -22,14 +21,12 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t, void *p)
   return p;
 }
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (void *, void *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (NOOP, 2 parameters)");
   return;
 }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void *
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n)
@@ -38,14 +35,14 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n)
 
   ACE_Dynamic *const dynamic_instance = ACE_Dynamic::instance ();
 
-  if (dynamic_instance == 0)
+  if (!dynamic_instance)
     {
       // If this ACE_ASSERT fails, it may be due to running of out TSS
       // keys.  Try using ACE_HAS_TSS_EMULATION, or increasing
       // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
       ACE_ASSERT (dynamic_instance != 0);
 
-      ACE_throw_bad_alloc;
+      throw std::bad_alloc ();
     }
   else
     {
@@ -57,10 +54,9 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n)
     }
 }
 
-#if defined (ACE_HAS_NEW_NOTHROW)
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void *
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n,
-                                                          const ACE_nothrow_t&) throw()
+                                                          const std::nothrow_t&) noexcept
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new(nothrow)");
 
@@ -81,21 +77,17 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n,
       // storage, depending on config flags).
       dynamic_instance->set ();
 
-      return ::new(ACE_nothrow) char[n];
+      return ::new(std::nothrow) char[n];
     }
 }
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (void *p,
-                                         const ACE_nothrow_t&) throw()
+                                         const std::nothrow_t&) noexcept
 {
   ACE_TRACE("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete(nothrow)");
   ::delete [] static_cast <char *> (p);
 }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
-
-#endif /* ACE_HAS_NEW_NOTHROW */
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::destroy ()

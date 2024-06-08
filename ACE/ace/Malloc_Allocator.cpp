@@ -196,7 +196,7 @@ ACE_New_Allocator::protect (void *, size_t, int)
 
 #if defined (ACE_HAS_MALLOC_STATS)
 void
-ACE_New_Allocator::print_stats (void) const
+ACE_New_Allocator::print_stats () const
 {
 }
 #endif /* ACE_HAS_MALLOC_STATS */
@@ -322,7 +322,7 @@ ACE_Static_Allocator_Base::protect (void *, size_t, int)
 
 #if defined (ACE_HAS_MALLOC_STATS)
 void
-ACE_Static_Allocator_Base::print_stats (void) const
+ACE_Static_Allocator_Base::print_stats () const
 {
 }
 #endif /* ACE_HAS_MALLOC_STATS */

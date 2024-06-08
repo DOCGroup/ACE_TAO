@@ -89,10 +89,10 @@ public:
    * @retval -1 Failure
    * @retval 0 Success
    */
-  int fini (void);
+  int fini ();
 
   /// Destructor.
-  ~TAO_ORB_Manager (void);
+  ~TAO_ORB_Manager ();
 
   // = Accessor methods.
 
@@ -106,7 +106,7 @@ public:
    * @retval -1 Failure
    * @retval 0 Success
    */
-  int activate_poa_manager (void);
+  int activate_poa_manager ();
 
   /**
    * Activate <servant>, using the POA <activate_object> call.  Users
@@ -164,7 +164,7 @@ public:
   /**
    * Run the ORB event loop.
    */
-  int run (void);
+  int run ();
 
   /**
    * Accessor which returns the ORB pointer.  Following the normal
@@ -175,7 +175,7 @@ public:
    * @return ORB pointer which has been duplicated, so caller
    *         must release pointer when done.
    */
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
   /**
    * Accessor which returns the root poa. Following the normal CORBA
@@ -185,7 +185,7 @@ public:
    * @return Root POA pointer which has been duplicated.  Caller
    *         must release pointer when done.
    */
-  PortableServer::POA_ptr root_poa (void);
+  PortableServer::POA_ptr root_poa ();
 
   /**
    * Accessor which returns the child poa. Following the normal CORBA
@@ -195,7 +195,7 @@ public:
    * @return Child POA pointer which has been duplicated.  Caller
    *         must release pointer when done.
    */
-  PortableServer::POA_ptr child_poa (void);
+  PortableServer::POA_ptr child_poa ();
 
   /**
    * Accessor which returns the poa manager. Following the normal
@@ -206,7 +206,7 @@ public:
    * @return POAManager pointer which has been duplicated.  Caller
    *         must release pointer when done.
    */
-  PortableServer::POAManager_ptr poa_manager (void);
+  PortableServer::POAManager_ptr poa_manager ();
 
 protected:
   /// The ORB.

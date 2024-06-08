@@ -125,7 +125,6 @@ Cancel_Check::open (void *)
  */
 class Stack_Size_Check : public ACE_Task<ACE_MT_SYNCH>
 {
-
 public:
   /// Create the thread with specified stack size
   Stack_Size_Check (size_t stack_size);

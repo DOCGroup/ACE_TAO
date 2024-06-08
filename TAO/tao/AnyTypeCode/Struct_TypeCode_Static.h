@@ -38,7 +38,6 @@ namespace TAO
               class FieldArrayType,
               class RefCountPolicy> class Struct;
 
-
     /**
      * @class Struct
      *
@@ -58,7 +57,6 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-
       /// Constructor.
       Struct (CORBA::TCKind kind,
               char const * id,
@@ -114,7 +112,6 @@ namespace TAO
        *       increase cache hits by improving spatial locality.
        */
       //@{
-
       /// Base attributes containing repository ID and name of
       /// structure type.
       Base_Attributes<char const *> const base_attributes_;
@@ -128,7 +125,6 @@ namespace TAO
                    CORBA::TypeCode_ptr const *> const * const fields_;
       //@}
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

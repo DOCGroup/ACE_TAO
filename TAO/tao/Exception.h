@@ -97,7 +97,6 @@ namespace CORBA
   class TAO_Export Exception
   {
   public:
-
     /// Copy constructor.
     /**
      * @note This constructor should be protected, but VC7.1 at
@@ -110,7 +109,7 @@ namespace CORBA
     Exception (const Exception &src);
 
     /// Destructor.
-    virtual ~Exception ();
+    virtual ~Exception () = default;
 
     // = To throw the exception (when using the standard mapping).
     virtual void _raise () const = 0;
@@ -165,13 +164,13 @@ namespace CORBA
      * class SomeException : public // Derives from CORBA::Exception
      * {
      * public:
-     *   virtual CORBA::Exception *_tao_duplicate (void) const
+     *   CORBA::Exception *_tao_duplicate () override const
      *   {
-     *     CORBA::Exception *result = 0;
+     *     CORBA::Exception *result {};
      *     ACE_NEW_RETURN (
      *         result,
      *         SomeException (*this),
-     *         0);
+     *         nullptr);
      *     return result;
      *   }
      * };
@@ -181,7 +180,7 @@ namespace CORBA
 
   protected:
     /// Default constructor.
-    Exception ();
+    Exception () = default;
 
     /// Assignment operator.
     Exception & operator = (const Exception & src);

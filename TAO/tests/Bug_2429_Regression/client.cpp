@@ -13,7 +13,7 @@ class Reply_Handler
     }
 
    virtual void
-   childMethod (void)
+   childMethod ()
     {
     }
 
@@ -32,12 +32,11 @@ class Reply_Handler
     }
 
    virtual void
-   parentMethod (void)
+   parentMethod ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "client: parentMethod reply %d @ %T\n",
                   ++parentMethod_count));
-
     }
 
    virtual void
@@ -58,7 +57,7 @@ class Reply_Handler
         }
    }
 
-   CORBA::ULong reply_count (void) { return parentMethod_count + parentMethod_excep_count; };
+   CORBA::ULong reply_count () { return parentMethod_count + parentMethod_excep_count; };
 
  private:
    // Count of replies and excep
@@ -99,7 +98,6 @@ client_parse_args(int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   CORBA::ORB_var orb;
 
   try

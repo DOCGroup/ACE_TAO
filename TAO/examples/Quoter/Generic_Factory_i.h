@@ -24,10 +24,9 @@
  */
 class Quoter_Generic_Factory_i : public POA_Stock::Quoter_Generic_Factory
 {
-
 public:
   Quoter_Generic_Factory_i (int debug_level = 1);
-  ~Quoter_Generic_Factory_i (void);
+  ~Quoter_Generic_Factory_i ();
 
   /// Returns true if the Generic Factory is able to forward a request
   /// for creating an object described by the <factory_key>.

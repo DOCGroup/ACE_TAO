@@ -47,7 +47,7 @@ public:
                     ACE_HANDLE &handle);
 
   /// Get handle.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /// Overrides set_handle() from the base classes.
   void set_handle (ACE_HANDLE fd);

@@ -26,7 +26,6 @@
 #                   to CPPFLAGS, PLATFORM_DMALLOC_LDFLAGS to LDFLAGS, and
 #                   PLATFORM_DMALLOC_LIBS to LIBS. For more information on
 #                   dmalloc, see http://dmalloc.com.
-#  fast             Enable -fast option, e.g., with Sun C++.
 #  inline           Enable ACE inlining.  Some platforms enable inlining by
 #                   default, others do not. If platform_macros.GNU does not
 #                   set this, inline is enabled.
@@ -82,6 +81,8 @@
 #                   the version will be appended to the name but *before* the
 #                   $(SOEXT) - it should have a lead '-' - else it defaults to
 #                   -ACE_MAJOR.ACE_MINOR.ACE_MICRO.
+#                   If versioned_so is 3, then set the SONAME, but without a
+#                   version.
 #  wfmo             Build with wfmo support (Win32 only)
 #  winregistry      Build with windows registry support (Win32 only)
 #  winnt            Build WinNT-specific projects (Win32 only)
@@ -222,7 +223,6 @@ endif # alternate_platform_macros
 
 # Define some variables to silence warnings
 GHS ?=
-AIX_TEMPLATE_HACK ?=
 
 # $(ACE_PLATFORM_CONFIG) is used in dependency rules and corresponds to the
 # platform dependent config-*.h file included in config.h, and can be set
@@ -281,10 +281,6 @@ DEFFLAGS ?=
 
 ifeq ($(debug),0)
   DEFFLAGS        += -DNDEBUG
-endif
-
-ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
-  INCLDIRS        += -I$(ACE_ROOT)
 endif
 
 CPPFLAGS          += $(DEFFLAGS) $(INCLDIRS)
@@ -703,12 +699,12 @@ zlib ?= 1
 valgrind ?=
 ifeq ($(valgrind),1)
   CPPFLAGS += -DACE_HAS_VALGRIND
-endif
-# Does the valgrind version support --keep-debug-info, if not
-# we disable dlclose in ACE to get complete callstacks
-valgrind_keep_debuginfo ?=
-ifeq ($(valgrind_keep_debuginfo),0)
-  CPPFLAGS += -DACE_LACKS_DLCLOSE
+  # Does the valgrind version support --keep-debug-info, if not
+  # we disable dlclose in ACE to get complete callstacks
+  valgrind_keep_debuginfo ?=
+  ifeq ($(valgrind_keep_debuginfo),0)
+    CPPFLAGS += -DACE_LACKS_DLCLOSE
+  endif
 endif
 
 profile ?=
@@ -841,10 +837,6 @@ ifdef quantify
   PURELINK += quantify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
               -max_threads=100 $(PLATFORM_QUANTIFY_OPTIONS)
   CPPFLAGS += -DACE_HAS_QUANTIFY -I$(ACE_QUANTIFY_DIR)
-
-  ifeq ($(shell uname -p),sparc)
-    PURELINK += -record-register-window-traps
-  endif # sparc
 endif # quantify
 
 repo ?=

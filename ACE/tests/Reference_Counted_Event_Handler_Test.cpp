@@ -40,7 +40,6 @@ static const char *two_second_timeout = "two second timeout";
 class Reference_Counted_Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Reference_Counted_Event_Handler (int &events);
 
   ~Reference_Counted_Event_Handler () override;
@@ -64,7 +63,6 @@ public:
   ACE_Pipe pipe_;
 
   int &events_;
-
 };
 
 Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (int &events)
@@ -470,7 +468,6 @@ reference_count_2 (ACE_Reactor_Impl *impl)
 class Simple_Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Simple_Event_Handler (int &events,
                         int close_count);
 
@@ -485,15 +482,13 @@ public:
 
   int handle_signal (int, siginfo_t *, ucontext_t *) override;
 
-  int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask) override;
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 
   ACE_Pipe pipe_;
 
   int &events_;
 
   int close_count_;
-
 };
 
 Simple_Event_Handler::Simple_Event_Handler (int &events,
@@ -769,7 +764,6 @@ simple (ACE_Reactor_Impl *impl)
 class Closed_In_Upcall_Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Closed_In_Upcall_Event_Handler (int &events);
 
   ~Closed_In_Upcall_Event_Handler () override;
@@ -786,7 +780,6 @@ public:
   ACE_Pipe pipe_;
 
   int &events_;
-
 };
 
 Closed_In_Upcall_Event_Handler::Closed_In_Upcall_Event_Handler (int &events)

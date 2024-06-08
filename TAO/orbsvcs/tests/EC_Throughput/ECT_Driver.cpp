@@ -2,7 +2,6 @@
 #include "ace/High_Res_Timer.h"
 
 
-
-ECT_Driver::~ECT_Driver (void)
+ECT_Driver::~ECT_Driver ()
 {
 }

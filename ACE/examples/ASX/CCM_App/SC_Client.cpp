@@ -1,7 +1,6 @@
 #include "ace/ACE.h"
 
 
-
 // Pretty simple, eh? ;-)
 
 int

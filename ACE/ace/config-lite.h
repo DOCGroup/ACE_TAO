@@ -4,7 +4,7 @@
 /**
  *  @file   config-lite.h
  *
- *  @author (Originally in OS.h)Doug Schmidt <d.schmidt@vanderbilt.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  *
@@ -54,7 +54,7 @@ extern "C"
 # if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" {
 # endif /* ACE_HAS_SIG_C_FUNC */
-typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
+typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* noexcept */;
 # if defined (ACE_HAS_SIG_C_FUNC)
 }
 # endif /* ACE_HAS_SIG_C_FUNC */
@@ -65,20 +65,20 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
 // Prototype of win32 structured exception handler functions.
 // They are used to get the exception handling expression or
 // as exception handlers.
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 class ACE_OS_Thread_Descriptor;
 class ACE_OS_Log_Msg_Attributes;
 typedef void (*ACE_INIT_LOG_MSG_HOOK) (ACE_OS_Log_Msg_Attributes &attr
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
                                        , ACE_SEH_EXCEPT_HANDLER selector
                                        , ACE_SEH_EXCEPT_HANDLER handler
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
                                        );
 typedef void (*ACE_INHERIT_LOG_MSG_HOOK) (ACE_OS_Thread_Descriptor*,
                                           ACE_OS_Log_Msg_Attributes &);
@@ -90,57 +90,6 @@ typedef void (*ACE_SYNC_LOG_MSG_HOOK) (const ACE_TCHAR *prog_name);
 typedef ACE_OS_Thread_Descriptor *(*ACE_THR_DESC_LOG_MSG_HOOK) ();
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-/**
- * @deprecated ACE_DECLARE_STL_REVERSE_ITERATORS is a crutch to be
- *             used until all C++ compiler supported by ACE support
- *             the standard reverse_iterator adapters.
- * @internal   ACE_DECLARE_STL_REVERSE_ITERATORS is not meant for use
- *             outside of ACE.
- */
-// STL reverse_iterator declaration generator
-// Make sure you include <iterator> in the file you're using this
-// generator, and that the following traits are available:
-//
-//   iterator
-//   const_iterator
-//   value_type
-//   reference
-//   pointer
-//   const_reference
-//   const_pointer
-//   difference_type
-//
-// Once all C++ compilers support the standard reverse_iterator
-// adapters, we can drop this generator macro or at least drop the
-// MSVC++ or Sun Studio preprocessor conditional blocks.
-#if defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x5140 \
-      && !defined (_STLPORT_VERSION)
-  // If we're not using the stlport4 C++ library (which has standard
-  // iterators), we need to ensure this is included in order to test
-  // the _RWSTD_NO_CLASS_PARTIAL_SPEC feature test macro below.
-# include <Cstd/stdcomp.h>
-#endif /* __SUNPRO_CC <= 0x5110 */
-#if defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x5140 \
-    && defined (_RWSTD_NO_CLASS_PARTIAL_SPEC)
-# define ACE_DECLARE_STL_REVERSE_ITERATORS \
-  typedef std::reverse_iterator<iterator, \
-                                std::input_iterator_tag, \
-                                value_type, \
-                                reference, \
-                                pointer, \
-                                difference_type> reverse_iterator; \
-  typedef std::reverse_iterator<const_iterator, \
-                                std::input_iterator_tag, \
-                                value_type const, \
-                                const_reference, \
-                                const_pointer, \
-                                difference_type> const_reverse_iterator;
-#else
-# define ACE_DECLARE_STL_REVERSE_ITERATORS \
-  typedef std::reverse_iterator<iterator>       reverse_iterator; \
-  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
-#endif  /* _MSC_VER && _WIN64 */
 
 #include /**/ "ace/post.h"
 

@@ -86,10 +86,6 @@ CORBA::SystemException::SystemException (const CORBA::SystemException &src)
 {
 }
 
-CORBA::SystemException::~SystemException ()
-{
-}
-
 CORBA::SystemException &
 CORBA::SystemException::operator= (const CORBA::SystemException &src)
 {
@@ -152,8 +148,6 @@ CORBA::SystemException::_tao_errno (int errno_value)
       return TAO_ECONNREFUSED_MINOR_CODE;
     case ENOENT:
       return TAO_ENOENT_MINOR_CODE;
-
-#if !defined (ACE_HAS_WINCE)
     case EMFILE:
       return TAO_EMFILE_MINOR_CODE;
     case EBADF:
@@ -162,8 +156,6 @@ CORBA::SystemException::_tao_errno (int errno_value)
       return TAO_EPERM_MINOR_CODE;
     case EINVAL:
       return TAO_EINVAL_MINOR_CODE;
-#endif  // ACE_HAS_WINCE
-
 #if (ENOSYS != EFAULT)
     case ENOSYS:
       return TAO_ENOSYS_MINOR_CODE;
@@ -912,7 +904,7 @@ TAO::excp_factory excp_array [] = {
 
 // Concrete SystemException constructors
 #define TAO_SYSTEM_EXCEPTION(name) \
-CORBA::name ::name (void) \
+CORBA::name ::name () \
   :  CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
                              #name, \
                              0, \
@@ -933,13 +925,12 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::TypeCode_ptr \
-CORBA::name ::_tao_type (void) const \
+CORBA::name ::_tao_type () const \
 { \
   TAO_AnyTypeCode_Adapter *adapter = \
     ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance ( \
-        "AnyTypeCode_Adapter" \
-      ); \
-  if (adapter != 0) \
+        "AnyTypeCode_Adapter"); \
+  if (adapter != nullptr) \
     return adapter->_tao_type_ ## name (); \
   else \
     { \
@@ -968,7 +959,7 @@ TAO::create_system_exception (const char *id)
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \
-CORBA::name ::_raise (void) const \
+CORBA::name ::_raise () const \
 { \
   throw *this; \
 }
@@ -978,7 +969,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::Exception * \
-CORBA::name ::_tao_duplicate (void) const \
+CORBA::name ::_tao_duplicate () const \
 { \
   CORBA::Exception * result = 0; \
   ACE_NEW_RETURN (result, CORBA::name (*this), 0); \
@@ -990,7 +981,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::SystemException * \
-CORBA::name ::_tao_create (void) \
+CORBA::name ::_tao_create () \
 { \
   CORBA::name *result = 0; \
   ACE_NEW_RETURN (result, CORBA::name (), 0); \

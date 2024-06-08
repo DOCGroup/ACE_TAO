@@ -17,12 +17,12 @@ class JAWS_Export JAWS_Pipeline_Handler
   : public JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>
 {
 public:
-  JAWS_Pipeline_Handler (void);
-  virtual ~JAWS_Pipeline_Handler (void);
+  JAWS_Pipeline_Handler ();
+  virtual ~JAWS_Pipeline_Handler ();
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
   virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv) = 0;
 
-  virtual JAWS_Dispatch_Policy * policy (void);
+  virtual JAWS_Dispatch_Policy * policy ();
   virtual void policy (JAWS_Dispatch_Policy *);
 
 private:

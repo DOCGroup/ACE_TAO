@@ -153,7 +153,7 @@ DeclAsScope (AST_Decl *d)
        * field and iterating
        */
       d = (dynamic_cast<AST_InterfaceFwd*> (d))->full_definition ();
-      // fallthrough
+      ACE_FALLTHROUGH;
     case AST_Decl::NT_interface:
       return dynamic_cast<AST_Interface*> (d);
     case AST_Decl::NT_valuetype:

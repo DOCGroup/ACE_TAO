@@ -19,6 +19,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 #include "ace/CORBA_macros.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,7 +40,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_Event_Handler_Array_var
  *
- * @brief Auto pointer like class for an array of Event Handlers.
+ * @brief Unique pointer like class for an array of Event Handlers.
  *
  * Used to manage lifecycle of handlers. This class calls
  * ACE_Event_Handler::remove_reference() on each handler in its destructor
@@ -443,8 +444,8 @@ namespace TAO_IIOP
   private:
     TAO_Transport** tlist_;
   private:
-    ACE_UNIMPLEMENTED_FUNC (void operator= (const TList_Holder &))
-    ACE_UNIMPLEMENTED_FUNC (TList_Holder (const TList_Holder &))
+    void operator= (const TList_Holder &) = delete;
+    TList_Holder (const TList_Holder &) = delete;
   };
 }
 
@@ -730,12 +731,12 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
 
   static const char *protocol[] = { "iiop", "iioploc" };
 
-  size_t const slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  size_t const slot = std::strchr (endpoint, ':') - endpoint;
   if (slot == 0) // an empty string is valid for corbaloc.
     return 0;
 
-  size_t const len0 = ACE_OS::strlen (protocol[0]);
-  size_t const len1 = ACE_OS::strlen (protocol[1]);
+  size_t const len0 = std::strlen (protocol[0]);
+  size_t const len1 = std::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.

@@ -11,11 +11,6 @@ TAO_Connect_Strategy::TAO_Connect_Strategy (TAO_ORB_Core *orb_core)
 {
 }
 
-
-TAO_Connect_Strategy::~TAO_Connect_Strategy ()
-{
-}
-
 int
 TAO_Connect_Strategy::wait (TAO_Connection_Handler *ch,
                             ACE_Time_Value *max_wait_time)

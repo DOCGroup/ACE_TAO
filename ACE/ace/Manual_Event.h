@@ -4,8 +4,6 @@
 /**
  *  @file    Manual_Event.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -53,7 +51,7 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  ~ACE_Manual_Event_T ();
+  ~ACE_Manual_Event_T () = default;
 
   /// Dump the state of an object.
   void dump () const;
@@ -85,22 +83,12 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  virtual ~ACE_Manual_Event () {}
+  ~ACE_Manual_Event () override = default;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (__ACE_INLINE__)
-#include "ace/Manual_Event.inl"
-#endif /* __ACE_INLINE__ */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Manual_Event.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Manual_Event.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_MANUAL_EVENT_H */

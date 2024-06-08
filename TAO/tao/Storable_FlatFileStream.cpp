@@ -12,7 +12,6 @@
 
 #include "tao/Storable_FlatFileStream.h"
 
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_sys_stat.h"
@@ -24,6 +23,8 @@
 #if defined (ACE_HAS_MNTENT)
 #include <mntent.h>
 #endif /* ACE_HAS_MNTENT */
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -94,7 +95,6 @@ namespace
           {
             if (ACE_OS::fwrite(buffer, 1, n_read, f2) != n_read)
               {
-                ferror (f2);
                 if (TAO_debug_level > 0)
                   {
                     TAOLIB_ERROR ((LM_ERROR,
@@ -109,7 +109,6 @@ namespace
             errno = 0;
             if (!feof (f1))
               {
-                ferror (f1);
                 if (TAO_debug_level > 0)
                   {
                     TAOLIB_ERROR ((LM_ERROR,
@@ -436,8 +435,8 @@ TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
       this->throw_on_read_error (badbit);
     }
   {
-    int strSize = bufSize + 1; // Account for newline
-    ACE_Auto_Basic_Array_Ptr<char> str_array (new char[strSize]);
+    int const strSize = bufSize + 1; // Account for newline
+    std::unique_ptr<char[]> str_array (new char[strSize]);
     str_array[0] = '\0';
     if (ACE_OS::fgets (str_array.get (),
                        strSize,

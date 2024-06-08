@@ -46,13 +46,13 @@ public:
   ACE_MEM_SAP_Node (size_t cap);
 
   /// Get the size of the data we hold.
-  size_t size (void) const;
+  size_t size () const;
 
   /// Get the capacity of this block of data.
-  size_t capacity (void) const;
+  size_t capacity () const;
 
   /// Get the pointer to the block of data we hold.
-  void *data (void);
+  void *data ();
 
   /// The maximum size of this memory block.
   size_t capacity_;
@@ -76,7 +76,7 @@ public:
   typedef ACE_MMAP_Memory_Pool_Options MALLOC_OPTIONS;
 
   /// Destructor.
-  virtual ~ACE_MEM_SAP (void);
+  virtual ~ACE_MEM_SAP ();
 
   /**
    * Initialize the MEM_SAP object.
@@ -136,7 +136,7 @@ protected:
 
   /// Close down the share memory pool.  Clean up the
   /// mmap file if we are the last one using it.
-  int close_shm_malloc (void);
+  int close_shm_malloc ();
 
   ACE_HANDLE handle_;
 
@@ -144,7 +144,7 @@ protected:
   MALLOC_TYPE *shm_malloc_;
 
   /// Constructor.  Prevent this class from being instantiated.
-  ACE_MEM_SAP (void);
+  ACE_MEM_SAP ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

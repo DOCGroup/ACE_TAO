@@ -19,7 +19,7 @@
 
 #include "ACEXML/common/XML_Types.h"
 #include "ACEXML/common/SAXExceptions.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 /**
  * @class ACEXML_Attribute_Def_Builder
@@ -33,8 +33,7 @@
 class ACEXML_Export ACEXML_Attribute_Def_Builder
 {
 public:
-
-  typedef auto_ptr<ACEXML_Attribute_Def_Builder> VAR;
+  typedef std::unique_ptr<ACEXML_Attribute_Def_Builder> VAR;
 
   enum ATT_TYPE {
     CDATA,
@@ -67,7 +66,7 @@ public:
   /**
    * Get the name of the attribute.
    */
-  virtual const ACEXML_Char *getName (void) = 0;
+  virtual const ACEXML_Char *getName () = 0;
 
   /**
    * Set the attribute type.
@@ -90,12 +89,12 @@ public:
    *
    * @retval 0 if the attribute is not a valid combo.
    */
-  virtual int validAttr (void) = 0;
+  virtual int validAttr () = 0;
 
   /**
    * Dump the content of the attribute definition.
    */
-  virtual void dump (void) = 0;
+  virtual void dump () = 0;
 };
 
 /**
@@ -110,8 +109,7 @@ public:
 class ACEXML_Export ACEXML_Attributes_Def_Builder
 {
 public:
-
-  typedef auto_ptr<ACEXML_Attributes_Def_Builder> VAR;
+  typedef std::unique_ptr<ACEXML_Attributes_Def_Builder> VAR;
 
   virtual ~ACEXML_Attributes_Def_Builder () = 0;
 
@@ -127,7 +125,7 @@ public:
   /**
    * Acquire an Attribute_Builder.
    */
-  virtual ACEXML_Attribute_Def_Builder *getAttribute_Def_Builder (void) = 0;
+  virtual ACEXML_Attribute_Def_Builder *getAttribute_Def_Builder () = 0;
 
   /**
    * Add a definition for one attribute.
@@ -138,7 +136,7 @@ public:
   /**
    * Dump the content of the attribute definition.
    */
-  virtual void dump (void) = 0;
+  virtual void dump () = 0;
 };
 
 #include /**/ "ace/post.h"

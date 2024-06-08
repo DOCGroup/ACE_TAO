@@ -8,14 +8,13 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_PERSISTENT_NAMING_CONTEXT_H
 #define TAO_FT_PERSISTENT_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Naming/Persistent_Naming_Context.h"
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/PortableGroupC.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -47,7 +46,7 @@ public:
                                     ACE_UINT32 *counter = 0);
 
   /// Destructor.
-  virtual ~TAO_FT_Persistent_Naming_Context (void);
+  virtual ~TAO_FT_Persistent_Naming_Context () = default;
 
   /**
    * Override the resolve operation to support load balancing using
@@ -61,7 +60,6 @@ public:
 
 protected:
   static TAO_FT_Naming_Manager *naming_manager_impl_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

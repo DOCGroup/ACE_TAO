@@ -58,8 +58,7 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
       class_name +=  node->local_name ();
     }
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the skeleton class name.
   *os << "class " << class_name.c_str () << ";" << be_nl;

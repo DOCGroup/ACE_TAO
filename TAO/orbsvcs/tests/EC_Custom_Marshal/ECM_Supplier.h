@@ -32,7 +32,7 @@ class Test_Supplier : public ACE_Task<ACE_SYNCH>
 public:
   Test_Supplier (ECMS_Driver *driver);
 
-  int svc (void);
+  int svc ();
   // Run the test, just forwards to the driver
 
   void connect (const char* name,
@@ -41,16 +41,16 @@ public:
                 RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the supplier to the EC.
 
-  void disconnect (void);
+  void disconnect ();
   // Disconnect from the EC.
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
   // The methods in the skeleton.
 
-  RtecEventComm::EventSourceID supplier_id (void) const;
+  RtecEventComm::EventSourceID supplier_id () const;
   // The supplier ID.
 
-  RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy (void);
+  RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy ();
   // We talk to the EC (as a supplier) using this proxy, no duplicates
   // are done here...
 
@@ -80,7 +80,7 @@ class ECMS_Driver
   // = DESCRIPTION
   //
 public:
-  ECMS_Driver (void);
+  ECMS_Driver ();
 
   enum {
     MAX_SUPPLIERS = 16
@@ -107,10 +107,10 @@ private:
   // parse the command line args
 
   void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec);
-  void disconnect_suppliers (void);
+  void disconnect_suppliers ();
   // Connect the suppliers.
 
-  void activate_suppliers (void);
+  void activate_suppliers ();
   // Activate the suppliers, i.e. they start generating events.
 
 private:

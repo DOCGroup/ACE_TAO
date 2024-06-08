@@ -36,10 +36,10 @@ class Supplier_Input_Handler : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Supplier_Input_Handler (void);
+  Supplier_Input_Handler ();
 
   /// Destructor.
-  ~Supplier_Input_Handler (void);
+  ~Supplier_Input_Handler ();
 
   /// Initialization.
   int initialize (Notifier_Handler *);
@@ -48,7 +48,7 @@ public:
   virtual int handle_input (ACE_HANDLE);
 
   /// Close down the handler.
-  int close (void);
+  int close ();
 
 protected:
   /// Pointer to a <Notifier_Handler> that's used to inform Consumers

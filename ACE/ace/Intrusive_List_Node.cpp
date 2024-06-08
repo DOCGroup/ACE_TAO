@@ -11,15 +11,4 @@
 #include "ace/Intrusive_List_Node.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-template<class T>
-ACE_Intrusive_List_Node<T>::ACE_Intrusive_List_Node ()
-  : prev_ (0)
-  , next_ (0)
-{
-}
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* ACE_INTRUSIVE_LIST_NODE_CPP */

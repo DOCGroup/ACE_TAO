@@ -14,10 +14,8 @@
 class test_i : public virtual POA_Collocated_ForwardRequestTest::test
 {
 public:
-
   /// Constructor.
   test_i (CORBA::Short id,
-          bool direct,
           CORBA::ORB_ptr orb);
 
   /// A way to setup forwarding in case of direct collocation.
@@ -25,15 +23,11 @@ public:
                 CORBA::ULong request_pass_count);
 
   /// Return the number assigned to this object.
-  virtual CORBA::Short collocated_call (void);
+  virtual CORBA::Short collocated_call ();
 
 private:
-
   /// Id of this instance.
   CORBA::Short id_;
-
-  /// An indication to throwing forward request exception.
-  bool direct_;
 
   /// Pseudo-reference to the ORB.
   CORBA::ORB_var orb_;

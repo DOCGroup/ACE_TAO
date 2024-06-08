@@ -87,7 +87,7 @@ use PerlACE::TestTarget;
 
 my($status) = 0;
 my($verbose) = 0;         # 1: report perl actions before executing them
-my($debug_builds) = ($^O eq 'MSWin32' ? 0 : 1);;    # 0: use exes from Release directories
+my($debug_builds) = ($^O eq 'MSWin32' ? 0 : 1);    # 0: use exes from Release directories
 my($simulated) = 1;       # 1: use "client simulated" fault tolerance
 
 # List of the proccess which must be killed before exit with error

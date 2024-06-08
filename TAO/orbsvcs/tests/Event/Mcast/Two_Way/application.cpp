@@ -39,12 +39,11 @@ class Heartbeat_Application :
   public TAO_EC_Deactivated_Object
 {
 public:
-
   /// Constructor.
-  Heartbeat_Application (void);
+  Heartbeat_Application ();
 
   /// Destructor.
-  ~Heartbeat_Application (void);
+  ~Heartbeat_Application ();
 
   // Initializes the object: connects with EC as a supplier and a
   // consumer and registers with reactor for timeouts.  If init ()
@@ -60,7 +59,7 @@ public:
   // No-op if the object hasn't been fully initialized.  Otherwise,
   // deregister from reactor and poa, destroy ec or just disconnect from it
   // (based on <destroy_ec> flag), and shut down the orb.
-  void shutdown (void);
+  void shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Send another heartbeat or, if we already sent/attempted the required
@@ -74,11 +73,10 @@ public:
   virtual void push (const RtecEventComm::EventSet &events);
 
   /// Initiate shutdown().
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
   //@}
 
 private:
-
   /**
    * @class Timeout_Handler
    *
@@ -103,16 +101,16 @@ private:
   int check_args (CORBA::ORB_var orb,
                   RtecEventChannelAdmin::EventChannel_var ec);
   /// Connects to EC as a supplier.
-  void connect_as_supplier (void);
+  void connect_as_supplier ();
   /// Connects to EC as a consumer.  Activate with default POA.
-  void connect_as_consumer (void);
+  void connect_as_consumer ();
   /// Call destroy() on the EC.  Does not propagate exceptions.
-  void destroy_ec (void);
+  void destroy_ec ();
   /// Registers with orb's reactor for timeouts ocurring every 0.5
   /// seconds. Returns 0 on success, -1 on error.
-  int register_for_timeouts (void);
+  int register_for_timeouts ();
   /// Deregister from reactor.
-  void stop_timeouts (void);
+  void stop_timeouts ();
   //@}
 
   /// Flag indicating whether this object has been fully initialized.
@@ -173,7 +171,7 @@ handle_timeout (const ACE_Time_Value& tv,
 
 // **************************************************************************
 
-Heartbeat_Application::Heartbeat_Application (void)
+Heartbeat_Application::Heartbeat_Application ()
   : initialized_ (0)
   , timeout_handler_ (this)
   , n_timeouts_ (0)
@@ -185,7 +183,7 @@ Heartbeat_Application::Heartbeat_Application (void)
 {
 }
 
-Heartbeat_Application::~Heartbeat_Application (void)
+Heartbeat_Application::~Heartbeat_Application ()
 {
 }
 
@@ -268,7 +266,7 @@ Heartbeat_Application::init (CORBA::ORB_var orb,
 }
 
 int
-Heartbeat_Application::register_for_timeouts (void)
+Heartbeat_Application::register_for_timeouts ()
 {
   // Schedule timeout every 0.5 seconds, for sending heartbeat events.
   ACE_Time_Value timeout_interval (0, 500000);
@@ -288,7 +286,7 @@ Heartbeat_Application::register_for_timeouts (void)
 }
 
 void
-Heartbeat_Application::stop_timeouts (void)
+Heartbeat_Application::stop_timeouts ()
 {
   ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
   if (!reactor
@@ -301,7 +299,7 @@ Heartbeat_Application::stop_timeouts (void)
 }
 
 void
-Heartbeat_Application::connect_as_supplier (void)
+Heartbeat_Application::connect_as_supplier ()
 {
   // Obtain reference to SupplierAdmin.
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
@@ -324,7 +322,7 @@ Heartbeat_Application::connect_as_supplier (void)
 }
 
 void
-Heartbeat_Application::connect_as_consumer (void)
+Heartbeat_Application::connect_as_consumer ()
 {
   // Activate with poa.
   RtecEventComm::PushConsumer_var consumer_ref;
@@ -443,13 +441,13 @@ Heartbeat_Application::push (const RtecEventComm::EventSet &events)
 }
 
 void
-Heartbeat_Application::disconnect_push_consumer (void)
+Heartbeat_Application::disconnect_push_consumer ()
 {
   this->shutdown ();
 }
 
 void
-Heartbeat_Application::destroy_ec (void)
+Heartbeat_Application::destroy_ec ()
 {
   if (!CORBA::is_nil (this->ec_.in ()))
     {
@@ -467,7 +465,7 @@ Heartbeat_Application::destroy_ec (void)
     }
 }
 void
-Heartbeat_Application::shutdown (void)
+Heartbeat_Application::shutdown ()
 {
   if (!this->initialized_)
     return;
@@ -515,7 +513,7 @@ Heartbeat_Application::shutdown (void)
   // Shutdown the ORB.
   try
     {
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {

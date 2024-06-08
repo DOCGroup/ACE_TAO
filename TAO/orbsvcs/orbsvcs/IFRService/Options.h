@@ -45,22 +45,22 @@ public:
                   ACE_TCHAR *argv[]);
 
   /// Return the file where the IOR of the server object is stored.
-  const char *ior_output_file (void) const;
+  const char *ior_output_file () const;
 
   /// Is the Interface Repository persistent?
-  int persistent (void) const;
+  int persistent () const;
 
   /// Return the default filename for persistent IFR.
-  const char *persistent_file (void) const;
+  const char *persistent_file () const;
 
   /// Are we using a WIN32 registry as the backing store?
-  int using_registry (void) const;
+  int using_registry () const;
 
   /// Should the repository have a real mutex or a null mutex?
-  int enable_locking (void) const;
+  int enable_locking () const;
 
   /// should the service support discovery via multicast?
-  int support_multicast_discovery (void) const;
+  int support_multicast_discovery () const;
 
 private:
   /// File where the IOR of the server object is stored.

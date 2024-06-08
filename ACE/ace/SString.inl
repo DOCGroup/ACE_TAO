@@ -1,7 +1,5 @@
 // -*- C++ -*-
-// Include ACE.h only if it hasn't already been included, e.g., if
-// ACE_TEMPLATES_REQUIRE_SOURCE, ACE.h won't have been pulled in by
-// String_Base.cpp.
+// Include ACE.h only if it hasn't already been included
 #ifndef ACE_ACE_H
 #  include "ace/ACE.h"
 #endif /* !ACE_ACE_H */
@@ -34,12 +32,6 @@ ACE_NS_WString::ACE_NS_WString (const ACE_WSTRING_TYPE *s,
 ACE_INLINE
 ACE_NS_WString::ACE_NS_WString (size_type len, ACE_Allocator *alloc)
   : ACE_WString (len, 0, alloc)
-{
-}
-
-ACE_INLINE
-ACE_NS_WString::ACE_NS_WString (const ACE_NS_WString &s)
-  : ACE_WString (s)
 {
 }
 
@@ -127,7 +119,6 @@ ACE_SString::operator== (const ACE_SString &s) const
 }
 
 // Less than comparison operator.
-
 ACE_INLINE bool
 ACE_SString::operator < (const ACE_SString &s) const
 {

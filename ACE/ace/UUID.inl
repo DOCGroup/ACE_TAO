@@ -30,12 +30,6 @@ namespace ACE_Utils
     ACE_OS::memcpy (&this->uuid_, &right.uuid_, BINARY_SIZE);
   }
 
-  ACE_INLINE
-  UUID::~UUID ()
-  {
-
-  }
-
   ACE_INLINE void
   UUID::init ()
   {

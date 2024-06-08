@@ -181,22 +181,16 @@ AST_UnionBranch::label_list_length ()
 void
 AST_UnionBranch::add_labels (AST_Union *u)
 {
+  const bool enum_labels = (u->udisc_type () == AST_Expression::EV_enum);
   for (UTL_LabellistActiveIterator i (this->pd_ll);
        !i.is_done ();
        i.next ())
     {
       if (AST_UnionLabel::UL_default == i.item ()->label_kind ())
         {
-          return;
+          continue;
         }
-    }
 
-  const bool enum_labels = (u->udisc_type () == AST_Expression::EV_enum);
-
-  for (UTL_LabellistActiveIterator i (this->pd_ll);
-       !i.is_done ();
-       i.next ())
-    {
       AST_Expression *ex = i.item ()->label_val ();
       UTL_ScopedName *n = ex->n ();
 
@@ -212,6 +206,12 @@ AST_UnionBranch::add_labels (AST_Union *u)
         {
           ex->ev ()->et = AST_Expression::EV_enum;
           AST_Enum *disc = dynamic_cast<AST_Enum*> (u->disc_type ());
+          if (disc == nullptr)
+            {
+              // this is strictly to mollycoddle the Coverity null pointer
+              // dereference check. The enum labels ensures consistency here.
+              return;
+            }
           AST_EnumVal *dval = disc->lookup_by_value (ex);
 
           if (dval == nullptr)

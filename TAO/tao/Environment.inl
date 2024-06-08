@@ -5,7 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 CORBA::Exception *
-CORBA::Environment::exception (void) const
+CORBA::Environment::exception () const
 {
   return this->exception_;
 }
@@ -14,23 +14,23 @@ ACE_INLINE
 CORBA::Environment *
 CORBA::Environment::_duplicate (CORBA::Environment *x)
 {
-  if (x == 0)
+  if (!x)
     {
-      return 0;
+      return nullptr;
     }
 
-  CORBA::Environment* ptr = 0;
+  CORBA::Environment* ptr = nullptr;
   ACE_NEW_RETURN (ptr,
                   CORBA::Environment (*x),
-                  0);
+                  nullptr);
   return ptr;
 }
 
 ACE_INLINE
 CORBA::Environment_ptr
-CORBA::Environment::_nil (void)
+CORBA::Environment::_nil ()
 {
-  return static_cast <CORBA::Environment_ptr> (0);
+  return nullptr;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

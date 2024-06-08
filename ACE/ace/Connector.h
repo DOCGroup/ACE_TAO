@@ -38,7 +38,7 @@ template <class SVC_HANDLER>
 class ACE_Connector_Base
 {
 public:
-  virtual ~ACE_Connector_Base (void) {}
+  virtual ~ACE_Connector_Base () = default;
 
   /// Initialize the Svc_Handler.
   virtual void initialize_svc_handler (ACE_HANDLE handle,
@@ -46,7 +46,7 @@ public:
 
   /// Return the handle set representing the non-blocking connects in
   /// progress.
-  virtual ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles (void) = 0;
+  virtual ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles () = 0;
 };
 
 /**
@@ -64,7 +64,7 @@ public:
                                    long timer_id);
 
   /// Destructor.
-  ~ACE_NonBlocking_Connect_Handler (void);
+  ~ACE_NonBlocking_Connect_Handler ();
 
   /// Close up and return underlying SVC_HANDLER through @c sh.
   /**
@@ -81,16 +81,16 @@ public:
   bool close (SVC_HANDLER *&sh);
 
   /// Get SVC_HANDLER.
-  SVC_HANDLER *svc_handler (void);
+  SVC_HANDLER *svc_handler ();
 
   /// Get handle.
-  ACE_HANDLE handle (void);
+  ACE_HANDLE handle ();
 
   /// Set handle.
   void handle (ACE_HANDLE);
 
   /// Get timer id.
-  long timer_id (void);
+  long timer_id ();
 
   /// Set timer id.
   void timer_id (long timer_id);
@@ -113,7 +113,7 @@ public:
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
 
   /// Should Reactor resume us if we have been suspended before the upcall?
-  virtual int resume_handler (void);
+  virtual int resume_handler ();
 
   /// Dump the state of an object.
   void dump () const;
@@ -191,7 +191,7 @@ public:
                     int flags = 0);
 
   /// Shutdown a connector and release resources.
-  virtual ~ACE_Connector (void);
+  virtual ~ACE_Connector ();
 
   // = Connection establishment methods.
 
@@ -260,10 +260,10 @@ public:
 
   /// Close down the Connector.  All pending non-blocking connects are
   /// canceled and the corresponding svc_handler is closed.
-  virtual int close (void);
+  virtual int close ();
 
   /// Return the underlying PEER_CONNECTOR object.
-  virtual PEER_CONNECTOR &connector (void) const;
+  virtual PEER_CONNECTOR &connector () const;
 
   /// Initialize Svc_Handler.
   virtual void initialize_svc_handler (ACE_HANDLE handle,
@@ -273,7 +273,7 @@ public:
   virtual void reactor (ACE_Reactor *reactor);
 
   /// Get Reactor.
-  virtual ACE_Reactor *reactor (void) const;
+  virtual ACE_Reactor *reactor () const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -348,7 +348,7 @@ protected:
 
   /// Return the handle set representing the non-blocking connects in
   /// progress.
-  ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles (void);
+  ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles ();
 
   // = Dynamic linking hooks.
   /// Default version does no work and returns -1.  Must be overloaded
@@ -356,7 +356,7 @@ protected:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Calls handle_close() to shutdown the Connector gracefully.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Default version returns address info in @a buf.
   virtual int info (ACE_TCHAR **strp, size_t length) const;
@@ -364,11 +364,11 @@ protected:
   // = Service management hooks.
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int suspend (void);
+  virtual int suspend ();
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int resume (void);
+  virtual int resume ();
 
 private:
   /// This is the peer connector factory.
@@ -387,7 +387,6 @@ private:
 
   /// Handle set representing the non-blocking connects in progress.
   ACE_Unbounded_Set<ACE_HANDLE> non_blocking_handles_;
-
 };
 
 /**
@@ -464,15 +463,15 @@ public:
                     int flags = 0);
 
   /// Shutdown a connector and release resources.
-  virtual ~ACE_Strategy_Connector (void);
+  virtual ~ACE_Strategy_Connector ();
 
   /// Close down the Connector
-  virtual int close (void);
+  virtual int close ();
 
   // = Strategies accessors
-  virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy (void) const;
-  virtual ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> *connect_strategy (void) const;
-  virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy (void) const;
+  virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy () const;
+  virtual ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> *connect_strategy () const;
+  virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -565,13 +564,7 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Connector.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Connector.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

@@ -4,7 +4,7 @@
 #include "ace/OS_NS_string.h"
 
 ACEXML_INLINE
-ACEXML_Attribute::ACEXML_Attribute (void)
+ACEXML_Attribute::ACEXML_Attribute ()
   : uri_ (0),
     localName_ (0),
     qName_ (0),
@@ -38,7 +38,7 @@ ACEXML_Attribute::ACEXML_Attribute (const ACEXML_Char *uri,
 }
 
 ACEXML_INLINE
-ACEXML_Attribute::~ACEXML_Attribute (void)
+ACEXML_Attribute::~ACEXML_Attribute ()
 {
   delete[] this->uri_;
   delete[] this->localName_;
@@ -48,7 +48,7 @@ ACEXML_Attribute::~ACEXML_Attribute (void)
 }
 
 ACEXML_INLINE const ACEXML_Char *
-ACEXML_Attribute::uri (void) const
+ACEXML_Attribute::uri () const
 {
   return this->uri_;
 }
@@ -61,7 +61,7 @@ ACEXML_Attribute::uri (const ACEXML_Char *uri)
 }
 
 ACEXML_INLINE const ACEXML_Char *
-ACEXML_Attribute::localName (void) const
+ACEXML_Attribute::localName () const
 {
   return this->localName_;
 }
@@ -74,7 +74,7 @@ ACEXML_Attribute::localName (const ACEXML_Char *localName)
 }
 
 ACEXML_INLINE const ACEXML_Char *
-ACEXML_Attribute::qName (void) const
+ACEXML_Attribute::qName () const
 {
   return this->qName_;
 }
@@ -87,7 +87,7 @@ ACEXML_Attribute::qName (const ACEXML_Char *qName)
 }
 
 ACEXML_INLINE const ACEXML_Char *
-ACEXML_Attribute::type (void) const
+ACEXML_Attribute::type () const
 {
   return this->type_;
 }
@@ -100,7 +100,7 @@ ACEXML_Attribute::type (const ACEXML_Char *type)
 }
 
 ACEXML_INLINE const ACEXML_Char *
-ACEXML_Attribute::value (void) const
+ACEXML_Attribute::value () const
 {
   return this->value_;
 }

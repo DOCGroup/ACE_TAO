@@ -9,7 +9,6 @@
 #include "ace/OS_NS_errno.h"
 
 
-
 TAO_Notify_ThreadPool_Consumer_Client::TAO_Notify_ThreadPool_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
   , consumer_ (0)
@@ -61,7 +60,7 @@ TAO_Notify_ThreadPool_Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-TAO_Notify_ThreadPool_Consumer_Client::_init (void)
+TAO_Notify_ThreadPool_Consumer_Client::_init ()
 {
   PortableServer::POAManager_var poa_manager =
     this->orb_objects_.root_poa_->the_POAManager ();
@@ -104,7 +103,7 @@ TAO_Notify_ThreadPool_Consumer_Client::_init (void)
 }
 
 PortableServer::POA_ptr
-TAO_Notify_ThreadPool_Consumer_Client::create_rt_poa (void)
+TAO_Notify_ThreadPool_Consumer_Client::create_rt_poa ()
 {
   PortableServer::POA_var rt_poa;
 
@@ -159,19 +158,19 @@ TAO_Notify_ThreadPool_Consumer_Client::create_rt_poa (void)
 }
 
 void
-TAO_Notify_ThreadPool_Consumer_Client::run (void)
+TAO_Notify_ThreadPool_Consumer_Client::run ()
 {
   this->consumer_->run ();
 }
 
 void
-TAO_Notify_ThreadPool_Consumer_Client::dump_stats (void)
+TAO_Notify_ThreadPool_Consumer_Client::dump_stats ()
 {
   this->consumer_->dump_throughput ();
 }
 
 int
-TAO_Notify_ThreadPool_Consumer_Client::svc (void)
+TAO_Notify_ThreadPool_Consumer_Client::svc ()
 {
   try
     {
@@ -185,7 +184,6 @@ TAO_Notify_ThreadPool_Consumer_Client::svc (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Supplier error "));
-
     }
 
   return 0;

@@ -24,7 +24,6 @@ module Messaging
   local interface RelativeRoundtripTimeoutPolicy : CORBA::Policy {
     readonly attribute TimeBase::TimeT relative_expiry;
   };
-
 };
 
 #endif /*TAO_MESSAGING_RT_POLICY_PIDL*/

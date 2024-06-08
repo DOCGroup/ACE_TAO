@@ -16,7 +16,7 @@ class TAO_TS_Export TimeStamp_Protocol_Object : public TAO_AV_Protocol_Object
   TimeStamp_Protocol_Object (TAO_AV_Callback *callback,
                              TAO_AV_Transport *transport);
 
-  virtual int handle_input (void);
+  virtual int handle_input ();
 
   /// send a data frame.
   virtual int send_frame (ACE_Message_Block *frame,
@@ -30,7 +30,7 @@ class TAO_TS_Export TimeStamp_Protocol_Object : public TAO_AV_Protocol_Object
                           size_t len);
 
   /// end the stream.
-  virtual int destroy (void);
+  virtual int destroy ();
 
  private:
   /// Pre-allocated memory to receive the data...
@@ -41,8 +41,8 @@ class TAO_TS_Export TimeStamp_Protocol_Factory : public TAO_AV_Flow_Protocol_Fac
 {
  public:
   /// Initialization hook.
-  TimeStamp_Protocol_Factory (void);
-  virtual ~TimeStamp_Protocol_Factory (void);
+  TimeStamp_Protocol_Factory ();
+  virtual ~TimeStamp_Protocol_Factory ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *flow_string);
   // Note : Some platforms still don't support Covariant returns

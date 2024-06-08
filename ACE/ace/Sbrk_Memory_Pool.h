@@ -54,7 +54,7 @@ public:
   ACE_Sbrk_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                         const OPTIONS *options = 0);
 
-  virtual ~ACE_Sbrk_Memory_Pool (void);
+  virtual ~ACE_Sbrk_Memory_Pool ();
 
   // = Implementor operations.
   /// Ask system for initial chunk of local memory.
@@ -97,7 +97,7 @@ public:
 
   /// Return the base address of this memory pool, 0 if base_addr
   /// never changes.
-  virtual void *base_addr (void) const;
+  virtual void *base_addr () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

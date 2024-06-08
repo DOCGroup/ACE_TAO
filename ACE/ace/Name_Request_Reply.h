@@ -67,7 +67,7 @@ public:
   };
 
   /// Default constructor.
-  ACE_Name_Request (void);
+  ACE_Name_Request ();
 
   /// Create a ACE_Name_Request message.
   ACE_Name_Request (ACE_INT32 msg_type, // Type of request.
@@ -81,53 +81,53 @@ public:
 
   /// Initialize length_ in order to ensure correct byte ordering
   /// before a request is sent.
-  void init (void);
+  void init ();
 
   // = Set/get the length of the encoded/decoded message.
-  ACE_UINT32 length (void) const;
+  ACE_UINT32 length () const;
   void length (ACE_UINT32);
 
   // = Set/get the type of the message.
-  ACE_INT32 msg_type (void) const;
+  ACE_INT32 msg_type () const;
   void msg_type (ACE_INT32);
 
   // = Set/get the blocking semantics.
-  ACE_UINT32 block_forever (void) const;
+  ACE_UINT32 block_forever () const;
   void block_forever (ACE_UINT32);
 
   // = Set/get the timeout.
-  ACE_Time_Value timeout (void) const;
+  ACE_Time_Value timeout () const;
   void timeout (const ACE_Time_Value timeout);
 
   // = Set/get the name
-  const ACE_WCHAR_T *name (void) const;
+  const ACE_WCHAR_T *name () const;
   void name (const ACE_WCHAR_T *);
 
   // = Set/get the value
-  const ACE_WCHAR_T *value (void) const;
+  const ACE_WCHAR_T *value () const;
   void value (const ACE_WCHAR_T *);
 
   // = Set/get the type
-  const char *type (void) const;
+  const char *type () const;
   void type (const char *);
 
   // = Set/get the len of name
-  ACE_UINT32 name_len (void) const;
+  ACE_UINT32 name_len () const;
   void name_len (ACE_UINT32);
 
   // = Set/get the len of value
-  ACE_UINT32 value_len (void) const;
+  ACE_UINT32 value_len () const;
   void value_len (ACE_UINT32);
 
   // = Set/get the len of type
-  ACE_UINT32 type_len (void) const;
+  ACE_UINT32 type_len () const;
   void type_len (ACE_UINT32);
 
   /// Encode the message before transmission.
   int encode (void *&);
 
   /// Decode message after reception.
-  int decode (void);
+  int decode ();
 
   /// Print out the values of the message for debugging purposes.
   void dump () const;
@@ -201,36 +201,36 @@ public:
   };
 
   /// Default constructor.
-  ACE_Name_Reply (void);
+  ACE_Name_Reply ();
 
   /// Create a ACE_Name_Reply message.
   ACE_Name_Reply (ACE_UINT32 type, ACE_UINT32 err); // Type of reply.
 
   /// Initialize length_ in order to ensure correct byte ordering
   /// before a reply is sent.
-  void init (void);
+  void init ();
 
   // = Set/get the length of the encoded/decoded message.
-  ACE_UINT32 length (void) const;
+  ACE_UINT32 length () const;
   void length (ACE_UINT32);
 
   // = Set/get the type of the message.
-  ACE_INT32 msg_type (void) const;
+  ACE_INT32 msg_type () const;
   void msg_type (ACE_INT32);
 
   // = Set/get the status of the reply (0 == success, -1 == failure).
-  ACE_INT32 status (void) const;
+  ACE_INT32 status () const;
   void status (ACE_INT32);
 
   // = Set/get the errno of a failed reply.
-  ACE_UINT32 errnum (void) const;
+  ACE_UINT32 errnum () const;
   void errnum (ACE_UINT32);
 
   /// Encode the message before transfer.
   int encode (void *&);
 
   /// Decode a message after reception.
-  int decode (void);
+  int decode ();
 
   /// Print out the values of the message for debugging purposes.
   void dump () const;

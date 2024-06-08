@@ -29,12 +29,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-Basic::Basic (void)
+Basic::Basic ()
 {
   // No-Op.
 }
 
-Basic::~Basic (void)
+Basic::~Basic ()
 {
   // No-Op.
 }
@@ -69,7 +69,7 @@ Basic::init_ORB  (int argc, ACE_TCHAR *argv [])
 }
 
 void
-Basic::init_CosEC (void)
+Basic::init_CosEC ()
 {
   CosEC_ServantBase *ec = 0;
 
@@ -97,7 +97,7 @@ Basic::init_CosEC (void)
 }
 
 void
-Basic::run (void)
+Basic::run ()
 {
   // Create an Any type to pass to the Cos EC.
   CORBA::Any any;
@@ -124,7 +124,7 @@ Basic::run (void)
 }
 
 void
-Basic::shutdown (void)
+Basic::shutdown ()
 {
   this->supplier_.close ();
 

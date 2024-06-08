@@ -8,17 +8,12 @@
  *  or project specific include files that are used frequently, but
  *  are changed infrequently
  *
- *  @author Steve Huston <shuston@cs.wustl.edu>
+ *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================
 
-
 #ifndef AFX_STDAFX_H__64FDCA02_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_
 #define AFX_STDAFX_H__64FDCA02_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_
-
-#if _MSC_VER >= 1000
-#pragma once
-#endif // _MSC_VER >= 1000
 
 // Exclude rarely-used stuff from Windows headers
 #define VC_EXTRALEAN

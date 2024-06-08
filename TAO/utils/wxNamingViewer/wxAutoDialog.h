@@ -3,15 +3,14 @@
 #ifndef i_wxAutoDialog_h
 #define i_wxAutoDialog_h
 
-
 template <class D>
 class WxAutoDialog
 {
 public:
-  explicit WxAutoDialog( D* dialog) throw():dialog( dialog) {}
-  ~WxAutoDialog() throw() { dialog->Destroy(); }
+  explicit WxAutoDialog( D* dialog) noexcept:dialog( dialog) {}
+  ~WxAutoDialog() noexcept { dialog->Destroy(); }
 
-  D* operator->() const throw() { return dialog; }
+  D* operator->() const noexcept { return dialog; }
 
 protected:
   D* dialog;

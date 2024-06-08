@@ -8,8 +8,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Process_Mutex.h"
 
-
-
 #if defined (ACE_HAS_THREADS)
 
 static sig_atomic_t done;

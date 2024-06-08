@@ -18,7 +18,7 @@ FOO_ClientRequestInterceptor::name ()
 }
 
 void
-FOO_ClientRequestInterceptor::destroy (void)
+FOO_ClientRequestInterceptor::destroy ()
 {
 }
 

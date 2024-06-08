@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/ACE.h"
@@ -25,11 +24,9 @@
 #include "ace/Future_Set.h"
 #include "ace/Method_Request.h"
 #include "ace/Activation_Queue.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Atomic_Op.h"
 #include "ace/Null_Mutex.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -281,7 +278,7 @@ Prime_Scheduler::svc ()
 {
   for (;;)
     {
-      // Dequeue the next method request (we use an auto pointer in
+      // Dequeue the next method request (we use an unique pointer in
       // case an exception is thrown in the <call>).
       std::unique_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
 

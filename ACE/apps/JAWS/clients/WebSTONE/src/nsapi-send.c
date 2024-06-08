@@ -72,11 +72,7 @@ int nsapi_send(pblock *pb, Session *sn, Request *rq)
     maxindex = sizeof(HEADERS) + filesize;
     for (index=sizeof(HEADERS); index < (maxindex); index++)
         /* generate random characters from A-Z */
-#ifdef IRIX
-        buffer[index] = rand_r() % 26 + 63;
-#else
         buffer[index] = rand() %26 + 63;
-#endif
 
     /* Send the output */
     if (net_write(sn->csd, buffer, sizeof(HEADERS)-1+filesize, 0) == IO_ERROR)

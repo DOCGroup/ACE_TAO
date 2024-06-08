@@ -63,10 +63,10 @@ public:
    * cooperative termination protocol in the destructor of the derived
    * class.
    */
-  ~Task_Activator (void);
+  ~Task_Activator ();
 
   /// Release the task, do not terminate it
-  void release (void);
+  void release ();
 
 protected:
   Task *task_;
@@ -76,8 +76,6 @@ protected:
 #include "Task_Activator.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Task_Activator.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_PERF_RTEC_TASK_ACTIVATOR_H */

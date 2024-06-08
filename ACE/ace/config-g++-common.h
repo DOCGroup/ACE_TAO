@@ -14,27 +14,25 @@
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 #define ACE_CC_BETA_VERSION (0)
 
-#define ACE_HAS_CPLUSPLUS_HEADERS
-#define ACE_HAS_STDCPP_STL_INCLUDES
-#define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#define ACE_TEMPLATES_REQUIRE_SOURCE
-#define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
-#define ACE_NEW_THROWS_EXCEPTIONS
-#define ACE_HAS_NEW_NOTHROW
-
-#if __cplusplus >= 201103L
-# define ACE_HAS_CPP11
+#if __cplusplus >= 202002L
+# define ACE_HAS_CPP20
+#endif
+#if __cplusplus >= 201703L
+# define ACE_HAS_CPP17
+# define ACE_FALLTHROUGH [[fallthrough]]
 #endif
 #if __cplusplus >= 201402L
 # define ACE_HAS_CPP14
 #endif
-#if __cplusplus >= 201703L
-# define ACE_HAS_CPP17
-#endif
-#if __cplusplus >= 202002L
-# define ACE_HAS_CPP20
+#if __cplusplus >= 201103L
+# define ACE_HAS_CPP11
+# if !defined (ACE_FALLTHROUGH)
+#  if __GNUC__ >= 7
+#   define ACE_FALLTHROUGH [[gnu::fallthrough]]
+#  else
+#   define ACE_FALLTHROUGH
+#  endif
+# endif
 #endif
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
@@ -62,10 +60,6 @@
 #define ACE_HAS_GCC_DESTRUCTOR_ATTRIBUTE 1
 #endif
 
-#if !defined (ACE_HAS_GCC_DEPRECATED_ATTRIBUTE)
-#define ACE_HAS_GCC_DEPRECATED_ATTRIBUTE 1
-#endif
-
 #if !defined (ACE_HAS_GCC_FORMAT_ATTRIBUTE)
 #define ACE_HAS_GCC_FORMAT_ATTRIBUTE 1
 #endif
@@ -78,10 +72,6 @@
 # define ACE_GCC_DESTRUCTOR_ATTRIBUTE __attribute__ ((destructor))
 #endif
 
-#if (ACE_HAS_GCC_DEPRECATED_ATTRIBUTE == 1)
-#define ACE_DEPRECATED __attribute__ ((deprecated))
-#endif
-
 #if (ACE_HAS_GCC_FORMAT_ATTRIBUTE == 1)
 # define ACE_GCC_FORMAT_ATTRIBUTE(TYPE, STR_INDEX, FIRST_INDEX) \
    __attribute__ ((format (TYPE, STR_INDEX, FIRST_INDEX)))
@@ -89,7 +79,7 @@
 
 // Take advantage of g++ visibility attributes to generate
 // improved shared library binaries.
-#if !defined (__MINGW32__) && !defined (ACE_HAS_CEGCC)
+#if !defined (__MINGW32__)
 
 # if defined (ACE_HAS_CUSTOM_EXPORT_MACROS) && ACE_HAS_CUSTOM_EXPORT_MACROS == 0
 #  undef ACE_HAS_CUSTOM_EXPORT_MACROS
@@ -133,7 +123,7 @@
 # define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
 
 # endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
-#endif  /* !__MINGW32__ && !ACE_HAS_CEGCC */
+#endif  /* !__MINGW32__ */
 
 #if defined (ACE_HAS_THREADS)
 # if defined (__powerpc__)

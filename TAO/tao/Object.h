@@ -32,12 +32,6 @@
 #include "tao/Any_Insert_Policy_T.h"
 #include <atomic>
 
-#if defined (HPUX) && defined (IOR)
-   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
-      and we don't want that definition.  See IOP_IORC.h. */
-# undef IOR
-#endif /* HPUX && IOR */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Stub;
@@ -342,9 +336,8 @@ namespace CORBA
     std::atomic<uint32_t> refcount_;
 
   private:
-    // = Unimplemented methods
-    ACE_UNIMPLEMENTED_FUNC (Object (const Object &))
-    ACE_UNIMPLEMENTED_FUNC (Object &operator = (const Object &))
+    Object (const Object &) = delete;
+    Object &operator = (const Object &) = delete;
 
   private:
     /// Specify whether this is a local object or not.

@@ -20,7 +20,6 @@
 #include "ace/Null_Mutex.h"
 
 
-
 static const size_t STRING_TABLE_ENTRIES = 3 * 2;
 static const size_t MAX_HASH = 6;
 

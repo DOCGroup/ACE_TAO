@@ -1487,7 +1487,6 @@ be_visitor_ccm_pre_proc::lookup_one_exception (const char *name,
 int
 be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
 {
-
   UTL_Scope *s = node->defined_in ();
 
   UTL_ScopedName *consumer_name =
@@ -1799,7 +1798,6 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
                       UTL_NameList (full_name,
                                     nullptr),
                       nullptr);
-
     }
   else
     {

@@ -885,12 +885,11 @@ protected:
   static bool delete_reactor_;
 
   /// Deny access since member-wise won't work...
-  ACE_Reactor (const ACE_Reactor &);
-  ACE_Reactor &operator = (const ACE_Reactor &);
+  ACE_Reactor (const ACE_Reactor &) = delete;
+  ACE_Reactor &operator = (const ACE_Reactor &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 #include "ace/Reactor.inl"

@@ -7,7 +7,6 @@
 #include "tao/Array_VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T, typename T_slice, typename TAG>

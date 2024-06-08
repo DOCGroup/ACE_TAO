@@ -15,7 +15,7 @@
 #include "Fill_ACE_QoS.h"
 
 // Constructor.
-Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (void)
+Sender_QoS_Event_Handler::Sender_QoS_Event_Handler ()
 {
 }
 
@@ -29,7 +29,7 @@ Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_Q
 }
 
 // Destructor.
-Sender_QoS_Event_Handler::~Sender_QoS_Event_Handler (void)
+Sender_QoS_Event_Handler::~Sender_QoS_Event_Handler ()
 {
 }
 
@@ -37,7 +37,7 @@ Sender_QoS_Event_Handler::~Sender_QoS_Event_Handler (void)
 // internally by the reactor.
 
 ACE_HANDLE
-Sender_QoS_Event_Handler::get_handle (void) const
+Sender_QoS_Event_Handler::get_handle () const
 {
   return this->dgram_mcast_qos_.get_handle ();
 }

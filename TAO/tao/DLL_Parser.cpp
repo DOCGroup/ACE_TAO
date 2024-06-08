@@ -16,11 +16,6 @@ static const char dll_prefix[] = "DLL:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DLL_Parser::~TAO_DLL_Parser ()
-{
-}
-
-
 bool
 TAO_DLL_Parser::match_prefix (const char *ior_string) const
 {

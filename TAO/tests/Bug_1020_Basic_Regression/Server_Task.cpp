@@ -1,19 +1,15 @@
 #include "Server_Task.h"
 
-Server_Task::Server_Task (Test::Echo_ptr echo,
-                          size_t sz)
-  : echo_ (Test::Echo::_duplicate (echo)),
-    sz_ (sz)
-
+Server_Task::Server_Task (Test::Echo_ptr echo)
+  : echo_ (Test::Echo::_duplicate (echo))
 {
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
   Test::Payload payload (32768);
   payload.length (32768);
-
 
   try
     {

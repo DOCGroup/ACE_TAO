@@ -109,7 +109,7 @@ public:
   typedef void (*PTVF) (void *);
 
   /// Null constructor.
-  ACE_TPQ_Entry (void);
+  ACE_TPQ_Entry ();
 
   /// Constructor.
   ACE_TPQ_Entry (const ACE_Token_Proxy *proxy,
@@ -119,25 +119,25 @@ public:
   ACE_TPQ_Entry (const ACE_TPQ_Entry &rhs);
 
   /// Destructor.
-  ~ACE_TPQ_Entry (void);
+  ~ACE_TPQ_Entry ();
 
   /// Copy operator use by the queue.
   void operator= (const ACE_TPQ_Entry &rhs);
 
   /// Get top of the queue.
-  ACE_Token_Proxy *proxy (void) const;
+  ACE_Token_Proxy *proxy () const;
 
   /// Set top of the queue.
   void proxy (ACE_Token_Proxy *);
 
   /// Get nesting level of the entry.
-  int nesting_level (void) const;
+  int nesting_level () const;
 
   /// Delta nesting level of the entry.
   void nesting_level (int delta);
 
   /// Get client_id of the entry.
-  const ACE_TCHAR *client_id (void) const;
+  const ACE_TCHAR *client_id () const;
 
   /// Set client_id of the entry.
   void client_id (const ACE_TCHAR *);
@@ -152,10 +152,10 @@ public:
   void sleep_hook (void (*sh)(void *));
 
   /// Get sleep hook of the entry.
-  PTVF sleep_hook (void) const;
+  PTVF sleep_hook () const;
 
   /// Call the sleep hook function or method passing arg.
-  void call_sleep_hook (void);
+  void call_sleep_hook ();
 
   /// Dump the state of the class.
   void dump () const;
@@ -168,7 +168,7 @@ public:
   ACE_TPQ_Entry *next_;
 
   /// Get whether this client is blocked waiting for a token.
-  int waiting (void) const;
+  int waiting () const;
 
   /// Set whether this client is blocked waiting for a token.
   void waiting (int w);
@@ -216,28 +216,27 @@ public:
                      const ACE_TCHAR *client_id);
 
   /// Destructor.
-  virtual ~ACE_TSS_TPQ_Entry (void);
+  virtual ~ACE_TSS_TPQ_Entry () = default;
 
   /// Allows us to pass args to the construction of the TSS object.
-  virtual ACE_TPQ_Entry *make_TSS_TYPE (void) const;
+  virtual ACE_TPQ_Entry *make_TSS_TYPE () const;
 
   /// Operator overloading and inheritance don't mix.
-  operator ACE_TPQ_Entry *(void);
+  operator ACE_TPQ_Entry *();
 
   /// Dump the state of the class.
   void dump () const;
 
 #if defined (ACE_NO_TSS_TOKENS)
-  ACE_TPQ_Entry *operator-> (void)
+  ACE_TPQ_Entry *operator-> ()
     {
       return (ACE_TPQ_Entry *) this;
     }
 #endif /* ACE_NO_TSS_TOKENS */
 
 private:
-  /// Private: should not be used
-  ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &);
-  void operator= (const ACE_TSS_TPQ_Entry &);
+  ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &) = delete;
+  void operator= (const ACE_TSS_TPQ_Entry &) = delete;
 
   // = These are passed to the constructor of ACE_TPQ_Entry in
   // make_TSS_TYPE
@@ -266,16 +265,16 @@ public:
   ACE_TPQ_Iterator (ACE_Token_Proxy_Queue &q);
 
   /// Destructor.
-  ~ACE_TPQ_Iterator (void);
+  ~ACE_TPQ_Iterator () = default;
 
   /// Pass back the @a next_item.
   int next (ACE_TPQ_Entry *&next_item);
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Move forward by one element in the queue.
-  void advance (void);
+  void advance ();
 
   /// Dump the state of an object.
   void dump () const;
@@ -305,10 +304,10 @@ public:
   friend class ACE_TPQ_Iterator;
 
   /// Constructor.
-  ACE_Token_Proxy_Queue (void);
+  ACE_Token_Proxy_Queue ();
 
   /// Destructor.
-  ~ACE_Token_Proxy_Queue (void);
+  ~ACE_Token_Proxy_Queue () = default;
 
   /**
    * Enqueue a proxy, nesting level, client_id, and a magic cookie at
@@ -319,19 +318,19 @@ public:
                 int position);
 
   /// Top of the queue.
-  const ACE_TPQ_Entry* head (void);
+  const ACE_TPQ_Entry* head ();
 
 //  int member (const ACE_TCHAR *id);
   // Is this id in the waiter list?
 
   /// Remove the top waiter.
-  void dequeue (void);
+  void dequeue ();
 
   /// Remove the waiter whose proxy ref matches @a remove_me.
   void remove (const ACE_TPQ_Entry *remove_me);
 
   /// The number of waiters.
-  int size (void);
+  int size ();
 
   /// Dump the state of the class.
   void dump () const;
@@ -369,12 +368,11 @@ protected:
 class ACE_Export ACE_Tokens
 {
 public:
-
   /// Null constructor.
-  ACE_Tokens (void);
+  ACE_Tokens ();
 
   /// Destructor
-  virtual ~ACE_Tokens (void);
+  virtual ~ACE_Tokens () = default;
 
   /// No implementation.
   virtual int acquire (ACE_TPQ_Entry *caller,
@@ -414,22 +412,22 @@ public:
   virtual int is_owner (const ACE_TCHAR *id) = 0;
 
   /// Return the queue of waiters.
-  virtual ACE_Token_Proxy_Queue *waiters (void);
+  virtual ACE_Token_Proxy_Queue *waiters ();
 
   /// Return the number of proxies that are currently waiting to get
   /// the token.
-  virtual int no_of_waiters (void);
+  virtual int no_of_waiters ();
 
   /// The current owner.
-  const ACE_TCHAR *owner_id (void);
+  const ACE_TCHAR *owner_id ();
 
   /// Token name.
-  const ACE_TCHAR* name (void);
+  const ACE_TCHAR* name ();
 
   // = Reference counting.  These are only called by the
   // Token_Manager.
-  void inc_reference (void);
-  int dec_reference (void);
+  void inc_reference ();
+  int dec_reference ();
 
   /// Dump the state of the class.
   void dump () const;
@@ -446,7 +444,7 @@ public:
    * ACE_Token_Request so that the type of a token can be sent to a
    * remote Token Server.
    */
-  virtual int type (void) const = 0;
+  virtual int type () const = 0;
 
   // = The following methods allow the deadlock detection algorithm to
   // check if this token has been visited.
@@ -455,13 +453,12 @@ public:
   void visit (int v);
 
   /// Check if the token has been visited.
-  int visited (void);
+  int visited ();
 
   /// All the data of the current owner.
-  ACE_TPQ_Entry *owner (void);
+  ACE_TPQ_Entry *owner ();
 
 protected:
-
   /// For the deadlock detection algorithm.
   int visited_;
 
@@ -500,7 +497,7 @@ public:
   explicit ACE_Mutex_Token (const ACE_TCHAR* name);
 
   /// Destructor
-  virtual ~ACE_Mutex_Token (void);
+  virtual ~ACE_Mutex_Token ();
 
   // = Synchronization operations.
   // With acquire, renew, and release, the caller must be specified so
@@ -555,7 +552,7 @@ public:
   void dump () const;
 
   /// Returns ACE_Tokens::MUTEX.
-  virtual int type (void) const;
+  virtual int type () const;
 
   /// Returns a stack of the current owners.  Returns -1 on error, 0 on
   /// success.  If @a id is non-zero, returns 1 if id is an owner.
@@ -595,7 +592,7 @@ public:
   explicit ACE_RW_Token (const ACE_TCHAR* name);
 
   /// Destructor.
-  virtual ~ACE_RW_Token (void);
+  virtual ~ACE_RW_Token ();
 
   // = Synchronization operations.
   // With acquire, renew, and release, the caller must be specified so
@@ -653,7 +650,7 @@ public:
   enum PROXY_TYPE { READER, WRITER };
 
   /// Returns READER or WRITER.
-  virtual int type (void) const;
+  virtual int type () const;
 
   /// Returns a stack of the current owners.  Returns -1 on error, 0 on
   /// success.  If @a id is non-zero, returns 1 if id is an owner.
@@ -698,7 +695,7 @@ public:
   ACE_Token_Name (const ACE_Token_Name &rhs);
 
   /// Destructor.
-  virtual ~ACE_Token_Name (void);
+  virtual ~ACE_Token_Name ();
 
   /// Copy.
   void operator= (const ACE_Token_Name &rhs);
@@ -707,7 +704,7 @@ public:
   bool operator== (const ACE_Token_Name &rhs) const;
 
   /// Get the token name.
-  const ACE_TCHAR *name (void) const;
+  const ACE_TCHAR *name () const;
 
   /// Set the token name.
   void name (const ACE_TCHAR *new_name);
@@ -754,10 +751,10 @@ public:
 
   // Initialization and termination methods.
   /// Construction.
-  ACE_Token_Proxy (void);
+  ACE_Token_Proxy ();
 
   /// Destructor.
-  virtual ~ACE_Token_Proxy (void);
+  virtual ~ACE_Token_Proxy ();
 
   /**
    * Open the <ACE_Token>.
@@ -825,7 +822,7 @@ public:
 
   /// Get the client id of the proxy.  This is implemented as
   /// thread-specific data.
-  virtual const ACE_TCHAR *client_id (void) const;
+  virtual const ACE_TCHAR *client_id () const;
 
   /**
    * Set the client_id for the calling thread.  I strongly recommend
@@ -842,24 +839,24 @@ public:
    * So, for instance, the token within the reactor should probably be
    * called "Reactor Token."
    */
-  virtual const ACE_TCHAR *name (void) const;
+  virtual const ACE_TCHAR *name () const;
 
   /**
    * This should really be called <someone_waiting>.  This is called
    * by ACE_Token_xx's when another proxy enters the waiting list and
    * requests that the current token holder be notified.
    */
-  virtual void sleep_hook (void);
+  virtual void sleep_hook ();
 
   /// This is called when a queued (waiting) proxy is removed from the
   /// waiters list and given the token.
   virtual void token_acquired (ACE_TPQ_Entry *);
 
   /// The client id of the current token holder
-  virtual const ACE_TCHAR *owner_id (void);
+  virtual const ACE_TCHAR *owner_id ();
 
   /// Return a dynamically allocated clone of the derived class.
-  virtual ACE_Token_Proxy *clone (void) const = 0;
+  virtual ACE_Token_Proxy *clone () const = 0;
 
   /// Dump the state of the class.
   void dump () const;
@@ -870,7 +867,7 @@ public:
    * should return a different type value than a Writer proxy.  The
    * default implementation returns 0.
    */
-  virtual int type (void) const;
+  virtual int type () const;
 
 protected:
   /// Duplication.
@@ -907,14 +904,11 @@ protected:
 class ACE_Export ACE_Null_Token : public ACE_Token_Proxy
 {
 public:
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-  // @@ Hopefully, we can remove this ridicules ifdef when CE's compiler becomes more normal.
   /// Construction.
-  ACE_Null_Token (void);
+  ACE_Null_Token () = default;
 
   /// Destructor.
-  ~ACE_Null_Token (void);
-#endif /* ACE_LACKS_INLINE_FUNCTION */
+  ~ACE_Null_Token () = default;
 
   /// Acquire.
   virtual int acquire (int /* notify */ = 0,
@@ -939,7 +933,7 @@ public:
                       ACE_Synch_Options::defaults) { return 0; }
 
   /// Return a dynamically allocated clone of the derived class.
-  virtual ACE_Token_Proxy *clone (void) const { return new ACE_Null_Token; }
+  virtual ACE_Token_Proxy *clone () const { return new ACE_Null_Token; }
 
   /// Dump the state of the class.
   void dump () const;
@@ -981,13 +975,13 @@ public:
                    int debug = 0);
 
   /// Destructor
-  ~ACE_Local_Mutex (void);
+  ~ACE_Local_Mutex ();
 
   /// Dump the state of the class.
   void dump () const;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone (void) const;
+  virtual ACE_Token_Proxy *clone () const;
 
 protected:
   /// Return a new ACE_Local_Mutex.
@@ -1033,16 +1027,16 @@ public:
                    int debug = 0);
 
   /// Destructor
-  ~ACE_Local_RLock (void);
+  ~ACE_Local_RLock ();
 
   /// Dump the state of the class.
   void dump () const;
 
   /// Returns ACE_RW_Token::RLOCK.
-  virtual int type (void) const;
+  virtual int type () const;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone (void) const;
+  virtual ACE_Token_Proxy *clone () const;
 
 protected:
   /// Return a new ACE_Local_Mutex.
@@ -1088,16 +1082,16 @@ public:
                    int debug = 0);
 
   /// Destructor
-  ~ACE_Local_WLock (void);
+  ~ACE_Local_WLock ();
 
   /// Dump the state of the class.
   void dump () const;
 
   /// Returns ACE_RW_Token::WLOCK.
-  virtual int type (void) const;
+  virtual int type () const;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone (void) const;
+  virtual ACE_Token_Proxy *clone () const;
 
 protected:
   /// Return a new ACE_Local_Mutex.

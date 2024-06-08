@@ -51,8 +51,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the return type mapping. Return type is simply void.
   *os << be_nl_2
@@ -190,7 +189,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   ACE_CString::size_type len = opname.length ();
 
   *os << be_nl_2
-      << "TAO::Asynch_Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
+      << "TAO::Asynch_Invocation_Adapter _invocation_call (" << be_idt << be_idt_nl
       << "this," << be_nl
       << "_the_tao_operation_signature," << be_nl
       << nargs << "," << be_nl
@@ -218,7 +217,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       << ");" << be_uidt;
 
   *os << be_nl_2
-      << "_tao_call.invoke (" << be_idt << be_idt_nl
+      << "_invocation_call.invoke (" << be_idt << be_idt_nl
       << "ami_handler," << be_nl
       << "&";
 

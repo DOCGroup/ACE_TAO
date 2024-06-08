@@ -78,7 +78,6 @@ namespace ACE
   {
     typedef Tb result_type;
   };
-
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

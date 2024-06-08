@@ -162,6 +162,30 @@ ACE_OutputCDR::from_std_wstring::from_std_wstring (const std::wstring &ws,
 #endif
 
 ACE_INLINE
+ACE_InputCDR::to_int8::to_int8 (ACE_CDR::Int8 &ref)
+  : ref_ (ref)
+{
+}
+
+ACE_INLINE
+ACE_OutputCDR::from_int8::from_int8 (ACE_CDR::Int8 val)
+  : val_ (val)
+{
+}
+
+ACE_INLINE
+ACE_InputCDR::to_uint8::to_uint8 (ACE_CDR::UInt8 &ref)
+  : ref_ (ref)
+{
+}
+
+ACE_INLINE
+ACE_OutputCDR::from_uint8::from_uint8 (ACE_CDR::UInt8 val)
+  : val_ (val)
+{
+}
+
+ACE_INLINE
 ACE_InputCDR::Transfer_Contents::Transfer_Contents (ACE_InputCDR &rhs)
   :  rhs_ (rhs)
 {
@@ -356,6 +380,18 @@ ACE_OutputCDR::write_wstring (const std::wstring &x)
 #endif
 
 ACE_INLINE ACE_CDR::Boolean
+ACE_OutputCDR::write_int8 (ACE_CDR::Int8 x)
+{
+  return this->write_1 (reinterpret_cast<ACE_CDR::Octet *> (&x));
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_OutputCDR::write_uint8 (ACE_CDR::UInt8 x)
+{
+  return this->write_1 (reinterpret_cast<ACE_CDR::Octet *> (&x));
+}
+
+ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_char_array (const ACE_CDR::Char *x,
                                  ACE_CDR::ULong length)
 {
@@ -377,7 +413,7 @@ ACE_OutputCDR::write_wchar_array (const ACE_CDR::WChar* x,
   if (ACE_OutputCDR::wchar_maxbytes_ == 0)
     {
       errno = EACCES;
-      return (ACE_CDR::Boolean) (this->good_bit_ = false);
+      return (this->good_bit_ = false);
     }
 
   if (ACE_OutputCDR::wchar_maxbytes_ == sizeof (ACE_CDR::WChar))
@@ -489,6 +525,18 @@ ACE_OutputCDR::write_longdouble_array (const ACE_CDR::LongDouble* x,
                             ACE_CDR::LONGDOUBLE_SIZE,
                             ACE_CDR::LONGDOUBLE_ALIGN,
                             length);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_OutputCDR::write_int8_array (const ACE_CDR::Int8 *x, ACE_CDR::ULong length)
+{
+  return write_array (x, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN, length);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_OutputCDR::write_uint8_array (const ACE_CDR::UInt8 *x, ACE_CDR::ULong length)
+{
+  return write_array (x, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN, length);
 }
 
 ACE_INLINE bool
@@ -694,7 +742,7 @@ ACE_InputCDR::read_boolean (ACE_CDR::Boolean& x)
   ACE_CDR::Octet tmp = 0;
   (void) this->read_octet (tmp);
   x = tmp ? true : false;
-  return (ACE_CDR::Boolean) this->good_bit_;
+  return this->good_bit_;
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -789,6 +837,18 @@ ACE_InputCDR::read_fixed (ACE_CDR::Fixed &x)
     }
 
   return false;
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_InputCDR::read_int8 (ACE_CDR::Int8 &x)
+{
+  return read_1 (reinterpret_cast<ACE_CDR::Octet *>(&x));
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_InputCDR::read_uint8 (ACE_CDR::UInt8 &x)
+{
+  return read_1 (reinterpret_cast<ACE_CDR::Octet *>(&x));
 }
 
 ACE_INLINE size_t
@@ -1022,6 +1082,30 @@ ACE_InputCDR::read_longdouble_array (ACE_CDR::LongDouble* x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
+ACE_InputCDR::read_int8_array (ACE_CDR::Int8 *x, ACE_CDR::ULong length)
+{
+  if (length * ACE_CDR::OCTET_SIZE > this->length ())
+    {
+      this->good_bit_ = false;
+      return false;
+    }
+
+  return read_array (x, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN, length);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_InputCDR::read_uint8_array (ACE_CDR::UInt8 *x, ACE_CDR::ULong length)
+{
+  if (length * ACE_CDR::OCTET_SIZE > this->length ())
+    {
+      this->good_bit_ = false;
+      return false;
+    }
+
+  return read_array (x, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN, length);
+}
+
+ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::skip_octet ()
 {
   ACE_CDR::Octet x;
@@ -1187,114 +1271,110 @@ ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_CDR::Char x)
 {
   os.write_char (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_CDR::Short x)
 {
   os.write_short (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_CDR::UShort x)
 {
   os.write_ushort (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_CDR::Long x)
 {
   os.write_long (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_CDR::ULong x)
 {
   os.write_ulong (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_CDR::LongLong x)
 {
   os.write_longlong (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_CDR::ULongLong x)
 {
   os.write_ulonglong (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_CDR::LongDouble x)
 {
   os.write_longdouble (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_CDR::Float x)
 {
   os.write_float (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_CDR::Double x)
 {
   os.write_double (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, const ACE_CDR::Fixed &x)
 {
   os.write_fixed (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, const ACE_CDR::Char *x)
 {
   os.write_string (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, const ACE_CDR::WChar *x)
 {
   os.write_wstring (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_std_string x)
 {
-  ACE_CDR::ULong const len =
-      static_cast<ACE_CDR::ULong> (x.val_.size ());
+  ACE_CDR::ULong const len = static_cast<ACE_CDR::ULong> (x.val_.size ());
 
   os.write_string (len, x.val_.c_str ());
-  return
-    (ACE_CDR::Boolean) (os.good_bit () && (!x.bound_ || len <= x.bound_));
+  return (os.good_bit () && (!x.bound_ || len <= x.bound_));
 }
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_std_wstring x)
 {
-  ACE_CDR::ULong const len =
-      static_cast<ACE_CDR::ULong> (x.val_.size ());
+  ACE_CDR::ULong const len = static_cast<ACE_CDR::ULong> (x.val_.size ());
 
   os.write_wstring (len, x.val_.c_str ());
-  return
-    (ACE_CDR::Boolean) (os.good_bit () && (!x.bound_ || len <= x.bound_));
+  return (os.good_bit () && (!x.bound_ || len <= x.bound_));
 }
 #endif
 
@@ -1302,7 +1382,7 @@ ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, const std::string& x)
 {
   os.write_string (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 #if !defined(ACE_LACKS_STD_WSTRING)
@@ -1310,7 +1390,7 @@ ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, const std::wstring& x)
 {
   os.write_wstring (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 #endif
 
@@ -1319,28 +1399,28 @@ ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_boolean x)
 {
   (void) os.write_boolean (x.val_);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_char x)
 {
   os.write_char (x.val_);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_wchar x)
 {
   os.write_wchar (x.val_);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_octet x)
 {
   os.write_octet (x.val_);
-  return (ACE_CDR::Boolean) os.good_bit ();
+  return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -1354,8 +1434,7 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_string x)
     }
 
   os.write_string (len, x.val_);
-  return
-    (ACE_CDR::Boolean) (os.good_bit () && (!x.bound_ || len <= x.bound_));
+  return (os.good_bit () && (!x.bound_ || len <= x.bound_));
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -1369,8 +1448,21 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_wstring x)
     }
 
   os.write_wstring (len, x.val_);
-  return
-    (ACE_CDR::Boolean) (os.good_bit () && (!x.bound_ || len <= x.bound_));
+  return (os.good_bit () && (!x.bound_ || len <= x.bound_));
+}
+
+ACE_INLINE ACE_CDR::Boolean
+operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_uint8 x)
+{
+  os.write_uint8 (x.val_);
+  return os.good_bit ();
+}
+
+ACE_INLINE ACE_CDR::Boolean
+operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_int8 x)
+{
+  os.write_int8 (x.val_);
+  return os.good_bit ();
 }
 
 // ****************************************************************
@@ -1537,6 +1629,19 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_std_wstring x)
          || static_cast<ACE_CDR::ULong> (x.val_.size ()) <= x.bound_));
 }
 #endif
+
+ACE_INLINE ACE_CDR::Boolean
+operator>> (ACE_InputCDR &is, ACE_InputCDR::to_uint8 x)
+{
+  return is.read_uint8 (x.ref_) && is.good_bit ();
+}
+
+ACE_INLINE ACE_CDR::Boolean
+operator>> (ACE_InputCDR &is, ACE_InputCDR::to_int8 x)
+{
+  return is.read_int8 (x.ref_) && is.good_bit ();
+}
+
 // ***************************************************************************
 // We must define these methods here because they use the "read_*" inlined
 // methods of the ACE_InputCDR class

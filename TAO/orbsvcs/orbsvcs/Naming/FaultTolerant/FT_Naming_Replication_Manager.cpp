@@ -163,7 +163,6 @@ TAO_FT_Naming_Replication_Manager::svc ()
     }
   try
     {
-
       this->orb_->run ();
     }
   catch (const CORBA::SystemException &ex)
@@ -349,7 +348,6 @@ TAO_FT_Naming_Replication_Manager::send_context_update (const ACE_CString & name
 void
 TAO_FT_Naming_Replication_Manager::send_registration (bool use_combo_refs)
 {
-
   if (TAO_debug_level > 1)
     {
       ORBSVCS_DEBUG((LM_INFO,

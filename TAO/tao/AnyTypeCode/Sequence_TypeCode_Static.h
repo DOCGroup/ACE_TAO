@@ -48,7 +48,6 @@ namespace TAO
       , private TAO::Null_RefCount_Policy
     {
     public:
-
       /// Constructor.
       Sequence (CORBA::TCKind kind,
                 CORBA::TypeCode_ptr const * content_type,
@@ -83,7 +82,7 @@ namespace TAO
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
       virtual CORBA::TypeCode_ptr get_compact_typecode_i () const;
       virtual CORBA::ULong length_i () const;
-      virtual CORBA::TypeCode_ptr content_type_i (        ) const;
+      virtual CORBA::TypeCode_ptr content_type_i () const;
 
     private:
       /// Element type of the sequence.

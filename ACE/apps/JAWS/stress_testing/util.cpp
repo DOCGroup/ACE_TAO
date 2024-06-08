@@ -1,7 +1,6 @@
 #include "util.h"
 
 URL::URL(char *input_buf) {
-
   char *buffer = new char[BUFSIZ];
 
   ACE_OS::strcpy(buffer,input_buf);
@@ -30,23 +29,22 @@ URL::URL(char *input_buf) {
   }
 }
 
-char *URL::get_protocol(void) {
+char *URL::get_protocol() {
   return protocol_;
 }
 
-char *URL::get_hostname(void) {
+char *URL::get_hostname() {
   return hostname_;
 }
 
-char *URL::get_filename(void) {
+char *URL::get_filename() {
   return filename_;
 }
 
 
 
 
-
-void cleanup(void) {
+void cleanup() {
   ACE_OS::unlink(TEMPORARY_FILE_NAME);
   ACE_OS::unlink(INCOMING_FILE_NAME);
 }

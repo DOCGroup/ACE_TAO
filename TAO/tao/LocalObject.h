@@ -44,7 +44,6 @@ namespace CORBA
   class TAO_Export LocalObject : public virtual CORBA::Object
   {
   public:
-
     /// Destructor
     virtual ~LocalObject ();
 
@@ -159,14 +158,8 @@ namespace CORBA
     LocalObject ();
 
   private:
-    /**
-     * @name Unimplemented methods
-     */
-    //@{
-    ACE_UNIMPLEMENTED_FUNC (LocalObject (const LocalObject &))
-    ACE_UNIMPLEMENTED_FUNC (LocalObject & operator = (const LocalObject &))
-    //@}
-
+    LocalObject (const LocalObject &) = delete;
+    LocalObject & operator = (const LocalObject &)  = delete;
   };
 }   // End CORBA namespace
 

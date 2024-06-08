@@ -32,9 +32,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Reactive_MEM_IO : public ACE_MEM_SAP
 {
 public:
-  ACE_Reactive_MEM_IO (void);
+  ACE_Reactive_MEM_IO ();
 
-  virtual ~ACE_Reactive_MEM_IO (void);
+  virtual ~ACE_Reactive_MEM_IO ();
 
   /**
    * Initialize the MEM_SAP object.
@@ -85,14 +85,14 @@ public:
   class Simple_Queue
   {
   public:
-    Simple_Queue (void);
+    Simple_Queue ();
     Simple_Queue (MQ_Struct *mq);
 
     int init (MQ_Struct *mq, ACE_MEM_SAP::MALLOC_TYPE *malloc);
 
     int write (ACE_MEM_SAP_Node *new_msg);
 
-    ACE_MEM_SAP_Node *read (void);
+    ACE_MEM_SAP_Node *read ();
   private:
     MQ_Struct *mq_;
     ACE_MEM_SAP::MALLOC_TYPE *malloc_;
@@ -105,9 +105,9 @@ public:
     Simple_Queue queue_;
   } Channel;
 
-  ACE_MT_MEM_IO (void);
+  ACE_MT_MEM_IO ();
 
-  virtual ~ACE_MT_MEM_IO (void);
+  virtual ~ACE_MT_MEM_IO ();
 
   /**
    * Initialize the MEM_SAP object.
@@ -171,10 +171,10 @@ class ACE_Export ACE_MEM_IO : public ACE_SOCK
 {
 public:
   /// Constructor.
-  ACE_MEM_IO (void);
+  ACE_MEM_IO ();
 
   /// Destructor.
-  ~ACE_MEM_IO (void);
+  ~ACE_MEM_IO ();
 
   typedef enum
   {
@@ -193,7 +193,7 @@ public:
    * Finalizing the MEM_IO object.  This method doesn't invoke
    * the <remove> method.
    */
-  int fini (void);
+  int fini ();
 
   /// Send an @a n byte buffer to the other process using shm_malloc_
   /// connected thru the socket.

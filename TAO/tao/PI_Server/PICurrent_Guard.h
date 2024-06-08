@@ -48,7 +48,6 @@ namespace TAO
   class PICurrent_Guard
   {
   public:
-
     /// Constructor
     /**
      * This constructor sets up this guard to copy the data held in a
@@ -75,7 +74,6 @@ namespace TAO
     ~PICurrent_Guard ();
 
   private:
-
     /// The PICurrent implementation whose slot table will be copied.
     PICurrent_Impl *src_;
 

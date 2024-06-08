@@ -201,7 +201,6 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
 };
 
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)

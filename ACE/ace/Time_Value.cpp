@@ -12,12 +12,7 @@
 #include "ace/If_Then_Else.h"
 #include "ace/OS_NS_math.h"
 #include "ace/Time_Policy.h"
-
-#ifdef ACE_HAS_CPP98_IOSTREAMS
-# include <ostream>
-# include <iomanip>
-#endif /* ACE_HAS_CPP98_IOSTREAMS */
-
+#include <iomanip>
 #include <cstdlib>
 #include <cmath>
 
@@ -39,9 +34,6 @@ const ACE_Time_Value ACE_Time_Value::max_time (
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
 
-ACE_Time_Value::~ACE_Time_Value()
-{}
-
 /// Increment microseconds (the only reason this is here is to allow
 /// the use of ACE_Atomic_Op with ACE_Time_Value).
 ACE_Time_Value
@@ -56,7 +48,7 @@ ACE_Time_Value::operator ++ (int)
 ACE_Time_Value &
 ACE_Time_Value::operator ++ ()
 {
-  // ACE_OS_TRACE ("ACE_Time_Value::operator ++ (void)");
+  // ACE_OS_TRACE ("ACE_Time_Value::operator ++ ()");
   this->usec (this->usec () + 1);
   this->normalize ();
   return *this;
@@ -76,7 +68,7 @@ ACE_Time_Value::operator -- (int)
 ACE_Time_Value &
 ACE_Time_Value::operator -- ()
 {
-  // ACE_OS_TRACE ("ACE_Time_Value::operator -- (void)");
+  // ACE_OS_TRACE ("ACE_Time_Value::operator -- ()");
   this->usec (this->usec () - 1);
   this->normalize ();
   return *this;
@@ -309,8 +301,7 @@ ACE_Time_Value::operator *= (double d)
   return *this;
 }
 
-#ifdef ACE_HAS_CPP98_IOSTREAMS
-ostream &operator<<(ostream &o, const ACE_Time_Value &v)
+std::ostream &operator<<(std::ostream &o, const ACE_Time_Value &v)
 {
   char const oldFiller = o.fill ();
   o.fill ('0');
@@ -333,6 +324,5 @@ ostream &operator<<(ostream &o, const ACE_Time_Value &v)
   o.fill (oldFiller);
   return o;
 }
-#endif /* ACE_HAS_CPP98_IOSTREAMS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -64,7 +64,7 @@ public:
   ACE_Command_Callback (RECEIVER &recvr, ACTION action);
 
   /// Virtual destructor.
-  virtual ~ACE_Command_Callback ();
+  virtual ~ACE_Command_Callback () = default;
 
   /// Invokes the method @c action_ from the object @c receiver_.
   virtual int execute (void *arg = 0);
@@ -96,7 +96,7 @@ public:
   ACE_Member_Function_Command (RECEIVER &recvr, PTMF ptmf);
 
   /// Virtual destructor.
-  virtual ~ACE_Member_Function_Command ();
+  virtual ~ACE_Member_Function_Command () = default;
 
   /// Invokes the method <action_> from the object <receiver_>.  The
   /// parameter is ignored
@@ -180,14 +180,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Functor_T.inl"
 #endif /* __ACE_INLINE__ */
 
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Functor_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Functor_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_FUNCTOR_T_H */

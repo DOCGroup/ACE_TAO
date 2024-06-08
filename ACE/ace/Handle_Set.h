@@ -64,6 +64,7 @@ public:
 
   /// Constructor, initializes the bitmask to all 0s.
   ACE_Handle_Set ();
+  ~ACE_Handle_Set () = default;
 
   /**
    * Constructor, initializes the handle set from a given mask.
@@ -113,9 +114,17 @@ public:
   fd_set *fdset ();
 
 #if defined (ACE_HAS_BIG_FD_SET)
-  /// Assignment operator optimizes for cases where <size_> == 0.
-  ACE_Handle_Set & operator= (const ACE_Handle_Set &);
+  /// Assignment operator optimizes for cases where size_ == 0.
+  ACE_Handle_Set & operator= (const ACE_Handle_Set &rhs);
+  /// Copy constructor optimizes for cases where size_ == 0
+  ACE_Handle_Set (const ACE_Handle_Set &rhs);
+#else
+  ACE_Handle_Set & operator= (const ACE_Handle_Set &) = default;
+  ACE_Handle_Set (const ACE_Handle_Set &) = default;
 #endif /* ACE_HAS_BIG_FD_SET */
+
+  ACE_Handle_Set & operator= (ACE_Handle_Set &&) = default;
+  ACE_Handle_Set (ACE_Handle_Set &&) = default;
 
   /// Dump the state of an object.
   void dump () const;
@@ -175,9 +184,8 @@ class ACE_Export ACE_Handle_Set_Iterator
 public:
   /// Constructor.
   ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs);
-
-  /// Default dtor.
-  ~ACE_Handle_Set_Iterator ();
+  ACE_Handle_Set_Iterator () = delete;
+  ~ACE_Handle_Set_Iterator () = default;
 
   /// Reset the state of the iterator by reinitializing the state
   /// that we maintain.

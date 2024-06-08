@@ -28,8 +28,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
-
-
 TAO_Trading_Loader::TAO_Trading_Loader ()
   : federate_ (0),
     ior_output_file_ (0),
@@ -74,11 +72,6 @@ TAO_Trading_Loader::TAO_Trading_Loader ()
     }
 }
 
-TAO_Trading_Loader::~TAO_Trading_Loader ()
-{
-  // Destructor
-}
-
 int
 TAO_Trading_Loader::init (int argc, ACE_TCHAR *argv[])
 {
@@ -101,7 +94,6 @@ TAO_Trading_Loader::init (int argc, ACE_TCHAR *argv[])
       // Initializes and sets up the Trading Service
       CORBA::Object_var object =
         this->create_object (orb.in (), command_line.get_argc(), command_line.get_TCHAR_argv());
-
     }
   catch (const CORBA::Exception&)
     {

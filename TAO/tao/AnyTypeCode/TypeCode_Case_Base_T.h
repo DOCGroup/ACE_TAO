@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Case
      *
@@ -49,7 +48,6 @@ namespace TAO
     class Case
     {
     public:
-
       /// Constructor.
       /**
        * Constructor used when creating static @c union @c TypeCodes.
@@ -147,7 +145,6 @@ namespace TAO
     };
 
     typedef Case<CORBA::String_var, CORBA::TypeCode_var> Case_Dynamic;
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 
@@ -170,7 +167,6 @@ namespace ACE
       return p->clone ();
     }
   };
-
 } // End namespace ACE.
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -180,13 +176,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/TypeCode_Case_Base_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/TypeCode_Case_Base_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("TypeCode_Case_Base_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "tao/AnyTypeCode/TypeCode_Case_Base_T.cpp"
 
 #include /**/ "ace/post.h"
 

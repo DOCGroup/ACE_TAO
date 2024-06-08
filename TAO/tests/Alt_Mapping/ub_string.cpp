@@ -17,19 +17,19 @@
 //               Test_Unbounded_String
 // ************************************************************************
 
-Test_Unbounded_String::Test_Unbounded_String (void)
+Test_Unbounded_String::Test_Unbounded_String ()
   : opname_ (CORBA::string_dup ("test_unbounded_string"))
 {
 }
 
-Test_Unbounded_String::~Test_Unbounded_String (void)
+Test_Unbounded_String::~Test_Unbounded_String ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Unbounded_String::opname (void) const
+Test_Unbounded_String::opname () const
 {
   return this->opname_;
 }
@@ -46,7 +46,7 @@ Test_Unbounded_String::init_parameters (Alt_Mapping_ptr)
 }
 
 int
-Test_Unbounded_String::reset_parameters (void)
+Test_Unbounded_String::reset_parameters ()
 {
   this->inout_ = this->in_.c_str ();
   this->out_.clear ();
@@ -75,7 +75,7 @@ Test_Unbounded_String::run_sii_test (Alt_Mapping_ptr objref)
 }
 
 CORBA::Boolean
-Test_Unbounded_String::check_validity (void)
+Test_Unbounded_String::check_validity ()
 {
   CORBA::ULong len = this->in_.length ();
 
@@ -98,7 +98,7 @@ Test_Unbounded_String::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Unbounded_String::print_values (void)
+Test_Unbounded_String::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"

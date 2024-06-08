@@ -15,18 +15,17 @@ class  Test_i : public virtual POA_Test
 {
 public:
   //Constructor
-  Test_i (void);
+  Test_i ();
 
   //Destructor
   virtual ~Test_i ();
 
-  virtual void foo (void);
+  virtual void foo ();
 
-  virtual CORBA::Short get_call_count (void);
+  virtual CORBA::Short get_call_count ();
 
 private:
   CORBA::Short count_;
-
 };
 
 #endif /* TEST_I_H_ */

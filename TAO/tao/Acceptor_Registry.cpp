@@ -14,21 +14,16 @@
 # include "tao/IIOP_Acceptor.h"
 #endif /* ACE_WIN32 && ACE_HAS_IPV6 */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
+#include <cstring>
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Acceptor_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_Acceptor_Registry::TAO_Acceptor_Registry ()
-  : acceptors_ (nullptr),
-    size_ (0)
-{
-}
 
 TAO_Acceptor_Registry::~TAO_Acceptor_Registry ()
 {
@@ -196,11 +191,11 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       // remaining number of endpoints in the current endpoint
       // specification.
       const char *ep_end =
-        ep->c_str () + ACE_OS::strlen (ep->c_str ());
+        ep->c_str () + std::strlen (ep->c_str ());
 
-      for (const char *e = ACE_OS::strchr (ep->c_str (), ',');
+      for (const char *e = std::strchr (ep->c_str (), ',');
            e != nullptr && e != ep_end;
-           e = ACE_OS::strchr (e, ','))
+           e = std::strchr (e, ','))
         {
           ++acceptor_count;
           ++e;
@@ -687,7 +682,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
     }
 
   char *last_addr = nullptr;
-  ACE_Auto_Basic_Array_Ptr<char> addr_str (addrs.rep ());
+  std::unique_ptr<char[]> addr_str (addrs.rep ());
 
   const char *astr = ACE_OS::strtok_r (addr_str.get (), ",", &last_addr);
 

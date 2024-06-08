@@ -18,7 +18,7 @@ ifr_adding_visitor_union::ifr_adding_visitor_union (AST_Decl *scope)
 {
 }
 
-ifr_adding_visitor_union::~ifr_adding_visitor_union (void)
+ifr_adding_visitor_union::~ifr_adding_visitor_union ()
 {
 }
 
@@ -459,7 +459,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
 }
 
 CORBA::IDLType_ptr
-ifr_adding_visitor_union::ir_current (void) const
+ifr_adding_visitor_union::ir_current () const
 {
   return this->ir_current_.in ();
 }

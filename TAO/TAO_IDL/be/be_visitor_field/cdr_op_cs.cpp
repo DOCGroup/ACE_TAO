@@ -12,6 +12,7 @@
 #include "field.h"
 #include "be_visitor_array/cdr_op_cs.h"
 #include "be_visitor_sequence/cdr_op_cs.h"
+#include "be_visitor_map/cdr_op_cs.h"
 #include "be_visitor_structure/cdr_op_cs.h"
 #include "be_visitor_union/cdr_op_cs.h"
 
@@ -500,6 +501,16 @@ be_visitor_field_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
           *os << "(strm >> ::ACE_InputCDR::to_boolean (_tao_aggregate."
               << f->local_name () << "))";
         }
+      else if (pt == AST_PredefinedType::PT_uint8)
+        {
+          *os << "(strm >> ::ACE_InputCDR::to_uint8 (_tao_aggregate."
+              << f->local_name () << "))";
+        }
+      else if (pt == AST_PredefinedType::PT_int8)
+        {
+          *os << "(strm >> ::ACE_InputCDR::to_int8 (_tao_aggregate."
+              << f->local_name () << "))";
+        }
       else
         {
           *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
@@ -529,6 +540,16 @@ be_visitor_field_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
       else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "(strm << ::ACE_OutputCDR::from_boolean (_tao_aggregate."
+              << f->local_name () << "))";
+        }
+      else if (pt == AST_PredefinedType::PT_uint8)
+        {
+          *os << "(strm << ::ACE_OutputCDR::from_uint8 (_tao_aggregate."
+              << f->local_name () << "))";
+        }
+      else if (pt == AST_PredefinedType::PT_int8)
+        {
+          *os << "(strm << ::ACE_OutputCDR::from_int8 (_tao_aggregate."
               << f->local_name () << "))";
         }
       else
@@ -614,6 +635,69 @@ be_visitor_field_cdr_op_cs::visit_sequence (be_sequence *node)
                         -1);
     }
 
+  return 0;
+}
+
+int
+be_visitor_field_cdr_op_cs::visit_map (be_map *node)
+{
+  // If the map is defined in this scope, generate its
+  // CDR stream operators here.
+  if (node->node_type () != AST_Decl::NT_typedef
+      && node->is_child (this->ctx_->scope ()->decl ()))
+    {
+      be_visitor_context ctx (*this->ctx_);
+      ctx.node (node);
+      be_visitor_map_cdr_op_cs visitor (&ctx);
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_field_cdr_op_cs::"
+                             "visit_map - "
+                             "codegen failed\n"),
+                            -1);
+        }
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // Retrieve the field node.
+  be_field *f =
+    dynamic_cast<be_field*> (this->ctx_->node ());
+
+  if (f == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_field_cdr_op_cs::"
+                         "visit_map - "
+                         "cannot retrieve field node\n"),
+                        -1);
+    }
+
+  // Check what is the code generations substate. Are we generating code for
+  // the in/out operators for our parent or for us?
+  switch (this->ctx_->sub_state ())
+    {
+    case TAO_CodeGen::TAO_CDR_INPUT:
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
+
+      return 0;
+    case TAO_CodeGen::TAO_CDR_OUTPUT:
+      *os << "(strm << _tao_aggregate." << f->local_name () << ")";
+
+      return 0;
+    case TAO_CodeGen::TAO_CDR_SCOPE:
+      // Proceed further.
+      break;
+    default:
+      // Error.
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_field_cdr_op_cs::"
+                         "visit_map - "
+                         "bad sub state\n"),
+                        -1);
+    }
   return 0;
 }
 

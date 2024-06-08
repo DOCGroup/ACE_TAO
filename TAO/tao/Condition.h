@@ -41,7 +41,6 @@ template <class MUTEX>
 class TAO_Condition
 {
 public:
-
   /// Useful typedef
   typedef MUTEX LOCK;
 
@@ -92,8 +91,8 @@ public:
   MUTEX *mutex ();
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Condition (const TAO_Condition<MUTEX> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Condition &operator= (const TAO_Condition<MUTEX> &))
+  TAO_Condition (const TAO_Condition<MUTEX> &) = delete;
+  TAO_Condition &operator= (const TAO_Condition<MUTEX> &) = delete;
 
   /// Reference to mutex lock.
   MUTEX *mutex_;
@@ -111,13 +110,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Condition.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Condition.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Condition.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /*TAO_CONDITION_H*/

@@ -21,7 +21,6 @@
 #include "ace/Time_Value.h"
 #include "orbsvcs/AV/AV_export.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -54,7 +53,7 @@ class TAO_AV_Export TAO_AV_Policy
 {
 public:
   TAO_AV_Policy (CORBA::ULong type);
-  CORBA::ULong type (void);
+  CORBA::ULong type ();
 protected:
   CORBA::ULong type_;
 };
@@ -63,7 +62,7 @@ class  TAO_AV_Export TAO_AV_SSRC_Policy : public TAO_AV_Policy
 {
 public:
   TAO_AV_SSRC_Policy (CORBA::ULong ssrc = 0);
-  CORBA::ULong value (void);
+  CORBA::ULong value ();
   void value (CORBA::ULong ssrc);
 protected:
   CORBA::ULong ssrc_;
@@ -73,7 +72,7 @@ class  TAO_AV_Export TAO_AV_Payload_Type_Policy : public TAO_AV_Policy
 {
 public:
   TAO_AV_Payload_Type_Policy (int payload_type = -1);
-  int value (void);
+  int value ();
   void value (int pt);
 protected:
   int payload_type_;
@@ -82,8 +81,8 @@ protected:
 class TAO_AV_Export TAO_AV_RTCP_Sdes_Policy : public TAO_AV_Policy
 {
 public:
-  TAO_AV_RTCP_Sdes_Policy (void);
-  TAO_AV_RTCP_Sdes &value (void);
+  TAO_AV_RTCP_Sdes_Policy ();
+  TAO_AV_RTCP_Sdes &value ();
   void value (const TAO_AV_RTCP_Sdes& sdes_val);
 protected:
   TAO_AV_RTCP_Sdes sdes_;
@@ -92,8 +91,8 @@ protected:
 class TAO_AV_Export TAO_AV_SFP_Credit_Policy : public TAO_AV_Policy
 {
 public:
-  TAO_AV_SFP_Credit_Policy (void);
-  int value (void);
+  TAO_AV_SFP_Credit_Policy ();
+  int value ();
   void value (int val);
 protected:
   int value_;
@@ -114,23 +113,23 @@ class TAO_AV_Flow_Handler;
 class TAO_AV_Export TAO_AV_Callback
 {
 public:
-  TAO_AV_Callback (void);
-  virtual ~TAO_AV_Callback (void);
+  TAO_AV_Callback ();
+  virtual ~TAO_AV_Callback ();
 
   /// Called for opening the callback.
   int open (TAO_AV_Protocol_Object *object,
             TAO_AV_Flow_Handler *handler);
 
   /// Called during Streamctrl->start.
-  virtual int handle_start (void);
+  virtual int handle_start ();
 
   /// Called during Streamctrl->stop.
-  virtual int handle_stop (void);
+  virtual int handle_stop ();
 
   /// Called during timeout for Flow Producers.
   virtual int handle_timeout (void *arg);
 
-  virtual int schedule_timer (void);
+  virtual int schedule_timer ();
 
   virtual int receive_frame (ACE_Message_Block *frame,
                              TAO_AV_frame_info *frame_info = 0,
@@ -143,7 +142,7 @@ public:
                                      const ACE_Addr &address = ACE_Addr::sap_any);
 
   /// Called during Streamctrl->destroy i.e tear_down  of the stream
-  virtual int handle_destroy (void);
+  virtual int handle_destroy ();
 
   /**
    * Called to get the timeout. If tv is 0 then the framework stop
@@ -154,10 +153,10 @@ public:
                             void *&arg);
 
   /// Accessor to protocol object.
-  TAO_AV_Protocol_Object *protocol_object (void);
+  TAO_AV_Protocol_Object *protocol_object ();
 
   /// get the policies for the protocol object.
-  virtual TAO_AV_PolicyList get_policies (void);
+  virtual TAO_AV_PolicyList get_policies ();
 protected:
   TAO_AV_Protocol_Object *protocol_object_;
   TAO_AV_Flow_Handler *handler_;

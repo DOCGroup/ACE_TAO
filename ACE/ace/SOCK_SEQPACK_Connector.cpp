@@ -16,8 +16,6 @@
 #include "ace/SOCK_SEQPACK_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_SEQPACK_Connector)
@@ -37,7 +35,6 @@ ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_assoc
                                  int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_open");
-
 
 
   // Only open a new socket if we don't already have a valid handle.

@@ -6,6 +6,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "tao/debug.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,7 +43,6 @@ TAO_HTTP_Handler::open (void *)
   if (this->receive_reply () != 0)
     TAOLIB_ERROR_RETURN ((LM_ERROR, "TAO (%P|%t) - HTTP_Handler::open, receive_reply failed\n"), -1);
   return 0;
-
 }
 
 int
@@ -87,9 +87,9 @@ TAO_HTTP_Reader::send_request ()
   char mesg [MAX_HEADER_SIZE];
 
   // Check to see if the request is too big
-  if (MAX_HEADER_SIZE < (ACE_OS::strlen (request_prefix_)
+  if (MAX_HEADER_SIZE < (std::strlen (request_prefix_)
                          + ACE_OS::strlen (filename_)
-                         + ACE_OS::strlen (request_suffix_) + 4))
+                         + std::strlen (request_suffix_) + 4))
     TAOLIB_ERROR_RETURN((LM_ERROR,"TAO (%P|%t) - HTTP_Reader::send_request, request too large!"), -1);
 
   // Create a message to send to the server requesting retrieval of the file
@@ -133,7 +133,6 @@ TAO_HTTP_Reader::receive_reply ()
       // Determine number of data bytes read. This is equal to the
       // total bytes read minus number of header bytes.
       bytes_read = num_recvd - (buf_ptr - buf);
-
     }
   else
     {
@@ -182,7 +181,6 @@ TAO_HTTP_Reader::receive_reply ()
 
       // Increment bytes_read
       bytes_read += num_recvd;
-
     }
   else
     {

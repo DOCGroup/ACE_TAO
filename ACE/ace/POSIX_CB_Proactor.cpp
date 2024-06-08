@@ -73,7 +73,7 @@ ACE_POSIX_CB_Proactor::notify_completion (int sig_num)
 ssize_t
 ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 {
-  ssize_t slot = ACE_POSIX_AIOCB_Proactor::allocate_aio_slot (result);
+  ssize_t const slot = ACE_POSIX_AIOCB_Proactor::allocate_aio_slot (result);
   if (slot == -1)
     return -1;
 
@@ -83,8 +83,7 @@ ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
   // the proactor, but the aiocb as well.
   result->aio_sigevent.sigev_notify = SIGEV_THREAD;
 #  if defined (ACE_HAS_SIG_C_FUNC)
-  result->aio_sigevent.sigev_notify_function =
-    ACE_POSIX_CB_Proactor_aio_completion;
+  result->aio_sigevent.sigev_notify_function = ACE_POSIX_CB_Proactor_aio_completion;
 #  else
   result->aio_sigevent.sigev_notify_function = aio_completion_func;
 #  endif /* ACE_HAS_SIG_C_FUNC */
@@ -98,7 +97,6 @@ ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 int
 ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
 {
-
   int result_wait=0;
 
   // Wait for the signals.

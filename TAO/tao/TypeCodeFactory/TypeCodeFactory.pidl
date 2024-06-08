@@ -30,112 +30,92 @@ module CORBA
     TypeCode create_struct_tc (
         in RepositoryId id,
         in Identifier name,
-        in StructMemberSeq members
-      );
+        in StructMemberSeq members);
 
     TypeCode create_union_tc (
         in RepositoryId id,
         in Identifier name,
         in TypeCode discriminator_type,
-        in UnionMemberSeq members
-      );
+        in UnionMemberSeq members);
 
     TypeCode create_enum_tc (
         in RepositoryId id,
         in Identifier name,
-        in EnumMemberSeq members
-      );
+        in EnumMemberSeq members);
 
     TypeCode create_alias_tc (
         in RepositoryId id,
         in Identifier name,
-        in TypeCode original_type
-      );
+        in TypeCode original_type);
 
     TypeCode create_exception_tc (
         in RepositoryId id,
         in Identifier name,
-        in StructMemberSeq members
-      );
+        in StructMemberSeq members);
 
     TypeCode create_interface_tc (
         in RepositoryId id,
-        in Identifier name
-      );
+        in Identifier name);
 
     TypeCode create_string_tc (
-        in unsigned long bound
-      );
+        in unsigned long bound);
 
     TypeCode create_wstring_tc (
-        in unsigned long bound
-      );
+        in unsigned long bound);
 
     TypeCode create_fixed_tc (
         in unsigned short digits,
-        in unsigned short scale
-      );
+        in unsigned short scale);
 
     TypeCode create_sequence_tc (
         in unsigned long bound,
-        in TypeCode element_type
-      );
+        in TypeCode element_type);
 
     TypeCode create_array_tc (
         in unsigned long length,
-        in TypeCode element_type
-      );
+        in TypeCode element_type);
 
     TypeCode create_value_tc (
         in RepositoryId id,
         in Identifier name,
         in ValueModifier type_modifier,
         in TypeCode concrete_base,
-        in ValueMemberSeq members
-      );
+        in ValueMemberSeq members);
 
     TypeCode create_value_box_tc (
         in RepositoryId id,
         in Identifier name,
-        in TypeCode boxed_type
-      );
+        in TypeCode boxed_type);
 
     TypeCode create_native_tc (
         in RepositoryId id,
-        in Identifier name
-      );
+        in Identifier name);
 
     TypeCode create_recursive_tc (
-        in RepositoryId id
-      );
+        in RepositoryId id);
 
     TypeCode create_abstract_interface_tc (
         in RepositoryId id,
-        in Identifier name
-      );
+        in Identifier name);
 
     TypeCode create_local_interface_tc (
         in RepositoryId id,
-        in Identifier name
-      );
+        in Identifier name);
 
     TypeCode create_component_tc (
         in RepositoryId id,
-        in Identifier name
-      );
+        in Identifier name);
 
     TypeCode create_home_tc (
         in RepositoryId id,
-        in Identifier name
-      );
+        in Identifier name);
 
     TypeCode create_event_tc (
         in RepositoryId id,
         in Identifier name,
         in ValueModifier type_modifier,
         in TypeCode concrete_base,
-        in ValueMemberSeq members
-      );
+        in ValueMemberSeq members);
   };
 };
 

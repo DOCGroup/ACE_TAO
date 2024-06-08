@@ -95,7 +95,7 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
                     TAO_Notify_POA_Helper (),
                     CORBA::NO_MEMORY ());
 
-  ACE_Auto_Ptr<TAO_Notify_POA_Helper> auto_object_poa (object_poa);
+  std::unique_ptr<TAO_Notify_POA_Helper> auto_object_poa (object_poa);
 
   ACE_CString poa_name = object_poa->get_unique_id ();
 #if defined (CORBA_E_MICRO)

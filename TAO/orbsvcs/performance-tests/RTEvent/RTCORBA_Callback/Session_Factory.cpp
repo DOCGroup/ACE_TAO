@@ -19,13 +19,13 @@ Session_Factory::create_new_session (Test::Callback_ptr cb)
 }
 
 void
-Session_Factory::shutdown (void)
+Session_Factory::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr
-Session_Factory::_default_POA (void)
+Session_Factory::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

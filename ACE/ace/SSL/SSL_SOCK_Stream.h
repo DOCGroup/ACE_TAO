@@ -318,8 +318,8 @@ protected:
                   const ACE_Time_Value *timeout) const;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_SSL_SOCK_Stream &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &))
+  void operator= (const ACE_SSL_SOCK_Stream &) = delete;
+  ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &) = delete;
 
 protected:
   /// The SSL session.

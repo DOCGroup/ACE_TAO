@@ -7,7 +7,7 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_strings.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -68,7 +68,7 @@ namespace FTRTEC
       TAO_FTRTEC::Log(3, ACE_TEXT("Basic replication strategy\n"));
     }
 
-     ACE_auto_ptr_reset (replication_strategy, strategy);
+     replication_strategy.reset (strategy);
 
       try
       {
@@ -104,7 +104,7 @@ namespace FTRTEC
     ACE_ASSERT(strategy);
 
     if (replication_strategy.get() != strategy) {
-      ACE_auto_ptr_reset(replication_strategy, strategy);
+      replication_strategy.reset (strategy);
     }
   }
 

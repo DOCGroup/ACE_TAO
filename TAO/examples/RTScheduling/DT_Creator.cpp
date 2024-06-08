@@ -168,7 +168,7 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
 }
 
 void
-DT_Creator::register_synch_obj (void)
+DT_Creator::register_synch_obj ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -204,7 +204,6 @@ DT_Creator::register_synch_obj (void)
         this->naming_->resolve (name);
 
       synch_context = CosNaming::NamingContext::_narrow (object.in ());
-
     }
 
   ACE_CString synch_name ("Synch");
@@ -229,12 +228,11 @@ DT_Creator::register_synch_obj (void)
   // Register the synch object with the Synch context.
   synch_context->rebind (name,
        synch.in ());
-
 }
 
 
 int
-DT_Creator::activate_root_poa (void)
+DT_Creator::activate_root_poa ()
 {
   CORBA::Object_var object =
     this->orb_->resolve_initial_references ("RootPOA");
@@ -251,7 +249,7 @@ DT_Creator::activate_root_poa (void)
 }
 
 void
-DT_Creator::activate_poa_list (void)
+DT_Creator::activate_poa_list ()
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -277,9 +275,8 @@ DT_Creator::activate_poa_list (void)
 }
 
 void
-DT_Creator::activate_job_list (void)
+DT_Creator::activate_job_list ()
 {
-
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
     "DT_Creator::activate_job_list\n"));
@@ -325,8 +322,6 @@ DT_Creator::activate_job_list (void)
 
       this->naming_->rebind (name.in (),
                              server.in ());
-
-
     } /* while */
 
   ACE_DEBUG ((LM_DEBUG,
@@ -334,7 +329,7 @@ DT_Creator::activate_job_list (void)
 }
 
 void
-DT_Creator::activate_schedule (void)
+DT_Creator::activate_schedule ()
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -395,11 +390,10 @@ DT_Creator::activate_schedule (void)
     ACE_DEBUG ((LM_DEBUG,
     "Activated schedule, task count = %d\n",
     dt_count_));
-
 }
 
 int
-DT_Creator::resolve_naming_service (void)
+DT_Creator::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService");
@@ -494,7 +488,7 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
 }
 
 void
-DT_Creator::dt_ended (void)
+DT_Creator::dt_ended ()
 {
   {
     ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
@@ -509,7 +503,7 @@ DT_Creator::dt_ended (void)
 }
 
 void
-DT_Creator::job_ended (void)
+DT_Creator::job_ended ()
 {
   {
     ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
@@ -525,7 +519,7 @@ DT_Creator::job_ended (void)
 }
 
 void
-DT_Creator::check_ifexit (void)
+DT_Creator::check_ifexit ()
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -577,19 +571,18 @@ DT_Creator::check_ifexit (void)
         }
       ACE_DEBUG ((LM_DEBUG,
       "Log File Ready\n"));
-
     }
       }
   }
 }
 
 int
-DT_Creator::dt_count (void)
+DT_Creator::dt_count ()
 {
   return dt_count_;
 }
 
-DT_Creator::DT_Creator (void)
+DT_Creator::DT_Creator ()
  : dt_list_ (0),
    poa_list_ (0),
    job_list_ (0),
@@ -609,7 +602,7 @@ DT_Creator::DT_Creator (void)
 {
 }
 
-DT_Creator::~DT_Creator (void)
+DT_Creator::~DT_Creator ()
 {
   for (int i = 0; i < log_index; ++i)
     ACE_OS::free (log[i]);
@@ -637,7 +630,7 @@ DT_Creator::log_msg (char* msg)
 }
 
 CORBA::ORB_ptr
-DT_Creator::orb (void)
+DT_Creator::orb ()
 {
   return this->orb_.in ();
 }
@@ -649,7 +642,7 @@ DT_Creator::orb (CORBA::ORB_ptr orb)
 }
 
 ACE_Time_Value*
-DT_Creator::base_time (void)
+DT_Creator::base_time ()
 {
   return this->base_time_;
 }
@@ -662,7 +655,7 @@ DT_Creator::base_time (ACE_Time_Value* base_time)
 
 
 Synch_i*
-DT_Creator::synch (void)
+DT_Creator::synch ()
 {
   return this->synch_.in ();
 }

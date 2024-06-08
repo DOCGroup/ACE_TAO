@@ -13,11 +13,10 @@ Client_Task::Client_Task (const ACE_TCHAR *ior,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {
-
       CORBA::Object_var object =
         corb_->string_to_object (input_);
 
@@ -43,7 +42,6 @@ Client_Task::svc (void)
     }
 
   return 0;
-
 }
 
 

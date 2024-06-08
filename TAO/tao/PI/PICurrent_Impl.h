@@ -94,12 +94,8 @@ namespace TAO
      */
     Table & current_slot_table ();
 
-    /// Prevent copying through the copy constructor and the assignment
-    /// operator.
-    //@{
     PICurrent_Impl (const PICurrent_Impl &) = delete;
     void operator= (const PICurrent_Impl &) = delete;
-    //@}
 
   private:
     /// Allow for stack of PICurrent_Impl as required.

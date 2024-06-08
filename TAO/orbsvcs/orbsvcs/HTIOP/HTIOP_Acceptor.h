@@ -48,7 +48,6 @@ namespace TAO
 {
   namespace HTIOP
   {
-
     // TAO HTIOP_Acceptor concrete call definition
 
     /**
@@ -67,14 +66,14 @@ namespace TAO
                 int is_inside);
 
       /// Destructor.
-      ~Acceptor (void);
+      ~Acceptor ();
 
       /// @@ Helper method for the implementation repository, should go
       ///    away
-      const ACE::HTBP::Addr& address (void) const;
+      const ACE::HTBP::Addr& address () const;
 
       /// Returns the array of endpoints in this acceptor
-      const ACE::HTBP::Addr *endpoints (void);
+      const ACE::HTBP::Addr *endpoints ();
 
       typedef TAO_Strategy_Acceptor<Completion_Handler, ACE_SOCK_ACCEPTOR> BASE_ACCEPTOR;
       typedef Creation_Strategy<Completion_Handler> CREATION_STRATEGY;
@@ -98,7 +97,7 @@ namespace TAO
                                 int version_minor,
                                 const char *options = 0);
 
-      virtual int close (void);
+      virtual int close ();
 
       virtual int create_profile (const TAO::ObjectKey &object_key,
                                   TAO_MProfile &mprofile,
@@ -106,7 +105,7 @@ namespace TAO
 
       virtual int is_collocated (const TAO_Endpoint *endpoint);
 
-      virtual CORBA::ULong endpoint_count (void);
+      virtual CORBA::ULong endpoint_count ();
 
       virtual int object_key (IOP::TaggedProfile &profile,
                               TAO::ObjectKey &key);
@@ -131,7 +130,6 @@ namespace TAO
                                   char *&host);
 
     protected:
-
       /**
        * Implement the common part of the open*() methods.  This method is
        * virtual to allow a derived class implementation to be invoked
@@ -172,7 +170,6 @@ namespace TAO
 
 
     protected:
-
       /// Array of ACE::HTBP::Addr instances, each one corresponding to a
       /// given network interface.
       ACE::HTBP::Addr *addrs_;
@@ -206,7 +203,6 @@ namespace TAO
       TAO_ORB_Core *orb_core_;
 
     private:
-
       /// the concrete acceptor, as a pointer to it's base class.
       BASE_ACCEPTOR base_acceptor_;
 

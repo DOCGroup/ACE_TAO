@@ -156,7 +156,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // struct tests
   try
     {
-
       Demo::BaseStruct foo1;
       foo1.str = CORBA::string_dup("BaseStruct 1");
 

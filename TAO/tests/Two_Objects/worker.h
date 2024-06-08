@@ -10,12 +10,11 @@
 class Worker : public ACE_Task_Base
 {
 public:
-
   // Ctor
   Worker (CORBA::ORB_ptr orb);
 
   // The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 
 private:

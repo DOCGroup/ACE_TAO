@@ -14,14 +14,13 @@ class Server_i
 
 public:
   // = Constructor and destructor.
-  Server_i (void);
-  ~Server_i (void);
+  Server_i ();
+  ~Server_i ();
 
   int init (int &argc, ACE_TCHAR **argv);
   // Initialize the server multicast.
 
 private:
-
   /// Sets the IOR_Multicast class to listen for multicast requests
   // for this server.
   int enable_multicast (const char *ior);
@@ -30,7 +29,6 @@ private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
-
   int argc_;
   // # of arguments on the command line.
 
@@ -49,7 +47,6 @@ private:
   CORBA::String_var mcast_address_;
   // Address of the multicast address where to listen for requests for */
   // the server. */
-
 
 };
 

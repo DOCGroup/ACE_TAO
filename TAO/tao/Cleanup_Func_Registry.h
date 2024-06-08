@@ -40,7 +40,7 @@ class TAO_Export TAO_Cleanup_Func_Registry
 
 public:
   /// Constructor.
-  TAO_Cleanup_Func_Registry ();
+  TAO_Cleanup_Func_Registry () = default;
 
   /// Return the number of registered cleanup functions.
   size_t size () const;
@@ -58,8 +58,8 @@ protected:
   void cleanup (ACE_Array_Base<void *> &ts_objects);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Cleanup_Func_Registry (const TAO_Cleanup_Func_Registry &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Cleanup_Func_Registry &operator= (const TAO_Cleanup_Func_Registry &))
+  TAO_Cleanup_Func_Registry (const TAO_Cleanup_Func_Registry &) = delete;
+  TAO_Cleanup_Func_Registry &operator= (const TAO_Cleanup_Func_Registry &) = delete;
 
   /// Array of registered cleanup functions.  The number of
   /// registered cleanup functions should be the same as the number

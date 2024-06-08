@@ -220,7 +220,7 @@ ACE_INET_Addr::is_multicast () const
 #if defined (ACE_HAS_IPV6)
 // Return @c true if the IP address is IPv6 linklocal address.
 ACE_INLINE bool
-ACE_INET_Addr::is_linklocal (void) const
+ACE_INET_Addr::is_linklocal () const
 {
   if (this->get_type () == AF_INET6)
       return IN6_IS_ADDR_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr);
@@ -230,7 +230,7 @@ ACE_INET_Addr::is_linklocal (void) const
 
 // Return @c true if the IP address is IPv6 sitelocal address.
 ACE_INLINE bool
-ACE_INET_Addr::is_sitelocal (void) const
+ACE_INET_Addr::is_sitelocal () const
 {
   if (this->get_type () == AF_INET6)
       return IN6_IS_ADDR_SITELOCAL (&this->inet_addr_.in6_.sin6_addr);
@@ -240,7 +240,7 @@ ACE_INET_Addr::is_sitelocal (void) const
 
 // Return @c true if the IP address is IPv4 mapped IPv6 address.
 ACE_INLINE bool
-ACE_INET_Addr::is_ipv4_mapped_ipv6 (void) const
+ACE_INET_Addr::is_ipv4_mapped_ipv6 () const
 {
   if (this->get_type () == AF_INET6)
       return IN6_IS_ADDR_V4MAPPED (&this->inet_addr_.in6_.sin6_addr);
@@ -250,7 +250,7 @@ ACE_INET_Addr::is_ipv4_mapped_ipv6 (void) const
 
 // Return @c true if the IP address is IPv4-compatible IPv6 address.
 ACE_INLINE bool
-ACE_INET_Addr::is_ipv4_compat_ipv6 (void) const
+ACE_INET_Addr::is_ipv4_compat_ipv6 () const
 {
   if (this->get_type () == AF_INET6)
       return IN6_IS_ADDR_V4COMPAT (&this->inet_addr_.in6_.sin6_addr);

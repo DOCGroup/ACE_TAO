@@ -4,8 +4,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
-
-
 #if defined (ACE_HAS_TLI)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -23,19 +21,19 @@ struct ACE_TLI_Request
 class ACE_TLI_Request_Queue
 {
 public:
-  ACE_TLI_Request_Queue (void);
+  ACE_TLI_Request_Queue ();
 
   ACE_HANDLE open (ACE_HANDLE fd, int size);
-  int close (void);
+  int close ();
 
   int enqueue (const char device[], bool restart, int rwflag);
   int dequeue (ACE_TLI_Request *&ptr);
   int remove (int sequence_number);
 
-  int is_empty (void) const;
-  int is_full (void) const;
+  int is_empty () const;
+  int is_full () const;
 
-  ACE_TLI_Request *alloc (void);
+  ACE_TLI_Request *alloc ();
   void    free (ACE_TLI_Request *node);
 
   void dump () const;
@@ -56,7 +54,7 @@ private:
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Request_Queue)
 
 void
-ACE_TLI_Request_Queue::dump (void) const
+ACE_TLI_Request_Queue::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TLI_Request_Queue::dump");
@@ -64,14 +62,14 @@ ACE_TLI_Request_Queue::dump (void) const
 }
 
 int
-ACE_TLI_Request_Queue::is_empty (void) const
+ACE_TLI_Request_Queue::is_empty () const
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::is_empty");
   return this->current_count_ == 0;
 }
 
 int
-ACE_TLI_Request_Queue::is_full (void) const
+ACE_TLI_Request_Queue::is_full () const
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::is_full");
   return this->current_count_ + 1 == this->size_; // Add 1 for the dummy.
@@ -90,7 +88,7 @@ ACE_TLI_Request_Queue::free (ACE_TLI_Request *node)
 // Remove a node from the free list stack.
 
 ACE_TLI_Request *
-ACE_TLI_Request_Queue::alloc (void)
+ACE_TLI_Request_Queue::alloc ()
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::alloc");
   ACE_TLI_Request *temp = this->free_list_;
@@ -101,14 +99,14 @@ ACE_TLI_Request_Queue::alloc (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Acceptor)
 
 void
-ACE_TLI_Acceptor::dump (void) const
+ACE_TLI_Acceptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TLI_Acceptor::dump");
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_TLI_Acceptor::ACE_TLI_Acceptor (void)
+ACE_TLI_Acceptor::ACE_TLI_Acceptor ()
   : queue_ (0)
 {
   ACE_TRACE ("ACE_TLI_Acceptor::ACE_TLI_Acceptor");
@@ -170,7 +168,7 @@ open_new_endpoint (ACE_HANDLE listen_handle,
 // Close down the acceptor and release resources.
 
 int
-ACE_TLI_Request_Queue::close (void)
+ACE_TLI_Request_Queue::close ()
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::close");
   int res = 0;
@@ -221,7 +219,7 @@ ACE_TLI_Request_Queue::open (ACE_HANDLE f, int sz)
   return 0;
 }
 
-ACE_TLI_Request_Queue::ACE_TLI_Request_Queue (void)
+ACE_TLI_Request_Queue::ACE_TLI_Request_Queue ()
   : size_ (0),
     current_count_ (0),
     base_ (0),
@@ -404,7 +402,7 @@ ACE_TLI_Acceptor::ACE_TLI_Acceptor (const ACE_Addr &remote_sap,
 }
 
 int
-ACE_TLI_Acceptor::close (void)
+ACE_TLI_Acceptor::close ()
 {
   ACE_TRACE ("ACE_TLI_Acceptor::close");
   if (this->device_ != 0)

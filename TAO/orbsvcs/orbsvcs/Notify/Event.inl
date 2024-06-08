@@ -2,32 +2,32 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const TAO_Notify_Property_Short&
-TAO_Notify_Event::priority (void) const
+TAO_Notify_Event::priority () const
 {
   return this->priority_;
 }
 
 ACE_INLINE const TAO_Notify_Property_Time&
-TAO_Notify_Event::timeout (void) const
+TAO_Notify_Event::timeout () const
 {
   return this->timeout_;
 }
 
 ACE_INLINE const TAO_Notify_Property_Boolean&
-TAO_Notify_Event::reliable (void) const
+TAO_Notify_Event::reliable () const
 {
   return this->reliable_;
 }
 
 ACE_INLINE const ACE_Time_Value&
-TAO_Notify_Event::creation_time (void) const
+TAO_Notify_Event::creation_time () const
 {
   return this->time_;
 }
 
 ACE_INLINE
 TAO_Notify_Event*
-TAO_Notify_Event::queueable_copy (void) const
+TAO_Notify_Event::queueable_copy () const
 {
   if ( is_on_heap_ )
   {

@@ -125,7 +125,6 @@ namespace
 }
 
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -201,7 +200,6 @@ run_main (int, ACE_TCHAR *[])
 
 namespace
 {
-
 void
 check_constructor_count(int expected,
                         char const * filename,

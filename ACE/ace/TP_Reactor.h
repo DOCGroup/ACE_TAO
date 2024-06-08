@@ -47,14 +47,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_EH_Dispatch_Info
 {
 public:
-  ACE_EH_Dispatch_Info (void);
+  ACE_EH_Dispatch_Info ();
 
   void set (ACE_HANDLE handle,
             ACE_Event_Handler *event_handler,
             ACE_Reactor_Mask mask,
             ACE_EH_PTMF callback);
 
-  bool dispatch (void) const;
+  bool dispatch () const;
 
   ACE_HANDLE handle_;
   ACE_Event_Handler *event_handler_;
@@ -87,20 +87,19 @@ private:
 class ACE_TP_Token_Guard
 {
 public:
-
   /// Constructor that will grab the token for us
   ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token);
 
   /// Destructor. This will release the token if it hasnt been
   /// released till this point
-  ~ACE_TP_Token_Guard (void);
+  ~ACE_TP_Token_Guard ();
 
   /// Release the token ..
-  void release_token (void);
+  void release_token ();
 
   /// Returns whether the thread that created this object ownes the
   /// token or not.
-  bool is_owner (void);
+  bool is_owner ();
 
   /// A helper method that grabs the token for us, after which the
   /// thread that owns that can do some actual work.
@@ -115,16 +114,13 @@ public:
   int acquire_token (ACE_Time_Value *max_wait_time = 0);
 
 private:
-  // Disallow default construction.
-  ACE_TP_Token_Guard (void);
-
+  ACE_TP_Token_Guard () = delete;
   ACE_TP_Token_Guard (const ACE_TP_Token_Guard &) = delete;
   ACE_TP_Token_Guard &operator= (const ACE_TP_Token_Guard &) = delete;
   ACE_TP_Token_Guard (ACE_TP_Token_Guard &&) = delete;
   ACE_TP_Token_Guard &operator= (ACE_TP_Token_Guard &&) = delete;
 
 private:
-
   /// The Select Reactor token.
   ACE_Select_Reactor_Token &token_;
 
@@ -174,7 +170,6 @@ private:
 class ACE_Export ACE_TP_Reactor : public ACE_Select_Reactor
 {
 public:
-
   /// Initialize ACE_TP_Reactor with the default size.
   ACE_TP_Reactor (ACE_Sig_Handler * = 0,
                   ACE_Timer_Queue * = 0,
@@ -221,7 +216,7 @@ public:
   /// its own ie. can it pass on the control of handle resumption to
   /// the application.  The TP reactor has can allow applications to
   /// resume handles.  So return a positive value.
-  virtual int resumable_handler (void);
+  virtual int resumable_handler ();
 
   /// Called from handle events
   static void no_op_sleep_hook (void *);
@@ -284,10 +279,9 @@ protected:
                               ACE_Event_Handler *eh,
                               ACE_EH_PTMF callback);
 private:
-
   /// Get the handle of the notify pipe from the ready set if there is
   /// an event in the notify pipe.
-  ACE_HANDLE get_notify_handle (void);
+  ACE_HANDLE get_notify_handle ();
 
   /// Get socket event dispatch information.
   int get_socket_event_info (ACE_EH_Dispatch_Info &info);
@@ -302,9 +296,8 @@ private:
   int post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,int status);
 
 private:
-  /// Deny access since member-wise won't work...
-  ACE_TP_Reactor (const ACE_TP_Reactor &);
-  ACE_TP_Reactor &operator = (const ACE_TP_Reactor &);
+  ACE_TP_Reactor (const ACE_TP_Reactor &) = delete;
+  ACE_TP_Reactor &operator = (const ACE_TP_Reactor &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -4,8 +4,6 @@
 /**
  *  @file    Guard_T.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -112,7 +110,6 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-
   /// Helper, meant for subclass only.
   ACE_Guard (ACE_LOCK *lock): lock_ (lock), owner_ (0) {}
 
@@ -123,9 +120,8 @@ protected:
   int owner_;
 
 private:
-  // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Guard<ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Guard (const ACE_Guard<ACE_LOCK> &))
+  void operator= (const ACE_Guard<ACE_LOCK> &) = delete;
+  ACE_Guard (const ACE_Guard<ACE_LOCK> &) = delete;
 };
 
 /**
@@ -284,8 +280,8 @@ private:
   typedef ACE_Guard<ACE_LOCK> Guard_Type;
   // FUZZ: enable check_for_ACE_Guard
 
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS_Guard<ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_TSS_Guard (const ACE_TSS_Guard<ACE_LOCK> &))
+  void operator= (const ACE_TSS_Guard<ACE_LOCK> &) = delete;
+  ACE_TSS_Guard (const ACE_TSS_Guard<ACE_LOCK> &) = delete;
 };
 
 /**
@@ -382,13 +378,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Guard_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Guard_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Guard_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_GUARD_T_H */

@@ -4,22 +4,7 @@
 #include "ace/Lock.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-ACE_Lock::~ACE_Lock ()
-{
-}
-
-ACE_Adaptive_Lock::ACE_Adaptive_Lock ()
-  : lock_ (0)
-{
-}
-
-ACE_Adaptive_Lock::~ACE_Adaptive_Lock ()
-{
-}
 
 int
 ACE_Adaptive_Lock::remove ()

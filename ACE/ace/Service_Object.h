@@ -180,20 +180,6 @@ private:
   ACE_Service_Object *service_object_;
 };
 
-#if defined (ACE_OPENVMS)
-/**
- * @class ACE_Dynamic_Svc_Registrar
- *
- * @brief Used to register Service allocator function by its full name.
- */
-class ACE_Dynamic_Svc_Registrar
-{
-public:
-  ACE_Dynamic_Svc_Registrar (const ACE_TCHAR* alloc_name,
-                             void* svc_allocator);
-};
-#endif
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)

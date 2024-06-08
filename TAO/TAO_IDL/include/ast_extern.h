@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -65,7 +64,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #ifndef _AST_EXTERN_AST_EXTERN_HH
 #define _AST_EXTERN_AST_EXTERN_HH
-
 
 
 class AST_Type;

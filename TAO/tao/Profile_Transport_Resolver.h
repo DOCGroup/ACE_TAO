@@ -149,7 +149,6 @@ namespace TAO
 
     CORBA::PolicyList *steal_inconsistent_policies ();
   private:
-
     /// Helper method to access get the connection timeout from the
     /// ORB.
     bool get_connection_timeout (ACE_Time_Value &max_wait_time);
@@ -181,12 +180,12 @@ namespace TAO
     /**
      * If current effective policies cause the invocation to raise
      * CORBA::INV_POLICY exception, the conflicting/problematic policies
-     * are stored in this list.  This is used by \param
-     * Object::_validate_connection method to inform clients about
+     * are stored in this list.  This is used by
+     * Object::_validate_connection() method to inform clients about
      * causes of invocation failure.
      * @par
-     * Conflicting policies are only stored in this list if \param
-     * init_inconsistent_policies method has been called prior to the
+     * Conflicting policies are only stored in this list if
+     * init_inconsistent_policies() method has been called prior to the
      * beginning of invocation.  This saves extra work of conflicting
      * policies 'logging' when it's not needed.
      *

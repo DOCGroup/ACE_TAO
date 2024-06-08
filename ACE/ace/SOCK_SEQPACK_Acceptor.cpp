@@ -1,6 +1,5 @@
 #include "ace/SOCK_SEQPACK_Acceptor.h"
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
@@ -11,21 +10,17 @@
 #include "ace/SOCK_SEQPACK_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_SEQPACK_Acceptor)
 
 // Do nothing routine for constructor.
-
 ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor ()
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor");
 }
 
 // Performs the timed accept operation.
-
 int
 ACE_SOCK_SEQPACK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
                                         bool restart,
@@ -95,7 +90,6 @@ ACE_SOCK_SEQPACK_Acceptor::shared_accept_finish (ACE_SOCK_SEQPACK_Association ne
 }
 
 // General purpose routine for accepting new connections.
-
 int
 ACE_SOCK_SEQPACK_Acceptor::accept (ACE_SOCK_SEQPACK_Association &new_association,
                            ACE_Addr *remote_addr,
@@ -285,7 +279,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
           local_inet_addr.sin_port = 0;
         }
       else
-        local_inet_addr = *reinterpret_cast<sockaddr_in *> (local_sap.get_addr ());
+        {
+          local_inet_addr = *reinterpret_cast<sockaddr_in *> (local_sap.get_addr ());
+        }
 
 //  A port number of 0 means that the user is requesting that the
 //  operating system choose an arbitrary, unused port.  Since some
@@ -415,9 +411,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
                          local_sap.get_size ()) == -1)
     error = 1;
 
-  if (error != 0
-      || ACE_OS::listen (this->get_handle (),
-                         backlog) == -1)
+  if (error != 0 || ACE_OS::listen (this->get_handle (), backlog) == -1)
     {
       error = 1;
       this->close ();
@@ -454,9 +448,7 @@ ACE_SOCK_SEQPACK_Acceptor::open (const ACE_Addr &local_sap,
                       reuse_addr) == -1)
     return -1;
   else
-    return this->shared_open (local_sap,
-                              protocol_family,
-                              backlog);
+    return this->shared_open (local_sap, protocol_family, backlog);
 }
 
 ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor (const ACE_Addr &local_sap,

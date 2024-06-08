@@ -36,7 +36,7 @@ class ACE_Export ACE_MEM_Connector : public ACE_SOCK_Connector
 {
 public:
   /// Default constructor.
-  ACE_MEM_Connector (void);
+  ACE_MEM_Connector ();
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_MEM_Stream
@@ -133,7 +133,7 @@ public:
                int perms = 0);
 
   /// Get the preferred signaling strategy.
-  ACE_MEM_IO::Signal_Strategy preferred_strategy (void) const;
+  ACE_MEM_IO::Signal_Strategy preferred_strategy () const;
 
   /// Set the preferred signaling strategy.
   void preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy);

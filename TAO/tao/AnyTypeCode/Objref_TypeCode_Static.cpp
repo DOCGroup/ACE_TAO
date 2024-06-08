@@ -100,7 +100,6 @@ TAO::TypeCode::Objref<char const *,
     {
       return adapter->create_local_interface_tc (this->attributes_.id (),
                                                  ""  /* empty name */);
-
     }
   else if (this->kind_ == CORBA::tk_native)
     {
@@ -115,8 +114,7 @@ TAO::TypeCode::Objref<char const *,
 }
 
 char const *
-TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::id_i (
-  ) const
+TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -124,8 +122,7 @@ TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::id_i (
 }
 
 char const *
-TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::name_i (
-  ) const
+TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.

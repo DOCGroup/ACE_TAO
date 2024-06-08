@@ -75,10 +75,10 @@ public:
             MESSAGE_QUEUE_EX *mq = 0);
 
   /// Destructor.
-  virtual ~ACE_Task_Ex (void);
+  virtual ~ACE_Task_Ex ();
 
   /// Gets the message queue associated with this task.
-  MESSAGE_QUEUE_EX *msg_queue (void);
+  MESSAGE_QUEUE_EX *msg_queue ();
 
   /// Sets the message queue associated with this task.
   void msg_queue (MESSAGE_QUEUE_EX *);
@@ -127,20 +127,20 @@ public: // Should be protected:
   // = ACE_Task utility routines to identify names et al.
   /// Return the name of the enclosing Module if there's one associated
   /// with the Task, else returns 0.
-  const ACE_TCHAR *name (void) const;
+  const ACE_TCHAR *name () const;
 
   // = Pointers to next ACE_Task_Base (if ACE is part of an ACE_Stream).
   /// Get next Task pointer.
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next (void);
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next ();
 
   /// Set next Task pointer.
   void next (ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *);
 
   /// Alwasy return 0. @todo FIXME
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *sibling (void);
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *sibling ();
 
   /// Return the Task's Module if there is one, else returns 0.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *module (void) const;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *module () const;
 
   /**
    * Flush the task's queue, i.e., free all of the enqueued
@@ -180,13 +180,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Task_Ex_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Task_Ex_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Task_Ex_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TASK_EX_H */

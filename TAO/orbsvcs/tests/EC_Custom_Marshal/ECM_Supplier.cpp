@@ -1,5 +1,5 @@
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Sched_Params.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
@@ -15,8 +15,7 @@
 #include "ace/OS_NS_errno.h"
 
 
-
-ECMS_Driver::ECMS_Driver (void)
+ECMS_Driver::ECMS_Driver ()
   : n_suppliers_ (1),
     event_count_ (100),
     event_period_ (100),
@@ -70,7 +69,7 @@ ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
                   this->event_a_,
                   this->event_b_,
 
-                  this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")) );
+                  this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
 
       if (this->pid_file_name_ != 0)
         {
@@ -85,7 +84,7 @@ ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
 
       int min_priority =
         ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
-        // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      // Enable FIFO scheduling
 
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                                   min_priority,
@@ -287,7 +286,7 @@ ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel)
 }
 
 void
-ECMS_Driver::activate_suppliers (void)
+ECMS_Driver::activate_suppliers ()
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -296,7 +295,7 @@ ECMS_Driver::activate_suppliers (void)
 }
 
 void
-ECMS_Driver::disconnect_suppliers (void)
+ECMS_Driver::disconnect_suppliers ()
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -436,7 +435,7 @@ Test_Supplier::connect (const char* name,
 }
 
 void
-Test_Supplier::disconnect (void)
+Test_Supplier::disconnect ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -471,19 +470,19 @@ Test_Supplier::svc ()
 }
 
 void
-Test_Supplier::disconnect_push_supplier (void)
+Test_Supplier::disconnect_push_supplier ()
 {
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
 
-int Test_Supplier::supplier_id (void) const
+int Test_Supplier::supplier_id () const
 {
   return this->supplier_id_;
 }
 
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
-Test_Supplier::consumer_proxy (void)
+Test_Supplier::consumer_proxy ()
 {
   return this->consumer_proxy_.in ();
 }

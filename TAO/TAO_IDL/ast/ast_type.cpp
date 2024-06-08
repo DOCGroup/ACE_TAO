@@ -185,17 +185,10 @@ AST_Type::has_constructor (bool value)
     }
 }
 
-// This code works. However, whether we should generate the
-// ACE_NESTED_CLASS macro or not should be based on an option to the
-// compiler. The previous version generated a relative path.
-// This version always generates ACE_NESTED_CLASS, (leave ace/ACE.h and friends
-// do the porting)
-//
 // Caution: returns the same buffer pointer even if the contents may change
 // in the next call.  (return std::string anyone?)
 //
-// Return the type name using the ACE_NESTED_CLASS macro
-
+// Return the type name
 const char *
 AST_Type::nested_type_name (AST_Decl *use_scope,
                             const char *suffix,
@@ -242,16 +235,13 @@ AST_Type::nested_name (const char* local_name,
   // Some compilers do not like generating a fully scoped name for a type that
   // was defined in the same enclosing scope in which it was defined. For such,
   // we emit a macro defined in the ACE library.
-  //
 
   // The tricky part here is that it is not enough to check if the
   // typename we are using was defined in the current scope. But we
   // need to ensure that it was not defined in any of our ancestor
-  // scopes as well. If that is the case, then we can generate a fully
-  // scoped name for that type, else we use the ACE_NESTED_CLASS macro.
+  // scopes as well.
 
   // Thus we need some sort of relative name to be generated.
-
   if (this->nested_type_name_ == nullptr)
     {
       ACE_NEW_RETURN (this->nested_type_name_,
@@ -288,9 +278,7 @@ AST_Type::nested_name (const char* local_name,
   // Traverse every component of the def_scope and use_scope beginning at the
   // root and proceeding towards the leaf trying to see if the components
   // match. Continue until there is a match and keep accumulating the path
-  // traversed. This forms the first argument to the ACE_NESTED_CLASS
-  // macro. Whenever there is no match, the remaining components of the
-  // def_scope form the second argument.
+  // traversed.
 
   // This adds the global double colon for type names using the canonical
   // CORBA namespace, replacing the ad hoc spot

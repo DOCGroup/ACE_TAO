@@ -25,7 +25,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Policy_Validator;
-
+//
 class TAO_PortableServer_Export TAO_POA_Policy_Set
 {
 public:

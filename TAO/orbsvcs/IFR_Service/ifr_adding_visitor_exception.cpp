@@ -20,7 +20,7 @@ ifr_adding_visitor_exception::ifr_adding_visitor_exception (
 {
 }
 
-ifr_adding_visitor_exception::~ifr_adding_visitor_exception (void)
+ifr_adding_visitor_exception::~ifr_adding_visitor_exception ()
 {
 }
 
@@ -418,7 +418,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
 }
 
 CORBA::IDLType_ptr
-ifr_adding_visitor_exception::ir_current (void) const
+ifr_adding_visitor_exception::ir_current () const
 {
   return this->ir_current_.in ();
 }

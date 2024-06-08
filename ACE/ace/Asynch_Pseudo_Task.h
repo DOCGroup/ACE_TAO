@@ -34,8 +34,8 @@ public:
   ACE_Asynch_Pseudo_Task();
   virtual ~ACE_Asynch_Pseudo_Task();
 
-  int start (void);
-  int stop (void);
+  int start ();
+  int stop ();
 
   int register_io_handler (ACE_HANDLE handle,
                            ACE_Event_Handler *handler,
@@ -48,7 +48,7 @@ public:
   int suspend_io_handler (ACE_HANDLE handle);
 
 protected:
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Should be initialized before reactor_
   ACE_Select_Reactor select_reactor_;

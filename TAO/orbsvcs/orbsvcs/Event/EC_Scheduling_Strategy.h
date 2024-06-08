@@ -59,7 +59,6 @@ public:
   virtual void schedule_event (const RtecEventComm::EventSet &event,
                                TAO_EC_ProxyPushConsumer *consumer,
                                TAO_EC_Supplier_Filter *filter) = 0;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

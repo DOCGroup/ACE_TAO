@@ -3,6 +3,7 @@
 
 #include "tao/AnyTypeCode/TypeCode_Case_Base_T.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/TypeCode_Case_Base_T.inl"
@@ -11,7 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType, typename TypeCodeType>
-TAO::TypeCode::Case<StringType, TypeCodeType>::~Case (void)
+TAO::TypeCode::Case<StringType, TypeCodeType>::~Case ()
 {
 }
 
@@ -24,7 +25,7 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::equal (CORBA::ULong index,
   char const * const lhs_name = this->name ();
   char const * const rhs_name = tc->member_name (index);
 
-  if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
+  if (std::strcmp (lhs_name, rhs_name) != 0)
     return false;
 
   // Check case TypeCodes.

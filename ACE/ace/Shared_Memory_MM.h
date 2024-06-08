@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SHARED_MALLOC_MM_H
 #define ACE_SHARED_MALLOC_MM_H
 #include /**/ "ace/pre.h"
@@ -36,7 +35,7 @@ class ACE_Export ACE_Shared_Memory_MM : public ACE_Shared_Memory
 {
 public:
   /// Default constructor.
-  ACE_Shared_Memory_MM (void);
+  ACE_Shared_Memory_MM ();
 
   /// Constructor.
   ACE_Shared_Memory_MM (ACE_HANDLE handle,
@@ -74,27 +73,27 @@ public:
             ACE_OFF_T pos = 0);
 
   /// Return the name of file that is mapped (if any).
-  const ACE_TCHAR *filename (void) const;
+  const ACE_TCHAR *filename () const;
 
   /// Close down the shared memory segment.
-  virtual int close (void);
+  virtual int close ();
 
   /// Remove the shared memory segment and the underlying file.
-  virtual int remove (void);
+  virtual int remove ();
 
   // = Allocation and deallocation methods.
   /// Create a new chuck of memory containing @a size bytes.
   virtual void *malloc (size_t size = 0);
 
   /// Free a chuck of memory allocated by
-  /// <ACE_Shared_Memory_MM::malloc>.
+  /// ACE_Shared_Memory_MM::malloc.
   virtual int free (void *p);
 
   /// Return the size of the shared memory segment.
-  virtual size_t get_segment_size (void) const;
+  virtual size_t get_segment_size () const;
 
   /// Return the ID of the shared memory segment (i.e., an ACE_HANDLE).
-  virtual ACE_HANDLE get_id (void) const;
+  virtual ACE_HANDLE get_id () const;
 
   /// Dump the state of an object.
   void dump () const;

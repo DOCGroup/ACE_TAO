@@ -32,7 +32,6 @@ template <class T>
 class ACE_Noop_Key_Generator
 {
 public:
-
   /// Functor method: generates a new key.
   int operator () (T &);
 };
@@ -54,9 +53,8 @@ template <class T>
 class ACE_Incremental_Key_Generator
 {
 public:
-
   /// Constructor.
-  ACE_Incremental_Key_Generator ();
+  ACE_Incremental_Key_Generator () = default;
 
   /// Functor method: generates a new key.
   int operator () (T &t);
@@ -65,9 +63,8 @@ public:
   const T& current_value () const;
 
 protected:
-
   /// Current value.
-  T t_;
+  T t_ {};
 };
 
 /**
@@ -81,9 +78,8 @@ template <class T>
 class ACE_Iterator_Impl
 {
 public:
-
   /// Destructor.
-  virtual ~ACE_Iterator_Impl ();
+  virtual ~ACE_Iterator_Impl () = default;
 
   /// Clone.
   virtual ACE_Iterator_Impl<T> *clone () const = 0;
@@ -112,9 +108,8 @@ template <class T>
 class ACE_Reverse_Iterator_Impl
 {
 public:
-
   /// Destructor.
-  virtual ~ACE_Reverse_Iterator_Impl ();
+  virtual ~ACE_Reverse_Iterator_Impl () = default;
 
   /// Clone.
   virtual ACE_Reverse_Iterator_Impl<T> *clone () const = 0;
@@ -143,7 +138,6 @@ template <class T>
 class ACE_Iterator
 {
 public:
-
   // = Traits.
   typedef T value_type;
   typedef ACE_Iterator_Impl<T> implementation;
@@ -183,7 +177,6 @@ public:
   ACE_Iterator_Impl<T> &impl ();
 
 protected:
-
   /// Implementation pointer.
   ACE_Iterator_Impl<T> *implementation_;
 };
@@ -199,7 +192,6 @@ template <class T>
 class ACE_Reverse_Iterator
 {
 public:
-
   // = Traits.
   typedef T value_type;
   typedef ACE_Reverse_Iterator_Impl<T> implementation;
@@ -245,7 +237,6 @@ public:
   ACE_Reverse_Iterator_Impl<T> &impl ();
 
 protected:
-
   /// Implementation pointer.
   ACE_Reverse_Iterator_Impl<T> *implementation_;
 };
@@ -261,7 +252,6 @@ template <class KEY, class VALUE>
 class ACE_Map
 {
 public:
-
   // = Traits.
   typedef KEY
           key_type;
@@ -279,11 +269,11 @@ public:
           reverse_iterator_implementation;
 
   /// Close down and release dynamically allocated resources.
-  virtual ~ACE_Map ();
+  virtual ~ACE_Map () = default;
 
   /// Initialize a map with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-                    ACE_Allocator *alloc = 0) = 0;
+                    ACE_Allocator *alloc = nullptr) = 0;
 
   /// Close down a <Map> and release dynamically allocated resources.
   virtual int close () = 0;
@@ -423,9 +413,8 @@ public:
   reverse_iterator rend ();
 
 protected:
-
   // = Protected no-op constructor.
-  ACE_Map ();
+  ACE_Map () = default;
 
   /// Return forward iterator.
   virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl () = 0;
@@ -436,10 +425,9 @@ protected:
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl () = 0;
 
 private:
-
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Map<KEY, VALUE> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Map (const ACE_Map<KEY, VALUE> &))
+  void operator= (const ACE_Map<KEY, VALUE> &) = delete;
+  ACE_Map (const ACE_Map<KEY, VALUE> &) = delete;
 };
 
 /**
@@ -453,7 +441,6 @@ template <class T, class IMPLEMENTATION, class ENTRY>
 class ACE_Map_Impl_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef IMPLEMENTATION
           implementation;
@@ -462,7 +449,7 @@ public:
   ACE_Map_Impl_Iterator_Adapter (const IMPLEMENTATION &impl);
 
   /// Destructor.
-  virtual ~ACE_Map_Impl_Iterator_Adapter ();
+  virtual ~ACE_Map_Impl_Iterator_Adapter () = default;
 
   /// Clone.
   virtual ACE_Iterator_Impl<T> *clone () const;
@@ -483,7 +470,6 @@ public:
   IMPLEMENTATION &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   IMPLEMENTATION implementation_;
 };
@@ -499,7 +485,6 @@ template <class T, class IMPLEMENTATION, class ENTRY>
 class ACE_Map_Impl_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef IMPLEMENTATION
           implementation;
@@ -529,7 +514,6 @@ public:
   IMPLEMENTATION &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   IMPLEMENTATION implementation_;
 };
@@ -555,19 +539,19 @@ public:
           implementation;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
-  ACE_Map_Impl (ACE_Allocator *alloc = 0);
+  ACE_Map_Impl (ACE_Allocator *alloc = nullptr);
 
   /// Initialize with @a size entries.  The @a size parameter is ignored
   /// by maps for which an initialize size does not make sense.
   ACE_Map_Impl (size_t size,
-                ACE_Allocator *alloc = 0);
+                ACE_Allocator *alloc = nullptr);
 
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Map_Impl ();
 
   /// Initialize a <Map> with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-                    ACE_Allocator *alloc = 0);
+                    ACE_Allocator *alloc = nullptr);
 
   /// Close down a <Map> and release dynamically allocated resources.
   virtual int close ();
@@ -700,7 +684,6 @@ public:
   IMPLEMENTATION &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   IMPLEMENTATION implementation_;
 
@@ -715,10 +698,9 @@ protected:
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
 
 private:
-
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Map_Impl (const ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY> &))
+  void operator= (const ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY> &) = delete;
+  ACE_Map_Impl (const ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY> &) = delete;
 };
 
 /**
@@ -732,7 +714,6 @@ template <class T, class VALUE>
 class ACE_Active_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef typename ACE_Active_Map_Manager<VALUE>::iterator
           implementation;
@@ -762,7 +743,6 @@ public:
   ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> implementation_;
 };
@@ -778,7 +758,6 @@ template <class T, class VALUE>
 class ACE_Active_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef typename ACE_Active_Map_Manager<VALUE>::reverse_iterator
           implementation;
@@ -808,7 +787,6 @@ public:
   ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> implementation_;
 };
@@ -835,19 +813,19 @@ public:
           implementation;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
-  ACE_Active_Map_Manager_Adapter (ACE_Allocator *alloc = 0);
+  ACE_Active_Map_Manager_Adapter (ACE_Allocator *alloc = nullptr);
 
   /// Initialize with @a size entries.  The @a size parameter is ignored
   /// by maps for which an initialize size does not make sense.
   ACE_Active_Map_Manager_Adapter (size_t size,
-                                  ACE_Allocator *alloc = 0);
+                                  ACE_Allocator *alloc = nullptr);
 
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Active_Map_Manager_Adapter ();
 
   /// Initialize a Map with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-                    ACE_Allocator *alloc = 0);
+                    ACE_Allocator *alloc = nullptr);
 
   /// Close down a Map and release dynamically allocated resources.
   virtual int close ();
@@ -982,7 +960,6 @@ public:
   KEY_ADAPTER &key_adapter ();
 
 protected:
-
   /// Find helper.
   virtual int find (const KEY &key,
                     expanded_value *&internal_value);
@@ -1008,10 +985,9 @@ protected:
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
 
 private:
-
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Active_Map_Manager_Adapter (const ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER> &))
+  void operator= (const ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER> &) = delete;
+  ACE_Active_Map_Manager_Adapter (const ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER> &) = delete;
 };
 
 /**
@@ -1025,7 +1001,6 @@ template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS>
 class ACE_Hash_Map_Manager_Ex_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator
           implementation;
@@ -1055,7 +1030,6 @@ public:
   ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
 };
@@ -1071,7 +1045,6 @@ template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS>
 class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator
           implementation;
@@ -1101,7 +1074,6 @@ public:
   ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
 };
@@ -1126,19 +1098,19 @@ public:
           implementation;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
-  ACE_Hash_Map_Manager_Ex_Adapter (ACE_Allocator *alloc = 0);
+  ACE_Hash_Map_Manager_Ex_Adapter (ACE_Allocator *alloc = nullptr);
 
   /// Initialize with @a size entries.  The @a size parameter is ignored
   /// by maps for which an initialize size does not make sense.
   ACE_Hash_Map_Manager_Ex_Adapter (size_t size,
-                                   ACE_Allocator *alloc = 0);
+                                   ACE_Allocator *alloc = nullptr);
 
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Hash_Map_Manager_Ex_Adapter ();
 
   /// Initialize a Map with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-                    ACE_Allocator *alloc = 0);
+                    ACE_Allocator *alloc = nullptr);
 
   /// Close down a Map and release dynamically allocated resources.
   virtual int close ();
@@ -1274,7 +1246,6 @@ public:
   KEY_GENERATOR &key_generator ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
 
@@ -1292,10 +1263,9 @@ protected:
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
 
 private:
-
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Hash_Map_Manager_Ex_Adapter (const ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR> &))
+  void operator= (const ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR> &) = delete;
+  ACE_Hash_Map_Manager_Ex_Adapter (const ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR> &) = delete;
 };
 
 /**
@@ -1309,7 +1279,6 @@ template <class T, class KEY, class VALUE>
 class ACE_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator
           implementation;
@@ -1339,7 +1308,6 @@ public:
   ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> implementation_;
 };
@@ -1355,7 +1323,6 @@ template <class T, class KEY, class VALUE>
 class ACE_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator
           implementation;
@@ -1385,7 +1352,6 @@ public:
   ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> implementation_;
 };
@@ -1410,19 +1376,19 @@ public:
           implementation;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
-  ACE_Map_Manager_Adapter (ACE_Allocator *alloc = 0);
+  ACE_Map_Manager_Adapter (ACE_Allocator *alloc = nullptr);
 
   /// Initialize with @a size entries.  The @a size parameter is ignored
   /// by maps for which an initialize size does not make sense.
   ACE_Map_Manager_Adapter (size_t size,
-                           ACE_Allocator *alloc = 0);
+                           ACE_Allocator *alloc = nullptr);
 
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Map_Manager_Adapter ();
 
   /// Initialize a <Map> with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-                    ACE_Allocator *alloc = 0);
+                    ACE_Allocator *alloc = nullptr);
 
   /// Close down a <Map> and release dynamically allocated resources.
   virtual int close ();
@@ -1558,7 +1524,6 @@ public:
   KEY_GENERATOR &key_generator ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex> implementation_;
 
@@ -1576,10 +1541,9 @@ protected:
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
 
 private:
-
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Map_Manager_Adapter (const ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR> &))
+  void operator= (const ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR> &) = delete;
+  ACE_Map_Manager_Adapter (const ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -1588,13 +1552,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Map_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Map_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_MAP_T_H */

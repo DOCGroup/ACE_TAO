@@ -428,7 +428,6 @@ ACE_Service_Config::current ()
 {
   void* temp = ACE_Service_Config::singleton()->threadkey_.get ();
   if (temp == 0) {
-
     // The most likely reason is that the current thread was spawned
     // by some native primitive, like pthreads or Windows API - not
     // from ACE. This is perfectly legal for callers who are not, or
@@ -451,7 +450,6 @@ ACE_Service_Config::current (ACE_Service_Gestalt* newcurrent)
 {
   ACE_Service_Config::singleton()->threadkey_.set (newcurrent);
 }
-
 
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
@@ -507,15 +505,12 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
       break;
     }
   return stp;
-
 }
 
 
 // Signal handling API to trigger dynamic reconfiguration.
 void
-ACE_Service_Config::handle_signal (int sig,
-                                   siginfo_t *,
-                                   ucontext_t *)
+ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
 {
 #if defined (ACE_NDEBUG)
   ACE_UNUSED_ARG (sig);

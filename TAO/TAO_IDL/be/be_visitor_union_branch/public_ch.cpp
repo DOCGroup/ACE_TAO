@@ -108,8 +108,7 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
 
       ctx.state (TAO_CodeGen::TAO_ROOT_CH);
 
-      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      TAO_INSERT_COMMENT (os);
 
       // Now use this array as a "type" for the subsequent declarator
       // the set method.
@@ -122,8 +121,7 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
     }
   else
     {
-      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      TAO_INSERT_COMMENT (os);
 
       // Now use this array as a "type" for the subsequent declarator
       // the set method.
@@ -185,8 +183,7 @@ be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Now use this enum as a "type" for the subsequent declarator
   // the set method.
@@ -229,8 +226,7 @@ be_visitor_union_branch_public_ch::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Set method.
   *os << be_nl_2
@@ -272,8 +268,7 @@ be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Set method.
   *os << be_nl_2
@@ -315,8 +310,7 @@ be_visitor_union_branch_public_ch::visit_valuebox (be_valuebox *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Set method.
   *os << be_nl_2
@@ -358,8 +352,7 @@ be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Set method.
   *os << be_nl_2
@@ -401,8 +394,7 @@ be_visitor_union_branch_public_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Set method.
   *os << be_nl_2
@@ -445,8 +437,7 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   switch (node->pt ())
     {
@@ -533,8 +524,7 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
                             -1);
         }
 
-      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      TAO_INSERT_COMMENT (os);
 
       // Generate the anonymous sequence member typedef.
       // This provides a consistent name to use instead of the
@@ -544,8 +534,7 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
           << " _" << ub->local_name () << "_seq;";
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
       << "void " << ub->local_name () << " (const "
@@ -576,8 +565,7 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Three methods to set the string value
   if (node->width () == (long) sizeof (char))
@@ -594,7 +582,7 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
   else
     {
       *os << be_nl_2
-          << "void " << ub->local_name () << " ( ::CORBA::WChar *);" << be_nl;
+          << "void " << ub->local_name () << " (::CORBA::WChar *);" << be_nl;
       *os << "void " << ub->local_name () << " (const ::CORBA::WChar *);"
           << be_nl;
       *os << "void " << ub->local_name () << " (const ::CORBA::WString_var&);"
@@ -652,8 +640,7 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
       << "void " << ub->local_name () << " (const "
@@ -745,8 +732,7 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
       << "void " << ub->local_name () << " (const "

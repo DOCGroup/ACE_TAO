@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -34,24 +32,19 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-# if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64  \
-     && defined (ACE_WIN32)
-#   if defined (__BORLANDC__)
-typedef struct stati64 ACE_stat;
-#       define ACE_STAT_FUNC_NAME ::_stati64
-#       define ACE_WSTAT_FUNC_NAME ::_wstati64
-#   elif !defined (ACE_HAS_WINCE) && defined (_MSC_VER)
-#       if defined (ACE_MSVC_USES_DOUBLE_UNDERSCORE_STAT64)
-typedef struct __stat64 ACE_stat;
-#       else
+# if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64 && defined (ACE_WIN32)
+#   if defined (_MSC_VER)
 typedef struct _stat64 ACE_stat;
-#       endif
 #       define ACE_STAT_FUNC_NAME ::_stat64
 #       define ACE_WSTAT_FUNC_NAME ::_wstat64
 #   elif defined (__MINGW32__)
 typedef struct _stati64 ACE_stat;
 #     define ACE_STAT_FUNC_NAME ::_stati64
 #     define ACE_WSTAT_FUNC_NAME ::_wstati64
+#   elif defined (__BORLANDC__)
+typedef struct stati64 ACE_stat;
+#       define ACE_STAT_FUNC_NAME ::_stati64
+#       define ACE_WSTAT_FUNC_NAME ::_wstati64
 #   else
 typedef struct stat ACE_stat;
 #     define ACE_STAT_FUNC_NAME ::stat
@@ -59,7 +52,7 @@ typedef struct stat ACE_stat;
 #   endif  /**/
 # else
 //  Default file offset case.
-#   if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#   if defined (ACE_WIN32)
 typedef struct _stat ACE_stat;
 #     define ACE_STAT_FUNC_NAME ::_stat
 #     define ACE_WSTAT_FUNC_NAME ::_wstat
@@ -72,7 +65,6 @@ typedef struct stat ACE_stat;
 
 namespace ACE_OS
 {
-
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE creat (const ACE_TCHAR *filename,
                     mode_t mode);
@@ -125,7 +117,6 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   mode_t umask (mode_t cmask);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

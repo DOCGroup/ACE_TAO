@@ -23,7 +23,6 @@ ACE_ALLOC_HOOK_DEFINE_Tc4(ACE_RB_Tree_Iterator)
 ACE_ALLOC_HOOK_DEFINE_Tc4(ACE_RB_Tree_Reverse_Iterator)
 
 // Constructor.
-
 template <class EXT_ID, class INT_ID>
 ACE_RB_Tree_Node<EXT_ID, INT_ID>::ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t)
   : k_ (k),

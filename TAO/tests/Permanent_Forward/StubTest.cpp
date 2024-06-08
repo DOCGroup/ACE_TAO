@@ -75,7 +75,7 @@ marshaled_equal_to_other (CORBA::ORB_ptr orb, CORBA::Object_ptr obj, TAO_MProfil
   TAO_Stub *stub_copy = obj_copy->_stubobj ();
   TAO_MProfile *copy_mprofile  = &(stub_copy->base_profiles ());
 
-  if ( copy_mprofile->size() != other_mprofile->size())
+  if (copy_mprofile->size() != other_mprofile->size())
     return false;
 
   for (size_t i=0; i<copy_mprofile->size(); ++i)
@@ -83,7 +83,7 @@ marshaled_equal_to_other (CORBA::ORB_ptr orb, CORBA::Object_ptr obj, TAO_MProfil
       TAO_Profile *copy_profile  = copy_mprofile->get_profile (i);
       TAO_Profile *other_profile = other_mprofile->get_profile (i);
 
-      if ( ! equal_endpoint (copy_profile, other_profile) )
+      if (! equal_endpoint (copy_profile, other_profile) )
         return false;
     }
 
@@ -108,7 +108,7 @@ test_forward_permanent (CORBA::ORB_ptr orb)
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 1111));
 
   // ----- forward to obj2 permanently
-  stub1->add_forward_profiles (stub4->base_profiles(), true /* permanent */ );
+  stub1->add_forward_profiles (stub4->base_profiles(), true /* permanent */);
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
@@ -117,7 +117,7 @@ test_forward_permanent (CORBA::ORB_ptr orb)
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 4444));
 
   // ----- stringified object reference must be equal to obj4->base_prpfiles().
-  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub4->base_profiles())) );
+  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub4->base_profiles())));
 
   // ----- consume second profile of obj2
 
@@ -161,7 +161,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 1111));
 
   // ----- forward to obj2
-  stub1->add_forward_profiles (stub2->base_profiles(), false /* permanent */ );
+  stub1->add_forward_profiles (stub2->base_profiles(), false /* permanent */);
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
@@ -170,7 +170,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 2222));
 
   // ----- forward to obj3
-  stub1->add_forward_profiles (stub3->base_profiles(), false /* permanent */ );
+  stub1->add_forward_profiles (stub3->base_profiles(), false /* permanent */);
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
@@ -179,10 +179,10 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 3333));
 
   // ----- stringified object reference must be equal to obj1->base_prpfiles().
-  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub1->base_profiles())) );
+  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub1->base_profiles())));
 
   // ----- forward to obj4 permanently
-  stub1->add_forward_profiles (stub4->base_profiles(), true /* permanent */ );
+  stub1->add_forward_profiles (stub4->base_profiles(), true /* permanent */);
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
@@ -191,7 +191,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 4444));
 
   // ----- stringified object reference must be equal to obj4->base_prpfiles().
-  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub4->base_profiles())) );
+  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub4->base_profiles())));
 
   // ----- consume second profile from obj4
   profile = stub1->next_profile ();
@@ -199,7 +199,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.3", 4444));
 
   // ----- forward to obj2
-  stub1->add_forward_profiles (stub2->base_profiles(), false /* permanent */ );
+  stub1->add_forward_profiles (stub2->base_profiles(), false /* permanent */);
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
@@ -208,7 +208,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 2222));
 
   // ----- forward to obj3
-  stub1->add_forward_profiles (stub3->base_profiles(), false /* permanent */ );
+  stub1->add_forward_profiles (stub3->base_profiles(), false /* permanent */);
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
@@ -217,10 +217,10 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 3333));
 
   // ----- stringified object reference must be equal to obj4->base_prpfiles().
-  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub4->base_profiles())) );
+  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub4->base_profiles())));
 
   // ----- forward to obj5 permanently
-  stub1->add_forward_profiles (stub5->base_profiles(), true /* permanent */ );
+  stub1->add_forward_profiles (stub5->base_profiles(), true /* permanent */);
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
@@ -229,7 +229,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 5555));
 
   // ----- stringified object reference must be equal to obj5->base_prpfiles().
-  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub5->base_profiles())) );
+  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub5->base_profiles())));
 
   // ----- consume second profile from obj5
   profile = stub1->next_profile ();
@@ -237,7 +237,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.3", 5555));
 
   // ----- stringified object reference must be equal to obj1->base_prpfiles().
-  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub5->base_profiles())) );
+  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub5->base_profiles())));
 
   // reached end of profiles, next_profile must return NULL
 
@@ -266,7 +266,7 @@ test_forward (CORBA::ORB_ptr orb)
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 1111));
 
   // ----- forward to obj2
-  stub1->add_forward_profiles (stub2->base_profiles(), false /* permanent */ );
+  stub1->add_forward_profiles (stub2->base_profiles(), false /* permanent */);
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
@@ -276,7 +276,7 @@ test_forward (CORBA::ORB_ptr orb)
 
   // ----- forward to obj3
 
-  stub1->add_forward_profiles (stub3->base_profiles(), false /* permanent */ );
+  stub1->add_forward_profiles (stub3->base_profiles(), false /* permanent */);
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
@@ -285,7 +285,7 @@ test_forward (CORBA::ORB_ptr orb)
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 3333));
 
   // ----- stringified object reference must be equal to obj1->base_prpfiles().
-  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub1->base_profiles())) );
+  FRANKS_ASSERT (marshaled_equal_to_other (orb, obj1.in (), &(stub1->base_profiles())));
 
   // ----- consume second profile of obj3
 

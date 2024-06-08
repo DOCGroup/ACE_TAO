@@ -57,7 +57,7 @@ private:
 
 // ****************************************************************
 
-// NOTE: Solaris studio compilers amongst others will issue warnings if the
+// NOTE: Some compilers will issue warnings if the
 // the correct type of function pointer (i.e. extern "C" ) is not stored/used
 // of the form:
 // Warning (Anachronism): Formal argument callback of type
@@ -167,6 +167,12 @@ public:
 
   /// Load certificate from memory rather than a file.
   int certificate (X509* cert);
+
+  /// Loads certificate chain file_name into ctx. Certificates must be
+  /// sorted starting with the subject's certificate (actual client or
+  /// server certificate), followed by ordered intermediate CA certificates.
+  /// E.g. Let's Encrypt's intermediate certificate chain.
+  int certificate_chain (const char *file_name, int type = SSL_FILETYPE_PEM);
 
   /// Parse the string and filter crypto versions accordingly
   int filter_versions (const char *filter);
@@ -289,8 +295,8 @@ public:
   /// of files and paths etc.
   /// Query the location of trusted certification authority
   /// certificates.
-  // const char* ca_file_name(void) const;
-  // const char* ca_dir_name(void) const;
+  // const char* ca_file_name() const;
+  // const char* ca_dir_name() const;
 
   /**
    * Set and query the default verify mode for this context, it is
@@ -367,11 +373,8 @@ private:
   void ssl_library_init ();
   void ssl_library_fini ();
 
-  // = Prevent assignment and copy initialization.
-  //@{
-  ACE_SSL_Context (const ACE_SSL_Context &);
-  ACE_SSL_Context & operator= (const ACE_SSL_Context &);
-  //@}
+  ACE_SSL_Context (const ACE_SSL_Context &) = delete;
+  ACE_SSL_Context & operator= (const ACE_SSL_Context &) = delete;
 
 private:
   /// The SSL_CTX structure

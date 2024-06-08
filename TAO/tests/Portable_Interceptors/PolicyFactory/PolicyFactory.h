@@ -40,7 +40,6 @@ class PolicyFactory
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name Methods Required by the PolicyFactory Interface
    *
@@ -49,13 +48,11 @@ public:
    * methods required for all PolicyFactory sub-classes.
    */
   //@{
-
   /// Construct a Test::Policy object as a test.
   virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                            const CORBA::Any & value);
 
   //@}
-
 };
 
 #if defined(_MSC_VER)

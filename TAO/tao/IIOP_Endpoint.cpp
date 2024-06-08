@@ -24,6 +24,7 @@
 #include "ace/ACE.h"
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -99,7 +100,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
 TAO_IIOP_Endpoint &
 TAO_IIOP_Endpoint::operator= (const TAO_IIOP_Endpoint &other)
 {
-  if (this != &other)
+  if (this != std::addressof(other))
     {
       this->host_ = other.host_;
       this->port_ = other.port_;
@@ -113,10 +114,6 @@ TAO_IIOP_Endpoint::operator= (const TAO_IIOP_Endpoint &other)
       this->next_ = nullptr; // do not copy list membership, since we are only cloning the values
     }
   return *this;
-}
-
-TAO_IIOP_Endpoint::~TAO_IIOP_Endpoint ()
-{
 }
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &rhs)
@@ -190,7 +187,7 @@ TAO_IIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   size_t actual_len =
     ACE_OS::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
-    + ACE_OS::strlen ("65536")         // max port
+    + std::strlen ("65536")         // max port
     + sizeof ('\0');
 
 #if defined (ACE_HAS_IPV6)
@@ -218,7 +215,7 @@ TAO_IIOP_Endpoint::host (const char *h)
 {
   this->host_ = h;
 #if defined (ACE_HAS_IPV6)
-  if (ACE_OS::strchr (h, ':') != 0)
+  if (std::strchr (h, ':') != 0)
     this->is_ipv6_decimal_ = true;
 #endif /* ACE_HAS_IPV6 */
 
@@ -347,7 +344,7 @@ TAO_IIOP_Endpoint::object_addr_i () const
   if (!this->is_ipv6_decimal_)
     is_ipv4_decimal_ =
       ACE_OS::strspn (this->host_.in (), ".0123456789") ==
-                              ACE_OS::strlen (this->host_.in ());
+                              std::strlen (this->host_.in ());
 
   // If this is *not* an IPv4 decimal address at first try to
   // resolve the address as an IPv6 address; if that fails

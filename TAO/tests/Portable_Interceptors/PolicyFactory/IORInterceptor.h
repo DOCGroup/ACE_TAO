@@ -43,9 +43,8 @@ class IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
-  IORInterceptor (void);
+  IORInterceptor ();
 
   /**
    * @name Methods Required by the IOR Interceptor Interface
@@ -56,10 +55,10 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Add the tagged components to the IOR.
   virtual void establish_components (
@@ -67,19 +66,16 @@ public:
   //@}
 
 protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
    */
-  ~IORInterceptor (void);
+  ~IORInterceptor ();
 
 private:
-
   /// IORInterceptor successfully called and executed.
   bool success_;
-
 };
 
 #if defined(_MSC_VER)

@@ -69,24 +69,23 @@ namespace CORBA
   class TAO_DynamicInterface_Export Context
   {
   public:
-    Context (void);
-
-    ~Context (void);
+    Context () = default;
+    ~Context () = default;
 
     // = Pseudo-object methods
     static Context *_duplicate (Context*);
-    static Context *_nil (void);
+    static Context *_nil ();
 
     // = Reference counting.
-    CORBA::ULong _incr_refcount (void);
-    CORBA::ULong _decr_refcount (void);
+    CORBA::ULong _incr_refcount ();
+    CORBA::ULong _decr_refcount ();
 
     // = All the spec-required functions below will just throw a
     //   CORBA::NO_IMPLEMENT exception and do nothing else.
 
-    const char *context_name (void) const;
+    const char *context_name () const;
 
-    CORBA::Context_ptr parent (void) const;
+    CORBA::Context_ptr parent () const;
 
     void create_child (const char *child_ctx_name,
                        CORBA::Context_out child_ctx);
@@ -109,7 +108,7 @@ namespace CORBA
 
   private:
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ { 1 };
   };
 
   /**
@@ -123,26 +122,26 @@ namespace CORBA
   {
   public:
     /// Constructor.
-    ContextList (void);
+    ContextList () = default;
 
     /// Constructor - initialize given a length and an array of
     /// strings.
     ContextList (CORBA::ULong len, char **ctx_list);
 
     /// Destructor.
-    ~ContextList (void);
+    ~ContextList ();
 
     /// Return the number of elements.
-    CORBA::ULong count (void);
+    CORBA::ULong count ();
 
     /// Increment the reference count.
-    ContextList_ptr _duplicate (void);
+    ContextList_ptr _duplicate ();
 
     /// Increment the reference count.
     static ContextList_ptr _duplicate (ContextList *);
 
     /// Decrement the reference count and delete if it is 0.
-    void _destroy (void);
+    void _destroy ();
 
     /// Return null pointer of this type.
     static ContextList_ptr _nil ();
@@ -160,8 +159,8 @@ namespace CORBA
     void remove (CORBA::ULong slot);
 
     /// Increment and decrement ref counts.
-    void _incr_refcount (void);
-    void  _decr_refcount (void);
+    void _incr_refcount ();
+    void  _decr_refcount ();
 
     // Useful for template programming.
     typedef CORBA::ContextList_ptr _ptr_type;
@@ -169,9 +168,8 @@ namespace CORBA
     typedef CORBA::ContextList_out _out_type;
 
   private:
-    // Not allowed.
-    ContextList (const ContextList &);
-    ContextList &operator= (const ContextList &);
+    ContextList (const ContextList &) = delete;
+    ContextList &operator= (const ContextList &) = delete;
 
     /// Reference counter.
     std::atomic<uint32_t> refcount_;

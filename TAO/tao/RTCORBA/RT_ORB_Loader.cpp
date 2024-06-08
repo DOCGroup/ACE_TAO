@@ -13,12 +13,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_ORB_Loader::TAO_RT_ORB_Loader (void)
+TAO_RT_ORB_Loader::TAO_RT_ORB_Loader ()
   : initialized_ (false)
 {
 }
 
-TAO_RT_ORB_Loader::~TAO_RT_ORB_Loader (void)
+TAO_RT_ORB_Loader::~TAO_RT_ORB_Loader ()
 {
 }
 

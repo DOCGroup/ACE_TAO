@@ -141,7 +141,6 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
 
 
       return -1;
-
     }
 
   return 0;
@@ -580,7 +579,6 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
 
       // Set the <rd_ptr> of the <incoming>..
       qd->msg_block ()->rd_ptr (copy_len);
-
     }
 
   return 0;
@@ -1533,7 +1531,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
     // request/reply id.
     CORBA::ULong tmp = 0;
-    CORBA::ULong *id = &tmp;
+    CORBA::ULong *id = std::addressof(tmp);
     char *tmp_id = nullptr;
 
     if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Request ||
@@ -1616,8 +1614,7 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg) const
   msg.get_version (giop_version);
 
   // Get the parser we need to use
-  TAO_GIOP_Message_Generator_Parser *generator_parser =
-    this->get_parser (giop_version);
+  TAO_GIOP_Message_Generator_Parser *generator_parser = this->get_parser (giop_version);
 
   // We dont really know.. So ask the generator and parser objects that
   // we know.

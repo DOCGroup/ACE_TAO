@@ -52,7 +52,7 @@ public:
   ACE_Local_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                          const OPTIONS *options = 0);
 
-  virtual ~ACE_Local_Memory_Pool (void);
+  virtual ~ACE_Local_Memory_Pool ();
 
   /// Ask system for initial chunk of local memory.
   virtual void *init_acquire (size_t nbytes,
@@ -107,7 +107,7 @@ public:
 
   /// Return the base address of this memory pool, 0 if base_addr
   /// never changes.
-  virtual void *base_addr (void) const;
+  virtual void *base_addr () const;
 
   /// Dump the state of an object.
   virtual void dump () const;

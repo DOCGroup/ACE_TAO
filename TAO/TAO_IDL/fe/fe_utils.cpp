@@ -123,6 +123,10 @@ FE_Utils::PredefinedTypeToExprType (
       return AST_Expression::EV_bool;
     case AST_PredefinedType::PT_void:
       return AST_Expression::EV_void;
+    case AST_PredefinedType::PT_int8:
+      return AST_Expression::EV_int8;
+    case AST_PredefinedType::PT_uint8:
+      return AST_Expression::EV_uint8;
     default:
       return AST_Expression::EV_enum;
   }
@@ -165,6 +169,10 @@ FE_Utils::ExprTypeToPredefinedType (AST_Expression::ExprType et)
       return AST_PredefinedType::PT_object;
     case AST_Expression::EV_void:
       return AST_PredefinedType::PT_void;
+    case AST_Expression::EV_int8:
+      return AST_PredefinedType::PT_int8;
+    case AST_Expression::EV_uint8:
+      return AST_PredefinedType::PT_uint8;
     case AST_Expression::EV_enum:
     case AST_Expression::EV_string:
     case AST_Expression::EV_wstring:
@@ -428,7 +436,7 @@ FE_Utils::create_implied_ami_uses_stuff ()
 int
 FE_Utils::path_cmp (const char *s, const char *t)
 {
-#if defined (WIN32) || defined (ACE_OPENVMS)
+#if defined (WIN32)
   // Since Windows has case-insensitive filenames, the preprocessor,
   // when searching using a provided relative path, will sometimes
   // capitalize the first letter of the last segment of a path name

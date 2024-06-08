@@ -150,7 +150,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Reactor_Timer_Interface.cpp
     Read_Buffer.cpp
     Recursive_Thread_Mutex.cpp
-    Rtems_init.c
     RW_Mutex.cpp
     RW_Thread_Mutex.cpp
     Sched_Params.cpp
@@ -219,7 +218,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Auto_Event.cpp
     Auto_Functor.cpp
     Auto_IncDec_T.cpp
-    Auto_Ptr.cpp
     Based_Pointer_T.cpp
     Cache_Map_Manager_T.cpp
     Cached_Connect_Strategy_T.cpp
@@ -296,7 +294,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Guard_T.inl
     Handle_Gobbler.inl
     Lock_Adapter_T.inl
-    OS_Memory.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
     TSS_T.inl
@@ -315,7 +312,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Countdown_Time.h
     Default_Constants.h
     Event_Base.h
-    Exception_Macros.h
     Global_Macros.h
     Guard_T.h
     Handle_Gobbler.h
@@ -362,14 +358,10 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Version.h
     ace_wchar.h
     checked_iterator.h
-    config-WinCE.h
     config-all.h
-    config-borland-common.h
     config-lite.h
-    config-minimal.h
     config-win32-borland.h
     config-win32-common.h
-    config-win32-msvc-7.h
     config-win32-msvc.h
     config-win32.h
     config.h
@@ -391,6 +383,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
   }
 
   Pkgconfig_Files {
-     ACE_FOR_TAO.pc.in
+    ACE_FOR_TAO.pc.in
   }
 }

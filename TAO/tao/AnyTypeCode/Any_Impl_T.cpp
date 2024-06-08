@@ -10,7 +10,7 @@
 #include "tao/SystemException.h"
 #include "tao/debug.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
@@ -30,7 +30,7 @@ TAO::Any_Impl_T<T>::Any_Impl_T (_tao_destructor destructor,
 }
 
 template<typename T>
-TAO::Any_Impl_T<T>::~Any_Impl_T (void)
+TAO::Any_Impl_T<T>::~Any_Impl_T ()
 {
 }
 
@@ -156,14 +156,14 @@ TAO::Any_Impl_T<T>::marshal_value (TAO_OutputCDR &cdr)
 
 template<typename T>
 const void *
-TAO::Any_Impl_T<T>::value (void) const
+TAO::Any_Impl_T<T>::value () const
 {
   return this->value_;
 }
 
 template<typename T>
 void
-TAO::Any_Impl_T<T>::free_value (void)
+TAO::Any_Impl_T<T>::free_value ()
 {
   if (this->value_destructor_ != 0)
     {

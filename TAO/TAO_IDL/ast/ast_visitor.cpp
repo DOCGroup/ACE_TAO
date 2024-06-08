@@ -18,3 +18,8 @@ int ast_visitor::visit_annotation_decl (AST_Annotation_Decl *)
 {
   return 0;
 }
+
+int ast_visitor::visit_map (AST_Map *)
+{
+  return 0;
+}

@@ -44,21 +44,21 @@ public:
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
   typedef details::range_checking<value_type,true> range;
 
-  inline unbounded_value_sequence<CORBA::Octet>()
+  inline unbounded_value_sequence()
     : maximum_ (allocation_traits::default_maximum())
     , length_ (0)
     , buffer_ (allocation_traits::default_buffer_allocation())
     , release_ (buffer_ != 0)
     , mb_ (0)
   {}
-  inline explicit unbounded_value_sequence<CORBA::Octet>(CORBA::ULong maximum)
+  inline explicit unbounded_value_sequence(CORBA::ULong maximum)
     : maximum_(maximum)
     , length_(0)
     , buffer_(allocbuf(maximum_))
     , release_(true)
     , mb_ (0)
   {}
-  inline unbounded_value_sequence<CORBA::Octet>(
+  inline unbounded_value_sequence(
       CORBA::ULong maximum,
       CORBA::ULong length,
       value_type * data,
@@ -69,7 +69,7 @@ public:
       release_ (release),
       mb_ (0)
   {}
-  inline ~unbounded_value_sequence<CORBA::Octet>() {
+  inline ~unbounded_value_sequence() {
     if (mb_)
       ACE_Message_Block::release (mb_);
     if (release_)
@@ -77,7 +77,7 @@ public:
   }
   /// Create a sequence of octets from a single message block (i.e. it
   /// ignores any chaining in the message block).
-  inline unbounded_value_sequence<CORBA::Octet> (CORBA::ULong length,
+  inline unbounded_value_sequence (CORBA::ULong length,
                                                  const ACE_Message_Block* mb)
     : maximum_ (length)
     , length_ (length)
@@ -135,7 +135,7 @@ public:
           }
         else
           {
-            unbounded_value_sequence<CORBA::Octet> tmp(length);
+            unbounded_value_sequence tmp(length);
             tmp.length_ = length;
             element_traits::copy_range(
               buffer_,
@@ -146,7 +146,7 @@ public:
         return;
       }
 
-    unbounded_value_sequence<CORBA::Octet> tmp(length);
+    unbounded_value_sequence tmp(length);
     tmp.length_ = length;
     element_traits::copy_range(
       buffer_,
@@ -167,7 +167,7 @@ public:
       CORBA::ULong length,
       value_type * data,
       CORBA::Boolean release = false) {
-    unbounded_value_sequence<CORBA::Octet> tmp(maximum, length, data, release);
+    unbounded_value_sequence tmp(maximum, length, data, release);
     swap(tmp);
   }
   inline value_type const * get_buffer() const {
@@ -196,7 +196,7 @@ public:
       return buffer_;
     }
 
-    unbounded_value_sequence<CORBA::Octet> tmp;
+    unbounded_value_sequence tmp;
     swap(tmp);
     tmp.release_ = false;
 
@@ -205,8 +205,8 @@ public:
 
   // moved inside the class to resolve namespace lookup issues.
   // This is a replacement for the commented block below.
-  inline bool operator== (const unbounded_value_sequence<CORBA::Octet> & rhs) const {
-    unbounded_value_sequence<CORBA::Octet> const & lhs = *this;
+  inline bool operator== (const unbounded_value_sequence & rhs) const {
+    unbounded_value_sequence const & lhs = *this;
     CORBA::ULong const len = lhs.length();
 
     // We use the subscript operator instead of get_buffer() to avoid a
@@ -218,12 +218,12 @@ public:
            : ACE_OS::memcmp(&lhs[0], &rhs[0], len) == 0));
   }
 
-  inline bool operator!= (const unbounded_value_sequence<CORBA::Octet> & rhs) const
+  inline bool operator!= (const unbounded_value_sequence & rhs) const
   {
     return !this->operator==(rhs);
   }
 
-  inline void swap(unbounded_value_sequence & rhs) throw() {
+  inline void swap(unbounded_value_sequence & rhs) noexcept {
     std::swap (mb_, rhs.mb_);
     std::swap (maximum_, rhs.maximum_);
     std::swap (length_, rhs.length_);
@@ -246,12 +246,12 @@ public:
   /// Replaces the current buffer with @a mb, using only @a length bytes.
   /// It takes a duplicate of <mb> so the user still owns it.
   inline void replace (CORBA::ULong length, const ACE_Message_Block* mb) {
-    unbounded_value_sequence<CORBA::Octet> s (length, mb);
+    unbounded_value_sequence s (length, mb);
     swap (s);
   }
 
-  unbounded_value_sequence<CORBA::Octet> (
-    const unbounded_value_sequence<CORBA::Octet> &rhs)
+  unbounded_value_sequence (
+    const unbounded_value_sequence &rhs)
     : maximum_ (0)
     , length_ (0)
     , buffer_(0)
@@ -264,7 +264,7 @@ public:
       length_ = rhs.length_;
       return;
     }
-    unbounded_value_sequence<CORBA::Octet> tmp(rhs.maximum_);
+    unbounded_value_sequence tmp(rhs.maximum_);
     tmp.length_ = rhs.length_;
     if (rhs.mb_ == 0)
       {
@@ -287,10 +287,10 @@ public:
     swap(tmp);
   }
 
-  unbounded_value_sequence<CORBA::Octet> &
-  operator= (const unbounded_value_sequence<CORBA::Octet> & rhs)
+  unbounded_value_sequence &
+  operator= (const unbounded_value_sequence & rhs)
   {
-    unbounded_value_sequence<CORBA::Octet> tmp(rhs);
+    unbounded_value_sequence tmp(rhs);
     swap(tmp);
     return * this;
   }
@@ -311,7 +311,6 @@ private:
   mutable CORBA::Boolean release_;
   ACE_Message_Block* mb_;
 };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -67,8 +67,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
     }
 
   // Now generate the class definition.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "// TIE class: Refer to CORBA v2.2, Section 20.34.4" << be_nl;
   *os << "template <class T>" << be_nl;
@@ -99,7 +98,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "/// do we own it" << be_nl
       << "::CORBA::Boolean _is_owner ();" << be_nl
       << "/// set the ownership" << be_nl_2
-      << "void _is_owner ( ::CORBA::Boolean b);" << be_nl
+      << "void _is_owner (::CORBA::Boolean b);" << be_nl
       << "// overridden ServantBase operations" << be_nl
       << "PortableServer::POA_ptr _default_POA ();";
 
@@ -123,9 +122,8 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "T *ptr_;" << be_nl
       << "PortableServer::POA_var poa_;" << be_nl
       << "::CORBA::Boolean rel_;" << be_nl_2
-      << "// copy and assignment are not allowed" << be_nl
-      << tiename << " (const " << tiename << " &);" << be_nl
-      << "void operator= (const " << tiename << " &);" << be_uidt_nl
+      << tiename << " (const " << tiename << " &) = delete;" << be_nl
+      << "void operator= (const " << tiename << " &) = delete;" << be_uidt_nl
       << "};";
 
   return 0;

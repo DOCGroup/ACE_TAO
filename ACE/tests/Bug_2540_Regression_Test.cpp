@@ -14,7 +14,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 int const nhandlers = 3;
 
@@ -178,7 +178,6 @@ ACE_HANDLE Handler::get_handle() const
 
 int Handler::handle_input(ACE_HANDLE /* h */)
 {
-
     ++handle_input_count_;
     // ACE_DEBUG((LM_DEBUG, "Handler::handle_input called for %d\n", h));
 

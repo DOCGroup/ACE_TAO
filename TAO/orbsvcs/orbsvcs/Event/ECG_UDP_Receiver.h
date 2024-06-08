@@ -84,7 +84,6 @@ public:
   void execute ();
 
 private:
-
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy_;
 };
 
@@ -104,10 +103,8 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Receiver :
   , public virtual TAO_ECG_Dgram_Handler
 {
 public:
-
   /// Initialization and termination methods.
   //@{
-
   /// Create a new TAO_ECG_UDP_Receiver object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_UDP_Receiver objects are heap-allocated.)
@@ -186,13 +183,11 @@ public:
   virtual int handle_input (ACE_SOCK_Dgram& dgram);
 
 protected:
-
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_UDP_Receiver objects using the static create() method.
   TAO_ECG_UDP_Receiver (CORBA::Boolean perform_crc = false);
 
 private:
-
   /// Helpers for the connect() method.
   //@{
   // Establishes connection to the Event Channel for the first time.

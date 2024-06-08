@@ -8,13 +8,7 @@
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"
 
-// Default constructor.
-
-Logging_Handler::Logging_Handler (void)
-{
-}
-
-Logging_Handler::~Logging_Handler (void)
+Logging_Handler::~Logging_Handler ()
 {
   // Make sure there are no timers.
   REACTOR::instance ()->cancel_timer (this);
@@ -24,9 +18,8 @@ Logging_Handler::~Logging_Handler (void)
 
 // Extract the underlying ACE_SOCK_Stream (e.g., for purposes of
 // accept()).
-
 ACE_SOCK_Stream &
-Logging_Handler::peer (void)
+Logging_Handler::peer ()
 {
   return this->cli_stream_;
 }
@@ -141,13 +134,13 @@ Logging_Handler::handle_input (ACE_HANDLE)
 // Extract underlying device descriptor.
 
 ACE_HANDLE
-Logging_Handler::get_handle (void) const
+Logging_Handler::get_handle () const
 {
   return this->cli_stream_.get_handle ();
 }
 
 int
-Logging_Handler::open (void)
+Logging_Handler::open ()
 {
   ACE_INET_Addr addr;
 
@@ -180,7 +173,6 @@ Logging_Handler::open (void)
 
 // Perform termination activities when deregistered from the
 // ACE_Reactor.
-
 int
 Logging_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
@@ -190,9 +182,8 @@ Logging_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 }
 
 // Perform termination activities when close fails.
-
 int
-Logging_Handler::close (void)
+Logging_Handler::close ()
 {
   return this->handle_close ();
 }

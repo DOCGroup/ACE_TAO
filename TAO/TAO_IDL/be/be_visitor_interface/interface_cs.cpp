@@ -44,8 +44,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (node->is_defined () && be_global->gen_arg_traits ())
     {
-      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      TAO_INSERT_COMMENT (os);
 
       *os << be_global->core_versioning_begin ();
 
@@ -55,8 +54,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl_2
           << node->name () << "_ptr" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::duplicate ("
-          << be_idt << be_idt_nl
-          << node->name () << "_ptr p)" << be_uidt << be_uidt_nl
+          << node->name () << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "return " << node->name () << "::_duplicate (p);" << be_uidt_nl
           << "}";
@@ -64,11 +62,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl_2
           << "void" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::release ("
-          << be_idt << be_idt_nl
-          << node->name () << "_ptr p)" << be_uidt << be_uidt_nl
+          << node->name () << "_ptr p)" << be_nl
           << "{" << be_idt_nl;
 
-      // Workaround for broken HP V7.4-004 on OpenVMS IA83
       if (node->has_mixed_parentage ())
         {
           *os << "::CORBA::AbstractBase_ptr abs = p;" << be_nl
@@ -92,9 +88,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl_2
           << "::CORBA::Boolean" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
-          << be_idt << be_idt_nl
-          << "const " << node->name () << "_ptr p," << be_nl
-          << "TAO_OutputCDR & cdr)" << be_uidt << be_uidt_nl
+          << "const " << node->name () << "_ptr p,"
+          << "TAO_OutputCDR & cdr)" << be_nl
           << "{" << be_idt_nl
           << "return ";
 
@@ -200,14 +195,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << " ()" << be_nl;
 
       *os << "{" << be_nl;
-
-      *os << "}";
+      *os << "}" << be_nl;
     }
-
-  *os << be_nl_2
-      << node->name () << "::~" << node->local_name ()
-      << " ()" << be_nl;
-  *os << "{" << be_nl << "}" << be_nl_2;
 
   bool gen_any_destructor =
     be_global->any_support ()
@@ -391,7 +380,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (be_global->tc_support ())
     {
-
       be_visitor_context ctx = *this->ctx_;
       TAO::be_visitor_objref_typecode tc_visitor (&ctx);
 
@@ -415,8 +403,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << node->full_name () << "_ptr" << be_nl
-      << node->full_name () << "::_" << pre << " ("
-      << be_idt << be_idt_nl;
+      << node->full_name () << "::_" << pre << " (";
 
   if (node->is_abstract ())
     {
@@ -428,8 +415,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
     }
 
   *os << " _tao_objref)"
-      << be_uidt
-      << be_uidt_nl
+      << be_nl
       << "{" << be_idt_nl;
 
   if (node->is_local ())

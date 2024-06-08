@@ -36,7 +36,7 @@ ACE_Base_Thread_Adapter::entry_point ()
 
 #ifdef ACE_USES_GPROF
 ACE_INLINE itimerval*
-ACE_Base_Thread_Adapter::timerval (void)
+ACE_Base_Thread_Adapter::timerval ()
 {
   return &(this->itimer_);
 }

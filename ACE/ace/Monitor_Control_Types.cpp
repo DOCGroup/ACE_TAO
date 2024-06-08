@@ -26,10 +26,6 @@ namespace ACE
 
     //=============================================================
 
-    Monitor_Control_Types::Constraint::Constraint ()
-      : control_action (0)
-    {}
-
     Monitor_Control_Types::Constraint::Constraint (const Constraint& rhs)
       : expr (rhs.expr),
         control_action (rhs.control_action)

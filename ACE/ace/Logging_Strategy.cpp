@@ -301,7 +301,7 @@ ACE_Logging_Strategy::fini ()
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(this->logger_key_);
-  ACE_Allocator::instance()->free(this->program_name_);;
+  ACE_Allocator::instance()->free(this->program_name_);
 #else
   delete [] this->logger_key_;
   delete [] this->program_name_;

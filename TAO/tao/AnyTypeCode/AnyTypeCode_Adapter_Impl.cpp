@@ -71,7 +71,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::TypeCode_ptr \
-TAO_AnyTypeCode_Adapter_Impl::_tao_type_ ## name (void) const \
+TAO_AnyTypeCode_Adapter_Impl::_tao_type_ ## name () const \
 { \
   return CORBA::_tc_ ## name; \
 }

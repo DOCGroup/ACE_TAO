@@ -39,7 +39,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   ACE_Bound_Ptr_Counter (long init_obj_ref_count = 0);
-  ~ACE_Bound_Ptr_Counter ();
+  ~ACE_Bound_Ptr_Counter () = default;
 
   /// Create a ACE_Bound_Ptr_Counter<ACE_LOCK> and initialize the
   /// reference count to indicate ownership by a strong pointer.
@@ -121,7 +121,7 @@ public:
   template <class Y>
   ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<Y, ACE_LOCK> &r)
       : counter_ (r.counter_),
-        ptr_ (dynamic_cast<X_t*>(r.ptr_))
+        ptr_ (dynamic_cast<X*>(r.ptr_))
   {
     // This ctor is temporarily defined here to increase our chances
     // of being accepted by broken compilers.
@@ -151,7 +151,7 @@ public:
     // This will work if &r == this, by first increasing the ref count
 
     COUNTER *new_counter = r.counter_;
-    X* new_ptr = dynamic_cast<X_t*> (r.ptr_);
+    X* new_ptr = dynamic_cast<X*> (r.ptr_);
     COUNTER::attach_strong (new_counter);
     if (COUNTER::detach_strong (this->counter_) == 0)
       delete this->ptr_;
@@ -214,8 +214,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  typedef X X_t; // This indirection is for Borland C++.
-
   friend class ACE_Weak_Bound_Ptr<X, ACE_LOCK>;
 
   template <class Y, class L>
@@ -350,8 +348,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  typedef X X_t; // This indirection is for Borland C++.
-
   friend class ACE_Strong_Bound_Ptr<X, ACE_LOCK>;
 
   /// The ACE_Bound_Ptr_Counter type.
@@ -370,13 +366,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Bound_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Bound_Ptr.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Bound_Ptr.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

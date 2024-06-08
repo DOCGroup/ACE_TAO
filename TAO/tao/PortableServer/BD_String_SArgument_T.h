@@ -39,13 +39,13 @@ namespace TAO
   class In_BD_String_SArgument_T : public InArgument
   {
   public:
-    In_BD_String_SArgument_T (void);
+    In_BD_String_SArgument_T ();
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    const typename S_var::s_traits::char_type * arg (void) const;
+    const typename S_var::s_traits::char_type * arg () const;
 
   private:
     S_var x_;
@@ -63,14 +63,14 @@ namespace TAO
   class Inout_BD_String_SArgument_T : public InoutArgument
   {
   public:
-    Inout_BD_String_SArgument_T (void);
+    Inout_BD_String_SArgument_T ();
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_var::s_traits::char_type *& arg (void);
+    typename S_var::s_traits::char_type *& arg ();
 
   private:
     S_var x_;
@@ -88,13 +88,13 @@ namespace TAO
   class Out_BD_String_SArgument_T : public OutArgument
   {
   public:
-    Out_BD_String_SArgument_T (void);
+    Out_BD_String_SArgument_T ();
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_var::s_traits::char_type *& arg (void);
+    typename S_var::s_traits::char_type *& arg ();
 
   private:
     S_var x_;
@@ -112,13 +112,13 @@ namespace TAO
   class Ret_BD_String_SArgument_T : public RetArgument
   {
   public:
-    Ret_BD_String_SArgument_T (void);
+    Ret_BD_String_SArgument_T ();
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_var::s_traits::char_type *& arg (void);
+    typename S_var::s_traits::char_type *& arg ();
 
   private:
     S_var x_;
@@ -168,13 +168,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/PortableServer/BD_String_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/PortableServer/BD_String_SArgument_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("BD_String_SArgument_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

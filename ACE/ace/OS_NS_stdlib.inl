@@ -9,12 +9,6 @@
 # include "ace/os_include/os_signal.h"
 #endif
 
-#if defined (ACE_WCHAR_IN_STD_NAMESPACE)
-# define ACE_WCHAR_STD_NAMESPACE std
-#else
-# define ACE_WCHAR_STD_NAMESPACE ACE_STD_NAMESPACE
-#endif /* ACE_WCHAR_IN_STD_NAMESPACE */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Doesn't need a macro since it *never* returns!
@@ -25,8 +19,6 @@ ACE_OS::_exit (int status)
   ACE_OS_TRACE ("ACE_OS::_exit");
 #if defined (ACE_VXWORKS)
   ::exit (status);
-#elif defined (ACE_HAS_WINCE)
-  ::TerminateProcess (::GetCurrentProcess (), status);
 #elif defined (ACE_MQX)
   _mqx_exit (status);
 #elif !defined (ACE_LACKS__EXIT)
@@ -57,7 +49,7 @@ ACE_OS::atexit (ACE_EXIT_HOOK func, const char* name)
 ACE_INLINE int
 ACE_OS::atoi (const char *s)
 {
-  ACE_OSCALL_RETURN (::atoi (s), int, -1);
+  return ::atoi (s);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -65,7 +57,7 @@ ACE_INLINE int
 ACE_OS::atoi (const wchar_t *s)
 {
 #if defined (ACE_WIN32) && defined (ACE_HAS_WTOI)
-  ACE_OSCALL_RETURN (::_wtoi (s), int, -1);
+  return ::_wtoi (s);
 #else /* ACE_WIN32 */
   return ACE_OS::atoi (ACE_Wide_To_Ascii (s).char_rep ());
 #endif /* ACE_WIN32 */
@@ -75,7 +67,7 @@ ACE_OS::atoi (const wchar_t *s)
 ACE_INLINE long
 ACE_OS::atol (const char *s)
 {
-  ACE_OSCALL_RETURN (::atol (s), long, -1);
+  return ::atol (s);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -83,7 +75,7 @@ ACE_INLINE long
 ACE_OS::atol (const wchar_t *s)
 {
 #if defined (ACE_WIN32) && defined (ACE_HAS_WTOL)
-  ACE_OSCALL_RETURN (::_wtol (s), long, -1);
+  return ::_wtol (s);
 #else /* ACE_WIN32 */
   return ACE_OS::atol (ACE_Wide_To_Ascii (s).char_rep ());
 #endif /* ACE_WIN32 */
@@ -93,7 +85,7 @@ ACE_OS::atol (const wchar_t *s)
 ACE_INLINE double
 ACE_OS::atof (const char *s)
 {
-  ACE_OSCALL_RETURN (::atof (s), double, -1);
+  return ::atof (s);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -103,9 +95,9 @@ ACE_OS::atof (const wchar_t *s)
 #if !defined (ACE_HAS_WTOF)
   return ACE_OS::atof (ACE_Wide_To_Ascii (s).char_rep ());
 #elif defined (ACE_WTOF_EQUIVALENT)
-  ACE_OSCALL_RETURN (ACE_WTOF_EQUIVALENT (s), double, -1);
+  return ACE_WTOF_EQUIVALENT (s);
 #else /* ACE_HAS__WTOF */
-  ACE_OSCALL_RETURN (::wtof (s), double, -1);
+  return ::wtof (s);
 #endif /* ACE_HAS_WTOF */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -116,12 +108,6 @@ ACE_OS::atop (const char *s)
   ACE_TRACE ("ACE_OS::atop");
 #if defined (ACE_WIN64)
   intptr_t ip = ::_atoi64 (s);
-#elif defined (ACE_OPENVMS)
-#  if !defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64)
-  int ip = ::atoi (s);
-#  else
-  intptr_t ip = ::atoi (s);
-#  endif
 #else
   intptr_t ip = ::atoi (s);
 #endif /* ACE_WIN64 */
@@ -135,12 +121,6 @@ ACE_OS::atop (const wchar_t *s)
 {
 #  if defined (ACE_WIN64)
   intptr_t ip = ::_wtoi64 (s);
-#  elif defined (ACE_OPENVMS)
-#    if !defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64)
-  int ip = ACE_OS::atoi (s);
-#    else
-  intptr_t ip = ACE_OS::atoi (s);
-#    endif
 #  else
   intptr_t ip = ACE_OS::atoi (s);
 #  endif /* ACE_WIN64 */
@@ -176,7 +156,7 @@ ACE_OS::getenv (const char *symbol)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
 #else /* ACE_LACKS_GETENV */
-  ACE_OSCALL_RETURN (::getenv (symbol), char *, 0);
+  return ::getenv (symbol);
 #endif /* ACE_LACKS_GETENV */
 }
 
@@ -188,7 +168,7 @@ ACE_OS::getenv (const wchar_t *symbol)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::_wgetenv (symbol), wchar_t *, 0);
+  return ::_wgetenv (symbol);
 #endif /* ACE_LACKS_GETENV */
 }
 #endif /* ACE_HAS_WCHAR && ACE_WIN32 */
@@ -341,9 +321,9 @@ ACE_OS::putenv (const char *string)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_PUTENV_EQUIVALENT)
-  ACE_OSCALL_RETURN (ACE_PUTENV_EQUIVALENT (const_cast <char *> (string)), int, -1);
-#else /* ! ACE_HAS_WINCE */
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::putenv (const_cast <char *> (string)), int, -1);
+  return ACE_PUTENV_EQUIVALENT (const_cast <char *> (string));
+#else
+  return ACE_STD_NAMESPACE::putenv (const_cast <char *> (string));
 #endif /* ACE_LACKS_PUTENV && ACE_HAS_SETENV */
 }
 
@@ -356,7 +336,7 @@ ACE_OS::setenv(const char *envname, const char *envval, int overwrite)
   ACE_UNUSED_ARG (overwrite);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::setenv (envname, envval, overwrite), int, -1);
+  return ACE_STD_NAMESPACE::setenv (envname, envval, overwrite);
 #endif
 }
 
@@ -371,7 +351,7 @@ ACE_OS::unsetenv(const char *name)
   ::unsetenv (name);
   return 0;
 #else
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::unsetenv (name), int, -1);
+  return ACE_STD_NAMESPACE::unsetenv (name);
 # endif /* ACE_HAS_VOID_UNSETENV */
 #endif /* ACE_LACKS_UNSETENV */
 }
@@ -385,7 +365,7 @@ ACE_OS::putenv (const wchar_t *string)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::_wputenv (string), int, -1);
+  return ::_wputenv (string);
 #endif /* ACE_LACKS_PUTENV */
 }
 #endif /* ACE_HAS_WCHAR && ACE_WIN32 */
@@ -411,7 +391,7 @@ ACE_OS::rand ()
 {
   ACE_OS_TRACE ("ACE_OS::rand");
 #if !defined (ACE_LACKS_RAND)
-  ACE_OSCALL_RETURN (::rand (), int, -1);
+  return ::rand ();
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_LACKS_RAND */
@@ -436,7 +416,7 @@ ACE_OS::rand_r (unsigned int *seed)
 # endif /* ACE_LACKS_RAND_R */
 }
 
-#  if !defined (ACE_LACKS_REALPATH)
+#if !defined (ACE_LACKS_REALPATH)
 ACE_INLINE char *
 ACE_OS::realpath (const char *file_name,
                   char *resolved_name)
@@ -468,7 +448,7 @@ ACE_OS::realpath (const wchar_t *file_name,
 #    endif /* ! ACE_WIN32 */
 }
 #  endif /* ACE_HAS_WCHAR */
-#endif /* ACE_HAS_WINCE */
+#endif /* !ACE_LACKS_REALPATH */
 
 ACE_INLINE ACE_EXIT_HOOK
 ACE_OS::set_exit_hook (ACE_EXIT_HOOK exit_hook)
@@ -489,19 +469,17 @@ ACE_OS::srand (u_int seed)
 #endif
 }
 
-#if !defined (ACE_LACKS_STRTOD)
 ACE_INLINE double
 ACE_OS::strtod (const char *s, char **endptr)
 {
   return ::strtod (s, endptr);
 }
-#endif /* !ACE_LACKS_STRTOD */
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOD)
 ACE_INLINE double
 ACE_OS::strtod (const wchar_t *s, wchar_t **endptr)
 {
-  return ACE_WCHAR_STD_NAMESPACE::wcstod (s, endptr);
+  return std::wcstod (s, endptr);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOD */
 
@@ -522,7 +500,7 @@ ACE_OS::strtol (const wchar_t *s, wchar_t **ptr, int base)
 #if defined (ACE_LACKS_WCSTOL)
   return ACE_OS::wcstol_emulation (s, ptr, base);
 #else
-  return ACE_WCHAR_STD_NAMESPACE::wcstol (s, ptr, base);
+  return std::wcstol (s, ptr, base);
 #endif /* ACE_LACKS_WCSTOL */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -544,7 +522,7 @@ ACE_OS::strtoul (const wchar_t *s, wchar_t **ptr, int base)
 #if defined (ACE_LACKS_WCSTOUL)
   return ACE_OS::wcstoul_emulation (s, ptr, base);
 #else
-  return ACE_WCHAR_STD_NAMESPACE::wcstoul (s, ptr, base);
+  return std::wcstoul (s, ptr, base);
 #endif /* ACE_LACKS_WCSTOUL */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -570,7 +548,7 @@ ACE_OS::strtoll (const wchar_t *s, wchar_t **ptr, int base)
 #elif defined (ACE_WCSTOLL_EQUIVALENT)
   return ACE_WCSTOLL_EQUIVALENT (s, ptr, base);
 #else
-  return ACE_WCHAR_STD_NAMESPACE::wcstoll (s, ptr, base);
+  return std::wcstoll (s, ptr, base);
 #endif /* ACE_LACKS_WCSTOLL */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -596,7 +574,7 @@ ACE_OS::strtoull (const wchar_t *s, wchar_t **ptr, int base)
 #elif defined (ACE_WCSTOULL_EQUIVALENT)
   return ACE_WCSTOULL_EQUIVALENT (s, ptr, base);
 #else
-  return ACE_WCHAR_STD_NAMESPACE::wcstoull (s, ptr, base);
+  return std::wcstoull (s, ptr, base);
 #endif /* ACE_LACKS_WCSTOULL */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -609,9 +587,9 @@ ACE_OS::system (const ACE_TCHAR *s)
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wsystem (s), int, -1);
+  return ::_wsystem (s);
 #else
-  ACE_OSCALL_RETURN (::system (ACE_TEXT_ALWAYS_CHAR (s)), int, -1);
+  return ::system (ACE_TEXT_ALWAYS_CHAR (s));
 #endif /* ACE_LACKS_SYSTEM */
 }
 

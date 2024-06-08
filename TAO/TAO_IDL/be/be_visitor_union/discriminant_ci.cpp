@@ -51,8 +51,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
     {
@@ -141,8 +140,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
     {
@@ -171,6 +169,9 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
           *os << dv.u.ulong_val;
           break;
         case AST_Expression::EV_char:
+        case AST_Expression::EV_octet:
+        case AST_Expression::EV_int8:
+        case AST_Expression::EV_uint8:
           os->print ("'\\%o'", dv.u.char_val);
           break;
         case AST_Expression::EV_bool:
@@ -200,7 +201,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
       << "// Accessor to set the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << bu->name () << "::_d ( ::" << bt->name ()
+      << bu->name () << "::_d (::" << bt->name ()
       << " discval)" << be_nl
       << "{" << be_idt_nl
       << "this->disc_ = discval;" << be_uidt_nl

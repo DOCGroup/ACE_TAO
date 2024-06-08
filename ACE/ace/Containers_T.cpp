@@ -1396,7 +1396,7 @@ ACE_Bounded_Set_Iterator<T>::done () const
 {
   ACE_TRACE ("ACE_Bounded_Set_Iterator<T>::done");
 
-  return static_cast<ACE_CAST_CONST size_t> (this->next_) >=
+  return static_cast<size_t> (this->next_) >=
     this->s_.cur_size_;
 }
 
@@ -1602,7 +1602,6 @@ ACE_Ordered_MultiSet<T>::find (const T &item,
 
   return -1;
 }
-
 
 
 template <class T> void

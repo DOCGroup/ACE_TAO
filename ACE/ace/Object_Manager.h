@@ -195,7 +195,6 @@ template <class T> class ACE_Cleanup_Adapter;
  */
 class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
 {
-
 public:
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -246,8 +245,8 @@ public:
   static int at_exit (ACE_Cleanup *object, void *param = 0, const char* name = 0);
 
 #if defined (ACE_HAS_TSS_EMULATION)
-  static int init_tss (void);
-  int init_tss_i (void);
+  static int init_tss ();
+  int init_tss_i ();
 #endif
 
   /**

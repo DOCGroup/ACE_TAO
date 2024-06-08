@@ -11,7 +11,6 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 : orb_ (CORBA::ORB::_duplicate (orb))
 , supplier_(new EventSequenceSupplier_i(orb))
 {
-
   CORBA::Object_var naming_obj =
     orb_->resolve_initial_references ("NameService");
 
@@ -67,7 +66,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 }
 
 
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 
@@ -116,6 +115,5 @@ CORBA::Boolean Messenger_i::send_message (const char * user_name,
   consumer_proxy_->push_structured_events(events);
 
   return 1;
-
 }
 

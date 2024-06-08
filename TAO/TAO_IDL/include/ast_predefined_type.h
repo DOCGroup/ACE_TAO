@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -95,6 +94,8 @@ public:
       , PT_abstract     // Predefined type "CORBA::AbstractBase"
       , PT_void         // Predefined type "void"
       , PT_pseudo       // Predefined type for pseudo objects
+      , PT_int8         // Predefined type for int8
+      , PT_uint8        // Predefined type for uint8
     };
 
   AST_PredefinedType (PredefinedType t,

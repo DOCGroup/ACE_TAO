@@ -98,7 +98,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SOCK_Dgram_Mcast : public ACE_SOCK_Dgram
 {
 public:
-
   /**
    * @brief Option parameters.
    *
@@ -344,7 +343,6 @@ public:
   int opts () const;
 
 private:
-
   /// Subscribe to a multicast address on one or more network interface(s).
   /// (No QoS support.)
   int subscribe_ifs (const ACE_INET_Addr &mcast_addr,
@@ -376,14 +374,14 @@ protected:
   /// Empty the dynamic subscription list.
   int clear_subs_list ();
 
+  /// Multicast address to which local send() methods send datagrams.
+  ACE_INET_Addr send_addr_;
+  /// Network interface to which all send() methods send multicast datagrams.
+  ACE_TCHAR* send_net_if_ {};
+
 private:
   /// Per-instance options..
   int opts_;
-
-  /// Multicast address to which local send() methods send datagrams.
-  ACE_INET_Addr  send_addr_;
-  /// Network interface to which all send() methods send multicast datagrams.
-  ACE_TCHAR *send_net_if_;
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
  typedef ACE_DLList<ip_mreq>  subscription_list_t;
@@ -394,7 +392,6 @@ private:
  mutable ACE_SDM_LOCK subscription_list_lock_;
      // (Lock type does not need to support recursive locking.)
 #endif /* ACE_SOCK_DGRAM_MCAST_DUMPABLE */
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

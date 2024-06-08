@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    ClientTask.h
@@ -17,26 +15,25 @@
 
 class ClientTask : public ACE_Task_Base
 {
-  public:
+public:
+  ClientTask(CORBA::ORB_ptr orb,
+              Foo_ptr foo,
+              Callback_ptr callback,
+              bool         collocated = false);
 
-    ClientTask(CORBA::ORB_ptr orb,
-               Foo_ptr foo,
-               Callback_ptr callback,
-               bool         collocated = false);
+  virtual ~ClientTask();
 
-    virtual ~ClientTask();
+  virtual int open(void* x = 0);
+  virtual int svc();
+  virtual int close(u_long);
 
-    virtual int open(void* x = 0);
-    virtual int svc();
-    virtual int close(u_long);
+private:
+  bool validate_connection ();
 
-  private:
-    bool validate_connection ();
-
-    CORBA::ORB_var orb_;
-    Foo_var foo_;
-    Callback_var callback_;
-    bool collocated_;
+  CORBA::ORB_var orb_;
+  Foo_var foo_;
+  Callback_var callback_;
+  bool collocated_;
 };
 
 #endif

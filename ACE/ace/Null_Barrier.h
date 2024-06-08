@@ -4,8 +4,6 @@
 /**
  *  @file    Null_Barrier.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -27,25 +25,24 @@ public:
   /// Initialize the barrier to synchronize <count> threads.
   ACE_Null_Barrier (unsigned int,
                     const char * = 0,
-                    void * = 0) {};
+                    void * = 0) {}
 
   /// Default dtor.
-  ~ACE_Null_Barrier () {};
+  ~ACE_Null_Barrier () = default;
 
   /// Block the caller until all <count> threads have called <wait> and
   /// then allow all the caller threads to continue in parallel.
-  int wait () { return 0; };
+  int wait () { return 0; }
 
   /// Dump the state of an object.
-  void dump () const {};
+  void dump () const {}
 
   /// Declare the dynamic allocation hooks.
   //ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Null_Barrier &);
-  ACE_Null_Barrier (const ACE_Null_Barrier &);
+  void operator= (const ACE_Null_Barrier &) = delete;
+  ACE_Null_Barrier (const ACE_Null_Barrier &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

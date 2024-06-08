@@ -55,7 +55,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * /// activate the proxy and return the object reference
  * PROXY::_ptr_type
- * PROXY::activate (void) throw ();
+ * PROXY::activate () noexcept;
  * @endverbatim
  */
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE>
@@ -135,20 +135,12 @@ private:
   COUNTED *counted_;
 };
 
-// ****************************************************************
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/ESF/ESF_Proxy_Admin.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/ESF/ESF_Proxy_Admin.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Proxy_Admin.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_ESF_PROXY_ADMIN_H */

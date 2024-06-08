@@ -95,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
         }
 
-      orb->shutdown (1);
+      orb->shutdown (true);
 
       orb->destroy ();
     }

@@ -2,20 +2,20 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE> ACE_INLINE const TYPE&
-TAO_Notify_PropertyBase_T<TYPE>::value (void) const
+TAO_Notify_PropertyBase_T<TYPE>::value () const
 {
   return this->value_;
 }
 
 template <class TYPE> ACE_INLINE
 const char *
-TAO_Notify_PropertyBase_T<TYPE>::name (void) const
+TAO_Notify_PropertyBase_T<TYPE>::name () const
 {
   return this->name_;
 }
 
 template <class TYPE> ACE_INLINE CORBA::Boolean
-TAO_Notify_PropertyBase_T<TYPE>::is_valid (void) const
+TAO_Notify_PropertyBase_T<TYPE>::is_valid () const
 {
   return this->valid_;
 }
@@ -33,7 +33,7 @@ TAO_Notify_PropertyBase_T<TYPE>::operator!= (const TYPE &rhs) const
 }
 
 template <class TYPE> ACE_INLINE void
-TAO_Notify_PropertyBase_T<TYPE>:: invalidate (void)
+TAO_Notify_PropertyBase_T<TYPE>:: invalidate ()
 {
   this->valid_ = 0;
 }
@@ -52,13 +52,13 @@ TAO_Notify_PropertyBase_T<TYPE>:: assign (const TYPE& value)
 
 template <class TYPE> ACE_INLINE
 const char *
-TAO_Notify_StructProperty_T<TYPE>::name (void) const
+TAO_Notify_StructProperty_T<TYPE>::name () const
 {
   return this->name_;
 }
 
 template <class TYPE> ACE_INLINE const TYPE&
-TAO_Notify_StructProperty_T<TYPE>::value (void) const
+TAO_Notify_StructProperty_T<TYPE>::value () const
 {
   return this->value_;
 }
@@ -66,7 +66,7 @@ TAO_Notify_StructProperty_T<TYPE>::value (void) const
 
 
 template <class TYPE> ACE_INLINE CORBA::Boolean
-TAO_Notify_StructProperty_T<TYPE>::is_valid (void) const
+TAO_Notify_StructProperty_T<TYPE>::is_valid () const
 {
   return this->valid_;
 }

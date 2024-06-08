@@ -7,24 +7,17 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    IdUniquenessStrategyUnique::IdUniquenessStrategyUnique () :
-      poa_ (0)
-    {
-    }
-
     void
     IdUniquenessStrategyUnique::strategy_init (
-      TAO_Root_POA *poa
-      )
+      TAO_Root_POA *poa)
     {
       poa_ = poa;
     }
 
     void
-    IdUniquenessStrategyUnique::strategy_cleanup (
-      )
+    IdUniquenessStrategyUnique::strategy_cleanup ()
     {
-      poa_ = 0;
+      poa_ = nullptr;
     }
 
     bool
@@ -46,28 +39,8 @@ namespace TAO
     {
       return false;
     }
-
-    ::PortableServer::IdUniquenessPolicyValue
-    IdUniquenessStrategyUnique::type() const
-    {
-      return ::PortableServer::UNIQUE_ID;
-    }
-
   }
 }
-
-ACE_FACTORY_NAMESPACE_DEFINE (
-  ACE_Local_Service,
-  IdUniquenessStrategyUnique,
-  TAO::Portable_Server::IdUniquenessStrategyUnique)
-
-ACE_STATIC_SVC_DEFINE (
-  IdUniquenessStrategyUnique,
-  ACE_TEXT ("IdUniquenessStrategyUnique"),
-  ACE_SVC_OBJ_T,
-  &ACE_SVC_NAME (IdUniquenessStrategyUnique),
-  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-  0)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

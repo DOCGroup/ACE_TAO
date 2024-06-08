@@ -18,7 +18,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Task_Entry::Task_Entry ()
@@ -211,7 +210,6 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
                                (const char*) this->rt_info ()->entry_point);
               unresolved_remotes +=
                 ACE_CString (string_buffer);
-
             }
 
           // Check for and warn about unresolved local dependencies in

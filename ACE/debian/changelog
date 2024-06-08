@@ -1,3 +1,137 @@
+ace (7.1.2+dfsg-2) unstable; urgency=medium
+
+  * Team upload.
+  * Upload to unstable.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Wed, 06 Dec 2023 17:28:25 +0000
+
+ace (7.1.2+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+
+  [ Debian Janitor ]
+  * Set upstream metadata fields: Repository-Browse.
+  * Fix day-of-week for changelog entries 5.4.7-4, 5.4-3.
+
+  [ Sudip Mukherjee ]
+  * Update to upstream v7.1.2
+    - Sync debian/* files with upstream.
+    - Use common changelog, MPC/ChangeLog has been removed by upstream.
+  * Update Standards-Version to 4.6.2
+  * Add linitan overrides.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Fri, 01 Dec 2023 20:51:44 +0000
+
+ace (7.0.8+dfsg-2) unstable; urgency=medium
+
+  * Team upload.
+  * Upload to unstable.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Fri, 02 Sep 2022 10:31:52 +0100
+
+ace (7.0.8+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update to upstream v7.0.8
+    - Sync debian/* with upstream.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Fri, 26 Aug 2022 18:12:01 +0100
+
+ace (7.0.7+dfsg-2) unstable; urgency=medium
+
+  * Team upload.
+  * Upload to unstable.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sun, 12 Jun 2022 01:06:07 +0100
+
+ace (7.0.7+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update to upstream v7.0.7
+    - Sync debian/* with upstream.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sun, 29 May 2022 22:45:34 +0100
+
+ace (7.0.6+dfsg-2) unstable; urgency=medium
+
+  * Team upload.
+  * Upload to unstable.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Mon, 14 Feb 2022 19:22:20 +0000
+
+ace (7.0.6+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update to upstream v7.0.6
+    - Sync debian/* with upstream.
+    - Install ACE_Monitor_Control.pc
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Fri, 28 Jan 2022 19:42:31 +0000
+
+ace (7.0.5+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update to upstream v7.0.5
+    - Sync debian/* with upstream.
+    - Remove upstream applied patch.
+  * Update Standards-Version to 4.6.0.1
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Thu, 30 Dec 2021 00:08:17 +0000
+
+ace (7.0.3+dfsg-2) unstable; urgency=medium
+
+  * Team upload.
+  * Upload to unstable.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Mon, 23 Aug 2021 22:27:59 +0100
+
+ace (7.0.3+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update to upstream v7.0.3
+    - Sync debian/* with upstream.
+    - Remove upstream applied patch.
+    - Add upstream patch to fix doxygen generation.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Thu, 19 Aug 2021 21:37:21 +0100
+
+ace (7.0.2+dfsg-2) experimental; urgency=medium
+
+  * Team upload.
+  * Add upstream patch to fix FTBFS on arm.
+  * Update copyright to use SPDX identifier.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sun, 13 Jun 2021 14:20:33 +0100
+
+ace (7.0.2+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update get-orig-source script.
+  * Update to upstream v7.0.2
+    - Sync debian/* with upstream.
+    - Exclude files in d/copyright.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sun, 23 May 2021 00:20:02 +0100
+
+ace (7.0.1+dfsg-2) experimental; urgency=medium
+
+  * Team upload.
+  * Update Standards-Version to 4.5.1
+  * Update copyright to dep5 format.
+  * Update debhelper-compat to 13.
+    - Mention correct path of installed files.
+    - List files not installed.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sun, 16 May 2021 22:27:52 +0100
+
+ace (7.0.1+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update to upstream v7.0.1
+    - Sync debian/* with upstream.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sun, 28 Mar 2021 02:03:03 +0100
+
 ace (6.5.12+dfsg-3) unstable; urgency=medium
 
   * Team upload.
@@ -828,7 +962,7 @@ ace (5.4.7-4) unstable; urgency=medium
     Update: Even on i386, cpp-4.0 produces Internal Compiler Errors(ICEs). For
     this reason, cpp-3.4 will be used instead (but with gcc/g++ 4.0.
 
- -- Konstantinos Margaritis <markos@debian.org>  Mon, 4 Oct 2005 03:21:20 +0300
+ -- Konstantinos Margaritis <markos@debian.org>  Tue, 04 Oct 2005 03:21:20 +0300
 
 ace (5.4.7-3) unstable; urgency=low
 
@@ -988,7 +1122,7 @@ ace (5.4-3) unstable; urgency=low
     until 5.4.1 is released (mid-march).
     Closes: #233890
 
- -- Konstantinos Margaritis <markos@debian.org>  Wed, 28 Feb 2004 15:53:30 +0200
+ -- Konstantinos Margaritis <markos@debian.org>  Sat, 28 Feb 2004 15:53:30 +0200
 
 ace (5.4-2) unstable; urgency=low
 

@@ -234,6 +234,13 @@ public:
     , PS_EnumQsSeen             // Seen '}' for enum
     , PS_EnumBodySeen           // Seen complete enum body
     , PS_EnumCommaSeen          // Seen ',' in list of enumerators
+    , PS_MapSeen                // Seen a MAP keyword
+    , PS_MapSqSeen              // Seen a '<' for map
+    , PS_MapQsSeen              // Seen a '>' for map
+    , PS_MapKeyTypeSeen         // Seen a key type decl for map
+    , PS_MapValueTypeSeen       // Seen a value type decl for map
+    , PS_MapCommaSeen           // Seen comma for map
+    , PS_MapExprSeen            // Seen a size expression for map
     , PS_SequenceSeen           // Seen a SEQUENCE keyword
     , PS_SequenceSqSeen         // Seen '<' for sequence
     , PS_SequenceQsSeen         // Seen '>' for sequence
@@ -665,10 +672,6 @@ public:
   // match the corresponding element on this list, if it is
   // non-zero.
 
-#if defined (ACE_OPENVMS)
-  static char* translateName (const char* name, char *name_buf);
-#endif
-
   AST_Module *corba_module () const;
   void corba_module (AST_Module *m);
   // Accessors for the member.
@@ -791,9 +794,11 @@ public:
   bool non_local_op_seen_;
   bool object_arg_seen_;
   bool octet_seq_seen_;
+  bool octet_map_seen_;
   bool operation_seen_;
   bool pseudo_seq_seen_;
   bool recursive_type_seen_;
+  bool map_seen_;
   bool seq_seen_;
   bool short_seq_seen_;
   bool special_basic_decl_seen_;

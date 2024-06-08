@@ -41,7 +41,7 @@ public:
   TAO_LRU_Connection_Purging_Strategy (int cache_maximum);
 
   /// The destructor
-  virtual ~TAO_LRU_Connection_Purging_Strategy (void);
+  virtual ~TAO_LRU_Connection_Purging_Strategy ();
 
   /// Called when accessing an item from the cache
   virtual void update_item (TAO_Transport& transport);

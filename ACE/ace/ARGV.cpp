@@ -301,7 +301,6 @@ ACE_ARGV_T<CHAR_TYPE>::add (CHAR_TYPE *argv[], bool quote_args)
 }
 
 // Free up argv_ and buf_
-
 template <typename CHAR_TYPE>
 ACE_ARGV_T<CHAR_TYPE>::~ACE_ARGV_T ()
 {
@@ -314,7 +313,6 @@ ACE_ARGV_T<CHAR_TYPE>::~ACE_ARGV_T ()
 #else
       ACE_OS::free ((void *) this->argv_[i]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-
 
 
 #if defined (ACE_HAS_ALLOC_HOOKS)

@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -70,7 +69,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Class for all concrete types.
 // This is useful to group together IDL types other than objects.
-
 class TAO_IDL_FE_Export AST_ConcreteType : public virtual AST_Type
 {
 public:

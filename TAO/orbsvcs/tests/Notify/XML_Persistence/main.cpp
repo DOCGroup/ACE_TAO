@@ -3,12 +3,12 @@
 #include "orbsvcs/NotifyExtC.h"
 #include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
 
-// On SunOS 5.8 and MacOS X, the static initialization trick used
+// On MacOS X, the static initialization trick used
 // in the CosNotification_Serv library does not work.  Including the
 // initializer class here works around the problem.
-#if defined (sun) || defined (__APPLE__)
+#if defined (__APPLE__)
 #include "orbsvcs/Notify/CosNotify_Initializer.h"
-#endif /* sun || __APPLE__ */
+#endif /* __APPLE__ */
 
 #include "tao/TimeBaseC.h"
 #include "tao/corba.h"
@@ -22,7 +22,7 @@
 class TestSupplier
 : public POA_CosNotifyComm::StructuredPushSupplier
 {
-  virtual void disconnect_structured_push_supplier(void)
+  virtual void disconnect_structured_push_supplier()
   {
   }
 
@@ -35,7 +35,7 @@ class TestSupplier
 class TestConsumer
 : public POA_CosNotifyComm::StructuredPushConsumer
 {
-  virtual void disconnect_structured_push_consumer(void)
+  virtual void disconnect_structured_push_consumer()
   {
   }
 
@@ -242,9 +242,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
       constraint_list[0].event_types.length(0);
       constraint_list[0].constraint_expr = CORBA::string_dup("Number == 100");
 
-      filter1->add_constraints(constraint_list);
-
-      filter2->add_constraints(constraint_list);
+      CosNotifyFilter::ConstraintInfoSeq_var cons_info1 = filter1->add_constraints(constraint_list);
+      CosNotifyFilter::ConstraintInfoSeq_var cons_info2 = filter2->add_constraints(constraint_list);
 
       ca->add_filter (filter1.in());
 
@@ -292,12 +291,10 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
       ////////////////////////////////
       // TODO make this not hardcoded
       ACE_OS::rename ("abc.xml", "loadtest.xml");
-
     } // end of pass 1
 
     if (pass2)
     {
-
       // Create a new ecf, which should load itself from loadtest.xml
       CosNotifyChannelAdmin::EventChannelFactory_var
         cosecf = TAO_Notify_EventChannelFactory_i::create(persistentPOA.in ());
@@ -316,7 +313,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
       ecf->destroy();
     }
 
-    poa->destroy (1, 1);
+    poa->destroy (true, true);
     orb->destroy ();
     poa = PortableServer::POA::_nil ();
     orb = CORBA::ORB::_nil ();

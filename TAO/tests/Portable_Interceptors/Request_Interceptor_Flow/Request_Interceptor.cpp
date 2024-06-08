@@ -15,9 +15,8 @@ Request_Interceptor::name ()
 }
 
 void
-Request_Interceptor::destroy (void)
+Request_Interceptor::destroy ()
 {
-
   CORBA::ULong s_count =
     this->starting_interception_point_count_.value ();
 

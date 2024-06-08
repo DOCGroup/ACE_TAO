@@ -10,6 +10,7 @@
 #include "tao/SystemException.h"
 
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -46,14 +47,14 @@ CORBA::TypeCode::equal (TypeCode_ptr tc) const
 
       char const * const this_id = this->id ();
 
-      if (ACE_OS::strcmp (this_id, tc_id) != 0)
+      if (std::strcmp (this_id, tc_id) != 0)
         return false;
 
       char const * const tc_name = tc->name ();
 
       char const * const this_name = this->name ();
 
-      if (ACE_OS::strcmp (this_name, tc_name) != 0)
+      if (std::strcmp (this_name, tc_name) != 0)
         return false;
     }
   catch (const ::CORBA::TypeCode::BadKind&)
@@ -96,10 +97,10 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
       char const * const this_id = unaliased_this->id ();
       char const * const tc_id = unaliased_tc->id ();
 
-      if (ACE_OS::strlen (this_id) != 0
-          && ACE_OS::strlen (tc_id) != 0)
+      if (std::strlen (this_id) != 0
+          && std::strlen (tc_id) != 0)
         {
-          return ACE_OS::strcmp (this_id, tc_id) == 0;
+          return std::strcmp (this_id, tc_id) == 0;
         }
     }
   catch (const ::CORBA::TypeCode::BadKind&)

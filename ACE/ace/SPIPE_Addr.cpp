@@ -14,8 +14,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Addr)
 void
 ACE_SPIPE_Addr::dump () const
 {
-#if defined (ACE_HAS_DUMP)
-#endif /* ACE_HAS_DUMP */
 }
 
 // Set a pointer to the address.
@@ -29,16 +27,13 @@ ACE_SPIPE_Addr::set_addr (const void *addr, int len)
 }
 
 // Return the address.
-
 void *
 ACE_SPIPE_Addr::get_addr () const
 {
   return (void *) &this->SPIPE_addr_;
 }
 
-
 // Do nothing constructor.
-
 ACE_SPIPE_Addr::ACE_SPIPE_Addr ()
   : ACE_Addr (AF_SPIPE, sizeof this->SPIPE_addr_)
 {
@@ -57,7 +52,6 @@ ACE_SPIPE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 }
 
 // Transform the string into the current addressing format.
-
 int
 ACE_SPIPE_Addr::string_to_addr (const ACE_TCHAR *addr)
 {
@@ -81,7 +75,6 @@ ACE_SPIPE_Addr::set (const ACE_SPIPE_Addr &sa)
 }
 
 // Copy constructor.
-
 ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa)
   : ACE_Addr (AF_SPIPE, sizeof this->SPIPE_addr_)
 {
@@ -107,7 +100,6 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
     }
   else
     {
-
       if (ACE_OS::strncmp (addr,
                            ACE_TEXT ("localhost"),
                            ACE_OS::strlen ("localhost")) == 0)
@@ -149,7 +141,6 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
 }
 
 // Create a ACE_Addr from a ACE_SPIPE pathname.
-
 ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_TCHAR *addr,
                                 gid_t gid,
                                 uid_t uid)

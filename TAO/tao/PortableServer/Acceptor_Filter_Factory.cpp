@@ -6,25 +6,21 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Acceptor_Filter_Factory::~TAO_Acceptor_Filter_Factory(void)
-{
-}
-
 TAO_Acceptor_Filter*
 TAO_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& )
 {
-  TAO_Acceptor_Filter *filter = 0;
+  TAO_Acceptor_Filter *filter = nullptr;
 
   ACE_NEW_RETURN (filter,
                   TAO_Default_Acceptor_Filter (),
-                  0);
+                  nullptr);
 
   return filter;
 }
 
 
 int
-TAO_Acceptor_Filter_Factory::initialize (void)
+TAO_Acceptor_Filter_Factory::initialize ()
 {
   return ACE_Service_Config::process_directive
     (ace_svc_desc_TAO_Acceptor_Filter_Factory);

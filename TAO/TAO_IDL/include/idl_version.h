@@ -95,7 +95,7 @@ public:
   void from_string (const char * version);
 
   /**
-   * Get the value for __TAO_IDL_IDL_VERSION preprocessor macro.
+   * Get the value for the __TAO_IDL_IDL_VERSION preprocessor macro.
    */
   const char * to_macro () const;
 

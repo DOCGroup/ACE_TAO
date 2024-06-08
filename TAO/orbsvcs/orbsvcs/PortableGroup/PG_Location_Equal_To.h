@@ -38,12 +38,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_PG_Location_Equal_To
 {
 public:
-
   /// Perform a string comparison on each of the sequence elements in
   /// the given locations.
   int operator() (const PortableGroup::Location &lhs,
                   const PortableGroup::Location &rhs) const;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -10,8 +10,8 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 
 static const ACE_TCHAR *ior_output_file = ACE_TEXT ("supplier.ior");
 static bool useFilters = false;
@@ -30,12 +30,12 @@ public:
   {
   }
 
-  void go (void)
+  void go ()
   {
     started_ = true;
   }
 
-  void done (void)
+  void done ()
   {
     started_ = false;
   }
@@ -184,14 +184,14 @@ void add_admin_filter (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   constraint_list[0].event_types.length (0);
   constraint_list[0].constraint_expr = CORBA::string_dup ("type != 0");
 
-  filter->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
   admin->add_filter (filter.in ());
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Auto_Ptr< sig_i > sig_impl;
+  std::unique_ptr<sig_i> sig_impl;
   try
   {
     Supplier_Client client;
@@ -206,7 +206,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     CORBA::ORB_ptr orb = client.orb ();
 
-    sig_impl.reset( new sig_i( orb ) );
+    sig_impl.reset( new sig_i(orb));
     sig_var sig = sig_impl->_this ();
 
     CosNotifyChannelAdmin::SupplierAdmin_var admin =

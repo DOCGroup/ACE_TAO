@@ -126,7 +126,6 @@ TAO_FT_Naming_Server::update_info_i ()
 void
 TAO_FT_Naming_Server::update_info (FT_Naming::UpdateInfoSeq &infos)
 {
-
   CORBA::ULong count = infos.length();
   FT_Naming::UpdateInfo* guts = infos.get_buffer(true);
   FT_Naming::UpdateInfoSeq_var block = 0;
@@ -322,7 +321,6 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int, ACE_TCHAR *[], CORBA::O
 
       this->naming_manager_.initialize (this->orb_.in (),
                                         this->naming_manager_poa_.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -412,7 +410,6 @@ TAO_FT_Naming_Server::init_replication_pairing ()
 void
 TAO_FT_Naming_Server::no_replica ()
 {
-
   if (this->server_role_ == BACKUP)
     {
       this->recover_iors ();
@@ -559,7 +556,9 @@ TAO_FT_Naming_Server::parse_args (int argc,
               break;
             }
         }
+        ACE_FALLTHROUGH;
       case '?':
+        ACE_FALLTHROUGH;
       default:
         ORBSVCS_ERROR ((LM_ERROR,ACE_TEXT ("Unknown arg %c\n"), c ));
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -689,21 +688,13 @@ TAO_FT_Naming_Server::fini ()
 TAO_Storable_Naming_Context_Factory *
 TAO_FT_Naming_Server::storable_naming_context_factory (size_t context_size)
 {
-#if defined (ACE_HAS_NEW_NOTHROW)
-  return new (ACE_nothrow) TAO_FT_Storable_Naming_Context_Factory (context_size, this->replicator_);
-#else
-  return new TAO_FT_Storable_Naming_Context_Factory (context_size, this->replicator_);
-#endif /* ACE_HAS_NEW_NOTHROW */
+  return new (std::nothrow) TAO_FT_Storable_Naming_Context_Factory (context_size, this->replicator_);
 }
 
 TAO_Persistent_Naming_Context_Factory *
 TAO_FT_Naming_Server::persistent_naming_context_factory ()
 {
-#if defined (ACE_HAS_NEW_NOTHROW)
-  return new (ACE_nothrow) TAO_FT_Persistent_Naming_Context_Factory;
-#else
-  return new TAO_FT_Persistent_Naming_Context_Factory;
-#endif /* ACE_HAS_NEW_NOTHROW */
+  return new (std::nothrow) TAO_FT_Persistent_Naming_Context_Factory;
 }
 
 /// Return the IOR for the registered replication manager
@@ -937,7 +928,6 @@ TAO_FT_Naming_Server::combine_iors (FT_Naming::EntityKind kind, CORBA::Object_pt
         }
       else
         {
-
           this->assign (combo, false, iorm->add_profiles (peer,
                                                          this->iors_[local].ref_.in ()));
         }

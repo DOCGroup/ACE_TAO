@@ -28,30 +28,22 @@ namespace XSCRT
   class Type
   {
   public:
-    virtual ~Type (void)
-    {
-    }
+    virtual ~Type () = default;
 
   protected:
-    Type (void)
-        : container_ (0)
-    {
-    }
+    Type () = default;
 
     template <typename C>
     Type (XML::Element<C> const&)
-        : container_ (0)
     {
     }
 
     template <typename C>
     Type (XML::Attribute<C> const&)
-        : container_ (0)
     {
     }
 
     Type (Type const&)
-        : container_ (0)
     {
     }
 
@@ -75,7 +67,6 @@ namespace XSCRT
     {
       return container_ ? container_ : this;
     }
-
 
     Type const*
     root () const
@@ -112,7 +103,7 @@ namespace XSCRT
 
       // Revoke registrations from our old container.
       //
-      if (container_ != 0 && map_.get ())
+      if (container_ != nullptr && map_.get ())
       {
         for (Map_::iterator i (map_->begin ()); i != map_->end (); ++i)
         {
@@ -243,11 +234,10 @@ namespace XSCRT
     }
 
   private:
-
     // Data member to handle unbounded IDREF attributes and elements
     std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*> idref_map_;
 
-    Type* container_;
+    Type* container_ {};
 
     struct IdentityComparator
     {
@@ -266,8 +256,6 @@ namespace XSCRT
   };
 
   // Fundamental types template.
-  //
-  //
   template <typename X>
   class FundamentalType : public Type
   {
@@ -275,9 +263,7 @@ namespace XSCRT
     // Trait for marshaling a FundamentalType X
     typedef X CDR_Type__;
 
-    FundamentalType ()
-    {
-    }
+    FundamentalType () = default;
 
     template<typename C>
     FundamentalType (XML::Element<C> const& e)
@@ -323,8 +309,6 @@ namespace XSCRT
   };
 
   // Specialization for `signed char'
-  //
-  //
   template<>
   template<typename C>
   inline
@@ -356,8 +340,6 @@ namespace XSCRT
   }
 
   // Specialization for `unsigned char'
-  //
-  //
   template<>
   template<typename C>
   inline
@@ -389,9 +371,6 @@ namespace XSCRT
   }
 
   // Specialization for bool.
-  //
-  //
-
   template<>
   template<>
   inline

@@ -56,7 +56,7 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 void
 ST_AMH_Servant::shutdown (Test::AMH_RoundtripResponseHandler_ptr /*_tao_rh*/)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 /*** Server Declaration ***/
@@ -72,7 +72,7 @@ public:
   virtual ~ST_AMH_Server ();
 
   /// ORB initialisation stuff
-  int start_orb_and_poa (void);
+  int start_orb_and_poa ();
 
   /// register the servant with the poa
   virtual void register_servant (ST_AMH_Servant *servant);
@@ -131,7 +131,7 @@ ST_AMH_Server::~ST_AMH_Server ()
 }
 
 int
-ST_AMH_Server::start_orb_and_poa (void)
+ST_AMH_Server::start_orb_and_poa ()
 {
   try
     {

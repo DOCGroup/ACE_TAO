@@ -63,7 +63,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB first.
@@ -255,7 +254,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager_1->activate ();
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
 

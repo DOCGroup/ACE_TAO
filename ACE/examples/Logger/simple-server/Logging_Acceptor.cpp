@@ -5,10 +5,7 @@
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"
 
-
-
 // Initialize peer_acceptor object.
-
 int
 Logging_Acceptor::open (const ACE_INET_Addr &addr)
 {
@@ -19,14 +16,7 @@ Logging_Acceptor::open (const ACE_INET_Addr &addr)
     return 0;
 }
 
-// Default constructor.
-
-Logging_Acceptor::Logging_Acceptor (void)
-{
-}
-
 // Performs termination activities.
-
 int
 Logging_Acceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
@@ -36,21 +26,15 @@ Logging_Acceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   return 0;
 }
 
-Logging_Acceptor::~Logging_Acceptor (void)
-{
-}
-
 // Returns underlying device descriptor.
-
 ACE_HANDLE
-Logging_Acceptor::get_handle (void) const
+Logging_Acceptor::get_handle () const
 {
   return this->peer_acceptor_.get_handle ();
 }
 
 // Accepts connections from client and registers new object with the
 // ACE_Reactor.
-
 int
 Logging_Acceptor::handle_input (ACE_HANDLE)
 {
@@ -65,7 +49,7 @@ Logging_Acceptor::handle_input (ACE_HANDLE)
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  int reset_new_handle = this->reactor ()->uses_event_associations ();
+  int const reset_new_handle = this->reactor ()->uses_event_associations ();
 
   if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
                                    0, // remote address

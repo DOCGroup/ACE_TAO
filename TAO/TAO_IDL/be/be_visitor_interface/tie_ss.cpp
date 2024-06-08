@@ -75,21 +75,20 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "template <class T>" << be_nl
       << fulltiename << "<T>::" << localtiename << " (T &t)" << be_idt_nl
-      << ": ptr_ (&t)," << be_idt_nl
-      << "poa_ ( ::PortableServer::POA::_nil ())," << be_nl
+      << ": ptr_ (std::addressof(t))," << be_idt_nl
+      << "poa_ (::PortableServer::POA::_nil ())," << be_nl
       << "rel_ (false)" << be_uidt << be_uidt_nl
       << "{}" << be_nl_2;
 
   *os << "template <class T>" << be_nl
       << fulltiename << "<T>::" << localtiename
       << " (T &t, ::PortableServer::POA_ptr poa)" << be_idt_nl
-      << ": ptr_ (&t)," << be_idt_nl
-      << "poa_ ( ::PortableServer::POA::_duplicate (poa))," << be_nl
+      << ": ptr_ (std::addressof(t))," << be_idt_nl
+      << "poa_ (::PortableServer::POA::_duplicate (poa))," << be_nl
       << "rel_ (false)" << be_uidt << be_uidt_nl
       << "{}" << be_nl_2;
 
@@ -97,7 +96,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << fulltiename << "<T>::" << localtiename
       << " (T *tp, ::CORBA::Boolean release)" << be_idt_nl
       << ": ptr_ (tp)," << be_idt_nl
-      << "poa_ ( ::PortableServer::POA::_nil ())," << be_nl
+      << "poa_ (::PortableServer::POA::_nil ())," << be_nl
       << "rel_ (release)" << be_uidt << be_uidt_nl
       << "{}" << be_nl_2;
 
@@ -106,7 +105,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << " (T *tp, ::PortableServer::POA_ptr poa, ::CORBA::Boolean release)"
       << be_idt_nl
       << ": ptr_ (tp)," << be_idt_nl
-      << "poa_ ( ::PortableServer::POA::_duplicate (poa))," << be_nl
+      << "poa_ (::PortableServer::POA::_duplicate (poa))," << be_nl
       << "rel_ (release)" << be_uidt << be_uidt_nl
       << "{}" << be_nl_2;
 
@@ -132,7 +131,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "delete this->ptr_;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "this->ptr_ = &obj;" << be_nl
+      << "this->ptr_ = std::addressof(obj);" << be_nl
       << "this->rel_ = false;" << be_uidt_nl
       << "}" << be_nl_2;
 
@@ -155,7 +154,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << "}" << be_nl_2;
 
   *os << "template <class T> void" << be_nl
-      << fulltiename << "<T>::_is_owner ( ::CORBA::Boolean b)" << be_nl
+      << fulltiename << "<T>::_is_owner (::CORBA::Boolean b)" << be_nl
       << "{" << be_idt_nl
       << "this->rel_ = b;" << be_uidt_nl
       << "}" << be_nl_2;

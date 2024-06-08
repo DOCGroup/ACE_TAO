@@ -7,6 +7,7 @@
 
 #include <map>
 #include <string>
+#include <memory>
 #include <typeinfo.h>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -32,11 +33,11 @@ public:
 
   static TAO_Notify_Tracker& get_instance();
 
-  void add( TAO_Notify_Refcountable* p );
+  void add( TAO_Notify_Refcountable* p);
 
-  void remove( const TAO_Notify_Refcountable* p );
+  void remove( const TAO_Notify_Refcountable* p);
 
-  Entry find( const TAO_Notify_Refcountable* p ) const;
+  Entry find( const TAO_Notify_Refcountable* p) const;
 
   void dump( const char* title = 0 );
 
@@ -44,8 +45,8 @@ private:
   TAO_Notify_Tracker();
   ~TAO_Notify_Tracker();
 
-  friend class std::auto_ptr< TAO_Notify_Tracker >;
-  static std::auto_ptr< TAO_Notify_Tracker > s_instance;
+  friend class std::unique_ptr< TAO_Notify_Tracker >;
+  static std::unique_ptr< TAO_Notify_Tracker > s_instance;
   mutable TAO_SYNCH_MUTEX lock_;
   typedef std::map<int, Entry> EntityMap;
   EntityMap map_;
@@ -133,7 +134,7 @@ TAO_Notify_Refcountable::_decr_refcnt ()
 
 #if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
 
-std::auto_ptr< TAO_Notify_Tracker > TAO_Notify_Tracker::s_instance;
+std::unique_ptr< TAO_Notify_Tracker > TAO_Notify_Tracker::s_instance;
 
 TAO_Notify_Tracker::TAO_Notify_Tracker()
 : id_counter_(0)
@@ -227,7 +228,7 @@ TAO_Notify_Tracker::remove( const TAO_Notify_Refcountable* p )
 
 
 TAO_Notify_Tracker::Entry
-TAO_Notify_Tracker::find( const TAO_Notify_Refcountable* p ) const
+TAO_Notify_Tracker::find( const TAO_Notify_Refcountable* p) const
 {
   Entry e = { 0, "" };
   if ( p == 0 ) return e;

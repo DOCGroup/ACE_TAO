@@ -11,7 +11,7 @@ static pthread_once_t tao_lb_once_control = PTHREAD_ONCE_INIT;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-extern "C" void tao_lb_random_init_routine (void)
+extern "C" void tao_lb_random_init_routine ()
 {
   ACE_OS::srand (static_cast<unsigned int> (ACE_OS::time ()));
 }

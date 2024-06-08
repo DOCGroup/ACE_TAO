@@ -25,5 +25,9 @@
 
 #include "ace/config-win32-msvc-141.h"
 
+#if _MSVC_LANG >= 202002L
+#  define ACE_HAS_CPP20
+#endif /* _MSVC_LANG >= 202002L */
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_142_H */

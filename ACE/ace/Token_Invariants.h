@@ -41,29 +41,29 @@ class ACE_Export ACE_Mutex_Invariants
 {
 public:
   /// Default construction.
-  ACE_Mutex_Invariants (void);
+  ACE_Mutex_Invariants () = default;
 
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int acquired (void);
+  int acquired ();
 
   /// Updates internal database.
-  void releasing (void);
+  void releasing ();
 
   // = Map_Manager operations.
 
   /// Copy construction.
-  ACE_Mutex_Invariants (const ACE_Mutex_Invariants &rhs);
+  ACE_Mutex_Invariants (const ACE_Mutex_Invariants &rhs) = default;
 
   /// Copy.
-  void operator= (const ACE_Mutex_Invariants &rhs);
+  void operator= (const ACE_Mutex_Invariants &rhs) = default;
 
   /// Dump the state of the class.
   void dump () const;
 
 private:
   /// Number of owners.  This had better be 0 >= owners_ <= 1;
-  int owners_;
+  int owners_ {};
 };
 
 /**
@@ -79,36 +79,36 @@ class ACE_Export ACE_RWLock_Invariants
 {
 public:
   /// Default construction.
-  ACE_RWLock_Invariants (void);
+  ACE_RWLock_Invariants () = default;
 
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int writer_acquired (void);
+  int writer_acquired ();
 
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int reader_acquired (void);
+  int reader_acquired ();
 
   /// Updates internal database.
-  void releasing (void);
+  void releasing ();
 
   // = Map_Manager operations.
 
   /// Copy construction.
-  ACE_RWLock_Invariants (const ACE_RWLock_Invariants &rhs);
+  ACE_RWLock_Invariants (const ACE_RWLock_Invariants &rhs) = default;
 
   /// Copy.
-  void operator= (const ACE_RWLock_Invariants &rhs);
+  void operator= (const ACE_RWLock_Invariants &rhs) = default;
 
   /// Dump the state of the class.
   void dump () const;
 
 private:
   /// Number of owning writers.
-  int writers_;
+  int writers_ {};
 
   /// Number of owning readers.
-  int readers_;
+  int readers_ {};
 };
 
 /**
@@ -126,9 +126,8 @@ private:
 class ACE_Export ACE_Token_Invariant_Manager : public ACE_Cleanup
 {
 public:
-
   /// Singleton access point.
-  static ACE_Token_Invariant_Manager *instance (void);
+  static ACE_Token_Invariant_Manager *instance ();
 
   // = Polymorphic methods.  Just pass in the proxy and the method
   // figures out the type of the token.
@@ -167,10 +166,10 @@ public:
   // = The following two method should be in the protected part of the
   //   class.  Bugs with certain compilers preclude this.
   /// Prevent non-singleton construction.
-  ACE_Token_Invariant_Manager (void);
+  ACE_Token_Invariant_Manager ();
 
   /// Destruction.
-  virtual ~ACE_Token_Invariant_Manager (void);
+  virtual ~ACE_Token_Invariant_Manager ();
 
 protected:
   /// Return or create.

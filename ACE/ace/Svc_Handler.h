@@ -170,16 +170,12 @@ public:
   /// dynamically.
   void *operator new (size_t n);
 
-#if defined (ACE_HAS_NEW_NOTHROW)
   /// Overloaded new operator, nothrow_t variant. Unobtrusively records if a
   /// <Svc_Handler> is allocated dynamically, which allows it to clean
   /// itself up correctly whether or not it's allocated statically or
   /// dynamically.
-  void *operator new (size_t n, const ACE_nothrow_t&) throw();
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
-  void operator delete (void *p, const ACE_nothrow_t&) throw ();
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
-#endif
+  void *operator new (size_t n, const std::nothrow_t&) noexcept;
+  void operator delete (void *p, const std::nothrow_t&) noexcept;
 
   /// This operator permits "placement new" on a per-object basis.
   void * operator new (size_t n, void *p);
@@ -202,14 +198,12 @@ public:
    */
   void operator delete (void *);
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
   /**
    * This operator is necessary to complement the class-specific
    * operator new above.  Unfortunately, it's not portable to all C++
    * compilers...
    */
   void operator delete (void *, void *);
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
   /// Close down the descriptor and unregister from the Reactor
   void shutdown ();
@@ -218,7 +212,6 @@ public:
   void dump () const;
 
 public:
-
   // = The following methods are not suppose to be public.
 
   // Because friendship is *not* inherited in C++, these methods have
@@ -344,13 +337,7 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Svc_Handler.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Svc_Handler.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

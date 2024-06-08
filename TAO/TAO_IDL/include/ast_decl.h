@@ -73,9 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/SString.h"
 #include "ace/Vector_T.h"
 
-// This is for AIX w/IBM C++
 class Identifier;
-
 class UTL_Scope;
 class UTL_String;
 class ast_visitor;
@@ -151,6 +149,7 @@ public:
       , NT_wstring                  // Denotes an IDL wstring
       , NT_array                    // Denotes an IDL array
       , NT_sequence                 // Denotes an IDL sequence
+      , NT_map                      // Denotes an IDL map
       , NT_typedef                  // Denotes a typedef
       , NT_pre_defined              // Denotes a predefined type
       , NT_native                   // Denotes a native type
@@ -236,7 +235,7 @@ public:
 
   void set_name (UTL_ScopedName *n);
 
-  Identifier *local_name ();
+  Identifier *local_name () const;
   void local_name (Identifier *id);
 
   Identifier *compute_local_name (const char *prefix,

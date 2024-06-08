@@ -26,7 +26,7 @@ ACE_TEXT_OSVERSIONINFO ACE_OS::win32_versioninfo_;
 HINSTANCE ACE_OS::win32_resource_module_;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#   if defined (ACE_HAS_DLL) && (ACE_HAS_DLL == 1) && !defined (ACE_HAS_WINCE)
+#   if defined (ACE_HAS_DLL) && (ACE_HAS_DLL == 1)
 // This function is called by the OS when the ACE DLL is loaded. We
 // use it to determine the default module containing ACE's resources.
 extern "C" BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID)
@@ -51,7 +51,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-
 void
 ace_flock_t::dump () const
 {
@@ -87,7 +86,7 @@ ace_flock_t::dump () const
 /*****************************************************************************/
 
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 namespace
 {
   /// Translate fopen's mode char to open's mode.  This helper function
@@ -863,12 +862,8 @@ namespace { // helpers for vsnprintf_emulation
 
       const long double log = val > 0 ? std::log10 (val) : 0;
       int dig_left = static_cast<int> (1 + ((val >= 1) ? log : 0));
-
-#if defined __HP_aCC && __HP_aCC < 40000
-      int exp = static_cast<int> (log);
-#else
       int exp = static_cast<int> (std::floor (log));
-#endif
+
       if (flags.has (SNPRINTF_FLEXPONENT))
         {
           const int p = precision > 0 ? precision : (precision < 0 ? 6 : 1);

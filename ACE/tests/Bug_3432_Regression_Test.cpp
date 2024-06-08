@@ -19,7 +19,6 @@
 #include "ace/OS_NS_time.h"
 
 
-
 int
 strptime_test ()
 {

@@ -66,7 +66,6 @@ TAO_AV_UDP_Flow_Handler::set_remote_address (ACE_Addr *address)
   return transport->set_remote_address (*inet_addr);
 }
 
-
 ACE_HANDLE
 TAO_AV_UDP_Flow_Handler::get_handle () const
 {
@@ -95,7 +94,6 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
   int dscp_flag=0;
   for(i=0; i < qos.QoSParams.length(); i++)
     {
-
       if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
         {
           qos.QoSParams[i].property_value >>= dscp;
@@ -281,7 +279,6 @@ TAO_AV_UDP_Transport::send (const iovec *iov,
   return this->handler_->get_socket ()->send ((const iovec *) iov,
                                               iovcnt,
                                               this->peer_addr_);
-
 }
 
 ssize_t
@@ -566,17 +563,19 @@ TAO_AV_UDP_Acceptor::close ()
 //------------------------------------------------------------
 TAO_AV_UDP_Connector::TAO_AV_UDP_Connector ()
   : control_inet_address_ (0)
+  , delete_control_inet_address_ (false)
 {
 }
 
 TAO_AV_UDP_Connector::~TAO_AV_UDP_Connector ()
 {
-  if (this->flow_component_ == TAO_AV_Core::TAO_AV_CONTROL)
+  if (this->entry_ && this->flow_component_ == TAO_AV_Core::TAO_AV_CONTROL)
     {
       delete this->entry_->control_handler ();
+      this->entry_->control_handler (nullptr);
     }
 
-  if (this->control_inet_address_ != 0)
+  if (this->delete_control_inet_address_)
     delete this->control_inet_address_;
 }
 
@@ -677,7 +676,6 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                     control_inet_addr =  dynamic_cast<ACE_INET_Addr*> (entry->control_address ()) ;
                   else
                     {
-
                       if (local_addr != 0)
                         {
                           ACE_TCHAR buf [BUFSIZ];
@@ -692,9 +690,12 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
 
 
                       if (entry->control_address () == 0)
-                        ACE_NEW_RETURN (this->control_inet_address_,
-                                        ACE_INET_Addr ("0"),
-                                        -1);
+                        {
+                          ACE_NEW_RETURN (this->control_inet_address_,
+                                          ACE_INET_Addr ("0"),
+                                          -1);
+                          delete_control_inet_address_ = true;
+                        }
                       else
                         control_inet_address_ = dynamic_cast<ACE_INET_Addr*> (entry->control_address ());
                     }

@@ -187,10 +187,10 @@ public:
 
 private:
   /// Copy Constructor should not be used.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Arg_Shifter_T (const ACE_Arg_Shifter_T<CHAR_TYPE> &))
+  ACE_Arg_Shifter_T (const ACE_Arg_Shifter_T<CHAR_TYPE> &) = delete;
 
   /// Assignment '=' operator should not be used.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Arg_Shifter_T operator= (const ACE_Arg_Shifter_T<CHAR_TYPE> &))
+  ACE_Arg_Shifter_T operator= (const ACE_Arg_Shifter_T<CHAR_TYPE> &) = delete;
 
   /// Refactor the constructor logic.
   void init ();
@@ -226,13 +226,7 @@ typedef ACE_Arg_Shifter_T<ACE_TCHAR> ACE_Arg_Shifter;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Arg_Shifter.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Arg_Shifter.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

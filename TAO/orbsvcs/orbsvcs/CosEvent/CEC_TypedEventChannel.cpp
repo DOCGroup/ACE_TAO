@@ -90,7 +90,7 @@ namespace
 
     virtual int handle_timeout (const ACE_Time_Value&, const void*)
     {
-      orb_->shutdown (1);
+      orb_->shutdown (true);
       return 0;
     }
 
@@ -502,7 +502,6 @@ TAO_CEC_TypedEventChannel::create_operation_list (TAO_CEC_Operation_Params *oper
 
   for (CORBA::ULong param=0; param<oper_params->num_params_; param++)
     {
-
       CORBA::Any any_1;
       any_1._tao_set_typecode(oper_params->parameters_[param].type_.in ());
 

@@ -21,18 +21,6 @@ ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
     no_hidden_visibility ?= 1
   endif
 endif
-ifeq (Red Hat, $(findstring Red Hat,$(CXX_FULL_VERSION)))
-  ifeq (4.1.1, $(findstring 4.1.1,$(CXX_VERSION)))
-    gcc_template_instantiation_visibility ?= 1
-  endif
-  ifeq (4.1.2, $(findstring 4.1.2,$(CXX_VERSION)))
-    gcc_template_instantiation_visibility ?= 1
-  endif
-endif
-# Mandriva 2007
-ifeq (4.1.1-3mdk, $(findstring 4.1.1-3mdk,$(CXX_FULL_VERSION)))
-  gcc_template_instantiation_visibility ?= 1
-endif
 
 ifeq ($(buildbits),32)
   FLAGS_C_CC += -m32
@@ -42,20 +30,6 @@ ifeq ($(buildbits),64)
   FLAGS_C_CC += -m64
   LDFLAGS    += -m64
 endif
-
-# DT_RUNPATH is preferred over DT_RPATH, but the linker will only use it when
-# this extra flag option (enable-new-dtags) is present
-LD_RPATH_FLAGS += -Wl,--enable-new-dtags
-
-# Rely on _GNU_SOURCE to set these defaults defined in /usr/include/features.h
-# instead of setting them directly here (older versions of gcc don't set it
-# for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, ...
-CPPFLAGS += -D_GNU_SOURCE
-
-DCFLAGS  += -ggdb
-DCCFLAGS += -ggdb
-DLD      = $(CXX)
-LD       = $(CXX)
 
 ifeq ($(dynamic_loader),0)
   CPPFLAGS += -DACE_HAS_DYNAMIC_LINKING=0
@@ -69,18 +43,9 @@ ifeq ($(threads),1)
   LIBS += -lrt
 endif
 
-ifeq ($(optimize),1)
-  SOFLAGS += -Wl,-O3
-endif
-
 ifeq ($(static_stdlibs),1)
   LDFLAGS += -static-libgcc -static-libstdc++
 endif
-
-SOFLAGS += -shared
-SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
-          $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
-PRELIB  = @true
 
 # Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld

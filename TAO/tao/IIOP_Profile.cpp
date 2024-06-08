@@ -12,6 +12,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Truncate.h"
 #include "ace/os_include/os_netdb.h"
+#include <cstring>
 
 static const char the_prefix[] = "iiop";
 
@@ -128,7 +129,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
 
-  const char *okd = ACE_OS::strchr (ior, this->object_key_delimiter_);
+  const char *okd = std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == nullptr || okd == ior)
     {
@@ -143,7 +144,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
   // Length of host string.
   CORBA::ULong length_host = 0;
 
-  const char *cp_pos_overrun = ACE_OS::strchr (ior, ':');  // Look for a port
+  const char *cp_pos_overrun = std::strchr (ior, ':');  // Look for a port
   const char *cp_pos = (cp_pos_overrun < okd) ? cp_pos_overrun : nullptr; // but before object key
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
@@ -157,7 +158,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      const char *cp_pos_a_overrun = ACE_OS::strchr(ior, ']');
+      const char *cp_pos_a_overrun = std::strchr(ior, ']');
       const char *cp_pos_a = (cp_pos_a_overrun < okd) ? cp_pos_a_overrun : 0; // before object key
       if (cp_pos_a == 0)
         {
@@ -482,9 +483,9 @@ TAO_IIOP_Profile::to_string () const
        8 /* "corbaloc" */ +
        1 /* colon separator */ +
        1 /* object key separator */ +
-       ACE_OS::strlen (key.in ()));
+       std::strlen (key.in ()));
   size_t const pfx_len = (
-       ACE_OS::strlen (::the_prefix) /* "iiop" */ +
+       std::strlen (::the_prefix) /* "iiop" */ +
        1 /* colon separator */);
 
  const TAO_IIOP_Endpoint *endp = nullptr;
@@ -496,7 +497,7 @@ TAO_IIOP_Profile::to_string () const
           1 /* decimal point */ +
           1 /* minor version */ +
           1 /* `@' character */ +
-          ACE_OS::strlen (endp->host ()) +
+          std::strlen (endp->host ()) +
           1 /* colon separator */ +
           5 /* port number */ +
           1 /* comma */);
@@ -528,7 +529,7 @@ TAO_IIOP_Profile::to_string () const
               tmp = tmp.substr(0, pos + 1);
               tmp[pos] = '\0';
             }
-          ACE_OS::sprintf (buf + ACE_OS::strlen(buf),
+          ACE_OS::sprintf (buf + std::strlen(buf),
                   "%s:%c.%c@[%s]:%d",
                   ::the_prefix,
                   digits [this->version_.major],
@@ -538,16 +539,15 @@ TAO_IIOP_Profile::to_string () const
         }
       else
 #endif
-      ACE_OS::sprintf (buf + ACE_OS::strlen(buf),
+      ACE_OS::sprintf (buf + std::strlen(buf),
               "%s:%c.%c@%s:%d",
               ::the_prefix,
               digits [this->version_.major],
               digits [this->version_.minor],
               endp->host (),
               endp->port () );
-
   }
-  ACE_OS::sprintf (buf + ACE_OS::strlen(buf),
+  ACE_OS::sprintf (buf + std::strlen(buf),
           "%c%s",
           this->object_key_delimiter_,
           key.in ());
@@ -577,7 +577,7 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   const char* host = 0;
   const char* pos = 0;
   if (this->endpoint_.is_ipv6_decimal_ &&
-      (pos = ACE_OS::strchr (host = this->endpoint_.host (), '%')) != 0)
+      (pos = std::strchr (host = this->endpoint_.host (), '%')) != 0)
     {
       ACE_CString tmp;
       size_t len = pos - host;
@@ -634,7 +634,7 @@ TAO_IIOP_Profile::encode_alternate_endpoints ()
       const char* host = 0;
       const char* pos = 0;
       if (endpoint->is_ipv6_decimal_ &&
-          (pos = ACE_OS::strchr (host = endpoint->host (), '%')) != 0)
+          (pos = std::strchr (host = endpoint->host (), '%')) != 0)
         {
           ACE_CString tmp;
           size_t len = pos - host;

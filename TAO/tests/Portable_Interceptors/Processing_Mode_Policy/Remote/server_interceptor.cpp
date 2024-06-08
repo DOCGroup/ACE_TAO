@@ -9,7 +9,7 @@ const char *request_msg = "The Echo_Server_Request_Interceptor request message";
 const char *reply_msg = "The Echo_Server_Request_Interceptor reply message";
 CORBA::ULong Echo_Server_Request_Interceptor::server_interceptor_check_ = 0;
 
-Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
+Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor ()
   : myname_ ("Echo_Server_Interceptor")
 {
 }
@@ -19,13 +19,13 @@ Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor ()
 }
 
 char *
-Echo_Server_Request_Interceptor::name (void)
+Echo_Server_Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Server_Request_Interceptor::destroy (void)
+Echo_Server_Request_Interceptor::destroy ()
 {
 }
 
@@ -63,7 +63,6 @@ Echo_Server_Request_Interceptor::receive_request (
       ACE_DEBUG ((LM_DEBUG,
                   "The arg is %d\n",
                   param));
-
      }
 
   CORBA::String_var tmdi =

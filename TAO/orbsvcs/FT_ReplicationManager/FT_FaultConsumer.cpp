@@ -54,7 +54,6 @@ int TAO::FT_FaultConsumer::init (
   FT::FaultNotifier_ptr fault_notifier,
   TAO::FT_FaultAnalyzer * fault_analyzer)
 {
-
   if (TAO_debug_level > 1)
   {
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -114,9 +113,8 @@ int TAO::FT_FaultConsumer::init (
 * - Disconnect from FT::FaultNotifier.
 * - Deactivate from the POA.
 */
-int TAO::FT_FaultConsumer::fini (void)
+int TAO::FT_FaultConsumer::fini ()
 {
-
   if (TAO_debug_level > 1)
   {
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -130,7 +128,6 @@ int TAO::FT_FaultConsumer::fini (void)
   {
     if (!CORBA::is_nil (this->fault_notifier_.in()))
     {
-
       if (TAO_debug_level > 1)
       {
         ORBSVCS_DEBUG ((LM_DEBUG,

@@ -34,7 +34,6 @@ TAO_Notify_LogConsumer::connect (
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
 
   proxy_supplier_->connect_any_push_consumer (objref.in ());
-
 }
 
 void

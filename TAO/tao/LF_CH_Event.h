@@ -49,15 +49,15 @@ public:
   friend class TAO_LF_Multi_Event;
 
   /// Constructor
-  TAO_LF_CH_Event (void);
+  TAO_LF_CH_Event ();
 
   /// Destructor
-  virtual ~TAO_LF_CH_Event (void);
+  virtual ~TAO_LF_CH_Event ();
 
   //@{
 protected:
   /// Check whether we have reached the final state..
-  virtual bool is_state_final (void) const;
+  virtual bool is_state_final () const;
 
   //@}
 private:
@@ -100,11 +100,11 @@ private:
 
   /// Return true if the condition was satisfied successfully, false if it
   /// has not
-  virtual bool successful_i (void) const;
+  virtual bool successful_i () const;
 
   /// Return true if an error was detected while waiting for the
   /// event
-  virtual bool error_detected_i (void) const;
+  virtual bool error_detected_i () const;
 
   /// Set the state irrespective of anything.
   virtual void set_state (LFS_STATE new_state);

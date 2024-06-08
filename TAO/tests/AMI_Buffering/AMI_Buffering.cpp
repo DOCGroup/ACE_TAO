@@ -18,7 +18,7 @@ AMI_Buffering::Nest_Guard::Nest_Guard (AMI_Buffering &a)
     target_.max_nest_ = target_.nest_;
 }
 
-AMI_Buffering::Nest_Guard::~Nest_Guard (void)
+AMI_Buffering::Nest_Guard::~Nest_Guard ()
 {
   --target_.nest_;
 }
@@ -40,25 +40,25 @@ AMI_Buffering::receive_data (const Test::Payload &the_payload)
 }
 
 void
-AMI_Buffering::flush (void)
+AMI_Buffering::flush ()
 {
 }
 
 void
-AMI_Buffering::sync (void)
+AMI_Buffering::sync ()
 {
   this->admin_->flush ();
 }
 
 void
-AMI_Buffering::shutdown (void)
+AMI_Buffering::shutdown ()
 {
   this->must_shutdown_ = true;
   this->try_shutdown();
 }
 
 void
-AMI_Buffering::try_shutdown(void)
+AMI_Buffering::try_shutdown()
 {
   if (!this->must_shutdown_ || this->nest_ > 0)
     return;
@@ -66,5 +66,5 @@ AMI_Buffering::try_shutdown(void)
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) max nesting level: %d\n", max_nest_));
   this->admin_->shutdown();
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

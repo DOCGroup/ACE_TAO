@@ -24,12 +24,12 @@ be_util::prep_be_arg (char *)
 }
 
 void
-be_util::arg_post_proc (void)
+be_util::arg_post_proc ()
 {
 }
 
 void
-be_util::usage (void)
+be_util::usage ()
 {
   ORBSVCS_DEBUG ((
       LM_DEBUG,
@@ -44,7 +44,7 @@ be_util::usage (void)
 }
 
 AST_Generator *
-be_util::generator_init (void)
+be_util::generator_init ()
 {
   AST_Generator *gen = 0;
   ACE_NEW_RETURN (gen,

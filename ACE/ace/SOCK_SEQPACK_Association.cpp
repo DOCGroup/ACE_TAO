@@ -1,15 +1,13 @@
 #include "ace/SOCK_SEQPACK_Association.h"
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SOCK_SEQPACK_Association.inl"
 #endif /* __ACE_INLINE__ */
-
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -92,11 +90,7 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
   int err = 0;
   size_t len = 0;
 
-#ifndef ACE_HAS_VOID_PTR_SCTP_GETLADDRS
   err = sctp_getladdrs(this->get_handle(), 0, &laddrs);
-#else
-  err = sctp_getladdrs(this->get_handle(), 0, reinterpret_cast<void**>(&laddrs));
-#endif /* ACE_HAS_VOID_PTR_SCTP_GETPADDRS */
   if (err > 0)
   {
     len = err;
@@ -149,10 +143,10 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
 
   */
 
-  // The array of sockaddr_in will be stored in an ACE_Auto_Array_Ptr,
+  // The array of sockaddr_in will be stored in an std::unique_ptr,
   // which causes dynamically-allocated memory to be released as soon
-  // as the ACE_Auto_Array_Ptr goes out of scope.
-  ACE_Auto_Array_Ptr<sockaddr_in> addr_structs;
+  // as the std::unique_ptr goes out of scope.
+  std::unique_ptr<sockaddr_in[]> addr_structs;
 
   // Allocate memory for this array.  Return -1 if the memory cannot
   // be allocated.  (This activity requires a temporary variable---a
@@ -292,10 +286,10 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
 
   */
 
-  // The array of sockaddr_in will be stored in an ACE_Auto_Array_Ptr,
+  // The array of sockaddr_in will be stored in an std::unique_ptr,
   // which causes dynamically-allocated memory to be released as soon
-  // as the ACE_Auto_Array_Ptr goes out of scope.
-  ACE_Auto_Array_Ptr<sockaddr_in> addr_structs;
+  // as the std::unique_ptr goes out of scope.
+  std::unique_ptr<sockaddr_in[]> addr_structs;
 
   // Allocate memory for this array.  Return -1 if the memory cannot
   // be allocated.  (This activity requires a temporary variable---a

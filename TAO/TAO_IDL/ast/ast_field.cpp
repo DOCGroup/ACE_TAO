@@ -103,6 +103,7 @@ AST_Field::AST_Field (AST_Type *ft,
   this->owns_base_type_ =
     fnt == AST_Decl::NT_array
     || fnt == AST_Decl::NT_sequence
+    || fnt == AST_Decl::NT_fixed
     || fnt == AST_Decl::NT_param_holder;
 
   if (fnt == AST_Decl::NT_param_holder)
@@ -113,6 +114,10 @@ AST_Field::AST_Field (AST_Type *ft,
         {
           idl_global->err ()->not_a_type (ft);
         }
+    }
+  else if (fnt == AST_Decl::NT_except)
+    {
+      idl_global->err ()->not_a_type (ft);
     }
 }
 
@@ -135,6 +140,7 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
   this->owns_base_type_ =
     fnt == AST_Decl::NT_array
     || fnt == AST_Decl::NT_sequence
+    || fnt == AST_Decl::NT_fixed
     || fnt == AST_Decl::NT_param_holder;
 
   if (fnt == AST_Decl::NT_param_holder)

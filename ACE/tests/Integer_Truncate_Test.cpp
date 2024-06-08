@@ -329,8 +329,11 @@ sizeof_from_gt_sizeof_to ()
  * Test method invocation functor.
  */
 template <typename T>
-struct Caller : public std::unary_function<T, void>
+struct Caller
 {
+  typedef T argument_type;
+  typedef void result_type;
+
   /// Constructor
   Caller () : success (true) {}
 

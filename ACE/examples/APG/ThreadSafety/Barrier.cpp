@@ -18,10 +18,10 @@ public:
       shutdown_barrier_(shutdown_barrier)
     { }
 
-  void initialize_handler (void);
-  int handle_command_requests (void);
+  void initialize_handler ();
+  int handle_command_requests ();
 
-  int svc (void)
+  int svc ()
   {
     initialize_handler ();
     startup_barrier_.wait ();
@@ -43,7 +43,7 @@ private:
 // Listing 2
 
 void
-HA_CommandHandler::initialize_handler (void)
+HA_CommandHandler::initialize_handler ()
 {
   ACE_Time_Value tv (0, ACE_OS::rand () * 100);
   timespec_t t = (timespec_t)tv;
@@ -51,7 +51,7 @@ HA_CommandHandler::initialize_handler (void)
 }
 
 int
-HA_CommandHandler::handle_command_requests (void)
+HA_CommandHandler::handle_command_requests ()
 {
   ACE_Time_Value tv (0, ACE_OS::rand () * 100);
   timespec_t t = (timespec_t)tv;

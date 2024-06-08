@@ -27,17 +27,15 @@ public:
   /// ctor
   Test_impl (CORBA::ORB_ptr orb);
 
-  virtual CORBA::Any * get_something (
-      CORBA::Boolean need_vb);
+  virtual CORBA::Any * get_something (CORBA::Boolean need_vb);
 
-  virtual OBV_AnyTest::VB * get_vb (void);
+  virtual OBV_AnyTest::VB * get_vb ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// The ORB
   CORBA::ORB_var orb_;
-  CORBA::Boolean even_;
 };
 
 #endif /* TAO_ANY_S_IMPL_H */

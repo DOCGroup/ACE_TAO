@@ -59,7 +59,7 @@ public:
                    struct t_info *info = 0);
 
   /// Close a TLI endpoint and release resources.
-  int close (void);
+  int close ();
 
   /// Set underlying protocol options.
   int set_option (int level, int option, void *optval, int optlen);
@@ -68,11 +68,11 @@ public:
   int get_option (int level, int option, void *optval, int &optlen);
 
   // = Calls to underlying TLI operations.
-  int look (void) const;
+  int look () const;
   int rcvdis (struct t_discon * = 0) const;
   int snddis (struct t_call * = 0) const;
-  int sndrel (void) const;
-  int rcvrel (void) const;
+  int sndrel () const;
+  int rcvrel () const;
 
   /// Return our local endpoint address.
   int get_local_addr (ACE_Addr &) const;
@@ -86,20 +86,13 @@ public:
 protected:
   // = Ensure we are an abstract class.
   /// Default constructor.
-  ACE_TLI (void);
+  ACE_TLI ();
 
   /// Destructor.
-  ~ACE_TLI (void);
+  ~ACE_TLI ();
 
   /// Initialize a TLI endpoint.
   ACE_TLI (const char device[], int oflag = O_RDWR, struct t_info *info = 0);
-
-private:
-#if defined (ACE_HAS_SVR4_TLI)
-  // XTI/TLI option management.
-  struct t_optmgmt so_opt_req;
-  struct t_optmgmt so_opt_ret;
-#endif /* ACE_HAS_SVR4_TLI */
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

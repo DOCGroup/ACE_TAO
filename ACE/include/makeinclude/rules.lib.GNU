@@ -1,6 +1,6 @@
 # -*- Makefile -*-
 #----------------------------------------------------------------------------
-#       
+#
 #
 #       Build libraries (i.e., contain no binary executables)
 #       GNU version
@@ -22,12 +22,12 @@ ifneq ($(versioned_so),0)
   ifeq ($(SOVERSION),)
     ifeq ($(versioned_so),1)
       SOVERSION = .$(GNUACE_PROJECT_VERSION)
+    else ifeq ($(versioned_so),2)
+      SOVERSION = -$(GNUACE_PROJECT_VERSION)
+    else ifeq ($(versioned_so),3)
+      # Nothing
     else
-      ifeq ($(versioned_so),2)
-        SOVERSION = -$(GNUACE_PROJECT_VERSION)
-      else
-        $(error unknown value for versioned_so: $(versioned_so))
-      endif
+      $(error unknown value for versioned_so: $(versioned_so))
     endif
   endif # SOVERSION
 
@@ -36,10 +36,10 @@ ifneq ($(versioned_so),0)
   ifeq ($(SONAME),)
     ifeq ($(versioned_so),1)
       SONAME = $(SHLIB)$(SOVERSION)
-    else
-      ifeq ($(versioned_so),2)
-        SONAME = $(patsubst %.$(SOEXT),%,$(SHLIB))$(SOVERSION).$(SOEXT)
-      endif
+    else ifeq ($(versioned_so),2)
+      SONAME = $(patsubst %.$(SOEXT),%,$(SHLIB))$(SOVERSION).$(SOEXT)
+    else ifeq ($(versioned_so),3)
+      SONAME = $(SHLIB)
     endif
   endif # SONAME
 endif # versioned_so
@@ -137,7 +137,6 @@ ifneq ($(INSLIB),)
 endif # INSLIB
 
 ace_lib_prelink ?= 0
-aix_build ?= 0
 
 ifeq (1,$(VXWORKS))
 
@@ -187,25 +186,11 @@ $(VLIB): $(VLOBJS)
         #### to lib files, for example.
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
   endif # ace_lib_prelink
-  ifeq (1,$(ACE_OPENVMS))
-	find $(TMPINCDIR:%=%) -name "*.$(OBJEXT)" -or -name "*.obj" | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
-  else
-    ifneq (,$(AR.cc.override))
+  ifneq (,$(AR.cc.override))
 	$(AR.cc.override)
     else
 	([ "`echo $(TMPINCDIR:%=%/*.$(OBJEXT))`" != "$(TMPINCDIR:%=%/*.$(OBJEXT))" ] && echo $(TMPINCDIR:%=%/*.$(OBJEXT)); \
 	echo $(filter %.$(OBJEXT), $^)) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
-    endif
-  endif
-  ifdef ibmcxx_build
-# This is required to get AIX IBM C/C++ to instantiate and compile the needed
-# templates.
-	if test -s ./$(TEMPINCDIR)/*.C; \
-	then \
-		$(LINK.cc) $(LINK_OUTPUT_FLAG) dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(ACE_SHLIBS) $(LIBS); \
-		$(RM) dummy; \
-		$(AR) $(ARFLAGS) $@ $(TEMPINCDIR)/*.$(OBJEXT); \
-	fi
   endif
 	-chmod a+r $@
   ifneq (,$(RANLIB))
@@ -214,55 +199,19 @@ $(VLIB): $(VLOBJS)
 
 endif # !VXWORKS
 
-# Note that if you don't want to build shared libraries, just remove the
-# $(VSHOBJS)
-#
-# The AIX shr.o build is out here to keep it away from the SOVERSION stuff.
-# The SOVERSION transform is applied after building the library file.
-ifeq (1,$(aix_build))
-shr.o: $(VSHOBJS)
-	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
-
-.INTERMEDIATE: shr.o
-endif # aix_build
-
 ifeq ($(VXWORKSLINK),1)
 $(VSHLIB): $(basename $(notdir $(PRJ_FILE))).out
 	-$(RM) $@
 	-$(LN_S)  $(PROJECT_OUT) $@
 	-$(POST_BUILD_RULE)
 else # !VXWORKSLINK
-  ifeq (1,$(aix_build))
-$(VSHLIB): shr.o
-	$(AR) $(ARFLAGS) $@ $?
-    ifneq (,$(RANLIB))
-	-$(RANLIB) $@
-    endif # RANLIB
-  else # ! aix_build
 $(VSHLIB): $(VSHOBJS)
-    ifdef PRELIB
+  ifdef PRELIB
 	$(PRELIB)
-    endif # PRELIB
-    ifdef ibmcxx_build
-    # This is required to get AIX IBM C/C++ to instantiate and compile the needed
-    # templates before building the library.
-	if test -s ./$(TEMPINCDIR)/*.C; \
-	then \
-		$(LINK.cc) $(LINK_OUTPUT_FLAG) dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(ACE_SHLIBS) $(LIBS); \
-		$(RM) dummy; \
-	fi
-    endif # ibmcxx_build
-    ifdef SHLIBBUILD
+  endif # PRELIB
+  ifdef SHLIBBUILD
 	$(SHLIBBUILD)
     else # ! SHLIBBUILD
-      ifdef ibmcxx_build
-	if test -s ./$(TEMPINCDIR)/*.$(OBJEXT); \
-        then \
-		$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(TEMPINCDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
-        else \
-		$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
-	fi
-      else # !ibmcxx_build
           ifeq (1,$(ace_lib_prelink))
           #### Attempt a link (which will fail), to add template instantiations
           #### to lib files, for example.
@@ -273,9 +222,7 @@ $(VSHLIB): $(VSHOBJS)
           else
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
           endif #override
-      endif  # ibmcxx_build
-    endif  # SHLIBBUILD
-  endif  # aix_build
+  endif  # SHLIBBUILD
 endif # VXWORKSLINK
 ifneq ($(SOVERSION),)
 # This carefully works with both ARCH (where VSHLIB_* refer to the ARCH

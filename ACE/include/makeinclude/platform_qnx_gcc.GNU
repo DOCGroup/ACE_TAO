@@ -6,6 +6,7 @@ debug ?= 1
 optimize ?= 0
 threads ?= 1
 pipes ?= 0
+c++std ?= gnu++17
 
 CCFLAGS += -fexceptions
 LDFLAGS += -fexceptions
@@ -23,8 +24,10 @@ ifeq ($(optimize),1)
 OCFLAGS += -O3
 endif #optimize
 
-DLD     = $(CXX)
-LD      = $(CXX)
+CC ?= qcc
+CXX ?= q++
+DLD = $(CXX)
+LD = $(CXX)
 
 LIBS    += -lsocket -lstdc++ -lm
 
@@ -34,7 +37,7 @@ SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
 
-# Test for template  instantiation, add to SOFLAGS if SONAME set,
+# Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

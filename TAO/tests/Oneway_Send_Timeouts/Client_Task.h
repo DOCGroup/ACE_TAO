@@ -4,29 +4,29 @@
 #include "Client.h"
 
 #include "ace/ARGV.h"
+#include "ace/Task.h"
 
 class Client_Task : public ACE_Task_Base
 {
- public:
-
+public:
   Client_Task (const std::string& args)
     : args_ (args)
-  { }
+  {}
 
   virtual int svc ()
   {
-    ACE_ARGV my_args (args_.c_str());
+    ACE_ARGV my_args (args_.c_str ());
 
     {
-      Client client (my_args.argc(), my_args.argv());
-      client.run();
+      Client client (my_args.argc (), my_args.argv ());
+      client.run ();
     }
 
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client_Task::svc>\n"));
     return 0;
   }
 
- private:
+private:
   std::string args_;
 };
 

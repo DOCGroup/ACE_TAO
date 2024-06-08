@@ -4,7 +4,7 @@
 /**
  *  @file   OS_Errno.h
  *
- *  @author (Originally in OS.h)Doug Schmidt <d.schmidt@vanderbilt.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -55,24 +55,18 @@ public:
   /// Reset the value of @c errno to <error>.
   ~ACE_Errno_Guard ();
 
-#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-  /// Assign @a errno_ref to <error_>.
-  int operator= (const ACE_ERRNO_TYPE &errno_ref);
-#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
-
-  /// Assign <error> to <error_>.
+  /// Assign @a erro> to error_.
   int operator= (int error);
 
-  /// Compare <error> with <error_> for equality.
+  /// Compare @a error with error_ for equality.
   bool operator== (int error);
 
-  /// Compare <error> with <error_> for inequality.
+  /// Compare @a error with error_ for inequality.
   bool operator!= (int error);
 
 private:
-  // Prevent copying
-  ACE_Errno_Guard (const ACE_Errno_Guard &);
-  ACE_Errno_Guard &operator= (const ACE_Errno_Guard &);
+  ACE_Errno_Guard (const ACE_Errno_Guard &) = delete;
+  ACE_Errno_Guard &operator= (const ACE_Errno_Guard &) = delete;
 
 #if defined (ACE_MT_SAFE)
   ACE_ERRNO_TYPE *errno_ptr_;
@@ -82,11 +76,10 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-// Inlining this class on debug builds with gcc on Solaris can cause
+// Inlining this class on debug builds with can cause
 // deadlocks during static initialization. On non debug builds it
 // causes compilation errors.
-#if defined (ACE_HAS_INLINED_OSCALLS) && \
-    (!defined (__GNUG__) || !defined (__sun__))
+#if defined (ACE_HAS_INLINED_OSCALLS)
 # if defined (ACE_INLINE)
 #  undef ACE_INLINE
 # endif /* ACE_INLINE */
