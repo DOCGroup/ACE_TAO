@@ -1,0 +1,21 @@
+union WcharUnion switch (wchar) {
+case L'i':
+  int32 i32;
+case L'u':
+  uint32 u32;
+default:
+  string str;
+};
+
+union OctetUnion switch (octet) {
+case 1:
+  boolean b;
+case 8:
+  int8 i8;
+case 16:
+  int8 i16;
+case 32:
+  int32 i32;
+default:
+  string str;
+};

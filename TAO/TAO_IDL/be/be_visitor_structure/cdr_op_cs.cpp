@@ -56,7 +56,9 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
       << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->name () << " &_tao_aggregate)" << be_uidt
       << be_uidt_nl
-      << "{" << be_idt_nl;
+      << "{" << be_idt_nl
+      << "ACE_UNUSED_ARG(strm);" << be_nl
+      << "ACE_UNUSED_ARG(_tao_aggregate);" << be_nl;
 
   be_visitor_context new_ctx (*this->ctx_);
   be_visitor_cdr_op_field_decl field_decl (&new_ctx);
@@ -81,7 +83,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
                         -1);
     }
 
-  *os << ";" << be_uidt << be_uidt_nl
+  *os << "true;" << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
   // Set the substate as generating code for the input operator.
@@ -104,7 +106,9 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
     }
 
   *os << ")" << be_uidt << be_uidt_nl
-      << "{" << be_idt_nl;
+      << "{" << be_idt_nl
+      << "ACE_UNUSED_ARG(strm);" << be_nl
+      << "ACE_UNUSED_ARG(_tao_aggregate);" << be_nl;
 
   if (node->is_local ())
     {
@@ -135,7 +139,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
                             -1);
         }
 
-      *os << ";" << be_uidt << be_uidt;
+      *os << "true;" << be_uidt << be_uidt;
     }
 
   *os << be_uidt_nl << "}" << be_nl;
@@ -157,8 +161,7 @@ be_visitor_structure_cdr_op_cs::post_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (!this->last_node (bd)
-      && bd->node_type () != AST_Decl::NT_enum_val)
+  if (bd->node_type () != AST_Decl::NT_enum_val)
     {
       switch (this->ctx_->sub_state ())
         {
