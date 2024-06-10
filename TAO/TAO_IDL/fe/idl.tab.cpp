@@ -5084,7 +5084,7 @@ yyreduce:
         {
           if (idl_global->idl_version_ < IDL_VERSION_4)
             idl_global->err ()->idl_version_error (
-              "Annotations are not allowed in IDL3");
+              "Annotations are not allowed in IDL versions before 4");
 
           Identifier *id = (yyvsp[-1].idval);
           UTL_ScopedName name (id, 0);
@@ -5234,7 +5234,7 @@ yyreduce:
         {
           if (idl_global->idl_version_ < IDL_VERSION_4)
             idl_global->err ()->idl_version_error (
-              "Annotations are not allowed in IDL3");
+              "Annotations are not allowed in IDL versions before 4");
 
           AST_Annotation_Decl *decl = 0;
           UTL_ScopedName *name = (yyvsp[0].idlist);
@@ -6010,7 +6010,7 @@ yyreduce:
         {
           if (idl_global->idl_version_ < IDL_VERSION_4)
             idl_global->err ()->idl_version_error (
-              "Empty structs are not allowed in IDL3");
+              "Empty structs are not allowed in IDL versions before 4");
 
           idl_global->set_parse_state (IDL_GlobalData::PS_StructQsSeen);
         }
@@ -6324,7 +6324,7 @@ yyreduce:
         {
           if ((yyvsp[0].etval) == AST_Expression::EV_wchar && idl_global->idl_version_ < IDL_VERSION_4)
             idl_global->err ()->idl_version_error (
-              "Using wchar as a union discriminator isn't allowed in IDL3");
+              "Using wchar as a union discriminator isn't allowed in IDL versions before 4");
 
           (yyval.dcval) = idl_global->scopes ().bottom ()->lookup_primitive_type ((yyvsp[0].etval));
         }
@@ -6336,7 +6336,7 @@ yyreduce:
         {
           if (idl_global->idl_version_ < IDL_VERSION_4)
             idl_global->err ()->idl_version_error (
-              "Using octet as a union discriminator isn't allowed in IDL3");
+              "Using octet as a union discriminator isn't allowed in IDL versions before 4");
 
           (yyval.dcval) = idl_global->scopes ().bottom ()->lookup_primitive_type ((yyvsp[0].etval));
         }
@@ -6366,8 +6366,7 @@ yyreduce:
            * typedef's to arrive at the base type at the end of the
            * chain.
            */
-          d =
-            s->lookup_by_name ((yyvsp[0].idlist));
+          d = s->lookup_by_name ((yyvsp[0].idlist));
 
           if (s != 0 && d != 0)
             {
@@ -6392,6 +6391,8 @@ yyreduce:
                             case AST_PredefinedType::PT_ulonglong:
                             case AST_PredefinedType::PT_short:
                             case AST_PredefinedType::PT_ushort:
+                            case AST_PredefinedType::PT_int8:
+                            case AST_PredefinedType::PT_uint8:
                             case AST_PredefinedType::PT_char:
                             case AST_PredefinedType::PT_boolean:
                               (yyval.dcval) = p;
@@ -6399,11 +6400,10 @@ yyreduce:
                               break;
                             case AST_PredefinedType::PT_wchar:
                             case AST_PredefinedType::PT_octet:
-                              /* octets and wchars are not allowed */
-                              idl_global->err ()->error0 (
-                                  UTL_Error::EIDL_DISC_TYPE
-                                );
-                              (yyval.dcval) = 0;
+                              if (idl_global->idl_version_ < IDL_VERSION_4)
+                                idl_global->err ()->idl_version_error (
+                                  "Using octet or wchar as a union discriminator isn't allowed in IDL versions before 4");
+                              (yyval.dcval) = p;
                               found = true;
                               break;
                             default:
