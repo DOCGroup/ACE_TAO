@@ -52,13 +52,14 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
+  const bool empty = node->nfields () == 0;
+  const char *const strm = empty ? "" : "strm";
+  const char *const tao_aggregate = empty ? "" : "_tao_aggregate";
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
-      << "TAO_OutputCDR &strm," << be_nl
-      << "const " << node->name () << " &_tao_aggregate)" << be_uidt
+      << "TAO_OutputCDR &" << strm << "," << be_nl
+      << "const " << node->name () << " &" << tao_aggregate << ")" << be_uidt
       << be_uidt_nl
-      << "{" << be_idt_nl
-      << "ACE_UNUSED_ARG(strm);" << be_nl
-      << "ACE_UNUSED_ARG(_tao_aggregate);" << be_nl;
+      << "{" << be_idt_nl;
 
   be_visitor_context new_ctx (*this->ctx_);
   be_visitor_cdr_op_field_decl field_decl (&new_ctx);
@@ -94,7 +95,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 
   if (! node->is_local ())
     {
-      *os << "strm";
+      *os << strm;
     }
 
   *os << "," << be_nl
@@ -102,13 +103,11 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 
   if (! node->is_local ())
     {
-      *os << "_tao_aggregate";
+      *os << tao_aggregate;
     }
 
   *os << ")" << be_uidt << be_uidt_nl
-      << "{" << be_idt_nl
-      << "ACE_UNUSED_ARG(strm);" << be_nl
-      << "ACE_UNUSED_ARG(_tao_aggregate);" << be_nl;
+      << "{" << be_idt_nl;
 
   if (node->is_local ())
     {
