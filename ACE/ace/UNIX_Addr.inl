@@ -27,9 +27,16 @@ ACE_UNIX_Addr::set (const wchar_t rendezvous_point[])
 ACE_INLINE bool
 ACE_UNIX_Addr::operator == (const ACE_UNIX_Addr &sap) const
 {
-  return ACE_OS::strncmp (this->unix_addr_.sun_path,
-                          sap.unix_addr_.sun_path,
-                          sizeof this->unix_addr_.sun_path) == 0;
+  size_t i = 0;
+#if defined (ACE_LINUX)
+  if (!*this->unix_addr_.sun_path && !*sap.unix_addr_.sun_path)
+    {
+      i = 1;
+    }
+#endif /* ACE_LINUX */
+  return ACE_OS::strncmp (this->unix_addr_.sun_path + i,
+                          sap.unix_addr_.sun_path + i,
+                          sizeof (this->unix_addr_.sun_path) - 1) == 0;
 }
 
 // Compare two addresses for inequality.
