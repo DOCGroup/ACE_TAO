@@ -15,4 +15,42 @@ module Test
           RecursiveUnion3 uni;
   };
 
+// Sequence indirection test
+  exception Sequence_Indirection_Test_Failed {};
+
+   typedef string Istring;
+   typedef Istring PropertyName;
+   typedef any PropertyValue;
+
+   struct Property
+   {
+      PropertyName name;
+      PropertyValue value;
+   };
+   typedef sequence<Property> PropertySeq;
+   typedef PropertySeq OptionalHeaderFields;
+   typedef PropertySeq FilterableEventBody;
+   struct _EventType
+   {
+      string domain_name;
+      string type_name;
+   };
+   typedef sequence<_EventType> EventTypeSeq;
+   struct FixedEventHeader
+   {
+      _EventType event_type;
+      string event_name;
+   };
+   struct EventHeader
+   {
+      FixedEventHeader fixed_header;
+      OptionalHeaderFields variable_header;
+   };
+   struct StructuredEvent
+   {
+      EventHeader header;
+      FilterableEventBody filterable_data;
+      any remainder_of_body;
+   }; // StructuredEvent
+
 };
