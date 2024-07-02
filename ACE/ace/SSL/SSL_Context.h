@@ -67,7 +67,7 @@ private:
 // when C library routines are passed CallBack functions pointers that are
 // actually C++ functions.
 //
-// Unfortunatly you can not specify extern "C" linkage anywhere inside a class
+// Unfortunately you can not specify extern "C" linkage anywhere inside a class
 // declaration or inside a function prototype for individual parameters. I.e:
 //   class { extern "C" int (*callback_) (int, void *); };
 // to store a function pointer as a data member of the class is illegal as is:
@@ -78,7 +78,7 @@ private:
 // Since we need an extern "C" function pointer as a parameter to be stored
 // in the class and handled by member functions, we are forced to declare
 // a typedef of that extern "C" function pointer that we can then use.
-// Again unfortunatly you also are not allowed to simply add the extern "C"
+// Again unfortunately you also are not allowed to simply add the extern "C"
 // to the typedef itself, instead you have to place the typedef declaration
 // inside an extern "C" block, thus:
 
@@ -104,9 +104,18 @@ public:
 
   enum {
     INVALID_METHOD = -1,
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L
+    TLS_client,
+    TLS_server,
+    TLS,
+    SSLv23_client [[deprecated("Use TLS_client instead.")]],
+    SSLv23_server [[deprecated("Use TLS_server instead.")]],
+    SSLv23 [[deprecated("Use TLS instead.")]]
+#else
     SSLv23_client,
     SSLv23_server,
     SSLv23
+#endif
   };
 
   /// Constructor
@@ -130,7 +139,11 @@ public:
    * If the mode is not set, then the class automatically initializes
    * itself to the default mode.
    */
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L
+  int set_mode (int mode = ACE_SSL_Context::TLS);
+#else
   int set_mode (int mode = ACE_SSL_Context::SSLv23);
+#endif
 
   int get_mode () const;
 
@@ -268,7 +281,7 @@ public:
    *
    *  @doc Use this method when certificate chain verification is
    *  required.  The default server behaviour is SSL_VERIFY_NONE
-   *  i.e. client certicates are requested for verified. This method
+   *  i.e. client certificates are requested for verified. This method
    *  can be used to configure server to request client certificates
    *  and perform the certificate verification. If <strict> is set
    *  true the client connection is rejected when certificate
@@ -301,7 +314,7 @@ public:
   /**
    * Set and query the default verify mode for this context, it is
    * inherited by all the ACE_SSL objects created using the context.
-   * It can be overriden on a per-ACE_SSL object.
+   * It can be overridden on a per-ACE_SSL object.
    */
   void default_verify_mode (int mode);
   int default_verify_mode () const;
@@ -309,7 +322,7 @@ public:
   /**
    * Set and query the default verify callback for this context, it is
    * inherited by all the ACE_SSL objects created using the context.
-   * It can be overriden on a per-ACE_SSL object.
+   * It can be overridden on a per-ACE_SSL object.
    */
   void default_verify_callback (extern_C_CallBackVerify_t);
   extern_C_CallBackVerify_t  default_verify_callback () const;
