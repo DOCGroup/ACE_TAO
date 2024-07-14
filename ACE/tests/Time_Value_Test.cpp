@@ -188,6 +188,7 @@ run_main (int, ACE_TCHAR *[])
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("set_msec test failed: %d usecs should be 555000\n"),
                   msec_test3.usec ()));
+      ++ret;
     }
 
 #ifdef ACE_HAS_CPP98_IOSTREAMS
@@ -215,11 +216,12 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("time_t not at least 64bit, this platform will have problems after 2038\n")));
+      ++ret;
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("time_t at least 64bit, this platform will not have problems after 2038\n")));
+                  ACE_TEXT ("time_t is at least 64bit, this platform will not have problems after 2038\n")));
     }
 
   ACE_END_TEST;
