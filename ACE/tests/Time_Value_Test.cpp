@@ -98,22 +98,32 @@ run_main (int, ACE_TCHAR *[])
   ACE_UINT64 ms = 0;
   msec_test.msec (ms);
   if (ms != 42555)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("msec test failed: %Q should be 42555\n"),
-                ms));
+    {
+       ACE_ERROR ((LM_ERROR,
+                     ACE_TEXT ("msec test failed: %Q should be 42555\n"),
+                     ms));
+       ++ret;
+    }
+
   ms = 0;
   ms = msec_test.get_msec ();
   if (ms != 42555)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("get_msec test failed: %Q should be 42555\n"),
-                ms));
+    {
+       ACE_ERROR ((LM_ERROR,
+                     ACE_TEXT ("get_msec test failed: %Q should be 42555\n"),
+                     ms));
+       ++ret;
+    }
   ACE_Time_Value const msec_test2 (42, 555000);
   ms = 0;
   msec_test2.msec (ms);
   if (ms != 42555)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("msec const test failed: %Q should be 42555\n"),
-                ms));
+    {
+       ACE_ERROR ((LM_ERROR,
+                     ACE_TEXT ("msec const test failed: %Q should be 42555\n"),
+                     ms));
+       ++ret;
+    }
 
   // Test setting double values
   ACE_Time_Value d1(10, 500000);
@@ -167,13 +177,19 @@ run_main (int, ACE_TCHAR *[])
   ACE_Time_Value msec_test3;
   msec_test3.set_msec (ms);
   if (msec_test3.sec () != 42)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("set_msec test failed: %d secs should be 42\n"),
-                msec_test3.sec ()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("set_msec test failed: %d secs should be 42\n"),
+                  msec_test3.sec ()));
+      ++ret;
+    }
   if (msec_test3.usec () != 555000)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("set_msec test failed: %d usecs should be 555000\n"),
-                msec_test3.usec ()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("set_msec test failed: %d usecs should be 555000\n"),
+                  msec_test3.usec ()));
+      ++ret;
+    }
 
 #ifdef ACE_HAS_CPP98_IOSTREAMS
   std::ostringstream ost;
@@ -195,6 +211,18 @@ run_main (int, ACE_TCHAR *[])
   ost << ACE_Time_Value();
   ACE_TEST_ASSERT( ost.str() == "0" );
 #endif
+
+  if (sizeof(time_t) < 8)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("time_t not at least 64bit, this platform will have problems after 2038\n")));
+      ++ret;
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("time_t is at least 64bit, this platform will not have problems after 2038\n")));
+    }
 
   ACE_END_TEST;
 
