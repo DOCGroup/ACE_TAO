@@ -433,7 +433,8 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
     {
       // Lock out any other logging.
-      if (this->log_msg_->acquire ())
+      ACE_Guard<ACE_Log_Msg> guard (*this->log_msg_);
+      if (!guard.locked ())
         ACELIB_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Cannot acquire lock!\n")),
                           -1);
@@ -442,7 +443,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
       FILE *output_file = (FILE *) this->log_msg_->msg_ostream ();
       ACE_OS::fclose (output_file);
-      // We'll call msg_ostream() modifier later.
+      this->log_msg_->msg_ostream (0);
 #else
       ofstream *output_file =
         (ofstream *) this->log_msg_->msg_ostream ();
@@ -470,9 +471,6 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
               output_file->open (ACE_TEXT_ALWAYS_CHAR (this->filename_),
                                  ios::out);
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
-
-              // Release the lock previously acquired.
-              this->log_msg_->release ();
               return 0;
             }
         }
@@ -563,9 +561,6 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
       output_file->open (ACE_TEXT_ALWAYS_CHAR (this->filename_),
                          ios::out);
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
-
-      // Release the lock previously acquired.
-      this->log_msg_->release ();
     }
 
   return 0;
