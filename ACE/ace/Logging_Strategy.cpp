@@ -443,8 +443,10 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
       FILE *output_file = (FILE *) this->log_msg_->msg_ostream ();
       if (output_file)
-        ACE_OS::fclose (output_file);
-      this->log_msg_->msg_ostream (nullptr);
+        {
+          ACE_OS::fclose (output_file);
+          this->log_msg_->msg_ostream (nullptr);
+        }
 #else
       ofstream *output_file =
         (ofstream *) this->log_msg_->msg_ostream ();
