@@ -106,8 +106,8 @@ ACE_OS::ctime (const time_t *t)
   // we've done this before, free the previous one. Yes, this leaves a
   // small memory leak (26 characters) but there's no way around this
   // that I know of. (Steve Huston, 12-Feb-2003).
-  static wchar_t *wide_time = 0;
-  if (wide_time != 0)
+  static wchar_t *wide_time = nullptr;
+  if (wide_time != nullptr)
     delete [] wide_time;
   wide_time = ACE_Ascii_To_Wide::convert (narrow_time);
   return wide_time;
@@ -124,7 +124,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 
-  char *bufp = 0;
+  char *bufp = nullptr;
 #   if defined (ACE_USES_WCHAR)
   char narrow_buf[ctime_buf_size];
   bufp = narrow_buf;
@@ -149,8 +149,8 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 
 #   endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 
-  if (bufp == 0)
-    return 0;
+  if (bufp == nullptr)
+    return nullptr;
 
 #   if defined (ACE_USES_WCHAR)
   ACE_Ascii_To_Wide wide_buf (bufp);
@@ -164,7 +164,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   if (buflen < ctime_buf_size)
     {
       errno = ERANGE;
-      return 0;
+      return nullptr;
     }
   ACE_TCHAR *result = buf;
 #  if defined (ACE_USES_WCHAR)
@@ -178,16 +178,16 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   if (buflen < ctime_buf_size)
     {
       errno = ERANGE;
-      return 0;
+      return nullptr;
     }
 
-  ACE_TCHAR *result = 0;
+  ACE_TCHAR *result = nullptr;
 #     if defined (ACE_USES_WCHAR)
   ACE_OSCALL (::_wctime (t), wchar_t *, result);
 #     else /* ACE_USES_WCHAR */
   ACE_OSCALL (::ctime (t), char *, result);
 #     endif /* ACE_USES_WCHAR */
-  if (result != 0)
+  if (result != nullptr)
     ACE_OS::strsncpy (buf, result, buflen);
   return buf;
 #endif /* ACE_HAS_REENTRANT_FUNCTIONS */
