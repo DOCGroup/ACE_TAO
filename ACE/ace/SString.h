@@ -282,6 +282,7 @@ public:
 
   char* operator* () const;
   char operator[] (size_t i) const;
+  explicit operator bool () const;
   char* get () const;
   char* release ();
   void reset (char* p = 0);

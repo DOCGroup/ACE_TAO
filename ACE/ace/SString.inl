@@ -274,6 +274,12 @@ ACE_Auto_String_Free::operator[] (size_t i) const
   return this->p_[i];
 }
 
+ACE_INLINE
+ACE_Auto_String_Free::operator bool (void) const
+{
+  return this->p_ != 0;
+}
+
 ACE_INLINE char*
 ACE_Auto_String_Free::get () const
 {
