@@ -150,6 +150,18 @@ int testConstIterator()
   return 0;
 }
 
+int testAutoStringFree()
+{
+  char* s = ACE_OS::strdup("Hello, World");
+  const ACE_Auto_String_Free s1(s);
+  if (!s1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("ACE_Auto_String_Free is nullptr")),
+                       1);
+
+  return 0;
+}
+
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -425,6 +437,7 @@ run_main (int, ACE_TCHAR *[])
   int err = testConcatenation ();
   err += testIterator ();
   err += testConstIterator ();
+  err += testAutoStringFree ();
 
   ACE_END_TEST;
   return err;

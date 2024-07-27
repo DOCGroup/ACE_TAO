@@ -275,7 +275,7 @@ typedef ACE_CString ACE_TString;
 class ACE_Export ACE_Auto_String_Free
 {
 public:
-  explicit ACE_Auto_String_Free (char* p = 0);
+  explicit ACE_Auto_String_Free (char* p = nullptr);
   ACE_Auto_String_Free (ACE_Auto_String_Free &rhs);
   ACE_Auto_String_Free& operator= (ACE_Auto_String_Free &rhs);
   ~ACE_Auto_String_Free ();
@@ -285,7 +285,7 @@ public:
   explicit operator bool () const;
   char* get () const;
   char* release ();
-  void reset (char* p = 0);
+  void reset (char* p = nullptr);
 
 private:
   char* p_;
