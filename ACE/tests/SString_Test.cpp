@@ -154,9 +154,19 @@ int testAutoStringFree()
 {
   char* s = ACE_OS::strdup("Hello, World");
   const ACE_Auto_String_Free s1(s);
+  if (s1)
+  {
+  }
+  else
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("ACE_Auto_String_Free::operator bool return false")),
+                       1);
+  }
+
   if (!s1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("ACE_Auto_String_Free is nullptr")),
+                       ACE_TEXT ("!ACE_Auto_String_Free::operator bool return true")),
                        1);
 
   return 0;
