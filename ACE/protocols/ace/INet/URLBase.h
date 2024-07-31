@@ -41,7 +41,7 @@ namespace ACE
               URLStream (const URLStream& url_stream);
               ~URLStream ();
 
-              explicit bool operator ! ();
+              bool operator ! ();
 
               explicit operator bool ();
 

@@ -124,7 +124,7 @@ namespace ACE
               explicit operator bool () const;
 
               /// Return true if status code == INVALID
-              explicit bool operator !() const;
+              bool operator !() const;
 
               /// Returns an appropriate reason phrase
               static const ACE_CString& get_reason(Code status);

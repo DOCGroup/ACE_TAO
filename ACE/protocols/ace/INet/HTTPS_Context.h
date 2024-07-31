@@ -50,7 +50,7 @@ namespace ACE
 
               explicit operator bool () const;
 
-              explicit bool operator ! () const;
+              bool operator ! () const;
 
               ACE_SSL_Context& ssl_context ();
 
