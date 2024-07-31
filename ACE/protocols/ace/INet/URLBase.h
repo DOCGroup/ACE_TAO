@@ -41,9 +41,9 @@ namespace ACE
               URLStream (const URLStream& url_stream);
               ~URLStream ();
 
-              bool operator ! ();
+              explicit bool operator ! ();
 
-              operator bool ();
+              explicit operator bool ();
 
               std::istream& operator * ();
 

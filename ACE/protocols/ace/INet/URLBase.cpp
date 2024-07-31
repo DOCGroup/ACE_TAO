@@ -31,7 +31,7 @@ namespace ACE
         return this->request_handler_ == 0 || !this->request_handler_->is_response_ok ();
       }
 
-    URLStream::operator bool ()
+    explicit URLStream::operator bool ()
       {
         return this->request_handler_ != 0 && this->request_handler_->is_response_ok ();
       }

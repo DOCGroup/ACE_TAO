@@ -121,10 +121,10 @@ namespace ACE
               bool is_ok () const;
 
               /// Return true in case of a *valid* HTTP status
-              operator bool () const;
+              explicit operator bool () const;
 
               /// Return true if status code == INVALID
-              bool operator !() const;
+              explicit bool operator !() const;
 
               /// Returns an appropriate reason phrase
               static const ACE_CString& get_reason(Code status);
