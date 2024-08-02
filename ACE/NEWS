@@ -1,7 +1,10 @@
+USER VISIBLE CHANGES BETWEEN ACE-8.0.1 and ACE-8.0.2
+====================================================
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.0 and ACE-8.0.1
 ====================================================
 
-. When using the Embarcadero C++ Builder bcc64x compiler now bcc64x is 
+. When using the Embarcadero C++ Builder bcc64x compiler now bcc64x is
   used as linker instead of ld.lld
 
 USER VISIBLE CHANGES BETWEEN ACE-7.1.4 and ACE-8.0.0
