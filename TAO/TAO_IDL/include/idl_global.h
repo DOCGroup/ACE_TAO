@@ -318,6 +318,14 @@ public:
     UNKNOWN_ANNOTATIONS_IGNORE
   };
 
+  enum PreprocessorInput {
+    PreprocessorInputGuess,
+    PreprocessorInputDirectWithE,
+    PreprocessorInputDirectWithoutE,
+    PreprocessorInputDirectGcc,
+    PreprocessorInputCopy
+  };
+
   IDL_GlobalData ();
   ~IDL_GlobalData ();
 
@@ -896,6 +904,9 @@ public:
    * Set of the local names of unkown annotations already seen
    */
   ACE_Unbounded_Set<Identifier> unknown_annotations_seen_;
+
+  /// How to pass input files to the C preprocessor
+  PreprocessorInput preprocessor_input_;
 
 private:
   // Data
