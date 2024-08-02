@@ -753,8 +753,8 @@ ACE_Log_Msg::cleanup_ostream ()
           ACE_OS::fclose (this->ostream_);
 #else
           delete this->ostream_;
-          this->ostream_ = 0;
 #endif
+          this->ostream_ = 0;
         }
       this->ostream_refcount_ = 0;
     }
