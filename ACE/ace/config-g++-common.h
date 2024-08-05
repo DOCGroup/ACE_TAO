@@ -22,20 +22,12 @@
 #endif
 #if __cplusplus >= 201703L
 # define ACE_HAS_CPP17
-# define ACE_FALLTHROUGH [[fallthrough]]
 #endif
 #if __cplusplus >= 201402L
 # define ACE_HAS_CPP14
 #endif
 #if __cplusplus >= 201103L
 # define ACE_HAS_CPP11
-# if !defined (ACE_FALLTHROUGH)
-#  if __GNUC__ >= 7
-#   define ACE_FALLTHROUGH [[gnu::fallthrough]]
-#  else
-#   define ACE_FALLTHROUGH
-#  endif
-# endif
 #endif
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
