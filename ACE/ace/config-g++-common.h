@@ -14,6 +14,9 @@
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 #define ACE_CC_BETA_VERSION (0)
 
+#if __cplusplus >= 202302L
+# define ACE_HAS_CPP23
+#endif
 #if __cplusplus >= 202002L
 # define ACE_HAS_CPP20
 #endif

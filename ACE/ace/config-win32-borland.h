@@ -200,6 +200,9 @@
 #if __cplusplus >= 202002L
 # define ACE_HAS_CPP20
 #endif
+#if __cplusplus >= 202302L
+# define ACE_HAS_CPP23
+#endif
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */
