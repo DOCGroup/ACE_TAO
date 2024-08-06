@@ -169,6 +169,11 @@ int testAutoStringFree()
                        ACE_TEXT ("!ACE_Auto_String_Free::operator bool return true")),
                        1);
 
+  if (!**s1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("ACE_Auto_String_Free is empty")),
+                       1);
+
   return 0;
 }
 
