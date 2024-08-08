@@ -1117,10 +1117,10 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
 
   // Define bits to check for while dispatching.
 #if defined (ACE_HAS_EVENT_POLL)
-  const __uint32_t out_event = EPOLLOUT;
-  const __uint32_t exc_event = EPOLLPRI;
-  const __uint32_t in_event  = EPOLLIN;
-  const __uint32_t err_event = EPOLLHUP | EPOLLERR;
+  const ACE_UINT32 out_event = EPOLLOUT;
+  const ACE_UINT32 exc_event = EPOLLPRI;
+  const ACE_UINT32 in_event  = EPOLLIN;
+  const ACE_UINT32 err_event = EPOLLHUP | EPOLLERR;
 #else
   const short out_event = POLLOUT;
   const short exc_event = POLLPRI;
@@ -1133,7 +1133,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
   // is invalid, there's no event there. Else process it. In any event, we
   // have the event, so clear event_ for the next thread.
   const ACE_HANDLE handle = this->event_.data.fd;
-  __uint32_t revents      = this->event_.events;
+  ACE_UINT32 revents      = this->event_.events;
   this->event_.data.fd = ACE_INVALID_HANDLE;
   this->event_.events = 0;
   if (handle != ACE_INVALID_HANDLE)
