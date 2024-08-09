@@ -106,7 +106,7 @@
 
 #define ACE_HAS_UALARM
 
-#if defined (__GLIBC__) && (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 10)
+#if defined (__GLIBC__) && (__GLIBC__ < 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 10))
 // Although the scandir man page says otherwise, this setting is correct.
 // The setting was fixed in 2.10, so do not use the hack after that.
 #  define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
