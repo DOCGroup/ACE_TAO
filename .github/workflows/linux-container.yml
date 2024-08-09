@@ -1,0 +1,56 @@
+name: linux-container
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 1 * * SUN'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-22.04
+    name: alpine-3.18
+    env:
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      TAO_ROOT: ${{ github.workspace }}/TAO
+      MPC_ROOT: ${{ github.workspace }}/MPC
+    steps:
+    - name: Checkout ACE_TAO
+      uses: actions/checkout@v4
+    - name: Checkout MPC
+      uses: actions/checkout@v4
+      with:
+        repository: DOCGroup/MPC
+        path: ${{ env.MPC_ROOT }}
+    - name: Write configuation files
+      run: |
+        echo '#include "ace/config-linux.h"' > ${{ env.ACE_ROOT }}/ace/config.h
+        echo 'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' > ${{ env.ACE_ROOT }}/include/makeinclude/platform_macros.GNU
+    - name: Build in container
+      uses: addnab/docker-run-action@v3
+      with:
+        image: alpine:3.18
+        options: -v ${{ github.workspace }}:${{ github.workspace }}
+        run: |
+          apk add --no-cache git bash make g++ perl linux-headers
+          export ACE_ROOT=${{ env.ACE_ROOT }}
+          export TAO_ROOT=${{ env.TAO_ROOT }}
+          export MPC_ROOT=${{ env.MPC_ROOT }}
+          perl ${{ env.ACE_ROOT }}/bin/mwc.pl -type gnuace ${{ env.TAO_ROOT }}/TAO_ACE.mwc -workers 4
+          perl ${{ env.ACE_ROOT }}/bin/mwc.pl -type gnuace ${{ env.ACE_ROOT }}/tests/tests.mwc -workers 4
+          perl ${{ env.ACE_ROOT }}/bin/mwc.pl -type gnuace ${{ env.TAO_ROOT }}/tests/IDL_Test -workers 4
+          perl ${{ env.ACE_ROOT }}/bin/mwc.pl -type gnuace ${{ env.TAO_ROOT }}/tests/IDLv4 -workers 4
+          make -j 6 -C ${{ env.TAO_ROOT }}
+          make -j 6 -C ${{ env.ACE_ROOT }}/tests
+          make -j 6 -C ${{ env.TAO_ROOT }}/tests/IDL_Test
+          make -j 6 -C ${{ env.TAO_ROOT }}/tests/IDLv4

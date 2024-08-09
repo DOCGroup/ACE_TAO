@@ -28,6 +28,10 @@
 #  include /**/ <sys/types.h>
 #endif /* !ACE_LACKS_SYS_TYPES_H */
 
+#if !defined (ACE_LACKS_FCNTL_H)
+# include /**/ <fcntl.h>
+#endif /* !ACE_LACKS_FCNTL_H */
+
 # if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
              (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
 using std::time_t;
@@ -53,7 +57,7 @@ typedef double ACE_timer_t;
 
 #if defined (ACE_SIZEOF_LONG) && ACE_SIZEOF_LONG == 8
    typedef off_t ACE_LOFF_T;
-#elif defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined (__APPLE__)
+#elif defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined (__APPLE__) || defined (ACE_HAS_MUSL)
    typedef off_t ACE_LOFF_T;
 #elif defined (__QNX__)
    typedef off64_t ACE_LOFF_T;
