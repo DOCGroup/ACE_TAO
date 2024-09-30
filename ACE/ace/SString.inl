@@ -231,7 +231,7 @@ ACE_INLINE
 ACE_Auto_String_Free::ACE_Auto_String_Free (ACE_Auto_String_Free& rhs)
   :  p_ (rhs.p_)
 {
-  rhs.p_ = 0;
+  rhs.p_ = nullptr;
 }
 
 ACE_INLINE void
@@ -251,7 +251,7 @@ ACE_Auto_String_Free::operator= (ACE_Auto_String_Free& rhs)
   if (this != &rhs)
     {
       this->reset (rhs.p_);
-      rhs.p_ = 0;
+      rhs.p_ = nullptr;
     }
   return *this;
 }
@@ -274,6 +274,12 @@ ACE_Auto_String_Free::operator[] (size_t i) const
   return this->p_[i];
 }
 
+ACE_INLINE
+ACE_Auto_String_Free::operator bool (void) const
+{
+  return this->p_ != nullptr;
+}
+
 ACE_INLINE char*
 ACE_Auto_String_Free::get () const
 {
@@ -284,7 +290,7 @@ ACE_INLINE char*
 ACE_Auto_String_Free::release ()
 {
   char* p = this->p_;
-  this->p_ = 0;
+  this->p_ = nullptr;
   return p;
 }
 
