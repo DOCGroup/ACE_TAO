@@ -284,6 +284,7 @@ The following sections explain how to build ACE on:
 <li><a href="#win32">Windows (including MinGW and Cygwin)</a></li>
 <li><a href="#vxworks">VxWorks</a></li>
 <li><a href="#android">Android</a></li>
+<li><a href="#emscripten">Emscripten WebAssembly</a></li>
 </ul>
 
 <h2>General Rules</h2>
@@ -1821,7 +1822,7 @@ ACE_LOG_MSG-&gt;clr_flags (ACE_Log_Msg::SYSLOG);
   OpenSSL. On Android, OpenSSL isn't part of the NDK Library and Android
   preloads the system SSL library (either OpenSSL or BoringSSL) for the Java
   Android API. This means OpenSSL <b>MUST</b> be statically linked to avoid
-  conflicts with the almost certianly incompatible system SSL library.
+  conflicts with the almost certainly incompatible system SSL library.
 
   To build OpenSSL for Android, please read <code>NOTES.ANDROID</code> that comes
   with OpenSSL's source code. The static libraries will used if the shared
@@ -1830,6 +1831,43 @@ ACE_LOG_MSG-&gt;clr_flags (ACE_Log_Msg::SYSLOG);
   OpenSSL's <code>Configure</code> script or just deleting the so files after
   building OpenSSL.
 </p>
+
+<hr align="left" width="50%">
+
+<h2><a name="emscripten">Building ACE for Emscripten WebAssembly</a></h2>
+
+<p><b>NOTE: This has only been tested on Linux with NodeJS 16.18.</b></p>
+
+<a href="https://emscripten.org/">Emscripten</a>
+is a LLVM toolchain that allows compiling C++ to
+<a href="https://en.wikipedia.org/wiki/WebAssembly">WebAssembly</a>
+that can be ran on a web browser or <a href="https://nodejs.org">NodeJS</a>.
+
+<h3>Building</h3>
+
+<ol>
+  <li>Download and setup <a href="https://emscripten.org/docs/getting_started/downloads.html">emscripten</a>.</li>
+  <li>Run <code>source emsdk_env.sh</code> in <code>emsdk</code>.</li>
+  <li>Make sure MPC is available and <code>MPC_ROOT</code> is set.</li>
+  <li>Configure ACE:
+    <ol>
+      <li><code>$ACE_ROOT/bin/MakeProjectCreator/config/default.features</code>
+        should contain <code>no_cxx11=0</code></li>
+      <li><code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code> should contain
+        <code>include $(ACE_ROOT)/include/makeinclude/platform_emscripten.GNU</code></li>
+      <li><code>$ACE_ROOT/ace/config.h</code> should contain
+        <code>#include "config-emscripten.h"</code></li>
+      <li><code>cd $ACE_ROOT/ace &amp;&amp; mwc.pl -type gnuace .</code></li>
+    </ol>
+  </li>
+  <li>Build ACE: <code>cd $ACE_ROOT/ace &amp;&amp; make -j4</code></li>
+</ol>
+
+<h3>Running Tests</h3>
+
+<pre class="indent">
+DOC_TEST_1=NODEJS NODEJS_OS=local ./run_test.pl -Config STATIC -Config NODEJS
+</pre>
 
 <hr>
 <h1><a name="svcsinstall">Building and Installing ACE Network Services</a></h1>
