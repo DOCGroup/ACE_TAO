@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-8.0.1 and ACE-8.0.2
 ====================================================
 
+. Embarcadero C++ Builder bcc64x compiler supported has been
+  updated to match the C++Builder 12.2 release
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.0 and ACE-8.0.1
 ====================================================
 
