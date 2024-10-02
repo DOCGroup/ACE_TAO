@@ -649,10 +649,16 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
   ip_mreq  lmreq;       // Scratch copy.
   if (net_if != 0)
     {
+      const char * net_if_char = ACE_TEXT_ALWAYS_CHAR (net_if);
+      if (ACE_OS::strstr (net_if_char, "if=") != 0)
+        {
+          net_if_char = net_if_char + 3;
+        }
+
 #if defined (ACE_WIN32)
       // This port number is not necessary, just convenient
       ACE_INET_Addr interface_addr;
-      if (interface_addr.set (mcast_addr.get_port_number (), net_if) == -1)
+      if (interface_addr.set (mcast_addr.get_port_number (), net_if_char) == -1)
         {
           IP_ADAPTER_ADDRESSES tmp_addrs;
           // Initial call to determine actual memory size needed
@@ -677,8 +683,8 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
           int set_result = -1;
           while (pAddrs && set_result == -1)
             {
-              if (ACE_OS::strcmp (ACE_TEXT_ALWAYS_CHAR (net_if), pAddrs->AdapterName) == 0 ||
-                  ACE_OS::strcmp (ACE_TEXT_ALWAYS_WCHAR (net_if), pAddrs->FriendlyName) == 0)
+              if (ACE_OS::strcmp (net_if_char, pAddrs->AdapterName) == 0 ||
+                  ACE_OS::strcmp (ACE_Ascii_To_Wide (net_if_char).wchar_rep (), pAddrs->FriendlyName) == 0)
                 {
                   PIP_ADAPTER_UNICAST_ADDRESS pUnicast = pAddrs->FirstUnicastAddress;
                   LPSOCKADDR sa = pUnicast->Address.lpSockaddr;
@@ -702,19 +708,19 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
         ACE_HTONL (interface_addr.get_ip_address ());
 #else
       ifreq if_address;
-      ACE_OS::strsncpy (if_address.ifr_name, ACE_TEXT_ALWAYS_CHAR (net_if), (sizeof if_address.ifr_name));
+      ACE_OS::strsncpy (if_address.ifr_name, net_if_char, (sizeof if_address.ifr_name));
       if (ACE_OS::ioctl (this->get_handle (),
                          SIOCGIFADDR,
                          &if_address) == -1)
         {
-          // The net_if name failed to be found. It seems that older linux
+          // The net_if_char name failed to be found. It seems that older linux
           // kernals only support the actual interface name (eg. "eth0"),
           // not the IP address string of the interface (eg. "192.168.0.1"),
           // which newer kernals seem to automatically translate.
           // So assume that we have been given an IP Address and translate
           // that instead, similar to the above for windows.
           ACE_INET_Addr interface_addr;
-          if (interface_addr.set (mcast_addr.get_port_number (), net_if) == -1)
+          if (interface_addr.set (mcast_addr.get_port_number (), net_if_char) == -1)
             return -1;  // Still doesn't work, unknown device specified.
           lmreq.imr_interface.s_addr =
             ACE_HTONL (interface_addr.get_ip_address ());
@@ -755,11 +761,24 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 #if defined (ACE_WIN32) || !defined (ACE_LACKS_IF_NAMETOINDEX)
   if (net_if != 0)
     {
+      const char * net_if_char = ACE_TEXT_ALWAYS_CHAR (net_if);
+
+      struct in6_addr net_if_in6_addr;
+      bool net_if_is_ip_address ( false );
+      if (ACE_OS::strstr (net_if_char, "if=") != 0)
+        {
+          net_if_char = net_if_char + 3;
+        }
+      else
+        {
+          net_if_is_ip_address = inet_pton (AF_INET6, net_if_char, &net_if_in6_addr) == 1;
+        }
+
 #if defined (ACE_WIN32)
       int if_ix = 0;
       bool const num_if =
-        ACE_OS::ace_isdigit (net_if[0]) &&
-        (if_ix = ACE_OS::atoi (net_if)) > 0;
+        ACE_OS::ace_isdigit (net_if_char[0]) &&
+        (if_ix = ACE_OS::atoi (net_if_char)) > 0;
 
       ULONG bufLen = 15000; // Initial size as per Microsoft
       char *buf = nullptr;
@@ -793,10 +812,30 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 
       while (pAddrs)
         {
-          if ((num_if && pAddrs->Ipv6IfIndex == static_cast<unsigned int>(if_ix))
-              || (!num_if &&
-                  (ACE_OS::strcmp (ACE_TEXT_ALWAYS_CHAR (net_if), pAddrs->AdapterName) == 0
-                   || ACE_OS::strcmp (ACE_TEXT_ALWAYS_WCHAR (net_if), pAddrs->FriendlyName) == 0)))
+          if (net_if_is_ip_address)
+            {
+              IP_ADAPTER_UNICAST_ADDRESS *uni = 0;
+              for (uni = pAddrs->FirstUnicastAddress; uni != 0; uni = uni->Next)
+                {
+                  struct sockaddr_in6 *sin = reinterpret_cast <sockaddr_in6 *> (uni->Address.lpSockaddr);
+                  if (std::memcmp (
+                       reinterpret_cast <void *> (&net_if_in6_addr),
+                       reinterpret_cast <void *> (&sin->sin6_addr),
+                       sizeof (in6_addr)) == 0)
+                    {
+                      lmreq.ipv6mr_interface = pAddrs->Ipv6IfIndex;
+                      break;
+                    }
+                }
+              if (lmreq.ipv6mr_interface != 0)
+                {
+                  break;
+                }
+            }
+          else if ((num_if && pAddrs->Ipv6IfIndex == static_cast<unsigned int>(if_ix))
+                   || (!num_if &&
+                       (ACE_OS::strcmp (net_if_char, pAddrs->AdapterName) == 0
+                        || ACE_OS::strcmp (ACE_Ascii_To_Wide (net_if_char).wchar_rep (), pAddrs->FriendlyName) == 0)))
             {
               lmreq.ipv6mr_interface = pAddrs->Ipv6IfIndex;
               break;
@@ -809,13 +848,53 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 
 #else /* ACE_WIN32 */
 #ifndef ACE_LACKS_IF_NAMETOINDEX
-      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (ACE_TEXT_ALWAYS_CHAR (net_if));
+      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (net_if_char);
 #endif /* ACE_LACKS_IF_NAMETOINDEX */
 #endif /* ACE_WIN32 */
       if (lmreq.ipv6mr_interface == 0)
         {
-          errno = EINVAL;
-          return -1;
+#ifndef ACE_LACKS_IF_NAMETOINDEX
+          if (net_if_is_ip_address)
+            {
+              // net_if is an IP(v6) address, so find the interface name and *then* convert it to an interface index
+              ACE_INET_Addr *if_addrs = 0;
+              size_t if_cnt;
+              if (ACE::get_ip_interfaces (if_cnt, if_addrs) == 0)
+                {
+                  struct sockaddr_in6 net_if_sockaddr_in6;
+                  net_if_sockaddr_in6.sin6_family = AF_INET6;
+                  net_if_sockaddr_in6.sin6_addr = net_if_in6_addr;
+                  net_if_sockaddr_in6.sin6_port = 0;
+                  net_if_sockaddr_in6.sin6_flowinfo = 0;
+                  ACE_INET_Addr net_if_ace_inet_addr (
+                    reinterpret_cast<struct sockaddr_in *> (&net_if_sockaddr_in6),
+                    sizeof(sockaddr_in6));
+
+                  while (if_cnt > 0)
+                    {
+                      // Convert to 0-based for indexing, next loop check
+                      --if_cnt;
+
+                      if (net_if_ace_inet_addr.is_ip_equal (if_addrs[if_cnt]))
+                        {
+                          auto if_name = if_addrs[if_cnt].get_interface_name ();
+                          if (if_name)
+                            {
+                              lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (if_name->c_str ());
+                            }
+                          break;
+                        }
+                    }
+                }
+              delete [] if_addrs;
+            }
+
+          if (lmreq.ipv6mr_interface == 0)
+#endif /* ACE_LACKS_IF_NAMETOINDEX */
+            {
+              errno = EINVAL;
+              return -1;
+            }
         }
     }
 #else  /* ACE_WIN32 || !ACE_LACKS_IF_NAMETOINDEX */
