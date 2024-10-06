@@ -1099,7 +1099,7 @@ BASEHDR="$BASEHDR `find \
 for j in $BASEHDR; do
         echo $j >> rawhdrs.log
         echo '#include <'$j'>' | \
-        g++ %{inline} \
+        g++ -std=c++17 %{inline} \
             -I . \
             -I protocols \
             $TAO_MM_OPTS \
