@@ -462,7 +462,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Version.h
     Versioned_Namespace.h
     ace_wchar.h
-    checked_iterator.h
     config-*.h
     config.h
     iosfwd.h
