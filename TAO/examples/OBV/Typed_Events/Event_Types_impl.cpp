@@ -20,7 +20,7 @@ Event_impl::~Event_impl ()
 Event_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
@@ -63,7 +63,7 @@ Temperature_impl::~Temperature_impl ()
 Temperature_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
@@ -106,7 +106,7 @@ Position_impl::~Position_impl ()
 Position_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
@@ -186,7 +186,7 @@ Log_Msg_impl::~Log_Msg_impl ()
 Log_Msg_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
@@ -243,7 +243,7 @@ Event_List_Link_impl::~Event_List_Link_impl ()
 Event_List_Link_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
@@ -292,7 +292,7 @@ Event_List_impl::~Event_List_impl ()
 Event_List_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
@@ -431,7 +431,7 @@ Temperature_Criterion_impl::~Temperature_Criterion_impl ()
 Temperature_Criterion_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
@@ -490,7 +490,7 @@ Position_Criterion_impl::~Position_Criterion_impl ()
 Position_Criterion_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
@@ -546,7 +546,7 @@ Log_Msg_Criterion_impl::~Log_Msg_Criterion_impl ()
 Log_Msg_Criterion_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
@@ -599,7 +599,7 @@ Criterion_List_impl::~Criterion_List_impl ()
 Criterion_List_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
