@@ -411,6 +411,8 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     IO_Cntl_Msg.h
     Intrusive_Auto_Ptr.h
     Lock_Adapter_T.h
+    Log_Msg_Backend.h
+    Log_Msg_Callback.h
     Log_Priority.h
     Malloc_Base.h
     Metrics_Cache.h
