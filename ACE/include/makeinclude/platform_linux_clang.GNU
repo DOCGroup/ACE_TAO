@@ -47,8 +47,6 @@ else ifeq ($(c++20),1)
   CCFLAGS += -std=c++20
 else ifeq ($(c++17),1)
   CCFLAGS += -std=c++17
-else ifeq ($(c++14),1)
-  CCFLAGS += -std=c++14
 endif
 
 ifeq ($(no_deprecated),1)
