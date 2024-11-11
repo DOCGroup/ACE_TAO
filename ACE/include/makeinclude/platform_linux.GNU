@@ -52,15 +52,8 @@ endif
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-# TAO with GCC 4.0.2 and -O3 seems to result in runtime issues, for example
-# the ForwardRequest PI test will fail. For GCC 4.0.2 we default to -O2
-ifeq ($(CXX_VERSION),4.0.2)
-  OCFLAGS ?= -O2
-  OCCFLAGS ?=-O2
-else
-  OCFLAGS ?= -O3
-  OCCFLAGS ?= -O3
-endif
+OCFLAGS ?= -O3
+OCCFLAGS ?= -O3
 
 #### GNU gas has a string limit of 4096 characters.  On Alphas,
 #### builds will fail due to running over that limit.  There are
