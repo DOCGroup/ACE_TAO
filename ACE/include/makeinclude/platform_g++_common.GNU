@@ -59,20 +59,18 @@ else
   CXX_FOR_VERSION_TEST ?= $(CXX)
 endif
 
-CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
-CXX_MACHINE := $(shell $(CXX_FOR_VERSION_TEST) -dumpmachine)
-ifeq (cmd,$(findstring cmd,$(SHELL)))
-CXX_MAJOR_VERSION := $(firstword $(subst ., ,$(CXX_VERSION)))
-else
-CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
+ifndef CXX_VERSION
+  CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
 endif
-ifeq (cmd,$(findstring cmd,$(SHELL)))
-CXX_MINOR_VERSION := $(word 2,$(subst ., ,$(CXX_VERSION)))
-else
-CXX_MINOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/^[0-9]*\.//' | sed -e 's/\..*$$//')
+ifndef CXX_MACHINE
+  CXX_MACHINE := $(shell $(CXX_FOR_VERSION_TEST) -dumpmachine)
+endif
+ifndef CXX_FULL_VERSION
+  CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
 endif
 
-CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
+CXX_MAJOR_VERSION := $(firstword $(subst ., ,$(CXX_VERSION)))
+CXX_MINOR_VERSION := $(word 2,$(subst ., ,$(CXX_VERSION)))
 
 # Minimum C++ level is now C++17, gcc until version 11 have an older version as default
 ifeq ($(CXX_MAJOR_VERSION),7)
