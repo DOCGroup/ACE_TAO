@@ -11,6 +11,8 @@ USER VISIBLE CHANGES BETWEEN ACE-8.0.1 and ACE-8.0.2
 
 . Improved QNX support
 
+. Add support for std::string_view to CDR classes
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.0 and ACE-8.0.1
 ====================================================
 
