@@ -571,14 +571,7 @@ public:
                                const ACE_Time_Value &interval =
                                 ACE_Time_Value::zero);
 
-  template<class Rep1, class Period1, class Rep2 = int, class Period2 = std::ratio<1>>
-  long schedule_timer (ACE_Event_Handler *event_handler,
-                       const void *arg,
-                       const std::chrono::duration<Rep1, Period1>& delay,
-                       const std::chrono::duration<Rep2, Period2>& interval = std::chrono::duration<Rep2, Period2>::zero ())
-  {
-    return ACE_Reactor_Timer_Interface::schedule_timer(event_handler, arg, delay, interval);
-  }
+  using ACE_Reactor_Timer_Interface::schedule_timer;
 
   /**
    * Reset recurring timer interval.
@@ -594,12 +587,7 @@ public:
   virtual int reset_timer_interval (long timer_id,
                                     const ACE_Time_Value &interval);
 
-  template<class Rep, class Period>
-  int reset_timer_interval (long timer_id,
-                            const std::chrono::duration<Rep, Period>& interval)
-  {
-    return ACE_Reactor_Timer_Interface::reset_timer_interval(timer_id, interval);
-  }
+  using ACE_Reactor_Timer_Interface::reset_timer_interval;
 
   /**
    * Cancel timer.
