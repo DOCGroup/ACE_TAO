@@ -21,7 +21,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_OSTREAM_TYPE &
 operator<< (ACE_OSTREAM_TYPE &os, const ACE_CString &cs)
 {
-  if (cs.fast_rep () != 0)
+  if (cs.fast_rep ())
     os << cs.fast_rep ();
   return os;
 }
@@ -59,7 +59,7 @@ ACE_NS_WString::char_rep () const
     return 0;
   else
     {
-      char *t = 0;
+      char *t = nullptr;
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (t,
@@ -89,7 +89,7 @@ ACE_NS_WString::ushort_rep () const
     return 0;
   else
     {
-      ACE_UINT16 *t = 0;
+      ACE_UINT16 *t = nullptr;
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (t,
