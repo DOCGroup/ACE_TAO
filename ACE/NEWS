@@ -1,10 +1,13 @@
+USER VISIBLE CHANGES BETWEEN ACE-8.0.2 and ACE-8.0.3
+====================================================
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.1 and ACE-8.0.2
 ====================================================
 
 . Removed ACE_make_checked_array_iterator that used deprecated
-  stdext::checked_array_iterator 
+  stdext::checked_array_iterator
 
-. Embarcadero C++ Builder bcc64x compiler supported has been
+. Embarcadero C++ Builder bcc64x compiler support has been
   updated to match the C++Builder 12.2 release
 
 . Added support for Linux platforms that use musl-libc instead of glibc
