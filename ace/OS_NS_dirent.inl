@@ -20,8 +20,10 @@ ACE_OS::closedir (ACE_DIR *d)
   ACE_OS::closedir_emulation (d);
   delete [] d->directory_name_;
   delete d;
-#   else /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
+#   elif !defined (ACE_LACKS_CLOSEDIR)
   ::closedir (d);
+#   else
+  ACE_UNUSED_ARG (d);
 #   endif /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
 
 # endif /* ACE_PSOS */
@@ -51,10 +53,15 @@ ACE_OS::opendir (const ACE_TCHAR *filename)
 #  else /* ! ACE_PSOS */
 #    if defined (ACE_WIN32) && defined (ACE_LACKS_OPENDIR)
   return ::ACE_OS::opendir_emulation (filename);
-#    elif defined (ACE_HAS_NONCONST_OPENDIR)
+#    elif !defined (ACE_LACKS_OPENDIR)
+#      if defined (ACE_HAS_NONCONST_OPENDIR)
   return ::opendir (const_cast<char *> (filename));
-#    else /* ! ACE_WIN32 && ACE_LACKS_OPENDIR */
+#      else
   return ::opendir (ACE_TEXT_ALWAYS_CHAR (filename));
+#      endif /* ACE_HAS_NONCONST_OPENDIR */
+#    else
+  ACE_UNUSED_ARG (filename);
+  ACE_NOTSUP_RETURN (0);
 #    endif /* ACE_WIN32 && ACE_LACKS_OPENDIR */
 #  endif /* ACE_PSOS */
 #else
@@ -81,8 +88,11 @@ ACE_OS::readdir (ACE_DIR *d)
 #  else /* ! ACE_PSOS */
 #    if defined (ACE_WIN32) && defined (ACE_LACKS_READDIR)
   return ACE_OS::readdir_emulation (d);
-#    else /* ACE_WIN32 && ACE_LACKS_READDIR */
+#    elif !defined (ACE_LACKS_READDIR)
   return ::readdir (d);
+#    else
+  ACE_UNUSED_ARG (d);
+  ACE_NOTSUP_RETURN (0);
 #    endif /* ACE_WIN32 && ACE_LACKS_READDIR */
 #  endif /* ACE_PSOS */
 #else

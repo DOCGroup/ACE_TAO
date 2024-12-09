@@ -128,6 +128,9 @@ ACE_OS::closesocket (ACE_HANDLE handle)
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
 #elif defined (ACE_PSOS_DIAB_PPC)
   ACE_OSCALL_RETURN (::pna_close (handle), int, -1);
+#elif defined ACE_LACKS_CLOSE
+  ACE_UNUSED_ARG (handle);
+  ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::close (handle), int, -1);
 #endif /* ACE_WIN32 */
@@ -179,7 +182,7 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
   ACE_OS_TRACE ("ACE_OS::getpeername");
 
 #if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
-         && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
+           && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
   int result;
 #  if defined (ACE_PSOS) && !defined ACE_PSOS_DIAB_PPC
   ACE_SOCKCALL (::getpeername ((ACE_SOCKET) handle,
@@ -239,7 +242,7 @@ ACE_OS::getsockname (ACE_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::getsockname");
 #if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
-         && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
+           && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
   int result;
 #  if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
   ACE_SOCKCALL (::getsockname ((ACE_SOCKET) handle,
@@ -812,6 +815,7 @@ ACE_OS::sendv (ACE_HANDLE handle,
     }
   return ACE_OS::writev (handle, local_iov, n);
 
+
 #else
   return ACE_OS::writev (handle, buffers, n);
 #endif /* ACE_HAS_WINSOCK2 */
@@ -825,8 +829,7 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
                     int optlen)
 {
   ACE_OS_TRACE ("ACE_OS::setsockopt");
-
-  #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && defined(SO_REUSEPORT)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && defined(SO_REUSEPORT)
   // To work around an inconsistency with Microsofts implementation of
   // sockets, we will check for SO_REUSEADDR, and ignore it. Winsock
   // always behaves as if SO_REUSEADDR=1. Some implementations have
@@ -845,7 +848,7 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
       optname = SO_REUSEADDR;
     }
   }
-  #endif /*ACE_HAS_WINSOCK2*/
+#endif /*ACE_HAS_WINSOCK2*/
 
   ACE_SOCKCALL_RETURN (::setsockopt ((ACE_SOCKET) handle,
                                      level,
@@ -860,7 +863,13 @@ ACE_INLINE int
 ACE_OS::shutdown (ACE_HANDLE handle, int how)
 {
   ACE_OS_TRACE ("ACE_OS::shutdown");
+#if defined (ACE_LACKS_SHUTDOWN)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (how);
+  ACE_NOTSUP_RETURN (-1);
+#else
   ACE_SOCKCALL_RETURN (::shutdown ((ACE_SOCKET) handle, how), int, -1);
+#endif
 }
 
 ACE_INLINE ACE_HANDLE

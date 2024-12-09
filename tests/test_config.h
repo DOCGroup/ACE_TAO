@@ -62,43 +62,66 @@ const size_t ACE_MAX_CLIENTS = 4;
 const size_t ACE_MAX_CLIENTS = 30;
 #endif /* ACE_HAS_WINCE */
 
-const size_t ACE_NS_MAX_ENTRIES = 1000;
-const size_t ACE_DEFAULT_USECS = 1000;
-const size_t ACE_MAX_TIMERS = 4;
-const size_t ACE_MAX_DELAY = 10;
-const size_t ACE_MAX_INTERVAL = 0;
-const size_t ACE_MAX_ITERATIONS = 10;
-const size_t ACE_MAX_PROCESSES = 10;
-const size_t ACE_MAX_THREADS = 4;
+size_t const ACE_NS_MAX_ENTRIES = 1000;
+size_t const ACE_DEFAULT_USECS = 1000;
+size_t const ACE_MAX_TIMERS = 4;
+size_t const ACE_MAX_DELAY = 10;
+size_t const ACE_MAX_INTERVAL = 0;
+size_t const ACE_MAX_ITERATIONS = 10;
+size_t const ACE_MAX_PROCESSES = 10;
+size_t const ACE_MAX_THREADS = 4;
 
-#define ACE_START_TEST(NAME) \
+#if defined ACE_HAS_CONSOLE_TEST_OUTPUT
+#ifndef ACE_START_TEST
+# define ACE_START_TEST(NAME) const ACE_TCHAR *program = NAME; ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), NAME))
+#endif /* ACE_START_TEST */
+
+#ifndef ACE_END_TEST
+# define ACE_END_TEST ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test %D\n"), program));
+#endif /* ACE_END_TEST */
+#endif /* ACE_HAS_CONSOLE_TEST_OUTPUT */
+
+#ifdef ACE_TEST_LOG_TO_STDERR
+#  define ACE_TEST_LOG_MSG_FLAGS ACE_Log_Msg::STDERR | ACE_Log_Msg::VERBOSE_LITE
+#  define ACE_TEST_SET_OUTPUT(APPEND)
+#  define ACE_CLOSE_TEST_LOG
+#else
+#  define ACE_TEST_LOG_MSG_FLAGS ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE
+#  define ACE_TEST_SET_OUTPUT(APPEND) \
+  if (ace_file_stream::instance ()->set_output (program, APPEND) != 0) \
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1);
+#  define ACE_CLOSE_TEST_LOG ace_file_stream::instance ()->close ()
+#endif
+
+#define ACE_START_TEST_TEMPLATE(NAME, APPEND) \
   const ACE_TCHAR *program = NAME; \
-  ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
-  if (ace_file_stream::instance()->set_output (program) != 0) \
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
+  if (ACE_LOG_MSG->open (program, ACE_TEST_LOG_MSG_FLAGS) != 0) \
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open log_msg failed")), -1); \
+  ACE_TEST_SET_OUTPUT (APPEND); \
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program))
 
+#ifndef ACE_START_TEST
+#  define ACE_START_TEST(NAME) ACE_START_TEST_TEMPLATE (NAME, 0)
+#endif /* ACE_START_TEST */
+
+#ifndef ACE_END_TEST
 #define ACE_END_TEST \
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %D\n"), program)); \
-  ace_file_stream::instance()->close ()
+  ACE_CLOSE_TEST_LOG;
+#endif /* ACE_END_TEST */
 
-#define ACE_CLOSE_TEST_LOG ace_file_stream::instance()->close ()
-
-#define ACE_APPEND_LOG(NAME) \
-  const ACE_TCHAR *program = NAME; \
-  ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
-  if (ace_file_stream::instance()->set_output (program, 1) != 0) \
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
+#ifndef ACE_APPEND_LOG
+#  define ACE_APPEND_LOG(NAME) ACE_START_TEST_TEMPLATE (NAME, 1)
+#endif /* ACE_APPEND_LOG */
 
 #define ACE_END_LOG \
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %D\n\n"), program)); \
   ACE_LOG_MSG->set_flags(ACE_Log_Msg::SILENT); \
-  ace_file_stream::instance()->close ();
+  ACE_CLOSE_TEST_LOG;
 
 #if defined (VXWORKS)
   // This is the only way I could figure out to avoid an error
-  // about attempting to unlink a non-existant file.
+  // about attempting to unlink a non-existent file.
 
 #include "ace/OS_NS_fcntl.h"
 

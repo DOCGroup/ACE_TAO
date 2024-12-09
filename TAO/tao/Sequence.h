@@ -316,9 +316,9 @@ public:
   /**
    * The assignment operator first releases all object reference
    * members and frees all string  members, and then performs a
-   * deep­copy to create a new structure.
+   * copy to create a new structure.
    *
-   * The assignment operator deep­copies its parameter, releasing
+   * The assignment operator copies its parameter, releasing
    * old storage if necessary. It behaves as if the original sequence
    * is destroyed via its destructor and then the source sequence
    * copied using the copy constructor. If release=TRUE, the
@@ -464,9 +464,9 @@ public:
   /**
    * The assignment operator first releases all object reference
    * members and frees all wstring  members, and then performs a
-   * deep­copy to create a new structure.
+   * copy to create a new structure.
    *
-   * The assignment operator deep­copies its parameter, releasing
+   * The assignment operator copies its parameter, releasing
    * old storage if necessary. It behaves as if the original sequence
    * is destroyed via its destructor and then the source sequence
    * copied using the copy constructor. If release=TRUE, the

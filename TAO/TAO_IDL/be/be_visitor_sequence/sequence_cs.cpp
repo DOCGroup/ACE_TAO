@@ -62,7 +62,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// "__FILE__ << ":" << __LINE__;
+      << "// " __FILE__ ":" << __LINE__;
 
   os->gen_ifdef_macro (node->flat_name ());
 

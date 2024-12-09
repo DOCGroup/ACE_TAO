@@ -198,7 +198,7 @@ public:
   static T_slice * tao_alloc (void);
 private:
   T_slice * ptr_;
-  const CORBA::Boolean nocopy_;
+  CORBA::Boolean nocopy_;
 };
 
 #if defined (__ACE_INLINE__)

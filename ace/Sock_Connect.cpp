@@ -375,9 +375,9 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
   // Get interface structure and initialize the addresses using UNIX
   // techniques
 #if defined (AIX)
-  int cmd = CSIOCGIFCONF;
+  ACE_IOCTL_TYPE_ARG2 const cmd = CSIOCGIFCONF;
 #else
-  int cmd = SIOCGIFCONF;
+  ACE_IOCTL_TYPE_ARG2 const cmd = SIOCGIFCONF;
 #endif /* AIX */
   if (ACE_OS::ioctl (s, cmd, (char *) &ifc) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

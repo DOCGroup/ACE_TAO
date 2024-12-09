@@ -63,7 +63,6 @@ namespace ACE_OS {
                       ACE_TCHAR *&buf,
                       int substitute_env_args = 1);
 
-#if !defined (ACE_LACKS_CHDIR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int chdir (const char *path);
 
@@ -71,7 +70,6 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int chdir (const wchar_t *path);
 #endif /* ACE_HAS_WCHAR */
-#endif /* ACE_LACKS_CHDIR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int rmdir (const char *path);

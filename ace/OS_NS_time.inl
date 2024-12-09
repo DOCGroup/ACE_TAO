@@ -505,7 +505,10 @@ ACE_OS::strftime (char *s, size_t maxsize, const char *format,
 ACE_INLINE time_t
 ACE_OS::time (time_t *tloc)
 {
-#if !defined (ACE_HAS_WINCE)
+#if defined (ACE_LACKS_TIME)
+  ACE_UNUSED_ARG (tloc);
+  return (time_t) -1;
+#elif !defined (ACE_HAS_WINCE)
   ACE_OS_TRACE ("ACE_OS::time");
 #  if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
         unsigned long d_date, d_time, d_tick;

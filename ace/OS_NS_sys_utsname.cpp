@@ -230,7 +230,6 @@ ACE_OS::uname (ACE_utsname *name)
   ACE_OS::strcpy (name->release, "???");
   ACE_OS::strcpy (name->version, buf);
   ACE_OS::strcpy (name->machine, "PPC 405");  // a bit of a hack
-
 #endif /* ACE_WIN32 */
 }
 #endif /* ACE_WIN32 || VXWORKS */

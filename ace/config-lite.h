@@ -570,6 +570,12 @@ typedef int ACE_THR_FUNC_RETURN;
 // easier to deal with declaring variables internally in ACE.
 # elif defined (ACE_WIN32)
 typedef DWORD ACE_THR_FUNC_RETURN;
+# elif defined (INTEGRITY)
+// INTEGRITY-178 Task's entry point function doesn't return anything.
+// For INTEGRITY, we are also using Task API in which entry point function doesn't return.
+// This is used by ACE's internal thread adapter function but will be ignored by
+// the actual entry point passed to INTEGRITY's and INTEGRITY-178 Task calls.
+typedef int ACE_THR_FUNC_RETURN;
 # else
 typedef void* ACE_THR_FUNC_RETURN;
 # endif /* VXWORKS */

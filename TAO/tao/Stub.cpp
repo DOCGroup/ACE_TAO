@@ -424,14 +424,14 @@ public:
   TAO_Synchronous_Cancellation_Required (void)
     : old_type_ (0)
   {
-#if !defined (VXWORKS)
+#if !defined (VXWORKS) && !defined (INTEGRITY)
     ACE_OS::thr_setcanceltype (THR_CANCEL_DEFERRED, &old_type_);
 #endif /* ! VXWORKS */
   }
 
   ~TAO_Synchronous_Cancellation_Required (void)
   {
-#if !defined (VXWORKS)
+#if !defined (VXWORKS) && !defined (INTEGRITY)
     int dont_care;
     ACE_OS::thr_setcanceltype(old_type_, &dont_care);
 #endif /* ! VXWORKS */

@@ -107,8 +107,12 @@ ACE_OS::ioctl (ACE_HANDLE handle,
                void *val)
 {
   ACE_OS_TRACE ("ACE_OS::ioctl");
-
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_IOCTL)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (cmd);
+  ACE_UNUSED_ARG (val);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
   ACE_SOCKET sock = (ACE_SOCKET) handle;
   ACE_SOCKCALL_RETURN (::ioctlsocket (sock, cmd, reinterpret_cast<unsigned long *> (val)), int, -1);
 #elif defined (VXWORKS)

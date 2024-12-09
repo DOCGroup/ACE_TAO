@@ -61,7 +61,7 @@ public:
 
   /// "Do-nothing" constructor.
   ACE_Acceptor (ACE_Reactor * = 0,
-                int use_select = 1);
+                int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT);
 
   /**
    * Initialize and register <this> with the Reactor and listen for
@@ -78,7 +78,7 @@ public:
   ACE_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
                 ACE_Reactor * = ACE_Reactor::instance (),
                 int flags = 0,
-                int use_select = 1,
+                int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                 int reuse_addr = 1);
 
   /**
@@ -118,7 +118,7 @@ public:
   virtual int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
                     ACE_Reactor *reactor = ACE_Reactor::instance (),
                     int flags = 0,
-                    int use_select = 1,
+                    int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                     int reuse_addr = 1);
 
   /// Close down the Acceptor's resources.
@@ -270,7 +270,7 @@ public:
   /// Default constructor.
   ACE_Strategy_Acceptor (const ACE_TCHAR service_name[] = 0,
                          const ACE_TCHAR service_description[] = 0,
-                         int use_select = 1,
+                         int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                          int reuse_addr = 1);
 
   /**
@@ -287,7 +287,7 @@ public:
                          ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
                          const ACE_TCHAR service_name[] = 0,
                          const ACE_TCHAR service_description[] = 0,
-                         int use_select = 1,
+                         int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                          int reuse_addr = 1);
 
   /**
@@ -327,7 +327,7 @@ public:
   virtual int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
                     ACE_Reactor *reactor,
                     int flags = 0,
-                    int use_select = 1,
+                    int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                     int reuse_addr = 1);
 
   /**
@@ -344,7 +344,7 @@ public:
                     ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
                     const ACE_TCHAR *service_name = 0,
                     const ACE_TCHAR *service_description = 0,
-                    int use_select = 1,
+                    int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                     int reuse_addr = 1);
 
   /// Close down the Strategy_Acceptor's resources.

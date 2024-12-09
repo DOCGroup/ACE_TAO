@@ -182,7 +182,12 @@ inline double ace_difftime(time_t t1, time_t t0)
   // simulate difftime ; just subtracting ; ACE_PSOS case
   return ((double)t1) - ((double)t0);
 # else
+#   if defined (difftime)
   return difftime (t1, t0);
+#   undef difftime
+#   else
+  return ACE_STD_NAMESPACE::difftime (t1, t0);
+#   endif
 # endif /* ACE_PSOS !ACE_PSOS_HAS_TIME */
 }
 #endif /* !ACE_LACKS_DIFFTIME */

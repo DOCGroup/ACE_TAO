@@ -23,6 +23,10 @@
 #  include /**/ <sys/priocntl.h>
 #endif /* ACE_HAS_PRIOCNTL */
 
+#if defined (INTEGRITY) && defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#  include "ace/Object_Manager.h"
+#endif
+
 /*****************************************************************************/
 
 #if defined (ACE_LACKS_COND_T) && defined (ACE_HAS_THREADS)
@@ -36,8 +40,8 @@ ACE_cond_t::waiters (void) const
 /*****************************************************************************/
 
 #if defined (ACE_HAS_TSS_EMULATION)
-
 #  if !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+
 ACE_INLINE
 void **&
 ACE_TSS_Emulation::tss_base ()
@@ -48,6 +52,10 @@ ACE_TSS_Emulation::tss_base ()
   // not supported
   long x=0;   //JINLU
   return (void **&) x;
+#    elif defined (INTEGRITY)
+  ACE_INTEGRITY_TSS_Impl *const obj = static_cast<ACE_INTEGRITY_TSS_Impl*> (ACE_Object_Manager::preallocated_object[ACE_Object_Manager::ACE_INTEGRITY_TSS_IMPL]);
+  void **&base = obj->get (CurrentTask ());
+  return base;
 #    else
   // Uh oh.
   ACE_NOTSUP_RETURN (0);
@@ -1391,6 +1399,11 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   ACE_OSCALL (::semDelete (s->sema_), int, -1, result);
   s->sema_ = 0;
   return result;
+#   elif defined (INTEGRITY)
+  // INTEGRITY has CloseSemaphore kernel call that closes the semaphore object.
+  // However, we are imitating INTEGRITY-178 behavior which does not support this operation.
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (s);
@@ -1703,6 +1716,13 @@ ACE_OS::sema_init (ACE_sema_t *s,
   s->name_ = 0;
   s->sema_ = ::semCCreate (type, count);
   return s->sema_ ? 0 : -1;
+#  elif defined (INTEGRITY)
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (max);
+  ACE_UNUSED_ARG (sa);
+  return ::CreateSemaphore (count, s) == Success ? 0 : -1;
 #  endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (s);
@@ -1846,6 +1866,8 @@ ACE_OS::sema_post (ACE_sema_t *s)
   return result;
 #   elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::semGive (s->sema_), int, -1);
+#   elif defined (INTEGRITY)
+  return ::ReleaseSemaphore (*s) == Success ? 0 : -1;
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (s);
@@ -2004,6 +2026,8 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   else
     // got the semaphore
     return 0;
+#   elif defined (INTEGRITY)
+  return ::TryToObtainSemaphore (*s) == Success ? 0 : -1;
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (s);
@@ -2118,6 +2142,23 @@ ACE_OS::sema_wait (ACE_sema_t *s)
   return result;
 #   elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::semTake (s->sema_, WAIT_FOREVER), int, -1);
+#   elif defined (INTEGRITY)
+#     if defined (INTEGRITY178B)
+  // It seems INTEGRITY178B's WaitForSemaphore does not check for the semaphore's value underflow,
+  // so we attempt to do it manually here. However, it does not prevent a race when two or more
+  // threads call this functions simultaneously and the calls to GetSemaphoreValue and WaitForSemaphore
+  // interleave. In that case, WaitForSemaphore might still get called when its value has reached the
+  // minimum negative value.
+  SignedValue curr_val;
+  if (::GetSemaphoreValue (*s, &curr_val) != Success)
+    return -1;
+
+  if (curr_val == LONG_MIN)
+    // If we have this many Tasks waiting for a semaphore, something seems incorrect.
+    return -1;
+#     endif
+
+  return ::WaitForSemaphore (*s) == Success ? 0 : -1;
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (s);
@@ -2359,6 +2400,12 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       tv = ACE_OS::gettimeofday ();  // Update to time acquired
       return 0;
     }
+#   elif defined (INTEGRITY)
+  // INTEGRITY has kernel calls to wait for semaphore with timeout.
+  // Since we are imitating INTEGRITY-178 behavior, we're not using them now.
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (tv);
+  ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (s);
@@ -2511,6 +2558,10 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
     // means forever.
     *sig = ::sigtimedwait (sset, 0, 0);
     return *sig;
+# elif defined (INTEGRITY)
+    ACE_UNUSED_ARG (sset);
+    ACE_UNUSED_ARG (sig);
+    ACE_NOTSUP_RETURN (-1);
 # endif /* __FreeBSD__ */
 #else
     ACE_UNUSED_ARG (sset);
@@ -2624,6 +2675,9 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::t_resume (target_thread), result), int, -1);
 # elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::taskResume (target_thread), int, -1);
+# elif defined (INTEGRITY)
+  ACE_UNUSED_ARG (target_thread);
+  ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (target_thread);
@@ -2638,7 +2692,7 @@ ACE_OS::thr_getconcurrency (void)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
   return ::thr_getconcurrency ();
-# elif defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS)
+# elif defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_WTHREADS)
   ACE_NOTSUP_RETURN (-1);
@@ -2711,6 +2765,13 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::t_setpri (ht_id, 0, (u_long *) &priority), result), int, -1);
 # elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::taskPriorityGet (ht_id, &priority), int, -1);
+# elif defined (INTEGRITY)
+  Value active_prio;
+  Error err = GetActivePriority (ht_id, &active_prio);
+  if (err != Success)
+    return -1;
+  priority = static_cast<int> (active_prio);
+  return 0;
 # else
   ACE_UNUSED_ARG (ht_id);
   ACE_UNUSED_ARG (priority);
@@ -2808,7 +2869,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 #endif /* ACE_HAS_THREADS */
 }
 
-#if !(defined (VXWORKS) && !defined (ACE_HAS_PTHREADS))
+#if !((defined (VXWORKS) || defined (INTEGRITY)) && !defined (ACE_HAS_PTHREADS))
 ACE_INLINE int
 ACE_OS::thr_join (ACE_hthread_t thr_handle,
                   ACE_THR_FUNC_RETURN *status)
@@ -2930,7 +2991,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
-#endif /* !VXWORKS */
+#endif /* ! ((VXWORKS || INTEGRITY) && !ACE_HAS_PTHREADS)  */
 
 ACE_INLINE int
 ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
@@ -2967,6 +3028,10 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
   else
     ACE_OSCALL_RETURN (::kill (tid, signum), int, -1);
 
+# elif defined (INTEGRITY)
+  Error err;
+  ACE_OSCALL (::ExitTask (thr_id, (Value) signum), Error, InvalidObject, err);
+  return err == Success ? 0 : -1;
 # else /* This should not happen! */
   ACE_UNUSED_ARG (thr_id);
   ACE_UNUSED_ARG (signum);
@@ -3016,6 +3081,10 @@ ACE_OS::thr_min_stack (void)
                                 status),
               STATUS, -1, status);
   return status == OK ? taskDesc.td_stackSize : 0;
+# elif defined (INTEGRITY)
+  // There seems no API to get the minimum stack size for a Task.
+  // A related call, GetTaskStackLimits, returns the actual bottom and top of the current Task's stack.
+  ACE_NOTSUP_RETURN (0);
 # else /* Should not happen... */
   ACE_NOTSUP_RETURN (0);
 # endif /* ACE_HAS_STHREADS */
@@ -3042,6 +3111,8 @@ ACE_OS::thr_self (void)
   return 0;
 # elif defined (VXWORKS)
   return ::taskName (::taskIdSelf ());
+# elif defined (INTEGRITY)
+  return CurrentTask ();
 # endif /* ACE_HAS_STHREADS */
 #else
   return 1; // Might as well make it the first thread ;-)
@@ -3066,6 +3137,8 @@ ACE_OS::thr_self (ACE_hthread_t &self)
   t_ident ((char *) 0, 0, &self);
 # elif defined (VXWORKS)
   self = ::taskIdSelf ();
+# elif defined (INTEGRITY)
+  self = CurrentTask ();
 # endif /* ACE_HAS_STHREADS */
 #else
   self = 1; // Might as well make it the main thread ;-)
@@ -3366,6 +3439,8 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::t_suspend (target_thread), result), int, -1);
 # elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::taskSuspend (target_thread), int, -1);
+# elif defined (INTEGRITY)
+  return HaltTask (target_thread) == Success ? 0 : -1;
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (target_thread);
@@ -3418,6 +3493,8 @@ ACE_OS::thr_yield (void)
   // Now, it does seem to work.  The context_switch_time test
   // works fine with task_delay set to 0.
   ::taskDelay (0);
+# elif defined (INTEGRITY)
+  ::Yield ();
 # endif /* ACE_HAS_STHREADS */
 #else
   ;
@@ -3433,7 +3510,7 @@ ACE_OS::thread_mutex_destroy (ACE_thread_mutex_t *m)
   ::DeleteCriticalSection (m);
   return 0;
 
-# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS)
+# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   return ACE_OS::mutex_destroy (m);
 
 # endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
@@ -3465,9 +3542,12 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
   return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, 0, lock_type);
 # elif defined (VXWORKS) || defined (ACE_PSOS)
   return mutex_init (m, lock_type, name, arg);
-
+# elif defined (INTEGRITY)
+  ACE_UNUSED_ARG (lock_type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+  return ACE_OS::mutex_init (m);
 # endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
-
 #else
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (lock_type);
@@ -3522,7 +3602,7 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m)
 # if defined (ACE_HAS_WTHREADS)
   ::EnterCriticalSection (m);
   return 0;
-# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS)
+# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   return ACE_OS::mutex_lock (m);
 # endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS || VXWORKS || ACE_PSOS */
 #else
@@ -3546,7 +3626,7 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m,
   // Windows synchronization mechanism.
 
 #if defined (ACE_HAS_THREADS) && !defined (ACE_HAS_WTHREADS)
-# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS)
+# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   return ACE_OS::mutex_lock (m, timeout);
 #endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS || VXWORKS || ACE_PSOS */
 #else
@@ -3585,7 +3665,7 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_WIN32_TRYLOCK */
-# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS)
+# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   return ACE_OS::mutex_trylock (m);
 #endif /* Threads variety case */
 
@@ -3603,7 +3683,7 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 # if defined (ACE_HAS_WTHREADS)
   ::LeaveCriticalSection (m);
   return 0;
-# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS)
+# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
   return ACE_OS::mutex_unlock (m);
 # endif /* Threads variety case */
 #else

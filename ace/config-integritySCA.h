@@ -1,23 +1,37 @@
 // -*- C++ -*-
 
-#ifndef ACE_INT_CONFIG_H
-#define ACE_INT_CONFIG_H
+#ifndef ACE_CONFIG_INTEGRITYSCA_H
+#define ACE_CONFIG_INTEGRITYSCA_H
 
 /*
- * This config.h file is for version 4.0.x of the
- * Integrity RTOS with SCA from Green Hills Software
+ * This config.h file is for version 11.4.x of the
+ * Integrity RTOS with POSIX APIs from Green Hills Software
  * http://www.ghs.com/products/rtos/integrity.html
  *
- * $Id$
  */
 
+// This config uses the POSIX calls provided by libraries in INTEGRITY.
+// All network utility and socket functions from the GHnet stack
+// are also assumed to be available.
+
 #define ghs
+
 /* compilation defines */
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETREUID
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETSID
+// These may not be applicable to the ACE code,
+// i.e., defining them doesn't do anything
+//#define ACE_LACKS_SETEGID
+//#define ACE_LACKS_SETUID
+//#define ACE_LACKS_SETEUID
+//#define ACE_LACKS_GETEUID
+//#define ACE_LACKS_GETUID
+//#define ACE_LACKS_GETEGID
+//#define ACE_LACKS_GETGID
+
 #ifndef ACE_HAS_EXCEPTIONS
   #define ACE_HAS_EXCEPTIONS
 #endif
@@ -42,8 +56,6 @@
 /***** ANSI defines *****/
 #define ACE_LACKS_TEMPNAM /* believe it or not, this is ANSI C */
 #define ACE_HAS_STRERROR
-
-
 #define ACE_LACKS_SENDMSG
 
 /***** End Stack Defines *****/
@@ -53,6 +65,7 @@
 #if defined(INTEGRITY_VERSION) && (INTEGRITY_VERSION >= 40108)
 #define ACE_HAS_SIG_ATOMIC_T
 #endif /* INTEGRITY_VERSION */
+
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIGACTION
 #define ACE_HAS_SIGINFO_T
@@ -66,7 +79,6 @@
 #define ACE_HAS_DIRENT
 
 #define ACE_HAS_THREADS
-
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_STD
 /***** End Threading Defines *****/
@@ -78,7 +90,19 @@
 /****** SYSV_IPC STUFF *****/
 #define ACE_LACKS_KEY_T
 
+#define ACE_HAS_WCHAR
+#define ACE_LACKS_ISCTYPE
+#define ACE_LACKS_WCSICMP
+#define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_WCSDUP
+#define ACE_LACKS_WCSTOK
+#define ACE_LACKS_ITOW
+#define ACE_LACKS_STRPTIME
+#define ACE_LACKS_SYSTEM
+
 /****** Posix Defines *****/
+#define ACE_LACKS_SUSECONDS_T
+#define ACE_LACKS_USECONDS_T
 #define ACE_LACKS_WAIT
 #define ACE_LACKS_WAITPID
 #define ACE_HAS_POSIX_TIME
@@ -95,26 +119,17 @@
 #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_LACKS_PIPE
 #define ACE_LACKS_RLIMIT
-#define ACE_LACKS_RECVMSG
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_USER
 #define ACE_LACKS_FILE_FCNTL
-#define ACE_LACKS_FCNTL
-#define ACE_LACKS_UMASK
-#define ACE_LACKS_SEEK
 #define ACE_LACKS_SHARED_MEMORY
 #define ACE_LACKS_MSYNC
-#define ACE_LACKS_PID_STUFF
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_IPC_H
 #define ACE_LACKS_SYS_PARAM_H
 #define ACE_LACKS_SYS_MSG_H
-#define ACE_LACKS_UTSNAME_T
-#define ACE_LACKS_UMASK
-#define ACE_LACKS_ISATTY
-#define ACE_LACKS_GETOPT
 #define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_TRUNCATE
 #define ACE_LACKS_PWD_FUNCTIONS
@@ -125,16 +140,9 @@
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CLOCK_SETTIME
-#define ACE_LACKS_THREAD_PROCESS_SCOPING
-#define ACE_LACKS_SETSCHED
 #define ACE_LACKS_STRRECVFD
-#define ACE_LACKS_WRITEV
-#define ACE_LACKS_READV
-/* below refers to fcntl style locking */
-#define ACE_LACKS_FILELOCKS
 
 #define ACE_LACKS_REALPATH
-#define ACE_HAS_CONST_CHAR_SWAB
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
 /***** Not tied to standards AFAIK ****/
@@ -143,17 +151,11 @@
 #define ACE_LACKS_MEMORY_H /* netbsd's just includes string.h */
 #define ACE_LACKS_INTTYPES_H
 #define ACE_LACKS_SYS_RESOURCE_H
-#define ACE_LACKS_SYS_WAIT_H
 #define ACE_LACKS_SEARCH_H
 #define ACE_LACKS_SYS_IPC_H
 #define ACE_LACKS_SYS_SEM_H
-#define ACE_LACKS_PWD_H
 #define ACE_LACKS_STROPTS_H
-#define ACE_LACKS_DLFCN_H
-#define ACE_LACKS_REGEX_H
-#define ACE_LACKS_POLL_H
 #define ACE_LACKS_SYS_SHM_H
-#define ACE_LACKS_TERMIOS_H
 
 /***** STUFF INTEGRITY 4.0.8 APPEARS TO SUPPORT ****/
 /* note, possibly untested with ace */
@@ -167,16 +169,9 @@
 
 typedef void (*__sighandler_t)(int);
 
-extern "C"
-{
-  inline int isatty(int) { return 0; }
-}
-
 #ifdef ppc
 #define ACE_HAS_POWERPC_TIMER
 #endif
-
-typedef union sigval sigval_t;
 
 /* MIKEC Addtions */
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
@@ -209,7 +204,6 @@ extern "C" {
 int unlink(const char *);
 }
 
-#define ACE_LACKS_SETSID
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 #define ACE_LACKS_UNIX_SYSLOG
 #define ACE_LACKS_TELLDIR
@@ -223,4 +217,4 @@ int unlink(const char *);
 // have the right linkage
 #include <unistd.h>
 
-#endif /* ACE_CONFIG_H */
+#endif /* ACE_CONFIG_INTEGRITYSCA_H */

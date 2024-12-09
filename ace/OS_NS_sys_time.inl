@@ -74,15 +74,20 @@ ACE_OS::gettimeofday (void)
   ACE_OSCALL (ACE_OS::clock_gettime (CLOCK_REALTIME, &ts), int, -1, result);
   tv.tv_sec = ts.tv_sec;
   tv.tv_usec = ts.tv_nsec / 1000L;  // timespec has nsec, but timeval has usec
-# else
+# elif !(defined (INTEGRITY) && defined (ACE_LACKS_GETTIMEOFDAY))
   ACE_OSCALL (::gettimeofday (&tv), int, -1, result);
 # endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
 #endif /* 0 */
+  
 #if !defined (ACE_HAS_WINCE)&& !defined (ACE_WIN32)
+# if defined (INTEGRITY) && defined (ACE_LACKS_GETTIMEOFDAY)
+  return -1;
+# else
   if (result == -1)
     return -1;
   else
     return ACE_Time_Value (tv);
+# endif // INTEGRITY && ACE_LACKS_GETTIMEOFDAY
 #endif // !defined (ACE_HAS_WINCE)&& !defined (ACE_WIN32)
 }
 

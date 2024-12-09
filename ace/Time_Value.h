@@ -25,6 +25,8 @@
 # include "ace/os_include/sys/os_time.h"
 #endif /* ACE_HAS_WINCE ACE_PSOS_DIAB_MIPS */
 
+# include "ace/os_include/os_time.h"
+
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
 #define ACE_ONE_SECOND_IN_MSECS 1000L

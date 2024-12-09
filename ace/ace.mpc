@@ -216,6 +216,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Shared_Memory_Pool.cpp
     Shared_Memory_SV.cpp
     Signal.cpp
+    Single_Input_Reactor.cpp
     SOCK.cpp
     SOCK_Acceptor.cpp
     SOCK_CODgram.cpp

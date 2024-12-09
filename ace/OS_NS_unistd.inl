@@ -69,13 +69,13 @@ ACE_INLINE u_int
 ACE_OS::alarm (u_int secs)
 {
   ACE_OS_TRACE ("ACE_OS::alarm");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS) \
+  || (defined INTEGRITY && defined ACE_LACKS_ALARM)
   ACE_UNUSED_ARG (secs);
-
   ACE_NOTSUP_RETURN (0);
 #else
   return ::alarm (secs);
-#endif /* ACE_WIN32 || VXWORKS || CHORUS || ACE_PSOS */
+#endif /* ACE_WIN32 || VXWORKS || CHORUS || ACE_PSOS || (INTEGRITY && ACE_LACKS_ALARM) */
 }
 
 ACE_INLINE int
@@ -87,7 +87,7 @@ ACE_OS::getpagesize (void)
   ::GetSystemInfo (&sys_info);
   return (int) sys_info.dwPageSize;
 #elif defined (_SC_PAGESIZE)
-  return (int) ::sysconf (_SC_PAGESIZE);
+  return (int) ACE_OS::sysconf (_SC_PAGESIZE);
 #elif defined (ACE_HAS_GETPAGESIZE)
   return ::getpagesize ();
 #else
@@ -108,7 +108,6 @@ ACE_OS::allocation_granularity (void)
 #endif /* ACE_WIN32 */
 }
 
-#if !defined (ACE_LACKS_CHDIR)
 ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
@@ -116,7 +115,7 @@ ACE_OS::chdir (const char *path)
 #if defined (ACE_HAS_NONCONST_CHDIR)
   ACE_OSCALL_RETURN (::chdir (const_cast<char *> (path)), int, -1);
 
-#elif defined (ACE_PSOS_LACKS_PHILE)
+#elif defined ACE_PSOS_LACKS_PHILE || defined ACE_LACKS_CHDIR
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
 
@@ -149,12 +148,11 @@ ACE_OS::chdir (const wchar_t *path)
 #endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
-#endif /* ACE_LACKS_CHDIR */
 
 ACE_INLINE int
 ACE_OS::rmdir (const char *path)
 {
-#if defined (ACE_PSOS_LACKS_PHILE)
+#if defined ACE_PSOS_LACKS_PHILE || defined ACE_LACKS_RMDIR
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_PSOS)
@@ -235,6 +233,9 @@ ACE_OS::close (ACE_HANDLE handle)
       return static_cast<int> (-1);
     }
   return static_cast<int> (0);
+#elif defined ACE_LACKS_CLOSE
+  ACE_UNUSED_ARG (handle);
+  ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::close (handle), int, -1);
 #endif /* ACE_WIN32 */
@@ -257,7 +258,7 @@ ACE_OS::dup (ACE_HANDLE handle)
   else
     ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
   /* NOTREACHED */
-#elif defined (VXWORKS) || defined (ACE_PSOS)
+#elif defined (VXWORKS) || defined (ACE_PSOS) || defined (ACE_LACKS_DUP)
   ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WINCE)
@@ -406,7 +407,7 @@ ACE_OS::ftruncate (ACE_HANDLE handle, off_t offset)
   else
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
-#elif defined (ACE_PSOS_LACKS_PHILE)
+#elif defined (ACE_PSOS_LACKS_PHILE) || defined (ACE_LACKS_FTRUNCATE)
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (offset);
   ACE_NOTSUP_RETURN (-1);
@@ -421,7 +422,7 @@ ACE_INLINE char *
 ACE_OS::getcwd (char *buf, size_t size)
 {
   ACE_OS_TRACE ("ACE_OS::getcwd");
-#if defined (ACE_PSOS_LACKS_PHILE)
+#if defined ACE_PSOS_LACKS_PHILE || defined ACE_LACKS_GETCWD
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (size);
   ACE_NOTSUP_RETURN ( (char*)-1);
@@ -778,13 +779,12 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
     ACE_FAIL_RETURN (static_cast<off_t> (-1));
   else
     return result;
-#elif defined (ACE_PSOS)
-# if defined (ACE_PSOS_LACKS_PHILE)
+#elif (defined ACE_PSOS && defined ACE_PSOS_LACKS_PHILE) || defined ACE_LACKS_LSEEK
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (offset);
   ACE_UNUSED_ARG (whence);
   ACE_NOTSUP_RETURN (static_cast<off_t> (-1));
-# else
+#elif defined ACE_PSOS
   unsigned long oldptr, newptr, result;
   // seek to the requested position
   result = ::lseek_f (handle, whence, offset, &oldptr);
@@ -801,7 +801,6 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
       return static_cast<off_t> (-1);
     }
   return static_cast<off_t> (newptr);
-# endif /* defined (ACE_PSOS_LACKS_PHILE */
 #else
   ACE_OSCALL_RETURN (::lseek (handle, offset, whence), off_t, -1);
 #endif /* ACE_WIN32 */
@@ -845,20 +844,18 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
     return (ssize_t) ok_len;
   else
     ACE_FAIL_RETURN (-1);
-#elif defined (ACE_PSOS)
-# if defined (ACE_PSOS_LACKS_PHILE)
+#elif (defined ACE_PSOS && defined ACE_PSOS_LACKS_PHILE) || defined ACE_LACKS_READ
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
-# else
+#elif defined ACE_PSOS
   u_long count;
   u_long result = ::read_f (handle, buf, len, &count);
   if (result != 0)
     return static_cast<ssize_t> (-1);
   else
     return static_cast<ssize_t> (count == len ? count : 0);
-# endif /* defined (ACE_PSOS_LACKS_PHILE */
 #else
 
   int result;
@@ -1085,6 +1082,9 @@ ACE_OS::sleep (u_int seconds)
   wait.tv_sec = seconds;
   wait.tv_usec = 0;
   ACE_OSCALL_RETURN (::select (0, 0, 0, 0, &wait), int, -1);
+#elif defined (ACE_LACKS_SLEEP)
+  ACE_UNUSED_ARG (seconds);
+  ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::sleep (seconds), int, -1);
 #endif /* ACE_WIN32 */
@@ -1107,8 +1107,11 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
   timeval tv_copy = tv;
 #  if defined(ACE_TANDEM_T1248_PTHREADS)
      ACE_OSCALL_RETURN (::spt_select (0, 0, 0, 0, &tv_copy), int, -1);
-#  else
+#  elif ! defined (ACE_LACKS_SELECT)
      ACE_OSCALL_RETURN (::select (0, 0, 0, 0, &tv_copy), int, -1);
+#  else
+     ACE_UNUSED_ARG (tv);
+     ACE_NOTSUP_RETURN (-1);
 #  endif
 # else  /* ! ACE_HAS_NONCONST_SELECT_TIMEVAL */
   const timeval *tvp = tv;
@@ -1154,7 +1157,10 @@ ACE_INLINE long
 ACE_OS::sysconf (int name)
 {
   ACE_OS_TRACE ("ACE_OS::sysconf");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+#if defined (INTEGRITY)
+  if (name == _SC_PAGESIZE) return ACE_PAGE_SIZE;
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (-1);
 #else
@@ -1307,26 +1313,20 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
     return (ssize_t) bytes_written;
   else
     ACE_FAIL_RETURN (-1);
-#elif defined (ACE_PSOS)
-# if defined (ACE_PSOS_LACKS_PHILE)
+#elif (defined ACE_PSOS && defined ACE_PSOS_LACKS_PHILE) || defined ACE_LACKS_WRITE
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (nbyte);
   ACE_NOTSUP_RETURN (-1);
-# else
+#elif defined ACE_PSOS
   if(::write_f (handle, (void *) buf, nbyte) == 0)
     return (ssize_t) nbyte;
   else
     return -1;
-# endif /* defined (ACE_PSOS_LACKS_PHILE) */
-#else
-# if defined (ACE_PSOS)
-  ACE_OSCALL_RETURN (::write_f(handle, (void *) buf, nbyte), ssize_t, -1);
-# elif defined (ACE_HAS_CHARPTR_SOCKOPT)
+#elif defined (ACE_HAS_CHARPTR_SOCKOPT)
   ACE_OSCALL_RETURN (::write (handle, (char *) buf, nbyte), ssize_t, -1);
 # else
   ACE_OSCALL_RETURN (::write (handle, buf, nbyte), ssize_t, -1);
-# endif /* ACE_PSOS */
 #endif /* ACE_WIN32 */
 }
 

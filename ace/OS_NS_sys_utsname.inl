@@ -13,21 +13,26 @@ namespace ACE_OS
   ACE_INLINE int
   uname (ACE_utsname *name)
   {
-#if defined (INTEGRITY)
-    if(!name) {
-      errno = EFAULT;
-      return -1;
-    }
-    strcpy(name->sysname,"INTEGRITY");
-    int status = gethostname(name->nodename,_SYS_NMLN);
-    strcpy(name->release,"4.0");
-    strcpy(name->version,"4.0.9");
-    strcpy(name->machine,"a standard name");
-    return status;
+#if defined (INTEGRITY178B)
+# if defined (ACE_LACKS_GETHOSTNAME)
+  ACE_UNUSED_ARG (name);
+  ACE_NOTSUP_RETURN (-1);
+# else
+  if(!name) {
+    errno = EFAULT;
+    return -1;
+  }
+  strcpy(name->sysname,"INTEGRITY-178B");
+  int status = gethostname(name->nodename, __SYS_NMLN);
+  strcpy(name->release,"minor");
+  strcpy(name->version,"5.0.0");
+  strcpy(name->machine,"a standard name");
+  return status;
+# endif /* ACE_LACKS_GETHOSTNAME */
 #else
     ACE_OS_TRACE ("ACE_OS::uname");
     ACE_OSCALL_RETURN (::uname (name), int, -1);
-#endif
+#endif /* INTEGRITY178B */
   }
-#endif /* ! ACE_WIN32 && ! VXWORKS && ! CHORUS */
+#endif /* ! ACE_WIN32 && ! VXWORKS && ! CHORUS && ! ACE_PSOS */
 } // namespace ACE_OS

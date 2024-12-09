@@ -235,12 +235,6 @@ ACE_OS::mktemp (wchar_t *s)
 
 #endif /* !ACE_LACKS_MKTEMP */
 
-#if defined(INTEGRITY)
-extern "C" {
-  int putenv(char *string);
-}
-#endif
-
 ACE_INLINE int
 ACE_OS::putenv (const char *string)
 {
@@ -485,7 +479,7 @@ ACE_INLINE int
 ACE_OS::system (const ACE_TCHAR *s)
 {
   // ACE_OS_TRACE ("ACE_OS::system");
-#if defined (CHORUS) || defined (ACE_HAS_WINCE) || defined(ACE_PSOS)
+#if defined (CHORUS) || defined (ACE_HAS_WINCE) || defined(ACE_PSOS) || defined (ACE_LACKS_SYSTEM)
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)

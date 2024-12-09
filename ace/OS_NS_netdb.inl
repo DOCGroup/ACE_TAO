@@ -45,7 +45,7 @@ ACE_INLINE struct hostent *
 ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyaddr");
-# if defined (ACE_PSOS)
+# if defined (ACE_PSOS) || defined (ACE_LACKS_GETHOSTBYADDR)
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (length);
   ACE_UNUSED_ARG (type);
@@ -74,7 +74,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
                          int *h_errnop)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyaddr_r");
-# if defined (ACE_PSOS)
+# if defined (ACE_PSOS) || defined (ACE_LACKS_GETHOSTBYADDR_R)
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (length);
   ACE_UNUSED_ARG (type);
@@ -149,7 +149,7 @@ ACE_INLINE struct hostent *
 ACE_OS::gethostbyname (const char *name)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyname");
-# if defined (ACE_PSOS)
+# if defined (ACE_PSOS) || defined (ACE_LACKS_GETHOSTBYNAME)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_NONCONST_GETBY)
@@ -170,7 +170,7 @@ ACE_OS::gethostbyname_r (const char *name,
                          int *h_errnop)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyname_r");
-#if defined (ACE_PSOS)
+#if defined (ACE_PSOS) || defined (ACE_LACKS_GETHOSTBYNAME_R)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
@@ -315,7 +315,8 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
 ACE_INLINE struct protoent *
 ACE_OS::getprotobyname (const char *name)
 {
-#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || (defined (ghs) && defined (__Chorus)) || defined (ACE_PSOS)
+#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || \
+(defined (ghs) && defined (__Chorus)) || defined (ACE_PSOS) || defined (ACE_LACKS_GETPROTOBYNAME)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
@@ -334,7 +335,8 @@ ACE_OS::getprotobyname_r (const char *name,
                           struct protoent *result,
                           ACE_PROTOENT_DATA buffer)
 {
-#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || (defined (ghs) && defined (__Chorus)) || defined (ACE_PSOS)
+#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || \
+(defined (ghs) && defined (__Chorus)) || defined (ACE_PSOS) || defined (ACE_LACKS_GETPROTOBYNAME_R)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
@@ -387,7 +389,8 @@ ACE_OS::getprotobyname_r (const char *name,
 ACE_INLINE struct protoent *
 ACE_OS::getprotobynumber (int proto)
 {
-#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || (defined (ghs) && defined (__Chorus)) || defined (ACE_PSOS)
+#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || \
+(defined (ghs) && defined (__Chorus)) || defined (ACE_PSOS) || defined (ACE_LACKS_GETPROTOBYNUMBER)
   ACE_UNUSED_ARG (proto);
   ACE_NOTSUP_RETURN (0);
 #else
@@ -401,7 +404,8 @@ ACE_OS::getprotobynumber_r (int proto,
                             struct protoent *result,
                             ACE_PROTOENT_DATA buffer)
 {
-#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || (defined (ghs) && defined (__Chorus)) || defined (ACE_PSOS)
+#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || \
+(defined (ghs) && defined (__Chorus)) || defined (ACE_PSOS) || defined (ACE_LACKS_GETPROTOBYNUMBER_R)
   ACE_UNUSED_ARG (proto);
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);

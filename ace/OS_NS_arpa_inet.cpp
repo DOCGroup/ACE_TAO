@@ -49,7 +49,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 }
 
 // All other platforms have this inlined in OS_NS_arpa_inet.inl
-#if defined (ACE_PSOS)
+#if defined (ACE_PSOS) || (defined (INTEGRITY) && defined (ACE_LACKS_INET_NTOA))
 char *
 ACE_OS::inet_ntoa (const struct in_addr addr)
 {
@@ -65,4 +65,4 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
           (ipaddr & 0x000000ff));
   return addrstr;
 }
-#endif /* defined (ACE_PSOS) */
+#endif /* ACE_PSOS || (INTEGRITY && ACE_LACKS_INET_NTOA) */
