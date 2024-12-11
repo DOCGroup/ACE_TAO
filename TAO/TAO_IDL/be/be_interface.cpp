@@ -2234,7 +2234,7 @@ be_interface::copy_ctor_helper (be_interface *derived,
 {
   // We can't call ourselves in a copy constructor, and
   // abstract interfaces don't exist on the skeleton side.
-  if (derived == base || base->is_abstract ())
+  if (derived == base || base->is_abstract () || derived->nmembers () > 0)
     {
       return 0;
     }
