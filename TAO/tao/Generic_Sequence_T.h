@@ -55,7 +55,6 @@
  */
 
 #include "tao/Range_Checking_T.h"
-#include "ace/checked_iterator.h"
 
 #include <algorithm>
 
@@ -155,7 +154,7 @@ public:
     element_traits::copy_range(
         rhs.buffer_,
         rhs.buffer_ + rhs.length_,
-        ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
+        tmp.buffer_);
     swap(tmp);
   }
 
@@ -239,7 +238,7 @@ public:
     element_traits::copy_swap_range(
       buffer_,
       buffer_ + length_,
-      ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
+      tmp.buffer_);
 
     swap(tmp);
   }
