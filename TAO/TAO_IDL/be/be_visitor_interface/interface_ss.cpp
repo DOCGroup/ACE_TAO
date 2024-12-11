@@ -107,13 +107,21 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
-      << " ()" << be_idt_nl;
+      << " ()";
 
-  *os << ": TAO_ServantBase ()" << be_uidt_nl;
+  bool const init_bases = node->nmembers () == 0;
+  if (init_bases)
+    {
+      *os << be_idt_nl << ": TAO_ServantBase ()" << be_uidt_nl;
+    }
+  else
+    {
+      *os << be_nl;
+    }
 
   // Default constructor body.
   *os << "{" << be_idt_nl
-      << "this->optable_ = std::addressof(tao_" << flat_name
+      << "this->optable_ = std::addressof (tao_" << flat_name
       << "_optable);" << be_uidt_nl
       << "}" << be_nl_2;
 
@@ -121,11 +129,15 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name << " ("
       << "const " << local_name_prefix
-      << node_local_name << "& rhs)";
+      << node_local_name << " &"
+      << (init_bases ? "rhs" : "") << ")";
 
-  *os << be_idt_nl
-      << ": TAO_Abstract_ServantBase (rhs)," << be_nl
-      << "  TAO_ServantBase (rhs)";
+  if (init_bases)
+    {
+      *os << be_idt_nl
+          << ": TAO_Abstract_ServantBase (rhs)," << be_nl
+          << "  TAO_ServantBase (rhs)";
+    }
 
   if (this->generate_copy_ctor (node, os) == -1)
     {
