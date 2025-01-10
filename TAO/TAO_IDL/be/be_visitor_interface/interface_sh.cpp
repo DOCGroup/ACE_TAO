@@ -115,7 +115,11 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   // Copy constructor and destructor.
   *os << class_name.c_str () << " (const "
-      << class_name.c_str () << "& rhs);" << be_nl
+      << class_name.c_str () << "& rhs)\n"
+      << "#ifdef ACE_HAS_CPP11" << be_idt_nl
+      << "= default\n"
+      << "#endif" << be_uidt_nl
+      << ";" << be_nl
       << "virtual ~" << class_name.c_str () << " (void);" << be_nl_2;
 
   // _is_a

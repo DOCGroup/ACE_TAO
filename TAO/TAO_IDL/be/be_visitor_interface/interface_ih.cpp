@@ -81,7 +81,12 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
           << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << " (const "
           << be_global->impl_class_prefix () << namebuf
-          << be_global->impl_class_suffix () << "&);" <<be_nl <<be_nl;
+          << be_global->impl_class_suffix () << "&)\n"
+          << "#ifdef ACE_HAS_CPP11" << be_idt_nl
+          << "= default\n"
+          << "#endif" << be_uidt_nl
+          << ";" << be_nl
+          << be_nl;
     }
 
   if (be_global->gen_assign_op ())
