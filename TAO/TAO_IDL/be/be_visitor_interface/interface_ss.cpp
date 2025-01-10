@@ -123,10 +123,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "{" << be_idt_nl
       << "this->optable_ = &tao_" << flat_name
       << "_optable;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}\n\n";
 
   // find if we are at the top scope or inside some module
-  *os << full_skel_name << "::"
+  *os << "#ifndef ACE_HAS_CPP11" << be_nl
+      << full_skel_name << "::"
       << local_name_prefix << node_local_name << " ("
       << "const " << local_name_prefix
       << node_local_name << " &"
@@ -150,7 +151,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << be_uidt_nl
       << "{" << be_nl
-      << "}" << be_nl_2;
+      << "}\n"
+      << "#endif" << be_nl_2;
 
   *os << full_skel_name << "::~"
       << local_name_prefix << node_local_name

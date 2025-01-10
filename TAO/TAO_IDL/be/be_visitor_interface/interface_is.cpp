@@ -64,7 +64,8 @@ be_visitor_interface_is::visit_interface (be_interface *node)
 
   if (be_global->gen_copy_ctor () && !node->is_local ())
     {
-      *os << "//Implementation Skeleton Copy Constructor" << be_nl;
+      *os << "//Implementation Skeleton Copy Constructor\n"
+          << "#ifndef ACE_HAS_CPP11" << be_nl;
 
       *os << be_global->impl_class_prefix () << node->flat_name ()
           << be_global->impl_class_suffix () <<"::"
@@ -105,7 +106,8 @@ be_visitor_interface_is::visit_interface (be_interface *node)
 
       *os << be_uidt_nl
           << "{" << be_nl
-          << "}" << be_nl << be_uidt_nl;
+          << "}\n"
+          << "#endif" << be_nl << be_uidt_nl;
     }
 
   if (be_global->gen_assign_op ())
