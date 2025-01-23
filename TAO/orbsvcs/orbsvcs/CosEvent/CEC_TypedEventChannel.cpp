@@ -200,7 +200,7 @@ TAO_CEC_TypedEventChannel::insert_into_ifr_cache (const char *operation_,
 
   CORBA::String_var operation = CORBA::string_dup (operation_);
 
-  int result = this->interface_description_.bind (operation.in (), parameters_);
+  int const result = this->interface_description_.bind (operation.in (), parameters_);
 
   if (result == 0)
     {
@@ -222,7 +222,7 @@ TAO_CEC_TypedEventChannel::clear_ifr_cache ()
       if (TAO_debug_level >= 10)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("***** Destroying operation %s from ifr cache *****\n"),
+                      ACE_TEXT ("***** Destroying operation %C from ifr cache *****\n"),
                       const_cast<char *> ((*i).ext_id_)));
         }
 
@@ -262,7 +262,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
           if (TAO_debug_level >= 10)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("***** CORBA::InterfaceDef::_narrow failed for interface %s *****\n"),
+                          ACE_TEXT ("***** CORBA::InterfaceDef::_narrow failed for interface %C *****\n"),
                           interface_));
             }
           return -1;
@@ -280,7 +280,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
               for (CORBA::ULong base=0; base<fid->base_interfaces.length(); base++)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("***** Base interface %s found on interface %s *****\n"),
+                              ACE_TEXT ("***** Base interface %C found on interface %C *****\n"),
                               static_cast<char const*>(fid->base_interfaces[base]),
                               interface_ ));
                 }
@@ -292,7 +292,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
               if (TAO_debug_level >= 10)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("***** Operation %s found on interface %s, num params %d *****\n"),
+                              ACE_TEXT ("***** Operation %C found on interface %C, num params %d *****\n"),
                               fid->operations[oper].name.in(),
                               interface_,
                               fid->operations[oper].parameters.length() ));
@@ -322,7 +322,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
                   if (TAO_debug_level >= 10)
                     {
                       ORBSVCS_DEBUG ((LM_DEBUG,
-                                  ACE_TEXT ("***** Parameter %s found on operation %s *****\n"),
+                                  ACE_TEXT ("***** Parameter %C found on operation %C *****\n"),
                                   oper_params->parameters_[param].name_.in(),
                                   fid->operations[oper].name.in() ));
                     }
@@ -331,7 +331,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
               if (TAO_debug_level >= 10)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("***** Adding operation %s with %d parameters to the IFR cache *****\n"),
+                              ACE_TEXT ("***** Adding operation %C with %d parameters to the IFR cache *****\n"),
                               fid->operations[oper].name.in(),
                               oper_params->num_params_ ));
                 }
@@ -543,8 +543,7 @@ TAO_CEC_TypedEventChannel::destroy ()
 }
 
 CORBA::Policy_ptr
-TAO_CEC_TypedEventChannel::create_roundtrip_timeout_policy
-(const ACE_Time_Value &timeout)
+TAO_CEC_TypedEventChannel::create_roundtrip_timeout_policy (const ACE_Time_Value &timeout)
 {
   return this->factory_->create_roundtrip_timeout_policy (timeout);
 }
