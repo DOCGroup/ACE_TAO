@@ -88,12 +88,11 @@ namespace
       : orb_ (CORBA::ORB::_duplicate (orb)) {}
     CORBA::ORB_var orb_;
 
-    virtual int handle_timeout (const ACE_Time_Value&, const void*)
+    int handle_timeout (const ACE_Time_Value&, const void*) override
     {
       orb_->shutdown (true);
       return 0;
     }
-
   };
 }
 
