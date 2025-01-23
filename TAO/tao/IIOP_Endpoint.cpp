@@ -400,7 +400,7 @@ TAO_IIOP_Endpoint_get_ip_interfaces (ACE_Vector<ACE_CString> &local_ips)
 {
   ACE_INET_Addr* tmp = nullptr;
   size_t cnt = 0u;
-  int err = ACE::get_ip_interfaces (cnt, tmp);
+  int const err = ACE::get_ip_interfaces (cnt, tmp);
   if (err != 0)
     return;
 #if defined (ACE_HAS_IPV6)
