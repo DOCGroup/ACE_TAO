@@ -163,6 +163,12 @@ TAO_MProfile::forward_from ()
   return this->forward_from_;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_MProfile::has_next () const
+{
+  return !(last_ == 0 || current_ == last_);
+}
+
 ACE_INLINE CORBA::ULong
 TAO_MProfile::profile_count () const
 {

@@ -114,6 +114,11 @@ public:
   /// Returns the index for the current profile.
   TAO_PHandle get_current_handle () const;
 
+  /// Check ahead to see if there are more profiles to go without incrementing
+  /// the pointer.
+  /// @return true if there are further profiles, false otherwise.
+  CORBA::Boolean has_next () const;
+
   /// Returns the number of profiles stored in the list (last_+1).
   CORBA::ULong profile_count () const;
 
