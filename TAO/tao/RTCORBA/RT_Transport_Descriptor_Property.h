@@ -48,9 +48,10 @@ protected:
   TAO_RT_Transport_Descriptor_Property* next_;
 
 private:
-  // = Disallow copying and assignment.
-  TAO_RT_Transport_Descriptor_Property (const TAO_RT_Transport_Descriptor_Property &);
-  TAO_RT_Transport_Descriptor_Property & operator= (const TAO_RT_Transport_Descriptor_Property &);
+  TAO_RT_Transport_Descriptor_Property (const TAO_RT_Transport_Descriptor_Property &) = delete;
+  TAO_RT_Transport_Descriptor_Property (TAO_RT_Transport_Descriptor_Property &&) = delete;
+  TAO_RT_Transport_Descriptor_Property & operator= (const TAO_RT_Transport_Descriptor_Property &) = delete;
+  TAO_RT_Transport_Descriptor_Property & operator= (TAO_RT_Transport_Descriptor_Property &&) = delete;
 };
 
 /**
