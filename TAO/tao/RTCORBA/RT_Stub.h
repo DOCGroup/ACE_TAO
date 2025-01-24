@@ -117,9 +117,10 @@ private:
   bool are_policies_parsed_;
 
 private:
-  // = Disallow copying and assignment.
-  TAO_RT_Stub (const TAO_RT_Stub &);
-  TAO_RT_Stub &operator = (const TAO_RT_Stub &);
+  TAO_RT_Stub (const TAO_RT_Stub &) = delete;
+  TAO_RT_Stub (TAO_RT_Stub &&) = delete;
+  TAO_RT_Stub &operator = (const TAO_RT_Stub &) = delete;
+  TAO_RT_Stub &operator = (TAO_RT_Stub &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
