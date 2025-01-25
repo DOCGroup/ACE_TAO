@@ -87,9 +87,10 @@ private:
   CORBA::Boolean are_policies_parsed_;
 
 private:
-  // = Disallow copying and assignment.
-  TAO_ZIOP_Stub (const TAO_ZIOP_Stub &);
-  TAO_ZIOP_Stub &operator = (const TAO_ZIOP_Stub &);
+  TAO_ZIOP_Stub (const TAO_ZIOP_Stub &) = delete;
+  TAO_ZIOP_Stub (TAO_ZIOP_Stub &&) = delete;
+  TAO_ZIOP_Stub &operator = (const TAO_ZIOP_Stub &) = delete;
+  TAO_ZIOP_Stub &operator = (TAO_ZIOP_Stub &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
