@@ -51,7 +51,7 @@ public:
   TAO_CEC_ConsumerControl ();
 
   /// Destructor
-  virtual ~TAO_CEC_ConsumerControl ();
+  virtual ~TAO_CEC_ConsumerControl () = default;
 
   /// Activate any internal threads or timers used to poll the state of
   /// the consumers

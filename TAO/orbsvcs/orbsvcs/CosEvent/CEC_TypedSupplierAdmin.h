@@ -39,7 +39,7 @@ public:
    TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChannel* event_channel);
 
   /// Destructor
-  virtual ~TAO_CEC_TypedSupplierAdmin ();
+  virtual ~TAO_CEC_TypedSupplierAdmin () = default;
 
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_TypedProxyPushConsumer> *worker);
