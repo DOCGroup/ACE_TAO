@@ -43,10 +43,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_Default_Factory::~TAO_CEC_Default_Factory ()
 {
-    if (orbid_dupped_ != 0)
-      {
-        ACE_OS::free (orbid_);
-      }
+  if (orbid_dupped_ != 0)
+    {
+      ACE_OS::free (orbid_);
+    }
 }
 
 int

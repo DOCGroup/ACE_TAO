@@ -24,11 +24,9 @@ TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer
     refcount_ (1),
     connected_ (0)
 {
-  this->lock_ =
-    this->typed_event_channel_->create_consumer_lock ();
+  this->lock_ = this->typed_event_channel_->create_consumer_lock ();
 
-  this->default_POA_ =
-    this->typed_event_channel_->typed_consumer_poa ();
+  this->default_POA_ = this->typed_event_channel_->typed_consumer_poa ();
 
   this->typed_event_channel_->get_servant_retry_map ().bind (this, 0);
 
