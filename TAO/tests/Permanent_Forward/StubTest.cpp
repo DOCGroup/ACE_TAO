@@ -36,7 +36,7 @@ is_endpoint (TAO_Profile *profile, const char *host, unsigned short port)
     const char     * endpoint_host = iiop_endpoint->host();
     unsigned short   endpoint_port = iiop_endpoint->port();
 
-    bool retval =
+    bool const retval =
       ACE_OS::strcmp (endpoint_host, host)==0
       && endpoint_port == port;
 
@@ -58,7 +58,7 @@ equal_endpoint (TAO_Profile *profile, TAO_Profile *other)
     const char     * other_endpoint_host = other_iiop_endpoint->host();
     unsigned short   other_endpoint_port = other_iiop_endpoint->port();
 
-    bool retval =
+    bool const retval =
       ACE_OS::strcmp (endpoint_host, other_endpoint_host)==0
       && endpoint_port == other_endpoint_port;
 
@@ -112,7 +112,7 @@ test_forward_permanent (CORBA::ORB_ptr orb)
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
-  profile = stub1->next_profile ();
+  profile = stub1->profile_in_use ();
 
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 4444));
 
@@ -165,7 +165,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
-  profile = stub1->next_profile ();
+  profile = stub1->profile_in_use ();
 
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 2222));
 
@@ -174,7 +174,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
-  profile = stub1->next_profile ();
+  profile = stub1->profile_in_use ();
 
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 3333));
 
@@ -186,7 +186,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
-  profile = stub1->next_profile ();
+  profile = stub1->profile_in_use ();
 
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 4444));
 
@@ -203,7 +203,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
-  profile = stub1->next_profile ();
+  profile = stub1->profile_in_use ();
 
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 2222));
 
@@ -212,7 +212,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
-  profile = stub1->next_profile ();
+  profile = stub1->profile_in_use ();
 
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 3333));
 
@@ -224,7 +224,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
-  profile = stub1->next_profile ();
+  profile = stub1->profile_in_use ();
 
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 5555));
 
@@ -270,7 +270,7 @@ test_forward (CORBA::ORB_ptr orb)
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
-  profile = stub1->next_profile ();
+  profile = stub1->profile_in_use ();
 
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 2222));
 
@@ -280,7 +280,7 @@ test_forward (CORBA::ORB_ptr orb)
 
   FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
-  profile = stub1->next_profile ();
+  profile = stub1->profile_in_use ();
 
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.2", 3333));
 
