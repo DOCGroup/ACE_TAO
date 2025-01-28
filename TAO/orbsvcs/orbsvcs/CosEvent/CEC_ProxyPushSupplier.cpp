@@ -471,7 +471,7 @@ TAO_CEC_ProxyPushSupplier::apply_policy (CosEventComm::PushConsumer_ptr pre)
   this->nopolicy_consumer_ = CosEventComm::PushConsumer::_duplicate (pre);
   CORBA::Object_var post_obj = apply_policy_obj (pre);
   CosEventComm::PushConsumer_var post =
-    CosEventComm::PushConsumer::_unchecked_narrow (post_obj.in ());
+    CosEventComm::PushConsumer::_narrow (post_obj.in ());
   return post._retn ();
 }
 
