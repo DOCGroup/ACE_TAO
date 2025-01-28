@@ -329,9 +329,9 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                 }
               else
                 {
-                  ACE_ERROR ((LM_ERROR,
+                  ORBSVCS_ERROR ((LM_ERROR,
                               "CEC_Default_Factory - "
-                              "unsupported true/false for wait_for_shutdown_thread_completion option <%s>\n",
+                              "unsupported true/false for CECShutdownWaitCompletion option <%s>\n",
                               opt));
                 }
               arg_shifter.consume_arg ();
