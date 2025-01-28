@@ -7,4 +7,7 @@
 #define ACE_MICRO_VERSION 2
 #define ACE_VERSION "8.0.2"
 #define ACE_VERSION_CODE 0x80002
+#if !defined (ACE_PATCH)
+# define ACE_PATCH ""
+#endif
 #define ACE_MAKE_VERSION_CODE(a,b,c) (((a) << 16) + ((b) << 8) + (c))

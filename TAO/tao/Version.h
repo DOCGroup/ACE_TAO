@@ -7,4 +7,7 @@
 #define TAO_MICRO_VERSION 2
 #define TAO_VERSION "4.0.2"
 #define TAO_VERSION_CODE 0x40002
+#if !defined (TAO_PATCH)
+# define TAO_PATCH ""
+#endif
 #define TAO_MAKE_VERSION_CODE(a,b,c) (((a) << 16) + ((b) << 8) + (c))
