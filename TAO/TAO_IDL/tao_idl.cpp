@@ -231,6 +231,14 @@ DRV_drive (const char *s)
   // and checked below.
   (void) FE_yyparse ();
 
+  if (!idl_global->filename ())
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error - %C: %C: No filename info found. ")
+        ACE_TEXT ("Preprocessor output was probably empty\n"),
+        idl_global->prog_name (), s));
+      throw Bailout ();
+    }
+
   // This option creates a single IDL file that includes all
   // input files. The backend outputs their names individually.
   if (!idl_global->multi_file_input () &&
@@ -455,7 +463,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  int const retval = idl_global->err_count ();
+  int const retval = idl_global->err_count () == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
   DRV_cleanup ();
 
   return retval;

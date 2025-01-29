@@ -1320,7 +1320,7 @@ Using the Cygnus tools, this approach works:
 # include "ace/config-vxworks5.x.h"
 #endif
 </pre><p>
-   </p></li><li>Set your <code>ACE_ROOT</code>, <code>CPP_LOCATION</code>,
+   </p></li><li>Set your <code>ACE_ROOT</code>, <code>TAO_IDL_PREPROCESSOR</code>,
      <code>WIND_BASE</code>, and <code>WIND_HOST_TYPE</code> environment
      variables.<p>
    </p></li><li>Build for NT, then build for VxWorks.<p>
@@ -1370,7 +1370,7 @@ on Windows NT hosts:
       SHELL=/bin/sh.exe
       TERM=pcbios
       TAO_ROOT=/ace/ACE_wrappers.vxworks/TAO
-      CPP_LOCATION=/Program Files/DevStudio/VC/bin/CL.EXE
+      TAO_IDL_PREPROCESSOR=/Program Files/DevStudio/VC/bin/CL.EXE
       GCC_EXEC_PREFIX=/tornado/host/x86-win32/lib/gcc-lib/
       WIND_HOST_TYPE=x86-win32
       ACE_ROOT=/ace/ACE_wrappers.vxworks
@@ -1426,13 +1426,13 @@ on Windows NT hosts:
       <code>ACE_wrappers/apps/gperf/src</code>.<p>
 
   </p></li><li>Build $TAO_ROOT/tao
-      <pre>      CPP_LOCATION=/Program Files/DevStudio/VC/bin/CL.exe
+      <pre>      TAO_IDL_PREPROCESSOR=/Program Files/DevStudio/VC/bin/CL.exe
       cd $TAO_ROOT/tao
       /gnuwin32/b18/H-i386-cygwin32/bin/make
       </pre>
 
   </li><li>Build orbsvcs.
-      <pre>      CPP_LOCATION=/Program Files/DevStudio/VC/bin/CL.exe
+      <pre>      TAO_IDL_PREPROCESSOR=/Program Files/DevStudio/VC/bin/CL.exe
       cd $TAO_ROOT/orbsvcs/orbsvcs
       /gnuwin32/b18/H-i386-cygwin32/bin/make
       </pre>
@@ -1487,7 +1487,7 @@ WIND_BASE=/tornado
 SHELL=/bin/sh.exe
 TERM=pcbios
 TAO_ROOT=/Corba/ACE_wrapper/Tao
-CPP_LOCATION=/Program Files/Microsoft Visual Studio/VC98/Bin/CL.exe
+TAO_IDL_PREPROCESSOR=/Program Files/Microsoft Visual Studio/VC98/Bin/CL.exe
 GCC_EXEC_PREFIX=/tornado/host/x86-win32/lib/gcc-lib/
 WIND_HOST_TYPE=x86-win32
 PERL_PATH=/perl/bin/perl.exe
