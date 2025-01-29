@@ -13,6 +13,7 @@
 
 #include /**/ "ace/pre.h"
 #include "SSL_Context.h"
+#include <list>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -379,12 +380,13 @@ protected:
   /// External,i.e user  handler
   ACE_Handler * ext_handler_;
 
+private:
   /// External, i.e. read result faked for user
-  ACE_SSL_Asynch_Read_Stream_Result *  ext_read_result_ ;
+  std::list<ACE_SSL_Asynch_Read_Stream_Result*>  ext_read_result_queue_;
 
   /// External, i.e. write result faked for user
-  ACE_SSL_Asynch_Write_Stream_Result * ext_write_result_ ;
-
+  std::list<ACE_SSL_Asynch_Write_Stream_Result*> ext_write_result_queue_;
+protected:
   /// Stream state/flags
   enum Stream_Flag
     {
