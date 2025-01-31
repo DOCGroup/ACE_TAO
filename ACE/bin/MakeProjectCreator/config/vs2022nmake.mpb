@@ -5,6 +5,12 @@ feature (nmake_avoid_Wp64) {
   }
 }
 
+feature (nmake_avoid_Gm) {
+  specific(nmake) {
+    compile_flags -= /Gm
+  }
+}
+
 feature(vc_avoid_hides_local_declaration) {
   specific(nmake) {
     DisableSpecificWarnings += 4456
@@ -20,5 +26,11 @@ feature(vc_avoid_hides_global_declaration) {
 feature(vc_avoid_hides_class_member) {
   specific(nmake) {
     DisableSpecificWarnings += 4458
+  }
+}
+
+feature(ace_languagestandard2017) {
+  specific(nmake) {
+    compile_flags += /std:c++17
   }
 }

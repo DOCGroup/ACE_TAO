@@ -451,7 +451,7 @@ TAO_Literal_Constraint::operator CORBA::ULongLong () const
   else if (this->type_ == TAO_DOUBLE)
     return_value =
       (this->op_.double_ > 0) ?
-      ((this->op_.double_ > ACE_UINT64_MAX) ?
+      ((this->op_.double_ > static_cast<CORBA::Double>(ACE_UINT64_MAX)) ?
        ACE_UINT64_MAX :
        static_cast<CORBA::ULongLong> (this->op_.double_)) : 0;
 
@@ -471,7 +471,7 @@ TAO_Literal_Constraint::operator CORBA::LongLong () const
   else if (this->type_ == TAO_DOUBLE)
     return_value  =
       (this->op_.double_ > 0) ?
-      ((this->op_.double_ > ACE_INT64_MAX) ?
+      ((this->op_.double_ > static_cast<CORBA::Double>(ACE_INT64_MAX)) ?
        ACE_INT64_MAX :
        static_cast<CORBA::LongLong> (this->op_.double_)) :
     ((this->op_.double_ < ACE_INT64_MIN) ?

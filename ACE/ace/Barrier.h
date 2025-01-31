@@ -45,6 +45,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #else /* ACE_HAS_THREADS */
 
+#include <atomic>
 #include "ace/Condition_Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -63,7 +64,7 @@ struct ACE_Export ACE_Sub_Barrier
   ACE_Condition_Thread_Mutex barrier_finished_;
 
   /// Number of threads that are still running.
-  int running_threads_;
+  std::atomic<int> running_threads_;
 
   /// Dump the state of an object.
   void dump () const;

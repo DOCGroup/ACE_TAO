@@ -12,10 +12,11 @@ endif
 ifndef CXX_VERSION
   CXX_VERSION := $(shell $(CXX) -dumpversion)
 endif
-ifeq (cmd,$(findstring cmd,$(SHELL)))
 CXX_MAJOR_VERSION := $(firstword $(subst ., ,$(CXX_VERSION)))
-else
-CXX_MAJOR_VERSION := $(shell $(CXX) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
+
+# clang 16 and newer default to C++17
+ifeq ($(CXX_MAJOR_VERSION),$(filter $(CXX_MAJOR_VERSION),4 5 6 7 8 9 10 11 12 13 14 15))
+  c++std ?= c++17
 endif
 
 CCFLAGS += $(CFLAGS)
@@ -35,8 +36,12 @@ ifeq ($(optimize),0)
   CPPFLAGS += -O0
 endif
 
-ifeq ($(c++14),1)
-  CCFLAGS += -std=c++14
+ifneq ($(c++std),)
+  CCFLAGS += -std=$(c++std)
+else ifeq ($(c++20),1)
+  CCFLAGS += -std=c++20
+else ifeq ($(c++17),1)
+  CCFLAGS += -std=c++17
 endif
 
 ifeq ($(no_deprecated),1)

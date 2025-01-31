@@ -71,9 +71,9 @@ namespace TAO
   {
     TAO::ORB_Countdown_Time countdown (max_wait_time);
 
-    TAO_Synch_Reply_Dispatcher *rd_p = nullptr;
-    ACE_NEW_NORETURN (rd_p, TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
-                                          this->details_.reply_service_info ()));
+    TAO_Synch_Reply_Dispatcher *rd_p =
+      new (std::nothrow) TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
+                                                     this->details_.reply_service_info ());
     if (!rd_p)
       {
         throw ::CORBA::NO_MEMORY ();

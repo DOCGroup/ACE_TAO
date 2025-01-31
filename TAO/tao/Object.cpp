@@ -969,10 +969,9 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
           return false;
         }
 
-      ACE_NEW_NORETURN (x,
-                        CORBA::Object (ior, orb_core));
+      x = new (std::nothrow) CORBA::Object (ior, orb_core);
 
-      if (x == nullptr)
+      if (!x)
         {
           // Can't allocate a CORBA Object so delete first the
           // memory we already allocated before we return

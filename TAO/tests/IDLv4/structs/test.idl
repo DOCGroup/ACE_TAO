@@ -1,0 +1,17 @@
+struct EmptyStruct {
+};
+
+struct StructWithEmptyStruct {
+  EmptyStruct empty;
+};
+
+#include __TAO_IDL_FEATURES
+#if TAO_IDL_HAS_STRUCT_INHERITANCE
+struct Derived1 : EmptyStruct {
+  int16 member1;
+};
+
+struct Derived2 : Derived1 {
+  int32 member2;
+};
+#endif
