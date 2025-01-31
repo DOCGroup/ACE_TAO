@@ -254,7 +254,7 @@ ACE_Auto_String_Free::operator= (ACE_Auto_String_Free& rhs)
 ACE_INLINE
 ACE_Auto_String_Free::~ACE_Auto_String_Free ()
 {
-  this->reset (0);
+  this->reset (nullptr);
 }
 
 ACE_INLINE char*
