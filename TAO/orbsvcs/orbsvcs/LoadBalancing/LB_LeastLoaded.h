@@ -75,7 +75,6 @@ class TAO_LB_LeastLoaded
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-
   /// Constructor.
   TAO_LB_LeastLoaded (PortableServer::POA_ptr poa);
 
@@ -85,7 +84,7 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  virtual char * name (void);
+  virtual char * name ();
 
   virtual CosLoadBalancing::Properties * get_properties ();
 
@@ -107,16 +106,14 @@ public:
   //@}
 
   /// Returns the default POA for this servant.
-  virtual PortableServer::POA_ptr _default_POA (
-    );
+  virtual PortableServer::POA_ptr _default_POA ();
 
   /// Initialize the LeastLoaded instance with the given properties.
   void init (const PortableGroup::Properties & props);
 
 protected:
-
   /// Destructor.
-  ~TAO_LB_LeastLoaded (void);
+  ~TAO_LB_LeastLoaded ();
 
   /// Retrieve the least loaded location from the given list of
   /// locations.
@@ -141,7 +138,6 @@ protected:
                                CORBA::Float & value);
 
 private:
-
   /// This servant's default POA.
   PortableServer::POA_var poa_;
 
@@ -161,7 +157,6 @@ private:
    * Cached LeastLoaded load balancing strategy property values.
    */
   //@{
-
   /// The critical load threshold.
   /**
    * Load rebalancing/shedding will occur if loads at a given location
@@ -193,7 +188,6 @@ private:
   CORBA::Float per_balance_load_;
 
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

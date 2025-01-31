@@ -13,12 +13,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_ORB_Loader::TAO_RT_ORB_Loader (void)
+TAO_RT_ORB_Loader::TAO_RT_ORB_Loader ()
   : initialized_ (false)
 {
 }
 
-TAO_RT_ORB_Loader::~TAO_RT_ORB_Loader (void)
+TAO_RT_ORB_Loader::~TAO_RT_ORB_Loader ()
 {
 }
 
@@ -147,7 +147,7 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
                                    (ACE_TEXT("-RTORBDynamicThreadIdleTimeout"))))
         {
           const ACE_TCHAR *name = current_arg;
-          int timeout = ACE_OS::atoi (name);
+          int const timeout = ACE_OS::atoi (name);
           dynamic_thread_time = ACE_Time_Value (0, timeout);
           lifespan = TAO_RT_ORBInitializer::TAO_RTCORBA_DT_IDLE;
           arg_shifter.consume_arg ();
@@ -156,7 +156,7 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
                                    (ACE_TEXT("-RTORBDynamicThreadRunTime"))))
         {
           const ACE_TCHAR *name = current_arg;
-          int timeout = ACE_OS::atoi (name);
+          int const timeout = ACE_OS::atoi (name);
           dynamic_thread_time = ACE_Time_Value (0, timeout);
           lifespan = TAO_RT_ORBInitializer::TAO_RTCORBA_DT_FIXED;
           arg_shifter.consume_arg ();

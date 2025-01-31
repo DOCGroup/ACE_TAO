@@ -12,14 +12,12 @@
 #define TAO_THREAD_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/Policy_Strategy.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ThreadPolicyC.h"
-#include "tao/orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,18 +26,14 @@ namespace TAO
   namespace Portable_Server
   {
     class ThreadStrategy
-      : public Policy_Strategy
     {
     public:
+      ThreadStrategy () = default;
+      virtual ~ThreadStrategy () = default;
+
       virtual int enter () = 0;
 
       virtual int exit () = 0;
-
-      virtual void strategy_init (TAO_Root_POA *poa);
-
-      virtual void strategy_cleanup(void);
-
-      virtual ::PortableServer::ThreadPolicyValue type() const = 0;
     };
   }
 }

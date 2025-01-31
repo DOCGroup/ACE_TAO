@@ -7,7 +7,7 @@
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
 
 extern "C" ACE_Proper_Export_Flag ACE_XML_Svc_Conf *
-_ACEXML_create_XML_Svc_Conf_Object (void)
+_ACEXML_create_XML_Svc_Conf_Object ()
 {
   ACE_XML_Svc_Conf *retp = 0;
 

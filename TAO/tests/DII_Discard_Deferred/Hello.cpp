@@ -8,7 +8,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 char *
-Hello::get_string (void)
+Hello::get_string ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Hello::get_string called\n"));
   ACE_OS::sleep (2);
@@ -17,7 +17,7 @@ Hello::get_string (void)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

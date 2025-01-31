@@ -49,12 +49,11 @@ class TAO_RTCORBA_Export TAO_Continuous_Priority_Mapping
   : public TAO_Priority_Mapping
 {
 public:
-
   /// Constructor.
   TAO_Continuous_Priority_Mapping (int policy = ACE_SCHED_OTHER);
 
   /// Destructor.
-  ~TAO_Continuous_Priority_Mapping (void);
+  ~TAO_Continuous_Priority_Mapping ();
 
   /// Convert CORBA priority to native priority.
   CORBA::Boolean to_native (RTCORBA::Priority corba_priority,

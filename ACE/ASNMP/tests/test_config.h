@@ -59,7 +59,7 @@
 #define ACE_NEW_THREAD \
 do {\
   ACE_LOG_MSG->msg_ostream (ace_file_stream.output_file ()); \
-  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER ); \
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER); \
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM); \
 } while (0)
 
@@ -97,11 +97,11 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 class ACE_Test_Output
 {
 public:
-  ACE_Test_Output (void);
-  ~ACE_Test_Output (void);
+  ACE_Test_Output ();
+  ~ACE_Test_Output ();
   int set_output (const ACE_TCHAR *filename, int append = 0);
-  ofstream *output_file (void);
-  void close (void);
+  ofstream *output_file ();
+  void close ();
 
 private:
   ofstream output_file_;
@@ -109,11 +109,11 @@ private:
 
 static ACE_Test_Output ace_file_stream;
 
-ACE_Test_Output::ACE_Test_Output (void)
+ACE_Test_Output::ACE_Test_Output ()
 {
 }
 
-ACE_Test_Output::~ACE_Test_Output (void)
+ACE_Test_Output::~ACE_Test_Output ()
 {
 }
 
@@ -133,20 +133,20 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
     return -1;
 
   ACE_LOG_MSG->msg_ostream (ace_file_stream.output_file ());
-  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
   return 0;
 }
 
 ofstream *
-ACE_Test_Output::output_file (void)
+ACE_Test_Output::output_file ()
 {
   return &this->output_file_;
 }
 
 void
-ACE_Test_Output::close (void)
+ACE_Test_Output::close ()
 {
   this->output_file_.flush ();
   this->output_file_.close ();

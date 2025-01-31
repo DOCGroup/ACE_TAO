@@ -15,7 +15,6 @@
 #include "tao/debug.h"
 
 
-
 AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
      number_ ((CORBA::Long) 931232),
@@ -47,16 +46,15 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
 }
 
 
-
 void
-AMI_Test_i::shutdown (void)
+AMI_Test_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 
 CORBA::Long
-AMI_Test_i::yadda (void)
+AMI_Test_i::yadda ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:(%P:%t):AMI_Test_i::(get_)yadda\n"));

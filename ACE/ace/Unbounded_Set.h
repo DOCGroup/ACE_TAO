@@ -60,7 +60,6 @@ class ACE_Unbounded_Set_Const_Iterator : public
   ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T> >
 {
 public:
-
   typedef ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T> > base_type;
 
   ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set<T> &s,
@@ -78,7 +77,7 @@ class ACE_Unbounded_Set : public
   ACE_Unbounded_Set_Ex<T, ACE_Unbounded_Set_Default_Comparator<T> >
 {
 public:
-  ACE_Unbounded_Set (ACE_Allocator *alloc = 0);
+  ACE_Unbounded_Set (ACE_Allocator *alloc = nullptr);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -87,13 +86,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Unbounded_Set.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Unbounded_Set.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Unbounded_Set.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_UNBOUNDED_SET_H */

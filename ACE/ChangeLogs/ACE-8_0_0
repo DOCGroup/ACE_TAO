@@ -1,0 +1,349 @@
+commit e8fa636e51f9675c60b025ac73652a63babb5ab1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 30 13:32:30 2024 +0200
+
+    Define ACE_DEPRECATED as [[deprecated]]
+        * ACE/ace/config-g++-common.h:
+        * ACE/ace/config-macros.h:
+
+commit fe15e4e0a2d096ba17c03542da026058a8ac950c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 30 08:59:33 2024 +0200
+
+    Next release will be ACE8 with TAO4
+    
+        * ACE/NEWS:
+        * ACE/bin/make_release.py:
+        * TAO/NEWS:
+
+commit f4f1bf61a8f99a113f8540e73c845d87ee9e12e0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 26 12:41:30 2024 +0200
+
+    Simplify handling of platform_libs for bmake
+    
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+
+commit 3e1c169728f701f875b3204b04f609cbf9ffe05f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 26 09:32:49 2024 +0200
+
+    Introduce platform_libs which is used for bmake
+    
+    Don't add iphlpapi to lit_libs for any compiler on windows, with bmake we don't need that
+
+commit d71bd20a9796177b10fabeeffd98ba3d383ae06f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 25 14:23:34 2024 +0200
+
+    Document change
+    
+        * ACE/NEWS:
+
+commit b8016f70eff874a90b4f18900dd5cdd1e74cb545
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 25 14:04:07 2024 +0200
+
+    Remove Auto_Ptr.h, with C++17 auto_ptr is not available anymore
+    
+        * ACE/ace/Auto_Ptr.cpp:
+        * ACE/ace/Auto_Ptr.h:
+        * ACE/ace/Auto_Ptr.inl:
+          Deleted.
+    
+        * ACE/ace/ace.mpc:
+        * ACE/ace/ace_for_tao.mpc:
+        * ACE/tests/Logging_Strategy_Test.cpp:
+
+commit 9abf05ca86eae5f0da11e7b518d8e6a3b40a3cc5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 24 11:26:09 2024 +0200
+
+    Add _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING to the default compiler flags to suppress the stdext::checked_array_iterator deprecation warnings at this moment
+    
+        * ACE/bin/MakeProjectCreator/config/vc_warnings.mpb:
+
+commit 268b116929816ef35d0664ae4ed4a22e03581bc0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 24 10:43:07 2024 +0200
+
+    Header fix
+    
+        * ACE/NEWS:
+
+commit 61c0befaa0139e9ebf80196c5644191a6fd70508
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 24 08:28:44 2024 +0200
+
+    Next version will be a minor one
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit a2fec2210c135d4e9a205ce96e89b57f9be74b4e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 24 08:27:56 2024 +0200
+
+    Simplified c++std checks
+    
+        * ACE/include/makeinclude/platform_gcc_clang_common.GNU:
+
+commit d5a360e8e02d60bbe5bf993341593a479e708a8a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 24 08:25:29 2024 +0200
+
+    Update ACE/include/makeinclude/platform_linux_clang.GNU
+    
+    Co-authored-by: Fred Hornsey <fred@hornsey.us>
+
+commit 5a4e5ec786755a19b36fdd09ffac72561a77497e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 23 14:34:33 2024 +0200
+
+    Document C++17 requirement
+    
+        * ACE/NEWS:
+        * ACE/ace/checked_iterator.h:
+
+commit ed0b72b1ef533ea54276166e90cd615d10bddd54
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 23 12:28:40 2024 +0200
+
+    Add version 4/5
+    
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+
+commit e4fd6ae1e2a7c9197c5f1ce271905a325634a36d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 23 11:39:02 2024 +0200
+
+    Cleanup
+    
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+
+commit 87905036e334c90eadb3a16a5718f7d4a4dc6428
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 23 11:35:13 2024 +0200
+
+    Rework compiler detection
+    
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+
+commit e78b80f1bd2ac4c9750d9d71eb92a51c4bb9301b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 23 10:22:46 2024 +0200
+
+    Fixed error
+    
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+
+commit 1d9323c0e07b0c54ed840a02fb54185e4956f23d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 23 10:19:49 2024 +0200
+
+    Rename and add cmake override
+    
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+        * ACE/bin/MakeProjectCreator/config/vs2017nmake.mpb:
+        * ACE/bin/MakeProjectCreator/config/vs2019nmake.mpb:
+        * ACE/bin/MakeProjectCreator/config/vs2022nmake.mpb:
+
+commit 5efddd5a61db295b7878f4d9d4e00a672333667b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 23 09:48:33 2024 +0200
+
+    Changes for clang default C++ compiler level
+    
+        * .github/workflows/linux.yml:
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+        * ACE/include/makeinclude/platform_macosx_common.GNU:
+
+commit 0655b61de5e25e42391061458d67e489377b38dc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 23 09:39:33 2024 +0200
+
+    Add compiler support for c++17/c++20
+    
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+        * ACE/include/makeinclude/platform_macosx_common.GNU:
+
+commit d6bc831954c272001538a1f9c5b4f45aeeb536a8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 23 09:34:26 2024 +0200
+
+    Language standard fixes
+    
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+        * ACE/bin/MakeProjectCreator/config/vs2017nmake.mpb:
+        * ACE/bin/MakeProjectCreator/config/vs2019nmake.mpb:
+        * ACE/bin/MakeProjectCreator/config/vs2022nmake.mpb:
+
+commit ccfdcddc366ecee7a5a506408f79c9ccfdaafca3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 23 09:29:57 2024 +0200
+
+    Increment to C++17 as minimum required C++ compiler, includes setting default C++ version for Visual Studio to 2017
+    
+        * ACE/ace/Global_Macros.h:
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+        * ACE/bin/MakeProjectCreator/config/vs2017nmake.mpb:
+        * ACE/bin/MakeProjectCreator/config/vs2019nmake.mpb:
+        * ACE/bin/MakeProjectCreator/config/vs2022nmake.mpb:
+        * TAO/tests/Oneway_Send_Timeouts/Server_Task.h:
+        * TAO/tests/Oneway_Send_Timeouts/main.cpp:
+
+commit 4aad080508af80d28616eb02d017b05d102a1d54
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 22 15:06:07 2024 +0200
+
+    Ship with Visual 2019/2022 solutions
+    
+        * ACE/bin/make_release.py:
+
+commit 3bf38eaee831fc923f0f661b33fe8f97c2995a64
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 22 15:05:45 2024 +0200
+
+    Removed empty line
+    
+        * ACE/tests/Framework_Component_DLL.cpp:
+
+commit 6abd30c46ef257c777eb64e8426c39d088cf7a79
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 22 15:05:34 2024 +0200
+
+    Layout changes
+    
+        * ACE/apps/JAWS2/JAWS/Parse_Headers.h:
+
+commit 08f4763d712abed02e5d41d5a055d9ee853c6d3a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 22 15:05:20 2024 +0200
+
+    Layout changes
+    
+        * ACE/ace/Based_Pointer_Repository.cpp:
+
+commit 1839b1cdad078b343540eb30bafb35f0e54cc8ed
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 22 15:05:06 2024 +0200
+
+    Layout changes
+    
+        * ACE/tests/Framework_Component_DLL.h:
+
+commit 909a92103f532f1ef6ac3d40abd7d659b944072f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 22 15:04:51 2024 +0200
+
+    Cleanup Visual Studio files
+    
+        * ACE/bin/MakeProjectCreator/config/vc10nmake.mpb:
+        * ACE/bin/MakeProjectCreator/config/vc11.features:
+        * ACE/bin/MakeProjectCreator/config/vc11nmake.mpb:
+        * ACE/bin/MakeProjectCreator/config/vc12.features:
+        * ACE/bin/MakeProjectCreator/config/vc12nmake.mpb:
+        * ACE/bin/MakeProjectCreator/config/vc14.features:
+        * ACE/bin/MakeProjectCreator/config/vc71.features:
+        * ACE/bin/MakeProjectCreator/config/vc8.features:
+        * ACE/bin/MakeProjectCreator/config/vc8nmake.mpb:
+        * ACE/bin/MakeProjectCreator/config/vc9.features:
+        * ACE/bin/MakeProjectCreator/config/vc9nmake.mpb:
+          Deleted.
+    
+        * ACE/bin/MakeProjectCreator/config/vc10.features -> ACE/bin/MakeProjectCreator/config/vs2022.features:
+        * ACE/bin/MakeProjectCreator/config/vc14nmake.mpb -> ACE/bin/MakeProjectCreator/config/vs2022nmake.mpb:
+          Moved.
+
+commit 4c4c03a78c62e383128eb10028621bcb506903cf
+Merge: 6a9352f28cb 060a9701ac4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 16 16:41:03 2024 +0200
+
+    Merge branch 'master' into jwi-bcc64xsingletonwarning
+
+commit 6a9352f28cb79bab46128295364d72a71711a98d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 16 16:01:08 2024 +0200
+
+    Changes to attempt to silence bcc64x
+    
+        * ACE/ace/Based_Pointer_Repository.h:
+        * ACE/ace/UUID.h:
+
+commit 143905afafa988abe2e236f517a97f85533960dc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 16 08:45:21 2024 +0200
+
+    Revert "Use a variable on the stack to not have a temporary in the call"
+
+commit 198cf53edd21efe4c86cc9d65b29fbc5d8d697ac
+Merge: c247ac5cbb6 b0e4f06810a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 16:11:59 2024 +0200
+
+    Merge pull request #2216 from jwillemsen/jwi-cxxversionchecks
+    
+    Check for full match with major version
+
+commit 42e242e9cc0cb594e9109c6692935b69730b4268
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 11:19:43 2024 +0200
+
+    Cleanup ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE, all platforms support it so far as I can tell
+    
+        * ACE/ace/config-face-conftest.h:
+        * ACE/ace/config-hurd.h:
+        * ACE/ace/config-kfreebsd.h:
+        * ACE/ace/config-linux-common.h:
+        * ACE/ace/config-lynxos-178.h:
+        * ACE/ace/config-lynxos.h:
+        * ACE/ace/config-mqx.h:
+        * ACE/ace/config-openbsd.h:
+        * ACE/ace/config-win32-mingw64.h:
+        * ACE/ace/os_include/os_signal.h:
+
+commit ee147da820e0e6acca101e9309108133e530bf4e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 12 12:04:42 2024 +0200
+
+    Use a variable on the stack to not have a temporary in the call
+    
+        * ACE/protocols/ace/INet/URLBase.cpp:
+
+commit fc698ff965ccd387fcf0fc217b22fb5de9e4461a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 11 13:06:10 2024 +0200
+
+    Remove check for gcc 4.2, any compiler we support is newer
+    
+        * ACE/include/makeinclude/platform_g++_common.GNU:
+
+commit b0e4f06810a909c171b5012d1c0bf808f1729dcf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 11 13:05:10 2024 +0200
+
+    Check for full match with major version
+    
+        * ACE/include/makeinclude/platform_g++_common.GNU:
+
+commit 787f08ae9d0896fa5c2b6aa1d495057c0769eca0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 10 10:14:48 2024 +0200
+
+    Upgrade for next rlease
+    
+        * ACE/bin/copy-local-script.sh:
+
+commit c3da0520bc65f368f5b914d0fb576330e51093f2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 10 10:11:46 2024 +0200
+
+    Make 7.1.4 public and prepare for 7.1.5
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

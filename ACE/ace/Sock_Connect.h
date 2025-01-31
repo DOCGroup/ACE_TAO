@@ -74,7 +74,7 @@ namespace ACE
 
   /// Routine to return a handle from which @c ioctl requests can be
   /// made.  Caller must close the handle.
-  extern ACE_Export ACE_HANDLE get_handle (void);
+  extern ACE_Export ACE_HANDLE get_handle ();
 
   /// Returns @c true if IPv4 is enabled on the current host; @c false
   /// if not.
@@ -85,7 +85,7 @@ namespace ACE
    * succeeds, and @c false if it fails. Caches the result so it only
      gets checked once.
    */
-  extern ACE_Export bool ipv4_enabled (void);
+  extern ACE_Export bool ipv4_enabled ();
 
   /**
    * Returns 1 if IPv6 is enabled on the current host; 0 if not.
@@ -95,7 +95,7 @@ namespace ACE
    * returning 1 if it succeeds, and 0 if it fails. Caches the result
    * so it only gets checked once.
    */
-  extern ACE_Export int ipv6_enabled (void);
+  extern ACE_Export int ipv6_enabled ();
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

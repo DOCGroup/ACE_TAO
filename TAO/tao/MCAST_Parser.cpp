@@ -12,6 +12,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
+#include <cstring>
 
 #if !defined(__ACE_INLINE__)
 #include "tao/MCAST_Parser.inl"
@@ -21,7 +22,7 @@ static const char mcast_prefix[] = "mcast:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_MCAST_Parser::~TAO_MCAST_Parser (void)
+TAO_MCAST_Parser::~TAO_MCAST_Parser ()
 {
 }
 
@@ -203,7 +204,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
           CORBA::Short data_len =
             (CORBA::Short) ACE_HTONS (
                 ACE_Utils::truncate_cast<ACE_UINT16> (
-                    ACE_OS::strlen (service_name) + 1));
+                    std::strlen (service_name) + 1));
 
           // Vector we will send.  It contains: 1) length of service
           // name string, 2)port on which we are listening for
@@ -222,7 +223,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
           // The service name string.
           iovp[2].iov_base = (char *) service_name;
           iovp[2].iov_len  =
-            static_cast<u_long> (ACE_OS::strlen (service_name) + 1);
+            static_cast<u_long> (std::strlen (service_name) + 1);
 
           // Send the multicast.
           result = dgram.send (iovp,
@@ -247,13 +248,13 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                             result));
               // Wait for response until timeout.
               ACE_Time_Value tv (
-                timeout == 0
+                timeout == nullptr
                 ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
                 : *timeout);
 
               // Accept reply connection from server.
               if (acceptor.accept (stream,
-                                   0,
+                                   nullptr,
                                    &tv) == -1)
                 {
                   if (TAO_debug_level > 0)
@@ -293,7 +294,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                       if (ior_len >= TAO_DEFAULT_IOR_SIZE)
                         {
                           buf = CORBA::string_alloc (ior_len);
-                          if (buf == 0)
+                          if (buf == nullptr)
                             {
                               if (TAO_debug_level > 0)
                                 {

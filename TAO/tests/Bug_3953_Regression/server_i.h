@@ -11,9 +11,9 @@ public:
   void start (client_ptr c,
               CORBA::UShort time_to_live);
 
-  void shutdown (void);
+  void shutdown ();
 
-  bool exception (void) const;
+  bool exception () const;
 private:
   int quiet_;
   // Be quiet.

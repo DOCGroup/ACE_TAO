@@ -28,7 +28,6 @@ namespace ACE
 {
   namespace HTBP
   {
-
     /**
      * @class Addr
      *
@@ -42,7 +41,7 @@ namespace ACE
     {
     public:
       /// Constructor
-      Addr ();
+      Addr () = default;
 
       Addr (const Addr &other);
 
@@ -59,7 +58,7 @@ namespace ACE
             int address_family = AF_UNSPEC);
 
       /// Destructor
-      virtual ~Addr ();
+      virtual ~Addr () = default;
 
       int set (u_short port,
                const char host [],
@@ -74,13 +73,12 @@ namespace ACE
                           int address_facmily = AF_UNSPEC);
 
       int set_htid(const char *htid);
-      const char *get_htid (void) const;
+      const char *get_htid () const;
 
     private:
       /// HTID - web-obtained unique-identifier
       ACE_CString htid_;
     };
-
   }
 }
 

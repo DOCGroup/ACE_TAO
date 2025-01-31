@@ -33,7 +33,6 @@ CachedRequestTable::update(const ACE_CString& client_id,
 }
 
 
-
 CORBA::Any
 CachedRequestTable::get_result(const ACE_CString& client_id)
 {
@@ -97,7 +96,6 @@ retrieve_ft_request_context(
 
   if ((cdr >> ft_request_service_context) == 0)
     throw CORBA::BAD_PARAM ();
-
 }
 
 FTRT::TransactionDepth
@@ -180,13 +178,13 @@ FtEventServiceInterceptor::instance()
 }
 
 char *
-FtEventServiceInterceptor::name (void)
+FtEventServiceInterceptor::name ()
 {
   return CORBA::string_dup ("FtEventServiceInterceptor");
 }
 
 void
-FtEventServiceInterceptor::destroy (void)
+FtEventServiceInterceptor::destroy ()
 {
 }
 
@@ -227,7 +225,6 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
     Request_Context_Repository().set_ft_request_service_context(ri, service_context);
 
     try{
-
       FTRT::TransactionDepth transaction_depth =
         get_transaction_depth_context(ri);
 

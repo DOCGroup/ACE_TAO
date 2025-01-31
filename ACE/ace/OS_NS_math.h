@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -24,6 +22,7 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_math.h"
+#include <cmath>
 
 #include /**/ "ace/ACE_export.h"
 
@@ -46,7 +45,7 @@ inline double ace_log2_helper (double x)
 #undef log2
 #else
 #  if !defined (ACE_LACKS_LOG2)
-  return ACE_STD_NAMESPACE::log2 (x);
+  return std::log2 (x);
 #  else
   /*
     ==================================================================
@@ -89,41 +88,20 @@ namespace ACE_OS
   inline
   T floor (T x)
   {
-    return ACE_STD_NAMESPACE::floor (x);
+    return std::floor (x);
   }
-
-#if defined (ACE_HAS_WINCE)
-  /// Windows CE has an intrinsic floor for float
-  template <>
-  inline
-  float floor (float x)
-  {
-    return ACE_STD_NAMESPACE::floorf (x);
-  }
-#endif
 
   /// This method computes the smallest integral value not less than x.
   template <typename T>
   inline
   T ceil (T x)
   {
-    return ACE_STD_NAMESPACE::ceil (x);
+    return std::ceil (x);
   }
-
-#if defined (ACE_HAS_WINCE)
-  /// Windows CE has an intrinsic ceil for float
-  template <>
-  inline
-  float ceil (float x)
-  {
-    return ACE_STD_NAMESPACE::ceilf (x);
-  }
-#endif
 
   /// This method computes the base-2 logarithm of x.
   ACE_NAMESPACE_INLINE_FUNCTION
   double log2 (double x);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

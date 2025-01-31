@@ -6,7 +6,6 @@
 #include "Print_Handler.h"
 #include "SAXPrint_Handler.h"
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
 
@@ -115,7 +114,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   else if (url != 0)
     {
-
       ACE_NEW_RETURN (ustm, ACEXML_HttpCharStream (), -1);
       if (ustm->open (url) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -144,7 +142,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_NEW_RETURN (handler,
                     ACEXML_SAXPrint_Handler (name),
                     -1);
-  auto_ptr<ACEXML_DefaultHandler> cleanup_handler (handler);
+
+  std::unique_ptr<ACEXML_DefaultHandler> cleanup_handler (handler);
 
   ACEXML_Parser parser;
   ACEXML_InputSource input (stm);

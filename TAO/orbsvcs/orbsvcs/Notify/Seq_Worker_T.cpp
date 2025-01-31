@@ -10,7 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
-TAO_Notify_Seq_Worker_T<T>::TAO_Notify_Seq_Worker_T (void)
+TAO_Notify_Seq_Worker_T<T>::TAO_Notify_Seq_Worker_T ()
 {
 }
 
@@ -27,7 +27,6 @@ TAO_Notify_Seq_Worker_T<TYPE>::create (CONTAINER &container)
   container.collection ()->for_each (this);
 
   return this->seq_._retn ();
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

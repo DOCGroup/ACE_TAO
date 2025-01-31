@@ -33,7 +33,7 @@ public:
 
   CORBA::Long get_number (CORBA::Long num);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

@@ -11,22 +11,16 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::Environment::Environment (void)
-  : exception_ (0)
-  , previous_ (0)
-{
-}
-
 CORBA::Environment::Environment (const CORBA::Environment& rhs)
-  : exception_ (0)
-  , previous_ (0)
+  : exception_ (nullptr)
+  , previous_ (nullptr)
 {
   if (rhs.exception_)
     this->exception_ = rhs.exception_->_tao_duplicate ();
 }
 
 CORBA::Environment::Environment (TAO_ORB_Core* orb_core)
-  : exception_ (0)
+  : exception_ (nullptr)
   , previous_ (orb_core->default_environment ())
 {
   orb_core->default_environment (this);
@@ -49,14 +43,14 @@ CORBA::Environment::operator= (const CORBA::Environment& rhs)
   return *this;
 }
 
-CORBA::Environment::~Environment (void)
+CORBA::Environment::~Environment ()
 {
   this->clear ();
 
   // If previous is 0 then this is the first Environment, allocated
   // with the ORB, it shouldn't try to pop because the ORB is being
   // destroyed also.
-  if (this->previous_ != 0)
+  if (this->previous_ != nullptr)
     TAO_ORB_Core_instance ()->default_environment (this->previous_);
 }
 
@@ -84,15 +78,15 @@ CORBA::Environment::exception (CORBA::Exception *ex)
 
   this->exception_ = ex;
 
-  if (this->exception_ != 0)
+  if (this->exception_ != nullptr)
     this->exception_->_raise ();
 }
 
 void
-CORBA::Environment::clear (void)
+CORBA::Environment::clear ()
 {
   delete this->exception_;
-  this->exception_ = 0;
+  this->exception_ = nullptr;
 }
 
 CORBA::Environment&
@@ -112,13 +106,13 @@ CORBA::Environment::default_environment ()
   // clear the environment before calling into the ORB.
   TAO_ORB_Core_instance ()->default_environment ()->clear ();
 
-  return TAO_default_environment ();;
+  return TAO_default_environment ();
 }
 
 // Convenience -- say if the exception is a system exception or not.
 
 int
-CORBA::Environment::exception_type (void) const
+CORBA::Environment::exception_type () const
 {
   // @@ Carlos, is this stuff that's properly "transformed" for EBCDIC
   //    platforms?!
@@ -156,10 +150,10 @@ CORBA::Environment::exception_type (void) const
 }
 
 const char*
-CORBA::Environment::exception_id (void) const
+CORBA::Environment::exception_id () const
 {
-  if (this->exception_ == 0)
-    return 0;
+  if (this->exception_ == nullptr)
+    return nullptr;
 
   return this->exception_->_rep_id ();
 }
@@ -182,7 +176,7 @@ CORBA::Environment::print_exception (const char *info,
       CORBA::SystemException *x2 =
         CORBA::SystemException::_downcast (this->exception_);
 
-      if (x2 != 0)
+      if (x2 != nullptr)
         x2->_tao_print_system_exception ();
       else
         // @@ we can use the exception's typecode to dump all the data

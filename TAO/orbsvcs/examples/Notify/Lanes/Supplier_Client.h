@@ -31,23 +31,23 @@ public:
   ~TAO_Notify_Lanes_Supplier_Client ();
 
   /// Init
-  void initialize (void);
+  void initialize ();
 
   /// Run
-  void run (void);
+  void run ();
 
   /// Parse Args
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 protected:
   /// Create an EC
-  CosNotifyChannelAdmin::EventChannel_ptr create_ec (void);
+  CosNotifyChannelAdmin::EventChannel_ptr create_ec ();
 
   /// Write ior to file.
-  void write_ior (void);
+  void write_ior ();
 
   /// ORB Objects.
   TAO_Notify_ORB_Objects orb_objects_;

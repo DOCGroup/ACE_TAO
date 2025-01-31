@@ -7,7 +7,7 @@
 #include "Options_Parser.h"
 #include "orbsvcs/NotifyExtC.h"
 
-TAO_Notify_Tests_Periodic_Supplier_Command::TAO_Notify_Tests_Periodic_Supplier_Command (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::TAO_Notify_Tests_Periodic_Supplier_Command ()
 {
 }
 
@@ -16,13 +16,13 @@ TAO_Notify_Tests_Periodic_Supplier_Command::~TAO_Notify_Tests_Periodic_Supplier_
 }
 
 const char*
-TAO_Notify_Tests_Periodic_Supplier_Command::get_name (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::get_name ()
 {
   return TAO_Notify_Tests_Periodic_Supplier_Command::name ();
 }
 
 const char*
-TAO_Notify_Tests_Periodic_Supplier_Command::name (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::name ()
 {
   return TAO_Notify_Tests_Name::periodic_supplier_command;
 }
@@ -130,7 +130,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 TAO_Notify_Tests_Periodic_Supplier*
-TAO_Notify_Tests_Periodic_Supplier_Command::supplier (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::supplier ()
 {
   TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
   LOOKUP_MANAGER->resolve (act_mgr);
@@ -147,7 +147,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::supplier (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_create (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_create ()
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
   if (supplier == 0)
@@ -159,7 +159,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::handle_create (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_offers (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_offers ()
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
   if (supplier == 0)
@@ -169,7 +169,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::handle_offers (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_disconnect (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_disconnect ()
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier= this->supplier ();
   if (supplier == 0)
@@ -179,7 +179,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::handle_disconnect (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_deactivate (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_deactivate ()
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
   if (supplier == 0)
@@ -189,7 +189,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::handle_deactivate (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_status (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_status ()
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
 
@@ -200,7 +200,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::handle_status (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::handle_set_qos (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_set_qos ()
 {
   TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
 
@@ -211,7 +211,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::handle_set_qos (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::execute_i (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::execute_i ()
 {
   if (this->command_ == CREATE)
     {

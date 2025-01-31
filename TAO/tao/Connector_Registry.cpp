@@ -7,7 +7,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.inl"
@@ -15,13 +15,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Connector_Registry::TAO_Connector_Registry (void)
-  : connectors_ (0),
+TAO_Connector_Registry::TAO_Connector_Registry ()
+  : connectors_ (nullptr),
     size_ (0)
 {
 }
 
-TAO_Connector_Registry::~TAO_Connector_Registry (void)
+TAO_Connector_Registry::~TAO_Connector_Registry ()
 {
   this->close_all ();
 
@@ -41,7 +41,7 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag) const
         return *connector;
     }
 
-  return 0;
+  return nullptr;
 }
 
 int
@@ -52,7 +52,7 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 
   // The array containing the TAO_Connectors will never contain more
   // than the number of loaded protocols in the ORB core.
-  if (this->connectors_ == 0)
+  if (this->connectors_ == nullptr)
     ACE_NEW_RETURN (this->connectors_,
                     TAO_Connector *[pfs->size ()],
                     -1);
@@ -64,11 +64,7 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
        factory != end;
        ++factory)
     {
-#if defined (ACE_HAS_CPP11)
       std::unique_ptr <TAO_Connector> connector ((*factory)->factory ()->make_connector ());
-#else
-      auto_ptr <TAO_Connector> connector ((*factory)->factory ()->make_connector ());
-#endif /* ACE_HAS_CPP11 */
 
       if (connector.get ())
         {
@@ -92,7 +88,7 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_Connector_Registry::close_all (void)
+TAO_Connector_Registry::close_all ()
 {
   const TAO_ConnectorSetIterator end = this->end ();
 
@@ -100,7 +96,7 @@ TAO_Connector_Registry::close_all (void)
        i != end;
        ++i)
     {
-      if (*i == 0)
+      if (*i == nullptr)
         continue;
 
       (*i)->close ();
@@ -115,8 +111,7 @@ TAO_Connector_Registry::close_all (void)
 
 int
 TAO_Connector_Registry::make_mprofile (const char *ior,
-                                       TAO_MProfile &mprofile
-                                       )
+                                       TAO_MProfile &mprofile)
 {
   if (!ior)
     // Failure: Null IOR string pointer
@@ -137,8 +132,7 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
         {
           const int mp_result =
             (*connector)->make_mprofile (ior,
-                                         mprofile
-                                        );
+                                         mprofile);
 
           if (mp_result == 0)
             return 0;  // Success
@@ -172,13 +166,13 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
     TAOLIB_ERROR ((LM_ERROR,
                    ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry::")
                    ACE_TEXT ("create_profile: Unable to extract tag from CDR stream\n")));
-    return 0;
+    return nullptr;
   }
 
   TAO_Connector *connector =
     this->get_connector (tag);
 
-  if (connector == 0)
+  if (connector == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -189,7 +183,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
         }
 
       TAO_ORB_Core *orb_core = cdr.orb_core ();
-      if (orb_core == 0)
+      if (orb_core == nullptr)
         {
           orb_core = TAO_ORB_Core_instance ();
           if (TAO_debug_level > 0)
@@ -202,18 +196,18 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
             }
         }
 
-      TAO_Profile *pfile = 0;
+      TAO_Profile *pfile = nullptr;
       ACE_NEW_RETURN (pfile,
                       TAO_Unknown_Profile (tag,
                                            orb_core),
-                      0);
+                      nullptr);
       if (pfile->decode (cdr) == -1)
         {
           TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry::")
                         ACE_TEXT ("create_profile: Unable to decode unknown profile from CDR stream\n")));
           pfile->_decr_refcnt ();
-          pfile = 0;
+          pfile = nullptr;
         }
 
       return pfile;
@@ -231,7 +225,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
     TAOLIB_ERROR ((LM_ERROR,
                    ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry::")
                    ACE_TEXT ("create_profile: Unable to extract encapsulated length from CDR stream\n")));
-    return 0;
+    return nullptr;
   }
 
   // Create the decoding stream from the encapsulation in the buffer,
@@ -243,7 +237,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
     TAOLIB_ERROR ((LM_ERROR,
                    ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry::")
                    ACE_TEXT ("create_profile: Unable to skip encapsulated stream from CDR stream\n")));
-    return 0;
+    return nullptr;
   }
 
   TAO_Profile* profile = connector->create_profile (str);

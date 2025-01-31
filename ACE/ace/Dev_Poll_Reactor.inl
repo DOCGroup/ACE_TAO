@@ -18,7 +18,7 @@ ACE_Dev_Poll_Reactor::Event_Tuple::Event_Tuple (ACE_Event_Handler *eh,
 // ---------------------------------------------------------------------
 
 ACE_INLINE size_t
-ACE_Dev_Poll_Reactor::Handler_Repository::size (void) const
+ACE_Dev_Poll_Reactor::Handler_Repository::size () const
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::size");
 
@@ -26,7 +26,7 @@ ACE_Dev_Poll_Reactor::Handler_Repository::size (void) const
 }
 
 ACE_INLINE size_t
-ACE_Dev_Poll_Reactor::Handler_Repository::max_size (void) const
+ACE_Dev_Poll_Reactor::Handler_Repository::max_size () const
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::max_size");
 
@@ -54,14 +54,14 @@ ACE_Dev_Poll_Handler_Guard::ACE_Dev_Poll_Handler_Guard
 }
 
 ACE_INLINE
-ACE_Dev_Poll_Handler_Guard::~ACE_Dev_Poll_Handler_Guard (void)
+ACE_Dev_Poll_Handler_Guard::~ACE_Dev_Poll_Handler_Guard ()
 {
   if (this->refcounted_ && this->eh_ != 0)
     this->eh_->remove_reference ();
 }
 
 ACE_INLINE void
-ACE_Dev_Poll_Handler_Guard::release (void)
+ACE_Dev_Poll_Handler_Guard::release ()
 {
   this->eh_ = 0;
 }
@@ -102,7 +102,7 @@ ACE_Dev_Poll_Reactor::Token_Guard::Token_Guard (ACE_Dev_Poll_Reactor_Token &toke
 }
 
 ACE_INLINE
-ACE_Dev_Poll_Reactor::Token_Guard::~Token_Guard (void)
+ACE_Dev_Poll_Reactor::Token_Guard::~Token_Guard ()
 {
   if (this->owner_)
     {
@@ -112,7 +112,7 @@ ACE_Dev_Poll_Reactor::Token_Guard::~Token_Guard (void)
 }
 
 ACE_INLINE void
-ACE_Dev_Poll_Reactor::Token_Guard::release_token (void)
+ACE_Dev_Poll_Reactor::Token_Guard::release_token ()
 {
   if (this->owner_)
     {
@@ -124,7 +124,7 @@ ACE_Dev_Poll_Reactor::Token_Guard::release_token (void)
 }
 
 ACE_INLINE bool
-ACE_Dev_Poll_Reactor::Token_Guard::is_owner (void)
+ACE_Dev_Poll_Reactor::Token_Guard::is_owner ()
 {
   return this->owner_;
 }

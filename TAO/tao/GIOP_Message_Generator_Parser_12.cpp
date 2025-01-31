@@ -16,7 +16,7 @@
 // This is used by GIOP1.2. This is to align the message body on a
 // 8-octet boundary. This is declared static so that it is in file
 // scope.
-static const size_t TAO_GIOP_MESSAGE_ALIGN_PTR = 8;
+static constexpr size_t TAO_GIOP_MESSAGE_ALIGN_PTR = 8;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -225,7 +225,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   // Get the input CDR in the request class
   TAO_InputCDR & input = *request.incoming ();
 
-  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status = input.good_bit ();
 
   CORBA::ULong req_id = 0;
   // Get the rest of the request header ...
@@ -380,20 +380,20 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
 
 
 CORBA::Octet
-TAO_GIOP_Message_Generator_Parser_12::major_version (void) const
+TAO_GIOP_Message_Generator_Parser_12::major_version () const
 {
   return static_cast<CORBA::Octet> (1);
 }
 
 
 CORBA::Octet
-TAO_GIOP_Message_Generator_Parser_12::minor_version (void) const
+TAO_GIOP_Message_Generator_Parser_12::minor_version () const
 {
   return static_cast<CORBA::Octet> (2);
 }
 
 bool
-TAO_GIOP_Message_Generator_Parser_12::is_ready_for_bidirectional (void) const
+TAO_GIOP_Message_Generator_Parser_12::is_ready_for_bidirectional () const
 {
   // We do support bidirectional
   return true;
@@ -465,7 +465,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
           return false;
 
         // Get the IOR
-        IOP::IOR *ior = 0;
+        IOP::IOR *ior = nullptr;
         CORBA::ULong const index = spec.iop_ior (ior);
 
         if (ior)
@@ -476,7 +476,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
             if (!(msg << index))
               return false;
             if (!(msg << *ior))
-              return false;;
+              return false;
           }
         else
           {
@@ -502,7 +502,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
 }
 
 size_t
-TAO_GIOP_Message_Generator_Parser_12::fragment_header_length (void) const
+TAO_GIOP_Message_Generator_Parser_12::fragment_header_length () const
 {
   return TAO_GIOP_MESSAGE_FRAGMENT_HEADER;
 }

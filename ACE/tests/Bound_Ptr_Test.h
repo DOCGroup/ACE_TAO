@@ -3,8 +3,7 @@
 /**
  *  @file    Bound_Ptr_Test.h
  *
- *  Define class needed for generating templates. IBM C++ requires this to
- *  be in its own file for auto template instantiation.
+ *  Define class needed for generating templates.
  *
  *  @author @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
@@ -22,9 +21,9 @@
 struct Printer
 {
   Printer (const char *message);
-  ~Printer (void) ;
+  ~Printer () ;
 
-  void print (void);
+  void print ();
 
   const char *message_;
   static size_t instance_count_;
@@ -49,7 +48,7 @@ class Scheduler : public ACE_Task<ACE_SYNCH>
   friend class Method_Request_end;
 public:
   /// Constructor.
-  Scheduler (Scheduler * = 0);
+  Scheduler ();
 
   /// Initializer.
   virtual int open (void *args = 0);
@@ -58,21 +57,20 @@ public:
   virtual int close (u_long flags = 0);
 
   /// Destructor.
-  virtual ~Scheduler (void);
+  virtual ~Scheduler ();
 
   // = These methods are part of the Active Object Proxy interface.
   void print (Printer_var &printer);
-  void end (void);
+  void end ();
 
 protected:
   /// Runs the Scheduler's event loop, which dequeues <Method_Requests>
   /// and dispatches them.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   // = These are the <Scheduler> implementation details.
   ACE_Activation_Queue activation_queue_;
-  Scheduler *scheduler_;
 };
 
 #endif /* ACE_HAS_THREADS */

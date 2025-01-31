@@ -11,18 +11,18 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Handle_Set.h"
 #include "ace/Containers.h"
 
-
-
 static void
 test_duplicates (size_t count)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing %B duplicates\n"), count));
+
   size_t duplicates = 0;
   size_t sets = 0;
   size_t clears = 0;
@@ -33,29 +33,37 @@ test_duplicates (size_t count)
 
   for (size_t i = 0; i < count; i++)
     {
-      size_t handle =
-        static_cast<size_t> (ACE_OS::rand_r (&seed) % ACE_Handle_Set::MAXSIZE);
+      size_t const handle = static_cast<size_t> (ACE_OS::rand_r (&seed) % ACE_Handle_Set::MAXSIZE);
 
       if (ACE_ODD (handle))
         {
           if (handle_set.is_set ((ACE_HANDLE) handle))
-            duplicates++;
+            ++duplicates;
 
           handle_set.set_bit ((ACE_HANDLE) handle);
-          sets++;
+          ++sets;
         }
       else
         {
           if (handle_set.is_set ((ACE_HANDLE) handle))
-            duplicates--;
+            --duplicates;
 
           handle_set.clr_bit ((ACE_HANDLE) handle);
-          clears++;
+          ++clears;
         }
     }
 
   ACE_TEST_ASSERT (count == sets + clears);
   ACE_TEST_ASSERT (handle_set.num_set () + duplicates == sets);
+
+  ACE_Handle_Set copy_set (handle_set);
+  ACE_TEST_ASSERT (copy_set.num_set () + duplicates == sets);
+
+  ACE_Handle_Set move_set (std::move(handle_set));
+  ACE_TEST_ASSERT (move_set.num_set () + duplicates == sets);
+
+  ACE_Handle_Set move_assign = std::move(copy_set);
+  ACE_TEST_ASSERT (move_assign.num_set () + duplicates == sets);
 }
 
 // This is the vector of handles to test.  These numbers are chosen to
@@ -91,7 +99,7 @@ static ACE_HANDLE handle_vector[] =
 #endif /* ACE_WIN64 */
 
 static void
-test_boundaries (void)
+test_boundaries ()
 {
   ACE_Handle_Set handle_set;
   ACE_Unbounded_Set<ACE_HANDLE> set;
@@ -142,7 +150,7 @@ test_boundaries (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("obtained handle %d\n"),
                   handle));
-      int done = set.remove (handle);
+      int const done = set.remove (handle);
       ACE_TEST_ASSERT (done == 0);
       count++;
     }

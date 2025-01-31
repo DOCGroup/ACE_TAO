@@ -17,7 +17,7 @@ namespace TAO
 
   template <typename handler_type, typename alloc_type>
   handler_type*
-  TAO_Buffer_Allocator<handler_type, alloc_type>::allocate (void)
+  TAO_Buffer_Allocator<handler_type, alloc_type>::allocate ()
   {
     handler_type* myvalue = 0;
     ACE_NEW_MALLOC_RETURN (myvalue,

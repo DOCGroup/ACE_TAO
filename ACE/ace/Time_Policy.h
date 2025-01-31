@@ -35,7 +35,7 @@ public:
   ACE_Time_Value_T<ACE_System_Time_Policy> operator() () const;
 
   /// Noop. Just here to satisfy backwards compatibility demands.
-  void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
+  void set_gettimeofday (ACE_Time_Value (*gettimeofday)());
 };
 
 /**
@@ -50,7 +50,7 @@ public:
   ACE_Time_Value_T<ACE_HR_Time_Policy> operator() () const;
 
   /// Noop. Just here to satisfy backwards compatibility demands.
-  void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
+  void set_gettimeofday (ACE_Time_Value (*gettimeofday)());
 };
 
 /**
@@ -92,7 +92,7 @@ public:
   ACE_Time_Value_T<ACE_FPointer_Time_Policy> operator()() const;
 
   /// Satisfy backwards compatibility demands.
-  void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
+  void set_gettimeofday (ACE_Time_Value (*gettimeofday)());
 private:
   FPtr function_;
 };
@@ -108,7 +108,7 @@ class ACE_Dynamic_Time_Policy_Base; // forward decl
 class ACE_Export ACE_Delegating_Time_Policy
 {
 public:
-  ACE_Delegating_Time_Policy (ACE_Dynamic_Time_Policy_Base const * delegate = 0);
+  ACE_Delegating_Time_Policy (ACE_Dynamic_Time_Policy_Base const * delegate = nullptr);
 
   /// Return the current time according to this policy
   ACE_Time_Value_T<ACE_Delegating_Time_Policy> operator()() const;
@@ -116,15 +116,13 @@ public:
   /// Set delegate
   void set_delegate (ACE_Dynamic_Time_Policy_Base const * delegate);
 
-#if defined (ACE_HAS_CPP11)
   ACE_Delegating_Time_Policy (const ACE_Delegating_Time_Policy&) = default;
   ACE_Delegating_Time_Policy (ACE_Delegating_Time_Policy&&) = default;
   ACE_Delegating_Time_Policy& operator = (ACE_Delegating_Time_Policy const &) = default;
   ACE_Delegating_Time_Policy &operator = (ACE_Delegating_Time_Policy&&)  = default;
-#endif /* ACE_HAS_CPP11 */
 
   /// Noop. Just here to satisfy backwards compatibility demands.
-  void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
+  void set_gettimeofday (ACE_Time_Value (*gettimeofday)());
 private:
   ACE_Dynamic_Time_Policy_Base const * delegate_;
 };
@@ -144,7 +142,7 @@ public:
   ACE_Time_Value_T<ACE_Delegating_Time_Policy> operator()() const;
 
   /// Noop. Just here to satisfy backwards compatibility demands.
-  void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
+  void set_gettimeofday (ACE_Time_Value (*gettimeofday)());
 protected:
   /// Return the current time according to policy implementation.
   virtual ACE_Time_Value_T<ACE_Delegating_Time_Policy> gettimeofday () const = 0;

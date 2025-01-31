@@ -5,7 +5,6 @@
 
 namespace Bug_3647_Regression
 {
-
 /**
  * @class Backend
  *
@@ -15,7 +14,7 @@ class Backend_Impl : public POA_Bug_3647_Regression::Backend
 {
 public:
   Backend_Impl(CORBA::ORB_ptr orb, bool verbose);
-  virtual ~Backend_Impl();
+  virtual ~Backend_Impl() = default;
 
   virtual void startup_test();
   virtual void ping(Bug_3647_Regression::Payload const & the_payload);
@@ -30,7 +29,6 @@ private:
   /// Use this flag to decide if the program should produce any output.
   bool verbose_;
 };
-
 } // namespace Bug_3647_Regression
 
 #endif // Bug_3647_Regression_Backend_h

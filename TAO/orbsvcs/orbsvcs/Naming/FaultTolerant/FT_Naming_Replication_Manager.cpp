@@ -87,12 +87,12 @@ TAO_FT_Naming_Replication_Manager::TAO_FT_Naming_Replication_Manager (TAO_FT_Nam
 {
 }
 
-TAO_FT_Naming_Replication_Manager::~TAO_FT_Naming_Replication_Manager(void)
+TAO_FT_Naming_Replication_Manager::~TAO_FT_Naming_Replication_Manager()
 {
 }
 
 void
-TAO_FT_Naming_Replication_Manager::init_orb (void)
+TAO_FT_Naming_Replication_Manager::init_orb ()
 {
   int argc = 8;
   ACE_TCHAR *argv[11];
@@ -132,19 +132,19 @@ TAO_FT_Naming_Replication_Manager::init_orb (void)
 }
 
 char *
-TAO_FT_Naming_Replication_Manager::ior (void)
+TAO_FT_Naming_Replication_Manager::ior ()
 {
   return this->orb_->object_to_string (this->me_.in ());
 }
 
 bool
-TAO_FT_Naming_Replication_Manager::peer_available (void)
+TAO_FT_Naming_Replication_Manager::peer_available ()
 {
   return !CORBA::is_nil (this->peer_.in ());
 }
 
 void
-TAO_FT_Naming_Replication_Manager::stop (void)
+TAO_FT_Naming_Replication_Manager::stop ()
 {
   if (this->reactor_ == 0)
     {
@@ -155,7 +155,7 @@ TAO_FT_Naming_Replication_Manager::stop (void)
 }
 
 int
-TAO_FT_Naming_Replication_Manager::svc (void)
+TAO_FT_Naming_Replication_Manager::svc ()
 {
   if (this->reactor_ == 0)
     {
@@ -163,7 +163,6 @@ TAO_FT_Naming_Replication_Manager::svc (void)
     }
   try
     {
-
       this->orb_->run ();
     }
   catch (const CORBA::SystemException &ex)
@@ -349,7 +348,6 @@ TAO_FT_Naming_Replication_Manager::send_context_update (const ACE_CString & name
 void
 TAO_FT_Naming_Replication_Manager::send_registration (bool use_combo_refs)
 {
-
   if (TAO_debug_level > 1)
     {
       ORBSVCS_DEBUG((LM_INFO,
@@ -371,7 +369,7 @@ TAO_FT_Naming_Replication_Manager::send_registration (bool use_combo_refs)
 }
 
 bool
-TAO_FT_Naming_Replication_Manager::peer_init_i (void)
+TAO_FT_Naming_Replication_Manager::peer_init_i ()
 {
   CORBA::Object_var obj = this->orb_->string_to_object (replica_ior_.c_str());
   bool non_exist = true;
@@ -421,7 +419,7 @@ TAO_FT_Naming_Replication_Manager::peer_init_i (void)
 }
 
 bool
-TAO_FT_Naming_Replication_Manager::update_peer_registration (void)
+TAO_FT_Naming_Replication_Manager::update_peer_registration ()
 {
   FT_Naming::ReplicaInfo info;
   info.combined = this->send_combos_;
@@ -450,7 +448,7 @@ TAO_FT_Naming_Replication_Manager::update_peer_registration (void)
 
 
 bool
-TAO_FT_Naming_Replication_Manager::init_peer (void)
+TAO_FT_Naming_Replication_Manager::init_peer ()
 {
   ACE_TString replica_ior_file = this->server_.replica_ior_filename (true);
 

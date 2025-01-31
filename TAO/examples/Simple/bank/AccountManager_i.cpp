@@ -4,13 +4,13 @@
 #include "tao/Utils/ORB_Manager.h"
 
 // Constructor
-AccountManager_i::AccountManager_i (void) :
+AccountManager_i::AccountManager_i () :
   orb_manager_ (0)
 {
 }
 
 // Destructor
-AccountManager_i::~AccountManager_i (void)
+AccountManager_i::~AccountManager_i ()
 {
 }
 
@@ -114,7 +114,7 @@ AccountManager_i::close (Bank::Account_ptr account)
 }
 
 void
-AccountManager_i::shutdown (void)
+AccountManager_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n[SERVER] Process/Thread Id : (%P/%t) AccountManager_i is shutting down\n")));

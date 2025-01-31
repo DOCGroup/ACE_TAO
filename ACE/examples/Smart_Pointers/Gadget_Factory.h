@@ -24,7 +24,7 @@ public:
   /// transferred to the caller since we return a Gadget_var. This also means
   /// that the object will be deleted automatically if the caller "forgets" to
   /// collect the return value.
-  static Gadget_var create_gadget (void);
+  static Gadget_var create_gadget ();
 };
 
 #endif /* GADGET_FACTORY_H */

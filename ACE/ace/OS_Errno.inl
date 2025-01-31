@@ -26,7 +26,7 @@ ACE_Errno_Guard::ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref)
 }
 
 ACE_INLINE
-ACE_Errno_Guard::~ACE_Errno_Guard (void)
+ACE_Errno_Guard::~ACE_Errno_Guard ()
 {
 #if defined (ACE_MT_SAFE)
   *errno_ptr_ = this->error_;
@@ -34,14 +34,6 @@ ACE_Errno_Guard::~ACE_Errno_Guard (void)
   errno = this->error_;
 #endif /* ACE_MT_SAFE */
 }
-
-#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-ACE_INLINE int
-ACE_Errno_Guard::operator= (const ACE_ERRNO_TYPE &error)
-{
-  return this->error_ = error;
-}
-#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 
 ACE_INLINE int
 ACE_Errno_Guard::operator= (int error)

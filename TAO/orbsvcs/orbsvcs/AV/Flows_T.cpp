@@ -13,7 +13,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // default constructor
 template <class T_Producer, class T_Consumer>
-TAO_FDev<T_Producer, T_Consumer>::TAO_FDev (void)
+TAO_FDev<T_Producer, T_Consumer>::TAO_FDev ()
 {
 }
 
@@ -35,14 +35,14 @@ TAO_FDev<T_Producer, T_Consumer>::TAO_FDev (const char *flowname)
 }
 
 template <class T_Producer, class T_Consumer>
-TAO_FDev<T_Producer, T_Consumer>::~TAO_FDev (void)
+TAO_FDev<T_Producer, T_Consumer>::~TAO_FDev ()
 {
   //no-op
 }
 
 template <class T_Producer, class T_Consumer>
 const char *
-TAO_FDev<T_Producer, T_Consumer>::flowname (void)
+TAO_FDev<T_Producer, T_Consumer>::flowname ()
 {
   return this->flowname_.in ();
 }

@@ -30,10 +30,7 @@ public:
   virtual int accept (be_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
-
-  // Narrowing
-  DEF_NARROW_FROM_DECL (be_valuebox);
+  virtual void destroy ();
 };
 
 #endif /* TAO_BE_VALUEBOX_H */

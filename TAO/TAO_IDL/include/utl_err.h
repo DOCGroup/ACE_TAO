@@ -130,6 +130,7 @@ public:
     EIDL_KEYWORD_WARNING,       // Same as above, but only a warning
     EIDL_ANONYMOUS_ERROR,       // Anonymous types are deprecated by spec
     EIDL_ANONYMOUS_WARNING,     // Same as above, but only a warning
+    EIDL_ANONYMOUS_EXPLICIT_ERROR, // Anonymous types have been explicitly disabled
     EIDL_ENUM_VAL_EXPECTED,     // Expected an enumerator
     EIDL_ENUM_VAL_NOT_FOUND,    // Didnt find an enumerator with that name
     EIDL_EVAL_ERROR,            // Error in evaluating expression
@@ -163,7 +164,9 @@ public:
   };
 
   ErrorCode last_error;
+  long last_error_lineno;
   ErrorCode last_warning;
+  long last_warning_lineno;
 
   // Operations
 
@@ -242,7 +245,7 @@ public:
   void version_syntax_error (const char *msg);
 
   // Repost an attempt to reset the version.
-  void version_reset_error (void);
+  void version_reset_error ();
 
   // Report an attempt to change the id once set.
   void id_reset_error (const char *o,
@@ -378,7 +381,7 @@ public:
 
   // Report illegal infix operator error (they can be used
   // only with integer, floating point or fixed point expressions.
-  void illegal_infix (void);
+  void illegal_infix ();
 
   // Report local type used in remote operation.
   void local_remote_mismatch (AST_Decl *l,
@@ -408,7 +411,7 @@ public:
                             AST_Decl *loc);
 
   // Error (default) or warning (set by command line option).
-  void anonymous_type_diagnostic (void);
+  void anonymous_type_diagnostic ();
 
   // Reference to an item in the scope of a template
   // module was not via an alias.
@@ -463,6 +466,9 @@ public:
    */
   void annotation_param_missing_error (
     AST_Annotation_Appl *appl, AST_Annotation_Member *member);
+
+  /// Reset recent warning and error information
+  void reset_last_error_and_warning ();
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

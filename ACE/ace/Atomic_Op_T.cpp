@@ -26,7 +26,7 @@ ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Atomic_Op)
 
 // *************************************************
 template <class ACE_LOCK, class TYPE> ACE_LOCK &
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::mutex (void)
+ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::mutex ()
 {
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::mutex");
   return this->mutex_;
@@ -34,7 +34,7 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::mutex (void)
 
 template <class ACE_LOCK, class TYPE>
 void
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump (void) const
+ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump");
@@ -65,7 +65,7 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex (
 // ****************************************************************
 
 template <class ACE_LOCK, class TYPE>
-ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (void)
+ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op ()
   : impl_ (this->own_mutex_)
 {
   // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");

@@ -26,7 +26,7 @@
 
 #include "tao/DynamicAny/DynAnyFactory.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -118,7 +118,7 @@ namespace TAO
                       DA_IMPL (allow_truncation),
                       CORBA::NO_MEMORY ());
 
-    ACE_Auto_Basic_Ptr<DA_IMPL> dp (p);
+    std::unique_ptr<DA_IMPL> dp (p);
     try
       {
         p->init (any_tc);
@@ -129,7 +129,6 @@ namespace TAO
         // of a previously found TAO_DynValue_i). The new BLANK one created
         // above on which we called init() will be deleted automatically by
         // the ACE_Auto_Basic_Ptr.
-
         return original;
       }
 
@@ -148,7 +147,7 @@ namespace TAO
                       DA_IMPL (allow_truncation),
                       CORBA::NO_MEMORY ());
 
-    ACE_Auto_Basic_Ptr<DA_IMPL> dp (p);
+    std::unique_ptr<DA_IMPL> dp (p);
     try
       {
         p->init (tc, any_tc);
@@ -159,7 +158,6 @@ namespace TAO
         // of a previously found TAO_DynValue_i). The new BLANK one created
         // above on which we called init() will be deleted automatically by
         // the ACE_Auto_Basic_Ptr.
-
         return original;
       }
 

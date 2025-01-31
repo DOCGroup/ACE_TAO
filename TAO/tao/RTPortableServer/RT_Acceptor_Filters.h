@@ -52,11 +52,11 @@ public:
                     TAO_MProfile &mprofile,
                     TAO_Acceptor **acceptors_begin,
                     TAO_Acceptor **acceptors_end,
-                    CORBA::Short priority);
+                    CORBA::Short priority) override;
 
   /// Encodes the endpoints in the profiles into the TAO_TAG_ENDPOINTS
   /// tag component of profiles.
-  int encode_endpoints (TAO_MProfile &mprofile);
+  int encode_endpoints (TAO_MProfile &mprofile) override;
 
 private:
   /// Value of the ServerProtocolPolicy used for endpoint

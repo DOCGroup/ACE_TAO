@@ -54,7 +54,7 @@ public:
           CORBA::PolicyManager_ptr policy_manager,
           test_ptr receiver);
 
-  ~test_i (void);
+  ~test_i ();
 
   void start_test (CORBA::Long session_id,
                    const char *protocol,
@@ -62,11 +62,11 @@ public:
                    CORBA::ULong message_size,
                    CORBA::ULong iterations);
 
-  void end_test (void);
+  void end_test ();
 
-  void oneway_sync (void);
+  void oneway_sync ();
 
-  void twoway_sync (void);
+  void twoway_sync ();
 
   void oneway_method (CORBA::Long session_id,
                       CORBA::ULong iteration,
@@ -77,10 +77,10 @@ public:
                       ::test::octets &payload);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void);
+  void shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
   CORBA::ORB_var orb_;
@@ -125,7 +125,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
     this->rtorb_->create_client_protocol_policy (protocols);
 }
 
-test_i::~test_i (void)
+test_i::~test_i ()
 {
 }
 
@@ -171,7 +171,6 @@ test_i::start_test (CORBA::Long session_id,
   // for a few times before giving up.
   for (int j = 0;;)
     {
-
     test_protocol_setup:
 
       try
@@ -209,7 +208,6 @@ test_i::start_test (CORBA::Long session_id,
   // for a few times before giving up.
   for (int k = 0;;)
     {
-
     base_protocol_setup:
 
       try
@@ -248,7 +246,7 @@ test_i::start_test (CORBA::Long session_id,
 }
 
 void
-test_i::end_test (void)
+test_i::end_test ()
 {
   // Use IIOP to indicate end of test to server.
   this->policy_manager_->set_policy_overrides (this->base_protocol_policy_,
@@ -258,13 +256,13 @@ test_i::end_test (void)
 }
 
 void
-test_i::oneway_sync (void)
+test_i::oneway_sync ()
 {
   this->receiver_->oneway_sync ();
 }
 
 void
-test_i::twoway_sync (void)
+test_i::twoway_sync ()
 {
   this->receiver_->twoway_sync ();
 }
@@ -290,17 +288,17 @@ test_i::twoway_method (CORBA::Long &session_id,
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (void)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
   this->receiver_->shutdown ();
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 int

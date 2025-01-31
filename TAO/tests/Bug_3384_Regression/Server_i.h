@@ -6,16 +6,13 @@ public:
   Server (CORBA::ORB_ptr orb)
     : POA_Test::Server(),
       orb_ (CORBA::ORB::_duplicate (orb)) {}
-  virtual ~Server ();
+  virtual ~Server () = default;
 
-  virtual void setup (
-    ::Test::Client_ptr cli);
+  virtual void setup (::Test::Client_ptr cli);
 
-  virtual void request (
-    ::CORBA::Long sel);
+  virtual void request (::CORBA::Long sel);
 
-  virtual void shutdown (
-    void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

@@ -4,7 +4,7 @@
 class Global
 {
 public:
-  static long double get_long_double (void);
+  static long double get_long_double ();
 };
 
 #endif /* TAO_TEST_GLOBAL_H */

@@ -92,7 +92,7 @@ CM_Client::receive (int timeout)
 }
 
 int
-CM_Client::send (void)
+CM_Client::send ()
 {
   int packet_length = 0;
 
@@ -126,12 +126,12 @@ CM_Client::send (void)
   return 1;
 }
 
-CM_Client::CM_Client (void)
+CM_Client::CM_Client ()
   : top_ (0)
 {
 }
 
-CM_Client::~CM_Client (void)
+CM_Client::~CM_Client ()
 {
   if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,

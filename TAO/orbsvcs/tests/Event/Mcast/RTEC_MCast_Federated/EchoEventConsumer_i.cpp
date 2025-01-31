@@ -13,7 +13,6 @@ EchoEventConsumer_i::EchoEventConsumer_i(CORBA::ORB_ptr orb, int event_limit)
   : orb_(CORBA::ORB::_duplicate(orb))
   , event_limit_(event_limit)
 {
-  // Nothing to do.
 }
 
 // Implement the push() operation.

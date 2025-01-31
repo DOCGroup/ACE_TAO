@@ -48,16 +48,14 @@ class TAO_Dynamic_TP_Export TAO_DTP_New_Leader_Generator
   : public TAO_New_Leader_Generator
 {
 public:
-
   /// Constructor.
   TAO_DTP_New_Leader_Generator (TAO_DTP_Thread_Pool &lane);
 
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.
-  bool no_leaders_available (void);
+  bool no_leaders_available ();
 
 private:
-
   /// Pool associated with this leader generator.
   TAO_DTP_Thread_Pool &pool_;
 };
@@ -77,10 +75,10 @@ public:
   TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &pool);
 
   /// Method executed when a thread is spawned.
-  int svc (void);
+  int svc ();
 
   /// Accessor to the pool to which this thread belongs to.
-  TAO_DTP_Thread_Pool &pool (void) const;
+  TAO_DTP_Thread_Pool &pool () const;
 
 protected:
   /// Do the real work
@@ -104,7 +102,7 @@ public:
   TAO_DTP_Termination_Waiter (TAO_DTP_Thread_Pool &pool);
 
   /// Method executed when a thread is spawned.
-  int svc (void);
+  int svc ();
 
 protected:
   /// Pool to which this thread belongs to.
@@ -131,19 +129,19 @@ public:
                        TAO_DTP_Definition &definition);
 
   /// Destructor.
-  ~TAO_DTP_Thread_Pool (void);
+  ~TAO_DTP_Thread_Pool ();
 
   /// Open the pool.
-  void open (void);
+  void open ();
 
   /// Wait for threads to exit.
-  void wait (void);
+  void wait ();
 
   /// Mark this thread pool that we are shutting down.
-  void shutting_down (void);
+  void shutting_down ();
 
   /// Create the initial threads - only called once.
-  int create_initial_threads (void);
+  int create_initial_threads ();
 
   /// Called by the TAO_DTP_New_Leader_Generator to request a new dynamic
   /// thread.
@@ -154,28 +152,26 @@ public:
    * @retval true A new thread is created
    * @retval false No thread could be created
    */
-  bool new_dynamic_thread (void);
+  bool new_dynamic_thread ();
 
   /// Called by the run loop to determine if to expire a thread or not
   /// when the dynamic timeout is reached.
-  bool above_minimum (void);
+  bool above_minimum ();
 
   /// @name Accessors
   // @{
+  bool use_timeouts () const;
+  const ACE_Time_Value& dynamic_thread_time () const;
 
-  bool use_timeouts (void) const;
-  const ACE_Time_Value& dynamic_thread_time (void) const;
-
-  TAO_DTP_Thread_Pool_Manager &manager (void) const;
-  CORBA::ULong id (void) const;
-  CORBA::ULong current_threads (void) const;
-  void add_active (void);
+  TAO_DTP_Thread_Pool_Manager &manager () const;
+  CORBA::ULong id () const;
+  CORBA::ULong current_threads () const;
+  void add_active ();
   bool remove_active (bool force);
 
   // @}
 
 private:
-
   int create_threads_i (size_t count);
 
   TAO_DTP_Thread_Pool_Manager &manager_;
@@ -217,15 +213,14 @@ private:
 class TAO_Dynamic_TP_Export TAO_DTP_Thread_Pool_Manager
 {
 public:
-
   /// Constructor.
   TAO_DTP_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_DTP_Thread_Pool_Manager (void);
+  ~TAO_DTP_Thread_Pool_Manager ();
 
   /// Wait for threads to exit.
-  void wait (void);
+  void wait ();
 
   /// Create a threadpool without lanes.
   CORBA::ULong create_threadpool (TAO_DTP_Definition &def);
@@ -239,14 +234,12 @@ public:
 
   /// @name Accessors
   // @{
-  TAO_ORB_Core &orb_core (void) const;
+  TAO_ORB_Core &orb_core () const;
   // @}
 
 private:
-
   /// @name Helpers
   // @{
-
   CORBA::ULong
   create_threadpool_i (TAO_DTP_Definition &def);
 
@@ -255,7 +248,6 @@ private:
   // @}
 
 private:
-
   TAO_ORB_Core &orb_core_;
 
   THREAD_POOLS thread_pools_;

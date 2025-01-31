@@ -65,7 +65,6 @@ class TAO_Messaging_Export TAO_AMH_Response_Handler
   : public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
   TAO_AMH_Response_Handler ();
 
@@ -74,7 +73,7 @@ public:
    * Releases the transport and in case of an error, sends the appropriate
    * exception back to the client
    */
-  virtual ~TAO_AMH_Response_Handler (void);
+  virtual ~TAO_AMH_Response_Handler ();
 
   /**
    * Stores necessary information from a TAO_Server_Request onto the heap
@@ -84,18 +83,17 @@ public:
 
   /// @name Mutators for refcount
   //@{
-  virtual void _remove_ref (void);
+  virtual void _remove_ref ();
   //@}
 
 protected:
-
   /// Sets up the various parameters in anticipation of returning a reply
   /// to the client. return/OUT/INOUT arguments are marshalled into the
   /// Output stream after this method has been called.
-  void _tao_rh_init_reply (void);
+  void _tao_rh_init_reply ();
 
   /// Sends the marshalled reply back to the client.
-  void _tao_rh_send_reply (void);
+  void _tao_rh_send_reply ();
 
   /// Send back an exception to the client.
   void _tao_rh_send_exception (const CORBA::Exception &ex);
@@ -118,10 +116,8 @@ protected:
   GIOP::ReplyStatusType reply_status_;
 
 private:
-
-  // Private and undefined, standard C++ idiom to prohibit copying.
-  TAO_AMH_Response_Handler (const TAO_AMH_Response_Handler&);
-  TAO_AMH_Response_Handler& operator= (const TAO_AMH_Response_Handler&);
+  TAO_AMH_Response_Handler (const TAO_AMH_Response_Handler&) = delete;
+  TAO_AMH_Response_Handler& operator= (const TAO_AMH_Response_Handler&) = delete;
 
   /// Pointer to the original message-base
   TAO_GIOP_Message_Base *mesg_base_;
@@ -202,9 +198,8 @@ namespace TAO
   class TAO_Messaging_Export ARH_Refcount_Functor
   {
   public:
-    void operator() (TAO_AMH_Response_Handler *arh) throw ();
+    void operator() (TAO_AMH_Response_Handler *arh) noexcept;
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

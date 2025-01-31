@@ -20,24 +20,23 @@
 class HTTPU_Export HTTP_Request : public HTTP_Base
 {
 public:
-  HTTP_Request (void);
-  virtual ~HTTP_Request (void);
+  HTTP_Request ();
+  virtual ~HTTP_Request ();
 
-  Parse_HTTP_Request *request_line (void);
+  Parse_HTTP_Request *request_line ();
   // Returns the parsed request line.
 
-  const Parse_HTTP_Request *request_line (void) const;
+  const Parse_HTTP_Request *request_line () const;
   // Returns the parsed request line.
 
-  HTTP_Parse_URL *url (void);
+  HTTP_Parse_URL *url ();
   // Returns the parsed url.
 
-  void dump (void);
+  void dump ();
 
 protected:
-
-  virtual void parse_line (void);
-  virtual int espouse_line (void);
+  virtual void parse_line ();
+  virtual int espouse_line ();
   virtual void set_status (int);
 
 private:

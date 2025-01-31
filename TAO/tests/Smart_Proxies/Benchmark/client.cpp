@@ -28,7 +28,6 @@ int register_smart_proxy = 1;
 class Marker
 {
  public:
-
   void accumulate_into (ACE_Throughput_Stats &throughput) const
     {
       // Accumulate the throughput statistics into <throughput>
@@ -46,7 +45,6 @@ class Marker
       // get the sample.
       this->throughput_.sample (throughput_diff,
                                 latency_diff);
-
     }
  private:
   /// Keep throughput statistics on a per-thread basis
@@ -91,7 +89,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
 
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,

@@ -28,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class TAO::PG_Object_Group_Manipulator
    *
@@ -40,12 +39,11 @@ namespace TAO
   class TAO_PortableGroup_Export PG_Object_Group_Manipulator
   {
   public:
-
     /// Constructor.
     PG_Object_Group_Manipulator ();
 
     /// Destructor.
-    ~PG_Object_Group_Manipulator ();
+    ~PG_Object_Group_Manipulator () = default;
 
     /**
      * Initializes the group creator.
@@ -87,7 +85,6 @@ namespace TAO
                         PortableGroup::ObjectGroup_ptr member) const;
 
   private:
-
     /**
      * Allocate an ogid for a new object group
      */
@@ -100,7 +97,6 @@ namespace TAO
       convert_ogid_to_oid (PortableGroup::ObjectGroupId ogid) const;
 
   private:
-
     /// The orb
     CORBA::ORB_var orb_;
 
@@ -115,7 +111,6 @@ namespace TAO
 
     /// Next ogid to be allocated.
     PortableGroup::ObjectGroupId next_ogid_;
-
   };
 } //namespace TAO
 

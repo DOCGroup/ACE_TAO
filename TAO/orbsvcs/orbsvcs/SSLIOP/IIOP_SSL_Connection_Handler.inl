@@ -20,7 +20,7 @@ TAO::Null_SSL_State_Guard::Null_SSL_State_Guard (
 }
 
 ACE_INLINE
-TAO::Null_SSL_State_Guard::~Null_SSL_State_Guard (void)
+TAO::Null_SSL_State_Guard::~Null_SSL_State_Guard ()
 {
   // Restore the previous TSS SSL state.
   this->current_->teardown (this->previous_current_impl_,

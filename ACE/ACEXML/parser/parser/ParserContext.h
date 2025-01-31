@@ -44,13 +44,13 @@ public:
   /// Reset the parser context. This does not free up the memory. Only sets
   /// it to zero. Meant to be called after a context is pushed on to a
   /// stack.
-  void reset (void);
+  void reset ();
 
   /// Get the underlying input source.
-  virtual ACEXML_InputSource* getInputSource(void);
+  virtual ACEXML_InputSource* getInputSource();
 
   /// Get the underlying locator.
-  virtual ACEXML_LocatorImpl* getLocator(void);
+  virtual ACEXML_LocatorImpl* getLocator();
 
   /// Set the underlying input source.
   virtual void setInputSource(ACEXML_InputSource* ip);
@@ -59,7 +59,6 @@ public:
   virtual void setLocator(ACEXML_LocatorImpl* locator);
 
 private:
-
   /// Copy constructor
   ACEXML_Parser_Context (const ACEXML_Parser_Context& src);
 

@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_MEM_IO::Signal_Strategy
-ACE_MEM_Connector::preferred_strategy (void) const
+ACE_MEM_Connector::preferred_strategy () const
 {
   return this->preferred_strategy_;
 }

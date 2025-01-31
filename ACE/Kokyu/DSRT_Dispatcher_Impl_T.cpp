@@ -9,7 +9,6 @@
 
 namespace Kokyu
 {
-
 template <class DSRT_Scheduler_Traits>
 DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 DSRT_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,

@@ -47,21 +47,21 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     poa_manager->activate ();
 
     // Make policies for child POA
-    CORBA::PolicyList policies(2) ;
-    policies.length(2) ;
-    policies[0] = root_poa->create_lifespan_policy ( PortableServer::PERSISTENT ) ;
-    policies[1] = root_poa->create_id_assignment_policy ( PortableServer::USER_ID ) ;
+    CORBA::PolicyList policies(2);
+    policies.length(2);
+    policies[0] = root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
+    policies[1] = root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
-    PortableServer::POA_var poa = root_poa->create_POA ( "MyPOA", poa_manager.in(), policies );
+    PortableServer::POA_var poa = root_poa->create_POA ("MyPOA", poa_manager.in(), policies);
 
     // Creation of the new POAs over, so destroy the Policy_ptr's.
-    for ( CORBA::ULong i = 0 ; i < policies.length (); ++i ) {
+    for (CORBA::ULong i = 0 ; i < policies.length (); ++i) {
       CORBA::Policy_ptr policy = policies[i];
       policy->destroy ();
     }
 
     // use this poa for making system objects
-    Quoter_Stock_i::set_default_POA ( poa.in() ) ;
+    Quoter_Stock_i::set_default_POA (poa.in());
 
     // Create the servant
     Quoter_Stock_Factory_i *stock_factory_i = 0;
@@ -96,7 +96,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb->run (timeout);
 
     // Destroy the POA, waiting until the destruction terminates
-    root_poa->destroy (1, 1);
+    root_poa->destroy (true, true);
     orb->destroy ();
   }
   catch (const CORBA::Exception & e) {

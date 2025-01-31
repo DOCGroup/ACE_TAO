@@ -1,0 +1,1657 @@
+commit 9c1556c22e0d01e87c706c946ad131b62507653c
+Merge: 03481d0f1dd 28bbfa6d7ce
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Aug 3 08:42:36 2021 -0500
+
+    Merge pull request #1640 from jwillemsen/jwi-sockdgramlogging
+    
+    ifr_name is ascii so use %C for logging
+
+commit 28bbfa6d7cea9231d52c7c34917677a5ce687c5f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 3 08:41:57 2021 +0200
+
+    ifr_name is ascii so use %C for logging
+    
+        * ACE/ace/SOCK_Dgram_Bcast.cpp:
+
+commit 06e2a14d2d98b2a18b50615f4c048cffd49b3bfd
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Aug 2 16:56:40 2021 -0500
+
+    make_multicast_ifaddr: prevent buffer overrun from net_if
+    
+    fixes #1637
+    also removed a preprocessor conditional that was redundant
+
+commit 85260ba716f60442b000b76b848cffb8f5320329
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 2 15:56:01 2021 +0200
+
+    Update NEWS
+
+commit ad197ab1179e257f24ae95f54425812dd3ffd6cc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 21 10:14:33 2021 +0200
+
+    Removed redundant whitespace
+    
+        * ACE/ACEXML/parser/parser/Parser.cpp:
+        * ACE/examples/ConfigViewer/ValueListCtrl.cpp:
+        * ACE/tests/CDR_Array_Test.cpp:
+        * TAO/TAO_IDL/be/be_interface.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
+
+commit 4e4a1260bc4bb65abdde4542cbdaba20e270ed45
+Merge: 0dbbaa0ee8e 8dcbc57bc0b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 19 16:41:23 2021 +0200
+
+    Merge pull request #1619 from jwillemsen/jwi-stdcleanup
+    
+    Make use of std namespace functions now that we have C++11
+
+commit 0dbbaa0ee8e72731380c2f4b9811023ca463ce20
+Merge: 9813f22105a 18cbda7cf52
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 19 14:06:50 2021 +0200
+
+    Merge pull request #1618 from jwillemsen/jwi-bcc32clenaup
+    
+    Removed old workarounds for bcc32
+
+commit 8dcbc57bc0b5870c41f886a491c7c324e4a43274
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 19 13:15:16 2021 +0200
+
+    Include cstdlib
+    
+        * ACE/ace/OS_NS_stdlib.h:
+
+commit 7ce07d26ac8fc15d2961613bc94ae48c75557c14
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 19 13:08:25 2021 +0200
+
+    Include cmath
+    
+        * ACE/ace/OS_NS_math.h:
+
+commit de0dde267b764c98e817b0affd2af354721b4e6b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 19 12:29:53 2021 +0200
+
+    Fixed compile errors
+    
+        * ACE/ace/OS_NS_stdio.h:
+        * ACE/ace/OS_NS_stdio.inl:
+        * ACE/ace/OS_NS_time.inl:
+
+commit 80b5d2a102bb0cea3bb58bd891af52a8796a7018
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 19 11:28:19 2021 +0200
+
+    Add missing include of ctime for windows
+    
+        * ACE/ace/OS_NS_time.inl:
+
+commit 377501f6634e161bcb82f7babf11753806db96fb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 19 11:21:37 2021 +0200
+
+    Removed ACE_STD_NAMESPACE from all signal related operations, these are not in the std namespace, this worked because ACE_STD_NAMESPACE only expands to std with Borland C++ which doesn't support these operations
+    
+        * ACE/ace/OS_NS_signal.h:
+        * ACE/ace/OS_NS_string.cpp:
+
+commit 006c3267d1ec9cfec8d2fa22458c182433bc1489
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 19 11:16:36 2021 +0200
+
+    More std usage
+    
+        * ACE/ace/OS_NS_time.cpp:
+        * ACE/ace/OS_NS_time.inl:
+
+commit a3ecbed8af2478a7b32ef0c6bb7fb26c9701569a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 19 10:59:08 2021 +0200
+
+    Make use of std now that we have C++11
+    
+        * ACE/ace/OS_NS_math.h:
+        * ACE/ace/OS_NS_stdio.h:
+        * ACE/ace/OS_NS_stdio.inl:
+        * ACE/ace/OS_NS_stdlib.h:
+        * ACE/ace/OS_NS_wchar.inl:
+
+commit 18cbda7cf52bc121583e7af7b585c70c380d80e4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 19 10:41:05 2021 +0200
+
+    Removed old workarounds for bcc32
+    
+        * ACE/ace/Refcounted_Auto_Ptr.h:
+        * ACE/ace/XML_Utils/XercesString.h:
+        * TAO/orbsvcs/orbsvcs/AV/RTCP_Channel.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
+        * TAO/utils/nslist/nslist.cpp:
+        * TAO/utils/wxNamingViewer/wxNamingViewer.cpp:
+
+commit 335e4a12ade8196a5e0bc8b7efa9d9f038f5883a
+Merge: ccbd4637729 2fa3cc5530c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 17 08:47:14 2021 +0200
+
+    Merge pull request #1616 from jwillemsen/jwi-2980test
+    
+    Make use of std::printf with all compilers
+
+commit 225e262df0754688a49c20bd9802e1b69d2aa83a
+Merge: a874267e5b6 2cd8f43e142
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 22:05:54 2021 +0200
+
+    Merge pull request #1614 from jwillemsen/jwi-sco
+    
+    Removed some old references to SCO
+
+commit a874267e5b6bdbb0438ed19ca46d6b2a90c31097
+Merge: 51349e55c43 a210795f448
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 22:05:26 2021 +0200
+
+    Merge pull request #1613 from jwillemsen/jwi-ACE_RM544
+    
+    Removed ACE_RM544 check, not set in any config file
+
+commit 51349e55c430dd2b5d7cee2ad421dd5b912d1ff3
+Merge: 9cb9618c068 13ec912f53d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 22:05:06 2021 +0200
+
+    Merge pull request #1612 from jwillemsen/jwi-clangcomp24
+    
+    clang4 lacks adequate C++11 support so we don't support that anymore,…
+
+commit 9cb9618c0681b34a96e7ca1dc81a13fa5519de6d
+Merge: 23ca9fac520 02a291f64ce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 22:04:49 2021 +0200
+
+    Merge pull request #1611 from jwillemsen/jwi-bccclang
+    
+    Borland C++ is now always using clang based compilers
+
+commit 23ca9fac520dd32527a3b15cbeae0f12233a30ff
+Merge: 394720b553e 32dab58b0ce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 18:27:43 2021 +0200
+
+    Merge pull request #1610 from jwillemsen/jwi-ACE_MSVC_USES_DOUBLE_UNDERSCORE_STAT64
+    
+    Removed check for ACE_MSVC_USES_DOUBLE_UNDERSCORE_STAT64, not set in …
+
+commit 394720b553eae92dfc91a0b47c15a52c3b932676
+Merge: f4c3d81895c 1fa67340e9a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 17:35:47 2021 +0200
+
+    Merge pull request #1609 from jwillemsen/jwi-ACE_WCHAR_STD_NAMESPACE
+    
+    Replace ACE_WCHAR_STD_NAMESPACE with std, with C++11 these are all in…
+
+commit f4c3d81895c79868c5695879d614c8ced6494741
+Merge: 1e700ccbf6d 940aaf09fca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 16:44:16 2021 +0200
+
+    Merge pull request #1608 from jwillemsen/jwi-embarcaderocleanup
+    
+    Cleanup some workarounds for old Embarcadero compilers
+
+commit 2fa3cc5530ce41128f7821a674beffc19a5b165d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 16:19:38 2021 +0200
+
+    Make use of std::printf with all compilers
+    
+        * ACE/tests/Bug_2980_Regression_Test.cpp:
+
+commit 2cd8f43e1427a64c0881c207252298f52627fd6a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 15:42:51 2021 +0200
+
+    Removed some old references to SCO
+    
+        * ACE/ace/OS_NS_sys_time.inl:
+        * ACE/ace/README:
+
+commit a210795f448aabc6e3bfb4ca2913164b21d2d2be
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 15:35:22 2021 +0200
+
+    Removed ACE_RM544 check, not set in any config file
+    
+        * ACE/ace/config-macros.h:
+
+commit 1e700ccbf6dcbe8e2edffae9285139dd246a5028
+Merge: 46ac50d47b0 4c26e2b362e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 15:04:55 2021 +0200
+
+    Merge pull request #1607 from jwillemsen/jwi-configwin32commoncleanup
+    
+    Simplified config-win32-common.h, moved the defines specific for a co…
+
+commit 13ec912f53df70ed557822ff1ecc18b386bebc72
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 15:04:14 2021 +0200
+
+    clang4 lacks adequate C++11 support so we don't support that anymore, we can now always compile this unit test
+    
+        * ACE/tests/Compiler_Features_24_Test.cpp:
+
+commit 02a291f64ce8156c02d46c5488a098186e3e297b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 15:02:40 2021 +0200
+
+    Borland C++ is now always using clang based compilers
+    
+        * ACE/ace/config-macros.h:
+
+commit 32dab58b0ce863723dd9d64d8d0dd22e323bde63
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 14:59:59 2021 +0200
+
+    Removed check for ACE_MSVC_USES_DOUBLE_UNDERSCORE_STAT64, not set in any config file
+    
+        * ACE/ace/OS_NS_sys_stat.h:
+
+commit 1fa67340e9a18a783ef5bff78d82d7a88fe70b9a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 14:39:32 2021 +0200
+
+    Replace ACE_WCHAR_STD_NAMESPACE with std, with C++11 these are all in the std namespace available
+    
+        * ACE/ace/OS_NS_stdlib.inl:
+
+commit 940aaf09fcaba4d101a27f92830746889629a319
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 14:34:01 2021 +0200
+
+    Cleanup some workarounds for old Embarcadero compilers
+    
+        * ACE/ace/Bound_Ptr.h:
+        * ACE/ace/Bound_Ptr.inl:
+        * ACE/ace/Future.h:
+        * ACE/ace/High_Res_Timer.cpp:
+
+commit 46ac50d47b02bab9066dd1bf0001dd778a0d8fa9
+Merge: 92fa7474dc3 5ce13938d56
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 13:40:21 2021 +0200
+
+    Merge pull request #1605 from jwillemsen/jwi-embcleanup
+    
+    Cleanup Embarcadero C++ Builder support
+
+commit 4c26e2b362eb77103f7cb851afee82f64c1dafa2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 10:07:10 2021 +0200
+
+    Simplified config-win32-common.h, moved the defines specific for a compiler to the respective file
+    
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/config-win32-common.h:
+        * ACE/ace/config-win32-mingw.h:
+        * ACE/ace/config-win32-mingw64.h:
+        * ACE/ace/config-win32-msvc-14.h:
+
+commit c27cd5515034f0baff249e0976ab27f70ddbe44b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 09:44:44 2021 +0200
+
+    All platforms that define ACE_LACKS_IOVEC has an unsigned iov_len, not only Embarcadero C++ Builder/Linux/RTEMS
+    
+        * ACE/ace/SOCK_Dgram.cpp:
+
+commit 5ce13938d56b7ec1967151e45df264eceb150ca1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 09:32:08 2021 +0200
+
+    Cleanup Embarcadero C++ Builder support
+    
+        * ACE/ace/Compression/rle/RLECompressor.cpp:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/post.h:
+        * ACE/ace/pre.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * TAO/orbsvcs/orbsvcs/Notify/RT_Factory.h:
+        * TAO/orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * TAO/tests/Bug_3574_Regression/test.cpp:
+        * TAO/tests/RTCORBA/README:
+
+commit 14310131cc5cb7fae74c38a2accbca23df3bad3b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 14 11:30:50 2021 +0200
+
+    Add cleanup
+    
+        * ACE/NEWS:
+
+commit 121ce4ec0a3ece51991220bc98ce008e97614e2b
+Merge: a1d27bfcc0b a0da9d2ed9c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 13 12:45:32 2021 +0200
+
+    Merge pull request #1603 from jwillemsen/jwi-bcc32c
+    
+    Only the Embarcadero clang based compilers support C++11
+
+commit a0da9d2ed9cc30217ba98f5c9de03ca2db8d3aa0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 13 12:03:13 2021 +0200
+
+    Only the clang based compilers support C++11
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit ee05329751aa33e1624970de84345b085ec1b8f1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 12 13:23:37 2021 +0200
+
+    Further extend DLL test with exceptions
+    
+        * ACE/tests/DLL_Test_Impl.cpp:
+        * ACE/tests/DLL_Test_Parent.cpp:
+        * ACE/tests/DLL_Test_Parent.h:
+
+commit 3f4c7637ce0cfbaa396fed5cc2613b61df751d89
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 11 19:18:03 2021 +0200
+
+    Removed item
+    
+        * ACE/NEWS:
+
+commit 14c03f487d6d565c28b054c7a0d87336c9360e6f
+Merge: 4db73f60569 b88ab9048d5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 9 21:31:22 2021 +0200
+
+    Merge pull request #1597 from jwillemsen/jwi-mingw3cleanup
+    
+    Require MinGW 3 or greater, as a side effect cleanup some defines
+
+commit b88ab9048d58f5507bbf5f5d31904e22c2606cbf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 9 19:29:29 2021 +0200
+
+    Add necessary defines for msvc, they are not in common anymore
+    
+        * ACE/ace/config-win32-msvc-14.h:
+
+commit c27497da9eb1dffd5119bf29fe128cbef7413bb5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 9 17:08:41 2021 +0200
+
+    List changes
+    
+        * ACE/NEWS:
+
+commit 215a7de03a7d7cc07bc690a1bf20e0fbf79e313a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 9 16:55:04 2021 +0200
+
+    Require MinGW 3 or greater, as a side effect cleanup some defines
+    
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/config-win32-common.h:
+        * ACE/ace/config-win32-mingw.h:
+        * ACE/ace/config-win32-mingw64.h:
+
+commit 263e4488a7d0618dcbab2e4f5e7995428cde53ca
+Merge: 5e3afb9d934 b23362324e9
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jul 9 09:45:05 2021 -0500
+
+    Merge pull request #1592 from mitza-oci/install-relative
+    
+    make install: use relative links in prefix/share
+
+commit 5e3afb9d934fe5d94d26bb4831c7ba7ed35a3c43
+Merge: e43718d94e0 1252f0d1f1e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jul 9 09:44:51 2021 -0500
+
+    Merge pull request #1594 from iguessthislldo/igtd/stdint
+    
+    Fix Coverity Issues and Compiler Warnings
+
+commit f818b6ca180b86dc00be9bbc21d2e67f40d9dddf
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 8 17:26:09 2021 -0500
+
+    Attempt to Fix Coverity Issues from #840
+    
+    https://github.com/DOCGroup/ACE_TAO/pull/840
+    
+    Because the main set of issues in `coerce_value` was caused by applying
+    the existing pattern, the issues caused by the existing code should also
+    be fixed.
+
+commit b23362324e929b731f3908c2f1d458d16c524f49
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jul 8 14:04:25 2021 -0500
+
+    make install: use relative links in prefix/share
+
+commit 4a181052a851fe1b117d42458f9380e6de1c8867
+Merge: 53b36b652c0 b0cd3a5186a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 1 10:48:18 2021 +0200
+
+    Merge pull request #1585 from likema/hpux-dccflags
+    
+    Fix HP-UX g++ DCCFLAGS.
+
+commit c2990a3bc0a9d809bd84a6d5f1d97f6f381143b9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 1 08:24:43 2021 +0200
+
+    Extend exception tests
+    
+        * ACE/tests/DLL_Test_Impl.cpp:
+        * ACE/tests/DLL_Test_Parent.cpp:
+        * ACE/tests/DLL_Test_Parent.h:
+
+commit b0cd3a5186ae483896beb002777f4d8eab16ed9b
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Thu Jul 1 13:48:51 2021 +0800
+
+    Fix HP-UX g++ DCCFLAGS.
+
+commit 48f51b52ee8e8cc1ff6608f1539a7985c65e5acc
+Merge: 4a5a0596c8b 354b698dd92
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Jun 30 13:51:55 2021 -0500
+
+    Merge pull request #840 from iguessthislldo/igtd/stdint
+    
+    IDLv4 Explicitly-named Integer Types
+
+commit 4a5a0596c8b261c211a59c945b4f7783df50f132
+Merge: 25c7d1ff355 17a723d7169
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 30 17:28:51 2021 +0200
+
+    Merge pull request #1584 from likema/aix-dccflags
+    
+    Fix AIX g++ DCCFLAGS.
+
+commit 354b698dd92c075dc01d36bd01fefd56099ce6a5
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jun 29 22:38:26 2021 -0500
+
+    Fix Issue with No Inlining
+
+commit 17a723d7169f55a740585f8666379205bf92bf46
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Wed Jun 30 03:21:47 2021 +0800
+
+    Fix AIX g++ DCCFLAGS.
+
+commit 19202d5a268243c47f2edb2ca6451c263fe8458c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 29 12:36:39 2021 +0200
+
+    Add -q back
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit 249f06de2845ac9885fdc79893a7808e0fbe26d5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 29 12:20:37 2021 +0200
+
+    Use bcc32c/bcc64 as preprocessor
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit c8221814c5dd3e724f88b3b5dc33e38b652dc0ba
+Merge: fffe48a8fea 4690065da35
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 28 15:45:40 2021 +0200
+
+    Merge branch 'master' into jwi-ACE_OSCALL
+
+commit fffe48a8fea850e331714bb526be5de12122307f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 28 15:41:21 2021 +0200
+
+    Removed lot of ACE_OSCALL_RETURN calls, the macro expanded to only the method invocation itself
+    
+        * ACE/ace/OS_NS_Thread.inl:
+        * ACE/ace/OS_NS_arpa_inet.cpp:
+        * ACE/ace/OS_NS_arpa_inet.inl:
+        * ACE/ace/OS_NS_devctl.inl:
+        * ACE/ace/OS_NS_dlfcn.inl:
+        * ACE/ace/OS_NS_fcntl.cpp:
+        * ACE/ace/OS_NS_fcntl.inl:
+        * ACE/ace/OS_NS_poll.inl:
+        * ACE/ace/OS_NS_regex.inl:
+        * ACE/ace/OS_NS_signal.inl:
+        * ACE/ace/OS_NS_stdio.inl:
+        * ACE/ace/OS_NS_stdlib.inl:
+        * ACE/ace/OS_NS_stropts.inl:
+        * ACE/ace/OS_NS_sys_mman.inl:
+        * ACE/ace/OS_NS_sys_msg.inl:
+        * ACE/ace/OS_NS_sys_resource.inl:
+        * ACE/ace/OS_NS_sys_shm.inl:
+        * ACE/ace/OS_NS_sys_socket.inl:
+        * ACE/ace/OS_NS_sys_stat.inl:
+        * ACE/ace/OS_NS_sys_uio.inl:
+        * ACE/ace/OS_NS_sys_utsname.cpp:
+        * ACE/ace/OS_NS_sys_wait.inl:
+        * ACE/ace/OS_NS_time.cpp:
+        * ACE/ace/OS_NS_time.inl:
+        * ACE/ace/OS_NS_unistd.cpp:
+        * ACE/ace/OS_NS_unistd.inl:
+        * ACE/ace/OS_NS_wchar.inl:
+        * ACE/ace/OS_TLI.inl:
+
+commit 6e2e9f862209e9dae3a282f2505e83d9dce2ac69
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 28 14:50:36 2021 +0200
+
+    Removed FAIL value from ACE_OSCALL an ACE_OSCALL_RETURN, not used at all
+    
+        * ACE/ace/Mem_Map.cpp:
+        * ACE/ace/OS_NS_Thread.cpp:
+        * ACE/ace/OS_NS_Thread.inl:
+        * ACE/ace/OS_NS_arpa_inet.cpp:
+        * ACE/ace/OS_NS_arpa_inet.inl:
+        * ACE/ace/OS_NS_devctl.inl:
+        * ACE/ace/OS_NS_dlfcn.inl:
+        * ACE/ace/OS_NS_fcntl.cpp:
+        * ACE/ace/OS_NS_fcntl.inl:
+        * ACE/ace/OS_NS_macros.h:
+        * ACE/ace/OS_NS_netdb.inl:
+        * ACE/ace/OS_NS_poll.inl:
+        * ACE/ace/OS_NS_regex.inl:
+        * ACE/ace/OS_NS_signal.inl:
+        * ACE/ace/OS_NS_stdio.inl:
+        * ACE/ace/OS_NS_stdlib.inl:
+        * ACE/ace/OS_NS_stropts.inl:
+        * ACE/ace/OS_NS_sys_mman.inl:
+        * ACE/ace/OS_NS_sys_msg.inl:
+        * ACE/ace/OS_NS_sys_resource.inl:
+        * ACE/ace/OS_NS_sys_shm.inl:
+        * ACE/ace/OS_NS_sys_socket.inl:
+        * ACE/ace/OS_NS_sys_stat.inl:
+        * ACE/ace/OS_NS_sys_time.inl:
+        * ACE/ace/OS_NS_sys_uio.inl:
+        * ACE/ace/OS_NS_sys_utsname.cpp:
+        * ACE/ace/OS_NS_sys_wait.inl:
+        * ACE/ace/OS_NS_time.cpp:
+        * ACE/ace/OS_NS_time.h:
+        * ACE/ace/OS_NS_time.inl:
+        * ACE/ace/OS_NS_unistd.cpp:
+        * ACE/ace/OS_NS_unistd.inl:
+        * ACE/ace/OS_NS_wchar.inl:
+        * ACE/ace/OS_TLI.inl:
+        * ACE/ace/config-macros.h:
+        * TAO/TAO_IDL/be/be_helper.cpp:
+
+commit ac88af9fc0cf5111abdcd6b0ee57634269aa1ea9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 28 14:11:00 2021 +0200
+
+    Make sure ACE_OS::dlsym called with an invalid handle returns nullptr, updated DLL_Test to validate that
+    
+        * ACE/ace/DLL_Manager.cpp:
+        * ACE/ace/Lib_Find.cpp:
+        * ACE/ace/OS_NS_dlfcn.inl:
+        * ACE/ace/README:
+        * ACE/ace/config-android.h:
+        * ACE/ace/config-hurd.h:
+        * ACE/ace/config-openbsd.h:
+        * ACE/tests/DLL_Test.cpp:
+
+commit 6b379156a30c1e708cefc87a89dd0ad820848c1a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jun 26 09:11:42 2021 +0200
+
+    Renamed ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS to ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS
+    
+        * ACE/NEWS:
+        * ACE/ace/Base_Thread_Adapter.cpp:
+        * ACE/ace/Base_Thread_Adapter.h:
+        * ACE/ace/Global_Macros.h:
+        * ACE/ace/Log_Msg.cpp:
+        * ACE/ace/Log_Msg.h:
+        * ACE/ace/MEM_IO.inl:
+        * ACE/ace/Malloc_T.cpp:
+        * ACE/ace/OS_Log_Msg_Attributes.h:
+        * ACE/ace/OS_Log_Msg_Attributes.inl:
+        * ACE/ace/OS_NS_Thread.cpp:
+        * ACE/ace/OS_Thread_Adapter.cpp:
+        * ACE/ace/OS_Thread_Adapter.h:
+        * ACE/ace/Object_Manager_Base.cpp:
+        * ACE/ace/Object_Manager_Base.h:
+        * ACE/ace/README:
+        * ACE/ace/Thread_Adapter.cpp:
+        * ACE/ace/Thread_Adapter.h:
+        * ACE/ace/Thread_Manager.cpp:
+        * ACE/ace/config-all.h:
+        * ACE/ace/config-lite.h:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/config-win32-msvc.h:
+        * ACE/tests/Compiler_Features_39_Test.cpp:
+
+commit bc384f398ea308b8355655cd444f668690cd2ae7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 25 15:51:22 2021 +0200
+
+    When using native windows threads the thread function needs a special signature else it could trigger some warnings
+    
+        * ACE/performance-tests/Misc/childbirth_time.cpp:
+
+commit ffc277577505ef64fe556f1a84e023e51a7f0d8a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 25 08:07:30 2021 +0200
+
+    Run DLL_Test and Process_Test also on Windows
+    
+        * ACE/tests/run_test.lst:
+
+commit 08fe2f69bbb6bc25eec064f2cb4bc17194589f1c
+Merge: 337be15bf74 3cbad3a99b3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 24 13:26:00 2021 +0200
+
+    Merge pull request #1575 from jwillemsen/jwi-exceptiontest
+    
+    Extend DLL test with throwing and catching exceptions through DLL bou…
+
+commit 3cbad3a99b3645e99cedd39bd5129f7187e9d589
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 24 11:37:54 2021 +0200
+
+    Extend DLL test with throwing and catching exceptions through DLL boundaries
+    
+        * ACE/tests/DLL_Test_Impl.cpp:
+        * ACE/tests/DLL_Test_Parent.cpp:
+        * ACE/tests/DLL_Test_Parent.h:
+
+commit aa056a80e866c6b4bb113cd35492109522f3e76c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 24 10:04:32 2021 +0200
+
+    Removed old comments and support for Chorus which we don't support anymore
+    
+        * ACE/ace/README:
+        * ACE/ace/Thread_Manager.cpp:
+        * ACE/ace/config-kfreebsd.h:
+        * ACE/bin/libsize.pl:
+        * ACE/docs/run_test.txt:
+        * TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/run_test.pl:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test.pl:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test_ft.pl:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/README:
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/README:
+        * TAO/tests/Alt_Mapping/run_test.pl:
+        * TAO/tests/Bug_2289_Regression/run_test.pl:
+        * TAO/tests/Bug_3853_Regression/run_test.pl:
+        * TAO/tests/DynAny_Test/run_test.pl:
+        * TAO/tests/Param_Test/run_test.pl:
+
+commit 89c2153b1ec4a1cf07a2a2c3b6c4f38b49fa2683
+Merge: 02fd46984c0 cbc77affe62
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 23 15:38:12 2021 +0200
+
+    Merge pull request #1573 from jwillemsen/jwi-sehdefine
+    
+    msvc and borland should define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS, r…
+
+commit 02fd46984c068ff37a1ed35dfa678b8ecb7a5bcc
+Merge: 25d33e0d26a 619a36fa943
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 23 15:37:54 2021 +0200
+
+    Merge pull request #1572 from jwillemsen/jwi-ACE_USES_STD_NAMESPACE_FOR_ABS
+    
+    Removed ACE_USES_STD_NAMESPACE_FOR_ABS, not used anymore
+
+commit 619a36fa943b746ea64f56df063a2bb1a418d084
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 23 12:45:19 2021 +0200
+
+    Removed ACE_USES_STD_NAMESPACE_FOR_ABS, not used anymore
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit cbc77affe62f4e782c6791608ef1d0ff287919aa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 23 12:44:20 2021 +0200
+
+    msvc and borland should define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS, removes mingw check from the common header
+    
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/config-win32-common.h:
+        * ACE/ace/config-win32-msvc.h:
+
+commit 9be3895de04b2b137660979c1019e02992809309
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 23 08:39:56 2021 +0200
+
+    Fixed unused parameter warning
+    
+        * ACE/tests/DLL_Test_Parent.h:
+
+commit 74eb535936de21c734f536843123817ab2f04abf
+Merge: e5d76ecbb70 cc9cfeeecde
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 22 21:43:32 2021 +0200
+
+    Merge pull request #1570 from jwillemsen/jwi-ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
+    
+    Removed ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS for gcc
+
+commit cc9cfeeecde110117b0fd4ab85c6f50f8f0106d1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 22 16:47:10 2021 +0200
+
+    Removed ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS, not necessary anymore
+    
+        * ACE/ace/config-g++-common.h:
+
+commit 502ccddc6caee898488ac02d1a865e84459d2853
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 22 15:43:22 2021 +0200
+
+    Add class with default operations to test dllexport/import
+
+commit 1f157faae5e6f2fdc9f10c236dca136c7ee7488a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 22 14:35:02 2021 +0200
+
+    Minor cleanup
+    
+        * ACE/tests/Based_Pointer_Test.cpp:
+        * ACE/tests/Basic_Types_Test.cpp:
+        * ACE/tests/Bound_Ptr_Test.cpp:
+        * ACE/tests/Bound_Ptr_Test.h:
+        * ACE/tests/DLL_Test.cpp:
+        * ACE/tests/DLL_Test.h:
+        * ACE/tests/DLL_Test_Impl.cpp:
+        * ACE/tests/DLL_Test_Parent.h:
+        * ACE/tests/SOCK_Acceptor_Test.cpp:
+        * ACE/tests/Unbounded_Set_Test.cpp:
+
+commit 16b803df3f89ccbaab85bc75c8950fd3f891f5db
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 22 14:24:35 2021 +0200
+
+    Use override, removed redundant void
+    
+        * ACE/tests/DLL_Test.h:
+        * ACE/tests/DLL_Test_Impl.h:
+        * ACE/tests/DLL_Test_Parent.h:
+
+commit bcd7675d8dd8a4821981fc4afc619c54bc9125b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 22 12:47:55 2021 +0200
+
+    Layout changes, remove redundant void
+    
+        * ACE/ace/LSOCK_Acceptor.cpp:
+        * ACE/tests/Compiler_Features_20_DLL.h:
+        * ACE/tests/DLL_Test.h:
+        * ACE/tests/FIFO_Test.cpp:
+        * ACE/tests/Framework_Component_DLL.h:
+        * ACE/tests/Framework_Component_Test.cpp:
+        * ACE/tests/Future_Set_Test.cpp:
+        * ACE/tests/Log_Msg_Test.cpp:
+        * ACE/tests/Logging_Strategy_Test.cpp:
+        * ACE/tests/Max_Default_Port_Test_IPV6.cpp:
+        * ACE/tests/Naming_Test.cpp:
+
+commit 2ed7fe7c1c6492c7f920581ec3ac8e7ec4278efd
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 21 20:22:55 2021 -0500
+
+    Support int8/uint8 Sequences and Arrays
+
+commit 26cf12f3227f3186c8b60ad07a9c669f00cf5302
+Merge: 7f52a0eb64a 83f68ebe620
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 21 15:52:22 2021 +0200
+
+    Merge pull request #1568 from jwillemsen/jwi-msvccleanup2
+    
+    Removed workaround for old msvc compilers
+
+commit 7f52a0eb64a4847e013af14558c96184b3494081
+Merge: 7b35108cb72 edb65903473
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 21 15:52:06 2021 +0200
+
+    Merge pull request #1567 from jwillemsen/jwi-overridert
+    
+    Use override instead of virtual
+
+commit 7b35108cb72cd2d53cb21629c5e7962e2b61011a
+Merge: 87fc522dcd5 67644425022
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 21 15:51:54 2021 +0200
+
+    Merge pull request #1565 from jwillemsen/jwi-removebrokenhpacc
+    
+    Removed workarounds for very old broken HP compilers
+
+commit 87fc522dcd51fde1ba6ee644986bf60d33ff68ab
+Merge: 2bc24057cc1 f3c30f56870
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 21 15:51:30 2021 +0200
+
+    Merge pull request #1564 from jwillemsen/jwi-bcc32fix
+    
+    Updated bcc32 version check
+
+commit 83f68ebe62048fbcd7722dd203f719eded401655
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 21 09:58:45 2021 +0200
+
+    Removed workaround for old msvc compiler
+    
+        * ACE/ace/os_include/os_intrin.h:
+
+commit edf3f0d624f95ad02ada1a22cfa9f6beb393f82a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 21 08:55:48 2021 +0200
+
+    Layout changes
+    
+        * ACE/ace/OS_Thread_Adapter.h:
+        * ACE/ace/Object_Manager_Base.h:
+        * ACE/ace/Thread_Adapter.cpp:
+        * ACE/ace/Thread_Adapter.h:
+        * ACE/examples/APG/Shared_Memory/Pool_Growth.cpp:
+
+commit 67644425022c6c520debc2a47b1fa1c90f2cd59e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 21 08:45:31 2021 +0200
+
+    Removed workarounds for very old broken HP compilers
+    
+        * ACE/ACEXML/common/ZipCharStream.cpp:
+        * ACE/ace/OS_NS_signal.h:
+        * ACE/ace/OS_NS_stdio.cpp:
+        * ACE/ace/OS_TLI.h:
+        * ACE/ace/SStringfwd.h:
+        * ACE/ace/Stack_Trace.cpp:
+        * ACE/tests/Bug_3709_Regression_Test.cpp:
+        * ACE/tests/Compiler_Features_12_Test.cpp:
+        * TAO/orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+
+commit f3c30f56870cc2b03f99abfa50124d7dd495a2ad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 21 08:42:22 2021 +0200
+
+    Updated bcc32 version check
+    
+        * ACE/ace/post.h:
+        * ACE/ace/pre.h:
+
+commit fcb9994d5b958dfd7308eba8adee2cf62a9774d2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 20 19:32:50 2021 +0200
+
+    Default to no inlining with the Borland compilers
+    
+        * ACE/ace/config-kfreebsd.h:
+        * ACE/ace/config-win32-borland.h:
+
+commit 08331ad15de2a9e1b63aa84a0c7ae31af502f8cc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 20 16:44:17 2021 +0200
+
+    Extend SEH test with call variant
+    
+        * ACE/tests/Compiler_Features_39_Test.cpp:
+
+commit 84428c7adffc789509786dcdf40392e79664bab8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jun 19 10:30:01 2021 +0200
+
+    Fixed typo in comment
+    
+        * ACE/ace/MEM_IO.cpp:
+
+commit 32de3d895ac0742f100bf3722d562219b251d41c
+Merge: 67e660cf72c c14fe113555
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 18 19:05:28 2021 +0200
+
+    Merge pull request #1560 from jwillemsen/jwi-gnuaceciaodance
+    
+    Cleanup CIAO/DAnCE in ACE_ROOT/bin, they are not possible to be used with ACE7/TAO3
+
+commit 67e660cf72c7e02e91b7e0df2bbfb9fe5d5e2094
+Merge: 1620aa41534 2b717af399e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 18 18:56:46 2021 +0200
+
+    Merge pull request #1561 from jwillemsen/jwi-sehtest
+    
+    New compiler test to validated that structured exception handling on windows works
+
+commit 2b717af399e275065bfada5f77631cd69d75eff6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 18 16:32:55 2021 +0200
+
+    Indent changes
+    
+        * ACE/ace/OS_Thread_Adapter.cpp:
+        * ACE/ace/OS_Thread_Adapter.h:
+        * ACE/ace/Thread_Adapter.h:
+
+commit 2871e2a915aaec15988365222766e5f7227603d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 18 14:49:17 2021 +0200
+
+    No need to check for ACE_WIN32 in combination with ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
+        * ACE/ace/Global_Macros.h:
+        * ACE/ace/OS_Log_Msg_Attributes.inl:
+        * ACE/tests/Compiler_Features_39_Test.cpp:
+
+commit 7a4b933220109962afd6ed72fe4e352184536e69
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 18 14:46:08 2021 +0200
+
+    Update Compiler_Features_39_Test.cpp
+
+commit c14fe11355571c09ea0846358179df8e1bd0fb79
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 18 14:14:16 2021 +0200
+
+    Removed CIAO/DANCE_ROOT
+    
+        * ACE/bin/MakeProjectCreator/config/MPC.cfg:
+
+commit 3cfb4c306e8bd659dd222db1be39e1b10522df8e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 18 08:38:10 2021 +0200
+
+    Removed CIAO/DAnCE references
+
+commit e99ea57e711be1eeff12027ba9a57578e7ab975f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 18 08:37:32 2021 +0200
+
+    Removed CIAO/DAnCE references
+
+commit d4555d0f7cefb0fe006b193ca3feb3e1810467b7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 18 08:31:21 2021 +0200
+
+    Fixed errors
+    
+        * ACE/bin/fuzz.pl:
+
+commit ad9983b5ed5796616a511ee5ea50729108172fc1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 18 08:26:54 2021 +0200
+
+    Removed some dance leftovers
+
+commit b888b487c9bb05280ad48227f00d1564e478d955
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 18 08:23:20 2021 +0200
+
+    Cleanup CIAO/DAnCE, they are not possible to be used with ACE7/TAO3
+
+commit c0a5c2e18a9f7ab12db3e599653c08e22229f334
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 18 08:04:01 2021 +0200
+
+    First version of Win32 structured exception handling test
+    
+        * ACE/tests/Compiler_Features_39_Test.cpp:
+          Added.
+    
+        * ACE/tests/run_test.lst:
+        * ACE/tests/tests.mpc:
+
+commit 2020e227a719734fc88d220e60ba5043bbc5ec69
+Merge: 80443baaae5 6d7ea0a3e68
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 17 14:03:19 2021 +0200
+
+    Merge pull request #1557 from jwillemsen/jwi-processenvtest3
+    
+    Log the status returned by wait
+
+commit 6d7ea0a3e686337865d9440feb9bb327582c6bf9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 17 10:16:56 2021 +0200
+
+    Log the status returned by wait
+    
+        * ACE/tests/Process_Env_Test.cpp:
+
+commit ec3720c20cfbbfe910d03f4aa563b2a720e6e04b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 17 08:41:24 2021 +0200
+
+    MinGW64 also requires ACE_LACKS_SET_ABORT_BEHAVIOR
+    
+        * ACE/ace/config-win32-mingw64.h:
+
+commit cb579f6b18458bb17117bc953ac6ef3428ca47ea
+Merge: 767d3491c10 70516980225
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Wed Jun 16 09:13:26 2021 -0500
+
+    Merge pull request #1549 from simpsont-oci/master_ip_check_fix
+    
+    Fix Concurrency and too-early-request Issues for Windows ip_check
+
+commit e78920b82757e4075d256b302a788891cec69780
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 16 08:14:08 2021 +0200
+
+    Introduce new ACE_LACKS_SET_ABORT_BEHAVIOR which is set for Embarcadero/MinGW32
+    
+        * ACE/ace/Object_Manager.cpp:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/config-win32-mingw.h:
+
+commit 800cec49aeaedbf5355557fc1b300a3b7a1be46d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jun 15 13:35:07 2021 -0500
+
+    s/Uint/UInt/g
+
+commit dda04a7f69ac196f69d74ec02f52573b7a76abc5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 15 11:48:13 2021 +0200
+
+    Use override instead of virtual
+    
+        * ACE/ace/ETCL/ETCL_Constraint.h:
+
+commit 737b9195ece838d15d4c6d54300026a26e5d1c44
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 14 15:58:44 2021 -0500
+
+    Partially Respond to Review of #840
+    
+    https://github.com/DOCGroup/ACE_TAO/pull/840
+
+commit 70516980225b7e267f3ce7ac172d237037715d7b
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Mon Jun 14 10:45:53 2021 -0500
+
+    fix concurrency and too-early-request issues for windows ip_check
+
+commit e994776aa9614588eb6e4ed0dd9ba5e71a74e494
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Sun Jun 13 00:55:05 2021 -0500
+
+    CDR_Stream.h: Fix Arg Type
+
+commit 56a61b91a637fbb0be576cbc3f7a173e0c63476a
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Sat Jun 12 22:43:28 2021 -0500
+
+    Fix Issues with explicit_ints Test
+    
+    - Add uint8 and int8 to ACE and TAO serialization
+    - Refactor parts of AST_Expression to also cover uint8 and int8
+
+commit 7e72c4b61b877a1f85bdc4e59e82b7f9eec8a041
+Merge: a8e49fee8d0 0e8140b00d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 19:40:26 2021 +0200
+
+    Merge pull request #1541 from jwillemsen/jwi-autoptrresset
+    
+    Use reset instead of ACE_auto_ptr_reset
+
+commit a8e49fee8d0c88d561c11ae5d8b1e1e2dc58ca6c
+Merge: 29063318f84 a3c268906c8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 19:36:42 2021 +0200
+
+    Merge pull request #1537 from jwillemsen/jwi-ACE_HAS_STRING_CLASS
+    
+    Each platform we support provides std::string as string class, define…
+
+commit 0d9ec7842b2b0d59a0052ac0b64d9d69ab6dc336
+Merge: f8ff8d3510e b373359da92
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 18:08:45 2021 +0200
+
+    Merge pull request #1535 from jwillemsen/jwi-ACE_HAS_CPP98_IOSTREAMS
+    
+    We require each platform to provide std iostreams so define ACE_HAS_C…
+
+commit f8ff8d3510eccc69503113eb56790318e0c6cb4a
+Merge: 31ba785e82f 28b457fae1e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 18:08:22 2021 +0200
+
+    Merge pull request #1538 from jwillemsen/jwi-ipfxmsvc
+    
+    Removed some !ACE_WIN32 checks, the comments talk about an ancient ms…
+
+commit 0e8140b00d4eecdede01f04d77e9e9331d7e3785
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 16:25:50 2021 +0200
+
+    Use reset instead of ACE_auto_ptr_reset
+    
+        * ACE/ace/CDR_Stream.cpp:
+        * ACE/ace/OS_NS_Thread.cpp:
+        * ACE/tests/Bug_2820_Regression_Test.cpp:
+        * ACE/tests/Malloc_Test.cpp:
+
+commit 31ba785e82f878e319c94aa9978584adbf64b77c
+Merge: a51c02528aa e3a0e35c417
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 16:18:48 2021 +0200
+
+    Merge pull request #1518 from ops/tty_io_fix
+    
+    TTY_IO enhancements
+
+commit a51c02528aaca67a5fdaf68994af0ae682e7a447
+Merge: c4a710295bf 485cadb9199
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 16:16:09 2021 +0200
+
+    Merge pull request #1540 from jwillemsen/jwi-ACE_AUTO_PTR_LACKS_RESET
+    
+    Removed ACE_AUTO_PTR_LACKS_RESET support, not set anymore for any pla…
+
+commit b373359da92b4daa71282e6ce849ea641fea790c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 11:44:25 2021 +0200
+
+    Move include of ostream from source to header for face
+    
+        * ACE/ace/Time_Value.cpp:
+        * ACE/ace/Time_Value.h:
+
+commit 485cadb91999321a1c153344c7fc51ceb68bb78c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 10:20:12 2021 +0200
+
+    Removed ACE_AUTO_PTR_LACKS_RESET support, not set anymore for any platform
+    
+        * ACE/ace/Auto_Ptr.h:
+
+commit 6e95ede02abea0d5d1b66a2da1765e5ce3df7f26
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 09:56:35 2021 +0200
+
+    Removed ACE_HAS_NEW_NO_H, not used anymore
+    
+        * ACE/ace/config-hpux-11.00.h:
+        * ACE/ace/config-kfreebsd.h:
+        * ACE/ace/config-netbsd.h:
+        * ACE/ace/config-openbsd.h:
+        * ACE/ace/config-qnx.h:
+
+commit 28b457fae1edb832ff50a8ab0edd44b27f99acc4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 09:47:36 2021 +0200
+
+    Removed some !ACE_WIN32 checks, the comments talk about an ancient msvc compiler
+    
+        * ACE/ace/IOStream_T.h:
+
+commit a3c268906c8890975eb405c421050b92b16aaf0d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 09:44:07 2021 +0200
+
+    Remove cleanup of ACE_HAS_STRING_CLASS
+    
+        * ACE/ace/IOStream.h:
+        * ACE/ace/README:
+        * ACE/ace/config-hpux-11.00.h:
+        * ACE/ace/config-lynxos.h:
+        * ACE/ace/config-netbsd.h:
+        * ACE/ace/config-openbsd.h:
+        * ACE/ace/config-openvms.h:
+        * ACE/ace/config-qnx.h:
+        * ACE/ace/config-rtems.h:
+        * ACE/ace/config-suncc-common.h:
+        * ACE/ace/config-sunos5.4-g++.h:
+        * ACE/ace/config-sunos5.5.h:
+        * ACE/ace/config-sunos5.6.h:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/examples/IOStream/client/iostream_client.cpp:
+        * ACE/examples/IOStream/server/iostream_server.cpp:
+
+commit b68528866d94595dabe98676058e46189b26e785
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 09:35:42 2021 +0200
+
+    Add missing std scope
+    
+        * ACE/ace/Time_Value.cpp:
+        * ACE/ace/Time_Value.h:
+
+commit 6e9f7718c9e564e9a0ac1efbe34adfc3f74ed06c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 09:30:34 2021 +0200
+
+    Each platform we support provides std::string as string class, define ACE_HAS_STRING_CLASS always and removed the checks for it
+    
+        * ACE/ace/IOStream.h:
+        * ACE/ace/IOStream_T.cpp:
+        * ACE/ace/IOStream_T.h:
+        * ACE/ace/config-aix-5.x.h:
+        * ACE/ace/config-all.h:
+        * ACE/ace/config-cygwin32.h:
+        * ACE/ace/config-hpux-11.00.h:
+        * ACE/ace/config-hurd.h:
+        * ACE/ace/config-icc-common.h:
+        * ACE/ace/config-kfreebsd.h:
+        * ACE/ace/config-linux-common.h:
+        * ACE/tests/IOStream_Test.cpp:
+
+commit b3f34e9f9b193af148e884c00552cbe88b08df18
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 08:55:19 2021 +0200
+
+    Fixed compile error
+    
+        * ACE/examples/C++NPv1/Logging_Client.cpp:
+
+commit 8b78a5b28039bf877a77acc625c362473c9238c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 08:40:22 2021 +0200
+
+    We require each platform to provide std iostreams so define ACE_HAS_CPP98_IOSTREAMS always for backwards compability and removed the checks for it
+    
+        * ACE/ace/Time_Value.cpp:
+        * ACE/ace/Time_Value.h:
+        * ACE/ace/iosfwd.h:
+        * ACE/tests/Time_Value_Test.cpp:
+
+commit a4c5b22c20a1f1298a23d3ab57571237284b1963
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 7 23:43:19 2021 -0500
+
+    Added WIP explicit_ints Test
+    
+    And a bunch of fixes to get it to (sorta) work.
+
+commit 85a1e615810419950f8f1280f80df9da9f5dee4d
+Merge: 7549f0b34c1 d8971212c4f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 7 17:12:57 2021 -0500
+
+    Merge remote-tracking branch 'upstream/master' into igtd/stdint
+
+commit f8d348ca352579461659e5e58fccfd6cb57a83b2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 7 21:23:38 2021 +0200
+
+    Update config-win32-msvc-14.h
+
+commit 072c0939cc2a824ced1fb3ab7091b74c3bb092c3
+Merge: 6f6f7ea0c8f d8971212c4f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 7 21:22:22 2021 +0200
+
+    Merge branch 'master' into jwi-ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+
+commit 1efcb84d7779c43e091aac2e1af698f238c5c489
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 7 18:50:02 2021 +0200
+
+    Check with nullptr
+    
+        * ACE/ace/CORBA_macros.h:
+
+commit 6eb9c720ec8370387a7ae9474d853d571e1a8070
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 7 08:57:12 2021 +0200
+
+    Operator bool doesn't work in all places, use nullptr
+    
+        * ACE/ace/OS_Memory.h:
+
+commit 6f6f7ea0c8fcde679ef21a59a4686043b02d3057
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 7 08:50:33 2021 +0200
+
+    We require now that the standard C++ library is supported and available in the std namespace, removed support for non compliant configurations
+    
+        * ACE/ace/Auto_Ptr.h:
+        * ACE/ace/Auto_Ptr.inl:
+        * ACE/ace/Global_Macros.h:
+        * ACE/ace/IOStream.h:
+        * ACE/ace/README:
+        * ACE/ace/ace_wchar.h:
+        * ACE/ace/config-aix-5.x.h:
+        * ACE/ace/config-all.h:
+        * ACE/ace/config-g++-common.h:
+        * ACE/ace/config-hpux-11.00.h:
+        * ACE/ace/config-icc-common.h:
+        * ACE/ace/config-integritySCA.h:
+        * ACE/ace/config-kfreebsd.h:
+        * ACE/ace/config-linux-common.h:
+        * ACE/ace/config-mqx.h:
+        * ACE/ace/config-netbsd.h:
+        * ACE/ace/config-openvms.h:
+        * ACE/ace/config-qnx.h:
+        * ACE/ace/config-suncc-common.h:
+        * ACE/ace/config-sunos5.5.h:
+        * ACE/ace/config-sunos5.6.h:
+        * ACE/ace/config-vxworks6.4.h:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/config-win32-msvc-14.h:
+        * ACE/ace/iosfwd.h:
+        * ACE/ace/streams.h:
+        * ACE/examples/C++NPv1/Logging_Client.cpp:
+        * ACE/examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * ACE/examples/C++NPv2/Server_Shutdown.cpp:
+        * ACE/examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+        * ACE/tests/IOStream_Test.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/Auth/Messenger_i.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/Auth/ServerInitializer.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/PICurrent/Messenger_i.cpp:
+        * TAO/docs/tutorials/Quoter/AMI/Stock_i.h:
+        * TAO/docs/tutorials/Quoter/Naming_Service/Stock_i.h:
+        * TAO/docs/tutorials/Quoter/On_Demand_Activation/Stock_i.h:
+        * TAO/docs/tutorials/Quoter/Simple/Impl-Repo/Stock_i.h:
+        * TAO/docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.h:
+        * TAO/docs/tutorials/Quoter/Simple/Persistent/Stock_i.h:
+        * TAO/docs/tutorials/Quoter/Simple/Server/Stock_i.h:
+        * TAO/orbsvcs/DevGuideExamples/PortableInterceptors/PICurrent_NameService/Messenger_i.cpp:
+        * TAO/orbsvcs/examples/LoadBalancing/Stock.h:
+
+commit 1f1d2c372d0c41d86b7f00446c204e47cadee9fc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 7 08:27:37 2021 +0200
+
+    Use operator bool and removed obsolete comments
+    
+        * ACE/ace/CORBA_macros.h:
+        * ACE/ace/OS_Memory.h:
+
+commit bdeb46e37e0bee0df3a6fc1e00aeb601c87ff002
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 6 18:27:56 2021 +0200
+
+    Update OS_Memory.h
+
+commit 54f5383fa3c74268081cdaa306d793935b40a658
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 6 18:12:33 2021 +0200
+
+    Instead of ACE_throw_bad_alloc throw std::badalloc directly
+        * ACE/ace/Bound_Ptr.inl:
+        * ACE/ace/Future.cpp:
+        * ACE/ace/OS_Memory.h:
+        * ACE/ace/Refcounted_Auto_Ptr.inl:
+        * ACE/ace/Svc_Handler.cpp:
+
+commit 0dc692d9bb9744d921361e655ad8a7d46c1daf16
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 6 18:08:41 2021 +0200
+
+    Removed ACE_del_bad_alloc, was only used in when std::nothrow wasn't supported which is now supported by all configurations
+    
+        * ACE/ace/CORBA_macros.h:
+        * ACE/ace/OS_Memory.h:
+        * ACE/ace/config-win32-msvc.h:
+
+commit a436568e52a5a78afe7b039b4c6b1e089369eba6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 6 18:04:12 2021 +0200
+
+    Make use of std::nothrow/std::nothrow_t/std::badalloc, ACE macros for these are kept for backward compatiblity
+    
+        * ACE/ace/CORBA_macros.h:
+        * ACE/ace/OS_Memory.h:
+        * ACE/ace/Svc_Handler.cpp:
+        * ACE/ace/Svc_Handler.h:
+        * ACE/examples/DLL/Newsweek.cpp:
+        * ACE/examples/DLL/Newsweek.h:
+        * ACE/examples/DLL/Today.cpp:
+        * ACE/examples/DLL/Today.h:
+        * ACE/examples/Shared_Malloc/test_persistence.cpp:
+        * ACE/tests/DLL_Test_Impl.cpp:
+        * ACE/tests/DLL_Test_Impl.h:
+        * ACE/tests/Dynamic_Test.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.cpp:
+        * TAO/tao/Var_Size_Argument_T.cpp:
+        * TAO/tests/POA/DSI/Database_i.cpp:
+        * TAO/tests/POA/DSI/Database_i.h:
+
+commit 1652ce786e3f76875cfa9008ac83682c4828d6a6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 6 10:29:02 2021 +0200
+
+    All compilers we support provide ACE_HAS_NEW_NOTHROW
+    
+        * ACE/ace/CORBA_macros.h:
+        * ACE/ace/OS_Memory.h:
+        * ACE/ace/README:
+        * ACE/ace/Svc_Handler.cpp:
+        * ACE/ace/Svc_Handler.h:
+        * ACE/ace/config-all.h:
+        * ACE/ace/config-g++-common.h:
+        * ACE/ace/config-hpux-11.00.h:
+        * ACE/ace/config-lynxos.h:
+        * ACE/ace/config-sunos5.5.h:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/config-win32-msvc-14.h:
+        * ACE/examples/DLL/Newsweek.cpp:
+        * ACE/examples/DLL/Newsweek.h:
+        * ACE/examples/DLL/Today.cpp:
+        * ACE/examples/DLL/Today.h:
+        * ACE/examples/Shared_Malloc/test_persistence.cpp:
+        * ACE/tests/DLL_Test_Impl.cpp:
+        * ACE/tests/DLL_Test_Impl.h:
+        * ACE/tests/Dynamic_Test.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.cpp:
+        * TAO/tao/Var_Size_Argument_T.cpp:
+        * TAO/tests/POA/DSI/Database_i.cpp:
+        * TAO/tests/POA/DSI/Database_i.h:
+
+commit cb68090e23b22ae8c3312955d9cd2d3fd957db3c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 6 10:24:03 2021 +0200
+
+    Cleanup more ACE_NEW_THROWS_EXCEPTIONS
+    
+        * ACE/ace/config-g++-common.h:
+        * ACE/ace/config-suncc-common.h:
+        * ACE/ace/config-sunos5.4-sunc++-4.x.h:
+        * ACE/ace/config-sunos5.5.h:
+        * ACE/ace/config-win32-msvc-14.h:
+        * ACE/ace/config-win32-msvc.h:
+
+commit 9a4de67ddf1ce60fe8e56c00ee92e52593c09973
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 6 10:23:38 2021 +0200
+
+    All compilers we currently support throw on new so always define ACE_NEW_THROWS_EXCEPTIONS and removed code for the case it was not defined
+    
+        * ACE/ace/Bound_Ptr.inl:
+        * ACE/ace/CORBA_macros.h:
+        * ACE/ace/Future.cpp:
+        * ACE/ace/OS_Memory.h:
+        * ACE/ace/README:
+        * ACE/ace/Refcounted_Auto_Ptr.inl:
+        * ACE/ace/config-all.h:
+        * ACE/ace/config-hpux-11.00.h:
+        * ACE/ace/config-icc-common.h:
+        * ACE/ace/config-integritySCA.h:
+        * ACE/ace/config-mqx.h:
+        * ACE/ace/config-openvms.h:
+        * ACE/tests/New_Fail_Test.cpp:
+
+commit eb87f7d8b90c831f14e1292b1b2c2f68d79f68cd
+Author: Ako Tulu <ako@koodinurk.ee>
+Date:   Thu Jun 3 21:35:06 2021 +0300
+
+    Fixed fuzz.pl error SSL_Context.cpp:772: found trailing whitespace
+
+commit d9c3e6f1a0504d3903778112a015423c70363485
+Author: Ako Tulu <ako@koodinurk.ee>
+Date:   Thu Jun 3 10:10:19 2021 +0300
+
+    Implemented ::SSL_CTX_use_certificate_chain_file function
+
+commit 2c5a1fd94d2e4d40ba2011c9883a511933b35fa9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat May 29 09:22:48 2021 +0200
+
+    Removed support for tao_idl3_to_idl2 and tao_idl3_to_xml now that CIAO is archived, wasn't supported for a longer time already
+    
+        * ACE/bin/MakeProjectCreator/docs/templates/gnu.txt:
+        * ACE/bin/MakeProjectCreator/templates/gnu.mpd:
+        * ACE/include/makeinclude/platform_clang_common.GNU:
+        * ACE/include/makeinclude/platform_g++_common.GNU:
+        * ACE/include/makeinclude/platform_macosx_iOS.GNU:
+        * ACE/include/makeinclude/platform_rtems.x_g++.GNU:
+        * ACE/include/makeinclude/platform_vxworks6.2.GNU:
+        * ACE/include/makeinclude/platform_vxworks6.3.GNU:
+        * ACE/include/makeinclude/platform_vxworks7.0.GNU:
+
+commit efed481531b46aa87aa7bf52e43720b321496a81
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 27 18:22:49 2021 +0200
+
+    Updated commercial support links
+    
+        * ACE/README:
+        * ACE/docs/Download.html:
+
+commit c87f353ea8b30d887b8f1884476a188a3abc7fb1
+Merge: 2ec39d5e5f8 50de7316330
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 26 14:09:28 2021 +0200
+
+    Merge pull request #1520 from jwillemsen/jwi-exampleclean
+    
+    Minor cleanup in logger example and fixed some typos
+
+commit 50de731633076f7f69340e5bae676da3af2a7426
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 26 09:41:44 2021 +0200
+
+    Minor cleanup
+    
+        * ACE/examples/Logger/simple-server/Logging_Acceptor.cpp:
+        * ACE/examples/Logger/simple-server/Logging_Acceptor.h:
+        * ACE/examples/Logger/simple-server/Logging_Handler.cpp:
+        * ACE/examples/Logger/simple-server/Logging_Handler.h:
+        * ACE/examples/Logger/simple-server/server_loggerd.cpp:
+
+commit 6887cd65ed23bc27a166f43c1681cc74546d4b49
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Sun May 23 14:39:59 2021 +0100
+
+    Sync debian/* files for ACE
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit e3a0e35c4174181029b93d2a3b801c47c8164f70
+Author: Olli Savia <ops@iki.fi>
+Date:   Sat May 22 16:52:32 2021 +0300
+
+    Added an option to enable/disable input parity checking
+
+commit 82d92848f8880d543bf16bbccb559472156d4a77
+Author: Olli Savia <ops@iki.fi>
+Date:   Sat May 22 15:41:32 2021 +0300
+
+    Disable character conversions
+
+commit 592c787f6e5e00ea58f92ba8301999ef4439791e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 21 14:49:41 2021 +0200
+
+    Typo fixes
+    
+        * ACE/ace/os_include/os_limits.h:
+
+commit 8ff0232a45d6fce1ffc48a1464be8cbb132dff20
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 18 16:07:17 2021 +0200
+
+    Add missing check for ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT, fixed #1514
+    
+        * ACE/ace/Select_Reactor.h:
+
+commit c3e4a776843d101a2b07446ea1efbe9055052b06
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 14 14:46:40 2021 +0200
+
+    Update correct MPC branch, fixed #1511
+    
+        * ACE/bin/make_release.py:
+
+commit 920549e6a8df90f797253eed1cd473a024713190
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 14 12:14:47 2021 +0200
+
+    Update for next release
+    
+        * ACE/docs/bczar/bczar.html:
+
+commit 97169ac7eecf2badd25c1e775046680709baebc2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 14 12:09:53 2021 +0200
+
+    Update for next release
+    
+        * ACE/bin/copy-local-script.sh:
+
+commit 713ab7d553cc72df6323204419e510391c67d27c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 14 11:52:21 2021 +0200
+
+    Make ACE 7.0.2 and TAO 3.0.2 public available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit 9d2523abd86b4791b2160b8c4aaba8d09866fda7
+Merge: d004d8da4fb 45f4d9aa787
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jun 7 16:46:23 2019 -0500
+
+    Merge remote-tracking branch 'upstream/master' into igtd/stdint
+
+commit c7a62920dbfc44687ea63e28fd9382451751ffe5
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Feb 20 21:30:14 2019 -0600
+
+    Add new limits for new types to Basic_Types.h

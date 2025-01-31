@@ -26,82 +26,52 @@
 #include "ace/Get_Opt.h"
 #include "Cache_Map_Manager_Test.h"     // Hash_Key class defined in here
 
-typedef size_t KEY;
-typedef size_t VALUE;
-typedef int ATTR;
-typedef std::pair<VALUE, ATTR> CACHE_VALUE;
-typedef ACE_Equal_To<KEY> COMPARE_KEYS;
+using KEY = size_t;
+using VALUE = size_t;
+using ATTR = int;
+using CACHE_VALUE = std::pair<VALUE, ATTR>;
+using COMPARE_KEYS = ACE_Equal_To<KEY>;
 
-typedef ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, Hash_Key, ACE_Equal_To<KEY>, ACE_Null_Mutex>
-        HASH_MAP_MANAGER;
-typedef ACE_Hash_Map_Iterator_Ex<KEY, CACHE_VALUE, Hash_Key, ACE_Equal_To<KEY>, ACE_Null_Mutex>
-        HASH_MAP_ITERATOR;
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<KEY, CACHE_VALUE, Hash_Key, ACE_Equal_To<KEY>, ACE_Null_Mutex>
-        HASH_MAP_REVERSE_ITERATOR;
+using HASH_MAP_MANAGER = ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, Hash_Key, ACE_Equal_To<KEY>, ACE_Null_Mutex>;
+using HASH_MAP_ITERATOR = ACE_Hash_Map_Iterator_Ex<KEY, CACHE_VALUE, Hash_Key, ACE_Equal_To<KEY>, ACE_Null_Mutex>;
+using HASH_MAP_REVERSE_ITERATOR = ACE_Hash_Map_Reverse_Iterator_Ex<KEY, CACHE_VALUE, Hash_Key, ACE_Equal_To<KEY>, ACE_Null_Mutex>;
 
-typedef ACE_Map_Manager<KEY, CACHE_VALUE, ACE_Null_Mutex>
-        MAP_MANAGER;
-typedef ACE_Map_Iterator<KEY, CACHE_VALUE, ACE_Null_Mutex>
-        MAP_ITERATOR;
-typedef ACE_Map_Reverse_Iterator<KEY, CACHE_VALUE, ACE_Null_Mutex>
-        MAP_REVERSE_ITERATOR;
+using MAP_MANAGER = ACE_Map_Manager<KEY, CACHE_VALUE, ACE_Null_Mutex>;
+using MAP_ITERATOR = ACE_Map_Iterator<KEY, CACHE_VALUE, ACE_Null_Mutex>;
+using MAP_REVERSE_ITERATOR = ACE_Map_Reverse_Iterator<KEY, CACHE_VALUE, ACE_Null_Mutex>;
 
-typedef ACE_Cleanup_Strategy<KEY, CACHE_VALUE, HASH_MAP_MANAGER>
-        HASH_MAP_CLEANUP;
+using HASH_MAP_CLEANUP = ACLE<KEY, CACHE_VALUE, HASH_MAP_MANAGER>;
 
-typedef ACE_Cleanup_Strategy<KEY, CACHE_VALUE, MAP_MANAGER>
-        MAP_CLEANUP;
+using MAP_CLEANUP = ACLE<KEY, CACHE_VALUE, MAP_MANAGER>;
 
-typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, HASH_MAP_MANAGER, HASH_MAP_ITERATOR, ATTR>
-        HASH_MAP_CACHING_UTILITY;
+using HASH_MAP_CACHING_UTILITY = ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, HASH_MAP_MANAGER, HASH_MAP_ITERATOR, ATTR>;
 
-typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, MAP_MANAGER, MAP_ITERATOR, ATTR>
-        MAP_CACHING_UTILITY;
+using MAP_CACHING_UTILITY = ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, MAP_MANAGER, MAP_ITERATOR, ATTR>;
 
 // = Hash_Map_Manager related
-typedef ACE_Caching_Strategy<ATTR, HASH_MAP_CACHING_UTILITY>
-        HASH_MAP_CACHING_STRATEGY;
-typedef ACE_LRU_Caching_Strategy<ATTR, HASH_MAP_CACHING_UTILITY>
-        HASH_MAP_LRU;
-typedef ACE_LFU_Caching_Strategy<ATTR, HASH_MAP_CACHING_UTILITY>
-        HASH_MAP_LFU;
-typedef ACE_FIFO_Caching_Strategy<ATTR, HASH_MAP_CACHING_UTILITY>
-        HASH_MAP_FIFO;
-typedef ACE_Null_Caching_Strategy<ATTR, HASH_MAP_CACHING_UTILITY>
-        HASH_MAP_NULL;
-typedef ACE_Caching_Strategy_Adapter<ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_LRU>
-        HASH_MAP_LRU_ADAPTER;
-typedef ACE_Caching_Strategy_Adapter<ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_LFU>
-        HASH_MAP_LFU_ADAPTER;
-typedef ACE_Caching_Strategy_Adapter<ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_FIFO>
-        HASH_MAP_FIFO_ADAPTER;
-typedef ACE_Caching_Strategy_Adapter<ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_NULL>
-        HASH_MAP_NULL_ADAPTER;
+using HASH_MAP_CACHING_STRATEGY = ACS<ATTR, HASH_MAP_CACHING_UTILITY>;
+using HASH_MAP_LRU = ALRU<ATTR, HASH_MAP_CACHING_UTILITY>;
+using HASH_MAP_LFU = ALFU<ATTR, HASH_MAP_CACHING_UTILITY>;
+using HASH_MAP_FIFO = AFIFO<ATTR, HASH_MAP_CACHING_UTILITY>;
+using HASH_MAP_NULL = ANULL<ATTR, HASH_MAP_CACHING_UTILITY>;
+using HASH_MAP_LRU_ADAPTER = ACSA<ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_LRU>;
+using HASH_MAP_LFU_ADAPTER = ACSA<ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_LFU>;
+using HASH_MAP_FIFO_ADAPTER = ACSA<ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_FIFO>;
+using HASH_MAP_NULL_ADAPTER = ACSA<ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_NULL>;
 
 // = Map_Manager related
-typedef ACE_Caching_Strategy<ATTR, MAP_CACHING_UTILITY>
-        MAP_CACHING_STRATEGY;
-typedef ACE_LRU_Caching_Strategy<ATTR, MAP_CACHING_UTILITY>
-        MAP_LRU;
-typedef ACE_LFU_Caching_Strategy<ATTR, MAP_CACHING_UTILITY>
-        MAP_LFU;
-typedef ACE_FIFO_Caching_Strategy<ATTR, MAP_CACHING_UTILITY>
-        MAP_FIFO;
-typedef ACE_Null_Caching_Strategy<ATTR, MAP_CACHING_UTILITY>
-        MAP_NULL;
-typedef ACE_Caching_Strategy_Adapter<ATTR, MAP_CACHING_UTILITY, MAP_LRU>
-        MAP_LRU_ADAPTER;
-typedef ACE_Caching_Strategy_Adapter<ATTR, MAP_CACHING_UTILITY, MAP_LFU>
-        MAP_LFU_ADAPTER;
-typedef ACE_Caching_Strategy_Adapter<ATTR, MAP_CACHING_UTILITY, MAP_FIFO>
-        MAP_FIFO_ADAPTER;
-typedef ACE_Caching_Strategy_Adapter<ATTR, MAP_CACHING_UTILITY, MAP_NULL>
-        MAP_NULL_ADAPTER;
+using MAP_CACHING_STRATEGY = ACS<ATTR, MAP_CACHING_UTILITY>;
+using MAP_LRU = ALRU<ATTR, MAP_CACHING_UTILITY>;
+using MAP_LFU = ALFU<ATTR, MAP_CACHING_UTILITY>;
+using MAP_FIFO = AFIFO<ATTR, MAP_CACHING_UTILITY>;
+using MAP_NULL = ANULL<ATTR, MAP_CACHING_UTILITY>;
+using MAP_LRU_ADAPTER = ACSA<ATTR, MAP_CACHING_UTILITY, MAP_LRU>;
+using MAP_LFU_ADAPTER = ACSA<ATTR, MAP_CACHING_UTILITY, MAP_LFU>;
+using MAP_FIFO_ADAPTER = ACSA<ATTR, MAP_CACHING_UTILITY, MAP_FIFO>;
+using MAP_NULL_ADAPTER = ACSA<ATTR, MAP_CACHING_UTILITY, MAP_NULL>;
 
-typedef ACE_Hash_Cache_Map_Manager<KEY, VALUE, Hash_Key, ACE_Equal_To<KEY>, HASH_MAP_CACHING_STRATEGY, ATTR>
-        HASH_MAP_CACHE;
-typedef ACE_Cache_Map_Manager<KEY, VALUE, MAP_MANAGER, MAP_ITERATOR, MAP_REVERSE_ITERATOR, MAP_CACHING_STRATEGY, ATTR>
-        MAP_CACHE;
+using HASH_MAP_CACHE = ACE_Hash_Cache_Map_Manager<KEY, VALUE, Hash_Key, ACE_Equal_To<KEY>, HASH_MAP_CACHING_STRATEGY, ATTR>;
+using MAP_CACHE = ACMM<KEY, VALUE, MAP_MANAGER, MAP_ITERATOR, MAP_REVERSE_ITERATOR, MAP_CACHING_STRATEGY, ATTR>;
 
 enum Caching_Strategy_Type
 {
@@ -416,7 +386,7 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
 }
 
 void
-test_caching_strategy_type (void)
+test_caching_strategy_type ()
 {
   HASH_MAP_CACHING_STRATEGY *hash_map_caching_strategy = 0;
   MAP_CACHING_STRATEGY *map_caching_strategy = 0;

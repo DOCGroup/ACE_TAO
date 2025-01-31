@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_STRUCTURE_STRUCTURE_H_
 #define _BE_VISITOR_STRUCTURE_STRUCTURE_H_
 
@@ -25,19 +24,19 @@
 class be_visitor_structure : public be_visitor_scope
 {
 public:
-  /// constructureor
+  /// constructur
   be_visitor_structure (be_visitor_context *ctx);
 
-  /// destructureor
-  ~be_visitor_structure (void);
+  /// destructur
+  ~be_visitor_structure () override = default;
 
   /// visit structure. We provide code for this method in the derived class
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 
   // =visit operations on syntactically valid elements in our scope
 
   /// visit field
-  virtual int visit_field (be_field *node);
+  int visit_field (be_field *node) override;
 };
 
 #endif /* _BE_VISITOR_STRUCTURE_STRUCTURE_H_ */

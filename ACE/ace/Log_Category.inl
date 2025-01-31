@@ -2,25 +2,25 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE unsigned int
-ACE_Log_Category::id()
+ACE_Log_Category::id() const
 {
   return id_;
 }
 
 ACE_INLINE const char*
-ACE_Log_Category::name ()
+ACE_Log_Category::name () const
 {
   return name_;
 }
 
 ACE_INLINE unsigned int
-ACE_Log_Category_TSS::id()
+ACE_Log_Category_TSS::id() const
 {
   return category_->id_;
 }
 
 ACE_INLINE const char*
-ACE_Log_Category_TSS::name ()
+ACE_Log_Category_TSS::name () const
 {
   return category_->name_;
 }
@@ -33,7 +33,7 @@ ACE_Log_Category_TSS::logger ()
 
 /// Get the current ACE_Log_Priority mask.
 ACE_INLINE u_long
-ACE_Log_Category_TSS::priority_mask ()
+ACE_Log_Category_TSS::priority_mask () const
 {
   return priority_mask_;
 }
@@ -158,7 +158,7 @@ ACE_Log_Category_TSS::log_hexdump (ACE_Log_Priority priority,
 
 /// Get the current ACE_Log_Priority mask.
 ACE_INLINE u_long
-ACE_Log_Category::priority_mask ()
+ACE_Log_Category::priority_mask () const
 {
   return priority_mask_;
 }

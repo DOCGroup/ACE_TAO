@@ -6,38 +6,32 @@
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
-Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor (void)
-  : myname_ ("Echo_Client_Interceptor")
-{
-}
-
-Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor ()
+Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor (int& result)
+  : result_ (result)
 {
 }
 
 char *
-Echo_Client_Request_Interceptor::name (void)
+Echo_Client_Request_Interceptor::name ()
 {
-  return CORBA::string_dup (this->myname_);
+  return CORBA::string_dup ("Echo_Client_Interceptor");
 }
 
 void
-Echo_Client_Request_Interceptor::destroy (void)
+Echo_Client_Request_Interceptor::destroy ()
 {
 }
 
 void
-Echo_Client_Request_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr)
+Echo_Client_Request_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
 {
   // Do nothing
 }
 
 void
-Echo_Client_Request_Interceptor::send_request (
-    PortableInterceptor::ClientRequestInfo_ptr ri)
+Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   bool catched_exception = false;
   try
@@ -45,13 +39,15 @@ Echo_Client_Request_Interceptor::send_request (
       PortableInterceptor::ReplyStatus rstatus = ri->reply_status ();
       ACE_UNUSED_ARG (rstatus);
     }
-  catch (const ::CORBA::BAD_INV_ORDER&)
+  catch (const ::CORBA::BAD_INV_ORDER& ex)
     {
-      catched_exception = true;
+      // BAD_INV_ORDER should be thrown with minor code 14
+      catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
     }
 
   if (!catched_exception)
     {
+      ++this->result_;
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) ERROR, no exception when getting reply status\n"));
     }
@@ -64,17 +60,15 @@ Echo_Client_Request_Interceptor::send_request (
               op.in ()));
 
   // For the "normal" operation, get the argument list.
-  if (ACE_OS::strcmp (op.in (),
-                      "normal") == 0)
+  if (std::strcmp (op.in (), "normal") == 0)
     {
-      Dynamic::ParameterList_var paramlist =
-        ri->arguments ();
+      Dynamic::ParameterList_var paramlist = ri->arguments ();
 
       if (paramlist->length () != 2)
         {
+          ++this->result_;
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) All parameters not available\n"));
-
         }
 
       CORBA::ULong first = 0, second = 1; // If you dont understand
@@ -92,6 +86,7 @@ Echo_Client_Request_Interceptor::send_request (
 
       if (param != 10)
         {
+          ++this->result_;
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in send_request while checking "
                       "the value of the extracted "
@@ -101,6 +96,7 @@ Echo_Client_Request_Interceptor::send_request (
       CORBA::TypeCode_var second_typecode = paramlist[second].argument.type ();
       if (second_typecode->kind () != CORBA::tk_null)
         {
+          ++this->result_;
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in send_request while checking "
                       "the type of the extracted out"
@@ -110,10 +106,8 @@ Echo_Client_Request_Interceptor::send_request (
 }
 
 void
-Echo_Client_Request_Interceptor::receive_other (
-  PortableInterceptor::ClientRequestInfo_ptr ri)
+Echo_Client_Request_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -123,8 +117,7 @@ Echo_Client_Request_Interceptor::receive_other (
 }
 
 void
-Echo_Client_Request_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr ri)
+Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   CORBA::String_var op = ri->operation ();
 
@@ -134,17 +127,14 @@ Echo_Client_Request_Interceptor::receive_reply (
               op.in ()));
 
     // For the "normal" operation, get the argument list.
-  if (ACE_OS::strcmp (op.in (),
-                      "normal") == 0)
+  if (std::strcmp (op.in (), "normal") == 0)
     {
-      Dynamic::ParameterList_var paramlist =
-        ri->arguments ();
+      Dynamic::ParameterList_var paramlist = ri->arguments ();
 
       if (paramlist->length () != 2)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) All parameters not available\n"));
-
         }
 
       CORBA::ULong first = 0, second = 1; // If you dont understand
@@ -153,6 +143,7 @@ Echo_Client_Request_Interceptor::receive_reply (
       if (paramlist[first].mode != CORBA::PARAM_IN ||
           paramlist[second].mode != CORBA::PARAM_OUT)
         {
+          ++this->result_;
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in the extracted argument list\n"));
         }
@@ -162,6 +153,7 @@ Echo_Client_Request_Interceptor::receive_reply (
 
       if (param != 10)
         {
+          ++this->result_;
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in send_request while checking "
                       "the value of the extracted "
@@ -174,9 +166,9 @@ Echo_Client_Request_Interceptor::receive_reply (
 
       CORBA::String_var transfer (str);
 
-      if (ACE_OS::strcmp (str,
-                          "DO_NOT_INSULT_MY_INTELLIGENCE") != 0)
+      if (std::strcmp (str, "DO_NOT_INSULT_MY_INTELLIGENCE") != 0)
         {
+          ++this->result_;
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in send_request while checking "
                       "the value of the extracted "
@@ -184,10 +176,9 @@ Echo_Client_Request_Interceptor::receive_reply (
         }
     }
 
-  if (ACE_OS::strcmp (op.in (), "calculate") == 0)
+  if (std::strcmp (op.in (), "calculate") == 0)
     {
-      Dynamic::ParameterList_var paramlist =
-        ri->arguments ();
+      Dynamic::ParameterList_var paramlist = ri->arguments ();
 
       CORBA::Long param1, param2, result;
       CORBA::ULong i = 0;  // index -- explicitly used to avoid
@@ -206,11 +197,11 @@ Echo_Client_Request_Interceptor::receive_reply (
                   result));
     }
 
-  if (ACE_OS::strcmp (op.in (), "_get_the_structure") == 0)
+  if (std::strcmp (op.in (), "_get_the_structure") == 0)
     {
       CORBA::Any_var a = ri->result ();
 
-      const Test_Interceptors::Visual::VarLenStruct * v = 0;
+      const Test_Interceptors::Visual::VarLenStruct * v = nullptr;
 
       (a.in ()) >>= v;
 
@@ -227,7 +218,6 @@ void
 Echo_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -235,9 +225,7 @@ Echo_Client_Request_Interceptor::receive_exception (
               "from \"%C\"\n",
               op.in ()));
 
-
-  CORBA::String_var exception_id =
-    ri->received_exception_id ();
+  CORBA::String_var exception_id = ri->received_exception_id ();
 
   ACE_DEBUG ((LM_DEBUG,
               "Exception ID = %C\n",

@@ -7,7 +7,7 @@ Service::Service (CORBA::ORB_ptr orb)
 }
 
 void
-Service::dump_results (void)
+Service::dump_results ()
 {
   if (this->test_count_ == 0)
     {
@@ -44,7 +44,7 @@ Service::run_test (Test::Callback_ptr callback)
     }
 
   // shutdown ourselves
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 

@@ -191,13 +191,13 @@ class TAO_Ubergestalt_Ready_Condition
   : public ACE_SYNCH_RECURSIVE_CONDITION
 {
 public:
-  static TAO_Ubergestalt_Ready_Condition* instance (void)
+  static TAO_Ubergestalt_Ready_Condition* instance ()
   {
     return TAO_Singleton <TAO_Ubergestalt_Ready_Condition,
       TAO_SYNCH_RECURSIVE_MUTEX>::instance ();
   }
 
-  TAO_Ubergestalt_Ready_Condition (void)
+  TAO_Ubergestalt_Ready_Condition ()
     : ACE_SYNCH_RECURSIVE_CONDITION (mutex_)
   {
   }
@@ -260,7 +260,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
   // has something to skip!
   ACE_ARGV global_svc_config_argv (true); // only this ctor allows
   // subsequent use of add()!
-  global_svc_config_argv.add ((argc <= 0 || argv == 0) ?
+  global_svc_config_argv.add ((argc <= 0 || argv == nullptr) ?
             ACE_TEXT ("") : argv[0], true);
 
   // Will expand the environment variables, if any were used.
@@ -408,7 +408,6 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                       ACE_TEXT ("TAO (%P|%t) - The default ")
                       ACE_TEXT ("ORB must have completed the global ")
                       ACE_TEXT ("initialization...\n")));
-
       }
     else
       {
@@ -428,7 +427,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
   // has something to skip!
   ACE_ARGV svc_config_argv (true);  // only this ctor allows subsequent
                                     // use of add()!
-  svc_config_argv.add ((argc <= 0 || argv == 0) ? ACE_TEXT ("") : argv[0],
+  svc_config_argv.add ((argc <= 0 || argv == nullptr) ? ACE_TEXT ("") : argv[0],
                        true);
 
   // Should we skip the ACE_Service_Config::open() method?,
@@ -544,9 +543,18 @@ TAO::ORB::default_svc_conf_entries (char const * rf_args,
                                     char const * ssf_args,
                                     char const * csf_args)
 {
-  resource_factory_args        = rf_args;
-  server_strategy_factory_args = ssf_args;
-  client_strategy_factory_args = csf_args;
+  if (rf_args)
+    {
+      resource_factory_args        = rf_args;
+    }
+  if (ssf_args)
+    {
+      server_strategy_factory_args = ssf_args;
+    }
+  if (csf_args)
+    {
+      client_strategy_factory_args = csf_args;
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -563,7 +571,6 @@ namespace
                            bool skip_service_config_open,
                            bool ignore_default_svc_conf_file)
   {
-
     if (skip_service_config_open)
       {
         return 0;
@@ -578,7 +585,7 @@ namespace
 
     return pcfg->open (command_line.get_argc (),
                        command_line.get_TCHAR_argv (),
-                       0,
+                       nullptr,
                        false, // Don't ignore static services.
                        ignore_default_svc_conf_file);
   }
@@ -597,7 +604,7 @@ namespace
           ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance (
             "TAO_Codeset");
 
-        if (factory == 0 || factory->is_default ())
+        if (factory == nullptr || factory->is_default ())
           {
 #if !defined (TAO_AS_STATIC_LIBS) && !(defined (ACE_VXWORKS) && !defined (__RTP__))
             // only for dynamic libs, check to see if default factory
@@ -620,7 +627,7 @@ namespace
 #endif /* !TAO_AS_STATIC_LIBS && !(ACE_VXWORKS && !__RTP__) */
           }
 
-        if (factory == 0)
+        if (factory == nullptr)
           {
             if (TAO_debug_level > 0)
               {
@@ -694,19 +701,19 @@ namespace
     // @@ They are needed for platforms that have no file system,
     //    like VxWorks.
 
-    if (resource_factory_args != 0)
+    if (resource_factory_args != nullptr)
       {
         pcfg->process_directive(
           ACE_TEXT_CHAR_TO_TCHAR (resource_factory_args));
       }
 
-    if (client_strategy_factory_args != 0)
+    if (client_strategy_factory_args != nullptr)
       {
         pcfg->process_directive
           (ACE_TEXT_CHAR_TO_TCHAR (client_strategy_factory_args));
       }
 
-    if (server_strategy_factory_args != 0)
+    if (server_strategy_factory_args != nullptr)
       {
         pcfg->process_directive
           (ACE_TEXT_CHAR_TO_TCHAR (server_strategy_factory_args));
@@ -717,9 +724,9 @@ namespace
         pcfg,
         "PI_Server_Loader");
 
-    if (pi_server_loader != 0)
+    if (pi_server_loader != nullptr)
       {
-        pi_server_loader->init (0, 0);
+        pi_server_loader->init (0, nullptr);
       }
 
     ACE_Service_Object * const bidir_loader =
@@ -727,9 +734,9 @@ namespace
         pcfg,
         "BiDirGIOP_Loader");
 
-    if (bidir_loader != 0)
+    if (bidir_loader != nullptr)
       {
-        bidir_loader->init (0, 0);
+        bidir_loader->init (0, nullptr);
       }
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP == 1
@@ -738,9 +745,9 @@ namespace
         pcfg,
         "ZIOP_Loader");
 
-    if (ziop_loader != 0)
+    if (ziop_loader != nullptr)
       {
-        ziop_loader->init (0, 0);
+        ziop_loader->init (0, nullptr);
       }
 #endif
 
@@ -749,9 +756,9 @@ namespace
         pcfg,
         "Messaging_Loader");
 
-    if (messaging_loader != 0)
+    if (messaging_loader != nullptr)
       {
-        messaging_loader->init (0, 0);
+        messaging_loader->init (0, nullptr);
       }
 
     // Handle RTCORBA library special case.  Since RTCORBA needs
@@ -762,9 +769,9 @@ namespace
         pcfg,
         "RT_ORB_Loader");
 
-    if (rt_loader != 0)
+    if (rt_loader != nullptr)
       {
-        rt_loader->init (0, 0);
+        rt_loader->init (0, nullptr);
       }
 
     ACE_Service_Object * const rtscheduler_loader =
@@ -772,9 +779,9 @@ namespace
         pcfg,
         "RTScheduler_Loader");
 
-    if (rtscheduler_loader != 0)
+    if (rtscheduler_loader != nullptr)
       {
-        rtscheduler_loader->init (0, 0);
+        rtscheduler_loader->init (0, nullptr);
       }
 
     ACE_Service_Object * const csd_framework_loader =
@@ -782,9 +789,9 @@ namespace
         pcfg,
         "CSD_Framework_Loader");
 
-    if (csd_framework_loader != 0)
+    if (csd_framework_loader != nullptr)
       {
-        csd_framework_loader->init (0, 0);
+        csd_framework_loader->init (0, nullptr);
       }
 
     ACE_Service_Object * const endpoint_policy_loader =
@@ -792,9 +799,9 @@ namespace
         pcfg,
         "EndpointPolicy_Initializer");
 
-    if (endpoint_policy_loader != 0)
+    if (endpoint_policy_loader != nullptr)
       {
-        endpoint_policy_loader->init (0, 0);
+        endpoint_policy_loader->init (0, nullptr);
       }
 
     ACE_Service_Object * const diffserv_policy_loader =
@@ -802,9 +809,9 @@ namespace
         pcfg,
         "DiffservPolicy_Initializer");
 
-    if (diffserv_policy_loader != 0)
+    if (diffserv_policy_loader != nullptr)
       {
-        diffserv_policy_loader->init (0, 0);
+        diffserv_policy_loader->init (0, nullptr);
       }
   } /* register_additional_services_i */
 
@@ -829,7 +836,7 @@ namespace
             // Proceeds only if the configuration file exists.
             FILE * const conf_file =
               ACE_OS::fopen (current_arg, ACE_TEXT ("r"));
-            if (0 == conf_file)
+            if (nullptr == conf_file)
               {
                 // Assigning EINVAL to errno to make an exception
                 // thrown.  calling code does not throw an exception if
@@ -889,7 +896,7 @@ namespace
 
     while (arg_shifter.is_anything_left ())
       {
-        const ACE_TCHAR *current_arg = 0;
+        const ACE_TCHAR *current_arg = nullptr;
         if (0 == arg_shifter.cur_arg_strncasecmp
             (ACE_TEXT ("-ORBSkipServiceConfigOpen")))
           {
@@ -904,7 +911,7 @@ namespace
 
             arg_shifter.consume_arg ();
           }
-        else if (0 != (current_arg = arg_shifter.get_the_parameter
+        else if (nullptr != (current_arg = arg_shifter.get_the_parameter
                        (ACE_TEXT ("-ORBServiceConfigLoggerKey"))))
           {
             svc_config_argv.add (ACE_TEXT ("-k"));
@@ -921,12 +928,12 @@ namespace
             // Don't consume, the ORB_Core::init will use it again.
             arg_shifter.ignore_arg();
 
-            if (0 != (current_arg = arg_shifter.get_current()))
+            if (nullptr != (current_arg = arg_shifter.get_current()))
               negotiate_codesets = (ACE_OS::atoi (current_arg));
 
             arg_shifter.ignore_arg();
           }
-        else if (0 != (current_arg =
+        else if (nullptr != (current_arg =
                        arg_shifter.get_the_parameter
                        (ACE_TEXT ("-ORBDebugLevel"))))
           {
@@ -957,7 +964,7 @@ namespace
     // NOTE: When adding new global arguments, ensure they are only
     // applied when apply_values is true, but that they are always
     // consumed, if they need to be consumed.
-#if defined (TAO_DEBUG) && !defined (ACE_HAS_WINCE)
+#if defined (TAO_DEBUG)
     // Make it a little easier to debug programs using this code.
     if (apply_values)
       {
@@ -975,7 +982,7 @@ namespace
                         TAO_debug_level));
           }
       }
-#endif  /* TAO_DEBUG && !ACE_HAS_WINCE */
+#endif  /* TAO_DEBUG */
 
     // Extract the Service Configurator ORB options from the argument
     // vector.
@@ -1035,7 +1042,7 @@ namespace
             // This should set current_arg to the value of ORBGestalt option.
             const ACE_TCHAR *current_arg = arg_shifter.get_current ();
 
-            if (0 != current_arg &&
+            if (nullptr != current_arg &&
                 ACE_OS::strcasecmp (current_arg, ACE_TEXT("GLOBAL")) != 0)
               {
                 with_global_gestalt = false;

@@ -8,7 +8,7 @@
 #include "ace/Truncate.h"
 
 ACE_INLINE
-Handle_R_Stream::Handle_R_Stream (void)
+Handle_R_Stream::Handle_R_Stream ()
 {
   if (Handle_R_Stream::login_name == 0) {
 #if !defined(ACE_LACKS_CUSERID)
@@ -90,14 +90,14 @@ Handle_R_Stream::init (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_INLINE int
-Handle_R_Stream::fini (void)
+Handle_R_Stream::fini ()
 {
   return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
 ACE_INLINE ACE_HANDLE
-Handle_R_Stream::get_handle (void) const
+Handle_R_Stream::get_handle () const
 {
   return ACE_SOCK_Acceptor::get_handle ();
 }

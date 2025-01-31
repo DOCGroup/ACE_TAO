@@ -46,9 +46,7 @@ class TAO_LogMgr_i;
  */
 class TAO_Log_Serv_Export TAO_Log_i : public virtual POA_DsLogAdmin::Log
 {
-
 public:
-
   /// Constructor.
   TAO_Log_i (CORBA::ORB_ptr orb,
              TAO_LogMgr_i& logmgr_i,
@@ -60,7 +58,7 @@ public:
   ~TAO_Log_i ();
 
   /// Initlialize the Log.
-  void init (void);
+  void init ();
 
   /**
    * @name DsLogAdmin::Log Methods
@@ -69,21 +67,21 @@ public:
    */
   //@{
   /// Return the factory of the log.
-  DsLogAdmin::LogMgr_ptr my_factory (void);
+  DsLogAdmin::LogMgr_ptr my_factory ();
 
   /// Return the id of the log.
-  DsLogAdmin::LogId id (void);
+  DsLogAdmin::LogId id ();
 
   /// Get the list of the QoS properties supported by the log.
   DsLogAdmin::QoSList*
-  get_log_qos (void);
+  get_log_qos ();
 
   /// Set the list of the QoS properties supported by the log.
   void set_log_qos (const DsLogAdmin::QoSList & qos);
 
   /// Get the record life in seconds (0 infinite).
   CORBA::ULong
-  get_max_record_life (void);
+  get_max_record_life ();
 
   /// Set the record life in seconds (0 infinite).
   void
@@ -91,7 +89,7 @@ public:
 
   /// Get the maximum size in octets.
   CORBA::ULongLong
-  get_max_size (void);
+  get_max_size ();
 
   /// Set the maximum size in octets.
   void
@@ -99,15 +97,15 @@ public:
 
   /// Get the current size of the log in octets.
   CORBA::ULongLong
-  get_current_size (void);
+  get_current_size ();
 
   /// Return the number of records in the log.
   CORBA::ULongLong
-  get_n_records (void);
+  get_n_records ();
 
   /// Get the action to be taken when the log reaches its maximum size.
   DsLogAdmin::LogFullActionType
-  get_log_full_action (void);
+  get_log_full_action ();
 
   /// Set the action to be taken when the log reaches its maximum size.
   void
@@ -115,7 +113,7 @@ public:
 
   /// Get the administrative state of the log.
   DsLogAdmin::AdministrativeState
-  get_administrative_state (void);
+  get_administrative_state ();
 
   /// Set the administrative state of the log.
   void
@@ -126,7 +124,7 @@ public:
   /// @@@ Of course!  get_forwarding_state() is virtual in the base
   ///     class dictated by the IDL!  -Ossama
   virtual DsLogAdmin::ForwardingState
-  get_forwarding_state (void);
+  get_forwarding_state ();
 
   /// Set the forwarding state of the log.
   /// @@ Note: is it ok to make this method virtual?
@@ -135,11 +133,11 @@ public:
 
   /// Get the operational state of the log.
   DsLogAdmin::OperationalState
-  get_operational_state (void);
+  get_operational_state ();
 
   /// Get the log duration
   DsLogAdmin::TimeInterval
-  get_interval (void);
+  get_interval ();
 
   /// Set the log duration.
   void
@@ -147,11 +145,11 @@ public:
 
   /// Get the availability status
   DsLogAdmin::AvailabilityStatus
-  get_availability_status (void);
+  get_availability_status ();
 
   /// Get the capacity alarm threshold
   DsLogAdmin::CapacityAlarmThresholdList*
-    get_capacity_alarm_thresholds (void);
+    get_capacity_alarm_thresholds ();
 
   /**
    * Set the capacity alarm threshold. Threshold values represent
@@ -167,7 +165,7 @@ public:
 
   /// Get the weekly scheduling parameters
   DsLogAdmin::WeekMask*
-  get_week_mask (void);
+  get_week_mask ();
 
   /// Set the weekly scheduling parameters.
   void
@@ -231,30 +229,30 @@ public:
   /// Causes all pending events to be written to storage. Raises
   /// DsLogAdmin::UnsupportedQos
   void
-  flush (void);
+  flush ();
   //@}
 
   /// Remove records that have exceeded max_record_life_.
-  void remove_old_records (void);
+  void remove_old_records ();
 
 protected:
   /// Get the availability status
   /// @note must be called with locks held
   DsLogAdmin::AvailabilityStatus
-  get_availability_status_i (void);
+  get_availability_status_i ();
 
   /// Tells if the Log is scheduled to run now.
   /// @note must be called with locks held
-  CORBA::Boolean scheduled (void);
+  CORBA::Boolean scheduled ();
 
   /// Copy the attributes of the log being passed.
   void copy_attributes (DsLogAdmin::Log_ptr log);
 
   /// Check if threshold reached.
-  void check_capacity_alarm_threshold (void);
+  void check_capacity_alarm_threshold ();
 
   /// Reset capacity alarm threshold.
-  void reset_capacity_alarm_threshold (void);
+  void reset_capacity_alarm_threshold ();
 
   /// Check that valid threshold values have been given.
   static CORBA::Boolean validate_capacity_alarm_thresholds (

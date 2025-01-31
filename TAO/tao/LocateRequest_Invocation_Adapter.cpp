@@ -18,19 +18,19 @@ namespace TAO
   LocateRequest_Invocation_Adapter::LocateRequest_Invocation_Adapter (
     CORBA::Object_ptr target)
     : target_ (target)
-    , list_ (0)
+    , list_ (nullptr)
   {
   }
 
   void
-  LocateRequest_Invocation_Adapter::invoke (void)
+  LocateRequest_Invocation_Adapter::invoke ()
   {
     CORBA::Object_var effective_target =
       CORBA::Object::_duplicate (this->target_);
 
     TAO_Stub * const stub =
       this->target_->_stubobj ();
-    if (stub == 0)
+    if (stub == nullptr)
       throw ::CORBA::INTERNAL (
                      CORBA::SystemException::_tao_minor_code (
                        0,
@@ -45,7 +45,7 @@ namespace TAO
     ACE_Service_Config_Guard scg (stub->orb_core ()->configuration ());
 
     ACE_Time_Value tmp_wait_time;
-    ACE_Time_Value *max_wait_time = 0;
+    ACE_Time_Value *max_wait_time = nullptr;
 
     if (this->get_timeout (tmp_wait_time))
       max_wait_time = &tmp_wait_time;
@@ -70,7 +70,7 @@ namespace TAO
 
             // Dummy operation details that is used to instantiate the
             // LocateRequest class.
-            TAO_Operation_Details op (0, 0);
+            TAO_Operation_Details op (nullptr, 0);
 
             op.request_id (resolver.transport ()->tms ()->request_id ());
             TAO::LocateRequest_Invocation synch (this->target_, resolver, op);
@@ -101,7 +101,7 @@ namespace TAO
   }
 
   CORBA::PolicyList *
-  LocateRequest_Invocation_Adapter::get_inconsistent_policies (void)
+  LocateRequest_Invocation_Adapter::get_inconsistent_policies ()
   {
     return this->list_._retn ();
   }
@@ -125,7 +125,7 @@ namespace TAO
   {
     // The object pointer has to be changed to a TAO_Stub pointer
     // in order to obtain the profiles.
-    TAO_Stub *stubobj = 0;
+    TAO_Stub *stubobj = nullptr;
 
     bool nil_forward_ref = false;
     if (CORBA::is_nil (effective_target.in ()))
@@ -146,7 +146,7 @@ namespace TAO
           0),
         CORBA::COMPLETED_NO);
 
-    if (stubobj == 0)
+    if (stubobj == nullptr)
       throw ::CORBA::INTERNAL (
         CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
@@ -155,15 +155,6 @@ namespace TAO
 
     // Reset the profile in the stubs
     stub->add_forward_profiles (stubobj->base_profiles (), permanent_forward);
-
-    if (stub->next_profile () == 0)
-      throw ::CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-          0),
-        CORBA::COMPLETED_NO);
-
-    return;
   }
 
 } // End namespace TAO

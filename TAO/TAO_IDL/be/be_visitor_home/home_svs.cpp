@@ -13,8 +13,8 @@
 
 be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (0),
-    comp_ (0),
+    node_ (nullptr),
+    comp_ (nullptr),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->svnt_export_macro ()),
     for_finder_ (false)
@@ -29,7 +29,7 @@ be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
     }
 }
 
-be_visitor_home_svs::~be_visitor_home_svs (void)
+be_visitor_home_svs::~be_visitor_home_svs ()
 {
 }
 
@@ -44,8 +44,7 @@ be_visitor_home_svs::visit_home (be_home *node)
   node_ = node;
   comp_ = node_->managed_component ();
 
-  /// CIDL-generated namespace used 'CIDL_' + composition name.
-  /// Now we use 'CIAO_' + component's flat name.
+  /// Use 'CIAO_' + component's flat name.
   os_ << be_nl_2
       << "namespace CIAO_" << comp_->flat_name () << "_Impl" << be_nl
       << "{" << be_idt;
@@ -102,7 +101,7 @@ be_visitor_home_svs::visit_factory (be_factory *node)
   // An inherited factory/finder needs to return the managed
   // component of the home where it is defined.
   be_home *h =
-    be_home::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_home*> (node->defined_in ());
 
   AST_Component *c = h->managed_component ();
 
@@ -148,7 +147,7 @@ be_visitor_home_svs::visit_factory (be_factory *node)
           << "::_duplicate (this->executor_.in ());" << be_uidt
           << be_nl_2;
 
-      os_ << "if ( ::CORBA::is_nil (executor.in ()))" << be_idt_nl
+      os_ << "if (::CORBA::is_nil (executor.in ()))" << be_idt_nl
           << "{"<< be_idt_nl
           << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
           << "}" << be_uidt << be_nl_2;
@@ -178,7 +177,7 @@ be_visitor_home_svs::visit_factory (be_factory *node)
           << "_var _ciao_comp =" << be_idt_nl
           << global << comp_sname << "::CCM_" << comp_lname
           << "::_narrow (_ciao_ec.in ());" << be_uidt << be_nl_2
-          << "if ( ::CORBA::is_nil (_ciao_ec.in ()))" <<  be_idt_nl
+          << "if (::CORBA::is_nil (_ciao_ec.in ()))" <<  be_idt_nl
           << "{" << be_idt_nl
           << "throw ::Components::CreateFailure ();" << be_uidt_nl
           << "}" << be_uidt << be_nl_2
@@ -204,7 +203,7 @@ be_visitor_home_svs::visit_finder (be_finder *node)
 }
 
 int
-be_visitor_home_svs::gen_servant_class (void)
+be_visitor_home_svs::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
@@ -236,7 +235,7 @@ be_visitor_home_svs::gen_servant_class (void)
       << "}";
 
   os_ << be_nl_2
-      << lname << "_Servant::~" << lname << "_Servant (void)"
+      << lname << "_Servant::~" << lname << "_Servant ()"
       << be_nl
       << "{" << be_nl
       << "}";
@@ -250,7 +249,7 @@ be_visitor_home_svs::gen_servant_class (void)
           << be_uidt_nl
           << "{" << be_idt_nl;
 
-      os_ << "for ( ::CORBA::ULong i = 0; i < descr.length (); ++i)"
+      os_ << "for (::CORBA::ULong i = 0; i < descr.length (); ++i)"
           << be_idt_nl
           << "{" << be_idt_nl
           << "const char * descr_name = descr[i]->name ();"
@@ -275,7 +274,7 @@ be_visitor_home_svs::gen_servant_class (void)
 
   AST_Type *pk = node_->primary_key ();
 
-  if (pk != 0)
+  if (pk != nullptr)
     {
       os_ << be_nl_2
           << "::" << comp_->name () << "_ptr" << be_nl
@@ -330,7 +329,7 @@ be_visitor_home_svs::gen_servant_class (void)
 
   be_home *h = node_;
 
-  while (h != 0)
+  while (h != nullptr)
     {
       if (this->visit_scope (h) != 0)
         {
@@ -346,7 +345,7 @@ be_visitor_home_svs::gen_servant_class (void)
           // A closure of all the supported interfaces is stored
           // in the base class 'pd_inherits_flat' member.
           be_interface *bi =
-            be_interface::narrow_from_decl (h->inherits ()[i]);
+            dynamic_cast<be_interface*> (h->inherits ()[i]);
 
           bi->get_insert_queue ().reset ();
           bi->get_del_queue ().reset ();
@@ -373,14 +372,14 @@ be_visitor_home_svs::gen_servant_class (void)
 
         }
 
-      h = be_home::narrow_from_decl (h->base_home ());
+      h = dynamic_cast<be_home*> (h->base_home ());
     }
 
   return 0;
 }
 
 void
-be_visitor_home_svs::gen_entrypoint (void)
+be_visitor_home_svs::gen_entrypoint ()
 {
   ACE_CString sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
@@ -443,14 +442,14 @@ be_visitor_home_attr_set::be_visitor_home_attr_set (
 {
 }
 
-be_visitor_home_attr_set::~be_visitor_home_attr_set (void)
+be_visitor_home_attr_set::~be_visitor_home_attr_set ()
 {
 }
 
 int
 be_visitor_home_attr_set::visit_home (be_home *node)
 {
-  if (node == 0)
+  if (node == nullptr)
     {
       return 0;
     }
@@ -459,7 +458,7 @@ be_visitor_home_attr_set::visit_home (be_home *node)
        !i.is_done ();
        i.next ())
     {
-      be_decl *d = be_decl::narrow_from_decl (i.item ());
+      be_decl *d = dynamic_cast<be_decl*> (i.item ());
 
       if (d->accept (this) == -1)
         {
@@ -471,7 +470,7 @@ be_visitor_home_attr_set::visit_home (be_home *node)
         }
     }
 
-  be_home *h = be_home::narrow_from_decl (node->base_home ());
+  be_home *h = dynamic_cast<be_home*> (node->base_home ());
 
   return this->visit_home (h);
 }

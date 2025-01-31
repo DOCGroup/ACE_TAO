@@ -1,4 +1,3 @@
-// Handle_Set.cpp
 #include "ace/Handle_Set.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
@@ -33,7 +32,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)
 #endif  /* ACE_LINUX && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1 && !_XOPEN_SOURCE */
 
 void
-ACE_Handle_Set::dump (void) const
+ACE_Handle_Set::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Handle_Set::dump");
@@ -91,7 +90,7 @@ const char ACE_Handle_Set::nbits_[256] =
 
 // Constructor, initializes the bitmask to all 0s.
 
-ACE_Handle_Set::ACE_Handle_Set (void)
+ACE_Handle_Set::ACE_Handle_Set ()
 {
   ACE_TRACE ("ACE_Handle_Set::ACE_Handle_Set");
   this->reset ();
@@ -118,7 +117,6 @@ ACE_Handle_Set::ACE_Handle_Set (const fd_set &fd_mask)
 int
 ACE_Handle_Set::count_bits (u_long n)
 {
-
  ACE_TRACE ("ACE_Handle_Set::count_bits");
 #if defined (ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT)
   int rval = 0;
@@ -245,7 +243,7 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
 ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set_Iterator)
 
 void
-ACE_Handle_Set_Iterator::dump (void) const
+ACE_Handle_Set_Iterator::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Handle_Set_Iterator::dump");
@@ -263,7 +261,7 @@ ACE_Handle_Set_Iterator::dump (void) const
 }
 
 ACE_HANDLE
-ACE_Handle_Set_Iterator::operator () (void)
+ACE_Handle_Set_Iterator::operator () ()
 {
   ACE_TRACE ("ACE_Handle_Set_Iterator::operator");
 #if defined (ACE_HANDLE_SET_USES_FD_ARRAY)
@@ -419,11 +417,9 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
   ACE_TRACE ("ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator");
 #if !defined (ACE_HANDLE_SET_USES_FD_ARRAY) && !defined (ACE_HAS_BIG_FD_SET)
   // No sense searching further than the max_handle_ + 1;
-  ACE_HANDLE maxhandlep1 =
-    this->handles_.max_handle_ + 1;
+  ACE_HANDLE maxhandlep1 = this->handles_.max_handle_ + 1;
 
-  fd_mask *maskp =
-    (fd_mask *)(this->handles_.mask_.fds_bits);
+  fd_mask *maskp = (fd_mask *)(this->handles_.mask_.fds_bits);
 
   // Loop until we've found the first non-zero bit or we run past the
   // <maxhandlep1> of the bitset.
@@ -454,15 +450,14 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
       }
     else
       {
-        this->word_num_ =
-          ACE_DIV_BY_WORDSIZE (this->handles_.min_handle_) - 1;
+        this->word_num_ = ACE_DIV_BY_WORDSIZE (this->handles_.min_handle_) - 1;
         this->word_val_ = 0;
       }
 #endif /* !ACE_HANDLE_SET_USES_FD_ARRAY && !ACE_HAS_BIG_FD_SET */
 }
 
 void
-ACE_Handle_Set_Iterator::reset_state (void)
+ACE_Handle_Set_Iterator::reset_state ()
 {
   ACE_TRACE ("ACE_Handle_Set_Iterator::reset_state");
 
@@ -478,11 +473,9 @@ ACE_Handle_Set_Iterator::reset_state (void)
 
 #if !defined (ACE_HANDLE_SET_USES_FD_ARRAY) && !defined (ACE_HAS_BIG_FD_SET)
   // No sense searching further than the max_handle_ + 1;
-  ACE_HANDLE maxhandlep1 =
-    this->handles_.max_handle_ + 1;
+  ACE_HANDLE maxhandlep1 = this->handles_.max_handle_ + 1;
 
-  fd_mask *maskp =
-    (fd_mask *)(this->handles_.mask_.fds_bits);
+  fd_mask *maskp = (fd_mask *)(this->handles_.mask_.fds_bits);
 
   // Loop until we've found the first non-zero bit or we run past the
   // <maxhandlep1> of the bitset.

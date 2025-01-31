@@ -10,80 +10,79 @@
 
 #include "ace/SSL/SSL_SOCK_Stream.h"
 
+/// Define the options for this test.
 class Options
-  // = TITLE
-  //   Define the options for this test.
 {
 public:
-  Options (void);
   // Constructor.
+  Options ();
 
-  ~Options (void);
   // Destructor.
+  ~Options ();
 
-  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the command-line arguments.
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  const ACE_Time_Value &sleep_time (void) const;
   // Return the amount of time to sleep in order to implement the
   // proper transmission rates.
+  const ACE_Time_Value &sleep_time () const;
 
-  u_short port (void) const;
   // Port of the server.
+  u_short port () const;
 
-  const ACE_TCHAR *host (void) const;
   // Host of the server.
+  const ACE_TCHAR *host () const;
 
-  size_t threads (void) const;
   // Number of threads.
+  size_t threads () const;
 
-  const char *quit_string (void) const;
   // String that shuts down the client/server.
+  const char *quit_string () const;
 
-  ssize_t read (void *buf, size_t len, size_t &iterations);
   // Read from the appropriate location.
+  ssize_t read (void *buf, size_t len, size_t &iterations);
 
-  size_t message_len (void) const;
   // Returns the length of the message to send.
+  size_t message_len () const;
 
-  const void *message_buf (void) const;
   // Returns a pointer to the message.
+  const void *message_buf () const;
 
-  ACE_THR_FUNC thr_func (void);
   // Returns a pointer to the entry point into the thread that runs
   // the client test function.
+  ACE_THR_FUNC thr_func ();
 
 private:
-  int init (void);
   // Initialize the message we're sending to the user and set up the
   // barrier.
+  int init ();
 
-  char *shared_client_test (u_short port,
-                            ACE_SSL_SOCK_Stream &cli_stream);
   // Performs the shared behavior of the oneway and twoway client
   // tests.
+  char *shared_client_test (u_short port,
+                            ACE_SSL_SOCK_Stream &cli_stream);
 
-  static void *twoway_client_test (void *);
   // Performs the twoway test.
+  static void *twoway_client_test (void *);
 
-  static void *oneway_client_test (void *);
   // Performs the oneway test.
+  static void *oneway_client_test (void *);
 
-  const ACE_TCHAR *host_;
   // Host of the server.
+  const ACE_TCHAR *host_;
 
-  u_short port_;
   // Port of the server.
+  u_short port_;
 
-  ACE_Time_Value sleep_time_;
   // Sleep_Time value.
+  ACE_Time_Value sleep_time_;
 
-  size_t threads_;
   // Number of threads.
+  size_t threads_;
 
-  enum {QUIT_STRING_SIZE = 128};
-  char quit_string_[QUIT_STRING_SIZE];
   // String that shuts down the client/server.
+  enum {QUIT_STRING_SIZE = 128};
+  char quit_string_[QUIT_STRING_SIZE + 1];
 
   size_t message_len_;
   // Size of the message we send to the server.

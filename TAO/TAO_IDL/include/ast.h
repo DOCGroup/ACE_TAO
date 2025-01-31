@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -115,6 +114,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ast_enum_val.h"        // class AST_EnumVal
 #include        "ast_array.h"           // class AST_Array
 #include        "ast_sequence.h"        // class AST_Sequence
+#include        "ast_map.h"             // class AST_Map
 #include        "ast_string.h"          // class AST_String
 #include        "ast_typedef.h"         // class AST_Typedef
 #include        "ast_native.h"          // class AST_Native

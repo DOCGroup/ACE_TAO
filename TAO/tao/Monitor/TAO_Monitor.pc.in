@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: TAO_Monitor
 Description: TAO Monitor Library
-Requires: TAO_PortableServer, TAO_ETCL_Parser, ACE_MonitorControl
+Requires: TAO_PortableServer, ACE_Monitor_Control
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_Monitor
 Cflags: -I${includedir}

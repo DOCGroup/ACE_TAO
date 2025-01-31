@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
 
 #include "ace/ACE.h"
 #include "ace/os_include/sys/os_mman.h"
@@ -66,7 +66,7 @@ public:
                             const OPTIONS *options = 0);
 
   /// Destructor
-  virtual ~ACE_Pagefile_Memory_Pool (void);
+  virtual ~ACE_Pagefile_Memory_Pool () = default;
 
   /// Ask system for initial chunk of shared memory.
   void *init_acquire (size_t nbytes,
@@ -114,12 +114,11 @@ public:
 
   /// Return the base address of this memory pool, 0 if base_addr
   /// never changes.
-  virtual void *base_addr (void) const;
+  virtual void *base_addr () const;
 
-  void dump (void) const {}
+  void dump () const {}
 
 protected:
-
   /**
    * Map portions or the entire pool into the local virtual address
    * space.  To do this, we compute the new @c file_offset of the
@@ -128,10 +127,9 @@ protected:
   int map (int &firstTime, size_t appendBytes = 0);
 
   /// Release the mapping.
-  int unmap (void);
+  int unmap ();
 
 private:
-
   /**
    * @class Control_Block
    *
@@ -192,7 +190,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Pagefile_Memory_Pool.inl"

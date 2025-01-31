@@ -43,21 +43,21 @@ class TAO_Codeset_Manager;
 class TAO_Export TAO_Codeset_Manager_Factory_Base : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_Codeset_Manager_Factory_Base ();
+  virtual ~TAO_Codeset_Manager_Factory_Base () = default;
 
   /// Create makes a new instance of the codeset manager for every
   /// call. This allows multiple ORBs to have their own (or none).
   /// This default implementation returns a null pointer only.
-  virtual TAO_Codeset_Manager *create(void);
+  virtual TAO_Codeset_Manager *create();
 
   /// Is_default is called by the ORB Core to determine if it needs
   /// to reload the factory with a dynamically linked libTAO_Codeset.
   /// Statically linked applications get derive implementation by
   /// including "tao/Codeset/Codeset.h" somewhere in their source code.
-  virtual bool is_default (void) const;
+  virtual bool is_default () const;
 
   /// Static initializer ensures the factory is loaded
-  static int initialize (void);
+  static int initialize ();
 };
 
 static int

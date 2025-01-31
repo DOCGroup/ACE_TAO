@@ -6,12 +6,12 @@
 #include "tao/CDR.h"
 #include "testS.h"
 
-Server_Request_Interceptor::Server_Request_Interceptor (void)
+Server_Request_Interceptor::Server_Request_Interceptor ()
     : request_forwarded_ (0)
 {
 }
 
-Server_Request_Interceptor::~Server_Request_Interceptor (void)
+Server_Request_Interceptor::~Server_Request_Interceptor ()
 {
 }
 
@@ -23,13 +23,13 @@ Server_Request_Interceptor::forward_reference (
 }
 
 char *
-Server_Request_Interceptor::name (void)
+Server_Request_Interceptor::name ()
 {
   return CORBA::string_dup ("Server_Request_Interceptor");
 }
 
 void
-Server_Request_Interceptor::destroy (void)
+Server_Request_Interceptor::destroy ()
 {
 }
 
@@ -38,7 +38,6 @@ Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr //
     )
 {
-
 }
 
 void
@@ -91,8 +90,6 @@ Server_Request_Interceptor::receive_request (
           "object_group_ref_version is %d\n", group_component.object_group_ref_version));
         }
     }
-
-  return;
 }
 
 void

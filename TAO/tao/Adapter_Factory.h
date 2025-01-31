@@ -33,7 +33,7 @@ class TAO_Export TAO_Adapter_Factory : public ACE_Service_Object
 {
 public:
   /// Destructor
-  virtual ~TAO_Adapter_Factory (void);
+  virtual ~TAO_Adapter_Factory ();
 
   /// Create a new adapter
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core) = 0;

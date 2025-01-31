@@ -32,25 +32,24 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IORTable_Export TAO_Table_Adapter : public TAO_Adapter
 {
 public:
-
   /// Constructor
   TAO_Table_Adapter (TAO_ORB_Core &orb_core);
 
   /// Destructor
-  virtual ~TAO_Table_Adapter (void);
+  virtual ~TAO_Table_Adapter ();
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open (void);
+  virtual void open ();
   virtual void close (int wait_for_completion);
   virtual void check_close (int wait_for_completion);
-  virtual int priority (void) const;
+  virtual int priority () const;
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
                         CORBA::Object_out foward_to);
 
-  virtual const char *name (void) const;
-  virtual CORBA::Object_ptr root (void);
+  virtual const char *name () const;
+  virtual CORBA::Object_ptr root ();
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &);
 
@@ -80,7 +79,7 @@ class TAO_IORTable_Export TAO_Table_Adapter_Factory : public TAO_Adapter_Factory
 {
 public:
   /// Constructor
-  TAO_Table_Adapter_Factory (void);
+  TAO_Table_Adapter_Factory ();
 
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   /// details.

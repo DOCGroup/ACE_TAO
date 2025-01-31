@@ -7,34 +7,34 @@
 #
 # NOTE: This file contains examples and other service level test  for
 # TAO's. Please do not include regular tests here.
-TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: !LynxOS !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !ACE_FOR_TAO !OpenVMS !HPUX_IA64
-TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: !ST !OpenBSD !Win32 !ACE_FOR_TAO !OpenVMS !CORBA_E_MICRO
-TAO/performance-tests/Latency/Single_Threaded/run_test.pl -n 1000: !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Latency/Thread_Pool/run_test.pl -n 1000: !ST !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Latency/Thread_Per_Connection/run_test.pl -n 1000: !ST !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Latency/AMI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Latency/DSI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Latency/DII/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Latency/Deferred/run_test.pl: !QNX !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Sequence_Latency/Single_Threaded/run_test.pl: !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Sequence_Latency/Thread_Pool/run_test.pl: !ST !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Sequence_Latency/Thread_Per_Connection/run_test.pl: !ST !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Sequence_Latency/AMI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Sequence_Latency/DSI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Sequence_Latency/DII/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Sequence_Latency/Deferred/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Sequence_Latency/Sequence_Operations_Time/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Throughput/run_test.pl: !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/POA/Object_Creation_And_Registration/run_test.pl: !Win32 !ACE_FOR_TAO !OpenVMS !CORBA_E_MICRO
-TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !OpenVMS !LynxOS !HPUX_IA64
-TAO/performance-tests/Protocols/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !Win32 !ACE_FOR_TAO !OpenVMS !LynxOS
+TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: !LynxOS !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: !ST !OpenBSD !Win32 !ACE_FOR_TAO !CORBA_E_MICRO
+TAO/performance-tests/Latency/Single_Threaded/run_test.pl -n 1000: !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Latency/Thread_Pool/run_test.pl -n 1000: !ST !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Latency/Thread_Per_Connection/run_test.pl -n 1000: !ST !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Latency/AMI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Latency/DSI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Latency/DII/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Latency/Deferred/run_test.pl: !QNX !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Sequence_Latency/Single_Threaded/run_test.pl: !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Sequence_Latency/Thread_Pool/run_test.pl: !ST !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Sequence_Latency/Thread_Per_Connection/run_test.pl: !ST !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Sequence_Latency/AMI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Sequence_Latency/DSI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Sequence_Latency/DII/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Sequence_Latency/Deferred/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Sequence_Latency/Sequence_Operations_Time/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO
+TAO/performance-tests/Throughput/run_test.pl: !Win32 !ACE_FOR_TAO
+TAO/performance-tests/POA/Object_Creation_And_Registration/run_test.pl: !Win32 !ACE_FOR_TAO  !CORBA_E_MICRO
+TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32  !LynxOS
+TAO/performance-tests/Protocols/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !Win32 !ACE_FOR_TAO  !LynxOS
 TAO/examples/Simple/bank/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
 TAO/examples/Simple/grid/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
 TAO/examples/Simple/time/run_test.pl: !NO_MESSAGING !Win32 !CORBA_E_MICRO
 TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC !NO_MESSAGING !Win32
 TAO/examples/Quoter/run_test.pl: !DISABLE_ToFix_LynxOS_PPC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO
 TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
-TAO/examples/AMH/Sink_Server/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !LynxOS !ACE_FOR_TAO !HPUX_IA64
+TAO/examples/AMH/Sink_Server/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !LynxOS !ACE_FOR_TAO
 TAO/examples/OBV/Typed_Events/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/examples/Buffered_AMI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p TCP,UDP,RTP_UDP: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
@@ -88,7 +88,7 @@ TAO/orbsvcs/tests/Event/Basic/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_
 TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/orbsvcs/tests/Event/UDP/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !NO_DIOP
 TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86
-TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO !LynxOS !HPUX_IA64
+TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/EC_MT_Mcast/run_test.pl:!ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/run_test.pl: !NO_MCAST !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/run_test.pl -ipv6: IPV6 !NO_MCAST !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS
@@ -142,7 +142,7 @@ TAO/orbsvcs/tests/ImplRepo/kill_server/run_test.pl -rm2523ol: !MINIMUM !CORBA_E_
 TAO/orbsvcs/tests/ImplRepo/kill_slow_server/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/oneway/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO !OSX
-TAO/orbsvcs/tests/ImplRepo/manual_start/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO !OpenVMS
+TAO/orbsvcs/tests/ImplRepo/manual_start/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl -servers 5 -objects 5: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/ImplRepo/scale_clients/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/ImplRepo/scale_clients/run_test.pl -clients 3 -secs_between_clients 0 -activationmode per_client: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
@@ -156,17 +156,17 @@ TAO/orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl: !MINIMUM !CORBA_E_COMPAC
 TAO/orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl -forwardalways: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl -forwardonce: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl -pingexternal: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
-TAO/orbsvcs/tests/ImplRepo/RestartServer/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
-TAO/orbsvcs/tests/ImplRepo/RestartServer/run_test.pl -manual: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
-TAO/orbsvcs/tests/ImplRepo/RestartServer/run_test.pl -manual -lockout: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
-TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
-TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl -delay 20 -imr_start: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
-TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl -hide_server -imr_start: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
-TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl -multistart: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
-TAO/orbsvcs/tests/ImplRepo/ping_interrupt/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
-TAO/orbsvcs/tests/ImplRepo/link_poas/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
-TAO/orbsvcs/tests/ImplRepo/RestartIMR/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
-TAO/orbsvcs/tests/ImplRepo/RestartIMR/run_test.pl -kill_server: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
+TAO/orbsvcs/tests/ImplRepo/RestartServer/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
+TAO/orbsvcs/tests/ImplRepo/RestartServer/run_test.pl -manual: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
+TAO/orbsvcs/tests/ImplRepo/RestartServer/run_test.pl -manual -lockout: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
+TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
+TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl -delay 20 -imr_start: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
+TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl -hide_server -imr_start: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
+TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl -multistart: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
+TAO/orbsvcs/tests/ImplRepo/ping_interrupt/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
+TAO/orbsvcs/tests/ImplRepo/link_poas/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
+TAO/orbsvcs/tests/ImplRepo/RestartIMR/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
+TAO/orbsvcs/tests/ImplRepo/RestartIMR/run_test.pl -kill_server: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ST !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/examples/CosEC/TypedSimple/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !WCHAR
 TAO/orbsvcs/tests/CosEvent/Timeout/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !NO_MESSAGING !ACE_FOR_TAO !LynxOS
@@ -186,7 +186,7 @@ TAO/orbsvcs/tests/Notify/Discarding/run_test.pl: !ST !NO_MESSAGING !MINIMUM !COR
 TAO/orbsvcs/tests/Notify/MT_Dispatching/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/orbsvcs/tests/Notify/Ordering/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86
 TAO/orbsvcs/tests/Notify/Timeout/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
-TAO/orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !IRIX !ACE_FOR_TAO
+TAO/orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO

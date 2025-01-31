@@ -18,7 +18,6 @@
 
 MFC_Log::MFC_Log ()
 {
-
 }
 
 void
@@ -40,5 +39,4 @@ MFC_Log::log (ACE_Log_Record& log_record)
 
 MFC_Log::~MFC_Log ()
 {
-
 }

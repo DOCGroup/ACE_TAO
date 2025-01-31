@@ -22,7 +22,6 @@ class JAWS_Cache_List
 // trying to simplify all the heap operations to be O(1).
 {
 public:
-
   typedef JAWS_Cache_Manager<EXT_ID, FACT, H_FN, E_FN> Cache_Manager;
   typedef JAWS_Cache_List_Item<EXT_ID, FACT, H_FN, E_FN> Cache_List_Item;
 
@@ -30,13 +29,13 @@ public:
   // maxsize is the total number of objects the in memory cache is
   // willing to manage
 
-  ~JAWS_Cache_List (void);
+  ~JAWS_Cache_List ();
 
-  int is_empty (void) const;
-  int is_full (void) const;
+  int is_empty () const;
+  int is_full () const;
 
-  size_t size (void) const;
-  size_t maxsize (void) const;
+  size_t size () const;
+  size_t maxsize () const;
 
   int maxsize (Cache_Manager *cm, size_t new_maxsize);
   // attempt to grow (or shrink) the heap.  Return 0 on success, -1 on
@@ -55,18 +54,16 @@ public:
   // treat item as a Cache_List_Item, and alter its heap position
 
 protected:
-
   void insert_i (Cache_List_Item *item);
   // insert item into heap.
 
   void remove_i (Cache_List_Item *item);
   // remove the element residing at pos, but do not delete it.
 
-  void remove_i (void);
+  void remove_i ();
   // remove the element residing at the top of heap, but do not delete it.
 
 private:
-
   ACE_Allocator *allocator_;
 
   size_t maxsize_;
@@ -76,25 +73,21 @@ private:
 
   Cache_List_Item *head_;
   Cache_List_Item *tail_;
-
 };
 
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
 class JAWS_Cache_List_Item
 {
-
   friend class JAWS_Cache_List<EXT_ID, FACT, H_FN, E_FN>;
 
 public:
-
   typedef JAWS_Cache_List<EXT_ID, FACT, H_FN, E_FN> Cache_List;
 
   JAWS_Cache_List_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
-  unsigned int priority (void);
+  unsigned int priority ();
 
 private:
-
   EXT_ID ext_id_;
   JAWS_Cache_Object *int_id_;
 
@@ -102,8 +95,6 @@ private:
   JAWS_Cache_List_Item *prev_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Cache_List_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* JAWS_CACHE_LIST_T_H */

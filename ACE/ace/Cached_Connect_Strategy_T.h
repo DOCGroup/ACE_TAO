@@ -57,10 +57,10 @@ public:
     int delete_lock = 0);
 
   /// Destructor
-  virtual ~ACE_Cached_Connect_Strategy_Ex (void);
+  virtual ~ACE_Cached_Connect_Strategy_Ex ();
 
   /// Explicit purging of connection entries from the connection cache.
-  virtual int purge_connections (void);
+  virtual int purge_connections ();
 
   /// Mark as closed (non-locking version). This is used during the cleanup of the
   /// connections purged.
@@ -71,7 +71,7 @@ public:
    * method had to be devised to avoid memory leaks and perform
    * cleanup of the <connection_cache_>.
    */
-  void cleanup (void);
+  void cleanup ();
 
   // = Typedefs for managing the map
   typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
@@ -100,13 +100,12 @@ public:
           CCSBASE;
 
   // = Accessor.
-  CACHING_STRATEGY &caching_strategy (void);
+  CACHING_STRATEGY &caching_strategy ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Find an idle handle.
   int find (ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> &search_addr,
             ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, std::pair<SVC_HANDLER *, ATTRIBUTES> > *&entry);
@@ -206,7 +205,6 @@ template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1,
 class ACE_Bounded_Cached_Connect_Strategy
   : public ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>
 {
-
    typedef ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>
    CCSEBASE;
 
@@ -215,7 +213,6 @@ class ACE_Bounded_Cached_Connect_Strategy
           REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
 
 public:
-
   /// Constructor
   ACE_Bounded_Cached_Connect_Strategy (size_t  max_size,
                                        CACHING_STRATEGY &caching_s,
@@ -226,13 +223,12 @@ public:
                                        int delete_lock = 0);
 
   /// Destructor
-  virtual ~ACE_Bounded_Cached_Connect_Strategy (void);
+  virtual ~ACE_Bounded_Cached_Connect_Strategy () = default;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   virtual int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
                                             const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                             ACE_Time_Value *timeout,
@@ -245,20 +241,13 @@ protected:
                                             int &found);
 
 protected:
-
   /// Max items in the cache, used as a bound for the creation of svc_handlers.
   size_t  max_size_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Cached_Connect_Strategy_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Cached_Connect_Strategy_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* CACHED_CONNECT_STRATEGY_T_H */

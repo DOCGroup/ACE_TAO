@@ -43,30 +43,30 @@ public:
   TAO_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  virtual ~TAO_Thread_Lane_Resources_Manager (void);
+  virtual ~TAO_Thread_Lane_Resources_Manager ();
 
   /// Finalize resources.
-  virtual void finalize (void) = 0;
+  virtual void finalize () = 0;
 
   /// Open default resources.
-  virtual int open_default_resources (void) = 0;
+  virtual int open_default_resources () = 0;
 
   /// Shutdown reactor.
-  virtual void shutdown_reactor (void) = 0;
+  virtual void shutdown_reactor () = 0;
 
   /// Cleanup transports to wake threads up waiting on those sockets.
-  virtual void close_all_transports (void) = 0;
+  virtual void close_all_transports () = 0;
 
   /// Does @a mprofile belong to us?
   virtual int is_collocated (const TAO_MProfile& mprofile) = 0;
 
   /// @name Accessors
   // @{
-  virtual TAO_Thread_Lane_Resources &lane_resources (void) = 0;
+  virtual TAO_Thread_Lane_Resources &lane_resources () = 0;
 
-  virtual TAO_Thread_Lane_Resources &default_lane_resources (void) = 0;
+  virtual TAO_Thread_Lane_Resources &default_lane_resources () = 0;
 
-  TAO_LF_Strategy &lf_strategy (void);
+  TAO_LF_Strategy &lf_strategy ();
   // @}
 
 private:
@@ -94,12 +94,11 @@ class TAO_Export TAO_Thread_Lane_Resources_Manager_Factory
 {
 public:
   /// Virtual destructor.
-  virtual ~TAO_Thread_Lane_Resources_Manager_Factory (void);
+  virtual ~TAO_Thread_Lane_Resources_Manager_Factory ();
 
   /// Factory method.
   virtual TAO_Thread_Lane_Resources_Manager *
   create_thread_lane_resources_manager (TAO_ORB_Core &core) = 0;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

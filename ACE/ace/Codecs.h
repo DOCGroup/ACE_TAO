@@ -27,7 +27,6 @@
 #include "ace/Basic_Types.h"
 #include "ace/Global_Macros.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -42,9 +41,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Base64
 {
 public:
-
   //@{
-
   /**
    * Encodes a stream of bytes to Base64 data
    *
@@ -82,21 +79,17 @@ public:
   //@}
 
 protected:
-
   // Prevent default construction.
-  ACE_Base64 (void) {}
+  ACE_Base64 () = default;
 
 private:
-
-  // Preventing copying and assignment.
-  ACE_Base64 (ACE_Base64 const &);
-  ACE_Base64 & operator= (ACE_Base64 const &);
+  ACE_Base64 (ACE_Base64 const &) = delete;
+  ACE_Base64 & operator= (ACE_Base64 const &) = delete;
 
   /// Initialize the tables for encoding/decoding.
-  static void init (void);
+  static void init ();
 
 private:
-
   /// Alphabet used for decoding i.e decoder_[alphabet_[i = 0..63]] = i
   static ACE_Byte decoder_[];
 
@@ -106,7 +99,6 @@ private:
 
   /// Boolean to denote whether initialization is complete
   static bool init_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

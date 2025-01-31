@@ -58,7 +58,7 @@ public:
    * Create a Log_Record and set its priority, time stamp, and
    * process id.
    */
-  ACE_Log_Record (void);
+  ACE_Log_Record ();
   ACE_Log_Record (ACE_Log_Priority lp,
                   time_t time_stamp,
                   long pid);
@@ -67,17 +67,17 @@ public:
                   long pid);
 
   /// Default dtor.
-  ~ACE_Log_Record (void);
+  ~ACE_Log_Record ();
 
   /// Write the contents of the logging record to the appropriate
   /// FILE if the corresponding type is enabled.
   int print (const ACE_TCHAR host_name[],
              u_long verbose_flag,
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_STDERR)
+#if !defined (ACE_LACKS_STDERR)
              FILE *fp = stderr);
 #else
              FILE *fp);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_STDERR */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   /// Write the contents of the logging record to the appropriate
@@ -103,13 +103,13 @@ public:
   static void priority_name (ACE_Log_Priority p, const ACE_TCHAR *name);
 
   /// Get the type of the Log_Record.
-  ACE_UINT32 type (void) const;
+  ACE_UINT32 type () const;
 
   /// Set the type of the Log_Record.
   void type (ACE_UINT32);
 
   /// Get the category of the Log_Record.
-  ACE_Log_Category_TSS* category (void) const;
+  ACE_Log_Category_TSS* category () const;
   /// Set the category of the Log_Record.
   void category (ACE_Log_Category_TSS*);
 
@@ -118,7 +118,7 @@ public:
    * as the base 2 logarithm of <type_> (which must be a power of 2,
    * as defined by the enums in ACE_Log_Priority).
    */
-  u_long priority (void) const;
+  u_long priority () const;
 
   /// Set the priority of the Log_Record <type_> (which must be a
   /// power of 2, as defined by the enums in ACE_Log_Priority).
@@ -126,51 +126,51 @@ public:
 
   /// Get the total length of the Log_Record, which includes the
   /// size of the various data member fields.
-  long length (void) const;
+  long length () const;
 
   /// Set the total length of the Log_Record, which needs to account for
   /// the size of the various data member fields.
   void length (long);
 
   /// Get the time stamp of the Log_Record.
-  ACE_Time_Value time_stamp (void) const;
+  ACE_Time_Value time_stamp () const;
 
   /// Set the time stamp of the Log_Record.
   void time_stamp (const ACE_Time_Value &ts);
 
   /// Get the process id of the Log_Record.
-  long pid (void) const;
+  long pid () const;
 
   /// Set the process id of the Log_Record.
   void pid (long);
 
   /// Get the message data of the Log_Record.
-  const ACE_TCHAR *msg_data (void) const;
+  const ACE_TCHAR *msg_data () const;
 
   /// Set the message data of the record. If @a data is longer than the
   /// current msg_data_ buffer, a new msg_data_ buffer is allocated to
-  /// fit. If such a reallocation faisl, this method returns -1, else 0.
+  /// fit. If such a reallocation fails, this method returns -1, else 0.
   int msg_data (const ACE_TCHAR *data);
 
   /// Get the size of the message data of the Log_Record, including
   /// a byte for the NUL.
-  size_t msg_data_len (void) const;
+  size_t msg_data_len () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
   /// Round up to the alignment restrictions.
-  void round_up (void);
+  void round_up ();
 
   /**
    * Total length of the logging record in bytes.  This field *must*
    * come first in order for various IPC framing mechanisms to work
    * correctly.  In addition, the field must be an ACE_INT32 in order
-   * to be passed portably across platforms.
+   * to be passed portable across platforms.
    */
   ACE_INT32 length_;
 
@@ -193,9 +193,10 @@ private:
   ///
   ACE_Log_Category_TSS* category_;
 
-  /// disallow copying...
-  ACE_Log_Record (const ACE_Log_Record& rhs);
-  ACE_Log_Record& operator= (const ACE_Log_Record& rhs);
+  ACE_Log_Record (const ACE_Log_Record&) = delete;
+  ACE_Log_Record& operator= (const ACE_Log_Record&) = delete;
+  ACE_Log_Record (ACE_Log_Record&&) = delete;
+  ACE_Log_Record& operator= (ACE_Log_Record&& rhs) = delete;
 };
 
 // Forward decls.

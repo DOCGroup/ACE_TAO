@@ -42,19 +42,19 @@ template <typename T>
 class TAO_Value_Var_T : private TAO_Base_var
 {
 public:
-  TAO_Value_Var_T (void);
+  TAO_Value_Var_T ();
   TAO_Value_Var_T (T *);
   TAO_Value_Var_T (const TAO_Value_Var_T<T> &);
 
   // (TAO extension)
   TAO_Value_Var_T (const T *);
 
-  ~TAO_Value_Var_T (void);
+  ~TAO_Value_Var_T ();
 
   TAO_Value_Var_T &operator= (T *);
   TAO_Value_Var_T &operator= (const TAO_Value_Var_T<T> &);
 
-  T * operator-> (void) const;
+  T * operator-> () const;
 
   operator const T * () const;
   operator T *& ();
@@ -65,16 +65,15 @@ public:
   typedef T *  _retn_type;
 
   // in, inout, out, _retn
-  _in_type in (void) const;
-  _inout_type inout (void);
-  _out_type out (void);
-  _retn_type _retn (void);
+  _in_type in () const;
+  _inout_type inout ();
+  _out_type out ();
+  _retn_type _retn ();
 
   // (TAO extension)
-  T * ptr (void) const;
+  T * ptr () const;
 
 private:
-
   // Prevent widening assignment.
   TAO_Value_Var_T (const TAO_Base_var &);
   void operator= (const TAO_Base_var &);
@@ -100,9 +99,9 @@ public:
   TAO_Value_Out_T &operator= (T *);
 
   operator T *& ();
-  T *& ptr (void);
+  T *& ptr ();
 
-  T * operator-> (void);
+  T * operator-> ();
 
 private:
   T *& ptr_;
@@ -112,13 +111,7 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Valuetype/Value_VarOut_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Value_VarOut_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

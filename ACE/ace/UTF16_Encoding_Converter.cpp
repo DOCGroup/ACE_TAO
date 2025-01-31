@@ -30,17 +30,17 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-static const ACE_UINT32 halfShift = 10;
-static const ACE_UINT32 halfBase  = 0x00010000;
-static const ACE_UINT32 halfMask  = 0x000003FF;
+static constexpr ACE_UINT32 halfShift = 10;
+static constexpr ACE_UINT32 halfBase  = 0x00010000;
+static constexpr ACE_UINT32 halfMask  = 0x000003FF;
 
-static const ACE_UINT32 UNI_SUR_HIGH_START   = 0x0000D800;
-static const ACE_UINT32 UNI_SUR_HIGH_END     = 0x0000DBFF;
-static const ACE_UINT32 UNI_SUR_LOW_START    = 0x0000DC00;
-static const ACE_UINT32 UNI_SUR_LOW_END      = 0x0000DFFF;
-static const ACE_UINT32 UNI_REPLACEMENT_CHAR = 0x0000FFFD;
-static const ACE_UINT32 UNI_MAX_BMP          = 0x0000FFFF;
-static const ACE_UINT32 UNI_MAX_UTF16        = 0x0010FFFF;
+static constexpr ACE_UINT32 UNI_SUR_HIGH_START   = 0x0000D800;
+static constexpr ACE_UINT32 UNI_SUR_HIGH_END     = 0x0000DBFF;
+static constexpr ACE_UINT32 UNI_SUR_LOW_START    = 0x0000DC00;
+static constexpr ACE_UINT32 UNI_SUR_LOW_END      = 0x0000DFFF;
+static constexpr ACE_UINT32 UNI_REPLACEMENT_CHAR = 0x0000FFFD;
+static constexpr ACE_UINT32 UNI_MAX_BMP          = 0x0000FFFF;
+static constexpr ACE_UINT32 UNI_MAX_UTF16        = 0x0010FFFF;
 
 // Once the bits are split out into bytes of UTF-8, this is a mask OR-ed
 // into the first byte, depending on how many bytes follow.  There are
@@ -79,7 +79,7 @@ ACE_UTF16_Encoding_Converter::ACE_UTF16_Encoding_Converter (bool swap)
 {
 }
 
-ACE_UTF16_Encoding_Converter::~ACE_UTF16_Encoding_Converter (void)
+ACE_UTF16_Encoding_Converter::~ACE_UTF16_Encoding_Converter ()
 {
 }
 
@@ -323,37 +323,37 @@ ACE_UTF16_Encoding_Converter::encoded (const ACE_Byte* source,
 }
 
 ACE_UINT32
-ACE_UTF16_Encoding_Converter::get_UNI_SUR_HIGH_START (void)
+ACE_UTF16_Encoding_Converter::get_UNI_SUR_HIGH_START ()
 {
   return UNI_SUR_HIGH_START;
 }
 
 ACE_UINT32
-ACE_UTF16_Encoding_Converter::get_UNI_SUR_LOW_END (void)
+ACE_UTF16_Encoding_Converter::get_UNI_SUR_LOW_END ()
 {
   return UNI_SUR_LOW_END;
 }
 
 ACE_UINT32
-ACE_UTF16_Encoding_Converter::get_UNI_REPLACEMENT_CHAR (void)
+ACE_UTF16_Encoding_Converter::get_UNI_REPLACEMENT_CHAR ()
 {
   return UNI_REPLACEMENT_CHAR;
 }
 
 const ACE_Byte*
-ACE_UTF16_Encoding_Converter::get_first_byte_mark (void)
+ACE_UTF16_Encoding_Converter::get_first_byte_mark ()
 {
   return firstByteMark;
 }
 
 const ACE_Byte*
-ACE_UTF16_Encoding_Converter::get_trailing_bytes_for_utf8 (void)
+ACE_UTF16_Encoding_Converter::get_trailing_bytes_for_utf8 ()
 {
   return trailingBytesForUTF8;
 }
 
 const ACE_UINT32*
-ACE_UTF16_Encoding_Converter::get_offsets_from_utf8 (void)
+ACE_UTF16_Encoding_Converter::get_offsets_from_utf8 ()
 {
   return offsetsFromUTF8;
 }

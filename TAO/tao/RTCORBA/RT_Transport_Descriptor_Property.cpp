@@ -8,18 +8,18 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Transport_Descriptor_Property::~TAO_RT_Transport_Descriptor_Property (void)
+TAO_RT_Transport_Descriptor_Property::~TAO_RT_Transport_Descriptor_Property ()
 {
 }
 
 /*************************************************************************************************/
 
-TAO_RT_Transport_Descriptor_Private_Connection_Property::~TAO_RT_Transport_Descriptor_Private_Connection_Property (void)
+TAO_RT_Transport_Descriptor_Private_Connection_Property::~TAO_RT_Transport_Descriptor_Private_Connection_Property ()
 {
 }
 
 TAO_RT_Transport_Descriptor_Property*
-TAO_RT_Transport_Descriptor_Private_Connection_Property::duplicate (void)
+TAO_RT_Transport_Descriptor_Private_Connection_Property::duplicate ()
 {
   // Construct a copy of our class
   TAO_RT_Transport_Descriptor_Private_Connection_Property *desc_prop = 0;
@@ -47,7 +47,7 @@ TAO_RT_Transport_Descriptor_Banded_Connection_Property::~TAO_RT_Transport_Descri
 }
 
 TAO_RT_Transport_Descriptor_Property*
-TAO_RT_Transport_Descriptor_Banded_Connection_Property::duplicate (void)
+TAO_RT_Transport_Descriptor_Banded_Connection_Property::duplicate ()
 {
   // Construct a copy of our class
   TAO_RT_Transport_Descriptor_Banded_Connection_Property *desc_prop = 0;

@@ -3,15 +3,9 @@
 #include "ace/CDR_Stream.h"
 #include "ace/Truncate.h"
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Log_Msg_IPC::ACE_Log_Msg_IPC (void)
-{
-}
-
-ACE_Log_Msg_IPC::~ACE_Log_Msg_IPC (void)
+ACE_Log_Msg_IPC::~ACE_Log_Msg_IPC ()
 {
   (void) this->close ();
 }
@@ -27,7 +21,7 @@ ACE_Log_Msg_IPC::open (const ACE_TCHAR *logger_key)
 }
 
 int
-ACE_Log_Msg_IPC::reset (void)
+ACE_Log_Msg_IPC::reset ()
 {
   if (this->message_queue_.get_handle () != ACE_INVALID_HANDLE)
     {
@@ -39,7 +33,7 @@ ACE_Log_Msg_IPC::reset (void)
 }
 
 int
-ACE_Log_Msg_IPC::close (void)
+ACE_Log_Msg_IPC::close ()
 {
   return this->message_queue_.close ();
 }

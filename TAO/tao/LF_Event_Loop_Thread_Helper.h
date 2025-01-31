@@ -37,10 +37,10 @@ public:
                                    ACE_Time_Value *max_wait_time);
 
   /// Destructor
-  ~TAO_LF_Event_Loop_Thread_Helper (void);
+  ~TAO_LF_Event_Loop_Thread_Helper ();
 
   /// Calls @c set_event_loop_thread on the leader/followers object.
-  int event_loop_return (void) const;
+  int event_loop_return () const;
 
 private:
   /// Reference to leader/followers object.

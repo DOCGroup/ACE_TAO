@@ -78,7 +78,7 @@ public:
   shutdown ()
   {
     ACE_DEBUG ((LM_DEBUG, "Server is shutting down.\n"));
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
   }
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -265,7 +265,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       //
       orb->run ();
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
       orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));

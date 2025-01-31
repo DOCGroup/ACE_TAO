@@ -28,7 +28,7 @@ public:
   void method (CORBA::ULong request_number,
                const test::data &);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB.

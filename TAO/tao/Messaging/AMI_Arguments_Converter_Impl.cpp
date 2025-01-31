@@ -14,7 +14,7 @@ TAO_AMI_Arguments_Converter_Impl::convert_request (
     TAO::Argument * const args[],
     size_t nargs)
 {
-  // The AMI requests on client side just has the in and inout argumenst,
+  // The AMI requests on client side just has the in and inout arguments,
   // Since the argument list in the client side is used by server side
   // in collocation case and the server expects the full list of arguments
   // and not just the inout arguments we need to expand the client arguments
@@ -120,12 +120,11 @@ TAO_AMI_Arguments_Converter_Impl::handle_corba_exception (
 // Initialization and registration of dynamic service object.
 
 int
-TAO_AMI_Arguments_Converter_Impl::Initializer (void)
+TAO_AMI_Arguments_Converter_Impl::Initializer ()
 {
   return ACE_Service_Config::process_directive (
     ace_svc_desc_TAO_AMI_Arguments_Converter_Impl);
 }
-
 
 
 ACE_STATIC_SVC_DEFINE (

@@ -55,7 +55,6 @@ class TAO_LB_ClientRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name Methods Required by the Client Request Interceptor
    * Interface
@@ -66,9 +65,9 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestInterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void send_request (
       PortableInterceptor::ClientRequestInfo_ptr ri);
@@ -85,7 +84,6 @@ public:
   virtual void receive_other (
       PortableInterceptor::ClientRequestInfo_ptr ri);
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

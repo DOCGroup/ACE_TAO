@@ -5,8 +5,7 @@
 #include "tao/PI/PI.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-#include "ace/Auto_Ptr.h"
-
+#include <memory>
 
 
 //const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
@@ -115,7 +114,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (servers,
                       Test::Hello_var [number_of_servers],
                       -1);
-      ACE_Auto_Array_Ptr<Test::Hello_var> owner (servers);
+      std::unique_ptr<Test::Hello_var[]> owner (servers);
 
       for (CORBA::ULong i = 0; i < number_of_servers; ++ i)
         {

@@ -30,7 +30,7 @@ class be_visitor_operation_arglist : public be_visitor_operation
 public:
   be_visitor_operation_arglist (be_visitor_context *ctx);
 
-  ~be_visitor_operation_arglist (void);
+  ~be_visitor_operation_arglist ();
 
   virtual int visit_operation (be_operation *node);
   virtual int visit_factory (be_factory *node);

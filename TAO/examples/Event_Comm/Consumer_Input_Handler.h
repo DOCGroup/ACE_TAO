@@ -37,10 +37,10 @@ class Consumer_Input_Handler : public ACE_Event_Handler
 public:
   // Initialization and termination methods.
   /// Constructor.
-  Consumer_Input_Handler(void);
+  Consumer_Input_Handler();
 
   /// Destructor.
-  ~Consumer_Input_Handler (void);
+  ~Consumer_Input_Handler () = default;
 
   /// registers the input event handler.
   /// returns 0 on success, -1 on error.
@@ -50,10 +50,10 @@ public:
   virtual int handle_input (ACE_HANDLE);
 
   /// Close down the handler.
-  int close (void);
+  int close ();
 
   /// Report whether the Consumer initiated the shutdown.
-  int consumer_initiated_shutdown (void);
+  int consumer_initiated_shutdown ();
 
   /// Indicate that the Consumer initiated the shutdown.
   void consumer_initiated_shutdown (int);

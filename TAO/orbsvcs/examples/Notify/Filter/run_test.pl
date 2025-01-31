@@ -20,8 +20,6 @@ my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n
 my $nfs = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $flt = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 
-PerlACE::check_privilege_group();
-
 $nsiorfile = "naming.ior";
 $nfsiorfile = "notify.ior";
 

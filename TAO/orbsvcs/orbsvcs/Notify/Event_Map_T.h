@@ -32,18 +32,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class PROXY, class ACE_LOCK>
 class TAO_Notify_Event_Map_T
 {
-
 public:
   typedef  TAO_Notify_Event_Map_Entry_T<PROXY> ENTRY;
 
   /// Constructor
-  TAO_Notify_Event_Map_T (void);
+  TAO_Notify_Event_Map_T ();
 
   /// Destructor
   ~TAO_Notify_Event_Map_T ();
 
   /// Init
-  void init (void);
+  void init ();
 
   /// Connect a PROXY
   void connect (PROXY* proxy);
@@ -66,19 +65,19 @@ public:
   ENTRY* find (const TAO_Notify_EventType& event_type);
 
   /// Find the default broadcast list.
-  typename ENTRY::COLLECTION* broadcast_collection (void);
+  typename ENTRY::COLLECTION* broadcast_collection ();
 
   /// Find the update list. This is all the PROXYS connected to this Map.
-  typename ENTRY::COLLECTION* updates_collection (void);
+  typename ENTRY::COLLECTION* updates_collection ();
 
   /// Release the usage count on this entry.
   void release (ENTRY* entry);
 
   /// Access all the event types available
-  const TAO_Notify_EventTypeSeq& event_types (void);
+  const TAO_Notify_EventTypeSeq& event_types ();
 
   /// Access number of proxys connected in all.
-  int proxy_count (void);
+  int proxy_count ();
 
 protected:
   /// The Map that stores eventtype to entry mapping.
@@ -106,13 +105,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/Notify/Event_Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Notify/Event_Map_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Event_Map_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_EVENT_MAP_T_H */

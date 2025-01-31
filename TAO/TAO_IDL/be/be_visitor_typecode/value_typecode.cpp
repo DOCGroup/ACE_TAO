@@ -39,7 +39,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
       // we're repeated and we're recursive so just leave
       return 0;
     }
-  else if (this->queue_insert (this->tc_queue_, node, 0) == 0)
+  else if (this->queue_insert (this->tc_queue_, node, 0) == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_value_typecode::"
@@ -60,9 +60,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   if (this->gen_member_typecodes (node) != 0)
     {
@@ -155,7 +153,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
   if (concrete_base)
     {
       be_type * const base_type =
-        be_type::narrow_from_decl (concrete_base);
+        dynamic_cast<be_type*> (concrete_base);
 
       ACE_ASSERT (base_type);
 
@@ -172,7 +170,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
      << count << ");" << be_uidt_nl
      << be_uidt_nl;
 
-  if (this->gen_typecode_ptr (be_type::narrow_from_decl (node)) != 0)
+  if (this->gen_typecode_ptr (dynamic_cast<be_type*> (node)) != 0)
     {
       return -1;
     }
@@ -198,7 +196,7 @@ TAO::be_visitor_value_typecode::gen_member_typecodes (be_valuetype * node)
                             0);
         }
 
-      AST_Field * const field = AST_Field::narrow_from_decl (d);
+      AST_Field * const field = dynamic_cast<AST_Field*> (d);
 
       if (!field
           || field->visibility () == AST_Field::vis_NA)
@@ -207,7 +205,7 @@ TAO::be_visitor_value_typecode::gen_member_typecodes (be_valuetype * node)
         }
 
       be_type * const member_type =
-        be_type::narrow_from_decl (field->field_type ());
+        dynamic_cast<be_type*> (field->field_type ());
 
       if (this->is_typecode_generation_required (member_type)
           && member_type->accept (this) != 0)
@@ -259,7 +257,7 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
                              "bad node in this scope\n"), 0);
         }
 
-      AST_Field * const field = AST_Field::narrow_from_decl (d);
+      AST_Field * const field = dynamic_cast<AST_Field*> (d);
 
       if (!field)
         {
@@ -274,10 +272,10 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
         }
 
       be_decl * const member_decl =
-        be_decl::narrow_from_decl (field);
+        dynamic_cast<be_decl*> (field);
 
       be_type * const member_type =
-        be_type::narrow_from_decl (field->field_type ());
+        dynamic_cast<be_type*> (field->field_type ());
 
       os << "{ "
          << "\"" << member_decl->original_local_name () << "\", "

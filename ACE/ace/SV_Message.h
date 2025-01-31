@@ -34,16 +34,16 @@ public:
   ACE_SV_Message (long type = 0);
 
   /// Destructor
-  ~ACE_SV_Message (void);
+  ~ACE_SV_Message ();
 
   /// Get the message type.
-  long type (void) const;
+  long type () const;
 
   /// Set the message type.
   void type (long);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

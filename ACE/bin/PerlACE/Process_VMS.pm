@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#!/usr/bin/env perl
 
 package PerlACE::Process;
 
@@ -203,11 +203,16 @@ sub Spawn ()
     return 0;
 }
 
-sub WaitKill ($)
+# The second argument is an optional output argument that, if present,
+# will be passed to check_return_value function to get the signal number
+# the process has received, if any, and/or whether there was a core dump.
+sub WaitKill ($;$)
 {
     my $self = shift;
     my $timeout = shift;
-    my $status = $self->TimedWait ($timeout);
+    my $opts = shift;
+
+    my $status = $self->TimedWait ($timeout, $opts);
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
@@ -247,11 +252,16 @@ sub TerminateWaitKill ($)
     return $self->WaitKill ($timeout);
 }
 
-# really only for internal use
+# Really only for internal use.
+# The second optional argument indicates whether the corresponding process
+# may deliberately send a signal to itself or not. It also contains output
+# data indicating whether there was a core dump and/or the signal nubmer
+# the process has died from, if any.
 sub check_return_value ($)
 {
     my $self = shift;
     my $rc = shift;
+    my $opts = shift // {};
 
     if ($rc == 0) {
         return 0;
@@ -262,8 +272,7 @@ sub check_return_value ($)
         return ($rc >> 8);
     }
     elsif (($rc & 0xff) == 0) {
-        $rc >>= 8;
-        return $rc;
+        return ($rc >> 8);
     }
 
     my $dump = 0;
@@ -273,9 +282,21 @@ sub check_return_value ($)
         $dump = 1;
     }
 
-    # check for ABRT, KILL or TERM
-    if ($rc == 6 || $rc == 9 || $rc == 15) {
+    my $self_crash = $opts->{self_crash};
+
+    # ABRT, KILL or TERM can be sent deliberately
+    if ($self_crash && ($rc == 6 || $rc == 9 || $rc == 15)) {
         return 0;
+    }
+
+    my $signal_ref = $opts->{signal_ref};
+    if (defined $signal_ref) {
+        ${$signal_ref} = $rc;
+    }
+
+    my $dump_ref = $opts->{dump_ref};
+    if (defined $dump_ref) {
+        ${$dump_ref} = $dump;
     }
 
     print STDERR "ERROR: <", $self->{EXECUTABLE},
@@ -285,7 +306,7 @@ sub check_return_value ($)
 
     print STDERR "signal $rc : ", $signame[$rc], "\n";
 
-    return 0;
+    return 255;
 }
 
 sub Kill ()
@@ -295,7 +316,7 @@ sub Kill ()
     if ($self->{RUNNING}) {
         kill ('KILL', $self->{PROCESS});
         waitpid ($self->{PROCESS}, 0);
-        $self->check_return_value ($?);
+        $self->check_return_value ($?, {self_crash => 1});
     }
 
     $self->{RUNNING} = 0;
@@ -315,17 +336,21 @@ sub Wait ($)
 
 }
 
-sub TimedWait ($)
+# The second argument is an optional output argument that, if present,
+# will contain the signal number that the process has received, if any,
+# and/or whether there was a core dump.
+sub TimedWait ($;$)
 {
     my $self = shift;
     my $timeout = shift;
+    my $opts = shift;
 
     $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
 
     my $status;
     my $pid = VmsProcess::TimedWaitPid ($self->{PROCESS}, $timeout, $status);
     if ($pid > 0) {
-      return $self->check_return_value ($status);
+      return $self->check_return_value ($status, $opts);
     }
     return -1;
 }

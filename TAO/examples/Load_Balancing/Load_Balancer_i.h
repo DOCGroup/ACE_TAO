@@ -40,10 +40,10 @@ class  Object_Group_Factory_i :
   //
 public:
   /// Constructor.
-  Object_Group_Factory_i (void);
+  Object_Group_Factory_i ();
 
   /// Destructor.
-  ~Object_Group_Factory_i (void);
+  ~Object_Group_Factory_i ();
 
   // = Load_Balancer::Object_Group_Factory idl methods.
 
@@ -78,7 +78,7 @@ public:
    * a sequence of <Group_ID>s of all existing round robin
    * <Object_Group>s created by this factory.
    */
-  Load_Balancer::Group_List * round_robin_groups (void);
+  Load_Balancer::Group_List * round_robin_groups ();
 
   /**
    * Lists all the random <Object_Group>s which were created
@@ -86,7 +86,7 @@ public:
    * a sequence of <Group_ID>s of all existing random
    * <Object_Group>s created by this factory.
    */
-  Load_Balancer::Group_List * random_groups (void);
+  Load_Balancer::Group_List * random_groups ();
 
   // = Implementation detail methods.
 
@@ -152,12 +152,12 @@ public:
                   Object_Group_Factory_i * my_factory);
 
   /// Destructor.
-  ~Object_Group_i (void);
+  ~Object_Group_i ();
 
   // = Load_Balancer::Object_Group idl methods.
 
   /// Get group's id.
-  char * id (void);
+  char * id ();
 
   /**
    * Adds a new <member> to the <Object_Group>.  Note that each
@@ -180,8 +180,7 @@ public:
    * ``round robin.''  If the group contains no members, <no_such_member>
    * exception is thrown.
    */
-  CORBA::Object_ptr resolve (void)
-    = 0;
+  CORBA::Object_ptr resolve () = 0;
 
   /**
    * Returns an object with the specified <Member_ID>.  If this
@@ -191,7 +190,7 @@ public:
   CORBA::Object_ptr resolve_with_id (const char * id);
 
   /// Return a sequence of <Member_ID>s of all of its members.
-  Load_Balancer::Member_ID_List * members (void);
+  Load_Balancer::Member_ID_List * members ();
 
   /**
    * Cleanup the resources associated with this <Object_Group>.
@@ -199,10 +198,9 @@ public:
    * <id> should become available.  <Object_Group_Factory>
    * should no longer list this <Object_Group>.
    */
-  void destroy (void);
+  void destroy ();
 
 protected:
-
   /// Typedefs for ease of use.
   typedef ACE_DLList<ACE_CString> LIST;
   typedef ACE_DLList_Iterator<ACE_CString> ITERATOR;
@@ -250,11 +248,11 @@ public:
                        Object_Group_Factory_i *my_factory);
 
   /// Destructor.
-  ~Random_Object_Group (void);
+  ~Random_Object_Group ();
 
   /// Returns a member object from this <Object_Group> in accordance with
   /// the "random" load balancing policy.
-  CORBA::Object_ptr resolve (void);
+  CORBA::Object_ptr resolve ();
 
   /**
    * Cleanup the resources associated with this <Object_Group>.
@@ -262,7 +260,7 @@ public:
    * <id> should become available.  <Object_Group_Factory>
    * should no longer list this <Object_Group>.
    */
-  void destroy (void);
+  void destroy ();
 };
 
 /**
@@ -274,13 +272,12 @@ public:
 class RR_Object_Group: public Object_Group_i
 {
 public:
-
   /// Constructor.
   RR_Object_Group (const char *id,
                    Object_Group_Factory_i *my_factory);
 
   /// Destructor.
-  ~RR_Object_Group (void);
+  ~RR_Object_Group ();
 
   /**
    * We need to override the implementation of <unbind> from
@@ -291,7 +288,7 @@ public:
 
   /// Returns a member object from this <Object_Group> in accordance with
   /// the "round robin" load balancing policy.
-  CORBA::Object_ptr resolve (void);
+  CORBA::Object_ptr resolve ();
 
   /**
    * Cleanup the resources associated with this <Object_Group>.
@@ -299,10 +296,9 @@ public:
    * <id> should become available.  <Object_Group_Factory>
    * should no longer list this <Object_Group>.
    */
-  void destroy (void);
+  void destroy ();
 
 private:
-
   /// Index into the Object_Group_i::member_id_list_: keeps track of
   /// the member_id to return on the next invocation of <resolve>.
   size_t next_;

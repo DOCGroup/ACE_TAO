@@ -26,14 +26,14 @@ FT_ProxyAdmin_Base::activate(const FtRtecEventComm::ObjectId& oid)
 
 
 const FtRtecEventComm::ObjectId&
-FT_ProxyAdmin_Base::object_id(void) const
+FT_ProxyAdmin_Base::object_id() const
 {
   return object_id_;
 }
 
 
 CORBA::Object_var
-FT_ProxyAdmin_Base::reference(void) const
+FT_ProxyAdmin_Base::reference() const
 {
   return poa_->servant_to_reference(servant_);
 }

@@ -1,4 +1,9 @@
 /anyop
 /client
 /param_testA.cpp
+/param_testC.cpp
+/param_testC.h
+/param_testC.inl
+/param_testS.cpp
+/param_testS.h
 /server

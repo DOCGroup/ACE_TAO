@@ -89,8 +89,7 @@ TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((
         LM_DEBUG,
-        ACE_TEXT ("TAO_Marshal_Primitive::append detected error\n")
-      ));
+        ACE_TEXT ("TAO_Marshal_Primitive::append detected error\n")));
 
   throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
@@ -306,8 +305,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((
         LM_DEBUG,
-        ACE_TEXT ("TAO_Marshal_ObjRef::append detected error\n")
-      ));
+        ACE_TEXT ("TAO_Marshal_ObjRef::append detected error\n")));
 
   throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
@@ -586,8 +584,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
     tc->member_type (current_member);
   return TAO_Marshal_Object::perform_append (member_tc.in (),
                                              src,
-                                             dest
-                                            );
+                                             dest);
 }
 
 TAO::traverse_status
@@ -637,8 +634,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
     {
       TAOLIB_DEBUG ((
           LM_DEBUG,
-          ACE_TEXT ("TAO_Marshal_Sequence::append detected error\n")
-        ));
+          ACE_TEXT ("TAO_Marshal_Sequence::append detected error\n")));
       throw ::CORBA::MARSHAL ();
     }
 
@@ -809,8 +805,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             {
               retval = TAO_Marshal_Object::perform_append (tc2.in (),
                                                            src,
-                                                           dest
-                                                           );
+                                                           dest);
             }
           break;
         }// end of switch
@@ -822,8 +817,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((
         LM_DEBUG,
-        ACE_TEXT ("marshaling TAO_Marshal_Sequence::append detected error\n")
-      ));
+        ACE_TEXT ("marshaling TAO_Marshal_Sequence::append detected error\n")));
 
   throw ::CORBA::MARSHAL ();
 }
@@ -996,8 +990,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         {
           retval = TAO_Marshal_Object::perform_append (tc2.in (),
                                                        src,
-                                                       dest
-                                                      );
+                                                       dest);
         }
       break;
     }// end of switch
@@ -1050,8 +1043,7 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
 TAO::traverse_status
 TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
                             TAO_InputCDR *src,
-                            TAO_OutputCDR *dest
-                            )
+                            TAO_OutputCDR *dest)
 {
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE;
@@ -1092,8 +1084,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
 TAO::traverse_status
 TAO_Marshal_WString::append (CORBA::TypeCode_ptr,
                              TAO_InputCDR *src,
-                             TAO_OutputCDR *dest
-                             )
+                             TAO_OutputCDR *dest)
 {
   CORBA::Boolean continue_append = true;
 
@@ -1120,8 +1111,7 @@ TAO_Marshal_WString::append (CORBA::TypeCode_ptr,
 TAO::traverse_status
 TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
                            TAO_InputCDR *src,
-                           TAO_OutputCDR *dest
-                           )
+                           TAO_OutputCDR *dest)
 {
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE;
@@ -1181,8 +1171,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
       param = tc->content_type ();
       retval = TAO_Marshal_Object::perform_append (param.in (),
                                                    src,
-                                                   dest
-                                                   );
+                                                   dest);
     }
   else // tc->kind () must be  tk_value  or  tk_event
     {
@@ -1192,8 +1181,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
         {
           retval = this->append (param.in (),
                                  src,
-                                 dest
-                                );
+                                 dest);
         }
 
       if (retval == TAO::TRAVERSE_CONTINUE)
@@ -1212,8 +1200,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
               retval =
                 TAO_Marshal_Object::perform_append (param.in (),
                                                     src,
-                                                    dest
-                                                   );
+                                                    dest);
             }
         }
     }

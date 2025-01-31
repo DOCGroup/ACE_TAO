@@ -115,7 +115,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if (failed)
     {
-      ACE_DEBUG ((LM_ERROR, "Test failed.\n") );
+      ACE_DEBUG ((LM_ERROR, "Test failed.\n"));
     }
 
   return 0;

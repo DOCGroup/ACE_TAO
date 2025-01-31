@@ -15,17 +15,18 @@
 
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIOP_Connector::TAO_UIOP_Connector (void)
+TAO_UIOP_Connector::TAO_UIOP_Connector ()
   : TAO_Connector (TAO_TAG_UIOP_PROFILE),
     connect_strategy_ (),
     base_connector_ (0)
 {
 }
 
-TAO_UIOP_Connector::~TAO_UIOP_Connector (void)
+TAO_UIOP_Connector::~TAO_UIOP_Connector ()
 {
 }
 
@@ -61,7 +62,7 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_UIOP_Connector::close (void)
+TAO_UIOP_Connector::close ()
 {
   // Zap the creation strategy that we created earlier.
   delete this->base_connector_.creation_strategy ();
@@ -76,7 +77,7 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
   if (this->check_prefix (str) != 0)
     return 0;
 
-  const char *separator = ACE_OS::strchr (str,'|');
+  const char *separator = std::strchr (str,'|');
   if (separator == 0)
     {
       if (TAO_debug_level)
@@ -305,7 +306,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_UIOP_Connector::make_profile (void)
+TAO_UIOP_Connector::make_profile ()
 {
   TAO_Profile *profile = 0;
   ACE_NEW_THROW_EX (profile,
@@ -329,10 +330,10 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
 
   static const char *protocol[] = { "uiop", "uioploc" };
 
-  const size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  size_t const slot = std::strchr (endpoint, ':') - endpoint;
 
-  const size_t len0 = ACE_OS::strlen (protocol[0]);
-  const size_t len1 = ACE_OS::strlen (protocol[1]);
+  size_t const len0 = std::strlen (protocol[0]);
+  size_t const len1 = std::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
@@ -352,7 +353,7 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
 }
 
 char
-TAO_UIOP_Connector::object_key_delimiter (void) const
+TAO_UIOP_Connector::object_key_delimiter () const
 {
   return TAO_UIOP_Profile::object_key_delimiter_;
 }

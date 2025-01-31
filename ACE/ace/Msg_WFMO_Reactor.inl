@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
+#if defined (ACE_WIN32)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -29,4 +29,4 @@ ACE_Msg_WFMO_Reactor::alertable_handle_events (ACE_Time_Value *how_long)
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
+#endif /* ACE_WIN32 */

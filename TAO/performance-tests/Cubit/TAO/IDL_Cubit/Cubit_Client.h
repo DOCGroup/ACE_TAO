@@ -43,7 +43,7 @@ public:
   // = Constructor and destructor.
   Cubit_Client (int shutdown = 0);
 
-  ~Cubit_Client (void);
+  ~Cubit_Client ();
 
   /// Execute client example code.
   int run ();
@@ -61,7 +61,7 @@ private:
   int read_ior (const ACE_TCHAR *filename);
 
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// Obtain the bit mask representation of the specified test
   u_int opt_to_mask (const ACE_TCHAR *opt);
@@ -80,7 +80,7 @@ private:
                     ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
 
   /// Exercise the union.  Cube a union.
-  void cube_union (void);
+  void cube_union ();
 
   /// calculate the cube from a struct.
   void cube_struct (int i);

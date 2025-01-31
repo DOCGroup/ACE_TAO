@@ -21,7 +21,7 @@ public:
   ~FTEC_Gateway_ConsumerAdmin();
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier (void);
+      obtain_push_supplier ();
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -33,7 +33,7 @@ public:
   ~FTEC_Gateway_SupplierAdmin();
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
-      obtain_push_consumer (void);
+      obtain_push_consumer ();
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -47,9 +47,9 @@ public:
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
                 const RtecEventChannelAdmin::ConsumerQOS &qos);
-  virtual void disconnect_push_supplier (void);
-  virtual void suspend_connection (void);
-  virtual void resume_connection (void);
+  virtual void disconnect_push_supplier ();
+  virtual void suspend_connection ();
+  virtual void resume_connection ();
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -65,7 +65,7 @@ public:
   virtual void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
                 const RtecEventChannelAdmin::SupplierQOS& qos);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
   FTEC_Gateway_Impl* impl_;
 };
@@ -75,7 +75,7 @@ class PushConsumerHandler : public POA_FtRtecEventComm::AMI_PushConsumerHandler
 public:
   PushConsumerHandler();
   ~PushConsumerHandler();
-  virtual void push (void);
+  virtual void push ();
 
   virtual void push_excep (::Messaging::ExceptionHolder * excep_holder);
 };
@@ -91,9 +91,9 @@ public:
   }
 private:
   Interceptor_Destoryer();
-  inline void do_it(void) {
+  inline void do_it() {
     destroy_interceptors();
-  };
+  }
 };
 
 struct FTEC_Gateway_Impl
@@ -210,19 +210,19 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa)
 
 //= The RtecEventChannelAdmin::EventChannel methods
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-FTEC_Gateway::for_consumers (void)
+FTEC_Gateway::for_consumers ()
 {
   return RtecEventChannelAdmin::ConsumerAdmin::_duplicate(impl_->consumer_admin.in());
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-FTEC_Gateway::for_suppliers (void)
+FTEC_Gateway::for_suppliers ()
 {
   ORBSVCS_DEBUG((LM_DEBUG, "FTEC_Gateway::for_suppliers\n"));
   return RtecEventChannelAdmin::SupplierAdmin::_duplicate(impl_->supplier_admin.in());
 }
 
-void FTEC_Gateway::destroy (void)
+void FTEC_Gateway::destroy ()
 {
   impl_->ftec->destroy();
 }
@@ -262,9 +262,8 @@ FTEC_Gateway_ConsumerAdmin::~FTEC_Gateway_ConsumerAdmin()
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
-FTEC_Gateway_ConsumerAdmin::obtain_push_supplier (void)
+FTEC_Gateway_ConsumerAdmin::obtain_push_supplier ()
 {
-
   FtRtecEventComm::ObjectId** remote_proxy_oid_ptr;
   ACE_NEW_THROW_EX(remote_proxy_oid_ptr, FtRtecEventComm::ObjectId*, CORBA::NO_MEMORY());
 
@@ -292,7 +291,7 @@ FTEC_Gateway_SupplierAdmin::~FTEC_Gateway_SupplierAdmin()
 
 // = The RtecEventChannelAdmin::SupplierAdmin methods...
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
-FTEC_Gateway_SupplierAdmin::obtain_push_consumer (void)
+FTEC_Gateway_SupplierAdmin::obtain_push_consumer ()
 {
   FtRtecEventComm::ObjectId** remote_proxy_oid_ptr;
   ACE_NEW_THROW_EX(remote_proxy_oid_ptr, FtRtecEventComm::ObjectId*, CORBA::NO_MEMORY());
@@ -341,13 +340,12 @@ void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
   RtecEventComm::PushConsumer_ptr push_consumer,
   const RtecEventChannelAdmin::ConsumerQOS &qos)
 {
-
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
 
   *oid_ptr = impl_->ftec->connect_push_consumer(push_consumer, qos);
 }
 
-void FTEC_Gateway_ProxyPushSupplier::disconnect_push_supplier (void)
+void FTEC_Gateway_ProxyPushSupplier::disconnect_push_supplier ()
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
   impl_->ftec->disconnect_push_supplier(**oid_ptr);
@@ -355,13 +353,13 @@ void FTEC_Gateway_ProxyPushSupplier::disconnect_push_supplier (void)
   delete oid_ptr;
 }
 
-void FTEC_Gateway_ProxyPushSupplier::suspend_connection (void)
+void FTEC_Gateway_ProxyPushSupplier::suspend_connection ()
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
   impl_->ftec->suspend_push_supplier(**oid_ptr);
 }
 
-void FTEC_Gateway_ProxyPushSupplier::resume_connection (void)
+void FTEC_Gateway_ProxyPushSupplier::resume_connection ()
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
   impl_->ftec->resume_push_supplier(**oid_ptr);
@@ -405,7 +403,7 @@ void FTEC_Gateway_ProxyPushConsumer::connect_push_supplier (
   *oid_ptr = impl_->ftec->connect_push_supplier(push_supplier, qos);
 }
 
-void FTEC_Gateway_ProxyPushConsumer::disconnect_push_consumer (void)
+void FTEC_Gateway_ProxyPushConsumer::disconnect_push_consumer ()
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
   impl_->ftec->disconnect_push_consumer(**oid_ptr);
@@ -421,7 +419,7 @@ PushConsumerHandler::~PushConsumerHandler()
 {
 }
 
-void PushConsumerHandler::push (void)
+void PushConsumerHandler::push ()
 {
 }
 

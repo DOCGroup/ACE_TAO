@@ -1,1 +1,6 @@
 /client
+/structC.cpp
+/structC.h
+/structC.inl
+/structS.cpp
+/structS.h

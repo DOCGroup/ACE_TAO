@@ -47,12 +47,6 @@ public:
 
   virtual ~AST_Annotation_Appl ();
 
-  /// Narrowing
-  ///{
-  DEF_NARROW_FROM_DECL (AST_Annotation_Appl);
-  DEF_NARROW_FROM_SCOPE (AST_Annotation_Appl);
-  ///}
-
   /// AST Dumping
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
@@ -111,6 +105,11 @@ private:
 struct Decl_Annotations_Pair {
   AST_Decl *decl;
   AST_Annotation_Appls *annotations;
+};
+
+struct Decl_Annotations_Pair_Pair {
+  Decl_Annotations_Pair *first;
+  Decl_Annotations_Pair *second;
 };
 
 #endif

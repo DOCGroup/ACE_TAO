@@ -67,20 +67,20 @@ protected:
                 HTTP_Handler_Factory &factory);
 
   /// Destructor
-  virtual ~HTTP_Handler (void);
+  virtual ~HTTP_Handler ();
 
   /// This method is called by the framework when there is a timeout.
-  virtual void timeout (void);
+  virtual void timeout ();
 
   /**
    * This is the termination state of the handler. After successful or
    * unsuccessful completions, the handler will end up in this state
    * (method).
    */
-  virtual void done (void);
+  virtual void done ();
 
   /// Request too long.
-  virtual void request_too_long (void);
+  virtual void request_too_long ();
 
   /// Reference to the creating factory.
   HTTP_Handler_Factory &factory_;
@@ -89,14 +89,14 @@ protected:
   // = Completion methods inherited from <JAWS_IO_Handler>.
 
   virtual void read_complete (ACE_Message_Block &data);
-  virtual void read_error (void);
-  virtual void transmit_file_complete (void);
+  virtual void read_error ();
+  virtual void transmit_file_complete ();
   virtual void transmit_file_error (int result);
-  virtual void receive_file_complete (void);
+  virtual void receive_file_complete ();
   virtual void receive_file_error (int result);
-  virtual void write_error (void);
-  virtual void confirmation_message_complete (void);
-  virtual void error_message_complete (void);
+  virtual void write_error ();
+  virtual void confirmation_message_complete ();
+  virtual void error_message_complete ();
 
 public:
   enum
@@ -132,10 +132,10 @@ class HTTP_Handler_Factory
 {
 public:
   /// Destructor
-  virtual ~HTTP_Handler_Factory (void);
+  virtual ~HTTP_Handler_Factory ();
 
   /// This creates a new HTTP_Handler
-  virtual HTTP_Handler *create_http_handler (void) = 0;
+  virtual HTTP_Handler *create_http_handler () = 0;
 
   /**
    * The HTTP handler will call this method from HTTP_Handler::done to
@@ -156,7 +156,7 @@ class Synch_HTTP_Handler_Factory : public HTTP_Handler_Factory
 {
 public:
   /// This creates a new HTTP_Handler
-  HTTP_Handler *create_http_handler (void);
+  HTTP_Handler *create_http_handler ();
 
   /**
    * The HTTP handler will call this method from HTTP_Handler::done to
@@ -179,7 +179,7 @@ class No_Cache_Synch_HTTP_Handler_Factory : public HTTP_Handler_Factory
 {
 public:
   /// This creates a new HTTP_Handler
-  HTTP_Handler *create_http_handler (void);
+  HTTP_Handler *create_http_handler ();
 
   /**
    * The HTTP handler will call this method from HTTP_Handler::done to
@@ -226,7 +226,7 @@ private:
    * handlers. New handlers can only be created by the framework when
    * new client connections arrive.
    */
-  HTTP_Handler *create_http_handler (void);
+  HTTP_Handler *create_http_handler ();
 };
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 #endif /* HTTP_HANDLER_H */

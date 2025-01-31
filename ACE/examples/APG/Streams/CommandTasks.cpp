@@ -15,7 +15,7 @@ AnswerCallModule::AnswerCallModule (ACE_SOCK_Stream *peer)
 { }
 // Listing 011
 // Listing 012 code/ch18
-AnswerCallDownstreamTask::AnswerCallDownstreamTask (void)
+AnswerCallDownstreamTask::AnswerCallDownstreamTask ()
   : CommandTask(Command::CMD_ANSWER_CALL)
 { }
 // Listing 012
@@ -38,7 +38,7 @@ int AnswerCallDownstreamTask::process (Command *command)
 }
 // Listing 013
 // Listing 014 code/ch18
-AnswerCallUpstreamTask::AnswerCallUpstreamTask (void)
+AnswerCallUpstreamTask::AnswerCallUpstreamTask ()
   : CommandTask(Command::CMD_ANSWER_CALL)
 { }
 // Listing 014
@@ -62,7 +62,7 @@ RetrieveCallerIdModule::RetrieveCallerIdModule
 // Listing 021
 // Listing 022 code/ch18
 RetrieveCallerIdDownstreamTask::RetrieveCallerIdDownstreamTask
-  (void)
+  ()
     : CommandTask(Command::CMD_RETRIEVE_CALLER_ID)
 { }
 
@@ -76,7 +76,7 @@ int RetrieveCallerIdDownstreamTask::process (Command *)
 // Listing 022
 // Listing 023 code/ch18
 RetrieveCallerIdUpstreamTask::RetrieveCallerIdUpstreamTask
-  (void)
+  ()
     : CommandTask(Command::CMD_RETRIEVE_CALLER_ID)
 { }
 
@@ -106,7 +106,7 @@ PlayMessageModule::PlayMessageModule (ACE_SOCK_Stream *peer)
                    peer)
 { }
 
-PlayMessageDownstreamTask::PlayMessageDownstreamTask (void)
+PlayMessageDownstreamTask::PlayMessageDownstreamTask ()
   : CommandTask(Command::CMD_PLAY_MESSAGE)
 { }
 // Listing 032 code/ch18
@@ -143,7 +143,7 @@ int PlayMessageDownstreamTask::process (Command *command)
   return Command::RESULT_SUCCESS;
 }
 // Listing 032
-PlayMessageUpstreamTask::PlayMessageUpstreamTask (void)
+PlayMessageUpstreamTask::PlayMessageUpstreamTask ()
   : CommandTask(Command::CMD_PLAY_MESSAGE)
 { }
 
@@ -166,7 +166,7 @@ RecordMessageModule::RecordMessageModule (ACE_SOCK_Stream *peer)
                    peer)
 { }
 
-RecordMessageDownstreamTask::RecordMessageDownstreamTask (void)
+RecordMessageDownstreamTask::RecordMessageDownstreamTask ()
   : CommandTask(Command::CMD_RECORD_MESSAGE)
 { }
 
@@ -175,7 +175,7 @@ int RecordMessageDownstreamTask::process (Command *)
   return Command::RESULT_SUCCESS;
 }
 
-RecordMessageUpstreamTask::RecordMessageUpstreamTask (void)
+RecordMessageUpstreamTask::RecordMessageUpstreamTask ()
   : CommandTask(Command::CMD_RECORD_MESSAGE)
 { }
 // Listing 033 code/ch18

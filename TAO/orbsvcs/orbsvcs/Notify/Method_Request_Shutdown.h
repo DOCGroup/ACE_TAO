@@ -37,10 +37,10 @@ public:
   virtual ~TAO_Notify_Method_Request_Shutdown ();
 
   /// Create a copy of this object.
-  TAO_Notify_Method_Request_Queueable* copy (void);
+  TAO_Notify_Method_Request_Queueable* copy ();
 
   /// Execute the Request
-  virtual int execute (void);
+  virtual int execute ();
 
 private:
   // Task to shutdown

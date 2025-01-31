@@ -1,11 +1,11 @@
 #include "Reply_Handler.h"
 
-Reply_Handler::Reply_Handler (void)
+Reply_Handler::Reply_Handler ()
 {
 }
 
 void
-Reply_Handler::receive_data (void)
+Reply_Handler::receive_data ()
 {
 }
 
@@ -23,7 +23,7 @@ Reply_Handler::receive_data_excep (::Messaging::ExceptionHolder *holder)
 }
 
 void
-Reply_Handler::sync (void)
+Reply_Handler::sync ()
 {
 }
 
@@ -41,7 +41,7 @@ Reply_Handler::sync_excep (::Messaging::ExceptionHolder *holder)
 }
 
 void
-Reply_Handler::shutdown (void)
+Reply_Handler::shutdown ()
 {
 }
 

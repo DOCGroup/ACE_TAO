@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY) && !defined (ACE_LACKS_REGNOTIFYCHANGEKEYVALUE)
@@ -19,8 +18,6 @@
 #include "ace/Auto_Event.h"
 #include "ace/OS_NS_unistd.h"
 
-
-
 static int stop_test = 0;
 static HKEY context_to_monitor = HKEY_CURRENT_USER;
 static const ACE_TCHAR *temp_context_name = ACE_TEXT ("ACE temporary context");
@@ -29,11 +26,11 @@ class Event_Handler : public ACE_Event_Handler
 {
 public:
   Event_Handler (ACE_Reactor &reactor);
-  ~Event_Handler (void);
+  ~Event_Handler ();
   int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask close_mask);
-  ACE_Registry::Naming_Context &context (void);
+  ACE_Registry::Naming_Context &context ();
 
 private:
   ACE_Auto_Event event_;
@@ -58,7 +55,7 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
     ACE_ERROR ((LM_ERROR, "Registration with Reactor could not be done\n"));
 }
 
-Event_Handler::~Event_Handler (void)
+Event_Handler::~Event_Handler ()
 {
 }
 
@@ -87,7 +84,7 @@ Event_Handler::handle_close (ACE_HANDLE,
 }
 
 ACE_Registry::Naming_Context &
-Event_Handler::context (void)
+Event_Handler::context ()
 {
   return this->context_;
 }

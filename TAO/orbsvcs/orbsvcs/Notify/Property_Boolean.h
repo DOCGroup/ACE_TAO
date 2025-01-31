@@ -54,13 +54,13 @@ public:
   void get (CosNotification::PropertySeq& prop_seq);
 
   /// Return the name
-  const char * name (void) const;
+  const char * name () const;
 
   /// Return the value.
-  CORBA::Boolean value (void) const;
+  CORBA::Boolean value () const;
 
   /// Is the current value valid
-  CORBA::Boolean is_valid (void) const;
+  CORBA::Boolean is_valid () const;
 
 protected:
   /// The Property name.

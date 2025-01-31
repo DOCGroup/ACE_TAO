@@ -39,7 +39,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup
   , public TAO_Notify_Method_Request_Event
 {
 public:
-
   /// an arbitrary code (Octet) to identify this type of request in persistent storage
   enum {persistence_code = 2};
 
@@ -60,13 +59,12 @@ protected:
   TAO_Notify_Method_Request_Lookup (const TAO_Notify::Delivery_Request_Ptr& delivery, TAO_Notify_ProxyConsumer * proxy);
 
   /// Execute the dispatch operation.
-  int execute_i (void);
+  int execute_i ();
 
   ///= TAO_ESF_Worker method
   virtual void work (TAO_Notify_ProxySupplier* proxy_supplier);
 
 protected:
-
   /// The Proxy
   TAO_Notify_ProxyConsumer* proxy_consumer_;
 };
@@ -97,7 +95,7 @@ public:
   virtual ~TAO_Notify_Method_Request_Lookup_Queueable ();
 
   /// Execute the Request
-  virtual int execute (void);
+  virtual int execute ();
 
 private:
   TAO_Notify_Event::Ptr event_var_;
@@ -125,10 +123,10 @@ public:
   virtual ~TAO_Notify_Method_Request_Lookup_No_Copy ();
 
   /// Execute the Request
-  virtual int execute (void);
+  virtual int execute ();
 
   /// Create a copy of this object.
-  virtual TAO_Notify_Method_Request_Queueable* copy (void);
+  virtual TAO_Notify_Method_Request_Queueable* copy ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

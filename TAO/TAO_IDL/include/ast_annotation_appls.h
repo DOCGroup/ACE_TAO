@@ -1,9 +1,9 @@
 #ifndef AST_ANNOTATION_APPL_VECTOR_HEADER
 #define AST_ANNOTATION_APPL_VECTOR_HEADER
 
-#include "ace/Vector_T.h"
-#include "ace/Mutex.h"
 #include "ace/Bound_Ptr.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Vector_T.h"
 
 #include "TAO_IDL_FE_Export.h"
 
@@ -17,7 +17,9 @@ class AST_Annotation_Decl;
  */
 class TAO_IDL_FE_Export AST_Annotation_Appls {
 public:
-  typedef ACE_Strong_Bound_Ptr<AST_Annotation_Appl, ACE_Mutex> AST_Annotation_Appl_Ptr;
+//FUZZ: disable check_for_ACE_SYNCH_MUTEX
+  typedef ACE_Strong_Bound_Ptr<AST_Annotation_Appl, ACE_SYNCH_MUTEX> AST_Annotation_Appl_Ptr;
+//FUZZ: enable check_for_ACE_SYNCH_MUTEX
   typedef ACE_Vector<AST_Annotation_Appl_Ptr> AST_Annotation_Appl_Ptrs;
   typedef AST_Annotation_Appl_Ptrs::iterator iterator;
   typedef AST_Annotation_Appl_Ptrs::const_iterator const_iterator;
@@ -43,7 +45,7 @@ public:
   bool empty () const;
   size_t size () const;
 
-  /// Iterate through ACE_Strong_Bound_Ptr<AST_Annotation_Appl, ACE_Mutex>
+  /// Iterate through vector_
   ///{
   iterator begin ();
   iterator end ();

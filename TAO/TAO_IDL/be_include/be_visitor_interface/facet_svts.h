@@ -27,7 +27,7 @@ class be_visitor_facet_svts : public be_visitor_interface
 public:
   be_visitor_facet_svts (be_visitor_context *ctx);
 
-  ~be_visitor_facet_svts (void);
+  ~be_visitor_facet_svts ();
 
   virtual int visit_interface (be_interface *node);
 };

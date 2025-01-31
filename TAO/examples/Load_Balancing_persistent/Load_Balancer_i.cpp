@@ -1,5 +1,5 @@
 #include "Load_Balancer_i.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Hash_Map_Manager_T.h"
 
 const char *rr_name_bind = "RR_Group";
@@ -32,13 +32,13 @@ Object_Group_Factory_i::Object_Group_Factory_i (CORBA::ORB_ptr orb,
                       &options));
 }
 
-Object_Group_Factory_i::~Object_Group_Factory_i (void)
+Object_Group_Factory_i::~Object_Group_Factory_i ()
 {
   delete this->mem_pool_;
 }
 
 PortableServer::POA_ptr
-Object_Group_Factory_i::_default_POA (void)
+Object_Group_Factory_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -47,7 +47,6 @@ Object_Group_Factory_i::_default_POA (void)
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_round_robin (const char * id)
 {
-
   void *tmp_rr (0);
 
   if (this->mem_pool_->find (rr_name_bind,
@@ -121,7 +120,6 @@ Object_Group_Factory_i::unbind_round_robin (const char * id)
 
   // Bump down the flags value
   --this->flags_;
-
 }
 
 Load_Balancer::Object_Group_ptr
@@ -229,7 +227,6 @@ Object_Group_Factory_i::make_group (int random,
     }
 
 
-
   // As we are sure that it is not in the list go ahead and insert it
   if (random)
     ACE_NEW_THROW_EX (group_servant,
@@ -285,7 +282,6 @@ Object_Group_Factory_i::make_group (int random,
     }
 
 
-
   // Update the value of flags_
   this->update_flags (random);
 
@@ -295,7 +291,6 @@ Object_Group_Factory_i::make_group (int random,
       // dynamically allocated  memory.
       this->mem_pool_->free ((void *) ptr);
       throw Load_Balancer::duplicate_group ();
-
     }
 
   // Return.
@@ -308,9 +303,6 @@ Object_Group_Factory_i::make_group (int random,
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::resolve (const char * id)
 {
-
-
-
 #if defined (DOORS_MEASURE_STATS)
   // Time the calls
   // Record the entry  time.
@@ -357,7 +349,6 @@ Object_Group_Factory_i::resolve (const char * id)
                              ACE_TEXT ("(%N|%l) The factory does not have any references ")
                              ACE_TEXT ("to the group that you have sought \n\n")),
                             0);
-
         }
     }
 
@@ -387,7 +378,6 @@ Object_Group_Factory_i::resolve (const char * id)
 
   Load_Balancer::Object_Group_ptr
     object_group = Load_Balancer::Object_Group::_narrow (objref.in ());
-
 
 
 #if defined (DOORS_MEASURE_STATS)
@@ -448,13 +438,13 @@ Object_Group_Factory_i::list_groups (int random)
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::round_robin_groups (void)
+Object_Group_Factory_i::round_robin_groups ()
 {
   return list_groups (0);
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::random_groups (void)
+Object_Group_Factory_i::random_groups ()
 {
   return list_groups (1);
 }
@@ -506,12 +496,11 @@ Object_Group_Factory_i::update_flags (int random)
       if (!random)
         *(this->flags_) = 3;
       break;
-
     }
 }
 
 void
-Object_Group_Factory_i::update_objects (void)
+Object_Group_Factory_i::update_objects ()
 {
   // Create an appropriate servant.
   Object_Group_i * group_servant = 0;
@@ -563,7 +552,6 @@ Object_Group_i::Object_Group_i (const char * id,
    id_ (id),
    allocator_ (0)
 {
-
   if (!this->allocator_)
     {
       ACE_MMAP_Memory_Pool::OPTIONS options (ACE_DEFAULT_BASE_ADDR);
@@ -575,7 +563,7 @@ Object_Group_i::Object_Group_i (const char * id,
 }
 
 
-Object_Group_i::~Object_Group_i (void)
+Object_Group_i::~Object_Group_i ()
 {
   // Need to delete all the items from the member_id_list, to avoid
   // memory leaks.
@@ -591,14 +579,14 @@ Object_Group_i::~Object_Group_i (void)
 
 
 PortableServer::POA_ptr
-Object_Group_i::_default_POA (void)
+Object_Group_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 
 char *
-Object_Group_i::id (void)
+Object_Group_i::id ()
 {
   return CORBA::string_dup (id_.c_str ());
 }
@@ -606,7 +594,6 @@ Object_Group_i::id (void)
 void
 Object_Group_i::bind (const Load_Balancer::Member & member)
 {
-
   if (this->members_ == 0)
     {
       ACE_CString id = this->id ();
@@ -634,7 +621,6 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
             {
               ACE_ERROR ((LM_ERROR,
                           "Unable to bind\n"));
-
             }
         }
     }
@@ -756,7 +742,6 @@ Object_Group_i::unbind (const char * id)
     }
 
 
-
   Object_Group_i::ITERATOR iter (*(this->member_id_list_));
 
   while (ACE_OS::strcmp (id,*(iter.next ())))
@@ -780,11 +765,10 @@ Object_Group_i::resolve_with_id (const char * id)
   char *retn_ptr = CORBA::string_dup (ior.in ());
 
   return retn_ptr;
-
 }
 
 Load_Balancer::Member_ID_List *
-Object_Group_i::members (void)
+Object_Group_i::members ()
 {
   Load_Balancer::Member_ID_List * list = 0;
 
@@ -815,7 +799,7 @@ Object_Group_i::members (void)
 }
 
 void
-Object_Group_i::destroy (void)
+Object_Group_i::destroy ()
 {
   // Deregister with POA.
   PortableServer::POA_var poa =
@@ -828,7 +812,7 @@ Object_Group_i::destroy (void)
 }
 
 void
-Object_Group_i::read_from_memory (void)
+Object_Group_i::read_from_memory ()
 {
     // Sanity check needs to be done in all the places
   ACE_CString id = this->id ();
@@ -883,9 +867,8 @@ Random_Object_Group::Random_Object_Group (const char *id,
 }
 
 char *
-Random_Object_Group::resolve (void)
+Random_Object_Group::resolve ()
 {
-
   this->read_from_memory ();
 
   size_t group_size = this->members_->current_size ();
@@ -919,7 +902,7 @@ RR_Object_Group::RR_Object_Group (const char *id,
 }
 
 char *
-RR_Object_Group::resolve (void)
+RR_Object_Group::resolve ()
 {
   char *objref = 0;
 
@@ -953,7 +936,6 @@ RR_Object_Group::resolve (void)
 void
 RR_Object_Group::unbind (const char *id)
 {
-
   if (this->members_ == 0)
     {
       ACE_CString id = this->id ();

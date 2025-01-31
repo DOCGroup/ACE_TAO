@@ -30,10 +30,10 @@ class ACEXML_Export ACEXML_FileCharStream : public ACEXML_CharStream
 {
 public:
   /// Default constructor.
-  ACEXML_FileCharStream (void);
+  ACEXML_FileCharStream ();
 
   /// Destructor
-  virtual ~ACEXML_FileCharStream (void);
+  virtual ~ACEXML_FileCharStream ();
 
   /// Open a file.
   int open (const ACEXML_Char *name);
@@ -48,12 +48,12 @@ public:
    * Returns the available ACEXML_Char in the buffer.  -1
    * if the object is not initialized properly.
    */
-  virtual int available (void);
+  virtual int available ();
 
   /**
    * Close this stream and release all resources used by it.
    */
-  virtual int close (void);
+  virtual int close ();
 
   /**
    * Read the next ACEXML_Char.  Return -1 if we are not able to
@@ -70,32 +70,31 @@ public:
   /**
    *  Determine the encoding of the file.
    */
-  virtual int determine_encoding (void);
+  virtual int determine_encoding ();
 
 
   /**
    * Peek the next ACEXML_Char in the CharStream.  Return the
    * character if success, -1 if EOF is reached.
    */
-  virtual int peek (void);
+  virtual int peek ();
 
   /**
    *  Resets the file pointer to the beginning of the stream.
    */
-  virtual void rewind (void);
+  virtual void rewind ();
 
   /*
    * Get the character encoding for the file.
    */
-  virtual const ACEXML_Char *getEncoding (void);
+  virtual const ACEXML_Char *getEncoding ();
 
   /*
    * Get the systemId for the underlying CharStream
    */
-  virtual const ACEXML_Char* getSystemId (void);
+  virtual const ACEXML_Char* getSystemId ();
 
 private:
-
   /** Read the next character as a normal character. Return -1 if EOF is
    *  reached, else return 0.
    */
@@ -113,7 +112,7 @@ private:
    *  encoding of the file. Subsequent call to get() returns this
    *  character.
    */
-  int peek_i (void);
+  int peek_i ();
 
 #endif /* ACE_USES_WCHAR */
 

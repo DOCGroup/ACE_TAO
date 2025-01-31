@@ -7,10 +7,10 @@
 #include "Locator_Request_Reply.inl"
 #endif
 
-#include "ace/Auto_Ptr.h"
 #include "URL_Properties.h"
 #include "URL_Array_Helper.h"
 #include "URL_Locator.h"
+#include <memory>
 
 int
 ACE_URL_Locator_Request::url_query (const int how,
@@ -86,7 +86,7 @@ ACE_URL_Locator_Request::modify_offer (const ACE_WString &offer_id,
    LEN += sizeof (ACE_UINT32);
 
 size_t
-ACE_URL_Locator_Request::encode (void)
+ACE_URL_Locator_Request::encode ()
 {
   ACE_TRACE ("ACE_URL_Locator_Request::encode");
 
@@ -192,7 +192,7 @@ ACE_URL_Locator_Request::decode (void *buffer)
 
 
 size_t
-ACE_URL_Locator_Request::size (void)
+ACE_URL_Locator_Request::size ()
 {
   ACE_TRACE ("ACE_URL_Locator_Request::size");
 
@@ -227,7 +227,7 @@ ACE_URL_Locator_Request::size (void)
 }
 
 void
-ACE_URL_Locator_Request::dump (void) const
+ACE_URL_Locator_Request::dump () const
 {
   //ACE_TRACE ("ACE_URL_Locator_Request::dump");
 
@@ -265,13 +265,13 @@ ACE_URL_Locator_Request::dump (void) const
 
   if (this->id_.length () > 0)
     ACE_DEBUG ((LM_DEBUG, "Offer ID: %s\n",
-                ACE_Auto_Basic_Array_Ptr<char> (this->id_.char_rep ()).get ()));
+                std::unique_ptr<char[]> (this->id_.char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "Offer ID: \"\"\n"));
 
   if (this->url_.length () > 0)
     ACE_DEBUG ((LM_DEBUG, "URL: %s\n",
-                ACE_Auto_Basic_Array_Ptr<char> (this->url_.char_rep ()).get ()));
+                std::unique_ptr<char[]> (this->url_.char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "URL: \"\"\n"));
 
@@ -313,7 +313,7 @@ ACE_URL_Locator_Reply::describe_reply (int result,
 }
 
 size_t
-ACE_URL_Locator_Reply::encode (void)
+ACE_URL_Locator_Reply::encode ()
 {
   ACE_TRACE ("ACE_URL_Locator_Reply::encode");
 
@@ -398,7 +398,7 @@ ACE_URL_Locator_Reply::decode (void *buffer)
 }
 
 size_t
-ACE_URL_Locator_Reply::size (void)
+ACE_URL_Locator_Reply::size ()
 {
   ACE_TRACE ("ACE_URL_Locator_Reply:size");
 
@@ -421,7 +421,7 @@ ACE_URL_Locator_Reply::size (void)
 }
 
 void
-ACE_URL_Locator_Reply::dump (void) const
+ACE_URL_Locator_Reply::dump () const
 {
   //ACE_TRACE ("ACE_URL_Locator_Reply::dump");
 

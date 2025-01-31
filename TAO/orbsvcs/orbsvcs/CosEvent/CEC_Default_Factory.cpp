@@ -41,16 +41,16 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CEC_Default_Factory::~TAO_CEC_Default_Factory (void)
+TAO_CEC_Default_Factory::~TAO_CEC_Default_Factory ()
 {
-    if (orbid_dupped_ != 0)
-      {
-        ACE_OS::free (orbid_);
-      }
+  if (orbid_dupped_ != 0)
+    {
+      ACE_OS::free (orbid_);
+    }
 }
 
 int
-TAO_CEC_Default_Factory::init_svcs (void)
+TAO_CEC_Default_Factory::init_svcs ()
 {
   return
     ACE_Service_Config::static_svcs ()->insert (
@@ -312,6 +312,32 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECShutdownWaitCompletion")) == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT("false")) == 0)
+                {
+                  this->wait_for_shutdown_thread_completion_ = false;
+                }
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("true")) == 0)
+                {
+                  this->wait_for_shutdown_thread_completion_ = true;
+                }
+              else
+                {
+                  ORBSVCS_ERROR ((LM_ERROR,
+                              "CEC_Default_Factory - "
+                              "unsupported true/false for CECShutdownWaitCompletion option <%s>\n",
+                              opt));
+                }
+              arg_shifter.consume_arg ();
+            }
+        }
+
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECConsumerControlPeriod")) == 0)
         {
           arg_shifter.consume_arg ();
@@ -423,7 +449,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_CEC_Default_Factory::fini (void)
+TAO_CEC_Default_Factory::fini ()
 {
   return 0;
 }
@@ -439,8 +465,9 @@ TAO_CEC_Default_Factory::create_dispatching (TAO_CEC_EventChannel *)
     return new TAO_CEC_MT_Dispatching (this->dispatching_threads_,
                                       this->dispatching_threads_flags_,
                                       this->dispatching_threads_priority_,
-                                      this->dispatching_threads_force_active_);
-  return 0;
+                                      this->dispatching_threads_force_active_,
+                                      this->wait_for_shutdown_thread_completion_);
+  return nullptr;
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
@@ -453,8 +480,9 @@ TAO_CEC_Default_Factory::create_dispatching (TAO_CEC_TypedEventChannel *)
     return new TAO_CEC_MT_Dispatching (this->dispatching_threads_,
                                       this->dispatching_threads_flags_,
                                       this->dispatching_threads_priority_,
-                                      this->dispatching_threads_force_active_);
-  return 0;
+                                      this->dispatching_threads_force_active_,
+                                      this->wait_for_shutdown_thread_completion_);
+  return nullptr;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
@@ -1233,7 +1261,7 @@ TAO_CEC_Default_Factory::destroy_proxy_pull_supplier_collection (TAO_CEC_ProxyPu
 }
 
 ACE_Lock*
-TAO_CEC_Default_Factory::create_consumer_lock (void)
+TAO_CEC_Default_Factory::create_consumer_lock ()
 {
   if (this->consumer_lock_ == 0)
     return new ACE_Lock_Adapter<ACE_Null_Mutex>;
@@ -1251,7 +1279,7 @@ TAO_CEC_Default_Factory::destroy_consumer_lock (ACE_Lock* x)
 }
 
 ACE_Lock*
-TAO_CEC_Default_Factory::create_supplier_lock (void)
+TAO_CEC_Default_Factory::create_supplier_lock ()
 {
   if (this->supplier_lock_ == 0)
     return new ACE_Lock_Adapter<ACE_Null_Mutex>;

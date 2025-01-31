@@ -101,12 +101,11 @@ struct ReplyHeader_1_0 { // Renamed from ReplyHeader
  */
 
 
-
 //static const size_t target_offset_12 = GIOP_Buffer::giop_header_len + 12;
 
 // 12 = req_id + flags + RESVD + addr disp.
 
-GIOP_Buffer::GIOP_Buffer(void)
+GIOP_Buffer::GIOP_Buffer()
   : cdr_ (0),
     preamble_(),
     log_offset_(0),
@@ -187,7 +186,7 @@ GIOP_Buffer::owner (Invocation *owner)
 }
 
 Invocation *
-GIOP_Buffer::owner (void)
+GIOP_Buffer::owner ()
 {
   return this->owner_;
 }
@@ -215,7 +214,7 @@ GIOP_Buffer::init_buf (const char *text, size_t offset)
   this->wr_pos_ = this->octets_;
 }
 
-GIOP_Buffer::~GIOP_Buffer(void)
+GIOP_Buffer::~GIOP_Buffer()
 {
   delete [] this->octets_;
 }
@@ -267,19 +266,19 @@ GIOP_Buffer::add_octets (const char *text, size_t offset)
 }
 
 bool
-GIOP_Buffer::sending (void) const
+GIOP_Buffer::sending () const
 {
   return this->sending_;
 }
 
 bool
-GIOP_Buffer::is_full (void) const
+GIOP_Buffer::is_full () const
 {
   return this->buffer_size_ > 0 && this->cur_size() == this->buffer_size_;
 }
 
 char
-GIOP_Buffer::type (void) const
+GIOP_Buffer::type () const
 {
   if (this->octets_ == 0)
     return 127;
@@ -287,31 +286,31 @@ GIOP_Buffer::type (void) const
 }
 
 char
-GIOP_Buffer::expected_type (void) const
+GIOP_Buffer::expected_type () const
 {
   return this->expected_type_;
 }
 
 char
-GIOP_Buffer::minor_version (void) const
+GIOP_Buffer::minor_version () const
 {
   return this->ver_minor_;
 }
 
 size_t
-GIOP_Buffer::reply_status (void) const
+GIOP_Buffer::reply_status () const
 {
   return this->reply_status_;
 }
 
 size_t
-GIOP_Buffer::num_contexts (void) const
+GIOP_Buffer::num_contexts () const
 {
   return this->num_contexts_;
 }
 
 bool
-GIOP_Buffer::is_oneway (void)
+GIOP_Buffer::is_oneway ()
 {
   if (this->octets_ == 0)
     {
@@ -325,19 +324,19 @@ GIOP_Buffer::is_oneway (void)
 }
 
 size_t
-GIOP_Buffer::log_posn (void) const
+GIOP_Buffer::log_posn () const
 {
   return this->log_offset_;
 }
 
 Thread *
-GIOP_Buffer::thread (void)
+GIOP_Buffer::thread ()
 {
   return this->thr_;
 }
 
 const ACE_Time_Value &
-GIOP_Buffer::time (void) const
+GIOP_Buffer::time () const
 {
   return this->time_;
 }
@@ -349,19 +348,19 @@ GIOP_Buffer::time (const ACE_Time_Value &t)
 }
 
 const ACE_CString &
-GIOP_Buffer::preamble (void) const
+GIOP_Buffer::preamble () const
 {
   return this->preamble_;
 }
 
 size_t
-GIOP_Buffer::expected_size (void) const
+GIOP_Buffer::expected_size () const
 {
   return this->expected_size_;
 }
 
 size_t
-GIOP_Buffer::msg_size (void)
+GIOP_Buffer::msg_size ()
 {
   if (this->cur_size() < 12)
     return 0;
@@ -371,13 +370,13 @@ GIOP_Buffer::msg_size (void)
 }
 
 size_t
-GIOP_Buffer::expected_req_id (void) const
+GIOP_Buffer::expected_req_id () const
 {
   return this->expected_req_id_;
 }
 
 size_t
-GIOP_Buffer::actual_req_id (void)
+GIOP_Buffer::actual_req_id ()
 {
   if (this->octets_ == 0)
     return 0;
@@ -389,13 +388,13 @@ GIOP_Buffer::actual_req_id (void)
 }
 
 size_t
-GIOP_Buffer::cur_size (void) const
+GIOP_Buffer::cur_size () const
 {
   return this->wr_pos_ - this->octets_;
 }
 
 bool
-GIOP_Buffer::parse_svc_contexts (void)
+GIOP_Buffer::parse_svc_contexts ()
 {
   ACE_CDR::ULong temp;
   ACE_CDR::ULong num_svc_cont;
@@ -422,7 +421,7 @@ GIOP_Buffer::parse_svc_contexts (void)
 }
 
 bool
-GIOP_Buffer::parse_header (void)
+GIOP_Buffer::parse_header ()
 {
   if (this->octets_ == 0 || this->cur_size() < 12)
     {
@@ -482,7 +481,6 @@ GIOP_Buffer::parse_header (void)
     this->oid_ = this->cdr_->rd_ptr();
     if (!this->cdr_->skip_bytes(len_ulong))
       {
-
         return false;
       }
     if (!(*this->cdr_ >> len_ulong))
@@ -534,7 +532,7 @@ GIOP_Buffer::target_oid (size_t &len)
 }
 
 const char *
-GIOP_Buffer::operation (void)
+GIOP_Buffer::operation ()
 {
   if (octets_ == 0)
     return 0;
@@ -546,7 +544,7 @@ GIOP_Buffer::operation (void)
 }
 
 ACE_InputCDR &
-GIOP_Buffer::payload (void)
+GIOP_Buffer::payload ()
 {
   if (octets_ != 0 && !this->header_parsed_)
     this->header_parsed_ = this->parse_header();
@@ -554,13 +552,13 @@ GIOP_Buffer::payload (void)
 }
 
 bool
-GIOP_Buffer::has_octets (void) const
+GIOP_Buffer::has_octets () const
 {
   return (octets_ != 0);
 }
 
 bool
-GIOP_Buffer::validate (void)
+GIOP_Buffer::validate ()
 {
   return
     this->expected_req_id_ == this->actual_req_id() &&
@@ -585,7 +583,7 @@ GIOP_Buffer::matches (GIOP_Buffer *other) const
 }
 
 void
-GIOP_Buffer::reset (void)
+GIOP_Buffer::reset ()
 {
   this->octets_ = 0;
   this->wr_pos_ = 0;

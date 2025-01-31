@@ -29,6 +29,8 @@ force=0
 # can we do it?
 die=0
 
+# this script name without path
+this_script=$(basename $0)
 
 #####################################################################
 # check for install_ace options
@@ -43,7 +45,7 @@ while [ $# -gt 0 ]; do
 
         -h | --help*)
             echo " "
-            echo "`basename $0` [options]"
+            echo "$this_script [options]"
             echo " "
             echo "options:"
             echo "  -h, --help                show brief help"
@@ -83,7 +85,7 @@ while [ $# -gt 0 ]; do
             ;;
 
         --aceroot*)
-            ACE_ROOT=`echo $1 | sed -e 's/^[^=]*=//g'`; export ACE_ROOT
+            ACE_ROOT=$(echo $1 | sed -e 's/^[^=]*=//g'); export ACE_ROOT
             shift
             ;;
 
@@ -103,7 +105,7 @@ while [ $# -gt 0 ]; do
             ;;
 
         --archive*)
-            ACE_ARCHIVE=`echo $1 | sed -e 's/^[^=]*=//g'`; export ACE_ARCHIVE
+            ACE_ARCHIVE=$(echo $1 | sed -e 's/^[^=]*=//g'); export ACE_ARCHIVE
             unpack=1
             shift
             ;;
@@ -111,8 +113,8 @@ while [ $# -gt 0 ]; do
         -p)
             shift
             if [ $# -gt 0 ]; then
-                ACE_HEADER=`echo $1 | cut -f 1 -d ,`; export ACE_HEADER
-                ACE_MAKE=`echo $1 | cut -f 2 -d ,`; export ACE_MAKE
+                ACE_HEADER=$(echo $1 | cut -f 1 -d ,); export ACE_HEADER
+                ACE_MAKE=$(echo $1 | cut -f 2 -d ,); export ACE_MAKE
             else
                 echo "no header,make files specified"
                 exit 1
@@ -122,9 +124,9 @@ while [ $# -gt 0 ]; do
             ;;
 
         --platform*)
-            stuff=`echo $1 | sed -e 's/^[^=]*=//g'`
-            ACE_HEADER=`echo $stuff | cut -f 1 -d ,`; export ACE_HEADER
-            ACE_MAKE=`echo $stuff | cut -f 2 -d ,`; export ACE_MAKE
+            stuff=$(echo $1 | sed -e 's/^[^=]*=//g')
+            ACE_HEADER=$(echo $stuff | cut -f 1 -d ,); export ACE_HEADER
+            ACE_MAKE=$(echo $stuff | cut -f 2 -d ,); export ACE_MAKE
             config=1
             shift
             ;;
@@ -145,7 +147,7 @@ while [ $# -gt 0 ]; do
             ;;
 
         --compile*)
-            ACE_OPTS=`echo $1 | sed -e 's/^[^=]*=//g'`; export ACE_OPTS
+            ACE_OPTS=$(echo $1 | sed -e 's/^[^=]*=//g'); export ACE_OPTS
             compile=1
             shift
             ;;
@@ -166,7 +168,7 @@ while [ $# -gt 0 ]; do
             ;;
 
         --install*)
-            ACE_DEST=`echo $1 | sed -e 's/^[^=]*=//g'`; export ACE_DEST
+            ACE_DEST=$(echo $1 | sed -e 's/^[^=]*=//g'); export ACE_DEST
             install=1
             shift
             ;;
@@ -183,7 +185,7 @@ while [ $# -gt 0 ]; do
             ;;
 
         --arch*)
-            ACE_ARCH=`echo $1 | sed -e 's/^[^=]*=//g'`; export ACE_ARCH
+            ACE_ARCH=$(echo $1 | sed -e 's/^[^=]*=//g'); export ACE_ARCH
             shift
             ;;
 
@@ -210,32 +212,32 @@ done
 # sanity checks for required variables
 #####################################################################
 
-if [ $install -ne 0 -a $compile -ne 0 -a $unpack -eq 0 ]; then
+if [ $install -ne 0 ] && [ $compile -ne 0 ] && [ $unpack -eq 0 ]; then
     echo "- No actions specified."
     die=1
 fi
 
-if [ $unpack -ne 0 -a $compile -ne 0 -a $config -eq 0 ] \
-        || [ $unpack -ne 0 -a $install -ne 0 -a $config -eq 0 ]; then
+if [ $unpack -ne 0 ] && [ $compile -ne 0 ] && [ $config -eq 0 ] \
+        || [ $unpack -ne 0 ] && [ $install -ne 0 ] && [ $config -eq 0 ]; then
     echo "- Must set platform config options with --platform option"
-    echo "  (`basename $0` -h for help) to unpack and compile/install"
+    echo "  ($this_script -h for help) to unpack and compile/install"
     die=1
 fi
 
 if [ -z "$ACE_ROOT" ]; then
     echo "- Must set ACE_ROOT directory before proceeding..."
     echo "  The directory may be set with the ACE_ROOT environment"
-    echo "  variable or the --aceroot option (`basename $0` -h for help)"
+    echo "  variable or the --aceroot option ($this_script -h for help)"
     die=1
 fi
 
-if [ $install -eq 1 -a -z "$ACE_ARCH" ]; then
+if [ $install -eq 1 ] && [ -z "$ACE_ARCH" ]; then
 	# just set it to blank if we want to flatten this level of subdirectory
 	ACE_ARCH=""
 fi
 
 if [ $die -ne 0 ]; then
-    echo "- terminating `basename $0` script"
+    echo "- terminating $this_script script"
     exit 2
 fi
 
@@ -285,7 +287,7 @@ if [ $force -eq 0 ]; then
     echo " "
     echo "Type 'yes' to proceed, anything else to exit"
 
-    read ready
+    read -r ready
     if [ "$ready" != "yes" ]; then
         echo "Terminating install script.  Thank you for playing."
         echo "We have some lovely parting gifts for you. =)"
@@ -302,7 +304,7 @@ if [ $unpack -ne 0 ]; then
 
     echo "Unpacking $ACE_ARCHIVE..."
 
-    cd `dirname $ACE_ROOT`
+    cd $(dirname $ACE_ROOT)
     gzip -dc $ACE_ARCHIVE | tar xvf -
 
 fi
@@ -350,7 +352,7 @@ if [ $compile -ne 0 ]; then
 
     ##########################################
     # add ACE_ROOT/ace to LD_LIBRARY_PATH so tao_idl can find libACE.so
-    if [ "`uname -s`" = "HP-UX" ]; then
+    if [ "$(uname -s)" = "HP-UX" ]; then
       if [ ! -z "$SHLIB_PATH" ]; then
           SHLIB_PATH=$ACE_ROOT/ace:$SHLIB_PATH
       else
@@ -389,10 +391,10 @@ if [ $install -ne 0 ]; then
     ##########################################
     # determine final target directories
 
-    ACE_VER=`head -n 1 $ACE_ROOT/VERSION | sed -e 's/^[^0-9]*//' -e 's/[, ].*//'`
+    ACE_VER=$(head -n 1 $ACE_ROOT/VERSION.txt | sed -e 's/^[^0-9]*//' -e 's/[, ].*//')
     ACE_DIR="$ACE_DEST/ACE-$ACE_VER"; export ACE_DIR
 
-    TAO_VER=`head -n 1 $ACE_ROOT/TAO/VERSION | sed -e 's/^[^0-9]*//' -e 's/[, ].*//'`
+    TAO_VER=$(head -n 1 $ACE_ROOT/TAO/VERSION.txt | sed -e 's/^[^0-9]*//' -e 's/[, ].*//')
     TAO_DIR="$ACE_DEST/TAO-$TAO_VER"; export ACE_DIR
 
     ##########################################
@@ -417,7 +419,7 @@ if [ $install -ne 0 ]; then
     # copy TAO stuff
 
     cd $ACE_ROOT/TAO
-    cp VERSION $TAO_DIR/$ACE_ARCH/TAO-VERSION
+    cp VERSION.txt $TAO_DIR/$ACE_ARCH/TAO-VERSION
 
     # copy TAO includes
     echo "Copying include files..."
@@ -438,7 +440,7 @@ if [ $install -ne 0 ]; then
 
     # copy TAO libs
     echo "Copying libraries..."
-    for f in `find . -type f -name "lib?*" -not -name "*\.dsw" -not -name "*Test*" -print`; do
+    for f in $(find . -type f \( -name "lib?*.so*" -o -name "lib?*.a" -o -name "lib?*.dll" -o -name "*.dylib" \) -print); do
         echo $f
         cp $f $TAO_DIR/$ACE_ARCH/lib
     done
@@ -446,9 +448,9 @@ if [ $install -ne 0 ]; then
     # copy TAO executables
     echo "Copying executables..."
 
-    ALL_PROGS=`find orbsvcs -type f -perm /a+x -print | grep -v ".*lib.*" | grep -v ".\.pl" | grep -v test | grep -v example`
-    ALL_PROGS="`find utils  -type f -perm /a+x -print` $ALL_PROGS"
-    PROGS=`echo $ALL_PROGS | tr " " "\n" | grep -v test | grep -v default.bld | grep -v README | grep -v GNUmakefile`
+    ALL_PROGS=$(find orbsvcs -type f -perm /a+x -print | grep -v ".*lib.*" | grep -v ".\.pl" | grep -v test | grep -v example)
+    ALL_PROGS="$(find utils  -type f -perm /a+x -print) $ALL_PROGS"
+    PROGS=$(echo $ALL_PROGS | tr " " "\n" | grep -v test | grep -v default.bld | grep -v README | grep -v GNUmakefile)
 
     for f in TAO_IDL/tao_idl $PROGS; do
         echo $f
@@ -459,7 +461,7 @@ if [ $install -ne 0 ]; then
     # copy ACE stuff
 
     cd $ACE_ROOT
-    cp VERSION $ACE_DIR/$ACE_ARCH/ACE-VERSION
+    cp VERSION.txt $ACE_DIR/$ACE_ARCH/ACE-VERSION
 
     # copy ACE includes
     echo "Copying include files..."
@@ -471,9 +473,9 @@ if [ $install -ne 0 ]; then
 
     # copy ACE libs
     echo "Copying libraries..."
-    for f in `find . -type f -name "lib?*" -not -name "*\.dsw" -not -name "*Test*" -print`; do
+    for f in $(find . -type f \( -name "lib?*.so*" -o -name "lib?*.a" -o -name "lib?*.dll" -o -name "*.dylib" \) -print); do
         # only copy libs if they're not already in $TAO_DIR/$ACE_ARCH/lib
-        maybe_tao_lib=$TAO_DIR/$ACE_ARCH/lib/`basename $f`
+        maybe_tao_lib=$TAO_DIR/$ACE_ARCH/lib/$(basename $f)
         if [ ! -f $maybe_tao_lib ]; then
           echo $f
           cp $f $ACE_DIR/$ACE_ARCH/lib
@@ -483,7 +485,7 @@ if [ $install -ne 0 ]; then
 
     # copy ACE executables
     echo "Copying executables..."
-    ACE_PROGS=apps/gperf/src/gperf
+    ACE_PROGS=apps/gperf/src/ace_gperf
 
     for f in $ACE_PROGS; do
         echo $f
@@ -507,4 +509,4 @@ fi   # if [ $install -ne 0 ]
 # that's all, folks
 #####################################################################
 
-echo "`basename $0`: done."
+echo "$this_script: done."

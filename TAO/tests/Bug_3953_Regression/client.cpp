@@ -19,9 +19,9 @@ class Client_Task
 public:
   Client_Task (client_ptr c,
                server_ptr s);
-  int svc (void);
+  int svc ();
 
-  bool exception (void) const;
+  bool exception () const;
 
 private:
   client_var client_;
@@ -36,7 +36,7 @@ Client_Task::Client_Task (client_ptr c,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {
@@ -154,7 +154,7 @@ ACE_TMAIN (int argc,
           server->shutdown ();
         }
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

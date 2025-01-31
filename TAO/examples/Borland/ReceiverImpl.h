@@ -7,25 +7,25 @@
 class TReceiverImplementation : public POA_Receiver
 {
 public:
-  // Constructor.
-  TReceiverImplementation (void);
+  /// Constructor.
+  TReceiverImplementation (;
 
-  // Destructor.
-  ~TReceiverImplementation (void);
+  /// Destructor.
+  ~TReceiverImplementation ();
 
   virtual void message (const char* msg);
 
-  virtual void shutdown (void);
-  // Called when the chat server is going away.  The client
-  // implementation should shutdown the chat client in response to
-  // this.
+  /// Called when the chat server is going away.  The client
+  /// implementation should shutdown the chat client in response to
+  /// this.
+  virtual void shutdown ();
 
+  /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
-  // Set the ORB pointer.
 
 private:
+  /// ORB pointer.
   CORBA::ORB_var orb_;
-  // ORB pointer.
 };
 //---------------------------------------------------------------------------
 #endif

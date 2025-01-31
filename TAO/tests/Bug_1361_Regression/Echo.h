@@ -13,14 +13,11 @@
 class Echo : public POA_Test::Echo
 {
 public:
-  Echo(CORBA::ORB_ptr orb,
-       int abort_counter);
+  Echo(CORBA::ORB_ptr orb, int abort_counter);
 
   virtual void echo_payload (Test::Payload const & data);
 
-  virtual void echo_payload_out (
-        Test::Payload_out data
-      );
+  virtual void echo_payload_out (Test::Payload_out data);
 
 private:
   CORBA::ORB_var orb_;
