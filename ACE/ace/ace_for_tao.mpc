@@ -69,8 +69,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Lock.cpp
     Log_Category.cpp
     Log_Msg.cpp
-    Log_Msg_Backend.cpp
-    Log_Msg_Callback.cpp
     Log_Msg_IPC.cpp
     Log_Msg_NT_Event_Log.cpp
     Log_Msg_UNIX_Syslog.cpp
@@ -318,6 +316,8 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     If_Then_Else.h
     IO_Cntl_Msg.h
     Lock_Adapter_T.h
+    Log_Msg_Backend.h
+    Log_Msg_Callback.h
     Log_Priority.h
     Malloc_Base.h
     MMAP_Memory_Pool.h
@@ -357,7 +357,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Value_Ptr.h
     Version.h
     ace_wchar.h
-    checked_iterator.h
     config-all.h
     config-lite.h
     config-win32-borland.h

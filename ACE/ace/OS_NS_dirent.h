@@ -52,7 +52,7 @@ extern "C" {
  * using the pre-processor.
  */
 #if !defined (ACE_LACKS_REWINDDIR)
-#  if !defined (ACE_HAS_WREWINDDIR) || !defined (ACE_USES_WCHAR)
+#  if !defined (ACE_HAS_WREWINDDIR_EQUIVALENT) || !defined (ACE_USES_WCHAR)
 inline void ace_rewinddir_helper (ACE_DIR *dir)
 {
 #    if defined (rewinddir)
@@ -63,7 +63,7 @@ inline void ace_rewinddir_helper (ACE_DIR *dir)
 #    endif /* defined (rewinddir) */
 }
 #  endif /* !defined (ACE_HAS_WREWINDDIR) && !defined (ACE_USES_WCHAR) */
-#endif /* ACE_LACKS_REWINDDIR */
+#endif /* ACE_HAS_WREWINDDIR_EQUIVALENT */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
