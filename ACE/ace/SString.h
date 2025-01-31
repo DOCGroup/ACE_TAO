@@ -153,7 +153,7 @@ public:
   ACE_SString (char c, ACE_Allocator *alloc = nullptr);
 
   /// Default destructor.
-  ~ACE_SString ();
+  ~ACE_SString () = default;
 
   /// Return the slot'th character in the string (doesn't perform
   /// bounds checking).
