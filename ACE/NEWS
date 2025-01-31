@@ -1,5 +1,28 @@
+USER VISIBLE CHANGES BETWEEN ACE-8.0.2 and ACE-8.0.3
+====================================================
+
+USER VISIBLE CHANGES BETWEEN ACE-8.0.1 and ACE-8.0.2
+====================================================
+
+. Removed ACE_make_checked_array_iterator that used deprecated
+  stdext::checked_array_iterator
+
+. Embarcadero C++ Builder bcc64x compiler support has been
+  updated to match the C++Builder 12.2 release
+
+. Added support for Linux platforms that use musl-libc instead of glibc
+
+. Improved QNX support
+
+. Add support for std::string_view to CDR classes
+
+. Define ACE_HAS_CPP23 when we have a C++23 capable C++ compiler
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.0 and ACE-8.0.1
 ====================================================
+
+. When using the Embarcadero C++ Builder bcc64x compiler now bcc64x is
+  used as linker instead of ld.lld
 
 USER VISIBLE CHANGES BETWEEN ACE-7.1.4 and ACE-8.0.0
 ====================================================

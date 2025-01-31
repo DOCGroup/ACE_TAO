@@ -1,4 +1,4 @@
-This is ACE version 8.0.0, released Thu May 16 12:27:08 CEST 2024
+This is ACE version 8.0.2, released Fri Dec 06 13:11:26 CET 2024
 
 If you have any problems with or questions about ACE, please open
 a issue or discussion on the ACE_TAO github project at
