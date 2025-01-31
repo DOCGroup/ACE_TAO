@@ -1,6 +1,8 @@
 #
 # QNX/RTP hosted, using GCC
 
+ACE_PLATFORM_CONFIG ?= config-qnx.h
+
 inline ?= 1
 debug ?= 1
 optimize ?= 0

@@ -492,6 +492,8 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const std::string &x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      const std::string_view &x);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_std_string x);
 #if !defined(ACE_LACKS_STD_WSTRING)
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,

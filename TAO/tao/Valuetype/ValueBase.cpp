@@ -68,7 +68,7 @@ CORBA::ValueBase::_copy_value ()
   ACE_VERSIONED_NAMESPACE_NAME::__ace_assert (
     __FILE__,
     __LINE__,
-    ACE_TEXT_CHAR_TO_TCHAR ("Valuetype's _copy_value() should be implimented in user's most derived class"));
+    ACE_TEXT_CHAR_TO_TCHAR ("Valuetype's _copy_value() should be implemented in user's most derived class"));
   return 0;
 }
 
