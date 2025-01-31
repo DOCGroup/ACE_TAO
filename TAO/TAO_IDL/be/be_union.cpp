@@ -234,10 +234,12 @@ be_union::gen_empty_default_label ()
       return (n_labels < 2);
 
     case AST_PredefinedType::PT_char:
+    case AST_PredefinedType::PT_octet:
       return (n_labels <= ACE_OCTET_MAX);
 
     case AST_PredefinedType::PT_short:
     case AST_PredefinedType::PT_ushort:
+    case AST_PredefinedType::PT_wchar:
       return (n_labels <= ACE_UINT16_MAX);
 
     case AST_PredefinedType::PT_long:

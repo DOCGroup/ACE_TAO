@@ -144,7 +144,7 @@ namespace TAO
 
     protected:
       /// The POA implementation invoking an upcall
-      ::TAO_Root_POA *poa_;
+      ::TAO_Root_POA *poa_ {};
 
       /// In order to avoid memory allocations, we will populate
       /// the object id with this buffer.

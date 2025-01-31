@@ -12,11 +12,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Destructor
-TAO_CEC_DynamicImplementationServer::~TAO_CEC_DynamicImplementationServer ()
-{
-}
-
 // The DSI invoke request
 void
 TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)

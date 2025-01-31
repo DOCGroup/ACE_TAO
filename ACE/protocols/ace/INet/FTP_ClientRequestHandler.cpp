@@ -6,7 +6,7 @@
 
 #include "ace/INet/INet_Log.h"
 #include "ace/INet/String_IOStream.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_ctype.h"
 #include "ace/Connector.h"
 #include "ace/Acceptor.h"
@@ -48,7 +48,7 @@ namespace ACE
         ACE_NEW_RETURN (session_holder,
                         SessionHolder (),
                         0);
-        ACE_Auto_Ptr<SessionHolder> session_safe_ref (session_holder);
+        std::unique_ptr<SessionHolder> session_safe_ref (session_holder);
 
         (*session_holder)->set_host (ikey.host (), ikey.port ());
 

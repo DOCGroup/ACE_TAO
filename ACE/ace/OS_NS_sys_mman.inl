@@ -40,11 +40,11 @@ ACE_OS::mmap (void *addr,
               const ACE_TCHAR *file_mapping_name)
 {
   ACE_OS_TRACE ("ACE_OS::mmap");
-#if !defined (ACE_WIN32) || defined (ACE_HAS_PHARLAP)
+#if !defined (ACE_WIN32)
   ACE_UNUSED_ARG (file_mapping_name);
-#endif /* !defined (ACE_WIN32) || defined (ACE_HAS_PHARLAP) */
+#endif /* !defined (ACE_WIN32) */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
   if (!ACE_BIT_ENABLED (flags, MAP_FIXED))
     addr = 0;
   else if (addr == 0)   // can not map to address 0
@@ -149,7 +149,7 @@ ACE_OS::mmap (void *addr,
   ACE_UNUSED_ARG (file_mapping);
   ACE_UNUSED_ARG (sa);
   ACE_NOTSUP_RETURN (MAP_FAILED);
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */
 }
 
 // Implements simple read/write control for pages.  Affects a page if
@@ -161,7 +161,7 @@ ACE_INLINE int
 ACE_OS::mprotect (void *addr, size_t len, int prot)
 {
   ACE_OS_TRACE ("ACE_OS::mprotect");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
   DWORD dummy; // Sigh!
   return ::VirtualProtect(addr, len, prot, &dummy) ? 0 : -1;
 #elif !defined (ACE_LACKS_MPROTECT)
@@ -171,16 +171,15 @@ ACE_OS::mprotect (void *addr, size_t len, int prot)
   ACE_UNUSED_ARG (len);
   ACE_UNUSED_ARG (prot);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE int
 ACE_OS::msync (void *addr, size_t len, int sync)
 {
   ACE_OS_TRACE ("ACE_OS::msync");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
   ACE_UNUSED_ARG (sync);
-
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FlushViewOfFile (addr, len), ace_result_), int, -1);
 #elif !defined (ACE_LACKS_MSYNC)
   return ::msync ((ACE_MMAP_TYPE) addr, len, sync);
@@ -189,7 +188,7 @@ ACE_OS::msync (void *addr, size_t len, int sync)
   ACE_UNUSED_ARG (len);
   ACE_UNUSED_ARG (sync);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE int

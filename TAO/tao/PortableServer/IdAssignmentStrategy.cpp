@@ -6,16 +6,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    void
-    IdAssignmentStrategy::strategy_init (TAO_Root_POA * /*poa*/)
-    {
-    }
-
-    void
-    IdAssignmentStrategy::strategy_cleanup()
-    {
-    }
-
     char
     IdAssignmentStrategy::key_type_length () const
     {

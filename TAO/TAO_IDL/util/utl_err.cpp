@@ -186,7 +186,7 @@ error_string (UTL_Error::ErrorCode c)
       return "Warning - spelling differs from IDL keyword only in case: ";
     case UTL_Error::EIDL_ANONYMOUS_ERROR:
       return "anonymous types require the IDL version to be 4 or later or must "
-        "be explictly enabled using -as";
+        "be explicitly enabled using -as";
     case UTL_Error::EIDL_ANONYMOUS_WARNING:
       return "anonymous type found";
     case UTL_Error::EIDL_ANONYMOUS_EXPLICIT_ERROR:

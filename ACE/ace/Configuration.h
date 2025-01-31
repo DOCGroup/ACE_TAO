@@ -349,7 +349,7 @@ public:
    * error The path consists of sections separated by the backslash
    * '\' or forward slash '/'.
    * Returns 0 on success, -1 if <create) is 0 and the path refers
-   * a nonexistant section
+   * a non-existent section
    */
   int expand_path (const ACE_Configuration_Section_Key& key,
                    const ACE_TString& path_in,
@@ -407,7 +407,7 @@ protected:
   ACE_Configuration_Section_Key root_;
 };
 
-#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
+#if defined (ACE_WIN32)
 
 /**
  * @class ACE_Section_Key_Win32
@@ -534,7 +534,7 @@ protected:
 
   const u_long security_access_;
 };
-#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
+#endif /* ACE_WIN32 */
 
 // ACE_Allocator version
 

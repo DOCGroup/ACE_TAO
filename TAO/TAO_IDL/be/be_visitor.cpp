@@ -306,6 +306,12 @@ be_visitor::visit_array (be_array *)
 }
 
 int
+be_visitor::visit_map (be_map *)
+{
+  return 0;
+}
+
+int
 be_visitor::visit_sequence (be_sequence *)
 {
   return 0;

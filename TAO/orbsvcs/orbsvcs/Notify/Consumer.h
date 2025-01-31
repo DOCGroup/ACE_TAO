@@ -203,7 +203,7 @@ protected:
 
 private:
   /// Events pending to be delivered.
-  ACE_Auto_Ptr<Request_Queue> pending_events_;
+  std::unique_ptr<Request_Queue> pending_events_;
 
   CORBA::Object_var rtt_obj_;
 };

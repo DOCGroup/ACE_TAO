@@ -47,15 +47,6 @@
 #endif
 # define ACE_FILENO_EQUIVALENT ::_fileno
 
-// Latest version of MingW64 (GCC 4.8.2) with Win32 threading
-// defines a 'pthread_sigmask' macro when including signal.h.
-// We have to remove that one since ACE declares a (non-functional)
-// pthread_sigmask method in ACE_OS.
-#include <signal.h>
-#if defined (pthread_sigmask)
-#  undef pthread_sigmask
-#endif
-
 #define ACE_HAS_SSIZE_T
 #undef ACE_LACKS_TELLDIR
 #undef ACE_LACKS_SEEKDIR
@@ -119,14 +110,17 @@
 #define ACE_LACKS_UID_T
 #define ACE_LACKS_GID_T
 
-#define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
-
 #define ACE_INT64_FORMAT_SPECIFIER_ASCII "%I64d"
 #define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%I64u"
 
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
 
 #define ACE_DLL_PREFIX ACE_TEXT ("lib")
+
+#if defined(_UCRT)
+# define ACE_HAS_3_PARAM_WCSTOK
+#endif
+
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MINGW64_H */

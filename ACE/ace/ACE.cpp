@@ -2,7 +2,6 @@
 
 #include "ace/Basic_Types.h"
 #include "ace/Handle_Set.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/Version.h"
 #include "ace/Message_Block.h"
@@ -215,10 +214,7 @@ ACE::select (int width,
 int
 ACE::terminate_process (pid_t pid)
 {
-#if defined (ACE_HAS_PHARLAP)
-  ACE_UNUSED_ARG (pid);
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   // Create a handle for the given process id.
   ACE_HANDLE process_handle =
     ::OpenProcess (PROCESS_TERMINATE,
@@ -239,7 +235,7 @@ ACE::terminate_process (pid_t pid)
     }
 #else
   return ACE_OS::kill (pid, 9);
-#endif /* ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */
 }
 
 int

@@ -1763,18 +1763,6 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
   DWORD result = 0;
   while (1)
     {
-#  if defined (ACE_HAS_PHARLAP)
-      // PharLap doesn't implement WaitForMultipleObjectsEx, and doesn't
-      // do async I/O, so it's not needed in this case anyway.
-      result = ::WaitForMultipleObjects (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
-                                         this->atomic_wait_array_,
-                                         TRUE,
-                                         timeout);
-
-      if (result != WAIT_IO_COMPLETION)
-        break;
-
-#  else
       result = ::WaitForMultipleObjectsEx (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
                                            this->atomic_wait_array_,
                                            TRUE,
@@ -1783,8 +1771,6 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
 
       if (result != WAIT_IO_COMPLETION)
         break;
-
-#  endif /* ACE_HAS_PHARLAP */
     }
 
   switch (result)
@@ -1811,22 +1797,11 @@ ACE_WFMO_Reactor::wait_for_multiple_events (int timeout,
   // Wait for any of handles_ to be active, or until timeout expires.
   // If <alertable> is enabled allow asynchronous completion of
   // ReadFile and WriteFile operations.
-
-#if defined (ACE_HAS_PHARLAP)
-  // PharLap doesn't do async I/O and doesn't implement
-  // WaitForMultipleObjectsEx, so use WaitForMultipleObjects.
-  ACE_UNUSED_ARG (alertable);
-  return ::WaitForMultipleObjects (this->handler_rep_.max_handlep1 (),
-                                   this->handler_rep_.handles (),
-                                   FALSE,
-                                   timeout);
-#else
   return ::WaitForMultipleObjectsEx (this->handler_rep_.max_handlep1 (),
                                      this->handler_rep_.handles (),
                                      FALSE,
                                      timeout,
                                      alertable);
-#endif /* ACE_HAS_PHARLAP */
 }
 
 DWORD

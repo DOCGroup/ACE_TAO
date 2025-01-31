@@ -15,7 +15,7 @@
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/debug.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

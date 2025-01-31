@@ -8,10 +8,6 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/os_include/os_string.h"
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_PHARLAP)
-# include "ace/OS_NS_stdio.h"
-#endif
-
 #if defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
 #  include "ace/OS_Memory.h"
 #  include "ace/OS_NS_string.h"
@@ -69,9 +65,6 @@ ACE_OS::dlerror ()
   //FUZZ: enable check_for_lack_ACE_OS
 # elif defined (ACE_WIN32)
   static ACE_TCHAR buf[128];
-#   if defined (ACE_HAS_PHARLAP)
-  ACE_OS::sprintf (buf, "error code %d", GetLastError());
-#   else
   ACE_TEXT_FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM,
                           0,
                           ::GetLastError (),
@@ -79,7 +72,6 @@ ACE_OS::dlerror ()
                           buf,
                           sizeof buf / sizeof buf[0],
                           0);
-#   endif /* ACE_HAS_PHARLAP */
   return buf;
 # else
   ACE_NOTSUP_RETURN (0);

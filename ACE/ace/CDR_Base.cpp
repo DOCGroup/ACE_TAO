@@ -932,7 +932,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
       ++f.digits_;
     }
 
-  if (!f.scale_ && str[span - f.digits_ - 1] == '.')
+  if (!f.scale_ && span > f.digits_ && str[span - f.digits_ - 1] == '.')
     f.scale_ = f.digits_;
 
   if (idx >= 0)

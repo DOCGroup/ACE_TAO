@@ -24,10 +24,10 @@
 #include "Key_List.h"
 #include "Hash_Table.h"
 #include "ace/Read_Buffer.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 /// Default type for generated code.
 const char *const Key_List::default_array_type = "char *";
@@ -501,7 +501,6 @@ Key_List::reorder ()
 // Outputs the maximum and minimum hash values.  Since the list is
 // already sorted by hash value all we need to do is find the final
 // item!
-
 void
 Key_List::output_min_max ()
 {
@@ -557,7 +556,7 @@ Key_List::output_switch (int use_keyword_table)
         output_keyword_table ();
     }
 
-  ACE_Auto_Basic_Array_Ptr<char> safe_comp_buffer;
+  std::unique_ptr<char[]> safe_comp_buffer;
   char * comp_buffer;
 
   List_Node *curr = head;
@@ -1145,7 +1144,7 @@ Key_List::output_hash_function ()
 
   // Generate the asso_values table.
   ACE_OS::printf ("  static %sunsigned %s asso_values[] =\n    {",
-                  option[CONSTANT] ? "const " : "",
+                  option[CONSTANT] ? "constexpr " : "",
                   max_hash_value < ((int) UCHAR_MAX) ? "char" : (max_hash_value < ((int) USHRT_MAX) ? "short" : "int"));
 
 #if ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE
@@ -1443,7 +1442,7 @@ Key_List::output_lookup_array ()
 
       const char *indent = option[GLOBAL] ? "" : "  ";
 
-      ACE_OS::printf ("%sstatic %ssigned %s lookup[] =\n%s%s{\n%s", indent, option[CONSTANT] ? "const " : "",
+      ACE_OS::printf ("%sstatic %ssigned %s lookup[] =\n%s%s{\n%s", indent, option[CONSTANT] ? "constexpr " : "",
               max <= SCHAR_MAX ? "char" : (max <= SHRT_MAX ? "short" : "int"),
               indent, indent, option[DEBUGGING] ? "" : "      ");
 

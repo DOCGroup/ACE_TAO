@@ -49,12 +49,7 @@
 
 #define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".log")
 
-#if defined (ACE_HAS_PHARLAP)
-const size_t ACE_MAX_CLIENTS = 4;
-#else
 const size_t ACE_MAX_CLIENTS = 30;
-#endif /* ACE_HAS_PHARLAP */
-
 const size_t ACE_NS_MAX_ENTRIES = 1000;
 const size_t ACE_DEFAULT_USECS = 1000;
 const size_t ACE_MAX_TIMERS = 4;
@@ -101,7 +96,7 @@ const size_t ACE_MAX_THREADS = 4;
 
 #if defined (VXWORKS)
 // This is the only way I could figure out to avoid an error
-// about attempting to unlink a non-existant file.
+// about attempting to unlink a non-existent file.
 #define ACE_INIT_LOG(NAME) \
   ACE_TCHAR temp[MAXPATHLEN]; \
   ACE_OS::sprintf (temp, ACE_TEXT ("%s%s%s"), \
@@ -170,7 +165,7 @@ inline ACE_Test_Output::~ACE_Test_Output ()
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_HAS_PHARLAP)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   delete this->output_file_;
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 }
@@ -184,13 +179,6 @@ ACE_Test_Output::output_file ()
 inline int
 ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 {
-#if defined (ACE_HAS_PHARLAP)
-  // For PharLap, just send it all to the host console for now - redirect
-  // to a file there for saving/analysis.
-  EtsSelectConsole(ETS_CO_HOST);
-  ACE_LOG_MSG->msg_ostream (&cout);
-
-#else
   ACE_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
   const ACE_TCHAR *test_dir {};
@@ -210,7 +198,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #if defined (VXWORKS)
   // This is the only way I could figure out to avoid a console
   // warning about opening an existing file (w/o O_CREAT), or
-  // attempting to unlink a non-existant one.
+  // attempting to unlink a non-existent one.
   ACE_HANDLE fd = ACE_OS::open (temp,
                                 O_WRONLY|O_CREAT,
                                 S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
@@ -243,8 +231,6 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->msg_ostream (this->output_file ());
-#endif /* ACE_HAS_PHARLAP */
-
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 

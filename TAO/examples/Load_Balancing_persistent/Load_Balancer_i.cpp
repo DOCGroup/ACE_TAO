@@ -1,5 +1,5 @@
 #include "Load_Balancer_i.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Hash_Map_Manager_T.h"
 
 const char *rr_name_bind = "RR_Group";

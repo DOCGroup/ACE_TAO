@@ -1,0 +1,61 @@
+commit fe15e4e0a2d096ba17c03542da026058a8ac950c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 30 08:59:33 2024 +0200
+
+    Next release will be ACE8 with TAO4
+    
+        * ACE/NEWS:
+        * ACE/bin/make_release.py:
+        * TAO/NEWS:
+
+commit 61c0befaa0139e9ebf80196c5644191a6fd70508
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 24 08:28:44 2024 +0200
+
+    Next version will be a minor one
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit ccfdcddc366ecee7a5a506408f79c9ccfdaafca3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 23 09:29:57 2024 +0200
+
+    Increment to C++17 as minimum required C++ compiler, includes setting default C++ version for Visual Studio to 2017
+    
+        * ACE/ace/Global_Macros.h:
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+        * ACE/bin/MakeProjectCreator/config/vs2017nmake.mpb:
+        * ACE/bin/MakeProjectCreator/config/vs2019nmake.mpb:
+        * ACE/bin/MakeProjectCreator/config/vs2022nmake.mpb:
+        * TAO/tests/Oneway_Send_Timeouts/Server_Task.h:
+        * TAO/tests/Oneway_Send_Timeouts/main.cpp:
+
+commit 8a541c6352b963f459883f3d9fa503589629ff18
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 22 12:00:21 2024 +0200
+
+    Update Constraint_Nodes.cpp
+    
+    Added cast to not perform an implicit conversion
+
+commit a0254dacc11a8371a153df228867cb830377af7d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 22 11:45:14 2024 +0200
+
+    Fix compile warning with bcc64x
+    
+    Fix compile warnings with bcc64x
+
+commit c3da0520bc65f368f5b914d0fb576330e51093f2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 10 10:11:46 2024 +0200
+
+    Make 7.1.4 public and prepare for 7.1.5
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

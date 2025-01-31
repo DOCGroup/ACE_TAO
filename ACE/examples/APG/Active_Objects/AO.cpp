@@ -6,7 +6,8 @@
 #include "ace/Method_Request.h"
 #include "ace/Task.h"
 #include "ace/Future.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
+
 // Listing 1 code/ch15
 class HA_ControllerAgent
 {

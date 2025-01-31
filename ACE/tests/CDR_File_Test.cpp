@@ -16,7 +16,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/CDR_Stream.h"
 #include "ace/FILE_Connector.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 #include "ace/Truncate.h"
@@ -225,7 +225,7 @@ run_test (int write_file,
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
       // Make sure <buffer> is released automagically.
-      ACE_Auto_Basic_Array_Ptr<char> b (buffer);
+      std::unique_ptr<char[]> b (buffer);
 
       // Move the file pointer back to the beginning of the file.
       if (file.seek (0,

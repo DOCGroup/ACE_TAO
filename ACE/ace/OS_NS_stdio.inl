@@ -39,7 +39,6 @@ ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
     case SEEK_CUR:
       {
         LARGE_INTEGER offset;
-# if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
         LARGE_INTEGER distance;
         distance.QuadPart = 0;
         if (!::SetFilePointerEx (lock->handle_,
@@ -50,18 +49,6 @@ ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
             ACE_OS::set_errno_to_last_error ();
             return;
           }
-# else
-        offset.LowPart = ::SetFilePointer (lock->handle_,
-                                           0,
-                                           &offset.HighPart,
-                                           FILE_CURRENT);
-        if (offset.LowPart == INVALID_SET_FILE_POINTER &&
-            ::GetLastError() != NO_ERROR)
-          {
-            ACE_OS::set_errno_to_last_error ();
-            return;
-          }
-# endif /* ACE_LACKS_WIN32_SETFILEPOINTEREX */
 
 # if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64
         start += offset.QuadPart;
@@ -364,10 +351,6 @@ ACE_OS::cuserid (char *user, size_t maxlen)
       ::remCurIdGet (user, 0);
       return user;
     }
-#elif defined (ACE_HAS_PHARLAP)
-  ACE_UNUSED_ARG (user);
-  ACE_UNUSED_ARG (maxlen);
-  ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
   BOOL const result = GetUserNameA (user, (u_long *) &maxlen);
   if (result == FALSE)
@@ -841,7 +824,7 @@ ACE_OS::rename (const char *old_name,
   ACE_UNUSED_ARG (new_name);
   ACE_UNUSED_ARG (flags);
   ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_MOVEFILEEX)
+# elif defined (ACE_WIN32)
   // NT4 (and up) provides a way to rename/move a file with similar semantics
   // to what's usually done on UNIX - if there's an existing file with
   // <new_name> it is removed before the file is renamed/moved. The
@@ -870,7 +853,7 @@ ACE_OS::rename (const wchar_t *old_name,
   ACE_UNUSED_ARG (new_name);
   ACE_UNUSED_ARG (flags);
   ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_MOVEFILEEX)
+# elif defined (ACE_WIN32)
   // NT4 (and up) provides a way to rename/move a file with similar semantics
   // to what's usually done on UNIX - if there's an existing file with
   // <new_name> it is removed before the file is renamed/moved. The
@@ -943,8 +926,11 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
 #  endif /* ACE_HAS_NONCONST_TEMPNAM */
 #else /* ACE_LACKS_TEMPNAM */
   // No native wide-char support; convert to narrow and call the char* variant.
-  char *ndir = ACE_Wide_To_Ascii (dir).char_rep ();
-  char *npfx = ACE_Wide_To_Ascii (pfx).char_rep ();
+  ACE_Wide_To_Ascii wta_ndir(dir);
+  char *ndir = wta_ndir.char_rep ();
+
+  ACE_Wide_To_Ascii wta_npfx(pfx);
+  char *npfx = wta_npfx.char_rep ();
   char *name = ACE_OS::tempnam (ndir, npfx);
   // ACE_OS::tempnam returns a pointer to a malloc()-allocated space.
   // Convert that string to wide-char and free() the original.
