@@ -100,12 +100,6 @@ override_dh_auto_clean:
 override_dh_compress:
 	dh_compress -Xexamples
 
-# ACE+TAO has different changelogs. Use the right one in every package.
-override_dh_installchangelogs:
-	dh_installchangelogs -pmpc-ace MPC/ChangeLog
-	dh_installchangelogs --remaining-packages \
-	        ChangeLogs/ACE-$(ACE_MAJOR_VERSION)_$(ACE_MINOR_VERSION)_$(ACE_MICRO_VERSION)
-
 override_dh_fixperms:
 ifneq (,$(filter libace-doc, $(shell dh_listpackages)))
 	find debian -name '*.pl' | xargs -r sed -i -e '1i#!/usr/bin/perl'

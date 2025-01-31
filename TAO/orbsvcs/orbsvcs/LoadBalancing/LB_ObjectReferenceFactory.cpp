@@ -50,7 +50,7 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
 TAO_LB_ObjectReferenceFactory::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
