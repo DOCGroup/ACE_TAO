@@ -270,7 +270,7 @@ ACE_Auto_String_Free::operator[] (size_t i) const
 }
 
 ACE_INLINE
-ACE_Auto_String_Free::operator bool (void) const
+ACE_Auto_String_Free::operator bool () const
 {
   return this->p_ != nullptr;
 }
