@@ -230,6 +230,9 @@ def update_version_files (component):
 #define {comp}_MICRO_VERSION {micro}
 #define {comp}_VERSION \"{version}\"
 #define {comp}_VERSION_CODE 0x{code:x}
+#if !defined ({comp}_PATCH)
+# define {comp}_PATCH \"\"
+#endif
 #define {comp}_MAKE_VERSION_CODE(a,b,c) (((a) << 16) + ((b) << 8) + (c))
 """.format(**parts)
 

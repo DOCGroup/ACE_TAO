@@ -83,10 +83,6 @@ TAO_CEC_Reactive_SupplierControl::
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-TAO_CEC_Reactive_SupplierControl::~TAO_CEC_Reactive_SupplierControl ()
-{
-}
-
 void
 TAO_CEC_Reactive_SupplierControl::query_suppliers ()
 {
