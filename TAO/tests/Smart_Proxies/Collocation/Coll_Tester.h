@@ -24,7 +24,7 @@
 class Collocation_Test
 {
 public:
-  Collocation_Test (void);
+  Collocation_Test ();
 
   int init (int argc, ACE_TCHAR *argv[]);
   // Initializing the Collocation_Test object.
@@ -32,11 +32,11 @@ public:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the test specific arguments.
 
-  int test_narrow (void);
+  int test_narrow ();
   // This test narrow an object reference to its base class and see
   // if it works correctly.
 
-  int run (void);
+  int run ();
   // Run the test.
 
 private:

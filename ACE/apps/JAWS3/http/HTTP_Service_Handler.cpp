@@ -8,7 +8,7 @@
 #include "HTTP_States.h"
 #include "HTTP_Data.h"
 
-JAWS_HTTP_Service_Handler::JAWS_HTTP_Service_Handler (void)
+JAWS_HTTP_Service_Handler::JAWS_HTTP_Service_Handler ()
   : JAWS_Protocol_Handler (JAWS_HTTP_Read_Request::instance (), & this->data_)
   , data_ (this)
 {

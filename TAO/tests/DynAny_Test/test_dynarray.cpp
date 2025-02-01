@@ -23,20 +23,20 @@ Test_DynArray::Test_DynArray (CORBA::ORB_var orb, int debug)
 {
 }
 
-Test_DynArray::~Test_DynArray (void)
+Test_DynArray::~Test_DynArray ()
 {
   CORBA::string_free (this->test_name_);
   this->test_name_ = 0;
 }
 
 const char*
-Test_DynArray::test_name (void) const
+Test_DynArray::test_name () const
 {
   return this->test_name_;
 }
 
 int
-Test_DynArray::run_test (void)
+Test_DynArray::run_test ()
 {
   Data data (this->orb_);
 

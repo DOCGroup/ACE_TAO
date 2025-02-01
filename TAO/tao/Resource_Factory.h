@@ -23,7 +23,7 @@
 #include /**/ "tao/Versioned_Namespace.h"
 #include "tao/Basic_Types.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Service_Object.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/SString.h"
@@ -58,23 +58,23 @@ public:
 
   /// Destructor that deallocates the factory object if the
   /// Protocol_Item retains ownership.
-  ~TAO_Protocol_Item (void);
+  ~TAO_Protocol_Item ();
 
   /// Return a reference to the character representation of the protocol
   /// factories name.
-  const ACE_CString &protocol_name (void);
+  const ACE_CString &protocol_name ();
 
   /// Return a pointer to the protocol factory.
-  TAO_Protocol_Factory *factory (void);
+  TAO_Protocol_Factory *factory ();
 
   /// Set the factory pointer's value.
   void factory (TAO_Protocol_Factory *factory, int owner = 0);
 
 private:
-
-  // Disallow copying and assignment.
-  TAO_Protocol_Item (const TAO_Protocol_Item&);
-  void operator= (const TAO_Protocol_Item&);
+  TAO_Protocol_Item (const TAO_Protocol_Item&) = delete;
+  void operator= (const TAO_Protocol_Item&) = delete;
+  TAO_Protocol_Item (TAO_Protocol_Item&&) = delete;
+  void operator= (TAO_Protocol_Item&&) = delete;
 
 private:
   /// Protocol factory name.
@@ -108,7 +108,6 @@ typedef ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>
 class TAO_Export TAO_Resource_Factory : public ACE_Service_Object
 {
 public:
-
   enum Purging_Strategy
   {
     /// Least Recently Used
@@ -133,52 +132,52 @@ public:
       TAO_LAZY
     };
 
-  TAO_Resource_Factory (void);
-  virtual ~TAO_Resource_Factory (void);
+  TAO_Resource_Factory ();
+  virtual ~TAO_Resource_Factory ();
 
   // = Resource Retrieval
 
   /// @@ Backwards compatibility, return 1 if the ORB core should use
   ///    Locked_Data_Blocks
-  virtual int use_locked_data_blocks (void) const;
+  virtual int use_locked_data_blocks () const;
 
   /// Return an ACE_Reactor to be utilized.
-  virtual ACE_Reactor *get_reactor (void);
+  virtual ACE_Reactor *get_reactor ();
 
   /// Reclaim reactor resources (e.g. deallocate, etc).
   virtual void reclaim_reactor (ACE_Reactor *reactor);
 
   /// Return a reference to the acceptor registry.
-  virtual TAO_Acceptor_Registry *get_acceptor_registry (void);
+  virtual TAO_Acceptor_Registry *get_acceptor_registry ();
 
   /// Return a connector to be utilized.
-  virtual TAO_Connector_Registry *get_connector_registry (void);
+  virtual TAO_Connector_Registry *get_connector_registry ();
 
   /// Return the Allocator's memory pool type
   virtual void use_local_memory_pool (bool);
 
   /// @name Access the input CDR allocators.
   //@{
-  virtual ACE_Allocator* input_cdr_dblock_allocator (void);
-  virtual ACE_Allocator* input_cdr_buffer_allocator (void);
-  virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
+  virtual ACE_Allocator* input_cdr_dblock_allocator ();
+  virtual ACE_Allocator* input_cdr_buffer_allocator ();
+  virtual ACE_Allocator* input_cdr_msgblock_allocator ();
   //@}
 
   // Return 1 when the input CDR allocator uses a lock else 0.
-  virtual int input_cdr_allocator_type_locked (void);
+  virtual int input_cdr_allocator_type_locked ();
 
   /// @name Access the output CDR allocators.
   //@{
-  virtual ACE_Allocator* output_cdr_dblock_allocator (void);
-  virtual ACE_Allocator* output_cdr_buffer_allocator (void);
-  virtual ACE_Allocator* output_cdr_msgblock_allocator (void);
+  virtual ACE_Allocator* output_cdr_dblock_allocator ();
+  virtual ACE_Allocator* output_cdr_buffer_allocator ();
+  virtual ACE_Allocator* output_cdr_msgblock_allocator ();
   //@}
 
   /// Access the AMH response handler allocator
-  virtual ACE_Allocator* amh_response_handler_allocator (void);
+  virtual ACE_Allocator* amh_response_handler_allocator ();
 
   /// Access the AMI response handler allocator
-  virtual ACE_Allocator* ami_response_handler_allocator (void);
+  virtual ACE_Allocator* ami_response_handler_allocator ();
 
   /**
    * The protocol factory list is implemented in this class since
@@ -186,7 +185,7 @@ public:
    * b) it is initialized at start up and then not altered.
    * Returns a container holding the list of loaded protocols.
    */
-  virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
+  virtual TAO_ProtocolFactorySet *get_protocol_factories ();
 
   /**
    * This method will loop through the protocol list and
@@ -196,43 +195,43 @@ public:
    * that only one thread will call this method at ORB initialization.
    * NON-THREAD-SAFE
    */
-  virtual int init_protocol_factories (void);
+  virtual int init_protocol_factories ();
 
   /// Gets the codeset manager.
-  virtual TAO_Codeset_Manager* codeset_manager (void);
+  virtual TAO_Codeset_Manager* codeset_manager ();
 
   /// This denotes the maximum number of connections that can be cached.
-  virtual int cache_maximum (void) const;
+  virtual int cache_maximum () const;
 
   /// This denotes the amount of entries to remove from the connection
   /// cache.
-  virtual int purge_percentage (void) const;
+  virtual int purge_percentage () const;
 
   /// Return the number of muxed connections that are allowed for a
   /// remote endpoint
-  virtual int max_muxed_connections (void) const;
+  virtual int max_muxed_connections () const;
 
   virtual int get_parser_names (char **&names,
                                 int &number_of_names);
 
   /// Creates the lock for the lock needed in the Cache Map
   /// @deprecated
-  virtual ACE_Lock *create_cached_connection_lock (void);
+  virtual ACE_Lock *create_cached_connection_lock ();
 
   /// Should the transport cache have a lock or not? Return 1 if the
   /// transport cache needs to be locked  else return 0
-  virtual int locked_transport_cache (void);
+  virtual int locked_transport_cache ();
 
   /// Creates the flushing strategy.  The new instance is owned by the
   /// caller.
-  virtual TAO_Flushing_Strategy *create_flushing_strategy (void) = 0;
+  virtual TAO_Flushing_Strategy *create_flushing_strategy () = 0;
 
   /// Creates the connection purging strategy.
-  virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void) = 0;
+  virtual TAO_Connection_Purging_Strategy *create_purging_strategy () = 0;
 
   /// Creates the leader followers strategy.  The new instance is owned by the
   /// caller.
-  virtual TAO_LF_Strategy *create_lf_strategy (void) = 0;
+  virtual TAO_LF_Strategy *create_lf_strategy () = 0;
 
   /// Outgoing fragment creation strategy.
   virtual TAO_GIOP_Fragmentation_Strategy*
@@ -243,12 +242,12 @@ public:
   /// this function should be called on the previously used (default)
   /// factory.  This should result in proper error reporting if the
   /// user attempts to set options on an unused factory.
-  virtual void disable_factory (void) = 0;
+  virtual void disable_factory () = 0;
 
   /// Return the resource usage strategy.
   virtual
   TAO_Resource_Factory::Resource_Usage
-  resource_usage_strategy (void) const = 0;
+  resource_usage_strategy () const = 0;
 
   /// Return the value of the strategy that indicates whether
   /// the ORB should wait for the replies during shutdown or drop
@@ -261,8 +260,7 @@ protected:
    * advanced_resource.cpp can call the one in default_resource.cpp
    * without calling unnecessary functions.
    */
-  virtual int load_default_protocols (void);
-
+  virtual int load_default_protocols ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

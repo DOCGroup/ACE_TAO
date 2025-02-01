@@ -52,7 +52,7 @@ public:
   //= Initialization and termination code.
 
   /// Constructor.
-  TAO_RTEventLogFactory_i (void);
+  TAO_RTEventLogFactory_i ();
 
   /// Destructor.
   ~TAO_RTEventLogFactory_i ();
@@ -65,7 +65,7 @@ public:
 
   /// Activate this servant
   RTEventLogAdmin::EventLogFactory_ptr
-  activate (void);
+  activate ();
 
   /// Used to create a RTEventLog.
   RTEventLogAdmin::EventLog_ptr create (

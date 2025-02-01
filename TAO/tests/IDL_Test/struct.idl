@@ -39,4 +39,21 @@ module Test
     FooType Foo1;
     FooType Foo2;
   };
+
+  enum S90
+  {
+    S90_1,
+    S90_2
+  };
+  typedef S90 S90Array[2];
+  typedef long S42[2];
+  typedef string SString43[2];
+  typedef S4 S4Array[2];
+  struct S10
+  {
+    S90 s10_1;
+    S42 s10_2;
+    SString43 s10_3;
+    S4 s10_4;
+  };
 };

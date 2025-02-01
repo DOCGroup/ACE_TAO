@@ -12,7 +12,7 @@ TAO_ECG_CDR_Message_Sender::TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc)
 }
 
 ACE_INLINE void
-TAO_ECG_CDR_Message_Sender::shutdown (void)
+TAO_ECG_CDR_Message_Sender::shutdown ()
 {
   // Release the endpoint.
   TAO_ECG_Refcounted_Endpoint empty_endpoint_rptr;
@@ -20,7 +20,7 @@ TAO_ECG_CDR_Message_Sender::shutdown (void)
 }
 
 ACE_INLINE ACE_SOCK_Dgram&
-TAO_ECG_CDR_Message_Sender::dgram (void)
+TAO_ECG_CDR_Message_Sender::dgram ()
 {
   ACE_ASSERT (this->endpoint_rptr_.get ());
   return this->endpoint_rptr_->dgram ();
@@ -35,7 +35,7 @@ TAO_ECG_CDR_Message_Sender::get_local_addr (ACE_INET_Addr& addr)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_ECG_CDR_Message_Sender::mtu (void) const
+TAO_ECG_CDR_Message_Sender::mtu () const
 {
   return this->mtu_;
 }

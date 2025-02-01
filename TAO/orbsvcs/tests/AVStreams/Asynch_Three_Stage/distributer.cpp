@@ -41,7 +41,7 @@ Distributer_Receiver_StreamEndPoint::get_callback (const char *,
   return 0;
 }
 
-Distributer_Receiver_Callback::Distributer_Receiver_Callback (void)
+Distributer_Receiver_Callback::Distributer_Receiver_Callback ()
   : frame_count_ (1)
 {
 }
@@ -79,7 +79,7 @@ Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-Distributer_Receiver_Callback::handle_destroy (void)
+Distributer_Receiver_Callback::handle_destroy ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Distributer_Callback::end_stream\n"));
@@ -90,7 +90,7 @@ Distributer_Receiver_Callback::handle_destroy (void)
   return 0;
 }
 
-Distributer::Distributer (void)
+Distributer::Distributer ()
   : sender_name_ ("sender")
   , distributer_name_ ("distributer")
   , done_ (0)
@@ -98,12 +98,12 @@ Distributer::Distributer (void)
 {
 }
 
-Distributer::~Distributer (void)
+Distributer::~Distributer ()
 {
 }
 
 Connection_Manager &
-Distributer::connection_manager (void)
+Distributer::connection_manager ()
 {
   return this->connection_manager_;
 }
@@ -205,7 +205,7 @@ Distributer::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Distributer::done (void) const
+Distributer::done () const
 {
   return this->done_;
 }

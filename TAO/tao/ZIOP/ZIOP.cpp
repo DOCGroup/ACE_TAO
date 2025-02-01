@@ -10,12 +10,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ZIOP_Loader::TAO_ZIOP_Loader (void)
+TAO_ZIOP_Loader::TAO_ZIOP_Loader ()
   : initialized_ (false)
 {
 }
 
-TAO_ZIOP_Loader::~TAO_ZIOP_Loader (void)
+TAO_ZIOP_Loader::~TAO_ZIOP_Loader ()
 {
 }
 
@@ -93,7 +93,7 @@ TAO_ZIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
 }
 
 int
-TAO_ZIOP_Loader::Initializer (void)
+TAO_ZIOP_Loader::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_ZIOP_Loader);
 }
@@ -541,8 +541,7 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
                           ACE_TEXT ("compressed length (%u >= %u) ")
                           ACE_TEXT ("uncompressed length, (did not compress).\n"),
                           static_cast <unsigned int> (output.length () + Compression_Overhead),
-                          static_cast <unsigned int> (original_data_length)
-                        ));
+                          static_cast <unsigned int> (original_data_length)));
             }
           return false;
         }

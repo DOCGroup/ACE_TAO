@@ -2,13 +2,12 @@
 #include "ace/Log_Msg.h"
 
 
-
 #include "LookupManager.h"
 #include "Name.h"
 #include "Options_Parser.h"
 #include "orbsvcs/Notify/Service.h"
 
-TAO_Notify_Tests_EventChannel_Command::TAO_Notify_Tests_EventChannel_Command (void)
+TAO_Notify_Tests_EventChannel_Command::TAO_Notify_Tests_EventChannel_Command ()
   : collocated_ (0)
 {
 }
@@ -18,13 +17,13 @@ TAO_Notify_Tests_EventChannel_Command::~TAO_Notify_Tests_EventChannel_Command ()
 }
 
 const char*
-TAO_Notify_Tests_EventChannel_Command::get_name (void)
+TAO_Notify_Tests_EventChannel_Command::get_name ()
 {
   return TAO_Notify_Tests_EventChannel_Command::name ();
 }
 
 const char*
-TAO_Notify_Tests_EventChannel_Command::name (void)
+TAO_Notify_Tests_EventChannel_Command::name ()
 {
   return TAO_Notify_Tests_Name::event_channel_command;
 }
@@ -85,7 +84,7 @@ TAO_Notify_Tests_EventChannel_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf (void)
+TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf ()
 {
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory;
 
@@ -124,7 +123,7 @@ TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf (void)
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::handle_create (void)
+TAO_Notify_Tests_EventChannel_Command::handle_create ()
 {
   if (this->collocated_ == 1)
     {
@@ -148,7 +147,7 @@ TAO_Notify_Tests_EventChannel_Command::handle_create (void)
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::handle_destroy (void)
+TAO_Notify_Tests_EventChannel_Command::handle_destroy ()
 {
   ACE_DEBUG ((LM_DEBUG, "Destroying event channel %s\n", this->name_.c_str ()));
   CosNotifyChannelAdmin::EventChannel_var ec;
@@ -158,7 +157,7 @@ TAO_Notify_Tests_EventChannel_Command::handle_destroy (void)
   ec->destroy ();
 }
 void
-TAO_Notify_Tests_EventChannel_Command::handle_set_qos (void)
+TAO_Notify_Tests_EventChannel_Command::handle_set_qos ()
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
@@ -168,13 +167,13 @@ TAO_Notify_Tests_EventChannel_Command::handle_set_qos (void)
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::handle_status (void)
+TAO_Notify_Tests_EventChannel_Command::handle_status ()
 {
   //@@ TODO: Implement
 }
 
 void
-TAO_Notify_Tests_EventChannel_Command::execute_i (void)
+TAO_Notify_Tests_EventChannel_Command::execute_i ()
 {
   if (this->command_ == CREATE)
     {

@@ -20,7 +20,7 @@ public:
     ::CORBA::Long valueb,
     const char * inputb);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

@@ -11,14 +11,14 @@ namespace TAO
   }
 }
 
-TAO::SL3::CredentialsCurator::CredentialsCurator (void)
+TAO::SL3::CredentialsCurator::CredentialsCurator ()
   : lock_ (),
     acquirer_factories_ (),
     credentials_table_ (TAO::SL3::CREDENTIALS_TABLE_SIZE)
 {
 }
 
-TAO::SL3::CredentialsCurator::~CredentialsCurator (void)
+TAO::SL3::CredentialsCurator::~CredentialsCurator ()
 {
   const Factory_Iterator fend = this->acquirer_factories_.end ();
   for (Factory_Iterator i = this->acquirer_factories_.begin ();
@@ -62,13 +62,13 @@ TAO::SL3::CredentialsCurator::_narrow (CORBA::Object_ptr obj)
 }
 
 TAO::SL3::CredentialsCurator_ptr
-TAO::SL3::CredentialsCurator::_nil (void)
+TAO::SL3::CredentialsCurator::_nil ()
 {
   return (CredentialsCurator *) 0;
 }
 
 SecurityLevel3::AcquisitionMethodList *
-TAO::SL3::CredentialsCurator::supported_methods (void)
+TAO::SL3::CredentialsCurator::supported_methods ()
 {
   SecurityLevel3::AcquisitionMethodList * list;
   ACE_NEW_THROW_EX (list,
@@ -111,11 +111,10 @@ TAO::SL3::CredentialsCurator::acquire_credentials (
     }
 
   throw CORBA::BAD_PARAM ();
-
 }
 
 SecurityLevel3::OwnCredentialsList *
-TAO::SL3::CredentialsCurator::default_creds_list (void)
+TAO::SL3::CredentialsCurator::default_creds_list ()
 {
   SecurityLevel3::OwnCredentialsList * list;
   ACE_NEW_THROW_EX (list,
@@ -146,7 +145,7 @@ TAO::SL3::CredentialsCurator::default_creds_list (void)
 }
 
 SecurityLevel3::CredentialsIdList *
-TAO::SL3::CredentialsCurator::default_creds_ids (void)
+TAO::SL3::CredentialsCurator::default_creds_ids ()
 {
   SecurityLevel3::CredentialsIdList * list;
   ACE_NEW_THROW_EX (list,

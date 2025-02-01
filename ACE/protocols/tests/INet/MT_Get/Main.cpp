@@ -17,7 +17,7 @@ public:
   Get_Task (ACE_Thread_Manager *thr_mgr,
             int n_threads);
 
-  virtual int svc (void);
+  virtual int svc ();
 
   const ACE_Array<ACE_CString>& results ();
 
@@ -107,7 +107,7 @@ class Get_MultiTask : public ACE_Task<ACE_MT_SYNCH>
 public:
   Get_MultiTask (ACE_Thread_Manager *thr_mgr);
 
-  virtual int svc (void);
+  virtual int svc ();
 
   int failures ();
 

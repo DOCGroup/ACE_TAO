@@ -51,7 +51,6 @@ namespace ACE_RMCast
 
       ssock_.get_option (SOL_SOCKET, SO_RCVBUF, &r, &s);
       //cerr << 5 << "send buffer size: " << r << endl;
-
     }
 
     // Bind address and port.
@@ -185,7 +184,7 @@ namespace ACE_RMCast
   {
     size_t max_packet_size (params_.max_packet_size ());
 
-    ACE_Auto_Array_Ptr<char> holder (new char[max_packet_size + ACE_CDR::MAX_ALIGNMENT]);
+    std::unique_ptr<char[]> holder (new char[max_packet_size + ACE_CDR::MAX_ALIGNMENT]);
 
     char* data = ACE_ptr_align_binary (holder.get (), ACE_CDR::MAX_ALIGNMENT);
 

@@ -51,25 +51,22 @@ class TAO_Export TAO_IIOP_Connector : public TAO_Connector
 {
 public:
   /// Constructor.
-  TAO_IIOP_Connector (void);
+  TAO_IIOP_Connector ();
 
   /// Destructor.
-  ~TAO_IIOP_Connector (void);
+  ~TAO_IIOP_Connector ();
 
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
   int open (TAO_ORB_Core *orb_core);
-  int close (void);
+  int close ();
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
   virtual int check_prefix (const char *endpoint);
 
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
 
 public:
-
-  //@@ TAO_CONNECTOR_SPL_PUBLIC_METHODS_COPY_HOOK_START
-
   typedef TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
           TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY;
 
@@ -83,14 +80,13 @@ public:
   typedef ACE_Strategy_Connector<TAO_IIOP_Connection_Handler,
                                  ACE_SOCK_CONNECTOR>
           TAO_IIOP_BASE_CONNECTOR;
-  //@@ TAO_CONNECTOR_SPL_PUBLIC_METHODS_COPY_HOOK_END
 
 protected:
   /// A flag indicating the actual connector supports parallel
   /// connection attempts. The base implementation always returns
   /// 0. Override to return non-zero if parallel connection attempts
   /// may be tried.
-  virtual int supports_parallel_connects (void) const;
+  virtual int supports_parallel_connects () const;
 
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
@@ -108,16 +104,10 @@ protected:
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h
-  virtual TAO_Profile *make_profile (void);
+  virtual TAO_Profile *make_profile ();
 
   /// Cancel the passed cvs handler from the connector
   virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
-
-/*
- * Hook to copy over the protected and private data from this class to
- * base Connector class.
- */
-//@@ TAO_CONNECTOR_SPL_COPY_HOOK_START
 
 private:
   /// This is the first half of making a connection. Both make_connection
@@ -141,20 +131,15 @@ private:
                                       ACE_Time_Value *timeout = 0);
 
 
-
   /// Return the remote endpoint, a helper function
   TAO_IIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
 private:
-
   /// Our connect strategy
   TAO_IIOP_CONNECT_STRATEGY connect_strategy_;
 
   /// The connector initiating connection requests for IIOP.
   TAO_IIOP_BASE_CONNECTOR base_connector_;
-
-//@@ TAO_CONNECTOR_SPL_COPY_HOOK_END
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

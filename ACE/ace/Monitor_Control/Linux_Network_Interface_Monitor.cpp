@@ -1,6 +1,6 @@
 #include "ace/Monitor_Control/Linux_Network_Interface_Monitor.h"
 
-#if defined (ACE_LINUX) || defined (AIX)
+#if defined (ACE_LINUX)
 
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdio.h"
@@ -21,7 +21,7 @@ namespace ACE
     }
 
     void
-    Linux_Network_Interface_Monitor::update_i (void)
+    Linux_Network_Interface_Monitor::update_i ()
     {
       char buf[1024];
       FILE* fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"),
@@ -66,13 +66,13 @@ namespace ACE
     }
 
     void
-    Linux_Network_Interface_Monitor::clear_impl (void)
+    Linux_Network_Interface_Monitor::clear_impl ()
     {
       this->init ();
     }
 
     void
-    Linux_Network_Interface_Monitor::init (void)
+    Linux_Network_Interface_Monitor::init ()
     {
       for (unsigned long i = 0UL; i < MAX_INTERFACES; ++i)
         {
@@ -119,4 +119,4 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* defined (ACE_LINUX) || defined (AIX) */
+#endif /* defined (ACE_LINUX) */

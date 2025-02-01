@@ -26,14 +26,14 @@ TAO::TypeCode::Fixed<RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr,
 
 template <class RefCountPolicy>
 void
-TAO::TypeCode::Fixed<RefCountPolicy>::tao_duplicate (void)
+TAO::TypeCode::Fixed<RefCountPolicy>::tao_duplicate ()
 {
   this->RefCountPolicy::add_ref ();
 }
 
 template <class RefCountPolicy>
 void
-TAO::TypeCode::Fixed<RefCountPolicy>::tao_release (void)
+TAO::TypeCode::Fixed<RefCountPolicy>::tao_release ()
 {
   this->RefCountPolicy::remove_ref ();
 }
@@ -64,18 +64,16 @@ TAO::TypeCode::Fixed<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc) cons
 
 template <class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Fixed<RefCountPolicy>::get_compact_typecode_i (void) const
+TAO::TypeCode::Fixed<RefCountPolicy>::get_compact_typecode_i () const
 {
   // Already compact since tk_fixed TypeCodes have no name or member
   // names, meaning that we can simply call _duplicate() on this
   // TypeCode.
 
-
   // @@ There is a potential problem here if this TypeCode is a static
   //    and const since it may have been placed in read-only memory by
   //    the compiler.  A const_cast<> can return undefined results in
   //    that case.
-
   CORBA::TypeCode_ptr mutable_tc =
     const_cast<TAO::TypeCode::Fixed<RefCountPolicy> *> (this);
 
@@ -84,14 +82,14 @@ TAO::TypeCode::Fixed<RefCountPolicy>::get_compact_typecode_i (void) const
 
 template <class RefCountPolicy>
 CORBA::UShort
-TAO::TypeCode::Fixed<RefCountPolicy>::fixed_digits_i (void) const
+TAO::TypeCode::Fixed<RefCountPolicy>::fixed_digits_i () const
 {
   return this->digits_;
 }
 
 template <class RefCountPolicy>
 CORBA::UShort
-TAO::TypeCode::Fixed<RefCountPolicy>::fixed_scale_i (void) const
+TAO::TypeCode::Fixed<RefCountPolicy>::fixed_scale_i () const
 {
   return this->scale_;
 }

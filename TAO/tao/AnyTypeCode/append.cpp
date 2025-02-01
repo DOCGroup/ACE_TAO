@@ -89,8 +89,7 @@ TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((
         LM_DEBUG,
-        ACE_TEXT ("TAO_Marshal_Primitive::append detected error\n")
-      ));
+        ACE_TEXT ("TAO_Marshal_Primitive::append detected error\n")));
 
   throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
@@ -306,8 +305,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((
         LM_DEBUG,
-        ACE_TEXT ("TAO_Marshal_ObjRef::append detected error\n")
-      ));
+        ACE_TEXT ("TAO_Marshal_ObjRef::append detected error\n")));
 
   throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
@@ -636,8 +634,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
     {
       TAOLIB_DEBUG ((
           LM_DEBUG,
-          ACE_TEXT ("TAO_Marshal_Sequence::append detected error\n")
-        ));
+          ACE_TEXT ("TAO_Marshal_Sequence::append detected error\n")));
       throw ::CORBA::MARSHAL ();
     }
 
@@ -820,8 +817,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((
         LM_DEBUG,
-        ACE_TEXT ("marshaling TAO_Marshal_Sequence::append detected error\n")
-      ));
+        ACE_TEXT ("marshaling TAO_Marshal_Sequence::append detected error\n")));
 
   throw ::CORBA::MARSHAL ();
 }
@@ -1185,8 +1181,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
         {
           retval = this->append (param.in (),
                                  src,
-                                 dest
-                                );
+                                 dest);
         }
 
       if (retval == TAO::TRAVERSE_CONTINUE)

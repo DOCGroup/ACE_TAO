@@ -31,19 +31,18 @@ TAO::Less_Than_ObjectKey::operator () (const TAO::ObjectKey &lhs,
 }
 
 /********************************************************/
-TAO::ObjectKey_Table::ObjectKey_Table (void)
+TAO::ObjectKey_Table::ObjectKey_Table ()
   : table_ ()
 {
-
 }
 
-TAO::ObjectKey_Table::~ObjectKey_Table (void)
+TAO::ObjectKey_Table::~ObjectKey_Table ()
 {
   this->table_.close ();
 }
 
 int
-TAO::ObjectKey_Table::destroy (void)
+TAO::ObjectKey_Table::destroy ()
 {
   if (this->table_.current_size ())
     {
@@ -92,7 +91,7 @@ TAO::ObjectKey_Table::bind_i (const TAO::ObjectKey &key,
 int
 TAO::ObjectKey_Table::unbind_i (TAO::Refcounted_ObjectKey *&key_new)
 {
-  TAO::Refcounted_ObjectKey *tmp = 0;
+  TAO::Refcounted_ObjectKey *tmp = nullptr;
 
   if (this->table_.unbind (key_new->object_key (), tmp) != -1)
     {

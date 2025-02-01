@@ -64,7 +64,7 @@ public:
   Worker (CORBA::ORB_ptr orb);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:
@@ -225,7 +225,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   ACE_Time_Value tv(120);
 

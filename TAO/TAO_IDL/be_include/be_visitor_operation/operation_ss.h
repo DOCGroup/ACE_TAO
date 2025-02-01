@@ -32,7 +32,7 @@ public:
   be_visitor_operation_ss (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_ss (void);
+  ~be_visitor_operation_ss ();
 
   /// visit operation. We provide code for this method in the derived class
   virtual int visit_operation (be_operation *node);

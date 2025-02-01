@@ -29,7 +29,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CEC_Event_Loader::TAO_CEC_Event_Loader (void) :
+TAO_CEC_Event_Loader::TAO_CEC_Event_Loader () :
   attributes_ (0)
   , factory_ (0)
   , ec_impl_ (0)
@@ -39,11 +39,6 @@ TAO_CEC_Event_Loader::TAO_CEC_Event_Loader (void) :
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 {
   // Constructor
-}
-
-TAO_CEC_Event_Loader::~TAO_CEC_Event_Loader (void)
-{
-  // Destructor
 }
 
 int
@@ -405,7 +400,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 }
 
 int
-TAO_CEC_Event_Loader::fini (void)
+TAO_CEC_Event_Loader::fini ()
 {
   //   + Since it was activated with _this() you have to do the
   //   canonical:

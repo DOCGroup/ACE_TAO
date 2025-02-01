@@ -28,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class Null_RefCount_Policy
    *
@@ -43,8 +42,8 @@ namespace TAO
    *   class MyHostClass : private RefCountPolicy
    *   {
    *   public:
-   *     void my_add_ref (void)    { this->RefCountPolicy::add_ref (); }
-   *     void my_remove_ref (void) { this->RefCountPolicy::remove_ref (); }
+   *     void my_add_ref () { this->RefCountPolicy::add_ref (); }
+   *     void my_remove_ref () { this->RefCountPolicy::remove_ref (); }
    *   };
    * @endcode
    *
@@ -64,15 +63,13 @@ namespace TAO
   class TAO_AnyTypeCode_Export Null_RefCount_Policy
   {
   public:
-
     /// No-op reference increment.
-    void add_ref (void)  { }
+    void add_ref ()  { }
 
     /// No-op reference decrement.
-    void remove_ref (void) { }
+    void remove_ref () { }
 
   };
-
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

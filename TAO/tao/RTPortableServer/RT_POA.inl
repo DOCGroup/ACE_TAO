@@ -102,7 +102,7 @@ TAO_RT_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId
 #endif
 
 ACE_INLINE void *
-TAO_RT_POA::thread_pool (void) const
+TAO_RT_POA::thread_pool () const
 {
   return this->thread_pool_;
 }

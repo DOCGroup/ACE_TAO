@@ -8,7 +8,7 @@
 class ACE_Svc_Export RWRD_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   static ACE_RW_Mutex rw_lock;
@@ -17,7 +17,7 @@ private:
 ACE_RW_Mutex RWRD_Test::rw_lock;
 
 int
-RWRD_Test::svc (void)
+RWRD_Test::svc ()
 {
   int ni = this->thr_id ();
   synch_count = 2;

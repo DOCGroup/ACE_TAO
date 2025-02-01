@@ -31,7 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 /**
  * \brief A random file class.
  *
@@ -83,7 +82,6 @@ private:
   size_t block_size_;
   mutable TAO_SYNCH_MUTEX lock_;
 };
-
 } /* namespace TAO_Notify */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

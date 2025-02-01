@@ -5,12 +5,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Method_Request::~TAO_Notify_Method_Request (void)
+TAO_Notify_Method_Request::~TAO_Notify_Method_Request ()
 {
 }
 
 TAO_Notify_Method_Request_Queueable *
-TAO_Notify_Method_Request_Queueable::copy (void)
+TAO_Notify_Method_Request_Queueable::copy ()
 {
   return this;
 }
@@ -57,7 +57,7 @@ TAO_Notify_Method_Request_Queueable::init (const TAO_Notify_Event* event)
 }
 
 const ACE_Time_Value&
-TAO_Notify_Method_Request_Queueable::creation_time (void) const
+TAO_Notify_Method_Request_Queueable::creation_time () const
 {
   return this->time_;
 }

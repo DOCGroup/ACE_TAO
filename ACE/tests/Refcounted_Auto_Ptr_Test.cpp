@@ -35,7 +35,7 @@ Printer::Printer (const char *message)
   ++Printer::instance_count_;
 }
 
-Printer::~Printer (void)
+Printer::~Printer ()
 {
   --Printer::instance_count_;
   ACE_DEBUG ((LM_DEBUG,
@@ -45,7 +45,7 @@ Printer::~Printer (void)
 }
 
 void
-Printer::print (void)
+Printer::print ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) %C\n"),
@@ -54,7 +54,7 @@ Printer::print (void)
 
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex> Printer_var;
+using Printer_var = ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex>;
 
 /**
  * @class Scheduler
@@ -71,27 +71,27 @@ class Scheduler : public ACE_Task<ACE_SYNCH>
   friend class Method_Request_end;
 public:
   /// Constructor.
-  Scheduler (void);
+  Scheduler ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Initializer.
-  virtual int open (void *args = 0);
+  int open (void *args = 0) override;
 
   /// Terminator.
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Destructor.
-  virtual ~Scheduler (void);
+  ~Scheduler () override;
 
   // = These methods are part of the Active Object Proxy interface.
   void print (Printer_var &printer);
-  void end (void);
+  void end ();
 
 protected:
   /// Runs the Scheduler's event loop, which dequeues <Method_Requests>
   /// and dispatches them.
-  virtual int svc (void);
+  int svc () override;
 
 private:
   // = These are the <Scheduler> implementation details.
@@ -107,10 +107,10 @@ class Method_Request_print : public ACE_Method_Request
 {
 public:
   explicit Method_Request_print (Printer_var &printer);
-  virtual ~Method_Request_print (void);
+  ~Method_Request_print () override;
 
   /// This is the entry point into the Active Object method.
-  virtual int call (void);
+  int call () override;
 
 private:
   Printer_var printer_;
@@ -126,7 +126,7 @@ Method_Request_print::Method_Request_print (Printer_var &printer)
               printer_.count ()));
 }
 
-Method_Request_print::~Method_Request_print (void)
+Method_Request_print::~Method_Request_print ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Method_Request_print will be deleted.\n")));
@@ -136,7 +136,7 @@ Method_Request_print::~Method_Request_print (void)
 }
 
 int
-Method_Request_print::call (void)
+Method_Request_print::call ()
 {
   // Dispatch the Servant's operation and store the result into the
   // Future.
@@ -156,8 +156,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Scheduler *new_Prime_Scheduler);
-  virtual ~Method_Request_end (void);
-  virtual int call (void);
+  ~Method_Request_end () override;
+  int call () override;
 
 private:
   Scheduler *scheduler_;
@@ -168,12 +168,12 @@ Method_Request_end::Method_Request_end (Scheduler *scheduler)
 {
 }
 
-Method_Request_end::~Method_Request_end (void)
+Method_Request_end::~Method_Request_end ()
 {
 }
 
 int
-Method_Request_end::call (void)
+Method_Request_end::call ()
 {
   // Shut down the scheduler by deactivating the activation queue's
   // underlying message queue - should pop all worker threads off their
@@ -186,7 +186,7 @@ Method_Request_end::call (void)
 // Associates the activation queue with this task's message queue,
 // allowing easy access to the message queue for shutting it down
 // when it's time to stop this object's service threads.
-Scheduler::Scheduler (void)
+Scheduler::Scheduler ()
   : activation_queue_ (msg_queue ())
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -195,7 +195,7 @@ Scheduler::Scheduler (void)
 
 // Destructor
 
-Scheduler::~Scheduler (void)
+Scheduler::~Scheduler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Scheduler will be destroyed\n")));
@@ -225,11 +225,11 @@ Scheduler::close (u_long)
 // Service..
 
 int
-Scheduler::svc (void)
+Scheduler::svc ()
 {
   for (;;)
     {
-      // Dequeue the next method request (we use an auto pointer in
+      // Dequeue the next method request (we use an unique pointer in
       // case an exception is thrown in the <call>).
       ACE_Method_Request *mo_p = this->activation_queue_.dequeue ();
       if (0 == mo_p)
@@ -238,7 +238,7 @@ Scheduler::svc (void)
                       ACE_TEXT ("(%t) activation queue shut down\n")));
           break;
         }
-      auto_ptr<ACE_Method_Request> mo (mo_p);
+      std::unique_ptr<ACE_Method_Request> mo (mo_p);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) calling method request\n")));
@@ -253,7 +253,7 @@ Scheduler::svc (void)
 }
 
 void
-Scheduler::end (void)
+Scheduler::end ()
 {
   this->activation_queue_.enqueue (new Method_Request_end (this));
 }
@@ -276,7 +276,7 @@ static int n_loops = 10;
 // This will be used in a single thread to test the reset and release
 // methods. See Bugzilla #1925 for history.
 
-typedef ACE_Refcounted_Auto_Ptr <Printer, ACE_Null_Mutex> Printer_Ptr;
+using Printer_Ptr = ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>;
 
 static bool expect (const ACE_TCHAR *name,
                     const Printer_Ptr &ptr,
@@ -323,7 +323,7 @@ static bool expect (const ACE_TCHAR *name,
   return !fail;
 }
 
-static int test_reset_release (void)
+static int test_reset_release ()
 {
   int errors = 0;
 
@@ -381,7 +381,7 @@ static int test_reset_release (void)
   return errors;
 }
 
-static int test_operator(void)
+static int test_operator()
 {
   int errors = 0;
 
@@ -486,7 +486,7 @@ run_main (int, ACE_TCHAR *[])
                   Scheduler (),
                   -1);
 
-  auto_ptr<Scheduler> scheduler(scheduler_ptr);
+  std::unique_ptr<Scheduler> scheduler(scheduler_ptr);
 
   if (scheduler->open () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

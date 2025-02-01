@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -24,7 +24,7 @@ TAO::CSD::TP_Collocated_Synch_Request::TP_Collocated_Synch_Request
 
 ACE_INLINE
 bool
-TAO::CSD::TP_Collocated_Synch_Request::wait(void)
+TAO::CSD::TP_Collocated_Synch_Request::wait()
 {
   bool dispatched = this->synch_helper_.wait_while_pending();
 
@@ -40,7 +40,7 @@ TAO::CSD::TP_Collocated_Synch_Request::wait(void)
           CORBA::Exception* ex = this->exception_;
           this->exception_ = 0;
 
-          ACE_Auto_Basic_Ptr<CORBA::Exception> ex_holder(ex);
+          std::unique_ptr<CORBA::Exception> ex_holder(ex);
           ex->_raise ();
         }
     }

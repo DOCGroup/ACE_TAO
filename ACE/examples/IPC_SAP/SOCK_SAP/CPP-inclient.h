@@ -13,46 +13,46 @@ class Options
   //   Define the options for this test.
 {
 public:
-  Options (void);
+  Options ();
   // Constructor.
 
-  ~Options (void);
+  ~Options ();
   // Destructor.
 
   int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the command-line arguments.
 
-  const ACE_Time_Value &sleep_time (void) const;
+  const ACE_Time_Value &sleep_time () const;
   // Return the amount of time to sleep in order to implement the
   // proper transmission rates.
 
-  u_short port (void) const;
+  u_short port () const;
   // Port of the server.
 
-  const ACE_TCHAR *host (void) const;
+  const ACE_TCHAR *host () const;
   // Host of the server.
 
-  size_t threads (void) const;
+  size_t threads () const;
   // Number of threads.
 
-  const ACE_TCHAR *quit_string (void) const;
+  const ACE_TCHAR *quit_string () const;
   // String that shuts down the client/server.
 
   ssize_t read (void *buf, size_t len, size_t &iterations);
   // Read from the appropriate location.
 
-  size_t message_len (void) const;
+  size_t message_len () const;
   // Returns the length of the message to send.
 
-  const void *message_buf (void) const;
+  const void *message_buf () const;
   // Returns a pointer to the message.
 
-  ACE_THR_FUNC thr_func (void);
+  ACE_THR_FUNC thr_func ();
   // Returns a pointer to the entry point into the thread that runs
   // the client test function.
 
 private:
-  int init (void);
+  int init ();
   // Initialize the message we're sending to the user and set up the
   // barrier.
 

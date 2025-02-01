@@ -184,7 +184,7 @@ B<run_test.pl> [B<-help|?>] [B<-iter iterations>] [B<-chost host>]
 
 =head1 DESCRIPTION
 
-This is a test that exercises the birectional GIOP connection
+This is a test that exercises the bidirectional GIOP connection
 implementation in TAO over SSLIOP connection. Start the server like this
 
     $ server -ORBSvcConf server.conf -o <file.ior> -i <no_iterations>

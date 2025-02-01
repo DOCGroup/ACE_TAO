@@ -28,7 +28,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Sequence
      *
@@ -44,7 +43,6 @@ namespace TAO
       , private RefCountPolicy
     {
     public:
-
       /// Constructor.
       Sequence (CORBA::TCKind kind,
                 TypeCodeType const & content_type,
@@ -60,8 +58,8 @@ namespace TAO
        */
       //@{
       virtual bool tao_marshal (TAO_OutputCDR & cdr, CORBA::ULong offset) const;
-      virtual void tao_duplicate (void);
-      virtual void tao_release (void);
+      virtual void tao_duplicate ();
+      virtual void tao_release ();
       //@}
 
     protected:
@@ -76,9 +74,9 @@ namespace TAO
       //@{
       virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
-      virtual CORBA::TypeCode_ptr get_compact_typecode_i (void) const;
-      virtual CORBA::ULong length_i (void) const;
-      virtual CORBA::TypeCode_ptr content_type_i (void) const;
+      virtual CORBA::TypeCode_ptr get_compact_typecode_i () const;
+      virtual CORBA::ULong length_i () const;
+      virtual CORBA::TypeCode_ptr content_type_i () const;
 
     private:
       /// Element type of the sequence.
@@ -107,14 +105,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/Sequence_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
-#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/Sequence_TypeCode.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("Sequence_TypeCode.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
+#include "tao/AnyTypeCode/Sequence_TypeCode.cpp"
 
 #include /**/ "ace/post.h"
 

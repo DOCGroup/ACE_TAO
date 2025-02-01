@@ -34,7 +34,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     if (parse_args (argc, argv) != 0)
       return 1;
@@ -45,7 +45,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_DEBUG, "Client could not RIR Test\n"));
         return 1;
       }
-    Test_var test = Test::_narrow( obj.in() );
+    Test_var test = Test::_narrow( obj.in());
     if (CORBA::is_nil(test.in()))
       {
         ACE_DEBUG ((LM_DEBUG, "Client could not narrow Test\n"));
@@ -77,7 +77,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 n));
 
     return n != 1;
-
   }
   catch(const CORBA::Exception& ex) {
     ex._tao_print_exception ("client:");

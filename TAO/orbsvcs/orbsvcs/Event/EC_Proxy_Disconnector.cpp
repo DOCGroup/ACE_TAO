@@ -10,7 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_EC_Supplier_Proxy_Disconnect_Functor::operator() (
-                       RtecEventComm::PushSupplier_ptr supplier) throw ()
+                       RtecEventComm::PushSupplier_ptr supplier) noexcept
 {
   try
     {
@@ -23,7 +23,7 @@ TAO_EC_Supplier_Proxy_Disconnect_Functor::operator() (
 
 void
 TAO_EC_Consumer_Proxy_Disconnect_Functor::operator() (
-                       RtecEventComm::PushConsumer_ptr consumer) throw ()
+                       RtecEventComm::PushConsumer_ptr consumer) noexcept
 {
   try
     {

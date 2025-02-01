@@ -32,7 +32,7 @@ public:
   be_visitor_operation (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation (void);
+  ~be_visitor_operation ();
 
   // =helper
 

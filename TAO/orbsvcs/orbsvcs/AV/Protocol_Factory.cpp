@@ -9,12 +9,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_AV_Flow_Protocol_Factory
-TAO_AV_Flow_Protocol_Factory::TAO_AV_Flow_Protocol_Factory (void)
+TAO_AV_Flow_Protocol_Factory::TAO_AV_Flow_Protocol_Factory ()
  : ref_count (0)
 {
 }
 
-TAO_AV_Flow_Protocol_Factory::~TAO_AV_Flow_Protocol_Factory (void)
+TAO_AV_Flow_Protocol_Factory::~TAO_AV_Flow_Protocol_Factory ()
 {
 }
 
@@ -41,7 +41,7 @@ TAO_AV_Flow_Protocol_Factory::make_protocol_object (TAO_FlowSpec_Entry * /* entr
 }
 
 const char *
-TAO_AV_Flow_Protocol_Factory::control_flow_factory (void)
+TAO_AV_Flow_Protocol_Factory::control_flow_factory ()
 {
   return 0;
 }
@@ -49,7 +49,7 @@ TAO_AV_Flow_Protocol_Factory::control_flow_factory (void)
 //----------------------------------------------------------------------
 // TAO_AV_Protocol_Object
 //----------------------------------------------------------------------
-TAO_AV_Protocol_Object::TAO_AV_Protocol_Object (void)
+TAO_AV_Protocol_Object::TAO_AV_Protocol_Object ()
   :transport_ (0),
    callback_ (0)
 {
@@ -71,18 +71,18 @@ TAO_AV_Protocol_Object::open (TAO_AV_Callback *callback,
   return 0;
 }
 
-TAO_AV_Protocol_Object::~TAO_AV_Protocol_Object (void)
+TAO_AV_Protocol_Object::~TAO_AV_Protocol_Object ()
 {
 }
 
 int
-TAO_AV_Protocol_Object::start (void)
+TAO_AV_Protocol_Object::start ()
 {
   return this->callback_->handle_start ();
 }
 
 int
-TAO_AV_Protocol_Object::stop (void)
+TAO_AV_Protocol_Object::stop ()
 {
   return this->callback_->handle_stop ();
 }
@@ -95,13 +95,13 @@ TAO_AV_Protocol_Object::set_policies (const TAO_AV_PolicyList &policy_list)
 }
 
 TAO_AV_PolicyList
-TAO_AV_Protocol_Object::get_policies (void)
+TAO_AV_Protocol_Object::get_policies ()
 {
   return this->policy_list_;
 }
 
 TAO_AV_Transport*
-TAO_AV_Protocol_Object::transport (void)
+TAO_AV_Protocol_Object::transport ()
 {
   return this->transport_;
 }

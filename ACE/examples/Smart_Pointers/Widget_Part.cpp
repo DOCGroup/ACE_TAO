@@ -9,6 +9,6 @@
 
 #include "Widget_Part.h"
 
-Widget_Part::~Widget_Part (void)
+Widget_Part::~Widget_Part ()
 {
 }

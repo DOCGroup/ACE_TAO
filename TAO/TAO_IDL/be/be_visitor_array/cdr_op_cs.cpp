@@ -18,7 +18,7 @@ be_visitor_array_cdr_op_cs::be_visitor_array_cdr_op_cs (
 {
 }
 
-be_visitor_array_cdr_op_cs::~be_visitor_array_cdr_op_cs (void)
+be_visitor_array_cdr_op_cs::~be_visitor_array_cdr_op_cs ()
 {
 }
 
@@ -41,7 +41,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
     }
 
   // Retrieve the base type.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (!bt)
     {
@@ -74,7 +74,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   // If the array is an anonymous member and if its element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 // Not a typedef.
+  if (this->ctx_->alias () == nullptr // Not a typedef.
       && bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;
@@ -124,7 +124,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
                   '\0',
                   NAMEBUFSIZE);
 
-  bool use_underscore = (this->ctx_->tdef () == 0);
+  bool use_underscore = (this->ctx_->tdef () == nullptr);
 
   if (!use_underscore)
     {
@@ -140,7 +140,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           ACE_OS::sprintf (fname,
                            "%s::_%s",
                            parent->full_name (),
@@ -159,8 +159,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -286,9 +285,9 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
 
   // Grab the array node.
   be_array *array =
-    be_array::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_array*> (this->ctx_->node ());
 
-  if (array == 0)
+  if (array == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -300,8 +299,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
   // We generate optimized code based on an optimized interface available from
   // the CDR class. These optimizations are applicable only to primitive
   // types.
-  *os << "return" << be_idt_nl
-      << "strm.";
+  *os << "return strm.";
 
   // Based on our substate, we may be reading from a stream or writing into a
   // stream.
@@ -362,6 +360,12 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
       break;
     case AST_PredefinedType::PT_boolean:
       *os << "boolean_array";
+      break;
+    case AST_PredefinedType::PT_uint8:
+      *os << "uint8_array";
+      break;
+    case AST_PredefinedType::PT_int8:
+      *os << "int8_array";
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -431,6 +435,12 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
     case AST_PredefinedType::PT_boolean:
       *os << "ACE_CDR::Boolean";
       break;
+    case AST_PredefinedType::PT_uint8:
+      *os << "ACE_CDR::UInt8";
+      break;
+    case AST_PredefinedType::PT_int8:
+      *os << "ACE_CDR::Int8";
+      break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -456,7 +466,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
                         -1);
     }
 
-  unsigned long ndims = array->n_dims ();
+  unsigned long const ndims = array->n_dims ();
 
   // Generate a product of all the dimensions. This will be the total length
   // of the "unfolded" single dimensional array.
@@ -465,7 +475,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
       // Retrieve the ith dimension value.
       AST_Expression *expr = array->dims ()[i];
 
-      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
+      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -495,7 +505,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
         }
     }
 
-  *os << ");" << be_uidt
+  *os << ");"
       << be_uidt << be_uidt << be_uidt_nl;
 
   return 0;
@@ -542,7 +552,7 @@ be_visitor_array_cdr_op_cs::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -553,10 +563,10 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
   TAO_OutStream *os = this->ctx_->stream ();
   ACE_CDR::ULong i;
   be_array *node =
-    be_array::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_array*> (this->ctx_->node ());
   AST_Decl::NodeType nt = bt->node_type ();
 
-  if (node == 0)
+  if (node == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -580,7 +590,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
       // Retrieve the ith dimension value.
       AST_Expression *expr = node->dims ()[i];
 
-      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
+      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -592,7 +602,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
           // Generate a loop for each dimension.
-          *os << be_nl << "for ( ::CORBA::ULong i" << i
+          *os << be_nl << "for (::CORBA::ULong i" << i
               << " = 0; i" << i << " < "
               << expr->ev ()->u.ulval << " && _tao_marshal_flag; ++i" << i
               << ")" << be_idt_nl
@@ -633,11 +643,11 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
         }
       else
         {
-          be_string *str = 0;
+          be_string *str = nullptr;
           if (bt->node_type () == AST_Decl::NT_string ||
               bt->node_type () == AST_Decl::NT_wstring)
             {
-              str = be_string::narrow_from_decl (bt);
+              str = dynamic_cast<be_string*> (bt);
               if (!str)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
@@ -649,7 +659,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
             }
 
           *os << "_tao_marshal_flag = (strm >> ";
-          if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
+          if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
             {
               if (str->width () == (long) sizeof (char))
                 {
@@ -698,7 +708,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
                   // We need to separately handle this case of pseudo
                   // objects because they have a _var type.
                   be_predefined_type *pt =
-                    be_predefined_type::narrow_from_decl (bt);
+                    dynamic_cast<be_predefined_type*> (bt);
 
                   if (!pt)
                     {
@@ -760,11 +770,11 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
         }
       else
         {
-          be_string *str = 0;
+          be_string *str = nullptr;
           if (bt->node_type () == AST_Decl::NT_string ||
               bt->node_type () == AST_Decl::NT_wstring)
             {
-              str = be_string::narrow_from_decl (bt);
+              str = dynamic_cast<be_string*> (bt);
               if (!str)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
@@ -776,7 +786,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
             }
 
           *os << "_tao_marshal_flag = (strm << ";
-          if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
+          if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
             {
               if (str->width () == (long) sizeof (char))
                 {
@@ -825,7 +835,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
                   // We need to separately handle this case of pseudo
                   // objects because they have a _var type.
                   be_predefined_type *pt =
-                    be_predefined_type::narrow_from_decl (bt);
+                    dynamic_cast<be_predefined_type*> (bt);
 
                   if (!pt)
                     {

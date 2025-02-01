@@ -19,7 +19,6 @@ namespace ACE
   {
     namespace INet
       {
-
         /**
         * @class ACE_INet_RequestHandler
         *
@@ -40,7 +39,6 @@ namespace ACE
 
               virtual const Response& response () const = 0;
           };
-
       }
   }
 

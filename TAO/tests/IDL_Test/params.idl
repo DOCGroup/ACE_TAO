@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    params.idl
  *
@@ -8,16 +6,8 @@
  *  compiler. This test is to make sure the problems
  *  stay fixed.
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
-
-
-// Compiling the generated code for the parameters of
-// getDate taught us to use the ACE_NESTED_CLASS macro
-// more judiciously in the header file. This file was
-// also initially a problem for lookups as well.
 
 module foo
 {

@@ -19,7 +19,6 @@ namespace ACE
 {
   namespace FTP
   {
-
     template <ACE_SYNCH_DECL>
     Session_T<ACE_SYNCH_USE>::Session_T ()
       : port_ (FTP_PORT),

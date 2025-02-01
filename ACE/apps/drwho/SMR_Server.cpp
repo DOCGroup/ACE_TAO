@@ -11,6 +11,6 @@ SMR_Server::SMR_Server (short port_number)
                 1));
 }
 
-SMR_Server::~SMR_Server (void)
+SMR_Server::~SMR_Server ()
 {
 }

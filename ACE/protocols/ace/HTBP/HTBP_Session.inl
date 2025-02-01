@@ -33,14 +33,14 @@ ACE::HTBP::Session::outbound (ACE::HTBP::Channel *s)
 
 ACE_INLINE
 ACE::HTBP::Channel *
-ACE::HTBP::Session::inbound (void) const
+ACE::HTBP::Session::inbound () const
 {
   return this->inbound_;
 }
 
 ACE_INLINE
 const ACE::HTBP::Session_Id_t&
-ACE::HTBP::Session::session_id(void) const
+ACE::HTBP::Session::session_id() const
 {
   return this->session_id_;
 }
@@ -55,21 +55,21 @@ ACE::HTBP::Session::session_id (ACE_UINT32 id)
 
 ACE_INLINE
 const ACE_INET_Addr *
-ACE::HTBP::Session::proxy_addr (void) const
+ACE::HTBP::Session::proxy_addr () const
 {
   return this->proxy_addr_;
 }
 
 ACE_INLINE
 const ACE::HTBP::Addr &
-ACE::HTBP::Session::peer_addr (void) const
+ACE::HTBP::Session::peer_addr () const
 {
   return this->session_id_.peer_;
 }
 
 ACE_INLINE
 const ACE::HTBP::Addr &
-ACE::HTBP::Session::local_addr (void) const
+ACE::HTBP::Session::local_addr () const
 {
   return this->session_id_.local_;
 }
@@ -86,7 +86,7 @@ ACE::HTBP::Session::proxy_addr (ACE_INET_Addr *pa, int destroy)
 
 ACE_INLINE
 int
-ACE::HTBP::Session::sock_flags (void) const
+ACE::HTBP::Session::sock_flags () const
 {
   return this->sock_flags_;
 }

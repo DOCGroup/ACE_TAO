@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
+#if defined (ACE_WIN32)
 
 #include "ace/WFMO_Reactor.h"
 
@@ -55,7 +55,7 @@ public:
                         ACE_Timer_Queue * = 0);
 
   /// Close down the ACE_Msg_WFMO_Reactor and release all of its resources.
-  virtual ~ACE_Msg_WFMO_Reactor (void);
+  virtual ~ACE_Msg_WFMO_Reactor ();
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
@@ -102,7 +102,7 @@ protected:
   virtual DWORD poll_remaining_handles (DWORD index);
 
   /// Dispatches window messages.
-  virtual int dispatch_window_messages (void);
+  virtual int dispatch_window_messages ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -111,7 +111,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Msg_WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
+#endif /* ACE_WIN32 */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_MSG_WFMO_REACTOR_H */

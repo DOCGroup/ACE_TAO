@@ -26,7 +26,7 @@ public:
               Test::Index max_range);
 
   /// dtor
-  ~Database_i (void);
+  ~Database_i ();
 
   // = The Simple_Server methods.
   void set (Test::Index i,
@@ -38,7 +38,7 @@ public:
 
   CORBA::ULong get_crc (Test::Index i);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB pointer

@@ -24,11 +24,9 @@ TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer
     refcount_ (1),
     connected_ (0)
 {
-  this->lock_ =
-    this->typed_event_channel_->create_consumer_lock ();
+  this->lock_ = this->typed_event_channel_->create_consumer_lock ();
 
-  this->default_POA_ =
-    this->typed_event_channel_->typed_consumer_poa ();
+  this->default_POA_ = this->typed_event_channel_->typed_consumer_poa ();
 
   this->typed_event_channel_->get_servant_retry_map ().bind (this, 0);
 
@@ -55,7 +53,7 @@ TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer
 }
 
 // Implementation skeleton destructor
-TAO_CEC_TypedProxyPushConsumer::~TAO_CEC_TypedProxyPushConsumer (void)
+TAO_CEC_TypedProxyPushConsumer::~TAO_CEC_TypedProxyPushConsumer ()
 {
   try{
     this->default_POA_->deactivate_object (this->oid_.in ());
@@ -86,7 +84,7 @@ TAO_CEC_TypedProxyPushConsumer::activate (
 }
 
 void
-TAO_CEC_TypedProxyPushConsumer::deactivate (void)
+TAO_CEC_TypedProxyPushConsumer::deactivate ()
 {
   try
     {
@@ -137,7 +135,7 @@ TAO_CEC_TypedProxyPushConsumer::supplier_non_existent (
 }
 
 void
-TAO_CEC_TypedProxyPushConsumer::shutdown (void)
+TAO_CEC_TypedProxyPushConsumer::shutdown ()
 {
   CosEventComm::PushSupplier_var supplier;
 
@@ -168,7 +166,7 @@ TAO_CEC_TypedProxyPushConsumer::shutdown (void)
 }
 
 void
-TAO_CEC_TypedProxyPushConsumer::cleanup_i (void)
+TAO_CEC_TypedProxyPushConsumer::cleanup_i ()
 {
   this->typed_supplier_ =
     CosEventComm::PushSupplier::_nil ();
@@ -176,14 +174,14 @@ TAO_CEC_TypedProxyPushConsumer::cleanup_i (void)
 }
 
 CORBA::ULong
-TAO_CEC_TypedProxyPushConsumer::_incr_refcnt (void)
+TAO_CEC_TypedProxyPushConsumer::_incr_refcnt ()
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
   return this->refcount_++;
 }
 
 CORBA::ULong
-TAO_CEC_TypedProxyPushConsumer::_decr_refcnt (void)
+TAO_CEC_TypedProxyPushConsumer::_decr_refcnt ()
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
@@ -313,25 +311,25 @@ TAO_CEC_TypedProxyPushConsumer::disconnect_push_consumer ()
 }
 
 PortableServer::POA_ptr
-TAO_CEC_TypedProxyPushConsumer::_default_POA (void)
+TAO_CEC_TypedProxyPushConsumer::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_CEC_TypedProxyPushConsumer::_add_ref (void)
+TAO_CEC_TypedProxyPushConsumer::_add_ref ()
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_CEC_TypedProxyPushConsumer::_remove_ref (void)
+TAO_CEC_TypedProxyPushConsumer::_remove_ref ()
 {
   this->_decr_refcnt ();
 }
 
 CORBA::Object_ptr
-TAO_CEC_TypedProxyPushConsumer::get_typed_consumer (void)
+TAO_CEC_TypedProxyPushConsumer::get_typed_consumer ()
 
 {
   CORBA::Object_var server =
@@ -382,7 +380,7 @@ TAO_CEC_TypedProxyPushConsumer_Guard::
 }
 
 TAO_CEC_TypedProxyPushConsumer_Guard::
-    ~TAO_CEC_TypedProxyPushConsumer_Guard (void)
+    ~TAO_CEC_TypedProxyPushConsumer_Guard ()
 {
   // This access is safe because guard objects are created on the
   // stack, only one thread has access to them

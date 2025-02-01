@@ -9,7 +9,7 @@ class corbaloc_Status_i : public POA_corbaloc::Status
 public:
   corbaloc_Status_i ();
 
-  CORBA::Boolean print_status (void);
+  CORBA::Boolean print_status ();
 
   void set_name (const char *name) { server_name_ = name; }
 

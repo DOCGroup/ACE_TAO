@@ -46,7 +46,7 @@ public:
   friend class TAO_SSLIOP_Profile;
 
   /// Default constructor.
-  TAO_DIOP_Endpoint (void);
+  TAO_DIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.
@@ -65,7 +65,7 @@ public:
                      CORBA::Short priority);
 
   /// Destructor.
-  ~TAO_DIOP_Endpoint (void);
+  ~TAO_DIOP_Endpoint () = default;
 
   /**
    * @name TAO_Endpoint Methods
@@ -73,16 +73,16 @@ public:
    * Please check the documentation in Endpoint.h for details.
    */
   //@{
-  virtual TAO_Endpoint *next (void);
+  virtual TAO_Endpoint *next ();
   virtual int addr_to_string (char *buffer, size_t length);
-  virtual TAO_Endpoint *duplicate (void);
+  virtual TAO_Endpoint *duplicate ();
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their port and host are the same.
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
   /// Return a hash value for this object.
-  CORBA::ULong hash (void);
+  CORBA::ULong hash ();
   //@}
 
   // Allocates memory and returns a copy of <this>
@@ -90,30 +90,29 @@ public:
   // = DIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
-  const ACE_INET_Addr &object_addr (void) const;
+  const ACE_INET_Addr &object_addr () const;
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
-  const char *host (void) const;
+  const char *host () const;
 
   /// Copy the string @a h into <host_> and return the resulting pointer.
   /// This object maintains ownership of this string.
   const char *host (const char *h);
 
   /// Return the port number.
-  CORBA::UShort port (void) const;
+  CORBA::UShort port () const;
 
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
 
 private:
-
   /// Helper method for setting INET_Addr.
   int set (const ACE_INET_Addr &addr,
            int use_dotted_decimal_addresses);
 
   /// Helper method for object_addr () call.
-  void object_addr_i (void) const;
+  void object_addr_i () const;
 
   /// String representing the host name.
   CORBA::String_var host_;

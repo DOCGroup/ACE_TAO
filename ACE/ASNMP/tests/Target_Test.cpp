@@ -51,7 +51,7 @@ DAMAGES.
   7) can't access retry, timeout parameters...
   8) can't assign or equate two UdpTargets
 
-    UdpTarget( void);
+    UdpTarget();
     UdpTarget( const Address &address);
     UdpTarget( const UdpTarget &target);
     UdpTarget( const Address &address,              // address

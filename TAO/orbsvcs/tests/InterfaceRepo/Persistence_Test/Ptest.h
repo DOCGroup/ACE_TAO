@@ -33,25 +33,25 @@ class Ptest
 {
 public:
   /// Constructor
-  Ptest (void);
+  Ptest ();
 
   /// Destructor
-  ~Ptest (void);
+  ~Ptest ();
 
   /// Initialize the ORB and get the IFR object reference.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   /// Execute test code.
-  int run (void);
+  int run ();
 
   /// Cleanup
-  int shutdown (void);
+  int shutdown ();
 
 private:
   /// The two IFR tests.
-  void populate (void);
-  int query (void);
+  void populate ();
+  int query ();
 
   /// Process the command line arguments.
   int parse_args (int argc,

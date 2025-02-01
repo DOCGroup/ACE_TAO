@@ -16,7 +16,6 @@
 #include "test_config.h"
 
 
-
 /*
  * Ultra-basic test of stack trace.
  *

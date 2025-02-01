@@ -40,7 +40,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Consumer
   : public TAO_Notify_Peer
   , public ACE_Event_Handler    // to support timer
 {
-
 public:
   /// Status returned from dispatch attempts
   enum DispatchStatus {
@@ -52,7 +51,6 @@ public:
   };
 
 public:
-
 typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
 
   /// Constructor
@@ -62,14 +60,14 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
   virtual ~TAO_Notify_Consumer ();
 
   /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   /// Access Specific Proxy.
-  TAO_Notify_ProxySupplier* proxy_supplier (void);
+  TAO_Notify_ProxySupplier* proxy_supplier ();
 
   /// Access Base Proxy.
-  virtual TAO_Notify_Proxy* proxy (void);
+  virtual TAO_Notify_Proxy* proxy ();
 
   /// Dispatch Event to consumer
   void deliver (TAO_Notify_Method_Request_Event * request);
@@ -87,19 +85,19 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
   DispatchStatus dispatch_batch (const CosNotification::EventBatch& batch);
 
   /// Dispatch the pending events
-  void dispatch_pending (void);
+  void dispatch_pending ();
 
   /// Is the connection suspended?
-  CORBA::Boolean is_suspended (void);
+  CORBA::Boolean is_suspended ();
 
   /// Suspend Connection
-  void suspend (void);
+  void suspend ();
 
   /// Resume Connection
-  void resume (void);
+  void resume ();
 
   /// Shutdown the consumer
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// On reconnect we need to move events from the old consumer
   /// to the new one
@@ -120,13 +118,12 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
   ///
   /// The estimate does not include events queued at the admin level which
   /// have not been passed to this consumer for delivery yet.
-  size_t pending_count (void);
+  size_t pending_count ();
 
 protected:
-
   /// This method is called by the is_alive() method.  It should provide
   /// the connected consumer or nil if there is none.
-  virtual CORBA::Object_ptr get_consumer (void) = 0;
+  virtual CORBA::Object_ptr get_consumer () = 0;
 
   typedef ACE_Unbounded_Queue<TAO_Notify_Method_Request_Event_Queueable *> Request_Queue;
 
@@ -161,7 +158,7 @@ protected:
                                    const CosNotification::EventTypeSeq& removed);
 
   /// Get the shared Proxy Lock
-  TAO_SYNCH_MUTEX* proxy_lock (void);
+  TAO_SYNCH_MUTEX* proxy_lock ();
 
 protected:
   virtual int handle_timeout (const ACE_Time_Value& current_time,
@@ -172,7 +169,7 @@ protected:
   void schedule_timer (bool is_error = false);
 
   /// Cancel timer
-  void cancel_timer (void);
+  void cancel_timer ();
 
   ///= Protected Data Members
 protected:
@@ -205,9 +202,8 @@ protected:
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, ACE_Time_Value> last_ping_;
 
 private:
-
   /// Events pending to be delivered.
-  ACE_Auto_Ptr< Request_Queue > pending_events_;
+  std::unique_ptr<Request_Queue> pending_events_;
 
   CORBA::Object_var rtt_obj_;
 };

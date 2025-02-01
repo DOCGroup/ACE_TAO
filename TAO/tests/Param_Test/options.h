@@ -74,31 +74,31 @@ public:
   };
 
   /// constructor
-  Options (void);
+  Options ();
 
   /// destructor
-  ~Options (void);
+  ~Options ();
 
   /// Parses the arguments passed on the command line.
   int parse_args (int argc, ACE_TCHAR **argv);
 
   /// return the IOR for the servant
-  char const * param_test_ior (void) const;
+  char const * param_test_ior () const;
 
   /// what test to run
-  TEST_TYPE test_type (void);
+  TEST_TYPE test_type ();
 
   /// whether to use SII or DII
-  INVOKE_TYPE invoke_type (void);
+  INVOKE_TYPE invoke_type ();
 
   /// number of times to run the test
-  CORBA::ULong loop_count (void);
+  CORBA::ULong loop_count ();
 
   /// whether debug option is on or not
-  CORBA::Boolean debug (void) const;
+  CORBA::Boolean debug () const;
 
   /// If we should request the server to shutdown.
-  CORBA::Boolean shutdown (void) const;
+  CORBA::Boolean shutdown () const;
 
 private:
   /// Function to read the servant IOR from a file.

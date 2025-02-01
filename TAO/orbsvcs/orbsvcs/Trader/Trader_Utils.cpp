@@ -1,8 +1,6 @@
 #include "orbsvcs/Trader/Trader_Utils.h"
 #include "ace/OS_NS_string.h"
 
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
@@ -117,13 +115,13 @@ TAO_Policy_Creator::request_id (const CosTrading::Admin::OctetSeq& request_id)
   policy.value <<= request_id;
 }
 
-TAO_Policy_Creator::operator const CosTrading::PolicySeq& (void) const
+TAO_Policy_Creator::operator const CosTrading::PolicySeq& () const
 {
   return this->policies_;
 }
 
 const CosTrading::PolicySeq&
-TAO_Policy_Creator::policy_seq (void) const
+TAO_Policy_Creator::policy_seq () const
 {
   return this->policies_;
 }
@@ -214,7 +212,7 @@ TAO_Property_Evaluator(CosTrading::Offer& offer,
       this->dp_cache_[i] = 0;
 }
 
-TAO_Property_Evaluator::~TAO_Property_Evaluator (void)
+TAO_Property_Evaluator::~TAO_Property_Evaluator ()
 {
   // Clean up the results of any dynamic properties.
   for (CORBA::ULong i = 0; i < this->props_.length (); i++)
@@ -424,7 +422,7 @@ TAO_Property_Evaluator_By_Name::get_property (const char* property_name)
   return property;
 }
 
-TAO_Dynamic_Property::~TAO_Dynamic_Property (void)
+TAO_Dynamic_Property::~TAO_Dynamic_Property ()
 {
 }
 
@@ -462,7 +460,7 @@ construct_dynamic_prop (const char* name,
 }
 
 void
-TAO_Dynamic_Property::destroy (void)
+TAO_Dynamic_Property::destroy ()
 {
   if (this->prop_.in () != CosTradingDynamic::DynamicPropEval::_nil ())
     {
@@ -553,7 +551,7 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
     }
 }
 
-TAO_Policies::~TAO_Policies (void)
+TAO_Policies::~TAO_Policies ()
 {
 }
 
@@ -610,19 +608,19 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol) const
 }
 
 CORBA::ULong
-TAO_Policies::search_card (void) const
+TAO_Policies::search_card () const
 {
   return this->ulong_prop (SEARCH_CARD);
 }
 
 CORBA::ULong
-TAO_Policies::match_card (void) const
+TAO_Policies::match_card () const
 {
   return this->ulong_prop (MATCH_CARD);
 }
 
 CORBA::ULong
-TAO_Policies::return_card (void) const
+TAO_Policies::return_card () const
 {
   return this->ulong_prop (RETURN_CARD);
 }
@@ -679,32 +677,32 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol) const
 
 
 CORBA::Boolean
-TAO_Policies::use_modifiable_properties (void) const
+TAO_Policies::use_modifiable_properties () const
 {
   return this->boolean_prop (USE_MODIFIABLE_PROPERTIES);
 }
 
 CORBA::Boolean
-TAO_Policies::use_dynamic_properties (void) const
+TAO_Policies::use_dynamic_properties () const
 {
   return this->boolean_prop (USE_DYNAMIC_PROPERTIES);
 }
 
 CORBA::Boolean
-TAO_Policies::use_proxy_offers (void) const
+TAO_Policies::use_proxy_offers () const
 {
   return this->boolean_prop (USE_PROXY_OFFERS);
 }
 
 CORBA::Boolean
-TAO_Policies::exact_type_match (void) const
+TAO_Policies::exact_type_match () const
 {
   return this->boolean_prop (EXACT_TYPE_MATCH);
 }
 
 
 const CosTrading::TraderName*
-TAO_Policies::starting_trader (void) const
+TAO_Policies::starting_trader () const
 {
   const CosTrading::TraderName* trader_name = 0;
 
@@ -731,7 +729,7 @@ TAO_Policies::starting_trader (void) const
 }
 
 CosTrading::FollowOption
-TAO_Policies::link_follow_rule (void) const
+TAO_Policies::link_follow_rule () const
 {
   CosTrading::FollowOption return_value =
     this->trader_.import_attributes ().def_follow_policy ();
@@ -783,13 +781,13 @@ TAO_Policies::link_follow_rule (const CosTrading::Link::LinkInfo& link_info) con
 }
 
 CORBA::ULong
-TAO_Policies::hop_count (void) const
+TAO_Policies::hop_count () const
 {
   return this->ulong_prop (HOP_COUNT);
 }
 
 const CosTrading::Admin::OctetSeq*
-TAO_Policies::request_id (void) const
+TAO_Policies::request_id () const
 {
   const CosTrading::Admin::OctetSeq* request_id = 0;
 
@@ -1023,7 +1021,7 @@ TAO_Offer_Modifier (const char* type_name,
     }
 }
 
-TAO_Offer_Modifier::~TAO_Offer_Modifier (void)
+TAO_Offer_Modifier::~TAO_Offer_Modifier ()
 {
   for (TAO_Typecode_Table::iterator type_iter (this->prop_types_);
        ! type_iter.done ();
@@ -1296,13 +1294,13 @@ TAO_Offer_Filter::ok_to_consider (CosTrading::Offer* offer)
 }
 
 CORBA::Boolean
-TAO_Offer_Filter::ok_to_consider_more (void)
+TAO_Offer_Filter::ok_to_consider_more ()
 {
   return this->search_card_ > 0 && this->match_card_ > 0;
 }
 
 void
-TAO_Offer_Filter::matched_offer (void)
+TAO_Offer_Filter::matched_offer ()
 {
   this->match_card_--;
   this->return_card_--;
@@ -1323,19 +1321,19 @@ TAO_Offer_Filter::matched_offer (void)
 }
 
 CORBA::ULong
-TAO_Offer_Filter::search_card_remaining (void) const
+TAO_Offer_Filter::search_card_remaining () const
 {
   return this->search_card_;
 }
 
 CORBA::ULong
-TAO_Offer_Filter::match_card_remaining (void) const
+TAO_Offer_Filter::match_card_remaining () const
 {
   return this->match_card_;
 }
 
 CosTrading::PolicyNameSeq*
-TAO_Offer_Filter::limits_applied (void)
+TAO_Offer_Filter::limits_applied ()
 {
   int i = 0;
   CORBA::ULong size = static_cast<CORBA::ULong> (this->limits_.size ());
@@ -1379,22 +1377,6 @@ TAO_Property_Filter (const SPECIFIED_PROPS& desired_props)
             throw CosTrading::IllegalPropertyName (pname);
         }
     }
-}
-
-TAO_Property_Filter::
-TAO_Property_Filter (const TAO_Property_Filter& prop_filter)
-  : props_ (prop_filter.props_),
-    policy_ (prop_filter.policy_)
-{
-}
-
-TAO_Property_Filter&
-TAO_Property_Filter::operator= (const TAO_Property_Filter& other)
-{
-  this->props_ = other.props_;
-  this->policy_ = other.policy_;
-
-  return *this;
 }
 
 void

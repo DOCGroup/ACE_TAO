@@ -9,10 +9,6 @@ use PerlACE::TestTarget;
 use File::Copy;
 use Getopt::Std;
 
-PerlACE::check_privilege_group();
-
-$status = 0;
-
 # -n notify.conf -s high_path.conf -c other_paths.conf -o output_dir -h
 getopts ("n:s:c:o:h");
 

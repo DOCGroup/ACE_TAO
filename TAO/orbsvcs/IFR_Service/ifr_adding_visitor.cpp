@@ -61,7 +61,7 @@ ifr_adding_visitor::ifr_adding_visitor (
 {
 }
 
-ifr_adding_visitor::~ifr_adding_visitor (void)
+ifr_adding_visitor::~ifr_adding_visitor ()
 {
 }
 
@@ -1021,7 +1021,7 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
     }
 
   AST_Component *c =
-    AST_Component::narrow_from_decl (node->full_definition ());
+    dynamic_cast<AST_Component*> (node->full_definition ());
 
   try
     {
@@ -1872,7 +1872,7 @@ ifr_adding_visitor::visit_field (AST_Field *node)
       return this->create_value_member (node);
     }
 
-  AST_Type *ft = AST_Type::narrow_from_decl (node->field_type ());
+  AST_Type *ft = dynamic_cast<AST_Type*> (node->field_type ());
 
   if (ft == 0)
     {
@@ -2299,6 +2299,18 @@ ifr_adding_visitor::visit_sequence (AST_Sequence *node)
     }
 
   return 0;
+}
+
+int
+ifr_adding_visitor::visit_map (AST_Map *)
+{
+  ORBSVCS_ERROR_RETURN ((
+            LM_ERROR,
+            ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_map -")
+            ACE_TEXT (" maps are not supported\n")
+          ),
+          -1
+        );
 }
 
 int
@@ -2738,7 +2750,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
       for (CORBA::ULong i = 0; i < n_parents; ++i)
         {
           AST_Interface *intf =
-            AST_Interface::narrow_from_decl (parents[i]);
+            dynamic_cast<AST_Interface*> (parents[i]);
 
           if (intf == 0)
             {
@@ -2800,7 +2812,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
       for (CORBA::ULong i = 0; i < n_parents; ++i)
         {
           AST_Interface *intf =
-            AST_Interface::narrow_from_decl (parents[i]);
+            dynamic_cast<AST_Interface*> (parents[i]);
 
           if (intf == 0)
             {
@@ -3719,21 +3731,21 @@ ifr_adding_visitor::fill_supported_interfaces (CORBA::InterfaceDefSeq &result,
       case AST_Decl::NT_valuetype:
       case AST_Decl::NT_eventtype:
         {
-          AST_ValueType *v = AST_ValueType::narrow_from_decl (node);
+          AST_ValueType *v = dynamic_cast<AST_ValueType*> (node);
           s_length = v->n_supports ();
           list = v->supports ();
           break;
         }
       case AST_Decl::NT_component:
         {
-          AST_Component *c = AST_Component::narrow_from_decl (node);
+          AST_Component *c = dynamic_cast<AST_Component*> (node);
           s_length = c->n_supports ();
           list = c->supports ();
           break;
         }
       case AST_Decl::NT_home:
         {
-          AST_Home *h = AST_Home::narrow_from_decl (node);
+          AST_Home *h = dynamic_cast<AST_Home*> (node);
           s_length = h->n_supports ();
           list = h->supports ();
           break;
@@ -3788,7 +3800,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
 
       if (item->node_type () == AST_Decl::NT_factory)
         {
-          factories.push_back (AST_Factory::narrow_from_decl (item));
+          factories.push_back (dynamic_cast<AST_Factory*> (item));
         }
     }
 
@@ -3819,7 +3831,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
            !f_iter.is_done ();
            f_iter.next (), ++index)
         {
-          arg = AST_Argument::narrow_from_decl (f_iter.item ());
+          arg = dynamic_cast<AST_Argument*> (f_iter.item ());
           result[i].members[index].name =
             CORBA::string_dup (arg->local_name ()->get_string ());
           result[i].members[index].type =
@@ -3850,7 +3862,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
            !ei.is_done ();
            ei.next ())
         {
-          excp = AST_Exception::narrow_from_decl (ei.item ());
+          excp = dynamic_cast<AST_Exception*> (ei.item ());
           result[i].exceptions[index].name =
             CORBA::string_dup (excp->local_name ()->get_string ());
           result[i].exceptions[index].id = excp->repoID ();
@@ -3887,7 +3899,7 @@ ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
     {
       case AST_Decl::NT_op:
         {
-          AST_Operation *op = AST_Operation::narrow_from_decl (node);
+          AST_Operation *op = dynamic_cast<AST_Operation*> (node);
           this->fill_exceptions (result,
                                  op->exceptions ());
           return;
@@ -3895,7 +3907,7 @@ ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
       case AST_Decl::NT_factory:
       case AST_Decl::NT_finder:
         {
-          AST_Factory *f = AST_Factory::narrow_from_decl (node);
+          AST_Factory *f = dynamic_cast<AST_Factory*> (node);
           this->fill_exceptions (result,
                                  f->exceptions ());
           return;
@@ -3954,7 +3966,7 @@ ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
        ! iter.is_done ();
        iter.next (), ++index)
     {
-      arg = AST_Argument::narrow_from_decl (iter.item ());
+      arg = dynamic_cast<AST_Argument*> (iter.item ());
       result[index].name =
         CORBA::string_dup (arg->local_name ()->get_string ());
       result[index].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
@@ -3989,7 +4001,7 @@ ifr_adding_visitor::visit_all_factories (AST_Home *node,
           continue;
         }
 
-      AST_Factory *f = AST_Factory::narrow_from_decl (d);
+      AST_Factory *f = dynamic_cast<AST_Factory*> (d);
 
       CORBA::ParDescriptionSeq params;
       this->fill_params (params, f);
@@ -4018,7 +4030,7 @@ ifr_adding_visitor::visit_all_finders (AST_Home *node,
        !h_iter.is_done ();
        h_iter.next ())
     {
-      f = AST_Finder::narrow_from_decl (h_iter.item ());
+      f = dynamic_cast<AST_Finder*> (h_iter.item ());
 
       if (f == 0)
         {

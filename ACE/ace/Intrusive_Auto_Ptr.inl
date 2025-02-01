@@ -21,7 +21,7 @@ ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (const ACE_Intrusive_Auto_Ptr<
 }
 
 template <class X> ACE_INLINE X *
-ACE_Intrusive_Auto_Ptr<X>::operator-> (void) const
+ACE_Intrusive_Auto_Ptr<X>::operator-> () const
 {
     return this->rep_;
 }
@@ -33,14 +33,14 @@ ACE_Intrusive_Auto_Ptr<X>::operator *() const
 }
 
 template <class X> ACE_INLINE X*
-ACE_Intrusive_Auto_Ptr<X>::get (void) const
+ACE_Intrusive_Auto_Ptr<X>::get () const
 {
   // We return the ACE_Future_rep.
   return this->rep_;
 }
 
 template<class X> ACE_INLINE X *
-ACE_Intrusive_Auto_Ptr<X>::release (void)
+ACE_Intrusive_Auto_Ptr<X>::release ()
 {
   X *p = this->rep_;
   if (this->rep_ != 0)

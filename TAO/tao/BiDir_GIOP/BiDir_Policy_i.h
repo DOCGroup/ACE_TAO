@@ -48,19 +48,19 @@ public:
   /// Copy constructor.
   TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy &rhs);
 
-  /// Returns a copy of <this>.
-  virtual TAO_BidirectionalPolicy *clone (void) const;
+  /// Returns a copy of this.
+  virtual TAO_BidirectionalPolicy *clone () const;
 
   /// = The BiDir::BidirectionalPolicy methods
-  virtual BiDirPolicy::BidirectionalPolicyValue value (void);
+  BiDirPolicy::BidirectionalPolicyValue value () override;
 
-  virtual CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy (void);
+  void destroy () override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
 private:
   /// The attribute

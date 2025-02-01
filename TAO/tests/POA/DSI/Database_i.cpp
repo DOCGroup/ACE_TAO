@@ -6,12 +6,12 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "ace/Null_Mutex.h"
 
-DatabaseImpl::Simpler_Database_Malloc::Simpler_Database_Malloc (void)
+DatabaseImpl::Simpler_Database_Malloc::Simpler_Database_Malloc ()
   //  : DATABASE_MALLOC ()
 {
 }
 
-DatabaseImpl::Simpler_Database_Malloc::~Simpler_Database_Malloc (void)
+DatabaseImpl::Simpler_Database_Malloc::~Simpler_Database_Malloc ()
 {
   this->remove ();
 }
@@ -30,7 +30,7 @@ DatabaseImpl::Entry::Entry (CORBA::ORB_ptr orb,
     PortableServer::Current::_narrow (obj.in ());
 }
 
-DatabaseImpl::Entry::~Entry (void)
+DatabaseImpl::Entry::~Entry ()
 {
 }
 
@@ -106,7 +106,7 @@ DatabaseImpl::Entry::_primary_interface (const PortableServer::ObjectId &/*oid*/
 }
 
 PortableServer::POA_ptr
-DatabaseImpl::Entry::_default_POA (void)
+DatabaseImpl::Entry::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -118,11 +118,10 @@ DatabaseImpl::Agent::Agent (CORBA::ORB_ptr orb,
     common_servant_ (orb,
                      poa)
 {
-
   this->poa_->set_servant (&this->common_servant_);
 }
 
-DatabaseImpl::Agent::~Agent (void)
+DatabaseImpl::Agent::~Agent ()
 {
 }
 
@@ -262,13 +261,13 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
 }
 
 void
-DatabaseImpl::Agent::shutdown (void)
+DatabaseImpl::Agent::shutdown ()
 {
   this->orb_->shutdown ();
 }
 
 PortableServer::POA_ptr
-DatabaseImpl::Agent::_default_POA (void)
+DatabaseImpl::Agent::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -304,13 +303,13 @@ DatabaseImpl::Employee::Employee (const char* name,
   this->name (name);
 }
 
-DatabaseImpl::Employee::~Employee (void)
+DatabaseImpl::Employee::~Employee ()
 {
   DATABASE::instance ()->free (this->name_);
 }
 
 const char *
-DatabaseImpl::Employee::name (void) const
+DatabaseImpl::Employee::name () const
 {
   return this->name_;
 }
@@ -328,7 +327,7 @@ DatabaseImpl::Employee::name (const char* name)
 }
 
 CORBA::Long
-DatabaseImpl::Employee::id (void) const
+DatabaseImpl::Employee::id () const
 {
   return this->id_;
 }
@@ -351,22 +350,17 @@ DatabaseImpl::Employee::operator delete (void *pointer)
   DATABASE::instance ()->free (pointer);
 }
 
-#if defined (ACE_HAS_NEW_NOTHROW)
   /// Overloaded new operator, nothrow_t variant.
 void *
-DatabaseImpl::Employee::operator new (size_t size, const ACE_nothrow_t &)
+DatabaseImpl::Employee::operator new (size_t size, const std::nothrow_t &)
 {
   return DATABASE::instance ()->malloc (size);
 }
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 void
-DatabaseImpl::Employee::operator delete (void *ptr, const ACE_nothrow_t&) throw ()
+DatabaseImpl::Employee::operator delete (void *ptr, const std::nothrow_t&) noexcept
 {
   DATABASE::instance ()->free (ptr);
 }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
-
-#endif /* ACE_HAS_NEW_NOTHROW */
 
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, DatabaseImpl::Simpler_Database_Malloc,  ACE_Null_Mutex);

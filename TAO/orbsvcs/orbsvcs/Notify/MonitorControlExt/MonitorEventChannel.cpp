@@ -39,7 +39,7 @@ public:
   {
   }
 
-  virtual void update (void) {
+  virtual void update () {
     if (this->type () == Monitor_Control_Types::MC_LIST)
       {
         Monitor_Control_Types::NameList list;
@@ -75,7 +75,7 @@ public:
   {
   }
 
-  virtual void update (void) {
+  virtual void update () {
     Monitor_Control_Types::NameList list;
     this->interf_->get_timedout_consumers (&list);
     this->receive (list);
@@ -97,7 +97,7 @@ public:
   {
   }
 
-  virtual void update (void)
+  virtual void update ()
   {
     if (this->type () == Monitor_Control_Types::MC_LIST)
       {
@@ -146,7 +146,7 @@ public:
   {
   }
 
-  virtual void update (void)
+  virtual void update ()
   {
     this->receive (this->interf_->calculate_queue_size (this->count_));
   }
@@ -168,7 +168,7 @@ public:
   {
   }
 
-  virtual void update (void)
+  virtual void update ()
   {
     this->receive (this->interf_->get_oldest_event ());
   }
@@ -187,7 +187,7 @@ public:
   {
   }
 
-  virtual void update (void)
+  virtual void update ()
   {
     Monitor_Control_Types::NameList list;
     this->interf_->determine_slowest_consumer (&list);
@@ -296,7 +296,7 @@ TAO_MonitorEventChannel::TAO_MonitorEventChannel (const char* name)
   this->add_stats ();
 }
 
-TAO_MonitorEventChannel::~TAO_MonitorEventChannel (void)
+TAO_MonitorEventChannel::~TAO_MonitorEventChannel ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->names_mutex_);
 
@@ -318,7 +318,7 @@ TAO_MonitorEventChannel::~TAO_MonitorEventChannel (void)
 }
 
 const ACE_CString&
-TAO_MonitorEventChannel::name (void) const
+TAO_MonitorEventChannel::name () const
 {
   return this->name_;
 }
@@ -1288,7 +1288,7 @@ TAO_MonitorEventChannel::determine_slowest_consumer (
 }
 
 double
-TAO_MonitorEventChannel::get_oldest_event (void)
+TAO_MonitorEventChannel::get_oldest_event ()
 {
   CosNotifyChannelAdmin::AdminIDSeq_var conadmin_ids =
     this->get_all_consumeradmins ();

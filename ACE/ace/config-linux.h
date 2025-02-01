@@ -106,7 +106,7 @@
 
 #define ACE_HAS_UALARM
 
-#if (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 10)
+#if defined (__GLIBC__) && (__GLIBC__ < 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 10))
 // Although the scandir man page says otherwise, this setting is correct.
 // The setting was fixed in 2.10, so do not use the hack after that.
 #  define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
@@ -120,7 +120,9 @@
 #define ACE_HAS_SYSV_IPC
 
 // Compiler/platform defines a union semun for SysV shared memory.
-#define ACE_HAS_SEMUN
+#if defined (__GLIBC__)
+# define ACE_HAS_SEMUN
+#endif
 
 #if defined (__powerpc__) && !defined (ACE_SIZEOF_LONG_DOUBLE)
 // 32bit PowerPC Linux uses 128bit long double
@@ -186,10 +188,6 @@
 #    undef ACE_SCANDIR_CMP_USES_VOIDPTR
 #  endif /* ACE_SCANDIR_CMP_USES_VOIDPTR */
 
-#  if defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
-#    undef ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
-#  endif /* ACE_SCANDIR_CMP_USES_CONST_VOIDPTR */
-
 #  if defined (ACE_HAS_EXECINFO_H)
 #    undef ACE_HAS_EXECINFO_H
 #  endif /* ACE_HAS_EXECINFO_H */
@@ -198,11 +196,26 @@
 #    undef __GLIBC__
 #  endif /* __GLIBC__ */
 
-#  if defined(ACE_HAS_SEMUN)
-#    undef ACE_HAS_SEMUN
-#  endif /* ACE_HAS_SEMUN */
-
 #endif /* __UCLIBC__ */
+
+#if !defined (__GLIBC__) && !defined (__UCLIBC__)
+// Assume musl, it has no equivalent macro
+
+#define ACE_HAS_CPU_SET_T
+#define ACE_HAS_PTHREADS
+#define ACE_HAS_PTHREADS_UNIX98_EXT
+#define ACE_HAS_RECURSIVE_MUTEXES
+#define ACE_HAS_SIGINFO_T
+#define ACE_HAS_SIGTIMEDWAIT
+#define ACE_HAS_SOCKLEN_T
+#define ACE_HAS_UCONTEXT_T
+
+#define ACE_LACKS_ISCTYPE
+#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
+#define ACE_LACKS_SIGINFO_H
+#define ACE_LACKS_SYS_SYSCTL_H
+
+#endif
 
 #include /**/ "ace/post.h"
 

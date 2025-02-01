@@ -59,7 +59,7 @@ namespace ACE
     public:
       Monitor_Query (const char* monitor_name);
 
-      void query (void);
+      void query ();
 
     private:
       Monitor_Base* monitor_;

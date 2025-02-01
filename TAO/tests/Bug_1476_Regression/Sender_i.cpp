@@ -7,7 +7,7 @@ Sender_i::Sender_i (CORBA::ORB_ptr orb)
 {
 }
 
-Sender_i::~Sender_i (void)
+Sender_i::~Sender_i ()
 {
 }
 
@@ -19,7 +19,7 @@ Sender_i::active_objects (CORBA::ULong no_threads)
 
 
 void
-Sender_i::send_ready_message (void)
+Sender_i::send_ready_message ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Received a call ...\n"));
@@ -28,13 +28,13 @@ Sender_i::send_ready_message (void)
 }
 
 CORBA::ULong
-Sender_i::get_number_received (void) const
+Sender_i::get_number_received () const
 {
   return number_received_;
 }
 
 CORBA::ULong
-Sender_i::get_active_objects (void) const
+Sender_i::get_active_objects () const
 {
   return active_objects_;
 }

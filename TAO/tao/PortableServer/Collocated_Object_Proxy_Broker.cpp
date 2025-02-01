@@ -210,13 +210,13 @@ namespace TAO
 
 // -----------------------------------------------------
 TAO::Collocated_Object_Proxy_Broker *
-the_tao_collocated_object_proxy_broker (void)
+the_tao_collocated_object_proxy_broker ()
 {
   static TAO::Collocated_Object_Proxy_Broker the_broker;
   return &the_broker;
 }
 
-TAO::Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory (void)
+TAO::Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory ()
 {
   return the_tao_collocated_object_proxy_broker ();
 }
@@ -233,8 +233,6 @@ _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (size_t)
 static int
 _TAO_collocation_Object_Proxy_Broker_Factory_Initializer_Scarecrow =
 _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (
-    reinterpret_cast<size_t> (_TAO_collocation_Object_Proxy_Broker_Factory_Initializer
-      )
-  );
+    reinterpret_cast<size_t> (_TAO_collocation_Object_Proxy_Broker_Factory_Initializer));
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -26,13 +26,12 @@
  */
 class be_visitor_sequence_any_op_cs : public be_visitor_decl
 {
-
 public:
   /// constructor
   be_visitor_sequence_any_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_sequence_any_op_cs (void);
+  ~be_visitor_sequence_any_op_cs ();
 
   /// visit sequence
   virtual int visit_sequence (be_sequence *node);

@@ -36,24 +36,21 @@
 class Test_Client_Module_Export Test_Client_Module : public ACE_Task_Base
 {
 public:
-
   /// Initializes object when dynamic linking occurs.
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Run by a daemon thread to handle deferred processing.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
-
   /// Reference to the ORB.
   CORBA::ORB_var orb_;
 
   /// Reference to the test object.
   Test_var test_;
-
 };
 
 ACE_FACTORY_DECLARE (Test_Client_Module, Test_Client_Module)

@@ -1,7 +1,7 @@
 #include "orbsvcs/Log/Hash_LogStore.h"
 #include "orbsvcs/Log/Hash_LogRecordStore.h"
 #include "orbsvcs/Log/LogMgr_i.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -18,7 +18,7 @@ TAO_Hash_LogStore::~TAO_Hash_LogStore()
 
 
 DsLogAdmin::LogList*
-TAO_Hash_LogStore::list_logs (void)
+TAO_Hash_LogStore::list_logs ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -54,7 +54,7 @@ TAO_Hash_LogStore::list_logs (void)
 }
 
 DsLogAdmin::LogIdList*
-TAO_Hash_LogStore::list_logs_by_id (void)
+TAO_Hash_LogStore::list_logs_by_id ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -168,7 +168,7 @@ TAO_Hash_LogStore::create(DsLogAdmin::LogFullActionType full_action,
                                              ),
                     CORBA::NO_MEMORY ());
 
-  auto_ptr<TAO_Hash_LogRecordStore> recordstore (impl);
+  std::unique_ptr<TAO_Hash_LogRecordStore> recordstore (impl);
 
   if (this->hash_map_.bind (id, recordstore.get ()) != 0)
     {
@@ -205,7 +205,7 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
                                              ),
                     CORBA::NO_MEMORY ());
 
-  auto_ptr<TAO_Hash_LogRecordStore> recordstore (impl);
+  std::unique_ptr<TAO_Hash_LogRecordStore> recordstore (impl);
 
   if (this->hash_map_.bind (id, recordstore.get ()) != 0)
     {

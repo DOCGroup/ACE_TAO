@@ -1,0 +1,819 @@
+commit 6db9157a06c38119e160454d772d2a6303f1d312
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 29 10:27:36 2022 +0200
+
+    Update NEWS
+
+commit bdf31098cdda557b8b245b089306b737fb297305
+Merge: 697cb84ee1a 2c45e323a5b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 23 22:25:46 2022 +0200
+
+    Merge pull request #1944 from jwillemsen/jwi-dllistdocu
+    
+    Fixed documentation of ~ACE_DLList and use nullptr
+
+commit 2c45e323a5b597d17b1389abeb8be2fd25c74154
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 23 20:26:11 2022 +0200
+
+    Fixed documentation of ~ACE_DLList and use nullptr
+    
+        * ACE/ace/Containers_T.h:
+        * ACE/ace/Containers_T.inl:
+
+commit eb1fccda5feb81606a021382bb8fe4d40c85b087
+Author: Luke Mewburn <Luke@Mewburn.net>
+Date:   Fri Sep 23 19:01:43 2022 +1000
+
+    Fix -Wformat-security issues in examples
+
+commit 7b7e65323459375cda40274c9b5828b3f5aebda9
+Merge: 0b7e12778ae 2aab75d5fdd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 23 09:20:32 2022 +0200
+
+    Merge pull request #1941 from knutpett/knutpett/remove_void_part2
+    
+    Part 2: Remove obsolescent (void) in functions with no parameters
+
+commit 2aab75d5fddc126e8085c70fe8e1b875b75a30ef
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Mon Sep 19 14:37:02 2022 +0200
+
+    Part 2: Remove obsolescent (void) in functions with no parameters
+
+commit 64b5a4fecb5806522f220d63b0744ffa40bb6bcc
+Merge: ccbb3639f96 9bb6d09a139
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Sep 19 16:40:20 2022 -0500
+
+    Merge branch 'master' into format-security
+
+commit 96f0f9c16668c07531ea8c60c7b912f2e7b55806
+Merge: 14610fc4e13 d7c2081760f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 19 09:55:26 2022 +0200
+
+    Merge pull request #1934 from jwillemsen/jwi-require_truncation_
+    
+    Use uniform initialisation for require_truncation_ so tha we can generate a default constructor
+
+commit f110de2e2657cf09094d799152c52cff8c285afa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 18 10:34:06 2022 +0200
+
+    Layout change
+    
+        * ACE/ace/OS_NS_dirent.h:
+
+commit 8b0b7b43dbb949159a5d2384ea9897ff1cf0abf6
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Fri Sep 16 06:29:10 2022 -0500
+
+    Added $(ACE_SHLIBS) to the link line for shared libraries.  This allows dlopen() to load in other dependency libraries.
+    
+    Removed the -soname option from the link line so that shared libraries do not have a hard-coded path built into them.
+
+commit 5c2ec52d1b878b4a8a7d18a6eb2f8319746b0ddf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 15 17:44:46 2022 +0200
+
+    Make use of default, uniform initialisation, and nullptr
+    
+        * ACE/ace/Dirent.h:
+        * ACE/ace/Dirent.inl:
+        * ACE/ace/Dirent_Selector.cpp:
+        * ACE/ace/Dirent_Selector.h:
+        * ACE/ace/Malloc_T.cpp:
+        * ACE/ace/POSIX_Asynch_IO.cpp:
+
+commit c9737bc0a77324eb91dd7e0a94d0ff7099eda09e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 13:49:46 2022 +0200
+
+    Use bcc32x in 32bit mode, at that moment it should have the same arguments as bcc64
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit 1b723073155ca88a84cf04e276f7402a3b9867b2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 13:44:43 2022 +0200
+
+    bcc64 needs different commandline arguments to be used as preprocessor
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit 3da59eac098c1ef9d2c98f2079185ff35c3b6105
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Tue Sep 13 22:57:39 2022 +0200
+
+    Remove obsolescent (void) in functions with no parameters
+
+commit ccbb3639f96d55c38f96914c6c7c4bc8c8998db9
+Merge: bdc29ef27a6 fe03724176d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 12 09:36:12 2022 +0200
+
+    Merge branch 'master' into format-security
+
+commit fe03724176dcfd20e0f9a6e493198469242be6b6
+Merge: 41a1f3bc12f 00b403be7df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 12 08:32:34 2022 +0200
+
+    Merge pull request #1922 from knutpett/knutpett/whitespace
+    
+    Remove whitespace
+
+commit 41a1f3bc12f780cc087c936ab53d1074f363b630
+Merge: 37eece01ce5 8933b892aaf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 12 08:29:51 2022 +0200
+
+    Merge pull request #1919 from esohns/asynch_acceptor_addr_family_protected
+    
+    make addr_family_ protected so it can be accessed from derived classes
+
+commit bdc29ef27a6bc8dc63bc46309639e3ef307e8557
+Author: Luke Mewburn <Luke@Mewburn.net>
+Date:   Sun Sep 11 10:06:02 2022 +1000
+
+    Fixup previous adapt to ACE_TEXT_PRIs
+    
+    Add missing comma after format string.
+
+commit 15e81d1fdd3aceba9199802a697782507ecc87f2
+Author: Luke Mewburn <Luke@Mewburn.net>
+Date:   Sun Sep 11 10:03:05 2022 +1000
+
+    Fix -Wformat-security issues for ACE/tests
+    
+    Fixes issue #1906.
+
+commit 00b403be7df0442405bd5e3dcc07beaa6730ddd2
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Sat Sep 10 12:26:57 2022 +0200
+
+    Fixed Redundant blank line at the end of a code block should be deleted
+
+commit 60987b4ba42ff6e4e6a4f4457d902a18c0c6b0a0
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Sat Sep 10 12:19:28 2022 +0200
+
+    Remove leading blank lines after opening {
+
+commit c42abee7c0e81ed89bdfb47bf3a1bcb743cf256b
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Sat Sep 10 12:08:48 2022 +0200
+
+    Removed extra newline before closing }
+
+commit 983dabc472d4670a53a352584cdc82de749e2c41
+Author: Luke Mewburn <Luke@Mewburn.net>
+Date:   Sat Sep 10 17:12:19 2022 +1000
+
+    Fixup previous adapt to ACE_TEXT_PRIs
+    
+    Remove reference to removed variable in separate #if codepath.
+
+commit 2be659384defe6b235e020f03a7d683c80a16c7e
+Author: Luke Mewburn <Luke@Mewburn.net>
+Date:   Sat Sep 10 16:30:54 2022 +1000
+
+    Adapt to ACE_TEXT_PRIs
+    
+    Use ACE_TEXT_PRIs instead of conditional compilation
+    checking !defined(ACE_WIN32) && defined(ACE_USES_WCHAR).
+
+commit f5e5d7759a9314053509d294a4c10827d3946034
+Author: Luke Mewburn <Luke@Mewburn.net>
+Date:   Sat Sep 10 11:05:56 2022 +1000
+
+    Define ACE_TEXT_PRIs. Use to fix -Wformat-security
+    
+    Define ACE_TEXT_PRIs as "s" or "ls" depending upon the WCHAR mode.
+    (This is similar to the PRIxxx macros in <inttypes.h>)
+    
+    Use  ACE_TEXT("%") ACE_TEXT_PRIs  instead of "%s" or even
+    just the raw string without a format specifier.
+    
+    Fixes issue #1906.
+
+commit 126e88aeb3f288c770f0dccde5c6314ccaa6212c
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Sep 9 15:46:54 2022 +0200
+
+    Replace 3 blank lines with just 2 blank lines
+
+commit 430d023f1d97173cfd104498f92dc4ccaa1c4135
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Sep 9 14:31:18 2022 +0200
+
+    Remove extra newline after public, protected and private
+
+commit 6f72892d61032d294fe1387a36ec6e04e9efa9c2
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Sep 9 10:38:55 2022 +0200
+
+    Fix trailing newline in class declarations
+
+commit 7de198658db10447a86ce14e457b5881140e95ce
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Fri Sep 9 07:27:27 2022 -0500
+
+    Removed unnecessary check of ret inside the while condition.
+
+commit 6d7b6be10a2c2be4fc47bdd2e285657fcc4d60fd
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Sep 9 10:31:07 2022 +0200
+
+    Fix more blank line issues
+
+commit e21a89220b0b1571e09f02e66feea5c5dc734cd7
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Sep 8 13:42:26 2022 -0500
+
+    Fixed indentation.
+
+commit 0a67ad7caf312a5ce67a071aee7859b3cf509824
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Sep 8 13:38:45 2022 -0500
+
+    Added support for VxWorks 21.03, including building for RTP mode.
+
+commit 8933b892aaf731a58554a71e7ea2cd03d23b8aa3
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Wed Sep 7 16:58:12 2022 +0200
+
+    corrected ctor initialization order
+
+commit f32b02507a1a1cc642d84c3883f513e864b8400b
+Author: Erik Sohns <erik.sohns@posteo.de>
+Date:   Tue Sep 6 20:16:15 2022 +0200
+
+    make addr_family_ protected so it can be accessed from derived classes
+
+commit 248271543f7574c7f10f98bfe0a905df8ea0889e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 5 08:26:47 2022 +0200
+
+    Fixed redefined ACE_FALLTHROUGH warnings
+    
+        * ACE/ace/config-g++-common.h:
+
+commit 023da962da06c7c6ab4e801d7a5861ef21ca9577
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Mon Aug 29 16:20:38 2022 +0200
+
+    Remove warnings -Wextra-semi
+
+commit 348277c5a753b65b7a0cc206720fd7ea47f81659
+Merge: c86d810dec3 dd6e9956697
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 29 15:24:44 2022 +0200
+
+    Merge pull request #1910 from Erich71/old_gcc_fix
+    
+    Fix ACE_FALLTHROUGH definition for old GCC compilers.
+
+commit c86d810dec3f11f7450312f7618fb1b25053cf16
+Merge: fe57f94c747 6e391dc5f42
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 29 15:24:13 2022 +0200
+
+    Merge pull request #1909 from jwillemsen/jwi-memorypoollogging
+    
+    Updated logging to include the class/method so that it is more obviou…
+
+commit fe57f94c7477e00cc6d3feaabbb76e4a0f9b4429
+Merge: 280392c8b78 d8409f7ce0b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 29 15:23:53 2022 +0200
+
+    Merge pull request #1908 from jwillemsen/jwi-redundantvoid3
+    
+    Removed redundant void
+
+commit dd6e99566974c958738973d72bd7f3695447af44
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 29 09:07:02 2022 +0200
+
+    Update config-g++-common.h
+    
+    With C++17 we can use https://en.cppreference.com/w/cpp/language/attributes/fallthrough
+
+commit 93d938a9e43e4c368d0cd5caabedf4651a0737f2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 29 08:59:18 2022 +0200
+
+    No need to define ACE_FALLTHROUGH for C++14, it is alreadys set from the C++11 part
+
+commit fc83f54e9330f3c325460f1f01cb4a10ef570f6f
+Author: Erich Ponstingl <erich.ponstingl@gmx.net>
+Date:   Fri Aug 26 14:58:39 2022 +0200
+
+    Fix ACE_FALLTHROUGH definition for old GCC compilers.
+
+commit d8409f7ce0bfe8f283d2bd80faeb80adb74e4b32
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 24 13:08:05 2022 +0200
+
+    Removed redundant void
+    
+        * ACE/ace/ATM_Acceptor.cpp:
+        * ACE/ace/ATM_Acceptor.inl:
+        * ACE/ace/ATM_Connector.cpp:
+
+commit 6e391dc5f42d373d5b42f6f9c9642d867ce0fc6d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 24 13:07:26 2022 +0200
+
+    Updated logging to include the class/method so that it is more obvious where these logging messages are coming from
+    
+        * ACE/ace/Shared_Memory.cpp:
+        * ACE/ace/Shared_Memory.h:
+        * ACE/ace/Shared_Memory_MM.cpp:
+        * ACE/ace/Shared_Memory_MM.h:
+        * ACE/ace/Shared_Memory_MM.inl:
+        * ACE/ace/Shared_Memory_Pool.cpp:
+        * ACE/ace/Shared_Memory_Pool.h:
+        * ACE/ace/Shared_Memory_SV.cpp:
+        * ACE/ace/Shared_Memory_SV.h:
+        * ACE/ace/Shared_Memory_SV.inl:
+
+commit 73d9dcd44d257cb427c8510bbec52b0df73a9190
+Merge: 49423535b6e a9a6b7e565c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 15 09:51:55 2022 +0200
+
+    Merge pull request #1903 from likema/proc-gid
+    
+    Fix incorrect `uid_t` to `gid_t` in `ACE_Process`
+
+commit a9a6b7e565cda5187d4f0b14b62b2b19dc5fcbc8
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Sun Aug 14 03:22:02 2022 +0800
+
+    Fix incorrect uid_t to gid_t in ACE_Process
+
+commit 41cfd85e05e3f72df6fe90353f2e1a2cf3069942
+Author: Bin Lan <lanbin@scutech.com>
+Date:   Wed Mar 23 16:19:44 2022 +0800
+
+    Fix localtime_r emulation for Windows.
+
+commit 05484cd6cd8d3bf884075311041242d95158a0d4
+Merge: 7aeb1020b1a 4a7649ed0a6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 14:42:58 2022 +0200
+
+    Merge pull request #1897 from jwillemsen/jwi-news8
+    
+    List changes for next release
+
+commit 7aeb1020b1a73c01bc1f5473b6ddabe940c0bd65
+Merge: 3d4038ad273 4a6478c41ac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 14:42:41 2022 +0200
+
+    Merge pull request #1896 from jwillemsen/jwi-cleanup10
+    
+    Use override, remove redundant whitespacing, fixed typo
+
+commit 3d4038ad273524a32bf892921e9d1a8f0bc609d4
+Merge: 636f29faa68 a972e0f1637
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 14:42:17 2022 +0200
+
+    Merge pull request #1895 from jwillemsen/jwi-acedebug
+    
+    Changed internal debug_ flag to bool and initialise it to false
+
+commit 4a7649ed0a6a58e62ca46c8add446502ead50e7d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 08:47:12 2022 +0200
+
+    List changes for next release
+    
+        * ACE/NEWS:
+
+commit 4a6478c41ac4b1e17cea8e0e4f4bbb6afe91269b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 08:32:51 2022 +0200
+
+    Use override, remove redundant whitespacing, fixed typo
+    
+        * ACE/tests/Enum_Interfaces_Test.cpp:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/README:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/client.cpp:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/test_object.idl:
+
+commit a972e0f1637e8a2ec2ce70f02c0154adfef59f73
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 08:31:55 2022 +0200
+
+    Changed internal debug_ flag to bool and initialise it to false
+    
+        * ACE/ace/ACE.cpp:
+
+commit f10a95323666778399fca640bbe95ad3a4c8b0d1
+Author: Andrew Buettner <leeloo@cletis.net>
+Date:   Thu Jul 21 09:43:29 2022 -0500
+
+    Fix syntax error when compiling without threads.
+    
+    This addresses issue in [ACE-TAO Issue #1889](https://github.com/DOCGroup/ACE_TAO/issues/1889)
+
+commit bd92596bbc63635a2ed2131322e6c659a5420586
+Merge: b9e4a9a92a6 8f9a9f304ba
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 18 16:27:20 2022 +0200
+
+    Merge pull request #1887 from jwillemsen/jwi-codesetregistry
+    
+    Minor change for codeset registry generation and removed old Id tags
+
+commit d497168cef77c63a7557f6dad1c4483baf835754
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 18 13:21:48 2022 +0200
+
+    Updated tool to generate the same as we have Codeset_Registry_db.cpp
+    
+        * ACE/apps/mkcsregdb/mkcsregdb.cpp:
+
+commit 2f757b8bea56e2ca31c24507e8a1685c13733e13
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Wed Jul 13 10:58:09 2022 -0500
+
+    Add header and footer for stuck stacks
+
+commit 3ebafd712042a344dc52677e1d190c9dfcbb3c65
+Merge: b619e577177 8096d513b52
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 14 11:57:11 2022 +0200
+
+    Merge pull request #1883 from jwillemsen/jwi-localhost
+    
+    Make use of ACE_LOCALHOST and removed Tru64/Irix remaining code
+
+commit 8096d513b52a30164b1820eab996dd26dbe2a4b8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 14 09:25:40 2022 +0200
+
+    Removed old code for Tru64/Irix, not supported anymore for a long time
+
+commit ea7ee2053a878b207203af4ce134cc7fddea8465
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 13 16:29:49 2022 +0200
+
+    Doxygen style comment
+    
+        * ACE/ace/INET_Addr.cpp:
+
+commit a0b4b6382c2010a622c819814bdee790ca3b7f8d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 13 15:50:53 2022 +0200
+
+    Layout changes
+    
+        * ACE/ace/Pipe.cpp:
+
+commit 941dfb2ba87b3fd32dd4fc861212d20460060570
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 13 15:40:57 2022 +0200
+
+    Removed redundant whiteline
+    
+        * ACE/ace/SPIPE_Addr.cpp:
+
+commit 7671a48aaf4f297d396ec1106ed76664cd93a172
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 13 15:40:42 2022 +0200
+
+    Make use of ACE_LOCALHOST
+    
+        * ACE/ace/MEM_Addr.cpp:
+
+commit b619e577177bd4a8f5b7daffe27f32c84f13e021
+Merge: 77df25b965b 55e5793c721
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 13 11:53:38 2022 +0200
+
+    Merge pull request #1882 from jwillemsen/jwi-cleanup32
+    
+    Removed duplicated define and layout changes
+
+commit 76c4b0736b2b7d0ebeaa7c3d9f04ecbac96c9d73
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 13 09:25:02 2022 +0200
+
+    Removed duplicated define
+    
+        * ACE/ace/config-integritySCA.h:
+
+commit 60dca03280c31b7861b1782649d23a00b7004d7b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 13 09:24:30 2022 +0200
+
+    Log the operation when reporting an error
+    
+        * ACE/ace/Select_Reactor_T.cpp:
+
+commit dee78f113e79812a438f050384ed6ec92d9d4cba
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Tue Jul 12 10:00:51 2022 -0500
+
+    Fixes for Static Initialization Order Issues Reported By AddressSanitizer
+
+commit b102db31aa3ff4cd53f25f1ae743277c452609aa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 16:06:38 2022 +0200
+
+    Use VxWorks type for return value of sysClkRateGet
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+        * ACE/ace/OS_NS_Thread.inl:
+
+commit 78d9da7d3f305160d4bd5c17edd56f02ef1418bd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 11:05:23 2022 +0200
+
+    Fixed compile error
+
+commit 2e5015f022ce6e154a9d46f5f3f48f9e80637ce6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 10:55:18 2022 +0200
+
+    Removed redundant void
+
+commit 36cee4c046b4f8fafe6b246b477af7349b91d2fd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 10:54:21 2022 +0200
+
+    Add back regular destructor
+    
+        * ACE/ace/Profile_Timer.h:
+        * ACE/ace/Profile_Timer.inl:
+
+commit c85f9f17b1741ef2f10edbbc2c87eb4442d70430
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 10:53:24 2022 +0200
+
+    Make use of default destructors
+
+commit f9cb5892de0657a1193aa0d37a01c7cc16bcce7a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 10:44:52 2022 +0200
+
+    Make use of default destructor
+
+commit f471ff957ddd5c41f24d7e42df80574c1f8dba6a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 10:32:29 2022 +0200
+
+    VxWorks 22.03 seems to provide a lot more APIs, not runtime tested, just compilation
+    
+        * ACE/ace/config-vxworks22.03.h:
+        * ACE/ace/config-vxworks6.8.h:
+
+commit cc30a10ec83e20f75d4afd1977b6f648a23f2804
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 09:28:11 2022 +0200
+
+    Removed setting of ACE_LACKS_MEMORY_H, not used
+    
+        * ACE/ace/README:
+        * ACE/ace/config-face-conftest.h:
+        * ACE/ace/config-integritySCA.h:
+        * ACE/ace/config-posix-nonetworking.h:
+        * ACE/ace/config-sunos5.5.h:
+        * ACE/ace/config-vxworks6.4.h:
+
+commit 69ce5d1ae70831d8776ef2e2cc6544e242a4adad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 09:27:03 2022 +0200
+
+    Removed setting of ACE_LACKS_MALLOC_H, not used
+    
+        * ACE/ace/README:
+        * ACE/ace/config-WinCE.h:
+        * ACE/ace/config-freebsd.h:
+        * ACE/ace/config-integritySCA.h:
+        * ACE/ace/config-macosx-jaguar.h:
+        * ACE/ace/config-macosx-leopard.h:
+        * ACE/ace/config-macosx-panther.h:
+        * ACE/ace/config-macosx-tiger.h:
+        * ACE/ace/config-openvms.h:
+        * ACE/ace/config-vxworks6.4.h:
+
+commit 147fd87b68c94b39c6e5102b11ffedcd97c3763f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 09:26:11 2022 +0200
+
+    Updates for VxWorks API changes
+    
+        * ACE/ace/config-vxworks22.03.h:
+        * ACE/ace/config-vxworks6.4.h:
+
+commit ccab26600dd079be3187df64697af03126cb39e3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 08:48:00 2022 +0200
+
+    Removed not used member, removed redundant void
+    
+        * ACE/ace/Message_Queue_Vx.cpp:
+        * ACE/ace/Message_Queue_Vx.h:
+        * ACE/ace/Message_Queue_Vx.inl:
+
+commit 669ac3a4ae2dc752a8fa8add5f00ebc65b03008f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 08:45:04 2022 +0200
+
+    Silence compiler warning
+    
+        * ACE/ace/SOCK_SEQPACK_Acceptor.cpp:
+
+commit bc710dd497225059151efbfd8bc7015c7b2585c0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 08:41:44 2022 +0200
+
+    Add cast to short to silence compiler warning, done in more places already to calls to cond_init
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+
+commit 43d1ea38792cb6d170e18f49ea9f30050091133e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 08:37:19 2022 +0200
+
+    Add truncate_cast to silence warning in 32bit build
+    
+        * ACE/ace/Time_Value.h:
+
+commit 1057396aed5bdd95dff9fc3b3af4014f687e41a7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 08:36:59 2022 +0200
+
+    Changed ~ACE_Condition_Attributes_T to default
+    
+        * ACE/ace/Condition_Attributes.h:
+        * ACE/ace/Condition_Attributes.inl:
+
+commit 94703dd1d5c6500e425ec00fd1db0ab9f0d84684
+Merge: 5ff9db33d6e a9a4ffd3504
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 08:12:47 2022 +0200
+
+    Merge branch 'master' into jwi-vxworkstaskid
+
+commit 5ff9db33d6e74f43be11c5e122571dbea63558a6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 2 10:20:00 2022 +0200
+
+    Removed check for ACE_LACKS_VA_FUNCTIONS from VxWorks specific code
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+
+commit e8f3989275cda650ab71b3c85ebd0a91fa272f10
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 2 10:19:20 2022 +0200
+
+    Update some more taskSpawn return value checks
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+
+commit ab6a0cda2826319044013c7de5808a4574b0eb11
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 2 10:02:25 2022 +0200
+
+    Use ACE_VX_TASK_ID_ERROR
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+
+commit a9a4ffd350481eb482bd6a738c40c2a8a38515a1
+Merge: 42ceeaaeb44 d1a837e449f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 2 09:17:39 2022 +0200
+
+    Merge pull request #1877 from jwillemsen/jwi-vxworks2203
+    
+    Added config file for VxWorks 22.03
+
+commit 42ceeaaeb4478e0bf54eca6f36a0e9c084b5f7e9
+Merge: eafca4ec3ad cf9035f2ffe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 20:15:02 2022 +0200
+
+    Merge pull request #1875 from jwillemsen/jwi-nameproxy
+    
+    Removed not used reactor_ member, cleanup, and const changes
+
+commit eafca4ec3ad0f1f4d9e80737a0ac25c6184d8b85
+Merge: e35823e1811 1fd113b0e02
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 20:13:37 2022 +0200
+
+    Merge pull request #1874 from jwillemsen/jwi-ctdtcompile
+    
+    ctdt is a c file, so compile as c file, not c++
+
+commit cf9035f2ffe88ce12fa484a752425ae1f09a263d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 13:00:14 2022 +0200
+
+    Removed not used reactor_ member, cleanup, and const changes
+    
+        * ACE/ace/Name_Proxy.cpp:
+        * ACE/ace/Name_Proxy.h:
+
+commit d1a837e449fa8908c3e836f4faf977b22f2de98a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 12:25:29 2022 +0200
+
+    Updated comment
+    
+        * ACE/ace/config-vxworks22.03.h:
+
+commit ea6b7064f8578aa8912f781d319aba909b04bdde
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 12:10:10 2022 +0200
+
+    New file for VxWorks 22.03
+
+commit 42a4f7db249d4d7a40dc73ebe42c4b198628517e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 12:06:40 2022 +0200
+
+    Make preprocessor check more readable
+    
+        * ACE/ace/OS_NS_sys_stat.h:
+
+commit 1fd113b0e0210221ea0be7f49b80d99f1ba3a2e1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 11:39:52 2022 +0200
+
+    ctdt is a c file, so compile as c file, not c++
+
+commit e35823e1811b6e38c0b175b4d238c7d9599e6c4e
+Merge: 582d76a3464 0ed5e6bcf74
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 10:27:10 2022 +0200
+
+    Merge pull request #1872 from jwillemsen/jwi-vxworks
+    
+    Fixed VxWorks compile error and minor cleanup
+
+commit bff9af24d9cfd567a0f91d15dbab8bf729758e5a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 09:55:07 2022 +0200
+
+    Updated
+    
+        * ACE/docs/bczar/bczar.html:
+        * TAO/NEWS:
+
+commit 812f982c65d4cd70b7e33fe0bed7064e2861261a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 09:22:06 2022 +0200
+
+    Update for x.0.8
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+
+commit e30c5f68e6e216c735461235a546dae31e2c07bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 08:59:21 2022 +0200
+
+    Updated return value check of taskSpawn
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+
+commit 0ed5e6bcf74f4dc8feaac94da2aaea640fb066d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 30 11:47:38 2022 +0200
+
+    Fixed compile error
+
+commit 6b131752925e286e135d0b00f7c1a312413acfa5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 30 11:46:59 2022 +0200
+
+    Directly assign variable
+    
+        * ACE/ace/SOCK_Dgram_Mcast.cpp:
+
+commit 1cc25240a576c75b0210cfeee0fcc63aba5800c4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 30 11:46:45 2022 +0200
+
+    Fixed compile error
+
+commit 8780cb42e95433e4b05a4b3b423456a36311f631
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 30 11:46:15 2022 +0200
+
+    Fixed comment

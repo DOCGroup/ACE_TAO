@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef AST_PARAM_HOLDER_H
 #define AST_PARAM_HOLDER_H
 
@@ -13,18 +12,15 @@ public:
   AST_Param_Holder (UTL_ScopedName *parameter_name,
                     FE_Utils::T_Param_Info *info);
 
-  virtual ~AST_Param_Holder (void);
+  virtual ~AST_Param_Holder ();
 
-  FE_Utils::T_Param_Info const *info (void) const;
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (AST_Param_Holder);
+  FE_Utils::T_Param_Info const *info () const;
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

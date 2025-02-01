@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/HTIOP/HTIOP_Acceptor.h"
@@ -14,7 +13,7 @@
 #include "tao/CDR.h"
 #include "tao/Codeset_Manager.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/HTIOP/HTIOP_Acceptor.inl"
@@ -40,7 +39,7 @@ TAO::HTIOP::Acceptor::Acceptor (ACE::HTBP::Environment *ht_env,
 {
 }
 
-TAO::HTIOP::Acceptor::~Acceptor (void)
+TAO::HTIOP::Acceptor::~Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -246,7 +245,7 @@ TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO::HTIOP::Acceptor::close (void)
+TAO::HTIOP::Acceptor::close ()
 {
   return this->base_acceptor_.close ();
 }
@@ -454,10 +453,9 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
 
       ACE::HTBP::ID_Requestor req(ht_env_);
       ACE_TCHAR *htid = req.get_HTID ();
-      ACE_Auto_Array_Ptr<ACE_TCHAR> guard (htid);
+      std::unique_ptr<ACE_TCHAR[]> guard (htid);
       this->addrs_[0] = ACE_TEXT_ALWAYS_CHAR (htid);
       return 0;
-
     }
 
   // Check for multiple network interfaces.
@@ -671,12 +669,12 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // the list of cached hostnames unless it is the only interface.
   size_t lo_cnt = 0;  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
-    if (inet_addrs[j].get_ip_address () == INADDR_LOOPBACK)
+    if (inet_addrs[j].is_loopback ())
       lo_cnt++;
 
   // The instantiation for this template is in
   // HTIOP/HTIOP_Connector.cpp.
-  ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (inet_addrs);
+  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (inet_addrs);
 
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
@@ -706,7 +704,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       // Ignore any loopback interface if there are other
       // non-loopback interfaces.
       if (if_cnt != lo_cnt &&
-          inet_addrs[i].get_ip_address() == INADDR_LOOPBACK)
+          inet_addrs[i].is_loopback ())
         continue;
 
       if (this->hostname_in_ior_ != 0)
@@ -743,7 +741,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
 }
 
 CORBA::ULong
-TAO::HTIOP::Acceptor::endpoint_count (void)
+TAO::HTIOP::Acceptor::endpoint_count ()
 {
   return this->endpoint_count_;
 }

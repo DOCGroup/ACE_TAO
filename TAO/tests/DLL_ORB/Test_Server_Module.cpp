@@ -33,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-Test_Server_Module::~Test_Server_Module (void)
+Test_Server_Module::~Test_Server_Module ()
 {
 }
 
@@ -157,7 +157,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Test_Server_Module::fini (void)
+Test_Server_Module::fini ()
 {
   ACE_DEBUG ((LM_INFO,
               "Server is being finalized.\n"));
@@ -177,7 +177,7 @@ Test_Server_Module::fini (void)
 }
 
 int
-Test_Server_Module::svc (void)
+Test_Server_Module::svc ()
 {
   try
     {

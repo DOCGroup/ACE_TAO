@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // ---------------------------------------------------------------------------
 
 ACE_INLINE ACE_Time_Value *
-CORBA::ORB::get_timeout (void)
+CORBA::ORB::get_timeout ()
 {
   return this->timeout_;
 }
@@ -18,33 +18,28 @@ CORBA::ORB::set_timeout (ACE_Time_Value *timeout)
 }
 
 ACE_INLINE unsigned long
-CORBA::ORB::_incr_refcount (void)
+CORBA::ORB::_incr_refcount ()
 {
   return ++this->refcount_;
 }
 
 ACE_INLINE unsigned long
-CORBA::ORB::_refcount (void) const
+CORBA::ORB::_refcount () const
 {
-#if defined (ACE_HAS_CPP11)
   return this->refcount_;
-#else
-  return this->refcount_.value ();
-#endif /* ACE_HAS_CPP11 */
 }
 
 ACE_INLINE unsigned long
-CORBA::ORB::_decr_refcount (void)
+CORBA::ORB::_decr_refcount ()
 {
   unsigned long const count = --this->refcount_;
 
-  if (count != 0)
+  if (count == 0)
     {
-      return count;
+      delete this;
     }
 
-  delete this;
-  return 0;
+  return count;
 }
 
 ACE_INLINE CORBA::ORB_ptr
@@ -61,9 +56,9 @@ CORBA::ORB::_duplicate (CORBA::ORB_ptr obj)
 // Null pointers represent nil objects.
 
 ACE_INLINE CORBA::ORB_ptr
-CORBA::ORB::_nil (void)
+CORBA::ORB::_nil ()
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE void
@@ -73,13 +68,13 @@ CORBA::ORB::_use_omg_ior_format (CORBA::Boolean ior)
 }
 
 ACE_INLINE CORBA::Boolean
-CORBA::ORB::_use_omg_ior_format (void)
+CORBA::ORB::_use_omg_ior_format ()
 {
   return this->use_omg_ior_format_;
 }
 
 ACE_INLINE TAO_ORB_Core *
-CORBA::ORB::orb_core (void) const
+CORBA::ORB::orb_core () const
 {
   return this->orb_core_;
 }

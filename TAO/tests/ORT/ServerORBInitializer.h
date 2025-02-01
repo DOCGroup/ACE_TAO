@@ -38,7 +38,6 @@ class ServerORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name Methods Required by the ORBInitializer Interface
    *
@@ -55,7 +54,6 @@ public:
   virtual void post_init (
       PortableInterceptor::ORBInitInfo_ptr info);
   //@}
-
 };
 
 

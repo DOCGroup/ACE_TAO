@@ -30,7 +30,7 @@ public:
    * We need a default constructor because this class is often used in
    * arrays.
    */
-  Client_Pair (void);
+  Client_Pair ();
 
   /// Initialize the consumer/supplier pair
   /**
@@ -75,14 +75,14 @@ public:
   void connect (RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Disconnect from the event channel
-  void disconnect (void);
+  void disconnect ();
 
   //@{
   /** @name Accessors
    */
-  Supplier *supplier (void) const;
+  Supplier *supplier () const;
 
-  Consumer *consumer (void) const;
+  Consumer *consumer () const;
   //@}
 
 private:

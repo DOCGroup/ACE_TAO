@@ -5,29 +5,7 @@ namespace XSCRT
 {
   namespace Traversal
   {
-    // TraverserBase
-    //
-    //
-
-    template<typename B>
-    TraverserBase<B>::
-    ~TraverserBase ()
-    {
-    }
-
-    // DispatcherBase
-    //
-    //
-
-    template <typename B>
-    DispatcherBase<B>::
-    ~DispatcherBase ()
-    {
-    }
-
     //@@ merge after dropping VC6
-    //
-    //
     template <typename B>
     void DispatcherBase<B>::
     dispatch (B& n)

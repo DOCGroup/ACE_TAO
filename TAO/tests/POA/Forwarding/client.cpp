@@ -88,7 +88,6 @@ do_calls (test_ptr test)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB

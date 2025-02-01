@@ -29,31 +29,29 @@
 class test_i : public virtual POA_PICurrentTest::test
 {
 public:
-
   /// Constructor.
   test_i (PortableInterceptor::Current_ptr current,
           PortableInterceptor::SlotId id,
           CORBA::ORB_ptr orb);
 
   /// Destructor.
-  ~test_i (void);
+  ~test_i ();
 
   /// Main servant test method.
-  virtual void invoke_me (void);
+  virtual void invoke_me ();
 
   /// No-op method used so that a client request interceptor will be
   /// invoked when invoking this method from the above invoke_me()
   /// method.  Say that 10 times fast. :-)
-  virtual void invoke_you (void);
+  virtual void invoke_you ();
 
   /// Test just a set slot
-  virtual void invoke_we (void);
+  virtual void invoke_we ();
 
   /// Shutdown the ORB.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
-
   /// Reference to the PICurrent object.
   PortableInterceptor::Current_var current_;
 
@@ -62,7 +60,6 @@ private:
 
   /// Pseudo-reference to the ORB.
   CORBA::ORB_var orb_;
-
 };
 
 #endif  /* TEST_I_H */

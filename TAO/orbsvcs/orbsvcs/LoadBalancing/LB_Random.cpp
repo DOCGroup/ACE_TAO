@@ -11,7 +11,7 @@ static pthread_once_t tao_lb_once_control = PTHREAD_ONCE_INIT;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-extern "C" void tao_lb_random_init_routine (void)
+extern "C" void tao_lb_random_init_routine ()
 {
   ACE_OS::srand (static_cast<unsigned int> (ACE_OS::time ()));
 }
@@ -23,13 +23,13 @@ TAO_LB_Random::TAO_LB_Random (PortableServer::POA_ptr poa)
 }
 
 char *
-TAO_LB_Random::name (void)
+TAO_LB_Random::name ()
 {
   return CORBA::string_dup ("Random");
 }
 
 CosLoadBalancing::Properties *
-TAO_LB_Random::get_properties (void)
+TAO_LB_Random::get_properties ()
 {
   CosLoadBalancing::Properties * props = 0;
   ACE_NEW_THROW_EX (props,
@@ -85,7 +85,7 @@ TAO_LB_Random::analyze_loads (
 }
 
 PortableServer::POA_ptr
-TAO_LB_Random::_default_POA (void)
+TAO_LB_Random::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -133,7 +133,7 @@ TAO_LB_Random::_tao_next_member (
 }
 
 void
-TAO_LB_Random::init (void)
+TAO_LB_Random::init ()
 {
 #ifdef ACE_HAS_PTHREADS
   (void) ::pthread_once (&::tao_lb_once_control,

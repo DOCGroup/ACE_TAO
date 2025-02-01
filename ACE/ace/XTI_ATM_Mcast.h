@@ -36,7 +36,7 @@ class ACE_Export ACE_XTI_ATM_Mcast : public ACE_TLI_Connector
 {
 public:
   /// Default constructor.
-  ACE_XTI_ATM_Mcast (void);
+  ACE_XTI_ATM_Mcast ();
 
   /**
    * Actively connect and produce a @a new_stream if things go well.
@@ -115,7 +115,7 @@ public:
   typedef ACE_TLI_Stream PEER_STREAM;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

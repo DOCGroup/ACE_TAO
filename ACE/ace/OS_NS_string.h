@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -35,7 +33,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-
   /** @name Functions from <cstring>
    *
    *  Included are the functions defined in <cstring> and their <cwchar>
@@ -44,7 +41,6 @@ namespace ACE_OS {
    *  @todo To be complete, we should add strcoll, and strxfrm.
    */
   //@{
-
   /// Finds characters in a buffer (const void version).
   ACE_NAMESPACE_INLINE_FUNCTION
   const void *memchr (const void *s, int c, size_t len);
@@ -409,7 +405,6 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *strtok (wchar_t *s, const wchar_t *tokens);
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOK */
-
   //@}
 
   /// Finds the next token in a string (safe char version).

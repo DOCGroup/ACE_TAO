@@ -147,7 +147,7 @@ class ThrMgr_Task : public ACE_Task_Base {
 public:
   ThrMgr_Task (ACE_Thread_Manager *);
 
-  virtual int svc (void);
+  int svc () override;
 
   static int errors;
 };
@@ -162,7 +162,7 @@ ThrMgr_Task::ThrMgr_Task (ACE_Thread_Manager *mgr)
 
 // svc just waits til it's been cancelled, then exits.
 int
-ThrMgr_Task::svc (void)
+ThrMgr_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Task 0x%x, thread %t waiting to be cancelled\n"),
@@ -192,7 +192,6 @@ ThrMgr_Task::svc (void)
 static int
 test_task_record_keeping (ACE_Thread_Manager *mgr)
 {
-
   int status = 0;
 
   ThrMgr_Task t1 (mgr), t2 (mgr);

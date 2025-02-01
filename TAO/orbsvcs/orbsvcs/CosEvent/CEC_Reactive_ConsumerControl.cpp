@@ -83,10 +83,6 @@ TAO_CEC_Reactive_ConsumerControl::
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-TAO_CEC_Reactive_ConsumerControl::~TAO_CEC_Reactive_ConsumerControl (void)
-{
-}
-
 void
 TAO_CEC_Reactive_ConsumerControl::query_consumers ()
 {
@@ -161,7 +157,6 @@ void
 TAO_CEC_Reactive_ConsumerControl::successful_transmission (
                                     PortableServer::ServantBase* proxy)
 {
-
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   if (this->typed_event_channel_)
     {
@@ -232,7 +227,7 @@ TAO_CEC_Reactive_ConsumerControl::handle_timeout (
 }
 
 int
-TAO_CEC_Reactive_ConsumerControl::activate (void)
+TAO_CEC_Reactive_ConsumerControl::activate ()
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   try
@@ -283,7 +278,7 @@ TAO_CEC_Reactive_ConsumerControl::activate (void)
 }
 
 int
-TAO_CEC_Reactive_ConsumerControl::shutdown (void)
+TAO_CEC_Reactive_ConsumerControl::shutdown ()
 {
   int r = 0;
 

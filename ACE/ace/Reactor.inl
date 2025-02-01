@@ -1,18 +1,12 @@
 // -*- C++ -*-
 #include "ace/Reactor_Impl.h"
 
-/*
- * Hook to specialize the Reactor with the concrete implementation
- * known at compile time.
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Run the event loop until the <ACE_Reactor::handle_events> method
 // returns -1 or the <end_event_loop> method is invoked.
 ACE_INLINE int
-ACE_Reactor::run_event_loop (void)
+ACE_Reactor::run_event_loop ()
 {
   ACE_TRACE ("ACE_Reactor::run_event_loop");
   ACE_Reactor *r = ACE_Reactor::instance ();
@@ -44,7 +38,7 @@ ACE_Reactor::run_event_loop (ACE_Time_Value &tv)
 // returns -1 or the <end_event_loop> method is invoked.
 
 ACE_INLINE int
-ACE_Reactor::run_alertable_event_loop (void)
+ACE_Reactor::run_alertable_event_loop ()
 {
   ACE_TRACE ("ACE_Reactor::run_alertable_event_loop");
   ACE_Reactor *r = ACE_Reactor::instance ();
@@ -73,7 +67,7 @@ ACE_Reactor::run_alertable_event_loop (ACE_Time_Value &tv)
 }
 
 ACE_INLINE void
-ACE_Reactor::reset_event_loop (void)
+ACE_Reactor::reset_event_loop ()
 {
   ACE_TRACE ("ACE_Reactor::reset_event_loop");
 
@@ -81,7 +75,7 @@ ACE_Reactor::reset_event_loop (void)
 }
 
 ACE_INLINE int
-ACE_Reactor::end_event_loop (void)
+ACE_Reactor::end_event_loop ()
 {
   ACE_TRACE ("ACE_Reactor::end_event_loop");
   ACE_Reactor::instance ()->end_reactor_event_loop ();
@@ -90,14 +84,14 @@ ACE_Reactor::end_event_loop (void)
 }
 
 ACE_INLINE int
-ACE_Reactor::event_loop_done (void)
+ACE_Reactor::event_loop_done ()
 {
   ACE_TRACE ("ACE_Reactor::event_loop_done");
   return ACE_Reactor::instance ()->reactor_event_loop_done ();
 }
 
 ACE_INLINE int
-ACE_Reactor::end_reactor_event_loop (void)
+ACE_Reactor::end_reactor_event_loop ()
 {
   ACE_TRACE ("ACE_Reactor::end_reactor_event_loop");
 
@@ -107,7 +101,7 @@ ACE_Reactor::end_reactor_event_loop (void)
 }
 
 ACE_INLINE void
-ACE_Reactor::reset_reactor_event_loop (void)
+ACE_Reactor::reset_reactor_event_loop ()
 {
   ACE_TRACE ("ACE_Reactor::reset_reactor_event_loop");
 
@@ -115,13 +109,13 @@ ACE_Reactor::reset_reactor_event_loop (void)
 }
 
 ACE_INLINE int
-ACE_Reactor::resumable_handler (void)
+ACE_Reactor::resumable_handler ()
 {
   return this->implementation ()->resumable_handler ();
 }
 
 ACE_INLINE ACE_Reactor_Impl *
-ACE_Reactor::implementation (void) const
+ACE_Reactor::implementation () const
 {
   return this->implementation_;
 }
@@ -162,13 +156,13 @@ ACE_Reactor::timer_queue (ACE_Timer_Queue *tq)
 }
 
 ACE_INLINE ACE_Timer_Queue *
-ACE_Reactor::timer_queue (void) const
+ACE_Reactor::timer_queue () const
 {
   return this->implementation ()->timer_queue ();
 }
 
 ACE_INLINE int
-ACE_Reactor::close (void)
+ACE_Reactor::close ()
 {
   return this->implementation ()->close ();
 }
@@ -285,7 +279,7 @@ ACE_Reactor::suspend_handler (const ACE_Handle_Set &handles)
 }
 
 ACE_INLINE int
-ACE_Reactor::suspend_handlers (void)
+ACE_Reactor::suspend_handlers ()
 {
   return this->implementation ()->suspend_handlers ();
 }
@@ -309,7 +303,7 @@ ACE_Reactor::resume_handler (const ACE_Handle_Set &handles)
 }
 
 ACE_INLINE int
-ACE_Reactor::resume_handlers (void)
+ACE_Reactor::resume_handlers ()
 {
   return this->implementation ()->resume_handlers ();
 }
@@ -344,7 +338,7 @@ ACE_Reactor::max_notify_iterations (int iterations)
 }
 
 ACE_INLINE int
-ACE_Reactor::max_notify_iterations (void)
+ACE_Reactor::max_notify_iterations ()
 {
   return this->implementation ()->max_notify_iterations ();
 }
@@ -378,19 +372,19 @@ ACE_Reactor::handler (int signum,
 }
 
 ACE_INLINE int
-ACE_Reactor::initialized (void)
+ACE_Reactor::initialized ()
 {
   return this->implementation ()->initialized ();
 }
 
 ACE_INLINE ACE_Lock &
-ACE_Reactor::lock (void)
+ACE_Reactor::lock ()
 {
   return this->implementation ()->lock ();
 }
 
 ACE_INLINE void
-ACE_Reactor::wakeup_all_threads (void)
+ACE_Reactor::wakeup_all_threads ()
 {
   this->implementation ()->wakeup_all_threads ();
 }
@@ -408,7 +402,7 @@ ACE_Reactor::owner (ACE_thread_t *owner)
 }
 
 ACE_INLINE bool
-ACE_Reactor::restart (void)
+ACE_Reactor::restart ()
 {
   return this->implementation ()->restart ();
 }
@@ -426,7 +420,7 @@ ACE_Reactor::requeue_position (int position)
 }
 
 ACE_INLINE int
-ACE_Reactor::requeue_position (void)
+ACE_Reactor::requeue_position ()
 {
   return this->implementation ()->requeue_position ();
 }
@@ -464,26 +458,26 @@ ACE_Reactor::ready_ops (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_Reactor::reactor_event_loop_done (void)
+ACE_Reactor::reactor_event_loop_done ()
 {
   ACE_TRACE ("ACE_Reactor::reactor_event_loop_done");
   return this->implementation_->deactivated ();
 }
 
 ACE_INLINE size_t
-ACE_Reactor::size (void) const
+ACE_Reactor::size () const
 {
   return this->implementation ()->size ();
 }
 
 ACE_INLINE bool
-ACE_Reactor::uses_event_associations (void)
+ACE_Reactor::uses_event_associations ()
 {
   return this->implementation ()->uses_event_associations ();
 }
 
 ACE_INLINE void
-ACE_Reactor::dump (void) const
+ACE_Reactor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Reactor::dump");

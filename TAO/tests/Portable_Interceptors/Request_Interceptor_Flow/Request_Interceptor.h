@@ -42,7 +42,6 @@ class Request_Interceptor
   : public virtual PortableInterceptor::Interceptor
 {
 public:
-
   /// Constructor.
   Request_Interceptor (const char *name);
 
@@ -56,13 +55,12 @@ public:
    */
   //@{
   /// Return the name of this Requestinterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
   //@}
 
 protected:
-
   /// The name of this interceptor.
   CORBA::String_var name_;
 
@@ -75,7 +73,6 @@ protected:
   /// called.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>
     ending_interception_point_count_;
-
 };
 
 #if defined(_MSC_VER)

@@ -73,13 +73,13 @@ public:
 
   };
 
-  ACE_Message_Queue_Base (void);
+  ACE_Message_Queue_Base ();
 
   /// Close down the message queue and release all resources.
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /// Close down the message queue and release all resources.
-  virtual ~ACE_Message_Queue_Base (void);
+  virtual ~ACE_Message_Queue_Base ();
 
   // = Enqueue and dequeue methods.
 
@@ -125,23 +125,23 @@ public:
 
   // = Check if queue is full/empty.
   /// True if queue is full, else false.
-  virtual bool is_full (void) = 0;
+  virtual bool is_full () = 0;
 
   /// True if queue is empty, else false.
-  virtual bool is_empty (void) = 0;
+  virtual bool is_empty () = 0;
 
   // = Queue statistic methods.
 
   /// Number of total bytes on the queue, i.e., sum of the message
   /// block sizes.
-  virtual size_t message_bytes (void) = 0;
+  virtual size_t message_bytes () = 0;
 
   /// Number of total length on the queue, i.e., sum of the message
   /// block lengths.
-  virtual size_t message_length (void) = 0;
+  virtual size_t message_length () = 0;
 
   /// Number of total messages on the queue.
-  virtual size_t message_count (void) = 0;
+  virtual size_t message_count () = 0;
 
   /// New value of the number of total bytes on the queue, i.e.,
   /// sum of the message block sizes.
@@ -162,7 +162,7 @@ public:
    *
    * @retval  The queue's state before this call.
    */
-  virtual int deactivate (void) = 0;
+  virtual int deactivate () = 0;
 
   /**
    * Reactivate the queue so that threads can enqueue and dequeue
@@ -170,7 +170,7 @@ public:
    *
    * @retval  The queue's state before this call.
    */
-  virtual int activate (void) = 0;
+  virtual int activate () = 0;
 
   /**
    * Pulse the queue to wake up any waiting threads.  Changes the
@@ -179,17 +179,17 @@ public:
    *
    * @retval  The queue's state before this call.
    */
-  virtual int pulse (void) = 0;
+  virtual int pulse () = 0;
 
   /// Returns the current state of the queue.
-  virtual int state (void);
+  virtual int state ();
 
   /// Returns 1 if the state of the queue is DEACTIVATED,
   /// and 0 if the queue's state is ACTIVATED or PULSED.
-  virtual int deactivated (void) = 0;
+  virtual int deactivated () = 0;
 
   /// Get the notification strategy for the Message_Queue
-  virtual ACE_Notification_Strategy *notification_strategy (void) = 0;
+  virtual ACE_Notification_Strategy *notification_strategy () = 0;
 
   /// Set the notification strategy for the Message_Queue
   virtual void notification_strategy (ACE_Notification_Strategy *s) = 0;
@@ -197,7 +197,7 @@ public:
   // = Notification hook.
 
   /// Dump the state of an object.
-  virtual void dump (void) const = 0;
+  virtual void dump () const = 0;
 
 private:
   // = Disallow copying and assignment.

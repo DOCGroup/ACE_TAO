@@ -13,7 +13,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 
 // -- ACE Include --
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
@@ -165,12 +165,8 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     ACE_NEW (hint_strategy,
              No_Hint_Strategy);
 
-  // Give ownership to the auto pointer.
-#if defined (ACE_HAS_CPP11)
+  // Give ownership to the unique pointer.
   std::unique_ptr<Hint_Strategy> new_hint_strategy (hint_strategy);
-#else
-  auto_ptr<Hint_Strategy> new_hint_strategy (hint_strategy);
-#endif /* ACE_HAS_CPP11 */
 
   new_hint_strategy->object_adapter (this);
 
@@ -196,12 +192,8 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
                persistent_poa_name_hash_map (creation_parameters.poa_map_size_));
       break;
     }
-  // Give ownership to the auto pointer.
-#if defined (ACE_HAS_CPP11)
+  // Give ownership to the unique pointer.
   std::unique_ptr<persistent_poa_name_map> new_persistent_poa_name_map (ppnm);
-#else
-  auto_ptr<persistent_poa_name_map> new_persistent_poa_name_map (ppnm);
-#endif /* ACE_HAS_CPP11 */
 
   transient_poa_map *tpm = 0;
   switch (creation_parameters.poa_lookup_strategy_for_transient_id_policy_)
@@ -230,12 +222,8 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
                transient_poa_active_map (creation_parameters.poa_map_size_));
       break;
     }
-  // Give ownership to the auto pointer.
-#if defined (ACE_HAS_CPP11)
+  // Give ownership to the unique pointer.
   std::unique_ptr<transient_poa_map> new_transient_poa_map (tpm);
-#else
-  auto_ptr<transient_poa_map> new_transient_poa_map (tpm);
-#endif /* ACE_HAS_CPP11 */
 
   this->hint_strategy_ = new_hint_strategy.release ();
   this->persistent_poa_name_map_ = new_persistent_poa_name_map.release ();
@@ -292,7 +280,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies)
 #endif
 }
 
-TAO_Object_Adapter::~TAO_Object_Adapter (void)
+TAO_Object_Adapter::~TAO_Object_Adapter ()
 {
   delete this->hint_strategy_;
   delete this->persistent_poa_name_map_;
@@ -521,30 +509,30 @@ TAO_Object_Adapter::locate_servant_i (const TAO::ObjectKey &key)
   this->locate_poa (key, id, poa);
 
   PortableServer::Servant servant = 0;
-  TAO_SERVANT_LOCATION const servant_location =
+  TAO_Servant_Location const servant_location =
     poa->locate_servant_i (id, servant);
 
   switch (servant_location)
     {
-    case TAO_SERVANT_FOUND:
+    case TAO_Servant_Location::Found:
       // Optimistic attitude
-    case TAO_DEFAULT_SERVANT:
-    case TAO_SERVANT_MANAGER:
+    case TAO_Servant_Location::Default_Servant:
+    case TAO_Servant_Location::Servant_Manager:
       return 0;
 
-    case TAO_SERVANT_NOT_FOUND:
+    case TAO_Servant_Location::Not_Found:
       return -1;
     }
 
   return -1;
 }
 
-TAO_SERVANT_LOCATION
+TAO_Servant_Location
 TAO_Object_Adapter::find_servant_i (const TAO::ObjectKey &key,
                                     PortableServer::Servant &servant)
 {
   PortableServer::ObjectId id;
-  TAO_Root_POA *poa = 0;
+  TAO_Root_POA *poa = nullptr;
 
   this->locate_poa (key, id, poa);
 
@@ -552,14 +540,14 @@ TAO_Object_Adapter::find_servant_i (const TAO::ObjectKey &key,
 }
 
 void
-TAO_Object_Adapter::open (void)
+TAO_Object_Adapter::open ()
 {
   // Add in the default POA policies to the default list.
   this->init_default_policies (this->default_poa_policies ());
 
   // If a POA extension hasn't changed the servant dispatcher, initialize the
   // default one.
-  if (this->servant_dispatcher_ == 0)
+  if (!this->servant_dispatcher_)
     {
       ACE_NEW (this->servant_dispatcher_,
                TAO_Default_Servant_Dispatcher);
@@ -572,8 +560,7 @@ TAO_Object_Adapter::open (void)
 
   ::CORBA::PolicyList policy;
   PortableServer::POAManager_var poa_manager
-    = poa_manager_factory_->create_POAManager (TAO_DEFAULT_ROOTPOAMANAGER_NAME,
-                                              policy);
+    = poa_manager_factory_->create_POAManager (TAO_DEFAULT_ROOTPOAMANAGER_NAME, policy);
 #else
   PortableServer::POAManager_ptr poa_manager_ptr;
   ::CORBA::PolicyList policy_list;
@@ -691,7 +678,7 @@ TAO_Object_Adapter::check_close (int wait_for_completion)
 }
 
 int
-TAO_Object_Adapter::priority (void) const
+TAO_Object_Adapter::priority () const
 {
   return 0;
 }
@@ -757,7 +744,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
                                                          0,  // nargs
                                                          0,  // servant_upcall
                                                          0,  // exceptions
-                                                         0);   // nexceptions
+                                                         0); // nexceptions
 
           // If a PortableInterceptor::ForwardRequest exception was
           // thrown, then set the forward_to object reference and return
@@ -786,8 +773,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
                                        0,  // nargs
                                        0,  // servant_upcall
                                        0,  // exceptions
-                                       0   // nexceptions
-                                      );
+                                       0); // nexceptions
             }
         }
     }
@@ -829,13 +815,13 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 }
 
 const char *
-TAO_Object_Adapter::name (void) const
+TAO_Object_Adapter::name () const
 {
   return TAO_OBJID_ROOTPOA;
 }
 
 CORBA::Object_ptr
-TAO_Object_Adapter::root (void)
+TAO_Object_Adapter::root ()
 {
   return CORBA::Object::_duplicate (this->root_);
 }
@@ -936,7 +922,7 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
 
 // ****************************************************************
 
-TAO_Object_Adapter::Hint_Strategy::~Hint_Strategy (void)
+TAO_Object_Adapter::Hint_Strategy::~Hint_Strategy ()
 {
 }
 
@@ -951,7 +937,7 @@ TAO_Object_Adapter::Active_Hint_Strategy::Active_Hint_Strategy (CORBA::ULong map
 {
 }
 
-TAO_Object_Adapter::Active_Hint_Strategy::~Active_Hint_Strategy (void)
+TAO_Object_Adapter::Active_Hint_Strategy::~Active_Hint_Strategy ()
 {
 }
 
@@ -1024,7 +1010,7 @@ TAO_Object_Adapter::Active_Hint_Strategy::unbind_persistent_poa (
   return result;
 }
 
-TAO_Object_Adapter::No_Hint_Strategy::~No_Hint_Strategy (void)
+TAO_Object_Adapter::No_Hint_Strategy::~No_Hint_Strategy ()
 {
 }
 
@@ -1115,7 +1101,7 @@ TAO_Object_Adapter::poa_name_iterator::operator* () const
 }
 
 TAO_Object_Adapter::poa_name_iterator &
-TAO_Object_Adapter::poa_name_iterator::operator++ (void)
+TAO_Object_Adapter::poa_name_iterator::operator++ ()
 {
   for (this->last_separator_ = this->position_;
        ;
@@ -1141,7 +1127,7 @@ TAO_Object_Adapter::iteratable_poa_name::iteratable_poa_name (
 }
 
 TAO_Object_Adapter::iteratable_poa_name::iterator
-TAO_Object_Adapter::iteratable_poa_name::begin (void) const
+TAO_Object_Adapter::iteratable_poa_name::begin () const
 {
   return iterator (1,
                    this->folded_name_.length (),
@@ -1149,7 +1135,7 @@ TAO_Object_Adapter::iteratable_poa_name::begin (void) const
 }
 
 TAO_Object_Adapter::iteratable_poa_name::iterator
-TAO_Object_Adapter::iteratable_poa_name::end (void) const
+TAO_Object_Adapter::iteratable_poa_name::end () const
 {
   return iterator (0,
                    this->folded_name_.length (),
@@ -1157,7 +1143,7 @@ TAO_Object_Adapter::iteratable_poa_name::end (void) const
 }
 
 void
-TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (void)
+TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete ()
 {
   // Check if a non-servant upcall is in progress.  If a non-servant
   // upcall is in progress, wait for it to complete.  Unless of
@@ -1174,7 +1160,7 @@ TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (void)
 }
 
 void
-TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete_no_throw (void)
+TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete_no_throw ()
 {
   // Non-exception throwing version.
   try

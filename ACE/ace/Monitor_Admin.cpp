@@ -25,12 +25,12 @@ namespace ACE
 
     //====================================================================
 
-    Monitor_Admin::Monitor_Admin (void)
+    Monitor_Admin::Monitor_Admin ()
       : reactor_ (ACE_Reactor::instance ()),
         default_reactor_ (true)
     {}
 
-    Monitor_Admin::~Monitor_Admin (void)
+    Monitor_Admin::~Monitor_Admin ()
     {
       if (this->default_reactor_)
         {
@@ -98,7 +98,7 @@ namespace ACE
     }
 
     ACE_Reactor*
-    Monitor_Admin::reactor (void) const
+    Monitor_Admin::reactor () const
     {
       return this->reactor_;
     }

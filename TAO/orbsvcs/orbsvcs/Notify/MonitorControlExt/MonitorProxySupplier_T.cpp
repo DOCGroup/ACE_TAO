@@ -17,7 +17,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename ProxyPushSupplier>
-TAO_MonitorProxySupplier_T<ProxyPushSupplier>::TAO_MonitorProxySupplier_T (void)
+TAO_MonitorProxySupplier_T<ProxyPushSupplier>::TAO_MonitorProxySupplier_T ()
   : queue_item_stat_name_ ()
   , overflow_stat_name_ ()
   , queue_item_count_ (0)
@@ -28,7 +28,7 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::TAO_MonitorProxySupplier_T (void)
 }
 
 template <typename ProxyPushSupplier>
-TAO_MonitorProxySupplier_T<ProxyPushSupplier>::~TAO_MonitorProxySupplier_T (void)
+TAO_MonitorProxySupplier_T<ProxyPushSupplier>::~TAO_MonitorProxySupplier_T ()
 {
   if (this->admin_ != 0)
     {
@@ -146,7 +146,7 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::configure(
 
 template <typename ProxyPushSupplier>
 ACE_CString &
-TAO_MonitorProxySupplier_T<ProxyPushSupplier>::queue_item_stat_name(void)
+TAO_MonitorProxySupplier_T<ProxyPushSupplier>::queue_item_stat_name()
 {
   return this->queue_item_stat_name_;
 }
@@ -154,7 +154,7 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::queue_item_stat_name(void)
 
 template <typename ProxyPushSupplier>
 ACE_CString &
-TAO_MonitorProxySupplier_T<ProxyPushSupplier>::overflow_stat_name(void)
+TAO_MonitorProxySupplier_T<ProxyPushSupplier>::overflow_stat_name()
 {
   return this->overflow_stat_name_;
 }

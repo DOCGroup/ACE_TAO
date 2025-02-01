@@ -37,7 +37,7 @@ DAMAGES.
 #include "test_config.h"
 
 /*
-   Gauge32( void);
+   Gauge32();
    Gauge32( const unsigned long i);
    Gauge32 ( const Gauge32 &g);
    ~Gauge32();
@@ -54,7 +54,7 @@ DAMAGES.
    value of 2^32-1 (4294967295 dec) for gauges.
  */
 static void
-TestGuage (void)
+TestGuage ()
 {
 #if !defined (ACE_WIN32)
    long l = LONG_MAX, nl = LONG_MIN;  // limits.h

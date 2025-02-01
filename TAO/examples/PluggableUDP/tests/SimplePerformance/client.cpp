@@ -68,10 +68,10 @@ public:
   /// ctor
   Client (Simple_Server_ptr server, ACE_UINT32 niterations);
 
-  virtual ~Client (void) {};
+  virtual ~Client () {};
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The server.
@@ -145,7 +145,7 @@ Client::Client (Simple_Server_ptr server,
 
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {
@@ -198,7 +198,6 @@ Client::svc (void)
 
       for (int c = 0; c < 10; ++c)
         server_->shutdown ();
-
     }
   catch (const CORBA::Exception& ex)
     {

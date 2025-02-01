@@ -9,8 +9,6 @@ use PerlACE::TestTarget;
 use File::Copy;
 use Getopt::Std;
 
-PerlACE::check_privilege_group();
-
 $status = 0;
 $debug_level = '0';
 

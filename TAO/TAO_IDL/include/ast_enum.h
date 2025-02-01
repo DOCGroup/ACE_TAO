@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -80,12 +79,7 @@ public:
             bool local,
             bool abstract);
 
-  virtual ~AST_Enum (void);
-
-  // Narrowing
-
-  DEF_NARROW_FROM_DECL(AST_Enum);
-  DEF_NARROW_FROM_SCOPE(AST_Enum);
+  virtual ~AST_Enum ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);
@@ -94,16 +88,16 @@ public:
   AST_EnumVal *lookup_by_value (const AST_Expression *v);
 
   // Get value to be assigned to next enumerator.
-  unsigned long next_enum_val (void);
+  unsigned long next_enum_val ();
 
   // Return the count of members
-  virtual int member_count (void);
+  virtual int member_count ();
 
   // Convert a numeric value to the enum's string name for it.
   UTL_ScopedName *value_to_name (const unsigned long v);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
@@ -113,7 +107,7 @@ public:
   virtual bool annotatable () const { return true; }
 
 private:
-  friend int tao_yyparse (void);
+  friend int tao_yyparse ();
 
   unsigned long pd_enum_counter;
   // Value for next enumerator.
@@ -121,7 +115,7 @@ private:
   int member_count_;
   // Number of members.
 
-  int compute_member_count (void);
+  int compute_member_count ();
   // Count the number of members.
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);

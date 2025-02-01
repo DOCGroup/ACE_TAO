@@ -28,7 +28,6 @@
  */
 class ACEXML_PARSER_Export ACEXML_ParserInt
 {
-
 public:
 #if defined (ACE_USES_WCHAR)
 
@@ -91,7 +90,6 @@ public:
     IN_NOTATION,
     INVALID = -1
   };
-
 };
 
 #include /**/ "ace/post.h"

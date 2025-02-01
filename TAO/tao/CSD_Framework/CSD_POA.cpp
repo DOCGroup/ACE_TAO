@@ -36,7 +36,7 @@ TAO_CSD_POA::TAO_CSD_POA (const String &name,
 
 
 // Implementation skeleton destructor
-TAO_CSD_POA::~TAO_CSD_POA (void)
+TAO_CSD_POA::~TAO_CSD_POA ()
 {
   delete this->sds_proxy_;
 }

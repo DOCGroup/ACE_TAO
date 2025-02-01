@@ -45,9 +45,8 @@ namespace TAO
     class TAO_Security_Export SecurityCurrent_Impl
     {
     public:
-
       /// Destructor.
-      virtual ~SecurityCurrent_Impl (void);
+      virtual ~SecurityCurrent_Impl ();
 
       /**
        * @name SecurityLevel3::Current Methods
@@ -58,19 +57,15 @@ namespace TAO
       //@{
       /// Return the Credentials received from the client associate with
       /// the current request.
-      virtual SecurityLevel3::ClientCredentials_ptr client_credentials ()
-        = 0;
+      virtual SecurityLevel3::ClientCredentials_ptr client_credentials () = 0;
 
       /// Is the current request local?
-      virtual CORBA::Boolean request_is_local ()
-        = 0;
+      virtual CORBA::Boolean request_is_local () = 0;
       //@}
 
       /// Return the unique tag that identifies the concrete subclass.
-      virtual CORBA::ULong tag (void) const = 0;
-
+      virtual CORBA::ULong tag () const = 0;
     };
-
   }  // End Security namespace.
 }  // End TAO namespace.
 

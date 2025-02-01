@@ -15,12 +15,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  Topology_Savable::~Topology_Savable (void)
+  Topology_Savable::~Topology_Savable ()
   {
   }
 
   void
-  Topology_Savable::reconnect (void)
+  Topology_Savable::reconnect ()
   {
   }
 
@@ -76,14 +76,14 @@ namespace TAO_Notify
   }
 
   bool
-  Topology_Object::self_change (void)
+  Topology_Object::self_change ()
   {
     this->self_changed_ = true;
     return send_change ();
   }
 
   bool
-  Topology_Object::send_change (void)
+  Topology_Object::send_change ()
   {
     bool saving = false;
     if (is_persistent ())
@@ -107,7 +107,7 @@ namespace TAO_Notify
   }
 
   bool
-  Topology_Object::send_deletion_change (void)
+  Topology_Object::send_deletion_change ()
   {
     bool saving = false;
     if (is_persistent ())
@@ -120,7 +120,7 @@ namespace TAO_Notify
   }
 
   bool
-    Topology_Object::change_to_parent (void)
+    Topology_Object::change_to_parent ()
     {
       bool result = false;
       Topology_Parent * parent = this->topology_parent();

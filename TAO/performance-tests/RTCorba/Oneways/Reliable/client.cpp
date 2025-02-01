@@ -81,7 +81,7 @@ static Messaging::SyncScope sync_scope = Messaging::SYNC_WITH_TRANSPORT;
 static ACE_High_Res_Timer::global_scale_factor_type gsf = 0;
 
 static void
-print_params (void)
+print_params ()
 {
   if (test_twoway)
     {
@@ -359,14 +359,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-set_rt_mode (void)
+set_rt_mode ()
 {
   int policy = ACE_SCHED_FIFO;
   int priority =
     (ACE_Sched_Params::priority_min (policy)
      + ACE_Sched_Params::priority_max (policy)) / 2;
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   int result =
     ACE_OS::sched_params (ACE_Sched_Params (policy,
                                             priority,

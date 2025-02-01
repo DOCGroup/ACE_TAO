@@ -1,5 +1,3 @@
-
-
 ******************************************************************************
 CALLBACK QUOTER TEST EXAMPLE                           -- Kirthika Parameswaran
                                                           <kirthika@cs.wustl.edu>
@@ -14,7 +12,6 @@ There are three parts to the Callback Quoter Example.
 1) Supplier
 2) Notifier
 3) Consumer
-
 
 In detail:
 _________
@@ -59,8 +56,6 @@ There are 3  parts to it:
 
 ./notifier
 
-
-
 2) shell 2: type at the command prompt:
 
 ./consumer
@@ -70,8 +65,6 @@ Enter the stockname and value.
 Now wait for information to arrive.
 
 You can  unregister by typing 'u' and quit by typing 'q'.
-
-
 
 3) shell 3: type at the command prompt:
 
@@ -94,8 +87,6 @@ There are 3  parts to it:
 
 ./notifier -fior_file -s
 
-
-
 2) shell 2: type at the command prompt:
 
 ./consumer -fior_file -s
@@ -105,8 +96,6 @@ Enter the stockname and value.
 Now wait for information to arrive.
 
 You can  unregister by typing 'u' and quit by typing 'q'.
-
-
 
 3) shell 3: type at the command prompt:
 

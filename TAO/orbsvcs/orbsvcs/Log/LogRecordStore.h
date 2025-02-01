@@ -37,20 +37,20 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 {
 public:
   /// Destructor.
-  virtual ~TAO_LogRecordStore (void);
+  virtual ~TAO_LogRecordStore ();
 
   /// Initialization.
-  virtual int open (void) = 0;
+  virtual int open () = 0;
 
   /// Close the record store.
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
 
   // = Log Parameters
 
   /// Gets the administrative state of the log
   virtual DsLogAdmin::AdministrativeState
-    get_administrative_state (void) const = 0;
+    get_administrative_state () const = 0;
 
   /// Sets the administrative state of the log
   virtual void
@@ -58,7 +58,7 @@ public:
 
   /// Get the capacity alarm thresholds
   virtual DsLogAdmin::CapacityAlarmThresholdList*
-    get_capacity_alarm_thresholds (void) const = 0;
+    get_capacity_alarm_thresholds () const = 0;
 
   /// Set the capacity alarm thresholds
   virtual void
@@ -66,14 +66,14 @@ public:
 
   /// Gets the forwarding state
   virtual DsLogAdmin::ForwardingState
-    get_forwarding_state (void) const = 0;
+    get_forwarding_state () const = 0;
 
   /// Sets the forwarding state
   virtual void
     set_forwarding_state (DsLogAdmin::ForwardingState state) = 0;
 
   /// Get the log duration
-  virtual DsLogAdmin::TimeInterval get_interval (void) const = 0;
+  virtual DsLogAdmin::TimeInterval get_interval () const = 0;
 
   /// Set the log duration.
   virtual void
@@ -81,7 +81,7 @@ public:
 
   /// Get the log full action
   virtual DsLogAdmin::LogFullActionType
-    get_log_full_action (void) const = 0;
+    get_log_full_action () const = 0;
 
   /// Set the log full action
   virtual void
@@ -89,7 +89,7 @@ public:
 
   /// Get the list of the QoS properties supported by the log.
   virtual DsLogAdmin::QoSList*
-    get_log_qos (void) const = 0;
+    get_log_qos () const = 0;
 
   /// Set the list of the QoS properties supported by the log.
   virtual void
@@ -97,7 +97,7 @@ public:
 
   /// Gets the max record life
   virtual CORBA::ULong
-    get_max_record_life (void) const = 0;
+    get_max_record_life () const = 0;
 
   /// Sets the max record life
   virtual void
@@ -105,7 +105,7 @@ public:
 
   /// Get the current set value of the max size of the log data.
   virtual CORBA::ULongLong
-    get_max_size (void) const = 0;
+    get_max_size () const = 0;
 
   /// Set the max size of log data. size == 0, => infinite.
   virtual void
@@ -113,7 +113,7 @@ public:
 
   /// Get the weekly scheduling parameters
   virtual DsLogAdmin::WeekMask*
-    get_week_mask (void) = 0;
+    get_week_mask () = 0;
 
   /// Set the weekly scheduling parameters.
   virtual void
@@ -124,11 +124,11 @@ public:
 
   /// Gets the current size of the log data.
   virtual CORBA::ULongLong
-    get_current_size (void) = 0;
+    get_current_size () = 0;
 
   /// Get the number of records in the log right now.
   virtual CORBA::ULongLong
-    get_n_records (void) = 0;
+    get_n_records () = 0;
 
 
   // = LogRecordStore gauge
@@ -136,11 +136,11 @@ public:
   /// Gets the current value of the "gauge" that measures the total
   /// size of the records written to the log.
   virtual CORBA::ULongLong
-    get_gauge(void) = 0;
+    get_gauge() = 0;
 
   /// Resets the "gauge" to 0
   virtual void
-    reset_gauge(void) = 0;
+    reset_gauge() = 0;
 
 
   // = Record logging, retrieval, update and removal methods.
@@ -152,7 +152,7 @@ public:
 
   /// Deletes "old" records from the store.
   virtual int
-    purge_old_records (void) = 0;
+    purge_old_records () = 0;
 
   /// Set single record attributes.
   virtual void
@@ -174,7 +174,7 @@ public:
   /// Ensure changes have been flushed to persistent media
   /// Returns 0 on success, -1 on failure
   virtual int
-    flush (void) = 0;
+    flush () = 0;
 
 
   /// Returns all records in the log that match the given constraint
@@ -207,14 +207,14 @@ public:
 
 
   virtual CORBA::ULong
-    remove_old_records (void) = 0;
+    remove_old_records () = 0;
 
   /// Read-Write Lock
   virtual ACE_SYNCH_RW_MUTEX& lock() = 0;
 
 protected:
   /// Constructor.
-  TAO_LogRecordStore (void);
+  TAO_LogRecordStore ();
 
 
 private:

@@ -127,7 +127,7 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Test_Client_Module::fini (void)
+Test_Client_Module::fini ()
 {
   ACE_DEBUG ((LM_INFO,
               "Client is being finalized.\n"));
@@ -147,7 +147,7 @@ Test_Client_Module::fini (void)
 }
 
 int
-Test_Client_Module::svc (void)
+Test_Client_Module::svc ()
 {
   try
     {
@@ -179,7 +179,6 @@ Test_Client_Module::svc (void)
       // is used, i.e. one isn't explicitly loaded prior to initializing
       // the ORB.
       (void) this->test_.out ();
-
     }
   catch (const CORBA::Exception& ex)
     {

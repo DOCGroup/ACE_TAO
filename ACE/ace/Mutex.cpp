@@ -16,7 +16,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE (ACE_Mutex)
 
 void
-ACE_Mutex::dump (void) const
+ACE_Mutex::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Mutex::dump");
@@ -143,7 +143,7 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
                    ACE_TEXT ("ACE_Mutex::ACE_Mutex")));
 }
 
-ACE_Mutex::~ACE_Mutex (void)
+ACE_Mutex::~ACE_Mutex ()
 {
 // ACE_TRACE ("ACE_Mutex::~ACE_Mutex");
   this->remove ();

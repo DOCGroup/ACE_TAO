@@ -29,7 +29,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief A high resolution timer class wrapper that encapsulates
  * OS-specific high-resolution timers, such as those found on
- * Solaris, AIX, Win32/Pentium, and VxWorks.
+ * Win32/Pentium, and VxWorks.
  *
  * Most of the member functions don't return values.  The only
  * reason that one would fail is if high-resolution time isn't
@@ -58,9 +58,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This is probably not a problem profiling code, but could be
  * on if the high resolution timer class is used to initiate
  * actions after a "long" timeout.
- * On Solaris, a scale factor of 1000 should be used because its
- * high-resolution timer returns nanoseconds.  However, on Intel
- * platforms, we use RDTSC which returns the number of clock
+ * On Intel platforms, we use RDTSC which returns the number of clock
  * ticks since system boot.  For a 200MHz cpu, each clock tick
  * is 1/200 of a microsecond; the global_scale_factor_ should
  * therefore be 200 or 200000 if it's in unit/millisecond.
@@ -75,8 +73,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * you query for your @c timer.stop() value might not be the one
  * you queried for @c timer.start().  Its not clear how much
  * divergence there would be, if any.
- * This issue is not mentioned in the Solaris 2.5.1 gethrtime
- * man page.
  * A RDTSC NOTE: RDTSC is the Intel Pentium read-time stamp counter
  * and is actualy a 64 bit clock cycle counter, which is increased
  * with every cycle.  It has a low overhead and can be read within
@@ -109,7 +105,7 @@ public:
    * global_scale_factor_.  This allows applications to set the scale
    * factor just once for all High_Res_Timers.  Check
    *  High_Res_Timer.cpp for the default global_scale_factors for
-   * several platforms.  For many platforms (e.g., Solaris), the
+   * several platforms.  For many platforms the
    * global_scale_factor_ is set to 1000 so that <scale_factor> need
    * not be set.  Careful, a <scale_factor> of 0 will cause division
    * by zero exceptions.
@@ -120,7 +116,7 @@ public:
   static void global_scale_factor (global_scale_factor_type gsf);
 
   /// Returns the global_scale_factor.
-  static global_scale_factor_type global_scale_factor (void);
+  static global_scale_factor_type global_scale_factor ();
 
 #ifndef  ACE_HR_SCALE_CONVERSION
 #  define ACE_HR_SCALE_CONVERSION (ACE_ONE_SECOND_IN_USECS)
@@ -151,13 +147,13 @@ public:
                                const u_int iterations = 10);
 
   /// Initialize the timer.
-  ACE_High_Res_Timer (void);
+  ACE_High_Res_Timer ();
 
   /// Destructor.
-  ~ACE_High_Res_Timer (void);
+  ~ACE_High_Res_Timer ();
 
   /// Reinitialize the timer.
-  void reset (void);
+  void reset ();
 
   /// Start timing.
   void start (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
@@ -213,7 +209,7 @@ public:
                   ACE_HANDLE handle = ACE_STDOUT) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -224,7 +220,7 @@ public:
    * as the gettimeofday function, thereby basing the timer calculations
    * on the high res timer rather than wall clock time.
    */
-  static ACE_Time_Value gettimeofday_hr (void);
+  static ACE_Time_Value gettimeofday_hr ();
 
   /**
    * @deprecated THIS FUNCTION IS DEPRECATED.  PLEASE USE
@@ -252,7 +248,7 @@ public:
    * factor.  If there are any problems getting it, we just return 1
    * (the default).
    */
-  static ACE_UINT32 get_cpuinfo (void);
+  static ACE_UINT32 get_cpuinfo ();
 #endif /* defined (ACE_LINUX) && !ACE_LACKS_SSCANF */
 
 private:

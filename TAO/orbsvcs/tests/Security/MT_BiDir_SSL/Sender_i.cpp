@@ -19,7 +19,7 @@ Sender_i::Sender_i (CORBA::ULong no_clients,
     this->payload_[j] = (j % 256);
 }
 
-Sender_i::~Sender_i (void)
+Sender_i::~Sender_i ()
 {
   delete []this->receivers_;
 }
@@ -49,7 +49,7 @@ Sender_i::receiver_object (Receiver_ptr recv)
 
 
 void
-Sender_i::send_message (void)
+Sender_i::send_message ()
 {
   // NOTE:No synchronization with purpose. Synchrnozing this is
   // going to spoil the whole purpose of this test.

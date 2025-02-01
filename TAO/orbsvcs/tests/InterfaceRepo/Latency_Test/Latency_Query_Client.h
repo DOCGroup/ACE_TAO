@@ -28,24 +28,24 @@ class Latency_Query_Client
 {
 public:
   /// Constructor
-  Latency_Query_Client (void);
+  Latency_Query_Client ();
 
   /// Destructor
-  ~Latency_Query_Client (void);
+  ~Latency_Query_Client ();
 
   /// Initialize the ORB and get the IFR object reference.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   /// Execute test code.
-  int run (void);
+  int run ();
 private:
   /// Process the command line arguments.
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
 
   /// Put in something to query about.
-  int populate_ifr (void);
+  int populate_ifr ();
 
 private:
   /// Toggle debugging output.

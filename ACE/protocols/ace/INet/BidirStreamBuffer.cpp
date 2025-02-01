@@ -11,7 +11,6 @@ namespace ACE
 {
   namespace IOS
   {
-
     template <class ACE_CHAR_T, class STREAM_HANDLER, class TR>
     BasicBidirStreamBuffer<ACE_CHAR_T, STREAM_HANDLER, TR>::BasicBidirStreamBuffer (
         STREAM_HANDLER* sh,

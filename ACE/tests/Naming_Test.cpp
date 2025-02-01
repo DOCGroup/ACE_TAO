@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "randomize.h"
 #include "ace/Lib_Find.h"
@@ -21,7 +20,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if !defined ACE_LACKS_FCNTL || defined ACE_WIN32
 
@@ -259,13 +257,9 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
       // Set the database name using the pid. mktemp isn't always available.
       ACE_OS::snprintf(temp_file, BUFSIZ,
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                       ACE_TEXT ("%ls%d"),
-#else
-                       ACE_TEXT ("%s%d"),
-#endif
+                       ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT ("%d"),
                        pname,
-                       (int)(ACE_OS::getpid ()));
+                       (int)ACE_OS::getpid ());
 
       name_options->database (temp_file);
     }

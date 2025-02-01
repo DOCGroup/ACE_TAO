@@ -5,19 +5,19 @@
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 ACE_INLINE
-HTTP_Hdr_Node::operator int (void) const
+HTTP_Hdr_Node::operator int () const
 {
   return this->index_;
 }
 
 ACE_INLINE
-HTTP_Hdr_Node::operator const char * (void) const
+HTTP_Hdr_Node::operator const char * () const
 {
   return this->token_;
 }
 
 ACE_INLINE const char *
-HTTP_Hdr_Node::format (void) const
+HTTP_Hdr_Node::format () const
 {
   return this->format_;
 }

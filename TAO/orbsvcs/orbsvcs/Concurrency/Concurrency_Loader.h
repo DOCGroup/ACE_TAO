@@ -30,12 +30,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Concurrency_Serv_Export TAO_Concurrency_Loader : public TAO_Object_Loader
 {
 public:
-
   /// Constructor
-  TAO_Concurrency_Loader (void);
+  TAO_Concurrency_Loader ();
 
   /// Destructor
-  ~TAO_Concurrency_Loader (void);
+  ~TAO_Concurrency_Loader ();
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>
@@ -43,7 +42,7 @@ public:
 
   /// Called by the Service Configurator framework to remove the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int fini (void);
+  virtual int fini ();
 
   /// This function call initializes the Concurrency Service given a
   /// reference to the ORB and the command line parameters.
@@ -56,11 +55,10 @@ public:
   TAO_Concurrency_Server concurrency_server_;
 
 private:
-
-  // Disallow copying and assignment.
-  TAO_Concurrency_Loader (const TAO_Concurrency_Loader &);
-  TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &);
-
+  TAO_Concurrency_Loader (const TAO_Concurrency_Loader &) = delete;
+  TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &) = delete;
+  TAO_Concurrency_Loader (TAO_Concurrency_Loader &&) = delete;
+  TAO_Concurrency_Loader &operator = (TAO_Concurrency_Loader &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

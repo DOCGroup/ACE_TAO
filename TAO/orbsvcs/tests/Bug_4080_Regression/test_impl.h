@@ -9,7 +9,7 @@ class UIPMC_Object_Impl : public virtual POA_Test::UIPMC_Object
 {
 public:
   UIPMC_Object_Impl (CORBA::ORB_ptr orb, CORBA::ULong num_threads);
-  ~UIPMC_Object_Impl (void);
+  ~UIPMC_Object_Impl ();
 
   // The skeleton methods
   virtual void process ();

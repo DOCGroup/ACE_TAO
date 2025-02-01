@@ -59,7 +59,7 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
-  ~test_i (void);
+  ~test_i ();
 
   void start_test (CORBA::Long session_id,
                    const char *protocol,
@@ -67,11 +67,11 @@ public:
                    CORBA::ULong message_size,
                    CORBA::ULong iterations);
 
-  void end_test (void);
+  void end_test ();
 
-  void oneway_sync (void);
+  void oneway_sync ();
 
-  void twoway_sync (void);
+  void twoway_sync ();
 
   void oneway_method (CORBA::Long session_id,
                       CORBA::ULong iteration,
@@ -82,10 +82,10 @@ public:
                       ::test::octets &payload);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void);
+  void shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
   CORBA::ORB_var orb_;
@@ -112,7 +112,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 {
 }
 
-test_i::~test_i (void)
+test_i::~test_i ()
 {
 }
 
@@ -162,7 +162,7 @@ test_i::start_test (CORBA::Long session_id,
 }
 
 void
-test_i::end_test (void)
+test_i::end_test ()
 {
   // Record end time.
   this->test_end_ =
@@ -226,12 +226,12 @@ test_i::end_test (void)
 }
 
 void
-test_i::oneway_sync (void)
+test_i::oneway_sync ()
 {
 }
 
 void
-test_i::twoway_sync (void)
+test_i::twoway_sync ()
 {
 }
 
@@ -308,18 +308,18 @@ test_i::twoway_method (CORBA::Long &session_id,
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (void)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::shutdown\n"));
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 int

@@ -16,10 +16,6 @@ ServerApp::ServerApp()
 {
 }
 
-ServerApp::~ServerApp()
-{
-}
-
 int
 ServerApp::run_i(int argc, ACE_TCHAR *argv[])
 {

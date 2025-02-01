@@ -23,13 +23,13 @@ class Gadget_Part
 {
 public:
   /// Destructor.
-  virtual ~Gadget_Part (void);
+  virtual ~Gadget_Part ();
 
   /// Ask the part to print information about itself.
-  virtual void print_info (void) = 0;
+  virtual void print_info () = 0;
 
   /// Ask the part to remove itself from the gadget that contains it.
-  virtual void remove_from_owner (void) = 0;
+  virtual void remove_from_owner () = 0;
 };
 
 // The Gadget_Part_var smart pointer has shared (reference counted) ownership

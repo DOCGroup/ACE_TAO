@@ -15,7 +15,7 @@ TAO_Tagged_Profile::TAO_Tagged_Profile (TAO_ORB_Core *orb_core)
 }
 
 ACE_INLINE TAO::ObjectKey &
-TAO_Tagged_Profile::object_key (void)
+TAO_Tagged_Profile::object_key ()
 {
   if (!this->object_key_extracted_)
     this->object_key_extracted_ = this->extract_object_key (this->profile_);
@@ -33,31 +33,31 @@ TAO_Tagged_Profile::object_key (TAO::ObjectKey &object_key)
 }
 
 ACE_INLINE const TAO::ObjectKey &
-TAO_Tagged_Profile::object_key (void) const
+TAO_Tagged_Profile::object_key () const
 {
   return const_cast<TAO_Tagged_Profile *> (this)->object_key ();
 }
 
 ACE_INLINE const IOP::TaggedProfile &
-TAO_Tagged_Profile::tagged_profile (void) const
+TAO_Tagged_Profile::tagged_profile () const
 {
   return this->profile_;
 }
 
 ACE_INLINE CORBA::ULong
-TAO_Tagged_Profile::profile_index (void) const
+TAO_Tagged_Profile::profile_index () const
 {
   return this->profile_index_;
 }
 
 ACE_INLINE const char*
-TAO_Tagged_Profile::type_id (void) const
+TAO_Tagged_Profile::type_id () const
 {
   return this->type_id_ == 0 ? "" : this->type_id_;
 }
 
 ACE_INLINE CORBA::Short
-TAO_Tagged_Profile::discriminator (void) const
+TAO_Tagged_Profile::discriminator () const
 {
   return this->discriminator_;
 }

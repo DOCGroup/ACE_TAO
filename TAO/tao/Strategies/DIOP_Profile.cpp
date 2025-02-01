@@ -13,6 +13,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/Truncate.h"
+#include <cstring>
 
 static const char the_prefix[] = "diop";
 
@@ -21,7 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 const char TAO_DIOP_Profile::object_key_delimiter_ = '/';
 
 char
-TAO_DIOP_Profile::object_key_delimiter (void) const
+TAO_DIOP_Profile::object_key_delimiter () const
 {
   return TAO_DIOP_Profile::object_key_delimiter_;
 }
@@ -65,7 +66,7 @@ TAO_DIOP_Profile::TAO_DIOP_Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO_DIOP_Profile::~TAO_DIOP_Profile (void)
+TAO_DIOP_Profile::~TAO_DIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -117,7 +118,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
-  const char *okd = ACE_OS::strchr (ior, this->object_key_delimiter_);
+  const char *okd = std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == 0 || okd == ior)
     {
@@ -132,7 +133,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
   // Length of host string.
   CORBA::ULong length_host = 0;
 
-  const char *cp_pos = ACE_OS::strchr (ior, ':');  // Look for a port
+  const char *cp_pos = std::strchr (ior, ':');  // Look for a port
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
   bool ipv6_in_host = false;
@@ -145,7 +146,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      const char *cp_pos_a = ACE_OS::strchr (ior, ']');
+      const char *cp_pos_a = std::strchr (ior, ']');
       if (cp_pos_a == 0)
         {
           // No valid IPv6 address specified.
@@ -341,13 +342,13 @@ TAO_DIOP_Profile::hash (CORBA::ULong max)
 }
 
 TAO_Endpoint*
-TAO_DIOP_Profile::endpoint (void)
+TAO_DIOP_Profile::endpoint ()
 {
   return &this->endpoint_;
 }
 
 CORBA::ULong
-TAO_DIOP_Profile::endpoint_count (void) const
+TAO_DIOP_Profile::endpoint_count () const
 {
   return this->count_;
 }
@@ -362,7 +363,7 @@ TAO_DIOP_Profile::add_endpoint (TAO_DIOP_Endpoint *endp)
 }
 
 char *
-TAO_DIOP_Profile::to_string (void) const
+TAO_DIOP_Profile::to_string () const
 {
   // corbaloc:diop:1.2@host:port,diop:1.2@host:port,.../key
 
@@ -437,7 +438,6 @@ TAO_DIOP_Profile::to_string (void) const
               digits [this->version_.minor],
               endp->host (),
               endp->port ());
-
   }
   ACE_OS::sprintf (buf + ACE_OS::strlen (buf),
                    "%c%s",
@@ -448,7 +448,7 @@ TAO_DIOP_Profile::to_string (void) const
 }
 
 const char *
-TAO_DIOP_Profile::prefix (void)
+TAO_DIOP_Profile::prefix ()
 {
   return ::the_prefix;
 }
@@ -469,7 +469,7 @@ TAO_DIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   const char* host;
   const char* pos;
   if (this->endpoint_.is_ipv6_decimal_ &&
-      (pos = ACE_OS::strchr (host = this->endpoint_.host (), '%')) != 0)
+      (pos = std::strchr (host = this->endpoint_.host (), '%')) != 0)
     {
       ACE_CString tmp;
       size_t len = pos - host;
@@ -499,7 +499,7 @@ TAO_DIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 }
 
 int
-TAO_DIOP_Profile::encode_endpoints (void)
+TAO_DIOP_Profile::encode_endpoints ()
 {
   // Create a data structure and fill it with endpoint info for wire
   // transfer.
@@ -552,7 +552,7 @@ TAO_DIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_DIOP_Profile::decode_endpoints (void)
+TAO_DIOP_Profile::decode_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;

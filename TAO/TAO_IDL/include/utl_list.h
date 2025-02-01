@@ -85,25 +85,25 @@ class TAO_IDL_FE_Export UTL_List
 public:
   UTL_List (UTL_List *c);
 
-  virtual ~UTL_List (void);
+  virtual ~UTL_List ();
 
   // Smash last cdr pointer in "this" with l.
   void nconc (UTL_List *l);
 
   // Copy the list starting at "this".
-  virtual UTL_List *copy (void);
+  virtual UTL_List *copy ();
 
   // Get next list.
-  UTL_List *tail (void);
+  UTL_List *tail ();
 
   // Set next list
   void set_tail (UTL_List *l);
 
   // How long is this list?
-  ACE_CDR::Long length (void);
+  ACE_CDR::Long length ();
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
 private:
   // The next list.
@@ -120,16 +120,15 @@ private:
 class TAO_IDL_FE_Export UTL_ListActiveIterator
 {
 public:
-
   UTL_ListActiveIterator (UTL_List *s);
 
-  virtual ~UTL_ListActiveIterator (void) {}
+  virtual ~UTL_ListActiveIterator () {}
 
   // Get next list.
-  virtual void next (void);
+  virtual void next ();
 
   // Are we at the end of this list?
-  virtual bool is_done (void);
+  virtual bool is_done ();
 
 protected:
   // On what to iterate?

@@ -48,13 +48,13 @@ public:
                          RtecEventComm::Time period);
 
   /// Destructor.
-  virtual ~TAO_EC_Timeout_Filter (void);
+  virtual ~TAO_EC_Timeout_Filter ();
 
   /// Return the QOS_Info for this Timeout filter.
-  const TAO_EC_QOS_Info& qos_info (void) const;
+  const TAO_EC_QOS_Info& qos_info () const;
 
   /// The type of timeout event that we generate.
-  RtecEventComm::EventType type (void) const;
+  RtecEventComm::EventType type () const;
 
   /// Callback from the Timeout_Generator
   void push_to_proxy (const RtecEventComm::EventSet& event,
@@ -70,8 +70,8 @@ public:
                      TAO_EC_QOS_Info& qos_info);
   virtual void push_nocopy (RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info);
-  virtual void clear (void);
-  virtual CORBA::ULong max_event_size (void) const;
+  virtual void clear ();
+  virtual CORBA::ULong max_event_size () const;
   virtual int can_match (const RtecEventComm::EventHeader& header) const;
   virtual int add_dependencies (const RtecEventComm::EventHeader& header,
                                 const TAO_EC_QOS_Info &qos_info);

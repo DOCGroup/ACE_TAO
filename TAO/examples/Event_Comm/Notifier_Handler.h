@@ -32,29 +32,29 @@ class Notifier_Handler
 public:
   /// This constructor gets the notifier object from the Naming
   /// Service.
-  Notifier_Handler (void);
+  Notifier_Handler () = default;
 
   /// Destructor.
-  virtual ~Notifier_Handler (void);
+  virtual ~Notifier_Handler () = default;
 
   /// Initialize the client communication endpoint with server.
   int init (int argc, ACE_TCHAR *argv[], ShutdownCallback* _shutdowncallback);
 
   // = Accessors.
-  Event_Comm::Notifier *notifier (void);
+  Event_Comm::Notifier *notifier ();
   void notifier (Event_Comm::Notifier *);
 
   /// runs the ORB.
-  int run (void);
+  int run ();
 
   /// Close down the handler.
-  int close (void);
+  int close ();
 
   /// called to request application shutdown.
-  void shutdown (void);
+  void shutdown ();
 
   /// returns the ORB's reactor.
-  ACE_Reactor *reactor (void);
+  ACE_Reactor *reactor ();
 
 private:
   /// Remember our orb.

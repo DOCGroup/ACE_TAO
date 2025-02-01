@@ -33,12 +33,11 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
-  Server_Request_Interceptor (void);
+  Server_Request_Interceptor ();
 
   /// Destructor.
-  ~Server_Request_Interceptor (void);
+  ~Server_Request_Interceptor ();
 
   /// Set the references to which requests will be forwarded.
   virtual void forward_reference (const char* iorstr);
@@ -53,9 +52,9 @@ public:
    */
   //@{
   /// Return the name of this ServerRequestinterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void receive_request_service_contexts (
       PortableInterceptor::ServerRequestInfo_ptr ri);
@@ -74,7 +73,6 @@ public:
   //@}
 
 private:
-
   /// References to the two objects used in this test.
   CORBA::String_var iorstr_;
     int request_forwarded_;

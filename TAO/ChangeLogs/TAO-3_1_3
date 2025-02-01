@@ -1,0 +1,11 @@
+commit c9c19d844a1ca78ab287023c48ffa2e740c8bfc2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 30 08:22:34 2023 +0100
+
+    Make x.1.2 publicly available
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

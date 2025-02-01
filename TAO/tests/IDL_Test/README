@@ -1,5 +1,3 @@
-
-
 This test is a collection of IDL files that once caused IDL compiler
 or C++ compiler errors, plus a dummy main.cpp for the build. There is
 no execution check in this test, the only outcome of interest being
@@ -39,3 +37,7 @@ The rest of the .idl files need only to build cleanly. To test the
 client/server functionality of the various IDL types and operations,
 see the test suite in ACE_wrappers/TAO/tests/Param_Test.
 
+There are a few negative tests (e.g. invalid_scoping, keyword_case_diff,
+exception_misuse) where it shall be verified that tao_idl exits with
+an error status. The main.cpp program cannot be used for them because
+it only handles positive tests. To this end, run the script run_test.pl.

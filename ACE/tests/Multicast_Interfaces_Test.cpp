@@ -28,7 +28,7 @@
 
 #include <set>
 
-typedef std::set<ACE_TString> nameset;
+using nameset = std::set<ACE_TString>;
 
 #if defined (ACE_WIN32)
 void

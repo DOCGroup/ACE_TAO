@@ -25,13 +25,12 @@
  */
 class be_visitor_valuebox_cdr_op_ch : public be_visitor_valuebox
 {
-
 public:
   /// constructor
   be_visitor_valuebox_cdr_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_cdr_op_ch (void);
+  ~be_visitor_valuebox_cdr_op_ch ();
 
   /// visit valuebox
   virtual int visit_valuebox (be_valuebox *node);

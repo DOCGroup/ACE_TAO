@@ -22,10 +22,10 @@ public:
                       CORBA::Long iteration);
 
   /// Shutdown the server.
-  void shutdown (void);
+  void shutdown ();
 
   /// Our POA.
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
   /// ORB.

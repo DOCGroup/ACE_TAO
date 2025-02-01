@@ -7,9 +7,9 @@ test_i::test_i (CORBA::ORB_ptr orb)
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\"test_i\" is shutting down.\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -12,14 +12,14 @@ vlink="#ff0f0f"
 bgcolor="#ffffff">
 
 <hr>
-<h3>The ACE+TAO+CIAO+DAnCE Development and Release Process</h3>
+<h3>The ACE+TAO Development and Release Process</h3>
 
 To improve the quality of our software and minimize development
 effort, we try to follow the structured development and release
 process described below.<p>
 
 An important concept to keep in mind is <em>risk</em>.  Before you
-commit <em>any</em> change to ACE+TAO+CIAO+DAnCE, please consider the effects
+commit <em>any</em> change to ACE+TAO, please consider the effects
 that it will have.  Could it possibly cause a build failure, on any
 platform?  Could it possibly cause different run-time behavior?  And
 so on.  If so, it is your responsibility to adequately build and test
@@ -35,11 +35,11 @@ blocked for the duration of the broken build, the fix, and the
 rebuild.<p>
 
 <hr>
-<h3>The ACE+TAO+CIAO+DAnCE Development Process</h3>
+<h3>The ACE+TAO Development Process</h3>
 
-The ACE+TAO+CIAO+DAnCE development process looks like:<p>
+The ACE+TAO development process looks like:<p>
 <ol>
-  <li>Every change to ACE+TAO+CIAO+DAnCE must have a bug report.  <em>Change</em>
+  <li>Every change to ACE+TAO must have a bug report.  <em>Change</em>
     includes fixes, enhancements, updates, and so on.
   <li><a href="https://github.com/DOCGroup/ACE_TAO/issues">Create a
 an issue</a>.
@@ -49,9 +49,9 @@ an issue</a>.
     changelog
   <li>Test the change sufficiently to demonstrate that it both does
     what is intended, and doesn't break anything.  The test may be
-    as simple as building and running the ACE+TAO+CIAO+DAnCE tests on at least two
+    as simple as building and running the ACE+TAO tests on at least two
     platforms.
-    Or as complicated as rebuilding and test all of ACE+TAO+CIAO+DAnCE on
+    Or as complicated as rebuilding and test all of ACE+TAO on
     all platforms that we have.
   <li>Merge the changes only to master when
     you are available the next 3 days to resolve any issues.
@@ -102,7 +102,7 @@ A bug should typically follow this life cycle:<p>
 At all times, we'll have a build czar.  The role may be shared by
 multiple people.  The build czar is responsible for ensuring that the
 next kits are clean, <em>i.e.</em>, it builds and runs cleanly on all
-platforms.  The status of all ACE+TAO+CIAO+DAnCE builds is tracked automatically
+platforms.  The status of all ACE+TAO builds is tracked automatically
 <A HREF="http://www.dre.vanderbilt.edu/scoreboard"</A>online</A>.<p>
 
 A comprehensive summary of the build czar's role is available <A HREF="bczar/bczar.html">here</A>.
@@ -132,22 +132,22 @@ violator.  This is also intentional, desirable, beneficial, and the
 Right Thing[TM] to do.<p>
 
 <p><hr>
-<H3>The ACE+TAO+CIAO+DAnCE Release Process</H3>
+<H3>The ACE+TAO Release Process</H3>
 <P>
 
-Minor releases of ACE+TAO+CIAO+DAnCE occur periodically, typically twice a
+Minor releases of ACE+TAO occur periodically, typically twice a
 year. Minor releases have two-digit numbers, <EM>e.g.,</EM> 5.3.
 Major releases are released infrequently, typically once a year.
 Major releases are 1-digit numbers, <EM>e.g.,</EM>5, that include
 substantially new functionality.  Both major and minor releases are
 carefully tested on all platforms the ACE+TAO run on.  In particular,
-we do not put out major or minor releases of ACE+TAO+CIAO+DAnCE until all the
+we do not put out major or minor releases of ACE+TAO until all the
 compilations and regression tests work successful on all the platform
 we support. <P>
 
 Between major/minor releases, we release micro releases periodically,
-<EM>e.g.,</EM> 3-4 times per year, so that ACE+TAO+CIAO+DAnCE users can
-download and test our latest work in progress.  ACE+TAO+CIAO+DAnCE micro
+<EM>e.g.,</EM> 3-4 times per year, so that ACE+TAO users can
+download and test our latest work in progress.  ACE+TAO micro
 release kits have three-digit numbers, <EM>e.g.,</EM> 5.3.1.  Micro
 releases often contain important fixes that aren't in the major/minor
 releases and will compile cleanly and pass most tests on most
@@ -159,7 +159,7 @@ features may be changed or removed between the micro releases. <P>
 <H3>Contributions from the Open-Source Community</H3>
 <P>
 
-Over the years, ACE+TAO+CIAO have benefited significantly from
+Over the years, ACE+TAO have benefited significantly from
 contributions by <A
 HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-members.html">thousands</A>
 of developers in the open-source community.  To avoid fragmentation of

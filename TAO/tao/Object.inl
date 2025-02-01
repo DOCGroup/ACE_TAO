@@ -8,7 +8,7 @@ ACE_INLINE
 CORBA::Boolean
 CORBA::is_nil<> (CORBA::Object_ptr obj)
 {
-  if (obj == 0)
+  if (!obj)
     {
       return true;
     }
@@ -24,8 +24,8 @@ CORBA::Object::Object (int)
     is_local_ (true),
     is_evaluated_ (true),
     ior_ (),
-    orb_core_ (0),
-    protocol_proxy_ (0)
+    orb_core_ (nullptr),
+    protocol_proxy_ (nullptr)
 {
 }
 
@@ -44,9 +44,9 @@ CORBA::Object::_duplicate (CORBA::Object_ptr obj)
 
 ACE_INLINE
 CORBA::Object_ptr
-CORBA::Object::_nil (void)
+CORBA::Object::_nil ()
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE
@@ -57,31 +57,31 @@ CORBA::Object::_narrow (CORBA::Object_ptr obj)
 }
 
 ACE_INLINE CORBA::Boolean
-CORBA::Object::is_evaluated (void) const
+CORBA::Object::is_evaluated () const
 {
   return this->is_evaluated_;
 }
 
 ACE_INLINE TAO_ORB_Core *
-CORBA::Object::orb_core (void) const
+CORBA::Object::orb_core () const
 {
   return this->orb_core_;
 }
 
 ACE_INLINE IOP::IOR *
-CORBA::Object::steal_ior (void)
+CORBA::Object::steal_ior ()
 {
   return this->ior_._retn ();
 }
 
 ACE_INLINE const IOP::IOR &
-CORBA::Object::ior (void) const
+CORBA::Object::ior () const
 {
   return this->ior_.in ();
 }
 
 ACE_INLINE void
-CORBA::Object::_decr_refcount (void)
+CORBA::Object::_decr_refcount ()
 {
   this->_remove_ref ();
 }

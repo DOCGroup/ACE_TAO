@@ -79,7 +79,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       sender->shutdown ();
 
 
-
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)

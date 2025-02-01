@@ -30,12 +30,11 @@ class TAO_PortableServer_Export TAO_POA_Default_Policy_Validator
   : public TAO_Policy_Validator
 {
 public:
-
   /// Constructor.
   TAO_POA_Default_Policy_Validator (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_POA_Default_Policy_Validator (void);
+  ~TAO_POA_Default_Policy_Validator () = default;
 
 protected:
   /**
@@ -55,7 +54,6 @@ protected:
    * validate () routine, and these need to be caught.
    */
   virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -46,16 +46,16 @@ AST_Component::AST_Component (UTL_ScopedName *n,
     }
 }
 
-AST_Component::~AST_Component (void)
+AST_Component::~AST_Component ()
 {
 }
 
 void
 AST_Component::redefine (AST_Interface *from)
 {
-  AST_Component *c = AST_Component::narrow_from_decl (from);
+  AST_Component *c = dynamic_cast<AST_Component*> (from);
 
-  if (c == 0)
+  if (c == nullptr)
     {
       idl_global->err ()->redef_error (from->local_name ()->get_string (),
                                        this->local_name ()->get_string ());
@@ -72,9 +72,9 @@ AST_Decl *
 AST_Component::look_in_inherited (UTL_ScopedName *e,
                                   bool full_def_only)
 {
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
 
-  if (this->pd_base_component != 0)
+  if (this->pd_base_component != nullptr)
     {
       d =
         this->pd_base_component->lookup_by_name_r (
@@ -90,15 +90,15 @@ AST_Decl *
 AST_Component::look_in_supported (UTL_ScopedName *e,
                                   bool full_def_only)
 {
-  AST_Decl *d = 0;
-  AST_Type **is = 0;
+  AST_Decl *d = nullptr;
+  AST_Type **is = nullptr;
   long nis = -1;
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
     {
       idl_global->err ()->fwd_decl_lookup (this, e);
-      return 0;
+      return nullptr;
     }
 
   // OK, loop through supported interfaces.
@@ -113,11 +113,11 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
         }
 
       AST_Interface *i =
-        AST_Interface::narrow_from_decl (*is);
+        dynamic_cast<AST_Interface*> (*is);
 
       d = (i)->lookup_by_name_r (e, full_def_only);
 
-      if (d != 0)
+      if (d != nullptr)
         {
           break;
         }
@@ -127,19 +127,19 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
 }
 
 AST_Component *
-AST_Component::base_component (void) const
+AST_Component::base_component () const
 {
   return this->pd_base_component;
 }
 
 AST_Type **
-AST_Component::supports (void) const
+AST_Component::supports () const
 {
   return this->inherits ();
 }
 
 long
-AST_Component::n_supports (void) const
+AST_Component::n_supports () const
 {
   return this->n_inherits ();
 }
@@ -151,7 +151,7 @@ AST_Component::special_lookup (UTL_ScopedName *e,
 {
   AST_Decl *d = this->look_in_inherited (e, full_def_only);
 
-  if (d == 0)
+  if (d == nullptr)
     {
       d = this->look_in_supported (e, full_def_only);
     }
@@ -160,7 +160,7 @@ AST_Component::special_lookup (UTL_ScopedName *e,
 }
 
 void
-AST_Component::destroy (void)
+AST_Component::destroy ()
 {
   this->AST_Interface::destroy ();
 }
@@ -174,7 +174,7 @@ AST_Component::dump (ACE_OSTREAM_TYPE &o)
 
   this->dump_i (o, " ");
 
-  if (this->pd_base_component != 0)
+  if (this->pd_base_component != nullptr)
     {
       this->dump_i (o, ": ");
       this->pd_base_component->local_name ()->dump (o);
@@ -212,57 +212,43 @@ AST_Component::ast_accept (ast_visitor *visitor)
 AST_Provides *
 AST_Component::fe_add_provides (AST_Provides *p)
 {
-  return
-    AST_Provides::narrow_from_decl (
-      this->fe_add_ref_decl (p));
+  return dynamic_cast<AST_Provides*> (this->fe_add_ref_decl (p));
 }
 
 AST_Uses *
 AST_Component::fe_add_uses (AST_Uses *u)
 {
-  return
-    AST_Uses::narrow_from_decl (
-      this->fe_add_ref_decl (u));
+  return dynamic_cast<AST_Uses*> (this->fe_add_ref_decl (u));
 }
 
 AST_Publishes *
 AST_Component::fe_add_publishes (AST_Publishes *p)
 {
-  return
-    AST_Publishes::narrow_from_decl (
-      this->fe_add_ref_decl (p));
+  return dynamic_cast<AST_Publishes*> (this->fe_add_ref_decl (p));
 }
 
 AST_Emits *
 AST_Component::fe_add_emits (AST_Emits *e)
 {
-  return
-    AST_Emits::narrow_from_decl (
-      this->fe_add_ref_decl (e));
+  return dynamic_cast<AST_Emits*> (this->fe_add_ref_decl (e));
 }
 
 AST_Consumes *
 AST_Component::fe_add_consumes (AST_Consumes *c)
 {
-  return
-    AST_Consumes::narrow_from_decl (
-      this->fe_add_ref_decl (c));
+  return dynamic_cast<AST_Consumes*> (this->fe_add_ref_decl (c));
 }
 
 AST_Extended_Port *
 AST_Component::fe_add_extended_port (AST_Extended_Port *p)
 {
-  return
-    AST_Extended_Port::narrow_from_decl (
-      this->fe_add_ref_decl (p));
+  return dynamic_cast<AST_Extended_Port*> (this->fe_add_ref_decl (p));
 }
 
 AST_Mirror_Port *
 AST_Component::fe_add_mirror_port (AST_Mirror_Port *p)
 {
-  return
-    AST_Mirror_Port::narrow_from_decl (
-      this->fe_add_ref_decl (p));
+  return dynamic_cast<AST_Mirror_Port*> (this->fe_add_ref_decl (p));
 }
 
 int
@@ -282,5 +268,3 @@ AST_Component::be_add_uses (AST_Uses *i,
   return 0;
 }
 
-IMPL_NARROW_FROM_DECL (AST_Component)
-IMPL_NARROW_FROM_SCOPE (AST_Component)

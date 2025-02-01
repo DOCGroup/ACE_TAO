@@ -6,12 +6,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PolicyFactory_Registry::TAO_PolicyFactory_Registry (void)
+TAO_PolicyFactory_Registry::TAO_PolicyFactory_Registry ()
   : factories_ (TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE)
 {
 }
 
-TAO_PolicyFactory_Registry::~TAO_PolicyFactory_Registry (void)
+TAO_PolicyFactory_Registry::~TAO_PolicyFactory_Registry ()
 {
   const TABLE::iterator end (this->factories_.end ());
 

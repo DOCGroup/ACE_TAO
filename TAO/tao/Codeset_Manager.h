@@ -58,15 +58,13 @@ class TAO_Codeset_Descriptor_Base;
  */
 class TAO_Export TAO_Codeset_Manager
 {
-
 public:
-
   /// Destructor.
-  virtual ~TAO_Codeset_Manager (void);
+  virtual ~TAO_Codeset_Manager () = default;
 
   /// Called by an object of TAO_Acceptor to set NCS and CCS values for
   /// Char/Wchar in to the Object Reference.
-  virtual void set_codeset (TAO_Tagged_Components& ) const = 0;
+  virtual void set_codeset (TAO_Tagged_Components&) const = 0;
 
   /// Called from an object of "TAO_GIOP_Invocation" to set TCS on the
   /// Transport
@@ -86,8 +84,8 @@ public:
 
   virtual void open (TAO_ORB_Core& core) = 0;
 
-  virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor (void) = 0;
-  virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor (void) = 0;
+  virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor () = 0;
+  virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor () = 0;
 
   virtual void get_ncs (CONV_FRAME::CodeSetId &ncsc,
                         CONV_FRAME::CodeSetId &ncsw) = 0;

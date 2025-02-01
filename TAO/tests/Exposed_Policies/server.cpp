@@ -15,7 +15,6 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       Policy_Tester policy_tester;

@@ -30,11 +30,7 @@
 #include "ace/Basic_Types.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 #include "ace/Null_Mutex.h"
 #include "ace/Vector_T.h"
 
@@ -147,12 +143,12 @@ namespace CORBA
 
     typedef ACE_Vector < ACE_CString > Repository_Id_List;
 
-    virtual CORBA::ValueBase* _copy_value (void) TAO_local_COPY_VALUE_IS_PURE;
+    virtual CORBA::ValueBase* _copy_value () TAO_local_COPY_VALUE_IS_PURE;
 
     // Reference counting.
-    virtual void _add_ref (void) = 0;
-    virtual void _remove_ref (void) = 0;
-    virtual CORBA::ULong _refcount_value (void) = 0;
+    virtual void _add_ref () = 0;
+    virtual void _remove_ref () = 0;
+    virtual CORBA::ULong _refcount_value () = 0;
 
     // dynamic casting
     static CORBA::ValueBase* _downcast (CORBA::ValueBase *);
@@ -161,10 +157,10 @@ namespace CORBA
 
     /// Used in the implementation of CORBA::Any
     static void _tao_any_destructor (void *);
-    virtual CORBA::TypeCode_ptr _tao_type (void) const = 0;
+    virtual CORBA::TypeCode_ptr _tao_type () const = 0;
 
     /// Return the repository id of this valuetype.
-    virtual const char * _tao_obv_repository_id (void) const = 0;
+    virtual const char * _tao_obv_repository_id () const = 0;
 
     /// Give the list of the RepositoryIds in the valuetype "truncatable"
     /// inheritance hierarchy. List the id of this valuetype as first
@@ -238,9 +234,9 @@ namespace CORBA
     virtual void truncation_hook ();
 
   protected:
-    ValueBase (void);
+    ValueBase ();
     ValueBase (const ValueBase&);
-    virtual ~ValueBase (void);
+    virtual ~ValueBase () = default;
 
     /// This flag is set to be true when the valuetype defined
     /// in the idl has the truncatable parent.
@@ -327,18 +323,18 @@ namespace CORBA
     : public virtual ValueBase
   {
   public:
-    virtual void _add_ref (void);
-    virtual void _remove_ref (void);
-    virtual CORBA::ULong _refcount_value (void);
+    virtual void _add_ref ();
+    virtual void _remove_ref ();
+    virtual CORBA::ULong _refcount_value ();
 
     /// The _tao variants are inline for fast access from T_var
     /// (if valuetype T is compiled with optimization for that.) %! (todo)
-    void _tao_add_ref (void);
-    void _tao_remove_ref (void);
-    CORBA::ULong _tao_refcount_value (void) const;
+    void _tao_add_ref ();
+    void _tao_remove_ref ();
+    CORBA::ULong _tao_refcount_value () const;
 
   protected:
-    DefaultValueRefCountBase (void);
+    DefaultValueRefCountBase ();
     DefaultValueRefCountBase (const DefaultValueRefCountBase&);
     virtual ~DefaultValueRefCountBase ();
 
@@ -347,11 +343,7 @@ namespace CORBA
 
   private: // data
     /// Reference counter.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
   }; // DefaultValueRefCountBase
 
   //  which lock has the lowest memory overhead ?

@@ -6,7 +6,7 @@
  * ACE wrapper around access functions for the OSF's DCE codeset registry
  * access functions
  *
- * For environments that intrinsicly support the DCE defined access functions,
+ * For environments that intrinsically support the DCE defined access functions,
  * the methods in this class are simply wrappers. On other platforms, emulation
  * is provided. The motivation for this class is to support interoperability
  * via translators and the CDR streams, primarily in TAO, but this capability

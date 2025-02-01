@@ -3,10 +3,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PG_Servant_Dispatcher::~TAO_PG_Servant_Dispatcher (void)
-{
-}
-
 TAO_Root_POA *
 TAO_PG_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                             PortableServer::POAManager_ptr poa_manager,

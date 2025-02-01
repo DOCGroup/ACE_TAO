@@ -19,7 +19,7 @@ int run_main (int, ACE_TCHAR *[])
 #ifdef ACE_HAS_PTHREADS
 struct Inheritor : ACE_Task_Base
 {
-  int svc ()
+  int svc () override
   {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) - this test might crash ACE if it does not "
                           "have the fix for the second bug in #3480.\n"));
@@ -60,7 +60,6 @@ bool test_inherited_attributes ()
 
 struct MyThread : ACE_Task_Base
 {
-
   enum { THREAD_DEFAULTS = THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED };
 
   explicit MyThread (bool openfile = false)
@@ -69,7 +68,7 @@ struct MyThread : ACE_Task_Base
   bool openfile_;
   static MyThread childthread_;
 
-  int svc ()
+  int svc () override
   {
     if (openfile_)
       {

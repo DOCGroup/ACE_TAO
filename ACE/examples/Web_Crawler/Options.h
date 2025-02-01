@@ -40,43 +40,43 @@ public:
 
   /// If non-0 and the link is an HTML file then recursively check all
   /// links that are embedded in the body of file.
-  int recurse (void) const;
+  int recurse () const;
 
   /// Return the hostname of the initial Web server.
-  const ACE_TCHAR *hostname (void) const;
+  const ACE_TCHAR *hostname () const;
 
   /// Return the initial URI.
-  const ACE_TCHAR *path_name (void) const;
+  const ACE_TCHAR *path_name () const;
 
   /// String used to filter out which URLs to validate.
-  const ACE_TCHAR *url_filter (void) const;
+  const ACE_TCHAR *url_filter () const;
 
   /// Are we debugging?
-  int debug (void) const;
+  int debug () const;
 
   /// Are we being verbose?
-  int verbose (void) const;
+  int verbose () const;
 
   /// Which order? LIFO|FIFO??
-  const ACE_TCHAR *order (void) const;
+  const ACE_TCHAR *order () const;
 
   /// Port #
-  int port_no (void) const;
+  int port_no () const;
 
   /// Return the timeout used to prevent hanging on <recv> and
   /// <connect> calls to broken servers.
-  const ACE_Time_Value *timeout (void) const;
+  const ACE_Time_Value *timeout () const;
 
   // = Get/set the <Command_Processor>.
-  Command_Processor *command_processor (void) const;
+  Command_Processor *command_processor () const;
   void command_processor (Command_Processor *);
 
   // = Get/set the <URL_Visitor>.
-  URL_Visitor *visitor (void) const;
+  URL_Visitor *visitor () const;
   void visitor (URL_Visitor *);
 
   // Get the handle_limit.
-  int handle_limit (void);
+  int handle_limit ();
 private:
   /// Are we recursving.
   int recurse_;

@@ -13,16 +13,18 @@
 
 #include "test_config.h"
 #include "Reactor_Performance_Test.h"
-#include "ace/Profile_Timer.h"
-#include "ace/Get_Opt.h"
-#include "ace/SOCK_Connector.h"
-#include "ace/SOCK_Acceptor.h"
+
 #include "ace/Acceptor.h"
+#include <memory>
 #include "ace/Connector.h"
+#include "ace/Get_Opt.h"
+#include "ace/Profile_Timer.h"
 #include "ace/Reactor.h"
-#include "ace/WFMO_Reactor.h"
+#include "ace/SOCK_Acceptor.h"
+#include "ace/SOCK_Connector.h"
 #include "ace/Select_Reactor.h"
-#include "ace/Auto_Ptr.h"
+#include "ace/WFMO_Reactor.h"
+#include <utility>
 
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
@@ -146,7 +148,7 @@ Write_Handler::open (void *)
 }
 
 int
-Write_Handler::send_data (void)
+Write_Handler::send_data ()
 {
   int send_size = sizeof (ACE_ALPHABET) - 1;
 
@@ -160,8 +162,8 @@ Write_Handler::send_data (void)
 }
 
 // Connection factories
-typedef ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
-typedef ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
+using CONNECTOR = ACE_Connector<Write_Handler, ACE_SOCK_Connector>;
+using ACCEPTOR = ACE_Acceptor<Read_Handler, ACE_SOCK_Acceptor>;
 
 // Execute the client tests.
 void *
@@ -181,20 +183,20 @@ client (void *arg)
   ACE_NEW_RETURN (temp_writers,
                   Write_Handler *[opt_nconnections],
                   0);
-  ACE_Auto_Basic_Array_Ptr <Write_Handler *> writers (temp_writers);
+  std::unique_ptr <Write_Handler *[]> writers (temp_writers);
 
   ACE_TCHAR *temp_failed = 0;
   ACE_NEW_RETURN (temp_failed,
                   ACE_TCHAR[opt_nconnections],
                   0);
-  ACE_Auto_Basic_Array_Ptr <ACE_TCHAR> failed_svc_handlers (temp_failed);
+  std::unique_ptr <ACE_TCHAR[]> failed_svc_handlers (temp_failed);
 
   // Automagic memory cleanup.
   ACE_INET_Addr *temp_addresses;
   ACE_NEW_RETURN (temp_addresses,
                   ACE_INET_Addr [opt_nconnections],
                   0);
-  ACE_Auto_Array_Ptr <ACE_INET_Addr> addresses (temp_addresses);
+  std::unique_ptr <ACE_INET_Addr[]> addresses (temp_addresses);
 
   // Initialize array.
   for (i = 0; i < opt_nconnections; i++)
@@ -245,7 +247,7 @@ client (void *arg)
 // Sets up the correct reactor (based on platform and options).
 
 void
-create_reactor (void)
+create_reactor ()
 {
   ACE_Reactor_Impl *impl = 0;
 
@@ -333,15 +335,15 @@ run_main (int argc, ACE_TCHAR *argv[])
   create_reactor ();
 
   // Manage memory automagically.
-  auto_ptr<ACE_Reactor> reactor (ACE_Reactor::instance ());
-  auto_ptr<ACE_Reactor_Impl> impl;
+  std::unique_ptr<ACE_Reactor> reactor (ACE_Reactor::instance ());
+  std::unique_ptr<ACE_Reactor_Impl> impl;
 
   // If we are using other that the default implementation, we must
   // clean up.
   if (opt_select_reactor || opt_wfmo_reactor)
     {
-      auto_ptr<ACE_Reactor_Impl> auto_impl (ACE_Reactor::instance ()->implementation ());
-      impl = auto_impl;
+      std::unique_ptr<ACE_Reactor_Impl> auto_impl (ACE_Reactor::instance ()->implementation ());
+      impl = std::move(auto_impl);
     }
 
   Read_Handler::set_countdown (opt_nconnections);

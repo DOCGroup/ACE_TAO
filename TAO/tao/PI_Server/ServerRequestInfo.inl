@@ -1,7 +1,6 @@
 // -*- C++ -*-
 #include "tao/PortableServer/Servant_Upcall.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -27,7 +26,6 @@ TAO::ServerRequestInfo::forward_reference (
 {
   // Note that we're converting the ForwardRequest exception in to a
   // LOCATION_FORWARD reply, so we do not set the exception status.
-
   this->server_request_.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
 
   // Store the forward reference in the TAO_ServerRequest object.
@@ -39,7 +37,6 @@ TAO::ServerRequestInfo::forward_reference (CORBA::Object_ptr obj)
 {
   // We only get here if a servant manager threw a
   // PortableServer::ForwardRequest exception.
-
   this->server_request_.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
 
   // Store the forward reference in the TAO_ServerRequest object.
@@ -47,7 +44,7 @@ TAO::ServerRequestInfo::forward_reference (CORBA::Object_ptr obj)
 }
 
 ACE_INLINE TAO_ServerRequest &
-TAO::ServerRequestInfo::server_request (void)
+TAO::ServerRequestInfo::server_request ()
 {
   return this->server_request_;
 }

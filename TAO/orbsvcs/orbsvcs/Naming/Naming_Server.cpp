@@ -32,7 +32,7 @@
 #include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Arg_Shifter.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -260,6 +260,7 @@ TAO_Naming_Server::parse_args (int argc,
         this->round_trip_timeout_ = (int)1.0e7 * ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
+        ACE_FALLTHROUGH;
       default:
 #if !defined (ACE_NLOGGING)
         const ACE_TCHAR *reqNonMinCorba=
@@ -483,11 +484,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           TAO::Storable_Factory* pf = 0;
           ACE_CString directory (ACE_TEXT_ALWAYS_CHAR (persistence_location));
           ACE_NEW_RETURN (pf, TAO::Storable_FlatFileFactory (directory), -1);
-#if defined (ACE_HAS_CPP11)
           std::unique_ptr<TAO::Storable_Factory> persFactory(pf);
-#else
-          auto_ptr<TAO::Storable_Factory> persFactory(pf);
-#endif /* ACE_HAS_CPP11 */
 
           // Use an auto_ptr to ensure that we clean up the factory in the case
           // of a failure in creating and registering the Activator.
@@ -495,11 +492,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             this->storable_naming_context_factory (context_size);
           // Make sure we got a factory
           if (cf == 0) return -1;
-#if defined (ACE_HAS_CPP11)
           std::unique_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
-#else
-          auto_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
-#endif /* ACE_HAS_CPP11 */
 
           // This instance will either get deleted after recreate all or,
           // in the case of a servant activator's use, on destruction of the
@@ -579,7 +572,6 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         // Initialize Persistent Naming Service.
         //
         {
-
           // Create Naming Context Implementation Factory to be used for the creation of
           // naming contexts by the TAO_Persistent_Context_Index
           TAO_Persistent_Naming_Context_Factory *naming_context_factory =
@@ -615,7 +607,6 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                             TAO_ROOT_NAMING_CONTEXT,
                                                             context_size);
           this->assign (size_t(ROOT), false, new_context.in());
-
         }
 
 #if !defined (CORBA_E_MICRO)
@@ -762,25 +753,17 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 TAO_Storable_Naming_Context_Factory *
 TAO_Naming_Server::storable_naming_context_factory (size_t context_size)
 {
-#if defined (ACE_HAS_NEW_NOTHROW)
-  return new (ACE_nothrow) TAO_Storable_Naming_Context_Factory (context_size);
-#else
-  return new TAO_Storable_Naming_Context_Factory (context_size);
-#endif /* ACE_HAS_NEW_NOTHROW */
+  return new (std::nothrow) TAO_Storable_Naming_Context_Factory (context_size);
 }
 
 TAO_Persistent_Naming_Context_Factory *
-TAO_Naming_Server::persistent_naming_context_factory (void)
+TAO_Naming_Server::persistent_naming_context_factory ()
 {
-#if defined (ACE_HAS_NEW_NOTHROW)
-  return new (ACE_nothrow) TAO_Persistent_Naming_Context_Factory;
-#else
-  return new TAO_Persistent_Naming_Context_Factory;
-#endif /* ACE_HAS_NEW_NOTHROW */
+  return new (std::nothrow) TAO_Persistent_Naming_Context_Factory;
 }
 
 int
-TAO_Naming_Server::fini (void)
+TAO_Naming_Server::fini ()
 {
   // First get rid of the multi cast handler
   if (this->ior_multicast_)
@@ -802,7 +785,6 @@ TAO_Naming_Server::fini (void)
     {
       if (!CORBA::is_nil (this->ns_poa_.in ()))
         this->ns_poa_->destroy (1, 1);
-
     }
   catch (const CORBA::Exception&)
     {
@@ -852,13 +834,13 @@ TAO_Naming_Server::fini (void)
 }
 
 char*
-TAO_Naming_Server::naming_service_ior (void)
+TAO_Naming_Server::naming_service_ior ()
 {
   return CORBA::string_dup (this->iors_[ROOT].ior_.c_str());
 }
 
 CosNaming::NamingContext_ptr
-TAO_Naming_Server::operator-> (void) const
+TAO_Naming_Server::operator-> () const
 {
   if (CORBA::is_nil (this->iors_[ROOT].ref_))
     {
@@ -872,7 +854,7 @@ TAO_Naming_Server::operator-> (void) const
 }
 
 
-TAO_Naming_Server::~TAO_Naming_Server (void)
+TAO_Naming_Server::~TAO_Naming_Server ()
 {
   delete [] this->iors_;
 
@@ -921,7 +903,6 @@ TAO_Naming_Server::bundle_at(size_t ndx) const
     }
   return &iors_[ndx];
   }
-
 
 
 int

@@ -42,8 +42,6 @@
 #include "tao/orbconf.h"
 #include "tao/Versioned_Namespace.h"
 
-//long random (void);
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class MediaTimer

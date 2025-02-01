@@ -28,7 +28,7 @@ public:
   be_visitor_component_fwd_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_component_fwd_ch (void);
+  ~be_visitor_component_fwd_ch ();
 
   /// visit interface_fwd.
   virtual int visit_component_fwd (be_component_fwd *node);

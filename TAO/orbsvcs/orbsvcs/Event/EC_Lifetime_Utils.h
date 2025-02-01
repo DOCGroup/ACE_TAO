@@ -41,7 +41,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Object_Deactivator
 public:
   /// Default constructor.  Deactivation info can be supplied later
   /// through set_values ().
-  TAO_EC_Object_Deactivator (void);
+  TAO_EC_Object_Deactivator ();
 
   /// Constructor.  Set @a id which will be deactivated from @ poa in
   /// the deactivator's destructor, unless deactivate () or
@@ -52,7 +52,7 @@ public:
   /// Destructor.  Deactivates id_ from poa_ if those values have
   /// been set, and neither deactivate() nor disallow_deactivation()
   /// have been invoked.
-  ~TAO_EC_Object_Deactivator (void);
+  ~TAO_EC_Object_Deactivator ();
 
   /// Set <id> which will be deactivated from <poa> in
   /// the deactivator's destructor, unless deactivate () or
@@ -65,23 +65,22 @@ public:
 
   /// Explicitly enable deactivation to happen in destructor or when
   /// deactivate() is called.
-  void allow_deactivation (void);
+  void allow_deactivation ();
 
   /// Explicitly disable deactivation from happening in destructor or
   /// when deactivate() is called.
-  void disallow_deactivation (void);
+  void disallow_deactivation ();
 
   /// Perform deactivation now if <poa_> and <id_> values have been set, and
   /// deactivation hasn't happened yet nor has it been explicitly
   /// disallowed.  CORBA exceptions occurring during deactivation are
   /// not propagated.   Deactivation will NOT happen in the destructor.
-  void deactivate (void);
+  void deactivate ();
 
   /// Accessor for the POA used in deactivation.
-  PortableServer::POA_var poa (void) const;
+  PortableServer::POA_var poa () const;
 
 private:
-
   /// Disallow.
   //@{
   TAO_EC_Object_Deactivator (const TAO_EC_Object_Deactivator &rhs);
@@ -119,15 +118,13 @@ private:
 class TAO_RTEvent_Serv_Export TAO_EC_Deactivated_Object
 {
 public:
-
   /// Set deactivation state to that specified by the @a deactivator
   /// argument.
   void set_deactivator (TAO_EC_Object_Deactivator & deactivator);
 
 protected:
-
-  TAO_EC_Deactivated_Object (void);
-  ~TAO_EC_Deactivated_Object (void);
+  TAO_EC_Deactivated_Object ();
+  ~TAO_EC_Deactivated_Object ();
 
   /// Utility for deactivating ourselves from POA.
   TAO_EC_Object_Deactivator deactivator_;
@@ -147,10 +144,10 @@ class TAO_RTEvent_Serv_Export TAO_EC_ORB_Holder
 {
 public:
   /// Constructor. No-op.
-  TAO_EC_ORB_Holder (void);
+  TAO_EC_ORB_Holder ();
 
   /// Destructor.  If holding an ORB, destroy it.
-  ~TAO_EC_ORB_Holder (void);
+  ~TAO_EC_ORB_Holder ();
 
   /// Set the ORB to be destroyed in destructor to <orb_var>.  If
   /// TAO_EC_ORB_Holder already held an orb prior to invocation of
@@ -158,7 +155,6 @@ public:
   void init (CORBA::ORB_var orb_var);
 
 private:
-
   /// Disallow.
   //@{
   TAO_EC_ORB_Holder & operator= (const TAO_EC_ORB_Holder &rhs);
@@ -183,10 +179,10 @@ class TAO_RTEvent_Serv_Export TAO_EC_Event_Channel_Holder
 {
 public:
   /// Constructor. No-op.
-  TAO_EC_Event_Channel_Holder (void);
+  TAO_EC_Event_Channel_Holder ();
 
   /// Destructor.  If holding an Event Channel, destroy it.
-  ~TAO_EC_Event_Channel_Holder (void);
+  ~TAO_EC_Event_Channel_Holder ();
 
   /// Set the Event Channel to be destroyed in destructor to @a ec_var.  If
   /// TAO_EC_Event_Channel_Holder already held an Event Channel prior
@@ -194,7 +190,6 @@ public:
   void init (RtecEventChannelAdmin::EventChannel_var ec_var);
 
 private:
-
   /// Disallow.
   //@{
   TAO_EC_Event_Channel_Holder & operator= (const TAO_EC_Event_Channel_Holder &rhs);

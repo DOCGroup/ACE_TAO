@@ -3,14 +3,13 @@
 #include "JAWS/IO_Acceptor.h"
 
 
-
 JAWS_Reaper::JAWS_Reaper (JAWS_Concurrency_Base *concurrency)
   : concurrency_ (concurrency),
     waiting_ (0)
 {
 }
 
-JAWS_Reaper::~JAWS_Reaper (void)
+JAWS_Reaper::~JAWS_Reaper ()
 {
 }
 
@@ -32,7 +31,7 @@ JAWS_Reaper::open (void *)
 }
 
 int
-JAWS_Reaper::svc (void)
+JAWS_Reaper::svc ()
 {
   ACE_TRACE ("JAWS_Reaper::svc");
   int result = this->concurrency_->thr_mgr ()->wait ();

@@ -167,8 +167,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       using namespace Bug_3647_Regression;
       PortableServer::ServantBase_var impl(
-          new Middle_Impl(backend.in(), orb.in(), verbose,
-                          timeout));
+          new Middle_Impl(backend.in(), orb.in(), verbose));
 
       PortableServer::ObjectId_var id =
           root_poa->activate_object (impl.in());
@@ -199,7 +198,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
               "middle_server(%P|%t) - event loop finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

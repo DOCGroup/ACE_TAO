@@ -42,10 +42,10 @@ public:
   TAO_Connection_Purging_Strategy (int cache_maximum);
 
   /// The destructor
-  virtual ~TAO_Connection_Purging_Strategy (void);
+  virtual ~TAO_Connection_Purging_Strategy ();
 
   /// Return the maximum number of cache entries
-  virtual int cache_maximum (void) const;
+  virtual int cache_maximum () const;
 
   /// Sub-classes must implement these methods
   virtual void update_item (TAO_Transport& transport) = 0;

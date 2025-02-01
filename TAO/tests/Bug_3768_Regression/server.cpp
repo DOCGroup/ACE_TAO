@@ -12,7 +12,7 @@ public:
   {
   }
 
-  int svc(void)
+  int svc()
   {
     orb_->run();
     return 0;
@@ -125,7 +125,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       work.wait (); // wait for the worker to finish
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

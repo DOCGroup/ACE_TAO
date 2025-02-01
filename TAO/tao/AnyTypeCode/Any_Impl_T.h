@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Any_Impl_T.h
@@ -7,7 +5,6 @@
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
 //=============================================================================
-
 
 #ifndef TAO_ANY_IMPL_T_H
 #define TAO_ANY_IMPL_T_H
@@ -43,7 +40,7 @@ namespace TAO
     Any_Impl_T (_tao_destructor destructor,
                 CORBA::TypeCode_ptr,
                 T * const);
-    virtual ~Any_Impl_T (void);
+    virtual ~Any_Impl_T ();
 
     static void insert (CORBA::Any &,
                         _tao_destructor destructor,
@@ -61,8 +58,8 @@ namespace TAO
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
     virtual void _tao_decode (TAO_InputCDR & );
-    virtual const void *value (void) const;
-    virtual void free_value (void);
+    virtual const void *value () const;
+    virtual void free_value ();
 
   private:
     T * value_;
@@ -80,13 +77,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/AnyTypeCode/Any_Impl_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Any_Impl_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

@@ -375,7 +375,7 @@
     <P>
     <h3>IIOP Endpoint Examples</h3>
     <P>
-      Here are some additional examples of IIOP endoints:
+      Here are some additional examples of IIOP endpoints:
     <UL>
       <LI><CODE>-ORBListenEndpoints iiop://1.0@foo1:0</CODE>
       <LI><CODE>-ORBListenEndpoints iiop://1.0@foo:0,1.1@bar,baz:3456</CODE>
@@ -578,13 +578,46 @@
     <P>
       Since DIOP endpoints in TAO have the same form as
       <A HREF="#IIOP">IIOP</A> endpoints, a detailed description is
-      therefore omitted. DIOP has no support for endpoint-specific
-      options.
+      therefore omitted.
     <P>
       We recommend explicitly setting port numbers for endpoints
       since TAO does not support automatic selection of free endpoints for
       UDP sockets.  Instead, the ORB will try to use the same default port
       number in every case.
+    <P>
+
+    <h3>DIOP Endpoint-Specific Options</h3>
+    <P>
+    TAO supports the following endpoint-specific options that apply only
+    to DIOP endpoints:
+
+      <TABLE BORDER="2" CELLSPACING="2" CELLPADDING= "0">
+        <TR>
+          <TH>Option</TH>
+          <TH>Availability</TH>
+          <TH>Description</TH>
+        </TR>
+        <TR>
+          <TD>
+            <CODE>portspan</CODE>
+          </TD>
+          <TD>
+            <CODE>TAO 2.5.12</CODE>
+          </TD>
+          <TD>
+            The <CODE>portspan</CODE> option works identically to the
+            <A HREF="#IIOP">IIOP</A> <CODE>portspan</CODE> option documented above.
+            <P>
+            The format for <CODE>ORBListenEndpoints</CODE> with the
+            <CODE>portspan</CODE> option is:
+            <BLOCKQUOTE>
+              <CODE>-ORBListenEndpoints diop://[</CODE><I>hostname</I><CODE>]:</CODE><I
+>initialPort</I><CODE>/portspan=</CODE><I>span</I>
+            </BLOCKQUOTE>
+          </TD>
+        </TR>
+      </TABLE>
+    </P>
 
     <h3>DIOP Endpoint Examples</h3>
     <P>
@@ -592,6 +625,7 @@
     <UL>
       <LI><CODE>-ORBListenEndpoints diop://1.0@foo1:2345</CODE>
       <LI><CODE>-ORBListenEndpoints diop://1.1@:1234</CODE>
+      <LI><CODE>-ORBListenEndpoints diop://1.1@foo:2020/portspan=30</CODE>
     </UL>
 
     <hr>

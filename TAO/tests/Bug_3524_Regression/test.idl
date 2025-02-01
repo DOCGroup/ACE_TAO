@@ -1,3 +1,5 @@
+#include "tao/StringSeq.pidl"
+
 module Test
 {
   const short BOUND = 10;

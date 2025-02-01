@@ -15,8 +15,7 @@ TAO_Regular_POA::TAO_Regular_POA (const TAO_Root_POA::String &name,
                   ACE_Lock &lock,
                   TAO_SYNCH_MUTEX &thread_lock,
                   TAO_ORB_Core &orb_core,
-                  TAO_Object_Adapter *object_adapter
-                  )
+                  TAO_Object_Adapter *object_adapter)
   : TAO_Root_POA (name,
                   poa_manager,
                   policies,
@@ -24,18 +23,13 @@ TAO_Regular_POA::TAO_Regular_POA (const TAO_Root_POA::String &name,
                   lock,
                   thread_lock,
                   orb_core,
-                  object_adapter
-                 ),
+                  object_adapter),
      parent_ (parent)
 {
 }
 
-TAO_Regular_POA::~TAO_Regular_POA (void)
-{
-}
-
 void
-TAO_Regular_POA::remove_from_parent_i (void)
+TAO_Regular_POA::remove_from_parent_i ()
 {
   // Remove POA from the parent
   if (this->parent_ != 0)
@@ -49,13 +43,13 @@ TAO_Regular_POA::remove_from_parent_i (void)
 }
 
 CORBA::Boolean
-TAO_Regular_POA::root (void) const
+TAO_Regular_POA::root () const
 {
   return (parent_ == 0);
 }
 
 char
-TAO_Regular_POA::root_key_type (void)
+TAO_Regular_POA::root_key_type ()
 {
   if (this->parent_ != 0)
     {

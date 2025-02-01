@@ -6,7 +6,7 @@ Server_Task::Server_Task (CORBA::ORB_ptr orb)
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
   try
     {

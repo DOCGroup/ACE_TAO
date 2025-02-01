@@ -22,7 +22,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceId id, TAO_OutputCDR &cdr)
   CORBA::Octet *buf = context.context_data.get_buffer ();
 
   for (const ACE_Message_Block *i = cdr.begin ();
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     {
       ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
@@ -42,7 +42,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceContext &context,
   CORBA::Octet *buf = context.context_data.get_buffer ();
 
   for (const ACE_Message_Block *i = cdr.begin ();
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     {
       ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());

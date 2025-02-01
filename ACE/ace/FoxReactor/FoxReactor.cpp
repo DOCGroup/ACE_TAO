@@ -35,7 +35,7 @@ ACE_FoxReactor::ACE_FoxReactor (FXApp* a,
 #endif /* ACE_MT_SAFE */
 }
 
-ACE_FoxReactor::~ACE_FoxReactor (void)
+ACE_FoxReactor::~ACE_FoxReactor ()
 {
 }
 
@@ -65,7 +65,6 @@ ACE_FoxReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_
     nfound = FoxWaitForMultipleEvents (width,
                                       handle_set,
                                       max_wait_time);
-
   } while( nfound == -1 && this->handle_error () > 0 );
 
   if (nfound > 0)
@@ -233,7 +232,7 @@ ACE_FoxReactor::remove_handler_i (const ACE_Handle_Set &handles,
 // timeout in the Reactor's Timer_Queue.
 
 void
-ACE_FoxReactor::reset_timeout (void)
+ACE_FoxReactor::reset_timeout ()
 {
   ACE_Time_Value *max_wait_time =
     this->timer_queue_->calculate_timeout (0);

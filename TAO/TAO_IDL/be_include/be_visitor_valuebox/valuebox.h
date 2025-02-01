@@ -28,7 +28,7 @@ public:
   be_visitor_valuebox (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox (void);
+  ~be_visitor_valuebox ();
 
   /// visit attribute. We provide code for this method in the derived class
   virtual int visit_valuebox (be_valuebox *node);

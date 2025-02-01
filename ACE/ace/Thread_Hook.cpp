@@ -24,7 +24,7 @@ ACE_Thread_Hook::thread_hook (ACE_Thread_Hook *hook)
 }
 
 ACE_Thread_Hook *
-ACE_Thread_Hook::thread_hook (void)
+ACE_Thread_Hook::thread_hook ()
 {
   return ACE_OS_Object_Manager::thread_hook ();
 }

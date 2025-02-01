@@ -47,7 +47,7 @@ TAO::HTIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
   this->transport (specific_transport);
 }
 
-TAO::HTIOP::Connection_Handler::~Connection_Handler (void)
+TAO::HTIOP::Connection_Handler::~Connection_Handler ()
 {
   delete this->transport ();
   int const result =
@@ -94,7 +94,6 @@ TAO::HTIOP::Connection_Handler::open (void*)
   if (local_addr.is_ip_equal (remote_addr)
       && local_addr.get_port_number () == remote_addr.get_port_number ())
     {
-
       if (TAO_debug_level > 0)
         {
           ACE_TCHAR remote_as_string[MAXHOSTNAMELEN + 16];
@@ -141,13 +140,13 @@ TAO::HTIOP::Connection_Handler::open (void*)
 }
 
 int
-TAO::HTIOP::Connection_Handler::resume_handler (void)
+TAO::HTIOP::Connection_Handler::resume_handler ()
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
 int
-TAO::HTIOP::Connection_Handler::close_connection (void)
+TAO::HTIOP::Connection_Handler::close_connection ()
 {
   return this->close_connection_eh (this);
 }
@@ -208,14 +207,14 @@ TAO::HTIOP::Connection_Handler::close (u_long)
 }
 
 int
-TAO::HTIOP::Connection_Handler::release_os_resources (void)
+TAO::HTIOP::Connection_Handler::release_os_resources ()
 {
   int result = this->peer().close ();
   return result;
 }
 
 int
-TAO::HTIOP::Connection_Handler::add_transport_to_cache (void)
+TAO::HTIOP::Connection_Handler::add_transport_to_cache ()
 {
   ACE::HTBP::Addr addr;
 
