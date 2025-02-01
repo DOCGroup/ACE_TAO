@@ -31,10 +31,10 @@ public:
                  int nthreads);
 
   /// Return the thread pool lanes appropriate for the benchamrks
-  const RTCORBA::ThreadpoolLanes & lanes (void) const;
+  const RTCORBA::ThreadpoolLanes & lanes () const;
 
   /// Return the priority of the process
-  RTCORBA::Priority process_priority (void) const;
+  RTCORBA::Priority process_priority () const;
 
 private:
   void setup_lane (int priority, RTCORBA::ThreadpoolLane &lane);

@@ -19,7 +19,6 @@
 #include "ace/Atomic_Op.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // Default number of iterations.
@@ -72,7 +71,7 @@ static Linked_List *linked_list_ptr;
 //         0 if not found,
 //        -1 on an error
 static int
-find_last (void)
+find_last ()
 {
   find_called++;
 
@@ -92,12 +91,11 @@ find_last (void)
     }
 
   return 0;
-
 }
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-r n_readers] [-w n_writers]\n")
@@ -144,7 +142,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 // while we have a read lock.
 
 int
-Reader_Task::svc (void)
+Reader_Task::svc ()
 {
   ACE_Profile_Timer timer;
   ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
@@ -219,7 +217,7 @@ Reader_Task::svc (void)
 // checking that nobody steps on it while we can write it.
 
 int
-Writer_Task::svc (void)
+Writer_Task::svc ()
 {
   ACE_Profile_Timer timer;
   ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
@@ -269,7 +267,7 @@ Time_Calculation::report_time (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time
 }
 
 void
-Time_Calculation ::print_stats (void)
+Time_Calculation ::print_stats ()
 {
   ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time = this->times_;
   u_int iterations = 1;
@@ -310,7 +308,7 @@ Time_Calculation ::print_stats (void)
 }
 
 static int
-init (void)
+init ()
 {
   char entry[MAX_STRING_SIZE];
   ACE_CString *cString_ptr = 0;

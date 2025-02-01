@@ -82,7 +82,7 @@ create_proxyFilter (CosNotifyChannelAdmin::EventChannel_ptr ec)
     constraint_list[0].constraint_expr =
       CORBA::string_dup ("$.domain_name == 'domain1'");
 
-    filter->add_constraints (constraint_list);
+    CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
     }
   return filter._retn();
 }
@@ -162,7 +162,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 status = consumer_1->messages_received() == 1 ? 0 : 1;
 
               ACE_DEBUG((LM_DEBUG, "Test status is %s.\n", status == 1 ? "fail" : "pass"));
-
             }
         }
     }

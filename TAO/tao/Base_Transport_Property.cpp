@@ -7,21 +7,17 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Base_Transport_Property::~TAO_Base_Transport_Property (void)
-{
-}
-
 TAO_Transport_Descriptor_Interface *
-TAO_Base_Transport_Property::duplicate (void)
+TAO_Base_Transport_Property::duplicate ()
 {
   // Get a copy of the underlying endpoint
   TAO_Endpoint *const endpt = this->endpoint_->duplicate ();
-  if (endpt == 0)
-    return 0;
+  if (endpt == nullptr)
+    return nullptr;
 
   // Construct a copy of our class
-  TAO_Base_Transport_Property *prop = 0;
-  ACE_NEW_RETURN (prop, TAO_Base_Transport_Property (endpt, true), 0);
+  TAO_Base_Transport_Property *prop = nullptr;
+  ACE_NEW_RETURN (prop, TAO_Base_Transport_Property (endpt, true), nullptr);
   return prop;
 }
 
@@ -33,7 +29,7 @@ TAO_Base_Transport_Property::is_equivalent
   const TAO_Base_Transport_Property *other_desc =
     dynamic_cast<const TAO_Base_Transport_Property *> (rhs);
 
-  if (other_desc == 0)
+  if (other_desc == nullptr)
     return false;
 
   return this->endpoint_->is_equivalent (other_desc->endpoint_);
@@ -41,7 +37,7 @@ TAO_Base_Transport_Property::is_equivalent
 
 
 u_long
-TAO_Base_Transport_Property::hash (void) const
+TAO_Base_Transport_Property::hash () const
 {
   return this->endpoint_->hash ();
 }

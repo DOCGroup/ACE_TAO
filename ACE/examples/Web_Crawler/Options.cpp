@@ -5,7 +5,6 @@
 #include "ace/OS_NS_string.h"
 
 
-
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -96,60 +95,60 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Options::port_no (void) const
+Options::port_no () const
 {
   return this->port_no_;
 }
 
 int
-Options::recurse (void) const
+Options::recurse () const
 {
   return this->recurse_;
 }
 
 const ACE_Time_Value *
-Options::timeout (void) const
+Options::timeout () const
 {
   return &this->timeout_;
 }
 
 int
-Options::debug (void) const
+Options::debug () const
 {
   return this->debug_;
 }
 
 int
-Options::verbose (void) const
+Options::verbose () const
 {
   return this->verbose_;
 }
 
 const ACE_TCHAR *
-Options::order (void) const
+Options::order () const
 {
   return this->order_;
 }
 const ACE_TCHAR *
-Options::hostname (void) const
+Options::hostname () const
 {
   return this->hostname_;
 }
 
 const ACE_TCHAR *
-Options::path_name (void) const
+Options::path_name () const
 {
   return this->uri_;
 }
 
 const ACE_TCHAR *
-Options::url_filter (void) const
+Options::url_filter () const
 {
   return this->url_filter_;
 }
 
 Command_Processor *
-Options::command_processor (void) const
+Options::command_processor () const
 {
   return this->command_processor_;
 }
@@ -161,7 +160,7 @@ Options::command_processor (Command_Processor *cp)
 }
 
 URL_Visitor *
-Options::visitor (void) const
+Options::visitor () const
 {
   return this->visitor_;
 }
@@ -173,7 +172,7 @@ Options::visitor (URL_Visitor *v)
 }
 
 int
-Options::handle_limit (void)
+Options::handle_limit ()
 {
   return this->handle_limit_;
 }

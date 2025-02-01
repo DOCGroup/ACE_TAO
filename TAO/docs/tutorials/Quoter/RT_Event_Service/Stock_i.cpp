@@ -14,12 +14,12 @@ protected:
       ref_count_(0) {}
 
 public:
-  virtual void _add_ref (void)
+  virtual void _add_ref ()
   {
     ++this->ref_count_;
   }
 
-  virtual void _remove_ref (void)
+  virtual void _remove_ref ()
   {
     CORBA::ULong new_count = --this->ref_count_;
 
@@ -38,7 +38,7 @@ Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
   this->data_.price = price;
 }
 
-Quoter_Stock_i::~Quoter_Stock_i (void)
+Quoter_Stock_i::~Quoter_Stock_i ()
 {
   if (consumer_proxy_.in ())
     consumer_proxy_->disconnect_push_consumer ();
@@ -90,7 +90,7 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 }
 
 void
-Quoter_Stock_i::disconnect_push_supplier (void)
+Quoter_Stock_i::disconnect_push_supplier ()
 {
   // Forget about the consumer it is not there anymore
   this->consumer_proxy_ =

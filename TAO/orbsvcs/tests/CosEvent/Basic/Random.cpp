@@ -25,7 +25,7 @@ deactivate_servant (PortableServer::Servant servant)
 }
 
 
-RND_Driver::RND_Driver (void)
+RND_Driver::RND_Driver ()
   :  nsuppliers_ (4),
      nconsumers_ (4),
      max_recursion_ (1)
@@ -207,7 +207,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
 
       // ****************************************************************
 
@@ -326,7 +326,7 @@ RND_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin)
 }
 
 void
-RND_Consumer::disconnect (void)
+RND_Consumer::disconnect ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -344,7 +344,7 @@ RND_Consumer::push (const CORBA::Any &event)
 }
 
 void
-RND_Consumer::disconnect_push_consumer (void)
+RND_Consumer::disconnect_push_consumer ()
 {
 }
 
@@ -376,7 +376,7 @@ RND_Supplier::connect (CosEventChannelAdmin::SupplierAdmin_ptr admin)
 }
 
 void
-RND_Supplier::disconnect (void)
+RND_Supplier::disconnect ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -388,7 +388,7 @@ RND_Supplier::disconnect (void)
 }
 
 void
-RND_Supplier::push_new_event (void)
+RND_Supplier::push_new_event ()
 {
   CORBA::Any event;
   CORBA::Long recursion = 0;
@@ -415,12 +415,12 @@ RND_Supplier::push (CORBA::Any &event)
 }
 
 void
-RND_Supplier::disconnect_push_supplier (void)
+RND_Supplier::disconnect_push_supplier ()
 {
 }
 
 int
-RND_Supplier::svc (void)
+RND_Supplier::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "Thread %t started\n"));
   int percent = 10;

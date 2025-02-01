@@ -23,16 +23,15 @@ class Echo_Client_Request_Interceptor
 {
   // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
-
-  Echo_Client_Request_Interceptor (void);
+  Echo_Client_Request_Interceptor ();
   // ctor.
   virtual ~Echo_Client_Request_Interceptor ();
   // dtor.
 
-  virtual char * name (void);
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void send_poll (
       PortableInterceptor::ClientRequestInfo_ptr);
@@ -59,15 +58,15 @@ class Echo_Server_Request_Interceptor
 {
   // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
-  Echo_Server_Request_Interceptor (void);
+  Echo_Server_Request_Interceptor ();
   // cotr.
   ~Echo_Server_Request_Interceptor ();
   // dotr.
 
-  virtual char * name (void);
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void receive_request_service_contexts (
         PortableInterceptor::ServerRequestInfo_ptr);

@@ -39,7 +39,6 @@ static const int RECURSION_INDENT = 3;
 static int entrycount = 0;
 
 extern "C" {
-
 static int
 selector (const ACE_DIRENT *d)
 {
@@ -55,7 +54,7 @@ comparator (const ACE_DIRENT **d1, const ACE_DIRENT **d2)
 } /* extern "C" */
 
 static int
-dirent_selector_test (void)
+dirent_selector_test ()
 {
   int n;
   int error = 0;
@@ -156,7 +155,7 @@ dirent_selector_test (void)
 }
 
 static int
-dirent_test (void)
+dirent_test ()
 {
   ACE_Dirent dir;
 
@@ -315,7 +314,7 @@ dirent_count (const ACE_TCHAR *dir_path,
 }
 
 static int
-dirent_recurse_test (void)
+dirent_recurse_test ()
 {
   int total_dirs = 0;
   int total_files = 0;

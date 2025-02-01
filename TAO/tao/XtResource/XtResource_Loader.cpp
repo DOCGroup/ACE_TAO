@@ -6,7 +6,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   XtResource_Loader::XtResource_Loader (XtAppContext context)
   {
     XtResource_Factory *tmp = 0;

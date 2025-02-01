@@ -25,7 +25,7 @@ class Alt_Mapping_i : public POA_Alt_Mapping
 public:
   Alt_Mapping_i (CORBA::ORB_ptr orb);
 
-  ~Alt_Mapping_i (void);
+  ~Alt_Mapping_i ();
 
   virtual std::string
   test_unbounded_string (const std::string s1,
@@ -37,7 +37,7 @@ public:
     Alt_Mapping::StructSeq & s2,
     Alt_Mapping::StructSeq & s3);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

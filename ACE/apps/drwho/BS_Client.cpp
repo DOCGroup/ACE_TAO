@@ -5,7 +5,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 
-BS_Client::BS_Client (void)
+BS_Client::BS_Client ()
 {
   this->count_ = FILE_MANAGER::instance ()->open_file (Options::friend_file);
 
@@ -77,7 +77,7 @@ BS_Client::insert (const char *key_name, int)
 }
 
 Protocol_Record *
-BS_Client::get_each_entry (void)
+BS_Client::get_each_entry ()
 {
   for (Protocol_Record *prp = Binary_Search::get_each_entry ();
        prp != 0;

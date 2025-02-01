@@ -52,7 +52,7 @@ namespace TAO
                     size_t tss_slot= 0,
                     PICurrent_Impl *pop= 0);
     /// Destructor.
-    ~PICurrent_Impl (void);
+    ~PICurrent_Impl ();
 
     /// Retrieve information stored in the slot table at the given
     /// SlotId.
@@ -66,10 +66,10 @@ namespace TAO
     void take_lazy_copy (PICurrent_Impl *p);
 
     /// Push a new PICurrent_Impl on stack
-    void push (void);
+    void push ();
 
     /// Pop old PICurrent_Impl from stack
-    void pop (void);
+    void pop ();
 
   private:
     /// Force this object to convert from a logical (referenced)
@@ -94,12 +94,8 @@ namespace TAO
      */
     Table & current_slot_table ();
 
-    /// Prevent copying through the copy constructor and the assignment
-    /// operator.
-    //@{
-    PICurrent_Impl (const PICurrent_Impl &);
-    void operator= (const PICurrent_Impl &);
-    //@}
+    PICurrent_Impl (const PICurrent_Impl &) = delete;
+    void operator= (const PICurrent_Impl &) = delete;
 
   private:
     /// Allow for stack of PICurrent_Impl as required.

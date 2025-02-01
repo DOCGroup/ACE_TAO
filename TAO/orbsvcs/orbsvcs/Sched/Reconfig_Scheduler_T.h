@@ -42,7 +42,6 @@ class TAO_Reconfig_Scheduler :
   //
 {
 public:
-
   /// Type of map used for O(1) lookup of RT_Infos by their handles.
   typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
                                   TAO_RT_Info_Ex *,
@@ -106,7 +105,7 @@ public:
             u_long stability_flags);
 
   /// Closes the scheduler, releasing all current resources.
-  void close (void);
+  void close ();
 
   /**
    * Create an RT_Info.  If it does not exist, a new RT_Info is
@@ -248,7 +247,7 @@ public:
    * of scheduled priorities.  All scheduled priorities range from 0
    * to the number returned, inclusive.
    */
-  virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (void);
+  virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority ();
 
   /// Provides the set of Config_Infos associated with the current schedule.
   virtual void get_config_infos (RtecScheduler::Config_Info_Set_out configs);
@@ -308,7 +307,6 @@ public:
   void critical_utilization_threshold (const CORBA::Double &);
 
 protected:
-
   // @@ TO DO: use a memento to save and restore scheduler state without
   //           breaking encapsulation, particularly of these flags.
 
@@ -436,15 +434,15 @@ protected:
 
   /// Traverses dependency graph, assigning a topological ordering.
   /// Resets DFS map entries, do DFS traversal, constructs DFS map.
-  virtual void dfs_traverse_i (void);
+  virtual void dfs_traverse_i ();
 
   /// Sorts an array of RT_info handles in topological order, then
   /// checks for loops, marks unresolved remote dependencies.
-  virtual void detect_cycles_i (void);
+  virtual void detect_cycles_i ();
 
   /// Compute aggregate execution times, then performs admission over
   /// rate tuples.
-  void perform_admission_i (void);
+  void perform_admission_i ();
 
 
   /**
@@ -452,29 +450,29 @@ protected:
    * ordering.  Resets DFS map entries, do DFS traversal, constructs
    * DFS map.
    */
-  void crit_dfs_traverse_i (void);
+  void crit_dfs_traverse_i ();
 
 
   /// Propagates criticalities.
-  void propagate_criticalities_i (void);
+  void propagate_criticalities_i ();
 
 
   /// Propagates effective execution time and period, sets total frame size.
-  void propagate_characteristics_i (void);
+  void propagate_characteristics_i ();
 
   /**
    * Sort operations by urgency (done by strategy), then assign
    * priorities and subpriorities in one pass.  (Re)computes utilization
    * and sets last scheduled priority and last feasible priority.
    */
-  virtual void assign_priorities_i (void);
+  virtual void assign_priorities_i ();
 
   /// Refreshes the array of tuple pointers, corrects the count.
-  void refresh_tuple_ptr_array_i (void);
+  void refresh_tuple_ptr_array_i ();
 
   /// Compute utilization, set last feasible priority.
 /* WSOA merge - commented out
-  virtual void compute_utilization_i (void);
+  virtual void compute_utilization_i ();
 
 
   /// Helper method to give an RT_Info some reasonable default values
@@ -599,14 +597,7 @@ maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Sched/Reconfig_Scheduler_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Reconfig_Scheduler_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 
 #include /**/ "ace/post.h"
 #endif /* TAO_RECONFIG_SCHEDULER_T_H */

@@ -56,7 +56,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
@@ -84,7 +83,7 @@ namespace TAO
           >
   {
   public:
-    ObjectKey (void);
+    ObjectKey ();
     ObjectKey (CORBA::ULong max);
     ObjectKey (
         CORBA::ULong max,
@@ -92,13 +91,11 @@ namespace TAO
         CORBA::Octet* buffer,
         CORBA::Boolean release = false
       );
-#if defined (ACE_HAS_CPP11)
     ObjectKey (const ObjectKey &) = default;
     ObjectKey (ObjectKey &&) = default;
     ObjectKey& operator= (const ObjectKey &) = default;
     ObjectKey& operator= (ObjectKey &&) = default;
-#endif /* ACE_HAS_CPP11 */
-    ~ObjectKey (void);
+    ~ObjectKey ();
 
     typedef ObjectKey_var _var_type;
 

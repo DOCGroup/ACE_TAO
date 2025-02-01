@@ -87,7 +87,6 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
 
   ::perform_invocation<Test::NonRecursiveUnionWithStringStruct3> (hello,
                                                                   the_any);
-
 }
 
 /**
@@ -98,7 +97,7 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
  * Test method invocation functor.
  */
 template <typename T>
-struct Caller : public std::unary_function<T, void>
+struct Caller : public std::function<void(T)>
 {
   /// Constructor.
   Caller (CORBA::ORB_ptr o, Test::Hello_ptr h)

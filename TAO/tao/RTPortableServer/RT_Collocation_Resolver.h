@@ -41,7 +41,7 @@ class TAO_RTPortableServer_Export TAO_RT_Collocation_Resolver :
 {
 public:
   /// Is @a object collocated?
-  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object) const;
+  CORBA::Boolean is_collocated (CORBA::Object_ptr object) const override;
 };
 
 

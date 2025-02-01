@@ -1,5 +1,3 @@
-
-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
@@ -48,7 +46,7 @@ if ($server->WaitForFileTimed ($TestCaseC_i,
 # Body_dup is there, then all the Body_* methods are also there.
 #
 $found = 0 ;
-open (I_FILE, "$server_TestCaseC_i") ;
+open (I_FILE, "$server_TestCaseC_i");
 while( <I_FILE> ){
    chomp ;
    if( $_ =~ /Body_dup/ ){
@@ -62,6 +60,5 @@ if( $found != 1 ){
 }
 
 $server->DeleteFile($TestCaseC_i);
-
 
 exit $status;

@@ -7,20 +7,20 @@ MT_Cubit_Timer::MT_Cubit_Timer (u_int granularity)
 }
 
 void
-MT_Cubit_Timer::start (void)
+MT_Cubit_Timer::start ()
 {
   this->timer_.start ();
 }
 
 void
-MT_Cubit_Timer::stop (void)
+MT_Cubit_Timer::stop ()
 {
   this->timer_.stop ();
   this->timer_.elapsed_time (this->delta_);
 }
 
 ACE_timer_t
-MT_Cubit_Timer::get_elapsed (void)
+MT_Cubit_Timer::get_elapsed ()
 {
   ACE_timer_t real_time;
   // Store the time in usecs.

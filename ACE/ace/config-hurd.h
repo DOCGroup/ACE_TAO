@@ -59,7 +59,6 @@
 #endif /* __GLIBC__ */
 
 #define ACE_HAS_LSEEK64
-//#define ACE_LACKS_LSEEK64_PROTOTYPE
 
 #define ACE_HAS_P_READ_WRITE
 // Use ACE's alternate cuserid() implementation since the use of the
@@ -68,7 +67,6 @@
 
 #if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)
 # define ACE_HAS_ISASTREAM_PROTOTYPE
-# define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
 # define ACE_HAS_CPU_SET_T
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
@@ -79,9 +77,6 @@
 // Then the compiler specific parts
 
 #if defined (__GNUG__)
-  // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
-  // this must appear before its #include.
-# define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
 #elif defined (__GNUC__)
 /**
@@ -118,8 +113,6 @@
 #define ACE_LACKS_ISWASCII
 
 #define ACE_HAS_3_PARAM_WCSTOK
-
-#define ACE_HAS_3_PARAM_READDIR_R
 
 #if !defined (ACE_DEFAULT_BASE_ADDR)
 #  define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
@@ -238,7 +231,6 @@
 
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_AUTOMATIC_INIT_FINI
-#define ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE
 #define ACE_HAS_RECURSIVE_MUTEXES
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS

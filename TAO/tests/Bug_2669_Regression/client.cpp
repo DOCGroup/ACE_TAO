@@ -33,15 +33,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class ChildHandler : public POA_ChildModule::AMI_ChildInterfaceHandler
 {
 public:
-  ChildHandler (void) {};
-  ~ChildHandler (void) {};
+  ChildHandler () = default;
+  ~ChildHandler () = default;
 };
 
 class NonRelatedChildHandler : public POA_AMI_ChildInterfaceHandler
 {
 public:
-  NonRelatedChildHandler (void) {};
-  ~NonRelatedChildHandler (void) {};
+  NonRelatedChildHandler () = default;
+  ~NonRelatedChildHandler () = default;
 };
 
 int
@@ -145,7 +145,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_var->destroy (1,0);
 
       orb->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {

@@ -21,10 +21,10 @@ class TAO_Notify_MC_Export TAO_NS_Control
 {
 public:
   /// This is here due to virtual functions.
-  virtual ~TAO_NS_Control (void);
+  virtual ~TAO_NS_Control ();
 
   /// Return the name of this control object.
-  const ACE_CString& name (void) const;
+  const ACE_CString& name () const;
 
   /// Execute the control object.  Only return false if the command
   /// specified is not supported.

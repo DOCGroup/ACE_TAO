@@ -39,21 +39,21 @@ TAO_FlowSpec_Entry::parse_flow_protocol_string (const char *flow_string)
 
 ACE_INLINE
 int
-TAO_FlowSpec_Entry::direction (void)
+TAO_FlowSpec_Entry::direction ()
 {
   return this->direction_;
 }
 
 ACE_INLINE
 const char *
-TAO_FlowSpec_Entry::direction_str (void) const
+TAO_FlowSpec_Entry::direction_str () const
 {
   return this->direction_str_.c_str();
 }
 
 ACE_INLINE
 const char *
-TAO_FlowSpec_Entry::flow_protocol_str (void) const
+TAO_FlowSpec_Entry::flow_protocol_str () const
 {
   return this->flow_protocol_.c_str();
 }
@@ -67,21 +67,21 @@ TAO_FlowSpec_Entry::flow_protocol_str (const char *str)
 
 ACE_INLINE
 TAO_AV_Core::Protocol
-TAO_FlowSpec_Entry::carrier_protocol (void)
+TAO_FlowSpec_Entry::carrier_protocol ()
 {
   return this->protocol_;
 }
 
 ACE_INLINE
 const char *
-TAO_FlowSpec_Entry::carrier_protocol_str (void) const
+TAO_FlowSpec_Entry::carrier_protocol_str () const
 {
   return this->carrier_protocol_.c_str();
 }
 
 ACE_INLINE
 ACE_Addr *
-TAO_FlowSpec_Entry::address (void)
+TAO_FlowSpec_Entry::address ()
 {
   return this->address_;
 }
@@ -99,7 +99,7 @@ TAO_FlowSpec_Entry::address (ACE_Addr *addr, bool cleanup)
 
 ACE_INLINE
 ACE_Addr *
-TAO_FlowSpec_Entry::control_address (void)
+TAO_FlowSpec_Entry::control_address ()
 {
   return this->control_address_;
 }
@@ -113,21 +113,21 @@ TAO_FlowSpec_Entry::control_address (ACE_Addr *addr)
 
 ACE_INLINE
 const char *
-TAO_FlowSpec_Entry::address_str (void) const
+TAO_FlowSpec_Entry::address_str () const
 {
   return this->address_str_.c_str();
 }
 
 ACE_INLINE
 const char*
-TAO_FlowSpec_Entry::format (void) const
+TAO_FlowSpec_Entry::format () const
 {
   return this->format_.c_str();
 }
 
 ACE_INLINE
 const char *
-TAO_FlowSpec_Entry::flowname (void) const
+TAO_FlowSpec_Entry::flowname () const
 {
   return this->flowname_.c_str();
 }
@@ -150,7 +150,7 @@ TAO_FlowSpec_Entry::set_peer_addr (ACE_Addr *peer_addr)
 
 ACE_INLINE
 ACE_Addr *
-TAO_FlowSpec_Entry::get_peer_addr (void)
+TAO_FlowSpec_Entry::get_peer_addr ()
 {
   return this->peer_addr_;
 }
@@ -173,14 +173,14 @@ TAO_FlowSpec_Entry::set_local_control_addr (ACE_Addr *local_addr)
 
 ACE_INLINE
 ACE_Addr*
-TAO_FlowSpec_Entry::get_local_addr (void)
+TAO_FlowSpec_Entry::get_local_addr ()
 {
   return this->local_addr_;
 }
 
 ACE_INLINE
 ACE_Addr*
-TAO_FlowSpec_Entry::get_local_control_addr (void)
+TAO_FlowSpec_Entry::get_local_control_addr ()
 {
   return this->local_control_addr_;
 }
@@ -197,14 +197,14 @@ TAO_FlowSpec_Entry::set_local_sec_addr (char** local_sec_addr,
 
 ACE_INLINE
 char**
-TAO_FlowSpec_Entry::get_local_sec_addr (void)
+TAO_FlowSpec_Entry::get_local_sec_addr ()
 {
   return this->local_sec_addr_;
 }
 
 ACE_INLINE
 int
-TAO_FlowSpec_Entry::num_local_sec_addrs (void)
+TAO_FlowSpec_Entry::num_local_sec_addrs ()
 {
   return this->num_local_sec_addrs_;
 }
@@ -221,21 +221,21 @@ TAO_FlowSpec_Entry::set_peer_sec_addr (char** peer_sec_addr,
 
 ACE_INLINE
 char**
-TAO_FlowSpec_Entry::get_peer_sec_addr (void)
+TAO_FlowSpec_Entry::get_peer_sec_addr ()
 {
   return this->peer_sec_addr_;
 }
 
 ACE_INLINE
 int
-TAO_FlowSpec_Entry::num_peer_sec_addrs (void)
+TAO_FlowSpec_Entry::num_peer_sec_addrs ()
 {
   return this->num_peer_sec_addrs_;
 }
 
 ACE_INLINE
 TAO_AV_Transport*
-TAO_FlowSpec_Entry::transport (void)
+TAO_FlowSpec_Entry::transport ()
 {
   return this->transport_;
 }
@@ -249,7 +249,7 @@ TAO_FlowSpec_Entry::transport (TAO_AV_Transport *transport)
 
 ACE_INLINE
 TAO_AV_Transport*
-TAO_FlowSpec_Entry::control_transport (void)
+TAO_FlowSpec_Entry::control_transport ()
 {
   return this->control_transport_;
 }
@@ -263,14 +263,14 @@ TAO_FlowSpec_Entry::control_transport (TAO_AV_Transport *control_transport)
 
 ACE_INLINE
 TAO_AV_Flow_Handler *
-TAO_FlowSpec_Entry::handler (void)
+TAO_FlowSpec_Entry::handler ()
 {
   return this->handler_;
 }
 
 ACE_INLINE
 TAO_AV_Flow_Handler *
-TAO_FlowSpec_Entry::control_handler (void)
+TAO_FlowSpec_Entry::control_handler ()
 {
   return this->control_handler_;
 }
@@ -305,7 +305,7 @@ TAO_FlowSpec_Entry::control_handler (TAO_AV_Flow_Handler *handler)
 
 ACE_INLINE
 TAO_AV_Protocol_Object*
-TAO_FlowSpec_Entry::protocol_object (void)
+TAO_FlowSpec_Entry::protocol_object ()
 {
   return this->protocol_object_;
 }
@@ -319,7 +319,7 @@ TAO_FlowSpec_Entry::protocol_object (TAO_AV_Protocol_Object *object)
 
 ACE_INLINE
 TAO_AV_Protocol_Object*
-TAO_FlowSpec_Entry::control_protocol_object (void)
+TAO_FlowSpec_Entry::control_protocol_object ()
 {
   return this->control_protocol_object_;
 }
@@ -333,7 +333,7 @@ TAO_FlowSpec_Entry::control_protocol_object (TAO_AV_Protocol_Object *object)
 
 ACE_INLINE
 int
-TAO_FlowSpec_Entry::is_multicast (void)
+TAO_FlowSpec_Entry::is_multicast ()
 {
   return this->is_multicast_;
 }

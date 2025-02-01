@@ -5,7 +5,6 @@
 #ifndef _TP_LOGGING_SERVER_H
 #define _TP_LOGGING_SERVER_H
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
@@ -13,6 +12,7 @@
 #include "Logging_Event_Handler.h"
 #include "Reactor_Logging_Server_T.h"
 #include "TPLS_export.h"
+#include <memory>
 
 class TP_Logging_Task : public ACE_Task<ACE_SYNCH> {
          // Instantiated with an MT synchronization trait.
@@ -26,7 +26,7 @@ public:
                    ACE_Time_Value *timeout = 0)
   { return putq (mblk, timeout); }
 
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 typedef ACE_Unmanaged_Singleton<TP_Logging_Task, ACE_Null_Mutex>
@@ -102,7 +102,7 @@ public:
     int i;
     char **array = 0;
     ACE_NEW_RETURN (array, char*[argc], -1);
-    ACE_Auto_Array_Ptr<char *> char_argv (array);
+    std::unique_ptr<char *[]> char_argv (array);
 
     for (i = 0; i < argc; ++i)
       char_argv[i] = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (argv[i]));

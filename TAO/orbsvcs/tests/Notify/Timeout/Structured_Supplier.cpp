@@ -32,12 +32,12 @@ public:
   {
   }
 
-  void go (void)
+  void go ()
   {
     started_ = true;
   }
 
-  void done (void)
+  void done ()
   {
     started_ = false;
   }

@@ -6,11 +6,7 @@
  *   This test program stresses how many threads can be
  *   consecutively (not simultaneously) created on a platform.
  *   Rather than testing exhaustively, it establishes a
- *   semi-arbitrary upper limit (MAX_THREAD)of threads.  The limit
- *   is only partly arbitrary because it was chosen as a value that
- *   exceeded an observed upper limit on the values that Solaris 9
- *   will accept as arguments to thr_concurrency(), used by
- *   ACE_OS::thr_create(THR_NEW_LWP).
+ *   semi-arbitrary upper limit (MAX_THREAD)of threads.
  *
  *  @author Chris Cleeland <cleeland@ociweb.com>
  */
@@ -19,7 +15,6 @@
 
 #include "test_config.h"
 #include "ace/Task.h"
-
 
 
 #if defined (ACE_HAS_THREADS)
@@ -57,11 +52,11 @@ public:
   Thread_Pool (int n_threads);
 
   /// Destructor...
-  ~Thread_Pool (void);
+  ~Thread_Pool () override;
 
   /// Iterate <n_iterations> time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
-  virtual int svc (void);
+  int svc () override;
 
   /// Start the threads in the pool.
   void start();
@@ -80,11 +75,11 @@ public:
 private:
   //FUZZ: disable check_for_lack_ACE_OS
   /// Spawn the threads in the pool.
-  virtual int open (void * = 0);
+  int open (void * = 0) override;
 
   /// Close hook.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close (u_long);
+  int close (u_long) override;
 
   /// Total number of threads activated through this thread pool ever.
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> total_activated_threads_;
@@ -103,7 +98,7 @@ Thread_Pool::operator!()
   return ! this->failed_;
 }
 
-Thread_Pool::~Thread_Pool (void)
+Thread_Pool::~Thread_Pool ()
 {
 }
 
@@ -139,7 +134,7 @@ Thread_Pool::start ()
 }
 
 int
-Thread_Pool::svc (void)
+Thread_Pool::svc ()
 {
   unsigned long t = ++this->total_activated_threads_;
   if (PRINT_DEBUG_MSGS) // change this to 'true' for debugging

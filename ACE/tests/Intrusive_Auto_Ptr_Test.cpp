@@ -36,7 +36,7 @@ public:
     return this->ref == howmany;
   }
 
-  static bool was_released (void)
+  static bool was_released ()
   {
     return released;
   }

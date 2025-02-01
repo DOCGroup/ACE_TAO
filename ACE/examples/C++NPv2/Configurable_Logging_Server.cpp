@@ -7,7 +7,6 @@
 #include "ace/Reactor.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
-
   ACE_STATIC_SVC_REGISTER (Reporter_Descriptor);
 
   ACE_Service_Config::open

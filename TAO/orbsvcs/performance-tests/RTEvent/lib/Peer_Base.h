@@ -31,22 +31,22 @@ public:
              RTServer_Setup &rtserver_setup);
 
   /// Destructor
-  virtual ~Peer_Base (void);
+  virtual ~Peer_Base ();
 
   //@{
   /** @name The Federated_Test::Peer methods
    */
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   virtual CORBA::Object_ptr
-      channel (void);
+      channel ();
 
   virtual void connect (Federated_Test::Peer_ptr remote_peer);
 
   Federated_Test::Loopback_ptr setup_loopback (CORBA::Long experiment_id,
                                                CORBA::Long base_event_type);
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
   //@}
 
 protected:

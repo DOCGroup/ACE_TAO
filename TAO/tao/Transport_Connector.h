@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file Transport_Connector.h
@@ -45,12 +43,6 @@ namespace TAO
   class Profile_Transport_Resolver;
 }
 
-/*
- * Hook to add includes and forward declaration
- * to the Connector class.
- */
-//@@ TAO_CONNECTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 /**
  * @class TAO_Connector
  *
@@ -63,12 +55,11 @@ namespace TAO
 class TAO_Export TAO_Connector
 {
 public:
-
   /// Default constructor.
   TAO_Connector (CORBA::ULong tag);
 
   /// The destructor.
-  virtual ~TAO_Connector (void);
+  virtual ~TAO_Connector ();
 
   /**
    * The tag identifying the specific ORB transport layer protocol.
@@ -77,7 +68,7 @@ public:
    * profile0} {tag1, profile1} ...}.  The IOP module defines the
    * ProfileId typedef to be a CORBA::ULong.
    */
-  CORBA::ULong tag (void) const;
+  CORBA::ULong tag () const;
 
   /// Parse a string containing a URL style IOR and return an
   /// MProfile.  Verify that ior is in the correct format.
@@ -95,7 +86,7 @@ public:
   virtual int open (TAO_ORB_Core *orb_core) = 0;
 
   /// Shutdown Connector bridge and concrete Connector.
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /**
    * To support pluggable we need to abstract away the details of the
@@ -121,18 +112,16 @@ public:
   virtual int check_prefix (const char *endpoint) = 0;
 
   /// Return the object key delimiter to use or expect.
-  virtual char object_key_delimiter (void) const = 0;
-
-  //@@ TAO_CONNECTOR_SPL_PUBLIC_METHODS_ADD_HOOK
+  virtual char object_key_delimiter () const = 0;
 
 protected:
   /// A flag indicating the actual connector supports parallel connection
   /// attempts. The base implementation always returns 0. Override to return
   /// non-zero if parallel connection attempts may be tried.
-  virtual int supports_parallel_connects (void) const;
+  virtual int supports_parallel_connects () const;
 
   /// Create a profile with a given endpoint.
-  virtual TAO_Profile *make_profile (void) = 0;
+  virtual TAO_Profile *make_profile () = 0;
 
   /// Set and validate endpoint. We need to do this to initialize our
   /// remote *_Addr's which have not been done during IOR decode.
@@ -210,28 +199,22 @@ protected:
   void orb_core (TAO_ORB_Core *orb_core);
 
   /// Create a connect strategy
-  int create_connect_strategy (void);
+  int create_connect_strategy ();
 
   /// Return the TAO_ORB_Core pointer
-  TAO_ORB_Core *orb_core (void);
+  TAO_ORB_Core *orb_core ();
 
 protected:
-
   /// The (a)synch connect strategy
   TAO_Connect_Strategy *active_connect_strategy_;
 
 private:
-
   /// IOP protocol tag.
   CORBA::ULong const tag_;
 
   /// Pointer to our ORB core
   TAO_ORB_Core *orb_core_;
-
-  //@@ TAO_CONNECTOR_SPL_PRIVATE_DATA_ADD_HOOK
 };
-
-//@@ TAO_CONNECTOR_SPL_EXTERN_ADD_HOOK
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

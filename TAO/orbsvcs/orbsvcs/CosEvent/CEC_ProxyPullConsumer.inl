@@ -2,13 +2,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
-TAO_CEC_ProxyPullConsumer::is_connected_i (void) const
+TAO_CEC_ProxyPullConsumer::is_connected_i () const
 {
   return !CORBA::is_nil (this->supplier_.in ());
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_CEC_ProxyPullConsumer::is_connected (void) const
+TAO_CEC_ProxyPullConsumer::is_connected () const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, false);
 
@@ -16,7 +16,7 @@ TAO_CEC_ProxyPullConsumer::is_connected (void) const
 }
 
 ACE_INLINE CosEventComm::PullSupplier_ptr
-TAO_CEC_ProxyPullConsumer::supplier (void) const
+TAO_CEC_ProxyPullConsumer::supplier () const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
   return CosEventComm::PullSupplier::_duplicate (this->supplier_.in ());

@@ -4,7 +4,7 @@
 #include "tao/TAO_Internal.h"
 #include "ace/Barrier.h"
 
-Cubit_Task::Cubit_Task (void)
+Cubit_Task::Cubit_Task ()
 {
   // No-op.
 }
@@ -26,7 +26,7 @@ Cubit_Task::Cubit_Task (const ACE_TCHAR *args,
 }
 
 int
-Cubit_Task::svc (void)
+Cubit_Task::svc ()
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -97,7 +97,7 @@ Cubit_Task::svc (void)
 }
 
 int
-Cubit_Task::initialize_orb (void)
+Cubit_Task::initialize_orb ()
 {
   try
     {
@@ -154,7 +154,7 @@ Cubit_Task::get_servant_ior (u_int index)
 }
 
 int
-Cubit_Task::create_servants (void)
+Cubit_Task::create_servants ()
 {
   try
     {

@@ -57,10 +57,10 @@ public:
                       bool used_with_reactor_event_loop = false);
 
   /// Virtual destruction.
-  virtual ~ACE_WIN32_Proactor (void);
+  virtual ~ACE_WIN32_Proactor ();
 
   /// Close the IO completion port.
-  virtual int close (void);
+  virtual int close ();
 
   /// This method adds the @a handle to the I/O completion port. This
   /// function is a no-op function for Unix systems.
@@ -81,7 +81,7 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events (void);
+  virtual int handle_events ();
 
   /**
    * Post a result to the completion port of the Proactor.  If errors
@@ -94,29 +94,29 @@ public:
   virtual int post_completion (ACE_WIN32_Asynch_Result *result);
 
   /// Add wakeup dispatch threads (reinit).
-  int wake_up_dispatch_threads (void);
+  int wake_up_dispatch_threads ();
 
   /// Close all dispatch threads.
   int close_dispatch_threads (int wait);
 
   /// Get number of thread used as a parameter to @c CreateIoCompletionPort.
-  size_t number_of_threads (void) const;
+  size_t number_of_threads () const;
 
   /// Set number of thread used as a parameter to @c CreateIoCompletionPort.
   void number_of_threads (size_t threads);
 
   /// Get the event handle.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
-  virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
-  virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void);
-  virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file (void);
-  virtual ACE_Asynch_Write_File_Impl *create_asynch_write_file (void);
-  virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram (void);
-  virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram (void);
-  virtual ACE_Asynch_Accept_Impl *create_asynch_accept (void);
-  virtual ACE_Asynch_Connect_Impl *create_asynch_connect (void);
-  virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
+  virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream ();
+  virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream ();
+  virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file ();
+  virtual ACE_Asynch_Write_File_Impl *create_asynch_write_file ();
+  virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram ();
+  virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram ();
+  virtual ACE_Asynch_Accept_Impl *create_asynch_accept ();
+  virtual ACE_Asynch_Connect_Impl *create_asynch_connect ();
+  virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file ();
 
   // Methods used to create Asynch_IO_Result objects. We create the right
   // objects here in these methods.
@@ -227,7 +227,7 @@ public:
 
 protected:
   /// Task to process pseudo-asynchronous operations
-  ACE_Asynch_Pseudo_Task & get_asynch_pseudo_task (void);
+  ACE_Asynch_Pseudo_Task & get_asynch_pseudo_task ();
 
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).

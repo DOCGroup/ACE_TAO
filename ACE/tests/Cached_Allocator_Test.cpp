@@ -16,11 +16,10 @@
 #include "ace/High_Res_Timer.h"
 
 
-
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 
-typedef ACE_Dynamic_Cached_Allocator<ACE_SYNCH_NULL_MUTEX> DYNAMIC_ALLOCATOR;
+using DYNAMIC_ALLOCATOR = ACE_Dynamic_Cached_Allocator<ACE_MT_SYNCH::NULL_MUTEX>;
 
 static int
 speed_test (ACE_UINT32 loops)
@@ -71,12 +70,11 @@ speed_test (ACE_UINT32 loops)
 }
 
 typedef char MEMBLOCK[8];
-typedef ACE_Cached_Allocator<MEMBLOCK, ACE_SYNCH_NULL_MUTEX> STATIC_ALLOCATOR;
+using STATIC_ALLOCATOR = ACE_Cached_Allocator<MEMBLOCK, ACE_MT_SYNCH::NULL_MUTEX>;
 
 static int
 stdspeed_test (ACE_UINT32 loops)
 {
-
   double tt    = 0.0,
     ut    = 0.0,
     utus  = 0.0,

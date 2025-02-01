@@ -2,31 +2,22 @@
 #include "tao/PortableServer/Active_Policy_Strategies.h"
 #include "tao/PortableServer/POA_Cached_Policies.h"
 
-#include "tao/PortableServer/ThreadStrategy.h"
-#include "tao/PortableServer/ThreadStrategyFactory.h"
-#include "tao/PortableServer/RequestProcessingStrategy.h"
-#include "tao/PortableServer/RequestProcessingStrategyFactory.h"
-#include "tao/PortableServer/IdAssignmentStrategy.h"
-#include "tao/PortableServer/IdAssignmentStrategyFactory.h"
-#include "tao/PortableServer/LifespanStrategy.h"
-#include "tao/PortableServer/LifespanStrategyFactory.h"
-#include "tao/PortableServer/IdUniquenessStrategy.h"
-#include "tao/PortableServer/IdUniquenessStrategyFactory.h"
-#include "tao/PortableServer/ImplicitActivationStrategy.h"
-#include "tao/PortableServer/ImplicitActivationStrategyFactory.h"
-#include "tao/PortableServer/ServantRetentionStrategy.h"
-#include "tao/PortableServer/ServantRetentionStrategyFactory.h"
-
-#include "tao/PortableServer/IdAssignmentPolicyC.h"
-#include "tao/PortableServer/IdUniquenessPolicyC.h"
-#include "tao/PortableServer/ImplicitActivationPolicyC.h"
-#include "tao/PortableServer/LifespanPolicyC.h"
-#include "tao/PortableServer/RequestProcessingPolicyC.h"
-#include "tao/PortableServer/ServantRetentionPolicyC.h"
-#include "tao/PortableServer/ThreadPolicyC.h"
-#include "tao/PortableServer/ServantRetentionPolicyC.h"
-
-#include "ace/Dynamic_Service.h"
+#include "tao/PortableServer/ThreadStrategySingle.h"
+#include "tao/PortableServer/ThreadStrategyORBControl.h"
+#include "tao/PortableServer/IdAssignmentStrategySystem.h"
+#include "tao/PortableServer/IdAssignmentStrategyUser.h"
+#include "tao/PortableServer/IdUniquenessStrategyMultiple.h"
+#include "tao/PortableServer/IdUniquenessStrategyUnique.h"
+#include "tao/PortableServer/ImplicitActivationStrategyExplicit.h"
+#include "tao/PortableServer/ImplicitActivationStrategyImplicit.h"
+#include "tao/PortableServer/LifespanStrategyPersistent.h"
+#include "tao/PortableServer/LifespanStrategyTransient.h"
+#include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
+#include "tao/PortableServer/RequestProcessingStrategyDefaultServant.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantLocator.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantActivator.h"
+#include "tao/PortableServer/ServantRetentionStrategyNonRetain.h"
+#include "tao/PortableServer/ServantRetentionStrategyRetain.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Active_Policy_Strategies.inl"
@@ -38,181 +29,229 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Active_Policy_Strategies::Active_Policy_Strategies (void)
-      : thread_strategy_ (0),
-        request_processing_strategy_ (0),
-        id_assignment_strategy_ (0),
-        lifespan_strategy_ (0),
-        id_uniqueness_strategy_ (0),
-        implicit_activation_strategy_ (0),
-        servant_retention_strategy_ (0),
-        thread_strategy_factory_ (0),
-        servant_retention_strategy_factory_ (0),
-        request_processing_strategy_factory_ (0),
-        lifespan_strategy_factory_ (0),
-        implicit_activation_strategy_factory_ (0),
-        id_uniqueness_strategy_factory_ (0),
-        id_assignment_strategy_factory_ (0)
-    {
-    }
-
     void
     Active_Policy_Strategies::update (Cached_Policies &policies,
                                       ::TAO_Root_POA *poa)
     {
-      this->thread_strategy_factory_ =
-        ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategyFactory");
-
-      if (this->thread_strategy_factory_ != 0)
-        this->thread_strategy_ =
-          this->thread_strategy_factory_->create (policies.thread());
-
-      /**/
-
-      this->id_assignment_strategy_factory_ =
-        ACE_Dynamic_Service<IdAssignmentStrategyFactory>::instance ("IdAssignmentStrategyFactory");
-
-      if (this->id_assignment_strategy_factory_ != 0)
-        this->id_assignment_strategy_ =
-          this->id_assignment_strategy_factory_->create (policies.id_assignment());
+      this->create (policies.thread());
+      this->create (policies.id_assignment());
+      this->create (policies.id_uniqueness());
+      this->create (policies.servant_retention());
+      this->create (policies.lifespan());
+      this->create (policies.implicit_activation());
+      this->create (policies.request_processing(), policies.servant_retention());
 
       /**/
-
-      this->id_uniqueness_strategy_factory_ =
-        ACE_Dynamic_Service<IdUniquenessStrategyFactory>::instance ("IdUniquenessStrategyFactory");
-
-      if (this->id_uniqueness_strategy_factory_ != 0)
-        this->id_uniqueness_strategy_ =
-          this->id_uniqueness_strategy_factory_->create (policies.id_uniqueness());
-
-      /**/
-
-      this->servant_retention_strategy_factory_ =
-        ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyFactory");
-
-      if (this->servant_retention_strategy_factory_ != 0)
-        this->servant_retention_strategy_ =
-          this->servant_retention_strategy_factory_->create (policies.servant_retention());
-
-      /**/
-
-      this->request_processing_strategy_factory_ =
-        ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyFactory");
-
-      if (this->request_processing_strategy_factory_ != 0)
-        this->request_processing_strategy_ =
-          this->request_processing_strategy_factory_->create (policies.request_processing(), policies.servant_retention());
-
-      /**/
-
-      this->lifespan_strategy_factory_ =
-        ACE_Dynamic_Service<LifespanStrategyFactory>::instance ("LifespanStrategyFactory");
-
-      if (this->lifespan_strategy_factory_ != 0)
-        this->lifespan_strategy_ =
-          this->lifespan_strategy_factory_->create (policies.lifespan());
-
-      /**/
-
-      this->implicit_activation_strategy_factory_ =
-        ACE_Dynamic_Service<ImplicitActivationStrategyFactory>::instance ("ImplicitActivationStrategyFactory");
-
-      if (this->implicit_activation_strategy_factory_ != 0)
-        this->implicit_activation_strategy_ =
-          this->implicit_activation_strategy_factory_->create (policies.implicit_activation());
-
-      /**/
-
-// @todo, check if all pointers are != 0
-
-      if (this->lifespan_strategy_ != 0)
+      if (this->lifespan_strategy_)
         {
           this->lifespan_strategy_->strategy_init (poa);
         }
 
-      if (this->request_processing_strategy_ != 0)
+      if (this->request_processing_strategy_)
         {
-          this->request_processing_strategy_->strategy_init (poa, policies.servant_retention());
+          this->request_processing_strategy_->strategy_init (poa);
         }
 
-      if (this->id_uniqueness_strategy_ != 0)
+      if (this->id_uniqueness_strategy_)
         {
           this->id_uniqueness_strategy_->strategy_init (poa);
         }
 
-      if (this->implicit_activation_strategy_ != 0)
-        {
-          this->implicit_activation_strategy_->strategy_init (poa);
-        }
-
-      if (this->thread_strategy_ != 0)
-        {
-          this->thread_strategy_->strategy_init (poa);
-        }
-
-      if (this->servant_retention_strategy_ != 0)
+      if (this->servant_retention_strategy_)
         {
           this->servant_retention_strategy_->strategy_init (poa);
-        }
-
-      if (this->id_assignment_strategy_ != 0)
-        {
-          this->id_assignment_strategy_->strategy_init (poa);
         }
     }
 
     void
-    Active_Policy_Strategies::cleanup (void)
+    Active_Policy_Strategies::cleanup ()
     {
-
-      if (this->lifespan_strategy_ != 0)
+      if (this->lifespan_strategy_)
         {
-          this->lifespan_strategy_factory_->destroy (lifespan_strategy_);
-
-          this->lifespan_strategy_ = 0;
+          this->lifespan_strategy_->strategy_cleanup ();
         }
-
-      if (this->request_processing_strategy_ != 0)
+      this->lifespan_strategy_.reset (nullptr);
+      if (this->request_processing_strategy_)
         {
-          this->request_processing_strategy_factory_->destroy (request_processing_strategy_);
-
-          this->request_processing_strategy_ = 0;
+          this->request_processing_strategy_->strategy_cleanup ();
         }
-
-      if (this->id_uniqueness_strategy_ != 0)
+      this->request_processing_strategy_.reset (nullptr);
+      if (this->id_uniqueness_strategy_)
         {
-          this->id_uniqueness_strategy_factory_->destroy (id_uniqueness_strategy_);
-
-          this->id_uniqueness_strategy_ = 0;
+          this->id_uniqueness_strategy_->strategy_cleanup ();
         }
-
-      if (this->implicit_activation_strategy_ != 0)
+      this->id_uniqueness_strategy_.reset (nullptr);
+      this->implicit_activation_strategy_.reset (nullptr);
+      this->thread_strategy_.reset (nullptr);
+      if (this->servant_retention_strategy_)
         {
-          this->implicit_activation_strategy_factory_->destroy (implicit_activation_strategy_);
-
-          this->implicit_activation_strategy_ = 0;
+          this->servant_retention_strategy_->strategy_cleanup ();
         }
+      this->servant_retention_strategy_.reset (nullptr);
+      this->id_assignment_strategy_.reset (nullptr);
+    }
 
-      if (this->thread_strategy_ != 0)
+    void
+    Active_Policy_Strategies::create (::PortableServer::ThreadPolicyValue value)
+    {
+      switch (value)
+      {
+        case ::PortableServer::SINGLE_THREAD_MODEL :
         {
-          this->thread_strategy_factory_->destroy (thread_strategy_);
-
-          this->thread_strategy_ = 0;
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
+          this->thread_strategy_ = std::make_unique<ThreadStrategySingle> ();
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+          break;
         }
-
-      if (this->servant_retention_strategy_ != 0)
+        case ::PortableServer::ORB_CTRL_MODEL :
         {
-          this->servant_retention_strategy_factory_->destroy (servant_retention_strategy_);
-
-          this->servant_retention_strategy_ = 0;
+          this->thread_strategy_ = std::make_unique<ThreadStrategyORBControl> ();
+          break;
         }
+      }
+    }
 
-      if (this->id_assignment_strategy_ != 0)
+    void
+    Active_Policy_Strategies::create (::PortableServer::IdAssignmentPolicyValue value)
+    {
+      switch (value)
+      {
+        case ::PortableServer::SYSTEM_ID :
         {
-          this->id_assignment_strategy_factory_->destroy (id_assignment_strategy_);
-
-          this->id_assignment_strategy_ = 0;
+          this->id_assignment_strategy_ = std::make_unique<IdAssignmentStrategySystem> ();
+          break;
         }
+        case ::PortableServer::USER_ID :
+        {
+#if !defined (CORBA_E_MICRO)
+          this->id_assignment_strategy_ = std::make_unique<IdAssignmentStrategyUser> ();
+#endif /* CORBA_E_MICRO */
+          break;
+        }
+      }
+    }
+
+    void
+    Active_Policy_Strategies::create (::PortableServer::IdUniquenessPolicyValue value)
+    {
+      switch (value)
+      {
+        case ::PortableServer::MULTIPLE_ID :
+        {
+#if !defined (CORBA_E_MICRO)
+          this->id_uniqueness_strategy_ = std::make_unique<IdUniquenessStrategyMultiple> ();
+#endif /* CORBA_E_MICRO */
+          break;
+        }
+        case ::PortableServer::UNIQUE_ID :
+        {
+          this->id_uniqueness_strategy_ = std::make_unique<IdUniquenessStrategyUnique> ();
+          break;
+        }
+      }
+    }
+
+    void
+    Active_Policy_Strategies::create (::PortableServer::ServantRetentionPolicyValue value)
+    {
+      switch (value)
+      {
+        case ::PortableServer::RETAIN :
+        {
+          this->servant_retention_strategy_ = std::make_unique<ServantRetentionStrategyRetain> ();
+          break;
+        }
+        case ::PortableServer::NON_RETAIN :
+        {
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
+          this->servant_retention_strategy_ = std::make_unique<ServantRetentionStrategyNonRetain> ();
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+          break;
+        }
+      }
+    }
+
+    void
+    Active_Policy_Strategies::create (::PortableServer::LifespanPolicyValue value)
+    {
+      switch (value)
+      {
+        case ::PortableServer::PERSISTENT :
+        {
+#if !defined (CORBA_E_MICRO)
+          this->lifespan_strategy_ = std::make_unique<LifespanStrategyPersistent> ();
+#endif /* CORBA_E_MICRO */
+          break;
+        }
+        case ::PortableServer::TRANSIENT :
+        {
+          this->lifespan_strategy_ = std::make_unique<LifespanStrategyTransient> ();
+          break;
+        }
+      }
+    }
+
+    void
+    Active_Policy_Strategies::create (::PortableServer::ImplicitActivationPolicyValue value)
+    {
+      switch (value)
+      {
+        case ::PortableServer::IMPLICIT_ACTIVATION :
+        {
+#if !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
+          this->implicit_activation_strategy_= std::make_unique<ImplicitActivationStrategyImplicit> ();
+#endif /* CORBA_E_MICRO */
+          break;
+        }
+        case ::PortableServer::NO_IMPLICIT_ACTIVATION :
+        {
+          this->implicit_activation_strategy_ = std::make_unique<ImplicitActivationStrategyExplicit> ();
+          break;
+        }
+      }
+    }
+
+    void
+    Active_Policy_Strategies::create (
+        ::PortableServer::RequestProcessingPolicyValue value,
+        ::PortableServer::ServantRetentionPolicyValue srvalue)
+    {
+      switch (value)
+      {
+        case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
+        {
+          this->request_processing_strategy_ = std::make_unique<RequestProcessingStrategyAOMOnly> ();
+          break;
+        }
+        case ::PortableServer::USE_DEFAULT_SERVANT :
+        {
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+          this->request_processing_strategy_ = std::make_unique<RequestProcessingStrategyDefaultServant> ();
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+          break;
+        }
+        case ::PortableServer::USE_SERVANT_MANAGER :
+        {
+          switch (srvalue)
+          {
+            case ::PortableServer::RETAIN :
+            {
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+              this->request_processing_strategy_ = std::make_unique<RequestProcessingStrategyServantActivator> ();
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+              break;
+            }
+            case ::PortableServer::NON_RETAIN :
+            {
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+              this->request_processing_strategy_ = std::make_unique<RequestProcessingStrategyServantLocator> ();
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+              break;
+            }
+          }
+          break;
+        }
+      }
     }
   }
 }

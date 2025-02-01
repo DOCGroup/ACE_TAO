@@ -32,7 +32,7 @@ public:
                    const char* in_str,
                    const A::Payload &the_payload);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ProxyPushSupplier::TAO_Notify_ProxyPushSupplier (void)
+TAO_Notify_ProxyPushSupplier::TAO_Notify_ProxyPushSupplier ()
 {
 }
 
@@ -15,7 +15,7 @@ TAO_Notify_ProxyPushSupplier::~TAO_Notify_ProxyPushSupplier ()
 }
 
 void
-TAO_Notify_ProxyPushSupplier::release (void)
+TAO_Notify_ProxyPushSupplier::release ()
 {
   delete this;
   //@@ inform factory
@@ -37,7 +37,7 @@ TAO_Notify_ProxyPushSupplier::connect_any_push_consumer (CosEventComm::PushConsu
 }
 
 void
-TAO_Notify_ProxyPushSupplier::disconnect_push_supplier (void)
+TAO_Notify_ProxyPushSupplier::disconnect_push_supplier ()
 {
   TAO_Notify_ProxyPushSupplier::Ptr guard( this );
   this->destroy ();
@@ -45,13 +45,13 @@ TAO_Notify_ProxyPushSupplier::disconnect_push_supplier (void)
 }
 
 CosNotifyChannelAdmin::ProxyType
-TAO_Notify_ProxyPushSupplier::MyType (void)
+TAO_Notify_ProxyPushSupplier::MyType ()
 {
   return CosNotifyChannelAdmin::PUSH_ANY;
 }
 
 const char *
-TAO_Notify_ProxyPushSupplier::get_proxy_type_name (void) const
+TAO_Notify_ProxyPushSupplier::get_proxy_type_name () const
 {
   return "proxy_push_supplier";
 }
@@ -108,7 +108,6 @@ TAO_Notify_ProxyPushSupplier::configure(
   // presently nothing to do here.
   // this method was added to support NotificationMC
 }
-
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -16,16 +16,15 @@
 #include "ace/Reactor.h"
 
 // CTOR
-Object_A_i::Object_A_i (void)
+Object_A_i::Object_A_i ()
   : finish_two_way_call_ (0)
 {
 }
 
 // DTOR
-Object_A_i::~Object_A_i (void)
+Object_A_i::~Object_A_i ()
 {
 }
-
 
 
 void
@@ -46,14 +45,13 @@ Object_A_i::foo (Initiator_ptr theInitiator_ptr)
 }
 
 void
-Object_A_i::finish (void)
+Object_A_i::finish ()
 {
   this->finish_two_way_call_ = 1;
-
 }
 
 void
-Object_A_i::shutdown (void)
+Object_A_i::shutdown ()
 {
   int argc = 0;
   ACE_TCHAR **argv = 0;

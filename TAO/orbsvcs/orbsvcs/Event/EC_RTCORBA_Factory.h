@@ -41,11 +41,11 @@ public:
                           const RTCORBA::ThreadpoolLanes &lanes);
 
   /// destructor...
-  virtual ~TAO_EC_RTCORBA_Factory (void);
+  virtual ~TAO_EC_RTCORBA_Factory ();
 
   // Decorated methods...
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini (void);
+  virtual int fini ();
   virtual TAO_EC_Dispatching*
       create_dispatching (TAO_EC_Event_Channel_Base*);
   virtual void
@@ -94,9 +94,9 @@ public:
       create_proxy_push_supplier_collection (TAO_EC_Event_Channel_Base*);
   virtual void
       destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*);
-  virtual ACE_Lock* create_consumer_lock (void);
+  virtual ACE_Lock* create_consumer_lock ();
   virtual void destroy_consumer_lock (ACE_Lock*);
-  virtual ACE_Lock* create_supplier_lock (void);
+  virtual ACE_Lock* create_supplier_lock ();
   virtual void destroy_supplier_lock (ACE_Lock*);
   virtual TAO_EC_ConsumerControl*
       create_consumer_control (TAO_EC_Event_Channel_Base*);

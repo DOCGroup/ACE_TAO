@@ -45,7 +45,7 @@ public:
                                const TAO_Property_Filter& pfilter);
 
   /// Destructor.
-  virtual ~TAO_Register_Offer_Iterator (void);
+  virtual ~TAO_Register_Offer_Iterator ();
 
   /// Deposit at maximum n offers into the return sequence and return 1,
   /// or return 0 if the iterator is done and no offers are returned.
@@ -58,14 +58,13 @@ public:
    * the trader will have all the offers it has now when the time
    * to return them comes.
    */
-  virtual CORBA::ULong max_left (void);
+  virtual CORBA::ULong max_left ();
 
   /// Add an offer the iterator should iterate over.
   void add_offer (CosTrading::OfferId id,
                   const CosTrading::Offer *);
 
 private:
-
   /// A reference to the trader is needed for access to the map of offers.
   TAO_Offer_Database<MAP_LOCK_TYPE> &db_;
 
@@ -75,9 +74,7 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Trader/Offer_Iterators_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

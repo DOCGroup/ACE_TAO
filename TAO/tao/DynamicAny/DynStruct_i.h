@@ -44,7 +44,7 @@ public:
   TAO_DynStruct_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynStruct_i (void);
+  ~TAO_DynStruct_i ();
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
@@ -57,15 +57,15 @@ public:
 
   // = Functions specific to DynStruct.
 
-  virtual DynamicAny::FieldName current_member_name (void);
+  virtual DynamicAny::FieldName current_member_name ();
 
-  virtual CORBA::TCKind current_member_kind (void);
+  virtual CORBA::TCKind current_member_kind ();
 
-  virtual DynamicAny::NameValuePairSeq *get_members (void);
+  virtual DynamicAny::NameValuePairSeq *get_members ();
 
   virtual void set_members (const DynamicAny::NameValuePairSeq& value);
 
-  virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (void);
+  virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any ();
 
   virtual void set_members_as_dyn_any (
       const DynamicAny::NameDynAnyPairSeq & value);
@@ -74,13 +74,13 @@ public:
 
   virtual void from_any (const CORBA::Any & value);
 
-  virtual CORBA::Any * to_any (void);
+  virtual CORBA::Any * to_any ();
 
   virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
-  virtual DynamicAny::DynAny_ptr current_component (void);
+  virtual DynamicAny::DynAny_ptr current_component ();
 
 private:
   /// Check if the typecode is acceptable.
@@ -91,7 +91,7 @@ private:
   void set_from_any (const CORBA::Any &any);
 
   /// Called by both versions of init().
-  void init_common (void);
+  void init_common ();
 
   // = Use copy() or assign() instead of these.
   TAO_DynStruct_i (const TAO_DynStruct_i &src);

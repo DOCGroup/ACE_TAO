@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::ULong
-TAO_POA_Policy_Set::num_policies (void) const
+TAO_POA_Policy_Set::num_policies () const
 {
   return this->impl_.num_policies ();
 }
@@ -39,7 +39,7 @@ TAO_POA_Policy_Set::get_policy (CORBA::PolicyType policy)
 }
 
 ACE_INLINE TAO_Policy_Set &
-TAO_POA_Policy_Set::policies (void)
+TAO_POA_Policy_Set::policies ()
 {
   return this->impl_;
 }

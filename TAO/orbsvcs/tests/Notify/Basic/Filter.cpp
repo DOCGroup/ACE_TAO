@@ -4,13 +4,12 @@
 #include "Filter.h"
 
 
-
-Filter::Filter (void)
+Filter::Filter ()
   : event_count_ (5)
 {
 }
 
-Filter::~Filter (void)
+Filter::~Filter ()
 {
 }
 
@@ -45,7 +44,7 @@ Filter::init (int argc, ACE_TCHAR* argv [])
 }
 
 void
-Filter::run_test (void)
+Filter::run_test ()
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, " Obtaining FilterAdmin interface from ConsumerAdmin\n"));
@@ -145,7 +144,7 @@ Filter::add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin)
   constraint_list[0].event_types.length (0);
   constraint_list[0].constraint_expr = CORBA::string_dup (test_filter_string);
 
-  filter->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
   CosNotifyFilter::FilterID id = filter_admin->add_filter (filter.in ());
 
@@ -171,7 +170,7 @@ Filter::print_filters (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 
 
 void
-Filter::create_EC (void)
+Filter::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id;
 

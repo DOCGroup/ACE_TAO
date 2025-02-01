@@ -21,8 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosEventChannelAdminC.h"
-
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,10 +38,10 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer
 public:
   typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer> Ptr;
   /// Constructor
-  TAO_Notify_ProxyConsumer (void);
+  TAO_Notify_ProxyConsumer ();
 
   /// Destructor
-  virtual ~TAO_Notify_ProxyConsumer (void);
+  virtual ~TAO_Notify_ProxyConsumer ();
 
   /// init: overrides Topology_Object method
   virtual void init (TAO_Notify::Topology_Parent * topology_parent);
@@ -51,26 +50,26 @@ public:
   void connect (TAO_Notify_Supplier* supplier);
 
   /// Disconnect
-  void disconnect (void);
+  void disconnect ();
 
   /// Shutdown  (TAO_Notify_Container_T method)
-  virtual int shutdown (void);
+  virtual int shutdown ();
 
   /// Destroy this object.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Return true if connected
-  bool is_connected (void) const;
+  bool is_connected () const;
 
   /// The SA parent.
-  TAO_Notify_SupplierAdmin& supplier_admin (void);
+  TAO_Notify_SupplierAdmin& supplier_admin ();
 
   ACE_Time_Value last_ping() const;
   void last_ping(const ACE_Time_Value& tv);
 
 protected:
   /// Access the Supplier
-  TAO_Notify_Supplier* supplier (void);
+  TAO_Notify_Supplier* supplier ();
 
   /// Accept an event from the Supplier
   void push_i (TAO_Notify_Event * event);
@@ -88,11 +87,10 @@ private:
   TAO_Notify_SupplierAdmin::Ptr supplier_admin_;
 
   /// The Supplier that we're connect to.
-  ACE_Auto_Ptr<TAO_Notify_Supplier> supplier_;
+  std::unique_ptr<TAO_Notify_Supplier> supplier_;
 
   /// Access our Peer.
-  virtual TAO_Notify_Peer* peer (void);
-
+  virtual TAO_Notify_Peer* peer ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

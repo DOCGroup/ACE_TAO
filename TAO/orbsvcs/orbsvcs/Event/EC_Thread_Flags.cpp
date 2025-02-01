@@ -7,7 +7,6 @@
 #include "ace/Sched_Params.h"
 
 
-
 #define TETFSF(flag)  { #flag, flag }
 TAO_EC_Thread_Flags::Supported_Flag TAO_EC_Thread_Flags::supported_flags_[] = {
 #if defined (ACE_HAS_THREADS)
@@ -53,18 +52,18 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
   flags_ = scope_ = sched_ = 0; // zero out everything
 
   // short-circuit on the trivial case
-  if (syms == 0 || *syms == '\0')
+  if (syms == nullptr || *syms == '\0')
     return;
 
   static size_t num_flags = sizeof(supported_flags_)/sizeof(Supported_Flag);
   char* s = ACE_OS::strdup (syms); // need a mutable string
-  if (s == 0)
+  if (s == nullptr)
     return;
 
   const char* SEPARATORS = " |"; // this should probably be at class level
-  char* ptr = 0;
+  char* ptr = nullptr;
   char* tok = ACE_OS::strtok_r (s, SEPARATORS, &ptr);
-  while (tok != 0)
+  while (tok != nullptr)
     {
       // This would allow for easy accomodation of flags that
       // aren't currently supported, but is it a good idea?
@@ -76,7 +75,7 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
           // If somebody specifies the scheduler this way, then they
           // lose range checking on the priority.  Bummer, but those
           // are the breaks.
-          this->flags_ |= ACE_OS::strtol (tok, 0, 0);
+          this->flags_ |= ACE_OS::strtol (tok, nullptr, 0);
         }
       else
         {
@@ -114,7 +113,7 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
                           tok));
             }
         }
-      tok = ACE_OS::strtok_r (0, SEPARATORS, &ptr);
+      tok = ACE_OS::strtok_r (nullptr, SEPARATORS, &ptr);
     }
 
   ACE_OS::free (s); // clean up after ourselves

@@ -43,18 +43,18 @@ class TAO_Event_Serv_Export TAO_CEC_Default_Factory : public TAO_CEC_Factory
 {
 public:
   /// Constructor
-  TAO_CEC_Default_Factory (void);
+  TAO_CEC_Default_Factory ();
 
   /// destructor...
-  virtual ~TAO_CEC_Default_Factory (void);
+  virtual ~TAO_CEC_Default_Factory ();
 
   /// Helper function to register the default factory into the service
   /// configurator.
-  static int init_svcs (void);
+  static int init_svcs ();
 
   // = The Service_Object entry points
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   // = The CEC_Factory methods
   virtual TAO_CEC_Dispatching*
@@ -110,9 +110,9 @@ public:
       destroy_proxy_pull_supplier_collection (
           TAO_CEC_ProxyPullSupplier_Collection*);
 
-  virtual ACE_Lock* create_consumer_lock (void);
+  virtual ACE_Lock* create_consumer_lock ();
   virtual void destroy_consumer_lock (ACE_Lock*);
-  virtual ACE_Lock* create_supplier_lock (void);
+  virtual ACE_Lock* create_supplier_lock ();
   virtual void destroy_supplier_lock (ACE_Lock*);
 
   virtual TAO_CEC_ConsumerControl*
@@ -208,6 +208,9 @@ private:
 
   /// The number of retries before disconnecting a proxy
   unsigned int proxy_disconnect_retries_;
+
+  /// The flag which allows or not to wait the message queue threads completion
+  bool wait_for_shutdown_thread_completion_ { true };
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -26,7 +26,7 @@ be_null_return_emitter::be_null_return_emitter (
 {
 }
 
-be_null_return_emitter::~be_null_return_emitter (void)
+be_null_return_emitter::~be_null_return_emitter ()
 {
 }
 

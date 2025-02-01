@@ -65,7 +65,7 @@ ACE_OS::strcat (wchar_t *s, const wchar_t *t)
 ACE_INLINE const char *
 ACE_OS::strchr (const char *s, int c)
 {
-  return const_cast <const char *> (::strchr (s, c));
+  return ::strchr (s, c);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -90,9 +90,7 @@ ACE_OS::strchr (char *s, int c)
 ACE_INLINE wchar_t *
 ACE_OS::strchr (wchar_t *s, wchar_t c)
 {
-  return
-    const_cast<wchar_t *> (ACE_OS::strchr (const_cast<const wchar_t *> (s),
-                                           c));
+  return const_cast<wchar_t *> (ACE_OS::strchr (const_cast<const wchar_t *> (s), c));
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -338,8 +336,7 @@ ACE_OS::strpbrk (char *s1, const char *s2)
 ACE_INLINE wchar_t *
 ACE_OS::strpbrk (wchar_t *s, const wchar_t *t)
 {
-  return const_cast<wchar_t *> (ACE_OS::strpbrk (
-                                  const_cast<const wchar_t *> (s), t));
+  return const_cast<wchar_t *> (ACE_OS::strpbrk (const_cast<const wchar_t *> (s), t));
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -406,8 +403,6 @@ ACE_OS::strstr (const wchar_t *s, const wchar_t *t)
 {
 #  if defined (ACE_LACKS_WCSSTR)
   return ACE_OS::wcsstr_emulation (s, t);
-#  elif defined (HPUX)
-  return const_cast <const wchar_t *> (::wcswcs (s, t));
 #  else /* ACE_LACKS_WCSSTR */
   return const_cast <const wchar_t *> (::wcsstr (s, t));
 #  endif /* ACE_LACKS_WCSSTR */
@@ -426,8 +421,6 @@ ACE_OS::strstr (wchar_t *s, const wchar_t *t)
 {
 #  if defined (ACE_LACKS_WCSSTR)
   return ACE_OS::wcsstr_emulation (s, t);
-#  elif defined (HPUX)
-  return ::wcswcs (s, t);
 #  else /* ACE_LACKS_WCSSTR */
   return ::wcsstr (s, t);
 #  endif /* ACE_LACKS_WCSSTR */

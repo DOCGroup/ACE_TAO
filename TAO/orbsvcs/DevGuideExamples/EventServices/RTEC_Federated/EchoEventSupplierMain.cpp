@@ -140,13 +140,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     std::cout << "Supplier starting sending of events.\n";
 
     while (1) {
-
       consumer->push (event);
       ACE_Time_Value tv(0, 1000 * EVENT_DELAY_MS);
       orb->run(tv);
 
       if ((remote_ecname != 0)  && (!gateway_initialized)) {
-
         try {
           // Get the remote event channel object
           CORBA::Object_var obj = root_context->resolve_str (ACE_TEXT_ALWAYS_CHAR (remote_ecname));

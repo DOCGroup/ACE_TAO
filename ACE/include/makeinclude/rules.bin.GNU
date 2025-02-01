@@ -1,7 +1,7 @@
 # -*- Makefile -*-
 
 #----------------------------------------------------------------------------
-#       
+#
 #
 #       Build binaries
 #       GNU version
@@ -35,18 +35,12 @@ PSRC += $(addsuffix .cpp, $(CLEANUP_BIN))
 CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(VAR)$(EXEEXT))
 
 VXWORKSLINK ?=
-using_aix_vacpp ?=
 
 ifeq ($(VXWORKSLINK),1)
 $(ARCH_BIN): $(DEFAULTRULE)
 	mv $(DEFAULTRULE) $@
 else # !VXWORKSLINK
-  ifeq (1,$(using_aix_vacpp))
-$(ARCH_BIN): %: %.icc $(SRC)
-	vacbld_r $< -severitylevel=warning
-  else # !using_aix_vacpp
 # Since we add in the vdir, don't use arch_bin.  use bin instead!
 $(ARCH_BIN): %: $(VDIR)$(BIN).$(OBJEXT) $(VOBJS)
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $(sort $(VDIR)$(BIN).$(OBJEXT) $(VOBJS)) $(VLDLIBS) $(POSTLINK)
-  endif # using_aix_vacpp
 endif

@@ -46,7 +46,7 @@ namespace TAO
     : public ACE_Service_Object
   {
     public:
-      virtual ~ORBInitializer_Registry_Adapter (void);
+      virtual ~ORBInitializer_Registry_Adapter ();
 
       /// Register an ORBInitializer with the underlying ORBInitializer
       /// array.

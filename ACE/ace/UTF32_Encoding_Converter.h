@@ -32,7 +32,7 @@ public:
   ACE_UTF32_Encoding_Converter (bool swap = false);
 
   /// This is a do nothing destructor.
-  virtual ~ACE_UTF32_Encoding_Converter (void);
+  virtual ~ACE_UTF32_Encoding_Converter ();
 
   /// Convert the source from UTF-32 to UTF-8 and store it in the
   /// provided target buffer.

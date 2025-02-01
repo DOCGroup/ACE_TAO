@@ -30,17 +30,9 @@ my $status = 0;
 
 $extra_client_args = "-k file://$client_iorfile -ORBdebuglevel $client_debuglevel -d $client_debug -x";
 $extra_server_args = "-ORBdebuglevel $server_debuglevel -d $server_debug";
-
-if ($OSNAME eq "solaris") {
-    $lanes = "lanes_r";
-    $bands = "bands_r";
-    $inv_prio = "invocation_priorities_r";
-}
-else {
-    $lanes = "lanes";
-    $bands = "bands";
-    $inv_prio = "invocation_priorities";
-}
+$lanes = "lanes";
+$bands = "bands";
+$inv_prio = "invocation_priorities";
 
 sub setup_configurations_2
 {

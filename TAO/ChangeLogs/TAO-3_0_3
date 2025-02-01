@@ -1,0 +1,1135 @@
+commit 4e7704ac7ade6d97cc7d30bd7e2f00f38fac898c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 2 16:28:54 2021 +0200
+
+    Update NEWS
+
+commit 279dff9caac9bbf85b0f4b86e68a31e67a8bada0
+Author: Samuel Miller <samuelsmiller@gmail.com>
+Date:   Sat Jul 31 13:30:29 2021 -0400
+
+    Typo fix.
+
+commit 908c1a40dda1810d021b1d70603ef4e05f4af6b2
+Merge: 13c55ef5cda bdd85124c4e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jul 23 18:11:20 2021 -0500
+
+    Merge pull request #1633 from iguessthislldo/igtd/stdint
+    
+    Fix Coverity Issue
+
+commit bdd85124c4e39d5200575c6b3e1252d42842a74f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jul 23 11:54:21 2021 -0500
+
+    Fix Coverity Issue
+
+commit aff30bce101b66183399c6547d0d288c61f96aea
+Merge: 3673b6a3100 5eb19d9799d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 23 08:16:54 2021 +0200
+
+    Merge pull request #1625 from jwillemsen/jwi-paramtestascii
+    
+    %C is for logging ascii strings
+
+commit 3673b6a3100918e42056bc916850b0000d5ef9c5
+Merge: f68d662da1d c6ed7d4b48b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 22 18:34:01 2021 -0500
+
+    Merge pull request #1631 from mitza-oci/taoidlfe-tao3
+    
+    Updated tao_idl_fe base project.
+
+commit 93088ce46b7de3e5c8303faad1ac43e62ffd14fa
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 22 15:18:48 2021 -0500
+
+    Revert "Add TAO_ROOT to tao_idl_fe.mpb"
+    
+    This reverts commit 81524bce67b278f129ec5a4e9ab2d3ba28df4720.
+
+commit c6ed7d4b48bbc7bb5ad1a5e390c080dd2169690b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jul 22 15:00:34 2021 -0500
+
+    Updated tao_idl_fe base project.
+    
+    Projects that use tao_idl_fe need TAO_ROOT on preprocessor include
+    path, due to the recent change to idl_defines.h including
+    idl_features.h from tao.
+
+commit 81524bce67b278f129ec5a4e9ab2d3ba28df4720
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 22 14:39:52 2021 -0500
+
+    Add TAO_ROOT to tao_idl_fe.mpb
+    
+    For tao/idl_features.h
+
+commit 2364cfbe655db819e94185d4ac96f8040228864a
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 22 14:39:05 2021 -0500
+
+    Refactor DRV_cpp_putarg to Avoid ACE_TCHAR
+
+commit dd50c1191b8d87ca7e0d8bfa0b138a1950b6863c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 22 01:06:31 2021 -0500
+
+    Escape Double Quotes in tao_idl PP Args on Windows
+
+commit 43904ad8613e8b56fc352bff3d0c1cae4bb31b9f
+Merge: f8e095c8b13 ad197ab1179
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 21 16:20:37 2021 +0200
+
+    Merge pull request #1624 from jwillemsen/jwi-whitespace
+    
+    Removed redundant whitespace
+
+commit 5eb19d9799db38ba5d58ca36f02b9c87de7e88fd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 21 11:31:37 2021 +0200
+
+    Fixed incorrect logging
+    
+        * TAO/tests/Param_Test/except.cpp:
+
+commit 5dff5cebea9fab9737204ce549635ea4081fa2f9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 21 11:23:48 2021 +0200
+
+    %C is for logging ascii strings
+    
+        * TAO/tests/Param_Test/bd_str_seq.cpp:
+        * TAO/tests/Param_Test/bd_string.cpp:
+        * TAO/tests/Param_Test/client.cpp:
+        * TAO/tests/Param_Test/complex_any.cpp:
+        * TAO/tests/Param_Test/nested_struct.cpp:
+        * TAO/tests/Param_Test/objref.cpp:
+        * TAO/tests/Param_Test/objref_struct.cpp:
+        * TAO/tests/Param_Test/param_test_i.cpp:
+        * TAO/tests/Param_Test/ub_any_seq.cpp:
+        * TAO/tests/Param_Test/ub_objref_seq.cpp:
+        * TAO/tests/Param_Test/ub_str_seq.cpp:
+        * TAO/tests/Param_Test/ub_string.cpp:
+        * TAO/tests/Param_Test/ub_struct_seq.cpp:
+        * TAO/tests/Param_Test/var_array.cpp:
+
+commit 57ac037347ce7a2bdc559ea33f35d15e57a1200f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 21 11:21:24 2021 +0200
+
+    %C is for logging ascii strings
+    
+        * TAO/tests/Param_Test/any.cpp:
+        * TAO/tests/Param_Test/except.cpp:
+        * TAO/tests/Param_Test/var_struct.cpp:
+
+commit ad197ab1179e257f24ae95f54425812dd3ffd6cc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 21 10:14:33 2021 +0200
+
+    Removed redundant whitespace
+    
+        * ACE/ACEXML/parser/parser/Parser.cpp:
+        * ACE/examples/ConfigViewer/ValueListCtrl.cpp:
+        * ACE/tests/CDR_Array_Test.cpp:
+        * TAO/TAO_IDL/be/be_interface.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
+
+commit f8e095c8b1345f565b464c8e9b8557305f62fa00
+Merge: 4e4a1260bc4 c9568bca8c9
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jul 20 17:54:05 2021 -0500
+
+    Merge pull request #1621 from iguessthislldo/igtd/stdint
+    
+    Header File for TAO_IDL Supported IDL Features
+
+commit c9568bca8c9520c7cad3aeedfba24d6232ce703a
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jul 20 17:52:30 2021 -0500
+
+    Prevent Possible Redefinition Warnings
+
+commit 9956106ce26e3c53de6e9cf2d19e3a6d6ca7559c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jul 20 15:37:50 2021 -0500
+
+    Correct NEWS and Examples
+
+commit 8ece0e448f1905c36ce5aaad498c5565550c0021
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jul 20 00:15:00 2021 -0500
+
+    Header File for TAO_IDL Supported IDL Features
+    
+    Get information about what IDL features the IDL compiler has, similarly
+    to the "version" standard header in C++.
+    
+    In C++ it can be used like this if you want to be compatible with older
+    versions of TAO:
+    
+    ```c++
+     #include "tao/orbconf.h"
+     #if defined TAO_HAS_IDL_FEATURES && TAO_HAS_IDL_FEATURES
+     // Use this macro if you are using something that's not the max possible
+     // version.
+     #  define TAO_IDL_IDL_VERSION 0x50000
+     #  include "tao/idl_features.h"
+     #  define USE_FEATURE defined TAO_IDL_HAS_FEATURE && TAO_IDL_HAS_FEATURE
+     #else
+     #  define USE_FEATURE 0
+     #endif
+    ```
+    
+    In IDL it can be used like this if you want to be compatible with older
+    versions of TAO:
+    
+    ```c++
+     #if defined __TAO_IDL_FEATURES
+     #  include __TAO_IDL_FEATURES
+     #  define USE_FEATURE defined TAO_IDL_HAS_FEATURE && TAO_IDL_HAS_FEATURE
+     #else
+     #  define USE_FEATURE 0
+     #endif
+    ```
+
+commit 18cbda7cf52bc121583e7af7b585c70c380d80e4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 19 10:41:05 2021 +0200
+
+    Removed old workarounds for bcc32
+    
+        * ACE/ace/Refcounted_Auto_Ptr.h:
+        * ACE/ace/XML_Utils/XercesString.h:
+        * TAO/orbsvcs/orbsvcs/AV/RTCP_Channel.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
+        * TAO/utils/nslist/nslist.cpp:
+        * TAO/utils/wxNamingViewer/wxNamingViewer.cpp:
+
+commit e89c98b326b1732550309ab69056d3fdb4c96f52
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 16:03:14 2021 +0200
+
+    Embarcadero C++ Builder can not handle this IDL file
+    
+        * TAO/tests/Bug_3940_Regression/README:
+        * TAO/tests/Bug_3940_Regression/test.idl:
+
+commit 5ce13938d56b7ec1967151e45df264eceb150ca1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 16 09:32:08 2021 +0200
+
+    Cleanup Embarcadero C++ Builder support
+    
+        * ACE/ace/Compression/rle/RLECompressor.cpp:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/post.h:
+        * ACE/ace/pre.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * TAO/orbsvcs/orbsvcs/Notify/RT_Factory.h:
+        * TAO/orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * TAO/tests/Bug_3574_Regression/test.cpp:
+        * TAO/tests/RTCORBA/README:
+
+commit b93e21d9e5b15494a6eb5b37c9b212aa3632ff5a
+Merge: 121ce4ec0a3 f46f63fcc2c
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Jul 13 17:03:27 2021 -0500
+
+    Merge pull request #1602 from iguessthislldo/igtd/stdint
+    
+    tao_idl: Fix Assignment Warning
+
+commit f46f63fcc2c467b6684855da743db9f77e93c240
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Tue Jul 13 12:55:46 2021 -0500
+
+    Update TAO/TAO_IDL/ast/ast_expression.cpp
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit 121ce4ec0a3ece51991220bc98ce008e97614e2b
+Merge: a1d27bfcc0b a0da9d2ed9c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 13 12:45:32 2021 +0200
+
+    Merge pull request #1603 from jwillemsen/jwi-bcc32c
+    
+    Only the Embarcadero clang based compilers support C++11
+
+commit bfff39e0073af7ff9d9b26c82ac2a62669c5259e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 13 12:02:46 2021 +0200
+
+    Use nullptr
+    
+        * TAO/tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+
+commit 47e50c0a89e7f5dbb9eac51a27de8c272da54148
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jul 12 18:09:06 2021 -0500
+
+    tao_idl: Fix Assignment Warning
+
+commit d281148ea8a1a3790435acba2b1fcf55833e82a6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 12 14:17:26 2021 +0200
+
+    Use operator! and const change
+    
+        * TAO/tao/operation_details.cpp:
+        * TAO/tests/Param_Test/except.cpp:
+
+commit 4db73f60569d5b3a1a2ed8f7ab119d1c2e770bdb
+Merge: 263e4488a7d 3b5890cbf46
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 9 18:23:41 2021 +0200
+
+    Merge pull request #1596 from jwillemsen/jwi-logreplystatus
+    
+    Log reply status in case of an error and some DII_Deferred_Transient test changes
+
+commit 263e4488a7d0618dcbab2e4f5e7995428cde53ca
+Merge: 5e3afb9d934 b23362324e9
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jul 9 09:45:05 2021 -0500
+
+    Merge pull request #1592 from mitza-oci/install-relative
+    
+    make install: use relative links in prefix/share
+
+commit 5e3afb9d934fe5d94d26bb4831c7ba7ed35a3c43
+Merge: e43718d94e0 1252f0d1f1e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jul 9 09:44:51 2021 -0500
+
+    Merge pull request #1594 from iguessthislldo/igtd/stdint
+    
+    Fix Coverity Issues and Compiler Warnings
+
+commit 3b5890cbf46ab51d05e89278524dd199a06a0cfe
+Merge: 6f4f2c50cda 4760efc83d2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 9 16:32:29 2021 +0200
+
+    Merge branch 'master' into jwi-logreplystatus
+
+commit 4760efc83d2c07af027ef10907cf0a5dbbe62e01
+Merge: 3a243cd1ccf e43718d94e0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 9 16:32:05 2021 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into master
+
+commit 3a243cd1ccf93d8219caa6d1e8d0d805ca0b2160
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 9 16:31:54 2021 +0200
+
+    Enable ORBVerboseLogging 1 to show timestamps
+    
+        * TAO/tests/DII_Deferred_Transient/run_test.pl:
+
+commit 02bc0ec464aa15d19208407353e96919cbe444d9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 9 16:31:42 2021 +0200
+
+    Use override
+    
+        * TAO/tests/DII_Deferred_Transient/Hello.h:
+
+commit 6f4f2c50cdae99aeda006d9289557c4c3a20a98a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 9 16:27:17 2021 +0200
+
+    Log the reply_status to indicate what we received
+    
+        * TAO/tao/DynamicInterface/Request.cpp:
+
+commit 1252f0d1f1ea2182759b029871a3ca2a7994256b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 8 20:22:38 2021 -0500
+
+    ast_expression.cpp: Fix Uninitialized Value
+
+commit a0cea31f31479ba6ef6ee9adff63f8f164779821
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 8 19:18:55 2021 -0500
+
+    TAO/TAO_IDL/regen.pl: Remove Extra Make Call
+
+commit d5819180d02d76ed3c14c421f02ad69c4d0bab9e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 8 19:16:24 2021 -0500
+
+    Regenerate with Bison 3.7.6
+
+commit cbd16710267989e98357aa2b0d79434297d03f0f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 8 19:13:48 2021 -0500
+
+    TAO/TAO_IDL/regen.pl: Exit with Error
+
+commit f818b6ca180b86dc00be9bbc21d2e67f40d9dddf
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 8 17:26:09 2021 -0500
+
+    Attempt to Fix Coverity Issues from #840
+    
+    https://github.com/DOCGroup/ACE_TAO/pull/840
+    
+    Because the main set of issues in `coerce_value` was caused by applying
+    the existing pattern, the issues caused by the existing code should also
+    be fixed.
+
+commit b23362324e929b731f3908c2f1d458d16c524f49
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jul 8 14:04:25 2021 -0500
+
+    make install: use relative links in prefix/share
+
+commit 35df1735144f2552884d31ec5bb1f05a5c8bac4d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 8 11:50:58 2021 +0200
+
+    Use nullptr, removed redundant void, layout changes
+    
+        * TAO/tao/Objref_VarOut_T.cpp:
+        * TAO/tao/Objref_VarOut_T.h:
+        * TAO/tao/Objref_VarOut_T.inl:
+        * TAO/tao/Seq_Out_T.inl:
+        * TAO/tao/Seq_Var_T.cpp:
+        * TAO/tao/Seq_Var_T.inl:
+
+commit 94f6032a4820c82f673ab86848b7d4bbcf61ebb5
+Author: Claus Klein <claus.klein@rohde-schwarz.com>
+Date:   Tue Jul 6 16:32:48 2021 +0200
+
+    add missed header Basic_Types_IDLv4 to list
+
+commit 0f50d148543e52e8c58005aad78976897bc4bacc
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 1 14:41:42 2021 -0500
+
+    Fix Integer Literals for Windows
+
+commit f54b7d10d2c3aedda1132beb22e2713270b1bfdc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 1 09:16:24 2021 +0200
+
+    Fixed fallthrough warnings
+    
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+
+commit 48f51b52ee8e8cc1ff6608f1539a7985c65e5acc
+Merge: 4a5a0596c8b 354b698dd92
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Jun 30 13:51:55 2021 -0500
+
+    Merge pull request #840 from iguessthislldo/igtd/stdint
+    
+    IDLv4 Explicitly-named Integer Types
+
+commit 70b28ba29efaed433c3bfbdca14332c39a99883c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jun 29 18:53:04 2021 -0500
+
+    Try to Fix Issues with int8/uint8
+
+commit c8221814c5dd3e724f88b3b5dc33e38b652dc0ba
+Merge: fffe48a8fea 4690065da35
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 28 15:45:40 2021 +0200
+
+    Merge branch 'master' into jwi-ACE_OSCALL
+
+commit 6e2e9f862209e9dae3a282f2505e83d9dce2ac69
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 28 14:50:36 2021 +0200
+
+    Removed FAIL value from ACE_OSCALL an ACE_OSCALL_RETURN, not used at all
+    
+        * ACE/ace/Mem_Map.cpp:
+        * ACE/ace/OS_NS_Thread.cpp:
+        * ACE/ace/OS_NS_Thread.inl:
+        * ACE/ace/OS_NS_arpa_inet.cpp:
+        * ACE/ace/OS_NS_arpa_inet.inl:
+        * ACE/ace/OS_NS_devctl.inl:
+        * ACE/ace/OS_NS_dlfcn.inl:
+        * ACE/ace/OS_NS_fcntl.cpp:
+        * ACE/ace/OS_NS_fcntl.inl:
+        * ACE/ace/OS_NS_macros.h:
+        * ACE/ace/OS_NS_netdb.inl:
+        * ACE/ace/OS_NS_poll.inl:
+        * ACE/ace/OS_NS_regex.inl:
+        * ACE/ace/OS_NS_signal.inl:
+        * ACE/ace/OS_NS_stdio.inl:
+        * ACE/ace/OS_NS_stdlib.inl:
+        * ACE/ace/OS_NS_stropts.inl:
+        * ACE/ace/OS_NS_sys_mman.inl:
+        * ACE/ace/OS_NS_sys_msg.inl:
+        * ACE/ace/OS_NS_sys_resource.inl:
+        * ACE/ace/OS_NS_sys_shm.inl:
+        * ACE/ace/OS_NS_sys_socket.inl:
+        * ACE/ace/OS_NS_sys_stat.inl:
+        * ACE/ace/OS_NS_sys_time.inl:
+        * ACE/ace/OS_NS_sys_uio.inl:
+        * ACE/ace/OS_NS_sys_utsname.cpp:
+        * ACE/ace/OS_NS_sys_wait.inl:
+        * ACE/ace/OS_NS_time.cpp:
+        * ACE/ace/OS_NS_time.h:
+        * ACE/ace/OS_NS_time.inl:
+        * ACE/ace/OS_NS_unistd.cpp:
+        * ACE/ace/OS_NS_unistd.inl:
+        * ACE/ace/OS_NS_wchar.inl:
+        * ACE/ace/OS_TLI.inl:
+        * ACE/ace/config-macros.h:
+        * TAO/TAO_IDL/be/be_helper.cpp:
+
+commit 1f33020ef2e1075a4432ffbcf51e27b1bb477637
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 28 12:16:32 2021 +0200
+
+    More compact code generation
+    
+        * TAO/TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+
+commit cc8c46b954cf036ff76042a623f89f1868d968af
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 28 11:30:16 2021 +0200
+
+    Make use of nullptr, removed redundant cast, const changes, layout changes
+    
+        * TAO/TAO_IDL/be/be_codegen.cpp:
+        * TAO/TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO/TAO_IDL/fe/idl.ll:
+        * TAO/TAO_IDL/fe/idl.yy.cpp:
+
+commit 245f1c228eae5258cf54407f99230cfc8ebd1543
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jun 26 09:09:00 2021 +0200
+
+    Layout changes
+    
+        * TAO/tests/IDL_Test/constants.idl:
+
+commit e4c207da0cac01069ab467c83cc6eb0e520bdea3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 24 10:22:49 2021 +0200
+
+    Removed onewin argument, not supported anymore, only listed in the readme and help output
+    
+        * TAO/tests/Alt_Mapping/README:
+        * TAO/tests/Alt_Mapping/run_test.pl:
+        * TAO/tests/Param_Test/README:
+        * TAO/tests/Param_Test/run_test.pl:
+
+commit d2a454489af821ea8532781f7b5349f6e35f84cf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 24 10:06:43 2021 +0200
+
+    Chorus cleanup
+    
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/Timer.h:
+
+commit aa056a80e866c6b4bb113cd35492109522f3e76c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 24 10:04:32 2021 +0200
+
+    Removed old comments and support for Chorus which we don't support anymore
+    
+        * ACE/ace/README:
+        * ACE/ace/Thread_Manager.cpp:
+        * ACE/ace/config-kfreebsd.h:
+        * ACE/bin/libsize.pl:
+        * ACE/docs/run_test.txt:
+        * TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/run_test.pl:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test.pl:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test_ft.pl:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/README:
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/README:
+        * TAO/tests/Alt_Mapping/run_test.pl:
+        * TAO/tests/Bug_2289_Regression/run_test.pl:
+        * TAO/tests/Bug_3853_Regression/run_test.pl:
+        * TAO/tests/DynAny_Test/run_test.pl:
+        * TAO/tests/Param_Test/run_test.pl:
+
+commit 2ed7fe7c1c6492c7f920581ec3ac8e7ec4278efd
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 21 20:22:55 2021 -0500
+
+    Support int8/uint8 Sequences and Arrays
+
+commit 7f52a0eb64a4847e013af14558c96184b3494081
+Merge: 7b35108cb72 edb65903473
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 21 15:52:06 2021 +0200
+
+    Merge pull request #1567 from jwillemsen/jwi-overridert
+    
+    Use override instead of virtual
+
+commit edb65903473f95d16434895c1cc772e0f413eee5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 21 09:07:20 2021 +0200
+
+    Use override instead of virtual
+    
+        * TAO/tao/RTScheduling/Current.h:
+
+commit 67644425022c6c520debc2a47b1fa1c90f2cd59e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 21 08:45:31 2021 +0200
+
+    Removed workarounds for very old broken HP compilers
+    
+        * ACE/ACEXML/common/ZipCharStream.cpp:
+        * ACE/ace/OS_NS_signal.h:
+        * ACE/ace/OS_NS_stdio.cpp:
+        * ACE/ace/OS_TLI.h:
+        * ACE/ace/SStringfwd.h:
+        * ACE/ace/Stack_Trace.cpp:
+        * ACE/tests/Bug_3709_Regression_Test.cpp:
+        * ACE/tests/Compiler_Features_12_Test.cpp:
+        * TAO/orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+
+commit 1620aa41534fd4715d5fc1fed61c6035add528c6
+Merge: d47fcc93f29 ec0b842365a
+Author: Phil Mesnier <mesnierp@objectcomputing.com>
+Date:   Fri Jun 18 10:26:28 2021 -0500
+
+    Merge pull request #1559 from DOCGroup/plm_1550
+    
+    Applying changes recommended by Coverity scan.
+
+commit ec0b842365ae8acb64525f3c95949225538fd00a
+Author: Phil Mesnier <mesnierp@objectcomputing.com>
+Date:   Thu Jun 17 15:32:38 2021 -0500
+
+    Applying changes recommended by Coverity scan.
+
+commit d47fcc93f297109fb635e9f49497ece3a83df068
+Merge: 2020e227a71 13c9ee7bba3
+Author: Phil Mesnier <mesnierp@objectcomputing.com>
+Date:   Thu Jun 17 08:31:57 2021 -0500
+
+    Merge pull request #1555 from DOCGroup/plm_1550
+    
+    applying solution to issue 1550 as found in ace6tao2
+
+commit ce0ef8ecd7b1344446994f9d261ed648ffa8b041
+Merge: cb579f6b184 985e16cf828
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 16 20:23:00 2021 +0200
+
+    Merge pull request #1554 from jwillemsen/jwi-taoidl
+    
+    Make use of C++11 using in the generated code and more reduced code g…
+
+commit 13c9ee7bba3a02bb9b5a92fbc3699060867e8925
+Author: Phil Mesnier <mesnierp@objectcomputing.com>
+Date:   Wed Jun 16 10:15:11 2021 -0500
+
+    applying solution to issue 1550 as found in ace6tao2
+
+commit 985e16cf8287518dad30c718ed40fd35bbbe1f6a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 16 16:43:41 2021 +0200
+
+    More dense code
+    
+        * TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+
+commit ddbea6033ca341c274aa52faab27d00540b244a5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 16 16:37:53 2021 +0200
+
+    Use nullptr instead of 0
+    
+        * TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+
+commit 865e24ba171b6357cafeaf79a0b78aae6c29feda
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 16 16:32:56 2021 +0200
+
+    Make use of C++11 using in the generated code and more reduced code generation when an operation doesn't have arguments
+    
+        * TAO/TAO_IDL/be/be_interface.cpp:
+        * TAO/TAO_IDL/be/be_type.cpp:
+        * TAO/TAO_IDL/be/be_valuetype.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/arglist.cpp:
+
+commit b489eefef18d6c538d5498350bb732bc51792f50
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jun 15 17:48:47 2021 -0500
+
+    explicit_ints: Fix Mixup
+
+commit 71f7ce017d977f1c6bd226cdf05266d7dda0622c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jun 15 17:34:39 2021 -0500
+
+    Respond to Review of #840
+    
+    https://github.com/DOCGroup/ACE_TAO/pull/840
+
+commit 65962eedcc372b0d4addf94edea54b810c0e53c2
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jun 15 16:59:29 2021 -0500
+
+    Isolate IDL4 Ints in TAO Unless IDL4 is Used
+
+commit 800cec49aeaedbf5355557fc1b300a3b7a1be46d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jun 15 13:35:07 2021 -0500
+
+    s/Uint/UInt/g
+
+commit 722d05be5d93c81c8b64063bc8bf9f92639243b7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 15 11:48:21 2021 +0200
+
+    Removed empty lines
+    
+        * TAO/orbsvcs/tests/Security/Null_Cipher/README:
+
+commit 7471fc93d6470e27b102cb28e4f8b50e51e0f9e6
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 14 23:13:35 2021 -0500
+
+    ast_expression.cpp: Add Include for sprintf
+
+commit 2280b39eb55c10304e86db634d4455576732faec
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 14 18:28:45 2021 -0500
+
+    Respond to Review of #840
+    
+    https://github.com/DOCGroup/ACE_TAO/pull/840
+
+commit 737b9195ece838d15d4c6d54300026a26e5d1c44
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 14 15:58:44 2021 -0500
+
+    Partially Respond to Review of #840
+    
+    https://github.com/DOCGroup/ACE_TAO/pull/840
+
+commit 2afc6a2c504ab9a80a54c2d71efea83a0d5085c9
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Sun Jun 13 16:46:42 2021 -0500
+
+    Fix Warnings, Add explicit_ints to Test List
+
+commit 56a61b91a637fbb0be576cbc3f7a173e0c63476a
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Sat Jun 12 22:43:28 2021 -0500
+
+    Fix Issues with explicit_ints Test
+    
+    - Add uint8 and int8 to ACE and TAO serialization
+    - Refactor parts of AST_Expression to also cover uint8 and int8
+
+commit 13e44c96b9f58773a0bce6e490647d9d77c4698b
+Merge: 4bb439bda26 024f1c0a2de
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 11 19:56:12 2021 +0200
+
+    Merge pull request #1547 from jwillemsen/master
+    
+    Replace auto_ptr with std::unique_ptr and fixed missing break
+
+commit 024f1c0a2def74d2324c477346d2acf437979e54
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 11 16:21:59 2021 +0200
+
+    Removed redundant whitelines
+    
+        * TAO/orbsvcs/tests/FtRtEvent/consumer.cpp:
+        * TAO/orbsvcs/tests/FtRtEvent/supplier.cpp:
+
+commit c64416ce2e9b0714c9ce379186412f03072d7b3f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 11 16:20:42 2021 +0200
+
+    Replace auto_ptr with std::unique_ptr and fixed missing break
+    
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Control.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/RTClient_Setup.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/RTClient_Setup.h:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/RTEC_Initializer.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.h:
+        * TAO/orbsvcs/tests/FtRtEvent/consumer.cpp:
+        * TAO/orbsvcs/tests/FtRtEvent/supplier.cpp:
+        * TAO/orbsvcs/tests/Trading/colocated_test.cpp:
+
+commit 8a3fbaae85e86c8309a212e3a3e7f03f315ab7af
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 10 11:52:33 2021 +0200
+
+    Fixed double deletes during AV shutdown
+    
+        * TAO/orbsvcs/orbsvcs/AV/UDP.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/UDP.h:
+
+commit ead13705b3ed03b0107a832a5e98d15adf3e14ce
+Merge: aca5d7dca4c 8f56a94bc5a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 9 19:01:03 2021 +0200
+
+    Merge pull request #1545 from jwillemsen/jwi-notify
+    
+    Assign the result of the call to add_constraints to a _var to fix memory leak in CosNotify tests
+
+commit 8f56a94bc5abdee1ddb7e1a19b67c0c2a8eea810
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 9 15:18:05 2021 +0200
+
+    Assign the result of the call to add_constraints to a _var to fix memory leaks, replaced one occurance of auto_ptr with unique_ptr
+    
+        * TAO/orbsvcs/tests/Notify/Basic/ExtendedFilter.cpp:
+        * TAO/orbsvcs/tests/Notify/Basic/Filter.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_1884_Regression/consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_2415_Regression/Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_3252_Regression/DllOrb.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_3252_Regression/DllOrb.h:
+        * TAO/orbsvcs/tests/Notify/Bug_3688_Regression/consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_3688b_Regression/TestListener.cpp:
+        * TAO/orbsvcs/tests/Notify/Persistent_Filter/Filter.cpp:
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.cpp:
+        * TAO/orbsvcs/tests/Notify/XML_Persistence/main.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Filter_Command.cpp:
+        * TAO/orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.cpp:
+
+commit d17ee94d63125de3e7f3e74ac399ec9b4e9ebca7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 9 15:03:55 2021 +0200
+
+    Use true instead of 1
+    
+        * TAO/orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+
+commit fe353c0b9338aa9deb8079e68b812e6a9ee8ab4e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 9 14:53:15 2021 +0200
+
+    Don't use close, it modifies the unbounded set which causes a crash when we iterate on it, delete the contents directly
+    
+        * TAO/orbsvcs/orbsvcs/AV/Transport.cpp:
+
+commit 44a71f80a21f094f286c4db98fa31db83cff7451
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 9 13:10:33 2021 +0200
+
+    Removed empty lines
+    
+        * TAO/tests/POA/EndpointPolicy/README:
+
+commit 9ad0c2a8fc8e8619ffdf87b159b046089296caf6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 9 10:15:42 2021 +0200
+
+    Fixed compile errors with C++11
+    
+        * TAO/tests/Oneway_Send_Timeouts/Server_Task.h:
+        * TAO/tests/Oneway_Send_Timeouts/main.cpp:
+
+commit 643aed4d8f870ecb2eab19d45ccd390eb3f4d401
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 9 08:28:50 2021 +0200
+
+    Fixed compile errors due to auto_ptr to unqiue_ptr changes
+    
+        * TAO/tests/Bug_3251_Regression/DllOrb.cpp:
+        * TAO/tests/Bug_3542_Regression/DllOrb.cpp:
+        * TAO/tests/Oneway_Send_Timeouts/Client_Task.h:
+        * TAO/tests/Oneway_Send_Timeouts/main.cpp:
+
+commit d5e417e1baf0437e73217803c63dac1160f50ee3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 10:17:53 2021 +0200
+
+    Removed redundant whiteline
+    
+        * TAO/tests/Compression/zlibserver.cpp:
+
+commit e228392015a670c6a73106a63717fcf0c559a944
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 10:16:53 2021 +0200
+
+    Layout changes
+    
+        * TAO/tests/Compression/bzip2server.cpp:
+        * TAO/tests/Compression/zlibserver.cpp:
+
+commit a9866bb7e45461f47bcaec272a95ecc869bc5ac9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 10:16:43 2021 +0200
+
+    Replaced ACE_Byte_Array_ptr with std::unique_ptr usage
+    
+        * TAO/tests/Compression/RLECompressorTest.cpp:
+
+commit 04fcadef2677421412a225cea383f7909153d3d2
+Merge: c412d454d86 f5be2f529f7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 8 10:07:29 2021 +0200
+
+    Merge branch 'master' into feature/prevent-auto_ptr-usage
+
+commit a4c5b22c20a1f1298a23d3ab57571237284b1963
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 7 23:43:19 2021 -0500
+
+    Added WIP explicit_ints Test
+    
+    And a bunch of fixes to get it to (sorta) work.
+
+commit 85a1e615810419950f8f1280f80df9da9f5dee4d
+Merge: 7549f0b34c1 d8971212c4f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 7 17:12:57 2021 -0500
+
+    Merge remote-tracking branch 'upstream/master' into igtd/stdint
+
+commit 072c0939cc2a824ced1fb3ab7091b74c3bb092c3
+Merge: 6f6f7ea0c8f d8971212c4f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 7 21:22:22 2021 +0200
+
+    Merge branch 'master' into jwi-ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+
+commit 6f6f7ea0c8fcde679ef21a59a4686043b02d3057
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 7 08:50:33 2021 +0200
+
+    We require now that the standard C++ library is supported and available in the std namespace, removed support for non compliant configurations
+    
+        * ACE/ace/Auto_Ptr.h:
+        * ACE/ace/Auto_Ptr.inl:
+        * ACE/ace/Global_Macros.h:
+        * ACE/ace/IOStream.h:
+        * ACE/ace/README:
+        * ACE/ace/ace_wchar.h:
+        * ACE/ace/config-aix-5.x.h:
+        * ACE/ace/config-all.h:
+        * ACE/ace/config-g++-common.h:
+        * ACE/ace/config-hpux-11.00.h:
+        * ACE/ace/config-icc-common.h:
+        * ACE/ace/config-integritySCA.h:
+        * ACE/ace/config-kfreebsd.h:
+        * ACE/ace/config-linux-common.h:
+        * ACE/ace/config-mqx.h:
+        * ACE/ace/config-netbsd.h:
+        * ACE/ace/config-openvms.h:
+        * ACE/ace/config-qnx.h:
+        * ACE/ace/config-suncc-common.h:
+        * ACE/ace/config-sunos5.5.h:
+        * ACE/ace/config-sunos5.6.h:
+        * ACE/ace/config-vxworks6.4.h:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/config-win32-msvc-14.h:
+        * ACE/ace/iosfwd.h:
+        * ACE/ace/streams.h:
+        * ACE/examples/C++NPv1/Logging_Client.cpp:
+        * ACE/examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * ACE/examples/C++NPv2/Server_Shutdown.cpp:
+        * ACE/examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+        * ACE/tests/IOStream_Test.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/Auth/Messenger_i.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/Auth/ServerInitializer.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/Auth/ServerInterceptor.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/PICurrent/Messenger_i.cpp:
+        * TAO/docs/tutorials/Quoter/AMI/Stock_i.h:
+        * TAO/docs/tutorials/Quoter/Naming_Service/Stock_i.h:
+        * TAO/docs/tutorials/Quoter/On_Demand_Activation/Stock_i.h:
+        * TAO/docs/tutorials/Quoter/Simple/Impl-Repo/Stock_i.h:
+        * TAO/docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.h:
+        * TAO/docs/tutorials/Quoter/Simple/Persistent/Stock_i.h:
+        * TAO/docs/tutorials/Quoter/Simple/Server/Stock_i.h:
+        * TAO/orbsvcs/DevGuideExamples/PortableInterceptors/PICurrent_NameService/Messenger_i.cpp:
+        * TAO/orbsvcs/examples/LoadBalancing/Stock.h:
+
+commit a436568e52a5a78afe7b039b4c6b1e089369eba6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 6 18:04:12 2021 +0200
+
+    Make use of std::nothrow/std::nothrow_t/std::badalloc, ACE macros for these are kept for backward compatiblity
+    
+        * ACE/ace/CORBA_macros.h:
+        * ACE/ace/OS_Memory.h:
+        * ACE/ace/Svc_Handler.cpp:
+        * ACE/ace/Svc_Handler.h:
+        * ACE/examples/DLL/Newsweek.cpp:
+        * ACE/examples/DLL/Newsweek.h:
+        * ACE/examples/DLL/Today.cpp:
+        * ACE/examples/DLL/Today.h:
+        * ACE/examples/Shared_Malloc/test_persistence.cpp:
+        * ACE/tests/DLL_Test_Impl.cpp:
+        * ACE/tests/DLL_Test_Impl.h:
+        * ACE/tests/Dynamic_Test.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.cpp:
+        * TAO/tao/Var_Size_Argument_T.cpp:
+        * TAO/tests/POA/DSI/Database_i.cpp:
+        * TAO/tests/POA/DSI/Database_i.h:
+
+commit 1652ce786e3f76875cfa9008ac83682c4828d6a6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 6 10:29:02 2021 +0200
+
+    All compilers we support provide ACE_HAS_NEW_NOTHROW
+    
+        * ACE/ace/CORBA_macros.h:
+        * ACE/ace/OS_Memory.h:
+        * ACE/ace/README:
+        * ACE/ace/Svc_Handler.cpp:
+        * ACE/ace/Svc_Handler.h:
+        * ACE/ace/config-all.h:
+        * ACE/ace/config-g++-common.h:
+        * ACE/ace/config-hpux-11.00.h:
+        * ACE/ace/config-lynxos.h:
+        * ACE/ace/config-sunos5.5.h:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/config-win32-msvc-14.h:
+        * ACE/examples/DLL/Newsweek.cpp:
+        * ACE/examples/DLL/Newsweek.h:
+        * ACE/examples/DLL/Today.cpp:
+        * ACE/examples/DLL/Today.h:
+        * ACE/examples/Shared_Malloc/test_persistence.cpp:
+        * ACE/tests/DLL_Test_Impl.cpp:
+        * ACE/tests/DLL_Test_Impl.h:
+        * ACE/tests/Dynamic_Test.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.cpp:
+        * TAO/tao/Var_Size_Argument_T.cpp:
+        * TAO/tests/POA/DSI/Database_i.cpp:
+        * TAO/tests/POA/DSI/Database_i.h:
+
+commit c412d454d866452cec1cc1837a6d501ef1bdeb73
+Author: ClausKlein <claus.klein@arcormail.de>
+Date:   Thu Jun 3 21:56:09 2021 +0200
+
+    do not AlignConsecutiveDeclarations
+    
+    and set SpaceAfterLogicalNot: false according review comments
+    check unique_ptr with bool operator too
+
+commit 2c7d1c0d018acfd7bee05099371f6eea534cd315
+Author: ClausKlein <claus.klein@arcormail.de>
+Date:   Wed Jun 2 20:45:15 2021 +0200
+
+    use make_unique if possible
+    
+    change code style after review comments
+
+commit 07fa228d53c104d14b136d6dd6cdb514b4b995f1
+Author: ClausKlein <claus.klein@arcormail.de>
+Date:   Tue Jun 1 21:52:40 2021 +0200
+
+    add clang-format config file to format code
+    
+    respect code review comments
+
+commit 9a26624a2fdad8541d01afaf0dbafb64a8852f69
+Author: ClausKlein <claus.klein@arcormail.de>
+Date:   Tue Jun 1 18:14:36 2021 +0200
+
+    prevent empty line after public:
+
+commit e4d9890748bc415246bd42696b19b5dc136496ae
+Author: ClausKlein <claus.klein@arcormail.de>
+Date:   Tue Jun 1 18:08:54 2021 +0200
+
+    use std::unique_ptr instead of std::auto_ptr
+    
+    prevent include of ace/Auto_Ptr.h for TAO at least
+
+commit f738d227364e650fcb55a502d6adedfe6479bd13
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 1 12:25:20 2021 +0200
+
+    Removed some extension for VMS which we don't support anymore
+    
+        * TAO/tests/IDL_Test/IDL_Test.mpc:
+        * TAO/tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+
+commit 713ab7d553cc72df6323204419e510391c67d27c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 14 11:52:21 2021 +0200
+
+    Make ACE 7.0.2 and TAO 3.0.2 public available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit 7549f0b34c18f6629b426d020395352d16b2ab4e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jun 7 17:21:56 2019 -0500
+
+    tao_idl: Committing Parser as is
+
+commit 9d2523abd86b4791b2160b8c4aaba8d09866fda7
+Merge: d004d8da4fb 45f4d9aa787
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jun 7 16:46:23 2019 -0500
+
+    Merge remote-tracking branch 'upstream/master' into igtd/stdint
+
+commit d004d8da4fb79a35587aa1d19a91e6df5422a9b7
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jun 7 16:46:18 2019 -0500
+
+    Adding Files As is For Merge
+
+commit ce28b30d566a6b6ea6f05f80348ced804d8f5ba3
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Feb 20 21:34:42 2019 -0600
+
+    ast_constant.cpp: Move C++ specific code out of the FE
+
+commit 8f4fcb1ed7a972b75530af8ecc1a4e0a932044d4
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Dec 21 17:27:31 2018 -0600
+
+    TAO_IDL: IDL4 stdint-like Integers
+    
+    uint16, uint32, uint64, int16, int32, int64 from IDL 4.2 section
+    7.4.13.4.5 "Explicitly-named Integer Types"
+    
+    WIP uint8/int8 from IDL4.2 section 7.4.13.4.4 "Integers restricted to holding 8-bits of
+    information"

@@ -18,9 +18,9 @@ int EVENTS_EXPECTED_TO_RECEIVE = 9*4;  // 2 consumers get the same events from 2
 #define DOMAIN_NAME "*"
 #define TYPE_NAME "*"
 
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0;
+ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0;
 
-FilterClient::FilterClient (void)
+FilterClient::FilterClient ()
   :consumer_1 (0),
   consumer_2 (0),
   supplier_1 (0),
@@ -213,7 +213,7 @@ FilterClient::run_consumer ()
 }
 
 void
-FilterClient::done (void)
+FilterClient::done ()
 {
   this->done_ = 1;
 }
@@ -341,7 +341,7 @@ FilterClient::create_supplieradmin ()
   constraint_list[1].event_types[0].type_name = CORBA::string_dup(TYPE_NAME);
   constraint_list[1].constraint_expr = CORBA::string_dup (SA_FILTER);
 
-  sa_filter->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info = sa_filter->add_constraints (constraint_list);
 
   supplier_admin_->add_filter (sa_filter.in ());
 }
@@ -418,11 +418,10 @@ FilterClient::create_consumeradmin ()
   constraint_list[1].event_types[0].type_name = CORBA::string_dup(TYPE_NAME);
   constraint_list[1].constraint_expr = CORBA::string_dup (CA_FILTER);
 
-  ca_filter_1->add_constraints (constraint_list);
-  ca_filter_2->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info1 = ca_filter_1->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info2 = ca_filter_2->add_constraints (constraint_list);
 
   consumer_admin_1_->add_filter (ca_filter_1.in ());
-
   consumer_admin_2_->add_filter (ca_filter_2.in ());
 }
 
@@ -610,7 +609,7 @@ Filter_StructuredPushConsumer::Filter_StructuredPushConsumer (FilterClient* filt
 {
 }
 
-Filter_StructuredPushConsumer::~Filter_StructuredPushConsumer (void)
+Filter_StructuredPushConsumer::~Filter_StructuredPushConsumer ()
 {
 }
 

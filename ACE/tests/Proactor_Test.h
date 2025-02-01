@@ -25,13 +25,13 @@ class Server : public ACE_Service_Handler
 public:
   Server ();
   Server (TestData *tester, int id);
-  ~Server (void);
+  ~Server ();
 
-  int id (void) { return this->id_; }
-  size_t get_total_snd (void) { return this->total_snd_; }
-  size_t get_total_rcv (void) { return this->total_rcv_; }
-  long get_total_w   (void) { return this->total_w_; }
-  long get_total_r   (void) { return this->total_r_; }
+  int id () { return this->id_; }
+  size_t get_total_snd () { return this->total_snd_; }
+  size_t get_total_rcv () { return this->total_rcv_; }
+  long get_total_w   () { return this->total_w_; }
+  long get_total_r   () { return this->total_r_; }
 
   // This is called to pass the new connection's addresses.
   virtual void addresses (const ACE_INET_Addr& peer,
@@ -57,7 +57,7 @@ protected:
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
 
 private:
-  int initiate_read_stream (void);
+  int initiate_read_stream ();
   int initiate_write_stream (ACE_Message_Block &mb, size_t nbytes);
 
   TestData *tester_;
@@ -83,20 +83,19 @@ private:
 class Client : public ACE_Service_Handler
 {
 public:
-
   /// This is called after the new connection has been established.
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
 
   Client ();
   Client (TestData *tester, int id);
-  ~Client (void);
+  ~Client ();
 
-  int id (void) { return this->id_; }
-  size_t get_total_snd (void) { return this->total_snd_; }
-  size_t get_total_rcv (void) { return this->total_rcv_; }
-  int    get_total_w   (void) { return this->total_w_; }
-  int    get_total_r   (void) { return this->total_r_; }
+  int id () { return this->id_; }
+  size_t get_total_snd () { return this->total_snd_; }
+  size_t get_total_rcv () { return this->total_rcv_; }
+  int    get_total_w   () { return this->total_w_; }
+  int    get_total_r   () { return this->total_r_; }
 
   // This is called to pass the new connection's addresses.
   virtual void addresses (const ACE_INET_Addr& peer,
@@ -108,12 +107,12 @@ public:
   /// This is called when asynchronous writes from the socket complete
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
 
-  void cancel (void);
+  void cancel ();
 
 private:
-  int initiate_read_stream (void);
-  int initiate_write_stream (void);
-  void close (void);
+  int initiate_read_stream ();
+  int initiate_write_stream ();
+  void close ();
 
   TestData *tester_;
   int id_;

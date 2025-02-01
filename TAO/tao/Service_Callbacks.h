@@ -58,7 +58,6 @@ namespace IOP
 class TAO_Export TAO_Service_Callbacks
 {
 public:
-
   enum Profile_Equivalence
   {
     EQUIVALENT,
@@ -67,7 +66,7 @@ public:
   };
 
   /// Dtor
-  virtual ~TAO_Service_Callbacks (void);
+  virtual ~TAO_Service_Callbacks ();
 
   /// Select the profile from MProfile as the needs of the services
   /// may be. Return the profile in @a pfile

@@ -10,7 +10,7 @@ TAO_LB_ClientRequestInterceptor::name ()
 }
 
 void
-TAO_LB_ClientRequestInterceptor::destroy (void)
+TAO_LB_ClientRequestInterceptor::destroy ()
 {
 }
 

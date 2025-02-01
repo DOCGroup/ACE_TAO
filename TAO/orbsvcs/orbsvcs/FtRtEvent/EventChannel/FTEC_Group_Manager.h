@@ -18,7 +18,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 struct TAO_FTEC_Group_Manager_Impl;
@@ -39,8 +38,7 @@ public:
     const FTRT::ManagerInfoList & info_list,
     CORBA::ULong object_group_ref_version);
 
-  void join_group (
-    const FTRT::ManagerInfo & info);
+  void join_group (const FTRT::ManagerInfo & info);
 
   void add_member (
     const FTRT::ManagerInfo & info,
@@ -50,13 +48,10 @@ public:
     const FTRT::Location & crashed_location,
     CORBA::ULong object_group_ref_version);
 
-  void replica_crashed (
-    const FTRT::Location & location);
+  void replica_crashed (const FTRT::Location & location);
 
 private:
-  virtual void get_state (
-        FtRtecEventChannelAdmin::EventChannelState & s
-      )=0;
+  virtual void get_state (FtRtecEventChannelAdmin::EventChannelState & s)=0;
 
   virtual void connection_closed();
 

@@ -23,7 +23,7 @@ TAO_Notify_Container_T<TYPE>::Destroyer::work (TYPE* type)
 }
 
 template<class TYPE>
-TAO_Notify_Container_T<TYPE>::TAO_Notify_Container_T (void)
+TAO_Notify_Container_T<TYPE>::TAO_Notify_Container_T ()
   : collection_ (0)
 {
 }
@@ -35,7 +35,7 @@ TAO_Notify_Container_T<TYPE>::~TAO_Notify_Container_T ()
 }
 
 template <class TYPE> void
-TAO_Notify_Container_T<TYPE>::shutdown (void)
+TAO_Notify_Container_T<TYPE>::shutdown ()
 {
   TAO_ESF_Shutdown_Proxy<TYPE> shutdown_worker;
 
@@ -43,7 +43,7 @@ TAO_Notify_Container_T<TYPE>::shutdown (void)
 }
 
 template <class TYPE> void
-TAO_Notify_Container_T<TYPE>::destroy (void)
+TAO_Notify_Container_T<TYPE>::destroy ()
 {
   Destroyer destroyer;
   this->collection_->for_each (&destroyer);
@@ -62,7 +62,7 @@ TAO_Notify_Container_T<TYPE>::remove (TYPE* type)
 }
 
 template<class TYPE> void
-TAO_Notify_Container_T<TYPE>::init (void)
+TAO_Notify_Container_T<TYPE>::init ()
 {
   // get the factory
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();

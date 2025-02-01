@@ -14,11 +14,9 @@
 
 Test_i::Test_i (CORBA::ORB_ptr orb,
                 A::AMI_TestHandler_ptr rh,
-                CORBA::ULong max_count,
                 A::RunMode mode)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
      rh_ (A::AMI_TestHandler::_duplicate (rh)),
-     max_count_ (max_count),
      mode_(mode)
 {
   time_t _tm = ACE_OS::time ();
@@ -87,13 +85,13 @@ Test_i::report (
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
   if (this->mode_ == A::RM_SLAVE && !CORBA::is_nil (this->opponent_.in ()))
   {
     this->opponent_->shutdown ();
   }
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 Test_Reply_i::Test_Reply_i (CORBA::ORB_ptr orb,

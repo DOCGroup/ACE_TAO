@@ -80,7 +80,6 @@ class TAO_Operation_Details;
 class TAO_Export TAO_ServerRequest
 {
 public:
-
   /// Declare FW_Server_Request_Wrapper a friend
   /// This friendship makes the FW_Server_Request_Wrapper be able to
   /// clone the TAO_ServerRequest.
@@ -125,79 +124,79 @@ public:
                      CORBA::Object_ptr target);
 
   /// Destructor.
-  ~TAO_ServerRequest (void);
+  ~TAO_ServerRequest ();
 
   /**
    * @name Request attributes.
    */
   //@{
   /// Return the operation name.
-  const char *operation (void) const;
+  const char *operation () const;
 
   /// Set the operation name.
   void operation (const char *operation, size_t length, int release);
 
   /// Return the length of the operation.
-  size_t operation_length (void) const;
+  size_t operation_length () const;
   //@}
 
   /// Return the underlying ORB.
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
   /// Return the ORB core pointer member.
-  TAO_ORB_Core *orb_core (void) const;
+  TAO_ORB_Core *orb_core () const;
 
   /// Start a Reply message.
-  void init_reply (void);
+  void init_reply ();
 
   /// Retrieve the incoming stream.
-  TAO_InputCDR * incoming (void) const;
+  TAO_InputCDR * incoming () const;
 
   /// Retrieve the outgoing stream.
-  TAO_OutputCDR * outgoing (void) const;
+  TAO_OutputCDR * outgoing () const;
 
   /// Is the response expected?
-  CORBA::Boolean response_expected (void) const;
+  CORBA::Boolean response_expected () const;
 
   /// Should the reply be deferred?
-  CORBA::Boolean deferred_reply (void) const;
+  CORBA::Boolean deferred_reply () const;
 
   /// Set the response expected flag.
   void response_expected (CORBA::Boolean response);
 
   /// Should we return before dispatching the servant?
-  CORBA::Boolean sync_with_server (void) const;
+  CORBA::Boolean sync_with_server () const;
 
   /// Set the sync_with_server flag.
   void sync_with_server (CORBA::Boolean sync_flag);
 
   /// Is the request at risk of being queued?
-  CORBA::Boolean is_queued (void) const;
+  CORBA::Boolean is_queued () const;
 
   /// Set the queued flag.
   void is_queued (CORBA::Boolean qeueued_flag);
 
   /// Send a sync reply if needed after _dispatch is called
-  void sync_after_dispatch (void);
+  void sync_after_dispatch ();
 
   /// Send a sync reply if needed before _dispatch is called to avoid
   /// possible queuing first.
-  void sync_before_dispatch (void);
+  void sync_before_dispatch ();
 
   /// Used with reliable oneway requests.
-  void send_no_exception_reply (void);
+  void send_no_exception_reply ();
 
-  TAO::ObjectKey &object_key (void);
+  TAO::ObjectKey &object_key ();
 
   /// Return the request TAO_Service_Context
-  TAO_Service_Context &request_service_context (void);
+  TAO_Service_Context &request_service_context ();
 
   /// Return the reply TAO_Service_Context
-  TAO_Service_Context &reply_service_context (void);
+  TAO_Service_Context &reply_service_context ();
 
-  IOP::ServiceContextList &reply_service_info (void);
+  IOP::ServiceContextList &reply_service_info ();
 
-  IOP::ServiceContextList &request_service_info (void);
+  IOP::ServiceContextList &request_service_info ();
 
   /// Return the underlying transport
   TAO_Transport *transport ();
@@ -205,7 +204,7 @@ public:
   /// To handle System Exceptions at the lowest level, a method
   /// returning the request_id_ is needed.
   //@{
-  CORBA::ULong request_id (void);
+  CORBA::ULong request_id ();
   void request_id (CORBA::ULong req);
   //@}
 
@@ -217,16 +216,16 @@ public:
   void forward_location (CORBA::Object_ptr forward_reference);
 
   /// Get the forward_location.
-  CORBA::Object_ptr forward_location (void);
+  CORBA::Object_ptr forward_location ();
 
   /**
    * Since forward location is allowed to be nil then this is a proper
    * method to check if the request is being forwarded.
    */
-  bool is_forwarded (void) const;
+  bool is_forwarded () const;
 
   /// Get the reply status
-  GIOP::ReplyStatusType reply_status (void);
+  GIOP::ReplyStatusType reply_status ();
 
   /// Set the reply status
   void reply_status (GIOP::ReplyStatusType except_type);
@@ -235,29 +234,29 @@ public:
   void requesting_principal (const CORBA::OctetSeq & principal);
 
   /// Return the reference to the tagged profile
-  TAO_Tagged_Profile &profile (void);
+  TAO_Tagged_Profile &profile ();
 
-  void tao_send_reply (void);
+  void tao_send_reply ();
 
   void tao_send_reply_exception (const CORBA::Exception& ex);
 
   /// Set the boolean member to true.
-  void is_dsi (void);
+  void is_dsi ();
 
   /// Set the member.
   void dsi_nvlist_align (ptrdiff_t alignment);
 
   /// Get the operation details for the current request.
-  TAO_Operation_Details const * operation_details (void) const;
+  TAO_Operation_Details const * operation_details () const;
 
   /// Set the argument_flag
   void argument_flag (CORBA::Boolean flag);
 
   /// Get the argument_flag
-  CORBA::Boolean argument_flag (void);
+  CORBA::Boolean argument_flag ();
 
   /// Returns @c true if the current request is collocated.
-  bool collocated (void) const;
+  bool collocated () const;
 
 #if TAO_HAS_INTERCEPTORS == 1
   /// Send cached reply. Used in scenarios where the FTORB thinks that
@@ -271,12 +270,12 @@ public:
    *       code must be able to modify this value and use that value
    *       at a later time without being forced to use TSS.
    */
-  size_t & interceptor_count (void);
+  size_t & interceptor_count ();
 
   /// Return a reference to the "request scope" PICurrent object.
-  TAO::PICurrent_Impl *rs_pi_current (void);
+  TAO::PICurrent_Impl *rs_pi_current ();
 
-  CORBA::Exception *caught_exception (void);
+  CORBA::Exception *caught_exception ();
 
   void caught_exception (CORBA::Exception *exception);
 
@@ -284,7 +283,7 @@ public:
   void pi_reply_status (PortableInterceptor::ReplyStatus s);
 
   /// Get the status of the received reply.
-  PortableInterceptor::ReplyStatus pi_reply_status (void);
+  PortableInterceptor::ReplyStatus pi_reply_status ();
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if TAO_HAS_ZIOP == 1
@@ -297,7 +296,7 @@ public:
 private:
   /// Default ctor only used to create a TAO_ServerRequest that is about
   /// to be the target of a clone operation.
-  TAO_ServerRequest (void);
+  TAO_ServerRequest ();
 
   TAO_GIOP_Message_Base *mesg_base_;
 

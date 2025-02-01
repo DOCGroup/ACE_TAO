@@ -46,12 +46,11 @@ class TAO_PortableGroup_Export TAO_PG_ObjectGroupManager
   : public virtual POA_PortableGroup::ObjectGroupManager
 {
 public:
-
   /// Constructor.
-  TAO_PG_ObjectGroupManager (void);
+  TAO_PG_ObjectGroupManager ();
 
   /// Destructor.
-  ~TAO_PG_ObjectGroupManager (void);
+  ~TAO_PG_ObjectGroupManager ();
 
   /**
    * @name PortableGroup::ObjectGroupManager methods
@@ -60,7 +59,6 @@ public:
    * interface.
    */
   //@{
-
   /// Create a member and add it to the given object group.
   virtual PortableGroup::ObjectGroup_ptr create_member (
       PortableGroup::ObjectGroup_ptr object_group,
@@ -199,7 +197,6 @@ public:
   void validate_members (CORBA::ORB_ptr orb, const TimeBase::TimeT& timeout);
 
 protected:
-
   /// Underlying and non-locking implementation of the add_member()
   /// and _tao_add_member() methods in this class.
   PortableGroup::ObjectGroup_ptr add_member_i (
@@ -249,7 +246,6 @@ protected:
                                    TAO_PG_ObjectGroup_Array * groups);
 
 private:
-
   /// Help function to get active or inactive member infos.
   TAO_PG_MemberInfo_Set get_members (bool is_alive);
 

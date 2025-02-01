@@ -44,7 +44,7 @@ public:
   friend class ACE_Unbounded_List<T>;
   friend class ACE_Unbounded_List_Iterator<T>;
 
-  ~ACE_NS_Node (void);
+  ~ACE_NS_Node ();
 
 private:
   ACE_NS_Node (const T &i, ACE_NS_Node<T> *n);
@@ -76,17 +76,17 @@ public:
 
   /// Move forward by one element in the List.  Returns 0 when all the
   /// items in the List have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Move to the first element in the List.  Returns 0 if the
   /// List is empty, else 1.
-  int first (void);
+  int first ();
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
@@ -94,10 +94,10 @@ public:
   ACE_Unbounded_List_Iterator<T> operator++ (int);
 
   /// Prefix advance.
-  ACE_Unbounded_List_Iterator<T>& operator++ (void);
+  ACE_Unbounded_List_Iterator<T>& operator++ ();
 
   /// Returns a reference to the interal element <this> is pointing to.
-  T& operator* (void);
+  T& operator* ();
 
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Unbounded_List_Iterator<T> &) const;
@@ -144,15 +144,15 @@ public:
   void operator= (const ACE_Unbounded_List<T> &);
 
   /// Destructor.
-  ~ACE_Unbounded_List (void);
+  ~ACE_Unbounded_List ();
 
   // = Check boundary conditions.
 
   /// Returns 1 if the container is empty, otherwise returns 0.
-  int is_empty (void) const;
+  int is_empty () const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
-  int is_full (void) const;
+  int is_full () const;
 
   // = Classic unordered set operations.
 
@@ -171,17 +171,17 @@ public:
   int remove (const T &item);
 
   /// Size of the set.
-  size_t size (void) const;
+  size_t size () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Reset the <ACE_Unbounded_List> to be empty.
-  void reset (void);
+  void reset ();
 
   // = STL-styled unidirectional iterator factory.
-  ACE_Unbounded_List_Iterator<T> begin (void);
-  ACE_Unbounded_List_Iterator<T> end (void);
+  ACE_Unbounded_List_Iterator<T> begin ();
+  ACE_Unbounded_List_Iterator<T> end ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -192,7 +192,7 @@ private:
   int insert_tail (const T &item);
 
   /// Delete all the nodes in the List.
-  void delete_nodes (void);
+  void delete_nodes ();
 
   /// Copy nodes into this set.
   void copy_nodes (const ACE_Unbounded_List<T> &);
@@ -209,13 +209,7 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Naming/Naming_Service_Container.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Naming_Service_Container.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* NS_CONTAINERS_T_H */

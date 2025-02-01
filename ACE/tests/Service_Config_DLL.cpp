@@ -35,7 +35,7 @@ invoke_service_config (void *arg)
   return 0;
 }
 
-Service_Config_DLL::Service_Config_DLL (void)
+Service_Config_DLL::Service_Config_DLL ()
 {
   ACE_OS::memset (this->directive_[0], 0, BUFSIZ * sizeof (ACE_TCHAR));
   ACE_OS::memset (this->directive_[1], 0, BUFSIZ * sizeof (ACE_TCHAR));
@@ -107,13 +107,13 @@ Service_Config_DLL::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Service_Config_DLL::fini (void)
+Service_Config_DLL::fini ()
 {
   return 0;
 }
 
 int
-Service_Config_DLL::svc (void)
+Service_Config_DLL::svc ()
 {
   if (ACE_Thread_Manager::instance ()->spawn (invoke_service_config,
                                               this->directive_[1]) == -1)
@@ -243,7 +243,7 @@ Refuses_Init::init (int, ACE_TCHAR *[])
 
 /// Terminates object when dynamic unlinking occurs.
 int
-Refuses_Init::fini (void)
+Refuses_Init::fini ()
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Refuses_Init::fini should not be called!\n")));

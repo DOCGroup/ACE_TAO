@@ -40,15 +40,9 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_LACKS_FD_MASK)
-   typedef long fd_mask;
-#endif /* ACE_LACKS_FD_MASK */
-
 #if defined (ACE_WIN32)
    // This will help until we figure out everything:
 #  define NFDBITS 32 /* only used in unused functions... */
-#elif defined (ACE_LACKS_NFDBITS)
-#  define NFDBITS (sizeof(fd_mask) * NBBY)        /* bits per mask */
 #endif /* ACE_WIN32 */
 
 #ifdef __cplusplus

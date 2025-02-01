@@ -244,7 +244,7 @@ const char * StubFaultAnalyzer::identity () const
 /**
  * Clean house for process shut down.
  */
-int StubFaultAnalyzer::fini (void)
+int StubFaultAnalyzer::fini ()
 {
   this->faultConsumer_.fini();
   this->batchConsumer_.fini();

@@ -27,10 +27,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Linear_Search_OpTable::~TAO_Linear_Search_OpTable (void)
-{
-}
-
 int
 TAO_Linear_Search_OpTable::bind (const char *,
                                  const TAO::Operation_Skeletons )

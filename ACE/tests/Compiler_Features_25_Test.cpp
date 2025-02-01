@@ -5,14 +5,12 @@
 
 #include "test_config.h"
 
-#if defined (ACE_HAS_CPP11)
-
 #include <type_traits>
 
 struct Foo
 {
-  typedef std::true_type is_true;
-  typedef std::false_type is_false;
+  using is_true = std::true_type;
+  using is_false = std::false_type;
 };
 
 int
@@ -36,18 +34,3 @@ run_main (int, ACE_TCHAR *[])
 
   return retval;
 }
-
-#else
-int
-run_main (int, ACE_TCHAR *[])
-{
-  ACE_START_TEST (ACE_TEXT("Compiler_Features_25_Test"));
-
-  ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("No C++11 support enabled\n")));
-
-  ACE_END_TEST;
-  return 0;
-}
-
-#endif

@@ -37,7 +37,7 @@ TAO_Binary_Constraint (TAO_Expression_Type op_type,
 {
 }
 
-TAO_Binary_Constraint::~TAO_Binary_Constraint (void)
+TAO_Binary_Constraint::~TAO_Binary_Constraint ()
 {
   delete left_;
   delete right_;
@@ -194,13 +194,13 @@ visit_in (TAO_Constraint_Visitor* visitor,
 
 
 TAO_Constraint*
-TAO_Binary_Constraint::left_operand (void) const
+TAO_Binary_Constraint::left_operand () const
 {
   return this->left_;
 }
 
 TAO_Constraint*
-TAO_Binary_Constraint::right_operand (void) const
+TAO_Binary_Constraint::right_operand () const
 {
   return this->right_;
 }
@@ -213,7 +213,7 @@ TAO_Unary_Constraint (TAO_Expression_Type op_type,
 {
 }
 
-TAO_Unary_Constraint::~TAO_Unary_Constraint (void)
+TAO_Unary_Constraint::~TAO_Unary_Constraint ()
 {
   delete operand_;
 }
@@ -254,7 +254,7 @@ TAO_Unary_Constraint::accept (TAO_Constraint_Visitor* visitor)
 }
 
 TAO_Constraint*
-TAO_Unary_Constraint::operand (void)
+TAO_Unary_Constraint::operand ()
 {
   return this->operand_;
 }
@@ -265,7 +265,7 @@ TAO_Property_Constraint (const char* name)
 {
 }
 
-TAO_Property_Constraint::~TAO_Property_Constraint (void)
+TAO_Property_Constraint::~TAO_Property_Constraint ()
 {
   CORBA::string_free (this->name_);
 }
@@ -277,18 +277,18 @@ TAO_Property_Constraint::accept (TAO_Constraint_Visitor* visitor)
 }
 
 TAO_Expression_Type
-TAO_Property_Constraint::expr_type (void) const
+TAO_Property_Constraint::expr_type () const
 {
   return TAO_IDENT;
 }
 
 const char*
-TAO_Property_Constraint::name (void) const
+TAO_Property_Constraint::name () const
 {
   return name_;
 }
 
-TAO_Literal_Constraint::TAO_Literal_Constraint (void)
+TAO_Literal_Constraint::TAO_Literal_Constraint ()
   : type_ (TAO_UNKNOWN)
 {
 }
@@ -415,7 +415,7 @@ TAO_Literal_Constraint::TAO_Literal_Constraint (const char* str)
   this->op_.str_ = CORBA::string_dup (str);
 }
 
-TAO_Literal_Constraint::~TAO_Literal_Constraint (void)
+TAO_Literal_Constraint::~TAO_Literal_Constraint ()
 {
   if (this->type_ == TAO_STRING)
     CORBA::string_free (this->op_.str_);
@@ -433,12 +433,12 @@ TAO_Literal_Constraint::operator= (const TAO_Literal_Constraint& co)
   this->copy (co);
 }
 
-TAO_Literal_Constraint::operator CORBA::Boolean (void) const
+TAO_Literal_Constraint::operator CORBA::Boolean () const
 {
   return (this->type_ == TAO_BOOLEAN) ? this->op_.bool_ : 0;
 }
 
-TAO_Literal_Constraint::operator CORBA::ULongLong (void) const
+TAO_Literal_Constraint::operator CORBA::ULongLong () const
 {
   CORBA::ULongLong return_value = 0;
 
@@ -451,14 +451,14 @@ TAO_Literal_Constraint::operator CORBA::ULongLong (void) const
   else if (this->type_ == TAO_DOUBLE)
     return_value =
       (this->op_.double_ > 0) ?
-      ((this->op_.double_ > ACE_UINT64_MAX) ?
+      ((this->op_.double_ > static_cast<CORBA::Double>(ACE_UINT64_MAX)) ?
        ACE_UINT64_MAX :
        static_cast<CORBA::ULongLong> (this->op_.double_)) : 0;
 
   return return_value;
 }
 
-TAO_Literal_Constraint::operator CORBA::LongLong (void) const
+TAO_Literal_Constraint::operator CORBA::LongLong () const
 {
   CORBA::LongLong return_value = 0;
 
@@ -471,7 +471,7 @@ TAO_Literal_Constraint::operator CORBA::LongLong (void) const
   else if (this->type_ == TAO_DOUBLE)
     return_value  =
       (this->op_.double_ > 0) ?
-      ((this->op_.double_ > ACE_INT64_MAX) ?
+      ((this->op_.double_ > static_cast<CORBA::Double>(ACE_INT64_MAX)) ?
        ACE_INT64_MAX :
        static_cast<CORBA::LongLong> (this->op_.double_)) :
     ((this->op_.double_ < ACE_INT64_MIN) ?
@@ -481,7 +481,7 @@ TAO_Literal_Constraint::operator CORBA::LongLong (void) const
   return return_value;
 }
 
-TAO_Literal_Constraint::operator CORBA::Double (void) const
+TAO_Literal_Constraint::operator CORBA::Double () const
 {
   CORBA::Double return_value = 0.0;
 
@@ -495,12 +495,12 @@ TAO_Literal_Constraint::operator CORBA::Double (void) const
   return return_value;
 }
 
-TAO_Literal_Constraint::operator const char* (void) const
+TAO_Literal_Constraint::operator const char* () const
 {
   return (this->type_ == TAO_STRING) ? this->op_.str_ : 0;
 }
 
-TAO_Literal_Constraint::operator const CORBA::Any* (void) const
+TAO_Literal_Constraint::operator const CORBA::Any* () const
 {
   return (this->type_ == TAO_SEQUENCE) ? this->op_.any_ : 0;
 }
@@ -603,7 +603,6 @@ operator== (const TAO_Literal_Constraint& left,
 
   return return_value;
 }
-
 
 
 bool

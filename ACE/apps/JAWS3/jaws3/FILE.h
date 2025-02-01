@@ -13,10 +13,9 @@ class JAWS_Export JAWS_FILE : public ACE_FILE_IO
 // Like ACE_FILE_IO, but support for ACE_Mem_Map;
 {
 public:
+  JAWS_FILE ();
 
-  JAWS_FILE (void);
-
-  ~JAWS_FILE (void);
+  ~JAWS_FILE ();
 
   ACE_Mem_Map *mem_map (int length = -1,
                         int prot = PROT_RDWR,
@@ -31,17 +30,15 @@ public:
                         ACE_OFF_T offset = 0,
                         LPSECURITY_ATTRIBUTES sa = 0) const;
 
-  ACE_Mem_Map *map (void) const;
+  ACE_Mem_Map *map () const;
 
   void can_map (int);
 
 private:
-
   ACE_SYNCH_MUTEX lock_;
   ACE_Mem_Map *map_;
 
   int can_map_;
-
 };
 
 #endif /* JAWS_FILE_H */

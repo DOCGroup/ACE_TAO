@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Broadcaster_i.cpp
@@ -9,7 +8,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #include "Broadcaster_i.h"
 
@@ -23,16 +21,6 @@ Broadcaster_i::Receiver_Data::operator == (const Broadcaster_i::Receiver_Data &r
   return
     this->receiver_->_is_equivalent (receiver_data.receiver_.in ())
     && this->nickname_ == receiver_data.nickname_;
-}
-
-Broadcaster_i::Broadcaster_i (void)
-{
-  // No-op
-}
-
-Broadcaster_i::~Broadcaster_i (void)
-{
-  // No-op
 }
 
 void

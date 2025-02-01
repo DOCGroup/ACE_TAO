@@ -3,10 +3,6 @@
 #if !defined(AFX_ACE_INIT_TESTDLG_H__64FDCA00_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_)
 #define AFX_ACE_INIT_TESTDLG_H__64FDCA00_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_
 
-#if _MSC_VER >= 1000
-#pragma once
-#endif // _MSC_VER >= 1000
-
 // CACE_Init_TestDlg dialog
 
 class CACE_Init_TestDlg : public CDialog

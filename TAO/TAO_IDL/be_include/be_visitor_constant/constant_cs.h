@@ -28,7 +28,7 @@ public:
   be_visitor_constant_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_constant_cs (void);
+  ~be_visitor_constant_cs ();
 
   /// visit constant
   virtual int visit_constant (be_constant *node);

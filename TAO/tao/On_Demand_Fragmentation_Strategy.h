@@ -46,15 +46,16 @@ public:
   TAO_On_Demand_Fragmentation_Strategy (TAO_Transport * transport,
                                         ACE_CDR::ULong max_message_size);
 
-  virtual ~TAO_On_Demand_Fragmentation_Strategy (void);
+  virtual ~TAO_On_Demand_Fragmentation_Strategy ();
   virtual int fragment (TAO_OutputCDR & cdr,
                         ACE_CDR::ULong pending_alignment,
                         ACE_CDR::ULong pending_length);
 
 private:
-  // Disallow copying and assignment.
-  TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy const &);
-  void operator= (TAO_On_Demand_Fragmentation_Strategy const &);
+  TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy const &) = delete;
+  void operator= (TAO_On_Demand_Fragmentation_Strategy const &) = delete;
+  TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy &&) = delete;
+  void operator= (TAO_On_Demand_Fragmentation_Strategy &&) = delete;
 
 private:
   /// Pointer to the underlying transport object.

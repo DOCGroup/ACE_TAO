@@ -59,7 +59,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (oneway_call)
         {
-          CORBA::String_var the_string = CORBA::string_dup( "Test" );
+          CORBA::String_var the_string = CORBA::string_dup( "Test");
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client sending string <%C> oneway\n",
                       the_string.in ()));
           hello->set_string (the_string);

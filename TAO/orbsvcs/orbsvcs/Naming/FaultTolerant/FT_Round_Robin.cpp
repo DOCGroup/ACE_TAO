@@ -9,16 +9,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_Round_Robin::TAO_FT_Round_Robin (void)
+TAO_FT_Round_Robin::TAO_FT_Round_Robin ()
   : lock_ (),
     location_index_map_ (TAO_PG_MAX_OBJECT_GROUPS)
 {
 }
-
-TAO_FT_Round_Robin::~TAO_FT_Round_Robin (void)
-{
-}
-
 
 bool
 TAO_FT_Round_Robin::next_location (

@@ -19,7 +19,7 @@ be_visitor_valuetype_cdr_op_cs::be_visitor_valuetype_cdr_op_cs (
 {
 }
 
-be_visitor_valuetype_cdr_op_cs::~be_visitor_valuetype_cdr_op_cs (void)
+be_visitor_valuetype_cdr_op_cs::~be_visitor_valuetype_cdr_op_cs ()
 {
 }
 
@@ -56,8 +56,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -127,9 +126,9 @@ be_visitor_valuetype_cdr_op_cs::visit_eventtype (be_eventtype *node)
 int
 be_visitor_valuetype_cdr_op_cs::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_ci::"

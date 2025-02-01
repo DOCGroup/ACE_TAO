@@ -9,7 +9,6 @@ TAO_Endpoint::TAO_Endpoint (CORBA::ULong tag,
   //    which case this optimizaton wouldn't work. We can get around
   //    that using a bool. But we don't want to increase the runtime
   //    memory.
-  , hash_val_ (0)
   , tag_ (tag)
   , priority_ (priority)
 
@@ -17,13 +16,13 @@ TAO_Endpoint::TAO_Endpoint (CORBA::ULong tag,
 }
 
 ACE_INLINE CORBA::ULong
-TAO_Endpoint::tag (void) const
+TAO_Endpoint::tag () const
 {
   return this->tag_;
 }
 
 ACE_INLINE CORBA::Short
-TAO_Endpoint::priority (void) const
+TAO_Endpoint::priority () const
 {
   return this->priority_;
 }

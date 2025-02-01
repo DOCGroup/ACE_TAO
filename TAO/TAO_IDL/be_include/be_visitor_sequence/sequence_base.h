@@ -36,7 +36,7 @@ public:
   be_visitor_sequence_base (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_sequence_base (void);
+  ~be_visitor_sequence_base ();
 
   // = Visitor methods.
   virtual int visit_predefined_type (be_predefined_type *node);
@@ -59,7 +59,6 @@ public:
 protected:
   /// helper that does the common job
   int visit_node (be_type *);
-
 };
 
 /**
@@ -80,7 +79,7 @@ public:
                                           be_sequence *node );
 
   ///Dtor
-  ~be_visitor_sequence_base_template_args (void);
+  ~be_visitor_sequence_base_template_args ();
 
   //= Visit methods
   virtual int visit_interface (be_interface *node);

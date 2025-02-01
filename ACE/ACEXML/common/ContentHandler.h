@@ -42,8 +42,7 @@
 class ACEXML_Export ACEXML_ContentHandler
 {
 public:
-
-  virtual ~ACEXML_ContentHandler (void);
+  virtual ~ACEXML_ContentHandler ();
 
   /**
    * Receive notification of character data.
@@ -55,7 +54,7 @@ public:
   /**
    * Receive notification of the end of a document.
    */
-  virtual void endDocument (void) = 0;
+  virtual void endDocument () = 0;
 
   /**
    * Receive notification of the end of an element.
@@ -95,7 +94,7 @@ public:
   /**
    * Receive notification of the beginning of a document.
    */
-  virtual void startDocument (void) = 0;
+  virtual void startDocument () = 0;
 
   /**
    * Receive notification of the beginning of an element.

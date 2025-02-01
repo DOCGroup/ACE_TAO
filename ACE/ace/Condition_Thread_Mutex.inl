@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_Condition<ACE_Thread_Mutex>::remove (void)
+ACE_Condition<ACE_Thread_Mutex>::remove ()
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::remove");
 
@@ -29,7 +29,7 @@ ACE_Condition<ACE_Thread_Mutex>::remove (void)
 }
 
 ACE_INLINE ACE_Thread_Mutex &
-ACE_Condition<ACE_Thread_Mutex>::mutex (void)
+ACE_Condition<ACE_Thread_Mutex>::mutex ()
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::mutex");
   return this->mutex_;

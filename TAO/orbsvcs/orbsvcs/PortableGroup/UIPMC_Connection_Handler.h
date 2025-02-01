@@ -50,9 +50,7 @@ class TAO_PortableGroup_Export TAO_UIPMC_Connection_Handler :
   public TAO_UIPMC_SVC_HANDLER,
   public TAO_Connection_Handler
 {
-
 public:
-
   TAO_UIPMC_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor. arg parameter is used by the Acceptor to pass the
@@ -61,7 +59,7 @@ public:
 
 
   /// Destructor.
-  ~TAO_UIPMC_Connection_Handler (void);
+  ~TAO_UIPMC_Connection_Handler ();
 
   //@{
   /** @name Connection Handler overloads
@@ -76,8 +74,8 @@ public:
   //@{
   /** @name Event Handler overloads
    */
-  virtual int resume_handler (void);
-  virtual int close_connection (void);
+  virtual int resume_handler ();
+  virtual int close_connection ();
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
@@ -87,26 +85,25 @@ public:
   //@}
 
   /// Add ourselves to Cache.
-  int add_transport_to_cache (void);
+  int add_transport_to_cache ();
 
   /// Set Diff-Serv codepoint on outgoing packets.
   int set_dscp_codepoint (CORBA::Boolean set_network_priority);
   int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
   // UIPMC Additions - Begin
-  const ACE_INET_Addr &addr (void) const;
+  const ACE_INET_Addr &addr () const;
 
   void addr (const ACE_INET_Addr &addr);
 
-  const ACE_INET_Addr &local_addr (void) const;
+  const ACE_INET_Addr &local_addr () const;
 
   void local_addr (const ACE_INET_Addr &addr);
 
-  u_long send_hi_water_mark (void) const;
+  u_long send_hi_water_mark () const;
   // UIPMC Additions - End
 
 protected:
-
   // UIPMC Additions - Begin
 
   // This is always the remote address
@@ -121,7 +118,7 @@ protected:
   /**
    * @name TAO_Connection Handler overloads
    */
-  virtual int release_os_resources (void);
+  virtual int release_os_resources ();
   virtual int handle_write_ready (const ACE_Time_Value *timeout);
   //@}
 
@@ -130,7 +127,6 @@ protected:
   int set_tos (int tos);
 
 private:
-
   /// Stores the type of service value.
   int dscp_codepoint_;
 

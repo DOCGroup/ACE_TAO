@@ -16,7 +16,7 @@ be_visitor_constant_ch::be_visitor_constant_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_constant_ch::~be_visitor_constant_ch (void)
+be_visitor_constant_ch::~be_visitor_constant_ch ()
 {
 }
 
@@ -31,8 +31,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // If we are defined in the outermost scope, then the value is assigned
   // to us here itself, else it will be in the *.cpp file.
@@ -43,10 +42,10 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   AST_Expression::ExprType etype = node->et ();
   AST_Decl::NodeType snt = node->defined_in ()->scope_node_type ();
 
-  if (tdef != 0)
+  if (tdef != nullptr)
     {
       nt = tdef->node_type ();
-      be_typedef *td = be_typedef:: narrow_from_decl (tdef);
+      be_typedef *td = dynamic_cast<be_typedef*> (tdef);
       bnt = td->base_node_type ();
     }
 
@@ -66,7 +65,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         }
       else
         {
-          *os << node->exprtype_to_string ();
+          *os << exprtype_to_cpp_corba_type (node->et ());
         }
 
       *os << " " << node->local_name ();
@@ -93,7 +92,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         {
           if (bnt == AST_Decl::NT_string || bnt == AST_Decl::NT_wstring)
             {
-              *os << node->exprtype_to_string ();
+              *os << exprtype_to_cpp_corba_type (node->et ());
             }
           else
             {
@@ -102,14 +101,14 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         }
       else
         {
-          *os << node->exprtype_to_string ();
+          *os << exprtype_to_cpp_corba_type (node->et ());
         }
 
       *os << " " << node->local_name ();
     }
 
   // If this is true, can't generate inline constants.
-  bool forbidden_in_class = (snt != AST_Decl::NT_root
+  bool const forbidden_in_class = (snt != AST_Decl::NT_root
                              && snt != AST_Decl::NT_module
                              && (etype == AST_Expression::EV_string
                                  || etype == AST_Expression::EV_wstring

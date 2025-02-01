@@ -22,9 +22,9 @@ class agent_impl;
  * Contructs agents that are capable of processing SNMPv1 requests
  * over the MIB II System group
  */
-class snmp_agent {
-
-  public:
+class snmp_agent
+{
+public:
   snmp_agent(); // uses port 161, public, private
   ~snmp_agent();
 
@@ -37,7 +37,7 @@ class snmp_agent {
   int run();
   // begin processing requests
 
-  private:
+private:
   snmp_agent(const snmp_agent&);
   agent_impl *agent_;
 };

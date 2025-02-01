@@ -45,7 +45,7 @@ namespace TAO
                      CORBA::TypeCode_ptr,
                      const T &);
     Any_Dual_Impl_T (CORBA::TypeCode_ptr);
-    virtual ~Any_Dual_Impl_T (void);
+    virtual ~Any_Dual_Impl_T ();
 
     static void insert (CORBA::Any &,
                         _tao_destructor,
@@ -64,8 +64,8 @@ namespace TAO
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
     virtual void _tao_decode (TAO_InputCDR &);
 
-    virtual const void *value (void) const;
-    virtual void free_value (void);
+    virtual const void *value () const;
+    virtual void free_value ();
 
   protected:
     void value (const T &);
@@ -87,13 +87,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/Any_Dual_Impl_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Any_Dual_Impl_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

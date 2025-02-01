@@ -35,7 +35,6 @@ class be_decl;
 class TAO_IDL_BE_Export TAO_CodeGen
 {
 public:
-
   // Define all the code generation states.
   // The first letter C/S of the suffix stands for client/server-side
   // The second letter H/I/S stands for header/inline/impl file.
@@ -143,6 +142,7 @@ public:
 
       // For sequence buffer types.
       TAO_SEQUENCE_BUFFER_TYPE_CH,
+      TAO_MAP_BUFFER_TYPE_CH,
 
       // Emitting code for the public members of the union.
       TAO_UNION_PUBLIC_CH,
@@ -198,10 +198,10 @@ public:
     };
 
   /// Constructor
-  TAO_CodeGen (void);
+  TAO_CodeGen ();
 
   /// Destructor
-  ~TAO_CodeGen (void);
+  ~TAO_CodeGen ();
 
   /// Set the client header stream.
   int start_client_header (const char *fname);
@@ -249,16 +249,16 @@ public:
 
   /// Generate code at the end such as the <<= and >>= operators along
   /// with the ending #endif statement.
-  int end_client_header (void);
+  int end_client_header ();
 
   /// Generate necessary code at end of client inline file.
-  void end_client_inline (void);
+  void end_client_inline ();
 
   /// Generate necessary code at end of client stub file.
-  void end_client_stubs (void);
+  void end_client_stubs ();
 
   /// Put a last #endif in the server header.
-  int end_server_header (void);
+  int end_server_header ();
 
   /// Put a last #endif in the server header.
   int end_implementation_header (const char *fname);
@@ -267,102 +267,102 @@ public:
   int end_implementation_skeleton (const char *fname);
 
   /// Put a last #endif in the server template header.
-  int end_server_template_header (void);
+  int end_server_template_header ();
 
   /// Put a last #endif in the server skeletons.
-  int end_server_template_skeletons (void);
+  int end_server_template_skeletons ();
 
   /// Put a last #endif in the server skeletons.
-  int end_server_skeletons (void);
+  int end_server_skeletons ();
 
   /// Put a last #endif in the anyop header.
-  int end_anyop_header (void);
+  int end_anyop_header ();
 
   /// Make sure we end with a newline.
-  int end_anyop_source (void);
+  int end_anyop_source ();
 
-  int end_ciao_svnt_header (void);
-  int end_ciao_svnt_source (void);
-  int end_ciao_svnt_template_header (void);
-  int end_ciao_svnt_template_source (void);
-  int end_ciao_exec_header (void);
-  int end_ciao_exec_source (void);
-  int end_ciao_exec_idl (void);
-  int end_ciao_conn_header (void);
-  int end_ciao_conn_source (void);
-  int end_ciao_ami_conn_idl (void);
+  int end_ciao_svnt_header ();
+  int end_ciao_svnt_source ();
+  int end_ciao_svnt_template_header ();
+  int end_ciao_svnt_template_source ();
+  int end_ciao_exec_header ();
+  int end_ciao_exec_source ();
+  int end_ciao_exec_idl ();
+  int end_ciao_conn_header ();
+  int end_ciao_conn_source ();
+  int end_ciao_ami_conn_idl ();
 
   /// Get the client header stream.
-  TAO_OutStream *client_header (void);
+  TAO_OutStream *client_header ();
 
   /// Get the client stubs stream.
-  TAO_OutStream *client_stubs (void);
+  TAO_OutStream *client_stubs ();
 
   /// Get the client inline stream.
-  TAO_OutStream *client_inline (void);
+  TAO_OutStream *client_inline ();
 
   /// get the server header stream.
-  TAO_OutStream *server_header (void);
+  TAO_OutStream *server_header ();
 
   /// Get the implementation header stream.
-  TAO_OutStream *implementation_header (void);
+  TAO_OutStream *implementation_header ();
 
   /// Get the implementation skeleton stream.
-  TAO_OutStream *implementation_skeleton (void);
+  TAO_OutStream *implementation_skeleton ();
 
   /// Get the server header template stream.
-  TAO_OutStream *server_template_header (void);
+  TAO_OutStream *server_template_header ();
 
   /// Get the server skeletons stream.
-  TAO_OutStream *server_skeletons (void);
+  TAO_OutStream *server_skeletons ();
 
   /// Get the server template skeletons stream.
-  TAO_OutStream *server_template_skeletons (void);
+  TAO_OutStream *server_template_skeletons ();
 
   /// Get the server template inline stream.
-  TAO_OutStream *server_template_inline (void);
+  TAO_OutStream *server_template_inline ();
 
   /// Get the anyop header stream.
-  TAO_OutStream *anyop_header (void);
+  TAO_OutStream *anyop_header ();
 
   /// Get the anyop source stream.
-  TAO_OutStream *anyop_source (void);
+  TAO_OutStream *anyop_source ();
 
   /// Get the CIAO servant header stream.
-  TAO_OutStream *ciao_svnt_header (void);
+  TAO_OutStream *ciao_svnt_header ();
 
   /// Get the CIAO servant source stream.
-  TAO_OutStream *ciao_svnt_source (void);
+  TAO_OutStream *ciao_svnt_source ();
 
   /// Get the CIAO template servant header stream.
-  TAO_OutStream *ciao_svnt_template_header (void);
+  TAO_OutStream *ciao_svnt_template_header ();
 
   /// Get the CIAO template servant source stream.
-  TAO_OutStream *ciao_svnt_template_source (void);
+  TAO_OutStream *ciao_svnt_template_source ();
 
   /// Get the CIAO executor impl header stream.
-  TAO_OutStream *ciao_exec_header (void);
+  TAO_OutStream *ciao_exec_header ();
 
   /// Get the CIAO executor impl source stream.
-  TAO_OutStream *ciao_exec_source (void);
+  TAO_OutStream *ciao_exec_source ();
 
   /// Get the CIAO executor IDL source stream.
-  TAO_OutStream *ciao_exec_idl (void);
+  TAO_OutStream *ciao_exec_idl ();
 
   /// Get the CIAO connector impl header stream.
-  TAO_OutStream *ciao_conn_header (void);
+  TAO_OutStream *ciao_conn_header ();
 
   /// Get the CIAO connector impl source stream.
-  TAO_OutStream *ciao_conn_source (void);
+  TAO_OutStream *ciao_conn_source ();
 
   /// Get the CIAO AMI connector IDL stream.
-  TAO_OutStream *ciao_ami_conn_idl (void);
+  TAO_OutStream *ciao_ami_conn_idl ();
 
   /// Set the gperf input file stream.
   void gperf_input_stream (TAO_OutStream *gperf_input);
 
   /// Retrieve the gperf input stream being used.
-  TAO_OutStream *gperf_input_stream (void);
+  TAO_OutStream *gperf_input_stream ();
 
   /// Set the gperf input file name.
   void gperf_input_filename (char *filename);
@@ -373,7 +373,7 @@ public:
    * program. This is needed coz I do ACE_OS::open on this when I need
    * ACE_HANDLE for the file instead FILE*.
    */
-  char *gperf_input_filename (void);
+  char *gperf_input_filename ();
 
   /// Convert input string to all one case.
   const char *upcase (const char *str);
@@ -383,7 +383,7 @@ public:
   void gen_ident_string (TAO_OutStream *stream) const;
 
   /// Generates the export files selected on the command line.
-  void gen_export_files (void);
+  void gen_export_files ();
 
   /// Generate file include, with optional empty comment to
   /// short-circuit DOxygen.
@@ -392,7 +392,7 @@ public:
                              bool add_comment = false);
 
   /// Cleanup.
-  void destroy (void);
+  void destroy ();
 
 private:
   void gen_ifndef_string (const char *fname,
@@ -401,13 +401,13 @@ private:
                           const char *suffix);
 
   /// Utility methods for generating file includes.
-  void gen_stub_hdr_includes (void);
-  void gen_stub_src_includes (void);
-  void gen_skel_hdr_includes (void);
-  void gen_skel_src_includes (void);
-  void gen_seq_file_includes (void);
+  void gen_stub_hdr_includes ();
+  void gen_stub_src_includes ();
+  void gen_skel_hdr_includes ();
+  void gen_skel_src_includes ();
+  void gen_seq_file_includes ();
   void gen_any_file_includes (TAO_OutStream * stream) ;
-  void gen_var_file_includes (void);
+  void gen_var_file_includes ();
   void gen_stub_arg_file_includes (TAO_OutStream * stream);
   void gen_skel_arg_file_includes (TAO_OutStream * stream);
   void gen_cond_file_include (bool condition_green,
@@ -419,12 +419,12 @@ private:
   void gen_svnt_hdr_includes (TAO_OutStream *stream);
   void gen_svnt_src_includes (TAO_OutStream *stream);
   void gen_svnt_tmpl_hdr_includes (TAO_OutStream *stream);
-  void gen_exec_hdr_includes (void);
-  void gen_exec_src_includes (void);
-  void gen_exec_idl_includes (void);
-  void gen_conn_hdr_includes (void);
-  void gen_conn_src_includes (void);
-  void gen_ami_conn_idl_includes (void);
+  void gen_exec_hdr_includes ();
+  void gen_exec_src_includes ();
+  void gen_exec_idl_includes ();
+  void gen_conn_hdr_includes ();
+  void gen_conn_src_includes ();
+  void gen_ami_conn_idl_includes ();
 
   bool is_system_file (const char * idl_name) const;
 

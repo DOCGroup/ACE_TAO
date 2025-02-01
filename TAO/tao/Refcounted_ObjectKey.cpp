@@ -14,7 +14,7 @@ TAO::Refcounted_ObjectKey::Refcounted_ObjectKey (const TAO::ObjectKey &key)
 {
 }
 
-TAO::Refcounted_ObjectKey::~Refcounted_ObjectKey (void)
+TAO::Refcounted_ObjectKey::~Refcounted_ObjectKey ()
 {
 }
 

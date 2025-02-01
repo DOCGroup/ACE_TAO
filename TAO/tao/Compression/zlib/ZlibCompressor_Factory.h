@@ -34,14 +34,14 @@ namespace TAO
         const ::Compression::Compressor_var> ZlibCompressorMap;
 
   public:
-    Zlib_CompressorFactory (void);
+    Zlib_CompressorFactory ();
 
     virtual ::Compression::Compressor_ptr get_compressor (
         ::Compression::CompressionLevel compression_level);
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (Zlib_CompressorFactory (const Zlib_CompressorFactory &))
-    ACE_UNIMPLEMENTED_FUNC (Zlib_CompressorFactory &operator= (const Zlib_CompressorFactory &))
+    Zlib_CompressorFactory (const Zlib_CompressorFactory &) = delete;
+    Zlib_CompressorFactory &operator= (const Zlib_CompressorFactory &) = delete;
 
     // Ensure we can lock with imutability (i.e. const)
     mutable TAO_SYNCH_MUTEX mutex_;

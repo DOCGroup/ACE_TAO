@@ -18,7 +18,7 @@ Foo_C_i::~Foo_C_i()
 
 
 void
-Foo_C_i::op1(void)
+Foo_C_i::op1()
 {
   ++this->count_[0];
 }
@@ -50,7 +50,7 @@ Foo_C_i::op4(CORBA::Long value)
 
 
 void
-Foo_C_i::op5(void)
+Foo_C_i::op5()
 {
   ++this->count_[4];
   throw FooException();
@@ -58,14 +58,14 @@ Foo_C_i::op5(void)
 
 
 void
-Foo_C_i::done(void)
+Foo_C_i::done()
 {
   TheAppShutdown->client_done();
 }
 
 
 void
-Foo_C_i::cust_op1(void)
+Foo_C_i::cust_op1()
 {
   ++this->count_[5];
 }
@@ -97,7 +97,7 @@ Foo_C_i::cust_op4(long value)
 
 
 void
-Foo_C_i::cust_op5(void)
+Foo_C_i::cust_op5()
 {
   ++this->count_[9];
   throw CustomException();

@@ -48,7 +48,7 @@ class TAO_Export TAO_Object_Loader : public ACE_Service_Object
 {
 public:
   /// The destructor
-  virtual ~TAO_Object_Loader (void);
+  virtual ~TAO_Object_Loader ();
 
   /**
    * Create and activate a new object into the orb.

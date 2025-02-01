@@ -101,7 +101,6 @@ class SIPAddress; // aka ipv6
  */
 class  ASNMP_Export Address: public  SnmpSyntax
 {
-
 public:
    /// allow destruction of derived classes
    virtual ~Address();
@@ -294,7 +293,6 @@ protected:
   /// thread safe routine to lookup name given ip address
   /// return <> 0 on error
   static int resolve_to_hostname(const in_addr& quad_addr, char *hostname);
-
 };
 
 //------------------------------------------------------------------------
@@ -477,7 +475,6 @@ protected:
 class  ASNMP_Export NetbiosAddress : public Address
 {
 public:
-
    /// default constructor with string arg
    NetbiosAddress( const char *inaddr = "");
 
@@ -538,42 +535,42 @@ protected:
  */
 class  ASNMP_Export DecNetAddress : public Address
 {
-  public:
-   /// default constructor with string arg
-   DecNetAddress( const char *inaddr = "");
+public:
+  /// default constructor with string arg
+  DecNetAddress( const char *inaddr = "");
 
-   /// copy constructor
-   DecNetAddress( const DecNetAddress& decaddr);
+  /// copy constructor
+  DecNetAddress( const DecNetAddress& decaddr);
 
-   /// construct with a GenAddress
-   DecNetAddress( const GenAddress& genaddr);
+  /// construct with a GenAddress
+  DecNetAddress( const GenAddress& genaddr);
 
-   ~DecNetAddress();
+  ~DecNetAddress();
 
-   virtual const char *to_string();
+  virtual const char *to_string();
 
-   DecNetAddress& operator=( const DecNetAddress &decaddr);
+  DecNetAddress& operator=( const DecNetAddress &decaddr);
 
-   /// convert address into octet string format 2 bytes of decnet address
-   virtual void to_octet(OctetStr& octet) const;
+  /// convert address into octet string format 2 bytes of decnet address
+  virtual void to_octet(OctetStr& octet) const;
 
-   /// const char * operator overloaded for streaming output
-   virtual operator const char *() const;
+  /// const char * operator overloaded for streaming output
+  virtual operator const char *() const;
 
-   /// syntax type
-   virtual SmiUINT32 get_syntax();
+  /// syntax type
+  virtual SmiUINT32 get_syntax();
 
-   /// copy an instance of this Value
-   SnmpSyntax& operator=( SnmpSyntax &val);
+  /// copy an instance of this Value
+  SnmpSyntax& operator=( SnmpSyntax &val);
 
-   /// create a new instance of this Value
-   SnmpSyntax *clone() const;
+  /// create a new instance of this Value
+  SnmpSyntax *clone() const;
 
-   protected:
-   virtual int parse_address( const char *inaddr);
-   virtual addr_type get_type() const;
-   virtual void format_output();
-   char output_buffer[MAX_DISPLAY_SZ];
+protected:
+  virtual int parse_address( const char *inaddr);
+  virtual addr_type get_type() const;
+  virtual void format_output();
+  char output_buffer[MAX_DISPLAY_SZ];
 };
 
 //------------------------------------------------------------------------
@@ -587,54 +584,54 @@ class  ASNMP_Export DecNetAddress : public Address
  */
 class  ASNMP_Export AppleTalkAddress :  public Address
 {
-  public:
-   /// default constructor with string arg
+public:
+  /// default constructor with string arg
   AppleTalkAddress( const char *inaddr = "");
 
-   /// copy constructor
-   AppleTalkAddress( const AppleTalkAddress& atkaddr);
+  /// copy constructor
+  AppleTalkAddress( const AppleTalkAddress& atkaddr);
 
-   /// construct with a GenAddress
-   AppleTalkAddress( const GenAddress& genaddr);
+  /// construct with a GenAddress
+  AppleTalkAddress( const GenAddress& genaddr);
 
-   ~AppleTalkAddress();
+  ~AppleTalkAddress();
 
-   virtual const char *to_string();
+  virtual const char *to_string();
 
-   AppleTalkAddress& operator=( const AppleTalkAddress &atkaddr);
+  AppleTalkAddress& operator=( const AppleTalkAddress &atkaddr);
 
-   /// convert address into octet string format 3 bytes of atk address
-   virtual void to_octet(OctetStr& octet) const;
+  /// convert address into octet string format 3 bytes of atk address
+  virtual void to_octet(OctetStr& octet) const;
 
-   /// get the host part of the address
-   char get_host_address() const;
+  /// get the host part of the address
+  char get_host_address() const;
 
-   /// set the host part of the address
-   void set_host_address(const char);
+  /// set the host part of the address
+  void set_host_address(const char);
 
-   /// get the 2 byte atk network address
-   short get_net_address() const;
+  /// get the 2 byte atk network address
+  short get_net_address() const;
 
-   /// set the host 2 byte atk  network address
-   void set_net_address(const short atknet);
+  /// set the host 2 byte atk  network address
+  void set_net_address(const short atknet);
 
-   /// const char * operator overloaded for streaming output
-   virtual operator const char *() const;
+  /// const char * operator overloaded for streaming output
+  virtual operator const char *() const;
 
-   /// syntax type
-   virtual SmiUINT32 get_syntax();
+  /// syntax type
+  virtual SmiUINT32 get_syntax();
 
-   /// copy an instance of this Value
-   SnmpSyntax& operator=( SnmpSyntax &val);
+  /// copy an instance of this Value
+  SnmpSyntax& operator=( SnmpSyntax &val);
 
-   /// create a new instance of this Value
-   SnmpSyntax *clone() const;
+  /// create a new instance of this Value
+  SnmpSyntax *clone() const;
 
-   private:
-   virtual int parse_address( const char *inaddr);
-   virtual addr_type get_type() const;
-   virtual void format_output();
-   char output_buffer[MAX_DISPLAY_SZ];
+private:
+  virtual int parse_address( const char *inaddr);
+  virtual addr_type get_type() const;
+  virtual void format_output();
+  char output_buffer[MAX_DISPLAY_SZ];
 };
 
 //------------------------------------------------------------------------
@@ -702,7 +699,6 @@ protected:
   /// uses same separator as when constructed
   virtual void format_output();
 };
-
 
 
 //------------------------------------------------------------------------

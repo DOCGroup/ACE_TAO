@@ -8,7 +8,7 @@
 #include "jaws3/Timer_Helpers.h"
 
 
-JAWS_Task_Timer::JAWS_Task_Timer (void)
+JAWS_Task_Timer::JAWS_Task_Timer ()
 {
   this->timer_queue_.activate ();
 }

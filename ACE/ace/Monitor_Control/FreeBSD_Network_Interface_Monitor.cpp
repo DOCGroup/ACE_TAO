@@ -28,20 +28,20 @@ namespace ACE
     }
 
     void
-    FreeBSD_Network_Interface_Monitor::update_i (void)
+    FreeBSD_Network_Interface_Monitor::update_i ()
     {
       this->fetch(this->value_);
       this->value_ -= this->start_;
     }
 
     void
-    FreeBSD_Network_Interface_Monitor::clear_impl (void)
+    FreeBSD_Network_Interface_Monitor::clear_impl ()
     {
       this->init();
     }
 
     void
-    FreeBSD_Network_Interface_Monitor::init (void)
+    FreeBSD_Network_Interface_Monitor::init ()
     {
       this->fetch(this->start_);
       this->value_ = 0UL;

@@ -6,7 +6,7 @@
 #include "ace/Truncate.h"
 
 ACE_INLINE
-Handle_Timeout::Handle_Timeout (void): count (0)
+Handle_Timeout::Handle_Timeout () : count (0)
 {
 }
 
@@ -63,13 +63,13 @@ Handle_Timeout::init (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_INLINE int
-Handle_Timeout::fini (void)
+Handle_Timeout::fini ()
 {
   return 0;
 }
 
 ACE_INLINE ACE_HANDLE
-Handle_Timeout::get_handle (void) const
+Handle_Timeout::get_handle () const
 {
   return ACE_INVALID_HANDLE;
 }

@@ -37,15 +37,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * ACE applications can link to dynamically using the ACE_DLL class.
  * This DLL should include an operation as follow:
  *
- *   extern "C" ACE_XML_Svc_Conf_Parser * _ACEXML_create_XML_Svc_Conf_Object (void);
+ *   extern "C" ACE_XML_Svc_Conf_Parser * _ACEXML_create_XML_Svc_Conf_Object ();
  */
 
 class ACE_Export ACE_XML_Svc_Conf
 {
 public:
-  typedef ACE_XML_Svc_Conf *(*Factory)(void);
+  typedef ACE_XML_Svc_Conf *(*Factory)();
 
-  virtual ~ACE_XML_Svc_Conf (void) = 0;
+  virtual ~ACE_XML_Svc_Conf () = 0;
 
   virtual int parse_file (const ACE_TCHAR file[]) = 0;
 

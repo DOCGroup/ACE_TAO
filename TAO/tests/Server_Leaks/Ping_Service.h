@@ -14,9 +14,9 @@ public:
   Ping_Service (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void ping (void);
+  virtual void ping ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

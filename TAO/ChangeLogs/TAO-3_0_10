@@ -1,0 +1,134 @@
+commit 367992d328a3fdbf3465445b1922ea9b21a04f04
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 17 07:58:59 2022 +0100
+
+    Update NEWS files for next release
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit fca859fece1cf48bc3ecbba171286a09b660f879
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 1 11:25:13 2022 +0100
+
+    Use const/override/default and some layout changes
+    
+        * ACE/ace/Process.cpp:
+        * ACE/ace/Process.h:
+        * TAO/tao/ORB_Core.cpp:
+
+commit 5968484ea70f045ed9c5cdb8d38602d6592b7f25
+Merge: 711fbe05e66 3d67b98a644
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 20 07:39:29 2022 +0200
+
+    Merge pull request #1970 from jwillemsen/jwi-overrirde
+    
+    Use override
+
+commit 3d67b98a644c748826e76a10659add89497c42b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 19 19:56:03 2022 +0200
+
+    Use override
+    
+        * ACE/ace/OS_NS_stropts.cpp:
+        * TAO/tao/PortableServer/Active_Policy_Strategies.cpp:
+        * TAO/tao/PortableServer/ThreadStrategy.h:
+        * TAO/tao/PortableServer/ThreadStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/ThreadStrategyFactoryImpl.h:
+        * TAO/tao/PortableServer/ThreadStrategyORBControl.h:
+        * TAO/tao/PortableServer/ThreadStrategySingle.h:
+        * TAO/tao/PortableServer/ThreadStrategySingleFactoryImpl.h:
+        * TAO/tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
+
+commit f4e36f0711e03618f88594d3ee02938d0da6a3ee
+Author: Niepsho <68657205+Niepsho@users.noreply.github.com>
+Date:   Tue Oct 18 13:56:41 2022 +0200
+
+    Use default
+
+commit e815db1b8fe83d68b037c7a61227c736166f9979
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 14 08:38:46 2022 +0200
+
+    Fixed compile error due to cleanup and made destructors default
+
+commit 66da37c13452cd66442bb2baaa9beadbf3c449e4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 13 09:07:28 2022 +0200
+
+    Make use of default
+
+commit dca58941074b2098a9e898e73b4bcd05a3b80bcb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 13 08:48:56 2022 +0200
+
+    Fixed unused variable warnings
+
+commit 969d4ddf3152fe1e6cb616b284dbecf72849c494
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 13 08:39:56 2022 +0200
+
+    Fixed unused variable warnings
+
+commit 99f66230ce63174a10ff5acbe7c54e9c06b98065
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 12 09:44:26 2022 +0200
+
+    Layout changes
+
+commit 892141ae11c090cf86d1d6e8c017d2535645f69a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 12 09:39:00 2022 +0200
+
+    Layout changes
+
+commit 727fb1f5d2a067320c00149f7df2ecba602d9457
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 12 09:29:41 2022 +0200
+
+    Layout changes
+
+commit d7b7a7ce9d2f46fb6e351b844ed87e643e051f27
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 12 09:08:18 2022 +0200
+
+    Layout/return changes
+
+commit 26c2fbc083da279e132f5a951bc43f95b4c97843
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 15:51:19 2022 +0200
+
+    Use default destructors
+    
+        * TAO/tao/String_Const_Sequence_Element_T.h:
+        * TAO/tao/String_Sequence_Element_T.h:
+        * TAO/tao/UserException.cpp:
+        * TAO/tao/UserException.h:
+
+commit 4d827f7dbfef927d913e6bc20a8360b78bb07242
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 4 16:54:06 2022 +0200
+
+    Use nullptr/std::addressof/default/uniform initialization
+    :
+        * ACE/ace/OS_NS_netdb.inl:
+        * TAO/tao/Endpoint.h:
+        * TAO/tao/Endpoint.inl:
+        * TAO/tao/IIOP_Endpoint.cpp:
+        * TAO/tao/IIOP_Endpoint.h:
+
+commit d5987833e7a582ff1a72a059f48c5c568a603b65
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 1 14:39:21 2022 +0200
+
+    Make x.0.9 public
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

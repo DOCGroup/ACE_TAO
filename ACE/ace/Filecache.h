@@ -88,7 +88,6 @@ class ACE_Export ACE_Filecache_Handle
   // Since this design should be simpler, problems should be easier to spot.
   //
 public:
-
   /// Query cache for file, and acquire it.  Assumes the file is being
   /// opened for reading.
   ACE_Filecache_Handle (const ACE_TCHAR *filename,
@@ -104,26 +103,26 @@ public:
                         ACE_Filecache_Flag mapit = ACE_MAPIT);
 
   /// Closes any open handles, release acquired file.
-  ~ACE_Filecache_Handle (void);
+  ~ACE_Filecache_Handle ();
 
   /// Base address of memory mapped file.
-  void *address (void) const;
+  void *address () const;
 
   /// A handle (e.g., UNIX file descriptor, or NT file handle).
-  ACE_HANDLE handle (void) const;
+  ACE_HANDLE handle () const;
 
   /// Any associated error in handle creation and acquisition.
-  int error (void) const;
+  int error () const;
 
   /// The size of the file.
-  ACE_OFF_T size (void) const;
+  ACE_OFF_T size () const;
 
 protected:
   /// Default do nothing constructor.  Prevent it from being called.
-  ACE_Filecache_Handle (void);
+  ACE_Filecache_Handle ();
 
   /// Common initializations for constructors.
-  void init (void);
+  void init ();
 
 public:
   /// These come from ACE_Filecache_Object, which is an internal class.
@@ -164,9 +163,9 @@ class ACE_Export ACE_Filecache
 {
 public:
   /// Singleton pattern.
-  static ACE_Filecache *instance (void);
+  static ACE_Filecache *instance ();
 
-  ~ACE_Filecache (void);
+  ~ACE_Filecache ();
 
   /// Returns 0 if the file associated with ``filename'' is in the cache,
   /// or -1 if not.
@@ -198,7 +197,6 @@ protected:
                                   int mapit);
 
 public:
-
   enum
   {
     /// For this stupid implementation, use an array.  Someday, use a
@@ -212,7 +210,7 @@ public:
 
 protected:
   /// Prevent it from being called.
-  ACE_Filecache (void);
+  ACE_Filecache ();
 
 private:
   ACE_OFF_T size_;
@@ -255,42 +253,42 @@ public:
                         LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Only if reference count is zero should this be called.
-  ~ACE_Filecache_Object (void);
+  ~ACE_Filecache_Object ();
 
   /// Increment the reference_count_.
-  int acquire (void);
+  int acquire ();
 
   /// Decrement the reference_count_.
-  int release (void);
+  int release ();
 
   // = error_ accessors
-  int error (void) const;
+  int error () const;
   int error (int error_value,
              const ACE_TCHAR *s = ACE_TEXT ("ACE_Filecache_Object"));
 
   /// filename_ accessor
-  const ACE_TCHAR *filename (void) const;
+  const ACE_TCHAR *filename () const;
 
   /// handle_ accessor.
-  ACE_HANDLE handle (void) const;
+  ACE_HANDLE handle () const;
 
   /// Base memory address for memory mapped file.
-  void *address (void) const;
+  void *address () const;
 
   /// size_ accessor.
-  ACE_OFF_T size (void) const;
+  ACE_OFF_T size () const;
 
   /// True if file on disk is newer than cached file.
-  int update (void) const;
+  int update () const;
 
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
   /// Prevent from being called.
-  ACE_Filecache_Object (void);
+  ACE_Filecache_Object ();
 
   /// Common initialization code,
-  void init (void);
+  void init ();
 
 private:
   /// Internal error logging method, no locking.

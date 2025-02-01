@@ -24,17 +24,13 @@ class be_finder : public virtual AST_Finder,
 public:
   be_finder (UTL_ScopedName *n);
 
-  ~be_finder (void);
+  ~be_finder ();
 
   /// Cleanup method.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
-
-  // Narrowing
-  DEF_NARROW_FROM_DECL (be_finder);
-  DEF_NARROW_FROM_SCOPE (be_finder);
 };
 
 #endif // BE_FINDER_H

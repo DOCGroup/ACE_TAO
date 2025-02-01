@@ -24,10 +24,9 @@
  */
 class be_visitor_exception_any_op_cs : public be_visitor_scope
 {
-
 public:
   be_visitor_exception_any_op_cs (be_visitor_context *ctx);
-  ~be_visitor_exception_any_op_cs (void);
+  ~be_visitor_exception_any_op_cs ();
 
   virtual int visit_exception (be_exception *node);
   virtual int visit_field (be_field *node);

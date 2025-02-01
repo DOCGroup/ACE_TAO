@@ -44,7 +44,7 @@ public:
   };
 
   /// Default constructor.
-  ACE_Time_Request (void);
+  ACE_Time_Request ();
 
   /**
    * Create a ACE_Time_Request message.
@@ -57,28 +57,28 @@ public:
                     ACE_Time_Value *timeout = 0);
 
   // Get the fixed size of message
-  ssize_t size (void) const;
+  ssize_t size () const;
 
   /// Get the type of the message.
-  ACE_INT32 msg_type (void) const;
+  ACE_INT32 msg_type () const;
 
   /// Set the type of the message.
   void msg_type (ACE_INT32);
 
   /// Get the time
-  time_t time (void) const;
+  time_t time () const;
 
   // Set the time
   void time (time_t t);
 
   /// Get the blocking semantics.
-  ACE_UINT32 block_forever (void) const;
+  ACE_UINT32 block_forever () const;
 
   ///  Set the blocking semantics.
   void block_forever (ACE_UINT32);
 
   /// Get the timeout.
-  ACE_Time_Value timeout (void) const;
+  ACE_Time_Value timeout () const;
 
   /// Set the timeout.
   void timeout (const ACE_Time_Value& timeout);
@@ -87,10 +87,10 @@ public:
   int encode (void *&);
 
   /// Decode message after reception.
-  int decode (void);
+  int decode ();
 
   /// Print out the values of the message for debugging purposes.
-  void dump (void) const;
+  void dump () const;
 
 private:
   // = The 5 fields in the <Transfer> struct are transmitted to the server.

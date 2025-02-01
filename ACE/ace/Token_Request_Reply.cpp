@@ -6,17 +6,7 @@
 #include "ace/Token_Request_Reply.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// Default "do nothing" constructor.
-
-ACE_Token_Request::ACE_Token_Request (void)
-  : token_name_ (0),
-    client_id_ (0)
-{
-}
 
 // Create a ACE_Token_Request message.
 
@@ -52,7 +42,7 @@ ACE_Token_Request::encode (void *&buf)
 // so that it can be used by the server.
 
 int
-ACE_Token_Request::decode (void)
+ACE_Token_Request::decode ()
 {
   this->token_name_ = this->transfer_.data_;
 
@@ -89,7 +79,7 @@ ACE_Token_Request::decode (void)
 // Print out the current values of the ACE_Token_Request.
 
 void
-ACE_Token_Request::dump (void) const
+ACE_Token_Request::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -141,7 +131,7 @@ ACE_Token_Request::dump (void) const
 
 // Create a ACE_Token_Reply message.
 
-ACE_Token_Reply::ACE_Token_Reply (void) // Type of reply.
+ACE_Token_Reply::ACE_Token_Reply () // Type of reply.
 {
   this->arg (0);
   this->errnum (0);
@@ -162,7 +152,7 @@ ACE_Token_Reply::encode (void *&buf)
 // so that it can be used by the client.
 
 int
-ACE_Token_Reply::decode (void)
+ACE_Token_Reply::decode ()
 {
   return 0;
 }
@@ -170,7 +160,7 @@ ACE_Token_Reply::decode (void)
 // Print out current values of the ACE_Token_Reply object.
 
 void
-ACE_Token_Reply::dump (void) const
+ACE_Token_Reply::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %d\nerrnum = %d"),

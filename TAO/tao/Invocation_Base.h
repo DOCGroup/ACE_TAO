@@ -57,11 +57,11 @@ namespace TAO
   class TAO_Export Invocation_Base
   {
   public:
-    virtual ~Invocation_Base (void);
+    virtual ~Invocation_Base ();
 
     /// Accessor and mutator methods
     //@{
-    TAO_Stub *stub (void) const;
+    TAO_Stub *stub () const;
 
     /// Accessor and mutator methods for forwarded object
     /// locations.
@@ -69,7 +69,7 @@ namespace TAO
      * These access methods have to be public so that the
      * PortableInterceptor can use them
      */
-    CORBA::Object_ptr forwarded_reference (void);
+    CORBA::Object_ptr forwarded_reference ();
     void forwarded_reference (CORBA::Object_ptr o);
 
     /// Accessors for the service context list.
@@ -78,33 +78,33 @@ namespace TAO
      * elsewhere. Providing this accessor helps the PI to access this
      * list in both remote and collocated mode.
      */
-    TAO_Service_Context &request_service_context (void);
-    TAO_Service_Context &reply_service_context (void);
+    TAO_Service_Context &request_service_context ();
+    TAO_Service_Context &reply_service_context ();
 
     /// Return the forwarded object location by loosing ownership.
-    CORBA::Object_ptr steal_forwarded_reference (void);
+    CORBA::Object_ptr steal_forwarded_reference ();
 
     /// Return the effective target of the invocation.
     /**
      * Please see the PortableInterceptor specification in the CORBA
      * spec to understand what effective target means.
      */
-    CORBA::Object_ptr effective_target (void) const;
+    CORBA::Object_ptr effective_target () const;
 
     /// Return the target object
-    CORBA::Object_ptr target (void) const;
+    CORBA::Object_ptr target () const;
 
     /// Does this invocation return a response?
-    CORBA::Boolean response_expected (void) const;
+    CORBA::Boolean response_expected () const;
 
     /// Accessor of reply_status of the invocation.
-    GIOP::ReplyStatusType reply_status (void) const;
+    GIOP::ReplyStatusType reply_status () const;
 
     /// Mutator of reply_status of the invocation.
     void reply_status (GIOP::ReplyStatusType s);
 
     /// The operaton details of the invocation
-    TAO_Operation_Details &operation_details (void);
+    TAO_Operation_Details &operation_details ();
     //@}
 
   protected:
@@ -174,19 +174,19 @@ namespace TAO
      *       code must be able to modify this value and use that value
      *       at a later time without being forced to use TSS.
      */
-    size_t &stack_size (void);
+    size_t &stack_size ();
 
-    CORBA::Exception *caught_exception (void);
+    CORBA::Exception *caught_exception ();
 
     /// Change the exception status.
     void exception (CORBA::Exception *exception);
 
     /// Invocation status.
-    TAO::Invocation_Status invoke_status (void) const;
+    TAO::Invocation_Status invoke_status () const;
     /// Mutator to set the invocation status.
     void invoke_status (Invocation_Status s);
 
-    PortableInterceptor::ReplyStatus pi_reply_status (void) const;
+    PortableInterceptor::ReplyStatus pi_reply_status () const;
 
     /// Accessor used to determine if the current invocation is part
     /// of a remote request, and if not, it will be considered to be
@@ -196,22 +196,22 @@ namespace TAO
   protected:
     /// Helper method to invoke send_request interception call to all
     /// the registered interceptors.
-    Invocation_Status send_request_interception (void);
+    Invocation_Status send_request_interception ();
 
     /// Helper method to invoke receive_reply interception call to all
     /// the registered interceptors.
-    Invocation_Status receive_reply_interception (void);
+    Invocation_Status receive_reply_interception ();
 
     /// Helper method to invoke receive_other interception call to all
     /// the registered interceptors.
-    Invocation_Status receive_other_interception (void);
+    Invocation_Status receive_other_interception ();
 
     /// Helper methods to handle interception calls when exceptions
     /// are thrown by the PortableInterceptor.
     PortableInterceptor::ReplyStatus
         handle_any_exception (CORBA::Exception * e);
 
-    PortableInterceptor::ReplyStatus handle_all_exception (void);
+    PortableInterceptor::ReplyStatus handle_all_exception ();
 
   protected:
     /// The client requestor adapter

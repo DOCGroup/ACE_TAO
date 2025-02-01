@@ -36,13 +36,13 @@ namespace TAO
   class In_Fixed_Array_SArgument_T : public InArgument
   {
   public:
-    In_Fixed_Array_SArgument_T (void);
+    In_Fixed_Array_SArgument_T ();
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_forany::_slice_type const * arg (void) const;
+    typename S_forany::_slice_type const * arg () const;
 
   private:
     mutable typename S_forany::_array_type x_;
@@ -58,14 +58,14 @@ namespace TAO
   class Inout_Fixed_Array_SArgument_T : public InoutArgument
   {
   public:
-    Inout_Fixed_Array_SArgument_T (void);
+    Inout_Fixed_Array_SArgument_T ();
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_forany::_slice_type * arg (void);
+    typename S_forany::_slice_type * arg ();
 
   private:
     mutable typename S_forany::_array_type x_;
@@ -81,13 +81,13 @@ namespace TAO
   class Out_Fixed_Array_SArgument_T : public OutArgument
   {
   public:
-    Out_Fixed_Array_SArgument_T (void);
+    Out_Fixed_Array_SArgument_T ();
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_forany::_slice_type * arg (void);
+    typename S_forany::_slice_type * arg ();
 
   private:
     mutable typename S_forany::_array_type x_;
@@ -105,13 +105,13 @@ namespace TAO
   class Ret_Fixed_Array_SArgument_T : public RetArgument
   {
   public:
-    Ret_Fixed_Array_SArgument_T (void);
+    Ret_Fixed_Array_SArgument_T ();
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_forany::_slice_type *& arg (void);
+    typename S_forany::_slice_type *& arg ();
 
   private:
     S_var x_;
@@ -158,13 +158,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/PortableServer/Fixed_Array_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/PortableServer/Fixed_Array_SArgument_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Fixed_Array_SArgument_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

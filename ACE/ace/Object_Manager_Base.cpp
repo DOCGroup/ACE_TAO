@@ -11,7 +11,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 int ACE_SEH_Default_Exception_Selector (void *)
 {
   // this is only windows and only used here,
@@ -23,7 +23,7 @@ int ACE_SEH_Default_Exception_Handler (void *)
 {
   return 0;
 }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # define ACE_OS_PREALLOCATE_OBJECT(TYPE, ID)\
@@ -47,14 +47,14 @@ int ACE_SEH_Default_Exception_Handler (void *)
     preallocated_object[ID] = 0;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-ACE_Object_Manager_Base::ACE_Object_Manager_Base (void)
+ACE_Object_Manager_Base::ACE_Object_Manager_Base ()
   : object_manager_state_ (OBJ_MAN_UNINITIALIZED)
   , dynamically_allocated_ (false)
   , next_ (0)
 {
 }
 
-ACE_Object_Manager_Base::~ACE_Object_Manager_Base (void)
+ACE_Object_Manager_Base::~ACE_Object_Manager_Base ()
 {
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
   // Clear the flag so that fini () doesn't delete again.
@@ -78,7 +78,7 @@ ACE_Object_Manager_Base::shutting_down_i ()
 
 extern "C"
 void
-ACE_OS_Object_Manager_Internal_Exit_Hook (void)
+ACE_OS_Object_Manager_Internal_Exit_Hook ()
 {
   if (ACE_OS_Object_Manager::instance_)
     ACE_OS_Object_Manager::instance ()->fini ();
@@ -89,14 +89,14 @@ ACE_OS_Object_Manager *ACE_OS_Object_Manager::instance_ = 0;
 void *ACE_OS_Object_Manager::preallocated_object[
   ACE_OS_Object_Manager::ACE_OS_PREALLOCATED_OBJECTS] = { 0 };
 
-ACE_OS_Object_Manager::ACE_OS_Object_Manager (void)
+ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
   : default_mask_ (0)
   , thread_hook_ (0)
   , exit_info_ ()
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   , seh_except_selector_ (ACE_SEH_Default_Exception_Selector)
   , seh_except_handler_ (ACE_SEH_Default_Exception_Handler)
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 {
   // If instance_ was not 0, then another ACE_OS_Object_Manager has
   // already been instantiated (it is likely to be one initialized by
@@ -115,7 +115,7 @@ ACE_OS_Object_Manager::ACE_OS_Object_Manager (void)
   init ();
 }
 
-ACE_OS_Object_Manager::~ACE_OS_Object_Manager (void)
+ACE_OS_Object_Manager::~ACE_OS_Object_Manager ()
 {
   dynamically_allocated_ = false;   // Don't delete this again in fini()
   fini ();
@@ -124,20 +124,20 @@ ACE_OS_Object_Manager::~ACE_OS_Object_Manager (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_OS_Object_Manager)
 
 sigset_t *
-ACE_OS_Object_Manager::default_mask (void)
+ACE_OS_Object_Manager::default_mask ()
 {
   return ACE_OS_Object_Manager::instance ()->default_mask_;
 }
 
 ACE_Thread_Hook *
-ACE_OS_Object_Manager::thread_hook (void)
+ACE_OS_Object_Manager::thread_hook ()
 {
   return ACE_OS_Object_Manager::instance ()->thread_hook_;
 }
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 ACE_SEH_EXCEPT_HANDLER
-ACE_OS_Object_Manager::seh_except_selector (void)
+ACE_OS_Object_Manager::seh_except_selector ()
 {
   return ACE_OS_Object_Manager::instance ()->seh_except_selector_;
 }
@@ -154,7 +154,7 @@ ACE_OS_Object_Manager::seh_except_selector (ACE_SEH_EXCEPT_HANDLER n)
 }
 
 ACE_SEH_EXCEPT_HANDLER
-ACE_OS_Object_Manager::seh_except_handler (void)
+ACE_OS_Object_Manager::seh_except_handler ()
 {
   return ACE_OS_Object_Manager::instance ()->seh_except_handler_;
 }
@@ -169,7 +169,7 @@ ACE_OS_Object_Manager::seh_except_handler (ACE_SEH_EXCEPT_HANDLER n)
   instance->seh_except_handler_ = n;
   return retv;
 }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 ACE_Thread_Hook *
 ACE_OS_Object_Manager::thread_hook (ACE_Thread_Hook *new_thread_hook)
@@ -181,7 +181,7 @@ ACE_OS_Object_Manager::thread_hook (ACE_Thread_Hook *new_thread_hook)
 }
 
 ACE_OS_Object_Manager *
-ACE_OS_Object_Manager::instance (void)
+ACE_OS_Object_Manager::instance ()
 {
   // This function should be called during construction of static
   // instances, or before any other threads have been created in the
@@ -199,14 +199,13 @@ ACE_OS_Object_Manager::instance (void)
       // ACE_ASSERT (instance_pointer == instance_);
 
       instance_pointer->dynamically_allocated_ = true;
-
     }
 
   return instance_;
 }
 
 int
-ACE_OS_Object_Manager::init (void)
+ACE_OS_Object_Manager::init ()
 {
   if (starting_up_i ())
     {
@@ -217,26 +216,20 @@ ACE_OS_Object_Manager::init (void)
       if (this == instance_)
         {
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#   if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-          ACE_CE_Errno::init ();
-#   endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
           ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t, ACE_OS_MONITOR_LOCK)
           if (ACE_OS::thread_mutex_init
-              // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
               (reinterpret_cast <ACE_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
               __LINE__, ACE_TEXT ("ACE_OS_MONITOR_LOCK"));
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_CLEANUP_LOCK)
           if (ACE_OS::recursive_mutex_init
-              // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
               (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
               __LINE__, ACE_TEXT ("ACE_TSS_CLEANUP_LOCK"));
           ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t,
                                      ACE_LOG_MSG_INSTANCE_LOCK)
           if (ACE_OS::thread_mutex_init
-              // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
               (reinterpret_cast <ACE_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
               __LINE__, ACE_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK"));
@@ -244,7 +237,6 @@ ACE_OS_Object_Manager::init (void)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_KEY_LOCK)
           if (ACE_OS::recursive_mutex_init
-              // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
               (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_KEY_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
               __LINE__, ACE_TEXT ("ACE_TSS_KEY_LOCK"));
@@ -252,7 +244,6 @@ ACE_OS_Object_Manager::init (void)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_BASE_LOCK)
           if (ACE_OS::recursive_mutex_init
-              // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
               (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
               __LINE__, ACE_TEXT ("ACE_TSS_BASE_LOCK"));
@@ -306,7 +297,7 @@ ACE_OS_Object_Manager::init (void)
 // reason.  All objects clean up their per-object information and managed
 // objects, but only The Instance cleans up the static preallocated objects.
 int
-ACE_OS_Object_Manager::fini (void)
+ACE_OS_Object_Manager::fini ()
 {
   if (instance_ == 0  ||  shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
@@ -344,7 +335,6 @@ ACE_OS_Object_Manager::fini (void)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #   if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
       if (ACE_OS::thread_mutex_destroy
-          // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
           (reinterpret_cast <ACE_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
 #     ifdef ACE_LACKS_PTHREAD_MUTEX_DESTROY
         if (errno != ENOTSUP)
@@ -356,7 +346,6 @@ ACE_OS_Object_Manager::fini (void)
                                          ACE_OS_MONITOR_LOCK)
 #   if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
       if (ACE_OS::recursive_mutex_destroy
-          // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
           (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) != 0)
 #     ifdef ACE_LACKS_PTHREAD_MUTEX_DESTROY
         if (errno != ENOTSUP)
@@ -368,7 +357,6 @@ ACE_OS_Object_Manager::fini (void)
                                          ACE_TSS_CLEANUP_LOCK)
 #   if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
       if (ACE_OS::thread_mutex_destroy
-          // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
           (reinterpret_cast <ACE_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object [ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
 #     ifdef ACE_LACKS_PTHREAD_MUTEX_DESTROY
         if (errno != ENOTSUP)
@@ -381,7 +369,6 @@ ACE_OS_Object_Manager::fini (void)
 #   if defined (ACE_HAS_TSS_EMULATION)
 #     if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
         if (ACE_OS::recursive_mutex_destroy
-            // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
             (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_KEY_LOCK])) != 0)
           ACE_OS_Object_Manager::print_error_message (
             __LINE__, ACE_TEXT ("ACE_TSS_KEY_LOCK"));
@@ -391,7 +378,6 @@ ACE_OS_Object_Manager::fini (void)
 #     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 #       if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
           if (ACE_OS::recursive_mutex_destroy
-              // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
               (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
               __LINE__, ACE_TEXT ("ACE_TSS_BASE_LOCK"));
@@ -400,9 +386,6 @@ ACE_OS_Object_Manager::fini (void)
                                          ACE_TSS_BASE_LOCK)
 #     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #   endif /* ACE_HAS_TSS_EMULATION */
-#   if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-          ACE_CE_Errno::fini ();
-#   endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
     }
@@ -444,43 +427,21 @@ ACE_OS_Object_Manager::print_error_message (unsigned int line_number,
                                             const ACE_TCHAR *message)
 {
   // To avoid duplication of these const strings in OS.o.
-#if !defined (ACE_HAS_WINCE)
-# ifndef ACE_LACKS_STDERR
+#ifndef ACE_LACKS_STDERR
   fprintf (stderr, "ace/Object_Manager_Base.cpp, line %u: %s ",
            line_number,
            ACE_TEXT_ALWAYS_CHAR (message));
-# else
-  ACE_UNUSED_ARG (line_number);
-  ACE_UNUSED_ARG (message);
-# endif
-# if !defined (ACE_LACKS_PERROR)
-  perror ("failed");
-# endif /* ACE_LACKS_PERROR */
 #else
-  // @@ Need to use the following information.
   ACE_UNUSED_ARG (line_number);
   ACE_UNUSED_ARG (message);
-
-  ACE_TCHAR *lpMsgBuf = 0;
-  ::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER |
-                   FORMAT_MESSAGE_FROM_SYSTEM,
-                   0,
-                   ::GetLastError (),
-                   MAKELANGID (LANG_NEUTRAL,
-                               SUBLANG_DEFAULT),
-                   // Default language
-                   (ACE_TCHAR *) &lpMsgBuf,
-                   0,
-                   0);
-  ::MessageBox (0,
-                lpMsgBuf,
-                ACE_TEXT ("ACE_OS error"),
-                MB_OK);
 #endif
+#if !defined (ACE_LACKS_PERROR)
+  perror ("failed");
+#endif /* ACE_LACKS_PERROR */
 }
 
 int
-ACE_OS_Object_Manager::starting_up (void)
+ACE_OS_Object_Manager::starting_up ()
 {
   return ACE_OS_Object_Manager::instance_
     ? instance_->starting_up_i ()
@@ -488,7 +449,7 @@ ACE_OS_Object_Manager::starting_up (void)
 }
 
 int
-ACE_OS_Object_Manager::shutting_down (void)
+ACE_OS_Object_Manager::shutting_down ()
 {
   return ACE_OS_Object_Manager::instance_
     ? instance_->shutting_down_i ()
@@ -512,17 +473,17 @@ class ACE_OS_Object_Manager_Manager
 {
 public:
   /// Constructor.
-  ACE_OS_Object_Manager_Manager (void);
+  ACE_OS_Object_Manager_Manager ();
 
   /// Destructor.
-  ~ACE_OS_Object_Manager_Manager (void);
+  ~ACE_OS_Object_Manager_Manager ();
 
 private:
   /// Save the main thread ID, so that destruction can be suppressed.
   ACE_thread_t saved_main_thread_id_;
 };
 
-ACE_OS_Object_Manager_Manager::ACE_OS_Object_Manager_Manager (void)
+ACE_OS_Object_Manager_Manager::ACE_OS_Object_Manager_Manager ()
   : saved_main_thread_id_ (ACE_OS::thr_self ())
 {
   // Ensure that the Object_Manager gets initialized before any
@@ -532,7 +493,7 @@ ACE_OS_Object_Manager_Manager::ACE_OS_Object_Manager_Manager (void)
   (void) ACE_OS_Object_Manager::instance ();
 }
 
-ACE_OS_Object_Manager_Manager::~ACE_OS_Object_Manager_Manager (void)
+ACE_OS_Object_Manager_Manager::~ACE_OS_Object_Manager_Manager ()
 {
   if (ACE_OS::thr_equal (ACE_OS::thr_self (),
                          saved_main_thread_id_))

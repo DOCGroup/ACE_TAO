@@ -17,7 +17,7 @@ be_visitor_root_ex_idl::be_visitor_root_ex_idl (
 {
 }
 
-be_visitor_root_ex_idl::~be_visitor_root_ex_idl (void)
+be_visitor_root_ex_idl::~be_visitor_root_ex_idl ()
 {
 }
 
@@ -46,7 +46,7 @@ be_visitor_root_ex_idl::visit_root (be_root *node)
 }
 
 int
-be_visitor_root_ex_idl::init (void)
+be_visitor_root_ex_idl::init ()
 {
   // First open the client-side header file for writing.
   int const status =

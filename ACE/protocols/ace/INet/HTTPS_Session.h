@@ -62,7 +62,6 @@ namespace ACE
               bool attach_connection (connection_type* connection);
 
             protected:
-
               void close_connection ();
 
               virtual bool connect_i (const ACE_Synch_Options& sync_opt);
@@ -87,13 +86,7 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/INet/HTTPS_Session.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("HTTPS_Session.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_HTTPS_SESSION_H */

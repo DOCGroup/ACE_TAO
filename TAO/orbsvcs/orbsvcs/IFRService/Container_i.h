@@ -50,7 +50,7 @@ public:
   TAO_Container_i (TAO_Repository_i *repo);
 
   /// Destructor.
-  virtual ~TAO_Container_i (void);
+  virtual ~TAO_Container_i ();
 
   /// Remove our contents.
   virtual void destroy ();

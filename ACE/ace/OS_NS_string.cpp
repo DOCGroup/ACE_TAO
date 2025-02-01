@@ -83,9 +83,9 @@ ACE_OS::strerror (int errnum)
   if (ACE::is_sock_error (errnum))
     {
       const ACE_TCHAR *errortext = ACE::sock_error (errnum);
-      ACE_OS::strncpy (ret_errortext,
-                       ACE_TEXT_ALWAYS_CHAR (errortext),
-                       sizeof (ret_errortext));
+      ACE_OS::strsncpy (ret_errortext,
+                        ACE_TEXT_ALWAYS_CHAR (errortext),
+                        sizeof (ret_errortext));
       return ret_errortext;
     }
 #if defined (ACE_LACKS_STRERROR)
@@ -148,7 +148,7 @@ ACE_OS::strsignal (int signum)
     ret_val = 0;
   else
 # endif /* (ACE_NEEDS_STRSIGNAL_RANGE_CHECK */
-  ret_val = ACE_STD_NAMESPACE::strsignal (signum);
+  ret_val = ::strsignal (signum);
 
   if (ret_val <= reinterpret_cast<char *> (0))
     {

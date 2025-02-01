@@ -42,7 +42,7 @@ template <class DSRT_Scheduler_Traits,
 int Sched_Ready_Queue<DSRT_Scheduler_Traits,
                       More_Eligible_Comparator,
                       ACE_LOCK>::
-current_size (void)
+current_size ()
 {
   return
     ACE_Utils::truncate_cast<int> (

@@ -4,14 +4,13 @@
 
 #include "PersistentPoa.h"
 
-PersistentPoa::PersistentPoa ( )
+PersistentPoa::PersistentPoa ()
 {
-} /* end of PersistentPoa::PersistentPoa ( ) */
+}
 
-PersistentPoa::~PersistentPoa ( )
-  throw ()
+PersistentPoa::~PersistentPoa () noexcept
 {
-} /* end of PersistentPoa::~PersistentPoa ( ) */
+}
 
 int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
 {
@@ -45,8 +44,7 @@ int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
     mv_thisPOA = mv_rootPOA->create_POA (
       m_poaName.c_str (),
       PortableServer::POAManager::_nil (),
-      policies
-    );
+      policies);
 
     mv_poaManager = mv_thisPOA->the_POAManager ();
     mv_poaManager->activate ();
@@ -60,10 +58,10 @@ int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_ERROR, ACE_TEXT ("POA activated\n")));
 
   return 0;
-} /* end of PersistentPoa::init ( ) */
+}
 
 
-int PersistentPoa::fini (void)
+int PersistentPoa::fini ()
 {
   try
   {
@@ -82,7 +80,7 @@ int PersistentPoa::fini (void)
   ACE_DEBUG ((LM_ERROR, ACE_TEXT ("POA deactivated\n")));
 
   return 0;
-} /* end of PersistentPoa::fini ( ) */
+}
 
 
 ACE_FACTORY_DEFINE (bug_3251, PersistentPoa)

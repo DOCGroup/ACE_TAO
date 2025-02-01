@@ -34,7 +34,7 @@ HA_ThreadHook::add_sec_context_thr(ACE_TSS<SecurityContext> &secCtx)
 class HA_CommandHandler : public ACE_Task_Base
 {
 public:
-  virtual int svc (void)
+  virtual int svc ()
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) starting up\n")));
 

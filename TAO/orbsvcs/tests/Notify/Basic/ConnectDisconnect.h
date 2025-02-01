@@ -63,11 +63,11 @@ class ConnectDisconnect : public Notify_Test_Client
 {
 public:
   // Initialization and termination code.
-  ConnectDisconnect (void);
+  ConnectDisconnect ();
   virtual ~ConnectDisconnect ();
 
   /// Keeps track of how many objects were destroyed.
-  void on_entity_destroyed (void);
+  void on_entity_destroyed ();
 
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
@@ -77,17 +77,17 @@ public:
             ACE_TCHAR *argv []);
 
   /// Run the test.
-  void run_test (void);
+  void run_test ();
 
   /// End the test.
-  void end_test (void);
+  void end_test ();
 
   /// Check if we got the expected results.
-  int check_results (void);
+  int check_results ();
 
 protected:
   /// Create EC.
-  void create_EC (void);
+  void create_EC ();
 
   /// The one channel that we create using the factory.
   CosNotifyChannelAdmin::EventChannel_var ec_;

@@ -75,34 +75,34 @@ public:
 
   /// Return an ID unique to the current request.  This request ID may
   /// or may not be the same as the GIOP request ID.
-  virtual CORBA::ULong request_id (void);
+  virtual CORBA::ULong request_id ();
 
   /// Return the operation name for the current request.
-  virtual char * operation (void);
+  virtual char * operation ();
 
   /// Return the list of arguments passed to the current operation.
-  virtual Dynamic::ParameterList * arguments (void);
+  virtual Dynamic::ParameterList * arguments ();
 
   /// Return the list of exceptions the current operation is capable
   /// of throwing.
-  virtual Dynamic::ExceptionList * exceptions (void);
+  virtual Dynamic::ExceptionList * exceptions ();
 
-  virtual Dynamic::ContextList * contexts (void);
+  virtual Dynamic::ContextList * contexts ();
 
-  virtual Dynamic::RequestContext * operation_context (void);
+  virtual Dynamic::RequestContext * operation_context ();
 
   /// Return the result of the current request.  If there is no return
   /// value then an Any with tk_void TypeCode is returned.  This is
   /// method is not valid for oneway operations.
-  virtual CORBA::Any * result (void);
+  virtual CORBA::Any * result ();
 
   /// Returns true for a two-way operation, and false otherwise.
-  virtual CORBA::Boolean response_expected (void);
+  virtual CORBA::Boolean response_expected ();
 
   /// Return the sync_scope policy value for the current one-way
   /// operation.  If the operation is not a one-way, a
   /// CORBA::BAD_INV_ORDER exception is thrown.
-  virtual Messaging::SyncScope sync_scope (void);
+  virtual Messaging::SyncScope sync_scope ();
 
   /// Return the reply status for the current request.
   /**
@@ -110,11 +110,11 @@ public:
    * SYSTEM_EXCEPTION, USER_EXCEPTION, LOCATION_FORWARD,
    * TRANSPORT_RETRY, UNKNOWN.
    */
-  virtual PortableInterceptor::ReplyStatus reply_status (void);
+  virtual PortableInterceptor::ReplyStatus reply_status ();
 
   /// If the reply status is PortableInterceptor::LOCATION_FORWARD or
   /// return the object reference to which the request was forwarded.
-  virtual CORBA::Object_ptr forward_reference (void);
+  virtual CORBA::Object_ptr forward_reference ();
 
   virtual CORBA::Any * get_slot (PortableInterceptor::SlotId id);
 
@@ -129,23 +129,23 @@ public:
 
   /// Return the (initial, non-forwarded, or permanently forwarded)
   /// object reference of the target.
-  virtual CORBA::Object_ptr target (void);
+  virtual CORBA::Object_ptr target ();
 
   /// Return the object reference for the current target.  The target
   /// may change in the even of a location forward.
-  virtual CORBA::Object_ptr effective_target (void);
+  virtual CORBA::Object_ptr effective_target ();
 
-  virtual IOP::TaggedProfile * effective_profile (void);
+  virtual IOP::TaggedProfile * effective_profile ();
 
   /// Return an Any containing the received exception, if any.
   /// Otherwise, throw a CORBA::BAD_INV_ORDER exception.
   /**
    * @note There is no trivial way to extract the exception from an Any.
    */
-  virtual CORBA::Any * received_exception (void);
+  virtual CORBA::Any * received_exception ();
 
   /// Return the repository ID for the received exception.
-  virtual char * received_exception_id (void);
+  virtual char * received_exception_id ();
 
   /// Return the first IOP::TaggedComponent that matches the given
   /// IOP::ComponentId in the object reference for the current
@@ -176,20 +176,19 @@ public:
   void tao_ft_expiration_time (TimeBase::TimeT time);
 
   /// Get the absolute FT expiration time for this request
-  TimeBase::TimeT tao_ft_expiration_time (void) const;
+  TimeBase::TimeT tao_ft_expiration_time () const;
 
   /// Set the FT request retention ID for this request.
   void tao_ft_retention_id (CORBA::Long request_id);
 
   /// Get the FT request retention ID for this request.
-  CORBA::Long tao_ft_retention_id (void) const;
+  CORBA::Long tao_ft_retention_id () const;
 
   /*
   * End proprietary FT methods.
   */
 
 private:
-
   bool parameter_list (Dynamic::ParameterList &param_list);
 
   bool exception_list (Dynamic::ExceptionList &exception_list);
@@ -198,11 +197,11 @@ private:
 
   /// Check if this ClientRequestInfo object is called within the
   /// context of a request.
-  void check_validity (void);
+  void check_validity ();
 
   /// Setup thread scope and request scope
   /// PortableInterceptor::Current objects.
-  void setup_picurrent (void);
+  void setup_picurrent ();
 
   /// Helper method to get the request and response service contexts.
   IOP::ServiceContext *get_service_context_i (

@@ -66,13 +66,13 @@ be_union::be_union (AST_ConcreteType *dt,
 void
 be_union::redefine (AST_Structure *from)
 {
-  be_union *bu = be_union::narrow_from_decl (from);
+  be_union *bu = dynamic_cast<be_union*> (from);
   this->common_varout_gen_ = bu->common_varout_gen_;
   AST_Union::redefine (from);
 }
 
 bool
-be_union::has_duplicate_case_labels (void)
+be_union::has_duplicate_case_labels ()
 {
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -80,7 +80,7 @@ be_union::has_duplicate_case_labels (void)
     {
       AST_Decl *d = si.item ();
       AST_UnionBranch *ub =
-        AST_UnionBranch::narrow_from_decl (d);
+        dynamic_cast<AST_UnionBranch*> (d);
 
       if (ub->label_list_length () > 1)
         {
@@ -108,10 +108,10 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
   for (long i = 0; i < this->pd_decls_used; ++i)
     {
       be_union_branch *ub =
-        be_union_branch::narrow_from_decl (this->pd_decls[i]);
+        dynamic_cast<be_union_branch*> (this->pd_decls[i]);
 
       // We don't want any decls, just members.
-      if (ub == 0)
+      if (ub == nullptr)
         {
           continue;
         }
@@ -151,7 +151,7 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
 
       *os << "strm << ";
 
-      be_type *ub_ft = be_type::narrow_from_decl (ub->field_type ());
+      be_type *ub_ft = dynamic_cast<be_type*> (ub->field_type ());
       AST_Decl::NodeType ub_nt = ub_ft->node_type ();
       // catch anonymous Array member types
       bool ub_use_underscore = ub_nt == AST_Decl::NT_array;
@@ -181,13 +181,12 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
 }
 
 void
-be_union::destroy (void)
+be_union::destroy ()
 {
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();
   this->be_type::destroy ();
   this->AST_Union::destroy ();
-
 }
 
 // Visitor method.
@@ -198,7 +197,7 @@ be_union::accept (be_visitor *visitor)
 }
 
 bool
-be_union::gen_empty_default_label (void)
+be_union::gen_empty_default_label ()
 {
   // A non-empty explicit default label will be generated.
   if (this->default_index () != -1)
@@ -207,7 +206,7 @@ be_union::gen_empty_default_label (void)
     }
 
   AST_ConcreteType *disc = this->disc_type ();
-  if (disc == 0)
+  if (disc == nullptr)
     {
       return true; // In reality this is an error.
     }
@@ -223,8 +222,8 @@ be_union::gen_empty_default_label (void)
       return (n_labels <= ACE_UINT32_MAX);
     }
 
-  AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (disc);
-  if (pdt == 0)
+  AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (disc);
+  if (pdt == nullptr)
     {
       return true; // In reality this is an error.
     }
@@ -235,10 +234,12 @@ be_union::gen_empty_default_label (void)
       return (n_labels < 2);
 
     case AST_PredefinedType::PT_char:
+    case AST_PredefinedType::PT_octet:
       return (n_labels <= ACE_OCTET_MAX);
 
     case AST_PredefinedType::PT_short:
     case AST_PredefinedType::PT_ushort:
+    case AST_PredefinedType::PT_wchar:
       return (n_labels <= ACE_UINT16_MAX);
 
     case AST_PredefinedType::PT_long:
@@ -266,7 +267,7 @@ be_union::be_add_union_branch (AST_UnionBranch *b)
 }
 
 ACE_UINT64
-be_union::nlabels (void)
+be_union::nlabels ()
 {
   ACE_UINT64 retval = 0;
 
@@ -276,9 +277,9 @@ be_union::nlabels (void)
     {
       AST_Decl *d = si.item ();
       AST_UnionBranch *ub =
-        AST_UnionBranch::narrow_from_decl (d);
+        dynamic_cast<AST_UnionBranch*> (d);
 
-      if (ub != 0)
+      if (ub != nullptr)
         {
           retval += ub->label_list_length ();
         }
@@ -286,8 +287,3 @@ be_union::nlabels (void)
 
   return retval;
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_union)
-IMPL_NARROW_FROM_SCOPE (be_union)

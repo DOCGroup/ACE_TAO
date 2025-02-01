@@ -14,10 +14,8 @@
 #include "tao/Storable_Base.h"
 #include "tao/Storable_Factory.h"
 #include "tao/Storable_File_Guard.h"
-
-#include "ace/Auto_Ptr.h"
-
 #include <algorithm>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -29,7 +27,7 @@ namespace TAO
     PG_Group_List_Store_File_Guard (PG_Group_List_Store & list_store,
                                     Method_Type method_type);
 
-    ~PG_Group_List_Store_File_Guard () ACE_NOEXCEPT_FALSE;
+    ~PG_Group_List_Store_File_Guard () noexcept(false);
 
     virtual void set_object_last_changed (const time_t & time);
 
@@ -69,7 +67,7 @@ TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (
     }
 }
 
-TAO::PG_Group_List_Store_File_Guard::~PG_Group_List_Store_File_Guard () ACE_NOEXCEPT_FALSE
+TAO::PG_Group_List_Store_File_Guard::~PG_Group_List_Store_File_Guard () noexcept(false)
 {
   this->release ();
   if (list_store_.lock_.release() == -1)
@@ -144,8 +142,7 @@ TAO::PG_Group_List_Store::PG_Group_List_Store (
   // version already exists.
   bool stream_exists = false;
   {
-    ACE_Auto_Ptr<TAO::Storable_Base> stream (
-      this->create_stream ("r"));
+    std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
     if (stream->exists ())
       stream_exists = true;
@@ -260,7 +257,7 @@ bool
 TAO::PG_Group_List_Store::list_obsolete ()
 {
   // TODO: Update if obsolete flag is set based on CORBA call.
-  ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
+  std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
   if (!stream->exists ())
     throw CORBA::INTERNAL ();
   if (stream->open () != 0)

@@ -16,7 +16,7 @@ public:
   // = The skeleton methods
   virtual void get_string (CORBA::String_out string_out);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

@@ -17,20 +17,20 @@ public:
   Sender (CORBA::ORB_ptr orb);
 
   /// Print out the results
-  void dump_results (void);
+  void dump_results ();
 
   /// Get the status of the flag..
-  bool is_done (void) const;
+  bool is_done () const;
 
   // = The skeleton methods
   virtual CORBA::Boolean get_data (CORBA::ULong size,
                                    Test::Payload_out payload);
 
-  virtual CORBA::Long get_event_count (void);
+  virtual CORBA::Long get_event_count ();
 
-  virtual void ping (void);
+  virtual void ping ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   TAO_SYNCH_MUTEX mutex_;

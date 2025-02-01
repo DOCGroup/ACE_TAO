@@ -34,9 +34,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief This information is stored in memory allocated by the Memory_Pool.
  *
  * This class implements the control block structure that can be
- * used in a "position indepent" fashion, i.e., you don't need to
+ * used in a "position independent" fashion, i.e., you don't need to
  * "map" the underlying memory pool to the same address in
- * processes sharing the memory.  The tradoff of this flexibility
+ * processes sharing the memory.  The trade off of this flexibility
  * is more expensive malloc/free operations.
  */
 class ACE_Export ACE_PI_Control_Block
@@ -59,7 +59,7 @@ public:
   class ACE_Export ACE_Malloc_Header
   {
   public:
-    ACE_Malloc_Header (void);
+    ACE_Malloc_Header ();
 
     /// Points to next block if on free list.
     MALLOC_HEADER_PTR next_block_;
@@ -78,14 +78,12 @@ public:
     char padding_[(ACE_PI_MALLOC_PADDING_SIZE) ? ACE_PI_MALLOC_PADDING_SIZE : ACE_MALLOC_ALIGN];
 
     /// Dump the state of the object.
-    void dump (void) const;
+    void dump () const;
 
   private:
-
     // Disallow copy construction and assignment.
     ACE_Malloc_Header (ACE_Malloc_Header const &);
     void operator= (ACE_Malloc_Header const &);
-
   };
 
   /**
@@ -111,10 +109,10 @@ public:
     ACE_Name_Node (const ACE_Name_Node &);
 
     /// Constructor.
-    ACE_Name_Node (void);
+    ACE_Name_Node ();
 
     /// Constructor.
-    ~ACE_Name_Node (void);
+    ~ACE_Name_Node ();
 
     /// Initialize a name node pointer.
     static void init_ptr (NAME_NODE_PTR *ptr,
@@ -122,7 +120,7 @@ public:
                           void *base_addr);
 
     /// Return a pointer to the name of this node.
-    const char *name (void) const;
+    const char *name () const;
 
     /// Assign a name;
     void name (const char *);
@@ -140,16 +138,15 @@ public:
     NAME_NODE_PTR prev_;
 
     /// Dump the state of the object.
-    void dump (void) const;
+    void dump () const;
 
   private:
-
     // Disallow assignment.
     void operator= (const ACE_Name_Node &);
   };
 
   /// Print out a bunch of size info for debugging.
-  static void print_alignment_info (void);
+  static void print_alignment_info ();
 
   /// Reference counter.
   int ref_counter_;
@@ -189,12 +186,10 @@ public:
   ACE_Malloc_Header base_;
 
   /// Dump the state of the object.
-  void dump (void) const;
+  void dump () const;
 
 private:
-
-  // Disallow assignment.
-  void operator= (const ACE_Control_Block &);
+  void operator= (const ACE_Control_Block &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

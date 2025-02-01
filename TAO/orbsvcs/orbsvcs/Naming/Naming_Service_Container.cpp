@@ -24,7 +24,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_NS_Node)
 
 template <class T>
-ACE_NS_Node<T>::~ACE_NS_Node (void)
+ACE_NS_Node<T>::~ACE_NS_Node ()
 {
 }
 
@@ -55,7 +55,7 @@ ACE_NS_Node<T>::ACE_NS_Node (const ACE_NS_Node<T> &s)
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_List)
 
   template <class T> size_t
-ACE_Unbounded_List<T>::size (void) const
+ACE_Unbounded_List<T>::size () const
 {
   // ACE_TRACE ("ACE_Unbounded_List<T>::size");
   return this->cur_size_;
@@ -85,7 +85,7 @@ ACE_Unbounded_List<T>::insert_tail (const T &item)
 }
 
 template <class T> void
-ACE_Unbounded_List<T>::reset (void)
+ACE_Unbounded_List<T>::reset ()
 {
   ACE_TRACE ("reset");
 
@@ -93,7 +93,7 @@ ACE_Unbounded_List<T>::reset (void)
 }
 
 template <class T> void
-ACE_Unbounded_List<T>::dump (void) const
+ACE_Unbounded_List<T>::dump () const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::dump");
 
@@ -125,7 +125,7 @@ ACE_Unbounded_List<T>::copy_nodes (const ACE_Unbounded_List<T> &us)
 }
 
 template <class T> void
-ACE_Unbounded_List<T>::delete_nodes (void)
+ACE_Unbounded_List<T>::delete_nodes ()
 {
   ACE_NS_Node<T> *curr = this->head_->next_;
 
@@ -147,7 +147,7 @@ ACE_Unbounded_List<T>::delete_nodes (void)
 }
 
 template <class T>
-ACE_Unbounded_List<T>::~ACE_Unbounded_List (void)
+ACE_Unbounded_List<T>::~ACE_Unbounded_List ()
 {
   // ACE_TRACE ("ACE_Unbounded_List<T>::~ACE_Unbounded_List");
 
@@ -246,14 +246,14 @@ ACE_Unbounded_List<T>::remove (const T &item)
 }
 
 template <class T> ACE_Unbounded_List_Iterator<T>
-ACE_Unbounded_List<T>::begin (void)
+ACE_Unbounded_List<T>::begin ()
 {
   // ACE_TRACE ("ACE_Unbounded_List<T>::begin");
   return ACE_Unbounded_List_Iterator<T> (*this);
 }
 
 template <class T> ACE_Unbounded_List_Iterator<T>
-ACE_Unbounded_List<T>::end (void)
+ACE_Unbounded_List<T>::end ()
 {
   // ACE_TRACE ("ACE_Unbounded_List<T>::end");
   return ACE_Unbounded_List_Iterator<T> (*this, 1);
@@ -263,7 +263,7 @@ ACE_Unbounded_List<T>::end (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_List_Iterator)
 
   template <class T> void
-ACE_Unbounded_List_Iterator<T>::dump (void) const
+ACE_Unbounded_List_Iterator<T>::dump () const
 {
   // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::dump");
 }
@@ -277,7 +277,7 @@ ACE_Unbounded_List_Iterator<T>::ACE_Unbounded_List_Iterator (ACE_Unbounded_List<
 }
 
 template <class T> int
-ACE_Unbounded_List_Iterator<T>::advance (void)
+ACE_Unbounded_List_Iterator<T>::advance ()
 {
   // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::advance");
   this->current_ = this->current_->next_;
@@ -285,7 +285,7 @@ ACE_Unbounded_List_Iterator<T>::advance (void)
 }
 
 template <class T> int
-ACE_Unbounded_List_Iterator<T>::first (void)
+ACE_Unbounded_List_Iterator<T>::first ()
 {
   // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::first");
   this->current_ = this->set_->head_->next_;
@@ -293,7 +293,7 @@ ACE_Unbounded_List_Iterator<T>::first (void)
 }
 
 template <class T> int
-ACE_Unbounded_List_Iterator<T>::done (void) const
+ACE_Unbounded_List_Iterator<T>::done () const
 {
   ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::done");
 
@@ -326,9 +326,9 @@ ACE_Unbounded_List_Iterator<T>::operator++ (int)
 }
 
 template <class T> ACE_Unbounded_List_Iterator<T>&
-ACE_Unbounded_List_Iterator<T>::operator++ (void)
+ACE_Unbounded_List_Iterator<T>::operator++ ()
 {
-  // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator++ (void)");
+  // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator++ ()");
 
   // prefix operator
 
@@ -337,7 +337,7 @@ ACE_Unbounded_List_Iterator<T>::operator++ (void)
 }
 
 template <class T> T&
-ACE_Unbounded_List_Iterator<T>::operator* (void)
+ACE_Unbounded_List_Iterator<T>::operator* ()
 {
   //ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator*");
   T *retv = 0;
@@ -366,14 +366,14 @@ ACE_Unbounded_List_Iterator<T>::operator!= (const ACE_Unbounded_List_Iterator<T>
 // ---
 
 template <class T> int
-ACE_Unbounded_List<T>::is_empty (void) const
+ACE_Unbounded_List<T>::is_empty () const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::is_empty");
   return this->head_ == this->head_->next_;
 }
 
 template <class T>  int
-ACE_Unbounded_List<T>::is_full (void) const
+ACE_Unbounded_List<T>::is_full () const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::is_full");
   return 0; // We should implement a "node of last resort for this..."

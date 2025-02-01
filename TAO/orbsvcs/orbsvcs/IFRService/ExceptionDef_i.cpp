@@ -2,7 +2,7 @@
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/IDLType_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -14,18 +14,18 @@ TAO_ExceptionDef_i::TAO_ExceptionDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ExceptionDef_i::~TAO_ExceptionDef_i (void)
+TAO_ExceptionDef_i::~TAO_ExceptionDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_ExceptionDef_i::def_kind (void)
+TAO_ExceptionDef_i::def_kind ()
 {
   return CORBA::dk_Exception;
 }
 
 void
-TAO_ExceptionDef_i::destroy (void)
+TAO_ExceptionDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -35,7 +35,7 @@ TAO_ExceptionDef_i::destroy (void)
 }
 
 void
-TAO_ExceptionDef_i::destroy_i (void)
+TAO_ExceptionDef_i::destroy_i ()
 {
   // Destroy our members.
   TAO_Container_i::destroy_i ();
@@ -45,7 +45,7 @@ TAO_ExceptionDef_i::destroy_i (void)
 }
 
 CORBA::Contained::Description *
-TAO_ExceptionDef_i::describe (void)
+TAO_ExceptionDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -55,7 +55,7 @@ TAO_ExceptionDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_ExceptionDef_i::describe_i (void)
+TAO_ExceptionDef_i::describe_i ()
 {
   CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
@@ -90,7 +90,7 @@ TAO_ExceptionDef_i::describe_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ExceptionDef_i::type (void)
+TAO_ExceptionDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -100,7 +100,7 @@ TAO_ExceptionDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ExceptionDef_i::type_i (void)
+TAO_ExceptionDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -123,7 +123,7 @@ TAO_ExceptionDef_i::type_i (void)
 }
 
 CORBA::StructMemberSeq *
-TAO_ExceptionDef_i::members (void)
+TAO_ExceptionDef_i::members ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -133,7 +133,7 @@ TAO_ExceptionDef_i::members (void)
 }
 
 CORBA::StructMemberSeq *
-TAO_ExceptionDef_i::members_i (void)
+TAO_ExceptionDef_i::members_i ()
 {
   ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
   ACE_Unbounded_Queue<ACE_TString> path_queue;

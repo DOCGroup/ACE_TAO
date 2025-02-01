@@ -26,9 +26,9 @@ public:
 
   virtual void request_excep (::Messaging::ExceptionHolder * excep_holder);
 
-  virtual void start (void);
+  virtual void start ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// The real implementation
@@ -39,10 +39,10 @@ class Peer_i : public POA_Peer
 {
 public:
   /// Constructor
-  Peer_i (void);
+  Peer_i ();
 
   /// Destructor
-  virtual ~Peer_i (void);
+  virtual ~Peer_i ();
 
   void init (CORBA::ORB_ptr orb,
              Progress_ptr progress,
@@ -58,7 +58,7 @@ public:
   void start (const PeerSet& the_peers,
               CORBA::Long iterations);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The reply_handler
@@ -92,7 +92,7 @@ public:
              CORBA::Long id);
 
   /// The thread entry point
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The peers

@@ -21,10 +21,10 @@ class  AMH_Messenger_i : public virtual POA_DevGuide::AMH_Messenger
 {
 public:
   //Constructor
-  AMH_Messenger_i (void);
+  AMH_Messenger_i ();
 
   //Destructor
-  virtual ~AMH_Messenger_i (void);
+  virtual ~AMH_Messenger_i ();
 
   virtual void send_message (
     DevGuide::AMH_MessengerResponseHandler_ptr _tao_rh,

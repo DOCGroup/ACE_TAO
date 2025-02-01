@@ -19,8 +19,8 @@ class Driver
 {
 public:
   // = Constructor and destructor.
-  Driver (void);
-  ~Driver (void);
+  Driver ();
+  ~Driver ();
 
 enum TEST_TYPE
   {
@@ -43,7 +43,7 @@ enum TEST_TYPE
   /**
    * @return The number of errors detected
    */
-  int run (void);
+  int run ();
 
 private:
   /// underlying ORB (we do not own it)

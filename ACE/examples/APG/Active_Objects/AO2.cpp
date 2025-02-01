@@ -6,7 +6,7 @@
 #include "ace/Method_Request.h"
 #include "ace/Task.h"
 #include "ace/Future.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 class HA_ControllerAgent
 {
@@ -18,7 +18,7 @@ public:
     status_result_ = 1;
   }
 
-  int status_update (void)
+  int status_update ()
   {
     ACE_TRACE ("HA_ControllerAgent::status_update");
     ACE_DEBUG ((LM_DEBUG,
@@ -31,7 +31,7 @@ public:
   }
 
 private:
-  int next_result_id (void)
+  int next_result_id ()
   {
     ACE_TRACE ("HA_ControllerAgent::next_cmd_id");
     return status_result_++;
@@ -50,7 +50,7 @@ public:
     ACE_TRACE ("StatusUpdate::StatusUpdate");
   }
 
-  virtual int call (void)
+  virtual int call ()
   {
     ACE_TRACE ("StatusUpdate::call");
 
@@ -67,7 +67,7 @@ private:
 class ExitMethod : public ACE_Method_Request
 {
 public:
-  virtual int call (void)
+  virtual int call ()
   {
     // Cause exit.
     return -1;
@@ -83,18 +83,14 @@ public:
     this->activate ();
   }
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     ACE_TRACE ("Scheduler::svc");
 
     while (1)
       {
         // Dequeue the next method object
-#if defined (ACE_HAS_CPP11)
         std::unique_ptr<ACE_Method_Request> request (this->activation_queue_.dequeue ());
-#else
-        auto_ptr<ACE_Method_Request> request (this->activation_queue_.dequeue ());
-#endif /* ACE_HAS_CPP11 */
 
         // Invoke the method request.
         if (request->call () == -1)
@@ -118,7 +114,7 @@ class HA_ControllerAgentProxy
 {
   // This acts as a Proxy to the controller impl object.
 public:
-  ACE_Future<int> status_update (void)
+  ACE_Future<int> status_update ()
   {
     ACE_TRACE("HA_ControllerAgentProxy::status_update");
     ACE_Future<int> result;
@@ -132,7 +128,7 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void exit (void)
+  void exit ()
   {
   //FUZZ: enable check_for_lack_ACE_OS
 

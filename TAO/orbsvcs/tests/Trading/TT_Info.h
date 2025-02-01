@@ -12,7 +12,6 @@
 class TAO_TTest_Export TT_Info
 {
 public:
-
   static void dump_properties (const CosTrading::PropertySeq& prop_seq,
                                CORBA::Boolean print_dynamic = 1);
   // Dump the contents of this property sequence.
@@ -32,10 +31,9 @@ public:
     public POA_TAO_Trader_Test::Remote_Output
   {
   public:
+    Remote_Output () {}
 
-    Remote_Output (void) {}
-
-    virtual void confirm (void)
+    virtual void confirm ()
       {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -45,10 +43,9 @@ public:
     public POA_TAO_Trader_Test::Printer
   {
   public:
+    Printer () {}
 
-    Printer (void) {}
-
-    virtual void confirm (void)
+    virtual void confirm ()
       {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -58,9 +55,9 @@ public:
     public POA_TAO_Trader_Test::Plotter
   {
   public:
-    Plotter (void) {}
+    Plotter () {}
 
-    virtual void confirm (void)
+    virtual void confirm ()
       {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -70,9 +67,9 @@ public:
     public POA_TAO_Trader_Test::File_System
   {
   public:
-    File_System (void) {}
+    File_System () {}
 
-    virtual void confirm (void)
+    virtual void confirm ()
       {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -82,9 +79,9 @@ public:
     public POA_TAO_Trader_Test::PostScript_Printer
   {
   public:
-    PostScript_Printer (void) {}
+    PostScript_Printer () {}
 
-    virtual void confirm (void)
+    virtual void confirm ()
       {}
     // Method to test that the importer received a valid reference to
     // the exported object.
@@ -179,7 +176,6 @@ class TAO_TTest_Export TT_Parse_Args
   // Utility to parse the command-line arguments to the trading service tests.
 {
   public:
-
   TT_Parse_Args (int& argc, ACE_TCHAR** argv);
 
   ~TT_Parse_Args ();
@@ -195,7 +191,6 @@ class TAO_TTest_Export TT_Parse_Args
   // Not null if the test user supplied an explicit ior.
 
   private:
-
   int federated_, quiet_;
   char* ior_;
 };

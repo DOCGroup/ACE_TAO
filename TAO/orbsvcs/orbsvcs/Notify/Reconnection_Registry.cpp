@@ -87,7 +87,7 @@ namespace TAO_Notify
   }
 
   CORBA::Boolean
-  Reconnection_Registry::is_alive (void)
+  Reconnection_Registry::is_alive ()
   {
     return CORBA::Boolean(1);
   }
@@ -231,7 +231,7 @@ namespace TAO_Notify
   }
 
   void
-  Reconnection_Registry::release (void)
+  Reconnection_Registry::release ()
   {
     delete this;
     //@@ inform factory

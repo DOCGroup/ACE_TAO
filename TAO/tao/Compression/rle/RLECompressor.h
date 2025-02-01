@@ -29,7 +29,6 @@ namespace TAO
     class TAO_RLECOMPRESSOR_Export RLECompressor : public ::TAO::BaseCompressor
     {
     public:
-
         RLECompressor(::Compression::CompressorFactory_ptr);
 
         virtual void compress (

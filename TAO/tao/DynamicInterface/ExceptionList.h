@@ -30,11 +30,7 @@
 #include "tao/Pseudo_VarOut_T.h"
 
 #include "ace/Unbounded_Queue.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -57,27 +53,27 @@ namespace CORBA
   {
   public:
     /// Constructor.
-    ExceptionList (void);
+    ExceptionList ();
 
     /// Constructor - initialize given a length and an array of
     /// TypeCodes.
     ExceptionList (CORBA::ULong len, CORBA::TypeCode_ptr *tc_list);
 
     /// Destructor.
-    ~ExceptionList (void);
+    ~ExceptionList ();
 
     /// Return the number of elements.
-    CORBA::ULong count (void);
+    CORBA::ULong count ();
 
     /// Increase the reference count.
-    ExceptionList_ptr _duplicate (void);
+    ExceptionList_ptr _duplicate ();
 
     /// Increase the reference count in the spec defined manner.
     static ExceptionList_ptr _duplicate (ExceptionList *);
 
-    void _destroy (void);
+    void _destroy ();
 
-    static ExceptionList_ptr _nil (void);
+    static ExceptionList_ptr _nil ();
 
     /// Add a TypeCode to the list.
     void add (CORBA::TypeCode_ptr tc);
@@ -92,8 +88,8 @@ namespace CORBA
     void remove (CORBA::ULong slot);
 
     /// Increment and decrement ref counts.
-    void _incr_refcount (void);
-    void _decr_refcount (void);
+    void _incr_refcount ();
+    void _decr_refcount ();
 
     /// Useful for template programming.
     typedef CORBA::ExceptionList_ptr _ptr_type;
@@ -106,11 +102,7 @@ namespace CORBA
     ExceptionList &operator= (const ExceptionList &);
 
     /// Reference counter.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
     /// Internal list of typecodes.
     ACE_Unbounded_Queue<CORBA::TypeCode_ptr> tc_list_;

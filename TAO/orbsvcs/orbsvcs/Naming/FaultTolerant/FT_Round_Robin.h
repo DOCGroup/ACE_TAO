@@ -22,7 +22,6 @@
 
 #include "orbsvcs/Naming/FaultTolerant/FT_Location_Index_Map.h"
 
-
 #include "orbsvcs/CosLoadBalancingS.h"
 #include "ace/Vector_T.h"
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
@@ -45,9 +44,8 @@ class TAO_FT_Naming_Manager;
 class TAO_FtNaming_Export TAO_FT_Round_Robin
 {
 public:
-
   /// Constructor.
-  TAO_FT_Round_Robin (void);
+  TAO_FT_Round_Robin ();
 
   /// This function obtains the next object's location as it is bound
   /// within the object group.
@@ -64,10 +62,9 @@ public:
       PortableGroup::Location& location);
 
   /// Destructor
-  virtual ~TAO_FT_Round_Robin (void);
+  virtual ~TAO_FT_Round_Robin () = default;
 
 private:
-
   /// Lock used to ensure atomic access to state retained by this
   /// class.
   TAO_SYNCH_MUTEX lock_;
@@ -83,7 +80,6 @@ private:
    * to be returned from the Strategy::next_member() method.
    */
   TAO_FT_Location_Index_Map location_index_map_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -22,11 +22,6 @@ TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
 {
 }
 
-// Destructor.
-TAO_Asynch_Reply_Dispatcher::~TAO_Asynch_Reply_Dispatcher (void)
-{
-}
-
 // Dispatch the reply.
 int
 TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
@@ -147,7 +142,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 }
 
 void
-TAO_Asynch_Reply_Dispatcher::connection_closed (void)
+TAO_Asynch_Reply_Dispatcher::connection_closed ()
 {
   try
     {
@@ -196,7 +191,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 // AMI Timeout Handling Begin
 
 void
-TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
+TAO_Asynch_Reply_Dispatcher::reply_timed_out ()
 {
   try
     {

@@ -6,15 +6,6 @@
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
-#if defined (ACE_OPENVMS)
-// need this to circumvent link error on OpenVMS
-// has to do with interference in template instantiations
-// for the server build by previous compilation of TestX
-// components in client build which are reused by server
-// without recompilation
-ACE_Time_Value dum = ACE_Time_Value::zero;
-#endif
-
 int
 parse_args (int argc, ACE_TCHAR *argv[]);
 
@@ -89,7 +80,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

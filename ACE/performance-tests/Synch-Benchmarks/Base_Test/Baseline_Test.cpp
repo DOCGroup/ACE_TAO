@@ -17,7 +17,7 @@ Baseline_Test_Options baseline_options;
 // Static Baseline Options holds the test configuration information
 // and the test statistics.
 
-Baseline_Test_Base::Baseline_Test_Base (void)
+Baseline_Test_Base::Baseline_Test_Base ()
   : Benchmark_Base (Benchmark_Base::BASELINE),
     yield_method_ (Baseline_Test_Options::USE_SLEEP_ZERO),
     iteration_ (DEFAULT_ITERATIONS),
@@ -76,7 +76,7 @@ Baseline_Test_Base::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Baseline_Test_Base::yield (void)
+Baseline_Test_Base::yield ()
 {
   if (this->yield_method_ == Baseline_Test_Options::USE_SLEEP_ZERO)
     ACE_OS::sleep (0);
@@ -84,7 +84,7 @@ Baseline_Test_Base::yield (void)
     ACE_OS::thr_yield ();
 }
 
-Baseline_Test_Options::Baseline_Test_Options (void)
+Baseline_Test_Options::Baseline_Test_Options ()
   : test_try_lock_ (0),
     verbose_ (0),
     current_yield_method_ (0),
@@ -132,7 +132,7 @@ Baseline_Test_Options::reset_params (size_t iteration,
 }
 
 void
-Baseline_Test_Options::print_result (void)
+Baseline_Test_Options::print_result ()
 {
   ACE_Time_Value tv;
   ACE_hrtime_t nsec;
@@ -148,7 +148,7 @@ Baseline_Test_Options::print_result (void)
               (int) (nsec / this->current_iteration_)));
 }
 
-Baseline_Test::Baseline_Test (void)
+Baseline_Test::Baseline_Test ()
   : current_test_ (0),
     get_lock_ (2),
     let_go_lock_ (2)
@@ -183,7 +183,7 @@ Baseline_Test::pre_run_test (Benchmark_Base *bb)
 }
 
 int
-Baseline_Test::run_test (void)
+Baseline_Test::run_test ()
 {
   if (baseline_options.test_try_lock ())
     return this->current_test_->test_try_lock ();
@@ -192,7 +192,7 @@ Baseline_Test::run_test (void)
 }
 
 int
-Baseline_Test::post_run_test (void)
+Baseline_Test::post_run_test ()
 {
   if (baseline_options.test_try_lock ())
     {

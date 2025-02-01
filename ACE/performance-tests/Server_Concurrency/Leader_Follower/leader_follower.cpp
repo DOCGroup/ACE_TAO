@@ -37,7 +37,7 @@ class Leader_Follower_Task : public TASK
 public:
   Leader_Follower_Task (ACE_SYNCH_MUTEX &mutex,
                         ACE_SYNCH_CONDITION &condition);
-  int svc (void);
+  int svc ();
 
   size_t messages_consumed_;
   ACE_SYNCH_MUTEX &mutex_;
@@ -56,7 +56,7 @@ Leader_Follower_Task::Leader_Follower_Task (ACE_SYNCH_MUTEX &mutex,
 }
 
 int
-Leader_Follower_Task::svc (void)
+Leader_Follower_Task::svc ()
 {
   for (;;)
     {

@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
+#if defined (ACE_WIN32)
 
 #include "ace/ACE.h"
 #include "ace/OS_Log_Msg_Attributes.h"
@@ -110,7 +110,7 @@ public:
                   DWORD service_type = SERVICE_WIN32_OWN_PROCESS,
                   DWORD controls_mask = SERVICE_ACCEPT_STOP);
 
-  virtual ~ACE_NT_Service (void);
+  virtual ~ACE_NT_Service ();
 
   // = Functions to operate the service
 
@@ -126,7 +126,7 @@ public:
    * ACE_Shared_Object. Default implementation sets the service status
    * to SERVICE_STOPPED.
    */
-  virtual int fini (void);
+  virtual int fini ();
 
   /**
    * The actual service implementation.  This function need not be overridden
@@ -134,7 +134,7 @@ public:
    * by subclasses when actually running the service.  It is expected that
    * this function will set the status to RUNNING.
    */
-  virtual int svc (void);
+  virtual int svc ();
 
   /**
    * This function is called in response to a request from the Service
@@ -147,7 +147,7 @@ public:
    *    SERVICE_CONTROL_INTERROGATE: reports current status
    *    SERVICE_CONTROL_SHUTDOWN: same as SERVICE_CONTROL_STOP.
    */
-  virtual void  handle_control (DWORD control_code);
+  virtual void handle_control (DWORD control_code);
 
   /// Set the svc_handle_ member.  This is only a public function because
   /// the macro-generated service function calls it.
@@ -163,16 +163,16 @@ public:
   void name (const ACE_TCHAR *name, const ACE_TCHAR *desc = 0);
 
   /// Get the service name.
-  const ACE_TCHAR *name (void) const;
+  const ACE_TCHAR *name () const;
 
   /// Get the service description.
-  const ACE_TCHAR *desc (void) const;
+  const ACE_TCHAR *desc () const;
 
   /// Sets the host machine
   void host (const ACE_TCHAR *host);
 
   /// Get the host machine.
-  const ACE_TCHAR *host (void) const;
+  const ACE_TCHAR *host () const;
 
   /**
    * Insert (create) the service in the NT Service Control Manager,
@@ -196,13 +196,13 @@ public:
    * error, 0 on success.  This just affects the SCM and registry - the
    * can and will keep running fine if it is already running.
    */
-  int remove (void);
+  int remove ();
 
   /// Sets the startup type for the service.  Returns -1 on error, 0 on success.
   int startup (DWORD startup);
 
   /// Returns the current startup type.
-  DWORD startup (void);
+  DWORD startup ();
 
   // = Methods to control ACE_Log_Msg behavior in the service.
 
@@ -216,7 +216,7 @@ public:
    * call this function just before calling the StartServiceCtrlDispatcher
    * function.
    */
-  void capture_log_msg_attributes (void);
+  void capture_log_msg_attributes ();
 
   /**
    * Set the ACE_Log_Msg attributes in the current thread to those saved
@@ -225,7 +225,7 @@ public:
    * first method called to be sure that any logging done is incorporated
    * correctly into the process's established logging setup.
    */
-  void inherit_log_msg_attributes (void);
+  void inherit_log_msg_attributes ();
 
   // = Methods which control the service's execution.
 
@@ -323,7 +323,7 @@ protected:
    * retrieves the handle from the Service Control Manager and caches
    * it.
    */
-  SC_HANDLE svc_sc_handle (void);
+  SC_HANDLE svc_sc_handle ();
 
   /**
    * Waits for the service to reach @a desired_state or get
@@ -429,7 +429,7 @@ extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc,                \
 #include "ace/NT_Service.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
+#endif /* ACE_WIN32 */
 
 #include /**/ "ace/post.h"
 

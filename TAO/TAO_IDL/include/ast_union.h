@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -84,7 +83,7 @@ public:
              bool local,
              bool abstract);
 
-  virtual ~AST_Union (void);
+  virtual ~AST_Union ();
 
   // This also calls the base class version.
   virtual void redefine (AST_Structure *from);
@@ -94,13 +93,9 @@ public:
 
   // Data Accessors.
 
-  AST_ConcreteType *disc_type (void);
+  AST_ConcreteType *disc_type ();
 
-  AST_Expression::ExprType udisc_type (void);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(AST_Union);
-  DEF_NARROW_FROM_SCOPE(AST_Union);
+  AST_Expression::ExprType udisc_type ();
 
   struct DefaultValue
   {
@@ -127,7 +122,7 @@ public:
   int default_value (DefaultValue &);
   // Get the default value.
 
-  virtual int default_index (void);
+  virtual int default_index ();
   // Return the default index used.
 
   // AST Dumping.
@@ -147,7 +142,7 @@ public:
   ///}
 
 protected:
-  virtual int compute_size_type (void);
+  virtual int compute_size_type ();
   // Compute the size type if it is unknown.
 
   virtual AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b);
@@ -169,7 +164,7 @@ private:
   AST_UnionBranch *lookup_branch (AST_UnionBranch *branch);
 
   // Look up the branch with the "default" label.
-  AST_UnionBranch *lookup_default (void);
+  AST_UnionBranch *lookup_default ();
 
   // Look up a branch given a branch with a label. This is used to
   // check for duplicate labels.
@@ -179,7 +174,7 @@ private:
   // check for duplicate enum labels.
   AST_UnionBranch *lookup_enum (AST_UnionBranch *b);
 
-  friend int tao_yyparse (void);
+  friend int tao_yyparse ();
   friend class ast_visitor_tmpl_module_inst;
 
   // Scope Management Protocol.
@@ -192,10 +187,10 @@ private:
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
 
-  virtual int compute_default_value (void);
+  virtual int compute_default_value ();
   // Compute the default value (if any).
 
-  int compute_default_index (void);
+  int compute_default_index ();
   // Count the default index.
 
   DefaultValue default_value_;

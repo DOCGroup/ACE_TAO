@@ -8,14 +8,12 @@
 #include "ace/SV_Shared_Memory.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SV_Shared_Memory)
 
 void
-ACE_SV_Shared_Memory::dump (void) const
+ACE_SV_Shared_Memory::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SV_Shared_Memory::dump");
@@ -60,7 +58,7 @@ ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (key_t external_id,
 
 // The "do nothing" constructor.
 
-ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (void)
+ACE_SV_Shared_Memory::ACE_SV_Shared_Memory ()
   : internal_id_ (0),
     size_ (0),
     segment_ptr_ (0)
@@ -71,7 +69,7 @@ ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (void)
 // Added this constructor to accept an internal id, the one generated
 // when a server constructs with the key IPC_PRIVATE.  The client can
 // be passed ACE_SV_Shared_Memory::internal_id via a socket and call
-// this construtor to attach the existing segment.  This prevents
+// this constructor to attach the existing segment.  This prevents
 // having to hard-code a key in advance.  Courtesy of Marvin Wolfthal
 // (maw@fsg.com).
 

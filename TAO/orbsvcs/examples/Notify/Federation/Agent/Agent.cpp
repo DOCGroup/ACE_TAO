@@ -173,7 +173,7 @@ private:
 
 
   virtual void
-  disconnect_structured_push_consumer (void)
+  disconnect_structured_push_consumer ()
   {
     // We don't care.
   }
@@ -190,7 +190,6 @@ private:
 
   ProxyID supplier_id_;
   StructuredProxyPushSupplier_var supplier_;
-
 };
 
 int
