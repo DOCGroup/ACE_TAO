@@ -18,9 +18,9 @@ The ADAPTIVE Communication Environment (ACE) is an object-oriented
 communication software.  ACE provides a rich set of reusable C++
 wrappers and frameworks that perform common communication software
 tasks across a range of OS platforms, including Win32/Win64, most
-versions of UNIX (e.g., SunOS, HP-UX , AIX, Linux, NetBSD, and FreeBSD),
+versions of UNIX (e.g., SunOS, Linux, NetBSD, and FreeBSD),
 real-time operating systems (e.g., VxWorks, Chorus, LynxOS, and QNX),
-OpenVMS, and MVS OpenEdition.  A single source tree is used for all
+and MVS OpenEdition.  A single source tree is used for all
 these platforms and porting ACE to other platforms is relatively easy.
 
 The communication software components provided by ACE include event
@@ -62,8 +62,7 @@ interfaces:
       WaitForMultipleObjects and I/O completion ports;
 
 . Multi-threading and synchronization
-  -- e.g., Solaris threads, POSIX Pthreads, and Win32
-      threads;
+  -- e.g., POSIX Pthreads, and Win32 threads;
 
 . Explicit dynamic linking
   -- e.g., dlopen/dlsym on UNIX and LoadLibrary/GetProc

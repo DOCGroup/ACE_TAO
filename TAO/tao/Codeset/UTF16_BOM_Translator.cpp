@@ -19,11 +19,10 @@
 // ****************************************************************
 
 typedef ACE_CDR::UShort ACE_UTF16_T;
-static const size_t ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
-static const ACE_CDR::ULong ACE_UL_UTF16_CODEPOINT_SIZE =
-  static_cast<ACE_CDR::ULong>(ACE_UTF16_CODEPOINT_SIZE);
-static const unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
-static const unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
+static constexpr size_t ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
+static constexpr ACE_CDR::ULong ACE_UL_UTF16_CODEPOINT_SIZE = static_cast<ACE_CDR::ULong>(ACE_UTF16_CODEPOINT_SIZE);
+static constexpr unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
+static constexpr unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -280,7 +280,7 @@ private:
   int closing_;
 };
 
-Server_Service_Handler::Server_Service_Handler (void) :
+Server_Service_Handler::Server_Service_Handler () :
   ssl_stream_ (ACE_SSL_Asynch_Stream::ST_SERVER),
   pending_writes_ (0),
   pending_reads_ (0),
@@ -573,7 +573,7 @@ public:
 typedef ACE_Singleton<Acceptor, ACE_SYNCH_RECURSIVE_MUTEX> Acceptor_Singleton;
 #define ACCEPTOR Acceptor_Singleton::instance ()
 
-Acceptor::Acceptor (void) :
+Acceptor::Acceptor () :
   accept_cnt_ (0),
   cancel_flag_ (0),
   service_handler_ (0)
@@ -729,7 +729,7 @@ private:
   int closing_;
 };
 
-Client_Service_Handler::Client_Service_Handler (void) :
+Client_Service_Handler::Client_Service_Handler () :
   ssl_stream_ (ACE_SSL_Asynch_Stream::ST_CLIENT),
   read_successful_ (0),
   pending_writes_ (0),
@@ -1057,7 +1057,7 @@ protected:
 typedef ACE_Singleton<Connector, ACE_SYNCH_RECURSIVE_MUTEX> Connector_Singleton;
 #define CONNECTOR Connector_Singleton::instance ()
 
-Connector::Connector (void) :
+Connector::Connector () :
   service_handler_ (0)
 {
 }

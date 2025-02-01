@@ -174,7 +174,7 @@ class TAO_Trading_Serv_Export TAO_Dynamic_Property
   : public virtual POA_CosTradingDynamic::DynamicPropEval
 {
 public:
-  TAO_Dynamic_Property (void) {}
+  TAO_Dynamic_Property () {}
   virtual ~TAO_Dynamic_Property ();
 
   void destroy ();
@@ -681,7 +681,7 @@ public:
   typedef CosTrading::Lookup::SpecifiedProps SPECIFIED_PROPS;
 
   /// An accomplice to g++'s insane lust for copy constructors.
-  TAO_Property_Filter (void) : policy_ (CosTrading::Lookup::all) {}
+  TAO_Property_Filter () : policy_ (CosTrading::Lookup::all) {}
 
   /// Verify that the specified properties are correct.
   TAO_Property_Filter (const SPECIFIED_PROPS& desired_props);

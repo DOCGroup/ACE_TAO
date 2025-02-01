@@ -43,24 +43,19 @@ virtual char * name ();
 virtual void destroy ();
 
 virtual void receive_request_service_contexts (
-  PortableInterceptor::ServerRequestInfo_ptr ri
-  );
+  PortableInterceptor::ServerRequestInfo_ptr ri);
 
 virtual void receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    );
+    PortableInterceptor::ServerRequestInfo_ptr ri);
 
 virtual void send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    );
+    PortableInterceptor::ServerRequestInfo_ptr ri);
 
 virtual void send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    );
+    PortableInterceptor::ServerRequestInfo_ptr ri);
 
 virtual void send_other (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    );
+    PortableInterceptor::ServerRequestInfo_ptr ri);
 //@}
 private:
 CORBA::ORB_var orb_;

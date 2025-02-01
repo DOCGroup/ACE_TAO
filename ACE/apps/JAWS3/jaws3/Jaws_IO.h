@@ -19,7 +19,7 @@ class JAWS_Export JAWS_IO_Impl
 //     Bridge Pattern.
 {
 public:
-  virtual ~JAWS_IO_Impl (void) {}
+  virtual ~JAWS_IO_Impl () {}
 
   // = Regular IO methods.
 

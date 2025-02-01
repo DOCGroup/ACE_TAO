@@ -72,10 +72,10 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Manager_var
   : private TAO_Base_var
 {
 public:
-  TAO_RTScheduler_Manager_var (void); // default constructor
+  TAO_RTScheduler_Manager_var (); // default constructor
   TAO_RTScheduler_Manager_var (TAO_RTScheduler_Manager_ptr);
   TAO_RTScheduler_Manager_var (const TAO_RTScheduler_Manager_var &); // copy constructor
-  ~TAO_RTScheduler_Manager_var (void); // destructor
+  ~TAO_RTScheduler_Manager_var (); // destructor
 
   TAO_RTScheduler_Manager_var &operator= (TAO_RTScheduler_Manager_ptr);
   TAO_RTScheduler_Manager_var &operator= (const TAO_RTScheduler_Manager_var &);

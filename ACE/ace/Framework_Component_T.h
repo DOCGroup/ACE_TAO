@@ -57,13 +57,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
         ACE_Framework_Repository::instance ()->register_component \
           (new ACE_Framework_Component_T<CLASS> (INSTANCE));
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Framework_Component_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Framework_Component_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_FRAMEWORK_COMPONENT_T_H */

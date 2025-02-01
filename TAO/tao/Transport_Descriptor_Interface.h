@@ -50,7 +50,7 @@ public:
 
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
-  virtual  TAO_Transport_Descriptor_Interface *duplicate (void) = 0;
+  virtual  TAO_Transport_Descriptor_Interface *duplicate () = 0;
 
   /// Try to determine if this object is same as the @a other_prop.
   virtual CORBA::Boolean is_equivalent (

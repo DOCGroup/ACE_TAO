@@ -84,7 +84,7 @@ public:
     return impl_.get_buffer(orphan);
   }
   // @copydoc TAO::details::generic_sequence::swap()
-  inline void swap(bounded_value_sequence & rhs) throw() {
+  inline void swap(bounded_value_sequence & rhs) noexcept {
     impl_.swap(rhs.impl_);
   }
   static value_type * allocbuf(CORBA::ULong maximum) {

@@ -93,8 +93,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      test_i servant1 (1, direct_collocation, orb.in ());
-      test_i servant2 (2, direct_collocation, orb.in ());
+      test_i servant1 (1, orb.in ());
+      test_i servant2 (2, orb.in ());
 
       PortableServer::ObjectId_var oid1 =
         root_poa->activate_object (&servant1);

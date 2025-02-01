@@ -43,12 +43,12 @@ public:
   void *heap_item () const;
   void heap_item (void *item);
 
-  virtual ACE_Lock & lock (void) = 0;
+  virtual ACE_Lock & lock () = 0;
 
 protected:
   virtual unsigned int count_i () const = 0;
-  virtual int acquire_i (void) = 0;
-  virtual int release_i (void) = 0;
+  virtual int acquire_i () = 0;
+  virtual int release_i () = 0;
   virtual unsigned int priority_i () const = 0;
 
 private:

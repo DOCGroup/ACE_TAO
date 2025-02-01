@@ -60,8 +60,7 @@ TAO249_ServerRequest_Interceptor2::receive_request (
 
 
   IOP::ServiceContext_var sc =
-    ri->get_request_service_context (IOP::FT_REQUEST
-                                   );
+    ri->get_request_service_context (IOP::FT_REQUEST);
 
 
   TAO_InputCDR cdr (reinterpret_cast <const char*>

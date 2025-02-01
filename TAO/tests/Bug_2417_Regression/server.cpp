@@ -84,8 +84,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate();
 
-      const CORBA::Object_var pmobj (orb->resolve_initial_references("ORBPolicyManager" ) );
-      CORBA::PolicyManager_var policy_manager = CORBA::PolicyManager::_narrow(pmobj.in() );
+      const CORBA::Object_var pmobj (orb->resolve_initial_references("ORBPolicyManager" ));
+      CORBA::PolicyManager_var policy_manager = CORBA::PolicyManager::_narrow(pmobj.in());
 
       CORBA::Any orb_level;
       orb_level <<= Messaging::SYNC_NONE;

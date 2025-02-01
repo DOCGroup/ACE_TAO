@@ -49,7 +49,7 @@ public:
 
   /// Send a <GET> command to fetch the contents in the URI from the
   /// server.
-  virtual ssize_t send_request (void) = 0;
+  virtual ssize_t send_request () = 0;
 
   /// Returns the URL that we represent.
   virtual const ACE_URL_Addr &url_addr () const = 0;

@@ -26,8 +26,6 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_POSIX_SEM
 
-//#define ACE_HAS_SVR4_TLI
-
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_WCHAR_H
 

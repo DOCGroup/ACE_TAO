@@ -33,7 +33,7 @@
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (TAO_DEFAULT_REACTOR_TYPE)
 #define TAO_DEFAULT_REACTOR_TYPE TAO_REACTOR_TP
@@ -452,10 +452,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
 #endif /* ACE_WIN32 */
       break;
 
-#if defined(ACE_WIN32) \
-  && !defined (ACE_LACKS_MSG_WFMO) \
-  && !defined (ACE_HAS_WINCE)      \
-  && !defined (ACE_HAS_PHARLAP)
+#if defined(ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
     case TAO_REACTOR_MSGWFMO:
       ACE_NEW_RETURN (impl, ACE_Msg_WFMO_Reactor (0, tmq.get ()), 0);
       break;

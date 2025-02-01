@@ -16,7 +16,7 @@
 
 #if defined (ACE_HAS_SCTP)
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Service_Config.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "ace/SOCK_SEQPACK_Association.h"
@@ -32,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_Unbounded_Set <ACE_CString> Interface_Seq;
 typedef ACE_Unbounded_Set_Iterator <ACE_CString> Interface_Seq_Itor;
 
-//typedef auto_ptr <Interface_Seq> Interface_Seq_Ptr;
 typedef ACE_Hash_Map_Manager <ACE_CString,Interface_Seq,ACE_Null_Mutex>  Secondary_Addr_Map;
 typedef ACE_Hash_Map_Entry <ACE_CString,Interface_Seq> Secondary_Addr_Map_Entry;
 typedef ACE_Hash_Map_Iterator <ACE_CString,Interface_Seq,ACE_Null_Mutex>  Secondary_Addr_Map_Iterator;
@@ -106,7 +105,7 @@ public:
                         int iovcnt,
                         ACE_Time_Value *s = 0);
 
-  TAO_AV_SCTP_SEQ_Flow_Handler *handler (void) { return this->handler_; }
+  TAO_AV_SCTP_SEQ_Flow_Handler *handler () { return this->handler_; }
 
 protected:
   TAO_AV_SCTP_SEQ_Flow_Handler *handler_;
@@ -128,7 +127,7 @@ public:
   virtual int open (void * = 0);
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
-  virtual ACE_Event_Handler* event_handler (void){ return this; }
+  virtual ACE_Event_Handler* event_handler () { return this; }
   /// Change the QoS
   virtual int change_qos (AVStreams::QoS);
 

@@ -8,6 +8,8 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
+#include <memory>
+
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/Event/ECG_CDR_Message_Receiver.inl"
 #endif /* __ACE_INLINE__ */

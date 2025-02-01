@@ -51,10 +51,10 @@ public:
   virtual void execute (TAO_Notify_Method_Request& method_request) = 0;
 
   /// Shutdown task
-  virtual void shutdown (void) = 0;
+  virtual void shutdown () = 0;
 
   /// The object used by clients to register timers.
-  virtual TAO_Notify_Timer* timer (void) = 0;
+  virtual TAO_Notify_Timer* timer () = 0;
 
 
 protected:

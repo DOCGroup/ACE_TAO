@@ -32,10 +32,10 @@ class Notifier_Handler
 public:
   /// This constructor gets the notifier object from the Naming
   /// Service.
-  Notifier_Handler (void) = default;
+  Notifier_Handler () = default;
 
   /// Destructor.
-  virtual ~Notifier_Handler (void) = default;
+  virtual ~Notifier_Handler () = default;
 
   /// Initialize the client communication endpoint with server.
   int init (int argc, ACE_TCHAR *argv[], ShutdownCallback* _shutdowncallback);

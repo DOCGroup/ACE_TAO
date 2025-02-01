@@ -25,7 +25,7 @@ namespace TAO
 {
   class TAO_PortableGroup_Export MIOP_Loader
   {
-    public:
+  public:
     /// Used to force the insertion of UIPMC_Factory in the service
     /// configurator.
     static int Initializer ();

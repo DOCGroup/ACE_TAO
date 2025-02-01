@@ -55,13 +55,13 @@ int box_test1 (BoxT *valuebox, UT val1, UT val2)
                     1);
 
     // should be a deep copy of val1...
-    OBV_VERITY ( &valuebox_clone->_boxed_inout () != &valuebox->_boxed_inout () );
+    OBV_VERITY (&valuebox_clone->_boxed_inout () != &valuebox->_boxed_inout ());
 
     // but values should be equal
     OBV_VERITY (ACE::is_equal (valuebox_clone->_value (), valuebox->_value ()));
 
     // Check that modifier is working.
-    valuebox_clone->_value ( val2 );
+    valuebox_clone->_value (val2);
     OBV_VERITY (!ACE::is_equal (valuebox_clone->_value (), valuebox->_value ()));
 
     // use operator=
@@ -84,7 +84,7 @@ int box_test1 (BoxT *valuebox, UT val1, UT val2)
 
     // Test _copy_value
     CORBA::ValueBase *copy = valuebox->_copy_value ();
-    OBV_VERITY ( copy != 0 );
+    OBV_VERITY (copy != 0);
     // check add_ref, remove_ref
     copy->_add_ref ();
     copy->_remove_ref ();
@@ -99,7 +99,7 @@ int box_test1 (BoxT *valuebox, UT val1, UT val2)
     else
       {
         OBV_VERITY (ACE::is_equal (down->_value (), val1));
-        down->_value ( val2 );
+        down->_value (val2);
         OBV_VERITY (!ACE::is_equal (down->_value (), valuebox->_value ()));
         OBV_VERITY (ACE::is_equal (down->_value (), val2));
       }
@@ -140,13 +140,13 @@ int box_test_ref (BoxT *valuebox, UT &val1, UT &val2)
                     1);
 
     // should be a deep copy of val1...
-    OBV_VERITY ( &p->_boxed_inout () != &valuebox->_boxed_inout () );
+    OBV_VERITY (&p->_boxed_inout () != &valuebox->_boxed_inout ());
 
-    p->_value ( val2 ); // deep copy
-    OBV_VERITY ( &p->_boxed_inout () != &valuebox->_boxed_inout () );
+    p->_value (val2); // deep copy
+    OBV_VERITY (&p->_boxed_inout () != &valuebox->_boxed_inout () );
 
     *valuebox = val2;      // deep copy, too.
-    OBV_VERITY ( &p->_boxed_inout () != &valuebox->_boxed_inout () );
+    OBV_VERITY (&p->_boxed_inout () != &valuebox->_boxed_inout () );
 
     CORBA::remove_ref (p);
 
@@ -408,7 +408,7 @@ int test_boxed_string()
   vbstring2->_value(svar);
   OBV_VERITY ((*vbstring2)[0] == 'S');
   // test value accessor
-  OBV_VERITY ( (vbstring2->_value())[0] == 'S' );
+  OBV_VERITY ((vbstring2->_value())[0] == 'S');
 
   //
   // Test ctors.
@@ -580,7 +580,7 @@ int test_boxed_sequence ()
       OBV_VERITY (vbseqlong4->length() == 0);
 
       // Test copy_value
-      VBseqlong *vbseqlong6 = VBseqlong::_downcast( vbseqlong4->_copy_value() );
+      VBseqlong *vbseqlong6 = VBseqlong::_downcast( vbseqlong4->_copy_value());
       if (vbseqlong6 == 0)
         {
           fail++;
@@ -724,8 +724,8 @@ int test_boxed_struct ()
   VBfixed_struct1_var valuebox2 = valuebox2_ptr;
 
   OBV_VERITY (valuebox1->l () == valuebox2->l ());
-  OBV_VERITY ((valuebox1->abstruct ()).s1 == (valuebox2->abstruct ()).s1 );
-  OBV_VERITY ((valuebox1->abstruct ()).s2 == (valuebox2->abstruct ()).s2 );
+  OBV_VERITY ((valuebox1->abstruct ()).s1 == (valuebox2->abstruct ()).s1);
+  OBV_VERITY ((valuebox1->abstruct ()).s2 == (valuebox2->abstruct ()).s2);
 
   // Change an element
   valuebox1->l (505);
@@ -733,9 +733,9 @@ int test_boxed_struct ()
 
   // Change some more, to test other types.
   (valuebox2->abstruct ()).s1 = 667;
-  OBV_VERITY ((valuebox1->abstruct ()).s1 != (valuebox2->abstruct ()).s1 );
+  OBV_VERITY ((valuebox1->abstruct ()).s1 != (valuebox2->abstruct ()).s1);
   (valuebox2->abstruct ()).s2 = 1667;
-  OBV_VERITY ((valuebox1->abstruct ()).s2 != (valuebox2->abstruct ()).s2 );
+  OBV_VERITY ((valuebox1->abstruct ()).s2 != (valuebox2->abstruct ()).s2);
 
   Fixed_Struct1 *fixed_struct_b = 0;
   ACE_NEW_RETURN (fixed_struct_b,

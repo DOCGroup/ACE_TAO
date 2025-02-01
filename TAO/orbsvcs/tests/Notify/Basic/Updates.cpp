@@ -209,9 +209,7 @@ Updates::test_subscription_change ()
         this->print_event_types (removed);
       }
 
-    this->consumer_->get_proxy_supplier ()->subscription_change (added,
-                                                                 removed
-                                                                 );
+    this->consumer_->get_proxy_supplier ()->subscription_change (added, removed);
 
     this->wait_for_updates (3, 0); // The supplier should receive Added (RED, GREEN, BLUE)
 
@@ -245,9 +243,7 @@ Updates::test_subscription_change ()
         this->print_event_types (removed);
       }
 
-    this->consumer_->get_proxy_supplier ()->subscription_change (added,
-                                                                 removed
-                                                                 );
+    this->consumer_->get_proxy_supplier ()->subscription_change (added, removed);
 
     this->wait_for_updates (1, 0); // The supplier should receive Added (PURPLE).
 
@@ -279,9 +275,7 @@ Updates::test_subscription_change ()
         this->print_event_types (removed);
       }
 
-    this->consumer_->get_proxy_supplier ()->subscription_change (added,
-                                                                 removed
-                                                                 );
+    this->consumer_->get_proxy_supplier ()->subscription_change (added, removed);
 
     this->wait_for_updates (0, 4);
     // The supplier should receive Remove {RED, GREEN} out of the 4 actally removed (RED, GREEN, BLUE, PURPLE) becaue that whats it offered for.
@@ -327,9 +321,7 @@ Updates::test_offer_change ()
         this->print_event_types (removed);
       }
 
-    this->supplier_->get_proxy_consumer ()->offer_change (added,
-                                                          removed
-                                                          );
+    this->supplier_->get_proxy_consumer ()->offer_change (added, removed);
 
     this->wait_for_updates (3, 0); // The consumer should receive Added (RED, GREEN, BLUE)
 
@@ -363,9 +355,7 @@ Updates::test_offer_change ()
         this->print_event_types (removed);
       }
 
-    this->supplier_->get_proxy_consumer ()->offer_change (added,
-                                                          removed
-                                                                 );
+    this->supplier_->get_proxy_consumer ()->offer_change (added, removed);
 
     this->wait_for_updates (1, 0); // The consumer should receive Added (PURPLE).
 
@@ -397,9 +387,7 @@ Updates::test_offer_change ()
         this->print_event_types (removed);
       }
 
-    this->supplier_->get_proxy_consumer ()->offer_change (added,
-                                                          removed
-                                                          );
+    this->supplier_->get_proxy_consumer ()->offer_change (added, removed);
 
     this->wait_for_updates (0, 4);
     // The consumer should receive Remove {RED, GREEN} out of the 4 actally removed (RED, GREEN, BLUE, PURPLE) becaue that whats it offered for.

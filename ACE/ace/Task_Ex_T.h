@@ -136,7 +136,7 @@ public: // Should be protected:
   /// Set next Task pointer.
   void next (ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *);
 
-  /// Alwasy return 0. @todo FIXME
+  /// Always return 0. @todo FIXME
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *sibling ();
 
   /// Return the Task's Module if there is one, else returns 0.
@@ -180,13 +180,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Task_Ex_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Task_Ex_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Task_Ex_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TASK_EX_H */

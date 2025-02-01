@@ -73,7 +73,7 @@ extern "C"
 void
 exithook ()
 {
-  ACE_TRACE ("void exithook (void)");
+  ACE_TRACE ("void exithook ()");
 
   ACE_DEBUG ((LM_DEBUG,
               "we're outta here!\n"));

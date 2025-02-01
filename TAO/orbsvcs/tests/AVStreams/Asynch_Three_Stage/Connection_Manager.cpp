@@ -570,9 +570,8 @@ Connection_Manager::add_streamctrl (const ACE_CString &flowname,
   if( streamctrl_any.in() >>= streamctrl )
   {
      // Any still owns the pointer, so we duplicate it
-     AVStreams::StreamCtrl::_duplicate( streamctrl );
-     this->streamctrls_.bind (flowname,
-                             streamctrl);
+     AVStreams::StreamCtrl::_duplicate( streamctrl);
+     this->streamctrls_.bind (flowname, streamctrl);
   }
 }
 
@@ -582,7 +581,7 @@ Connection_Manager::destroy (const ACE_CString &flowname)
   this->protocol_objects_.unbind (flowname);
   this->receivers_.unbind (flowname);
 
-  this->streamctrls_.unbind (flowname );
+  this->streamctrls_.unbind (flowname);
 }
 
 Connection_Manager::Receivers &

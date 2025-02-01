@@ -70,6 +70,7 @@ public:
   virtual int visit_constant (AST_Constant *node);
   virtual int visit_array (AST_Array *node);
   virtual int visit_sequence (AST_Sequence *node);
+  virtual int visit_map (AST_Map *node);
   virtual int visit_string (AST_String *node);
   virtual int visit_typedef (AST_Typedef *node);
   virtual int visit_root (AST_Root *node);

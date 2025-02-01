@@ -72,7 +72,7 @@ public:
               ACE_hrtime_t empty_iteration_time);
   virtual ~Basic_Test ();
 
-  virtual void run (void) = 0;
+  virtual void run () = 0;
 
   double iteration_time ();
 
@@ -143,7 +143,7 @@ class Empty_Iteration_Test : public Basic_Test
 {
 public:
   Empty_Iteration_Test (ACE_High_Res_Timer &timer) : Basic_Test (timer, 0) {}
-  virtual ~Empty_Iteration_Test (void) {};
+  virtual ~Empty_Iteration_Test () {};
 
   virtual void run ();
 
@@ -186,7 +186,7 @@ public:
   Inline_Call_Test (ACE_High_Res_Timer &timer,
                     ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Inline_Call_Test (void) {};
+  virtual ~Inline_Call_Test () {};
 
   virtual void run ();
 
@@ -222,7 +222,7 @@ public:
   Noninline_Call_Test (ACE_High_Res_Timer &timer,
                        ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Noninline_Call_Test (void) {};
+  virtual ~Noninline_Call_Test () {};
 
   virtual void run ();
 
@@ -258,7 +258,7 @@ public:
   Inline_Member_Call_Test (ACE_High_Res_Timer &timer,
                            ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Inline_Member_Call_Test (void) {};
+  virtual ~Inline_Member_Call_Test () {};
 
   virtual void run ();
 
@@ -294,7 +294,7 @@ public:
   Noninline_Member_Call_Test (ACE_High_Res_Timer &timer,
                               ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Noninline_Member_Call_Test (void) {};
+  virtual ~Noninline_Member_Call_Test () {};
 
   virtual void run ();
 
@@ -330,7 +330,7 @@ public:
   Inline_Member_With_Virtual_Call_Test (ACE_High_Res_Timer &timer,
                                         ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Inline_Member_With_Virtual_Call_Test (void) {};
+  virtual ~Inline_Member_With_Virtual_Call_Test () {};
 
   virtual void run ();
 
@@ -368,7 +368,7 @@ public:
   Noninline_Member_With_Virtual_Call_Test (ACE_High_Res_Timer &timer,
                                            ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Noninline_Member_With_Virtual_Call_Test (void) {};
+  virtual ~Noninline_Member_With_Virtual_Call_Test () {};
 
   virtual void run ();
 
@@ -406,7 +406,7 @@ public:
   Virtual_Member_Optimizable_Call_Test (ACE_High_Res_Timer &timer,
                                         ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Virtual_Member_Optimizable_Call_Test (void) {};
+  virtual ~Virtual_Member_Optimizable_Call_Test () {};
 
   virtual void run ();
 
@@ -446,7 +446,7 @@ public:
   Virtual_Member_Call_Test (ACE_High_Res_Timer &timer,
                             ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Virtual_Member_Call_Test (void) {};
+  virtual ~Virtual_Member_Call_Test () {};
 
   virtual void run ();
 

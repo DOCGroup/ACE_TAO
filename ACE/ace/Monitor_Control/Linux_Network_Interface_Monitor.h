@@ -21,7 +21,7 @@
 
 #include "ace/Monitor_Control/Monitor_Control_export.h"
 
-#if defined (ACE_LINUX) || defined (AIX)
+#if defined (ACE_LINUX)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -67,7 +67,7 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* defined (ACE_LINUX) || defined (AIX) */
+#endif /* defined (ACE_LINUX) */
 
 #include /**/ "ace/post.h"
 

@@ -28,8 +28,6 @@ $stc->AddLibPath ('../lib');
 $ses->AddLibPath ('../lib');
 $sec->AddLibPath ('../lib');
 
-PerlACE::check_privilege_group();
-
 $deadline = 0;
 $port = $ns->RandomPort ();
 $host = $ns->HostName ();

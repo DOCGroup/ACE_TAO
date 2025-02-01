@@ -36,8 +36,8 @@ public:
   virtual ~Command ();
 
   /// This is the entry point to execute the command.
-  virtual int execute (void) = 0;
-  virtual int destroy (void) = 0;
+  virtual int execute () = 0;
+  virtual int destroy () = 0;
 };
 
 /**

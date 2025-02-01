@@ -35,9 +35,7 @@ class MultiTypes_PushConsumer : public TAO_Notify_Tests_PushConsumer
 public:
   MultiTypes_PushConsumer (MultiTypes* client);
 
-  void push (
-             const CORBA::Any & data
-             );
+  void push (const CORBA::Any & data);
 
 protected:
   MultiTypes* client_;
@@ -51,8 +49,7 @@ public:
   MultiTypes_StructuredPushConsumer (MultiTypes* client);
 
   // = StructuredPushSupplier methods
-  virtual void push_structured_event (const CosNotification::StructuredEvent & notification
-                                      );
+  virtual void push_structured_event (const CosNotification::StructuredEvent & notification);
 
 protected:
   MultiTypes* client_;
@@ -65,8 +62,7 @@ public:
 
   // = SequencePushConsumer methods
   virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications
-      );
+        const CosNotification::EventBatch & notifications);
 
 protected:
   MultiTypes* client_;

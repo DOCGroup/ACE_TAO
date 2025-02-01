@@ -20,7 +20,7 @@ my $test_stderr_file = $test1->LocalFile ($stderr_file);
 sub cat_file($)
 {
     my $file_name = shift;
-    if (-s $file_name ) # size of file is greater than zero
+    if (-s $file_name) # size of file is greater than zero
     {
         open TESTFILE, $file_name or die "Couldn't open file: $!";
         my @teststring = <TESTFILE>; # read in all of the file

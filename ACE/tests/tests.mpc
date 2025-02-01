@@ -960,6 +960,14 @@ project(Future Set Test) : acetest {
   }
 }
 
+project(Future Stress Test) : acetest {
+  avoids += ace_for_tao
+  exename = Future_Stress_Test
+  Source_Files {
+    Future_Stress_Test.cpp
+  }
+}
+
 project(Get Opt Test) : acetest {
   exename = Get_Opt_Test
   Source_Files {
@@ -1168,13 +1176,6 @@ project(Message Queue Test) : acetest {
   exename = Message_Queue_Test
   Source_Files {
     Message_Queue_Test.cpp
-  }
-  verbatim(gnuace,local) {
-    # Needs a larger heap on AIX to avoid overwriting stacks in the counting
-    # part of the test.
-    ifdef AIX_VERS
-      LDFLAGS += -bmaxdata:0x20000000
-    endif
   }
 }
 
@@ -2194,7 +2195,6 @@ project(Based Pointer Test) : acetest {
 }
 
 project(Library Unload): unload_libace {
-  avoids += wince
   exename = UnloadLibACE
   staticflags += ACE_AS_STATIC_LIBS
   Source_Files {

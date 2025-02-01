@@ -3,8 +3,7 @@
 /**
  *  @file    TP_Reactor_Test.h
  *
- *  Define class needed for generating templates. IBM C++ requires this to
- *  be in its own file for auto template instantiation.
+ *  Define class needed for generating templates.
  *
  *  @author Alexander Libman <alibman@ihug.com.au>
  *  @author <alexl@rumblgroup.com>
@@ -42,10 +41,10 @@ public:
 
   ~Receiver ();
 
-  long get_total_snd (void) { return this->total_snd_; }
-  long get_total_rcv (void) { return this->total_rcv_; }
-  long get_total_w   (void) { return this->total_w_; }
-  long get_total_r   (void) { return this->total_r_; }
+  long get_total_snd () { return this->total_snd_; }
+  long get_total_rcv () { return this->total_rcv_; }
+  long get_total_w   () { return this->total_w_; }
+  long get_total_r   () { return this->total_r_; }
 
   // virtual from ACE_Svc_Handler<>
   virtual int open (void * pVoid);
@@ -77,11 +76,11 @@ class Acceptor : public ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>
 {
  friend class Receiver;
 public:
-  size_t get_number_sessions (void) { return sessions_; }
-  long get_total_snd (void) { return this->total_snd_; }
-  long get_total_rcv (void) { return this->total_rcv_; }
-  long get_total_w   (void) { return this->total_w_; }
-  long get_total_r   (void) { return this->total_r_; }
+  size_t get_number_sessions () { return sessions_; }
+  long get_total_snd () { return this->total_snd_; }
+  long get_total_rcv () { return this->total_rcv_; }
+  long get_total_w   () { return this->total_w_; }
+  long get_total_r   () { return this->total_r_; }
 
   Acceptor ();
   virtual ~Acceptor ();
@@ -121,10 +120,10 @@ public:
 
   ~Sender ();
 
-  long get_total_snd (void) { return this->total_snd_; }
-  long get_total_rcv (void) { return this->total_rcv_; }
-  long get_total_w   (void) { return this->total_w_; }
-  long get_total_r   (void) { return this->total_r_; }
+  long get_total_snd () { return this->total_snd_; }
+  long get_total_rcv () { return this->total_rcv_; }
+  long get_total_w   () { return this->total_w_; }
+  long get_total_r   () { return this->total_r_; }
 
   // virtual from ACE_Svc_Handler<>
   virtual int open (void * pVoid);
@@ -159,11 +158,11 @@ class Connector: public ACE_Connector<Sender,ACE_SOCK_CONNECTOR>
 {
   friend class Sender;
 public:
-  size_t get_number_sessions (void) { return sessions_; }
-  long get_total_snd (void) { return this->total_snd_; }
-  long get_total_rcv (void) { return this->total_rcv_; }
-  long get_total_w   (void) { return this->total_w_; }
-  long get_total_r   (void) { return this->total_r_; }
+  size_t get_number_sessions () { return sessions_; }
+  long get_total_snd () { return this->total_snd_; }
+  long get_total_rcv () { return this->total_rcv_; }
+  long get_total_w   () { return this->total_w_; }
+  long get_total_r   () { return this->total_r_; }
 
 
   Connector ();

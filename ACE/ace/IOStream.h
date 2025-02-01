@@ -45,7 +45,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Quoted_String : public ACE_IOStream_String
 {
 public:
-  inline ACE_Quoted_String (void) { *this = ""; }
+  inline ACE_Quoted_String () { *this = ""; }
   inline ACE_Quoted_String (const char *c) { *this = ACE_IOStream_String (c); }
   inline ACE_Quoted_String (const ACE_IOStream_String &s) { *this = s; }
   inline ACE_Quoted_String &operator= (const ACE_IOStream_String& s)
@@ -62,7 +62,7 @@ public:
     return *(ACE_IOStream_String *) this < (ACE_IOStream_String) s;
   }
 #    if defined (ACE_WIN32) && defined (_MSC_VER)
-  inline int length (void) { return this->GetLength (); }
+  inline int length () { return this->GetLength (); }
 #    endif /* ACE_WIN32 && defined (_MSC_VER) */
 };
 
@@ -343,16 +343,6 @@ typedef ostream& (*__omanip_)(ostream&);
 // operators.  Notice how the <ipfx> and <isfx> functions are used.
 
 #define GET_SIG(MT,DT)          inline virtual MT& operator>> (DT v)
-#  if (defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510)
-#define GET_CODE {                      \
-        if (ipfx (0))                                   \
-        {                                               \
-                (*((istream*)this)) >> (v);             \
-        }                                               \
-        isfx ();                                        \
-        return *this;                                   \
-        }
-#  else
 #define GET_CODE {                      \
         if (ipfx (0))                                   \
         {                                               \
@@ -361,7 +351,6 @@ typedef ostream& (*__omanip_)(ostream&);
         isfx ();                                        \
         return *this;                                   \
         }
-#  endif
 #define GET_PROT(MT,DT,CODE)    GET_SIG(MT,DT)  CODE
 #define GET_FUNC(MT,DT)         GET_PROT(MT,DT,GET_CODE)
 
@@ -370,16 +359,6 @@ typedef ostream& (*__omanip_)(ostream&);
 // operators.  Notice how the <opfx> and <osfx> functions are used.
 
 #define PUT_SIG(MT,DT)          inline virtual MT& operator<< (DT v)
-#  if (defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510)
-#define PUT_CODE {                      \
-        if (opfx ())                                    \
-        {                                               \
-                (*((ostream *) this)) << (v);            \
-        }                                               \
-        osfx ();                                        \
-        return *this;                                   \
-        }
-#  else
 #define PUT_CODE {                      \
         if (opfx ())                                    \
         {                                               \
@@ -388,26 +367,12 @@ typedef ostream& (*__omanip_)(ostream&);
         osfx ();                                        \
         return *this;                                   \
         }
-#  endif
 #define PUT_PROT(MT,DT,CODE)    PUT_SIG(MT,DT)  CODE
 #define PUT_FUNC(MT,DT)         PUT_PROT(MT,DT,PUT_CODE)
 
 // These are necessary in case somebody wants to derive from us and
 // override one of these with a custom approach.
 
-#  if defined (ACE_LACKS_CHAR_RIGHT_SHIFTS)
-#define GET_FUNC_SET0(MT,CODE,CODE2) \
-        GET_PROT(MT,short &,CODE) \
-        GET_PROT(MT,u_short &,CODE) \
-        GET_PROT(MT,int &,CODE) \
-        GET_PROT(MT,u_int &,CODE) \
-        GET_PROT(MT,long &,CODE) \
-        GET_PROT(MT,u_long &,CODE) \
-        GET_PROT(MT,float &,CODE) \
-        GET_PROT(MT,double &,CODE) \
-        inline virtual MT& operator>>(__omanip_ func) CODE2 \
-        inline virtual MT& operator>>(__manip_ func)  CODE2
-#  else
 #define GET_FUNC_SET0(MT,CODE,CODE2) \
         GET_PROT(MT,short &,CODE) \
         GET_PROT(MT,u_short &,CODE) \
@@ -423,7 +388,6 @@ typedef ostream& (*__omanip_)(ostream&);
         GET_PROT(MT,u_char *,CODE) \
         inline virtual MT& operator>>(__omanip_ func) CODE2 \
         inline virtual MT& operator>>(__manip_ func)  CODE2
-#  endif
 
 #define PUT_FUNC_SET0(MT,CODE,CODE2) \
         PUT_PROT(MT,short,CODE) \
@@ -442,10 +406,6 @@ typedef ostream& (*__omanip_)(ostream&);
         inline virtual MT& operator<<(__omanip_ func) CODE2 \
         inline virtual MT& operator<<(__manip_ func)  CODE2
 
-#  if defined (ACE_LACKS_SIGNED_CHAR)
-  #define GET_FUNC_SET1(MT,CODE,CODE2) GET_FUNC_SET0(MT,CODE,CODE2)
-  #define PUT_FUNC_SET1(MT,CODE,CODE2) PUT_FUNC_SET0(MT,CODE,CODE2)
-#  else
   #define GET_FUNC_SET1(MT,CODE,CODE2) \
           GET_PROT(MT,signed char &,CODE) \
           GET_PROT(MT,signed char *,CODE) \
@@ -455,7 +415,6 @@ typedef ostream& (*__omanip_)(ostream&);
           PUT_FUNC(MT,signed char) \
           PUT_FUNC(MT,const signed char *) \
           PUT_FUNC_SET0(MT,CODE,CODE2)
-#  endif /* ACE_LACKS_SIGNED_CHAR */
 
 #define GET_MANIP_CODE  { if (ipfx ()) { (*func) (*this); } isfx (); return *this; }
 #define PUT_MANIP_CODE  { if (opfx ()) { (*func) (*this); } osfx (); return *this; }

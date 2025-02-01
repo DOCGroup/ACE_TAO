@@ -25,7 +25,7 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Configuration.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

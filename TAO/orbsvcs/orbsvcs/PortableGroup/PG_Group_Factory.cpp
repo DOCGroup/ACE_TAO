@@ -241,9 +241,7 @@ int TAO::PG_Group_Factory::find_group_with_name (const char* target_group_name,
     // If the group has the group name in the property
     //
     const char* a_group_name = a_group->get_name ();
-    if (a_group_name != 0 &&
-        ACE_OS::strcmp (target_group_name,
-                        a_group_name) == 0)
+    if (a_group_name != 0 && ACE_OS::strcmp (target_group_name, a_group_name) == 0)
       { // This is the group we were looking for
         group_target = a_group;
         result = 1;

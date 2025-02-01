@@ -93,23 +93,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 static long *pSeenOnce = nullptr;
 
-#if defined (ACE_OPENVMS)
-#include <unixlib.h>
-char* IDL_GlobalData::translateName(const char* name, char *name_buf)
-{
-  char* transName = (ACE_OS::strpbrk (name, ":[") == 0
-                      ? (char*)name
-                      : ::decc$translate_vms (name));
-  if (transName)
-    {
-      ACE_OS::strcpy (name_buf, transName);
-      transName = name_buf;
-    }
-
-  return (transName == 0 || ((int)transName) == -1 ) ? 0 : transName;
-}
-#endif
-
 IDL_GlobalData::IDL_GlobalData ()
   : syntax_only_ (false),
     parse_args_exit_ (false),
@@ -289,6 +272,7 @@ IDL_GlobalData::reset_flag_seen ()
   seq_seen_ = false;
   short_seq_seen_ = false;
   special_basic_decl_seen_ = false;
+  map_seen_ = false;
   string_seen_ = false;
   string_member_seen_ = false;
   string_seq_seen_ = false;

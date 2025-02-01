@@ -148,7 +148,7 @@ public:
 
   /// Accessors for the argument list
   TAO::Argument ** args () const;
-  CORBA::ULong args_num () const ;
+  CORBA::ULong args_num () const;
 
   /// Exception count
   CORBA::ULong ex_count () const;

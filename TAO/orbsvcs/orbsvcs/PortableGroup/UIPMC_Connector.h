@@ -43,7 +43,7 @@ public:
   TAO_UIPMC_Connector ();
 
   /// Destructor.
-  ~TAO_UIPMC_Connector ();
+  ~TAO_UIPMC_Connector () = default;
 
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h

@@ -19,8 +19,6 @@ Simple_Server_i::remote_call ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Print out from process id (%P) hosting the servant\n")));
-
-  return;
 }
 
 

@@ -48,10 +48,10 @@ public:
   virtual ~JAWS_Abstract_IO_Handler ();
 
   virtual void task (JAWS_Pipeline_Handler *ph) = 0;
-  virtual JAWS_Pipeline_Handler *task (void) = 0;
+  virtual JAWS_Pipeline_Handler *task () = 0;
 
   virtual void message_block (JAWS_Data_Block *mb) = 0;
-  virtual JAWS_Data_Block *message_block (void) = 0;
+  virtual JAWS_Data_Block *message_block () = 0;
 
   /// This method is called by the IO class when new passive connection has
   /// been established.
@@ -59,7 +59,7 @@ public:
 
   /// This method is called by the IO class when new passive connection has
   /// been established.
-  virtual void accept_error (void) = 0;
+  virtual void accept_error () = 0;
 
 #if 0
   /// This method is called by the IO class when new active connection has
@@ -77,11 +77,11 @@ public:
 
   /// This method is called by the IO class when there was an error in
   /// reading new data from the client.
-  virtual void read_error (void) = 0;
+  virtual void read_error () = 0;
 
   /// This method is called by the IO class when the requested file has
   /// been successfully transmitted to the client.
-  virtual void transmit_file_complete (void) = 0;
+  virtual void transmit_file_complete () = 0;
 
   /// This method is called by the IO class when there was an error in
   /// transmitting the requested file to the client.
@@ -89,7 +89,7 @@ public:
 
   /// This method is called by the IO class when the requested file has
   /// been successfully received from the client.
-  virtual void receive_file_complete (void) = 0;
+  virtual void receive_file_complete () = 0;
 
   /// This method is called by the IO class when there was an error in
   /// receiving the requested file from the client.
@@ -97,30 +97,30 @@ public:
 
   /// This method is called by the IO class when there was an error in
   /// writing data to the client.
-  virtual void write_error (void) = 0;
+  virtual void write_error () = 0;
 
   /// This method is called by the IO class when the confirmation
   /// message has been delivered to the client.
-  virtual void confirmation_message_complete (void) = 0;
+  virtual void confirmation_message_complete () = 0;
 
   /// This method is called by the IO class when the error message has
   /// been delivered to the client.
-  virtual void error_message_complete (void) = 0;
+  virtual void error_message_complete () = 0;
 
   /// Returns the factory for this IO handler
-  virtual JAWS_IO_Handler_Factory *factory (void) = 0;
+  virtual JAWS_IO_Handler_Factory *factory () = 0;
 
   /// Returns the socket handle for this handler
   virtual ACE_HANDLE handle () const = 0;
 
   /// Cleans up the handler.
-  virtual void done (void) = 0;
+  virtual void done () = 0;
 
   /// Returns the status of the handler
-  virtual int status (void) = 0;
+  virtual int status () = 0;
 
   /// puts handler in an idle state
-  virtual void idle (void) = 0;
+  virtual void idle () = 0;
 
   enum { IDLE = 0, IDLE_A = 1,
          ACCEPT_OK = 2, ACCEPT_OK_A = 3,

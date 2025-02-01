@@ -27,7 +27,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/Timer_Heap.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include "Network_Adapters_Test.h"
 
@@ -835,7 +835,7 @@ extern "C"
 }
 #endif /* #if defined (ACE_HAS_SIG_C_FUNC) */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 static BOOL WINAPI CtrlHandler(DWORD fdwCtrlType)
 {
   switch (fdwCtrlType)
@@ -1011,9 +1011,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Network_Adapters_Test"));
 
 #if defined (ACE_WIN32)
-#if !defined (ACE_HAS_WINCE)
   SetConsoleCtrlHandler(&CtrlHandler, TRUE);
-#endif
 #else /* #if defined (ACE_WIN32) */
   // Set a handler for SIGSEGV signal to call for abort.
   ACE_Sig_Action sa1 ((ACE_SignalHandler) sigsegv_handler, SIGSEGV);

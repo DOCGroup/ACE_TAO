@@ -32,11 +32,9 @@ private:
   void destroy_ec (CosNotifyChannelAdmin::ChannelID id);
 
   CosNotifyChannelAdmin::AdminID create_supplier_admin (
-      CosNotifyChannelAdmin::ChannelID channel_id
-    );
+      CosNotifyChannelAdmin::ChannelID channel_id);
   CosNotifyChannelAdmin::AdminID create_consumer_admin (
-      CosNotifyChannelAdmin::ChannelID channel_id
-    );
+      CosNotifyChannelAdmin::ChannelID channel_id);
 
   void destroy_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id,
                                CosNotifyChannelAdmin::AdminID admin_id);

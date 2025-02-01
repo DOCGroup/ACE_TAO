@@ -153,7 +153,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // Tell the supplier to go
         sig->go ();
 
-        client.ORB_run( );
+        client.ORB_run();
 
         disconnect_consumers();
 

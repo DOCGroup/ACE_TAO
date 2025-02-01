@@ -119,8 +119,8 @@ namespace ACE_OS
               char *const argv[]);
 
   //@{
-  /// Forks and exec's a process in a manner that works on Solaris and
-  /// NT.  argv[0] must be the full path name to the executable.
+  /// Forks and exec's a process in a manner that works Windows.
+  /// argv[0] must be the full path name to the executable.
   ACE_NAMESPACE_INLINE_FUNCTION
   pid_t fork ();
 

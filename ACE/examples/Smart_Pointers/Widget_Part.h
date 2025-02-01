@@ -22,10 +22,10 @@ public:
   virtual ~Widget_Part ();
 
   /// Ask the part to print information about itself.
-  virtual void print_info (void) = 0;
+  virtual void print_info () = 0;
 
   /// Ask the part to remove itself from the widget that contains it.
-  virtual void remove_from_owner (void) = 0;
+  virtual void remove_from_owner () = 0;
 };
 
 #endif /* WIDGET_PART_H */

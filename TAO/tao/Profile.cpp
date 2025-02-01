@@ -889,7 +889,7 @@ operator<< (TAO_OutputCDR& cdr, const TAO_opaque& x)
       cdr.write_octet_array (x.get_buffer (), length);
     }
 
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
 CORBA::Boolean
@@ -917,7 +917,7 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
       cdr.read_octet_array (x.get_buffer (), length);
     }
 
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

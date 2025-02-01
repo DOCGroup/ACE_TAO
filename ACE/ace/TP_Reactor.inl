@@ -6,7 +6,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /************************************************************************/
 
 ACE_INLINE
-ACE_EH_Dispatch_Info::ACE_EH_Dispatch_Info (void) :
+ACE_EH_Dispatch_Info::ACE_EH_Dispatch_Info () :
   handle_ (ACE_INVALID_HANDLE),
   event_handler_ (0),
   mask_ (ACE_Event_Handler::NULL_MASK),
@@ -58,7 +58,7 @@ ACE_TP_Token_Guard::ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token)
 }
 
 ACE_INLINE
-ACE_TP_Token_Guard::~ACE_TP_Token_Guard (void)
+ACE_TP_Token_Guard::~ACE_TP_Token_Guard ()
 {
   if (this->owner_)
     {
@@ -68,7 +68,7 @@ ACE_TP_Token_Guard::~ACE_TP_Token_Guard (void)
 }
 
 ACE_INLINE void
-ACE_TP_Token_Guard::release_token (void)
+ACE_TP_Token_Guard::release_token ()
 {
   if (this->owner_)
     {
@@ -80,7 +80,7 @@ ACE_TP_Token_Guard::release_token (void)
 }
 
 ACE_INLINE bool
-ACE_TP_Token_Guard::is_owner (void)
+ACE_TP_Token_Guard::is_owner ()
 {
   return this->owner_;
 }

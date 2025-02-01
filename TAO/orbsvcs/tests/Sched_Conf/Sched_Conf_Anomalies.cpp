@@ -252,8 +252,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         add_dependency (config_infos[1].handle,
                         config_infos[0].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL  // type of dependency
-                        );
+                        RtecBase::ONE_WAY_CALL);  // type of dependency
 
       // register dependency of consumer that will have unresolved remote
       // dependencies on supplier with unresolved remote dependencies
@@ -261,9 +260,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         add_dependency (config_infos[3].handle,
                         config_infos[2].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL  // type of dependency
-                        );
-
+                        RtecBase::ONE_WAY_CALL);  // type of dependency
 
       // register dependency of consumer that will have unresolved local
       // dependencies on supplier with unresolved local dependencies
@@ -271,9 +268,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         add_dependency (config_infos[5].handle,
                         config_infos[4].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL  // type of dependency
-                        );
-
+                        RtecBase::ONE_WAY_CALL);  // type of dependency
 
       // register dependencies on each supplier of first consumer that will
       // have both unresolved local and unresolved remote dependencies.
@@ -281,22 +276,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         add_dependency (config_infos[6].handle,
                         config_infos[0].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL  // type of dependency
-                        );
+                        RtecBase::ONE_WAY_CALL);  // type of dependency
 
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[6].handle,
                         config_infos[2].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL  // type of dependency
-                        );
+                        RtecBase::ONE_WAY_CALL);  // type of dependency
 
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[6].handle,
                         config_infos[4].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL  // type of dependency
-                        );
+                        RtecBase::ONE_WAY_CALL);  // type of dependency
 
       // Register dependencies on each of the other consumers by second
       // consumer that will have both unresolved local and unresolved remote
@@ -305,29 +297,25 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         add_dependency (config_infos[7].handle,
                         config_infos[1].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL  // type of dependency
-                        );
+                        RtecBase::ONE_WAY_CALL);  // type of dependency
 
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[7].handle,
                         config_infos[3].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL  // type of dependency
-                        );
+                        RtecBase::ONE_WAY_CALL);  // type of dependency
 
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[7].handle,
                         config_infos[5].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL  // type of dependency
-                        );
+                        RtecBase::ONE_WAY_CALL);  // type of dependency
 
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[7].handle,
                         config_infos[6].handle,
                         1,                            // number of calls
-                        RtecBase::ONE_WAY_CALL  // type of dependency
-                        );
+                        RtecBase::ONE_WAY_CALL);  // type of dependency
 
       RtecScheduler::RT_Info_Set_var infos;
       RtecScheduler::Dependency_Set_var deps;

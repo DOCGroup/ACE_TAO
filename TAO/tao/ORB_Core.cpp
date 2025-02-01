@@ -52,7 +52,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Static_Object_Lock.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/CORBA_macros.h"
 #include "ace/Logging_Strategy.h"
 
@@ -799,15 +799,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
             this->orb_params ()->ami_collication (true);
           else
             this->orb_params ()->ami_collication (false);
-
-          arg_shifter.consume_arg ();
-        }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBResources"))))
-        {
-          TAOLIB_DEBUG ((LM_WARNING,
-                      ACE_TEXT ("\"-ORBResources\" has been ")
-                      ACE_TEXT ("deprecated.\n")));
 
           arg_shifter.consume_arg ();
         }
@@ -2098,8 +2089,7 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
         if (this->is_collocation_enabled (other_core, mprofile))
           {
             other_core->_incr_refcnt();
-             TAO_ORB_Core_Auto_Ptr tmp_auto_ptr (other_core);
-             collocated_orb_core = tmp_auto_ptr;
+            collocated_orb_core.reset(other_core);
             break;
           }
       }
@@ -2163,12 +2153,10 @@ TAO_ORB_Core::initialize_object_i (TAO_Stub *stub, const TAO_MProfile &mprofile)
       {
         TAO_ORB_Core * const other_core = (*i).second.core ();
 
-        if (this->is_collocation_enabled (other_core,
-                                          mprofile))
+        if (this->is_collocation_enabled (other_core, mprofile))
           {
             other_core->_incr_refcnt ();
-            TAO_ORB_Core_Auto_Ptr tmp_auto_ptr (other_core);
-            collocated_orb_core = tmp_auto_ptr;
+            collocated_orb_core.reset(other_core);
             break;
           }
       }
@@ -2766,7 +2754,7 @@ TAO_ORB_Core::resolve_ior_table_i ()
 
       this->adapter_registry_.insert (iortable_adapter.get ());
 
-      // It is now (exception) safe to release ownership from the auto pointers
+      // It is now (exception) safe to release ownership from the unique pointers
       this->ior_table_= tmp_root._retn ();
       iortable_adapter.release ();
     }
@@ -2800,7 +2788,7 @@ TAO_ORB_Core::resolve_async_ior_table_i ()
 
       this->adapter_registry_.insert (iortable_adapter.get ());
 
-      // It is now (exception) safe to release ownership from the auto pointers
+      // It is now (exception) safe to release ownership from the unique pointers
       this->async_ior_table_= tmp_root._retn ();
       iortable_adapter.release ();
     }
@@ -3242,7 +3230,7 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
 
 #define TOCSRi TAO_ORB_Core_Static_Resources::instance ()
 
-  // A consern was raised that since this function is called by two
+  // A concern was raised that since this function is called by two
   // different initializers there may be a race condition that might
   // require a lock. We are not using a lock at this time because of
   // two callers, one happens only during service directive processing
@@ -3250,14 +3238,13 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
   // happens when the OC_Endpoint_Selector_Factory is loaded, the
   // latter is part of the messaging library. The messaging library
   // calls this function as part of pre_init processing, and this call
-  // happes for every ORB instance. This was the case before these The
+  // happens for every ORB instance. This was the case before these The
   // latter call occurs when the messaging library is loaded. The
   // redundant calls occurred then as well. Second, it isn't clear how
   // a lock in this static method would react in the face of windows
   // dlls, shared memory segments, etc. Therefore we are continuing to
   // keep this code lockless as it always was, assuming no
-  // simultanious overwrite will occur.
-
+  // simultaneous overwrite will occur.
   if (TOCSRi->connection_timeout_hook_ == nullptr)
     {
       if (TAO_debug_level > 2)

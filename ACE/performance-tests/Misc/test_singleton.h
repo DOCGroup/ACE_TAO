@@ -1,6 +1,4 @@
-// Define the DC_Singleton here - it needs to be in a separate file to
-// get picked up correctly on AIX with auto template instantiation using
-// IBM C++ compiler (xlC).
+// Define the DC_Singleton here
 
 #ifndef __TEST_SINGLETON_H
 #define __TEST_SINGLETON_H
@@ -10,8 +8,8 @@
 class DC_Singleton
 {
 public:
-  DC_Singleton (void) {}
-  void svc (void) {}
+  DC_Singleton () {}
+  void svc () {}
   static DC_Singleton *instance ();
 
 private:

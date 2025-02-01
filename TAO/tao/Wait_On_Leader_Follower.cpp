@@ -13,10 +13,6 @@ TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower
 {
 }
 
-TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower ()
-{
-}
-
 int
 TAO_Wait_On_Leader_Follower::register_handler ()
 {

@@ -25,12 +25,8 @@
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
-// Note: 'interface' has been defined as struct on WinCE platform and
-//       gives a compiler error.  This undef has been found harmless on
-//       Windows and solaris platforms; however, if this generates
-//       error, then proper ifdef must be added around following block.
 #if defined (interface)
-#undef interface
+# undef interface
 #endif  // interface
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -54,7 +50,7 @@ public:
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.
-  virtual size_t current_size (void) = 0;
+  virtual size_t current_size () = 0;
 
   /**
    * Add a binding with the specified parameters to the table.

@@ -305,7 +305,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (void) = 0;
+  virtual CosNaming::NamingContext_ptr new_context () = 0;
 
   /**
    * This operation creates a new context and binds it to the name
@@ -323,7 +323,7 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (void) = 0;
+  virtual void destroy () = 0;
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -336,7 +336,7 @@ public:
                      CosNaming::BindingIterator_out &bi) = 0;
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (void) = 0;
+  virtual PortableServer::POA_ptr _default_POA () = 0;
 
   /**
    * Set the stale flag for replicated persistence support.

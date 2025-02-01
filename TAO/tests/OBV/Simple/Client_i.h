@@ -37,7 +37,7 @@ public:
   virtual ~Checkpoint_Client_i ();
 
   /// Execute the methods
-  virtual int run (const char *,int, ACE_TCHAR** );
+  virtual int run (const char *,int, ACE_TCHAR**);
 
 private:
   /// Instantiate the checkpoint object.

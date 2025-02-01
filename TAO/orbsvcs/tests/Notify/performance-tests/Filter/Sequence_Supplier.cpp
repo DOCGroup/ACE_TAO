@@ -130,7 +130,7 @@ SendEvents (int id)
 
   for(CORBA::ULong z = 0; z < amount; z++)
   {
-    const char* type = ( (z & 1) == 1 ? "odd" : "even" );
+    const char* type = ( (z & 1) == 1 ? "odd" : "even");
     events[z].header.fixed_header.event_type.domain_name =
       CORBA::string_dup("Orbix 2000 Demos");
     events[z].header.fixed_header.event_type.type_name =
@@ -189,7 +189,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::ORB_ptr orb = client.orb ();
 
-      sig_impl.reset(new sig_i( orb ) );
+      sig_impl.reset(new sig_i(orb));
       sig_var sig = sig_impl->_this ();
 
       CORBA::String_var ior =

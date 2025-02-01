@@ -130,8 +130,7 @@ private:
   virtual void tao_update_object_group (
       const char * iogr,
       PortableGroup::ObjectGroupRefVersion version,
-      CORBA::Boolean is_primary
-    );
+      CORBA::Boolean is_primary);
 
   /////////////////
   // implementation

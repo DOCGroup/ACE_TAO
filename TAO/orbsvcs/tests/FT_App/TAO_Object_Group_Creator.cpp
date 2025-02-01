@@ -225,8 +225,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_infrastructure_managed_group
     group = this->replication_manager_->create_object (
       type_id,
       criteria,
-      creation_id
-      );
+      creation_id);
   }
   else
   {
@@ -291,8 +290,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
       group = this->replication_manager_->create_object (
         type_id.in (),
         criteria,
-        creation_id
-        );
+        creation_id);
 
       //@@ this is a bit of a hack
       creation_id >>= group_id;
@@ -331,8 +329,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
           group_id,
           info.the_location);
 
-        const char * replica_ior = orb_->object_to_string (created_obj.in () );
-
+        const char * replica_ior = orb_->object_to_string (created_obj.in ());
 
         if (write_iors)
         {

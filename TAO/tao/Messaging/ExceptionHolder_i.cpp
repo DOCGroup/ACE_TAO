@@ -5,7 +5,7 @@
 #include "tao/Exception_Data.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -89,7 +89,7 @@ namespace TAO
           exception->completed (CORBA::CompletionStatus (completion));
 
           // Raise the exception.
-          ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(exception);
+          std::unique_ptr<CORBA::SystemException> e_ptr(exception);
           exception->_raise ();
 
           return;
@@ -100,12 +100,12 @@ namespace TAO
       // This is important to decode the exception.
       for (CORBA::ULong i = 0; i != this->count_; ++i)
         {
-          if (ACE_OS::strcmp (type_id.in (), this->data_[i].id) != 0)
+          if (this->data_[i].id.compare(type_id.in ()) != 0)
             continue;
 
           CORBA::Exception * const exception = this->data_[i].alloc ();
 
-          if (exception == 0)
+          if (!exception)
             {
               throw ::CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_YES);
             }
@@ -115,7 +115,7 @@ namespace TAO
             }
 
           // Raise the exception.
-          ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr (exception);
+          std::unique_ptr<CORBA::Exception> e_ptr (exception);
           exception->_raise ();
 
           return;

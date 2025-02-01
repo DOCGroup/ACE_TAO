@@ -36,8 +36,7 @@ Client_Task::svc ()
 
       Hello *hello_impl = 0;
       ACE_NEW_RETURN (hello_impl,
-                      Hello (this->corb_.in (),
-                             ACE_Thread::self ()),
+                      Hello (this->corb_.in ()),
                       1);
 
       PortableServer::ServantBase_var owner_transfer(hello_impl);
@@ -70,7 +69,7 @@ Client_Task::svc ()
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client starting\n"));
 
-      evNode->registerHello( hello_servant.in() );
+      evNode->registerHello( hello_servant.in());
 
       evNode->shutdown ();
     }

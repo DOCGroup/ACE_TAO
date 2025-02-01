@@ -93,7 +93,7 @@ public:
   /// ctor
   Client (A::AMI_Test_ptr server, int niterations, A::AMI_AMI_TestHandler_ptr hnd);
   /// dtor
-  ~Client () ;
+  ~Client ();
 
   /// The thread entry point.
   virtual int svc ();

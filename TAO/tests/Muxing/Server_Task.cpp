@@ -14,13 +14,9 @@ Server_Task::svc ()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting server task\n"));
   try
     {
-#if defined (ACE_OPENVMS)
-      // OpenVMS typically takes a lot longer...
-      ACE_Time_Value tv (360, 0);
-#else
       // run the test for at most 120 seconds...
       ACE_Time_Value tv (120, 0);
-#endif
+
       this->orb_->run (tv);
     }
   catch (const CORBA::Exception&)

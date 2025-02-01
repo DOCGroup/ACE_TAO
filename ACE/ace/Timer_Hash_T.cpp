@@ -18,7 +18,7 @@ class Hash_Token
 {
 public:
   // This constructor is required by ACE_Locked_Free_List::alloc.
-  Hash_Token (void) :
+  Hash_Token () :
     act_ (0),
     pos_ (0),
     orig_id_ (0),

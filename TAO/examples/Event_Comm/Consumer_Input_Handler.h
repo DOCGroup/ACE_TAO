@@ -40,7 +40,7 @@ public:
   Consumer_Input_Handler();
 
   /// Destructor.
-  ~Consumer_Input_Handler (void) = default;
+  ~Consumer_Input_Handler () = default;
 
   /// registers the input event handler.
   /// returns 0 on success, -1 on error.

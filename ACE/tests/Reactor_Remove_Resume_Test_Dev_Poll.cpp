@@ -21,7 +21,7 @@
 #include "ace/ACE.h"
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Pipe.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include <algorithm>
 #include <functional>
@@ -375,7 +375,7 @@ dev_poll_reactor_factory ()
  *
  * Reactor test execution functor.
  */
-struct Run_Test : public std::unary_function<reactor_factory_type, void>
+struct Run_Test : public std::function<void(reactor_factory_type)>
 {
   /// Function call operator overload.
   void operator() (reactor_factory_type factory)

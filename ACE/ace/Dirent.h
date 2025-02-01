@@ -34,7 +34,7 @@ class ACE_Export ACE_Dirent
 {
 public:
   /// Default constructor.
-  ACE_Dirent ();
+  ACE_Dirent () = default;
 
   /// Constructor calls @c opendir()
   explicit ACE_Dirent (const ACE_TCHAR *dirname);
@@ -98,7 +98,7 @@ public:
 
 private:
   /// Pointer to the directory stream.
-  ACE_DIR *dirp_;
+  ACE_DIR *dirp_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

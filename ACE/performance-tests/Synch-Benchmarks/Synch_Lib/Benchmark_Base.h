@@ -29,7 +29,7 @@ class Thr_ID
   //
   // DESCRIPTION
   //   Pthreads are too lame to have a sensible scalar values for the
-  //   thread id (unlike Solaris threads).   Therefore, we have to
+  //   thread id.   Therefore, we have to
   //   emulate this ourselves with this class (gag).
 {
 public:
@@ -93,11 +93,11 @@ public:
   // Before running the real test.  Subclasses implement this method
   // to dictate how the test is performed.
 
-  virtual int run_test (void) = 0;
+  virtual int run_test () = 0;
   // Run the real test.  Subclasses implement this method to
   // dictate how the test is performed.
 
-  virtual int post_run_test (void) = 0;
+  virtual int post_run_test () = 0;
   // After running the real test.  Subclasses implement this method to
   // dictate how the test is performed.
 

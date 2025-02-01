@@ -21,7 +21,7 @@ ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::ACE_C
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE
-ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::~ACE_Caching_Strategy_Adapter (void)
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::~ACE_Caching_Strategy_Adapter ()
 {
   if (this->delete_implementation_)
     {
@@ -32,13 +32,13 @@ ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::~ACE_
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE ATTRIBUTES
-ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::attributes (void)
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::attributes ()
 {
   return this->implementation_->attributes ();
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE double
-ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::purge_percent (void)
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::purge_percent ()
 {
   return this->implementation_->purge_percent ();
 }
@@ -90,13 +90,13 @@ ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::notif
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE IMPLEMENTATION &
-ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::implementation (void)
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::implementation ()
 {
   return *this->implementation_;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE CACHING_UTILITY &
-ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::caching_utility (void)
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::caching_utility ()
 {
   return this->implementation_->caching_utility ();
 }
@@ -115,13 +115,13 @@ ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::dump 
 //////////////////////////////////////////////////////////////////////////////////
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE ATTRIBUTES
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::attributes (void)
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::attributes ()
 {
   return this->timer_;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE double
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (void)
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent ()
 {
   return this->purge_percent_;
 }
@@ -185,7 +185,7 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE CACHING_UTILITY &
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility ()
 {
   return this->caching_utility_;
 }
@@ -205,13 +205,13 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump () const
 //////////////////////////////////////////////////////////////////////////////////
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE ATTRIBUTES
-ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::attributes (void)
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::attributes ()
 {
   return 0;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE double
-ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (void)
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent ()
 {
   return this->purge_percent_;
 }
@@ -262,7 +262,7 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (int result
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE CACHING_UTILITY &
-ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility ()
 {
   return this->caching_utility_;
 }
@@ -281,13 +281,13 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump () const
 //////////////////////////////////////////////////////////////////////////////////////
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE ATTRIBUTES
-ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::attributes (void)
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::attributes ()
 {
   return this->order_;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE double
-ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (void)
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent ()
 {
   return this->purge_percent_;
 }
@@ -350,7 +350,7 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int resul
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE CACHING_UTILITY &
-ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility ()
 {
   return this->caching_utility_;
 }
@@ -370,13 +370,13 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump () const
 //////////////////////////////////////////////////////////////////////////////////
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE ATTRIBUTES
-ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::attributes (void)
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::attributes ()
 {
   return 0;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE double
-ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (void)
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent ()
 {
   return 0;
 }
@@ -433,7 +433,7 @@ ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int resul
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE CACHING_UTILITY &
-ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility ()
 {
   return this->caching_utility_;
 }

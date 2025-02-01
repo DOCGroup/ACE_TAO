@@ -44,22 +44,15 @@ PLATFORM_BOOST_CPPFLAGS ?=
 PLATFORM_BOOST_LDLAGS ?=
 PLATFORM_BOOST_UTF_LIBS ?= -lboost_unit_test_framework
 
-ifeq ($(buildbits),64)
-PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib64/tkConfig.sh && echo -n $$TK_INCLUDE_SPEC $$TK_DEFS)
-PLATFORM_TK_LIBS=$(shell . /usr/lib64/tkConfig.sh && echo -n $$TK_LIB_FLAG)
-else
-PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_INCLUDE_SPEC $$TK_DEFS)
-PLATFORM_TK_LIBS=$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_LIB_FLAG)
-endif
+ace_source_if_exists=$(if $(wildcard $(1)), $(shell . $(1) $(2)))
+ace_buildbits_64=$(findstring 64,$(buildbits))
+
+PLATFORM_TK_CPPFLAGS=$(call ace_source_if_exists,/usr/lib$(ace_buildbits_64)/tkConfig.sh,&& echo -n $$TK_INCLUDE_SPEC $$TK_DEFS)
+PLATFORM_TK_LIBS=$(call ace_source_if_exists,/usr/lib$(ace_buildbits_64)/tkConfig.sh,&& echo -n $$TK_LIB_FLAG)
 PLATFORM_TK_LDFLAGS=
 
-ifeq ($(buildbits),64)
-PLATFORM_TCL_CPPFLAGS=$(shell . /usr/lib64/tclConfig.sh && echo -n $$TCL_INCLUDE_SPEC $$TCL_DEFS)
-PLATFORM_TCL_LIBS=$(shell . /usr/lib64/tclConfig.sh && echo -n $$(eval echo $$TCL_LIB_FLAG))
-else
-PLATFORM_TCL_CPPFLAGS=$(shell . /usr/lib/tclConfig.sh && echo -n $$TCL_INCLUDE_SPEC $$TCL_DEFS)
-PLATFORM_TCL_LIBS=$(shell . /usr/lib/tclConfig.sh && echo -n $$(eval echo $$TCL_LIB_FLAG))
-endif
+PLATFORM_TCL_CPPFLAGS=$(call ace_source_if_exists,/usr/lib$(ace_buildbits_64)/tclConfig.sh,&& echo -n $$TCL_INCLUDE_SPEC $$TCL_DEFS)
+PLATFORM_TCL_LIBS=$(call ace_source_if_exists,/usr/lib$(ace_buildbits_64)/tclConfig.sh,&& echo -n $$(eval echo $$TCL_LIB_FLAG))
 PLATFORM_TCL_LDFLAGS=
 
 PLATFORM_QT_CPPFLAGS ?= -I$(QTDIR)/include

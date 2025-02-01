@@ -47,8 +47,6 @@ private:
   CACHE_BUCKET_MANAGER **hashtable_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Cache_Hash_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ACE_CACHE_HASH_T_H */

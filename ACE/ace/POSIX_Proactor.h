@@ -64,9 +64,6 @@ public:
     /// Signals notifications
     PROACTOR_SIG    = 2,
 
-    /// SUN specific aiowait()
-    PROACTOR_SUN    = 3,
-
     /// Callback notifications
     PROACTOR_CB     = 4
   };
@@ -78,13 +75,6 @@ public:
     ACE_OS_WIN      = 0x0100,          // for future
     ACE_OS_WIN_NT   = ACE_OS_WIN | 0x0001,
     ACE_OS_WIN_2000 = ACE_OS_WIN | 0x0002,
-    ACE_OS_SUN      = 0x0200,          // Sun Solaris family
-    ACE_OS_SUN_55   = ACE_OS_SUN | 0x0001,
-    ACE_OS_SUN_56   = ACE_OS_SUN | 0x0002,
-    ACE_OS_SUN_57   = ACE_OS_SUN | 0x0004,
-    ACE_OS_SUN_58   = ACE_OS_SUN | 0x0008,
-    ACE_OS_HPUX     = 0x0400,          // HPUX family
-    ACE_OS_HPUX_11  = ACE_OS_HPUX | 0x0001,
     ACE_OS_LINUX    = 0x0800,          // Linux family
     ACE_OS_FREEBSD  = 0x1000,          // FreeBSD family
     ACE_OS_IRIX     = 0x2000,          // SGI IRIX family
@@ -118,7 +108,7 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events (void) = 0;
+  virtual int handle_events () = 0;
 
   /**
    * Post a result to the completion port of the Proactor.  If errors
@@ -408,7 +398,7 @@ protected:
 
   /// Define the maximum number of asynchronous I/O requests
   /// for the current OS
-  void check_max_aio_num (void) ;
+  void check_max_aio_num ();
 
   /// To identify requests from Notify_Pipe_Manager
   void set_notify_handle (ACE_HANDLE h);
@@ -630,7 +620,7 @@ protected:
                           int signal_number = ACE_SIGRTMIN);
 
   /// Destructor.
-  ~ACE_POSIX_Asynch_Timer (void) override = default;
+  ~ACE_POSIX_Asynch_Timer () override = default;
 
   /// This method calls the handler's handle_timeout method.
   void complete (size_t bytes_transferred,

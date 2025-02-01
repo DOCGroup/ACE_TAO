@@ -104,10 +104,10 @@ public:
   // = Template Methods.
 
   /// Prints the user interface for the driver to STDOUT.
-  virtual int display_menu (void)=0;
+  virtual int display_menu () = 0;
 
   /// Initializes values and operations for the driver.
-  virtual int init (void)=0;
+  virtual int init () = 0;
 
 protected:
   /// timer queue
@@ -128,12 +128,6 @@ protected:
   Command<RECEIVER, ACTION> *shutdown_cmd_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Driver.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Driver.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* _DRIVER_H_ */

@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (void)
+ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector ()
   : connector_ ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector");

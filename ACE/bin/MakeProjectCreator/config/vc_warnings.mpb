@@ -11,11 +11,21 @@ feature(vc_avoid_crt_secure_warnings) {
   specific(prop:microsoft) {
     macros += _CRT_SECURE_NO_WARNINGS _CRT_SECURE_NO_DEPRECATE _CRT_NONSTDC_NO_DEPRECATE
   }
+  verbatim(cmake, macros, 1) {
+    if(MSVC)
+    "  add_compile_definitions(_CRT_SECURE_NO_WARNINGS _CRT_SECURE_NO_DEPRECATE _CRT_NONSTDC_NO_DEPRECATE)"
+    endif()
+  }
 }
 
 feature(!vc_scl_secure_warnings) {
   specific(prop:microsoft) {
     macros += _SCL_SECURE_NO_WARNINGS
+  }
+  verbatim(cmake, macros, 1) {
+    if(MSVC)
+    "  add_compile_definitions(_SCL_SECURE_NO_WARNINGS)"
+    endif()
   }
 }
 
@@ -23,11 +33,21 @@ feature(vc_avoid_this_in_initializer_warnings) {
   specific(prop:microsoft) {
     DisableSpecificWarnings += 4355
   }
+  verbatim(cmake, macros, 1) {
+    if(MSVC)
+    "  add_compile_options(/wd4355)"
+    endif()
+  }
 }
 
 feature(vc_avoid_winsock_warnings) {
   specific(prop:microsoft) {
     macros += _WINSOCK_DEPRECATED_NO_WARNINGS
+  }
+  verbatim(cmake, macros, 1) {
+    if(MSVC)
+    "  add_compile_definitions(_WINSOCK_DEPRECATED_NO_WARNINGS)"
+    endif()
   }
 }
 

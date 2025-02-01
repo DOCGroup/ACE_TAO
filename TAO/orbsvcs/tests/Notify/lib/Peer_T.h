@@ -92,7 +92,7 @@ protected:
                                          , CosNotification::QoSProperties& qos) = 0;
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy (void) = 0;
+  virtual void disconnect_from_proxy () = 0;
 
   // = Data Members
 
@@ -103,13 +103,7 @@ protected:
    typename Proxy_Traits::ID proxy_id_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Peer_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Peer_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_PEER_T_H */

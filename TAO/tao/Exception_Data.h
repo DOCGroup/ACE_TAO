@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/orbconf.h"
+#include <string_view>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -50,7 +51,7 @@ namespace TAO
   struct Exception_Data
   {
     /// Repository id of the exception.
-    const char *id;
+    std::string_view id;
 
     /// The allocator for this exception.
     TAO_Exception_Alloc alloc;

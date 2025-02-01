@@ -55,7 +55,7 @@ class ACE_Service_Gestalt_Test : public ACE_Service_Gestalt
     return this->repo_->current_size ();
   };
 
-  bool has_same_service_repository ( ACE_Service_Gestalt_Test const * psg)
+  bool has_same_service_repository (ACE_Service_Gestalt_Test const * psg)
   {
     return (this->repo_ == psg->repo_);
   }

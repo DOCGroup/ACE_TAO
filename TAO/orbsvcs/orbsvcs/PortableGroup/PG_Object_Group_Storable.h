@@ -46,8 +46,6 @@ namespace TAO
   class TAO_PortableGroup_Export PG_Object_Group_Storable
     : public PG_Object_Group
   {
-    /////////////////////
-    // Construct/Destruct
   public:
     /**
      * This constructor is suitable for creating an object group from
@@ -78,8 +76,6 @@ namespace TAO
     /// Destructor
     ~PG_Object_Group_Storable ();
 
-    /////////////////
-    // public methods
   public:
     /**
      * Indicate that this object group is to be permanently

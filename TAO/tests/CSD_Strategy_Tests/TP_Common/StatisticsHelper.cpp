@@ -1,7 +1,7 @@
 #include "StatisticsHelper.h"
 
 // swap function for integers
-void swap ( CORBA::Long& x, CORBA::Long& y )
+void swap (CORBA::Long& x, CORBA::Long& y)
 {
   CORBA::Long temp;
   temp = x;
@@ -10,7 +10,7 @@ void swap ( CORBA::Long& x, CORBA::Long& y )
 }
 
 
-void sort ( LongVector & vector )
+void sort (LongVector & vector)
 {
   unsigned size = vector.size ();
 
@@ -20,15 +20,15 @@ void sort ( LongVector & vector )
       unsigned pass;
       unsigned j;
 
-      for ( pass = 0; pass < size - 1; pass++ )
+      for (pass = 0; pass < size - 1; pass++ )
       {
         indexOfMin = pass;
 
-        for ( j = pass + 1; j < size; j++ )
-          if ( vector[j] < vector[indexOfMin] )
+        for (j = pass + 1; j < size; j++ )
+          if (vector[j] < vector[indexOfMin] )
             indexOfMin = j;
 
-        swap ( vector[pass], vector[indexOfMin] );
+        swap (vector[pass], vector[indexOfMin]);
       }
     }
 }

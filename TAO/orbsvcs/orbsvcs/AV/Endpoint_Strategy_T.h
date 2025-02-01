@@ -38,7 +38,7 @@ protected:
   virtual int activate ();
 
   /// activates the stream_endpoint with the POA
-  virtual int activate_stream_endpoint (void) = 0;
+  virtual int activate_stream_endpoint () = 0;
 
   /// activates the vdev with the POA
   virtual int activate_vdev ();
@@ -266,13 +266,7 @@ public:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/AV/Endpoint_Strategy_T.cpp"
-#endif /*ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Endpoint_Strategy_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_AV_ENDPOINT_STRATEGY_T_H */

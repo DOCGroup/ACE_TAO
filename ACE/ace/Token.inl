@@ -9,7 +9,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_Token::queueing_strategy (void)
+ACE_Token::queueing_strategy ()
 {
   return this->queueing_strategy_;
 }
@@ -21,7 +21,7 @@ ACE_Token::queueing_strategy (int queueing_strategy)
 }
 
 ACE_INLINE int
-ACE_Token::remove (void)
+ACE_Token::remove ()
 {
   ACE_TRACE ("ACE_Token::remove");
   // Don't have an implementation for this yet...
@@ -29,7 +29,7 @@ ACE_Token::remove (void)
 }
 
 ACE_INLINE int
-ACE_Token::tryacquire (void)
+ACE_Token::tryacquire ()
 {
   ACE_TRACE ("ACE_Token::tryacquire");
   return this->shared_acquire
@@ -37,7 +37,7 @@ ACE_Token::tryacquire (void)
 }
 
 ACE_INLINE int
-ACE_Token::waiters (void)
+ACE_Token::waiters ()
 {
   ACE_TRACE ("ACE_Token::waiters");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
@@ -47,7 +47,7 @@ ACE_Token::waiters (void)
 }
 
 ACE_INLINE ACE_thread_t
-ACE_Token::current_owner (void)
+ACE_Token::current_owner ()
 {
   ACE_TRACE ("ACE_Token::current_owner");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, this->owner_);
@@ -56,7 +56,7 @@ ACE_Token::current_owner (void)
 }
 
 ACE_INLINE int
-ACE_Token::acquire_read (void)
+ACE_Token::acquire_read ()
 {
   ACE_TRACE ("ACE_Token::acquire_read");
   return this->shared_acquire
@@ -64,7 +64,7 @@ ACE_Token::acquire_read (void)
 }
 
 ACE_INLINE int
-ACE_Token::acquire_write (void)
+ACE_Token::acquire_write ()
 {
   ACE_TRACE ("ACE_Token::acquire_write");
   return this->shared_acquire
@@ -72,7 +72,7 @@ ACE_Token::acquire_write (void)
 }
 
 ACE_INLINE int
-ACE_Token::tryacquire_read (void)
+ACE_Token::tryacquire_read ()
 {
   ACE_TRACE ("ACE_Token::tryacquire_read");
   return this->shared_acquire
@@ -89,7 +89,7 @@ ACE_Token::acquire_read (void (*sleep_hook_func)(void *),
 }
 
 ACE_INLINE int
-ACE_Token::tryacquire_write (void)
+ACE_Token::tryacquire_write ()
 {
   ACE_TRACE ("ACE_Token::tryacquire_write");
   return this->shared_acquire
@@ -97,7 +97,7 @@ ACE_Token::tryacquire_write (void)
 }
 
 ACE_INLINE int
-ACE_Token::tryacquire_write_upgrade (void)
+ACE_Token::tryacquire_write_upgrade ()
 {
   ACE_TRACE ("ACE_Token::tryacquire_write_upgrade");
   return 0;
@@ -129,7 +129,7 @@ ACE_Token::ACE_Token_Queue_Entry::wait (ACE_Time_Value *timeout, ACE_Thread_Mute
 }
 
 ACE_INLINE int
-ACE_Token::ACE_Token_Queue_Entry::signal (void)
+ACE_Token::ACE_Token_Queue_Entry::signal ()
 {
   return
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
@@ -148,7 +148,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_Noop_Token::queueing_strategy (void)
+ACE_Noop_Token::queueing_strategy ()
 {
   return -1;
 }

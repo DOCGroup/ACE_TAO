@@ -17,7 +17,7 @@ TAO_IIOP_Acceptor::address () const
 }
 
 ACE_INLINE const ACE_INET_Addr *
-TAO_IIOP_Acceptor::endpoints (void)
+TAO_IIOP_Acceptor::endpoints ()
 {
   ACE_ASSERT (this->addrs_ != 0);
 

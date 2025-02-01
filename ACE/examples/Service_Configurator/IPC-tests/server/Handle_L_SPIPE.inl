@@ -12,7 +12,7 @@
 
 
 ACE_INLINE
-Handle_L_SPIPE::Handle_L_SPIPE (void)
+Handle_L_SPIPE::Handle_L_SPIPE ()
 {
 }
 
@@ -75,7 +75,7 @@ Handle_L_SPIPE::init (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_INLINE int
-Handle_L_SPIPE::fini (void)
+Handle_L_SPIPE::fini ()
 {
   return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);

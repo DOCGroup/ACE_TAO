@@ -83,7 +83,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << node->name () << " *" << be_nl
       << node->name () << "::_downcast (::CORBA::ValueBase *v)" << be_nl
       << "{" << be_idt_nl
-      << "return dynamic_cast< ::" << node->name () << " * > (v);"
+      << "return dynamic_cast<::" << node->name () << " *> (v);"
       << be_uidt_nl << "}" << be_nl_2;
 
   // _copy_value method

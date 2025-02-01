@@ -169,9 +169,9 @@ public:
       setstate (failbit);
       return (0);
     }
-  virtual int ipfx0 (void) // Optimized ipfx(0)
+  virtual int ipfx0 () // Optimized ipfx(0)
     {  return ipfx (0); }
-  virtual int ipfx1 (void) // Optimized ipfx(1)
+  virtual int ipfx1 () // Optimized ipfx(1)
     {
       if (good ())
         {
@@ -183,26 +183,26 @@ public:
       setstate (failbit);
       return (0);
     }
-  virtual void isfx (void) { return; }
+  virtual void isfx () { return; }
   virtual int opfx ()
     {
       if (good () && tie () != 0)
         tie ()->flush ();
       return good ();
     }
-  virtual void osfx (void) {  if (flags () & unitbuf) flush (); }
+  virtual void osfx () {  if (flags () & unitbuf) flush (); }
 #  else
 #    if defined (__GNUC__)
-  virtual int ipfx0 (void) { return iostream::ipfx0 (); }  // Optimized ipfx(0)
-  virtual int ipfx1 (void) { return iostream::ipfx1 (); }  // Optimized ipfx(1)
+  virtual int ipfx0 () { return iostream::ipfx0 (); }  // Optimized ipfx(0)
+  virtual int ipfx1 () { return iostream::ipfx1 (); }  // Optimized ipfx(1)
 #    else
-  virtual int ipfx0 (void) { return iostream::ipfx (0); }
-  virtual int ipfx1 (void) { return iostream::ipfx (1); }
+  virtual int ipfx0 () { return iostream::ipfx (0); }
+  virtual int ipfx1 () { return iostream::ipfx (1); }
 #    endif /* __GNUC__ */
   virtual int ipfx (int need = 0) {  return iostream::ipfx (need); }
-  virtual void isfx (void)        {  iostream::isfx (); }
-  virtual int opfx (void)         {  return iostream::opfx (); }
-  virtual void osfx (void)        {  iostream::osfx (); }
+  virtual void isfx ()        {  iostream::isfx (); }
+  virtual int opfx ()         {  return iostream::opfx (); }
+  virtual void osfx ()        {  iostream::osfx (); }
 #  endif /* ACE_LACKS_IOSTREAM_FX */
 
   /// Allow the programmer to provide a timeout for read operations.
@@ -266,18 +266,11 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#  if defined (__ACE_INLINE__)
-#    include "ace/IOStream_T.inl"
-#  endif /* __ACE_INLINE__ */
+#if defined (__ACE_INLINE__)
+# include "ace/IOStream_T.inl"
+#endif /* __ACE_INLINE__ */
 
-#  if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#    include "ace/IOStream_T.cpp"
-#  endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#  if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#    pragma implementation ("IOStream_T.cpp")
-#  endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-#endif /* ACE_LACKS_ACE_IOSTREAM */
+#include "ace/IOStream_T.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* ACE_IOSTREAM_T_H */

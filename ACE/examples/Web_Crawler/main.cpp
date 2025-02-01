@@ -27,9 +27,7 @@ void sig_handler (int)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-#if !defined (ACE_HAS_WINCE)
   ACE_Sig_Action sa ((ACE_SignalHandler) sig_handler, SIGFPE);
-#endif
   Web_Crawler crawler;
 
   if (crawler.open (argc, argv) == -1)

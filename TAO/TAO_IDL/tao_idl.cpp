@@ -100,9 +100,10 @@ DRV_version ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "%C\n"
-              "TAO_IDL_FE, version %s (Based on Sun IDL FE, version %s)\n",
+              "TAO_IDL_FE, version %s%s (Based on Sun IDL FE, version %s)\n",
               idl_global->prog_name (),
               ACE_TEXT (TAO_VERSION),
+              ACE_TEXT (TAO_PATCH),
               ACE_TEXT (SUN_IDL_FE_VERSION)));
 
   BE_version ();

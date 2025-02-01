@@ -65,13 +65,8 @@ public:
   TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
                      TAO_ORB_Core *orb_core);
 
-  ///  Profile constructor.  @@ Vadym - deprecate this.
-  TAO_UIPMC_Profile (const CORBA::Octet class_d_address[4],
-                     CORBA::UShort port,
-                     TAO_ORB_Core *orb_core);
-
   /// Destructor is to be called only through _decr_refcnt.
-  ~TAO_UIPMC_Profile ();
+  ~TAO_UIPMC_Profile () = default;
 
   /// Template methods. Please see tao/Profile.h for documentation.
 

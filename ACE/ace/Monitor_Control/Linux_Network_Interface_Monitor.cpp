@@ -1,6 +1,6 @@
 #include "ace/Monitor_Control/Linux_Network_Interface_Monitor.h"
 
-#if defined (ACE_LINUX) || defined (AIX)
+#if defined (ACE_LINUX)
 
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdio.h"
@@ -119,4 +119,4 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* defined (ACE_LINUX) || defined (AIX) */
+#endif /* defined (ACE_LINUX) */

@@ -20,28 +20,8 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Future_Rep)
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Future)
 
 template <class T>
-ACE_Future_Holder<T>::ACE_Future_Holder ()
-{
-}
-
-template <class T>
 ACE_Future_Holder<T>::ACE_Future_Holder (const ACE_Future<T> &item)
   : item_ (item)
-{
-}
-
-template <class T>
-ACE_Future_Holder<T>::~ACE_Future_Holder ()
-{
-}
-
-template <class T>
-ACE_Future_Observer<T>::ACE_Future_Observer ()
-{
-}
-
-template <class T>
-ACE_Future_Observer<T>::~ACE_Future_Observer ()
 {
 }
 
@@ -74,10 +54,10 @@ ACE_Future_Rep<T>::dump () const
 template <class T> ACE_Future_Rep<T> *
 ACE_Future_Rep<T>::internal_create ()
 {
-  ACE_Future_Rep<T> *temp = 0;
+  ACE_Future_Rep<T> *temp {};
   ACE_NEW_RETURN (temp,
                   ACE_Future_Rep<T> (),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -95,9 +75,9 @@ ACE_Future_Rep<T>::create ()
 template <class T> ACE_Future_Rep<T> *
 ACE_Future_Rep<T>::attach (ACE_Future_Rep<T>*& rep)
 {
-  ACE_ASSERT (rep != 0);
+  ACE_ASSERT (rep != nullptr);
   // Use value_ready_mutex_ for both condition and ref count management
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, r_mon, rep->value_ready_mutex_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, r_mon, rep->value_ready_mutex_, nullptr);
   ++rep->ref_count_;
   return rep;
 }
@@ -105,7 +85,7 @@ ACE_Future_Rep<T>::attach (ACE_Future_Rep<T>*& rep)
 template <class T> void
 ACE_Future_Rep<T>::detach (ACE_Future_Rep<T>*& rep)
 {
-  ACE_ASSERT (rep != 0);
+  ACE_ASSERT (rep != nullptr);
   // Use value_ready_mutex_ for both condition and ref count management
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, r_mon, rep->value_ready_mutex_);
 
@@ -122,8 +102,8 @@ ACE_Future_Rep<T>::detach (ACE_Future_Rep<T>*& rep)
 template <class T> void
 ACE_Future_Rep<T>::assign (ACE_Future_Rep<T>*& rep, ACE_Future_Rep<T>* new_rep)
 {
-  ACE_ASSERT (rep != 0);
-  ACE_ASSERT (new_rep != 0);
+  ACE_ASSERT (rep != nullptr);
+  ACE_ASSERT (new_rep != nullptr);
   // Use value_ready_mutex_ for both condition and ref count management
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, r_mon, rep->value_ready_mutex_);
 
@@ -143,9 +123,7 @@ ACE_Future_Rep<T>::assign (ACE_Future_Rep<T>*& rep, ACE_Future_Rep<T>* new_rep)
 
 template <class T>
 ACE_Future_Rep<T>::ACE_Future_Rep ()
-  : value_ (0),
-    ref_count_ (0),
-    value_ready_ (value_ready_mutex_)
+  : value_ready_ (value_ready_mutex_)
 {
 }
 
@@ -158,7 +136,7 @@ ACE_Future_Rep<T>::~ACE_Future_Rep ()
 template <class T> int
 ACE_Future_Rep<T>::ready () const
 {
-  return this->value_ != 0;
+  return this->value_ != nullptr;
 }
 
 template <class T> int
@@ -166,7 +144,7 @@ ACE_Future_Rep<T>::set (const T &r,
                         ACE_Future<T> &caller)
 {
   // If the value is already produced, ignore it...
-  if (this->value_ == 0)
+  if (this->value_ == nullptr)
     {
       ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                         ace_mon,
@@ -175,18 +153,15 @@ ACE_Future_Rep<T>::set (const T &r,
       // Otherwise, create a new result value.  Note the use of the
       // Double-checked locking pattern to avoid multiple allocations.
 
-      if (this->value_ == 0)       // Still no value, so proceed
+      if (this->value_ == nullptr)       // Still no value, so proceed
         {
           ACE_NEW_RETURN (this->value_,
                           T (r),
                           -1);
 
           // Remove and notify all subscribed observers.
-          typename OBSERVER_COLLECTION::iterator iterator =
-            this->observer_collection_.begin ();
-
-          typename OBSERVER_COLLECTION::iterator end =
-            this->observer_collection_.end ();
+          typename OBSERVER_COLLECTION::iterator iterator = this->observer_collection_.begin ();
+          typename OBSERVER_COLLECTION::iterator end = this->observer_collection_.end ();
 
           while (iterator != end)
             {
@@ -210,7 +185,7 @@ ACE_Future_Rep<T>::get (T &value,
                         ACE_Time_Value *tv) const
 {
   // If the value is already produced, return it.
-  if (this->value_ == 0)
+  if (this->value_ == nullptr)
     {
       ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon,
                         this->value_ready_mutex_,
@@ -218,7 +193,7 @@ ACE_Future_Rep<T>::get (T &value,
       // If the value is not yet defined we must block until the
       // producer writes to it.
 
-      while (this->value_ == 0)
+      while (this->value_ == nullptr)
         // Perform a timed wait.
         if (this->value_ready_.wait (tv) == -1)
           return -1;
@@ -242,10 +217,10 @@ ACE_Future_Rep<T>::attach (ACE_Future_Observer<T> *observer,
   int result = 1;
 
   // If the value is already produced, then notify observer
-  if (this->value_ == 0)
+  if (this->value_ == nullptr)
     result = this->observer_collection_.insert (observer);
   else
-      observer->update (caller);
+    observer->update (caller);
 
   return result;
 }
@@ -264,7 +239,7 @@ template <class T>
 ACE_Future_Rep<T>::operator T ()
 {
   // If the value is already produced, return it.
-  if (this->value_ == 0)
+  if (this->value_ == nullptr)
     {
       // Constructor of ace_mon acquires the mutex.
       ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->value_ready_mutex_, 0);
@@ -274,7 +249,7 @@ ACE_Future_Rep<T>::operator T ()
 
       // Wait ``forever.''
 
-      while (this->value_ == 0)
+      while (this->value_ == nullptr)
         if (this->value_ready_.wait () == -1)
           // What to do in this case since we've got to indicate
           // failure somehow?  Exceptions would be nice, but they're
@@ -356,8 +331,7 @@ ACE_Future<T>::ready () const
 }
 
 template <class T> int
-ACE_Future<T>::get (T &value,
-                    ACE_Time_Value *tv) const
+ACE_Future<T>::get (T &value, ACE_Time_Value *tv) const
 {
   // We return the ACE_Future_rep.
   return this->future_rep_->get (value, tv);

@@ -9,8 +9,6 @@
 #include "tao/Profile.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 PortableServer::ObjectId *

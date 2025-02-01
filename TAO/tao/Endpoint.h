@@ -76,7 +76,7 @@ public:
   /**
    * @return The next endpoint in the list, if any.
    */
-  virtual TAO_Endpoint *next (void) = 0;
+  virtual TAO_Endpoint *next () = 0;
 
   /**
    * Return the next endpoint in the list, but use protocol-specific
@@ -124,7 +124,7 @@ protected:
   mutable TAO_SYNCH_MUTEX addr_lookup_lock_;
 
   /// Cache the hash value
-  CORBA::ULong hash_val_;
+  CORBA::ULong hash_val_ {};
 
   /// IOP tag, identifying the protocol for which this endpoint
   /// contains addressing info.

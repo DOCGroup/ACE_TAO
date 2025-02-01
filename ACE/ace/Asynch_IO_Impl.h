@@ -128,7 +128,7 @@ public:
    * the calling thread.  The function does not cancel asynchronous
    * operations issued by other threads.
    */
-  virtual int cancel (void) = 0;
+  virtual int cancel () = 0;
 
   // = Access methods.
 
@@ -160,7 +160,7 @@ public:
                     int priority,
                     int signal_number) = 0;
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
@@ -170,7 +170,7 @@ public:
                      const void *act,
                      int priority,
                      int signal_number) = 0;
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
 protected:
   /// Do-nothing constructor.
@@ -224,7 +224,7 @@ public:
                      int priority,
                      int signal_number) = 0;
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
@@ -234,7 +234,7 @@ public:
                       const void *act,
                       int priority,
                       int signal_number) = 0;
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
 protected:
   /// Do-nothing constructor.
@@ -293,7 +293,7 @@ public:
                     int priority,
                     int signal_number) = 0;
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
@@ -307,7 +307,7 @@ public:
                      const void *act,
                      int priority,
                      int signal_number) = 0;
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
   /// This starts off an asynchronous read. Upto @a bytes_to_read will
   /// be read and stored in the @a message_block.
@@ -317,7 +317,7 @@ public:
                     int priority,
                     int signal_number) = 0;
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
@@ -327,7 +327,7 @@ public:
                      const void *act,
                      int priority,
                      int signal_number) = 0;
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
 protected:
   /// Do-nothing constructor.
@@ -376,7 +376,7 @@ public:
                      int priority,
                      int signal_number) = 0;
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
@@ -390,7 +390,7 @@ public:
                       const void *act,
                       int priority,
                       int signal_number) = 0;
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
   /// This starts off an asynchronous write.  Upto @a bytes_to_write
   /// will be written from the @a message_block.
@@ -400,7 +400,7 @@ public:
                      int priority,
                      int signal_number) = 0;
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
@@ -410,7 +410,7 @@ public:
                       const void *act,
                       int priority,
                       int signal_number) = 0;
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
 protected:
   /// Do-nothing constructor.

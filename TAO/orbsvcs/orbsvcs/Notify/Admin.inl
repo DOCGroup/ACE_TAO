@@ -10,7 +10,7 @@ TAO_Notify_Admin::event_channel () const
 
 
 ACE_INLINE TAO_Notify_FilterAdmin&
-TAO_Notify_Admin::filter_admin (void)
+TAO_Notify_Admin::filter_admin ()
 {
   return this->filter_admin_;
 }
@@ -22,7 +22,7 @@ TAO_Notify_Admin::filter_operator (CosNotifyChannelAdmin::InterFilterGroupOperat
 }
 
 ACE_INLINE CosNotifyChannelAdmin::InterFilterGroupOperator
-TAO_Notify_Admin::filter_operator (void)
+TAO_Notify_Admin::filter_operator ()
 {
   return this->filter_operator_;
 }

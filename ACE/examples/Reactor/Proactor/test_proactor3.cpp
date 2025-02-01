@@ -44,7 +44,6 @@
 #elif defined (ACE_HAS_AIO_CALLS)
 
 #include "ace/POSIX_Proactor.h"
-#include "ace/SUN_Proactor.h"
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
@@ -88,10 +87,10 @@ static u_short port = ACE_DEFAULT_SERVER_PORT;
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask (void) : threads_ (0), proactor_ (0) {}
+  MyTask () : threads_ (0), proactor_ (0) {}
 
   int svc ();
-  void waitready (void) { event_.wait (); }
+  void waitready () { event_.wait (); }
 
 private:
   ACE_Recursive_Thread_Mutex mutex_;
@@ -128,12 +127,6 @@ MyTask::create_proactor ()
           proactor = new ACE_POSIX_SIG_Proactor;
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG\n"));
           break;
-#  if defined (sun)
-        case 3:
-          proactor = new ACE_SUN_Proactor (max_aio_operations);
-          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SUN\n"));
-          break;
-#  endif /* sun */
         default:
           proactor = new ACE_POSIX_SIG_Proactor;
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG\n"));
@@ -192,7 +185,7 @@ public:
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
 
-  static long get_number_sessions (void) { return sessions_; }
+  static long get_number_sessions () { return sessions_; }
 
 protected:
   // These methods are called by the framework
@@ -671,9 +664,6 @@ set_proactor_type (const char *ptype)
     case 'D' :  proactor_type = 0; return true;
     case 'A' :  proactor_type = 1; return true;
     case 'I' :  proactor_type = 2; return true;
-#if defined (sun)
-    case 'S' :  proactor_type = 3; return true;
-#endif /* sun */
     }
   return false;
 }
@@ -737,9 +727,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-#if defined (sun)
-  ACE_DEBUG ((LM_DEBUG, "\nSUN defined!\n"));
-#endif
   if (parse_args (argc, argv) == -1)
     return -1;
 

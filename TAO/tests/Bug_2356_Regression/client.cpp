@@ -54,10 +54,10 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   /// Constructor.
-  Handler (void) {};
+  Handler () = default;
 
   /// Destructor.
-    ~Handler (void) {};
+  ~Handler () = default;
 
   void foo ()
     {

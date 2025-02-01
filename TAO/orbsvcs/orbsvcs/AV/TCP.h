@@ -110,7 +110,7 @@ public:
   virtual int open (void * = 0);
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
-  virtual ACE_Event_Handler* event_handler (void){ return this; }
+  virtual ACE_Event_Handler* event_handler () { return this; }
 protected:
   TAO_AV_Core *av_core_;
 };

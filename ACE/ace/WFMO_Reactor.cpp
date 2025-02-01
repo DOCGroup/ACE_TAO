@@ -1758,64 +1758,11 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
   // will not be able to dispatch it
 
   // We need to wait for both the <lock_> and <ok_to_wait_> event.
-  // If not on WinCE, use WaitForMultipleObjects() to wait for both atomically.
-  // On WinCE, the waitAll arg to WFMO must be false, so wait for the
-  // ok_to_wait_ event first (since that's likely to take the longest) then
-  // grab the lock and recheck the ok_to_wait_ event. When we can get them
-  // both, or there's an error/timeout, return.
-#if defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (alertable);
-  ACE_Time_Value timeout;
-  if (max_wait_time != 0)
-    {
-      timeout = ACE_OS::gettimeofday ();
-      timeout += *max_wait_time;
-    }
-  while (1)
-    {
-      int status;
-      if (max_wait_time == 0)
-        status = this->ok_to_wait_.wait ();
-      else
-        status = this->ok_to_wait_.wait (&timeout);
-      if (status == -1)
-        return -1;
-      // The event is signaled, so it's ok to wait; grab the lock and
-      // recheck the event. If something has changed, restart the wait.
-      if (max_wait_time == 0)
-        status = this->lock_.acquire ();
-      else
-        {
-          status = this->lock_.acquire (timeout);
-        }
-      if (status == -1)
-        return -1;
-
-      // Have the lock_, now re-check the event. If it's not signaled,
-      // another thread changed something so go back and wait again.
-      if (this->ok_to_wait_.wait (&ACE_Time_Value::zero, 0) == 0)
-        break;
-      this->lock_.release ();
-    }
-  return 1;
-
-#else
+  // Use WaitForMultipleObjects() to wait for both atomically.
   int timeout = max_wait_time == 0 ? INFINITE : max_wait_time->msec ();
   DWORD result = 0;
   while (1)
     {
-#  if defined (ACE_HAS_PHARLAP)
-      // PharLap doesn't implement WaitForMultipleObjectsEx, and doesn't
-      // do async I/O, so it's not needed in this case anyway.
-      result = ::WaitForMultipleObjects (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
-                                         this->atomic_wait_array_,
-                                         TRUE,
-                                         timeout);
-
-      if (result != WAIT_IO_COMPLETION)
-        break;
-
-#  else
       result = ::WaitForMultipleObjectsEx (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
                                            this->atomic_wait_array_,
                                            TRUE,
@@ -1824,8 +1771,6 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
 
       if (result != WAIT_IO_COMPLETION)
         break;
-
-#  endif /* ACE_HAS_PHARLAP */
     }
 
   switch (result)
@@ -1843,7 +1788,6 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
 
   // It is ok to enter ::WaitForMultipleObjects
   return 1;
-#endif /* ACE_HAS_WINCE */
 }
 
 DWORD
@@ -1853,22 +1797,11 @@ ACE_WFMO_Reactor::wait_for_multiple_events (int timeout,
   // Wait for any of handles_ to be active, or until timeout expires.
   // If <alertable> is enabled allow asynchronous completion of
   // ReadFile and WriteFile operations.
-
-#if defined (ACE_HAS_PHARLAP) || defined (ACE_HAS_WINCE)
-  // PharLap doesn't do async I/O and doesn't implement
-  // WaitForMultipleObjectsEx, so use WaitForMultipleObjects.
-  ACE_UNUSED_ARG (alertable);
-  return ::WaitForMultipleObjects (this->handler_rep_.max_handlep1 (),
-                                   this->handler_rep_.handles (),
-                                   FALSE,
-                                   timeout);
-#else
   return ::WaitForMultipleObjectsEx (this->handler_rep_.max_handlep1 (),
                                      this->handler_rep_.handles (),
                                      FALSE,
                                      timeout,
                                      alertable);
-#endif /* ACE_HAS_PHARLAP */
 }
 
 DWORD
@@ -1920,16 +1853,11 @@ ACE_WFMO_Reactor::dispatch (DWORD wait_status)
     case WAIT_FAILED: // Failure.
       ACE_OS::set_errno_to_last_error ();
       return -1;
-
     case WAIT_TIMEOUT: // Timeout.
       errno = ETIME;
       return handlers_dispatched;
-
-#ifndef ACE_HAS_WINCE
     case WAIT_IO_COMPLETION: // APC.
       return handlers_dispatched;
-#endif  // ACE_HAS_WINCE
-
     default:  // Dispatch.
       // We'll let dispatch worry about abandoned mutes.
       handlers_dispatched += this->dispatch_handles (wait_status);

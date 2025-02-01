@@ -49,8 +49,6 @@ if (status != OK)\
 #elif defined (ACE_WIN32) || defined (__FreeBSD__)
 #define SCHED_PRIORITY \
 ACE_Sched_Params::priority_max(ACE_SCHED_FIFO,ACE_SCOPE_THREAD)
-#elif defined (HPUX)
-#define SCHED_PRIORITY ACE_THR_PRI_FIFO_MAX
 #else
 #define SCHED_PRIORITY \
 ACE_THR_PRI_FIFO_DEF + 25
@@ -110,7 +108,7 @@ public:
   int parse_args (int argc, ACE_TCHAR **argv);
 
   /**
-   * Enables fifo scheduling eg., RT scheduling class on solaris.
+   * Enables fifo scheduling.
    * Returns 0 on success, 1 if insufficient permission, or -1
    * for other failure.  As a side effect, sets thr_create_flags
    * appropriately.

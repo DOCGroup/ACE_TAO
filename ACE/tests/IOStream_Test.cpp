@@ -61,7 +61,7 @@ typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 class qchar
 {
 public:
-  qchar (void) { c_ = '\0'; }
+  qchar () { c_ = '\0'; }
 
   qchar (char c) : c_ (c) { };
 
@@ -153,9 +153,8 @@ client (void *arg = 0)
 
   // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
   // But if we don't, it doesn't get destroyed on some platforms,
-  // e.g., g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1. (It does work
-  // on Linux, so the code seems fine.)  If we manage the storage
-  // ourselves, we _will_ destroy it at the end of this function.
+  // If we manage the storage ourselves, we _will_ destroy it at
+  // the end of this function.
   ACE_SOCK_IOStream server;
 
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
@@ -269,9 +268,8 @@ server (void *arg = 0)
 {
   // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
   // But if we don't, it doesn't get destroyed on some platforms,
-  // e.g., g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1. (It does work
-  // on Linux, so the code seems fine.)  If we manage the storage
-  // ourselves, we _will_ destroy it at the end of this function.
+  // If we manage the storage ourselves, we _will_ destroy it at
+  // the end of this function.
   ACE_SOCK_IOStream client_handler;
 
   ACE_INET_Addr server_addr;

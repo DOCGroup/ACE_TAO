@@ -14,9 +14,8 @@
 #include "ace/Process.h"
 #include "ace/SString.h"
 
+#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR)
 using setenvfn_t = void (*)(const ACE_TCHAR *, const ACE_TCHAR *, void *);
-
-#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
 
 void create_large_env (setenvfn_t setenv, void *ctx)
 {
@@ -55,7 +54,7 @@ run_main (int, ACE_TCHAR*[])
   int test_status = 0;
   ACE_START_TEST (ACE_TEXT ("Process_Env_Test"));
 
-#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR)
   ACE_Process_Options options (
                         0,
                         ACE_Process_Options::DEFAULT_COMMAND_LINE_BUF_LEN,
@@ -100,7 +99,7 @@ run_main (int, ACE_TCHAR*[])
                              128 * 1024);
   create_large_env (thisproc_setenv, 0);
   opts2.enable_unicode_environment ();
-  opts2.setenv (ACE_TEXT ("ZZ"), ACE_TEXT ("1"));
+  opts2.setenv (ACE_TEXT ("Z"), ACE_TEXT ("1"));
   opts2.command_line (ACE_TEXT ("cmd.exe /d /c ")
     ACE_TEXT ("\"if defined Z (exit 1) else (exit 2)\""));
   ACE_Process process2;
@@ -121,7 +120,7 @@ run_main (int, ACE_TCHAR*[])
 
 #else
   ACE_DEBUG ((LM_INFO, "This test is for Win32 without ACE_USES_WCHAR\n"));
-#endif /* ACE_WIN32 && !ACE_USES_WCHAR && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 && !ACE_USES_WCHAR */
 
   ACE_END_TEST;
   return test_status;

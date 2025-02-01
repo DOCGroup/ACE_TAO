@@ -17,7 +17,7 @@ ACE_ATM_QoS::~ACE_ATM_QoS ()
 
 ACE_INLINE
 ATM_QoS
-ACE_ATM_QoS::get_qos (void)
+ACE_ATM_QoS::get_qos ()
 {
   ACE_TRACE ("ACE_ATM_QoS::get_qos");
   return qos_;

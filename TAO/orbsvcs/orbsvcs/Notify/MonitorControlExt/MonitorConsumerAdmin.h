@@ -63,7 +63,7 @@ public:
 
   TAO_MonitorEventChannel* get_ec () const;
 
-  const ACE_CString & stat_name (void)const;
+  const ACE_CString & stat_name () const;
 
 
   /// Receive the queue count and store the approximated queue size in

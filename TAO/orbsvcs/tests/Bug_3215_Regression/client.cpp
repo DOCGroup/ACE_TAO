@@ -48,11 +48,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior );
+        orb->string_to_object(ior);
 
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in () );
+        Test::Hello::_narrow(tmp.in ());
 
 
       if (CORBA::is_nil (hello.in ()))

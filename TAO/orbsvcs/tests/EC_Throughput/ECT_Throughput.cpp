@@ -119,8 +119,7 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
                       this->supplier_type_shift_,
 
                       this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil"),
-                      this->ec_concurrency_hwm_
-                      ) );
+                      this->ec_concurrency_hwm_));
         }
 
       if (this->pid_file_name_ != 0)
@@ -137,10 +136,9 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
       int priority =
         (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
          + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority);
-      // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
 
+      // Enable FIFO scheduling
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                                   priority,
                                                   ACE_SCOPE_PROCESS)) != 0)

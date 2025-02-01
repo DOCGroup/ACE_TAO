@@ -31,7 +31,7 @@ Coffee_i::~Coffee_i ()
 
 // get attribute
 Coffee::Desc *
-Coffee_i::description ( /*env*/)
+Coffee_i::description ()
 {
   Coffee::Desc *desc = new Coffee::Desc;
   desc->name = CORBA::string_dup (this->name_.in ());

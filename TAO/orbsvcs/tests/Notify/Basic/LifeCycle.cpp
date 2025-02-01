@@ -79,9 +79,7 @@ LifeCycle::init (int argc, ACE_TCHAR *argv[])
   CORBA::Object_var obj = rootNC->resolve (name);
 
   notify_factory_ =
-    CosNotifyChannelAdmin::EventChannelFactory::_narrow (
-        obj.in()
-      );
+    CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in());
 
   if (CORBA::is_nil (notify_factory_.in ()))
     {

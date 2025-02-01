@@ -2,7 +2,6 @@
 
 #include "ace/Basic_Types.h"
 #include "ace/Handle_Set.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/Version.h"
 #include "ace/Message_Block.h"
@@ -59,9 +58,6 @@ ACE::out_of_handles (int error)
 #if defined (ACE_WIN32)
       // On Win32, we need to check for ENOBUFS also.
       error == ENOBUFS ||
-#elif defined (HPUX)
-      // On HPUX, we need to check for EADDRNOTAVAIL also.
-      error == EADDRNOTAVAIL ||
 #elif defined (ACE_LINUX)
       // On linux, we need to check for ENOENT also.
       error == ENOENT ||
@@ -69,11 +65,6 @@ ACE::out_of_handles (int error)
       error == EINVAL ||
       // Without threads check for EOPNOTSUPP
       error == EOPNOTSUPP ||
-#elif defined (sun)
-      // On sun, we need to check for ENOSR also.
-      error == ENOSR ||
-      // Without threads check for ENOTSUP
-      error == ENOTSUP ||
 #elif defined (__FreeBSD__)
       // On FreeBSD we need to check for EOPNOTSUPP (LinuxThreads) or
       // ENOSYS (libc_r threads) also.
@@ -223,10 +214,7 @@ ACE::select (int width,
 int
 ACE::terminate_process (pid_t pid)
 {
-#if defined (ACE_HAS_PHARLAP)
-  ACE_UNUSED_ARG (pid);
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   // Create a handle for the given process id.
   ACE_HANDLE process_handle =
     ::OpenProcess (PROCESS_TERMINATE,
@@ -247,7 +235,7 @@ ACE::terminate_process (pid_t pid)
     }
 #else
   return ACE_OS::kill (pid, 9);
-#endif /* ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */
 }
 
 int
@@ -2444,11 +2432,7 @@ ACE::format_hexdump (const char *buffer,
       textver[j] = 0;
 
       ACE_OS::snprintf (obuf, obuf_sz - (obuf - obuf_start),
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                       ACE_TEXT ("  %ls\n"),
-#else
-                       ACE_TEXT ("  %s\n"),
-#endif
+                       ACE_TEXT ("  %") ACE_TEXT_PRIs ACE_TEXT ("\n"),
                        textver);
 
       while (*obuf != '\0')
@@ -2485,11 +2469,7 @@ ACE::format_hexdump (const char *buffer,
 
       textver[i] = 0;
       ACE_OS::snprintf (obuf, obuf_sz - (obuf - obuf_start),
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                       ACE_TEXT ("  %ls\n"),
-#else
-                       ACE_TEXT ("  %s\n"),
-#endif
+                       ACE_TEXT ("  %") ACE_TEXT_PRIs ACE_TEXT ("\n"),
                        textver);
     }
   return size;

@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_SOCK_Dgram_Bcast::~ACE_SOCK_Dgram_Bcast (void)
+ACE_SOCK_Dgram_Bcast::~ACE_SOCK_Dgram_Bcast ()
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::~ACE_SOCK_Dgram_Bcast");
 }

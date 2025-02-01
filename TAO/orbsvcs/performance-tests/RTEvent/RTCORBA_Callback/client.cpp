@@ -16,7 +16,6 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Messaging/Messaging.h"
 #include "ace/Auto_Functor.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Basic_Stats.h"
 #include "ace/Stats.h"
@@ -34,7 +33,7 @@ public:
   {
   }
 
-  virtual void run_test (void) = 0;
+  virtual void run_test () = 0;
 
   virtual int svc ()
   {

@@ -84,7 +84,6 @@
 #define ACE_HAS_VOIDPTR_MMAP
 #define ACE_HAS_POLL
 #define ACE_HAS_SOCKADDR_MSG_NAME 1
-#define ACE_LACKS_PRI_T 1
 
 // Compiler/platform supports alloca().
 // Although ACE does have alloca() on this compiler/platform combination, it is

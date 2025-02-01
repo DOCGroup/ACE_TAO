@@ -32,7 +32,7 @@ protected:
   virtual int demux (char *packet, int &packet_length) = 0;
   virtual int open (short port_number) = 0;
   virtual int receive (int timeout = 0) = 0;
-  virtual int send (void) = 0;
+  virtual int send () = 0;
 };
 
 #endif /* _COMM_MANAGER_H */

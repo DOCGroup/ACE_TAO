@@ -355,6 +355,18 @@ annotation_tests ()
   } catch (Failed const &) {}
 
   try {
+    Annotation_Test t ("Empty Annotation Application Before Fully Scopped Type");
+    AST_Field *member = t.run (
+      "typedef uint32 fully_scopped_type;\n"
+      "struct empty_annotation_before_fully_scopped_type {\n"
+      "  @test_annotation_1() ::fully_scopped_type member;\n"
+      "};\n"
+    ).assert_node<AST_Field> ("::empty_annotation_before_fully_scopped_type::member");
+    t.assert_annotation_appl_count (member, 1);
+    t.assert_annotation_appl (member, 0, test_annotation_1);
+  } catch (Failed const &) {}
+
+  try {
     Annotation_Test t ("Struct Annotation Application");
     AST_Decl *struct1 = t.run (
       "@test_annotation_1\n"
@@ -1097,7 +1109,7 @@ annotation_tests ()
                 }
            }
       }
-} catch (Failed const &) {}
+  } catch (Failed const &) {}
 
   // Done, Print Overall Results
   Annotation_Test::results ();

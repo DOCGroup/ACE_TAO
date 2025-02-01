@@ -124,7 +124,7 @@ ConnectDisconnect::init (int argc,
                   TAO_Notify_Tests_SequencePushSupplier*[this->suppliers_],
                   -1);
 
-  consumer_start( 0 );
+  consumer_start(0);
   return 0;
 }
 
@@ -248,12 +248,10 @@ ConnectDisconnect::run_test ()
           this->any_consumer_[i]->disconnect ();
 
           // Disconnect Structured Consumers.
-          this->structured_consumer_[i]->disconnect (
-                                           );
+          this->structured_consumer_[i]->disconnect ();
 
           // Disconnect Sequence Consumers.
-          this->sequence_consumer_[i]->disconnect (
-                                     );
+          this->sequence_consumer_[i]->disconnect ();
         }
 
       for (i = 0; i < this->suppliers_; ++i)
@@ -262,12 +260,10 @@ ConnectDisconnect::run_test ()
           this->any_supplier_[i]->disconnect ();
 
           // Disconnect Structured Suppliers.
-          this->structured_supplier_[i]->disconnect (
-                                           );
+          this->structured_supplier_[i]->disconnect ();
 
           // Disconnect Sequence Suppliers.
-          this->sequence_supplier_[i]->disconnect (
-                                         );
+          this->sequence_supplier_[i]->disconnect ();
         }
     }
 }
@@ -275,7 +271,7 @@ ConnectDisconnect::run_test ()
 void
 ConnectDisconnect::end_test ()
 {
-  consumer_done( 0 );
+  consumer_done(0);
 }
 
 int

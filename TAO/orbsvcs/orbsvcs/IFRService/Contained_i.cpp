@@ -1,16 +1,13 @@
 #include "orbsvcs/IFRService/concrete_classes.h"
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char *TAO_Contained_i::tmp_name_holder_ = 0;
 
-TAO_Contained_i::TAO_Contained_i (
-    TAO_Repository_i *repo
-  )
+TAO_Contained_i::TAO_Contained_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo)
 {
 }

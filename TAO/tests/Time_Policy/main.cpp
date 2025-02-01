@@ -21,7 +21,6 @@
 
 #if (TAO_HAS_TIME_POLICY == 1) && \
     (defined (ACE_HAS_HI_RES_TIMER) || \
-     defined (ACE_HAS_AIX_HI_RES_TIMER) || \
      defined (ACE_WIN32) || \
      (defined (ghs) && defined (ACE_HAS_PENTIUM)) || \
      ((defined (__GNUG__) || defined (__INTEL_COMPILER)) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)) || \

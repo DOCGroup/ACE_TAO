@@ -5,8 +5,7 @@
  *  @file    Process_Strategy_Test.h
  *
  *  This file contains the definition of Counting_Service and
- *  Options.  Some compilers need it in a .h file for template
- *  instantiation (such as AIX C Set ++).
+ *  Options.
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu> and Kevin Boyle <kboyle@sanwafp.com>
  */

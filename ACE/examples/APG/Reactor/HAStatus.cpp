@@ -2,11 +2,11 @@
 #include "ace/os_include/os_netdb.h"
 
 // Listing 1 code/ch07
-#include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Reactor.h"
+#include <memory>
 
 class ClientAcceptor : public ACE_Event_Handler
 {
@@ -42,7 +42,7 @@ protected:
 class ClientService : public ACE_Event_Handler
 {
 public:
-  ACE_SOCK_Stream &peer (void) { return this->sock_; }
+  ACE_SOCK_Stream &peer () { return this->sock_; }
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open ();

@@ -7,7 +7,7 @@
 // This is the interface program that accesses the remote object
 
 // Constructor.
-Echo_Client_i::Echo_Client_i (void) : payload_length_ (0)
+Echo_Client_i::Echo_Client_i () : payload_length_ (0)
 {
   //no-op
 }

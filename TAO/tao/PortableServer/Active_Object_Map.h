@@ -23,7 +23,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "ace/Map_T.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
 #include "ace/Monitor_Size.h"
@@ -277,7 +277,7 @@ class TAO_Id_Uniqueness_Strategy
 {
 public:
   /// Virtual destructor.
-  virtual ~TAO_Id_Uniqueness_Strategy ();
+  virtual ~TAO_Id_Uniqueness_Strategy () = default;
 
   /// Must be used with UNIQUE_ID policy.
   virtual int
@@ -432,7 +432,7 @@ class TAO_Lifespan_Strategy
 {
 public:
   /// Virtual destructor.
-  virtual ~TAO_Lifespan_Strategy ();
+  virtual ~TAO_Lifespan_Strategy () = default;
 
   /// Can be used with any policy.
   virtual int
@@ -503,7 +503,7 @@ class TAO_Id_Assignment_Strategy
 {
 public:
   /// Virtual destructor.
-  virtual ~TAO_Id_Assignment_Strategy ();
+  virtual ~TAO_Id_Assignment_Strategy () = default;
 
   /// Must be used with SYSTEM_ID policy.
   virtual int
@@ -589,7 +589,7 @@ class TAO_Id_Hint_Strategy
 {
 public:
   /// Virtual destructor.
-  virtual ~TAO_Id_Hint_Strategy ();
+  virtual ~TAO_Id_Hint_Strategy () = default;
 
   /// Find the user id from the system id.
   virtual int
@@ -632,7 +632,7 @@ public:
   TAO_Active_Hint_Strategy (CORBA::ULong map_size);
 
   /// Virtual destructor.
-  virtual ~TAO_Active_Hint_Strategy ();
+  virtual ~TAO_Active_Hint_Strategy () = default;
 
   virtual int
   recover_key (const PortableServer::ObjectId &system_id,
@@ -674,7 +674,7 @@ class TAO_No_Hint_Strategy : public TAO_Id_Hint_Strategy
 {
 public:
   /// Virtual destructor.
-  virtual ~TAO_No_Hint_Strategy ();
+  virtual ~TAO_No_Hint_Strategy () = default;
 
   virtual int
   recover_key (const PortableServer::ObjectId &system_id,

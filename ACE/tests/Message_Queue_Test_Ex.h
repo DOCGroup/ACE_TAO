@@ -4,8 +4,7 @@
 /**
  * @file Message_Queue_Test_Ex.h
  *
- * Define class needed for generating templates. IBM C++ requires this
- * to be in its own file for auto template instantiation.
+ * Define class needed for generating templates.
  *
  * @author Michael Vitlo <mvitalo@sprynet.com>
  * @author Irfan Pyarali <irfan@cs.wustl.edu>
@@ -24,14 +23,12 @@ class User_Class
 {
 public:
   User_Class (const char inputMsg[])
-    : message_ (0),
-      next_(0)
   {
     ACE_NEW (this->message_, char[ACE_OS::strlen (inputMsg) + 1]);
     ACE_OS::strcpy (this->message_, inputMsg);
   }
 
-  ~User_Class (void) { delete [] this->message_; }
+  ~User_Class () { delete [] this->message_; }
 
   const char *message () const
   {
@@ -50,8 +47,8 @@ public:
   }
 
 private:
-  char *message_;
-  User_Class *next_;
+  char *message_ {};
+  User_Class *next_ {};
 };
 
 // The main tests for the ACE_Message_Queue_Ex_N

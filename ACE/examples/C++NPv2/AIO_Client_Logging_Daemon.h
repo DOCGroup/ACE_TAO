@@ -95,7 +95,7 @@ public:
   { open (); }
 
   // Destructor frees the SSL resources.
-  virtual ~AIO_CLD_Connector (void) {
+  virtual ~AIO_CLD_Connector () {
     SSL_free (ssl_);
     SSL_CTX_free (ssl_ctx_);
     proactor ()->cancel_timer (*this);
@@ -108,7 +108,7 @@ public:
      const ACE_INET_Addr &remote, const ACE_INET_Addr& local);
 
   // Re-establish a connection to the logging server.
-  int reconnect (void) { return connect (remote_addr_); }
+  int reconnect () { return connect (remote_addr_); }
 
 protected:
   // Hook method called on timer expiration - retry connect

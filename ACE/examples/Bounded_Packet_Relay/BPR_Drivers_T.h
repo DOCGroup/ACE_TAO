@@ -73,10 +73,10 @@ public:
   virtual ssize_t read_input (char *buf, size_t bufsiz);
 
   /// Prints the user interface for the driver to STDERR.
-  virtual int display_menu (void)=0;
+  virtual int display_menu () = 0;
 
   /// Initializes values and operations for the driver.
-  virtual int init (void)=0;
+  virtual int init () = 0;
 
   /// Get count of packets to send in a transmission.
   u_long packet_count ();
@@ -160,12 +160,6 @@ private:
   int logging_level_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "BPR_Drivers_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("BPR_Drivers_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* _BPR_DRIVERS_T_H_ */

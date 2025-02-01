@@ -32,10 +32,10 @@ public:
   /// Remove a random part from the gadget. Responsibility for ownership of the
   /// part is automatically returned to the caller since we are returning a
   /// Gadget_Part_var.
-  virtual Gadget_Part_var remove_part (void) = 0;
+  virtual Gadget_Part_var remove_part () = 0;
 
   /// Ask the gadget to print information about the parts that it contains.
-  virtual void list_parts (void) = 0;
+  virtual void list_parts () = 0;
 };
 
 // The Gadget_var smart pointer has shared (reference counted) ownership

@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-11, macos-12]
+        os: [macos-13, macos-14]
         include:
           - platform_file: include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU
     runs-on: ${{ matrix.os }}
@@ -30,9 +30,9 @@ jobs:
       MPC_ROOT: ${{ github.workspace }}/MPC
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: checkout MPC
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
@@ -61,6 +61,10 @@ jobs:
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/tests/IDL_Test -workers 4
       shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/tests/IDLv4
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/tests/IDLv4 -workers 4
+      shell: pwsh
     - name: Build TAO_ACE project
       run: |
         make -j 6 -C ${env:TAO_ROOT}
@@ -73,3 +77,8 @@ jobs:
       run: |
         make -j 6 -C ${env:TAO_ROOT}/tests/IDL_Test
       shell: pwsh
+    - name: Build TAO/tests/IDLv4/maps project
+      run: |
+        make -j 6 -C ${env:TAO_ROOT}/tests/IDLv4
+      shell: pwsh
+

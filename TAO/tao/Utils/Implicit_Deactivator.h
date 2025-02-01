@@ -36,7 +36,7 @@ namespace TAO
       typedef PortableServer::ServantBase * argument;
 
       // Deactivate an implicitly activated servant
-      void operator() (PortableServer::ServantBase * servant) throw ();
+      void operator() (PortableServer::ServantBase * servant) noexcept;
     };
 
     /**

@@ -54,7 +54,7 @@ ACEXML_URL_Addr::get_path_name () const
 }
 
 ACE_INLINE int
-ACEXML_URL_Addr::destroy (void)
+ACEXML_URL_Addr::destroy ()
 {
   // Commit suicide.
   delete this;

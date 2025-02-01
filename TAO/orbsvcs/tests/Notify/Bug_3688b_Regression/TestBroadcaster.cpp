@@ -1,13 +1,10 @@
 #include "TestBroadcaster.h"
 
-
 TestBroadcaster::TestBroadcaster()
 {
-} /* end of TestBroadcaster::TestBroadcaster */
+}
 
-
-TestBroadcaster::~TestBroadcaster()
-  throw()
+TestBroadcaster::~TestBroadcaster() noexcept
 {
   // ensure nothrow guarantee
   try
@@ -17,13 +14,11 @@ TestBroadcaster::~TestBroadcaster()
   catch(...)
   {
   }
-} /* end of TestBroadcaster::~TestBroadcaster */
-
+}
 
 bool TestBroadcaster::connect(
   CORBA::ORB_ptr p_orb,
-  std::string const & rc_channelIor
-)
+  std::string const & rc_channelIor)
 {
   try
   {
@@ -40,22 +35,18 @@ bool TestBroadcaster::connect(
     v_supplierAdmin =
       v_eventChannel->new_for_suppliers (
       CosNotifyChannelAdmin::OR_OP,
-      supplierAdminId
-    );
+      supplierAdminId);
 
     v_proxyConsumer = v_supplierAdmin->obtain_notification_push_consumer(
       CosNotifyChannelAdmin::SEQUENCE_EVENT,
-      proxyConsumerId
-    );
+      proxyConsumerId);
 
     mv_sequenceProxyPushConsumer =
       CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow(
-        v_proxyConsumer.in()
-      );
+        v_proxyConsumer.in());
 
     mv_sequenceProxyPushConsumer->connect_sequence_push_supplier(
-      CosNotifyComm::SequencePushSupplier::_nil()
-    );
+      CosNotifyComm::SequencePushSupplier::_nil());
   }
   catch(...)
   {
@@ -63,8 +54,7 @@ bool TestBroadcaster::connect(
   }
 
   return true;
-} /* end of TestBroadcaster::connect */
-
+}
 
 bool TestBroadcaster::disconnect()
 {
@@ -85,7 +75,7 @@ bool TestBroadcaster::disconnect()
 } /* end of TestBroadcaster::disconnect */
 
 
-bool TestBroadcaster::sendData( )
+bool TestBroadcaster::sendData()
 {
   try
   {
@@ -115,10 +105,9 @@ bool TestBroadcaster::sendData( )
   }
 
   return true;
-} /* end of TestBroadcaster::sendData */
-
+}
 
 bool TestBroadcaster::isConnected() const
 {
   return !CORBA::is_nil(mv_sequenceProxyPushConsumer.in());
-} /* end of TestBroadcaster::isConnected */
+}

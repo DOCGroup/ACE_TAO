@@ -201,7 +201,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ec->set_qos (qos);
       }
 
-      sig_impl.reset( new sig_i( client.orb() ) );
+      sig_impl.reset( new sig_i(client.orb()));
       sig_var sig = sig_impl->_this ();
 
       // If the ior_output_file exists, output the ior to it

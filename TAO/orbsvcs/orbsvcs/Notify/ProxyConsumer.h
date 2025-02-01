@@ -21,8 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosEventChannelAdminC.h"
-
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -88,7 +87,7 @@ private:
   TAO_Notify_SupplierAdmin::Ptr supplier_admin_;
 
   /// The Supplier that we're connect to.
-  ACE_Auto_Ptr<TAO_Notify_Supplier> supplier_;
+  std::unique_ptr<TAO_Notify_Supplier> supplier_;
 
   /// Access our Peer.
   virtual TAO_Notify_Peer* peer ();

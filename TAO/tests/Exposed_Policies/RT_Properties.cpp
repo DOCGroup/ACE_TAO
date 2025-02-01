@@ -11,11 +11,6 @@ RT_Properties::RT_Properties ()
   ior_source_ = ACE_TEXT("poa_default.ior");
 }
 
-RT_Properties::~RT_Properties ()
-{
-  // No-Op.
-}
-
 RT_Properties *
 RT_Properties::read_from (const ACE_TCHAR *file_name)
 {

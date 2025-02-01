@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
-TAO_Stub::reset_base (void)
+TAO_Stub::reset_base ()
 {
   this->base_profiles_.rewind ();
   this->profile_success_ = false;
@@ -21,7 +21,7 @@ TAO_Stub::profile_lock () const
 }
 
 ACE_INLINE void
-TAO_Stub::reset_forward (void)
+TAO_Stub::reset_forward ()
 {
   while (this->forward_profiles_ != 0
          && this->forward_profiles_ != this->forward_profiles_perm_) // Disturbingly the permanent
@@ -31,7 +31,7 @@ TAO_Stub::reset_forward (void)
 }
 
 ACE_INLINE void
-TAO_Stub::reset_profiles_i (void)
+TAO_Stub::reset_profiles_i ()
 {
   this->reset_forward ();
   this->reset_base ();
@@ -49,7 +49,7 @@ TAO_Stub::reset_profiles_i (void)
 }
 
 ACE_INLINE void
-TAO_Stub::reset_profiles (void)
+TAO_Stub::reset_profiles ()
 {
   ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                      guard,
@@ -66,13 +66,13 @@ TAO_Stub::reset_profiles (void)
 }
 
 ACE_INLINE TAO_Profile *
-TAO_Stub::profile_in_use (void)
+TAO_Stub::profile_in_use ()
 {
   return this->profile_in_use_;
 }
 
 ACE_INLINE TAO_MProfile *
-TAO_Stub::make_profiles (void)
+TAO_Stub::make_profiles ()
 {
   TAO_MProfile *mp = 0;
 
@@ -84,7 +84,7 @@ TAO_Stub::make_profiles (void)
 }
 
 ACE_INLINE TAO_Profile *
-TAO_Stub::next_forward_profile (void)
+TAO_Stub::next_forward_profile ()
 {
   TAO_Profile *pfile_next = 0;
 
@@ -99,7 +99,7 @@ TAO_Stub::next_forward_profile (void)
 }
 
 ACE_INLINE TAO_Profile *
-TAO_Stub::next_profile_i (void)
+TAO_Stub::next_profile_i ()
 {
   TAO_Profile *pfile_next = 0;
 
@@ -181,7 +181,7 @@ TAO_Stub::next_profile_i (void)
 }
 
 ACE_INLINE TAO_Profile *
-TAO_Stub::next_profile (void)
+TAO_Stub::next_profile ()
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
@@ -196,13 +196,13 @@ TAO_Stub::next_profile (void)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Stub::valid_forward_profile (void)
+TAO_Stub::valid_forward_profile ()
 {
   return (this->profile_success_ && this->forward_profiles_);
 }
 
 ACE_INLINE void
-TAO_Stub::set_valid_profile (void)
+TAO_Stub::set_valid_profile ()
 {
   this->profile_success_ = true;
 }
@@ -240,7 +240,7 @@ TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Stub::next_profile_retry (void)
+TAO_Stub::next_profile_retry ()
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
@@ -280,7 +280,7 @@ TAO_Stub::base_profiles () const
 }
 
 ACE_INLINE TAO_MProfile&
-TAO_Stub::base_profiles (void)
+TAO_Stub::base_profiles ()
 {
   return this->base_profiles_;
 }
@@ -292,7 +292,7 @@ TAO_Stub::forward_profiles () const
 }
 
 ACE_INLINE TAO_MProfile *
-TAO_Stub::forward_profiles (void)
+TAO_Stub::forward_profiles ()
 {
   return this->forward_profiles_;
 }
@@ -310,14 +310,14 @@ TAO_Stub::orb_core () const
 }
 
 ACE_INLINE CORBA::ORB_var &
-TAO_Stub::servant_orb_var (void)
+TAO_Stub::servant_orb_var ()
 {
   // Simply pass back the ORB pointer for temporary use.
   return this->servant_orb_;
 }
 
 ACE_INLINE CORBA::ORB_ptr
-TAO_Stub::servant_orb_ptr (void)
+TAO_Stub::servant_orb_ptr ()
 {
   // Simply pass back the ORB pointer for temporary use.
   return CORBA::ORB::_duplicate (this->servant_orb_.in ());
@@ -354,7 +354,7 @@ TAO_Stub::object_proxy_broker (TAO::Object_Proxy_Broker * object_proxy_broker)
 }
 
 ACE_INLINE void
-TAO_Stub::destroy (void)
+TAO_Stub::destroy ()
 {
   // The reference count better be zero at this point!
   delete this;
@@ -367,7 +367,7 @@ TAO_Stub::optimize_collocation_objects () const
 }
 
 ACE_INLINE TAO::Transport_Queueing_Strategy *
-TAO_Stub::transport_queueing_strategy (void)
+TAO_Stub::transport_queueing_strategy ()
 {
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -398,14 +398,14 @@ bool TAO_Stub::forwarded_on_exception () const
 
 ACE_INLINE
 void
-TAO_Stub::_incr_refcnt (void)
+TAO_Stub::_incr_refcnt ()
 {
   ++this->refcount_;
 }
 
 ACE_INLINE
 void
-TAO_Stub::_decr_refcnt (void)
+TAO_Stub::_decr_refcnt ()
 {
   if (--this->refcount_ == 0)
     delete this;
@@ -416,83 +416,6 @@ CORBA::Boolean
 TAO_Stub::at_starting_profile () const
 {
   return profile_in_use_ == base_profiles_.get_profile(0);
-}
-
-// ---------------------------------------------------------------
-
-// Creator methods for TAO_Stub_Auto_Ptr (TAO_Stub Auto Pointer)
-ACE_INLINE
-TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr (TAO_Stub *p)
-  : p_ (p)
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr");
-}
-
-ACE_INLINE TAO_Stub *
-TAO_Stub_Auto_Ptr::get () const
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::get");
-  return this->p_;
-}
-
-ACE_INLINE TAO_Stub *
-TAO_Stub_Auto_Ptr::release (void)
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::release");
-  TAO_Stub *old = this->p_;
-  this->p_ = nullptr;
-  return old;
-}
-
-ACE_INLINE void
-TAO_Stub_Auto_Ptr::reset (TAO_Stub *p)
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::reset");
-  if (this->get () != p && this->get () != nullptr)
-    this->get ()->_decr_refcnt ();
-  this->p_ = p;
-}
-
-ACE_INLINE TAO_Stub *
-TAO_Stub_Auto_Ptr::operator-> () const
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::operator->");
-  return this->get ();
-}
-
-ACE_INLINE
-TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &rhs)
-  : p_ (rhs.release ())
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr");
-}
-
-ACE_INLINE TAO_Stub_Auto_Ptr &
-TAO_Stub_Auto_Ptr::operator= (TAO_Stub_Auto_Ptr &rhs)
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::operator=");
-  if (this != &rhs)
-    {
-      this->reset (rhs.release ());
-    }
-  return *this;
-}
-
-ACE_INLINE
-TAO_Stub_Auto_Ptr::~TAO_Stub_Auto_Ptr (void)
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::~TAO_Stub_Auto_Ptr");
-  if (this->get() != nullptr)
-    this->get ()->_decr_refcnt ();
-}
-
-// Accessor methods to the underlying Stub Object
-ACE_INLINE TAO_Stub &
-TAO_Stub_Auto_Ptr::operator *() const
-{
-  ACE_TRACE ("TAO_Stub_Auto_Ptr::operator *()");
-  // @@ Potential problem if this->p_ is zero!
-  return *this->get ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

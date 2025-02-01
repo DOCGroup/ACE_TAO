@@ -9,7 +9,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
@@ -79,7 +79,7 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
                       this->type_start_,
                       this->type_count_,
 
-                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")) );
+                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
         }
 
       if (this->pid_file_name_ != 0)
@@ -93,10 +93,9 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      int min_priority =
-        ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
-        // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      int min_priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 
+      // Enable FIFO scheduling
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                                   min_priority,
                                                   ACE_SCOPE_PROCESS)) != 0)

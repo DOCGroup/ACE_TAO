@@ -1,0 +1,235 @@
+commit d9c5ee83df0e28aca1fcaaa22430c17ddd73171a
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Dec 16 17:07:33 2022 -0600
+
+    Updated NEWS for 7.0.11/3.0.11
+
+commit b5eb7cc3715e4a458ef63d1a8175c7c901eec121
+Merge: 34a585c202d 633be2b32bd
+Author: ocielliottc <elliottc@objectcomputing.com>
+Date:   Thu Dec 15 06:07:46 2022 -0600
+
+    Merge pull request #1998 from DOCGroup/elliottc/715-additional-master
+    
+    Fix additional warnings from OpenDDS builds.
+
+commit 2a171fa555c2c6db006aae28b7f397416dc2beec
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Wed Dec 14 08:32:50 2022 -0600
+
+    Modified strenvdup() to avoid a second copy (via strdup) and silence a warning from gcc 11 about possibly returning a pointer to a local variable.
+
+commit 167bdcb15282991d199f2fdb1b2c0827187d77c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 14 11:17:51 2022 +0100
+
+    Document changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit c35922f48773b120e75210dda841dfab025c5019
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 13 09:06:19 2022 +0100
+
+    Upgrade all doxygen config files
+    
+        * ACE/etc/ace.doxygen:
+        * ACE/etc/ace_inet.doxygen:
+        * ACE/etc/ace_qos.doxygen:
+        * ACE/etc/ace_rmcast.doxygen:
+        * ACE/etc/ace_ssl.doxygen:
+        * ACE/etc/acexml.doxygen:
+        * TAO/etc/tao.doxygen:
+        * TAO/etc/tao_anytypecode.doxygen:
+        * TAO/etc/tao_av.doxygen:
+        * TAO/etc/tao_compression.doxygen:
+        * TAO/etc/tao_cosevent.doxygen:
+        * TAO/etc/tao_cosnaming.doxygen:
+        * TAO/etc/tao_cosnotification.doxygen:
+        * TAO/etc/tao_costime.doxygen:
+        * TAO/etc/tao_costrader.doxygen:
+        * TAO/etc/tao_dynamicany.doxygen:
+        * TAO/etc/tao_dynamicinterface.doxygen:
+        * TAO/etc/tao_esf.doxygen:
+        * TAO/etc/tao_ifr.doxygen:
+        * TAO/etc/tao_implrepo.doxygen:
+        * TAO/etc/tao_iormanip.doxygen:
+        * TAO/etc/tao_iortable.doxygen:
+        * TAO/etc/tao_pi.doxygen:
+        * TAO/etc/tao_pi_server.doxygen:
+        * TAO/etc/tao_portablegroup.doxygen:
+        * TAO/etc/tao_portableserver.doxygen:
+        * TAO/etc/tao_rtcorba.doxygen:
+        * TAO/etc/tao_rtevent.doxygen:
+        * TAO/etc/tao_rtportableserver.doxygen:
+        * TAO/etc/tao_security.doxygen:
+        * TAO/etc/tao_smartproxies.doxygen:
+        * TAO/etc/tao_ssliop.doxygen:
+        * TAO/etc/tao_strategies.doxygen:
+        * TAO/etc/tao_transportcurrent.doxygen:
+        * TAO/etc/tao_ziop.doxygen:
+
+commit cfebb9c5c616716f6fbde437c00c8e3655caa696
+Merge: ca1c66c3ab5 d5e5deaa57d
+Author: ocielliottc <elliottc@objectcomputing.com>
+Date:   Mon Dec 12 06:07:04 2022 -0600
+
+    Merge pull request #1992 from DOCGroup/elliottc/configuration-fix-master
+    
+    Correction for wide-char builds
+
+commit ca1c66c3ab52e226d7d36716dac9928e93da912a
+Merge: 3a3bf85fb3b 0ddf6649d67
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 12 12:36:50 2022 +0100
+
+    Merge pull request #1993 from jwillemsen/jwi-noexcept2
+    
+    Make use of noexcept instead of throw()
+
+commit 0ddf6649d679123b281879416b46e42933b82a21
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 12 09:57:46 2022 +0100
+
+    Make use of noexcept instead of throw()
+    
+        * ACE/ace/Auto_Functor.h:
+        * ACE/ace/Local_Name_Space_T.cpp:
+        * ACE/ace/Svc_Handler.cpp:
+        * ACE/ace/Svc_Handler.h:
+        * ACE/ace/config-lite.h:
+        * ACE/ace/config-macros.h:
+        * ACE/examples/DLL/Newsweek.cpp:
+        * ACE/examples/DLL/Newsweek.h:
+        * ACE/examples/DLL/Today.cpp:
+        * ACE/examples/DLL/Today.h:
+        * ACE/examples/Shared_Malloc/test_persistence.cpp:
+        * ACE/tests/DLL_Test_Impl.cpp:
+        * ACE/tests/DLL_Test_Impl.h:
+        * ACE/tests/Dynamic_Test.cpp:
+        * TAO/orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
+        * TAO/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.h:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/Utils/ScopeGuard.h:
+        * TAO/orbsvcs/tests/Notify/Bug_3688b_Regression/TestBroadcaster.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_3688b_Regression/TestBroadcaster.h:
+        * TAO/tao/Asynch_Reply_Dispatcher_Base.h:
+        * TAO/tao/Asynch_Reply_Dispatcher_Base.inl:
+        * TAO/tao/Bounded_Array_Sequence_T.h:
+        * TAO/tao/Bounded_Basic_String_Sequence_T.h:
+        * TAO/tao/Bounded_Object_Reference_Sequence_T.h:
+        * TAO/tao/Bounded_Value_Sequence_T.h:
+        * TAO/tao/Generic_Sequence_T.h:
+        * TAO/tao/Messaging/AMH_Response_Handler.cpp:
+        * TAO/tao/Messaging/AMH_Response_Handler.h:
+        * TAO/tao/PortableServer/Servant_var.cpp:
+        * TAO/tao/PortableServer/Servant_var.h:
+        * TAO/tao/PortableServer/Servant_var.inl:
+        * TAO/tao/Unbounded_Array_Sequence_T.h:
+        * TAO/tao/Unbounded_Basic_String_Sequence_T.h:
+        * TAO/tao/Unbounded_Object_Reference_Sequence_T.h:
+        * TAO/tao/Unbounded_Octet_Sequence_T.h:
+        * TAO/tao/Unbounded_Value_Sequence_T.h:
+        * TAO/tao/Utils/Implicit_Deactivator.cpp:
+        * TAO/tao/Utils/Implicit_Deactivator.h:
+        * TAO/tao/Utils/ORB_Destroyer.cpp:
+        * TAO/tao/Utils/ORB_Destroyer.h:
+        * TAO/tao/Utils/PolicyList_Destroyer.cpp:
+        * TAO/tao/Utils/PolicyList_Destroyer.h:
+        * TAO/tao/Valuetype/Bounded_Valuetype_Sequence_T.h:
+        * TAO/tao/Valuetype/Unbounded_Valuetype_Sequence_T.h:
+        * TAO/tests/Bug_2936_Regression/PersistentPOA.cpp:
+        * TAO/tests/Bug_2936_Regression/PersistentPOA.h:
+        * TAO/tests/Bug_3251_Regression/PersistentPoa.cpp:
+        * TAO/tests/Bug_3251_Regression/PersistentPoa.h:
+        * TAO/tests/ORB_Local_Config/Bug_2612/DllOrb.cpp:
+        * TAO/tests/ORB_Local_Config/Bug_2612/DllOrb.h:
+        * TAO/tests/POA/DSI/Database_i.cpp:
+        * TAO/tests/POA/DSI/Database_i.h:
+        * TAO/utils/wxNamingViewer/wxAutoDialog.h:
+
+commit d5e5deaa57db13fe854bcd30af90ec9c2232c687
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Fri Dec 9 12:20:40 2022 -0600
+
+    Remove division by sizeof ACE_TCHAR when calculating the simple_section; pointer arithmetic already accounts for size of the individual elements.
+
+commit 27d365656066ed1e94a0f79a99dd703db473993f
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Dec 8 10:19:50 2022 -0600
+
+    No need to compare the result of ::TryEnterCriticalSection to an explicit value. Doing so causes a warning in Release builds.
+
+commit 252d9cb0aa3b3a0fd5ce8907b076a3c5eeaeacb0
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Dec 8 10:19:33 2022 -0600
+
+    Increased the final buffer size (in the info method) to accommodate the maximum possible string size. (ubuntu 20 - gcc 10 warning)
+
+commit 6bedb8802eaf1b84527fd2f2c1dfa418c8d60cb3
+Author: Chad Elliott <elliott_c@ociweb.com>
+Date:   Tue Dec 6 13:50:14 2022 -0600
+
+    Increased the final buffer size (in the info method) to accommodate the maximum possible string size. (ubuntu 20 - gcc 10 warning)
+
+commit 485116aff06946416d30536b5c85d209877a0000
+Author: Chad Elliott <elliott_c@ociweb.com>
+Date:   Tue Dec 6 13:49:26 2022 -0600
+
+    Added curly braces around an else clause (ubuntu 22 - gcc 11 warning)
+
+commit b3d23ce050ba2ba8d48efd80d65dd5be0fb64472
+Author: Branaci Serban-Mihai <serban-mihai.branaci@atos.net>
+Date:   Thu Nov 17 16:45:32 2022 +0200
+
+    [#1981] Removed invalid 'endscript' drectives from logrotate configuration files
+
+commit 10be9100e6c9e9d0d366e212c23c62e6e949cf08
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 17 10:28:40 2022 +0100
+
+    Update for next release
+    
+        * ACE/bin/copy-local-script.sh:
+
+commit 7b001f0c9c078a07546114cb5a32f67c90a17291
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 17 10:10:09 2022 +0100
+
+    Add missing news item
+    
+        * ACE/NEWS:
+
+commit b0e766146110d476f86919741ca35c5ae1baa4b9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 17 10:07:57 2022 +0100
+
+    Make x.0.10 publicly available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit 02e49a5139604e2ca369ea836549b438b3c2069c
+Merge: 55a4be8e626 f5e8e9be931
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 17 09:50:11 2022 +0100
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into master
+
+commit 55a4be8e62645e75083249690c380f77b614f9b2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 17 09:35:42 2022 +0100
+
+    Fixed broken link
+    
+        * ACE/docs/bczar/bczar.html:

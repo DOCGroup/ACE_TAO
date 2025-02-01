@@ -123,7 +123,7 @@ typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
 protected:
   /// This method is called by the is_alive() method.  It should provide
   /// the connected consumer or nil if there is none.
-  virtual CORBA::Object_ptr get_consumer (void) = 0;
+  virtual CORBA::Object_ptr get_consumer () = 0;
 
   typedef ACE_Unbounded_Queue<TAO_Notify_Method_Request_Event_Queueable *> Request_Queue;
 
@@ -203,7 +203,7 @@ protected:
 
 private:
   /// Events pending to be delivered.
-  ACE_Auto_Ptr<Request_Queue> pending_events_;
+  std::unique_ptr<Request_Queue> pending_events_;
 
   CORBA::Object_var rtt_obj_;
 };

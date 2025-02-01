@@ -14,7 +14,7 @@ class Backend_Impl : public POA_Bug_3647_Regression::Backend
 {
 public:
   Backend_Impl(CORBA::ORB_ptr orb, bool verbose);
-  virtual ~Backend_Impl();
+  virtual ~Backend_Impl() = default;
 
   virtual void startup_test();
   virtual void ping(Bug_3647_Regression::Payload const & the_payload);

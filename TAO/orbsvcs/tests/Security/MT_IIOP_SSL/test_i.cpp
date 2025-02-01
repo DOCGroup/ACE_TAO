@@ -13,7 +13,6 @@
 void
 Simple_Server_i::ping ()
 {
-  return;
 }
 
 void

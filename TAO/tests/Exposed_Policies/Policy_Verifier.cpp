@@ -110,7 +110,7 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Policy_Verifier::run ( )
+Policy_Verifier::run ()
 {
   this->verify_reference (this->base_object_.in (),
                           this->rt_poa_properties_);

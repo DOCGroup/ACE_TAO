@@ -5,7 +5,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Event_Handler.h"
 #include "ace/os_include/netinet/os_tcp.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include "HTBP_Filter.h"
 #include "HTBP_ID_Requestor.h"
@@ -69,7 +69,7 @@ ACE::HTBP::Session::Session ()
 {
   ACE::HTBP::ID_Requestor req;
   ACE_TCHAR * htid = req.get_HTID();
-  ACE_Auto_Array_Ptr<ACE_TCHAR> guard (htid);
+  std::unique_ptr<ACE_TCHAR[]> guard (htid);
   session_id_.local_ = ACE_TEXT_ALWAYS_CHAR(htid);
   session_id_.id_ = ACE::HTBP::Session::next_session_id();
   ACE_NEW (inbound_, ACE::HTBP::Channel (this));
@@ -248,7 +248,7 @@ ACE::HTBP::Session::flush_outbound_queue ()
       ACE_NEW_RETURN (iov,
                       iovec[this->outbound_queue_.message_count()],
                       -1);
-      ACE_Auto_Array_Ptr<iovec> guard (iov);
+      std::unique_ptr<iovec[]> guard (iov);
       this->outbound_queue_.peek_dequeue_head (msg);
       for (size_t i = 0; i < this->outbound_queue_.message_count(); i++)
         {
@@ -299,7 +299,7 @@ ACE::HTBP::Session::disable (int flags)
 }
 
 ACE::HTBP::Stream *
-ACE::HTBP::Session::stream (void)const
+ACE::HTBP::Session::stream () const
 {
   return this->stream_;
 }

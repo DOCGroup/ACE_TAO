@@ -79,7 +79,7 @@ WxNamingTree::~WxNamingTree()
   clearChildren();
 }
 
-void WxNamingTree::clearChildren( void)
+void WxNamingTree::clearChildren()
 {
   wxTreeItemId item = GetRootItem();
   if (item) {
@@ -116,7 +116,7 @@ void WxNamingTree::copySelectedToClipboard()
 }
 
 
-WxNamingObject* WxNamingTree::getTreeObject( void) const
+WxNamingObject* WxNamingTree::getTreeObject() const
 {
   wxTreeItemId item = GetSelection();
   if (item == wxTreeItemId( (wxGenericTreeItem*)0)) {

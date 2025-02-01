@@ -39,7 +39,7 @@ public:
   /// Destructor
   virtual ~TAO_RT_Transport_Descriptor_Property ();
 
-  virtual TAO_RT_Transport_Descriptor_Property *duplicate (void) = 0;
+  virtual TAO_RT_Transport_Descriptor_Property *duplicate () = 0;
 
   virtual CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop) = 0;
 
@@ -48,9 +48,10 @@ protected:
   TAO_RT_Transport_Descriptor_Property* next_;
 
 private:
-  // = Disallow copying and assignment.
-  TAO_RT_Transport_Descriptor_Property (const TAO_RT_Transport_Descriptor_Property &);
-  TAO_RT_Transport_Descriptor_Property & operator= (const TAO_RT_Transport_Descriptor_Property &);
+  TAO_RT_Transport_Descriptor_Property (const TAO_RT_Transport_Descriptor_Property &) = delete;
+  TAO_RT_Transport_Descriptor_Property (TAO_RT_Transport_Descriptor_Property &&) = delete;
+  TAO_RT_Transport_Descriptor_Property & operator= (const TAO_RT_Transport_Descriptor_Property &) = delete;
+  TAO_RT_Transport_Descriptor_Property & operator= (TAO_RT_Transport_Descriptor_Property &&) = delete;
 };
 
 /**

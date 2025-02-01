@@ -33,9 +33,7 @@ public:
   Event_AnyPushConsumer (Simple_Test *test_client);
 
   // = PushSupplier methods
-  virtual void push (
-      const CORBA::Any & data
-    );
+  virtual void push (const CORBA::Any & data);
 
 protected:
   Simple_Test * test_client_;

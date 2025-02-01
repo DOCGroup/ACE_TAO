@@ -336,7 +336,7 @@ run_test (ACE_THR_FUNC worker,
     {
       // For the synchronous signal tests, block signals to prevent
       // asynchronous delivery to default handler (at least necessary
-      // on linux and solaris; POSIX spec also states that signal(s)
+      // on linux ; POSIX spec also states that signal(s)
       // should be blocked before call to sigwait())
       ACE_Sig_Guard guard;
 

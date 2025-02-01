@@ -69,8 +69,7 @@ public:
                      CORBA::Short priority);
 
   /// Destructor.
-  ~TAO_IIOP_Endpoint ();
-
+  ~TAO_IIOP_Endpoint () = default;
 
   // = Implementation of abstract TAO_Endpoint methods.  See
   // Endpoint.h for their documentation.

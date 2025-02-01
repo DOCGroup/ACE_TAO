@@ -16,8 +16,7 @@ ObjectReferenceFactory::_copy_value ()
   ACE_NEW_THROW_EX (
     ret_val,
     ObjectReferenceFactory (old_orf_.inout ()),
-    ::CORBA::NO_MEMORY ()
-  );
+    ::CORBA::NO_MEMORY ());
   return ret_val;
 }
 

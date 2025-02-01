@@ -394,10 +394,9 @@ Connection_Manager::add_streamctrl (const ACE_CString &flowname,
   {
     // the CORBA::Any_var owns the pointer, so we should
     // _duplicate it before passing it around
-    AVStreams::StreamCtrl::_duplicate( streamctrl );
+    AVStreams::StreamCtrl::_duplicate( streamctrl);
     this->streamctrls_.unbind(flowname);
-    this->streamctrls_.bind (flowname,
-                             streamctrl);
+    this->streamctrls_.bind (flowname, streamctrl);
   }
 }
 
