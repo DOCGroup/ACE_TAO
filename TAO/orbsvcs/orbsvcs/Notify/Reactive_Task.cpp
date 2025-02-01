@@ -8,7 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Reactive_Task::TAO_Notify_Reactive_Task (void)
+TAO_Notify_Reactive_Task::TAO_Notify_Reactive_Task ()
   :timer_ (0)
 {
 }
@@ -18,7 +18,7 @@ TAO_Notify_Reactive_Task::~TAO_Notify_Reactive_Task ()
 }
 
 void
-TAO_Notify_Reactive_Task::init (void)
+TAO_Notify_Reactive_Task::init ()
 {
   ACE_ASSERT (this->timer_.get() == 0);
 
@@ -30,13 +30,13 @@ TAO_Notify_Reactive_Task::init (void)
 }
 
 void
-TAO_Notify_Reactive_Task::release (void)
+TAO_Notify_Reactive_Task::release ()
 {
   delete this; //TODO: Release via factory.
 }
 
 void
-TAO_Notify_Reactive_Task::shutdown (void)
+TAO_Notify_Reactive_Task::shutdown ()
 {
 }
 
@@ -47,7 +47,7 @@ TAO_Notify_Reactive_Task::execute (TAO_Notify_Method_Request& method_request)
 }
 
 TAO_Notify_Timer*
-TAO_Notify_Reactive_Task::timer (void)
+TAO_Notify_Reactive_Task::timer ()
 {
   return this->timer_.get();
 }

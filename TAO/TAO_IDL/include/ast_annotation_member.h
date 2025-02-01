@@ -37,12 +37,6 @@ public:
   /// Cleanup
   virtual void destroy ();
 
-  /// Narrowing
-  ///{
-  DEF_NARROW_FROM_DECL (AST_Annotation_Member);
-  DEF_NARROW_FROM_SCOPE (AST_Annotation_Member);
-  ///}
-
   /// AST Dumping
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

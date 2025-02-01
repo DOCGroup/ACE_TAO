@@ -36,7 +36,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command
   friend class TAO_Notify_Tests_Command_Builder;
 public:
   /// Constructor
-  TAO_Notify_Tests_Command (void);
+  TAO_Notify_Tests_Command ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_Command ();
@@ -45,13 +45,13 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
     /// Implement command execution.
-  virtual void execute_i (void) = 0;
+  virtual void execute_i () = 0;
 
   /// Return the name of this command.
-  virtual const char* get_name (void)= 0;
+  virtual const char* get_name () = 0;
 
   ///= Each derived type must also implement the following signature:
-  // static const char* name (void);
+  // static const char* name ();
 
 protected:
   /// Next command after this one.
@@ -63,7 +63,7 @@ protected:
 
 private:
   /// Execute the command.
-  void execute (void);
+  void execute ();
 
   /// Save the next command to exec.
   void next (TAO_Notify_Tests_Command* command);

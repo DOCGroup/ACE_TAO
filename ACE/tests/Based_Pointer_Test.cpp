@@ -49,24 +49,23 @@ class Void_Pointer : public ACE_Based_Pointer<void>
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
 #endif /* ACE_LD_DECORATOR_STR */
 
-#if defined (ACE_WIN32) || defined (ACE_OPENVMS)
+#if defined (ACE_WIN32)
 #  define OBJ_PREFIX ACE_DLL_PREFIX
 #else
 #  define OBJ_PREFIX ACE_TEXT("./") ACE_DLL_PREFIX
 #endif /* ACE_WIN32 */
 
 // Declare the type of the DLL symbol:
-typedef void *(*Get_Bp_Repository_Inst)(void);
+using Get_Bp_Repository_Inst = void *(*)();
 
 // Declare an allocator based MMAP_Memory_Pool
-typedef ACE_Malloc_T< ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_PI_Control_Block
-                   > MMAP_Allocator;
+using MMAP_Allocator = ACE_Malloc_T<ACE_MMAP_Memory_Pool, ACE_Null_Mutex, ACE_PI_Control_Block>;
 
 
 // Check that the ACE_Based_Pointer_Repository can be accessed
 // from a Windows DLL
 // (see http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1991)
-int singleton_test (void)
+int singleton_test ()
 {
     void* baddr1 = ACE_BASED_POINTER_REPOSITORY::instance();
     void* baddr2 = ACE_BASED_POINTER_REPOSITORY::instance();
@@ -80,7 +79,6 @@ int singleton_test (void)
 
 // Protection against this test being run on platforms not supporting Dlls.
 #if defined(ACE_HAS_DYNAMIC_LINKING)
-
     ACE_TString dll_file;
     const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
     if (subdir_env)
@@ -110,12 +108,7 @@ int singleton_test (void)
                            -1);
        }
 
-#if defined (ACE_OPENVMS)
-    // with OPENVMS symbol names > 31 cause us trouble with dlsym()
-    void* foo = dll.symbol (ACE_TEXT ("get_based_pointer_repo_inst"));
-#else
     void* foo = dll.symbol (ACE_TEXT ("get_based_pointer_repository_instance"));
-#endif
 
     // Cast the void* to function* with a long as intermediate.
     ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
@@ -148,7 +141,7 @@ int singleton_test (void)
 // Check that MMAP memory blocks are correctly mapped
 // into the Based_Pointer_Repository
 int
-mmap_map_test(void)
+mmap_map_test()
 {
     MMAP_Allocator* alloc = 0;
 
@@ -216,7 +209,7 @@ mmap_map_test(void)
 //  present in the filesystem)
 // (see http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2216)
 int
-mmap_persistent_map_test(void)
+mmap_persistent_map_test()
 {
     MMAP_Allocator* alloc = 0;
 
@@ -283,7 +276,7 @@ mmap_persistent_map_test(void)
 // base address, in this case the Repository must be updated)
 // (see http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2218)
 int
-mmap_remap_test(void)
+mmap_remap_test()
 {
     // Use a Position Independent memory segment
     // because this one is going to move

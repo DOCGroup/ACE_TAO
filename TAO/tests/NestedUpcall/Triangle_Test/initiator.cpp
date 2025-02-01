@@ -17,7 +17,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
-Initiator_Server::Initiator_Server (void)
+Initiator_Server::Initiator_Server ()
   : object_A_key_ (0),
     object_B_key_ (0),
     object_A_var_ (0),
@@ -68,7 +68,7 @@ Initiator_Server::read_ior (ACE_TCHAR *filename, unsigned int A_B)
 
 
 int
-Initiator_Server::parse_args (void)
+Initiator_Server::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:g:"));
   int c, result;
@@ -214,7 +214,7 @@ Initiator_Server::init (int argc,
 
 
 int
-Initiator_Server::run (void)
+Initiator_Server::run ()
 {
   try
     {
@@ -243,7 +243,7 @@ Initiator_Server::run (void)
   return 0;
 }
 
-Initiator_Server::~Initiator_Server (void)
+Initiator_Server::~Initiator_Server ()
 {
   if (this->object_A_key_ != 0)
     ACE_Allocator::instance ()->free (this->object_A_key_);

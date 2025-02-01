@@ -63,7 +63,6 @@ class TAO_Reply_Dispatcher;
 class TAO_Export TAO_Operation_Details
 {
 public:
-
   /// Declare FW_Server_Request_Wrapper a friend
   /// This friendship makes the FW_Server_Request_Wrapper be able to
   /// clone the TAO_Operation_Details data member in TAO_ServerRequest.
@@ -79,46 +78,46 @@ public:
                          const CORBA::ULong ex_count = 0);
 
   /// Operation name
-  const char* opname (void) const;
+  const char* opname () const;
 
   /// Length of the operation name
-  CORBA::ULong opname_len (void) const;
+  CORBA::ULong opname_len () const;
 
   /// Return the flag that indicates whether the operation has any
   /// arguments
-  CORBA::Boolean argument_flag (void) const;
-  CORBA::Boolean in_argument_flag (void) const;
+  CORBA::Boolean argument_flag () const;
+  CORBA::Boolean in_argument_flag () const;
 
   /// Set the response flags
   void response_flags (CORBA::Octet flags);
 
   /// Get the response flags
-  CORBA::Octet response_flags (void) const;
+  CORBA::Octet response_flags () const;
 
   /// Accessors for the service context list
-  IOP::ServiceContextList &request_service_info (void);
-  const IOP::ServiceContextList &request_service_info (void) const;
-  IOP::ServiceContextList &reply_service_info (void);
-  const IOP::ServiceContextList &reply_service_info (void) const;
+  IOP::ServiceContextList &request_service_info ();
+  const IOP::ServiceContextList &request_service_info () const;
+  IOP::ServiceContextList &reply_service_info ();
+  const IOP::ServiceContextList &reply_service_info () const;
 
   /// Access the TAO_Service_Context
-  TAO_Service_Context &request_service_context (void);
-  const TAO_Service_Context &request_service_context (void) const;
-  TAO_Service_Context &reply_service_context (void);
-  const TAO_Service_Context &reply_service_context (void) const;
+  TAO_Service_Context &request_service_context ();
+  const TAO_Service_Context &request_service_context () const;
+  TAO_Service_Context &reply_service_context ();
+  const TAO_Service_Context &reply_service_context () const;
 
   /// Reset the contents of the service context lists that we hold.
-  void reset_request_service_info (void);
-  void reset_reply_service_info (void);
+  void reset_request_service_info ();
+  void reset_reply_service_info ();
 
   /// Cache the request id.
   void request_id (CORBA::ULong id);
 
   /// Return the request ID associated with the operation
-  CORBA::ULong request_id (void) const;
+  CORBA::ULong request_id () const;
 
   /// Accessor method for the addressing mode
-  TAO_Target_Specification::TAO_Target_Address addressing_mode (void) const;
+  TAO_Target_Specification::TAO_Target_Address addressing_mode () const;
 
   /// Set method for the addressing mode
   void addressing_mode (CORBA::Short addr);
@@ -141,7 +140,6 @@ public:
    * @name Helper methods used by the Invocation classes.
    */
   //@{
-
   /// Marshals the list of @c this->arg_ into the \a cdr.
   bool marshal_args (TAO_OutputCDR &cdr);
 
@@ -149,34 +147,33 @@ public:
   bool demarshal_args (TAO_InputCDR &cdr);
 
   /// Accessors for the argument list
-  TAO::Argument ** args (void) const;
-  CORBA::ULong args_num (void) const ;
+  TAO::Argument ** args () const;
+  CORBA::ULong args_num () const;
 
   /// Exception count
-  CORBA::ULong ex_count (void) const;
+  CORBA::ULong ex_count () const;
 
-  TAO::Exception_Data const * ex_data (void) const;
+  TAO::Exception_Data const * ex_data () const;
 
-  CORBA::Boolean use_stub_args (void) const;
+  CORBA::Boolean use_stub_args () const;
   void use_stub_args (CORBA::Boolean use_stub_arguments);
 
 #if TAO_HAS_INTERCEPTORS == 1
   void ft_expiration_time (TimeBase::TimeT time);
-  TimeBase::TimeT ft_expiration_time (void) const;
+  TimeBase::TimeT ft_expiration_time () const;
 
   void ft_retention_id (CORBA::Long request_id);
-  CORBA::Long ft_retention_id (void) const;
+  CORBA::Long ft_retention_id () const;
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
   /// Accessor for cac_ pointer.
-  TAO::Collocated_Arguments_Converter *cac (void) const;
+  TAO::Collocated_Arguments_Converter *cac () const;
   void cac (TAO::Collocated_Arguments_Converter *cac);
 
-  TAO_Reply_Dispatcher *reply_dispatcher (void) const;
+  TAO_Reply_Dispatcher *reply_dispatcher () const;
   void reply_dispatcher (TAO_Reply_Dispatcher *rd);
 
 private:
-
   /// Name of the operation being invoked.
   const char *opname_;
 
@@ -235,7 +232,6 @@ private:
 
   /// The optional reply dispatcher
   TAO_Reply_Dispatcher *reply_dispatcher_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

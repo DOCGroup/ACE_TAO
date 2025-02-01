@@ -95,9 +95,9 @@ be_string::gen_member_ostream_operator (TAO_OutStream *os,
 
 // Overriden method.
 void
-be_string::compute_tc_name (void)
+be_string::compute_tc_name ()
 {
-  Identifier * id = 0;
+  Identifier * id = nullptr;
   ACE_CDR::ULong val = 0UL;
   AST_Expression zero (val);
 
@@ -107,13 +107,13 @@ be_string::compute_tc_name (void)
       // constants.
 
       // Start with the head as the CORBA namespace.
-      Identifier * corba_id = 0;
+      Identifier * corba_id = nullptr;
       ACE_NEW (corba_id,
                Identifier ("CORBA"));
 
       ACE_NEW (this->tc_name_,
                UTL_ScopedName (corba_id,
-                               0));
+                               nullptr));
 
       ACE_NEW (id,
                Identifier (this->width () == 1
@@ -125,26 +125,26 @@ be_string::compute_tc_name (void)
       // We have a bounded string.  Generate a TypeCode name that is
       // meant for internal use alone.
 
-      Identifier * tao_id = 0;
+      Identifier * tao_id = nullptr;
       ACE_NEW (tao_id,
                Identifier ("TAO"));
 
       ACE_NEW (this->tc_name_,
                UTL_ScopedName (tao_id,
-                               0));
+                               nullptr));
 
       ACE_CString local_tc_name =
         ACE_CString ("tc_")
         + ACE_CString (this->flat_name ());
 
-      Identifier * typecode_scope = 0;
+      Identifier * typecode_scope = nullptr;
       ACE_NEW (typecode_scope,
                Identifier ("TypeCode"));
 
-      UTL_ScopedName * tc_scope_conc_name = 0;
+      UTL_ScopedName * tc_scope_conc_name = nullptr;
       ACE_NEW (tc_scope_conc_name,
                UTL_ScopedName (typecode_scope,
-                               0));
+                               nullptr));
 
       this->tc_name_->nconc (tc_scope_conc_name);
 
@@ -154,10 +154,10 @@ be_string::compute_tc_name (void)
 
   zero.destroy ();
 
-  UTL_ScopedName *conc_name = 0;
+  UTL_ScopedName *conc_name = nullptr;
   ACE_NEW (conc_name,
            UTL_ScopedName (id,
-                           0));
+                           nullptr));
 
   this->tc_name_->nconc (conc_name);
 }
@@ -169,10 +169,8 @@ be_string::accept (be_visitor * visitor)
 }
 
 void
-be_string::destroy (void)
+be_string::destroy ()
 {
   this->be_type::destroy ();
   this->AST_String::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL (be_string)

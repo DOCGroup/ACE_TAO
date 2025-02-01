@@ -21,7 +21,7 @@ ObjectGroupManagerHandler::start_excep (::Messaging::ExceptionHolder *)
 {
 }
 
-void ObjectGroupManagerHandler::create_group (void)
+void ObjectGroupManagerHandler::create_group ()
 {
 }
 
@@ -32,7 +32,7 @@ ObjectGroupManagerHandler::create_group_excep (::Messaging::ExceptionHolder *)
 }
 
 void
-ObjectGroupManagerHandler::add_member (void)
+ObjectGroupManagerHandler::add_member ()
 {
   if (--num_backups_ ==0)
     evt_.signal();
@@ -45,7 +45,7 @@ ObjectGroupManagerHandler::add_member_excep (::Messaging::ExceptionHolder *)
 }
 
 void
-ObjectGroupManagerHandler::set_state (void)
+ObjectGroupManagerHandler::set_state ()
 {
 }
 

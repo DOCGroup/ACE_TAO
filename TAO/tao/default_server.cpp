@@ -5,20 +5,20 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
+TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory ()
   : activate_server_connections_ (0),
     thread_flags_ (THR_BOUND | THR_DETACHED),
     thread_per_connection_use_timeout_ (-1)
 {
 }
 
-TAO_Default_Server_Strategy_Factory::~TAO_Default_Server_Strategy_Factory (void)
+TAO_Default_Server_Strategy_Factory::~TAO_Default_Server_Strategy_Factory ()
 {
   // Perform appropriate cleanup.
 }
 
 int
-TAO_Default_Server_Strategy_Factory::activate_server_connections (void)
+TAO_Default_Server_Strategy_Factory::activate_server_connections ()
 {
   return this->activate_server_connections_;
 }
@@ -31,13 +31,13 @@ TAO_Default_Server_Strategy_Factory::thread_per_connection_timeout (ACE_Time_Val
 }
 
 int
-TAO_Default_Server_Strategy_Factory::server_connection_thread_flags (void)
+TAO_Default_Server_Strategy_Factory::server_connection_thread_flags ()
 {
   return this->thread_flags_;
 }
 
 int
-TAO_Default_Server_Strategy_Factory::server_connection_thread_count (void)
+TAO_Default_Server_Strategy_Factory::server_connection_thread_count ()
 {
   return 1;
 }
@@ -52,13 +52,13 @@ TAO_Default_Server_Strategy_Factory::server_connection_thread_count (void)
 void
 TAO_Default_Server_Strategy_Factory::tokenize (ACE_TCHAR* flag_string)
 {
-  ACE_TCHAR* lasts = 0;
+  ACE_TCHAR* lasts = nullptr;
 
   for (ACE_TCHAR* flag = ACE_OS::strtok_r (flag_string,
                                       ACE_TEXT("|"),
                                       &lasts);
-       flag != 0;
-       flag = ACE_OS::strtok_r (0,
+       flag != nullptr;
+       flag = ACE_OS::strtok_r (nullptr,
                                 ACE_TEXT("|"),
                                 &lasts))
     {
@@ -129,7 +129,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
             else
               {
                 this->thread_per_connection_use_timeout_ = 1;
-                int milliseconds = ACE_OS::atoi (name);
+                int const milliseconds = ACE_OS::atoi (name);
                 this->thread_per_connection_timeout_.set (0,
                                                           1000 * milliseconds);
               }
@@ -145,7 +145,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
         if (curarg < argc)
           this->active_object_map_creation_parameters_.active_object_map_size_ =
             ACE_OS::strtoul (argv[curarg],
-                             0,
+                             nullptr,
                              10);
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -155,7 +155,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
         if (curarg < argc)
           this->active_object_map_creation_parameters_.poa_map_size_ =
             ACE_OS::strtoul (argv[curarg],
-                             0,
+                             nullptr,
                              10);
       }
     else if (ACE_OS::strcasecmp (argv[curarg],

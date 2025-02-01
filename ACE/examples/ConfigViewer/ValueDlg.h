@@ -42,7 +42,6 @@ protected:
   u_int       m_UINTValue;
 
 private:
-
 };
 
 #endif

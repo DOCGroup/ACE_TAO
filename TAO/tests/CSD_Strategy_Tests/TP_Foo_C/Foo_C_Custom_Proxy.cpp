@@ -50,7 +50,7 @@ Foo_C_Custom_Proxy::validate_connection ()
 
 
 void
-Foo_C_Custom_Proxy::op1(void)
+Foo_C_Custom_Proxy::op1()
 {
   this->objref_->op1();
 }
@@ -79,21 +79,21 @@ Foo_C_Custom_Proxy::op4(CORBA::Long x)
 
 
 void
-Foo_C_Custom_Proxy::op5(void)
+Foo_C_Custom_Proxy::op5()
 {
   this->objref_->op5();
 }
 
 
 void
-Foo_C_Custom_Proxy::done(void)
+Foo_C_Custom_Proxy::done()
 {
   this->objref_->done();
 }
 
 
 void
-Foo_C_Custom_Proxy::cust_op1(void)
+Foo_C_Custom_Proxy::cust_op1()
 {
   Foo_C_cust_op1_Handle op = new Foo_C_cust_op1(this->servant_);
   this->strategy_->custom_synch_request(op.in());
@@ -127,7 +127,7 @@ Foo_C_Custom_Proxy::cust_op4(long x)
 
 
 void
-Foo_C_Custom_Proxy::cust_op5(void)
+Foo_C_Custom_Proxy::cust_op5()
 {
   Foo_C_cust_op5_Handle op = new Foo_C_cust_op5(this->servant_);
   this->strategy_->custom_synch_request(op.in());

@@ -16,13 +16,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 #if !defined (ACE_SIZEOF_LONG_DOUBLE)
-# if (__GNUC__ == 3 && __GNUC_MINOR__ == 3)
-   // Size of long double in GCC 3.3 is 8.
-#  define ACE_SIZEOF_LONG_DOUBLE 8
-# else // Else, the compiler is GCC4
-   // For GCC4, the size is 16.
-#  define ACE_SIZEOF_LONG_DOUBLE 16
-# endif // GCC 3.3
+#  define ACE_SIZEOF_LONG_DOUBLE __SIZEOF_LONG_DOUBLE__
 #endif // ACE_SIZEOF_LONG_DOUBLE
 
 #if defined (__GNUG__)
@@ -30,8 +24,6 @@
 #endif /* __GNUG__ */
 
 #define ACE_ISCTYPE_EQUIVALENT __isctype
-
-#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 #define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
@@ -98,8 +90,6 @@
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
 #define ACE_NEEDS_SCHED_H
-
-#define ACE_LACKS_MALLOC_H
 
 #define ACE_HAS_ALT_CUSERID
 
@@ -196,7 +186,6 @@
 #define ACE_LACKS_SIGINFO_H
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_GETIFADDRS
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_UNNAMED_SEMAPHORE
 
 #if !defined (__DARWIN_UNIX03)
@@ -204,11 +193,15 @@
 #endif
 
 #define ACE_LACKS_CONDATTR_SETCLOCK
+
+#ifndef ACE_HAS_IPHONE
 #if __MAC_OS_X_VERSION_MAX_ALLOWED < 101200
 #define ACE_LACKS_CLOCKID_T
 #define ACE_LACKS_CLOCK_MONOTONIC
 #define ACE_LACKS_CLOCK_REALTIME
 #endif
+#endif
+
 // dlcompat package (not part of base Darwin) is needed for dlopen().
 // You may download directly from sourceforge and install or use fink
 // Fink installer puts libraries in /sw/lib and headers in /sw/include

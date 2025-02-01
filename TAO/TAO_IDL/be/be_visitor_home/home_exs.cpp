@@ -13,8 +13,8 @@
 
 be_visitor_home_exs::be_visitor_home_exs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (0),
-    comp_ (0),
+    node_ (nullptr),
+    comp_ (nullptr),
     os_ (*ctx->stream ()),
     comment_start_border_ ("/**"),
     comment_end_border_ (" */"),
@@ -23,7 +23,7 @@ be_visitor_home_exs::be_visitor_home_exs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_home_exs::~be_visitor_home_exs (void)
+be_visitor_home_exs::~be_visitor_home_exs ()
 {
 }
 
@@ -38,8 +38,7 @@ be_visitor_home_exs::visit_home (be_home *node)
   node_ = node;
   comp_ = node_->managed_component ();
 
-  /// CIDL-generated namespace used 'CIDL_' + composition name.
-  /// Now we use 'CIAO_' + component's flat name.
+  /// Use 'CIAO_' + component's flat name.
   os_ << be_nl_2
       << "namespace CIAO_" << comp_->flat_name () << "_Impl" << be_nl
       << "{" << be_idt;
@@ -114,7 +113,7 @@ be_visitor_home_exs::visit_factory (be_factory *node)
 }
 
 int
-be_visitor_home_exs::gen_exec_class (void)
+be_visitor_home_exs::gen_exec_class ()
 {
   // No '_cxx_' prefix.
   const char *lname =
@@ -127,18 +126,18 @@ be_visitor_home_exs::gen_exec_class (void)
       << comment_end_border_;
 
   os_ << be_nl_2
-      << lname << "_exec_i::" << lname << "_exec_i (void)" << be_nl
+      << lname << "_exec_i::" << lname << "_exec_i ()" << be_nl
       << "{" << be_nl
       << "}";
 
   os_ << be_nl_2
-      << lname << "_exec_i::~" << lname << "_exec_i (void)" << be_nl
+      << lname << "_exec_i::~" << lname << "_exec_i ()" << be_nl
       << "{" << be_nl
       << "}";
 
   be_home *h = node_;
 
-  while (h != 0)
+  while (h != nullptr)
     {
       if (this->visit_scope (h) != 0)
         {
@@ -155,7 +154,7 @@ be_visitor_home_exs::gen_exec_class (void)
           // A closure of all the supported interfaces is stored
           // in the base class 'pd_inherits_flat' member.
           be_interface *bi =
-            be_interface::narrow_from_decl (h->inherits ()[i]);
+            dynamic_cast<be_interface*> (h->inherits ()[i]);
 
           bi->get_insert_queue ().reset ();
           bi->get_del_queue ().reset ();
@@ -181,7 +180,7 @@ be_visitor_home_exs::gen_exec_class (void)
             }
         }
 
-      h = be_home::narrow_from_decl (h->base_home ());
+      h = dynamic_cast<be_home*> (h->base_home ());
     }
 
   os_ << be_nl_2
@@ -189,7 +188,7 @@ be_visitor_home_exs::gen_exec_class (void)
 
   os_ << be_nl_2
       << "::Components::EnterpriseComponent_ptr" << be_nl
-      << lname << "_exec_i::create (void)" << be_nl
+      << lname << "_exec_i::create ()" << be_nl
       << "{" << be_idt_nl
       << "::Components::EnterpriseComponent_ptr retval ="
       << be_idt_nl
@@ -208,13 +207,13 @@ be_visitor_home_exs::gen_exec_class (void)
 }
 
 void
-be_visitor_home_exs::gen_entrypoint (void)
+be_visitor_home_exs::gen_entrypoint ()
 {
   os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::HomeExecutorBase_ptr" << be_nl
       << "create_" << node_->flat_name ()
-      << "_Impl (void)" << be_nl
+      << "_Impl ()" << be_nl
       << "{" << be_idt_nl
       << "::Components::HomeExecutorBase_ptr retval =" << be_idt_nl
       << "::Components::HomeExecutorBase::_nil ();"

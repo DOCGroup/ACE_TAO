@@ -33,7 +33,7 @@ public:
   void init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, ACE_CString& event_type);
 
   /// Run
-  void run (void);
+  void run ();
 
 protected:
   // = Data members
@@ -58,20 +58,20 @@ protected:
 
   // = Methods
   /// Destructor
-  virtual ~TAO_Notify_Lanes_Consumer (void);
+  virtual ~TAO_Notify_Lanes_Consumer ();
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
   /// Connect the Consumer to the EventChannel.
   /// Creates a new proxy supplier and connects to it.
-  void connect (void);
+  void connect ();
 
   /// Disconnect the supplier.
-  void disconnect (void);
+  void disconnect ();
 
   /// Deactivate.
-  void deactivate (void);
+  void deactivate ();
 
   // = NotifyPublish method
   virtual void offer_change (

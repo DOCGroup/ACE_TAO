@@ -34,10 +34,13 @@ class ACE_Export ACE_SPIPE_Addr : public ACE_Addr
 {
 public:
   /// Default constructor.
-  ACE_SPIPE_Addr (void);
+  ACE_SPIPE_Addr ();
 
   /// Copy constructor.
   ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa);
+
+  /// Assignment operator
+  ACE_SPIPE_Addr& operator= (const ACE_SPIPE_Addr&) = default;
 
   /// Create a ACE_SPIPE_Addr from a rendezvous point in the file
   /// system.
@@ -51,7 +54,7 @@ public:
   int set (const ACE_TCHAR *rendezvous_point, gid_t = 0, uid_t = 0);
 
   /// Return a pointer to the address.
-  virtual void *get_addr (void) const;
+  virtual void *get_addr () const;
 
   /// Set a pointer to the underlying network address.
   virtual void set_addr (const void *addr, int len);
@@ -71,10 +74,10 @@ public:
 
   // = SPIPE-specific address operations
   /// Pathname of rendezvous point in file system.
-  const ACE_TCHAR *get_path_name (void) const;
+  const ACE_TCHAR *get_path_name () const;
 
   /// Get user id.
-  uid_t user_id (void) const;
+  uid_t user_id () const;
 
   /// Set user id.
   void user_id (uid_t uid);
@@ -83,10 +86,10 @@ public:
   void group_id (gid_t gid);
 
   /// Get group ids.
-  gid_t group_id (void) const;
+  gid_t group_id () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -103,7 +106,6 @@ private:
 
     /// Pathname in the file system.
     ACE_TCHAR rendezvous_[MAXPATHLEN + 1];
-
   } SPIPE_addr_;
   // Contents of an SPIPE address.
 };

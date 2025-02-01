@@ -12,14 +12,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PortableGroup_Acceptor_Registry::TAO_PortableGroup_Acceptor_Registry (void)
-{
-}
-
-TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry (void)
+TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry ()
 {
   // Free the memory for the endpoints.
-  Entry *entry;
+  Entry *entry = nullptr;
   Acceptor_Registry_Iterator iter (this->registry_);
 
   while (iter.next (entry))
@@ -30,12 +26,11 @@ TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry (void)
     }
 }
 
-
 void
 TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
                                            TAO_ORB_Core &orb_core)
 {
-  Entry *entry;
+  Entry *entry = nullptr;
 
   if (this->find (profile, entry) == 1)
     {

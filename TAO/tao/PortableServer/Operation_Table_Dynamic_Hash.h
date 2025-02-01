@@ -49,20 +49,20 @@ public:
                             ACE_Allocator *alloc);
 
   /// Destructor
-  ~TAO_Dynamic_Hash_OpTable (void);
+  ~TAO_Dynamic_Hash_OpTable () override;
 
   /// See the documentation in the base class for details.
-  virtual int bind (const char *opname,
-                    const TAO::Operation_Skeletons skel_ptr);
+  int bind (const char *opname,
+            const TAO::Operation_Skeletons skel_ptr) override;
 
-  virtual int find (const char *opname,
-                    TAO_Skeleton &skelfunc,
-                    const unsigned int length = 0);
+  int find (const char *opname,
+            TAO_Skeleton &skelfunc,
+            const unsigned int length = 0) override;
 
-  virtual int find (const char *opname,
-                    TAO_Collocated_Skeleton &skelfunc,
-                    TAO::Collocation_Strategy s,
-                    const unsigned int length = 0);
+  int find (const char *opname,
+            TAO_Collocated_Skeleton &skelfunc,
+            TAO::Collocation_Strategy s,
+            const unsigned int length = 0) override;
 private:
   typedef ACE_Hash_Map_Manager_Ex<const char *,
                                   TAO::Operation_Skeletons,

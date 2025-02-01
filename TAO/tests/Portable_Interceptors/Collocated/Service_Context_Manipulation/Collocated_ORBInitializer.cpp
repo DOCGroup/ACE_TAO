@@ -2,7 +2,7 @@
 #include "interceptors.h"
 #include "ace/OS_NS_string.h"
 
-Collocated_ORBInitializer::Collocated_ORBInitializer (void)
+Collocated_ORBInitializer::Collocated_ORBInitializer ()
 {
 }
 
@@ -16,7 +16,6 @@ void
 Collocated_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   CORBA::String_var orb_id =
     info->orb_id ();
 

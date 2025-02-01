@@ -51,15 +51,9 @@ static_libs_only = 1
 SHLIB_UNCHECKED  = $(LIB_PREFIX)<%libname_prefix%><%sharedname%>.$(SOEXT)
 SHLIB            = $(SHLIB_UNCHECKED)
 <%endif%>
-<%if(tao || ciao || dance)%>
+<%if(tao)%>
 
 TAO_ROOT  ?= $(ACE_ROOT)/TAO
-<%if(ciao)%>
-CIAO_ROOT ?= $(TAO_ROOT)/CIAO
-<%endif%>
-<%if(dance)%>
-DANCE_ROOT ?= $(TAO_ROOT)/DAnCE
-<%endif%>
 <%endif%>
 
 <%if(grouped_source_files)%>
@@ -118,33 +112,6 @@ TAO_IDL_DEP = <%tao_idl_dep%>$(EXEEXT)
 <%endif%>
 <%if(tao_idlflags)%>
 TAO_IDLFLAGS = <%tao_idlflags%><%if(!compares(vms_old_make, 1))%>$(if $(ARCH), -g $(call ADD_QUOTE,$(call ADD_ARCH,$(ACE_ROOT)/bin/ace_gperf)))<%endif%>
-<%endif%>
-<%if(xsc_bin)%>
-XSC_BIN = <%xsc_bin%>
-<%endif%>
-<%if(xsc_dep)%>
-XSC_DEP = <%xsc_dep%>$(EXEEXT)
-<%endif%>
-<%if(xsc_flags)%>
-XSC_FLAGS = <%xsc_flags%>
-<%endif%>
-<%if(tao_idl3_to_idl2)%>
-TAO_IDL3_TO_IDL2 = <%tao_idl3_to_idl2%>
-<%endif%>
-<%if(tao_idl3_to_idl2_dep)%>
-TAO_IDL3_TO_IDL2_DEP = <%tao_idl3_to_idl2_dep%>$(EXEEXT)
-<%endif%>
-<%if(tao_idl3toidl2flags)%>
-TAO_IDL3_TO_IDL2_FLAGS = <%tao_idl3toidl2flags%>
-<%endif%>
-<%if(tao_idl3_to_xmi)%>
-TAO_IDL3_TO_XMI = <%tao_idl3_to_xmi%>
-<%endif%>
-<%if(tao_idl3_to_xmi_dep)%>
-TAO_IDL3_TO_XMI_DEP = <%tao_idl3_to_xmi_dep%>$(EXEEXT)
-<%endif%>
-<%if(tao_idl3toxmiflags)%>
-TAO_IDL3_TO_XMI_FLAGS = <%tao_idl3toxmiflags%>
 <%endif%>
 
 <%if(exename)%>
@@ -209,15 +176,7 @@ VSHDIR = <%targetoutdir%>.shobj/
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 <%marker(extension)%>
-<%if(ciao)%>
-include $(CIAO_ROOT)/rules.ciao.GNU
-<%endif%>
-<%if(dance)%>
-include $(DANCE_ROOT)/rules.dance.GNU
-<%endif%>
-<%if(tao)%>
-include $(TAO_ROOT)/rules.tao.GNU
-<%endif%>
+<%marker(deferred-extension)%>
 
 <%if(version)%>
 GNUACE_PROJECT_VERSION = <%version%>
@@ -242,9 +201,6 @@ RCFLAGS = \
 endif
 
 <%endif%>
-# To build multiple targets in the same directory on AIX, it works
-# best to have a template directory per project.
-# The compiler/linker isn't too smart about instantiating templates...
 ifdef TEMPINCDIR
 TEMPINCDIR := $(TEMPINCDIR)/<%project_name%>
 all: $(TEMPINCDIR)
@@ -530,6 +486,7 @@ endif
 #       Local targets
 #----------------------------------------------------------------------------
 <%marker(local)%>
+.PHONY: lib_warning
 lib_warning:
 	@echo <%project_name%> will not be built due to the following missing library: $(LIBCHECK) >&2
 
@@ -539,6 +496,7 @@ ifneq ($(<%require%>),1)
 requires_disabled_macros += <%require%>
 endif
 <%endfor%>
+.PHONY: require_warning
 require_warning:
 	@echo <%project_name%> will not be built due to the following disabled make macros: $(requires_disabled_macros)>&2
 
@@ -549,6 +507,7 @@ ifeq ($(<%avoid%>),1)
 avoids_enabled_macros += <%avoid%>
 endif
 <%endfor%>
+.PHONY: avoid_warning
 avoid_warning:
 	@echo <%project_name%> will not be built due to the following enabled make macros: $(avoids_enabled_macros)>&2
 
@@ -575,7 +534,10 @@ export PATH              := $(PATH):<%custom_type->libpath%>$(if $(ARCH),:<%cust
 <%endif%>
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->output_files)%>
-GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
+GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%custom_type->input_file->output_file%><%endfor%>
+<%if(precious_files)%>
+PRECIOUS_FILES +=<%foreach(precious_files)%><%foreach(custom_type->input_file->output_files)%><%if(contains(custom_type->input_file->output_file, precious_file))%> <%custom_type->input_file->output_file%><%endif%><%endfor%><%endfor%>
+<%endif%>
 <%if(custom_type->input_file->non_source_output_files)%>
 OBJS_DEPEND_ON_GENERATED = 1
 <%endif%>
@@ -613,7 +575,7 @@ else
 endif
 <%endif%>
 <%endfor%>
-<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->input_file->dependencies)%><%foreach(custom_type->input_file->dependencies)%> <%if(contains(custom_type->input_file->dependencie, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%custom_type->input_file->dependencie%>)<%else%><%custom_type->input_file->dependencie%><%endif%><%endfor%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%><%foreach(dep, flag_overrides(custom_type->input_file, dependent))%> <%if(contains(dep, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%if(compares(vms_old_make, 1))%><%dep%><%else%>$(call ADD_ARCH,<%dep%>)<%endif%>)<%else%><%if(compares(vms_old_make, 1))%><%dep%><%else%>$(call ADD_ARCH,<%dep%>)<%endif%><%endif%><%endfor%><%else%><%if(custom_type->dependent)%><%foreach(custom_type->dependent)%> <%if(contains(custom_type->dependent, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%if(compares(vms_old_make, 1))%><%custom_type->dependent%><%else%>$(call ADD_ARCH,<%custom_type->dependent%>)<%endif%>)<%else%><%if(compares(vms_old_make, 1))%><%custom_type->dependent%><%else%>$(call ADD_ARCH,<%custom_type->dependent%>)<%endif%><%endif%><%endfor%><%endif%><%endif%>
+<%foreach(custom_type->input_file->output_files)%><%custom_type->input_file->output_file%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->input_file->dependencies)%><%foreach(custom_type->input_file->dependencies)%> <%if(contains(custom_type->input_file->dependencie, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%custom_type->input_file->dependencie%>)<%else%><%custom_type->input_file->dependencie%><%endif%><%endfor%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%><%foreach(dep, flag_overrides(custom_type->input_file, dependent))%> <%if(contains(dep, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%if(compares(vms_old_make, 1))%><%dep%><%else%>$(call ADD_ARCH,<%dep%>)<%endif%>)<%else%><%if(compares(vms_old_make, 1))%><%dep%><%else%>$(call ADD_ARCH,<%dep%>)<%endif%><%endif%><%endfor%><%else%><%if(custom_type->dependent)%><%foreach(custom_type->dependent)%> <%if(contains(custom_type->dependent, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%if(compares(vms_old_make, 1))%><%custom_type->dependent%><%else%>$(call ADD_ARCH,<%custom_type->dependent%>)<%endif%>)<%else%><%if(compares(vms_old_make, 1))%><%custom_type->dependent%><%else%>$(call ADD_ARCH,<%custom_type->dependent%>)<%endif%><%endif%><%endfor%><%endif%><%endif%>
 <%if(flag_overrides(custom_type->input_file, gendir))%>
 <%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%>
 	$(MKDIR) <%flag_overrides(custom_type->input_file, gendir)%>
@@ -741,7 +703,7 @@ incremental_depend_idl::
 
 realclean: clean
 ifneq ($(GENERATED_DIRTY),)
-	-$(RM) -r $(GENERATED_DIRTY)
+	-$(RM) -r $(filter-out $(PRECIOUS_FILES),$(GENERATED_DIRTY))
 endif
 <%if(postclean)%>
 	-<%eval(postclean)%>
@@ -766,6 +728,7 @@ endif
 <%if(postbuild)%>
 all: __postbuild__
 
+.PHONY: __postbuild__
 <%if(exename)%>
 __postbuild__: $(VBIN) $(INSTALL)
 <%else%>

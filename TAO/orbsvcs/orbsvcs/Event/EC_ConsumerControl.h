@@ -48,15 +48,15 @@ class TAO_RTEvent_Serv_Export TAO_EC_ConsumerControl
 {
 public:
   /// Constructor.
-  TAO_EC_ConsumerControl (void);
+  TAO_EC_ConsumerControl ();
 
   /// Destructor.
-  virtual ~TAO_EC_ConsumerControl (void);
+  virtual ~TAO_EC_ConsumerControl ();
 
   /// Activate any internal threads or timers used to poll the state of
   /// the consumers
-  virtual int activate (void);
-  virtual int shutdown (void);
+  virtual int activate ();
+  virtual int shutdown ();
 
   /**
    * When pushing an event to the consumer a CORBA::OBJECT_NOT_EXIST

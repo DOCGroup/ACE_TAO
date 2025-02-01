@@ -60,7 +60,7 @@ namespace TAO
       OwnCredentials (::X509 *cert, ::EVP_PKEY *evp);
 
       static OwnCredentials_ptr _duplicate (OwnCredentials_ptr obj);
-      static OwnCredentials_ptr _nil (void);
+      static OwnCredentials_ptr _nil ();
       static OwnCredentials_ptr _narrow (CORBA::Object_ptr obj);
 
       /**
@@ -70,7 +70,7 @@ namespace TAO
        * interface.
        */
       //@{
-      SecurityLevel3::CredentialsType creds_type (void);
+      SecurityLevel3::CredentialsType creds_type ();
       //@}
 
       /**
@@ -84,19 +84,17 @@ namespace TAO
 
       virtual SecurityLevel3::CredsAcceptor_ptr creds_acceptor ();
 
-      virtual void release_credentials (void);
+      virtual void release_credentials ();
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~OwnCredentials (void);
+      ~OwnCredentials ();
     };
-
   } // End SSLIOP namespace
 }  // End TAO namespace
 

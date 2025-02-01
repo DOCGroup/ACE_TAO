@@ -7,7 +7,6 @@
 #include "ace/Reactor.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Reactive_ConsumerEC_Control::
@@ -28,7 +27,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::
     this->orb_->orb_core ()->reactor ();
 }
 
-TAO_ECG_Reactive_ConsumerEC_Control::~TAO_ECG_Reactive_ConsumerEC_Control (void)
+TAO_ECG_Reactive_ConsumerEC_Control::~TAO_ECG_Reactive_ConsumerEC_Control ()
 {
 }
 
@@ -104,7 +103,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::handle_timeout (
 }
 
 int
-TAO_ECG_Reactive_ConsumerEC_Control::activate (void)
+TAO_ECG_Reactive_ConsumerEC_Control::activate ()
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   try
@@ -134,7 +133,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::activate (void)
         // handle_timeout uses these policies, if done in front, the channel
         // can crash when the timeout expires before initiazation is ready.
         timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
-                                                    0,
+                                                    nullptr,
                                                     this->rate_,
                                                     this->rate_);
         if (timer_id_ == -1)
@@ -151,7 +150,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::activate (void)
 }
 
 int
-TAO_ECG_Reactive_ConsumerEC_Control::shutdown (void)
+TAO_ECG_Reactive_ConsumerEC_Control::shutdown ()
 {
   int r = 0;
 
@@ -159,7 +158,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::shutdown (void)
   r = this->reactor_->cancel_timer (timer_id_);
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
-  this->adapter_.reactor (0);
+  this->adapter_.reactor (nullptr);
   return r;
 }
 
@@ -175,7 +174,6 @@ TAO_ECG_Reactive_ConsumerEC_Control::event_channel_not_exist (
       gateway->cleanup_consumer_ec ();
 
       gateway->cleanup_consumer_proxies ();
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -195,7 +193,6 @@ TAO_ECG_Reactive_ConsumerEC_Control::system_exception (
       gateway->cleanup_consumer_ec ();
 
       gateway->cleanup_consumer_proxies ();
-
     }
   catch (const CORBA::Exception&)
     {

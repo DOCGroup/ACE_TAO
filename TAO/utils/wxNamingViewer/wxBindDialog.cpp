@@ -12,7 +12,6 @@
 
 namespace  // anonymous
 {
-
 void create_dialog_components(wxDialog* dialog)
 {
   wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
@@ -62,7 +61,6 @@ void create_dialog_components(wxDialog* dialog)
   topsizer->SetSizeHints( dialog);
 }
 
-
 };  // anonymous
 
 
@@ -101,11 +99,8 @@ WxBindDialog::WxBindDialog(
   create_dialog_components( this);
 #endif  // defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
   if (isContext) {
-
     SetTitle( "Bind Context");
-
   } else {
-
     SetTitle( "Bind Object");
   }
   wxButton* ctrl = static_cast<wxButton*>( wxFindWindowByName(
@@ -148,14 +143,10 @@ bool WxBindDialog::TransferDataFromWindow()
   name[0].id = CORBA::string_dup( id);
   name[0].kind = CORBA::string_dup( kind);
   try {
-
     object = orb->string_to_object( ior);
-
   } catch(CORBA::Exception& ex) {
-
     wxMessageBox( ex._rep_id(), "Invalid IOR");
     object = CORBA::Object::_nil();
-
   }
   return true;
 }

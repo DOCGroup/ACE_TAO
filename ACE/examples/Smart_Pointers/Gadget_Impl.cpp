@@ -10,12 +10,12 @@
 #include "Gadget_Impl.h"
 #include "ace/Log_Msg.h"
 
-Gadget_Impl::Gadget_Impl (void)
+Gadget_Impl::Gadget_Impl ()
 {
   ACE_DEBUG ((LM_DEBUG, "Gadget_Impl constructor\n"));
 }
 
-Gadget_Impl::~Gadget_Impl (void)
+Gadget_Impl::~Gadget_Impl ()
 {
   ACE_DEBUG ((LM_DEBUG, "Gadget_Impl destructor\n"));
 }
@@ -25,7 +25,7 @@ void Gadget_Impl::add_part (Gadget_Part_var part)
   parts_.enqueue_tail (part);
 }
 
-Gadget_Part_var Gadget_Impl::remove_part (void)
+Gadget_Part_var Gadget_Impl::remove_part ()
 {
   Gadget_Part_var removed_part;
   if (parts_.dequeue_head (removed_part) == -1)
@@ -33,7 +33,7 @@ Gadget_Part_var Gadget_Impl::remove_part (void)
   return removed_part;
 }
 
-void Gadget_Impl::list_parts (void)
+void Gadget_Impl::list_parts ()
 {
   ACE_Unbounded_Queue_Iterator<Gadget_Part_var> iter (parts_);
   Gadget_Part_var *current_part;

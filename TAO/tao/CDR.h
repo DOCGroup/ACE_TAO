@@ -48,7 +48,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
+#include "tao/Basic_Types_IDLv4.h"
 #include "tao/GIOP_Message_Version.h"
 #include "tao/Message_Semantics.h"
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
@@ -163,7 +163,7 @@ public:
                  ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR);
 
   /// Destructor.
-  ~TAO_OutputCDR (void);
+  ~TAO_OutputCDR ();
 
   // @todo do we want a special method to write an array of
   // strings and wstrings?
@@ -190,7 +190,7 @@ public:
                         ACE_CDR::ULong pending_length);
 
   /// Are there more data fragments to come?
-  bool more_fragments (void) const;
+  bool more_fragments () const;
 
   /// Specify whether there are more data fragments to come.
   void more_fragments (bool more);
@@ -202,16 +202,16 @@ public:
                            ACE_Time_Value * timeout);
 
   /// Fragmented message request ID.
-  CORBA::ULong request_id (void) const;
+  CORBA::ULong request_id () const;
 
   /// Stub object associated with the request.
-  TAO_Stub * stub (void) const;
+  TAO_Stub * stub () const;
 
   /// Message semantics (twoway, oneway, reply)
-  TAO_Message_Semantics message_semantics (void) const;
+  TAO_Message_Semantics message_semantics () const;
 
   /// Maximum time to wait for outgoing message to be sent.
-  ACE_Time_Value * timeout (void) const;
+  ACE_Time_Value * timeout () const;
   //@}
 
   /// These methods are used by valuetype indirection support.
@@ -240,13 +240,12 @@ public:
   int offset (char* pos);
 
 private:
-
-  // disallow copying...
-  TAO_OutputCDR (const TAO_OutputCDR& rhs);
-  TAO_OutputCDR& operator= (const TAO_OutputCDR& rhs);
+  TAO_OutputCDR (const TAO_OutputCDR&rhs) = delete;
+  TAO_OutputCDR& operator= (const TAO_OutputCDR&) = delete;
+  TAO_OutputCDR (TAO_OutputCDR&&) = delete;
+  TAO_OutputCDR& operator= (TAO_OutputCDR&&) = delete;
 
 private:
-
   /**
    * @name Outgoing GIOP Fragment Related Attributes
    *
@@ -406,17 +405,19 @@ public:
                 TAO_ORB_Core* orb_core = 0);
 
   /// Initialize the contents of one CDR from another, without data
-  /// copying and with minimimum locking overhead.
+  /// copying and with minimum locking overhead.
   TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
                 TAO_ORB_Core* orb_core = 0);
 
+  TAO_InputCDR& operator= (const TAO_InputCDR&) = default;
+
   /// Destructor
-  virtual ~TAO_InputCDR (void);
+  virtual ~TAO_InputCDR ();
 
   // = TAO specific methods.
 
   /// Accessor
-  TAO_ORB_Core *orb_core (void) const;
+  TAO_ORB_Core *orb_core () const;
 
   ACE_Message_Block::Message_Flags
     clr_mb_flags( ACE_Message_Block::Message_Flags less_flags );
@@ -490,6 +491,8 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_wstring x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const std::string &x);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      const std::string_view &x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_std_string x);
 #if !defined(ACE_LACKS_STD_WSTRING)

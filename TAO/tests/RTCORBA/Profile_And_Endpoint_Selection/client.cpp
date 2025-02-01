@@ -91,16 +91,14 @@ parse_args (int argc, ACE_TCHAR **argv)
 
 class Client
 {
-
 public:
-
   Client (test_ptr test,
           CORBA::ORB_ptr orb,
           RTCORBA::Current_ptr current,
           RTCORBA::RTORB_ptr rt_orb,
           CORBA::PolicyManager_ptr policy_manager);
 
-  void vanilla_invocations (void);
+  void vanilla_invocations ();
 
   void priority_invocations (int debug);
 
@@ -108,19 +106,17 @@ public:
 
   void set_priority_bands (int debug);
 
-  void set_private_connection_policies (void);
+  void set_private_connection_policies ();
 
-  void reset_policies (void);
+  void reset_policies ();
 
 
 private:
-
   test_var test_;
   CORBA::ORB_var orb_;
   RTCORBA::Current_var current_;
   RTCORBA::RTORB_var rt_orb_;
   CORBA::PolicyManager_var policy_manager_;
-
 };
 
 class Worker_Thread : public ACE_Task_Base
@@ -132,9 +128,9 @@ public:
                  RTCORBA::Current_ptr current,
                  CORBA::Short priority);
 
-  int svc (void);
+  int svc ();
 
-  void validate_connection (void);
+  void validate_connection ();
 
 private:
   Client client_;
@@ -157,7 +153,7 @@ Worker_Thread::Worker_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 void
-Worker_Thread::validate_connection (void)
+Worker_Thread::validate_connection ()
 {
   // Try to validate the connection several times, ignoring transient
   // exceptions.  If the connection can still not be setup, return
@@ -191,7 +187,7 @@ Worker_Thread::validate_connection (void)
 }
 
 int
-Worker_Thread::svc (void)
+Worker_Thread::svc ()
 {
   try
     {
@@ -222,7 +218,7 @@ Client::Client (test_ptr test,
 }
 
 void
-Client::vanilla_invocations (void)
+Client::vanilla_invocations ()
 {
   for (int i = 0; i < iterations; i++)
     {
@@ -343,7 +339,7 @@ Client::set_priority_bands (int debug)
 }
 
 void
-Client::set_private_connection_policies (void)
+Client::set_private_connection_policies ()
 {
   CORBA::PolicyList policies;
   policies.length (1);
@@ -356,7 +352,7 @@ Client::set_private_connection_policies (void)
 }
 
 void
-Client::reset_policies (void)
+Client::reset_policies ()
 {
   CORBA::PolicyList empty_policies;
 
@@ -367,14 +363,12 @@ Client::reset_policies (void)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -385,7 +379,7 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   try
     {
@@ -478,7 +472,6 @@ Task::svc (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       CORBA::ORB_var orb =

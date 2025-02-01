@@ -12,6 +12,7 @@
 #include "native.h"
 #include "be_visitor_typecode/typecode_decl.h"
 #include "global_extern.h"
+#include <cstring>
 
 // ********************************************************************
 // Visitor implementation for the Native type
@@ -23,11 +24,7 @@ be_visitor_native_ch::be_visitor_native_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_native_ch::~be_visitor_native_ch (void)
-{
-}
-
-// Visit the native_ch node and its scope.
+/// Visit the native_ch node and its scope.
 int
 be_visitor_native_ch::visit_native (be_native *node)
 {
@@ -38,10 +35,7 @@ be_visitor_native_ch::visit_native (be_native *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__
-      << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   const char *node_name = node->full_name ();
 
@@ -71,15 +65,16 @@ be_visitor_native_ch::visit_native (be_native *node)
       // strip  the "Seq" ending to get the sample's name
       const char * node_name = node->full_name ();
       const size_t max_name_length = 2000;
-      if (ACE_OS::strlen (node_name) >= max_name_length)
+      const size_t node_name_length = std::strlen (node_name);
+      if (node_name_length >= max_name_length ||
+          node_name_length <= 3)
         {
           return -1;
         }
       char sample_name[max_name_length];
-      ACE_OS::strncpy (sample_name,
-                       node_name,
-                       ACE_OS::strlen (node_name) - 3);
-      sample_name[ACE_OS::strlen (node_name) - 3] = '\0';
+      // Copy node_name into sample_name and shorten to remove Seq suffix
+      std::strcpy (sample_name, node_name);
+      sample_name[node_name_length - 3] = '\0';
 
       *os << be_nl_2
           << "typedef ::TAO::DCPS::ZeroCopyDataSeq< "

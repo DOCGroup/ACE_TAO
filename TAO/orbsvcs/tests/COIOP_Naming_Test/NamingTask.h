@@ -14,7 +14,7 @@ public:
   void waitInit ();
   void end();
 
-  CosNaming::NamingContext_ptr root (void) const;
+  CosNaming::NamingContext_ptr root () const;
 
 private:
   CORBA::ORB_var orb_;

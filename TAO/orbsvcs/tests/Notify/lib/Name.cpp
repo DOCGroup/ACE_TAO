@@ -1,7 +1,6 @@
 #include "Name.h"
 
 
-
 #define TAO_Notify_Tests_DECLARE_NAME(target, name) \
 const char* const TAO_Notify_Tests_Name::target = name;
 

@@ -112,6 +112,8 @@ static AST_Decl *           idl_find_node (const char *);
 #undef ECHO
 #endif
 
+#define IDL4_KEYWORD(TOKEN_NAME) if (idl_global->idl_version_ >= IDL_VERSION_4) return TOKEN_NAME;
+
 %}
 
 /* SO we don't choke on files that use \r\n */
@@ -208,6 +210,20 @@ oneway          return IDL_ONEWAY;
 @annotation[^A-Za-z0-9_] return IDL_ANNOTATION_DECL; // Allow annotation names that start with "annotation"
 @ return IDL_ANNOTATION_SYMBOL;
 
+int8 IDL4_KEYWORD(IDL_INT8); REJECT;
+uint8 IDL4_KEYWORD(IDL_UINT8); REJECT;
+int16 IDL4_KEYWORD(IDL_INT16); REJECT;
+uint16 IDL4_KEYWORD(IDL_UINT16); REJECT;
+int32 IDL4_KEYWORD(IDL_INT32); REJECT;
+uint32 IDL4_KEYWORD(IDL_UINT32); REJECT;
+int64 IDL4_KEYWORD(IDL_INT64); REJECT;
+uint64 IDL4_KEYWORD(IDL_UINT64); REJECT;
+
+bitfield IDL4_KEYWORD(IDL_BITFIELD); REJECT;
+bitmask IDL4_KEYWORD(IDL_BITMASK); REJECT;
+bitset IDL4_KEYWORD(IDL_BITSET); REJECT;
+map IDL4_KEYWORD(IDL_MAP); REJECT;
+
 [a-ij-rs-zA-IJ-RS-Z_][a-ij-rs-zA-IJ-RS-Z0-9_]* {
   // Make sure that this identifier is not a C++ keyword. If it is,
   // prepend it with a _cxx_. Lookup in the perfect hash table for C++
@@ -285,7 +301,7 @@ oneway          return IDL_ONEWAY;
                   char * const tmp = ace_yytext;
                   for (size_t i = ACE_OS::strlen (tmp); i-- != 0; )
                     {
-                      if (isspace(tmp[i]))
+                      if (isspace (tmp[i]))
                         {
                           tmp[i] = '\0';
                         }
@@ -305,7 +321,7 @@ oneway          return IDL_ONEWAY;
                   char * const tmp = ACE_OS::strdup (ace_yytext);
                   for (size_t i = ACE_OS::strlen (tmp); i-- != 0; )
                     {
-                      if (isspace(tmp[i]))
+                      if (isspace (tmp[i]))
                         {
                           tmp[i] = '\0';
                         }
@@ -315,7 +331,8 @@ oneway          return IDL_ONEWAY;
                         }
                     }
                   tmp[ACE_OS::strlen (tmp) - 1] = '\0';
-                  tao_yylval.wsval = idl_wstring_escape_reader (tmp + 2);
+                  tao_yylval.wsval = ACE_OS::strdup (idl_wstring_escape_reader (tmp + 2));
+                  ACE_OS::free (tmp);
                   return IDL_WSTRING_LITERAL;
                 }
 "'"."'"         {
@@ -517,20 +534,6 @@ idl_parse_line_and_file (char *buf)
         }
 
       h[i] = '\0';
-#if defined (ACE_OPENVMS)
-      // translate this into *nix format as the OpenVMS preprocessor
-      // possibly produced VMS-style paths here.
-      char trans_path[MAXPATHLEN] = "";
-      char *temp_h = IDL_GlobalData::translateName (h, trans_path);
-      if (temp_h)
-        h = temp_h;
-      else
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Unable to construct full file pathname\n")));
-          throw Bailout ();
-        }
-#endif
       ACE_NEW (tmp,
                UTL_String (h, true));
       idl_global->update_prefix (tmp->get_string ());
@@ -549,21 +552,10 @@ idl_parse_line_and_file (char *buf)
 
   if (!is_real_filename)
     {
-#if defined (ACE_OPENVMS)
-      char full_path[MAXPATHLEN] = "";
-      char *full_fname = ACE_OS::realpath (fname->get_string (), full_path);
-      // I don't see the benefit of using ->compare since this is targeted at IDL identifiers
-      // not at filenames and in the case of OpenVMS (case-insensitive filesystem) gets really
-      // problematic as filenames retrieved through different mechanisms may give different
-      // casing.
-      is_main_filename = FE_Utils::path_cmp (idl_global->main_filename ()->get_string (),
-                                             full_fname) == 0;
-#else
       is_main_filename =
         fname->compare (idl_global->main_filename ())
         || same_file (fname->get_string (),
                       idl_global->main_filename ()->get_string ());
-#endif
     }
 
   if (is_real_filename || is_main_filename)
@@ -970,7 +962,7 @@ idl_store_pragma (char *buf)
 static ACE_CDR::LongLong
 idl_atoi (char *s, long b)
 {
-  ACE_CDR::LongLong r = ACE_CDR_LONGLONG_INITIALIZER;
+  ACE_CDR::LongLong r = 0;
 
   // Skip over the dash and possibly spaces after the dash
   while (*s == '-' || *s == ' ' || *s == '\t')
@@ -1250,33 +1242,29 @@ idl_get_pragma_string (char *pragma)
   // Get pointers to each end of the substring between the quotes.
   const char *firstquote = ACE_OS::strchr (pragma, '"');
 
-  if (firstquote == 0)
+  if (!firstquote)
     {
-      idl_global->err ()->syntax_error (
-          IDL_GlobalData::PS_PragmaPrefixSyntax
-        );
+      idl_global->err ()->syntax_error (IDL_GlobalData::PS_PragmaPrefixSyntax);
 
-      return 0;
+      return nullptr;
     }
 
   const char *start = firstquote + 1;
   const char *end = ACE_OS::strchr (start, '"');
 
-  if (end == 0)
+  if (!end)
     {
-      idl_global->err ()->syntax_error (
-          IDL_GlobalData::PS_PragmaPrefixSyntax
-        );
+      idl_global->err ()->syntax_error (IDL_GlobalData::PS_PragmaPrefixSyntax);
 
-      return 0;
+      return nullptr;
     }
 
-  int len = static_cast<int> (end - start);
-  char *retval = 0;
+  size_t const len = end - start;
+  char *retval {};
 
   ACE_NEW_RETURN (retval,
                   char[len + 1],
-                  0);
+                  nullptr);
 
   ACE_OS::strncpy (retval,
                    start,

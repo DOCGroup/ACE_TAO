@@ -1,7 +1,7 @@
 #include "Policy_Verifier.h"
 #include "ace/OS_NS_string.h"
 
-Policy_Verifier::Policy_Verifier (void)
+Policy_Verifier::Policy_Verifier ()
   : rt_object_properties_ (0)
   , rt_poa_properties_ (0)
   , priority_bands_ (0)
@@ -12,7 +12,7 @@ Policy_Verifier::Policy_Verifier (void)
                   ACE_TEXT("file://overridden.ior"));
 }
 
-Policy_Verifier::~Policy_Verifier (void)
+Policy_Verifier::~Policy_Verifier ()
 {
   delete rt_object_properties_;
   delete rt_poa_properties_;
@@ -110,7 +110,7 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Policy_Verifier::run ( )
+Policy_Verifier::run ()
 {
   this->verify_reference (this->base_object_.in (),
                           this->rt_poa_properties_);
@@ -123,7 +123,6 @@ void
 Policy_Verifier::verify_reference (Counter_ptr object,
                                    RT_Properties *rt_properties)
 {
-
   try
     {
       CORBA::Policy_var policy_var =
@@ -162,7 +161,6 @@ Policy_Verifier::verify_reference (Counter_ptr object,
       if (Policy_Verifier::check_reference (policy_var.in (),
                                           "Unable to get Priority Banded Policy\n"))
         {
-
           RTCORBA::PriorityBandedConnectionPolicy_var priority_banded_policy =
             RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy_var.in ());
 
@@ -170,7 +168,6 @@ Policy_Verifier::verify_reference (Counter_ptr object,
           if (Policy_Verifier::check_reference (priority_banded_policy.in (),
                                               "Unable to get Priority Banded Policy\n"))
             {
-
               // Here we have a priority banded connection policy.
 
               RTCORBA::PriorityBands_var pb =
@@ -195,7 +192,6 @@ Policy_Verifier::verify_reference (Counter_ptr object,
                        (pb[i].high !=  rt_properties->priority_bands ()[i].high)))
                     ACE_DEBUG ((LM_DEBUG,
                                 ACE_TEXT ("Mismatching Priority Band Range!\n")));
-
                 }
             }
         }
@@ -214,7 +210,6 @@ Policy_Verifier::verify_reference (Counter_ptr object,
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\nThe Client Protocol Type: %d\n"),
                         protocol_list[i].protocol_type));
-
         }
 
     }

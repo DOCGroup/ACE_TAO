@@ -11,16 +11,15 @@ Hello::Hello (CORBA::ORB_ptr orb,
 }
 
 void
-Hello::onewayTest (void)
+Hello::onewayTest ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) onewayTest() Upcall in process ..\n"));
-  return;
 }
 
 
 char *
-Hello::get_string (void)
+Hello::get_string ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
@@ -47,7 +46,7 @@ Hello::get_string (void)
             TAO::ORB_Table::instance ();
 
           TAO_ORB_Core_Auto_Ptr tmp (orb_table->find ("server_orb"));
-          if (tmp.get () == 0)
+          if (tmp.get () == nullptr)
             {
               // We are running on a single ORB and this is an error.
               ACE_ERROR ((LM_ERROR,
@@ -63,7 +62,7 @@ Hello::get_string (void)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

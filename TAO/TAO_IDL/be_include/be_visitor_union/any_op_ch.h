@@ -26,11 +26,10 @@
  */
 class be_visitor_union_any_op_ch : public be_visitor_union
 {
-
 public:
   be_visitor_union_any_op_ch (be_visitor_context *ctx);
 
-  ~be_visitor_union_any_op_ch (void);
+  ~be_visitor_union_any_op_ch ();
 
   virtual int visit_union (be_union *node);
 

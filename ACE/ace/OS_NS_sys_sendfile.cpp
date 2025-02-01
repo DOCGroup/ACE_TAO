@@ -1,9 +1,9 @@
 #include "ace/OS_NS_sys_sendfile.h"
 #include "ace/OS_NS_sys_mman.h"
 
-#if defined (ACE_WIN32) || defined (HPUX)
+#if defined (ACE_WIN32)
 # include "ace/OS_NS_sys_socket.h"
-#endif  /* ACE_WIN32 || HPUX */
+#endif  /* ACE_WIN32 */
 
 #include "ace/OS_NS_unistd.h"
 
@@ -50,7 +50,7 @@ ACE_OS::sendfile_emulation (ACE_HANDLE out_fd,
   else if (buf == MAP_FAILED)
     return -1;
 
-#if defined (ACE_WIN32) || defined (HPUX)
+#if defined (ACE_WIN32)
   ssize_t const r =
     ACE_OS::send (out_fd, static_cast<const char *> (buf), count);
 #else

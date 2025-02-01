@@ -46,7 +46,6 @@ public:
 
     // MFC Log class for ACE_Log_Msg.  To be used by ACE_DEBUG
     MFC_Log m_mfc_logger;
-
 };
 
 

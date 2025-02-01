@@ -8,8 +8,8 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 use strict;
 
-if ($^O eq 'hpux' || $^O eq 'lynxos') {
-    print "This test will not run properly on HP-UX or LynxOS.\n",
+if ($^O eq 'lynxos') {
+    print "This test will not run properly on LynxOS.\n",
         "When one process uses up all of the file descriptors, no other\n",
         "processes run by the same user can start.\n";
     exit(0);

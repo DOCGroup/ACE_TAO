@@ -144,7 +144,7 @@ int run_auto_test (const ACE_TCHAR *prog_name)
   ACE_Process_Options opts;
   pid_t child_pid;
   opts.command_line (ACE_TEXT ("%s -p %d -t %d -a -r"),
-                     prog_name, dgram_port, dgram_recv_timeout.msec ());
+                     prog_name, dgram_port, static_cast<int>(dgram_recv_timeout.msec ()));
   if ((child_pid = ACE_Process_Manager::instance ()->spawn (opts)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")), -1);
 
@@ -197,7 +197,7 @@ int run_auto_test (const ACE_TCHAR *prog_name)
   return (receiver_exit_code);
 }
 
-void print_usage (void)
+void print_usage ()
 {
   ACE_OS::printf("Usage:SOCK_Dgram_Bast_Test [-p port] [-n dgrams_no] [-t timeout_ms] [-s] [-r]\n"
                  "\tp broadcast port [14521]\n"
@@ -206,7 +206,7 @@ void print_usage (void)
                  "\ts send datagrams and exit\n"
                  "\tr receive one datagram and exit\n\n"
                  "\t  run auto-test when no r and s option is passed\n"
-                 "\t  test failures are minifested by -1 exit value, otherwise 0\n");
+                 "\t  test failures are manifested by -1 exit value, otherwise 0\n");
 }
 
 int run_main (int argc, ACE_TCHAR *argv[])

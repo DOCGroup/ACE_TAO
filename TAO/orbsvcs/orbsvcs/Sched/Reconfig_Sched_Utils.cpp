@@ -19,7 +19,6 @@
 
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ///////////////////////////
@@ -166,7 +165,6 @@ TAO_RT_Info_Ex::enabled_state ()
 {
   return this->enabled;
 }
-
 
 
 //////////////////////////////
@@ -444,7 +442,6 @@ register_tuples (TAO_RT_Info_Tuple ** tuple_ptr_array,
 
 
 
-
 // Accessor for original RT_Info data.
 
 TAO_RT_Info_Ex &
@@ -582,7 +579,6 @@ fwd_dfs_status (TAO_Reconfig_Scheduler_Entry::DFS_Status ds)
 }
 
 
-
 // Accessor for DFS traversal status of the node.
 
 TAO_Reconfig_Scheduler_Entry::DFS_Status
@@ -705,7 +701,7 @@ effective_exec_multiplier (CORBA::Long l)
 
 ///////////////////////////
 
-TAO_Reconfig_Sched_Entry_Visitor::~TAO_Reconfig_Sched_Entry_Visitor (void)
+TAO_Reconfig_Sched_Entry_Visitor::~TAO_Reconfig_Sched_Entry_Visitor ()
 {
 }
 
@@ -910,7 +906,7 @@ enabled_state (RtecScheduler::RT_Info_Enabled_Type_t et)
 
 ////////////////////////////////////////////
 
-TAO_RT_Info_Tuple_Visitor::~TAO_RT_Info_Tuple_Visitor (void)
+TAO_RT_Info_Tuple_Visitor::~TAO_RT_Info_Tuple_Visitor ()
 {
 }
 
@@ -1194,7 +1190,6 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
 
   return 0;
 }
-
 
 
 // Compares two RT_Info entries by priority alone.  Returns -1 if the

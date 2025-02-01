@@ -5,31 +5,31 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_Policy_Validator &
-TAO_Object_Adapter::validator (void)
+TAO_Object_Adapter::validator ()
 {
   return this->default_validator_;
 }
 
 ACE_INLINE TAO_POA_Policy_Set &
-TAO_Object_Adapter::default_poa_policies (void)
+TAO_Object_Adapter::default_poa_policies ()
 {
   return this->default_poa_policies_;
 }
 
 ACE_INLINE ACE_Lock &
-TAO_Object_Adapter::lock (void)
+TAO_Object_Adapter::lock ()
 {
   return *this->lock_;
 }
 
 ACE_INLINE TAO_SYNCH_MUTEX &
-TAO_Object_Adapter::thread_lock (void)
+TAO_Object_Adapter::thread_lock ()
 {
   return this->thread_lock_;
 }
 
 ACE_INLINE ACE_Reverse_Lock<ACE_Lock> &
-TAO_Object_Adapter::reverse_lock (void)
+TAO_Object_Adapter::reverse_lock ()
 {
   return this->reverse_lock_;
 }
@@ -50,12 +50,12 @@ TAO_Object_Adapter::locate_servant (const TAO::ObjectKey &key)
   return this->locate_servant_i (key);
 }
 
-ACE_INLINE TAO_SERVANT_LOCATION
+ACE_INLINE TAO_Servant_Location
 TAO_Object_Adapter::find_servant (const TAO::ObjectKey &key,
                                   PortableServer::Servant &servant)
 {
   // Lock access for the duration of this transaction.
-  TAO_OBJECT_ADAPTER_GUARD_RETURN (TAO_SERVANT_NOT_FOUND);
+  TAO_OBJECT_ADAPTER_GUARD_RETURN (Not_Found);
 
   return this->find_servant_i (key, servant);
 }
@@ -129,19 +129,19 @@ TAO_Object_Adapter::unbind_persistent_poa (const poa_name &folded_name,
 }
 
 ACE_INLINE TAO_Root_POA *
-TAO_Object_Adapter::root_poa (void) const
+TAO_Object_Adapter::root_poa () const
 {
   return this->root_;
 }
 
 ACE_INLINE TAO_ORB_Core &
-TAO_Object_Adapter::orb_core (void) const
+TAO_Object_Adapter::orb_core () const
 {
   return this->orb_core_;
 }
 
 ACE_INLINE TAO::Portable_Server::Non_Servant_Upcall *
-TAO_Object_Adapter::non_servant_upcall_in_progress (void) const
+TAO_Object_Adapter::non_servant_upcall_in_progress () const
 {
   return this->non_servant_upcall_in_progress_;
 }

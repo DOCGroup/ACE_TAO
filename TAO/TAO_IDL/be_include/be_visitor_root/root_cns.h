@@ -28,12 +28,12 @@ class be_visitor_root_cns : public be_visitor_root
 public:
   be_visitor_root_cns (be_visitor_context *ctx);
 
-  ~be_visitor_root_cns (void);
+  ~be_visitor_root_cns ();
 
   virtual int visit_root (be_root *node);
 
   /// Open file and initialize stream.
-  int init (void);
+  int init ();
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_CNS_H_ */

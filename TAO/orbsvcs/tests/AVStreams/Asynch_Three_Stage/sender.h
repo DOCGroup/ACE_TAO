@@ -58,17 +58,17 @@ class Sender
 {
 public:
   /// Constructor
-  Sender (void);
+  Sender ();
 
   /// Method to initialize the various data components.
   int init (int argc,
             ACE_TCHAR **argv);
 
   /// Method to pace and send data from a file.
-  int pace_data (void);
+  int pace_data ();
 
   /// Accessor to the connection manager.
-  Connection_Manager &connection_manager (void);
+  Connection_Manager &connection_manager ();
 
 private:
   /// Method to parse the command line arguments.

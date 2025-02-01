@@ -35,8 +35,8 @@ module PortableServer
 
     POAManager create_POAManager(
       in string id,
-      in CORBA::PolicyList policies
-    ) raises(ManagerAlreadyExists, CORBA::PolicyError);
+      in CORBA::PolicyList policies)
+        raises(ManagerAlreadyExists, CORBA::PolicyError);
 
     POAManagerSeq list();
 

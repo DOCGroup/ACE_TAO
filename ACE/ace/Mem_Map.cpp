@@ -20,7 +20,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Mem_Map)
 
 void
-ACE_Mem_Map::dump (void) const
+ACE_Mem_Map::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Mem_Map::dump");
@@ -37,7 +37,7 @@ ACE_Mem_Map::dump (void) const
 }
 
 int
-ACE_Mem_Map::close (void)
+ACE_Mem_Map::close ()
 {
   ACE_TRACE ("ACE_Mem_Map::close");
 
@@ -46,7 +46,7 @@ ACE_Mem_Map::close (void)
   return this->close_handle ();
 }
 
-ACE_Mem_Map::~ACE_Mem_Map (void)
+ACE_Mem_Map::~ACE_Mem_Map ()
 {
   ACE_TRACE ("ACE_Mem_Map::~ACE_Mem_Map");
 
@@ -188,8 +188,6 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
 
 #if defined (INTEGRITY)  || defined (__QNXNTO__) || defined (ACE_VXWORKS)
   this->handle_ = ACE_OS::shm_open (file_name, flags, perms, sa);
-#elif defined (ACE_OPENVMS)
-  ACE_OSCALL (::open (file_name, flags, perms, "shr=get,put,upd"), ACE_HANDLE, -1, this->handle_);
 #else
   this->handle_ = ACE_OS::open (file_name, flags, perms, sa);
 #endif /* INTEGRITY */
@@ -236,7 +234,7 @@ ACE_Mem_Map::map (const ACE_TCHAR *file_name,
                          sa);
 }
 
-ACE_Mem_Map::ACE_Mem_Map (void)
+ACE_Mem_Map::ACE_Mem_Map ()
   : base_addr_ (MAP_FAILED),
     length_ (0),
     handle_ (ACE_INVALID_HANDLE),
@@ -248,7 +246,6 @@ ACE_Mem_Map::ACE_Mem_Map (void)
 }
 
 // Map a file specified by FILE_NAME.
-
 ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
                           size_t len,
                           int flags,
@@ -281,7 +278,6 @@ ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
 
 // Map a file from an open file descriptor HANDLE.  This function will
 // lookup the length of the file if it is not given.
-
 ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
                           size_t len,
                           int prot,
@@ -315,7 +311,7 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
 // Close down and remove the file from the file system.
 
 int
-ACE_Mem_Map::remove (void)
+ACE_Mem_Map::remove ()
 {
   ACE_TRACE ("ACE_Mem_Map::remove");
 

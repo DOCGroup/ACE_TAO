@@ -46,14 +46,14 @@ class TAO_RTEvent_Serv_Export TAO_EC_Timeout_Generator
 {
 public:
   /// destructor
-  virtual ~TAO_EC_Timeout_Generator (void);
+  virtual ~TAO_EC_Timeout_Generator ();
 
   /// Activate any internal threads.
-  virtual void activate (void) = 0;
+  virtual void activate () = 0;
 
   /// Deactivate any internal threads, clients can destroy the object
   /// after calling this method.
-  virtual void shutdown (void) = 0;
+  virtual void shutdown () = 0;
 
   /// Add a timer at the given priority, returns the timer ID.
   virtual int schedule_timer (TAO_EC_Timeout_Filter* filter,
@@ -80,7 +80,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Timeout_Adapter : public ACE_Event_Handler
 {
 public:
   /// Default construction.
-  TAO_EC_Timeout_Adapter (void);
+  TAO_EC_Timeout_Adapter ();
 
 private:
   /// Casts @a act to EC_Filter and dispatches an event to it.

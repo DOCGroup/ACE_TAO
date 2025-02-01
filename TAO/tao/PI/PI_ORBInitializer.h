@@ -37,7 +37,6 @@ class TAO_PI_Export TAO_PI_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name PortableInterceptor::ORBInitializer methods
    *
@@ -51,7 +50,6 @@ public:
   //@}
 
 private:
-
   /// Register PortableInterceptor policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 

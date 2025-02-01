@@ -137,7 +137,7 @@ ACE_OS::closesocket (ACE_HANDLE handle)
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
 #else
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_OSCALL_RETURN (::close (handle), int, -1);
+  return ::close (handle);
   //FUZZ: enable check_for_lack_ACE_OS
 #endif /* ACE_WIN32 */
 }
@@ -400,13 +400,6 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
     }
   else
     {
-#  if defined (ACE_HAS_PHARLAP)
-      // Pharlap ETS (at least to v13) returns a legit address but doesn't
-      // include the sin_zero[8] bytes in the count. Correct for this here.
-      if (addrlen != 0 && addr != 0 &&
-          *addrlen == 8 && addr->sa_family == AF_INET)
-        *addrlen = sizeof(sockaddr_in);
-#  endif /* ACE_HAS_PHARLAP */
       return result;
     }
 #else /* non Win32 */
@@ -472,16 +465,17 @@ ACE_OS::recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags)
 #if !defined (ACE_LACKS_RECVMSG)
 # if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   DWORD bytes_received = 0;
-
-  int result = ::WSARecvFrom ((SOCKET) handle,
-                              (WSABUF *) msg->msg_iov,
-                              msg->msg_iovlen,
-                              &bytes_received,
-                              (DWORD *) &flags,
-                              msg->msg_name,
-                              &msg->msg_namelen,
-                              0,
-                              0);
+  int const result = msg->msg_control
+    ? recvmsg_win32_i (handle, msg, flags, bytes_received)
+    : ::WSARecvFrom ((SOCKET) handle,
+                     (WSABUF *) msg->msg_iov,
+                     msg->msg_iovlen,
+                     &bytes_received,
+                     (DWORD *) &flags,
+                     msg->msg_name,
+                     &msg->msg_namelen,
+                     0,
+                     0);
 
   if (result != 0)
     {
@@ -628,15 +622,17 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
 #if !defined (ACE_LACKS_SENDMSG)
 # if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   DWORD bytes_sent = 0;
-  int result = ::WSASendTo ((SOCKET) handle,
-                            (WSABUF *) msg->msg_iov,
-                            msg->msg_iovlen,
-                            &bytes_sent,
-                            flags,
-                            msg->msg_name,
-                            msg->msg_namelen,
-                            0,
-                            0);
+  int const result = msg->msg_control
+    ? sendmsg_win32_i (handle, msg, flags, bytes_sent)
+    : ::WSASendTo ((SOCKET) handle,
+                   (WSABUF *) msg->msg_iov,
+                   msg->msg_iovlen,
+                   &bytes_sent,
+                   flags,
+                   msg->msg_name,
+                   msg->msg_namelen,
+                   0,
+                   0);
 
   if (result != 0)
     {
@@ -1012,59 +1008,58 @@ ACE_OS::socketpair (int domain, int type,
 
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::socketpair (domain, type, protocol, sv),
-                     int, -1);
+  return ::socketpair (domain, type, protocol, sv);
 #endif /* ACE_LACKS_SOCKETPAIR */
 }
 
-#if defined (ACE_LINUX) && defined (ACE_HAS_IPV6)
 ACE_INLINE unsigned int
 ACE_OS::if_nametoindex (const char *ifname)
 {
   ACE_OS_TRACE ("ACE_OS::if_nametoindex");
-#if defined (ACE_LACKS_IF_NAME_INDEX)
+#ifdef ACE_LACKS_IF_NAMETOINDEX
   ACE_UNUSED_ARG (ifname);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::if_nametoindex (ifname), int, 0);
-#endif /* ACE_LACKS_IF_NAME_INDEX */
+  return ::if_nametoindex (ifname);
+#endif /* ACE_LACKS_IF_NAMETOINDEX */
 }
 
 ACE_INLINE char *
 ACE_OS::if_indextoname (unsigned int ifindex, char *ifname)
 {
   ACE_OS_TRACE ("ACE_OS::if_indextoname");
-#if defined (ACE_LACKS_IF_NAME_INDEX)
+#ifdef ACE_LACKS_IF_NAMETOINDEX
   ACE_UNUSED_ARG (ifindex);
   ACE_UNUSED_ARG (ifname);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::if_indextoname (ifindex, ifname), char *, 0);
-#endif /* ACE_LACKS_IF_NAME_INDEX */
+  return ::if_indextoname (ifindex, ifname);
+#endif /* ACE_LACKS_IF_NAMETOINDEX */
 }
 
 ACE_INLINE struct if_nameindex *
-ACE_OS::if_nameindex (void)
+ACE_OS::if_nameindex ()
 {
   ACE_OS_TRACE ("ACE_OS::if_nameindex");
-#if defined (ACE_LACKS_IF_NAME_INDEX)
+#ifdef ACE_LACKS_IF_NAMEINDEX
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::if_nameindex (), struct if_nameindex *, 0);
-#endif /* ACE_LACKS_IF_NAME_INDEX */
+  return ::if_nameindex ();
+#endif /* ACE_LACKS_IF_NAMEINDEX */
 }
 
 ACE_INLINE void
 ACE_OS::if_freenameindex (struct if_nameindex *ptr)
 {
   ACE_OS_TRACE ("ACE_OS::if_freenameindex");
-#if defined (ACE_LACKS_IF_NAME_INDEX)
+#ifdef ACE_LACKS_IF_NAMEINDEX
   ACE_UNUSED_ARG (ptr);
 #else
-  if (ptr != 0)
+  if (ptr)
+  {
     ::if_freenameindex (ptr);
-#endif /* ACE_LACKS_IF_NAME_INDEX */
+  }
+#endif /* ACE_LACKS_IF_NAMEINDEX */
 }
-#endif /* ACE_LINUX && ACE_HAS_IPV6 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

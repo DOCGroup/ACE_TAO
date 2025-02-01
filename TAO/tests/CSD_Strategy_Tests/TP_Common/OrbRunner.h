@@ -6,18 +6,15 @@
 
 class CSD_TP_Test_Export OrbRunner
 {
-  public:
+public:
+  OrbRunner(CORBA::ORB_ptr orb, unsigned num_orb_threads = 1);
+  virtual ~OrbRunner();
 
-    OrbRunner(CORBA::ORB_ptr orb, unsigned num_orb_threads = 1);
-    virtual ~OrbRunner();
+  void run();
 
-    void run(void);
-
-
-  private:
-
-    CORBA::ORB_var orb_;
-    unsigned       num_orb_threads_;
+private:
+  CORBA::ORB_var orb_;
+  unsigned       num_orb_threads_;
 };
 
 #endif

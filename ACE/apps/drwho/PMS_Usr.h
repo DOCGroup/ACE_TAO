@@ -21,9 +21,8 @@
  */
 class PMS_Usr : public PM_Server
 {
-
 public:
-  PMS_Usr (void);
+  PMS_Usr ();
 
 protected:
   virtual int encode (char *packet, int &total_bytes);

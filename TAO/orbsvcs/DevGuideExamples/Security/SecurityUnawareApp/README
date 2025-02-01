@@ -44,7 +44,7 @@ server and therefore does not need a value for SSL_CERT_FILE.
 Example 1: Secured server and unsecured client
 ----------------------------------------------
 The server is configured to accept requests only via secured
-connections.  No specific configurationi is provided for the
+connections.  No specific configuration is provided for the
 client so it has the default configuration.
 
 The server's configuration is:

@@ -41,22 +41,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
+/**
+ * Run the client thread
+ *
+ * Use the ACE_Task_Base class to run the client threads.
+ */
 class Manipulation : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run the client thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the client threads.
-  //
 public:
   Manipulation (CORBA::ORB_ptr orb,
                 Test_ptr test,
                 int niterations);
-  // ctor
 
-  virtual int svc (void);
-  // The thread entry point.
+  /// The thread entry point.
+  virtual int svc ();
 
 private:
   void perform_iteration (unsigned int *seed,
@@ -65,14 +63,14 @@ private:
                           CORBA::PolicyCurrent_ptr policy_current);
 
 private:
+  /// The ORB pointer
   CORBA::ORB_var orb_;
-  // The ORB pointer
 
+  /// The test object reference
   Test_var test_;
-  // The test object reference
 
+  /// The number of iterations on this thread
   int niterations_;
-  // The number of iterations on this thread
 };
 
 int
@@ -271,7 +269,7 @@ Manipulation::perform_iteration (unsigned int *seed,
 
 
 int
-Manipulation::svc (void)
+Manipulation::svc ()
 {
   try
     {

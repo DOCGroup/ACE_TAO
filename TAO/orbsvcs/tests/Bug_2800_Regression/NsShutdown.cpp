@@ -6,7 +6,7 @@ NsShutdown::NsShutdown (CORBA::ORB_ptr orb)
 }
 
 void
-NsShutdown::shutdown (void)
+NsShutdown::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

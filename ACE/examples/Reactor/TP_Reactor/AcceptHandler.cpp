@@ -8,10 +8,9 @@
 #include "AcceptHandler.h"
 #include "ReadHandler.h"
 
-#include <ace/Auto_Ptr.h>
 #include <ace/INET_Addr.h>
 #include <ace/Log_Msg.h>
-
+#include <memory>
 
 AcceptHandler:: AcceptHandler(ACE_Reactor *reactor) :
         ACE_Event_Handler(),
@@ -24,8 +23,8 @@ AcceptHandler::~AcceptHandler() {
     ACE_TRACE("AcceptHandler::~AcceptHandler()");
 }
 
-int AcceptHandler::open(void) {
-    ACE_TRACE("AcceptHandler::open(void)");
+int AcceptHandler::open() {
+    ACE_TRACE("AcceptHandler::open()");
 
     // create the local address used for the service (PORT is from common.h)
     ACE_INET_Addr addr(PORT);
@@ -52,8 +51,8 @@ int AcceptHandler::open(void) {
     return 0;
 }
 
-ACE_HANDLE AcceptHandler::get_handle(void) const {
-    ACE_TRACE("AcceptHandler::get_handle(void)");
+ACE_HANDLE AcceptHandler::get_handle() const {
+    ACE_TRACE("AcceptHandler::get_handle()");
     return mAcceptor.get_handle();
 }
 
@@ -69,8 +68,8 @@ int AcceptHandler::handle_input(ACE_HANDLE) {
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to allocate ")
                         ACE_TEXT ("reader. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
 
-    // put reader in an auto pointer so we can use ACE_ERROR_RETURN safely
-    auto_ptr<ReadHandler> pReader(reader);
+    // put reader in an unique pointer so we can use ACE_ERROR_RETURN safely
+    std::unique_ptr<ReadHandler> pReader(reader);
 
     // accept the connection using the reader's stream
     if (mAcceptor.accept(reader->getStream(), &clientAddr) == -1)

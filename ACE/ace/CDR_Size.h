@@ -45,13 +45,13 @@ public:
                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Returns @c false if an error has occurred.
-  bool good_bit (void) const;
+  bool good_bit () const;
 
   /// Reset current size.
-  void reset (void);
+  void reset ();
 
   /// Return current size.
-  size_t total_length (void) const;
+  size_t total_length () const;
 
   // Return 0 on failure and 1 on success.
   //@{ @name Size-calculating pseudo-write operations
@@ -79,6 +79,7 @@ public:
   ACE_CDR::Boolean write_wstring (ACE_CDR::ULong length,
                                   const ACE_CDR::WChar *x);
   ACE_CDR::Boolean write_string (const std::string &x);
+  ACE_CDR::Boolean write_string_view (const std::string_view &x);
 #if !defined(ACE_LACKS_STD_WSTRING)
   ACE_CDR::Boolean write_wstring (const std::wstring &x);
 #endif
@@ -116,7 +117,7 @@ public:
                                            ACE_CDR::ULong length);
 
   ///
-  /// Adjust to @a size and count <size> octets.
+  /// Adjust to @a size and count @a size octets.
   void adjust (size_t size);
 
   /// As above, but now the size and alignment requirements may be
@@ -125,9 +126,10 @@ public:
                size_t align);
 
 private:
-  /// disallow copying...
-  ACE_SizeCDR (const ACE_SizeCDR& rhs);
-  ACE_SizeCDR& operator= (const ACE_SizeCDR& rhs);
+  ACE_SizeCDR (const ACE_SizeCDR&) = delete;
+  ACE_SizeCDR& operator= (const ACE_SizeCDR&) = delete;
+  ACE_SizeCDR (ACE_SizeCDR&&) = delete;
+  ACE_SizeCDR& operator= (ACE_SizeCDR&&) = delete;
 
   ACE_CDR::Boolean write_1 (const ACE_CDR::Octet *x);
   ACE_CDR::Boolean write_2 (const ACE_CDR::UShort *x);
@@ -157,7 +159,7 @@ private:
                                         ACE_CDR::ULong length);
 
 private:
-  /// Set to false when an error ocurrs.
+  /// Set to false when an error occurs.
   bool good_bit_;
 
   /// Current size.
@@ -229,6 +231,8 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
                                                const ACE_CDR::WChar* x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
                                                const std::string& x);
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
+                                               const std::string_view& x);
 #if !defined(ACE_LACKS_STD_WSTRING)
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
                                                const std::wstring& x);

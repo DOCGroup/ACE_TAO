@@ -178,7 +178,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           mmdevice->add_fdev (pong_fdev.in ());
         }
 
-      orb->run ( );
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
@@ -190,7 +190,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       recv_latency.dump_results (ACE_TEXT("Receive"), gsf);
 
       send_latency.dump_results (ACE_TEXT("Send"), gsf);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -203,7 +202,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Pong_Recv::Pong_Recv (void)
+Pong_Recv::Pong_Recv ()
   :  TAO_FlowConsumer ("Pong",
                        pong_protocols,
                        "UNS:pong")
@@ -220,7 +219,7 @@ Pong_Recv::get_callback (const char *,
 }
 
 int
-Pong_Recv_Callback::handle_stop (void)
+Pong_Recv_Callback::handle_stop ()
 {
   // ACE_DEBUG ((LM_DEBUG,"Pong_Recv_Callback::stop"));
   TAO_AV_CORE::instance ()->orb ()->shutdown ();
@@ -260,7 +259,7 @@ Pong_Recv_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-Pong_Recv_Callback::handle_destroy (void)
+Pong_Recv_Callback::handle_destroy ()
 {
   ACE_DEBUG ((LM_DEBUG,"Pong_Recv_Callback::destroy\n"));
   return 0;
@@ -268,7 +267,7 @@ Pong_Recv_Callback::handle_destroy (void)
 
 // ****************************************************************
 
-Ping_Send::Ping_Send (void)
+Ping_Send::Ping_Send ()
   :  TAO_FlowProducer ("Ping",
                        ping_protocols,
                        "UNS:ping")
@@ -284,7 +283,7 @@ Ping_Send::get_callback (const char *,
   return 0;
 }
 
-Ping_Send_Callback::Ping_Send_Callback (void)
+Ping_Send_Callback::Ping_Send_Callback ()
   :count_ (0)
 {
   this->timeout_ = ACE_Time_Value (2);
@@ -303,7 +302,6 @@ Ping_Send_Callback::get_timeout (ACE_Time_Value *&tv,
 int
 Ping_Send_Callback::handle_timeout (void *)
 {
-
   this->count_++;
 
   ACE_DEBUG ((LM_DEBUG, "Ping timeout frame %d\n", this->count_));
@@ -336,7 +334,7 @@ Ping_Send_Callback::handle_timeout (void *)
 }
 
 int
-Ping_Send_Callback::handle_end_stream (void)
+Ping_Send_Callback::handle_end_stream ()
 {
   return 0;
 }

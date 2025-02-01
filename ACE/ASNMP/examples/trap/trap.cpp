@@ -37,13 +37,13 @@
 // SNMPv1 Trap Application
 //
 class trapapp {
-  public:
+public:
   trapapp(int argc, char **argv); // process command line args
   int valid() const;             // verify transaction can proceed
   int run();                     //  issue transaction
   static void usage();           // operator help message
 
-  private:
+private:
   trapapp(const trapapp&);
 
   UdpAddress address_;

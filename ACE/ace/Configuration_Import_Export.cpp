@@ -11,16 +11,8 @@ ACE_Config_ImpExp_Base::ACE_Config_ImpExp_Base (ACE_Configuration& config)
 {
 }
 
-ACE_Config_ImpExp_Base::~ACE_Config_ImpExp_Base (void)
-{
-}
-
 ACE_Registry_ImpExp::ACE_Registry_ImpExp (ACE_Configuration& config)
     : ACE_Config_ImpExp_Base (config)
-{
-}
-
-ACE_Registry_ImpExp::~ACE_Registry_ImpExp (void)
 {
 }
 
@@ -410,7 +402,6 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
   int index = 0;
   ACE_TString name;
   ACE_Configuration_Section_Key sub_key;
-  ACE_TString sub_section;
   while (!config_.enumerate_sections (section, index, name))
     {
       ACE_TString sub_section (path);
@@ -466,10 +457,6 @@ ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
 
 ACE_Ini_ImpExp::ACE_Ini_ImpExp (ACE_Configuration& config)
     : ACE_Config_ImpExp_Base (config)
-{
-}
-
-ACE_Ini_ImpExp::~ACE_Ini_ImpExp (void)
 {
 }
 
@@ -686,7 +673,6 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
               }
             default:
               return -3;
-
             }// end switch on type
 
           line += ACE_TEXT ("\n");
@@ -699,7 +685,6 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
   int index = 0;
   ACE_TString name;
   ACE_Configuration_Section_Key sub_key;
-  ACE_TString sub_section;
   while (!config_.enumerate_sections (section, index, name))
     {
       ACE_TString sub_section (path);
@@ -713,7 +698,6 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
       ++index;
     }
   return 0;
-
 }
 
 // Method to squish leading and trailing whitespaces from a string.

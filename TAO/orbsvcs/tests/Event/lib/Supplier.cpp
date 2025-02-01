@@ -129,7 +129,7 @@ EC_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
 }
 
 void
-EC_Supplier::disconnect (void)
+EC_Supplier::disconnect ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -141,7 +141,7 @@ EC_Supplier::disconnect (void)
 }
 
 void
-EC_Supplier::shutdown (void)
+EC_Supplier::shutdown ()
 {
   if (!this->is_active_)
     return;
@@ -157,7 +157,7 @@ EC_Supplier::shutdown (void)
 }
 
 void
-EC_Supplier::disconnect_push_supplier (void)
+EC_Supplier::disconnect_push_supplier ()
 {
   this->driver_->supplier_disconnect (this->cookie_);
   this->consumer_proxy_ =
@@ -202,9 +202,8 @@ EC_Supplier_Task::EC_Supplier_Task (EC_Supplier* supplier,
 }
 
 int
-EC_Supplier_Task::svc (void)
+EC_Supplier_Task::svc ()
 {
-
   // Initialize a time value to pace the test
   ACE_Time_Value tv (0, this->burst_pause_);
 
@@ -234,7 +233,6 @@ EC_Supplier_Task::svc (void)
               // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
 
               this->supplier_->send_event (event);
-
             }
           catch (const CORBA::SystemException& sys_ex)
             {

@@ -6,7 +6,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Category.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/OS_NS_sys_mman.h"
 #include "ace/OS_NS_string.h"
@@ -19,16 +18,9 @@
 #include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1  */
 
-
-
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
-#if !defined (ACE_HAS_WINCE)
-#define ACE_MAP_FILE(_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd)\
+#if defined (ACE_WIN32)
+#define ACE_MAP_FILE(_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd) \
   MapViewOfFileEx (_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd)
-#else //if !defined (ACE_HAS_WINCE)
-#define ACE_MAP_FILE(_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd)\
-  MapViewOfFile (_hnd, _access, _offHigh, _offLow, _nBytes)
-#endif /* !ACE_HAS_WINCE */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -57,26 +49,22 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_sto
     {
       this->local_cb_.req_base_ = options->base_addr_;
       this->local_cb_.mapped_base_ = 0;
-      this->local_cb_.sh_.max_size_ =
-        options->max_size_;
+      this->local_cb_.sh_.max_size_ = options->max_size_;
       this->local_cb_.sh_.mapped_size_ = 0;
-      this->local_cb_.sh_.free_offset_ =
-        this->local_cb_.sh_.mapped_size_;
+      this->local_cb_.sh_.free_offset_ = this->local_cb_.sh_.mapped_size_;
       this->local_cb_.sh_.free_size_ = 0;
     }
   else
     {
       this->local_cb_.req_base_ = 0;
       this->local_cb_.mapped_base_ = 0;
-      this->local_cb_.sh_.max_size_ =
-        this->round_to_chunk_size (page_size_) ;
+      this->local_cb_.sh_.max_size_ = this->round_to_chunk_size (page_size_) ;
       this->local_cb_.sh_.mapped_size_ = 0;
-      this->local_cb_.sh_.free_offset_ =
-        this->local_cb_.sh_.mapped_size_;
+      this->local_cb_.sh_.free_offset_ = this->local_cb_.sh_.mapped_size_;
       this->local_cb_.sh_.free_size_ = 0;
     }
 
-  int update_backing_store_name = backing_store_name == 0 ? 0 : 1;
+  int const update_backing_store_name = backing_store_name == 0 ? 0 : 1;
 
   if (backing_store_name == 0)
     // Only create a new unique filename for the backing store file if
@@ -91,10 +79,6 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_sto
       && ACE_OS::strlen (this->backing_store_name_) < sizeof this->backing_store_name_)
       ACE_OS::strcat (this->backing_store_name_,
                       ACE_TEXT ("_"));
-}
-
-ACE_Pagefile_Memory_Pool::~ACE_Pagefile_Memory_Pool (void)
-{
 }
 
 void *
@@ -189,7 +173,7 @@ ACE_Pagefile_Memory_Pool::remap (void *addr)
 }
 
 int
-ACE_Pagefile_Memory_Pool::unmap (void)
+ACE_Pagefile_Memory_Pool::unmap ()
 {
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
   ACE_BASED_POINTER_REPOSITORY::instance ()->unbind
@@ -232,7 +216,6 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
   // Create file mapping, if not yet done
   if (object_handle_ == 0)
     {
-#if !defined (ACE_LACKS_WIN32_SECURITY_DESCRIPTORS)
       // Allow access by all users.
       SECURITY_ATTRIBUTES sa;
       SECURITY_DESCRIPTOR sd;
@@ -245,7 +228,6 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
       sa.nLength = sizeof (SECURITY_ATTRIBUTES);
       sa.lpSecurityDescriptor = &sd;
       sa.bInheritHandle = FALSE;
-#endif /* ACE_LACKS_WIN32_SECURITY_DESCRIPTORS */
 
       // Get an object handle to the named reserved memory object.
       DWORD size_high;
@@ -260,11 +242,7 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
 
       object_handle_ =
         ACE_TEXT_CreateFileMapping (INVALID_HANDLE_VALUE,
-#if !defined (ACE_LACKS_WIN32_SECURITY_DESCRIPTORS)
                                     &sa,
-#else
-                                    0,
-#endif /* !ACE_LACKS_WIN32_SECURITY_DESCRIPTORS */
                                     PAGE_READWRITE | SEC_RESERVE,
                                     size_high,
                                     size_low,
@@ -384,4 +362,4 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */

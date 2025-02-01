@@ -4,31 +4,29 @@
 #include "MessengerS.h"
 
 #include "orbsvcs/CosNotifyChannelAdminC.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 class EventSequenceSupplier_i;
 
 class  Messenger_i : public POA_Messenger
 {
- public:
+public:
   Messenger_i (CORBA::ORB_ptr orb);
 
-  virtual ~Messenger_i (void);
+  virtual ~Messenger_i ();
 
   CORBA::Boolean send_message (
       const char * user_name,
       const char * subject,
-      char *& message
-    );
+      char *& message);
 
- private:
+private:
   CORBA::ORB_var orb_;
   CosNotifyChannelAdmin::SequenceProxyPushConsumer_var consumer_proxy_;
-  auto_ptr<EventSequenceSupplier_i> supplier_;
+  std::unique_ptr<EventSequenceSupplier_i> supplier_;
 };
 
 #endif
-
 
 
 

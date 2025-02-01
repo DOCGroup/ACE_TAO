@@ -13,17 +13,14 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Blocked_Connect_Strategy.h"
 #include "ace/OS_NS_strings.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (void)
+TAO_SHMIOP_Connector::TAO_SHMIOP_Connector ()
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     connect_strategy_ (),
     base_connector_ (0)
-{
-}
-
-TAO_SHMIOP_Connector::~TAO_SHMIOP_Connector (void)
 {
 }
 
@@ -72,7 +69,7 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_SHMIOP_Connector::close (void)
+TAO_SHMIOP_Connector::close ()
 {
   delete this->base_connector_.concurrency_strategy ();
   delete this->base_connector_.creation_strategy ();
@@ -275,7 +272,7 @@ TAO_SHMIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_SHMIOP_Connector::make_profile (void)
+TAO_SHMIOP_Connector::make_profile ()
 {
   // The endpoint should be of the form:
   //    N.n@port/object_key
@@ -303,10 +300,10 @@ TAO_SHMIOP_Connector::check_prefix (const char *endpoint)
 
   const char *protocol[] = { "shmiop", "shmioploc" };
 
-  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  size_t const slot = std::strchr (endpoint, ':') - endpoint;
 
-  size_t len0 = ACE_OS::strlen (protocol[0]);
-  size_t len1 = ACE_OS::strlen (protocol[1]);
+  size_t const len0 = std::strlen (protocol[0]);
+  size_t const len1 = std::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
@@ -323,7 +320,7 @@ TAO_SHMIOP_Connector::check_prefix (const char *endpoint)
 }
 
 char
-TAO_SHMIOP_Connector::object_key_delimiter (void) const
+TAO_SHMIOP_Connector::object_key_delimiter () const
 {
   return TAO_SHMIOP_Profile::object_key_delimiter_;
 }

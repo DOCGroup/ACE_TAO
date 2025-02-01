@@ -25,11 +25,7 @@
 #include "tao/orbconf.h"
 
 #include "ace/Thread_Mutex.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -50,8 +46,8 @@ namespace TAO
    *   class MyHostClass : private RefCountPolicy
    *   {
    *   public:
-   *     void my_add_ref (void)    { this->RefCountPolicy::add_ref (); }
-   *     void my_remove_ref (void) { this->RefCountPolicy::remove_ref (); }
+   *     void my_add_ref () { this->RefCountPolicy::add_ref (); }
+   *     void my_remove_ref () { this->RefCountPolicy::remove_ref (); }
    *   };
    * @endcode
    *
@@ -73,9 +69,8 @@ namespace TAO
   class TAO_AnyTypeCode_Export True_RefCount_Policy
   {
   public:
-
     /// Increase the reference count on this object.
-    void add_ref (void);
+    void add_ref ();
 
     /// Decrease the reference count on this object.
     /**
@@ -83,16 +78,15 @@ namespace TAO
      * reference count drops to zero, call @c operator @c delete()
      * on this object.
      */
-    void remove_ref (void);
+    void remove_ref ();
 
   protected:
-
     /// Constructor.
     /**
      * @note This constructor is protected since it not meant to be
      *       instantiated/used as a standalone object.
      */
-    True_RefCount_Policy (void);
+    True_RefCount_Policy ();
 
     /// Destructor.
     /**
@@ -101,17 +95,12 @@ namespace TAO
      *       zero, i.e. when @c remove_ref() calls @c operator
      *       @c delete @c this.
      */
-    virtual ~True_RefCount_Policy (void);
+    virtual ~True_RefCount_Policy ();
 
   private:
     /// Reference counter.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
   };
-
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

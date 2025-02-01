@@ -50,7 +50,7 @@ public:
   /**
    * Destructor
    */
-  virtual ~ACE_Config_ImpExp_Base (void);
+  virtual ~ACE_Config_ImpExp_Base () = default;
 
    /**
    * Imports the configuration database from @a filename.
@@ -69,8 +69,8 @@ protected:
   ACE_Configuration &config_;
 
 private:
-  ACE_Config_ImpExp_Base (const ACE_Config_ImpExp_Base&);
-  ACE_Config_ImpExp_Base& operator= (const ACE_Config_ImpExp_Base&);
+  ACE_Config_ImpExp_Base (const ACE_Config_ImpExp_Base&) = delete;
+  ACE_Config_ImpExp_Base& operator= (const ACE_Config_ImpExp_Base&) = delete;
 };
 
 /**
@@ -94,7 +94,7 @@ public:
   ACE_Registry_ImpExp (ACE_Configuration&);
 
   /// Destruction.
-  virtual ~ACE_Registry_ImpExp (void);
+  virtual ~ACE_Registry_ImpExp () = default;
 
   /**
    * Imports the configuration database from @a filename.
@@ -117,8 +117,8 @@ private:
   int process_previous_line_format (ACE_TCHAR* buffer,
                                     ACE_Configuration_Section_Key& section);
 
-  ACE_Registry_ImpExp ( const ACE_Registry_ImpExp&);
-  ACE_Registry_ImpExp& operator= ( const ACE_Registry_ImpExp&);
+  ACE_Registry_ImpExp (const ACE_Registry_ImpExp&) = delete;
+  ACE_Registry_ImpExp& operator= (const ACE_Registry_ImpExp&) = delete;
 };
 
 /**
@@ -166,7 +166,7 @@ public:
   /**
    * Destructor
    */
-  virtual ~ACE_Ini_ImpExp (void);
+  virtual ~ACE_Ini_ImpExp () = default;
 
   /**
    * Imports the configuration database from @a filename.
@@ -201,8 +201,8 @@ private:
    */
   ACE_TCHAR *squish (ACE_TCHAR *src);
 
-  ACE_Ini_ImpExp (const ACE_Ini_ImpExp&);
-  ACE_Ini_ImpExp& operator= (const ACE_Ini_ImpExp&);
+  ACE_Ini_ImpExp (const ACE_Ini_ImpExp&) = delete;
+  ACE_Ini_ImpExp& operator= (const ACE_Ini_ImpExp&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

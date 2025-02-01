@@ -32,7 +32,6 @@ ACE_TMAIN(int, ACE_TCHAR *[])
           "_make_Test_Client_Module",
           "-k file://test.ior")) != 0)
     {
-
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
                          "ERROR: Client unable to process the "

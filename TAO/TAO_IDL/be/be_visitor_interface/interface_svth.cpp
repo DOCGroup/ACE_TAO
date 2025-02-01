@@ -18,7 +18,7 @@ be_visitor_interface_svth::be_visitor_interface_svth (
 {
 }
 
-be_visitor_interface_svth::~be_visitor_interface_svth (void)
+be_visitor_interface_svth::~be_visitor_interface_svth ()
 {
 }
 

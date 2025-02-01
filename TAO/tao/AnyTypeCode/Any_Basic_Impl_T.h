@@ -37,7 +37,7 @@ namespace TAO
   public:
     Any_Basic_Impl_T (CORBA::TypeCode_ptr,
                       const T & val);
-    virtual ~Any_Basic_Impl_T (void);
+    virtual ~Any_Basic_Impl_T ();
 
     static void insert (CORBA::Any &,
                         CORBA::TypeCode_ptr,
@@ -50,7 +50,7 @@ namespace TAO
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
     virtual void _tao_decode (TAO_InputCDR &);
 
-    virtual const void *value (void) const;
+    virtual const void *value () const;
     static Any_Basic_Impl_T<T> *create_empty (CORBA::TypeCode_ptr);
 
   private:
@@ -64,13 +64,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/Any_Basic_Impl_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/AnyTypeCode/Any_Basic_Impl_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Any_Basic_Impl_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

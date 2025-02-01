@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Foo_B_ClientEngine.h
@@ -20,26 +18,22 @@ class Callback_i;
 
 class CSD_TP_Foo_B_Export Foo_B_ClientEngine : public ClientEngine
 {
-  public:
+public:
+  Foo_B_ClientEngine(Foo_B_ptr obj,
+                      Callback_ptr callback,
+                      unsigned client_id = 0);
 
-    Foo_B_ClientEngine(Foo_B_ptr obj,
-                       Callback_ptr callback,
-                       unsigned client_id = 0,
-                       bool collocated = false);
+  virtual ~Foo_B_ClientEngine() = default;
 
-    virtual ~Foo_B_ClientEngine();
+  virtual bool execute();
 
-    virtual bool execute(void);
+  static void expected_results(Foo_B_Statistics& stats);
+  static unsigned expected_callbacks ();
 
-    static void expected_results(Foo_B_Statistics& stats);
-    static unsigned expected_callbacks ();
-
-  private:
-
-    Foo_B_var obj_;
-    Callback_var callback_;
-    unsigned client_id_;
-    bool collocated_;
+private:
+  Foo_B_var obj_;
+  Callback_var callback_;
+  unsigned client_id_;
 };
 
 #endif

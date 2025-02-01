@@ -70,24 +70,24 @@ class Basic_Test
 public:
   Basic_Test (ACE_High_Res_Timer &timer,
               ACE_hrtime_t empty_iteration_time);
-  virtual ~Basic_Test (void);
+  virtual ~Basic_Test ();
 
-  virtual void run (void) = 0;
+  virtual void run () = 0;
 
-  double iteration_time (void);
+  double iteration_time ();
 
   void print_iteration_time (const char *message);
 
 protected:
   ACE_hrtime_t elapsed_time_;
 
-  void start_timing (void)
+  void start_timing ()
   {
     timer_.reset ();
     timer_.start ();
   }
 
-  void stop_timing (void)
+  void stop_timing ()
   {
     timer_.stop ();
     timer_.elapsed_time (elapsed_time_);
@@ -98,7 +98,7 @@ private:
   ACE_hrtime_t empty_iteration_time_;
 
   // Require the timer reference.
-  Basic_Test (void);
+  Basic_Test ();
 
   // Force construction of independent instances by prohibiting copying.
   Basic_Test (const Basic_Test &);
@@ -113,12 +113,12 @@ Basic_Test::Basic_Test (ACE_High_Res_Timer &timer,
 {
 }
 
-Basic_Test::~Basic_Test (void)
+Basic_Test::~Basic_Test ()
 {
 }
 
 double
-Basic_Test::iteration_time (void)
+Basic_Test::iteration_time ()
 {
   return per_iteration (elapsed_time_ > empty_iteration_time_  ?
                           elapsed_time_ - empty_iteration_time_  :
@@ -143,18 +143,18 @@ class Empty_Iteration_Test : public Basic_Test
 {
 public:
   Empty_Iteration_Test (ACE_High_Res_Timer &timer) : Basic_Test (timer, 0) {}
-  virtual ~Empty_Iteration_Test (void) {};
+  virtual ~Empty_Iteration_Test () {};
 
-  virtual void run (void);
+  virtual void run ();
 
-  ACE_hrtime_t empty_iteration_time (void) const
+  ACE_hrtime_t empty_iteration_time () const
     {
       return elapsed_time_;
     }
 
 private:
   // Require the timer reference.
-  Empty_Iteration_Test (void);
+  Empty_Iteration_Test ();
 
   // Force construction of independent instances by prohibiting copying.
   Empty_Iteration_Test (const Empty_Iteration_Test &);
@@ -162,7 +162,7 @@ private:
 };
 
 void
-Empty_Iteration_Test::run (void)
+Empty_Iteration_Test::run ()
 {
   this->start_timing ();
 
@@ -186,13 +186,13 @@ public:
   Inline_Call_Test (ACE_High_Res_Timer &timer,
                     ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Inline_Call_Test (void) {};
+  virtual ~Inline_Call_Test () {};
 
-  virtual void run (void);
+  virtual void run ();
 
 private:
   // Require the timer reference.
-  Inline_Call_Test (void);
+  Inline_Call_Test ();
 
   // Force construction of independent instances by prohibiting copying.
   Inline_Call_Test (const Inline_Call_Test &);
@@ -200,7 +200,7 @@ private:
 };
 
 void
-Inline_Call_Test::run (void)
+Inline_Call_Test::run ()
 {
   this->start_timing ();
 
@@ -222,13 +222,13 @@ public:
   Noninline_Call_Test (ACE_High_Res_Timer &timer,
                        ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Noninline_Call_Test (void) {};
+  virtual ~Noninline_Call_Test () {};
 
-  virtual void run (void);
+  virtual void run ();
 
 private:
   // Require the timer reference.
-  Noninline_Call_Test (void);
+  Noninline_Call_Test ();
 
   // Force construction of independent instances by prohibiting copying.
   Noninline_Call_Test (const Noninline_Call_Test &);
@@ -236,7 +236,7 @@ private:
 };
 
 void
-Noninline_Call_Test::run (void)
+Noninline_Call_Test::run ()
 {
   this->start_timing ();
 
@@ -258,13 +258,13 @@ public:
   Inline_Member_Call_Test (ACE_High_Res_Timer &timer,
                            ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Inline_Member_Call_Test (void) {};
+  virtual ~Inline_Member_Call_Test () {};
 
-  virtual void run (void);
+  virtual void run ();
 
 private:
   // Require the timer reference.
-  Inline_Member_Call_Test (void);
+  Inline_Member_Call_Test ();
 
   // Force construction of independent instances by prohibiting copying.
   Inline_Member_Call_Test (const Inline_Member_Call_Test &);
@@ -272,7 +272,7 @@ private:
 };
 
 void
-Inline_Member_Call_Test::run (void)
+Inline_Member_Call_Test::run ()
 {
   this->start_timing ();
 
@@ -294,13 +294,13 @@ public:
   Noninline_Member_Call_Test (ACE_High_Res_Timer &timer,
                               ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Noninline_Member_Call_Test (void) {};
+  virtual ~Noninline_Member_Call_Test () {};
 
-  virtual void run (void);
+  virtual void run ();
 
 private:
   // Require the timer reference.
-  Noninline_Member_Call_Test (void);
+  Noninline_Member_Call_Test ();
 
   // Force construction of independent instances by prohibiting copying.
   Noninline_Member_Call_Test (const Noninline_Member_Call_Test &);
@@ -308,7 +308,7 @@ private:
 };
 
 void
-Noninline_Member_Call_Test::run (void)
+Noninline_Member_Call_Test::run ()
 {
   this->start_timing ();
 
@@ -330,13 +330,13 @@ public:
   Inline_Member_With_Virtual_Call_Test (ACE_High_Res_Timer &timer,
                                         ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Inline_Member_With_Virtual_Call_Test (void) {};
+  virtual ~Inline_Member_With_Virtual_Call_Test () {};
 
-  virtual void run (void);
+  virtual void run ();
 
 private:
   // Require the timer reference.
-  Inline_Member_With_Virtual_Call_Test (void);
+  Inline_Member_With_Virtual_Call_Test ();
 
   // Force construction of independent instances by prohibiting copying.
   Inline_Member_With_Virtual_Call_Test (
@@ -346,7 +346,7 @@ private:
 };
 
 void
-Inline_Member_With_Virtual_Call_Test::run (void)
+Inline_Member_With_Virtual_Call_Test::run ()
 {
   this->start_timing ();
 
@@ -368,13 +368,13 @@ public:
   Noninline_Member_With_Virtual_Call_Test (ACE_High_Res_Timer &timer,
                                            ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Noninline_Member_With_Virtual_Call_Test (void) {};
+  virtual ~Noninline_Member_With_Virtual_Call_Test () {};
 
-  virtual void run (void);
+  virtual void run ();
 
 private:
   // Require the timer reference.
-  Noninline_Member_With_Virtual_Call_Test (void);
+  Noninline_Member_With_Virtual_Call_Test ();
 
   // Force construction of independent instances by prohibiting copying.
   Noninline_Member_With_Virtual_Call_Test
@@ -384,7 +384,7 @@ private:
 };
 
 void
-Noninline_Member_With_Virtual_Call_Test::run (void)
+Noninline_Member_With_Virtual_Call_Test::run ()
 {
   this->start_timing ();
 
@@ -406,13 +406,13 @@ public:
   Virtual_Member_Optimizable_Call_Test (ACE_High_Res_Timer &timer,
                                         ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Virtual_Member_Optimizable_Call_Test (void) {};
+  virtual ~Virtual_Member_Optimizable_Call_Test () {};
 
-  virtual void run (void);
+  virtual void run ();
 
 private:
   // Require the timer reference.
-  Virtual_Member_Optimizable_Call_Test (void);
+  Virtual_Member_Optimizable_Call_Test ();
 
   // Force construction of independent instances by prohibiting copying.
   Virtual_Member_Optimizable_Call_Test (
@@ -422,7 +422,7 @@ private:
 };
 
 void
-Virtual_Member_Optimizable_Call_Test::run (void)
+Virtual_Member_Optimizable_Call_Test::run ()
 {
   Foo_v &fv_o = foo_v;
 
@@ -446,13 +446,13 @@ public:
   Virtual_Member_Call_Test (ACE_High_Res_Timer &timer,
                             ACE_hrtime_t empty_iteration_time)
     : Basic_Test (timer, empty_iteration_time) {}
-  virtual ~Virtual_Member_Call_Test (void) {};
+  virtual ~Virtual_Member_Call_Test () {};
 
-  virtual void run (void);
+  virtual void run ();
 
 private:
   // Require the timer reference.
-  Virtual_Member_Call_Test (void);
+  Virtual_Member_Call_Test ();
 
   // Force construction of independent instances by prohibiting copying.
   Virtual_Member_Call_Test (const Virtual_Member_Call_Test &);
@@ -460,7 +460,7 @@ private:
 };
 
 void
-Virtual_Member_Call_Test::run (void)
+Virtual_Member_Call_Test::run ()
 {
   Foo_v *fv;
 

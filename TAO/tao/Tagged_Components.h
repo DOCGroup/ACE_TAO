@@ -56,7 +56,7 @@ class TAO_Export TAO_Tagged_Components
 {
 public:
   /// Constructor
-  TAO_Tagged_Components (void);
+  TAO_Tagged_Components ();
 
   // = Standard OMG that require fast access.
   /// The the IOP::TAG_ORB_TYPE component value
@@ -113,7 +113,7 @@ public:
    * MutipleComponentProfile. Added by request from Chris Hafey
    * <chris@stentorsoft.com>
    */
-  IOP::MultipleComponentProfile &components (void);
+  IOP::MultipleComponentProfile &components ();
 
 private:
   /// Helper method to implement set_code_sets()

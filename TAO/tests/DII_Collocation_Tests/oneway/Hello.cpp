@@ -20,12 +20,12 @@ extern CORBA::Short TEST_SECOND;
 }
 
 // Implementation skeleton constructor
-Test_Simple_Test_i::Test_Simple_Test_i (void)
+Test_Simple_Test_i::Test_Simple_Test_i ()
 {
 }
 
 // Implementation skeleton destructor
-Test_Simple_Test_i::~Test_Simple_Test_i (void)
+Test_Simple_Test_i::~Test_Simple_Test_i ()
 {
 }
 
@@ -269,7 +269,7 @@ void Hello::test_args_3 (
 }
 
 char *
-Hello::get_string (void)
+Hello::get_string ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
@@ -292,7 +292,7 @@ Hello::get_string (void)
             TAO::ORB_Table::instance ();
 
           TAO_ORB_Core_Auto_Ptr tmp (orb_table->find ("server_orb"));
-          if (tmp.get () == 0)
+          if (tmp.get () == nullptr)
             {
               // We are running on a single ORB and this is an error.
               ACE_ERROR ((LM_ERROR,
@@ -324,19 +324,18 @@ Hello::test_unbounded_string (
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
   // Give the client thread time to return from the collocated
   // call to this method before shutting down the ORB.  We sleep
   // to avoid BAD_INV_ORDER exceptions on fast dual processor machines.
   ACE_OS::sleep (1);
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 CORBA::ULong Hello::error_count () const
 {
   return error_count_;
 }
-
 
 

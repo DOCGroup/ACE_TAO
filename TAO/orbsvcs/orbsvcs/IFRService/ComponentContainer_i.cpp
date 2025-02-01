@@ -17,7 +17,7 @@ TAO_ComponentContainer_i::TAO_ComponentContainer_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ComponentContainer_i::~TAO_ComponentContainer_i (void)
+TAO_ComponentContainer_i::~TAO_ComponentContainer_i ()
 {
 }
 

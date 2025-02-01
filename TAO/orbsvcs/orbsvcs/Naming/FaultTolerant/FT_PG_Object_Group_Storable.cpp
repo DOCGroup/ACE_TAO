@@ -52,10 +52,6 @@ TAO::FT_PG_Object_Group_Storable::FT_PG_Object_Group_Storable
 {
 }
 
-TAO::FT_PG_Object_Group_Storable::~FT_PG_Object_Group_Storable (void)
-{
-}
-
 void
 TAO::FT_PG_Object_Group_Storable::stale (bool is_stale)
 {
@@ -79,7 +75,7 @@ TAO::FT_PG_Object_Group_Storable::propagate_update_notification
 }
 
 void
-TAO::FT_PG_Object_Group_Storable::state_written (void)
+TAO::FT_PG_Object_Group_Storable::state_written ()
 {
   FT_Naming::ChangeType change_type;
   if (!this->file_created_)

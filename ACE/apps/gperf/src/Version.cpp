@@ -26,5 +26,4 @@
 #include "ace/ACE.h"
 
 
-
 const char *version_string = "2.8 (ACE version)";

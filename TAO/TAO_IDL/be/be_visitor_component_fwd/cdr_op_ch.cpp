@@ -18,7 +18,7 @@ be_visitor_component_fwd_cdr_op_ch::be_visitor_component_fwd_cdr_op_ch (
 {
 }
 
-be_visitor_component_fwd_cdr_op_ch::~be_visitor_component_fwd_cdr_op_ch (void)
+be_visitor_component_fwd_cdr_op_ch::~be_visitor_component_fwd_cdr_op_ch ()
 {
 }
 

@@ -32,7 +32,7 @@
 class Static_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
-  int open (void *)
+  int open (void *) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("opening %s\n"),
@@ -40,7 +40,7 @@ public:
     return 0;
   }
 
-  int close (u_long)
+  int close (u_long) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("closing %s\n"),
@@ -48,7 +48,7 @@ public:
     return 0;
   }
 
-  int init (int, ACE_TCHAR *[])
+  int init (int, ACE_TCHAR *[]) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("initializing %s\n"),
@@ -56,7 +56,7 @@ public:
     return 0;
   }
 
-  int fini (void)
+  int fini () override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("finalizing %s\n"),

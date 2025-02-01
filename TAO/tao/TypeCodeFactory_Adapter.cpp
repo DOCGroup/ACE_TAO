@@ -2,7 +2,7 @@
 
 #include "ace/Dynamic_Service.h"
 
-TAO_TypeCodeFactory_Adapter::~TAO_TypeCodeFactory_Adapter (void)
+TAO_TypeCodeFactory_Adapter::~TAO_TypeCodeFactory_Adapter ()
 {
 }
 

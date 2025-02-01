@@ -66,7 +66,7 @@ TAO_LB_LoadManager::TAO_LB_LoadManager (int ping_timeout,
   //       by whatever code instantiates this LoadManager.
 }
 
-TAO_LB_LoadManager::~TAO_LB_LoadManager (void)
+TAO_LB_LoadManager::~TAO_LB_LoadManager ()
 {
   this->shutdown_ = true;
   this->validate_condition_.signal ();
@@ -1062,7 +1062,6 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
     }
   else if (ACE_OS::strcmp (info->name.in (), "LoadMinimum") == 0)
     {
-
       if (info->props.length () == 0)
         {
           {
@@ -1104,7 +1103,6 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
     }
   else if (ACE_OS::strcmp (info->name.in (), "LoadAverage") == 0)
     {
-
       if (info->props.length () == 0)
         {
           {
@@ -1162,7 +1160,7 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
 
 
 int
-TAO_LB_LoadManager::svc (void)
+TAO_LB_LoadManager::svc ()
 {
   while (! this->shutdown_)
   {

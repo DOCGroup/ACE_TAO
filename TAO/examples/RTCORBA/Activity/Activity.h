@@ -52,11 +52,11 @@ public:
   void run (int argc, ACE_TCHAR *argv[]);
 
   /// Resolve the naming service.
-  int resolve_naming_service (void);
+  int resolve_naming_service ();
 
   /// = Accessors
-  CORBA::ORB_ptr orb (void);
-  RTCORBA::Current_ptr current (void);
+  CORBA::ORB_ptr orb ();
+  RTCORBA::Current_ptr current ();
   void builder (Builder* builder);
 
   /// Returns priority if server declared model else -1
@@ -71,16 +71,16 @@ public:
 protected:
   /// = Activation methods.
   /// Activate the POA's
-  void activate_poa_list (void);
+  void activate_poa_list ();
 
   /// Activate the task list.
-  void activate_schedule (void);
+  void activate_schedule ();
 
   /// Activate the Job's
-  void activate_job_list (void);
+  void activate_job_list ();
 
   /// Check if we should process exit
-  void check_ifexit (void);
+  void check_ifexit ();
 
   /// Create a file whose name is specified in the -Started_Flag <file_name> argument at startup.
   /// This file flags that the Activity has finished its bootstrapping step.

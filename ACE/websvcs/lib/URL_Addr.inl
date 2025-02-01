@@ -21,7 +21,7 @@ ACE_URL_Addr::operator= (const ACE_URL_Addr& address)
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_URL_Addr::get_url (void) const
+ACE_URL_Addr::get_url () const
 {
   return this->url_;
 }
@@ -33,7 +33,7 @@ ACE_URL_Addr::set_url (ACE_TCHAR *url)
 }
 
 ACE_INLINE u_long
-ACE_URL_Addr::hash (void) const
+ACE_URL_Addr::hash () const
 {
   return ACE::hash_pjw (this->url_);
 }
@@ -51,31 +51,31 @@ ACE_HTTP_Addr::operator= (const ACE_HTTP_Addr& rhs)
 }
 
 ACE_INLINE ACE_INET_Addr
-ACE_HTTP_Addr::get_inet_address (void) const
+ACE_HTTP_Addr::get_inet_address () const
 {
   return ACE_INET_Addr (this->port_number_, this->hostname_);
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_HTTP_Addr::get_hostname (void) const
+ACE_HTTP_Addr::get_hostname () const
 {
   return this->hostname_;
 }
 
 ACE_INLINE u_short
-ACE_HTTP_Addr::get_port_number (void) const
+ACE_HTTP_Addr::get_port_number () const
 {
   return this->port_number_;
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_HTTP_Addr::get_path (void) const
+ACE_HTTP_Addr::get_path () const
 {
   return this->path_;
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_HTTP_Addr::get_query (void) const
+ACE_HTTP_Addr::get_query () const
 {
   return this->query_;
 }
@@ -93,31 +93,31 @@ ACE_FTP_Addr::operator= (const ACE_FTP_Addr& rhs)
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_FTP_Addr::get_user (void) const
+ACE_FTP_Addr::get_user () const
 {
   return this->user_;
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_FTP_Addr::get_hostname (void) const
+ACE_FTP_Addr::get_hostname () const
 {
   return this->hostname_;
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_FTP_Addr::get_passwd (void) const
+ACE_FTP_Addr::get_passwd () const
 {
   return this->password_;
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_FTP_Addr::get_path (void) const
+ACE_FTP_Addr::get_path () const
 {
   return this->path_;
 }
 
 ACE_INLINE ACE_INET_Addr
-ACE_FTP_Addr::get_inet_address (void) const
+ACE_FTP_Addr::get_inet_address () const
 {
   return ACE_INET_Addr (ACE_TEXT ("ftp"), this->hostname_);
 }
@@ -135,19 +135,19 @@ ACE_Mailto_Addr::operator= (const ACE_Mailto_Addr& rhs)
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_Mailto_Addr::get_user (void) const
+ACE_Mailto_Addr::get_user () const
 {
   return this->user_;
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_Mailto_Addr::get_hostname (void) const
+ACE_Mailto_Addr::get_hostname () const
 {
   return this->hostname_;
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_Mailto_Addr::get_headers (void) const
+ACE_Mailto_Addr::get_headers () const
 {
   return this->headers_;
 }

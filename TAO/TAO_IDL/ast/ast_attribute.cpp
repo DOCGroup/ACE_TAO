@@ -94,12 +94,12 @@ AST_Attribute::AST_Attribute (bool ro,
                ft,
                n),
     pd_readonly (ro),
-    pd_get_exceptions (0),
-    pd_set_exceptions (0)
+    pd_get_exceptions (nullptr),
+    pd_set_exceptions (nullptr)
 {
 }
 
-AST_Attribute::~AST_Attribute (void)
+AST_Attribute::~AST_Attribute ()
 {
 }
 
@@ -123,23 +123,23 @@ AST_Attribute::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Attribute::destroy (void)
+AST_Attribute::destroy ()
 {
   // No need to delete our exception lists, the
   // destroy() method does it. The UTL_ExceptList
   // destroy() method does NOT delete the contained
   // exception nodes.
 
-  if (this->pd_get_exceptions != 0)
+  if (this->pd_get_exceptions != nullptr)
     {
       this->pd_get_exceptions->destroy ();
-      this->pd_get_exceptions = 0;
+      this->pd_get_exceptions = nullptr;
     }
 
-  if (this->pd_set_exceptions != 0)
+  if (this->pd_set_exceptions != nullptr)
     {
       this->pd_set_exceptions->destroy ();
-      this->pd_set_exceptions = 0;
+      this->pd_set_exceptions = nullptr;
     }
 
   this->AST_Field::destroy ();
@@ -148,7 +148,7 @@ AST_Attribute::destroy (void)
 UTL_ExceptList *
 AST_Attribute::be_add_get_exceptions (UTL_ExceptList *t)
 {
-  if (this->pd_get_exceptions != 0)
+  if (this->pd_get_exceptions != nullptr)
     {
       idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
                                   this);
@@ -164,7 +164,7 @@ AST_Attribute::be_add_get_exceptions (UTL_ExceptList *t)
 UTL_ExceptList *
 AST_Attribute::be_add_set_exceptions (UTL_ExceptList *t)
 {
-  if (this->pd_set_exceptions != 0)
+  if (this->pd_set_exceptions != nullptr)
     {
       idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
                                   this);
@@ -180,19 +180,19 @@ AST_Attribute::be_add_set_exceptions (UTL_ExceptList *t)
 // Data accessors.
 
 bool
-AST_Attribute::readonly (void) const
+AST_Attribute::readonly () const
 {
   return this->pd_readonly;
 }
 
 UTL_ExceptList *
-AST_Attribute::get_get_exceptions (void) const
+AST_Attribute::get_get_exceptions () const
 {
   return this->pd_get_exceptions;
 }
 
 UTL_ExceptList *
-AST_Attribute::get_set_exceptions (void) const
+AST_Attribute::get_set_exceptions () const
 {
   return this->pd_set_exceptions;
 }
@@ -202,11 +202,11 @@ AST_Attribute::get_set_exceptions (void) const
 UTL_NameList *
 AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
 {
-  UTL_ScopedName *nl_n = 0;
-  AST_Type *fe = 0;
-  AST_Decl *d = 0;
+  UTL_ScopedName *nl_n = nullptr;
+  AST_Type *fe = nullptr;
+  AST_Decl *d = nullptr;
 
-  this->pd_get_exceptions = 0;
+  this->pd_get_exceptions = nullptr;
 
   for (UTL_NamelistActiveIterator nl_i (t);
        !nl_i.is_done ();
@@ -216,10 +216,10 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
 
       d = this->defined_in ()->lookup_by_name (nl_n, true);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           idl_global->err ()->lookup_error (nl_n);
-          return 0;
+          return nullptr;
         }
 
       AST_Decl::NodeType nt = d->node_type ();
@@ -229,17 +229,17 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
                                       this);
-          return 0;
+          return nullptr;
         }
 
-      fe = AST_Type::narrow_from_decl (d);
+      fe = dynamic_cast<AST_Type*> (d);
 
-      UTL_ExceptList *el = 0;
+      UTL_ExceptList *el = nullptr;
       ACE_NEW_RETURN (el,
-                      UTL_ExceptList (fe, 0),
-                      0);
+                      UTL_ExceptList (fe, nullptr),
+                      nullptr);
 
-      if (this->pd_get_exceptions == 0)
+      if (this->pd_get_exceptions == nullptr)
         {
           this->pd_get_exceptions = el;
         }
@@ -257,11 +257,11 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
 UTL_NameList *
 AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
 {
-  UTL_ScopedName *nl_n = 0;
-  AST_Type *fe = 0;
-  AST_Decl *d = 0;
+  UTL_ScopedName *nl_n = nullptr;
+  AST_Type *fe = nullptr;
+  AST_Decl *d = nullptr;
 
-  this->pd_set_exceptions = 0;
+  this->pd_set_exceptions = nullptr;
 
   for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
     {
@@ -269,10 +269,10 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
 
       d = this->defined_in ()->lookup_by_name (nl_n, true);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           idl_global->err ()->lookup_error (nl_n);
-          return 0;
+          return nullptr;
         }
 
       AST_Decl::NodeType nt = d->node_type ();
@@ -282,17 +282,17 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
                                       this);
-          return 0;
+          return nullptr;
         }
 
-      fe = AST_Type::narrow_from_decl (d);
+      fe = dynamic_cast<AST_Type*> (d);
 
-      UTL_ExceptList *el = 0;
+      UTL_ExceptList *el = nullptr;
       ACE_NEW_RETURN (el,
-                      UTL_ExceptList (fe, 0),
-                      0);
+                      UTL_ExceptList (fe, nullptr),
+                      nullptr);
 
-      if (this->pd_set_exceptions == 0)
+      if (this->pd_set_exceptions == nullptr)
         {
           this->pd_set_exceptions = el;
         }
@@ -305,4 +305,8 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
   return t;
 }
 
-IMPL_NARROW_FROM_DECL(AST_Attribute)
+bool
+AST_Attribute::annotatable () const
+{
+  return true;
+}

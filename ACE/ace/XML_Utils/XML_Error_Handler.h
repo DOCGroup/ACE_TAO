@@ -20,34 +20,32 @@
 
 #include <xercesc/sax/ErrorHandler.hpp>
 
-using xercesc::SAXParseException;
-
 namespace XML
 {
   /**
     * @class XML_Error_Hander
     *
     * @brief Error handler for XERCES
-    *
     */
   class XML_Utils_Export XML_Error_Handler
     : public xercesc::ErrorHandler
   {
   public:
-    XML_Error_Handler (void);
-    ~XML_Error_Handler (void);
+    XML_Error_Handler () = default;
+    ~XML_Error_Handler () override = default;
 
-    void warning(const SAXParseException& toCatch);
-    void error(const SAXParseException& toCatch);
-    void fatalError(const SAXParseException& toCatch);
-    void resetErrors();
-    bool getErrors (void) const;
-  private :
-    // Disallow copying
-    XML_Error_Handler (const XML_Error_Handler&);
-    XML_Error_Handler& operator= (const XML_Error_Handler&);
-
-    bool errors_;
+    void warning(const xercesc::SAXParseException& toCatch) override;
+    void error(const xercesc::SAXParseException& toCatch) override;
+    void fatalError(const xercesc::SAXParseException& toCatch) override;
+    void resetErrors() override;
+    bool getErrors () const;
+  private:
+    XML_Error_Handler (const XML_Error_Handler&) = delete;
+    XML_Error_Handler& operator= (const XML_Error_Handler&) = delete;
+    XML_Error_Handler (XML_Error_Handler&&) = delete;
+    XML_Error_Handler& operator= (XML_Error_Handler&&) = delete;
+  protected:
+    bool errors_ { false };
   };
 }
 

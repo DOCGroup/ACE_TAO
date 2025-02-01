@@ -45,12 +45,11 @@ namespace TAO
 class TAO_ZIOP_Export TAO_ZIOP_Stub : public TAO_Stub
 {
 public:
-
   TAO_ZIOP_Stub (const char *repository_id,
                  const TAO_MProfile &profiles,
                  TAO_ORB_Core *orb_core);
 
-  virtual ~TAO_ZIOP_Stub (void);
+  virtual ~TAO_ZIOP_Stub ();
 
   /**
    * Returns the effective policy if @a type is a known client-exposed
@@ -62,20 +61,19 @@ public:
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
 private:
-
   /// Helper method used to parse the policies.
-  void parse_policies (void);
+  void parse_policies ();
 
   void exposed_compression_enabling_policy (CORBA::Policy_ptr policy);
 
   void exposed_compression_id_list_policy (CORBA::Policy_ptr policy);
 
-  CORBA::Policy_ptr exposed_compression_enabling_policy (void);
+  CORBA::Policy_ptr exposed_compression_enabling_policy ();
 
-  CORBA::Policy_ptr exposed_compression_id_list_policy (void);
+  CORBA::Policy_ptr exposed_compression_id_list_policy ();
 
-  CORBA::Policy *effective_compression_enabling_policy (void);
-  CORBA::Policy *effective_compression_id_list_policy (void);
+  CORBA::Policy *effective_compression_enabling_policy ();
+  CORBA::Policy *effective_compression_id_list_policy ();
 
   // The following attribute are used to cache
   // the different kind of policies and avoid to
@@ -89,9 +87,10 @@ private:
   CORBA::Boolean are_policies_parsed_;
 
 private:
-  // = Disallow copying and assignment.
-  TAO_ZIOP_Stub (const TAO_ZIOP_Stub &);
-  TAO_ZIOP_Stub &operator = (const TAO_ZIOP_Stub &);
+  TAO_ZIOP_Stub (const TAO_ZIOP_Stub &) = delete;
+  TAO_ZIOP_Stub (TAO_ZIOP_Stub &&) = delete;
+  TAO_ZIOP_Stub &operator = (const TAO_ZIOP_Stub &) = delete;
+  TAO_ZIOP_Stub &operator = (TAO_ZIOP_Stub &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -31,7 +31,7 @@ public:
   be_visitor_valuetype_init_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_init_ci (void);
+  ~be_visitor_valuetype_init_ci ();
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_INIT_CI_H_ */

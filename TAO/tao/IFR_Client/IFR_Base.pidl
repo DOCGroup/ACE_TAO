@@ -101,8 +101,7 @@ module CORBA
     void move (
         in Container new_container,
         in Identifier new_name,
-        in VersionSpec new_version
-      );
+        in VersionSpec new_version);
   };
 
   interface ModuleDef;
@@ -199,18 +198,15 @@ module CORBA
   {
     // read interface
     Contained lookup (
-        in ScopedName search_name
-      );
+        in ScopedName search_name);
     ContainedSeq contents (
         in DefinitionKind limit_type,
-        in boolean exclude_inherited
-      );
+        in boolean exclude_inherited);
     ContainedSeq lookup_name (
         in Identifier search_name,
         in long levels_to_search,
         in DefinitionKind limit_type,
-        in boolean exclude_inherited
-      );
+        in boolean exclude_inherited);
     struct Description
     {
       Contained contained_object;
@@ -231,52 +227,45 @@ module CORBA
     ModuleDef create_module (
         in RepositoryId id,
         in Identifier name,
-        in VersionSpec version
-      );
+        in VersionSpec version);
 
     ConstantDef create_constant (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
         in IDLType type,
-        in any value
-      );
+        in any value);
 
     StructDef create_struct (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in StructMemberSeq members
-      );
+        in StructMemberSeq members);
 
     UnionDef create_union (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
         in IDLType discriminator_type,
-        in UnionMemberSeq members
-      );
+        in UnionMemberSeq members);
 
     EnumDef create_enum (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in EnumMemberSeq members
-      );
+        in EnumMemberSeq members);
 
     AliasDef create_alias (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in IDLType original_type
-      );
+        in IDLType original_type);
 
     InterfaceDef create_interface (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in InterfaceDefSeq base_interfaces
-      );
+        in InterfaceDefSeq base_interfaces);
 
     ValueDef create_value (
         in RepositoryId id,
@@ -288,42 +277,36 @@ module CORBA
         in boolean is_truncatable,
         in ValueDefSeq abstract_base_values,
         in InterfaceDefSeq supported_interfaces,
-        in InitializerSeq initializers
-      );
+        in InitializerSeq initializers);
 
     ValueBoxDef create_value_box(
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in IDLType original_type_def
-      );
+        in IDLType original_type_def);
 
     ExceptionDef create_exception(
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in StructMemberSeq members
-      );
+        in StructMemberSeq members);
 
     NativeDef create_native(
         in RepositoryId id,
         in Identifier name,
-        in VersionSpec version
-      );
+        in VersionSpec version);
 
     AbstractInterfaceDef create_abstract_interface (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in AbstractInterfaceDefSeq base_interfaces
-      );
+        in AbstractInterfaceDefSeq base_interfaces);
 
     LocalInterfaceDef create_local_interface (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in InterfaceDefSeq base_interfaces
-      );
+        in InterfaceDefSeq base_interfaces);
 
     ExtValueDef create_ext_value ( in RepositoryId id,
                                    in Identifier name,

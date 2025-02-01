@@ -23,7 +23,6 @@ namespace XML
   XStr::XStr (XMLCh *wstr)
     : _wstr(wstr)
   {
-
   }
 
   XStr::XStr (const XMLCh* wstr)
@@ -127,7 +126,7 @@ namespace XML
     return _wstr[i];
   }
 
-  XMLCh * XStr::release (void)
+  XMLCh * XStr::release ()
   {
     XMLCh* tmp = _wstr;
     this->_wstr = 0;
@@ -135,7 +134,7 @@ namespace XML
   }
 
   void
-  XStr::reset (void)
+  XStr::reset ()
   {
     if (_wstr)
       XMLString::release(&_wstr);

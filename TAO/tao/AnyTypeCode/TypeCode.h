@@ -55,7 +55,6 @@ namespace CORBA
   class TAO_AnyTypeCode_Export TypeCode
   {
   public:
-
     /**
      * @class Bounds
      *
@@ -68,16 +67,15 @@ namespace CORBA
     class TAO_AnyTypeCode_Export Bounds : public UserException
     {
     public:
-
       /// Constructor.
-      Bounds (void);
+      Bounds ();
 
       static Bounds * _downcast (CORBA::Exception * ex);
-      static CORBA::Exception * _alloc (void);
+      static CORBA::Exception * _alloc ();
 
-      virtual CORBA::Exception * _tao_duplicate (void) const;
+      virtual CORBA::Exception * _tao_duplicate () const;
 
-      virtual void _raise (void) const;
+      virtual void _raise () const;
 
       virtual void _tao_encode (TAO_OutputCDR & cdr) const;
       virtual void _tao_decode (TAO_InputCDR & cdr);
@@ -95,15 +93,14 @@ namespace CORBA
     class TAO_AnyTypeCode_Export BadKind : public CORBA::UserException
     {
     public:
-
-      BadKind (void);
+      BadKind ();
 
       static BadKind * _downcast (CORBA::Exception * ex);
-      static CORBA::Exception * _alloc (void);
+      static CORBA::Exception * _alloc ();
 
-      virtual CORBA::Exception * _tao_duplicate (void) const;
+      virtual CORBA::Exception * _tao_duplicate () const;
 
-      virtual void _raise (void) const;
+      virtual void _raise () const;
 
       virtual void _tao_encode (TAO_OutputCDR & cdr) const;
       virtual void _tao_decode (TAO_InputCDR & cdr);
@@ -123,7 +120,7 @@ namespace CORBA
     static CORBA::TypeCode_ptr _duplicate (CORBA::TypeCode_ptr tc);
 
     /// Returns a NULL typecode.
-    static CORBA::TypeCode_ptr _nil (void);
+    static CORBA::TypeCode_ptr _nil ();
 
     /**
      * @name @c CORBA::TypeCode Methods
@@ -158,7 +155,7 @@ namespace CORBA
     Boolean equivalent (TypeCode_ptr tc) const;
 
     /// The kind of @c TypeCode.
-    TCKind kind (void) const;
+    TCKind kind () const;
 
     /// Return @c TypeCode stripped of optional @c name and
     /// @c member_name fields.
@@ -180,7 +177,7 @@ namespace CORBA
      *       the TAO_IDL compiler by invoking it with its "-Gt"
      *       (i.e. enable optimized TypeCodes) command line option.
      */
-    TypeCode_ptr get_compact_typecode (void) const;
+    TypeCode_ptr get_compact_typecode () const;
 
     /// The @c RepositoryId globally identifying the type.
     /**
@@ -206,7 +203,7 @@ namespace CORBA
      *       is required by the C++ mapping.  In particular, ownership
      *       is maintained by the @c TypeCode.
      */
-    char const * id (void) const;
+    char const * id () const;
 
     /// The simple name identifying the type within its enclosing
     /// scope.
@@ -233,7 +230,7 @@ namespace CORBA
      *       behavior is required by the C++ mapping.  In particular,
      *       ownership is maintained by the @c TypeCode.
      */
-    char const * name (void) const;
+    char const * name () const;
 
     /// The type member count.
     /**
@@ -246,7 +243,7 @@ namespace CORBA
      * @li @c tk_except
      * @li @c tk_event
      */
-    ULong member_count (void) const;
+    ULong member_count () const;
 
     /// The type member name.
     /**
@@ -292,7 +289,7 @@ namespace CORBA
      *
      * @li @c tk_union
      */
-    TypeCode_ptr discriminator_type (void) const;
+    TypeCode_ptr discriminator_type () const;
 
     /// The index of the default union member.
     /**
@@ -300,7 +297,7 @@ namespace CORBA
      *
      * @li @c tk_union
      */
-    Long default_index (void) const;
+    Long default_index () const;
 
     /// The length of the type.
     /**
@@ -311,7 +308,7 @@ namespace CORBA
      * @li @c tk_sequence
      * @li @c tk_array
      */
-    ULong length (void) const;
+    ULong length () const;
 
     /// The underlying content type.
     /**
@@ -322,7 +319,7 @@ namespace CORBA
      * @li @c tk_value_box
      * @li @c tk_alias
      */
-    TypeCode_ptr content_type (void) const;
+    TypeCode_ptr content_type () const;
 
     /// The number of significant digits.
     /**
@@ -330,7 +327,7 @@ namespace CORBA
      *
      * @li @c tk_fixed
      */
-    UShort fixed_digits (void) const;
+    UShort fixed_digits () const;
 
     /// The scale factor.
     /**
@@ -338,7 +335,7 @@ namespace CORBA
      *
      * @li @c tk_fixed
      */
-    UShort fixed_scale (void) const;
+    UShort fixed_scale () const;
 
     /// The @c Visibility of the @c valuetype or @c eventtype member
     /// corresponding to index @a index.
@@ -358,7 +355,7 @@ namespace CORBA
      * @li @c tk_value
      * @li @c tk_event
      */
-    ValueModifier type_modifier (void) const;
+    ValueModifier type_modifier () const;
 
     /// The @c TypeCode corresponding to the concrete base
     /// @c valuetype or @c eventtype.
@@ -372,7 +369,7 @@ namespace CORBA
      *         @c valuetype or @c eventtype.
      *         @c CORBA::TypeCode::_nil() if no concrete base exists.
      */
-    TypeCode_ptr concrete_base_type (void) const;
+    TypeCode_ptr concrete_base_type () const;
     //@}
 
     /// Marshal the @c TypeCode @c TCKind.
@@ -411,10 +408,10 @@ namespace CORBA
                               CORBA::ULong offset) const = 0;
 
     /// Increase the reference count on this @c TypeCode.
-    virtual void tao_duplicate (void) = 0;
+    virtual void tao_duplicate () = 0;
 
     /// Decrease the reference count on this object.
-    virtual void tao_release (void) = 0;
+    virtual void tao_release () = 0;
 
     /// Destruction callback for Anys.
     static void _tao_any_destructor (void * x);
@@ -424,7 +421,6 @@ namespace CORBA
     typedef CORBA::TypeCode_out _out_type;
 
   protected:
-
     /// Constructor.
     TypeCode (CORBA::TCKind kind);
 
@@ -433,7 +429,7 @@ namespace CORBA
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
      */
-    virtual ~TypeCode (void);
+    virtual ~TypeCode ();
 
     /**
      * @name @c TypeCode Template Methods
@@ -454,36 +450,33 @@ namespace CORBA
     //@{
     virtual Boolean equal_i (TypeCode_ptr tc) const = 0;
     virtual Boolean equivalent_i (TypeCode_ptr tc) const = 0;
-    virtual TypeCode_ptr get_compact_typecode_i (void) const = 0;
+    virtual TypeCode_ptr get_compact_typecode_i () const = 0;
 
-    virtual char const * id_i (void) const;
-    virtual char const * name_i (void) const;
-    virtual ULong member_count_i (void) const;
+    virtual char const * id_i () const;
+    virtual char const * name_i () const;
+    virtual ULong member_count_i () const;
     virtual char const * member_name_i (ULong index) const;
     virtual TypeCode_ptr member_type_i (ULong index) const;
     virtual Any * member_label_i (ULong index) const;
-    virtual TypeCode_ptr discriminator_type_i (void) const;
-    virtual Long default_index_i (void) const;
-    virtual ULong length_i (void) const;
-    virtual TypeCode_ptr content_type_i (void) const;
-    virtual UShort fixed_digits_i (void) const;
-    virtual UShort fixed_scale_i (void) const;
+    virtual TypeCode_ptr discriminator_type_i () const;
+    virtual Long default_index_i () const;
+    virtual ULong length_i () const;
+    virtual TypeCode_ptr content_type_i () const;
+    virtual UShort fixed_digits_i () const;
+    virtual UShort fixed_scale_i () const;
     virtual Visibility member_visibility_i (ULong index) const;
-    virtual ValueModifier type_modifier_i (void) const;
-    virtual TypeCode_ptr concrete_base_type_i (void) const;
+    virtual ValueModifier type_modifier_i () const;
+    virtual TypeCode_ptr concrete_base_type_i () const;
     //@}
 
   private:
-
     // Prevent copying and assignment.
     TypeCode (TypeCode const &);
     void operator= (TypeCode const &);
 
   protected:
-
     /// The kind of TypeCode.
     TCKind const kind_;
-
   };
 }  // End namespace CORBA
 
@@ -553,7 +546,7 @@ namespace TAO
   {
     static ::CORBA::TypeCode_ptr duplicate (::CORBA::TypeCode_ptr);
     static void release (::CORBA::TypeCode_ptr);
-    static ::CORBA::TypeCode_ptr nil (void);
+    static ::CORBA::TypeCode_ptr nil ();
     static CORBA::Boolean marshal (::CORBA::TypeCode_ptr p,
                                    TAO_OutputCDR & cdr);
   };

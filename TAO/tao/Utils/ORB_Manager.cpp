@@ -97,7 +97,7 @@ TAO_ORB_Manager::init_child_poa (int& argc,
 // Activate POA manager.
 
 int
-TAO_ORB_Manager::activate_poa_manager (void)
+TAO_ORB_Manager::activate_poa_manager ()
 {
   this->poa_manager_->activate ();
   return 0;
@@ -177,7 +177,7 @@ TAO_ORB_Manager::run (ACE_Time_Value &tv)
 }
 
 int
-TAO_ORB_Manager::fini (void)
+TAO_ORB_Manager::fini ()
 {
   this->poa_->destroy (1, 1);
 
@@ -193,7 +193,7 @@ TAO_ORB_Manager::fini (void)
 }
 
 int
-TAO_ORB_Manager::run (void)
+TAO_ORB_Manager::run ()
 {
   this->poa_manager_->activate ();
 
@@ -205,34 +205,34 @@ TAO_ORB_Manager::run (void)
 // Return the corba orb reference.
 
 CORBA::ORB_ptr
-TAO_ORB_Manager::orb (void)
+TAO_ORB_Manager::orb ()
 {
   return CORBA::ORB::_duplicate (this->orb_.in ());
 }
 
 // Return the root POA reference
 PortableServer::POA_ptr
-TAO_ORB_Manager::root_poa (void)
+TAO_ORB_Manager::root_poa ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 // Return the child POA reference
 PortableServer::POA_ptr
-TAO_ORB_Manager::child_poa (void)
+TAO_ORB_Manager::child_poa ()
 {
   return PortableServer::POA::_duplicate (this->child_poa_.in ());
 }
 
 PortableServer::POAManager_ptr
-TAO_ORB_Manager::poa_manager (void)
+TAO_ORB_Manager::poa_manager ()
 {
   return PortableServer::POAManager::_duplicate (this->poa_manager_.in ());
 }
 
 // Destructor.
 
-TAO_ORB_Manager::~TAO_ORB_Manager (void)
+TAO_ORB_Manager::~TAO_ORB_Manager ()
 {
   try
     {

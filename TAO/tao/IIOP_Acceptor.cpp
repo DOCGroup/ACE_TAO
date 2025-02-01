@@ -1,7 +1,3 @@
-/*
- * Hook to copy all include and forward declarations.
- */
-//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_START
 #include "tao/IIOP_Acceptor.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -21,18 +17,19 @@
 
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
+TAO_IIOP_Acceptor::TAO_IIOP_Acceptor ()
   : TAO_Acceptor (IOP::TAG_INTERNET_IOP),
-    addrs_ (0),
+    addrs_ (nullptr),
     port_span_ (1),
-    hosts_ (0),
-    hostname_in_ior_ (0),
+    hosts_ (nullptr),
+    hostname_in_ior_ (nullptr),
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0),
+    orb_core_ (nullptr),
     reuse_addr_ (1),
 #if defined (ACE_HAS_IPV6) && !defined (ACE_USES_IPV4_IPV6_MIGRATION)
     default_address_ (static_cast<unsigned short> (0), ACE_IPV6_ANY, AF_INET6),
@@ -40,9 +37,9 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
     default_address_ (static_cast<unsigned short> (0), static_cast<ACE_UINT32> (INADDR_ANY)),
 #endif /* ACE_HAS_IPV6  && !ACE_USES_IPV4_IPV6_MIGRATION */
     base_acceptor_ (this),
-    creation_strategy_ (0),
-    concurrency_strategy_ (0),
-    accept_strategy_ (0)
+    creation_strategy_ (nullptr),
+    concurrency_strategy_ (nullptr),
+    accept_strategy_ (nullptr)
 {
 #if defined (ACE_HAS_IPV6) && defined (ACE_USES_IPV4_IPV6_MIGRATION)
   if (ACE::ipv6_enabled())
@@ -53,9 +50,7 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
 #endif /* ACE_HAS_IPV6 && ACE_USES_IPV4_IPV6_MIGRATION */
 }
 
-//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_END
-
-TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
+TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -74,8 +69,6 @@ TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
 
   delete [] this->hostname_in_ior_;
 }
-
-//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_START
 
 // TODO =
 //    2) For V1.[1,2] there are tagged components
@@ -117,7 +110,7 @@ TAO_IIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
           && ACE_OS::strcmp(this->hosts_[i], this->hosts_[0]) == 0)
         continue;
 
-      TAO_IIOP_Profile *pfile = 0;
+      TAO_IIOP_Profile *pfile = nullptr;
       ACE_NEW_RETURN (pfile,
                       TAO_IIOP_Profile (this->hosts_[i],
                                         this->addrs_[i].get_port_number (),
@@ -131,7 +124,7 @@ TAO_IIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       if (mprofile.give_profile (pfile) == -1)
         {
           pfile->_decr_refcnt ();
-          pfile = 0;
+          pfile = nullptr;
           return -1;
         }
 
@@ -158,8 +151,8 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                           CORBA::Short priority)
 {
   CORBA::ULong index = 0;
-  TAO_Profile *pfile = 0;
-  TAO_IIOP_Profile *iiop_profile = 0;
+  TAO_Profile *pfile = nullptr;
+  TAO_IIOP_Profile *iiop_profile = nullptr;
 
   // First see if @a mprofile already contains a IIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
@@ -174,7 +167,7 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
 
   // If <mprofile> doesn't contain a IIOP_Profile, we need to create
   // one.
-  if (iiop_profile == 0)
+  if (iiop_profile == nullptr)
     {
       ACE_NEW_RETURN (iiop_profile,
                       TAO_IIOP_Profile (this->hosts_[0],
@@ -190,7 +183,7 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       if (mprofile.give_profile (iiop_profile) == -1)
         {
           iiop_profile->_decr_refcnt ();
-          iiop_profile = 0;
+          iiop_profile = nullptr;
           return -1;
         }
 
@@ -219,7 +212,7 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
           ACE_OS::strcmp(this->hosts_[index], this->hosts_[0]) == 0)
         continue;
 
-      TAO_IIOP_Endpoint *endpoint = 0;
+      TAO_IIOP_Endpoint *endpoint = nullptr;
       ACE_NEW_RETURN (endpoint,
                       TAO_IIOP_Endpoint (this->hosts_[index],
                                          this->addrs_[index].get_port_number (),
@@ -239,7 +232,7 @@ TAO_IIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
     dynamic_cast<const TAO_IIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
-  if (endp == 0)
+  if (endp == nullptr)
     return 0;
 
   for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
@@ -248,7 +241,7 @@ TAO_IIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
       // this code by comparing the IP address instead.  That would
       // trigger the following bug:
       //
-      // http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
+      // http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1220
       //
       if (endp->port() == this->addrs_[i].get_port_number()
           && ACE_OS::strcmp(endp->host(), this->hosts_[i]) == 0)
@@ -259,7 +252,7 @@ TAO_IIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO_IIOP_Acceptor::close (void)
+TAO_IIOP_Acceptor::close ()
 {
   return this->base_acceptor_.close ();
 }
@@ -282,7 +275,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   this->orb_core_ = orb_core;
 
-  if (this->hosts_ != 0)
+  if (this->hosts_ != nullptr)
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
@@ -293,7 +286,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                         -1);
     }
 
-  if (address == 0)
+  if (address == nullptr)
     return -1;
 
   if (major >=0 && minor >= 0)
@@ -365,16 +358,16 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                   char *[this->endpoint_count_],
                   -1);
 
-  this->hosts_[0] = 0;
+  this->hosts_[0] = nullptr;
 
-  if (this->hostname_in_ior_ != 0)
+  if (this->hostname_in_ior_ != nullptr)
     {
       if (TAO_debug_level > 2)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - ")
                       ACE_TEXT ("IIOP_Acceptor::open, ")
-                      ACE_TEXT ("Overriding address in IOR with %C\n"),
+                      ACE_TEXT ("overriding address in IOR with %C\n"),
                       this->hostname_in_ior_));
         }
       specified_hostname = this->hostname_in_ior_;
@@ -403,7 +396,7 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (this->hosts_ != 0)
+  if (this->hosts_ != nullptr)
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
@@ -462,7 +455,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                                      this->creation_strategy_,
                                      this->accept_strategy_,
                                      this->concurrency_strategy_,
-                                     0, 0, 0, ACE_DEFAULT_ACCEPTOR_USE_SELECT,
+                                     nullptr, nullptr, nullptr, ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                                      this->reuse_addr_) == -1)
         {
           if (TAO_debug_level > 0)
@@ -478,11 +471,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       ACE_INET_Addr a(addr);
 
       bool found_a_port = false;
-      ACE_UINT32 last_port = requested_port + this->port_span_ - 1;
-      if (last_port > ACE_MAX_DEFAULT_PORT)
-        {
-          last_port = ACE_MAX_DEFAULT_PORT;
-        }
+      ACE_UINT32 const last_port = ACE_MIN (requested_port + this->port_span_ - 1,
+                                            ACE_MAX_DEFAULT_PORT);
 
       for (ACE_UINT32 p = requested_port; p <= last_port; p++)
         {
@@ -498,7 +488,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                                          this->creation_strategy_,
                                          this->accept_strategy_,
                                          this->concurrency_strategy_,
-                                         0, 0, 0, ACE_DEFAULT_ACCEPTOR_USE_SELECT,
+                                         nullptr, nullptr, nullptr, ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                                          this->reuse_addr_) != -1)
             {
               found_a_port = true;
@@ -602,12 +592,12 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
                              char *&host,
                              const char *specified_hostname)
 {
-  if (this->hostname_in_ior_ != 0)
+  if (this->hostname_in_ior_ != nullptr)
     {
       if (TAO_debug_level >= 5)
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor - ")
-                      ACE_TEXT ("Overriding the hostname with <%C>\n"),
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::hostname, ")
+                      ACE_TEXT ("overriding the hostname with <%C>\n"),
                       this->hostname_in_ior_));
 
       host = CORBA::string_dup (this->hostname_in_ior_);
@@ -618,7 +608,7 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
       // just return ours.
       return this->dotted_decimal_address (addr, host);
     }
-  else if (specified_hostname != 0)
+  else if (specified_hostname != nullptr)
     {
       // If the user specified a hostname, pass it back
       // blindly as it overrides our choice of hostname.
@@ -665,7 +655,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
     specified_hostname.clear();
   }
 
-  const char *port_separator_loc = ACE_OS::strchr (address, ':');
+  const char *port_separator_loc = std::strchr (address, ':');
   char tmp_host[MAXHOSTNAMELEN + 1];
   tmp_host[0] = '\0';
   bool host_defaulted = port_separator_loc == address;
@@ -682,7 +672,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      char const * const cp_pos = ACE_OS::strchr (address, ']');
+      char const * const cp_pos = std::strchr (address, ']');
       if (cp_pos == 0)
         {
           // No valid IPv6 address specified.
@@ -718,7 +708,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
 #endif /* ACE_HAS_IPV6 */
     if (!host_defaulted)
       {
-        if (port_separator_loc != 0)
+        if (port_separator_loc != nullptr)
           {
             // Extract out just the host part of the address.
             size_t const len = port_separator_loc - address;
@@ -747,7 +737,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
     {
       // First convert the port into a usable form.
       unsigned short portno = 0;
-      if (port_separator_loc != 0)
+      if (port_separator_loc != nullptr)
         {
           portno =
             static_cast<u_short> (ACE_OS::atoi (port_separator_loc +
@@ -759,7 +749,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
       if (addr.set (this->default_address_) != 0)
         return -1;
     }
-  else if (port_separator_loc == 0)
+  else if (port_separator_loc == nullptr)
     {
       // The address is a hostname.  No port was specified, so assume
       // port zero (port will be chosen for us).
@@ -796,7 +786,7 @@ TAO_IIOP_Acceptor::dotted_decimal_address (const ACE_INET_Addr &addr,
                                            char *&host)
 {
   int result = 0;
-  const char *tmp = 0;
+  const char *tmp = nullptr;
 
   // If the IP address in the INET_Addr is the IN(6)ADDR_ANY address,
   // then force the actual IP address to be used by initializing a new
@@ -820,7 +810,7 @@ TAO_IIOP_Acceptor::dotted_decimal_address (const ACE_INET_Addr &addr,
   else
     tmp = addr.get_host_addr ();
 
-  if (tmp == 0 || result != 0)
+  if (tmp == nullptr || result != 0)
     {
       if (TAO_debug_level > 0)
         TAOLIB_ERROR ((LM_ERROR,
@@ -842,7 +832,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   // it.  The hostnames will then be used when creating a
   // TAO_IIOP_Profile for each endpoint setup on the probed
   // network interfaces.
-  ACE_INET_Addr *if_addrs = 0;
+  ACE_INET_Addr *if_addrs = nullptr;
   size_t if_cnt = 0;
 
   if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0
@@ -854,7 +844,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
       return -1;
     }
 
-  if (if_cnt == 0 || if_addrs == 0)
+  if (if_cnt == 0 || if_addrs == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -909,7 +899,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
 
   // The instantiation for this template is in
   // tao/IIOP_Connector.cpp.
-  ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (if_addrs);
+  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
 #if defined (ACE_HAS_IPV6)
   bool ipv4_only = def_type == AF_INET;
@@ -1057,7 +1047,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
 }
 
 CORBA::ULong
-TAO_IIOP_Acceptor::endpoint_count (void)
+TAO_IIOP_Acceptor::endpoint_count ()
 {
   return this->endpoint_count_;
 }
@@ -1120,7 +1110,7 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 int
 TAO_IIOP_Acceptor::parse_options (const char *str)
 {
-  if (str == 0)
+  if (str == nullptr)
     return 0;  // No options to parse.  Not a problem.
 
   // Use an option format similar to the one used for CGI scripts in
@@ -1148,9 +1138,9 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  ACE_CString *argv_base = 0;
+  ACE_CString *argv_base = nullptr;
   ACE_NEW_RETURN (argv_base, ACE_CString[argc],-1);
-  ACE_CString **argv = 0;
+  ACE_CString **argv = nullptr;
   ACE_NEW_RETURN (argv, ACE_CString*[argc],-1);
 
   ACE_CString::size_type begin = 0;
@@ -1230,7 +1220,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
                           -1);
       if (name == "portspan")
         {
-          int range = static_cast <int> (ACE_OS::atoi (value.c_str ()));
+          int const range = ACE_OS::atoi (value.c_str ());
           // @@ What's the lower bound on the range?  zero, or one?
           if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
             TAOLIB_ERROR_RETURN ((LM_ERROR,
@@ -1272,5 +1262,3 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
-
-//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_END

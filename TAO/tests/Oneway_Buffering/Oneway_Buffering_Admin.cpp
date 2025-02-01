@@ -17,7 +17,7 @@ CORBA::ULong
 Oneway_Buffering_Admin::request_count (CORBA::ULong expected_request_count)
 {
   ACE_Time_Value timeout (timeout_in_sec);
-  while ( (this->request_count_ < expected_request_count)
+  while ((this->request_count_ < expected_request_count)
         && (ACE_Time_Value::zero < timeout) )
     {
       orb_->perform_work (timeout); // Do some work, decreases timeout for amount done.
@@ -29,7 +29,7 @@ CORBA::ULong
 Oneway_Buffering_Admin::bytes_received_count (CORBA::ULong expected_bytes_received_count)
 {
   ACE_Time_Value timeout (timeout_in_sec);
-  while ( (this->bytes_received_count_ < expected_bytes_received_count)
+  while ((this->bytes_received_count_ < expected_bytes_received_count)
         && (ACE_Time_Value::zero < timeout) )
     {
       orb_->perform_work (timeout); // Do some work, decreases timeout for amount done.
@@ -45,12 +45,12 @@ Oneway_Buffering_Admin::request_received (CORBA::ULong payload_length)
 }
 
 void
-Oneway_Buffering_Admin::flush (void)
+Oneway_Buffering_Admin::flush ()
 {
 }
 
 void
-Oneway_Buffering_Admin::shutdown (void)
+Oneway_Buffering_Admin::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Timer_Reactor::TAO_Notify_Timer_Reactor (void)
+TAO_Notify_Timer_Reactor::TAO_Notify_Timer_Reactor ()
   :reactor_ (0)
 {
   // Get the ORB
@@ -20,7 +20,7 @@ TAO_Notify_Timer_Reactor::~TAO_Notify_Timer_Reactor ()
 }
 
 void
-TAO_Notify_Timer_Reactor::release (void)
+TAO_Notify_Timer_Reactor::release ()
 {
   delete this;
   //@@ inform factory

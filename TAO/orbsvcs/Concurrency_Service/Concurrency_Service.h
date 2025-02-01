@@ -39,21 +39,21 @@ class Concurrency_Service : public TAO_ORB_Manager
 {
 public:
   /// Default Constructor.
-  Concurrency_Service (void);
+  Concurrency_Service ();
 
   /// Constructor taking the command-line arguments.
   Concurrency_Service (int argc,
                        ACE_TCHAR **argv);
 
   /// Destructor.
-  ~Concurrency_Service (void);
+  ~Concurrency_Service ();
 
   /// Initialize the Concurrency Service with the arguments.
   int init (int argc,
             ACE_TCHAR **argv);
 
   /// Run the Concurrency_Service.
-  int run (void);
+  int run ();
 
 private:
   /// Parses the commandline arguments.
@@ -65,7 +65,7 @@ private:
    * the individual lock sets with the naming service. At present the
    * clients must keep track of the reference and pass 'by hand'
    */
-  int init_naming_service (void);
+  int init_naming_service ();
 
   /// Flag to tell wheter the naming service will be used.
   int use_naming_service_;

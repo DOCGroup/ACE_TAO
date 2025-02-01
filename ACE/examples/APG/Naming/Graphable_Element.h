@@ -21,12 +21,12 @@ public:
   // Listing 1
 
   // Listing 2 code/ch21
-  inline int when (void) const
+  inline int when () const
   {
     return this->when_;
   }
 
-  inline float temp (void)
+  inline float temp ()
   {
     return this->temp_;
   }

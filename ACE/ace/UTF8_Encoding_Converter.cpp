@@ -8,7 +8,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_UTF8_Encoding_Converter::ACE_UTF8_Encoding_Converter (void)
+ACE_UTF8_Encoding_Converter::ACE_UTF8_Encoding_Converter ()
  : native_ (0)
 {
   // Choose a converter for the ASCII or UTF-8 string to a wide character
@@ -25,7 +25,7 @@ ACE_UTF8_Encoding_Converter::ACE_UTF8_Encoding_Converter (void)
     }
 }
 
-ACE_UTF8_Encoding_Converter::~ACE_UTF8_Encoding_Converter (void)
+ACE_UTF8_Encoding_Converter::~ACE_UTF8_Encoding_Converter ()
 {
   delete native_;
 }

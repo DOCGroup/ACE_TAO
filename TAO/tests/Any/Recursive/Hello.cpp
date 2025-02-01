@@ -19,7 +19,7 @@ Hello::get_any (CORBA::Any const & the_any)
 
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

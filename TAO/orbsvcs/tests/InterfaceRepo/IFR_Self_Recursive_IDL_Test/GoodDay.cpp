@@ -10,20 +10,20 @@ GoodDay::GoodDay (CORBA::ORB_ptr orb)
 }
 
 char *
-GoodDay::get_string (void)
+GoodDay::get_string ()
 {
   return CORBA::string_dup ("Hello there!");
 }
 
 void
-GoodDay::shutdown (void)
+GoodDay::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 
 ::Test::GoodDay::RoughWeek *
-GoodDay::this_week (void)
+GoodDay::this_week ()
 {
   // Not actually used.
   return 0;

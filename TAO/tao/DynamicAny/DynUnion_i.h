@@ -43,7 +43,7 @@ public:
   TAO_DynUnion_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynUnion_i (void);
+  ~TAO_DynUnion_i ();
 
   /// Constructor taking an Any argument.
   void init (const CORBA::Any& any);
@@ -56,35 +56,35 @@ public:
 
   // = Functions specific to DynUnion.
 
-  virtual DynamicAny::DynAny_ptr get_discriminator (void);
+  virtual DynamicAny::DynAny_ptr get_discriminator ();
 
   virtual void set_discriminator (DynamicAny::DynAny_ptr d);
 
-  virtual void set_to_default_member (void);
+  virtual void set_to_default_member ();
 
-  virtual void set_to_no_active_member (void);
+  virtual void set_to_no_active_member ();
 
-  virtual CORBA::Boolean has_no_active_member (void);
+  virtual CORBA::Boolean has_no_active_member ();
 
-  virtual CORBA::TCKind discriminator_kind (void);
+  virtual CORBA::TCKind discriminator_kind ();
 
-  virtual DynamicAny::DynAny_ptr member (void);
+  virtual DynamicAny::DynAny_ptr member ();
 
-  virtual char * member_name (void);
+  virtual char * member_name ();
 
-  virtual CORBA::TCKind member_kind (void);
+  virtual CORBA::TCKind member_kind ();
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
   virtual void from_any (const CORBA::Any & value);
 
-  virtual CORBA::Any * to_any (void);
+  virtual CORBA::Any * to_any ();
 
   virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
-  virtual DynamicAny::DynAny_ptr current_component (void);
+  virtual DynamicAny::DynAny_ptr current_component ();
 
 private:
   /// Code common to the constructor from an Any arg and the member
@@ -92,7 +92,7 @@ private:
   void set_from_any (const CORBA::Any &any);
 
   /// Called by both versions of init().
-  void init_common (void);
+  void init_common ();
 
   /// Iterative check for label value match.
   CORBA::Boolean label_match (const CORBA::Any &my_any,

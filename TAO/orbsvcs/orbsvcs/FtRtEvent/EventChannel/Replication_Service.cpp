@@ -7,7 +7,7 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_strings.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -15,7 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace FTRTEC
 {
   namespace {
-    auto_ptr<Replication_Strategy> replication_strategy;
+    std::unique_ptr<Replication_Strategy> replication_strategy;
     int threads = 1;
     Replication_Service* service;
   }
@@ -68,7 +68,7 @@ namespace FTRTEC
       TAO_FTRTEC::Log(3, ACE_TEXT("Basic replication strategy\n"));
     }
 
-     ACE_auto_ptr_reset (replication_strategy, strategy);
+     replication_strategy.reset (strategy);
 
       try
       {
@@ -104,11 +104,11 @@ namespace FTRTEC
     ACE_ASSERT(strategy);
 
     if (replication_strategy.get() != strategy) {
-      ACE_auto_ptr_reset(replication_strategy, strategy);
+      replication_strategy.reset (strategy);
     }
   }
 
-  void Replication_Service::check_validity(void)
+  void Replication_Service::check_validity()
   {
     replication_strategy->check_validity();
   }
@@ -152,21 +152,21 @@ namespace FTRTEC
     replication_strategy->add_member(info, object_group_ref_version);
   }
 
-  int  Replication_Service::acquire_read (void)
+  int  Replication_Service::acquire_read ()
   {
     int r =  replication_strategy->acquire_read();
     TAO_FTRTEC::Log(3, ACE_TEXT("Read Lock acquired %d\n"), r);
     return r;
   }
 
-  int  Replication_Service::acquire_write (void)
+  int  Replication_Service::acquire_write ()
   {
     int r= replication_strategy->acquire_write();
     TAO_FTRTEC::Log(3, ACE_TEXT("Write Lock acqured %d\n"), r);
     return r;
   }
 
-  int  Replication_Service::release (void)
+  int  Replication_Service::release ()
   {
     int r= replication_strategy->release();
     TAO_FTRTEC::Log(3, ACE_TEXT("Lock Released %d\n"), r);

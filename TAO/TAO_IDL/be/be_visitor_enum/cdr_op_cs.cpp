@@ -16,10 +16,6 @@ be_visitor_enum_cdr_op_cs::be_visitor_enum_cdr_op_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_enum_cdr_op_cs::~be_visitor_enum_cdr_op_cs (void)
-{
-}
-
 int
 be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
 {
@@ -30,8 +26,7 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 

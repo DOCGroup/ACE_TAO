@@ -1,6 +1,6 @@
 # -*- Makefile -*-
 #----------------------------------------------------------------------------
-#       
+#
 #
 #       Local targets
 #       GNU version
@@ -27,19 +27,8 @@ ifdef TEMPINCDIR
   CLEANUP_DIRS += $(TEMPINCDIR)
 endif
 
-ifdef sun
-  CLEANUP_DIRS += SunWS_cache
-endif
-
 vxworks_ntbuild ?= 0
 lacks_touch ?= 0
-
-#### TEMPLATE_REPOSITORY can be set in individual platform files
-#### to create template repository directories.  See
-#### platform_sunos5_sunc++.GNU for an example.
-ifdef TEMPLATE_REPOSITORY
-CLEANUP_DIRS += $(TEMPLATE_REPOSITORY)
-endif
 
 ifeq ($(use_pwd_call),)
   ifneq ($(mingw32),1)
@@ -49,6 +38,7 @@ ifeq ($(use_pwd_call),)
   endif
 endif
 
+.PHONY: makefile_name.local
 ifneq ($(use_pwd_call),1)
 makefile_name.local:
 	@echo
@@ -149,7 +139,7 @@ RC_OUTPUT_FLAG ?=
   ifneq (,$(COMPILE.rc))
 $(VDIR)%.rc.o: %.rc
 	$(mk_obj_out_dir)
-	$(COMPILE.rc) $(RC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.rc) $(RC_OUTPUT_FLAG) $@ $(abspath $<)
 	${MVCMD}
   endif # COMPILE.rc
 
@@ -214,12 +204,12 @@ endif # SOLINK
 #### in the platform_macros.GNU file.
 show_statics:
 	-@$(TOOLDIR)nm$(TOOLENV) -Co $(VSHDIR)*o | \
-	  egrep ' global destructors '; true
+	  grep -E ' global destructors '; true
 
 #### show_uninit shows uninitialized data in locally-created object files.
 #### TOOLENV selects the proper nm in VxWorks host environments.
 show_uninit:
-	-@$(TOOLDIR)nm$(TOOLENV) -Co $(VSHDIR)*o | egrep ' b '
+	-@$(TOOLDIR)nm$(TOOLENV) -Co $(VSHDIR)*o | grep -E ' b '
 
 #----------------------------------------------------------------------------
 #       Installation targets
@@ -292,11 +282,17 @@ $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
 	@$(MKDIR) $(@D)
 ifeq ($(vxworks_ntbuild),1)
+  ifeq ($(SOVERSION),)
+	@if not "$(ARCH_SOURCE_DIR)/$(@F)" == "$@" \
+		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@ && \
+		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@
+  else
 	@if not exist $@ $(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
 		$(RM) $@ && \
 		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@ && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@
+  endif #SOVERSION
 else #not vxworks_ntbuild
     ifeq ($(firstword $(LN_S)),cp)
       ifneq ($(SOVERSION),)
@@ -362,7 +358,7 @@ ifneq ($(SHLIB_UNCHECKED),)
 	-$(RM) $(SHLIB_UNCHECKED)
 ifeq ($(versioned_so),1)
 	-$(RM) $(SHLIB_UNCHECKED)$(SOVERSION)
-else 
+else
 	ifeq ($(versioned_so),2)
 		-$(RM) $(SHLIB_UNCHECKED:.$(SOEXT)=$(SOVERSION).$(SOEXT))
 	endif
@@ -503,7 +499,7 @@ depend.local: $(MAKEFILE) idl_stubs.local
 	@$(RM) $(DEPENDENCY_FILE).old
 	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old
 	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) \
-	$(CPPFLAGS) -t gnu -DMAKEDEPEND $(CCFLAGS) $(LSRC) $(SRC) $(PSRC) 
+	$(CPPFLAGS) -t gnu -DMAKEDEPEND $(CCFLAGS) $(LSRC) $(SRC) $(PSRC)
 	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old ;\
 	then echo "GNUmakefile dependencies unchanged." ;\
 	else \

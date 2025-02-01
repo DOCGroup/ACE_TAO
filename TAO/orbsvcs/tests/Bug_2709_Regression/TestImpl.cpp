@@ -7,14 +7,13 @@ TestImpl::TestImpl (CORBA::ORB_ptr orb)
 }
 
 // virtual
-void TestImpl::myMethod (void)
+void TestImpl::myMethod ()
 {
-  ACE_DEBUG ((LM_ERROR, "(%P): TestImpl::myMethod called!.\n") );
+  ACE_DEBUG ((LM_ERROR, "(%P): TestImpl::myMethod called!.\n"));
 }
 
-
 // virtual
-void TestImpl::shutdown (void)
+void TestImpl::shutdown ()
 {
   // Give the client thread time to return from the collocated
   // call to this method before shutting down the ORB.  We sleep

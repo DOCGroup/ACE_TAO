@@ -37,9 +37,8 @@ class TAO_IOR_Manipulation_impl
     public ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
-  TAO_IOR_Manipulation_impl (void);
+  TAO_IOR_Manipulation_impl ();
 
   virtual CORBA::Object_ptr merge_iors (
     const TAO_IOP::TAO_IOR_Manipulation::IORList & iors);
@@ -77,10 +76,8 @@ public:
   virtual CORBA::ULong get_profile_count (CORBA::Object_ptr group);
 
 protected:
-
   /// Destructor
-  ~TAO_IOR_Manipulation_impl (void);
-
+  ~TAO_IOR_Manipulation_impl ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

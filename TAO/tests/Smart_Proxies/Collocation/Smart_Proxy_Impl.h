@@ -8,7 +8,7 @@
 class MY_Stub_Export Smart_Diamond_Top_Factory : public virtual Diamond::TAO_Diamond_Top_Default_Proxy_Factory
 {
 public:
-  Smart_Diamond_Top_Factory (void);
+  Smart_Diamond_Top_Factory ();
 
   virtual Diamond::Top_ptr create_proxy (Diamond::Top_ptr proxy);
 

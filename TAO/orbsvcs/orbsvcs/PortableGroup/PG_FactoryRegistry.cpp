@@ -6,7 +6,6 @@
 #include "ace/Vector_T.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/POAManagerC.h"
@@ -56,7 +55,7 @@ TAO::PG_FactoryRegistry::PG_FactoryRegistry (const char * name)
 {
 }
 
-TAO::PG_FactoryRegistry::~PG_FactoryRegistry (void)
+TAO::PG_FactoryRegistry::~PG_FactoryRegistry ()
 {
 }
 
@@ -111,7 +110,7 @@ const char * TAO::PG_FactoryRegistry::identity () const
   return this->identity_.c_str();
 }
 
-void TAO::PG_FactoryRegistry::_remove_ref (void)
+void TAO::PG_FactoryRegistry::_remove_ref ()
 {
   this->quit_state_ = GONE;
 }
@@ -135,7 +134,7 @@ int TAO::PG_FactoryRegistry::idle (int & result)
 }
 
 
-int TAO::PG_FactoryRegistry::fini (void)
+int TAO::PG_FactoryRegistry::fini ()
 {
   if (this->ior_output_file_ != 0)
   {
@@ -169,7 +168,6 @@ void TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr 
 
   // and create a ior string
   this->ior_ = this->orb_->object_to_string (this->this_obj_.in ());
-
 }
 
 int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
@@ -284,7 +282,7 @@ void TAO::PG_FactoryRegistry::register_factory (
   METHOD_ENTRY(TAO::PG_FactoryRegistry::register_factory);
 
   RoleInfo * role_info = 0;
-  auto_ptr<RoleInfo> safe_entry;
+  std::unique_ptr<RoleInfo> safe_entry;
   if (this->registry_.find(role, role_info) != 0)
     {
       ORBSVCS_DEBUG(( LM_DEBUG,
@@ -298,7 +296,7 @@ void TAO::PG_FactoryRegistry::register_factory (
                         RoleInfo(5),
                         CORBA::NO_MEMORY());
 
-      ACE_auto_ptr_reset (safe_entry, role_info);
+      safe_entry.reset (role_info);
       role_info->type_id_ = type_id;
     }
   else
@@ -309,7 +307,7 @@ void TAO::PG_FactoryRegistry::register_factory (
         }
     }
 
-  PortableGroup::FactoryInfos & infos = role_info->infos_;;
+  PortableGroup::FactoryInfos & infos = role_info->infos_;
   CORBA::ULong length = infos.length();
   for (CORBA::ULong nInfo = 0u; nInfo < length; ++nInfo)
     {
@@ -505,7 +503,6 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
       PortableGroup::FactoryInfo & info = infos[nInfo];
       if (info.the_location == location)
       {
-
         ORBSVCS_ERROR((LM_INFO,
           "%s: Unregister_factory_by_location: Removing: [%d] %s@%s\n",
           this->identity_.c_str(),

@@ -11,10 +11,6 @@ namespace TAO
   {
   }
 
-  Wait_On_LF_No_Upcall::~Wait_On_LF_No_Upcall (void)
-  {
-  }
-
   int
   Wait_On_LF_No_Upcall::wait (ACE_Time_Value *max_wait_time,
                               TAO_Synch_Reply_Dispatcher &rd)
@@ -25,7 +21,7 @@ namespace TAO
   }
 
   bool
-  Wait_On_LF_No_Upcall::can_process_upcalls (void) const
+  Wait_On_LF_No_Upcall::can_process_upcalls () const
   {
     if ((this->transport_->opened_as () == TAO::TAO_SERVER_ROLE) &&
         (this->transport_->bidirectional_flag () == -1))

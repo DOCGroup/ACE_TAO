@@ -44,9 +44,9 @@ AMI_Manager::start_workers (CORBA::Short worker_count,
 }
 
 void
-AMI_Manager::shutdown (void)
+AMI_Manager::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 // ****************************************************************
@@ -63,7 +63,7 @@ Worker::Worker (ACE_Thread_Manager *thr_mgr,
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   // ACE_DEBUG ((LM_DEBUG, "Worker starts\n"));
   try
@@ -134,7 +134,7 @@ Controller_Handler::Controller_Handler (TAO_SYNCH_MUTEX *mutex,
 }
 
 void
-Controller_Handler::worker_started (void)
+Controller_Handler::worker_started ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_);
   (*this->pending_replies_)--;
@@ -156,7 +156,7 @@ Controller_Handler::worker_started_excep
 }
 
 void
-Controller_Handler::worker_finished (void)
+Controller_Handler::worker_finished ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_);
   (*this->pending_replies_)--;

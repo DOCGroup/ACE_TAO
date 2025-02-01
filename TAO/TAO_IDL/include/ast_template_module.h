@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef AST_TEMPLATE_MODULE_H
 #define AST_TEMPLATE_MODULE_H
 
@@ -15,10 +14,10 @@ public:
   AST_Template_Module (UTL_ScopedName *n,
                        FE_Utils::T_PARAMLIST_INFO *template_params);
 
-  virtual ~AST_Template_Module (void);
+  virtual ~AST_Template_Module ();
 
   FE_Utils::T_PARAMLIST_INFO *
-  template_params (void) const;
+  template_params () const;
 
   // Checks for errors in the template args of an instantiation.
   bool match_arg_names (FE_Utils::T_ARGLIST *args);
@@ -26,15 +25,11 @@ public:
   // Checks for errors in the template param refs of an alias.
   bool match_param_refs (UTL_StrList *refs, UTL_Scope *decl_scope);
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (AST_Template_Module);
-  DEF_NARROW_FROM_SCOPE (AST_Template_Module);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

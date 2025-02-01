@@ -15,7 +15,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/INet/StreamInterceptor.h"
 #include <streambuf>
 #include <iosfwd>
@@ -87,8 +87,8 @@ namespace ACE
               int flush_buffer ();
 
               std::streamsize bufsize_;
-              ACE_Auto_Array_Ptr<char_type> read_buffer_;
-              ACE_Auto_Array_Ptr<char_type> write_buffer_;
+              std::unique_ptr<char_type[]> read_buffer_;
+              std::unique_ptr<char_type[]> write_buffer_;
               openmode        mode_;
               STREAM_HANDLER *stream_;
               interceptor_type* interceptor_;
@@ -119,19 +119,12 @@ namespace ACE
               BidirStreamBuffer(const BidirStreamBuffer&);
               BidirStreamBuffer& operator = (const BidirStreamBuffer&);
           };
-
       }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/INet/BidirStreamBuffer.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("BidirStreamBuffer.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_IOS_BIDIR_STREAM_BUFFER_H */

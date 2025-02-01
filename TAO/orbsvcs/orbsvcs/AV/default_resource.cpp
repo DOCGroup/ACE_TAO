@@ -8,14 +8,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory (void)
+TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory ()
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory %d\n"));
 }
 
-TAO_AV_Default_Resource_Factory::~TAO_AV_Default_Resource_Factory (void)
+TAO_AV_Default_Resource_Factory::~TAO_AV_Default_Resource_Factory ()
 {
   TAO_AV_TransportFactorySetItor t_end = TAO_AV_CORE::instance ()->transport_factories ()->end ();
   for (TAO_AV_TransportFactorySetItor tfiterator =

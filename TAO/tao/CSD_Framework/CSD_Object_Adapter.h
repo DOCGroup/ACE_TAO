@@ -34,13 +34,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_CSD_FW_Export TAO_CSD_Object_Adapter : public TAO_Object_Adapter
 {
 public:
-
   /// Constructor
   TAO_CSD_Object_Adapter (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,
                           TAO_ORB_Core &orb_core);
 
   /// Destructor
-  virtual ~TAO_CSD_Object_Adapter (void);
+  virtual ~TAO_CSD_Object_Adapter ();
 
   /// Hand the request to the Service_Dispatching_Strategy_Proxy for
   /// dispatching.

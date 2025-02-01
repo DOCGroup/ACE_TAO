@@ -259,7 +259,6 @@ Thermostat_impl::set_nominal_temp (CCS::TempType new_temp)
 
   // Now set the nominal temperature to the new value.
   if (ICP_set (m_anum, "nominal_temp", &new_temp) != 0) {
-
     // If ICP_set () failed, read this thermostat's minimum
     // and maximum so we can initialize the BadTemp exception.
     CCS::Thermostat::BtData btd;
@@ -423,7 +422,6 @@ create_thermostat (
     assert (ICP_set (anum, "location", loc) == 0);
     // Set the nominal temperature.
     if (ICP_set (anum, "nominal_temp", &temp) != 0) {
-
         // If ICP_set () failed, read this thermostat's minimum
         // and maximum so we can initialize the BadTemp exception.
         CCS::Thermostat::BtData btd;
@@ -518,7 +516,6 @@ Controller_impl::find (CCS::Controller::SearchSeq & slist)
     // Loop over input list and lookup each device.
     CORBA::ULong listlen = slist.length ();
     for (CORBA::ULong i = 0; i < listlen; i++) {
-
         AssetMap::iterator where;   // Iterator for asset set
         int num_found = 0;          // Num matched per iteration
 

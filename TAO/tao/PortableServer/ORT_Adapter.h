@@ -68,11 +68,11 @@ namespace TAO
 
     /// Accessor methods to ObjectReferenceTemplate template
     virtual PortableInterceptor::ObjectReferenceTemplate *
-      get_adapter_template (void) = 0;
+      get_adapter_template () = 0;
 
     /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
     virtual PortableInterceptor::ObjectReferenceFactory *
-      get_obj_ref_factory (void) = 0;
+      get_obj_ref_factory () = 0;
 
     /// Release any references on @c ObjectReferenceTemplate @a t.
     virtual void release (
@@ -93,7 +93,6 @@ namespace TAO
 
  typedef
   ACE_Array_Base<PortableInterceptor::ObjectReferenceTemplate*> ORT_Array;
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -3,13 +3,19 @@ project(TAO_IDL_GEN) {
   requires += tao_idl_fe_gen
   custom_only = 1
 
+  verbatim(gnuace, extension, 1) {
+    OUTPUT_DIRECTORY =
+  }
+
   verbatim(gnuace, local) {
     BISON_FLAGS := -d --feature=caret --warnings=error=deprecated --warnings=error=empty-rule --warnings=error=conflicts-rr
     all: fe/fe_lookup.cpp fe/idl.yy.cpp fe/idl.tab.cpp fe/idl.tab.hpp
     GPERF ?= $(ACE_ROOT)/bin/ace_gperf
-    fe/fe_lookup.cpp: fe/keywords.dat
-    "	cp fe/lookup_starter.txt $@"
-    "	$(GPERF) -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ $^ | sed -f fe/post_gperf.sed >> $@"
+    fe/keywords.dat.tmp: fe/keywords.dat
+    "	$(GPERF) -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ $^ > $@"
+
+    fe/fe_lookup.cpp: fe/keywords.dat.tmp
+    "	sed -f fe/post_gperf.sed $^ > $@"
 
     fe/idl.yy.cpp: fe/idl.ll
     "	@echo 'WARNING: Potentially outdated $@'"
@@ -33,7 +39,7 @@ project(TAO_IDL_GEN) {
     "	@echo '         generate it using:'"
     "	@echo '    make y.tab'"
 
-    debug_bison: BISON_FLAGS += --report all
+    debug_bison: BISON_FLAGS += --report=all --report-file=bison_report
     debug_bison: y.tab
 
     .PHONY: y.tab
@@ -47,7 +53,7 @@ project(TAO_IDL_GEN) {
   }
 }
 
-project(TAO_IDL_FE) : acelib, conv_lib, tao_output {
+project(TAO_IDL_FE) : acelib, install_lib, tao_rules, tao_output {
   sharedname   = TAO_IDL_FE
   dynamicflags += TAO_IDL_FE_BUILD_DLL
   includes    += $(TAO_ROOT)

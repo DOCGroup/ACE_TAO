@@ -53,7 +53,7 @@ namespace CORBA
 
   template<typename T> inline void release (T x)
   {
-    if (x != 0)
+    if (x)
       {
         x->_decr_refcount ();
       }

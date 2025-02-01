@@ -9,18 +9,18 @@
 class Client_Test : public ACE_Event_Handler
 {
 public:
-  Client_Test (void);
+  Client_Test ();
 
-  int open (void);
+  int open ();
   // Cache reactor and then register self with reactor
 
-  int close (void);
+  int close ();
   // Close things down and free up resources.
 
   virtual int handle_input (ACE_HANDLE handle);
   // Handle user entered commands
 
-  void list_options (void);
+  void list_options ();
   // Print name options
 
   int bind (const char *key,
@@ -61,13 +61,13 @@ private:
   ACE_Name_Options *name_options_;
   // Name Options associated with the Naming Context
 
-  void display_menu (void);
+  void display_menu ();
   // Display user menu
 
-  int set_proc_local (void);
+  int set_proc_local ();
   // Set options to use PROC_LOCAL naming context
 
-  int set_node_local (void);
+  int set_node_local ();
   // Set options to use NODE_LOCAL naming context
 
   int set_host (const char *hostname, int port);

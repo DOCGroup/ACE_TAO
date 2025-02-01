@@ -2,11 +2,12 @@
 #include "ace/OS_NS_string.h"
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /home/fred/oci/ace_tao/tao_idl_fixes/ACE_TAO/ACE/bin/ace_gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat  */
+/* Command-line: ace_gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat */
+
 unsigned int
 TAO_IDL_CPP_Keyword_Table::hash (const char *str, unsigned int len)
 {
-  static const unsigned char asso_values[] =
+  static constexpr unsigned char asso_values[] =
     {
      252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
      252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
@@ -175,7 +176,7 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      unsigned int key = hash (str, len);
+      unsigned int const key = hash (str, len);
 
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {

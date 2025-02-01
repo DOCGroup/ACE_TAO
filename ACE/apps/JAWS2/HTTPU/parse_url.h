@@ -16,33 +16,33 @@ class HTTPU_Export HTTP_Parse_URL
 
 public:
   HTTP_Parse_URL (const char *url = 0);
-  ~HTTP_Parse_URL (void);
+  ~HTTP_Parse_URL ();
 
   void init (const char *url);
 
   enum URL_SCHEME { HTTP, FTP };
 
-  const char *scheme (void) const;
-  const char *user (void) const;
-  const char *passwd (void) const;
-  const char *host (void) const;
-  int port (void) const;
-  const char *url_path (void) const;
+  const char *scheme () const;
+  const char *user () const;
+  const char *passwd () const;
+  const char *host () const;
+  int port () const;
+  const char *url_path () const;
 
   enum URL_ERROR { URL_ERROR_NONE, URL_ERROR_STRDUP, URL_ERROR_SCHEME, URL_ERROR_SLASHSLASH };
 
-  int error (void) const { return( error_ ); }
+  int error () const { return( error_ ); }
 
-  int is_cgi (void) const;
+  int is_cgi () const;
 
 private:
-  void parse_url (void);
+  void parse_url ();
   void parse_scheme (char *&p);
   void parse_host (char *&p);
   void parse_url_path (char *&p);
   void is_cgi (const char *path);
 
-  void set_port_from_scheme (void);
+  void set_port_from_scheme ();
 
 private:
   char *url_;

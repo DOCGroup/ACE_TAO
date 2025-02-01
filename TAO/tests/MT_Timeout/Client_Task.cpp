@@ -22,27 +22,26 @@ Client_Task::Client_Task (CORBA::ORB_ptr orb,
 }
 
 int
-Client_Task::successful_calls (void) const
+Client_Task::successful_calls () const
 {
   return this->successful_calls_;
 }
 
 int
-Client_Task::timed_out_calls (void) const
+Client_Task::timed_out_calls () const
 {
   return this->timed_out_calls_;
 }
 
 int
-Client_Task::too_big_difference_calls (void) const
+Client_Task::too_big_difference_calls () const
 {
   return this->too_big_difference_;
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
-
   int successful_calls = 0;
   int timed_out_calls = 0;
 
@@ -102,7 +101,7 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::validate_connection (void)
+Client_Task::validate_connection ()
 {
   try
     {
@@ -118,7 +117,7 @@ Client_Task::validate_connection (void)
 }
 
 int
-Client_Task::one_iteration (void)
+Client_Task::one_iteration ()
 {
   try
     {

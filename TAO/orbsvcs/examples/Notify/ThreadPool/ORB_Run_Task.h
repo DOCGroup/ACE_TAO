@@ -28,7 +28,7 @@ public:
   ~TAO_Notify_ORB_Run_Task ();
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// ORB Objects.

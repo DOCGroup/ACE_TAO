@@ -21,7 +21,7 @@ class test_i :
 public:
   test_i (test_i *other);
 
-  ~test_i (void);
+  ~test_i ();
 
   test_i *other_;
 };
@@ -31,7 +31,7 @@ test_i::test_i (test_i *other)
 {
 }
 
-test_i::~test_i (void)
+test_i::~test_i ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) test_i::~test_i\n"));
 
@@ -93,7 +93,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->deactivate_object (id2.in ());
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

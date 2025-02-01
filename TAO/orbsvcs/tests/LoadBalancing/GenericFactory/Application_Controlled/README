@@ -1,5 +1,3 @@
-
-
 This program tests the application controlled membership support
 of the Cygnus load balancer. The aim is to allow the application
 to create the replicas and then forcefully add them as the members

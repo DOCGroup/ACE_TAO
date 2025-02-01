@@ -6,12 +6,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IORManip_Filter::TAO_IORManip_Filter (void)
+TAO_IORManip_Filter::TAO_IORManip_Filter ()
 {
 }
 
 
-TAO_IORManip_Filter::~TAO_IORManip_Filter (void)
+TAO_IORManip_Filter::~TAO_IORManip_Filter ()
 {
 }
 

@@ -9,12 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_OC_Endpoint_Selector_Factory::TAO_OC_Endpoint_Selector_Factory (void)
-  : oc_endpoint_selector_(0)
-{
-}
-
-TAO_OC_Endpoint_Selector_Factory::~TAO_OC_Endpoint_Selector_Factory (void)
+TAO_OC_Endpoint_Selector_Factory::~TAO_OC_Endpoint_Selector_Factory ()
 {
   delete this->oc_endpoint_selector_;
 }
@@ -46,7 +41,7 @@ TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-TAO_OC_Endpoint_Selector_Factory::register_orb_initializer (void)
+TAO_OC_Endpoint_Selector_Factory::register_orb_initializer ()
 {
   // Register the ORB initializer.
   try
@@ -80,7 +75,7 @@ TAO_OC_Endpoint_Selector_Factory::register_orb_initializer (void)
 }
 
 TAO_Invocation_Endpoint_Selector *
-TAO_OC_Endpoint_Selector_Factory::get_selector (void)
+TAO_OC_Endpoint_Selector_Factory::get_selector ()
 {
   // Trivial endpoint selector.  Just return the default selector.
   return this->oc_endpoint_selector_;

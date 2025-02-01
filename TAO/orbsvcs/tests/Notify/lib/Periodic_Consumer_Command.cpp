@@ -8,7 +8,7 @@
 #include "Options_Parser.h"
 #include "orbsvcs/NotifyExtC.h"
 
-TAO_Notify_Tests_Periodic_Consumer_Command::TAO_Notify_Tests_Periodic_Consumer_Command (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::TAO_Notify_Tests_Periodic_Consumer_Command ()
 {
 }
 
@@ -17,13 +17,13 @@ TAO_Notify_Tests_Periodic_Consumer_Command::~TAO_Notify_Tests_Periodic_Consumer_
 }
 
 const char*
-TAO_Notify_Tests_Periodic_Consumer_Command::get_name (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::get_name ()
 {
   return TAO_Notify_Tests_Periodic_Consumer_Command::name ();
 }
 
 const char*
-TAO_Notify_Tests_Periodic_Consumer_Command::name (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::name ()
 {
   return TAO_Notify_Tests_Name::periodic_consumer_command;
 }
@@ -83,7 +83,6 @@ TAO_Notify_Tests_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
          }
 
          consumer->init_state (arg_shifter);
-
         } /* -Create */
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Subscription")) == 0) // -Subscription admin_name +added_type1 +-added_type2 ... -added_type3 -added_type4..
         {
@@ -141,7 +140,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 TAO_Notify_Tests_Periodic_Consumer*
-TAO_Notify_Tests_Periodic_Consumer_Command::consumer (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::consumer ()
 {
   TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
 
@@ -161,13 +160,13 @@ TAO_Notify_Tests_Periodic_Consumer_Command::consumer (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_set_qos (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_set_qos ()
 {
   this->consumer ()->set_qos (this->qos_);
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_create (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_create ()
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
 
@@ -180,7 +179,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::handle_create (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_subscriptions (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_subscriptions ()
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer= this->consumer ();
   if (consumer == 0)
@@ -190,7 +189,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::handle_subscriptions (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_disconnect (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_disconnect ()
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer= this->consumer ();
   if (consumer == 0)
@@ -200,7 +199,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::handle_disconnect (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_deactivate (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_deactivate ()
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
   if (consumer == 0)
@@ -210,7 +209,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::handle_deactivate (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_status (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_status ()
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
 
@@ -221,7 +220,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::handle_status (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::execute_i (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::execute_i ()
 {
   if (this->command_ == CREATE)
     {

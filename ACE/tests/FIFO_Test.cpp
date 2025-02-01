@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_stat.h"
@@ -25,8 +24,6 @@
 #include "ace/Lib_Find.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
-
-
 
 #if !defined (ACE_LACKS_MKFIFO)
 
@@ -107,15 +104,8 @@ server (void *arg)
                        ACE_TEXT ("select")),
                       0);
 
-  // On AIX, select() always seems to select a fifo handle as a normal file,
-  // always readable. Just wait a second...
-# if defined (AIX) || defined (HPUX) || defined (__osf__)
-  ACE_OS::sleep (1);
-# endif /* AIX || HPUX */
-
   // Read the things the client is sending; alphabet, huge overflow, then
   // alphabet.
-
   char buf[BUFSIZ];
   ssize_t recv_count;
   ssize_t expect = static_cast <ssize_t> (ACE_OS::strlen (ACE_ALPHABET));
@@ -182,7 +172,7 @@ server (void *arg)
 }
 
 static int
-test_fifo_msg (void)
+test_fifo_msg ()
 {
   // Reader side opens first - it may fail if fifo not supported on this
   // platform.

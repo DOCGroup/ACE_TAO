@@ -72,8 +72,8 @@ namespace TAO
                  const TAO_Reply_Handler_Stub &reply_handler_stub);
 
     virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
-  protected:
 
+  protected:
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
@@ -93,12 +93,9 @@ namespace TAO
                             ARDB_Refcount_Functor> safe_rd_;
 
   private:
-    /// Don't allow default initializations
-    Asynch_Invocation_Adapter (void);
-
-    Asynch_Invocation_Adapter (const Asynch_Invocation_Adapter &);
-    Asynch_Invocation_Adapter & operator= (const Asynch_Invocation_Adapter &);
-
+    Asynch_Invocation_Adapter () = delete;
+    Asynch_Invocation_Adapter (const Asynch_Invocation_Adapter &) = delete;
+    Asynch_Invocation_Adapter & operator= (const Asynch_Invocation_Adapter &) = delete;
   };
 } // End namespace TAO
 

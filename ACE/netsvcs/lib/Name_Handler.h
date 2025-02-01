@@ -50,7 +50,7 @@ class ACE_Svc_Export ACE_Name_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, 
 {
 public:
   /// Pointer to a member function of ACE_Name_Handler returning int
-  typedef int (ACE_Name_Handler::*OPERATION) (void);
+  typedef int (ACE_Name_Handler::*OPERATION) ();
 
   /// Pointer to a member function of ACE_Naming_Context returning int
   typedef int (ACE_Naming_Context::*LIST_OP) (ACE_PWSTRING_SET &, const ACE_NS_WString &);
@@ -70,17 +70,17 @@ protected:
 
   /// Give up waiting (e.g., when a timeout occurs or a client shuts
   /// down unexpectedly).
-  virtual int abandon (void);
+  virtual int abandon ();
 
   // = Low level routines for framing requests, dispatching
   // operations, and returning replies.
 
   /// Receive, frame, and decode the client's request.
-  virtual int recv_request (void);
+  virtual int recv_request ();
 
   /// Dispatch the appropriate operation to handle the client's
   /// request.
-  virtual int dispatch (void);
+  virtual int dispatch ();
 
   /// Create and send a reply to the client.
   virtual int send_reply (ACE_INT32 status,
@@ -91,7 +91,7 @@ protected:
 
   // = Demultiplexing hooks.
   /// Return the underlying <ACE_HANDLE>.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Callback method invoked by the <ACE_Reactor> when client events
   /// arrive.
@@ -102,10 +102,9 @@ protected:
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
 
   /// Ensure dynamic allocation...
-  ~ACE_Name_Handler (void);
+  ~ACE_Name_Handler ();
 
 private:
-
   /// Table of pointers to member functions
   OPERATION op_table_[ACE_Name_Request::MAX_ENUM];
 
@@ -142,29 +141,29 @@ private:
   ///  Naming Context
   ACE_Naming_Context *naming_context_;
 
-  ACE_Naming_Context *naming_context (void);
+  ACE_Naming_Context *naming_context ();
 
   /// Handle binds.
-  int bind (void);
+  int bind ();
 
   /// Handle rebinds.
-  int rebind (void);
+  int rebind ();
 
   /// Handle binds and rebinds.
   int shared_bind (int rebind);
 
   /// Handle find requests.
-  int resolve (void);
+  int resolve ();
 
   /// Handle unbind requests.
-  int unbind (void);
+  int unbind ();
 
   /// Handle LIST_NAMES, LIST_VALUES, and LIST_TYPES requests.
-  int lists (void);
+  int lists ();
 
   /// Handle LIST_NAME_ENTRIES, LIST_VALUE_ENTRIES, and
   /// LIST_TYPE_ENTRIES requests.
-  int lists_entries (void);
+  int lists_entries ();
 
   /// Create a name request.
   ACE_Name_Request name_request (ACE_NS_WString *one_name);
@@ -192,7 +191,7 @@ public:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Naming context for acceptor /for the listening port/
-  ACE_Naming_Context *naming_context (void);
+  ACE_Naming_Context *naming_context ();
 
 private:
   /// The scheduling strategy is designed for Reactive services.

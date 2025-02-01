@@ -27,11 +27,11 @@ class JAWS_Export JAWS_Header_Data
 public:
   JAWS_Header_Data (const char *name, const char *value = 0, int type = 0);
   JAWS_Header_Data (const char *name, int type, const char *value = 0);
-  ~JAWS_Header_Data (void);
+  ~JAWS_Header_Data ();
 
-  const char * header_name (void) const;
-  const char * header_value (void) const;
-  int header_type (void) const;
+  const char * header_name () const;
+  const char * header_value () const;
+  int header_type () const;
 
   void header_name (const char *name);
   void header_value (const char *value);
@@ -49,8 +49,8 @@ typedef ACE_DLList_Iterator<JAWS_Header_Data> JAWS_Header_Table_Iterator;
 class JAWS_Export JAWS_Headers : public JAWS_Header_Table
 {
 public:
-  JAWS_Headers (void);
-  ~JAWS_Headers (void);
+  JAWS_Headers ();
+  ~JAWS_Headers ();
 
   int insert (JAWS_Header_Data *new_data);
   // insert the new data 0 -> success, -1 -> failure
@@ -66,7 +66,7 @@ public:
   void remove_all (const char *const &header_name);
   // remove all headers from list that match header_name
 
-  JAWS_Header_Table_Iterator &iter (void);
+  JAWS_Header_Table_Iterator &iter ();
   // returns an iterator to the headers container
 
 private:

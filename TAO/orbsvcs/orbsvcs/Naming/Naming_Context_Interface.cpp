@@ -18,7 +18,7 @@ TAO_Naming_Context::TAO_Naming_Context (TAO_Naming_Context_Impl *impl)
 {
 }
 
-TAO_Naming_Context::~TAO_Naming_Context (void)
+TAO_Naming_Context::~TAO_Naming_Context ()
 {
   delete impl_;
 }
@@ -68,7 +68,7 @@ TAO_Naming_Context::unbind (const CosNaming::Name &n)
 }
 
 CosNaming::NamingContext_ptr
-TAO_Naming_Context::new_context (void)
+TAO_Naming_Context::new_context ()
 {
   return impl_->new_context ();
 }
@@ -80,7 +80,7 @@ TAO_Naming_Context::bind_new_context (const CosNaming::Name &n)
 }
 
 void
-TAO_Naming_Context::destroy (void)
+TAO_Naming_Context::destroy ()
 {
   impl_->destroy ();
 }
@@ -166,7 +166,6 @@ TAO_Naming_Context::to_string (const CosNaming::Name &n)
   // Stringify the name
   for (i=0; i < n.length (); ++i)
     {
-
       // Stringify Id
       //
       const char *id = n[i].id.in ();
@@ -463,7 +462,7 @@ TAO_Naming_Context::stale (bool value)
   this->impl_->stale (value);
 }
 
-TAO_Naming_Context_Impl::~TAO_Naming_Context_Impl (void)
+TAO_Naming_Context_Impl::~TAO_Naming_Context_Impl ()
 {
 }
 
@@ -475,7 +474,7 @@ TAO_Naming_Context_Impl::stale (bool value)
 }
 
 bool
-TAO_Naming_Context_Impl::stale (void)
+TAO_Naming_Context_Impl::stale ()
 {
   // Default implementation is to reply false
   return false;

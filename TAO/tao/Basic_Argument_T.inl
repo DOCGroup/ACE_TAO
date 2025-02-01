@@ -12,7 +12,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S
-TAO::In_Basic_Argument_T<S, Insert_Policy>::arg (void) const
+TAO::In_Basic_Argument_T<S, Insert_Policy>::arg () const
 {
   return this->x_;
 }
@@ -38,7 +38,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S &
-TAO::Inout_Basic_Argument_T<S, Insert_Policy>::arg (void)
+TAO::Inout_Basic_Argument_T<S, Insert_Policy>::arg ()
 {
   return this->x_;
 }
@@ -56,7 +56,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S &
-TAO::Out_Basic_Argument_T<S, Insert_Policy>::arg (void)
+TAO::Out_Basic_Argument_T<S, Insert_Policy>::arg ()
 {
   return this->x_;
 }
@@ -66,7 +66,7 @@ TAO::Out_Basic_Argument_T<S, Insert_Policy>::arg (void)
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Ret_Basic_Argument_T<S, Insert_Policy>::Ret_Basic_Argument_T (void)
+TAO::Ret_Basic_Argument_T<S, Insert_Policy>::Ret_Basic_Argument_T ()
 {
 }
 
@@ -74,7 +74,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S &
-TAO::Ret_Basic_Argument_T<S, Insert_Policy>::arg (void)
+TAO::Ret_Basic_Argument_T<S, Insert_Policy>::arg ()
 {
   return this->x_;
 }
@@ -83,7 +83,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S
-TAO::Ret_Basic_Argument_T<S, Insert_Policy>::excp (void)
+TAO::Ret_Basic_Argument_T<S, Insert_Policy>::excp ()
 {
   return this->x_;
 }
@@ -92,7 +92,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S
-TAO::Ret_Basic_Argument_T<S, Insert_Policy>::retn (void)
+TAO::Ret_Basic_Argument_T<S, Insert_Policy>::retn ()
 {
   return this->x_;
 }

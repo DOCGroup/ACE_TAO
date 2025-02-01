@@ -4,7 +4,7 @@
 #include "orbsvcs/CosEventChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_strings.h"
@@ -125,7 +125,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           servant.activate ();
         }
 
-      ACE_Auto_Ptr<SupplierTask> pST;
+      std::unique_ptr<SupplierTask> pST;
       if (supplier)
         {
           // The supplier will use its own ORB.

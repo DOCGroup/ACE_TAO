@@ -26,7 +26,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   class TAO_Export Storable_Factory
   {
   public:
@@ -41,7 +40,6 @@ namespace TAO
                                          bool use_backup =
                                          Storable_Base::use_backup_default) = 0;
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

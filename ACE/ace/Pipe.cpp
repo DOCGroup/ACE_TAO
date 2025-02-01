@@ -24,12 +24,10 @@
 #include "ace/Pipe.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-ACE_Pipe::dump (void) const
+ACE_Pipe::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Pipe::dump");
@@ -93,17 +91,22 @@ ACE_Pipe::open (int buffer_size)
 # endif /* ACE_WIN32 */
 
   // Bind listener to any port and then find out what the port was.
-  if (acceptor.open (local_any) == -1
-      || acceptor.get_local_addr (my_addr) == -1)
-    result = -1;
+  if (acceptor.open (local_any) == -1 || acceptor.get_local_addr (my_addr) == -1)
+    {
+      result = -1;
+    }
   else
     {
-      ACE_INET_Addr sv_addr (my_addr.get_port_number (),
-                             ACE_LOCALHOST);
-
+      ACE_INET_Addr sv_addr;
+      if (sv_addr.set (my_addr.get_port_number (), ACE_LOCALHOST) == -1)
+        {
+          result = -1;
+        }
       // Establish a connection within the same process.
-      if (connector.connect (writer, sv_addr) == -1)
-        result = -1;
+      else if (connector.connect (writer, sv_addr) == -1)
+        {
+          result = -1;
+        }
       else if (acceptor.accept (reader) == -1)
         {
           writer.close ();
@@ -225,21 +228,6 @@ ACE_Pipe::open (int buffer_size)
       return -1;
     }
 # endif /* ! ACE_LACKS_SO_SNDBUF */
-# if defined (ACE_OPENVMS) && !defined (ACE_LACKS_TCP_NODELAY)
-  int one = 1;
-  // OpenVMS implements socketpair(AF_UNIX...) by returning AF_INET sockets.
-  // Since these are plagued by Nagle as any other INET socket we need to set
-  // TCP_NODELAY on the write handle.
-  if (ACE_OS::setsockopt (this->handles_[1],
-                          ACE_IPPROTO_TCP,
-                          TCP_NODELAY,
-                          reinterpret_cast <const char *> (&one),
-                          sizeof (one)) == -1)
-    {
-      this->close ();
-      return -1;
-    }
-# endif /* ACE_OPENVMS && !ACE_LACKS_TCP_NODELAY */
 #endif  /* ! ACE_LACKS_SOCKETPAIR && ! ACE_HAS_STREAM_PIPES */
   // Point both the read and write HANDLES to the appropriate socket
   // HANDLEs.
@@ -264,7 +252,7 @@ ACE_Pipe::open (ACE_HANDLE handles[2])
 
 // Do nothing...
 
-ACE_Pipe::ACE_Pipe (void)
+ACE_Pipe::ACE_Pipe ()
 {
   ACE_TRACE ("ACE_Pipe::ACE_Pipe");
 
@@ -290,7 +278,7 @@ ACE_Pipe::ACE_Pipe (ACE_HANDLE read,
 }
 
 int
-ACE_Pipe::close (void)
+ACE_Pipe::close ()
 {
   ACE_TRACE ("ACE_Pipe::close");
 
@@ -300,12 +288,12 @@ ACE_Pipe::close (void)
 }
 
 int
-ACE_Pipe::close_read (void)
+ACE_Pipe::close_read ()
 {
   return this->close_handle (0);
 }
 
-int ACE_Pipe::close_write (void)
+int ACE_Pipe::close_write ()
 {
   return this->close_handle (1);
 }

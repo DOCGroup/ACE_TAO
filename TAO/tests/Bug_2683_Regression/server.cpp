@@ -45,7 +45,7 @@ public:
   {
   }
 
-  int svc (void)
+  int svc ()
   {
     try
       {
@@ -58,7 +58,6 @@ public:
       }
     return 0;
   }
-
 };
 
 int

@@ -39,24 +39,22 @@ class TAO_RTPortableServer_Export TAO_RT_Servant_Dispatcher
   : public TAO_Servant_Dispatcher
 {
 public:
-  virtual ~TAO_RT_Servant_Dispatcher (void);
+  ~TAO_RT_Servant_Dispatcher () override = default;
 
   /// Pre_invoke remote request.
   void pre_invoke_remote_request (TAO_Root_POA &poa,
                                   CORBA::Short servant_priority,
                                   TAO_ServerRequest &req,
-                                  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-                                 );
+                                  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state) override;
 
   /// Pre_invoke collocated request.
   void pre_invoke_collocated_request (TAO_Root_POA &poa,
                                       CORBA::Short servant_priority,
-                                      TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-                                     );
+                                      TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state) override;
 
   /// Post_invoke request.
   void post_invoke (TAO_Root_POA &poa,
-                    TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state);
+                    TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state) override;
 
   /// Factory method for creating new POA's.
   TAO_Root_POA *create_Root_POA (const ACE_CString &name,
@@ -65,8 +63,7 @@ public:
                                  ACE_Lock &lock,
                                  TAO_SYNCH_MUTEX &thread_lock,
                                  TAO_ORB_Core &orb_core,
-                                 TAO_Object_Adapter *object_adapter
-                                );
+                                 TAO_Object_Adapter *object_adapter) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

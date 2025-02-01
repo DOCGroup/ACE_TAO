@@ -13,7 +13,7 @@ typedef FPRT::Return_Type FP_RETURN_TYPE;
 // File_Parser stuff.
 
 template <class ENTRY>
-File_Parser<ENTRY>::~File_Parser (void)
+File_Parser<ENTRY>::~File_Parser ()
 {
 }
 
@@ -28,7 +28,7 @@ File_Parser<ENTRY>::open (const ACE_TCHAR filename[])
 }
 
 template <class ENTRY> int
-File_Parser<ENTRY>::close (void)
+File_Parser<ENTRY>::close ()
 {
   return ACE_OS::fclose (this->infile_);
 }
@@ -140,7 +140,7 @@ File_Parser<ENTRY>::comments (char ch)
 }
 
 template <class ENTRY> int
-File_Parser<ENTRY>::skipline (void)
+File_Parser<ENTRY>::skipline ()
 {
   // Skip the remainder of the line.
 

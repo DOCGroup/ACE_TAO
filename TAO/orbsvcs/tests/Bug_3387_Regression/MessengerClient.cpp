@@ -51,7 +51,7 @@ ACE_TMAIN(int argc, ACE_TCHAR * argv[])
     }
 
     // Narrow
-    Messenger_var messenger = Messenger::_narrow( obj.in() );
+    Messenger_var messenger = Messenger::_narrow( obj.in());
     if (CORBA::is_nil(messenger.in())) {
       std::cerr << "Argument is not a Messenger reference" << std::endl;
       return 1;

@@ -17,10 +17,8 @@ typedef CORBA::OctetSeq DataSeq;
 
 interface TX_Object
 {
-
   void send (in DataSeq data);
   void recv (out DataSeq data);
 
   oneway void shutdown ();
-
 };

@@ -8,13 +8,6 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
-// Windows Mobile (CE) stuff is primarily further restrictions to what's
-// in the rest of this file. Also, it defined ACE_HAS_WINCE, which is used
-// in this file.
-#if defined (_WIN32_WCE)
-#  include "ace/config-WinCE.h"
-#endif /* _WIN32_WCE */
-
 #if defined(__MINGW32__)
 // When using the --std=c++0x option with MinGW the compiler omits defining
 // the following required macros (at least with the GCC 4.6.2 version)
@@ -31,7 +24,7 @@
 #endif
 
 // Complain if WIN32 is not already defined.
-#if !defined (WIN32) && !defined (ACE_HAS_WINCE)
+#if !defined (WIN32)
 # error Please define WIN32 in your project settings.
 #endif
 
@@ -40,8 +33,8 @@
 #  define ACE_WIN64
 
 // MPC template adds _AMD64_ but user projects not generated using MPC
-// may want to use _AMD64_ as well. Ensure it's there in all cases.
-#  ifndef _AMD64_
+// may want to use _AMD64_ as well. Ensure it's there in all non ARM cases
+#  if !defined (_AMD64_) && !defined(_ARM_) && !defined(_ARM64_)
 #    define _AMD64_
 #  endif
 
@@ -55,10 +48,6 @@
 #  endif  /* !_FILE_OFFSET_BITS */
 #endif /* _WIN64 || WIN64 */
 
-#if !defined (_WIN32_WINNT)
-# define _WIN32_WINNT 0x0501 // pretend it's at least Windows XP or Win2003
-#endif
-
 // If the invoking procedure turned off debugging by setting NDEBUG, then
 // also set ACE_NDEBUG, unless the user has already set it.
 #if defined (NDEBUG)
@@ -71,7 +60,7 @@
 // be defined, if your application uses MFC.
 //  Setting applies to  : building ACE
 //  Runtime restrictions: MFC DLLs must be installed
-//  Additonal notes             : If both ACE_HAS_MFC and ACE_MT_SAFE are
+//  Additional notes    : If both ACE_HAS_MFC and ACE_MT_SAFE are
 //                        defined, the MFC DLL (not the static lib)
 //                        will be used from ACE.
 #if !defined (ACE_HAS_MFC)
@@ -110,8 +99,6 @@
 # define ACE_MT_SAFE 1
 #endif
 
-// On winCE these classes do not exist. If they are
-// introduced in the future, no changes need to be made
 #if defined (ABOVE_NORMAL_PRIORITY_CLASS) && \
   defined (BELOW_NORMAL_PRIORITY_CLASS) && \
   defined (HIGH_PRIORITY_CLASS) && \
@@ -214,22 +201,14 @@
 # define ACE_IOV_MAX 64
 #endif /* ACE_IOV_MAX */
 
-#if !defined (ACE_HAS_WINCE)
 // Platform supports pread() and pwrite()
-# define ACE_HAS_WTOF
-#endif /* ! ACE_HAS_WINCE */
+#define ACE_HAS_WTOF
 
 #define ACE_HAS_P_READ_WRITE
 
-#if !defined (ACE_HAS_WINCE)
-# define ACE_HAS_DIRECT_H
-# define ACE_HAS_PROCESS_H
-# define ACE_HAS_IO_H
-#endif /* ! ACE_HAS_WINCE */
-
-#if !defined (__MINGW32__)
-# define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
-#endif /* __MINGW32__ */
+#define ACE_HAS_DIRECT_H
+#define ACE_HAS_PROCESS_H
+#define ACE_HAS_IO_H
 
 #define ACE_DEFAULT_THREAD_PRIORITY 0
 
@@ -245,7 +224,6 @@
 #define ACE_HAS_WIN32_GETVERSION
 
 /* LACKS dir-related facilities */
-#define ACE_LACKS_READDIR_R
 #define ACE_LACKS_REWINDDIR
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_TELLDIR
@@ -253,6 +231,8 @@
 #define ACE_LACKS_CLOCKID_T
 #define ACE_LACKS_CLOCK_REALTIME
 #define ACE_LACKS_CLOCK_MONOTONIC
+#define ACE_HAS_MONOTONIC_TIME_POLICY
+#define ACE_HAS_MONOTONIC_CONDITIONS
 
 /* LACKS gid/pid/sid/uid facilities */
 #define ACE_LACKS_GETPGID
@@ -280,13 +260,10 @@
 #define ACE_LACKS_GETIPNODEBYNAME_IPV6
 #define ACE_LACKS_KILL
 #define ACE_LACKS_INET_ATON
-#if _WIN32_WINNT < 0x0600
-# define ACE_LACKS_INET_NTOP
-# define ACE_LACKS_INET_PTON
-#endif
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MKFIFO
 #define ACE_LACKS_MODE_MASKS
+#define ACE_LACKS_MSGHDR
 #define ACE_LACKS_PTHREAD_H
 #define ACE_LACKS_PWD_FUNCTIONS
 #define ACE_LACKS_RAND_R
@@ -314,17 +291,6 @@
 #define ACE_LACKS_IOVEC
 #define ACE_LACKS_LOG2
 #define ACE_LACKS_CADDR_T
-#if !defined(__MINGW32__) && !defined (__BORLANDC__)
-# define ACE_LACKS_MODE_T
-#endif
-#if !defined(__MINGW32__)
-# define ACE_LACKS_PID_T
-#endif
-#if !defined (__BORLANDC__)
-# define ACE_LACKS_NLINK_T
-# define ACE_LACKS_UID_T
-# define ACE_LACKS_GID_T
-#endif
 #define ACE_LACKS_SETENV
 #define ACE_LACKS_UNSETENV
 
@@ -336,16 +302,6 @@
 #define ACE_MKDIR_LACKS_MODE
 
 #define ACE_SIZEOF_LONG_LONG 8
-
-#if !defined (__MINGW32__)
-#define ACE_INT64_TYPE  signed __int64
-#define ACE_UINT64_TYPE unsigned __int64
-#endif
-
-#if defined (__MINGW32__)
-#define ACE_INT64_TYPE  signed long long
-#define ACE_UINT64_TYPE unsigned long long
-#endif
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -448,8 +404,6 @@
 #  include /**/ <afxwin.h>   /* He is doing MFC */
 // Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
 // #define      _INC_WINDOWS  // Prevent winsock.h from including windows.h
-#elif defined (ACE_HAS_WINCE)
-#  include /**/ <windows.h>
 #endif
 
 #if !defined (_INC_WINDOWS)     /* Already include windows.h ? */
@@ -479,68 +433,22 @@
 # if !defined (_WINSOCK2API_)
 // will also include windows.h, if not present
 #  include /**/ <winsock2.h>
-// WinCE 4 doesn't define the Exxx values without the WSA prefix, so do that
-// here. This is all lifted from the #if 0'd out part of winsock2.h.
-#  if defined (_WIN32_WCE) && (_WIN32_WCE < 0x600)
-#    define EWOULDBLOCK             WSAEWOULDBLOCK
-#    define EINPROGRESS             WSAEINPROGRESS
-#    define EALREADY                WSAEALREADY
-#    define ENOTSOCK                WSAENOTSOCK
-#    define EDESTADDRREQ            WSAEDESTADDRREQ
-#    define EMSGSIZE                WSAEMSGSIZE
-#    define EPROTOTYPE              WSAEPROTOTYPE
-#    define ENOPROTOOPT             WSAENOPROTOOPT
-#    define EPROTONOSUPPORT         WSAEPROTONOSUPPORT
-#    define ESOCKTNOSUPPORT         WSAESOCKTNOSUPPORT
-#    define EOPNOTSUPP              WSAEOPNOTSUPP
-#    define EPFNOSUPPORT            WSAEPFNOSUPPORT
-#    define EAFNOSUPPORT            WSAEAFNOSUPPORT
-#    define EADDRINUSE              WSAEADDRINUSE
-#    define EADDRNOTAVAIL           WSAEADDRNOTAVAIL
-#    define ENETDOWN                WSAENETDOWN
-#    define ENETUNREACH             WSAENETUNREACH
-#    define ENETRESET               WSAENETRESET
-#    define ECONNABORTED            WSAECONNABORTED
-#    define ECONNRESET              WSAECONNRESET
-#    define ENOBUFS                 WSAENOBUFS
-#    define EISCONN                 WSAEISCONN
-#    define ENOTCONN                WSAENOTCONN
-#    define ESHUTDOWN               WSAESHUTDOWN
-#    define ETOOMANYREFS            WSAETOOMANYREFS
-#    define ETIMEDOUT               WSAETIMEDOUT
-#    define ECONNREFUSED            WSAECONNREFUSED
-#    define ELOOP                   WSAELOOP
-#    define ENAMETOOLONG            WSAENAMETOOLONG
-#    define EHOSTDOWN               WSAEHOSTDOWN
-#    define EHOSTUNREACH            WSAEHOSTUNREACH
-#    define ENOTEMPTY               WSAENOTEMPTY
-#    define EPROCLIM                WSAEPROCLIM
-#    define EUSERS                  WSAEUSERS
-#    define EDQUOT                  WSAEDQUOT
-#    define ESTALE                  WSAESTALE
-#    define EREMOTE                 WSAEREMOTE
-#  endif /* (_WIN32_WCE) && (_WIN32_WCE < 0x600) */
 # endif /* _WINSOCK2API */
 
 # if defined (ACE_HAS_FORE_ATM_WS2)
 #  include /**/ <ws2atm.h>
 # endif /*ACE_HAS_FORE_ATM_WS2 */
 
-// CE doesn't have Microsoft Winsock 2 extensions
-# if !defined _MSWSOCK_ && !defined (ACE_HAS_WINCE)
+# if !defined _MSWSOCK_
 #  include /**/ <mswsock.h>
 # endif /* _MSWSOCK_ */
 
 # if defined (_MSC_VER)
-#  if defined (ACE_HAS_WINCE)
-#    pragma comment(lib, "ws2.lib")
-#  else
-#    pragma comment(lib, "ws2_32.lib")
-#    pragma comment(lib, "mswsock.lib")
-#    if defined (ACE_HAS_IPV6)
-#      pragma comment(lib, "iphlpapi.lib")
-#    endif
-#  endif /* ACE_HAS_WINCE */
+#  pragma comment(lib, "ws2_32.lib")
+#  pragma comment(lib, "mswsock.lib")
+#  if defined (ACE_HAS_IPV6)
+#   pragma comment(lib, "iphlpapi.lib")
+#  endif
 # endif /* _MSC_VER */
 
 # define ACE_WSOCK_VERSION 2, 0
@@ -552,7 +460,7 @@
 
 // PharLap ETS has its own winsock lib, so don't grab the one
 // supplied with the OS.
-# if defined (_MSC_VER) && !defined (_WIN32_WCE) && !defined (ACE_HAS_PHARLAP)
+# if defined (_MSC_VER)
 #  pragma comment(lib, "wsock32.lib")
 # endif /* _MSC_VER */
 
@@ -564,24 +472,32 @@
 # define ACE_WSOCK_VERSION 1, 1
 #endif /* ACE_HAS_WINSOCK2 */
 
+#if _WIN32_WINNT >= 0x400
+# define ACE_HAS_WIN32_TRYLOCK
+#endif
+#if _WIN32_WINNT < 0x600
+# define ACE_LACKS_INET_NTOP
+# define ACE_LACKS_INET_PTON
+# define ACE_LACKS_IF_NAMETOINDEX
+#endif
+#define ACE_LACKS_IF_NAMEINDEX
+#define ACE_LACKS_STRUCT_IF_NAMEINDEX
+
 // Platform supports IP multicast on Winsock 2
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 # define ACE_HAS_IP_MULTICAST
 #endif /* ACE_HAS_WINSOCK2 */
 
-#if !defined (ACE_HAS_WINCE)
-# define ACE_HAS_INTERLOCKED_EXCHANGEADD
-#endif
-#define ACE_HAS_WIN32_TRYLOCK
+#define ACE_HAS_INTERLOCKED_EXCHANGEADD
 
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
+#if _WIN32_WINNT >= 0x400
 # define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
+#endif
 
 // If CancelIO is undefined get the updated sp2-sdk from MS
-# define ACE_HAS_CANCEL_IO
-# define ACE_HAS_WIN32_OVERLAPPED_IO
-# define ACE_HAS_WIN32_NAMED_PIPES
-#endif /* !defined (ACE_HAS_WINCE) && !ACE_HAS_PHARLAP */
+#define ACE_HAS_CANCEL_IO
+#define ACE_HAS_WIN32_OVERLAPPED_IO
+#define ACE_HAS_WIN32_NAMED_PIPES
 
 #if !defined (ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION)
 # define ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION EXCEPTION_CONTINUE_SEARCH
@@ -606,10 +522,6 @@
 
 #define ACE_SIZEOF_WCHAR 2
 #define ACE_HAS_MUTEX_TIMEOUTS
-#define ACE_LACKS_STRUCT_DIR
-#define ACE_LACKS_OPENDIR
-#define ACE_LACKS_CLOSEDIR
-#define ACE_LACKS_READDIR
 #define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_MKSTEMP
 #define ACE_LACKS_LSTAT
@@ -617,9 +529,6 @@
 // non-standard int len (rather than ssize_t).
 #define ACE_HAS_NONCONST_SWAB
 #define ACE_HAS_INT_SWAB
-
-// gethostbyaddr does not handle IPv6-mapped-IPv4 addresses
-#define ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED
 
 #if defined (ACE_WIN64)
 // Data must be aligned on 8-byte boundaries, at a minimum.
@@ -632,23 +541,15 @@
 # define ACE_DISABLES_THREAD_LIBRARY_CALLS 0
 #endif /* ACE_DISABLES_THREAD_LIBRARY_CALLS */
 
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
-#  define ACE_HAS_LOG_MSG_NT_EVENT_LOG
-#endif /* !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
+#define ACE_HAS_LOG_MSG_NT_EVENT_LOG
 
-#if !defined (ACE_HAS_WINCE)
-# define ACE_HAS_LLSEEK
-#endif /* !ACE_HAS_WINCE */
+#define ACE_HAS_LLSEEK
 
 // Needed for obtaining the MAC address
-// I dont believe this will work under CE, notice the
-// check for ACE_HAS_WINCE.
-# if !defined (ACE_HAS_WINCE)
-# include <nb30.h>
-#  if defined (_MSC_VER)
-#   pragma comment(lib, "netapi32.lib") // needed for obtaing MACaddress
-#  endif
-# endif /* !ACE_HAS_WINCE */
+#include <nb30.h>
+#if defined (_MSC_VER)
+# pragma comment(lib, "netapi32.lib") // needed for obtaing MACaddress
+#endif
 
 #if !defined (WINVER)
 # define WINVER 0x0400 // pretend it's at least WinNT 4.0

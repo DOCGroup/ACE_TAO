@@ -1,7 +1,351 @@
+USER VISIBLE CHANGES BETWEEN ACE-8.0.2 and ACE-8.0.3
+====================================================
+
+USER VISIBLE CHANGES BETWEEN ACE-8.0.1 and ACE-8.0.2
+====================================================
+
+. Removed ACE_make_checked_array_iterator that used deprecated
+  stdext::checked_array_iterator
+
+. Embarcadero C++ Builder bcc64x compiler support has been
+  updated to match the C++Builder 12.2 release
+
+. Added support for Linux platforms that use musl-libc instead of glibc
+
+. Improved QNX support
+
+. Add support for std::string_view to CDR classes
+
+. Define ACE_HAS_CPP23 when we have a C++23 capable C++ compiler
+
+USER VISIBLE CHANGES BETWEEN ACE-8.0.0 and ACE-8.0.1
+====================================================
+
+. When using the Embarcadero C++ Builder bcc64x compiler now bcc64x is
+  used as linker instead of ld.lld
+
+USER VISIBLE CHANGES BETWEEN ACE-7.1.4 and ACE-8.0.0
+====================================================
+
+. ACE/TAO now require C++17 or newer
+
+. Add support for Embarcadero C++ Builder bcc64x compiler
+
+. Removed ace/Auto_Ptr.*, with C++17 std::auto_ptr is not
+  available anymore
+
+. New Latest_ACE8TAO4_Micro, Latest_ACE8TAO4_Minor, and Latest_ACE8TAO4_Major
+  branches
+
+USER VISIBLE CHANGES BETWEEN ACE-7.1.3 and ACE-7.1.4
+====================================================
+
+. With g++ versions < 11 we default to C++17 as
+  minimum C++ standards level
+
+USER VISIBLE CHANGES BETWEEN ACE-7.1.2 and ACE-7.1.3
+====================================================
+
+. Fixed possible race conditions in extreme use case
+  in the barrier and future implementations
+
+. Improve support for QNX 7.1 and FreeBSD
+
+. Integrated debian packaging changes
+
+USER VISIBLE CHANGES BETWEEN ACE-7.1.1 and ACE-7.1.2
+====================================================
+
+. C++17 removed std::auto_ptr, updated ACE/TAO to not
+  use std::auto_ptr anymore and also not provide our
+  own auto_ptr. With C++17 ACE doesn't provide ACE_Auto_Ptr,
+  ACE_Auto_Basic_Ptr, ACE_Auto_Basic_Array_Ptr, ACE_Auto_Array_Ptr,
+  and ACE_auto_ptr_reset anymore, just use std::unique_ptr
+
+. Add c++std which can be used in the platform_macros.GNU
+  to set the C++ revision to be used (results in -std= flag)
+
+. Improve support for QNX 7.1
+
+. Embarcadero C++ Builder enhancements
+
+USER VISIBLE CHANGES BETWEEN ACE-7.1.0 and ACE-7.1.1
+====================================================
+
+. Fixed shared memory leak by ACE_Shared_Memory_Pool
+
+. Fixed ACE_INET_Addr::set when ACE_LACKS_GETSERVBYNAME has
+  been defined
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.11 and ACE-7.1.0
+=====================================================
+
+. Removed support for Windows CE, OpenVMS, HPUX, AIX, RTEMS,
+  Pharlap, Solaris, and Visual Studio 2015
+
+. ACE/TAO now require C++14 or newer
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.10 and ACE-7.0.11
+======================================================
+
+. Fixed some compiler warnings given by newer compilers
+
+. Make use of noexcept instead of throw()
+
+. Fixed a bug in ACE_Configuration_Heap with uses_wchar=1 builds
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.9 and ACE-7.0.10
+=====================================================
+
+. Add missing resource files for several DLLs on Windows
+
+. VxWorks runtime fixes
+
+. Various cleanup and using more C++11 features
+
+. Embarcadero C++ Builder 11.2 fixes
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.8 and ACE-7.0.9
+====================================================
+
+. Compile fixes for VxWorks 22.03
+
+. Various cleanup
+
+. Minor fixes
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.7 and ACE-7.0.8
+====================================================
+
+. Minor changes
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.6 and ACE-7.0.7
+====================================================
+
+. Minor changes
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.5 and ACE-7.0.6
+====================================================
+
+. Various cleanup and using more C++11 features
+
+. Various packaging related fixes
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.4 and ACE-7.0.5
+====================================================
+
+. Initial not tested support for Visual Studio 2022
+
+. Fixed compile errors when using Visual Studio 2019 with C++17
+  or C++20 support enabled
+
+. Various cleanup and using more C++11 features
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.3 and ACE-7.0.4
+====================================================
+
+. Add support for Embarcadero C++ Builder 11.0 Alexandria using
+  the bcc32c compiler
+
+. Allow ACE_Module and ACE_SOCK_Dgram_Mcast to be sub-classed
+
+. Add ACE_SWAP_LONG_LONG byte swap macro for ACE_UINT64
+
+. Improved ACE_Atomic implementation for g++
+
+. Various cleanup and using more C++11 features
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.2 and ACE-7.0.3
+====================================================
+
+. The macro ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS has been renamed
+  to ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS, update your code accordingly
+
+. MinGW 2 has been deprecated
+
+. ACE CDR supports (u)int8
+
+. Use more C++11 features including using std alternatives
+
+. Various cleanup
+
+. Fix SocketConnect::ip_check() Concurrency and Too-Early Request Issues for Windows
+
+. Make install: use relative links in prefix/share
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.1 and ACE-7.0.2
+====================================================
+
+. Fixed various warnings given by newer compilers
+
+. Use more C++11 features
+
+. Various cleanup
+
+USER VISIBLE CHANGES BETWEEN ACE-7.0.0 and ACE-7.0.1
+====================================================
+
+. Cleanup of ACE_* macros which are not used anymore
+
+. Removed support for LynxOS 4 which has gcc3
+
+. Make sure C++11 is enabled on MacOSX
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-7.0.0
+=====================================================
+
+. C++11 is now a mandatory compiler feature which is
+  required for ACE. Cleaned up part of the support for compilers
+  that lack C++11 support
+
+. When valgrind is enabled we don't disable dlclose anymore,
+  this reduces the amount of leaks reported related to dlclose.
+  When you unload your shared libraries before the end of your program
+  you can use `--keep-debuginfo=yes` as valgrind options as alternative
+  or you can disable dlclose yourself by adding
+  `#define ACE_LACKS_DLCLOSE` to your ace/config.h file
+
+. Removed `ACE_OS::readdir_r`. `readdir_r` was marked as depracated in glibc
+  and FreeBSD libc. Also removed `ACE_Dirent::read (ACE_DIRENT *, ACE_DIRENT **)`
+  which used it. `ACE_LACKS_READDIR_R` will now always be defined.
+
+. Modernized part of the code using clang-type, added override, use nullptr,
+  use unique_ptr, remove redundant void, use bool, simplify boolean expressions,
+  make use of std::atomic, use using
+
+. New Latest_ACE7TAO3_ branches which can be used to always checkout the
+  latest ACE7/TAO3 micro/minor release
+
+. Android Support:
+
+  . `gnuace` no longer supports Android NDKs before r18. This means only clang
+    is now supported when building for Android.
+
+  . Support for building with the Android NDK r19 or later directly instead of
+    having to use a generated standalone toolchain. See `ACE-INSTALL.html` for
+    details. Using a standalone toolchain is still supported.
+
+  . Made it easier to use `gnuace`-built libraries in as imported libraries in
+    CMake-based Android Studio native projects.
+
+  . Removed support for old `ANDROID_ARCH` make variable. Replaced
+    `ANDROID_ABI` with `android_abi`, but kept the former as an alias of the
+    later for compatibility. Also will no longer default to 32-bit ARM, so
+    `android_abi` or `ANDROID_ABI` must be defined.
+
+  . As recommend by Google, building with neon support is now the default when
+    `android_abi` is `armeabi-v7a`. If support for these processors without
+    NEON extensions is needed, put `androind_neon := 0` in
+    `platform_macros.GNU`.
+
+  . As recommend by Google, `gnuace` will start using LLD, the LLVM linker,
+    instead of the default GNU linkers. If the NDK being used doesn't default
+    to LLD and you want to use the GNU linkers, put `androind_set_lld := 0` in
+    `platform_macros.GNU`.
+
+. Removed support for the Alpha CPU
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.11 and ACE-6.5.12
+======================================================
+
+. Fixed some C++11 warnings
+
+. Fixed compile problem on AIX
+
+. Removed c++0x and c++1y as GNU make variables, use c++11 and c++14 as
+  alternatives
+
+. Moved all CI builds to github actions
+
+. Added ACE_GCC_NO_RETURN to fix fall through warnings
+
+. Fix ACE_Thread_Manager::join memory leak and potential deadlock
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.10 and ACE-6.5.11
+======================================================
+
+. Latest_{Major,Minor,Micro,Beta} tags have been replaced with
+  branches because tags are not intended to move where branches are
+
+. Removed emulated operations in ACE_OS which are not used anymore
+
+. Resolved some compile warnings when using C++11 or newer
+
+. Integrated debian packaging changes
+
+. Visual Studio 2015 solutions are not part of the release
+  packaging anymore. When you require these you need to generate
+  them locally using MPC
+
+. Improve multicast join by interface name on Windows
+
+. Fixed ACE_INT64_FORMAT_SPECIFIER (and similar) preprocessor macros
+  on macOS (Apple-clang) with -std=c++11 or higher
+
+. On Windows, use unnamed kernel objects (Events and Semaphores)
+  for thread-scoped reader-write mutexes in ACE_OS::rwlock_init
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.9 and ACE-6.5.10
+=====================================================
+
+. Add support for Embarcadero C++ Builder 10.4 Sydney using the
+  classic compiler. ACE/TAO compile with the new 32/64 bit clang
+  compilers but runtime tests show several runtime problems which
+  makes them not safe to use
+
+. Make a change in the ACE Process Manager to resolve an internal
+  compiler error with Visual Studio 2019 16.5.x compilers
+
+. Android enhancements for if_nameindex
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.8 and ACE-6.5.9
+====================================================
+
+. On Windows, ACE no longer defines _WIN32_WINNT.  ACE wrappers for
+  if_nametoindex and if_indextoname are available if the version of the
+  Windows SDK supports them.
+
+. IPv6 extended datagram receive info now supported on macOS.
+
+. ACE_(U)INT8/16/32/64 map to (u)int8/16/32/64_t when C++11 has been
+  enabled.
+
+. CDR_Base uses ACE_INT64 for LongLong, all old emulated support
+  has been removed
+
+. Updated debian and rpm packaging support
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.7 and ACE-6.5.8
+====================================================
+
+. Added instructions to ACE-INSTALL.html for building ACE/TAO for Android on
+  Windows.
+
+. Embarcadero C++ Builder Rio fixes
+
+. Renamed `VERSION` file to `VERSION.txt` to avoid conflicting with the
+  `version` standard header.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.6 and ACE-6.5.7
 ====================================================
 
 . Fixed compile problem with glibc 2.30 and newer
+
+. gnuace makefiles: Updated handling of generated files and
+  use requires/avoids to make postbuild steps conditional
+
+. Removed references to the ACE_LACKS_MONOTONIC_TIME preprocessor macro because
+  it was equivalent to ACE_LACKS_CLOCK_MONOTONIC.
+
+. Exposed support status of monotonic times features using preprocessor macros.
+  See "Testing for Monotonic Time Support" in docs/ACE-monotonic-timer.html for
+  details.
+
+. Added support for ARM and ARM64 stack traces with Microsoft Visual C++.
+
+. The "optional argument for the receive address in ACE_SOCK_Dgram::recv"
+  feature from ACE-6.5.5 is now supported on Windows.  This includes enhanced
+  support for sendmsg/recvmsg on Windows.
 
 USER VISIBLE CHANGES BETWEEN ACE-6.5.5 and ACE-6.5.6
 ====================================================

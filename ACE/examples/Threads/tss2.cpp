@@ -20,7 +20,6 @@
 #include "TSS_Task.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 const int MAX_TASKS = 4;
@@ -36,26 +35,26 @@ static ACE_Token token;
 
 ACE_Atomic_Op<ACE_Thread_Mutex, int> TSS_Obj::count_ = 0;
 
-TSS_Obj::TSS_Obj (void)
+TSS_Obj::TSS_Obj ()
 {
   TSS_Obj::count_++;
   ACE_DEBUG ((LM_DEBUG, "(%t) TSS_Obj+: %d\n", TSS_Obj::count_.value ()));
 }
 
-TSS_Obj::~TSS_Obj (void)
+TSS_Obj::~TSS_Obj ()
 {
   TSS_Obj::count_--;
   ACE_DEBUG ((LM_DEBUG, "(%t) TSS_Obj-: %d\n", TSS_Obj::count_.value ()));
 }
 
-Test_Task::Test_Task (void)
+Test_Task::Test_Task ()
 {
   Test_Task::count_++;
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Test_Task+: %d\n", Test_Task::count_.value ()));
 }
 
-Test_Task::~Test_Task (void)
+Test_Task::~Test_Task ()
 {
   Test_Task::count_--;
 

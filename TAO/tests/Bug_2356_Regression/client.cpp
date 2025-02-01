@@ -54,18 +54,17 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   /// Constructor.
-  Handler (void) {};
+  Handler () = default;
 
   /// Destructor.
-    ~Handler (void) {};
+  ~Handler () = default;
 
-  void foo (void)
+  void foo ()
     {
     };
 
   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
     {
-
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"
                   "Testing proper exception handling ...\n"));

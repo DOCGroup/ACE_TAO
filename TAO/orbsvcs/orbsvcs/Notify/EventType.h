@@ -34,7 +34,7 @@ class TAO_Notify_Serv_Export TAO_Notify_EventType : public TAO_Notify::Topology_
 {
 public:
   /// Constructor
-  TAO_Notify_EventType (void);
+  TAO_Notify_EventType ();
   TAO_Notify_EventType (const char* domain_name, const char* type_name);
   TAO_Notify_EventType (const CosNotification::EventType& event_type);
   // Constructor
@@ -43,7 +43,7 @@ public:
   virtual ~TAO_Notify_EventType ();
 
   /// hash value
-  u_long hash (void) const;
+  u_long hash () const;
 
   /// Assignment from CosNotification::EventType
   TAO_Notify_EventType& operator=(const CosNotification::EventType& event_type);
@@ -58,16 +58,16 @@ public:
   bool operator!=(const TAO_Notify_EventType& notify_event_type) const;
 
   /// Return the special event type.
-  static TAO_Notify_EventType special (void);
+  static TAO_Notify_EventType special ();
 
   /// Is this the special event (accept everything).
-  CORBA::Boolean is_special (void) const;
+  CORBA::Boolean is_special () const;
 
   /// Get the type underneath us.
-  const CosNotification::EventType& native (void) const;
+  const CosNotification::EventType& native () const;
 
   /// Helper to print contents.
-  void dump (void) const;
+  void dump () const;
 
   /// Initialize from an NVPList, return false on failure
   bool init(const TAO_Notify::NVPList& attrs);
@@ -77,14 +77,13 @@ public:
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
 
 protected:
-
   friend class TAO_Notify_Constraint_Interpreter;
 
   /// Init this object.
   void init_i (const char* domain_name, const char* type_name);
 
   /// Recompute the hash value.
-  void recompute_hash (void);
+  void recompute_hash ();
 
   bool domain_is_wildcard (const char* domain) const;
   bool type_is_wildcard (const char* type) const;

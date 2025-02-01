@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_ECG_UDP_Receiver_Disconnect_Command::
-TAO_ECG_UDP_Receiver_Disconnect_Command (void)
+TAO_ECG_UDP_Receiver_Disconnect_Command ()
   : proxy_ ()
 {
 }
@@ -41,7 +41,7 @@ TAO_ECG_UDP_Receiver_Disconnect_Command::operator= (
 
 ACE_INLINE void
 TAO_ECG_UDP_Receiver_Disconnect_Command::
-execute (void)
+execute ()
 {
   if (CORBA::is_nil (this->proxy_.in ()))
     // We are not connected.

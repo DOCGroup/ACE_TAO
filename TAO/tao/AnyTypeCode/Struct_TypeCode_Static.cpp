@@ -13,6 +13,7 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Truncate.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -83,7 +84,7 @@ TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
                       TAO::TypeCode::Struct_Field<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
-                      TAO::Null_RefCount_Policy>::tao_duplicate (void)
+                      TAO::Null_RefCount_Policy>::tao_duplicate ()
 {
 }
 
@@ -92,7 +93,7 @@ TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
                       TAO::TypeCode::Struct_Field<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
-                      TAO::Null_RefCount_Policy>::tao_release (void)
+                      TAO::Null_RefCount_Policy>::tao_release ()
 {
 }
 
@@ -121,10 +122,9 @@ TAO::TypeCode::Struct<char const *,
 
       char const * const lhs_name =
         Traits<char const *>::get_string (lhs_field.name);
-      char const * const rhs_name = tc->member_name (i
-                                                    );
+      char const * const rhs_name = tc->member_name (i);
 
-      if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
+      if (std::strcmp (lhs_name, rhs_name) != 0)
         return false;
 
       CORBA::TypeCode_ptr const lhs_tc =
@@ -181,8 +181,7 @@ TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
                       TAO::TypeCode::Struct_Field<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
-                      TAO::Null_RefCount_Policy>::get_compact_typecode_i (
-  void) const
+                      TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
   ACE_Array_Base<Struct_Field<CORBA::String_var,
                               CORBA::TypeCode_var> >
@@ -229,8 +228,7 @@ TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
                       TAO::TypeCode::Struct_Field<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
-                      TAO::Null_RefCount_Policy>::id_i (
-  void) const
+                      TAO::Null_RefCount_Policy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -242,7 +240,7 @@ TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
                       TAO::TypeCode::Struct_Field<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
-                      TAO::Null_RefCount_Policy>::name_i (void) const
+                      TAO::Null_RefCount_Policy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -254,7 +252,7 @@ TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
                       TAO::TypeCode::Struct_Field<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
-                      TAO::Null_RefCount_Policy>::member_count_i (void) const
+                      TAO::Null_RefCount_Policy>::member_count_i () const
 {
   return this->nfields_;
 }

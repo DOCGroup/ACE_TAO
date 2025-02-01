@@ -8,11 +8,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Local_Name_Space.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_regex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -139,7 +139,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
   const char *type,
   int rebind)
 {
-
   ACE_TRACE ("ACE_Local_Name_Space::shared_bind_i");
   const size_t name_len = (name.length () + 1) * sizeof (ACE_WCHAR_T);
   const size_t value_len = (value.length () + 1) * sizeof (ACE_WCHAR_T);
@@ -157,8 +156,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
       ACE_WCHAR_T *name_rep = (ACE_WCHAR_T *) (ptr + value_len);
       char *new_type = (char *) (ptr + value_len + name_len);
 
-      ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> name_urep (name.rep ());
-      ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> value_urep (value.rep ());
+      std::unique_ptr<ACE_WCHAR_T[]> name_urep (name.rep ());
+      std::unique_ptr<ACE_WCHAR_T[]> value_urep (value.rep ());
       ACE_NS_String new_name (name_rep, name_urep.get (), name_len);
       ACE_NS_String new_value (value_rep, value_urep.get (), value_len);
 
@@ -232,7 +231,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind (
     {
     }
   return result;
-
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
@@ -360,7 +358,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::open (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (void)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space ()
   : allocator_ (0),
     name_space_map_ (0),
     name_options_ (0)
@@ -383,7 +381,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::~ACE_Local_Name_Space (void)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::~ACE_Local_Name_Space ()
 {
   ACE_TRACE ("ACE_Local_Name_Space::~ACE_Local_Name_Space");
 
@@ -395,7 +393,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::~ACE_Local_Name_Space (void)
 ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Local_Name_Space)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager (void)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager ()
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -413,7 +411,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager (void)
 
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
 {
   ACE_TRACE ("ACE_Local_Name_Space::create_manager_i");
   // Get directory name
@@ -441,8 +439,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   ACE_TCHAR lock_name_for_backing_store [MAXPATHLEN + MAXNAMELEN];
   const ACE_TCHAR *postfix = database;
 
-  size_t length = 0;
-  length = sizeof lock_name_for_local_name_space / sizeof (ACE_TCHAR);
+  size_t length = sizeof lock_name_for_local_name_space / sizeof (ACE_TCHAR);
   ACE_OS::strsncpy (lock_name_for_local_name_space,
                     dir,
                     length);
@@ -811,7 +808,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> void
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i () const
 {
   ACE_TRACE ("ACE_Local_Name_Space::dump_i");
 
@@ -961,7 +958,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> void
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   // Note that we *must* use structured exception handling here

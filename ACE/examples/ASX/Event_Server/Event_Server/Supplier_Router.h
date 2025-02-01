@@ -59,7 +59,7 @@ protected:
   // The Router queues up this message, which is then processed in the
   // <svc> method in a separate thread.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Runs in a separate thread to dequeue messages and pass them up
   // the stream.
 

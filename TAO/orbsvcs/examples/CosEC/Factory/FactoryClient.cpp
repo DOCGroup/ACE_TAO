@@ -13,26 +13,26 @@ class FactoryClient
 
 public:
   // Initialization and termination methods
-  FactoryClient (void);
+  FactoryClient ();
   // constructor.
 
-  virtual ~FactoryClient (void);
+  virtual ~FactoryClient ();
   // destructor.
 
   void init_ORB (int argc, ACE_TCHAR *argv []);
   // Initializes the ORB.
 
-  void resolve_naming_service (void);
+  void resolve_naming_service ();
   // Try to get hold of a running naming service.
 
-  void resolve_factory (void);
+  void resolve_factory ();
   // Try to resolve the factory from the Naming service.
 
   CosEventChannelFactory::ChannelFactory_ptr
-  create_factory (void);
+  create_factory ();
   // Create a local Factory and also set the <factory_>.
 
-  virtual void run_test (void);
+  virtual void run_test ();
   // Runs a couple of tests to check if the factory behaves correctly.
 
 protected:
@@ -67,14 +67,14 @@ protected:
   // flag to indicate if the naming service should be used.
 };
 
-FactoryClient::FactoryClient (void)
+FactoryClient::FactoryClient ()
   :factory_name_ ("CosEC_Factory"),
    use_naming_service (0)
 {
   // No-Op.
 }
 
-FactoryClient::~FactoryClient (void)
+FactoryClient::~FactoryClient ()
 {
   // No-Op.
 }
@@ -86,7 +86,7 @@ FactoryClient::init_ORB (int argc, ACE_TCHAR *argv [])
 }
 
 void
-FactoryClient::resolve_naming_service (void)
+FactoryClient::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService");
@@ -102,7 +102,7 @@ FactoryClient::resolve_naming_service (void)
 }
 
 void
-FactoryClient::resolve_factory (void)
+FactoryClient::resolve_factory ()
 {
   ACE_ASSERT (this->use_naming_service == 1);
 
@@ -118,7 +118,7 @@ FactoryClient::resolve_factory (void)
 }
 
 CosEventChannelFactory::ChannelFactory_ptr
-FactoryClient::create_factory (void)
+FactoryClient::create_factory ()
 {
   throw CORBA::UNKNOWN ();
 }
@@ -223,7 +223,7 @@ FactoryClient::find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel)
  */
 
 void
-FactoryClient::run_test (void)
+FactoryClient::run_test ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->factory_.in ()));
 

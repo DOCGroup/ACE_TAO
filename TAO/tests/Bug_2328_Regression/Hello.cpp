@@ -13,7 +13,7 @@ Hello::get_string (const char * A, const char * B, const char * C)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

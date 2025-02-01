@@ -26,7 +26,6 @@ namespace ACE
 {
   namespace HTBP
   {
-
     // Forward declarations.
     class Channel;
 
@@ -48,9 +47,9 @@ namespace ACE
     class HTBP_Export Filter
     {
     public:
-      Filter (void);
+      Filter ();
 
-      virtual ~Filter (void);
+      virtual ~Filter () = default;
 
       /// Inside and outside Send filters need to supply a data header that
       /// sets the stage before sending the data body, and then (maybe) send a
@@ -76,10 +75,10 @@ namespace ACE
       virtual ssize_t recv_data_trailer(Channel *ch);
 
       /// reset the http_code_ in anticipation of a new message.
-      void reset_http_code (void);
+      void reset_http_code ();
 
       /// get the value of the most recent http result code
-      int http_code (void);
+      int http_code ();
 
     protected:
       char *header_complete (Channel *ch);
@@ -88,7 +87,6 @@ namespace ACE
       /// Store the most recent HTTP result code. Typically it will be 200,
       /// but it could be a 4xx or 5xx code if the proxy reports an error.
       int http_code_;
-
     };
   }
 }

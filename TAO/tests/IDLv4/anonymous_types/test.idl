@@ -1,0 +1,34 @@
+/*
+ * This is just a simple test making sure anonymous types work in IDL4 since
+ * there is already a test file at tests/IDL_Test/anonymous.idl.
+ */
+
+#include __TAO_IDL_FEATURES
+#ifdef TAO_IDL_HAS_ANONYMOUS_TYPES
+#  if !TAO_IDL_HAS_ANONYMOUS_TYPES
+#    error "Expecting macro to be true"
+#  endif
+#else
+#  error "Expecting macro to be defined"
+#endif
+
+struct TestStruct {
+  short short_array[10];
+  short another_short_array[10];
+  sequence<long> long_sequence;
+  sequence<long> another_long_sequence;
+  sequence<long, 3> bounded_long_sequence;
+  sequence<long, 3> another_bounded_long_sequence;
+};
+
+// Another struct, different lengths
+struct AnotherTestStruct {
+  short short_array[9];
+  short another_short_array[9];
+  short another_short_10_array[10];
+  sequence<long> long_sequence;
+  sequence<long> another_long_sequence;
+  sequence<long, 4> bounded_long_sequence;
+  sequence<long, 4> another_bounded_long_sequence;
+  sequence<long, 3> another_bounded_3_long_sequence;
+};

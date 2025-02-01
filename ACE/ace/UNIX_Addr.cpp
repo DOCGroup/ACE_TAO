@@ -1,7 +1,5 @@
 #include "ace/UNIX_Addr.h"
 
-
-
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -29,7 +27,7 @@ ACE_UNIX_Addr::set_addr (const void *addr, int len)
 // Return a pointer to the underlying address.
 
 void *
-ACE_UNIX_Addr::get_addr (void) const
+ACE_UNIX_Addr::get_addr () const
 {
   return (void *) &this->unix_addr_;
 }
@@ -60,13 +58,13 @@ ACE_UNIX_Addr::addr_to_string (ACE_TCHAR s[], size_t len) const
 }
 
 u_long
-ACE_UNIX_Addr::hash (void) const
+ACE_UNIX_Addr::hash () const
 {
   return ACE::hash_pjw (this->unix_addr_.sun_path);
 }
 
 void
-ACE_UNIX_Addr::dump (void) const
+ACE_UNIX_Addr::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 #endif /* ACE_HAS_DUMP */
@@ -74,7 +72,7 @@ ACE_UNIX_Addr::dump (void) const
 
 // Do nothing constructor.
 
-ACE_UNIX_Addr::ACE_UNIX_Addr (void)
+ACE_UNIX_Addr::ACE_UNIX_Addr ()
   : ACE_Addr (AF_UNIX,
               sizeof this->unix_addr_ - sizeof (this->unix_addr_.sun_path))
 {

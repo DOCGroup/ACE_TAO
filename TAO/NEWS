@@ -1,5 +1,205 @@
+USER VISIBLE CHANGES BETWEEN TAO-4.0.2 and TAO-4.0.3
+====================================================
+
+USER VISIBLE CHANGES BETWEEN TAO-4.0.1 and TAO-4.0.2
+====================================================
+
+- None
+
+USER VISIBLE CHANGES BETWEEN TAO-4.0.0 and TAO-4.0.1
+====================================================
+
+- TAO_IDL:
+  - Support the following IDL v4 features (may not work everywhere in TAO):
+    - Empty structs
+    - `octet` and `wchar` union discriminators
+    - Allow using `typedef`s of `int8` and `uint8` as union discriminators
+    - Allow using empty parentheses in annotation applications to
+      workaround syntax errors when an annotation with no arguments has to
+      be followed by a complete scoped name:
+        `@example_annotation() ::ex::ExampleType`
+      This is a proposed solution to an IDL spec issue.
+    - Reserve the `bitfield`, `bitmask`, and `bitset` keywords in IDL v4
+      (these are not implemented yet)
+  - Allow using `map` as an identifier in IDL v3 again
+
+USER VISIBLE CHANGES BETWEEN TAO-3.1.4 and TAO-4.0.0
+====================================================
+
+- ACE/TAO now require C++17 or newer
+
+USER VISIBLE CHANGES BETWEEN TAO-3.1.3 and TAO-3.1.4
+====================================================
+
+- None
+
+USER VISIBLE CHANGES BETWEEN TAO-3.1.2 and TAO-3.1.3
+====================================================
+
+- None
+
+USER VISIBLE CHANGES BETWEEN TAO-3.1.1 and TAO-3.1.2
+====================================================
+
+- TAO_IDL: Added support for the map data type, but this isn't supported in TAO
+  user applications except for local usage
+
+USER VISIBLE CHANGES BETWEEN TAO-3.1.0 and TAO-3.1.1
+====================================================
+
+- Removed deprecated -ORBResources flag
+
+USER VISIBLE CHANGES BETWEEN TAO-3.0.11 and TAO-3.1.0
+=====================================================
+
+. Removed usage of ACE service configurator for all
+  POA internal strategy classes
+
+USER VISIBLE CHANGES BETWEEN TAO-3.0.10 and TAO-3.0.11
+======================================================
+
+. Fixed some compiler warnings given by newer compilers
+
+. PortableGroup cleanup
+
+USER VISIBLE CHANGES BETWEEN TAO-3.0.9 and TAO-3.0.10
+=====================================================
+
+. Various cleanup and using more C++11 features
+
+USER VISIBLE CHANGES BETWEEN TAO-3.0.8 and TAO-3.0.9
+====================================================
+
+. Various cleanup
+
+USER VISIBLE CHANGES BETWEEN TAO-3.0.7 and TAO-3.0.8
+====================================================
+
+. Moved operators<<= and >>= for CORBA::Any to the CORBA namespace.
+  This makes the code compatible with GCC 12 and removes the need for
+  both the -fdelayed-template-parsing workaround (for clang) and defining
+  ACE_ANY_OPS_USE_NAMESPACE in config-macos*.h.
+
+. Removed unused configuration option ACE_ANY_OPS_USE_NAMESPACE
+
+USER VISIBLE CHANGES BETWEEN TAO-3.0.6 and TAO-3.0.7
+====================================================
+
+. Fixed an issue with handling spaces in paths for TAO_IDL
+
+. TAO_IDL: Fix open file error not mentioning the filename and not checking if
+  the file is actually a directory.
+
+USER VISIBLE CHANGES BETWEEN TAO-3.0.5 and TAO-3.0.6
+====================================================
+
+. Various cleanup and using more C++11 features
+
+. Fixed compilation error in the TAO core when using C++20
+
+USER VISIBLE CHANGES BETWEEN TAO-3.0.4 and TAO-3.0.5
+====================================================
+
+. TAO_IDL: Fix bug where floating point constant expressions fail to evaluate.
+  This bug was introduced in 3.0.3
+
+USER VISIBLE CHANGES BETWEEN TAO-3.0.3 and TAO-3.0.4
+====================================================
+
+. Various cleanup and using more C++11 features
+
+USER VISIBLE CHANGES BETWEEN TAO-3.0.2 and TAO-3.0.3
+====================================================
+
+. Support for IDL 4 explicitly-named integer types like `int64` in TAO_IDL.
+  Support for `uint8` and `int8` is limited in TAO. Unlike the larger types,
+  these are new distinct types that are not aliases of existing types covered
+  by the CORBA specification
+
+. Added the `tao/idl_features.h` header file for getting the IDL features
+  supported by TAO_IDL. See the file for example usage
+
+. TAO_IDL: Fix empty case evaluation on unions with enum discriminators
+
+USER VISIBLE CHANGES BETWEEN TAO-3.0.1 and TAO-3.0.2
+====================================================
+
+. Fix wstring coerce leak in tao_idl
+
+. Support C++ Keywords in `DCPS_DATA_SEQUENCE_TYPE`
+
+. Minor cleanup
+
+USER VISIBLE CHANGES BETWEEN TAO-3.0.0 and TAO-3.0.1
+====================================================
+
+. Minor cleanup
+
+USER VISIBLE CHANGES BETWEEN TAO-2.5.12 and TAO-3.0.0
+=====================================================
+
+. C++11 is now a mandatory compiler feature which is
+  required for TAO
+
+. Fixed some CORBA spec mismatches for the CORBA server
+  portable interceptors
+
+. Add portspan support to DIOP
+
+USER VISIBLE CHANGES BETWEEN TAO-2.5.11 and TAO-2.5.12
+======================================================
+
+. Removed usage of narrow_from_decl and narrow_from_scope
+  from TAO_IDL, use dynamic_cast now that we have RTTI. Any
+  user that has a custom backend should make the similar
+  changes to their own TAO_IDL backend
+
+USER VISIBLE CHANGES BETWEEN TAO-2.5.10 and TAO-2.5.11
+======================================================
+
+. Simplified some code generated by tao_idl
+
+USER VISIBLE CHANGES BETWEEN TAO-2.5.9 and TAO-2.5.10
+=====================================================
+
+. TAO IDL Frontend annotation support extended: (#1125)
+  . All the direct contents of interfaces
+  . Porttypes, eventtypes, components, and all their direct contents
+  . Valuetypes and most of their direct contents
+
+. TAO IDL now supports anonymous types when using IDL4. (#1135)
+
+USER VISIBLE CHANGES BETWEEN TAO-2.5.8 and TAO-2.5.9
+====================================================
+
+. With C++11 we are now using (u)int8/16/32/64 to map all
+  CORBA types
+
+USER VISIBLE CHANGES BETWEEN TAO-2.5.7 and TAO-2.5.8
+====================================================
+
+. Fixed handling of transient errors with DII requests
+
+. Renamed `VERSION` file to `VERSION.txt` to avoid conflicting with the
+  `version` standard header.
+
 USER VISIBLE CHANGES BETWEEN TAO-2.5.6 and TAO-2.5.7
 ====================================================
+
+. Fixed deprecated-copy warnings in TAO_IDL generated code
+
+. The TAO IDL Frontend now supports annotations on interfaces, operations, and
+  attributes. (#967)
+
+. `idl_global->eval` in the TAO IDL Frontend will now produce error and warning
+  messages. This can be silenced by passing `true` as a second argument. (#967)
+
+. Expanded documentation on what can be annotated and roughly how to extend
+  annotation support in `TAO_IDL/docs/annotations.md`. Also made various
+  corrections. (#967)
+
+. Fixed invalid free in the TAO IDL Frontend while parsing an IDL wstring
+  literal. (#984)
 
 USER VISIBLE CHANGES BETWEEN TAO-2.5.5 and TAO-2.5.6
 ====================================================

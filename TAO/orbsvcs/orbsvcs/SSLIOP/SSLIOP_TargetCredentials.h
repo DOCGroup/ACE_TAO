@@ -41,7 +41,6 @@ namespace TAO
         public virtual SSLIOP_Credentials
     {
     public:
-
       TargetCredentials (::X509 *cert, ::EVP_PKEY *evp);
 
       /**
@@ -61,7 +60,7 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * context_id (void);
+      virtual char * context_id ();
 
       virtual SecurityLevel3::Principal * client_principal ();
 
@@ -77,21 +76,20 @@ namespace TAO
 
       virtual SecurityLevel3::OwnCredentials_ptr parent_credentials ();
 
-      virtual CORBA::Boolean client_authentication (void);
+      virtual CORBA::Boolean client_authentication ();
 
-      virtual CORBA::Boolean target_authentication (void);
+      virtual CORBA::Boolean target_authentication ();
 
-      virtual CORBA::Boolean confidentiality (void);
+      virtual CORBA::Boolean confidentiality ();
 
-      virtual CORBA::Boolean integrity (void);
+      virtual CORBA::Boolean integrity ();
 
-      virtual CORBA::Boolean target_embodied (void);
+      virtual CORBA::Boolean target_embodied ();
 
-      virtual CORBA::Boolean target_endorsed (void);
+      virtual CORBA::Boolean target_endorsed ();
 
-      virtual void release (void);
+      virtual void release ();
       //@}
-
     };
   }
 }

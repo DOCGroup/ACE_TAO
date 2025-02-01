@@ -1,10 +1,4 @@
-
-
 Real-Time Event Service
-
-
-File: TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/README
-
 
 This directory contains an example that shows how to create and
 federate real-time event channels using the classes in EC_Gateway_UDP.h.

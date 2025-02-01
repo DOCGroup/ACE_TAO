@@ -25,11 +25,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The pseudo-object _nil method.
 TAO_AMH_Locate_ResponseHandler_ptr
-TAO_AMH_Locate_ResponseHandler::_nil (void)
+TAO_AMH_Locate_ResponseHandler::_nil ()
 {
-  return (TAO_AMH_Locate_ResponseHandler_ptr) 0;
+  return nullptr;
 }
-
 
 TAO_AMH_Locate_ResponseHandler::TAO_AMH_Locate_ResponseHandler (
     TAO_ServerRequest & sr)
@@ -39,7 +38,7 @@ TAO_AMH_Locate_ResponseHandler::TAO_AMH_Locate_ResponseHandler (
   this->init (sr,0);
 }
 
-TAO_AMH_Locate_ResponseHandler::~TAO_AMH_Locate_ResponseHandler (void)
+TAO_AMH_Locate_ResponseHandler::~TAO_AMH_Locate_ResponseHandler ()
 {
 }
 
@@ -80,7 +79,7 @@ TAO_AMH_Locate_ResponseHandler::_unchecked_narrow (CORBA::Object_ptr obj)
 }
 
 const char*
-TAO_AMH_Locate_ResponseHandler::_interface_repository_id (void) const
+TAO_AMH_Locate_ResponseHandler::_interface_repository_id () const
 {
   return 0;
 }

@@ -21,23 +21,17 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Atomic_Op.h"
 
-#if defined (ACE_WIN32) || \
-    (defined (ACE_HAS_CLOCK_GETTIME) && \
-     !defined (ACE_LACKS_MONOTONIC_TIME) && \
-     !defined (ACE_LACKS_CONDATTR) && \
-     (defined (_POSIX_MONOTONIC_CLOCK) || defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)) && \
-     defined (_POSIX_CLOCK_SELECTION) && !defined (ACE_LACKS_CONDATTR_SETCLOCK))
-
-# include "ace/Monotonic_Time_Policy.h"
-# if defined (ACE_WIN32)
-#   include "ace/Date_Time.h"
-#   include "ace/Truncate.h"
-# endif
+#if defined (ACE_HAS_MONOTONIC_TIME_POLICY) && defined (ACE_HAS_MONOTONIC_CONDITIONS)
+#  include "ace/Monotonic_Time_Policy.h"
+#  if defined (ACE_WIN32)
+#    include "ace/Date_Time.h"
+#    include "ace/Truncate.h"
+#  endif
 
 // Test results, 'success' is 0
 static int test_result = 0;
 
-#if defined (ACE_HAS_THREADS)
+#  if defined (ACE_HAS_THREADS)
 
 // Event used in the tests.  Start it "unsignalled" (i.e., its initial
 // state is 0).
@@ -53,17 +47,17 @@ static long n_workers = 10;
 static ACE_Time_Value *initial_timeout;
 
 // Number of wakeups.
-#if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
+#    if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 static ACE_Atomic_Op<ACE_Thread_Mutex, long>   n_awoken;
 static ACE_Atomic_Op<ACE_Thread_Mutex, long>   n_awoken2;
-#else
+#    else
 static long                                    n_awoken;
 static long                                    n_awoken2;
-#endif
+#    endif
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-w n_workers] [-s]\n")));
@@ -94,7 +88,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 void set_system_time(const ACE_Time_Value& tv)
 {
-#   if defined (ACE_WIN32)
+#    if defined (ACE_WIN32)
   ACE_Date_Time curdt (tv);
   SYSTEMTIME sys_time;
   sys_time.wDay = ACE_Utils::truncate_cast <WORD> (curdt.day ());
@@ -105,11 +99,11 @@ void set_system_time(const ACE_Time_Value& tv)
   sys_time.wSecond = ACE_Utils::truncate_cast <WORD> (curdt.second ());
   sys_time.wMilliseconds = ACE_Utils::truncate_cast <WORD> (curdt.microsec () / 1000);
   if (!::SetLocalTime (&sys_time))
-#   else
+#    else
   timespec_t curts;
   curts = tv;
   if (ACE_OS::clock_settime (CLOCK_REALTIME, &curts) != 0)
-#   endif
+#    endif
     {
       ACE_DEBUG((LM_INFO,
                   "(%P|%t) Unable to reset OS time. Insufficient privileges or not supported.\n"));
@@ -218,7 +212,7 @@ worker (void *)
   return 0;
 }
 
-#endif /* ACE_HAS_THREADS */
+#  endif /* ACE_HAS_THREADS */
 
 // Test event functionality.
 
@@ -226,7 +220,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Monotonic_Manual_Event_Test"));
 
-#if defined (ACE_HAS_THREADS)
+#  if defined (ACE_HAS_THREADS)
   ACE_Manual_Event_T<ACE_Monotonic_Time_Policy> monotonic_event (0);
   ACE_Manual_Event systime_event (0);
   ACE_Time_Value_T<ACE_Monotonic_Time_Policy> tm_mono;
@@ -304,12 +298,12 @@ int run_main (int argc, ACE_TCHAR *argv[])
                       1);
 
   ACE_Thread_Manager::instance ()->wait ();
-#else
+#  else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("Threads not supported on this platform\n")));
-#endif /* ACE_HAS_THREADS */
+#  endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return test_result;
 }

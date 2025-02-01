@@ -37,13 +37,13 @@ class Supplier
 {
 public:
   /// Constructor.
-  Supplier (void);
+  Supplier ();
 
   /// Destructor.
-  ~Supplier (void);
+  ~Supplier ();
 
   /// Execute  the daemon.
-  int run (void);
+  int run ();
 
   /// Initialize the client communication endpoint with Notifier.
   int init (int argc, ACE_TCHAR *argv[]);
@@ -52,11 +52,11 @@ public:
   int send_market_status (const char *stock_name,
                           long value);
 
+private:
   /// The timer handler used to send the market status to the notifier
   /// periodically.
-  Supplier_Timer_Handler *supplier_timer_handler_;
+  Supplier_Timer_Handler *supplier_timer_handler_ {};
 
-private:
   /// Remember our orb.
   CORBA::ORB_var orb_;
 
@@ -64,14 +64,14 @@ private:
   int read_ior (ACE_TCHAR *filename);
 
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// This method initialises the naming service and registers the
   /// object with the POA.
-  int via_naming_service(void);
+  int via_naming_service();
 
   /// returns the TAO instance of the singleton Reactor.
-   ACE_Reactor *reactor_used (void) const;
+   ACE_Reactor *reactor_used () const;
 
   /// This method used for getting stock information from a file.
   int read_file (ACE_TCHAR *filename);

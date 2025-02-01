@@ -18,7 +18,7 @@ class Scoped_Compute_Queue_Guard
 {
 public:
   Scoped_Compute_Queue_Guard (be_visitor_typecode_defn* );
-  ~Scoped_Compute_Queue_Guard (void);
+  ~Scoped_Compute_Queue_Guard ();
 
 private:
   be_visitor_typecode_defn* customer_;
@@ -29,7 +29,7 @@ Scoped_Compute_Queue_Guard::Scoped_Compute_Queue_Guard (
   )
   :customer_ (customer)
 {
-  if (customer_ != 0)
+  if (customer_ != nullptr)
     {
       // Reset the compute queue to set the stage for computing our
       // encapsulation length.
@@ -37,9 +37,9 @@ Scoped_Compute_Queue_Guard::Scoped_Compute_Queue_Guard (
     }
 }
 
-Scoped_Compute_Queue_Guard::~Scoped_Compute_Queue_Guard (void)
+Scoped_Compute_Queue_Guard::~Scoped_Compute_Queue_Guard ()
 {
-  if (customer_ != 0)
+  if (customer_ != nullptr)
     {
       // Reset the compute queue since we must not affect computation of other
       // nodes.
@@ -70,7 +70,7 @@ be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context * ctx)
     }
 }
 
-be_visitor_typecode_defn::~be_visitor_typecode_defn (void)
+be_visitor_typecode_defn::~be_visitor_typecode_defn ()
 {
   this->queue_reset (this->tc_queue_);
   this->queue_reset (this->compute_queue_);
@@ -98,9 +98,9 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
       be_module * const module =
-        be_module::narrow_from_scope (node->defined_in ());
+        dynamic_cast<be_module*> (node->defined_in ());
 
-      if (module == 0)
+      if (module == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_typecode_defn::")
@@ -188,9 +188,9 @@ be_visitor_typecode_defn::gen_forward_declared_typecode (be_type * node)
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
       be_module * const module =
-        be_module::narrow_from_scope (node->defined_in ());
+        dynamic_cast<be_module*> (node->defined_in ());
 
-      if (module == 0)
+      if (module == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_typecode_defn::")
@@ -238,7 +238,7 @@ be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
                                                          true);
 
       be_interface * const intf =
-        d != 0 ? be_interface::narrow_from_decl (d) : 0;
+        d != nullptr ? dynamic_cast<be_interface*> (d) : nullptr;
 
       if (intf && intf->is_defined ())
         {
@@ -251,7 +251,7 @@ be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
       // structures and unions
 
       AST_Structure * const st =
-        AST_Structure::narrow_from_decl (node);
+        dynamic_cast<AST_Structure*> (node);
 
       if (st && st->is_defined ())
         {
@@ -263,7 +263,7 @@ be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
 }
 
 void
-be_visitor_typecode_defn::gen_begin_NS_for_anon (void)
+be_visitor_typecode_defn::gen_begin_NS_for_anon ()
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -276,7 +276,7 @@ be_visitor_typecode_defn::gen_begin_NS_for_anon (void)
 }
 
 void
-be_visitor_typecode_defn::gen_end_NS_for_anon (void)
+be_visitor_typecode_defn::gen_end_NS_for_anon ()
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -289,13 +289,11 @@ be_visitor_typecode_defn::gen_end_NS_for_anon (void)
 int
 be_visitor_typecode_defn::visit_array (be_array *node)
 {
-  be_type * const base = be_type::narrow_from_decl (node->base_type ());
+  be_type * const base = dynamic_cast<be_type*> (node->base_type ());
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // generate typecode for the base type
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
@@ -452,13 +450,11 @@ be_visitor_typecode_defn::visit_interface_fwd (be_interface_fwd * node)
 int
 be_visitor_typecode_defn::visit_sequence (be_sequence * node)
 {
-  be_type * const base = be_type::narrow_from_decl (node->base_type ());
+  be_type * const base = dynamic_cast<be_type*> (node->base_type ());
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // generate typecode for the base type
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
@@ -551,9 +547,7 @@ be_visitor_typecode_defn::visit_string (be_string * node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // Multiple definition guards.
   // @todo Can we automate duplicate detection within the IDL compiler
@@ -615,7 +609,7 @@ be_visitor_typecode_defn::visit_typedef (be_typedef * node)
   // visited are strings and sequences.  All others have their own
   // full-fledged visitors (e.g. objref_typecode, etc.)
 
-  be_type * const base = be_type::narrow_from_decl (node->base_type ());
+  be_type * const base = dynamic_cast<be_type*> (node->base_type ());
 
   this->recursion_detect_ = true;
 
@@ -711,9 +705,9 @@ be_visitor_typecode_defn::queue_insert (
     ACE_CDR::Long offset
   )
 {
-  be_visitor_typecode_defn::QNode *qnode = 0;
+  be_visitor_typecode_defn::QNode *qnode = nullptr;
 
-  ACE_NEW_RETURN (qnode, be_visitor_typecode_defn::QNode, 0);
+  ACE_NEW_RETURN (qnode, be_visitor_typecode_defn::QNode, nullptr);
 
   qnode->node = node;
   qnode->offset = offset;
@@ -741,8 +735,8 @@ be_visitor_typecode_defn::queue_lookup (
        !iter.done ();
        iter.advance ())
     {
-      be_visitor_typecode_defn::QNode **addr = 0;
-      be_visitor_typecode_defn::QNode *item = 0;
+      be_visitor_typecode_defn::QNode **addr = nullptr;
+      be_visitor_typecode_defn::QNode *item = nullptr;
       iter.next (addr);
       item = *addr;
 
@@ -754,7 +748,7 @@ be_visitor_typecode_defn::queue_lookup (
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 void
@@ -763,7 +757,7 @@ queue_reset (ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> & queue)
 {
   while (!queue.is_empty ())
     {
-      be_visitor_typecode_defn::QNode * qnode = 0;
+      be_visitor_typecode_defn::QNode * qnode = nullptr;
       (void) queue.dequeue_head (qnode);
       delete qnode;
     }

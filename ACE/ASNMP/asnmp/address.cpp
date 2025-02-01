@@ -127,7 +127,6 @@ bool operator<=( const Address &lhs,const Address &rhs)
     return true;
   else
     return false;
-
 }
 
 
@@ -249,7 +248,6 @@ IpAddress::IpAddress( const char *inaddr): Address()
   smival.value.string.ptr = address_buffer;
 
   if (ACE_OS::strlen(inaddr) == 0) {
-
     valid_flag = 0;
     iv_friendly_name_[0] = 0;
     iv_friendly_name_status_ = 0;
@@ -505,7 +503,6 @@ int IpAddress::parse_address( const char *inaddr)
   // is this a dotted IP notation string or
   // a friendly name
   if ( parse_dotted_ipstring( inaddr)) {
-
     // since this is a valid dotted string
     // don't do any DNS (Performance!)
     return 1;
@@ -513,7 +510,6 @@ int IpAddress::parse_address( const char *inaddr)
   else {
     int rc;
     if ((rc = resolve_to_address(inaddr, ipAddr)) == 0) {
-
         // now lets check out the dotted string
         ACE_OS::strncpy( ds, ACE_OS::inet_ntoa(ipAddr), MAXHOSTNAMELEN);
 
@@ -522,7 +518,6 @@ int IpAddress::parse_address( const char *inaddr)
 
         // save the friendly name
         ACE_OS::strcpy( iv_friendly_name_, inaddr);
-
     }    // end if lookup result
     else {
       iv_friendly_name_status_ = rc;
@@ -570,7 +565,6 @@ int IpAddress::resolve_to_hostname(const in_addr& quad_addr, char *hostname)
   // reverse lookup (requires in-addr.arpa to be setup in DNS
   if (ACE_OS::gethostbyaddr_r((const char *)&quad_addr.s_addr, IPV4LEN,
                           AF_INET, &lookupResult, buffer, &loc_errno)) {
-
     // verify right type of record
     if (lookupResult.h_addrtype == AF_INET &&
         lookupResult.h_length == IPV4LEN) {
@@ -1009,7 +1003,6 @@ void NetbiosAddress::InitNBAddr(const char *inaddr)
 NetbiosAddress::NetbiosAddress( const char *inaddr)
 {
   InitNBAddr(inaddr);
-
 }
 
 NetbiosAddress::NetbiosAddress( const char *inaddr,  nb_service svc)
@@ -1714,7 +1707,6 @@ int IpxSockAddress::parse_address( const char *inaddr)
 }
 
 
-
 //-------------[ set the socket number ]----------------------------------
 void IpxSockAddress::set_socket( const unsigned short s)
 {
@@ -1837,7 +1829,6 @@ MacAddress& MacAddress::operator=( const MacAddress &macaddress)
   format_output();
   return *this;
 }
-
 
 
 //-----[ MAC Address general = operator ]---------------------------------
@@ -2364,7 +2355,6 @@ int GenAddress::parse_address( const char *addr)
           return 1;    // ok, its a mac
         }
         break;
-
     }
         // otherwise its invalid
     delete address;

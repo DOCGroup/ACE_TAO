@@ -43,7 +43,7 @@ namespace TAO
   {
   }
 
-  DII_Invocation_Adapter::~DII_Invocation_Adapter (void)
+  DII_Invocation_Adapter::~DII_Invocation_Adapter ()
   {
     delete[] ex_data_;
   }
@@ -62,7 +62,7 @@ namespace TAO
     {
       CORBA::TypeCode_var xtc = this->exception_list_->item (l);
       this->ex_data_[l].id = xtc->id ();
-      this->ex_data_[l].alloc = 0;
+      this->ex_data_[l].alloc = nullptr;
 #if TAO_HAS_INTERCEPTORS == 1
       this->ex_data_[l].tc_ptr = xtc.in ();
 #endif
@@ -254,7 +254,14 @@ namespace TAO
 
     if (status == TAO_INVOKE_RESTART)
       {
+        CORBA::Boolean const is_permanent_forward =
+          (synch.reply_status () == GIOP::LOCATION_FORWARD_PERM);
+
         effective_target = synch.steal_forwarded_reference ();
+
+        this->object_forwarded (effective_target,
+                                r.stub (),
+                                is_permanent_forward);
       }
 
     return status;

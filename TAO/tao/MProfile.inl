@@ -39,7 +39,7 @@ TAO_MProfile::operator= (const TAO_MProfile& rhs)
 
 /// Cyclic get next.  It will simply cycle through the complete list.
 ACE_INLINE TAO_Profile *
-TAO_MProfile::get_cnext (void)
+TAO_MProfile::get_cnext ()
 {
   if (last_ == 0)
     return 0;
@@ -53,7 +53,7 @@ TAO_MProfile::get_cnext (void)
 /// This will return the next element until either null is found or the
 /// end of list.  It then continues to return NULL until rewind.
 ACE_INLINE TAO_Profile *
-TAO_MProfile::get_next (void)
+TAO_MProfile::get_next ()
 {
   // Nolist or EndOfList
   if (last_ == 0 || current_ == last_)
@@ -63,7 +63,7 @@ TAO_MProfile::get_next (void)
 }
 
 ACE_INLINE TAO_Profile *
-TAO_MProfile::get_cprev (void)
+TAO_MProfile::get_cprev ()
 {
   if (last_ == 0)
     return 0;
@@ -78,7 +78,7 @@ TAO_MProfile::get_cprev (void)
 }
 
 ACE_INLINE TAO_Profile *
-TAO_MProfile::get_prev (void)
+TAO_MProfile::get_prev ()
 {
   if (last_ == 0 || current_ <= 1)
     // No List of BeginningOfList
@@ -100,7 +100,7 @@ TAO_MProfile::get_profile (TAO_PHandle handle)
 }
 
 ACE_INLINE TAO_Profile *
-TAO_MProfile::get_current_profile (void)
+TAO_MProfile::get_current_profile ()
 {
   if (last_ == 0)
     return 0;
@@ -112,7 +112,7 @@ TAO_MProfile::get_current_profile (void)
 }
 
 ACE_INLINE TAO_PHandle
-TAO_MProfile::get_current_handle (void)
+TAO_MProfile::get_current_handle ()
 {
   if (current_ > 0)
     return current_ - 1;
@@ -121,7 +121,7 @@ TAO_MProfile::get_current_handle (void)
 }
 
 ACE_INLINE TAO_PHandle
-TAO_MProfile::get_current_handle (void) const
+TAO_MProfile::get_current_handle () const
 {
   if (current_ > 0)
     return current_ - 1;
@@ -130,7 +130,7 @@ TAO_MProfile::get_current_handle (void) const
 }
 
 ACE_INLINE void
-TAO_MProfile::rewind (void)
+TAO_MProfile::rewind ()
 {
   current_ = 0;
 }
@@ -158,19 +158,19 @@ TAO_MProfile::forward_from (TAO_MProfile *from)
 
 ACE_INLINE
 TAO_MProfile *
-TAO_MProfile::forward_from (void)
+TAO_MProfile::forward_from ()
 {
   return this->forward_from_;
 }
 
 ACE_INLINE CORBA::ULong
-TAO_MProfile::profile_count (void) const
+TAO_MProfile::profile_count () const
 {
   return this->last_;
 }
 
 ACE_INLINE CORBA::ULong
-TAO_MProfile::size (void) const
+TAO_MProfile::size () const
 {
   return this->size_;
 }
@@ -184,7 +184,7 @@ TAO_MProfile::get_profile (CORBA::ULong slot) const
 }
 
 ACE_INLINE TAO_Profile **
-TAO_MProfile::pfiles (void) const
+TAO_MProfile::pfiles () const
 {
   return this->pfiles_;
 }

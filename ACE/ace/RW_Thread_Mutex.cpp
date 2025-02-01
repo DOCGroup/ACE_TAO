@@ -1,8 +1,6 @@
 /**
  * @file RW_Thread_Mutex.cpp
  *
- * Originally in Synch.cpp
- *
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 
@@ -20,8 +18,6 @@
 
 #include "ace/Guard_T.h"
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Thread_Mutex)
@@ -34,7 +30,7 @@ ACE_RW_Thread_Mutex::ACE_RW_Thread_Mutex (const ACE_TCHAR *name,
 }
 
 void
-ACE_RW_Thread_Mutex::dump (void) const
+ACE_RW_Thread_Mutex::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_RW_Thread_Mutex::dump");

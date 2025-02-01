@@ -23,17 +23,17 @@ public:
   test_i (CORBA::ORB_ptr orb_ptr,
           PortableServer::POA_ptr poa);
 
-  void method (void);
+  void method ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  void shutdown (void);
+  void shutdown ();
 
-  test_ptr create_POA (void);
+  test_ptr create_POA ();
 
-  void destroy_POA (void);
+  void destroy_POA ();
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
 protected:
   CORBA::ORB_var orb_;
@@ -50,7 +50,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 void
-test_i::method (void)
+test_i::method ()
 {
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("POACurrent");
@@ -70,19 +70,19 @@ test_i::method (void)
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (void)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 test_ptr
-test_i::create_POA (void)
+test_i::create_POA ()
 {
   CORBA::PolicyList policies (2);
   policies.length (2);
@@ -137,7 +137,7 @@ test_i::create_POA (void)
 }
 
 void
-test_i::destroy_POA (void)
+test_i::destroy_POA ()
 {
   this->child_poa_->destroy (1, 0);
 }
@@ -201,7 +201,6 @@ write_ior_to_file (const char *ior)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       CORBA::ORB_var orb =

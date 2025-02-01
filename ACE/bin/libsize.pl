@@ -15,7 +15,7 @@ $usage =
 #### Configuration parameters.
 ####
 $build_args =
-  'debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0';
+  'debug=0 optimize=1 static_libs_only=1';
 $ACE_COMPONENTS =
   'OS Utils Logging Threads Demux Connection Sockets IPC Svcconf ' .
     'Streams Memory Token Other';
@@ -105,8 +105,6 @@ if ($ACE_ROOT =~ /vxworks/) {
   $size = '/usr/lynx/3.0.0/ppc/cdk/sunos-xcoff-ppc/bin/size';
 } elsif ($ACE_ROOT =~ /lynx/) {
   $size = '/usr/lynx/3.0.0/x86/cdk/sunos-coff-x86/bin/size';
-} elsif ($ACE_ROOT =~ /chorus/) {
-  $size = '/project/doc/mvme/green68k/gnu/bin/size';
 } else {
   $size = 'size';
 }

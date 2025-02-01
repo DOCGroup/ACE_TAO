@@ -14,7 +14,6 @@
 #include "ace/Singleton.h"
 
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {
