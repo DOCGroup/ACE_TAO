@@ -16,10 +16,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Mcast_Transport::TAO_UIPMC_Mcast_Transport (
   TAO_UIPMC_Mcast_Connection_Handler *handler,
-  TAO_ORB_Core *orb_core
-)
-  : TAO_Transport (IOP::TAG_UIPMC,
-                   orb_core)
+  TAO_ORB_Core *orb_core)
+  : TAO_Transport (IOP::TAG_UIPMC, orb_core)
   , connection_handler_ (handler)
 {
   // Replace the default wait strategy with our own
@@ -99,49 +97,28 @@ TAO_UIPMC_Mcast_Transport::connection_handler_i ()
   return this->connection_handler_;
 }
 
-ssize_t TAO_UIPMC_Mcast_Transport::send (
-  iovec *,
-  int,
-  size_t &,
-  ACE_Time_Value const *)
+ssize_t TAO_UIPMC_Mcast_Transport::send (iovec *, int, size_t &, ACE_Time_Value const *)
 {
   // Write the complete Message_Block chain to the connection.
   // Shouldn't ever be called on the server side.
-  ACE_ASSERT (0);
   return -1;
 }
 
-ssize_t TAO_UIPMC_Mcast_Transport::recv (
-  char *,
-  size_t,
-  ACE_Time_Value const *)
+ssize_t TAO_UIPMC_Mcast_Transport::recv (char *, size_t, ACE_Time_Value const *)
 {
   // Shouldn't ever be called. We use recv_all() with different semantics.
-  ACE_ASSERT (0);
   return -1;
 }
 
-int TAO_UIPMC_Mcast_Transport::send_request (
-  TAO_Stub *,
-  TAO_ORB_Core *,
-  TAO_OutputCDR &,
-  TAO_Message_Semantics,
-  ACE_Time_Value *)
+int TAO_UIPMC_Mcast_Transport::send_request (TAO_Stub *, TAO_ORB_Core *, TAO_OutputCDR &, TAO_Message_Semantics, ACE_Time_Value *)
 {
   // Shouldn't ever be called on the server side.
-  ACE_ASSERT (0);
   return -1;
 }
 
-int TAO_UIPMC_Mcast_Transport::send_message (
-  TAO_OutputCDR &,
-  TAO_Stub *,
-  TAO_ServerRequest *,
-  TAO_Message_Semantics,
-  ACE_Time_Value *)
+int TAO_UIPMC_Mcast_Transport::send_message (TAO_OutputCDR &, TAO_Stub *, TAO_ServerRequest *, TAO_Message_Semantics, ACE_Time_Value *)
 {
   // Shouldn't ever be called on the server side.
-  ACE_ASSERT (0);
   return -1;
 }
 
@@ -157,9 +134,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
 {
   // We read the whole MIOP packet which is not longer than MIOP_MAX_DGRAM_SIZE.
   ssize_t const n =
-    this->connection_handler_->peer ().recv (buf,
-                                             len,
-                                             from_addr);
+    this->connection_handler_->peer ().recv (buf, len, from_addr);
 
   // There is nothing left in the socket buffer.
   if (n <= 0)

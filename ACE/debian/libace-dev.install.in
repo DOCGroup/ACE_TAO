@@ -5,8 +5,6 @@ usr/share/ace/bin/add_rel_link.sh               usr/lib/ace/bin
 usr/share/ace/bin/depgen.pl                     usr/lib/ace/bin
 usr/share/ace/bin/DependencyGenerator           usr/lib/ace/bin
 usr/share/ace/include                   usr/lib/ace
-ace/Log_Msg_Backend.h usr/include/ace/
-ace/Log_Msg_Callback.h usr/include/ace/
 ../../include/makeinclude/platform_macros.GNU usr/lib/ace/include/makeinclude
 usr/include/ace/*.h
 usr/include/ace/*.inl
