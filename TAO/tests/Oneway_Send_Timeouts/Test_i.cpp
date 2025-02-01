@@ -24,7 +24,7 @@ Test_i::sleep (CORBA::Long sec, CORBA::Long msec)
   unsleep_ = false;
 
   ACE_Time_Value duration (sec);
-  duration.msec (static_cast<long> (msec)); // HPUX seems to require this cast
+  duration.msec (static_cast<long> (msec));
 
   if (sec == 0 && msec == 0) {
     // 1000 seconds is infinity
@@ -79,7 +79,7 @@ Test_i::dummy_two_way ()
 void
 Test_i::shutdown ()
 {
-  orb_->shutdown (0);
+  orb_->shutdown (false);
   shutdown_ = true;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test_i::shutdown>\n"));
 }

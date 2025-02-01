@@ -29,7 +29,7 @@ deactivate_servant (PortableServer::Servant servant)
 }
 
 
-RND_Driver::RND_Driver (void)
+RND_Driver::RND_Driver ()
   :  timer_ (this),
      supplier_ (0),
      nsuppliers_ (4),
@@ -243,7 +243,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
 
       // ****************************************************************
 
@@ -386,7 +386,7 @@ RND_Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr admin,
 }
 
 void
-RND_Consumer::disconnect (void)
+RND_Consumer::disconnect ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -404,7 +404,7 @@ RND_Consumer::push (const RtecEventComm::EventSet &event)
 }
 
 void
-RND_Consumer::disconnect_push_consumer (void)
+RND_Consumer::disconnect_push_consumer ()
 {
 }
 
@@ -433,7 +433,7 @@ RND_Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr admin,
 }
 
 void
-RND_Supplier::disconnect (void)
+RND_Supplier::disconnect ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -445,7 +445,7 @@ RND_Supplier::disconnect (void)
 }
 
 void
-RND_Supplier::push_new_event (void)
+RND_Supplier::push_new_event ()
 {
   RtecEventComm::EventSet event (1);
   event.length (1);
@@ -473,12 +473,12 @@ RND_Supplier::push (RtecEventComm::EventSet &event)
 }
 
 void
-RND_Supplier::disconnect_push_supplier (void)
+RND_Supplier::disconnect_push_supplier ()
 {
 }
 
 int
-RND_Supplier::svc (void)
+RND_Supplier::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "Thread %t started\n"));
   int percent = 10;

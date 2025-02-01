@@ -75,17 +75,15 @@ typedef enum {CC_EM=-1, CC_IR=0, CC_R, CC_U, CC_IW, CC_W} CC_LockModeEnum;
 class TAO_Concurrency_Serv_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
 {
 public:
-
-  // = Initialization and termination methods.
   /// Default constructor
-  CC_LockSet (void);
+  CC_LockSet ();
 
   /// Constructor used if create_related is used to create the lock
   /// set.
   CC_LockSet (CosConcurrencyControl::LockSet_ptr related);
 
   /// Destructor.
-  ~CC_LockSet (void);
+  ~CC_LockSet ();
 
   // = CosConcurrencyControl methods
   /// Acquires this lock. Blocks until lock is obtained
@@ -104,7 +102,7 @@ public:
 
   // = Debugging methods
   /// Dump the state of the object to stdout
-  void dump (void);
+  void dump ();
 
 private:
   /// Converts the CORBA specification's lock mode to the internal
@@ -113,7 +111,7 @@ private:
 
   /// Initiatlizes the lock set array and acquires the initial
   /// semaphore.
-  void Init (void);
+  void Init ();
 
   /// Returns true if the held lock and the requested lock are compatible
   CORBA::Boolean compatible (CC_LockModeEnum mr);

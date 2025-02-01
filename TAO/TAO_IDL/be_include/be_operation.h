@@ -35,10 +35,10 @@ public:
                 bool local,
                 bool abstract);
 
-  ~be_operation (void);
+  ~be_operation ();
 
   /// Cleanup method.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
@@ -49,18 +49,14 @@ public:
   /// Insert an exception at the head of the list.
   int be_insert_exception (AST_Exception *ex);
 
-  bool is_sendc_ami (void) const;
+  bool is_sendc_ami () const;
   void is_sendc_ami (bool val);
 
-  bool is_excep_ami (void) const;
+  bool is_excep_ami () const;
   void is_excep_ami (bool val);
 
-  bool is_attr_op (void) const;
+  bool is_attr_op () const;
   void is_attr_op (bool val);
-
-  // Narrowing
-  DEF_NARROW_FROM_DECL (be_operation);
-  DEF_NARROW_FROM_SCOPE (be_operation);
 
 protected:
   bool is_sendc_ami_;

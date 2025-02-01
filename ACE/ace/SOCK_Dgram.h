@@ -37,9 +37,8 @@ class ACE_Time_Value;
 class ACE_Export ACE_SOCK_Dgram : public ACE_SOCK
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor.
-  ACE_SOCK_Dgram (void);
+  ACE_SOCK_Dgram ();
 
   /// This is a BSD-style method (i.e., no QoS) for initiating a socket
   /// dgram that will accept datagrams at the <local> address.
@@ -86,7 +85,7 @@ public:
             int ipv6_only = 0);
 
   /// Default dtor.
-  ~ACE_SOCK_Dgram (void);
+  ~ACE_SOCK_Dgram ();
 
   // = Data transfer routines.
   /// Send an @a n byte @a buf to the datagram socket (uses <sendto(3)>).
@@ -205,7 +204,7 @@ public:
   typedef ACE_INET_Addr PEER_ADDR;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Set NIC to use as multicast interface.
   int set_nic (const ACE_TCHAR *net_if,

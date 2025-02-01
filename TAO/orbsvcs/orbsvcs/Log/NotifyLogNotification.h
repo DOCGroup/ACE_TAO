@@ -44,13 +44,11 @@ class TAO_NotifyLog_Serv_Export TAO_NotifyLogNotification :
   public POA_CosNotifyComm::PushSupplier
 {
 public:
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr);
 
   /// Destructor.
-  ~TAO_NotifyLogNotification (void);
+  ~TAO_NotifyLogNotification ();
 
 protected:
   // = Helper methods
@@ -68,7 +66,7 @@ protected:
         const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier method
-    virtual void disconnect_push_supplier (void);
+    virtual void disconnect_push_supplier ();
 
   /// Send the event on the event channel.
   virtual void send_notification (const CORBA::Any& any);

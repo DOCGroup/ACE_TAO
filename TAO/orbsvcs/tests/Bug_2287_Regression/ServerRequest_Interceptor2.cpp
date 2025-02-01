@@ -14,24 +14,24 @@
 #include "ace/OS_NS_sys_time.h"
 #include "tao/PI/PIForwardRequestC.h"
 
-TAO249_ServerRequest_Interceptor2::TAO249_ServerRequest_Interceptor2 (void)
+TAO249_ServerRequest_Interceptor2::TAO249_ServerRequest_Interceptor2 ()
 : orb_ (0),
   expired_ (0)
 {
 }
 
-TAO249_ServerRequest_Interceptor2::~TAO249_ServerRequest_Interceptor2 (void)
+TAO249_ServerRequest_Interceptor2::~TAO249_ServerRequest_Interceptor2 ()
 {
 }
 
 char *
-TAO249_ServerRequest_Interceptor2::name (void)
+TAO249_ServerRequest_Interceptor2::name ()
 {
   return CORBA::string_dup ("TAO_TAO249_ServerRequest_Interceptor2");
 }
 
 void
-TAO249_ServerRequest_Interceptor2::destroy (void)
+TAO249_ServerRequest_Interceptor2::destroy ()
 {
 }
 
@@ -111,7 +111,7 @@ TAO249_ServerRequest_Interceptor2::receive_request (
 }
 
 TimeBase::TimeT
-TAO249_ServerRequest_Interceptor2::get_now (void)
+TAO249_ServerRequest_Interceptor2::get_now ()
 {
   // 1582...
   const TimeBase::TimeT timeOffset = ACE_UINT64_LITERAL (0x1B21DD213814000);

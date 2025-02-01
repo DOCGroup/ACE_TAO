@@ -55,14 +55,13 @@ public:
 class ACE_XtReactor_Export ACE_XtReactor : public ACE_Select_Reactor
 {
 public:
-  // = Initialization and termination methods.
   ACE_XtReactor (XtAppContext context = 0,
                  size_t size = DEFAULT_SIZE,
                  bool restart = false,
                  ACE_Sig_Handler * = 0);
-  virtual ~ACE_XtReactor (void);
+  virtual ~ACE_XtReactor ();
 
-  XtAppContext context (void) const;
+  XtAppContext context () const;
   void context (XtAppContext);
 
   // = Timer operations.
@@ -127,7 +126,7 @@ protected:
 private:
   /// This method ensures there's an Xt timeout for the first timeout
   /// in the Reactor's Timer_Queue.
-  void reset_timeout (void);
+  void reset_timeout ();
 
   // = Integrate with the X callback function mechanism.
   static void TimerCallbackProc (XtPointer closure, XtIntervalId *id);

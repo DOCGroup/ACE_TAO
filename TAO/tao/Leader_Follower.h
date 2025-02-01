@@ -53,7 +53,7 @@ public:
                        TAO_New_Leader_Generator *new_leader_generator = 0);
 
   /// Destructor
-  ~TAO_Leader_Follower (void);
+  ~TAO_Leader_Follower ();
 
   /// The current thread has become a server thread (i.e. called
   /// ORB::run), update any flags and counters.
@@ -61,20 +61,20 @@ public:
 
   /// The current thread is not a server thread anymore, reset any
   /// flags and counters.
-  void reset_event_loop_thread (void);
+  void reset_event_loop_thread ();
 
   /// This thread is going to perform an upcall, it will no longer be
   /// an event loop thread.
-  void set_upcall_thread (void);
+  void set_upcall_thread ();
 
   /// Is there any thread running as a leader?
-  bool leader_available (void) const;
+  bool leader_available () const;
 
   /// A server thread is making a request.
-  void set_client_thread (void);
+  void set_client_thread ();
 
   /// A server thread has finished is making a request.
-  void reset_client_thread (void);
+  void reset_client_thread ();
 
   /// Wait on the Leader/Followers loop until one event happens.
   /**
@@ -96,30 +96,30 @@ public:
 
   /// The current thread has become the leader thread in the
   /// client side leader-follower set.
-  void set_client_leader_thread (void) ;
+  void set_client_leader_thread ();
 
   /// The current thread is no longer the leader thread in the client
   /// side leader-follower set.
-  void reset_client_leader_thread (void) ;
+  void reset_client_leader_thread ();
 
   /// Sets the thread ID of the leader thread in the leader-follower
   /// model
   void set_client_leader_thread (ACE_thread_t thread_ID);
 
   /// Checks if we are a leader thread
-  bool is_client_leader_thread (void) const;
+  bool is_client_leader_thread () const;
 
   /// Sets the client leader avoidance flag true. This is used with the
   /// noupcall wait strategy to allow the creation of dynamic threads
   /// when possible
-  void set_avoid_client_leader (void);
+  void set_avoid_client_leader ();
 
   /**
    * A leader thread is relinquishing its role, unless there are more
    * leader threads running pick up a follower (if there is any) to
    * play the leader role.
    */
-  int elect_new_leader (void);
+  int elect_new_leader ();
 
   /** @name Follower creation/destruction
    *
@@ -143,7 +143,7 @@ public:
    */
   //@{
   /// Allocate a new follower to the caller.
-  TAO_LF_Follower *allocate_follower (void);
+  TAO_LF_Follower *allocate_follower ();
 
   /// The caller has finished using a follower.
   void release_follower (TAO_LF_Follower *);
@@ -163,12 +163,12 @@ public:
   /**
    * @return true if there follower set is not empty
    */
-  bool follower_available (void) const;
+  bool follower_available () const;
 
   //@}
 
   /// Get a reference to the underlying mutex
-  TAO_SYNCH_MUTEX &lock (void);
+  TAO_SYNCH_MUTEX &lock ();
 
   /// Provide a pre-initialized reverse lock for the Leader/Followers
   /// set.
@@ -177,16 +177,16 @@ public:
    * running operations.  This helper class simplifies the process of
    * releasing and reacquiring said mutex.
    */
-  ACE_Reverse_Lock<TAO_SYNCH_MUTEX> &reverse_lock (void);
+  ACE_Reverse_Lock<TAO_SYNCH_MUTEX> &reverse_lock ();
 
   /// Check if there are any client threads running
-  bool has_clients (void) const;
+  bool has_clients () const;
 
   /// Accessor to the reactor
-  ACE_Reactor *reactor (void);
+  ACE_Reactor *reactor ();
 
   /// Called when we are out of leaders.
-  bool no_leaders_available (void);
+  bool no_leaders_available ();
 
   /// Set the new leader generator.
   void set_new_leader_generator(TAO_New_Leader_Generator *new_leader_generator);
@@ -198,7 +198,7 @@ public:
 
 private:
   /// Shortcut to obtain the TSS resources of the orb core.
-  TAO_ORB_Core_TSS_Resources *get_tss_resources (void) const;
+  TAO_ORB_Core_TSS_Resources *get_tss_resources () const;
 
   /// Wait for the client leader to complete.
   int wait_for_client_leader_to_complete (ACE_Time_Value *max_wait_time);
@@ -221,7 +221,7 @@ private:
    * that all the pre-conditions are satisfied the Follower set is
    * changed and the promoted Follower is signaled.
    */
-  int elect_new_leader_i (void);
+  int elect_new_leader_i ();
 
   //@}
 
@@ -306,7 +306,7 @@ public:
   TAO_LF_Client_Thread_Helper (TAO_Leader_Follower &leader_follower);
 
   /// Destructor
-  ~TAO_LF_Client_Thread_Helper (void);
+  ~TAO_LF_Client_Thread_Helper ();
 
 private:
   /// Reference to leader/followers object.
@@ -320,7 +320,7 @@ public:
   TAO_LF_Client_Leader_Thread_Helper (TAO_Leader_Follower &leader_follower);
 
   /// Destructor
-  ~TAO_LF_Client_Leader_Thread_Helper (void);
+  ~TAO_LF_Client_Leader_Thread_Helper ();
 
 private:
   /// Reference to leader/followers object.

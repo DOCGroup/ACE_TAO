@@ -28,12 +28,11 @@
 class Echo_Client_i
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor
-  Echo_Client_i (void);
+  Echo_Client_i () = default;
 
   /// Destructor
-  ~Echo_Client_i (void);
+  ~Echo_Client_i () = default;
 
   /// Execute the methods
   int run (const char *, int, ACE_TCHAR **);

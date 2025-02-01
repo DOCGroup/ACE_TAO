@@ -3,7 +3,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_IIOP_Endpoint *
-TAO_SSLIOP_Endpoint::iiop_endpoint (void) const
+TAO_SSLIOP_Endpoint::iiop_endpoint () const
 {
   return this->iiop_endpoint_;
 }
@@ -35,31 +35,31 @@ TAO_SSLIOP_Endpoint::iiop_endpoint (TAO_IIOP_Endpoint *iiop_endpoint,
 }
 
 ACE_INLINE const ::SSLIOP::SSL &
-TAO_SSLIOP_Endpoint::ssl_component (void) const
+TAO_SSLIOP_Endpoint::ssl_component () const
 {
   return this->ssl_component_;
 }
 
 ACE_INLINE ::Security::QOP
-TAO_SSLIOP_Endpoint::qop (void) const
+TAO_SSLIOP_Endpoint::qop () const
 {
   return this->qop_;
 }
 
 ACE_INLINE ::Security::EstablishTrust
-TAO_SSLIOP_Endpoint::trust (void) const
+TAO_SSLIOP_Endpoint::trust () const
 {
   return this->trust_;
 }
 
 ACE_INLINE TAO::SSLIOP::OwnCredentials *
-TAO_SSLIOP_Endpoint::credentials (void) const
+TAO_SSLIOP_Endpoint::credentials () const
 {
   return this->credentials_.in ();
 }
 
 ACE_INLINE int
-TAO_SSLIOP_Endpoint::credentials_set (void) const
+TAO_SSLIOP_Endpoint::credentials_set () const
 {
   return this->credentials_set_;
 }

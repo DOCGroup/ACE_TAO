@@ -10,23 +10,15 @@
 //=============================================================================
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 
-
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.inl"
 #endif /* !  __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//////////
-// Properties_Encoder
 TAO_PG::Properties_Encoder::Properties_Encoder ()
 {
 }
-
-TAO_PG::Properties_Encoder::~Properties_Encoder ()
-{
-}
-
 
 void TAO_PG::Properties_Encoder::add (
   const char * name,
@@ -36,13 +28,12 @@ void TAO_PG::Properties_Encoder::add (
   values_.push_back(nv);
 }
 
-void TAO_PG::Properties_Encoder::encode (
-  PortableGroup::Properties * property_set) const
+void TAO_PG::Properties_Encoder::encode (PortableGroup::Properties * property_set) const
 {
   ACE_ASSERT (property_set != 0);
-  size_t count = values_.size();
+  CORBA::ULong const count = static_cast<CORBA::ULong> (values_.size());
   property_set->length(count);
-  for( size_t nItem = 0; nItem < count; ++nItem )
+  for( CORBA::ULong nItem = 0; nItem < count; ++nItem )
   {
     const NamedValue & nv = values_[nItem];
     PortableGroup::Property & property = (*property_set)[nItem];

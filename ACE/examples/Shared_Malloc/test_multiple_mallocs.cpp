@@ -4,10 +4,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Malloc_T.h"
 #include "ace/MMAP_Memory_Pool.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Process_Mutex.h"
-
-
+#include <memory>
 
 typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> TEST_MALLOC;
 
@@ -42,7 +40,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                       &request_options),
                   1);
 
-  auto_ptr <ACE_Allocator_Adapter<TEST_MALLOC> > shmem_request (adapter_ptr);
+  std::unique_ptr <ACE_Allocator_Adapter<TEST_MALLOC> > shmem_request (adapter_ptr);
   ACE_MMAP_Memory_Pool_Options response_options (RESPONSE_BASE_ADDR);
 
   TEST_MALLOC *ptr = 0;
@@ -52,7 +50,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                ACE_TEXT("response_lock"),
                                &response_options),
                   1);
-  auto_ptr <TEST_MALLOC> shmem_response (ptr);
+  std::unique_ptr <TEST_MALLOC> shmem_response (ptr);
   void *data = 0;
 
   // If we find "foo" then we're running the "second" time, so we must

@@ -13,11 +13,7 @@
 #include "ace/SOCK_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
-#if !defined (ACE_HAS_WINCE)
 #include "ace/OS_QoS.h"
-#endif  // ACE_HAS_WINCE
-
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -25,7 +21,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Acceptor)
 
 // Do nothing routine for constructor.
 
-ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (void)
+ACE_SOCK_Acceptor::ACE_SOCK_Acceptor ()
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::ACE_SOCK_Acceptor");
 }
@@ -156,7 +152,6 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
                                      reset_new_handle);
 }
 
-#if !defined (ACE_HAS_WINCE)
 int
 ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
                            ACE_Accept_QoS_Params qos_params,
@@ -208,10 +203,9 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
                                      in_blocking_mode,
                                      reset_new_handle);
 }
-#endif  // ACE_HAS_WINCE
 
 void
-ACE_SOCK_Acceptor::dump (void) const
+ACE_SOCK_Acceptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_Acceptor::dump");
@@ -425,7 +419,7 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
 }
 
 int
-ACE_SOCK_Acceptor::close (void)
+ACE_SOCK_Acceptor::close ()
 {
   return ACE_SOCK::close ();
 }

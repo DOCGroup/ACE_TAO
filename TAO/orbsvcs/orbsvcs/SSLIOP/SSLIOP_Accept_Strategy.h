@@ -34,7 +34,6 @@ namespace TAO
 {
   namespace SSLIOP
   {
-
     /**
      * @class Accept_Strategy
      *
@@ -65,7 +64,6 @@ namespace TAO
                                    ACE_SSL_SOCK_Acceptor>
     {
     public:
-
       /// Constructor.
       Accept_Strategy (TAO_ORB_Core * orb_core,
                        const ACE_Time_Value & timeout,
@@ -76,7 +74,6 @@ namespace TAO
       virtual int accept_svc_handler (handler_type * svc_handler);
 
     private:
-
       /// The accept() timeout.
       /**
        * This timeout includes the overall time to complete the SSL
@@ -84,9 +81,8 @@ namespace TAO
        * handshake.
        */
       const ACE_Time_Value timeout_;
-      bool check_host_;
+      bool const check_host_;
     };
-
   }  // End SSLIOP namespace
 }  // End TAO namespace
 

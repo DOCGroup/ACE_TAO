@@ -1,21 +1,20 @@
 #include "ftp.h"
 
-FTP_Client_Callback::FTP_Client_Callback (void)
+FTP_Client_Callback::FTP_Client_Callback ()
   : count_ (0)
 {
 }
 
 int
-FTP_Client_Callback::handle_end_stream (void)
+FTP_Client_Callback::handle_end_stream ()
 {
   TAO_AV_CORE::instance ()->orb ()->shutdown ();
   return 0;
 }
 
-FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (void)
+FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint ()
   : callback_ (0)
 {
-
 }
 
 void
@@ -152,24 +151,24 @@ Client::parse_args (int argc,
 }
 
 FILE *
-Client::file (void)
+Client::file ()
 {
   return this->fp_;
 }
 
 char*
-Client::flowname (void)
+Client::flowname ()
 {
   return this->flowname_;
 }
 
 TAO_StreamCtrl*
-Client::streamctrl (void)
+Client::streamctrl ()
 {
   return &this->streamctrl_;
 }
 
-Client::Client (void)
+Client::Client ()
   :endpoint_strategy_ (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa (),this),
    client_mmdevice_ (&endpoint_strategy_),
    address_ (ACE_OS::strdup ("224.9.9.2:12345")),
@@ -182,7 +181,6 @@ Client::Client (void)
 int
 Client::bind_to_server (const char *name)
 {
-
   try
     {
       // Initialize the naming services
@@ -212,7 +210,6 @@ Client::bind_to_server (const char *name)
 int
 Client::init (int argc, ACE_TCHAR *argv[])
 {
-
   PortableServer::POAManager_var mgr
     = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
 
@@ -245,7 +242,7 @@ Client::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Client::run (void)
+Client::run ()
 {
   try
     {

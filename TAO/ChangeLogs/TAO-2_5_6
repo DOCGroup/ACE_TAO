@@ -1,0 +1,1273 @@
+commit 441f6abac2d8967cc993b6d9d947975f707ff505
+Merge: 2ec946a16b8 6027bfe9ad1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 26 20:00:00 2019 +0200
+
+    Merge pull request #928 from jwillemsen/jwi-azurebadge
+    
+    Use correct azure devops badge
+
+commit 9a0cce755eeabf8bc71b749de9ff53dcc4e0d34a
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Tue Jun 25 07:33:04 2019 -0500
+
+    Provide two values in the struct linger initializer even though it absolutely is not required by the standard
+
+commit ea0205bef9691755788871bffaeae8a4fff49a5d
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Mon Jun 24 12:25:36 2019 -0500
+
+    Redundantly set the l_linger member to appease gcc
+
+commit de6952566c18e2fb7bc049dfac5814f6e53cf72f
+Merge: b1dee1f113c 2f7a952cc6f
+Author: ocielliottc <elliottc@objectcomputing.com>
+Date:   Mon Jun 24 07:52:53 2019 -0500
+
+    Merge pull request #917 from ocielliottc/master
+    
+    Adding support for the MQX RTOS.
+
+commit a00b1a3d43eaac70178887e53500216c78b8581f
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Jun 20 16:17:49 2019 -0500
+
+    Changed types and added static_casts to resolve 64-bit warnings.
+
+commit edc04eea14d97c29a91167b8ec5ff08f9f6e1e9e
+Merge: 83076677f70 6156438d623
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jun 13 13:55:01 2019 -0500
+
+    Merge pull request #918 from iguessthislldo/igtd/tao_idl_fixes
+    
+    TAO_IDL: Minor Annotation Fixes
+
+commit 6156438d623bc933ba77e9114d174494ba109972
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Wed Jun 12 13:31:46 2019 -0500
+
+    Apply suggestions from by @mitza-oci
+    
+    Co-Authored-By: Adam Mitz <mitza@objectcomputing.com>
+
+commit 617e37349071008c940681345749fd355066b829
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 12 10:11:21 2019 +0200
+
+    Corrected invalid define usage, same value, but logically not correct
+    
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+commit de31845d06bdb260a5ede9a2d202b92fbabad407
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 12 08:28:44 2019 +0200
+
+    Remove handling of CORBA::TIMEOUT as part of the sendc_ping exception handling, breaks Windows
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit dde054ada9023d80ce42abe82f5dc92470d10624
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 11 10:27:09 2019 +0200
+
+    When sendc fails with a timeout mark the server as timed out
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit 2e19e8ebfd93f9ae69c2fd8f43b2ece8edde51e2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 11 09:19:42 2019 +0200
+
+    Logging enhancements
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.h:
+
+commit 2211b831b81dbac580dea499d016132b59805b4f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 10 19:31:04 2019 +0200
+
+    Make use of an atomic for the refcount instead of a full mutex
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncListManager.h:
+
+commit 6b84a09f60463bfd831e7f55a03000690847d44c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 9 10:42:50 2019 +0200
+
+    Commented out check for nill ping interval, breaks one unit test
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit 8bc6fd296f1307242e09c012ccf9b703783253d8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 9 10:42:25 2019 +0200
+
+    Const change
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+
+commit 751c09cc92e6e90ebe476b17711f3a2ea3cc1fda
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jun 9 10:32:30 2019 +0200
+
+    Change the refcount_ of LiveListener to a atomic which is more efficient
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.h:
+
+commit d33e96029091ab22fd1e5ab0c5e91e3f433eb904
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jun 7 11:45:31 2019 -0500
+
+    annotest_idl: Fix Annotation Decl
+    
+    I had changed this value to false to make sure the test could fail, but
+    forgot to change it before committing.
+
+commit eb4bf96c72cf2e080201908a93de4e53182fd363
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jun 7 11:43:06 2019 -0500
+
+    tao_idl: Fix Typo in idl.ypp
+
+commit 9953cd68ac6941641dc96b870ae4d4bf24b14c3c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 7 17:04:08 2019 +0200
+
+    Mark constructor as explicit
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/server.cpp:
+
+commit 36b1106d400f1403b306cda85b870d68e5ccbfa9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 7 16:48:31 2019 +0200
+
+    Revert "Remove ORB runner as separate task, not necessary and only complicates this test"
+    
+    This reverts commit 57021d0e7fba3d19037c02472f6a41bf2b0dfa30.
+
+commit 42f4029d31bf42f1c1d32c550ce9fc1c8d6b51a9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 7 14:09:41 2019 +0200
+
+    When there is no ping interval specified we don't need to ping a server at all
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit 7f41b8422c7e91eae163dd83f344d6b97ff01085
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 7 13:08:53 2019 +0200
+
+    Print defaults using the hardcoded define, not copy the value just in the output message.
+    
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+commit 57021d0e7fba3d19037c02472f6a41bf2b0dfa30
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 7 10:21:57 2019 +0200
+
+    Remove ORB runner as separate task, not necessary and only complicates this test
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/server.cpp:
+
+commit b0dd4712cf44c6e110e6d213d9574515b0959137
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 7 09:09:02 2019 +0200
+
+    Default ping timeout is 1000ms, not 10ms
+    
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+commit be84b2154a6e6b55acfa3e30d4fea4438cae35e9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 7 08:54:14 2019 +0200
+
+    No need to use a ACE_Time_Value to sleep a number of seconds
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/server.cpp:
+
+commit 50dbb1c0ad44bb262eceaa8da39f30c0b13e7425
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 7 08:52:49 2019 +0200
+
+    Log process id in exit message using %P
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/server.cpp:
+
+commit 534f364de4a6c090e4c70e39fee13951c7d64873
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 7 08:50:08 2019 +0200
+
+    Make use of %P for logging the process id
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/server.cpp:
+
+commit a3cd77e6bf7ae3cba390708676bf9e1c5474238f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jun 6 19:32:13 2019 -0500
+
+    annotations.md: Add Prefix Thing to History
+
+commit 7a28f35fdb3c9fd0213ae4e13386c9238478f08c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jun 6 19:07:23 2019 -0500
+
+    tao_idl: Annotations cant class with C++ Keywords
+
+commit 2b5481c0a5aa1d51b5fcd0470f0b32b8fa98696c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jun 6 19:06:42 2019 -0500
+
+    annotations.md: Various Fixes
+
+commit 6b0113c3b7debb7e898e7f8b48260e16f63bd1e4
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jun 6 17:46:30 2019 -0500
+
+    annotest_idl: Added A Test Case
+    
+    This turned out not to be needed, but at least the
+    `@annotationName(TRUE)` or `@annotation(FALSE)` syntax isn't tested
+    currently. It's not special syntax really, but was failing in the
+    particular instance and went away with a rebuild.
+
+commit d0c9f695bc0cc30bc4f36946eb041a24499d9495
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 6 19:03:44 2019 +0200
+
+    Revert change
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+commit 4c69b74225cf6d9479caa7a31ab38fa6d70ad669
+Author: Chad Elliott <elliottc@objectcomputing.com>
+Date:   Thu Jun 6 09:15:02 2019 -0500
+
+    - Use ACE_OS::send and ACE_OS::recv on MQX, instead of write and read.
+    - Added static casts where pid_t is assumed to be an int.
+    - Use configurable macro for the "use_select" parameter.
+    - MQX does not follow conventional standards when it comes to HTONS and NTOHS and must be configured accordingly.
+    - Modified ACE_Handle_Set so that the use of fd_array is not conditional upon ACE_WIN32.  It is now enabled through ACE_HANDLE_SET_USES_FD_ARRAY.
+    - Implement UNIX File IO Functions for MQX in MQX_Filesystem.*
+    - Use the existing implementation to simulate condition variables.
+    - Use emulation for diropen on MQX as is done for Windows.
+    - Convert from MQX error to standard error number.
+    - Use _mqx_exit in ACE_OS::_exit for MQX.
+    - Added a nop in ACE_OS::ioctl for MQX.
+    - Added a definition of ACE_TMAIN for MQX so that MQX is initialized and RTCS and the MQX Filesystem code is initialized before calling ace_main_i().
+    - Fixed a compile error in SOCK_Dgram.cpp introduced months ago.
+    - Use struct initialization to avoid using the l_linger member directly.
+    - Modified ACE_Select_Reactor_Base to use a hash map for handle storage based on ACE_SELECT_REACTOR_BASE_USES_HASH_MAP instead of ACE_WIN32.
+    - Added the IAR compiler to define ACE_NOTREACHED(a) as empty.
+    - Made ACE_IPPROTO_TCP conditionally defined.
+    - Added error values required for ACE.
+    - Skip the wide-character strtok test if ACE_LACKS_WCSTOK is defined in ACE/tests/OS_Test.cpp.
+    - Added the ability to compile tests so that they output to stderr instead of a file.
+
+commit bbf72d32389b6419ead71b051c347f23144ebce0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 6 14:38:42 2019 +0200
+
+    Extended readme
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/README:
+
+commit 7be72bf5ab6f86ac35e1bf01a54f71b45dc5524b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 6 13:58:55 2019 +0200
+
+    Add ping timeout to default startup debug message and use the flag whether we should ping or not
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+commit 2c7141c62ecc2610bb04ef51e0ca1c9c25cd5d9d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 6 13:39:35 2019 +0200
+
+    Logging enhancements
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit 936f658f53dce9b034f95a361611b3cc793d0ce0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 6 11:12:26 2019 +0200
+
+    Remove redundant return
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+
+commit 0ae60cf9c60a7d71d27ddfdb54a20ecfa876ce8c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 6 11:12:10 2019 +0200
+
+    Log all exception details using _info, not just the type of exception
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Replicator.cpp:
+
+commit 2a145992dbc9196cccda37903c04a7a300f3cb91
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Jun 5 14:17:20 2019 -0500
+
+    tao_idl: fix --dump segfault
+
+commit d4dc5874ea9c94d2248b16ebe8535bfc654c0376
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 23 08:07:35 2019 +0200
+
+    Layout changes
+    
+        * ACE/tests/Log_Msg_Backend_Test.cpp:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
+
+commit 6c0847b58a371dd9e494f947a70a2193a9d59fad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 23 08:07:25 2019 +0200
+
+    Use full path for client
+    
+        * TAO/orbsvcs/tests/Simple_Naming/run_test.pl:
+
+commit fb73b217820cef92a469cd31045e479d4d776c7d
+Merge: 1a0c0c00af9 a92f7c5b5be
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 19:17:29 2019 +0200
+
+    Merge pull request #909 from jwillemsen/jwi-logginglayoutdii
+    
+    Logging and layout fixes
+
+commit a92f7c5b5bea6896f726ad8ce1713814c9780d82
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 14:01:01 2019 +0200
+
+    Layout
+    
+        * TAO/tao/Intrusive_Ref_Count_Object_T.h:
+
+commit 9988c52c966314b6b6abd9639e692dce5a807bd0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 13:58:30 2019 +0200
+
+    Layout change
+    
+        * TAO/tao/IIOP_Factory.cpp:
+
+commit 664595aba8f63f2a32aef705db7ee67042900f71
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 13:57:42 2019 +0200
+
+    Layout changes
+    
+        * TAO/tao/IIOP_Connection_Handler.cpp:
+        * TAO/tao/IIOP_Connector.cpp:
+
+commit b86d7be0f49cefaa48663d9d7c5d5af2afafdd23
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 13:52:21 2019 +0200
+
+    Enhance debug message
+    
+        * TAO/tao/Transport_Connector.cpp:
+
+commit f81ba0ce2cc9adeb68900a28e661b063dcc6fdee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 13:16:31 2019 +0200
+
+    Various layout changes
+    
+        * TAO/tao/AnyTypeCode/TypeCode_Case_Enum_T.h:
+        * TAO/tao/AnyTypeCode/Union_TypeCode_Static.h:
+        * TAO/tao/Array_VarOut_T.h:
+        * TAO/tao/CORBANAME_Parser.h:
+        * TAO/tao/Connector_Registry.h:
+        * TAO/tao/Default_Collocation_Resolver.h:
+        * TAO/tao/Fixed_Array_Argument_T.cpp:
+        * TAO/tao/LF_CH_Event.cpp:
+        * TAO/tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * TAO/tao/RTPortableServer/RT_POA.cpp:
+
+commit 0e934322fe64f1b3e87bad28701e149720d219eb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 13:12:07 2019 +0200
+
+    Layout changes
+    
+        * TAO/tao/LF_CH_Event.h:
+
+commit 7e380c8c84ab3f60eb6d7806a329687c97095414
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 12:11:44 2019 +0200
+
+    Layout changes
+    
+        * TAO/tao/GIOP_Message_Generator_Parser_11.h:
+        * TAO/tao/GIOP_Message_Generator_Parser_12.h:
+        * TAO/tao/GIOP_Message_Generator_Parser_Impl.h:
+        * TAO/tao/GIOP_Message_Locate_Header.h:
+        * TAO/tao/GIOP_Message_State.h:
+        * TAO/tao/GIOP_Message_Version.h:
+
+commit 689d04315d04fb658cba4576adb3468ae4e8fd08
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 12:08:04 2019 +0200
+
+    Logging text change
+    
+        * TAO/tao/Transport.cpp:
+
+commit 810bc1d986872b940819d82dcd93480119497740
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 11:56:16 2019 +0200
+
+    Logging format change
+    
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+
+commit 8b14f3bec3be8860dadf984e314bd9040c70ef59
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 11:43:17 2019 +0200
+
+    Consistent logging of request id
+    
+        * TAO/tao/Exclusive_TMS.cpp:
+        * TAO/tao/GIOP_Message_Generator_Parser.h:
+        * TAO/tao/GIOP_Message_Generator_Parser_10.h:
+        * TAO/tao/GIOP_Message_Generator_Parser_12.h:
+        * TAO/tao/Messaging/Asynch_Timeout_Handler.cpp:
+        * TAO/tao/Muxed_TMS.cpp:
+
+commit bfab77d5691508b5d49f84e8176d3da6ea415856
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 11:23:59 2019 +0200
+
+    Log request id using [%d] so that we can more easily search it
+    
+        * TAO/tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * TAO/tao/Muxed_TMS.cpp:
+
+commit c58b762c03b8ee9d99f8a82fa16a6a0c1f305b66
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 11:06:08 2019 +0200
+
+    Const fix
+    
+        * TAO/tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+
+commit dd34f8db9b026ad063d68a0a5d6864c6ddd5b2ae
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 11:05:00 2019 +0200
+
+    Just remove the argument name instead of using ACE_UNUSED_ARG
+    
+        * TAO/tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+
+commit fbe57ca13bf180d3f117c7d691d11f9d611837a5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 11:04:36 2019 +0200
+
+    Layout change
+    
+        * TAO/interop-tests/CdrOutArg/orbix/test_i.h:
+
+commit 4c4d78afde48d98b03b81a4989ed2fa7f523807f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 10:37:21 2019 +0200
+
+    Layout changes
+    
+        * TAO/tao/DynamicInterface/Context.h:
+        * TAO/tao/DynamicInterface/DII_Arguments_Converter_Impl.h:
+        * TAO/tao/DynamicInterface/DII_Invocation.h:
+        * TAO/tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * TAO/tao/DynamicInterface/ExceptionList.h:
+        * TAO/tao/DynamicInterface/Request.h:
+        * TAO/tao/DynamicInterface/Unknown_User_Exception.h:
+
+commit 59de22d497b8006fa730b1b3c28e47bc8e5e49d1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 10:33:37 2019 +0200
+
+    Layout and logging changes
+    
+        * TAO/orbsvcs/Naming_Service/README:
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * TAO/tao/AnyTypeCode/NVList.cpp:
+        * TAO/tao/BiDir_GIOP/BiDirPolicy_Validator.cpp:
+        * TAO/tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+        * TAO/tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * TAO/tao/DynamicInterface/Request.cpp:
+        * TAO/tao/DynamicInterface/Request.h:
+        * TAO/tao/DynamicInterface/Server_Request.cpp:
+        * TAO/tao/Muxed_TMS.cpp:
+
+commit d401cb3a1ff51d82972732ad9a1179b49892a53f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 09:08:38 2019 +0200
+
+    Layout changes
+    
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/README:
+
+commit 9e5d5794f5fd34d238d5222430ff70351e8c743a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 09:08:28 2019 +0200
+
+    List all FaultTolerant tests separately and removed the helper run_test.pl which is not required anymore
+    
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_test.pl:
+          Deleted.
+    
+        * TAO/bin/tao_other_tests.lst:
+
+commit 77cafabffd9a4a2d65ad047d010eff0d1498f049
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 12:56:08 2019 +0200
+
+    Removed some empty lines
+    
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_backup_restart_test.pl:
+
+commit 9032a4ce3a705ba4f1718fc1b477a0e86f0b7250
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 12:38:09 2019 +0200
+
+    More usage of TAO_ROOT
+    
+        * TAO/examples/Callback_Quoter/run_test.pl:
+        * TAO/examples/Quoter/run_test.pl:
+        * TAO/examples/RTCORBA/Activity/run_test.pl:
+        * TAO/examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl:
+        * TAO/examples/RTScheduling/MIF_Scheduler/run_test.pl:
+        * TAO/examples/ior_corbaloc/run_test.pl:
+        * TAO/orbsvcs/examples/ORT/run_test.pl:
+        * TAO/tests/IOR_Endpoint_Hostnames/run_test.pl:
+        * TAO/tests/Monitor/Marshal_Buffer/run_test.pl:
+        * TAO/utils/nslist/run_test.pl:
+
+commit 6b925ebe17583e3602d625f50d2b63131d3ddabb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 11:30:47 2019 +0200
+
+    Make use of $ENV{TAO_ROOT}/orbsvcs instead of a relative path
+    
+        * TAO/orbsvcs/tests/BiDir_CORBALOC/run_test.pl:
+        * TAO/orbsvcs/tests/Bug_1334_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Bug_1393_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Bug_1395_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Bug_1436_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Bug_1437_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Bug_1630_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Bug_2777_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Bug_2800_Regression/run_test_federated.pl:
+        * TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * TAO/orbsvcs/tests/EC_Multiple/run_test.pl:
+        * TAO/orbsvcs/tests/EC_Throughput/run_test.pl:
+        * TAO/orbsvcs/tests/EC_Throughput/run_test_overflow.pl:
+        * TAO/orbsvcs/tests/ImplRepo/Bug_689_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl:
+        * TAO/orbsvcs/tests/ImplRepo/NotifyService/run_test.pl:
+        * TAO/orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+        * TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl:
+        * TAO/orbsvcs/tests/ImplRepo/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/Bug_3881_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/IDL3_Test/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/IDL_Test/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/Latency_Test/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:
+        * TAO/orbsvcs/tests/InterfaceRepo/Union_Forward_Test/run_test.pl:
+        * TAO/orbsvcs/tests/Interoperable_Naming/run_test.pl:
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl:
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/run_test.pl:
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/run_test.pl:
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/run_test.pl:
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/run_test.pl:
+        * TAO/orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/run_test.pl:
+        * TAO/orbsvcs/tests/Log/Basic_Log_Test/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Basic/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Basic/run_test_ipv6.pl:
+        * TAO/orbsvcs/tests/Notify/Blocking/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Bug_1385_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Bug_1884_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Bug_2415_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Bug_2561_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Bug_3646a_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Bug_3646c_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Bug_3688_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Discarding/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Lanes/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/MC/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Ordering/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Persistent_Filter/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Persistent_POA/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Structured_Filter/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/ThreadPool/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Timeout/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Validate_Client/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/lib/EventChannel_Command.h:
+        * TAO/orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/2_Hops_RTCORBA/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/3_Hops_RTCORBA/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_notify.pl:
+        * TAO/orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/run_test.pl:
+        * TAO/orbsvcs/tests/Property/run_test.pl:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/run_test.pl:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+        * TAO/orbsvcs/tests/Time/run_test.pl:
+        * TAO/orbsvcs/tests/Trading/run_test.pl:
+
+commit 13c030748bbb5a9984ef5242159e6942c65d93e7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 11:20:47 2019 +0200
+
+    Use more TAO_ROOT as environment for a path, using startdir will not work correctly in a cross platform setup
+    
+        * TAO/orbsvcs/tests/Bug_4118_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_backup_restart_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_equivalence_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_failover_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+        * TAO/orbsvcs/tests/Redundant_Naming/run_test.pl:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test.pl:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
+
+commit 98c64649c747f9a52e88c40155004a894e4e065a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 11:06:04 2019 +0200
+
+    Use TAO_ROOT for tao_ft_naming
+    
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_backup_restart_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_equivalence_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_failover_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_persistence_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/Federation/run_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/Replication/run_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/stress_storable/run_test.pl:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+        * TAO/orbsvcs/tests/Simple_Naming/run_test_ft.pl:
+
+commit bb3b31f5d559b25805fbdcd52a994f148d1aecf4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 08:24:30 2019 +0200
+
+    Tab changes
+    
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_persistence_test.pl:
+
+commit 37c0f08472a27b839713a052524136f7915c8fad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 08:16:15 2019 +0200
+
+    Adapt these test scripts in order to let them work with an arch subdir set
+    
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_backup_restart_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_equivalence_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_failover_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_persistence_test.pl:
+        * TAO/orbsvcs/tests/FT_Naming/Federation/run_test.pl:
+
+commit 92c88990852cbbc383943be050d957746a620b09
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 08:09:28 2019 +0200
+
+    Use tab instead of spaces
+    
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/FaultTolerant.mpc:
+
+commit 0f7dfaf9b8591104dd4820043f1c190944bd5e9f
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu May 9 16:48:36 2019 -0500
+
+    Fixed typo in tao_orb_tests.lst
+
+commit 863f81e47ecf4cbae065016c9bdae897ae75cb09
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 6 12:00:58 2019 +0200
+
+    Remove our own default copy constructor, let the compiler generate one, will fix a warning with gcc9
+    
+        * TAO/tao/Message_Semantics.h:
+
+commit 3bd772780b1a4bbc2dde75a97cce17370ad42fe6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 1 14:06:21 2019 +0200
+
+    In ping_replied when we get a death and we didn't wait for a ping but do get a death notify wait on the process exit before marking the server as death
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit ed9cc7537297fe03f1792001216b8c6eda76653b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 1 14:03:11 2019 +0200
+
+    Within validate_ping move logging statement outside of the if so that we can all status fields in the log
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit a4a0c861ea4d3d00ce12022124477b39292ff934
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Sun Apr 28 00:36:20 2019 +0200
+
+    TAO/TAO_IDL/docs/annotations.md : Fix a few typos.
+
+commit e4e6b0cf6be0691e7579e16176cc0ec9e4f09628
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 27 09:41:02 2019 +0200
+
+    Revert 64bit change, triggers warning on linux
+    
+        * TAO/orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp:
+
+commit e04261bab50a3c23e0eacf57db3aa9dfe16fad4d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 27 09:37:57 2019 +0200
+
+    Add missing Activator_Export macro to the Watchdog for MinGW unresolved symbols during linking
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+
+commit b940c3951fb908fcdaa3c8490803ac7459dfc0a5
+Merge: ae66b5d5676 26212992b67
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 25 20:26:53 2019 +0200
+
+    Merge branch 'master' into jwi-implreprestart-889
+
+commit 26212992b6723c287d231fa0a6b8e2ebf059533c
+Merge: 930c9568dae 1cc99db75ca
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Apr 24 09:27:38 2019 -0500
+
+    Merge pull request #895 from mitza-oci/vs2019proj
+    
+    orbsvcs tests/examples: removed MPC and Perl files from Documentation_Files, they are already elsewhere in the project
+
+commit 1cc99db75ca15faed9fee9f4ac1d716a0bb1b487
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Apr 23 09:45:23 2019 -0500
+
+    orbsvcs tests/examples: removed Perl files from Documentation_Files group as they are already in Test_Files
+    
+    VS2017 and VS2019 require each file to be listed in a single section, no overlaps
+
+commit 483b7acbfbd9f3385fde99cf4febeebb5093cef9
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Apr 22 09:26:53 2019 -0500
+
+    orbsvcs tests/examples: removed MPC files from Documentation_Files group as they are already in Build_Files
+    
+    VS2017 and VS2019 require each file to be listed in a single section, no overlaps
+
+commit 61b81490b9253d108c23310d5ea727d8f9d5f853
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Apr 18 10:47:09 2019 -0500
+
+    TAO_Security requires TAO_Svc_Utils
+
+commit ae66b5d5676e7e0e02b543e5a721e67a7e338abc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 18 14:11:23 2019 +0200
+
+    Less indent and newlines in Any related code
+    
+        * TAO/TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+
+commit 08d320c08471927d8d2ced9f5c35f62f8d94b9f3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 18 13:39:58 2019 +0200
+
+    Removed some unnecessary newlines
+    
+        * TAO/TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+
+commit 677704a5158607afc89c3befda8ef00da24baead
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 18 08:31:13 2019 +0200
+
+    List change
+    
+        * TAO/NEWS:
+
+commit addc66f94c92683e43b264a5e269470da173b310
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 17 19:10:09 2019 +0200
+
+    Fixed compile error on non Windows platforms
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+commit 05f90a87cdb1cb354ffd8608ed4b01a9b7bbc70e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 17 16:04:18 2019 +0200
+
+    Layout changes
+    
+        * TAO/orbsvcs/DevGuideExamples/NotifyService/Filtering/StructuredEventConsumer_i.h:
+        * TAO/orbsvcs/DevGuideExamples/NotifyService/OfferSubscriptions/StructuredEventConsumer_i.h:
+        * TAO/orbsvcs/DevGuideExamples/NotifyService/QoSProperties/StructuredEventConsumer_i.h:
+        * TAO/orbsvcs/DevGuideExamples/NotifyService/RTNotify/StructuredEventConsumer_i.h:
+        * TAO/orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h:
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * TAO/orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector_i.h:
+        * TAO/orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+        * TAO/orbsvcs/examples/Log/Notify/Notify_Consumer.h:
+        * TAO/orbsvcs/examples/Log/Notify/Notify_Supplier.h:
+        * TAO/orbsvcs/examples/Notify/Filter/Filter.h:
+        * TAO/orbsvcs/examples/Notify/Lanes/Supplier.h:
+        * TAO/orbsvcs/examples/Notify/Subscribe/Subscribe.h:
+        * TAO/orbsvcs/examples/Notify/ThreadPool/Consumer.h:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/UpdateableHandler.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/ComponentRepository_i.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h:
+        * TAO/orbsvcs/tests/Notify/Persistent_Filter/Filter.h:
+        * TAO/orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Reconnecting/Consumer.h:
+        * TAO/orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Consumer_T.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Consumer_T.h:
+        * TAO/orbsvcs/tests/Notify/lib/PushConsumer.h:
+        * TAO/orbsvcs/tests/Notify/lib/SequencePushConsumer.h:
+        * TAO/orbsvcs/tests/Notify/lib/StructuredPushConsumer.h:
+        * TAO/orbsvcs/tests/Notify/lib/Supplier_T.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Supplier_T.h:
+
+commit afed34cf77bd8d2e2acbeb5991be019aade1c777
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 17 13:30:42 2019 +0200
+
+    Start the process watcher before the rir of the ImplRepoService
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+commit 280dd0e06c554183151e9443f8b217ad771d1918
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 17 13:25:07 2019 +0200
+
+    Tab chagnes
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+
+commit bee73e54be4fbf202600e4e418f10d6c5c149875
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 17 12:23:51 2019 +0100
+
+    Add process watchdog for Windows
+    
+    On Windows we require the WFMO_Reactor to get a notify of a child death and TAO uses the TP Reactor so use a separate task to let the process manager check the status of our child processes
+
+commit 353c5cd7e792865fcae7b71d9b8e7c577e21ea62
+Merge: 6587242537b 2c635535b81
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 17 12:23:45 2019 +0200
+
+    Merge branch 'jwi-implreprestart-889' of https://github.com/jwillemsen/ATCD into jwi-implreprestart-889
+
+commit c1bb9e940b47d8be511c8d62f3f2251971b93743
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 17 11:21:52 2019 +0200
+
+    Layout and const changes
+    
+        * ACE/ace/Event_Handler.cpp:
+        * ACE/ace/Process_Manager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * TAO/orbsvcs/tests/ImplRepo/ping_interrupt/run_test.pl:
+
+commit 2c635535b814a5ecdff9c76c40b22c8a5fbaa55f
+Merge: 458e396ceb3 3b08cd8e993
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 16 19:18:53 2019 +0100
+
+    Merge branch 'jwi-implreprestart-889' of https://github.com/jwillemsen/ATCD into jwi-implreprestart-889
+
+commit 458e396ceb34f4eaf70182f5a08b4bf546cd3a24
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 16 19:18:28 2019 +0100
+
+    Fixed 64bit conversion warnings on Windows
+
+commit 3b08cd8e99327a66f8a77dc50d3cee2ee73119a4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 16 19:05:18 2019 +0200
+
+    Layout change
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+
+commit 7832cbc2b97d64de5e386b7c3b59022ee3797b8a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 16 10:18:54 2019 +0200
+
+    Layout and unicode fixes
+    
+        * TAO/orbsvcs/tests/ImplRepo/ReconnectServer/serverA.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/ReconnectServer/serverB.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/ReconnectServer/test_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/ReconnectServer/test_i.h:
+
+commit 4cd737f565179eb2b019a764cc814610f0bc4be6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 16 09:42:23 2019 +0200
+
+    Layout changes
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/server.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/README:
+        * TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/Test_i.h:
+
+commit 0c9a512c58d20f3db9327b6a7614761c162b245e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 16 09:42:12 2019 +0200
+
+    When we have a listener disconnect and we have a notify child death enable mark the server as wait for death and wait on the signal. In the restart functionality check whether the restart has succeeded, if not, we are in a final state. Extended the start server with more logging to know why the restart failed
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit e3cacac7b753cb2e238836a91a14c2d937a3c87e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 16 09:39:03 2019 +0200
+
+    Helper output on one line
+    
+        * TAO/orbsvcs/tests/ImplRepo/ping_interrupt/run_test.pl:
+
+commit 14279070f933585cfed4587cd45d69a927f13c0f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 16 09:38:01 2019 +0200
+
+    Add with -debug also ImR activator logging and tab changes
+    
+        * TAO/orbsvcs/tests/ImplRepo/ping_interrupt/run_test.pl:
+
+commit f6c8325e4e79378efa05c99aa6952f1e1c6b05e6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 16 08:59:18 2019 +0200
+
+    Const changes
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit d8f5b041e7710132a469ebf890dbd00ec0f8732e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 21:25:40 2019 +0200
+
+    Revert change
+
+commit 82d4980d11994c90d7e3fbf20192361ee4c2901d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 21:12:56 2019 +0200
+
+    Logging change
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit f5b9533e9933298f6d9532434ffd7378d15e22d9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 21:10:47 2019 +0200
+
+    Logging change
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit 6f23f063d837def2f10d284c8f21c12dd077bbf7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 21:07:34 2019 +0200
+
+    Layout, unicode, and doxygen changes
+    
+        * TAO/orbsvcs/tests/ImplRepo/ping_interrupt/Server_ORBInitializer.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/ping_interrupt/server_interceptor.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/ping_interrupt/server_interceptor.h:
+
+commit 7ab9d7d683b34a37d766a11d7cd7abd4ee66b18c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 16:45:54 2019 +0200
+
+    Fixed CodeFactor issue
+    
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/RTClient_Setup.cpp:
+
+commit 9c1d915a45893a7acb2d763663cff78dcd6f7f25
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 15:37:54 2019 +0200
+
+    Add missing include
+    
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/RTEC_Initializer.cpp:
+
+commit d23ea58f6eac4e23783ea9a7bb53d8bfdad2303c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 15:37:45 2019 +0200
+
+    Removed not needed include
+    
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/RTCORBA_Setup.h:
+
+commit 6dd22625d702d60cb6d0d0368b7cfc7d849d8425
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 15:34:10 2019 +0200
+
+    Removed priorityband_setup_ member, not used
+    
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/RTClient_Setup.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/RTClient_Setup.h:
+
+commit 97ab035ead6d942c06c916adbf8c7e5a89178295
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 15:33:20 2019 +0200
+
+    Removed empty inline files
+    
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/EC_Destroyer.inl:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.inl:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/PriorityBand_Setup.inl:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.inl:
+          Deleted.
+    
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/EC_Destroyer.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/EC_Destroyer.h:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.h:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/PriorityBand_Setup.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/PriorityBand_Setup.h:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.h:
+
+commit 29d99306df66c97856e5a9f1d4c87fe8c8b6dba3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 13:54:57 2019 +0200
+
+    In server_is_shutting_down we only get informed that the server is going down, we can't assume it is dead at that moment already
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit b6ce240aff0ed2285cf6f5dc7efe454042245313
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 10:47:53 2019 +0200
+
+    Added run of 4152 ImR test with a shutdown delay of 5
+    
+        * TAO/bin/tao_other_tests.lst:
+
+commit abaff624a6a915e553f7e9fd9dde4b4278e9118d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 10:47:26 2019 +0200
+
+    Extend perl script with -s option to have a shutdown delay in the server
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/run_test.pl:
+
+commit a157abe7ba76ab34162fdc3851bfe6bea6beb182
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 10:41:39 2019 +0200
+
+    Layout change
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+
+commit 0aad93323b1802723edfbfdc4a5d2d0f7b3393cc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 09:57:46 2019 +0200
+
+    Added new -s commandline option to shutdown the server instead of letting it terminate
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/client.cpp:
+
+commit b6da164721260a0f81628c222ba5f63e8bb86a2d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 09:56:28 2019 +0200
+
+    Check that we forward to a valid corbaloc, if not, throw an exception here instead of passing an invalid corbaloc further down
+    
+        * TAO/orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/INS_Locator.h:
+
+commit 51eb7d1d8393a1a450ec52e957f4d62711cc4165
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 09:54:14 2019 +0200
+
+    Layout change
+    
+        * TAO/tao/Messaging/AMH_Response_Handler.cpp:
+
+commit d8f1f9cff24310895b4d33cae747d09e561457c1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 09:32:52 2019 +0200
+
+    Enhanced logging and only log when debugging is enabled
+    
+        * TAO/orbsvcs/ImplRepo_Service/Forwarder.cpp:
+
+commit d9a9912cb8130109784d908771626f0856f4d83a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 09:00:03 2019 +0200
+
+    Add option to set a shutdown delay
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/server.cpp:
+
+commit 0dfeb018b048008367f36db424458fbc19fff402
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 15 08:55:12 2019 +0200
+
+    Add shutdown operation to the server so that we can trigger a controlled shutdown instead of only a terminate
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/Test.idl:
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/Test_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/Test_i.h:
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/server.cpp:
+
+commit c905cde373f47cb7efa87f74a3164767a0afd762
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 12 12:36:00 2019 +0200
+
+    Logging changes
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+commit f454748df67032a63c80be968fdf94503361a5fc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 12 10:11:35 2019 +0200
+
+    Removed these partial test list files, only convenience files which are not updated, when someone wants to quickly run just the tests of one orbscvs it is much quicker to just quickly remove all not needed tests from tao_other_tests.lst locally
+    
+        * TAO/bin/imr_tests.lst:
+        * TAO/bin/name_tests.lst:
+          Deleted.
+
+commit 28b5800f526c918cbccb648759ebd1cafc2ba182
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 12 09:52:43 2019 +0200
+
+    Add more exception logging to ActivatorReceiver::start_server_excep
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit 2e18f3156648d62241072358d9aad41a61ad9f56
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 12 09:52:11 2019 +0200
+
+    Add server name to logging statement when we don't start a server
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+commit 6b634d9c5094f557635ad3278be6fc3838b1aeeb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 12 09:51:46 2019 +0200
+
+    Layout change
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+
+commit c674522f93bf7bfafb2b94ecc142ce333f87c9dd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 11 20:02:08 2019 +0200
+
+    Layout changes
+    
+        * TAO/orbsvcs/tests/ImplRepo/RestartIMR/test_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/RestartIMR/test_i.h:
+        * TAO/orbsvcs/tests/ImplRepo/RestartServer/README:
+        * TAO/orbsvcs/tests/ImplRepo/kill_server/README:
+        * TAO/orbsvcs/tests/ImplRepo/ping_interrupt/README:
+
+commit a1de64b58f63ab32781632785f2934eb548fd4b0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 11 19:41:58 2019 +0200
+
+    Layout changes
+    
+        * TAO/orbsvcs/tests/ImplRepo/kill_slow_server/Test.idl:
+        * TAO/orbsvcs/tests/ImplRepo/kill_slow_server/Test_i.h:
+        * TAO/orbsvcs/tests/ImplRepo/kill_slow_server/client.cpp:
+
+commit 9f546301da35b8f9fdffdd100aafe5daeca3b06f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 11 19:38:08 2019 +0200
+
+    Unicode logging fixes
+    
+        * TAO/orbsvcs/tests/ImplRepo/kill_slow_server/server.cpp:
+
+commit 0fa9ddfc41d0edca827cadf16cb42c7bdb498424
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 11 19:37:45 2019 +0200
+
+    Fixed typo
+    
+        * TAO/orbsvcs/tests/ImplRepo/kill_slow_server/README:
+
+commit 94426d8e49192c6e92b81f1481ed55489f1a93d6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 11 19:20:37 2019 +0200
+
+    Logging fix to ImplRepo_Service
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit 4b4a1f24385c0f7eac54ee1175ac562d9f859bf7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 11 14:40:34 2019 +0200
+
+    Logging fix
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+
+commit 93fac19be21a518e53730592f7a2f9ad92fb0521
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 8 09:06:16 2019 +0200
+
+    Make x.5.5 public available and prepar for next release
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

@@ -10,7 +10,7 @@ class ACE_Svc_Export Pipe_Proc_Test : public Benchmark_Performance
 {
 public:
   int init (int, ACE_TCHAR **);
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   ACE_HANDLE pipe_handles[2];
@@ -55,7 +55,7 @@ Pipe_Proc_Test::reader (ACE_HANDLE handle)
 
 
 int
-Pipe_Proc_Test::svc (void)
+Pipe_Proc_Test::svc ()
 {
   ssize_t length = performance_test_options.msg_size ();
   int ni = this->thr_id ();

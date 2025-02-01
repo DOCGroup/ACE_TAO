@@ -23,7 +23,8 @@ static const char * const TAO_IIOP_SSL_Connect_Timeprobe_Description[] =
   "IIOP_SSL_Connection_Handler::receive_request - end",
 
   "IIOP_SSL_Connection_Handler::send_request - start",
-  "IIOP_SSL_Connection_Handler::send_request - end"};
+  "IIOP_SSL_Connection_Handler::send_request - end"
+};
 
 enum
 {
@@ -35,7 +36,6 @@ enum
   TAO_IIOP_SSL_CONNECTION_HANDLER_HANDLE_LOCATE_END,
 
   TAO_IIOP_SSL_CONNECTION_HANDLER_RECEIVE_REQUEST_END
-
 };
 
 // Setup Timeprobes
@@ -58,7 +58,6 @@ TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
   ACE_ASSERT (0);
 }
 
-
 TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
   TAO_ORB_Core *orb_core)
   : TAO_IIOP_Connection_Handler (orb_core)
@@ -75,7 +74,7 @@ TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
   this->transport (specific_transport);
 }
 
-TAO::IIOP_SSL_Connection_Handler::~IIOP_SSL_Connection_Handler (void)
+TAO::IIOP_SSL_Connection_Handler::~IIOP_SSL_Connection_Handler ()
 {
 }
 

@@ -11,6 +11,7 @@
 #include "tao/SystemException.h"
 
 #include "ace/Log_Msg.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -81,7 +82,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
   if (result != 0)
     {
       const CORBA::ULong username_size =
-        static_cast<CORBA::ULong> (ACE_OS::strlen (username));
+        static_cast<CORBA::ULong> (std::strlen (username));
 
       CORBA::Octet *buffer =
         CORBA::OctetSeq::allocbuf (username_size + 1);
@@ -332,7 +333,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
   if (!(input >> service_info))
     return -1;
 
-  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status = input.good_bit ();
 
   CORBA::ULong req_id = 0;
 
@@ -391,7 +392,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
       CORBA::OctetSeq oct_seq;
       input >> oct_seq;
       request.requesting_principal (oct_seq);
-      hdr_status = (CORBA::Boolean) input.good_bit ();
+      hdr_status = input.good_bit ();
     }
 
   return hdr_status ? 0 : -1;
@@ -456,21 +457,21 @@ TAO_GIOP_Message_Generator_Parser_10::parse_locate_reply (
 }
 
 CORBA::Octet
-TAO_GIOP_Message_Generator_Parser_10::major_version (void) const
+TAO_GIOP_Message_Generator_Parser_10::major_version () const
 {
   // Any harm in hardcoding??
   return static_cast<CORBA::Octet> (1);
 }
 
 CORBA::Octet
-TAO_GIOP_Message_Generator_Parser_10::minor_version (void) const
+TAO_GIOP_Message_Generator_Parser_10::minor_version () const
 {
   // Any harm in hardcoding??
   return 0;
 }
 
 size_t
-TAO_GIOP_Message_Generator_Parser_10::fragment_header_length (void) const
+TAO_GIOP_Message_Generator_Parser_10::fragment_header_length () const
 {
   return 0;
 }

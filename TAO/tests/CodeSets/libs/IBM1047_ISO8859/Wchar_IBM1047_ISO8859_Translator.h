@@ -42,10 +42,10 @@ class IBM1047_ISO8859_Export WIBM1047_ISO8859 : public ACE_WChar_Codeset_Transla
 {
 public:
   /// A do nothing constructor.
-  WIBM1047_ISO8859 (void);
+  WIBM1047_ISO8859 ();
 
   /// Virtual destruction
-  virtual ~WIBM1047_ISO8859 (void);
+  virtual ~WIBM1047_ISO8859 ();
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
   virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR &, ACE_CDR::WChar &);

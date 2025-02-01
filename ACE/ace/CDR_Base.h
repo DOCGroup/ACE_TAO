@@ -21,7 +21,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_CDR_BASE_H
 #define ACE_CDR_BASE_H
 
@@ -199,59 +198,23 @@ public:
    */
   //@{
   typedef bool Boolean;
-  typedef unsigned char Octet;
+  typedef ACE_Byte Octet;
   typedef char Char;
   typedef ACE_WCHAR_T WChar;
   typedef ACE_INT16 Short;
   typedef ACE_UINT16 UShort;
   typedef ACE_INT32 Long;
   typedef ACE_UINT32 ULong;
+  typedef ACE_INT64 LongLong;
   typedef ACE_UINT64 ULongLong;
-
-#   if (defined (_MSC_VER)) || (defined (__BORLANDC__))
-      typedef __int64 LongLong;
-#   elif ACE_SIZEOF_LONG == 8
-      typedef long LongLong;
-#   elif defined(__TANDEM)
-      typedef long long LongLong;
-#   elif ACE_SIZEOF_LONG_LONG == 8
-#     if defined (sun) && !defined (ACE_LACKS_U_LONGLONG_T)
-              // sun #defines   u_longlong_t, maybe other platforms do also.
-              // Use it, at least with g++, so that its -pedantic doesn't
-              // complain about no ANSI C++ long long.
-              typedef   longlong_t LongLong;
-#     else
-              typedef   long long LongLong;
-#     endif /* sun */
-#   else  /* no native 64 bit integer type */
-#     define NONNATIVE_LONGLONG
-      struct ACE_Export LongLong
-        {
-#     if defined (ACE_BIG_ENDIAN)
-          ACE_CDR::Long h;
-          ACE_CDR::Long l;
-#     else
-          ACE_CDR::Long l;
-          ACE_CDR::Long h;
-#     endif /* ! ACE_BIG_ENDIAN */
-
-          /**
-           * @name Overloaded Relation Operators.
-           *
-           * The canonical comparison operators.
-           */
-          //@{
-          bool operator== (const LongLong &rhs) const;
-          bool operator!= (const LongLong &rhs) const;
-          //@}
-        };
-#   endif /* no native 64 bit integer type */
-
-#   if defined (NONNATIVE_LONGLONG)
-#     define ACE_CDR_LONGLONG_INITIALIZER {0,0}
-#   else
-#     define ACE_CDR_LONGLONG_INITIALIZER 0
-#   endif /* NONNATIVE_LONGLONG */
+  typedef ACE_INT8 Int8;
+  typedef ACE_UINT8 UInt8;
+  typedef Short Int16;
+  typedef UShort UInt16;
+  typedef Long Int32;
+  typedef ULong UInt32;
+  typedef LongLong Int64;
+  typedef ULongLong UInt64;
 
 #   if ACE_SIZEOF_FLOAT == 4
       typedef float Float;
@@ -301,7 +264,7 @@ public:
        // VxWorks' compiler (gcc 2.96) gets confused by the operator long
        // double, so we avoid using long double as the NativeImpl.
        // Linux's x86 long double format (12 or 16 bytes) is incompatible
-       // with Windows, Solaris, AIX, MacOS X and HP-UX (and probably others)
+       // with Windows, and MacOS X (and probably others)
        // long double format (8 or 16 bytes).  If you need 32-bit Linux to
        // inter-operate with 64-bit Linux you will want to define this
        // macro to 0 so that "long double" is used.  Otherwise, do not define
@@ -362,7 +325,7 @@ public:
        /// See OMG 2012-07-02 IDL-to-C++ Mapping v1.3 section 5.13
        /// This class doesn't exactly match the IDL-to-C++ mapping because
        /// it is meant for use inside a union in the IDL compiler and therefore
-       /// has no constructors.  Standards-based middlware libraries such as
+       /// has no constructors.  Standards-based middleware libraries such as
        /// ORBs and DDSs can wrap this class in a class of their own to provide
        /// the exact interface described by the mapping specification.
        class ACE_Export Fixed
@@ -442,10 +405,15 @@ public:
          };
 
          class Iterator
-           : public std::iterator<std::bidirectional_iterator_tag, Proxy>
-           , private IteratorBase
+           : private IteratorBase
          {
          public:
+           typedef std::bidirectional_iterator_tag iterator_category;
+           typedef Proxy value_type;
+           typedef std::ptrdiff_t difference_type;
+           typedef Proxy* pointer;
+           typedef Proxy& reference;
+
            explicit Iterator (Fixed *outer, int digit = 0);
            Proxy operator* ();
            Iterator &operator+= (std::ptrdiff_t n);
@@ -460,10 +428,15 @@ public:
          };
 
          class ConstIterator
-           : public std::iterator<std::bidirectional_iterator_tag, Octet>
-           , private IteratorBase
+           : public IteratorBase
          {
          public:
+           typedef std::bidirectional_iterator_tag iterator_category;
+           typedef Octet value_type;
+           typedef std::ptrdiff_t difference_type;
+           typedef Octet* pointer;
+           typedef Octet& reference;
+
            explicit ConstIterator (const Fixed *outer, int digit = 0);
            Octet operator* ();
            ConstIterator &operator+= (std::ptrdiff_t n);

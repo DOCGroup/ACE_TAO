@@ -73,19 +73,19 @@ JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
 {
 }
 
-JAWS_Cached_FILE::~JAWS_Cached_FILE (void)
+JAWS_Cached_FILE::~JAWS_Cached_FILE ()
 {
   this->file_.close ();
 }
 
 ACE_FILE_IO *
-JAWS_Cached_FILE::file (void)
+JAWS_Cached_FILE::file ()
 {
   return &(this->file_);
 }
 
 ACE_Mem_Map *
-JAWS_Cached_FILE::mmap (void)
+JAWS_Cached_FILE::mmap ()
 {
   return (this->data () == 0 ? 0 : this->data ()->mem_map ());
 }

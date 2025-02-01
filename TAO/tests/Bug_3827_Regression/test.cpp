@@ -12,7 +12,7 @@ public:
   {
   }
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     try
       {
@@ -38,7 +38,7 @@ public:
   {
   }
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     try
       {

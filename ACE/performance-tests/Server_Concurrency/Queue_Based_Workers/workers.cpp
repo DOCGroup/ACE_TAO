@@ -48,7 +48,7 @@ class Worker_Task : public TASK
 {
 public:
   Worker_Task (ACE_Message_Queue<ACE_SYNCH> *mq);
-  int svc (void);
+  int svc ();
 
   size_t messages_dequeued_;
 
@@ -60,7 +60,7 @@ class IO_Task : public TASK
 {
 public:
   IO_Task (ACE_Message_Queue<ACE_SYNCH> *mq);
-  int svc (void);
+  int svc ();
 };
 
 Worker_Task::Worker_Task (ACE_Message_Queue<ACE_SYNCH> *mq)
@@ -70,7 +70,7 @@ Worker_Task::Worker_Task (ACE_Message_Queue<ACE_SYNCH> *mq)
 }
 
 int
-Worker_Task::svc (void)
+Worker_Task::svc ()
 {
   for (;;)
     {
@@ -157,7 +157,7 @@ IO_Task::IO_Task (ACE_Message_Queue<ACE_SYNCH> *mq)
 }
 
 int
-IO_Task::svc (void)
+IO_Task::svc ()
 {
   size_t i = 0;
   size_t messages_queued = 1;

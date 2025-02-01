@@ -26,7 +26,6 @@ namespace TAO
   class Storable_Factory;
 }
 
-
 /**
  * @class TAO_Storable_Naming_Context_Factory
  *
@@ -35,12 +34,9 @@ namespace TAO
 class TAO_Naming_Serv_Export TAO_Storable_Naming_Context_Factory
 {
 public:
-
   /// Data structure used by TAO_Persistent_Context_Index
   /// - typedef for ease of use.
   typedef TAO_Storable_Naming_Context::HASH_MAP HASH_MAP;
-
-  // = Initialization and termination methods.
 
   /// Constructor.
   TAO_Storable_Naming_Context_Factory (
@@ -48,7 +44,7 @@ public:
 
   /// Destructor.  Does not deallocate the hash map: if an instance of
   /// this class goes out of scope, its hash_map remains in persistent storage.
-  virtual ~TAO_Storable_Naming_Context_Factory (void);
+  virtual ~TAO_Storable_Naming_Context_Factory ();
 
   /// Factory method for creating an implementation object for naming contexts.
   /// If an existing naming context implementation is being rebuilt, the map

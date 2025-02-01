@@ -28,14 +28,20 @@
 # include "ace/Notification_Queue.h"
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
-#ifdef ACE_WIN32
+#if defined (ACE_WIN32) || defined (ACE_MQX)
+# ifndef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
+#  define ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
+# endif
+#endif
+
+#ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
 # include "ace/Null_Mutex.h"
 # include "ace/Hash_Map_Manager_T.h"
 # include "ace/Functor.h"  /* For ACE_Hash<void *> */
 # include <functional>      /* For std::equal_to<>  */
 #else
 # include "ace/Array_Base.h"
-#endif  /* ACE_WIN32 */
+#endif  /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
 #if !defined (ACE_DISABLE_NOTIFY_PIPE_DEFAULT)
 # define ACE_DISABLE_NOTIFY_PIPE_DEFAULT 0
@@ -50,13 +56,6 @@ typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
 // Forward declaration.
 class ACE_Select_Reactor_Impl;
 class ACE_Sig_Handler;
-
-/*
- * Hook to specialize the Select_Reactor_Base implementation
- * with the concrete reactor, e.g., select or tp reactor
- * specified at build/compilation time.
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
 
 /**
  * @class ACE_Select_Reactor_Handle_Set
@@ -91,7 +90,7 @@ class ACE_Event_Tuple
 {
 public:
   /// Default constructor.
-  ACE_Event_Tuple (void);
+  ACE_Event_Tuple ();
 
   /// Constructor.
   ACE_Event_Tuple (ACE_Event_Handler *eh, ACE_HANDLE h);
@@ -108,7 +107,6 @@ public:
 
   /// ACE_Event_Handler associated with the ACE_HANDLE.
   ACE_Event_Handler *event_handler_;
-
 };
 
 /**
@@ -130,19 +128,18 @@ class ACE_Export ACE_Select_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
   /// Constructor.
-  ACE_Select_Reactor_Notify (void);
+  ACE_Select_Reactor_Notify ();
 
   /// Destructor.
-  virtual ~ACE_Select_Reactor_Notify (void);
+  virtual ~ACE_Select_Reactor_Notify ();
 
-  // = Initialization and termination methods.
   /// Initialize.
   virtual int open (ACE_Reactor_Impl *,
                     ACE_Timer_Queue * = 0,
                     int disable_notify_pipe = ACE_DISABLE_NOTIFY_PIPE_DEFAULT);
 
   /// Destroy.
-  virtual int close (void);
+  virtual int close ();
 
   /**
    * Called by a thread when it wants to unblock the
@@ -167,7 +164,7 @@ public:
   /// Returns the ACE_HANDLE of the notify pipe on which the reactor
   /// is listening for notifications so that other threads can unblock
   /// the Select_Reactor
-  virtual ACE_HANDLE notify_handle (void);
+  virtual ACE_HANDLE notify_handle ();
 
   /// Handle one of the notify call on the @c handle. This could be
   /// because of a thread trying to unblock the Reactor_Impl
@@ -209,7 +206,7 @@ public:
    * dispatch the ACE_Event_Handlers that are passed in via the
    * notify pipe before breaking out of its recv loop.
    */
-  virtual int max_notify_iterations (void);
+  virtual int max_notify_iterations ();
 
   /**
    * Purge any notifications pending in this reactor for the specified
@@ -223,7 +220,7 @@ public:
       ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -289,7 +286,7 @@ public:
   typedef ACE_Event_Handler * value_type;
 
   // = The mapping from <HANDLES> to <Event_Handlers>.
-#ifdef ACE_WIN32
+#ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   /**
    * The NT version implements this via a hash map
    * @c ACE_Event_Handler*.  Since NT implements @c ACE_HANDLE
@@ -311,11 +308,10 @@ public:
    */
   typedef ACE_Array_Base<value_type> map_type;
   typedef ACE_HANDLE max_handlep1_type;
-#endif  /* ACE_WIN32 */
+#endif  /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
   typedef map_type::size_type size_type;
 
-  // = Initialization and termination methods.
   /// Default "do-nothing" constructor.
   ACE_Select_Reactor_Handler_Repository (ACE_Select_Reactor_Impl &);
 
@@ -331,7 +327,7 @@ public:
   int open (size_type size);
 
   /// Close down the repository.
-  int close (void);
+  int close ();
 
   // = Search structure operations.
 
@@ -351,7 +347,7 @@ public:
               ACE_Reactor_Mask mask);
 
   /// Remove all the <ACE_HANDLE, ACE_Event_Handler> tuples.
-  int unbind_all (void);
+  int unbind_all ();
 
   // = Sanity checking.
 
@@ -366,19 +362,18 @@ public:
 
   // = Accessors.
   /// Returns the current table size.
-  size_type size (void) const;
+  size_type size () const;
 
   /// Maximum ACE_HANDLE value, plus 1.
-  max_handlep1_type max_handlep1 (void) const;
+  max_handlep1_type max_handlep1 () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Remove the binding of @a handle corresponding to position @a pos
   /// in accordance with the @a mask.
   int unbind (ACE_HANDLE handle,
@@ -395,11 +390,11 @@ private:
   /// Reference to our @c Select_Reactor.
   ACE_Select_Reactor_Impl &select_reactor_;
 
-#ifndef ACE_WIN32
+#ifndef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   /// The highest currently active handle, plus 1 (ranges between 0 and
   /// @c max_size_.
   max_handlep1_type max_handlep1_;
-#endif  /* !ACE_WIN32 */
+#endif  /* !ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
   /// Underlying table of event handlers.
   map_type event_handlers_;
@@ -413,11 +408,9 @@ private:
 class ACE_Export ACE_Select_Reactor_Handler_Repository_Iterator
 {
 public:
-
   typedef
     ACE_Select_Reactor_Handler_Repository::map_type::const_iterator const_base_iterator;
 
-  // = Initialization method.
   explicit ACE_Select_Reactor_Handler_Repository_Iterator (
     ACE_Select_Reactor_Handler_Repository const * s);
 
@@ -428,20 +421,19 @@ public:
   bool next (ACE_Event_Handler* & next_item);
 
   /// Returns @c true when all items have been seen, else @c false.
-  bool done (void) const;
+  bool done () const;
 
   /// Move forward by one element in the set.  Returns @c false when
   /// all the items in the set have been seen, else @c true.
-  bool advance (void);
+  bool advance ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Reference to the Handler_Repository we are iterating over.
   ACE_Select_Reactor_Handler_Repository const * const rep_;
 
@@ -483,14 +475,7 @@ public:
   /// its own ie. can it pass on the control of handle resumption to
   /// the application.  The select reactor has no handlers that can be
   /// resumed by the  application. So return 0;
-  virtual int resumable_handler (void);
-
-  /*
-   * Hook to add concrete methods required to specialize the
-   * implementation with concrete methods required for the concrete
-   * reactor implementation, for example, select, tp reactors.
-   */
-  //@@ REACTOR_SPL_PUBLIC_METHODS_ADD_HOOK
+  virtual int resumable_handler ();
 
 protected:
   /// Allow manipulation of the <wait_set_> mask and <ready_set_> mask.
@@ -501,7 +486,7 @@ protected:
 
   /// Enqueue ourselves into the list of waiting threads at the
   /// appropriate point specified by <requeue_position_>.
-  virtual void renew (void) = 0;
+  virtual void renew () = 0;
 
   /// Check to see if the Event_Handler associated with @a handle is
   /// suspended. Returns 0 if not, 1 if so.
@@ -587,18 +572,16 @@ protected:
 
   /// Controls/access whether the notify handler should renew the
   /// Select_Reactor's token or not.
-  int supress_notify_renew (void);
-  void supress_notify_renew (int sr);
+  bool supress_notify_renew ();
+  void supress_notify_renew (bool sr);
 
 private:
-
   /// Determine whether we should renew Select_Reactor's token after handling
   /// the notification message.
-  int supress_renew_;
+  bool supress_renew_;
 
-  /// Deny access since member-wise won't work...
-  ACE_Select_Reactor_Impl (const ACE_Select_Reactor_Impl &);
-  ACE_Select_Reactor_Impl &operator = (const ACE_Select_Reactor_Impl &);
+  ACE_Select_Reactor_Impl (const ACE_Select_Reactor_Impl &) = delete;
+  ACE_Select_Reactor_Impl &operator = (const ACE_Select_Reactor_Impl &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

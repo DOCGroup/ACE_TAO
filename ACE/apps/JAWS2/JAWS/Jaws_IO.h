@@ -45,13 +45,13 @@ class JAWS_IO_Acceptor;
 class JAWS_Export JAWS_IO
 {
 public:
-  JAWS_IO (void);
-  virtual ~JAWS_IO (void);
+  JAWS_IO ();
+  virtual ~JAWS_IO ();
 
   //  void acceptor (JAWS_IO_Acceptor *acceptor);
   //  void handler (JAWS_IO_Handler *handler);
   //  void handle (ACE_HANDLE h);
-  //  ACE_HANDLE handle (void);
+  //  ACE_HANDLE handle ();
 
   // James, please add documentation here.
 
@@ -113,9 +113,9 @@ protected:
 class JAWS_Export JAWS_Synch_IO : public JAWS_IO
 {
 public:
-  JAWS_Synch_IO (void);
+  JAWS_Synch_IO ();
 
-  virtual ~JAWS_Synch_IO (void);
+  virtual ~JAWS_Synch_IO ();
 
   virtual void accept (JAWS_IO_Handler *ioh,
                        ACE_Message_Block *mb = 0,
@@ -173,9 +173,9 @@ typedef ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>
 class JAWS_Export JAWS_Asynch_IO : public JAWS_IO
 {
 public:
-  JAWS_Asynch_IO (void);
+  JAWS_Asynch_IO ();
 
-  virtual ~JAWS_Asynch_IO (void);
+  virtual ~JAWS_Asynch_IO ();
 
   virtual void accept (JAWS_IO_Handler *ioh,
                        ACE_Message_Block *mb = 0,
@@ -226,7 +226,6 @@ public:
   };
 
 protected:
-
   virtual void send_message (JAWS_IO_Handler *ioh,
                              const char *buffer,
                              unsigned int length,
@@ -247,7 +246,6 @@ public:
   virtual void accept (JAWS_IO_Handler *ioh,
                        ACE_Message_Block *mb = 0,
                        unsigned int size = 0);
-
 };
 
 typedef ACE_Singleton<JAWS_Asynch2_IO, ACE_SYNCH_MUTEX>

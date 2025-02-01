@@ -7,10 +7,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-PortableGroup_Request_Dispatcher::~PortableGroup_Request_Dispatcher (void)
-{
-}
-
 void
 PortableGroup_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
                                             TAO_ServerRequest &request,

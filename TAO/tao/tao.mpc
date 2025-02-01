@@ -61,6 +61,12 @@ project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_
   }
 
   IDL_Files {
+    idlflags += -Sci -Gse -Gata --idl-version 4
+    Int8Seq.pidl >> AnyTypeCode/Int8SeqA.h AnyTypeCode/Int8SeqA.cpp
+    UInt8Seq.pidl >> AnyTypeCode/UInt8SeqA.h AnyTypeCode/UInt8SeqA.cpp
+  }
+
+  IDL_Files {
     idlflags += -GT -oS PortableServer -Gd \
                 -Wb,safe_include=tao/PolicyC.h \
                 -Wb,skel_export_macro=TAO_PortableServer_Export \
@@ -169,6 +175,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     IIOPC.cpp
     Incoming_Message_Queue.cpp
     Incoming_Message_Stack.cpp
+    Int8SeqC.cpp
     Invocation_Adapter.cpp
     Invocation_Base.cpp
     Invocation_Endpoint_Selectors.cpp
@@ -308,6 +315,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     TSS_Resources.cpp
     TypeCodeFactory_Adapter.cpp
     Typecode_typesC.cpp
+    UInt8SeqC.cpp
     ULongLongSeqC.cpp
     ULongSeqC.cpp
     UserException.cpp
@@ -347,6 +355,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Basic_Arguments.h
     Basic_Argument_T.h
     Basic_Types.h
+    Basic_Types_IDLv4.h
     BD_String_Argument_T.h
     BiDir_Adapter.h
     Bind_Dispatcher_Guard.h
@@ -439,6 +448,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     HTTP_Client.h
     HTTP_Handler.h
     HTTP_Parser.h
+    idl_features.h
     IFR_Client_Adapter.h
     IIOP_Acceptor.h
     IIOPC.h
@@ -453,6 +463,8 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     IIOP_Transport.h
     Incoming_Message_Queue.h
     Incoming_Message_Stack.h
+    Int8SeqC.h
+    Int8SeqS.h
     Invocation_Adapter.h
     Invocation_Base.h
     Invocation_Endpoint_Selectors.h
@@ -492,7 +504,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Messaging_PolicyValueS.h
     Messaging_SyncScopeC.h
     Messaging_SyncScopeS.h
-    MM_Sequence_Iterator_T.h
     MMAP_Allocator.h
     MProfile.h
     Muxed_TMS.h
@@ -634,6 +645,8 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Typecode_typesS.h
     UB_String_Arguments.h
     UB_String_Argument_T.h
+    UInt8SeqC.h
+    UInt8SeqS.h
     ULongLongSeqC.h
     ULongLongSeqS.h
     ULongSeqC.h
@@ -706,7 +719,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     gendir = .
     ../rules.tao.GNU
     ../README*
-    ../VERSION
+    ../VERSION.txt
     ../PROBLEM-REPORT-FORM
     ../NEWS
     ../COPYING*

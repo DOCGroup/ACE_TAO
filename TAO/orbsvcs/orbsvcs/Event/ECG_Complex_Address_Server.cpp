@@ -15,7 +15,7 @@ TAO_ECG_Complex_Address_Server::TAO_ECG_Complex_Address_Server (
 {
 }
 
-TAO_ECG_Complex_Address_Server::~TAO_ECG_Complex_Address_Server (void)
+TAO_ECG_Complex_Address_Server::~TAO_ECG_Complex_Address_Server ()
 {
 }
 
@@ -32,7 +32,7 @@ TAO_ECG_Complex_Address_Server::init (const char *arg)
   while (*data != '\0')
     {
       // Extract lookup value (it is followed by '@').
-      const char * location = 0;
+      const char * location = nullptr;
       location = ACE_OS::strchr (data, '@');
       if (!location)
         {
@@ -44,24 +44,24 @@ TAO_ECG_Complex_Address_Server::init (const char *arg)
                             -1);
         }
       size_t len = location - data;
-      key_string.set (data, len, 1);
+      key_string.set (data, len, true);
       data += len + 1;
 
       // Extract mcast address to be mapped to just extracted lookup
       // value.
-      location = 0;
+      location = nullptr;
       location = ACE_OS::strchr (data, ' ');
       if (location)
         {
           len = location - data;
-          mcast_string.set (data, len, 1);
+          mcast_string.set (data, len, true);
           data += len + 1;
         }
       else
         {
           // This must be the last entry in the mapping.
           len = ACE_OS::strlen (data);
-          mcast_string.set (data, len, 1);
+          mcast_string.set (data, len, true);
           data += len;
         }
 
@@ -90,7 +90,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
     }
 
   // Convert strings to values.
-  char * endptr = 0;
+  char * endptr = nullptr;
   CORBA::Long header_value = ACE_OS::strtol (key, &endptr, 0);
   if (*endptr != '\0')
     {
@@ -131,7 +131,7 @@ TAO_ECG_Complex_Address_Server::get_addr (
   else
     key = header.type;
 
-  MAP::ENTRY * mapping_entry = 0;
+  MAP::ENTRY * mapping_entry = nullptr;
   if (this->mcast_mapping_.find (key, mapping_entry) == -1)
     {
       // Key was not found in the mapping.  Use default.
@@ -164,7 +164,7 @@ TAO_ECG_Complex_Address_Server::get_address (
   else
     key = header.type;
 
-  MAP::ENTRY * mapping_entry = 0;
+  MAP::ENTRY * mapping_entry = nullptr;
   ACE_INET_Addr &src_addr =
     (this->mcast_mapping_.find (key, mapping_entry) == -1) ?
     this->default_addr_ : mapping_entry->int_id_;
@@ -188,7 +188,7 @@ TAO_ECG_Complex_Address_Server::get_address (
 
 
 void
-TAO_ECG_Complex_Address_Server::dump_content (void)
+TAO_ECG_Complex_Address_Server::dump_content ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG, "Default address: %s:%d\n",
               this->default_addr_.get_host_addr (),

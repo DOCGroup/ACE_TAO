@@ -30,7 +30,7 @@ public:
    * We need a default constructor because this class is often used in
    * arrays.
    */
-  Loopback_Pair (void);
+  Loopback_Pair ();
 
   /**
    * @param experiment_id For tests that run multiple experiments
@@ -54,14 +54,14 @@ public:
   void connect (RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Disconnect from the event channel
-  void disconnect (void);
+  void disconnect ();
 
   //@{
   /** @name Accessors
    */
-  Loopback_Supplier *loopback_supplier (void) const;
+  Loopback_Supplier *loopback_supplier () const;
 
-  Loopback_Consumer *loopback_consumer (void) const;
+  Loopback_Consumer *loopback_consumer () const;
   //@}
 
 private:

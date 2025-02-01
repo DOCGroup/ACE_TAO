@@ -1,0 +1,260 @@
+commit cce840e88439eb21e24df18a2668856bbccc1e21
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 29 16:33:29 2020 +0200
+
+    Removed left over ACE_CDR_LONGLONG_INITIALIZER, related to #1090
+    
+        * TAO/TAO_IDL/fe/idl.ll:
+        * TAO/TAO_IDL/fe/idl.yy.cpp:
+
+commit 7dfaded78138a3ad8a3f3bdf5bef3c611ffeca23
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 19:10:42 2020 +0200
+
+    Layout and doxygen changes
+    
+        * TAO/tao/Special_Basic_Argument_T.h:
+        * TAO/tao/Storable_Base.h:
+        * TAO/tao/Storable_Factory.h:
+        * TAO/tao/Storable_File_Guard.h:
+        * TAO/tao/Storable_FlatFileStream.h:
+        * TAO/tao/String_Manager_T.h:
+
+commit d9e956d4b7270bc34e9ad1e74ab4126fc970bfa1
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Tue Apr 28 14:33:46 2020 -0500
+
+    Cleanup
+
+commit d0f75bede9608ba56a332f80b5a0d5a90e3e3ad5
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Tue Apr 28 14:17:48 2020 -0500
+
+    Remove additional overloaded operators and change caller code instead
+
+commit 6542591505d81e79e2d3abd9bd4f497f1adafb9a
+Merge: 6bab61a7d0a 57e38a7b4a4
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Tue Apr 28 09:39:00 2020 -0500
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into basic_types_macos
+
+commit ad17ff63affd12aa82869308875e2630972132c9
+Merge: 2e234782449 57bc0064bdf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 15:51:51 2020 +0200
+
+    Merge pull request #1093 from jwillemsen/jwi-ace-cpp20
+    
+     When __cplusplus is equal or bigger as 202002L we define ACE_HAS_CPP20
+
+commit 2e234782449d31eff4a88aaaf90ff7085558d99a
+Merge: aedcae37cbf f38497c7057
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 15:51:24 2020 +0200
+
+    Merge pull request #1090 from jwillemsen/jwi-cdrbaselonglong-cleanup
+    
+    Map ACE_CDR LongLong to ACE_INT64, all platforms for which we needed …
+
+commit 2031410e265b9711c180bd9221d1188aaec945b6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 09:45:50 2020 +0200
+
+    Fixed docu typos
+    
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.h:
+
+commit 6bab61a7d0a8a953285d3dc2862c68a3f89976e5
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Sun Apr 26 15:04:21 2020 -0500
+
+    Update printing format
+
+commit c4f4af8bff18366ed85cdb080ea801e2999d9f7c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 25 10:52:11 2020 +0200
+
+    Cleanup some last leftovers from old and deprecated tandem support
+    
+        * ACE/ace/ACE_export.h:
+        * ACE/ace/Basic_Types.h:
+        * ACE/ace/config-macros.h:
+        * ACE/ace/os_include/sys/os_types.h:
+        * TAO/orbsvcs/orbsvcs/Shutdown_Utilities.cpp:
+
+commit 17a3a7e2eaf969480c4c26d30b74c95ce90d842e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 25 10:50:22 2020 +0200
+
+    Map ACE_CDR LongLong to ACE_INT64, all platforms for which we needed an emulation have been deprecated in the past.
+    
+        * ACE/ace/CDR_Base.cpp:
+        * ACE/ace/CDR_Base.h:
+        * ACE/ace/CDR_Size.h:
+        * ACE/ace/README:
+        * ACE/ace/config-kfreebsd.h:
+        * ACE/ace/config-qnx.h:
+        * TAO/TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO/TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+        * TAO/TAO_IDL/be/be_visitor_attr_init.cpp:
+        * TAO/TAO_IDL/be/be_visitor_null_return_value.cpp:
+        * TAO/TAO_IDL/fe/idl.yy.cpp:
+        * TAO/orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+        * TAO/tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * TAO/tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+commit 64dd9fd7ab12f72daaf3bfc60af618718c800fdc
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Fri Apr 24 10:02:12 2020 -0500
+
+    Fix printing format
+
+commit 9609100ac7f226ea056b60abcbc262015275eb5b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 23 13:16:40 2020 +0200
+
+    Layout changes
+    
+        * ACE/ace/Malloc_Base.h:
+        * ACE/ace/SString.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
+
+commit 4769f4a6dfd4110aab6cea30a978a5ed2e3f1da5
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Wed Apr 22 16:29:22 2020 -0500
+
+    Use size_t instead of unsigned long
+
+commit aaf3877d5e0a2e3ad32579b7486c42c6c8506df0
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Wed Apr 22 16:02:49 2020 -0500
+
+    Add other C++11 types
+
+commit 551fedf2a88deb604a3ec1184c6f40c98782cdd6
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Tue Apr 21 14:15:23 2020 -0500
+
+    move headers out of namespace
+
+commit 28eb828a89f225b5aced9ec600d357107b6df16a
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Apr 20 22:56:17 2020 -0500
+
+    Add overloaded operators definitions
+
+commit 9c1c550ec6757373a5bcc160694f21ab5fcffdd6
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Apr 20 18:36:15 2020 -0500
+
+    Add a forward declaration of read_integer
+
+commit ba25cff827d7325287547956308022aa0c1d225f
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Apr 20 16:39:08 2020 -0500
+
+    Removed trailing whitespaces
+
+commit 166bccb7f2a9e09f8e7bca36338daa894c6394fa
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Apr 20 16:34:26 2020 -0500
+
+    Avoid redefining overloaded operators for unsigned long
+
+commit ede89c300ab0009ecb57c6ddf88a2176a97782cb
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Sun Apr 19 23:00:55 2020 -0500
+
+    Conditionally add overloaded operators
+
+commit ac3abf49acfe2fad2da6dfc11e4a13a268c3ff32
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Sun Apr 19 21:54:22 2020 -0500
+
+    Add hash functors conditionally and related overloaded operators
+
+commit a1b647e4348ddff1242655c05f9b7d214bc11643
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 14 08:22:09 2020 +0200
+
+    Make use of https download.dre
+    
+        * ACE/Kokyu/docs/Kokyu.html:
+        * ACE/README:
+        * ACE/ace/DLL_Manager.h:
+        * ACE/ace/FIFO_Send.h:
+        * ACE/ace/Managed_Object.h:
+        * ACE/ace/config-win32-common.h:
+        * ACE/debian/README.source:
+        * ACE/docs/Download.html:
+        * TAO/TAO-INSTALL.html:
+        * TAO/docs/Security/Download.html:
+        * TAO/docs/tutorials/Quoter/index.html:
+
+commit 7bb0ad4a56ff69945c7c106f0bda43dde8e75670
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 8 09:07:22 2020 +0200
+
+    Minor layout/const/doxygen changes
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.cpp:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirerFactory.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.h:
+        * TAO/orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h:
+        * TAO/orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h:
+        * TAO/orbsvcs/orbsvcs/Time/Timer_Helper.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Interpreter.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
+
+commit 08e08d58760277f539806bb2f7624359562d5915
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 13 11:53:27 2020 +0100
+
+    Generate get_type_name as part of the DDS traits, could be used for logging purposes
+    
+        * TAO/TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+
+commit bc79ed1fc15c999c1c39a8de684311b81ec1f359
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 12 17:17:55 2020 +0100
+
+    Fixed some typos in comments and removed some empty lines
+    
+        * TAO/tao/ORB.cpp:
+        * TAO/tao/ORB.h:
+
+commit 97364bb7c541e2709321272443949cd22d0f9686
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 10 09:44:35 2020 +0100
+
+    Make ACE/TAO 6.5.8/2.5.8 public and prepare for next release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

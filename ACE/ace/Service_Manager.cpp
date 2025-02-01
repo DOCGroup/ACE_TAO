@@ -15,7 +15,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Manager)
 
 void
-ACE_Service_Manager::dump (void) const
+ACE_Service_Manager::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Manager::dump");
@@ -26,27 +26,27 @@ ACE_Service_Manager::dump (void) const
 
 u_short ACE_Service_Manager::DEFAULT_PORT_ = 10000;
 
-ACE_Service_Manager::ACE_Service_Manager (void)
+ACE_Service_Manager::ACE_Service_Manager ()
   : debug_ (false),
     signum_ (SIGHUP)
 {
   ACE_TRACE ("ACE_Service_Manager::ACE_Service_Manager");
 }
 
-ACE_Service_Manager::~ACE_Service_Manager (void)
+ACE_Service_Manager::~ACE_Service_Manager ()
 {
   ACE_TRACE ("ACE_Service_Manager::~ACE_Service_Manager");
 }
 
 int
-ACE_Service_Manager::suspend (void)
+ACE_Service_Manager::suspend ()
 {
   ACE_TRACE ("ACE_Service_Manager::suspend");
   return ACE_Reactor::instance ()->suspend_handler (this);
 }
 
 int
-ACE_Service_Manager::resume (void)
+ACE_Service_Manager::resume ()
 {
   ACE_TRACE ("ACE_Service_Manager::resume");
   return ACE_Reactor::instance ()->resume_handler (this);
@@ -149,7 +149,7 @@ ACE_Service_Manager::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 }
 
 int
-ACE_Service_Manager::fini (void)
+ACE_Service_Manager::fini ()
 {
   ACE_TRACE ("ACE_Service_Manager::fini");
 
@@ -170,7 +170,7 @@ ACE_Service_Manager::fini (void)
 }
 
 ACE_HANDLE
-ACE_Service_Manager::get_handle (void) const
+ACE_Service_Manager::get_handle () const
 {
   ACE_TRACE ("ACE_Service_Manager::get_handle");
   return this->acceptor_.get_handle ();
@@ -186,7 +186,7 @@ ACE_Service_Manager::handle_signal (int, siginfo_t *, ucontext_t *)
 // information back to the client.
 
 int
-ACE_Service_Manager::list_services (void)
+ACE_Service_Manager::list_services ()
 {
   ACE_TRACE ("ACE_Service_Manager::list_services");
   ACE_Service_Repository_Iterator sri (*ACE_Service_Repository::instance (), 0);
@@ -238,7 +238,7 @@ ACE_Service_Manager::list_services (void)
 // svc.conf file.
 
 int
-ACE_Service_Manager::reconfigure_services (void)
+ACE_Service_Manager::reconfigure_services ()
 {
   ACE_TRACE ("ACE_Service_Manager::reconfigure_services");
 

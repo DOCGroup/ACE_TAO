@@ -56,7 +56,7 @@ public:
   typedef int (Async_Timer_Queue::*ACTION) (void *);
 
    /// Singleton access point.
-  static Async_Timer_Queue *instance (void);
+  static Async_Timer_Queue *instance ();
 
   /// Schedule a timer to expire <microsecs> in the future.
   void schedule (u_int microsecs);
@@ -65,7 +65,7 @@ public:
   void cancel (long timer_id);
 
   /// Dump the contents of the queue.
-  void dump (void);
+  void dump ();
 
   /// hook method to schedule a timer.  Called from
   /// <Timer_Queue_Test_Driver>
@@ -108,13 +108,13 @@ private:
 class ACE_Svc_Export Async_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Async_Timer_Queue *, Async_Timer_Queue, Async_Timer_Queue::ACTION>
 {
 public:
-  Async_Timer_Queue_Test_Driver (void);
+  Async_Timer_Queue_Test_Driver ();
 
   /// Print menu of options.
-  virtual int display_menu (void);
+  virtual int display_menu ();
 
   /// Initializes the driver's internal variables inherited from the parent
-  virtual int init (void);
+  virtual int init ();
 };
 
 #endif /* _ASYNC_TIMER_QUEUE_TEST_H_ */

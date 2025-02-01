@@ -54,8 +54,6 @@ class TAO_RTEventLog_Serv_Export TAO_RTEventLog_i :
   public POA_RTEventLogAdmin::EventLog
 {
 public:
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_RTEventLog_i (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr poa,
@@ -75,15 +73,15 @@ public:
   virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
 
   /// Destroy the log object and all contained records.
-  void destroy (void);
+  void destroy ();
 
   /// Activate the RTEventLog.
-  void activate (void);
+  void activate ();
 
   // = The RtecEventChannelAdmin::EventChannel interface methods.
-  RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void);
+  RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers ();
 
-  RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void);
+  RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers ();
 
   virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr);

@@ -7,7 +7,6 @@
 #include "ace/Time_Value.h"
 
 
-
 #if defined (ACE_HAS_STREAM_PIPES)
 
 #include "shared.h"

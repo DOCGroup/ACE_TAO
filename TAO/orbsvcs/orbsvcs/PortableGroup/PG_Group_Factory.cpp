@@ -59,7 +59,7 @@ TAO::PG_Group_Factory::PG_Group_Factory ()
 {
 }
 
-TAO::PG_Group_Factory::~PG_Group_Factory (void)
+TAO::PG_Group_Factory::~PG_Group_Factory ()
 {
   for (Group_Map_Iterator it = this->group_map_.begin ();
     it != this->group_map_.end ();
@@ -241,9 +241,7 @@ int TAO::PG_Group_Factory::find_group_with_name (const char* target_group_name,
     // If the group has the group name in the property
     //
     const char* a_group_name = a_group->get_name ();
-    if (a_group_name != 0 &&
-        ACE_OS::strcmp (target_group_name,
-                        a_group_name) == 0)
+    if (a_group_name != 0 && ACE_OS::strcmp (target_group_name, a_group_name) == 0)
       { // This is the group we were looking for
         group_target = a_group;
         result = 1;
@@ -293,13 +291,12 @@ int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroup_ptr object_
 }
 
 
-
 PortableGroup::ObjectGroups *
 TAO::PG_Group_Factory::groups_at_location (
     const PortableGroup::Location & the_location)
 {
   Group_Map & group_map = this->get_group_map ();
-  size_t upper_limit = group_map.current_size ();
+  CORBA::ULong const upper_limit = static_cast<CORBA::ULong> (group_map.current_size ());
   PortableGroup::ObjectGroups * result = 0;
   ACE_NEW_THROW_EX (
     result,
@@ -308,7 +305,7 @@ TAO::PG_Group_Factory::groups_at_location (
 
   result->length(upper_limit);
 
-  size_t group_count = 0;
+  CORBA::ULong group_count = 0;
   for (Group_Map_Iterator it = group_map.begin ();
     it != group_map.end ();
     ++it)
@@ -325,10 +322,10 @@ TAO::PG_Group_Factory::groups_at_location (
 }
 
 PortableGroup::ObjectGroups *
-TAO::PG_Group_Factory::all_groups (void)
+TAO::PG_Group_Factory::all_groups ()
 {
   Group_Map & group_map = this->get_group_map ();
-  size_t upper_limit = group_map.current_size ();
+  CORBA::ULong const upper_limit = static_cast<CORBA::ULong> (group_map.current_size ());
   PortableGroup::ObjectGroups * result = 0;
   ACE_NEW_THROW_EX (
     result,
@@ -337,7 +334,7 @@ TAO::PG_Group_Factory::all_groups (void)
 
   result->length(upper_limit);
 
-  size_t group_count = 0;
+  CORBA::ULong group_count = 0;
   for (Group_Map_Iterator it = group_map.begin ();
     it != group_map.end ();
     ++it)
@@ -359,7 +356,6 @@ TAO::PG_Group_Factory::set_object_group_storable_factory (
   ACE_NEW_THROW_EX (this->list_store_,
                     TAO::PG_Group_List_Store (*this->storable_factory_),
                     CORBA::NO_MEMORY ());
-
 }
 
 TAO::PG_Group_Factory::Group_Map &
@@ -430,7 +426,6 @@ TAO::PG_Group_Factory::get_group_map ()
             }
 
           this->groups_read_ = true;
-
         }
 
     }

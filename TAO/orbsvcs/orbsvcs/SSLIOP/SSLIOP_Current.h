@@ -86,7 +86,7 @@ namespace TAO
        * @return @c true if the current execution context is not
        *         within a SSL session.
        */
-      virtual CORBA::Boolean no_context (void);
+      virtual CORBA::Boolean no_context ();
 
       /// Set the TSS slot ID assigned to this object.
       void tss_slot (size_t slot);
@@ -111,36 +111,29 @@ namespace TAO
 
       static Current_ptr _narrow (CORBA::Object_ptr obj);
 
-      static Current_ptr _nil (void)
+      static Current_ptr _nil ()
       {
         return (Current_ptr)0;
       }
 
-      virtual const char* _interface_repository_id (void) const;
+      virtual const char* _interface_repository_id () const;
       //@}
 
     protected:
-
       /// Destructor
-      ~Current (void);
+      ~Current ();
 
       /// Set the TSS SSLIOP::Current implementation.
       int implementation (Current_Impl *impl);
 
       /// Return the TSS SSLIOP::Current implementation.
-      Current_Impl *implementation (void);
+      Current_Impl *implementation ();
 
     private:
-
-      /// Prevent copying through the copy constructor and the assignment
-      /// operator.
-      //@{
-      Current (const Current &);
-      void operator= (const Current &);
-      //@}
+      Current (const Current &) = delete;
+      void operator= (const Current &) = delete;
 
     private:
-
       /// TSS slot assigned to this object.
       size_t tss_slot_;
 

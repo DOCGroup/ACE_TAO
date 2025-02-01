@@ -48,11 +48,11 @@ public:
   Worker (CORBA::ORB_ptr orb);
   // Constructor
 
-  virtual void run_test (void);
+  virtual void run_test ();
   // The actual implementation of the test
 
   // = The Task_Base methods
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   CORBA::ORB_var orb_;
@@ -118,7 +118,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {
@@ -133,7 +133,7 @@ Worker::svc (void)
 }
 
 void
-Worker::run_test (void)
+Worker::run_test ()
 {
   for (int j = 0; j != niterations; ++j)
     {

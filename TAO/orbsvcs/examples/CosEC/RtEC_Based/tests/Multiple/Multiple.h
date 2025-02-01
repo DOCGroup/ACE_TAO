@@ -29,22 +29,21 @@ class Multiple
   //   Base class for suppliers and consumers to send/receive events
   //   via the Cos Event Service.
  public:
-  // = Initialization and termination methods.
   /// Constructor.
-  Multiple (void);
+  Multiple ();
 
   /// Destructor.
-  virtual ~Multiple (void);
+  virtual ~Multiple ();
 
   /// Calls parse_args, Starts up an ORB, gets hold of the Event Service.
   /// Returns 0 on success, -1 on error.
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Calls the ORB's <run> method.
-  int runORB (void);
+  int runORB ();
 
   /// Closes down the ORB and exits.
-  void shutdown (void);
+  void shutdown ();
 
  protected:
   /// Parse the command line arguments.
@@ -63,7 +62,7 @@ class Multiple
 
   /// initializes the COS EC.
   /// Returns 0 on success, -1 on error.
-  int init_CosEC (void);
+  int init_CosEC ();
 
   /// The ORB that we use.
   CORBA::ORB_var orb_;

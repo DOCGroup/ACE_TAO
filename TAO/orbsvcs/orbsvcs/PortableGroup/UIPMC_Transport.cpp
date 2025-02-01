@@ -16,8 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Transport::TAO_UIPMC_Transport (
   TAO_UIPMC_Connection_Handler *handler,
-  TAO_ORB_Core *orb_core
-)
+  TAO_ORB_Core *orb_core)
   : TAO_Transport (IOP::TAG_UIPMC, orb_core)
   , connection_handler_ (handler)
   , total_bytes_outstanding_ (0u)
@@ -35,18 +34,14 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (
   this->uuid_hash_ = uuid.to_string ()->hash ();
 }
 
-TAO_UIPMC_Transport::~TAO_UIPMC_Transport (void)
-{
-}
-
 ACE_Event_Handler *
-TAO_UIPMC_Transport::event_handler_i (void)
+TAO_UIPMC_Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO_UIPMC_Transport::connection_handler_i (void)
+TAO_UIPMC_Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }
@@ -410,18 +405,14 @@ TAO_UIPMC_Transport::send (
 }
 
 ssize_t
-TAO_UIPMC_Transport::recv (
-  char *,
-  size_t,
-  const ACE_Time_Value *)
+TAO_UIPMC_Transport::recv (char *, size_t, const ACE_Time_Value *)
 {
   // Shouldn't ever be called on the client side.
-  ACE_ASSERT (0);
   return -1;
 }
 
 int
-TAO_UIPMC_Transport::register_handler (void)
+TAO_UIPMC_Transport::register_handler ()
 {
   // We never register the handler with the reactor
   // as we never need to be informed about any incoming data,

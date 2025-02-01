@@ -12,7 +12,6 @@
 #ifndef _TRADING_SERVICE_H
 #define _TRADING_SERVICE_H
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Sig_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -55,27 +54,20 @@ protected:
 class Trading_Service
 {
 public:
+  Trading_Service () = default;
 
-  /// Default constructor.
-  Trading_Service (void);
-
-  /// Destructor
-  ~Trading_Service (void);
+  ~Trading_Service ();
 
   /// Initialize the Trading Service with arguments.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   /// Run the Trading Service.
-  int run (void);
+  int run ();
 
-  int shutdown (void);
+  int shutdown ();
 
 protected:
-
-  /// Pointer to the linked trader.
-  auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader_;
-
   /// Instance of TAO_Trading_Laoder
   TAO_Trading_Loader trading_loader_;
 };

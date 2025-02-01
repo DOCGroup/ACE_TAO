@@ -21,7 +21,7 @@ TAO_Policy_Current::implementation (TAO_Policy_Current_Impl &current)
 }
 
 TAO_Policy_Current_Impl &
-TAO_Policy_Current::implementation (void) const
+TAO_Policy_Current::implementation () const
 {
   return *TAO_TSS_Resources::instance ()->policy_current_;
 }

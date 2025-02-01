@@ -1,8 +1,7 @@
 // -*- MPC -*-
 project : aceexe, ace_mfc {
-  avoids += wince
   exename = Log_Msg_MFC
-  Source_Files { 
+  Source_Files {
     Log_Msg_MFC.cpp
     Log_Msg_MFCDlg.cpp
     MFC_Log.cpp

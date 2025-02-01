@@ -15,11 +15,11 @@ be_visitor_ami4ccm_sendc_ex_idl::be_visitor_ami4ccm_sendc_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     os_ (*ctx->stream ()),
-    iface_ (0)
+    iface_ (nullptr)
 {
 }
 
-be_visitor_ami4ccm_sendc_ex_idl::~be_visitor_ami4ccm_sendc_ex_idl (void)
+be_visitor_ami4ccm_sendc_ex_idl::~be_visitor_ami4ccm_sendc_ex_idl ()
 {
 }
 
@@ -28,9 +28,7 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_interface (be_interface *node)
 {
   this->iface_ = node;
 
-  os_ << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (&os_);
 
   os_ << be_nl_2
       << "local interface AMI4CCM_"
@@ -51,7 +49,7 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_interface (be_interface *node)
   for (long i = 0; i < node->n_inherits_flat (); ++i)
     {
       be_interface *ancestor =
-        be_interface::narrow_from_decl (inh_flat[i]);
+        dynamic_cast<be_interface*> (inh_flat[i]);
 
       if (this->visit_scope (ancestor) == -1)
         {
@@ -121,7 +119,7 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_argument (be_argument *node)
   else
     {
       be_type *t =
-        be_type::narrow_from_decl (node->field_type ());
+        dynamic_cast<be_type*> (node->field_type ());
 
       os_ << be_nl
           << "in ";
@@ -169,9 +167,9 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_sequence (be_sequence *node)
 int
 be_visitor_ami4ccm_sendc_ex_idl::pre_process (be_decl *node)
 {
-  be_argument *arg = be_argument::narrow_from_decl (node);
+  be_argument *arg = dynamic_cast<be_argument*> (node);
 
-  if (arg == 0)
+  if (arg == nullptr)
     {
       return 0;
     }

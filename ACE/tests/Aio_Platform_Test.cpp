@@ -18,7 +18,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #if defined (_POSIX_ASYNCHRONOUS_IO)
-static int do_sysconf (void)
+static int do_sysconf ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Doing <sysconf> calls to know the run-time values of POSIX feature limits\n"));
@@ -101,7 +101,7 @@ static int do_sysconf (void)
 #endif /* _POSIX_ASYNCHRONOUS_IO */
 
 static int
-have_asynchio (void)
+have_asynchio ()
 {
 #if defined (_POSIX_ASYNCHRONOUS_IO)
 #if defined (_POSIX_ASYNC_IO)

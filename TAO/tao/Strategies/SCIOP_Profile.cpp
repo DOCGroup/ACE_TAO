@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #include "tao/Strategies/SCIOP_Profile.h"
 
 #if TAO_HAS_SCIOP == 1
@@ -19,7 +18,7 @@ const char TAO_SCIOP_Profile::object_key_delimiter_ = '/';
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char
-TAO_SCIOP_Profile::object_key_delimiter (void) const
+TAO_SCIOP_Profile::object_key_delimiter () const
 {
   return TAO_SCIOP_Profile::object_key_delimiter_;
 }
@@ -62,7 +61,7 @@ TAO_SCIOP_Profile::TAO_SCIOP_Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO_SCIOP_Profile::~TAO_SCIOP_Profile (void)
+TAO_SCIOP_Profile::~TAO_SCIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -132,13 +131,12 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_SCIOP_Profile::parse_string_i (const char *ior
-                                   )
+TAO_SCIOP_Profile::parse_string_i (const char *ior)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
 
-  const char *okd = ACE_OS::strchr (ior, this->object_key_delimiter_);
+  const char *okd = std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == 0 || okd == ior)
     {
@@ -153,7 +151,7 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior
   // Length of host string.
   CORBA::ULong length_host = 0;
 
-  const char *cp_pos = ACE_OS::strchr (ior, ':');  // Look for a port
+  const char *cp_pos = std::strchr (ior, ':');  // Look for a port
 
   if (cp_pos == ior)
     {
@@ -257,8 +255,7 @@ TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 }
 
 CORBA::ULong
-TAO_SCIOP_Profile::hash (CORBA::ULong max
-                        )
+TAO_SCIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hash value for all endpoints.
   CORBA::ULong hashval = 0;
@@ -287,13 +284,13 @@ TAO_SCIOP_Profile::hash (CORBA::ULong max
 }
 
 TAO_Endpoint*
-TAO_SCIOP_Profile::endpoint (void)
+TAO_SCIOP_Profile::endpoint ()
 {
   return &this->endpoint_;
 }
 
 CORBA::ULong
-TAO_SCIOP_Profile::endpoint_count (void) const
+TAO_SCIOP_Profile::endpoint_count () const
 {
   return this->count_;
 }
@@ -308,7 +305,7 @@ TAO_SCIOP_Profile::add_endpoint (TAO_SCIOP_Endpoint *endp)
 }
 
 char *
-TAO_SCIOP_Profile::to_string (void) const
+TAO_SCIOP_Profile::to_string () const
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
@@ -346,7 +343,7 @@ TAO_SCIOP_Profile::to_string (void) const
 }
 
 const char *
-TAO_SCIOP_Profile::prefix (void)
+TAO_SCIOP_Profile::prefix ()
 {
   return ::prefix_;
 }
@@ -399,7 +396,7 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 }
 
 int
-TAO_SCIOP_Profile::encode_endpoints (void)
+TAO_SCIOP_Profile::encode_endpoints ()
 {
   CORBA::ULong actual_count = 0;
 
@@ -455,7 +452,7 @@ TAO_SCIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_SCIOP_Profile::decode_endpoints (void)
+TAO_SCIOP_Profile::decode_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;

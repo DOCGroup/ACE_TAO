@@ -16,7 +16,7 @@ be_visitor_module_ch::be_visitor_module_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_module_ch::~be_visitor_module_ch (void)
+be_visitor_module_ch::~be_visitor_module_ch ()
 {
 }
 
@@ -29,10 +29,9 @@ be_visitor_module_ch::visit_module (be_module *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  TAO_OutStream *aos = 0;
+  TAO_OutStream *aos = nullptr;
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "namespace " << node->local_name () << be_nl
       << "{" << be_idt;
@@ -41,8 +40,7 @@ be_visitor_module_ch::visit_module (be_module *node)
     {
       aos = tao_cg->anyop_header ();
 
-      *aos << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-           << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      TAO_INSERT_COMMENT (aos);
 
       *aos << "namespace " << node->local_name () << be_nl
            << "{" << be_idt;
@@ -60,16 +58,16 @@ be_visitor_module_ch::visit_module (be_module *node)
                         -1);
     }
 
-  *os << be_uidt_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << be_uidt_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl
       << "} // module " << node->name ();
 
   if (be_global->gen_anyop_files ())
     {
-      *aos << be_uidt_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-           << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+      *aos << be_uidt_nl << be_nl;
+      TAO_INSERT_COMMENT (aos);
 
       *aos << be_nl
            << "} // module " << node->name () << be_nl;

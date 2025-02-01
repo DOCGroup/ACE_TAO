@@ -20,13 +20,12 @@ public:
   Tie_i (CORBA::Long value);
 
   /// Destructor.
-  virtual ~Tie_i (void);
+  virtual ~Tie_i ();
 
   // Simple doit method
-  virtual CORBA::Long doit (void);
+  virtual CORBA::Long doit ();
 
 protected:
-
   CORBA::Long value_;
 };
 
@@ -38,13 +37,12 @@ public:
        PortableServer::POA_ptr poa);
 
   // Simple doit method
-  virtual CORBA::Long doit (void);
+  virtual CORBA::Long doit ();
 
   // Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
 protected:
-
   CORBA::Long value_;
 
   /// Default poa associated with this servant
@@ -54,7 +52,6 @@ protected:
 class Outer_i
 {
 public:
-
   class B_i : public POA_Outer::B
   {
   public:
@@ -63,13 +60,12 @@ public:
          PortableServer::POA_ptr poa);
 
     // Simple doit method
-    virtual CORBA::Long doit (void);
+    virtual CORBA::Long doit ();
 
     // Returns the Default POA of this Servant object
-    virtual PortableServer::POA_ptr _default_POA (void);
+    virtual PortableServer::POA_ptr _default_POA ();
 
   protected:
-
     CORBA::Long value_;
 
     /// Default poa associated with this servant
@@ -79,7 +75,6 @@ public:
   class Inner_i
   {
   public:
-
     class C_i : public POA_Outer::Inner::C
     {
     public:
@@ -88,13 +83,12 @@ public:
            PortableServer::POA_ptr poa);
 
       // Simple doit method
-      virtual CORBA::Long doit (void);
+      virtual CORBA::Long doit ();
 
       // Returns the Default POA of this Servant object
-      virtual PortableServer::POA_ptr _default_POA (void);
+      virtual PortableServer::POA_ptr _default_POA ();
 
     protected:
-
       CORBA::Long value_;
 
       /// Default poa associated with this servant

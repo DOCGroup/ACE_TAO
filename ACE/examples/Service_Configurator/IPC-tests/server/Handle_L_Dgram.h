@@ -21,14 +21,14 @@
 class ACE_Svc_Export Handle_L_Dgram : public ACE_Service_Object, public ACE_LSOCK_Dgram
 {
 public:
-  Handle_L_Dgram (void);
+  Handle_L_Dgram ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini (void);
+  virtual int fini ();
 
 private:
   int open (const ACE_UNIX_Addr &suad, int async = 0);
-  virtual int get_handle (void) const;
+  virtual int get_handle () const;
   virtual int handle_input (int fd);
   virtual int handle_close (int fd, ACE_Reactor_Mask);
 

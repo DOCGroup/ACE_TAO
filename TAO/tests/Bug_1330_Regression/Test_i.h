@@ -12,12 +12,12 @@ public:
   Test_i (CORBA::ORB_ptr orb);
 
   /// Destructor
-  ~Test_i (void);
+  ~Test_i ();
 
   /// A method
-  virtual void test_method(void);
+  virtual void test_method();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

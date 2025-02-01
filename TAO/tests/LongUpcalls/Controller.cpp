@@ -1,6 +1,6 @@
 #include "Controller.h"
 
-Controller::Controller (void)
+Controller::Controller ()
   :  start_count_ (0)
   ,  finish_count_ (0)
 {
@@ -19,7 +19,7 @@ Controller::dump_results ()
 }
 
 void
-Controller::worker_started (void)
+Controller::worker_started ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->start_count_++;
@@ -28,7 +28,7 @@ Controller::worker_started (void)
 }
 
 void
-Controller::worker_finished (void)
+Controller::worker_finished ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->finish_count_++;

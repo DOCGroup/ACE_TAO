@@ -59,12 +59,11 @@ public:
 class ACE_TkReactor_Export ACE_TkReactor : public ACE_Select_Reactor
 {
 public:
-  // = Initialization and termination methods.
   ACE_TkReactor (size_t size = DEFAULT_SIZE,
                  bool restart = false,
                  ACE_Sig_Handler * = 0);
 
-  virtual ~ACE_TkReactor (void);
+  virtual ~ACE_TkReactor ();
 
   // = Timer operations.
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
@@ -117,7 +116,7 @@ protected:
 private:
   /// This method ensures there's a Tk timeout for the first timeout in
   /// the Reactor's Timer_Queue.
-  void reset_timeout (void);
+  void reset_timeout ();
 
   // = Integrate with the X callback function mechanism.
   static void TimerCallbackProc (ClientData cd);

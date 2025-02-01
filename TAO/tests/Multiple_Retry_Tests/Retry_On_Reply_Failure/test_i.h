@@ -29,7 +29,7 @@ public:
   // = The Simple_Server methods.
   CORBA::Boolean test_is_a (const char * type);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB

@@ -19,11 +19,10 @@
 // ****************************************************************
 
 typedef ACE_CDR::UShort ACE_UTF16_T;
-static const size_t ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
-static const ACE_CDR::ULong ACE_UL_UTF16_CODEPOINT_SIZE =
-  static_cast<ACE_CDR::ULong>(ACE_UTF16_CODEPOINT_SIZE);
-static const unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
-static const unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
+static constexpr size_t ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
+static constexpr ACE_CDR::ULong ACE_UL_UTF16_CODEPOINT_SIZE = static_cast<ACE_CDR::ULong>(ACE_UTF16_CODEPOINT_SIZE);
+static constexpr unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
+static constexpr unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,10 +36,6 @@ TAO_UTF16_BOM_Translator::TAO_UTF16_BOM_Translator (bool forceBE)
     TAOLIB_DEBUG((LM_DEBUG,
                ACE_TEXT ("TAO (%P|%t) - UTF16_BOM_Translator: ")
                ACE_TEXT("forceBE %d\n"), this->forceBE_ ? 1:0 ));
-}
-
-TAO_UTF16_BOM_Translator::~TAO_UTF16_BOM_Translator (void)
-{
 }
 
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h
@@ -170,7 +165,6 @@ ACE_CDR::Boolean
 TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
                                         std::wstring &x)
 {
-#if defined (ACE_HAS_CPP11)
   ACE_CDR::ULong len;
   if (!this->read_4 (cdr, &len))
     return false;
@@ -227,9 +221,6 @@ TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
     }
   x.clear ();
   return false;
-#else
-  return this->ACE_WChar_Codeset_Translator::read_wstring (cdr, x);
-#endif
 }
 #endif
 
@@ -478,7 +469,6 @@ TAO_UTF16_BOM_Translator::write_wchar_array_i (ACE_OutputCDR & cdr,
       sb[i] = static_cast<ACE_UTF16_T> (x[i]);
     }
   return 1;
-
 }
 
 ACE_CDR::Boolean

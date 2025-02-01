@@ -36,6 +36,10 @@
 #  define ACE_DEFAULT_SELECT_REACTOR_SIZE ACE_FD_SETSIZE
 #endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
 
+#if defined (ACE_WIN32) || defined (ACE_MQX)
+# define ACE_HANDLE_SET_USES_FD_ARRAY
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -53,15 +57,14 @@ class ACE_Export ACE_Handle_Set
 public:
   friend class ACE_Handle_Set_Iterator;
 
-  // = Initialization and termination.
-
   enum
   {
     MAXSIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE
   };
 
   /// Constructor, initializes the bitmask to all 0s.
-  ACE_Handle_Set (void);
+  ACE_Handle_Set ();
+  ~ACE_Handle_Set () = default;
 
   /**
    * Constructor, initializes the handle set from a given mask.
@@ -70,7 +73,7 @@ public:
 
   // = Methods for manipulating bitsets.
   /// Initialize the bitmask to all 0s and reset the associated fields.
-  void reset (void);
+  void reset ();
 
   /**
    * Checks whether @a handle is enabled.  No range checking is
@@ -88,10 +91,10 @@ public:
   void clr_bit (ACE_HANDLE handle);
 
   /// Returns a count of the number of enabled bits.
-  int num_set (void) const;
+  int num_set () const;
 
   /// Returns the number of the large bit.
-  ACE_HANDLE max_set (void) const;
+  ACE_HANDLE max_set () const;
 
   /**
    * Rescan the underlying @c fd_set up to handle @a max to find the new
@@ -108,15 +111,23 @@ public:
 
   /// Returns a pointer to the underlying @c fd_set.  Returns 0 if
   /// there are no handle bits set (<size_> == 0).
-  fd_set *fdset (void);
+  fd_set *fdset ();
 
 #if defined (ACE_HAS_BIG_FD_SET)
-  /// Assignment operator optimizes for cases where <size_> == 0.
-  ACE_Handle_Set & operator= (const ACE_Handle_Set &);
+  /// Assignment operator optimizes for cases where size_ == 0.
+  ACE_Handle_Set & operator= (const ACE_Handle_Set &rhs);
+  /// Copy constructor optimizes for cases where size_ == 0
+  ACE_Handle_Set (const ACE_Handle_Set &rhs);
+#else
+  ACE_Handle_Set & operator= (const ACE_Handle_Set &) = default;
+  ACE_Handle_Set (const ACE_Handle_Set &) = default;
 #endif /* ACE_HAS_BIG_FD_SET */
 
+  ACE_Handle_Set & operator= (ACE_Handle_Set &&) = default;
+  ACE_Handle_Set (ACE_Handle_Set &&) = default;
+
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -139,9 +150,9 @@ private:
   enum
   {
     WORDSIZE = NFDBITS,
-#if !defined (ACE_WIN32)
+#if !defined (ACE_HANDLE_SET_USES_FD_ARRAY)
     NUM_WORDS = howmany (MAXSIZE, NFDBITS),
-#endif /* ACE_WIN32 */
+#endif /* ACE_HANDLE_SET_USES_FD_ARRAY */
     NBITS = 256
   };
 
@@ -173,13 +184,12 @@ class ACE_Export ACE_Handle_Set_Iterator
 public:
   /// Constructor.
   ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs);
-
-  /// Default dtor.
-  ~ACE_Handle_Set_Iterator (void);
+  ACE_Handle_Set_Iterator () = delete;
+  ~ACE_Handle_Set_Iterator () = default;
 
   /// Reset the state of the iterator by reinitializing the state
   /// that we maintain.
-  void reset_state (void);
+  void reset_state ();
 
   /**
    * "Next" operator.  Returns the next unseen ACE_HANDLE in the
@@ -188,10 +198,10 @@ public:
    * the iterator automatically, so you need not call <operator++>
    * (which is now obsolete).
    */
-  ACE_HANDLE operator () (void);
+  ACE_HANDLE operator () ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -201,14 +211,14 @@ private:
   const ACE_Handle_Set &handles_;
 
   /// Index of the bit we're examining in the current word_num_() word.
-#if defined (ACE_WIN32)
+#if defined (ACE_HANDLE_SET_USES_FD_ARRAY)
   u_int handle_index_;
 #elif !defined (ACE_HAS_BIG_FD_SET)
   int handle_index_;
 #elif defined (ACE_HAS_BIG_FD_SET)
   int handle_index_;
   u_long oldlsb_;
-#endif /* ACE_WIN32 */
+#endif /* ACE_HANDLE_SET_USES_FD_ARRAY */
 
   /// Number of the word we're iterating over (typically between 0..7).
   int word_num_;
@@ -218,13 +228,13 @@ private:
   int word_max_;
 #endif /* ACE_HAS_BIG_FD_SET */
 
-#if !defined (ACE_WIN32) && !defined (ACE_HAS_BIG_FD_SET)
+#if !defined (ACE_HANDLE_SET_USES_FD_ARRAY) && !defined (ACE_HAS_BIG_FD_SET)
   /// Value of the bits in the word we're iterating on.
   fd_mask word_val_;
-#elif !defined (ACE_WIN32) && defined (ACE_HAS_BIG_FD_SET)
+#elif !defined (ACE_HANDLE_SET_USES_FD_ARRAY) && defined (ACE_HAS_BIG_FD_SET)
   /// Value of the bits in the word we're iterating on.
   u_long word_val_;
-#endif /* !ACE_WIN32 && !ACE_HAS_BIG_FD_SET */
+#endif /* !ACE_HANDLE_SET_USES_FD_ARRAY && !ACE_HAS_BIG_FD_SET */
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

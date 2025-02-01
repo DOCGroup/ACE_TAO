@@ -39,20 +39,8 @@ struct t_uderr { };
 struct netbuf { };
 
 # else /* !(ACE_HAS_TLI || ACE_HAS_XTI) */
-
-#   if defined (ACE_HAS_CONFLICTING_XTI_MACROS)
-      // Make sure tcp.h gets included before sys/xti.h.
-#     include "ace/os_include/netinet/os_tcp.h"
-#     undef TCP_NODELAY
-#     undef TCP_MAXSEG
-#   endif /* ACE_HAS_CONFLICTING_XTI_MACROS */
-
 #   if defined (ACE_HAS_XTI)
-#     if defined (ACE_HAS_SYS_XTI_H)   /* Nonstandard header placement */
-#       define class ace_xti_class
-#       include /**/ <sys/xti.h>
-#       undef class
-#     elif defined (ACE_HAS_FORE_ATM_XTI)
+#     if defined (ACE_HAS_FORE_ATM_XTI)
 #       include /**/ <fore_xti/xti_user_types.h>
 #       include /**/ <fore_xti/xti.h>
 #       include /**/ <fore_xti/xti_atm.h>
@@ -68,7 +56,6 @@ struct netbuf { };
       // desired, local or peer, while t_getprotaddr() gets both at once.
       // t_getname() has values defined for the type, so these aren't defined
       // for XTI systems. So, define them here for ACE API users to use.
-      // These values were taken from sys/tiuser.h on Solaris.
 #     if !defined (LOCALNAME)
 #       define LOCALNAME  0
 #     endif
@@ -113,42 +100,14 @@ extern "C"
 }
 #     endif /* !ACE_HAS_TLI_PROTOTYPES */
 
-#     if defined (ACE_HAS_TIUSER_H)
-#       include /**/ <tiuser.h>
-#     else
-       /* What to do here??? Is there a tli.h? */
-#     endif /* ACE_HAS_TIUSER_H */
-
-#     if defined (ACE_HAS_SVR4_TLI)
-         // t_getname is a TLI extension added by some platforms before XTI
-         // was widely available. However, it's not often in the system's
-         // header files. Sun OS, for example, is like this.
-         extern "C" int t_getname (int, struct netbuf *, int);
-#     endif /* ACE_HAS_SVR4_TLI */
 #   endif /* !ACE_HAS_XTI */
 
 # endif /* ACE_HAS_XTI || ACE_HAS_TLI */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// This hack is needed to get around an odd and hard-to-reproduce problem
-// with HP aC++. If struct sigaction is defined extern "C" and the sigaction
-// function in namespace ACE_OS, the compiler sometimes gets confused.
-// If we help it with this typedef, it's fine. User code should not use
-// the ACE typedef - it will be removed without warning as soon as we can
-// either drop support for the broken compilers or figure out how to reproduce
-// it so it can be reported to HP and fixed.
-// There's a similar hack in OS_TLI.h for struct t_optmgmt.
-// Also see ChangeLog entries:
-// Mon Jan 23 16:35:40 UTC 2006  Steve Huston  <shuston@riverace.com>
-// Mon Jan 23 22:08:56 UTC 2006  Steve Huston  <shuston@riverace.com>
-#if defined (__HP_aCC) && (__HP_aCC <= 37300)
-typedef extern "C" struct t_optmgmt  ACE_TOPTMGMT;
-typedef extern "C" struct t_bind  ACE_TBIND;
-#else
 typedef struct t_optmgmt ACE_TOPTMGMT;
 typedef struct t_bind  ACE_TBIND;
-#endif
 
 /**
  * @namespace ACE_OS
@@ -259,7 +218,6 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_unbind (ACE_HANDLE fildes);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

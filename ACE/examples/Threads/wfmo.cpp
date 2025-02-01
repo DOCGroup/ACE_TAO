@@ -11,7 +11,6 @@
 #include "ace/OS_main.h"
 
 
-
 #if defined (ACE_WIN32)
 
 // Number of threads.
@@ -27,7 +26,7 @@ public:
   virtual int open (void *);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc (void);
+  virtual int svc ();
 
   // Use two handles here..
   ACE_sema_t sema_handles_[2];
@@ -47,7 +46,7 @@ WFMO_Test::open (void *arg)
 }
 
 int
-WFMO_Test::svc (void)
+WFMO_Test::svc ()
 {
   while(1)
     {

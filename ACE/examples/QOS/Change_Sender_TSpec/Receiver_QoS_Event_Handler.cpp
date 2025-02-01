@@ -15,7 +15,7 @@
 #include "Fill_ACE_QoS.h"
 
 // Constructor.
-Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler (void)
+Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler ()
 {
 }
 
@@ -28,14 +28,14 @@ Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler (const ACE_SOCK_Dgram_Mca
 }
 
 // Destructor.
-Receiver_QoS_Event_Handler::~Receiver_QoS_Event_Handler (void)
+Receiver_QoS_Event_Handler::~Receiver_QoS_Event_Handler ()
 {
 }
 
 // Return the handle of the Dgram_Mcast. This method is called
 // internally by the reactor.
 ACE_HANDLE
-Receiver_QoS_Event_Handler::get_handle (void) const
+Receiver_QoS_Event_Handler::get_handle () const
 {
   return this->dgram_mcast_qos_.get_handle ();
 }
@@ -130,9 +130,7 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
 
 
 return 0;
-
 }
-
 
 
 

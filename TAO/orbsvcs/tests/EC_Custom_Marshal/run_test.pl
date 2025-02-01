@@ -15,7 +15,7 @@ my $server2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 fai
 my $server3 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 my $client = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 
-$port = $server1->RandomPort () + 10001; # This can't be 10000 on Chorus 4.0
+$port = $server1->RandomPort () + 10001;
 
 $naming_ior = "NameService.ior";
 

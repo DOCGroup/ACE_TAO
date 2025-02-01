@@ -5,7 +5,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 void
 Simple_Server_i::send_line (const char *line)
 {
@@ -13,7 +12,7 @@ Simple_Server_i::send_line (const char *line)
 }
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

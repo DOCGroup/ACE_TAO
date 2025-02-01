@@ -10,22 +10,22 @@ class Options
   //   Define the options for this test.
 {
 public:
-  Options (void);
+  Options ();
   // Constructor.
 
-  ~Options (void);
+  ~Options ();
   // Destructor.
 
   int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the command-line arguments.
 
-  int verbose (void) const;
+  int verbose () const;
   // Are we running in verbose mode?
 
-  u_short port (void) const;
+  u_short port () const;
   // Port number that we are listening at.
 
-  int reply_message_len (void) const;
+  int reply_message_len () const;
   // Size of the reply message.
 
 private:

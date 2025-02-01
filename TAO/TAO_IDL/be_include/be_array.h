@@ -31,7 +31,7 @@ public:
             bool local,
             bool abstract);
 
-  ~be_array (void);
+  ~be_array () override = default;
 
   /// Generate dimensions. If slice == 1, generate dimensions for the slice
   /// definition.
@@ -39,28 +39,24 @@ public:
                       unsigned short slice = 0);
 
   /// Overridden from class be_type.
-  virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore);
-  virtual void gen_member_ostream_operator (TAO_OutStream *os,
-                                            const char *instance_name,
-                                            bool use_underscore,
-                                            bool accessor);
+  void gen_ostream_operator (TAO_OutStream *os,
+                             bool use_underscore) override;
+  void gen_member_ostream_operator (TAO_OutStream *os,
+                                    const char *instance_name,
+                                    bool use_underscore,
+                                    bool accessor) override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_array);
+  void destroy () override;
 
 protected:
   /// Create a name for us.
-  virtual int create_name (void);
+  virtual int create_name ();
 
-  virtual void compute_tc_name (void);
+  void compute_tc_name () override;
 };
 
 #endif

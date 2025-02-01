@@ -14,7 +14,7 @@ UUID::UUID(int)
 {
 }
 
-/// construct an UUID from the binary represetation
+/// construct an UUID from the binary representation
 ACE_INLINE
 UUID::UUID(const unsigned char* id)
 {
@@ -24,7 +24,7 @@ UUID::UUID(const unsigned char* id)
 ACE_INLINE
 bool UUID::operator == (const UUID& other) const
 {
-  return ACE_OS::memcmp(this->rep_.uuid, other.rep_.uuid, BINRARY_LENGTH) == 0;
+  return ACE_OS::memcmp(this->rep_.uuid, other.rep_.uuid, BINARY_LENGTH) == 0;
 }
 
 ACE_INLINE

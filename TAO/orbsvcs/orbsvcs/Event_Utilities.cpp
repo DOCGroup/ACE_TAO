@@ -25,7 +25,7 @@ ACE_ConsumerQOS_Factory::
   qos_.dependencies.length (0);
 }
 
-ACE_ConsumerQOS_Factory::~ACE_ConsumerQOS_Factory (void)
+ACE_ConsumerQOS_Factory::~ACE_ConsumerQOS_Factory ()
 {
 }
 
@@ -72,7 +72,7 @@ ACE_ConsumerQOS_Factory::start_logical_and_group (int nchildren)
 }
 
 int
-ACE_ConsumerQOS_Factory::start_negation (void)
+ACE_ConsumerQOS_Factory::start_negation ()
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
@@ -215,7 +215,6 @@ void ACE_SupplierQOS_Factory::debug (const RtecEventChannelAdmin::SupplierQOS& q
                   buf, qos.publications[i].dependency_info.number_of_calls));
         }
   ORBSVCS_DEBUG ((LM_DEBUG, "}\n"));
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -17,10 +17,10 @@ public:
   Session_Control (CORBA::ULong session_count);
 
   /// Destructor
-  virtual ~Session_Control (void);
+  virtual ~Session_Control ();
 
   /// Return 1 when all sessions have finished
-  int all_sessions_finished (void) const;
+  int all_sessions_finished () const;
 
   // = The skeleton methods
   virtual void session_finished (CORBA::Boolean success);

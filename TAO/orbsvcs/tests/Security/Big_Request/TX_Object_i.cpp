@@ -7,10 +7,6 @@ TX_Object_i::TX_Object_i (CORBA::ORB_ptr orb)
 {
 }
 
-TX_Object_i::~TX_Object_i (void)
-{
-}
-
 void
 TX_Object_i::send (const DataSeq & data)
 {
@@ -36,7 +32,7 @@ TX_Object_i::recv (DataSeq_out data)
 }
 
 void
-TX_Object_i::shutdown (void)
+TX_Object_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -92,7 +92,7 @@ namespace TAO
      * resource leaks.
      * @returns a newly allocated PortableGroup::Properties.
      */
-    PortableGroup::Properties * get_default_properties (void);
+    PortableGroup::Properties * get_default_properties ();
 
     /**
      * Undefine default properties that appear in props.

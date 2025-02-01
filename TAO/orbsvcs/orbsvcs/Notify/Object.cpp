@@ -15,7 +15,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Object::TAO_Notify_Object (void)
+TAO_Notify_Object::TAO_Notify_Object ()
 : poa_ (0)
 , proxy_poa_ (0)
 , own_proxy_poa_ (false)
@@ -82,7 +82,7 @@ TAO_Notify_Object::activate (
 
 
 void
-TAO_Notify_Object::deactivate (void)
+TAO_Notify_Object::deactivate ()
 {
   try
   {
@@ -100,7 +100,7 @@ TAO_Notify_Object::deactivate (void)
 }
 
 int
-TAO_Notify_Object::shutdown (void)
+TAO_Notify_Object::shutdown ()
 {
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 1);
@@ -119,13 +119,13 @@ TAO_Notify_Object::shutdown (void)
 }
 
 CORBA::Object_ptr
-TAO_Notify_Object::ref (void)
+TAO_Notify_Object::ref ()
 {
   return this->poa_->id_to_reference (this->id_);
 }
 
 void
-TAO_Notify_Object::shutdown_worker_task (void)
+TAO_Notify_Object::shutdown_worker_task ()
 {
   // Only do this if we are the owner.
   TAO_Notify_Worker_Task::Ptr task( this->worker_task_ );
@@ -140,7 +140,7 @@ TAO_Notify_Object::shutdown_worker_task (void)
 }
 
 void
-TAO_Notify_Object::destroy_proxy_poa (void)
+TAO_Notify_Object::destroy_proxy_poa ()
 {
   if (this->proxy_poa_ != 0)
   {
@@ -152,7 +152,7 @@ TAO_Notify_Object::destroy_proxy_poa (void)
       if ( this->own_proxy_poa_ == true )
       {
         this->own_proxy_poa_ = false;
-        ACE_Auto_Ptr< TAO_Notify_POA_Helper > app( proxy_poa_ );
+        std::unique_ptr< TAO_Notify_POA_Helper > app( proxy_poa_ );
         this->proxy_poa_->destroy ();
       }
       this->proxy_poa_ = 0;
@@ -166,19 +166,19 @@ TAO_Notify_Object::destroy_proxy_poa (void)
 }
 
 void
-TAO_Notify_Object::destroy_object_poa (void)
+TAO_Notify_Object::destroy_object_poa ()
 {
   if (this->object_poa_ != 0)
   {
     try
     {
-      if ( this->object_poa_ == this->proxy_poa_ ) this->proxy_poa_ = 0;
-      if ( this->object_poa_ == this->poa_ ) this->poa_ = 0;
+      if (this->object_poa_ == this->proxy_poa_) this->proxy_poa_ = 0;
+      if (this->object_poa_ == this->poa_) this->poa_ = 0;
 
-      if ( this->own_object_poa_ == true )
+      if (this->own_object_poa_ == true)
       {
         this->own_object_poa_ = false;
-        ACE_Auto_Ptr< TAO_Notify_POA_Helper > aop( object_poa_ );
+        std::unique_ptr<TAO_Notify_POA_Helper> aop (object_poa_);
         this->object_poa_->destroy ();
       }
       this->object_poa_ = 0;
@@ -192,7 +192,7 @@ TAO_Notify_Object::destroy_object_poa (void)
 }
 
 /// Shutdown the current poa.
-void TAO_Notify_Object::destroy_poa (void)
+void TAO_Notify_Object::destroy_poa ()
 {
   this->poa_ = 0;
 }
@@ -280,7 +280,7 @@ TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos)
 }
 
 CosNotification::QoSProperties*
-TAO_Notify_Object::get_qos (void)
+TAO_Notify_Object::get_qos ()
 {
   CosNotification::QoSProperties_var properties;
 
@@ -311,7 +311,7 @@ TAO_Notify_Object::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties
 }
 
 TAO_Notify_Timer*
-TAO_Notify_Object::timer (void)
+TAO_Notify_Object::timer ()
 {
   ACE_ASSERT (worker_task_.get() != 0);
   return this->worker_task_->timer ();
@@ -355,7 +355,7 @@ TAO_Notify_Object::load_attrs(const TAO_Notify::NVPList& attrs)
 }
 
 TAO_Notify_Worker_Task*
-TAO_Notify_Object::get_worker_task (void)
+TAO_Notify_Object::get_worker_task ()
 {
   return this->worker_task_.get ();
 }

@@ -36,8 +36,7 @@ class TAO_Trading_Serv_Export TAO_Trader_Constraint_Validator
                                    type_struct);
 
   /// Desctructor.
-  virtual ~TAO_Trader_Constraint_Validator (void);
-
+  virtual ~TAO_Trader_Constraint_Validator ();
 };
 
 class TAO_Trading_Serv_Export TAO_Trader_Constraint_Evaluator : public TAO_Constraint_Evaluator
@@ -51,7 +50,7 @@ class TAO_Trading_Serv_Export TAO_Trader_Constraint_Evaluator : public TAO_Const
 
  private:
   /// Utility with which to evaluate the properties of an offer, be
-  /// they dyanmic or static.
+  /// they dynamic or static.
   TAO_Property_Evaluator prop_eval_;
 };
 

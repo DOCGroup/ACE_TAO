@@ -33,7 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * transport has a larger ordering number than the previous.  This will
  * cause the first transport to be purged first.
  */
-
 class TAO_Strategies_Export TAO_FIFO_Connection_Purging_Strategy:
                             public TAO_Connection_Purging_Strategy
 {

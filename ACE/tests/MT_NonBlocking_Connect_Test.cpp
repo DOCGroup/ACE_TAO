@@ -56,16 +56,16 @@ static const ACE_TCHAR* hosts[] = {
 class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  Svc_Handler (void)
+  Svc_Handler ()
   {
     ACE_TEST_ASSERT (0);
   }
 
   Svc_Handler (ACE_Thread_Manager *);
 
-  int open (void *);
+  int open (void *) override;
 
-  int close (u_long flags);
+  int close (u_long flags) override;
 
   bool connected_;
 };
@@ -98,7 +98,7 @@ class Concurrency_Strategy :
   public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg);
+  int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg) override;
 };
 
 template<class SVC_HANDLER> int
@@ -121,12 +121,10 @@ Concurrency_Strategy<SVC_HANDLER>::
     }
 }
 
-typedef ACE_Creation_Strategy<Svc_Handler> CREATION_STRATEGY;
-typedef ACE_Connect_Strategy<Svc_Handler,
-                             ACE_SOCK_CONNECTOR> CONNECT_STRATEGY;
-typedef Concurrency_Strategy<Svc_Handler> CONCURRENCY_STRATEGY;
-typedef ACE_Strategy_Connector<Svc_Handler,
-                               ACE_SOCK_CONNECTOR> BASE_CONNECTOR;
+using CREATION_STRATEGY = ACE_Creation_Strategy<Svc_Handler>;
+using CONNECT_STRATEGY = ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_Connector>;
+using CONCURRENCY_STRATEGY = Concurrency_Strategy<Svc_Handler>;
+using BASE_CONNECTOR = ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_Connector>;
 
 class Connect_Thread : public ACE_Task_Base
 {
@@ -144,7 +142,7 @@ public:
                                 &this->cns_, &this->cts_, &this->cys_);
   }
 
-  int svc (void);
+  int svc () override;
 
 private:
   ACE_Reactor &reactor_;
@@ -159,7 +157,7 @@ private:
 };
 
 int
-Connect_Thread::svc (void)
+Connect_Thread::svc ()
 {
   size_t const nr_names = sizeof hosts / sizeof (char *);
   ACE_INET_Addr *addresses = new ACE_INET_Addr[nr_names];

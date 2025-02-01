@@ -144,18 +144,17 @@ class ACE_Log_Category;
  *
  * @see ACE_Log_Categy
  */
-
 class ACE_Export ACE_Log_Category_TSS
 {
 public:
   ACE_Log_Category_TSS(ACE_Log_Category* category, ACE_Log_Msg* logger);
 
-  const char* name();
-  unsigned int id();
+  const char* name() const;
+  unsigned int id() const;
 
   ACE_Log_Msg* logger();
   /// Get the current ACE_Log_Priority mask.
-  u_long priority_mask ();
+  u_long priority_mask () const;
 
   /// Set the ACE_Log_Priority mask, returns original mask.
   u_long priority_mask (u_long);
@@ -233,9 +232,9 @@ private:
  * object would also be disabled regardless of the @c priority_mask
  * setting in the  @c ACE_Log_Category object.
  *
- * Each cateogry can have a name which
+ * Each category can have a name which
  * is fixed at construction. The name is not used for
- * formating the messages. However, it can be used by a
+ * formatting the messages. However, it can be used by a
  * message backend object for identification and reformat
  * accordingly.
  *
@@ -243,20 +242,19 @@ private:
  * and then use @c per_thr_obj() for logging. For example,
  *
  * \code{.cpp}
- *  ACE_Log_Category test_catogory("Test");
- *  test_cateogry.per_thr_obj()->log(LM_DEBUG, "Log into the Test category.");
+ *  ACE_Log_Category test_category("Test");
+ *  test_category.per_thr_obj()->log(LM_DEBUG, "Log into the Test category.");
  *
  *  // set the process wide priority mask
- *  test_catogory.priority_mask(LM_DEBUG|LM_ERROR);
+ *  test_category.priority_mask(LM_DEBUG|LM_ERROR);
  *
  *  // set the thread specific priority mask
- *  test_cateogry.per_thr_obj()->priority_mask(LM_DEBUG);
+ *  test_category.per_thr_obj()->priority_mask(LM_DEBUG);
  * \endcode
  */
 class ACE_Export ACE_Log_Category
 {
 public:
-
   /**
    * Initialize the logger with a name.
    *
@@ -271,13 +269,13 @@ public:
   ACE_Log_Category(const char* name);
   ~ACE_Log_Category();
 
-  unsigned int id();
-  const char* name();
+  unsigned int id() const;
+  const char* name() const;
 
   ACE_Log_Category_TSS* per_thr_obj();
 
   /// Get the process  ACE_Log_Priority mask.
-  u_long priority_mask ();
+  u_long priority_mask () const;
 
   /// Set the process ACE_Log_Priority mask, returns original mask.
   u_long priority_mask (u_long);

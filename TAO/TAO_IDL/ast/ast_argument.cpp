@@ -70,6 +70,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_argument.h"
 #include "ast_visitor.h"
+#include "ast_type.h"
+
+#include "utl_err.h"
+
+#include "global_extern.h"
 
 // Static functions.
 
@@ -87,7 +92,7 @@ direction_to_string (AST_Argument::Direction d)
       return "inout";
     }
 
-  return 0;
+  return nullptr;
 }
 
 AST_Decl::NodeType const
@@ -101,9 +106,15 @@ AST_Argument::AST_Argument (Direction d,
     AST_Field (AST_Decl::NT_argument, ft, n),
     pd_direction (d)
 {
+  AST_Decl::NodeType fnt = ft->node_type ();
+
+  if (fnt == AST_Decl::NT_except)
+    {
+      idl_global->err ()->not_a_type (ft);
+    }
 }
 
-AST_Argument::~AST_Argument (void)
+AST_Argument::~AST_Argument ()
 {
 }
 
@@ -123,15 +134,13 @@ AST_Argument::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Argument::destroy (void)
+AST_Argument::destroy ()
 {
   this->AST_Field::destroy ();
 }
 
 AST_Argument::Direction
-AST_Argument::direction (void)
+AST_Argument::direction ()
 {
   return this->pd_direction;
 }
-
-IMPL_NARROW_FROM_DECL(AST_Argument)

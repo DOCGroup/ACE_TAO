@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    UUID_Test.cpp
@@ -9,24 +8,23 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/UUID.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 class Tester
 {
 public:
-  int test (void);
+  int test ();
 };
 
 int
-Tester::test (void)
+Tester::test ()
 {
   int retval = 0;
 
   // Generate UUID
-  auto_ptr <ACE_Utils::UUID> uuid (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
+  std::unique_ptr <ACE_Utils::UUID> uuid (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
   ACE_CString uuid_str (uuid->to_string ()->c_str ());
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Generated UUID\n %C\n"),
@@ -107,7 +105,7 @@ Tester::test (void)
                        -1);
 
   // Generate UUID with process and thread ids.
-  auto_ptr <ACE_Utils::UUID>
+  std::unique_ptr <ACE_Utils::UUID>
     uuid_with_tp_id (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (0x0001, 0xc0));
 
   ACE_DEBUG ((LM_DEBUG,

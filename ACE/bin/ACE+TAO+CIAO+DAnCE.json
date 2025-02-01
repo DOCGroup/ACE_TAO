@@ -57,30 +57,7 @@
             { line_regex: "TAOLIB_DEBUG" },
             { line_regex: "TAOLIB_ERROR" },
             { line_regex: "TAOLIB_ERROR_RETURN" },
-            { line_regex: "DANCE_DEBUG" },
-            { line_regex: "DANCE_ERROR" },
-            { line_regex: "DANCE_ERROR_RETURN" },
-            { line_regex: "CIAO_DEBUG" },
-            { line_regex: "CIAO_ERROR" },
-            { line_regex: "CIAO_ERROR_RETURN" },
-            { line_regex: "DDS4CCM_DEBUG" },
-            { line_regex: "DDS4CCM_ERROR" },
-            { line_regex: "DDS4CCM_ERROR_RETURN" },
-            { line_regex: "DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION" },
-            { line_regex: "DDS4CCM_PRINT_CORBA_EXCEPTION" },
-            { line_regex: "DDS4CCM_debug_level" },
-            { line_regex: "CIAO_debug_level" },
             { line_regex: "TAO_debug_level" },
-            { line_regex: "DAnCE_debug_level" },
-            { line_regex: "DANCE_debug_level" },
-            { line_regex: "DDS4CCM_DEBUG_LEVEL" },
-            { line_regex: "CIAO_DEBUG_LEVEL" },
-            { line_regex: "DAnCE_DEBUG_LEVEL" },
-            { line_regex: "DANCE_DEBUG_LEVEL" },
-            { line_regex: "DDS4CCM::debug_level" },
-            { line_regex: "CIAO::debug_level" },
-            { line_regex: "DAnCE::debug_level" },
-            { line_regex: "DANCE::debug_level" },
             { line_regex: "ORBSVCS_DEBUG" },
             { line_regex: "ORBSVCS_ERROR" },
             { line_regex: "ORBSVCS_ERROR_RETURN" },
@@ -129,13 +106,8 @@
                 { file_name_regex: ".*/TAO/tao/.*" },
                 { file_name_regex: ".*/TAO/orbsvcs/orbsvcs/Naming/.*" },
                 { file_name_regex: ".*/TAO/orbsvcs/orbsvcs/Notify/.*" },
-                { file_name_regex: ".*/TAO/orbsvcs/orbsvcs/Event/.*" },
-                { file_name_regex: ".*/CIAO/ciao/.*" },
-                { file_name_regex: ".*/CIAO/connectors/dds4ccm/impl/.*" },
-                { file_name_regex: ".*/DAnCE/dance/LocalityManager.*" },
-                { file_name_regex: ".*/DAnCE/tools/Config_Handlers/DynAny_Handler.*" }
-              ] },
-              { not: { file_name_regex: "CIAO/connectors/dds4ccm/impl/ndds" }}
+                { file_name_regex: ".*/TAO/orbsvcs/orbsvcs/Event/.*" }
+              ] }
             ]
         }
       ]

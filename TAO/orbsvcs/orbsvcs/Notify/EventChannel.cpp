@@ -40,12 +40,12 @@ TAO_Notify_SupplierAdmin_Find_Worker;
 typedef TAO_Notify_Seq_Worker_T<TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Seq_Worker;
 typedef TAO_Notify_Seq_Worker_T<TAO_Notify_SupplierAdmin> TAO_Notify_SupplierAdmin_Seq_Worker;
 
-TAO_Notify_EventChannel::TAO_Notify_EventChannel (void)
-  : ecf_ (0)
-  , ca_container_ (0)
-  , sa_container_ (0)
+TAO_Notify_EventChannel::TAO_Notify_EventChannel ()
+  : ecf_ (nullptr)
+  , ca_container_ (nullptr)
+  , sa_container_ (nullptr)
   , default_filter_factory_ (CosNotifyFilter::FilterFactory::_nil ())
-  , default_filter_factory_servant_ (0)
+  , default_filter_factory_servant_ (nullptr)
 {
 }
 
@@ -179,19 +179,19 @@ TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent)
 
 
 void
-TAO_Notify_EventChannel::_add_ref (void)
+TAO_Notify_EventChannel::_add_ref ()
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_Notify_EventChannel::_remove_ref (void)
+TAO_Notify_EventChannel::_remove_ref ()
 {
   this->_decr_refcnt ();
 }
 
 void
-TAO_Notify_EventChannel::release (void)
+TAO_Notify_EventChannel::release ()
 {
   delete this;
   //@@ inform factory
@@ -204,7 +204,7 @@ TAO_Notify_EventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID,
 }
 
 int
-TAO_Notify_EventChannel::shutdown (void)
+TAO_Notify_EventChannel::shutdown ()
 {
   int sd_ret = TAO_Notify_Object::shutdown ();
 
@@ -221,7 +221,7 @@ TAO_Notify_EventChannel::shutdown (void)
 }
 
 void
-TAO_Notify_EventChannel::destroy (void)
+TAO_Notify_EventChannel::destroy ()
 {
   TAO_Notify_EventChannel::Ptr guard( this );
 
@@ -260,19 +260,19 @@ TAO_Notify_EventChannel::set_qos (const CosNotification::QoSProperties & qos)
 }
 
 CosNotification::QoSProperties*
-TAO_Notify_EventChannel::get_qos (void)
+TAO_Notify_EventChannel::get_qos ()
 {
   return this->TAO_Notify_Object::get_qos ();
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_Notify_EventChannel::MyFactory (void)
+TAO_Notify_EventChannel::MyFactory ()
 {
   return this->ecf_->_this ();
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
-TAO_Notify_EventChannel::default_consumer_admin (void)
+TAO_Notify_EventChannel::default_consumer_admin ()
 {
   if (CORBA::is_nil (default_consumer_admin_.in ()))
     {
@@ -299,7 +299,7 @@ TAO_Notify_EventChannel::default_consumer_admin (void)
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
-TAO_Notify_EventChannel::default_supplier_admin (void)
+TAO_Notify_EventChannel::default_supplier_admin ()
 {
   if (CORBA::is_nil (default_supplier_admin_.in ()))
     {
@@ -324,7 +324,7 @@ TAO_Notify_EventChannel::default_supplier_admin (void)
 }
 
 ::CosNotifyFilter::FilterFactory_ptr
-TAO_Notify_EventChannel::default_filter_factory (void)
+TAO_Notify_EventChannel::default_filter_factory ()
 {
   return CosNotifyFilter::FilterFactory::_duplicate (this->default_filter_factory_.in ());
 }
@@ -384,7 +384,7 @@ TAO_Notify_EventChannel::get_supplieradmin (CosNotifyChannelAdmin::AdminID id)
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
-TAO_Notify_EventChannel::get_all_consumeradmins (void)
+TAO_Notify_EventChannel::get_all_consumeradmins ()
 {
   TAO_Notify_ConsumerAdmin_Seq_Worker seq_worker;
 
@@ -392,7 +392,7 @@ TAO_Notify_EventChannel::get_all_consumeradmins (void)
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
-TAO_Notify_EventChannel::get_all_supplieradmins (void)
+TAO_Notify_EventChannel::get_all_supplieradmins ()
 {
   TAO_Notify_SupplierAdmin_Seq_Worker seq_worker;
 
@@ -406,7 +406,7 @@ TAO_Notify_EventChannel::set_admin (const CosNotification::AdminProperties & adm
 }
 
 CosNotification::AdminProperties*
-TAO_Notify_EventChannel::get_admin (void)
+TAO_Notify_EventChannel::get_admin ()
 {
   CosNotification::AdminProperties_var properties;
 
@@ -420,13 +420,13 @@ TAO_Notify_EventChannel::get_admin (void)
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-TAO_Notify_EventChannel::for_consumers (void)
+TAO_Notify_EventChannel::for_consumers ()
 {
   return this->default_consumer_admin();
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
-TAO_Notify_EventChannel::for_suppliers (void)
+TAO_Notify_EventChannel::for_suppliers ()
 {
   return this->default_supplier_admin ();
 }
@@ -592,7 +592,7 @@ TAO_Notify_EventChannel::find_proxy_supplier (TAO_Notify::IdVec & id_path, size_
 
 
 void
-TAO_Notify_EventChannel::reconnect (void)
+TAO_Notify_EventChannel::reconnect ()
 {
   TAO_Notify::Reconnect_Worker<TAO_Notify_ConsumerAdmin> ca_wrk;
   this->ca_container().collection()->for_each(&ca_wrk);
@@ -625,7 +625,6 @@ TAO_Notify_EventChannel::validate ()
   TAO_Notify::Validate_Worker<TAO_Notify_SupplierAdmin> sa_wrk;
   this->sa_container().collection()->for_each(&sa_wrk);
 }
-
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

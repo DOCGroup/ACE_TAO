@@ -10,7 +10,6 @@
 //=============================================================================
 
 
-
 #include "ace/Get_Opt.h"
 
 #include "test_i.h"
@@ -106,7 +105,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

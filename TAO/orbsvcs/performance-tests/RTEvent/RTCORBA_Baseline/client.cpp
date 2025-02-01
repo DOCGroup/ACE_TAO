@@ -9,7 +9,6 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sample_History.h"
 #include "ace/Basic_Stats.h"
@@ -28,9 +27,9 @@ public:
   {
   }
 
-  virtual void run_test (void) = 0;
+  virtual void run_test () = 0;
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     this->barrier_->wait ();
     try
@@ -67,7 +66,7 @@ public:
   {
   }
 
-  virtual void run_test (void)
+  virtual void run_test ()
   {
     for (int i = 0; i != this->iterations_; ++i)
       {
@@ -81,7 +80,6 @@ public:
           ACE_hrtime_t elapsed = ACE_OS::gethrtime () - start;
 
           this->sample_history.sample (elapsed);
-
         } catch (const CORBA::Exception&) {
         }
       }
@@ -111,13 +109,13 @@ public:
   {
   }
 
-  void stop (void)
+  void stop ()
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     this->stopped_ = 1;
   }
 
-  virtual void run_test (void)
+  virtual void run_test ()
   {
     for (;;)
       {
@@ -134,7 +132,6 @@ public:
           CORBA::ULongLong dummy = 0;
           (void) this->roundtrip_->test_method (dummy,
                                                 this->workload_);
-
         } catch (const CORBA::Exception&) {
         }
       }

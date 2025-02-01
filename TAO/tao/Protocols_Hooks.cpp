@@ -3,7 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IIOP_Protocol_Properties::TAO_IIOP_Protocol_Properties (void)
+TAO_IIOP_Protocol_Properties::TAO_IIOP_Protocol_Properties ()
   : send_buffer_size_ (0),
     recv_buffer_size_ (0),
     keep_alive_ (0),
@@ -14,13 +14,13 @@ TAO_IIOP_Protocol_Properties::TAO_IIOP_Protocol_Properties (void)
 {
 }
 
-TAO_UIOP_Protocol_Properties::TAO_UIOP_Protocol_Properties (void)
+TAO_UIOP_Protocol_Properties::TAO_UIOP_Protocol_Properties ()
   : send_buffer_size_ (0),
     recv_buffer_size_ (0)
 {
 }
 
-TAO_SHMIOP_Protocol_Properties::TAO_SHMIOP_Protocol_Properties (void)
+TAO_SHMIOP_Protocol_Properties::TAO_SHMIOP_Protocol_Properties ()
   : send_buffer_size_ (0),
     recv_buffer_size_ (0),
     keep_alive_ (0),
@@ -32,7 +32,7 @@ TAO_SHMIOP_Protocol_Properties::TAO_SHMIOP_Protocol_Properties (void)
 {
 }
 
-TAO_DIOP_Protocol_Properties::TAO_DIOP_Protocol_Properties (void)
+TAO_DIOP_Protocol_Properties::TAO_DIOP_Protocol_Properties ()
   : send_buffer_size_ (0),
     recv_buffer_size_ (0),
     enable_network_priority_ (0),
@@ -41,7 +41,7 @@ TAO_DIOP_Protocol_Properties::TAO_DIOP_Protocol_Properties (void)
 {
 }
 
-TAO_SCIOP_Protocol_Properties::TAO_SCIOP_Protocol_Properties (void)
+TAO_SCIOP_Protocol_Properties::TAO_SCIOP_Protocol_Properties ()
   : send_buffer_size_ (0),
     recv_buffer_size_ (0),
     keep_alive_ (0),
@@ -52,7 +52,7 @@ TAO_SCIOP_Protocol_Properties::TAO_SCIOP_Protocol_Properties (void)
 {
 }
 
-TAO_Protocols_Hooks::~TAO_Protocols_Hooks (void)
+TAO_Protocols_Hooks::~TAO_Protocols_Hooks ()
 {
 }
 

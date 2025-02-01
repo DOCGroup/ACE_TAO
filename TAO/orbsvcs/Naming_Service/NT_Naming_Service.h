@@ -33,9 +33,8 @@ class TAO_NT_Naming_Service : public ACE_NT_Service
 public:
   typedef TAO_SYNCH_RECURSIVE_MUTEX MUTEX;
 
-  // = Initialization and termination hooks.
-  TAO_NT_Naming_Service (void);
-  virtual ~TAO_NT_Naming_Service (void);
+  TAO_NT_Naming_Service ();
+  virtual ~TAO_NT_Naming_Service ();
 
   /// We override <handle_control> because it handles stop requests
   /// privately.
@@ -46,7 +45,7 @@ public:
   virtual int handle_exception (ACE_HANDLE h);
 
   /// This is a virtual method inherited from ACE_NT_Service.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Initialize the objects argc_ and argv_ attributes values.
   virtual int init (int argc,
@@ -72,7 +71,6 @@ private:
 
   friend class ACE_Singleton<TAO_NT_Naming_Service, MUTEX>;
   friend class AutoFinalizer;
-
 };
 
 /**
@@ -82,7 +80,6 @@ private:
   */
 class AutoFinalizer
 {
-
 public:
     AutoFinalizer (TAO_NT_Naming_Service &service);
     ~AutoFinalizer ();
@@ -90,7 +87,6 @@ public:
 private:
     TAO_NT_Naming_Service &service_;
 };
-
 
 
 typedef ACE_Singleton<TAO_NT_Naming_Service, TAO_NT_Naming_Service::MUTEX> SERVICE;

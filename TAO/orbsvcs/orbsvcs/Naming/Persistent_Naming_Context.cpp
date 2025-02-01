@@ -3,7 +3,7 @@
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
 #include "ace/OS_NS_stdio.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -70,31 +70,31 @@ TAO_Persistent_Bindings_Map::TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb)
 {
 }
 
-TAO_Persistent_Bindings_Map::~TAO_Persistent_Bindings_Map (void)
+TAO_Persistent_Bindings_Map::~TAO_Persistent_Bindings_Map ()
 {
 }
 
 void
-TAO_Persistent_Bindings_Map::destroy (void)
+TAO_Persistent_Bindings_Map::destroy ()
 {
   this->map_->ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>::~ACE_Hash_Map_With_Allocator ();
   this->allocator_->free (map_);
 }
 
 TAO_Persistent_Bindings_Map::HASH_MAP *
-TAO_Persistent_Bindings_Map::map (void)
+TAO_Persistent_Bindings_Map::map ()
 {
   return this->map_;
 }
 
 size_t
-TAO_Persistent_Bindings_Map::total_size (void)
+TAO_Persistent_Bindings_Map::total_size ()
 {
   return this->map_->total_size ();
 }
 
 size_t
-TAO_Persistent_Bindings_Map::current_size (void)
+TAO_Persistent_Bindings_Map::current_size ()
 {
   return map_->current_size ();
 }
@@ -260,7 +260,7 @@ TAO_Persistent_Naming_Context::init (size_t hash_table_size)
   return persistent_context_->open (hash_table_size, index_->allocator ());
 }
 
-TAO_Persistent_Naming_Context::~TAO_Persistent_Naming_Context (void)
+TAO_Persistent_Naming_Context::~TAO_Persistent_Naming_Context ()
 {
   // Perform appropriate cleanup based on the destruction level specified.
 
@@ -301,9 +301,9 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   if (context_impl == 0)
     throw CORBA::NO_MEMORY ();
 
-  // Put <context_impl> into the auto pointer temporarily, in case next
+  // Put <context_impl> into the unique pointer temporarily, in case next
   // allocation fails.
-  ACE_Auto_Basic_Ptr<TAO_Persistent_Naming_Context> temp (context_impl);
+  std::unique_ptr<TAO_Persistent_Naming_Context> temp (context_impl);
 
   if (context_impl->init (context_size) == -1)
     throw CORBA::NO_MEMORY ();
@@ -328,7 +328,7 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
 
-  // Release auto pointer, and start using reference counting to
+  // Release unique pointer, and start using reference counting to
   // control our servant.
   temp.release ();
   PortableServer::ServantBase_var s = context;
@@ -349,7 +349,7 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 }
 
 CosNaming::NamingContext_ptr
-TAO_Persistent_Naming_Context::new_context (void)
+TAO_Persistent_Naming_Context::new_context ()
 {
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -396,9 +396,9 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
                     (*persistent_context_->map ()),
                     CORBA::NO_MEMORY ());
 
-  // Store <hash_iter temporarily in auto pointer, in case we'll have
+  // Store hash_iter temporarily in unique pointer, in case we'll have
   // some failures and throw an exception.
-  ACE_Auto_Basic_Ptr<HASH_MAP::ITERATOR> temp (hash_iter);
+  std::unique_ptr<HASH_MAP::ITERATOR> temp (hash_iter);
 
   // Silliness below is required because of broken old g++!!!  E.g.,
   // without it, we could have just said HASH_MAP::ITERATOR everywhere we use ITER_DEF.
@@ -453,7 +453,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
                         ITER_SERVANT (this, hash_iter, this->poa_.in ()),
                         CORBA::NO_MEMORY ());
 
-      // Release <hash_iter> from auto pointer, and start using the
+      // Release <hash_iter> from unique pointer, and start using the
       // reference counting to control our servant.
       temp.release ();
       PortableServer::ServantBase_var iter = bind_iter;

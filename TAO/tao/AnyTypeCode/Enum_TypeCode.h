@@ -46,7 +46,6 @@ namespace TAO
         private RefCountPolicy
     {
     public:
-
       /// Constructor.
       Enum (char const * id,
             char const * name,
@@ -63,12 +62,11 @@ namespace TAO
        */
       //@{
       virtual bool tao_marshal (TAO_OutputCDR & cdr, CORBA::ULong offset) const;
-      virtual void tao_duplicate (void);
-      virtual void tao_release (void);
+      virtual void tao_duplicate ();
+      virtual void tao_release ();
       //@}
 
     protected:
-
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
@@ -79,15 +77,14 @@ namespace TAO
       //@{
       virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
-      virtual CORBA::TypeCode_ptr get_compact_typecode_i (void) const;
-      virtual char const * id_i (void) const;
-      virtual char const * name_i (void) const;
-      virtual CORBA::ULong member_count_i (void) const;
+      virtual CORBA::TypeCode_ptr get_compact_typecode_i () const;
+      virtual char const * id_i () const;
+      virtual char const * name_i () const;
+      virtual CORBA::ULong member_count_i () const;
       virtual char const * member_name_i (CORBA::ULong index) const;
       //@}
 
     private:
-
       /**
        * @c Enum Attributes
        *
@@ -99,7 +96,6 @@ namespace TAO
        *       increase cache hits by improving spatial locality.
        */
       //@{
-
       /// Base attributes containing repository ID and name of
       /// structure type.
       Base_Attributes<StringType> base_attributes_;
@@ -110,9 +106,7 @@ namespace TAO
       /// Array of @c TAO::TypeCode enumerators representing
       /// enumerators in the OMG IDL defined @c enum.
       EnumeratorArrayType const enumerators_;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 
@@ -122,14 +116,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/Enum_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
-#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/Enum_TypeCode.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("Enum_TypeCode.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
+#include "tao/AnyTypeCode/Enum_TypeCode.cpp"
 
 #include /**/ "ace/post.h"
 

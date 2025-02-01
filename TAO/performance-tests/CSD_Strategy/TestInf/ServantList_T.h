@@ -11,7 +11,6 @@ template <class T>
 class ServantList
 {
   public:
-
     typedef typename T::_stub_type     T_stub;
     typedef typename T::_stub_ptr_type T_stub_ptr;
     typedef typename T::_stub_var_type T_stub_var;
@@ -38,7 +37,6 @@ class ServantList
 
 
   private:
-
     struct ServantRecord
     {
       T*                              servant_;
@@ -51,14 +49,7 @@ class ServantList
     ServantRecordVector servant_records_;
 };
 
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ServantList_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ServantList_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* SERVANTLIST_T_H */
 

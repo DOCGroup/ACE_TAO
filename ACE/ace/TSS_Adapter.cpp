@@ -1,8 +1,6 @@
 /**
  * @file TSS_Adapter.cpp
  *
- * Originally in Synch.cpp
- *
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 
@@ -23,7 +21,7 @@ ACE_TSS_Adapter::ACE_TSS_Adapter (void *object, ACE_THR_DEST f)
 ACE_ALLOC_HOOK_DEFINE(ACE_TSS_Adapter);
 
 void
-ACE_TSS_Adapter::cleanup (void)
+ACE_TSS_Adapter::cleanup ()
 {
   (*this->func_)(this->ts_obj_);  // call cleanup routine for ts_obj_
 }

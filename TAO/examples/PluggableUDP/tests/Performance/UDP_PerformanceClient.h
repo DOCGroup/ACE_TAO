@@ -30,7 +30,6 @@ class UDP_PerformanceClient
   //    This class wrapps the client functionality into one class
   //
 public:
-  // = Initialization and termination methods.
   /// Constructor
   UDP_PerformanceClient (CORBA::ORB_ptr orb,
                          UDP_ptr udp,
@@ -38,11 +37,11 @@ public:
                          ACE_UINT32 burst_messages);
 
   /// Destructor
-  virtual ~UDP_PerformanceClient (void);
+  virtual ~UDP_PerformanceClient ();
 
 private:
   // Runs in a separate thread.
-  virtual int svc (void );
+  virtual int svc ();
 
 private:
   CORBA::ORB_var orb_;

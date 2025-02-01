@@ -37,15 +37,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_ICMP_Socket : public ACE_SOCK
 {
 public:
-  // = Initialization methods.
-
   /**
    * @name Data transfer routines.
    *
    * Data transfer routines.
    */
   //@{
-
   /// Send an @a n byte @a buf to the datagram socket (uses
   /// @c sendto(3) ).
   ssize_t send (void const * buf,
@@ -74,17 +71,15 @@ public:
             int reuse_addr = 0);
 
   /// Dump the state of object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   // Protected constructors, so the class can only be derived from.
-
   /// Default constructor.
-  ACE_ICMP_Socket (void);
+  ACE_ICMP_Socket ();
 
   /// Constructor that takes a local listening address.
   ACE_ICMP_Socket (ACE_Addr const & local,

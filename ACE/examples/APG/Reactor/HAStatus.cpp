@@ -2,11 +2,11 @@
 #include "ace/os_include/os_netdb.h"
 
 // Listing 1 code/ch07
-#include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Reactor.h"
+#include <memory>
 
 class ClientAcceptor : public ACE_Event_Handler
 {
@@ -18,7 +18,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Get this handler's I/O handle.
-  virtual ACE_HANDLE get_handle (void) const
+  virtual ACE_HANDLE get_handle () const
     { return this->acceptor_.get_handle (); }
 
   // Called when a connection is ready to accept.
@@ -42,14 +42,14 @@ protected:
 class ClientService : public ACE_Event_Handler
 {
 public:
-  ACE_SOCK_Stream &peer (void) { return this->sock_; }
+  ACE_SOCK_Stream &peer () { return this->sock_; }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open (void);
+  int open ();
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Get this handler's I/O handle.
-  virtual ACE_HANDLE get_handle (void) const
+  virtual ACE_HANDLE get_handle () const
     { return this->sock_.get_handle (); }
 
   // Called when input is available from the client.
@@ -93,9 +93,9 @@ ClientAcceptor::open (const ACE_INET_Addr &listen_addr)
 int
 ClientAcceptor::handle_input (ACE_HANDLE)
 {
-  ClientService *client;
+  ClientService *client = 0;
   ACE_NEW_RETURN (client, ClientService, -1);
-  auto_ptr<ClientService> p (client);
+  std::unique_ptr<ClientService> p (client);
 
   if (this->acceptor_.accept (client->peer ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -128,7 +128,7 @@ ClientAcceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 
 // Listing 7 code/ch07
 int
-ClientService::open (void)
+ClientService::open ()
 {
   ACE_TCHAR peer_name[MAXHOSTNAMELEN];
   ACE_INET_Addr peer_addr;
@@ -241,9 +241,7 @@ public:
   LoopStopper (int signum = SIGINT);
 
   // Called when object is signaled by OS.
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 };
 
 LoopStopper::LoopStopper (int signum)
@@ -268,9 +266,7 @@ public:
   LogSwitcher (int on_sig, int off_sig);
 
   // Called when object is signaled by OS.
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
   // Called when an exceptional event occurs.
   virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);

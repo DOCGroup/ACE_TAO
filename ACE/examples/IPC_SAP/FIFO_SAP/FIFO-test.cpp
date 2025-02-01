@@ -12,8 +12,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_fcntl.h"
 
-
-
 #define PERMS                   0666
 #define EXEC_NAME               "more"
 #define EXEC_COMMAND_ARG        "more"
@@ -86,27 +84,35 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (fifo_reader.get_handle () == ACE_INVALID_HANDLE)
     return -1;
 
-  pid_t child_pid = ACE_OS::fork ();
+  pid_t const child_pid = ACE_OS::fork ();
 
   switch (child_pid)
     {
     case -1:
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%n: %p\n%a"),
+                  ACE_TEXT ("%n: %p\n"),
                   ACE_TEXT ("fork"),
                   1));
+      ACE_OS::abort ();
     case 0:
       if (do_child (fifo_reader) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%n: %p\n%a"),
-                    ACE_TEXT ("do_child"),
-                    1));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%n: %p\n"),
+                      ACE_TEXT ("do_child"),
+                      1));
+          ACE_OS::abort ();
+        }
+      ACE_FALLTHROUGH;
     default:
       if (do_parent (FIFO_NAME, argv[1]) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%n: %p\n%a"),
-                    ACE_TEXT ("do_parent"),
-                    1));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%n: %p\n"),
+                      ACE_TEXT ("do_parent"),
+                      1));
+          ACE_OS::abort ();
+        }
 
       // wait for child to ACE_OS::exit.
       if (ACE_OS::waitpid (child_pid, (ACE_exitcode *) 0, 0) == -1)

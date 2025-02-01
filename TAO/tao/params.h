@@ -42,8 +42,6 @@ typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
 // -------------------------------------------------------------------
 
-
-
 /**
  * @class TAO_ORB_Parameters
  *
@@ -53,11 +51,10 @@ typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
 class TAO_Export TAO_ORB_Parameters
 {
 public:
-
   typedef ACE_Array_Map<ACE_CString, ACE_CString> endpoints_map_type;
 
   /// Constructor.
-  TAO_ORB_Parameters (void);
+  TAO_ORB_Parameters ();
 
   /// Specifies the endpoints on which this server is willing to
   /// listen for requests.
@@ -72,41 +69,41 @@ public:
 
   /// Get/Set address:port for Multicast Discovery Protocol for
   /// the Naming Service.
-  const char *mcast_discovery_endpoint (void) const;
+  const char *mcast_discovery_endpoint () const;
   void mcast_discovery_endpoint (const char *mde);
 
   /// Set/Get the size to be used for a socket's receive buffer.
-  int sock_rcvbuf_size (void) const;
+  int sock_rcvbuf_size () const;
   void sock_rcvbuf_size (int);
 
   /// Set/Get the size to be used for a socket's send buffer.
-  int sock_sndbuf_size (void) const;
+  int sock_sndbuf_size () const;
   void sock_sndbuf_size (int);
 
   /// Set/Get the status of whether to use TCP_NODELAY or not.
-  int nodelay (void) const;
+  int nodelay () const;
   void nodelay (int);
 
   /// Set/Get whether we should set SO_KEEPALIVE on the socket or not.
-  int sock_keepalive (void);
+  int sock_keepalive ();
   void sock_keepalive (int);
 
   /// Set/Get whether we should set SO_DONTROUTE on the socket or not.
-  int sock_dontroute (void);
+  int sock_dontroute ();
   void sock_dontroute (int);
 
   /// Set/Get the number of hops to be used for datagrams sent through socket.
-  int ip_hoplimit (void);
+  int ip_hoplimit ();
   void ip_hoplimit (int);
 
   /// Set/Get whether we should set IP_MULTICAST_LOOP on the socket or not.
-  bool ip_multicastloop (void);
+  bool ip_multicastloop ();
   void ip_multicastloop (bool);
 
   /// Set/Get client side port span values
-  u_short iiop_client_port_base (void);
+  u_short iiop_client_port_base ();
   void iiop_client_port_base (u_short);
-  u_short iiop_client_port_span (void);
+  u_short iiop_client_port_span ();
   void iiop_client_port_span (u_short);
 
   /**
@@ -115,7 +112,7 @@ public:
    * octet sequence is small enough and there is room in the current
    * message block it is more efficient just to copy the buffer.
    */
-  int cdr_memcpy_tradeoff (void) const;
+  int cdr_memcpy_tradeoff () const;
   void cdr_memcpy_tradeoff (int);
 
   /**
@@ -123,36 +120,36 @@ public:
    * kicks in.
    */
   //@{
-  ACE_CDR::ULong max_message_size (void) const;
+  ACE_CDR::ULong max_message_size () const;
   void max_message_size (ACE_CDR::ULong size);
   //@}
 
   /// The ORB will use the dotted decimal notation for addresses. By
   /// default we use the full ascii names.
-  int use_dotted_decimal_addresses (void) const;
+  int use_dotted_decimal_addresses () const;
   void use_dotted_decimal_addresses (int);
 
   /// The ORB will cache incoming connections against the dotted
   /// decimal form of the peer's address
-  int cache_incoming_by_dotted_decimal_address (void) const;
+  int cache_incoming_by_dotted_decimal_address () const;
   void cache_incoming_by_dotted_decimal_address (int);
 
   /// The ORB will turn off SO_LINGER if this is zero.
-  int linger (void) const;
+  int linger () const;
   void linger (int);
 
   /// The amount of time desired by the user to wait to accept
   /// connections after a particular type of accept() error.
-  time_t accept_error_delay (void) const;
+  time_t accept_error_delay () const;
   void accept_error_delay (time_t);
 
   /// Set/Get the Init Reference of an arbitrary ObjectID.
-  char *default_init_ref (void) const;
+  char *default_init_ref () const;
   void default_init_ref (const char *default_init_ref);
 
   /// Disable the OMG standard profile components, useful for
   /// homogenous environments.
-  bool std_profile_components (void) const;
+  bool std_profile_components () const;
   void std_profile_components (bool x);
 
   /// Scheduling policy.
@@ -163,7 +160,7 @@ public:
    * ACE_Sched_Params::priority_min(). Legal values are ACE_SCHED_RR,
    * ACE_SCHED_FIFO, and ACE_SCHED_OTHER.
    */
-  int ace_sched_policy (void) const;
+  int ace_sched_policy () const;
   void ace_sched_policy (int x);
 
   /// Scheduling policy flag.
@@ -173,7 +170,7 @@ public:
    * thread creation functions. Legal values are THR_SCHED_RR,
    * THR_SCHED_FIFO, and THR_SCHED_DEFAULT.
    */
-  long sched_policy (void) const;
+  long sched_policy () const;
   void sched_policy (long x);
 
   /// Scheduling scope flag.
@@ -183,103 +180,103 @@ public:
    * thread creation functions. Legal values are THR_SCOPE_SYSTEM and
    * THR_SCOPE_PROCESS.
    */
-  long scope_policy (void) const;
+  long scope_policy () const;
   void scope_policy (long x);
 
   /// Thread creation flags.
   /**
    * Shorthand for OR'ing together the scope_policy and sched_policy.
    */
-  long thread_creation_flags (void) const;
+  long thread_creation_flags () const;
 
   /// Single read optimization.
-  int single_read_optimization (void) const;
+  int single_read_optimization () const;
   void single_read_optimization (int x);
 
   /// Create shared profiles without priority
-  int shared_profile (void) const;
+  int shared_profile () const;
   void shared_profile (int x);
 
   /// Want to use parallel connection attempts when profiles have multiple
   /// endpoints.
-  bool use_parallel_connects(void) const;
+  bool use_parallel_connects() const;
   void use_parallel_connects (bool x);
 
   /// The milliseconds delay used to stagger individual connection starts
   /// when using parallel connects.
-  unsigned long parallel_connect_delay (void) const;
+  unsigned long parallel_connect_delay () const;
   void parallel_connect_delay (unsigned long x);
 
   /// Mutators and accessors for rt_collocation_resolver
-  bool disable_rt_collocation_resolver (void) const;
+  bool disable_rt_collocation_resolver () const;
   void disable_rt_collocation_resolver (bool);
 
   /// Accepts the list of preferred interfaces and does a simple
   /// semantic check on the string before setting. Also the getter.
   bool preferred_interfaces (const char *s);
-  const char *preferred_interfaces (void) const;
+  const char *preferred_interfaces () const;
 
   /// Utility function called by the preferred interfaces setter
   static bool check_preferred_interfaces_string (const char *);
 
   void enforce_pref_interfaces (bool p);
-  bool enforce_pref_interfaces (void) const;
+  bool enforce_pref_interfaces () const;
 
 #if defined (ACE_HAS_IPV6)
   void prefer_ipv6_interfaces (bool p);
-  bool prefer_ipv6_interfaces (void) const;
+  bool prefer_ipv6_interfaces () const;
 
   void connect_ipv6_only (bool p);
-  bool connect_ipv6_only (void) const;
+  bool connect_ipv6_only () const;
 
   void use_ipv6_link_local (bool p);
-  bool use_ipv6_link_local (void) const;
+  bool use_ipv6_link_local () const;
 #endif /* ACE_HAS_IPV6 */
 
   void negotiate_codesets (bool c);
-  bool negotiate_codesets (void) const;
+  bool negotiate_codesets () const;
 
   void ami_collication (bool opt);
-  bool ami_collication (void) const;
+  bool ami_collication () const;
 
   void protocols_hooks_name (const char *s);
-  const char *protocols_hooks_name (void) const;
+  const char *protocols_hooks_name () const;
 
   void thread_lane_resources_manager_factory_name (const char *s);
-  const char *thread_lane_resources_manager_factory_name (void) const;
+  const char *thread_lane_resources_manager_factory_name () const;
 
   void dynamic_thread_pool_config_name (const char *s);
-  const char *dynamic_thread_pool_config_name (void) const;
+  const char *dynamic_thread_pool_config_name () const;
 
   void stub_factory_name (const char *s);
-  const char *stub_factory_name (void) const;
+  const char *stub_factory_name () const;
 
   void poa_factory_name (const char *s);
-  const char *poa_factory_name (void) const;
+  const char *poa_factory_name () const;
 
   void poa_factory_directive (const ACE_TCHAR *s);
-  const ACE_TCHAR *poa_factory_directive (void) const;
+  const ACE_TCHAR *poa_factory_directive () const;
 
   void endpoint_selector_factory_name (const char *s);
-  const char *endpoint_selector_factory_name (void) const;
+  const char *endpoint_selector_factory_name () const;
 
   void collocation_resolver_name (const char *s);
-  const char *collocation_resolver_name (void) const;
+  const char *collocation_resolver_name () const;
 
   void forward_invocation_on_object_not_exist (bool opt);
-  bool forward_invocation_on_object_not_exist (void) const;
+  bool forward_invocation_on_object_not_exist () const;
 
   void forward_on_exception_limit (const int ef, const int limit);
   void forward_on_exception_delay (const ACE_Time_Value &delay);
 
-  TAO::Invocation_Retry_Params &invocation_retry_params (void);
-  const TAO::Invocation_Retry_Params &invocation_retry_params (void) const;
+  TAO::Invocation_Retry_Params &invocation_retry_params ();
+  const TAO::Invocation_Retry_Params &invocation_retry_params () const;
 
   void forward_once_exception (const int ef);
   int forward_once_exception () const;
 
   void allow_ziop_no_server_policies (bool opt);
-  bool allow_ziop_no_server_policies (void) const;
+  bool allow_ziop_no_server_policies () const;
 
 private:
   /// Each "endpoint" is of the form:

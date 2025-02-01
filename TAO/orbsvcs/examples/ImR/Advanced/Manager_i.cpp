@@ -8,7 +8,7 @@ Manager_i::Manager_i (long retryCount)
 {
 }
 
-Manager_i::~Manager_i (void)
+Manager_i::~Manager_i ()
 {
 }
 

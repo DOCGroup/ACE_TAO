@@ -14,7 +14,7 @@ public:
   Workers ()
   { }
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     while (1)
       {
@@ -63,7 +63,7 @@ public:
     ACE_TRACE ("Manager::Manager");
   }
 
-  int svc (void)
+  int svc ()
   {
     ACE_TRACE ("Manager::svc");
 
@@ -95,13 +95,13 @@ public:
   }
 
 private:
-  int done (void);
+  int done ();
 
   int shutdown_;
 };
 // Listing 1
 
-int Manager::done (void)
+int Manager::done ()
 {
   return (shutdown_ == 1);
 }

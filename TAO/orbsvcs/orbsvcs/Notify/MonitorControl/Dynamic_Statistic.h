@@ -33,7 +33,7 @@ public:
   /// method is expected to call the receive base class method. This
   /// method isn't pure virtual in Monitor_Base, but we reintroduce
   /// it here to force all subclasses to implement it.
-  virtual void update (void) = 0;
+  virtual void update () = 0;
 
 protected:
   TYPE* interf_;

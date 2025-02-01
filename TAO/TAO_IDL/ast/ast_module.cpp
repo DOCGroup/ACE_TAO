@@ -105,11 +105,11 @@ AST_Decl::NodeType const
 AST_Module::AST_Module (UTL_ScopedName *n, AST_Module *previous)
   : AST_Decl (AST_Decl::NT_module, n),
     UTL_Scope (AST_Decl::NT_module),
-    pd_has_nested_valuetype_ (0),
+    pd_has_nested_valuetype_ (false),
     previous_opening_ (previous),
     last_in_same_parent_scope_ (this),
-    from_inst_ (0),
-    from_ref_ (0)
+    from_inst_ (nullptr),
+    from_ref_ (nullptr)
 {
   // NOTE previous passed into this constructor should be
   // the FIRST module that is a previous opening of this same
@@ -120,19 +120,16 @@ AST_Module::AST_Module (UTL_ScopedName *n, AST_Module *previous)
   // below.
 }
 
-AST_Module::~AST_Module (void)
+AST_Module::~AST_Module ()
 {
 }
 
 void
-AST_Module::destroy (void)
+AST_Module::destroy ()
 {
   this->UTL_Scope::destroy ();
   this->AST_Decl::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Module)
-IMPL_NARROW_FROM_SCOPE(AST_Module)
 
 // Dump this AST_Module node to the ostream o.
 void
@@ -159,23 +156,23 @@ AST_Module::adjust_found (
 
 // Involved in OBV_ namespace generation.
 void
-AST_Module::set_has_nested_valuetype (void)
+AST_Module::set_has_nested_valuetype ()
 {
   UTL_Scope *parent = this->defined_in ();
   if (parent && !this->pd_has_nested_valuetype_)
     {
-      AST_Module *pm = AST_Module::narrow_from_scope (parent);
+      AST_Module *pm = dynamic_cast<AST_Module*> (parent);
       if (pm)
         {
           pm->set_has_nested_valuetype ();
         }
     }
 
-  this->pd_has_nested_valuetype_ = 1;
+  this->pd_has_nested_valuetype_ = true;
 }
 
 bool
-AST_Module::has_nested_valuetype (void)
+AST_Module::has_nested_valuetype ()
 {
   return this->pd_has_nested_valuetype_;
 }
@@ -226,7 +223,7 @@ AST_Module::referenced (AST_Decl *e,
       return false;
     }
 
-  AST_Type *t = AST_Type::narrow_from_decl (d);
+  AST_Type *t = dynamic_cast<AST_Type*> (d);
   return (!t || t->is_defined ());
 }
 
@@ -258,7 +255,7 @@ AST_Module::look_in_prev_mods_local (Identifier *e,
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 AST_Decl *
@@ -299,7 +296,7 @@ AST_Module::look_in_prev_mods (UTL_ScopedName *e,
         }
     }
 
-  return 0; // Not found.
+  return nullptr; // Not found.
 }
 
 int
@@ -309,7 +306,7 @@ AST_Module::ast_accept (ast_visitor *visitor)
 }
 
 AST_Template_Module_Inst *
-AST_Module::from_inst (void) const
+AST_Module::from_inst () const
 {
   return this->from_inst_;
 }
@@ -321,7 +318,7 @@ AST_Module::from_inst (AST_Template_Module_Inst *node)
 }
 
 AST_Template_Module_Ref *
-AST_Module::from_ref (void) const
+AST_Module::from_ref () const
 {
   return this->from_ref_;
 }
@@ -345,8 +342,7 @@ AST_Module::special_lookup (UTL_ScopedName *e,
 AST_PredefinedType *
 AST_Module::fe_add_predefined_type (AST_PredefinedType *t)
 {
-  return AST_PredefinedType::narrow_from_decl (
-    this->fe_add_decl (t));
+  return dynamic_cast<AST_PredefinedType*> (this->fe_add_decl (t));
 }
 
 AST_Module *
@@ -378,7 +374,7 @@ AST_Module::fe_add_module (AST_Module *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  AST_Module *m = 0;
+  AST_Module *m = nullptr;
   AST_Decl *d = this->lookup_for_add (t);
 
   if (d)
@@ -389,15 +385,15 @@ AST_Module::fe_add_module (AST_Module *t)
                                       t,
                                       this,
                                       d);
-          return 0;
+          return nullptr;
         }
 
       // has_ancestor() returns TRUE if both nodes are the same.
-      m = AST_Module::narrow_from_decl (d);
+      m = dynamic_cast<AST_Module*> (d);
       if (t != m && t->has_ancestor (d))
         {
           idl_global->err ()->redefinition_in_scope (t, d);
-          return 0;
+          return nullptr;
         }
 
       const char *prev_prefix = d->prefix ();
@@ -463,121 +459,97 @@ AST_Module::fe_add_module (AST_Module *t)
 AST_Template_Module_Inst *
 AST_Module::fe_add_template_module_inst (AST_Template_Module_Inst *t)
 {
-  return
-    AST_Template_Module_Inst::narrow_from_decl (
-      this->fe_add_ref_decl (t));
+  return dynamic_cast<AST_Template_Module_Inst*> (this->fe_add_ref_decl (t));
 }
 
 AST_Interface *
 AST_Module::fe_add_interface (AST_Interface *t)
 {
-  return
-    this->fe_add_full_intf_decl<AST_Interface> (t);
+  return this->fe_add_full_intf_decl<AST_Interface> (t);
 }
 
 AST_ValueBox *
 AST_Module::fe_add_valuebox (AST_ValueBox *t)
 {
-  return
-    AST_ValueBox::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_ValueBox*> (this->fe_add_decl (t));
 }
 
 AST_ValueType *
 AST_Module::fe_add_valuetype (AST_ValueType *t)
 {
-  return
-    this->fe_add_full_intf_decl<AST_ValueType> (t);
+  return this->fe_add_full_intf_decl<AST_ValueType> (t);
 }
 
 AST_EventType *
 AST_Module::fe_add_eventtype (AST_EventType *t)
 {
-  return
-    this->fe_add_full_intf_decl<AST_EventType> (t);
+  return this->fe_add_full_intf_decl<AST_EventType> (t);
 }
 
 AST_Component *
 AST_Module::fe_add_component (AST_Component *t)
 {
-  return
-    this->fe_add_full_intf_decl<AST_Component> (t);
+  return this->fe_add_full_intf_decl<AST_Component> (t);
 }
 
 AST_Connector *
 AST_Module::fe_add_connector (AST_Connector *t)
 {
-  return
-    AST_Connector::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Connector*> (this->fe_add_decl (t));
 }
 
 AST_Home *
 AST_Module::fe_add_home (AST_Home *t)
 {
-  return
-    AST_Home::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Home*> (this->fe_add_decl (t));
 }
 
 AST_InterfaceFwd *
 AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *t)
 {
-  return
-    this->fe_add_fwd_intf_decl<AST_Interface> (t);
+  return this->fe_add_fwd_intf_decl<AST_Interface> (t);
 }
 
 AST_ValueTypeFwd *
 AST_Module::fe_add_valuetype_fwd (AST_ValueTypeFwd *t)
 {
-  return
-    this->fe_add_fwd_intf_decl<AST_ValueType> (t);
+  return this->fe_add_fwd_intf_decl<AST_ValueType> (t);
 }
 
 AST_EventTypeFwd *
 AST_Module::fe_add_eventtype_fwd (AST_EventTypeFwd *t)
 {
-  return
-    this->fe_add_fwd_intf_decl<AST_EventType> (t);
+  return this->fe_add_fwd_intf_decl<AST_EventType> (t);
 }
 
 AST_ComponentFwd *
 AST_Module::fe_add_component_fwd (AST_ComponentFwd *t)
 {
-  return
-    this->fe_add_fwd_intf_decl<AST_Component> (t);
+  return this->fe_add_fwd_intf_decl<AST_Component> (t);
 }
 
 AST_Constant *
 AST_Module::fe_add_constant (AST_Constant *t)
 {
-  return
-    AST_Constant::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Constant*> (this->fe_add_decl (t));
 }
 
 AST_Exception *
 AST_Module::fe_add_exception (AST_Exception *t)
 {
-  return
-    AST_Exception::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Exception*> (this->fe_add_decl (t));
 }
 
 AST_Union *
 AST_Module::fe_add_union (AST_Union *t)
 {
-  return
-    AST_Union::narrow_from_decl (
-      this->fe_add_full_struct_type (t));
+  return dynamic_cast<AST_Union*> (this->fe_add_full_struct_type (t));
 }
 
 AST_UnionFwd *
 AST_Module::fe_add_union_fwd (AST_UnionFwd *t)
 {
-  return
-    AST_UnionFwd::narrow_from_decl (
-      this->fe_add_fwd_struct_type (t));
+  return dynamic_cast<AST_UnionFwd*> (this->fe_add_fwd_struct_type (t));
 }
 
 AST_Structure *
@@ -595,9 +567,7 @@ AST_Module::fe_add_structure_fwd (AST_StructureFwd *t)
 AST_Enum *
 AST_Module::fe_add_enum (AST_Enum *t)
 {
-  return
-    AST_Enum::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Enum*> (this->fe_add_decl (t));
 }
 
 // Add an AST_EnumVal node (an enumerator) to this scope.
@@ -607,37 +577,29 @@ AST_Module::fe_add_enum (AST_Enum *t)
 AST_EnumVal *
 AST_Module::fe_add_enum_val (AST_EnumVal *t)
 {
-  return
-    AST_EnumVal::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_EnumVal*> (this->fe_add_decl (t));
 }
 
 AST_Typedef *
 AST_Module::fe_add_typedef (AST_Typedef *t)
 {
-  return
-    AST_Typedef::narrow_from_decl (
-      this->fe_add_ref_decl (t));
+  return dynamic_cast<AST_Typedef*> (this->fe_add_ref_decl (t));
 }
 
 AST_Native *
 AST_Module::fe_add_native (AST_Native *t)
 {
-  return
-    AST_Native::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Native*> (this->fe_add_decl (t));
 }
 
 AST_PortType *
 AST_Module::fe_add_porttype (AST_PortType *t)
 {
-  return
-    AST_PortType::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_PortType*> (this->fe_add_decl (t));
 }
 
 void
-AST_Module::reset_last_in_same_parent_scope (void)
+AST_Module::reset_last_in_same_parent_scope ()
 {
   this->last_in_same_parent_scope_ = this;
 }
@@ -646,6 +608,5 @@ AST_Annotation_Decl *
 AST_Module::fe_add_annotation_decl (
   AST_Annotation_Decl *annotation_decl)
 {
-  return AST_Annotation_Decl::narrow_from_decl (
-    fe_add_decl (annotation_decl));
+  return dynamic_cast<AST_Annotation_Decl*> (fe_add_decl (annotation_decl));
 }

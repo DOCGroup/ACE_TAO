@@ -90,7 +90,7 @@ namespace TAO
                             CORBA::Request *r,
                             Invocation_Mode mode = TAO_DII_INVOCATION);
 
-    virtual ~DII_Invocation_Adapter (void);
+    virtual ~DII_Invocation_Adapter ();
 
     /// Invoke the target
     virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
@@ -116,12 +116,9 @@ namespace TAO
 
     TAO::Exception_Data *ex_data_;
   private:
-
-    /// Dont allow default initializations
-    DII_Invocation_Adapter (void);
-
-    DII_Invocation_Adapter (const DII_Invocation_Adapter &);
-    DII_Invocation_Adapter & operator= (const DII_Invocation_Adapter &);
+    DII_Invocation_Adapter () = delete;
+    DII_Invocation_Adapter (const DII_Invocation_Adapter &) = delete;
+    DII_Invocation_Adapter & operator= (const DII_Invocation_Adapter &) = delete;
   };
 
   /**

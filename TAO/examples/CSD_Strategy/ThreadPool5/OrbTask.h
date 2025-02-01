@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    OrbTask.h
@@ -16,20 +14,17 @@
 
 class OrbTask : public ACE_Task_Base
 {
-  public:
+public:
+  OrbTask(CORBA::ORB_ptr orb, unsigned num_threads = 1);
+  virtual ~OrbTask() = default;
 
-    OrbTask(CORBA::ORB_ptr orb, unsigned num_threads = 1);
-    virtual ~OrbTask();
+  virtual int open(void* x = 0);
+  virtual int svc();
+  virtual int close(u_long);
 
-    virtual int open(void* x = 0);
-    virtual int svc();
-    virtual int close(u_long);
-
-
-  private:
-
-    CORBA::ORB_var orb_;
-    unsigned       num_threads_;
+private:
+  CORBA::ORB_var orb_;
+  unsigned       num_threads_;
 };
 
 #endif

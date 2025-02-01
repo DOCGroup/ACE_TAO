@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -37,7 +35,6 @@ class ACE_Time_Value;
 
 namespace ACE_OS
 {
-
   ACE_NAMESPACE_INLINE_FUNCTION
   int poll (struct pollfd *pollfds,
             unsigned long len,
@@ -47,7 +44,6 @@ namespace ACE_OS
   int poll (struct pollfd *pollfds,
             unsigned long len,
             const ACE_Time_Value &tv);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

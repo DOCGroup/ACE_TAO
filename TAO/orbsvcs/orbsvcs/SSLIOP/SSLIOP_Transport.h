@@ -33,7 +33,6 @@
 
 #include "ace/Svc_Handler.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
@@ -59,13 +58,12 @@ namespace TAO
     class TAO_SSLIOP_Export Transport : public TAO_Transport
     {
     public:
-
       /// Constructor.
       Transport (Connection_Handler *handler,
                  TAO_ORB_Core *orb_core);
 
       /// Default destructor.
-      ~Transport (void);
+      ~Transport ();
 
       /// Overload of the handle_input () in the TAO_Transport
       /// class. This is required to set up the state guard. The
@@ -81,8 +79,8 @@ namespace TAO
        * TAO_Transport.
        */
       //@{
-      virtual ACE_Event_Handler * event_handler_i (void);
-      virtual TAO_Connection_Handler *connection_handler_i (void);
+      virtual ACE_Event_Handler * event_handler_i ();
+      virtual TAO_Connection_Handler *connection_handler_i ();
 
       /// Write the complete Message_Block chain to the connection.
       virtual ssize_t send (iovec *iov, int iovcnt,
@@ -110,12 +108,11 @@ namespace TAO
                                   TAO_Message_Semantics (),
                                 ACE_Time_Value *max_time_wait = 0);
 
-      /// Open teh service context list and process it.
+      /// Open the service context list and process it.
       virtual int tear_listen_point_list (TAO_InputCDR &cdr);
       //@}
 
     private:
-
       /// Set the Bidirectional context info in the service context
       /// list.
       void set_bidir_context_info (TAO_Operation_Details &opdetails);
@@ -127,12 +124,10 @@ namespace TAO
                             TAO_Acceptor *acceptor);
 
     private:
-
       /// The connection service handler used for accessing lower layer
       /// communication protocols.
       Connection_Handler *connection_handler_;
     };
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

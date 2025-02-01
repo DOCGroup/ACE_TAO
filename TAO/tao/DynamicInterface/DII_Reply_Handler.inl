@@ -14,7 +14,7 @@ TAO_DII_Reply_Handler::_duplicate (TAO_DII_Reply_Handler_ptr x)
 
 // Inline operations for class TAO_DII_Reply_Handler_var
 ACE_INLINE
-TAO_DII_Reply_Handler_var::TAO_DII_Reply_Handler_var (void)
+TAO_DII_Reply_Handler_var::TAO_DII_Reply_Handler_var ()
   : ptr_ (TAO_DII_Reply_Handler::_nil ())
 {
 }
@@ -26,13 +26,13 @@ TAO_DII_Reply_Handler_var::TAO_DII_Reply_Handler_var (
 {}
 
 ACE_INLINE
-TAO_DII_Reply_Handler_var::~TAO_DII_Reply_Handler_var (void)
+TAO_DII_Reply_Handler_var::~TAO_DII_Reply_Handler_var ()
 {
   CORBA::release (this->ptr_);
 }
 
 ACE_INLINE TAO_DII_Reply_Handler_ptr
-TAO_DII_Reply_Handler_var::ptr (void) const
+TAO_DII_Reply_Handler_var::ptr () const
 {
   return this->ptr_;
 }
@@ -75,25 +75,25 @@ TAO_DII_Reply_Handler_var::operator TAO_DII_Reply_Handler_ptr &()
 }
 
 ACE_INLINE TAO_DII_Reply_Handler_ptr
-TAO_DII_Reply_Handler_var::operator-> (void) const
+TAO_DII_Reply_Handler_var::operator-> () const
 {
   return this->ptr_;
 }
 
 ACE_INLINE TAO_DII_Reply_Handler_ptr
-TAO_DII_Reply_Handler_var::in (void) const
+TAO_DII_Reply_Handler_var::in () const
 {
   return this->ptr_;
 }
 
 ACE_INLINE TAO_DII_Reply_Handler_ptr &
-TAO_DII_Reply_Handler_var::inout (void)
+TAO_DII_Reply_Handler_var::inout ()
 {
   return this->ptr_;
 }
 
 ACE_INLINE TAO_DII_Reply_Handler_ptr &
-TAO_DII_Reply_Handler_var::out (void)
+TAO_DII_Reply_Handler_var::out ()
 {
   CORBA::release (this->ptr_);
   this->ptr_ = TAO_DII_Reply_Handler::_nil ();
@@ -101,7 +101,7 @@ TAO_DII_Reply_Handler_var::out (void)
 }
 
 ACE_INLINE TAO_DII_Reply_Handler_ptr
-TAO_DII_Reply_Handler_var::_retn (void)
+TAO_DII_Reply_Handler_var::_retn ()
 {
   // yield ownership
   TAO_DII_Reply_Handler_ptr val = this->ptr_;

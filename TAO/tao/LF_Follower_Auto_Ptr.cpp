@@ -7,7 +7,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LF_Follower_Auto_Ptr::~TAO_LF_Follower_Auto_Ptr (void)
+TAO_LF_Follower_Auto_Ptr::~TAO_LF_Follower_Auto_Ptr ()
 {
   this->leader_follower_.release_follower (this->follower_);
 }

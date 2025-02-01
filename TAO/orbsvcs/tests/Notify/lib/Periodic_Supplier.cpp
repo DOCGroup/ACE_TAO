@@ -13,7 +13,7 @@
 #include "LookupManager.h"
 #include "Priority_Mapping.h"
 
-TAO_Notify_Tests_Periodic_Supplier::TAO_Notify_Tests_Periodic_Supplier (void)
+TAO_Notify_Tests_Periodic_Supplier::TAO_Notify_Tests_Periodic_Supplier ()
   : barrier_ (0),
     priority_ (0),
     period_ (0),
@@ -172,7 +172,7 @@ TAO_Notify_Tests_Periodic_Supplier::activate_task (ACE_Barrier* barrier)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier::send_warmup_events (void)
+TAO_Notify_Tests_Periodic_Supplier::send_warmup_events ()
 {
   int WARMUP_COUNT = 10;
 
@@ -183,7 +183,7 @@ TAO_Notify_Tests_Periodic_Supplier::send_warmup_events (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier::send_prologue (void)
+TAO_Notify_Tests_Periodic_Supplier::send_prologue ()
 {
   // populate event.
   // send the base time and max count.
@@ -208,7 +208,7 @@ TAO_Notify_Tests_Periodic_Supplier::send_prologue (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier::handle_svc (void)
+TAO_Notify_Tests_Periodic_Supplier::handle_svc ()
 {
   this->send_prologue ();
 
@@ -291,7 +291,7 @@ TAO_Notify_Tests_Periodic_Supplier::handle_svc (void)
 }
 
 int
-TAO_Notify_Tests_Periodic_Supplier::svc (void)
+TAO_Notify_Tests_Periodic_Supplier::svc ()
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Thread_Task (%t) - wait\n"));

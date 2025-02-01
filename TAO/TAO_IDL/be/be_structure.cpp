@@ -81,7 +81,7 @@ be_structure::be_structure (AST_Decl::NodeType nt,
 void
 be_structure::redefine (AST_Structure *from)
 {
-  be_structure *bs = be_structure::narrow_from_decl (from);
+  be_structure *bs = dynamic_cast<be_structure*> (from);
   this->common_varout_gen_ = bs->common_varout_gen_;
   this->AST_Structure::redefine (from);
 }
@@ -111,10 +111,10 @@ be_structure::gen_ostream_operator (TAO_OutStream *os,
 
   for (long i = 0; i < n; ++i)
     {
-      be_field *f = be_field::narrow_from_decl (this->pd_decls[i]);
+      be_field *f = dynamic_cast<be_field*> (this->pd_decls[i]);
 
       // We don't want any decls, just members.
-      if (f == 0)
+      if (f == nullptr)
         {
           continue;
         }
@@ -145,7 +145,7 @@ be_structure::gen_ostream_operator (TAO_OutStream *os,
 }
 
 void
-be_structure::destroy (void)
+be_structure::destroy ()
 {
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();
@@ -158,6 +158,3 @@ be_structure::accept (be_visitor *visitor)
 {
   return visitor->visit_structure (this);
 }
-
-IMPL_NARROW_FROM_DECL (be_structure)
-IMPL_NARROW_FROM_SCOPE (be_structure)

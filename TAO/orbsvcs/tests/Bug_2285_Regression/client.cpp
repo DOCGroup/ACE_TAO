@@ -6,7 +6,6 @@
 #include "Hello.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int

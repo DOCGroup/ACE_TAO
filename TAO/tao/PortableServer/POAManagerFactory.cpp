@@ -14,7 +14,7 @@ TAO_POAManager_Factory::TAO_POAManager_Factory (TAO_Object_Adapter &object_adapt
 {
 }
 
-TAO_POAManager_Factory::~TAO_POAManager_Factory (void)
+TAO_POAManager_Factory::~TAO_POAManager_Factory ()
 {
   this->remove_all_poamanagers ();
 }
@@ -74,7 +74,7 @@ TAO_POAManager_Factory::create_POAManager (
 }
 
 ::PortableServer::POAManagerFactory::POAManagerSeq *
-TAO_POAManager_Factory::list (void)
+TAO_POAManager_Factory::list ()
 {
   ::PortableServer::POAManagerFactory::POAManagerSeq_var poamanagers;
   CORBA::ULong number_of_poamanagers = static_cast <CORBA::ULong>
@@ -122,7 +122,7 @@ TAO_POAManager_Factory::find (const char * id)
 }
 
 void
-TAO_POAManager_Factory::remove_all_poamanagers (void)
+TAO_POAManager_Factory::remove_all_poamanagers ()
 {
   for (POAMANAGERSET::iterator iterator = this->poamanager_set_.begin ();
         iterator != this->poamanager_set_.end ();

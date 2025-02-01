@@ -50,12 +50,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Service_Manager : public ACE_Service_Object
 {
 public:
-  // = Initialization and termination hooks.
   /// Constructor.
-  ACE_Service_Manager (void);
+  ACE_Service_Manager ();
 
   /// Destructor.
-  virtual ~ACE_Service_Manager (void);
+  virtual ~ACE_Service_Manager ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -65,29 +64,29 @@ protected:
 
   /// Trigger a reconfiguration of the Service Configurator by
   /// re-reading its local <svc.conf> file.
-  virtual int reconfigure_services (void);
+  virtual int reconfigure_services ();
 
   /// Determine all the services offered by this daemon and return the
   /// information back to the client.
-  virtual int list_services (void);
+  virtual int list_services ();
 
   // = Dynamic linking hooks.
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **info_string, size_t length) const;
-  virtual int fini (void);
+  virtual int fini ();
 
   // = Scheduling hooks.
-  virtual int suspend (void);
-  virtual int resume (void);
+  virtual int suspend ();
+  virtual int resume ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
 protected:
   int open (const ACE_INET_Addr &sia);
 
   // = Demultiplexing hooks.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);

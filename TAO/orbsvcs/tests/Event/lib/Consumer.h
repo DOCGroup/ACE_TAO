@@ -57,14 +57,14 @@ public:
       int shutdown_event_type);
 
   /// returns 0 if it is not connected
-  virtual int connected (void) const;
+  virtual int connected () const;
 
   /// The application can invoke this method to disconnect from the EC
   /// and deactivate this class.
-  void disconnect (void);
+  void disconnect ();
 
   /// The application is shutting down, deactivate the consumer.
-  void shutdown (void);
+  void shutdown ();
 
   /// Accumulate our statistics to the totals.
   void accumulate (ACE_Throughput_Stats& throughput) const;
@@ -78,7 +78,7 @@ public:
 
   /// The skeleton methods.
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
 private:
   /// The main driver for the test.

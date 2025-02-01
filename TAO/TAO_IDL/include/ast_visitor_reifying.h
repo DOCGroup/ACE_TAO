@@ -42,9 +42,9 @@ class ast_visitor_reifying : public ast_visitor
 public:
   ast_visitor_reifying (ast_visitor_context *ctx);
 
-  virtual ~ast_visitor_reifying (void);
+  virtual ~ast_visitor_reifying ();
 
-  AST_Decl *reified_node (void) const;
+  AST_Decl *reified_node () const;
 
   virtual int visit_decl (AST_Decl *d);
   virtual int visit_scope (UTL_Scope *node);
@@ -93,6 +93,7 @@ public:
   virtual int visit_typedef (AST_Typedef *node);
   virtual int visit_array (AST_Array *node);
   virtual int visit_sequence (AST_Sequence *node);
+  virtual int visit_map (AST_Map *node);
   virtual int visit_predefined_type (AST_PredefinedType *node);
   virtual int visit_string (AST_String *node);
   virtual int visit_constant (AST_Constant *node);

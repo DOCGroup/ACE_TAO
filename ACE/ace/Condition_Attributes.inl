@@ -8,14 +8,14 @@ ACE_Condition_Attributes::ACE_Condition_Attributes (int type)
 }
 
 ACE_INLINE
-ACE_Condition_Attributes::~ACE_Condition_Attributes (void)
+ACE_Condition_Attributes::~ACE_Condition_Attributes ()
 {
   ACE_OS::condattr_destroy (this->attributes_);
 }
 
 ACE_INLINE
 const ACE_condattr_t&
-ACE_Condition_Attributes::attributes (void) const
+ACE_Condition_Attributes::attributes () const
 {
   return this->attributes_;
 }
@@ -24,14 +24,9 @@ ACE_INLINE
 ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy>::ACE_Condition_Attributes_T (int type)
  : ACE_Condition_Attributes (type)
 {
-#if (defined (_POSIX_MONOTONIC_CLOCK) && !defined (ACE_LACKS_MONOTONIC_TIME)) || defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
+#if defined (ACE_HAS_POSIX_MONOTONIC_CONDITIONS)
   (void) ACE_OS::condattr_setclock (this->attributes_, CLOCK_MONOTONIC);
 #endif
-}
-
-ACE_INLINE
-ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy>::~ACE_Condition_Attributes_T (void)
-{
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

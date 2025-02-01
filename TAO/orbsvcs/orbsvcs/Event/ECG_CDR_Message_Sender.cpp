@@ -10,14 +10,13 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_ECG_CDR_Message_Sender::init (
       TAO_ECG_Refcounted_Endpoint endpoint_rptr)
 {
-  if (endpoint_rptr.get () == 0
+  if (endpoint_rptr.get () == nullptr
       || endpoint_rptr->dgram ().get_handle () == ACE_INVALID_HANDLE)
     {
       ORBSVCS_ERROR ((LM_ERROR, "TAO_ECG_CDR_Message_Sender::init(): "
@@ -32,7 +31,7 @@ void
 TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                                            const ACE_INET_Addr &addr)
 {
-  if (this->endpoint_rptr_.get () == 0)
+  if (this->endpoint_rptr_.get () == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR, "Attempt to invoke send_message() "
                             "on non-initialized sender object.\n"));
@@ -171,7 +170,6 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
     }
   // ACE_ASSERT (total_length == fragment_offset);
   // ACE_ASSERT (fragment_id == fragment_count);
-
 }
 
 

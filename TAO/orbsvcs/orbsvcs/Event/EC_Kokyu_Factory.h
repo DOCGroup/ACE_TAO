@@ -34,18 +34,18 @@ class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Factory : public TAO_EC_Default_Facto
 {
 public:
   /// Constructor
-  TAO_EC_Kokyu_Factory (void);
+  TAO_EC_Kokyu_Factory ();
 
   /// Helper function to register the Kokyu factory into the service
   /// configurator.
-  static int init_svcs (void);
+  static int init_svcs ();
 
   /// destructor...
-  virtual ~TAO_EC_Kokyu_Factory (void);
+  virtual ~TAO_EC_Kokyu_Factory ();
 
   // = The Service_Object entry points
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*

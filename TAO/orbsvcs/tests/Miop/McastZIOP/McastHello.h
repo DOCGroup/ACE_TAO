@@ -17,7 +17,7 @@ public:
   // = The skeleton methods
   virtual void send_forty_two (CORBA::Long forty_two);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Return whether all test requests have been received successfully.
   CORBA::Boolean get_status ();

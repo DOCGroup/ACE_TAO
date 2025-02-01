@@ -5,13 +5,13 @@
 #include "tao/Exception_Data.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  ExceptionHolder::ExceptionHolder (void) :
+  ExceptionHolder::ExceptionHolder () :
     data_ (0),
     count_ (0),
     char_translator_ (0),
@@ -47,7 +47,7 @@ namespace TAO
     this->count_ = exceptions_count;
   }
 
-  void ExceptionHolder::raise_exception (void)
+  void ExceptionHolder::raise_exception ()
     {
       TAO_InputCDR _tao_in ((const char*) this->marshaled_exception ().get_buffer (),
                             this->marshaled_exception ().length (),
@@ -89,7 +89,7 @@ namespace TAO
           exception->completed (CORBA::CompletionStatus (completion));
 
           // Raise the exception.
-          ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(exception);
+          std::unique_ptr<CORBA::SystemException> e_ptr(exception);
           exception->_raise ();
 
           return;
@@ -100,12 +100,12 @@ namespace TAO
       // This is important to decode the exception.
       for (CORBA::ULong i = 0; i != this->count_; ++i)
         {
-          if (ACE_OS::strcmp (type_id.in (), this->data_[i].id) != 0)
+          if (this->data_[i].id.compare(type_id.in ()) != 0)
             continue;
 
           CORBA::Exception * const exception = this->data_[i].alloc ();
 
-          if (exception == 0)
+          if (!exception)
             {
               throw ::CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_YES);
             }
@@ -115,7 +115,7 @@ namespace TAO
             }
 
           // Raise the exception.
-          ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr (exception);
+          std::unique_ptr<CORBA::Exception> e_ptr (exception);
           exception->_raise ();
 
           return;
@@ -138,7 +138,7 @@ namespace TAO
     }
 
   CORBA::ValueBase*
-  ExceptionHolder::_copy_value (void)
+  ExceptionHolder::_copy_value ()
   {
     TAO::ExceptionHolder* ret_val = 0;
     ACE_NEW_THROW_EX (ret_val,
@@ -156,7 +156,7 @@ namespace TAO
   }
 
   CORBA::ValueBase *
-  ExceptionHolderFactory::create_for_unmarshal (void)
+  ExceptionHolderFactory::create_for_unmarshal ()
   {
     TAO::ExceptionHolder* ret_val = 0;
     ACE_NEW_THROW_EX (ret_val,

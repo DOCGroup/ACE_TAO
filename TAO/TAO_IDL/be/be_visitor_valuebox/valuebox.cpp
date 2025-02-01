@@ -16,7 +16,7 @@ be_visitor_valuebox::be_visitor_valuebox (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuebox::~be_visitor_valuebox (void)
+be_visitor_valuebox::~be_visitor_valuebox ()
 {
 }
 

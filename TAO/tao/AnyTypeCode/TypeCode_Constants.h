@@ -39,6 +39,8 @@ namespace CORBA
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_boolean;
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_char;
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_wchar;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_int8;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_uint8;
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_short;
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_ushort;
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_long;

@@ -16,7 +16,7 @@ ORB_Holder::ORB_Holder (int &argc, ACE_TCHAR *argv[],
 {
 }
 
-ORB_Holder::~ORB_Holder (void)
+ORB_Holder::~ORB_Holder ()
 {
   try{
     this->orb_->destroy ();

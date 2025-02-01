@@ -11,7 +11,6 @@ class RecordingDevice;
 class RecordingDeviceFactory
 {
 public:
-
   // Instantiate the appropriate RecordingDevice implementation
   static RecordingDevice *instantiate (int argc, ACE_TCHAR *argv[]);
 };

@@ -4,7 +4,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 const ACE_TCHAR *ior_output_file = 0;
 
 int
@@ -86,7 +85,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       ACE_OS::sleep (5);
     }

@@ -13,7 +13,7 @@ public:
 
   KeyType (const KeyType& kt) { this->val_ = kt.val_; }
 
-  operator int (void) const { return val_; }
+  operator int () const { return val_; }
 
 private:
   int val_;

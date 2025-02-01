@@ -28,12 +28,11 @@
 class Time_Date_Client_i
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor
-  Time_Date_Client_i (void);
+  Time_Date_Client_i ();
 
   /// Destructor
-  virtual ~Time_Date_Client_i (void);
+  virtual ~Time_Date_Client_i ();
 
   /// Execute the methods.
   virtual int run (const char *, int, ACE_TCHAR *[]);

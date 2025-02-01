@@ -9,15 +9,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.
 TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
-    const CORBA::Request_ptr req,
+    CORBA::Request_ptr req,
     TAO_ORB_Core *orb_core)
   : TAO_Asynch_Reply_Dispatcher_Base (orb_core)
-  , req_ (req)
-{
-}
-
-// Destructor.
-TAO_DII_Deferred_Reply_Dispatcher::~TAO_DII_Deferred_Reply_Dispatcher (void)
+  , req_ (CORBA::Request::_duplicate (req))
 {
 }
 
@@ -48,7 +43,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
     }
 
   // See whether we need to delete the data block by checking the
-  // flags. We cannot be happy that we initally allocated the
+  // flags. We cannot be happy that we initially allocated the
   // datablocks of the stack. If this method is called twice, as is in
   // some cases where the same invocation object is used to make two
   // invocations like forwarding, the release becomes essential.
@@ -90,7 +85,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
 }
 
 void
-TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
+TAO_DII_Deferred_Reply_Dispatcher::connection_closed ()
 {
   try
     {
@@ -138,7 +133,7 @@ TAO_DII_Asynch_Reply_Dispatcher::TAO_DII_Asynch_Reply_Dispatcher (
 {
 }
 
-TAO_DII_Asynch_Reply_Dispatcher::~TAO_DII_Asynch_Reply_Dispatcher (void)
+TAO_DII_Asynch_Reply_Dispatcher::~TAO_DII_Asynch_Reply_Dispatcher ()
 {
   // this was handed to us by the caller.
   CORBA::release(callback_);
@@ -199,7 +194,7 @@ TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
 }
 
 void
-TAO_DII_Asynch_Reply_Dispatcher::connection_closed (void)
+TAO_DII_Asynch_Reply_Dispatcher::connection_closed ()
 {
   try
     {

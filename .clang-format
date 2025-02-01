@@ -1,0 +1,49 @@
+---
+# This configuration requires clang-format version v12.0 or newer.
+BasedOnStyle: Mozilla
+#
+AlignConsecutiveDeclarations: None
+AlignEscapedNewlines: Left
+AlignOperands: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortBlocksOnASingleLine: true
+AllowShortFunctionsOnASingleLine: InlineOnly
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
+# AlwaysBreakAfterDefinitionReturnType: TopLevel
+# AlwaysBreakAfterReturnType: TopLevelDefinitions
+BinPackArguments: false
+BinPackParameters: false
+# parameters will either all be on the same line or will have one line each.
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel:  true
+  AfterClass:      true
+  AfterControlStatement: Always
+  AfterEnum:       true
+  AfterFunction:   true
+  AfterNamespace:  true
+  AfterObjCDeclaration: true
+  AfterStruct:     true
+  AfterUnion:      true
+  AfterExternBlock: true
+  BeforeCatch:     true
+  BeforeElse:      true
+  BeforeLambdaBody: false
+  BeforeWhile:     true
+  IndentBraces:    false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+# based on BreakBeforeBraces: GNU
+ColumnLimit: 123 # MAYBE up to 160
+#
+# XXX v13.0 only IndentAccessModifiers: true
+#
+IndentPPDirectives: AfterHash
+SortUsingDeclarations: false
+SpaceAfterTemplateKeyword: true
+SpaceAfterLogicalNot: false
+SpaceBeforeParens: Always
+SpaceInEmptyBlock: false
+...

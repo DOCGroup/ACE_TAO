@@ -1,0 +1,289 @@
+commit d61d61771cb9f73a9c2a0fc4c4f896385513c212
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 20 08:26:33 2022 +0100
+
+    List changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit f67de62fc547264c093e4e7fd8db6f1981dbca76
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 20 08:22:51 2022 +0100
+
+    Fixed typo
+    
+        * TAO/tao/PortableServer/Root_POA.cpp:
+
+commit 6bed8a1e6e8067968ecd7bc2f1e60f6d1a5f5a64
+Merge: e1066915005 2067f66c702
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 18 13:25:36 2022 +0100
+
+    Merge pull request #1766 from jwillemsen/jwi-docucleanup2
+    
+    Corrected links to documentation, use nullptr/default, layout changes
+
+commit 2067f66c7028d125e09cdfcbe9fb33aed5a58692
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 18 10:51:55 2022 +0100
+
+    Use nullptr/default, docu changes
+    
+        * TAO/tao/BiDir_GIOP/BiDir_ORBInitializer.cpp:
+        * TAO/tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+        * TAO/tao/BiDir_GIOP/BiDir_Policy_i.h:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/PI/PolicyFactory_Loader.cpp:
+        * TAO/tao/Policy_Validator.cpp:
+        * TAO/tao/PortableServer/Default_Policy_Validator.cpp:
+        * TAO/tao/PortableServer/Default_Policy_Validator.h:
+        * TAO/tao/RTPortableServer/RT_Policy_Validator.cpp:
+        * TAO/tao/RTPortableServer/RT_Policy_Validator.h:
+        * TAO/tao/ZIOP/ZIOP_Policy_Validator.h:
+        * TAO/tests/BiDirectional/README:
+        * TAO/tests/BiDirectional/client.cpp:
+
+commit 5d3513f7346ef9465df43e3a8151e4643867d37b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 18 10:51:14 2022 +0100
+
+    Corrected links
+    
+        * TAO/docs/documentation.html:
+
+commit e1066915005387ee81397e9cec2e24b72abb1bd9
+Merge: a8372419d0e 27acd637ea3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 17 14:40:36 2022 +0100
+
+    Merge pull request #1765 from jwillemsen/jwi-cleanup2
+    
+    Use doxygen/nullptr/bool
+
+commit 27acd637ea341c104749d6b8369d67fc5448920d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 17 11:57:46 2022 +0100
+
+    Use doxygen/nullptr/bool
+    
+        * ACE/ace/Log_Msg.cpp:
+        * ACE/ace/NT_Service.cpp:
+        * ACE/ace/Object_Manager.cpp:
+        * ACE/ace/Object_Manager.h:
+        * ACE/ace/Thread.inl:
+        * ACE/tests/Task_Test.cpp:
+        * TAO/tao/DynamicInterface/Request.cpp:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/Messaging/AMH_Response_Handler.cpp:
+
+commit a8372419d0e73f4b816fccd15d85b085c56ea4d3
+Merge: d41442943e4 2733b15ce02
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jan 14 16:48:18 2022 -0600
+
+    Merge pull request #1760 from mitza-oci/cxx20
+    
+    fixed build with GCC -std=c++20
+
+commit d41442943e4fcdfc689133619b2043aee7d62a59
+Merge: 97daeea11d2 ab0b550403f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 13 17:40:49 2022 +0100
+
+    Merge pull request #1761 from jwillemsen/jwi-defaultoverride
+    
+    Make use of C++ default/override
+
+commit ab0b550403f711d725405afdd04475107b8f3bd2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 13 10:28:36 2022 +0100
+
+    Make use of C++ default/override
+
+commit 8e4d70bc963383a8798b8d63e518fe4bcfb2b234
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Jan 11 20:34:43 2022 -0600
+
+    fixed build with GCC -std=c++20
+
+commit 97daeea11d251609247a90379d61551e8627910a
+Merge: 71c64284b43 0f69c85d3a3
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jan 10 21:20:04 2022 -0600
+
+    Merge pull request #1752 from mitza-oci/gha-install
+    
+    make install, pkgconfig, ace_for_tao fixes
+
+commit 71c64284b4334f0f715ffc91fcdcef8bf6f3d031
+Merge: ee8f83a1e40 bf32655ffa4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 10 21:26:03 2022 +0100
+
+    Merge pull request #1757 from jwillemsen/jwi-codeset
+    
+    Make use of C++11 default and override
+
+commit bf32655ffa453d723536b06570059f38ef2b0136
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 10 17:17:45 2022 +0100
+
+    Removed redundant void
+    
+        * TAO/tao/Codeset/Codeset.h:
+
+commit f30b9cbe69c8599f3e96e1e03b1ca41699019915
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 10 17:07:28 2022 +0100
+
+    Make use of C++11 default
+    
+        * TAO/tao/Cleanup_Func_Registry.h:
+        * TAO/tao/Cleanup_Func_Registry.inl:
+        * TAO/tao/Client_Strategy_Factory.h:
+        * TAO/tao/Codeset_Manager.h:
+        * TAO/tao/Codeset_Manager_Factory_Base.cpp:
+        * TAO/tao/Codeset_Manager_Factory_Base.h:
+
+commit 48e842b9afeb089a4f3d5c5011c69ea75f99631d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 10 17:02:33 2022 +0100
+
+    Make use of C++11 default and override
+    
+        * TAO/tao/Codeset/Codeset_Manager_i.cpp:
+        * TAO/tao/Codeset/Codeset_Manager_i.h:
+        * TAO/tao/Codeset/Codeset_Service_Context_Handler.h:
+        * TAO/tao/Codeset/Codeset_Translator_Factory.cpp:
+        * TAO/tao/Codeset/Codeset_Translator_Factory.h:
+        * TAO/tao/Codeset/Codeset_Translator_Factory_T.cpp:
+        * TAO/tao/Codeset/Codeset_Translator_Factory_T.h:
+        * TAO/tao/Codeset/UTF16_BOM_Factory.cpp:
+        * TAO/tao/Codeset/UTF16_BOM_Factory.h:
+        * TAO/tao/Codeset/UTF16_BOM_Translator.cpp:
+        * TAO/tao/Codeset/UTF16_BOM_Translator.h:
+        * TAO/tao/Codeset/UTF8_Latin1_Factory.cpp:
+        * TAO/tao/Codeset/UTF8_Latin1_Factory.h:
+        * TAO/tao/Codeset/UTF8_Latin1_Translator.cpp:
+        * TAO/tao/Codeset/UTF8_Latin1_Translator.h:
+
+commit 0f69c85d3a38b8b50bd766fae5795b81329c7335
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jan 7 16:55:12 2022 -0600
+
+    Fixed a few pkg-config issues
+
+commit f6a98bf6e81d24b776921aab7ed812156d77eef1
+Merge: 5a2c18b21aa cacd3ed5e1b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 7 13:20:24 2022 +0100
+
+    Merge pull request #1754 from jwillemsen/jwi-rcsid
+    
+    Removed lef over for rcsid
+
+commit 5a2c18b21aab3ddc9efb4c365888872b427260ba
+Merge: 971a2f55600 37146c8f03e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 7 13:19:57 2022 +0100
+
+    Merge pull request #1753 from jwillemsen/jwi-bidircpp11
+    
+    Make use of C++11 features in BiDIR
+
+commit cacd3ed5e1b549e9adb7c8701ca33d6996ea532d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 7 11:33:33 2022 +0100
+
+    Removed lef over for rcsid
+    
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+        * ACE/bin/libsize.pl:
+        * TAO/docs/minimumTAO.html:
+        * TAO/docs/performance.html:
+
+commit 37146c8f03ecb28dfa9be8f8d4144466c90d946a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 7 09:48:37 2022 +0100
+
+    Make use of C++11 features in BiDIR
+    
+        * TAO/tao/BiDir_GIOP/BiDirGIOP.cpp:
+        * TAO/tao/BiDir_GIOP/BiDirGIOP.h:
+        * TAO/tao/BiDir_GIOP/BiDirPolicy_Validator.h:
+        * TAO/tao/BiDir_GIOP/BiDir_ORBInitializer.h:
+        * TAO/tao/BiDir_GIOP/BiDir_PolicyFactory.h:
+        * TAO/tao/BiDir_GIOP/BiDir_Policy_i.h:
+        * TAO/tao/BiDir_GIOP/BiDir_Service_Context_Handler.h:
+
+commit 3ad369c499d9a3045b041428c830dfba1bfdf468
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Dec 17 13:44:56 2021 -0600
+
+    Use the tao_rules base project to bring in makefile rules
+
+commit eba5995a2fb8ed7734a4bb5332606f17cf8f6122
+Merge: 982e921423e 94baee24599
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 14 19:50:29 2021 +0100
+
+    Merge pull request #1745 from jwillemsen/jwi-exceptiondocu
+    
+    Modernize example code in deep copy documentation
+
+commit 8421ce146282ea06925a23229c2f046cba781814
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 14 12:45:54 2021 +0100
+
+    Add an attribute with the name call as test case
+    
+        * TAO/tests/IDL_Test/interface.idl:
+
+commit 94baee245996a418a3cc1ada80e50f1f2e9a343b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 14 12:38:15 2021 +0100
+
+    Modernize excample code in deep copy documentation
+    
+        * TAO/tao/Exception.h:
+
+commit 3f9404e68a0abe4755f328d70fdff6f403327de5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 14 12:37:30 2021 +0100
+
+    Add test case where we have an argument `call` which lead to non compiling generated code
+    
+        * TAO/TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO/tests/IDL_Test/interface.idl:
+
+commit 65f57025d8615cff69543ab63ddc30701f7f4e85
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Nov 19 16:07:46 2021 -0600
+
+    fixed comments in tao_idl-generated code
+    
+    (cherry picked from commit f8d8777b9cb4c42d8e693b9c97f8f9469740de76)
+
+commit e66d46e38a26f3113edd07241337205e9842cf40
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 18 15:03:57 2021 +0100
+
+    Fallback to MacOSX 11 latest when we have a not recognized major version
+    
+        * ACE/include/makeinclude/platform_macosx.GNU:
+        * TAO/NEWS:
+
+commit b75ee3d8e1cc3dcad8d508b590167837fe0bfa2a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 17 11:30:38 2021 +0100
+
+    Prepare for next release and make x.0.5 public
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

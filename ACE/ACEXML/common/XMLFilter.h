@@ -40,7 +40,7 @@ public:
   /**
    * Get the parent reader.
    */
-  virtual ACEXML_XMLReader *getParent (void) const = 0;
+  virtual ACEXML_XMLReader *getParent () const = 0;
 
   /**
    * Set the parent reader.

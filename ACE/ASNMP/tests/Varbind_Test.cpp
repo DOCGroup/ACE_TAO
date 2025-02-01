@@ -39,7 +39,7 @@ DAMAGES.
 #include "test_config.h"
 
 /*
-  Vb( void);
+  Vb();
   Vb( const Oid &oid);
   Vb( const Vb &vb);
   Vb( const Oid& vb, const SnmpSyntax &val, const SmiUINT32=SNMP_CLASS_SUCCESS);

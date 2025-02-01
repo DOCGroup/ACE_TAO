@@ -34,14 +34,13 @@ typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
 class ACE_Export ACE_Name_Binding
 {
 public:
-  // = Initialization and termination.
   /// Main constructor that initializes all the fields.
   ACE_Name_Binding (const ACE_NS_WString &n,
                     const ACE_NS_WString &v,
                     const char *t);
 
   /// Default constructor.
-  ACE_Name_Binding (void);
+  ACE_Name_Binding ();
 
   /// Copy constructor.
   ACE_Name_Binding (const ACE_Name_Binding &);
@@ -50,7 +49,7 @@ public:
   const ACE_Name_Binding& operator= (const ACE_Name_Binding &);
 
   /// Destructor.
-  ~ACE_Name_Binding (void);
+  ~ACE_Name_Binding ();
 
   /// Test for equality.
   bool operator == (const ACE_Name_Binding &s) const;
@@ -83,10 +82,9 @@ typedef ACE_Unbounded_Set_Iterator<ACE_NS_WString> ACE_PWSTRING_ITERATOR;
 class ACE_Export ACE_Name_Space
 {
 public:
-
   /// virtual destructor to ensure destructors of subclasses get
   /// called.
-  virtual ~ACE_Name_Space (void);
+  virtual ~ACE_Name_Space ();
 
   /// Bind a new name to a naming context (Wide character strings).
   virtual int bind (const ACE_NS_WString &name_in,
@@ -153,7 +151,7 @@ public:
                                  const ACE_NS_WString &pattern) = 0;
 
   /// Dump the state of the object
-  virtual void dump (void) const = 0;
+  virtual void dump () const = 0;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -4,13 +4,10 @@
 #include "orbsvcs/IFRService/ExtValueDef_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
-
 #include "tao/IFR_Client/IFR_ComponentsC.h"
-
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,12 +18,12 @@ TAO_Container_i::TAO_Container_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_Container_i::~TAO_Container_i (void)
+TAO_Container_i::~TAO_Container_i ()
 {
 }
 
 void
-TAO_Container_i::destroy (void)
+TAO_Container_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -36,14 +33,14 @@ TAO_Container_i::destroy (void)
 }
 
 void
-TAO_Container_i::destroy_i (void)
+TAO_Container_i::destroy_i ()
 {
   this->destroy_references_i();
   this->destroy_definitions_i();
 }
 
 void
-TAO_Container_i::destroy_references_i (void)
+TAO_Container_i::destroy_references_i ()
 {
   int index = 0;
   int status;
@@ -119,7 +116,7 @@ TAO_Container_i::destroy_references_i (void)
 }
 
 void
-TAO_Container_i::destroy_definitions_i (void)
+TAO_Container_i::destroy_definitions_i ()
 {
   int index = 0;
   int status;
@@ -835,7 +832,7 @@ TAO_Container_i::create_constant_i (const char *id,
       TAO_InputCDR in (out);
       mb = in.steal_contents ();
     }
-  ACE_Auto_Ptr<ACE_Message_Block> safe (mb);
+  std::unique_ptr<ACE_Message_Block> safe (mb);
 
   CORBA::TypeCode_var val_tc = value.type ();
 

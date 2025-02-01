@@ -17,18 +17,18 @@ be_visitor_valuebox_field_ci::be_visitor_valuebox_field_ci (
     be_visitor_context *ctx
   )
   : be_visitor_decl (ctx),
-    vb_node_ (0)
+    vb_node_ (nullptr)
 {
 }
 
-be_visitor_valuebox_field_ci::~be_visitor_valuebox_field_ci (void)
+be_visitor_valuebox_field_ci::~be_visitor_valuebox_field_ci ()
 {
 }
 
 int
 be_visitor_valuebox_field_ci::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -42,7 +42,7 @@ be_visitor_valuebox_field_ci::visit_field (be_field *node)
   // Store the valuebox in the visitor member, then replace the
   // context value with the field node.
   this->vb_node_ =
-    be_valuebox::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_valuebox*> (this->ctx_->node ());
   this->ctx_->node (node);
 
   if (bt->accept (this) == -1)
@@ -63,7 +63,7 @@ int
 be_visitor_valuebox_field_ci::visit_array (be_array *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -99,7 +99,7 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
       if (bt->is_nested ())
         {
           be_decl *parent =
-                 be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+                 dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
           ACE_OS::sprintf (fname,
                            "%s::_%s",
                            parent->full_name (),
@@ -120,8 +120,7 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
                        bt->full_name ());
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "/// Modifier to set the member." << be_nl;
 
@@ -138,7 +137,7 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
 
   *os << "ACE_INLINE const " << fname << "_slice *" << be_nl
       << vb_node_->name () << "::" << field->local_name ()
-      << " (void) const" << be_nl
+      << " () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->" << field->local_name ()
       << ";" << be_uidt_nl
@@ -151,7 +150,7 @@ int
 be_visitor_valuebox_field_ci::visit_enum (be_enum *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -174,9 +173,7 @@ be_visitor_valuebox_field_ci::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
-
+  TAO_INSERT_COMMENT (os);
 
   this->emit_member_set (field, bt, "", "");
   this->emit_member_get (field, bt, "", "", "const", "");
@@ -188,7 +185,7 @@ int
 be_visitor_valuebox_field_ci::visit_interface (be_interface *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -211,8 +208,7 @@ be_visitor_valuebox_field_ci::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "// Modifier to set the member." << be_nl;
 
@@ -234,7 +230,7 @@ int
 be_visitor_valuebox_field_ci::visit_interface_fwd (be_interface_fwd *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -257,8 +253,7 @@ be_visitor_valuebox_field_ci::visit_interface_fwd (be_interface_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "// Modifier to set the member." << be_nl;
 
@@ -308,7 +303,7 @@ int
 be_visitor_valuebox_field_ci::visit_predefined_type (be_predefined_type *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -331,8 +326,7 @@ be_visitor_valuebox_field_ci::visit_predefined_type (be_predefined_type *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   switch (node->pt ())
   {
@@ -342,7 +336,7 @@ be_visitor_valuebox_field_ci::visit_predefined_type (be_predefined_type *node)
 
       *os << "ACE_INLINE void" << be_nl
           << vb_node_->name () << "::" << field->local_name ()
-          << " ( ::" << bt->name () << "_ptr val)"
+          << " (::" << bt->name () << "_ptr val)"
           << be_nl << "{" << be_idt_nl
           << "this->_pd_value->" << field->local_name ()
           << " = ::" << bt->name() << "::_duplicate (val);" << be_uidt_nl
@@ -370,7 +364,7 @@ int
 be_visitor_valuebox_field_ci::visit_sequence (be_sequence *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -393,8 +387,7 @@ be_visitor_valuebox_field_ci::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_member_set (field, bt, "const ", " &");
   this->emit_member_get (field, bt, "const ", " &", "const", "");
@@ -407,7 +400,7 @@ int
 be_visitor_valuebox_field_ci::visit_string (be_string *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -430,8 +423,7 @@ be_visitor_valuebox_field_ci::visit_string (be_string *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_member_set (field, bt, "", "");
   this->emit_member_set (field, bt, "const ", "");
@@ -465,7 +457,7 @@ int
 be_visitor_valuebox_field_ci::visit_structure (be_structure *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -488,8 +480,7 @@ be_visitor_valuebox_field_ci::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_member_set (field, bt, "const ", " &");
   this->emit_member_get (field, bt, "const ", " &", "const", "");
@@ -513,7 +504,7 @@ be_visitor_valuebox_field_ci::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -521,7 +512,7 @@ int
 be_visitor_valuebox_field_ci::visit_union (be_union *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -544,8 +535,7 @@ be_visitor_valuebox_field_ci::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_member_set (field, bt, "const ", " &");
   this->emit_member_get (field, bt, "const ", " &", "const", "");
@@ -571,7 +561,6 @@ be_visitor_valuebox_field_ci::emit_member_set (be_decl *field,
       << "this->_pd_value->" << field->local_name ()
       << " = val;" << be_uidt_nl
       << "}" << be_nl_2;
-
 }
 
 void
@@ -589,7 +578,7 @@ be_visitor_valuebox_field_ci::emit_member_get (be_decl *field,
   *os << "ACE_INLINE " << const_prefix << field_type->name () << type_suffix
       << be_nl
       << vb_node_->name () << "::" << field->local_name ()
-      << " (void) " << const_method << be_nl
+      << " () " << const_method << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->" << field->local_name () << access_modifier
       << ";" << be_uidt_nl

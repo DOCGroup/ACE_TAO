@@ -5,8 +5,7 @@
  *  @file    Process_Strategy_Test.h
  *
  *  This file contains the definition of Counting_Service and
- *  Options.  Some compilers need it in a .h file for template
- *  instantiation (such as AIX C Set ++).
+ *  Options.
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu> and Kevin Boyle <kboyle@sanwafp.com>
  */
@@ -50,14 +49,14 @@ protected:
   // = Methods invoked via "pointer to method" table entry.
 
   /// Handle the THREAD case.
-  virtual int svc (void);
+  virtual int svc ();
 
   // = Operations corresponding to requests from the client.
   /// Execute the read operation on the file.
-  int read (void);
+  int read ();
 
   /// Execute the increment operation on the file.
-  int inc (void);
+  int inc ();
 
   // = Hooks called by <Reactor> and <Strategy_Acceptor>.
 
@@ -72,7 +71,6 @@ protected:
 class Process_Strategy : public ACE_Process_Strategy<Counting_Service>
 {
 public:
-
   // Constructor
   Process_Strategy (size_t n_processes = 1,
                     ACE_Event_Handler *acceptor = 0,
@@ -80,7 +78,7 @@ public:
                     int flags = 0);
 
   // Destructor
-  ~Process_Strategy (void);
+  ~Process_Strategy ();
 
   // Overwrite the process creation method to include connection
   // counting
@@ -97,10 +95,10 @@ class Options : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Options (void);
+  Options ();
 
   /// Destructor.
-  ~Options (void);
+  ~Options ();
 
   /// Read command-line arguments and initialize options.
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -113,17 +111,17 @@ public:
   };
 
   // = Get/set concurrency type.
-  Concurrency_Type concurrency_type (void);
+  Concurrency_Type concurrency_type ();
   void concurrency_type (Concurrency_Type);
 
   /// Returns the file lock.
-  ACE_File_Lock &file_lock (void);
+  ACE_File_Lock &file_lock ();
 
   /// Returns the filename that we're using as the lock.
-  const ACE_TCHAR *filename (void);
+  const ACE_TCHAR *filename ();
 
   /// Returns the concurrency strategy.
-  ACE_Concurrency_Strategy <Counting_Service> *concurrency_strategy (void);
+  ACE_Concurrency_Strategy <Counting_Service> *concurrency_strategy ();
 
 private:
   /// Concurrency strategy that we're running.

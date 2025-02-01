@@ -18,7 +18,6 @@ class Svc_Handler : public ACE_Svc_Handler <PEER_STREAM, ACE_NULL_SYNCH>
   //     This class does the work once the <ACE_Oneshot_Acceptor> has
   //     accepted a connection.
 public:
-  // = Initialization method.
   Svc_Handler (ACE_Reactor *r);
 
   virtual int open (void *);
@@ -44,11 +43,10 @@ class IPC_Server : public ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>
   // = TITLE
   //     This class illustrates how the <ACE_Oneshot_Acceptor> works.
 public:
-  // = Initialization and termination.
-  IPC_Server (void);
+  IPC_Server ();
   // Constructor.
 
-  ~IPC_Server (void);
+  ~IPC_Server ();
   // Destructor.
 
   // = Demultiplexing hooks.
@@ -61,10 +59,10 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the network server.
 
-  virtual int fini (void);
+  virtual int fini ();
   // Close down the server.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Run the interative service.
 
 private:
@@ -82,12 +80,6 @@ private:
   // signal.
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "CPP-acceptor.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("CPP-acceptor.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* CPP_ACCEPTOR_H */

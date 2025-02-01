@@ -287,7 +287,6 @@ int FT_ReplicaFactory_i::idle (int & result)
 }
 
 
-
 int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
 {
   int result = 0;
@@ -498,7 +497,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
   return result;
 }
 
-int FT_ReplicaFactory_i::fini (void)
+int FT_ReplicaFactory_i::fini ()
 {
   if (this->ior_output_file_ != 0)
   {
@@ -703,13 +702,13 @@ void FT_ReplicaFactory_i::delete_object (
   METHOD_RETURN(FT_ReplicaFactory_i::delete_object);
 }
 
-CORBA::Boolean FT_ReplicaFactory_i::is_alive (void)
+CORBA::Boolean FT_ReplicaFactory_i::is_alive ()
 {
   METHOD_RETURN(FT_ReplicaFactory_i::is_alive)
     true;
 }
 
-void FT_ReplicaFactory_i::shutdown (void)
+void FT_ReplicaFactory_i::shutdown ()
 {
   METHOD_ENTRY(FT_FaultDetectorFactory_i::shutdown);
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);

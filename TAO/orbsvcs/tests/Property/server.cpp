@@ -13,13 +13,11 @@
 #include "server.h"
 
 
-
 // Main program
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
@@ -86,7 +84,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Run the ORB Event loop.
       orb->run ();
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

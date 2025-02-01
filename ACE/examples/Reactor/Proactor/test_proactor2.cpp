@@ -35,7 +35,6 @@
 #include "ace/OS_main.h"
 
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
@@ -82,14 +81,12 @@ static int initial_read_size = BUFSIZ;
 //--------------------------------------------------------------------------
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
-
 public:
-
-  int svc (void) ;
+  int svc () ;
 };
 
 
-int MyTask::svc (void )
+int MyTask::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) MyTask started\n"));
 
@@ -108,9 +105,8 @@ int MyTask::svc (void )
 class Receiver : public ACE_Service_Handler
 {
 public:
-
-  Receiver (void);
-  ~Receiver (void);
+  Receiver ();
+  ~Receiver ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// This is called after the new connection has been accepted.
@@ -132,7 +128,7 @@ protected:
                                     &result);
 
 private:
-  int  initiate_read_stream  (void);
+  int  initiate_read_stream  ();
   int  initiate_write_stream (ACE_Message_Block & mb, int nBytes );
   bool check_destroy () ;
 
@@ -147,7 +143,7 @@ private:
 
 long Receiver::nSessions = 0 ;
 
-Receiver::Receiver (void)
+Receiver::Receiver ()
   : handle_ (ACE_INVALID_HANDLE),
     nIOCount ( 0 )
 {
@@ -156,7 +152,7 @@ Receiver::Receiver (void)
   ACE_DEBUG ((LM_DEBUG, "Receiver Ctor nSessions=%d\n", nSessions ));
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
   ACE_GUARD (MyMutex, locker, m_Mtx);
   nSessions -- ;
@@ -198,7 +194,6 @@ void Receiver::open (ACE_HANDLE handle,
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "ACE_Asynch_Write_Stream::open"));
-
     }
   else if (this->rs_.open (*this, this->handle_) == -1)
     {
@@ -215,7 +210,7 @@ void Receiver::open (ACE_HANDLE handle,
   check_destroy ();
 }
 
-int Receiver::initiate_read_stream (void)
+int Receiver::initiate_read_stream ()
 {
   ACE_GUARD_RETURN (MyMutex, locker, m_Mtx, -1);
 
@@ -364,15 +359,15 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result
 class Sender : public ACE_Handler
 {
 public:
-  Sender (void);
-  ~Sender (void);
+  Sender ();
+  ~Sender ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
   int open (const ACE_TCHAR *host, u_short port);
   void close ();
 
-  ACE_HANDLE handle (void) const;
+  ACE_HANDLE handle () const;
   void handle (ACE_HANDLE);
 
 protected:
@@ -387,9 +382,8 @@ virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
 &result);
 
 private:
-
-int initiate_read_stream (void);
-int initiate_write_stream (void);
+int initiate_read_stream ();
+int initiate_write_stream ();
 
 /// Network I/O handle
 ACE_SOCK_Stream stream_;
@@ -409,14 +403,14 @@ long    nIOCount ;
 
 static const char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
 
-Sender::Sender (void)
+Sender::Sender ()
   :nIOCount ( 0 )
 {
   // Moment of inspiration... :-)
   this->welcome_message_.init (data, ACE_OS::strlen (data));
 }
 
-Sender::~Sender (void)
+Sender::~Sender ()
 {
   this->close ();
 }
@@ -426,7 +420,7 @@ void Sender::close ()
   this->stream_.close ();
 }
 
-ACE_HANDLE Sender::handle (void) const
+ACE_HANDLE Sender::handle () const
 {
   return this->stream_.get_handle ();
 }
@@ -480,7 +474,7 @@ int Sender::open (const ACE_TCHAR *host, u_short port)
   return 0;
 }
 
-int Sender::initiate_write_stream (void)
+int Sender::initiate_write_stream ()
 {
   ACE_GUARD_RETURN (MyMutex, locker, m_Mtx, -1);
 
@@ -502,7 +496,7 @@ int Sender::initiate_write_stream (void)
   return 0;
 }
 
-int Sender::initiate_read_stream (void)
+int Sender::initiate_read_stream ()
 {
   ACE_GUARD_RETURN (MyMutex, locker, m_Mtx, -1);
 
@@ -704,7 +698,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       // Simplify , initial read with  zero size
       Rc = acceptor.open (ACE_INET_Addr (port),0,1);
-
     }
   else
     {
@@ -740,7 +733,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 //--------------------------------------------------------------------
 int DisableSignal ( int SigNum )
 {
-
 #ifndef ACE_WIN32
   sigset_t signal_set;
   if ( ACE_OS::sigemptyset (&signal_set) == - 1 )

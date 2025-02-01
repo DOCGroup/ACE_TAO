@@ -39,7 +39,7 @@ class ACE_String_Base_Const_Iterator;
  * @brief This class provides a wrapper facade for C strings.
  *
  * This class uses an ACE_Allocator to allocate memory.  The
- * user can make this a persistant class by providing an
+ * user can make this a persistent class by providing an
  * ACE_Allocator with a persistable memory pool.  This class is
  * optimized for efficiency, so it doesn't provide any internal
  * locking.
@@ -102,7 +102,7 @@ public:
    * @return ACE_String_Base containing const ACE_CHAR_T *s
    */
   ACE_String_Base (const ACE_CHAR_T *s,
-                   ACE_Allocator *the_allocator = 0,
+                   ACE_Allocator *the_allocator = nullptr,
                    bool release = true);
 
   /**
@@ -124,7 +124,7 @@ public:
    */
   ACE_String_Base (const ACE_CHAR_T *s,
                    size_type len,
-                   ACE_Allocator *the_allocator = 0,
+                   ACE_Allocator *the_allocator = nullptr,
                    bool release = true);
 
   /**
@@ -133,7 +133,7 @@ public:
    *  @param s Input ACE_String_Base string to copy
    *  @return Copy of input string @a s
    */
-  ACE_String_Base (const ACE_String_Base < ACE_CHAR_T > &s);
+  ACE_String_Base (const ACE_String_Base <ACE_CHAR_T> &s);
 
   /**
    *  Constructor that copies @a c into dynamically allocated memory.
@@ -159,15 +159,15 @@ public:
    */
   ACE_String_Base (size_type len,
                    ACE_CHAR_T c = 0,
-                   ACE_Allocator *the_allocator = 0);
+                   ACE_Allocator *the_allocator = nullptr);
 
   /**
    *  Deletes the memory...
    */
-  ~ACE_String_Base (void);
+  ~ACE_String_Base ();
 
   /**
-   * Return the <slot'th> character in the string (doesn't perform
+   * Return the slot'th character in the string (doesn't perform
    * bounds checking).
    *
    * @param slot Index of the desired character
@@ -176,7 +176,7 @@ public:
   const ACE_CHAR_T & operator[] (size_type slot) const;
 
   /**
-   * Return the <slot'th> character by reference in the string
+   * Return the slot'th character by reference in the string
    * (doesn't perform bounds checking).
    *
    * @param slot Index of the desired character
@@ -190,7 +190,7 @@ public:
    *  @param s Input null-terminated ACE_CHAR_T string to assign to this object.
    *  @return Return a copy of the this string.
    */
-  ACE_String_Base < ACE_CHAR_T > &operator = (const ACE_CHAR_T * s);
+  ACE_String_Base <ACE_CHAR_T> &operator = (const ACE_CHAR_T * s);
 
   /**
    *  Assignment operator (does copy memory).
@@ -198,7 +198,7 @@ public:
    *  @param s Input ACE_String_Base string to assign to this object.
    *  @return Return a copy of the this string.
    */
-  ACE_String_Base < ACE_CHAR_T > &operator = (const ACE_String_Base < ACE_CHAR_T > &s);
+  ACE_String_Base <ACE_CHAR_T> &operator = (const ACE_String_Base <ACE_CHAR_T> &s);
 
   /**
    *  Assignment alternative method (does not copy memory).
@@ -206,7 +206,7 @@ public:
    *  @param s Input ACE_String_Base string to assign to this object.
    *  @return Return this string.
    */
-  ACE_String_Base < ACE_CHAR_T > &assign_nocopy (const ACE_String_Base < ACE_CHAR_T > &s);
+  ACE_String_Base <ACE_CHAR_T> &assign_nocopy (const ACE_String_Base <ACE_CHAR_T> &s);
 
   /**
    * Copy @a s into this @a ACE_String_Base.
@@ -250,11 +250,11 @@ public:
   /**
    * Clear this string. Memory is _not_ freed if @a release is false.
    *
-   * Warning: This method was incorrectly documented in the past, but
+   * @warning This method was incorrectly documented in the past, but
    * the current implementation has been changed to match the documented
    * behavior.
    *
-   * Warning: clear(false) behaves like fast_clear() below.
+   * @warning clear(false) behaves like fast_clear() below.
    *
    * @param release Memory is freed if true, and not freed if false.
    */
@@ -272,13 +272,13 @@ public:
    *    maintain a pointer to the caller-supplied buffer on return
    *  - the maximum string length is reset to 0.
    *
-   * Warning : Calling clear(false) or fast_clear() can have unintended
+   * @warning Calling clear(false) or fast_clear() can have unintended
    *   side-effects if the string was constructed (or set()) with an
    *   external buffer. The string will be disassociated with the buffer
    *   and the next append() or +=() will cause a new buffer to be
    *   allocated internally.
    */
-  void fast_clear (void);
+  void fast_clear ();
 
   /**
    * Return a substring given an offset and length.
@@ -289,8 +289,8 @@ public:
    * @param length How many characters to return starting at the offset.
    * @return The string containing the desired substring
    */
-  ACE_String_Base < ACE_CHAR_T > substring (size_type offset,
-                                      size_type length = npos) const;
+  ACE_String_Base <ACE_CHAR_T> substring (size_type offset,
+                                          size_type length = npos) const;
 
   /**
    *  Same as <substring>.
@@ -299,8 +299,8 @@ public:
    * @param length How many characters to return starting at the offset.
    * @return The string containing the desired substring
    */
-  ACE_String_Base < ACE_CHAR_T > substr (size_type offset,
-                                   size_type length = npos) const;
+  ACE_String_Base <ACE_CHAR_T> substr (size_type offset,
+                                       size_type length = npos) const;
 
   /**
    *  Concat operator (copies memory).
@@ -309,7 +309,7 @@ public:
    *  @return The combined string (input append to the end of the old). New
    *    string is zero terminated.
    */
-  ACE_String_Base < ACE_CHAR_T > &operator += (const ACE_String_Base < ACE_CHAR_T > &s);
+  ACE_String_Base <ACE_CHAR_T> &operator += (const ACE_String_Base <ACE_CHAR_T> &s);
 
   /**
    *  Concat operator (copies memory).
@@ -318,7 +318,7 @@ public:
    *  @return The combined string (input append to the end of the old). New
    *    string is zero terminated.
    */
-  ACE_String_Base < ACE_CHAR_T >& operator += (const ACE_CHAR_T* s);
+  ACE_String_Base <ACE_CHAR_T>& operator += (const ACE_CHAR_T* s);
 
   /**
    *  Concat operator (copies memory).
@@ -327,7 +327,7 @@ public:
    *  @return The combined string (input append to the end of the old). New
    *    string is zero terminated.
    */
-  ACE_String_Base < ACE_CHAR_T >& operator += (const ACE_CHAR_T c);
+  ACE_String_Base <ACE_CHAR_T>& operator += (const ACE_CHAR_T c);
 
   /**
    *  Append function (copies memory).
@@ -337,21 +337,21 @@ public:
    *  @return The combined string (input append to the end of the old). New
    *    string is zero terminated.
    */
-  ACE_String_Base < ACE_CHAR_T >& append (const ACE_CHAR_T* s, size_type slen);
+  ACE_String_Base <ACE_CHAR_T>& append (const ACE_CHAR_T* s, size_type slen);
 
   /**
    *  Returns a hash value for this string.
    *
    *  @return Hash value of string
    */
-  u_long hash (void) const;
+  u_long hash () const;
 
   /**
    *  Return the length of the string.
    *
    *  @return Length of stored string
    */
-  size_type length (void) const;
+  size_type length () const;
 
   /**
    *  Return the number of allocated CHARs in the string object.
@@ -360,19 +360,19 @@ public:
    *  @return Maximum number of ACE_CHAR_T units that can be stored, including
    *          any terminating nul that may be needed.
    */
-  size_t capacity (void) const;
+  size_t capacity () const;
 
   /**
    * Return @c true if the length of the string is zero, else @c false.
    */
-  bool is_empty (void) const;
+  bool is_empty () const;
 
   /**
    * Return @c true if the length of the string is zero, else @c
    * false.  We recommend using @c is_empty() instead since it's more
    * consistent with the ACE container naming conventions.
    */
-  bool empty (void) const;
+  bool empty () const;
 
   /**
    * Get a copy of the underlying representation.
@@ -384,7 +384,7 @@ public:
    * @return Pointer reference to the string data. Returned string is
    *    zero terminated.
    */
-  ACE_CHAR_T *rep (void) const;
+  ACE_CHAR_T *rep () const;
 
   /**
    * Get at the underlying representation directly!
@@ -395,12 +395,12 @@ public:
    *    that the string is zero terminated.
    *
    */
-  const ACE_CHAR_T *fast_rep (void) const;
+  const ACE_CHAR_T *fast_rep () const;
 
   /**
    *  Same as STL String's c_str() and fast_rep().
    */
-  const ACE_CHAR_T *c_str (void) const;
+  const ACE_CHAR_T *c_str () const;
 
   /**
    *  Comparison operator that will match substrings.  Returns the
@@ -516,7 +516,7 @@ public:
   /**
    *  Dump the state of an object.
    */
-  void dump (void) const;
+  void dump () const;
 
   /**
    * This method is designed for high-performance. Please use with
@@ -546,11 +546,11 @@ public:
    */
   void swap (ACE_String_Base<ACE_CHAR_T> & str);
 
-  iterator begin (void);
-  const_iterator begin (void) const;
+  iterator begin ();
+  const_iterator begin () const;
 
-  iterator end (void);
-  const_iterator end (void) const;
+  iterator end ();
+  const_iterator end () const;
 
   /**
    *  Declare the dynamic allocation hooks.
@@ -627,7 +627,7 @@ public:
   ACE_String_Base_Iterator (const ACE_String_Base_Iterator <ACE_CHAR_T> & iter);
 
   /// Destructor.
-  ~ACE_String_Base_Iterator (void);
+  ~ACE_String_Base_Iterator ();
 
   /**
    * Test if the iterator has seen all characters.
@@ -635,7 +635,7 @@ public:
    * @retval          0         Characters still remain.
    * @retval          1         All characters have been seen.
    */
-  int done (void) const;
+  int done () const;
 
   /**
    * Get the current character.
@@ -652,7 +652,7 @@ public:
    * @retval         0          All characters have been seen.
    * @retval         1          Items still remain to be seen.
    */
-  int advance (void);
+  int advance ();
 
   /**
    * Assignment operator
@@ -667,12 +667,12 @@ public:
    *
    * @return          Reference to current character seen by iterator.
    */
-  ACE_CHAR_T & operator * (void);
+  ACE_CHAR_T & operator * ();
 
   /**
    * Prefix operator
    */
-  ACE_String_Base_Iterator <ACE_CHAR_T> & operator ++ (void);
+  ACE_String_Base_Iterator <ACE_CHAR_T> & operator ++ ();
 
   /**
    * Postfix operator
@@ -682,7 +682,7 @@ public:
   /**
    * Prefix operator
    */
-  ACE_String_Base_Iterator <ACE_CHAR_T> & operator -- (void);
+  ACE_String_Base_Iterator <ACE_CHAR_T> & operator -- ();
 
   /**
    * Postfix operator
@@ -754,7 +754,7 @@ public:
   ACE_String_Base_Const_Iterator (const ACE_String_Base_Const_Iterator <ACE_CHAR_T> & iter);
 
   /// Destructor.
-  ~ACE_String_Base_Const_Iterator (void);
+  ~ACE_String_Base_Const_Iterator ();
 
   /**
    * Test if the iterator has seen all characters.
@@ -762,7 +762,7 @@ public:
    * @retval          0         Characters still remain.
    * @retval          1         All characters have been seen.
    */
-  int done (void) const;
+  int done () const;
 
   /**
    * Get the current character.
@@ -779,7 +779,7 @@ public:
    * @retval         0          All characters have been seen.
    * @retval         1          Items still remain to be seen.
    */
-  int advance (void);
+  int advance ();
 
   /**
    * Assignment operator
@@ -794,12 +794,12 @@ public:
    *
    * @return          Reference to current character seen by iterator.
    */
-  const ACE_CHAR_T & operator * (void);
+  const ACE_CHAR_T & operator * ();
 
   /**
    * Prefix operator
    */
-  ACE_String_Base_Const_Iterator <ACE_CHAR_T> & operator ++ (void);
+  ACE_String_Base_Const_Iterator <ACE_CHAR_T> & operator ++ ();
 
   /**
    * Postfix operator
@@ -809,7 +809,7 @@ public:
   /**
    * Prefix operator
    */
-  ACE_String_Base_Const_Iterator <ACE_CHAR_T> & operator -- (void);
+  ACE_String_Base_Const_Iterator <ACE_CHAR_T> & operator -- ();
 
   /**
    * Postfix operator
@@ -845,22 +845,22 @@ private:
 };
 
 template < class ACE_CHAR_T >
-  ACE_String_Base < ACE_CHAR_T > operator + (const ACE_String_Base < ACE_CHAR_T > &,
-                                       const ACE_String_Base < ACE_CHAR_T > &);
+  ACE_String_Base <ACE_CHAR_T> operator + (const ACE_String_Base <ACE_CHAR_T> &,
+                                       const ACE_String_Base <ACE_CHAR_T> &);
 template < class ACE_CHAR_T >
-  ACE_String_Base < ACE_CHAR_T > operator + (const ACE_String_Base < ACE_CHAR_T > &,
+  ACE_String_Base <ACE_CHAR_T> operator + (const ACE_String_Base <ACE_CHAR_T> &,
                                        const ACE_CHAR_T *);
 template < class ACE_CHAR_T >
-  ACE_String_Base < ACE_CHAR_T > operator + (const ACE_CHAR_T *,
-                                       const ACE_String_Base < ACE_CHAR_T > &);
+  ACE_String_Base <ACE_CHAR_T> operator + (const ACE_CHAR_T *,
+                                       const ACE_String_Base <ACE_CHAR_T> &);
 
 template < class ACE_CHAR_T >
-  ACE_String_Base < ACE_CHAR_T > operator + (const ACE_String_Base < ACE_CHAR_T > &t,
+  ACE_String_Base <ACE_CHAR_T> operator + (const ACE_String_Base <ACE_CHAR_T> &t,
                                        const ACE_CHAR_T c);
 
 template < class ACE_CHAR_T >
-  ACE_String_Base < ACE_CHAR_T > operator + (const ACE_CHAR_T c,
-                                       const ACE_String_Base < ACE_CHAR_T > &t);
+  ACE_String_Base <ACE_CHAR_T> operator + (const ACE_CHAR_T c,
+                                       const ACE_String_Base <ACE_CHAR_T> &t);
 
 template <class ACE_CHAR_T>
   bool operator == (const ACE_CHAR_T *s,
@@ -876,13 +876,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/String_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/String_Base.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("String_Base.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

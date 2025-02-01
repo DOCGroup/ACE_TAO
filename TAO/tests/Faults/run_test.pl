@@ -88,7 +88,7 @@ print STDERR "===== Client crash (abort) during upcall\n";
 
 $CL->Arguments ("-k file://$client_iorfile -i 100 -s");
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval(), {self_crash => 1});
 
 if ($client_status == -1) {
     print STDERR "ERROR: client returned $client_status\n";
@@ -122,7 +122,7 @@ if ($client_status != 0) {
     exit 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval(), {self_crash => 1});
 
 if ($server_status == -1) {
     print STDERR "ERROR: server returned $server_status\n";
@@ -245,7 +245,7 @@ if ($client->PutFile ($midiorbase) == -1) {
 
 $CL->Arguments ("-k file://$client_midiorfile -i 100 -s");
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 85);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 85, {self_crash => 1});
 
 if ($client_status == -1) {
     print STDERR "ERROR: client returned $client_status\n";
@@ -335,7 +335,7 @@ print STDERR "===== Client crash (abort) during upcall\n";
 
 $CL->Arguments ("-k file://$client_iorfile -i 100 -s");
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval(), {self_crash => 1});
 
 if ($client_status == -1) {
     print STDERR "ERROR: client returned $client_status\n";
@@ -369,7 +369,7 @@ if ($client_status != 0) {
     exit 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval(), {self_crash => 1});
 
 if ($server_status == -1) {
     print STDERR "ERROR: server returned $server_status\n";
@@ -488,7 +488,7 @@ if ($client->PutFile ($midiorbase) == -1) {
 
 $CL->Arguments ("-k file://$client_midiorfile -i 100 -s");
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 85);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 85, {self_crash => 1});
 
 if ($client_status == -1) {
     print STDERR "ERROR: client returned $client_status\n";

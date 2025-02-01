@@ -19,7 +19,7 @@ be_visitor_operation_upcall_command_ss::be_visitor_operation_upcall_command_ss (
 }
 
 be_visitor_operation_upcall_command_ss::~be_visitor_operation_upcall_command_ss (
-  void)
+  )
 {
 }
 
@@ -35,8 +35,8 @@ be_visitor_operation_upcall_command_ss::visit (
     }
 
   be_interface * const intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
+    ? dynamic_cast<be_interface*> (this->ctx_->attribute ()->defined_in ())
+    : dynamic_cast<be_interface*> (node->defined_in ());
 
   if (!intf)
     {
@@ -47,7 +47,7 @@ be_visitor_operation_upcall_command_ss::visit (
                         -1);
     }
 
-  be_module *module = 0;
+  be_module *module = nullptr;
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -57,9 +57,9 @@ be_visitor_operation_upcall_command_ss::visit (
   if (intf->is_nested () &&
       intf->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
-      module = be_module::narrow_from_scope (intf->defined_in ());
+      module = dynamic_cast<be_module*> (intf->defined_in ());
 
-      if (module == 0)
+      if (module == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_operation_")
@@ -76,8 +76,7 @@ be_visitor_operation_upcall_command_ss::visit (
   // save the node.
   this->ctx_->node (node);
 
-  os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // Generate the operation-specific TAO::Upcall_Command concrete
   // class.
@@ -134,7 +133,7 @@ be_visitor_operation_upcall_command_ss::visit (
      << "}" << be_nl_2;
 
   // Generate execute() method.
-  os << "virtual void execute (void)" << be_nl
+  os << "void execute () override" << be_nl
      << "{" << be_idt_nl;
 
   if (!node->void_return_type ())
@@ -200,7 +199,7 @@ be_visitor_operation_upcall_command_ss::visit (
   os << be_uidt_nl
      << "};";
 
-  if (module != 0)
+  if (module != nullptr)
     {
       be_util::gen_nested_namespace_end (&os, module);
     }
@@ -221,25 +220,24 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
   const char *op_name = node->flat_name ();
   static const char *excep_suffix = "_excep";
   static const size_t excep_suffix_len = ACE_OS::strlen (excep_suffix);
-  bool excep_method = ((ACE_OS::strstr (op_name, excep_suffix) +
-                        excep_suffix_len) ==
-                       (op_name + ACE_OS::strlen (op_name)));
+  const char *substr = ACE_OS::strstr (op_name, excep_suffix);
+  bool excep_method = substr && substr + excep_suffix_len == op_name + ACE_OS::strlen (op_name);
 
   for (; !si.is_done (); si.next (), ++index)
     {
       AST_Argument * const arg =
-        AST_Argument::narrow_from_decl (si.item ());
+        dynamic_cast<AST_Argument*> (si.item ());
 
       // Finish the check for the _excep method
       if (excep_method)
         {
           excep_method = false;
           be_argument *argument =
-            be_argument::narrow_from_decl (si.item ());
+            dynamic_cast<be_argument*> (si.item ());
           be_valuetype *value_type =
-            be_valuetype::narrow_from_decl (argument->field_type ());
+            dynamic_cast<be_valuetype*> (argument->field_type ());
 
-          if (value_type != 0)
+          if (value_type != nullptr)
             {
               static const char *excepholder = "ExceptionHolder";
               static const size_t excepholder_len =
@@ -334,7 +332,6 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
         }
 
       os << be_uidt_nl;
-
     }
 
   --index;
@@ -355,10 +352,10 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
         }
 
       os << be_nl
-         << "TAO::ExceptionHolder *tao_excepholder = " << be_idt_nl
+         << "TAO::ExceptionHolder *tao_excepholder = "
          << "dynamic_cast<TAO::ExceptionHolder *> (arg_" << index
-         << ");" << be_uidt_nl
-         << "if (tao_excepholder != 0)" << be_idt_nl
+         << ");" << be_nl
+         << "if (tao_excepholder)" << be_idt_nl
          << "{" << be_idt_nl
          << "tao_excepholder->set_exception_data "
             "(_tao_" << op_name << "_exceptiondata, " << exceptions_count << ");" << be_uidt_nl

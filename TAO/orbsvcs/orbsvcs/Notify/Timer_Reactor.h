@@ -35,7 +35,7 @@ public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer_Reactor > Ptr;
 
   /// Constructor
-  TAO_Notify_Timer_Reactor (void);
+  TAO_Notify_Timer_Reactor ();
 
   /// Destructor
   virtual ~TAO_Notify_Timer_Reactor ();
@@ -54,7 +54,7 @@ protected:
 
 private:
   /// Release
-  virtual void release (void);
+  virtual void release ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

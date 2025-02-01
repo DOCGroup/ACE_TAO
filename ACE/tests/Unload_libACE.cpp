@@ -26,10 +26,6 @@
 #endif /* !ACE_VXWORKS && !__MINGW32__ && !CYGWIN32 */
 #endif /* __GNUC__ */
 
-#if defined (__hpux) || defined (__SUNPRO_CC)
-#define UNLOAD_LIBACE_TEST 1
-#endif /* (__hpux) || (__SUNPRO_CC) */
-
 #if defined (ACE_AS_STATIC_LIBS)
 #undef UNLOAD_LIBACE_TEST
 #endif /* ACE_AS_STATIC_LIBS */
@@ -160,9 +156,7 @@ main (int, char **)
 #else
           strcat (buf, "ACE");
 #endif /* ACE_LIB_NAME */
-#if defined (__hpux) && !(defined (__ia64) && (__ia64 == 1))
-          strcat (buf, ".sl");
-#elif defined (__APPLE__)
+#if defined (__APPLE__)
           strcat (buf, ".dylib");
 #else
           strcat (buf, ".so");
@@ -240,11 +234,9 @@ main (int, char **)
 #else
 # if defined (WIN32) && defined (ACE_USES_WCHAR)
 // Borrow include list from ace_wchar.h
-# if defined (ACE_HAS_WINCE)
-#   include /**/ <wtypes.h>
-# elif !defined (__BORLANDC__)
+# if !defined (__BORLANDC__)
 #   include /**/ <wchar.h>
-# endif /* ACE_HAS_WINCE || __BORLANDC__ */
+# endif /* __BORLANDC__ */
 
 int
 wmain (int, wchar_t **)

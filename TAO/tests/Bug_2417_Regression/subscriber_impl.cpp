@@ -27,5 +27,5 @@ Subscriber_impl::isAlive ()
 
 void Subscriber_impl::shutdown()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -11,7 +11,6 @@
 class Echo : public POA_Test::Echo
 {
 public:
-
   Echo (CORBA::ORB_ptr orb,
         int abort_counter);
 

@@ -1,12 +1,12 @@
 #include "orbsvcs/Log/EventLogFactory_i.h"
 #include "orbsvcs/Log/LogNotification.h"
 #include "orbsvcs/Log/EventLogNotification.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_stdio.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EventLogFactory_i::TAO_EventLogFactory_i (void) :
+TAO_EventLogFactory_i::TAO_EventLogFactory_i () :
   impl (0),
   notifier_ (0)
 {
@@ -33,7 +33,7 @@ TAO_EventLogFactory_i::TAO_EventLogFactory_i (void) :
     }
 }
 
-TAO_EventLogFactory_i::~TAO_EventLogFactory_i (void)
+TAO_EventLogFactory_i::~TAO_EventLogFactory_i ()
 {
   // No-Op.
 }
@@ -45,7 +45,7 @@ TAO_EventLogFactory_i::init (PortableServer::POA_ptr /* poa */)
 
   CosEventChannelAdmin::EventChannel_var ec_return;
 
-  auto_ptr <TAO_CEC_EventChannel> ec (impl);
+  std::unique_ptr <TAO_CEC_EventChannel> ec (impl);
 
   PortableServer::ObjectId_var oid =
     this->poa_->activate_object (ec.get ());
@@ -186,13 +186,13 @@ TAO_EventLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_EventLogFactory_i::obtain_push_supplier (void)
+TAO_EventLogFactory_i::obtain_push_supplier ()
 {
   return consumer_admin_->obtain_push_supplier ();
 }
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
-TAO_EventLogFactory_i::obtain_pull_supplier (void)
+TAO_EventLogFactory_i::obtain_pull_supplier ()
 
 {
   return consumer_admin_->obtain_pull_supplier ();

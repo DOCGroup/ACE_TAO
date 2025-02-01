@@ -10,7 +10,7 @@ Messenger_i::Messenger_i (CORBA::ORB_var orb)
 }
 
 // Implementation skeleton destructor
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 
@@ -56,7 +56,7 @@ Messenger_i::call_message (const char * user_name)
 }
 
 void
-Messenger_i::shutdown (void)
+Messenger_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

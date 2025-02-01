@@ -42,19 +42,15 @@ class TAO_DTP_ORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
-
-  TAO_DTP_ORBInitializer (void);
+  TAO_DTP_ORBInitializer ();
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
 private:
-
   /// Register Dynamic_TP policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
-
-private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

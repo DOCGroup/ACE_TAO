@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -33,8 +31,8 @@
       if (RESULT == FAILVALUE) { int ___ = ::WSAGetLastError (); errno = ___; RESULT = FAILVALUE; } \
   } while (0)
 #else
-# define ACE_SOCKCALL_RETURN(OP,TYPE,FAILVALUE) ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE)
-# define ACE_SOCKCALL(OP,TYPE,FAILVALUE,RESULT) ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT)
+# define ACE_SOCKCALL_RETURN(OP,TYPE,FAILVALUE) ACE_OSCALL_RETURN(OP,TYPE)
+# define ACE_SOCKCALL(OP,TYPE,FAILVALUE,RESULT) ACE_OSCALL(OP,TYPE,RESULT)
 #endif /* ACE_WIN32 */
 
 #if !defined (ACE_WIN32)
@@ -67,10 +65,9 @@
 
 #endif /* !ACE_WIN32 */
 
-// Helper functions to split large intergers into smaller high-order
+// Helper functions to split large integers into smaller high-order
 // and low-order parts, and reconstitute them again.  These are
 // required primarily for supporting _FILE_OFFSET_BITS==64 on windows.
-
 #if defined(ACE_WIN32)
 #  if defined(_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS==64)
 #    include "ace/Basic_Types.h"
@@ -79,7 +76,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 LONG
-inline ACE_High_Part (ACE_OFF_T value)
+inline ACE_High_Part (LONGLONG value)
 {
   LARGE_INTEGER new_value;
   new_value.QuadPart = value;
@@ -105,7 +102,17 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  endif /* _FILE_OFFSET_BITS==64 */
 #endif /* ACE_WIN32 */
 
-
+// 64-bit quad-word definitions.
+#if defined (ACE_WIN32)
+#  if defined (_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS == 64)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+typedef unsigned __int64 ACE_QWORD;
+inline ACE_QWORD ACE_Make_QWORD (DWORD lo, DWORD hi) { return ACE_QWORD (lo) | (ACE_QWORD (hi) << 32); }
+inline DWORD ACE_Low_DWORD  (ACE_QWORD q) { return (DWORD) q; }
+inline DWORD ACE_High_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
+ACE_END_VERSIONED_NAMESPACE_DECL
+#  endif /* _FILE_OFFSET_BITS==64 */
+#endif /* ACE_WIN32 */
 
 # include /**/ "ace/post.h"
 

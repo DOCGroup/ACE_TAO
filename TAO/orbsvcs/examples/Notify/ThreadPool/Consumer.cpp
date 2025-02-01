@@ -18,7 +18,7 @@ TAO_Notify_ThreadPool_Consumer::TAO_Notify_ThreadPool_Consumer (TAO_Notify_ORB_O
 {
 }
 
-TAO_Notify_ThreadPool_Consumer::~TAO_Notify_ThreadPool_Consumer (void)
+TAO_Notify_ThreadPool_Consumer::~TAO_Notify_ThreadPool_Consumer ()
 {
 }
 
@@ -38,19 +38,19 @@ TAO_Notify_ThreadPool_Consumer::init (PortableServer::POA_var& poa, CosNotifyCha
 }
 
 PortableServer::POA_ptr
-TAO_Notify_ThreadPool_Consumer::_default_POA (void)
+TAO_Notify_ThreadPool_Consumer::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_Notify_ThreadPool_Consumer::run (void)
+TAO_Notify_ThreadPool_Consumer::run ()
 {
   // Nothing to do.
 }
 
 void
-TAO_Notify_ThreadPool_Consumer::connect (void)
+TAO_Notify_ThreadPool_Consumer::connect ()
 {
   // Activate the consumer with the default_POA_
   CosNotifyComm::StructuredPushConsumer_var objref = this->_this ();
@@ -111,7 +111,7 @@ TAO_Notify_ThreadPool_Consumer::connect (void)
 }
 
 void
-TAO_Notify_ThreadPool_Consumer::disconnect (void)
+TAO_Notify_ThreadPool_Consumer::disconnect ()
 {
   this->proxy_supplier_->disconnect_structured_push_supplier();
 }
@@ -150,7 +150,7 @@ TAO_Notify_ThreadPool_Consumer::push_structured_event (const CosNotification::St
       this->deactivate ();
 
       // We received the event, shutdown the ORB.
-      this->orb_objects_.orb_->shutdown (1);
+      this->orb_objects_.orb_->shutdown (true);
     }
 
   // Eat CPU:
@@ -158,7 +158,7 @@ TAO_Notify_ThreadPool_Consumer::push_structured_event (const CosNotification::St
 }
 
 void
-TAO_Notify_ThreadPool_Consumer::dump_throughput (void)
+TAO_Notify_ThreadPool_Consumer::dump_throughput ()
 {
   ACE_High_Res_Timer::global_scale_factor_type gsf =
     ACE_High_Res_Timer::global_scale_factor ();
@@ -171,7 +171,7 @@ TAO_Notify_ThreadPool_Consumer::dump_throughput (void)
 }
 
 void
-TAO_Notify_ThreadPool_Consumer::deactivate (void)
+TAO_Notify_ThreadPool_Consumer::deactivate ()
 {
   PortableServer::POA_var poa (this->_default_POA ());
 
@@ -181,7 +181,7 @@ TAO_Notify_ThreadPool_Consumer::deactivate (void)
 }
 
 void
-TAO_Notify_ThreadPool_Consumer::disconnect_structured_push_consumer (void)
+TAO_Notify_ThreadPool_Consumer::disconnect_structured_push_consumer ()
 {
   this->deactivate ();
 }

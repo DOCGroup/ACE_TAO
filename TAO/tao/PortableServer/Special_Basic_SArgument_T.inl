@@ -7,7 +7,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::
-In_Special_Basic_SArgument_T (void)
+In_Special_Basic_SArgument_T ()
 {
 }
 
@@ -17,7 +17,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S const &
-TAO::In_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg (void) const
+TAO::In_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg () const
 {
   return this->x_;
 }
@@ -30,7 +30,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::
-Inout_Special_Basic_SArgument_T (void)
+Inout_Special_Basic_SArgument_T ()
 {
 }
 
@@ -40,7 +40,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S &
-TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg (void)
+TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
@@ -53,7 +53,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::
-Out_Special_Basic_SArgument_T (void)
+Out_Special_Basic_SArgument_T ()
 {
 }
 
@@ -62,7 +62,7 @@ template<typename S,
          typename from_S,
          template <typename> class Insert_Policy>
 S &
-TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg (void)
+TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
@@ -75,7 +75,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::
-Ret_Special_Basic_SArgument_T (void)
+Ret_Special_Basic_SArgument_T ()
 {
 }
 
@@ -85,7 +85,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S &
-TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg (void)
+TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg ()
 {
   return this->x_;
 }

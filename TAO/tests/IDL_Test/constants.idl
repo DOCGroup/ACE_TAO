@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    constants.idl
@@ -7,7 +6,6 @@
  *  caused problems in the past for the TAO IDL
  *  compiler. This test is to make sure the problems
  *  stay fixed.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
@@ -25,7 +23,6 @@ const char backslash = '\\';
 // errors.
 
 // octal escape sequences
-
 const char oct_nought = '\000';
 const char lucky = '\7';
 const char square = '4';
@@ -33,7 +30,6 @@ const char blastoff = '\321';
 const char max_char_oct = '\377';
 
 // hex escape sequences
-
 const char hex_nought ='\x0';
 const char fingers = '\xA';
 const char fortnight = '\xe';
@@ -41,7 +37,7 @@ const char fivebits = '\x32';
 const char maybe_minus = '\xAf';
 const char max_char_hex = '\xff';
 
-// const wstring wstr = L"wstr";
+const wstring wstr = L"wstr";
 
 // unsigned longs greater than LONG_MAX
 const unsigned long in_range = 3222111000;
@@ -57,7 +53,6 @@ const long long PAAA = 122192928000000000;
 const long NAA = -1538947897;
 
 // various uncommon but legal formats for floats and doubles
-
 const float root_beer = .2;
 const double bogey = .2;
 const float trip = 2.;
@@ -75,7 +70,6 @@ const unsigned long mul1 = 0x80 * 0x70;
 const unsigned long div1 = 99 / 12;
 
 // The original Sun code for bitwise operators was broken.
-
 const unsigned short stuff = ~0;
 const unsigned long day = ~0;
 const unsigned long drink = 1000000000 << 2;
@@ -110,14 +104,14 @@ module ClassConstants
   {
     const long iface_long = 55;
     const string iface_str = "iface_str";
-//    const wstring iface_wstr = L"iface_wstr";
+    const wstring iface_wstr = L"iface_wstr";
   };
 
   valuetype Vt
   {
     const double vt_long = 66.66;
     const string vt_str = "vt_str";
-//    const wstring vt_wstr = L"vt_wstr";
+    const wstring vt_wstr = L"vt_wstr";
   };
 };
 

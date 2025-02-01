@@ -8,10 +8,9 @@
 #include "orbsvcs/Sched/Config_Scheduler.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Config_Scheduler::ACE_Config_Scheduler (void)
+ACE_Config_Scheduler::ACE_Config_Scheduler ()
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
   : scheduler_strategy_ (static_cast<RtecScheduler::Preemption_Priority_t> (TAO_MIN_CRITICAL_PRIORITY))
   , impl (new ACE_Strategy_Scheduler (scheduler_strategy_))
@@ -22,7 +21,7 @@ ACE_Config_Scheduler::ACE_Config_Scheduler (void)
   // impl->output_level (10);
 }
 
-ACE_Config_Scheduler::~ACE_Config_Scheduler (void)
+ACE_Config_Scheduler::~ACE_Config_Scheduler ()
 {
   delete impl;
 }
@@ -161,7 +160,6 @@ void ACE_Config_Scheduler::priority (RtecScheduler::handle_t handle,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                                      RtecScheduler::Preemption_Priority_t& p_priority)
 {
-
   if (impl->priority (handle, priority, p_subpriority, p_priority) == -1)
     {
       ORBSVCS_ERROR ((LM_ERROR,
@@ -185,7 +183,6 @@ void ACE_Config_Scheduler::add_dependency (RtecScheduler::handle_t handle,
                                            RtecScheduler::Dependency_Type_t
                                              dependency_type)
 {
-
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->lookup_rt_info (handle, rt_info))
     {
@@ -220,7 +217,6 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
                                                RtecScheduler::Config_Info_Set_out configs,
                                                RtecScheduler::Scheduling_Anomaly_Set_out anomalies)
 {
-
   // Initialize the scheduler implementation.
   impl->init (minimum_priority, maximum_priority);
 
@@ -425,7 +421,6 @@ void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Pri
                                                    RtecScheduler::OS_Priority& priority,
                                                    RtecScheduler::Dispatching_Type_t & d_type)
 {
-
   if (impl->dispatch_configuration (p_priority, priority, d_type) == -1)
     {
       ORBSVCS_ERROR ((LM_ERROR,
@@ -438,9 +433,8 @@ void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Pri
 
 
 RtecScheduler::Preemption_Priority_t
-ACE_Config_Scheduler::last_scheduled_priority (void)
+ACE_Config_Scheduler::last_scheduled_priority ()
 {
-
   RtecScheduler::Preemption_Priority_t priority = impl->minimum_priority_queue ();
 
   if (priority < 0)

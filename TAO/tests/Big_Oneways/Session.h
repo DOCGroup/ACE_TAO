@@ -26,19 +26,19 @@ public:
            CORBA::ULong peer_count);
 
   /// Destructor
-  virtual ~Session (void);
+  virtual ~Session ();
 
   /// Run one of the experiment threads
-  int svc (void);
+  int svc ();
 
   // = The skeleton methods
   virtual void start (const Test::Session_List &other_sessions);
 
-  virtual void ping (void);
+  virtual void ping ();
 
   virtual void receive_payload (const Test::Payload &the_payload);
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
 private:
   /// Helper function used to report any problems and destroy local
@@ -46,11 +46,11 @@ private:
   void terminate (CORBA::Boolean success);
 
   /// Return 1 if all the work in this session has been completed
-  int more_work (void) const;
+  int more_work () const;
 
   /// Make sure that all threads have connections avaiable to the
   /// other sessions.
-  void validate_connections (void);
+  void validate_connections ();
 
 private:
   /// Synchronize the internal state
@@ -85,7 +85,7 @@ private:
   /// Helper class to run svc() in a separate thread
   Session_Task task_;
 
-  /// Barrier to start all threads simultaenously
+  /// Barrier to start all threads simultaneously
 #if defined(ACE_HAS_THREADS)
   typedef ACE_Thread_Barrier Barrier;
 #else

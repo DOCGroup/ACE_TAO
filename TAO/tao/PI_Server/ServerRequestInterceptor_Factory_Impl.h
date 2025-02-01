@@ -38,7 +38,7 @@ class TAO_PI_Server_Export TAO_ServerRequestInterceptor_Adapter_Factory_Impl
   : public TAO_ServerRequestInterceptor_Adapter_Factory
 {
 public:
-  virtual TAO::ServerRequestInterceptor_Adapter *create (void);
+  virtual TAO::ServerRequestInterceptor_Adapter *create ();
 };
 
 

@@ -5,7 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
-Handle_R_Dgram::Handle_R_Dgram (void)
+Handle_R_Dgram::Handle_R_Dgram ()
 {
 }
 
@@ -64,14 +64,14 @@ Handle_R_Dgram::init (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_INLINE int
-Handle_R_Dgram::fini (void)
+Handle_R_Dgram::fini ()
 {
   return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
 ACE_INLINE ACE_HANDLE
-Handle_R_Dgram::get_handle (void) const
+Handle_R_Dgram::get_handle () const
 {
   return ACE_SOCK_Dgram::get_handle ();
 }

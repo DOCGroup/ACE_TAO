@@ -234,6 +234,13 @@ public:
     , PS_EnumQsSeen             // Seen '}' for enum
     , PS_EnumBodySeen           // Seen complete enum body
     , PS_EnumCommaSeen          // Seen ',' in list of enumerators
+    , PS_MapSeen                // Seen a MAP keyword
+    , PS_MapSqSeen              // Seen a '<' for map
+    , PS_MapQsSeen              // Seen a '>' for map
+    , PS_MapKeyTypeSeen         // Seen a key type decl for map
+    , PS_MapValueTypeSeen       // Seen a value type decl for map
+    , PS_MapCommaSeen           // Seen comma for map
+    , PS_MapExprSeen            // Seen a size expression for map
     , PS_SequenceSeen           // Seen a SEQUENCE keyword
     , PS_SequenceSqSeen         // Seen '<' for sequence
     , PS_SequenceQsSeen         // Seen '>' for sequence
@@ -311,77 +318,77 @@ public:
     UNKNOWN_ANNOTATIONS_IGNORE
   };
 
-  IDL_GlobalData (void);
-  ~IDL_GlobalData (void);
+  IDL_GlobalData ();
+  ~IDL_GlobalData ();
 
   // Operations
-  UTL_ScopeStack   &scopes (void);              // Scopes stack
+  UTL_ScopeStack   &scopes ();              // Scopes stack
 
-  AST_Root         *root (void);                // Root of AST
+  AST_Root         *root ();                // Root of AST
   void             set_root (AST_Root *);       // Set it
 
-  AST_Generator    *gen (void);                 // Generator
+  AST_Generator    *gen ();                 // Generator
   void             set_gen (AST_Generator *);   // Set it
 
-  AST_ValueType    *primary_key_base (void);    // PrimaryKeyBase
+  AST_ValueType    *primary_key_base ();    // PrimaryKeyBase
   void             primary_key_base (AST_ValueType *);   // Set it
 
-  UTL_Error        *err (void);                 // Error reporter
+  UTL_Error        *err ();                 // Error reporter
   void             set_err (UTL_Error *);       // Set it
 
-  int              err_count (void);            // How many errors?
+  int              err_count ();            // How many errors?
   void             set_err_count (int);         // Set it
 
-  long             lineno (void);               // Where in file?
+  long             lineno ();               // Where in file?
   void             set_lineno (long);           // Set it
 
-  UTL_String       *filename (void);            // What file?
+  UTL_String       *filename ();            // What file?
   void             set_filename (UTL_String *); // Set it
 
-  UTL_String       *main_filename (void);       // What's the main
+  UTL_String       *main_filename ();       // What's the main
                                                 // file name?
   void             set_main_filename (UTL_String *);
                                                 // Set it
 
-  UTL_String       *real_filename (void);       // What's the real
+  UTL_String       *real_filename ();       // What's the real
                                                 // file name?
   void             set_real_filename (UTL_String *);
                                                 // Set it
 
-  UTL_String       *stripped_filename (void);   // Stripped filename
+  UTL_String       *stripped_filename ();   // Stripped filename
   void             set_stripped_filename (UTL_String *);  // Set it
 
-  bool             imported (void);             // Are we imported?
-  bool             import (void);               // Is import on?
+  bool             imported ();             // Are we imported?
+  bool             import ();               // Is import on?
   void             set_import (bool);           // Set it
 
-  bool             in_main_file (void);         // Are we?
+  bool             in_main_file ();         // Are we?
   void             set_in_main_file (bool);     // Set it
 
-  const char       *prog_name (void);           // Invoked as..
+  const char       *prog_name ();           // Invoked as..
   void             set_prog_name (const char *);  // Set it
 
-  const char       *cpp_location (void);        // Where's CPP?
+  const char       *cpp_location ();        // Where's CPP?
   void             set_cpp_location (const char *);// Set it
 
-  long             compile_flags (void);        // What flags are on?
+  long             compile_flags ();        // What flags are on?
   void             set_compile_flags (long);    // Turn some on or off
 
-  char             *local_escapes (void);       // Get local escapes
+  char             *local_escapes ();       // Get local escapes
   void             set_local_escapes (const char *);// Set it
 
-  UTL_Indenter     *indent (void);              // Get indenter
+  UTL_Indenter     *indent ();              // Get indenter
   void             set_indent (UTL_Indenter *); // Set it
 
   void             store_include_file_name (UTL_String *);
 
-  UTL_String       **include_file_names (void); // Array of file names
+  UTL_String       **include_file_names (); // Array of file names
   void             set_include_file_names (UTL_String **); // Set it
 
-  unsigned long    n_include_file_names (void); // How many
+  unsigned long    n_include_file_names (); // How many
   void             set_n_include_file_names (unsigned long n);
 
-  void             reset_flag_seen (void);
+  void             reset_flag_seen ();
 
   // = Types & methods supporting DDS DCPS sequence definitions (from #pragma)
   typedef ACE_Unbounded_Queue<char *> DCPS_Sequence_Types_List;
@@ -418,7 +425,7 @@ public:
   void dcps_support_zero_copy_read (bool value);
 
   // BE calls to check the status of zero-copy read support
-  bool dcps_support_zero_copy_read (void) const;
+  bool dcps_support_zero_copy_read () const;
 
   // FE calls when #pragma DCPS_DATA_SEQUENCE_TYPE is processed
   void set_dcps_sequence_type (const char* seq_type);
@@ -430,7 +437,7 @@ public:
   void dcps_gen_zero_copy_read (bool value);
 
   // BE calls to check the status of zero-copy read support
-  bool dcps_gen_zero_copy_read (void) const;
+  bool dcps_gen_zero_copy_read () const;
 
   // = Access methods to deal with other IDL files included in the main
   //   IDL file. These IDL files are exactly the same strings that are
@@ -441,20 +448,20 @@ public:
   void add_to_included_idl_files (const char *file_name);
 
   // Get all the files.
-  char** included_idl_files (void);
+  char** included_idl_files ();
 
   // The number of currently availabe include files.
-  size_t n_included_idl_files (void);
+  size_t n_included_idl_files ();
 
   // Set the number of included_idl_files. Use this carefully. This
   // method is used when we validate all the #included idl files,
   // against the ones that we get after preprocessing.
   void n_included_idl_files (size_t n);
 
-  ParseState parse_state (void);       // What state we're in
+  ParseState parse_state ();       // What state we're in
   void set_parse_state (ParseState s); // Set it
 
-  UTL_String *idl_src_file (void);
+  UTL_String *idl_src_file ();
   // Returns the IDL source file being compiled.
 
   void idl_src_file (UTL_String *);
@@ -465,7 +472,7 @@ public:
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
 
-  const char *temp_dir (void) const;
+  const char *temp_dir () const;
   // Get the directory where the IDL compiler can keep all its temp
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
@@ -473,49 +480,49 @@ public:
   void tao_root (const char *s);
   // Set the path of TAO_ROOT.
 
-  const char *tao_root (void) const;
+  const char *tao_root () const;
   // Get the path for TAO_ROOT.
 
   void gperf_path (const char *s);
   // Set the path for the perfect hashing program (GPERF).
 
-  const char *gperf_path (void) const;
+  const char *gperf_path () const;
   // Get the path for the perfect hashing program (GPERF).
 
   void ident_string (const char *s);
   // Set the value of the #ident string.
 
-  const char *ident_string (void) const;
+  const char *ident_string () const;
   // Get the value of the #ident string.
 
   void case_diff_error (bool);
   // report an error (1) for indentifiers in the same scope
   // that differ only by case, or report a warning (0).
 
-  bool case_diff_error (void);
+  bool case_diff_error ();
   // are we strict about case-only differences or not?
 
   void nest_orb (bool);
   // Set on or off whether we are using the NEST ORB.
 
-  bool nest_orb (void);
+  bool nest_orb ();
   // are we beIng used with the NEST ORB?
 
-  void destroy (void);
+  void destroy ();
   // Cleanup function.
 
   void append_idl_flag (const char *s);
   // Save each flag passed to the IDL compiler.
 
-  const char *idl_flags (void) const;
+  const char *idl_flags () const;
   // Get a string representation of the flags
   // passed to the idl compiler.
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> &
-  idl_keywords (void);
+  idl_keywords ();
   // Accessor for the IDL keyword container.
 
-  ACE_Unbounded_Stack<char *> & pragma_prefixes (void);
+  ACE_Unbounded_Stack<char *> & pragma_prefixes ();
   // Accessor for the pragma prefix container.
 
   void update_prefix (char *filename);
@@ -524,11 +531,11 @@ public:
   long seen_include_file_before (char *);
   // Seen this include before?
 
-  long last_seen_index (void) const;
+  long last_seen_index () const;
   void last_seen_index (long val);
   // Accessors for last_seen_index_ member.
 
-  bool preserve_cpp_keywords (void);
+  bool preserve_cpp_keywords ();
   // Whether we should not mung idl element names that are
   // C++ keywords e.g. delete, operator etc. with _cxx_ prefix.
   // Should be true when being used by the IFR Service
@@ -543,98 +550,98 @@ public:
   // specific paths and false for paths provided by user.
 
   void add_rel_include_path (const char *s);
-  ACE_Unbounded_Queue<char *> const & rel_include_paths (void) const;
+  ACE_Unbounded_Queue<char *> const & rel_include_paths () const;
   // Accessor/mutator for the rel_include_paths_ member.
 
   void add_ciao_lem_file_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_lem_file_names (void);
+  ACE_Unbounded_Queue<char *> & ciao_lem_file_names ();
   // Accessor/mutator for the ciao_lem_file_names_ member.
 
   void add_ciao_rti_ts_file_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_rti_ts_file_names (void);
+  ACE_Unbounded_Queue<char *> & ciao_rti_ts_file_names ();
   // Accessor/mutator for the ciao_rti_ts_file_names_ member.
 
   void add_ciao_spl_ts_file_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_spl_ts_file_names (void);
+  ACE_Unbounded_Queue<char *> & ciao_spl_ts_file_names ();
   // Accessor/mutator for the ciao_spl_ts_file_names_ member.
 
   void add_ciao_oci_ts_file_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_oci_ts_file_names (void);
+  ACE_Unbounded_Queue<char *> & ciao_oci_ts_file_names ();
   // Accessor/mutator for the ciao_oci_ts_file_names_ member.
 
     void add_ciao_coredx_ts_file_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_coredx_ts_file_names (void);
+  ACE_Unbounded_Queue<char *> & ciao_coredx_ts_file_names ();
   // Accessor/mutator for the ciao_coredx_ts_file_names_ member.
 
   void add_ciao_ami_iface_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_ami_iface_names (void);
+  ACE_Unbounded_Queue<char *> & ciao_ami_iface_names ();
   // Accessor/mutator for the ciao_ami_iface_names_ member.
 
   void add_ciao_ami_recep_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_ami_recep_names (void);
+  ACE_Unbounded_Queue<char *> & ciao_ami_recep_names ();
   // Accessor/mutator for the ciao_ami_recep_names_ member.
 
   void add_included_ami_recep_names (const char *s);
-  ACE_Unbounded_Queue<char *> & included_ami_recep_names (void);
+  ACE_Unbounded_Queue<char *> & included_ami_recep_names ();
   // Accessor/mutator for the included_ami_recep_names_ member.
 
-  bool included_ami_receps_done (void) const;
+  bool included_ami_receps_done () const;
   void included_ami_receps_done (bool val);
 
   void add_ciao_ami_idl_fnames (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_ami_idl_fnames (void);
+  ACE_Unbounded_Queue<char *> & ciao_ami_idl_fnames ();
   // Accessor/mutator for the included_ami_idl_fnames_ member.
 
   void add_dds4ccm_impl_fnames (const char *s);
-  ACE_Unbounded_Queue<char *> & dds4ccm_impl_fnames (void);
+  ACE_Unbounded_Queue<char *> & dds4ccm_impl_fnames ();
   // Accessor mutator for the dds4ccm_impl_fnames_ member.
 
-  ACE_Unbounded_Queue<AST_Interface *> & mixed_parentage_interfaces (void);
+  ACE_Unbounded_Queue<AST_Interface *> & mixed_parentage_interfaces ();
   // Accessor for the member
 
   ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
-  file_prefixes (void);
+  file_prefixes ();
   // Accessor for the IDL file prefix container.
 
-  bool pass_orb_idl (void) const;
+  bool pass_orb_idl () const;
   void pass_orb_idl (bool val);
   // Accessor for the pass_orb_idl_ member.
 
-  bool using_ifr_backend (void) const;
+  bool using_ifr_backend () const;
   void using_ifr_backend (bool val);
   // Accessor for the using_ifr_backend_ member.
 
-  bool ignore_idl3 (void) const;
+  bool ignore_idl3 () const;
   void ignore_idl3 (bool val);
   // Accessor for the ignore_idl3_ member.
 
-  int check_gperf (void);
+  int check_gperf ();
   // Currently called only from IDL backend, but could be useful elsewhere.
 
-  void fini (void);
+  void fini ();
   // Do final cleanup just before process exits.
 
-  ACE_Unbounded_Queue<AST_ValueType *> &primary_keys (void);
+  ACE_Unbounded_Queue<AST_ValueType *> &primary_keys ();
   // Accessor for the member.
 
-  void check_primary_keys (void);
+  void check_primary_keys ();
   // Called affer yy_parse() returns - iterates over our list
   // of primary keys. Must be called this late so that we can
   // be sure that all forward declared stucts or unions that
   // might be used in such a valuetype are fully defined.
 
-  const char *recursion_start (void) const;
+  const char *recursion_start () const;
   void recursion_start (const char *val);
   // Accessors for the member.
 
-  bool multi_file_input (void) const;
+  bool multi_file_input () const;
   void multi_file_input (bool val);
   // Accessors for the member.
 
-  const char *big_file_name (void) const;
+  const char *big_file_name () const;
   // Just get the const string.
 
-  FE_Utils::T_PARAMLIST_INFO const *current_params (void) const;
+  FE_Utils::T_PARAMLIST_INFO const *current_params () const;
   void current_params (FE_Utils::T_PARAMLIST_INFO *params);
   // Accessors for the member. If UTL_Scope::lookup_by_name()
   // has a 0 result, it will check this param list (if it is not
@@ -643,25 +650,21 @@ public:
   // referenced template parameter of the eclosing template
   // module.
 
-  UTL_StrList const *alias_params (void) const;
+  UTL_StrList const *alias_params () const;
   void alias_params (UTL_StrList *params);
   // Accessors for the member. If we are parsing a template
   // module reference, we traverse the scope of the referenced
   // template module, but create param holders with the
   // alias names.
 
-  UTL_StrList const *for_new_holder (void) const;
+  UTL_StrList const *for_new_holder () const;
   void for_new_holder (UTL_StrList *params);
   // Accessors for the member. If a lookup matches something
   // from current_params(), the actual created param holder must
   // match the corresponding element on this list, if it is
   // non-zero.
 
-#if defined (ACE_OPENVMS)
-  static char* translateName (const char* name, char *name_buf);
-#endif
-
-  AST_Module *corba_module (void) const;
+  AST_Module *corba_module () const;
   void corba_module (AST_Module *m);
   // Accessors for the member.
 
@@ -676,7 +679,7 @@ public:
   typedef ACE_Unbounded_Queue_Iterator<Include_Path_Info>
     Unbounded_Paths_Queue_Iterator;
 
-  Unbounded_Paths_Queue &include_paths (void);
+  Unbounded_Paths_Queue &include_paths ();
   // Accessor for the member.
 
   enum ANON_TYPE_DIAGNOSTIC
@@ -691,20 +694,23 @@ public:
   void anon_type_diagnostic (ANON_TYPE_DIAGNOSTIC val);
   // Mutator for the member.
 
-  bool anon_error (void) const;
-  bool anon_warning (void) const;
-  bool anon_silent (void) const;
+  /// Has anon_type_diagnostic () been called?
+  bool explicit_anon_type_diagnostic () const;
+
+  bool anon_error () const;
+  bool anon_warning () const;
+  bool anon_silent () const;
   // Simple checks for the value of anon_type_diagnostic_.
 
-  bool in_typedef (void) const;
+  bool in_typedef () const;
   void in_typedef (bool val);
   // Accessors for the member.
 
-  bool in_tmpl_mod_no_alias (void) const;
+  bool in_tmpl_mod_no_alias () const;
   void in_tmpl_mod_no_alias (bool val);
   // Accessors for the member.
 
-  bool in_tmpl_mod_alias (void) const;
+  bool in_tmpl_mod_alias () const;
   void in_tmpl_mod_alias (bool val);
   // Accessors for the member.
 
@@ -736,7 +742,7 @@ public:
    * to the Abstract Syntax Tree. It was added for use in be_post_init. THIS
    * SHOULD NOT BE CALLED WHILE IN THE MIDDLE OF PARSING.
    */
-  void eval (const char *string);
+  void eval (const char *string, bool disable_output = false);
 
   /**
    * Dump AST after parsing files and exit
@@ -780,9 +786,11 @@ public:
   bool non_local_op_seen_;
   bool object_arg_seen_;
   bool octet_seq_seen_;
+  bool octet_map_seen_;
   bool operation_seen_;
   bool pseudo_seq_seen_;
   bool recursive_type_seen_;
+  bool map_seen_;
   bool seq_seen_;
   bool short_seq_seen_;
   bool special_basic_decl_seen_;
@@ -1067,6 +1075,7 @@ private:
   AST_Module *corba_module_;
 
   ANON_TYPE_DIAGNOSTIC anon_type_diagnostic_;
+  bool explicit_anon_type_diagnostic_;
 
   /// Flag set in parser so we can decide whether to emit
   /// an anonymous type diagnostic.

@@ -10,6 +10,7 @@
 
 #include "RTClient_Setup.h"
 #include "RTPOA_Setup.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,12 +31,12 @@ public:
                   int nthreads);
 
   /// Return the POA configured by the RTPOA_Setup
-  PortableServer::POA_ptr poa (void);
+  PortableServer::POA_ptr poa ();
 
 private:
   PortableServer::POA_var poa_;
 
-  auto_ptr<RTPOA_Setup> rtpoa_setup_;
+  std::unique_ptr<RTPOA_Setup> rtpoa_setup_;
 };
 
 #if defined(__ACE_INLINE__)

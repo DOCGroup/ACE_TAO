@@ -41,7 +41,6 @@ private:
 
   // Number of messages to send (make this configurable)
   unsigned long counter_;
-
 };
 
 

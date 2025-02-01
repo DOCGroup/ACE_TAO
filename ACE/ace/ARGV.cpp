@@ -18,7 +18,7 @@ ACE_ALLOC_HOOK_DEFINE_Tt (ACE_ARGV_T)
 
 template <typename CHAR_TYPE>
 void
-ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::dump (void) const
+ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_ARGV_Queue_Entry_T::dump");
@@ -32,7 +32,7 @@ ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::dump (void) const
 
 template <typename CHAR_TYPE>
 void
-ACE_ARGV_T<CHAR_TYPE>::dump (void) const
+ACE_ARGV_T<CHAR_TYPE>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_ARGV_T::dump");
@@ -61,7 +61,7 @@ ACE_ARGV_T<CHAR_TYPE>::dump (void) const
 
 template <typename CHAR_TYPE>
 int
-ACE_ARGV_T<CHAR_TYPE>::string_to_argv (void)
+ACE_ARGV_T<CHAR_TYPE>::string_to_argv ()
 {
   ACE_TRACE ("ACE_ARGV_T::string_to_argv");
 
@@ -301,9 +301,8 @@ ACE_ARGV_T<CHAR_TYPE>::add (CHAR_TYPE *argv[], bool quote_args)
 }
 
 // Free up argv_ and buf_
-
 template <typename CHAR_TYPE>
-ACE_ARGV_T<CHAR_TYPE>::~ACE_ARGV_T (void)
+ACE_ARGV_T<CHAR_TYPE>::~ACE_ARGV_T ()
 {
   ACE_TRACE ("ACE_ARGV_T::~ACE_ARGV_T");
 
@@ -314,7 +313,6 @@ ACE_ARGV_T<CHAR_TYPE>::~ACE_ARGV_T (void)
 #else
       ACE_OS::free ((void *) this->argv_[i]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-
 
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -331,7 +329,7 @@ ACE_ARGV_T<CHAR_TYPE>::~ACE_ARGV_T (void)
 
 template <typename CHAR_TYPE>
 int
-ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue (void)
+ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
 {
   ACE_TRACE ("ACE_ARGV_T::create_buf_from_queue");
 

@@ -7,8 +7,6 @@
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-
-
 #if !defined (__ACE_INLINE__)
 #include "ace/LSOCK_Stream.inl"
 #endif /* __ACE_INLINE__ */
@@ -47,7 +45,7 @@ ACE_LSOCK_Stream::get_remote_addr (ACE_Addr &addr) const
 }
 
 void
-ACE_LSOCK_Stream::dump (void) const
+ACE_LSOCK_Stream::dump () const
 {
   ACE_TRACE ("ACE_LSOCK_Stream::dump");
 

@@ -8,7 +8,6 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   ACE_Argv_Type_Converter ct (argc, argv);
   QApplication app (argc,  ct.get_ASCII_argv ());
   TAO::QtResource_Loader qt_resources (&app);
@@ -49,7 +48,7 @@ Client::Client (CORBA::ORB_ptr orb,
 {
 }
 
-Client::~Client (void)
+Client::~Client ()
 {
   delete this->slider_;
   delete this->push_button_;
@@ -131,11 +130,10 @@ Client::create_widgets (/**/)
 
   this->mainwindow_.setLayout(&box_);
 
-
 }
 
 void
-Client::show (void)
+Client::show ()
 {
   this->mainwindow_.show ();
 }
@@ -147,7 +145,7 @@ Client::remote_call (int val)
 }
 
 void
-Client::shutdown_call (void)
+Client::shutdown_call ()
 {
   this->server_->shutdown ();
 }

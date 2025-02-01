@@ -9,7 +9,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
@@ -23,7 +23,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-ECT_Consumer_Driver::ECT_Consumer_Driver (void)
+ECT_Consumer_Driver::ECT_Consumer_Driver ()
   : n_consumers_ (1),
     n_suppliers_ (1),
     type_start_ (ACE_ES_EVENT_UNDEFINED),
@@ -35,7 +35,7 @@ ECT_Consumer_Driver::ECT_Consumer_Driver (void)
 {
 }
 
-ECT_Consumer_Driver::~ECT_Consumer_Driver (void)
+ECT_Consumer_Driver::~ECT_Consumer_Driver ()
 {
 }
 
@@ -79,7 +79,7 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
                       this->type_start_,
                       this->type_count_,
 
-                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")) );
+                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
         }
 
       if (this->pid_file_name_ != 0)
@@ -93,10 +93,9 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      int min_priority =
-        ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
-        // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      int min_priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 
+      // Enable FIFO scheduling
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                                   min_priority,
                                                   ACE_SCOPE_PROCESS)) != 0)
@@ -177,7 +176,7 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
           channel->destroy ();
         }
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       this->orb_->destroy ();
     }
@@ -234,7 +233,7 @@ ECT_Consumer_Driver::connect_consumers
 }
 
 void
-ECT_Consumer_Driver::dump_results (void)
+ECT_Consumer_Driver::dump_results ()
 {
   ACE_High_Res_Timer::global_scale_factor_type gsf =
     ACE_High_Res_Timer::global_scale_factor ();
@@ -252,7 +251,7 @@ ECT_Consumer_Driver::dump_results (void)
 }
 
 void
-ECT_Consumer_Driver::disconnect_consumers (void)
+ECT_Consumer_Driver::disconnect_consumers ()
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {

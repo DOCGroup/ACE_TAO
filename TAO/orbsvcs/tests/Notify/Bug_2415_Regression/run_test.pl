@@ -24,8 +24,6 @@ my $con = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\
 $sup->AddLibPath ('../lib');
 $con->AddLibPath ('../lib');
 
-PerlACE::check_privilege_group();
-
 $domain1 = "domain1";
 $domain2 = "domain2";
 $expect_pass = "0";

@@ -22,7 +22,6 @@
 # Not all configurations supported on VxWorks 6.x have been brought forward
 # to this file.  If you are building a configuration that has not yet been
 # attempted on VxWorks 7, this file may need to be changed.
-
 VXWORKS = 1
 CROSS-COMPILE = 1
 
@@ -56,7 +55,6 @@ ifeq ($(WIND_HOST_TYPE),x86-win32)
   PWD = $(subst \,/,$(shell pwd))
   ACE_ROOT := $(subst \,/,$(ACE_ROOT))
   TAO_ROOT := $(subst \,/,$(TAO_ROOT))
-  CIAO_ROOT := $(subst \,/,$(CIAO_ROOT))
   HOST_ROOT := $(subst \,/,$(HOST_ROOT))
   override RM = rm -f
   HOST_EXE_EXT = .exe
@@ -65,17 +63,18 @@ endif # x86-win32
 ifneq (,$(HOST_ROOT))
   TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
   TAO_IDL = $(HOST_ROOT)/bin/tao_idl$(HOST_EXE_EXT)
-  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2$(HOST_EXE_EXT)
   TAO_IDL_DEP = $(TAO_IDL)
-  TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
 else
   # Append the HOST_EXE_EXT if it's not already there
   TAO_IDL_DEP = $(TAO_IDL:$(HOST_EXE_EXT)=)$(HOST_EXE_EXT)
-  TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2:$(HOST_EXE_EXT)=)$(HOST_EXE_EXT)
 endif
 
 VXWORKS_VERSION_FLAG ?= -DACE_VXWORKS=0x700
 CPPFLAGS += $(VXWORKS_VERSION_FLAG)
+
+ifneq ($(WIND_RELEASE_ID), )
+  CPPFLAGS += -DACE_VXWORKS_RELEASE=0x$(subst .,,$(WIND_RELEASE_ID))
+endif
 
 ifeq ($(pthread),1)
   CPPFLAGS += -DACE_HAS_PTHREADS
@@ -92,7 +91,7 @@ ifeq ($(rtp),0)
   define LINK.cc.override
 $(LD) -r -nostdlib $(LDFLAGS) -o $(call IFILE,$@)_partial.o $(filter %.o,$^) $(DKM_LIBS)
 	$(NM) $(call IFILE,$@)_partial.o | $(MUNCH) > $(call IFILE,$@)_ctdt.c
-	$(COMPILE.cc) -o $(call IFILE,$@)_ctdt.o $(call IFILE,$@)_ctdt.c
+	$(COMPILE.c) -o $(call IFILE,$@)_ctdt.o $(call IFILE,$@)_ctdt.c
 	$(LD) -r -nostdlib -X $(LD_SCRIPT_DOWNLOAD) -o $@ $(call IFILE,$@)_ctdt.o $(call IFILE,$@)_partial.o $(DKM_FINAL_LIBS)
   endef
 
@@ -102,6 +101,20 @@ endif
 
 ace_vx_mk_dir = $(if $(findstring 1,$(rtp)),$(WIND_USR_MK),$(WIND_KRNL_MK))
 include $(ace_vx_mk_dir)/defs.library.mk
+
+ifneq ($(rtp),0)
+  ## If we are building rtp and using the llvm (clang) compiler, we need to
+  ## use the linker directly to create shared libraries and executables.
+  ifeq ($(TOOL),llvm)
+    LLD = $(__WRS_TOOL_PATH)/ld$(TOOLENV)
+    define LINK.cc.override
+$(LLD) $(LDFLAGS) $(LD_EMULATION) --allow-shlib-undefined -EL $(VSB_DIR)/usr/lib/common/crt0.o -o $@ $(filter %.o,$^) --start-group --as-needed $(LDLIBS) -lc -lc_internal -lllvm -lcplusplus -lllvmcplus -lnet -ldl --end-group
+    endef
+    define SOLINK.cc.override
+$(LLD) $(LDFLAGS) $(LD_EMULATION) -shared --exclude-libs libc_internal.a -u __init -u __fini -o $@ $(filter %.o,$^) --start-group --as-needed $(ACE_SHLIBS) -lc -lc_internal -lcplusplus -lnet --end-group
+    endef
+  endif
+endif
 
 dkm_libstdcpp ?= $(if $(findstring y,$(_WRS_CONFIG_PRI_diab)),1,0)
 ifeq ($(dkm_libstdcpp),1)

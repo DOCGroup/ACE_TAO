@@ -16,7 +16,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_MonitorManager::TAO_MonitorManager (void)
+TAO_MonitorManager::TAO_MonitorManager ()
   : run_ (false)
   , initialized_ (false)
 {
@@ -93,7 +93,7 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_MonitorManager::fini (void)
+TAO_MonitorManager::fini ()
 {
   if (!CORBA::is_nil (this->task_.orb_.in ()))
     {
@@ -110,7 +110,7 @@ TAO_MonitorManager::fini (void)
 }
 
 int
-TAO_MonitorManager::run (void)
+TAO_MonitorManager::run ()
 {
   bool activate = false;
 
@@ -152,13 +152,13 @@ TAO_MonitorManager::run (void)
 }
 
 int
-TAO_MonitorManager::resume (void)
+TAO_MonitorManager::resume ()
 {
   return this->run ();
 }
 
 void
-TAO_MonitorManager::shutdown (void)
+TAO_MonitorManager::shutdown ()
 {
   TAO_MonitorManager* monitor =
     ACE_Dynamic_Service<TAO_MonitorManager>::instance (
@@ -170,7 +170,7 @@ TAO_MonitorManager::shutdown (void)
     }
 }
 
-TAO_MonitorManager::ORBTask::ORBTask (void)
+TAO_MonitorManager::ORBTask::ORBTask ()
  : use_name_svc_ (true)
    , startup_barrier_ (2) // synch the parent with the single child thread
    , mc_orb_name_ (ACE_TEXT("TAO_MonitorAndControl"))
@@ -178,7 +178,7 @@ TAO_MonitorManager::ORBTask::ORBTask (void)
 }
 
 int
-TAO_MonitorManager::ORBTask::svc (void)
+TAO_MonitorManager::ORBTask::svc ()
 {
   try
     {

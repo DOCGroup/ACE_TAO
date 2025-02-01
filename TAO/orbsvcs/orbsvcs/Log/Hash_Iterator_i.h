@@ -41,9 +41,6 @@ class TAO_Log_Serv_Export TAO_Hash_Iterator_i
   : public TAO_Iterator_i
 {
 public:
-
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_Hash_Iterator_i (PortableServer::POA_ptr poa,
                        ACE_Reactor* reactor,
@@ -55,7 +52,7 @@ public:
                        CORBA::ULong max_rec_list_len);
 
   /// Destructor.
-  virtual ~TAO_Hash_Iterator_i (void);
+  virtual ~TAO_Hash_Iterator_i ();
 
   /// Gets a list of LogRecords.
   virtual DsLogAdmin::RecordList* get (CORBA::ULong position,

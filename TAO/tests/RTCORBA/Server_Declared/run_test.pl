@@ -55,19 +55,6 @@ if ($^O eq "MSWin32") {
     $server_args =
         "-a 1 -b 2";
 }
-elsif ($^O eq "dec_osf") {
-    $server_args =
-        "-a 20 -b 30";
-}
-elsif ($^O eq "hpux") {
-    $continuous = 1;
-    $server_args =
-        "-a 17 -b 29";
-}
-
-if ($continuous) {
-    $server_args .= " -ORBSvcConf continuous$PerlACE::svcconf_ext";
-}
 
 $SV = $server->CreateProcess ("server", "-p $server_iorfile1 -o $server_iorfile2 $server_args");
 $CL = $client->CreateProcess ("client", "-p file://$client_iorfile1 -o file://$client_iorfile2");

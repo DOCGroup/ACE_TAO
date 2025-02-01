@@ -67,13 +67,13 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (ACE_CHAR_T c,
 template <class ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (
   const ACE_CHAR_T *s,
-  typename ACE_String_Base<ACE_CHAR_T>::size_type  len,
+  typename ACE_String_Base<ACE_CHAR_T>::size_type len,
   ACE_Allocator *the_allocator,
   bool release)
   : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
     len_ (0),
     buf_len_ (0),
-    rep_ (0),
+    rep_ (nullptr),
     release_ (false)
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::ACE_String_Base");
@@ -88,7 +88,7 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (const ACE_String_Base<ACE_CHAR_T> 
   : allocator_ (s.allocator_ ? s.allocator_ : ACE_Allocator::instance ()),
     len_ (0),
     buf_len_ (0),
-    rep_ (0),
+    rep_ (nullptr),
     release_ (false)
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::ACE_String_Base");
@@ -104,7 +104,7 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (
   : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
     len_ (0),
     buf_len_ (0),
-    rep_ (0),
+    rep_ (nullptr),
     release_ (false)
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::ACE_String_Base");
@@ -113,7 +113,7 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (
 }
 
 template <class ACE_CHAR_T>
-ACE_String_Base<ACE_CHAR_T>::~ACE_String_Base (void)
+ACE_String_Base<ACE_CHAR_T>::~ACE_String_Base ()
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::~ACE_String_Base");
 
@@ -128,10 +128,10 @@ ACE_String_Base<ACE_CHAR_T>::set (const ACE_CHAR_T *s,
                             bool release)
 {
   // Case 1. Going from memory to more memory
-  size_type new_buf_len = len + 1;
+  size_type const new_buf_len = len + 1;
   if (s != 0 && len != 0 && release && this->buf_len_ < new_buf_len)
     {
-      ACE_CHAR_T *temp = 0;
+      ACE_CHAR_T *temp = nullptr;
       ACE_ALLOCATOR (temp,
                      (ACE_CHAR_T *) this->allocator_->malloc (new_buf_len * sizeof (ACE_CHAR_T)));
 
@@ -250,7 +250,7 @@ ACE_String_Base<ACE_CHAR_T>::append (const ACE_CHAR_T* s,
 }
 
 template <class ACE_CHAR_T> u_long
-ACE_String_Base<ACE_CHAR_T>::hash (void) const
+ACE_String_Base<ACE_CHAR_T>::hash () const
 {
   return
     ACE::hash_pjw (reinterpret_cast<char *> (
@@ -345,7 +345,7 @@ ACE_String_Base<ACE_CHAR_T>::set (const ACE_CHAR_T *s, bool release)
 }
 
 template <class ACE_CHAR_T> void
-ACE_String_Base<ACE_CHAR_T>::fast_clear (void)
+ACE_String_Base<ACE_CHAR_T>::fast_clear ()
 {
   this->len_ = 0;
   if (this->release_)
@@ -365,7 +365,7 @@ ACE_String_Base<ACE_CHAR_T>::fast_clear (void)
 // Get a copy of the underlying representation.
 
 template <class ACE_CHAR_T> ACE_CHAR_T *
-ACE_String_Base<ACE_CHAR_T>::rep (void) const
+ACE_String_Base<ACE_CHAR_T>::rep () const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::rep");
 
@@ -495,7 +495,7 @@ int ACE_String_Base_Iterator <ACE_CHAR_T>::next (ACE_CHAR_T * & ch) const
 }
 
 template <class ACE_CHAR_T>
-int ACE_String_Base_Iterator <ACE_CHAR_T>::advance (void)
+int ACE_String_Base_Iterator <ACE_CHAR_T>::advance ()
 {
   ACE_TRACE ("ACE_String_Base_Iterator<ACE_CHAR_T>::advance");
 
@@ -545,7 +545,7 @@ int ACE_String_Base_Const_Iterator <ACE_CHAR_T>::next (const ACE_CHAR_T * & ch) 
 }
 
 template <class ACE_CHAR_T>
-int ACE_String_Base_Const_Iterator <ACE_CHAR_T>::advance (void)
+int ACE_String_Base_Const_Iterator <ACE_CHAR_T>::advance ()
 {
   ACE_TRACE ("ACE_String_Base_Const_Iterator<ACE_CHAR_T>::advance");
 

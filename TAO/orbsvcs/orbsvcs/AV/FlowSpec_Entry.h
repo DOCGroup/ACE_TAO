@@ -18,7 +18,6 @@
 #include "ace/Containers.h"
 #include "ace/SString.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -32,16 +31,16 @@ public:
   TAO_Tokenizer (const char *string,char delimiter);
 
   /// destructor.
-  ~TAO_Tokenizer (void);
+  ~TAO_Tokenizer ();
 
   /// parses the string and tokenizes it.
   int parse (const char *string,char delimiter);
 
   /// Returns the next token.
-  char *token (void);
+  char *token ();
 
   /// Number of tokens.
-  int num_tokens (void);
+  int num_tokens ();
 
   const char *operator [] (size_t index) const;
 
@@ -65,7 +64,6 @@ class TAO_AV_Protocol_Object;
 class TAO_AV_Export TAO_FlowSpec_Entry
 {
 public:
-
   enum Direction
   {
     TAO_AV_INVALID   = -1,
@@ -81,7 +79,7 @@ public:
   };
 
   /// default constructor.
-  TAO_FlowSpec_Entry (void);
+  TAO_FlowSpec_Entry ();
 
   /// constructor to construct an entry from the arguments.
   TAO_FlowSpec_Entry (const char *flowname,
@@ -104,81 +102,81 @@ public:
   virtual int parse (const char* flowSpec_entry) = 0;
 
   /// virtual destructor.
-  virtual ~TAO_FlowSpec_Entry (void);
+  virtual ~TAO_FlowSpec_Entry ();
 
   /// accessor to the direction.
-  int direction (void);
+  int direction ();
 
-  virtual Role role (void) = 0;
+  virtual Role role () = 0;
   void role (Role role);
   /// accessor to string version of direction .
-  const char * direction_str (void) const;
+  const char * direction_str () const;
 
   /// accessor to the flow protocol string.
-  const char *flow_protocol_str (void) const;
+  const char *flow_protocol_str () const;
 
   /// set the flow protocol string.
   void flow_protocol_str (const char *flow_protocol_str);
 
   /// accessor to address of the carrier protocol.
-  //ACE_Addr *fwd_address (void);
-  ACE_Addr *address (void);
-  ACE_Addr *control_address (void);
+  //ACE_Addr *fwd_address ();
+  ACE_Addr *address ();
+  ACE_Addr *control_address ();
   void address (ACE_Addr *address, bool cleanup = false);
   void control_address (ACE_Addr *address);
 
   /// Address in string format i. hostname:port.
-  const char *address_str (void) const;
-  //  const char * peer_address_str (void) const;
+  const char *address_str () const;
+  //  const char * peer_address_str () const;
 
   /// accessor to carrier protocol i.e TCP,UDP,RTP/UDP.
-  TAO_AV_Core::Protocol carrier_protocol (void);
+  TAO_AV_Core::Protocol carrier_protocol ();
 
   /// accessor to string version of carrier protocol.
-  const char * carrier_protocol_str (void) const;
+  const char * carrier_protocol_str () const;
 
   /// accessor to format to be used for this flow.
-  const char *format (void) const;
+  const char *format () const;
 
   /// accessor to name of this flow.
-  const char *flowname (void) const;
+  const char *flowname () const;
 
   /// converts the entry to a string.
-  virtual const char *entry_to_string (void) = 0;
+  virtual const char *entry_to_string () = 0;
 
   int set_peer_addr (ACE_Addr *peer_addr);
-  ACE_Addr *get_peer_addr (void);
+  ACE_Addr *get_peer_addr ();
   int set_peer_control_addr (ACE_Addr *peer_control_addr);
-  ACE_Addr *get_peer_control_addr (void);
+  ACE_Addr *get_peer_control_addr ();
 
   int set_local_sec_addr (char** local_sec_addr, int size);
-  char** get_local_sec_addr (void);
-  int num_local_sec_addrs (void);
+  char** get_local_sec_addr ();
+  int num_local_sec_addrs ();
 
   int set_peer_sec_addr (char** peer_sec_addr, int size);
-  char** get_peer_sec_addr (void);
-  int num_peer_sec_addrs (void);
+  char** get_peer_sec_addr ();
+  int num_peer_sec_addrs ();
 
   int set_local_addr (ACE_Addr *local_addr);
-  ACE_Addr *get_local_addr (void);
-  char *get_local_addr_str (void);
+  ACE_Addr *get_local_addr ();
+  char *get_local_addr_str ();
   int set_local_control_addr (ACE_Addr *local_control_addr);
-  ACE_Addr *get_local_control_addr (void);
-  char *get_local_control_addr_str (void);
+  ACE_Addr *get_local_control_addr ();
+  char *get_local_control_addr_str ();
 
-  TAO_AV_Transport *transport (void);
+  TAO_AV_Transport *transport ();
   void transport (TAO_AV_Transport *transport);
-  TAO_AV_Transport *control_transport (void);
+  TAO_AV_Transport *control_transport ();
   void control_transport (TAO_AV_Transport *control_transport);
 
-  TAO_AV_Flow_Handler* handler (void);
+  TAO_AV_Flow_Handler* handler ();
   void handler (TAO_AV_Flow_Handler *handler);
-  TAO_AV_Flow_Handler* control_handler (void);
+  TAO_AV_Flow_Handler* control_handler ();
   void control_handler (TAO_AV_Flow_Handler *control_handler);
 
-  TAO_AV_Protocol_Object* protocol_object (void);
+  TAO_AV_Protocol_Object* protocol_object ();
   void protocol_object (TAO_AV_Protocol_Object *object);
-  TAO_AV_Protocol_Object* control_protocol_object (void);
+  TAO_AV_Protocol_Object* control_protocol_object ();
   void control_protocol_object (TAO_AV_Protocol_Object *object);
 
   /// sets the address for this flow.
@@ -186,10 +184,9 @@ public:
                      TAO_AV_Core::Flow_Component flow_component);
 
   /// returns true for a multicast address.
-  int is_multicast (void);
+  int is_multicast ();
 
 protected:
-
   /// parses the flow protocol string with tokens separated by :
   int parse_flow_protocol_string (const char *flow_options_string);
 
@@ -197,7 +194,7 @@ protected:
   int set_direction (const char *direction_string);
 
   /// sets the protocol_ enum from the carrier_protocol_ string.
-  int set_protocol (void);
+  int set_protocol ();
 
   /// Addr information for the carrier protocol.
   ACE_Addr *address_;
@@ -256,7 +253,6 @@ protected:
   Role role_;
 };
 
-
 /**
  * @class TAO_Forward_FlowSpec_Entry
  */
@@ -272,7 +268,7 @@ public:
                  TAO_AV_PEER_ADDR = 5};
 
   /// default constructor.
-  TAO_Forward_FlowSpec_Entry (void);
+  TAO_Forward_FlowSpec_Entry ();
 
   /// constructor to construct an entry from the arguments.
   TAO_Forward_FlowSpec_Entry (const char *flowname,
@@ -289,12 +285,12 @@ public:
                               const char *flow_protocol,
                               const char *address);
 
-  virtual ~TAO_Forward_FlowSpec_Entry (void);
+  virtual ~TAO_Forward_FlowSpec_Entry ();
 
   /// converts the entry to a string.
-  virtual const char *entry_to_string (void);
+  virtual const char *entry_to_string ();
 
-  virtual Role role (void);
+  virtual Role role ();
 
   /// construct the entry from a string specified by the flowSpec grammar.
   virtual int parse (const char* flowSpec_entry);
@@ -315,7 +311,7 @@ public:
                  TAO_AV_FORMAT = 4};
 
   // default constructor.
-  TAO_Reverse_FlowSpec_Entry (void);
+  TAO_Reverse_FlowSpec_Entry ();
 
   // constructor to construct an entry from the arguments.
   TAO_Reverse_FlowSpec_Entry (const char *flowname,
@@ -333,12 +329,12 @@ public:
                               const char *flow_protocol,
                               const char *address);
 
-  virtual ~TAO_Reverse_FlowSpec_Entry (void);
+  virtual ~TAO_Reverse_FlowSpec_Entry ();
 
   /// converts the entry to a string.
-  virtual const char *entry_to_string (void);
+  virtual const char *entry_to_string ();
 
-  virtual Role role (void);
+  virtual Role role ();
 
   /// construct the entry from a string specified by the flowSpec grammar.
   virtual int parse (const char* flowSpec_entry);

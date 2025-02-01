@@ -17,7 +17,7 @@ be_visitor_amh_interface_sh::be_visitor_amh_interface_sh (
 {
 }
 
-be_visitor_amh_interface_sh::~be_visitor_amh_interface_sh (void)
+be_visitor_amh_interface_sh::~be_visitor_amh_interface_sh ()
 {
 }
 
@@ -34,7 +34,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
     }
 
   // Do not generate AMH classes for any sort of implied IDL.
-  if (node->original_interface () != 0)
+  if (node->original_interface () != nullptr)
     {
       return 0;
     }
@@ -42,8 +42,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
   ACE_CString class_name;
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // We shall have a POA_ prefix only if we are at the topmost level.
   if (!node->is_nested ())
@@ -78,9 +77,9 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
           ACE_CString amh_name ("POA_");
 
           // @@ The following code is *NOT* exception-safe.
-          char *buf = 0;
+          char *buf = nullptr;
           be_interface *base =
-            be_interface::narrow_from_decl (node->inherits ()[i]);
+            dynamic_cast<be_interface*> (node->inherits ()[i]);
           base->compute_full_name ("AMH_", "", buf);
           amh_name += buf;
           // buf was allocated by ACE_OS::strdup, so we need to use free
@@ -107,13 +106,13 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "protected:" << be_idt_nl
-      << class_name.c_str () << " (void);" << be_uidt_nl << be_nl
+      << class_name.c_str () << " ();" << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;
 
   // No copy constructor for locality constraint interface.
   *os << class_name.c_str () << " (const " << class_name.c_str ()
       << "& rhs);" << be_nl
-      << "virtual ~" << class_name.c_str () << " (void);\n\n"
+      << "virtual ~" << class_name.c_str () << " () = default;\n\n"
       << be_nl
       << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;
 
@@ -128,7 +127,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   // The _interface_repository_id method.
   *os << be_nl
       << "virtual const char* _interface_repository_id "
-      << "(void) const;";
+      << "() const;";
 
   if (this->visit_scope (node) ==  -1)
     {
@@ -189,7 +188,7 @@ be_visitor_amh_interface_sh::add_original_members (be_interface *node,
 
       if (d->node_type () == AST_Decl::NT_attr)
         {
-          be_attribute *attribute = be_attribute::narrow_from_decl (d);
+          be_attribute *attribute = dynamic_cast<be_attribute*> (d);
 
           if (!attribute)
             {
@@ -198,7 +197,7 @@ be_visitor_amh_interface_sh::add_original_members (be_interface *node,
         }
       else
         {
-          be_operation* operation = be_operation::narrow_from_decl (d);
+          be_operation* operation = dynamic_cast<be_operation*> (d);
 
           if (operation)
             {
@@ -226,8 +225,8 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
       return 0;
     }
 
-  Identifier *id = 0;
-  UTL_ScopedName *sn = 0;
+  Identifier *id = nullptr;
+  UTL_ScopedName *sn = nullptr;
 
   ACE_NEW_RETURN (id,
                   Identifier ("void"),
@@ -235,11 +234,11 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
 
   ACE_NEW_RETURN (sn,
                   UTL_ScopedName (id,
-                                  0),
+                                  nullptr),
                   -1);
 
   // Create the return type, which is "void"
-  be_predefined_type *rt = 0;
+  be_predefined_type *rt = nullptr;
   ACE_NEW_RETURN (rt,
                   be_predefined_type (AST_PredefinedType::PT_void,
                                       sn),
@@ -258,13 +257,13 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
 
   ACE_NEW_RETURN (sn,
                   UTL_ScopedName (id,
-                                  0),
+                                  nullptr),
                   -1);
 
   op_name->nconc (sn);
 
   // Create the operation
-  be_operation *operation = 0;
+  be_operation *operation = nullptr;
   ACE_NEW_RETURN (operation,
                   be_operation (rt, //node->return_type (),
                                 AST_Operation::OP_noflags,
@@ -290,24 +289,23 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
             {
               operation->destroy ();
               delete operation;
-              operation = 0;
+              operation = nullptr;
 
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("be_visitor_amh_pre_proc::")
                                  ACE_TEXT ("create_response_handler_operation - ")
                                  ACE_TEXT ("bad node in this scope\n")),
                                 -1);
-
             }
 
           AST_Argument *original_arg =
-            AST_Argument::narrow_from_decl (d);
+            dynamic_cast<AST_Argument*> (d);
 
           if (original_arg->direction () == AST_Argument::dir_INOUT ||
               original_arg->direction () == AST_Argument::dir_IN)
             {
               // Create the argument.
-              be_argument *arg = 0;
+              be_argument *arg = nullptr;
               ACE_NEW_RETURN (arg,
                               be_argument (original_arg->direction (),
                                            original_arg->field_type (),
@@ -323,7 +321,7 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
 
   // After having generated the operation we insert it into the
   // AMH node interface.
-  if (0 == amh_node->be_add_operation (operation))
+  if (nullptr == amh_node->be_add_operation (operation))
     {
       return -1;
     }
@@ -335,27 +333,27 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
 be_interface *
 be_visitor_amh_interface_sh::create_amh_class (ACE_CString name)
 {
-  Identifier *id = 0;
+  Identifier *id = nullptr;
   ACE_NEW_RETURN (id,
                   Identifier (name.c_str ()),
-                  0);
+                  nullptr);
 
-  UTL_ScopedName *amh_class_name = 0;
+  UTL_ScopedName *amh_class_name = nullptr;
   ACE_NEW_RETURN (amh_class_name,
                   UTL_ScopedName (id,
-                                  0),
-                  0);
+                                  nullptr),
+                  nullptr);
 
-  be_interface *amh_class = 0;
+  be_interface *amh_class = nullptr;
   ACE_NEW_RETURN (amh_class,
                   be_interface (amh_class_name, // name
-                                0,              // list of inherited
+                                nullptr,        // list of inherited
                                 0,              // number of inherited
-                                0,              // list of ancestors
+                                nullptr,        // list of ancestors
                                 0,              // number of ancestors
                                 0,              // non-local
                                 0),             // non-abstract
-                  0);
+                  nullptr);
 
   amh_class->set_name (amh_class_name);
   return amh_class;
@@ -373,5 +371,5 @@ be_visitor_amh_interface_sh::this_method (be_interface *node)
   // interfaces is "special", because the returned type is not exactly
   // the type of the class, but the original class that "implied" the
   // AMH one.
-  *os << non_amh_name.c_str () << " *_this (void);\n" << be_uidt;
+  *os << non_amh_name.c_str () << " *_this ();\n" << be_uidt;
 }

@@ -275,14 +275,14 @@ TAO_Active_Object_Map::remaining_activations (PortableServer::Servant servant)
 }
 
 ACE_INLINE size_t
-TAO_Active_Object_Map::current_size (void)
+TAO_Active_Object_Map::current_size ()
 {
   return this->user_id_map_->current_size ();
 }
 
 /* static */
 ACE_INLINE size_t
-TAO_Active_Object_Map::system_id_size (void)
+TAO_Active_Object_Map::system_id_size ()
 {
   return TAO_Active_Object_Map::system_id_size_;
 }

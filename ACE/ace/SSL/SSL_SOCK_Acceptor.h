@@ -49,12 +49,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SSL_Export ACE_SSL_SOCK_Acceptor : public ACE_SSL_SOCK
 {
 public:
-
   /// Default constructor.
-  ACE_SSL_SOCK_Acceptor (void);
+  ACE_SSL_SOCK_Acceptor ();
 
   /// Default destructor.
-  ~ACE_SSL_SOCK_Acceptor (void);
+  ~ACE_SSL_SOCK_Acceptor ();
 
   /**
    * Initiate a passive mode SSL/BSD-style acceptor socket.
@@ -113,7 +112,7 @@ public:
             int ipv6_only = 0);
 
   /// Close the listening socket.
-  int close (void);
+  int close ();
 
   /**
    * @name Passive Connection "accept" Methods
@@ -175,16 +174,13 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Complete SSL passive connection establishment.
   int ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
                   ACE_Time_Value *timeout) const;
 
 private:
-
   /// The BSD-socket workhorse
   ACE_SOCK_Acceptor acceptor_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

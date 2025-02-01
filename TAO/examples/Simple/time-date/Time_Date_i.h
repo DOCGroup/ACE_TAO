@@ -25,8 +25,6 @@ class Time_Date_i
   // = DESCRIPTION
   //    Time_Date object implementation
 public:
-  // = Initialization and termination methods.
-
   /// Obtain the time and date in binary format.
   virtual void bin_date (CORBA::Long_out time_date);
 
@@ -34,7 +32,7 @@ public:
   virtual void str_date (CORBA::String_out time_date);
 
   /// Shutdown the server.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// ORB pointer.
   void orb (CORBA::ORB_ptr orb_ptr);

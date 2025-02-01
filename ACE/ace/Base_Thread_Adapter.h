@@ -49,9 +49,9 @@ class ACE_Export ACE_OS_Thread_Descriptor
 {
 public:
   /// Get the thread creation flags.
-  long flags (void) const;
+  long flags () const;
 
-  virtual ~ACE_OS_Thread_Descriptor (void);
+  virtual ~ACE_OS_Thread_Descriptor () = default;
 
 protected:
   /// For use by ACE_Thread_Descriptor.
@@ -87,30 +87,29 @@ class ACE_Service_Gestalt;
 class ACE_Export ACE_Base_Thread_Adapter
 {
 public:
-
-  virtual ~ACE_Base_Thread_Adapter (void);
+  virtual ~ACE_Base_Thread_Adapter () = default;
 
   /// Virtual method invoked by the thread entry point.
-  virtual ACE_THR_FUNC_RETURN invoke (void) = 0;
+  virtual ACE_THR_FUNC_RETURN invoke () = 0;
 
   /// Accessor for the C entry point function to the OS thread creation
   /// routine.
-  ACE_THR_C_FUNC entry_point (void);
+  ACE_THR_C_FUNC entry_point ();
 
 #ifdef ACE_USES_GPROF
   /// Accessor to the itimer_
   /// followed http://sam.zoy.org/writings/programming/gprof.html
-  struct itimerval* timerval (void);
+  struct itimerval* timerval ();
 #endif // ACE_USES_PROF
 
   /// Invoke the close_log_msg_hook, if it is present
-  static void close_log_msg (void);
+  static void close_log_msg ();
 
   /// Invoke the sync_log_msg_hook, if it is present
   static void sync_log_msg (const ACE_TCHAR *prog_name);
 
   /// Invoke the thr_desc_log_msg_hook, if it is present
-  static ACE_OS_Thread_Descriptor *thr_desc_log_msg (void);
+  static ACE_OS_Thread_Descriptor *thr_desc_log_msg ();
 
 protected:
   /// Constructor.
@@ -118,15 +117,15 @@ protected:
                            void *arg,
                            ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
                            ACE_OS_Thread_Descriptor *td = 0
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
                            , ACE_SEH_EXCEPT_HANDLER selector = 0
                            , ACE_SEH_EXCEPT_HANDLER handler = 0
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
                            , long cancel_flags = 0
                       );
   /// Inherit the logging features if the parent thread has an
   /// ACE_Log_Msg.
-  void inherit_log_msg (void);
+  void inherit_log_msg ();
 
 private:
   /// The hooks to inherit and cleanup the Log_Msg attributes

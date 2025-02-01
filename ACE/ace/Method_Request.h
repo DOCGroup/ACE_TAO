@@ -43,16 +43,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Method_Request
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   ACE_Method_Request (unsigned long priority = 0);
 
   /// Destructor.
-  virtual ~ACE_Method_Request (void);
+  virtual ~ACE_Method_Request () = default;
 
   // = Accessors.
   /// Get priority.
-  unsigned long priority (void) const;
+  unsigned long priority () const;
 
   /// Set priority.
   /**
@@ -77,18 +76,17 @@ public:
    *         decide the meaning of this return value and act on it
    *         if needed.
    */
-  virtual int call (void) = 0;
+  virtual int call () = 0;
 
 private:
-
-  /// Disallow copying and assignment.
-  ACE_Method_Request (const ACE_Method_Request &);
-  void operator= (const ACE_Method_Request &);
+  ACE_Method_Request (const ACE_Method_Request &) = delete;
+  void operator= (const ACE_Method_Request &) = delete;
+  ACE_Method_Request (ACE_Method_Request &&) = delete;
+  void operator= (ACE_Method_Request &&) = delete;
 
 protected:
   /// The priority of the request.
   unsigned long priority_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

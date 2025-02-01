@@ -38,10 +38,10 @@ class TAO_IORManip_Export TAO_IORManip_Filter
 {
 public:
   /// Constructor.
-  TAO_IORManip_Filter (void);
+  TAO_IORManip_Filter ();
 
   /// Destructor.
-  virtual ~TAO_IORManip_Filter (void);
+  virtual ~TAO_IORManip_Filter ();
 
   /// Perform filtering using the profile passed in as a guide.
   /// If no profile is provided, filter using the profile_matches() method.
@@ -49,15 +49,12 @@ public:
                                        TAO_Profile* profile = 0);
 
 protected:
-
   /// This will be the bulk of the filtering code.
   virtual void filter_and_add (TAO_Profile* profile,
                                TAO_MProfile& profiles,
                                TAO_Profile* guideline = 0) = 0;
 
-
 private:
-
   /// The sanitize_profiles() methods call this to do the work.
   CORBA::Object_ptr sanitize (CORBA::Object_ptr object,
                               TAO_Profile* profile);

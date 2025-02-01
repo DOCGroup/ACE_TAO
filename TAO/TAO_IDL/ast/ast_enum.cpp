@@ -91,13 +91,13 @@ AST_Enum::AST_Enum (UTL_ScopedName *n,
   this->size_type (AST_Type::FIXED);
 }
 
-AST_Enum::~AST_Enum (void)
+AST_Enum::~AST_Enum ()
 {
 }
 
 // Return the member count.
 int
-AST_Enum::member_count (void)
+AST_Enum::member_count ()
 {
   if (this->member_count_ == -1)
     {
@@ -111,13 +111,13 @@ AST_Enum::member_count (void)
 UTL_ScopedName *
 AST_Enum::value_to_name (const unsigned long v)
 {
-  AST_EnumVal *item = 0;
-  AST_Decl *d = 0;
+  AST_EnumVal *item = nullptr;
+  AST_Decl *d = nullptr;
 
   for (UTL_ScopeActiveIterator i (this, IK_decls); !i.is_done (); i.next ())
     {
       d = i.item  ();
-      item = AST_EnumVal::narrow_from_decl (d);
+      item = dynamic_cast<AST_EnumVal*> (d);
 
       if (item->constant_value ()->ev ()->u.ulval == v)
         {
@@ -125,22 +125,22 @@ AST_Enum::value_to_name (const unsigned long v)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Look up an enumerator by the value of the supplied expression.
 AST_EnumVal *
 AST_Enum::lookup_by_value (const AST_Expression *v)
 {
-  AST_EnumVal *item = 0;
-  AST_Decl *d = 0;
+  AST_EnumVal *item = nullptr;
+  AST_Decl *d = nullptr;
 
   for (UTL_ScopeActiveIterator i (this, IK_decls);
        !i.is_done ();
        i.next ())
     {
       d = i.item ();
-      item = AST_EnumVal::narrow_from_decl (d);
+      item = dynamic_cast<AST_EnumVal*> (d);
       AST_Expression *cv = item->constant_value ();
 
       if (cv == v)
@@ -153,7 +153,7 @@ AST_Enum::lookup_by_value (const AST_Expression *v)
       // string name to look up the enum value with.
       UTL_ScopedName *v_n = const_cast<AST_Expression *> (v)->n ();
 
-      if (v_n != 0)
+      if (v_n != nullptr)
         {
           Identifier *cv_i = item->local_name ();
           Identifier *v_i = v_n->last_component ();
@@ -165,13 +165,13 @@ AST_Enum::lookup_by_value (const AST_Expression *v)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Compute the value to be assigned to the next enumerator. Bump the
 // counter.
 unsigned long
-AST_Enum::next_enum_val (void)
+AST_Enum::next_enum_val ()
 {
   unsigned long i = pd_enum_counter++;
 
@@ -202,11 +202,11 @@ munge_name_for_enumval (UTL_ScopedName *n,
       n = (UTL_ScopedName *) n->tail ();
     }
 
-  UTL_IdList *id = 0;
+  UTL_IdList *id = nullptr;
   ACE_NEW_RETURN (id,
                   UTL_IdList (last_component->copy (),
-                              0),
-                  0);
+                              nullptr),
+                  nullptr);
 
   n->set_tail (id);
 
@@ -215,7 +215,7 @@ munge_name_for_enumval (UTL_ScopedName *n,
 
 // Compute total number of members.
 int
-AST_Enum::compute_member_count (void)
+AST_Enum::compute_member_count ()
 {
   this->member_count_ = 0;
 
@@ -237,8 +237,8 @@ AST_Enum::compute_member_count (void)
 AST_EnumVal *
 AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 {
-  AST_Decl *d = 0;
-  AST_EnumVal *t1 = 0;
+  AST_Decl *d = nullptr;
+  AST_EnumVal *t1 = nullptr;
 
   AST_Expression::AST_ExprValue *ev =
     t->constant_value ()->coerce (AST_Expression::EV_ulong);
@@ -247,7 +247,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
                                             t->name ());
 
   delete ev;
-  ev = 0;
+  ev = nullptr;
 
   UTL_ScopedName *sn =
     munge_name_for_enumval ((UTL_IdList *) t->name ()->copy (),
@@ -261,7 +261,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
   t1->set_name (sn);
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t)) != 0)
+  if ((d = this->lookup_for_add (t)) != nullptr)
     {
       if (!FE_Utils::can_be_redefined (d, t))
         {
@@ -269,7 +269,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
                                       t,
                                       this,
                                       d);
-          return 0;
+          return nullptr;
         }
 
       if (this->referenced (d, t->local_name ()))
@@ -278,14 +278,14 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
                                       t,
                                       this,
                                       d);
-          return 0;
+          return nullptr;
         }
 
       if (t->has_ancestor (d))
         {
           idl_global->err ()->redefinition_in_scope (t,
                                                      d);
-          return 0;
+          return nullptr;
         }
     }
 
@@ -297,10 +297,10 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
                            false,
                            t->local_name ());
 
-  if (t1 == 0)
+  if (t1 == nullptr)
     {
       // Prevent dereferencing null pointer in nested calls.
-      return 0;
+      return nullptr;
     }
 
   // Add it to enclosing scope.
@@ -315,7 +315,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 void
 AST_Enum::dump (ACE_OSTREAM_TYPE &o)
 {
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
 
   if (this->is_local ())
     {
@@ -366,14 +366,8 @@ AST_Enum::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Enum::destroy (void)
+AST_Enum::destroy ()
 {
   this->UTL_Scope::destroy ();
   this->AST_ConcreteType::destroy ();
 }
-
-
-
-
-IMPL_NARROW_FROM_DECL(AST_Enum)
-IMPL_NARROW_FROM_SCOPE(AST_Enum)

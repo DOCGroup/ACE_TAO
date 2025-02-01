@@ -26,10 +26,6 @@ namespace ACE
 
     //=============================================================
 
-    Monitor_Control_Types::Constraint::Constraint (void)
-      : control_action (0)
-    {}
-
     Monitor_Control_Types::Constraint::Constraint (const Constraint& rhs)
       : expr (rhs.expr),
         control_action (rhs.control_action)
@@ -40,7 +36,7 @@ namespace ACE
         }
     }
 
-    Monitor_Control_Types::Constraint::~Constraint (void)
+    Monitor_Control_Types::Constraint::~Constraint ()
     {
       if (this->control_action != 0)
         {

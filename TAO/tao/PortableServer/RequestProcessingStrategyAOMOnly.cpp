@@ -12,14 +12,9 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategyAOMOnly::RequestProcessingStrategyAOMOnly()
-    {
-    }
-
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyAOMOnly::get_servant_manager (void)
+    RequestProcessingStrategyAOMOnly::get_servant_manager ()
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -39,14 +34,13 @@ namespace TAO
     }
 
     PortableServer::Servant
-    RequestProcessingStrategyAOMOnly::get_servant (void)
+    RequestProcessingStrategyAOMOnly::get_servant ()
     {
       throw PortableServer::POA::WrongPolicy ();
     }
-
 #endif /* TAO_HAS_MINIMUM_POA == 0 !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-    TAO_SERVANT_LOCATION
+    TAO_Servant_Location
     RequestProcessingStrategyAOMOnly::locate_servant (
       const PortableServer::ObjectId & system_id,
       PortableServer::Servant & servant)
@@ -141,13 +135,6 @@ namespace TAO
       const TAO::Portable_Server::Servant_Upcall &/*servant_upcall*/)
     {
     }
-
-    ::PortableServer::RequestProcessingPolicyValue
-    RequestProcessingStrategyAOMOnly::type() const
-    {
-      return ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY;
-    }
-
   }
 }
 
